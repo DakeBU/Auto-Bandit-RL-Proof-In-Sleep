@@ -1,0 +1,122 @@
+name: Anonymous BanditRLlib frozen review snapshot
+
+on:
+  push:
+    branches: [review/iclr-2027-anonymous]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: anonymous-banditrllib-review
+  cancel-in-progress: true
+
+jobs:
+  verify-and-export:
+    if: github.ref == 'refs/heads/review/iclr-2027-anonymous'
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - name: Check out frozen review branch
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up Lean and Mathlib cache
+        uses: leanprover/lean-action@v1
+        with:
+          auto-config: false
+          build: false
+          test: false
+          use-github-cache: true
+          use-mathlib-cache: true
+
+      - name: Compile review tooling
+        run: python3 -m compileall -q review tools website/scripts
+
+      - name: Test existing anonymous supplement builder
+        run: python3 -m unittest tools/test_build_anonymous_iclr_supplement.py -v
+
+      - name: Run full Lean and repository gate
+        run: python3 tools/bandit.py check
+
+      - name: Validate result-free workflow comparisons
+        run: |
+          python3 tools/validate_target_drift_suite_v2.py
+          python3 tools/validate_target_drift_external_comparator.py
+
+      - name: Export and validate the frozen proof graph
+        run: |
+          mkdir -p "$RUNNER_TEMP/abrl-review-evidence"
+          lake exe proof_graph_export --compact "$RUNNER_TEMP/abrl-review-evidence/proof-graph.json"
+          python3 tools/proof_graph_lab.py validate-export \
+            --graph "$RUNNER_TEMP/abrl-review-evidence/proof-graph.json"
+          python3 tools/proof_graph_lab.py benchmark \
+            --graph "$RUNNER_TEMP/abrl-review-evidence/proof-graph.json" \
+            --config research-wiki/proof-graph/benchmark_roots.json \
+            --output "$RUNNER_TEMP/abrl-review-evidence/proof-graph-benchmark.json"
+
+      - name: Build complete BanditRLlib reader
+        run: python3 website/scripts/build_site.py --lean-verified
+
+      - name: Check complete reader before anonymization
+        run: python3 website/scripts/check_site.py
+
+      - name: Remove reviewer-facing identity surfaces
+        run: python3 review/anonymize_full_site.py website/_site
+
+      - name: Recheck static reader after anonymization
+        run: python3 website/scripts/check_site.py
+
+      - name: Record frozen-review verification metadata
+        run: |
+          python3 - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+
+          site = Path('website/_site')
+          out = {
+              'review_commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(),
+              'frozen_development_revision': 'c16ea983e73054585e76465baa9e27a75c768622',
+              'lean_and_repository_gate': 'passed',
+              'anonymous_supplement_builder_tests': 'passed',
+              'target_drift_protocols': 'passed',
+              'proof_graph_export_and_validation': 'passed',
+              'full_site_build': 'passed',
+              'site_check_before_anonymization': 'passed',
+              'identity_postprocess': 'passed',
+              'site_check_after_anonymization': 'passed',
+              'note': 'Lean evidence, source-audit status, literature status and open frontier leaves remain distinct; anonymization changes reviewer-facing identity/provenance only.'
+          }
+          (site / 'review-verification.json').write_text(json.dumps(out, indent=2) + '\n', encoding='utf-8')
+          PY
+          (cd website/_site && zip -qr ../../anonymous-banditrllib-full-site.zip .)
+
+      - name: Upload deployable anonymous BanditRLlib site
+        uses: actions/upload-artifact@v4
+        with:
+          name: anonymous-banditrllib-full-site
+          path: anonymous-banditrllib-full-site.zip
+          if-no-files-found: error
+          retention-days: 90
+
+      - name: Upload author-side proof-graph evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: anonymous-banditrllib-proof-graph-evidence
+          path: ${{ runner.temp }}/abrl-review-evidence
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Upload diagnostics on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: anonymous-banditrllib-diagnostics
+          path: |
+            website/_site
+            .lake/build/logs
+          if-no-files-found: ignore
+          retention-days: 14
