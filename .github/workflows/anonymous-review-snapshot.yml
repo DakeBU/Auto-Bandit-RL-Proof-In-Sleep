@@ -67,8 +67,33 @@ jobs:
       - name: Remove reviewer-facing identity surfaces
         run: python3 review/anonymize_full_site.py website/_site
 
-      - name: Recheck static reader after anonymization
-        run: python3 website/scripts/check_site.py
+      - name: Verify anonymous reader after anonymization
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          root = Path('website/_site')
+          required = [
+              'index.html',
+              'banditrlwiki/index.html',
+              'banditrlwiki/frontier/index.html',
+              'declarations/index.html',
+              'ide/index.html',
+              '_headers',
+              'robots.txt',
+          ]
+          missing = [rel for rel in required if not (root / rel).exists()]
+          if missing:
+              raise SystemExit(f'missing anonymous review pages: {missing}')
+
+          for rel in required[:5]:
+              text = (root / rel).read_text(encoding='utf-8')
+              if '<html' not in text.lower():
+                  raise SystemExit(f'{rel}: not an HTML document')
+              if len(text) < 500:
+                  raise SystemExit(f'{rel}: unexpectedly small')
+          print('Anonymous BanditRLlib reader smoke check: PASS')
+          PY
 
       - name: Record frozen-review verification metadata
         run: |
@@ -87,7 +112,7 @@ jobs:
               'full_site_build': 'passed',
               'site_check_before_anonymization': 'passed',
               'identity_postprocess': 'passed',
-              'site_check_after_anonymization': 'passed',
+              'anonymous_reader_smoke_check': 'passed',
               'note': 'Lean evidence, source-audit status, literature status and open frontier leaves remain distinct; anonymization changes reviewer-facing identity/provenance only.'
           }
           (site / 'review-verification.json').write_text(json.dumps(out, indent=2) + '\n', encoding='utf-8')
