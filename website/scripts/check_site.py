@@ -669,6 +669,16 @@ def check_community_contract(output: Path, manifest: dict[str, object]) -> list[
     return errors
 
 
+def declaration_has_expected_badge(source: str, anchor: str, verified: bool) -> bool:
+    """Check this declaration's summary, never a later declaration's badge."""
+    summary = re.search(
+        rf'<details class="declaration" id="{re.escape(anchor)}">\s*<summary>(.*?)</summary>',
+        source, re.DOTALL,
+    )
+    status, label = ("compiled", "Compiled") if verified else ("source", "Source indexed")
+    return bool(summary and f'<span class="status {status}">{label}</span>' in summary.group(1))
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
@@ -1913,7 +1923,6 @@ def main() -> int:
         ),
     )
     expected_decl_status = "compiled" if manifest.get("lean_verified") else "source"
-    expected_decl_label = "Compiled" if manifest.get("lean_verified") else "Source indexed"
     for declaration in sgb_freshness_declarations:
         freshness_items = [
             item for item in search_items if item.get("name") == declaration
@@ -1930,13 +1939,7 @@ def main() -> int:
             errors.append(f"SGB freshness declaration page is missing: {declaration}")
             continue
         freshness_module_source = freshness_module_path.read_text(encoding="utf-8")
-        compiled_summary = re.compile(
-            rf'<details class="declaration" id="{re.escape(freshness_target.fragment)}">'
-            r"\s*<summary>.*?"
-            rf'<span class="status {expected_decl_status}">{expected_decl_label}</span>.*?</summary>',
-            re.DOTALL,
-        )
-        if not compiled_summary.search(freshness_module_source):
+        if not declaration_has_expected_badge(freshness_module_source, freshness_target.fragment, bool(manifest.get("lean_verified"))):
             errors.append(
                 "SGB deterministic-time selected-reward freshness is not rendered as "
                 f"{expected_decl_status}: {declaration}"
@@ -1960,13 +1963,7 @@ def main() -> int:
             errors.append("SGB native-prefix declaration page is missing")
         else:
             native_prefix_module_source = native_prefix_module_path.read_text(encoding="utf-8")
-            compiled_summary = re.compile(
-                rf'<details class="declaration" id="{re.escape(native_prefix_target.fragment)}">'
-                r"\s*<summary>.*?"
-                rf'<span class="status {expected_decl_status}">{expected_decl_label}</span>.*?</summary>',
-                re.DOTALL,
-            )
-            if not compiled_summary.search(native_prefix_module_source):
+            if not declaration_has_expected_badge(native_prefix_module_source, native_prefix_target.fragment, bool(manifest.get("lean_verified"))):
                 errors.append("SGB native-prefix identification badge disagrees with the build gate")
     frontier_source = (output / "chapters" / "frontier" / "index.html").read_text(encoding="utf-8")
     for required in (

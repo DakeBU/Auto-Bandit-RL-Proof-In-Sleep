@@ -625,6 +625,7 @@
     if (source === currentSource && data?.views?.[view]) {
       ++graphLoadRevision;
       graphLoadPromise = null;
+      app.removeAttribute("aria-busy");
       setView(view);
       return Promise.resolve(true);
     }

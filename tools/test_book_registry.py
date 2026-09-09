@@ -5,6 +5,7 @@ import unittest
 
 from website.scripts import build_site as site
 from website.scripts.book_registry import build_registry, membership_index
+from website.scripts.check_site import declaration_has_expected_badge
 
 
 class BookRegistryTests(unittest.TestCase):
@@ -91,6 +92,17 @@ class BookRegistryTests(unittest.TestCase):
         self.assertIsNone(books["conformal-prediction"]["source"])
         for key in books.keys() - {"bandit"}:
             self.assertEqual("planned", books[key]["status"])
+
+    def test_preview_badge_cannot_borrow_evidence_from_another_declaration(self):
+        source = ('<details class="declaration" id="a"><summary>'
+                  '<span class="status source">Source indexed</span></summary></details>'
+                  '<details class="declaration" id="b"><summary>'
+                  '<span class="status compiled">Compiled</span></summary></details>')
+        self.assertTrue(declaration_has_expected_badge(source, "a", False))
+        self.assertFalse(declaration_has_expected_badge(source, "a", True))
+        self.assertTrue(declaration_has_expected_badge(source, "b", True))
+        self.assertFalse(declaration_has_expected_badge(source, "b", False))
+        self.assertFalse(declaration_has_expected_badge(source, "missing", True))
 
     def test_navigation_has_one_current_page_and_shared_chapter_context(self):
         saved = (site.SITE_CHAPTERS, site.SITE_BOOKS, site.SITE_TEXTBOOK_SPINE, site.SITE_REGISTRY)
