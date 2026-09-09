@@ -501,7 +501,7 @@ code {
   transition: transform 140ms ease;
 }
 
-.nav-group[open] .nav-group-chevron {
+.nav-group[open] > summary .nav-group-chevron {
   transform: rotate(180deg);
 }
 
@@ -6635,3 +6635,34 @@ tbody tr:hover {
     break-inside: avoid;
   }
 }
+
+/* Books share the native site shell and canonical reading pages. */
+.books-grid, .topic-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.book-entry, .topic-card { min-width: 0; padding: 1.4rem; border: 1px solid var(--line); border-radius: .7rem; background: var(--surface, #fffdf8); }
+.book-entry { border-top: 3px solid var(--accent, #176b70); }
+.book-entry h3, .topic-card h3 { margin: .55rem 0; font-size: 1.4rem; }
+.book-entry h3 a, .topic-card h3 a { text-decoration-thickness: 1px; text-underline-offset: .18em; }
+.book-entry-status, .book-entry-source, .topic-tags { font-family: var(--sans); font-size: .8rem; line-height: 1.6; }
+.book-entry-status { color: var(--muted, #536261); }
+.book-entry-source { border-top: 1px solid var(--line); padding-top: .7rem; }
+.book-breadcrumb { display: flex; flex-wrap: wrap; align-items: baseline; gap: .45rem; margin: 1rem 0; font-size: .9rem; }
+.shared-reading, .node-memberships { font-size: .9rem; padding: .7rem 1rem; background: var(--accent-soft); border-left: 3px solid var(--accent, #176b70); }
+.node-memberships code, .book-source, .comparison-contract dd, .graph-scope-field { overflow-wrap: anywhere; min-width: 0; }
+.nav-section-label { font-size: .73rem; padding: .6rem .4rem 0; color: var(--muted, #536261); }
+.nav-group-links .nav-group { border-top: 0; margin-top: .4rem; padding-top: 0; }
+.nav-group-links .nav-group-title { padding-inline: .35rem; }
+.comparison-contract > div { display: grid; grid-template-columns: minmax(10rem, 1fr) minmax(0, 2fr); gap: 1rem; padding: .9rem 0; border-bottom: 1px solid var(--line); }
+.comparison-contract dt { font-weight: 600; }
+.comparison-contract dd { margin: 0; }
+.graph-scope-field { display: grid; gap: .35rem; max-width: 28rem; }
+.graph-scope-field select { width: 100%; min-width: 0; min-height: 44px; }
+.book-entry a:focus-visible, .topic-card a:focus-visible { outline: 3px solid #176b70; outline-offset: 4px; }
+@media (max-width: 640px) {
+  .books-grid, .topic-grid, .comparison-contract > div { grid-template-columns: minmax(0, 1fr); }
+  .book-entry, .topic-card { padding: 1rem; }
+  .comparison-contract > div { gap: .3rem; }
+  .book-breadcrumb { font-size: .8rem; }
+  .book-entry h3 a, .topic-card h3 a { display: inline-block; padding-block: .25rem; }
+}
+
+.book-breadcrumb + .hero { padding-top: 1.5rem; }

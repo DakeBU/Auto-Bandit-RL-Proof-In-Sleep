@@ -13,6 +13,7 @@
   const suggestions = app.querySelector("[data-graph-suggestions]");
   const branchSizeSelect = app.querySelector("[data-graph-branch-size]");
   const viewButtons = [...app.querySelectorAll("[data-graph-view]")];
+  const readingScope = app.querySelector("[data-graph-scope]");
   const fitButton = app.querySelector("[data-graph-fit]");
   const resetButton = app.querySelector("[data-graph-reset]");
   const mobileOpenButton = app.querySelector("[data-graph-mobile-open]");
@@ -691,6 +692,7 @@
 
   viewButtons.forEach((button) => {
     button.addEventListener("click", () => {
+      if (readingScope) readingScope.value = "";
       const view = button.dataset.graphView;
       const source = button.dataset.graphViewSource;
       if (source === currentSource && data?.views?.[view]) {
@@ -702,6 +704,12 @@
           setMobileCanvasOpen(true);
         }
       });
+    });
+  });
+  readingScope?.addEventListener("change", () => {
+    const source = readingScope.value || app.dataset.graphOverviewSource;
+    loadGraphSlice(source, readingScope.value ? "scope" : "overview").then((loaded) => {
+      if (loaded) setMobileCanvasOpen(true);
     });
   });
   mobileOpenButton?.addEventListener("click", () => {
