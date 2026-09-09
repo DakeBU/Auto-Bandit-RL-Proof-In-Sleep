@@ -4237,7 +4237,7 @@ def build_lean_graph(
     )
     add_node(
         book_group,
-        "Book Map",
+        "Bandit Book · Teaching routes",
         "curriculum",
         "partial",
         subtitle=f"{len(chapters)} teaching chapters",
@@ -4249,11 +4249,11 @@ def build_lean_graph(
     )
     add_node(
         spine_group,
-        "Part IV lower-bound spine",
+        "Bandit Book · Source Ch.13–17",
         "textbook spine",
         "partial",
         subtitle=f"Chapters 13–17 · {len(textbook_spine['chapters'])} source chapters",
-        description="A separate, source-faithful lower-bound spine. Whole-chapter status remains partial even when a named source terminal compiles.",
+        description="The source-numbered group of the Bandit Book. Chapters 13–17 have merged required main-text contracts; optional exercises are not all complete and Chapter 17 uses explicit source corrections. Exact chapter and build status remain separate.",
         url="../textbook-spine/index.html",
         parent=root_id,
         order=2,

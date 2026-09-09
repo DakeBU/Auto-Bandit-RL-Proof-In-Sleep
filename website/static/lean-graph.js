@@ -65,6 +65,7 @@
   let searchNodes = [];
   let searchDataPromise = null;
   let graphLoadPromise = null;
+  let graphLoadRevision = 0;
 
   const setMobileCanvasOpen = (open = true) => {
     app.classList.toggle("mobile-canvas-open", open);
@@ -622,20 +623,25 @@
 
   const loadGraphSlice = (source, view) => {
     if (source === currentSource && data?.views?.[view]) {
+      ++graphLoadRevision;
+      graphLoadPromise = null;
       setView(view);
       return Promise.resolve(true);
     }
     if (graphLoadPromise?.source === source) return graphLoadPromise.promise;
+    const revision = ++graphLoadRevision;
     count.textContent = "Loading this graph branch…";
     app.setAttribute("aria-busy", "true");
     const promise = fetchGraph(source)
       .then((payload) => {
+        if (revision !== graphLoadRevision) return false;
         currentSource = source;
         initialize(payload, view);
         app.removeAttribute("aria-busy");
         return true;
       })
       .catch((error) => {
+        if (revision !== graphLoadRevision) return false;
         showLoadError(error);
         return false;
       })
@@ -695,10 +701,6 @@
       if (readingScope) readingScope.value = "";
       const view = button.dataset.graphView;
       const source = button.dataset.graphViewSource;
-      if (source === currentSource && data?.views?.[view]) {
-        setView(view);
-        return;
-      }
       loadGraphSlice(source, view).then((loaded) => {
         if (loaded) {
           setMobileCanvasOpen(true);
