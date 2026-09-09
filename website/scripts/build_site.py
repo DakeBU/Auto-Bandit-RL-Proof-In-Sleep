@@ -2144,7 +2144,7 @@ def build_index(
   <p class="eyebrow">Choose your path</p>
   <h2 id="three-roles-title">BanditRLlib, three ways to use it</h2>
   <div class="audience-path-grid">
-    <a class="audience-path-card learn-role" href="{href_from(page_path, 'learning/index.html')}"><span>01 · Student</span><strong>Learn math beside Lean</strong><small>Choose a book and reading route →</small></a>
+    <a class="audience-path-card learn-role" href="{href_from(page_path, 'books/index.html')}"><span>01 · Student</span><strong>Learn math beside Lean</strong><small>Choose a book and reading route →</small></a>
     <a class="audience-path-card browse-role" href="{href_from(page_path, 'declarations/index.html')}"><span>02 · Researcher</span><strong>Find exact proofs</strong><small>Search {len(declarations):,} indexed declarations →</small></a>
     <a class="audience-path-card contribute-role" href="{href_from(page_path, 'community/index.html')}"><span>03 · Contributor</span><strong>Contribute one lemma</strong><small>Follow the contribution contract →</small></a>
   </div>
