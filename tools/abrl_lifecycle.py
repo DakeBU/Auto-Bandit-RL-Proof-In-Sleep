@@ -612,10 +612,17 @@ def lean_declaration_header(path: Path, declaration: str) -> str:
     start = match.start()
     bracket_stack: list[str] = []
     in_string = False
+    in_quoted_identifier = False
     escaped = False
+    top_level_let_before_assignment = False
     index = start
     while index < len(text):
         char = text[index]
+        if in_quoted_identifier:
+            if char == "»":
+                in_quoted_identifier = False
+            index += 1
+            continue
         if in_string:
             if escaped:
                 escaped = False
@@ -629,15 +636,26 @@ def lean_declaration_header(path: Path, declaration: str) -> str:
             in_string = True
             index += 1
             continue
+        if char == "«":
+            in_quoted_identifier = True
+            index += 1
+            continue
+        if not bracket_stack and text.startswith("let", index):
+            before = text[index - 1] if index > start else " "
+            after_index = index + 3
+            after = text[after_index] if after_index < len(text) else " "
+            if not (before.isalnum() or before in "_'") and (
+                after == "I" or not (after.isalnum() or after in "_'")
+            ):
+                top_level_let_before_assignment = True
         if char in "([{":
             bracket_stack.append(char)
         elif char in ")]}":
             if bracket_stack:
                 bracket_stack.pop()
         elif text.startswith(":=", index) and not bracket_stack:
-            line_start = text.rfind("\n", start, index) + 1
-            line_prefix = text[line_start:index].strip()
-            if re.match(r"^(?:.*:\s*)?let(?:I)?\b", line_prefix):
+            if top_level_let_before_assignment:
+                top_level_let_before_assignment = False
                 index += 2
                 continue
             return normalize_statement(text[start:index])
@@ -1108,17 +1126,32 @@ class FauxProvider:
         return outcome
 
 
-def validate_parallel_lower_routes(routes: Sequence[dict[str, Any]]) -> dict[str, Any]:
+def validate_parallel_lower_routes(
+    routes: Sequence[dict[str, Any]],
+    *,
+    root: Path,
+) -> dict[str, Any]:
     if len(routes) < 2:
         return {"allowed": False, "reason": "fewer than two routes"}
     fingerprints = [str(route.get("route_fingerprint", "")) for route in routes]
     if any(not fingerprint for fingerprint in fingerprints) or len(set(fingerprints)) != len(fingerprints):
         return {"allowed": False, "reason": "routes are not materially distinct"}
+    canonical_root = root.resolve()
     owners: set[str] = set()
     for route in routes:
         if not route.get("expected_information_gain"):
             return {"allowed": False, "reason": "missing expected information gain"}
-        files = {os.path.normcase(str(Path(path))) for path in route.get("owned_files", [])}
+        owned_files = route.get("owned_files", [])
+        if not isinstance(owned_files, list) or not owned_files:
+            return {"allowed": False, "reason": "missing owned files"}
+        files: set[str] = set()
+        for raw_path in owned_files:
+            path = Path(str(raw_path))
+            candidate = path if path.is_absolute() else canonical_root / path
+            canonical = candidate.resolve()
+            if canonical == canonical_root or canonical_root not in canonical.parents:
+                return {"allowed": False, "reason": "owned file is outside repository"}
+            files.add(os.path.normcase(str(canonical)))
         if owners.intersection(files):
             return {"allowed": False, "reason": "file ownership overlaps"}
         owners.update(files)

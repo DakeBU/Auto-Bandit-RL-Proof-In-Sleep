@@ -26982,9 +26982,9 @@ def make_prompt_deck(
     route_packet_hash: str = "",
 ) -> list[Path]:
     routes = list(routes or [])
-    task_text = read_optional(task_file(task_id), 12000)
-    conversion_text = read_optional(ROOT / "conversion-windows" / f"{task_id}.md", 12000)
-    obligations_text = read_optional(ROOT / "proof-obligations" / f"{task_id}.md", 12000)
+    task_text = read_snapshot(task_file(task_id), 12000)
+    conversion_text = read_snapshot(ROOT / "conversion-windows" / f"{task_id}.md", 12000)
+    obligations_text = read_snapshot(ROOT / "proof-obligations" / f"{task_id}.md", 12000)
     memory_text = read_optional(RETRIEVAL_INDEX_DIR / f"{task_id}.json", 12000)
     completion_text = read_optional(ROOT / "docs" / "completion_gap_audit.md", 14000)
     adaptive_text = read_optional(ROOT / "docs" / "adaptive_harness_design.md", 14000)
@@ -27202,7 +27202,7 @@ def load_parallel_routes(value: str, lower_count: int) -> list[dict[str, Any]]:
     routes = route_payload.get("routes", route_payload) if isinstance(route_payload, dict) else route_payload
     if not isinstance(routes, list):
         raise SystemExit("parallel route proposal must be a list or an object with a routes list")
-    decision = lifecycle.validate_parallel_lower_routes(routes)
+    decision = lifecycle.validate_parallel_lower_routes(routes, root=ROOT)
     if not decision["allowed"]:
         raise SystemExit(f"parallel lower dispatch rejected: {decision['reason']}")
     if len(routes) < lower_count:
@@ -27233,9 +27233,9 @@ def make_master_worker_prompt_deck(
 ) -> list[Path]:
     """Create a compact master/parallel-worker/synthesis/reviewer prompt deck."""
     route_packet_hash = frozen_route_packet_hash(routes)
-    task_text = read_optional(task_file(task_id), 12000)
-    conversion_text = read_optional(ROOT / "conversion-windows" / f"{task_id}.md", 10000)
-    obligations_text = read_optional(ROOT / "proof-obligations" / f"{task_id}.md", 12000)
+    task_text = read_snapshot(task_file(task_id), 12000)
+    conversion_text = read_snapshot(ROOT / "conversion-windows" / f"{task_id}.md", 10000)
+    obligations_text = read_snapshot(ROOT / "proof-obligations" / f"{task_id}.md", 12000)
     frontier_text = read_optional(ROOT / "runs" / "active_frontier.json", 10000)
     recent_trials = [row for row in load_jsonl(TRIAL_LOG) if row.get("task") == task_id][-12:]
     context = f"""# Master–Worker Context
@@ -27551,6 +27551,7 @@ def execute_master_worker_prompt_deck(
         if prompt.name.startswith("40_master") or prompt.name.startswith("50_reviewer")
     ]
 
+    first_failure = 0
     for prompt in plan_prompts:
         code = execute_prompt(
             command_for_prompt(prompt, fallback, profile),
@@ -27564,6 +27565,8 @@ def execute_master_worker_prompt_deck(
             route_packet_hash=route_packet_hash,
             capture_log=True,
         )
+        if code != 0 and first_failure == 0:
+            first_failure = code
         if code != 0 and stop_on_error:
             return code
 
@@ -27589,6 +27592,8 @@ def execute_master_worker_prompt_deck(
             worker_codes.append(future.result())
     if stop_on_error and any(code != 0 for code in worker_codes):
         return next(code for code in worker_codes if code != 0)
+    if first_failure == 0:
+        first_failure = next((code for code in worker_codes if code != 0), 0)
 
     final_code = 0
     for prompt in final_prompts:
@@ -27604,9 +27609,11 @@ def execute_master_worker_prompt_deck(
             route_packet_hash=route_packet_hash,
             capture_log=True,
         )
+        if final_code != 0 and first_failure == 0:
+            first_failure = final_code
         if final_code != 0 and stop_on_error:
             return final_code
-    return final_code or next((code for code in worker_codes if code != 0), 0)
+    return first_failure
 
 
 def cmd_init(_args: argparse.Namespace) -> int:
@@ -28484,7 +28491,7 @@ def cmd_run_cycle(args: argparse.Namespace) -> int:
                 route_packet_hash=route_packet_hash,
                 stop_on_error=args.stop_on_error,
             )
-        code = 0
+        first_failure = 0
         for prompt in prompts:
             command = command_for_prompt(prompt, args.agent_cmd, profile)
             code = execute_prompt(
@@ -28499,15 +28506,17 @@ def cmd_run_cycle(args: argparse.Namespace) -> int:
                 route_packet_hash=route_packet_hash,
                 capture_log=True,
             )
+            if code != 0 and first_failure == 0:
+                first_failure = code
             if code != 0 and args.stop_on_error:
                 break
-        return code
+        return first_failure
     print(f"created run deck: {rel(run_dir)}")
     return 0
 
 
 def cmd_sleep_run(args: argparse.Namespace) -> int:
-    code = 0
+    first_failure = 0
     for cycle in range(1, args.cycles + 1):
         ns = argparse.Namespace(
             id=args.id,
@@ -28529,14 +28538,22 @@ def cmd_sleep_run(args: argparse.Namespace) -> int:
             target_fingerprint=getattr(args, "target_fingerprint", ""),
         )
         code = cmd_run_cycle(ns)
+        if code != 0 and first_failure == 0:
+            first_failure = code
         if code != 0 and args.stop_on_error:
-            return code
+            return first_failure
         if args.check_each_cycle:
             code = cmd_check(argparse.Namespace())
+            if code != 0 and first_failure == 0:
+                first_failure = code
             if code != 0 and args.stop_on_error:
-                return code
-        cmd_memory_refresh(argparse.Namespace(id=args.id, run_id="latest"))
-    return code
+                return first_failure
+        memory_code = cmd_memory_refresh(argparse.Namespace(id=args.id, run_id="latest"))
+        if memory_code != 0 and first_failure == 0:
+            first_failure = memory_code
+        if memory_code != 0 and args.stop_on_error:
+            return first_failure
+    return first_failure
 
 
 UNFINISHED_STATUSES = {"missing-leaf", "import-route", "theorem-card", "weapon-only", "gate-pending"}

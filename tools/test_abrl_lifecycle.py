@@ -268,6 +268,48 @@ class StatementFenceTests(unittest.TestCase):
             self.assertTrue(header.endswith("doubled = 2 * n"), header)
             self.assertNotIn(":= by", header)
 
+    def test_multiline_result_let_annotation_remains_inside_fenced_statement(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            source = Path(tmp) / "Demo.lean"
+            source.write_text(
+                "namespace Demo\n"
+                "theorem fixed (n : Nat) :\n"
+                "    let doubled :\n"
+                "        Nat :=\n"
+                "      n + n\n"
+                "    let incremented := doubled + 1\n"
+                "    incremented = 2 * n + 1 := by\n"
+                "  omega\n"
+                "end Demo\n",
+                encoding="utf-8",
+            )
+
+            header = self.lifecycle.lean_declaration_header(source, "Demo.fixed")
+
+            self.assertIn("let doubled : Nat := n + n", header)
+            self.assertIn("let incremented := doubled + 1", header)
+            self.assertTrue(header.endswith("incremented = 2 * n + 1"), header)
+            self.assertNotIn(":= by", header)
+
+    def test_quoted_let_identifier_is_not_a_result_let(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            source = Path(tmp) / "Demo.lean"
+            source.write_text(
+                "namespace Demo\n"
+                "theorem fixed («let» : Nat) : «let» = «let» := by\n"
+                "  rfl\n"
+                "theorem next : True := by\n"
+                "  trivial\n"
+                "end Demo\n",
+                encoding="utf-8",
+            )
+
+            header = self.lifecycle.lean_declaration_header(source, "Demo.fixed")
+
+            self.assertTrue(header.endswith(": «let» = «let»"), header)
+            self.assertNotIn(":= by", header)
+            self.assertNotIn("theorem next", header)
+
 
 class RuntimeContractTests(unittest.TestCase):
     def setUp(self) -> None:
@@ -450,6 +492,46 @@ class RuntimeContractTests(unittest.TestCase):
             precedence={"probability": "repo"},
         )
         self.assertEqual(selected[0]["provenance"], "repo")
+
+    def test_parallel_route_ownership_is_nonempty_canonical_and_in_repository(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            base = [
+                {
+                    "route_fingerprint": "route-a",
+                    "expected_information_gain": "tests route a",
+                    "owned_files": ["proofs/a.lean"],
+                },
+                {
+                    "route_fingerprint": "route-b",
+                    "expected_information_gain": "tests route b",
+                    "owned_files": ["proofs/b.lean"],
+                },
+            ]
+            self.assertTrue(
+                self.lifecycle.validate_parallel_lower_routes(base, root=root)["allowed"]
+            )
+
+            empty = [dict(base[0]), {**base[1], "owned_files": []}]
+            self.assertEqual(
+                self.lifecycle.validate_parallel_lower_routes(empty, root=root)["reason"],
+                "missing owned files",
+            )
+
+            aliases = [
+                {**base[0], "owned_files": ["proofs/../shared.lean"]},
+                {**base[1], "owned_files": ["shared.lean"]},
+            ]
+            self.assertEqual(
+                self.lifecycle.validate_parallel_lower_routes(aliases, root=root)["reason"],
+                "file ownership overlaps",
+            )
+
+            escaped = [dict(base[0]), {**base[1], "owned_files": ["../outside.lean"]}]
+            self.assertEqual(
+                self.lifecycle.validate_parallel_lower_routes(escaped, root=root)["reason"],
+                "owned file is outside repository",
+            )
 
 
 if __name__ == "__main__":

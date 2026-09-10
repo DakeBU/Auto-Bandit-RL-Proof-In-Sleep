@@ -11,6 +11,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -495,6 +496,139 @@ class ReviewResponseDetectionTests(unittest.TestCase):
                 )
         finally:
             bandit.ROOT = original_root
+
+
+class PromptExecutionContractTests(unittest.TestCase):
+    def test_master_worker_retains_plan_or_synthesis_failure(self) -> None:
+        bandit = load_bandit_module()
+        prompts = [Path("10_master_plan.md"), Path("30_worker_1.md"),
+                   Path("30_worker_2.md"), Path("40_master_synthesis.md"),
+                   Path("50_reviewer.md")]
+        for failed_prompt in ("10_master_plan.md", "40_master_synthesis.md"):
+            with self.subTest(failed_prompt=failed_prompt):
+                def execute(_command, prompt, *_args, **_kwargs):
+                    return 7 if prompt.name == failed_prompt else 0
+                with mock.patch.object(bandit, "execute_prompt", side_effect=execute):
+                    code = bandit.execute_master_worker_prompt_deck(
+                        prompts, fallback="noop", profile={}, run_dir=Path("run"),
+                        task_id="TASK", cycle=1, experiment_id="test",
+                        target_fingerprint="target", route_packet_hash="packet",
+                        stop_on_error=False,
+                    )
+                self.assertEqual(code, 7)
+
+    def test_prompt_deck_keeps_head_and_tail_of_contract_artifacts(self) -> None:
+        bandit = load_bandit_module()
+        original_root = bandit.ROOT
+        original_retrieval = bandit.RETRIEVAL_INDEX_DIR
+        try:
+            with tempfile.TemporaryDirectory() as tmp:
+                root = Path(tmp)
+                for directory in ["tasks", "conversion-windows", "proof-obligations", "runs"]:
+                    (root / directory).mkdir(parents=True, exist_ok=True)
+                records = {
+                    root / "tasks" / "TASK.md": ("TASK-TOP", "TASK-BOTTOM"),
+                    root / "conversion-windows" / "TASK.md": ("CONVERSION-TOP", "CONVERSION-BOTTOM"),
+                    root / "proof-obligations" / "TASK.md": ("OBLIGATION-TOP", "OBLIGATION-BOTTOM"),
+                }
+                for path, (head, tail) in records.items():
+                    path.write_text(head + "\n" + ("middle\n" * 3000) + tail + "\n", encoding="utf-8")
+                run_dir = root / "runs" / "cycle"
+                run_dir.mkdir()
+                bandit.ROOT = root
+                bandit.RETRIEVAL_INDEX_DIR = root / "research-wiki" / "retrieval-index"
+
+                bandit.make_prompt_deck(run_dir, "TASK", 1, 1)
+
+                context = (run_dir / "00_context.md").read_text(encoding="utf-8")
+                for head, tail in records.values():
+                    self.assertIn(head, context)
+                    self.assertIn(tail, context)
+                self.assertIn("characters omitted from the middle", context)
+        finally:
+            bandit.ROOT = original_root
+            bandit.RETRIEVAL_INDEX_DIR = original_retrieval
+
+    def test_execute_prompt_records_real_role_without_claiming_compilation(self) -> None:
+        bandit = load_bandit_module()
+        original_root = bandit.ROOT
+        original_trial_log = bandit.TRIAL_LOG
+        try:
+            with tempfile.TemporaryDirectory() as tmp:
+                root = Path(tmp)
+                run_dir = root / "runs" / "cycle"
+                run_dir.mkdir(parents=True)
+                prompt = run_dir / "10_upper_director.md"
+                prompt.write_text("upper\n", encoding="utf-8")
+                bandit.ROOT = root
+                bandit.TRIAL_LOG = root / "runs" / "trials.jsonl"
+                completed = subprocess.CompletedProcess(args="noop", returncode=0)
+
+                with mock.patch.object(bandit.subprocess, "run", return_value=completed):
+                    code = bandit.execute_prompt("noop", prompt, run_dir, "TASK", 1)
+
+                self.assertEqual(code, 0)
+                row = json.loads(bandit.TRIAL_LOG.read_text(encoding="utf-8"))
+                self.assertEqual(row["role"], "upper")
+                self.assertEqual(row["status"], "executed")
+                self.assertNotEqual(row["status"], "compiled")
+        finally:
+            bandit.ROOT = original_root
+            bandit.TRIAL_LOG = original_trial_log
+
+    def test_run_cycle_retains_first_failure_when_later_prompt_succeeds(self) -> None:
+        bandit = load_bandit_module()
+        original_root = bandit.ROOT
+        original_trial_log = bandit.TRIAL_LOG
+        try:
+            with tempfile.TemporaryDirectory() as tmp:
+                root = Path(tmp)
+                (root / "runs").mkdir()
+                bandit.ROOT = root
+                bandit.TRIAL_LOG = root / "runs" / "trials.jsonl"
+                args = bandit.argparse.Namespace(
+                    id="TASK",
+                    cycle=1,
+                    lower_count=1,
+                    execute=True,
+                    agent_cmd="noop",
+                    agent_profile="",
+                    stop_on_error=False,
+                    require_review_response=False,
+                    require_review_direction=False,
+                    parallel_route_json="",
+                )
+                prompts = [root / "10_upper.md", root / "20_middle.md"]
+                with mock.patch.object(bandit, "make_prompt_deck", return_value=prompts), \
+                        mock.patch.object(bandit, "load_agent_profile", return_value={}), \
+                        mock.patch.object(bandit, "execute_prompt", side_effect=[7, 0]):
+                    code = bandit.cmd_run_cycle(args)
+
+                self.assertEqual(code, 7)
+        finally:
+            bandit.ROOT = original_root
+            bandit.TRIAL_LOG = original_trial_log
+
+    def test_sleep_run_retains_failure_across_later_successful_cycle(self) -> None:
+        bandit = load_bandit_module()
+        args = bandit.argparse.Namespace(
+            id="TASK",
+            cycles=2,
+            lower_count=1,
+            execute=True,
+            agent_cmd="noop",
+            agent_profile="",
+            check_each_cycle=False,
+            stop_on_error=False,
+            require_review_response=False,
+            require_review_direction=False,
+            parallel_route_json="",
+        )
+        with mock.patch.object(bandit, "cmd_run_cycle", side_effect=[5, 0]), \
+                mock.patch.object(bandit, "cmd_memory_refresh", return_value=0):
+            code = bandit.cmd_sleep_run(args)
+
+        self.assertEqual(code, 5)
 
 
 if __name__ == "__main__":

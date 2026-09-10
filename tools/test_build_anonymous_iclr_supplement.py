@@ -845,6 +845,8 @@ class AnonymousSupplementTests(unittest.TestCase):
             "missing-pull-aware masked latent law",
             "stopped or pull-ordered selected IID",
             "four declarations map the missing-pull branch",
+            "three phase-trigger adapters expose the finite last-pull cutoff",
+            "do not derive the required parameter inequality from the phase",
             "exact latent-visible/generated-source marginal",
             "finite-horizon expected sampled pseudo-regret consumer",
             "no positive missing-pull probability is proved",
@@ -905,6 +907,12 @@ class AnonymousSupplementTests(unittest.TestCase):
             ],
             4,
         )
+        self.assertEqual(
+            ledger["stochastic_gradient_bandit"][
+                "separate_compiled_phase_trigger_adapter_declaration_count"
+            ],
+            6,
+        )
         self.assertTrue(
             ledger["stochastic_gradient_bandit"][
                 "separate_module_theorem_two_native_prefix_identification_compiled"
@@ -933,6 +941,11 @@ class AnonymousSupplementTests(unittest.TestCase):
         self.assertTrue(
             ledger["stochastic_gradient_bandit"][
                 "separate_module_theorem_two_missing_pull_terminal_count_compiled"
+            ]
+        )
+        self.assertTrue(
+            ledger["stochastic_gradient_bandit"][
+                "separate_module_theorem_two_phase_trigger_adapters_compiled"
             ]
         )
         self.assertTrue(
@@ -1084,6 +1097,9 @@ class AnonymousSupplementTests(unittest.TestCase):
             ],
             4,
         )
+        self.assertEqual(
+            sgb["separate_compiled_phase_trigger_adapter_declaration_count"], 6
+        )
         self.assertTrue(
             sgb["separate_module_theorem_two_selected_block_transport_compiled"]
         )
@@ -1097,6 +1113,9 @@ class AnonymousSupplementTests(unittest.TestCase):
             sgb[
                 "separate_module_theorem_two_missing_pull_terminal_count_compiled"
             ]
+        )
+        self.assertTrue(
+            sgb["separate_module_theorem_two_phase_trigger_adapters_compiled"]
         )
         self.assertFalse(sgb["theorem_two_native_prefix_identification_compiled"])
 
@@ -1113,7 +1132,8 @@ class AnonymousSupplementTests(unittest.TestCase):
             BUILDER.SGB_THEOREM_TWO_SELECTED_BLOCK_INDEXED_DECLARATIONS |
             BUILDER.SGB_THEOREM_TWO_PHASE_EVENT_INDEXED_DECLARATIONS |
             BUILDER.SGB_THEOREM_TWO_PHASE_DICHOTOMY_INDEXED_DECLARATIONS |
-            BUILDER.SGB_THEOREM_TWO_MISSING_PULL_TERMINAL_COUNT_INDEXED_DECLARATIONS,
+            BUILDER.SGB_THEOREM_TWO_MISSING_PULL_TERMINAL_COUNT_INDEXED_DECLARATIONS |
+            BUILDER.SGB_THEOREM_TWO_PHASE_TRIGGER_ADAPTER_INDEXED_DECLARATIONS,
         )
 
     def test_theorem_audit_comparison_rejects_status_and_count_drift(self):
@@ -1207,6 +1227,18 @@ class AnonymousSupplementTests(unittest.TestCase):
         ):
             BUILDER.validate_theorem_audit_comparison(
                 records, index, comparison=terminal_count_bridge_drift
+            )
+
+        phase_trigger_adapter_drift = json.loads(json.dumps(source))
+        phase_trigger_adapter_drift["rows"][3][
+            "separate_compiled_phase_trigger_adapter_declaration_count"
+        ] = 4
+        with self.assertRaisesRegex(
+            ValueError,
+            "separate_compiled_phase_trigger_adapter_declaration_count drift",
+        ):
+            BUILDER.validate_theorem_audit_comparison(
+                records, index, comparison=phase_trigger_adapter_drift
             )
 
         declaration_drift_records = json.loads(json.dumps(records))

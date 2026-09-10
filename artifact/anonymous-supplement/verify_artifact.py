@@ -1024,6 +1024,7 @@ def verify_theorem_audit_comparison():
             "separate_compiled_phase_event_declaration_count": 14,
             "separate_compiled_phase_dichotomy_declaration_count": 10,
             "separate_compiled_missing_pull_terminal_count_declaration_count": 4,
+            "separate_compiled_phase_trigger_adapter_declaration_count": 6,
             "separate_module_theorem_two_native_prefix_identification_compiled":
                 True,
             "separate_module_theorem_two_native_trajectory_compiled": True,
@@ -1031,6 +1032,7 @@ def verify_theorem_audit_comparison():
                 True,
             "separate_module_theorem_two_phase_event_transport_compiled": True,
             "separate_module_theorem_two_phase_dichotomy_compiled": True,
+            "separate_module_theorem_two_phase_trigger_adapters_compiled": True,
             "separate_module_theorem_two_missing_pull_terminal_count_compiled":
                 True,
             "theorem_two_native_prefix_identification_compiled": False,
@@ -1142,6 +1144,12 @@ def verify_theorem_audit_comparison():
                 "BanditRLProof.StochasticGradientBandit.twoArmAppendixCMissingPullLatentPhaseEvent_subset_terminalCountBelow",
                 "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDMissingPullLatentPhase_probability_le_countBelow",
                 "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDMissingPullLatentPhase_charge_mul_probability_le_integral",
+                "BanditRLProof.StochasticGradientBandit.softmaxProbability_zero_le_one_div_two_mul_nat_of_exp_two_mul_le",
+                "BanditRLProof.StochasticGradientBandit.twoArmSuccessProbability_le_one_div_two_mul_nat_of_exp_parameter_le",
+                "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullSuccessProbability_le_one_div_two_mul_nat_of_time_eq",
+                "BanditRLProof.StochasticGradientBandit.twoArmSuccessProbability_le_exp_two_mul_parameter",
+                "BanditRLProof.StochasticGradientBandit.twoArmSuccessProbability_le_one_div_two_mul_horizon_of_parameter",
+                "BanditRLProof.StochasticGradientBandit.twoArmAppendixCGeneratedPhaseEvent_exists_lastPullTime",
             }
             if selected_block_names != expected_selected_block_names:
                 fail("separate SGB selected-block declaration inventory drift")

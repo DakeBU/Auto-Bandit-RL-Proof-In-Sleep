@@ -102,6 +102,13 @@ Task id: `PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE`
 
 ## Failure policy
 
+Reconciliation intake adds six compiled deterministic adapters: three exact
+odds-threshold/finite-pull wrappers and three parameter/last-pull-time adapters.
+They use existing zero-sum softmax identities and finite `WithTop` witnesses.
+The selected-block module has 42 declarations; the original 361-declaration
+source-audit ledger is unchanged. The phase-to-parameter recurrence is still
+the next missing producer; this intake does not complete the phase trigger.
+
 No row may be promoted from a plan, theorem card, scalar proxy, or supplied
 IID selected-reward assumption.  If the adaptive nth-pull producer or ballot
 route does not compile, record the exact boundary and retain Theorem 2 as
