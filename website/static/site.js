@@ -96,7 +96,9 @@
   });
   syncSidebarAccessibility(false);
 
-  const navGroups = [...document.querySelectorAll("[data-nav-group]")];
+  // Only sibling sections form an accordion. Nested book contents must not
+  // close their own Books parent when a reader expands them.
+  const navGroups = [...document.querySelectorAll(".sidebar-nav > [data-nav-group]")];
   const navStateKey = `abrl-nav-group-v3:${window.location.pathname}`;
   let preferredNavGroup = "";
   try {

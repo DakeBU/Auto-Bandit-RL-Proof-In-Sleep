@@ -12,6 +12,11 @@ from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
+try:
+    from .check_books import check_books
+except ImportError:
+    from check_books import check_books
+
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 SITE_DIR = SCRIPT_DIR.parent
@@ -664,6 +669,16 @@ def check_community_contract(output: Path, manifest: dict[str, object]) -> list[
     return errors
 
 
+def declaration_has_expected_badge(source: str, anchor: str, verified: bool) -> bool:
+    """Check this declaration's summary, never a later declaration's badge."""
+    summary = re.search(
+        rf'<details class="declaration" id="{re.escape(anchor)}">\s*<summary>(.*?)</summary>',
+        source, re.DOTALL,
+    )
+    status, label = ("compiled", "Compiled") if verified else ("source", "Source indexed")
+    return bool(summary and f'<span class="status {status}">{label}</span>' in summary.group(1))
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
@@ -702,6 +717,7 @@ def main() -> int:
 
     pages = parse_pages(output)
     errors.extend(check_internal_links(output, pages))
+    errors.extend(check_books(output))
     errors.extend(check_page_metadata(output, pages))
     errors.extend(check_markdown_links(ROOT / "README.md"))
     errors.extend(check_markdown_links(SITE_DIR / "README.md"))
@@ -878,6 +894,7 @@ def main() -> int:
                 errors.append("lean-graph/overview.json: edge references a deferred node")
                 break
     graph_shard_paths = [lean_graph_overview_path]
+    graph_shard_paths.extend(sorted((output / "lean-graph" / "scopes").rglob("*.json")))
     if lean_graph_views_path.exists():
         graph_shard_paths.extend(sorted(lean_graph_views_path.glob("*.json")))
     if lean_graph_modules_path.exists():
@@ -1761,7 +1778,8 @@ def main() -> int:
         for required in (PRIMARY_TEXTBOOK_TITLE, PRIMARY_TEXTBOOK_URL, "10.1017/9781108571401"):
             if required not in page_source:
                 errors.append(f"{relative}: missing canonical textbook metadata {required}")
-        if page_source.count('aria-current="page"') != 1:
+        sidebar_source = page_source.split('<nav class="sidebar-nav"', 1)[1].split('</nav>', 1)[0]
+        if sidebar_source.count('aria-current="page"') != 1:
             errors.append(f"{relative}: Part IV navigation must expose exactly one current page")
     if manifest.get("max_module_slug_length", 10_000) > 96:
         errors.append("generated module URL exceeds the 96-character slug contract")
@@ -1904,6 +1922,7 @@ def main() -> int:
             "latentArmStreamVisibleTrajectoryMeasure_nextReward_condDistrib_ae_eq_nu"
         ),
     )
+    expected_decl_status = "compiled" if manifest.get("lean_verified") else "source"
     for declaration in sgb_freshness_declarations:
         freshness_items = [
             item for item in search_items if item.get("name") == declaration
@@ -1920,16 +1939,10 @@ def main() -> int:
             errors.append(f"SGB freshness declaration page is missing: {declaration}")
             continue
         freshness_module_source = freshness_module_path.read_text(encoding="utf-8")
-        compiled_summary = re.compile(
-            rf'<details class="declaration" id="{re.escape(freshness_target.fragment)}">'
-            r"\s*<summary>.*?"
-            r'<span class="status compiled">Compiled</span>.*?</summary>',
-            re.DOTALL,
-        )
-        if not compiled_summary.search(freshness_module_source):
+        if not declaration_has_expected_badge(freshness_module_source, freshness_target.fragment, bool(manifest.get("lean_verified"))):
             errors.append(
                 "SGB deterministic-time selected-reward freshness is not rendered as "
-                f"compiled: {declaration}"
+                f"{expected_decl_status}: {declaration}"
             )
     sgb_native_prefix_declaration = (
         "BanditRLProof.Thompson."
@@ -1950,14 +1963,8 @@ def main() -> int:
             errors.append("SGB native-prefix declaration page is missing")
         else:
             native_prefix_module_source = native_prefix_module_path.read_text(encoding="utf-8")
-            compiled_summary = re.compile(
-                rf'<details class="declaration" id="{re.escape(native_prefix_target.fragment)}">'
-                r"\s*<summary>.*?"
-                r'<span class="status compiled">Compiled</span>.*?</summary>',
-                re.DOTALL,
-            )
-            if not compiled_summary.search(native_prefix_module_source):
-                errors.append("SGB native-prefix identification is not rendered as compiled")
+            if not declaration_has_expected_badge(native_prefix_module_source, native_prefix_target.fragment, bool(manifest.get("lean_verified"))):
+                errors.append("SGB native-prefix identification badge disagrees with the build gate")
     frontier_source = (output / "chapters" / "frontier" / "index.html").read_text(encoding="utf-8")
     for required in (
         "A Novel General Framework for Sharp Lower Bounds in Succinct Stochastic Bandits",

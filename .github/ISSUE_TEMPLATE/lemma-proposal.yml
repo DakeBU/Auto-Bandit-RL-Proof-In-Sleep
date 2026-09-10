@@ -51,7 +51,12 @@ body:
     id: dependencies
     attributes:
       label: Expected dependencies
-      description: Existing BanditRLlib or Mathlib declarations, or mathematical prerequisites.
+      description: Search BanditRLlib and Mathlib first. List canonical declaration IDs and compatible hypotheses/types; explain why each candidate is reused or why a new abstraction is necessary. Distinguish Lean type/value dependencies, module imports and teaching prerequisites. Never merge incompatible statements for a higher sharing count.
+  - type: textarea
+    id: reading_views
+    attributes:
+      label: Book and setting references
+      description: List existing book/chapter/setting IDs and source version or theorem locator. Reference the same canonical node across views; do not copy declarations. See website/BOOKS.md. Unknown source fields remain pending review.
   - type: input
     id: credit
     attributes:

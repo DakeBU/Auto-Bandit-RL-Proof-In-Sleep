@@ -4,13 +4,19 @@ This directory contains the original static generator for BanditRLlib, the
 public Lean library produced by the ABRL research harness. It is generated from
 the current Lean tree instead of a hand-maintained declaration list.
 
+Books now share one canonical declaration registry. The Bandit Book combines
+the ten teaching routes with source Chapters 13–17; RL, Online Learning and
+Conformal Prediction have separate planned reading maps. Existing chapter URLs
+and Lean nodes are reused. See [Books maintenance protocol](BOOKS.md) for source
+ownership, metadata, graph semantics, topic contracts and compatibility rules.
+
 The build:
 
 - indexes every supported declaration under `BanditRLProof/`;
 - preserves exact namespace, statement, module, imports, and source location;
 - maps every declaration into a ten-chapter Book Map;
-- preserves that Book Map while adding a separate, ordered Part IV lower-bound
-  Textbook Spine from `content/textbook_spine.json`;
+- groups that teaching map with the ordered Part IV lower-bound source chapters
+  from `content/textbook_spine.json` inside one Bandit Book;
 - adds reviewed teaching notes from `content/highlights.json`;
 - gives every Book Map source theorem a five-field model/assumption/parameter/
   regret/guarantee contract and links directly to the cited PDF page;
