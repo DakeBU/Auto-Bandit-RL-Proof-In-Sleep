@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-05T17:26:10+00:00",
+  "generated": "2026-09-10T07:26:00+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -6056,6 +6056,54 @@
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
       "line": 925,
       "statement": "theorem twoArmAppendixCRewardPhaseProbability_eq_generated_add_missing (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) (n0 n1 : Nat) (phaseOneTotal : Real) : (Measure.pi (fun _ : Fin (n0 + n1) => armLaw 0) : Measure (Fin (n0 + n1) -> Real)) (twoArmAppendixCRewardPhaseEvent n0 n1 phaseOneTotal) = (twoArmTrajectoryMeasure (Measure.dirac ()) eta (twoArmFixedIIDEnvironment armLaw hprob)) (twoArmAppendixCGeneratedPhaseEvent n0 n1 phaseOneTotal) + (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta) (twoArmAppendixCMissingPullLatentPhaseEvent n0 n1 phaseOneTotal)"
+    },
+    {
+      "kind": "theorem",
+      "name": "softmaxProbability_zero_le_one_div_two_mul_nat_of_exp_two_mul_le",
+      "full_name": "BanditRLProof.StochasticGradientBandit.softmaxProbability_zero_le_one_div_two_mul_nat_of_exp_two_mul_le",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 969,
+      "statement": "theorem softmaxProbability_zero_le_one_div_two_mul_nat_of_exp_two_mul_le (theta : Fin 2 -> Real) (horizon : Nat) (hhorizon : 1 <= horizon) (hsum : \u2211 coordinate, theta coordinate = 0) (hexp : Real.exp (2 * theta 0) <= 1 / (2 * (horizon : Real) - 1)) : softmaxProbability theta 0 <= 1 / (2 * (horizon : Real))"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmSuccessProbability_le_one_div_two_mul_nat_of_exp_parameter_le",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmSuccessProbability_le_one_div_two_mul_nat_of_exp_parameter_le",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 1001,
+      "statement": "theorem twoArmSuccessProbability_le_one_div_two_mul_nat_of_exp_parameter_le {Env : Type v} [MeasurableSpace Env] (eta : Real) (time horizon : Nat) (hhorizon : 1 <= horizon) (sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real)) (hexp : Real.exp (2 * twoArmTrajectoryParameterZero eta time sample) <= 1 / (2 * (horizon : Real) - 1)) : twoArmSuccessProbability eta time sample <= 1 / (2 * (horizon : Real))"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmNthOptimalPullSuccessProbability_le_one_div_two_mul_nat_of_time_eq",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullSuccessProbability_le_one_div_two_mul_nat_of_time_eq",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 1022,
+      "statement": "theorem twoArmNthOptimalPullSuccessProbability_le_one_div_two_mul_nat_of_time_eq {Env : Type v} [MeasurableSpace Env] (eta : Real) (pullIndex time horizon : Nat) (hhorizon : 1 <= horizon) (sample : Env \u00d7 ((k : Nat) -> Fin 2 \u00d7 Real)) (htime : twoArmNthOptimalPullTime pullIndex sample = (time : WithTop Nat)) (hexp : Real.exp (2 * twoArmTrajectoryParameterZero eta time sample) <= 1 / (2 * (horizon : Real) - 1)) : twoArmNthOptimalPullSuccessProbability eta pullIndex sample <= 1 / (2 * (horizon : Real))"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmSuccessProbability_le_exp_two_mul_parameter",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmSuccessProbability_le_exp_two_mul_parameter",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 1045,
+      "statement": "theorem twoArmSuccessProbability_le_exp_two_mul_parameter {Env : Type u} [MeasurableSpace Env] (eta : Real) (n : Nat) (sample : Env \u00d7 ((t : Nat) -> Fin 2 \u00d7 Real)) : twoArmSuccessProbability eta n sample <= Real.exp (2 * twoArmTrajectoryParameterZero eta n sample)"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmSuccessProbability_le_one_div_two_mul_horizon_of_parameter",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmSuccessProbability_le_one_div_two_mul_horizon_of_parameter",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 1075,
+      "statement": "theorem twoArmSuccessProbability_le_one_div_two_mul_horizon_of_parameter {Env : Type u} [MeasurableSpace Env] (eta : Real) (n T : Nat) (sample : Env \u00d7 ((t : Nat) -> Fin 2 \u00d7 Real)) (hT : 0 < T) (hparameter : 2 * twoArmTrajectoryParameterZero eta n sample <= -Real.log (2 * (T : Real))) : twoArmSuccessProbability eta n sample <= 1 / (2 * (T : Real))"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmAppendixCGeneratedPhaseEvent_exists_lastPullTime",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmAppendixCGeneratedPhaseEvent_exists_lastPullTime",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 1101,
+      "statement": "theorem twoArmAppendixCGeneratedPhaseEvent_exists_lastPullTime (n0 n1 : Nat) (phaseOneTotal : Real) (hpositive : 0 < n0 + n1) (sample : Unit \u00d7 ((t : Nat) -> Fin 2 \u00d7 Real)) (hphase : sample \u2208 twoArmAppendixCGeneratedPhaseEvent n0 n1 phaseOneTotal) : exists cutoff : Nat, twoArmNthOptimalPullTime (n0 + n1 - 1) sample = (cutoff : WithTop Nat) /\\ twoArmOptimalPullCount cutoff sample = n0 + n1 - 1 /\\ twoArmGeneratedAction sample cutoff = 0 /\\ twoArmOptimalPullCount (cutoff + 1) sample = n0 + n1"
     },
     {
       "kind": "def",

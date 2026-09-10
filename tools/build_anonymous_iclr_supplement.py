@@ -339,6 +339,15 @@ SGB_THEOREM_TWO_MISSING_PULL_TERMINAL_COUNT_INDEXED_DECLARATIONS = frozenset({
     "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDMissingPullLatentPhase_probability_le_countBelow",
     "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDMissingPullLatentPhase_charge_mul_probability_le_integral",
 })
+SGB_THEOREM_TWO_PHASE_TRIGGER_ADAPTER_SOURCE_DECLARATION_COUNT = 6
+SGB_THEOREM_TWO_PHASE_TRIGGER_ADAPTER_INDEXED_DECLARATIONS = frozenset({
+    "BanditRLProof.StochasticGradientBandit.softmaxProbability_zero_le_one_div_two_mul_nat_of_exp_two_mul_le",
+    "BanditRLProof.StochasticGradientBandit.twoArmSuccessProbability_le_one_div_two_mul_nat_of_exp_parameter_le",
+    "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullSuccessProbability_le_one_div_two_mul_nat_of_time_eq",
+    "BanditRLProof.StochasticGradientBandit.twoArmSuccessProbability_le_exp_two_mul_parameter",
+    "BanditRLProof.StochasticGradientBandit.twoArmSuccessProbability_le_one_div_two_mul_horizon_of_parameter",
+    "BanditRLProof.StochasticGradientBandit.twoArmAppendixCGeneratedPhaseEvent_exists_lastPullTime",
+})
 SGB_TOTAL_DECLARATION_COUNT = (
     SGB_HISTORICAL_DECLARATION_COUNT
     + SGB_COROLLARY_ONE_DECLARATION_COUNT
@@ -2612,6 +2621,8 @@ def validate_theorem_audit_comparison(records, index, comparison=None,
                 SGB_THEOREM_TWO_PHASE_DICHOTOMY_SOURCE_DECLARATION_COUNT,
             "separate_compiled_missing_pull_terminal_count_declaration_count":
                 SGB_THEOREM_TWO_MISSING_PULL_TERMINAL_COUNT_SOURCE_DECLARATION_COUNT,
+            "separate_compiled_phase_trigger_adapter_declaration_count":
+                SGB_THEOREM_TWO_PHASE_TRIGGER_ADAPTER_SOURCE_DECLARATION_COUNT,
             "separate_module_theorem_two_native_prefix_identification_compiled":
                 True,
             "separate_module_theorem_two_native_trajectory_compiled": True,
@@ -2621,6 +2632,7 @@ def validate_theorem_audit_comparison(records, index, comparison=None,
             "separate_module_theorem_two_phase_dichotomy_compiled": True,
             "separate_module_theorem_two_missing_pull_terminal_count_compiled":
                 True,
+            "separate_module_theorem_two_phase_trigger_adapters_compiled": True,
             "theorem_two_native_prefix_identification_compiled": False,
             "declaration_count_breakdown": {
                 "finite_action_algebra": SGB_FINITE_ALGEBRA_DECLARATION_COUNT,
@@ -2745,12 +2757,14 @@ def validate_theorem_audit_comparison(records, index, comparison=None,
                     (SGB_THEOREM_TWO_SELECTED_BLOCK_INDEXED_DECLARATIONS |
                      SGB_THEOREM_TWO_PHASE_EVENT_INDEXED_DECLARATIONS |
                      SGB_THEOREM_TWO_PHASE_DICHOTOMY_INDEXED_DECLARATIONS |
-                     SGB_THEOREM_TWO_MISSING_PULL_TERMINAL_COUNT_INDEXED_DECLARATIONS)
+                     SGB_THEOREM_TWO_MISSING_PULL_TERMINAL_COUNT_INDEXED_DECLARATIONS |
+                     SGB_THEOREM_TWO_PHASE_TRIGGER_ADAPTER_INDEXED_DECLARATIONS)
                 or selected_block_source_count !=
                     (SGB_THEOREM_TWO_SELECTED_BLOCK_SOURCE_DECLARATION_COUNT +
                      SGB_THEOREM_TWO_PHASE_EVENT_SOURCE_DECLARATION_COUNT +
                      SGB_THEOREM_TWO_PHASE_DICHOTOMY_SOURCE_DECLARATION_COUNT +
-                     SGB_THEOREM_TWO_MISSING_PULL_TERMINAL_COUNT_SOURCE_DECLARATION_COUNT)
+                     SGB_THEOREM_TWO_MISSING_PULL_TERMINAL_COUNT_SOURCE_DECLARATION_COUNT +
+                     SGB_THEOREM_TWO_PHASE_TRIGGER_ADAPTER_SOURCE_DECLARATION_COUNT)
             ):
                 raise ValueError(
                     "separate SGB selected-block module declaration drift"
@@ -2791,6 +2805,10 @@ def validate_theorem_audit_comparison(records, index, comparison=None,
                 or "ten more declarations split its pure latent probability"
                 not in row.get("scope_boundary", "")
                 or "four declarations prove that the missing-pull branch lies inside"
+                not in row.get("scope_boundary", "")
+                or "Three phase-trigger adapters expose the finite last-pull cutoff"
+                not in row.get("scope_boundary", "")
+                or "do not derive the required parameter inequality from the phase"
                 not in row.get("scope_boundary", "")
                 or "neither supply a product law nor make totalized or occurrence-conditioned rewards IID"
                 not in row.get("scope_boundary", "")
@@ -2970,9 +2988,9 @@ def build_claim_ledger(proof_report):
                 "source_record_ids": [SGB_AUDIT_ID, SGB_FOLLOW_ON_ID],
                 "boundary": (
                     "361 declarations preserve the frozen counted audit slice through deterministic-time one-step selected-reward freshness, terminal-count events, nth-pull-to-count bridges, and the generic nonnegative-gap terminal-count-below regret consumer. "
-                    "A separate ten-declaration native-law module proves the complete visible/native trajectory-law identity. In the selected-block module, eight declarations transport every finite pull-time/reward block to an exact missing-pull-aware masked latent law on both native and source-shaped generated trajectories, fourteen declarations transport the exact finite Appendix-C S0/S1 event while retaining the adaptive all-pulls-present intersection, ten declarations split the pure latent phase probability exactly into the generated all-present event plus an explicit missing-pull event, and four declarations map the missing-pull branch into a measurable finite-horizon terminal-count-below event, identify the exact latent-visible/generated-source marginal, transport the missing-pull probability to that generated event, and consume the resulting nonnegative-gap charge into expected sampled pseudo-regret. "
+                    "A separate ten-declaration native-law module proves the complete visible/native trajectory-law identity. In the selected-block module, eight declarations transport every finite pull-time/reward block to an exact missing-pull-aware masked latent law on both native and source-shaped generated trajectories, fourteen declarations transport the exact finite Appendix-C S0/S1 event while retaining the adaptive all-pulls-present intersection, ten declarations split the pure latent phase probability exactly into the generated all-present event plus an explicit missing-pull event, four declarations map the missing-pull branch into a measurable finite-horizon terminal-count-below event, identify the exact latent-visible/generated-source marginal, transport the missing-pull probability to that generated event, and consume the resulting nonnegative-gap charge into expected sampled pseudo-regret, three exact odds-threshold adapters turn an explicit exponential parameter bound into a 1/(2*T) probability cap (including a finite nth-pull-time wrapper), and three phase-trigger adapters expose the finite last-pull cutoff and close the softmax/log terminal from an explicit parameter inequality. "
                     "The mask and occurrence-intersected event do not make totalized or occurrence-conditioned stopped rewards IID, and neither is a stopped or pull-ordered selected IID theorem. "
-                    "The missing-pull probability is transported to the generated terminal-count-below event and a finite-horizon expected sampled pseudo-regret consumer, but the terminal-count-below event is not yet connected to a fixed-cutoff starvation trigger and no positive missing-pull probability is proved; the stopped-prefix future-cylinder, conditional no-return probability >= 1/2, Rademacher/binomial ballot probability lower bound, asymptotic terminal, and the frozen K = 2 Theorem-2 endpoint remain blocked. "
+                    "The phase-trigger adapters do not derive the required parameter inequality from the phase. The missing-pull probability is transported to the generated terminal-count-below event and a finite-horizon expected sampled pseudo-regret consumer, but the terminal-count-below event is not yet connected to a fixed-cutoff starvation trigger and no positive missing-pull probability is proved; the stopped-prefix future-cylinder, conditional no-return probability >= 1/2, Rademacher/binomial ballot probability lower bound, asymptotic terminal, and the frozen K = 2 Theorem-2 endpoint remain blocked. "
                     "Theorem 4 also remains open. Dirac refers only to the Unit environment prior, not to the arm reward laws."
                 ),
             },
@@ -3175,6 +3193,10 @@ def build_claim_ledger(proof_report):
                 sgb_comparison[
                     "separate_compiled_missing_pull_terminal_count_declaration_count"
                 ],
+            "separate_compiled_phase_trigger_adapter_declaration_count":
+                sgb_comparison[
+                    "separate_compiled_phase_trigger_adapter_declaration_count"
+                ],
             "separate_module_theorem_two_native_prefix_identification_compiled":
                 sgb_comparison[
                     "separate_module_theorem_two_native_prefix_identification_compiled"
@@ -3198,6 +3220,10 @@ def build_claim_ledger(proof_report):
             "separate_module_theorem_two_missing_pull_terminal_count_compiled":
                 sgb_comparison[
                     "separate_module_theorem_two_missing_pull_terminal_count_compiled"
+                ],
+            "separate_module_theorem_two_phase_trigger_adapters_compiled":
+                sgb_comparison[
+                    "separate_module_theorem_two_phase_trigger_adapters_compiled"
                 ],
             "source_theorem_two_status": "blocked",
             "source_theorem_two_endpoint_verified":

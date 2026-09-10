@@ -959,6 +959,186 @@ theorem twoArmAppendixCRewardPhaseProbability_eq_generated_add_missing
             n0 n1 phaseOneTotal) := by
       rw [twoArmFixedIIDTrajectoryMeasure_appendixCGeneratedPhaseEvent_eq_latent]
 
+/-! ## Appendix-C two-arm odds threshold -/
+
+/-- A zero-sum two-arm softmax vector reaches the source Step-1 threshold once
+its exact odds are at most `1 / (2 * T - 1)`.
+
+This is the final algebraic implication in Appendix C's deterministic trigger.
+It does not supply the preceding phase-to-parameter or phase-to-odds bound. -/
+theorem softmaxProbability_zero_le_one_div_two_mul_nat_of_exp_two_mul_le
+    (theta : Fin 2 -> Real) (horizon : Nat) (hhorizon : 1 <= horizon)
+    (hsum : ∑ coordinate, theta coordinate = 0)
+    (hexp : Real.exp (2 * theta 0) <=
+      1 / (2 * (horizon : Real) - 1)) :
+    softmaxProbability theta 0 <= 1 / (2 * (horizon : Real)) := by
+  let p := softmaxProbability theta 0
+  have hp_le_one : p <= 1 := softmaxProbability_le_one theta 0
+  have hfailure : 0 <= 1 - p := sub_nonneg.mpr hp_le_one
+  have hhorizonReal : (1 : Real) <= (horizon : Real) := by
+    exact_mod_cast hhorizon
+  have hden : 0 < 2 * (horizon : Real) - 1 := by linarith
+  have htwo : 0 < 2 * (horizon : Real) := by positivity
+  have hodds : Real.exp (2 * theta 0) * (1 - p) = p := by
+    simpa [p] using
+      (exp_two_mul_zero_mul_one_sub_softmaxProbability_zero theta hsum)
+  have hmul :
+      Real.exp (2 * theta 0) * (1 - p) <=
+        (1 / (2 * (horizon : Real) - 1)) * (1 - p) :=
+    mul_le_mul_of_nonneg_right hexp hfailure
+  have hdiv : p <= (1 - p) / (2 * (horizon : Real) - 1) := by
+    calc
+      p = Real.exp (2 * theta 0) * (1 - p) := hodds.symm
+      _ <= (1 / (2 * (horizon : Real) - 1)) * (1 - p) := hmul
+      _ = (1 - p) / (2 * (horizon : Real) - 1) := by ring
+  have hscaled :
+      p * (2 * (horizon : Real) - 1) <= 1 - p :=
+    (le_div_iff₀ hden).mp hdiv
+  apply (le_div_iff₀ htwo).2
+  nlinarith
+
+/-- Generated-trajectory specialization of the exact two-arm odds threshold. -/
+theorem twoArmSuccessProbability_le_one_div_two_mul_nat_of_exp_parameter_le
+    {Env : Type v} [MeasurableSpace Env]
+    (eta : Real) (time horizon : Nat) (hhorizon : 1 <= horizon)
+    (sample : Env × ((k : Nat) -> Fin 2 × Real))
+    (hexp : Real.exp (2 * twoArmTrajectoryParameterZero eta time sample) <=
+      1 / (2 * (horizon : Real) - 1)) :
+    twoArmSuccessProbability eta time sample <=
+      1 / (2 * (horizon : Real)) := by
+  let theta := historyParameter (fun _ : Fin 2 => 0) eta time
+    (twoArmEnvironmentPrefix time sample).2
+  have hsum : ∑ coordinate, theta coordinate = 0 := by
+    exact historyParameter_zeroInitialization_sum eta time
+      (twoArmEnvironmentPrefix time sample).2
+  have hthreshold :=
+    softmaxProbability_zero_le_one_div_two_mul_nat_of_exp_two_mul_le
+      theta horizon hhorizon hsum
+      (by simpa [theta, twoArmTrajectoryParameterZero] using hexp)
+  simpa [theta, twoArmSuccessProbability] using hthreshold
+
+/-- At a finite requested optimal-arm pull, the generated parameter odds cap
+transfers to the stopped post-pull probability used by Appendix C. -/
+theorem twoArmNthOptimalPullSuccessProbability_le_one_div_two_mul_nat_of_time_eq
+    {Env : Type v} [MeasurableSpace Env]
+    (eta : Real) (pullIndex time horizon : Nat) (hhorizon : 1 <= horizon)
+    (sample : Env × ((k : Nat) -> Fin 2 × Real))
+    (htime : twoArmNthOptimalPullTime pullIndex sample =
+      (time : WithTop Nat))
+    (hexp : Real.exp (2 * twoArmTrajectoryParameterZero eta time sample) <=
+      1 / (2 * (horizon : Real) - 1)) :
+    twoArmNthOptimalPullSuccessProbability eta pullIndex sample <=
+      1 / (2 * (horizon : Real)) := by
+  rw [twoArmNthOptimalPullSuccessProbability_eq_of_time_eq
+    eta pullIndex time sample htime]
+  exact
+    twoArmSuccessProbability_le_one_div_two_mul_nat_of_exp_parameter_le
+      eta time horizon hhorizon sample hexp
+
+/-! ## Deterministic adapters for the Appendix-C phase trigger -/
+
+/-- The two-arm optimal-arm probability is bounded by the exponential of
+twice its zero-sum parameter coordinate.
+
+This is the deterministic softmax terminal used in Appendix C.  It does not
+derive a parameter bound from the reward phase. -/
+theorem twoArmSuccessProbability_le_exp_two_mul_parameter
+    {Env : Type u} [MeasurableSpace Env]
+    (eta : Real) (n : Nat)
+    (sample : Env × ((t : Nat) -> Fin 2 × Real)) :
+    twoArmSuccessProbability eta n sample <=
+      Real.exp (2 * twoArmTrajectoryParameterZero eta n sample) := by
+  let history := (twoArmEnvironmentPrefix n sample).2
+  let theta := historyParameter (fun _ : Fin 2 => 0) eta n history
+  have hodds :
+      Real.exp (2 * theta 0) * (1 - softmaxProbability theta 0) =
+        softmaxProbability theta 0 := by
+    simpa [theta] using
+      (historyParameter_exp_two_mul_zero_eq_odds eta n history)
+  have hprobNonneg : 0 <= softmaxProbability theta 0 :=
+    softmaxProbability_nonneg theta 0
+  have hfactor : 1 - softmaxProbability theta 0 <= 1 := by
+    linarith
+  have hmul :
+      Real.exp (2 * theta 0) * (1 - softmaxProbability theta 0) <=
+        Real.exp (2 * theta 0) * 1 :=
+    mul_le_mul_of_nonneg_left hfactor (Real.exp_pos _).le
+  rw [hodds] at hmul
+  simpa [twoArmSuccessProbability, twoArmTrajectoryParameterZero,
+    history, theta] using hmul
+
+/-- A sufficiently negative post-prefix parameter implies the exact
+`1/(2*T)` optimal-arm probability threshold used by source Lemma 9.
+
+The hard phase-recurrence obligation is deliberately a producer for
+`hparameter`; this theorem only closes the final softmax/exponential step. -/
+theorem twoArmSuccessProbability_le_one_div_two_mul_horizon_of_parameter
+    {Env : Type u} [MeasurableSpace Env]
+    (eta : Real) (n T : Nat)
+    (sample : Env × ((t : Nat) -> Fin 2 × Real))
+    (hT : 0 < T)
+    (hparameter :
+      2 * twoArmTrajectoryParameterZero eta n sample <=
+        -Real.log (2 * (T : Real))) :
+    twoArmSuccessProbability eta n sample <= 1 / (2 * (T : Real)) := by
+  have hscale : 0 < (2 * (T : Real)) := by positivity
+  calc
+    twoArmSuccessProbability eta n sample <=
+        Real.exp (2 * twoArmTrajectoryParameterZero eta n sample) :=
+      twoArmSuccessProbability_le_exp_two_mul_parameter eta n sample
+    _ <= Real.exp (-Real.log (2 * (T : Real))) :=
+      Real.exp_le_exp.mpr hparameter
+    _ = 1 / (2 * (T : Real)) := by
+      rw [Real.exp_neg, Real.exp_log hscale]
+      simp [one_div]
+
+/-- Membership in the generated all-present Appendix-C phase exposes the
+finite chronological time of its last requested optimal-arm pull.
+
+The zero-based pull index is `n0+n1-1`; the conclusion records the exact
+before/action/after count specification at the same cutoff.  This theorem is
+only the occurrence bridge and makes no probability or recurrence claim. -/
+theorem twoArmAppendixCGeneratedPhaseEvent_exists_lastPullTime
+    (n0 n1 : Nat) (phaseOneTotal : Real)
+    (hpositive : 0 < n0 + n1)
+    (sample : Unit × ((t : Nat) -> Fin 2 × Real))
+    (hphase :
+      sample ∈ twoArmAppendixCGeneratedPhaseEvent n0 n1 phaseOneTotal) :
+    exists cutoff : Nat,
+      twoArmNthOptimalPullTime (n0 + n1 - 1) sample =
+          (cutoff : WithTop Nat) /\
+        twoArmOptimalPullCount cutoff sample = n0 + n1 - 1 /\
+        twoArmGeneratedAction sample cutoff = 0 /\
+        twoArmOptimalPullCount (cutoff + 1) sample = n0 + n1 := by
+  let m := n0 + n1
+  let last : Fin m := ⟨m - 1, by omega⟩
+  have hpresent :
+      twoArmOptimalPullTimeRewardBlock (Env := Unit) m sample ∈
+        twoArmAppendixCAllPullsPresent m := by
+    change twoArmOptimalPullTimeRewardBlock (Env := Unit) (n0 + n1) sample ∈
+      twoArmAppendixCObservedPhaseEvent n0 n1 phaseOneTotal at hphase
+    exact hphase.1
+  have hfinite :
+      twoArmNthOptimalPullTime (m - 1) sample ≠ (⊤ : WithTop Nat) := by
+    have hlast := hpresent last
+    simpa [twoArmAppendixCAllPullsPresent,
+      twoArmOptimalPullTimeRewardBlock, last] using hlast
+  let cutoff := (twoArmNthOptimalPullTime (m - 1) sample).untopA
+  have htime :
+      twoArmNthOptimalPullTime (m - 1) sample =
+        (cutoff : WithTop Nat) := by
+    symm
+    dsimp [cutoff]
+    rw [WithTop.untopA_eq_untop hfinite]
+    exact WithTop.coe_untop _ hfinite
+  obtain ⟨hcount, haction, hcountSucc⟩ :=
+    twoArmNthOptimalPullTime_spec (m - 1) cutoff sample htime
+  refine ⟨cutoff, ?_, ?_, haction, ?_⟩
+  · simpa [m] using htime
+  · simpa [m] using hcount
+  · have hm : m - 1 + 1 = m := by omega
+    simpa [m, hm] using hcountSucc
+
 end StochasticGradientBandit
 end
 end BanditRLProof

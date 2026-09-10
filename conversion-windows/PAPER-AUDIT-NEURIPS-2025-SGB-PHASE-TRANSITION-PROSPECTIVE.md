@@ -392,7 +392,21 @@ obligation is discharged by the Round-19 packet below.
   deterministic recurrence implication from the generated all-present
   `S0/S1` phase to the source `1/(2*T)` next-action threshold.
 
-## Pivot rules
+## Pending-work reconciliation: deterministic adapters
+
+The intake in `reviews/2026-09-10-pending-work-intake.md` retains the exact
+source-facing `1/(2*T)` threshold while reviewing two sufficient premises:
+the zero-sum odds cap `exp(2*theta_0) <= 1/(2*T-1)` with `T >= 1`, and the
+logarithmic parameter cap `2*theta_0 <= -log(2*T)` with `T > 0`.
+Neither premise is derived from the Appendix-C reward phase in this intake.
+The occurrence bridge requires a positive phase block, exposes the finite
+last requested pull at zero-based index `n0+n1-1`, and keeps its exact
+chronological before/action/after count specification. The random-time
+specialization retains a finite `WithTop Nat` witness. All six adapters and
+typed canaries compile; the full library, tests and exporter gate pass. This
+is a compiled deterministic interface, not a completed Appendix-C phase trigger.
+
+## Pivot rules (unchanged)
 
 - Do not replace the nth-pull law with an IID premise on the selected reward
   sequence.

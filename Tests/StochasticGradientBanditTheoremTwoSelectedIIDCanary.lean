@@ -42,6 +42,12 @@ open scoped ProbabilityTheory
 #check twoArmFixedIIDLatentTrajectoryMeasure_purePhaseEvent_eq_pi
 #check twoArmFixedIIDLatentTrajectoryMeasure_purePhaseEvent_eq_phase_add_missing
 #check twoArmAppendixCRewardPhaseProbability_eq_generated_add_missing
+#check softmaxProbability_zero_le_one_div_two_mul_nat_of_exp_two_mul_le
+#check twoArmSuccessProbability_le_one_div_two_mul_nat_of_exp_parameter_le
+#check twoArmNthOptimalPullSuccessProbability_le_one_div_two_mul_nat_of_time_eq
+#check twoArmSuccessProbability_le_exp_two_mul_parameter
+#check twoArmSuccessProbability_le_one_div_two_mul_horizon_of_parameter
+#check twoArmAppendixCGeneratedPhaseEvent_exists_lastPullTime
 
 /-- The source-facing theorem retains the missing-pull time coordinate and
 does not replace its masked right-hand side by the unmasked product law. -/
@@ -76,6 +82,50 @@ example
     twoArmFixedIIDMissingPullLatentPhase_charge_mul_probability_le_integral
       armLaw hprob eta Delta hDelta 1 2 phaseOneTotal 7
 
+/-- The exact odds threshold retains the smallest allowed horizon. -/
+example (theta : Fin 2 -> Real) (hsum : ∑ coordinate, theta coordinate = 0)
+    (hodds : Real.exp (2 * theta 0) <= 1 / (2 * (1 : Real) - 1)) :
+    softmaxProbability theta 0 <= 1 / (2 * (1 : Real)) := by
+  simpa using softmaxProbability_zero_le_one_div_two_mul_nat_of_exp_two_mul_le
+    theta 1 (by omega) hsum (by simpa using hodds)
+
+/-- A missing pull is not silently replaced by a finite time: the witness
+is an explicit premise even in this concrete specialization. -/
+example (eta : Real) (sample : Unit × ((t : Nat) -> Fin 2 × Real))
+    (htime : twoArmNthOptimalPullTime 2 sample = (5 : WithTop Nat))
+    (hodds : Real.exp (2 * twoArmTrajectoryParameterZero eta 5 sample) <=
+      1 / (2 * (7 : Real) - 1)) :
+    twoArmNthOptimalPullSuccessProbability eta 2 sample <=
+      1 / (2 * (7 : Real)) := by
+  exact twoArmNthOptimalPullSuccessProbability_le_one_div_two_mul_nat_of_time_eq
+    eta 2 5 7 (by omega) sample htime hodds
+
+/-- A positive all-present phase exposes the third requested optimal pull. -/
+example (phaseOneTotal : Real)
+    (sample : Unit × ((t : Nat) -> Fin 2 × Real))
+    (hphase : sample ∈ twoArmAppendixCGeneratedPhaseEvent 1 2 phaseOneTotal) :
+    ∃ cutoff : Nat,
+      twoArmNthOptimalPullTime 2 sample = (cutoff : WithTop Nat) ∧
+        twoArmOptimalPullCount cutoff sample = 2 ∧
+        twoArmGeneratedAction sample cutoff = 0 ∧
+        twoArmOptimalPullCount (cutoff + 1) sample = 3 := by
+  simpa using twoArmAppendixCGeneratedPhaseEvent_exists_lastPullTime
+    1 2 phaseOneTotal (by omega) sample hphase
+
+/-- The logarithmic parameter producer remains a supplied hypothesis. -/
+example (eta : Real) (sample : Unit × ((t : Nat) -> Fin 2 × Real))
+    (hparameter : 2 * twoArmTrajectoryParameterZero eta 5 sample <=
+      -Real.log (2 * (7 : Real))) :
+    twoArmSuccessProbability eta 5 sample <= 1 / (2 * (7 : Real)) := by
+  exact twoArmSuccessProbability_le_one_div_two_mul_horizon_of_parameter
+    eta 5 7 sample (by omega) hparameter
+
+#print axioms softmaxProbability_zero_le_one_div_two_mul_nat_of_exp_two_mul_le
+#print axioms twoArmSuccessProbability_le_one_div_two_mul_nat_of_exp_parameter_le
+#print axioms twoArmNthOptimalPullSuccessProbability_le_one_div_two_mul_nat_of_time_eq
+#print axioms twoArmSuccessProbability_le_exp_two_mul_parameter
+#print axioms twoArmSuccessProbability_le_one_div_two_mul_horizon_of_parameter
+#print axioms twoArmAppendixCGeneratedPhaseEvent_exists_lastPullTime
 #print axioms twoArmOptimalPullTimeRewardBlock_eq_latentMasked_ae
 #print axioms twoArmNativeOptimalPullTimeRewardBlock_map_eq_latentMasked
 #print axioms twoArmFixedIIDTrajectoryMeasure_map_snd_eq_nativeStationary
