@@ -1394,8 +1394,8 @@ def main() -> int:
             errors.append(f"{relative}: primary textbook identity, edition, DOI, or free-edition link is missing")
         coverage_expectations = (
             'class="textbook-coverage"',
-            "10 source-mapped routes",
-            "9 canonical cores compiled",
+            f"{len(chapter_source)} source-mapped routes",
+            f"{sum(chapter.get('status') == 'compiled' for chapter in chapter_source)} canonical cores compiled",
             f"{sum(chapter.get('status') == 'compiled' for chapter in textbook_spine['chapters'])} of {len(textbook_spine['chapters'])} chapter contracts compiled",
             "Required scope only, not every exercise. Ch.17 uses explicitly corrected source statements.",
             "Not claimed complete",

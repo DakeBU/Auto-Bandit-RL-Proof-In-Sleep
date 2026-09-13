@@ -72,3 +72,4 @@ import Tests.TextbookPartIVChapter14DominationCanary
 import Tests.MOSSPeelingCanary
 import Tests.MOSSStreamCanary
 import Tests.SubgaussianMinimaxCanary
+import Tests.OnlineGradientDescentCanary

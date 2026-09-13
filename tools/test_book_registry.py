@@ -90,8 +90,24 @@ class BookRegistryTests(unittest.TestCase):
         self.assertIn("June 27, 2026", books["reinforcement-learning"]["source"]["version"])
         self.assertTrue(books["online-learning"]["source"]["url"].endswith("v10"))
         self.assertIsNone(books["conformal-prediction"]["source"])
-        for key in books.keys() - {"bandit"}:
+        self.assertEqual("source-mapped", books["online-learning"]["status"])
+        for key in books.keys() - {"bandit", "online-learning"}:
             self.assertEqual("planned", books[key]["status"])
+
+    def test_ogd_source_map_uses_shared_public_declarations_and_preserves_scope(self):
+        registry = self.registry()
+        nodes = membership_index(registry)
+        chapter = next(c for c in registry["chapters"] if c["id"] == "teaching:online-ogd")
+        names = ["iterate", "iterate_prefix", "proposition_2_11", "first_order",
+                 "lemma_2_12", "theorem_2_13_fixed", "equation_2_1"]
+        for name in names:
+            key = "declaration:BanditRL.OnlineGradientDescent." + name
+            self.assertIn(key, chapter["node_ids"])
+            self.assertEqual(["online-learning"], nodes[key]["books"])
+            self.assertEqual("source", nodes[key]["status"])
+        scope = next(c for c in self.chapters if c["slug"] == "online-ogd")
+        self.assertIn("not completion of all Chapter 2", scope["completion_definition"])
+        self.assertIn("variable-step", " ".join(scope["open_gaps"]))
 
     def test_preview_badge_cannot_borrow_evidence_from_another_declaration(self):
         source = ('<details class="declaration" id="a"><summary>'
@@ -117,10 +133,14 @@ class BookRegistryTests(unittest.TestCase):
                 self.assertEqual(1, nav.count('aria-current="page"'))
                 self.assertNotIn("Learn · Book map", nav)
                 self.assertNotIn("Textbook spine · Part IV", nav)
-                self.assertEqual(10, nav.count('class="book-nav-link"'))
+                self.assertEqual(len(self.chapters), nav.count('class="book-nav-link"'))
                 self.assertEqual(5, nav.count('class="spine-nav-link"'))
             breadcrumb = site.render_book_breadcrumb("chapters/finite-horizon-rl/index.html")
             self.assertIn("Reinforcement Learning Book", breadcrumb)
+            ogd_breadcrumb = site.render_book_breadcrumb("chapters/online-ogd/index.html")
+            self.assertIn("Online Learning Book", ogd_breadcrumb)
+            self.assertNotIn("Bandit Book", ogd_breadcrumb)
+            self.assertNotIn("Also read in", ogd_breadcrumb)
         finally:
             site.SITE_CHAPTERS, site.SITE_BOOKS, site.SITE_TEXTBOOK_SPINE, site.SITE_REGISTRY = saved
 
