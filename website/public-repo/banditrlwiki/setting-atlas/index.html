@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Full Setting Atlas · BanditRLlib</title>
+  <link rel="stylesheet" href="../../static/site.css">
+  <style>
+    .atlas-shell{max-width:1180px;margin:0 auto;padding:2rem 1rem 5rem}.atlas-nav{display:flex;gap:.8rem;flex-wrap:wrap;margin-bottom:1.5rem}.atlas-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem}.atlas-card{border:1px solid var(--border-color,#d7dce5);border-radius:14px;padding:1rem;background:var(--surface,#fff)}.atlas-card h3{margin:.25rem 0 .5rem}.atlas-meta{font-size:.84rem;opacity:.76}.atlas-chip{display:inline-block;border:1px solid currentColor;border-radius:999px;padding:.1rem .45rem;margin:.12rem .18rem .12rem 0;font-size:.74rem}.atlas-controls{display:grid;grid-template-columns:2fr 1fr 1fr;gap:.7rem;margin:1rem 0 1.3rem}.atlas-controls input,.atlas-controls select{width:100%}.atlas-note{border-left:4px solid currentColor;padding:.8rem 1rem;margin:1rem 0}.atlas-summary{display:flex;gap:1rem;flex-wrap:wrap}.atlas-summary strong{font-size:1.4rem}@media(max-width:720px){.atlas-controls{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<main class="atlas-shell">
+  <nav class="atlas-nav"><a href="../index.html">← BanditRLwiki</a><a href="../frontier-problems/index.html">Frontier & open problems</a><a href="../../books/bandit/index.html#extended-chapters">Bandit Book · Extended Chapters</a></nav>
+  <header class="hero">
+    <p class="eyebrow">Canonical multi-axis registry</p>
+    <h1 class="page-title">Bandit & RL Setting Atlas</h1>
+    <p class="lede">The old Setting Atlas is intentionally coarse. This registry is the canonical coverage baseline underneath it: settings, objectives, method families, cross-cutting guarantees and application bridges are separated rather than flattened into one alphabetic list.</p>
+  </header>
+  <div class="atlas-note"><strong>Normalization matters.</strong> Thompson sampling and GP-UCB are methods, BAI and regret minimization are objectives, and LLM is an application bridge. “Bolling Bandits” is retained as an alias of <em>Ballooning Bandits</em>. OMDP, SLB and Transform remain quarantined until a cited source fixes their intended expansion.</div>
+  <section>
+    <h2>Coverage snapshot</h2>
+    <div class="atlas-summary" id="summary"><span>Loading registry…</span></div>
+    <p>This page is generated in the browser from <code>data/setting-atlas.json</code>. The same JSON is intended to become the next source of truth for the generated Setting Atlas and Bandit Book Extended Chapters.</p>
+  </section>
+  <section>
+    <h2>Browse the atlas</h2>
+    <div class="atlas-controls">
+      <label>Search<input id="q" type="search" placeholder="e.g. heavy tail, causal, model selection, Thompson"></label>
+      <label>Axis<select id="axis"><option value="">All axes</option></select></label>
+      <label>Kind<select id="kind"><option value="">All kinds</option></select></label>
+    </div>
+    <div id="groups"></div>
+  </section>
+  <section>
+    <h2>Maintenance rule</h2>
+    <p>A new term should not become a comparable result case until its model contract fixes environment/action class, feedback, objective, probability mode, parameters, computation/oracle assumptions, upper/lower bound and source theorem. A missing Lean formalization is not automatically a mathematical open problem.</p>
+  </section>
+</main>
+<script>
+(async()=>{
+  const response=await fetch('../../data/setting-atlas.json');
+  const data=await response.json();
+  const q=document.querySelector('#q'), axis=document.querySelector('#axis'), kind=document.querySelector('#kind'), groups=document.querySelector('#groups'), summary=document.querySelector('#summary');
+  data.axes.forEach(a=>axis.insertAdjacentHTML('beforeend',`<option value="${a.id}">${a.title}</option>`));
+  [...new Set(data.entries.map(x=>x.kind))].sort().forEach(k=>kind.insertAdjacentHTML('beforeend',`<option value="${k}">${k}</option>`));
+  const counts={}; data.entries.forEach(x=>counts[x.site_status]=(counts[x.site_status]||0)+1);
+  const current=data.entries.filter(x=>/covered/.test(x.site_status)).length, missing=data.entries.filter(x=>x.site_status==='missing-topic').length, quarantine=data.entries.filter(x=>x.site_status==='quarantine').length;
+  summary.innerHTML=`<span><strong>${data.entries.length}</strong><br>canonical entries</span><span><strong>${current}</strong><br>already represented</span><span><strong>${missing}</strong><br>missing explicit topic</span><span><strong>${quarantine}</strong><br>needs disambiguation</span>`;
+  const esc=s=>String(s??'').replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const render=()=>{
+    const terms=q.value.toLowerCase().trim().split(/\s+/).filter(Boolean);
+    const filtered=data.entries.filter(x=>{
+      const hay=[x.title,x.kind,x.axis,x.priority,x.site_status,x.summary,...(x.aliases||[])].join(' ').toLowerCase();
+      return (!axis.value||x.axis===axis.value)&&(!kind.value||x.kind===kind.value)&&terms.every(t=>hay.includes(t));
+    });
+    groups.innerHTML='';
+    data.axes.forEach(a=>{
+      const rows=filtered.filter(x=>x.axis===a.id); if(!rows.length)return;
+      const section=document.createElement('section'); section.innerHTML=`<h2>${esc(a.title)} <small>· ${rows.length}</small></h2><div class="atlas-grid"></div>`;
+      const grid=section.querySelector('.atlas-grid');
+      rows.sort((l,r)=>l.priority.localeCompare(r.priority)||l.title.localeCompare(r.title)).forEach(x=>{
+        const aliases=(x.aliases||[]).length?`<p class="atlas-meta"><strong>Aliases:</strong> ${x.aliases.map(esc).join(', ')}</p>`:'';
+        grid.insertAdjacentHTML('beforeend',`<article class="atlas-card"><div class="atlas-meta">${esc(x.priority)} · ${esc(x.kind)} · ${esc(x.site_status)}</div><h3>${esc(x.title)}</h3><p>${esc(x.summary)}</p>${aliases}<span class="atlas-chip">${esc(x.kind)}</span><span class="atlas-chip">${esc(x.priority)}</span></article>`);
+      });
+      groups.append(section);
+    });
+    if(!filtered.length)groups.innerHTML='<p>No atlas entries match all filters.</p>';
+  };
+  [q,axis,kind].forEach(x=>x.addEventListener('input',render)); render();
+})().catch(error=>{document.querySelector('#groups').innerHTML='<p>Could not load the atlas JSON. The registry remains available in the repository.</p>';console.error(error)});
+</script>
+</body>
+</html>
