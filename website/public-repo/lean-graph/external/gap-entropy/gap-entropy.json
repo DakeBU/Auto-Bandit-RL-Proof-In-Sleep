@@ -1,0 +1,44 @@
+{
+  "schema_version": "external-bridge-1.0",
+  "root": "external:gap-entropy",
+  "source_kind": "external-formalization",
+  "source_repo": "https://github.com/zhouxiangxin1998/GapEntropy",
+  "license": "Apache-2.0",
+  "external_toolchain": "leanprover/lean4:v4.33.1",
+  "banditrl_toolchain": "leanprover/lean4:v4.29.1",
+  "verification_boundary": "Nodes labelled source/externally verified are metadata for an independent kernel-checked project. They are not BanditRLlib local compiled declarations. Conceptual-overlap edges are not Lean imports or proof dependencies.",
+  "nodes": [
+    {"id":"external:gap-entropy","label":"GapEntropy external formalization","kind":"external project","status":"partial","order":0,"subtitle":"P0 bridge · external Lean 4.33.1 → BanditRLlib Lean 4.29.1","description":"Attributed external formalization of the two Chen–Li COLT 2016 best-arm-identification conjectures. Kept outside local compilation until a toolchain/source-port decision is reviewed.","meta":[["Authors","Jiarui Yao; Jiaxi Zhao; Xiangxin Zhou"],["License","Apache-2.0"],["External toolchain","Lean 4.33.1"],["Local toolchain","Lean 4.29.1"],["Priority","P0"]],"missing":["Choose a source-port strategy: local re-proof, compatible dependency, or versioned external bridge.","Map reusable local probability/change-of-measure/stopping-time declarations at theorem-signature level."]},
+
+    {"id":"external:chen-li-2016","parent":"external:gap-entropy","label":"Chen–Li 2016 open problem","kind":"source problem","status":"source","order":1,"subtitle":"Conjectures 3.2 and 3.5","description":"Almost instance-wise optimality and the gap-entropy conjecture for fixed-confidence best-arm identification."},
+    {"id":"external:benchmark","parent":"external:gap-entropy","label":"order-oblivious benchmark","kind":"external definition","status":"source","order":2,"subtitle":"GapEntropy.benchmark","description":"Instance-wise benchmark averaged over arm-label permutations, matching the source's order-oblivious viewpoint."},
+    {"id":"external:gap-entropy:def","parent":"external:gap-entropy","label":"gap entropy","kind":"external definition","status":"source","order":3,"subtitle":"GapEntropy.Instance.gapEntropy","description":"Entropy of the normalized H-mass across dyadic gap groups."},
+    {"id":"external:gap-entropy:theorem","parent":"external:gap-entropy","label":"gapEntropyConjecture","kind":"external theorem","status":"source","order":4,"subtitle":"GapEntropy.gapEntropyConjecture · externally kernel checked","description":"For 0 < δ < 1/10, the order-oblivious benchmark is sandwiched within absolute constants by H(I)(log(1/δ)+Ent(I)).","statement":"External declaration: GapEntropy.gapEntropyConjecture"},
+    {"id":"external:universal","parent":"external:gap-entropy","label":"universalEntropyUpperBound","kind":"external theorem","status":"source","order":5,"subtitle":"GapEntropy.universalEntropyUpperBound · externally kernel checked","description":"One universal δ-correct algorithm with the manuscript's explicit H(log(1/δ)+Ent)+D·ℓ(D) sample bound.","statement":"External declaration: GapEntropy.universalEntropyUpperBound"},
+    {"id":"external:almost-opt","parent":"external:gap-entropy","label":"almostInstanceWiseOptimality","kind":"external theorem","status":"source","order":6,"subtitle":"GapEntropy.almostInstanceWiseOptimality","description":"Formalized almost instance-wise optimality with the manuscript's positive iterated-log convention."},
+    {"id":"external:positive-opt","parent":"external:gap-entropy","label":"positiveSourceAlmostInstanceWiseOptimality","kind":"external theorem","status":"source","order":7,"subtitle":"GapEntropy.positiveSourceAlmostInstanceWiseOptimality","description":"Variant using a max-with-one positive truncation of log log(1/Δ)."},
+    {"id":"external:policy-repr","parent":"external:gap-entropy","label":"standardBenchmark_eq","kind":"external theorem","status":"source","order":8,"subtitle":"GapEntropy.PolicyRepresentations.standardBenchmark_eq","description":"Benchmark equality between arbitrary standard-Borel private randomness and the Gaussian-tape policy representation used by the formalization."},
+
+    {"id":"banditrl:bai-case","parent":"external:gap-entropy","label":"BanditRLwiki fixed-confidence BAI","kind":"BanditRLlib route","status":"planned","order":20,"subtitle":"Existing case · Track-and-Stop / characteristic time","description":"Current BanditRLwiki case has source-matched asymptotic fixed-confidence bounds but no local BAI formalization terminal."},
+    {"id":"banditrl:probability","parent":"external:gap-entropy","label":"Probability, kernels, filtrations, stopping","kind":"BanditRLlib route","status":"compiled","order":21,"subtitle":"Teaching route 02","description":"Existing compiled probability infrastructure is the first retrieval surface for an eventual local port; overlap must be checked declaration-by-declaration."},
+    {"id":"banditrl:information","parent":"external:gap-entropy","label":"Information-theoretic lower-bound spine","kind":"BanditRLlib route","status":"compiled","order":22,"subtitle":"Textbook Part IV Chapters 14–16","description":"Existing KL, testing and change-of-measure proof technology is conceptually adjacent to BAI lower bounds, but no direct source reuse is claimed here."},
+    {"id":"banditrl:frontier","parent":"external:gap-entropy","label":"Frontier problem history","kind":"BanditRLlib route","status":"source","order":23,"subtitle":"Gap-Entropy posed → progress → 2026 resolution","description":"Preserves the decade-long problem history and records what new graph structure the resolution contributes."}
+  ],
+  "edges": [
+    {"source":"external:chen-li-2016","target":"external:benchmark","relation":"defines-target"},
+    {"source":"external:chen-li-2016","target":"external:gap-entropy:def","relation":"defines-complexity"},
+    {"source":"external:benchmark","target":"external:gap-entropy:theorem","relation":"dependency"},
+    {"source":"external:gap-entropy:def","target":"external:gap-entropy:theorem","relation":"dependency"},
+    {"source":"external:gap-entropy:theorem","target":"external:universal","relation":"paired-result"},
+    {"source":"external:universal","target":"external:almost-opt","relation":"implies-route"},
+    {"source":"external:almost-opt","target":"external:positive-opt","relation":"variant"},
+    {"source":"external:policy-repr","target":"external:benchmark","relation":"representation-bridge"},
+    {"source":"external:gap-entropy:theorem","target":"banditrl:bai-case","relation":"frontier-closure"},
+    {"source":"banditrl:probability","target":"external:policy-repr","relation":"conceptual-overlap"},
+    {"source":"banditrl:information","target":"external:gap-entropy:theorem","relation":"conceptual-overlap"},
+    {"source":"external:gap-entropy:theorem","target":"banditrl:frontier","relation":"records-resolution"}
+  ],
+  "views": {
+    "overview": ["external:gap-entropy","external:chen-li-2016","external:benchmark","external:gap-entropy:def","external:gap-entropy:theorem","external:universal","external:almost-opt","external:positive-opt","external:policy-repr","banditrl:bai-case","banditrl:probability","banditrl:information","banditrl:frontier"]
+  }
+}
