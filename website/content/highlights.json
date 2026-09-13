@@ -1833,6 +1833,94 @@
       "dependencies": [
         "BanditRLProof.LowerBounds.adversarialRegretLowerExpression_ge_quarter"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescent.iterate",
+      "title": "Algorithm 2.1: projected OGD",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 1,
+      "plain": "The next iterate uses the current gradient after the current prediction is output.",
+      "math": "\\(x_{t+1}=\\Pi_V(x_t-\\eta\\nabla\\ell_t(x_t))\\)",
+      "intuition": "The next iterate uses the current gradient after the current prediction is output.",
+      "why": "This supplies the next interface in the same source-aligned projected OGD chain.",
+      "position": "Orabona v10 Chapter 2 fixed-step package; not the whole chapter.",
+      "proof_idea": "Recursion from the fixed initial point; iterate_prefix proves strict-prefix causality.",
+      "lean_notes": "Real Hilbert-space statements specialize to finite-dimensional Euclidean space. Lean time 0 is source round 1. No probabilistic regret claim.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescent.proposition_2_11",
+      "title": "Proposition 2.11: projection decreases distance",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 2,
+      "plain": "Projection cannot increase distance to a feasible comparator.",
+      "math": "\\(\\|\\Pi_V(z)-u\\|\\le\\|z-u\\|\\)",
+      "intuition": "Projection cannot increase distance to a feasible comparator.",
+      "why": "This supplies the next interface in the same source-aligned projected OGD chain.",
+      "position": "Orabona v10 Chapter 2 fixed-step package; not the whole chapter.",
+      "proof_idea": "Use the Hilbert projection variational inequality and expand squared distance.",
+      "lean_notes": "Real Hilbert-space statements specialize to finite-dimensional Euclidean space. Lean time 0 is source round 1. No probabilistic regret claim.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescent.project_spec"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescent.lemma_2_12",
+      "title": "Lemma 2.12: one-step regret",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 3,
+      "plain": "Convexity linearizes loss; projection turns that inner product into a potential decrease plus gradient energy.",
+      "math": "\\(\\eta(\\ell_t(x_t)-\\ell_t(u))\\le\\eta\\langle g_t,x_t-u\\rangle\\le\\frac{\\|x_t-u\\|^2-\\|x_{t+1}-u\\|^2+\\eta^2\\|g_t\\|^2}{2}\\)",
+      "intuition": "Convexity linearizes loss; projection turns that inner product into a potential decrease plus gradient energy.",
+      "why": "This supplies the next interface in the same source-aligned projected OGD chain.",
+      "position": "Orabona v10 Chapter 2 fixed-step package; not the whole chapter.",
+      "proof_idea": "Derive first_order through a differentiable convex affine restriction, then expand the actual projected update.",
+      "lean_notes": "Real Hilbert-space statements specialize to finite-dimensional Euclidean space. Lean time 0 is source round 1. No probabilistic regret claim.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescent.first_order",
+        "BanditRL.OnlineGradientDescent.proposition_2_11",
+        "BanditRL.OnlineGradientDescent.step"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescent.theorem_2_13_fixed",
+      "title": "Theorem 2.13: fixed step only",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 4,
+      "plain": "Cumulative comparator regret retains the negative terminal squared distance, with no bounded-domain premise.",
+      "math": "\\(R_T(u)\\le\\frac{\\|x_1-u\\|^2}{2\\eta}+\\frac\\eta2\\sum_{t=1}^T\\|g_t\\|^2-\\frac{\\|x_{T+1}-u\\|^2}{2\\eta}\\)",
+      "intuition": "Cumulative comparator regret retains the negative terminal squared distance, with no bounded-domain premise.",
+      "why": "This supplies the next interface in the same source-aligned projected OGD chain.",
+      "position": "Orabona v10 Chapter 2 fixed-step package; not the whole chapter.",
+      "proof_idea": "Sum the generated trajectory one-step inequality and telescope; divide by the positive fixed step.",
+      "lean_notes": "Real Hilbert-space statements specialize to finite-dimensional Euclidean space. Lean time 0 is source round 1. No probabilistic regret claim.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescent.lemma_2_12",
+        "BanditRL.OnlineGradientDescent.iterate_mem",
+        "BanditRL.OnlineGradientDescent.regret"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescent.equation_2_1",
+      "title": "Equation (2.1): horizon tuning",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 5,
+      "plain": "A priori diameter and gradient bounds yield the source square-root regret rate.",
+      "math": "\\(\\eta=\\frac{D}{G\\sqrt T},\\qquad R_T(u)\\le DG\\sqrt T\\)",
+      "intuition": "A priori diameter and gradient bounds yield the source square-root regret rate.",
+      "why": "This supplies the next interface in the same source-aligned projected OGD chain.",
+      "position": "Orabona v10 Chapter 2 fixed-step package; not the whole chapter.",
+      "proof_idea": "Bound initial distance and gradient energy, then simplify the positive horizon-tuned step.",
+      "lean_notes": "Real Hilbert-space statements specialize to finite-dimensional Euclidean space. Lean time 0 is source round 1. No probabilistic regret claim.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescent.theorem_2_13_fixed",
+        "BanditRL.OnlineGradientDescent.equation_2_1_distance"
+      ]
     }
   ]
 }

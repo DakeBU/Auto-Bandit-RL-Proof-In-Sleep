@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "declaration": "theorem_2_13_fixed",
+  "file": "BanditRLProof/OnlineGradientDescent.lean",
+  "statement": "theorem theorem_2_13_fixed (V : Domain E) (η : ℝ) (hη : 0 < η) (loss : ℕ → E → ℝ) (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (T : ℕ) (hloss : ∀ t < T, RegularLoss V (loss t)) (u : E) (hu : u ∈ V.carrier) : regret V η loss x₁ u T ≤ ‖x₁ - u‖ ^ 2 / (2 * η) + η / 2 * (∑ t ∈ range T, ‖gradient (loss t) (iterate V η loss x₁ t)‖ ^ 2) - ‖iterate V η loss x₁ T - u‖ ^ 2 / (2 * η)",
+  "statement_hash": "3e457967e2f7884bea9e413427583bf3401902ed2708c5dbae996ddc2b2d3bb4",
+  "source_assumptions": [
+    "(V : Domain E)"
+  ],
+  "created_at": "2026-09-13T15:18:57+00:00"
+}

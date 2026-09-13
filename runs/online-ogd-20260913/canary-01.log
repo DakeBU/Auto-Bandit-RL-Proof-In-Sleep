@@ -1,0 +1,76 @@
+Tests/OnlineGradientDescentCanary.lean:25:11: error(lean.unknownIdentifier): Unknown constant `differentiable_const.mul`
+Tests/OnlineGradientDescentCanary.lean:37:2: error: `simp` made no progress
+Tests/OnlineGradientDescentCanary.lean:48:2: error: Type mismatch
+  project_high
+has type
+  project interval 2 = 1
+but is expected to have type
+  project interval (-gradient (losses 0) 0) = 1
+Tests/OnlineGradientDescentCanary.lean:46:28: warning: This simp argument is unused:
+  losses
+
+Hint: Omit it from the simp argument list.
+  simp only [iterate, step, l̵o̵s̵s̵e̵s̵,̵ ̵if_pos rfl, gradient_linear]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Tests/OnlineGradientDescentCanary.lean:46:36: warning: This simp argument is unused:
+  if_pos rfl
+
+Hint: Omit it from the simp argument list.
+  simp only [iterate, step, losses, i̵f̵_̵p̵o̵s̵ ̵r̵f̵l̵,̵ ̵gradient_linear]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Tests/OnlineGradientDescentCanary.lean:46:48: warning: This simp argument is unused:
+  gradient_linear
+
+Hint: Omit it from the simp argument list.
+  simp only [iterate, step, losses, if_pos rfl,̵ ̵g̵r̵a̵d̵i̵e̵n̵t̵_̵l̵i̵n̵e̵a̵r̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Tests/OnlineGradientDescentCanary.lean:55:2: error: Type mismatch
+  project_half
+has type
+  project interval (1 / 2) = 1 / 2
+but is expected to have type
+  project interval (1 - gradient (losses 1) 1) = 1 / 2
+Tests/OnlineGradientDescentCanary.lean:53:19: warning: This simp argument is unused:
+  losses
+
+Hint: Omit it from the simp argument list.
+  simp only [step, l̵o̵s̵s̵e̵s̵,̵ ̵if_neg (by decide : (1 : ℕ) ≠ 0), gradient_linear]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Tests/OnlineGradientDescentCanary.lean:53:27: warning: This simp argument is unused:
+  if_neg (by decide : (1 : ℕ) ≠ 0)
+
+Hint: Omit it from the simp argument list.
+  simp only [step, losses, i̵f̵_̵n̵e̵g̵ ̵(̵b̵y̵ ̵d̵e̵c̵i̵d̵e̵ ̵:̵ ̵(̵1̵ ̵:̵ ̵ℕ̵)̵ ̵≠̵ ̵0̵)̵,̵ ̵gradient_linear]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Tests/OnlineGradientDescentCanary.lean:53:61: warning: This simp argument is unused:
+  gradient_linear
+
+Hint: Omit it from the simp argument list.
+  simp only [step, losses, if_neg (by decide : (1 : ℕ) ≠ 0),̵ ̵g̵r̵a̵d̵i̵e̵n̵t̵_̵l̵i̵n̵e̵a̵r̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Tests/OnlineGradientDescentCanary.lean:65:2: error: unsolved goals
+case refine_1
+⊢ step interval 1 (losses 0) 0 = 1
+Tests/OnlineGradientDescentCanary.lean:65:34: warning: This simp argument is unused:
+  trajectory_one
+
+Hint: Omit it from the simp argument list.
+  simp [regret, sum_range_succ, t̵r̵a̵j̵e̵c̵t̵o̵r̵y̵_̵o̵n̵e̵,̵ ̵iterate, losses]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Tests/OnlineGradientDescentCanary.lean:88:4: error: `simp` made no progress
+'BanditRL.OnlineGradientDescent.project_spec' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BanditRL.OnlineGradientDescent.project_eq_of_variational' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BanditRL.OnlineGradientDescent.proposition_2_11' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BanditRL.OnlineGradientDescent.first_order' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BanditRL.OnlineGradientDescent.lemma_2_12' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BanditRL.OnlineGradientDescent.iterate_prefix' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BanditRL.OnlineGradientDescent.theorem_2_13_fixed' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BanditRL.OnlineGradientDescent.equation_2_1' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Tests.OnlineGradientDescent.nondegenerate_canary' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]

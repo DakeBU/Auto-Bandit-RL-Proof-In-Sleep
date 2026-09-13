@@ -15396,3 +15396,4 @@ here during local harness runs.
 - `2026-09-10T07:26:06+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/proof_weapon_cards.json` - refreshed proof_weapon_cards.json
 - `2026-09-10T07:26:06+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
 - `2026-09-10T07:26:06+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
+- `2026-09-13T15:02:24+00:00` `bandit.py new-task` `task` `tasks/ONLINE-OGD-CH2-FIXED.md` - Orabona v10 Chapter 2 projected OGD fixed-step chain

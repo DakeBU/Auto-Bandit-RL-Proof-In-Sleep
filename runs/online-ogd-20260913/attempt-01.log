@@ -1,0 +1,36 @@
+BanditRLProof/OnlineGradientDescent.lean:101:52: warning: `InnerProductSpace.toDual_apply` has been deprecated: Use `InnerProductSpace.toDual_apply_apply` instead
+BanditRLProof/OnlineGradientDescent.lean:138:71: warning: `Nat.lt.step` has been deprecated: Use `Nat.lt_succ_of_lt` instead
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.step` to `Nat.lt_succ_of_lt x`).
+BanditRLProof/OnlineGradientDescent.lean:153:42: warning: `Nat.lt.step` has been deprecated: Use `Nat.lt_succ_of_lt` instead
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.step` to `Nat.lt_succ_of_lt x`).
+BanditRLProof/OnlineGradientDescent.lean:159:2: error: Tactic `apply` failed: could not unify the type of `(le_div_iff₀ hη).mp ?m.448`
+  ?m.443 * η ≤ ?m.444
+with the goal
+  regret V η loss x₁ u T ≤
+    ‖x₁ - u‖ ^ 2 / (2 * η) + η / 2 * ∑ t ∈ Finset.range T, ‖gradient (loss t) (iterate V η loss x₁ t)‖ ^ 2 -
+      ‖iterate V η loss x₁ T - u‖ ^ 2 / (2 * η)
+
+E : Type u_1
+inst✝² : NormedAddCommGroup E
+inst✝¹ : InnerProductSpace ℝ E
+inst✝ : CompleteSpace E
+V : Domain E
+η : ℝ
+hη : 0 < η
+loss : ℕ → E → ℝ
+x₁ : E
+hx₁ : x₁ ∈ V.carrier
+T : ℕ
+hloss : ∀ t < T, RegularLoss V (loss t)
+u : E
+hu : u ∈ V.carrier
+hscaled :
+  η * regret V η loss x₁ u T ≤
+    ‖x₁ - u‖ ^ 2 / 2 - ‖iterate V η loss x₁ T - u‖ ^ 2 / 2 +
+      η ^ 2 / 2 * ∑ t ∈ Finset.range T, ‖gradient (loss t) (iterate V η loss x₁ t)‖ ^ 2
+⊢ regret V η loss x₁ u T ≤
+    ‖x₁ - u‖ ^ 2 / (2 * η) + η / 2 * ∑ t ∈ Finset.range T, ‖gradient (loss t) (iterate V η loss x₁ t)‖ ^ 2 -
+      ‖iterate V η loss x₁ T - u‖ ^ 2 / (2 * η)
+BanditRLProof/OnlineGradientDescent.lean:164:8: warning: declaration uses `sorry`

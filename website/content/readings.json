@@ -1216,6 +1216,176 @@
           }
         }
       ]
+    },
+    {
+      "slug": "online-ogd",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10, 21 June 2026",
+        "sections": "Section 2.1.2; Algorithm 2.1, Proposition 2.11, Lemma 2.12, Theorem 2.13 fixed step, Eq. (2.1)",
+        "pages": "printed pp. 12-15; PDF pp. 24-27",
+        "pdf_page": 24,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "x_t",
+          "meaning": "Point output before observing loss t; Lean iterate at t-1."
+        },
+        {
+          "term": "g_t",
+          "meaning": "Gradient of the current convex differentiable loss at x_t."
+        },
+        {
+          "term": "D, G",
+          "meaning": "A priori positive diameter and gradient norm upper bounds; the source calls G by L."
+        }
+      ],
+      "algorithm": {
+        "title": "Algorithm 2.1 with a fixed positive step",
+        "kind": "projected online gradient descent",
+        "steps": [
+          {
+            "title": "Initialize",
+            "detail": "Choose x1 in the nonempty closed convex set V and fix eta > 0."
+          },
+          {
+            "title": "Predict",
+            "detail": "Output the current point before seeing the current loss."
+          },
+          {
+            "title": "Read current feedback",
+            "detail": "Evaluate the current loss gradient at the current point."
+          },
+          {
+            "title": "Project",
+            "detail": "Project x - eta times the gradient onto V and continue."
+          }
+        ]
+      },
+      "teaching_route": [
+        "BanditRL.OnlineGradientDescent.iterate",
+        "BanditRL.OnlineGradientDescent.lemma_2_12",
+        "BanditRL.OnlineGradientDescent.theorem_2_13_fixed",
+        "BanditRL.OnlineGradientDescent.equation_2_1"
+      ],
+      "source_theorems": [
+        {
+          "label": "Proposition 2.11: projection decreases distance",
+          "pages": "printed pp. 12-15",
+          "pdf_page": 24,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\|\\Pi_V(z)-u\\|\\le\\|z-u\\|",
+          "fallback": "Projection cannot increase distance to a feasible comparator.",
+          "plain": "Projection cannot increase distance to a feasible comparator.",
+          "relationship": "Exact shared declaration: BanditRL.OnlineGradientDescent.proposition_2_11. Use the Hilbert projection variational inequality and expand squared distance.",
+          "contract": {
+            "model": "Finite-dimensional real Euclidean projected OGD; Lean additionally supports real Hilbert spaces.",
+            "assumptions": "Nonempty closed convex V; feasible comparator.",
+            "parameters": "Fixed eta, horizon T, initial point x1 and comparator u; tuning uses eta=D/(G sqrt T).",
+            "regret": "Deterministic cumulative loss difference on the same generated trajectory.",
+            "guarantee": "Projection cannot increase distance to a feasible comparator."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Scoped fixed-step proof",
+            "boundary": "Only this named interface is covered. Theorem 2.13 variable steps, remaining Chapter 2, general OMD and Tsallis dual guarantees are not completed."
+          }
+        },
+        {
+          "label": "Lemma 2.12: one-step regret",
+          "pages": "printed pp. 12-15",
+          "pdf_page": 25,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\eta(\\ell_t(x_t)-\\ell_t(u))\\le\\eta\\langle g_t,x_t-u\\rangle\\le\\frac{\\|x_t-u\\|^2-\\|x_{t+1}-u\\|^2+\\eta^2\\|g_t\\|^2}{2}",
+          "fallback": "Convexity linearizes loss; projection turns that inner product into a potential decrease plus gradient energy.",
+          "plain": "Convexity linearizes loss; projection turns that inner product into a potential decrease plus gradient energy.",
+          "relationship": "Exact shared declaration: BanditRL.OnlineGradientDescent.lemma_2_12. Derive first_order through a differentiable convex affine restriction, then expand the actual projected update.",
+          "contract": {
+            "model": "Finite-dimensional real Euclidean projected OGD; Lean additionally supports real Hilbert spaces.",
+            "assumptions": "Nonempty closed convex V; feasible comparator. Positive step and convex differentiable losses on an open neighborhood of V.",
+            "parameters": "Fixed eta, horizon T, initial point x1 and comparator u; tuning uses eta=D/(G sqrt T).",
+            "regret": "Deterministic cumulative loss difference on the same generated trajectory.",
+            "guarantee": "Convexity linearizes loss; projection turns that inner product into a potential decrease plus gradient energy."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Scoped fixed-step proof",
+            "boundary": "Only this named interface is covered. Theorem 2.13 variable steps, remaining Chapter 2, general OMD and Tsallis dual guarantees are not completed."
+          }
+        },
+        {
+          "label": "Theorem 2.13: fixed step only",
+          "pages": "printed pp. 12-15",
+          "pdf_page": 25,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "R_T(u)\\le\\frac{\\|x_1-u\\|^2}{2\\eta}+\\frac\\eta2\\sum_{t=1}^T\\|g_t\\|^2-\\frac{\\|x_{T+1}-u\\|^2}{2\\eta}",
+          "fallback": "Cumulative comparator regret retains the negative terminal squared distance, with no bounded-domain premise.",
+          "plain": "Cumulative comparator regret retains the negative terminal squared distance, with no bounded-domain premise.",
+          "relationship": "Exact shared declaration: BanditRL.OnlineGradientDescent.theorem_2_13_fixed. Sum the generated trajectory one-step inequality and telescope; divide by the positive fixed step.",
+          "contract": {
+            "model": "Finite-dimensional real Euclidean projected OGD; Lean additionally supports real Hilbert spaces.",
+            "assumptions": "Nonempty closed convex V; feasible comparator. Positive step and convex differentiable losses on an open neighborhood of V.",
+            "parameters": "Fixed eta, horizon T, initial point x1 and comparator u; tuning uses eta=D/(G sqrt T).",
+            "regret": "Deterministic cumulative loss difference on the same generated trajectory.",
+            "guarantee": "Cumulative comparator regret retains the negative terminal squared distance, with no bounded-domain premise."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Scoped fixed-step proof",
+            "boundary": "Only this named interface is covered. Theorem 2.13 variable steps, remaining Chapter 2, general OMD and Tsallis dual guarantees are not completed."
+          }
+        },
+        {
+          "label": "Equation (2.1): horizon tuning",
+          "pages": "printed pp. 12-15",
+          "pdf_page": 27,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\eta=\\frac{D}{G\\sqrt T},\\qquad R_T(u)\\le DG\\sqrt T",
+          "fallback": "A priori diameter and gradient bounds yield the source square-root regret rate.",
+          "plain": "A priori diameter and gradient bounds yield the source square-root regret rate.",
+          "relationship": "Exact shared declaration: BanditRL.OnlineGradientDescent.equation_2_1. Bound initial distance and gradient energy, then simplify the positive horizon-tuned step.",
+          "contract": {
+            "model": "Finite-dimensional real Euclidean projected OGD; Lean additionally supports real Hilbert spaces.",
+            "assumptions": "Nonempty closed convex V; feasible comparator. Positive step and convex differentiable losses on an open neighborhood of V. T >= 1 and positive bounds D, G on diameter and trajectory gradient norms.",
+            "parameters": "Fixed eta, horizon T, initial point x1 and comparator u; tuning uses eta=D/(G sqrt T).",
+            "regret": "Deterministic cumulative loss difference on the same generated trajectory.",
+            "guarantee": "A priori diameter and gradient bounds yield the source square-root regret rate."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Scoped fixed-step proof",
+            "boundary": "Only this named interface is covered. Theorem 2.13 variable steps, remaining Chapter 2, general OMD and Tsallis dual guarantees are not completed."
+          }
+        }
+      ],
+      "worked_example": {
+        "title": "Two rounds with an active projection",
+        "intro": "Use V=[0,1], x1=0, eta=1 and losses -2x followed by x/2. This is the exact public Lean canary.",
+        "steps": [
+          {
+            "title": "Project the first gradient step",
+            "detail": "The first gradient is -2. The unconstrained next point is 2, so projection changes it to 1.",
+            "math": "x_2=\\Pi_{[0,1]}(0-1(-2))=1.",
+            "fallback": "The first point is zero, the unconstrained step is two, and the projected point is one."
+          },
+          {
+            "title": "Use the changed current loss",
+            "detail": "The second gradient is one half. Its update stays inside the interval.",
+            "math": "x_3=\\Pi_{[0,1]}(1-1/2)=1/2.",
+            "fallback": "The terminal point is one half."
+          },
+          {
+            "title": "Keep a nonzero residual",
+            "detail": "Against comparator zero, regret and terminal squared distance are both positive.",
+            "math": "R_2(0)=1/2,\\qquad\\|x_3-0\\|^2=1/4.",
+            "fallback": "Regret is one half and terminal squared distance is one quarter."
+          }
+        ],
+        "takeaway": "Both the projection and the terminal residual matter in a changing-loss instance.",
+        "boundary": "This exact-real example is kernel-checked in Tests.OnlineGradientDescentCanary; it is not a numerical experiment. The tuned-rate test uses its own specified trajectory."
+      }
     }
   ]
 }

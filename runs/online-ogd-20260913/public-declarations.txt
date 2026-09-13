@@ -1,0 +1,32 @@
+BanditRL.OnlineGradientDescent.Domain [structure] BanditRLProof/OnlineGradientDescent.lean:25
+  structure Domain (E : Type*) [NormedAddCommGroup E] [InnerProductSpace ℝ E] where
+BanditRL.OnlineGradientDescent.project [def] BanditRLProof/OnlineGradientDescent.lean:32
+  def project (V : Domain E) (z : E) : E
+BanditRL.OnlineGradientDescent.RegularLoss [def] BanditRLProof/OnlineGradientDescent.lean:37
+  def RegularLoss (V : Domain E) (f : E → ℝ) : Prop
+BanditRL.OnlineGradientDescent.step [def] BanditRLProof/OnlineGradientDescent.lean:41
+  def step (V : Domain E) (η : ℝ) (f : E → ℝ) (x : E) : E
+BanditRL.OnlineGradientDescent.iterate [def] BanditRLProof/OnlineGradientDescent.lean:45
+  def iterate (V : Domain E) (η : ℝ) (loss : ℕ → E → ℝ) (x₁ : E) : ℕ → E | 0 => x₁ | t + 1 => step V η (loss t) (iterate V η loss x₁ t)
+BanditRL.OnlineGradientDescent.regret [def] BanditRLProof/OnlineGradientDescent.lean:50
+  def regret (V : Domain E) (η : ℝ) (loss : ℕ → E → ℝ) (x₁ u : E) (T : ℕ) : ℝ
+BanditRL.OnlineGradientDescent.project_spec [theorem] BanditRLProof/OnlineGradientDescent.lean:54
+  theorem project_spec (V : Domain E) (z : E) : project V z ∈ V.carrier ∧ ‖z - project V z‖ = ⨅ w : V.carrier, ‖z - w‖
+BanditRL.OnlineGradientDescent.project_eq_of_variational [theorem] BanditRLProof/OnlineGradientDescent.lean:60
+  theorem project_eq_of_variational (V : Domain E) (z p : E) (hp : p ∈ V.carrier) (h : ∀ w ∈ V.carrier, inner ℝ (z - p) (w - p) ≤ 0) : project V z = p
+BanditRL.OnlineGradientDescent.proposition_2_11 [theorem] BanditRLProof/OnlineGradientDescent.lean:74
+  theorem proposition_2_11 (V : Domain E) (z u : E) (hu : u ∈ V.carrier) : ‖project V z - u‖ ≤ ‖z - u‖
+BanditRL.OnlineGradientDescent.first_order [theorem] BanditRLProof/OnlineGradientDescent.lean:85
+  theorem first_order (V : Domain E) (f : E → ℝ) (hf : RegularLoss V f) (x u : E) (hx : x ∈ V.carrier) (hu : u ∈ V.carrier) : f x - f u ≤ inner ℝ (gradient f x) (x - u)
+BanditRL.OnlineGradientDescent.lemma_2_12 [theorem] BanditRLProof/OnlineGradientDescent.lean:106
+  theorem lemma_2_12 (V : Domain E) (f : E → ℝ) (hf : RegularLoss V f) (η : ℝ) (hη : 0 < η) (x u : E) (hx : x ∈ V.carrier) (hu : u ∈ V.carrier) : η * (f x - f u) ≤ η * inner ℝ (gradient f x) (x - u) ∧ η * inner ℝ (gradient f x) (x - u) ≤ ‖x - u‖ ^ 2 / 2 - ‖step V η f x - u‖ ^ 2 / 2 + η ^ 2 / 2 * ‖gradient f x‖ ^ 2
+BanditRL.OnlineGradientDescent.iterate_mem [theorem] BanditRLProof/OnlineGradientDescent.lean:125
+  theorem iterate_mem (V : Domain E) (η : ℝ) (loss : ℕ → E → ℝ) (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (t : ℕ) : iterate V η loss x₁ t ∈ V.carrier
+BanditRL.OnlineGradientDescent.iterate_prefix [theorem] BanditRLProof/OnlineGradientDescent.lean:132
+  theorem iterate_prefix (V : Domain E) (η : ℝ) (loss loss' : ℕ → E → ℝ) (x₁ : E) (t : ℕ) (h : ∀ s < t, loss s = loss' s) : iterate V η loss x₁ t = iterate V η loss' x₁ t
+BanditRL.OnlineGradientDescent.theorem_2_13_fixed [theorem] BanditRLProof/OnlineGradientDescent.lean:141
+  theorem theorem_2_13_fixed (V : Domain E) (η : ℝ) (hη : 0 < η) (loss : ℕ → E → ℝ) (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (T : ℕ) (hloss : ∀ t < T, RegularLoss V (loss t)) (u : E) (hu : u ∈ V.carrier) : regret V η loss x₁ u T ≤ ‖x₁ - u‖ ^ 2 / (2 * η) + η / 2 * (∑ t ∈ range T, ‖gradient (loss t) (iterate V η loss x₁ t)‖ ^ 2) - ‖iterate V η loss x₁ T - u‖ ^ 2 / (2 * η)
+BanditRL.OnlineGradientDescent.equation_2_1_distance [theorem] BanditRLProof/OnlineGradientDescent.lean:168
+  theorem equation_2_1_distance (V : Domain E) (loss : ℕ → E → ℝ) (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (T : ℕ) (hT : 0 < T) (D G : ℝ) (hD : 0 < D) (hG : 0 < G) (hloss : ∀ t < T, RegularLoss V (loss t)) (u : E) (hu : u ∈ V.carrier) (hdist : ‖x₁ - u‖ ≤ D) (hgrad : ∀ t < T, ‖gradient (loss t) (iterate V (D / (G * Real.sqrt T)) loss x₁ t)‖ ≤ G) : regret V (D / (G * Real.sqrt T)) loss x₁ u T ≤ D * G * Real.sqrt T
+BanditRL.OnlineGradientDescent.equation_2_1 [theorem] BanditRLProof/OnlineGradientDescent.lean:203
+  theorem equation_2_1 (V : Domain E) (loss : ℕ → E → ℝ) (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (T : ℕ) (hT : 0 < T) (D G : ℝ) (hD : 0 < D) (hG : 0 < G) (hdiam : ∀ x ∈ V.carrier, ∀ y ∈ V.carrier, ‖x - y‖ ≤ D) (hloss : ∀ t < T, RegularLoss V (loss t)) (hgrad : ∀ t < T, ‖gradient (loss t) (iterate V (D / (G * Real.sqrt T)) loss x₁ t)‖ ≤ G) : ∀ u ∈ V.carrier, regret V (D / (G * Real.sqrt T)) loss x₁ u T ≤ D * G * Real.sqrt T
