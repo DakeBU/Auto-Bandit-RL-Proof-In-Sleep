@@ -32,6 +32,41 @@
   };
   window.addEventListener("hashchange", revealHashTarget);
 
+  const wikiBase = (() => {
+    const marker = "/banditrlwiki/";
+    const index = window.location.pathname.indexOf(marker);
+    return index >= 0 ? window.location.pathname.slice(0, index + marker.length) : marker;
+  })();
+
+  const installRegistryLinks = () => {
+    const addLink = (section, href, label, detail) => {
+      if (!section || section.querySelector(`[href="${href}"]`)) return;
+      const callout = document.createElement("div");
+      callout.className = "callout";
+      const strong = document.createElement("strong");
+      const anchor = document.createElement("a");
+      anchor.href = href;
+      anchor.textContent = label;
+      strong.append(anchor);
+      callout.append(strong, document.createTextNode(` — ${detail}`));
+      section.insertBefore(callout, section.children[2] || null);
+    };
+
+    addLink(
+      document.getElementById("settings"),
+      `${wikiBase}setting-atlas/`,
+      "Full multi-axis Setting Atlas",
+      "the canonical coverage registry separates mathematical settings, objectives, methods, cross-cutting guarantees and application bridges; it also records missing and ambiguous labels.",
+    );
+    addLink(
+      document.getElementById("topics"),
+      `${wikiBase}frontier-problems/`,
+      "Frontier & Open Problems Registry",
+      "problem histories preserve posed questions, partial progress, resolutions, review state, Lean status and the resulting graph delta.",
+    );
+  };
+  installRegistryLinks();
+
   const root = document.querySelector("[data-wiki]");
   if (!root) {
     revealHashTarget();

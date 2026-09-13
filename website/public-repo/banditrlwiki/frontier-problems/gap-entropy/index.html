@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gap-Entropy Conjecture · Frontier Case · BanditRLlib</title>
+  <link rel="stylesheet" href="../../../static/site.css">
+  <style>.case-shell{max-width:1080px;margin:0 auto;padding:2rem 1rem 5rem}.case-nav{display:flex;gap:.8rem;flex-wrap:wrap}.case-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:1rem}.case-card{border:1px solid var(--border-color,#d7dce5);border-radius:14px;padding:1rem;background:var(--surface,#fff)}.case-card h3{margin-top:.15rem}.case-badge{display:inline-block;border:1px solid currentColor;border-radius:999px;padding:.12rem .55rem;font-size:.78rem}.case-chain{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;white-space:pre-wrap}.case-table{width:100%;border-collapse:collapse}.case-table th,.case-table td{text-align:left;vertical-align:top;padding:.55rem;border-bottom:1px solid var(--border-color,#ddd)}</style>
+</head>
+<body>
+<main class="case-shell">
+  <nav class="case-nav"><a href="../index.html">← Frontier registry</a><a href="../../setting-atlas/index.html">Setting Atlas</a><a href="../../../lean-graph/external/gap-entropy/index.html">Open graph bridge →</a></nav>
+  <header class="hero">
+    <p class="eyebrow">P0 frontier-history case · Best-arm identification</p>
+    <h1 class="page-title">Gap-Entropy Conjecture</h1>
+    <p class="lede">A decade-long fixed-confidence best-arm-identification problem is a near-ideal test of BanditRLlib's frontier philosophy: preserve the old question, the partial route, the new resolution, the formal proof object, and the structural change to the proof graph.</p>
+    <p><span class="case-badge">resolved in 2026</span> <span class="case-badge">external Lean formalization</span> <span class="case-badge">local port: P0</span></p>
+  </header>
+
+  <section>
+    <h2>Problem history</h2>
+    <div class="case-grid">
+      <article class="case-card"><h3>2016 · posed</h3><p>Lijie Chen and Jian Li posed almost instance-wise optimality and the gap-entropy conjecture for BEST-1-ARM.</p><p><a href="https://proceedings.mlr.press/v49/chen16b.html">COLT 2016 open-problem source</a></p></article>
+      <article class="case-card"><h3>2017 · major partial progress</h3><p>Chen, Li and Qiao obtained a highly nontrivial upper route and a lower bound for restricted Gaussian/gap structure, but did not close the full conjecture.</p><p><a href="https://proceedings.mlr.press/v65/chen17b.html">COLT 2017 paper</a></p></article>
+      <article class="case-card"><h3>2026 · two resolution routes meet</h3><p>Yao, Zhao and Zhou released a manuscript together with a Lean 4 formalization. Aronow, Kallus and Lopatto independently posted a positive resolution on arXiv on 9 September 2026.</p><p><a href="https://github.com/zhouxiangxin1998/GapEntropy">GapEntropy repository</a> · <a href="https://arxiv.org/abs/2609.10529">independent arXiv resolution</a></p></article>
+    </div>
+  </section>
+
+  <section>
+    <h2>Exact model boundary</h2>
+    <p>The resolution should not be summarized as “BAI is solved.” The formalized target is fixed-confidence best-arm identification with independent unit-variance Gaussian arms, means in <code>[0,1]</code>, a unique best arm, and an order-oblivious/permutation-averaged instance benchmark. The external formalization also documents explicit positive conventions for the iterated-log term where a literal source expression becomes negative or undefined.</p>
+    <table class="case-table">
+      <tr><th>Quantity</th><th>Role</th></tr>
+      <tr><td><code>Δ_i = μ* - μ_i</code></td><td>Gap of a suboptimal arm.</td></tr>
+      <tr><td><code>H(I) = Σ Δ_i⁻²</code></td><td>Classical inverse-gap-squared instance complexity.</td></tr>
+      <tr><td><code>p_r</code></td><td>Fraction of H contributed by arms in dyadic gap group r.</td></tr>
+      <tr><td><code>Ent(I) = Σ p_r log(1/p_r)</code></td><td>Extra complexity measuring how H is spread across gap scales.</td></tr>
+      <tr><td>benchmark</td><td>Optimal expected sample complexity after averaging over permutations of arm labels.</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>External Lean evidence</h2>
+    <p>The external repository is Apache-2.0, reports zero <code>sorry</code>s in the main formalization metadata, and records the standard foundational axioms <code>propext</code>, <code>Classical.choice</code>, and <code>Quot.sound</code>. Its <code>formalization.yaml</code> maps source statements to Lean declarations.</p>
+    <div class="case-grid">
+      <article class="case-card"><h3><code>GapEntropy.gapEntropyConjecture</code></h3><p>Constant-factor characterization of the order-oblivious benchmark by <code>H(I)(log(1/δ)+Ent(I))</code> under the formalized conventions.</p></article>
+      <article class="case-card"><h3><code>GapEntropy.universalEntropyUpperBound</code></h3><p>A single δ-correct algorithm with an explicit universal bound including the smallest-gap iterated-log correction.</p></article>
+      <article class="case-card"><h3><code>GapEntropy.almostInstanceWiseOptimality</code></h3><p>Almost instance-wise optimality with the manuscript's smooth positive iterated-log convention.</p></article>
+      <article class="case-card"><h3><code>GapEntropy.positiveSourceAlmostInstanceWiseOptimality</code></h3><p>Positive max-with-one truncation aligned to the source expression.</p></article>
+      <article class="case-card"><h3><code>GapEntropy.PolicyRepresentations.standardBenchmark_eq</code></h3><p>Policy-representation theorem equating the standard-Borel-private-randomness benchmark with the Gaussian-tape representation.</p></article>
+    </div>
+    <div class="callout warning"><strong>Not a BanditRLlib local compilation claim.</strong> GapEntropy pins Lean 4.33.1; this repository pins Lean 4.29.1. The first integration is therefore an attributed external graph bridge. A local source port is a separate P0 task.</div>
+  </section>
+
+  <section>
+    <h2>Why this changes the graph</h2>
+    <p class="case-chain">generic probability / adaptive histories / stopping
+        ↓
+change-of-measure & information lower bounds
+        ↓
+order-oblivious instance benchmark
+        ↓
+dyadic gap grouping → normalized H-mass → gap entropy
+        ↓
+benchmark lower/upper characterization
+        ↓
+universal fixed-confidence algorithm
+        ↓
+almost instance-wise optimality</p>
+    <p>If we only stored the final theorem, this would look like “another BAI sample-complexity result.” The graph view shows something stronger: the resolution inserts a reusable <em>complexity coordinate</em>—entropy of the distribution of inverse-gap-squared mass over scales—and a representation layer for what counts as an algorithm/benchmark. Those are candidate new hubs, not just terminal leaves.</p>
+    <p><a href="../../../lean-graph/external/gap-entropy/index.html">Explore the GapEntropy bridge slice in the Lean Graph UI →</a></p>
+  </section>
+
+  <section>
+    <h2>P0 local-port checklist</h2>
+    <ol>
+      <li>Freeze the external commit, Apache-2.0 attribution, toolchain and exact theorem signatures.</li>
+      <li>Retrieve BanditRLlib's existing probability kernels, stopping-time, KL/testing and lower-bound declarations by exact type; classify reuse versus conceptual overlap.</li>
+      <li>Choose whether to port the theorem into Lean 4.29.1, upgrade the local toolchain, or keep a versioned external proof certificate. Do not silently mix environments.</li>
+      <li>Only after a local kernel gate passes may external theorem nodes be promoted from <em>source/external</em> to <em>compiled local</em>.</li>
+      <li>Measure graph delta: new nodes, bridges, reused ancestors, newly-created hubs and any proof shortcuts relative to the existing fixed-confidence BAI route.</li>
+    </ol>
+  </section>
+</main>
+</body>
+</html>
