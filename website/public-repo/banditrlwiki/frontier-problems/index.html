@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Frontier Problem History · BanditRLlib</title>
+  <link rel="stylesheet" href="../../static/site.css">
+  <style>
+    .frontier-shell{max-width:1180px;margin:0 auto;padding:2rem 1rem 5rem}.frontier-nav{display:flex;gap:.8rem;flex-wrap:wrap;margin-bottom:1.5rem}.frontier-grid{display:grid;gap:1rem}.frontier-card{border:1px solid var(--border-color,#d7dce5);border-radius:14px;padding:1rem 1.1rem;background:var(--surface,#fff)}.frontier-card h3{margin:.25rem 0 .45rem}.frontier-meta{font-size:.84rem;opacity:.78}.frontier-status{display:inline-block;border:1px solid currentColor;border-radius:999px;padding:.12rem .5rem;margin-right:.35rem;font-size:.75rem}.frontier-controls{display:grid;grid-template-columns:2fr 1fr 1fr;gap:.7rem;margin:1rem 0 1.3rem}.frontier-timeline{margin:.7rem 0 0;padding-left:1.2rem}.frontier-timeline li{margin:.3rem 0}.frontier-note{border-left:4px solid currentColor;padding:.8rem 1rem;margin:1rem 0}@media(max-width:720px){.frontier-controls{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<main class="frontier-shell">
+  <nav class="frontier-nav"><a href="../index.html">← BanditRLwiki</a><a href="../setting-atlas/index.html">Full Setting Atlas</a><a href="../../lean-graph/index.html">Lean Graph</a></nav>
+  <header class="hero">
+    <p class="eyebrow">Problem history · source audit · Lean delta</p>
+    <h1 class="page-title">Frontier & Open Problems Registry</h1>
+    <p class="lede">A frontier problem remains useful after it is solved. We preserve the path from the original question through partial progress and resolution, then ask what mathematical nodes and edges the resolution adds to the existing BanditRLlib graph.</p>
+  </header>
+  <div class="frontier-note"><strong>Three independent statuses.</strong> Mathematical openness, publication/review state, and Lean formalization state are never collapsed. “No resolution found in this targeted audit” is not a proof that a problem is still open.</div>
+  <section>
+    <h2>Browse problem history</h2>
+    <div class="frontier-controls">
+      <label>Search<input id="q" type="search" placeholder="e.g. BAI, RKHS, privacy, horizon"></label>
+      <label>Status<select id="status"><option value="">All statuses</option></select></label>
+      <label>Priority<select id="priority"><option value="">All priorities</option><option>P0</option><option>P1</option><option>P2</option></select></label>
+    </div>
+    <p id="count">Loading registry…</p>
+    <div id="cards" class="frontier-grid"></div>
+  </section>
+  <section>
+    <h2>Admission rule for posts, talks and social media</h2>
+    <p>We may index an open problem first seen in a post or talk, but the record must preserve the original URL, author, date, exact problem statement or a short faithful paraphrase, and an evidence grade. Before it is promoted to a theorem-comparison case, a primary paper or an author-controlled source should freeze the mathematical contract. This prevents viral summaries from silently changing quantifiers or assumptions.</p>
+  </section>
+</main>
+<script>
+(async()=>{
+  const response=await fetch('../../data/frontier-problems.json'); const data=await response.json();
+  const q=document.querySelector('#q'), status=document.querySelector('#status'), priority=document.querySelector('#priority'), cards=document.querySelector('#cards'), count=document.querySelector('#count');
+  [...new Set(data.problems.map(x=>x.status))].sort().forEach(s=>status.insertAdjacentHTML('beforeend',`<option value="${s}">${s}</option>`));
+  const esc=s=>String(s??'').replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const links=items=>(items||[]).map(x=>`<li>${x.year||''} · <a href="${esc(x.url)}">${esc(x.title)}</a>${x.note?` — ${esc(x.note)}`:''}</li>`).join('');
+  const render=()=>{
+    const terms=q.value.toLowerCase().trim().split(/\s+/).filter(Boolean);
+    const rows=data.problems.filter(x=>{const hay=[x.title,x.area,x.status,x.posed_by,x.graph_delta,...(x.lean?.declarations||[])].join(' ').toLowerCase();return(!status.value||x.status===status.value)&&(!priority.value||x.priority===priority.value)&&terms.every(t=>hay.includes(t));});
+    count.textContent=`${rows.length} of ${data.problems.length} audited problem histories`;
+    cards.innerHTML=''; rows.sort((a,b)=>a.priority.localeCompare(b.priority)||String(b.posed_year||0).localeCompare(String(a.posed_year||0))).forEach(x=>{
+      const caseLink=x.case_url?` · <a href="${esc(x.case_url)}">dedicated case</a>`:'';
+      const progress=links(x.progress), resolution=links(x.resolution);
+      cards.insertAdjacentHTML('beforeend',`<article class="frontier-card"><div class="frontier-meta"><span class="frontier-status">${esc(x.status)}</span>${esc(x.priority)} · ${esc(x.area)} · posed ${esc(x.posed_year??'date to freeze')}</div><h3>${esc(x.title)}</h3><p><strong>Posed by:</strong> ${esc(x.posed_by)} · <a href="${esc(x.source.url)}">primary/source record</a>${caseLink}</p>${progress?`<p><strong>Progress</strong></p><ul class="frontier-timeline">${progress}</ul>`:''}${resolution?`<p><strong>Resolution / closure evidence</strong></p><ul class="frontier-timeline">${resolution}</ul>`:''}<p><strong>Lean:</strong> ${esc(x.lean?.status)} / ${esc(x.lean?.local_status)}</p><p><strong>Lean-graph delta:</strong> ${esc(x.graph_delta)}</p></article>`);
+    }); if(!rows.length)cards.innerHTML='<p>No problem histories match all filters.</p>';
+  };
+  [q,status,priority].forEach(x=>x.addEventListener('input',render)); render();
+})().catch(error=>{document.querySelector('#cards').innerHTML='<p>Could not load the frontier registry JSON.</p>';console.error(error)});
+</script>
+</body>
+</html>
