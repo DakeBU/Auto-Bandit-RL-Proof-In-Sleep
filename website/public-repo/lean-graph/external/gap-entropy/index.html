@@ -16,11 +16,13 @@
     <div class="callout warning"><strong>Verification boundary.</strong> GapEntropy uses Lean 4.33.1 while BanditRLlib currently uses Lean 4.29.1. External theorem nodes are therefore labelled as source/external evidence, not local compiled declarations. Dashed conceptual-overlap edges are research-map edges, not imports.</div>
   </section>
   <section id="explorer">
-    <div class="lean-graph-app" data-lean-graph data-graph-overview-source="gap-entropy.json">
+    <div class="lean-graph-app" data-lean-graph data-graph-overview-source="gap-entropy.json" data-graph-search-source="search-index.json">
       <header class="lean-graph-toolbar">
         <div class="lean-graph-views" role="group" aria-label="GapEntropy bridge view">
           <button type="button" data-graph-view="overview" data-graph-view-source="gap-entropy.json" aria-pressed="true">GapEntropy bridge</button>
         </div>
+        <label>Search bridge<input type="search" data-graph-search autocomplete="off" aria-expanded="false" aria-controls="gapentropy-search-suggestions" placeholder="gap entropy, benchmark, BAI…"></label>
+        <ul id="gapentropy-search-suggestions" data-graph-suggestions role="listbox" hidden></ul>
         <label>Branch size<select data-graph-branch-size><option value="12">12</option><option value="24">24</option></select></label>
         <button type="button" data-graph-fit>Fit graph</button>
         <button type="button" data-graph-reset>Reset</button>
