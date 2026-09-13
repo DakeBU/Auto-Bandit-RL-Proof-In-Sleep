@@ -44,9 +44,11 @@
   const q=document.querySelector('#q'), axis=document.querySelector('#axis'), kind=document.querySelector('#kind'), groups=document.querySelector('#groups'), summary=document.querySelector('#summary');
   data.axes.forEach(a=>axis.insertAdjacentHTML('beforeend',`<option value="${a.id}">${a.title}</option>`));
   [...new Set(data.entries.map(x=>x.kind))].sort().forEach(k=>kind.insertAdjacentHTML('beforeend',`<option value="${k}">${k}</option>`));
-  const counts={}; data.entries.forEach(x=>counts[x.site_status]=(counts[x.site_status]||0)+1);
-  const current=data.entries.filter(x=>/covered/.test(x.site_status)).length, missing=data.entries.filter(x=>x.site_status==='missing-topic').length, quarantine=data.entries.filter(x=>x.site_status==='quarantine').length;
-  summary.innerHTML=`<span><strong>${data.entries.length}</strong><br>canonical entries</span><span><strong>${current}</strong><br>already represented</span><span><strong>${missing}</strong><br>missing explicit topic</span><span><strong>${quarantine}</strong><br>needs disambiguation</span>`;
+  const current=data.entries.filter(x=>/covered/.test(x.site_status)).length;
+  const mentioned=data.entries.filter(x=>x.site_status==='mentioned-not-indexed').length;
+  const missing=data.entries.filter(x=>x.site_status==='missing-topic').length;
+  const quarantine=data.entries.filter(x=>x.site_status==='quarantine').length;
+  summary.innerHTML=`<span><strong>${data.entries.length}</strong><br>registry entries</span><span><strong>${current}</strong><br>already represented</span><span><strong>${mentioned}</strong><br>mentioned, not indexed</span><span><strong>${missing}</strong><br>missing explicit topic</span><span><strong>${quarantine}</strong><br>needs disambiguation</span>`;
   const esc=s=>String(s??'').replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
   const render=()=>{
     const terms=q.value.toLowerCase().trim().split(/\s+/).filter(Boolean);
