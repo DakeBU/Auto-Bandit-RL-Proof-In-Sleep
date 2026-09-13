@@ -3,12 +3,14 @@
   "root": "external:gap-entropy",
   "source_kind": "external-formalization",
   "source_repo": "https://github.com/zhouxiangxin1998/GapEntropy",
+  "source_commit": "30bfca8fd408cd14397e5baac0a69bbcc2e036c8",
+  "source_commit_url": "https://github.com/zhouxiangxin1998/GapEntropy/commit/30bfca8fd408cd14397e5baac0a69bbcc2e036c8",
   "license": "Apache-2.0",
   "external_toolchain": "leanprover/lean4:v4.33.1",
   "banditrl_toolchain": "leanprover/lean4:v4.29.1",
-  "verification_boundary": "Nodes labelled source/externally verified are metadata for an independent kernel-checked project. They are not BanditRLlib local compiled declarations. Conceptual-overlap edges are not Lean imports or proof dependencies.",
+  "verification_boundary": "Nodes labelled source/externally verified are metadata for an independent kernel-checked project at source_commit. They are not BanditRLlib local compiled declarations. Conceptual-overlap edges are not Lean imports or proof dependencies.",
   "nodes": [
-    {"id":"external:gap-entropy","label":"GapEntropy external formalization","kind":"external project","status":"partial","order":0,"subtitle":"P0 bridge · external Lean 4.33.1 → BanditRLlib Lean 4.29.1","description":"Attributed external formalization of the two Chen–Li COLT 2016 best-arm-identification conjectures. Kept outside local compilation until a toolchain/source-port decision is reviewed.","meta":[["Authors","Jiarui Yao; Jiaxi Zhao; Xiangxin Zhou"],["License","Apache-2.0"],["External toolchain","Lean 4.33.1"],["Local toolchain","Lean 4.29.1"],["Priority","P0"]],"missing":["Choose a source-port strategy: local re-proof, compatible dependency, or versioned external bridge.","Map reusable local probability/change-of-measure/stopping-time declarations at theorem-signature level."]},
+    {"id":"external:gap-entropy","label":"GapEntropy external formalization","kind":"external project","status":"partial","order":0,"subtitle":"P0 bridge · external Lean 4.33.1 → BanditRLlib Lean 4.29.1","description":"Attributed external formalization of the two Chen–Li COLT 2016 best-arm-identification conjectures, frozen at upstream commit 30bfca8. Kept outside local compilation until a toolchain/source-port decision is reviewed.","meta":[["Authors","Jiarui Yao; Jiaxi Zhao; Xiangxin Zhou"],["License","Apache-2.0"],["Upstream commit","30bfca8fd408cd14397e5baac0a69bbcc2e036c8"],["External toolchain","Lean 4.33.1"],["Local toolchain","Lean 4.29.1"],["Priority","P0"]],"missing":["Choose a source-port strategy: local re-proof, compatible dependency, or versioned external bridge.","Map reusable local probability/change-of-measure/stopping-time declarations at theorem-signature level."]},
 
     {"id":"external:chen-li-2016","parent":"external:gap-entropy","label":"Chen–Li 2016 open problem","kind":"source problem","status":"source","order":1,"subtitle":"Conjectures 3.2 and 3.5","description":"Almost instance-wise optimality and the gap-entropy conjecture for fixed-confidence best-arm identification."},
     {"id":"external:benchmark","parent":"external:gap-entropy","label":"order-oblivious benchmark","kind":"external definition","status":"source","order":2,"subtitle":"GapEntropy.benchmark","description":"Instance-wise benchmark averaged over arm-label permutations, matching the source's order-oblivious viewpoint."},
