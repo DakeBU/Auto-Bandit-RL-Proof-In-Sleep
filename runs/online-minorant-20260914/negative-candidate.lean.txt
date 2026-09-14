@@ -1,0 +1,27 @@
+import BanditRLProof.OnlineExpectation
+import BanditRLProof.OnlineConvexMinorant
+
+noncomputable section
+open Set Filter MeasureTheory
+open scoped ENNReal
+namespace BanditRL.OnlineConvex
+variable {Ω : Type*} [MeasurableSpace Ω]
+variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDimensional ℝ E]
+variable [MeasurableSpace E] [BorelSpace E]
+
+theorem jensen_negativeIntegral_ne_top (μ : Measure Ω) [IsProbabilityMeasure μ]
+    (f : E → EReal) (hbot : ∀ x, f x ≠ ⊥) (hf : IsConvexExtended f)
+    (hfm : Measurable f) (X : Ω → E) (hXm : Measurable X) (hX : Integrable X μ)
+    (hdom : ∀ᵐ ω ∂μ, X ω ∈ effectiveDomain f) :
+    negativeIntegral μ (fun ω => f (X ω)) ≠ ∞ := by
+  classical
+  obtain ⟨ω, hω⟩ := hdom.exists
+  obtain ⟨a, b, hab⟩ := convex_affine_minorant f hbot hf ⟨X ω, hω⟩
+  have hi : Integrable (fun ω => a (X ω) + b) μ := (a.integrable_comp hX).add (integrable_const b)
+  have hbound : negativeIntegral μ (fun ω => f (X ω)) ≤
+      negativeIntegral μ (fun ω => ((a (X ω) + b : ℝ) : EReal)) := by
+    apply lintegral_mono
+    intro ω
+    exact EReal.toENNReal_le_toENNReal (EReal.neg_le_neg_iff.mpr (hab (X ω)))
+  exact ne_top_of_le_ne_top (negativeIntegral_coe_ne_top μ _ hi) hbound
+end BanditRL.OnlineConvex

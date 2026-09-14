@@ -2431,6 +2431,40 @@
         "BanditRL.OnlineConvex.supporting_functional_ae_eq_mean",
         "BanditRL.OnlineConvex.supporting_functional_at_closure"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.affine_minorant_of_domain_interior",
+      "title": "Affine minorant from a domain interior point",
+      "chapter": "online-minorant",
+      "featured": false,
+      "teaching_order": 1,
+      "plain": "Affine minorant from a domain interior point",
+      "math": "\\(\\exists a,b,\\ \\forall x,\\ a(x)+b\\le f(x)\\)",
+      "intuition": "The supporting functional has a strictly negative vertical coefficient; divide the support inequality.",
+      "why": "Supplies the affine integrable lower bound needed for the source Jensen theorem.",
+      "position": "Orabona v10 printedp11/PDF23.",
+      "proof_idea": "The supporting functional has a strictly negative vertical coefficient; divide the support inequality.",
+      "lean_notes": "The global target retains the original frozen quantifiers and does not assume a closed or full-dimensional domain.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.supporting_functional_at_closure"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.convex_affine_minorant",
+      "title": "Global affine minorant without domain regularity",
+      "chapter": "online-minorant",
+      "featured": false,
+      "teaching_order": 2,
+      "plain": "Global affine minorant without domain regularity",
+      "math": "\\(\\exists a,b,\\ \\forall x,\\ a(x)+b\\le f(x)\\)",
+      "intuition": "Use relative interior in the affine span, apply the interior helper, and extend the functional.",
+      "why": "Supplies the affine integrable lower bound needed for the source Jensen theorem.",
+      "position": "Orabona v10 printedp11/PDF23.",
+      "proof_idea": "Use relative interior in the affine span, apply the interior helper, and extend the functional.",
+      "lean_notes": "The global target retains the original frozen quantifiers and does not assume a closed or full-dimensional domain.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.affine_minorant_of_domain_interior"
+      ]
     }
   ]
 }

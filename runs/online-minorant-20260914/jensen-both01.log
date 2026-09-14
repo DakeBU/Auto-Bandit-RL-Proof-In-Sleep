@@ -1,0 +1,36 @@
+tmp/online-jensen-both-canaries.lean:19:5: warning: unused variable `hfm`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+tmp/online-jensen-both-canaries.lean:19:38: warning: unused variable `hXm`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+tmp/online-jensen-both-canaries.lean:73:51: warning: This simp argument is unused:
+  max_eq_left
+
+Hint: Omit it from the simp argument list.
+  simp [max_eq_l̵e̵f̵t̵,̵ ̵m̵a̵x̵_̵e̵q̵_̵right, h, neg_nonneg.mpr, neg_nonpos.mpr]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+tmp/online-jensen-both-canaries.lean:73:64: warning: This simp argument is unused:
+  max_eq_right
+
+Hint: Omit it from the simp argument list.
+  simp [max_eq_left, m̵a̵x̵_̵e̵q̵_̵r̵i̵g̵h̵t̵,̵ ̵h, neg_nonneg.mpr, neg_nonpos.mpr]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+tmp/online-jensen-both-canaries.lean:73:117: warning: 'linarith' tactic does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+tmp/online-jensen-both-canaries.lean:73:117: warning: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+'JensenInfiniteProbe.source_infinite_instance' depends on axioms: [propext, Classical.choice, Quot.sound]
+tmp/online-jensen-both-canaries.lean:178:2: error: Tactic `apply` failed: could not unify the type of `theorem_2_9 law (fun x => ↑(?m.53 x))
+  (fun x => EReal.coe_ne_bot (?m.53 x)) ?m.54 ?m.55 id measurable_id (integrable_atom_function id)
+  (ae_of_all law fun x => EReal.coe_lt_top (?m.53 (id x)))`
+  ↑(?m.53 (∫ (ω : ℝ), id ω ∂law)) ≤ signedExpectation law fun ω => ↑(?m.53 (id ω))
+with the goal
+  ↑((∫ (x : ℝ), x ∂law) ^ 2) ≤ signedExpectation law fun x => ↑(x ^ 2)
+
+⊢ ↑((∫ (x : ℝ), x ∂law) ^ 2) ≤ signedExpectation law fun x => ↑(x ^ 2)
+'JensenFiniteProbe.source_finite_instance' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]

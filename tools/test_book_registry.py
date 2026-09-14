@@ -181,6 +181,16 @@ class BookRegistryTests(unittest.TestCase):
         scope = next(c for c in self.chapters if c["slug"] == "online-barycenter")
         self.assertIn("not completion of Orabona Theorem2.9", scope["completion_definition"])
 
+    def test_minorant_dependency_uses_shared_registry_without_claiming_jensen(self):
+        registry = self.registry()
+        nodes = membership_index(registry)
+        chapter = next(c for c in registry["chapters"] if c["id"] == "teaching:online-minorant")
+        key = "declaration:BanditRL.OnlineConvex.convex_affine_minorant"
+        self.assertIn(key, chapter["node_ids"])
+        self.assertEqual(["online-learning"], nodes[key]["books"])
+        scope = next(c for c in self.chapters if c["slug"] == "online-minorant")
+        self.assertIn("not completion of Orabona Theorem2.9", scope["completion_definition"])
+
     def test_preview_badge_cannot_borrow_evidence_from_another_declaration(self):
         source = ('<details class="declaration" id="a"><summary>'
                   '<span class="status source">Source indexed</span></summary></details>'

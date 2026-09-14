@@ -1,0 +1,1 @@
+Both exact public affine-minorant targets accepted-local. All gates and remaining parent obligations: runs/online-minorant-20260914/acceptance-decision.md. Scoped PR delivery pending. Full source Jensen remains a scratch candidate, not public accepted.
