@@ -29,3 +29,5 @@ Examples2.5/2.6 update: exact affine/norm epigraph endpoints and their finite em
 Closure update: affine precomposition, arbitrary indexed supremum and monotone real convex composition passed all scoped gates in runs/online-convex-closures-20260914. The nonnegative linear-combination bullet remains required and awaits explicit upper-addition proof. No Chapter2 completion.
 
 Fourth closure update: nonnegative combinations passed all local gates with explicit convex-analysis upperAdd and zero-weight semantics. Evidence runs/online-convex-sums-20260914 includes a compiled ordinary-addition counterexample. All four closure bullets are locally closed under this recorded interpretation; Theorems2.7-2.9 and all later required Chapter2 obligations remain incomplete.
+
+Theorem2.7 update: full extended-real supporting-gradient endpoint passed all scoped local gates in runs/online-first-order-20260914, including an actual neighborhood-agreement proof and outside-domain canary. Theorem2.8, Theorem2.9 and later Chapter2 obligations remain required. No Chapter2 completion.

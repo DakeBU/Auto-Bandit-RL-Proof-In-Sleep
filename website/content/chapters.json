@@ -355,7 +355,7 @@
       "audience": "Readers of Orabona Chapter 2 convex-analysis foundations.",
       "completion_definition": "Definitions 2.2 and 2.3, Theorem 2.4, convexity of the effective domain, the indicator equivalence adding an indicator, and Examples 2.5 (affine functions) and 2.6 (norms). This is not completion of all Chapter 2.",
       "completion_blockers": [
-        "Supporting gradients, optimality, Jensen and subgradient theory remain required."
+        "Optimality, Jensen, subgradient theory and later Chapter2 results remain required."
       ],
       "learning_goals": [
         "Keep positive and negative infinity distinct from finite real values.",
@@ -380,7 +380,7 @@
       "audience": "Readers of Orabona Chapter 2 convex-analysis foundations.",
       "completion_definition": "The four Orabona p10 closure operations, with the general nonnegative-combination result using explicitly documented top-dominant convex-analysis addition. This is not completion of all Chapter 2.",
       "completion_blockers": [
-        "Later Chapter2 supporting-gradient, optimality, Jensen and subgradient results remain required."
+        "Optimality, Jensen, subgradient theory and later Chapter2 results remain required."
       ],
       "learning_goals": [
         "Use affine changes of input without extra map assumptions.",
@@ -391,6 +391,30 @@
       "module_globs": [
         "BanditRLProof/OnlineConvexClosures.lean",
         "BanditRLProof/OnlineConvexSums.lean"
+      ],
+      "open_gaps": [
+        "The rest of Chapter 2 remains incomplete.",
+        "These mathematical interfaces are not a complete online algorithm or whole-book proof."
+      ]
+    },
+    {
+      "slug": "online-first-order",
+      "title": "Supporting gradients for extended-real losses",
+      "short_title": "Supporting gradients",
+      "status": "compiled",
+      "summary": "The full Theorem2.7 lower bound, with a locally exact finite representation and all comparator points.",
+      "audience": "Readers of Orabona Chapter 2 convex-analysis foundations.",
+      "completion_definition": "Orabona Theorem2.7 and its neighborhood-representation and real supporting-bound dependencies. This is not completion of all Chapter 2.",
+      "completion_blockers": [
+        "Theorem2.8 optimality, Theorem2.9 Jensen and later subgradient/linearization obligations remain required."
+      ],
+      "learning_goals": [
+        "Interpret gradients using a finite function that agrees locally with the extended-real loss.",
+        "Derive the supporting plane from a convex affine-line derivative.",
+        "Keep positive infinity at comparator points outside the effective domain."
+      ],
+      "module_globs": [
+        "BanditRLProof/OnlineConvexFirstOrder.lean"
       ],
       "open_gaps": [
         "The rest of Chapter 2 remains incomplete.",

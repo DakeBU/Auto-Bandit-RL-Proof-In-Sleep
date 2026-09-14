@@ -622,3 +622,4 @@ import BanditRLProof.OnlineConvexExtended
 import BanditRLProof.OnlineConvexExamples
 import BanditRLProof.OnlineConvexClosures
 import BanditRLProof.OnlineConvexSums
+import BanditRLProof.OnlineConvexFirstOrder

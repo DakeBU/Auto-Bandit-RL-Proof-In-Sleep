@@ -1,0 +1,1 @@
+Freeze full extended-real Theorem2.7, not the existing real OGD specialization. Require local finite-representation agreement and all comparator points. Three typed targets have ready dependencies; select neighborhood identity and real supporting bound first.

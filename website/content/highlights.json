@@ -2194,6 +2194,57 @@
         "BanditRL.OnlineConvex.convex_upperAdd",
         "BanditRL.OnlineConvex.convex_nonneg_mul"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.finitePart_eventually",
+      "title": "A locally exact finite representation",
+      "chapter": "online-first-order",
+      "featured": false,
+      "teaching_order": 1,
+      "plain": "Near an interior domain point, the finite representation embeds back to the original loss.",
+      "math": "\\((f(z).\\mathrm{toReal}:\\overline{\\mathbb R})=f(z)\\text{ locally at }x\\)",
+      "intuition": "Near an interior domain point, the finite representation embeds back to the original loss.",
+      "why": "Establishes the exact first-order foundation for later online convex analysis.",
+      "position": "Orabona v10 printedp11/PDF23.",
+      "proof_idea": "Use the open interior and prove both infinite values are excluded there.",
+      "lean_notes": "No closed or bounded domain is assumed. The gradient uses the proven local finite representation.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.effectiveDomain"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.convex_gradient_lower_bound",
+      "title": "A real supporting-gradient inequality",
+      "chapter": "online-first-order",
+      "featured": false,
+      "teaching_order": 2,
+      "plain": "Pointwise differentiability and convexity on a set give a lower affine bound for every point in the set.",
+      "math": "\\(f(x)+\\langle\\nabla f(x),y-x\\rangle\\le f(y)\\)",
+      "intuition": "Pointwise differentiability and convexity on a set give a lower affine bound for every point in the set.",
+      "why": "Establishes the exact first-order foundation for later online convex analysis.",
+      "position": "Orabona v10 printedp11/PDF23.",
+      "proof_idea": "Restrict to the affine line through x and y and apply the convex derivative-slope inequality.",
+      "lean_notes": "No closed or bounded domain is assumed. The gradient uses the proven local finite representation.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.theorem_2_7",
+      "title": "Orabona Theorem 2.7: all comparator points",
+      "chapter": "online-first-order",
+      "featured": false,
+      "teaching_order": 3,
+      "plain": "The supporting-gradient bound retains positive infinity outside the effective domain.",
+      "math": "\\(f(x)+\\langle\\nabla f(x),y-x\\rangle\\le f(y),\\quad\\forall y\\)",
+      "intuition": "The supporting-gradient bound retains positive infinity outside the effective domain.",
+      "why": "Establishes the exact first-order foundation for later online convex analysis.",
+      "position": "Orabona v10 printedp11/PDF23.",
+      "proof_idea": "Use local finite agreement and the real supporting bound on the domain; handle its complement by positive infinity.",
+      "lean_notes": "No closed or bounded domain is assumed. The gradient uses the proven local finite representation.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.finitePart_eventually",
+        "BanditRL.OnlineConvex.convex_gradient_lower_bound",
+        "BanditRL.OnlineConvex.convexExtended_iff_toReal"
+      ]
     }
   ]
 }
