@@ -618,3 +618,4 @@ import BanditRLProof.OnlineGradientDescent
 import BanditRLProof.OnlineLearningAsymptotic
 import BanditRLProof.OnlineLearningHistory
 import BanditRLProof.OnlineGradientDescentVariable
+import BanditRLProof.OnlineConvexExtended

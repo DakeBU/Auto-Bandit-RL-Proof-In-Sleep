@@ -1799,6 +1799,128 @@
         "takeaway": "The hindsight leader and causal predictor differ; the exact positive regret is checked in Lean.",
         "boundary": "Public root canary: Tests.OnlineLearningChapterOneCanary. The separate probability canary uses a fair two-point distribution."
       }
+    },
+    {
+      "slug": "online-convex",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10, 21 June 2026",
+        "sections": "Section 2.1.1; Definitions 2.2-2.3, Theorem 2.4 and domain/indicator consequences",
+        "pages": "printed pp. 9-10; PDF pp. 21-22",
+        "pdf_page": 21,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "dom f",
+          "meaning": "Points where f is strictly below positive infinity; negative infinity is included."
+        },
+        {
+          "term": "epigraph",
+          "meaning": "Pairs (x,r) with real height r at least f(x). Infinite heights are not coordinates."
+        },
+        {
+          "term": "iota_V",
+          "meaning": "Zero on V, positive infinity outside V."
+        }
+      ],
+      "algorithm": {
+        "title": "Read the convexity equivalence",
+        "kind": "mathematical characterization",
+        "steps": [
+          {
+            "title": "Define the epigraph",
+            "detail": "Keep real heights and the full extended-real function."
+          },
+          {
+            "title": "Identify the effective domain",
+            "detail": "For Theorem 2.4, verify convexity of the domain and exclusion of negative infinity."
+          },
+          {
+            "title": "Check interior weights",
+            "detail": "Compare the value on each convex combination with the weighted endpoint values."
+          }
+        ]
+      },
+      "teaching_route": [
+        "BanditRL.OnlineConvex.definition_2_2",
+        "BanditRL.OnlineConvex.convex_indicator_iff",
+        "BanditRL.OnlineConvex.convex_add_indicator",
+        "BanditRL.OnlineConvex.theorem_2_4"
+      ],
+      "source_theorems": [
+        {
+          "label": "Theorem 2.4: convexity through interior weights",
+          "pages": "printed p. 10",
+          "pdf_page": 22,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "f(\\theta x+(1-\\theta)y)\\le\\theta f(x)+(1-\\theta)f(y),\\quad x,y\\in\\operatorname{dom}f,\\;0<\\theta<1",
+          "fallback": "For a function that never takes negative infinity and has convex effective domain, epigraph convexity is equivalent to the interior-weight inequality.",
+          "plain": "Infinite values outside the effective domain are retained.",
+          "relationship": "Source interface: BanditRL.OnlineConvex.theorem_2_4. The exact finite-domain epigraph bridge permits reuse of the shared real-valued convexity API.",
+          "contract": {
+            "model": "Extended-real functions on a finite-dimensional real vector space; the Lean interfaces support real vector spaces.",
+            "assumptions": "Theorem 2.4 excludes negative infinity and assumes a convex effective domain. Definition 2.3 itself permits both infinities.",
+            "parameters": "Two points in the effective domain and a real weight strictly between zero and one; empty domains remain allowed.",
+            "regret": "This is a convex-analysis equivalence, not a regret bound.",
+            "guarantee": "Exact equivalence between the source real-height epigraph definition and its interior-weight inequality."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Scoped convexity proof",
+            "boundary": "Only the named foundation package is covered; remaining Chapter 2 results and exercises are not claimed complete."
+          }
+        },
+        {
+          "label": "Constraint indicators and adding constraints",
+          "pages": "printed pp. 9-10",
+          "pdf_page": 21,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\iota_V(x)=\\begin{cases}0&x\\in V,\\\\+\\infty&x\\notin V.\\end{cases}",
+          "fallback": "The constraint indicator is convex exactly when its set is convex; adding it to a convex function that never takes negative infinity preserves convexity.",
+          "plain": "This is the extended-real constraint indicator, not the zero-outside indicator used in some other contexts.",
+          "relationship": "Shared interfaces: BanditRL.OnlineConvex.convex_indicator_iff and BanditRL.OnlineConvex.convex_add_indicator.",
+          "contract": {
+            "model": "The same extended-real epigraph model.",
+            "assumptions": "No nonempty-domain assumption. Adding constraints uses a convex feasible set and a convex function that never takes negative infinity.",
+            "parameters": "A feasible set V and an extended-real function f.",
+            "regret": "No algorithmic performance statement is made here.",
+            "guarantee": "Indicator convexity equivalence and convexity of f plus the indicator."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Constraint foundation",
+            "boundary": "General weighted combinations, affine composition and supremum closure remain separate required obligations."
+          }
+        }
+      ],
+      "worked_example": {
+        "title": "Linear values on a half-line",
+        "intro": "Let f(x)=x for x>=0 and positive infinity otherwise. Finite values vary, and the domain restriction matters.",
+        "steps": [
+          {
+            "title": "Find the domain",
+            "detail": "The effective domain is the nonnegative half-line. At minus one the value is positive infinity.",
+            "math": "\\operatorname{dom}f=[0,\\infty),\\qquad f(-1)=+\\infty.",
+            "fallback": "The domain is the nonnegative half-line."
+          },
+          {
+            "title": "Compare distinct finite points",
+            "detail": "The values at zero and two are zero and two, respectively.",
+            "math": "f(0)=0,\\qquad f(2)=2.",
+            "fallback": "The finite function is not constant."
+          },
+          {
+            "title": "Check a midpoint and its height",
+            "detail": "The midpoint is one. Height one is in the epigraph there, while height zero is not.",
+            "math": "f(1)=1=\\tfrac12 f(0)+\\tfrac12 f(2).",
+            "fallback": "The midpoint inequality is exact."
+          }
+        ],
+        "takeaway": "The theorem handles genuine infinite values outside the domain without replacing them by zero.",
+        "boundary": "The public Lean canary proves this instance and checks the separate bottom-valued definition and empty-domain boundary. It does not establish the remaining Chapter 2 results."
+      }
     }
   ]
 }

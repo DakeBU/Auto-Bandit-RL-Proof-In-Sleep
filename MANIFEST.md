@@ -15398,3 +15398,4 @@ here during local harness runs.
 - `2026-09-10T07:26:06+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
 - `2026-09-13T15:02:24+00:00` `bandit.py new-task` `task` `tasks/ONLINE-OGD-CH2-FIXED.md` - Orabona v10 Chapter 2 projected OGD fixed-step chain
 - `2026-09-14T05:49:53+00:00` `bandit.py new-task` `task` `tasks/ONLINE-BOOK-CH2-VARIABLE.md` - Orabona Theorem 2.13 decreasing-step projected OGD with terminal residual
+- `2026-09-14T06:15:46+00:00` `bandit.py new-task` `task` `tasks/ONLINE-BOOK-CH2-CONVEX.md` - Orabona extended-real convexity definitions and Theorem 2.4

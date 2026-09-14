@@ -2023,6 +2023,74 @@
         "BanditRL.OnlineLearning.independent_prediction_square",
         "BanditRL.OnlineLearning.meanPredict_memLp"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.definition_2_2",
+      "title": "Definition 2.2: convex sets",
+      "chapter": "online-convex",
+      "featured": false,
+      "teaching_order": 1,
+      "plain": "The source open-weight definition agrees with the shared convex-set API.",
+      "math": "\\(\\theta x+(1-\\theta)y\\in V\\quad(0<\\theta<1)\\)",
+      "intuition": "The source open-weight definition agrees with the shared convex-set API.",
+      "why": "This is a source-qualified Chapter 2 foundation in the shared Lean graph.",
+      "position": "Orabona v10, printed pages 9-10.",
+      "proof_idea": "Apply the positive-weight characterization and identify the second weight with one minus the first.",
+      "lean_notes": "Definition 2.3 permits both infinities. Theorem 2.4 and indicator addition retain their explicit no-negative-infinity conditions. Remaining Chapter 2 results are not completed.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.convex_indicator_iff",
+      "title": "Constraint indicators characterize convex sets",
+      "chapter": "online-convex",
+      "featured": false,
+      "teaching_order": 2,
+      "plain": "Zero on the feasible set and positive infinity outside express the set as a function.",
+      "math": "\\(\\iota_V\\text{ is convex}\\iff V\\text{ is convex}\\)",
+      "intuition": "Zero on the feasible set and positive infinity outside express the set as a function.",
+      "why": "This is a source-qualified Chapter 2 foundation in the shared Lean graph.",
+      "position": "Orabona v10, printed pages 9-10.",
+      "proof_idea": "Identify the epigraph as the feasible set times nonnegative real heights; use convexity of the effective domain for the converse.",
+      "lean_notes": "Definition 2.3 permits both infinities. Theorem 2.4 and indicator addition retain their explicit no-negative-infinity conditions. Remaining Chapter 2 results are not completed.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.convex_effectiveDomain",
+        "BanditRL.OnlineConvex.effectiveDomain_indicator"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.convex_add_indicator",
+      "title": "Adding a convex constraint",
+      "chapter": "online-convex",
+      "featured": false,
+      "teaching_order": 3,
+      "plain": "Adding a convex constraint preserves convexity when the original function never takes negative infinity.",
+      "math": "\\(f+\\iota_V\\text{ is convex}\\)",
+      "intuition": "Adding a convex constraint preserves convexity when the original function never takes negative infinity.",
+      "why": "This is a source-qualified Chapter 2 foundation in the shared Lean graph.",
+      "position": "Orabona v10, printed pages 9-10.",
+      "proof_idea": "The constrained epigraph is the original epigraph intersected with the feasible cylinder.",
+      "lean_notes": "Definition 2.3 permits both infinities. Theorem 2.4 and indicator addition retain their explicit no-negative-infinity conditions. Remaining Chapter 2 results are not completed.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.realEpigraph",
+        "BanditRL.OnlineConvex.extendedIndicator"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.theorem_2_4",
+      "title": "Theorem 2.4: epigraph and weighted values",
+      "chapter": "online-convex",
+      "featured": false,
+      "teaching_order": 4,
+      "plain": "Epigraph convexity is equivalent to the source weighted inequality under its finite-domain conditions.",
+      "math": "\\(f(\\theta x+(1-\\theta)y)\\le\\theta f(x)+(1-\\theta)f(y)\\)",
+      "intuition": "Epigraph convexity is equivalent to the source weighted inequality under its finite-domain conditions.",
+      "why": "This is a source-qualified Chapter 2 foundation in the shared Lean graph.",
+      "position": "Orabona v10, printed pages 9-10.",
+      "proof_idea": "Prove the exact real-height epigraph bridge and apply the existing real-valued positive-weight convexity equivalence.",
+      "lean_notes": "Definition 2.3 permits both infinities. Theorem 2.4 and indicator addition retain their explicit no-negative-infinity conditions. Remaining Chapter 2 results are not completed.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.convexExtended_iff_toReal"
+      ]
     }
   ]
 }

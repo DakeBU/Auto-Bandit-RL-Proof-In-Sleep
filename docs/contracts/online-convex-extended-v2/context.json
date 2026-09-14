@@ -1,0 +1,4 @@
+{
+  "prefix": "import Mathlib.Analysis.Convex.Function\nimport Mathlib.Data.EReal.Basic\nimport Mathlib.Tactic\n\nnoncomputable section\nopen Set\n\nnamespace BanditRL.OnlineConvex\n\nvariable {E : Type*} [AddCommGroup E] [Module ℝ E]\n\n/-- Source effective domain includes negative infinity and excludes positive infinity. -/\ndef effectiveDomain (f : E → EReal) : Set E := {x | f x < ⊤}\n\n/-- Epigraph heights are real, as in the source subset of R^(d+1). -/\ndef realEpigraph (f : E → EReal) : Set (E × ℝ) := {p | f p.1 ≤ (p.2 : EReal)}\n\n/-- Definition 2.3 permits both infinite function values. -/\ndef IsConvexExtended (f : E → EReal) : Prop := Convex ℝ (realEpigraph f)\n\n/-- Extended-real constraint indicator, distinct from the zero-outside Set.indicator. -/\ndef extendedIndicator (V : Set E) (x : E) : EReal := by\n  classical\n  exact if x ∈ V then 0 else ⊤\n\n",
+  "sha256": "8dd1ad3820870ac24d565a51f9b01e790389fc6acfe85e4b1c08345d1eda83ca"
+}
