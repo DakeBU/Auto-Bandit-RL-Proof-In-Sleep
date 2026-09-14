@@ -1,0 +1,4 @@
+{
+  "prefix": "import BanditRLProof.OnlineGradientDescent\nimport Mathlib.Topology.MetricSpace.Bounded\n\nnoncomputable section\nopen Set Finset\nopen scoped InnerProductSpace\n\nnamespace BanditRL.OnlineGradientDescent\n\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]\n\n/-- Algorithm 2.1 with a prescribed schedule: source round t+1 is Lean t. -/\ndef iterateVariable (V : Domain E) (η : ℕ → ℝ) (loss : ℕ → E → ℝ) (x₁ : E) : ℕ → E\n  | 0 => x₁\n  | t + 1 => step V (η t) (loss t) (iterateVariable V η loss x₁ t)\n\n/-- Regret uses exactly the variable-step trajectory, with no comparator input to the policy. -/\ndef regretVariable (V : Domain E) (η : ℕ → ℝ) (loss : ℕ → E → ℝ)\n    (x₁ u : E) (T : ℕ) : ℝ :=\n  ∑ t ∈ range T, (loss t (iterateVariable V η loss x₁ t) - loss t u)\n\n",
+  "sha256": "6844f71c70e093ff92060a4b923be74a3d301a6399967bdbc257a253e40d4720"
+}

@@ -75,3 +75,4 @@ import Tests.SubgaussianMinimaxCanary
 import Tests.OnlineGradientDescentCanary
 
 import Tests.OnlineLearningChapterOneCanary
+import Tests.OnlineGradientDescentVariableCanary

@@ -1,0 +1,1 @@
+Choose the dependency-ready variable OGD branch following Chapter1 local acceptance. Freeze five precise headers and two algorithm definitions. Keep every remaining Chapter2 source obligation visible. No acceptance before public canary/root/Tests/full harness/site/axiom/fence/semantic review.

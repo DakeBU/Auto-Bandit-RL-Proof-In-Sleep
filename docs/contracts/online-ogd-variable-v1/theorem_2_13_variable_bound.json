@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "theorem_2_13_variable_bound",
+  "file": "tmp/ch2-variable-frozen.lean",
+  "statement": "theorem theorem_2_13_variable_bound (V : Domain E) (η : ℕ → ℝ) (loss : ℕ → E → ℝ) (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (T : ℕ) (hT : 0 < T) (hη : ∀ t < T, 0 < η t) (hmono : ∀ t, t + 1 < T → η (t + 1) ≤ η t) (hloss : ∀ t < T, RegularLoss V (loss t)) (D : ℝ) (hdiam : ∀ x ∈ V.carrier, ∀ y ∈ V.carrier, ‖x - y‖ ≤ D) (u : E) (hu : u ∈ V.carrier) : regretVariable V η loss x₁ u T ≤ D ^ 2 / (2 * η (T - 1)) + (∑ t ∈ range T, η t / 2 * ‖gradient (loss t) (iterateVariable V η loss x₁ t)‖ ^ 2) - ‖iterateVariable V η loss x₁ T - u‖ ^ 2 / (2 * η (T - 1))",
+  "statement_hash": "b886af8e364d2a44e1a658924c043f5cd460ab4a3f16a47505dac670244e63e7",
+  "source_assumptions": [],
+  "created_at": "2026-09-14T05:52:03+00:00"
+}

@@ -1,0 +1,51 @@
+{
+  "scope": "ONLINE-BOOK-CH2-VARIABLE; not global SGB frontier",
+  "nodes": [
+    {
+      "name": "iterateVariable_mem",
+      "dependencies": [
+        "project_spec"
+      ],
+      "status": "accepted-local"
+    },
+    {
+      "name": "iterateVariable_prefix",
+      "dependencies": [
+        "iterateVariable"
+      ],
+      "status": "accepted-local"
+    },
+    {
+      "name": "variable_one_step",
+      "dependencies": [
+        "iterateVariable_mem",
+        "lemma_2_12"
+      ],
+      "status": "accepted-local"
+    },
+    {
+      "name": "weighted_potential_sum",
+      "dependencies": [
+        "div_le_div_of_nonneg_left"
+      ],
+      "status": "accepted-local"
+    },
+    {
+      "name": "theorem_2_13_variable_bound",
+      "dependencies": [
+        "variable_one_step",
+        "weighted_potential_sum",
+        "iterateVariable_mem"
+      ],
+      "status": "accepted-local"
+    },
+    {
+      "name": "theorem_2_13_variable",
+      "dependencies": [
+        "theorem_2_13_variable_bound",
+        "Metric.dist_le_diam_of_mem"
+      ],
+      "status": "accepted-local"
+    }
+  ]
+}
