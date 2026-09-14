@@ -300,25 +300,26 @@
     },
     {
       "slug": "online-ogd",
-      "title": "Projected OGD: Orabona Chapter 2, fixed step",
+      "title": "Projected OGD: Orabona Chapter 2",
       "short_title": "Projected OGD",
       "status": "compiled",
-      "summary": "Source-aligned projected online gradient descent: algorithm, projection, one-step inequality, fixed-step regret with terminal residual, and horizon tuning.",
+      "summary": "Actual projected gradient recursion, fixed and decreasing-step regret with terminal residuals, and fixed-horizon tuning.",
       "audience": "Readers of convex optimization and online learning; this route shares the canonical Lean declaration graph.",
-      "completion_definition": "This package covers Algorithm 2.1 at constant step, Proposition 2.11, Lemma 2.12, the fixed-step branch of Theorem 2.13 and Eq. (2.1) in arXiv:1912.13213v10. It is not completion of all Chapter 2.",
+      "completion_definition": "Algorithm 2.1, Proposition 2.11, Lemma 2.12, both fixed and positive nonincreasing-step branches of Theorem 2.13, and Eq. (2.1), arXiv:1912.13213v10. This is not completion of all Chapter 2; convex analysis, subgradient and linearization results remain required.",
       "completion_blockers": [
-        "Variable steps, general subgradients, the remainder of Chapter 2, general OMD and Tsallis dual guarantees remain outside this package."
+        "Remaining Chapter 2 convex analysis, subgradient and linearization results are required future packages."
       ],
       "learning_goals": [
         "Follow the actual projected recurrence and strict-prefix information flow.",
-        "Keep the terminal residual in the fixed-step regret theorem.",
+        "Keep the negative terminal residual for fixed and decreasing learning rates.",
         "Distinguish fixed-step unbounded-domain analysis from diameter-based tuning."
       ],
       "module_globs": [
-        "BanditRLProof/OnlineGradientDescent.lean"
+        "BanditRLProof/OnlineGradientDescent.lean",
+        "BanditRLProof/OnlineGradientDescentVariable.lean"
       ],
       "open_gaps": [
-        "The variable-step branch of Theorem 2.13 is not covered.",
+        "Remaining Chapter 2 convex analysis, subgradient and linearization results are not completed.",
         "General OMD, FTRL extensions and Tsallis dual guarantees are separate work."
       ]
     },

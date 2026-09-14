@@ -99,7 +99,9 @@ class BookRegistryTests(unittest.TestCase):
         nodes = membership_index(registry)
         chapter = next(c for c in registry["chapters"] if c["id"] == "teaching:online-ogd")
         names = ["iterate", "iterate_prefix", "proposition_2_11", "first_order",
-                 "lemma_2_12", "theorem_2_13_fixed", "equation_2_1"]
+                 "lemma_2_12", "theorem_2_13_fixed", "equation_2_1",
+                 "iterateVariable", "iterateVariable_prefix", "variable_one_step",
+                 "theorem_2_13_variable_bound", "theorem_2_13_variable"]
         for name in names:
             key = "declaration:BanditRL.OnlineGradientDescent." + name
             self.assertIn(key, chapter["node_ids"])
@@ -107,7 +109,7 @@ class BookRegistryTests(unittest.TestCase):
             self.assertEqual("source", nodes[key]["status"])
         scope = next(c for c in self.chapters if c["slug"] == "online-ogd")
         self.assertIn("not completion of all Chapter 2", scope["completion_definition"])
-        self.assertIn("variable-step", " ".join(scope["open_gaps"]))
+        self.assertIn("subgradient", " ".join(scope["open_gaps"]))
 
     def test_online_foundations_use_the_shared_registry(self):
         registry = self.registry()

@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "variable_one_step",
+  "file": "tmp/ch2-variable-frozen.lean",
+  "statement": "theorem variable_one_step (V : Domain E) (η : ℕ → ℝ) (loss : ℕ → E → ℝ) (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (t : ℕ) (hη : 0 < η t) (hloss : RegularLoss V (loss t)) (u : E) (hu : u ∈ V.carrier) : loss t (iterateVariable V η loss x₁ t) - loss t u ≤ (‖iterateVariable V η loss x₁ t - u‖ ^ 2 - ‖iterateVariable V η loss x₁ (t + 1) - u‖ ^ 2) / (2 * η t) + η t / 2 * ‖gradient (loss t) (iterateVariable V η loss x₁ t)‖ ^ 2",
+  "statement_hash": "42fdcfcfde0d72f5143573bf65bb53582dac3196b790892fa891eb7377a55c0a",
+  "source_assumptions": [],
+  "created_at": "2026-09-14T05:52:03+00:00"
+}

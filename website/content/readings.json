@@ -1448,7 +1448,7 @@
         "title": "Online Learning: A Modern Introduction Using Convex Optimization",
         "authors": "Francesco Orabona",
         "edition": "arXiv:1912.13213v10, 21 June 2026",
-        "sections": "Section 2.1.2; Algorithm 2.1, Proposition 2.11, Lemma 2.12, Theorem 2.13 fixed step, Eq. (2.1)",
+        "sections": "Section 2.1.2; Algorithm 2.1, Proposition 2.11, Lemma 2.12, Theorem 2.13 fixed and decreasing steps, Eq. (2.1)",
         "pages": "printed pp. 12-15; PDF pp. 24-27",
         "pdf_page": 24,
         "url": "https://arxiv.org/pdf/1912.13213v10"
@@ -1468,12 +1468,12 @@
         }
       ],
       "algorithm": {
-        "title": "Algorithm 2.1 with a fixed positive step",
+        "title": "Algorithm 2.1 with fixed or positive nonincreasing steps",
         "kind": "projected online gradient descent",
         "steps": [
           {
             "title": "Initialize",
-            "detail": "Choose x1 in the nonempty closed convex set V and fix eta > 0."
+            "detail": "Choose x1 in V. Use a fixed positive eta, or a prescribed positive nonincreasing schedule eta_t for a bounded V."
           },
           {
             "title": "Predict",
@@ -1485,7 +1485,7 @@
           },
           {
             "title": "Project",
-            "detail": "Project x - eta times the gradient onto V and continue."
+            "detail": "Project x_t - eta_t times the current gradient onto V and continue. The fixed-step branch uses the same eta throughout."
           }
         ]
       },
@@ -1515,7 +1515,7 @@
           "local_status": {
             "status": "compiled",
             "label": "Scoped fixed-step proof",
-            "boundary": "Only this named interface is covered. Theorem 2.13 variable steps, remaining Chapter 2, general OMD and Tsallis dual guarantees are not completed."
+            "boundary": "Only the named interface is covered by this entry. The decreasing-step branch has its own source-qualified entry. Remaining Chapter 2, general OMD and Tsallis dual guarantees are not completed."
           }
         },
         {
@@ -1537,7 +1537,7 @@
           "local_status": {
             "status": "compiled",
             "label": "Scoped fixed-step proof",
-            "boundary": "Only this named interface is covered. Theorem 2.13 variable steps, remaining Chapter 2, general OMD and Tsallis dual guarantees are not completed."
+            "boundary": "Only the named interface is covered by this entry. The decreasing-step branch has its own source-qualified entry. Remaining Chapter 2, general OMD and Tsallis dual guarantees are not completed."
           }
         },
         {
@@ -1559,7 +1559,7 @@
           "local_status": {
             "status": "compiled",
             "label": "Scoped fixed-step proof",
-            "boundary": "Only this named interface is covered. Theorem 2.13 variable steps, remaining Chapter 2, general OMD and Tsallis dual guarantees are not completed."
+            "boundary": "Only the named interface is covered by this entry. The decreasing-step branch has its own source-qualified entry. Remaining Chapter 2, general OMD and Tsallis dual guarantees are not completed."
           }
         },
         {
@@ -1581,7 +1581,29 @@
           "local_status": {
             "status": "compiled",
             "label": "Scoped fixed-step proof",
-            "boundary": "Only this named interface is covered. Theorem 2.13 variable steps, remaining Chapter 2, general OMD and Tsallis dual guarantees are not completed."
+            "boundary": "Only the named interface is covered by this entry. The decreasing-step branch has its own source-qualified entry. Remaining Chapter 2, general OMD and Tsallis dual guarantees are not completed."
+          }
+        },
+        {
+          "label": "Theorem 2.13: positive nonincreasing steps",
+          "pages": "printed pp. 13-14",
+          "pdf_page": 25,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "R_T(u)\\le\\frac{D^2}{2\\eta_T}+\\sum_{t=1}^T\\frac{\\eta_t}{2}\\|g_t\\|^2-\\frac{\\|x_{T+1}-u\\|^2}{2\\eta_T}",
+          "fallback": "Decreasing learning rates give a finite-diameter regret bound with the negative terminal squared distance retained.",
+          "plain": "The same generated trajectory determines all gradients and the terminal residual.",
+          "relationship": "Exact shared declaration: BanditRL.OnlineGradientDescent.theorem_2_13_variable. Sum actual variable_one_step inequalities through weighted_potential_sum; boundedness supplies the finite Metric.diam interface.",
+          "contract": {
+            "model": "Projected OGD in finite-dimensional real Euclidean space; the Lean interface supports real Hilbert spaces.",
+            "assumptions": "Nonempty closed convex bounded V; feasible initial point and comparator; convex differentiable losses on open neighborhoods; positive nonincreasing learning rates; T>=1.",
+            "parameters": "Source D is the exact finite diameter; the separate theorem_2_13_variable_bound accepts any pairwise-distance upper bound. Zero diameter is allowed.",
+            "regret": "Deterministic cumulative comparator loss difference for iterateVariable; source eta_T is Lean eta(T-1).",
+            "guarantee": "D squared over twice the final step, plus weighted gradient energy, minus the terminal squared distance over twice the final step."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Scoped decreasing-step proof",
+            "boundary": "Only Theorem2.13 decreasing-step branch and its actual recursion are covered; remaining Chapter2 results are required separate packages."
           }
         }
       ],

@@ -1,6 +1,6 @@
 # Chapter 2 remaining source obligations, v1 audit
 
-Source v10 printed pp. 8-23, PDF pp. 20-35. Scope inventory is draft: none of the remaining statements is accepted or silently represented by the fixed-step real-valued theorem. All numbered required entries are in source-inventory.json. Formal results with exercise proofs remain required.
+Source v10 printed pp. 8-23, PDF pp. 20-35. The fixed and decreasing-step OGD packages are accepted locally; the remaining convex-analysis, subgradient, example and linearization statements below are still under contract review. No remaining statement is silently represented by the real-valued OGD specialization. All numbered required entries are in source-inventory.json. Formal results with exercise proofs remain required.
 
 ## Decreasing-step terminal reviewed intent
 
@@ -20,4 +20,4 @@ Source defines D as diameter. A bound D with all pairwise distances <=D is suffi
 
 2.10: actual FTL alternating linear-loss failure, regret >=T-3/2. 2.14: squared guessing gradient, interval projection formula, OGD guarantee. 2.15: Huber linear prediction, gradient formula, bounded-feature regret. 2.31 and Algorithm 2.2: actual subgradient feedback recursion, both one-step inequalities, inherited fixed/decreasing cumulative residual branches and tuning. The chosen subgradient depends only on current loss and current iterate; existence is not arbitrary full-sequence algorithm access. 2.32: absolute-loss guessing bound. Section 2.3: causal linearization and regret comparison. Unit-scaling example is an algebraic identity, not a separate regret theorem.
 
-Next: Chapter 1 gate first; prepare exact Lean signatures for Chapter 2 only after resolving the above domain semantics. No purported frozen Lean targets for unaudited extended-real results. No exclusions based on proof difficulty.
+Progress: Chapter1 and the Theorem2.13 variable-step package passed local gates. Next: finish precise contracts for the remaining Chapter2 obligations after resolving the above domain semantics. No purported frozen Lean targets for unaudited extended-real results. No exclusions based on proof difficulty.
