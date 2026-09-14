@@ -1,0 +1,7 @@
+# Orabona Example2.14 stabilized v1
+
+Source v10 printedp15/PDF27. Squared-loss guessing game with x,y in[0,1]; gradient2(x-y), norm<=2; projection min(max(z,0),1). Source tuned O(sqrtT) upper regret is made explicit as2sqrtT for D=1,G=2 and eta=1/(2sqrtT), T>=1. This is the same actual fixed-step OGD recurrence with horizon-selected step, all feasible comparators and arbitrary feasible initial value. No assumed gradient or regret consumer replaces derivation.
+
+Six exact headers and public-intended interval domain frozen before proof search. DAG: interval variational projection -> clamp; global squared-loss convexity/differentiability -> regularity and exact gradient -> bounded gradient on actual feasible iterates -> shared equation_2_1 -> concrete source rate. Step identity connects the explicit clamp to the same existing algorithm. Source comparison to Chapter1 logarithmic FTL is explanatory; no new Chapter4 result claimed. Empty horizon is excluded from tuning, not assigned eta(0). Same-model GPT-6 Astra/medium roles. Scratch work only during FTL gates; public integration/canary/axiom/full harness/site remain required.
+
+Public integration v2 changes only module/fence paths; six exact headers and the full definition/context prefix are byte-identical to v1. No source assumption, algorithm or conclusion change. Original v1 probes and failure logs remain. Public source/axiom/root/Tests/full-harness/graph/site acceptance is separate from prior scratch compilation.

@@ -1,0 +1,80 @@
+import BanditRLProof.OnlineGradientDescent
+import Mathlib.Analysis.Convex.Mul
+
+noncomputable section
+open Set Finset
+namespace BanditRL.OnlineGradientDescent
+
+def unitInterval : Domain ℝ where
+  carrier := Icc 0 1
+  nonempty := ⟨0, by norm_num⟩
+  closed := isClosed_Icc
+  convex := convex_Icc 0 1
+
+theorem project_unitInterval (z : ℝ) :
+    project unitInterval z = min (max z 0) 1 := by
+  by_cases h0 : z ≤ 0
+  · rw [max_eq_right h0, min_eq_left (by norm_num : (0:ℝ) ≤ 1)]
+    apply project_eq_of_variational unitInterval z 0 (by norm_num [unitInterval])
+    intro w hw
+    change w ∈ Icc (0:ℝ) 1 at hw
+    change (w-0)*(z-0) ≤ 0
+    nlinarith [hw.1]
+  · have hz0 : 0 ≤ z := le_of_lt (lt_of_not_ge h0)
+    rw [max_eq_left hz0]
+    by_cases h1 : 1 ≤ z
+    · rw [min_eq_right h1]
+      apply project_eq_of_variational unitInterval z 1 (by norm_num [unitInterval])
+      intro w hw
+      change w ∈ Icc (0:ℝ) 1 at hw
+      change (w-1)*(z-1) ≤ 0
+      exact mul_nonpos_of_nonpos_of_nonneg (sub_nonpos.mpr hw.2) (sub_nonneg.mpr h1)
+    · have hz1 : z ≤ 1 := le_of_lt (lt_of_not_ge h1)
+      rw [min_eq_left hz1]
+      apply project_eq_of_variational unitInterval z z ⟨hz0,hz1⟩
+      intro w hw
+      simp
+
+theorem square_regular (y : ℝ) :
+    RegularLoss unitInterval (fun x : ℝ => (x-y)^2) := by
+  refine ⟨univ, isOpen_univ, subset_univ _, ?_, ?_⟩
+  · simpa using (Even.convexOn_pow (𝕜 := ℝ) (by decide : Even 2)).comp_affineMap
+      (AffineMap.id ℝ ℝ - AffineMap.const ℝ ℝ y)
+  · exact ((differentiable_id.sub_const y).pow 2).differentiableOn
+
+theorem gradient_square (y x : ℝ) :
+    gradient (fun x : ℝ => (x-y)^2) x = 2 * (x-y) := by
+  simpa using ((((hasDerivAt_id x).sub_const y).pow 2).hasGradientAt).gradient
+
+theorem gradient_square_bound (y x : ℝ) (hy : y ∈ Icc (0 : ℝ) 1)
+    (hx : x ∈ Icc (0 : ℝ) 1) : ‖gradient (fun x : ℝ => (x-y)^2) x‖ ≤ 2 := by
+  rw [gradient_square, Real.norm_eq_abs, abs_le]
+  constructor <;> linarith [hx.1,hx.2,hy.1,hy.2]
+
+theorem square_step_clamp (η y x : ℝ) :
+    step unitInterval η (fun x : ℝ => (x-y)^2) x =
+      min (max (x - 2 * η * (x-y)) 0) 1 := by
+  rw [step, gradient_square, project_unitInterval]
+  congr 2
+  simp only [smul_eq_mul]
+  ring
+
+theorem example_2_14 (y : ℕ → ℝ) (x0 : ℝ) (hx0 : x0 ∈ Icc (0 : ℝ) 1)
+    (T : ℕ) (hT : 0 < T) (hy : ∀ t < T, y t ∈ Icc (0 : ℝ) 1) :
+    ∀ u ∈ Icc (0 : ℝ) 1,
+      regret unitInterval (1 / (2 * Real.sqrt T)) (fun t x => (x-y t)^2) x0 u T ≤
+        2 * Real.sqrt T := by
+  have hdiam : ∀ x ∈ unitInterval.carrier, ∀ z ∈ unitInterval.carrier, ‖x-z‖ ≤ (1:ℝ) := by
+    intro x hx z hz
+    change x ∈ Icc (0:ℝ) 1 at hx
+    change z ∈ Icc (0:ℝ) 1 at hz
+    rw [Real.norm_eq_abs, abs_le]
+    constructor <;> linarith [hx.1,hx.2,hz.1,hz.2]
+  have hgrad : ∀ t < T,
+      ‖gradient (fun x : ℝ => (x-y t)^2)
+        (iterate unitInterval (1/(2*Real.sqrt T)) (fun t x => (x-y t)^2) x0 t)‖ ≤ 2 := by
+    intro t ht
+    exact gradient_square_bound (y t) _ (hy t ht) (iterate_mem unitInterval _ _ x0 hx0 t)
+  simpa only [one_mul] using equation_2_1 unitInterval (fun t x => (x-y t)^2) x0 hx0 T hT
+    1 2 (by norm_num) (by norm_num) hdiam (fun t _ => square_regular (y t)) hgrad
+end BanditRL.OnlineGradientDescent

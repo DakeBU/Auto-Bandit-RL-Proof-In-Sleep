@@ -1,0 +1,2 @@
+Identify Hilbert projection on[0,1] by variational uniqueness, derive global regularity and exact gradient of square loss, then gradient bound on actual feasible iterates. Rewrite actual step as clamp and apply shared equation_2_1 with D=1,G=2.
+`nLower witness: initial1, zero labels, T=(2n)^2 and the identical tuned step1/(4n). Derive the actual geometric trajectory from square_step_clamp; Bernoulli bounds the first n losses and sum monotonicity yields n/4 regret. This is a supporting witness, not a printed numerical source bound.

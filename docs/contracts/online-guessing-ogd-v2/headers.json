@@ -1,0 +1,8 @@
+{
+  "project_unitInterval": "theorem project_unitInterval (z : \u211d) :\n    project unitInterval z = min (max z 0) 1",
+  "square_regular": "theorem square_regular (y : \u211d) :\n    RegularLoss unitInterval (fun x : \u211d => (x-y)^2)",
+  "gradient_square": "theorem gradient_square (y x : \u211d) :\n    gradient (fun x : \u211d => (x-y)^2) x = 2 * (x-y)",
+  "gradient_square_bound": "theorem gradient_square_bound (y x : \u211d) (hy : y \u2208 Icc (0 : \u211d) 1)\n    (hx : x \u2208 Icc (0 : \u211d) 1) : \u2016gradient (fun x : \u211d => (x-y)^2) x\u2016 \u2264 2",
+  "square_step_clamp": "theorem square_step_clamp (\u03b7 y x : \u211d) :\n    step unitInterval \u03b7 (fun x : \u211d => (x-y)^2) x =\n      min (max (x - 2 * \u03b7 * (x-y)) 0) 1",
+  "example_2_14": "theorem example_2_14 (y : \u2115 \u2192 \u211d) (x0 : \u211d) (hx0 : x0 \u2208 Icc (0 : \u211d) 1)\n    (T : \u2115) (hT : 0 < T) (hy : \u2200 t < T, y t \u2208 Icc (0 : \u211d) 1) :\n    \u2200 u \u2208 Icc (0 : \u211d) 1,\n      regret unitInterval (1 / (2 * Real.sqrt T)) (fun t x => (x-y t)^2) x0 u T \u2264\n        2 * Real.sqrt T"
+}

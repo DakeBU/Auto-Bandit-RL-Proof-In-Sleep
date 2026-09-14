@@ -1,0 +1,35 @@
+import Mathlib.Analysis.Calculus.Deriv.Basic
+import Mathlib.Analysis.Calculus.Deriv.Add
+import Mathlib.Tactic
+import Mathlib.Analysis.Calculus.Deriv.Pow
+import Mathlib.Analysis.Calculus.Deriv.Mul
+
+open Set
+namespace BanditRL.OnlineHuber
+
+theorem hasDerivAt_ite_le (f g : ℝ → ℝ) (c d : ℝ)
+    (hf : HasDerivAt f d c) (hg : HasDerivAt g d c) (he : f c = g c) :
+    HasDerivAt (fun x => if x ≤ c then f x else g x) d c := by
+  have hl : HasDerivWithinAt (fun x => if x ≤ c then f x else g x) d (Iic c) c := by
+    apply hf.hasDerivWithinAt.congr
+    · intro x hx
+      simp [show x ≤ c from hx]
+    · simp
+  have hr : HasDerivWithinAt (fun x => if x ≤ c then f x else g x) d (Ioi c) c := by
+    apply hg.hasDerivWithinAt.congr
+    · intro x hx
+      simp [not_le.mpr (show c < x from hx)]
+    · simpa using he
+  have hu := hl.union hr
+  simpa only [Iic_union_Ioi, hasDerivWithinAt_univ] using hu
+end BanditRL.OnlineHuber
+
+namespace HuberSeamProbe
+lemma upper_join : HasDerivAt (fun x : ℝ => if x ≤ 1 then x^2/2 else x-1/2) 1 1 := by
+  apply BanditRL.OnlineHuber.hasDerivAt_ite_le
+  · simpa using (((hasDerivAt_id (1:ℝ)).pow 2).div_const 2)
+  · exact (hasDerivAt_id (1:ℝ)).sub_const (1/2)
+  · norm_num
+#print axioms upper_join
+#print axioms BanditRL.OnlineHuber.hasDerivAt_ite_le
+end HuberSeamProbe

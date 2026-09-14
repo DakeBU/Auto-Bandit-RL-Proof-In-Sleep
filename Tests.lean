@@ -90,3 +90,7 @@ import Tests.OnlineConvexMinorantCanary
 import Tests.OnlineJensenCanary
 
 import Tests.OnlineFTLFailureCanary
+
+import Tests.OnlineGuessingOGDCanary
+
+import Tests.OnlineGuessingLowerCanary

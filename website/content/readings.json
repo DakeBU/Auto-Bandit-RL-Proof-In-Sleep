@@ -2758,6 +2758,134 @@
         "takeaway": "Convexity alone does not protect unregularized FTL from alternating losses.",
         "boundary": "The example contrasts with the separately proved projected OGD guarantees; it is not a lower bound against every online algorithm."
       }
+    },
+    {
+      "slug": "online-guessing-ogd",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10, 21 June 2026",
+        "sections": "Section2.1.2, Example2.14 (OGD guessing game)",
+        "pages": "printedp15/PDF27",
+        "pdf_page": 27,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "square loss",
+          "meaning": "The actual loss is(x-y_t)^2, with prediction and observation in[0,1]."
+        },
+        {
+          "term": "clamp",
+          "meaning": "The selected Hilbert projection equals min(max(z,0),1)."
+        },
+        {
+          "term": "horizon-tuned step",
+          "meaning": "For T>=1 use1/(2sqrtT), with diameter1 and gradient bound2."
+        }
+      ],
+      "algorithm": {
+        "title": "Same shared OGD recursion",
+        "kind": "causal projected update",
+        "steps": [
+          {
+            "title": "Evaluate the current square-loss gradient",
+            "detail": "At x, the actual gradient is2(x-y_t)."
+          },
+          {
+            "title": "Take and project the step",
+            "detail": "Clamp x-2eta(x-y_t) into[0,1], exactly the shared project/step."
+          },
+          {
+            "title": "Apply the tuned source bound",
+            "detail": "Feasibility gives gradient norm<=2 along the same recurrence, hence regret<=2sqrtT for every feasible comparator."
+          }
+        ]
+      },
+      "teaching_route": [
+        "BanditRL.OnlineGradientDescent.project_unitInterval",
+        "BanditRL.OnlineGradientDescent.gradient_square",
+        "BanditRL.OnlineGradientDescent.example_2_14",
+        "BanditRL.OnlineGradientDescent.guessing_squared_horizon_lower"
+      ],
+      "source_theorems": [
+        {
+          "label": "Example2.14: OGD guessing game",
+          "pages": "printedp15",
+          "pdf_page": 27,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "R_T(u)\\le 2\\sqrt T,\\qquad\\eta=\\frac1{2\\sqrt T}",
+          "fallback": "The source O(sqrtT) upper-regret claim is established with an explicit valid constant2.",
+          "plain": "The square-loss gradient bound and clamp are derived for the actual OGD algorithm.",
+          "relationship": "The source states an O(sqrtT) rate. This public instance makes its constant explicit using D=1,G=2 in the shared theorem; it does not attribute that printed constant to the book.",
+          "contract": {
+            "model": "Predictions, observations and comparator in[0,1]; squared loss.",
+            "assumptions": "Arbitrary feasible initial value, T>=1, observations feasible for all rounds before T.",
+            "parameters": "One horizon-tuned fixed step1/(2sqrtT).",
+            "regret": "Actual shared OGD recurrence versus every fixed feasible comparator.",
+            "guarantee": "At most2sqrtT, with exact gradient and projection identities."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Concrete square-loss OGD source instance",
+            "boundary": "Example2.14 only; Huber and later Chapter2 results remain required."
+          }
+        },
+        {
+          "label": "Example2.14: comparative remark, derived lower witness",
+          "pages": "printedp15",
+          "pdf_page": 27,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "T=(2n)^2,\\qquad R_T(0)\\ge n/4=\\sqrt T/8",
+          "fallback": "All labels0 and initial1 produce square-root regret on arbitrarily large square horizons under the same tuned step.",
+          "plain": "A weaker upper bound alone would not establish actual suboptimality; this witness supplies a real lower bound.",
+          "relationship": "The numerical lower witness is a derived strengthening that substantiates the source prose comparison; it is not a numerical theorem printed in the book. It covers an admissible fixed initialization, not every initialization simultaneously. The global logarithmic FTL guarantee is mapped in Chapter1.",
+          "contract": {
+            "model": "Same unit-interval squared-loss OGD, all labels0, initial1, comparator0.",
+            "assumptions": "n>=1, T=(2n)^2 and the same source step1/(2sqrtT)=1/(4n).",
+            "parameters": "Arbitrarily large square horizons.",
+            "regret": "Actual causal OGD regret, not a postulated prediction sequence.",
+            "guarantee": "Exact trajectory(1-1/(2n))^t; first n losses at least1/4 each."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Actual lower witness for the comparison",
+            "boundary": "This is not a lower bound against every online algorithm or every initialization."
+          }
+        }
+      ],
+      "worked_example": {
+        "title": "Projection and tuning are separate checks",
+        "intro": "Start at1/2 and reveal labels1 then0. The actual square-loss update can hit both interval endpoints.",
+        "steps": [
+          {
+            "title": "Project above the interval",
+            "detail": "With step1 the first raw update is3/2, and the actual projected next point is1.",
+            "math": "x_2=\\Pi_{[0,1]}(3/2)=1",
+            "fallback": "The canary exercises the real shared projection, not just arithmetic on a clamp."
+          },
+          {
+            "title": "Project below the interval",
+            "detail": "The next label0 gives raw update-1 and projected point0.",
+            "math": "x_3=\\Pi_{[0,1]}(-1)=0",
+            "fallback": "The same recurrence handles the other active boundary."
+          },
+          {
+            "title": "Instantiate the horizon-tuned guarantee",
+            "detail": "For four rounds the tuned step is1/4 and the public bound is4 for every feasible comparator.",
+            "math": "\\eta_4=1/4,\\qquad R_4(u)\\le4",
+            "fallback": "This tuned trajectory is distinct from the step1 projection demonstration."
+          },
+          {
+            "title": "Check a true lower witness",
+            "detail": "With all labels0, initial1 and horizon64, the same tuned step is1/16; regret is at least1 and the first next point is7/8.",
+            "math": "x_2=7/8,\\qquad R_{64}(0)\\ge1",
+            "fallback": "This separate source-admissible stream establishes a lower bound, rather than inferring one from the upper guarantee."
+          }
+        ],
+        "takeaway": "The concrete update and the tuned guarantee refer to the same shared algorithm definition.",
+        "boundary": "The lower witness and the separately proved global Chapter1 logarithmic guarantee support the comparison. No Chapter4 result or all-algorithm lower bound is claimed."
+      }
     }
   ]
 }

@@ -2554,6 +2554,93 @@
       "dependencies": [
         "BanditRL.OnlineLearning.failure_prediction"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescent.project_unitInterval",
+      "title": "Interval projection equals clamp",
+      "chapter": "online-guessing-ogd",
+      "featured": false,
+      "teaching_order": 1,
+      "plain": "Interval projection equals clamp",
+      "math": "\\(\\Pi_{[0,1]}z=\\min(\\max(z,0),1)\\)",
+      "intuition": "Use the variational projection identity in the below/inside/above cases.",
+      "why": "Instantiates the source example in the same shared causal OGD library.",
+      "position": "Orabona v10 printedp15/PDF27.",
+      "proof_idea": "Use the variational projection identity in the below/inside/above cases.",
+      "lean_notes": "No regularity or gradient bound is assumed as a consumer premise; both are derived from squared loss and feasibility.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescent.project_eq_of_variational"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescent.gradient_square",
+      "title": "Exact square-loss gradient",
+      "chapter": "online-guessing-ogd",
+      "featured": false,
+      "teaching_order": 2,
+      "plain": "Exact square-loss gradient",
+      "math": "\\(\\nabla\\ell_t(x)=2(x-y_t)\\)",
+      "intuition": "Differentiate the actual squared residual and identify its gradient.",
+      "why": "Instantiates the source example in the same shared causal OGD library.",
+      "position": "Orabona v10 printedp15/PDF27.",
+      "proof_idea": "Differentiate the actual squared residual and identify its gradient.",
+      "lean_notes": "No regularity or gradient bound is assumed as a consumer premise; both are derived from squared loss and feasibility.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescent.square_step_clamp",
+      "title": "Concrete projected square-loss update",
+      "chapter": "online-guessing-ogd",
+      "featured": false,
+      "teaching_order": 3,
+      "plain": "Concrete projected square-loss update",
+      "math": "\\(x_{t+1}=\\min(\\max(x_t-2\\eta(x_t-y_t),0),1)\\)",
+      "intuition": "Rewrite the shared step with its proved gradient and interval projection.",
+      "why": "Instantiates the source example in the same shared causal OGD library.",
+      "position": "Orabona v10 printedp15/PDF27.",
+      "proof_idea": "Rewrite the shared step with its proved gradient and interval projection.",
+      "lean_notes": "No regularity or gradient bound is assumed as a consumer premise; both are derived from squared loss and feasibility.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescent.project_unitInterval",
+        "BanditRL.OnlineGradientDescent.gradient_square"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescent.example_2_14",
+      "title": "Explicit square-root regret bound",
+      "chapter": "online-guessing-ogd",
+      "featured": false,
+      "teaching_order": 4,
+      "plain": "Explicit square-root regret bound",
+      "math": "\\(R_T(u)\\le2\\sqrt T\\)",
+      "intuition": "Bound actual iterate gradients by feasibility and instantiate the shared tuned OGD theorem.",
+      "why": "Instantiates the source example in the same shared causal OGD library.",
+      "position": "Orabona v10 printedp15/PDF27.",
+      "proof_idea": "Bound actual iterate gradients by feasibility and instantiate the shared tuned OGD theorem.",
+      "lean_notes": "No regularity or gradient bound is assumed as a consumer premise; both are derived from squared loss and feasibility.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescent.square_regular",
+        "BanditRL.OnlineGradientDescent.gradient_square_bound",
+        "BanditRL.OnlineGradientDescent.equation_2_1"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescent.guessing_squared_horizon_lower",
+      "title": "A true square-root lower witness",
+      "chapter": "online-guessing-ogd",
+      "featured": false,
+      "teaching_order": 5,
+      "plain": "Constant zero labels yield a square-root regret lower bound for the tuned OGD.",
+      "math": "\\(R_{(2n)^2}(0)\\ge n/4\\)",
+      "intuition": "A small fixed step learns a constant target slowly.",
+      "why": "Substantiates the source comparison with an actual lower witness.",
+      "position": "Orabona v10 printedp15/PDF27.",
+      "proof_idea": "Prove the exact geometric trajectory, apply Bernoulli to its first n terms, and sum their squared losses.",
+      "lean_notes": "The exact horizon-selected step is identified separately; the initial point1 and comparator0 are fixed admissible choices.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescent.guessing_zero_trajectory",
+        "BanditRL.OnlineGradientDescent.guessing_tuned_eta_square"
+      ]
     }
   ]
 }
