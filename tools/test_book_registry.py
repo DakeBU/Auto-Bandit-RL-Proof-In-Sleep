@@ -150,6 +150,16 @@ class BookRegistryTests(unittest.TestCase):
         self.assertIn("teaching:online-ogd", next(b for b in self.config["books"]
                       if b["id"] == "online-learning")["chapter_refs"])
 
+    def test_optimality_uses_shared_source_qualified_declarations(self):
+        registry = self.registry()
+        nodes = membership_index(registry)
+        chapter = next(c for c in registry["chapters"] if c["id"] == "teaching:online-optimality")
+        for name in ["minOn_real_iff_gradient", "minOn_finitePart_iff", "theorem_2_8",
+                     "interior_min_iff_gradient_zero"]:
+            key = "declaration:BanditRL.OnlineConvex." + name
+            self.assertIn(key, chapter["node_ids"])
+            self.assertEqual(["online-learning"], nodes[key]["books"])
+
     def test_preview_badge_cannot_borrow_evidence_from_another_declaration(self):
         source = ('<details class="declaration" id="a"><summary>'
                   '<span class="status source">Source indexed</span></summary></details>'

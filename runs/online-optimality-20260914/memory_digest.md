@@ -1,0 +1,3 @@
+Four v1 optimality headers closed in leaf02; canary03 succeeds. Explicitly unfold IsMinOn membership before arithmetic and EReal rewriting. For finite EReal numerals prefer coe-order iff rather than broad norm_num rewriting powers into EReal. Source neighborhood-convexity is restricted to V, a documented strengthening; never silently force U convex in the general endpoint. Interior V is essential for zero gradient. Total Goal and Chapter2 incomplete. Full gates pending.
+
+All acceptance gates now passed; see acceptance-decision.md. Next required Jensen source semantics were only audited read-only; no strengthened finite-loss substitute is accepted.

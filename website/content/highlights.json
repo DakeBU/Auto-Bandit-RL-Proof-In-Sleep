@@ -2245,6 +2245,74 @@
         "BanditRL.OnlineConvex.convex_gradient_lower_bound",
         "BanditRL.OnlineConvex.convexExtended_iff_toReal"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.minOn_real_iff_gradient",
+      "title": "Real optimality criterion",
+      "chapter": "online-optimality",
+      "featured": false,
+      "teaching_order": 1,
+      "plain": "A real convex function is minimized iff all feasible gradient directions are nonnegative.",
+      "math": "\\(x\\in\\operatorname{argmin}_V f\\iff\\forall y\\in V,\\ \\langle\\nabla f(x),y-x\\rangle\\ge0\\)",
+      "intuition": "A real convex function is minimized iff all feasible gradient directions are nonnegative.",
+      "why": "Preserves the distinction between boundary and interior convex minima.",
+      "position": "Orabona v10 printedp11/PDF23.",
+      "proof_idea": "Use local minimum derivatives on convex segments for necessity and the supporting plane for sufficiency.",
+      "lean_notes": "Convexity on V is an explicit strengthening of the source sufficient premise. No closedness or boundedness; finite representation is used only on its finite neighborhood.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.convex_gradient_lower_bound"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.minOn_finitePart_iff",
+      "title": "Finite representation preserves minima",
+      "chapter": "online-optimality",
+      "featured": false,
+      "teaching_order": 2,
+      "plain": "Finite values have exactly the same minimum order before and after real representation.",
+      "math": "\\(\\operatorname{IsMinOn}f\\,V\\,x\\iff\\operatorname{IsMinOn}(\\mathrm{toReal}\\circ f)\\,V\\,x\\)",
+      "intuition": "Finite values have exactly the same minimum order before and after real representation.",
+      "why": "Preserves the distinction between boundary and interior convex minima.",
+      "position": "Orabona v10 printedp11/PDF23.",
+      "proof_idea": "Rewrite the finite values at the candidate and comparator using exact EReal coercions.",
+      "lean_notes": "Convexity on V is an explicit strengthening of the source sufficient premise. No closedness or boundedness; finite representation is used only on its finite neighborhood.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.theorem_2_8",
+      "title": "Orabona Theorem 2.8",
+      "chapter": "online-optimality",
+      "featured": false,
+      "teaching_order": 3,
+      "plain": "All feasible gradient directions characterize a minimum.",
+      "math": "\\(x\\in\\operatorname{argmin}_V f\\iff\\forall y\\in V,\\ \\langle\\nabla f(x),y-x\\rangle\\ge0\\)",
+      "intuition": "All feasible gradient directions characterize a minimum.",
+      "why": "Preserves the distinction between boundary and interior convex minima.",
+      "position": "Orabona v10 printedp11/PDF23.",
+      "proof_idea": "Combine the real criterion and finite-value order equivalence, using the open neighborhood for differentiation.",
+      "lean_notes": "Convexity on V is an explicit strengthening of the source sufficient premise. No closedness or boundedness; finite representation is used only on its finite neighborhood.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.minOn_real_iff_gradient",
+        "BanditRL.OnlineConvex.minOn_finitePart_iff"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.interior_min_iff_gradient_zero",
+      "title": "Interior minima and zero gradient",
+      "chapter": "online-optimality",
+      "featured": false,
+      "teaching_order": 4,
+      "plain": "At an interior feasible point, a minimum is equivalent to a zero gradient.",
+      "math": "\\(x\\in\\operatorname{int}V:\\quad x\\in\\operatorname{argmin}_V f\\iff\\nabla f(x)=0\\)",
+      "intuition": "At an interior feasible point, a minimum is equivalent to a zero gradient.",
+      "why": "Preserves the distinction between boundary and interior convex minima.",
+      "position": "Orabona v10 printedp11/PDF23.",
+      "proof_idea": "Use the local-minimum Fermat theorem for necessity and the full feasible-direction criterion for sufficiency.",
+      "lean_notes": "Convexity on V is an explicit strengthening of the source sufficient premise. No closedness or boundedness; finite representation is used only on its finite neighborhood.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.minOn_finitePart_iff",
+        "BanditRL.OnlineConvex.theorem_2_8"
+      ]
     }
   ]
 }

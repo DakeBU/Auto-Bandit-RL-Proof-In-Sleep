@@ -1,0 +1,58 @@
+tmp/online-convex-optimality-reviewed.lean:13:2: error: draft optimality header, not proof
+E : Type u_1
+inst✝² : NormedAddCommGroup E
+inst✝¹ : InnerProductSpace ℝ E
+inst✝ : CompleteSpace E
+V : Set E
+f : E → ℝ
+hf : ConvexOn ℝ V f
+x : E
+hx : x ∈ V
+hd : DifferentiableAt ℝ f x
+⊢ IsMinOn f V x ↔ ∀ y ∈ V, 0 ≤ inner ℝ (gradient f x) (y - x)
+tmp/online-convex-optimality-reviewed.lean:18:2: error: draft optimality header, not proof
+E : Type u_1
+inst✝² : NormedAddCommGroup E
+inst✝¹ : InnerProductSpace ℝ E
+inst✝ : CompleteSpace E
+f : E → EReal
+V : Set E
+x : E
+hx : x ∈ V
+hfin : ∀ z ∈ V, f z ≠ ⊤ ∧ f z ≠ ⊥
+⊢ IsMinOn f V x ↔ IsMinOn (fun z => (f z).toReal) V x
+tmp/online-convex-optimality-reviewed.lean:26:2: error: draft optimality header, not proof
+E : Type u_1
+inst✝² : NormedAddCommGroup E
+inst✝¹ : InnerProductSpace ℝ E
+inst✝ : CompleteSpace E
+f : E → EReal
+V U : Set E
+hV : Convex ℝ V
+hne : V.Nonempty
+x : E
+hx : x ∈ V
+hU : IsOpen U
+hVU : V ⊆ U
+hfin : ∀ z ∈ U, f z ≠ ⊤ ∧ f z ≠ ⊥
+hf : ConvexOn ℝ V fun z => (f z).toReal
+hd : DifferentiableOn ℝ (fun z => (f z).toReal) U
+⊢ IsMinOn f V x ↔ ∀ y ∈ V, 0 ≤ inner ℝ (gradient (fun z => (f z).toReal) x) (y - x)
+tmp/online-convex-optimality-reviewed.lean:34:2: error: draft optimality header, not proof
+E : Type u_1
+inst✝² : NormedAddCommGroup E
+inst✝¹ : InnerProductSpace ℝ E
+inst✝ : CompleteSpace E
+f : E → EReal
+V U : Set E
+hV : Convex ℝ V
+hne : V.Nonempty
+x : E
+hx : x ∈ V
+hxi : x ∈ interior V
+hU : IsOpen U
+hVU : V ⊆ U
+hfin : ∀ z ∈ U, f z ≠ ⊤ ∧ f z ≠ ⊥
+hf : ConvexOn ℝ V fun z => (f z).toReal
+hd : DifferentiableOn ℝ (fun z => (f z).toReal) U
+⊢ IsMinOn f V x ↔ gradient (fun z => (f z).toReal) x = 0
