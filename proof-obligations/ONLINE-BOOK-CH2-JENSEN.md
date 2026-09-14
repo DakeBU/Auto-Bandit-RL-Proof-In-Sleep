@@ -6,7 +6,7 @@
 - Negative-part finiteness from source assumptions: frozen, unproved.
 - Full Theorem2.9, no loss-integrability/closedness/continuity assumptions: frozen, unproved.
 - Nonclosed-domain and infinite-expectation public source canaries: required, pending.
-- Foundation root/Tests/full harness, axioms, frozen checks, semantic review, actual dependency chain and Book/site: passed. Foundation scoped PR: pending. Full Jensen gates remain pending.
+- Foundation root/Tests/full harness, axioms, frozen checks, semantic review, actual dependency chain and Book/site: passed. Foundation PR125: open, not merged. Full Jensen gates remain pending.
 
 Foundation progress cannot mark Jensen or Chapter2 complete.
 
