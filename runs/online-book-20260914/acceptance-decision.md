@@ -1,0 +1,11 @@
+# Chapter 1 acceptance decision after environment repair
+
+Decision: accepted locally for the seven enumerated required Chapter 1 main-text groups; independent exercises remain optional/planned. This same-model reviewer decision is not an independent external review. All sixteen chapters remain the total Goal; this decision does not complete that Goal.
+
+The authorized execution environment changed from restricted to unrestricted. The unchanged combined Lean project passed tools/bandit.py check: root and Tests built successfully, and 423 Python tests completed with zero errors and seven existing skips (full-gate-02.log). The previously failing eight signature/temporary-key tests and capped-output test were not changed, removed or mocked. full-gate-01.log preserves the earlier failure. Protected old temporary files were not cleaned up.
+
+All nine module sources and the public canary still match the recorded LF hashes. contract-check-resumed.json verifies 24 frozen statements and nine definition/import contexts. The final compiled dependency graph is applicable to these unchanged sources and contains all seven required proof-value edges, including unique empirical-mean minimization. Public-root canaries include changing deterministic outcomes and a nondegenerate two-point probability law. Axiom evidence is limited to propext, Classical.choice and Quot.sound. Source semantic decisions, including upper-sublinear no-regret and deterministic measurable strict-history policies, remain explicit in the contracts. No source target was weakened during repair.
+
+The resumed verified site build and site-resumed-check.log pass with the shared declaration registry. No separate Book project or dependency upgrade was introduced. Prior references to requiring external CI addressed the unavailable full gate; the now-successful local full gate resolves that obstacle. Remote CI is still separately running and is not claimed passed.
+
+PR117 is an open draft stacked on exact PR116 head 73062790d5cf7b12c5d3c189a053270e993f1a68. Neither dependency nor this chapter is merged/deployed by this decision. No main/live update is claimed. The next primary proof task may now be Chapter 2 after its target review and freeze.

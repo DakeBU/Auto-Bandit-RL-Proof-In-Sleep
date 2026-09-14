@@ -27,3 +27,5 @@ Do not advance Chapter2 proof work until uniqueness, final audit/gates and mappi
 ## Updated audit
 
 Uniqueness is now proved and public-root canary checked in root-tests-02 (8998jobs). Final contract-check-final verifies all24frozen interfaces and9ambient/definition prefixes. The old dependency export was found to predate uniqueness; a fresh export is running and must satisfy the extraction script's explicit uniqueness node assertion. Final site check after uniqueness is running. Local full harness did fail9Pythonerrors (not a gate pass); see full-gate-repair. Thus this is a complete mathematical candidate with acceptance/delivery gates outstanding, not an accepted chapter. General-policy history theorem and normalized Eq1.2 are included. All16chapter Goal remains incomplete.
+
+Latest decision: see acceptance-decision.md. Full-gate-02 passed423tests (7existing skips), resumed contract and site checks passed; Chapter1 accepted-local, PR117 open. Earlier failures and pending states are historical. Goal remains active for all16chapters.
