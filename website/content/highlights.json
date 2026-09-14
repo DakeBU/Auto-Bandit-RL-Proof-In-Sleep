@@ -2383,6 +2383,54 @@
       "dependencies": [
         "BanditRL.OnlineConvex.signedExpectation"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.supporting_functional_ae_eq_mean",
+      "title": "Supporting values are constant almost surely",
+      "chapter": "online-barycenter",
+      "featured": false,
+      "teaching_order": 1,
+      "plain": "An a.e. upper bound by the value at the mean is attained almost surely.",
+      "math": "\\(a(X)\\le a(\\mathbb E X)\\text{ a.e.}\\Rightarrow a(X)=a(\\mathbb E X)\\text{ a.e.}\\)",
+      "intuition": "An a.e. upper bound by the value at the mean is attained almost surely.",
+      "why": "Supplies the nonclosed-set geometric dependency required by the frozen Jensen target.",
+      "position": "Orabona v10 printedp11/PDF23.",
+      "proof_idea": "Commute the continuous linear functional with integration, then use equality of ordered integrable functions with equal integrals.",
+      "lean_notes": "The kernel lift changes values only on a null set. A local elaboration transparency option resolves inherited subspace instances; kernel proof checking is unchanged.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.supporting_functional_at_closure",
+      "title": "Support even with empty interior",
+      "chapter": "online-barycenter",
+      "featured": false,
+      "teaching_order": 2,
+      "plain": "A closure point outside the interior admits a nonzero supporting functional in finite dimension.",
+      "math": "\\(x\\in\\overline s\\setminus\\operatorname{int}s\\Rightarrow\\exists a\\ne0,\\ \\forall y\\in s,\\ a(y)\\le a(x)\\)",
+      "intuition": "A closure point outside the interior admits a nonzero supporting functional in finite dimension.",
+      "why": "Supplies the nonclosed-set geometric dependency required by the frozen Jensen target.",
+      "position": "Orabona v10 printedp11/PDF23.",
+      "proof_idea": "Use existing separation for nonempty interior; otherwise annihilate the proper affine-span direction.",
+      "lean_notes": "The kernel lift changes values only on a null set. A local elaboration transparency option resolves inherited subspace instances; kernel proof checking is unchanged.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.integral_mem_convex_finiteDimensional",
+      "title": "Mean in the original convex set",
+      "chapter": "online-barycenter",
+      "featured": false,
+      "teaching_order": 3,
+      "plain": "An integrable finite-dimensional vector in convex s almost surely has mean in s.",
+      "math": "\\(X\\in s\\text{ a.s.},\\ s\\text{ convex}\\Rightarrow\\mathbb E X\\in s\\)",
+      "intuition": "An integrable finite-dimensional vector in convex s almost surely has mean in s.",
+      "why": "Supplies the nonclosed-set geometric dependency required by the frozen Jensen target.",
+      "position": "Orabona v10 printedp11/PDF23.",
+      "proof_idea": "Strong induction on dimension: a hypothetical missing mean yields an almost-sure proper-kernel lift and a lower-dimensional contradiction.",
+      "lean_notes": "The kernel lift changes values only on a null set. A local elaboration transparency option resolves inherited subspace instances; kernel proof checking is unchanged.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.supporting_functional_ae_eq_mean",
+        "BanditRL.OnlineConvex.supporting_functional_at_closure"
+      ]
     }
   ]
 }

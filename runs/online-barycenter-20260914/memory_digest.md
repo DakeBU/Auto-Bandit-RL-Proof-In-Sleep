@@ -1,0 +1,3 @@
+Exact arbitrary-convex finite-dimensional barycenter core closes in leaf05. Definitional transparency of induced subspace structures caused initial failures; local backward.isDefEq.respectTransparency=false resolves clean probes and removes manual overrides. Do not add closedness or interior assumptions. Probability nonclosed-ray canary02 passes; ENNReal.inv_two_add_inv_two and Measure.ae_smul_measure are the actual APIs. Full gates running. Next Jensen dependency is a global affine minorant; full source theorem not complete.
+
+Accepted-local: exact arbitrary-convex barycenter, all gates passed; see acceptance-decision.md. Next finite-interior minorant scratch compiled, but the general parent and full Jensen remain unproved.

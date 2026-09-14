@@ -1,0 +1,11 @@
+tmp/online-minorant-interior-draft.lean:14:2: error: reviewed interior minorant leaf, not proof
+E : Type u_1
+inst✝² : NormedAddCommGroup E
+inst✝¹ : NormedSpace ℝ E
+inst✝ : FiniteDimensional ℝ E
+f : E → EReal
+hbot : ∀ (y : E), f y ≠ ⊥
+hf : IsConvexExtended f
+x : E
+hx : x ∈ interior (effectiveDomain f)
+⊢ ∃ a b, ∀ (y : E), ↑(a y + b) ≤ f y

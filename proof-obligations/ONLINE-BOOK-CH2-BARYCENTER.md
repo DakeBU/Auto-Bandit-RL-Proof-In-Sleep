@@ -1,0 +1,1 @@
+Three frozen public terminals accepted-local; all acceptance gates and exact remaining parent obligations are recorded in runs/online-barycenter-20260914/acceptance-decision.md. No pending mathematical obligation within this barycenter package. Full Jensen global minorant, negative part and endpoint remain required. Scoped draft PR126 delivered; see delivery.md.
