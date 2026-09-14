@@ -1,0 +1,14 @@
+tmp/online-barycenter-support-draft.lean:14:2: error: reviewed support leaf, not proof
+Ω : Type u_1
+E : Type u_2
+inst✝⁴ : MeasurableSpace Ω
+inst✝³ : NormedAddCommGroup E
+inst✝² : NormedSpace ℝ E
+inst✝¹ : CompleteSpace E
+μ : Measure Ω
+inst✝ : IsProbabilityMeasure μ
+X : Ω → E
+hX : Integrable X μ
+a : E →L[ℝ] ℝ
+hle : ∀ᵐ (ω : Ω) ∂μ, a (X ω) ≤ a (∫ (ω : Ω), X ω ∂μ)
+⊢ ∀ᵐ (ω : Ω) ∂μ, a (X ω) = a (∫ (ω : Ω), X ω ∂μ)

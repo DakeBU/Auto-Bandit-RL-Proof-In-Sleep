@@ -1,0 +1,1 @@
+Context-only supersession by online-jensen-v2: replace embedded scratch definitions with an import of the actual shared OnlineExpectation module. All four headers are byte-identical. No proof existed for v1; keep its original headers/context/fences. v2 is the active full target, still unproved.

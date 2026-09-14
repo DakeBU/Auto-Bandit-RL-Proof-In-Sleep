@@ -160,6 +160,17 @@ class BookRegistryTests(unittest.TestCase):
             self.assertIn(key, chapter["node_ids"])
             self.assertEqual(["online-learning"], nodes[key]["books"])
 
+    def test_expectation_foundations_do_not_claim_full_jensen(self):
+        registry = self.registry()
+        nodes = membership_index(registry)
+        chapter = next(c for c in registry["chapters"] if c["id"] == "teaching:online-expectation")
+        key = "declaration:BanditRL.OnlineConvex.signedExpectation_coe_integrable"
+        self.assertIn(key, chapter["node_ids"])
+        self.assertEqual(["online-learning"], nodes[key]["books"])
+        self.assertNotIn("declaration:BanditRL.OnlineConvex.theorem_2_9", nodes)
+        scope = next(c for c in self.chapters if c["slug"] == "online-expectation")
+        self.assertIn("not completion of Orabona Theorem2.9", scope["completion_definition"])
+
     def test_preview_badge_cannot_borrow_evidence_from_another_declaration(self):
         source = ('<details class="declaration" id="a"><summary>'
                   '<span class="status source">Source indexed</span></summary></details>'

@@ -2313,6 +2313,76 @@
         "BanditRL.OnlineConvex.minOn_finitePart_iff",
         "BanditRL.OnlineConvex.theorem_2_8"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "title": "Finite positive part",
+      "chapter": "online-expectation",
+      "featured": false,
+      "teaching_order": 1,
+      "plain": "An integrable real function has finite positive integral.",
+      "math": "\\(\\int f^+<\\infty\\)",
+      "intuition": "An integrable real function has finite positive integral.",
+      "why": "Supports the exact extended expectation required by the still-unproved Jensen target.",
+      "position": "Orabona v10 printedp11/PDF23.",
+      "proof_idea": "Use integrability of the positive part and the nonnegative lintegral characterization.",
+      "lean_notes": "The parent Jensen target may not assume loss integrability. These are representation foundations for its finite and infinite branches.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.positiveIntegral_coe"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "title": "Compatibility with the Bochner integral",
+      "chapter": "online-expectation",
+      "featured": false,
+      "teaching_order": 2,
+      "plain": "For integrable real functions, the signed representation is the embedded real integral.",
+      "math": "\\(\\operatorname{signedExpectation}(f)=\\int f\\)",
+      "intuition": "For integrable real functions, the signed representation is the embedded real integral.",
+      "why": "Supports the exact extended expectation required by the still-unproved Jensen target.",
+      "position": "Orabona v10 printedp11/PDF23.",
+      "proof_idea": "Prove both parts finite, then apply the actual positive-minus-negative Bochner identity.",
+      "lean_notes": "The parent Jensen target may not assume loss integrability. These are representation foundations for its finite and infinite branches.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+        "BanditRL.OnlineConvex.negativeIntegral_coe_ne_top"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "title": "Nonnegative reduction",
+      "chapter": "online-expectation",
+      "featured": false,
+      "teaching_order": 3,
+      "plain": "An almost-everywhere nonnegative loss has zero negative integral.",
+      "math": "\\(f\\ge0\\text{ a.e.}\\Rightarrow\\operatorname{signedExpectation}(f)=\\int f^+\\)",
+      "intuition": "An almost-everywhere nonnegative loss has zero negative integral.",
+      "why": "Supports the exact extended expectation required by the still-unproved Jensen target.",
+      "position": "Orabona v10 printedp11/PDF23.",
+      "proof_idea": "Use almost-everywhere congruence of the negative integrand with zero.",
+      "lean_notes": "The parent Jensen target may not assume loss integrability. These are representation foundations for its finite and infinite branches.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.signedExpectation",
+        "BanditRL.OnlineConvex.negativeIntegral"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.signedExpectation_eq_top",
+      "title": "An infinite positive expectation",
+      "chapter": "online-expectation",
+      "featured": false,
+      "teaching_order": 4,
+      "plain": "Infinite positive part and finite negative part give positive infinity.",
+      "math": "\\(\\int f^+=\\infty,\\ \\int f^-<\\infty\\Rightarrow\\operatorname{signedExpectation}(f)=+\\infty\\)",
+      "intuition": "Infinite positive part and finite negative part give positive infinity.",
+      "why": "Supports the exact extended expectation required by the still-unproved Jensen target.",
+      "position": "Orabona v10 printedp11/PDF23.",
+      "proof_idea": "Embed the finite negative integral and apply the legitimate EReal top subtraction case.",
+      "lean_notes": "The parent Jensen target may not assume loss integrability. These are representation foundations for its finite and infinite branches.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.signedExpectation"
+      ]
     }
   ]
 }

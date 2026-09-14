@@ -1,0 +1,5 @@
+# Supporting-hyperplane concentration leaf v1
+
+A ready internal dependency of the frozen arbitrary-convex barycenter target in online-jensen-v2. Integrable X under a probability measure, continuous real linear functional a, and the a.e. upper bound a(X)<=a(EX) imply a(X)=a(EX) a.e. No discreteness, finite support or zero variance assumption. Nonzero a is needed later for dimension reduction, not for this universally valid leaf. All ambient complete real normed spaces allowed.
+
+One header/context stabilized after one deliberate body failure. Actual retrieved APIs: ContinuousLinearMap.integrable_comp and integral_comp_comm; MeasureTheory.integral_eq_iff_of_ae_le. DAG: commute the functional with integration -> equal integrals of ordered functions -> almost-sure equality. This does not prove the existence of a supporting hyperplane or arbitrary-convex barycenter membership. Scratch proof may proceed while the separate expectation packet runs its unchanged full gate; do not integrate or claim public acceptance until its own scope is complete. Same-model sequential director/architect/worker review, not external review. Frozen type may not weaken in repair.

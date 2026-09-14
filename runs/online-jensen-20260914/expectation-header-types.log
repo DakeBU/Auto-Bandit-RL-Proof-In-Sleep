@@ -1,0 +1,48 @@
+tmp/online-expectation-draft.lean:24:2: error: reviewed expectation header, not proof
+Ω : Type u_1
+inst✝ : MeasurableSpace Ω
+μ : Measure Ω
+f : Ω → ℝ
+⊢ (positiveIntegral μ fun ω => ↑(f ω)) = ∫⁻ (ω : Ω), ENNReal.ofReal (f ω) ∂μ
+tmp/online-expectation-draft.lean:28:2: error: reviewed expectation header, not proof
+Ω : Type u_1
+inst✝ : MeasurableSpace Ω
+μ : Measure Ω
+f : Ω → ℝ
+⊢ (negativeIntegral μ fun ω => ↑(f ω)) = ∫⁻ (ω : Ω), ENNReal.ofReal (-f ω) ∂μ
+tmp/online-expectation-draft.lean:32:2: error: reviewed expectation header, not proof
+Ω : Type u_1
+inst✝ : MeasurableSpace Ω
+μ : Measure Ω
+f : Ω → ℝ
+hf : Integrable f μ
+⊢ (positiveIntegral μ fun ω => ↑(f ω)) ≠ ∞
+tmp/online-expectation-draft.lean:36:2: error: reviewed expectation header, not proof
+Ω : Type u_1
+inst✝ : MeasurableSpace Ω
+μ : Measure Ω
+f : Ω → ℝ
+hf : Integrable f μ
+⊢ (negativeIntegral μ fun ω => ↑(f ω)) ≠ ∞
+tmp/online-expectation-draft.lean:40:2: error: reviewed expectation header, not proof
+Ω : Type u_1
+inst✝ : MeasurableSpace Ω
+μ : Measure Ω
+f : Ω → ℝ
+hf : Integrable f μ
+⊢ (signedExpectation μ fun ω => ↑(f ω)) = ↑(∫ (ω : Ω), f ω ∂μ)
+tmp/online-expectation-draft.lean:45:2: error: reviewed expectation header, not proof
+Ω : Type u_1
+inst✝ : MeasurableSpace Ω
+μ : Measure Ω
+f : Ω → EReal
+hf : ∀ᵐ (ω : Ω) ∂μ, 0 ≤ f ω
+⊢ signedExpectation μ f = ↑(positiveIntegral μ f)
+tmp/online-expectation-draft.lean:50:2: error: reviewed expectation header, not proof
+Ω : Type u_1
+inst✝ : MeasurableSpace Ω
+μ : Measure Ω
+f : Ω → EReal
+hp : positiveIntegral μ f = ∞
+hn : negativeIntegral μ f ≠ ∞
+⊢ signedExpectation μ f = ⊤

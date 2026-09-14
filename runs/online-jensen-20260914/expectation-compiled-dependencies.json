@@ -1,0 +1,4761 @@
+{
+  "schema_version": 1,
+  "scope": "Extended-real convexity compiled direct constant dependencies; not execution trace",
+  "extraction": {
+    "closure": "project-direct-with-external-boundary",
+    "dependency_semantics": "direct-constant-occurrence",
+    "deterministic": true,
+    "source": "compiled-environment",
+    "type_precedence": true
+  },
+  "lean_version": "4.29.1",
+  "full_export_sha256": "70b56d933b9e0510e6b3bc7f60adfa43154a6c02a48e66021ba3f2b0e22ad387",
+  "full_export_counts": {
+    "edges": 824077,
+    "external_boundary_nodes": 5267,
+    "module_imports": 2740,
+    "project_nodes": 16607
+  },
+  "required_chain_checks": [
+    {
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "proof_value_occurrence": true
+    },
+    {
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "BanditRL.OnlineConvex.negativeIntegral_coe_ne_top",
+      "proof_value_occurrence": true
+    },
+    {
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe_ne_top",
+      "target": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "proof_value_occurrence": true
+    },
+    {
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "MeasureTheory.integral_eq_lintegral_pos_part_sub_lintegral_neg_part",
+      "proof_value_occurrence": true
+    },
+    {
+      "source": "BanditRL.OnlineConvex.signedExpectation_eq_top",
+      "target": "EReal.top_sub",
+      "proof_value_occurrence": true
+    }
+  ],
+  "source_lf_sha256": "3e0743dbaff18637220a3d739caa3ef6b4ecba53a6929a8a9c8553bb50013bfa",
+  "nodes": [
+    {
+      "has_value": true,
+      "kind": "theorem",
+      "module": "BanditRLProof.OnlineExpectation",
+      "name": "BanditRL.OnlineConvex.negativeIntegral_coe",
+      "namespace": "BanditRL.OnlineConvex",
+      "scope": "project",
+      "short_name": "negativeIntegral_coe",
+      "source": {
+        "file": "BanditRLProof/OnlineExpectation.lean",
+        "line_end": 29,
+        "line_start": 27
+      },
+      "status": "compiled",
+      "type_dependency_count": 11,
+      "type_expr_objects": 43,
+      "value_dependency_count": 29,
+      "value_expr_objects": 141
+    },
+    {
+      "has_value": true,
+      "kind": "theorem",
+      "module": "BanditRLProof.OnlineExpectation",
+      "name": "BanditRL.OnlineConvex.negativeIntegral_coe._simp_1_2",
+      "namespace": "BanditRL.OnlineConvex.negativeIntegral_coe",
+      "scope": "project",
+      "short_name": "_simp_1_2",
+      "source": {
+        "file": "BanditRLProof/OnlineExpectation.lean",
+        "line_end": null,
+        "line_start": null
+      },
+      "status": "compiled",
+      "type_dependency_count": 7,
+      "type_expr_objects": 20,
+      "value_dependency_count": 8,
+      "value_expr_objects": 23
+    },
+    {
+      "has_value": true,
+      "kind": "theorem",
+      "module": "BanditRLProof.OnlineExpectation",
+      "name": "BanditRL.OnlineConvex.negativeIntegral_coe_ne_top",
+      "namespace": "BanditRL.OnlineConvex",
+      "scope": "project",
+      "short_name": "negativeIntegral_coe_ne_top",
+      "source": {
+        "file": "BanditRLProof/OnlineExpectation.lean",
+        "line_end": 42,
+        "line_start": 39
+      },
+      "status": "compiled",
+      "type_dependency_count": 20,
+      "type_expr_objects": 70,
+      "value_dependency_count": 36,
+      "value_expr_objects": 161
+    },
+    {
+      "has_value": true,
+      "kind": "theorem",
+      "module": "BanditRLProof.OnlineExpectation",
+      "name": "BanditRL.OnlineConvex.positiveIntegral_coe",
+      "namespace": "BanditRL.OnlineConvex",
+      "scope": "project",
+      "short_name": "positiveIntegral_coe",
+      "source": {
+        "file": "BanditRLProof/OnlineExpectation.lean",
+        "line_end": 25,
+        "line_start": 23
+      },
+      "status": "compiled",
+      "type_dependency_count": 9,
+      "type_expr_objects": 38,
+      "value_dependency_count": 26,
+      "value_expr_objects": 131
+    },
+    {
+      "has_value": true,
+      "kind": "theorem",
+      "module": "BanditRLProof.OnlineExpectation",
+      "name": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "namespace": "BanditRL.OnlineConvex",
+      "scope": "project",
+      "short_name": "positiveIntegral_coe_ne_top",
+      "source": {
+        "file": "BanditRLProof/OnlineExpectation.lean",
+        "line_end": 37,
+        "line_start": 31
+      },
+      "status": "compiled",
+      "type_dependency_count": 20,
+      "type_expr_objects": 70,
+      "value_dependency_count": 69,
+      "value_expr_objects": 361
+    },
+    {
+      "has_value": true,
+      "kind": "theorem",
+      "module": "BanditRLProof.OnlineExpectation",
+      "name": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "namespace": "BanditRL.OnlineConvex",
+      "scope": "project",
+      "short_name": "signedExpectation_coe_integrable",
+      "source": {
+        "file": "BanditRLProof/OnlineExpectation.lean",
+        "line_end": 52,
+        "line_start": 44
+      },
+      "status": "compiled",
+      "type_dependency_count": 24,
+      "type_expr_objects": 90,
+      "value_dependency_count": 55,
+      "value_expr_objects": 412
+    },
+    {
+      "has_value": true,
+      "kind": "theorem",
+      "module": "BanditRLProof.OnlineExpectation",
+      "name": "BanditRL.OnlineConvex.signedExpectation_eq_top",
+      "namespace": "BanditRL.OnlineConvex",
+      "scope": "project",
+      "short_name": "signedExpectation_eq_top",
+      "source": {
+        "file": "BanditRLProof/OnlineExpectation.lean",
+        "line_end": 71,
+        "line_start": 67
+      },
+      "status": "compiled",
+      "type_dependency_count": 12,
+      "type_expr_objects": 54,
+      "value_dependency_count": 26,
+      "value_expr_objects": 182
+    },
+    {
+      "has_value": true,
+      "kind": "theorem",
+      "module": "BanditRLProof.OnlineExpectation",
+      "name": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "namespace": "BanditRL.OnlineConvex",
+      "scope": "project",
+      "short_name": "signedExpectation_of_nonneg",
+      "source": {
+        "file": "BanditRLProof/OnlineExpectation.lean",
+        "line_end": 65,
+        "line_start": 54
+      },
+      "status": "compiled",
+      "type_dependency_count": 18,
+      "type_expr_objects": 75,
+      "value_dependency_count": 51,
+      "value_expr_objects": 360
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "BanditRLProof.OnlineExpectation",
+      "name": "BanditRL.OnlineConvex.negativeIntegral",
+      "namespace": "BanditRL.OnlineConvex",
+      "scope": "project",
+      "short_name": "negativeIntegral",
+      "source": {
+        "file": "BanditRLProof/OnlineExpectation.lean",
+        "line_end": 16,
+        "line_start": 15
+      },
+      "status": "compiled",
+      "type_dependency_count": 4,
+      "type_expr_objects": 16,
+      "value_dependency_count": 7,
+      "value_expr_objects": 30
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "BanditRLProof.OnlineExpectation",
+      "name": "BanditRL.OnlineConvex.positiveIntegral",
+      "namespace": "BanditRL.OnlineConvex",
+      "scope": "project",
+      "short_name": "positiveIntegral",
+      "source": {
+        "file": "BanditRLProof/OnlineExpectation.lean",
+        "line_end": 13,
+        "line_start": 12
+      },
+      "status": "compiled",
+      "type_dependency_count": 4,
+      "type_expr_objects": 16,
+      "value_dependency_count": 5,
+      "value_expr_objects": 25
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "BanditRLProof.OnlineExpectation",
+      "name": "BanditRL.OnlineConvex.signedExpectation",
+      "namespace": "BanditRL.OnlineConvex",
+      "scope": "project",
+      "short_name": "signedExpectation",
+      "source": {
+        "file": "BanditRLProof/OnlineExpectation.lean",
+        "line_end": 21,
+        "line_start": 18
+      },
+      "status": "compiled",
+      "type_dependency_count": 3,
+      "type_expr_objects": 15,
+      "value_dependency_count": 11,
+      "value_expr_objects": 46
+    },
+    {
+      "has_value": true,
+      "kind": "theorem",
+      "module": "BanditRLProof.OnlineExpectation",
+      "name": "BanditRL.OnlineConvex.signedExpectation.eq_1",
+      "namespace": "BanditRL.OnlineConvex.signedExpectation",
+      "scope": "project",
+      "short_name": "eq_1",
+      "source": {
+        "file": "BanditRLProof/OnlineExpectation.lean",
+        "line_end": null,
+        "line_start": null
+      },
+      "status": "compiled",
+      "type_dependency_count": 13,
+      "type_expr_objects": 55,
+      "value_dependency_count": 5,
+      "value_expr_objects": 24
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Algebra.Group.Defs",
+      "name": "AddMonoid.toAddZeroClass",
+      "namespace": "AddMonoid",
+      "scope": "external",
+      "short_name": "toAddZeroClass",
+      "source": {
+        "file": "Mathlib/Algebra/Group/Defs.lean",
+        "line_end": 613,
+        "line_start": 606
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 9,
+      "value_dependency_count": 8,
+      "value_expr_objects": 31
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Algebra.Group.Defs",
+      "name": "AddZero.toZero",
+      "namespace": "AddZero",
+      "scope": "external",
+      "short_name": "toZero",
+      "source": {
+        "file": "Mathlib/Algebra/Group/Defs.lean",
+        "line_end": 317,
+        "line_start": 317
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 9,
+      "value_dependency_count": 1,
+      "value_expr_objects": 7
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Algebra.Group.Defs",
+      "name": "AddZeroClass.toAddZero",
+      "namespace": "AddZeroClass",
+      "scope": "external",
+      "short_name": "toAddZero",
+      "source": {
+        "file": "Mathlib/Algebra/Group/Defs.lean",
+        "line_end": 354,
+        "line_start": 350
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 9,
+      "value_dependency_count": 1,
+      "value_expr_objects": 7
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Data.ENNReal.Basic",
+      "name": "ENNReal",
+      "namespace": "[anonymous]",
+      "scope": "external",
+      "short_name": "ENNReal",
+      "source": {
+        "file": "Mathlib/Data/ENNReal/Basic.lean",
+        "line_end": 103,
+        "line_start": 100
+      },
+      "status": "compiled",
+      "type_dependency_count": 0,
+      "type_expr_objects": 1,
+      "value_dependency_count": 2,
+      "value_expr_objects": 3
+    },
+    {
+      "has_value": true,
+      "kind": "theorem",
+      "module": "Mathlib.Data.ENNReal.Basic",
+      "name": "ENNReal.instCanonicallyOrderedAdd",
+      "namespace": "ENNReal",
+      "scope": "external",
+      "short_name": "instCanonicallyOrderedAdd",
+      "source": {
+        "file": "Mathlib/Data/ENNReal/Basic.lean",
+        "line_end": 137,
+        "line_start": 136
+      },
+      "status": "compiled",
+      "type_dependency_count": 11,
+      "type_expr_objects": 28,
+      "value_dependency_count": 1,
+      "value_expr_objects": 1
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Data.ENNReal.Basic",
+      "name": "ENNReal.instMax",
+      "namespace": "ENNReal",
+      "scope": "external",
+      "short_name": "instMax",
+      "source": {
+        "file": "Mathlib/Data/ENNReal/Basic.lean",
+        "line_end": 125,
+        "line_start": 125
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 3,
+      "value_dependency_count": 3,
+      "value_expr_objects": 5
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Topology.Order.Real",
+      "name": "ENNReal.instTopologicalSpace",
+      "namespace": "ENNReal",
+      "scope": "external",
+      "short_name": "instTopologicalSpace",
+      "source": {
+        "file": "Mathlib/Topology/Order/Real.lean",
+        "line_end": 54,
+        "line_start": 50
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 3,
+      "value_dependency_count": 4,
+      "value_expr_objects": 8
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Data.ENNReal.Basic",
+      "name": "ENNReal.ofReal",
+      "namespace": "ENNReal",
+      "scope": "external",
+      "short_name": "ofReal",
+      "source": {
+        "file": "Mathlib/Data/ENNReal/Basic.lean",
+        "line_end": 219,
+        "line_start": 218
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 3,
+      "value_dependency_count": 3,
+      "value_expr_objects": 7
+    },
+    {
+      "has_value": true,
+      "kind": "theorem",
+      "module": "Mathlib.Data.ENNReal.Real",
+      "name": "ENNReal.ofReal_max",
+      "namespace": "ENNReal",
+      "scope": "external",
+      "short_name": "ofReal_max",
+      "source": {
+        "file": "Mathlib/Data/ENNReal/Real.lean",
+        "line_end": 188,
+        "line_start": 187
+      },
+      "status": "compiled",
+      "type_dependency_count": 7,
+      "type_expr_objects": 25,
+      "value_dependency_count": 7,
+      "value_expr_objects": 19
+    },
+    {
+      "has_value": true,
+      "kind": "theorem",
+      "module": "Mathlib.Data.ENNReal.Basic",
+      "name": "ENNReal.ofReal_zero",
+      "namespace": "ENNReal",
+      "scope": "external",
+      "short_name": "ofReal_zero",
+      "source": {
+        "file": "Mathlib/Data/ENNReal/Basic.lean",
+        "line_end": 284,
+        "line_start": 284
+      },
+      "status": "compiled",
+      "type_dependency_count": 8,
+      "type_expr_objects": 23,
+      "value_dependency_count": 19,
+      "value_expr_objects": 72
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Data.EReal.Basic",
+      "name": "ENNReal.toEReal",
+      "namespace": "ENNReal",
+      "scope": "external",
+      "short_name": "toEReal",
+      "source": {
+        "file": "Mathlib/Data/EReal/Basic.lean",
+        "line_end": 79,
+        "line_start": 76
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 3,
+      "value_dependency_count": 15,
+      "value_expr_objects": 41
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Data.ENNReal.Basic",
+      "name": "ENNReal.toReal",
+      "namespace": "ENNReal",
+      "scope": "external",
+      "short_name": "toReal",
+      "source": {
+        "file": "Mathlib/Data/ENNReal/Basic.lean",
+        "line_end": 216,
+        "line_start": 215
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 3,
+      "value_dependency_count": 3,
+      "value_expr_objects": 7
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Analysis.Normed.Group.Defs",
+      "name": "ENormedAddCommMonoid.toESeminormedAddCommMonoid",
+      "namespace": "ENormedAddCommMonoid",
+      "scope": "external",
+      "short_name": "toESeminormedAddCommMonoid",
+      "source": {
+        "file": "Mathlib/Analysis/Normed/Group/Defs.lean",
+        "line_end": 157,
+        "line_start": 156
+      },
+      "status": "compiled",
+      "type_dependency_count": 3,
+      "type_expr_objects": 15,
+      "value_dependency_count": 2,
+      "value_expr_objects": 12
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Data.EReal.Basic",
+      "name": "EReal",
+      "namespace": "[anonymous]",
+      "scope": "external",
+      "short_name": "EReal",
+      "source": {
+        "file": "Mathlib/Data/EReal/Basic.lean",
+        "line_end": 39,
+        "line_start": 34
+      },
+      "status": "compiled",
+      "type_dependency_count": 0,
+      "type_expr_objects": 1,
+      "value_dependency_count": 3,
+      "value_expr_objects": 5
+    },
+    {
+      "has_value": true,
+      "kind": "theorem",
+      "module": "Mathlib.Data.EReal.Basic",
+      "name": "EReal.coe_ennreal_eq_top_iff",
+      "namespace": "EReal",
+      "scope": "external",
+      "short_name": "coe_ennreal_eq_top_iff",
+      "source": {
+        "file": "Mathlib/Data/EReal/Basic.lean",
+        "line_end": 598,
+        "line_start": 596
+      },
+      "status": "compiled",
+      "type_dependency_count": 8,
+      "type_expr_objects": 23,
+      "value_dependency_count": 9,
+      "value_expr_objects": 26
+    },
+    {
+      "has_value": true,
+      "kind": "theorem",
+      "module": "Mathlib.Data.EReal.Basic",
+      "name": "EReal.coe_ennreal_toReal",
+      "namespace": "EReal",
+      "scope": "external",
+      "short_name": "coe_ennreal_toReal",
+      "source": {
+        "file": "Mathlib/Data/EReal/Basic.lean",
+        "line_end": 573,
+        "line_start": 571
+      },
+      "status": "compiled",
+      "type_dependency_count": 9,
+      "type_expr_objects": 24,
+      "value_dependency_count": 17,
+      "value_expr_objects": 80
+    },
+    {
+      "has_value": true,
+      "kind": "theorem",
+      "module": "Mathlib.Data.EReal.Basic",
+      "name": "EReal.coe_ennreal_top",
+      "namespace": "EReal",
+      "scope": "external",
+      "short_name": "coe_ennreal_top",
+      "source": {
+        "file": "Mathlib/Data/EReal/Basic.lean",
+        "line_end": 588,
+        "line_start": 586
+      },
+      "status": "compiled",
+      "type_dependency_count": 7,
+      "type_expr_objects": 15,
+      "value_dependency_count": 6,
+      "value_expr_objects": 11
+    },
+    {
+      "has_value": true,
+      "kind": "theorem",
+      "module": "Mathlib.Data.EReal.Basic",
+      "name": "EReal.coe_ne_top._simp_1",
+      "namespace": "EReal.coe_ne_top",
+      "scope": "external",
+      "short_name": "_simp_1",
+      "source": {
+        "file": "Mathlib/Data/EReal/Basic.lean",
+        "line_end": null,
+        "line_start": null
+      },
+      "status": "compiled",
+      "type_dependency_count": 7,
+      "type_expr_objects": 19,
+      "value_dependency_count": 8,
+      "value_expr_objects": 19
+    },
+    {
+      "has_value": true,
+      "kind": "theorem",
+      "module": "Mathlib.Data.EReal.Operations",
+      "name": "EReal.coe_neg",
+      "namespace": "EReal",
+      "scope": "external",
+      "short_name": "coe_neg",
+      "source": {
+        "file": "Mathlib/Data/EReal/Operations.lean",
+        "line_end": 216,
+        "line_start": 216
+      },
+      "status": "compiled",
+      "type_dependency_count": 7,
+      "type_expr_objects": 20,
+      "value_dependency_count": 6,
+      "value_expr_objects": 14
+    },
+    {
+      "has_value": true,
+      "kind": "theorem",
+      "module": "Mathlib.Data.EReal.Operations",
+      "name": "EReal.coe_sub",
+      "namespace": "EReal",
+      "scope": "external",
+      "short_name": "coe_sub",
+      "source": {
+        "file": "Mathlib/Data/EReal/Operations.lean",
+        "line_end": 218,
+        "line_start": 218
+      },
+      "status": "compiled",
+      "type_dependency_count": 10,
+      "type_expr_objects": 40,
+      "value_dependency_count": 7,
+      "value_expr_objects": 22
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Data.EReal.Operations",
+      "name": "EReal.instNeg",
+      "namespace": "EReal",
+      "scope": "external",
+      "short_name": "instNeg",
+      "source": {
+        "file": "Mathlib/Data/EReal/Operations.lean",
+        "line_end": 202,
+        "line_start": 202
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 3,
+      "value_dependency_count": 3,
+      "value_expr_objects": 5
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Data.EReal.Operations",
+      "name": "EReal.instSubNegZeroMonoid",
+      "namespace": "EReal",
+      "scope": "external",
+      "short_name": "instSubNegZeroMonoid",
+      "source": {
+        "file": "Mathlib/Data/EReal/Operations.lean",
+        "line_end": 206,
+        "line_start": 204
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 3,
+      "value_dependency_count": 19,
+      "value_expr_objects": 50
+    },
+    {
+      "has_value": true,
+      "kind": "theorem",
+      "module": "Mathlib.Data.EReal.Operations",
+      "name": "EReal.neg_le_zero",
+      "namespace": "EReal",
+      "scope": "external",
+      "short_name": "neg_le_zero",
+      "source": {
+        "file": "Mathlib/Data/EReal/Operations.lean",
+        "line_end": 283,
+        "line_start": 283
+      },
+      "status": "compiled",
+      "type_dependency_count": 11,
+      "type_expr_objects": 34,
+      "value_dependency_count": 23,
+      "value_expr_objects": 113
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Data.EReal.Basic",
+      "name": "EReal.toENNReal",
+      "namespace": "EReal",
+      "scope": "external",
+      "short_name": "toENNReal",
+      "source": {
+        "file": "Mathlib/Data/EReal/Basic.lean",
+        "line_end": 690,
+        "line_start": 687
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 3,
+      "value_dependency_count": 11,
+      "value_expr_objects": 31
+    },
+    {
+      "has_value": true,
+      "kind": "theorem",
+      "module": "Mathlib.Data.EReal.Basic",
+      "name": "EReal.toENNReal_of_ne_top",
+      "namespace": "EReal",
+      "scope": "external",
+      "short_name": "toENNReal_of_ne_top",
+      "source": {
+        "file": "Mathlib/Data/EReal/Basic.lean",
+        "line_end": 696,
+        "line_start": 694
+      },
+      "status": "compiled",
+      "type_dependency_count": 9,
+      "type_expr_objects": 24,
+      "value_dependency_count": 12,
+      "value_expr_objects": 38
+    },
+    {
+      "has_value": true,
+      "kind": "theorem",
+      "module": "Mathlib.Data.EReal.Basic",
+      "name": "EReal.toENNReal_of_nonpos",
+      "namespace": "EReal",
+      "scope": "external",
+      "short_name": "toENNReal_of_nonpos",
+      "source": {
+        "file": "Mathlib/Data/EReal/Basic.lean",
+        "line_end": 710,
+        "line_start": 706
+      },
+      "status": "compiled",
+      "type_dependency_count": 12,
+      "type_expr_objects": 39,
+      "value_dependency_count": 38,
+      "value_expr_objects": 171
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Data.EReal.Basic",
+      "name": "EReal.toReal",
+      "namespace": "EReal",
+      "scope": "external",
+      "short_name": "toReal",
+      "source": {
+        "file": "Mathlib/Data/EReal/Basic.lean",
+        "line_end": 215,
+        "line_start": 211
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 3,
+      "value_dependency_count": 7,
+      "value_expr_objects": 23
+    },
+    {
+      "has_value": true,
+      "kind": "theorem",
+      "module": "Mathlib.Data.EReal.Operations",
+      "name": "EReal.top_sub",
+      "namespace": "EReal",
+      "scope": "external",
+      "short_name": "top_sub",
+      "source": {
+        "file": "Mathlib/Data/EReal/Operations.lean",
+        "line_end": 365,
+        "line_start": 363
+      },
+      "status": "compiled",
+      "type_dependency_count": 10,
+      "type_expr_objects": 34,
+      "value_dependency_count": 19,
+      "value_expr_objects": 126
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Analysis.Normed.Group.Defs",
+      "name": "ESeminormedAddCommMonoid.toESeminormedAddMonoid",
+      "namespace": "ESeminormedAddCommMonoid",
+      "scope": "external",
+      "short_name": "toESeminormedAddMonoid",
+      "source": {
+        "file": "Mathlib/Analysis/Normed/Group/Defs.lean",
+        "line_end": 148,
+        "line_start": 147
+      },
+      "status": "compiled",
+      "type_dependency_count": 3,
+      "type_expr_objects": 15,
+      "value_dependency_count": 2,
+      "value_expr_objects": 12
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Analysis.Normed.Group.Defs",
+      "name": "ESeminormedAddMonoid.toAddMonoid",
+      "namespace": "ESeminormedAddMonoid",
+      "scope": "external",
+      "short_name": "toAddMonoid",
+      "source": {
+        "file": "Mathlib/Analysis/Normed/Group/Defs.lean",
+        "line_end": 118,
+        "line_start": 115
+      },
+      "status": "compiled",
+      "type_dependency_count": 3,
+      "type_expr_objects": 14,
+      "value_dependency_count": 2,
+      "value_expr_objects": 12
+    },
+    {
+      "has_value": false,
+      "kind": "inductive",
+      "module": "Init.Prelude",
+      "name": "Eq",
+      "namespace": "[anonymous]",
+      "scope": "external",
+      "short_name": "Eq",
+      "source": {
+        "file": "Init/Prelude.lean",
+        "line_end": 284,
+        "line_start": 254
+      },
+      "status": "compiled",
+      "type_dependency_count": 0,
+      "type_expr_objects": 7,
+      "value_dependency_count": 0,
+      "value_expr_objects": 0
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Init.Core",
+      "name": "Eq.mp",
+      "namespace": "Eq",
+      "scope": "external",
+      "short_name": "mp",
+      "source": {
+        "file": "Init/Core.lean",
+        "line_end": 851,
+        "line_start": 843
+      },
+      "status": "compiled",
+      "type_dependency_count": 1,
+      "type_expr_objects": 12,
+      "value_dependency_count": 2,
+      "value_expr_objects": 25
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Init.Core",
+      "name": "Eq.mpr",
+      "namespace": "Eq",
+      "scope": "external",
+      "short_name": "mpr",
+      "source": {
+        "file": "Init/Core.lean",
+        "line_end": 861,
+        "line_start": 853
+      },
+      "status": "compiled",
+      "type_dependency_count": 1,
+      "type_expr_objects": 12,
+      "value_dependency_count": 3,
+      "value_expr_objects": 29
+    },
+    {
+      "has_value": false,
+      "kind": "recursor",
+      "module": "Init.Prelude",
+      "name": "Eq.rec",
+      "namespace": "Eq",
+      "scope": "external",
+      "short_name": "rec",
+      "source": {
+        "file": "Init/Prelude.lean",
+        "line_end": null,
+        "line_start": null
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 29,
+      "value_dependency_count": 0,
+      "value_expr_objects": 0
+    },
+    {
+      "has_value": false,
+      "kind": "constructor",
+      "module": "Init.Prelude",
+      "name": "Eq.refl",
+      "namespace": "Eq",
+      "scope": "external",
+      "short_name": "refl",
+      "source": {
+        "file": "Init/Prelude.lean",
+        "line_end": 284,
+        "line_start": 282
+      },
+      "status": "compiled",
+      "type_dependency_count": 1,
+      "type_expr_objects": 9,
+      "value_dependency_count": 0,
+      "value_expr_objects": 0
+    },
+    {
+      "has_value": true,
+      "kind": "theorem",
+      "module": "Init.Prelude",
+      "name": "Eq.symm",
+      "namespace": "Eq",
+      "scope": "external",
+      "short_name": "symm",
+      "source": {
+        "file": "Init/Prelude.lean",
+        "line_end": 329,
+        "line_start": 320
+      },
+      "status": "compiled",
+      "type_dependency_count": 1,
+      "type_expr_objects": 16,
+      "value_dependency_count": 3,
+      "value_expr_objects": 33
+    },
+    {
+      "has_value": true,
+      "kind": "theorem",
+      "module": "Init.Prelude",
+      "name": "Eq.trans",
+      "namespace": "Eq",
+      "scope": "external",
+      "short_name": "trans",
+      "source": {
+        "file": "Init/Prelude.lean",
+        "line_end": 345,
+        "line_start": 335
+      },
+      "status": "compiled",
+      "type_dependency_count": 1,
+      "type_expr_objects": 23,
+      "value_dependency_count": 2,
+      "value_expr_objects": 37
+    },
+    {
+      "has_value": false,
+      "kind": "inductive",
+      "module": "Init.Prelude",
+      "name": "False",
+      "namespace": "[anonymous]",
+      "scope": "external",
+      "short_name": "False",
+      "source": {
+        "file": "Init/Prelude.lean",
+        "line_end": 203,
+        "line_start": 195
+      },
+      "status": "compiled",
+      "type_dependency_count": 0,
+      "type_expr_objects": 1,
+      "value_dependency_count": 0,
+      "value_expr_objects": 0
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Order.Filter.Defs",
+      "name": "Filter.Eventually",
+      "namespace": "Filter",
+      "scope": "external",
+      "short_name": "Eventually",
+      "source": {
+        "file": "Mathlib/Order/Filter/Defs.lean",
+        "line_end": 283,
+        "line_start": 280
+      },
+      "status": "compiled",
+      "type_dependency_count": 1,
+      "type_expr_objects": 10,
+      "value_dependency_count": 5,
+      "value_expr_objects": 27
+    },
+    {
+      "has_value": true,
+      "kind": "theorem",
+      "module": "Mathlib.Order.Filter.Defs",
+      "name": "Filter.mp_mem",
+      "namespace": "Filter",
+      "scope": "external",
+      "short_name": "mp_mem",
+      "source": {
+        "file": "Mathlib/Order/Filter/Defs.lean",
+        "line_end": 122,
+        "line_start": 121
+      },
+      "status": "compiled",
+      "type_dependency_count": 6,
+      "type_expr_objects": 64,
+      "value_dependency_count": 11,
+      "value_expr_objects": 166
+    },
+    {
+      "has_value": true,
+      "kind": "theorem",
+      "module": "Mathlib.Order.Filter.Defs",
+      "name": "Filter.univ_mem'",
+      "namespace": "Filter",
+      "scope": "external",
+      "short_name": "univ_mem'",
+      "source": {
+        "file": "Mathlib/Order/Filter/Defs.lean",
+        "line_end": 116,
+        "line_start": 115
+      },
+      "status": "compiled",
+      "type_dependency_count": 5,
+      "type_expr_objects": 31,
+      "value_dependency_count": 7,
+      "value_expr_objects": 47
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Init.Prelude",
+      "name": "HSub.hSub",
+      "namespace": "HSub",
+      "scope": "external",
+      "short_name": "hSub",
+      "source": {
+        "file": "Init/Prelude.lean",
+        "line_end": 1349,
+        "line_start": 1349
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 19,
+      "value_dependency_count": 2,
+      "value_expr_objects": 17
+    },
+    {
+      "has_value": true,
+      "kind": "theorem",
+      "module": "Init.Core",
+      "name": "Iff.mp",
+      "namespace": "Iff",
+      "scope": "external",
+      "short_name": "mp",
+      "source": {
+        "file": "Init/Core.lean",
+        "line_end": 191,
+        "line_start": 191
+      },
+      "status": "compiled",
+      "type_dependency_count": 1,
+      "type_expr_objects": 11,
+      "value_dependency_count": 1,
+      "value_expr_objects": 10
+    },
+    {
+      "has_value": true,
+      "kind": "theorem",
+      "module": "Init.Core",
+      "name": "Iff.mpr",
+      "namespace": "Iff",
+      "scope": "external",
+      "short_name": "mpr",
+      "source": {
+        "file": "Init/Core.lean",
+        "line_end": 193,
+        "line_start": 193
+      },
+      "status": "compiled",
+      "type_dependency_count": 1,
+      "type_expr_objects": 11,
+      "value_dependency_count": 1,
+      "value_expr_objects": 10
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Analysis.InnerProductSpace.Defs",
+      "name": "InnerProductSpace.toNormedSpace",
+      "namespace": "InnerProductSpace",
+      "scope": "external",
+      "short_name": "toNormedSpace",
+      "source": {
+        "file": "Mathlib/Analysis/InnerProductSpace/Defs.lean",
+        "line_end": 116,
+        "line_start": 107
+      },
+      "status": "compiled",
+      "type_dependency_count": 6,
+      "type_expr_objects": 32,
+      "value_dependency_count": 3,
+      "value_expr_objects": 21
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Init.Prelude",
+      "name": "LE.le",
+      "namespace": "LE",
+      "scope": "external",
+      "short_name": "le",
+      "source": {
+        "file": "Init/Prelude.lean",
+        "line_end": 1260,
+        "line_start": 1260
+      },
+      "status": "compiled",
+      "type_dependency_count": 1,
+      "type_expr_objects": 11,
+      "value_dependency_count": 1,
+      "value_expr_objects": 7
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Init.Prelude",
+      "name": "Max.max",
+      "namespace": "Max",
+      "scope": "external",
+      "short_name": "max",
+      "source": {
+        "file": "Init/Prelude.lean",
+        "line_end": 1282,
+        "line_start": 1282
+      },
+      "status": "compiled",
+      "type_dependency_count": 1,
+      "type_expr_objects": 11,
+      "value_dependency_count": 1,
+      "value_expr_objects": 7
+    },
+    {
+      "has_value": false,
+      "kind": "inductive",
+      "module": "Mathlib.MeasureTheory.MeasurableSpace.Defs",
+      "name": "MeasurableSpace",
+      "namespace": "[anonymous]",
+      "scope": "external",
+      "short_name": "MeasurableSpace",
+      "source": {
+        "file": "Mathlib/MeasureTheory/MeasurableSpace/Defs.lean",
+        "line_end": 60,
+        "line_start": 49
+      },
+      "status": "compiled",
+      "type_dependency_count": 0,
+      "type_expr_objects": 2,
+      "value_dependency_count": 0,
+      "value_expr_objects": 0
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.MeasureTheory.Function.L1Space.Integrable",
+      "name": "MeasureTheory.Integrable",
+      "namespace": "MeasureTheory",
+      "scope": "external",
+      "short_name": "Integrable",
+      "source": {
+        "file": "Mathlib/MeasureTheory/Function/L1Space/Integrable.lean",
+        "line_end": 61,
+        "line_start": 56
+      },
+      "status": "compiled",
+      "type_dependency_count": 6,
+      "type_expr_objects": 29,
+      "value_dependency_count": 8,
+      "value_expr_objects": 49
+    },
+    {
+      "has_value": true,
+      "kind": "theorem",
+      "module": "Mathlib.MeasureTheory.Function.L1Space.Integrable",
+      "name": "MeasureTheory.Integrable.aestronglyMeasurable",
+      "namespace": "MeasureTheory.Integrable",
+      "scope": "external",
+      "short_name": "aestronglyMeasurable",
+      "source": {
+        "file": "Mathlib/MeasureTheory/Function/L1Space/Integrable.lean",
+        "line_end": 72,
+        "line_start": 69
+      },
+      "status": "compiled",
+      "type_dependency_count": 6,
+      "type_expr_objects": 45,
+      "value_dependency_count": 9,
+      "value_expr_objects": 60
+    },
+    {
+      "has_value": true,
+      "kind": "theorem",
+      "module": "Mathlib.MeasureTheory.Function.L1Space.Integrable",
+      "name": "MeasureTheory.Integrable.neg",
+      "namespace": "MeasureTheory.Integrable",
+      "scope": "external",
+      "short_name": "neg",
+      "source": {
+        "file": "Mathlib/MeasureTheory/Function/L1Space/Integrable.lean",
+        "line_end": 452,
+        "line_start": 449
+      },
+      "status": "compiled",
+      "type_dependency_count": 18,
+      "type_expr_objects": 98,
+      "value_dependency_count": 31,
+      "value_expr_objects": 185
+    },
+    {
+      "has_value": true,
+      "kind": "theorem",
+      "module": "Mathlib.MeasureTheory.Function.L1Space.Integrable",
+      "name": "MeasureTheory.Integrable.pos_part",
+      "namespace": "MeasureTheory.Integrable",
+      "scope": "external",
+      "short_name": "pos_part",
+      "source": {
+        "file": "Mathlib/MeasureTheory/Function/L1Space/Integrable.lean",
+        "line_end": 943,
+        "line_start": 940
+      },
+      "status": "compiled",
+      "type_dependency_count": 19,
+      "type_expr_objects": 73,
+      "value_dependency_count": 37,
+      "value_expr_objects": 177
+    },
+    {
+      "has_value": false,
+      "kind": "inductive",
+      "module": "Mathlib.MeasureTheory.Measure.MeasureSpaceDef",
+      "name": "MeasureTheory.Measure",
+      "namespace": "MeasureTheory",
+      "scope": "external",
+      "short_name": "Measure",
+      "source": {
+        "file": "Mathlib/MeasureTheory/Measure/MeasureSpaceDef.lean",
+        "line_end": 82,
+        "line_start": 72
+      },
+      "status": "compiled",
+      "type_dependency_count": 1,
+      "type_expr_objects": 6,
+      "value_dependency_count": 0,
+      "value_expr_objects": 0
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.MeasureTheory.Measure.MeasureSpaceDef",
+      "name": "MeasureTheory.Measure.instFunLike",
+      "namespace": "MeasureTheory.Measure",
+      "scope": "external",
+      "short_name": "instFunLike",
+      "source": {
+        "file": "Mathlib/MeasureTheory/Measure/MeasureSpaceDef.lean",
+        "line_end": 93,
+        "line_start": 91
+      },
+      "status": "compiled",
+      "type_dependency_count": 5,
+      "type_expr_objects": 17,
+      "value_dependency_count": 10,
+      "value_expr_objects": 41
+    },
+    {
+      "has_value": true,
+      "kind": "theorem",
+      "module": "Mathlib.MeasureTheory.Measure.MeasureSpaceDef",
+      "name": "MeasureTheory.Measure.instOuterMeasureClass",
+      "namespace": "MeasureTheory.Measure",
+      "scope": "external",
+      "short_name": "instOuterMeasureClass",
+      "source": {
+        "file": "Mathlib/MeasureTheory/Measure/MeasureSpaceDef.lean",
+        "line_end": 99,
+        "line_start": 96
+      },
+      "status": "compiled",
+      "type_dependency_count": 4,
+      "type_expr_objects": 17,
+      "value_dependency_count": 12,
+      "value_expr_objects": 58
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.MeasureTheory.OuterMeasure.AE",
+      "name": "MeasureTheory.ae",
+      "namespace": "MeasureTheory",
+      "scope": "external",
+      "short_name": "ae",
+      "source": {
+        "file": "Mathlib/MeasureTheory/OuterMeasure/AE.lean",
+        "line_end": 51,
+        "line_start": 47
+      },
+      "status": "compiled",
+      "type_dependency_count": 5,
+      "type_expr_objects": 24,
+      "value_dependency_count": 16,
+      "value_expr_objects": 104
+    },
+    {
+      "has_value": true,
+      "kind": "theorem",
+      "module": "Mathlib.MeasureTheory.OuterMeasure.AE",
+      "name": "MeasureTheory.ae_of_all",
+      "namespace": "MeasureTheory",
+      "scope": "external",
+      "short_name": "ae_of_all",
+      "source": {
+        "file": "Mathlib/MeasureTheory/OuterMeasure/AE.lean",
+        "line_end": 94,
+        "line_start": 93
+      },
+      "status": "compiled",
+      "type_dependency_count": 6,
+      "type_expr_objects": 43,
+      "value_dependency_count": 6,
+      "value_expr_objects": 37
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.MeasureTheory.Integral.Bochner.Basic",
+      "name": "MeasureTheory.integral",
+      "namespace": "MeasureTheory",
+      "scope": "external",
+      "short_name": "integral",
+      "source": {
+        "file": "Mathlib/MeasureTheory/Integral/Bochner/Basic.lean",
+        "line_end": 165,
+        "line_start": 161
+      },
+      "status": "compiled",
+      "type_dependency_count": 7,
+      "type_expr_objects": 32,
+      "value_dependency_count": 1,
+      "value_expr_objects": 2
+    },
+    {
+      "has_value": true,
+      "kind": "theorem",
+      "module": "Mathlib.MeasureTheory.Integral.Bochner.Basic",
+      "name": "MeasureTheory.integral_eq_lintegral_pos_part_sub_lintegral_neg_part",
+      "namespace": "MeasureTheory",
+      "scope": "external",
+      "short_name": "integral_eq_lintegral_pos_part_sub_lintegral_neg_part",
+      "source": {
+        "file": "Mathlib/MeasureTheory/Integral/Bochner/Basic.lean",
+        "line_end": 504,
+        "line_start": 475
+      },
+      "status": "compiled",
+      "type_dependency_count": 27,
+      "type_expr_objects": 101,
+      "value_dependency_count": 131,
+      "value_expr_objects": 2156
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.MeasureTheory.Integral.Lebesgue.Basic",
+      "name": "MeasureTheory.lintegral",
+      "namespace": "MeasureTheory",
+      "scope": "external",
+      "short_name": "lintegral",
+      "source": {
+        "file": "Mathlib/MeasureTheory/Integral/Lebesgue/Basic.lean",
+        "line_end": 50,
+        "line_start": 48
+      },
+      "status": "compiled",
+      "type_dependency_count": 3,
+      "type_expr_objects": 15,
+      "value_dependency_count": 1,
+      "value_expr_objects": 2
+    },
+    {
+      "has_value": true,
+      "kind": "theorem",
+      "module": "Mathlib.MeasureTheory.Integral.Lebesgue.Basic",
+      "name": "MeasureTheory.lintegral_congr_ae",
+      "namespace": "MeasureTheory",
+      "scope": "external",
+      "short_name": "lintegral_congr_ae",
+      "source": {
+        "file": "Mathlib/MeasureTheory/Integral/Lebesgue/Basic.lean",
+        "line_end": 277,
+        "line_start": 276
+      },
+      "status": "compiled",
+      "type_dependency_count": 9,
+      "type_expr_objects": 55,
+      "value_dependency_count": 14,
+      "value_expr_objects": 101
+    },
+    {
+      "has_value": true,
+      "kind": "theorem",
+      "module": "Mathlib.MeasureTheory.Function.L1Space.Integrable",
+      "name": "MeasureTheory.lintegral_ofReal_ne_top_iff_integrable",
+      "namespace": "MeasureTheory",
+      "scope": "external",
+      "short_name": "lintegral_ofReal_ne_top_iff_integrable",
+      "source": {
+        "file": "Mathlib/MeasureTheory/Function/L1Space/Integrable.lean",
+        "line_end": 931,
+        "line_start": 927
+      },
+      "status": "compiled",
+      "type_dependency_count": 31,
+      "type_expr_objects": 121,
+      "value_dependency_count": 58,
+      "value_expr_objects": 313
+    },
+    {
+      "has_value": true,
+      "kind": "theorem",
+      "module": "Mathlib.MeasureTheory.Integral.Lebesgue.Basic",
+      "name": "MeasureTheory.lintegral_zero",
+      "namespace": "MeasureTheory",
+      "scope": "external",
+      "short_name": "lintegral_zero",
+      "source": {
+        "file": "Mathlib/MeasureTheory/Integral/Lebesgue/Basic.lean",
+        "line_end": 115,
+        "line_start": 115
+      },
+      "status": "compiled",
+      "type_dependency_count": 8,
+      "type_expr_objects": 32,
+      "value_dependency_count": 30,
+      "value_expr_objects": 132
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Init.Prelude",
+      "name": "Membership.mem",
+      "namespace": "Membership",
+      "scope": "external",
+      "short_name": "mem",
+      "source": {
+        "file": "Init/Prelude.lean",
+        "line_end": 1726,
+        "line_start": 1726
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 16,
+      "value_dependency_count": 2,
+      "value_expr_objects": 13
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Init.Core",
+      "name": "Ne",
+      "namespace": "[anonymous]",
+      "scope": "external",
+      "short_name": "Ne",
+      "source": {
+        "file": "Init/Core.lean",
+        "line_end": 875,
+        "line_start": 870
+      },
+      "status": "compiled",
+      "type_dependency_count": 0,
+      "type_expr_objects": 7,
+      "value_dependency_count": 2,
+      "value_expr_objects": 13
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Init.Prelude",
+      "name": "Neg.neg",
+      "namespace": "Neg",
+      "scope": "external",
+      "short_name": "neg",
+      "source": {
+        "file": "Init/Prelude.lean",
+        "line_end": 1515,
+        "line_start": 1515
+      },
+      "status": "compiled",
+      "type_dependency_count": 1,
+      "type_expr_objects": 9,
+      "value_dependency_count": 1,
+      "value_expr_objects": 7
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Analysis.Normed.Ring.Basic",
+      "name": "NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing",
+      "namespace": "NonUnitalSeminormedCommRing",
+      "scope": "external",
+      "short_name": "toNonUnitalSeminormedRing",
+      "source": {
+        "file": "Mathlib/Analysis/Normed/Ring/Basic.lean",
+        "line_end": 96,
+        "line_start": 95
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 9,
+      "value_dependency_count": 1,
+      "value_expr_objects": 7
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Analysis.Normed.Ring.Basic",
+      "name": "NonUnitalSeminormedRing.toSeminormedAddCommGroup",
+      "namespace": "NonUnitalSeminormedRing",
+      "scope": "external",
+      "short_name": "toSeminormedAddCommGroup",
+      "source": {
+        "file": "Mathlib/Analysis/Normed/Ring/Basic.lean",
+        "line_end": 183,
+        "line_start": 181
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 9,
+      "value_dependency_count": 8,
+      "value_expr_objects": 34
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Analysis.Normed.Group.Defs",
+      "name": "NormedAddCommGroup.toSeminormedAddCommGroup",
+      "namespace": "NormedAddCommGroup",
+      "scope": "external",
+      "short_name": "toSeminormedAddCommGroup",
+      "source": {
+        "file": "Mathlib/Analysis/Normed/Group/Defs.lean",
+        "line_end": 237,
+        "line_start": 237
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 9,
+      "value_dependency_count": 7,
+      "value_expr_objects": 31
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Analysis.Normed.Ring.Basic",
+      "name": "NormedCommRing.toSeminormedCommRing",
+      "namespace": "NormedCommRing",
+      "scope": "external",
+      "short_name": "toSeminormedCommRing",
+      "source": {
+        "file": "Mathlib/Analysis/Normed/Ring/Basic.lean",
+        "line_end": 144,
+        "line_start": 141
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 9,
+      "value_dependency_count": 11,
+      "value_expr_objects": 42
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Analysis.Normed.Module.Basic",
+      "name": "NormedField.toNormedSpace",
+      "namespace": "NormedField",
+      "scope": "external",
+      "short_name": "toNormedSpace",
+      "source": {
+        "file": "Mathlib/Analysis/Normed/Module/Basic.lean",
+        "line_end": 64,
+        "line_start": 64
+      },
+      "status": "compiled",
+      "type_dependency_count": 7,
+      "type_expr_objects": 27,
+      "value_dependency_count": 13,
+      "value_expr_objects": 47
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Init.Prelude",
+      "name": "Not",
+      "namespace": "[anonymous]",
+      "scope": "external",
+      "short_name": "Not",
+      "source": {
+        "file": "Init/Prelude.lean",
+        "line_end": 229,
+        "line_start": 222
+      },
+      "status": "compiled",
+      "type_dependency_count": 0,
+      "type_expr_objects": 2,
+      "value_dependency_count": 1,
+      "value_expr_objects": 5
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Init.Prelude",
+      "name": "OfNat.ofNat",
+      "namespace": "OfNat",
+      "scope": "external",
+      "short_name": "ofNat",
+      "source": {
+        "file": "Init/Prelude.lean",
+        "line_end": 1251,
+        "line_start": 1251
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 11,
+      "value_dependency_count": 2,
+      "value_expr_objects": 11
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Order.Defs.PartialOrder",
+      "name": "PartialOrder.toPreorder",
+      "namespace": "PartialOrder",
+      "scope": "external",
+      "short_name": "toPreorder",
+      "source": {
+        "file": "Mathlib/Order/Defs/PartialOrder.lean",
+        "line_end": 168,
+        "line_start": 167
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 9,
+      "value_dependency_count": 1,
+      "value_expr_objects": 7
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Algebra.Notation.Pi.Defs",
+      "name": "Pi.instZero",
+      "namespace": "Pi",
+      "scope": "external",
+      "short_name": "instZero",
+      "source": {
+        "file": "Mathlib/Algebra/Notation/Pi/Defs.lean",
+        "line_end": 43,
+        "line_start": 43
+      },
+      "status": "compiled",
+      "type_dependency_count": 1,
+      "type_expr_objects": 17,
+      "value_dependency_count": 4,
+      "value_expr_objects": 27
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Order.Defs.PartialOrder",
+      "name": "Preorder.toLE",
+      "namespace": "Preorder",
+      "scope": "external",
+      "short_name": "toLE",
+      "source": {
+        "file": "Mathlib/Order/Defs/PartialOrder.lean",
+        "line_end": 51,
+        "line_start": 47
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 9,
+      "value_dependency_count": 1,
+      "value_expr_objects": 7
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Topology.MetricSpace.Pseudo.Defs",
+      "name": "PseudoMetricSpace.toUniformSpace",
+      "namespace": "PseudoMetricSpace",
+      "scope": "external",
+      "short_name": "toUniformSpace",
+      "source": {
+        "file": "Mathlib/Topology/MetricSpace/Pseudo/Defs.lean",
+        "line_end": 135,
+        "line_start": 135
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 9,
+      "value_dependency_count": 1,
+      "value_expr_objects": 7
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Analysis.InnerProductSpace.Basic",
+      "name": "RCLike.toInnerProductSpaceReal",
+      "namespace": "RCLike",
+      "scope": "external",
+      "short_name": "toInnerProductSpaceReal",
+      "source": {
+        "file": "Mathlib/Analysis/InnerProductSpace/Basic.lean",
+        "line_end": 978,
+        "line_start": 969
+      },
+      "status": "compiled",
+      "type_dependency_count": 11,
+      "type_expr_objects": 35,
+      "value_dependency_count": 21,
+      "value_expr_objects": 99
+    },
+    {
+      "has_value": false,
+      "kind": "inductive",
+      "module": "Mathlib.Data.Real.Basic",
+      "name": "Real",
+      "namespace": "[anonymous]",
+      "scope": "external",
+      "short_name": "Real",
+      "source": {
+        "file": "Mathlib/Data/Real/Basic.lean",
+        "line_end": 38,
+        "line_start": 34
+      },
+      "status": "compiled",
+      "type_dependency_count": 0,
+      "type_expr_objects": 1,
+      "value_dependency_count": 0,
+      "value_expr_objects": 0
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Data.Real.Basic",
+      "name": "Real.instLE",
+      "namespace": "Real",
+      "scope": "external",
+      "short_name": "instLE",
+      "source": {
+        "file": "Mathlib/Data/Real/Basic.lean",
+        "line_end": 313,
+        "line_start": 312
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 3,
+      "value_dependency_count": 3,
+      "value_expr_objects": 5
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Data.Real.Basic",
+      "name": "Real.instMax",
+      "namespace": "Real",
+      "scope": "external",
+      "short_name": "instMax",
+      "source": {
+        "file": "Mathlib/Data/Real/Basic.lean",
+        "line_end": 393,
+        "line_start": 392
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 3,
+      "value_dependency_count": 3,
+      "value_expr_objects": 5
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Data.Real.Basic",
+      "name": "Real.instNeg",
+      "namespace": "Real",
+      "scope": "external",
+      "short_name": "instNeg",
+      "source": {
+        "file": "Mathlib/Data/Real/Basic.lean",
+        "line_end": 112,
+        "line_start": 111
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 3,
+      "value_dependency_count": 3,
+      "value_expr_objects": 5
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Analysis.RCLike.Basic",
+      "name": "Real.instRCLike",
+      "namespace": "Real",
+      "scope": "external",
+      "short_name": "instRCLike",
+      "source": {
+        "file": "Mathlib/Analysis/RCLike/Basic.lean",
+        "line_end": 788,
+        "line_start": 770
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 3,
+      "value_dependency_count": 44,
+      "value_expr_objects": 141
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Data.Real.Basic",
+      "name": "Real.instSub",
+      "namespace": "Real",
+      "scope": "external",
+      "short_name": "instSub",
+      "source": {
+        "file": "Mathlib/Data/Real/Basic.lean",
+        "line_end": 120,
+        "line_start": 119
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 3,
+      "value_dependency_count": 7,
+      "value_expr_objects": 24
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Data.Real.Basic",
+      "name": "Real.instZero",
+      "namespace": "Real",
+      "scope": "external",
+      "short_name": "instZero",
+      "source": {
+        "file": "Mathlib/Data/Real/Basic.lean",
+        "line_end": 97,
+        "line_start": 96
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 3,
+      "value_dependency_count": 3,
+      "value_expr_objects": 5
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Data.Real.Basic",
+      "name": "Real.linearOrder",
+      "namespace": "Real",
+      "scope": "external",
+      "short_name": "linearOrder",
+      "source": {
+        "file": "Mathlib/Data/Real/Basic.lean",
+        "line_end": 491,
+        "line_start": 490
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 3,
+      "value_dependency_count": 13,
+      "value_expr_objects": 51
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Analysis.Normed.Group.Real",
+      "name": "Real.normedAddCommGroup",
+      "namespace": "Real",
+      "scope": "external",
+      "short_name": "normedAddCommGroup",
+      "source": {
+        "file": "Mathlib/Analysis/Normed/Group/Real.lean",
+        "line_end": 61,
+        "line_start": 60
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 3,
+      "value_dependency_count": 6,
+      "value_expr_objects": 17
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Analysis.Normed.Ring.Basic",
+      "name": "Real.normedCommRing",
+      "namespace": "Real",
+      "scope": "external",
+      "short_name": "normedCommRing",
+      "source": {
+        "file": "Mathlib/Analysis/Normed/Ring/Basic.lean",
+        "line_end": 636,
+        "line_start": 635
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 3,
+      "value_dependency_count": 52,
+      "value_expr_objects": 144
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Analysis.Normed.Field.Basic",
+      "name": "Real.normedField",
+      "namespace": "Real",
+      "scope": "external",
+      "short_name": "normedField",
+      "source": {
+        "file": "Mathlib/Analysis/Normed/Field/Basic.lean",
+        "line_end": 298,
+        "line_start": 296
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 3,
+      "value_dependency_count": 75,
+      "value_expr_objects": 227
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Topology.MetricSpace.Pseudo.Defs",
+      "name": "Real.pseudoMetricSpace",
+      "namespace": "Real",
+      "scope": "external",
+      "short_name": "pseudoMetricSpace",
+      "source": {
+        "file": "Mathlib/Topology/MetricSpace/Pseudo/Defs.lean",
+        "line_end": 1106,
+        "line_start": 1101
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 3,
+      "value_dependency_count": 28,
+      "value_expr_objects": 106
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Data.EReal.Basic",
+      "name": "Real.toEReal",
+      "namespace": "Real",
+      "scope": "external",
+      "short_name": "toEReal",
+      "source": {
+        "file": "Mathlib/Data/EReal/Basic.lean",
+        "line_end": 42,
+        "line_start": 41
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 3,
+      "value_dependency_count": 6,
+      "value_expr_objects": 14
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Order.Lattice",
+      "name": "SemilatticeSup.toPartialOrder",
+      "namespace": "SemilatticeSup",
+      "scope": "external",
+      "short_name": "toPartialOrder",
+      "source": {
+        "file": "Mathlib/Order/Lattice.lean",
+        "line_end": 76,
+        "line_start": 68
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 9,
+      "value_dependency_count": 1,
+      "value_expr_objects": 7
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Analysis.Normed.Group.Defs",
+      "name": "SeminormedAddCommGroup.toSeminormedAddGroup",
+      "namespace": "SeminormedAddCommGroup",
+      "scope": "external",
+      "short_name": "toSeminormedAddGroup",
+      "source": {
+        "file": "Mathlib/Analysis/Normed/Group/Defs.lean",
+        "line_end": 243,
+        "line_start": 243
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 9,
+      "value_dependency_count": 7,
+      "value_expr_objects": 31
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Analysis.Normed.Group.Continuity",
+      "name": "SeminormedAddGroup.toContinuousENorm",
+      "namespace": "SeminormedAddGroup",
+      "scope": "external",
+      "short_name": "toContinuousENorm",
+      "source": {
+        "file": "Mathlib/Analysis/Normed/Group/Continuity.lean",
+        "line_end": 129,
+        "line_start": 129
+      },
+      "status": "compiled",
+      "type_dependency_count": 5,
+      "type_expr_objects": 19,
+      "value_dependency_count": 8,
+      "value_expr_objects": 30
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Analysis.Normed.Ring.Basic",
+      "name": "SeminormedCommRing.toNonUnitalSeminormedCommRing",
+      "namespace": "SeminormedCommRing",
+      "scope": "external",
+      "short_name": "toNonUnitalSeminormedCommRing",
+      "source": {
+        "file": "Mathlib/Analysis/Normed/Ring/Basic.lean",
+        "line_end": 132,
+        "line_start": 129
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 9,
+      "value_dependency_count": 35,
+      "value_expr_objects": 129
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Data.Set.Defs",
+      "name": "Set",
+      "namespace": "[anonymous]",
+      "scope": "external",
+      "short_name": "Set",
+      "source": {
+        "file": "Mathlib/Data/Set/Defs.lean",
+        "line_end": 50,
+        "line_start": 44
+      },
+      "status": "compiled",
+      "type_dependency_count": 0,
+      "type_expr_objects": 2,
+      "value_dependency_count": 0,
+      "value_expr_objects": 5
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Data.Set.Defs",
+      "name": "Set.instMembership",
+      "namespace": "Set",
+      "scope": "external",
+      "short_name": "instMembership",
+      "source": {
+        "file": "Mathlib/Data/Set/Defs.lean",
+        "line_end": 75,
+        "line_start": 74
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 8,
+      "value_dependency_count": 3,
+      "value_expr_objects": 11
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Algebra.Group.Defs",
+      "name": "SubNegMonoid.toSub",
+      "namespace": "SubNegMonoid",
+      "scope": "external",
+      "short_name": "toSub",
+      "source": {
+        "file": "Mathlib/Algebra/Group/Defs.lean",
+        "line_end": 978,
+        "line_start": 967
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 9,
+      "value_dependency_count": 1,
+      "value_expr_objects": 7
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Algebra.Group.Defs",
+      "name": "SubNegZeroMonoid.toSubNegMonoid",
+      "namespace": "SubNegZeroMonoid",
+      "scope": "external",
+      "short_name": "toSubNegMonoid",
+      "source": {
+        "file": "Mathlib/Algebra/Group/Defs.lean",
+        "line_end": 1083,
+        "line_start": 1083
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 9,
+      "value_dependency_count": 1,
+      "value_expr_objects": 7
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Order.Notation",
+      "name": "Top.top",
+      "namespace": "Top",
+      "scope": "external",
+      "short_name": "top",
+      "source": {
+        "file": "Mathlib/Order/Notation.lean",
+        "line_end": 180,
+        "line_start": 180
+      },
+      "status": "compiled",
+      "type_dependency_count": 1,
+      "type_expr_objects": 7,
+      "value_dependency_count": 1,
+      "value_expr_objects": 7
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Init.Prelude",
+      "name": "Trans.trans",
+      "namespace": "Trans",
+      "scope": "external",
+      "short_name": "trans",
+      "source": {
+        "file": "Init/Prelude.lean",
+        "line_end": 1322,
+        "line_start": 1322
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 44,
+      "value_dependency_count": 2,
+      "value_expr_objects": 35
+    },
+    {
+      "has_value": false,
+      "kind": "inductive",
+      "module": "Init.Prelude",
+      "name": "True",
+      "namespace": "[anonymous]",
+      "scope": "external",
+      "short_name": "True",
+      "source": {
+        "file": "Init/Prelude.lean",
+        "line_end": 193,
+        "line_start": 185
+      },
+      "status": "compiled",
+      "type_dependency_count": 0,
+      "type_expr_objects": 1,
+      "value_dependency_count": 0,
+      "value_expr_objects": 0
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Topology.UniformSpace.Defs",
+      "name": "UniformSpace.toTopologicalSpace",
+      "namespace": "UniformSpace",
+      "scope": "external",
+      "short_name": "toTopologicalSpace",
+      "source": {
+        "file": "Mathlib/Topology/UniformSpace/Defs.lean",
+        "line_end": 380,
+        "line_start": 371
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 9,
+      "value_dependency_count": 1,
+      "value_expr_objects": 7
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Init.Data.Zero",
+      "name": "Zero.toOfNat0",
+      "namespace": "Zero",
+      "scope": "external",
+      "short_name": "toOfNat0",
+      "source": {
+        "file": "Init/Data/Zero.lean",
+        "line_end": 19,
+        "line_start": 18
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 11,
+      "value_dependency_count": 3,
+      "value_expr_objects": 15
+    },
+    {
+      "has_value": true,
+      "kind": "theorem",
+      "module": "Init.Prelude",
+      "name": "congrArg",
+      "namespace": "[anonymous]",
+      "scope": "external",
+      "short_name": "congrArg",
+      "source": {
+        "file": "Init/Prelude.lean",
+        "line_end": 372,
+        "line_start": 361
+      },
+      "status": "compiled",
+      "type_dependency_count": 1,
+      "type_expr_objects": 23,
+      "value_dependency_count": 3,
+      "value_expr_objects": 42
+    },
+    {
+      "has_value": true,
+      "kind": "theorem",
+      "module": "Init.Prelude",
+      "name": "congrFun'",
+      "namespace": "[anonymous]",
+      "scope": "external",
+      "short_name": "congrFun'",
+      "source": {
+        "file": "Init/Prelude.lean",
+        "line_end": 390,
+        "line_start": 388
+      },
+      "status": "compiled",
+      "type_dependency_count": 1,
+      "type_expr_objects": 26,
+      "value_dependency_count": 3,
+      "value_expr_objects": 46
+    },
+    {
+      "has_value": true,
+      "kind": "theorem",
+      "module": "Init.SimpLemmas",
+      "name": "eq_self",
+      "namespace": "[anonymous]",
+      "scope": "external",
+      "short_name": "eq_self",
+      "source": {
+        "file": "Init/SimpLemmas.lean",
+        "line_end": 37,
+        "line_start": 37
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 15,
+      "value_dependency_count": 3,
+      "value_expr_objects": 15
+    },
+    {
+      "has_value": true,
+      "kind": "theorem",
+      "module": "Init.Core",
+      "name": "funext",
+      "namespace": "[anonymous]",
+      "scope": "external",
+      "short_name": "funext",
+      "source": {
+        "file": "Init/Core.lean",
+        "line_end": 2288,
+        "line_start": 2271
+      },
+      "status": "compiled",
+      "type_dependency_count": 1,
+      "type_expr_objects": 29,
+      "value_dependency_count": 7,
+      "value_expr_objects": 97
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Init.Prelude",
+      "name": "id",
+      "namespace": "[anonymous]",
+      "scope": "external",
+      "short_name": "id",
+      "source": {
+        "file": "Init/Prelude.lean",
+        "line_end": 49,
+        "line_start": 37
+      },
+      "status": "compiled",
+      "type_dependency_count": 0,
+      "type_expr_objects": 5,
+      "value_dependency_count": 0,
+      "value_expr_objects": 4
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Analysis.Normed.Group.Real",
+      "name": "instENormedAddCommMonoidENNReal",
+      "namespace": "[anonymous]",
+      "scope": "external",
+      "short_name": "instENormedAddCommMonoidENNReal",
+      "source": {
+        "file": "Mathlib/Analysis/Normed/Group/Real.lean",
+        "line_end": 47,
+        "line_start": 43
+      },
+      "status": "compiled",
+      "type_dependency_count": 3,
+      "type_expr_objects": 5,
+      "value_dependency_count": 14,
+      "value_expr_objects": 38
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Init.Prelude",
+      "name": "instHSub",
+      "namespace": "[anonymous]",
+      "scope": "external",
+      "short_name": "instHSub",
+      "source": {
+        "file": "Init/Prelude.lean",
+        "line_end": 1648,
+        "line_start": 1646
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 11,
+      "value_dependency_count": 3,
+      "value_expr_objects": 21
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Data.EReal.Basic",
+      "name": "instPartialOrderEReal",
+      "namespace": "[anonymous]",
+      "scope": "external",
+      "short_name": "instPartialOrderEReal",
+      "source": {
+        "file": "Mathlib/Data/EReal/Basic.lean",
+        "line_end": 38,
+        "line_start": 38
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 3,
+      "value_dependency_count": 11,
+      "value_expr_objects": 24
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Data.ENNReal.Basic",
+      "name": "instSemilatticeSupENNReal",
+      "namespace": "[anonymous]",
+      "scope": "external",
+      "short_name": "instSemilatticeSupENNReal",
+      "source": {
+        "file": "Mathlib/Data/ENNReal/Basic.lean",
+        "line_end": 103,
+        "line_start": 103
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 3,
+      "value_dependency_count": 16,
+      "value_expr_objects": 35
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Data.ENNReal.Basic",
+      "name": "instTopENNReal",
+      "namespace": "[anonymous]",
+      "scope": "external",
+      "short_name": "instTopENNReal",
+      "source": {
+        "file": "Mathlib/Data/ENNReal/Basic.lean",
+        "line_end": 103,
+        "line_start": 103
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 3,
+      "value_dependency_count": 3,
+      "value_expr_objects": 5
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Data.EReal.Basic",
+      "name": "instTopEReal",
+      "namespace": "[anonymous]",
+      "scope": "external",
+      "short_name": "instTopEReal",
+      "source": {
+        "file": "Mathlib/Data/EReal/Basic.lean",
+        "line_end": 38,
+        "line_start": 38
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 3,
+      "value_dependency_count": 3,
+      "value_expr_objects": 5
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Init.Prelude",
+      "name": "instTransEq",
+      "namespace": "[anonymous]",
+      "scope": "external",
+      "short_name": "instTransEq",
+      "source": {
+        "file": "Init/Prelude.lean",
+        "line_end": 1327,
+        "line_start": 1326
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 20,
+      "value_dependency_count": 4,
+      "value_expr_objects": 55
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Data.ENNReal.Basic",
+      "name": "instZeroENNReal",
+      "namespace": "[anonymous]",
+      "scope": "external",
+      "short_name": "instZeroENNReal",
+      "source": {
+        "file": "Mathlib/Data/ENNReal/Basic.lean",
+        "line_end": 103,
+        "line_start": 103
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 3,
+      "value_dependency_count": 3,
+      "value_expr_objects": 5
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Data.EReal.Basic",
+      "name": "instZeroEReal",
+      "namespace": "[anonymous]",
+      "scope": "external",
+      "short_name": "instZeroEReal",
+      "source": {
+        "file": "Mathlib/Data/EReal/Basic.lean",
+        "line_end": 37,
+        "line_start": 37
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 3,
+      "value_dependency_count": 3,
+      "value_expr_objects": 5
+    },
+    {
+      "has_value": true,
+      "kind": "theorem",
+      "module": "Mathlib.Order.Defs.LinearOrder",
+      "name": "le_max_right",
+      "namespace": "[anonymous]",
+      "scope": "external",
+      "short_name": "le_max_right",
+      "source": {
+        "file": "Mathlib/Order/Defs/LinearOrder.lean",
+        "line_end": 148,
+        "line_start": 148
+      },
+      "status": "compiled",
+      "type_dependency_count": 7,
+      "type_expr_objects": 33,
+      "value_dependency_count": 24,
+      "value_expr_objects": 212
+    },
+    {
+      "has_value": true,
+      "kind": "theorem",
+      "module": "Init.SimpLemmas",
+      "name": "not_false_eq_true",
+      "namespace": "[anonymous]",
+      "scope": "external",
+      "short_name": "not_false_eq_true",
+      "source": {
+        "file": "Init/SimpLemmas.lean",
+        "line_end": 283,
+        "line_start": 283
+      },
+      "status": "compiled",
+      "type_dependency_count": 4,
+      "type_expr_objects": 9,
+      "value_dependency_count": 4,
+      "value_expr_objects": 8
+    },
+    {
+      "has_value": true,
+      "kind": "theorem",
+      "module": "Init.SimpLemmas",
+      "name": "of_eq_true",
+      "namespace": "[anonymous]",
+      "scope": "external",
+      "short_name": "of_eq_true",
+      "source": {
+        "file": "Init/SimpLemmas.lean",
+        "line_end": 17,
+        "line_start": 17
+      },
+      "status": "compiled",
+      "type_dependency_count": 2,
+      "type_expr_objects": 10,
+      "value_dependency_count": 5,
+      "value_expr_objects": 27
+    },
+    {
+      "has_value": true,
+      "kind": "definition",
+      "module": "Mathlib.Data.Set.Defs",
+      "name": "setOf",
+      "namespace": "[anonymous]",
+      "scope": "external",
+      "short_name": "setOf",
+      "source": {
+        "file": "Mathlib/Data/Set/Defs.lean",
+        "line_end": 66,
+        "line_start": 64
+      },
+      "status": "compiled",
+      "type_dependency_count": 1,
+      "type_expr_objects": 9,
+      "value_dependency_count": 0,
+      "value_expr_objects": 6
+    },
+    {
+      "has_value": true,
+      "kind": "theorem",
+      "module": "Mathlib.Algebra.Group.Basic",
+      "name": "sub_zero",
+      "namespace": "[anonymous]",
+      "scope": "external",
+      "short_name": "sub_zero",
+      "source": {
+        "file": "Mathlib/Algebra/Group/Basic.lean",
+        "line_end": 347,
+        "line_start": 347
+      },
+      "status": "compiled",
+      "type_dependency_count": 10,
+      "type_expr_objects": 43,
+      "value_dependency_count": 27,
+      "value_expr_objects": 134
+    },
+    {
+      "has_value": true,
+      "kind": "theorem",
+      "module": "Mathlib.Order.Lattice",
+      "name": "sup_of_le_left",
+      "namespace": "[anonymous]",
+      "scope": "external",
+      "short_name": "sup_of_le_left",
+      "source": {
+        "file": "Mathlib/Order/Lattice.lean",
+        "line_end": 189,
+        "line_start": 189
+      },
+      "status": "compiled",
+      "type_dependency_count": 8,
+      "type_expr_objects": 39,
+      "value_dependency_count": 10,
+      "value_expr_objects": 46
+    },
+    {
+      "has_value": true,
+      "kind": "theorem",
+      "module": "Mathlib.Algebra.Order.Monoid.Canonical.Defs",
+      "name": "zero_le._simp_1",
+      "namespace": "zero_le",
+      "scope": "external",
+      "short_name": "_simp_1",
+      "source": {
+        "file": "Mathlib/Algebra/Order/Monoid/Canonical/Defs.lean",
+        "line_end": null,
+        "line_start": null
+      },
+      "status": "compiled",
+      "type_dependency_count": 11,
+      "type_expr_objects": 49,
+      "value_dependency_count": 11,
+      "value_expr_objects": 52
+    }
+  ],
+  "edges": [
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe",
+      "target": "BanditRL.OnlineConvex.negativeIntegral",
+      "target_scope": "project"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe",
+      "target": "ENNReal",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe",
+      "target": "ENNReal.ofReal",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe",
+      "target": "EReal",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe",
+      "target": "EReal.coe_ne_top._simp_1",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe",
+      "target": "EReal.instNeg",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe",
+      "target": "EReal.toENNReal",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe",
+      "target": "EReal.toENNReal_of_ne_top",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe",
+      "target": "EReal.toReal",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe",
+      "target": "Eq",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe",
+      "target": "Eq.trans",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe",
+      "target": "False",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe",
+      "target": "MeasurableSpace",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe",
+      "target": "MeasureTheory.Measure",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe",
+      "target": "MeasureTheory.lintegral",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe",
+      "target": "Neg.neg",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe",
+      "target": "Not",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe",
+      "target": "Real",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe",
+      "target": "Real.instNeg",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe",
+      "target": "Real.toEReal",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe",
+      "target": "Top.top",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe",
+      "target": "True",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe",
+      "target": "congrArg",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe",
+      "target": "congrFun'",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe",
+      "target": "eq_self",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe",
+      "target": "funext",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe",
+      "target": "instTopEReal",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe",
+      "target": "not_false_eq_true",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe",
+      "target": "of_eq_true",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe._simp_1_2",
+      "target": "EReal",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe._simp_1_2",
+      "target": "EReal.coe_neg",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe._simp_1_2",
+      "target": "EReal.instNeg",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe._simp_1_2",
+      "target": "Eq",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe._simp_1_2",
+      "target": "Eq.symm",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe._simp_1_2",
+      "target": "Neg.neg",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe._simp_1_2",
+      "target": "Real",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe._simp_1_2",
+      "target": "Real.instNeg",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe._simp_1_2",
+      "target": "Real.toEReal",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe_ne_top",
+      "target": "BanditRL.OnlineConvex.negativeIntegral",
+      "target_scope": "project"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe_ne_top",
+      "target": "BanditRL.OnlineConvex.negativeIntegral_coe",
+      "target_scope": "project"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe_ne_top",
+      "target": "BanditRL.OnlineConvex.positiveIntegral",
+      "target_scope": "project"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe_ne_top",
+      "target": "BanditRL.OnlineConvex.positiveIntegral_coe",
+      "target_scope": "project"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe_ne_top",
+      "target": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target_scope": "project"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe_ne_top",
+      "target": "ENNReal",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe_ne_top",
+      "target": "ENNReal.ofReal",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe_ne_top",
+      "target": "Eq",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe_ne_top",
+      "target": "Eq.mp",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe_ne_top",
+      "target": "Eq.mpr",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe_ne_top",
+      "target": "MeasurableSpace",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe_ne_top",
+      "target": "MeasureTheory.Integrable",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe_ne_top",
+      "target": "MeasureTheory.Integrable.neg",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe_ne_top",
+      "target": "MeasureTheory.Measure",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe_ne_top",
+      "target": "MeasureTheory.lintegral",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe_ne_top",
+      "target": "Ne",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe_ne_top",
+      "target": "Neg.neg",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe_ne_top",
+      "target": "NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe_ne_top",
+      "target": "NonUnitalSeminormedRing.toSeminormedAddCommGroup",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe_ne_top",
+      "target": "NormedCommRing.toSeminormedCommRing",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe_ne_top",
+      "target": "PseudoMetricSpace.toUniformSpace",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe_ne_top",
+      "target": "Real",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe_ne_top",
+      "target": "Real.instNeg",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe_ne_top",
+      "target": "Real.normedAddCommGroup",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe_ne_top",
+      "target": "Real.normedCommRing",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe_ne_top",
+      "target": "Real.pseudoMetricSpace",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe_ne_top",
+      "target": "Real.toEReal",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe_ne_top",
+      "target": "SeminormedAddCommGroup.toSeminormedAddGroup",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe_ne_top",
+      "target": "SeminormedAddGroup.toContinuousENorm",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe_ne_top",
+      "target": "SeminormedCommRing.toNonUnitalSeminormedCommRing",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe_ne_top",
+      "target": "Top.top",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe_ne_top",
+      "target": "UniformSpace.toTopologicalSpace",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe_ne_top",
+      "target": "congrArg",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe_ne_top",
+      "target": "congrFun'",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe_ne_top",
+      "target": "id",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.negativeIntegral_coe_ne_top",
+      "target": "instTopENNReal",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe",
+      "target": "BanditRL.OnlineConvex.positiveIntegral",
+      "target_scope": "project"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe",
+      "target": "ENNReal",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe",
+      "target": "ENNReal.ofReal",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe",
+      "target": "EReal",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe",
+      "target": "EReal.coe_ne_top._simp_1",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe",
+      "target": "EReal.toENNReal",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe",
+      "target": "EReal.toENNReal_of_ne_top",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe",
+      "target": "EReal.toReal",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe",
+      "target": "Eq",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe",
+      "target": "Eq.trans",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe",
+      "target": "False",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe",
+      "target": "MeasurableSpace",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe",
+      "target": "MeasureTheory.Measure",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe",
+      "target": "MeasureTheory.lintegral",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe",
+      "target": "Not",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe",
+      "target": "Real",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe",
+      "target": "Real.toEReal",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe",
+      "target": "Top.top",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe",
+      "target": "True",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe",
+      "target": "congrArg",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe",
+      "target": "congrFun'",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe",
+      "target": "eq_self",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe",
+      "target": "funext",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe",
+      "target": "instTopEReal",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe",
+      "target": "not_false_eq_true",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe",
+      "target": "of_eq_true",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "AddMonoid.toAddZeroClass",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "AddZero.toZero",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "AddZeroClass.toAddZero",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "BanditRL.OnlineConvex.positiveIntegral",
+      "target_scope": "project"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "BanditRL.OnlineConvex.positiveIntegral_coe",
+      "target_scope": "project"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "ENNReal",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "ENNReal.instCanonicallyOrderedAdd",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "ENNReal.instMax",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "ENNReal.instTopologicalSpace",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "ENNReal.ofReal",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "ENNReal.ofReal_max",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "ENNReal.ofReal_zero",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "ENormedAddCommMonoid.toESeminormedAddCommMonoid",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "ESeminormedAddCommMonoid.toESeminormedAddMonoid",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "ESeminormedAddMonoid.toAddMonoid",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "Eq",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "Eq.mp",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "Eq.mpr",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "Eq.trans",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "Iff.mpr",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "LE.le",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "Max.max",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "MeasurableSpace",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "MeasureTheory.Integrable",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "MeasureTheory.Integrable.aestronglyMeasurable",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "MeasureTheory.Integrable.pos_part",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "MeasureTheory.Measure",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "MeasureTheory.Measure.instFunLike",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "MeasureTheory.Measure.instOuterMeasureClass",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "MeasureTheory.ae_of_all",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "MeasureTheory.lintegral",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "MeasureTheory.lintegral_ofReal_ne_top_iff_integrable",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "Ne",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "NonUnitalSeminormedRing.toSeminormedAddCommGroup",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "NormedCommRing.toSeminormedCommRing",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "Not",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "OfNat.ofNat",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "PartialOrder.toPreorder",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "Pi.instZero",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "Preorder.toLE",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "PseudoMetricSpace.toUniformSpace",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "Real",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "Real.instLE",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "Real.instMax",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "Real.instZero",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "Real.linearOrder",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "Real.normedCommRing",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "Real.pseudoMetricSpace",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "Real.toEReal",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "SemilatticeSup.toPartialOrder",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "SeminormedAddCommGroup.toSeminormedAddGroup",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "SeminormedAddGroup.toContinuousENorm",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "SeminormedCommRing.toNonUnitalSeminormedCommRing",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "Top.top",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "UniformSpace.toTopologicalSpace",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "Zero.toOfNat0",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "congrArg",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "congrFun'",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "funext",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "id",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "instENormedAddCommMonoidENNReal",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "instSemilatticeSupENNReal",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "instTopENNReal",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "instZeroENNReal",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "le_max_right",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "of_eq_true",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "sup_of_le_left",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target": "zero_le._simp_1",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "BanditRL.OnlineConvex.negativeIntegral",
+      "target_scope": "project"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "BanditRL.OnlineConvex.negativeIntegral_coe",
+      "target_scope": "project"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "BanditRL.OnlineConvex.negativeIntegral_coe_ne_top",
+      "target_scope": "project"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "BanditRL.OnlineConvex.positiveIntegral",
+      "target_scope": "project"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "BanditRL.OnlineConvex.positiveIntegral_coe",
+      "target_scope": "project"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+      "target_scope": "project"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "BanditRL.OnlineConvex.signedExpectation",
+      "target_scope": "project"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "BanditRL.OnlineConvex.signedExpectation.eq_1",
+      "target_scope": "project"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "ENNReal",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "ENNReal.ofReal",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "ENNReal.toEReal",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "ENNReal.toReal",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "EReal",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "EReal.coe_ennreal_toReal",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "EReal.coe_sub",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "EReal.instSubNegZeroMonoid",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "Eq",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "Eq.mpr",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "Eq.rec",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "Eq.refl",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "Eq.symm",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "HSub.hSub",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "InnerProductSpace.toNormedSpace",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "MeasurableSpace",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "MeasureTheory.Integrable",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "MeasureTheory.Measure",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "MeasureTheory.integral",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "MeasureTheory.integral_eq_lintegral_pos_part_sub_lintegral_neg_part",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "MeasureTheory.lintegral",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "Neg.neg",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "NonUnitalSeminormedRing.toSeminormedAddCommGroup",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "NormedAddCommGroup.toSeminormedAddCommGroup",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "NormedCommRing.toSeminormedCommRing",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "NormedField.toNormedSpace",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "PseudoMetricSpace.toUniformSpace",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "RCLike.toInnerProductSpaceReal",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "Real",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "Real.instNeg",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "Real.instRCLike",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "Real.instSub",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "Real.normedAddCommGroup",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "Real.normedCommRing",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "Real.normedField",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "Real.pseudoMetricSpace",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "Real.toEReal",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "SeminormedAddCommGroup.toSeminormedAddGroup",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "SeminormedAddGroup.toContinuousENorm",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "SeminormedCommRing.toNonUnitalSeminormedCommRing",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "SubNegMonoid.toSub",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "SubNegZeroMonoid.toSubNegMonoid",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "UniformSpace.toTopologicalSpace",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "congrArg",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "id",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+      "target": "instHSub",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_eq_top",
+      "target": "BanditRL.OnlineConvex.negativeIntegral",
+      "target_scope": "project"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_eq_top",
+      "target": "BanditRL.OnlineConvex.positiveIntegral",
+      "target_scope": "project"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_eq_top",
+      "target": "BanditRL.OnlineConvex.signedExpectation",
+      "target_scope": "project"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_eq_top",
+      "target": "BanditRL.OnlineConvex.signedExpectation.eq_1",
+      "target_scope": "project"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_eq_top",
+      "target": "ENNReal",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_eq_top",
+      "target": "ENNReal.toEReal",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_eq_top",
+      "target": "EReal",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_eq_top",
+      "target": "EReal.coe_ennreal_eq_top_iff",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_eq_top",
+      "target": "EReal.coe_ennreal_top",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_eq_top",
+      "target": "EReal.instSubNegZeroMonoid",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_eq_top",
+      "target": "EReal.top_sub",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_eq_top",
+      "target": "Eq",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_eq_top",
+      "target": "Eq.mpr",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_eq_top",
+      "target": "HSub.hSub",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_eq_top",
+      "target": "Iff.mp",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_eq_top",
+      "target": "MeasurableSpace",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_eq_top",
+      "target": "MeasureTheory.Measure",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_eq_top",
+      "target": "Ne",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_eq_top",
+      "target": "SubNegMonoid.toSub",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_eq_top",
+      "target": "SubNegZeroMonoid.toSubNegMonoid",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_eq_top",
+      "target": "Top.top",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_eq_top",
+      "target": "congrArg",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_eq_top",
+      "target": "id",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_eq_top",
+      "target": "instHSub",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_eq_top",
+      "target": "instTopENNReal",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_eq_top",
+      "target": "instTopEReal",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "BanditRL.OnlineConvex.negativeIntegral",
+      "target_scope": "project"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "BanditRL.OnlineConvex.positiveIntegral",
+      "target_scope": "project"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "BanditRL.OnlineConvex.signedExpectation",
+      "target_scope": "project"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "ENNReal",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "ENNReal.toEReal",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "EReal",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "EReal.instNeg",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "EReal.instSubNegZeroMonoid",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "EReal.neg_le_zero",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "EReal.toENNReal",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "EReal.toENNReal_of_nonpos",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "Eq",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "Eq.trans",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "Filter.Eventually",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "Filter.mp_mem",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "Filter.univ_mem'",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "HSub.hSub",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "Iff.mpr",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "LE.le",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "MeasurableSpace",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "MeasureTheory.Measure",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "MeasureTheory.Measure.instFunLike",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "MeasureTheory.Measure.instOuterMeasureClass",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "MeasureTheory.ae",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "MeasureTheory.lintegral",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "MeasureTheory.lintegral_congr_ae",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "MeasureTheory.lintegral_zero",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "Membership.mem",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "Neg.neg",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "OfNat.ofNat",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "PartialOrder.toPreorder",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "Preorder.toLE",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "Set",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "Set.instMembership",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "SubNegMonoid.toSub",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "SubNegZeroMonoid.toSubNegMonoid",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "Trans.trans",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "True",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "Zero.toOfNat0",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "congrArg",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "congrFun'",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "eq_self",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "id",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "instHSub",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "instPartialOrderEReal",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "instTransEq",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "instZeroENNReal",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": true,
+      "kind": "type",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "instZeroEReal",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "of_eq_true",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "setOf",
+      "target_scope": "external"
+    },
+    {
+      "also_in_value": false,
+      "kind": "value",
+      "source": "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+      "target": "sub_zero",
+      "target_scope": "external"
+    }
+  ]
+}

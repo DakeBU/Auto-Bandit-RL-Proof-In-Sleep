@@ -1,0 +1,3 @@
+Expectation leaf02 and canary02 compile; actual declarations MeasureTheory.lintegral_ofReal_ne_top_iff_integrable (ENNReal was a section, not namespace), EReal.neg_le_zero, explicit coe-top iff. Full Jensen v2 headers unchanged, context imports shared module rather than duplicate definitions. Supporting-functional scratch leaf compiled, no public integration yet. Geometry and full Jensen remain mandatory. Native fences/build gates and file-level semantic review are distinct.
+
+Expectation foundation accepted-local after full427tests/7skips and all separate gates. Supporting-functional equality and finite-dimensional separator scratch bodies compile; preserve exact headers and integrate with subsequent barycenter work. No Jensen completion.
