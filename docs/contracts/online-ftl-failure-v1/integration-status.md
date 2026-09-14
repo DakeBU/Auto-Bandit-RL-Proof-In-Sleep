@@ -1,0 +1,1 @@
+Historical scratch context retained. Exact seven headers and causal definitions publicly integrated/accepted-local under online-ftl-failure-v2; evidence runs/online-ftl-failure-20260914. No Chapter2 completion.

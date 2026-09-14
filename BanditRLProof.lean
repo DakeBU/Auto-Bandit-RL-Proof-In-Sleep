@@ -630,3 +630,5 @@ import BanditRLProof.OnlineConvexBarycenter
 import BanditRLProof.OnlineConvexMinorant
 
 import BanditRLProof.OnlineJensen
+
+import BanditRLProof.OnlineFTLFailure

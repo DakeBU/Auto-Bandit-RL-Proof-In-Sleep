@@ -1,0 +1,1 @@
+Recursive prefix statistic equals historical sum; derive strict-past dependence and sign-based minimizer. Source alternating prefixes have coefficient plus/minus1/2, so later loss1. Induct on horizon and keep initial -x0/2 exactly. All seven bodies were scratch-compiled before public integration.

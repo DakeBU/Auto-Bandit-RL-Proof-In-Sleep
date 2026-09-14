@@ -1,0 +1,1 @@
+Public integration changes only file paths; exact prefixes/headers retained. Public-canary01 passes8932jobs with seven public and two canary statements using standard axioms. No failed public proof attempt in this package. The earlier intentional failed-body header probe remains under the Jensen run. Full gates pending.

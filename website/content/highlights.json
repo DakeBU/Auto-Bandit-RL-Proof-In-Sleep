@@ -2503,6 +2503,57 @@
         "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
         "BanditRL.OnlineConvex.signedExpectation_eq_top"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.linearFTLPredict_prefix",
+      "title": "FTL uses only the strict past",
+      "chapter": "online-ftl-failure",
+      "featured": false,
+      "teaching_order": 1,
+      "plain": "FTL uses only the strict past",
+      "math": "\\(x_t\\in\\arg\\min_{x\\in[-1,1]}\\sum_{i<t}z_i x\\)",
+      "intuition": "Equal past coefficient streams give the same prediction.",
+      "why": "Connects the actual causal FTL algorithm to the source counterexample.",
+      "position": "Orabona v10 printedp12/PDF24.",
+      "proof_idea": "Equal past coefficient streams give the same prediction.",
+      "lean_notes": "Zero-based indices and arbitrary initial value are explicit; source T>=1 excludes the empty-horizon formula.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.prefixCoefficient_eq_sum"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.linearFTLPredict_minimizes",
+      "title": "The predictor minimizes historical loss",
+      "chapter": "online-ftl-failure",
+      "featured": false,
+      "teaching_order": 2,
+      "plain": "The predictor minimizes historical loss",
+      "math": "\\(x_t\\in\\arg\\min_{x\\in[-1,1]}\\sum_{i<t}z_i x\\)",
+      "intuition": "The sign of the accumulated coefficient selects the correct interval endpoint.",
+      "why": "Connects the actual causal FTL algorithm to the source counterexample.",
+      "position": "Orabona v10 printedp12/PDF24.",
+      "proof_idea": "The sign of the accumulated coefficient selects the correct interval endpoint.",
+      "lean_notes": "Zero-based indices and arbitrary initial value are explicit; source T>=1 excludes the empty-horizon formula.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.prefixCoefficient_eq_sum"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.example_2_10",
+      "title": "Exact linear-regret counterexample",
+      "chapter": "online-ftl-failure",
+      "featured": false,
+      "teaching_order": 3,
+      "plain": "Exact linear-regret counterexample",
+      "math": "\\(R_T(0)=T-1-x_0/2\\ge T-3/2\\)",
+      "intuition": "The alternating prefix forces each later prediction to incur loss1; keep the initial loss exactly.",
+      "why": "Connects the actual causal FTL algorithm to the source counterexample.",
+      "position": "Orabona v10 printedp12/PDF24.",
+      "proof_idea": "The alternating prefix forces each later prediction to incur loss1; keep the initial loss exactly.",
+      "lean_notes": "Zero-based indices and arbitrary initial value are explicit; source T>=1 excludes the empty-horizon formula.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.failure_prediction"
+      ]
     }
   ]
 }

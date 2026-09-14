@@ -88,3 +88,5 @@ import Tests.OnlineConvexBarycenterCanary
 import Tests.OnlineConvexMinorantCanary
 
 import Tests.OnlineJensenCanary
+
+import Tests.OnlineFTLFailureCanary

@@ -1,0 +1,1 @@
+Example2.10 exact causal FTL/minimization/regret chain accepted-local. All scoped gates passed; see runs/online-ftl-failure-20260914/acceptance-decision.md. Draft PR129 delivered; see delivery.md. Example2.14 scratch candidate and later Chapter2 obligations remain required.
