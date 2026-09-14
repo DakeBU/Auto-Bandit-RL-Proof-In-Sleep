@@ -1,0 +1,31 @@
+⚠ [3327/3329] Replayed BanditRLProof.OnlineLearningFTL
+warning: BanditRLProof/OnlineLearningFTL.lean:81:41: unused variable `hT`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+✖ [3329/3329] Building BanditRLProof.OnlineLearningAsymptotic (8.8s)
+trace: .> LEAN_PATH=E:\ABRL\research\.lake\packages\Cli\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\batteries\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\Qq\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\aesop\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\proofwidgets\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\importGraph\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\LeanSearchClient\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\plausible\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\mathlib\.lake\build\lib\lean;E:\ABRL\worktrees\research-online-book\.lake\build\lib\lean c:\Users\admin\.elan\toolchains\leanprover--lean4---v4.29.1\bin\lean.exe E:\ABRL\worktrees\research-online-book\BanditRLProof\OnlineLearningAsymptotic.lean -o E:\ABRL\worktrees\research-online-book\.lake\build\lib\lean\BanditRLProof\OnlineLearningAsymptotic.olean -i E:\ABRL\worktrees\research-online-book\.lake\build\lib\lean\BanditRLProof\OnlineLearningAsymptotic.ilean -c E:\ABRL\worktrees\research-online-book\.lake\build\ir\BanditRLProof\OnlineLearningAsymptotic.c --setup E:\ABRL\worktrees\research-online-book\.lake\build\ir\BanditRLProof\OnlineLearningAsymptotic.setup.json --json
+info: BanditRLProof/OnlineLearningAsymptotic.lean:30:4: Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+error: BanditRLProof/OnlineLearningAsymptotic.lean:20:2: unsolved goals
+case h.e'_3.h
+y : ℕ → ℝ
+hy : ∀ (t : ℕ), y t ∈ Set.Icc 0 1
+u : ℝ
+hu : u ∈ Set.Icc 0 1
+h0 : Tendsto (fun x => 1 / x) atTop (nhds 0)
+h1 : Tendsto (fun x => Real.log x / x) atTop (nhds 0)
+hc : Tendsto (fun n => ↑n) atTop atTop
+hh :
+  Tendsto (fun x => 4 * ((fun x => 1 / x) ∘ fun n => ↑n) x + 4 * ((fun x => Real.log x / x) ∘ fun n => ↑n) x) atTop
+    (nhds 0)
+T : ℕ
+⊢ Real.log ↑T * (↑T)⁻¹ * 4 + (↑T)⁻¹ * 4 =
+    ((fun x => x⁻¹) ∘ fun n => ↑n) T * 4 + ((fun x => Real.log x * x⁻¹) ∘ fun n => ↑n) T * 4
+error: Lean exited with code 1
+Some required targets logged failures:
+- BanditRLProof.OnlineLearningAsymptotic
+error: build failed

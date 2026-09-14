@@ -1,0 +1,53 @@
+E
+======================================================================
+ERROR: test_ephemeral_ed25519_positive_path_is_conservatively_scoped (tools.test_target_drift_human_contract_external_verification.ExternalVerificationSignatureTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\ABRL\worktrees\research-online-book\tools\test_target_drift_human_contract_external_verification.py", line 305, in test_ephemeral_ed25519_positive_path_is_conservatively_scoped
+    result = self.validate_bundle(self.make_bundle(Path(directory)))
+  File "E:\ABRL\worktrees\research-online-book\tools\test_target_drift_human_contract_external_verification.py", line 230, in make_bundle
+    keys = {
+  File "E:\ABRL\worktrees\research-online-book\tools\test_target_drift_human_contract_external_verification.py", line 231, in <dictcomp>
+    slot: self.generate_key(root, f"key-{slot}")
+  File "E:\ABRL\worktrees\research-online-book\tools\test_target_drift_human_contract_external_verification.py", line 119, in generate_key
+    self.assertEqual(process.returncode, 0, process.stdout.decode(errors="replace"))
+  File "C:\Users\admin\AppData\Local\Programs\Python\Python38\lib\unittest\case.py", line 912, in assertEqual
+    assertion_func(first, second, msg=msg)
+  File "C:\Users\admin\AppData\Local\Programs\Python\Python38\lib\unittest\case.py", line 905, in _baseAssertEqual
+    raise self.failureException(msg)
+AssertionError: 255 != 0 : Unable to save public key to E:\\ABRL\\worktrees\\research-online-book\\tmp\\harness-temp\\tmpaic39kmk\\key-reviewer_a.pub: Bad file descriptor
+
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\admin\AppData\Local\Programs\Python\Python38\lib\shutil.py", line 616, in _rmtree_unsafe
+    os.unlink(fullname)
+PermissionError: [WinError 5] Access is denied: 'E:\\ABRL\\worktrees\\research-online-book\\tmp\\harness-temp\\tmpaic39kmk\\key-reviewer_a'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\ABRL\worktrees\research-online-book\tools\test_target_drift_human_contract_external_verification.py", line 305, in test_ephemeral_ed25519_positive_path_is_conservatively_scoped
+    result = self.validate_bundle(self.make_bundle(Path(directory)))
+  File "C:\Users\admin\AppData\Local\Programs\Python\Python38\lib\tempfile.py", line 827, in __exit__
+    self.cleanup()
+  File "C:\Users\admin\AppData\Local\Programs\Python\Python38\lib\tempfile.py", line 831, in cleanup
+    self._rmtree(self.name)
+  File "C:\Users\admin\AppData\Local\Programs\Python\Python38\lib\tempfile.py", line 813, in _rmtree
+    _shutil.rmtree(name, onerror=onerror)
+  File "C:\Users\admin\AppData\Local\Programs\Python\Python38\lib\shutil.py", line 740, in rmtree
+    return _rmtree_unsafe(path, onerror)
+  File "C:\Users\admin\AppData\Local\Programs\Python\Python38\lib\shutil.py", line 618, in _rmtree_unsafe
+    onerror(os.unlink, fullname, sys.exc_info())
+  File "C:\Users\admin\AppData\Local\Programs\Python\Python38\lib\tempfile.py", line 799, in onerror
+    resetperms(path)
+  File "C:\Users\admin\AppData\Local\Programs\Python\Python38\lib\tempfile.py", line 794, in resetperms
+    _os.chmod(path, 0o700)
+PermissionError: [WinError 5] Access is denied: 'E:\\ABRL\\worktrees\\research-online-book\\tmp\\harness-temp\\tmpaic39kmk\\key-reviewer_a'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.024s
+
+FAILED (errors=1)

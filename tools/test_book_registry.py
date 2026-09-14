@@ -109,6 +109,17 @@ class BookRegistryTests(unittest.TestCase):
         self.assertIn("not completion of all Chapter 2", scope["completion_definition"])
         self.assertIn("variable-step", " ".join(scope["open_gaps"]))
 
+    def test_online_foundations_use_the_shared_registry(self):
+        registry = self.registry()
+        nodes = membership_index(registry)
+        chapter = next(c for c in registry["chapters"] if c["id"] == "teaching:online-foundations")
+        for name in ["lemma_1_2", "theorem_1_3", "meanPredict_noRegret", "iid_meanPredict_excess"]:
+            key = "declaration:BanditRL.OnlineLearning." + name
+            self.assertIn(key, chapter["node_ids"])
+            self.assertEqual(["online-learning"], nodes[key]["books"])
+        self.assertIn("teaching:online-ogd", next(b for b in self.config["books"]
+                      if b["id"] == "online-learning")["chapter_refs"])
+
     def test_preview_badge_cannot_borrow_evidence_from_another_declaration(self):
         source = ('<details class="declaration" id="a"><summary>'
                   '<span class="status source">Source indexed</span></summary></details>'

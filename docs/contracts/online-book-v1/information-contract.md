@@ -1,0 +1,3 @@
+# Source strategy information bridge v1
+
+Source p1 IID stream and pp3-6 causal mean strategy. Prove current-target independence for the actual meanPredict, from independent measurable observations. Identical distribution is not needed for this independence fact (it will provide common mean/variance in the cumulative benchmark). At time zero use independence of a constant. At positive times use mathlib independent prefix sum versus next coordinate and measurable division by the deterministic horizon. No independence of prediction is assumed. General arbitrary-history policies remain a distinct possible interface; this leaf specifically verifies the book's actual strategy.

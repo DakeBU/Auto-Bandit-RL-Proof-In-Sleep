@@ -277,7 +277,9 @@
       "position": "It connects the generated conditional reward law to the self-normalized matrix layer.",
       "proof_idea": "Apply the conditional sub-Gaussian MGF lemma at each round, use predictable measurability and the projection bound, and assemble the compensated sum.",
       "lean_notes": "The theorem explicitly requires a probability measure, filtration, strong adaptation, predictable projections, nonnegative projection bounds, and per-round conditional MGF witnesses. It is not an independence-only Hoeffding statement.",
-      "dependencies": ["BanditRLProof.ConditionalExpectationReward.historyStepKernelFamily_centeredReward_succ_hasCondSubgaussianMGF_trajMeasure"]
+      "dependencies": [
+        "BanditRLProof.ConditionalExpectationReward.historyStepKernelFamily_centeredReward_succ_hasCondSubgaussianMGF_trajMeasure"
+      ]
     },
     {
       "full_name": "BanditRLProof.OFUL.measure_finiteHorizonRidgeEstimate_error_matrixNorm_gt_confidenceRadius_le",
@@ -290,7 +292,9 @@
       "position": "It consumes the Gaussian-mixture self-normalized bound and feeds the optimistic finite-action score.",
       "proof_idea": "Rewrite the ridge error into noise and regularization terms, control the first by the determinant-ratio tail, bound the second by the supplied bias radius, and use the matrix-norm triangle inequality.",
       "lean_notes": "Positive definiteness, feature/noise measurability, adaptation, response identity, positive variance scale, delta domain, and the bias bound are explicit in the signature.",
-      "dependencies": ["BanditRLProof.OFUL.fixedDirectionCompensatedScore_hasMGFUpperBoundAt"]
+      "dependencies": [
+        "BanditRLProof.OFUL.fixedDirectionCompensatedScore_hasMGFUpperBoundAt"
+      ]
     },
     {
       "full_name": "BanditRLProof.OFUL.finiteHistoryTelescopingScalarRidgeOptimisticAlgorithm",
@@ -303,7 +307,9 @@
       "position": "It is the algorithm node between measurable optimistic selection and the generated all-time confidence/regret consumers.",
       "proof_idea": "Build ridge statistics from the finite history, compute scheduled scores for every finite arm, and use the measurable strict-improvement fold to choose a deterministic tie-breaking maximizer.",
       "lean_notes": "The arguments include arm count, regularization, features, noise scale, outer confidence budget, and parameter-radius bound, but no terminal horizon. The definition itself is not a regret theorem.",
-      "dependencies": ["BanditRLProof.OFUL.measure_finiteHorizonRidgeEstimate_error_matrixNorm_gt_confidenceRadius_le"]
+      "dependencies": [
+        "BanditRLProof.OFUL.measure_finiteHorizonRidgeEstimate_error_matrixNorm_gt_confidenceRadius_le"
+      ]
     },
     {
       "full_name": "BanditRLProof.OFUL.measure_telescopingCanonicalHistoryTrajectory_allTimeConfidenceFailureSet_le_of_linearSubgaussianEnvironment",
@@ -316,7 +322,10 @@
       "position": "It consumes the kernel-level linear sub-Gaussian producer and is the probability parent of the all-horizon regret terminal.",
       "proof_idea": "Convert the environment's initial/successor centered MGF laws into the canonical predictable residual source, apply every scheduled fixed-time ridge tail, and sum the telescoping shares.",
       "lean_notes": "CanonicalLinearSubgaussianEnvironmentLaw stores theta norm and kernel MGF laws, not this conclusion. The displayed trajectory measure uses exactly finiteHistoryTelescopingScalarRidgeOptimisticAlgorithm.",
-      "dependencies": ["BanditRLProof.OFUL.finiteHistoryTelescopingScalarRidgeOptimisticAlgorithm", "BanditRLProof.OFUL.CanonicalLinearSubgaussianEnvironmentLaw"]
+      "dependencies": [
+        "BanditRLProof.OFUL.finiteHistoryTelescopingScalarRidgeOptimisticAlgorithm",
+        "BanditRLProof.OFUL.CanonicalLinearSubgaussianEnvironmentLaw"
+      ]
     },
     {
       "full_name": "BanditRLProof.OFUL.telescopingCanonicalStandardHighProbabilityPseudoRegret_nonneg_and_allHorizon_tail_le_explicitBound_of_linearSubgaussianEnvironment_of_featureBound_le_regularization",
@@ -330,7 +339,10 @@
       "position": "It joins all-time ridge confidence, finite-action optimism, selected-width summation, and the initial-round gap bound.",
       "proof_idea": "Transport confidence to each selected action, convert optimism to gap bounds, sum widths with Cauchy-Schwarz and the log-determinant inequality, then show every violation belongs to the all-time failure event.",
       "lean_notes": "Finite actions/features, positive regularization/noise scale, 0<delta<=1, nonnegative S and L2, L2<=lambda, a feature-square bound, an optimal arm, and the canonical kernel-law producer are explicit. Sharp/minimax constants are not claimed.",
-      "dependencies": ["BanditRLProof.OFUL.measure_telescopingCanonicalHistoryTrajectory_allTimeConfidenceFailureSet_le_of_linearSubgaussianEnvironment", "BanditRLProof.OFUL.sum_range_min_prefix_update_le_two_trace_average_log"]
+      "dependencies": [
+        "BanditRLProof.OFUL.measure_telescopingCanonicalHistoryTrajectory_allTimeConfidenceFailureSet_le_of_linearSubgaussianEnvironment",
+        "BanditRLProof.OFUL.sum_range_min_prefix_update_le_two_trace_average_log"
+      ]
     },
     {
       "full_name": "BanditRLProof.OFUL.integral_stoppedValue_canonicalStandardHighProbabilityPseudoRegret_nonneg_and_le_quadraticCoefficient_mul_stoppingTimeRoundSecondMoment_add_initialGap_mul_sqrt_stoppingTimeRoundSecondMoment_mul_sqrt_delta_and_stoppedViolation_measure_le_of_squareIntegrableFiniteStoppingTime",
@@ -343,7 +355,9 @@
       "position": "It is the strongest random-horizon consumer inside the scoped Chapter 5 completion route.",
       "proof_idea": "Use stopped-value measurability and adaptation, split good and bad trajectories, integrate the quadratic envelope at tau, and bound the bad indicator by the stopping-round second moment times sqrt(delta).",
       "lean_notes": "The theorem explicitly requires the canonical all-round filtration, IsStoppingTime, and SquareIntegrableFiniteStoppingTime, which includes a.e. finiteness and integrability/second-moment control. It is not universal optional stopping or an almost-sure consistency theorem.",
-      "dependencies": ["BanditRLProof.OFUL.telescopingCanonicalStandardHighProbabilityPseudoRegret_nonneg_and_allHorizon_tail_le_explicitBound_of_linearSubgaussianEnvironment_of_featureBound_le_regularization"]
+      "dependencies": [
+        "BanditRLProof.OFUL.telescopingCanonicalStandardHighProbabilityPseudoRegret_nonneg_and_allHorizon_tail_le_explicitBound_of_linearSubgaussianEnvironment_of_featureBound_le_regularization"
+      ]
     },
     {
       "full_name": "BanditRLProof.PosteriorKernel.canonicalPosterior_kernel_ae_eq_condDistrib_of_pair_map_eq",
@@ -370,7 +384,9 @@
       "position": "It consumes posterior-kernel correctness and feeds the recursive trajectory sampler.",
       "proof_idea": "Construct the canonical sampler measure, apply posterior equals conditional environment law, and map both sides through the measurable best-action selector.",
       "lean_notes": "Standard Borel/nonempty environment and action spaces, a probability prior, Markov likelihood, and measurable bestAction are explicit. This is one-step matching, not yet a generated multi-round regret theorem.",
-      "dependencies": ["BanditRLProof.PosteriorKernel.canonicalPosterior_kernel_ae_eq_condDistrib_of_pair_map_eq"]
+      "dependencies": [
+        "BanditRLProof.PosteriorKernel.canonicalPosterior_kernel_ae_eq_condDistrib_of_pair_map_eq"
+      ]
     },
     {
       "full_name": "BanditRLProof.Thompson.uniformReferenceThompsonAlgorithm_trajectory_condDistrib_action_ae_eq_bestAction",
@@ -383,7 +399,9 @@
       "position": "It is the bridge from the canonical one-step sampler to the generated finite-history score identities.",
       "proof_idea": "Build the recursive history algorithm and canonical environment trajectory kernel, extract the actual finite history, apply density and conditional-law invariance, and identify the successor coordinate.",
       "lean_notes": "The canary restates the complete algorithm, trajectoryKernel, actualMeasure, actualHistory, and nextAction let chain. It is not an adjoined sampler theorem.",
-      "dependencies": ["BanditRLProof.Thompson.canonicalSampler_condDistrib_action_ae_eq_bestAction"]
+      "dependencies": [
+        "BanditRLProof.Thompson.canonicalSampler_condDistrib_action_ae_eq_bestAction"
+      ]
     },
     {
       "full_name": "BanditRLProof.Thompson.integral_trajectoryBayesMeanRegret_eq_add_historyScore",
@@ -396,7 +414,9 @@
       "position": "It follows recursive probability matching and precedes the concrete clipped-UCB specialization.",
       "proof_idea": "Apply the finite-history conditional-distribution equality to each score, integrate the score identity, sum over the finite horizon, and regroup the mean differences.",
       "lean_notes": "The theorem retains separate integrability hypotheses for selector means, selected means, selected scores, and selector scores. The decomposition is valid for any measurable selector; `trajectoryBayesMeanRegret` is genuinely Bayesian pseudo-regret only when `IsOptimalMeanSelector mean bestAction` is available.",
-      "dependencies": ["BanditRLProof.Thompson.uniformReferenceThompsonAlgorithm_trajectory_condDistrib_action_ae_eq_bestAction"]
+      "dependencies": [
+        "BanditRLProof.Thompson.uniformReferenceThompsonAlgorithm_trajectory_condDistrib_action_ae_eq_bestAction"
+      ]
     },
     {
       "full_name": "BanditRLProof.Thompson.integral_trajectoryBayesMeanRegret_eq_add_clippedUCB",
@@ -410,7 +430,9 @@
       "position": "It consumes the history-score decomposition and feeds the two stationary clipped-score expectation inequalities.",
       "proof_idea": "Prove the clipped score is measurable and uniformly bounded, automatically obtain the needed integrability, and instantiate the general history-score equality.",
       "lean_notes": "The mean surface must be measurable and contained in [l,u]. The theorem is comparator-relative algebra and does not itself assert selector optimality or provide the stationary concentration bounds.",
-      "dependencies": ["BanditRLProof.Thompson.integral_trajectoryBayesMeanRegret_eq_add_historyScore"]
+      "dependencies": [
+        "BanditRLProof.Thompson.integral_trajectoryBayesMeanRegret_eq_add_historyScore"
+      ]
     },
     {
       "full_name": "BanditRLProof.Thompson.canonicalLatentArmStreamTrajectory_reward_eq_rewardFromArmStream_ae",
@@ -423,7 +445,9 @@
       "position": "It connects the recursive generated trajectory to arm-stream concentration and clipped-score expectation bounds.",
       "proof_idea": "Use the canonical step-kernel construction and induction over finite trajectory prefixes to identify each feedback draw with rewardFromArmStream at the selected pull count.",
       "lean_notes": "The equality is almost everywhere under the canonical generated trajectory kernel for each latent environment/stream input. It is a support/alignment theorem, not independence stated by fiat.",
-      "dependencies": ["BanditRLProof.Thompson.uniformReferenceThompsonAlgorithm_trajectory_condDistrib_action_ae_eq_bestAction"]
+      "dependencies": [
+        "BanditRLProof.Thompson.uniformReferenceThompsonAlgorithm_trajectory_condDistrib_action_ae_eq_bestAction"
+      ]
     },
     {
       "full_name": "BanditRLProof.Thompson.stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_trajectoryBayesMeanRegret_le",
@@ -679,7 +703,9 @@
       "position": "It is the fixed-model asymptotic consumer of the compiled ridge-confidence, optimism, width-summation, and bad-event expectation route.",
       "proof_idea": "First prove the explicit expected bound is little-o of the natural horizon scale, transfer the bound to the canonical generated regret, and rewrite division as the expected-average definition.",
       "lean_notes": "The limit is for the horizon-indexed generated family in the theorem's fixed model. It is not a one-policy anytime, pathwise, minimax, or uniform-over-parameter consistency claim.",
-      "dependencies": ["BanditRLProof.OFUL.sum_range_min_prefix_update_le_two_trace_average_log"]
+      "dependencies": [
+        "BanditRLProof.OFUL.sum_range_min_prefix_update_le_two_trace_average_log"
+      ]
     },
     {
       "full_name": "BanditRLProof.Tsallis.integral_sampledOracleRestartHalfTsallisFiniteArmIndependentGlobalMeanChangeDynamicRegret_le",
@@ -691,7 +717,9 @@
       "position": "This is the current terminal of the full-information population-mean oracle-restart branch.",
       "proof_idea": "Construct the exact change-point schedule, prove its epoch count is the global switch count plus one, show the epoch-start best arm stays mean-optimal, transport the generated local stability certificates, and invoke the compiled restart assembly.",
       "lean_notes": "The schedule sees population-mean changes. An observable detector with delay and false alarms is a different, still-open random-schedule theorem route.",
-      "dependencies": ["BanditRLProof.Tsallis.sampledScheduledHalfTsallisPredictableMovingComparatorEnvironmentRegret_le_oracleRestartSwitchCountSqrt"]
+      "dependencies": [
+        "BanditRLProof.Tsallis.sampledScheduledHalfTsallisPredictableMovingComparatorEnvironmentRegret_le_oracleRestartSwitchCountSqrt"
+      ]
     },
     {
       "full_name": "BanditRLProof.FiniteHorizonRL.MDP",
@@ -719,7 +747,9 @@
       "position": "It joins Bellman optimality to occupancy-based empirical-model and optimistic-certificate consumers.",
       "proof_idea": "Prove a one-step Bellman difference identity, integrate it through the induced state kernel, and telescope recursively over the remaining horizon.",
       "lean_notes": "The occupancy recursion and all measurability/integrability obligations are explicit. This is expected policy regret, not realized sample-path regret.",
-      "dependencies": ["BanditRLProof.FiniteHorizonRL.MDP.optimalValueAt_dominates_and_is_attained"]
+      "dependencies": [
+        "BanditRLProof.FiniteHorizonRL.MDP.optimalValueAt_dominates_and_is_attained"
+      ]
     },
     {
       "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeStochasticEmpiricalOptimisticSource.exploratorySource_trajectoryMeasure_projectedCumulativeInverseSqrtPathSupport_decayingExplorationAverageRealizedBehaviorConsistency_allWindows_of_standardBorel",
@@ -731,7 +761,9 @@
       "position": "It is the regularity-closed all-window parent for later natural-causal, first-passage, and stopping-time constructions.",
       "proof_idea": "Combine cumulative empirical transition confidence, path-support visit floors, known reward transport, optimistic planning, selected-return concentration, the decaying exploration schedule, and asymptotic estimates for both coordinates.",
       "lean_notes": "The long signature records finite nonempty Standard Borel spaces, exact generated sources, support, bounded means, sub-Gaussian rewards, and horizon positivity. It is not a minimax UCB-VI theorem.",
-      "dependencies": ["BanditRLProof.FiniteHorizonRL.MarkovPolicy.expectedRegret_eq_occupancyGapRemaining"]
+      "dependencies": [
+        "BanditRLProof.FiniteHorizonRL.MarkovPolicy.expectedRegret_eq_occupancyGapRemaining"
+      ]
     },
     {
       "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledCausalSource_inverseSqrtThresholdUnboundedHittingAfter_stoppedAverageRealizedBehaviorRegret_integrable_and_integral_le_threshold",
@@ -937,7 +969,7 @@
       "full_name": "BanditRLProof.LowerBounds.IsMinimaxOptimal",
       "chapter": "foundations",
       "plain": "A policy is minimax optimal only if it belongs to the chosen policy class and its worst-case regret over the chosen environment class attains that class's minimax value.",
-      "math": "\u005cpi\u005cin\u005cmathcal P\u005cquad\u005ctext{and}\u005cquad\u005csup_{\u005cnu\u005cin\u005cmathcal E}R_n(\u005cpi,\u005cnu)=\u005cinf_{\u005cpi'\u005cin\u005cmathcal P}\u005csup_{\u005cnu\u005cin\u005cmathcal E}R_n(\u005cpi',\u005cnu).",
+      "math": "\\pi\\in\\mathcal P\\quad\\text{and}\\quad\\sup_{\\nu\\in\\mathcal E}R_n(\\pi,\\nu)=\\inf_{\\pi'\\in\\mathcal P}\\sup_{\\nu\\in\\mathcal E}R_n(\\pi',\\nu).",
       "intuition": "The same policy can be minimax optimal for one horizon or environment class and fail to be optimal for another.",
       "why": "This compiles the explicit Chapter 13 warning that minimax optimality is not a property of a policy alone.",
       "position": "It refines the minimax value surface without asserting that an arbitrary infimum has a minimizing policy.",
@@ -951,7 +983,7 @@
       "full_name": "BanditRLProof.LowerBounds.gaussianSampleMeanThresholdRisk_le_exp",
       "chapter": "foundations",
       "plain": "For the two Gaussian observation laws with means zero and Delta and variance one over n, the midpoint decision's worst-case error probability is at most exp(-n Delta squared over eight).",
-      "math": "\u005cmax_{\u005cmu\u005cin\u005c{0,\u005cDelta\u005c}}\u005cmathbb P_{\u005cmathcal N(\u005cmu,1/n)}(\u005chat\u005cmu\u005cneq\u005cmu)\u005cle\u005cexp(-n\u005cDelta^2/8).",
+      "math": "\\max_{\\mu\\in\\{0,\\Delta\\}}\\mathbb P_{\\mathcal N(\\mu,1/n)}(\\hat\\mu\\neq\\mu)\\le\\exp(-n\\Delta^2/8).",
       "intuition": "A larger sample size or a wider separation makes the two Gaussian hypotheses exponentially easier to distinguish.",
       "why": "It adds a real two-hypothesis probability theorem for the opening of Section 13.1 while leaving the sharper source display auditable.",
       "position": "This is a symmetric Chernoff companion, distinct from the separately compiled exact two-sided Mills-ratio Eq. (13.1).",
@@ -1134,11 +1166,11 @@
       "full_name": "BanditRLProof.LowerBounds.klDiv_compProd_same_left_eq_lintegral_klDiv_of_measurable",
       "chapter": "foundations",
       "plain": "When two one-step joint laws share the same first marginal, their relative entropy is the first-law integral of the pointwise relative entropy between their conditional kernels.",
-      "math": "D(\u03bc\u2297\u03ba\\Vert\u03bc\u2297\u03b7)=\u222b D(\u03ba_x\\Vert\u03b7_x)\\,\u03bc(dx).",
+      "math": "D(μ⊗κ\\Vertμ⊗η)=∫ D(κ_x\\Vertη_x)\\,μ(dx).",
       "intuition": "The shared past contributes no information; only the next conditional observation separates the two laws, and its cost is averaged over histories actually seen under the first law.",
       "why": "This closes the conditional-kernel chain-rule gap that previously prevented arm-level KL costs from being accumulated along an adaptive bandit history.",
       "position": "It is the measure-theoretic engine of Chapter 15 Lemma 15.1, before specializing the conditional kernels to one randomized policy and finite arms.",
-      "proof_idea": "Identify the joint Radon\u2013Nikodym derivative fibrewise, integrate its logarithm under the composition product, and preserve the singular branch: positive first-law mass on an infinite-KL fibre makes both sides infinite.",
+      "proof_idea": "Identify the joint Radon–Nikodym derivative fibrewise, integrate its logarithm under the composition product, and preserve the singular branch: positive first-law mass on an infinite-KL fibre makes both sides infinite.",
       "lean_notes": "The theorem assumes a finite first measure, finite Markov kernels, countably generated target measurable space, and measurability of the pointwise KL function. It does not assume absolute continuity or finite KL.",
       "dependencies": []
     },
@@ -1146,10 +1178,10 @@
       "full_name": "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum",
       "chapter": "foundations",
       "plain": "For one common randomized policy in two finite-arm environments, the directed KL between their canonical finite history laws equals the sum of first-environment expected pull counts times the directed KL of each arm law.",
-      "math": "D(\\mathbb P_{\u03bd,\u03c0}^{(n)}\\Vert\\mathbb P_{\u03bd',\u03c0}^{(n)})=\\sum_a \\mathbb E_{\u03bd,\u03c0}[T_a(n)]D(P_a\\Vert P'_a).",
+      "math": "D(\\mathbb P_{ν,π}^{(n)}\\Vert\\mathbb P_{ν',π}^{(n)})=\\sum_a \\mathbb E_{ν,π}[T_a(n)]D(P_a\\Vert P'_a).",
       "intuition": "At every round the same policy cancels from the likelihood ratio; an arm pays information only when the policy selects it, so repeated conditional costs regroup into expected pull counts.",
       "why": "This is the compiled Chapter 15 change-of-environment identity used by minimax, instance-dependent, and high-probability lower-bound routes.",
-      "position": "It is the local source-facing counterpart of Lattimore\u2013Szepesv\u00e1ri Lemma 15.1. The compiled Theorem 15.2 consumes it; later Chapter 16\u201317 terminals remain separate.",
+      "position": "It is the local source-facing counterpart of Lattimore–Szepesvári Lemma 15.1. The compiled Theorem 15.2 consumes it; later Chapter 16–17 terminals remain separate.",
       "proof_idea": "Recursively expose the canonical finite history law as a composition product, apply the same-policy conditional KL identity at each successor, sum over finite actions, and identify policy arm masses with lower integrals of realized pull counts.",
       "lean_notes": "Finite arms and a countably generated reward space are explicit. The equality uses ENNReal KL and lower-integral expected counts, covers singular or infinite arm KL, and uses the first environment in both the history law and expectation. The local lastRound index denotes lastRound+1 observations.",
       "dependencies": [
@@ -1220,8 +1252,8 @@
       "math": "\\forall \\pi,\\ k>1,\\ n\\ge k-1:\\quad \\exists \\mu\\in[0,1]^k,\\quad R_n^{\\mathrm{pseudo}}(\\pi,\\mu)\\ge\\frac{1}{27}\\sqrt{(k-1)n}.",
       "intuition": "A policy cannot explore every alternative often under the base instance. Raising one lightly sampled arm creates a competing environment that stays close in history KL, so the policy must incur substantial regret in at least one of the two worlds.",
       "why": "This is the first complete source-facing textbook minimax theorem in the Part IV spine: it joins reusable probability, history-law, Gaussian, event, and lattice layers into the exact external endpoint.",
-      "position": "It is the compiled counterpart of Lattimore\u2013Szepesv\u00e1ri Theorem 15.2 and implies the coarser Chapter 13 order statement with c=1/54. It does not promote the Bernoulli notes, exercises, or Chapter 16\u201317 terminals.",
-      "proof_idea": "Give the source's first arm (Lean Fin 0) mean Delta, select a least-explored alternative under the base law, raise only that arm to 2 Delta, use Lemma 15.1 to bound the directed history KL by one half, apply Bretagnolle\u2013Huber to the source event T_1(n) at most n/2 (Lean T_0), and tune Delta so the exponential constant yields 1/27.",
+      "position": "It is the compiled counterpart of Lattimore–Szepesvári Theorem 15.2 and implies the coarser Chapter 13 order statement with c=1/54. It does not promote the Bernoulli notes, exercises, or Chapter 16–17 terminals.",
+      "proof_idea": "Give the source's first arm (Lean Fin 0) mean Delta, select a least-explored alternative under the base law, raise only that arm to 2 Delta, use Lemma 15.1 to bound the directed history KL by one half, apply Bretagnolle–Huber to the source event T_1(n) at most n/2 (Lean T_0), and tune Delta so the exponential constant yields 1/27.",
       "lean_notes": "The policy is an arbitrary randomized HistoryAlgorithm used unchanged in both environments. Expected pseudo-regret is an ENNReal lower integral on the actual canonical history measure and is the source's standard Lemma 4.5-equivalent form; no separate reward-sum regret bridge is claimed here. lastRound=n-1 encodes exactly n observations. The environment witness certifies every mean lies in [0,1] and identifies an optimal arm.",
       "dependencies": [
         "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum",
@@ -1920,6 +1952,76 @@
       "dependencies": [
         "BanditRL.OnlineGradientDescent.theorem_2_13_fixed",
         "BanditRL.OnlineGradientDescent.equation_2_1_distance"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.lemma_1_2",
+      "title": "Lemma 1.2: Be-the-Leader",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 1,
+      "plain": "Prefix minimizers beat the final fixed leader in cumulative loss.",
+      "math": "\\(\\sum_{t=1}^T\\ell_t(x_t^*)\\le\\sum_{t=1}^T\\ell_t(x_T^*)\\)",
+      "intuition": "Prefix minimizers beat the final fixed leader in cumulative loss.",
+      "why": "This interface connects source Chapter 1 to its exact public Lean proof.",
+      "position": "Orabona v10 Chapter 1, printed page 4.",
+      "proof_idea": "Use the source-aligned dependency chain and the separately proved algorithm/information interfaces.",
+      "lean_notes": "Arbitrary real losses and feasible prefix minimizers; no convexity or causality assumption on the auxiliary leaders.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.theorem_1_3",
+      "title": "Theorem 1.3: guessing with the past mean",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 2,
+      "plain": "The actual history-mean predictor achieves the source logarithmic regret bound.",
+      "math": "\\(R_T\\le4+4\\log T\\)",
+      "intuition": "The actual history-mean predictor achieves the source logarithmic regret bound.",
+      "why": "This interface connects source Chapter 1 to its exact public Lean proof.",
+      "position": "Orabona v10 Chapter 1, printed page 4.",
+      "proof_idea": "Use the source-aligned dependency chain and the separately proved algorithm/information interfaces.",
+      "lean_notes": "Observations in [0,1], initial prediction 1/2, positive horizon; best-fixed comparator is the proved empirical-mean minimizer.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.lemma_1_2",
+        "BanditRL.OnlineLearning.empiricalMean_minimizes",
+        "BanditRL.OnlineLearning.meanPredict_stability"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.meanPredict_noRegret",
+      "title": "Upper-sublinear comparator regret",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 3,
+      "plain": "Every fixed comparator has vanishing normalized upper regret.",
+      "math": "\\(\\limsup_{T\\to\\infty}R_T(u)/T\\le0\\)",
+      "intuition": "Every fixed comparator has vanishing normalized upper regret.",
+      "why": "This interface connects source Chapter 1 to its exact public Lean proof.",
+      "position": "Orabona v10 Chapter 1, printed page 2.",
+      "proof_idea": "Use the source-aligned dependency chain and the separately proved algorithm/information interfaces.",
+      "lean_notes": "One actual prediction sequence for every comparator; no nonnegative-regret or convergence assumption.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.theorem_1_3"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.iid_meanPredict_excess",
+      "title": "Equation (1.1): the IID benchmark",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 4,
+      "plain": "The expected excess is a sum of nonnegative squared estimation errors.",
+      "math": "\\(\\mathbb E\\sum_{t=1}^T(x_t-Y_t)^2-T\\sigma^2=\\sum_{t=1}^T\\mathbb E(x_t-\\mathbb EY_1)^2\\)",
+      "intuition": "The expected excess is a sum of nonnegative squared estimation errors.",
+      "why": "This interface connects source Chapter 1 to its exact public Lean proof.",
+      "position": "Orabona v10 Chapter 1, printed page 1.",
+      "proof_idea": "Use the source-aligned dependency chain and the separately proved algorithm/information interfaces.",
+      "lean_notes": "Independent identically distributed measurable interval-valued observations; prediction measurability, integrability and current-target independence are proved.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.meanPredict_independent",
+        "BanditRL.OnlineLearning.independent_prediction_square",
+        "BanditRL.OnlineLearning.meanPredict_memLp"
       ]
     }
   ]

@@ -1,0 +1,5 @@
+{
+  "prefix": "import Mathlib.Topology.Algebra.Order.Field\nimport Mathlib.Algebra.Order.BigOperators.Group.Finset\nimport Mathlib.Data.Real.Basic\nimport Mathlib.Topology.Instances.Real.Lemmas\n\nopen Filter\n\nnamespace BanditRL.OnlineLearning\n\n/-- Comparator is an evaluation parameter, separate from the prediction sequence. -/\nnoncomputable def comparatorRegret {X : Type*} (loss : \u2115 \u2192 X \u2192 \u211d)\n    (prediction : \u2115 \u2192 X) (u : X) (T : \u2115) : \u211d :=\n  (\u2211 t \u2208 Finset.range T, loss t (prediction t)) - \u2211 t \u2208 Finset.range T, loss t u\n\n/-- Upper sublinear regret. This does not require nonnegative regret or existence of its limit. -/\ndef NoRegret {X : Type*} (V : Set X) (loss : \u2115 \u2192 X \u2192 \u211d) (prediction : \u2115 \u2192 X) : Prop :=\n  \u2200 u \u2208 V, \u2200 \u03b5 : \u211d, 0 < \u03b5 \u2192 \u2200\u1da0 T in atTop,\n    comparatorRegret loss prediction u T / T \u2264 \u03b5\n\n",
+  "sha256": "8a2ddeb4baaf48c2d13e24fa9d1e94f78264b2a016780d4c579a837f8974d74e",
+  "repair": "Explicit real topology import missing in original draft; definition bodies and theorem headers unchanged."
+}

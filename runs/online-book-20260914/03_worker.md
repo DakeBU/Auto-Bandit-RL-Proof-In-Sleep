@@ -1,0 +1,17 @@
+# Worker
+
+Attempt 01: missing real import, rejected. Attempt 02: wrong side for addition monotonicity API, rejected. Attempt 03: exact induction proof compiled, no statement change. Focused lake build succeeded: 886 jobs. Native safe-verify passed the v2 statement hash. See individual raw logs and exit receipts. This closes the selected Lemma 1.2 proof body, not Theorem 1.3 or the chapter gate.
+
+Module-import canary also compiled: leader switches between two actions; left loss -2 and right loss 0. Axioms are only propext, Classical.choice, Quot.sound. This is not yet the required public-root canary.
+
+Mean leaf: exact quadratic decomposition, unrestricted comparator minimization, and interval feasibility compiled. Attempt01 failed at denominator cancellation; attempt02 used field_simp and passed with redundant tactic warnings; removed only unreachable ring and final lake build succeeded (3285 jobs). All three frozen headers and context prefix match. No terminal weakened.
+
+FTL leaves and terminal: strict-prefix prediction, interval feasibility, mean update, and per-round 4/(t+1) stability are proved. Attempts01/02 failed at rational normalization and then a redundant tactic; attempt03 compiled Theorem1.3. Final module build passed (3327 jobs). The retained positive-horizon hypothesis hT is unused by the proof because the real-log convention also makes zero horizon trivial; kept to match source intent. Five native fences passed. No assumed stability or regret certificate.
+
+Stochastic identities and regret semantics: final focused build passed (3326 jobs). Stochastic attempt01 failed at function-space subtraction versus explicit lambda rewriting; explicit definitional change fixed it. Regret build01 failed at an unapplied sum lemma and missing real topology import. Context v2 records the added topology import; definitions and headers unchanged. Final four fences passed. IID-history independence bridge, bounded-source integrability instantiation, stochastic cumulative excess and FTL no-regret instantiation remain pending.
+
+Actual meanPredict_noRegret compiled, using Theorem1.3, mean optimality, and actual log/T limit. Attempts01/02 failed only during function equality normalization (simp no-progress, then unexpanded function composition); attempt03 compiled. meanPredict_independent compiled on first attempt using independent prefix sums and measurable division, with the initial constant case explicit. Both native fences passed.
+
+IID benchmark: measurability of actual meanPredict, bounded MemLp, cumulative expected excess identity, nonnegativity, and feasible optimal fixed mean all compile. Attempt01 failed at inference for integral_finset_sum; explicitly supplying f fixed it. Final iid-build-03 passed (3370 jobs); five native fences pass. No direct current-target independence or integrability assumed for actual predictions: both are derived. IdentDistrib unifies mean and variance.
+
+General bounded measurable finite-history policy: independence from current target and variance lower bound compile from disjoint independent observation tuples, derived bounded MemLp, and expected-square decomposition. Eq1.2 normalization compiled. Three fences pass. Nondegenerate probability canary instantiates source_mean_optimal on a Bernoulli(1/2) target and verifies both atom masses are 1/2. Public root and Tests imports added; root-tests-01 is the current build log. Existing OGD build cache seeded with robocopy /E /XO (no deletions, newer local artifacts preserved); actual new root and Tests compilation is required.

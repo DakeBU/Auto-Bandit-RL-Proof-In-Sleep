@@ -1,0 +1,6 @@
+import BanditRLProof.OnlineLearningStochastic
+import BanditRLProof.OnlineLearningRegret
+#print axioms BanditRL.OnlineLearning.expected_square_decomposition
+#print axioms BanditRL.OnlineLearning.independent_prediction_square
+#print axioms BanditRL.OnlineLearning.comparatorRegret_eq_sum
+#print axioms BanditRL.OnlineLearning.noRegret_of_vanishing_bound

@@ -1,0 +1,26 @@
+BanditRLProof/OnlineLearningFoundations.lean:19:4: error: Tactic `apply` failed: could not unify the conclusion of `@add_le_add_right`
+  ?a + ?b ≤ ?a + ?c
+with the goal
+  ∑ x ∈ Finset.range n, loss x (leader (x + 1)) + loss n (leader (n + 1)) ≤
+    ∑ x ∈ Finset.range n, loss x (leader (n + 1)) + loss n (leader (n + 1))
+
+Note: The full type of `@add_le_add_right` is
+  ∀ {α : Type ?u.645.626} [inst : Add α] [inst_1 : LE α] [AddLeftMono α] {b c : α}, b ≤ c → ∀ (a : α), a + b ≤ a + c
+
+case succ
+X : Type u_1
+V : Set X
+loss : ℕ → X → ℝ
+leader : ℕ → X
+n : ℕ
+ih :
+  (∀ (n_1 : ℕ), 0 < n_1 → n_1 ≤ n → leader n_1 ∈ V) →
+    (∀ (n_1 : ℕ),
+        0 < n_1 → n_1 ≤ n → ∀ u ∈ V, ∑ t ∈ Finset.range n_1, loss t (leader n_1) ≤ ∑ t ∈ Finset.range n_1, loss t u) →
+      ∑ t ∈ Finset.range n, loss t (leader (t + 1)) ≤ ∑ t ∈ Finset.range n, loss t (leader n)
+hmem : ∀ (n_1 : ℕ), 0 < n_1 → n_1 ≤ n + 1 → leader n_1 ∈ V
+hmin :
+  ∀ (n_1 : ℕ),
+    0 < n_1 → n_1 ≤ n + 1 → ∀ u ∈ V, ∑ t ∈ Finset.range n_1, loss t (leader n_1) ≤ ∑ t ∈ Finset.range n_1, loss t u
+⊢ ∑ x ∈ Finset.range n, loss x (leader (x + 1)) + loss n (leader (n + 1)) ≤
+    ∑ x ∈ Finset.range n, loss x (leader (n + 1)) + loss n (leader (n + 1))

@@ -1,0 +1,23 @@
+# Chapter 2 remaining source obligations, v1 audit
+
+Source v10 printed pp. 8-23, PDF pp. 20-35. Scope inventory is draft: none of the remaining statements is accepted or silently represented by the fixed-step real-valued theorem. All numbered required entries are in source-inventory.json. Formal results with exercise proofs remain required.
+
+## Decreasing-step terminal reviewed intent
+
+Algorithm 2.1: same nonempty closed convex V, initial x0 in V, actual recursion x(t+1)=project V (x(t)-eta(t)*gradient(loss(t),x(t))). Positive finite schedule; eta(t+1)<=eta(t) for t+1<T. T>=1. For each comparator u in V:
+
+sum(t<T)(loss(t,x(t))-loss(t,u)) <= D^2/(2*eta(T-1)) + sum(t<T)(eta(t)/2*norm(gradient(loss(t),x(t)))^2) - norm(x(T)-u)^2/(2*eta(T-1)).
+
+Source defines D as diameter. A bound D with all pairwise distances <=D is sufficient, but must be labelled as the upper-bound interface; the exact finite diameter corollary must instantiate it. Empty horizon is a separate zero-sum lemma, never fake eta(-1). Feasibility and prefix causality must be proved for the actual variable-step recurrence. DAG: inherited projection/first-order/one-step interfaces -> recurrence feasibility -> weighted telescoping identity -> monotone reciprocal coefficient estimate -> terminal. Do not assume one-step regret as an input to the public algorithm theorem.
+
+## Convex analysis obligations
+
+2.4: extended-real epigraph convexity equivalence on convex effective domain, excluding minus infinity. 2.5-2.6: affine functions and norms; all four printed closure operations required. 2.7: supporting gradient inequality for all y, including outside effective domain; inherited real-valued first_order is only a specialization. 2.8: constrained minimizer iff variational gradient condition, plus interior zero-gradient consequence. 2.9: measurable extended-real Jensen with integrable vector input; integrability/expectation conventions require careful audit, not a hidden stronger finite-loss assumption.
+
+2.16/18/20/29 definitions: closed/lower-semicontinuous, proper, subdifferential, Lipschitz on domain. Indicator closedness/properness examples 2.17/19 included. Interior subgradient existence and absence outside domain included. 2.21: everywhere subdifferentiability on convex V implies convex restriction. 2.22: differentiability iff singleton subdifferential at a finite point; boundary and extended-real differentiability semantics must be reviewed explicitly. 2.23: sum inclusion AND equality under closed convex qualification (domain last function intersects all other interior domains). 2.24/25: abs subdifferential, indicator normal cone, interior zero cone and sphere normal rays. 2.26: finite maximum subdifferential equals convex hull of active subdifferentials, continuity at common finite point; index family nonempty must be explicit. 2.27 hinge example included. 2.28: affine pullback inclusion with adjoint. 2.30: Lipschitz iff bounded subgradient norm on interior domain; domain degeneracies retained.
+
+## Algorithms and examples
+
+2.10: actual FTL alternating linear-loss failure, regret >=T-3/2. 2.14: squared guessing gradient, interval projection formula, OGD guarantee. 2.15: Huber linear prediction, gradient formula, bounded-feature regret. 2.31 and Algorithm 2.2: actual subgradient feedback recursion, both one-step inequalities, inherited fixed/decreasing cumulative residual branches and tuning. The chosen subgradient depends only on current loss and current iterate; existence is not arbitrary full-sequence algorithm access. 2.32: absolute-loss guessing bound. Section 2.3: causal linearization and regret comparison. Unit-scaling example is an algebraic identity, not a separate regret theorem.
+
+Next: Chapter 1 gate first; prepare exact Lean signatures for Chapter 2 only after resolving the above domain semantics. No purported frozen Lean targets for unaudited extended-real results. No exclusions based on proof difficulty.
