@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineConvex.interior_min_iff_gradient_zero",
+  "file": "BanditRLProof/OnlineConvexOptimality.lean",
+  "statement": "theorem interior_min_iff_gradient_zero (f : E → EReal) (V U : Set E) (hV : Convex ℝ V) (hne : V.Nonempty) (x : E) (hx : x ∈ V) (hxi : x ∈ interior V) (hU : IsOpen U) (hVU : V ⊆ U) (hfin : ∀ z ∈ U, f z ≠ ⊤ ∧ f z ≠ ⊥) (hf : ConvexOn ℝ V (fun z => (f z).toReal)) (hd : DifferentiableOn ℝ (fun z => (f z).toReal) U) : IsMinOn f V x ↔ gradient (fun z => (f z).toReal) x = 0",
+  "statement_hash": "cb1fdeab02bd6c6651b31786fbb244016bacedce7b65c8c4959e6869733fb550",
+  "source_assumptions": [],
+  "created_at": "2026-09-14T08:27:04+00:00"
+}

@@ -1,0 +1,68 @@
+BanditRLProof/OnlineConvexOptimality.lean:21:4: error: linarith failed to find a contradiction
+case mpr
+E : Type u_1
+inst✝² : NormedAddCommGroup E
+inst✝¹ : InnerProductSpace ℝ E
+inst✝ : CompleteSpace E
+V : Set E
+f : E → ℝ
+hf : ConvexOn ℝ V f
+x : E
+hx : x ∈ V
+hd : DifferentiableAt ℝ f x
+h : ∀ y ∈ V, 0 ≤ inner ℝ (gradient f x) (y - x)
+y : E
+hy : y ∈ V
+hl : f x + inner ℝ (gradient f x) (y - x) ≤ f y
+hn : 0 ≤ inner ℝ (gradient f x) (y - x)
+⊢ False
+failed
+BanditRLProof/OnlineConvexOptimality.lean:31:17: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  f y
+in the target expression
+  y ∈ {x_1 | (fun x_2 => ↑(f x).toReal ≤ f x_2) x_1}
+
+case mp
+E : Type u_1
+inst✝² : NormedAddCommGroup E
+inst✝¹ : InnerProductSpace ℝ E
+inst✝ : CompleteSpace E
+f : E → EReal
+V : Set E
+x : E
+hx : x ∈ V
+hfin : ∀ z ∈ V, f z ≠ ⊤ ∧ f z ≠ ⊥
+hxfin : ↑(f x).toReal = f x
+h : IsMinOn f V x
+y : E
+hy : y ∈ V
+hyfin : ↑(f y).toReal = f y
+hh : y ∈ {x_1 | (fun x_2 => ↑(f x).toReal ≤ f x_2) x_1}
+⊢ y ∈ {x_1 | (fun x_2 => (fun z => (f z).toReal) x ≤ (fun z => (f z).toReal) x_2) x_1}
+BanditRLProof/OnlineConvexOptimality.lean:35:17: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  f y
+in the target expression
+  y ∈ {x_1 | (fun x_2 => ↑(f x).toReal ≤ f x_2) x_1}
+
+case mpr
+E : Type u_1
+inst✝² : NormedAddCommGroup E
+inst✝¹ : InnerProductSpace ℝ E
+inst✝ : CompleteSpace E
+f : E → EReal
+V : Set E
+x : E
+hx : x ∈ V
+hfin : ∀ z ∈ V, f z ≠ ⊤ ∧ f z ≠ ⊥
+hxfin : ↑(f x).toReal = f x
+h : IsMinOn (fun z => (f z).toReal) V x
+y : E
+hy : y ∈ V
+hyfin : ↑(f y).toReal = f y
+⊢ y ∈ {x_1 | (fun x_2 => ↑(f x).toReal ≤ f x_2) x_1}
+BanditRLProof/OnlineConvexOptimality.lean:38:51: warning: unused variable `hV`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+BanditRLProof/OnlineConvexOptimality.lean:39:5: warning: unused variable `hne`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`

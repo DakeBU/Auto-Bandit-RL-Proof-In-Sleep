@@ -81,3 +81,4 @@ import Tests.OnlineConvexExamplesCanary
 import Tests.OnlineConvexClosuresCanary
 import Tests.OnlineConvexSumsCanary
 import Tests.OnlineConvexFirstOrderCanary
+import Tests.OnlineConvexOptimalityCanary

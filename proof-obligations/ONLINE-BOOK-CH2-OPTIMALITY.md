@@ -1,0 +1,1 @@
+All four frozen v1 bodies, source-premise instantiation, nondegenerate boundary/interior canaries, axioms, fences, combined root/Tests/full harness, full graph, semantic review and shared Book/site gates passed. See runs/online-optimality-20260914/acceptance-decision.md. PR124 open, not merged. Jensen and later Chapter2 obligations remain required.

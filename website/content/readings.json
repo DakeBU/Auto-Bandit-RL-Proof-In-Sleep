@@ -2134,7 +2134,7 @@
           "local_status": {
             "status": "compiled",
             "label": "Full extended-real supporting bound",
-            "boundary": "Theorem2.8, Jensen and later Chapter2 results remain incomplete."
+            "boundary": "Jensen and later Chapter2 results remain incomplete."
           }
         }
       ],
@@ -2163,6 +2163,106 @@
         ],
         "takeaway": "Local differentiation supports a statement about all comparator points.",
         "boundary": "The public canary proves local differentiability, the nonzero gradient and both comparator cases; later Chapter2 results remain required."
+      }
+    },
+    {
+      "slug": "online-optimality",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10, 21 June 2026",
+        "sections": "Section2.1.1, Theorem2.8 and subsequent interior consequence",
+        "pages": "printedp11/PDF23",
+        "pdf_page": 23,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "IsMinOn",
+          "meaning": "The point has no larger value than every feasible comparator; membership is a separate premise."
+        },
+        {
+          "term": "finite part",
+          "meaning": "A real representation valid on the finite open neighborhood."
+        },
+        {
+          "term": "feasible direction",
+          "meaning": "The vector y-x for y in V; its gradient inner product is nonnegative at a minimum."
+        }
+      ],
+      "algorithm": {
+        "title": "Characterize constrained minima",
+        "kind": "mathematical proof chain",
+        "steps": [
+          {
+            "title": "Use feasible segments",
+            "detail": "Convexity keeps segments inside V, so a minimum has nonnegative directional derivatives."
+          },
+          {
+            "title": "Use the supporting plane",
+            "detail": "Nonnegative inner products and the supporting bound imply minimum value."
+          },
+          {
+            "title": "Specialize to interior points",
+            "detail": "Fermat gives gradient zero for interior minima; the converse follows from the criterion."
+          }
+        ]
+      },
+      "teaching_route": [
+        "BanditRL.OnlineConvex.minOn_real_iff_gradient",
+        "BanditRL.OnlineConvex.minOn_finitePart_iff",
+        "BanditRL.OnlineConvex.theorem_2_8",
+        "BanditRL.OnlineConvex.interior_min_iff_gradient_zero"
+      ],
+      "source_theorems": [
+        {
+          "label": "Theorem2.8: first-order optimality",
+          "pages": "printedp11",
+          "pdf_page": 23,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "x\\in\\operatorname{argmin}_{z\\in V} f(z)\\iff\\langle\\nabla f(x),y-x\\rangle\\ge0\\quad\\forall y\\in V",
+          "fallback": "A convex differentiable function is minimized precisely when all feasible directional inner products are nonnegative.",
+          "plain": "An interior minimum has zero gradient; a boundary minimum need not.",
+          "relationship": "Shared theorem_2_8 deliberately needs convexity only on V. The source neighborhood-convexity assumption implies this by restriction, as checked in the public canary. This is a stronger result, not equivalence of assumption sets.",
+          "contract": {
+            "model": "Complete real inner-product spaces, including Euclidean spaces; finite differentiable loss on an open neighborhood U of V.",
+            "assumptions": "V nonempty convex; x in V; open U contains V; finite loss and differentiability on U; convexity of the finite representation on V.",
+            "parameters": "Every feasible y; interior membership is additional for gradient-zero equivalence.",
+            "regret": "A convex optimality characterization, not a regret theorem.",
+            "guarantee": "EReal minimum iff every feasible gradient inner product is nonnegative; interior minimum iff gradient zero."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Optimality and interior consequence",
+            "boundary": "Jensen and later Chapter2 results remain incomplete."
+          }
+        }
+      ],
+      "worked_example": {
+        "title": "A boundary minimum with gradient one",
+        "intro": "Let f(x)=x for x>0 and positive infinity otherwise. Minimize over [1,infinity).",
+        "steps": [
+          {
+            "title": "Restrict the feasible set",
+            "detail": "The function is convex and differentiable on (0,infinity), which contains [1,infinity).",
+            "math": "V=[1,\\infty),\\quad U=(0,\\infty)",
+            "fallback": "The feasible set lies in an open finite neighborhood."
+          },
+          {
+            "title": "Check every direction",
+            "detail": "At one, every feasible direction is nonnegative and the gradient is one.",
+            "math": "\\nabla f(1)=1,\\quad y-1\\ge0",
+            "fallback": "The nonzero gradient satisfies the constrained optimality condition."
+          },
+          {
+            "title": "Compare an interior example",
+            "detail": "The nonconstant quadratic x squared on (-1,infinity) has its interior minimum at zero.",
+            "math": "\\nabla(x^2)|_{x=0}=0",
+            "fallback": "The second public canary uses an open, nonclosed feasible set."
+          }
+        ],
+        "takeaway": "Zero gradient characterizes interior minima; feasible directions characterize constrained minima.",
+        "boundary": "Both examples are Lean canaries; no assumption of a closed or bounded feasible set is introduced."
       }
     }
   ]
