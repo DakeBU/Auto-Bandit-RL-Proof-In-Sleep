@@ -33,3 +33,5 @@ Fourth closure update: nonnegative combinations passed all local gates with expl
 Theorem2.7 update: full extended-real supporting-gradient endpoint passed all scoped local gates in runs/online-first-order-20260914, including an actual neighborhood-agreement proof and outside-domain canary. Theorem2.8, Theorem2.9 and later Chapter2 obligations remain required. No Chapter2 completion.
 
 Theorem2.8 and its interior-zero consequence passed all scoped local gates in runs/online-optimality-20260914. Source neighborhood convexity is explicitly restricted to V, a documented strengthening with a public source-premise canary. No closed/bounded V assumed. Theorem2.9 Jensen and later required results remain incomplete.
+
+Jensen update: full Theorem2.9 and geometric dependencies frozen in online-jensen-v2; all four targets remain unproved. Seven signed-expectation prerequisites passed local gates in runs/online-jensen-20260914/expectation-acceptance-decision.md. This is reusable foundation growth, not Jensen or Chapter2 completion. No loss-integrability, continuity or closed-domain premise added.

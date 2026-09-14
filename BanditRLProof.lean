@@ -624,3 +624,4 @@ import BanditRLProof.OnlineConvexClosures
 import BanditRLProof.OnlineConvexSums
 import BanditRLProof.OnlineConvexFirstOrder
 import BanditRLProof.OnlineConvexOptimality
+import BanditRLProof.OnlineExpectation

@@ -1,0 +1,1 @@
+Orabona v10 Theorem2.9 printedp11/PDF23; source SHA256 cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17 retained. Base PR124 ea1f873f754c88a30b0aa74e2308112cbb822f76, unmerged. Shared project/toolchain; same-model GPT-6 Astra/medium sequential roles. Scope Jensen exact target and necessary expectation/convex barycenter dependencies. No chapter completion.

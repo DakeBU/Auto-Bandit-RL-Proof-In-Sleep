@@ -1,0 +1,6 @@
+{
+  "convex_affine_minorant": "theorem convex_affine_minorant (f : E → EReal) (hbot : ∀ x, f x ≠ ⊥)\n    (hf : IsConvexExtended f) (hne : (effectiveDomain f).Nonempty) :\n    ∃ (a : E →L[ℝ] ℝ) (b : ℝ), ∀ x, ((a x + b : ℝ) : EReal) ≤ f x",
+  "integral_mem_convex_finiteDimensional": "theorem integral_mem_convex_finiteDimensional (μ : Measure Ω) [IsProbabilityMeasure μ]\n    (s : Set E) (hs : Convex ℝ s) (X : Ω → E) (hX : Integrable X μ)\n    (hmem : ∀ᵐ ω ∂μ, X ω ∈ s) :\n    (∫ ω, X ω ∂μ) ∈ s",
+  "jensen_negativeIntegral_ne_top": "theorem jensen_negativeIntegral_ne_top (μ : Measure Ω) [IsProbabilityMeasure μ]\n    (f : E → EReal) (hbot : ∀ x, f x ≠ ⊥) (hf : IsConvexExtended f)\n    (hfm : Measurable f) (X : Ω → E) (hXm : Measurable X) (hX : Integrable X μ)\n    (hdom : ∀ᵐ ω ∂μ, X ω ∈ effectiveDomain f) :\n    negativeIntegral μ (fun ω => f (X ω)) ≠ ∞",
+  "theorem_2_9": "theorem theorem_2_9 (μ : Measure Ω) [IsProbabilityMeasure μ]\n    (f : E → EReal) (hbot : ∀ x, f x ≠ ⊥) (hf : IsConvexExtended f)\n    (hfm : Measurable f) (X : Ω → E) (hXm : Measurable X) (hX : Integrable X μ)\n    (hdom : ∀ᵐ ω ∂μ, X ω ∈ effectiveDomain f) :\n    f (∫ ω, X ω ∂μ) ≤ signedExpectation μ (fun ω => f (X ω))"
+}

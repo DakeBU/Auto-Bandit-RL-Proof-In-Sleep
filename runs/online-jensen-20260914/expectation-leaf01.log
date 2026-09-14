@@ -1,0 +1,22 @@
+BanditRLProof/OnlineExpectation.lean:33:14: error(lean.unknownIdentifier): Unknown constant `ENNReal.lintegral_ofReal_ne_top_iff_integrable`
+BanditRLProof/OnlineExpectation.lean:31:55: error: unsolved goals
+Ω : Type u_1
+inst✝ : MeasurableSpace Ω
+μ : Measure Ω
+f : Ω → ℝ
+hf : Integrable f μ
+⊢ ∫⁻ (ω : Ω), ENNReal.ofReal (f ω) ∂μ ≠ ∞
+BanditRLProof/OnlineExpectation.lean:62:40: error: Application type mismatch: The argument
+  neg_nonpos.mpr ?m.77
+has type
+  @Neg.neg ?m.70 SubtractionMonoid.toSubNegZeroMonoid.toNegZeroClass.toNeg ?m.74 ≤ 0
+but is expected to have type
+  @Neg.neg EReal EReal.instNeg (f ω) ≤ 0
+in the application
+  EReal.toENNReal_of_nonpos (neg_nonpos.mpr ?m.77)
+BanditRLProof/OnlineExpectation.lean:70:26: error: Type mismatch: After simplification, term
+  hn
+ has type
+  negativeIntegral μ f ≠ ∞
+but is expected to have type
+  ↑(negativeIntegral μ f) ≠ ⊤

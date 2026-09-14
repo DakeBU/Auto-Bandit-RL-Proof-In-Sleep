@@ -2264,6 +2264,106 @@
         "takeaway": "Zero gradient characterizes interior minima; feasible directions characterize constrained minima.",
         "boundary": "Both examples are Lean canaries; no assumption of a closed or bounded feasible set is introduced."
       }
+    },
+    {
+      "slug": "online-expectation",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10, 21 June 2026",
+        "sections": "Section2.1.1, Theorem2.9 (unproved target; expectation prerequisites only)",
+        "pages": "printedp11/PDF23",
+        "pdf_page": 23,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "positiveIntegral",
+          "meaning": "The ENNReal integral of the positive part."
+        },
+        {
+          "term": "negativeIntegral",
+          "meaning": "The ENNReal integral of the negative part; Jensen still requires proving it finite from its own assumptions."
+        },
+        {
+          "term": "signedExpectation",
+          "meaning": "Positive minus negative integral in EReal; at least one part must be finite for mathematical use."
+        }
+      ],
+      "algorithm": {
+        "title": "Interpret the signed integral",
+        "kind": "mathematical representation, not an online algorithm",
+        "steps": [
+          {
+            "title": "Split positive and negative parts",
+            "detail": "Both parts are nonnegative extended integrals."
+          },
+          {
+            "title": "Prove a finite part",
+            "detail": "Integrable real functions have both parts finite. Full Jensen will need an affine lower bound to prove the negative part finite."
+          },
+          {
+            "title": "Retain infinite positive mass",
+            "detail": "If the positive part is infinite and the negative part finite, the signed result is positive infinity."
+          }
+        ]
+      },
+      "teaching_route": [
+        "BanditRL.OnlineConvex.positiveIntegral_coe_ne_top",
+        "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+        "BanditRL.OnlineConvex.signedExpectation_of_nonneg",
+        "BanditRL.OnlineConvex.signedExpectation_eq_top"
+      ],
+      "source_theorems": [
+        {
+          "label": "Theorem2.9: Jensen target (not yet proved)",
+          "pages": "printedp11",
+          "pdf_page": 23,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "f(\\mathbb E X)\\le\\mathbb E[f(X)]",
+          "fallback": "A measurable convex extended-real loss at the mean is bounded by its possibly infinite expected loss.",
+          "plain": "Only X is assumed integrable; loss integrability and a closed domain are not assumed.",
+          "relationship": "The full target is frozen in online-jensen-v2 and remains unproved. The shared OnlineExpectation module supplies seven representation prerequisites, not a Jensen proof.",
+          "contract": {
+            "model": "Finite-dimensional real random vectors under a probability law.",
+            "assumptions": "Measurable convex loss never negative infinity; measurable integrable X lies in the effective domain almost surely.",
+            "parameters": "Arbitrary probability space and finite dimension.",
+            "regret": "An expectation inequality, not a regret bound.",
+            "guarantee": "The required source endpoint allows positive-infinite expected loss and must prove finite negative part."
+          },
+          "local_status": {
+            "status": "planned",
+            "label": "Frozen full target; prerequisites only",
+            "boundary": "Affine minorant, nonclosed convex barycenter membership, finite negative part and full Jensen are still required."
+          }
+        }
+      ],
+      "worked_example": {
+        "title": "Finite values can have an infinite integral",
+        "intro": "The representation canary integrates n+1 over natural numbers with counting measure; a second test integrates the identity over atoms at -1 and 3.",
+        "steps": [
+          {
+            "title": "Keep signed finite values",
+            "detail": "The two-atom integral combines negative and positive values to give two.",
+            "math": "(-1)+3=2",
+            "fallback": "Both signs contribute; this measure has total mass two."
+          },
+          {
+            "title": "Keep infinite total mass",
+            "detail": "Every n+1 is finite and nonnegative, but their counting integral is infinite.",
+            "math": "\\sum_{n\\ge0}(n+1)=+\\infty",
+            "fallback": "No nonintegrable value is replaced by zero."
+          },
+          {
+            "title": "Separate the source theorem",
+            "detail": "Counting measure is not a probability measure. Full Jensen still needs an infinite-expectation probability canary satisfying its source assumptions.",
+            "math": "\\mu(\\mathbb N)=+\\infty",
+            "fallback": "This is a foundation test, not a full Jensen instance."
+          }
+        ],
+        "takeaway": "The representation preserves both finite signed integrals and legitimate infinite results.",
+        "boundary": "Neither counting-measure tests nor finite integral compatibility close the required Jensen theorem."
+      }
     }
   ]
 }

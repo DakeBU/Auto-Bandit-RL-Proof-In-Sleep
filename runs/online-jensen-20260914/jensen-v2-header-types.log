@@ -1,0 +1,69 @@
+tmp/online-jensen-target-v2.lean:16:2: error: reviewed Jensen terminal, not proof
+E : Type u_2
+inst✝⁴ : NormedAddCommGroup E
+inst✝³ : NormedSpace ℝ E
+inst✝² : FiniteDimensional ℝ E
+inst✝¹ : MeasurableSpace E
+inst✝ : BorelSpace E
+f : E → EReal
+hbot : ∀ (x : E), f x ≠ ⊥
+hf : IsConvexExtended f
+hne : (effectiveDomain f).Nonempty
+⊢ ∃ a b, ∀ (x : E), ↑(a x + b) ≤ f x
+tmp/online-jensen-target-v2.lean:22:2: error: reviewed Jensen terminal, not proof
+Ω : Type u_1
+inst✝⁶ : MeasurableSpace Ω
+E : Type u_2
+inst✝⁵ : NormedAddCommGroup E
+inst✝⁴ : NormedSpace ℝ E
+inst✝³ : FiniteDimensional ℝ E
+inst✝² : MeasurableSpace E
+inst✝¹ : BorelSpace E
+μ : Measure Ω
+inst✝ : IsProbabilityMeasure μ
+s : Set E
+hs : Convex ℝ s
+X : Ω → E
+hX : Integrable X μ
+hmem : ∀ᵐ (ω : Ω) ∂μ, X ω ∈ s
+⊢ ∫ (ω : Ω), X ω ∂μ ∈ s
+tmp/online-jensen-target-v2.lean:29:2: error: reviewed Jensen terminal, not proof
+Ω : Type u_1
+inst✝⁶ : MeasurableSpace Ω
+E : Type u_2
+inst✝⁵ : NormedAddCommGroup E
+inst✝⁴ : NormedSpace ℝ E
+inst✝³ : FiniteDimensional ℝ E
+inst✝² : MeasurableSpace E
+inst✝¹ : BorelSpace E
+μ : Measure Ω
+inst✝ : IsProbabilityMeasure μ
+f : E → EReal
+hbot : ∀ (x : E), f x ≠ ⊥
+hf : IsConvexExtended f
+hfm : Measurable f
+X : Ω → E
+hXm : Measurable X
+hX : Integrable X μ
+hdom : ∀ᵐ (ω : Ω) ∂μ, X ω ∈ effectiveDomain f
+⊢ (negativeIntegral μ fun ω => f (X ω)) ≠ ∞
+tmp/online-jensen-target-v2.lean:36:2: error: reviewed Jensen terminal, not proof
+Ω : Type u_1
+inst✝⁶ : MeasurableSpace Ω
+E : Type u_2
+inst✝⁵ : NormedAddCommGroup E
+inst✝⁴ : NormedSpace ℝ E
+inst✝³ : FiniteDimensional ℝ E
+inst✝² : MeasurableSpace E
+inst✝¹ : BorelSpace E
+μ : Measure Ω
+inst✝ : IsProbabilityMeasure μ
+f : E → EReal
+hbot : ∀ (x : E), f x ≠ ⊥
+hf : IsConvexExtended f
+hfm : Measurable f
+X : Ω → E
+hXm : Measurable X
+hX : Integrable X μ
+hdom : ∀ᵐ (ω : Ω) ∂μ, X ω ∈ effectiveDomain f
+⊢ f (∫ (ω : Ω), X ω ∂μ) ≤ signedExpectation μ fun ω => f (X ω)
