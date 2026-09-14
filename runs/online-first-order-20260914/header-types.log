@@ -1,0 +1,36 @@
+tmp/online-convex-first-order-draft.lean:14:2: error: draft supporting-gradient header, not proof
+E : Type u_1
+inst✝² : NormedAddCommGroup E
+inst✝¹ : InnerProductSpace ℝ E
+inst✝ : CompleteSpace E
+f : E → EReal
+hbot : ∀ (z : E), f z ≠ ⊥
+x : E
+hx : x ∈ interior (effectiveDomain f)
+⊢ ∀ᶠ (z : E) in 𝓝 x, ↑(f z).toReal = f z
+tmp/online-convex-first-order-draft.lean:19:2: error: draft supporting-gradient header, not proof
+E : Type u_1
+inst✝² : NormedAddCommGroup E
+inst✝¹ : InnerProductSpace ℝ E
+inst✝ : CompleteSpace E
+V : Set E
+f : E → ℝ
+hf : ConvexOn ℝ V f
+x y : E
+hx : x ∈ V
+hy : y ∈ V
+hd : DifferentiableAt ℝ f x
+⊢ f x + inner ℝ (gradient f x) (y - x) ≤ f y
+tmp/online-convex-first-order-draft.lean:25:2: error: draft supporting-gradient header, not proof
+E : Type u_1
+inst✝² : NormedAddCommGroup E
+inst✝¹ : InnerProductSpace ℝ E
+inst✝ : CompleteSpace E
+f : E → EReal
+hbot : ∀ (z : E), f z ≠ ⊥
+hf : IsConvexExtended f
+x : E
+hx : x ∈ interior (effectiveDomain f)
+hd : DifferentiableAt ℝ (fun z => (f z).toReal) x
+y : E
+⊢ f x + ↑(inner ℝ (gradient (fun z => (f z).toReal) x) (y - x)) ≤ f y

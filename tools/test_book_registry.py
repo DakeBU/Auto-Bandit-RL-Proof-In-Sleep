@@ -139,6 +139,17 @@ class BookRegistryTests(unittest.TestCase):
         scope = next(c for c in self.chapters if c["slug"] == "online-convex")
         self.assertIn("not completion of all Chapter 2", scope["completion_definition"])
 
+    def test_first_order_uses_shared_source_qualified_declarations(self):
+        registry = self.registry()
+        nodes = membership_index(registry)
+        chapter = next(c for c in registry["chapters"] if c["id"] == "teaching:online-first-order")
+        for name in ["finitePart_eventually", "convex_gradient_lower_bound", "theorem_2_7"]:
+            key = "declaration:BanditRL.OnlineConvex." + name
+            self.assertIn(key, chapter["node_ids"])
+            self.assertEqual(["online-learning"], nodes[key]["books"])
+        self.assertIn("teaching:online-ogd", next(b for b in self.config["books"]
+                      if b["id"] == "online-learning")["chapter_refs"])
+
     def test_preview_badge_cannot_borrow_evidence_from_another_declaration(self):
         source = ('<details class="declaration" id="a"><summary>'
                   '<span class="status source">Source indexed</span></summary></details>'

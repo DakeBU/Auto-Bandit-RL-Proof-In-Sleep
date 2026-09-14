@@ -1,0 +1,27 @@
+{
+  "status": "rejected-as-drop-in-full-graph-replacement",
+  "strict_node_differences": [
+    {
+      "name": "gradient.congr_simp",
+      "different_fields": [
+        "module",
+        "source"
+      ],
+      "module_scope_owner": "BanditRLProof.OnlineConvexFirstOrder",
+      "full_root_owner": "BanditRLProof.OnlineGradientDescent"
+    },
+    {
+      "name": "HasDerivAt.congr_simp",
+      "different_fields": [
+        "module",
+        "source"
+      ],
+      "module_scope_owner": "Mathlib.Analysis.Calculus.Deriv.Mul",
+      "full_root_owner": "Mathlib.Analysis.Calculus.Deriv.Add"
+    }
+  ],
+  "fixed_public_node_projection_equal": true,
+  "fixed_public_dependency_edges_equal": true,
+  "decision": "Keep the full-root exporter as the acceptance gate. Module-local generated declaration ownership is import-order dependent; this experiment is not a canonical shared-registry export.",
+  "nested_eval_experiment": "also rejected: PANIC despite exit0"
+}

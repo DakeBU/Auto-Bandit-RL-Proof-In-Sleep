@@ -1,0 +1,5 @@
+{
+  "finitePart_eventually": "theorem finitePart_eventually (f : E → EReal) (hbot : ∀ z, f z ≠ ⊥)\n    (x : E) (hx : x ∈ interior (effectiveDomain f)) :\n    ∀ᶠ z in 𝓝 x, ((f z).toReal : EReal) = f z",
+  "convex_gradient_lower_bound": "theorem convex_gradient_lower_bound (V : Set E) (f : E → ℝ) (hf : ConvexOn ℝ V f)\n    (x y : E) (hx : x ∈ V) (hy : y ∈ V) (hd : DifferentiableAt ℝ f x) :\n    f x + inner ℝ (gradient f x) (y - x) ≤ f y",
+  "theorem_2_7": "theorem theorem_2_7 (f : E → EReal) (hbot : ∀ z, f z ≠ ⊥)\n    (hf : IsConvexExtended f) (x : E) (hx : x ∈ interior (effectiveDomain f))\n    (hd : DifferentiableAt ℝ (fun z => (f z).toReal) x) (y : E) :\n    f x + ((inner ℝ (gradient (fun z => (f z).toReal) x) (y - x) : ℝ) : EReal) ≤ f y"
+}

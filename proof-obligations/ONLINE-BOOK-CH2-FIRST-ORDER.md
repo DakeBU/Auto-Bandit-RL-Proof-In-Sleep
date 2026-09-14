@@ -1,0 +1,1 @@
+Three frozen interfaces including full Theorem2.7 passed all local gates; see runs/online-first-order-20260914/acceptance-decision.md. Scoped PR delivery pending. The module-export experiment is rejected as a full graph replacement; the original full-root graph is the accepted evidence. Later Chapter2 and whole-book Goal incomplete.

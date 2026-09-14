@@ -2065,6 +2065,105 @@
         "boundary": "The public canary verifies these distinct values and convexity, and separately instantiates empty-index and noninjective-affine cases. The separate upper-addition canary distinguishes convex-analysis addition from ordinary EReal addition. Later Chapter2 results remain incomplete.",
         "intro": "Take the zero-or-positive-infinity indicators of x>=0 and x<=2."
       }
+    },
+    {
+      "slug": "online-first-order",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10, 21 June 2026",
+        "sections": "Section2.1.1, Theorem2.7",
+        "pages": "printedp11/PDF23",
+        "pdf_page": 23,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "gradient",
+          "meaning": "The gradient of the finite real representation, which agrees locally with f."
+        },
+        {
+          "term": "interior domain",
+          "meaning": "An open neighborhood where all function values are finite."
+        },
+        {
+          "term": "y - x",
+          "meaning": "The direction to any comparator; outside-domain comparators retain positive-infinity loss."
+        }
+      ],
+      "algorithm": {
+        "title": "Derive the supporting bound",
+        "kind": "mathematical proof chain",
+        "steps": [
+          {
+            "title": "Identify a finite neighborhood",
+            "detail": "Interior membership and exclusion of negative infinity give a locally exact real representation."
+          },
+          {
+            "title": "Differentiate a line",
+            "detail": "Compare the derivative at x along the line to y with its convex secant slope."
+          },
+          {
+            "title": "Keep all comparators",
+            "detail": "Use the finite inequality inside the domain and positive infinity outside it."
+          }
+        ]
+      },
+      "teaching_route": [
+        "BanditRL.OnlineConvex.finitePart_eventually",
+        "BanditRL.OnlineConvex.convex_gradient_lower_bound",
+        "BanditRL.OnlineConvex.theorem_2_7"
+      ],
+      "source_theorems": [
+        {
+          "label": "Theorem2.7: supporting gradient",
+          "pages": "printedp11",
+          "pdf_page": 23,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "f(x)+\\langle\\nabla f(x),y-x\\rangle\\le f(y),\\qquad\\forall y",
+          "fallback": "A differentiable interior point of an extended-real convex function has a global supporting-gradient bound.",
+          "plain": "The comparator may lie outside the effective domain.",
+          "relationship": "Exact shared endpoint BanditRL.OnlineConvex.theorem_2_7; the old OGD first_order remains a real-valued specialization.",
+          "contract": {
+            "model": "Extended-real convex functions on complete real inner-product spaces, including finite-dimensional Euclidean space.",
+            "assumptions": "No negative infinity; x in interior effective domain; differentiability at x of the locally exact finite representation.",
+            "parameters": "Every comparator y, including points outside the domain.",
+            "regret": "A first-order convex-analysis inequality, not a regret theorem.",
+            "guarantee": "The source supporting-gradient lower bound with infinite outside-domain values retained."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Full extended-real supporting bound",
+            "boundary": "Theorem2.8, Jensen and later Chapter2 results remain incomplete."
+          }
+        }
+      ],
+      "worked_example": {
+        "title": "A nonzero gradient and an infinite comparator value",
+        "intro": "Let f(x)=x for x>0 and positive infinity otherwise; use x=1.",
+        "steps": [
+          {
+            "title": "Stay inside an open domain",
+            "detail": "The effective domain is (0,infinity), so one is an interior point.",
+            "math": "\\operatorname{dom}f=(0,\\infty)",
+            "fallback": "The domain is open and unbounded."
+          },
+          {
+            "title": "Identify the actual gradient",
+            "detail": "Near one the loss agrees with the identity, so its gradient is one.",
+            "math": "\\nabla f(1)=1",
+            "fallback": "The gradient is nonzero."
+          },
+          {
+            "title": "Use finite and infinite comparators",
+            "detail": "The bound is exact at y=2; y=-1 retains a positive-infinity loss.",
+            "math": "f(2)=2,\\qquad f(-1)=+\\infty",
+            "fallback": "Both kinds of comparator are covered."
+          }
+        ],
+        "takeaway": "Local differentiation supports a statement about all comparator points.",
+        "boundary": "The public canary proves local differentiability, the nonzero gradient and both comparator cases; later Chapter2 results remain required."
+      }
     }
   ]
 }

@@ -1,0 +1,1 @@
+Frozen headers/context: docs/contracts/online-first-order-v1. Preserve noBot, interior effective-domain point, pointwise differentiability, local finite representation and all-y conclusion. No closed/bounded-domain or everywhere differentiability assumption may be introduced during repair. New versions require review. Scoped module/canary/evidence/shared integration only.

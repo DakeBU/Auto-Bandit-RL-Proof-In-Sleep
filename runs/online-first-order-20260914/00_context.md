@@ -1,0 +1,1 @@
+Whole-book Goal active. Branch codex/research-online-first-order stacked on PR122 exact 138021c6af57a16460138c81be815b475926088d. Sourcep11 reread; earlier OGD/convexity/examples/closures accepted locally, unmerged. Same shared library, toolchain, registry and preserved worktree.
