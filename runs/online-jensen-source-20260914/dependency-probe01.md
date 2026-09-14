@@ -1,0 +1,1 @@
+First extractor assertion failed for MeasureTheory.integral_pair. The actual full-root graph reports the global constant integral_pair as a direct proof-value dependency of theorem_2_9. Corrected the extractor to that observed name; no theorem or target changed. Dependent source-hash comparison was not evidence until the corrected extraction succeeded.

@@ -1,1 +1,8 @@
-Frozen online-jensen-v2 full headers and online-expectation-v1 foundation headers/context. Never add loss integrability, closedness, continuity, a supplied supporting plane or a supplied barycenter-membership conclusion to the source terminal. Mathematical signed expectation requires proven finite negative part here. Keep exact probability/input measurability/integrability and a.e. domain semantics. Ready expectation foundations first; geometry remains required. New target versions require review.
+# Source Theorem2.9
+
+Task id: `ONLINE-BOOK-CH2-JENSEN`
+Kind: `theorem`
+Status: `candidate`
+Harness: `hierarchical`
+
+Exact remaining two targets in docs/contracts/online-jensen-v3/contract.md. Accepted geometric/expectation dependencies are shared. No loss integrability or domain regularity premise added. Body-only window; all public/source canaries and full gates required. Chapter2 is not complete.

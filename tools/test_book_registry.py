@@ -167,7 +167,7 @@ class BookRegistryTests(unittest.TestCase):
         key = "declaration:BanditRL.OnlineConvex.signedExpectation_coe_integrable"
         self.assertIn(key, chapter["node_ids"])
         self.assertEqual(["online-learning"], nodes[key]["books"])
-        self.assertNotIn("declaration:BanditRL.OnlineConvex.theorem_2_9", nodes)
+        self.assertNotIn("declaration:BanditRL.OnlineConvex.theorem_2_9", chapter["node_ids"])
         scope = next(c for c in self.chapters if c["slug"] == "online-expectation")
         self.assertIn("not completion of Orabona Theorem2.9", scope["completion_definition"])
 
@@ -190,6 +190,16 @@ class BookRegistryTests(unittest.TestCase):
         self.assertEqual(["online-learning"], nodes[key]["books"])
         scope = next(c for c in self.chapters if c["slug"] == "online-minorant")
         self.assertIn("not completion of Orabona Theorem2.9", scope["completion_definition"])
+
+    def test_jensen_source_uses_shared_registry_with_chapter_boundary(self):
+        registry = self.registry()
+        nodes = membership_index(registry)
+        chapter = next(c for c in registry["chapters"] if c["id"] == "teaching:online-jensen")
+        key = "declaration:BanditRL.OnlineConvex.theorem_2_9"
+        self.assertIn(key, chapter["node_ids"])
+        self.assertEqual(["online-learning"], nodes[key]["books"])
+        scope = next(c for c in self.chapters if c["slug"] == "online-jensen")
+        self.assertIn("not completion of Chapter2", scope["completion_definition"])
 
     def test_preview_badge_cannot_borrow_evidence_from_another_declaration(self):
         source = ('<details class="declaration" id="a"><summary>'

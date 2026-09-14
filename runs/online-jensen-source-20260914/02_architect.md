@@ -1,0 +1,1 @@
+Affine lower bound -> finite negative integral. Infinite positive part -> legitimate top expectation. Finite positive part -> a.e. real representative with integrable positive/negative parts -> actual epigraph random vector -> mean in epigraph -> signed finite compatibility. Three public source canaries cover finite, positive-infinite and nonclosed-domain cases.
