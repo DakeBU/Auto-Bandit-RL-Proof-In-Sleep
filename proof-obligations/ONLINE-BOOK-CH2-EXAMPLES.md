@@ -1,0 +1,1 @@
+Three frozen targets and both source examples accepted locally. All required local gates passed; see runs/online-convex-examples-20260914/acceptance-decision.md. Delivered as draft PR120, proof commit afdb40d; not merged. General closure operations and all later Chapter2 obligations remain required; Chapter2 partial, total Goal active.

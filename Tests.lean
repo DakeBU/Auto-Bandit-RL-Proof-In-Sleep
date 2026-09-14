@@ -77,3 +77,4 @@ import Tests.OnlineGradientDescentCanary
 import Tests.OnlineLearningChapterOneCanary
 import Tests.OnlineGradientDescentVariableCanary
 import Tests.OnlineConvexExtendedCanary
+import Tests.OnlineConvexExamplesCanary

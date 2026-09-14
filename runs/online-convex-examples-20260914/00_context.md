@@ -1,0 +1,3 @@
+Whole-book Goal active. Branch codex/research-online-convex-examples stacked on PR119 exact 2e78a12f242d2eb08d23903a52bfa4d9e43a8304. Prior packet accepted locally and delivered; no merge/deploy. Same shared Lean project and packages junction. Source p10 reread before targets.
+
+Delivery audit: fresh origin fetch confirms canonical main=origin/main=eedcda1db4d84f6bd69ec6ee50e174f6cf4056ac and canonical working tree clean. Three retained worktrees: canonical research, research-online-ogd, and this ongoing book checkout. PR119 build still pending at the latest read; preflight/lifecycle passed. No shared-link or cleanup operation performed.
