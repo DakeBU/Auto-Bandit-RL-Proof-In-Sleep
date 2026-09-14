@@ -27,3 +27,5 @@ Extended-real convexity update: Definition2.2/2.3, Theorem2.4 and domain/indicat
 Examples2.5/2.6 update: exact affine/norm epigraph endpoints and their finite embedding iff passed all scoped local gates in runs/online-convex-examples-20260914. The four general closure operations remain required; next-closure-audit.md records primary-source support for explicitly distinguishing convex upper addition from ordinary mathlib EReal addition. This does not complete Chapter2.
 
 Closure update: affine precomposition, arbitrary indexed supremum and monotone real convex composition passed all scoped gates in runs/online-convex-closures-20260914. The nonnegative linear-combination bullet remains required and awaits explicit upper-addition proof. No Chapter2 completion.
+
+Fourth closure update: nonnegative combinations passed all local gates with explicit convex-analysis upperAdd and zero-weight semantics. Evidence runs/online-convex-sums-20260914 includes a compiled ordinary-addition counterexample. All four closure bullets are locally closed under this recorded interpretation; Theorems2.7-2.9 and all later required Chapter2 obligations remain incomplete.

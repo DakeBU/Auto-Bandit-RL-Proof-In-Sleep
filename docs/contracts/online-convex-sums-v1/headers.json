@@ -1,0 +1,10 @@
+{
+  "upperAdd_coe": "theorem upperAdd_coe (a b : ℝ) : upperAdd (a : EReal) (b : EReal) = ((a + b : ℝ) : EReal)",
+  "upperAdd_top": "theorem upperAdd_top (a : EReal) : upperAdd a ⊤ = ⊤",
+  "top_upperAdd": "theorem top_upperAdd (a : EReal) : upperAdd ⊤ a = ⊤",
+  "upperAdd_le_coe_iff": "theorem upperAdd_le_coe_iff (a b : EReal) (h : ℝ) :\n    upperAdd a b ≤ (h : EReal) ↔\n      ∃ r s : ℝ, a ≤ (r : EReal) ∧ b ≤ (s : EReal) ∧ r + s ≤ h",
+  "convex_upperAdd": "theorem convex_upperAdd {E : Type*} [AddCommGroup E] [Module ℝ E]\n    (f g : E → EReal) (hf : IsConvexExtended f) (hg : IsConvexExtended g) :\n    IsConvexExtended (fun x => upperAdd (f x) (g x))",
+  "positive_mul_le_coe_iff": "theorem positive_mul_le_coe_iff (a : ℝ) (ha : 0 < a) (z : EReal) (h : ℝ) :\n    (a : EReal) * z ≤ (h : EReal) ↔ z ≤ ((h / a : ℝ) : EReal)",
+  "convex_nonneg_mul": "theorem convex_nonneg_mul {E : Type*} [AddCommGroup E] [Module ℝ E]\n    (f : E → EReal) (hf : IsConvexExtended f) (a : ℝ) (ha : 0 ≤ a) :\n    IsConvexExtended (fun x => (a : EReal) * f x)",
+  "convex_nonneg_linear_combination": "theorem convex_nonneg_linear_combination {E : Type*} [AddCommGroup E] [Module ℝ E]\n    (f g : E → EReal) (hf : IsConvexExtended f) (hg : IsConvexExtended g)\n    (a b : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) :\n    IsConvexExtended (fun x => upperAdd ((a : EReal) * f x) ((b : EReal) * g x))"
+}

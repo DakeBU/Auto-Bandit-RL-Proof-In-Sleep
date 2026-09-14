@@ -15401,3 +15401,4 @@ here during local harness runs.
 - `2026-09-14T06:15:46+00:00` `bandit.py new-task` `task` `tasks/ONLINE-BOOK-CH2-CONVEX.md` - Orabona extended-real convexity definitions and Theorem 2.4
 - `2026-09-14T06:56:12+00:00` `bandit.py new-task` `task` `tasks/ONLINE-BOOK-CH2-EXAMPLES.md` - Orabona affine and norm convexity examples
 - `2026-09-14T07:15:05+00:00` `bandit.py new-task` `task` `tasks/ONLINE-BOOK-CH2-CLOSURES.md` - Orabona affine composition supremum and monotone composition
+- `2026-09-14T07:34:58+00:00` `bandit.py new-task` `task` `tasks/ONLINE-BOOK-CH2-SUMS.md` - Orabona nonnegative convex combinations with explicit upper addition

@@ -128,10 +128,11 @@ class BookRegistryTests(unittest.TestCase):
         chapter = next(c for c in registry["chapters"] if c["id"] == "teaching:online-convex")
         for name in ["effectiveDomain", "IsConvexExtended", "convex_effectiveDomain",
                      "convex_add_indicator", "theorem_2_4", "example_2_5", "example_2_6", "convex_comp_affine",
-                     "convex_iSup", "convex_comp_monotone"]:
+                     "convex_iSup", "convex_comp_monotone", "convex_nonneg_linear_combination"]:
             key = "declaration:BanditRL.OnlineConvex." + name
             route = "teaching:online-convex-closures" if name in {
-                "convex_comp_affine", "convex_iSup", "convex_comp_monotone"} else "teaching:online-convex"
+                "convex_comp_affine", "convex_iSup", "convex_comp_monotone",
+                "convex_nonneg_linear_combination"} else "teaching:online-convex"
             target = next(c for c in registry["chapters"] if c["id"] == route)
             self.assertIn(key, target["node_ids"])
             self.assertEqual(["online-learning"], nodes[key]["books"])

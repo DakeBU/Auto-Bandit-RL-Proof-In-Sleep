@@ -2176,6 +2176,24 @@
       "dependencies": [
         "BanditRL.OnlineConvex.convexExtended_coe_iff"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.convex_nonneg_linear_combination",
+      "title": "Nonnegative combinations with convex upper addition",
+      "chapter": "online-convex-closures",
+      "featured": false,
+      "teaching_order": 4,
+      "plain": "General extended-real convex functions remain convex under nonnegative scaling and top-dominant upper addition.",
+      "math": "\\(x\\mapsto a f(x)\\mathbin{+_{\\mathrm{upper}}}b g(x),\\quad a,b\\ge0\\)",
+      "intuition": "The operation at mixed infinities matters for the epigraph.",
+      "why": "Completes the remaining closure operation under an explicitly documented convex-analysis convention.",
+      "position": "Orabona v10 printedp10/PDF22, with upper-addition interpretation recorded in the source contract.",
+      "proof_idea": "Decompose finite upper heights into two real witnesses, combine epigraph points, then split scaling into zero and positive cases.",
+      "lean_notes": "No noBot, properness, nonempty-domain or positive-only coefficient restriction. Ordinary EReal addition has a public counterexample.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.convex_upperAdd",
+        "BanditRL.OnlineConvex.convex_nonneg_mul"
+      ]
     }
   ]
 }

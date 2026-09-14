@@ -1,0 +1,1 @@
+Whole-book Goal active. Branch codex/research-online-convex-sums stacked on PR121 exact de3e6cf48e1101b71945fbdd22724547a2b3aaeb. Three other closure operations accepted locally; fourth remains required. Same shared library and preserved worktree; no merge/deploy.

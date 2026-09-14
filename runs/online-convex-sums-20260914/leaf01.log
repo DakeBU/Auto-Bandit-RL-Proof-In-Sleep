@@ -1,0 +1,83 @@
+BanditRLProof/OnlineConvexSums.lean:10:93: error: unsolved goals
+a b : ℝ
+⊢ b + a = a + b
+BanditRLProof/OnlineConvexSums.lean:21:66: error: unsolved goals
+case bot.bot
+h : ℝ
+⊢ ∃ r s, r + s ≤ h
+
+case bot.coe
+h a✝ : ℝ
+⊢ ∃ r s, a✝ ≤ s ∧ r + s ≤ h
+
+case coe.bot
+h a✝ : ℝ
+⊢ ∃ r, a✝ ≤ r ∧ ∃ x, r + x ≤ h
+
+case coe.coe
+h a✝¹ a✝ : ℝ
+⊢ a✝ + a✝¹ ≤ h ↔ ∃ r, a✝¹ ≤ r ∧ ∃ x, a✝ ≤ x ∧ r + x ≤ h
+BanditRLProof/OnlineConvexSums.lean:37:4: error: linarith failed to find a contradiction
+case refine_3.h
+E : Type u_1
+inst✝¹ : AddCommGroup E
+inst✝ : Module ℝ E
+f g : E → EReal
+hf : IsConvexExtended f
+hg : IsConvexExtended g
+x : E × ℝ
+hx : x ∈ realEpigraph fun x => upperAdd (f x) (g x)
+y : E × ℝ
+hy : y ∈ realEpigraph fun x => upperAdd (f x) (g x)
+a b : ℝ
+ha : 0 ≤ a
+hb : 0 ≤ b
+hab : a + b = 1
+r₁ s₁ : ℝ
+hfr₁ : f x.1 ≤ ↑r₁
+hgs₁ : g x.1 ≤ ↑s₁
+h₁ : r₁ + s₁ ≤ x.2
+r₂ s₂ : ℝ
+hfr₂ : f y.1 ≤ ↑r₂
+hgs₂ : g y.1 ≤ ↑s₂
+h₂ : r₂ + s₂ ≤ y.2
+a✝ : (a • x + b • y).2 < a * r₁ + b * r₂ + (a * s₁ + b * s₂)
+⊢ False
+failed
+BanditRLProof/OnlineConvexSums.lean:46:46: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ?a * ?b
+in the target expression
+  ?m.68 ≤ ?m.69 / a ↔ ?m.75
+
+a : ℝ
+ha : 0 < a
+h z : ℝ
+⊢ ?m.68 ≤ ?m.69 / a ↔ ?m.75
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+BanditRLProof/OnlineConvexSums.lean:55:2: error: unsolved goals
+case h.e'_4.e_a
+E : Type u_1
+inst✝¹ : AddCommGroup E
+inst✝ : Module ℝ E
+f : E → EReal
+hf : IsConvexExtended f
+a : ℝ
+ha✝ : 0 ≤ a
+ha : 0 < a
+x : E × ℝ
+hx : x ∈ realEpigraph fun x => ↑a * f x
+y : E × ℝ
+hy : y ∈ realEpigraph fun x => ↑a * f x
+c d : ℝ
+hc : 0 ≤ c
+hd : 0 ≤ d
+hcd : c + d = 1
+hx' : f x.1 ≤ ↑(x.2 / a)
+hy' : f y.1 ≤ ↑(y.2 / a)
+h : f (c • x.1 + d • y.1) ≤ ↑(c * (x.2 / a) + d * (y.2 / a))
+⊢ (c • x + d • y).2 * a⁻¹ = a⁻¹ * c * x.2 + a⁻¹ * d * y.2
