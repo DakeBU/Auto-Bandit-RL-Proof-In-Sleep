@@ -1,1 +1,1 @@
-Full source Theorem2.9 and finite-negative-part prerequisite accepted-local. All scope gates passed; see runs/online-jensen-source-20260914/acceptance-decision.md. Scoped PR delivery pending. Example2.10 remains a scratch candidate; Chapter2 and total Goal incomplete.
+Full source Theorem2.9 and finite-negative-part prerequisite accepted-local. All scope gates passed; see runs/online-jensen-source-20260914/acceptance-decision.md. Draft PR128 delivered; see delivery.md. Example2.10 remains a scratch candidate; Chapter2 and total Goal incomplete.
