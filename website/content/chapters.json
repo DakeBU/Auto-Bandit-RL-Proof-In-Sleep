@@ -454,7 +454,7 @@
       "audience": "Readers of Orabona Chapter 2 convex-analysis foundations.",
       "completion_definition": "Seven signed-expectation foundation interfaces only. This is not completion of Orabona Theorem2.9 or all Chapter 2.",
       "completion_blockers": [
-        "Theorem2.9 still needs a convex affine minorant, arbitrary finite-dimensional convex barycenter membership and source-hypothesis canaries.",
+        "Theorem2.9 still needs a convex affine minorant, finite negative part and the full extended-real argument; its barycenter dependency is mapped separately.",
         "Later Chapter2 subgradient and linearization obligations remain required."
       ],
       "learning_goals": [
@@ -468,6 +468,31 @@
       "open_gaps": [
         "Full Jensen remains unproved; a total infinity-minus-infinity value is not a valid expectation.",
         "The current infinite-integral canary uses counting measure, not a probability law, and is only a representation check."
+      ]
+    },
+    {
+      "slug": "online-barycenter",
+      "title": "Means in arbitrary finite-dimensional convex sets",
+      "short_title": "Convex barycenters",
+      "status": "compiled",
+      "summary": "An integrable random vector taking values in a convex set has its mean in that same set, without requiring closedness.",
+      "audience": "Readers of Orabona Chapter 2 convex-analysis foundations.",
+      "completion_definition": "The finite-dimensional convex barycenter dependency and its two supporting-functional interfaces. This is not completion of Orabona Theorem2.9 or all Chapter 2.",
+      "completion_blockers": [
+        "Full Jensen still needs an affine minorant, finite negative part under its source assumptions and the extended-real epigraph/expectation argument.",
+        "Later Chapter2 subgradient and linearization obligations remain required."
+      ],
+      "learning_goals": [
+        "Distinguish membership in a convex set from membership only in its closure.",
+        "Handle empty interior through the affine span.",
+        "Reduce a boundary mean to a proper kernel using almost-sure equality."
+      ],
+      "module_globs": [
+        "BanditRLProof/OnlineConvexBarycenter.lean"
+      ],
+      "open_gaps": [
+        "Full Jensen remains unproved; this closes its arbitrary-convex barycenter dependency.",
+        "No infinite-dimensional nonclosed-set generalization is claimed."
       ]
     }
   ]

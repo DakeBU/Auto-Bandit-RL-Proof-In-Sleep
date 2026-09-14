@@ -1,0 +1,538 @@
+tmp/online-kernel-clean-trace.lean:14:35: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  ContinuousENorm ↥K
+tmp/online-kernel-clean-trace.lean:16:35: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  IsUniformAddGroup ↥K
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+[Meta.synthInstance] ✅️ TopologicalSpace ↥K
+  [Meta.synthInstance] ✅️ new goal TopologicalSpace ↥K
+    [Meta.synthInstance.instances] #[@UniformSpace.toTopologicalSpace, @instTopologicalSpaceSubtype]
+  [Meta.synthInstance.apply] ✅️ apply @instTopologicalSpaceSubtype to TopologicalSpace ↥K
+    [Meta.synthInstance.tryResolve] ✅️ TopologicalSpace ↥K ≟ TopologicalSpace ↥K
+    [Meta.synthInstance] ✅️ new goal TopologicalSpace F
+      [Meta.synthInstance.instances] #[@UniformSpace.toTopologicalSpace]
+  [Meta.synthInstance.apply] ✅️ apply @UniformSpace.toTopologicalSpace to TopologicalSpace F
+    [Meta.synthInstance.tryResolve] ✅️ TopologicalSpace F ≟ TopologicalSpace F
+    [Meta.synthInstance] ✅️ new goal UniformSpace F
+      [Meta.synthInstance.instances] #[@PseudoEMetricSpace.toUniformSpace, @PseudoMetricSpace.toUniformSpace]
+  [Meta.synthInstance.apply] ✅️ apply @PseudoMetricSpace.toUniformSpace to UniformSpace F
+    [Meta.synthInstance.tryResolve] ✅️ UniformSpace F ≟ UniformSpace F
+    [Meta.synthInstance] ✅️ new goal PseudoMetricSpace F
+      [Meta.synthInstance.instances] #[@MetricSpace.toPseudoMetricSpace, @SeminormedAddGroup.toPseudoMetricSpace, @SeminormedGroup.toPseudoMetricSpace, @SeminormedAddCommGroup.toPseudoMetricSpace, @SeminormedCommGroup.toPseudoMetricSpace, @NonUnitalSeminormedRing.toPseudoMetricSpace, @SeminormedRing.toPseudoMetricSpace]
+  [Meta.synthInstance.apply] ✅️ apply @SeminormedRing.toPseudoMetricSpace to PseudoMetricSpace F
+    [Meta.synthInstance.tryResolve] ✅️ PseudoMetricSpace F ≟ PseudoMetricSpace F
+    [Meta.synthInstance] ✅️ new goal SeminormedRing F
+      [Meta.synthInstance.instances] #[@NormedRing.toSeminormedRing, @SeminormedCommRing.toSeminormedRing]
+  [Meta.synthInstance.apply] ✅️ apply @SeminormedCommRing.toSeminormedRing to SeminormedRing F
+    [Meta.synthInstance.tryResolve] ✅️ SeminormedRing F ≟ SeminormedRing F
+    [Meta.synthInstance] ✅️ new goal SeminormedCommRing F
+      [Meta.synthInstance.instances] #[@NormedCommRing.toSeminormedCommRing]
+  [Meta.synthInstance.apply] ✅️ apply @NormedCommRing.toSeminormedCommRing to SeminormedCommRing F
+    [Meta.synthInstance.tryResolve] ✅️ SeminormedCommRing F ≟ SeminormedCommRing F
+    [Meta.synthInstance] ✅️ new goal NormedCommRing F
+      [Meta.synthInstance.instances] #[@NormedField.toNormedCommRing]
+  [Meta.synthInstance.apply] ✅️ apply @NormedField.toNormedCommRing to NormedCommRing F
+    [Meta.synthInstance.tryResolve] ✅️ NormedCommRing F ≟ NormedCommRing F
+    [Meta.synthInstance] ✅️ new goal NormedField F
+      [Meta.synthInstance.instances] #[@NontriviallyNormedField.toNormedField, @DenselyNormedField.toNormedField]
+  [Meta.synthInstance.apply] ✅️ apply @DenselyNormedField.toNormedField to NormedField F
+    [Meta.synthInstance.tryResolve] ✅️ NormedField F ≟ NormedField F
+    [Meta.synthInstance] ✅️ new goal DenselyNormedField F
+      [Meta.synthInstance.instances] #[@RCLike.toDenselyNormedField]
+  [Meta.synthInstance.apply] ✅️ apply @RCLike.toDenselyNormedField to DenselyNormedField F
+    [Meta.synthInstance.tryResolve] ✅️ DenselyNormedField F ≟ DenselyNormedField F
+    [Meta.synthInstance] ✅️ no instances for RCLike F
+      [Meta.synthInstance.instances] #[]
+  [Meta.synthInstance.apply] ✅️ apply @NontriviallyNormedField.toNormedField to NormedField F
+    [Meta.synthInstance.tryResolve] ✅️ NormedField F ≟ NormedField F
+    [Meta.synthInstance] ✅️ new goal NontriviallyNormedField F
+      [Meta.synthInstance.instances] #[@DenselyNormedField.toNontriviallyNormedField]
+  [Meta.synthInstance.apply] ✅️ apply @DenselyNormedField.toNontriviallyNormedField to NontriviallyNormedField F
+    [Meta.synthInstance.tryResolve] ✅️ NontriviallyNormedField F ≟ NontriviallyNormedField F
+  [Meta.synthInstance.apply] ✅️ apply @NormedRing.toSeminormedRing to SeminormedRing F
+    [Meta.synthInstance.tryResolve] ✅️ SeminormedRing F ≟ SeminormedRing F
+    [Meta.synthInstance] ✅️ new goal NormedRing F
+      [Meta.synthInstance.instances] #[@NormedDivisionRing.toNormedRing, @NormedCommRing.toNormedRing]
+  [Meta.synthInstance.apply] ✅️ apply @NormedCommRing.toNormedRing to NormedRing F
+    [Meta.synthInstance.tryResolve] ✅️ NormedRing F ≟ NormedRing F
+  [Meta.synthInstance.apply] ✅️ apply @NormedDivisionRing.toNormedRing to NormedRing F
+    [Meta.synthInstance.tryResolve] ✅️ NormedRing F ≟ NormedRing F
+    [Meta.synthInstance] ✅️ new goal NormedDivisionRing F
+      [Meta.synthInstance.instances] #[@NormedField.toNormedDivisionRing]
+  [Meta.synthInstance.apply] ✅️ apply @NormedField.toNormedDivisionRing to NormedDivisionRing F
+    [Meta.synthInstance.tryResolve] ✅️ NormedDivisionRing F ≟ NormedDivisionRing F
+  [Meta.synthInstance.apply] ✅️ apply @NonUnitalSeminormedRing.toPseudoMetricSpace to PseudoMetricSpace F
+    [Meta.synthInstance.tryResolve] ✅️ PseudoMetricSpace F ≟ PseudoMetricSpace F
+    [Meta.synthInstance] ✅️ new goal NonUnitalSeminormedRing F
+      [Meta.synthInstance.instances] #[@SeminormedRing.toNonUnitalSeminormedRing, @NonUnitalNormedRing.toNonUnitalSeminormedRing, @NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing]
+  [Meta.synthInstance.apply] ✅️ apply @NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing to NonUnitalSeminormedRing
+        F
+    [Meta.synthInstance.tryResolve] ✅️ NonUnitalSeminormedRing F ≟ NonUnitalSeminormedRing F
+    [Meta.synthInstance] ✅️ new goal NonUnitalSeminormedCommRing F
+      [Meta.synthInstance.instances] #[@NonUnitalNormedCommRing.toNonUnitalSeminormedCommRing, @SeminormedCommRing.toNonUnitalSeminormedCommRing]
+  [Meta.synthInstance.apply] ✅️ apply @SeminormedCommRing.toNonUnitalSeminormedCommRing to NonUnitalSeminormedCommRing F
+    [Meta.synthInstance.tryResolve] ✅️ NonUnitalSeminormedCommRing F ≟ NonUnitalSeminormedCommRing F
+  [Meta.synthInstance.apply] ✅️ apply @NonUnitalNormedCommRing.toNonUnitalSeminormedCommRing to NonUnitalSeminormedCommRing
+        F
+    [Meta.synthInstance.tryResolve] ✅️ NonUnitalSeminormedCommRing F ≟ NonUnitalSeminormedCommRing F
+    [Meta.synthInstance] ✅️ new goal NonUnitalNormedCommRing F
+      [Meta.synthInstance.instances] #[@NormedCommRing.toNonUnitalNormedCommRing]
+  [Meta.synthInstance.apply] ✅️ apply @NormedCommRing.toNonUnitalNormedCommRing to NonUnitalNormedCommRing F
+    [Meta.synthInstance.tryResolve] ✅️ NonUnitalNormedCommRing F ≟ NonUnitalNormedCommRing F
+  [Meta.synthInstance.apply] ✅️ apply @NonUnitalNormedRing.toNonUnitalSeminormedRing to NonUnitalSeminormedRing F
+    [Meta.synthInstance.tryResolve] ✅️ NonUnitalSeminormedRing F ≟ NonUnitalSeminormedRing F
+    [Meta.synthInstance] ✅️ new goal NonUnitalNormedRing F
+      [Meta.synthInstance.instances] #[@NormedRing.toNonUnitalNormedRing, @NonUnitalNormedCommRing.toNonUnitalNormedRing]
+  [Meta.synthInstance.apply] ✅️ apply @NonUnitalNormedCommRing.toNonUnitalNormedRing to NonUnitalNormedRing F
+    [Meta.synthInstance.tryResolve] ✅️ NonUnitalNormedRing F ≟ NonUnitalNormedRing F
+  [Meta.synthInstance.apply] ✅️ apply @NormedRing.toNonUnitalNormedRing to NonUnitalNormedRing F
+    [Meta.synthInstance.tryResolve] ✅️ NonUnitalNormedRing F ≟ NonUnitalNormedRing F
+  [Meta.synthInstance.apply] ✅️ apply @SeminormedRing.toNonUnitalSeminormedRing to NonUnitalSeminormedRing F
+    [Meta.synthInstance.tryResolve] ✅️ NonUnitalSeminormedRing F ≟ NonUnitalSeminormedRing F
+  [Meta.synthInstance.apply] ✅️ apply @SeminormedCommGroup.toPseudoMetricSpace to PseudoMetricSpace F
+    [Meta.synthInstance.tryResolve] ✅️ PseudoMetricSpace F ≟ PseudoMetricSpace F
+    [Meta.synthInstance] ✅️ new goal SeminormedCommGroup F
+      [Meta.synthInstance.instances] #[@NormedCommGroup.toSeminormedCommGroup]
+  [Meta.synthInstance.apply] ✅️ apply @NormedCommGroup.toSeminormedCommGroup to SeminormedCommGroup F
+    [Meta.synthInstance.tryResolve] ✅️ SeminormedCommGroup F ≟ SeminormedCommGroup F
+    [Meta.synthInstance] ✅️ no instances for NormedCommGroup F
+      [Meta.synthInstance.instances] #[]
+  [Meta.synthInstance.apply] ✅️ apply @SeminormedAddCommGroup.toPseudoMetricSpace to PseudoMetricSpace F
+    [Meta.synthInstance.tryResolve] ✅️ PseudoMetricSpace F ≟ PseudoMetricSpace F
+    [Meta.synthInstance] ✅️ new goal SeminormedAddCommGroup F
+      [Meta.synthInstance.instances] #[@NormedAddCommGroup.toSeminormedAddCommGroup, @NonUnitalSeminormedRing.toSeminormedAddCommGroup]
+  [Meta.synthInstance.apply] ✅️ apply @NonUnitalSeminormedRing.toSeminormedAddCommGroup to SeminormedAddCommGroup F
+    [Meta.synthInstance.tryResolve] ✅️ SeminormedAddCommGroup F ≟ SeminormedAddCommGroup F
+  [Meta.synthInstance.apply] ✅️ apply @NormedAddCommGroup.toSeminormedAddCommGroup to SeminormedAddCommGroup F
+    [Meta.synthInstance.tryResolve] ✅️ SeminormedAddCommGroup F ≟ SeminormedAddCommGroup F
+    [Meta.synthInstance] ✅️ new goal NormedAddCommGroup F
+      [Meta.synthInstance.instances] #[@NonUnitalNormedRing.toNormedAddCommGroup, inst✝²]
+  [Meta.synthInstance.apply] ✅️ apply inst✝² to NormedAddCommGroup F
+    [Meta.synthInstance.tryResolve] ✅️ NormedAddCommGroup F ≟ NormedAddCommGroup F
+    [Meta.synthInstance.answer] ✅️ NormedAddCommGroup F
+  [Meta.synthInstance.resume] ✅️ propagating NormedAddCommGroup
+        F to subgoal NormedAddCommGroup F of SeminormedAddCommGroup F
+    [Meta.synthInstance.resume] size: 1
+    [Meta.synthInstance.answer] ✅️ SeminormedAddCommGroup F
+  [Meta.synthInstance.resume] ✅️ propagating SeminormedAddCommGroup
+        F to subgoal SeminormedAddCommGroup F of PseudoMetricSpace F
+    [Meta.synthInstance.resume] size: 2
+    [Meta.synthInstance.answer] ✅️ PseudoMetricSpace F
+  [Meta.synthInstance.resume] ✅️ propagating PseudoMetricSpace F to subgoal PseudoMetricSpace F of UniformSpace F
+    [Meta.synthInstance.resume] size: 3
+    [Meta.synthInstance.answer] ✅️ UniformSpace F
+  [Meta.synthInstance.resume] ✅️ propagating UniformSpace F to subgoal UniformSpace F of TopologicalSpace F
+    [Meta.synthInstance.resume] size: 4
+    [Meta.synthInstance.answer] ✅️ TopologicalSpace F
+  [Meta.synthInstance.resume] ✅️ propagating TopologicalSpace F to subgoal TopologicalSpace F of TopologicalSpace ↥K
+    [Meta.synthInstance.resume] size: 5
+    [Meta.synthInstance.answer] ✅️ TopologicalSpace ↥K
+  [Meta.synthInstance] result instTopologicalSpaceSubtype
+[Meta.synthInstance] ✅️ CoeT (Submodule ℝ F) K (Type u_1)
+  [Meta.synthInstance] ✅️ new goal CoeT (Submodule ℝ F) K (Type ?u.1213)
+    [Meta.synthInstance.instances] #[@instCoeTOfCoeHTCT, @instCoeTOfCoeDep, @instCoeT]
+  [Meta.synthInstance.apply] ❌️ apply @instCoeT to CoeT (Submodule ℝ F) K (Type ?u.1213)
+    [Meta.synthInstance.tryResolve] ❌️ CoeT (Submodule ℝ F) K (Type ?u.1213) ≟ CoeT ?m.48 ?m.49 ?m.48
+  [Meta.synthInstance.apply] ✅️ apply @instCoeTOfCoeDep to CoeT (Submodule ℝ F) K (Type ?u.1213)
+    [Meta.synthInstance.tryResolve] ✅️ CoeT (Submodule ℝ F) K (Type ?u.1213) ≟ CoeT (Submodule ℝ F) K (Type ?u.1213)
+    [Meta.synthInstance] ✅️ no instances for CoeDep (Submodule ℝ F) K (Type ?u.1213)
+      [Meta.synthInstance.instances] #[]
+  [Meta.synthInstance.apply] ✅️ apply @instCoeTOfCoeHTCT to CoeT (Submodule ℝ F) K (Type ?u.1213)
+    [Meta.synthInstance.tryResolve] ✅️ CoeT (Submodule ℝ F) K (Type ?u.1213) ≟ CoeT (Submodule ℝ F) K (Type ?u.1213)
+    [Meta.synthInstance] ✅️ new goal CoeHTCT (Submodule ℝ F) (Type ?u.1213)
+      [Meta.synthInstance.instances] #[@instCoeHTCTOfCoeTailOfCoeHTC, @instCoeHTCTOfCoeHTC, @instCoeHTCT]
+  [Meta.synthInstance.apply] ❌️ apply @instCoeHTCT to CoeHTCT (Submodule ℝ F) (Type ?u.1213)
+    [Meta.synthInstance.tryResolve] ❌️ CoeHTCT (Submodule ℝ F) (Type ?u.1213) ≟ CoeHTCT ?m.52 ?m.52
+  [Meta.synthInstance.apply] ✅️ apply @instCoeHTCTOfCoeHTC to CoeHTCT (Submodule ℝ F) (Type ?u.1213)
+    [Meta.synthInstance.tryResolve] ✅️ CoeHTCT (Submodule ℝ F) (Type ?u.1213) ≟ CoeHTCT (Submodule ℝ F) (Type ?u.1213)
+    [Meta.synthInstance] ✅️ new goal CoeHTC (Submodule ℝ F) (Type ?u.1213)
+      [Meta.synthInstance.instances] #[@instCoeHTCOfCoeHeadOfCoeOTC, @instCoeHTCOfCoeOTC, @instCoeHTC]
+  [Meta.synthInstance.apply] ❌️ apply @instCoeHTC to CoeHTC (Submodule ℝ F) (Type ?u.1213)
+    [Meta.synthInstance.tryResolve] ❌️ CoeHTC (Submodule ℝ F) (Type ?u.1213) ≟ CoeHTC ?m.55 ?m.55
+  [Meta.synthInstance.apply] ✅️ apply @instCoeHTCOfCoeOTC to CoeHTC (Submodule ℝ F) (Type ?u.1213)
+    [Meta.synthInstance.tryResolve] ✅️ CoeHTC (Submodule ℝ F) (Type ?u.1213) ≟ CoeHTC (Submodule ℝ F) (Type ?u.1213)
+    [Meta.synthInstance] ✅️ new goal CoeOTC (Submodule ℝ F) (Type ?u.1213)
+      [Meta.synthInstance.instances] #[@instCoeOTCOfCoeOut, @instCoeOTCOfCoeTC, @instCoeOTC]
+  [Meta.synthInstance.apply] ❌️ apply @instCoeOTC to CoeOTC (Submodule ℝ F) (Type ?u.1213)
+    [Meta.synthInstance.tryResolve] ❌️ CoeOTC (Submodule ℝ F) (Type ?u.1213) ≟ CoeOTC ?m.58 ?m.58
+  [Meta.synthInstance.apply] ✅️ apply @instCoeOTCOfCoeTC to CoeOTC (Submodule ℝ F) (Type ?u.1213)
+    [Meta.synthInstance.tryResolve] ✅️ CoeOTC (Submodule ℝ F) (Type ?u.1213) ≟ CoeOTC (Submodule ℝ F) (Type ?u.1213)
+    [Meta.synthInstance] ✅️ new goal CoeTC (Submodule ℝ F) (Type ?u.1213)
+      [Meta.synthInstance.instances] #[@instCoeTCOfCoe, @instCoeTCOfCoe_1, @instCoeTC]
+  [Meta.synthInstance.apply] ❌️ apply @instCoeTC to CoeTC (Submodule ℝ F) (Type ?u.1213)
+    [Meta.synthInstance.tryResolve] ❌️ CoeTC (Submodule ℝ F) (Type ?u.1213) ≟ CoeTC ?m.61 ?m.61
+  [Meta.synthInstance.apply] ✅️ apply @instCoeTCOfCoe_1 to CoeTC (Submodule ℝ F) (Type ?u.1213)
+    [Meta.synthInstance.tryResolve] ✅️ CoeTC (Submodule ℝ F) (Type ?u.1213) ≟ CoeTC (Submodule ℝ F) (Type ?u.1213)
+    [Meta.synthInstance] ✅️ no instances for Coe (Submodule ℝ F) (Type ?u.1213)
+      [Meta.synthInstance.instances] #[]
+  [Meta.synthInstance.apply] ✅️ apply @instCoeTCOfCoe to CoeTC (Submodule ℝ F) (Type ?u.1213)
+    [Meta.synthInstance.tryResolve] ✅️ CoeTC (Submodule ℝ F) (Type ?u.1213) ≟ CoeTC (Submodule ℝ F) (Type ?u.1213)
+    [Meta.synthInstance] ✅️ new goal Coe _tc.1 (Type ?u.1213)
+      [Meta.synthInstance.instances] #[boolToProp]
+  [Meta.synthInstance.apply] ❌️ apply boolToProp to Coe ?m.61 (Type ?u.1213)
+    [Meta.synthInstance.tryResolve] ❌️ Coe ?m.61 (Type ?u.1213) ≟ Coe Bool Prop
+  [Meta.synthInstance.apply] ✅️ apply @instCoeOTCOfCoeOut to CoeOTC (Submodule ℝ F) (Type ?u.1213)
+    [Meta.synthInstance.tryResolve] ✅️ CoeOTC (Submodule ℝ F) (Type ?u.1213) ≟ CoeOTC (Submodule ℝ F) (Type ?u.1213)
+    [Meta.synthInstance] ✅️ new goal CoeOut (Submodule ℝ F) _tc.1
+      [Meta.synthInstance.instances] #[@instCoeOutOfCoeFun, @instCoeOutOfCoeSort, @ContinuousAddMonoidHom.instCoeOutOfAddMonoidHomClassOfContinuousMapClass, @HomeomorphClass.instCoeOutHomeomorph, @ContinuousMonoidHom.instCoeOutOfMonoidHomClassOfContinuousMapClass, @IsometryClass.instCoeOutIsometryEquiv]
+  [Meta.synthInstance.apply] ✅️ apply @IsometryClass.instCoeOutIsometryEquiv to CoeOut (Submodule ℝ F) (?m.64 ≃ᵢ ?m.65)
+    [Meta.synthInstance.tryResolve] ✅️ CoeOut (Submodule ℝ F) (?m.64 ≃ᵢ ?m.65) ≟ CoeOut (Submodule ℝ F) (?m.64 ≃ᵢ ?m.65)
+    [Meta.synthInstance] ✅️ no instances for EquivLike (Submodule ℝ F) _tc.2 _tc.3
+      [Meta.synthInstance.instances] #[]
+  [Meta.synthInstance.apply] ✅️ apply @ContinuousMonoidHom.instCoeOutOfMonoidHomClassOfContinuousMapClass to CoeOut
+        (Submodule ℝ F) (?m.63 →ₜ* ?m.64)
+    [Meta.synthInstance.tryResolve] ✅️ CoeOut (Submodule ℝ F)
+          (?m.63 →ₜ* ?m.64) ≟ CoeOut (Submodule ℝ F) (?m.63 →ₜ* ?m.64)
+    [Meta.synthInstance] ✅️ new goal FunLike (Submodule ℝ F) _tc.2 _tc.3
+      [Meta.synthInstance.instances] #[@EquivLike.toFunLike]
+  [Meta.synthInstance.apply] ✅️ apply @EquivLike.toFunLike to FunLike (Submodule ℝ F) ?m.74 ?m.75
+    [Meta.synthInstance.tryResolve] ✅️ FunLike (Submodule ℝ F) ?m.74
+          ?m.75 ≟ DFunLike (Submodule ℝ F) ?m.74 fun x => ?m.75
+    [Meta.synthInstance] ✅️ no instances for EquivLike (Submodule ℝ F) _tc.2 _tc.3
+      [Meta.synthInstance.instances] #[]
+  [Meta.synthInstance.apply] ✅️ apply @HomeomorphClass.instCoeOutHomeomorph to CoeOut (Submodule ℝ F) (?m.64 ≃ₜ ?m.65)
+    [Meta.synthInstance.tryResolve] ✅️ CoeOut (Submodule ℝ F) (?m.64 ≃ₜ ?m.65) ≟ CoeOut (Submodule ℝ F) (?m.64 ≃ₜ ?m.65)
+    [Meta.synthInstance] ✅️ no instances for EquivLike (Submodule ℝ F) _tc.2 _tc.3
+      [Meta.synthInstance.instances] #[]
+  [Meta.synthInstance.apply] ✅️ apply @ContinuousAddMonoidHom.instCoeOutOfAddMonoidHomClassOfContinuousMapClass to CoeOut
+        (Submodule ℝ F) (?m.63 →ₜ+ ?m.64)
+    [Meta.synthInstance.tryResolve] ✅️ CoeOut (Submodule ℝ F)
+          (?m.63 →ₜ+ ?m.64) ≟ CoeOut (Submodule ℝ F) (?m.63 →ₜ+ ?m.64)
+  [Meta.synthInstance.apply] ✅️ apply @instCoeOutOfCoeSort to CoeOut (Submodule ℝ F) ?m.64
+    [Meta.synthInstance.tryResolve] ✅️ CoeOut (Submodule ℝ F) ?m.64 ≟ CoeOut (Submodule ℝ F) ?m.64
+    [Meta.synthInstance] ✅️ new goal CoeSort (Submodule ℝ F) _tc.1
+      [Meta.synthInstance.instances] #[@SetLike.instCoeSortType]
+  [Meta.synthInstance.apply] ✅️ apply @SetLike.instCoeSortType to CoeSort (Submodule ℝ F) (Type ?u.1384)
+    [Meta.synthInstance.tryResolve] ✅️ CoeSort (Submodule ℝ F) (Type ?u.1384) ≟ CoeSort (Submodule ℝ F) (Type ?u.1384)
+    [Meta.synthInstance] ✅️ new goal SetLike (Submodule ℝ F) _tc.1
+      [Meta.synthInstance.instances] #[@Submodule.setLike]
+  [Meta.synthInstance.apply] ✅️ apply @Submodule.setLike to SetLike (Submodule ℝ F) F
+    [Meta.synthInstance.tryResolve] ✅️ SetLike (Submodule ℝ F) F ≟ SetLike (Submodule ℝ F) F
+    [Meta.synthInstance.answer] ✅️ SetLike (Submodule ℝ F) F
+  [Meta.synthInstance.resume] ✅️ propagating SetLike (Submodule ℝ F)
+        F to subgoal SetLike (Submodule ℝ F) F of CoeSort (Submodule ℝ F) (Type u_1)
+    [Meta.synthInstance.resume] size: 1
+    [Meta.synthInstance.answer] ✅️ CoeSort (Submodule ℝ F) (Type u_1)
+  [Meta.synthInstance.resume] ✅️ propagating CoeSort (Submodule ℝ F)
+        (Type u_1) to subgoal CoeSort (Submodule ℝ F) (Type u_1) of CoeOut (Submodule ℝ F) (Type u_1)
+    [Meta.synthInstance.resume] size: 2
+    [Meta.synthInstance.answer] ✅️ CoeOut (Submodule ℝ F) (Type u_1)
+  [Meta.synthInstance.resume] ✅️ propagating CoeOut (Submodule ℝ F)
+        (Type u_1) to subgoal CoeOut (Submodule ℝ F) (Type u_1) of CoeOTC (Submodule ℝ F) (Type ?u.1213)
+    [Meta.synthInstance.resume] size: 3
+    [Meta.synthInstance] ✅️ new goal CoeOTC (Type u_1) (Type ?u.1213)
+      [Meta.synthInstance.instances] #[@instCoeOTCOfCoeOut, @instCoeOTCOfCoeTC, @instCoeOTC]
+  [Meta.synthInstance.apply] ✅️ apply @instCoeOTC to CoeOTC (Type u_1) (Type u_1)
+    [Meta.synthInstance.tryResolve] ✅️ CoeOTC (Type u_1) (Type u_1) ≟ CoeOTC (Type u_1) (Type u_1)
+    [Meta.synthInstance.answer] ✅️ CoeOTC (Type u_1) (Type u_1)
+  [Meta.synthInstance.resume] ✅️ propagating CoeOTC (Type u_1)
+        (Type u_1) to subgoal CoeOTC (Type u_1) (Type u_1) of CoeOTC (Submodule ℝ F) (Type u_1)
+    [Meta.synthInstance.resume] size: 4
+    [Meta.synthInstance.answer] ✅️ CoeOTC (Submodule ℝ F) (Type u_1)
+  [Meta.synthInstance.resume] ✅️ propagating CoeOTC (Submodule ℝ F)
+        (Type u_1) to subgoal CoeOTC (Submodule ℝ F) (Type u_1) of CoeHTC (Submodule ℝ F) (Type u_1)
+    [Meta.synthInstance.resume] size: 5
+    [Meta.synthInstance.answer] ✅️ CoeHTC (Submodule ℝ F) (Type u_1)
+  [Meta.synthInstance.resume] ✅️ propagating CoeHTC (Submodule ℝ F)
+        (Type u_1) to subgoal CoeHTC (Submodule ℝ F) (Type u_1) of CoeHTCT (Submodule ℝ F) (Type u_1)
+    [Meta.synthInstance.resume] size: 6
+    [Meta.synthInstance.answer] ✅️ CoeHTCT (Submodule ℝ F) (Type u_1)
+  [Meta.synthInstance.resume] ✅️ propagating CoeHTCT (Submodule ℝ F)
+        (Type u_1) to subgoal CoeHTCT (Submodule ℝ F) (Type u_1) of CoeT (Submodule ℝ F) K (Type u_1)
+    [Meta.synthInstance.resume] size: 7
+    [Meta.synthInstance.answer] ✅️ CoeT (Submodule ℝ F) K (Type u_1)
+  [Meta.synthInstance] result instCoeTOfCoeHTCT
+[Meta.synthInstance] ❌️ ContinuousENorm ↥K
+  [Meta.synthInstance] ✅️ new goal ContinuousENorm ↥K
+    [Meta.synthInstance.instances] #[@ESeminormedAddMonoid.toContinuousENorm, @ESeminormedMonoid.toContinuousENorm, @SeminormedGroup.toContinuousENorm, @SeminormedAddGroup.toContinuousENorm]
+  [Meta.synthInstance.apply] ❌️ apply @SeminormedAddGroup.toContinuousENorm to ContinuousENorm ↥K
+    [Meta.synthInstance.tryResolve] ❌️ ContinuousENorm ↥K ≟ ContinuousENorm ?m.51
+      [Meta.synthInstance] ✅️ SeminormedAddGroup ↥K
+        [Meta.synthInstance] ✅️ new goal SeminormedAddGroup ↥K
+          [Meta.synthInstance.instances] #[@AddSubgroupClass.seminormedAddGroup, @NormedAddGroup.toSeminormedAddGroup, @SeminormedAddCommGroup.toSeminormedAddGroup]
+        [Meta.synthInstance.apply] ✅️ apply @SeminormedAddCommGroup.toSeminormedAddGroup to SeminormedAddGroup ↥K
+          [Meta.synthInstance.tryResolve] ✅️ SeminormedAddGroup ↥K ≟ SeminormedAddGroup ↥K
+          [Meta.synthInstance] ✅️ new goal SeminormedAddCommGroup ↥K
+            [Meta.synthInstance.instances] #[@AddSubgroupClass.seminormedAddCommGroup, @NormedAddCommGroup.toSeminormedAddCommGroup, @NonUnitalSeminormedRing.toSeminormedAddCommGroup, @Submodule.seminormedAddCommGroup]
+        [Meta.synthInstance.apply] ✅️ apply @Submodule.seminormedAddCommGroup to SeminormedAddCommGroup ↥K
+          [Meta.synthInstance.tryResolve] ✅️ SeminormedAddCommGroup ↥K ≟ SeminormedAddCommGroup ↥K
+            [Meta.synthInstance] ✅️ Ring ℝ
+              [Meta.synthInstance] ✅️ new goal Ring ℝ
+                [Meta.synthInstance.instances] #[@CommRing.toRing, @DivisionRing.toRing, @SeminormedRing.toRing, @NormedRing.toRing, Real.instRing]
+              [Meta.synthInstance.apply] ✅️ apply Real.instRing to Ring ℝ
+                [Meta.synthInstance.tryResolve] ✅️ Ring ℝ ≟ Ring ℝ
+                [Meta.synthInstance.answer] ✅️ Ring ℝ
+              [Meta.synthInstance] result Real.instRing
+            [Meta.synthInstance] ✅️ SeminormedAddCommGroup F
+              [Meta.synthInstance] ✅️ new goal SeminormedAddCommGroup F
+                [Meta.synthInstance.instances] #[@NormedAddCommGroup.toSeminormedAddCommGroup, @NonUnitalSeminormedRing.toSeminormedAddCommGroup]
+              [Meta.synthInstance.apply] ✅️ apply @NonUnitalSeminormedRing.toSeminormedAddCommGroup to SeminormedAddCommGroup
+                    F
+                [Meta.synthInstance.tryResolve] ✅️ SeminormedAddCommGroup F ≟ SeminormedAddCommGroup F
+                [Meta.synthInstance] ✅️ new goal NonUnitalSeminormedRing F
+                  [Meta.synthInstance.instances] #[@SeminormedRing.toNonUnitalSeminormedRing, @NonUnitalNormedRing.toNonUnitalSeminormedRing, @NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing]
+              [Meta.synthInstance.apply] ✅️ apply @NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing to NonUnitalSeminormedRing
+                    F
+                [Meta.synthInstance.tryResolve] ✅️ NonUnitalSeminormedRing F ≟ NonUnitalSeminormedRing F
+                [Meta.synthInstance] ✅️ new goal NonUnitalSeminormedCommRing F
+                  [Meta.synthInstance.instances] #[@NonUnitalNormedCommRing.toNonUnitalSeminormedCommRing, @SeminormedCommRing.toNonUnitalSeminormedCommRing]
+              [Meta.synthInstance.apply] ✅️ apply @SeminormedCommRing.toNonUnitalSeminormedCommRing to NonUnitalSeminormedCommRing
+                    F
+                [Meta.synthInstance.tryResolve] ✅️ NonUnitalSeminormedCommRing F ≟ NonUnitalSeminormedCommRing F
+                [Meta.synthInstance] ✅️ new goal SeminormedCommRing F
+                  [Meta.synthInstance.instances] #[@NormedCommRing.toSeminormedCommRing]
+              [Meta.synthInstance.apply] ✅️ apply @NormedCommRing.toSeminormedCommRing to SeminormedCommRing F
+                [Meta.synthInstance.tryResolve] ✅️ SeminormedCommRing F ≟ SeminormedCommRing F
+                [Meta.synthInstance] ✅️ new goal NormedCommRing F
+                  [Meta.synthInstance.instances] #[@NormedField.toNormedCommRing]
+              [Meta.synthInstance.apply] ✅️ apply @NormedField.toNormedCommRing to NormedCommRing F
+                [Meta.synthInstance.tryResolve] ✅️ NormedCommRing F ≟ NormedCommRing F
+                [Meta.synthInstance] ✅️ new goal NormedField F
+                  [Meta.synthInstance.instances] #[@NontriviallyNormedField.toNormedField, @DenselyNormedField.toNormedField]
+              [Meta.synthInstance.apply] ✅️ apply @DenselyNormedField.toNormedField to NormedField F
+                [Meta.synthInstance.tryResolve] ✅️ NormedField F ≟ NormedField F
+                [Meta.synthInstance] ✅️ new goal DenselyNormedField F
+                  [Meta.synthInstance.instances] #[@RCLike.toDenselyNormedField]
+              [Meta.synthInstance.apply] ✅️ apply @RCLike.toDenselyNormedField to DenselyNormedField F
+                [Meta.synthInstance.tryResolve] ✅️ DenselyNormedField F ≟ DenselyNormedField F
+                [Meta.synthInstance] ✅️ no instances for RCLike F
+                  [Meta.synthInstance.instances] #[]
+              [Meta.synthInstance.apply] ✅️ apply @NontriviallyNormedField.toNormedField to NormedField F
+                [Meta.synthInstance.tryResolve] ✅️ NormedField F ≟ NormedField F
+                [Meta.synthInstance] ✅️ new goal NontriviallyNormedField F
+                  [Meta.synthInstance.instances] #[@DenselyNormedField.toNontriviallyNormedField]
+              [Meta.synthInstance.apply] ✅️ apply @DenselyNormedField.toNontriviallyNormedField to NontriviallyNormedField
+                    F
+                [Meta.synthInstance.tryResolve] ✅️ NontriviallyNormedField F ≟ NontriviallyNormedField F
+              [Meta.synthInstance.apply] ✅️ apply @NonUnitalNormedCommRing.toNonUnitalSeminormedCommRing to NonUnitalSeminormedCommRing
+                    F
+                [Meta.synthInstance.tryResolve] ✅️ NonUnitalSeminormedCommRing F ≟ NonUnitalSeminormedCommRing F
+                [Meta.synthInstance] ✅️ new goal NonUnitalNormedCommRing F
+                  [Meta.synthInstance.instances] #[@NormedCommRing.toNonUnitalNormedCommRing]
+              [Meta.synthInstance.apply] ✅️ apply @NormedCommRing.toNonUnitalNormedCommRing to NonUnitalNormedCommRing F
+                [Meta.synthInstance.tryResolve] ✅️ NonUnitalNormedCommRing F ≟ NonUnitalNormedCommRing F
+              [Meta.synthInstance.apply] ✅️ apply @NonUnitalNormedRing.toNonUnitalSeminormedRing to NonUnitalSeminormedRing
+                    F
+                [Meta.synthInstance.tryResolve] ✅️ NonUnitalSeminormedRing F ≟ NonUnitalSeminormedRing F
+                [Meta.synthInstance] ✅️ new goal NonUnitalNormedRing F
+                  [Meta.synthInstance.instances] #[@NormedRing.toNonUnitalNormedRing, @NonUnitalNormedCommRing.toNonUnitalNormedRing]
+              [Meta.synthInstance.apply] ✅️ apply @NonUnitalNormedCommRing.toNonUnitalNormedRing to NonUnitalNormedRing
+                    F
+                [Meta.synthInstance.tryResolve] ✅️ NonUnitalNormedRing F ≟ NonUnitalNormedRing F
+              [Meta.synthInstance.apply] ✅️ apply @NormedRing.toNonUnitalNormedRing to NonUnitalNormedRing F
+                [Meta.synthInstance.tryResolve] ✅️ NonUnitalNormedRing F ≟ NonUnitalNormedRing F
+                [Meta.synthInstance] ✅️ new goal NormedRing F
+                  [Meta.synthInstance.instances] #[@NormedDivisionRing.toNormedRing, @NormedCommRing.toNormedRing]
+              [Meta.synthInstance.apply] ✅️ apply @NormedCommRing.toNormedRing to NormedRing F
+                [Meta.synthInstance.tryResolve] ✅️ NormedRing F ≟ NormedRing F
+              [Meta.synthInstance.apply] ✅️ apply @NormedDivisionRing.toNormedRing to NormedRing F
+                [Meta.synthInstance.tryResolve] ✅️ NormedRing F ≟ NormedRing F
+                [Meta.synthInstance] ✅️ new goal NormedDivisionRing F
+                  [Meta.synthInstance.instances] #[@NormedField.toNormedDivisionRing]
+              [Meta.synthInstance.apply] ✅️ apply @NormedField.toNormedDivisionRing to NormedDivisionRing F
+                [Meta.synthInstance.tryResolve] ✅️ NormedDivisionRing F ≟ NormedDivisionRing F
+              [Meta.synthInstance.apply] ✅️ apply @SeminormedRing.toNonUnitalSeminormedRing to NonUnitalSeminormedRing F
+                [Meta.synthInstance.tryResolve] ✅️ NonUnitalSeminormedRing F ≟ NonUnitalSeminormedRing F
+                [Meta.synthInstance] ✅️ new goal SeminormedRing F
+                  [Meta.synthInstance.instances] #[@NormedRing.toSeminormedRing, @SeminormedCommRing.toSeminormedRing]
+              [Meta.synthInstance.apply] ✅️ apply @SeminormedCommRing.toSeminormedRing to SeminormedRing F
+                [Meta.synthInstance.tryResolve] ✅️ SeminormedRing F ≟ SeminormedRing F
+              [Meta.synthInstance.apply] ✅️ apply @NormedRing.toSeminormedRing to SeminormedRing F
+                [Meta.synthInstance.tryResolve] ✅️ SeminormedRing F ≟ SeminormedRing F
+              [Meta.synthInstance.apply] ✅️ apply @NormedAddCommGroup.toSeminormedAddCommGroup to SeminormedAddCommGroup
+                    F
+                [Meta.synthInstance.tryResolve] ✅️ SeminormedAddCommGroup F ≟ SeminormedAddCommGroup F
+                [Meta.synthInstance] ✅️ new goal NormedAddCommGroup F
+                  [Meta.synthInstance.instances] #[@NonUnitalNormedRing.toNormedAddCommGroup, inst✝²]
+              [Meta.synthInstance.apply] ✅️ apply inst✝² to NormedAddCommGroup F
+                [Meta.synthInstance.tryResolve] ✅️ NormedAddCommGroup F ≟ NormedAddCommGroup F
+                [Meta.synthInstance.answer] ✅️ NormedAddCommGroup F
+              [Meta.synthInstance.resume] ✅️ propagating NormedAddCommGroup
+                    F to subgoal NormedAddCommGroup F of SeminormedAddCommGroup F
+                [Meta.synthInstance.resume] size: 1
+                [Meta.synthInstance.answer] ✅️ SeminormedAddCommGroup F
+              [Meta.synthInstance] result NormedAddCommGroup.toSeminormedAddCommGroup
+          [Meta.synthInstance.answer] ✅️ SeminormedAddCommGroup ↥K
+        [Meta.synthInstance.resume] ✅️ propagating SeminormedAddCommGroup
+              ↥K to subgoal SeminormedAddCommGroup ↥K of SeminormedAddGroup ↥K
+          [Meta.synthInstance.resume] size: 1
+          [Meta.synthInstance.answer] ✅️ SeminormedAddGroup ↥K
+        [Meta.synthInstance] result SeminormedAddCommGroup.toSeminormedAddGroup
+  [Meta.synthInstance.apply] ❌️ apply @SeminormedGroup.toContinuousENorm to ContinuousENorm ↥K
+    [Meta.synthInstance.tryResolve] ❌️ ContinuousENorm ↥K ≟ ContinuousENorm ?m.51
+      [Meta.synthInstance] ❌️ SeminormedGroup ↥K
+        [Meta.synthInstance] ✅️ new goal SeminormedGroup ↥K
+          [Meta.synthInstance.instances] #[@SubgroupClass.seminormedGroup, @NormedGroup.toSeminormedGroup, @SeminormedCommGroup.toSeminormedGroup]
+        [Meta.synthInstance.apply] ✅️ apply @SeminormedCommGroup.toSeminormedGroup to SeminormedGroup ↥K
+          [Meta.synthInstance.tryResolve] ✅️ SeminormedGroup ↥K ≟ SeminormedGroup ↥K
+          [Meta.synthInstance] ✅️ new goal SeminormedCommGroup ↥K
+            [Meta.synthInstance.instances] #[@SubgroupClass.seminormedCommGroup, @NormedCommGroup.toSeminormedCommGroup]
+        [Meta.synthInstance.apply] ✅️ apply @NormedCommGroup.toSeminormedCommGroup to SeminormedCommGroup ↥K
+          [Meta.synthInstance.tryResolve] ✅️ SeminormedCommGroup ↥K ≟ SeminormedCommGroup ↥K
+          [Meta.synthInstance] ✅️ new goal NormedCommGroup ↥K
+            [Meta.synthInstance.instances] #[@SubgroupClass.normedCommGroup]
+        [Meta.synthInstance.apply] ✅️ apply @SubgroupClass.normedCommGroup to NormedCommGroup ↥K
+          [Meta.synthInstance.tryResolve] ✅️ NormedCommGroup ↥K ≟ NormedCommGroup ↥K
+          [Meta.synthInstance] ✅️ no instances for NormedCommGroup F
+            [Meta.synthInstance.instances] #[]
+        [Meta.synthInstance.apply] ✅️ apply @SubgroupClass.seminormedCommGroup to SeminormedCommGroup ↥K
+          [Meta.synthInstance.tryResolve] ✅️ SeminormedCommGroup ↥K ≟ SeminormedCommGroup ↥K
+          [Meta.synthInstance] ✅️ new goal SeminormedCommGroup F
+            [Meta.synthInstance.instances] #[@NormedCommGroup.toSeminormedCommGroup]
+        [Meta.synthInstance.apply] ✅️ apply @NormedCommGroup.toSeminormedCommGroup to SeminormedCommGroup F
+          [Meta.synthInstance.tryResolve] ✅️ SeminormedCommGroup F ≟ SeminormedCommGroup F
+          [Meta.synthInstance] ✅️ no instances for NormedCommGroup F
+            [Meta.synthInstance.instances] #[]
+        [Meta.synthInstance.apply] ✅️ apply @NormedGroup.toSeminormedGroup to SeminormedGroup ↥K
+          [Meta.synthInstance.tryResolve] ✅️ SeminormedGroup ↥K ≟ SeminormedGroup ↥K
+          [Meta.synthInstance] ✅️ new goal NormedGroup ↥K
+            [Meta.synthInstance.instances] #[@SubgroupClass.normedGroup, @NormedCommGroup.toNormedGroup]
+        [Meta.synthInstance.apply] ✅️ apply @NormedCommGroup.toNormedGroup to NormedGroup ↥K
+          [Meta.synthInstance.tryResolve] ✅️ NormedGroup ↥K ≟ NormedGroup ↥K
+        [Meta.synthInstance.apply] ✅️ apply @SubgroupClass.normedGroup to NormedGroup ↥K
+          [Meta.synthInstance.tryResolve] ✅️ NormedGroup ↥K ≟ NormedGroup ↥K
+          [Meta.synthInstance] ✅️ new goal NormedGroup F
+            [Meta.synthInstance.instances] #[@NormedCommGroup.toNormedGroup]
+        [Meta.synthInstance.apply] ✅️ apply @NormedCommGroup.toNormedGroup to NormedGroup F
+          [Meta.synthInstance.tryResolve] ✅️ NormedGroup F ≟ NormedGroup F
+          [Meta.synthInstance] ✅️ no instances for NormedCommGroup F
+            [Meta.synthInstance.instances] #[]
+        [Meta.synthInstance.apply] ✅️ apply @SubgroupClass.seminormedGroup to SeminormedGroup ↥K
+          [Meta.synthInstance.tryResolve] ✅️ SeminormedGroup ↥K ≟ SeminormedGroup ↥K
+          [Meta.synthInstance] ✅️ new goal SeminormedGroup F
+            [Meta.synthInstance.instances] #[@NormedGroup.toSeminormedGroup, @SeminormedCommGroup.toSeminormedGroup]
+        [Meta.synthInstance.apply] ✅️ apply @SeminormedCommGroup.toSeminormedGroup to SeminormedGroup F
+          [Meta.synthInstance.tryResolve] ✅️ SeminormedGroup F ≟ SeminormedGroup F
+        [Meta.synthInstance.apply] ✅️ apply @NormedGroup.toSeminormedGroup to SeminormedGroup F
+          [Meta.synthInstance.tryResolve] ✅️ SeminormedGroup F ≟ SeminormedGroup F
+        [Meta.synthInstance] result <not-available>
+      [Meta.synthInstance] ❌️ SeminormedGroup ↥K
+        [Meta.synthInstance] result <not-available> (cached)
+      [Meta.synthInstance] ❌️ SeminormedGroup ↥K
+        [Meta.synthInstance] result <not-available> (cached)
+      [Meta.synthInstance] ❌️ SeminormedGroup ↥K
+        [Meta.synthInstance] result <not-available> (cached)
+  [Meta.synthInstance.apply] ✅️ apply @ESeminormedMonoid.toContinuousENorm to ContinuousENorm ↥K
+    [Meta.synthInstance.tryResolve] ✅️ ContinuousENorm ↥K ≟ ContinuousENorm ↥K
+    [Meta.synthInstance] ✅️ new goal ESeminormedMonoid ↥K
+      [Meta.synthInstance.instances] #[@ENormedMonoid.toESeminormedMonoid, @ESeminormedCommMonoid.toESeminormedMonoid]
+  [Meta.synthInstance.apply] ✅️ apply @ESeminormedCommMonoid.toESeminormedMonoid to ESeminormedMonoid ↥K
+    [Meta.synthInstance.tryResolve] ✅️ ESeminormedMonoid ↥K ≟ ESeminormedMonoid ↥K
+    [Meta.synthInstance] ✅️ new goal ESeminormedCommMonoid ↥K
+      [Meta.synthInstance.instances] #[@ENormedCommMonoid.toESeminormedCommMonoid]
+  [Meta.synthInstance.apply] ✅️ apply @ENormedCommMonoid.toESeminormedCommMonoid to ESeminormedCommMonoid ↥K
+    [Meta.synthInstance.tryResolve] ✅️ ESeminormedCommMonoid ↥K ≟ ESeminormedCommMonoid ↥K
+    [Meta.synthInstance] ✅️ new goal ENormedCommMonoid ↥K
+      [Meta.synthInstance.instances] #[@NormedCommGroup.toENormedCommMonoid]
+  [Meta.synthInstance.apply] ❌️ apply @NormedCommGroup.toENormedCommMonoid to ENormedCommMonoid ↥K
+    [Meta.synthInstance.tryResolve] ❌️ ENormedCommMonoid ↥K ≟ ENormedCommMonoid ?m.60
+      [Meta.synthInstance] ❌️ NormedCommGroup ↥K
+        [Meta.synthInstance] ✅️ new goal NormedCommGroup ↥K
+          [Meta.synthInstance.instances] #[@SubgroupClass.normedCommGroup]
+        [Meta.synthInstance.apply] ✅️ apply @SubgroupClass.normedCommGroup to NormedCommGroup ↥K
+          [Meta.synthInstance.tryResolve] ✅️ NormedCommGroup ↥K ≟ NormedCommGroup ↥K
+          [Meta.synthInstance] ✅️ no instances for NormedCommGroup F
+            [Meta.synthInstance.instances] #[]
+        [Meta.synthInstance] result <not-available>
+      [Meta.synthInstance] ❌️ NormedCommGroup ↥K
+        [Meta.synthInstance] result <not-available> (cached)
+      [Meta.synthInstance] ❌️ NormedCommGroup ↥K
+        [Meta.synthInstance] result <not-available> (cached)
+      [Meta.synthInstance] ❌️ NormedCommGroup ↥K
+        [Meta.synthInstance] result <not-available> (cached)
+  [Meta.synthInstance.apply] ✅️ apply @ENormedMonoid.toESeminormedMonoid to ESeminormedMonoid ↥K
+    [Meta.synthInstance.tryResolve] ✅️ ESeminormedMonoid ↥K ≟ ESeminormedMonoid ↥K
+    [Meta.synthInstance] ✅️ new goal ENormedMonoid ↥K
+      [Meta.synthInstance.instances] #[@ENormedCommMonoid.toENormedMonoid, @NormedGroup.toENormedMonoid]
+  [Meta.synthInstance.apply] ❌️ apply @NormedGroup.toENormedMonoid to ENormedMonoid ↥K
+    [Meta.synthInstance.tryResolve] ❌️ ENormedMonoid ↥K ≟ ENormedMonoid ?m.57
+      [Meta.synthInstance] ❌️ NormedGroup ↥K
+        [Meta.synthInstance] ✅️ new goal NormedGroup ↥K
+          [Meta.synthInstance.instances] #[@SubgroupClass.normedGroup, @NormedCommGroup.toNormedGroup]
+        [Meta.synthInstance.apply] ✅️ apply @NormedCommGroup.toNormedGroup to NormedGroup ↥K
+          [Meta.synthInstance.tryResolve] ✅️ NormedGroup ↥K ≟ NormedGroup ↥K
+          [Meta.synthInstance] ✅️ new goal NormedCommGroup ↥K
+            [Meta.synthInstance.instances] #[@SubgroupClass.normedCommGroup]
+        [Meta.synthInstance.apply] ✅️ apply @SubgroupClass.normedCommGroup to NormedCommGroup ↥K
+          [Meta.synthInstance.tryResolve] ✅️ NormedCommGroup ↥K ≟ NormedCommGroup ↥K
+          [Meta.synthInstance] ✅️ no instances for NormedCommGroup F
+            [Meta.synthInstance.instances] #[]
+        [Meta.synthInstance.apply] ✅️ apply @SubgroupClass.normedGroup to NormedGroup ↥K
+          [Meta.synthInstance.tryResolve] ✅️ NormedGroup ↥K ≟ NormedGroup ↥K
+          [Meta.synthInstance] ✅️ new goal NormedGroup F
+            [Meta.synthInstance.instances] #[@NormedCommGroup.toNormedGroup]
+        [Meta.synthInstance.apply] ✅️ apply @NormedCommGroup.toNormedGroup to NormedGroup F
+          [Meta.synthInstance.tryResolve] ✅️ NormedGroup F ≟ NormedGroup F
+          [Meta.synthInstance] ✅️ no instances for NormedCommGroup F
+            [Meta.synthInstance.instances] #[]
+        [Meta.synthInstance] result <not-available>
+      [Meta.synthInstance] ❌️ NormedGroup ↥K
+        [Meta.synthInstance] result <not-available> (cached)
+      [Meta.synthInstance] ❌️ NormedGroup ↥K
+        [Meta.synthInstance] result <not-available> (cached)
+      [Meta.synthInstance] ❌️ NormedGroup ↥K
+        [Meta.synthInstance] result <not-available> (cached)
+  [Meta.synthInstance.apply] ✅️ apply @ENormedCommMonoid.toENormedMonoid to ENormedMonoid ↥K
+    [Meta.synthInstance.tryResolve] ✅️ ENormedMonoid ↥K ≟ ENormedMonoid ↥K
+  [Meta.synthInstance.apply] ✅️ apply @ESeminormedAddMonoid.toContinuousENorm to ContinuousENorm ↥K
+    [Meta.synthInstance.tryResolve] ✅️ ContinuousENorm ↥K ≟ ContinuousENorm ↥K
+    [Meta.synthInstance] ✅️ new goal ESeminormedAddMonoid ↥K
+      [Meta.synthInstance.instances] #[@ENormedAddMonoid.toESeminormedAddMonoid, @ESeminormedAddCommMonoid.toESeminormedAddMonoid]
+  [Meta.synthInstance.apply] ✅️ apply @ESeminormedAddCommMonoid.toESeminormedAddMonoid to ESeminormedAddMonoid ↥K
+    [Meta.synthInstance.tryResolve] ✅️ ESeminormedAddMonoid ↥K ≟ ESeminormedAddMonoid ↥K
+    [Meta.synthInstance] ✅️ new goal ESeminormedAddCommMonoid ↥K
+      [Meta.synthInstance.instances] #[@ENormedAddCommMonoid.toESeminormedAddCommMonoid]
+  [Meta.synthInstance.apply] ✅️ apply @ENormedAddCommMonoid.toESeminormedAddCommMonoid to ESeminormedAddCommMonoid ↥K
+    [Meta.synthInstance.tryResolve] ✅️ ESeminormedAddCommMonoid ↥K ≟ ESeminormedAddCommMonoid ↥K
+    [Meta.synthInstance] ✅️ new goal ENormedAddCommMonoid ↥K
+      [Meta.synthInstance.instances] #[@NormedAddCommGroup.toENormedAddCommMonoid]
+  [Meta.synthInstance.apply] ❌️ apply @NormedAddCommGroup.toENormedAddCommMonoid to ENormedAddCommMonoid ↥K
+    [Meta.synthInstance.tryResolve] ❌️ ENormedAddCommMonoid ↥K ≟ ENormedAddCommMonoid ?m.60
+      [Meta.synthInstance] ✅️ NormedAddCommGroup ↥K
+        [Meta.synthInstance] ✅️ new goal NormedAddCommGroup ↥K
+          [Meta.synthInstance.instances] #[@AddSubgroupClass.normedAddCommGroup, @NonUnitalNormedRing.toNormedAddCommGroup, @Submodule.normedAddCommGroup, inst✝²]
+        [Meta.synthInstance.apply] ❌️ apply inst✝² to NormedAddCommGroup ↥K
+          [Meta.synthInstance.tryResolve] ❌️ NormedAddCommGroup ↥K ≟ NormedAddCommGroup F
+        [Meta.synthInstance.apply] ✅️ apply @Submodule.normedAddCommGroup to NormedAddCommGroup ↥K
+          [Meta.synthInstance.tryResolve] ✅️ NormedAddCommGroup ↥K ≟ NormedAddCommGroup ↥K
+            [Meta.synthInstance] ✅️ Ring ℝ
+              [Meta.synthInstance] result Real.instRing (cached)
+            [Meta.synthInstance] ✅️ NormedAddCommGroup F
+              [Meta.synthInstance] ✅️ new goal NormedAddCommGroup F
+                [Meta.synthInstance.instances] #[@NonUnitalNormedRing.toNormedAddCommGroup, inst✝²]
+              [Meta.synthInstance.apply] ✅️ apply inst✝² to NormedAddCommGroup F
+                [Meta.synthInstance.tryResolve] ✅️ NormedAddCommGroup F ≟ NormedAddCommGroup F
+                [Meta.synthInstance.answer] ✅️ NormedAddCommGroup F
+              [Meta.synthInstance] result inst✝²
+          [Meta.synthInstance.answer] ✅️ NormedAddCommGroup ↥K
+        [Meta.synthInstance] result K.normedAddCommGroup
+  [Meta.synthInstance.apply] ✅️ apply @ENormedAddMonoid.toESeminormedAddMonoid to ESeminormedAddMonoid ↥K
+    [Meta.synthInstance.tryResolve] ✅️ ESeminormedAddMonoid ↥K ≟ ESeminormedAddMonoid ↥K
+    [Meta.synthInstance] ✅️ new goal ENormedAddMonoid ↥K
+      [Meta.synthInstance.instances] #[@ENormedAddCommMonoid.toENormedAddMonoid, @NormedAddGroup.toENormedAddMonoid]
+  [Meta.synthInstance.apply] ❌️ apply @NormedAddGroup.toENormedAddMonoid to ENormedAddMonoid ↥K
+    [Meta.synthInstance.tryResolve] ❌️ ENormedAddMonoid ↥K ≟ ENormedAddMonoid ?m.57
+      [Meta.synthInstance] ✅️ NormedAddGroup ↥K
+        [Meta.synthInstance] ✅️ new goal NormedAddGroup ↥K
+          [Meta.synthInstance.instances] #[@AddSubgroupClass.normedAddGroup, @NormedAddCommGroup.toNormedAddGroup]
+        [Meta.synthInstance.apply] ✅️ apply @NormedAddCommGroup.toNormedAddGroup to NormedAddGroup ↥K
+          [Meta.synthInstance.tryResolve] ✅️ NormedAddGroup ↥K ≟ NormedAddGroup ↥K
+          [Meta.synthInstance] ✅️ new goal NormedAddCommGroup ↥K
+            [Meta.synthInstance.instances] #[@AddSubgroupClass.normedAddCommGroup, @NonUnitalNormedRing.toNormedAddCommGroup, @Submodule.normedAddCommGroup, inst✝²]
+        [Meta.synthInstance.apply] ❌️ apply inst✝² to NormedAddCommGroup ↥K
+          [Meta.synthInstance.tryResolve] ❌️ NormedAddCommGroup ↥K ≟ NormedAddCommGroup F
+        [Meta.synthInstance.apply] ✅️ apply @Submodule.normedAddCommGroup to NormedAddCommGroup ↥K
+          [Meta.synthInstance.tryResolve] ✅️ NormedAddCommGroup ↥K ≟ NormedAddCommGroup ↥K
+            [Meta.synthInstance] ✅️ Ring ℝ
+              [Meta.synthInstance] result Real.instRing (cached)
+            [Meta.synthInstance] ✅️ NormedAddCommGroup F
+              [Meta.synthInstance] result inst✝² (cached)
+          [Meta.synthInstance.answer] ✅️ NormedAddCommGroup ↥K
+        [Meta.synthInstance.resume] ✅️ propagating NormedAddCommGroup
+              ↥K to subgoal NormedAddCommGroup ↥K of NormedAddGroup ↥K
+          [Meta.synthInstance.resume] size: 1
+          [Meta.synthInstance.answer] ✅️ NormedAddGroup ↥K
+        [Meta.synthInstance] result NormedAddCommGroup.toNormedAddGroup
+  [Meta.synthInstance.apply] ✅️ apply @ENormedAddCommMonoid.toENormedAddMonoid to ENormedAddMonoid ↥K
+    [Meta.synthInstance.tryResolve] ✅️ ENormedAddMonoid ↥K ≟ ENormedAddMonoid ↥K
+  [Meta.synthInstance] result <not-available>

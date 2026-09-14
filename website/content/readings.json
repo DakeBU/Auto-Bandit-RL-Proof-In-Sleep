@@ -2334,7 +2334,7 @@
           "local_status": {
             "status": "planned",
             "label": "Frozen full target; prerequisites only",
-            "boundary": "Affine minorant, nonclosed convex barycenter membership, finite negative part and full Jensen are still required."
+            "boundary": "Affine minorant, finite negative part and full Jensen remain required; the barycenter dependency is mapped separately."
           }
         }
       ],
@@ -2363,6 +2363,105 @@
         ],
         "takeaway": "The representation preserves both finite signed integrals and legitimate infinite results.",
         "boundary": "Neither counting-measure tests nor finite integral compatibility close the required Jensen theorem."
+      }
+    },
+    {
+      "slug": "online-barycenter",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10, 21 June 2026",
+        "sections": "Section2.1.1, Theorem2.9 proof dependency (full Jensen still unproved)",
+        "pages": "printedp11/PDF23",
+        "pdf_page": 23,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "convex set s",
+          "meaning": "The set need not be closed and may have empty ambient interior."
+        },
+        {
+          "term": "supporting functional",
+          "meaning": "A nonzero continuous linear map bounded above on s by its value at the mean."
+        },
+        {
+          "term": "kernel lift",
+          "meaning": "The centered random vector belongs to the functional kernel almost surely, a strictly lower-dimensional space."
+        }
+      ],
+      "algorithm": {
+        "title": "Prove actual convex-set membership",
+        "kind": "finite-dimensional induction proof",
+        "steps": [
+          {
+            "title": "Locate the mean in the closure",
+            "detail": "Reuse the existing closed-convex-set integral theorem for the closure only."
+          },
+          {
+            "title": "Use a supporting hyperplane",
+            "detail": "If the mean were outside s, separate at the mean and prove the functional is constant almost surely."
+          },
+          {
+            "title": "Reduce dimension",
+            "detail": "Lift the centered vector into the proper kernel, preserve its integral, and apply induction to the preimage of s."
+          }
+        ]
+      },
+      "teaching_route": [
+        "BanditRL.OnlineConvex.supporting_functional_ae_eq_mean",
+        "BanditRL.OnlineConvex.supporting_functional_at_closure",
+        "BanditRL.OnlineConvex.integral_mem_convex_finiteDimensional"
+      ],
+      "source_theorems": [
+        {
+          "label": "Theorem2.9: Jensen target (not yet proved)",
+          "pages": "printedp11",
+          "pdf_page": 23,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "f(\\mathbb E X)\\le\\mathbb E[f(X)]",
+          "fallback": "A measurable convex extended-real loss at the mean is bounded by its possibly infinite expected loss.",
+          "plain": "Only X is assumed integrable; loss integrability and a closed domain are not assumed.",
+          "relationship": "The exact source Theorem2.9 remains unproved. This shared module proves an arbitrary-convex barycenter dependency used for its epigraph argument; it is not an additional numbered theorem attributed to the book.",
+          "contract": {
+            "model": "Finite-dimensional real random vectors under a probability law.",
+            "assumptions": "Measurable convex loss never negative infinity; measurable integrable X lies in the effective domain almost surely.",
+            "parameters": "Arbitrary probability space and finite dimension.",
+            "regret": "An expectation inequality, not a regret bound.",
+            "guarantee": "The required source endpoint allows positive-infinite expected loss and must prove finite negative part."
+          },
+          "local_status": {
+            "status": "planned",
+            "label": "Barycenter dependency compiled; Jensen unproved",
+            "boundary": "Affine minorant, finite negative part and the full Jensen inequality/canaries remain required."
+          }
+        }
+      ],
+      "worked_example": {
+        "title": "A nonclosed ray in a line",
+        "intro": "Choose (1,0) and (3,0) with equal probability. The convex set consists of (x,0) with x>0.",
+        "steps": [
+          {
+            "title": "Keep the set nonclosed",
+            "detail": "The origin is missing; the public canary proves this set is not closed.",
+            "math": "s=\\{(x,0):x>0\\}",
+            "fallback": "The ray lies in a proper line of the plane."
+          },
+          {
+            "title": "Compute the actual mean",
+            "detail": "The probability law is verified and its vector integral is (2,0).",
+            "math": "\\mathbb E X=(2,0)",
+            "fallback": "The two support vectors are distinct."
+          },
+          {
+            "title": "Instantiate the public theorem",
+            "detail": "The theorem concludes membership in the original ray, not merely the closed ray.",
+            "math": "\\mathbb E X\\in s",
+            "fallback": "The source interface accepts a nonclosed lower-dimensional convex set."
+          }
+        ],
+        "takeaway": "Finite-dimensional convexity suffices for mean membership, even without closedness.",
+        "boundary": "This barycenter dependency is proved; the full extended-real Jensen terminal remains required."
       }
     }
   ]

@@ -1,0 +1,7 @@
+# Arbitrary-convex finite-dimensional barycenter v1
+
+Exact terminal from online-jensen-v2, an essential epigraph dependency for Orabona Theorem2.9 p.11/PDF23. Probability measure, integrable finite-dimensional random vector and a.e. membership in convex s imply its Bochner mean lies in s itself, not just closure s. No closedness, nonempty interior or finite support assumed. Empty sets/dimension-zero cases remain governed by the explicit hypotheses.
+
+Three integrated headers are byte-identical to the previously frozen support/separation/parent targets. The integration probe compiled both support bodies and deliberately failed only at the final terminal. This is not a compiled barycenter proof. Separate section scopes preserve the earlier assumptions; integration-context.md records review. Initial support bodies came from compiled scratch, with public canary/axioms/graph still needed here.
+
+DAG: mean in closure via existing closed-set theorem; finite-dimensional separator at mean; a.e. equality of supporting functional; center and lift X into the proper kernel; preserve integrability and zero mean; strong induction on finite dimension; translate the zero kernel mean back into s. A supplied barycenter conclusion or a closedness assumption cannot replace this chain. Public canaries must include a nonclosed convex set and lower-dimensional support. All ordinary ABRL gates remain mandatory. Same-model GPT-6 Astra/medium sequential roles, not external review. No whole Jensen/Chapter2 completion.
