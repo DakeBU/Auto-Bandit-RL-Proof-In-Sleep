@@ -1,0 +1,49 @@
+tmp/convex-extended-frozen-v2.lean:28:2: error: frozen target, not proof
+E : Type u_1
+inst✝¹ : AddCommGroup E
+inst✝ : Module ℝ E
+V : Set E
+⊢ Convex ℝ V ↔ ∀ x ∈ V, ∀ y ∈ V, ∀ (θ : ℝ), 0 < θ → θ < 1 → θ • x + (1 - θ) • y ∈ V
+tmp/convex-extended-frozen-v2.lean:32:2: error: frozen target, not proof
+E : Type u_1
+inst✝¹ : AddCommGroup E
+inst✝ : Module ℝ E
+f : E → EReal
+hf : IsConvexExtended f
+⊢ Convex ℝ (effectiveDomain f)
+tmp/convex-extended-frozen-v2.lean:36:2: error: frozen target, not proof
+E : Type u_1
+inst✝¹ : AddCommGroup E
+inst✝ : Module ℝ E
+V : Set E
+⊢ effectiveDomain (extendedIndicator V) = V
+tmp/convex-extended-frozen-v2.lean:40:2: error: frozen target, not proof
+E : Type u_1
+inst✝¹ : AddCommGroup E
+inst✝ : Module ℝ E
+V : Set E
+⊢ IsConvexExtended (extendedIndicator V) ↔ Convex ℝ V
+tmp/convex-extended-frozen-v2.lean:44:2: error: frozen target, not proof
+E : Type u_1
+inst✝¹ : AddCommGroup E
+inst✝ : Module ℝ E
+f : E → EReal
+hbot : ∀ (x : E), f x ≠ ⊥
+⊢ realEpigraph f = {p | p.1 ∈ effectiveDomain f ∧ (f p.1).toReal ≤ p.2}
+tmp/convex-extended-frozen-v2.lean:48:2: error: frozen target, not proof
+E : Type u_1
+inst✝¹ : AddCommGroup E
+inst✝ : Module ℝ E
+f : E → EReal
+hbot : ∀ (x : E), f x ≠ ⊥
+⊢ IsConvexExtended f ↔ ConvexOn ℝ (effectiveDomain f) fun x => (f x).toReal
+tmp/convex-extended-frozen-v2.lean:55:2: error: frozen target, not proof
+E : Type u_1
+inst✝¹ : AddCommGroup E
+inst✝ : Module ℝ E
+f : E → EReal
+hbot : ∀ (x : E), f x ≠ ⊥
+hdom : Convex ℝ (effectiveDomain f)
+⊢ IsConvexExtended f ↔
+    ∀ x ∈ effectiveDomain f,
+      ∀ y ∈ effectiveDomain f, ∀ (θ : ℝ), 0 < θ → θ < 1 → f (θ • x + (1 - θ) • y) ≤ ↑θ * f x + ↑(1 - θ) * f y

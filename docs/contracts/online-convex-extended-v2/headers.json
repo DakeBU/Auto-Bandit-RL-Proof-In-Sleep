@@ -1,0 +1,10 @@
+{
+  "definition_2_2": "theorem definition_2_2 (V : Set E) : Convex ℝ V ↔\n    ∀ x ∈ V, ∀ y ∈ V, ∀ θ : ℝ, 0 < θ → θ < 1 → θ • x + (1 - θ) • y ∈ V",
+  "convex_effectiveDomain": "theorem convex_effectiveDomain (f : E → EReal) (hf : IsConvexExtended f) :\n    Convex ℝ (effectiveDomain f)",
+  "effectiveDomain_indicator": "theorem effectiveDomain_indicator (V : Set E) :\n    effectiveDomain (extendedIndicator V) = V",
+  "convex_indicator_iff": "theorem convex_indicator_iff (V : Set E) :\n    IsConvexExtended (extendedIndicator V) ↔ Convex ℝ V",
+  "realEpigraph_toReal": "theorem realEpigraph_toReal (f : E → EReal) (hbot : ∀ x, f x ≠ ⊥) :\n    realEpigraph f = {p : E × ℝ | p.1 ∈ effectiveDomain f ∧ (f p.1).toReal ≤ p.2}",
+  "convexExtended_iff_toReal": "theorem convexExtended_iff_toReal (f : E → EReal) (hbot : ∀ x, f x ≠ ⊥) :\n    IsConvexExtended f ↔ ConvexOn ℝ (effectiveDomain f) (fun x => (f x).toReal)",
+  "theorem_2_4": "theorem theorem_2_4 (f : E → EReal) (hbot : ∀ x, f x ≠ ⊥)\n    (hdom : Convex ℝ (effectiveDomain f)) :\n    IsConvexExtended f ↔ ∀ x ∈ effectiveDomain f, ∀ y ∈ effectiveDomain f,\n      ∀ θ : ℝ, 0 < θ → θ < 1 →\n        f (θ • x + (1 - θ) • y) ≤ (θ : EReal) * f x + ((1 - θ : ℝ) : EReal) * f y",
+  "convex_add_indicator": "theorem convex_add_indicator (f : E → EReal) (hbot : ∀ x, f x ≠ ⊥)\n    (hf : IsConvexExtended f) (V : Set E) (hV : Convex ℝ V) :\n    IsConvexExtended (fun x => f x + extendedIndicator V x)"
+}

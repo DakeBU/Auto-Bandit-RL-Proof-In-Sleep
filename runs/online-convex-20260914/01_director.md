@@ -1,0 +1,1 @@
+Next dependency-ready foundation: extended-real epigraph definitions and Theorem2.4. Preserve minus infinity in the general definition, positive infinity off the effective domain, and source open lambda endpoints. No arbitrary real-valued replacement. Later closed/proper/subgradient/Jensen targets remain under source review.

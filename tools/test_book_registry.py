@@ -122,6 +122,18 @@ class BookRegistryTests(unittest.TestCase):
         self.assertIn("teaching:online-ogd", next(b for b in self.config["books"]
                       if b["id"] == "online-learning")["chapter_refs"])
 
+    def test_extended_convexity_reuses_the_shared_registry(self):
+        registry = self.registry()
+        nodes = membership_index(registry)
+        chapter = next(c for c in registry["chapters"] if c["id"] == "teaching:online-convex")
+        for name in ["effectiveDomain", "IsConvexExtended", "convex_effectiveDomain",
+                     "convex_add_indicator", "theorem_2_4"]:
+            key = "declaration:BanditRL.OnlineConvex." + name
+            self.assertIn(key, chapter["node_ids"])
+            self.assertEqual(["online-learning"], nodes[key]["books"])
+        scope = next(c for c in self.chapters if c["slug"] == "online-convex")
+        self.assertIn("not completion of all Chapter 2", scope["completion_definition"])
+
     def test_preview_badge_cannot_borrow_evidence_from_another_declaration(self):
         source = ('<details class="declaration" id="a"><summary>'
                   '<span class="status source">Source indexed</span></summary></details>'

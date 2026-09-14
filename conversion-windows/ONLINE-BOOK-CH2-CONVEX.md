@@ -1,0 +1,1 @@
+Source V convex iff open-lambda segment closure; mathlib Convex includes endpoints via a proved equivalence. EReal retains both infinities; realEpigraph uses real heights. See docs/contracts/online-convex-extended-v2/contract.md and exact headers/context.
