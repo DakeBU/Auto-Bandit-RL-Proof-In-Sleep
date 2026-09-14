@@ -1,0 +1,5 @@
+# Read-only next-source audit: Example2.15
+
+Source printedp15-16/PDF27-28: unconstrained linear prediction, Huber loss with threshold delta, piecewise gradient and bounded features imply bounded gradients; constant horizon-selected eta proportional1/sqrtT gives vanishing average regret versus every fixed predictor. The full-space domain must not gain a bounded-diameter premise. Use the existing fixed-step distance-based endpoint; preserve comparator distance and actual causal recursion.
+
+No Huber-loss API found in pinned mathlib/project. Bretagnolle-Huber search hits concern testing inequalities and are irrelevant. Pinned APIs available: HasDerivWithinAt.union (Deriv/Basic.lean407) for joining matching derivatives and Monotone.convexOn_univ_of_deriv (Convex/Deriv.lean187). A future contract must make the threshold's nonnegative interpretation explicit and handle delta0 rather than silently lose that degeneracy. Smooth joining at both thresholds, convexity, exact vector gradient, uniform norm bound and actual unbounded-domain OGD rate all remain required. No target frozen or proof claimed by this retrieval note.

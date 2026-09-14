@@ -1,0 +1,7 @@
+# Example2.14 scratch candidate
+
+Source printedp15/PDF27 and existing OGD API reviewed before freezing six headers and the interval-domain prefix. Header probe deliberately failed six bodies only. Leaf01 genuinely compiled all six bodies. Canary01 failed only after norm_num split interval membership into two inequalities; canary02 explicitly passes those components and compiles. All six source/helper targets and three canary endpoints have only standard axioms. Frozen native checks and exact definition/context prefix pass.
+
+Projection is the actual Hilbert project selected in the existing library, identified with min(max(z,0),1) by its variational characterization, separately handling below0, above1 and inside interval. Squared loss is globally convex and differentiable, its actual gradient is2(x-y), and interval feasibility implies gradient norm<=2. The actual step equals the source clamp. equation_2_1 is instantiated with D=1,G=2 and eta=1/(2sqrtT), using feasibility of the same iterate, deriving regret<=2sqrtT for all feasible comparators. No assumed regularity/gradient/regret consumer.
+
+Canary uses labels1 then0, initial1/2 and step1 to exercise actual projection at both endpoints. A separate horizon-four source instance uses tuned step1/4 and bound4. It does not conflate the active-projection step1 trajectory with the tuned trajectory. Public integration/source registry/full gates remain required. Same-model GPT-6 Astra/medium sequential roles, not independent external review. No Chapter2 completion.

@@ -2659,6 +2659,105 @@
         "takeaway": "Input integrability and finite sample losses do not force finite expected loss.",
         "boundary": "Additional public canaries cover a finite nonconstant law and a nonclosed lower-dimensional loss domain."
       }
+    },
+    {
+      "slug": "online-ftl-failure",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10, 21 June 2026",
+        "sections": "Section2.1.2, Example2.10 (Failure of FTL)",
+        "pages": "printedp12/PDF24",
+        "pdf_page": 24,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "prefix coefficient",
+          "meaning": "The sum of exactly the coefficients revealed before the current round."
+        },
+        {
+          "term": "initial prediction x0",
+          "meaning": "Any point in[-1,1]; source x1 is Lean x0."
+        },
+        {
+          "term": "comparator0",
+          "meaning": "The fixed zero decision has zero loss on every round."
+        }
+      ],
+      "algorithm": {
+        "title": "Actual linear-loss FTL",
+        "kind": "causal recursive predictor",
+        "steps": [
+          {
+            "title": "Accumulate past coefficients",
+            "detail": "Start at0 and add only the newly revealed coefficient."
+          },
+          {
+            "title": "Choose the historical minimizer",
+            "detail": "Use x0 on the first round. Later choose1 for a negative cumulative coefficient, otherwise-1; ties have zero historical loss."
+          },
+          {
+            "title": "Evaluate the alternating stream",
+            "detail": "The initial coefficient is-1/2; later coefficients alternate1,-1 and each later incurred loss equals1."
+          }
+        ]
+      },
+      "teaching_route": [
+        "BanditRL.OnlineLearning.linearFTLPredict_prefix",
+        "BanditRL.OnlineLearning.linearFTLPredict_minimizes",
+        "BanditRL.OnlineLearning.example_2_10"
+      ],
+      "source_theorems": [
+        {
+          "label": "Example2.10: Failure of FTL",
+          "pages": "printedp12",
+          "pdf_page": 24,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "R_T(0)=T-1-\\frac{x_1}{2}\\ge T-\\frac32",
+          "fallback": "Every later round incurs loss1; the initial loss is minus half the initial decision.",
+          "plain": "An actual FTL strategy can have linear regret on convex linear losses.",
+          "relationship": "The same implemented predictor is proved causal, feasible and a historical-loss minimizer. The source alternation and regret are derived from that predictor, not assumed.",
+          "contract": {
+            "model": "Linear losses z_t x on V=[-1,1].",
+            "assumptions": "Any initial x1 in V; T>=1; z1=-1/2, then alternating+1,-1.",
+            "parameters": "All positive integer horizons and feasible initial choices.",
+            "regret": "Exact regret against the fixed comparator0.",
+            "guarantee": "T-1-x1/2, hence at least T-3/2."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Causal FTL and exact source counterexample",
+            "boundary": "Example2.10 only; Chapter2 remains incomplete."
+          }
+        }
+      ],
+      "worked_example": {
+        "title": "Six rounds from initial decision1/3",
+        "intro": "Use the source alternating coefficient stream and initialize the actual predictor at1/3.",
+        "steps": [
+          {
+            "title": "Include the arbitrary initial loss",
+            "detail": "The first coefficient is-1/2, so the initial loss is-1/6.",
+            "math": "\\ell_1(x_1)=-\\frac16",
+            "fallback": "The first round is not silently discarded."
+          },
+          {
+            "title": "Follow the past minimizer",
+            "detail": "The next predictions are1,-1,1,-1,1; every later loss is1.",
+            "math": "x_2=1,\\quad x_3=-1",
+            "fallback": "The public canary computes the actual initial predictions."
+          },
+          {
+            "title": "Compute exact regret",
+            "detail": "Comparator0 has zero loss, giving total regret29/6.",
+            "math": "R_6(0)=5-\\frac16=\\frac{29}{6}",
+            "fallback": "The public canary instantiates the source theorem at a nonzero initial value."
+          }
+        ],
+        "takeaway": "Convexity alone does not protect unregularized FTL from alternating losses.",
+        "boundary": "The example contrasts with the separately proved projected OGD guarantees; it is not a lower bound against every online algorithm."
+      }
     }
   ]
 }

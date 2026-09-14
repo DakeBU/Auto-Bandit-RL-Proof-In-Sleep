@@ -1,0 +1,4 @@
+{
+  "prefix": "import BanditRLProof.OnlineLearningFTL\nimport Mathlib.Tactic\n\nnoncomputable section\nopen Set Finset\nnamespace BanditRL.OnlineLearning\n\ndef prefixCoefficient (z : \u2115 \u2192 \u211d) : \u2115 \u2192 \u211d\n  | 0 => 0\n  | t+1 => prefixCoefficient z t + z t\n\ndef linearFTLPredict (z : \u2115 \u2192 \u211d) (x0 : \u211d) (t : \u2115) : \u211d :=\n  if t = 0 then x0 else if prefixCoefficient z t < 0 then 1 else -1\n\ndef failureCoefficient (t : \u2115) : \u211d :=\n  if t = 0 then -(1/2) else if t % 2 = 1 then 1 else -1\n\n",
+  "sha256": "0342a0185fa5a61a20d12814ffb768adcdb601755c5eadcbf9e732806545e51d"
+}
