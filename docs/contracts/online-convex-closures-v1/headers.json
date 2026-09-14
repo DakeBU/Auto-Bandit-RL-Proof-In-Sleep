@@ -1,0 +1,5 @@
+{
+  "convex_comp_affine": "theorem convex_comp_affine {E F : Type*} [AddCommGroup E] [Module ℝ E]\n    [AddCommGroup F] [Module ℝ F] (f : F → EReal) (hf : IsConvexExtended f)\n    (A : E →ᵃ[ℝ] F) : IsConvexExtended (fun x => f (A x))",
+  "convex_iSup": "theorem convex_iSup {ι E : Type*} [AddCommGroup E] [Module ℝ E]\n    (f : ι → E → EReal) (hf : ∀ i, IsConvexExtended (f i)) :\n    IsConvexExtended (fun x => ⨆ i, f i x)",
+  "convex_comp_monotone": "theorem convex_comp_monotone {E : Type*} [AddCommGroup E] [Module ℝ E]\n    (f : E → ℝ) (g : ℝ → ℝ)\n    (hf : IsConvexExtended (fun x => (f x : EReal)))\n    (hg : IsConvexExtended (fun x => (g x : EReal))) (hmono : Monotone g) :\n    IsConvexExtended (fun x => (g (f x) : EReal))"
+}

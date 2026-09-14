@@ -2125,6 +2125,57 @@
       "dependencies": [
         "BanditRL.OnlineConvex.convexExtended_coe_iff"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.convex_comp_affine",
+      "title": "Convexity under affine precomposition",
+      "chapter": "online-convex-closures",
+      "featured": false,
+      "teaching_order": 1,
+      "plain": "An arbitrary affine change of input preserves extended-real epigraph convexity.",
+      "math": "\\(x\\mapsto f(Ax)\\)",
+      "intuition": "An arbitrary affine change of input preserves extended-real epigraph convexity.",
+      "why": "An exact main-text closure operation used to recognize convex losses.",
+      "position": "Orabona v10 printed page10/PDF22, unnumbered closure bullets.",
+      "proof_idea": "Take the epigraph preimage under the product affine map preserving heights.",
+      "lean_notes": "No extra domain/image-convexity, finite-value or nonempty-index hypotheses are introduced. Mathlib API use is recorded in the proof explanation and compiled dependency evidence; this teaching link points to the shared epigraph definition.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.realEpigraph"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.convex_iSup",
+      "title": "Convexity of pointwise suprema",
+      "chapter": "online-convex-closures",
+      "featured": false,
+      "teaching_order": 2,
+      "plain": "The supremum of an arbitrary convex family is convex, including an empty index.",
+      "math": "\\(x\\mapsto\\sup_i f_i(x)\\)",
+      "intuition": "The supremum of an arbitrary convex family is convex, including an empty index.",
+      "why": "An exact main-text closure operation used to recognize convex losses.",
+      "position": "Orabona v10 printed page10/PDF22, unnumbered closure bullets.",
+      "proof_idea": "Identify the real-height epigraph with the intersection of all input epigraphs.",
+      "lean_notes": "No extra domain/image-convexity, finite-value or nonempty-index hypotheses are introduced. Mathlib API use is recorded in the proof explanation and compiled dependency evidence; this teaching link points to the shared epigraph definition.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.realEpigraph"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.convex_comp_monotone",
+      "title": "Monotone convex composition",
+      "chapter": "online-convex-closures",
+      "featured": false,
+      "teaching_order": 3,
+      "plain": "Real convex f and globally nondecreasing convex g have convex composition.",
+      "math": "\\(x\\mapsto g(f(x))\\)",
+      "intuition": "Real convex f and globally nondecreasing convex g have convex composition.",
+      "why": "An exact main-text closure operation used to recognize convex losses.",
+      "position": "Orabona v10 printed page10/PDF22, unnumbered closure bullets.",
+      "proof_idea": "Combine f convexity, global monotonicity, and g convexity through the finite embedding iff.",
+      "lean_notes": "No extra domain/image-convexity, finite-value or nonempty-index hypotheses are introduced.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.convexExtended_coe_iff"
+      ]
     }
   ]
 }

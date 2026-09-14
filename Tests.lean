@@ -78,3 +78,4 @@ import Tests.OnlineLearningChapterOneCanary
 import Tests.OnlineGradientDescentVariableCanary
 import Tests.OnlineConvexExtendedCanary
 import Tests.OnlineConvexExamplesCanary
+import Tests.OnlineConvexClosuresCanary

@@ -1,0 +1,1 @@
+Frozen headers/context: docs/contracts/online-convex-closures-v1. No target/assumption/conclusion changes during proving; revisions require a new reviewed version. Edit only the new module/canary/scoped evidence and shared root/registry integration.

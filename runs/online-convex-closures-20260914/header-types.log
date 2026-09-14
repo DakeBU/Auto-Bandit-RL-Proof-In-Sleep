@@ -1,0 +1,29 @@
+tmp/online-convex-closures-draft.lean:10:2: error: draft closure header, not proof
+E : Type u_1
+F : Type u_2
+inst✝³ : AddCommGroup E
+inst✝² : Module ℝ E
+inst✝¹ : AddCommGroup F
+inst✝ : Module ℝ F
+f : F → EReal
+hf : IsConvexExtended f
+A : E →ᵃ[ℝ] F
+⊢ IsConvexExtended fun x => f (A x)
+tmp/online-convex-closures-draft.lean:15:2: error: draft closure header, not proof
+ι : Type u_1
+E : Type u_2
+inst✝¹ : AddCommGroup E
+inst✝ : Module ℝ E
+f : ι → E → EReal
+hf : ∀ (i : ι), IsConvexExtended (f i)
+⊢ IsConvexExtended fun x => ⨆ i, f i x
+tmp/online-convex-closures-draft.lean:22:2: error: draft closure header, not proof
+E : Type u_1
+inst✝¹ : AddCommGroup E
+inst✝ : Module ℝ E
+f : E → ℝ
+g : ℝ → ℝ
+hf : IsConvexExtended fun x => ↑(f x)
+hg : IsConvexExtended fun x => ↑(g x)
+hmono : Monotone g
+⊢ IsConvexExtended fun x => ↑(g (f x))

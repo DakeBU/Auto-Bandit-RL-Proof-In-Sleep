@@ -1,0 +1,1 @@
+Select three dependency-ready closure bullets. Preserve the fourth linear-combination obligation; primary-source upper-addition interpretation is documented but not yet proved. Freeze exact infinities/index/affine-map/global-monotonicity semantics.
