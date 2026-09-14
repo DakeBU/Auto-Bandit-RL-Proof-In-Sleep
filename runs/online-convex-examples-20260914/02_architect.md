@@ -1,0 +1,1 @@
+Project duplicate search found no existing names. Pinned mathlib convexOn_univ_norm inspected; accepted epigraph/toReal bridge inspected. Prove embedding iff via exact full-domain equality and finite toReal; then norm reuse and affine inner-product identity. Nonzero slope/vector canaries and empty/zero edge cases required. Header probe is deliberately unproved, not compiled.

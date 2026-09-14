@@ -1,0 +1,7 @@
+# Affine and norm examples v1
+
+Source Orabona arXiv1912.13213v10 printed p10/PDF22, hash cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17. Examples2.5/2.6 are required main-text examples despite the exercise proof of norm convexity. Three exact headers and import context frozen; draft header probe has precisely three intentional unproved-body errors and no other errors. This is target elaboration, not proof completion.
+
+Source intent: all affine functions x -> inner z x+b and all norms are convex according to the same real-height extended-real epigraph definition. No boundedness, finite horizon, nonzero slope, or strict positivity is required. General real normed/inner-product spaces instantiate the source finite-dimensional setting. The embedding bridge is an iff for every real f on the whole space, with finite values explicitly embedded; it does not claim a finite-part equivalence for functions with infinities.
+
+DAG: accepted convexExtended_iff_toReal + finite coercions -> convexExtended_coe_iff -> both exact examples. Norm branch reuses pinned mathlib convexOn_univ_norm. Affine branch proves the inner-product affine identity. First ready leaf is the embedding bridge. Terminal types and context fixed; allowed edits are only this module, canary, scoped run/contracts/obligations and subsequent shared root/registry integration. Single lower route, sequential same-model GPT-6 Astra/medium roles; not external review. All previous contracts remain unchanged. All other Chapter2 obligations and whole-book Goal remain active.

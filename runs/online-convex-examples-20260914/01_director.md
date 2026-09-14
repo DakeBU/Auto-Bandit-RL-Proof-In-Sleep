@@ -1,0 +1,1 @@
+Select finite affine/norm examples as dependency-ready main-text obligations. Preserve unresolved general mixed-infinity closure audit; do not replace it with these examples. Three source-faithful targets reviewed and frozen in v1.

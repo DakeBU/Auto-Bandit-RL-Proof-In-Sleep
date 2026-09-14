@@ -1,0 +1,1 @@
+Frozen target/context: docs/contracts/online-convex-examples-v1. No premise, quantifier, conclusion or source boundary changes during proving. Changes require a new reviewed version. Only the new module/canary/scoped evidence and shared registry integration are editable.

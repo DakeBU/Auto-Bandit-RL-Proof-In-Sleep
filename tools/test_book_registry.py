@@ -127,7 +127,7 @@ class BookRegistryTests(unittest.TestCase):
         nodes = membership_index(registry)
         chapter = next(c for c in registry["chapters"] if c["id"] == "teaching:online-convex")
         for name in ["effectiveDomain", "IsConvexExtended", "convex_effectiveDomain",
-                     "convex_add_indicator", "theorem_2_4"]:
+                     "convex_add_indicator", "theorem_2_4", "example_2_5", "example_2_6"]:
             key = "declaration:BanditRL.OnlineConvex." + name
             self.assertIn(key, chapter["node_ids"])
             self.assertEqual(["online-learning"], nodes[key]["books"])

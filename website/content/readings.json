@@ -1844,10 +1844,10 @@
         ]
       },
       "teaching_route": [
-        "BanditRL.OnlineConvex.definition_2_2",
         "BanditRL.OnlineConvex.convex_indicator_iff",
-        "BanditRL.OnlineConvex.convex_add_indicator",
-        "BanditRL.OnlineConvex.theorem_2_4"
+        "BanditRL.OnlineConvex.theorem_2_4",
+        "BanditRL.OnlineConvex.example_2_5",
+        "BanditRL.OnlineConvex.example_2_6"
       ],
       "source_theorems": [
         {
@@ -1892,6 +1892,28 @@
             "status": "compiled",
             "label": "Constraint foundation",
             "boundary": "General weighted combinations, affine composition and supremum closure remain separate required obligations."
+          }
+        },
+        {
+          "label": "Examples 2.5 and 2.6: affine functions and norms",
+          "pages": "printed p. 10",
+          "pdf_page": 22,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "f(x)=\\langle z,x\\rangle+b,\\qquad h(x)=\\|x\\|",
+          "fallback": "Affine functions and norms are convex.",
+          "plain": "Finite real functions embed into the same extended-real epigraph definition.",
+          "relationship": "Exact source instances: BanditRL.OnlineConvex.example_2_5 and example_2_6; the real embedding iff is proved once in the shared library.",
+          "contract": {
+            "model": "Real inner-product spaces for affine functions; real normed spaces for norms. Both include finite-dimensional Euclidean space.",
+            "assumptions": "Arbitrary affine slope and constant; any norm. No boundedness or nonzero-value assumption.",
+            "parameters": "All points in the whole space.",
+            "regret": "This is a convex-analysis equivalence, not a regret bound.",
+            "guarantee": "Epigraph convexity of each source example."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Scoped convexity proof",
+            "boundary": "Only the named foundation package is covered; remaining Chapter 2 results and exercises are not claimed complete."
           }
         }
       ],
