@@ -1,3 +1,9 @@
+## Final candidate evidence (supersedes earlier pending-session entries)
+
+All seven required source groups have compiled interfaces. Public root/Tests passed 8998 jobs; all 24 statement fences and nine context prefixes match. The final graph includes empiricalMean_unique and all seven required direct proof-value dependency edges; no sorryAx was found. Final site validation passed (9779 Lean links, 130 highlights, 18 Mermaid diagrams). Same-model semantic review found no remaining mathematical obligation within the enumerated Chapter 1 scope; this is not independent external review.
+
+Acceptance is withheld: the complete local harness failed with nine errors (eight OpenSSH temporary-key errors and one child termination timeout), with seven other tests skipped. No test was removed or mocked. GitHub reads work, but the create-blob write was rejected because approval is required and this environment uses approval policy never. No new remote branch or PR exists. WSL is not installed and Docker is not on PATH; no local Linux gate is available from the inspected environment. The protected temporary keys and shared links are retained. The total Goal remains active; Chapter 2 proving has not started.
+
 # Chapter 1 completion audit before acceptance
 
 Status: candidate, not accepted. Canonical source v10 printed pp1-6 (PDF13-18); historical p6-7 and independent exercises1.1/1.2 separated. The audit does not treat chapter2 or chapters3-16 as complete.

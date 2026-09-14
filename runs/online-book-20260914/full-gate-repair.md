@@ -7,3 +7,5 @@ A narrowly scoped rerun of the positive signature test with TEMP/TMP under this 
 Next: retain local failures and obtain full CI evidence when the candidate package is ready for a reviewable PR. Continue remaining mathematical/semantic gates; do not mark chapter accepted now. No harness code was modified to bypass the failures.
 
 Uniqueness audit repair: original scratch used a missing order lemma. Public empiricalMean_unique was frozen and proved using positivity and the exact squared-loss decomposition; focused check passed. Root and Tests must rebuild with this new theorem and its public canary.
+
+Follow-up: the uniqueness root rebuild and final dependency export both passed. Publication through the authenticated connector was rejected before write by approval policy never. WSL reports not installed; no Docker executable was found. Neither remote CI nor a local Linux full harness has been run. The recorded Windows failures remain unresolved.
