@@ -1,0 +1,1 @@
+Whole-book Goal active. Chapter2 partial. Branch codex/research-online-convex-closures stacked on PR120 exact 4bf9714e6279de920f52df4ca081e56d252cdcbe. Source p10 reread in previous packet and exact three draft headers elaborated. No merge/deploy.

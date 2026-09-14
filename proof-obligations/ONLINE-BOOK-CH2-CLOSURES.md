@@ -1,0 +1,1 @@
+Three source closure endpoints accepted locally after all gates, including full-gate02 and site05. See runs/online-convex-closures-20260914/acceptance-decision.md. Scoped PR delivery pending. The fourth nonnegative-combination bullet remains required and incomplete; no Chapter2 or total Goal completion.

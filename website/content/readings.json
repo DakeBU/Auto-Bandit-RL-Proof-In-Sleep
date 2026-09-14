@@ -1907,7 +1907,7 @@
             "model": "Real inner-product spaces for affine functions; real normed spaces for norms. Both include finite-dimensional Euclidean space.",
             "assumptions": "Arbitrary affine slope and constant; any norm. No boundedness or nonzero-value assumption.",
             "parameters": "All points in the whole space.",
-            "regret": "This is a convex-analysis equivalence, not a regret bound.",
+            "regret": "These are exact convexity examples, not regret bounds.",
             "guarantee": "Epigraph convexity of each source example."
           },
           "local_status": {
@@ -1942,6 +1942,105 @@
         ],
         "takeaway": "The theorem handles genuine infinite values outside the domain without replacing them by zero.",
         "boundary": "The public Lean canary proves this instance and checks the separate bottom-valued definition and empty-domain boundary. It does not establish the remaining Chapter 2 results."
+      }
+    },
+    {
+      "slug": "online-convex-closures",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10, 21 June 2026",
+        "sections": "Section2.1.1, three unnumbered closure operations",
+        "pages": "printedp10/PDF22",
+        "pdf_page": 22,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "dom f",
+          "meaning": "Points where f is strictly below positive infinity; negative infinity is included."
+        },
+        {
+          "term": "epigraph",
+          "meaning": "Pairs (x,r) with real height r at least f(x). Infinite heights are not coordinates."
+        },
+        {
+          "term": "iota_V",
+          "meaning": "Zero on V, positive infinity outside V."
+        }
+      ],
+      "algorithm": {
+        "title": "Recognize a convex construction",
+        "kind": "mathematical closure rules",
+        "steps": [
+          {
+            "title": "Affine input",
+            "detail": "Pull the epigraph back along an affine map that leaves heights unchanged."
+          },
+          {
+            "title": "Supremum",
+            "detail": "Intersect all the epigraphs, including an empty indexed family."
+          },
+          {
+            "title": "Monotone composition",
+            "detail": "For real f and g, combine convexity with global monotonicity of g."
+          }
+        ]
+      },
+      "teaching_route": [
+        "BanditRL.OnlineConvex.convex_comp_affine",
+        "BanditRL.OnlineConvex.convex_iSup",
+        "BanditRL.OnlineConvex.convex_comp_monotone"
+      ],
+      "source_theorems": [
+        {
+          "label": "Three convexity-preserving operations",
+          "pages": "printed p. 10",
+          "pdf_page": 22,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "f\\circ A,\\qquad\\sup_i f_i,\\qquad g\\circ f",
+          "fallback": "Affine precomposition, pointwise supremum, and monotone real convex composition preserve convexity.",
+          "plain": "These cover three of the four printed closure bullets.",
+          "relationship": "Exact shared declarations: convex_comp_affine, convex_iSup and convex_comp_monotone in BanditRL.OnlineConvex. The nonnegative-combination bullet remains required separately.",
+          "contract": {
+            "model": "Extended-real epigraph convexity for affine maps and suprema; real-valued functions for monotone composition.",
+            "assumptions": "Arbitrary affine map and arbitrary index; convex f and g with globally nondecreasing g in the real composition case.",
+            "parameters": "All input points; empty family included.",
+            "regret": "These are convexity-preservation implications, not regret bounds.",
+            "guarantee": "Convexity of the three named constructions."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Scoped convexity proof",
+            "boundary": "Nonnegative combinations and later Chapter2 results are not claimed complete."
+          }
+        }
+      ],
+      "worked_example": {
+        "title": "Intersect two constraints by a supremum",
+        "steps": [
+          {
+            "title": "Keep both constraints",
+            "detail": "The supremum is finite only where both input indicators are zero.",
+            "math": "\\sup\\{\\iota_{[0,\\infty)}(x),\\iota_{(-\\infty,2]}(x)\\}",
+            "fallback": "Both constraints must hold."
+          },
+          {
+            "title": "Check a feasible value",
+            "detail": "At x=1 both indicators are zero, so the supremum is zero.",
+            "math": "h(1)=0",
+            "fallback": "One is feasible."
+          },
+          {
+            "title": "Check an excluded value",
+            "detail": "At x=3 the upper constraint fails, so the supremum is positive infinity.",
+            "math": "h(3)=+\\infty",
+            "fallback": "Three is excluded."
+          }
+        ],
+        "takeaway": "An epigraph intersection gives convexity of the resulting constrained loss.",
+        "boundary": "The public canary verifies these distinct values and convexity, and separately instantiates empty-index and noninjective-affine cases. The remaining fourth closure bullet is not claimed complete.",
+        "intro": "Take the zero-or-positive-infinity indicators of x>=0 and x<=2."
       }
     }
   ]

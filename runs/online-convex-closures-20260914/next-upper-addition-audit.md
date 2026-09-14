@@ -1,0 +1,7 @@
+# Fourth required closure operation: draft
+
+The nonnegative linear-combination bullet remains required. Prior packet source evidence: Rockafellar author-hosted Conjugate Duality and Optimization printedp6/PDF17 explicitly uses top-dominant mixed-infinity addition for convex functions, with cached SHA25629d57ab07857b8270c175343746c77b4138f2db6161ae20174a0bba076991b0e. Interpreting Orabona's silence using this convention remains explicit and requires contract review; ordinary EReal addition has the documented counterexample.
+
+Proposed named upperAdd(a,b)=-(-a+-b), preserving finite addition and making top dominate. Eight exact draft headers elaborated with exactly eight intentional unproved-body errors and no parser/type errors: finite/top rules, upperAdd<=finite iff two finite upper witnesses with bounded sum, epigraph convexity of pointwise upperAdd, positive-scalar finite-height equivalence, nonnegative scaling, and the full nonnegative-combination endpoint. This is not proof or acceptance evidence. The zero-coefficient case retains mathlib zero-times-infinity=zero and must be tested explicitly.
+
+Local APIs inspected: EReal.rec (bottom/real/top), EReal.coe_mul_top_of_pos, EReal.coe_mul_bot_of_pos, EReal coercion order and real le_div_iff. Proposed first ready leaves are the finite/top algebra rules and positive-scalar comparison. Exact new native fences and context must precede proofs; no change to existing accepted contracts. General mixed-infinity, empty-domain and zero-weight canaries required.
