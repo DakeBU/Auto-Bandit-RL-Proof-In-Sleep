@@ -84,3 +84,5 @@ import Tests.OnlineConvexFirstOrderCanary
 import Tests.OnlineConvexOptimalityCanary
 import Tests.OnlineExpectationCanary
 import Tests.OnlineConvexBarycenterCanary
+
+import Tests.OnlineConvexMinorantCanary

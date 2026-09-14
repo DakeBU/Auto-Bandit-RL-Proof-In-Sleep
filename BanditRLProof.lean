@@ -626,3 +626,5 @@ import BanditRLProof.OnlineConvexFirstOrder
 import BanditRLProof.OnlineConvexOptimality
 import BanditRLProof.OnlineExpectation
 import BanditRLProof.OnlineConvexBarycenter
+
+import BanditRLProof.OnlineConvexMinorant

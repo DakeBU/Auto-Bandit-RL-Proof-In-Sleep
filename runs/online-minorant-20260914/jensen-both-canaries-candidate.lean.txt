@@ -1,0 +1,183 @@
+import BanditRLProof.OnlineExpectation
+import BanditRLProof.OnlineConvexMinorant
+import BanditRLProof.OnlineConvexExamples
+import Mathlib.Probability.Distributions.Geometric
+import Mathlib.Probability.ProbabilityMassFunction.Integrals
+import Mathlib.Analysis.SpecificLimits.Normed
+import Mathlib.Analysis.Convex.Mul
+
+noncomputable section
+open Set Filter MeasureTheory
+open scoped ENNReal
+namespace BanditRL.OnlineConvex
+variable {Ω : Type*} [MeasurableSpace Ω]
+variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDimensional ℝ E]
+variable [MeasurableSpace E] [BorelSpace E]
+
+theorem jensen_negativeIntegral_ne_top (μ : Measure Ω) [IsProbabilityMeasure μ]
+    (f : E → EReal) (hbot : ∀ x, f x ≠ ⊥) (hf : IsConvexExtended f)
+    (hfm : Measurable f) (X : Ω → E) (hXm : Measurable X) (hX : Integrable X μ)
+    (hdom : ∀ᵐ ω ∂μ, X ω ∈ effectiveDomain f) :
+    negativeIntegral μ (fun ω => f (X ω)) ≠ ∞ := by
+  classical
+  obtain ⟨ω, hω⟩ := hdom.exists
+  obtain ⟨a, b, hab⟩ := convex_affine_minorant f hbot hf ⟨X ω, hω⟩
+  have hi : Integrable (fun ω => a (X ω) + b) μ := (a.integrable_comp hX).add (integrable_const b)
+  have hbound : negativeIntegral μ (fun ω => f (X ω)) ≤
+      negativeIntegral μ (fun ω => ((a (X ω) + b : ℝ) : EReal)) := by
+    apply lintegral_mono
+    intro ω
+    exact EReal.toENNReal_le_toENNReal (EReal.neg_le_neg_iff.mpr (hab (X ω)))
+  exact ne_top_of_le_ne_top (negativeIntegral_coe_ne_top μ _ hi) hbound
+theorem theorem_2_9 (μ : Measure Ω) [IsProbabilityMeasure μ]
+    (f : E → EReal) (hbot : ∀ x, f x ≠ ⊥) (hf : IsConvexExtended f)
+    (hfm : Measurable f) (X : Ω → E) (hXm : Measurable X) (hX : Integrable X μ)
+    (hdom : ∀ᵐ ω ∂μ, X ω ∈ effectiveDomain f) :
+    f (∫ ω, X ω ∂μ) ≤ signedExpectation μ (fun ω => f (X ω)) := by
+  classical
+  have hn := jensen_negativeIntegral_ne_top μ f hbot hf hfm X hXm hX hdom
+  by_cases hp : positiveIntegral μ (fun ω => f (X ω)) = ∞
+  · rw [signedExpectation_eq_top μ _ hp hn]
+    exact le_top
+  · let Y : Ω → ℝ := fun ω => (f (X ω)).toReal
+    have hYm : Measurable Y := (hfm.comp hXm).ereal_toReal
+    have hcoe : ∀ᵐ ω ∂μ, (Y ω : EReal) = f (X ω) := by
+      filter_upwards [hdom] with ω hω
+      exact EReal.coe_toReal (ne_of_lt hω) (hbot (X ω))
+    have hpos : (∫⁻ ω, ENNReal.ofReal (Y ω) ∂μ) ≠ ∞ := by
+      have he : (∫⁻ ω, ENNReal.ofReal (Y ω) ∂μ) = positiveIntegral μ (fun ω => f (X ω)) := by
+        apply lintegral_congr_ae
+        filter_upwards [hcoe] with ω hω
+        rw [← hω]
+        simp
+      rwa [he]
+    have hneg : (∫⁻ ω, ENNReal.ofReal (-Y ω) ∂μ) ≠ ∞ := by
+      have he : (∫⁻ ω, ENNReal.ofReal (-Y ω) ∂μ) = negativeIntegral μ (fun ω => f (X ω)) := by
+        apply lintegral_congr_ae
+        filter_upwards [hcoe] with ω hω
+        rw [← hω]
+        simp [← EReal.coe_neg]
+      rwa [he]
+    have hip : Integrable (fun ω => max (Y ω) 0) μ := by
+      apply (lintegral_ofReal_ne_top_iff_integrable (hYm.max measurable_const).aestronglyMeasurable
+        (ae_of_all μ (fun ω => le_max_right (Y ω) 0))).mp
+      simpa using hpos
+    have hin : Integrable (fun ω => max (-Y ω) 0) μ := by
+      apply (lintegral_ofReal_ne_top_iff_integrable (hYm.neg.max measurable_const).aestronglyMeasurable
+        (ae_of_all μ (fun ω => le_max_right (-Y ω) 0))).mp
+      simpa using hneg
+    have hY : Integrable Y μ := by
+      convert hip.sub hin using 1
+      ext ω
+      dsimp
+      rcases le_total (Y ω) 0 with h | h <;> simp [max_eq_left, max_eq_right, h, neg_nonneg.mpr, neg_nonpos.mpr] <;> linarith
+    have hepi : ∀ᵐ ω ∂μ, (X ω, Y ω) ∈ realEpigraph f := by
+      filter_upwards [hcoe] with ω hω
+      exact hω.ge
+    have hb := integral_mem_convex_finiteDimensional μ (realEpigraph f) hf
+      (fun ω => (X ω, Y ω)) (hX.prodMk hY) hepi
+    rw [integral_pair hX hY] at hb
+    have hexp : signedExpectation μ (fun ω => f (X ω)) = ((∫ ω, Y ω ∂μ : ℝ) : EReal) := by
+      rw [← signedExpectation_coe_integrable μ Y hY]
+      unfold signedExpectation positiveIntegral negativeIntegral
+      congr 2
+      · apply lintegral_congr_ae
+        filter_upwards [hcoe] with ω hω
+        rw [hω]
+      · apply lintegral_congr_ae
+        filter_upwards [hcoe] with ω hω
+        rw [hω]
+    rw [hexp]
+    exact hb
+end BanditRL.OnlineConvex
+
+noncomputable section
+open MeasureTheory ProbabilityTheory
+open scoped ENNReal
+namespace JensenInfiniteProbe
+
+def law : Measure ℕ := geometricMeasure (p := (3/4 : ℝ)) (by norm_num) (by norm_num)
+instance : IsProbabilityMeasure law := isProbabilityMeasure_geometricMeasure _ _
+def X (n : ℕ) : ℝ := 2 ^ n
+lemma atom (n : ℕ) : law {n} = ENNReal.ofReal ((1/4 : ℝ)^n * (3/4)) := by
+  rw [law, geometricMeasure, PMF.toMeasure_apply_singleton _ _ (measurableSet_singleton _)]
+  change ENNReal.ofReal ((1 - 3/4 : ℝ)^n * (3/4)) = _
+  norm_num
+
+lemma weighted (n : ℕ) : X n * ((1/4 : ℝ)^n * (3/4)) = (1/2 : ℝ)^n * (3/4) := by
+  dsimp [X]
+  rw [← mul_assoc, ← mul_pow]
+  norm_num
+
+lemma X_integrable : Integrable X law := by
+  apply (lintegral_ofReal_ne_top_iff_integrable (by fun_prop)
+    (ae_of_all law (fun n => pow_nonneg (by norm_num : (0:ℝ) ≤ 2) n))).mp
+  rw [lintegral_countable']
+  have hxn (n : ℕ) : (0:ℝ) ≤ X n := pow_nonneg (by norm_num) n
+  simp_rw [atom]
+  have he (n : ℕ) : ENNReal.ofReal (2 ^ n : ℝ) * ENNReal.ofReal ((1/4 : ℝ)^n * (3/4)) = ENNReal.ofReal ((1/2 : ℝ)^n * (3/4)) := by
+    rw [← ENNReal.ofReal_mul (pow_nonneg (by norm_num : (0:ℝ) ≤ 2) n)]
+    exact congrArg ENNReal.ofReal (weighted n)
+  simp_rw [he]
+  exact ((summable_geometric_of_norm_lt_one (by norm_num : ‖(1/2 : ℝ)‖ < 1)).mul_right (3/4)).tsum_ofReal_ne_top
+
+lemma square_infinite : (∫⁻ n, ENNReal.ofReal ((X n)^2) ∂law) = ∞ := by
+  rw [lintegral_countable']
+  have hterm (n : ℕ) : ENNReal.ofReal ((X n)^2) * law {n} = ENNReal.ofReal (3/4 : ℝ) := by
+    rw [atom, ← ENNReal.ofReal_mul (sq_nonneg _)]
+    congr 1
+    dsimp [X]
+    rw [← pow_mul, Nat.mul_comm n 2, pow_mul, ← mul_assoc, ← mul_pow]
+    norm_num
+  simp_rw [hterm]
+  exact ENNReal.tsum_const_eq_top_of_ne_zero (by norm_num)
+
+
+open BanditRL.OnlineConvex
+lemma source_infinite_instance :
+    (((∫ n, X n ∂law)^2 : ℝ) : EReal) ≤ signedExpectation law (fun n => (((X n)^2 : ℝ) : EReal)) ∧
+    signedExpectation law (fun n => (((X n)^2 : ℝ) : EReal)) = ⊤ := by
+  have hf : IsConvexExtended (fun x : ℝ => ((x^2 : ℝ) : EReal)) :=
+    (convexExtended_coe_iff _).mpr (Even.convexOn_pow (by decide : Even 2))
+  have hbot : ∀ x : ℝ, ((x^2 : ℝ) : EReal) ≠ ⊥ := fun x => EReal.coe_ne_bot _
+  have hm : Measurable (fun x : ℝ => ((x^2 : ℝ) : EReal)) := (measurable_id.pow_const 2).coe_real_ereal
+  have hXm : Measurable X := measurable_of_countable _
+  have hd : ∀ᵐ n ∂law, X n ∈ effectiveDomain (fun x : ℝ => ((x^2 : ℝ) : EReal)) :=
+    ae_of_all law (fun n => EReal.coe_lt_top _)
+  refine ⟨theorem_2_9 law _ hbot hf hm X hXm X_integrable hd, ?_⟩
+  apply signedExpectation_eq_top
+  · exact square_infinite
+  · exact jensen_negativeIntegral_ne_top law _ hbot hf hm X hXm X_integrable hd
+#print axioms source_infinite_instance
+end JensenInfiniteProbe
+
+namespace JensenFiniteProbe
+open BanditRL.OnlineConvex
+
+def law : Measure ℝ := (1/2 : ℝ≥0∞) • Measure.dirac 1 + (1/2 : ℝ≥0∞) • Measure.dirac 3
+instance : IsProbabilityMeasure law := by
+  constructor
+  norm_num [law, ENNReal.inv_two_add_inv_two]
+lemma integrable_atom_function (g : ℝ → ℝ) : Integrable g law := by
+  exact ((integrable_dirac (by simp)).smul_measure (by norm_num)).add_measure
+    ((integrable_dirac (by simp)).smul_measure (by norm_num))
+lemma mean : (∫ x : ℝ, x ∂law) = 2 := by
+  rw [law, integral_add_measure, integral_smul_measure, integral_smul_measure]
+  · norm_num
+  · exact (integrable_dirac (by simp)).smul_measure (by norm_num)
+  · exact (integrable_dirac (by simp)).smul_measure (by norm_num)
+lemma square_expectation : signedExpectation law (fun x : ℝ => ((x^2 : ℝ) : EReal)) = (5 : ℝ) := by
+  rw [signedExpectation_coe_integrable law _ (integrable_atom_function _)]
+  congr 1
+  rw [law, integral_add_measure, integral_smul_measure, integral_smul_measure]
+  · norm_num
+  · exact (integrable_dirac (by simp)).smul_measure (by norm_num)
+  · exact (integrable_dirac (by simp)).smul_measure (by norm_num)
+lemma source_finite_instance : (((∫ x : ℝ, x ∂law)^2 : ℝ) : EReal) ≤
+    signedExpectation law (fun x : ℝ => ((x^2 : ℝ) : EReal)) := by
+  apply theorem_2_9 law (fun x : ℝ => ((x^2 : ℝ) : EReal)) (fun x => EReal.coe_ne_bot _) _ _ id measurable_id
+    (integrable_atom_function id) (ae_of_all law (fun x => EReal.coe_lt_top _))
+  · exact (convexExtended_coe_iff _).mpr (Even.convexOn_pow (by decide : Even 2))
+  · exact (measurable_id.pow_const 2).coe_real_ereal
+#print axioms source_finite_instance
+end JensenFiniteProbe

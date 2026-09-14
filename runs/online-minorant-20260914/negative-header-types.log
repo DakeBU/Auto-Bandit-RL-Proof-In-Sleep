@@ -1,0 +1,21 @@
+tmp/online-jensen-negative-draft.lean:17:23: error: Tactic `assumption` failed
+
+Ω : Type u_1
+inst✝⁶ : MeasurableSpace Ω
+E : Type u_2
+inst✝⁵ : NormedAddCommGroup E
+inst✝⁴ : NormedSpace ℝ E
+inst✝³ : FiniteDimensional ℝ E
+inst✝² : MeasurableSpace E
+inst✝¹ : BorelSpace E
+μ : Measure Ω
+inst✝ : IsProbabilityMeasure μ
+f : E → EReal
+hbot : ∀ (x : E), f x ≠ ⊥
+hf : IsConvexExtended f
+hfm : Measurable f
+X : Ω → E
+hXm : Measurable X
+hX : Integrable X μ
+hdom : ∀ᵐ (ω : Ω) ∂μ, X ω ∈ effectiveDomain f
+⊢ False

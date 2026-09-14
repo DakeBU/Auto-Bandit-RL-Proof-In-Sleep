@@ -1,0 +1,6 @@
+{
+  "prefix": "import BanditRLProof.OnlineExpectation\nimport BanditRLProof.OnlineConvexMinorant\n\nnoncomputable section\nopen Set Filter MeasureTheory\nopen scoped ENNReal\nnamespace BanditRL.OnlineConvex\nvariable {\u03a9 : Type*} [MeasurableSpace \u03a9]\nvariable {E : Type*} [NormedAddCommGroup E] [NormedSpace \u211d E] [FiniteDimensional \u211d E]\nvariable [MeasurableSpace E] [BorelSpace E]\n\n",
+  "sha256": "d18af882e76f871eacad09f3d98e4cd5ce15f456958e0e5baa786efd0a236d91",
+  "header": "theorem jensen_negativeIntegral_ne_top (\u03bc : Measure \u03a9) [IsProbabilityMeasure \u03bc]\n    (f : E \u2192 EReal) (hbot : \u2200 x, f x \u2260 \u22a5) (hf : IsConvexExtended f)\n    (hfm : Measurable f) (X : \u03a9 \u2192 E) (hXm : Measurable X) (hX : Integrable X \u03bc)\n    (hdom : \u2200\u1d50 \u03c9 \u2202\u03bc, X \u03c9 \u2208 effectiveDomain f) :\n    negativeIntegral \u03bc (fun \u03c9 => f (X \u03c9)) \u2260 \u221e",
+  "review": "Exact parent header; integration context imports the compiled minorant. No source assumption removed. Candidate only; not public acceptance."
+}

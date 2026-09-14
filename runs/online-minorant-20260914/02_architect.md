@@ -1,0 +1,1 @@
+Epigraph support and Fermat give the interior helper. Relative interior exists in the affine span of the nonempty effective domain; translation identifies its direction space. Pull back the convex epigraph, apply the helper, extend the linear functional, adjust the constant, and handle top values directly.

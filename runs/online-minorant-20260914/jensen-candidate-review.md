@@ -1,0 +1,9 @@
+# Next source terminal scratch candidate
+
+Exact online-jensen-v2 headers remain unchanged. Negative-part leaf02 and full Jensen leaf01 compile as scratch after deliberate failed-body header probes. The negative-part argument derives an affine integrable lower bound and dominates the negative loss part by its negative affine part. Measurability hypotheses are unused there but preserved.
+
+Full endpoint splits on positiveIntegral=top. Negative part is proved finite, so signed expectation is legitimately top in that branch. In the finite branch the a.e. finite loss has measurable real representative Y. Its positive/negative real parts have finite integrals; their difference proves Y integrable. The joint vector (X,Y) is integrable and lies in the real epigraph a.e. The exact arbitrary-convex barycenter terminal and integral_pair give f(EX)<=E Y. A.e. coe equality and signedExpectation_coe_integrable identify the actual signed expectation. No assumed loss integrability, closedness or weakened comparator endpoint.
+
+This is not public integration or acceptance. Required future canaries include a probability law with infinite expected loss and a nondegenerate finite case; full frozen context/native fences, axioms, root/Tests/harness and source Book/site checks remain. No whole Chapter2 claim.
+
+Subsequent scratch evidence: infinite-probe04 compiles a geometric probability law p=3/4, X(n)=2^n integrable, and infinite expected square. jensen-both02 compiles both actual source theorem instances and prints only standard axioms. Finite law is equal atoms1,3, with mean2 and signed square expectation5. Infinite branch uses the exact public-intended Jensen target, not a counting-measure substitute. Still no public integration/full acceptance of these scratch declarations. First failures were normalization/unfolding and explicit real-before-EReal square casts; all rejected logs retained.

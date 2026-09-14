@@ -1,0 +1,1 @@
+Close the frozen global affine-minorant dependency without adding regularity. Prior exact barycenter accepted; interior helper scratch already compiled. No chapter or Jensen completion from this package.

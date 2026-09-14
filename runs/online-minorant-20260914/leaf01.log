@@ -1,0 +1,23 @@
+tmp/online-minorant-global.lean:97:13: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  NormedAddTorsor ?m.101 ↥(affineSpan ℝ (effectiveDomain f))
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+tmp/online-minorant-global.lean:90:69: error: unsolved goals
+E : Type u_1
+inst✝⁴ : NormedAddCommGroup E
+inst✝³ : NormedSpace ℝ E
+inst✝² : FiniteDimensional ℝ E
+inst✝¹ : MeasurableSpace E
+inst✝ : BorelSpace E
+f : E → EReal
+hbot : ∀ (x : E), f x ≠ ⊥
+hf : IsConvexExtended f
+hne : (effectiveDomain f).Nonempty
+S : AffineSubspace ℝ E := affineSpan ℝ (effectiveDomain f)
+hcv : Convex ℝ (effectiveDomain f)
+x : E
+hx : x ∈ intrinsicInterior ℝ (effectiveDomain f)
+p : ↥(affineSpan ℝ (effectiveDomain f))
+hp : p ∈ interior (Subtype.val ⁻¹' effectiveDomain f)
+hpx : ↑p = x
+⊢ ∃ a b, ∀ (x : E), ↑(a x + b) ≤ f x

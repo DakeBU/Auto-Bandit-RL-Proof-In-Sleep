@@ -2433,7 +2433,7 @@
           "local_status": {
             "status": "planned",
             "label": "Barycenter dependency compiled; Jensen unproved",
-            "boundary": "Affine minorant, finite negative part and the full Jensen inequality/canaries remain required."
+            "boundary": "The affine minorant is mapped separately; finite negative part and the full Jensen inequality/canaries remain required."
           }
         }
       ],
@@ -2462,6 +2462,104 @@
         ],
         "takeaway": "Finite-dimensional convexity suffices for mean membership, even without closedness.",
         "boundary": "This barycenter dependency is proved; the full extended-real Jensen terminal remains required."
+      }
+    },
+    {
+      "slug": "online-minorant",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10, 21 June 2026",
+        "sections": "Section2.1.1, Theorem2.9 proof dependency (full Jensen still unproved)",
+        "pages": "printedp11/PDF23",
+        "pdf_page": 23,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "proper function",
+          "meaning": "No negative infinity and nonempty effective domain."
+        },
+        {
+          "term": "affine minorant",
+          "meaning": "A continuous linear functional plus a real constant lies below f everywhere."
+        },
+        {
+          "term": "relative interior",
+          "meaning": "Interior inside the affine span, which can have lower ambient dimension."
+        }
+      ],
+      "algorithm": {
+        "title": "Obtain a global affine lower bound",
+        "kind": "convex-analysis proof",
+        "steps": [
+          {
+            "title": "Separate at a finite epigraph boundary",
+            "detail": "At a domain interior point, the vertical separator coefficient is strictly negative."
+          },
+          {
+            "title": "Use relative interior",
+            "detail": "Pull f back to the affine-span direction space, where the domain has an interior point."
+          },
+          {
+            "title": "Extend the functional",
+            "detail": "Extend the linear part to the ambient finite-dimensional space and adjust the constant."
+          }
+        ]
+      },
+      "teaching_route": [
+        "BanditRL.OnlineConvex.affine_minorant_of_domain_interior",
+        "BanditRL.OnlineConvex.convex_affine_minorant"
+      ],
+      "source_theorems": [
+        {
+          "label": "Theorem2.9: Jensen target (not yet proved)",
+          "pages": "printedp11",
+          "pdf_page": 23,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "f(\\mathbb E X)\\le\\mathbb E[f(X)]",
+          "fallback": "A measurable convex extended-real loss at the mean is bounded by its possibly infinite expected loss.",
+          "plain": "Only X is assumed integrable; loss integrability and a closed domain are not assumed.",
+          "relationship": "The exact source Theorem2.9 remains unproved. This module proves its global affine-minorant dependency, not an additional numbered theorem attributed to the book.",
+          "contract": {
+            "model": "Finite-dimensional real random vectors under a probability law.",
+            "assumptions": "Measurable convex loss never negative infinity; measurable integrable X lies in the effective domain almost surely.",
+            "parameters": "Arbitrary probability space and finite dimension.",
+            "regret": "An expectation inequality, not a regret bound.",
+            "guarantee": "The required source endpoint allows positive-infinite expected loss and must prove finite negative part."
+          },
+          "local_status": {
+            "status": "planned",
+            "label": "Affine minorant compiled; Jensen unproved",
+            "boundary": "Finite negative part and full Jensen inequality/canaries remain required."
+          }
+        }
+      ],
+      "worked_example": {
+        "title": "A varying finite loss on a nonclosed ray",
+        "intro": "On points (x,0) with x>0, set f(x,0)=x; set f to positive infinity elsewhere.",
+        "steps": [
+          {
+            "title": "Check the domain",
+            "detail": "The ray is convex, nonclosed and lies in a proper line.",
+            "math": "\\operatorname{dom}f=\\{(x,0):x>0\\}",
+            "fallback": "No ambient interior assumption is available."
+          },
+          {
+            "title": "Instantiate the global target",
+            "detail": "The public canary obtains a continuous affine minorant and verifies distinct finite values.",
+            "math": "f(1,0)=1,\\quad f(3,0)=3",
+            "fallback": "The function is not constant on its effective domain."
+          },
+          {
+            "title": "Keep outside-domain values explicit",
+            "detail": "At (0,1), the loss is positive infinity; the global affine inequality still applies.",
+            "math": "f(0,1)=+\\infty",
+            "fallback": "The domain restriction is part of the actual extended-real function."
+          }
+        ],
+        "takeaway": "The global theorem handles lower-dimensional nonclosed domains.",
+        "boundary": "This does not yet prove Jensen or negative-part integrability."
       }
     }
   ]
