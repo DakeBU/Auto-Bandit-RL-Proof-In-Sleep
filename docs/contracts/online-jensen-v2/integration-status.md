@@ -1,0 +1,1 @@
+Historical frozen design context retained. All four target headers remain unchanged: barycenter accepted-local PR126, global affine minorant PR127; negative-part and Theorem2.9 source endpoint now publicly integrated/accepted-local under context-only online-jensen-v3, evidence runs/online-jensen-source-20260914. This does not complete Chapter2.

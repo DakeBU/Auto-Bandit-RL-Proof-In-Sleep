@@ -1,0 +1,9 @@
+{
+  "prefixCoefficient_eq_sum": "theorem prefixCoefficient_eq_sum (z : \u2115 \u2192 \u211d) (t : \u2115) :\n    prefixCoefficient z t = \u2211 i \u2208 range t, z i",
+  "linearFTLPredict_prefix": "theorem linearFTLPredict_prefix (z w : \u2115 \u2192 \u211d) (x0 : \u211d) (t : \u2115)\n    (h : \u2200 i < t, z i = w i) : linearFTLPredict z x0 t = linearFTLPredict w x0 t",
+  "linearFTLPredict_mem": "theorem linearFTLPredict_mem (z : \u2115 \u2192 \u211d) (x0 : \u211d) (hx0 : x0 \u2208 Icc (-1 : \u211d) 1)\n    (t : \u2115) : linearFTLPredict z x0 t \u2208 Icc (-1 : \u211d) 1",
+  "linearFTLPredict_minimizes": "theorem linearFTLPredict_minimizes (z : \u2115 \u2192 \u211d) (x0 : \u211d) (t : \u2115)\n    (u : \u211d) (hu : u \u2208 Icc (-1 : \u211d) 1) :\n    (\u2211 i \u2208 range t, z i * linearFTLPredict z x0 t) \u2264 \u2211 i \u2208 range t, z i * u",
+  "failure_prefixCoefficient": "theorem failure_prefixCoefficient (t : \u2115) (ht : 0 < t) :\n    prefixCoefficient failureCoefficient t = if t % 2 = 1 then -(1/2) else (1/2)",
+  "failure_prediction": "theorem failure_prediction (x0 : \u211d) (t : \u2115) (ht : 0 < t) :\n    linearFTLPredict failureCoefficient x0 t = if t % 2 = 1 then 1 else -1",
+  "example_2_10": "theorem example_2_10 (x0 : \u211d) (hx0 : x0 \u2208 Icc (-1 : \u211d) 1) (T : \u2115) (hT : 0 < T) :\n    (\u2211 t \u2208 range T, failureCoefficient t * linearFTLPredict failureCoefficient x0 t) -\n      (\u2211 t \u2208 range T, failureCoefficient t * (0 : \u211d)) = (T : \u211d) - 1 - x0 / 2 \u2227\n    (T : \u211d) - 3/2 \u2264\n      (\u2211 t \u2208 range T, failureCoefficient t * linearFTLPredict failureCoefficient x0 t) -\n        (\u2211 t \u2208 range T, failureCoefficient t * (0 : \u211d))"
+}

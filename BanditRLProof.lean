@@ -628,3 +628,5 @@ import BanditRLProof.OnlineExpectation
 import BanditRLProof.OnlineConvexBarycenter
 
 import BanditRLProof.OnlineConvexMinorant
+
+import BanditRLProof.OnlineJensen

@@ -1,0 +1,7 @@
+# Orabona Example2.10 draft/stabilized v1
+
+Source v10 printedp12/PDF24; exact cached hash recorded in online-jensen-v3. Re-read example: z1=-1/2, later even source rounds+1 and odd rounds-1; arbitrary initial prediction in[-1,1]. FTL minimizes all strictly previous losses. Subsequent predictions alternate+1,-1. Regret versus comparator0 is T-1-x1/2 >=T-3/2 for T>=1.
+
+Lean indices start at0. prefixCoefficient is an actual causal recursive statistic, updated by adding only current z. linearFTLPredict chooses x0 initially and thereafter the endpoint minimizing the prefix linear coefficient (ties choose-1, a valid minimizer). The prefix theorem must prove strict-past dependence for arbitrary sequences. No future-loss chooser or assumed regret identity is allowed. Feasibility and minimization refer to the same implemented predictor. Source specialized coefficient uses index0=-1/2; positive odd indices+1 and even indices-1.
+
+DAG: prefix recurrence=sum -> prefix causality/feasibility/minimization; explicit alternating cumulative coefficient -> actual predictions -> each later loss1 -> exact regret and bound using x0<=1. T>=1; empty horizon not assigned the positive-horizon formula. Seven exact headers and definitions frozen before body search. This is a scratch-only next leaf while source Jensen acceptance is running; public integration/axioms/canary/whole-project/site gates remain mandatory. Same-model GPT-6 Astra/medium roles, no independent review.

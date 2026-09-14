@@ -355,7 +355,7 @@
       "audience": "Readers of Orabona Chapter 2 convex-analysis foundations.",
       "completion_definition": "Definitions 2.2 and 2.3, Theorem 2.4, convexity of the effective domain, the indicator equivalence adding an indicator, and Examples 2.5 (affine functions) and 2.6 (norms). This is not completion of all Chapter 2.",
       "completion_blockers": [
-        "Optimality, Jensen, subgradient theory and later Chapter2 results remain required."
+        "Subgradient theory and later Chapter2 results remain required; optimality and Jensen are mapped separately."
       ],
       "learning_goals": [
         "Keep positive and negative infinity distinct from finite real values.",
@@ -380,7 +380,7 @@
       "audience": "Readers of Orabona Chapter 2 convex-analysis foundations.",
       "completion_definition": "The four Orabona p10 closure operations, with the general nonnegative-combination result using explicitly documented top-dominant convex-analysis addition. This is not completion of all Chapter 2.",
       "completion_blockers": [
-        "Optimality, Jensen, subgradient theory and later Chapter2 results remain required."
+        "Subgradient theory and later Chapter2 results remain required; optimality and Jensen are mapped separately."
       ],
       "learning_goals": [
         "Use affine changes of input without extra map assumptions.",
@@ -406,7 +406,7 @@
       "audience": "Readers of Orabona Chapter 2 convex-analysis foundations.",
       "completion_definition": "Orabona Theorem2.7 and its neighborhood-representation and real supporting-bound dependencies. This is not completion of all Chapter 2.",
       "completion_blockers": [
-        "Theorem2.9 Jensen and later subgradient/linearization obligations remain required."
+        "Later subgradient/linearization obligations remain required; Jensen is mapped separately."
       ],
       "learning_goals": [
         "Interpret gradients using a finite function that agrees locally with the extended-real loss.",
@@ -430,7 +430,7 @@
       "audience": "Readers of Orabona Chapter 2 convex-analysis foundations.",
       "completion_definition": "Orabona Theorem2.8 and the following interior-gradient-zero consequence. This is not completion of all Chapter 2.",
       "completion_blockers": [
-        "Theorem2.9 Jensen and later subgradient/linearization obligations remain required."
+        "Later subgradient/linearization obligations remain required; Jensen is mapped separately."
       ],
       "learning_goals": [
         "Test all feasible directions at a constrained minimum.",
@@ -450,12 +450,11 @@
       "title": "Signed expectation foundations for Jensen",
       "short_title": "Expectation foundations",
       "status": "compiled",
-      "summary": "Positive and negative lintegrals preserve finite and infinite signed integrals. The full Jensen target remains unproved.",
+      "summary": "Positive and negative lintegrals preserve finite and infinite signed integrals. The full source Jensen theorem is mapped separately.",
       "audience": "Readers of Orabona Chapter 2 convex-analysis foundations.",
       "completion_definition": "Seven signed-expectation foundation interfaces only. This is not completion of Orabona Theorem2.9 or all Chapter 2.",
       "completion_blockers": [
-        "Theorem2.9 still needs a convex affine minorant, finite negative part and the full extended-real argument; its barycenter dependency is mapped separately.",
-        "Later Chapter2 subgradient and linearization obligations remain required."
+        "The full source Jensen theorem is mapped separately in Source Jensen; later Chapter2 obligations remain required."
       ],
       "learning_goals": [
         "Represent signed expectations using positive and negative lintegrals.",
@@ -466,8 +465,7 @@
         "BanditRLProof/OnlineExpectation.lean"
       ],
       "open_gaps": [
-        "Full Jensen remains unproved; a total infinity-minus-infinity value is not a valid expectation.",
-        "The current infinite-integral canary uses counting measure, not a probability law, and is only a representation check."
+        "This dependency page does not imply completion of Chapter2."
       ]
     },
     {
@@ -479,8 +477,7 @@
       "audience": "Readers of Orabona Chapter 2 convex-analysis foundations.",
       "completion_definition": "The finite-dimensional convex barycenter dependency and its two supporting-functional interfaces. This is not completion of Orabona Theorem2.9 or all Chapter 2.",
       "completion_blockers": [
-        "The global affine minorant is mapped separately; full Jensen still needs finite negative part and the extended-real expectation argument.",
-        "Later Chapter2 subgradient and linearization obligations remain required."
+        "The full source Jensen theorem is mapped separately in Source Jensen; later Chapter2 obligations remain required."
       ],
       "learning_goals": [
         "Distinguish membership in a convex set from membership only in its closure.",
@@ -491,8 +488,7 @@
         "BanditRLProof/OnlineConvexBarycenter.lean"
       ],
       "open_gaps": [
-        "Full Jensen remains unproved; this closes its arbitrary-convex barycenter dependency.",
-        "No infinite-dimensional nonclosed-set generalization is claimed."
+        "This dependency page does not imply completion of Chapter2."
       ]
     },
     {
@@ -504,7 +500,7 @@
       "audience": "Readers of Orabona Chapter 2 convex-analysis foundations.",
       "completion_definition": "The global affine-minorant dependency and interior-domain helper; not completion of Orabona Theorem2.9 or Chapter2.",
       "completion_blockers": [
-        "Full Jensen still needs finite negative part and the source expectation endpoint."
+        "The full source Jensen theorem is mapped separately in Source Jensen; later Chapter2 obligations remain required."
       ],
       "learning_goals": [
         "Separate the real epigraph at a domain interior point.",
@@ -515,7 +511,30 @@
         "BanditRLProof/OnlineConvexMinorant.lean"
       ],
       "open_gaps": [
-        "The full source Jensen inequality remains unproved."
+        "This dependency page does not imply completion of Chapter2."
+      ]
+    },
+    {
+      "slug": "online-jensen",
+      "title": "Jensen with possibly infinite expected loss",
+      "short_title": "Source Jensen",
+      "status": "compiled",
+      "summary": "Orabona Theorem2.9 with an integrable random vector, a measurable convex extended-real loss and possibly infinite expected loss.",
+      "audience": "Readers of Orabona Chapter 2 convex-analysis foundations.",
+      "completion_definition": "Full Orabona Theorem2.9 and its finite-negative-part prerequisite; not completion of Chapter2 or the whole book.",
+      "completion_blockers": [
+        "Later Chapter2 subgradient, linearization and other source obligations remain required."
+      ],
+      "learning_goals": [
+        "Prove finite negative part from an affine integrable lower bound.",
+        "Distinguish integrable inputs from integrable losses.",
+        "Use epigraph barycenters for the finite case and a legitimate positive-infinite expectation for the other case."
+      ],
+      "module_globs": [
+        "BanditRLProof/OnlineJensen.lean"
+      ],
+      "open_gaps": [
+        "No whole Chapter2 or infinite-dimensional source generalization claimed."
       ]
     }
   ]

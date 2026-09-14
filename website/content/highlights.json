@@ -2465,6 +2465,44 @@
       "dependencies": [
         "BanditRL.OnlineConvex.affine_minorant_of_domain_interior"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.jensen_negativeIntegral_ne_top",
+      "title": "Convex loss has finite negative part",
+      "chapter": "online-jensen",
+      "featured": false,
+      "teaching_order": 1,
+      "plain": "Convex loss has finite negative part",
+      "math": "\\(\\int f(X)^-<\\infty\\)",
+      "intuition": "Dominate the negative loss part by the negative part of an integrable affine lower bound.",
+      "why": "Closes the full source Jensen contract without adding loss integrability.",
+      "position": "Orabona v10 printedp11/PDF23.",
+      "proof_idea": "Dominate the negative loss part by the negative part of an integrable affine lower bound.",
+      "lean_notes": "Measurability and a.e. effective-domain membership are explicit. Shared signed expectation is used only after negative-part finiteness is proved.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.convex_affine_minorant",
+        "BanditRL.OnlineConvex.negativeIntegral_coe_ne_top"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.theorem_2_9",
+      "title": "Jensen with possibly infinite expectation",
+      "chapter": "online-jensen",
+      "featured": false,
+      "teaching_order": 2,
+      "plain": "Jensen with possibly infinite expectation",
+      "math": "\\(f(\\mathbb E X)\\le\\mathbb E[f(X)]\\)",
+      "intuition": "Split on positive-part finiteness; in the finite case take the mean of the actual epigraph-valued random vector.",
+      "why": "Closes the full source Jensen contract without adding loss integrability.",
+      "position": "Orabona v10 printedp11/PDF23.",
+      "proof_idea": "Split on positive-part finiteness; in the finite case take the mean of the actual epigraph-valued random vector.",
+      "lean_notes": "Measurability and a.e. effective-domain membership are explicit. Shared signed expectation is used only after negative-part finiteness is proved.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.jensen_negativeIntegral_ne_top",
+        "BanditRL.OnlineConvex.integral_mem_convex_finiteDimensional",
+        "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+        "BanditRL.OnlineConvex.signedExpectation_eq_top"
+      ]
     }
   ]
 }
