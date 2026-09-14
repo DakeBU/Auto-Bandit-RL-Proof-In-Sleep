@@ -211,6 +211,17 @@ class BookRegistryTests(unittest.TestCase):
         scope = next(c for c in self.chapters if c["slug"] == "online-ftl-failure")
         self.assertIn("not completion of Chapter2", scope["completion_definition"])
 
+    def test_guessing_ogd_source_uses_shared_registry_with_chapter_boundary(self):
+        registry = self.registry()
+        nodes = membership_index(registry)
+        chapter = next(c for c in registry["chapters"] if c["id"] == "teaching:online-guessing-ogd")
+        key = "declaration:BanditRL.OnlineGradientDescent.example_2_14"
+        self.assertIn("declaration:BanditRL.OnlineGradientDescent.guessing_squared_horizon_lower", chapter["node_ids"])
+        self.assertIn(key, chapter["node_ids"])
+        self.assertEqual(["online-learning"], nodes[key]["books"])
+        scope = next(c for c in self.chapters if c["slug"] == "online-guessing-ogd")
+        self.assertIn("not completion of Chapter2", scope["completion_definition"])
+
     def test_preview_badge_cannot_borrow_evidence_from_another_declaration(self):
         source = ('<details class="declaration" id="a"><summary>'
                   '<span class="status source">Source indexed</span></summary></details>'

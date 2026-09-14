@@ -1,0 +1,9 @@
+tmp/online-huber-scalar-draft.lean:5:4: error(lean.dependsOnNoncomputable): failed to compile definition, consider marking it as 'noncomputable' because it depends on 'Real.decidableLE', which is 'noncomputable'
+tmp/online-huber-scalar-draft.lean:12:2: error: header probe only
+delta r : ℝ
+hd : 0 ≤ delta
+⊢ huber delta r =
+    if r ≤ -delta then -delta * r - delta ^ 2 / 2 else if r ≤ delta then r ^ 2 / 2 else delta * r - delta ^ 2 / 2
+tmp/online-huber-scalar-draft.lean:16:2: error: header probe only
+r : ℝ
+⊢ huber 0 r = 0

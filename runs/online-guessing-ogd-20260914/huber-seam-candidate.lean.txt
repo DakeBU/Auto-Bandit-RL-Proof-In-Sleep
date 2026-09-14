@@ -1,0 +1,23 @@
+import Mathlib.Analysis.Calculus.Deriv.Basic
+import Mathlib.Analysis.Calculus.Deriv.Add
+import Mathlib.Tactic
+
+open Set
+namespace BanditRL.OnlineHuber
+
+theorem hasDerivAt_ite_le (f g : ℝ → ℝ) (c d : ℝ)
+    (hf : HasDerivAt f d c) (hg : HasDerivAt g d c) (he : f c = g c) :
+    HasDerivAt (fun x => if x ≤ c then f x else g x) d c := by
+  have hl : HasDerivWithinAt (fun x => if x ≤ c then f x else g x) d (Iic c) c := by
+    apply hf.hasDerivWithinAt.congr
+    · intro x hx
+      simp [show x ≤ c from hx]
+    · simp
+  have hr : HasDerivWithinAt (fun x => if x ≤ c then f x else g x) d (Ioi c) c := by
+    apply hg.hasDerivWithinAt.congr
+    · intro x hx
+      simp [not_le.mpr (show c < x from hx)]
+    · simpa using he
+  have hu := hl.union hr
+  simpa only [Iic_union_Ioi, hasDerivWithinAt_univ] using hu
+end BanditRL.OnlineHuber

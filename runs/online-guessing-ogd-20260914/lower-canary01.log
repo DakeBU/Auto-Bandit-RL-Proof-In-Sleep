@@ -1,0 +1,14 @@
+tmp/online-guessing-lower-canary.lean:73:2: error: Type mismatch: After simplification, term
+  guessing_zero_trajectory 4 (Decidable.byContradiction fun a => first_state._proof_1_1 a) 1
+ has type
+  iterate BanditRL.OnlineGradientDescent.unitInterval (4⁻¹ * 4⁻¹) (fun x x_1 => x_1 ^ 2) 1 1 = 1 - 4⁻¹ * 2⁻¹
+but is expected to have type
+  iterate BanditRL.OnlineGradientDescent.unitInterval 16⁻¹ (fun x x_1 => x_1 ^ 2) 1 1 = 7 / 8
+tmp/online-guessing-lower-canary.lean:77:2: error: Type mismatch
+  h
+has type
+  1 ≤ regret BanditRL.OnlineGradientDescent.unitInterval (1 / 16) (fun x x_1 => x_1 ^ 2) 1 0 64
+but is expected to have type
+  1 ≤ regret BanditRL.OnlineGradientDescent.unitInterval (1 / 16) (fun x x_1 => (x_1 - 0) ^ 2) 1 0 64
+'GuessingLowerProbe.first_state' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'GuessingLowerProbe.source_lower' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]

@@ -1,0 +1,44 @@
+import Mathlib.Tactic
+
+namespace BanditRL.OnlineHuber
+
+noncomputable def huber (delta r : ℝ) : ℝ :=
+  if |r| ≤ delta then r ^ 2 / 2 else delta * (|r| - delta / 2)
+
+theorem huber_three_pieces (delta r : ℝ) (hd : 0 ≤ delta) :
+    huber delta r = if r ≤ -delta then -delta * r - delta ^ 2 / 2
+      else if r ≤ delta then r ^ 2 / 2 else delta * r - delta ^ 2 / 2 := by
+  by_cases hlo : r ≤ -delta
+  · have hr : r ≤ 0 := by linarith
+    by_cases hin : -r ≤ delta
+    · have he : r = -delta := by linarith
+      simp only [huber, abs_of_nonpos hr, if_pos hin, if_pos hlo]
+      rw [he]
+      ring
+    · simp only [huber, abs_of_nonpos hr, if_neg hin, if_pos hlo]
+      ring
+  · by_cases hhi : r ≤ delta
+    · have ha : |r| ≤ delta := abs_le.mpr ⟨le_of_lt (not_le.mp hlo), hhi⟩
+      simp only [huber, if_pos ha, if_neg hlo, if_pos hhi]
+    · have hr : 0 ≤ r := by linarith
+      simp only [huber, abs_of_nonneg hr, if_neg hhi, if_neg hlo]
+      ring
+
+theorem huber_zero (r : ℝ) : huber 0 r = 0 := by
+  unfold huber
+  split_ifs with h
+  · have hr : r = 0 := abs_nonpos_iff.mp h
+    simp [hr]
+  · ring
+end BanditRL.OnlineHuber
+
+namespace HuberScalarProbe
+open BanditRL.OnlineHuber
+example : huber 2 (-3) = 4 := by norm_num [huber]
+example : huber 2 (-2) = 2 := by norm_num [huber]
+example : huber 2 2 = 2 := by norm_num [huber]
+example : huber 2 3 = 4 := by norm_num [huber]
+example : huber 0 7 = 0 := huber_zero 7
+#print axioms BanditRL.OnlineHuber.huber_three_pieces
+#print axioms BanditRL.OnlineHuber.huber_zero
+end HuberScalarProbe

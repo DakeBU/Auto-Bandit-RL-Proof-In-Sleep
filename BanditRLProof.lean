@@ -632,3 +632,7 @@ import BanditRLProof.OnlineConvexMinorant
 import BanditRLProof.OnlineJensen
 
 import BanditRLProof.OnlineFTLFailure
+
+import BanditRLProof.OnlineGuessingOGD
+
+import BanditRLProof.OnlineGuessingLower

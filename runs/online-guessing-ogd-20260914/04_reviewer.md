@@ -1,0 +1,11 @@
+# Semantic review: Example 2.14
+
+Same-model sequential reviewer (GPT-6 Astra / medium), not an independent external review. This review is separate from command-enforced checks.
+
+The six upper-guarantee terminals retain their frozen statements. The public implementation identifies the existing Hilbert projection on [0,1] with the source clamp, proves global convex differentiability of the actual squared loss, computes its gradient, bounds that gradient on feasible iterates, and applies the shared causal OGD theorem with diameter 1 and gradient bound 2. The explicit 2 sqrt(T) constant instantiates the source order bound; it is not a claimed printed numerical constant. T >= 1 protects the selected positive step. All feasible initial values and comparators remain quantified.
+
+An upper bound alone does not establish the source comparative remark. Review therefore required a separate three-terminal lower-witness contract, without weakening or rewriting the six existing terminals. With initial prediction 1, all labels 0, and T=(2n)^2 for n>=1, the same horizon-selected step equals 1/(4n). Its actual recursive trajectory is (1-1/(2n))^t. Bernoulli's inequality bounds the first n predictions below by 1/2, yielding regret at least n/4 against comparator 0. This is an explicit square-root witness for the horizon-selected OGD, compared with the previously formalized logarithmic FTL guarantee. The derived numerical lower bound is our supporting proof, not attributed as a printed source theorem. It does not assert a lower bound for every initial value or every algorithm.
+
+Public canaries cover active projection at both endpoints, an upper guarantee for a tuned horizon, and a nonzero lower witness at horizon 64. The active-projection canary uses a different step from the tuned-horizon canary and does not conflate their trajectories. The exact-horizon identity connects the lower witness to the same source tuning.
+
+Mathematical review accepts the candidate semantics. Final acceptance additionally requires the combined root/Tests/harness, nine frozen statements, axiom audit, full-root proof graph and site checks. Their results belong in acceptance-decision.md; this review does not substitute for them. Example 2.15, remaining Chapter 2 obligations, and Chapters 3-16 remain open.
