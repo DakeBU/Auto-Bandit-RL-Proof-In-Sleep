@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "source_mean_optimal",
+  "file": "BanditRLProof/OnlineLearningIID.lean",
+  "statement": "theorem source_mean_optimal {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : Ω → ℝ) (hY : Measurable Y) (hb : ∀ ω, Y ω ∈ Set.Icc (0 : ℝ) 1) : (∫ ω, Y ω ∂μ) ∈ Set.Icc (0 : ℝ) 1 ∧ (∫ ω, ((∫ ω, Y ω ∂μ) - Y ω)^2 ∂μ) = variance Y μ ∧ ∀ u : ℝ, variance Y μ ≤ ∫ ω, (u - Y ω)^2 ∂μ",
+  "statement_hash": "463d7a5658fbf3c335f46e2918a0bb5046e906de13785dfe0a32f571192e433b",
+  "source_assumptions": [],
+  "created_at": "2026-09-14T03:56:11+00:00"
+}

@@ -614,3 +614,6 @@ import BanditRLProof.Algorithms.MOSSHistoryLaw
 import BanditRLProof.Algorithms.MOSSHistoryRegret
 import BanditRLProof.LowerBounds.SubgaussianMinimax
 import BanditRLProof.OnlineGradientDescent
+
+import BanditRLProof.OnlineLearningAsymptotic
+import BanditRLProof.OnlineLearningHistory

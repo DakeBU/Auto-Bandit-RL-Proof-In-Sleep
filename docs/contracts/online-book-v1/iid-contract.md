@@ -1,0 +1,7 @@
+# Source stochastic benchmark v1
+
+Source pp1-2: expected cumulative squared loss minus variance*T. Model has independent, identically distributed measurable [0,1]-valued observations. Prediction is exactly the book's strict-past average. MemLp is derived from bounds, not assumed; independence from current target is derived by meanPredict_independent. IdentDistrib supplies common mean and variance. Terminal is exact equality to a sum of expected nonnegative squared estimation errors, followed by nonnegativity. Finite-sum integral exchange is justified from derived square integrability. T=0 is permitted and both sides vanish. This models actual source strategy, while arbitrary independent predictions are covered by independent_prediction_square.
+
+DAG: measurable predictor + interval feasibility -> MemLp; independent prediction bridge + square identity + common law -> per-round equality; integral finite-sum exchange -> cumulative identity -> nonnegativity. New file only; previous frozen contexts unchanged. Source boundedness is pointwise as stated in the game; measurable real random variables with values in the interval satisfy it directly.
+
+source_mean_optimal: measurable interval-valued Y has interval-valued expectation, expected loss at its mean equals variance, and every real fixed prediction has loss at least variance. Square integrability is derived. This verifies the source optimal fixed comparator benchmark, without claiming arbitrary future-informed predictors obey it.

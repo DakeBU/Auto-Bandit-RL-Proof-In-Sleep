@@ -1,0 +1,30 @@
+⚠ [3327/3370] Replayed BanditRLProof.OnlineLearningFTL
+warning: BanditRLProof/OnlineLearningFTL.lean:81:41: unused variable `hT`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+✖ [3370/3370] Building BanditRLProof.OnlineLearningIID (9.4s)
+trace: .> LEAN_PATH=E:\ABRL\research\.lake\packages\Cli\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\batteries\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\Qq\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\aesop\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\proofwidgets\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\importGraph\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\LeanSearchClient\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\plausible\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\mathlib\.lake\build\lib\lean;E:\ABRL\worktrees\research-online-book\.lake\build\lib\lean c:\Users\admin\.elan\toolchains\leanprover--lean4---v4.29.1\bin\lean.exe E:\ABRL\worktrees\research-online-book\BanditRLProof\OnlineLearningIID.lean -o E:\ABRL\worktrees\research-online-book\.lake\build\lib\lean\BanditRLProof\OnlineLearningIID.olean -i E:\ABRL\worktrees\research-online-book\.lake\build\lib\lean\BanditRLProof\OnlineLearningIID.ilean -c E:\ABRL\worktrees\research-online-book\.lake\build\ir\BanditRLProof\OnlineLearningIID.c --setup E:\ABRL\worktrees\research-online-book\.lake\build\ir\BanditRLProof\OnlineLearningIID.setup.json --json
+error: BanditRLProof/OnlineLearningIID.lean:37:6: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ∫ (a : Ω), ∑ i ∈ ?m.179, ((fun ω => meanPredict (fun i => Y i ω) i) - Y i) a ^ 2 ∂μ
+in the target expression
+  ∫ (ω : Ω), ∑ t ∈ Finset.range T, (meanPredict (fun i => Y i ω) t - Y t ω) ^ 2 ∂μ - ↑T * Var[Y 0; μ] =
+    ∑ t ∈ Finset.range T, ∫ (ω : Ω), (meanPredict (fun i => Y i ω) t - ∫ (ω : Ω), Y 0 ω ∂μ) ^ 2 ∂μ
+
+Ω : Type u_1
+inst✝¹ : MeasurableSpace Ω
+μ : Measure Ω
+inst✝ : IsProbabilityMeasure μ
+Y : ℕ → Ω → ℝ
+hY : ∀ (t : ℕ), Measurable (Y t)
+hind : iIndepFun Y μ
+hlaw : ∀ (t : ℕ), IdentDistrib (Y t) (Y 0) μ μ
+hb : ∀ (t : ℕ) (ω : Ω), Y t ω ∈ Set.Icc 0 1
+T : ℕ
+hL : ∀ (t : ℕ), MemLp (Y t) 2 μ
+hP : ∀ (t : ℕ), MemLp (fun ω => meanPredict (fun i => Y i ω) t) 2 μ
+⊢ ∫ (ω : Ω), ∑ t ∈ Finset.range T, (meanPredict (fun i => Y i ω) t - Y t ω) ^ 2 ∂μ - ↑T * Var[Y 0; μ] =
+    ∑ t ∈ Finset.range T, ∫ (ω : Ω), (meanPredict (fun i => Y i ω) t - ∫ (ω : Ω), Y 0 ω ∂μ) ^ 2 ∂μ
+error: Lean exited with code 1
+Some required targets logged failures:
+- BanditRLProof.OnlineLearningIID
+error: build failed

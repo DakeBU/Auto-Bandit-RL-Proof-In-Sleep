@@ -1,0 +1,5 @@
+import BanditRLProof.OnlineLearningIID
+#print axioms BanditRL.OnlineLearning.meanPredict_memLp
+#print axioms BanditRL.OnlineLearning.iid_meanPredict_excess
+#print axioms BanditRL.OnlineLearning.iid_meanPredict_excess_nonneg
+#print axioms BanditRL.OnlineLearning.source_mean_optimal

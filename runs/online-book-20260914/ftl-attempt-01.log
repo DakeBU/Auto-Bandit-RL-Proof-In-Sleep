@@ -1,0 +1,54 @@
+BanditRLProof/OnlineLearningFTL.lean:39:2: warning: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+BanditRLProof/OnlineLearningFTL.lean:55:37: error: not a positivity goal
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+BanditRLProof/OnlineLearningFTL.lean:63:67: error: unsolved goals
+y : ℕ → ℝ
+t : ℕ
+hy : ∀ i ≤ t, y i ∈ Set.Icc 0 1
+ht : ¬t = 0
+htpos : 0 < t
+ha : empiricalMean y t ∈ Set.Icc 0 1
+hb : y t ∈ Set.Icc 0 1
+hd : 0 < ↑t + 1
+hd1 : 1 ≤ ↑t + 1
+hs : (empiricalMean y t - y t) ^ 2 ≤ 1
+⊢ -(empiricalMean y t * y t * (1 + ↑t)⁻¹ * 4) + empiricalMean y t * y t * (1 + ↑t)⁻¹ ^ 2 * 2 +
+            empiricalMean y t ^ 2 * (1 + ↑t)⁻¹ * 2 -
+          empiricalMean y t ^ 2 * (1 + ↑t)⁻¹ ^ 2 +
+        y t ^ 2 * (1 + ↑t)⁻¹ * 2 -
+      y t ^ 2 * (1 + ↑t)⁻¹ ^ 2 =
+    -(empiricalMean y t * y t * (1 + ↑t)⁻¹ * 4) + empiricalMean y t * y t * (1 + ↑t * 2 + ↑t ^ 2)⁻¹ * 2 +
+            empiricalMean y t ^ 2 * (1 + ↑t)⁻¹ * 2 -
+          empiricalMean y t ^ 2 * (1 + ↑t * 2 + ↑t ^ 2)⁻¹ +
+        y t ^ 2 * (1 + ↑t)⁻¹ * 2 -
+      y t ^ 2 * (1 + ↑t * 2 + ↑t ^ 2)⁻¹
+BanditRLProof/OnlineLearningFTL.lean:67:6: error: not a positivity goal
+BanditRLProof/OnlineLearningFTL.lean:71:4: error: linarith failed to find a contradiction
+case neg.h
+y : ℕ → ℝ
+t : ℕ
+hy : ∀ i ≤ t, y i ∈ Set.Icc 0 1
+ht : ¬t = 0
+htpos : 0 < t
+ha : empiricalMean y t ∈ Set.Icc 0 1
+hb : y t ∈ Set.Icc 0 1
+hd : 0 < ↑t + 1
+hd1 : 1 ≤ ↑t + 1
+hs : (empiricalMean y t - y t) ^ 2 ≤ 1
+hid :
+  (empiricalMean y t - y t) ^ 2 - (empiricalMean y t + (y t - empiricalMean y t) / (↑t + 1) - y t) ^ 2 =
+    (2 / (↑t + 1) - 1 / (↑t + 1) ^ 2) * (empiricalMean y t - y t) ^ 2
+hcoef : 0 ≤ 2 / (↑t + 1) - 1 / (↑t + 1) ^ 2
+hbound : (2 / (↑t + 1) - 1 / (↑t + 1) ^ 2) * (empiricalMean y t - y t) ^ 2 ≤ (2 / (↑t + 1) - 1 / (↑t + 1) ^ 2) * 1
+hneg : 0 ≤ 1 / (↑t + 1) ^ 2
+htwo : 0 ≤ 2 / (↑t + 1)
+a✝ : 4 / (↑t + 1) < (2 / (↑t + 1) - 1 / (↑t + 1) ^ 2) * (empiricalMean y t - y t) ^ 2
+⊢ False
+failed

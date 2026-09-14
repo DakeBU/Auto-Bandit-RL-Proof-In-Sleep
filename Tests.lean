@@ -73,3 +73,5 @@ import Tests.MOSSPeelingCanary
 import Tests.MOSSStreamCanary
 import Tests.SubgaussianMinimaxCanary
 import Tests.OnlineGradientDescentCanary
+
+import Tests.OnlineLearningChapterOneCanary

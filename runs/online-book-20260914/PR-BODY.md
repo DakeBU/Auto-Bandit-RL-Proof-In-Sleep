@@ -1,0 +1,7 @@
+Chapter 1 previously had no source-aligned proof route. This candidate adds the actual strict-past mean predictor with initial prediction 1/2, Be-the-Leader, unique empirical-mean minimization, and Theorem 1.3's 4 + 4 log T best-fixed regret bound. It also formalizes comparator/no-regret semantics, the actual asymptotic corollary, and the IID squared-loss benchmark with derived information and integrability conditions. All mappings reference the shared Lean registry.
+
+This is stacked on PR #116 (`codex/research-online-ogd`, exact dependency 73062790d5cf7b12c5d3c189a053270e993f1a68), which has not been merged. It preserves the fixed-step OGD contracts. The 16-chapter coverage ledger marks later chapters unenumerated; no whole-book completion is claimed.
+
+Validation: local public root/Tests passed (8998 jobs), including nondegenerate deterministic and fair-two-point probability canaries; 24 frozen interfaces and nine definition/import contexts match. Axiom audits contain only propext, Classical.choice, and Quot.sound. Registry tests and site checks passed. Source review and repair records are in runs/online-book-20260914.
+
+The resumed complete local harness passed all 423 tests with seven existing skips after the execution environment changed. No failing test was changed, removed or mocked; the earlier nine errors remain in full-gate-01.log. Frozen source hashes, contracts, dependency graph and the resumed site checks pass. Chapter 1 is accepted locally; remote CI is tracked separately. No merge or deployment is requested by this draft.

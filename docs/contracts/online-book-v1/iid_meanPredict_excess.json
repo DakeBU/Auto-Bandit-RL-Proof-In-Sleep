@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "iid_meanPredict_excess",
+  "file": "BanditRLProof/OnlineLearningIID.lean",
+  "statement": "theorem iid_meanPredict_excess {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t ω, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) : (∫ ω, ∑ t ∈ Finset.range T, (meanPredict (fun i => Y i ω) t - Y t ω)^2 ∂μ) - T * variance (Y 0) μ = ∑ t ∈ Finset.range T, ∫ ω, (meanPredict (fun i => Y i ω) t - ∫ ω, Y 0 ω ∂μ)^2 ∂μ",
+  "statement_hash": "59be69303a68e0a30f6b437dee0c553e0fce2cec18350bf8734251d4600e490f",
+  "source_assumptions": [],
+  "created_at": "2026-09-14T03:54:01+00:00"
+}

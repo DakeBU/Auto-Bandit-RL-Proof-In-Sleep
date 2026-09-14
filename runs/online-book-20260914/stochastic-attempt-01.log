@@ -1,0 +1,33 @@
+BanditRLProof/OnlineLearningStochastic.lean:13:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  Var[fun ω => u - Y ω; μ]
+in the target expression
+  Var[(fun x => u) - Y; μ] = ∫ (x : Ω), (((fun x => u) - Y) ^ 2) x ∂μ - (∫ (x : Ω), ((fun x => u) - Y) x ∂μ) ^ 2
+
+Ω : Type u_1
+inst✝¹ : MeasurableSpace Ω
+μ : Measure Ω
+inst✝ : IsProbabilityMeasure μ
+Y : Ω → ℝ
+hY : MemLp Y 2 μ
+u : ℝ
+hv : Var[(fun x => u) - Y; μ] = ∫ (x : Ω), (((fun x => u) - Y) ^ 2) x ∂μ - (∫ (x : Ω), ((fun x => u) - Y) x ∂μ) ^ 2
+⊢ ∫ (ω : Ω), (u - Y ω) ^ 2 ∂μ = Var[Y; μ] + (u - ∫ (ω : Ω), Y ω ∂μ) ^ 2
+BanditRLProof/OnlineLearningStochastic.lean:30:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  Var[fun ω => P ω - ?c; μ]
+in the target expression
+  Var[P - fun x => ∫ (ω : Ω), Y ω ∂μ; μ] =
+    ∫ (x : Ω), ((P - fun x => ∫ (ω : Ω), Y ω ∂μ) ^ 2) x ∂μ - (∫ (x : Ω), (P - fun x => ∫ (ω : Ω), Y ω ∂μ) x ∂μ) ^ 2
+
+Ω : Type u_1
+inst✝¹ : MeasurableSpace Ω
+μ : Measure Ω
+inst✝ : IsProbabilityMeasure μ
+P Y : Ω → ℝ
+hP : MemLp P 2 μ
+hY : MemLp Y 2 μ
+h : P ⟂ᵢ[μ] Y
+hv : Var[P; μ] - 2 * 0 + Var[Y; μ] = ∫ (x : Ω), ((P - Y) ^ 2) x ∂μ - (∫ (x : Ω), (P - Y) x ∂μ) ^ 2
+hc :
+  Var[P - fun x => ∫ (ω : Ω), Y ω ∂μ; μ] =
+    ∫ (x : Ω), ((P - fun x => ∫ (ω : Ω), Y ω ∂μ) ^ 2) x ∂μ - (∫ (x : Ω), (P - fun x => ∫ (ω : Ω), Y ω ∂μ) x ∂μ) ^ 2
+⊢ ∫ (ω : Ω), (P ω - Y ω) ^ 2 ∂μ = ∫ (ω : Ω), (P ω - ∫ (ω : Ω), Y ω ∂μ) ^ 2 ∂μ + Var[Y; μ]
