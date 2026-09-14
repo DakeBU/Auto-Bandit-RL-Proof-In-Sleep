@@ -1,0 +1,1 @@
+Frozen exact headers, upperAdd definition and source-convention interpretation: docs/contracts/online-convex-sums-v1. No noBot/properness/positive-only restriction may be added during proving. Any target revision requires a new version and semantic review. Scoped new module/canary/evidence/shared integration only.

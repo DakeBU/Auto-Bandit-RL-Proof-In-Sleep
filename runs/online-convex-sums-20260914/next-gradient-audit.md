@@ -1,0 +1,9 @@
+# Next source terminal: Theorem2.7 draft audit
+
+Source printedp11/PDF23: f:E->(-infinity,+infinity] convex, x in interior(dom f), differentiable at x, supporting-gradient inequality for all y. Prior OGD first_order is only the real-valued specialization on a closed domain structure and must not be substituted for this full target.
+
+Proposed exact representation: gradient of z->(f z).toReal at x, together with a proved neighborhood agreement of this finite representation and f. The interior effective-domain and global noBot premises make this conversion locally exact; arbitrary points outside the domain must remain positive infinity in the inequality. No closed/bounded domain or everywhere differentiability hypothesis is added. General complete real inner-product spaces instantiate the source finite-dimensional Euclidean space.
+
+Two draft headers explicitly elaborate with two deliberate body failures and no other errors: finitePart_eventually and theorem_2_7. They are not frozen proofs or accepted results. Actual local APIs inspected: DifferentiableAt.hasGradientAt, HasGradientAt.hasFDerivAt, ConvexOn.comp_affineMap and le_slope_of_hasDerivAt; prior OGD first_order proof inspected. Proposed route is the same line-derivative inequality on the convex effective domain after the proved finite-part epigraph equivalence, then a separate outside-domain top case. Theorem2.8 and measurable extended-real Jensen2.9 still need distinct contracts; no finite-expectation restriction may silently replace2.9.
+
+Canary/API audit: Gradient/Basic.lean provides gradient_eq_deriv and HasGradientAt.congr_of_eventuallyEq; a restricted nonconstant real loss on an open half-line can certify a nonzero derivative at an interior point and a genuine top-valued outside point. This must use a proved neighborhood equality, not differentiate the artificial toReal=0 values outside the domain.

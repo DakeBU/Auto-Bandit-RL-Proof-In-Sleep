@@ -1,0 +1,47 @@
+tmp/online-convex-upper-add-draft.lean:11:2: error: draft upper-addition header, not proof
+a b : ℝ
+⊢ upperAdd ↑a ↑b = ↑(a + b)
+tmp/online-convex-upper-add-draft.lean:14:2: error: draft upper-addition header, not proof
+a : EReal
+⊢ upperAdd a ⊤ = ⊤
+tmp/online-convex-upper-add-draft.lean:17:2: error: draft upper-addition header, not proof
+a : EReal
+⊢ upperAdd ⊤ a = ⊤
+tmp/online-convex-upper-add-draft.lean:22:2: error: draft upper-addition header, not proof
+a b : EReal
+h : ℝ
+⊢ upperAdd a b ≤ ↑h ↔ ∃ r s, a ≤ ↑r ∧ b ≤ ↑s ∧ r + s ≤ h
+tmp/online-convex-upper-add-draft.lean:27:2: error: draft upper-addition header, not proof
+E : Type u_1
+inst✝¹ : AddCommGroup E
+inst✝ : Module ℝ E
+f g : E → EReal
+hf : IsConvexExtended f
+hg : IsConvexExtended g
+⊢ IsConvexExtended fun x => upperAdd (f x) (g x)
+tmp/online-convex-upper-add-draft.lean:31:2: error: draft upper-addition header, not proof
+a : ℝ
+ha : 0 < a
+z : EReal
+h : ℝ
+⊢ ↑a * z ≤ ↑h ↔ z ≤ ↑(h / a)
+tmp/online-convex-upper-add-draft.lean:36:2: error: draft upper-addition header, not proof
+E : Type u_1
+inst✝¹ : AddCommGroup E
+inst✝ : Module ℝ E
+f : E → EReal
+hf : IsConvexExtended f
+a : ℝ
+ha : 0 ≤ a
+⊢ IsConvexExtended fun x => ↑a * f x
+tmp/online-convex-upper-add-draft.lean:42:2: error: draft upper-addition header, not proof
+E : Type u_1
+inst✝¹ : AddCommGroup E
+inst✝ : Module ℝ E
+f g : E → EReal
+hf : IsConvexExtended f
+hg : IsConvexExtended g
+a b : ℝ
+ha : 0 ≤ a
+hb : 0 ≤ b
+⊢ IsConvexExtended fun x => upperAdd (↑a * f x) (↑b * g x)

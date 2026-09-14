@@ -1,0 +1,1 @@
+All eight frozen endpoints, the upperAdd definition and the fourth closure operation passed all local gates; see runs/online-convex-sums-20260914/acceptance-decision.md. Operation convention remains explicit. Delivered as draft PR122, proof commit8caaca4; unmerged. Chapter2 and whole-book Goal incomplete; no ordinary-addition claim.

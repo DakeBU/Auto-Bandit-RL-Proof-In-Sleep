@@ -466,19 +466,25 @@
       "meaning": "Nonnegative linear combinations, affine composition, monotone convex composition, pointwise supremum",
       "printed_page": 10,
       "pdf_page": 22,
-      "status": "partial; three operations accepted-local, nonnegative combination required",
+      "status": "accepted-local under explicit convex-analysis upper-addition convention; PR121/122 open, not merged",
       "lean_name": null,
       "required": true,
       "lean_names": [
         "BanditRL.OnlineConvex.convex_comp_affine",
         "BanditRL.OnlineConvex.convex_iSup",
-        "BanditRL.OnlineConvex.convex_comp_monotone"
+        "BanditRL.OnlineConvex.convex_comp_monotone",
+        "BanditRL.OnlineConvex.convex_nonneg_linear_combination"
       ],
       "evidence": "runs/online-convex-closures-20260914/acceptance-decision.md",
-      "remaining_operations": [
-        "nonnegative linear combinations with explicit convex-analysis upper addition"
+      "remaining_operations": [],
+      "source_interpretation": "Orabona does not state mixed-infinity arithmetic; upperAdd and zero-times-infinity conventions are explicit, with primary-source support and a compiled counterexample to ordinary EReal addition.",
+      "delivery_prs": [
+        121,
+        122
       ],
-      "delivery_pr": 121
+      "additional_evidence": [
+        "runs/online-convex-sums-20260914/acceptance-decision.md"
+      ]
     },
     {
       "source_id": "C2-interior-optimum",

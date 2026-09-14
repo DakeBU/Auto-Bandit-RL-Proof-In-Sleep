@@ -1950,7 +1950,7 @@
         "title": "Online Learning: A Modern Introduction Using Convex Optimization",
         "authors": "Francesco Orabona",
         "edition": "arXiv:1912.13213v10, 21 June 2026",
-        "sections": "Section2.1.1, three unnumbered closure operations",
+        "sections": "Section2.1.1, four unnumbered closure operations; explicit upper-addition interpretation",
         "pages": "printedp10/PDF22",
         "pdf_page": 22,
         "url": "https://arxiv.org/pdf/1912.13213v10"
@@ -1990,7 +1990,8 @@
       "teaching_route": [
         "BanditRL.OnlineConvex.convex_comp_affine",
         "BanditRL.OnlineConvex.convex_iSup",
-        "BanditRL.OnlineConvex.convex_comp_monotone"
+        "BanditRL.OnlineConvex.convex_comp_monotone",
+        "BanditRL.OnlineConvex.convex_nonneg_linear_combination"
       ],
       "source_theorems": [
         {
@@ -2001,7 +2002,7 @@
           "math": "f\\circ A,\\qquad\\sup_i f_i,\\qquad g\\circ f",
           "fallback": "Affine precomposition, pointwise supremum, and monotone real convex composition preserve convexity.",
           "plain": "These cover three of the four printed closure bullets.",
-          "relationship": "Exact shared declarations: convex_comp_affine, convex_iSup and convex_comp_monotone in BanditRL.OnlineConvex. The nonnegative-combination bullet remains required separately.",
+          "relationship": "Exact shared declarations: convex_comp_affine, convex_iSup and convex_comp_monotone in BanditRL.OnlineConvex. The nonnegative-combination result is documented in the separate upper-addition source card.",
           "contract": {
             "model": "Extended-real epigraph convexity for affine maps and suprema; real-valued functions for monotone composition.",
             "assumptions": "Arbitrary affine map and arbitrary index; convex f and g with globally nondecreasing g in the real composition case.",
@@ -2012,7 +2013,29 @@
           "local_status": {
             "status": "compiled",
             "label": "Scoped convexity proof",
-            "boundary": "Nonnegative combinations and later Chapter2 results are not claimed complete."
+            "boundary": "Later Chapter2 results remain incomplete."
+          }
+        },
+        {
+          "label": "Nonnegative linear combinations with convex upper addition",
+          "pages": "printed p. 10",
+          "pdf_page": 22,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "a f(x)\\mathbin{+_{\\mathrm{upper}}}b g(x),\\qquad a,b\\ge0",
+          "fallback": "Nonnegative scaling and convex upper addition preserve extended-real epigraph convexity.",
+          "plain": "At mixed infinities, upper addition returns positive infinity; this differs from ordinary mathlib EReal addition.",
+          "relationship": "BanditRL.OnlineConvex.convex_nonneg_linear_combination. The unstated Orabona convention is interpreted explicitly using the primary-source convex-analysis convention documented in docs/contracts/online-convex-sums-v1; the ordinary-addition counterexample is publicly tested.",
+          "contract": {
+            "model": "Arbitrary extended-real epigraph-convex functions on real vector spaces.",
+            "assumptions": "Convex f and g, nonnegative real coefficients; top-dominant upperAdd and zero-times-infinity=zero are explicit operations.",
+            "parameters": "All points and all coefficients >=0, including zero.",
+            "regret": "These are convexity-preservation implications, not regret bounds.",
+            "guarantee": "Convexity of the upper-addition combination, with both infinities retained."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Explicit upper-addition proof",
+            "boundary": "The operation convention is part of the contract; this is not a theorem for ordinary EReal addition and does not complete Chapter2."
           }
         }
       ],
@@ -2039,7 +2062,7 @@
           }
         ],
         "takeaway": "An epigraph intersection gives convexity of the resulting constrained loss.",
-        "boundary": "The public canary verifies these distinct values and convexity, and separately instantiates empty-index and noninjective-affine cases. The remaining fourth closure bullet is not claimed complete.",
+        "boundary": "The public canary verifies these distinct values and convexity, and separately instantiates empty-index and noninjective-affine cases. The separate upper-addition canary distinguishes convex-analysis addition from ordinary EReal addition. Later Chapter2 results remain incomplete.",
         "intro": "Take the zero-or-positive-infinity indicators of x>=0 and x<=2."
       }
     }

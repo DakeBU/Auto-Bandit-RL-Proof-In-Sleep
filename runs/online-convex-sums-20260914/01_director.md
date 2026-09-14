@@ -1,0 +1,1 @@
+Select the fourth closure bullet with full source infinities and nonnegative coefficients. Explicitly adopt the primary-source convex upper-addition convention; retain the ordinary-add counterexample. Do not reduce to noBot or positive coefficients. Freeze source interpretation and terminal before proof.
