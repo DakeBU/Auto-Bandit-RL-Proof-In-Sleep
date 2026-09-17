@@ -120,5 +120,8 @@ example (Y : ℕ → ℝ) : Function.Injective (action 1 (1/2) Y) := action_inje
 #print axioms BanditRLProof.HOO.near_optimal_region
 #print axioms BanditRLProof.HOO.region_deviation_confidence
 #print axioms BanditRLProof.HOO.trajectory_initial_law
+#print axioms BanditRLProof.HOO.RegularCovering.poor_region_expected_visits
+#print axioms BanditRLProof.HOO.Covering.optimalPath_sup
+#print axioms BanditRLProof.HOO.Covering.history_selected_underestimate
 
 end HOOCausalCanary

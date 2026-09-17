@@ -77,4 +77,19 @@ theorem bValue_le_prefix_walk (S : Finset Node) (U : Node → WithTop ℝ)
     · simp only [walk, if_neg hv] at hw
       rw [hvw.eq_of_length_le hw.length_le]
 
+theorem visits_pos_mem_expanded (ν ρ : ℝ) (Y : ℕ → ℝ) (n : ℕ) (v : Node)
+    (ht : 0 < visits (history ν ρ Y n) v) : v ∈ expanded (history ν ρ Y n) := by
+  induction n with
+  | zero => simp [history, visits] at ht
+  | succ n ih =>
+    by_cases hp : 0 < visits (history ν ρ Y n) v
+    · rw [history, expanded_step]
+      exact Finset.mem_insert_of_mem (ih hp)
+    · have hz := Nat.eq_zero_of_not_pos hp
+      have hv : v <+: next ν ρ (history ν ρ Y n) := by
+        by_contra hn
+        simp [history, visits_step, hz, hn] at ht
+      apply expanded_history_prefix_closed ν ρ Y (n+1) (next ν ρ (history ν ρ Y n)) v _ hv
+      simp only [history, expanded_step, Finset.mem_insert_self]
+
 end BanditRLProof.HOO

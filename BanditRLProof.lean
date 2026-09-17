@@ -118,6 +118,7 @@ import BanditRLProof.HeavyTailClippedTransfer
 import BanditRLProof.HOOModel
 import BanditRLProof.Algorithms.HOOPrefix
 import BanditRLProof.Algorithms.HOOConfidence
+import BanditRLProof.Algorithms.HOOExpectedVisits
 import BanditRLProof.HeavyTailFixedTilt
 import BanditRLProof.HeavyTailConfidence
 import BanditRLProof.HeavyTailPowerSum
