@@ -1,5 +1,7 @@
 # Combinatorial bandits: source audit in progress
 
+Follow-up: the full triggered CUCB contract is now frozen in CUCB-CONTRACT.md (81a1998). A normalized analysis-charge repair is under implementation; this historical audit records the evidence leading to that decision. It is not independent acceptance.
+
 Date: 2026-09-17. This is a source-selection and proof-obligation audit, **not a frozen contract, Lean implementation, or accepted topic**. All ten topics remain mandatory; accepted topics remain 0/10. The current CUCB candidate must not be presented as a full-bandit result.
 
 ## Version fence

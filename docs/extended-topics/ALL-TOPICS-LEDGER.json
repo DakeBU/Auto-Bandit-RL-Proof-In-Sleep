@@ -292,19 +292,20 @@
     {
       "id": "combinatorial",
       "mandatory": true,
-      "status": "draft",
+      "status": "proving",
       "topic_complete": false,
-      "setting": "Stochastic combinatorial actions with semi-bandit feedback; direct versus probabilistically triggered observation model under source audit",
+      "setting": "General stochastic combinatorial semi-bandit with probabilistically triggered arms, nonlinear mean-based rewards and randomized approximation oracle",
       "source": {
-        "candidate": "Chen--Wang--Yuan, ICML 2013, with Chen--Wang--Yuan--Wang JMLR 2016 corrections; source PDFs hashed, endpoint not frozen",
+        "candidate": "Chen--Wang--Yuan--Wang, JMLR 17(50), 2016, Algorithm 1 and Theorems 1/2; repaired analysis counters",
         "audit_note": "docs/extended-topics/COMBINATORIAL-SOURCE-AUDIT.md",
-        "url": "https://proceedings.mlr.press/v28/chen13a.html",
+        "url": "https://jmlr.org/papers/v17/14-298.html",
         "full_audit_complete": false,
-        "frozen": false
+        "frozen": true,
+        "sha256": "6a29fc188cd1490c53864eb4f839e572551c171388fc27ba256a7e61424e856c"
       },
-      "algorithm": "CUCB with explicit feasible super arms and oracle contract",
-      "representative_endpoint": "Complete approximation-regret guarantee under source feedback/oracle assumptions",
-      "endpoint_frozen": false,
+      "algorithm": "Source CUCB without forced initialization; clipped indices; fresh feasible oracle and triggered feedback",
+      "representative_endpoint": "Full Theorem 1 refined integral approximation-regret and Theorem 2 polynomial-smoothness bounds for both deterministic and probabilistic triggering",
+      "endpoint_frozen": true,
       "mandatory_obligations": [
         {
           "id": "classic_and_recent_primary_source_audit",
@@ -394,7 +395,10 @@
       "current_blockers": [
         "Source/endpoint audit incomplete"
       ],
-      "next_action": "Audit exact oracle and triggering assumptions before freezing"
+      "next_action": "Audit exact oracle and triggering assumptions before freezing",
+      "contract": "docs/extended-topics/CUCB-CONTRACT.md",
+      "contract_commit": "81a1998",
+      "progress_note": "Only the exact piecewise threshold and normalized analysis-charge algebra compile; actual trajectory, concentration and both performance endpoints remain open."
     },
     {
       "id": "causal",
