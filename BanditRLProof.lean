@@ -112,6 +112,9 @@ import BanditRLProof.FiniteArmRewardKernelLaw
 import BanditRLProof.FiniteContextVarianceProxy
 import BanditRLProof.ConcentrationVariance
 import BanditRLProof.UCBSummability
+import BanditRLProof.HeavyTailTruncation
+import BanditRLProof.HeavyTailClipping
+import BanditRLProof.HeavyTailFixedTilt
 import BanditRLProof.Exp3Potential
 import BanditRLProof.Exp3HedgeRegret
 import BanditRLProof.Exp3ImportanceWeighted
