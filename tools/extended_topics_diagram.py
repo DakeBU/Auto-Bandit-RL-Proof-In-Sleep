@@ -25,6 +25,12 @@ focus = {prefix + name for name in (
     "truncated_mean_tail", "truncated_sum_mean_tail", "truncated_sum_abs_tail",
     "fixed_mgf_abs_tail", "truncated_centered_mgf", "independent_sum_mgf",
     "tuned_radius_le", "scheduled_tail_sum_le_two",
+    "bounded_centering_mgf", "sum_mean_tail_of_centered",
+    "integral_clip_bias_le", "integral_sq_clip_le", "clipped_centered_mgf",
+    "clipped_sum_abs_tail", "clipped_mean_tail", "scheduled_clipped_mean_tail",
+    "scheduled_adaptive_clipped_mean_tail", "clipped_prefix_corruption_le",
+    "clipped_observed_prefix", "adaptive_corrupted_clipped_mean_tail",
+    "observed_corrupted_clipped_mean_tail", "arm_corrupted_clipped_mean_tail",
 )}
 edges = [e for e in r["direct_edges"]
          if (e["kind"] == "value" or e.get("also_in_value"))
