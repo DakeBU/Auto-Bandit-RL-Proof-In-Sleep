@@ -3,6 +3,7 @@ import BanditRLProof.Algorithms.CUCBGapInverse
 import BanditRLProof.Algorithms.CUCBOracleSuccess
 import BanditRLProof.Algorithms.CUCBActualReward
 import BanditRLProof.Algorithms.CUCBSufficientSampling
+import BanditRLProof.Algorithms.CUCBRegretTail
 
 /-! Source model and deterministic-trigger dependency checks.
 The required concrete noisy final-performance witness is still pending. -/
@@ -50,4 +51,11 @@ open BanditRLProof.CUCB
 #print axioms SourceModel.sufficient_successful_charge_subset
 #print axioms SourceModel.sufficient_successful_charge_probability_of_all_one
 #print axioms SourceModel.sufficient_successful_charge_probability_source
+#print axioms SourceModel.gap_decomposition
+#print axioms SourceModel.measurableSet_sufficientSuccessfulCharge
+#print axioms SourceModel.integrable_actual_underSampledGap
+#print axioms SourceModel.expected_gap_decomposition
+#print axioms SourceModel.approximationRegret_le_underSampled_add_sufficient
+#print axioms SourceModel.sum_inverse_square_le
+#print axioms SourceModel.approximationRegret_le_underSampled_add_source_tail
 end Tests.CUCBSourceModelCanary

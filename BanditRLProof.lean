@@ -663,3 +663,5 @@ import BanditRLProof.Algorithms.CUCBRewardKernel
 import BanditRLProof.Algorithms.CUCBActualReward
 import BanditRLProof.Algorithms.CUCBThresholdTail
 import BanditRLProof.Algorithms.CUCBSufficientSampling
+import BanditRLProof.Algorithms.CUCBRegretDecomposition
+import BanditRLProof.Algorithms.CUCBRegretTail
