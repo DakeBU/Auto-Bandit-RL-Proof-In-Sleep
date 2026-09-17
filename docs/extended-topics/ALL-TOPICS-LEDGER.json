@@ -144,7 +144,7 @@
       "mandatory": true,
       "status": "proving",
       "topic_complete": false,
-      "setting": "Continuum actions, dissimilarity/metric and local smoothness to audit",
+      "setting": "Infinite binary covering tree; bounded stochastic rewards; A1 general dissimilarity and A2 weak Lipschitz smoothness; finite near-optimality dimension for the still-open terminal rate",
       "source": {
         "candidate": "Bubeck et al. JMLR 2011 HOO Algorithm 1 / Theorem 6, explicitly repaired",
         "url": "https://jmlr.org/papers/volume12/bubeck11a/bubeck11a.pdf",
@@ -170,19 +170,19 @@
         },
         {
           "id": "all_mathematical_producers",
-          "status": "pending"
+          "status": "partial: confidence, optimal branch, path comparison and expected poor-region visits compiled; packing and regret producers pending"
         },
         {
           "id": "actual_algorithm_to_performance_chain",
-          "status": "pending"
+          "status": "partial: actual HOO expected poor-region visit bound compiled; full regret endpoint pending"
         },
         {
           "id": "public_reusable_interfaces",
-          "status": "pending"
+          "status": "partial: shared fixed-MGF, finite-union and threshold-count interfaces consumed; terminal public acceptance pending"
         },
         {
           "id": "nondegenerate_public_root_canary",
-          "status": "pending"
+          "status": "partial: noisy process/action canaries pass; full infinite-arm A1/A2 model witness pending"
         },
         {
           "id": "semantic_review",
@@ -190,11 +190,11 @@
         },
         {
           "id": "axiom_audit",
-          "status": "pending"
+          "status": "partial: visit/path/index endpoints have standard axioms only; full terminal audit pending"
         },
         {
           "id": "joint_root_Tests_full_harness",
-          "status": "pending"
+          "status": "partial: visit/path/index milestone passes joint 9026-job Lean gate and full harness; terminal gate pending"
         },
         {
           "id": "site_and_shared_registry_mapping",
@@ -214,15 +214,15 @@
         },
         {
           "id": "optimistic tree policy",
-          "status": "open"
+          "status": "compiled producer; independent semantic acceptance pending"
         },
         {
           "id": "confidence on adaptive node samples",
-          "status": "open"
+          "status": "compiled actual-trajectory and U-index producers; independent semantic acceptance pending"
         },
         {
           "id": "visit counting",
-          "status": "open"
+          "status": "compiled expected poor-region visits with additive four and repaired log(max(N,2)); independent semantic acceptance pending"
         },
         {
           "id": "approximation and full regret rate",
@@ -242,9 +242,12 @@
       ],
       "acceptance_evidence": [],
       "current_blockers": [
-        "Source/endpoint audit incomplete"
+        "Near-optimality packing and geometric regret partition unproved",
+        "Complete regret rate and expectation identity unproved",
+        "Full infinite-arm A1/A2 canary and independent semantic acceptance pending",
+        "All-topic evaluation and paper evidence not complete"
       ],
-      "next_action": "Retrieve full source and select exact substantive theorem",
+      "next_action": "Construct the full infinite-arm model witness and finish packing, regret partition and depth optimization without weakening Theorem 6",
       "contract": "docs/extended-topics/LIPSCHITZ-HOO-CONTRACT.md",
       "contract_commit": "47474f9",
       "compiled_producers": [
@@ -252,10 +255,18 @@
         "causal measurable history/action construction and fresh nodes",
         "actual infinite reward trajectory and successor conditional law",
         "weak Lipschitz regional gap, source Lemma 3 without attained supremum",
-        "covering representative and actual selected-arm law bridge"
+        "covering representative and actual selected-arm law bridge",
+        "Actual regional conditional MGF and count-dependent upper/lower confidence",
+        "Supremum-preserving infinite branch without maximizer attainment",
+        "Actual B/search-path comparison and poor-region selection tail",
+        "Expected poor-region visits <= 8 log(max(N,2))/(gap-D)^2 + 4"
       ],
-      "producer_acceptance": "jointly compiled at 137db2626320574234a01b967e2ac7ff123d20f1; source performance endpoint and independent semantic acceptance pending",
-      "validation": "runs/extended-topics-20260917/hoo-validation.json"
+      "producer_acceptance": "Jointly compiled at d798f79825db50a9a68704e8ce7ed0f82c23c223 through expected poor-region visits; full source regret endpoint and independent semantic acceptance pending.",
+      "validation": "runs/extended-topics-20260917/hoo-visits-validation.json",
+      "progress_notes": [
+        "docs/extended-topics/HOO-CONFIDENCE-PROGRESS.md",
+        "docs/extended-topics/HOO-EXPECTED-VISITS-PROGRESS.md"
+      ]
     },
     {
       "id": "combinatorial",
