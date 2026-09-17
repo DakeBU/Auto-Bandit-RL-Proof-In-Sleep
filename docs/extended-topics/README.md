@@ -5,6 +5,12 @@ and an ongoing all-ten-topic program; zero topics have been accepted. Start with
 protocol](PROTOCOL.md), [source audit](SOURCE-AUDIT.md), [derivation](DERIVATION.md),
 and [obligations](OBLIGATIONS.md).
 
+The next mandatory line is [HOO for Lipschitz bandits](LIPSCHITZ-HOO-CONTRACT.md).
+Its source contract was committed before implementation. The actual causal tree
+algorithm, measurable action map, generated reward trajectory and source Lemma 3
+are now implemented. Region concentration, packing/dimension producers, the
+full regret proof, full model witness and independent acceptance remain open.
+
 ## What is proved
 
 For raw absolute (1+epsilon)-moments, the Lean modules supply moment-derived

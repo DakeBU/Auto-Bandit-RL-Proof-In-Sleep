@@ -142,30 +142,31 @@
     {
       "id": "lipschitz",
       "mandatory": true,
-      "status": "draft",
+      "status": "proving",
       "topic_complete": false,
       "setting": "Continuum actions, dissimilarity/metric and local smoothness to audit",
       "source": {
-        "candidate": "X-Armed Bandits, JMLR 2011; version/hash not yet frozen",
-        "url": "https://www.jmlr.org/papers/v12/bubeck11a.html",
-        "full_audit_complete": false,
-        "frozen": false
+        "candidate": "Bubeck et al. JMLR 2011 HOO Algorithm 1 / Theorem 6, explicitly repaired",
+        "url": "https://jmlr.org/papers/volume12/bubeck11a/bubeck11a.pdf",
+        "full_audit_complete": true,
+        "frozen": true,
+        "audit_note": "Selected model, Algorithm 1, A1/A2, Lemma 3, Definitions 4-5 and entire Appendix A.1 read; algorithm typos visually checked. Recent ICLR 2025 Log-Li model/algorithms and full main theorem proofs audited with explicit unresolved gaps; those results are not imported. Other 2026 candidates remain screened only. Independent semantic acceptance remains open."
       },
-      "algorithm": "HOO or source-exact discretized algorithm after full theorem audit",
-      "representative_endpoint": "Complete regret guarantee with smoothness/covering or near-optimality dimension dependence",
-      "endpoint_frozen": false,
+      "algorithm": "Actual infinite binary-tree HOO with source-permitted deterministic ties and representatives; explicit indexing and log(max(n,2)) repair",
+      "representative_endpoint": "Full expected HOO regret at every horizon with near-optimality dimension d, every d-prime > d, environment-dependent horizon-independent constant; actual cumulative/pseudo-regret expectation identity",
+      "endpoint_frozen": true,
       "mandatory_obligations": [
         {
           "id": "classic_and_recent_primary_source_audit",
-          "status": "pending"
+          "status": "frozen explicit repair; independent adjudication pending"
         },
         {
           "id": "source_version_hash_and_definition_context",
-          "status": "pending"
+          "status": "frozen explicit repair; independent adjudication pending"
         },
         {
           "id": "exact_algorithm_model_assumptions_and_endpoint_freeze",
-          "status": "pending"
+          "status": "frozen explicit repair; independent adjudication pending"
         },
         {
           "id": "all_mathematical_producers",
@@ -243,7 +244,17 @@
       "current_blockers": [
         "Source/endpoint audit incomplete"
       ],
-      "next_action": "Retrieve full source and select exact substantive theorem"
+      "next_action": "Retrieve full source and select exact substantive theorem",
+      "contract": "docs/extended-topics/LIPSCHITZ-HOO-CONTRACT.md",
+      "contract_commit": "47474f9",
+      "compiled_producers": [
+        "finite tree backward min/max semantics and no fuel truncation",
+        "causal measurable history/action construction and fresh nodes",
+        "actual infinite reward trajectory and successor conditional law",
+        "weak Lipschitz regional gap, source Lemma 3 without attained supremum",
+        "covering representative and actual selected-arm law bridge"
+      ],
+      "producer_acceptance": "focused compiled; joint gate and semantic review pending"
     },
     {
       "id": "combinatorial",

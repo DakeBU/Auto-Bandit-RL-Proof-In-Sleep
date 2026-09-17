@@ -115,6 +115,7 @@ import BanditRLProof.UCBSummability
 import BanditRLProof.HeavyTailTruncation
 import BanditRLProof.HeavyTailClipping
 import BanditRLProof.HeavyTailClippedTransfer
+import BanditRLProof.HOOModel
 import BanditRLProof.HeavyTailFixedTilt
 import BanditRLProof.HeavyTailConfidence
 import BanditRLProof.HeavyTailPowerSum
