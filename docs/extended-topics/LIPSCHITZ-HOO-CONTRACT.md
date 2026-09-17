@@ -46,3 +46,9 @@ Initially only the root is expanded and it has no sample. Every round starts at 
 ## Acceptance
 
 Joint public root, Tests and full harness; genuine infinite-arm/noisy/nonconstant-mean canary or an explicitly delimited nondegenerate finite-depth instance plus an infinite-arm model witness; axiom audit; independent semantic review; source repair ledger; shared registry/site mapping; compiled reference/transfer evidence and ICLR evaluation package. All remain required. Efficiency experiments must use a separately frozen valid protocol; this development is descriptive evidence only.
+
+## Definition 5 zero-packing clarification (frozen before dimension implementation)
+
+The source's contained-ball convention in Definition 4 is retained exactly. In Definition 5 we explicitly use the extended-real convention log(0) = minus infinity. For 0 < epsilon < 1, the normalized exponent is minus infinity when the packing number is zero and otherwise is the real log(N)/log(1/epsilon), embedded in the extended reals. The dimension is max(0, limsup of this exponent as epsilon tends to zero from above). Values outside 0 < epsilon < 1 are irrelevant to this limit. This states a convention omitted in the printed formula; it is not a claim that every near-optimal set contains an epsilon-ball, and does not use Lean's totalized real log(0)=0.
+
+This extended-real definition retains infinite dimension. For any finite real d' strictly above it, the proof must derive eventual exponent < d', then a packing power bound, and finally a horizon-independent uniform constant using A1's ambient finite-scale packing bound. Positive packing numbers agree literally with the printed logarithmic quotient. No finite power bound is added as a model assumption. This clarification, like the other source repairs above, remains subject to independent semantic review.
