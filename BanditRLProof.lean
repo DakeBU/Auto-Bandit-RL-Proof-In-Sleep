@@ -647,3 +647,8 @@ import BanditRLProof.Algorithms.CUCBConditionalMGF
 import BanditRLProof.Algorithms.CUCBConcentration
 import BanditRLProof.Algorithms.CUCBConfidence
 import BanditRLProof.Algorithms.CUCBNiceEvent
+import BanditRLProof.Algorithms.CUCBCharge
+import BanditRLProof.Algorithms.CUCBTriggerMGF
+import BanditRLProof.Algorithms.CUCBChargedMGF
+import BanditRLProof.Algorithms.CUCBChargedConditional
+import BanditRLProof.Algorithms.CUCBChargedConcentration

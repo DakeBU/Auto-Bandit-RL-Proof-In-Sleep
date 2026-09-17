@@ -28,7 +28,7 @@ Boundary correction in the source proof display: the complement of the non-stric
 ## Remaining source work
 
 - Assemble the finite feasible-action, trigger-probability, score/smoothness and approximation-oracle model. The existing generic trajectory does not itself impose all source model properties.
-- Construct the normalized analysis-counter recursion, prove its predictability, and derive charged-trigger lower tails from the actual environment law.
+- Normalized counter recursion and actual charged-trigger lower tails are now implemented; see CUCB-CHARGED-TRIGGER-PROGRESS.md. Source model assembly, deterministic-trigger almost-sure bridge and exact sufficient-sampling event union remain.
 - Prove actual/mean reward expectation identity, the source impossible-case lemma and sufficient-sampling count bound.
 - Complete both exact regret endpoints, the noisy combinatorial final canary, independent semantic review, shared mappings and all-ten-topic ICLR evidence.
 

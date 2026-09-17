@@ -82,3 +82,4 @@ import Tests.HOORateCanary
 import Tests.CUCBThresholdCanary
 import Tests.CUCBTrajectoryCanary
 import Tests.CUCBConcentrationCanary
+import Tests.CUCBChargeCanary
