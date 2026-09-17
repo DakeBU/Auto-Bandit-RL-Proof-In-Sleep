@@ -123,6 +123,9 @@ import BanditRLProof.HOOCantorModel
 import BanditRLProof.HOOLevels
 import BanditRLProof.HOOPacking
 import BanditRLProof.HOODimension
+import BanditRLProof.HOOPartition
+import BanditRLProof.Algorithms.HOORegretPartition
+import BanditRLProof.Algorithms.HOOExpectedRegret
 import BanditRLProof.HeavyTailFixedTilt
 import BanditRLProof.HeavyTailConfidence
 import BanditRLProof.HeavyTailPowerSum
