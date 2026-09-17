@@ -20,7 +20,25 @@ provided lambda*2B_s<=1 for every s<n. This exact fixed-prefix one-sided
 inequality is `truncated_sum_tail`. Integrability of all exponentials is derived
 from boundedness of the transformed variables, not assumed for raw X.
 
-## Remaining paper derivation (not yet Lean-certified)
+## Fixed-prefix confidence and causal policy (compiled)
+
+`HeavyTailConfidence.truncated_mean_tail` now derives the two-sided mean tail
+directly from the raw moments, independence and common mean. Its radius is
+the explicit bias sum plus `2sqrt(VL)+bL`, divided by the positive sample count.
+This is slightly sharper than the conservative paper bound used below; the
+algorithm still uses radius 8a. `HeavyTailPowerSum.sum_shifted_rpow_le` proves
+the fractional-power bias summation by Bernoulli's inequality and telescoping.
+
+`Algorithms.ArmStreamPolicy` constructs a measurable causal history process
+using existing reward streams, pull counts and history extension. Its UCB
+specialization equals the existing UCB histories. `HeavyTailHistory` computes
+sample-index truncation solely from the observed history and proves exact
+equality to the consumed latent prefix. `HeavyTailUCB` implements the explicit
+conservative schedule, round-robin initialization and maximal observed index.
+The confidence radius tuning, adaptive-count probability and regret assembly
+remain open. These compiled interfaces do not mark this topic complete.
+
+## Remaining paper derivation (not yet fully Lean-certified)
 
 Take B_s=(u(s+1)/L)^(1/p), L=log(1/delta)>0, and independent samples with
 common mean mu. Integral comparison bounds sum_{s=1}^n s^-q <= p*n^(1/p).
@@ -76,7 +94,8 @@ at B=1, x=1, y=3/2 the transformed difference is 1>1/2.
 | Literal published robust-UCB constants | repair | printed union and threshold mismatch, visually checked |
 | Raw-moment truncation producers | proving -> compiled leaf candidate | pointwise, integral, centered MGF, independent one-sided tail |
 | Actual transformed prefix | compiled leaf candidate | direct use of frozen UCB stream-prefix proof |
-| Conservative robust-UCB adaptation | draft/proving | tune both tails, bias sums, causal policy, random count, expected regret |
+| Fixed-prefix two-sided mean confidence | compiled leaf candidate | explicit bias/variance sums; canonical power tuning still open |
+| Causal robust-UCB adaptation | proving | measurable actual history policy compiled; random count and expected regret open |
 | Reserved clipping transfer | partial candidate | actual-prefix corruption stability closed; clean clipped confidence open |
 | Controlled efficiency evaluation | frozen, not executed | independent isolated model runner and enforceable budget unavailable |
 

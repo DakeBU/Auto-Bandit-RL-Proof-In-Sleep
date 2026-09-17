@@ -31,3 +31,25 @@ example {Ω : Type*} {K : ℕ} (a : Ω → ActionTrace (Fin K))
 #print axioms BanditRLProof.HeavyTail.truncated_centered_mgf
 #print axioms BanditRLProof.HeavyTail.truncated_sum_tail
 #print axioms BanditRLProof.HeavyTail.truncate_not_unit_lipschitz
+
+-- Two observed rewards of the same arm: the first is discarded, the second retained.
+example : historyTruncatedMean (0 : Fin 2) (fun _ => 1) 1
+    (fun i => ((0 : Fin 2), if i.val = 0 then 3 else 1/2)) 0 = 1/4 := by
+  norm_num [historyTruncatedMean, historyAction, historyReward, sumRewards,
+    pullCount, truncate]
+
+-- The actual generated policy starts with both arms, even on nonzero reward streams.
+example : robustAction (K := 2) (by decide) (1/2) 9 (fun _ a => if a = 0 then 3 else -2) 1 = 1 := by
+  rw [robustAction_initialization _ _ _ _ _ (by decide)]
+  rfl
+
+example : (∑ s ∈ Finset.range 4, ((s : ℝ)+1)^((1/2 : ℝ)-1)) ≤
+    (4 : ℝ)^(1/2 : ℝ) / (1/2 : ℝ) :=
+  sum_shifted_rpow_le (1/2) (by norm_num) (by norm_num) 4
+
+#print axioms BanditRLProof.HeavyTail.truncated_mean_tail
+#print axioms BanditRLProof.HeavyTail.sum_shifted_rpow_le
+#print axioms BanditRLProof.ArmStreamPolicy.history_ucb
+#print axioms BanditRLProof.HeavyTail.historyTruncatedMean_latent
+#print axioms BanditRLProof.HeavyTail.measurable_robustAction
+#print axioms BanditRLProof.HeavyTail.robustAction_maximizes

@@ -115,6 +115,10 @@ import BanditRLProof.UCBSummability
 import BanditRLProof.HeavyTailTruncation
 import BanditRLProof.HeavyTailClipping
 import BanditRLProof.HeavyTailFixedTilt
+import BanditRLProof.HeavyTailConfidence
+import BanditRLProof.HeavyTailPowerSum
+import BanditRLProof.HeavyTailTuning
+import BanditRLProof.Algorithms.HeavyTailUCB
 import BanditRLProof.Exp3Potential
 import BanditRLProof.Exp3HedgeRegret
 import BanditRLProof.Exp3ImportanceWeighted

@@ -7,11 +7,13 @@ flowchart TD
   V --> G[Centered fixed-tilt MGF: compiled]
   E[Existing EXP3 exponential remainder] --> G
   G --> T[Independent fixed-prefix one-sided tail: compiled]
-  B --> U[Two-sided tuned confidence: OPEN]
+  B --> U[Two-sided mean confidence with explicit sums: compiled]
   T --> U
   H[Existing next-unused-coordinate prefix proof] --> P[Transformed actual prefix: compiled]
-  P --> A[Causal robust policy and adaptive-count tail: OPEN]
-  U --> A
+  P --> H2[Causal observed-history policy: compiled]
+  H2 --> A[Adaptive-count tail: OPEN]
+  U --> S[Source-shaped power-radius tuning: OPEN]
+  S --> A
   A --> R[Expected robust-UCB regret: OPEN]
   P --> C[Actual clipped-corruption stability: compiled]
   L[Clipping is 1-Lipschitz] --> C
