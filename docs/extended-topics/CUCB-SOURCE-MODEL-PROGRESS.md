@@ -30,8 +30,10 @@ This is the complete primitive model specification and parameter connection, not
 
 `Algorithms/CUCBRegretDecomposition` defines the actual under-sampled charged-gap weight, proves its nonnegativity and boundedness by Delta_max, and derives the pathwise signed gap decomposition. It proves measurability and integrability of actual under-sampled weights and sufficiently sampled success indicators. Taking expectations through the actual oracle-success producer and original signed regret identity cancels the negative oracle-failure credit exactly. No action selection independence or additional reward bound is used.
 
-`Algorithms/CUCBRegretTail` identifies each sufficient indicator expectation with the actual event probability, bounds the finite inverse-square sum by the proved Basel value pi^2/6, and proves R(H)<=E(actual under-sampled weight)+(2+I{p_*<1})m*Delta_max*pi^2/6. Zero horizon is included. This module retains the actual random under-sampled weight. Its refined integral replacement and Theorem1 assembly are now proved in the subsequent modules described below; Theorem2 remains open.
+`Algorithms/CUCBRegretTail` identifies each sufficient indicator expectation with the actual event probability, bounds the finite inverse-square sum by the proved Basel value pi^2/6, and proves R(H)<=E(actual under-sampled weight)+(2+I{p_*<1})m*Delta_max*pi^2/6. Zero horizon is included. This module retains the actual random under-sampled weight. Its refined integral replacement and Theorem1 assembly are now proved in the subsequent modules described below; Theorem2 is now compiled in the later polynomial modules.
 
 The actual refined under-count integral and repaired Theorem1 endpoint are now compiled; see CUCB-THEOREM-ONE-PROGRESS.md for the exact chain and limits.
 
-Remaining: both Theorem2 branches; concrete noisy non-singleton-superarm canary and deterministic/no-bad cases; independent source and repair acceptance; shared mappings and all-ten ICLR evidence. No merge or deployment is implied by local gates.
+Both exact Theorem2 branches have now compiled; see CUCB-THEOREM-TWO-PROGRESS.md.
+
+Remaining: concrete noisy non-singleton-superarm canary and deterministic/no-bad cases; independent source and repair acceptance; shared mappings and all-ten ICLR evidence. No merge or deployment is implied by local gates.

@@ -7,6 +7,7 @@ import BanditRLProof.Algorithms.CUCBRegretTail
 import BanditRLProof.Algorithms.CUCBRefinedRegret
 import BanditRLProof.Algorithms.CUCBPolynomialThreshold
 import BanditRLProof.PowerTailIntegral
+import BanditRLProof.Algorithms.CUCBPolynomialRegret
 
 /-! Source model and deterministic-trigger dependency checks.
 The required concrete noisy final-performance witness is still pending. -/
@@ -83,4 +84,13 @@ open BanditRLProof.CUCB
 #print axioms BanditRLProof.PowerTailIntegral.integral_power_tail_le
 #print axioms BanditRLProof.PowerTailIntegral.cutoff_balance
 #print axioms BanditRLProof.PowerTailIntegral.cutoff_objective
+#print axioms SourceModel.polynomial_threshold_integral_deterministic
+#print axioms SourceModel.polynomial_threshold_integral_probabilistic
+#print axioms SourceModel.polynomial_cutoff_regret_deterministic
+#print axioms SourceModel.polynomial_cutoff_regret_probabilistic
+#print axioms BanditRLProof.PowerTailIntegral.source_cutoff_normalization
+#print axioms SourceModel.approximationRegret_le_linear_gap
+#print axioms SourceModel.approximationRegret_one_le
+#print axioms SourceModel.theorem_two_deterministic
+#print axioms SourceModel.theorem_two_probabilistic
 end Tests.CUCBSourceModelCanary

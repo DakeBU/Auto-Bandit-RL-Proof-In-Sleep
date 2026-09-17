@@ -1,6 +1,6 @@
 # CUCB Theorem 1: compiled repaired endpoint
 
-2026-09-18. The frozen CUCB contract and all-ten-topic objective are unchanged. Theorem 1 is now compiled from the actual source-model trajectory, using the already disclosed normalized analysis-counter repair. This is not independent acceptance of the repair or completion of the combinatorial topic; both mandatory Theorem 2 branches and the concrete noisy final-performance canaries remain open.
+2026-09-18. The frozen CUCB contract and all-ten-topic objective are unchanged. Theorem 1 is now compiled from the actual source-model trajectory, using the already disclosed normalized analysis-counter repair. This is not independent acceptance of the repair or completion of the combinatorial topic; both mandatory Theorem 2 branches have since compiled (see CUCB-THEOREM-TWO-PROGRESS.md), while the concrete noisy final-performance canaries remain open.
 
 ## Source and exact endpoint
 
@@ -30,4 +30,4 @@ The gapThreshold is the frozen exact piecewise threshold through the proved scal
 
 ## Remaining acceptance
 
-Theorem 2 needs the exact polynomial envelope, constants, exponents and both deterministic/probabilistic branches. The frozen obligations also require genuinely noisy multiple non-singleton feasible-action canaries, distinct rewards, nontrivial triggering and approximation-oracle cases; independent source/repair semantic review; shared mappings; and all-topic ICLR evidence under the frozen protocol. Dependency audits and joint gates do not replace these. No merge, deployment, manuscript update or controlled evaluation is implied.
+Theorem 2 now has the exact polynomial envelope, constants, exponents and both compiled deterministic/probabilistic branches; see CUCB-THEOREM-TWO-PROGRESS.md. The frozen obligations also require genuinely noisy multiple non-singleton feasible-action canaries, distinct rewards, nontrivial triggering and approximation-oracle cases; independent source/repair semantic review; shared mappings; and all-topic ICLR evidence under the frozen protocol. Dependency audits and joint gates do not replace these. No merge, deployment, manuscript update or controlled evaluation is implied.

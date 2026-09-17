@@ -673,3 +673,6 @@ import BanditRLProof.FiniteGapCutoff
 import BanditRLProof.PowerTailIntegral
 import BanditRLProof.Algorithms.CUCBGapCutoff
 import BanditRLProof.Algorithms.CUCBPolynomialThreshold
+import BanditRLProof.PowerCutoffNormalization
+import BanditRLProof.Algorithms.CUCBPolynomialIntegral
+import BanditRLProof.Algorithms.CUCBPolynomialRegret
