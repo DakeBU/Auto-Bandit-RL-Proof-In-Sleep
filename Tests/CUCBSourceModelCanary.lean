@@ -5,6 +5,8 @@ import BanditRLProof.Algorithms.CUCBActualReward
 import BanditRLProof.Algorithms.CUCBSufficientSampling
 import BanditRLProof.Algorithms.CUCBRegretTail
 import BanditRLProof.Algorithms.CUCBRefinedRegret
+import BanditRLProof.Algorithms.CUCBPolynomialThreshold
+import BanditRLProof.PowerTailIntegral
 
 /-! Source model and deterministic-trigger dependency checks.
 The required concrete noisy final-performance witness is still pending. -/
@@ -70,4 +72,15 @@ open BanditRLProof.CUCB
 #print axioms SourceModel.sum_underSampledGap_le_refined
 #print axioms SourceModel.theorem_one_refined_regret
 #print axioms SourceModel.approximationRegret_nonpos_of_no_bad
+#print axioms BanditRLProof.FiniteGapLayerCake.sum_le_cutoff_integral
+#print axioms SourceModel.sum_card_underChargeTimes_le
+#print axioms SourceModel.approximationRegret_le_gap_cutoff
+#print axioms SourceModel.approximationRegret_le_large_cutoff
+#print axioms SourceModel.inverseAt_polynomial
+#print axioms SourceModel.gapThreshold_polynomial_deterministic
+#print axioms SourceModel.gapThreshold_polynomial_probabilistic
+#print axioms SourceModel.gapThreshold_polynomial_upper
+#print axioms BanditRLProof.PowerTailIntegral.integral_power_tail_le
+#print axioms BanditRLProof.PowerTailIntegral.cutoff_balance
+#print axioms BanditRLProof.PowerTailIntegral.cutoff_objective
 end Tests.CUCBSourceModelCanary

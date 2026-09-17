@@ -669,3 +669,7 @@ import BanditRLProof.FiniteGapLayerCake
 import BanditRLProof.Algorithms.CUCBUnderCount
 import BanditRLProof.Algorithms.CUCBUnderCountIntegral
 import BanditRLProof.Algorithms.CUCBRefinedRegret
+import BanditRLProof.FiniteGapCutoff
+import BanditRLProof.PowerTailIntegral
+import BanditRLProof.Algorithms.CUCBGapCutoff
+import BanditRLProof.Algorithms.CUCBPolynomialThreshold
