@@ -42,10 +42,10 @@ Shahverdikondori, Etesami and Kiyavash, AISTATS 2026, PMLR 300:3088–3096,
 was downloaded from the PMLR linked repository. Abstract, related work and
 model sections were read. Its unknown graph, bounded intervention size and
 cumulative regret setting differs from the frozen 2016 known-parent-law
-simple regret setting. Its full theorem proofs have **not** been audited;
-no constants, optimality claims or experimental results from it enter the
-contract. Complete a relevant recent-proof audit before closing the source
-obligation. The broader screen is recorded separately.
+simple regret setting. A subsequent targeted upper-bound proof inspection is recorded below;
+other theorem proofs and the external UCB dependency remain unaudited. No
+constants, optimality claims or experimental results from it enter the
+contract. The broader screen is recorded separately.
 
 ## New derivation versus proof status
 
@@ -53,3 +53,32 @@ The contract's three-node canary and compact-sublevel optimizer route are
 local constructions. They are not attributed to the source. The former has
 exact arithmetic checks; the latter remains a proposed proof route. Neither
 has been compiled in Lean. No source correction is hidden in a theorem name.
+
+## Additional recent-proof inspection
+
+Subsequently read 2026 Algorithm 1, Theorem 4.4 and its complete printed proof,
+the optimal-arm fraction calculation (8), Lemma 9.7 and its proof, and
+Lemma 2.1 including both intervention-size cases. Also inspected Lemma 9.6;
+PDF page 15 was rendered to verify the mixture and sampling formulas.
+This is a targeted upper-bound dependency inspection, not a complete audit
+of the paper's lower bounds, unknown-parent-size results or external UCB proof.
+
+Qualifications before any formal reuse:
+
+- The displayed optimal-arm fraction is a guaranteed lower bound, not generally
+  the exact fraction: multiple maximizing parent assignments can add arms.
+- A real-valued sample count needs ceiling and a nonempty small-horizon rule;
+  the written log(sqrt(T)) is zero at T=1. The finite-set implementation must
+  handle its cardinality cap and not ask UCB to select from an empty subset.
+- Lemma 9.6 asserts independence of the centered residual and selected mean.
+  Componentwise sub-Gaussian bounds do not supply that independence. Its
+  variance-proxy conclusion instead follows by conditioning on the selected
+  component, applying its centered MGF bound, then Hoeffding to the bounded
+  component mean. This repairs the argument without refuting the result.
+- Theorem 4.4 should condition on the sampled arm subset before invoking UCB,
+  then average over subsets; subset sampling must be independent of subsequent
+  rewards. Its external UCB guarantee is not itself reconstructed here.
+
+These findings reinforce the frozen line's requirements for actual sampling,
+nonempty action sets and derived probability identities. They do not transfer
+the 2026 cumulative-regret theorem into the 2016 simple-regret contract.
