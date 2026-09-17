@@ -17,7 +17,10 @@ flowchart TD
   A --> R[Conservative expected robust-UCB regret: compiled candidate]
   P --> C[Actual clipped-corruption stability: compiled]
   L[Clipping is 1-Lipschitz] --> C
-  C --> Q[Clean clipped confidence plus corruption: OPEN]
+  C --> Q[Clean clipped confidence plus corruption: compiled candidate]
+  M --> CB[Clipped bias and second moment: compiled]
+  CB --> CG[Shared centering MGF and two-sided assembly: compiled]
+  CG --> Q
 ```
 
 Exact compiled type/value references are emitted separately by

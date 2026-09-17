@@ -83,6 +83,28 @@ theorem truncated_sum_abs_tail {Ω : Type*} [MeasurableSpace Ω]
       simpa only [Finset.mul_sum] using hg)
   simpa only [Y, Finset.sum_apply] using hsum
 
+/-- Shared bias-plus-fluctuation assembly for independent transformed estimators.
+The truncation and clipping producers discharge both premises separately. -/
+theorem sum_mean_tail_of_centered {Ω : Type*} [MeasurableSpace Ω]
+    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)
+    (mean bias fluctuation δ : ℝ) (n : ℕ)
+    (hbias : |∑ i ∈ Finset.range n, ((∫ ω, Y i ω ∂μ) - mean)| ≤ bias)
+    (htail : μ.real {ω | fluctuation ≤
+      |∑ i ∈ Finset.range n, (Y i ω - ∫ ω, Y i ω ∂μ)|} ≤ δ) :
+    μ.real {ω | bias + fluctuation ≤ |(∑ i ∈ Finset.range n, Y i ω) - n*mean|} ≤ δ := by
+  refine (measureReal_mono ?_ (measure_ne_top _ _)).trans htail
+  intro ω hw
+  have hid : (∑ i ∈ Finset.range n, Y i ω) - n*mean =
+      (∑ i ∈ Finset.range n, (Y i ω - ∫ ω, Y i ω ∂μ)) +
+      ∑ i ∈ Finset.range n, ((∫ ω, Y i ω ∂μ) - mean) := by
+    simp only [Finset.sum_sub_distrib, Finset.sum_const, Finset.card_range, nsmul_eq_mul]
+    ring
+  have htri := abs_add_le (∑ i ∈ Finset.range n, (Y i ω - ∫ ω, Y i ω ∂μ))
+    (∑ i ∈ Finset.range n, ((∫ ω, Y i ω ∂μ) - mean))
+  simp only [Set.mem_setOf_eq] at hw ⊢
+  rw [hid] at hw
+  linarith
+
 /-- The bias is produced from the same raw moment hypotheses as the fluctuation.
 The common mean is a distributional assumption, not a confidence assumption. -/
 theorem truncated_sum_mean_tail {Ω : Type*} [MeasurableSpace Ω]
@@ -108,22 +130,8 @@ theorem truncated_sum_mean_tail {Ω : Type*} [MeasurableSpace Ω]
       (hB i) hε0 (hXm i) (hX i) (hm i) (hu i)
     rw [hmean i, abs_sub_comm] at h
     exact h
-  refine (measureReal_mono ?_ (by finiteness)).trans
+  exact sum_mean_tail_of_centered μ (fun i ω => truncate (B i) (X i ω)) mean _ _ _ n hbias
     (truncated_sum_abs_tail μ X B ε u b L n hXm hi hB hε hu0 hb hL hbound hm hu)
-  intro ω hw
-  have hid : (∑ i ∈ Finset.range n, truncate (B i) (X i ω)) - n * mean =
-      (∑ i ∈ Finset.range n,
-        (truncate (B i) (X i ω) - ∫ ω, truncate (B i) (X i ω) ∂μ)) +
-      ∑ i ∈ Finset.range n, ((∫ ω, truncate (B i) (X i ω) ∂μ) - mean) := by
-    simp only [Finset.sum_sub_distrib, Finset.sum_const, Finset.card_range, nsmul_eq_mul]
-    ring
-  have htri := abs_add_le
-    (∑ i ∈ Finset.range n,
-      (truncate (B i) (X i ω) - ∫ ω, truncate (B i) (X i ω) ∂μ))
-    (∑ i ∈ Finset.range n, ((∫ ω, truncate (B i) (X i ω) ∂μ) - mean))
-  simp only [Set.mem_setOf_eq] at hw ⊢
-  rw [hid] at hw
-  linarith
 
 /-- Fixed positive sample-size confidence for the actual truncated empirical mean. -/
 theorem truncated_mean_tail {Ω : Type*} [MeasurableSpace Ω]

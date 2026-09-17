@@ -1,27 +1,32 @@
 # Extended topics development packet
 
-This branch contains actual new mathematics and a partial formalization, not a
-completed heavy-tailed bandit algorithm theorem. Start with [the frozen
+This branch contains a compiled conservative robust-UCB expected-regret chain
+and an ongoing all-ten-topic program; zero topics have been accepted. Start with [the frozen
 protocol](PROTOCOL.md), [source audit](SOURCE-AUDIT.md), [derivation](DERIVATION.md),
 and [obligations](OBLIGATIONS.md).
 
 ## What is proved
 
-For raw absolute (1+epsilon)-moments, the Lean modules supply truncation bias,
-the truncated second moment, a centered fixed-tilt MGF, and independent-prefix
-one-sided concentration. Existing stream-consumption algebra identifies actual
-transformed observations with their latent prefix. The reserved transfer proves
-clipped-estimator corruption stability on the actual same action trace, and
-diagnoses why hard truncation cannot use the same stability argument.
+For raw absolute (1+epsilon)-moments, the Lean modules supply moment-derived
+two-sided confidence, radius tuning, a causal measurable robust-UCB policy,
+adaptive-count bounds and its expected pseudo-regret theorem. This is the
+documented conservative adaptation, not the unchanged printed constant theorem.
+
+The reserved clipping transfer now supplies its own moment bias and second
+moment, consumes the shared centered-MGF and mean-error assembly, and derives
+scheduled confidence under arbitrary adaptive prefix selection and an L1
+corruption budget on the consumed prefix. Existing stream-consumption algebra
+identifies the estimator with actual observed rewards along the same action
+trace. See [the transfer derivation](CLIPPING-TRANSFER.md) for scope and gates.
 
 ## What is not proved
 
-The complete original or repaired robust-UCB expected-regret theorem remains
-open. A source-fixed confidence schedule needs two-sided tuning, a measurable
-causal algorithm, adaptive-count peeling, count/regret assembly, and independent
-semantic review. The clipped clean estimator's moment-based confidence theorem
-also remains open. There are no controlled productivity results and no new
-algorithmic rate claim.
+The unchanged printed robust-UCB constant statement, full source adjudication,
+recent-paper proof audit, independent semantic review and topic acceptance remain
+open. Clipping stability does not establish corruption-robust regret or compare
+two policies reacting differently to corruption. The other nine required topic
+endpoints and the all-topic evaluation remain open. There are no controlled
+productivity results and no new algorithmic rate claim.
 
 ## Reproduce
 

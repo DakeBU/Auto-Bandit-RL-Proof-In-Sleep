@@ -114,6 +114,7 @@ import BanditRLProof.ConcentrationVariance
 import BanditRLProof.UCBSummability
 import BanditRLProof.HeavyTailTruncation
 import BanditRLProof.HeavyTailClipping
+import BanditRLProof.HeavyTailClippedTransfer
 import BanditRLProof.HeavyTailFixedTilt
 import BanditRLProof.HeavyTailConfidence
 import BanditRLProof.HeavyTailPowerSum

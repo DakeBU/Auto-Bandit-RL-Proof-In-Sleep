@@ -60,10 +60,14 @@ def analyze(graph: dict, commit: str) -> dict:
         "endpoint_complete": False,
         "conservative_algorithm_endpoint_compiled": ENDPOINT in nodes,
         "conservative_algorithm_endpoint": ENDPOINT,
+        "clipping_transfer_endpoints_compiled": all(n in nodes for n in (
+            "BanditRLProof.HeavyTail.arm_corrupted_clipped_mean_tail",
+            "BanditRLProof.HeavyTail.observed_corrupted_clipped_mean_tail",
+        )),
         "accepted_topics": 0,
         "mandatory_open_obligations": [
             "literal source discrepancy adjudication and recent-source audit",
-            "clean clipped-confidence transfer producer",
+            "clipping transfer semantic acceptance and descriptive evidence review",
             "independent semantic review",
             "shared topic mapping and all-ten acceptance",
             "all-topic controlled evaluation protocol and valid runs",

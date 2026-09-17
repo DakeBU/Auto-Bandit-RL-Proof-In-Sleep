@@ -53,6 +53,35 @@ theorem bounded_centered_mgf {Ω : Type*} [MeasurableSpace Ω]
     _ ≤ 1 + tilt^2 * v := by gcongr
     _ ≤ Real.exp (tilt^2 * v) := by linarith [Real.add_one_le_exp (tilt^2 * v)]
 
+/-- Shared centering producer for bounded transformed rewards. Both hard
+truncation and clipping supply their own second-moment proofs to this interface. -/
+theorem bounded_centering_mgf {Ω : Type*} [MeasurableSpace Ω]
+    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : Ω → ℝ)
+    (B v tilt : ℝ) (hYm : Measurable Y) (hbound : ∀ ω, |Y ω| ≤ B)
+    (hv : (∫ ω, (Y ω)^2 ∂μ) ≤ v)
+    (hsmall : |tilt| * (2 * B) ≤ 1) :
+    Concentration.HasMGFUpperBoundAt
+      (fun ω => Y ω - ∫ ω, Y ω ∂μ) tilt (tilt^2 * v) μ := by
+  have hYi : Integrable Y μ := (integrable_const B).mono' hYm.aestronglyMeasurable
+    (Filter.Eventually.of_forall fun ω => by
+      simpa only [Real.norm_eq_abs] using hbound ω)
+  have hmeanB : |∫ ω, Y ω ∂μ| ≤ B := by
+    have h := norm_integral_le_of_norm_le_const (μ := μ) (f := Y)
+      (C := B) (Filter.Eventually.of_forall fun ω => by
+        simpa only [Real.norm_eq_abs] using hbound ω)
+    simpa only [Real.norm_eq_abs, probReal_univ, mul_one] using h
+  apply bounded_centered_mgf μ _ (2 * B) v tilt
+    (hYm.sub measurable_const) _ _ _ hsmall
+  · intro ω
+    calc
+      |Y ω - ∫ ω, Y ω ∂μ| ≤ |Y ω| + |∫ ω, Y ω ∂μ| := abs_sub _ _
+      _ ≤ 2 * B := by linarith [hbound ω]
+  · rw [integral_sub hYi (integrable_const _)]
+    simp
+  · rw [← ProbabilityTheory.variance_eq_integral hYm.aemeasurable]
+    exact (ProbabilityTheory.variance_le_expectation_sq hYm.aestronglyMeasurable).trans
+      hv
+
 /-- Moment assumptions produce a centered truncated MGF at every admissible
 tilt. Signed rewards require the factor 2 in the centering range. -/
 theorem truncated_centered_mgf {Ω : Type*} [MeasurableSpace Ω]
@@ -63,28 +92,10 @@ theorem truncated_centered_mgf {Ω : Type*} [MeasurableSpace Ω]
     (hsmall : |tilt| * (2 * B) ≤ 1) :
     Concentration.HasMGFUpperBoundAt
       (fun ω => truncate B (X ω) - ∫ ω, truncate B (X ω) ∂μ)
-      tilt (tilt^2 * (u * B^(1-ε))) μ := by
-  let Y := fun ω => truncate B (X ω)
-  have hYm : Measurable Y := (measurable_truncate B).comp hXm
-  have hYi : Integrable Y μ := (integrable_const B).mono' hYm.aestronglyMeasurable
-    (Filter.Eventually.of_forall fun ω => by
-      simpa only [Real.norm_eq_abs] using abs_truncate_le B (X ω) hB.le)
-  have hmeanB : |∫ ω, Y ω ∂μ| ≤ B := by
-    have h := norm_integral_le_of_norm_le_const (μ := μ) (f := Y)
-      (C := B) (Filter.Eventually.of_forall fun ω => by
-        simpa only [Real.norm_eq_abs] using abs_truncate_le B (X ω) hB.le)
-    simpa only [Real.norm_eq_abs, probReal_univ, mul_one] using h
-  apply bounded_centered_mgf μ _ (2 * B) (u * B^(1-ε)) tilt
-    (hYm.sub measurable_const) _ _ _ hsmall
-  · intro ω
-    calc
-      |Y ω - ∫ ω, Y ω ∂μ| ≤ |Y ω| + |∫ ω, Y ω ∂μ| := abs_sub _ _
-      _ ≤ 2 * B := by linarith [abs_truncate_le B (X ω) hB.le]
-  · rw [integral_sub hYi (integrable_const _)]
-    simp [Y]
-  · rw [← ProbabilityTheory.variance_eq_integral hYm.aemeasurable]
-    exact (ProbabilityTheory.variance_le_expectation_sq hYm.aestronglyMeasurable).trans
-      (integral_sq_truncate_le μ X B ε u hB hε hXm hm hu)
+      tilt (tilt^2 * (u * B^(1-ε))) μ :=
+  bounded_centering_mgf μ _ B _ tilt ((measurable_truncate B).comp hXm)
+    (fun ω => abs_truncate_le B (X ω) hB.le)
+    (integral_sq_truncate_le μ X B ε u hB hε hXm hm hu) hsmall
 
 /-- Independent composition preserves the individual admissible tilt, instead
 of imposing a range bound on the whole sum. -/
