@@ -665,3 +665,7 @@ import BanditRLProof.Algorithms.CUCBThresholdTail
 import BanditRLProof.Algorithms.CUCBSufficientSampling
 import BanditRLProof.Algorithms.CUCBRegretDecomposition
 import BanditRLProof.Algorithms.CUCBRegretTail
+import BanditRLProof.FiniteGapLayerCake
+import BanditRLProof.Algorithms.CUCBUnderCount
+import BanditRLProof.Algorithms.CUCBUnderCountIntegral
+import BanditRLProof.Algorithms.CUCBRefinedRegret

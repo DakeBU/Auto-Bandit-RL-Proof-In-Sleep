@@ -4,6 +4,7 @@ import BanditRLProof.Algorithms.CUCBOracleSuccess
 import BanditRLProof.Algorithms.CUCBActualReward
 import BanditRLProof.Algorithms.CUCBSufficientSampling
 import BanditRLProof.Algorithms.CUCBRegretTail
+import BanditRLProof.Algorithms.CUCBRefinedRegret
 
 /-! Source model and deterministic-trigger dependency checks.
 The required concrete noisy final-performance witness is still pending. -/
@@ -58,4 +59,15 @@ open BanditRLProof.CUCB
 #print axioms SourceModel.approximationRegret_le_underSampled_add_sufficient
 #print axioms SourceModel.sum_inverse_square_le
 #print axioms SourceModel.approximationRegret_le_underSampled_add_source_tail
+#print axioms ChargeData.counters_injOn_charges
+#print axioms ChargeData.card_charges_le
+#print axioms SourceModel.card_underChargeGapTail_le
+#print axioms SourceModel.badGap_bounds
+#print axioms BanditRLProof.FiniteGapLayerCake.sum_eq_layerCake
+#print axioms BanditRLProof.FiniteGapLayerCake.sum_le_refined_integral
+#print axioms SourceModel.underChargeWeight_le_refined
+#print axioms SourceModel.sum_underSampledGap_eq_weights
+#print axioms SourceModel.sum_underSampledGap_le_refined
+#print axioms SourceModel.theorem_one_refined_regret
+#print axioms SourceModel.approximationRegret_nonpos_of_no_bad
 end Tests.CUCBSourceModelCanary
