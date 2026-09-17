@@ -92,6 +92,21 @@ instance law_markov : IsMarkovKernel law := by
 
 example : IsProbabilityMeasure (trajectory 1 (1/2) law) := inferInstance
 
+theorem law_bounded (v : Node) : ∀ᵐ y ∂law v, y ∈ Set.Icc (0 : ℝ) 1 := by
+  change ∀ᵐ y ∂rewardLaw v, y ∈ Set.Icc (0 : ℝ) 1
+  simp only [rewardLaw, ae_add_measure_iff]
+  constructor
+  · simp
+  · split_ifs <;> norm_num
+
+-- Both tails use the actual eight-round adaptive process and random visit count.
+example (lower : Bool) :
+    (trajectory 1 (1/2) law) {Y | 0 < visits (history 1 (1/2) Y 8) [false] ∧
+      Real.sqrt (2 * (visits (history 1 (1/2) Y 8) [false] : ℝ) * 1) ≤
+        regionDeviation 1 (1/2) law [false] 8 lower Y} ≤
+      (8 : ENNReal) * ENNReal.ofReal (Real.exp (-4*1)) :=
+  region_deviation_confidence 1 (1/2) law law_bounded [false] 8 lower 1 (by norm_num)
+
 example (n : ℕ) :
     condDistrib (fun Y : ℕ → ℝ => Y (n+1)) (Preorder.frestrictLe n) (trajectory 1 (1/2) law)
       =ᵐ[(trajectory 1 (1/2) law).map (Preorder.frestrictLe n)] stepKernel 1 (1/2) law n :=
@@ -103,5 +118,7 @@ example (Y : ℕ → ℝ) : Function.Injective (action 1 (1/2) Y) := action_inje
 #print axioms BanditRLProof.HOO.trajectory_condDistrib
 #print axioms BanditRLProof.HOO.bValue_eq
 #print axioms BanditRLProof.HOO.near_optimal_region
+#print axioms BanditRLProof.HOO.region_deviation_confidence
+#print axioms BanditRLProof.HOO.trajectory_initial_law
 
 end HOOCausalCanary

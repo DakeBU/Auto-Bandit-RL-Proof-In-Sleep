@@ -57,4 +57,19 @@ theorem trajectory_prefix_compProd (ν ρ : ℝ) (law : Kernel Node ℝ) [IsMark
       (trajectory ν ρ law).map (fun Y => (Preorder.frestrictLe n Y, Y (n+1))) :=
   Kernel.map_frestrictLe_trajMeasure_compProd_eq_map_trajMeasure
 
+/-- The chronological trajectory starts with exactly the first selected node's
+reward law. No artificial reward is inserted at index zero. -/
+theorem trajectory_initial_law (ν ρ : ℝ) (law : Kernel Node ℝ) [IsMarkovKernel law] :
+    (trajectory ν ρ law).map (fun Y => Y 0) = law (action ν ρ (fun _ => 0) 0) := by
+  have he : (fun Y : ℕ → ℝ => Y 0) =
+      (fun h : (i : Finset.Iic 0) → ℝ => h ⟨0, by simp⟩) ∘ Preorder.frestrictLe 0 := rfl
+  rw [he, ← Measure.map_map (by fun_prop) (by fun_prop), trajectory, Kernel.trajMeasure,
+    Measure.map_comp _ _ (Preorder.measurable_frestrictLe 0),
+    Kernel.traj_map_frestrictLe_of_le (le_refl 0), Measure.deterministic_comp_eq_map,
+    Measure.map_map (by fun_prop) (Preorder.measurable_frestrictLe₂ (X := fun _ : ℕ => ℝ) (le_refl 0)),
+    Measure.map_map ((measurable_pi_apply _).comp
+      (Preorder.measurable_frestrictLe₂ (X := fun _ : ℕ => ℝ) (le_refl 0)))
+      (by fun_prop)]
+  convert (Measure.map_id (μ := law (action ν ρ (fun _ => 0) 0))) using 1
+
 end BanditRLProof.HOO
