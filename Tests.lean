@@ -78,3 +78,4 @@ import Tests.HeavyTailClippedCanary
 import Tests.HOOCausalCanary
 import Tests.HOOCantorCanary
 import Tests.HOORegretCanary
+import Tests.HOORateCanary

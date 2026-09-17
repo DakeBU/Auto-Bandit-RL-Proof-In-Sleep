@@ -126,6 +126,11 @@ import BanditRLProof.HOODimension
 import BanditRLProof.HOOPartition
 import BanditRLProof.Algorithms.HOORegretPartition
 import BanditRLProof.Algorithms.HOOExpectedRegret
+import BanditRLProof.Algorithms.HOORegretAlgebra
+import BanditRLProof.Algorithms.HOODepthOptimization
+import BanditRLProof.Algorithms.HOORate
+import BanditRLProof.Algorithms.HOOActualRegret
+import BanditRLProof.HOOCantorRate
 import BanditRLProof.HeavyTailFixedTilt
 import BanditRLProof.HeavyTailConfidence
 import BanditRLProof.HeavyTailPowerSum
