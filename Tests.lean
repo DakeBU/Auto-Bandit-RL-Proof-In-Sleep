@@ -86,3 +86,4 @@ import Tests.CUCBChargeCanary
 import Tests.CUCBSourceModelCanary
 
 import Tests.CUCBFiniteModelCanary
+import Tests.CausalOrderedLawCanary

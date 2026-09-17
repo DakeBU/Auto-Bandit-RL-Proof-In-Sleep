@@ -681,3 +681,4 @@ import BanditRLProof.Algorithms.CUCBPolynomialRegret
 import BanditRLProof.Algorithms.CUCBFiniteExample
 import BanditRLProof.Algorithms.CUCBFiniteSourceExample
 import BanditRLProof.Algorithms.CUCBFiniteDeterministicExample
+import BanditRLProof.Algorithms.CausalOrderedLaw
