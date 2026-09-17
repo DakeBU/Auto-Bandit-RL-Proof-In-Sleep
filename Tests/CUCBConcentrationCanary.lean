@@ -1,6 +1,6 @@
 import BanditRLProof.Algorithms.CUCBConfidence
 
-/-! Visibility regression and axiom audits of actual-path concentration.
+/-! Visibility regression and dependency audits of actual-path concentration.
 The noisy final-regret model required by the contract is still separate. -/
 namespace Tests.CUCBConcentrationCanary
 open BanditRLProof.CUCB
