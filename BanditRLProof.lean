@@ -684,3 +684,4 @@ import BanditRLProof.Algorithms.CUCBFiniteDeterministicExample
 import BanditRLProof.Algorithms.CausalOrderedLaw
 import BanditRLProof.Algorithms.CausalMarginalLaw
 import BanditRLProof.Algorithms.CausalImportance
+import BanditRLProof.Algorithms.CausalAllocation
