@@ -27,7 +27,12 @@ def analyze(graph: dict, commit: str) -> dict:
     if graph.get("extraction", {}).get("source") != "compiled-environment":
         raise ValueError("a compiled-environment export is required")
     nodes = {n["name"]: n for n in graph["nodes"]}
-    new = {n for n in nodes if n.startswith(PREFIXES)}
+    # Lean may generate private auxiliaries outside the public namespace prefix.
+    # Source ownership, not spelling alone, determines whether an edge is reuse.
+    added_paths = set(git("diff", "--name-only", "--diff-filter=A", BASE, commit,
+                          "--", "BanditRLProof").splitlines())
+    new = {n for n, node in nodes.items()
+           if n.startswith(PREFIXES) or node.get("source", {}).get("file") in added_paths}
     if not new:
         raise ValueError("graph does not contain the new declarations")
     edges = [e for e in graph["edges"] if e["source"] in new]
@@ -64,6 +69,7 @@ def analyze(graph: dict, commit: str) -> dict:
             "all-topic controlled evaluation protocol and valid runs",
         ],
         "new_declarations": sorted(new),
+        "new_source_modules": sorted(added_paths),
         "direct_frozen_library_references": reused,
         "direct_edges": edges,
         "semantics": "type and value constant occurrences, not teaching edges or utility scores",

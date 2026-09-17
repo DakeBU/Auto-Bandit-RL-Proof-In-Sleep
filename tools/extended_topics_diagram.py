@@ -13,10 +13,22 @@ base = {
     "BanditRLProof.UCB.sumRewards_rewardFromArmStream_eq_armPrefixSum",
     "BanditRLProof.Concentration.exp_le_one_add_self_add_sq_of_abs_le_one",
     "BanditRLProof.Concentration.HasMGFUpperBoundAt.measure_ge_le_exp_add",
+    "BanditRLProof.UCB.meanGap_le_two_radius_of_confidenceScore_max",
+    "BanditRLProof.UCB.natCast_pullCount_le_threshold_add_selectedLargePullCount_indicator_sum",
+    "BanditRLProof.integral_realMeanRegret_eq_sum_gap_mul_integral_pullCount",
 }
+focus = {prefix + name for name in (
+    "robust_expected_regret", "robust_integral_count_le", "robust_lintegral_count_le",
+    "lintegral_pullCount_threshold", "robust_large_count_tail",
+    "robust_selected_small_radius_tail", "robust_selected_gap_le", "robustMean_tail",
+    "arm_adaptive_mean_tail", "scheduled_adaptive_mean_tail", "scheduled_mean_tail",
+    "truncated_mean_tail", "truncated_sum_mean_tail", "truncated_sum_abs_tail",
+    "fixed_mgf_abs_tail", "truncated_centered_mgf", "independent_sum_mgf",
+    "tuned_radius_le", "scheduled_tail_sum_le_two",
+)}
 edges = [e for e in r["direct_edges"]
          if (e["kind"] == "value" or e.get("also_in_value"))
-         and (e["target"].startswith(prefix) or e["target"] in base)
+         and e["source"] in focus and (e["target"] in focus or e["target"] in base)
          and "_proof_" not in e["source"] and "_proof_" not in e["target"]]
 names = sorted({e[k] for e in edges for k in ("source", "target")})
 ids = {name: f"n{i}" for i, name in enumerate(names)}
