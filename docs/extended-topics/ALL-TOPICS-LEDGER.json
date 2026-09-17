@@ -414,30 +414,33 @@
     {
       "id": "causal",
       "mandatory": true,
-      "status": "draft",
+      "status": "contract-frozen; producers-open",
       "topic_complete": false,
-      "setting": "Known causal graph, observational/interventional laws and identification scope to audit",
+      "setting": "Finite observed DAG; known intervention reward-parent laws; binary reward; covered fixed allocation; fixed-budget simple regret",
       "source": {
-        "candidate": "Lattimore--Lattimore--Reid, NeurIPS 2016; version/hash not yet frozen",
+        "candidate": "Lattimore--Lattimore--Reid, NIPS 2016 main and official supplement",
         "url": "https://arxiv.org/abs/1606.03203",
         "full_audit_complete": false,
-        "frozen": false
+        "frozen": true,
+        "hash_manifest": "docs/extended-topics/causal-source-hashes.json",
+        "audit": "docs/extended-topics/CAUSAL-SOURCE-AUDIT.md",
+        "recent_audit_status": "2026 primary model inspected; proof audit pending"
       },
-      "algorithm": "Source causal best-intervention algorithm",
-      "representative_endpoint": "Complete simple-regret or sample-complexity guarantee with causal information gain",
-      "endpoint_frozen": false,
+      "algorithm": "Lattimore--Lattimore--Reid 2016 Algorithm 2: truncated importance estimates and actual argmax recommendation",
+      "representative_endpoint": "Theorem 3 general-graph simple regret with explicit conservative coefficient 2 sqrt(2)+7; uniform and optimal allocation; parallel allocation bridge",
+      "endpoint_frozen": true,
       "mandatory_obligations": [
         {
           "id": "classic_and_recent_primary_source_audit",
-          "status": "pending"
+          "status": "partial; selected classic proof inspected, recent full proof pending"
         },
         {
           "id": "source_version_hash_and_definition_context",
-          "status": "pending"
+          "status": "documented"
         },
         {
           "id": "exact_algorithm_model_assumptions_and_endpoint_freeze",
-          "status": "pending"
+          "status": "documented"
         },
         {
           "id": "all_mathematical_producers",
@@ -498,6 +501,18 @@
         {
           "id": "complete learning guarantee",
           "status": "open"
+        },
+        {
+          "id": "uniform allocation coverage and m <= K",
+          "status": "open"
+        },
+        {
+          "id": "convex design objective and attained covered optimum",
+          "status": "open"
+        },
+        {
+          "id": "parallel rare-action count and corrected normalized design bridge",
+          "status": "open"
         }
       ],
       "reuse_candidates": [
@@ -513,9 +528,13 @@
       ],
       "acceptance_evidence": [],
       "current_blockers": [
-        "Source/endpoint audit incomplete"
+        "Actual DAG/intervention probability producers and full performance proof remain open",
+        "Recent primary proof audit and independent semantic review pending"
       ],
-      "next_action": "Audit full source and distinguish causal identification from generic history dependence"
+      "next_action": "Construct finite DAG interventional law and common reward-parent factorization in shared library; complete recent proof audit",
+      "contract": "docs/extended-topics/CAUSAL-CONTRACT.md",
+      "diagnostic": "docs/extended-topics/causal_canary_diagnostic.py",
+      "endpoint_note": "Source repairs explicit; exact finite canary diagnostic passed except log cutoff is numerical. No causal Lean endpoint or acceptance yet."
     },
     {
       "id": "multi-agent",
