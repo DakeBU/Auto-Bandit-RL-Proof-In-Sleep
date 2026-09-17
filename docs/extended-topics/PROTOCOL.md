@@ -1,5 +1,13 @@
 # Extended topics: frozen development and evaluation contract
 
+**Scope amendment, 2026-09-17:** the user has now made ALL TEN directory topics
+mandatory under a persistent active Goal. `ALL-TOPICS-LEDGER.json` governs this
+expanded program. The two-target controlled design below is retained as an
+unexecuted historical protocol; it does not delimit the new target set. A v2
+all-topic evaluation protocol must be frozen before any formal runs. The primary
+heavy-tail contract and all unresolved obligations remain in force. Earlier
+triage decisions to defer a topic describe ordering only, not exemptions.
+
 Freeze date: 2026-09-17, before new interface implementation. Base library:
 `eedcda1db4d84f6bd69ec6ee50e174f6cf4056ac`; Lean/Mathlib 4.29.1 and the committed
 lake manifest. Online Learning branches are excluded. This is a descriptive
