@@ -17,13 +17,16 @@
 
 for x>=0 and b>0. `sum_pathCount` and `sum_pathNoise` identify these variables with the learner's actual masked statistics; the final declarations `observed_sum_upper_tail` and `observed_sum_lower_tail` expose those statistics directly.
 
-`Algorithms/CUCBConfidence.path_deviation_confidence` peels over counts 1 through n. For each direction separately and L>=0, the probability of positive count T and directional centered deviation at least sqrt(T L/2) is at most n exp(-L). No conditioning on the random count is used. This is the required adaptive statistical producer, but conversion to the exact simultaneous CUCB nice-event bound still remains.
+`Algorithms/CUCBConfidence.path_deviation_confidence` peels over counts 1 through n. For each direction separately and L>=0, the probability of positive count T and directional centered deviation at least sqrt(T L/2) is at most n exp(-L). No conditioning on the random count is used. This adaptive statistical producer is now consumed by the exact source nice-event theorem below.
+
+`Algorithms/CUCBNiceEvent` implements source Definitions 10/11 and Lemma 1 (JMLR 2016, p.13): the measurable simultaneous nice event before decision round t=n+1 has complement probability at most 2m/t^2. The proof explicitly handles zero observations, radius clipping at one, both directions and all arms. It translates actual centered sums to empirical means with the positive-count square-root identity, then applies the preceding path producer with L=3 log(t). No conditional concentration hypothesis is added. `upperIndex_of_confidence` also proves optimism and excess at most twice the clipped radius on this event.
+
+Boundary correction in the source proof display: the complement of the non-strict nice event uses strict deviation > radius. The displayed >= event in source Eq.(4) cannot in general discard the clipped-at-one branch at equality. The Lean proof uses the actual strict complement throughout; empirical and true means lie in [0,1], so strict deviation above one is impossible. This preserves the stated Lemma 1 and does not weaken its target.
 
 `Tests/CUCBConcentrationCanary` checks that arbitrary hidden outcomes and reward values do not alter the oracle input, and audits the new probability chain's axioms. It is not the nondegenerate noisy final-performance canary required by the contract.
 
 ## Remaining source work
 
-- Convert centered-sum confidence to the exact empirical-mean radius with L=3 log(t), union over arms and both tails, and handle zero observations and radius clipping explicitly.
 - Assemble the finite feasible-action, trigger-probability, score/smoothness and approximation-oracle model. The existing generic trajectory does not itself impose all source model properties.
 - Construct the normalized analysis-counter recursion, prove its predictability, and derive charged-trigger lower tails from the actual environment law.
 - Prove actual/mean reward expectation identity, the source impossible-case lemma and sufficient-sampling count bound.

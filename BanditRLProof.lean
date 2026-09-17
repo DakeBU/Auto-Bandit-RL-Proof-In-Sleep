@@ -646,3 +646,4 @@ import BanditRLProof.Algorithms.CUCBRoundMGF
 import BanditRLProof.Algorithms.CUCBConditionalMGF
 import BanditRLProof.Algorithms.CUCBConcentration
 import BanditRLProof.Algorithms.CUCBConfidence
+import BanditRLProof.Algorithms.CUCBNiceEvent
