@@ -657,3 +657,5 @@ import BanditRLProof.Algorithms.CUCBFeedbackModel
 import BanditRLProof.Algorithms.CUCBSourceModel
 import BanditRLProof.Algorithms.CUCBImpossibleCase
 import BanditRLProof.Algorithms.CUCBGapInverse
+import BanditRLProof.Algorithms.CUCBOracleMeasurable
+import BanditRLProof.Algorithms.CUCBOracleSuccess

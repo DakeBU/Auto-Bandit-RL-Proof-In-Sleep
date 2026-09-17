@@ -1,5 +1,6 @@
 import BanditRLProof.Algorithms.CUCBImpossibleCase
 import BanditRLProof.Algorithms.CUCBGapInverse
+import BanditRLProof.Algorithms.CUCBOracleSuccess
 
 /-! Source model and deterministic-trigger dependency checks.
 The required concrete noisy final-performance witness is still pending. -/
@@ -24,4 +25,10 @@ open BanditRLProof.CUCB
 #print axioms SourceModel.inverseAt_strictMono
 #print axioms SourceModel.gapThreshold_antitone
 #print axioms SourceModel.gapThreshold_intervalIntegrable
+#print axioms SourceModel.continuous_score
+#print axioms SourceModel.continuous_optimum
+#print axioms SourceModel.measurableSet_path_oracleSuccess
+#print axioms SourceModel.condExp_oracle_success
+#print axioms SourceModel.initial_oracle_success
+#print axioms SourceModel.oracle_failure_probability
 end Tests.CUCBSourceModelCanary
