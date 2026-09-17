@@ -121,6 +121,8 @@ import BanditRLProof.Algorithms.HOOConfidence
 import BanditRLProof.Algorithms.HOOExpectedVisits
 import BanditRLProof.HOOCantorModel
 import BanditRLProof.HOOLevels
+import BanditRLProof.HOOPacking
+import BanditRLProof.HOODimension
 import BanditRLProof.HeavyTailFixedTilt
 import BanditRLProof.HeavyTailConfidence
 import BanditRLProof.HeavyTailPowerSum

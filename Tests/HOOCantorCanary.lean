@@ -25,5 +25,9 @@ example (N : ℕ) :
 #print axioms BanditRLProof.HOO.CantorModel.expected_poor_visits
 #print axioms BanditRLProof.HOO.CantorModel.law_not_dirac
 #print axioms BanditRLProof.HOO.RegularCovering.exists_finite_packing_bound
+#print axioms BanditRLProof.HOO.RegularCovering.packingNumber_attained
+#print axioms BanditRLProof.HOO.RegularCovering.nearOptimalNodes_card_le_packing
+#print axioms BanditRLProof.HOO.RegularCovering.uniform_nearOptimalPacking_le
+#print axioms BanditRLProof.HOO.RegularCovering.nearOptimalNodes_power_bound
 
 end HOOCantorCanary
