@@ -1,4 +1,5 @@
 import BanditRLProof.Algorithms.CUCBImpossibleCase
+import BanditRLProof.Algorithms.CUCBGapInverse
 
 /-! Source model and deterministic-trigger dependency checks.
 The required concrete noisy final-performance witness is still pending. -/
@@ -18,4 +19,9 @@ open BanditRLProof.CUCB
 #print axioms SourceModel.maxPositiveGap_eq_zero_of_no_bad
 #print axioms SourceModel.counters_zero_of_no_bad
 
+#print axioms SourceModel.inverseAt_unique
+#print axioms SourceModel.inverseAt_gap
+#print axioms SourceModel.inverseAt_strictMono
+#print axioms SourceModel.gapThreshold_antitone
+#print axioms SourceModel.gapThreshold_intervalIntegrable
 end Tests.CUCBSourceModelCanary

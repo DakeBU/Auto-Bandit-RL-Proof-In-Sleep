@@ -656,3 +656,4 @@ import BanditRLProof.Algorithms.CUCBDeterministicTrigger
 import BanditRLProof.Algorithms.CUCBFeedbackModel
 import BanditRLProof.Algorithms.CUCBSourceModel
 import BanditRLProof.Algorithms.CUCBImpossibleCase
+import BanditRLProof.Algorithms.CUCBGapInverse
