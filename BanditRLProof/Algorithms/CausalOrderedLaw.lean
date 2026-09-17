@@ -109,4 +109,3 @@ theorem intervention_incompatible_zero {V : Type*} {n : ℕ} (g : GraphModel V n
   simp [ha, hx]
 
 end BanditRLProof.Causal
-
