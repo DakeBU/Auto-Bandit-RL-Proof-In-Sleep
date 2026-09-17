@@ -1,0 +1,21 @@
+import BanditRLProof.Algorithms.CUCBImpossibleCase
+
+/-! Source model and deterministic-trigger dependency checks.
+The required concrete noisy final-performance witness is still pending. -/
+namespace Tests.CUCBSourceModelCanary
+open BanditRLProof.CUCB
+
+#print axioms cucbTrajectory_ae_round_property
+#print axioms ChargeData.counters_le_observations_ae_of_one
+#print axioms FeedbackModel.minTrigger_pos
+#print axioms FeedbackModel.minTrigger_le_one
+#print axioms FeedbackModel.deterministic_counter_bound
+#print axioms FeedbackModel.charged_observation_tail
+#print axioms FeedbackModel.nice_event_probability
+#print axioms SourceModel.inverseGap_spec
+#print axioms SourceModel.chargeData_sufficient
+#print axioms SourceModel.not_bad_of_nice_and_sufficient_observations
+#print axioms SourceModel.maxPositiveGap_eq_zero_of_no_bad
+#print axioms SourceModel.counters_zero_of_no_bad
+
+end Tests.CUCBSourceModelCanary

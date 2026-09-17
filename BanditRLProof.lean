@@ -652,3 +652,7 @@ import BanditRLProof.Algorithms.CUCBTriggerMGF
 import BanditRLProof.Algorithms.CUCBChargedMGF
 import BanditRLProof.Algorithms.CUCBChargedConditional
 import BanditRLProof.Algorithms.CUCBChargedConcentration
+import BanditRLProof.Algorithms.CUCBDeterministicTrigger
+import BanditRLProof.Algorithms.CUCBFeedbackModel
+import BanditRLProof.Algorithms.CUCBSourceModel
+import BanditRLProof.Algorithms.CUCBImpossibleCase

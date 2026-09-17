@@ -28,6 +28,8 @@ for lambda>=0 and p<=the actual observation probability. The proof integrates th
 
 Here N is the recursive normalized analysis counter, while T is the learner's actual masked observation count. The proof first bounds charged successes, then uses their pathwise domination by T. It chooses lambda=log(2), and proves the numerical exponent via mathlib's certified log(2)<0.6931471808 bound. It does not condition on the existence of a stopping time, or assume an MGF/tail for the selected subsequence.
 
+The subsequent CUCB-SOURCE-MODEL-PROGRESS.md records completed full primitive model specification, actual minimum-trigger/gap identification, deterministic-trigger AE bridge and impossible-case proof. The remaining list below records the boundary of this earlier increment.
+
 ## Validation and remaining obligations
 
 `Tests/CUCBChargeCanary` checks the actual optional charge selects the under-sampled arm in the mixed p=1/p=1/2 example, no counters increment when all actions are good, and exactly n total increments occur in n bad rounds. It audits dependency assumptions of the entire new chain. This remains an analysis regression, not the contract's noisy full-performance canary.
