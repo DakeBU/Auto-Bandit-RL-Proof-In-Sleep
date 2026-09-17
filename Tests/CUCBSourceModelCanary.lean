@@ -1,3 +1,4 @@
+import BanditRLProof.Algorithms.CUCBFiniteConcavity
 import BanditRLProof.Algorithms.CUCBImpossibleCase
 import BanditRLProof.Algorithms.CUCBGapInverse
 import BanditRLProof.Algorithms.CUCBOracleSuccess
@@ -93,4 +94,6 @@ open BanditRLProof.CUCB
 #print axioms SourceModel.approximationRegret_one_le
 #print axioms SourceModel.theorem_two_deterministic
 #print axioms SourceModel.theorem_two_probabilistic
+#print axioms SourceModel.finite_power_sum_le
+#print axioms SourceModel.underChargeCount_power_sum_le
 end Tests.CUCBSourceModelCanary
