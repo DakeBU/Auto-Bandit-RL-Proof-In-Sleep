@@ -642,3 +642,7 @@ import BanditRLProof.Algorithms.CUCBThreshold
 import BanditRLProof.Algorithms.CUCBHistory
 import BanditRLProof.Algorithms.CUCBTrajectory
 import BanditRLProof.Algorithms.CUCBObservationMGF
+import BanditRLProof.Algorithms.CUCBRoundMGF
+import BanditRLProof.Algorithms.CUCBConditionalMGF
+import BanditRLProof.Algorithms.CUCBConcentration
+import BanditRLProof.Algorithms.CUCBConfidence

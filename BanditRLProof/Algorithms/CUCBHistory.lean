@@ -115,6 +115,27 @@ theorem oracleInput_causal {m : ℕ} (Y Z : ℕ → Feedback m) (n : ℕ)
   have hs := statistics_causal Y Z n h i
   simp only [oracleInput, upperIndex, empiricalMean, hs.1, hs.2]
 
+/-- Masked latent values and the aggregate reward cannot leak into CUCB's
+choice: only matching masks and matching observed arm values are needed. -/
+theorem oracleInput_visible {m : ℕ} (Y Z : ℕ → Feedback m) (n : ℕ)
+    (hm : ∀t<n, ∀i, (Y t).1 i=(Z t).1 i)
+    (hx : ∀t<n, ∀i, (Y t).1 i=true → (Y t).2.1 i=(Z t).2.1 i) :
+    oracleInput Y n=oracleInput Z n := by
+  have hc (i : Fin m) : observationCount Y n i=observationCount Z n i := by
+    apply Finset.sum_congr rfl
+    intro t ht
+    rw [hm t (Finset.mem_range.mp ht) i]
+  have hs (i : Fin m) : observationSum Y n i=observationSum Z n i := by
+    apply Finset.sum_congr rfl
+    intro t ht
+    have htm := hm t (Finset.mem_range.mp ht) i
+    by_cases ho : (Y t).1 i=true
+    · simp only [observation, ho, ← htm, ↓reduceIte, hx t (Finset.mem_range.mp ht) i ho]
+    · simp [observation, ← htm, ho]
+  funext i
+  apply Subtype.ext
+  simp only [oracleInput, upperIndex, empiricalMean, hc i, hs i]
+
 theorem measurable_observation {m : ℕ} (i : Fin m) :
     Measurable (fun z : Feedback m => observation z i) := by
   unfold observation

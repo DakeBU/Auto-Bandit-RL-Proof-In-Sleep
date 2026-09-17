@@ -24,6 +24,10 @@ theorem oracleInput_zero {m : ℕ} (Y : ℕ → Feedback m) :
 
 variable {A : Type*} [MeasurableSpace A] {m : ℕ}
 
+instance cucbPath_standardBorel [StandardBorelSpace A] : StandardBorelSpace (ℕ → Round A m) :=
+  @StandardBorelSpace.pi_countable ℕ inferInstance (fun _ => Round A m)
+    (fun _ => inferInstance) (fun _ => inferInstance)
+
 noncomputable def roundKernel (oracle : Kernel (Input m) A)
     (environment : Kernel A (Feedback m)) : Kernel (Input m) (Round A m) :=
   oracle ⊗ₖ environment.comap Prod.snd measurable_snd
