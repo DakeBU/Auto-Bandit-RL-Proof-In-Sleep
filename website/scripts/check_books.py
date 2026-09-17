@@ -77,6 +77,22 @@ def check_books(output):
             errors.append(f"planned book displays compiled coverage: {book['id']}")
     for topic in wiki["topics"]:
         source = (output / f"banditrlwiki/topics/{topic['id']}/index.html").read_text(encoding="utf-8")
+        mapping = topic.get("formalization")
+        if mapping:
+            setting = next((r for r in registry["settings"] if r["id"] == topic["id"]), {})
+            expected = {"declaration:" + ref["name"] for ref in mapping["declarations"]}
+            if set(setting.get("node_ids", [])) != expected or setting.get("formalization") != mapping:
+                errors.append(f"topic source mapping differs from canonical registry: {topic['id']}")
+            if setting.get("status") != "mapped-review-pending" or mapping.get("semantic_status") != "review-pending":
+                errors.append(f"topic mapping promotes unreviewed source acceptance: {topic['id']}")
+            if 'id="formalization"' not in source or mapping["source"]["sha256"] not in source:
+                errors.append(f"topic source provenance is absent from rendered page: {topic['id']}")
+            for ref in mapping["declarations"]:
+                node = nodes.get("declaration:" + ref["name"], {})
+                if node.get("statement_sha256") != ref["statement_sha256"] or topic["id"] not in node.get("settings", []):
+                    errors.append(f"topic declaration hash or membership drift: {ref['name']}")
+                if ref["name"] not in source:
+                    errors.append(f"topic declaration missing from rendered page: {ref['name']}")
         if source.count("Pending source verification</dd>") != len(wiki["comparison_fields"]):
             errors.append(f"topic lacks the full pending comparison contract: {topic['id']}")
     return errors

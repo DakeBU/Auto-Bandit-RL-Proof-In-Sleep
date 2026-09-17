@@ -71,10 +71,10 @@ class BookRegistryTests(unittest.TestCase):
                              {k: v for k, v in other.items() if k != "status"})
             self.assertEqual("stated" if node["status"] == "stated" else "compiled", other["status"])
 
-    def test_new_topics_have_no_claimed_results_or_compiled_counts(self):
+    def test_unmapped_topics_have_no_claimed_results_or_compiled_counts(self):
         registry = self.registry(verified=True)
         self.assertEqual(10, len(self.wiki["topics"]))
-        topic_ids = {t["id"] for t in self.wiki["topics"]}
+        topic_ids = {t["id"] for t in self.wiki["topics"] if not t.get("formalization")}
         for setting in registry["settings"]:
             if setting["id"] in topic_ids:
                 self.assertEqual([], setting["node_ids"])
@@ -123,6 +123,38 @@ class BookRegistryTests(unittest.TestCase):
             self.assertIn("Reinforcement Learning Book", breadcrumb)
         finally:
             site.SITE_CHAPTERS, site.SITE_BOOKS, site.SITE_TEXTBOOK_SPINE, site.SITE_REGISTRY = saved
+
+    def test_cucb_mapping_uses_canonical_nodes_without_preview_promotion(self):
+        registry = self.registry()
+        topic = next(t for t in self.wiki["topics"] if t["id"] == "combinatorial")
+        setting = next(t for t in registry["settings"] if t["id"] == "combinatorial")
+        self.assertEqual("mapped-review-pending", setting["status"])
+        expected = {"declaration:" + r["name"] for r in topic["formalization"]["declarations"]}
+        self.assertEqual(expected, set(setting["node_ids"]))
+        nodes = membership_index(registry)
+        for key in expected:
+            self.assertEqual("source", nodes[key]["status"])
+            self.assertIn("combinatorial", nodes[key]["settings"])
+
+    def test_topic_mapping_rejects_stale_or_dangling_references(self):
+        for mutation, message in [("hash", "statement hash drift"), ("name", "unknown topic declaration"), ("duplicate", "duplicate topic declaration")]:
+            with self.subTest(mutation=mutation):
+                wiki = copy.deepcopy(self.wiki)
+                refs = next(t for t in wiki["topics"] if t["id"] == "combinatorial")["formalization"]["declarations"]
+                if mutation == "hash":
+                    refs[0]["statement_sha256"] = "0" * 64
+                elif mutation == "name":
+                    refs[0]["name"] = "Not.A.Declaration"
+                else:
+                    refs.append(copy.deepcopy(refs[0]))
+                with self.assertRaisesRegex(ValueError, message):
+                    self.registry(wiki=wiki)
+
+    def test_topic_mapping_cannot_claim_independent_acceptance(self):
+        wiki = copy.deepcopy(self.wiki)
+        next(t for t in wiki["topics"] if t["id"] == "combinatorial")["formalization"]["semantic_status"] = "accepted"
+        with self.assertRaisesRegex(ValueError, "pending independent review"):
+            self.registry(wiki=wiki)
 
 
 if __name__ == "__main__":

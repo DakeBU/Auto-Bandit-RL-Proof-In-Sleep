@@ -15,6 +15,38 @@ def unique(items, label):
     return result
 
 
+def topic_formalization_nodes(topic, nodes):
+    """Resolve provisional source mappings without promoting semantic acceptance."""
+    mapping = topic.get("formalization")
+    if mapping is None:
+        return []
+    if mapping.get("schema_version") != 1 or mapping.get("semantic_status") != "review-pending":
+        raise ValueError("topic formalization requires explicit pending independent review")
+    if not re.fullmatch(r"[0-9a-f]{40}", mapping.get("source_commit", "")):
+        raise ValueError("topic formalization needs an exact source commit")
+    source = mapping.get("source", {})
+    if not source.get("title") or not source.get("url", "").startswith("https://") or not re.fullmatch(r"[0-9a-f]{64}", source.get("sha256", "")):
+        raise ValueError("topic formalization needs a frozen primary source")
+    if not mapping.get("title") or not mapping.get("scope") or not mapping.get("qualifications"):
+        raise ValueError("topic formalization must disclose scope and qualifications")
+    refs = mapping.get("declarations", [])
+    result = []
+    for ref in refs:
+        node_id = "declaration:" + ref["name"]
+        if node_id not in nodes:
+            raise ValueError(f"unknown topic declaration: {node_id}")
+        if ref.get("statement_sha256") != nodes[node_id]["statement_sha256"]:
+            raise ValueError(f"topic statement hash drift: {node_id}")
+        if ref.get("role") not in {"model", "algorithm", "producer", "endpoint", "canary", "reuse"} or not ref.get("source_locator"):
+            raise ValueError(f"missing topic declaration role or source locator: {node_id}")
+        if node_id in result:
+            raise ValueError(f"duplicate topic declaration: {node_id}")
+        result.append(node_id)
+    if not result:
+        raise ValueError("empty topic formalization mapping")
+    return sorted(result)
+
+
 def build_registry(config, chapters, spine, wiki, declarations, verified, commit):
     if config.get("schema_version") != 1:
         raise ValueError("unsupported book registry schema")
@@ -85,13 +117,17 @@ def build_registry(config, chapters, spine, wiki, declarations, verified, commit
             if ref not in chapter_registry:
                 raise ValueError(f"unknown related chapter: {ref}")
         node_ids = sorted({"declaration:" + name for ref in case_refs for name in cases[ref]["lean"]["declarations"]})
+        if is_topic:
+            node_ids = topic_formalization_nodes(setting, nodes)
         settings[setting_id] = {
             "id": setting_id, "title": setting["title"],
             "kind": setting.get("kind", "setting"),
             "url": f"banditrlwiki/topics/{setting_id}/index.html" if is_topic else f"banditrlwiki/settings/{setting_id}/index.html",
             "case_refs": case_refs, "node_ids": node_ids,
-            "status": "source-audit-pending" if is_topic else "case-indexed",
+            "status": ("mapped-review-pending" if node_ids else "source-audit-pending") if is_topic else "case-indexed",
         }
+        if is_topic and setting.get("formalization"):
+            settings[setting_id]["formalization"] = setting["formalization"]
         for node_id in node_ids:
             if node_id not in nodes:
                 raise ValueError(f"unknown setting declaration: {node_id}")

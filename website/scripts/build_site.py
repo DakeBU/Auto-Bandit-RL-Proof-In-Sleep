@@ -985,6 +985,24 @@ def render_node_memberships(page_path: str, name: str) -> str:
 <details><summary>Canonical node identity</summary><code>{html.escape(node['id'])}</code><p>Reading membership is not a proof dependency. Exact assumptions remain in the Lean statement.</p></details></div>'''
 
 
+def render_topic_formalization(page_path: str, topic: dict[str, Any]) -> str:
+    mapping = topic.get("formalization")
+    if not mapping:
+        return ""
+    source = mapping["source"]
+    rows = []
+    for ref in mapping["declarations"]:
+        node = SITE_MEMBERSHIPS["declaration:" + ref["name"]]
+        rows.append(f'<tr><td>{html.escape(ref["role"])}</td><td><a href="{href_from(page_path, node["url"])}"><code>{html.escape(ref["name"])}</code></a></td><td>{html.escape(ref["source_locator"])}</td></tr>')
+    qualifications = ''.join(f'<li>{html.escape(item)}</li>' for item in mapping["qualifications"])
+    return f'''<section id="formalization"><h2>{html.escape(mapping['title'])}</h2>
+<p>{html.escape(mapping['scope'])}</p>
+<p><a href="{html.escape(source['url'], quote=True)}">{html.escape(source['title'])}</a> · {html.escape(source['authors'])} · {source['year']}</p>
+<details><summary>Frozen source provenance</summary><p>PDF SHA-256: <code>{source['sha256']}</code></p><p>Compiled source snapshot: <code>{mapping['source_commit']}</code>. The page-wide banner separately reports this site's current Lean gate.</p></details>
+<ul>{qualifications}</ul><div class="table-wrap"><table><thead><tr><th>Role</th><th>Canonical Lean declaration</th><th>Source or instance scope</th></tr></thead><tbody>{''.join(rows)}</tbody></table></div>
+<p><a href="{href_from(page_path, 'lean-graph/index.html')}">Shared graph</a> · <a href="{href_from(page_path, 'books/registry.json')}">Shared reference registry</a></p></section>'''
+
+
 def render_topic_cards(page_path: str) -> str:
     cards = []
     for topic in SITE_BANDITRLWIKI.get("topics", []):
@@ -1034,12 +1052,15 @@ def build_books(output: Path, verified: bool, generated_at: str) -> None:
         fields = ''.join(f'<div><dt>{html.escape(field["label"])}</dt><dd>{html.escape(field["pending"])}</dd></div>' for field in SITE_BANDITRLWIKI["comparison_fields"])
         related = ''.join(f'<li><a href="{href_from(page_path, chapters[ref]["url"])}">{html.escape(chapters[ref]["title"])}</a></li>' for ref in topic["related_chapters"])
         related += ''.join(f'<li><a href="{href_from(page_path, f"banditrlwiki/cases/{ref}/index.html")}">{html.escape(ref)}</a></li>' for ref in topic["related_cases"])
+        formalization = render_topic_formalization(page_path, topic)
+        lean_evidence = "Provisional source-qualified references below; independent semantic review pending." if formalization else "No result is claimed by this topic placeholder."
         body = f'''<nav class="book-breadcrumb" aria-label="Breadcrumb"><a href="{href_from(page_path, 'banditrlwiki/index.html#topics')}">BanditRLwiki · Settings and methods</a></nav>
 <section class="hero" id="topic"><p class="eyebrow">{html.escape(topic['kind'])} · Source audit pending</p><h1 class="page-title">{html.escape(topic['title'])}</h1><p class="lede">{html.escape(topic['summary'])}</p><p class="topic-tags">{' · '.join(html.escape(t) for t in topic['tags'])}</p></section>
 <section id="comparison-contract"><h2>Result contract to fill</h2><p>A separate record is required for each exact model and guarantee. Compare bounds only when assumptions, feedback, metrics and parameter regimes match.</p><dl class="comparison-contract">{fields}</dl></section>
-<section id="evidence"><h2>Three separate evidence ledgers</h2><ul><li>Literature results: pending primary-source verification.</li><li>Lean mapping: no result is claimed by this topic placeholder.</li><li>Literature open problems: none asserted. Missing formalization is not an open mathematical problem.</li></ul></section>
+<section id="evidence"><h2>Three separate evidence ledgers</h2><ul><li>Literature results: pending primary-source verification.</li><li>Lean mapping: {lean_evidence}</li><li>Literature open problems: none asserted. Missing formalization is not an open mathematical problem.</li></ul></section>
+{formalization}
 <section id="related"><h2>Related reading</h2>{'<ul>' + related + '</ul>' if related else '<p>Related routes await review.</p>'}<p>Related links suggest starting points; they are not evidence for an unverified setting.</p><p><a href="{href_from(page_path, 'books/bandit/index.html#extended-chapters')}">Back to Extended Chapters</a></p></section>'''
-        write_page(output, page_path, layout(page_path, topic["title"], body, [("topic", "Topic"), ("comparison-contract", "Result contract"), ("evidence", "Evidence"), ("related", "Related reading")], "banditrlwiki", verified, generated_at))
+        write_page(output, page_path, layout(page_path, topic["title"], body, [("topic", "Topic"), ("comparison-contract", "Result contract"), ("evidence", "Evidence")] + ([("formalization", "Lean mapping")] if formalization else []) + [("related", "Related reading")], "banditrlwiki", verified, generated_at))
 
 
 def render_book_map(
