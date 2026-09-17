@@ -2,6 +2,7 @@ import BanditRLProof.Algorithms.CUCBImpossibleCase
 import BanditRLProof.Algorithms.CUCBGapInverse
 import BanditRLProof.Algorithms.CUCBOracleSuccess
 import BanditRLProof.Algorithms.CUCBActualReward
+import BanditRLProof.Algorithms.CUCBSufficientSampling
 
 /-! Source model and deterministic-trigger dependency checks.
 The required concrete noisy final-performance witness is still pending. -/
@@ -39,4 +40,14 @@ open BanditRLProof.CUCB
 #print axioms SourceModel.approximationRegret_zero
 #print axioms SourceModel.approximationRegret_eq_mean
 #print axioms SourceModel.approximationRegret_eq_gap_sum
+#print axioms probabilistic_threshold_crossing
+#print axioms FeedbackModel.globalMinTrigger_pos
+#print axioms FeedbackModel.globalMinTrigger_eq_one_iff
+#print axioms SourceModel.trigger_shortfall_slice
+#print axioms SourceModel.trigger_shortfall_probability
+#print axioms SourceModel.trigger_shortfall_probability_of_one
+#print axioms SourceModel.trigger_shortfall_union_probability
+#print axioms SourceModel.sufficient_successful_charge_subset
+#print axioms SourceModel.sufficient_successful_charge_probability_of_all_one
+#print axioms SourceModel.sufficient_successful_charge_probability_source
 end Tests.CUCBSourceModelCanary

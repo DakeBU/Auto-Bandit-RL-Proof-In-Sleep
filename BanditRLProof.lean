@@ -661,3 +661,5 @@ import BanditRLProof.Algorithms.CUCBOracleMeasurable
 import BanditRLProof.Algorithms.CUCBOracleSuccess
 import BanditRLProof.Algorithms.CUCBRewardKernel
 import BanditRLProof.Algorithms.CUCBActualReward
+import BanditRLProof.Algorithms.CUCBThresholdTail
+import BanditRLProof.Algorithms.CUCBSufficientSampling
