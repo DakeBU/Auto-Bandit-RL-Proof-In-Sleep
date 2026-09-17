@@ -35,10 +35,17 @@ specialization equals the existing UCB histories. `HeavyTailHistory` computes
 sample-index truncation solely from the observed history and proves exact
 equality to the consumed latent prefix. `HeavyTailUCB` implements the explicit
 conservative schedule, round-robin initialization and maximal observed index.
-The confidence radius tuning, adaptive-count probability and regret assembly
-remain open. These compiled interfaces do not mark this topic complete.
+`HeavyTailTuning` now closes the radius tuning, `HeavyTailScheduledConfidence`
+the finite-count union, and `HeavyTailArmLaw` the actual stationary reward-law
+transport. `HeavyTailAdaptive` connects observed indices, initialization and
+large-count selection. `HeavyTailExpectedCount` closes the expected count bound.
+`HeavyTailRegret.robust_expected_regret` closes the conservative finite-horizon
+expected pseudo-regret endpoint. Mean integrability is derived from the raw
+moment, and no confidence or MGF premise is supplied to this endpoint.
+Semantic review, full source adjudication and acceptance evidence are separate
+obligations; this compilation does not mark the topic complete.
 
-## Remaining paper derivation (not yet fully Lean-certified)
+## Conservative derivation (algorithm-to-regret chain compiled)
 
 Take B_s=(u(s+1)/L)^(1/p), L=log(1/delta)>0, and independent samples with
 common mean mu. Integral comparison bounds sum_{s=1}^n s^-q <= p*n^(1/p).
@@ -64,16 +71,20 @@ L_i = ceil(4 * 16^(p/(p-1)) * u^(1/(p-1)) * log(max(T,2))
 If its previous count is at least L_i, its twice-radius is strictly smaller
 than Delta_i. Selection then requires failure of the optimal arm's lower
 confidence or arm i's upper confidence. Peeling over possible counts gives
-failure probability <=2(t-1)t^-4<=2t^-3, without claiming that a random prefix
-has the same distribution as an independent fixed-size sample. The count budget
-is E N_i(T)<=L_i+2, so
+failure probability <=4t*max(t,2)^-4: each arm uses a two-sided bound with
+factor 2. This corrects the earlier draft's factor 2 union, which would require
+separate one-sided producers. No random prefix is asserted to have the law of
+an independent fixed-size sample. For t>=2, 4/t^3 <= 1/(t-1)-1/t, while t=0
+contributes zero and t=1 contributes 1/4. The entire finite tail sum is at most
+2, as proved in `HeavyTailTailSum`. The count budget remains E N_i(T)<=L_i+2, so
 
 E R_T <= sum_{i:Delta_i>0} Delta_i (L_i+2).
 
-This is a complete pen-and-paper route with conservative constants, awaiting
-independent semantic review and the remaining Lean steps. It is NOT the current
-formal endpoint. The source-faithful original-constant endpoint remains in
-repair; the adaptation has its own contract and must not overwrite that history.
+The compiled `gapThreshold` uses the algebraically equivalent quotient form
+ceil(L_T / (Delta/(16*u^(1/p)))^(p/(p-1)))+1. This conservative route is now
+compiled, but awaits semantic review and joint acceptance. The source-faithful
+original-constant endpoint remains in repair; the adaptation has its own
+contract and must not overwrite that history.
 
 ## Transfer derivation and boundary
 
@@ -94,8 +105,8 @@ at B=1, x=1, y=3/2 the transformed difference is 1>1/2.
 | Literal published robust-UCB constants | repair | printed union and threshold mismatch, visually checked |
 | Raw-moment truncation producers | proving -> compiled leaf candidate | pointwise, integral, centered MGF, independent one-sided tail |
 | Actual transformed prefix | compiled leaf candidate | direct use of frozen UCB stream-prefix proof |
-| Fixed-prefix two-sided mean confidence | compiled leaf candidate | explicit bias/variance sums; canonical power tuning still open |
-| Causal robust-UCB adaptation | proving | measurable actual history policy compiled; random count and expected regret open |
+| Fixed-prefix two-sided mean confidence | compiled candidate | raw moments, explicit sums and power tuning closed |
+| Causal robust-UCB adaptation | compiled endpoint candidate | actual history, random count, finite tail sum and expected regret closed; review and acceptance pending |
 | Reserved clipping transfer | partial candidate | actual-prefix corruption stability closed; clean clipped confidence open |
 | Controlled efficiency evaluation | frozen, not executed | independent isolated model runner and enforceable budget unavailable |
 

@@ -15,7 +15,8 @@ import subprocess
 
 BASE = "eedcda1db4d84f6bd69ec6ee50e174f6cf4056ac"
 ROOT = Path(__file__).resolve().parents[1]
-PREFIX = "BanditRLProof.HeavyTail."
+PREFIXES = ("BanditRLProof.HeavyTail.", "BanditRLProof.ArmStreamPolicy.")
+ENDPOINT = "BanditRLProof.HeavyTail.robust_expected_regret"
 
 
 def git(*args: str) -> str:
@@ -26,7 +27,7 @@ def analyze(graph: dict, commit: str) -> dict:
     if graph.get("extraction", {}).get("source") != "compiled-environment":
         raise ValueError("a compiled-environment export is required")
     nodes = {n["name"]: n for n in graph["nodes"]}
-    new = {n for n in nodes if n.startswith(PREFIX)}
+    new = {n for n in nodes if n.startswith(PREFIXES)}
     if not new:
         raise ValueError("graph does not contain the new declarations")
     edges = [e for e in graph["edges"] if e["source"] in new]
@@ -52,12 +53,15 @@ def analyze(graph: dict, commit: str) -> dict:
         "controlled_effect_estimate": None,
         "observable_tokens": None,
         "endpoint_complete": False,
+        "conservative_algorithm_endpoint_compiled": ENDPOINT in nodes,
+        "conservative_algorithm_endpoint": ENDPOINT,
+        "accepted_topics": 0,
         "mandatory_open_obligations": [
-            "two-sided bias-plus-tail tuning at source thresholds",
-            "measurable causal robust-UCB history and policy",
-            "adaptive fixed-count tail union with actual estimator",
-            "selection-count and expected-regret assembly",
+            "literal source discrepancy adjudication and recent-source audit",
+            "clean clipped-confidence transfer producer",
             "independent semantic review",
+            "shared topic mapping and all-ten acceptance",
+            "all-topic controlled evaluation protocol and valid runs",
         ],
         "new_declarations": sorted(new),
         "direct_frozen_library_references": reused,

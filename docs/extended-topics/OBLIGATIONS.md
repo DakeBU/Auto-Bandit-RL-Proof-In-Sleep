@@ -11,10 +11,10 @@ flowchart TD
   T --> U
   H[Existing next-unused-coordinate prefix proof] --> P[Transformed actual prefix: compiled]
   P --> H2[Causal observed-history policy: compiled]
-  H2 --> A[Adaptive-count tail: OPEN]
-  U --> S[Source-shaped power-radius tuning: OPEN]
+  H2 --> A[Adaptive-count tail: compiled]
+  U --> S[Sample-index power-radius tuning: compiled]
   S --> A
-  A --> R[Expected robust-UCB regret: OPEN]
+  A --> R[Conservative expected robust-UCB regret: compiled candidate]
   P --> C[Actual clipped-corruption stability: compiled]
   L[Clipping is 1-Lipschitz] --> C
   C --> Q[Clean clipped confidence plus corruption: OPEN]

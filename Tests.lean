@@ -73,3 +73,4 @@ import Tests.MOSSPeelingCanary
 import Tests.MOSSStreamCanary
 import Tests.SubgaussianMinimaxCanary
 import Tests.HeavyTailCanary
+import Tests.HeavyTailRegretCanary
