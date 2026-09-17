@@ -76,3 +76,4 @@ import Tests.HeavyTailCanary
 import Tests.HeavyTailRegretCanary
 import Tests.HeavyTailClippedCanary
 import Tests.HOOCausalCanary
+import Tests.HOOCantorCanary
