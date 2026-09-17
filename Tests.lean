@@ -84,3 +84,5 @@ import Tests.CUCBTrajectoryCanary
 import Tests.CUCBConcentrationCanary
 import Tests.CUCBChargeCanary
 import Tests.CUCBSourceModelCanary
+
+import Tests.CUCBFiniteModelCanary

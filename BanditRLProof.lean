@@ -677,3 +677,7 @@ import BanditRLProof.Algorithms.CUCBPolynomialThreshold
 import BanditRLProof.PowerCutoffNormalization
 import BanditRLProof.Algorithms.CUCBPolynomialIntegral
 import BanditRLProof.Algorithms.CUCBPolynomialRegret
+
+import BanditRLProof.Algorithms.CUCBFiniteExample
+import BanditRLProof.Algorithms.CUCBFiniteSourceExample
+import BanditRLProof.Algorithms.CUCBFiniteDeterministicExample
