@@ -1,6 +1,7 @@
 import BanditRLProof.Algorithms.CUCBImpossibleCase
 import BanditRLProof.Algorithms.CUCBGapInverse
 import BanditRLProof.Algorithms.CUCBOracleSuccess
+import BanditRLProof.Algorithms.CUCBActualReward
 
 /-! Source model and deterministic-trigger dependency checks.
 The required concrete noisy final-performance witness is still pending. -/
@@ -31,4 +32,11 @@ open BanditRLProof.CUCB
 #print axioms SourceModel.condExp_oracle_success
 #print axioms SourceModel.initial_oracle_success
 #print axioms SourceModel.oracle_failure_probability
+#print axioms SourceModel.integrable_round_reward
+#print axioms SourceModel.integral_joint_reward_eq_score
+#print axioms SourceModel.integrable_actual_reward
+#print axioms SourceModel.cumulative_actual_reward_expectation
+#print axioms SourceModel.approximationRegret_zero
+#print axioms SourceModel.approximationRegret_eq_mean
+#print axioms SourceModel.approximationRegret_eq_gap_sum
 end Tests.CUCBSourceModelCanary
