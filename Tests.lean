@@ -80,3 +80,4 @@ import Tests.HOOCantorCanary
 import Tests.HOORegretCanary
 import Tests.HOORateCanary
 import Tests.CUCBThresholdCanary
+import Tests.CUCBTrajectoryCanary

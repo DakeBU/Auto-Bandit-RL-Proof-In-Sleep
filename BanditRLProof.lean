@@ -639,3 +639,6 @@ import BanditRLProof.Algorithms.MOSSHistoryLaw
 import BanditRLProof.Algorithms.MOSSHistoryRegret
 import BanditRLProof.LowerBounds.SubgaussianMinimax
 import BanditRLProof.Algorithms.CUCBThreshold
+import BanditRLProof.Algorithms.CUCBHistory
+import BanditRLProof.Algorithms.CUCBTrajectory
+import BanditRLProof.Algorithms.CUCBObservationMGF
