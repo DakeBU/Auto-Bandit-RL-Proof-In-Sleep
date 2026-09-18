@@ -64,10 +64,10 @@ def base_contract() -> dict:
             "edge_semantics": "formal-solid; overlays-dashed"
         },
         "progress_updates": {
-            "teaching_route": "no-change: fixture",
-            "banditrlwiki": "no-change: fixture",
-            "results_ledger": "no-change: fixture",
-            "roadmap": "no-change: fixture",
+            "teaching_route": "no-change-with-reason: fixture",
+            "banditrlwiki": "no-change-with-reason: fixture",
+            "results_ledger": "no-change-with-reason: fixture",
+            "roadmap": "no-change-with-reason: fixture",
             "website_surfaces": ["fixture"]
         },
         "truth_boundary": "fixture only",
@@ -98,6 +98,8 @@ class ContributorContractTests(unittest.TestCase):
         payload = base_contract()
         payload["source_facing"] = True
         payload["source"]["kind"] = "paper"
+        payload["source"]["url"] = "https://example.invalid/source"
+        payload["declarations"] = ["BanditRLProof.Example.sourceTheorem"]
         payload["reader_contract"] = {
             key: True for key in contract.READER_REQUIRED
         }
