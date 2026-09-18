@@ -5,7 +5,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-import check_contributor_contract as contract
+from tools import check_contributor_contract as contract
 
 
 def base_contract() -> dict:
