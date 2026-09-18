@@ -83,7 +83,7 @@ def base_contract() -> dict:
 
 
 def validate(payload: dict) -> list[str]:
-    with tempfile.TemporaryDirectory() as directory:
+    with tempfile.TemporaryDirectory(dir=contract.ROOT / "tools") as directory:
         path = Path(directory) / "contract.json"
         path.write_text(json.dumps(payload), encoding="utf-8")
         _data, errors = contract.validate_contract(path)
