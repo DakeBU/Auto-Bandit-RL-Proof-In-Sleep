@@ -1,30 +1,31 @@
-name: Lemma proposal
-description: Propose a sourced mathematical result for teaching, Lean review, or integration.
+name: Lemma / theorem proposal
+description: Propose a sourced Bandit/RL result, reusable interface, source correction, or frontier theorem target.
 title: "[Lemma] "
 labels: ["lemma proposal"]
 body:
   - type: markdown
     attributes:
       value: |
-        Thank you for contributing. A proposal is not proved or integrated until the corresponding evidence exists.
+        Before substantial work, read AGENTS.md, CONTRIBUTING.md, docs/contributor-codex-contract.md, and docs/theorem-publication-protocol.md. A proposal is not proved, source-faithful, route-complete, or integrated until the corresponding independent evidence exists.
   - type: input
-    id: domain
+    id: route
     attributes:
-      label: Mathematical domain
-      description: For example, concentration, contextual bandits, optimization, or finite-horizon RL.
+      label: Route / frontier
+      description: Name the teaching route, BanditRLwiki setting/case/frontier, shared foundation, or other canonical owner.
     validations:
       required: true
   - type: textarea
     id: source
     attributes:
-      label: Source and locator
-      description: Give a DOI, arXiv URL, book and theorem number, or state that this is an original result.
+      label: Exact source and locator
+      description: Give paper/book title, version, URL/DOI/arXiv, theorem/lemma/section/page, or explicitly state original result/internal design.
     validations:
       required: true
   - type: textarea
     id: plain
     attributes:
-      label: Plain-English statement
+      label: Plain mathematical statement
+      description: State the theorem accurately for a mathematically trained reader outside the immediate subfield.
     validations:
       required: true
   - type: textarea
@@ -37,26 +38,44 @@ body:
   - type: textarea
     id: assumptions
     attributes:
-      label: Assumptions and scope
-      description: List finiteness, measurability, independence, boundedness, filtration, stopping-time, and algorithm assumptions explicitly.
+      label: Assumptions, conventions, and truth boundary
+      description: Include quantifiers, reward/feedback model, horizon/stopping semantics, probability mode, measurability/integrability/independence, constants, and regimes the claim does not cover.
+    validations:
+      required: true
+  - type: textarea
+    id: reuse
+    attributes:
+      label: Reuse / shared-floor audit
+      description: List BanditRLlib, Mathlib, LML, and compatible upstream declarations/regions searched; classify reuse/adapt/missing; identify at least two consumers if proposing a new shared lemma.
     validations:
       required: true
   - type: textarea
     id: lean
     attributes:
       label: Lean signature or draft
-      description: Optional; include imports and compiler diagnostics if available.
+      description: Optional at proposal time. Include intended module/imports and compiler diagnostics if available.
       render: lean
   - type: textarea
-    id: dependencies
+    id: reader
     attributes:
-      label: Expected dependencies
-      description: Search BanditRLlib and Mathlib first. List canonical declaration IDs and compatible hypotheses/types; explain why each candidate is reused or why a new abstraction is necessary. Distinguish Lean type/value dependencies, module imports and teaching prerequisites. Never merge incompatible statements for a higher sharing count.
+      label: Reader/publication plan
+      description: Which source-aligned chapter/case/frontier page should show the source statement, natural-language formula proof, hidden assumptions, folded Lean, dependencies, and remaining boundary?
+    validations:
+      required: true
   - type: textarea
-    id: reading_views
+    id: semantic
     attributes:
-      label: Book and setting references
-      description: List existing book/chapter/setting IDs and source version or theorem locator. Reference the same canonical node across views; do not copy declarations. See website/BOOKS.md. Unknown source fields remain pending review.
+      label: Encoder–denoiser semantic plan
+      description: For source-facing work, name how a source-blind decoder and distinct anti-anchored source reviewer will be used. The formalizer cannot self-certify source fidelity.
+    validations:
+      required: true
+  - type: textarea
+    id: graphs
+    attributes:
+      label: Lean Graph / Overview / Functor Hypergraph delta
+      description: State expected Lean graph placement, route/progress update, and whether the Functor Hypergraph audit is none-found-with-reason, candidate-published, or stabilized. Conceptual edges are never solid Lean dependencies.
+    validations:
+      required: true
   - type: input
     id: credit
     attributes:
@@ -69,9 +88,13 @@ body:
     attributes:
       label: Contribution confirmations
       options:
-        - label: I have the right to submit this material and license my intentional contribution under MIT.
+        - label: I will follow the repository-local Codex/contributor contract rather than an older copied chat prompt.
           required: true
-        - label: I have not described an uncompiled draft as proved or integrated.
+        - label: I have searched for reusable existing declarations before proposing route-local duplicates.
+          required: true
+        - label: I will not describe an uncompiled draft, incomplete semantic audit, or partial route as integrated/complete.
+          required: true
+        - label: I have the right to submit this material and license my intentional contribution under MIT.
           required: true
         - label: I have not included credentials, private review material, or sensitive personal information.
           required: true
