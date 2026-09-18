@@ -403,6 +403,7 @@ def _build_functor_hypergraph(
   <figure class="diagram" tabindex="0" role="region" aria-label="Functor Hypergraph conceptual incidence graph">
     <pre class="mermaid">{html.escape(diagram)}</pre>
     <figcaption>Conceptual incidence graph generated from <code>website/content/functor_hypergraph.json</code>.</figcaption>
+    <span class="diagram-scroll-hint" data-diagram-scroll-hint hidden>Swipe horizontally or use the left and right arrow keys to read the full diagram <span aria-hidden="true">↔</span></span>
   </figure>
 </section>
 <section id="families">
