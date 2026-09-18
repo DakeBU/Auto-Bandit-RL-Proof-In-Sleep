@@ -35,6 +35,21 @@ PRODUCTION_PREFIXES = (
 PRODUCTION_EXACT = {
     "BanditRLProof.lean",
     "website/BOOKS.md",
+    "AGENTS.md",
+    "CONTRIBUTING.md",
+    "docs/contribution-contract.schema.json",
+    "docs/contributor-codex-contract.md",
+    "docs/theorem-publication-protocol.md",
+    "tools/check_contributor_contract.py",
+    "tools/test_contributor_contract.py",
+    ".github/CODEOWNERS",
+    ".github/pull_request_template.md",
+    ".github/ISSUE_TEMPLATE/lemma-proposal.yml",
+    ".github/workflows/contributor-contract.yml",
+    ".github/workflows/documentation.yml",
+    "website/README.md",
+    "website/public-repo/.github/ISSUE_TEMPLATE/lemma-proposal.yml",
+    "research-wiki/contribution-contracts/README.md",
 }
 CONTRACT_PREFIX = "research-wiki/contribution-contracts/"
 
