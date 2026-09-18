@@ -239,6 +239,13 @@ def validate_contract(path: Path) -> tuple[dict[str, Any] | None, list[str]]:
         for key in ("kind", "title", "version", "anchor"):
             if not nonempty_string(source.get(key)):
                 errors.append(f"{path.relative_to(ROOT)}: source.{key} must be non-empty")
+        if data.get("source_facing"):
+            if source.get("kind") == "internal-design":
+                errors.append(f"{path.relative_to(ROOT)}: source-facing work cannot use source.kind internal-design")
+            if not nonempty_string(source.get("url")):
+                errors.append(f"{path.relative_to(ROOT)}: source-facing work requires a non-empty source URL")
+            if not data.get("declarations"):
+                errors.append(f"{path.relative_to(ROOT)}: source-facing work must name the affected Lean declaration(s)")
 
     reuse = data.get("reuse_plan")
     require_keys(reuse, REUSE_REQUIRED, f"{path}:reuse_plan", errors)
@@ -289,9 +296,13 @@ def validate_contract(path: Path) -> tuple[dict[str, Any] | None, list[str]]:
                 errors.append(
                     f"{path.relative_to(ROOT)}: source-facing contribution must reach semantic status accepted"
                 )
-            for key in ("formalizer", "blind_decoder", "source_reviewer", "verdict"):
+            for key in ("formalizer", "blind_decoder", "source_reviewer", "verdict", "remaining_semantic_delta"):
                 if not nonempty_string(semantic.get(key)):
                     errors.append(f"{path.relative_to(ROOT)}: semantic_roundtrip.{key} must be non-empty")
+            if semantic.get("verdict") not in {"accepted", "accepted-with-explicit-delta"}:
+                errors.append(
+                    f"{path.relative_to(ROOT)}: source-facing semantic verdict must be accepted or accepted-with-explicit-delta"
+                )
             actors = {
                 semantic.get("formalizer"),
                 semantic.get("blind_decoder"),
@@ -321,13 +332,28 @@ def validate_contract(path: Path) -> tuple[dict[str, Any] | None, list[str]]:
             errors.append(f"{path.relative_to(ROOT)}: focus_targets must be a string list")
         if not nonempty_string(graph.get("visual_review")):
             errors.append(f"{path.relative_to(ROOT)}: visual_review must be non-empty")
+        if graph.get("functor_hypergraph") in {"candidate-published", "stabilized"}:
+            affected = set(data.get("affected_files") or [])
+            for required_path in (
+                "website/content/functor_hypergraph.json",
+                "website/content/graph_memory_index.json",
+            ):
+                if required_path not in affected:
+                    errors.append(
+                        f"{path.relative_to(ROOT)}: {graph.get('functor_hypergraph')} requires affected file {required_path}"
+                    )
 
     progress = data.get("progress_updates")
     require_keys(progress, PROGRESS_REQUIRED, f"{path}:progress_updates", errors)
     if isinstance(progress, dict):
         for key in ("teaching_route", "banditrlwiki", "results_ledger", "roadmap"):
-            if not nonempty_string(progress.get(key)):
+            value = progress.get(key)
+            if not nonempty_string(value):
                 errors.append(f"{path.relative_to(ROOT)}: progress_updates.{key} must be non-empty")
+            elif not (value.startswith("updated:") or value.startswith("no-change-with-reason:")):
+                errors.append(
+                    f"{path.relative_to(ROOT)}: progress_updates.{key} must start with updated: or no-change-with-reason:"
+                )
         if not string_list(progress.get("website_surfaces")) or not progress["website_surfaces"]:
             errors.append(f"{path.relative_to(ROOT)}: website_surfaces must be non-empty")
 
@@ -412,11 +438,18 @@ def main() -> int:
         ids.add(cid)
         covered.update(data.get("affected_files") or [])
 
+    production_set = set(production)
     uncovered = [path for path in production if path not in covered]
     if uncovered:
         errors.append(
             "production paths missing from all changed contribution manifests: "
             + ", ".join(uncovered)
+        )
+    stale_coverage = sorted(covered - production_set)
+    if stale_coverage:
+        errors.append(
+            "contribution manifests list affected files that are not changed protected/production surfaces: "
+            + ", ".join(stale_coverage)
         )
 
     if errors:
