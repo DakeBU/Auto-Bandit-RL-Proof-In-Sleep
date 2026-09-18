@@ -23,6 +23,11 @@ try:
 except ImportError:  # Direct script execution.
     from book_registry import build_registry, membership_index
 
+try:
+    from .extended_research_surfaces import build_extended_research_surfaces
+except ImportError:  # Direct script execution.
+    from extended_research_surfaces import build_extended_research_surfaces
+
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 SITE_DIR = SCRIPT_DIR.parent
@@ -60,7 +65,7 @@ PAPER_TITLE = (
 PRIMARY_TEXTBOOK_TITLE = "Bandit Algorithms"
 PRIMARY_TEXTBOOK_AUTHORS = "Tor Lattimore and Csaba Szepesvári"
 PRIMARY_TEXTBOOK_URL = "https://tor-lattimore.com/downloads/book/book.pdf"
-ASSET_VERSION = "20260909-books"
+ASSET_VERSION = "20260918-contributor-contract"
 CATALOG_PAGE_SIZE = 20
 MILESTONE_PAGE_SIZE = 12
 MODULE_PAGE_SIZE = 30
@@ -706,7 +711,10 @@ def layout(
     ]
     research_items = [
         ("banditrlwiki", "BanditRLwiki", "banditrlwiki/index.html"),
+        ("banditrlwiki-setting-atlas", "Full Setting Atlas", "banditrlwiki/setting-atlas/index.html"),
+        ("banditrlwiki-frontier-problems", "Frontier problem history", "banditrlwiki/frontier-problems/index.html"),
         ("banditrlwiki-frontier", "Frontier leaves", "banditrlwiki/frontier/index.html"),
+        ("functor-hypergraph", "Functor Hypergraph", "functor-hypergraph/index.html"),
         ("banditrlwiki-papers", "Paper index", "banditrlwiki/papers/index.html"),
         ("banditrlwiki-progress", "Audit progress", "banditrlwiki/progress/index.html"),
     ]
@@ -789,7 +797,15 @@ def layout(
                 "research",
                 "Research atlas",
                 research_nav,
-                current in {"banditrlwiki", "banditrlwiki-frontier", "banditrlwiki-papers", "banditrlwiki-progress"},
+                current in {
+                    "banditrlwiki",
+                    "banditrlwiki-setting-atlas",
+                    "banditrlwiki-frontier-problems",
+                    "banditrlwiki-frontier",
+                    "functor-hypergraph",
+                    "banditrlwiki-papers",
+                    "banditrlwiki-progress",
+                },
             ),
             nav_group("library", "Library", library_nav, current in {"catalog", "map", "lean-graph", "proof-lab"}),
             nav_group("formalize", "Formalize", formalize_nav, current in {"ide", "workflow"}),
@@ -3251,6 +3267,25 @@ def build_community(output: Path, verified: bool, generated_at: str) -> None:
   <div class="callout warning"><strong>Trust boundary.</strong> GitHub Pages does not execute untrusted Lean code or call a model API. Local verified mode uses a loopback-only server; only semantic review, maintainer approval, and a passed full gate can move a proposal to BanditRLlib's integrated status.</div>
 </section>
 
+<section id="codex-contract">
+  <p class="eyebrow">Repository-enforced publication protocol</p>
+  <h2>Collaborators and their Codex agents follow the same contract</h2>
+  <p>Before substantial work, read <code>AGENTS.md</code>, <code>CONTRIBUTING.md</code>, <code>docs/contributor-codex-contract.md</code>, <code>docs/theorem-publication-protocol.md</code>, and the substantive-advance / semantic-roundtrip skills. The thin reusable bootstrap is <code>.agents/prompts/collaborator-contribution.md</code>.</p>
+  <div class="card-grid">
+    <article class="info-card"><h3>Reuse before new Lean</h3><p>Search BanditRLlib, Mathlib, LML and compatible upstreams. New shared leaves name real consumers; wrapper-only duplication is rejected by the contribution contract.</p></article>
+    <article class="info-card"><h3>Encoder–denoiser source review</h3><p>Source-facing claims require a formalizer, a distinct source-blind decoder, and a distinct anti-anchored source reviewer. Compilation alone never certifies source fidelity.</p></article>
+    <article class="info-card"><h3>Reader publication</h3><p>Keep source statement, natural-language formula proof, hidden assumptions, source-vs-Lean deltas, folded Lean, actual dependencies, and the remaining boundary together.</p></article>
+    <article class="info-card"><h3>Three graph views</h3><p>Every substantive delta classifies Lean Graph, Overview/route progress, and Functor Hypergraph. Formal structure is solid; source/planned/semantic/conceptual overlays stay dashed.</p></article>
+  </div>
+  <div class="callout warning"><strong>No silent website drift.</strong> Teaching route, BanditRLwiki, result/roadmap status, graph views and contributor/provenance surfaces are either updated or explicitly recorded as <code>no-change-with-reason</code> in a diff-aware contribution manifest.</div>
+  <pre class="lean-code"><code>python3 tools/check_contributor_contract.py --base BASE_COMMIT
+python3 tools/bandit.py check
+python3 website/scripts/build_site.py --lean-verified
+python3 website/scripts/check_site.py
+git diff --check</code></pre>
+  <p><a href="{GITHUB_REPO}/blob/main/docs/contributor-codex-contract.md">Contributor/Codex contract ↗</a> · <a href="{GITHUB_REPO}/blob/main/docs/theorem-publication-protocol.md">Theorem publication protocol ↗</a> · <a href="{href_from(page_path, 'functor-hypergraph/index.html')}">Functor Hypergraph →</a></p>
+</section>
+
 <section id="community-registry" data-community-registry data-registry-url="{href_from(page_path, 'community/registry.json')}">
   <h2>Community contribution registry</h2>
   <p data-community-summary>Loading the public registry…</p>
@@ -3273,6 +3308,7 @@ def build_community(output: Path, verified: bool, generated_at: str) -> None:
         ("who-can-contribute", "Ways to contribute"),
         ("review-loop", "Review loop"),
         ("machine-contract", "Compiler contract"),
+        ("codex-contract", "Codex/publication contract"),
         ("community-registry", "Registry"),
         ("governance", "Governance"),
     ]
@@ -3825,9 +3861,10 @@ def build_banditrlwiki(
 </section>
 <section id="settings">
   <p class="eyebrow">Start from assumptions</p><h2>Setting atlas</h2>
+  <p><a href="{href_from(page_path, 'banditrlwiki/setting-atlas/index.html')}">Open the full multi-axis Setting Atlas →</a></p>
   <div class="wiki-family-grid">{family_cards}</div>
 </section>
-<section id="topics"><p class="eyebrow">Settings, methods and proof techniques</p><h2>Extended topic directory</h2><p>These entries reserve precise result contracts for source review. Methods such as Thompson sampling cross setting boundaries; tags are not mutually exclusive.</p><p><a href="{href_from(page_path, 'books/bandit/index.html#extended-chapters')}">Bandit Book · Extended Chapters</a></p>{render_topic_cards(page_path)}</section>
+<section id="topics"><p class="eyebrow">Settings, methods and proof techniques</p><h2>Extended topic directory</h2><p>These entries reserve precise result contracts for source review. Methods such as Thompson sampling cross setting boundaries; tags are not mutually exclusive.</p><p><a href="{href_from(page_path, 'books/bandit/index.html#extended-chapters')}">Bandit Book · Extended Chapters</a> · <a href="{href_from(page_path, 'banditrlwiki/frontier-problems/index.html')}">Frontier/open-problem history</a> · <a href="{href_from(page_path, 'functor-hypergraph/index.html')}">Functor Hypergraph</a></p>{render_topic_cards(page_path)}</section>
 <section id="source-ports">
   <p class="eyebrow">Latest repository progress</p><h2>Active source ports awaiting a matched-bound case</h2>
   <p>These audits expose real compiled progress, but they are not counted among the 13 upper/lower comparison cases until a theorem-level rate contract and a compatible comparison partner are frozen.</p>
@@ -5743,6 +5780,17 @@ def main() -> int:
     build_research_ide(output, highlights, decl_by_name, args.lean_verified, generated_at)
     banditrlwiki_counts = build_banditrlwiki(
         output, banditrlwiki, decl_by_name, args.lean_verified, generated_at
+    )
+    build_extended_research_surfaces(
+        output,
+        layout=layout,
+        write_page=write_page,
+        href_from=href_from,
+        public_repo_dir=PUBLIC_REPO_DIR,
+        content_dir=CONTENT_DIR,
+        github_repo=GITHUB_REPO,
+        verified=args.lean_verified,
+        generated_at=generated_at,
     )
     build_roadmap(output, results, roadmap, decl_by_name, args.lean_verified, generated_at)
     lean_graph_counts = build_lean_graph(

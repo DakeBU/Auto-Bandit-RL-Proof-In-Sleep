@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0",
+  "updated": "2026-09-18",
+  "title": "BanditRLlib Functor Hypergraph",
+  "scope": "Conceptual cross-setting proof mechanisms. These are research-map correspondences, not Lean theorem dependencies or certified categorical functors.",
+  "edge_semantics": {
+    "formal": "solid",
+    "conceptual": "dashed"
+  },
+  "families": [
+    {
+      "id": "family:optimism-confidence-regret",
+      "title": "Confidence set → optimism → regret",
+      "status": "candidate",
+      "domains": ["finite stochastic bandits","linear bandits","finite-horizon RL"],
+      "formula": "good confidence event + optimistic selector => instantaneous regret controlled by confidence width; sum widths to obtain cumulative regret",
+      "mechanism": "Turn statistical uncertainty into an optimistic upper value, then charge regret to the width/bonus accumulated along the realized trajectory.",
+      "hypothesis_map": ["finite-arm concentration ↔ self-normalized linear confidence ↔ value-function confidence/bonus"],
+      "conclusion_map": ["arm-count regret ↔ elliptical-potential regret ↔ episodic Bellman-bonus regret"],
+      "source_ids": ["teaching:ucb","teaching:oful","teaching:finite-horizon-rl"],
+      "candidate_lean_substrates": ["BanditRLProof.UCB","BanditRLProof.OFUL","BanditRLProof.FiniteHorizonRL"],
+      "failure_boundary": "The confidence objects, dependence structure, planning operator, and width summation are not interchangeable; no generic theorem currently transports all three routes."
+    },
+    {
+      "id": "family:information-change-of-measure",
+      "title": "Alternative environment → information budget → lower bound",
+      "status": "candidate",
+      "domains": ["finite-arm minimax lower bounds","instance-dependent bandit lower bounds","best-arm identification"],
+      "formula": "history KL = expected sampling allocation × local KL; testing/change-of-measure forces enough information to distinguish alternatives",
+      "mechanism": "Construct a confusing alternative and convert indistinguishability into regret or sample-complexity cost.",
+      "hypothesis_map": ["same-policy history law ↔ adaptive stopping/recommendation law"],
+      "conclusion_map": ["regret lower bound ↔ pull-count constraint ↔ BAI characteristic/sample complexity"],
+      "source_ids": ["textbook:chapter-14","textbook:chapter-15","textbook:chapter-16","banditrlwiki:fixed-confidence-best-arm-identification"],
+      "candidate_lean_substrates": ["BanditRLProof.LowerBounds"],
+      "failure_boundary": "Stopped experiments, permutation-averaged benchmarks, alternative sets, and divergences require additional measurable/stopping interfaces; conceptual overlap is not a local BAI proof."
+    },
+    {
+      "id": "family:regularized-potential-stability",
+      "title": "Regularized potential → one-step stability → regret",
+      "status": "candidate",
+      "domains": ["EXP3/exponential weights","Tsallis-FTRL","online learning"],
+      "formula": "potential increment + unbiased/controlled estimator + regularizer stability => comparator regret bound",
+      "mechanism": "Use a convex/entropy-like potential to telescope learning dynamics while controlling estimator bias and variance.",
+      "hypothesis_map": ["Shannon/exponential potential ↔ Tsallis regularizer"],
+      "conclusion_map": ["adversarial expected/high-probability regret ↔ best-of-both-worlds/second-order regret"],
+      "source_ids": ["teaching:exp3","teaching:tsallis"],
+      "candidate_lean_substrates": ["BanditRLProof.Exp3","BanditRLProof.Tsallis"],
+      "failure_boundary": "Different regularizers and estimators have different domains, exploration requirements, and stability inequalities; there is no certified generic FTRL transport theorem in BanditRLlib."
+    },
+    {
+      "id": "family:posterior-randomization",
+      "title": "Posterior law → probability matching → Bayesian regret",
+      "status": "candidate",
+      "domains": ["Thompson sampling","Bayesian decision processes"],
+      "formula": "posterior sample / posterior-optimal action law = posterior probability that an action is optimal",
+      "mechanism": "Replace explicit optimism by randomized action selection induced by posterior uncertainty, then control regret through confidence/information structure.",
+      "hypothesis_map": ["finite-arm stationary posterior kernel ↔ richer posterior-sampling models"],
+      "conclusion_map": ["probability matching ↔ Bayesian regret decomposition"],
+      "source_ids": ["teaching:thompson"],
+      "candidate_lean_substrates": ["BanditRLProof.Thompson"],
+      "failure_boundary": "The compiled route is stationary finite-arm; contextual, linear, nonstationary, and posterior-sampling RL need additional model-specific semantics."
+    }
+  ],
+  "transports": []
+}
