@@ -3874,6 +3874,15 @@ def build_banditrlwiki(
   </div>
   <div class="callout warning"><strong>Open does not mean missing from this list.</strong> “Literature open” appears only after an explicit source audit. “Source audit pending” and “Lean blocked” are separate states.</div>
 </section>
+<section id="settings">
+  <p class="eyebrow">Compatibility layer · theorem comparison only</p><h2>Coarse bound-comparison families</h2>
+  <p>These seven families are retained because the existing theorem-level cases are indexed by them. They are <strong>not</strong> the full Bandit taxonomy. For the long-tail classification—heavy-tailed, causal, combinatorial, quantum, multi-agent, safe, matrix, Lipschitz, GP/RKHS and more—use <a href="{href_from(page_path, 'banditrlwiki/setting-atlas/index.html')}">Bandit Taxonomy</a>.</p>
+  <div class="wiki-family-grid">{family_cards}</div>
+</section>
+<section id="topics">
+  <p class="eyebrow">Legacy anchor · no second taxonomy</p><h2>Settings and methods moved to canonical views</h2>
+  <p>The old topic-directory anchor is preserved for incoming links. Canonical classification now lives in <a href="{href_from(page_path, 'banditrlwiki/setting-atlas/index.html')}">Bandit Taxonomy</a>; setting→technique relations live in the <a href="{href_from(page_path, 'banditrlwiki/technique-map/index.html')}">Technique Map</a>. The ten old topic URLs remain compatibility pages only.</p>
+</section>
 <section id="separation">
   <p class="eyebrow">One research system · separate truth contracts</p><h2>Classification is not a bound, and missing Lean is not an open problem</h2>
   <div class="card-grid">
@@ -3900,7 +3909,7 @@ def build_banditrlwiki(
   <div class="wiki-filter-status"><span data-wiki-count>{len(cases)} matching cases</span><span><button type="button" data-wiki-expand>Expand visible</button><button type="button" data-wiki-collapse>Collapse all</button></span></div>
   <div class="wiki-case-list">{case_cards}</div>
 </section>"""
-    toc = [("overview", "Bound & Source Atlas"), ("reading-contract", "Status contract"), ("separation", "Other research views"), ("source-ports", "Source ports"), ("cases", "Cases")]
+    toc = [("overview", "Bound & Source Atlas"), ("reading-contract", "Status contract"), ("settings", "Coarse families"), ("topics", "Legacy topic anchor"), ("separation", "Other research views"), ("source-ports", "Source ports"), ("cases", "Cases")]
     write_page(
         output,
         page_path,
@@ -4798,7 +4807,7 @@ def build_lean_graph(
     <div class="stat"><span class="stat-value">{len(modules):,}</span><span class="stat-label">Lean modules</span></div>
     <div class="stat"><span class="stat-value">{len(declarations):,}</span><span class="stat-label">indexed declarations</span></div>
   </div>
-  <div class="callout"><strong>Reading rule.</strong> Formal module/import/declaration structure and reviewed compiled evidence remain distinct from conceptual overlays. The <em>Settings ↔ techniques</em> view is deliberately dashed: it explains why different bandit settings need different mathematical moves, but it does not turn those teaching/research links into Lean theorem dependencies.</div>
+  <div class="callout"><strong>Reading rule.</strong> Formal module/import/declaration structure and reviewed compiled evidence remain distinct from conceptual overlays. The <em>Settings ↔ techniques</em> view is deliberately dashed: it explains why different bandit settings need different mathematical moves, but it does not turn those teaching/research links into Lean theorem dependencies. Whole-chapter status and individual compiled declarations remain separate.</div>
 </section>
 
 <section id="explorer">
@@ -5825,12 +5834,17 @@ def main() -> int:
         args.lean_verified,
         generated_at,
     )
-    build_lean_graph_technique_overlay(
+    technique_overlay_counts = build_lean_graph_technique_overlay(
         output,
         content_dir=CONTENT_DIR,
         public_repo_dir=PUBLIC_REPO_DIR,
         verified=args.lean_verified,
         generated_at=generated_at,
+    )
+    lean_graph_counts["shard_count"] += technique_overlay_counts["shard_count"]
+    lean_graph_counts["max_shard_bytes"] = max(
+        lean_graph_counts["max_shard_bytes"],
+        technique_overlay_counts["max_shard_bytes"],
     )
     build_proof_graph_laboratory(
         output,
