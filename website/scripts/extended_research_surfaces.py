@@ -583,7 +583,7 @@ def build_lean_graph_technique_overlay(
     public_repo_dir: Path,
     verified: bool,
     generated_at: str,
-) -> None:
+) -> dict[str, int]:
     """Add a conceptual Settings→Techniques→Lean/cross-library slice to Lean Graph.
 
     This overlay is intentionally separate from compiler-backed graph generation.
@@ -691,3 +691,4 @@ def build_lean_graph_technique_overlay(
     target = output / "lean-graph" / "views" / "techniques.json"
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(json.dumps(payload, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
+    return {"shard_count": 1, "max_shard_bytes": target.stat().st_size}
