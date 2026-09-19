@@ -1,4 +1,11 @@
-# Tani and Futami UAI 2026: local proof audit
+# Tani and Futami UAI 2026: source and repaired proof audit
+
+The chronological checkpoints below preserve earlier findings. The latest
+assembled recovery treats the actual first update separately and closes the
+finite-horizon confidence-to-regret chain under an explicit contract; earlier statements
+that its recurrence was still open describe the preceding checkpoints. This
+is a mathematical recovery, not acceptance of the original written proof or
+a Lean implementation. See the final section for the complete current scope.
 
 Source: Robust and Computationally Efficient Linear Contextual Bandits under
 Adversarial Corruption and Heavy-Tailed Noise, PMLR337:6645-6676.
@@ -17,7 +24,7 @@ truncation. The endpoint is high-probability conditional-mean pseudo-regret.
 Unknown-budget corollaries require available valid upper bounds; epsilon remains
 an input. Constant update cost is only in horizon, not dimension or arm oracle.
 
-Unresolved written-proof obligations:
+Issues in the original written proof (replacement derivations follow):
 - Eq49 drops predictable confidence indicators from an absolute signed sum;
   this need not increase that sum. Preserve the stopped process throughout.
 - Eq50->51 does not justify changing vector features to adaptive scalar
@@ -211,3 +218,115 @@ printed as Eq51. They retain the explicit M and B_n factors; the original
 math/source reports, source hashes and scope are bound in
 `runs/extended-topics-20260919/tani-stopped-score-audit.json`.
 This is mathematics only: no new Lean result, full regret or topic completion.
+
+## Assembled first-round and confidence recovery
+
+The complete derivation starts from primitive conditional centered p-moments
+and the actual projected update. Let alpha=8, p=1+epsilon in (1,2],
+`a=(2-p)/(2p)`, `ell=log(2T^2/delta)`, delta in (0,1/4),
+`b=sqrt(lambda(2+4S^2))`, and specify beta0=b separately. For positive n,
+retain `beta_n=b+409 tau0 ell n^a` and the original max-scale schedule.
+
+For the first update, weighted projection and the rank-one inverse give
+`||g_1||_(V_1 inverse)<=sqrt(alpha) tau0`, regardless of the observed reward.
+The actual first scale and `sqrt(lambda)S<=b/2` then yield
+
+```text
+||theta_2-theta_star||_(V_1)^2 <= b^2+17 tau0^2 <= beta_1^2.
+```
+
+Thus no first-round small-leverage assumption or extra scale floor is needed.
+For subsequent rounds the already proved floor holds. Three events are
+constructed before any induction: the clean exceedance-count event, a new
+weighted clipped-square event, and the stopped scalar score event restricted
+to rounds2 onward. Each costs at most delta. The square event follows from
+conditional p-moments and fixed-prefix Freedman applied to
+`Z_s=v_s h_tau_s(eta_s/sigma_s)^2`; it gives
+`sum Z_s<=4 tau0^2 ell n^(2a)`. On the score's nonzero support,
+`1+w_s^2<=65/64`, so its bound is at most `12 B_n D_n`,
+where `D_n=tau0 ell n^a`, `B_n=max_(s<=n) beta_(s-1)`.
+
+On their common event, the stopped nonlinear gradient discrepancy and
+corruption adapter give total generalization gap from rounds2..n at most
+`54 B_n D_n`. Actual gradient stability is at most
+`96 tau0^2 ell n^(2a)+3K+(3/8)sum q_s^2`, with
+`q_s=<X_s/sigma_s,theta_s-theta_star>`. The conditional OMD decomposition
+contributes `(1/alpha-1)sum q_s^2`; at alpha8 the combined coefficient is
+negative. Telescoping from the real first-update energy gives
+
+```text
+||theta_(n+1)-theta_star||_(V_n)^2
+ <= b^2+115 D_n^2+108 B_n D_n
+ <= b^2+108 b D_n+44287 D_n^2
+ <= (b+409 D_n)^2.
+```
+
+Only inside this induction, when its prefix confidence premise holds, is the
+stopped gap equated with the actual gap. The events themselves were proved
+without assuming that confidence conclusion. The resulting simultaneous
+confidence probability is at least1-3delta, sufficient for the source's
+weaker1-4delta probability on this finite-horizon contract. Independent
+mathematical and source reviews accepted the full assembly with explicit deltas.
+
+Qualifications remain attached: C is a fixed supplied corruption upper bound;
+actions and inputs are measurably causal; beta0 is explicitly specified; zero
+features use a positive finite threshold extension and are omitted from the
+auxiliary noise count. K must be consistently used in both scales and
+thresholds. Arbitrary positive sigma_min and causal actions are generalizations;
+Lemma4.4's parameter specialization also requires sigma_min=1/sqrt(T), and
+the actual UCB selector must meet the stated measurability contract. This
+does not identify the two printed K definitions or certify an infinite-horizon
+claim. No Lean build or declaration is added by this mathematical recovery.
+
+Evidence: `runs/extended-topics-20260919/tani-confidence-regret-audit.json`.
+
+## Finite regret from the actual UCB rule
+
+The actual source UCB maximizer is used, not an arbitrary action-policy
+consumer. Explicitly assume the bounded nonempty decision sets attain both
+the UCB and linear-comparator maxima, the chosen UCB action is measurable,
+and the optimal linear value is measurable. Boundedness alone does not
+provide these facts for arbitrary decision sets. On the confidence event,
+optimism gives gap at most `2 beta_(t-1)||X_t||_(V_(t-1) inverse)`.
+The first gap is bounded directly by `2LS`; it does not use the disputed
+first-round raw-leverage estimate.
+
+For t>=2 the scale gives w_t^2<=1/64. Thus
+`sum_(t=2..T) w_t^2<=2 log(det V_T/det V_0)<=2K`.
+Partition these rounds by the active term in the actual max-scale. Fixed tie
+assignment for this analysis changes neither the policy nor the scale:
+
+- Moment/minimum-scale rounds contribute at most
+  `sqrt(2K)*sqrt(sum nu_t^2+T sigma_min^2)` to `sum sigma_t w_t`.
+- Confidence-scale rounds have the exact identity
+  `w_t^(-2)=2sqrt(alpha) beta_(t-1)/(tau0 t^a)`.
+  It is at most `2sqrt(alpha)(b/tau0+409ell)`. Their count is bounded using
+  the raw-leverage sum, and each `sigma_t w_t<=L/sqrt(alpha lambda)`.
+  This yields `4KL/sqrt(lambda)*(b/tau0+409ell)`.
+- Corruption-scale rounds satisfy
+  `sigma_t w_t=sqrt(alpha) C w_t^2/sqrt(K)`, hence contribute at most
+  `2sqrt(alpha) C sqrt(K)`. This group is empty when C=0.
+
+Consequently, on the same event of probability at least1-3delta,
+
+```text
+R_T <= 2LS + 2sqrt(alpha) beta_T * [
+  sqrt(2K)*sqrt(sum_(t=1..T)nu_t^2+T sigma_min^2)
+  + 4KL/sqrt(lambda)*(b/tau0+409ell)
+  + 2sqrt(alpha) C sqrt(K) ].
+```
+
+For lambda=d, sigma_min=1/sqrt(T), alpha8, delta=1/(8T), fixed L,S and
+either consistently chosen source K, this has the source order
+`O_tilde(d T^a sqrt(sum nu_t^2)+d T^a max(1,C))`, with probability at least
+1-1/T. The finite initial residual remains visible above. Bounding the
+confidence-scale term uses the exact cancellation
+`K b/tau0=b sqrt(K/2) ell^(1/p)/(log(3T))^a`; no lower bound on K is assumed.
+
+Independent mathematical and source reviews accepted this full composition
+with the preceding contract qualifications. It is a new proof of the
+qualified endpoint, not validation of the original Appendix B/C derivation,
+literal equivalence for arbitrary bounded decision sets, or a Lean theorem.
+Huang published-supplement identity, implementation/measurable-selector
+construction, and the global topic/ICLR obligations are separate. No new
+Lean gate, main merge, deployment or whole-topic completion is asserted.
