@@ -1,6 +1,24 @@
 {
   "results": [
     {
+      "id": "HEAVY-TAIL-CORRECTED-SOURCE-REGRET",
+      "title": "Corrected expected regret for source-parameter robust UCB",
+      "chapter": "ucb",
+      "status": "compiled",
+      "informal": "For the unchanged radius4/r^-2 causal policy, raw p moments imply expected pseudo-regret at most sum over positive gaps of Delta*(A+5), A=2log(max(T,1))/(Delta/(8u^(1/p)))^(p/epsilon). This explicit corrected coefficient is128u/Delta at epsilon1; the printed32 coefficient has a separately checked mathematical counterexample, not yet fully Lean-certified.",
+      "declarations": [
+        "BanditRLProof.HeavyTail.SourcePolicy.robust_expected_regret",
+        "BanditRLProof.HeavyTail.SourcePolicy.robust_integral_count_le_budget"
+      ],
+      "depends_on": [
+        "BanditRLProof.HeavyTail.SourcePolicy.robust_large_count_tail",
+        "BanditRLProof.HeavyTail.lintegral_pullCount_threshold",
+        "BanditRLProof.HeavyTail.integrable_id_of_raw_moment"
+      ],
+      "missing": [],
+      "evidence": "BanditRLProof/Algorithms/HeavyTailSourceRegret.lean"
+    },
+    {
       "id": "HEAVY-TAIL-SOURCE-SCHEDULE-CONFIDENCE",
       "title": "Source-schedule causal robust-UCB confidence budgets",
       "chapter": "ucb",

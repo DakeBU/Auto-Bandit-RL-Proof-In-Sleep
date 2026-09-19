@@ -94,3 +94,5 @@ import Tests.CausalAllocationCanary
 import Tests.CausalOptimalAllocationCanary
 
 import Tests.HeavyTailSourceScheduleCanary
+
+import Tests.HeavyTailSourceRegretCanary

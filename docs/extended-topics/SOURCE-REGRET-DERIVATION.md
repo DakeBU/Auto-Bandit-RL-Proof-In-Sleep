@@ -49,3 +49,15 @@ its formal negation remains to be proved in Lean. The enlarged-coefficient
 upper bound above remains a separate explicit repair, not an unchanged source
 claim. Both the finite obstruction and the repaired performance chain remain
 mandatory before topic acceptance.
+
+## Implementation contract after026c3d4
+
+Implement a new source-policy performance module using the existing shared
+lintegral_pullCount_threshold and regret decomposition. Use closed signed bad
+sets and strict gap comparison to retain cutoff ceil(A) and additive5Delta.
+Horizon logarithm is2log(max(T,1)), exactly2log(T) for positive natural T and
+zero at T=0. Treat T=0/1 directly with count<=T; do not use a positive cutoff
+at those horizons. Negative/zero gaps are excluded from inversion by the
+best-arm split. Old conservative policy/result remain separate.
+The expected-regret endpoint receives raw moments, not confidence assumptions.
+Independent blind/source/repair review and full project gates remain required.
