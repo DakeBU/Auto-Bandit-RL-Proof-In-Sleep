@@ -38,3 +38,14 @@ Retain the printed coefficient obligation. An independent investigation seeks
 an alternative expected-count/hitting-time proof rather than inferring final
 falsity from the displayed proof gap. Any enlarged-coefficient endpoint must be
 labelled as a repair and cannot silently supersede the printed target.
+
+## Independently checked finite obstruction
+
+The coefficient investigation has now produced an admissible deterministic
+0/-1 reward counterexample at T=2^50, independently rechecked against the
+source by a separate reviewer. See PRINTED-REGRET-COUNTEREXAMPLE.md. Thus the
+literal printed coefficient is mathematically rejected for this exact policy;
+its formal negation remains to be proved in Lean. The enlarged-coefficient
+upper bound above remains a separate explicit repair, not an unchanged source
+claim. Both the finite obstruction and the repaired performance chain remain
+mandatory before topic acceptance.

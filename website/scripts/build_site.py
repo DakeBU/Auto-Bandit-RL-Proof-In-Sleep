@@ -4789,6 +4789,8 @@ def build_lean_graph(
     search_shard_ids = {shard: index for index, shard in enumerate(search_shards)}
     search_entries: list[list[Any]] = []
     for node in nodes.values():
+        # The browser derives declaration/module labels from the ID. Omit the
+        # trailing empty strings while preserving every indexed node and shard.
         derived_label = node["id"].startswith(("declaration:", "module:"))
         search_entries.append(
             [
@@ -4796,16 +4798,14 @@ def build_lean_graph(
                 node["kind"],
                 node["status"],
                 search_shard_ids[node["shard"]],
-                "" if derived_label else node["label"],
-                "" if derived_label else node["subtitle"],
-            ]
+            ] + ([] if derived_label else [node["label"], node["subtitle"]])
         )
     search_index_path = graph_dir / "search-index.json"
     write_text_lf(
         search_index_path,
         json.dumps(
             {
-                "schema_version": 1,
+                "schema_version": 2,
                 "generated_at": generated_at,
                 "shards": search_shards,
                 "entries": search_entries,
