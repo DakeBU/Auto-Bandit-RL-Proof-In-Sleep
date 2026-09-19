@@ -42,8 +42,9 @@ counterexample to the literal printed coefficient. The conservative adaptation
 and clipping transfer remain separately labeled. Independent reviews and joint
 validation are bound in the source-regret, clipping-review and counterexample
 receipts under `runs/extended-topics-20260919/`. These accepted results do not
-complete the topic: recent-source transitive audit, shared mapping acceptance
-and all-topic ICLR evidence remain separate requirements.
+complete the topic: recent-source transitive audit and all-topic ICLR evidence remain open.
+The scoped shared mapping is accepted in
+`runs/extended-topics-20260919/heavy-tail-mapping-validation.json`.
 
 The topic registry now maps exact statement hashes and reviewed receipts to
 existing declarations. Mapping membership is a reading reference, never a
