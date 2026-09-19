@@ -42,3 +42,15 @@ SOURCE-AUDIT.md remain screened-only until separately read in full.
 
 Private report: `E:/ABRL/maintenance/extended-topics-20260919-claude/review-20260919/genalti24-full-audit.md`.
 Report SHA256: `a575ee6a9af373171a8060da3cb027a8f133d960245def164d0029a76a3c5a76`.
+
+
+## Fixed-horizon adjudication (2026-09-20)
+
+The Eq5 obstruction is now independently adjudicated in
+[the finite-horizon proof](GENALTI24-FINITE-HORIZON.md): every measurable policy
+has normalized expected pseudo-regret at most2T, uniformly over positive u
+and admissible instances. A separate compiled Lean prototype derives that cap
+from the actual raw moments. Eq6 necessarily requires a horizon growing with
+the scale ratio; no repaired asymptotic lower bound is accepted. The algorithm
+root, other constants, and external concentration dependencies above remain
+separate unresolved issues. This checkpoint is not whole-paper acceptance.

@@ -1,15 +1,17 @@
 # Extended topics development packet
 
-This branch contains a compiled conservative robust-UCB expected-regret chain
-and an ongoing all-ten-topic program; zero topics have been accepted. Start with [the frozen
+This branch contains the corrected unchanged-source-policy robust-UCB expected-regret
+chain, its finite printed-coefficient counterexample, a separate conservative
+adaptation, and an ongoing all-ten-topic program; zero topics have been accepted. Start with [the frozen
 protocol](PROTOCOL.md), [source audit](SOURCE-AUDIT.md), [derivation](DERIVATION.md),
 and [obligations](OBLIGATIONS.md).
 
 The next mandatory line is [HOO for Lipschitz bandits](LIPSCHITZ-HOO-CONTRACT.md).
-Its source contract was committed before implementation. The actual causal tree
-algorithm, measurable action map, generated reward trajectory and source Lemma 3
-are now implemented. Region concentration, packing/dimension producers, the
-full regret proof, full model witness and independent acceptance remain open.
+Its source contract was committed before implementation. Its actual causal tree
+algorithm, concentration, dimension producers, all-horizon regret and noisy model
+witness have compiled milestones. Independent semantic acceptance remains open.
+Execution stays on heavy-tailed until its acceptance obligations are closed;
+these later-topic milestones do not authorize skipping the strict order.
 
 ## What is proved
 
@@ -27,11 +29,14 @@ trace. See [the transfer derivation](CLIPPING-TRANSFER.md) for scope and gates.
 
 ## What is not proved
 
-The unchanged printed robust-UCB constant statement, full source adjudication,
-recent-paper proof audit, independent semantic review and topic acceptance remain
-open. Clipping stability does not establish corruption-robust regret or compare
-two policies reacting differently to corruption. The other nine required topic
-endpoints and the all-topic evaluation remain open. There are no controlled
+The literal printed robust-UCB coefficient has an accepted finite Lean
+counterexample; the unchanged policy has a separately accepted corrected regret
+bound. Full recent-source adjudication and whole-topic acceptance remain open.
+See [the authoritative ledger](ALL-TOPICS-LEDGER.json) for packet-specific
+semantic review and joint-validation receipts. Clipping stability does not
+establish corruption-robust regret or compare two policies reacting differently
+to corruption. The other nine topics remain unaccepted even where endpoints
+have compiled milestones. The all-topic evaluation remains open. There are no controlled
 productivity results and no new algorithmic rate claim.
 
 ## Reproduce
