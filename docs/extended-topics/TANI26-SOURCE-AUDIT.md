@@ -22,6 +22,8 @@ Unresolved written-proof obligations:
   this need not increase that sum. Preserve the stopped process throughout.
 - Eq50->51 does not justify changing vector features to adaptive scalar
   estimation-error projections while retaining the original clipping schedule.
+  A direct stopped scalar replacement is derived below; its different bound
+  still needs to be integrated into the full confidence recurrence.
 - p6670 substitutes beta_t for beta_(t-1) to assert a leverage floor; the
   initial beta0 can fail to supply that floor. A separate initialization proof
   or explicit algorithm change is required.
@@ -143,3 +145,69 @@ does not by itself prove measurable optimizer dependence. Zero features still
 require a defined threshold convention. Separate mathematical/source review
 and the exact remaining boundaries are recorded in the same audit receipt.
 No full confidence/regret acceptance or Lean implementation is asserted.
+
+## Direct stopped scalar score and corruption adapter
+
+The vector-to-scalar invocation can be replaced by a probability bound for the
+actual scalar process. Let `E_s` be a before-noise measurable event implying
+the past-indexed confidence bound, and put
+`d_s=<X_s/sigma_s,theta_hat_s-theta_star> 1_(E_s)`.
+No assumption is made that these events hold with high probability. Retain
+the original feature-based threshold and define `S_n=sum d_s h_tau_s(z_s)`
+with `z_s=eta_s/sigma_s` and `h_tau` the Huber clipping function.
+
+The actual scale, with a separately specified positive beta0 and
+`beta_s=409 ell tau0 s^a+beta0` for s>=1, gives the deterministic envelope
+
+```text
+w_s^2 <= tau0 s^a/(2 sqrt(alpha) beta_(s-1)),
+1+w_s^2 <= M
+  := 1+max{tau0/(2 sqrt(alpha) beta0), sqrt(2)/(818 sqrt(alpha) ell)}.
+```
+
+The second estimate uses `(s/(s-1))^a<=sqrt(2)` only for s>=2 and treats
+s=1 separately. It does not use beta_s in place of beta_(s-1), nor assert
+the disputed first-round small-leverage floor. In fact, at alpha=8 and s>=2,
+the same bound gives `w_s^2<=1/(1636 ell)<=1/64`, hence
+`sigma_s>=2sqrt(2)||X_s||_(V_(s-1) inverse)`. Independent review verified
+this later-round corollary; the first round remains separate under the stated
+initial-value convention. Let `B_n=max_(s<=n) beta_(s-1)`.
+On the whole sample space, including stopped paths,
+`|d_s|<=sqrt(alpha) B_n w_s`.
+
+Conditional mean-zero p-moments give clipping bias at most `tau_s^(1-p)`
+and clipped second moment at most `tau_s^(2-p)`. Combining these with the
+actual saturated-leverage sum, Holder (direct summation for p=2), and
+predictability yields deterministic bias, variance and range envelopes:
+
+```text
+sum |E[d_s h_tau_s(z_s) | F_s]|
+ <= sqrt(alpha M) B_n tau0^(1-p) K^(p/2) p^((2-p)/2) n^a,
+sum Var[d_s h_tau_s(z_s) | F_s]
+ <= alpha M B_n^2 tau0^(2-p) K^(p/2) n^(2a),
+|d_s h_tau_s(z_s) - E[d_s h_tau_s(z_s) | F_s]|
+ <= 2 sqrt(alpha M) B_n tau0 n^a.
+```
+
+Apply fixed-prefix Freedman to both signs with failure `delta/(2T^2)` each.
+Union over n<=T costs at most delta. Substitution of the actual tau0 gives,
+simultaneously for those prefixes with probability at least1-delta,
+
+```text
+|S_n| <= 4 sqrt(alpha M) B_n tau0 ell n^a.
+```
+
+For a fixed corruption upper bound C>0, the original corruption scale gives
+`||X_s||_(V_(s-1) inverse)/sigma_s^2<=sqrt(K)/C`. Huber's Lipschitz property
+therefore bounds the stopped difference between corrupted and clean scores
+by `B_n sqrt(K) sum_(s<=n)|c_s|/C <= B_n sqrt(K)` pathwise. For C=0 every
+c_s is zero and this term vanishes. Zero features contribute zero under an
+explicit positive finite threshold convention. No predictability of current
+corruption and no extra failure budget are required for this adapter.
+
+These are replacement bounds, not the exact quadratic-penalty expression
+printed as Eq51. They retain the explicit M and B_n factors; the original
+409 radius and the full probability induction do not yet follow. Independent
+math/source reports, source hashes and scope are bound in
+`runs/extended-topics-20260919/tani-stopped-score-audit.json`.
+This is mathematics only: no new Lean result, full regret or topic completion.
