@@ -67,10 +67,10 @@ class BanditTaxonomyTechniqueTests(unittest.TestCase):
         }
         self.assertEqual(required - set(self.settings), set())
 
-    def test_slb_is_alias_of_linear_and_only_unresolved_aliases_remain_quarantined(self) -> None:
-        self.assertIn("SLB", self.settings["linear"].get("aliases", []))
+    def test_unresolved_bare_acronyms_remain_quarantined(self) -> None:
         ambiguous = {item["id"] for item in self.atlas["entries"] if item["kind"] == "ambiguous"}
-        self.assertEqual(ambiguous, {"omdp-alias", "transform-alias"})
+        self.assertEqual(ambiguous, {"omdp-alias", "slb-alias", "transform-alias"})
+        self.assertIn("SLB", self.settings["slb-alias"].get("aliases", []))
 
     def test_every_technique_setting_and_functor_reference_resolves(self) -> None:
         for technique in self.techniques["techniques"]:
