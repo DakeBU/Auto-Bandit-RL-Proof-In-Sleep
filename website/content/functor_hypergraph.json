@@ -1,0 +1,498 @@
+{
+  "schema_version": "1.0",
+  "updated": "2026-09-19",
+  "title": "BanditRLlib Functor Hypergraph",
+  "scope": "Conceptual cross-setting proof mechanisms. These are research-map correspondences, not Lean theorem dependencies or certified categorical functors.",
+  "edge_semantics": {
+    "formal": "solid",
+    "conceptual": "dashed"
+  },
+  "families": [
+    {
+      "id": "family:optimism-confidence-regret",
+      "title": "Confidence set → optimism → regret",
+      "status": "candidate",
+      "domains": [
+        "finite stochastic bandits",
+        "linear bandits",
+        "finite-horizon RL"
+      ],
+      "formula": "good confidence event + optimistic selector => instantaneous regret controlled by confidence width; sum widths to obtain cumulative regret",
+      "mechanism": "Turn statistical uncertainty into an optimistic upper value, then charge regret to the width/bonus accumulated along the realized trajectory.",
+      "hypothesis_map": [
+        "finite-arm concentration ↔ self-normalized linear confidence ↔ value-function confidence/bonus"
+      ],
+      "conclusion_map": [
+        "arm-count regret ↔ elliptical-potential regret ↔ episodic Bellman-bonus regret"
+      ],
+      "source_ids": [
+        "teaching:ucb",
+        "teaching:oful",
+        "teaching:finite-horizon-rl"
+      ],
+      "candidate_lean_substrates": [
+        "BanditRLProof.UCB",
+        "BanditRLProof.OFUL",
+        "BanditRLProof.FiniteHorizonRL"
+      ],
+      "failure_boundary": "The confidence objects, dependence structure, planning operator, and width summation are not interchangeable; no generic theorem currently transports all three routes.",
+      "technique_ids": [
+        "confidence-optimism",
+        "rl-bellman-optimism"
+      ]
+    },
+    {
+      "id": "family:information-change-of-measure",
+      "title": "Alternative environment → information budget → lower bound",
+      "status": "candidate",
+      "domains": [
+        "finite-arm minimax lower bounds",
+        "instance-dependent bandit lower bounds",
+        "best-arm identification"
+      ],
+      "formula": "history KL = expected sampling allocation × local KL; testing/change-of-measure forces enough information to distinguish alternatives",
+      "mechanism": "Construct a confusing alternative and convert indistinguishability into regret or sample-complexity cost.",
+      "hypothesis_map": [
+        "same-policy history law ↔ adaptive stopping/recommendation law"
+      ],
+      "conclusion_map": [
+        "regret lower bound ↔ pull-count constraint ↔ BAI characteristic/sample complexity"
+      ],
+      "source_ids": [
+        "textbook:chapter-14",
+        "textbook:chapter-15",
+        "textbook:chapter-16",
+        "banditrlwiki:fixed-confidence-best-arm-identification"
+      ],
+      "candidate_lean_substrates": [
+        "BanditRLProof.LowerBounds"
+      ],
+      "failure_boundary": "Stopped experiments, permutation-averaged benchmarks, alternative sets, and divergences require additional measurable/stopping interfaces; conceptual overlap is not a local BAI proof.",
+      "technique_ids": [
+        "elimination-testing"
+      ]
+    },
+    {
+      "id": "family:regularized-potential-stability",
+      "title": "Regularized potential → one-step stability → regret",
+      "status": "candidate",
+      "domains": [
+        "EXP3/exponential weights",
+        "Tsallis-FTRL",
+        "online learning"
+      ],
+      "formula": "potential increment + unbiased/controlled estimator + regularizer stability => comparator regret bound",
+      "mechanism": "Use a convex/entropy-like potential to telescope learning dynamics while controlling estimator bias and variance.",
+      "hypothesis_map": [
+        "Shannon/exponential potential ↔ Tsallis regularizer"
+      ],
+      "conclusion_map": [
+        "adversarial expected/high-probability regret ↔ best-of-both-worlds/second-order regret"
+      ],
+      "source_ids": [
+        "teaching:exp3",
+        "teaching:tsallis"
+      ],
+      "candidate_lean_substrates": [
+        "BanditRLProof.Exp3",
+        "BanditRLProof.Tsallis"
+      ],
+      "failure_boundary": "Different regularizers and estimators have different domains, exploration requirements, and stability inequalities; there is no certified generic FTRL transport theorem in BanditRLlib.",
+      "technique_ids": [
+        "exponential-weights-ftrl",
+        "bandit-convex-smoothing"
+      ]
+    },
+    {
+      "id": "family:posterior-randomization",
+      "title": "Posterior law → probability matching → Bayesian regret",
+      "status": "candidate",
+      "domains": [
+        "Thompson sampling",
+        "Bayesian decision processes"
+      ],
+      "formula": "posterior sample / posterior-optimal action law = posterior probability that an action is optimal",
+      "mechanism": "Replace explicit optimism by randomized action selection induced by posterior uncertainty, then control regret through confidence/information structure.",
+      "hypothesis_map": [
+        "finite-arm stationary posterior kernel ↔ richer posterior-sampling models"
+      ],
+      "conclusion_map": [
+        "probability matching ↔ Bayesian regret decomposition"
+      ],
+      "source_ids": [
+        "teaching:thompson"
+      ],
+      "candidate_lean_substrates": [
+        "BanditRLProof.Thompson"
+      ],
+      "failure_boundary": "The compiled route is stationary finite-arm; contextual, linear, nonstationary, and posterior-sampling RL need additional model-specific semantics.",
+      "technique_ids": [
+        "posterior-probability-matching"
+      ]
+    },
+    {
+      "id": "family:robust-confidence",
+      "title": "Robust estimator → confidence object → regret",
+      "status": "candidate",
+      "domains": [
+        "heavy-tailed bandits",
+        "corruption-tolerant bandits",
+        "missing/censored outcomes",
+        "variance-aware bandits",
+        "private bandits"
+      ],
+      "technique_ids": [
+        "robust-estimation",
+        "second-order-empirical-bernstein",
+        "privacy-randomization"
+      ],
+      "formula": "replace fragile empirical mean by robust/variance-aware/private estimate; prove valid confidence; reuse decision analysis with a changed uncertainty radius",
+      "mechanism": "Factor the proof into an estimator-specific concentration layer and a decision layer that consumes only a confidence contract.",
+      "hypothesis_map": [
+        "finite moments / corruption budget / censoring model / empirical variance / privacy semantics → confidence validity and radius"
+      ],
+      "conclusion_map": [
+        "robust UCB/elimination regret ↔ corruption/variance/privacy-adaptive regret"
+      ],
+      "source_ids": [
+        "setting:heavy-tailed",
+        "setting:corruption-tolerant",
+        "setting:missing-outcome",
+        "setting:variance-aware",
+        "setting:privacy"
+      ],
+      "candidate_lean_substrates": [
+        "BanditRLProof.Concentration",
+        "BanditRLProof.UCB"
+      ],
+      "failure_boundary": "The estimators are not interchangeable: contamination, missingness, tail moments, and differential privacy require different probability spaces and bias terms. No generic robust-confidence interface is compiled yet."
+    },
+    {
+      "id": "family:metric-localization",
+      "title": "Metric/RKHS geometry → localized uncertainty → regret",
+      "status": "candidate",
+      "domains": [
+        "Lipschitz/continuum bandits",
+        "kernel/RKHS bandits",
+        "GP-UCB",
+        "kernel RL"
+      ],
+      "technique_ids": [
+        "zooming-metric-localization",
+        "rkhs-information-gain"
+      ],
+      "formula": "global action space → local complexity/effective dimension around plausible near-optimal functions/actions → confidence-driven exploration",
+      "mechanism": "Replace raw arm count or ambient dimension by a geometry-sensitive complexity such as covering/zooming dimension or information gain.",
+      "hypothesis_map": [
+        "metric Lipschitz structure ↔ RKHS norm/kernel posterior geometry"
+      ],
+      "conclusion_map": [
+        "zooming regret ↔ GP/RKHS confidence/information-gain regret"
+      ],
+      "source_ids": [
+        "setting:lipschitz",
+        "setting:kernel-bandits",
+        "setting:gp-ucb",
+        "setting:linear-kernel-mdp"
+      ],
+      "candidate_lean_substrates": [],
+      "failure_boundary": "Zooming dimension and RKHS information gain are different complexity objects; this family records the localization skeleton, not an equivalence between their bounds."
+    },
+    {
+      "id": "family:oracle-relaxation",
+      "title": "Hard action set / resource constraint → oracle or relaxation → learnable surrogate",
+      "status": "candidate",
+      "domains": [
+        "combinatorial bandits",
+        "matching bandits",
+        "Bandits with Knapsacks",
+        "constrained/safe bandits"
+      ],
+      "technique_ids": [
+        "combinatorial-oracle-relaxation",
+        "primal-dual-resource-control"
+      ],
+      "formula": "statistical estimate + optimization oracle/relaxation/dual variable → feasible or approximately optimal action → regret plus computational/resource error",
+      "mechanism": "Separate statistical uncertainty from the combinatorial or constrained optimization subproblem and expose approximation/oracle assumptions explicitly.",
+      "hypothesis_map": [
+        "combinatorial oracle / LP relaxation / dual feasibility / budget semantics"
+      ],
+      "conclusion_map": [
+        "regret ↔ oracle approximation + statistical error + resource/safety violation"
+      ],
+      "source_ids": [
+        "setting:combinatorial",
+        "setting:matching",
+        "setting:bandits-with-knapsacks",
+        "setting:constrained",
+        "setting:safe-bandits"
+      ],
+      "candidate_lean_substrates": [],
+      "failure_boundary": "NP-hard optimization, semi-bandit feedback, stochastic resource consumption and hard safety constraints induce different approximation and feasibility contracts."
+    },
+    {
+      "id": "family:structured-dimension",
+      "title": "Ambient model → intrinsic structure → lower-dimensional confidence",
+      "status": "candidate",
+      "domains": [
+        "linear/GLM bandits",
+        "sparse bandits",
+        "matrix/low-rank bandits",
+        "factored bandits",
+        "unimodal bandits",
+        "MNL/assortment bandits"
+      ],
+      "technique_ids": [
+        "structured-low-dimensionality"
+      ],
+      "formula": "identify structural parameterization + prove estimator/confidence in intrinsic coordinates + explore according to intrinsic complexity",
+      "mechanism": "Compress the learning problem to a lower-complexity parameter or local structure before applying confidence/testing machinery.",
+      "hypothesis_map": [
+        "linearity / sparsity / low rank / factorization / order / likelihood structure"
+      ],
+      "conclusion_map": [
+        "ambient-size dependence → intrinsic dimension/rank/sparsity/graph/parameter dependence"
+      ],
+      "source_ids": [
+        "setting:linear",
+        "setting:generalized-linear",
+        "setting:matrix-low-rank",
+        "setting:sparse-high-dimensional",
+        "setting:factored",
+        "setting:unimodal",
+        "setting:mnl"
+      ],
+      "candidate_lean_substrates": [
+        "BanditRLProof.OFUL"
+      ],
+      "failure_boundary": "Sparsity, rank, factorization, unimodality and parametric likelihoods are not mutually reducible; each needs its own identifiability and estimator interface."
+    },
+    {
+      "id": "family:adaptation-meta",
+      "title": "Unknown environment complexity → detection/meta-combination → adaptive regret",
+      "status": "candidate",
+      "domains": [
+        "nonstationary bandits",
+        "delayed/availability bandits",
+        "parameter-free learning",
+        "model selection",
+        "best-of-both-worlds"
+      ],
+      "technique_ids": [
+        "nonstationary-adaptation",
+        "corralling-model-selection"
+      ],
+      "formula": "run/restart/window/combine base learners + detect or hedge over unknown complexity → regret tracks variation/switches/model complexity without prior tuning",
+      "mechanism": "Move uncertainty from reward parameters to the environment class itself and pay an adaptation overhead instead of assuming the class parameter is known.",
+      "hypothesis_map": [
+        "variation/switch/delay/availability/model-class budgets"
+      ],
+      "conclusion_map": [
+        "static regret → dynamic/model-adaptive/parameter-free regret"
+      ],
+      "source_ids": [
+        "setting:dynamic-nonstationary",
+        "setting:delayed",
+        "setting:parameter-free",
+        "setting:model-selection",
+        "setting:semi-adversarial"
+      ],
+      "candidate_lean_substrates": [
+        "BanditRLProof.Exp3",
+        "BanditRLProof.Tsallis"
+      ],
+      "failure_boundary": "Restarting, corralling, delay compensation and best-of-both-worlds self-bounding arguments use different observability and overhead mechanisms."
+    },
+    {
+      "id": "family:structured-information-transfer",
+      "title": "Nonstandard feedback structure → transferable information → effective observations",
+      "status": "candidate",
+      "domains": [
+        "causal bandits",
+        "feedback-graph bandits",
+        "partial monitoring",
+        "dueling/preference bandits"
+      ],
+      "technique_ids": [
+        "causal-intervention-transfer",
+        "graph-feedback-information",
+        "preference-comparison"
+      ],
+      "formula": "one chosen action/intervention/comparison reveals structured information about other latent rewards/actions → update a richer information state than the played arm alone",
+      "mechanism": "Exploit the observation graph/causal model/preference relation to transfer evidence across actions.",
+      "hypothesis_map": [
+        "causal graph / feedback graph / signal map / preference model"
+      ],
+      "conclusion_map": [
+        "effective sample information → regret/sample complexity"
+      ],
+      "source_ids": [
+        "setting:causal",
+        "setting:graphical",
+        "setting:partial-monitoring",
+        "setting:dueling"
+      ],
+      "candidate_lean_substrates": [],
+      "failure_boundary": "Causal interventions, graph side-observations, partial-monitoring signals and pairwise preferences encode fundamentally different information channels."
+    },
+    {
+      "id": "family:distributed-information",
+      "title": "Many learners → communication/coordination → pooled or decentralized learning",
+      "status": "candidate",
+      "domains": [
+        "multi-agent bandits",
+        "federated bandits",
+        "multi-task bandits",
+        "multi-agent RL"
+      ],
+      "technique_ids": [
+        "distributed-coordination"
+      ],
+      "formula": "local observations + communication/collision/game protocol → shared or strategically coupled information state → group regret/sample complexity",
+      "mechanism": "Trade communication, decentralization, collisions or heterogeneity against the statistical gain from multiple learners.",
+      "hypothesis_map": [
+        "communication graph / collision model / heterogeneity / cooperation-competition"
+      ],
+      "conclusion_map": [
+        "single-agent complexity → network/team/system complexity"
+      ],
+      "source_ids": [
+        "setting:multi-agent",
+        "setting:federated",
+        "setting:multi-bandit",
+        "setting:multi-agent-rl"
+      ],
+      "candidate_lean_substrates": [],
+      "failure_boundary": "Cooperative pooling, federated heterogeneity, collisions and competitive games have different objectives and cannot share one theorem statement."
+    },
+    {
+      "id": "family:objective-transport",
+      "title": "Scalar reward objective → alternative objective geometry",
+      "status": "candidate",
+      "domains": [
+        "single-objective regret",
+        "multi-objective/Pareto bandits",
+        "risk-sensitive/survival bandits"
+      ],
+      "technique_ids": [
+        "multiobjective-scalarization",
+        "primal-dual-resource-control"
+      ],
+      "formula": "replace scalar expectation by vector/risk/constraint functional; identify the correct ordering/comparator; then rebuild confidence and regret around that comparator",
+      "mechanism": "Expose the objective transformation before applying algorithms so scalarization, Pareto order, tail risk and safety are not silently conflated.",
+      "hypothesis_map": [
+        "scalar comparator ↔ Pareto/scalarized/risk/constraint comparator"
+      ],
+      "conclusion_map": [
+        "ordinary regret ↔ Pareto/risk/constrained performance"
+      ],
+      "source_ids": [
+        "setting:single-objective",
+        "setting:multi-objective",
+        "setting:risk-sensitive",
+        "setting:constrained"
+      ],
+      "candidate_lean_substrates": [],
+      "failure_boundary": "Different scalarizations and risk measures change the mathematical order itself; no universal objective transport theorem is claimed."
+    },
+    {
+      "id": "family:coverage-vs-exploration",
+      "title": "Online exploration ↔ offline coverage",
+      "status": "candidate",
+      "domains": [
+        "online bandits/RL",
+        "offline RL"
+      ],
+      "technique_ids": [
+        "offline-coverage-concentrability"
+      ],
+      "formula": "online visitation generated by exploration ↔ fixed data distribution with coverage/concentrability assumptions",
+      "mechanism": "Replace the ability to gather new information with an explicit dataset-support condition, often reversing optimism into pessimism.",
+      "hypothesis_map": [
+        "exploration policy/occupancy ↔ behavior-data coverage or concentrability"
+      ],
+      "conclusion_map": [
+        "online regret/sample efficiency ↔ offline value/policy error"
+      ],
+      "source_ids": [
+        "setting:offline-rl",
+        "setting:mdp-rl"
+      ],
+      "candidate_lean_substrates": [
+        "BanditRLProof.FiniteHorizonRL"
+      ],
+      "failure_boundary": "Coverage assumptions are external properties of a fixed dataset and do not follow from online optimism."
+    },
+    {
+      "id": "family:representation-lift",
+      "title": "Observed interface → richer latent/information representation",
+      "status": "candidate",
+      "domains": [
+        "POMDPs",
+        "LLM system bandit reductions",
+        "structured application bridges"
+      ],
+      "technique_ids": [
+        "partial-observability-belief",
+        "llm-preference-routing"
+      ],
+      "formula": "application observation/history → sufficient/belief/task-specific state representation → standard decision-theoretic contract",
+      "mechanism": "Formalize the representation map first, then reuse bandit/RL machinery only after the induced state/feedback/objective contract is proved.",
+      "hypothesis_map": [
+        "partial observation / application telemetry ↔ information state or explicit bandit/RL reduction"
+      ],
+      "conclusion_map": [
+        "application objective ↔ canonical regret/value/sample-complexity objective"
+      ],
+      "source_ids": [
+        "setting:pomdp",
+        "setting:llm-bandits"
+      ],
+      "candidate_lean_substrates": [
+        "BanditRLProof.FiniteHorizonRL"
+      ],
+      "failure_boundary": "A heuristic reduction is not a theorem: sufficiency, Markov structure, feedback semantics and objective preservation require separate proofs."
+    },
+    {
+      "id": "family:quantum-estimation-testing",
+      "title": "Quantum oracle access → quantum estimation/testing → new regret scale",
+      "status": "candidate",
+      "domains": [
+        "quantum MAB",
+        "quantum linear bandits",
+        "quantum-state/observable bandits",
+        "classical bandit lower-bound/testing routes"
+      ],
+      "technique_ids": [
+        "quantum-estimation-testing"
+      ],
+      "formula": "coherent reward/state oracle + quantum mean estimator or quantum hypothesis test → fewer oracle queries per confidence decision; polynomial/testing lower bound certifies the achievable scale",
+      "mechanism": "Change the information-access primitive itself, then separate quantum query complexity from the classical decision skeleton.",
+      "hypothesis_map": [
+        "classical samples ↔ unitary reward oracle / state copies / observables; classical testing ↔ quantum query testing"
+      ],
+      "conclusion_map": [
+        "classical sqrt(T)-type scales ↔ logarithmic/polylogarithmic horizon dependence in specific quantum-oracle models"
+      ],
+      "source_ids": [
+        "source:wan-et-al-2023-qmab-qlb",
+        "source:liu-li-lui-2026-quantum-lower-bounds",
+        "source:lumbreras-haapasalo-tomamichel-2022-quantum-state-bandits",
+        "external:aspbe"
+      ],
+      "candidate_lean_substrates": [
+        "BanditRLProof.Concentration",
+        "BanditRLProof.OFUL",
+        "BanditRLProof.LowerBounds"
+      ],
+      "cross_library": [
+        "https://github.com/DakeBU/Quantum-Computing-Block-Encoding",
+        "https://github.com/Hayata-Yamasaki-Group/lean-quantum",
+        "https://github.com/Timeroot/Lean-QuantumInfo",
+        "https://github.com/duckki/quantum-computing-lean"
+      ],
+      "failure_boundary": "Quantum reward-oracle, quantum-state/observable and contextual quantum-data models are different. Existing ASPBE and external quantum libraries are reference/circuit/semantic substrates, not imported ABRL proofs; every cross-library reuse needs a toolchain/license/API bridge."
+    }
+  ],
+  "transports": []
+}

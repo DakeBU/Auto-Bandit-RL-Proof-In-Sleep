@@ -1,0 +1,881 @@
+{
+  "schema_version": "1.0",
+  "updated": "2026-09-19",
+  "title": "Bandit Taxonomy",
+  "scope": "Reader-facing taxonomy for BanditRLlib. It separates mathematical settings, objectives, algorithm families, cross-cutting guarantee properties, RL/application bridges, and unresolved aliases. Classification is distinct from the Bound & Source Atlas and from Frontier open problems.",
+  "policy": {
+    "setting": "Changes the admissible environment, action space, feedback, reward law, interaction, or resource model.",
+    "objective": "Changes what the learner is asked to optimize or identify.",
+    "method": "Algorithmic family that may cross several settings.",
+    "cross-cutting": "Property of guarantees or adaptation that can apply to several settings.",
+    "application-bridge": "Domain route whose mathematical contract must be mapped to one or more settings before bounds are compared.",
+    "ambiguous": "Community/user label whose expansion is not source-stable enough to canonicalize without a cited definition.",
+    "alias": "A source-resolved synonym for another canonical node; aliases do not create a second mathematical setting."
+  },
+  "axes": [
+    {
+      "id": "foundations-objectives",
+      "title": "Foundations & objectives"
+    },
+    {
+      "id": "feedback-noise",
+      "title": "Feedback, noise & robustness"
+    },
+    {
+      "id": "structure",
+      "title": "Structured action/reward models"
+    },
+    {
+      "id": "time-resources",
+      "title": "Time, availability & resources"
+    },
+    {
+      "id": "agents-distribution",
+      "title": "Multiple agents / distributed learning"
+    },
+    {
+      "id": "methods",
+      "title": "Algorithm families"
+    },
+    {
+      "id": "oracle-computation",
+      "title": "Oracle, computation & quantum access"
+    },
+    {
+      "id": "rl-bridges",
+      "title": "RL & application bridges"
+    },
+    {
+      "id": "needs-disambiguation",
+      "title": "Aliases needing source disambiguation"
+    }
+  ],
+  "entries": [
+    {
+      "id": "best-arm-identification",
+      "title": "Best-arm identification (BAI)",
+      "kind": "objective",
+      "axis": "foundations-objectives",
+      "priority": "P0",
+      "site_status": "case-covered",
+      "aliases": [
+        "BAI",
+        "Best-1-Arm"
+      ],
+      "summary": "Pure exploration, fixed-confidence or fixed-budget, with sample complexity/error probability rather than cumulative regret."
+    },
+    {
+      "id": "model-selection",
+      "title": "Model selection / corralling",
+      "kind": "cross-cutting",
+      "axis": "foundations-objectives",
+      "priority": "P0",
+      "site_status": "missing-topic",
+      "aliases": [
+        "Model Selection"
+      ],
+      "summary": "Adapt to the best model/algorithm class without knowing its complexity in advance."
+    },
+    {
+      "id": "mab",
+      "title": "Multi-Armed Bandits (MAB)",
+      "kind": "setting",
+      "axis": "foundations-objectives",
+      "priority": "P0",
+      "site_status": "family-covered",
+      "aliases": [
+        "MAB"
+      ],
+      "summary": "Finite-action bandit baseline; should be the root from which stochastic/adversarial and structured variants branch."
+    },
+    {
+      "id": "regret-minimization",
+      "title": "Regret minimization",
+      "kind": "objective",
+      "axis": "foundations-objectives",
+      "priority": "P0",
+      "site_status": "family-covered",
+      "aliases": [
+        "RM",
+        "regret"
+      ],
+      "summary": "Cumulative learning objective; keep separate from pure exploration/identification."
+    },
+    {
+      "id": "multi-objective",
+      "title": "Multi-objective / Pareto bandits",
+      "kind": "objective",
+      "axis": "foundations-objectives",
+      "priority": "P1",
+      "site_status": "mentioned-not-indexed",
+      "aliases": [],
+      "summary": "Vector rewards, scalarization or Pareto criteria; should not be hidden under single-objective MAB."
+    },
+    {
+      "id": "single-objective",
+      "title": "Single-objective bandits",
+      "kind": "objective",
+      "axis": "foundations-objectives",
+      "priority": "P1",
+      "site_status": "missing-topic",
+      "aliases": [
+        "Single-Objective"
+      ],
+      "summary": "Scalar reward/regret objective; useful mainly as the parent contrast for multi-objective/Pareto bandits."
+    },
+    {
+      "id": "thresholding",
+      "title": "Threshold / thresholding bandits",
+      "kind": "objective",
+      "axis": "foundations-objectives",
+      "priority": "P1",
+      "site_status": "missing-topic",
+      "aliases": [
+        "Threshold Bandits"
+      ],
+      "summary": "Identify/classify arms relative to a threshold; distinct from BAI despite sharing pure-exploration tools."
+    },
+    {
+      "id": "top-m-pure-exploration",
+      "title": "Top-m / combinatorial pure exploration",
+      "kind": "objective",
+      "axis": "foundations-objectives",
+      "priority": "P1",
+      "site_status": "missing-topic",
+      "aliases": [],
+      "summary": "Identify a subset or combinatorial optimum; important bridge between BAI and structured bandits."
+    },
+    {
+      "id": "adversarial-bandits",
+      "title": "Adversarial bandits",
+      "kind": "setting",
+      "axis": "feedback-noise",
+      "priority": "P0",
+      "site_status": "family-covered",
+      "aliases": [],
+      "summary": "Adversarial loss/reward sequence with bandit feedback; a core setting missing as an explicit topic card."
+    },
+    {
+      "id": "heavy-tailed",
+      "title": "Heavy-tailed bandits",
+      "kind": "setting",
+      "axis": "feedback-noise",
+      "priority": "P0",
+      "site_status": "topic-covered",
+      "aliases": [
+        "heavy-tailed"
+      ],
+      "summary": "Finite-moment rather than sub-Gaussian rewards; robust estimation and unknown-tail adaptation are central."
+    },
+    {
+      "id": "partial-monitoring",
+      "title": "Partial monitoring",
+      "kind": "setting",
+      "axis": "feedback-noise",
+      "priority": "P0",
+      "site_status": "missing-topic",
+      "aliases": [],
+      "summary": "General feedback maps subsuming full information and bandits; important for locating feedback-complexity boundaries."
+    },
+    {
+      "id": "semi-adversarial",
+      "title": "Semi-adversarial / best-of-both-worlds bandits",
+      "kind": "setting",
+      "axis": "feedback-noise",
+      "priority": "P0",
+      "site_status": "case-covered",
+      "aliases": [
+        "Semi-adversary",
+        "BoBW"
+      ],
+      "summary": "Algorithms adapt across stochastic/self-bounding/adversarial regimes; corruption is related but not identical."
+    },
+    {
+      "id": "stochastic-bandits",
+      "title": "Stochastic bandits",
+      "kind": "setting",
+      "axis": "feedback-noise",
+      "priority": "P0",
+      "site_status": "family-covered",
+      "aliases": [],
+      "summary": "Stationary stochastic rewards; parent of many finite-arm and structured stochastic settings."
+    },
+    {
+      "id": "corruption-tolerant",
+      "title": "Corruption-tolerant bandits",
+      "kind": "setting",
+      "axis": "feedback-noise",
+      "priority": "P1",
+      "site_status": "topic-covered",
+      "aliases": [],
+      "summary": "Rewards/observations can be corrupted under an explicit adversary and corruption budget."
+    },
+    {
+      "id": "dueling",
+      "title": "Dueling / preference bandits",
+      "kind": "setting",
+      "axis": "feedback-noise",
+      "priority": "P1",
+      "site_status": "missing-topic",
+      "aliases": [
+        "Dueling bandits",
+        "preference bandits"
+      ],
+      "summary": "Pairwise/comparative feedback rather than scalar reward observations."
+    },
+    {
+      "id": "missing-outcome",
+      "title": "Missing / censored outcome bandits",
+      "kind": "setting",
+      "axis": "feedback-noise",
+      "priority": "P1",
+      "site_status": "missing-topic",
+      "aliases": [
+        "Missing Outcome Bandits",
+        "censored bandits"
+      ],
+      "summary": "Selected rewards may be unobserved or censored; missingness mechanism must be part of the model contract."
+    },
+    {
+      "id": "risk-sensitive",
+      "title": "Risk-sensitive / CVaR / survival bandits",
+      "kind": "objective",
+      "axis": "feedback-noise",
+      "priority": "P1",
+      "site_status": "missing-topic",
+      "aliases": [
+        "risk-aware bandits"
+      ],
+      "summary": "Optimize tail risk, safety probability, ruin/survival or other distributional criteria beyond expected reward."
+    },
+    {
+      "id": "variance-aware",
+      "title": "Variance-aware bandits",
+      "kind": "cross-cutting",
+      "axis": "feedback-noise",
+      "priority": "P1",
+      "site_status": "topic-covered",
+      "aliases": [
+        "Variance-aware Bandits"
+      ],
+      "summary": "Guarantees adapt to variance or second-order quantities rather than only range/sub-Gaussian proxies."
+    },
+    {
+      "id": "convex-bandits",
+      "title": "Bandit convex optimization",
+      "kind": "setting",
+      "axis": "structure",
+      "priority": "P0",
+      "site_status": "missing-topic",
+      "aliases": [
+        "Convex Bandits",
+        "BCO"
+      ],
+      "summary": "Bandit feedback for convex losses over convex action domains; now mature enough for a dedicated extended route."
+    },
+    {
+      "id": "combinatorial",
+      "title": "Combinatorial bandits",
+      "kind": "setting",
+      "axis": "structure",
+      "priority": "P0",
+      "site_status": "topic-covered",
+      "aliases": [
+        "Combinatorial Bandits"
+      ],
+      "summary": "Combinatorial action sets, often with semi-bandit/full-bandit feedback; oracle/relaxation and computational hardness must be tracked."
+    },
+    {
+      "id": "contextual",
+      "title": "Contextual bandits",
+      "kind": "setting",
+      "axis": "structure",
+      "priority": "P0",
+      "site_status": "family-covered",
+      "aliases": [
+        "Contextual Bandits"
+      ],
+      "summary": "Actions are chosen conditional on observed contexts; realizability and policy/function classes must be explicit."
+    },
+    {
+      "id": "generalized-linear",
+      "title": "Generalized linear bandits (GLB)",
+      "kind": "setting",
+      "axis": "structure",
+      "priority": "P0",
+      "site_status": "missing-topic",
+      "aliases": [
+        "GLB"
+      ],
+      "summary": "Known link function applied to a linear predictor; assumptions on link derivatives and contexts matter."
+    },
+    {
+      "id": "kernel-bandits",
+      "title": "Kernel / RKHS bandits",
+      "kind": "setting",
+      "axis": "structure",
+      "priority": "P0",
+      "site_status": "missing-topic",
+      "aliases": [
+        "kernelized bandits"
+      ],
+      "summary": "Nonparametric function class in an RKHS; information gain and online confidence are core quantities."
+    },
+    {
+      "id": "linear",
+      "title": "Linear bandits",
+      "kind": "setting",
+      "axis": "structure",
+      "priority": "P0",
+      "site_status": "chapter-covered",
+      "aliases": [
+        "stochastic linear bandits"
+      ],
+      "summary": "Mean reward is linear in action/context features; OFUL/self-normalized confidence is a canonical route."
+    },
+    {
+      "id": "lipschitz",
+      "title": "Lipschitz / continuum-armed bandits",
+      "kind": "setting",
+      "axis": "structure",
+      "priority": "P0",
+      "site_status": "topic-covered",
+      "aliases": [
+        "Lipschitz Bandits",
+        "zooming"
+      ],
+      "summary": "Metric action spaces with Lipschitz reward structure; zooming/near-optimality dimension is a major proof route."
+    },
+    {
+      "id": "causal",
+      "title": "Causal bandits",
+      "kind": "setting",
+      "axis": "structure",
+      "priority": "P1",
+      "site_status": "topic-covered",
+      "aliases": [
+        "Causal Bandits"
+      ],
+      "summary": "Actions/interventions interact with a causal model and possibly observational data."
+    },
+    {
+      "id": "factored",
+      "title": "Factored bandits",
+      "kind": "setting",
+      "axis": "structure",
+      "priority": "P1",
+      "site_status": "missing-topic",
+      "aliases": [
+        "Factored Bandits"
+      ],
+      "summary": "Reward/action model factorizes across components; distinguish from generic combinatorial and low-rank models."
+    },
+    {
+      "id": "graphical",
+      "title": "Graph-feedback / graphical bandits",
+      "kind": "setting",
+      "axis": "structure",
+      "priority": "P1",
+      "site_status": "missing-topic",
+      "aliases": [
+        "Graphical Bandits",
+        "graph feedback"
+      ],
+      "summary": "Feedback or reward structure is governed by a graph; distinguish feedback graphs from graph-structured reward models."
+    },
+    {
+      "id": "matching",
+      "title": "Matching bandits",
+      "kind": "setting",
+      "axis": "structure",
+      "priority": "P1",
+      "site_status": "missing-topic",
+      "aliases": [
+        "Matching Bandits"
+      ],
+      "summary": "Structured combinatorial actions defined by matchings; feedback and centralized/decentralized variants should be distinguished."
+    },
+    {
+      "id": "matrix-low-rank",
+      "title": "Matrix / low-rank / tensor bandits",
+      "kind": "setting",
+      "axis": "structure",
+      "priority": "P1",
+      "site_status": "topic-covered",
+      "aliases": [
+        "Matrix Bandits"
+      ],
+      "summary": "Structured high-dimensional reward parameter; rank, action factorization and observation model must be explicit."
+    },
+    {
+      "id": "mnl",
+      "title": "Multinomial-logit (MNL) / assortment bandits",
+      "kind": "setting",
+      "axis": "structure",
+      "priority": "P1",
+      "site_status": "missing-topic",
+      "aliases": [
+        "Multinomial Bandits",
+        "MNL bandits"
+      ],
+      "summary": "If 'multinomial' means MNL choice/assortment bandits, use this canonical label; a generic multinomial reward law is only a reward-distribution specialization."
+    },
+    {
+      "id": "sparse-high-dimensional",
+      "title": "Sparse / high-dimensional bandits",
+      "kind": "setting",
+      "axis": "structure",
+      "priority": "P1",
+      "site_status": "missing-topic",
+      "aliases": [],
+      "summary": "Linear/GLM/kernel problems with sparsity or intrinsic-dimension structure; useful cross-pollination route to compressed sensing."
+    },
+    {
+      "id": "unimodal",
+      "title": "Unimodal / structured-order bandits",
+      "kind": "setting",
+      "axis": "structure",
+      "priority": "P1",
+      "site_status": "missing-topic",
+      "aliases": [
+        "Unimodal Bandits"
+      ],
+      "summary": "Means obey a unimodal/ordered structure that permits local exploration."
+    },
+    {
+      "id": "bandits-with-knapsacks",
+      "title": "Bandits with knapsacks / budgeted bandits",
+      "kind": "setting",
+      "axis": "time-resources",
+      "priority": "P0",
+      "site_status": "mentioned-not-indexed",
+      "aliases": [
+        "BwK",
+        "budgeted bandits"
+      ],
+      "summary": "Stochastic rewards consume resources; should be an explicit child of constrained/resource bandits."
+    },
+    {
+      "id": "constrained",
+      "title": "Constrained bandits",
+      "kind": "setting",
+      "axis": "time-resources",
+      "priority": "P0",
+      "site_status": "topic-covered",
+      "aliases": [
+        "Constraints Bandits",
+        "Constraint bandits"
+      ],
+      "summary": "Actions/rewards are subject to resource, feasibility or long-run constraints."
+    },
+    {
+      "id": "delayed",
+      "title": "Delayed-feedback bandits",
+      "kind": "setting",
+      "axis": "time-resources",
+      "priority": "P0",
+      "site_status": "family-covered",
+      "aliases": [],
+      "summary": "Feedback arrives after delays; distinguish stochastic/adversarial and observable/anonymous delay models."
+    },
+    {
+      "id": "dynamic-nonstationary",
+      "title": "Dynamic / nonstationary bandits",
+      "kind": "setting",
+      "axis": "time-resources",
+      "priority": "P0",
+      "site_status": "family-covered",
+      "aliases": [
+        "Dynamic Bandits",
+        "nonstationary bandits"
+      ],
+      "summary": "Reward model changes over time; variation, switch, drift and comparator budgets must not be conflated."
+    },
+    {
+      "id": "parameter-free",
+      "title": "Parameter-free / adaptive bandits",
+      "kind": "cross-cutting",
+      "axis": "time-resources",
+      "priority": "P0",
+      "site_status": "missing-topic",
+      "aliases": [
+        "Parameter-free"
+      ],
+      "summary": "Guarantees adapt to unknown horizon, scale, variation, tail or comparator complexity without prior tuning."
+    },
+    {
+      "id": "ballooning",
+      "title": "Ballooning / growing-arm bandits",
+      "kind": "setting",
+      "axis": "time-resources",
+      "priority": "P1",
+      "site_status": "missing-topic",
+      "aliases": [
+        "Bolling Bandits",
+        "Ballooning Bandits",
+        "BL-MAB"
+      ],
+      "summary": "The available arm set grows over time; the user's 'Bolling' label is normalized here to Ballooning."
+    },
+    {
+      "id": "batched-limited-adaptivity",
+      "title": "Batched / limited-adaptivity bandits",
+      "kind": "setting",
+      "axis": "time-resources",
+      "priority": "P1",
+      "site_status": "missing-topic",
+      "aliases": [],
+      "summary": "Feedback is only available between batches or the number of adaptive rounds is constrained."
+    },
+    {
+      "id": "multi-fidelity",
+      "title": "Multi-fidelity bandits",
+      "kind": "setting",
+      "axis": "time-resources",
+      "priority": "P1",
+      "site_status": "missing-topic",
+      "aliases": [
+        "Multi-Fidelity"
+      ],
+      "summary": "Queries trade fidelity/cost against information; connect to multi-fidelity Bayesian optimization."
+    },
+    {
+      "id": "rotting-rising-restless",
+      "title": "Rotting / rising / restless bandits",
+      "kind": "setting",
+      "axis": "time-resources",
+      "priority": "P1",
+      "site_status": "missing-topic",
+      "aliases": [
+        "restless bandits"
+      ],
+      "summary": "Rewards evolve with pulls or time; each subfamily needs its own dynamics contract."
+    },
+    {
+      "id": "safe-bandits",
+      "title": "Safe bandits",
+      "kind": "setting",
+      "axis": "time-resources",
+      "priority": "P1",
+      "site_status": "missing-topic",
+      "aliases": [
+        "Safe Bandits"
+      ],
+      "summary": "Constraint violations themselves must be controlled; safety semantics differ from generic budget constraints."
+    },
+    {
+      "id": "sleeping",
+      "title": "Sleeping / availability bandits",
+      "kind": "setting",
+      "axis": "time-resources",
+      "priority": "P1",
+      "site_status": "missing-topic",
+      "aliases": [
+        "sleeping bandits"
+      ],
+      "summary": "Only a subset of arms is available each round."
+    },
+    {
+      "id": "fairness-incentives",
+      "title": "Fairness / incentives / strategic bandits",
+      "kind": "setting",
+      "axis": "agents-distribution",
+      "priority": "P1",
+      "site_status": "mentioned-not-indexed",
+      "aliases": [
+        "incentivized exploration"
+      ],
+      "summary": "Learning interacts with fairness or strategic agent constraints; link to the economics/agents textbook routes."
+    },
+    {
+      "id": "federated",
+      "title": "Federated bandits",
+      "kind": "setting",
+      "axis": "agents-distribution",
+      "priority": "P1",
+      "site_status": "missing-topic",
+      "aliases": [
+        "Federated Bandits"
+      ],
+      "summary": "Distributed/federated clients learn with communication and heterogeneity constraints."
+    },
+    {
+      "id": "multi-agent",
+      "title": "Multi-agent bandits",
+      "kind": "setting",
+      "axis": "agents-distribution",
+      "priority": "P1",
+      "site_status": "topic-covered",
+      "aliases": [
+        "Multi-Agent"
+      ],
+      "summary": "Multiple learning agents with communication, collision, cooperation or competition contracts."
+    },
+    {
+      "id": "privacy",
+      "title": "Private / JDP bandits",
+      "kind": "setting",
+      "axis": "agents-distribution",
+      "priority": "P1",
+      "site_status": "missing-topic",
+      "aliases": [
+        "differentially private bandits",
+        "JDP contextual bandits"
+      ],
+      "summary": "Privacy constraints change achievable regret and proof techniques; currently has explicit COLT open-problem history."
+    },
+    {
+      "id": "multi-bandit",
+      "title": "Multi-bandit / multi-task bandits",
+      "kind": "setting",
+      "axis": "agents-distribution",
+      "priority": "P2",
+      "site_status": "missing-topic",
+      "aliases": [
+        "Multi-Bandit"
+      ],
+      "summary": "Several related bandit tasks/instances are learned jointly; use only with a source-specific transfer/sharing model."
+    },
+    {
+      "id": "ftrl-mirror-descent",
+      "title": "EXP3 / FTRL / mirror-descent methods",
+      "kind": "method",
+      "axis": "methods",
+      "priority": "P0",
+      "site_status": "chapter-covered",
+      "aliases": [
+        "EXP3",
+        "Tsallis-INF"
+      ],
+      "summary": "Optimization-based adversarial-bandit methods and best-of-both-worlds variants."
+    },
+    {
+      "id": "thompson",
+      "title": "Thompson sampling / posterior sampling",
+      "kind": "method",
+      "axis": "methods",
+      "priority": "P0",
+      "site_status": "topic-and-chapter-covered",
+      "aliases": [
+        "Tompson Sampling",
+        "Thompson Sample",
+        "TS"
+      ],
+      "summary": "Bayesian/posterior-sampling method; keep as method, not setting."
+    },
+    {
+      "id": "ucb-family",
+      "title": "UCB / optimism methods",
+      "kind": "method",
+      "axis": "methods",
+      "priority": "P0",
+      "site_status": "chapter-covered",
+      "aliases": [
+        "UCB"
+      ],
+      "summary": "Confidence-bound method family crossing stochastic, linear, kernel and RL settings."
+    },
+    {
+      "id": "elimination",
+      "title": "Elimination / successive rejects / racing",
+      "kind": "method",
+      "axis": "methods",
+      "priority": "P1",
+      "site_status": "missing-topic",
+      "aliases": [],
+      "summary": "Core method family for pure exploration and confidence-based regret algorithms."
+    },
+    {
+      "id": "gp-ucb",
+      "title": "Gaussian-process UCB (GP-UCB)",
+      "kind": "method",
+      "axis": "methods",
+      "priority": "P1",
+      "site_status": "missing-topic",
+      "aliases": [
+        "Gaussian Process UCB",
+        "GP-UCB"
+      ],
+      "summary": "A method for GP/RKHS bandits, not a separate setting; index it under kernel bandits and UCB methods."
+    },
+    {
+      "id": "quantum-bandits",
+      "title": "Quantum bandits",
+      "kind": "setting",
+      "axis": "oracle-computation",
+      "priority": "P0",
+      "site_status": "cross-library-route",
+      "aliases": [
+        "Quantum MAB",
+        "QMAB",
+        "Quantum Linear Bandits",
+        "QLB",
+        "quantum reward-oracle bandits",
+        "quantum-state bandits"
+      ],
+      "summary": "Bandit models with genuinely quantum access or quantum-valued environments. Keep reward-oracle QMAB/QLB, quantum-state/observable bandits, and quantum contextual models separate; classical bandit theorems do not transfer without an explicit oracle/statistical bridge.",
+      "cross_library": {
+        "project": "ASPBE / QuantumComputinglib",
+        "repo": "https://github.com/DakeBU/Quantum-Computing-Block-Encoding",
+        "protocol": "docs/quantum-bandit-cross-library-protocol.md"
+      }
+    },
+    {
+      "id": "linear-kernel-mdp",
+      "title": "Linear / kernel MDPs",
+      "kind": "setting",
+      "axis": "rl-bridges",
+      "priority": "P0",
+      "site_status": "missing-topic",
+      "aliases": [
+        "linear MDP",
+        "kernel RL"
+      ],
+      "summary": "Function-approximation RL routes; kernel RL has explicit COLT open-problem history."
+    },
+    {
+      "id": "mdp-rl",
+      "title": "MDP reinforcement learning",
+      "kind": "application-bridge",
+      "axis": "rl-bridges",
+      "priority": "P0",
+      "site_status": "family-and-book-covered",
+      "aliases": [
+        "RL",
+        "MDP"
+      ],
+      "summary": "Bandit-to-RL bridge; branch into episodic, discounted and average-reward objectives."
+    },
+    {
+      "id": "constrained-safe-rl",
+      "title": "Constrained / safe RL",
+      "kind": "setting",
+      "axis": "rl-bridges",
+      "priority": "P1",
+      "site_status": "missing-topic",
+      "aliases": [],
+      "summary": "Sequential decision making under costs/safety constraints."
+    },
+    {
+      "id": "multi-agent-rl",
+      "title": "Multi-agent RL",
+      "kind": "setting",
+      "axis": "rl-bridges",
+      "priority": "P1",
+      "site_status": "missing-topic",
+      "aliases": [
+        "MARL"
+      ],
+      "summary": "RL counterpart of multi-agent bandits; cooperative/competitive/game structure must be explicit."
+    },
+    {
+      "id": "offline-rl",
+      "title": "Offline / batch RL",
+      "kind": "setting",
+      "axis": "rl-bridges",
+      "priority": "P1",
+      "site_status": "missing-topic",
+      "aliases": [],
+      "summary": "Learn from a fixed dataset; coverage/concentrability replaces online exploration."
+    },
+    {
+      "id": "online-mdp",
+      "title": "Online / adversarial MDP",
+      "kind": "setting",
+      "axis": "rl-bridges",
+      "priority": "P1",
+      "site_status": "missing-topic",
+      "aliases": [
+        "online MDP"
+      ],
+      "summary": "MDP with online/adversarial costs or changing environments; do not abbreviate as OMDP without expansion."
+    },
+    {
+      "id": "pomdp",
+      "title": "Partially observable MDP (POMDP)",
+      "kind": "setting",
+      "axis": "rl-bridges",
+      "priority": "P1",
+      "site_status": "missing-topic",
+      "aliases": [
+        "POMDP"
+      ],
+      "summary": "Partial observability changes planning and learning complexity."
+    },
+    {
+      "id": "llm-bandits",
+      "title": "Bandits for LLM / language-model systems",
+      "kind": "application-bridge",
+      "axis": "rl-bridges",
+      "priority": "P2",
+      "site_status": "missing-topic",
+      "aliases": [
+        "LLM"
+      ],
+      "summary": "Application bridge for preference learning, routing, inference-time allocation, evaluation or adaptation; map each paper back to a precise mathematical setting."
+    },
+    {
+      "id": "slb-alias",
+      "title": "SLB",
+      "kind": "ambiguous",
+      "axis": "needs-disambiguation",
+      "priority": "P1",
+      "site_status": "quarantine",
+      "aliases": [
+        "SLB"
+      ],
+      "summary": "Ambiguous acronym in the literature: it is used for stochastic linear bandits and also safe linear bandits. Preserve the label for discovery, but require a cited source before mapping a contribution to one canonical setting."
+    },
+    {
+      "id": "omdp-alias",
+      "title": "OMDP",
+      "kind": "ambiguous",
+      "axis": "needs-disambiguation",
+      "priority": "P2",
+      "site_status": "quarantine",
+      "aliases": [
+        "OMDP"
+      ],
+      "summary": "Do not canonicalize until a source defines whether this means online MDP, observable MDP, or another model."
+    },
+    {
+      "id": "transform-alias",
+      "title": "Transform",
+      "kind": "ambiguous",
+      "axis": "needs-disambiguation",
+      "priority": "P2",
+      "site_status": "quarantine",
+      "aliases": [
+        "Transform"
+      ],
+      "summary": "No stable canonical bandit setting was identified from the bare label; retain as an alias quarantine entry until a paper/source is supplied."
+    }
+  ],
+  "seed_sources": [
+    {
+      "title": "Bandit Algorithms",
+      "authors": "Tor Lattimore and Csaba Szepesvari",
+      "url": "https://tor-lattimore.com/downloads/book/book.pdf"
+    },
+    {
+      "title": "Introduction to Multi-Armed Bandits",
+      "authors": "Aleksandrs Slivkins",
+      "url": "https://arxiv.org/abs/1904.07272"
+    },
+    {
+      "title": "Regret Analysis of Stochastic and Nonstochastic Multi-armed Bandit Problems",
+      "authors": "Sebastien Bubeck and Nicolo Cesa-Bianchi",
+      "url": "https://arxiv.org/abs/1204.5721"
+    },
+    {
+      "title": "Bandit Convex Optimisation",
+      "authors": "Tor Lattimore",
+      "url": "https://tor-lattimore.com/downloads/bco-book.pdf"
+    },
+    {
+      "title": "Ballooning multi-armed bandits",
+      "authors": "Ganesh Ghalme et al.",
+      "url": "https://arxiv.org/abs/2001.10055"
+    }
+  ]
+}

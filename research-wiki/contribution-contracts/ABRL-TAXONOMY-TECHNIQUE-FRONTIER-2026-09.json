@@ -1,0 +1,126 @@
+{
+  "schema_version": "2.0",
+  "id": "ABRL-TAXONOMY-TECHNIQUE-FRONTIER-2026-09",
+  "route": "Bandit research atlas / cross-library teaching infrastructure",
+  "frontier_cell": "taxonomy-technique-frontier-separation",
+  "source_facing": false,
+  "source": {
+    "kind": "internal-design",
+    "title": "Bandit Taxonomy, Technique Map, Bound & Source Atlas, and Frontier separation",
+    "version": "2026-09-19",
+    "anchor": "website/public-repo/data/setting-atlas.json; website/content/bandit_technique_map.json; website/public-repo/data/frontier-problems.json",
+    "url": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep"
+  },
+  "target": "Make the reader-facing site separate curriculum, comprehensive Bandit taxonomy, setting-to-technique explanations, theorem-level upper/lower/source evidence, literature frontier histories, and formalization frontier; add quantum bandits as an explicit cross-library route through ASPBE/QuantumComputinglib; screen COLT 2023 without misclassifying adjacent online-learning/optimization questions as core Bandit/RL open problems.",
+  "affected_files": [
+    ".agents/prompts/collaborator-contribution.md",
+    ".github/CODEOWNERS",
+    "AGENTS.md",
+    "docs/quantum-bandit-cross-library-protocol.md",
+    "tools/check_contributor_contract.py",
+    "tools/test_bandit_taxonomy_techniques.py",
+    "website/BOOKS.md",
+    "website/content/bandit_technique_map.json",
+    "website/content/books.json",
+    "website/content/frontier_source_audits.json",
+    "website/content/functor_hypergraph.json",
+    "website/content/graph_memory_index.json",
+    "website/public-repo/data/frontier-problems.json",
+    "website/public-repo/data/setting-atlas.json",
+    "website/scripts/build_site.py",
+    "website/scripts/extended_research_surfaces.py",
+    "website/static/site.css"
+  ],
+  "declarations": [],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Existing 65-entry Bandit Setting Atlas and legacy 10 BanditRLwiki topic placeholders",
+      "Existing BanditRLwiki upper/lower/source case ledger, Part IV lower-bound spine, paper index and formalization frontier",
+      "Existing BanditRLlib Lean Graph and Functor Hypergraph truth contracts",
+      "ASPBE / QuantumComputinglib external quantum Lean atlas and cross-library reference cards",
+      "COLT 2023 official open-problem collection and PMLR primary entry for sparse feature priming"
+    ],
+    "reused_declarations": [],
+    "new_shared_declarations": [],
+    "known_consumers": [
+      "Bandit Book reader navigation",
+      "BanditRLwiki / Bound & Source Atlas",
+      "Lean Graph conceptual Settings↔Techniques view",
+      "Functor Hypergraph"
+    ],
+    "planned_consumers": [
+      "future setting-specific formalization PRs",
+      "future quantum-bandit ABRL↔ASPBE adapters",
+      "future frontier source audits"
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Reuse the existing canonical taxonomy, bound cases, source spine, Lean Graph and sibling ASPBE quantum memory. The change separates their reader roles and adds typed conceptual mappings instead of creating duplicate theorem ledgers or quantum foundations."
+  },
+  "reader_contract": {
+    "source_anchor_visible": false,
+    "natural_language_formula_proof": false,
+    "hidden_assumptions_visible": false,
+    "source_vs_lean_delta_visible": false,
+    "lean_folded": false,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": false,
+    "status": "not-required",
+    "formalizer": "OpenAI ChatGPT GPT-5.6 Sol",
+    "blind_decoder": "",
+    "source_reviewer": "",
+    "verdict": "not-required: site taxonomy/literature metadata/conceptual mapping only; no source theorem is formalized or altered",
+    "remaining_semantic_delta": "Individual theorem/source claims remain owned by BanditRLwiki case audits and future source-facing formalization manifests."
+  },
+  "graph_contribution": {
+    "lean_graph": "no-change-with-reason",
+    "overview_graph": "updated",
+    "functor_hypergraph": "candidate-published",
+    "functor_reason": "Formal Lean module/declaration dependencies are unchanged. A new dashed Settings→Techniques→candidate-substrate view is added to the Lean Graph UI, while the Functor Hypergraph gains typed candidate mechanism families with explicit failure boundaries. None is promoted to a formal theorem edge.",
+    "focus_targets": [
+      "banditrlwiki/setting-atlas/",
+      "banditrlwiki/technique-map/",
+      "banditrlwiki/",
+      "banditrlwiki/frontier-problems/",
+      "functor-hypergraph/",
+      "lean-graph/ · Settings ↔ techniques"
+    ],
+    "visual_review": "Required after generated site build: inspect taxonomy/technique/bounds/frontier navigation, legacy Extended Chapters anchor, Functor incidence, and Lean Graph conceptual overlay on desktop and narrow layout.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: Bandit Book keeps ten core teaching routes and Part IV source chapters; the old Extended Chapters anchor becomes a navigation layer rather than a ten-topic pseudo-curriculum.",
+    "banditrlwiki": "updated: the research atlas is split into Bandit Taxonomy, Technique Map, Bound & Source Atlas, Frontier open-problem history, and Lean formalization frontier; legacy topic URLs remain compatibility pages.",
+    "results_ledger": "no-change-with-reason: no local theorem, upper/lower bound, or compilation milestone changes status.",
+    "roadmap": "no-change-with-reason: no mathematical frontier is claimed solved; COLT 2023 screening and quantum-bandit routes are taxonomy/literature planning evidence.",
+    "website_surfaces": [
+      "Bandit Taxonomy",
+      "Technique Map",
+      "Bound & Source Atlas",
+      "Frontier · open problems",
+      "Lean formalization frontier",
+      "Functor Hypergraph",
+      "Lean Graph · Settings ↔ techniques",
+      "Bandit Book · Beyond the core textbook"
+    ]
+  },
+  "truth_boundary": "This contribution reorganizes reader truth and conceptual research memory. It does not prove a new Bandit/RL theorem, does not claim any COLT 2023 item is a core Bandit/RL question, does not claim the sparse-priming problem is permanently unresolved beyond the dated audit, does not import ASPBE or external quantum libraries into ABRL, and does not make conceptual setting-technique edges formal Lean dependencies.",
+  "verification": {
+    "focused_checks": [
+      "python3 -m unittest tools.test_bandit_taxonomy_techniques",
+      "python3 tools/check_contributor_contract.py --base 43f3c599b9ba6b1861510cef47196af5534e4c92"
+    ],
+    "bandit_check": "required in PR CI before merge",
+    "site_build": "required in PR CI before merge",
+    "site_check": "required in PR CI before merge; navigation, graph slices, links, formulas and diagrams must pass",
+    "independent_review": "Maintainer review required for taxonomy canonicalization, COLT routing, quantum cross-library boundary and candidate Functor-family semantics."
+  },
+  "contributor": {
+    "name": "OpenAI ChatGPT GPT-5.6 Sol",
+    "role": "taxonomy / literature / graph-publication integration contributor"
+  }
+}

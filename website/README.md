@@ -155,11 +155,32 @@ compilation, proof completion, and BanditRLlib integration are separate states.
 
 ## 🤝 Contribution contract
 
-`community/contribution.schema.json` is schema version 1.1. It records source,
-plain-English and LaTeX statements, Lean code, BanditRLlib/Mathlib/LML retrieval
-candidates, assumptions, unresolved obligations, independent status fields,
-compiler evidence, and contributor credit. Maintainers assign `integrated` only
-after the full ABRL gate passes and the change is merged to `main`.
+Small community lemma packets still use `community/contribution.schema.json`
+(schema 1.1). Substantive repository changes additionally use
+`research-wiki/contribution-contracts/*.json` and the stricter
+`docs/contribution-contract.schema.json` contract. The diff-aware gate binds
+changed production/site/graph files to source/reuse evidence, reader
+publication, an independent encoder–denoiser semantic review when source-facing,
+route/progress updates, and explicit Lean Graph / Overview / Functor Hypergraph
+deltas.
+
+Collaborators and their Codex agents start from `AGENTS.md` and
+`.agents/prompts/collaborator-contribution.md`; the detailed protocol is in
+`docs/contributor-codex-contract.md` and
+`docs/theorem-publication-protocol.md`. Conceptual Functor Hypergraph edges
+are research-memory overlays and never inherit formal Lean dependency status.
+
+For a substantive PR, run:
+
+```text
+python3 tools/check_contributor_contract.py --base BASE_COMMIT
+python3 tools/bandit.py check
+python3 website/scripts/build_site.py --lean-verified
+python3 website/scripts/check_site.py
+```
+
+Maintainers assign `integrated` only after the relevant source/semantic/status
+review, full project gates, and merge to `main`.
 
 ## 🔒 Private static review
 

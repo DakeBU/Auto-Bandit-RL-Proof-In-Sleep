@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/contribution-contract.schema.json",
+  "title": "ABRL substantive contribution contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version","id","route","frontier_cell","source_facing","source","target","affected_files","declarations","reuse_plan","reader_contract","semantic_roundtrip","graph_contribution","progress_updates","truth_boundary","verification","contributor"],
+  "properties": {
+    "schema_version": {"const": "2.0"},
+    "id": {"type":"string","pattern":"^[A-Z0-9][A-Z0-9._-]{2,127}$"},
+    "route": {"type":"string","minLength":1},
+    "frontier_cell": {"type":"string","minLength":1},
+    "source_facing": {"type":"boolean"},
+    "source": {
+      "type":"object","additionalProperties":false,
+      "required":["kind","title","version","anchor","url"],
+      "properties":{
+        "kind":{"enum":["paper","book","external-formalization","internal-design","original-result"]},
+        "title":{"type":"string","minLength":1},
+        "version":{"type":"string","minLength":1},
+        "anchor":{"type":"string","minLength":1},
+        "url":{"type":"string"}
+      }
+    },
+    "target": {"type":"string","minLength":1},
+    "affected_files": {"type":"array","items":{"type":"string","minLength":1},"uniqueItems":true},
+    "declarations": {"type":"array","items":{"type":"string"},"uniqueItems":true},
+    "reuse_plan": {
+      "type":"object","additionalProperties":false,
+      "required":["classification","decision","searched_existing","reused_declarations","new_shared_declarations","known_consumers","planned_consumers","no_duplicate_wrapper","decision_reason"],
+      "properties":{
+        "classification":{"enum":["reuse","adapt","missing","out_of_scope"]},
+        "decision":{"enum":["reuse_existing","adapt_existing","new_route_local","new_shared","out_of_scope"]},
+        "searched_existing":{"type":"array","items":{"type":"string"}},
+        "reused_declarations":{"type":"array","items":{"type":"string"}},
+        "new_shared_declarations":{"type":"array","items":{"type":"string"}},
+        "known_consumers":{"type":"array","items":{"type":"string"}},
+        "planned_consumers":{"type":"array","items":{"type":"string"}},
+        "no_duplicate_wrapper":{"const":true},
+        "decision_reason":{"type":"string","minLength":1}
+      }
+    },
+    "reader_contract": {
+      "type":"object","additionalProperties":false,
+      "required":["source_anchor_visible","natural_language_formula_proof","hidden_assumptions_visible","source_vs_lean_delta_visible","lean_folded","dependencies_visible","remaining_boundary_visible"],
+      "properties":{
+        "source_anchor_visible":{"type":"boolean"},
+        "natural_language_formula_proof":{"type":"boolean"},
+        "hidden_assumptions_visible":{"type":"boolean"},
+        "source_vs_lean_delta_visible":{"type":"boolean"},
+        "lean_folded":{"type":"boolean"},
+        "dependencies_visible":{"type":"boolean"},
+        "remaining_boundary_visible":{"type":"boolean"}
+      }
+    },
+    "semantic_roundtrip": {
+      "type":"object","additionalProperties":false,
+      "required":["required","status","formalizer","blind_decoder","source_reviewer","verdict","remaining_semantic_delta"],
+      "properties":{
+        "required":{"type":"boolean"},
+        "status":{"enum":["not-required","planned","blind-reconstructed","source-reviewed","accepted","rejected"]},
+        "formalizer":{"type":"string"},
+        "blind_decoder":{"type":"string"},
+        "source_reviewer":{"type":"string"},
+        "verdict":{"type":"string"},
+        "remaining_semantic_delta":{"type":"string"}
+      }
+    },
+    "graph_contribution": {
+      "type":"object","additionalProperties":false,
+      "required":["lean_graph","overview_graph","functor_hypergraph","functor_reason","focus_targets","visual_review","edge_semantics"],
+      "properties":{
+        "lean_graph":{"enum":["new-node","reuse-only","integration-node","no-change-with-reason"]},
+        "overview_graph":{"enum":["updated","no-change-with-reason"]},
+        "functor_hypergraph":{"enum":["none-found-with-reason","candidate-published","stabilized"]},
+        "functor_reason":{"type":"string","minLength":1},
+        "focus_targets":{"type":"array","items":{"type":"string"}},
+        "visual_review":{"type":"string","minLength":1},
+        "edge_semantics":{"const":"formal-solid; overlays-dashed"}
+      }
+    },
+    "progress_updates": {
+      "type":"object","additionalProperties":false,
+      "required":["teaching_route","banditrlwiki","results_ledger","roadmap","website_surfaces"],
+      "properties":{
+        "teaching_route":{"type":"string","minLength":1},
+        "banditrlwiki":{"type":"string","minLength":1},
+        "results_ledger":{"type":"string","minLength":1},
+        "roadmap":{"type":"string","minLength":1},
+        "website_surfaces":{"type":"array","items":{"type":"string"},"minItems":1}
+      }
+    },
+    "truth_boundary":{"type":"string","minLength":1},
+    "verification": {
+      "type":"object","additionalProperties":false,
+      "required":["focused_checks","bandit_check","site_build","site_check","independent_review"],
+      "properties":{
+        "focused_checks":{"type":"array","items":{"type":"string"}},
+        "bandit_check":{"type":"string","minLength":1},
+        "site_build":{"type":"string","minLength":1},
+        "site_check":{"type":"string","minLength":1},
+        "independent_review":{"type":"string","minLength":1}
+      }
+    },
+    "contributor": {
+      "type":"object","additionalProperties":false,
+      "required":["name","role"],
+      "properties":{"name":{"type":"string","minLength":1},"role":{"type":"string","minLength":1}}
+    }
+  }
+}
