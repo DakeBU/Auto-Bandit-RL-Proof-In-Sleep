@@ -38,7 +38,7 @@ no policy or random-count claim is attached to this theorem.
 | Infinite index family rather than finite sample notation | API-limitation | full-family hypotheses; conclusion uses first n only |
 | Closed bad event error>=radius | generalization | stronger than source's error>radius complement |
 | Two separately proved signed tails | generalization | reflection; each has failure delta, not a claimed joint delta |
-| Algorithm schedule and regret constants | unresolved | these declarations make no new algorithm guarantee |
+| Algorithm schedule and regret constants | separate results | source-policy confidence and corrected regret accepted; literal coefficient has a finite Lean counterexample, documented in their separate readers |
 
 ## Proof preserving the constant
 

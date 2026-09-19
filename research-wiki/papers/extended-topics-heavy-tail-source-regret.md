@@ -12,11 +12,11 @@ The printed gap-dependent endpoint is
     sum_(Delta_i>0) [8(4u/Delta_i)^(1/epsilon) log(T)+5Delta_i].
 
 For the literal radius-four source policy this coefficient has an independently
-checked finite counterexample on deterministic rewards0,-1 at T=2^50. That
-counterexample's complete Lean certificate is still an obligation. The theorem
-on this page proves a separately labelled corrected bound for the UNCHANGED
-source policy. It does not silently certify the printed coefficient or replace
-that outstanding formal-obstruction obligation.
+checked finite counterexample on deterministic rewards0,-1 at T=2^50. The
+complete Lean certificate now proves its expected-regret contradiction for the
+actual fixed SourcePolicy tie convention; see the source-counterexample reader.
+The theorem on this page remains a separately labelled corrected bound for the
+UNCHANGED source policy and does not certify the printed coefficient.
 
 The policy uses paper-round r^(-2), source sample-index hard deletion, radius4,
 round-robin unpulled-arm tie resolution, and least-encoded later ties. See the
@@ -94,7 +94,7 @@ composition, not an efficiency experiment or a new conceptual functor.
 
 The old conservative radius8/time^-4 regret theorem remains separate. The new
 result preserves the source algorithm and changes its guarantee explicitly.
-The finite counterexample, remaining source transitive audits, topic mappings and all-ten ICLR evidence are still required.
+Remaining source transitive audits, topic mappings and all-ten ICLR evidence are still required.
 
 ## Exact Lean endpoint and proof
 

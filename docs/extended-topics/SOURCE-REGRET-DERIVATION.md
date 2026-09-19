@@ -45,7 +45,8 @@ The coefficient investigation has now produced an admissible deterministic
 0/-1 reward counterexample at T=2^50, independently rechecked against the
 source by a separate reviewer. See PRINTED-REGRET-COUNTEREXAMPLE.md. Thus the
 literal printed coefficient is mathematically rejected for this exact policy;
-its formal negation remains to be proved in Lean. The enlarged-coefficient
+its formal negation is now compiled through actual counts, valid raw moments and
+the product-law expected-regret bridge. The enlarged-coefficient
 upper bound above remains a separate explicit repair, not an unchanged source
 claim. Both the finite obstruction and the repaired performance chain remain
 mandatory before topic acceptance.
@@ -61,3 +62,13 @@ at those horizons. Negative/zero gaps are excluded from inversion by the
 best-arm split. Old conservative policy/result remain separate.
 The expected-regret endpoint receives raw moments, not confidence assumptions.
 Independent blind/source/repair review and full project gates remain required.
+
+
+## Complete instantiated finite obstruction
+
+HeavyTailSourceCounterexample now closes the finite obstruction for the actual
+SourcePolicy deterministic tie rule. PacketH independent source and proof
+reviewers accept the literal printed-bound negation. The source-parameter
+corrected upper bound and clipping transfer have separate acceptance. The full
+recent-source transitive audits, shared mappings and all-ten ICLR evidence remain
+required; no topic-completion claim follows from these results.

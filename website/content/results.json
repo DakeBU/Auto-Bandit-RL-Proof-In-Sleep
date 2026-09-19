@@ -1,6 +1,24 @@
 {
   "results": [
     {
+      "id": "HEAVY-TAIL-PRINTED-REGRET-COUNTEREXAMPLE",
+      "title": "Finite counterexample to the printed source-policy regret coefficient",
+      "chapter": "ucb",
+      "status": "compiled",
+      "informal": "For the unchanged source-radius4/r^-2 policy with its permissible deterministic ties, valid Dirac0/-1 arm laws and epsilon=u=1, expected pseudo-regret at T=2^50 exceeds32logT+5. The actual finite count contradiction, raw-second-moment witness, product-law expectation bridge and positive-gap-sum negation compile. This rejects that literal printed coefficient, not every paper estimator or logarithmic regret order.",
+      "declarations": [
+        "BanditRLProof.HeavyTail.SourceCounterexample.literal_printed_bound_false",
+        "BanditRLProof.HeavyTail.SourceCounterexample.kernel_raw_moment"
+      ],
+      "depends_on": [
+        "BanditRLProof.HeavyTail.SourcePolicy.robustAction_maximizes",
+        "BanditRLProof.HeavyTail.SourcePolicy.robustMean_latent",
+        "BanditRLProof.HeavyTail.SourceCounterexample.expected_regret_eq_count"
+      ],
+      "missing": [],
+      "evidence": "BanditRLProof/Algorithms/HeavyTailSourceCounterexample.lean"
+    },
+    {
       "id": "HEAVY-TAIL-CLIPPED-CORRUPTION-TRANSFER",
       "title": "Clipped-prefix confidence under consumed-sample corruption",
       "chapter": "ucb",
@@ -23,7 +41,7 @@
       "title": "Corrected expected regret for source-parameter robust UCB",
       "chapter": "ucb",
       "status": "compiled",
-      "informal": "For the unchanged radius4/r^-2 causal policy, raw p moments imply expected pseudo-regret at most sum over positive gaps of Delta*(A+5), A=2log(max(T,1))/(Delta/(8u^(1/p)))^(p/epsilon). This explicit corrected coefficient is128u/Delta at epsilon1; the printed32 coefficient has a separately checked mathematical counterexample, not yet fully Lean-certified.",
+      "informal": "For the unchanged radius4/r^-2 causal policy, raw p moments imply expected pseudo-regret at most sum over positive gaps of Delta*(A+5), A=2log(max(T,1))/(Delta/(8u^(1/p)))^(p/epsilon). This explicit corrected coefficient is128u/Delta at epsilon1; the printed32 coefficient now has a complete finite Lean counterexample for the instantiated source tie rule.",
       "declarations": [
         "BanditRLProof.HeavyTail.SourcePolicy.robust_expected_regret",
         "BanditRLProof.HeavyTail.SourcePolicy.robust_integral_count_le_budget"

@@ -87,9 +87,11 @@ finite signed budget2 are derived strengthening/repair results, not quoted
 printed claims. The source's displayed summation proof is not silently accepted.
 The old conservative radius8/time^-4 policy remains a separate declaration.
 
-No complete original-policy regret bound or printed regret coefficient is
-claimed. The twice-radius gap threshold still needs adjudication; topic
-acceptance and the full all-ten ICLR evidence remain open.
+This page certifies the source-policy confidence layer. The separate
+source-regret reader now supplies its corrected complete expected-regret bound,
+and the source-counterexample reader refutes the literal printed coefficient
+with an admissible finite instance. Topic acceptance and all-ten ICLR evidence
+remain open.
 
 ## Actual reuse and graph semantics
 
@@ -243,5 +245,6 @@ review packet; that context was added and the independent decoder re-read it.
 Independent source review then accepted the exact Figure1 policy correspondence
 with the tie/index conventions above and the explicit derived confidence
 strengthening. Separate proof-method review accepted the frozen implementation.
-No source or repair review certifies a regret theorem. Final joint gate evidence
+PacketE itself certifies no regret theorem; later packetF and packetH separately
+review the corrected regret and finite obstruction. PacketE joint gate evidence
 is bound in runs/extended-topics-20260919/source-schedule-validation.json.

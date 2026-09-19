@@ -1,7 +1,9 @@
 # Finite obstruction to the literal printed BCL regret coefficient
 
-Status: independently checked mathematical counterexample; full Lean theorem
-not yet implemented. Separate investigator and adversarial source reviewer
+Status: complete Lean finite counterexample now compiled, including actual
+policy counts, admissible raw moments, product-law expectation and explicit
+positive-gap printed-bound negation. Final shared gates/source review recorded
+separately in the current contribution receipt. Separate investigator and adversarial source reviewer
 verified the frozen published BCL13 Figure1/Lemma1/Theorem1 contract. This rejects
 only that exact radius-four signed-reward policy/endpoint, not the paper's other
 estimators or its qualitative logarithmic-rate conclusion.
@@ -51,12 +53,33 @@ The obstruction is positive bias from deleting negative rewards. It does not
 contradict the accepted confidence statements: the bias can remain well within
 their valid radius while forcing extra pulls beyond the printed cutoff.
 
-Next obligations: formalize exact truncated deterministic indices, the finite
-late-half count contradiction, and the law/expected-regret bridge. The two scalar
-index comparisons already compile only in private CounterexampleIndexScratch.lean;
-that is not yet the whole counterexample. Then close and independently review an
-explicitly corrected regret endpoint for the unchanged source policy. Do not
-silently substitute the larger coefficient for the rejected printed claim.
+## Current Lean certificate and scope
+
+BanditRLProof/Algorithms/HeavyTailSourceCounterexample.lean implements the exact
+source-policy fixed deterministic tie convention. finite_count_obstruction
+proves the finite count inequality; kernel_raw_moment proves admissibility;
+ae_deterministic identifies the product law almost everywhere with the fixed
+reward stream; expected_regret_eq_count connects the actual expected mean regret
+to the same count. literal_printed_bound_false negates the exact positive-gap
+sum, with the additive5 INSIDE each summand. autoImplicit is disabled so an
+accidentally free summation index cannot become a hidden theorem parameter.
+
+The formal log2 certificate uses the lower bounds on log(4/3), log(5/4),
+log(6/5):1/4+1/5+1/6=37/60>3/5. This proves the same required inequality as the
+four-rectangle mathematical derivation above. No numeric approximation enters
+the Lean proof and no2^50-step simulation is executed.
+
+The stronger universal maximizing/randomized-tie argument above remains a
+mathematical statement; the Lean certificate instantiates the actual deterministic
+SourcePolicy and its probability law. This is sufficient to refute the literal
+source-policy claim. It does not assert a counterexample for every paper
+estimator or for an independently changed algorithm. The explicit corrected
+upper bound already compiled and passed independent review in the separate
+SourcePolicy.robust_expected_regret chain.
+
+Remaining heavy-topic obligations concern the recent-source transitive audits,
+accepted shared mappings and all-ten ICLR evidence, not missing links in this
+finite instantiated counterexample. See the reader and current gate receipt.
 
 Private independent evidence (hashes recorded in the gate receipt):
 PRINTED-REGRET-COEFFICIENT-INVESTIGATION.md and

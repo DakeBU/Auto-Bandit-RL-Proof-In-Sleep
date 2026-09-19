@@ -136,6 +136,7 @@ import BanditRLProof.HeavyTailConfidence
 import BanditRLProof.HeavyTailSourceConfidence
 import BanditRLProof.Algorithms.HeavyTailSourcePolicy
 import BanditRLProof.Algorithms.HeavyTailSourceRegret
+import BanditRLProof.Algorithms.HeavyTailSourceCounterexample
 import BanditRLProof.HeavyTailPowerSum
 import BanditRLProof.HeavyTailTuning
 import BanditRLProof.Algorithms.HeavyTailUCB
