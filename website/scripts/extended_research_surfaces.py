@@ -59,7 +59,7 @@ def build_extended_research_surfaces(
         output, layout, write_page, href_from, verified, generated_at
     )
     _build_functor_hypergraph(
-        output, functor, layout, write_page, href_from, github_repo, verified, generated_at
+        output, functor, techniques, layout, write_page, href_from, github_repo, verified, generated_at
     )
 
 
@@ -405,6 +405,7 @@ def _build_gap_entropy_graph(
 def _build_functor_hypergraph(
     output: Path,
     functor: dict[str, Any],
+    techniques: dict[str, Any],
     layout: Callable[..., str],
     write_page: Callable[[Path, str, str], None],
     href_from: Callable[[str, str], str],
@@ -431,6 +432,11 @@ def _build_functor_hypergraph(
         conclusion = "".join(f"<li>{html.escape(item)}</li>" for item in family["conclusion_map"])
         sources = " · ".join(html.escape(item) for item in family["source_ids"])
         substrates = " · ".join(f"<code>{html.escape(item)}</code>" for item in family["candidate_lean_substrates"])
+        technique_ids = family.get("technique_ids", [])
+        technique_links = " · ".join(
+            f'<a href="{href_from(page, "banditrlwiki/technique-map/index.html")}#technique-{html.escape(tid)}"><code>{html.escape(tid)}</code></a>'
+            for tid in technique_ids
+        )
         cards.append(
             f"""<article class="info-card" id="{html.escape(family['id'].replace(':','-'))}">
 <p class="panel-kicker">{html.escape(family['status'])} · {html.escape(family['id'])}</p>
@@ -439,7 +445,8 @@ def _build_functor_hypergraph(
 <p><strong>Formula/skeleton.</strong> {html.escape(family['formula'])}</p>
 <p><strong>Domains.</strong> {html.escape(' · '.join(family['domains']))}</p>
 <details><summary>Hypothesis and conclusion map</summary><h4>Hypotheses</h4><ul>{hypothesis}</ul><h4>Conclusions</h4><ul>{conclusion}</ul></details>
-<p><strong>Candidate Lean substrates.</strong> {substrates}</p>
+<p><strong>Technique Map.</strong> {technique_links or 'No named technique entry yet.'}</p>
+<p><strong>Candidate Lean substrates.</strong> {substrates or 'No local substrate mapped yet.'}</p>
 <p><strong>Source/route IDs.</strong> {sources}</p>
 <div class="callout warning"><strong>Failure boundary.</strong> {html.escape(family['failure_boundary'])}</div>
 </article>"""
@@ -451,7 +458,7 @@ def _build_functor_hypergraph(
   <p class="eyebrow">Conceptual proof-mechanism memory</p>
   <h1 class="page-title">{html.escape(functor['title'])}</h1>
   <p class="lede">{html.escape(functor['scope'])}</p>
-  <div class="hero-actions"><a class="button primary" href="{href_from(page, 'lean-graph/index.html')}">Open formal Lean Graph</a><a class="button" href="{href_from(page, 'community/index.html#codex-contract')}">Contribution protocol</a></div>
+  <div class="hero-actions"><a class="button primary" href="{href_from(page, 'banditrlwiki/setting-atlas/index.html')}">Bandit Taxonomy</a><a class="button" href="{href_from(page, 'banditrlwiki/technique-map/index.html')}">Technique Map</a><a class="button" href="{href_from(page, 'lean-graph/index.html')}">Lean Graph</a><a class="button" href="{href_from(page, 'community/index.html#codex-contract')}">Contribution protocol</a></div>
   <div class="callout warning"><strong>Not a theorem graph.</strong> Hyperedges are dashed conceptual correspondences. A family name does not assert theorem equivalence, a Lean dependency, or a certified categorical functor.</div>
 </section>
 <section id="incidence">
