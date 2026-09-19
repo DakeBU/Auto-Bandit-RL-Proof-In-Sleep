@@ -330,3 +330,20 @@ literal equivalence for arbitrary bounded decision sets, or a Lean theorem.
 Huang published-supplement identity, implementation/measurable-selector
 construction, and the global topic/ICLR obligations are separate. No new
 Lean gate, main merge, deployment or whole-topic completion is asserted.
+
+
+## Huang v3 dependency checkpoint (2026-09-20)
+
+The separate [Huang score audit](HUANG23-SOURCE-AUDIT.md) reconstructs C.4,
+C.5 and C.2 from primitive conditional moments and the actual Gram process.
+It replaces extraction of random predictable MGF factors by a compensated
+exponential, and replaces the invalid horizon-to-prefix calibration by a
+direct square-term bound. The constants4 and8 are preserved on an explicit
+finite horizon. Independent mathematical and source reviews accept this repair with the
+explicit contract deltas. Evidence: `runs/extended-topics-20260919/huang-v3-dependency-audit.json`.
+
+This vector-score result does not itself permit the adaptive scalar
+projection in the original Tani argument. The direct stopped scalar proof
+above remains necessary. The fixed source is arXiv2306.06836v3, March2024;
+identity with the NeurIPS2023 published supplement is still unverified.
+No complete Huang curvature/regression/RL theorem or Lean acceptance follows.
