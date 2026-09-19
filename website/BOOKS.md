@@ -9,9 +9,23 @@ Canonical website source is `research/website` in the ABRL hub. The hub's
 `content/books.json` registers book identity, bibliography, reading-map status
 and ordered chapter references. `chapters.json`, `readings.json` and
 `textbook_spine.json` remain the owners of existing chapter content and source
-contracts. `banditrlwiki.json` owns setting families, comparison cases, new topic
-placeholders and their twelve-field result contract. There is no second theorem
-ledger in a book or topic record.
+contracts. Research views are deliberately separated:
+
+- `public-repo/data/setting-atlas.json` owns **Bandit Taxonomy**: settings,
+  objectives, methods, oracle/resource models and application bridges;
+- `content/bandit_technique_map.json` owns the **Technique Map**: what new
+  mathematical move is used for each changed setting;
+- `banditrlwiki.json` owns the **Bound & Source Atlas** comparison cases and
+  theorem/source contracts;
+- `public-repo/data/frontier-problems.json` plus
+  `content/frontier_source_audits.json` own the **Frontier** history and source
+  screening ledger;
+- `content/functor_hypergraph.json` records recurring conceptual mechanisms;
+  Lean source and the generated Lean Graph remain the formal truth layer.
+
+Legacy `banditrlwiki/topics/<topic-id>/` pages are compatibility placeholders,
+not the canonical taxonomy. There is no second theorem ledger in a book or
+topic record.
 
 | Prior entry | Current navigation | Preserved route |
 | --- | --- | --- |
@@ -19,14 +33,16 @@ ledger in a book or topic record.
 | Textbook Spine / Part IV | Books / Bandit Book / Source chapters 13–17 | `textbook-spine/index.html`, `textbook-spine/<slug>/index.html` |
 | Finite-horizon RL | Shared by Bandit Book and RL Book | `chapters/finite-horizon-rl/index.html` |
 | EXP3 and Tsallis-FTRL | Shared by Bandit Book and Online Learning Book | Original chapter and declaration URLs |
-| Setting atlas | BanditRLwiki / Settings and methods | Existing family, case, paper and frontier URLs |
+| Old Setting / Extended Chapters entry | Research atlas / Bandit Taxonomy + Technique Map + Bound & Source Atlas + Frontier | Existing family/case/topic URLs remain compatibility routes |
 
 The homepage retains `#primary-textbook`, `#textbook-spine`, `#book-map` and
 `#reading-order`, including native disclosure expansion on fragment navigation.
 No old route is replaced by an inaccessible client-only redirect. The new entry
-pages are `books/index.html` and `books/<book-id>/index.html`. Planned topics use
-`banditrlwiki/topics/<topic-id>/index.html`. Small themes such as multi-objective
-optimization remain Extended Chapters; conformal prediction has its own planned
+pages are `books/index.html` and `books/<book-id>/index.html`. The old
+`#extended-chapters` fragment is preserved but now means “Beyond the core
+textbook”: it links to taxonomy, techniques, bounds/sources and frontier rather
+than rendering ten topic placeholders as if they were an exhaustive curriculum.
+Legacy topic URLs remain reachable. Conformal prediction has its own planned
 book, without an invented source or coverage count.
 
 ## Canonical node protocol, version 1

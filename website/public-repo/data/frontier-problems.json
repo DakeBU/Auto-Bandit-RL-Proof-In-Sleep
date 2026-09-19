@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0",
-  "updated": "2026-09-13",
+  "updated": "2026-09-19",
   "title": "Bandit & RL Frontier Problem History",
-  "scope": "Source-traceable open-problem history. A record may be currently open, partially resolved, resolved, negatively resolved, or resolved with an external formalization. Missing Lean code is tracked separately from mathematical openness.",
+  "scope": "Source-traceable open-problem history. Core Bandit/RL problems are separated from adjacent Online Learning/optimization/statistics routes. A record may be currently open, partially resolved, resolved, negatively resolved, or resolved with an external formalization. Missing Lean code is tracked separately from mathematical openness.",
   "status_semantics": {
     "resolved-formalized-external": "A mathematical resolution is public and a separately maintained external Lean formalization is available; BanditRLlib does not claim local compilation.",
     "resolved-peer-reviewed": "A later peer-reviewed publication explicitly reports resolving/confirming the problem.",
@@ -14,204 +14,453 @@
   },
   "problems": [
     {
-      "id":"gap-entropy-bai",
-      "priority":"P0",
-      "area":"Best-arm identification / pure exploration",
-      "title":"Gap-entropy conjecture and almost instance-wise optimal BAI",
-      "posed_year":2016,
-      "status":"resolved-formalized-external",
-      "posed_by":"Lijie Chen and Jian Li",
-      "source":{"title":"Open Problem: Best Arm Identification: Almost Instance-Wise Optimality and the Gap Entropy Conjecture","url":"https://proceedings.mlr.press/v49/chen16b.html"},
-      "progress":[{"year":2017,"title":"Towards Instance Optimal Bounds for Best Arm Identification","url":"https://proceedings.mlr.press/v65/chen17b.html","note":"Major partial progress on upper/lower routes."}],
-      "resolution":[
-        {"year":2026,"title":"Gap Entropy and Almost Instance-Wise Optimal Best-Arm Identification","url":"https://github.com/zhouxiangxin1998/GapEntropy","note":"Public manuscript plus Lean 4 formalization by Jiarui Yao, Jiaxi Zhao and Xiangxin Zhou."},
-        {"year":2026,"title":"A positive resolution of the gap-entropy conjecture","url":"https://arxiv.org/abs/2609.10529","note":"Independent proof by P. M. Aronow, Nathan Kallus and Patrick Lopatto."}
+      "id": "gap-entropy-bai",
+      "priority": "P0",
+      "area": "Best-arm identification / pure exploration",
+      "title": "Gap-entropy conjecture and almost instance-wise optimal BAI",
+      "posed_year": 2016,
+      "status": "resolved-formalized-external",
+      "posed_by": "Lijie Chen and Jian Li",
+      "source": {
+        "title": "Open Problem: Best Arm Identification: Almost Instance-Wise Optimality and the Gap Entropy Conjecture",
+        "url": "https://proceedings.mlr.press/v49/chen16b.html"
+      },
+      "progress": [
+        {
+          "year": 2017,
+          "title": "Towards Instance Optimal Bounds for Best Arm Identification",
+          "url": "https://proceedings.mlr.press/v65/chen17b.html",
+          "note": "Major partial progress on upper/lower routes."
+        }
       ],
-      "lean":{"status":"external-kernel-verified","local_status":"bridge-only","external_repo":"https://github.com/zhouxiangxin1998/GapEntropy","external_toolchain":"Lean 4.33.1","local_toolchain":"Lean 4.29.1","declarations":["GapEntropy.gapEntropyConjecture","GapEntropy.universalEntropyUpperBound","GapEntropy.almostInstanceWiseOptimality","GapEntropy.positiveSourceAlmostInstanceWiseOptimality","GapEntropy.PolicyRepresentations.standardBenchmark_eq"]},
-      "graph_delta":"Adds a BAI-specific information-complexity branch: gap groups → normalized complexity masses → entropy; permutation-averaged instance benchmark; measurable adaptive sampling/stopping; lower-bound change-of-measure; universal algorithm; policy-representation equivalences.",
-      "case_url":"gap-entropy/"
-    },
-    {
-      "id":"fixed-budget-bai-complexity",
-      "priority":"P0",
-      "area":"Best-arm identification / fixed budget",
-      "title":"Does fixed-budget BAI admit an instance complexity matching the static oracle?",
-      "posed_year":2022,
-      "status":"resolved-negative-preprint",
-      "posed_by":"Chao Qin",
-      "source":{"title":"Open Problem: Optimal Best Arm Identification with Fixed-Budget","url":"https://proceedings.mlr.press/v178/open-problem-qin22a.html"},
-      "resolution":[{"year":2026,"title":"Fundamental Limitations of Fixed-Budget Best-Arm Identification","url":"https://arxiv.org/abs/2607.11635","note":"Motti Goldberger gives a negative answer for K≥3 in one-parameter natural exponential families: no algorithm uniformly matches the static-oracle exponent."}],
-      "lean":{"status":"not-mapped","local_status":"planned","declarations":[]},
-      "graph_delta":"A negative-resolution case should connect oracle allocation geometry, change of measure and impossibility of one uniform instance-complexity functional."
-    },
-    {
-      "id":"heavy-tail-unknown-parameters",
-      "priority":"P0",
-      "area":"Heavy-tailed bandits / parameter-free learning",
-      "title":"Regret minimization with unknown heavy-tail parameters",
-      "posed_year":2025,
-      "status":"resolved-preprint",
-      "posed_by":"Gianmarco Genalti and Alberto Maria Metelli",
-      "source":{"title":"Open Problem: Regret Minimization in Heavy-Tailed Bandits with Unknown Distributional Parameters","url":"https://proceedings.mlr.press/v291/genalti25a.html"},
-      "resolution":[{"year":2026,"title":"Parameter-Free Heavy-Tailed Bandits","url":"https://arxiv.org/abs/2607.29460","note":"The authors state that they resolve the COLT 2025 problem without extra distributional assumptions and characterize the adaptation cost."}],
-      "lean":{"status":"not-mapped","local_status":"P0-candidate","declarations":[]},
-      "graph_delta":"High-value bridge from robust mean estimation/concentration to bandit regret, with lower-bound adaptation tradeoffs and scheduled exploration."
-    },
-    {
-      "id":"first-order-contextual-bandits",
-      "priority":"P1",
-      "area":"Contextual bandits",
-      "title":"First-order regret bounds for contextual bandits",
-      "posed_year":2017,
-      "status":"resolved-peer-reviewed",
-      "posed_by":"Alekh Agarwal, Akshay Krishnamurthy, John Langford, Haipeng Luo and Robert E. Schapire",
-      "source":{"title":"Open Problem: First-Order Regret Bounds for Contextual Bandits","url":"https://proceedings.mlr.press/v65/agarwal17a.html"},
-      "resolution":[{"year":2018,"title":"Make the Minority Great Again: First-Order Regret Bound for Contextual Bandits","url":"https://proceedings.mlr.press/v80/allen-zhu18b.html","note":"Allen-Zhu, Bubeck and Li explicitly state that their method resolves the COLT 2017 open problem."}],
-      "lean":{"status":"not-mapped","local_status":"planned","declarations":[]},
-      "graph_delta":"Useful historical shortcut case: policy-space augmentation changes how first-order online-learning machinery reaches contextual partial feedback."
-    },
-    {
-      "id":"contextual-model-selection",
-      "priority":"P1",
-      "area":"Contextual bandits / model selection",
-      "title":"Model selection for contextual bandits",
-      "posed_year":2020,
-      "status":"partial-current-audit",
-      "posed_by":"Dylan J. Foster, Akshay Krishnamurthy and Haipeng Luo",
-      "source":{"title":"Open Problem: Model Selection for Contextual Bandits","url":"https://proceedings.mlr.press/v125/foster20a.html"},
-      "progress":[
-        {"year":2024,"title":"Towards Costless Model Selection in Contextual Bandits: A Bias-Variance Perspective","url":"https://proceedings.mlr.press/v238/kumar-krishnamurthy24a.html","note":"Identifies impossibility in general and benign conditions for costless selection."},
-        {"year":2024,"title":"Model Selection for Generic Contextual Bandits","url":"https://doi.org/10.1109/TIT.2023.3298103","note":"Further positive guarantees under explicit realizability/model-class conditions."}
+      "resolution": [
+        {
+          "year": 2026,
+          "title": "Gap Entropy and Almost Instance-Wise Optimal Best-Arm Identification",
+          "url": "https://github.com/zhouxiangxin1998/GapEntropy",
+          "note": "Public manuscript plus Lean 4 formalization by Jiarui Yao, Jiaxi Zhao and Xiangxin Zhou."
+        },
+        {
+          "year": 2026,
+          "title": "A positive resolution of the gap-entropy conjecture",
+          "url": "https://arxiv.org/abs/2609.10529",
+          "note": "Independent proof by P. M. Aronow, Nathan Kallus and Patrick Lopatto."
+        }
       ],
-      "lean":{"status":"not-mapped","local_status":"planned","declarations":[]},
-      "graph_delta":"Connects contextual-bandit regret to nested classes, misspecification tests, bias/variance adaptation and impossibility nodes."
+      "lean": {
+        "status": "external-kernel-verified",
+        "local_status": "bridge-only",
+        "external_repo": "https://github.com/zhouxiangxin1998/GapEntropy",
+        "external_toolchain": "Lean 4.33.1",
+        "local_toolchain": "Lean 4.29.1",
+        "declarations": [
+          "GapEntropy.gapEntropyConjecture",
+          "GapEntropy.universalEntropyUpperBound",
+          "GapEntropy.almostInstanceWiseOptimality",
+          "GapEntropy.positiveSourceAlmostInstanceWiseOptimality",
+          "GapEntropy.PolicyRepresentations.standardBenchmark_eq"
+        ]
+      },
+      "graph_delta": "Adds a BAI-specific information-complexity branch: gap groups → normalized complexity masses → entropy; permutation-averaged instance benchmark; measurable adaptive sampling/stopping; lower-bound change-of-measure; universal algorithm; policy-representation equivalences.",
+      "case_url": "gap-entropy/"
     },
     {
-      "id":"rkhs-online-confidence",
-      "priority":"P0",
-      "area":"Kernel / RKHS bandits",
-      "title":"Tight online confidence intervals for RKHS elements",
-      "posed_year":2021,
-      "status":"source-open-current-audit",
-      "posed_by":"Sattar Vakili, Jonathan Scarlett and Tara Javidi",
-      "source":{"title":"Open Problem: Tight Online Confidence Intervals for RKHS Elements","url":"https://proceedings.mlr.press/v134/open-problem-vakili21a.html"},
-      "progress":[],
-      "lean":{"status":"not-mapped","local_status":"P0-candidate","declarations":[]},
-      "graph_delta":"Directly asks whether the confidence-sequence node or the algorithm analysis is the bottleneck; ideal for proof-graph diagnosis across GP-UCB/GP-TS/kernel RL."
+      "id": "fixed-budget-bai-complexity",
+      "priority": "P0",
+      "area": "Best-arm identification / fixed budget",
+      "title": "Does fixed-budget BAI admit an instance complexity matching the static oracle?",
+      "posed_year": 2022,
+      "status": "resolved-negative-preprint",
+      "posed_by": "Chao Qin",
+      "source": {
+        "title": "Open Problem: Optimal Best Arm Identification with Fixed-Budget",
+        "url": "https://proceedings.mlr.press/v178/open-problem-qin22a.html"
+      },
+      "resolution": [
+        {
+          "year": 2026,
+          "title": "Fundamental Limitations of Fixed-Budget Best-Arm Identification",
+          "url": "https://arxiv.org/abs/2607.11635",
+          "note": "Motti Goldberger gives a negative answer for K≥3 in one-parameter natural exponential families: no algorithm uniformly matches the static-oracle exponent."
+        }
+      ],
+      "lean": {
+        "status": "not-mapped",
+        "local_status": "planned",
+        "declarations": []
+      },
+      "graph_delta": "A negative-resolution case should connect oracle allocation geometry, change of measure and impossibility of one uniform instance-complexity functional."
     },
     {
-      "id":"noise-free-kernel-bandits",
-      "priority":"P0",
-      "area":"Kernel / RKHS bandits",
-      "title":"Order-optimal regret in noise-free kernel bandits",
-      "posed_year":2022,
-      "status":"source-open-current-audit",
-      "posed_by":"Sattar Vakili",
-      "source":{"title":"Open Problem: Regret Bounds for Noise-Free Kernel-Based Bandits","url":"https://proceedings.mlr.press/v178/open-problem-vakili22a.html"},
-      "progress":[],
-      "lean":{"status":"not-mapped","local_status":"P0-candidate","declarations":[]},
-      "graph_delta":"Separates deterministic approximation/interpolation error from statistical confidence; likely cross-pollination with numerical approximation and RKHS geometry."
+      "id": "heavy-tail-unknown-parameters",
+      "priority": "P0",
+      "area": "Heavy-tailed bandits / parameter-free learning",
+      "title": "Regret minimization with unknown heavy-tail parameters",
+      "posed_year": 2025,
+      "status": "resolved-preprint",
+      "posed_by": "Gianmarco Genalti and Alberto Maria Metelli",
+      "source": {
+        "title": "Open Problem: Regret Minimization in Heavy-Tailed Bandits with Unknown Distributional Parameters",
+        "url": "https://proceedings.mlr.press/v291/genalti25a.html"
+      },
+      "resolution": [
+        {
+          "year": 2026,
+          "title": "Parameter-Free Heavy-Tailed Bandits",
+          "url": "https://arxiv.org/abs/2607.29460",
+          "note": "The authors state that they resolve the COLT 2025 problem without extra distributional assumptions and characterize the adaptation cost."
+        }
+      ],
+      "lean": {
+        "status": "not-mapped",
+        "local_status": "P0-candidate",
+        "declarations": []
+      },
+      "graph_delta": "High-value bridge from robust mean estimation/concentration to bandit regret, with lower-bound adaptation tradeoffs and scheduled exploration."
     },
     {
-      "id":"jdp-linear-contextual-bandits",
-      "priority":"P1",
-      "area":"Privacy / linear contextual bandits",
-      "title":"Complexity of joint differential privacy in linear contextual bandits",
-      "posed_year":2024,
-      "status":"source-open-current-audit",
-      "posed_by":"Achraf Azize and Debabrota Basu",
-      "source":{"title":"Open Problem: What is the Complexity of Joint Differential Privacy in Linear Contextual Bandits?","url":"https://proceedings.mlr.press/v247/azize24a.html"},
-      "progress":[{"year":2026,"title":"Shuffle and Joint Differential Privacy for Generalized Linear Contextual Bandits","url":"https://arxiv.org/abs/2602.00417","note":"Extends private contextual-bandit algorithms to GLMs, but this registry does not treat it as a proof that the original upper/lower gap is closed."}],
-      "lean":{"status":"not-mapped","local_status":"planned","declarations":[]},
-      "graph_delta":"Adds privacy accounting/noise geometry on top of self-normalized linear-bandit confidence and regret lower bounds."
+      "id": "first-order-contextual-bandits",
+      "priority": "P1",
+      "area": "Contextual bandits",
+      "title": "First-order regret bounds for contextual bandits",
+      "posed_year": 2017,
+      "status": "resolved-peer-reviewed",
+      "posed_by": "Alekh Agarwal, Akshay Krishnamurthy, John Langford, Haipeng Luo and Robert E. Schapire",
+      "source": {
+        "title": "Open Problem: First-Order Regret Bounds for Contextual Bandits",
+        "url": "https://proceedings.mlr.press/v65/agarwal17a.html"
+      },
+      "resolution": [
+        {
+          "year": 2018,
+          "title": "Make the Minority Great Again: First-Order Regret Bound for Contextual Bandits",
+          "url": "https://proceedings.mlr.press/v80/allen-zhu18b.html",
+          "note": "Allen-Zhu, Bubeck and Li explicitly state that their method resolves the COLT 2017 open problem."
+        }
+      ],
+      "lean": {
+        "status": "not-mapped",
+        "local_status": "planned",
+        "declarations": []
+      },
+      "graph_delta": "Useful historical shortcut case: policy-space augmentation changes how first-order online-learning machinery reaches contextual partial feedback."
     },
     {
-      "id":"kernel-rl-order-optimal",
-      "priority":"P0",
-      "area":"Kernel reinforcement learning",
-      "title":"Order-optimal regret bounds for kernel-based RL",
-      "posed_year":2024,
-      "status":"source-open-current-audit",
-      "posed_by":"Sattar Vakili",
-      "source":{"title":"Open Problem: Order Optimal Regret Bounds for Kernel-Based Reinforcement Learning","url":"https://proceedings.mlr.press/v247/vakili24a.html"},
-      "progress":[],
-      "lean":{"status":"not-mapped","local_status":"P0-candidate","declarations":[]},
-      "graph_delta":"Natural bridge between the RKHS-confidence frontier and the finite-horizon RL confidence/optimism graph already present in BanditRLlib."
+      "id": "contextual-model-selection",
+      "priority": "P1",
+      "area": "Contextual bandits / model selection",
+      "title": "Model selection for contextual bandits",
+      "posed_year": 2020,
+      "status": "partial-current-audit",
+      "posed_by": "Dylan J. Foster, Akshay Krishnamurthy and Haipeng Luo",
+      "source": {
+        "title": "Open Problem: Model Selection for Contextual Bandits",
+        "url": "https://proceedings.mlr.press/v125/foster20a.html"
+      },
+      "progress": [
+        {
+          "year": 2024,
+          "title": "Towards Costless Model Selection in Contextual Bandits: A Bias-Variance Perspective",
+          "url": "https://proceedings.mlr.press/v238/kumar-krishnamurthy24a.html",
+          "note": "Identifies impossibility in general and benign conditions for costless selection."
+        },
+        {
+          "year": 2024,
+          "title": "Model Selection for Generic Contextual Bandits",
+          "url": "https://doi.org/10.1109/TIT.2023.3298103",
+          "note": "Further positive guarantees under explicit realizability/model-class conditions."
+        }
+      ],
+      "lean": {
+        "status": "not-mapped",
+        "local_status": "planned",
+        "declarations": []
+      },
+      "graph_delta": "Connects contextual-bandit regret to nested classes, misspecification tests, bias/variance adaptation and impossibility nodes."
     },
     {
-      "id":"distributional-regret-ls17",
-      "priority":"P0",
-      "area":"Distributional / high-probability regret",
-      "title":"Lattimore–Szepesvari Chapter 17 distributional-regret conjecture",
-      "posed_year":2020,
-      "status":"resolved-peer-reviewed",
-      "posed_by":"Tor Lattimore and Csaba Szepesvari",
-      "source":{"title":"Bandit Algorithms, Section 17.1","url":"https://tor-lattimore.com/downloads/book/book.pdf"},
-      "resolution":[{"year":2026,"title":"Unified Framework of Distributional Regret in Multi-Armed Bandits and Reinforcement Learning","url":"https://proceedings.mlr.press/v336/lee26b.html","note":"Lee and Oh state that their MAB bound confirms the Section 17.1 conjecture for the first time."}],
-      "lean":{"status":"local-lower-side-compiled","local_status":"existing-case","declarations":["BanditRLProof.LowerBounds.gaussianRandomPseudoRegret_ge_theorem17_1"]},
-      "graph_delta":"Already an excellent internal historical frontier: lower-tail spine is local; the 2026 EQO+ upper route remains a formalization leaf."
+      "id": "rkhs-online-confidence",
+      "priority": "P0",
+      "area": "Kernel / RKHS bandits",
+      "title": "Tight online confidence intervals for RKHS elements",
+      "posed_year": 2021,
+      "status": "source-open-current-audit",
+      "posed_by": "Sattar Vakili, Jonathan Scarlett and Tara Javidi",
+      "source": {
+        "title": "Open Problem: Tight Online Confidence Intervals for RKHS Elements",
+        "url": "https://proceedings.mlr.press/v134/open-problem-vakili21a.html"
+      },
+      "progress": [],
+      "lean": {
+        "status": "not-mapped",
+        "local_status": "P0-candidate",
+        "declarations": []
+      },
+      "graph_delta": "Directly asks whether the confidence-sequence node or the algorithm analysis is the bottleneck; ideal for proof-graph diagnosis across GP-UCB/GP-TS/kernel RL."
     },
     {
-      "id":"parameter-free-dynamic-linear-bandits",
-      "priority":"P1",
-      "area":"Dynamic / linear bandits",
-      "title":"Parameter-free adaptation to comparator switches in unconstrained linear bandits",
-      "posed_year":null,
-      "status":"resolved-peer-reviewed",
-      "posed_by":"Long-standing literature problem (source chain to be frozen before theorem-level port)",
-      "source":{"title":"Parameter-Free Dynamic Regret for Unconstrained Linear Bandits","url":"https://proceedings.mlr.press/v300/rumi26a.html"},
-      "resolution":[{"year":2026,"title":"Parameter-Free Dynamic Regret for Unconstrained Linear Bandits","url":"https://proceedings.mlr.press/v300/rumi26a.html","note":"The paper reports the first optimal switch-adaptive rate up to polylog factors without knowing the switch count."}],
-      "lean":{"status":"not-mapped","local_status":"planned","declarations":[]},
-      "graph_delta":"Connects dynamic-regret comparator complexity, parameter-free meta-combination and linear-bandit geometry."
+      "id": "noise-free-kernel-bandits",
+      "priority": "P0",
+      "area": "Kernel / RKHS bandits",
+      "title": "Order-optimal regret in noise-free kernel bandits",
+      "posed_year": 2022,
+      "status": "source-open-current-audit",
+      "posed_by": "Sattar Vakili",
+      "source": {
+        "title": "Open Problem: Regret Bounds for Noise-Free Kernel-Based Bandits",
+        "url": "https://proceedings.mlr.press/v178/open-problem-vakili22a.html"
+      },
+      "progress": [],
+      "lean": {
+        "status": "not-mapped",
+        "local_status": "P0-candidate",
+        "declarations": []
+      },
+      "graph_delta": "Separates deterministic approximation/interpolation error from statistical confidence; likely cross-pollination with numerical approximation and RKHS geometry."
     },
     {
-      "id":"pomdp-memoryless-planning",
-      "priority":"P2",
-      "area":"POMDP / planning",
-      "title":"Approximate planning of POMDPs in memoryless policies",
-      "posed_year":2016,
-      "status":"audit-needed",
-      "posed_by":"Kamyar Azizzadenesheli, Alessandro Lazaric and Animashree Anandkumar",
-      "source":{"title":"Open Problem: Approximate Planning of POMDPs in the class of Memoryless Policies","url":"https://proceedings.mlr.press/v49/azizzadenesheli16b.html"},
-      "lean":{"status":"not-mapped","local_status":"defer-until-RL-route","declarations":[]},
-      "graph_delta":"RL-side computational frontier: nonconvex planning and partial observability rather than statistical regret alone."
+      "id": "jdp-linear-contextual-bandits",
+      "priority": "P1",
+      "area": "Privacy / linear contextual bandits",
+      "title": "Complexity of joint differential privacy in linear contextual bandits",
+      "posed_year": 2024,
+      "status": "source-open-current-audit",
+      "posed_by": "Achraf Azize and Debabrota Basu",
+      "source": {
+        "title": "Open Problem: What is the Complexity of Joint Differential Privacy in Linear Contextual Bandits?",
+        "url": "https://proceedings.mlr.press/v247/azize24a.html"
+      },
+      "progress": [
+        {
+          "year": 2026,
+          "title": "Shuffle and Joint Differential Privacy for Generalized Linear Contextual Bandits",
+          "url": "https://arxiv.org/abs/2602.00417",
+          "note": "Extends private contextual-bandit algorithms to GLMs, but this registry does not treat it as a proof that the original upper/lower gap is closed."
+        }
+      ],
+      "lean": {
+        "status": "not-mapped",
+        "local_status": "planned",
+        "declarations": []
+      },
+      "graph_delta": "Adds privacy accounting/noise geometry on top of self-normalized linear-bandit confidence and regret lower bounds."
     },
     {
-      "id":"rl-horizon-lower-bounds",
-      "priority":"P1",
-      "area":"Reinforcement learning / lower bounds",
-      "title":"Dependence of sample-complexity lower bounds on planning horizon",
-      "posed_year":2018,
-      "status":"audit-needed",
-      "posed_by":"Nan Jiang and Alekh Agarwal",
-      "source":{"title":"Open Problem: The Dependence of Sample Complexity Lower Bounds on Planning Horizon","url":"https://proceedings.mlr.press/v75/jiang18a.html"},
-      "lean":{"status":"not-mapped","local_status":"planned","declarations":[]},
-      "graph_delta":"High-value lower-bound bridge for the RL book: separates horizon dependence from assumptions that can hide it."
+      "id": "kernel-rl-order-optimal",
+      "priority": "P0",
+      "area": "Kernel reinforcement learning",
+      "title": "Order-optimal regret bounds for kernel-based RL",
+      "posed_year": 2024,
+      "status": "source-open-current-audit",
+      "posed_by": "Sattar Vakili",
+      "source": {
+        "title": "Open Problem: Order Optimal Regret Bounds for Kernel-Based Reinforcement Learning",
+        "url": "https://proceedings.mlr.press/v247/vakili24a.html"
+      },
+      "progress": [],
+      "lean": {
+        "status": "not-mapped",
+        "local_status": "P0-candidate",
+        "declarations": []
+      },
+      "graph_delta": "Natural bridge between the RKHS-confidence frontier and the finite-horizon RL confidence/optimism graph already present in BanditRLlib."
     },
     {
-      "id":"risk-of-ruin-bandits",
-      "priority":"P2",
-      "area":"Safe / risk-sensitive bandits",
-      "title":"Risk of ruin in multi-armed bandits",
-      "posed_year":2019,
-      "status":"audit-needed",
-      "posed_by":"Filipo S. Perotto, Mathieu Bourgais, Bruno C. Silva and Laurent Vercouter",
-      "source":{"title":"Open Problem: Risk of Ruin in Multiarmed Bandits","url":"https://proceedings.mlr.press/v99/"},
-      "lean":{"status":"not-mapped","local_status":"planned","declarations":[]},
-      "graph_delta":"Combines multi-objective reward/safety, absorbing ruin events and budget dynamics; good candidate for safe-bandit cross-pollination."
+      "id": "distributional-regret-ls17",
+      "priority": "P0",
+      "area": "Distributional / high-probability regret",
+      "title": "Lattimore–Szepesvari Chapter 17 distributional-regret conjecture",
+      "posed_year": 2020,
+      "status": "resolved-peer-reviewed",
+      "posed_by": "Tor Lattimore and Csaba Szepesvari",
+      "source": {
+        "title": "Bandit Algorithms, Section 17.1",
+        "url": "https://tor-lattimore.com/downloads/book/book.pdf"
+      },
+      "resolution": [
+        {
+          "year": 2026,
+          "title": "Unified Framework of Distributional Regret in Multi-Armed Bandits and Reinforcement Learning",
+          "url": "https://proceedings.mlr.press/v336/lee26b.html",
+          "note": "Lee and Oh state that their MAB bound confirms the Section 17.1 conjecture for the first time."
+        }
+      ],
+      "lean": {
+        "status": "local-lower-side-compiled",
+        "local_status": "existing-case",
+        "declarations": [
+          "BanditRLProof.LowerBounds.gaussianRandomPseudoRegret_ge_theorem17_1"
+        ]
+      },
+      "graph_delta": "Already an excellent internal historical frontier: lower-tail spine is local; the 2026 EQO+ upper route remains a formalization leaf."
     },
     {
-      "id":"limited-expert-advice-bandits",
-      "priority":"P2",
-      "area":"Adversarial bandits / expert advice",
-      "title":"Multi-armed bandits with limited expert advice",
-      "posed_year":2013,
-      "status":"resolved-peer-reviewed",
-      "posed_by":"Seldin et al. (COLT 2013 open problem)",
-      "source":{"title":"Multiarmed Bandits With Limited Expert Advice","url":"https://proceedings.mlr.press/v35/kale14a.html"},
-      "resolution":[{"year":2014,"title":"Multiarmed Bandits With Limited Expert Advice","url":"https://proceedings.mlr.press/v35/kale14a.html","note":"Kale states that the nearly matching upper/lower bounds solve the COLT 2013 open problem."}],
-      "lean":{"status":"not-mapped","local_status":"low-priority-history","declarations":[]},
-      "graph_delta":"Compact historical example of a resource-constrained information interface producing a matching minimax scale."
+      "id": "parameter-free-dynamic-linear-bandits",
+      "priority": "P1",
+      "area": "Dynamic / linear bandits",
+      "title": "Parameter-free adaptation to comparator switches in unconstrained linear bandits",
+      "posed_year": null,
+      "status": "resolved-peer-reviewed",
+      "posed_by": "Long-standing literature problem (source chain to be frozen before theorem-level port)",
+      "source": {
+        "title": "Parameter-Free Dynamic Regret for Unconstrained Linear Bandits",
+        "url": "https://proceedings.mlr.press/v300/rumi26a.html"
+      },
+      "resolution": [
+        {
+          "year": 2026,
+          "title": "Parameter-Free Dynamic Regret for Unconstrained Linear Bandits",
+          "url": "https://proceedings.mlr.press/v300/rumi26a.html",
+          "note": "The paper reports the first optimal switch-adaptive rate up to polylog factors without knowing the switch count."
+        }
+      ],
+      "lean": {
+        "status": "not-mapped",
+        "local_status": "planned",
+        "declarations": []
+      },
+      "graph_delta": "Connects dynamic-regret comparator complexity, parameter-free meta-combination and linear-bandit geometry."
+    },
+    {
+      "id": "pomdp-memoryless-planning",
+      "priority": "P2",
+      "area": "POMDP / planning",
+      "title": "Approximate planning of POMDPs in memoryless policies",
+      "posed_year": 2016,
+      "status": "audit-needed",
+      "posed_by": "Kamyar Azizzadenesheli, Alessandro Lazaric and Animashree Anandkumar",
+      "source": {
+        "title": "Open Problem: Approximate Planning of POMDPs in the class of Memoryless Policies",
+        "url": "https://proceedings.mlr.press/v49/azizzadenesheli16b.html"
+      },
+      "lean": {
+        "status": "not-mapped",
+        "local_status": "defer-until-RL-route",
+        "declarations": []
+      },
+      "graph_delta": "RL-side computational frontier: nonconvex planning and partial observability rather than statistical regret alone."
+    },
+    {
+      "id": "rl-horizon-lower-bounds",
+      "priority": "P1",
+      "area": "Reinforcement learning / lower bounds",
+      "title": "Dependence of sample-complexity lower bounds on planning horizon",
+      "posed_year": 2018,
+      "status": "audit-needed",
+      "posed_by": "Nan Jiang and Alekh Agarwal",
+      "source": {
+        "title": "Open Problem: The Dependence of Sample Complexity Lower Bounds on Planning Horizon",
+        "url": "https://proceedings.mlr.press/v75/jiang18a.html"
+      },
+      "lean": {
+        "status": "not-mapped",
+        "local_status": "planned",
+        "declarations": []
+      },
+      "graph_delta": "High-value lower-bound bridge for the RL book: separates horizon dependence from assumptions that can hide it."
+    },
+    {
+      "id": "risk-of-ruin-bandits",
+      "priority": "P2",
+      "area": "Safe / risk-sensitive bandits",
+      "title": "Risk of ruin in multi-armed bandits",
+      "posed_year": 2019,
+      "status": "audit-needed",
+      "posed_by": "Filipo S. Perotto, Mathieu Bourgais, Bruno C. Silva and Laurent Vercouter",
+      "source": {
+        "title": "Open Problem: Risk of Ruin in Multiarmed Bandits",
+        "url": "https://proceedings.mlr.press/v99/"
+      },
+      "lean": {
+        "status": "not-mapped",
+        "local_status": "planned",
+        "declarations": []
+      },
+      "graph_delta": "Combines multi-objective reward/safety, absorbing ruin events and budget dynamics; good candidate for safe-bandit cross-pollination."
+    },
+    {
+      "id": "limited-expert-advice-bandits",
+      "priority": "P2",
+      "area": "Adversarial bandits / expert advice",
+      "title": "Multi-armed bandits with limited expert advice",
+      "posed_year": 2013,
+      "status": "resolved-peer-reviewed",
+      "posed_by": "Seldin et al. (COLT 2013 open problem)",
+      "source": {
+        "title": "Multiarmed Bandits With Limited Expert Advice",
+        "url": "https://proceedings.mlr.press/v35/kale14a.html"
+      },
+      "resolution": [
+        {
+          "year": 2014,
+          "title": "Multiarmed Bandits With Limited Expert Advice",
+          "url": "https://proceedings.mlr.press/v35/kale14a.html",
+          "note": "Kale states that the nearly matching upper/lower bounds solve the COLT 2013 open problem."
+        }
+      ],
+      "lean": {
+        "status": "not-mapped",
+        "local_status": "low-priority-history",
+        "declarations": []
+      },
+      "graph_delta": "Compact historical example of a resource-constrained information interface producing a matching minimax scale."
+    },
+    {
+      "id": "sparse-linear-priming-online-regret",
+      "priority": "P2",
+      "area": "Online learning / sparse linear prediction",
+      "title": "Provable online regret for feature-priming methods",
+      "posed_year": 2023,
+      "status": "source-open-current-audit",
+      "posed_by": "Manfred K. Warmuth and Ehsan Amid",
+      "scope_class": "adjacent-online-learning",
+      "core_bandit_rl": false,
+      "route_target": "book:online-learning",
+      "source": {
+        "title": "Open Problem: Learning sparse linear concepts by priming the features",
+        "url": "https://proceedings.mlr.press/v195/warmuth23a.html"
+      },
+      "source_collection": {
+        "title": "COLT 2023 Open Problems",
+        "url": "https://learningtheory.org/colt2023/open.html"
+      },
+      "progress": [],
+      "lean": {
+        "status": "not-mapped",
+        "local_status": "route-to-online-learning",
+        "declarations": []
+      },
+      "graph_delta": "Adjacent Online Learning bridge: sparse multiplicative updates / relative-entropy regularization versus closed-form least-squares-style priming. The core question is online regret, so it belongs to the Online Learning book and the technique/Functor graph rather than the core Bandit/RL frontier.",
+      "audit_note": "A targeted 2026-09-19 search confirmed the 2023 source statement; this registry does not claim that the question is permanently open beyond the dated audit."
+    },
+    {
+      "id": "quantum-bandit-horizon-independent-regret",
+      "priority": "P0",
+      "area": "Quantum multi-armed / linear bandits",
+      "title": "Can quantum-bandit regret be independent of the horizon?",
+      "posed_year": 2023,
+      "status": "resolved-preprint",
+      "posed_by": "Zongqi Wan, Zhijie Zhang, Tongyang Li, Jialin Zhang and Xiaoming Sun",
+      "scope_class": "core-bandit-quantum-access",
+      "core_bandit_rl": true,
+      "source": {
+        "title": "Quantum Multi-Armed Bandits and Stochastic Linear Bandits Enjoy Logarithmic Regrets",
+        "url": "https://ojs.aaai.org/index.php/AAAI/article/view/26202"
+      },
+      "resolution": [
+        {
+          "year": 2026,
+          "title": "Quantum Multi-Armed Bandits and Linear Bandits: Lower Bounds and Algorithms",
+          "url": "https://arxiv.org/abs/2608.14319",
+          "note": "Liu, Li and Lui prove Ω(K log(T/K)) QMAB and Ω(d log(T/d)) finite-action QLB lower bounds and state that this resolves the Wan et al. question of whether horizon-independent regret is achievable. The resolution is currently a preprint."
+        }
+      ],
+      "lean": {
+        "status": "not-mapped",
+        "local_status": "P0-cross-library-candidate",
+        "declarations": []
+      },
+      "graph_delta": "Quantum-access lower-bound bridge: a high-confidence single-arm quantum testing lower bound via the polynomial method and a Remez-type inequality is lifted by a bandit-to-testing reduction to QMAB, with a linear embedding for QLB. The eventual Lean route should reuse ABRL lower-bound/testing structure and source quantum semantics/testing primitives from ASPBE or audited quantum Lean libraries through an explicit adapter."
     }
   ]
 }
