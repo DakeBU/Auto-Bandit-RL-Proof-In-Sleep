@@ -92,3 +92,5 @@ import Tests.CausalMarginalLawCanary
 import Tests.CausalImportanceCanary
 import Tests.CausalAllocationCanary
 import Tests.CausalOptimalAllocationCanary
+
+import Tests.HeavyTailSourceScheduleCanary

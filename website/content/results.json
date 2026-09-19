@@ -1,6 +1,24 @@
 {
   "results": [
     {
+      "id": "HEAVY-TAIL-SOURCE-SCHEDULE-CONFIDENCE",
+      "title": "Source-schedule causal robust-UCB confidence budgets",
+      "chapter": "ucb",
+      "status": "compiled",
+      "informal": "The actual history-based robust UCB with source radius4 and paper-round confidence parameter r^(-2) has each per-arm signed deviation probability at most t exp(-5L_t/4), L_t=2log(t+1), after initialization. Each signed finite-time event-probability sum is at most2. This does not establish the printed regret coefficient.",
+      "declarations": [
+        "BanditRLProof.HeavyTail.SourcePolicy.robustMean_upper_tail_sum",
+        "BanditRLProof.HeavyTail.SourcePolicy.robustMean_lower_tail_sum"
+      ],
+      "depends_on": [
+        "BanditRLProof.HeavyTail.source_adaptive_mean_upper_tail",
+        "BanditRLProof.HeavyTail.source_schedule_tail_sum_le_two",
+        "BanditRLProof.HeavyTail.truncated_observed_sum"
+      ],
+      "missing": [],
+      "evidence": "BanditRLProof/Algorithms/HeavyTailSourcePolicy.lean"
+    },
+    {
       "id": "HEAVY-TAIL-SOURCE-CONFIDENCE-FOUR",
       "title": "Sample-index truncated confidence with source radius four",
       "chapter": "probability",

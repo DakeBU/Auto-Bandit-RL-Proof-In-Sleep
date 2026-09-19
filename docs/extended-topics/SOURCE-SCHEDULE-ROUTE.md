@@ -40,3 +40,27 @@ both statements; independent source reviewer A accepted with explicit delta;
 separate repair reviewer A accepted the implemented proof at frozen hashes.
 Full gate and site receipts will be recorded separately. None of these reviews
 accepts the original adaptive policy or printed regret coefficient.
+
+## Adaptive-prefix and finite budget target (after 84c0c3f)
+
+Target: original zero-based evaluation schedule L_t=2log(t+1), upper/lower
+signed radius-four confidence at arbitrary selected positive prefix <=t, and
+finite time budget <=2 for each sign. At t=0 the event is empty.
+Own HeavyTailSourceSchedule; reuse actual sharp raw-moment confidence and
+existing finite union method (scheduled_adaptive_mean_tail), not its larger
+radius or different log schedule. Reuse Mathlib finite measure union, rpow/exp
+identities and the independently checked inverse-square-root telescoping route.
+Count may depend on all data; outer-measure bound needs no count independence.
+No source-policy or regret acceptance until actual history consumer is joined.
+Reader/semantic packet and common gates are required at stabilization.
+
+## Current implemented extension
+
+HeavyTailSourceSchedule now compiles signed adaptive-prefix confidence and the
+finite time budget2, including empty t0. Algorithms/HeavyTailSourcePolicy
+constructs the original radius4/r^-2 parameter policy from finite observed
+histories, initializes round-robin and maximizes the actual source index.
+Its observed truncated mean is proved equal to the arm-stream latent prefix;
+stationary raw moments feed both signed per-arm finite-budget endpoints.
+Public-root canary uses two genuinely noisy arms and horizon1000. Full gate and
+semantic packetE are in progress; exact printed regret coefficient remains open.
