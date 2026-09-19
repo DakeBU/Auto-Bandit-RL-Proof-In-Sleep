@@ -42,8 +42,9 @@ large-count selection. `HeavyTailExpectedCount` closes the expected count bound.
 `HeavyTailRegret.robust_expected_regret` closes the conservative finite-horizon
 expected pseudo-regret endpoint. Mean integrability is derived from the raw
 moment, and no confidence or MGF premise is supplied to this endpoint.
-Semantic review, full source adjudication and acceptance evidence are separate
-obligations; this compilation does not mark the topic complete.
+The full conservative chain now has independent semantic and separate repair
+acceptance with explicit deltas (2026-09-19; regret-review-validation.json).
+Literal-source adjudication and topic acceptance evidence remain separate.
 
 ## Conservative derivation (algorithm-to-regret chain compiled)
 
@@ -82,7 +83,8 @@ E R_T <= sum_{i:Delta_i>0} Delta_i (L_i+2).
 
 The compiled `gapThreshold` uses the algebraically equivalent quotient form
 ceil(L_T / (Delta/(16*u^(1/p)))^(p/(p-1)))+1. This conservative route is now
-compiled, but awaits semantic review and joint acceptance. The source-faithful
+compiled and independently accepted as an explicit adaptation; whole-topic
+acceptance remains open. The source-faithful
 original-constant endpoint remains in repair; the adaptation has its own
 contract and must not overwrite that history.
 
@@ -110,7 +112,7 @@ at B=1, x=1, y=3/2 the transformed difference is 1>1/2.
 | Raw-moment truncation producers | proving -> compiled leaf candidate | pointwise, integral, centered MGF, independent one-sided tail |
 | Actual transformed prefix | compiled leaf candidate | direct use of frozen UCB stream-prefix proof |
 | Fixed-prefix two-sided mean confidence | compiled candidate | raw moments, explicit sums and power tuning closed |
-| Causal robust-UCB adaptation | compiled endpoint candidate | actual history, random count, finite tail sum and expected regret closed; review and acceptance pending |
+| Causal robust-UCB adaptation | compiled endpoint candidate | actual history, random count, finite tail sum and expected regret closed; conservative semantic review accepted, topic acceptance pending |
 | Reserved clipping transfer | compiled confidence candidate | clean clipped confidence and corrupted actual-prefix transport closed; independent review and corruption-robust regret remain open |
 | Controlled efficiency evaluation | frozen, not executed | independent isolated model runner and enforceable budget unavailable |
 
