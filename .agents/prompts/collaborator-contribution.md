@@ -31,3 +31,12 @@ For every substantive PR, create/update a manifest under
 `research-wiki/contribution-contracts/`.
 
 Do not claim completion until the current-base contributor contract, Lean gate, site build/check, graph publication review, and source-fidelity review pass. Generated `website/_site/` is never committed.
+
+## Cross-library special cases
+
+If the target is the canonical `quantum-bandits` setting, also read
+`docs/quantum-bandit-cross-library-protocol.md` and inspect ASPBE /
+QuantumComputinglib plus its audited quantum Lean reference cards before
+introducing quantum foundations locally. Treat every cross-library edge as a
+candidate overlay until a compatible import, local re-proof, or compiled ABRL
+adapter exists.
