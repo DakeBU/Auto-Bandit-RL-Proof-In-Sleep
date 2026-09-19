@@ -143,7 +143,7 @@ def _build_setting_atlas(
 <section id="taxonomy-rule">
   <h2>Do not flatten settings, objectives, and methods</h2>
   <p>BAI and regret minimization are objectives; Thompson sampling and GP-UCB are methods; LLM is an application bridge. A result becomes comparable only after the environment/action class, feedback, objective, probability mode, parameters, computation/oracle assumptions and theorem source are fixed.</p>
-  <div class="callout warning"><strong>Ambiguous acronyms stay quarantined.</strong> OMDP and Transform still require a cited source before canonicalization. SLB is now treated as an alias of stochastic linear bandits, not a separate setting.</div>
+  <div class="callout warning"><strong>Ambiguous acronyms stay quarantined.</strong> OMDP, SLB and Transform require a cited source before canonicalization. In particular, SLB is used in the literature for both stochastic linear bandits and safe linear bandits, so the bare acronym is not merged into either node.</div>
 </section>
 {''.join(groups)}
 <section id="maintenance">
