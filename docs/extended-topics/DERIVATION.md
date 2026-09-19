@@ -46,6 +46,17 @@ The full conservative chain now has independent semantic and separate repair
 acceptance with explicit deltas (2026-09-19; regret-review-validation.json).
 Literal-source adjudication and topic acceptance evidence remain separate.
 
+## Source constant-four confidence (separately compiled and reviewed)
+
+`HeavyTailUnshiftedMGF.bounded_centering_mgf_unshifted` applies the exponential
+remainder before subtracting the mean. It allows |lambda|B<=1 with a raw
+second-moment budget, without assuming the centered variable is bounded by B.
+`HeavyTailSourceConfidence.source_truncated_mean_upper_tail` and its reflected
+lower tail now prove radius4 for arbitrary delta in (0,1). The source estimator,
+constant and confidence parameter match; non-IID/common-mean and closed-event
+generalizations are explicit. The existing algorithm below still uses radius8
+and its own repaired schedule. These are distinct contracts.
+
 ## Conservative derivation (algorithm-to-regret chain compiled)
 
 Take B_s=(u(s+1)/L)^(1/p), L=log(1/delta)>0, and independent samples with

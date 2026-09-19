@@ -57,8 +57,9 @@ current execution follows `ALL-TOPICS-PROGRAM.md` in strict topic order.
 
 All four PDFs were retrieved; this table originally recorded targeted screening.
 The 2026-09-19 Genalti full supplied-proof reading is now recorded separately in
-`GENALTI24-SOURCE-AUDIT.md`, including unresolved literal-source defects. The
-other three remain screened-only. Full reading is not semantic acceptance. No recent-source endpoint is frozen from
+`GENALTI24-SOURCE-AUDIT.md`, including unresolved literal-source defects. Park2026 relevant proofs were also read in full; see `PARK26-SOURCE-AUDIT.md`
+for raw-reward assumptions and unresolved proof defects. Yu2025 and Tani2026
+remain screened-only. Full reading is not semantic acceptance. No recent-source endpoint is frozen from
 its abstract. The classical primary case has the clearest source and strongest
 direct relationship to existing arm-prefix/count infrastructure.
 

@@ -1,4 +1,20 @@
-# Candidate route to the published confidence constant 4
+# Source confidence constant 4: completed proof route
+
+## Current state, 2026-09-19
+
+The complete arbitrary-delta upper and lower confidence declarations now compile
+in the shared project at source commit `abf4d27`, under
+`BanditRLProof/HeavyTailSourceConfidence.lean`. The shared improved MGF is in
+`HeavyTailUnshiftedMGF.lean`. Independent source review accepts the coefficient4,
+sample-index estimator and arbitrarydelta, with declared non-IID/common-mean and
+closed-event generalizations. A distinct repair reviewer accepted the actual
+proof bodies. A public-root stochastic canary instantiates the upper statement
+at n=1000, delta=1/20, mean1 and raw second moment2. The final joint gate is
+recorded in `runs/extended-topics-20260919/source-confidence-validation.json`.
+
+The proposed route below is retained as mathematical derivation and development
+history. Its earlier scratch-only status is superseded for these two confidence
+endpoints. Original algorithm/regret constants remain separate unresolved work.
 
 2026-09-19; proposed by formalizer; subsequently accepted mathematically by the separate
 repair reviewer. Not yet an integrated source-confidence theorem.

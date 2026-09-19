@@ -45,7 +45,10 @@ checks; see `runs/extended-topics-20260919/confidence-review-validation.json`.
 Two scheduled confidence declarations have independent acceptance with explicit
 deltas, documented in `research-wiki/papers/extended-topics-heavy-tail-confidence.md`. The subsequent full conservative regret-chain review also accepted its explicit
 adaptation, recorded in `runs/extended-topics-20260919/regret-review-validation.json`.
-Neither review accepts the unchanged printed constants or completes the topic. Do not silently reduce a theorem, count a consumer as its
+Neither regret review accepts the unchanged printed regret constants or completes
+the topic. A subsequent source-confidence result recovers the original radius4
+for arbitrarydelta with independent semantic acceptance; it does not change the
+algorithm. See `CONSTANT-FOUR-ROUTE.md`. Do not silently reduce a theorem, count a consumer as its
 producer, or end the Goal after one PR or topic. Source-scope revisions preserve
 the original unresolved obligations and reasons.
 

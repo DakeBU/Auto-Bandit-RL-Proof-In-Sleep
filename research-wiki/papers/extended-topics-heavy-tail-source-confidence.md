@@ -4,7 +4,8 @@ Bubeck, Cesa-Bianchi and Lugosi, *Bandits With Heavy Tail*, IEEE TIT 59(11),
 2013, DOI 10.1109/TIT.2013.2277869, Lemma 1 pp.7713-7714 and Assumption 1 p.7712.
 The frozen published PDF hash is recorded in `docs/extended-topics/source-hashes.json`.
 This page concerns the source estimator and confidence constant, not the published
-algorithm's regret bound. Independent semantic review is recorded separately.
+algorithm's regret bound. Independent source review and separate proof-method review accept these
+statements with the explicit generalizations below.
 
 ## Source contract and assumptions
 
@@ -31,7 +32,7 @@ no policy or random-count claim is attached to this theorem.
 
 | Semantic component | Classification | Actual difference |
 |---|---|---|
-| Sample-index thresholds, raw moment, coefficient4, arbitrarydelta | same | unchanged |
+| Sample-index thresholds, raw moment, coefficient 4, arbitrary delta | same | unchanged |
 | Measurability and integrability | source-implicit | explicit real-integral prerequisites |
 | Independent common-mean sequence rather than identical laws | generalization | no identical-law premise required |
 | Infinite index family rather than finite sample notation | API-limitation | full-family hypotheses; conclusion uses first n only |
@@ -131,6 +132,21 @@ theorem source_truncated_mean_lower_tail {Ω : Type*} [MeasurableSpace Ω]
 
 </details>
 
+<details>
+<summary>Shared unshifted MGF interface</summary>
+
+```lean
+theorem bounded_centering_mgf_unshifted {Ω : Type*} [MeasurableSpace Ω]
+    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : Ω → ℝ)
+    (B v tilt : ℝ) (hYm : Measurable Y) (hbound : ∀ ω, |Y ω| ≤ B)
+    (hv : (∫ ω, (Y ω)^2 ∂μ) ≤ v)
+    (hsmall : |tilt| * B ≤ 1) :
+    Concentration.HasMGFUpperBoundAt
+      (fun ω => Y ω - ∫ ω, Y ω ∂μ) tilt (tilt^2 * v) μ
+```
+
+</details>
+
 ## Remaining boundary
 
 The endpoint excludes n=0, epsilon=0, u=0 and delta outside (0,1). The internal
@@ -140,7 +156,13 @@ Raw moments cannot be replaced silently by central moments. No unchanged
 published regret constant, gap-independent result or topic completion follows.
 
 The public-root canary consumes the upper theorem on one thousand genuinely random
-observations taking values0 and2 with equal probability, mean1, second moment2
+observations taking values 0 and 2 with equal probability, mean 1, second moment 2
 and delta=1/20. Both signed endpoints and the MGF are included in its axiom
 checks. Shared gates and the distinct blind/source/repair roles are bound in
 `runs/extended-topics-20260919/source-confidence-validation.json`.
+
+The compiled export in `source-confidence-reuse.json` identifies 19 direct
+project proof references from the new modules to five pre-existing source
+modules whose Git blobs are unchanged from the comparison base. It separates
+these from type-only and external references. These counts describe actual
+reuse, not novelty, saved effort or causal efficiency.
