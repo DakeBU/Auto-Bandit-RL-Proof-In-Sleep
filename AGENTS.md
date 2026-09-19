@@ -110,6 +110,23 @@ Canonical data:
 - `website/content/functor_hypergraph.json`
 - `website/content/graph_memory_index.json`
 
+## Special cross-library settings
+
+Some settings change the information model enough that another formal library should
+supply part of the semantics rather than ABRL rebuilding it locally.
+
+For `quantum-bandits`, read
+`docs/quantum-bandit-cross-library-protocol.md` before defining any quantum
+state, channel, oracle, measurement, or query-complexity interface. Search
+BanditRLlib for the classical decision skeleton, then ASPBE/QuantumComputinglib
+and its audited quantum Lean references for quantum semantics. External/cross-
+library facts remain dashed candidate substrates until a compatible import,
+local re-proof, or compiled adapter establishes an ABRL-owned theorem edge.
+
+The same pattern applies to future cross-library routes: reuse the owning
+library's foundations, preserve license/toolchain provenance, and formalize the
+smallest explicit adapter instead of forking a second foundational library.
+
 ## Route and progress synchronization
 
 A theorem contribution is incomplete as repository integration if the reader-facing project state remains stale. Update only affected canonical sources, but explicitly classify each surface:
