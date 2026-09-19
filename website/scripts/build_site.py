@@ -24,9 +24,15 @@ except ImportError:  # Direct script execution.
     from book_registry import build_registry, membership_index
 
 try:
-    from .extended_research_surfaces import build_extended_research_surfaces
+    from .extended_research_surfaces import (
+        build_extended_research_surfaces,
+        build_lean_graph_technique_overlay,
+    )
 except ImportError:  # Direct script execution.
-    from extended_research_surfaces import build_extended_research_surfaces
+    from extended_research_surfaces import (
+        build_extended_research_surfaces,
+        build_lean_graph_technique_overlay,
+    )
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent
@@ -65,7 +71,7 @@ PAPER_TITLE = (
 PRIMARY_TEXTBOOK_TITLE = "Bandit Algorithms"
 PRIMARY_TEXTBOOK_AUTHORS = "Tor Lattimore and Csaba Szepesvári"
 PRIMARY_TEXTBOOK_URL = "https://tor-lattimore.com/downloads/book/book.pdf"
-ASSET_VERSION = "20260918-contributor-contract"
+ASSET_VERSION = "20260919-taxonomy-techniques"
 CATALOG_PAGE_SIZE = 20
 MILESTONE_PAGE_SIZE = 12
 MODULE_PAGE_SIZE = 30
@@ -710,10 +716,11 @@ def layout(
         ("proof-lab", "Proof Graph Laboratory", "proof-graph-laboratory/index.html"),
     ]
     research_items = [
-        ("banditrlwiki", "BanditRLwiki", "banditrlwiki/index.html"),
-        ("banditrlwiki-setting-atlas", "Full Setting Atlas", "banditrlwiki/setting-atlas/index.html"),
-        ("banditrlwiki-frontier-problems", "Frontier problem history", "banditrlwiki/frontier-problems/index.html"),
-        ("banditrlwiki-frontier", "Frontier leaves", "banditrlwiki/frontier/index.html"),
+        ("banditrlwiki-setting-atlas", "Bandit Taxonomy", "banditrlwiki/setting-atlas/index.html"),
+        ("banditrlwiki-technique-map", "Technique Map", "banditrlwiki/technique-map/index.html"),
+        ("banditrlwiki", "Bound & Source Atlas", "banditrlwiki/index.html"),
+        ("banditrlwiki-frontier-problems", "Frontier · open problems", "banditrlwiki/frontier-problems/index.html"),
+        ("banditrlwiki-frontier", "Lean formalization frontier", "banditrlwiki/frontier/index.html"),
         ("functor-hypergraph", "Functor Hypergraph", "functor-hypergraph/index.html"),
         ("banditrlwiki-papers", "Paper index", "banditrlwiki/papers/index.html"),
         ("banditrlwiki-progress", "Audit progress", "banditrlwiki/progress/index.html"),
@@ -787,7 +794,7 @@ def layout(
     books_nav += nav_group("bandit-book", "Bandit Book contents",
         '<p class="nav-section-label">Teaching routes · 01–10</p>' + book_nav +
         '<p class="nav-section-label">Source chapters · Part IV</p>' + spine_nav +
-        nav_links([("extended", "Extended Chapters", "books/bandit/index.html#extended-chapters")]), bandit_active)
+        nav_links([("extended", "Beyond the core textbook", "books/bandit/index.html#extended-chapters")]), bandit_active)
     breadcrumb = render_book_breadcrumb(page_path)
     sidebar_groups = "".join(
         [
@@ -800,6 +807,7 @@ def layout(
                 current in {
                     "banditrlwiki",
                     "banditrlwiki-setting-atlas",
+                    "banditrlwiki-technique-map",
                     "banditrlwiki-frontier-problems",
                     "banditrlwiki-frontier",
                     "functor-hypergraph",
@@ -1035,8 +1043,15 @@ def build_books(output: Path, verified: bool, generated_at: str) -> None:
         if book["id"] == "bandit":
             body += f'''<section id="teaching-routes"><h2>Teaching routes · 01–10</h2><p>These ten curated routes keep their original numbering. They are not the textbook's chapter numbers and do not cover the entire book.</p>{render_book_map(page_path, SITE_CHAPTERS, compact=True)}<p><a href="{href_from(page_path, 'learning/index.html#path')}">Choose a mathematical reading path</a></p></section>
 <section id="source-chapters"><h2>Source chapters · Part IV, 13–17</h2><p>Required main-text contracts have prior merged compilation evidence; optional notes and exercises are not all complete. This build's verification banner states the local gate status.</p><div class="callout warning">Chapter 17 retains explicit source corrections: Claim 17.6 uses <code>T_i ≤ n/2</code>; Theorem 17.4 uses <code>0 &lt; δ ≤ 1/32</code>, <code>c = 1/160</code> and <code>C = 64</code>.</div>{render_textbook_spine_map(page_path, SITE_TEXTBOOK_SPINE, verified)}</section>
-<section id="extended-chapters"><h2>Extended Chapters</h2><p>Explore settings and proof techniques in BanditRLwiki. Smaller extensions, including multi-objective optimization, stay here until a sourced curriculum warrants a separate book.</p><p><a href="{href_from(page_path, 'banditrlwiki/index.html#topics')}">Settings and methods directory →</a> · <a href="{href_from(page_path, 'chapters/frontier/index.html')}">Existing extensions and formalization frontier →</a></p>{render_topic_cards(page_path)}</section>'''
-            toc += [("teaching-routes", "Teaching routes"), ("source-chapters", "Source chapters"), ("extended-chapters", "Extended Chapters")]
+<section id="extended-chapters"><h2>Beyond the core textbook</h2><p>This section used to mix a small set of “Extended Chapters” with BanditRLwiki. It is now only a navigation layer: classification, techniques, literature bounds and open problems have different truth contracts and live on separate pages.</p>
+<div class="card-grid">
+<article class="info-card"><p class="panel-kicker">Learn the landscape</p><h3><a href="{href_from(page_path, 'banditrlwiki/setting-atlas/index.html')}">Bandit Taxonomy</a></h3><p>Settings, objectives, methods, resource/oracle models and application bridges—including the full long-tail list and quantum bandits.</p></article>
+<article class="info-card"><p class="panel-kicker">Learn the mathematical moves</p><h3><a href="{href_from(page_path, 'banditrlwiki/technique-map/index.html')}">Technique Map</a></h3><p>Which new proof/algorithmic technique each setting needs: robust estimation, zooming, RKHS information gain, combinatorial relaxation, primal–dual control, quantum estimation/testing and more.</p></article>
+<article class="info-card"><p class="panel-kicker">Read theorem-level evidence</p><h3><a href="{href_from(page_path, 'banditrlwiki/index.html')}">Bound &amp; Source Atlas</a></h3><p>Compatible upper/lower bounds, primary theorem sources, assumptions and the exact local Lean boundary.</p></article>
+<article class="info-card"><p class="panel-kicker">Research frontier</p><h3><a href="{href_from(page_path, 'banditrlwiki/frontier-problems/index.html')}">Frontier · open problems</a></h3><p>Source-traceable posed → partial → resolved histories. Literature openness is never inferred from missing Lean.</p></article>
+</div>
+<p><a href="{href_from(page_path, 'banditrlwiki/frontier/index.html')}">Lean formalization frontier →</a> · <a href="{href_from(page_path, 'functor-hypergraph/index.html')}">Functor Hypergraph →</a> · <a href="{href_from(page_path, 'lean-graph/index.html')}">Underlying Lean Graph →</a></p></section>'''
+            toc += [("teaching-routes", "Teaching routes"), ("source-chapters", "Source chapters"), ("extended-chapters", "Beyond core textbook")]
         else:
             refs = ''.join(f'<li><a href="{href_from(page_path, chapters[ref]["url"])}">{html.escape(chapters[ref]["title"])}</a></li>' for ref in book["chapter_refs"])
             body += f'''<section id="existing-reading"><h2>Existing shared reading</h2><p>These links reuse established pages with their original sources and exact Lean boundaries. They do not certify a chapter of the new book.</p>{'<ol class="shared-route">' + refs + '</ol>' if refs else '<p>No chapter references registered yet.</p>'}</section>
@@ -1051,7 +1066,7 @@ def build_books(output: Path, verified: bool, generated_at: str) -> None:
         related = ''.join(f'<li><a href="{href_from(page_path, chapters[ref]["url"])}">{html.escape(chapters[ref]["title"])}</a></li>' for ref in topic["related_chapters"])
         related += ''.join(f'<li><a href="{href_from(page_path, f"banditrlwiki/cases/{ref}/index.html")}">{html.escape(ref)}</a></li>' for ref in topic["related_cases"])
         body = f'''<nav class="book-breadcrumb" aria-label="Breadcrumb"><a href="{href_from(page_path, 'banditrlwiki/index.html#topics')}">BanditRLwiki · Settings and methods</a></nav>
-<section class="hero" id="topic"><p class="eyebrow">{html.escape(topic['kind'])} · Source audit pending</p><h1 class="page-title">{html.escape(topic['title'])}</h1><p class="lede">{html.escape(topic['summary'])}</p><p class="topic-tags">{' · '.join(html.escape(t) for t in topic['tags'])}</p></section>
+<section class="hero" id="topic"><p class="eyebrow">Legacy topic placeholder · {html.escape(topic['kind'])}</p><h1 class="page-title">{html.escape(topic['title'])}</h1><p class="lede">{html.escape(topic['summary'])}</p><p class="topic-tags">{' · '.join(html.escape(t) for t in topic['tags'])}</p><div class="callout warning"><strong>Navigation changed.</strong> This URL is retained for compatibility. Canonical classification now lives in <a href="{href_from(page_path, 'banditrlwiki/setting-atlas/index.html')}">Bandit Taxonomy</a>; techniques live in <a href="{href_from(page_path, 'banditrlwiki/technique-map/index.html')}">Technique Map</a>; theorem-level bounds live in the <a href="{href_from(page_path, 'banditrlwiki/index.html')}">Bound &amp; Source Atlas</a>; literature-open questions live in <a href="{href_from(page_path, 'banditrlwiki/frontier-problems/index.html')}">Frontier</a>.</div></section>
 <section id="comparison-contract"><h2>Result contract to fill</h2><p>A separate record is required for each exact model and guarantee. Compare bounds only when assumptions, feedback, metrics and parameter regimes match.</p><dl class="comparison-contract">{fields}</dl></section>
 <section id="evidence"><h2>Three separate evidence ledgers</h2><ul><li>Literature results: pending primary-source verification.</li><li>Lean mapping: no result is claimed by this topic placeholder.</li><li>Literature open problems: none asserted. Missing formalization is not an open mathematical problem.</li></ul></section>
 <section id="related"><h2>Related reading</h2>{'<ul>' + related + '</ul>' if related else '<p>Related routes await review.</p>'}<p>Related links suggest starting points; they are not evidence for an unverified setting.</p><p><a href="{href_from(page_path, 'books/bandit/index.html#extended-chapters')}">Back to Extended Chapters</a></p></section>'''
@@ -3837,11 +3852,11 @@ def build_banditrlwiki(
     source_port_cards = render_active_source_audits(page_path)
     body = f"""
 <section class="hero wiki-hero" id="overview">
-  <p class="eyebrow">Assumption-indexed research atlas</p>
-  <h1>BanditRLwiki</h1>
-  <p class="lede">Compare published upper and lower bounds only under compatible assumptions, then inspect what BanditRLlib has—and has not—compiled for the same route.</p>
+  <p class="eyebrow">Theorem-level literature comparison</p>
+  <h1>Bound &amp; Source Atlas <small>· BanditRLwiki</small></h1>
+  <p class="lede">Compare published upper and lower bounds only under compatible assumptions, inspect the original theorem/source, then see exactly what BanditRLlib has—and has not—compiled for the same route.</p>
   <p><strong>Published optimality, theorem-level source audit, and local Lean compilation are separate ledgers.</strong></p>
-  <div class="hero-actions"><a class="button primary" href="{href_from(page_path, 'banditrlwiki/frontier/index.html')}">Open frontier leaves</a><a class="button" href="{href_from(page_path, 'banditrlwiki/papers/index.html')}">Browse paper index</a><a class="button" href="{href_from(page_path, 'banditrlwiki/progress/index.html')}">Audit progress</a></div>
+  <div class="hero-actions"><a class="button primary" href="{href_from(page_path, 'banditrlwiki/setting-atlas/index.html')}">Bandit Taxonomy</a><a class="button" href="{href_from(page_path, 'banditrlwiki/technique-map/index.html')}">Technique Map</a><a class="button" href="{href_from(page_path, 'banditrlwiki/frontier-problems/index.html')}">Frontier · open problems</a><a class="button" href="{href_from(page_path, 'banditrlwiki/papers/index.html')}">Primary paper index</a></div>
   <div class="stats-grid wiki-stats">
     <div class="stat"><span class="stat-value">{len(families)}</span><span class="stat-label">assumption families</span></div>
     <div class="stat"><span class="stat-value">{len(cases)}</span><span class="stat-label">comparison cases</span></div>
@@ -3859,12 +3874,15 @@ def build_banditrlwiki(
   </div>
   <div class="callout warning"><strong>Open does not mean missing from this list.</strong> “Literature open” appears only after an explicit source audit. “Source audit pending” and “Lean blocked” are separate states.</div>
 </section>
-<section id="settings">
-  <p class="eyebrow">Start from assumptions</p><h2>Setting atlas</h2>
-  <p><a href="{href_from(page_path, 'banditrlwiki/setting-atlas/index.html')}">Open the full multi-axis Setting Atlas →</a></p>
-  <div class="wiki-family-grid">{family_cards}</div>
+<section id="separation">
+  <p class="eyebrow">One research system · separate truth contracts</p><h2>Classification is not a bound, and missing Lean is not an open problem</h2>
+  <div class="card-grid">
+    <article class="info-card"><h3><a href="{href_from(page_path, 'banditrlwiki/setting-atlas/index.html')}">Bandit Taxonomy</a></h3><p>What problem class, objective, feedback, structure or oracle model are we studying?</p></article>
+    <article class="info-card"><h3><a href="{href_from(page_path, 'banditrlwiki/technique-map/index.html')}">Technique Map</a></h3><p>What new mathematical move handles that changed assumption?</p></article>
+    <article class="info-card"><h3>Bound &amp; Source Atlas</h3><p>This page only: what upper/lower theorem is known, under exactly which assumptions, and where is the original source?</p></article>
+    <article class="info-card"><h3><a href="{href_from(page_path, 'banditrlwiki/frontier-problems/index.html')}">Frontier</a></h3><p>Which source-traceable mathematical questions are or were open, and how were they resolved?</p></article>
+  </div>
 </section>
-<section id="topics"><p class="eyebrow">Settings, methods and proof techniques</p><h2>Extended topic directory</h2><p>These entries reserve precise result contracts for source review. Methods such as Thompson sampling cross setting boundaries; tags are not mutually exclusive.</p><p><a href="{href_from(page_path, 'books/bandit/index.html#extended-chapters')}">Bandit Book · Extended Chapters</a> · <a href="{href_from(page_path, 'banditrlwiki/frontier-problems/index.html')}">Frontier/open-problem history</a> · <a href="{href_from(page_path, 'functor-hypergraph/index.html')}">Functor Hypergraph</a></p>{render_topic_cards(page_path)}</section>
 <section id="source-ports">
   <p class="eyebrow">Latest repository progress</p><h2>Active source ports awaiting a matched-bound case</h2>
   <p>These audits expose real compiled progress, but they are not counted among the 13 upper/lower comparison cases until a theorem-level rate contract and a compatible comparison partner are frozen.</p>
@@ -3882,7 +3900,7 @@ def build_banditrlwiki(
   <div class="wiki-filter-status"><span data-wiki-count>{len(cases)} matching cases</span><span><button type="button" data-wiki-expand>Expand visible</button><button type="button" data-wiki-collapse>Collapse all</button></span></div>
   <div class="wiki-case-list">{case_cards}</div>
 </section>"""
-    toc = [("overview", "Overview"), ("reading-contract", "Status contract"), ("settings", "Settings"), ("topics", "Topics and methods"), ("source-ports", "Source ports"), ("cases", "Cases")]
+    toc = [("overview", "Bound & Source Atlas"), ("reading-contract", "Status contract"), ("separation", "Other research views"), ("source-ports", "Source ports"), ("cases", "Cases")]
     write_page(
         output,
         page_path,
@@ -4780,7 +4798,7 @@ def build_lean_graph(
     <div class="stat"><span class="stat-value">{len(modules):,}</span><span class="stat-label">Lean modules</span></div>
     <div class="stat"><span class="stat-value">{len(declarations):,}</span><span class="stat-label">indexed declarations</span></div>
   </div>
-  <div class="callout"><strong>Reading rule.</strong> Labeled teaching, import, and order edges point from prerequisite to consumer. Dashed <em>contains</em> edges describe navigation. Whole-chapter status and individual compiled declarations remain separate.</div>
+  <div class="callout"><strong>Reading rule.</strong> Formal module/import/declaration structure and reviewed compiled evidence remain distinct from conceptual overlays. The <em>Settings ↔ techniques</em> view is deliberately dashed: it explains why different bandit settings need different mathematical moves, but it does not turn those teaching/research links into Lean theorem dependencies.</div>
 </section>
 
 <section id="explorer">
@@ -4791,6 +4809,7 @@ def build_lean_graph(
         <button type="button" data-graph-view="book" data-graph-view-source="views/book.json" aria-pressed="false">Teaching routes</button>
         <button type="button" data-graph-view="spine" data-graph-view-source="views/spine.json" aria-pressed="false">Source Ch.13–17</button>
         <button type="button" data-graph-view="milestones" data-graph-view-source="views/milestones.json" aria-pressed="false">Milestones</button>
+        <button type="button" data-graph-view="techniques" data-graph-view-source="views/techniques.json" aria-pressed="false">Settings ↔ techniques</button>
       </div>
       <div class="graph-scope-field"><label for="graph-reading-scope">Book or setting reading view</label><select id="graph-reading-scope" data-graph-scope><option value="">Choose a reading view</option>{''.join(scope_options)}</select><small>Shared canonical nodes. Empty views have source mapping pending.</small></div>
       <div class="lean-graph-search-shell">
@@ -5805,6 +5824,13 @@ def main() -> int:
         novelty_audit,
         args.lean_verified,
         generated_at,
+    )
+    build_lean_graph_technique_overlay(
+        output,
+        content_dir=CONTENT_DIR,
+        public_repo_dir=PUBLIC_REPO_DIR,
+        verified=args.lean_verified,
+        generated_at=generated_at,
     )
     build_proof_graph_laboratory(
         output,
