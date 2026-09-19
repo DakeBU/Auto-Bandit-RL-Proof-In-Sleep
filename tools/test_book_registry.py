@@ -2,6 +2,8 @@
 import copy
 import json
 import unittest
+from unittest.mock import patch
+from pathlib import Path
 
 from website.scripts import build_site as site
 from website.scripts.book_registry import build_registry, membership_index
@@ -168,6 +170,16 @@ class BookRegistryTests(unittest.TestCase):
         for key in setting["node_ids"]:
             self.assertEqual("source", nodes[key]["status"])
             self.assertIn("heavy-tailed", nodes[key]["settings"])
+
+    def test_reviewed_mapping_rejects_proof_body_drift_with_same_statement(self):
+        original_read = Path.read_bytes
+        def changed_proof(path):
+            if path.as_posix().endswith("BanditRLProof/HeavyTailSourceConfidence.lean"):
+                return b"changed proof, same indexed statement"
+            return original_read(path)
+        with patch.object(Path, "read_bytes", changed_proof):
+            with self.assertRaisesRegex(ValueError, "reviewed module hash drift"):
+                self.registry()
 
     def test_reviewed_mapping_rejects_unbound_receipts_and_topic_promotion(self):
         for mutation, message in [("hash", "receipt hash drift"),

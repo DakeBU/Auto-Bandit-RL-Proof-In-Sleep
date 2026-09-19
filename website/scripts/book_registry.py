@@ -71,7 +71,7 @@ def topic_formalization_nodes(topic, nodes):
             if module_hash:
                 if hashlib.sha256((ROOT / module_path).read_bytes()).hexdigest() != module_hash:
                     raise ValueError("topic reviewed module hash drift")
-            elif ref["name"] not in evidence.get("targets", []):
+            else:
                 raise ValueError("topic receipt does not cover declaration or owning module")
         if ref.get("statement_sha256") != nodes[node_id]["statement_sha256"]:
             raise ValueError(f"topic statement hash drift: {node_id}")
