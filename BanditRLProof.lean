@@ -133,6 +133,7 @@ import BanditRLProof.Algorithms.HOOActualRegret
 import BanditRLProof.HOOCantorRate
 import BanditRLProof.HeavyTailFixedTilt
 import BanditRLProof.HeavyTailConfidence
+import BanditRLProof.HeavyTailSourceConfidence
 import BanditRLProof.HeavyTailPowerSum
 import BanditRLProof.HeavyTailTuning
 import BanditRLProof.Algorithms.HeavyTailUCB

@@ -55,8 +55,10 @@ current execution follows `ALL-TOPICS-PROGRAM.md` in strict topic order.
 | [Yu et al., UAI 2025](https://proceedings.mlr.press/v286/yu25b.html) | GLM, conditional finite variance, pseudo-Huber regression, corruption budget. | Follow-on variance-aware case, not a general infinite-variance theorem. Needs vector confidence producer. |
 | [Tani et al., UAI 2026](https://proceedings.mlr.press/v337/tani26a.html) | Assumption 3.1 is conditional mean-zero noise and conditional (1+epsilon)-moment; Assumption 3.2 bounds features/parameter. Corruption occurs after reward/action and may depend on both. | Strong future transfer challenge for OFUL/OMD interfaces, but IID scalar clipping does not prove Theorem 4.5. |
 
-All four PDFs were retrieved; this table is a targeted model/theorem screening.
-They are not marked full-proof-audited. No recent-source endpoint is frozen from
+All four PDFs were retrieved; this table originally recorded targeted screening.
+The 2026-09-19 Genalti full supplied-proof reading is now recorded separately in
+`GENALTI24-SOURCE-AUDIT.md`, including unresolved literal-source defects. The
+other three remain screened-only. Full reading is not semantic acceptance. No recent-source endpoint is frozen from
 its abstract. The classical primary case has the clearest source and strongest
 direct relationship to existing arm-prefix/count infrastructure.
 

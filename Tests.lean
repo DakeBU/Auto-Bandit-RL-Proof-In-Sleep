@@ -74,6 +74,7 @@ import Tests.MOSSStreamCanary
 import Tests.SubgaussianMinimaxCanary
 import Tests.HeavyTailCanary
 import Tests.HeavyTailRegretCanary
+import Tests.HeavyTailSourceConfidenceCanary
 import Tests.HeavyTailClippedCanary
 import Tests.HOOCausalCanary
 import Tests.HOOCantorCanary
