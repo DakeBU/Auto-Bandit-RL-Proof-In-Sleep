@@ -122,6 +122,16 @@ class BanditTaxonomyTechniqueTests(unittest.TestCase):
         self.assertFalse(frontier["core_bandit_rl"])
         self.assertEqual(frontier["route_target"], "book:online-learning")
 
+    def test_quantum_frontier_history_is_separate_from_local_formalization(self) -> None:
+        problem = next(
+            item
+            for item in self.frontier["problems"]
+            if item["id"] == "quantum-bandit-horizon-independent-regret"
+        )
+        self.assertTrue(problem["core_bandit_rl"])
+        self.assertEqual(problem["status"], "resolved-preprint")
+        self.assertEqual(problem["lean"]["local_status"], "P0-cross-library-candidate")
+
 
 if __name__ == "__main__":
     unittest.main()
