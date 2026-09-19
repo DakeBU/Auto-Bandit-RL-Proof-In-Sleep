@@ -93,9 +93,13 @@ clip_B(x)=max(-B,min(B,x)) is 1-Lipschitz. Therefore
 The compiled prefix identity transfers this inequality to actual observations
 on the same adaptively selected action trace. It is valid pathwise and needs no
 IID assumption. A clean estimator's bias/fluctuation bound can then be combined
-with this perturbation. The current transfer closes stability and actual-prefix
-transport, but has not independently supplied a clipped-estimator moment-bias
-and concentration theorem. Hard truncation fails the same stability property:
+with this perturbation. The current transfer also supplies clipped moment-bias
+and second-moment producers (`HeavyTailClippedMoments`), clean fixed-prefix and
+selected-count confidence (`HeavyTailClippedConfidence` and
+`HeavyTailClippedScheduled`), and corrupted observed-prefix confidence
+(`HeavyTailClippedTransfer`). These compiled statements do not establish a
+corruption-robust policy or its full regret theorem. Independent semantic
+acceptance remains open. Hard truncation fails the same stability property:
 at B=1, x=1, y=3/2 the transformed difference is 1>1/2.
 
 ## Lifecycle
@@ -107,7 +111,7 @@ at B=1, x=1, y=3/2 the transformed difference is 1>1/2.
 | Actual transformed prefix | compiled leaf candidate | direct use of frozen UCB stream-prefix proof |
 | Fixed-prefix two-sided mean confidence | compiled candidate | raw moments, explicit sums and power tuning closed |
 | Causal robust-UCB adaptation | compiled endpoint candidate | actual history, random count, finite tail sum and expected regret closed; review and acceptance pending |
-| Reserved clipping transfer | partial candidate | actual-prefix corruption stability closed; clean clipped confidence open |
+| Reserved clipping transfer | compiled confidence candidate | clean clipped confidence and corrupted actual-prefix transport closed; independent review and corruption-robust regret remain open |
 | Controlled efficiency evaluation | frozen, not executed | independent isolated model runner and enforceable budget unavailable |
 
 Compiler repairs retained in logs: an a.e.-measurability API mismatch was fixed

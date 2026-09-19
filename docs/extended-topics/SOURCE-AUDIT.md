@@ -32,6 +32,20 @@ not yet a Lean-certified endpoint; it deliberately does not preserve faulty
 displayed constants. Bernstein's bounded-increment term also needs care because
 centering a signed [-B,B] variable gives a 2B bound.
 
+## Status clarification, 2026-09-19
+
+The preceding generic one-sided repair derivation is retained as historical
+analysis, not the current compiled contract. The actual conservative endpoint
+`HeavyTail.robust_expected_regret` was compiled at
+`280378670ca4647440f795aae1905149eff0063b` (see the regret validation receipt).
+It uses radius 8a and two-sided confidence, with total selection-failure bound
+4t/max(t,2)^4 and a proved finite tail sum at most 2; the corresponding threshold
+contains 16 raised to p/(p-1). See `DERIVATION.md` for the actual formula.
+The generic paragraph's factor 2 must not be substituted for this compiled
+chain's factor 4. Source adjudication and independent semantic acceptance
+remain distinct obligations. The triage table below records the original base;
+current execution follows `ALL-TOPICS-PROGRAM.md` in strict topic order.
+
 ## Recent candidates: inspect assumptions before selecting endpoints
 
 | Source | Distinct question and audited part | Decision |

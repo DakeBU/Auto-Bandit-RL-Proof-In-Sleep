@@ -14,9 +14,9 @@ a partial heavy-tail producer and transfer milestone, not topic completion.
 | Mandatory topic | Candidate line (not frozen until full audit) | Current state |
 |---|---|---|
 | heavy-tailed | Robust UCB, moment-derived truncated confidence and expected regret | proving / source repair |
-| lipschitz | HOO or exact source discretization with geometric regret dependence | source audit pending |
-| combinatorial | CUCB with explicit feedback and oracle guarantees | source audit pending |
-| causal | Causal best-intervention learning with identification assumptions | source audit pending |
+| lipschitz | Repaired HOO with geometric regret dependence | full repaired rate compiled; independent acceptance pending |
+| combinatorial | CUCB with explicit feedback and oracle guarantees | full repaired endpoints compiled; independent acceptance pending |
+| causal | Causal best-intervention learning with identification assumptions | intervention, importance and optimal allocation infrastructure compiled; performance chain open |
 | multi-agent | Musical Chairs with collision and coordination cost | source audit pending |
 | thompson-bayesian | Posterior sampling and information-theoretic Bayesian regret | source audit pending |
 | constrained | Bandits with Knapsacks with feasibility and budget-aware comparator | source audit pending |
@@ -30,10 +30,21 @@ model, source/version, algorithm, endpoint, compulsory obligations, reuse,
 dependencies, evidence, blockers and next action. Full source audits include
 recent primary work and all proof appendices, not abstract-based selection.
 
-Execution starts by closing the existing heavy-tail probability and causal
-algorithm gaps, then proceeds according to mathematical dependencies. A local
-blocker cannot block the program while other topics remain actionable. Do not
-discard a difficult topic, silently reduce a theorem, count a consumer as its
+Execution follows the strict table order: Heavy-tailed, Lipschitz, Combinatorial,
+Causal, Multi-agent, Thompson/Bayesian, Constrained, Corruption-tolerant, Matrix,
+Variance-aware. The current topic is Heavy-tailed. Close its acceptance obligations
+before advancing; difficulty is not permission to skip. Preserve the already
+compiled later-topic milestones without treating them as accepted topics.
+
+The conservative heavy-tail adaptation already has a compiled actual-policy to
+expected-regret endpoint (`HeavyTail.robust_expected_regret`), documented in
+`runs/extended-topics-20260917/regret-validation.json`. Its source discrepancies,
+independent semantic acceptance, recent-proof audit, mapping and program evidence
+remain open. The merged baseline `ba81a53` now passes the fresh joint gate and local site
+checks; see `runs/extended-topics-20260919/confidence-review-validation.json`.
+Two scheduled confidence declarations have independent acceptance with explicit
+deltas, documented in `research-wiki/papers/extended-topics-heavy-tail-confidence.md`. This confidence-only
+review does not certify the complete regret chain. Do not silently reduce a theorem, count a consumer as its
 producer, or end the Goal after one PR or topic. Source-scope revisions preserve
 the original unresolved obligations and reasons.
 
