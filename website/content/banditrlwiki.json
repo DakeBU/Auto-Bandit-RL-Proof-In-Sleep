@@ -1061,7 +1061,123 @@
       "related_chapters": [
         "teaching:probability"
       ],
-      "status": "source-audit-pending"
+      "status": "source-audit-pending",
+      "formalization": {
+        "schema_version": 1,
+        "semantic_status": "accepted-with-explicit-delta",
+        "topic_complete": false,
+        "source_commit": "597ffe493d8839fe73290c2042aa78addec99a1f",
+        "title": "Reviewed heavy-tail results in the shared library",
+        "scope": "Source confidence and actual policy, corrected expected regret, a separate clipping transfer, and a finite printed-coefficient counterexample. These mapped results do not complete the topic.",
+        "source": {
+          "title": "Bandits with Heavy Tail",
+          "authors": "Bubeck, Cesa-Bianchi and Lugosi",
+          "year": 2013,
+          "url": "https://www.microsoft.com/en-us/research/wp-content/uploads/2017/01/BCL13.pdf",
+          "sha256": "df94efa3708dab85063d6c7a04e0812f264c1c6f13a284017eb2efeed5077ef3"
+        },
+        "qualifications": [
+          "The actual source-radius4 policy has an explicitly corrected regret guarantee; the printed coefficient is refuted, not accepted.",
+          "Clipping transfer is an estimator adaptation on one action trace, not a corruption-robust regret theorem.",
+          "The finite counterexample uses a fixed permissible deterministic tie rule; no universal randomized-tie certificate is claimed.",
+          "Recent-source audit, complete shared-topic acceptance and all-topic ICLR evidence remain open.",
+          "Reading membership is not a proof dependency; the current page banner separately reports whether Lean was rerun for this build."
+        ],
+        "review_receipts": [
+          {
+            "path": "runs/extended-topics-20260919/source-confidence-validation.json",
+            "sha256": "3f2c5e1f310181e351cf8f2130cc33aebf333cad68996bfb8314189ff6bb0f9c"
+          },
+          {
+            "path": "runs/extended-topics-20260919/source-schedule-validation.json",
+            "sha256": "fb20f24566886691b914d121d6738bd2c75ff7995b98d662993b78f3180de777"
+          },
+          {
+            "path": "runs/extended-topics-20260919/source-regret-validation.json",
+            "sha256": "5f409e4a45b4a4ca7cf6848068ba709c6c2b01def9b11f8e2cca37142ae5be0c"
+          },
+          {
+            "path": "runs/extended-topics-20260919/clipping-review-validation.json",
+            "sha256": "ffe4038454b6923b9b440bf77b45f8565b4e1da7c5a473b78068284eaa9a452c"
+          },
+          {
+            "path": "runs/extended-topics-20260919/counterexample-validation.json",
+            "sha256": "a1b75a8289608f3195839082a4e7b2bd7579560a8cd7b92459d00bcd1255517a"
+          }
+        ],
+        "declarations": [
+          {
+            "name": "BanditRLProof.HeavyTail.source_truncated_mean_upper_tail",
+            "statement_sha256": "641e15a914c711c5dc52317c29b677db4d2bc1f7df13871e5f0e48776da1ade3",
+            "role": "producer",
+            "source_locator": "BCL Lemma1: radius4; closed-event/common-mean generalizations",
+            "review_receipt": "runs/extended-topics-20260919/source-confidence-validation.json"
+          },
+          {
+            "name": "BanditRLProof.HeavyTail.source_truncated_mean_lower_tail",
+            "statement_sha256": "4e768748b2460f35f3859c5acdfaab90c5d3c61d565e701fa2a1a2f2e60e2ce5",
+            "role": "producer",
+            "source_locator": "BCL Lemma1: lower-tail sign counterpart",
+            "review_receipt": "runs/extended-topics-20260919/source-confidence-validation.json"
+          },
+          {
+            "name": "BanditRLProof.HeavyTail.SourcePolicy.robustAction",
+            "statement_sha256": "db6294f02893e5e582ad470db6604351e2a40fe2e316f8fe68b2f3e65a380397",
+            "role": "algorithm",
+            "source_locator": "BCL Figure1: causal history policy; explicit deterministic ties and initialization",
+            "review_receipt": "runs/extended-topics-20260919/source-schedule-validation.json"
+          },
+          {
+            "name": "BanditRLProof.HeavyTail.SourcePolicy.robustMean_upper_tail_sum",
+            "statement_sha256": "b19b8f2dff46c56efcbdf68aefb6c15dce8fae1e8ad3a09a6a56b6fbda52ad44",
+            "role": "producer",
+            "source_locator": "Source schedule: signed finite budget2",
+            "review_receipt": "runs/extended-topics-20260919/source-schedule-validation.json"
+          },
+          {
+            "name": "BanditRLProof.HeavyTail.SourcePolicy.robustMean_lower_tail_sum",
+            "statement_sha256": "74ab4ac6eb8a0bc37ba082ccc38c68d52b85cadf72beb6a3a893500edb0b2650",
+            "role": "producer",
+            "source_locator": "Source schedule: signed finite budget2",
+            "review_receipt": "runs/extended-topics-20260919/source-schedule-validation.json"
+          },
+          {
+            "name": "BanditRLProof.HeavyTail.SourcePolicy.robust_expected_regret",
+            "statement_sha256": "10a80c7a0091eac0ff70ff5a1bcc12649ea5b493e3e605f81e53e283096a5281",
+            "role": "endpoint",
+            "source_locator": "Explicit corrected coefficient for unchanged policy; all natural horizons; not printed constant",
+            "review_receipt": "runs/extended-topics-20260919/source-regret-validation.json"
+          },
+          {
+            "name": "BanditRLProof.HeavyTail.adaptive_corrupted_clipped_mean_tail",
+            "statement_sha256": "6f3e293435d68c9b742c0a246323a8d88278cb9477cdd3784bf9509a6141a9be",
+            "role": "endpoint",
+            "source_locator": "Reserved clipping adaptation: same consumed prefix, outer measure; no corrupted-policy regret",
+            "review_receipt": "runs/extended-topics-20260919/clipping-review-validation.json"
+          },
+          {
+            "name": "BanditRLProof.HeavyTail.observed_corrupted_clipped_mean_tail",
+            "statement_sha256": "93bb4df47219b36500fed2cb64625477ab1914125667f60542d2a0c331919bcf",
+            "role": "endpoint",
+            "source_locator": "Clipping adaptation on one observed action trace",
+            "review_receipt": "runs/extended-topics-20260919/clipping-review-validation.json"
+          },
+          {
+            "name": "BanditRLProof.HeavyTail.SourceCounterexample.literal_printed_bound_false",
+            "statement_sha256": "7ba29108e4c981e96b299f785af0705c86a77b8e7bed561ef824610b9fa5edd3",
+            "role": "endpoint",
+            "source_locator": "Finite refutation of BCL printed coefficient; deterministic permitted ties, Dirac0/-1, T=2^50",
+            "review_receipt": "runs/extended-topics-20260919/counterexample-validation.json"
+          },
+          {
+            "name": "BanditRLProof.HeavyTail.SourceCounterexample.kernel_raw_moment",
+            "statement_sha256": "27c030c9cb1bc29ba555dffbc9eeb2e680dfa698163845a47c2fadd0c218c786",
+            "role": "model",
+            "source_locator": "Admissible raw second moments of finite counterexample",
+            "review_receipt": "runs/extended-topics-20260919/counterexample-validation.json"
+          }
+        ]
+      }
     },
     {
       "id": "lipschitz",

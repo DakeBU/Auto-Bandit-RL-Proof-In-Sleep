@@ -36,21 +36,20 @@ Variance-aware. The current topic is Heavy-tailed. Close its acceptance obligati
 before advancing; difficulty is not permission to skip. Preserve the already
 compiled later-topic milestones without treating them as accepted topics.
 
-The conservative heavy-tail adaptation already has a compiled actual-policy to
-expected-regret endpoint (`HeavyTail.robust_expected_regret`), documented in
-`runs/extended-topics-20260917/regret-validation.json`. Its source discrepancies,
-literal-source/transfer acceptance, recent-proof audit, mapping and program evidence
-remain open. The merged baseline `ba81a53` now passes the fresh joint gate and local site
-checks; see `runs/extended-topics-20260919/confidence-review-validation.json`.
-Two scheduled confidence declarations have independent acceptance with explicit
-deltas, documented in `research-wiki/papers/extended-topics-heavy-tail-confidence.md`. The subsequent full conservative regret-chain review also accepted its explicit
-adaptation, recorded in `runs/extended-topics-20260919/regret-review-validation.json`.
-Neither regret review accepts the unchanged printed regret constants or completes
-the topic. A subsequent source-confidence result recovers the original radius4
-for arbitrarydelta with independent semantic acceptance; it does not change the
-algorithm. See `CONSTANT-FOUR-ROUTE.md`. Do not silently reduce a theorem, count a consumer as its
-producer, or end the Goal after one PR or topic. Source-scope revisions preserve
-the original unresolved obligations and reasons.
+The heavy-tail representative line now has a complete corrected expected-regret
+chain for the unchanged source-radius4 policy and an admissible finite Lean
+counterexample to the literal printed coefficient. The conservative adaptation
+and clipping transfer remain separately labeled. Independent reviews and joint
+validation are bound in the source-regret, clipping-review and counterexample
+receipts under `runs/extended-topics-20260919/`. These accepted results do not
+complete the topic: recent-source transitive audit, shared mapping acceptance
+and all-topic ICLR evidence remain separate requirements.
+
+The topic registry now maps exact statement hashes and reviewed receipts to
+existing declarations. Mapping membership is a reading reference, never a
+proof dependency or a whole-topic completion badge. See the mapping validation
+receipt for the current acceptance state; current-build Lean status remains
+separate from historical mathematical acceptance.
 
 The final program gate requires all ten frozen lines, all mandatory obligations,
 joint root/Tests/harness/site/shared registry validation and ICLR evidence.
@@ -58,7 +57,10 @@ Unavailable controlled experiments stay unexecuted; descriptive development
 cannot be relabeled as independent productivity trials. No paid API experiment,
 merge, deployment, anonymous-snapshot refresh, or external controller is added.
 
-The sharper fixed-prefix producer in SOURCE-SCHEDULE-ROUTE.md retains radius4
-and improves each signed probability to exp(-5L/4). Original-schedule adaptive
-assembly and regret constants remain open. Yu2025 local proof audit is recorded
-in YU25-SOURCE-AUDIT.md; external concentration dependencies remain unaudited.
+The source confidence producer retains radius4 and gives signed probability
+exp(-5L/4); its actual source-schedule assembly and corrected regret are already
+accepted. The literal printed coefficient is refuted separately. Yu2025 audit
+now includes an independently reviewed, explicitly changed log6 finite-horizon
+GLM confidence proof. The original probability contract and the exact TMLR2024
+version comparison remain unverified; this mathematical repair is not Lean or
+regret acceptance. See YU25-SOURCE-AUDIT.md and its evidence receipt.

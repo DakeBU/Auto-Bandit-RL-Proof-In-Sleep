@@ -2,7 +2,11 @@
 from __future__ import annotations
 
 import hashlib
+import json
 import re
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[2]
 
 
 def unique(items, label):
@@ -16,12 +20,35 @@ def unique(items, label):
 
 
 def topic_formalization_nodes(topic, nodes):
-    """Resolve provisional source mappings without promoting semantic acceptance."""
+    """Resolve reading references; reviewed packets never imply topic completion."""
     mapping = topic.get("formalization")
     if mapping is None:
         return []
-    if mapping.get("schema_version") != 1 or mapping.get("semantic_status") != "review-pending":
+    reviewed = mapping.get("semantic_status") == "accepted-with-explicit-delta"
+    if mapping.get("schema_version") != 1 or mapping.get("semantic_status") not in {"review-pending", "accepted-with-explicit-delta"}:
         raise ValueError("topic formalization requires explicit pending independent review")
+    receipts = {}
+    if reviewed:
+        if mapping.get("topic_complete") is not False or not mapping.get("review_receipts"):
+            raise ValueError("reviewed topic mapping requires receipts and incomplete topic boundary")
+        for receipt in mapping["review_receipts"]:
+            relative = receipt.get("path", "")
+            path = (ROOT / relative).resolve()
+            try:
+                path.relative_to(ROOT / "runs")
+            except ValueError:
+                raise ValueError("invalid topic review receipt path")
+            if not relative.startswith("runs/") or not path.is_file():
+                raise ValueError("invalid topic review receipt path")
+            raw = path.read_bytes()
+            if hashlib.sha256(raw).hexdigest() != receipt.get("sha256"):
+                raise ValueError("topic review receipt hash drift")
+            evidence = json.loads(raw)
+            if evidence.get("semantic_verdict") not in {"accepted", "accepted-with-explicit-delta"}:
+                raise ValueError("topic receipt lacks independent semantic acceptance")
+            if relative in receipts:
+                raise ValueError("duplicate topic review receipt")
+            receipts[relative] = evidence
     if not re.fullmatch(r"[0-9a-f]{40}", mapping.get("source_commit", "")):
         raise ValueError("topic formalization needs an exact source commit")
     source = mapping.get("source", {})
@@ -32,9 +59,20 @@ def topic_formalization_nodes(topic, nodes):
     refs = mapping.get("declarations", [])
     result = []
     for ref in refs:
+        if reviewed and ref.get("review_receipt") not in receipts:
+            raise ValueError("topic declaration lacks bound review receipt")
         node_id = "declaration:" + ref["name"]
         if node_id not in nodes:
             raise ValueError(f"unknown topic declaration: {node_id}")
+        if reviewed:
+            evidence = receipts[ref["review_receipt"]]
+            module_path = nodes[node_id]["module"].replace(".", "/") + ".lean"
+            module_hash = evidence.get("production_hashes", {}).get(module_path)
+            if module_hash:
+                if hashlib.sha256((ROOT / module_path).read_bytes()).hexdigest() != module_hash:
+                    raise ValueError("topic reviewed module hash drift")
+            elif ref["name"] not in evidence.get("targets", []):
+                raise ValueError("topic receipt does not cover declaration or owning module")
         if ref.get("statement_sha256") != nodes[node_id]["statement_sha256"]:
             raise ValueError(f"topic statement hash drift: {node_id}")
         if ref.get("role") not in {"model", "algorithm", "producer", "endpoint", "canary", "reuse"} or not ref.get("source_locator"):
@@ -124,7 +162,7 @@ def build_registry(config, chapters, spine, wiki, declarations, verified, commit
             "kind": setting.get("kind", "setting"),
             "url": f"banditrlwiki/topics/{setting_id}/index.html" if is_topic else f"banditrlwiki/settings/{setting_id}/index.html",
             "case_refs": case_refs, "node_ids": node_ids,
-            "status": ("mapped-review-pending" if node_ids else "source-audit-pending") if is_topic else "case-indexed",
+            "status": ("mapped-reviewed-partial" if node_ids and setting["formalization"]["semantic_status"] == "accepted-with-explicit-delta" else "mapped-review-pending" if node_ids else "source-audit-pending") if is_topic else "case-indexed",
         }
         if is_topic and setting.get("formalization"):
             settings[setting_id]["formalization"] = setting["formalization"]

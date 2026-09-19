@@ -156,6 +156,41 @@ class BookRegistryTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "pending independent review"):
             self.registry(wiki=wiki)
 
+    def test_reviewed_heavy_tail_membership_does_not_promote_preview_or_topic(self):
+        registry = self.registry()
+        setting = next(t for t in registry["settings"] if t["id"] == "heavy-tailed")
+        self.assertEqual("mapped-reviewed-partial", setting["status"])
+        self.assertFalse(setting["formalization"]["topic_complete"])
+        names = {r["name"] for r in setting["formalization"]["declarations"]}
+        self.assertIn("BanditRLProof.HeavyTail.SourcePolicy.robust_expected_regret", names)
+        self.assertIn("BanditRLProof.HeavyTail.SourceCounterexample.literal_printed_bound_false", names)
+        nodes = membership_index(registry)
+        for key in setting["node_ids"]:
+            self.assertEqual("source", nodes[key]["status"])
+            self.assertIn("heavy-tailed", nodes[key]["settings"])
+
+    def test_reviewed_mapping_rejects_unbound_receipts_and_topic_promotion(self):
+        for mutation, message in [("hash", "receipt hash drift"),
+                                  ("path", "receipt path"),
+                                  ("reference", "lacks bound review receipt"),
+                                  ("coverage", "does not cover declaration"),
+                                  ("complete", "incomplete topic boundary")]:
+            with self.subTest(mutation=mutation):
+                wiki = copy.deepcopy(self.wiki)
+                mapping = next(t for t in wiki["topics"] if t["id"] == "heavy-tailed")["formalization"]
+                if mutation == "hash":
+                    mapping["review_receipts"][0]["sha256"] = "0" * 64
+                elif mutation == "path":
+                    mapping["review_receipts"][0]["path"] = "runs/../../README.md"
+                elif mutation == "reference":
+                    mapping["declarations"][0]["review_receipt"] = "runs/missing.json"
+                elif mutation == "coverage":
+                    mapping["declarations"][-1]["review_receipt"] = mapping["review_receipts"][0]["path"]
+                else:
+                    mapping["topic_complete"] = True
+                with self.assertRaisesRegex(ValueError, message):
+                    self.registry(wiki=wiki)
+
 
 if __name__ == "__main__":
     unittest.main()
