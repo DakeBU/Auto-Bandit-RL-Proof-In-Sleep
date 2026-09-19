@@ -432,6 +432,35 @@
       },
       "graph_delta": "Adjacent Online Learning bridge: sparse multiplicative updates / relative-entropy regularization versus closed-form least-squares-style priming. The core question is online regret, so it belongs to the Online Learning book and the technique/Functor graph rather than the core Bandit/RL frontier.",
       "audit_note": "A targeted 2026-09-19 search confirmed the 2023 source statement; this registry does not claim that the question is permanently open beyond the dated audit."
+    },
+    {
+      "id": "quantum-bandit-horizon-independent-regret",
+      "priority": "P0",
+      "area": "Quantum multi-armed / linear bandits",
+      "title": "Can quantum-bandit regret be independent of the horizon?",
+      "posed_year": 2023,
+      "status": "resolved-preprint",
+      "posed_by": "Zongqi Wan, Zhijie Zhang, Tongyang Li, Jialin Zhang and Xiaoming Sun",
+      "scope_class": "core-bandit-quantum-access",
+      "core_bandit_rl": true,
+      "source": {
+        "title": "Quantum Multi-Armed Bandits and Stochastic Linear Bandits Enjoy Logarithmic Regrets",
+        "url": "https://ojs.aaai.org/index.php/AAAI/article/view/26202"
+      },
+      "resolution": [
+        {
+          "year": 2026,
+          "title": "Quantum Multi-Armed Bandits and Linear Bandits: Lower Bounds and Algorithms",
+          "url": "https://arxiv.org/abs/2608.14319",
+          "note": "Liu, Li and Lui prove Ω(K log(T/K)) QMAB and Ω(d log(T/d)) finite-action QLB lower bounds and state that this resolves the Wan et al. question of whether horizon-independent regret is achievable. The resolution is currently a preprint."
+        }
+      ],
+      "lean": {
+        "status": "not-mapped",
+        "local_status": "P0-cross-library-candidate",
+        "declarations": []
+      },
+      "graph_delta": "Quantum-access lower-bound bridge: a high-confidence single-arm quantum testing lower bound via the polynomial method and a Remez-type inequality is lifted by a bandit-to-testing reduction to QMAB, with a linear embedding for QLB. The eventual Lean route should reuse ABRL lower-bound/testing structure and source quantum semantics/testing primitives from ASPBE or audited quantum Lean libraries through an explicit adapter."
     }
   ]
 }
