@@ -100,3 +100,25 @@ requires a new version before affected execution; no retrospective retuning.
 Acceptance gates: public root, Tests, axiom audit, full `python tools/bandit.py
 check`, website validation; bind graph and counts to exact source commit. Keep
 teaching edges, source mapping and elaborated type/value references separate.
+
+## Current descriptive evidence snapshot (2026-09-19)
+
+The earlier claim table and statements about an uninspected transfer describe the
+freeze-time state. They are preserved as historical protocol text, not current
+completion assertions. The controlled v1 design remains disabled; v2 remains
+unfrozen and no controlled run has been performed.
+
+| Claim | Current descriptive evidence | Remaining boundary |
+|---|---|---|
+| Actual-policy heavy-tail performance | Corrected unchanged-source-policy expected regret accepted; finite printed-coefficient negation accepted | Not acceptance of the printed coefficient; recent-source audit remains open |
+| Existing-library use | Historical confidence snapshot: 19 direct project proof references, 15 distinct targets; two compared modules unchanged since original frozen base | Three other reused files entered during development; references do not measure effort saved |
+| Reserved transfer | Clipping confidence with consumed-prefix corruption and arbitrary outcome-dependent count accepted | Same-trace estimator adaptation, not corrupted-policy regret |
+| Diagnosis | Finite admissible Dirac0/-1 instance at T=2^50 negates literal printed coefficient | Fixed permissible deterministic tie rule; no universal randomized-tie certificate |
+| Shared integration | Ten exact references, independently reviewed mapping, joint Lean/harness/site gates | Partial topic acceptance; no main/live claim |
+| Efficiency benefit | No controlled runs and no effect estimate | Full all-topic v2 protocol and independent evaluation still required |
+
+See [ICLR-HEAVY-TAIL-CASE.md](ICLR-HEAVY-TAIL-CASE.md) for the Evaluation and
+appendix draft, and `runs/extended-topics-20260919/heavy-tail-case-evidence.json`
+for reproducible receipt-derived values. Development evidence cannot be
+retrospectively reclassified as fresh benchmark repeats. The case draft is one
+component of the all-ten evidence package, not an all-topic Evaluation result.
