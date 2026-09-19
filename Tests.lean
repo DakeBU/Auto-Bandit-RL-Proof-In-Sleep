@@ -72,3 +72,10 @@ import Tests.TextbookPartIVChapter14DominationCanary
 import Tests.MOSSPeelingCanary
 import Tests.MOSSStreamCanary
 import Tests.SubgaussianMinimaxCanary
+import Tests.HeavyTailCanary
+import Tests.HeavyTailRegretCanary
+import Tests.HeavyTailClippedCanary
+import Tests.HOOCausalCanary
+import Tests.HOOCantorCanary
+import Tests.HOORegretCanary
+import Tests.HOORateCanary

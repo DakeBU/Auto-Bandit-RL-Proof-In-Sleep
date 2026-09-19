@@ -1,0 +1,1142 @@
+{
+  "schema_version": 1,
+  "program": "ABRL Extended Topics all-ten mandatory program",
+  "goal_status_observed": "active",
+  "goal_thread": "01a0aedf-efda-78c3-9dc1-1f24264a3ba1",
+  "scope_amendment_date": "2026-09-17",
+  "base_library": "eedcda1db4d84f6bd69ec6ee50e174f6cf4056ac",
+  "prior_milestone": "4a32a9c4539fb08f2b6289e28ccbc92eb6a38c42",
+  "completed_topics": 0,
+  "completion_rule": "All 10 mandatory frozen representative lines, every required obligation, joint gates and ICLR evidence complete; no exemption by difficulty.",
+  "source_checklist": [
+    "Retrieve classic and recent primary PDFs",
+    "Read model, algorithm, exact theorem and entire proof including appendices",
+    "Freeze hash, theorem locator, notation and definitions",
+    "Separate source reconstruction, repair, adaptation and new result",
+    "Resolve raw/central moments, feedback, filtration, stopping and comparator",
+    "List every mandatory producer before proving",
+    "Record disagreements/failures without weakening endpoint"
+  ],
+  "evaluation": {
+    "status": "scope-expanded; formal run protocol v2 must freeze after all targets are audited",
+    "controlled_runs": [],
+    "effect_estimate": null,
+    "prior_two_target_protocol": "unexecuted historical design; not the full all-topic evaluation"
+  },
+  "topics": [
+    {
+      "id": "heavy-tailed",
+      "mandatory": true,
+      "status": "proving",
+      "topic_complete": false,
+      "setting": "Known raw p-moment stationary finite-arm rewards, p in (1,2]",
+      "source": {
+        "candidate": "Bubeck--Cesa-Bianchi--Lugosi 2013; source hashes already frozen",
+        "url": "https://www.microsoft.com/en-us/research/wp-content/uploads/2017/01/BCL13.pdf",
+        "full_audit_complete": false,
+        "frozen": true,
+        "audit_note": "Classical displayed proof audited with repair obligations; recent candidate proofs not fully audited."
+      },
+      "algorithm": "Robust UCB with sample-index truncation; original-constant target in repair and conservative adaptation separately tracked",
+      "representative_endpoint": "Complete finite-horizon expected pseudo-regret with moment-derived confidence and actual adaptive policy",
+      "endpoint_frozen": false,
+      "mandatory_obligations": [
+        {
+          "id": "classic_and_recent_primary_source_audit",
+          "status": "pending"
+        },
+        {
+          "id": "source_version_hash_and_definition_context",
+          "status": "pending"
+        },
+        {
+          "id": "exact_algorithm_model_assumptions_and_endpoint_freeze",
+          "status": "pending"
+        },
+        {
+          "id": "all_mathematical_producers",
+          "status": "pending"
+        },
+        {
+          "id": "actual_algorithm_to_performance_chain",
+          "status": "pending"
+        },
+        {
+          "id": "public_reusable_interfaces",
+          "status": "pending"
+        },
+        {
+          "id": "nondegenerate_public_root_canary",
+          "status": "pending"
+        },
+        {
+          "id": "semantic_review",
+          "status": "pending"
+        },
+        {
+          "id": "axiom_audit",
+          "status": "pending"
+        },
+        {
+          "id": "joint_root_Tests_full_harness",
+          "status": "pending"
+        },
+        {
+          "id": "site_and_shared_registry_mapping",
+          "status": "pending"
+        },
+        {
+          "id": "bound_commit_reuse_transfer_failure_evidence",
+          "status": "pending"
+        },
+        {
+          "id": "ICLR_body_appendix_and_reproducible_results",
+          "status": "pending"
+        },
+        {
+          "id": "two-sided confidence and explicit radius tuning",
+          "status": "compiled-conservative-adaptation; joint acceptance pending"
+        },
+        {
+          "id": "causal measurable robust-UCB construction",
+          "status": "compiled-conservative-adaptation; joint acceptance pending"
+        },
+        {
+          "id": "actual-count peeling",
+          "status": "compiled-conservative-adaptation; joint acceptance pending"
+        },
+        {
+          "id": "selection/count and expected-regret endpoint",
+          "status": "compiled-conservative-adaptation; joint acceptance pending"
+        },
+        {
+          "id": "source discrepancy adjudication",
+          "status": "open"
+        }
+      ],
+      "reuse_candidates": [
+        "HeavyTailTruncation",
+        "HeavyTailFixedTilt",
+        "UCBArmStreamSource",
+        "RealMeanRegretPullCount"
+      ],
+      "upstream_dependencies": [
+        "shared finite history/probability model"
+      ],
+      "downstream_consumers": [
+        "cross-topic transfer",
+        "ICLR library utility evaluation"
+      ],
+      "acceptance_evidence": [
+        "PR #131 partial producer packet",
+        "f771f57 local root/Tests/harness/site gate",
+        "4a32a9c evidence receipt; not algorithm completion"
+      ],
+      "current_blockers": [
+        "End-to-end probability/policy/regret obligations open"
+      ],
+      "next_action": "Continue fixed-prefix confidence, then causal policy",
+      "compiled_endpoint": "BanditRLProof.HeavyTail.robust_expected_regret",
+      "endpoint_note": "Actual causal policy, raw moment laws, derived confidence and expected count. Conservative repair/adaptation only; source adjudication and recent-proof audit remain mandatory."
+    },
+    {
+      "id": "lipschitz",
+      "mandatory": true,
+      "status": "proving",
+      "topic_complete": false,
+      "setting": "Infinite binary covering tree; bounded stochastic rewards; A1 general dissimilarity and A2 weak Lipschitz smoothness; finite near-optimality dimension for the still-open terminal rate",
+      "source": {
+        "candidate": "Bubeck et al. JMLR 2011 HOO Algorithm 1 / Theorem 6, explicitly repaired",
+        "url": "https://jmlr.org/papers/volume12/bubeck11a/bubeck11a.pdf",
+        "full_audit_complete": true,
+        "frozen": true,
+        "audit_note": "Selected model, Algorithm 1, A1/A2, Lemma 3, Definitions 4-5 and entire Appendix A.1 read; algorithm typos visually checked. Recent ICLR 2025 Log-Li model/algorithms and full main theorem proofs audited with explicit unresolved gaps; those results are not imported. Other 2026 candidates remain screened only. Independent semantic acceptance remains open."
+      },
+      "algorithm": "Actual infinite binary-tree HOO with source-permitted deterministic ties and representatives; explicit indexing and log(max(n,2)) repair",
+      "representative_endpoint": "Full expected HOO regret at every horizon with near-optimality dimension d, every d-prime > d, environment-dependent horizon-independent constant; actual cumulative/pseudo-regret expectation identity",
+      "endpoint_frozen": true,
+      "mandatory_obligations": [
+        {
+          "id": "classic_and_recent_primary_source_audit",
+          "status": "frozen explicit repair; independent adjudication pending"
+        },
+        {
+          "id": "source_version_hash_and_definition_context",
+          "status": "frozen explicit repair; independent adjudication pending"
+        },
+        {
+          "id": "exact_algorithm_model_assumptions_and_endpoint_freeze",
+          "status": "frozen explicit repair; independent adjudication pending"
+        },
+        {
+          "id": "all_mathematical_producers",
+          "status": "compiled for all seven frozen repaired HOO obligations, including full rate and actual reward identity; independent semantic acceptance pending"
+        },
+        {
+          "id": "actual_algorithm_to_performance_chain",
+          "status": "compiled actual algorithm-to-all-horizon pseudo and realized expected-regret rates for every exponent above actual dimension; source-repair acceptance pending"
+        },
+        {
+          "id": "public_reusable_interfaces",
+          "status": "partial: shared fixed-MGF, finite-union and threshold-count interfaces consumed; terminal public acceptance pending"
+        },
+        {
+          "id": "nondegenerate_public_root_canary",
+          "status": "full infinite-arm noisy A1/A2 model with proved conservative dimension<=2 consumes final realized-regret rate at d-prime=3 without unproved dimension premises"
+        },
+        {
+          "id": "semantic_review",
+          "status": "pending"
+        },
+        {
+          "id": "axiom_audit",
+          "status": "full-rate, integer optimization, reward identity and final model endpoints have standard axioms only; joint validation and semantic acceptance tracked separately"
+        },
+        {
+          "id": "joint_root_Tests_full_harness",
+          "status": "full repaired HOO rate and model canary pass joint 9041-job Lean gate and full harness; independent source acceptance pending"
+        },
+        {
+          "id": "site_and_shared_registry_mapping",
+          "status": "pending"
+        },
+        {
+          "id": "bound_commit_reuse_transfer_failure_evidence",
+          "status": "pending"
+        },
+        {
+          "id": "ICLR_body_appendix_and_reproducible_results",
+          "status": "pending"
+        },
+        {
+          "id": "geometry and partition assumptions",
+          "status": "source packing/limsup and actual disjoint three-way node partition compiled; source semantic acceptance pending"
+        },
+        {
+          "id": "optimistic tree policy",
+          "status": "compiled producer; independent semantic acceptance pending"
+        },
+        {
+          "id": "confidence on adaptive node samples",
+          "status": "compiled actual-trajectory and U-index producers; independent semantic acceptance pending"
+        },
+        {
+          "id": "visit counting",
+          "status": "compiled expected poor-region visits with additive four and repaired log(max(N,2)); independent semantic acceptance pending"
+        },
+        {
+          "id": "approximation and full regret rate",
+          "status": "compiled: explicit geometric reduction, integer cutoff including horizon one, full pseudo/actual rate and equality of expectations"
+        }
+      ],
+      "reuse_candidates": [
+        "UCB confidence algebra",
+        "finite histories"
+      ],
+      "upstream_dependencies": [
+        "shared finite history/probability model"
+      ],
+      "downstream_consumers": [
+        "cross-topic transfer",
+        "ICLR library utility evaluation"
+      ],
+      "acceptance_evidence": [],
+      "current_blockers": [
+        "Independent semantic source review of complete repaired HOO chain and repair ledger pending",
+        "Accepted shared topic/source registry/site mapping pending",
+        "Compiled-reference/transfer evidence and all-topic ICLR evaluation incomplete"
+      ],
+      "next_action": "Independently review the full repaired HOO chain against the source-obligation ledger, complete shared mappings/evidence after acceptance, and continue the remaining mandatory topic lines",
+      "contract": "docs/extended-topics/LIPSCHITZ-HOO-CONTRACT.md",
+      "contract_commit": "47474f9",
+      "compiled_producers": [
+        "finite tree backward min/max semantics and no fuel truncation",
+        "causal measurable history/action construction and fresh nodes",
+        "actual infinite reward trajectory and successor conditional law",
+        "weak Lipschitz regional gap, source Lemma 3 without attained supremum",
+        "covering representative and actual selected-arm law bridge",
+        "Actual regional conditional MGF and count-dependent upper/lower confidence",
+        "Supremum-preserving infinite branch without maximizer attainment",
+        "Actual B/search-path comparison and poor-region selection tail",
+        "Expected poor-region visits <= 8 log(max(N,2))/(gap-D)^2 + 4",
+        "Complete infinite binary-sequence A1/A2 noisy reward model with actual expected-visits instantiation",
+        "Finite complete depth levels and fixed-radius ambient disjoint-ball cardinality bound without triangle/symmetry",
+        "Whole-ball contained packing with attained finite natural packing number at every positive radius",
+        "Extended-real max-zero limsup near-optimality dimension with explicit log-zero convention",
+        "Limsup-derived fine-scale packing bound, A1-derived coarse-scale uniform constant and actual near-optimal-level power bound",
+        "Actual near-optimal/boundary node cover and pairwise disjoint three-way regret partition",
+        "Actual action injectivity gives shallow one-play contribution; prefix indicators give bad-subtree visits",
+        "Integrable actual regret and expected three-term bound, with derived boundary expected visits",
+        "One dimension-derived constant controls explicit expected regret sums for every cutoff and horizon",
+        "Explicit environment-only geometric coefficient and actual integer depth optimization including N=1",
+        "Full repaired expected pseudo-regret rate for every real exponent above actual near-optimality dimension",
+        "Bounded actual trajectory rewards and initial/successor-law derived expectation identity",
+        "Full repaired expected realized cumulative regret rate for one fixed infinite policy/law",
+        "Infinite-arm noisy final-rate witness with proved conservative dimension bound and no unproved dimension premise"
+      ],
+      "producer_acceptance": "Full repaired algorithm-to-pseudo/actual-regret chain jointly compiled at fc1cbe65f2f3a9b14c01e5a9cd504611efca3753, including nonvacuous infinite-arm final-rate canary. Independent semantic acceptance, shared mapping and ICLR program evidence pending; topic not accepted.",
+      "validation": "runs/extended-topics-20260917/hoo-rate-validation.json",
+      "progress_notes": [
+        "docs/extended-topics/HOO-CONFIDENCE-PROGRESS.md",
+        "docs/extended-topics/HOO-EXPECTED-VISITS-PROGRESS.md",
+        "docs/extended-topics/HOO-CANTOR-MODEL.md",
+        "docs/extended-topics/HOO-DIMENSION-PROGRESS.md",
+        "docs/extended-topics/HOO-REGRET-PARTITION-PROGRESS.md",
+        "docs/extended-topics/HOO-RATE-PROGRESS.md",
+        "docs/extended-topics/HOO-SOURCE-OBLIGATIONS.md"
+      ],
+      "definition5_clarification_commit": "c88f0c8",
+      "algorithm_to_regret_chain_compiled": true,
+      "independent_semantic_acceptance": false
+    },
+    {
+      "id": "combinatorial",
+      "mandatory": true,
+      "status": "draft",
+      "topic_complete": false,
+      "setting": "Stochastic combinatorial actions; semi-bandit/full-bandit feedback and oracle accuracy to audit",
+      "source": {
+        "candidate": "Chen--Wang--Yuan, ICML 2013; version/hash not yet frozen",
+        "url": "https://proceedings.mlr.press/v28/chen13a.html",
+        "full_audit_complete": false,
+        "frozen": false
+      },
+      "algorithm": "CUCB with explicit feasible super arms and oracle contract",
+      "representative_endpoint": "Complete approximation-regret guarantee under source feedback/oracle assumptions",
+      "endpoint_frozen": false,
+      "mandatory_obligations": [
+        {
+          "id": "classic_and_recent_primary_source_audit",
+          "status": "pending"
+        },
+        {
+          "id": "source_version_hash_and_definition_context",
+          "status": "pending"
+        },
+        {
+          "id": "exact_algorithm_model_assumptions_and_endpoint_freeze",
+          "status": "pending"
+        },
+        {
+          "id": "all_mathematical_producers",
+          "status": "pending"
+        },
+        {
+          "id": "actual_algorithm_to_performance_chain",
+          "status": "pending"
+        },
+        {
+          "id": "public_reusable_interfaces",
+          "status": "pending"
+        },
+        {
+          "id": "nondegenerate_public_root_canary",
+          "status": "pending"
+        },
+        {
+          "id": "semantic_review",
+          "status": "pending"
+        },
+        {
+          "id": "axiom_audit",
+          "status": "pending"
+        },
+        {
+          "id": "joint_root_Tests_full_harness",
+          "status": "pending"
+        },
+        {
+          "id": "site_and_shared_registry_mapping",
+          "status": "pending"
+        },
+        {
+          "id": "bound_commit_reuse_transfer_failure_evidence",
+          "status": "pending"
+        },
+        {
+          "id": "ICLR_body_appendix_and_reproducible_results",
+          "status": "pending"
+        },
+        {
+          "id": "base-arm observation model",
+          "status": "open"
+        },
+        {
+          "id": "oracle feasibility and approximation contract",
+          "status": "open"
+        },
+        {
+          "id": "adaptive confidence producer",
+          "status": "open"
+        },
+        {
+          "id": "charging bad super-arms",
+          "status": "open"
+        },
+        {
+          "id": "terminal approximation regret",
+          "status": "open"
+        }
+      ],
+      "reuse_candidates": [
+        "finite-action kernels",
+        "UCB count algebra"
+      ],
+      "upstream_dependencies": [
+        "shared finite history/probability model"
+      ],
+      "downstream_consumers": [
+        "cross-topic transfer",
+        "ICLR library utility evaluation"
+      ],
+      "acceptance_evidence": [],
+      "current_blockers": [
+        "Source/endpoint audit incomplete"
+      ],
+      "next_action": "Audit exact oracle and triggering assumptions before freezing"
+    },
+    {
+      "id": "causal",
+      "mandatory": true,
+      "status": "draft",
+      "topic_complete": false,
+      "setting": "Known causal graph, observational/interventional laws and identification scope to audit",
+      "source": {
+        "candidate": "Lattimore--Lattimore--Reid, NeurIPS 2016; version/hash not yet frozen",
+        "url": "https://arxiv.org/abs/1606.03203",
+        "full_audit_complete": false,
+        "frozen": false
+      },
+      "algorithm": "Source causal best-intervention algorithm",
+      "representative_endpoint": "Complete simple-regret or sample-complexity guarantee with causal information gain",
+      "endpoint_frozen": false,
+      "mandatory_obligations": [
+        {
+          "id": "classic_and_recent_primary_source_audit",
+          "status": "pending"
+        },
+        {
+          "id": "source_version_hash_and_definition_context",
+          "status": "pending"
+        },
+        {
+          "id": "exact_algorithm_model_assumptions_and_endpoint_freeze",
+          "status": "pending"
+        },
+        {
+          "id": "all_mathematical_producers",
+          "status": "pending"
+        },
+        {
+          "id": "actual_algorithm_to_performance_chain",
+          "status": "pending"
+        },
+        {
+          "id": "public_reusable_interfaces",
+          "status": "pending"
+        },
+        {
+          "id": "nondegenerate_public_root_canary",
+          "status": "pending"
+        },
+        {
+          "id": "semantic_review",
+          "status": "pending"
+        },
+        {
+          "id": "axiom_audit",
+          "status": "pending"
+        },
+        {
+          "id": "joint_root_Tests_full_harness",
+          "status": "pending"
+        },
+        {
+          "id": "site_and_shared_registry_mapping",
+          "status": "pending"
+        },
+        {
+          "id": "bound_commit_reuse_transfer_failure_evidence",
+          "status": "pending"
+        },
+        {
+          "id": "ICLR_body_appendix_and_reproducible_results",
+          "status": "pending"
+        },
+        {
+          "id": "causal/interventional law construction",
+          "status": "open"
+        },
+        {
+          "id": "identification conditions",
+          "status": "open"
+        },
+        {
+          "id": "observational importance estimator",
+          "status": "open"
+        },
+        {
+          "id": "allocation/recommendation policy",
+          "status": "open"
+        },
+        {
+          "id": "complete learning guarantee",
+          "status": "open"
+        }
+      ],
+      "reuse_candidates": [
+        "history kernels",
+        "importance weighting"
+      ],
+      "upstream_dependencies": [
+        "shared finite history/probability model"
+      ],
+      "downstream_consumers": [
+        "cross-topic transfer",
+        "ICLR library utility evaluation"
+      ],
+      "acceptance_evidence": [],
+      "current_blockers": [
+        "Source/endpoint audit incomplete"
+      ],
+      "next_action": "Audit full source and distinguish causal identification from generic history dependence"
+    },
+    {
+      "id": "multi-agent",
+      "mandatory": true,
+      "status": "draft",
+      "topic_complete": false,
+      "setting": "Simultaneous players, collision feedback and stationary arm rewards",
+      "source": {
+        "candidate": "Rosenski--Shamir--Szlak, ICML 2016; version/hash not yet frozen",
+        "url": "https://proceedings.mlr.press/v48/rosenski16.html",
+        "full_audit_complete": false,
+        "frozen": false
+      },
+      "algorithm": "Musical Chairs representative source line",
+      "representative_endpoint": "Complete multi-player regret guarantee including collision/coordination cost",
+      "endpoint_frozen": false,
+      "mandatory_obligations": [
+        {
+          "id": "classic_and_recent_primary_source_audit",
+          "status": "pending"
+        },
+        {
+          "id": "source_version_hash_and_definition_context",
+          "status": "pending"
+        },
+        {
+          "id": "exact_algorithm_model_assumptions_and_endpoint_freeze",
+          "status": "pending"
+        },
+        {
+          "id": "all_mathematical_producers",
+          "status": "pending"
+        },
+        {
+          "id": "actual_algorithm_to_performance_chain",
+          "status": "pending"
+        },
+        {
+          "id": "public_reusable_interfaces",
+          "status": "pending"
+        },
+        {
+          "id": "nondegenerate_public_root_canary",
+          "status": "pending"
+        },
+        {
+          "id": "semantic_review",
+          "status": "pending"
+        },
+        {
+          "id": "axiom_audit",
+          "status": "pending"
+        },
+        {
+          "id": "joint_root_Tests_full_harness",
+          "status": "pending"
+        },
+        {
+          "id": "site_and_shared_registry_mapping",
+          "status": "pending"
+        },
+        {
+          "id": "bound_commit_reuse_transfer_failure_evidence",
+          "status": "pending"
+        },
+        {
+          "id": "ICLR_body_appendix_and_reproducible_results",
+          "status": "pending"
+        },
+        {
+          "id": "joint multi-player process",
+          "status": "open"
+        },
+        {
+          "id": "collision observation law",
+          "status": "open"
+        },
+        {
+          "id": "exploration/ranking concentration",
+          "status": "open"
+        },
+        {
+          "id": "coordination success/time",
+          "status": "open"
+        },
+        {
+          "id": "complete multi-player regret",
+          "status": "open"
+        }
+      ],
+      "reuse_candidates": [
+        "finite product kernels",
+        "occupancy/count algebra"
+      ],
+      "upstream_dependencies": [
+        "shared finite history/probability model"
+      ],
+      "downstream_consumers": [
+        "cross-topic transfer",
+        "ICLR library utility evaluation"
+      ],
+      "acceptance_evidence": [],
+      "current_blockers": [
+        "Source/endpoint audit incomplete"
+      ],
+      "next_action": "Audit fixed/dynamic player assumptions and theorem scope"
+    },
+    {
+      "id": "thompson-bayesian",
+      "mandatory": true,
+      "status": "draft",
+      "topic_complete": false,
+      "setting": "Finite actions and Bayesian latent environment; prior/posterior model to freeze",
+      "source": {
+        "candidate": "Russo--Van Roy, JMLR 2016; version/hash not yet frozen",
+        "url": "https://jmlr.org/papers/v17/14-087.html",
+        "full_audit_complete": false,
+        "frozen": false
+      },
+      "algorithm": "Thompson sampling with genuine posterior sampling",
+      "representative_endpoint": "Complete Bayesian regret bound with information-ratio producer, not an assumed ratio",
+      "endpoint_frozen": false,
+      "mandatory_obligations": [
+        {
+          "id": "classic_and_recent_primary_source_audit",
+          "status": "pending"
+        },
+        {
+          "id": "source_version_hash_and_definition_context",
+          "status": "pending"
+        },
+        {
+          "id": "exact_algorithm_model_assumptions_and_endpoint_freeze",
+          "status": "pending"
+        },
+        {
+          "id": "all_mathematical_producers",
+          "status": "pending"
+        },
+        {
+          "id": "actual_algorithm_to_performance_chain",
+          "status": "pending"
+        },
+        {
+          "id": "public_reusable_interfaces",
+          "status": "pending"
+        },
+        {
+          "id": "nondegenerate_public_root_canary",
+          "status": "pending"
+        },
+        {
+          "id": "semantic_review",
+          "status": "pending"
+        },
+        {
+          "id": "axiom_audit",
+          "status": "pending"
+        },
+        {
+          "id": "joint_root_Tests_full_harness",
+          "status": "pending"
+        },
+        {
+          "id": "site_and_shared_registry_mapping",
+          "status": "pending"
+        },
+        {
+          "id": "bound_commit_reuse_transfer_failure_evidence",
+          "status": "pending"
+        },
+        {
+          "id": "ICLR_body_appendix_and_reproducible_results",
+          "status": "pending"
+        },
+        {
+          "id": "Bayesian joint law",
+          "status": "open"
+        },
+        {
+          "id": "posterior update and sampling equality",
+          "status": "open"
+        },
+        {
+          "id": "information-gain and entropy chain rule",
+          "status": "open"
+        },
+        {
+          "id": "model-specific information-ratio bound",
+          "status": "open"
+        },
+        {
+          "id": "Bayesian regret endpoint",
+          "status": "open"
+        }
+      ],
+      "reuse_candidates": [
+        "ThompsonBayesRegretDecomposition",
+        "posterior interfaces"
+      ],
+      "upstream_dependencies": [
+        "shared finite history/probability model"
+      ],
+      "downstream_consumers": [
+        "cross-topic transfer",
+        "ICLR library utility evaluation"
+      ],
+      "acceptance_evidence": [],
+      "current_blockers": [
+        "Source/endpoint audit incomplete"
+      ],
+      "next_action": "Audit current posterior modules against full source theorem"
+    },
+    {
+      "id": "constrained",
+      "mandatory": true,
+      "status": "draft",
+      "topic_complete": false,
+      "setting": "Stochastic reward/resource consumption, finite budgets and stopping rule",
+      "source": {
+        "candidate": "Bandits with Knapsacks, Badanidiyuru--Kleinberg--Slivkins; version/hash not yet frozen",
+        "url": "https://arxiv.org/abs/1305.2545",
+        "full_audit_complete": false,
+        "frozen": false
+      },
+      "algorithm": "Source BwK algorithm after model/comparator audit",
+      "representative_endpoint": "Complete reward/regret guarantee with feasibility and resource stopping",
+      "endpoint_frozen": false,
+      "mandatory_obligations": [
+        {
+          "id": "classic_and_recent_primary_source_audit",
+          "status": "pending"
+        },
+        {
+          "id": "source_version_hash_and_definition_context",
+          "status": "pending"
+        },
+        {
+          "id": "exact_algorithm_model_assumptions_and_endpoint_freeze",
+          "status": "pending"
+        },
+        {
+          "id": "all_mathematical_producers",
+          "status": "pending"
+        },
+        {
+          "id": "actual_algorithm_to_performance_chain",
+          "status": "pending"
+        },
+        {
+          "id": "public_reusable_interfaces",
+          "status": "pending"
+        },
+        {
+          "id": "nondegenerate_public_root_canary",
+          "status": "pending"
+        },
+        {
+          "id": "semantic_review",
+          "status": "pending"
+        },
+        {
+          "id": "axiom_audit",
+          "status": "pending"
+        },
+        {
+          "id": "joint_root_Tests_full_harness",
+          "status": "pending"
+        },
+        {
+          "id": "site_and_shared_registry_mapping",
+          "status": "pending"
+        },
+        {
+          "id": "bound_commit_reuse_transfer_failure_evidence",
+          "status": "pending"
+        },
+        {
+          "id": "ICLR_body_appendix_and_reproducible_results",
+          "status": "pending"
+        },
+        {
+          "id": "resource process and feasibility",
+          "status": "open"
+        },
+        {
+          "id": "LP or source comparator",
+          "status": "open"
+        },
+        {
+          "id": "algorithm primal/dual update",
+          "status": "open"
+        },
+        {
+          "id": "concentration with stopping",
+          "status": "open"
+        },
+        {
+          "id": "terminal budget-aware reward/regret",
+          "status": "open"
+        }
+      ],
+      "reuse_candidates": [
+        "stopping-time machinery",
+        "finite histories"
+      ],
+      "upstream_dependencies": [
+        "shared finite history/probability model"
+      ],
+      "downstream_consumers": [
+        "cross-topic transfer",
+        "ICLR library utility evaluation"
+      ],
+      "acceptance_evidence": [],
+      "current_blockers": [
+        "Source/endpoint audit incomplete"
+      ],
+      "next_action": "Retrieve primary source and freeze comparator/overshoot convention"
+    },
+    {
+      "id": "corruption-tolerant",
+      "mandatory": true,
+      "status": "draft",
+      "topic_complete": false,
+      "setting": "Stochastic bandits with explicit adversary timing and L1 budget",
+      "source": {
+        "candidate": "Lykouris--Mirrokni--Paes Leme 2018; version/hash not yet frozen",
+        "url": "https://arxiv.org/abs/1803.09353",
+        "full_audit_complete": false,
+        "frozen": false
+      },
+      "algorithm": "Source corruption-robust bandit algorithm; clipping transfer remains subsidiary",
+      "representative_endpoint": "Complete corruption-dependent regret theorem, not just estimator stability",
+      "endpoint_frozen": false,
+      "mandatory_obligations": [
+        {
+          "id": "classic_and_recent_primary_source_audit",
+          "status": "pending"
+        },
+        {
+          "id": "source_version_hash_and_definition_context",
+          "status": "pending"
+        },
+        {
+          "id": "exact_algorithm_model_assumptions_and_endpoint_freeze",
+          "status": "pending"
+        },
+        {
+          "id": "all_mathematical_producers",
+          "status": "pending"
+        },
+        {
+          "id": "actual_algorithm_to_performance_chain",
+          "status": "pending"
+        },
+        {
+          "id": "public_reusable_interfaces",
+          "status": "pending"
+        },
+        {
+          "id": "nondegenerate_public_root_canary",
+          "status": "pending"
+        },
+        {
+          "id": "semantic_review",
+          "status": "pending"
+        },
+        {
+          "id": "axiom_audit",
+          "status": "pending"
+        },
+        {
+          "id": "joint_root_Tests_full_harness",
+          "status": "pending"
+        },
+        {
+          "id": "site_and_shared_registry_mapping",
+          "status": "pending"
+        },
+        {
+          "id": "bound_commit_reuse_transfer_failure_evidence",
+          "status": "pending"
+        },
+        {
+          "id": "ICLR_body_appendix_and_reproducible_results",
+          "status": "pending"
+        },
+        {
+          "id": "adversary filtration and budget",
+          "status": "open"
+        },
+        {
+          "id": "robust policy and estimator",
+          "status": "open"
+        },
+        {
+          "id": "confidence under corruption",
+          "status": "open"
+        },
+        {
+          "id": "robust count argument",
+          "status": "open"
+        },
+        {
+          "id": "corruption-dependent regret",
+          "status": "open"
+        }
+      ],
+      "reuse_candidates": [
+        "HeavyTailClipping",
+        "Tsallis corruption modules"
+      ],
+      "upstream_dependencies": [
+        "shared finite history/probability model"
+      ],
+      "downstream_consumers": [
+        "cross-topic transfer",
+        "ICLR library utility evaluation"
+      ],
+      "acceptance_evidence": [],
+      "current_blockers": [
+        "Source/endpoint audit incomplete"
+      ],
+      "next_action": "Audit known/unknown budget and selected/all-arm corruption conventions"
+    },
+    {
+      "id": "matrix",
+      "mandatory": true,
+      "status": "draft",
+      "topic_complete": false,
+      "setting": "Nonnegative stochastic rank-1 row/column reward model, assumptions to audit",
+      "source": {
+        "candidate": "Katariya et al., AISTATS 2017; version/hash not yet frozen",
+        "url": "https://proceedings.mlr.press/v54/katariya17a.html",
+        "full_audit_complete": false,
+        "frozen": false
+      },
+      "algorithm": "Rank1Elim representative matrix-learning line",
+      "representative_endpoint": "Complete rank-1 regret guarantee with row/column dependence, not flat-arm relabeling",
+      "endpoint_frozen": false,
+      "mandatory_obligations": [
+        {
+          "id": "classic_and_recent_primary_source_audit",
+          "status": "pending"
+        },
+        {
+          "id": "source_version_hash_and_definition_context",
+          "status": "pending"
+        },
+        {
+          "id": "exact_algorithm_model_assumptions_and_endpoint_freeze",
+          "status": "pending"
+        },
+        {
+          "id": "all_mathematical_producers",
+          "status": "pending"
+        },
+        {
+          "id": "actual_algorithm_to_performance_chain",
+          "status": "pending"
+        },
+        {
+          "id": "public_reusable_interfaces",
+          "status": "pending"
+        },
+        {
+          "id": "nondegenerate_public_root_canary",
+          "status": "pending"
+        },
+        {
+          "id": "semantic_review",
+          "status": "pending"
+        },
+        {
+          "id": "axiom_audit",
+          "status": "pending"
+        },
+        {
+          "id": "joint_root_Tests_full_harness",
+          "status": "pending"
+        },
+        {
+          "id": "site_and_shared_registry_mapping",
+          "status": "pending"
+        },
+        {
+          "id": "bound_commit_reuse_transfer_failure_evidence",
+          "status": "pending"
+        },
+        {
+          "id": "ICLR_body_appendix_and_reproducible_results",
+          "status": "pending"
+        },
+        {
+          "id": "rank-1 observation law and identifiability",
+          "status": "open"
+        },
+        {
+          "id": "row/column elimination algorithm",
+          "status": "open"
+        },
+        {
+          "id": "confidence with coupled sampling",
+          "status": "open"
+        },
+        {
+          "id": "elimination correctness",
+          "status": "open"
+        },
+        {
+          "id": "full structural regret dependence",
+          "status": "open"
+        }
+      ],
+      "reuse_candidates": [
+        "finite product actions",
+        "concentration/count interfaces"
+      ],
+      "upstream_dependencies": [
+        "shared finite history/probability model"
+      ],
+      "downstream_consumers": [
+        "cross-topic transfer",
+        "ICLR library utility evaluation"
+      ],
+      "acceptance_evidence": [],
+      "current_blockers": [
+        "Source/endpoint audit incomplete"
+      ],
+      "next_action": "Audit positivity and benign-instance assumptions from full theorem"
+    },
+    {
+      "id": "variance-aware",
+      "mandatory": true,
+      "status": "draft",
+      "topic_complete": false,
+      "setting": "Bounded stochastic rewards and empirical variance, source constants to audit",
+      "source": {
+        "candidate": "Audibert--Munos--Szepesvari, TCS 2009; author preprint version to compare",
+        "url": "https://imagine.enpc.fr/publications/papers/TCS08.pdf",
+        "full_audit_complete": false,
+        "frozen": false
+      },
+      "algorithm": "UCB-V source line",
+      "representative_endpoint": "Complete variance-sensitive expected regret including empirical-variance concentration",
+      "endpoint_frozen": false,
+      "mandatory_obligations": [
+        {
+          "id": "classic_and_recent_primary_source_audit",
+          "status": "pending"
+        },
+        {
+          "id": "source_version_hash_and_definition_context",
+          "status": "pending"
+        },
+        {
+          "id": "exact_algorithm_model_assumptions_and_endpoint_freeze",
+          "status": "pending"
+        },
+        {
+          "id": "all_mathematical_producers",
+          "status": "pending"
+        },
+        {
+          "id": "actual_algorithm_to_performance_chain",
+          "status": "pending"
+        },
+        {
+          "id": "public_reusable_interfaces",
+          "status": "pending"
+        },
+        {
+          "id": "nondegenerate_public_root_canary",
+          "status": "pending"
+        },
+        {
+          "id": "semantic_review",
+          "status": "pending"
+        },
+        {
+          "id": "axiom_audit",
+          "status": "pending"
+        },
+        {
+          "id": "joint_root_Tests_full_harness",
+          "status": "pending"
+        },
+        {
+          "id": "site_and_shared_registry_mapping",
+          "status": "pending"
+        },
+        {
+          "id": "bound_commit_reuse_transfer_failure_evidence",
+          "status": "pending"
+        },
+        {
+          "id": "ICLR_body_appendix_and_reproducible_results",
+          "status": "pending"
+        },
+        {
+          "id": "empirical variance statistic",
+          "status": "open"
+        },
+        {
+          "id": "empirical Bernstein producer",
+          "status": "open"
+        },
+        {
+          "id": "causal UCB-V policy",
+          "status": "open"
+        },
+        {
+          "id": "adaptive confidence/count proof",
+          "status": "open"
+        },
+        {
+          "id": "variance-sensitive regret and regime constraints",
+          "status": "open"
+        }
+      ],
+      "reuse_candidates": [
+        "ConcentrationVariance",
+        "fixed-tilt MGF",
+        "UCB count algebra"
+      ],
+      "upstream_dependencies": [
+        "shared finite history/probability model"
+      ],
+      "downstream_consumers": [
+        "cross-topic transfer",
+        "ICLR library utility evaluation"
+      ],
+      "acceptance_evidence": [],
+      "current_blockers": [
+        "Source/endpoint audit incomplete"
+      ],
+      "next_action": "Freeze exact published/preprint theorem and constants"
+    }
+  ]
+}
