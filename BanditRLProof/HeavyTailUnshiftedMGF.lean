@@ -5,13 +5,21 @@ This uses a raw second moment, not the variance of the centered variable. -/
 namespace BanditRLProof.HeavyTail
 open MeasureTheory ProbabilityTheory
 
-theorem bounded_centering_mgf_unshifted {Ω : Type*} [MeasurableSpace Ω]
+theorem exp_le_one_add_self_add_three_quarters_sq {x : ℝ} (hx : |x| ≤ 1) :
+    Real.exp x ≤ 1 + x + (3/4 : ℝ)*x^2 := by
+  have h := Real.exp_bound hx (n := 2) (by decide)
+  norm_num [Finset.sum_range_succ, Nat.factorial, sq_abs] at h
+  have ha := le_abs_self (Real.exp x - (1+x))
+  nlinarith
+
+/-- Sharper raw-second-moment MGF at the unchanged full raw-variable tilt. -/
+theorem bounded_centering_mgf_unshifted_sharp {Ω : Type*} [MeasurableSpace Ω]
     (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : Ω → ℝ)
     (B v tilt : ℝ) (hYm : Measurable Y) (hbound : ∀ ω, |Y ω| ≤ B)
     (hv : (∫ ω, (Y ω)^2 ∂μ) ≤ v)
     (hsmall : |tilt| * B ≤ 1) :
     Concentration.HasMGFUpperBoundAt
-      (fun ω => Y ω - ∫ ω, Y ω ∂μ) tilt (tilt^2 * v) μ := by
+      (fun ω => Y ω - ∫ ω, Y ω ∂μ) tilt ((3/4 : ℝ)*tilt^2 * v) μ := by
   have hYi : Integrable Y μ := (integrable_const B).mono' hYm.aestronglyMeasurable
     (Filter.Eventually.of_forall fun ω => by simpa only [Real.norm_eq_abs] using hbound ω)
   have hsq : Integrable (fun ω => (Y ω)^2) μ := by
@@ -28,25 +36,25 @@ theorem bounded_centering_mgf_unshifted {Ω : Type*} [MeasurableSpace Ω]
       exact (le_abs_self _).trans ((abs_mul s (Y ω)).trans_le
         (mul_le_mul_of_nonneg_left (hbound ω) (abs_nonneg s)))
   have hraw : (∫ ω, Real.exp (tilt * Y ω) ∂μ) ≤
-      Real.exp (tilt * (∫ ω, Y ω ∂μ) + tilt^2 * v) := by
+      Real.exp (tilt * (∫ ω, Y ω ∂μ) + (3/4 : ℝ)*tilt^2 * v) := by
     calc
-      _ ≤ ∫ ω, (1 + tilt * Y ω) + tilt^2 * (Y ω)^2 ∂μ := by
+      _ ≤ ∫ ω, (1 + tilt * Y ω) + (3/4 : ℝ)*tilt^2 * (Y ω)^2 ∂μ := by
         apply integral_mono (hexp tilt)
           (((integrable_const 1).add (hYi.const_mul tilt)).add (hsq.const_mul _))
         intro ω
-        have h := Concentration.exp_le_one_add_self_add_sq_of_abs_le_one
+        have h := exp_le_one_add_self_add_three_quarters_sq
           (x := tilt * Y ω) (by rw [abs_mul]; exact
             (mul_le_mul_of_nonneg_left (hbound ω) (abs_nonneg _)).trans hsmall)
-        simpa only [Pi.add_apply, mul_pow] using h
-      _ = 1 + tilt * (∫ ω, Y ω ∂μ) + tilt^2 * (∫ ω, (Y ω)^2 ∂μ) := by
+        simpa only [Pi.add_apply, mul_pow, mul_assoc] using h
+      _ = 1 + tilt * (∫ ω, Y ω ∂μ) + (3/4 : ℝ)*tilt^2 * (∫ ω, (Y ω)^2 ∂μ) := by
         rw [integral_add (f := fun ω => 1 + tilt * Y ω)
-          (g := fun ω => tilt^2 * (Y ω)^2)
+          (g := fun ω => (3/4 : ℝ)*tilt^2 * (Y ω)^2)
           ((integrable_const 1).add (hYi.const_mul tilt)) (hsq.const_mul _),
           integral_add (f := fun _ : Ω => (1 : ℝ)) (g := fun ω => tilt * Y ω)
           (integrable_const 1) (hYi.const_mul tilt)]
         simp [integral_const_mul]
-      _ ≤ 1 + tilt * (∫ ω, Y ω ∂μ) + tilt^2 * v := by gcongr
-      _ ≤ _ := by linarith [Real.add_one_le_exp (tilt * (∫ ω, Y ω ∂μ) + tilt^2 * v)]
+      _ ≤ 1 + tilt * (∫ ω, Y ω ∂μ) + (3/4 : ℝ)*tilt^2 * v := by gcongr
+      _ ≤ _ := by linarith [Real.add_one_le_exp (tilt * (∫ ω, Y ω ∂μ) + (3/4 : ℝ)*tilt^2 * v)]
   have he (s : ℝ) (ω : Ω) : Real.exp (s * (Y ω - ∫ ω, Y ω ∂μ)) =
       Real.exp (-(s * ∫ ω, Y ω ∂μ)) * Real.exp (s * Y ω) := by
     rw [← Real.exp_add]
@@ -61,8 +69,22 @@ theorem bounded_centering_mgf_unshifted {Ω : Type*} [MeasurableSpace Ω]
     rw [integral_const_mul]
     calc
       _ ≤ Real.exp (-(tilt * ∫ ω, Y ω ∂μ)) *
-          Real.exp (tilt * (∫ ω, Y ω ∂μ) + tilt^2 * v) :=
+          Real.exp (tilt * (∫ ω, Y ω ∂μ) + (3/4 : ℝ)*tilt^2 * v) :=
         mul_le_mul_of_nonneg_left hraw (Real.exp_pos _).le
       _ = _ := by rw [← Real.exp_add]; congr 1; ring
+
+/-- Compatibility weakening of the sharper raw-second-moment producer. -/
+theorem bounded_centering_mgf_unshifted {Ω : Type*} [MeasurableSpace Ω]
+    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : Ω → ℝ)
+    (B v tilt : ℝ) (hYm : Measurable Y) (hbound : ∀ ω, |Y ω| ≤ B)
+    (hv : (∫ ω, (Y ω)^2 ∂μ) ≤ v)
+    (hsmall : |tilt| * B ≤ 1) :
+    Concentration.HasMGFUpperBoundAt
+      (fun ω => Y ω - ∫ ω, Y ω ∂μ) tilt (tilt^2 * v) μ := by
+  have h := bounded_centering_mgf_unshifted_sharp μ Y B v tilt hYm hbound hv hsmall
+  have hv0 : 0 ≤ v := (integral_nonneg (fun ω => sq_nonneg (Y ω))).trans hv
+  constructor
+  · exact h.1
+  · exact h.2.trans (Real.exp_le_exp.mpr (by nlinarith [mul_nonneg (sq_nonneg tilt) hv0]))
 
 end BanditRLProof.HeavyTail

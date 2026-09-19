@@ -55,7 +55,8 @@ it to lambda Z_j with |lambda|B_j<=1:
 Thus the full raw-variable tilt 1/B is allowed. This does not assert the false
 signed-range estimate |Z_j-EZ_j|<=B_j, and uses the raw second moment rather
 than variance in the exponent. Exponential integrability comes from bounded Z_j.
-The EXP3 exponential-remainder lemma is actually reused at this step.
+The coefficient-one display is now a weakening of the sharper Mathlib remainder
+route below; the historical EXP3 remainder is no longer a direct proof dependency.
 
 Let B=(un/L)^(1/p), a=u^(1/p)(L/n)^q and V=sum u B_j^(1-epsilon).
 Power-sum control and the scale identities give
@@ -71,8 +72,10 @@ is exactly delta. No confidence event or MGF is supplied as an endpoint premise.
 
 ## Actual proof reuse and graph boundary
 
-`bounded_centering_mgf_unshifted` reuses the EXP3 remainder and Mathlib integral
-monotonicity, exponential identities and integrability bounds.
+`bounded_centering_mgf_unshifted` now weakens
+`bounded_centering_mgf_unshifted_sharp`, whose scalar remainder is derived from
+Mathlib `Real.exp_bound` at order two. Integral monotonicity, exponential identities
+and integrability bounds are reused as before.
 `source_centered_sum_upper_tail` uses this MGF, `integral_sq_truncate_le`,
 `independent_sum_mgf` and its Chernoff interface. The bias side reuses
 `power_threshold_bias_sum`, `power_scale_bias`, `power_bias_normalization`,
@@ -166,3 +169,140 @@ project proof references from the new modules to five pre-existing source
 modules whose Git blobs are unchanged from the comparison base. It separates
 these from type-only and external references. These counts describe actual
 reuse, not novelty, saved effort or causal efficiency.
+
+
+## Sharper probability at the identical radius (2026-09-19)
+
+The actual source Lemma 1 asks for failure delta. A new strengthening proves each
+signed closed bad event at the very same radius and thresholds has probability
+at most exp(-5L/4). This exponent is our derived strengthening, not the paper's
+printed statement. The fixed positive sample size and common-mean independent
+sequence assumptions remain exactly those above, with epsilon=0 additionally
+allowed by the log-confidence interface. Positive u,L,n are required.
+
+Mathlib's order-two exponential remainder gives, for every signed |x|<=1,
+
+    |exp(x)-(1+x)| <= (3/4)*x^2.
+
+Apply this before centering to obtain
+
+    E exp(lambda(Z-EZ)) <= exp((3/4)*lambda^2 E Z^2).
+
+Independence and the same V<=B^2 L bound give, at lambda=1/B,
+
+    P(sum(Z_j-EZ_j)>=2BL) <= exp(-2L+(3/4)V/B^2) <= exp(-5L/4).
+
+The bias budget and radius-four inclusion are unchanged. Reflection gives the
+lower signed event. The previous exp(-L) and arbitrary-delta public interfaces
+are explicit weakenings of this stronger producer. No centered variance or
+false centered-range assumption was inserted.
+
+For the proposed original schedule L_t=2log(t+1), this fixed-prefix expression
+is (t+1)^(-5/2). A finite union over t possible counts and a telescoping bound
+would make the total failure budget finite. That full adaptive-policy assembly
+is a next obligation, not a conclusion of these declarations. The deterministic
+twice-radius regret coefficient issue also remains separate.
+
+The following declarations are exact, including proofs. Their direct local
+parents are the sharper MGF producer, independent_sum_mgf, the existing
+truncation moment/bias bounds and source threshold scale lemmas. No new
+conceptual functor is claimed.
+
+<details>
+<summary>source_truncated_mean_upper_tail_log_sharp</summary>
+
+```lean
+theorem source_truncated_mean_upper_tail_log_sharp {Ω : Type*} [MeasurableSpace Ω]
+    (μ : Measure Ω) [IsProbabilityMeasure μ] (X : ℕ → Ω → ℝ)
+    (ε u L mean : ℝ) (n : ℕ) (hn : 0 < n)
+    (hXm : ∀ i, Measurable (X i)) (hi : iIndepFun X μ)
+    (hε0 : 0 ≤ ε) (hε : ε ≤ 1) (hu : 0 < u) (hL : 0 < L)
+    (hX : ∀ i, Integrable (X i) μ)
+    (hmean : ∀ i, (∫ ω, X i ω ∂μ) = mean)
+    (hm : ∀ i, Integrable (fun ω => |X i ω|^(1+ε)) μ)
+    (hraw : ∀ i, (∫ ω, |X i ω|^(1+ε) ∂μ) ≤ u) :
+    μ.real {ω | 4*u^(1/(1+ε))*(L/n)^(ε/(1+ε)) ≤
+      (∑ i ∈ Finset.range n, truncate (sourceTruncationThreshold ε u L i) (X i ω))/n - mean}
+      ≤ Real.exp (-(5/4 : ℝ)*L) := by
+  let B := (u*n/L)^(1/(1+ε))
+  let R := u^(1/(1+ε))*(L/n)^(ε/(1+ε))
+  let bias := ∑ i ∈ Finset.range n, u/(sourceTruncationThreshold ε u L i)^ε
+  have hN : (0 : ℝ) < n := Nat.cast_pos.mpr hn
+  have hp : 0 < 1+ε := by linarith
+  have hR : 0 ≤ R := by dsimp [R]; positivity
+  have hq : 1-1/(1+ε) = ε/(1+ε) := by field_simp; ring
+  have hBL : B*L = n*R := by
+    dsimp [B, R]
+    rw [threshold_scale_identity u L n (1/(1+ε)) hu.le hL hN, hq]
+  have hbias := sourceThreshold_bias_average ε u L hε0 hu hL n hn
+  have hbias' : bias / n ≤ (1+ε)*R := by simpa only [bias, R, mul_assoc] using hbias
+  have hbudget : bias+2*B*L ≤ n*(4*R) := by
+    have hb := (div_le_iff₀ hN).mp hbias'
+    have hεR := mul_nonneg (sub_nonneg.mpr hε) (mul_nonneg hN.le hR)
+    nlinarith [hBL]
+  have hb : |∑ i ∈ Finset.range n,
+      ((∫ ω, truncate (sourceTruncationThreshold ε u L i) (X i ω) ∂μ)-mean)| ≤ bias := by
+    refine (Finset.abs_sum_le_sum_abs _ _).trans (Finset.sum_le_sum fun i _ => ?_)
+    have h := integral_truncate_bias_le μ (X i) _ ε u
+      (sourceThreshold_pos ε u L hu hL i) hε0 (hXm i) (hX i) (hm i) (hraw i)
+    rw [hmean i, abs_sub_comm] at h
+    exact h
+  apply (measureReal_mono ?_ (measure_ne_top _ _)).trans
+    (source_centered_sum_upper_tail_sharp μ X ε u L n hn hXm hi hε0 hε hu hL hm hraw)
+  intro ω hw
+  simp only [Set.mem_setOf_eq, mul_assoc] at hw
+  change 4*R ≤ _ at hw
+  change 2*B*L ≤ _
+  have hid : (∑ i ∈ Finset.range n, truncate (sourceTruncationThreshold ε u L i) (X i ω)) - n*mean =
+      (∑ i ∈ Finset.range n, (truncate (sourceTruncationThreshold ε u L i) (X i ω) -
+        ∫ ω, truncate (sourceTruncationThreshold ε u L i) (X i ω) ∂μ)) +
+      ∑ i ∈ Finset.range n, ((∫ ω, truncate (sourceTruncationThreshold ε u L i) (X i ω) ∂μ)-mean) := by
+    simp only [Finset.sum_sub_distrib, Finset.sum_const, Finset.card_range, nsmul_eq_mul]
+    ring
+  have hw' : n*(4*R) ≤
+      (∑ i ∈ Finset.range n, truncate (sourceTruncationThreshold ε u L i) (X i ω))-n*mean := by
+    have hh := (mul_le_mul_of_nonneg_right hw hN.le)
+    rw [sub_mul, div_mul_cancel₀ _ hN.ne'] at hh
+    nlinarith
+  have hm' := (le_abs_self (∑ i ∈ Finset.range n,
+      ((∫ ω, truncate (sourceTruncationThreshold ε u L i) (X i ω) ∂μ)-mean))).trans hb
+  linarith
+```
+
+</details>
+
+<details>
+<summary>source_truncated_mean_lower_tail_log_sharp</summary>
+
+```lean
+theorem source_truncated_mean_lower_tail_log_sharp {Ω : Type*} [MeasurableSpace Ω]
+    (μ : Measure Ω) [IsProbabilityMeasure μ] (X : ℕ → Ω → ℝ)
+    (ε u L mean : ℝ) (n : ℕ) (hn : 0 < n)
+    (hXm : ∀ i, Measurable (X i)) (hi : iIndepFun X μ)
+    (hε0 : 0 ≤ ε) (hε : ε ≤ 1) (hu : 0 < u) (hL : 0 < L)
+    (hX : ∀ i, Integrable (X i) μ)
+    (hmean : ∀ i, (∫ ω, X i ω ∂μ) = mean)
+    (hm : ∀ i, Integrable (fun ω => |X i ω|^(1+ε)) μ)
+    (hraw : ∀ i, (∫ ω, |X i ω|^(1+ε) ∂μ) ≤ u) :
+    μ.real {ω | 4*u^(1/(1+ε))*(L/n)^(ε/(1+ε)) ≤
+      mean - (∑ i ∈ Finset.range n,
+        truncate (sourceTruncationThreshold ε u (L) i) (X i ω))/n}
+      ≤ Real.exp (-(5/4 : ℝ)*L) := by
+  have h := source_truncated_mean_upper_tail_log_sharp μ (fun i ω => -X i ω) ε u L (-mean) n hn
+    (fun i => (hXm i).neg) (hi.comp (fun _ x => -x) (fun _ => measurable_neg))
+    hε0 hε hu hL (fun i => (hX i).neg)
+    (fun i => by rw [integral_neg, hmean i])
+    (fun i => by simpa only [abs_neg] using hm i)
+    (fun i => by simpa only [abs_neg] using hraw i)
+  simpa only [truncate_neg, Finset.sum_neg_distrib, neg_div, sub_neg_eq_add, neg_add_eq_sub]
+    using h
+```
+
+</details>
+
+Independent packet D review: decoder B reconstructed the actual signed
+statements; source reviewer A accepted the stated strengthening and explicit
+assumption deltas; separate repair reviewer A accepted the actual MGF/bias/
+reflection proof. These reviews do not certify the original adaptive policy.
+The earlier compiled-reuse receipt binds abf4d27; it is historical after this
+refactor and must not be used as the new proof's direct-dependency inventory.

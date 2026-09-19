@@ -57,3 +57,8 @@ joint root/Tests/harness/site/shared registry validation and ICLR evidence.
 Unavailable controlled experiments stay unexecuted; descriptive development
 cannot be relabeled as independent productivity trials. No paid API experiment,
 merge, deployment, anonymous-snapshot refresh, or external controller is added.
+
+The sharper fixed-prefix producer in SOURCE-SCHEDULE-ROUTE.md retains radius4
+and improves each signed probability to exp(-5L/4). Original-schedule adaptive
+assembly and regret constants remain open. Yu2025 local proof audit is recorded
+in YU25-SOURCE-AUDIT.md; external concentration dependencies remain unaudited.

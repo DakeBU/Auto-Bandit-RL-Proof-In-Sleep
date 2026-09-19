@@ -61,7 +61,7 @@ theorem sourceThreshold_variance_sum (ε u L : ℝ) (hε0 : 0 ≤ ε) (hε : ε 
     _ = _ := by simp only [Finset.sum_const, Finset.card_range, nsmul_eq_mul]; ring
 
 /-- One-sided centered-sum bound at the full raw-variable tilt 1/B. -/
-theorem source_centered_sum_upper_tail {Ω : Type*} [MeasurableSpace Ω]
+theorem source_centered_sum_upper_tail_sharp {Ω : Type*} [MeasurableSpace Ω]
     (μ : Measure Ω) [IsProbabilityMeasure μ] (X : ℕ → Ω → ℝ)
     (ε u L : ℝ) (n : ℕ) (hn : 0 < n)
     (hXm : ∀ i, Measurable (X i)) (hi : iIndepFun X μ)
@@ -70,7 +70,7 @@ theorem source_centered_sum_upper_tail {Ω : Type*} [MeasurableSpace Ω]
     (hraw : ∀ i, (∫ ω, |X i ω|^(1+ε) ∂μ) ≤ u) :
     μ.real {ω | 2*(u*n/L)^(1/(1+ε))*L ≤
       ∑ i ∈ Finset.range n, (truncate (sourceTruncationThreshold ε u L i) (X i ω) -
-        ∫ ω, truncate (sourceTruncationThreshold ε u L i) (X i ω) ∂μ)} ≤ Real.exp (-L) := by
+        ∫ ω, truncate (sourceTruncationThreshold ε u L i) (X i ω) ∂μ)} ≤ Real.exp (-(5/4 : ℝ)*L) := by
   let B := (u*n/L)^(1/(1+ε))
   let Y := fun i ω => truncate (sourceTruncationThreshold ε u L i) (X i ω) -
     ∫ ω, truncate (sourceTruncationThreshold ε u L i) (X i ω) ∂μ
@@ -84,8 +84,8 @@ theorem source_centered_sum_upper_tail {Ω : Type*} [MeasurableSpace Ω]
   have hYm : ∀ i, Measurable (Y i) := fun i =>
     ((measurable_truncate _).comp (hXm i)).sub measurable_const
   have hg := independent_sum_mgf μ Y (Finset.range n) (1/B)
-    (fun i => (1/B)^2*(u*(sourceTruncationThreshold ε u L i)^(1-ε))) hYi hYm
-    (fun i his => bounded_centering_mgf_unshifted μ
+    (fun i => (3/4 : ℝ)*(1/B)^2*(u*(sourceTruncationThreshold ε u L i)^(1-ε))) hYi hYm
+    (fun i his => bounded_centering_mgf_unshifted_sharp μ
       (fun ω => truncate (sourceTruncationThreshold ε u L i) (X i ω))
       (sourceTruncationThreshold ε u L i) _ (1/B)
       ((measurable_truncate _).comp (hXm i))
@@ -107,11 +107,11 @@ theorem source_centered_sum_upper_tail {Ω : Type*} [MeasurableSpace Ω]
     nlinarith [sq_nonneg B]
   have ht := hg.measure_ge_le_exp_add (2*B*L) (one_div_pos.mpr hB).le
   have he : -(1/B)*(2*B*L) + ∑ i ∈ Finset.range n,
-      (1/B)^2*(u*(sourceTruncationThreshold ε u L i)^(1-ε)) ≤ -L := by
+      (3/4 : ℝ)*(1/B)^2*(u*(sourceTruncationThreshold ε u L i)^(1-ε)) ≤ -(5/4 : ℝ)*L := by
     rw [← Finset.mul_sum]
-    change -(1/B)*(2*B*L)+(1/B)^2*V ≤ -L
-    have hv' := mul_le_mul_of_nonneg_left hv (sq_nonneg (1/B))
-    have hc : (1/B)^2*(B^2*L) = L := by field_simp
+    change -(1/B)*(2*B*L)+(3/4 : ℝ)*(1/B)^2*V ≤ -(5/4 : ℝ)*L
+    have hv' := mul_le_mul_of_nonneg_left hv (mul_nonneg (by norm_num : (0 : ℝ) ≤ 3/4) (sq_nonneg (1/B)))
+    have hc : (3/4 : ℝ)*(1/B)^2*(B^2*L) = (3/4 : ℝ)*L := by field_simp
     have hc2 : -(1/B)*(2*B*L) = -2*L := by field_simp
     rw [hc] at hv'
     rw [hc2]
@@ -120,8 +120,21 @@ theorem source_centered_sum_upper_tail {Ω : Type*} [MeasurableSpace Ω]
   simpa only [Y, B, Finset.sum_apply] using ht
 
 
+theorem source_centered_sum_upper_tail {Ω : Type*} [MeasurableSpace Ω]
+    (μ : Measure Ω) [IsProbabilityMeasure μ] (X : ℕ → Ω → ℝ)
+    (ε u L : ℝ) (n : ℕ) (hn : 0 < n)
+    (hXm : ∀ i, Measurable (X i)) (hi : iIndepFun X μ)
+    (hε0 : 0 ≤ ε) (hε : ε ≤ 1) (hu : 0 < u) (hL : 0 < L)
+    (hm : ∀ i, Integrable (fun ω => |X i ω|^(1+ε)) μ)
+    (hraw : ∀ i, (∫ ω, |X i ω|^(1+ε) ∂μ) ≤ u) :
+    μ.real {ω | 2*(u*n/L)^(1/(1+ε))*L ≤
+      ∑ i ∈ Finset.range n, (truncate (sourceTruncationThreshold ε u L i) (X i ω) -
+        ∫ ω, truncate (sourceTruncationThreshold ε u L i) (X i ω) ∂μ)} ≤ Real.exp (-L) := by
+  exact (source_centered_sum_upper_tail_sharp μ X ε u L n hn hXm hi hε0 hε hu hL hm hraw).trans
+    (Real.exp_le_exp.mpr (by linarith))
+
 /-- Constant-four upper deviation for arbitrary positive log confidence. -/
-theorem source_truncated_mean_upper_tail_log {Ω : Type*} [MeasurableSpace Ω]
+theorem source_truncated_mean_upper_tail_log_sharp {Ω : Type*} [MeasurableSpace Ω]
     (μ : Measure Ω) [IsProbabilityMeasure μ] (X : ℕ → Ω → ℝ)
     (ε u L mean : ℝ) (n : ℕ) (hn : 0 < n)
     (hXm : ∀ i, Measurable (X i)) (hi : iIndepFun X μ)
@@ -132,7 +145,7 @@ theorem source_truncated_mean_upper_tail_log {Ω : Type*} [MeasurableSpace Ω]
     (hraw : ∀ i, (∫ ω, |X i ω|^(1+ε) ∂μ) ≤ u) :
     μ.real {ω | 4*u^(1/(1+ε))*(L/n)^(ε/(1+ε)) ≤
       (∑ i ∈ Finset.range n, truncate (sourceTruncationThreshold ε u L i) (X i ω))/n - mean}
-      ≤ Real.exp (-L) := by
+      ≤ Real.exp (-(5/4 : ℝ)*L) := by
   let B := (u*n/L)^(1/(1+ε))
   let R := u^(1/(1+ε))*(L/n)^(ε/(1+ε))
   let bias := ∑ i ∈ Finset.range n, u/(sourceTruncationThreshold ε u L i)^ε
@@ -157,7 +170,7 @@ theorem source_truncated_mean_upper_tail_log {Ω : Type*} [MeasurableSpace Ω]
     rw [hmean i, abs_sub_comm] at h
     exact h
   apply (measureReal_mono ?_ (measure_ne_top _ _)).trans
-    (source_centered_sum_upper_tail μ X ε u L n hn hXm hi hε0 hε hu hL hm hraw)
+    (source_centered_sum_upper_tail_sharp μ X ε u L n hn hXm hi hε0 hε hu hL hm hraw)
   intro ω hw
   simp only [Set.mem_setOf_eq, mul_assoc] at hw
   change 4*R ≤ _ at hw
@@ -176,6 +189,21 @@ theorem source_truncated_mean_upper_tail_log {Ω : Type*} [MeasurableSpace Ω]
   have hm' := (le_abs_self (∑ i ∈ Finset.range n,
       ((∫ ω, truncate (sourceTruncationThreshold ε u L i) (X i ω) ∂μ)-mean))).trans hb
   linarith
+
+theorem source_truncated_mean_upper_tail_log {Ω : Type*} [MeasurableSpace Ω]
+    (μ : Measure Ω) [IsProbabilityMeasure μ] (X : ℕ → Ω → ℝ)
+    (ε u L mean : ℝ) (n : ℕ) (hn : 0 < n)
+    (hXm : ∀ i, Measurable (X i)) (hi : iIndepFun X μ)
+    (hε0 : 0 ≤ ε) (hε : ε ≤ 1) (hu : 0 < u) (hL : 0 < L)
+    (hX : ∀ i, Integrable (X i) μ)
+    (hmean : ∀ i, (∫ ω, X i ω ∂μ) = mean)
+    (hm : ∀ i, Integrable (fun ω => |X i ω|^(1+ε)) μ)
+    (hraw : ∀ i, (∫ ω, |X i ω|^(1+ε) ∂μ) ≤ u) :
+    μ.real {ω | 4*u^(1/(1+ε))*(L/n)^(ε/(1+ε)) ≤
+      (∑ i ∈ Finset.range n, truncate (sourceTruncationThreshold ε u L i) (X i ω))/n - mean}
+      ≤ Real.exp (-L) := by
+  exact (source_truncated_mean_upper_tail_log_sharp μ X ε u L mean n hn
+    hXm hi hε0 hε hu hL hX hmean hm hraw).trans (Real.exp_le_exp.mpr (by linarith))
 
 /-- BCL 2013 Lemma 1 upper deviation, retaining its radius constant four.
 The non-strict bad event proved here is stronger than a strict upper-tail event. -/
@@ -222,6 +250,29 @@ theorem source_truncated_mean_lower_tail {Ω : Type*} [MeasurableSpace Ω]
   have h := source_truncated_mean_upper_tail μ (fun i ω => -X i ω) ε u δ (-mean) n hn
     (fun i => (hXm i).neg) (hi.comp (fun _ x => -x) (fun _ => measurable_neg))
     hε0 hε hu hδ hδ1 (fun i => (hX i).neg)
+    (fun i => by rw [integral_neg, hmean i])
+    (fun i => by simpa only [abs_neg] using hm i)
+    (fun i => by simpa only [abs_neg] using hraw i)
+  simpa only [truncate_neg, Finset.sum_neg_distrib, neg_div, sub_neg_eq_add, neg_add_eq_sub]
+    using h
+
+/-- Sharper lower log-confidence tail, obtained by reflection. -/
+theorem source_truncated_mean_lower_tail_log_sharp {Ω : Type*} [MeasurableSpace Ω]
+    (μ : Measure Ω) [IsProbabilityMeasure μ] (X : ℕ → Ω → ℝ)
+    (ε u L mean : ℝ) (n : ℕ) (hn : 0 < n)
+    (hXm : ∀ i, Measurable (X i)) (hi : iIndepFun X μ)
+    (hε0 : 0 ≤ ε) (hε : ε ≤ 1) (hu : 0 < u) (hL : 0 < L)
+    (hX : ∀ i, Integrable (X i) μ)
+    (hmean : ∀ i, (∫ ω, X i ω ∂μ) = mean)
+    (hm : ∀ i, Integrable (fun ω => |X i ω|^(1+ε)) μ)
+    (hraw : ∀ i, (∫ ω, |X i ω|^(1+ε) ∂μ) ≤ u) :
+    μ.real {ω | 4*u^(1/(1+ε))*(L/n)^(ε/(1+ε)) ≤
+      mean - (∑ i ∈ Finset.range n,
+        truncate (sourceTruncationThreshold ε u (L) i) (X i ω))/n}
+      ≤ Real.exp (-(5/4 : ℝ)*L) := by
+  have h := source_truncated_mean_upper_tail_log_sharp μ (fun i ω => -X i ω) ε u L (-mean) n hn
+    (fun i => (hXm i).neg) (hi.comp (fun _ x => -x) (fun _ => measurable_neg))
+    hε0 hε hu hL (fun i => (hX i).neg)
     (fun i => by rw [integral_neg, hmean i])
     (fun i => by simpa only [abs_neg] using hm i)
     (fun i => by simpa only [abs_neg] using hraw i)
