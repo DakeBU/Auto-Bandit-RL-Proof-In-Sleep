@@ -3,6 +3,11 @@ import json
 from html.parser import HTMLParser
 from pathlib import Path
 
+try:
+    from .book_registry import topic_formalization_nodes
+except ImportError:
+    from book_registry import topic_formalization_nodes
+
 
 class Anchors(HTMLParser):
     def __init__(self):
@@ -83,8 +88,16 @@ def check_books(output):
             expected = {"declaration:" + ref["name"] for ref in mapping["declarations"]}
             if set(setting.get("node_ids", [])) != expected or setting.get("formalization") != mapping:
                 errors.append(f"topic source mapping differs from canonical registry: {topic['id']}")
-            if setting.get("status") != "mapped-review-pending" or mapping.get("semantic_status") != "review-pending":
+            reviewed = mapping.get("semantic_status") == "accepted-with-explicit-delta"
+            expected_status = "mapped-reviewed-partial" if reviewed else "mapped-review-pending"
+            try:
+                topic_formalization_nodes(topic, nodes)
+            except (ValueError, KeyError, OSError) as error:
+                errors.append(f"invalid topic review evidence: {topic['id']}: {error}")
+            if setting.get("status") != expected_status:
                 errors.append(f"topic mapping promotes unreviewed source acceptance: {topic['id']}")
+            if reviewed and "topic incomplete" not in source:
+                errors.append(f"reviewed mapping omits incomplete topic boundary: {topic['id']}")
             if 'id="formalization"' not in source or mapping["source"]["sha256"] not in source:
                 errors.append(f"topic source provenance is absent from rendered page: {topic['id']}")
             for ref in mapping["declarations"]:
