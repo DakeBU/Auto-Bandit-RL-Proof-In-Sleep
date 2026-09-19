@@ -94,8 +94,7 @@ composition, not an efficiency experiment or a new conceptual functor.
 
 The old conservative radius8/time^-4 regret theorem remains separate. The new
 result preserves the source algorithm and changes its guarantee explicitly.
-The finite counterexample, remaining source transitive audits, clipping-transfer
-acceptance, topic mappings and all-ten ICLR evidence are still required.
+The finite counterexample, remaining source transitive audits, topic mappings and all-ten ICLR evidence are still required.
 
 ## Exact Lean endpoint and proof
 

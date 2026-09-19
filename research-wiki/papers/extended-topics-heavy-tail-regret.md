@@ -146,6 +146,5 @@ remain in maintenance. The reviewed source's Lean/Tests/configuration trees are
 identical to the merged baseline that passed root, Tests, 434 Python tests
 (7 skipped), local site build and check. The review itself changes no Lean.
 
-Literal-source constants, full recent-source audits, clipping-transfer semantic
-acceptance, shared topic mapping and all-topic ICLR evidence remain open. No
+Literal-source constants, full recent-source audits, shared topic mapping and all-topic ICLR evidence remain open. No
 whole-topic completion, merge or deployment follows from this endpoint review.
