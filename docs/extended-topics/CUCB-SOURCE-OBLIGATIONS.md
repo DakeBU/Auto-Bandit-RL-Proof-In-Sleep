@@ -56,3 +56,25 @@ Functor Hypergraph have no change; this document updates the source-obligation
 map only. No canonical manuscript, anonymous artifact, main branch or live
 site is updated. Whole-topic completion remains false, and the all-ten ICLR
 evaluation and final common gate remain mandatory.
+
+
+## Independent acceptance checkpoint (2026-09-20)
+
+All 44 files have now undergone source-blind reconstruction and independent
+full-chain source comparison; the analysis repair has a separate mathematical
+review. The verdict is accepted-with-explicit-delta for CUCB-CONTRACT.md, bound
+in `runs/extended-topics-20260919/cucb-semantic-review.json`. Earlier pending
+wording above describes packet preparation.
+
+The accepted model requires observed-marginal compatibility, a measurable fresh
+oracle, inverse range on the needed positive-gap interval, distinct selected
+subsets and nonempty possible-trigger sets. It does not cover unrestricted
+outcome-dependent censoring or the paper's parameterized duplicate-subset
+application extension. Theorem 2 uses the global cutoff proof; the separately
+proved finite-concavity obligation is not its actual proof dependency.
+
+Both full endpoint formulas and their constants are preserved, while the
+normalized analysis counters and probability/counting arguments are explicit
+repairs. The learner is unchanged. Recent-source review, final mapping/reader
+acceptance, shared validation and ICLR evidence remain open; the topic is not
+complete. No fresh full project or site gate is implied by semantic acceptance.
