@@ -2205,7 +2205,7 @@
       "id": "multi-agent",
       "title": "Multi-agent bandits",
       "kind": "setting",
-      "summary": "Reviewed actual collision coordination, statewise fixation hazard, marginal survival and finite expected unfixed occupation<=4n². Unknown-N exploration and full regret remain open; topic incomplete.",
+      "summary": "Reviewed actual static common-set coordination reaches real expected mean deficit<=8n^2; learned common set, unknown-N exploration and full regret remain open.",
       "tags": [
         "communication",
         "collisions"
@@ -2215,7 +2215,7 @@
       "status": "source-audit-pending",
       "formalization": {
         "schema_version": 1,
-        "title": "Actual static coordination and finite expected unfixed occupation",
+        "title": "Actual static coordination: occupation and real expected mean regret",
         "semantic_status": "accepted-with-explicit-delta",
         "topic_complete": false,
         "source": {
@@ -2225,20 +2225,25 @@
           "url": "https://proceedings.mlr.press/v48/rosenski16.pdf",
           "sha256": "c56474f0c3e689c1819b11e2bca4d3e5dcaef6eddfd0173bb55ff6a84f11d99d"
         },
-        "source_commit": "4e79ff440beafd3e3e08e93416706044e34a2f3e",
-        "scope": "Static coordination component with actual local collision-bit update, finite joint law, fixed-arm invariants and total expected unfixed occupation<=4n² over every finite prefix. No full unknown-N MC regret result.",
+        "source_commit": "0b853ce17188070a8b720ab24ce911b18941dca7",
+        "scope": "Actual local coordination kernel, derived1/(4n) hazard, occupation<=4n^2 and actual2U comparator charge yield finite real expected common-set mean deficit<=8n^2. No full unknown-N learner or exploration conditioning.",
         "qualifications": [
           "Candidate sets are local-stage inputs. The quantitative endpoint assumes a common nonempty set of cardinality n; actual exploration must produce it later.",
           "Finite-time marginals and one-step collision feedback are constructed. No full observable-history or history-conditioned path-law theorem is claimed.",
           "The conservative static1/(4n) hazard and finite geometric sum are derived, without independent waiting times or a supplied fixation bound.",
-          "Total occupation counts unfixed players before each transition, including the initial state. It is not total completion time or pseudo-regret; the2U comparator charge remains open.",
-          "Six public-root component canaries cover collisions, successful draws, n=1, a specific1/4 event and all-horizon occupation<=16. They are not the required noisy full-learner canary.",
+          "Occupation counts before each transition, including the initial state. The new actual2U deficit charge and exact supported real-expectation identity give coordination mean deficit<=8n^2; this is not total completion time.",
+          "The comparator is the supplied common n-arm set S, not automatically the global top-n set. Means are in[0,1]; reward laws, learned optimality, exploration conditioning and realized-reward identification remain separate obligations.",
+          "Ten public-root component canaries cover occupation and regret. The oneFixed two-player collision diagnostic is invariant-compatible but unreachable from the two-player all-unfixed common-set law; its separate expected-bound canary starts all-unfixed. No full-learner canary yet.",
           "Recent-source comparison, complete exploration/regret chain and all-topic ICLR evidence remain open. No topic completion, merge or deployment."
         ],
         "review_receipts": [
           {
             "path": "runs/extended-topics-20260920/multi-agent-occupation-review.json",
             "sha256": "bf0ce4bc440a3efce02d8dc013f8d02081f8603de48ec28f4dc91c3e627920a0"
+          },
+          {
+            "path": "runs/extended-topics-20260920/multi-agent-regret-review.json",
+            "sha256": "618ab5fa065cc5696f8eb2d1c7e9a8a7a9027faf4f80ca3f983c3c26f6120eb3"
           }
         ],
         "declarations": [
@@ -2619,6 +2624,139 @@
             "role": "endpoint",
             "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
             "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.fixedPlayers",
+            "statement_sha256": "9f2acb3484fe69528bdef51e0aa218e26c4ba31b5c2f261c450306a68ea85541",
+            "role": "model",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 actual coordination charge; common-S interface and explicit8n^2 numerical route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-regret-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.hitFixed",
+            "statement_sha256": "ca5fed5c9923b023f78f82b5ef80d8fa94d32686838dcc6b61b92616b913b97a",
+            "role": "model",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 actual coordination charge; common-S interface and explicit8n^2 numerical route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-regret-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.safeFixed",
+            "statement_sha256": "88c14400457b4f119c6cc02ac624f5a1b6209617d131ce5fad320c8e4245e433",
+            "role": "model",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 actual coordination charge; common-S interface and explicit8n^2 numerical route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-regret-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.fixed_action_injective",
+            "statement_sha256": "db0b09ed5d940ee40f0c4af37b5b9005f6cfd222d43728d7d3e57a009af000b5",
+            "role": "producer",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 actual coordination charge; common-S interface and explicit8n^2 numerical route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-regret-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.hitFixed_partner",
+            "statement_sha256": "1f2e57d3ecfaf348ce476a6ca64f04089c59694bc0012cfcc0769834525d0944",
+            "role": "producer",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 actual coordination charge; common-S interface and explicit8n^2 numerical route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-regret-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.hitFixed_card_le",
+            "statement_sha256": "af9f813577ecbf46ca40f80be6f08aa51520bfd72106425c19711d90cadd1c43",
+            "role": "producer",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 actual coordination charge; common-S interface and explicit8n^2 numerical route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-regret-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.safeFixed_count",
+            "statement_sha256": "d3283894986cb0a0ecfdef151b51495bff88e7b0c11c15ffb178436e549f8124",
+            "role": "producer",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 actual coordination charge; common-S interface and explicit8n^2 numerical route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-regret-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.roundMeanReward",
+            "statement_sha256": "f907291cc15cd6e6f192cc749086d83e2c99eb5559b14bbb72671a6511c5297c",
+            "role": "model",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 actual coordination charge; common-S interface and explicit8n^2 numerical route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-regret-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.roundPseudoRegret",
+            "statement_sha256": "1bf407cba237fd1e0979d39bc82eb428407adc8def1320560232bb5b612c585d",
+            "role": "model",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 actual coordination charge; common-S interface and explicit8n^2 numerical route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-regret-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.safeFixed_mem",
+            "statement_sha256": "e5e970e09597f9b173bac54ac18e1f2af5f84cc1000309f0035fe2d70ac506b7",
+            "role": "producer",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 actual coordination charge; common-S interface and explicit8n^2 numerical route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-regret-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.safeFixed_arms_subset",
+            "statement_sha256": "a950ae1f808383614c1f1622a0c4d019dd538e73afa247721cff37bba070fd83",
+            "role": "producer",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 actual coordination charge; common-S interface and explicit8n^2 numerical route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-regret-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.safeFixed_reward_le",
+            "statement_sha256": "a0bfe378d029cd7c3fc46b5ac5917fa5ecd9da303612693f2b3b25ddd4679474",
+            "role": "producer",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 actual coordination charge; common-S interface and explicit8n^2 numerical route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-regret-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.roundPseudoRegret_le_twice_unfixed",
+            "statement_sha256": "179230824fdcf619d28dd2a095a19d747703f716431d7436c9019c769832582e",
+            "role": "producer",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 actual coordination charge; common-S interface and explicit8n^2 numerical route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-regret-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.roundPseudoRegret_nonneg",
+            "statement_sha256": "b50219b1847f35d26ab01cfff521571f1d50a55710b2245dc1f06b0c54badb76",
+            "role": "producer",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 actual coordination charge; common-S interface and explicit8n^2 numerical route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-regret-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.expected_round_charge",
+            "statement_sha256": "0f9a13c51400005fb0fd37c4300591ff4758cc13cf92430d64580ee43e7a4e03",
+            "role": "producer",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 actual coordination charge; common-S interface and explicit8n^2 numerical route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-regret-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.expectedCoordinationRegret",
+            "statement_sha256": "074d7c7bf2f826206f3346ee98250c61370a39cd22f48ce500810ec3370868f6",
+            "role": "model",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 actual coordination charge; common-S interface and explicit8n^2 numerical route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-regret-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.expectedCoordinationRegret_le",
+            "statement_sha256": "34ebae6fc73ee4fb92608d5f40525492115011a69c25856c83a7c7240c96e867",
+            "role": "endpoint",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 actual coordination charge; common-S interface and explicit8n^2 numerical route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-regret-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.expectedCoordinationRegret_toReal",
+            "statement_sha256": "15ab464b0b7f80ab05940927542bbc9ad07663761a677e6db39fa7d14535d4cd",
+            "role": "producer",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 actual coordination charge; common-S interface and explicit8n^2 numerical route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-regret-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.expectedCoordinationRegret_real_le",
+            "statement_sha256": "7b1b0fbf8fde4d514eaafd503df19242d3fc11be45cda483a2b25fc6c9dd3403",
+            "role": "endpoint",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 actual coordination charge; common-S interface and explicit8n^2 numerical route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-regret-review.json"
           }
         ],
         "mathematical_reader": [
@@ -2626,7 +2764,9 @@
           "If the common candidate set has n arms and player i is unfixed, at most n-1 fixed labels are occupied. Cardinality produces an unused arm. A specific isolated-draw event yields actual fixation probability at least(1/n)((n-1)/n)^(n-1).",
           "For n>=2, m=n-1 and x=m/(m+1) satisfy m log x>=-1 by1-1/x<=log x. Thus x^m>=exp(-1)>=1/4; n=1 is handled directly. This proves the actual statewise hazard1/(4n).",
           "Fixed players never return to unfixed. The actual PMF bind recursion gives Pr(i unfixed at t)<=(1-1/(4n))^t. Finite geometric summation yields sum_(t<T)Pr(i unfixed)<=4n.",
-          "For U(s)=number of unfixed players, finite sum interchange proves sum_s p_t(s)U(s)=sum_i Pr(i unfixed). Summing gives total finite expected occupation<=4n². No independence of players waiting times, expected completion time, or full regret statement is inferred."
+          "For U(s)=number of unfixed players, finite sum interchange proves sum_s p_t(s)U(s)=sum_i Pr(i unfixed). Summing gives total finite expected occupation<=4n². No independence of players waiting times, expected completion time, or full regret statement is inferred.",
+          "The actual real deficit is sum of means over S minus the sum of means of collision-free played actions. A fixed player hit by a collision must be hit by an unfixed player. Choosing a partner gives an injection, because two fixed players cannot share an arm. Thus at most U fixed players are hit, and at most2U reference arms are missing from successful fixed actions. Means in[0,1] give the actual per-round deficit<=2U.",
+          "All successful actions are distinct and, on the actual state/draw support, belong to S. Their sum is at most the S comparator, proving nonnegative supported deficit. Consequently the finite ENNReal expectation equals the ordinary real PMF-weighted deficit sum after toReal; no negative supported values are discarded. Summing the2U charge against the same constructed state/draw law and consuming occupation<=4n^2 gives actual finite expected coordination mean deficit<=8n^2. The full learner must still produce the true top-n S and the exploration-conditioned law."
         ]
       }
     },

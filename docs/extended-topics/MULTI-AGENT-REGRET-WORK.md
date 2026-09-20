@@ -28,3 +28,13 @@ ENNReal ofReal adapter must establish nonnegative regret on supported draws.
 Owner: scratch runs/extended-topics-20260920/MusicalChairsRegretPrototype.lean;
 planned production Algorithms/MusicalChairsCoordinationRegret.lean after
 independent blind/source review. Full learner and ICLR obligations remain open.
+
+Promotion checkpoint: exact core moved into
+BanditRLProof/Algorithms/MusicalChairsCoordinationRegret.lean with four
+public-root Tests canaries and exact folded reader. Independent blind decoder
+and source reviewer accepted the component with explicit scope delta and
+verified exact-body promotion. Code commit:
+0b853ce17188070a8b720ab24ce911b18941dca7. The oneFixed diagnostic is not reachable
+from the two-player all-unfixed common-{0,1} law; the expected canary separately
+uses the actual initial law. Fresh integration gates are recorded separately
+in runs/extended-topics-20260920/multi-agent-regret-validation.json.

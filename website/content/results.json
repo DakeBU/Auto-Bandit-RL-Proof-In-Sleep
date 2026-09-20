@@ -2465,7 +2465,7 @@
       "title": "Static Musical Chairs actual coordination and finite expected occupation",
       "chapter": "ucb",
       "status": "compiled",
-      "informal": "Actual finite coordination law, local collision-bit update, fixed-arm invariants, derived1/(4n) hazard and marginal survival give finite expected unfixed occupation<=4n². Candidate correctness is an intermediate input. Exploration,2U regret charge and complete unknown-N MC remain open; topic incomplete.",
+      "informal": "Actual finite coordination law, local collision-bit update, fixed-arm invariants, derived1/(4n) hazard and marginal survival give finite expected unfixed occupation<=4n². Candidate correctness is an intermediate input. The2U charge and coordination mean-regret bound are now separately reviewed; exploration and complete unknown-N MC remain open; topic incomplete.",
       "declarations": [
         "BanditRLProof.MusicalChairs.transition_unfixed_hazard_quarter",
         "BanditRLProof.MusicalChairs.unfixed_survival",
@@ -2478,6 +2478,24 @@
       ],
       "missing": [],
       "evidence": "BanditRLProof/Algorithms/MusicalChairsCoordinationTime.lean; runs/extended-topics-20260920/multi-agent-occupation-review.json; research-wiki/papers/extended-topics-musical-chairs-coordination.md"
+    },
+    {
+      "id": "MULTI-AGENT-STATIC-COORDINATION-REGRET",
+      "title": "Static Musical Chairs actual finite expected coordination mean regret",
+      "chapter": "ucb",
+      "status": "compiled",
+      "informal": "Actual real comparator deficit<=2U and support nonnegativity give finite expected common-set mean regret<=8n^2 through the constructed state/draw law. Exact real expectation conversion avoids positive-part substitution. Common S is supplied, not learned; full unknown-N exploration, top-n correctness and good-event conditioning remain open. Topic incomplete.",
+      "declarations": [
+        "BanditRLProof.MusicalChairs.roundPseudoRegret_le_twice_unfixed",
+        "BanditRLProof.MusicalChairs.expectedCoordinationRegret_real_le"
+      ],
+      "depends_on": [
+        "BanditRLProof.MusicalChairs.expected_unfixed_occupation_le",
+        "BanditRLProof.MusicalChairs.expectedCoordinationRegret_toReal",
+        "BanditRLProof.MusicalChairs.stateLaw_within"
+      ],
+      "missing": [],
+      "evidence": "BanditRLProof/Algorithms/MusicalChairsCoordinationRegret.lean; runs/extended-topics-20260920/multi-agent-regret-review.json; research-wiki/papers/extended-topics-musical-chairs-regret.md"
     }
   ]
 }
