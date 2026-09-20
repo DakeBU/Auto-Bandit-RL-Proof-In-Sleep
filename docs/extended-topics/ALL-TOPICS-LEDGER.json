@@ -783,12 +783,12 @@
         {
           "id": "collision observation law",
           "status": "partial",
-          "note": "Scratch actual action/collision/observation laws, count PGFs/Laplace, arbitrary bounded reward law and exact local mean product-mixture identity compiled and independently accepted; no conditional-history theorem claimed"
+          "note": "Actual action/collision law, count transform, local-feedback identity and fixed-horizon collision-frequency Hoeffding bound compiled/reviewed in scratch; same-law pullback and all-player union proved. No Nhat or conditional-history theorem."
         },
         {
           "id": "exploration/ranking concentration",
           "status": "partial",
-          "note": "Scratch actual simultaneous mean accuracy probability >=1-delta/2 proved at budget16k/eps^2 log(4k^2/delta), arbitrary [0,1] rewards; all-player collision concentration, inverse-log rounding, population recovery, ranking and full good event remain open"
+          "note": "Scratch actual joint mean/collision statistics accuracy probability>=1-delta proved at exact positive ceiling/max explorationLength; collision count concentration/all-player delta/2 now derived from actual iid law. Inverse-log rounding, Nhat recovery, ranking/full source good event remain open."
         },
         {
           "id": "coordination success/time",
@@ -817,14 +817,15 @@
         "runs/extended-topics-20260920/multi-agent-regret-review.json",
         "runs/extended-topics-20260920/multi-agent-regret-validation.json",
         "runs/extended-topics-20260920/multi-agent-exploration-review.json",
-        "runs/extended-topics-20260920/multi-agent-reward-review.json"
+        "runs/extended-topics-20260920/multi-agent-reward-review.json",
+        "runs/extended-topics-20260920/multi-agent-collision-review.json"
       ],
       "current_blockers": [
-        "Population recovery, ranking, full good event, conditional continuation and complete learner/regret assembly remain open",
-        "Scratch exploration/reward layers await shared extraction and public integration gates",
+        "Inverse-log rounding/Nhat recovery, ranking, full source good event, conditional continuation and complete learner/regret remain open",
+        "Scratch exploration/reward/collision layers await shared extraction and public integration gates",
         "Recent full-proof comparison and full-topic ICLR evidence open"
       ],
-      "next_action": "Prove actual collision-count concentration and all-player failure allocation, then inverse-log rounding/Nhat recovery and empirical ranking; assemble full good event and causal continuation. Extract accepted scratch layers into shared modules with public gates.",
+      "next_action": "Prove reviewed gamma=2/5 inverse-log rounding margin and implement actual total local Nhat with fallback/clamp; prove Nhat=N from collision accuracy, then empirical ranking/common true top-n set. Assemble source good event/continuation and extract reviewed layers with public gates.",
       "contract": "docs/extended-topics/MULTI-AGENT-CONTRACT.md",
       "proof_route": "docs/extended-topics/MULTI-AGENT-PROOF-ROUTE.md",
       "source_review_receipt": "runs/extended-topics-20260920/multi-agent-source-review.json",
@@ -880,6 +881,14 @@
         "status": "Focused scratch compiled; 46 new named declarations including33 theorems and3 probability instances standard-axiom audited; independent blind/source accepted with explicit delta; not public-root integrated",
         "endpoint": "Actual joint action/arbitrary bounded reward law yields simultaneous strict eps/2 mean accuracy with probability >=1-delta/2 at budget16k/eps^2 log(4k^2/delta)",
         "boundary": "No population recovery, ranking, full good event, conditional continuation or complete learner; continuous canary validates admissibility but its small-horizon bound exceeds1"
+      },
+      "collision_joint_statistics": {
+        "path": "runs/extended-topics-20260920/MusicalChairsCollisionPrototype.lean",
+        "reader": "docs/extended-topics/MULTI-AGENT-COLLISION-PROGRESS.md",
+        "receipt": "runs/extended-topics-20260920/multi-agent-collision-review.json",
+        "status": "Focused scratch compiled;37 new declarations/28 theorems standard-axiom audited; independent blind/source accepted with explicit delta; not public-root integrated",
+        "endpoint": "Actual joint local mean/collision accuracy probability>=1-delta at exact natural ceiling/max exploration duration; actual all-player collision failure<=delta/2",
+        "boundary": "No Nhat, ranking, full source good event, conditional continuation or complete learner; natural duration and both budgets are derived, not supplied."
       }
     },
     {
