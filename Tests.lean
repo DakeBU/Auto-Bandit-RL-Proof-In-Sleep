@@ -97,3 +97,5 @@ import Tests.HeavyTailSourceScheduleCanary
 
 import Tests.HeavyTailSourceRegretCanary
 import Tests.HeavyTailSourceCounterexampleCanary
+
+import Tests.HeavyTailRegretCapCanary
