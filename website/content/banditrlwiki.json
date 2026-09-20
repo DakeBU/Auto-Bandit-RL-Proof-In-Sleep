@@ -1836,7 +1836,150 @@
       ],
       "related_cases": [],
       "related_chapters": [],
-      "status": "source-audit-pending"
+      "status": "source-audit-pending",
+      "formalization": {
+        "schema_version": 1,
+        "title": "Reviewed common-alphabet causal sampling and actual expected regret",
+        "semantic_status": "accepted-with-explicit-delta",
+        "topic_complete": false,
+        "source": {
+          "title": "Causal Bandits: Learning Good Interventions via Causal Inference",
+          "authors": "F. Lattimore, T. Lattimore and M. D. Reid",
+          "year": 2016,
+          "url": "https://proceedings.neurips.cc/paper_files/paper/2016/file/b4288d9c0ec0a1841b3b3728321e7088-Paper.pdf",
+          "sha256": "99aa9427e02e31883510dfcd0b11ba4f45097dc30dd98a094cbf13068f93b747"
+        },
+        "source_commit": "6a7c1d19de9ab9fdc92d18444f4b6fd7a9fa5f99",
+        "scope": "Common finite alphabet actual-law expected regret; concrete noisy joint, means and uniform instance only. Frozen topic and canary remain partial.",
+        "qualifications": [
+          "General finite common alphabet V with a binary payoff readout. Distinct node-type transport is unproved.",
+          "Coverage is explicit; zero allocation weights are allowed only when Q covers every parent support.",
+          "Unchanged source truncation tuning and fixed-order ties; coefficient and failure direction repairs disclosed.",
+          "Uniform actual threshold uses m, with K substituted only in RHS. Optimal allocation minimizes cost, not a proved ordering of actual regrets.",
+          "Concrete noisy test proves joint factorization, three true means and uniform all-horizon bound; remaining concentrated and T=1 diagnostics open.",
+          "Parallel allocation bridge, remaining source audit and ICLR evidence remain required. No topic completion."
+        ],
+        "review_receipts": [
+          {
+            "path": "runs/extended-topics-20260919/causal-sampling-review.json",
+            "sha256": "03caccaa6a4ceb29e726a9283580530b609485092c3fa24f163dc996d2b41812"
+          }
+        ],
+        "declarations": [
+          {
+            "name": "BanditRLProof.Causal.GraphModel.roundLaw",
+            "statement_sha256": "8ecf39ef4e790aaa4d924af1c78a33471d050744afcfa6933e4990efcbafd3d7",
+            "role": "algorithm",
+            "source_locator": "Algorithm2/Theorem3 repaired common-alphabet chain; Proposition4 for uniform RHS",
+            "review_receipt": "runs/extended-topics-20260919/causal-sampling-review.json"
+          },
+          {
+            "name": "BanditRLProof.Causal.GraphModel.sampleLaw",
+            "statement_sha256": "11788e679e216209361afac1035680d0646dc0389b4bccdfc13ce7cf883e6255",
+            "role": "algorithm",
+            "source_locator": "Algorithm2/Theorem3 repaired common-alphabet chain; Proposition4 for uniform RHS",
+            "review_receipt": "runs/extended-topics-20260919/causal-sampling-review.json"
+          },
+          {
+            "name": "BanditRLProof.Causal.GraphModel.sampleWeightedBit",
+            "statement_sha256": "28ed6643bdb371d6d5c0364575baa3b7b23bddb8eeff798a342b5ce0423bf971",
+            "role": "algorithm",
+            "source_locator": "Algorithm2/Theorem3 repaired common-alphabet chain; Proposition4 for uniform RHS",
+            "review_receipt": "runs/extended-topics-20260919/causal-sampling-review.json"
+          },
+          {
+            "name": "BanditRLProof.Causal.GraphModel.sampleEstimate",
+            "statement_sha256": "e28bb0365d1065686d4ddd875fb52655f7e88c93413267f299b04c7a2a9cc9c1",
+            "role": "algorithm",
+            "source_locator": "Algorithm2/Theorem3 repaired common-alphabet chain; Proposition4 for uniform RHS",
+            "review_receipt": "runs/extended-topics-20260919/causal-sampling-review.json"
+          },
+          {
+            "name": "BanditRLProof.Causal.GraphModel.sampleRecommendation",
+            "statement_sha256": "9686a49ab5c77a7a46d4c0615e1ada4fa7819c0712cf59a703c8a72976b4bf3e",
+            "role": "algorithm",
+            "source_locator": "Algorithm2/Theorem3 repaired common-alphabet chain; Proposition4 for uniform RHS",
+            "review_receipt": "runs/extended-topics-20260919/causal-sampling-review.json"
+          },
+          {
+            "name": "BanditRLProof.Causal.GraphModel.rewardMean_eq_integral",
+            "statement_sha256": "5b890b0c97bb6ae7bdb99bca57138e0e5695da2634b3a9e2d8e237c257e2dcf5",
+            "role": "producer",
+            "source_locator": "Algorithm2/Theorem3 repaired common-alphabet chain; Proposition4 for uniform RHS",
+            "review_receipt": "runs/extended-topics-20260919/causal-sampling-review.json"
+          },
+          {
+            "name": "BanditRLProof.Causal.GraphModel.sampleEstimate_source_confidence",
+            "statement_sha256": "30ec291f38c08cc4d07da94e6eec5ae09cf7009a447b0d4dd7afc2c329830141",
+            "role": "producer",
+            "source_locator": "Algorithm2/Theorem3 repaired common-alphabet chain; Proposition4 for uniform RHS",
+            "review_receipt": "runs/extended-topics-20260919/causal-sampling-review.json"
+          },
+          {
+            "name": "BanditRLProof.Causal.GraphModel.expected_simpleRegret_source_bound",
+            "statement_sha256": "560b3d7b8bc1ac5db07f6a77989b69cd8fb8351f2dccafff5ff3fdeda76272d3",
+            "role": "endpoint",
+            "source_locator": "Algorithm2/Theorem3 repaired common-alphabet chain; Proposition4 for uniform RHS",
+            "review_receipt": "runs/extended-topics-20260919/causal-sampling-review.json"
+          },
+          {
+            "name": "BanditRLProof.Causal.GraphModel.expected_simpleRegret_bounds",
+            "statement_sha256": "81a4a4fbeef0d467ffda3a3a5cdd4f1b772224903683115cf5e7bbce214cdb41",
+            "role": "endpoint",
+            "source_locator": "Algorithm2/Theorem3 repaired common-alphabet chain; Proposition4 for uniform RHS",
+            "review_receipt": "runs/extended-topics-20260919/causal-sampling-review.json"
+          },
+          {
+            "name": "BanditRLProof.Causal.GraphModel.expected_simpleRegret_explicit_rate",
+            "statement_sha256": "3ae5346500a7c325eb697aca087bdce7aeaee6c8ed7f152e19eecf2ea9579d38",
+            "role": "endpoint",
+            "source_locator": "Algorithm2/Theorem3 repaired common-alphabet chain; Proposition4 for uniform RHS",
+            "review_receipt": "runs/extended-topics-20260919/causal-sampling-review.json"
+          },
+          {
+            "name": "BanditRLProof.Causal.GraphModel.expected_simpleRegret_uniform",
+            "statement_sha256": "cd8a789cfe03586894ba587b9059341c82fb1ce34afc39633e027dd6aa04c4f8",
+            "role": "endpoint",
+            "source_locator": "Algorithm2/Theorem3 repaired common-alphabet chain; Proposition4 for uniform RHS",
+            "review_receipt": "runs/extended-topics-20260919/causal-sampling-review.json"
+          },
+          {
+            "name": "BanditRLProof.Causal.GraphModel.expected_simpleRegret_optimal",
+            "statement_sha256": "1abf82d8dfd86e29a1a7bc8fddf98a0a897b9348edd5c554a672871e3bf9020e",
+            "role": "endpoint",
+            "source_locator": "Algorithm2/Theorem3 repaired common-alphabet chain; Proposition4 for uniform RHS",
+            "review_receipt": "runs/extended-topics-20260919/causal-sampling-review.json"
+          },
+          {
+            "name": "Tests.CausalNoisyGraphCanary.actual_joint_factorization",
+            "statement_sha256": "c3d96ca26f5ba3d20bfb3e93f1b7bd31bab9b73b7586f173ec9d8b2b9fd7ca4f",
+            "role": "canary",
+            "source_locator": "Frozen noisy graph partial canary: joint, true means, uniform all-horizon only",
+            "review_receipt": "runs/extended-topics-20260919/causal-sampling-review.json"
+          },
+          {
+            "name": "Tests.CausalNoisyGraphCanary.reward_means",
+            "statement_sha256": "001abea73b6b19ad7cf38d7e8d3201fc3f3fc674bd0a6d3b18a2b2e6590bc029",
+            "role": "canary",
+            "source_locator": "Frozen noisy graph partial canary: joint, true means, uniform all-horizon only",
+            "review_receipt": "runs/extended-topics-20260919/causal-sampling-review.json"
+          },
+          {
+            "name": "Tests.CausalNoisyGraphCanary.uniform_actual_rate",
+            "statement_sha256": "f02779e03297213eb29d50e3092cd6c51920beea51d2a93968f42e7f2dd81d23",
+            "role": "canary",
+            "source_locator": "Frozen noisy graph partial canary: joint, true means, uniform all-horizon only",
+            "review_receipt": "runs/extended-topics-20260919/causal-sampling-review.json"
+          }
+        ],
+        "mathematical_reader": [
+          "A round samples an action from eta and a full assignment from its actual intervened DAG law. The finite product law and reward projection derive independent paired observations; no supplied tail or confidence premise.",
+          "The observable estimator averages Y(P_a/Q)1{P_a/Q<=B}; it uses known parent laws and observed bits. Its mean differs from true intervention reward by nonnegative truncation bias at most m/B. The true reward mean is proved equal to the intervention integral.",
+          "Bounded centered MGF at tilt 1/(2B), with B=sqrt(mT/L), L=log(2TK), gives simultaneous confidence radius sqrt(2mL/T)+3BL/T with failure at most 1/T.",
+          "The least empirical maximizer satisfies regret <=2epsilon+m/B on the good event and <=1 everywhere. Integration gives (2sqrt(2)+7)sqrt(mL/T)+1/T and the cap 1. Since L>=1/2, explicit constant 3sqrt(2)+7 suffices.",
+          "Existing attained optimal-design and uniform-coverage theorems instantiate the same actual learner. The nondegenerate noisy graph has true means 1/2, 3/10 and 7/10. Remaining representation, parallel-design and exact diagnostic obligations stay open."
+        ]
+      }
     },
     {
       "id": "multi-agent",
