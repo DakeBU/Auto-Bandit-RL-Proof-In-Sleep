@@ -4567,9 +4567,16 @@ def build_lean_graph(
         if declaration_node:
             add_edge(declaration_node, laboratory_group, "audited in")
 
+    # Shard paths are internal lookup keys, not declaration permalinks. Long
+    # module slugs needlessly inflate the eagerly loaded search index.
     module_shards = {
-        module["name"]: f"modules/{module['slug']}.json" for module in modules
+        module["name"]: "modules/"
+        + hashlib.sha256(module["name"].encode("utf-8")).hexdigest()[:16]
+        + ".json"
+        for module in modules
     }
+    if len(set(module_shards.values())) != len(module_shards):
+        raise ValueError("Lean graph module shard hash collision")
     node_shards: dict[str, str] = {
         root_id: "overview.json",
         book_group: "views/book.json",

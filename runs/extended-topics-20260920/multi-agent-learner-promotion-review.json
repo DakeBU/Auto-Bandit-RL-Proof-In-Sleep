@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "promotion-semantics-accepted-joint-gates-pending",
+  "status": "accepted-local-static-learner-production",
   "semantic_verdict": "accepted-with-explicit-delta",
   "topic_complete": false,
   "source": {
@@ -19,12 +19,12 @@
     "BanditRLProof/Algorithms/MusicalChairsExploration.lean": "2f4233bcfc1bbe90fd64fb2560ce72897ed1adb8eb0f4f5791f86ff1f670deb4",
     "BanditRLProof/Algorithms/MusicalChairsReward.lean": "c276a3c950a0bb7d8339dc27506c55aadfd978bc0860f77aae4555173572b46f",
     "BanditRLProof/Algorithms/MusicalChairsCollision.lean": "aa53d62f3cefb039774782a096d56c1ea5411dcdbc4cc9d943340dc43ac232fa",
-    "BanditRLProof/Algorithms/MusicalChairsPopulation.lean": "d3916b5a9d72c3e0dbb011c1970f1ab525938aacde29b38a4d57c37ef048c548",
-    "BanditRLProof/Algorithms/MusicalChairsRanking.lean": "79770debf652fc1dc43f6bda429d2cab990ffd895dec10ca8949c6450e2fbdfd",
+    "BanditRLProof/Algorithms/MusicalChairsPopulation.lean": "2a0cad0ca40e919a03f0d0abc474dcc2e88dc4e7a69749d146d8a7cca0b3831d",
+    "BanditRLProof/Algorithms/MusicalChairsRanking.lean": "a12319d5b8664e55056d9c2952f8cae7ff5bf891efe0750a637316b1251079b4",
     "BanditRLProof/Algorithms/MusicalChairsHandoff.lean": "44f80b85259eb21a07868bad54afc2aa99f4fb1a570b140bac524734fd1c56fa",
     "BanditRLProof/Algorithms/MusicalChairsMarginal.lean": "67c360ac459574e2306fec5d3cb03c91c841b0ca4238fce8d04d6366805377f8",
     "BanditRLProof/Algorithms/MusicalChairsLearnerRegret.lean": "53945af87ac3eabc95946a1bfdf4b2c868c16237ae7a42eec3ae36f61c60f4cd",
-    "BanditRLProof/Algorithms/MusicalChairsRealized.lean": "a34fed734169b72642a5076cb9c2fad2749963625efca9bd242a12d0cfb3bd3e",
+    "BanditRLProof/Algorithms/MusicalChairsRealized.lean": "3f3dc7356f18eb7603ff328ae5ecb4a1162981df8b0271186c1464bb2833a4eb",
     "Tests/MusicalChairsLearnerCanary.lean": "1b73db7b658b121d7fa6d5dd8d1dba7a0902a16134396a2a85425fc12162d446"
   },
   "root_hashes": {
@@ -33,13 +33,13 @@
   },
   "extraction": {
     "path": "runs/extended-topics-20260920/multi-agent-extraction.json",
-    "sha256": "4803de6abb09b1da8414922a4e4cdb8a3e892b3cc31196ae77aad51b10da40db",
+    "sha256": "87428a5cc84280cbee0f3b32393131ed68f5bda2d662e54c615f9d94acc005db",
     "generator": "runs/extended-topics-20260920/promote_musical_chairs.py",
-    "generator_sha256": "800b1610ebdf307b76b72ba17b8547a59acccc9d73dca5a0025f174de4e9f34f"
+    "generator_sha256": "62c1ca5aa726544dea332330e8ad5ebb892d8d3e2f9f291d748ec802dcdb9ba4"
   },
   "reader": {
     "path": "research-wiki/papers/extended-topics-musical-chairs-learner.md",
-    "sha256": "7a37470a798cc2ada293ad111769bf3a2c66347ac840da3f4ecccb12c6fcfc30"
+    "sha256": "0e1f4031aace6a1407747d01cb15be505ea0096a7723dc0835e2219879333e97"
   },
   "declarations": [
     "BanditRLProof.FinitePMF.iid",
@@ -463,19 +463,46 @@
   "review_artifacts": {
     "learner-promotion-blind-v1.md": {
       "path": "E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\learner-promotion-blind-v1.md",
-      "sha256": "c7dea8e8b5af2453841ef3435fe8524e4a240dce6c68acbf1056a92504aaaebb"
+      "sha256": "4060c3271fb197ebcc7aa5832f8a18c0bf0dd60d45b5cb29917173a29a900893"
     },
     "learner-promotion-source-v1.md": {
       "path": "E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\learner-promotion-source-v1.md",
-      "sha256": "57fd18b3da1d11bcdaf11116ec1ac891ae1614652cb663a7f1b450ea53c058ae"
+      "sha256": "fdbd1d1c544a7226316d89a83600daad86e600e5868bfd908fac35701a738a24"
+    },
+    "learner-publication-review-v1.md": {
+      "path": "E:/ABRL/maintenance/extended-topics-20260920-multi-agent/learner-publication-review-v1.md",
+      "sha256": "fe8b174824242999949d1243faca51bc24ec137be2ed4873d7dd5f87e1c8a37f"
     }
   },
   "verification": {
     "focused": "Passed nine-module chain3474 jobs",
-    "shared_root_Tests": "Passed combined lake build BanditRLProof Tests,9151 jobs; terminal exit0",
-    "compiled_environment_axioms": "Running exact410-name audit; not yet accepted",
-    "full_harness": "Pending",
-    "site_registry_books": "Pending"
+    "shared_root_Tests": "Passed combined lake build BanditRLProof Tests after EOF normalization;9151 jobs; terminal exit0; hash-bound final log",
+    "compiled_environment_axioms": "Passed410-name public-root/test audit, standard axioms only; EOF-only normalization afterwards independently checked as statement/proof/instance identical",
+    "full_harness": "Passed python tools/bandit.py check after site shard repair;437 tests,7 skipped;exit0",
+    "site_registry_books": "Passed verified site build, check_site.py and check_books.py;371 canonical statement/module/anchor checks;all11347 graph nodes retained"
   },
-  "boundary": "Production semantics/reader accepted, joint publication gates pending. All-player budget repair explicit; conditional pseudo versus unconditional realized distinction retained. Recent-source comparison and ICLR evidence remain open; no main merge/deploy."
+  "boundary": "Selected static learner production and local joint gates accepted with explicit source repair. Recent-source comparison and ICLR evidence remain open; topic incomplete; no main merge/deploy.",
+  "axiom_audit": {
+    "log": "E:/ABRL/maintenance/extended-topics-20260920-multi-agent/learner-production-axioms.log",
+    "sha256": "a47551e9211e403928af339b2a6c5b361f5f51c261af44f096f5dac3b1af5529",
+    "audited_names": 410,
+    "allowed_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ]
+  },
+  "formatting_delta": "Only terminal blank lines removed from Population/Ranking/Realized; independent statement/proof/instance identity check and final root/Tests pass. Initial untracked-source harness failure resolved by tracking production; full rerun passed.",
+  "code_commit": "3d0265b41717401463ca35b832a87906c17b80e2",
+  "shared_root_Tests_log": {
+    "path": "E:/ABRL/maintenance/extended-topics-20260920-multi-agent/learner-root-tests-final.log",
+    "sha256": "8a3835da664860da07414ae0e578d7442859b56190d6f63888b53edd0e6fb4e4",
+    "exit_code": 0,
+    "jobs": 9151
+  },
+  "full_harness_log": {
+    "path": "E:/ABRL/maintenance/extended-topics-20260920-multi-agent/learner-full-check-published.log",
+    "sha256": "daf981a9bb66522a55faa0177ece7dab2ad933bc73173c04fa3588465f9e7c37",
+    "exit_code": 0
+  }
 }
