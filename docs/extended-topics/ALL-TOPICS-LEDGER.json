@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "program": "ABRL Extended Topics all-ten mandatory program",
-  "goal_status_observed": "active",
+  "goal_status_observed": "paused",
   "goal_thread": "01a0aedf-efda-78c3-9dc1-1f24264a3ba1",
   "scope_amendment_date": "2026-09-17",
   "base_library": "eedcda1db4d84f6bd69ec6ee50e174f6cf4056ac",
@@ -49,6 +49,13 @@
         "path": "docs/extended-topics/ICLR-CAUSAL-CASE.md",
         "review": "accepted-bounded-descriptive-case",
         "receipt": "runs/extended-topics-20260919/causal-case-validation.json",
+        "controlled_evaluation": false
+      },
+      {
+        "topic": "multi-agent",
+        "path": "docs/extended-topics/ICLR-MULTI-AGENT-CASE.md",
+        "review": "accepted-bounded-descriptive-case",
+        "receipt": "runs/extended-topics-20260920/multi-agent-case-validation.json",
         "controlled_evaluation": false
       }
     ]
@@ -782,11 +789,15 @@
         },
         {
           "id": "bound_commit_reuse_transfer_failure_evidence",
-          "status": "pending"
+          "status": "accepted-bounded-descriptive-case",
+          "evidence": "runs/extended-topics-20260920/multi-agent-case-validation.json",
+          "note": "Zero direct outside-case ABRL proof/value references. The 902 cross-module pairs are internal case development, not initial-library reuse."
         },
         {
           "id": "ICLR_body_appendix_and_reproducible_results",
-          "status": "pending"
+          "status": "partial",
+          "evidence": "runs/extended-topics-20260920/multi-agent-case-validation.json",
+          "note": "Descriptive body/appendix draft and independently replayed extraction accepted. All-topic controlled evaluation and manuscript integration remain open."
         },
         {
           "id": "joint multi-player process",
@@ -849,10 +860,9 @@
         "runs/extended-topics-20260920/multi-agent-source-disposition-review.json"
       ],
       "current_blockers": [
-        "Bound-commit descriptive ICLR case and public status synchronization remain open",
-        "All-topic controlled evaluation,manuscript integration and final program acceptance remain open"
+        "All-topic controlled evaluation, manuscript integration and final program acceptance remain open"
       ],
-      "next_action": "Extract compiled direct proof references for all12 MusicalChairs modules and freeze descriptive case evidence; distinguish original-base reuse from development additions; independent evidence/prose review and public status synchronization.",
+      "next_action": "Proceed in listed order to thompson-bayesian source audit and exact actual-posterior algorithm-to-performance contract; retain all-topic evaluation, manuscript and final acceptance obligations.",
       "contract": "docs/extended-topics/MULTI-AGENT-CONTRACT.md",
       "proof_route": "docs/extended-topics/MULTI-AGENT-PROOF-ROUTE.md",
       "source_review_receipt": "runs/extended-topics-20260920/multi-agent-source-review.json",
@@ -992,14 +1002,15 @@
         "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json",
         "validation": "runs/extended-topics-20260920/multi-agent-learner-validation.json",
         "status": "accepted-local-selected-static-scope",
-        "boundary": "Selected static learner production and local joint gates accepted with explicit source repair. Recent-source comparison and ICLR evidence remain open; topic incomplete; no main merge/deploy."
+        "boundary": "Selected static learner production and local joint gates accepted with explicit source repair. Bounded recent-source selection and descriptive case separately accepted. All-topic controlled evaluation, manuscript integration and final acceptance remain open; no main merge/deploy."
       },
       "recent_source_disposition": {
         "summary": "docs/extended-topics/MULTI-AGENT-SOURCE-DISPOSITION.md",
         "receipt": "runs/extended-topics-20260920/multi-agent-source-disposition-review.json",
         "status": "accepted-bounded-source-selection-with-explicit-deltas",
         "synCD_theorem_imported": false
-      }
+      },
+      "descriptive_case_acceptance": "runs/extended-topics-20260920/multi-agent-case-validation.json"
     },
     {
       "id": "thompson-bayesian",
@@ -1551,5 +1562,6 @@
     "source_commit": "ba81a53db30feb485d376e93d65c65d4e1368f1d",
     "canonical_main": "b3201f8da93a39027666a9d102ac0bdb03c57830",
     "validation": "Combined root (9006 jobs), Tests (9099 jobs), full harness (434 tests, 7 skipped), local site build/check passed; runs/extended-topics-20260919/confidence-review-validation.json"
-  }
+  },
+  "goal_status_note": "Goal tool reported paused on 2026-09-20; user requested continued work. This metadata does not change scheduler state."
 }
