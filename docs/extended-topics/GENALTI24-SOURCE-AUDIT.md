@@ -52,8 +52,9 @@ has normalized expected pseudo-regret at most2T, uniformly over positive u
 and admissible instances. A separate compiled Lean prototype derives that cap
 from the actual raw moments. Eq6 necessarily requires a horizon growing with
 the scale ratio; no repaired asymptotic lower bound is accepted. The algorithm
-root, other constants, and external concentration dependencies above remain
-separate unresolved issues. This checkpoint is not whole-paper acceptance.
+root, other constants, and concentration dependencies were separate unresolved
+issues at that checkpoint; later bounded adjudications below address the positive
+algorithm route. This remains distinct from whole-paper acceptance.
 
 The subsequent `genalti-supremum-audit.json` checkpoint adds a compiled EReal
 supremum non-infinity theorem, actual-process image-law membership, and a
@@ -71,3 +72,12 @@ the explicit enlarged-class contract; production integration was subsequently ac
 The [root concentration reconstruction](GENALTI24-ROOT-CONCENTRATION.md) proves Theorem5's constants for the precise intersection of root existence and failure. It supplies root measurability, derives the bounded independent exponential-moment bound, and handles the missing low-population-mass branch. A sparse two-point law with s6 refutes the stronger same-confidence conditional-on-root-existence interpretation; it is not a reachable algorithm-history claim.
 
 The [split-mean reconstruction](GENALTI24-SPLIT-MEAN-CONCENTRATION.md) uses independent n+n observations and a direct uncentered exponential-moment estimate to justify the linear term ML/(3n). Shared root-good accounting gives failure4delta, and converting n to total sample count s=2n preserves the source constant8. The earlier centered-range concern is resolved by this separate proof, not by asserting |Y-EY|<=M. Both results retain explicit event semantics, raw moments and sample multiplicity. The [prefix corollary](GENALTI24-ADAPTIVE-PREFIX-CONCENTRATION.md) transfers these events to measurable adaptive counts in a causal iid paired-stream realization: fixed-arm per-round failure at most4(t-1)/t^3 and at most4 expected exception rounds over a finite horizon. It preserves the extra K cost for an unrestricted selected arm. Empirical-variance index handling, Eq57/counting and full regret remain open. No new Lean result is claimed. Evidence: `runs/extended-topics-20260919/genalti-concentration-audit.json`.
+
+
+## Complete qualified positive-regret reconstruction (2026-09-20)
+
+[The corrected algorithm-to-regret proof](GENALTI24-CORRECTED-REGRET.md) now supplies the remaining positive-route steps as mathematics. A random-pairing exponential-moment proof controls sample variance directly; no unaudited self-bounding theorem is assumed. It retains the source index bonus10, gives a strict upper-index coefficient below22, and explicitly raises22 to the reciprocal gap exponent in the count threshold. The corrected exploration guard uses c log(t^3), c=(1+sqrt2)^2. Exploration counts are bounded by the original iid stream's waiting time for floor(c log(H^3))+1 nonzero observations, preserving the integer crossing and avoiding false independence of selected subsequences.
+
+The resulting expected pseudo-regret bound retains physical paired factor2, ceil of the per-arm learning threshold, a finite bad-round residual, and an explicit odd-final-pull residual. A gap-independent learning term is also derived while retaining the nonzero-mass-dependent exploration residual. It is a complete qualified mathematical proof for the stated corrected causal policy, not the literal printed guard, constants120/46, or a uniform minimax assertion. Independent repair and source reviews are bound in `runs/extended-topics-20260919/genalti-corrected-regret-audit.json`.
+
+This supersedes earlier 'positive index/count/regret unresolved' descriptions for this explicit repair only. The original lower/adaptivity theorems, full-paper acceptance, exact numerical root implementation and a Lean formalization of the corrected policy remain outside acceptance. The frozen representative heavy-tail Lean endpoint remains BCL; this recent-paper adjudication does not replace it or complete the all-topic evaluation.
