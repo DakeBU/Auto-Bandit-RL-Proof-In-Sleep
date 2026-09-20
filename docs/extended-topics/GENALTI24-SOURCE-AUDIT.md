@@ -54,3 +54,8 @@ from the actual raw moments. Eq6 necessarily requires a horizon growing with
 the scale ratio; no repaired asymptotic lower bound is accepted. The algorithm
 root, other constants, and external concentration dependencies above remain
 separate unresolved issues. This checkpoint is not whole-paper acceptance.
+
+The subsequent `genalti-supremum-audit.json` checkpoint adds a compiled EReal
+supremum non-infinity theorem, actual-process image-law membership, and a
+nonempty sharp K2/epsilon1 instance. Independent blind/source reviews accept
+the explicit enlarged-class contract; production integration remains open.

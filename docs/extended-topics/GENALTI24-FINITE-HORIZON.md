@@ -69,3 +69,55 @@ Independent anti-anchored source review also accepts the prototype as this
 generic per-instance cap with explicit generalizations, after reading the
 blind reconstruction. It does not accept a formal source-class/supremum
 obstruction or production integration.
+
+
+## Formal supremum extension (2026-09-20, independently reviewed)
+
+The new consolidated prototype `runs/extended-topics-20260919/GenaltiSupremum.lean`
+extends the previous snapshot. Both are evidence snapshots, not simultaneously
+importable production modules. The earlier snapshot and its receipt are retained
+unchanged; the new file is compiled in the same shared Lake project.
+
+`normalizedValues K epsilon T` is a set of EReal values with witnesses for a
+positive moment scale, an actual Markov reward kernel satisfying integrable raw
+moment bounds, and an actual probability law on infinite action traces. Its
+value is the integral of the existing mean-regret function divided by that
+scale's power. The definition contains no bound or performance premise.
+
+Every member is at most the finite real2T, so the extended-real supremum is
+also at most2T and differs from top. Because this class admits all trace laws,
+it is larger than any fixed causal algorithm's admissible class. Its upper
+bound therefore also bounds that algorithm's values. This is deliberately an
+over-approximation; an equality for the larger class is not a lower bound for
+each fixed algorithm.
+
+`process_value_mem` constructs the missing law adapter. Coordinatewise
+measurable actions form a measurable trace map; its image measure is a
+probability law. `integral_map` identifies the original expected regret with
+the trace-law integral. Thus the original action process's value belongs to
+the set without substituting a policy or changing its distribution.
+
+A concrete witness has two deterministic reward laws at+1 and-1, raw second
+moments1, and the action constantly selecting the negative arm. Its actual
+regret is2T, hence `normalized_sSup_two_eq` proves the aggregate supremum equals
+2T for K2,epsilon1. The T1000 check gives2000. This removes any concern that
+the sharp-slice conclusion depends on an empty class. General nonemptiness
+for arbitrary K and epsilon is not formalized here; the general theorem
+excludes top, while the explicit nonempty witness covers K2,epsilon1.
+
+Focused Lean compilation of the entire consolidated prototype passed, including
+the membership witness and T1000 check. The supremum non-infinity, pushforward
+adapter and sharp-supremum endpoint each use only propext, Classical.choice,
+and Quot.sound. The epsilon>=0/K>=1 generalizations, positive-u domain and
+finite-horizon boundary remain explicit. No Eq6 sufficiency/asymptotic repair
+or necessary-horizon-power theorem was added. No public-root integration,
+production graph mapping, new joint gate or topic completion is claimed.
+
+
+Independent mathematical review, source-blind reconstruction and anti-anchored
+source review accept this extension with the preceding generalizations. Receipt:
+`runs/extended-topics-20260919/genalti-supremum-audit.json`. The code does not
+name a fixed-algorithm class or prove its subset theorem; the universally
+quantified actual-process membership bridge supports that semantic application.
+The source review accepts the obstruction on this explicitly enlarged class,
+not a literal encoding of every symbol of the original Theorem2.
