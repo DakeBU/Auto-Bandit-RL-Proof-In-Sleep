@@ -78,3 +78,20 @@ normalized analysis counters and probability/counting arguments are explicit
 repairs. The learner is unchanged. Recent-source review, final mapping/reader
 acceptance, shared validation and ICLR evidence remain open; the topic is not
 complete. No fresh full project or site gate is implied by semantic acceptance.
+
+
+## Current local evidence checkpoint (2026-09-20)
+
+The reviewed source-qualified chain, recent-source non-import disposition,
+shared publication gate and descriptive case are now separately evidenced by
+`cucb-semantic-review.json`, `cmoss-full-source-disposition.json`,
+`cucb-production-validation.json` and `cucb-case-validation.json`. The case
+content commit is d0da6fd6e22e18879ab7cef60b4f0b216b4ebe49. Its 38 direct outward
+value-reference pairs split into29 initial unchanged-file references,2 to the
+HOO conditional-MGF interface and7 to shared files introduced with CUCB.
+Generated declarations remain included; no efficiency effect is estimated.
+The independently accepted Evaluation/appendix draft has not been integrated
+or typeset. All-topic protocol, required controlled evaluations, portable
+release, manuscript synthesis and final integrated acceptance remain mandatory.
+Proceed in listed order to the actual Causal sampling/simple-regret chain;
+all ten topics remain incomplete (0/10), and the Goal remains active.
