@@ -49,3 +49,9 @@ The explicit constant repair and residual 1/T remain unchanged. Parallel design,
 the original noisy canary's concentrated cost/bias/conditional/T=1/uncovered
 diagnostics, remaining source audit and ICLR evidence remain mandatory. The
 global ten-topic Goal and the causal topic remain incomplete.
+
+Validation: root 9029 jobs, Tests 9130 jobs and full harness 437 tests (7 skips)
+passed. Local site build/check and shared mapping validation passed: 27 mapped
+declarations, 39 scope nodes and 45 edges. Six reviewed file hashes and exact
+reader code snapshots match. Receipts: causal-heterogeneous-review.json and
+causal-heterogeneous-validation.json under runs/extended-topics-20260919.

@@ -5,7 +5,7 @@
       "title": "Causal actual-sampling expected simple regret on a common finite alphabet",
       "chapter": "ucb",
       "status": "compiled",
-      "informal": "Actual intervention samples and fixed-order empirical recommendation satisfy R_T <= (2sqrt(2)+7)sqrt(m log(2TK)/T)+1/T and R_T<=1; explicit rate constant 3sqrt(2)+7. Internally derived confidence, binary reward readout and covered allocation. Independently reviewed common-alphabet scope; heterogeneous-domain transport, parallel allocation, remaining noisy diagnostics and ICLR evidence remain open.",
+      "informal": "Actual intervention samples and fixed-order empirical recommendation satisfy R_T <= (2sqrt(2)+7)sqrt(m log(2TK)/T)+1/T and R_T<=1; explicit rate constant 3sqrt(2)+7. Internally derived confidence, binary reward readout and covered allocation. Independently reviewed common-alphabet scope; the separately reviewed native heterogeneous bridge is now available. Parallel allocation, remaining noisy diagnostics and ICLR evidence remain open.",
       "declarations": [
         "BanditRLProof.Causal.GraphModel.expected_simpleRegret_source_bound",
         "BanditRLProof.Causal.GraphModel.expected_simpleRegret_explicit_rate",
@@ -2420,6 +2420,25 @@
       ],
       "missing": [],
       "evidence": "BanditRLProof/Algorithms/CUCBRefinedRegret.lean"
+    },
+    {
+      "id": "CAUSAL-NATIVE-HETEROGENEOUS-EXPECTED-REGRET",
+      "title": "Native heterogeneous finite-node causal expected simple regret",
+      "chapter": "ucb",
+      "status": "compiled",
+      "informal": "Reviewed native heterogeneous finite-node intervention sampling and expected simple regret, with binary reward readout. Parallel allocation, remaining original noisy diagnostics, source screening and ICLR evidence remain open; topic incomplete. Actual joint and full sample-law pushforwards preserve estimator, ties, exact design cost and expectation. The final theorem constructs its finite codec internally and retains the repaired coefficient and 1/T residual.",
+      "declarations": [
+        "BanditRLProof.Causal.NodeGraphModel.expected_simpleRegret_source_bound",
+        "BanditRLProof.Causal.NodeGraphModel.expected_simpleRegret_explicit_rate",
+        "BanditRLProof.Causal.NodeGraphModel.expected_simpleRegret_uniform",
+        "BanditRLProof.Causal.NodeGraphModel.expected_simpleRegret_optimal"
+      ],
+      "depends_on": [
+        "BanditRLProof.Causal.NodeGraphModel.expected_simpleRegret_encoded",
+        "BanditRLProof.Causal.GraphModel.expected_simpleRegret_source_bound"
+      ],
+      "missing": [],
+      "evidence": "BanditRLProof/Algorithms/CausalHeterogeneousRegret.lean; runs/extended-topics-20260919/causal-heterogeneous-review.json"
     }
   ]
 }

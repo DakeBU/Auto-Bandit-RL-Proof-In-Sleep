@@ -1829,7 +1829,7 @@
       "id": "causal",
       "title": "Causal bandits",
       "kind": "setting",
-      "summary": "Reviewed actual intervention-sampling to expected simple-regret chain for a common finite alphabet and binary reward readout. Heterogeneous-domain transport, parallel allocation, remaining noisy diagnostics and ICLR evidence remain open; topic incomplete.",
+      "summary": "Reviewed native heterogeneous finite-node intervention sampling and expected simple regret, with binary reward readout. Parallel allocation, remaining original noisy diagnostics, source screening and ICLR evidence remain open; topic incomplete.",
       "tags": [
         "interventions",
         "feedback"
@@ -1839,7 +1839,7 @@
       "status": "source-audit-pending",
       "formalization": {
         "schema_version": 1,
-        "title": "Reviewed common-alphabet causal sampling and actual expected regret",
+        "title": "Reviewed native heterogeneous causal sampling and actual expected regret",
         "semantic_status": "accepted-with-explicit-delta",
         "topic_complete": false,
         "source": {
@@ -1849,20 +1849,25 @@
           "url": "https://proceedings.neurips.cc/paper_files/paper/2016/file/b4288d9c0ec0a1841b3b3728321e7088-Paper.pdf",
           "sha256": "99aa9427e02e31883510dfcd0b11ba4f45097dc30dd98a094cbf13068f93b747"
         },
-        "source_commit": "6a7c1d19de9ab9fdc92d18444f4b6fd7a9fa5f99",
-        "scope": "Common finite alphabet actual-law expected regret; concrete noisy joint, means and uniform instance only. Frozen topic and canary remain partial.",
+        "source_commit": "f2ef02eec2fe197d5497d48e88527093b82bd77f",
+        "scope": "Native heterogeneous finite-node actual-law expected regret; common-alphabet producer retained; concrete noisy and heterogeneous joint/mean/uniform canaries. Frozen topic remains partial.",
         "qualifications": [
-          "General finite common alphabet V with a binary payoff readout. Distinct node-type transport is unproved.",
+          "Each node has its own nonempty finite type; final performance theorem constructs the finite product codec internally. Binary readout extends the literal binary source reward node.",
           "Coverage is explicit; zero allocation weights are allowed only when Q covers every parent support.",
           "Unchanged source truncation tuning and fixed-order ties; coefficient and failure direction repairs disclosed.",
           "Uniform actual threshold uses m, with K substituted only in RHS. Optimal allocation minimizes cost, not a proved ordering of actual regrets.",
           "Concrete noisy test proves joint factorization, three true means and uniform all-horizon bound; remaining concentrated and T=1 diagnostics open.",
-          "Parallel allocation bridge, remaining source audit and ICLR evidence remain required. No topic completion."
+          "Parallel allocation bridge, remaining source audit and ICLR evidence remain required. No topic completion.",
+          "Heterogeneous Fin3/Fin2 canary proves native factorization, means 5/12, 1/4, 3/4 and uniform all-horizon rate; no exact diagnostic cost or random recommendation distribution is claimed."
         ],
         "review_receipts": [
           {
             "path": "runs/extended-topics-20260919/causal-sampling-review.json",
             "sha256": "03caccaa6a4ceb29e726a9283580530b609485092c3fa24f163dc996d2b41812"
+          },
+          {
+            "path": "runs/extended-topics-20260919/causal-heterogeneous-review.json",
+            "sha256": "768c9d7358ad92d878d70e6840c8187bd19705670e7634280bb16c0f624cf5ef"
           }
         ],
         "declarations": [
@@ -1949,6 +1954,111 @@
             "role": "endpoint",
             "source_locator": "Algorithm2/Theorem3 repaired common-alphabet chain; Proposition4 for uniform RHS",
             "review_receipt": "runs/extended-topics-20260919/causal-sampling-review.json"
+          },
+          {
+            "name": "BanditRLProof.Causal.nodeJoint",
+            "statement_sha256": "d84222401e8b6241fadf1fd81f479c58041f827a04da7f2503a11fbdfbb16379",
+            "role": "model",
+            "source_locator": "Algorithm2/Theorem3 native finite-node representation bridge; Proposition4 for uniform RHS; explicit repaired constants",
+            "review_receipt": "runs/extended-topics-20260919/causal-heterogeneous-review.json"
+          },
+          {
+            "name": "BanditRLProof.Causal.productNodeCodec",
+            "statement_sha256": "0798cbc29ad349de93a61be8bdc4cde1b5e1b449a4087ea5703b99866c2e97e9",
+            "role": "producer",
+            "source_locator": "Algorithm2/Theorem3 native finite-node representation bridge; Proposition4 for uniform RHS; explicit repaired constants",
+            "review_receipt": "runs/extended-topics-20260919/causal-heterogeneous-review.json"
+          },
+          {
+            "name": "BanditRLProof.Causal.NodeCodec.joint_encodeTables",
+            "statement_sha256": "12d66c053fff16cdf50bc0baf5e84bb23e71e166f15272bde5b5d88c73703889",
+            "role": "producer",
+            "source_locator": "Algorithm2/Theorem3 native finite-node representation bridge; Proposition4 for uniform RHS; explicit repaired constants",
+            "review_receipt": "runs/extended-topics-20260919/causal-heterogeneous-review.json"
+          },
+          {
+            "name": "BanditRLProof.Causal.nodeIntervention_factorization",
+            "statement_sha256": "1f15d68ad29aed85d5a5bdbc825fc75e5e703240a2c469760c2e8eb13952729c",
+            "role": "producer",
+            "source_locator": "Algorithm2/Theorem3 native finite-node representation bridge; Proposition4 for uniform RHS; explicit repaired constants",
+            "review_receipt": "runs/extended-topics-20260919/causal-heterogeneous-review.json"
+          },
+          {
+            "name": "BanditRLProof.Causal.NodeGraphModel.sampleLaw",
+            "statement_sha256": "873bc964d8f18d207ab653f2d337a686d346e7bbccb63e4a3f09e7f5db0aefcd",
+            "role": "algorithm",
+            "source_locator": "Algorithm2/Theorem3 native finite-node representation bridge; Proposition4 for uniform RHS; explicit repaired constants",
+            "review_receipt": "runs/extended-topics-20260919/causal-heterogeneous-review.json"
+          },
+          {
+            "name": "BanditRLProof.Causal.NodeGraphModel.sampleLaw_encoded",
+            "statement_sha256": "0594665eeb46b117c33caff1ac483c7358cbfa203104b7c74dd4b6af6ca1099a",
+            "role": "producer",
+            "source_locator": "Algorithm2/Theorem3 native finite-node representation bridge; Proposition4 for uniform RHS; explicit repaired constants",
+            "review_receipt": "runs/extended-topics-20260919/causal-heterogeneous-review.json"
+          },
+          {
+            "name": "BanditRLProof.Causal.NodeGraphModel.sampleWeightedBit",
+            "statement_sha256": "9aaa5a2682c510ee2f261ca00a9bd09e5f629b2b06fb788211871bfba624e21c",
+            "role": "algorithm",
+            "source_locator": "Algorithm2/Theorem3 native finite-node representation bridge; Proposition4 for uniform RHS; explicit repaired constants",
+            "review_receipt": "runs/extended-topics-20260919/causal-heterogeneous-review.json"
+          },
+          {
+            "name": "BanditRLProof.Causal.NodeGraphModel.sampleEstimate",
+            "statement_sha256": "040ee8775864b75582d682fe519597c4377d6c6fe2983f5cc533efc827432f71",
+            "role": "algorithm",
+            "source_locator": "Algorithm2/Theorem3 native finite-node representation bridge; Proposition4 for uniform RHS; explicit repaired constants",
+            "review_receipt": "runs/extended-topics-20260919/causal-heterogeneous-review.json"
+          },
+          {
+            "name": "BanditRLProof.Causal.NodeGraphModel.sampleRecommendation",
+            "statement_sha256": "1b3223ab0676575ac6968223b3684065981c367c4f6b2b450c9716ce2eb496f1",
+            "role": "algorithm",
+            "source_locator": "Algorithm2/Theorem3 native finite-node representation bridge; Proposition4 for uniform RHS; explicit repaired constants",
+            "review_receipt": "runs/extended-topics-20260919/causal-heterogeneous-review.json"
+          },
+          {
+            "name": "BanditRLProof.Causal.NodeGraphModel.designCost_encoded",
+            "statement_sha256": "fe8019fe292babd6a0ce9d6b5367b23c3719ec9738d6254b75da323c76d68897",
+            "role": "producer",
+            "source_locator": "Algorithm2/Theorem3 native finite-node representation bridge; Proposition4 for uniform RHS; explicit repaired constants",
+            "review_receipt": "runs/extended-topics-20260919/causal-heterogeneous-review.json"
+          },
+          {
+            "name": "BanditRLProof.Causal.NodeGraphModel.expected_simpleRegret_encoded",
+            "statement_sha256": "e7221164a0264a3beb73c701f267fa963213e9c33fd168abefc11dbcbede55a3",
+            "role": "producer",
+            "source_locator": "Algorithm2/Theorem3 native finite-node representation bridge; Proposition4 for uniform RHS; explicit repaired constants",
+            "review_receipt": "runs/extended-topics-20260919/causal-heterogeneous-review.json"
+          },
+          {
+            "name": "BanditRLProof.Causal.NodeGraphModel.expected_simpleRegret_source_bound",
+            "statement_sha256": "725865350292b9efae06b83f03c9b4331f63b9c540807ea9ae5d2a164cb01c48",
+            "role": "endpoint",
+            "source_locator": "Algorithm2/Theorem3 native finite-node representation bridge; Proposition4 for uniform RHS; explicit repaired constants",
+            "review_receipt": "runs/extended-topics-20260919/causal-heterogeneous-review.json"
+          },
+          {
+            "name": "BanditRLProof.Causal.NodeGraphModel.expected_simpleRegret_explicit_rate",
+            "statement_sha256": "2f47c8737f12f65aa3adcd3f61c280623037a11da3afe5120b66131e13688025",
+            "role": "endpoint",
+            "source_locator": "Algorithm2/Theorem3 native finite-node representation bridge; Proposition4 for uniform RHS; explicit repaired constants",
+            "review_receipt": "runs/extended-topics-20260919/causal-heterogeneous-review.json"
+          },
+          {
+            "name": "BanditRLProof.Causal.NodeGraphModel.expected_simpleRegret_uniform",
+            "statement_sha256": "6489f351d176f167031fad5c0b9aef7b90a18ac8f280281035789287eb5ca5c3",
+            "role": "endpoint",
+            "source_locator": "Algorithm2/Theorem3 native finite-node representation bridge; Proposition4 for uniform RHS; explicit repaired constants",
+            "review_receipt": "runs/extended-topics-20260919/causal-heterogeneous-review.json"
+          },
+          {
+            "name": "BanditRLProof.Causal.NodeGraphModel.expected_simpleRegret_optimal",
+            "statement_sha256": "0df306136758248147dbb6bc10c336bfce1be47feeeed2a31ae23bae30be4699",
+            "role": "endpoint",
+            "source_locator": "Algorithm2/Theorem3 native finite-node representation bridge; Proposition4 for uniform RHS; explicit repaired constants",
+            "review_receipt": "runs/extended-topics-20260919/causal-heterogeneous-review.json"
           }
         ],
         "mathematical_reader": [
@@ -1956,7 +2066,9 @@
           "The observable estimator averages Y(P_a/Q)1{P_a/Q<=B}; it uses known parent laws and observed bits. Its mean differs from true intervention reward by nonnegative truncation bias at most m/B. The true reward mean is proved equal to the intervention integral.",
           "Bounded centered MGF at tilt 1/(2B), with B=sqrt(mT/L), L=log(2TK), gives simultaneous confidence radius sqrt(2mL/T)+3BL/T with failure at most 1/T.",
           "The least empirical maximizer satisfies regret <=2epsilon+m/B on the good event and <=1 everywhere. Integration gives (2sqrt(2)+7)sqrt(mL/T)+1/T and the cap 1. Since L>=1/2, explicit constant 3sqrt(2)+7 suffices.",
-          "Existing attained optimal-design and uniform-coverage theorems instantiate the same actual learner. The nondegenerate noisy graph has true means 1/2, 3/10 and 7/10. Remaining representation, parallel-design and exact diagnostic obligations stay open."
+          "Existing attained optimal-design and uniform-coverage theorems instantiate the same actual learner. The original noisy graph has true means 1/2, 3/10, 7/10; remaining parallel-design and exact diagnostic obligations stay open.",
+          "Native dependent node tables define the joint before encoding. Induction proves its pushforward under a constructed finite product codec; intervention and parent laws, coverage, exact design cost and full product sample law are preserved.",
+          "The estimator, fixed-order recommendation and actual regret agree pathwise; integral transport yields the native expected-regret endpoint without an external codec premise. The additional Fin3/Fin2 canary has exact means 5/12, 1/4 and 3/4."
         ]
       }
     },
