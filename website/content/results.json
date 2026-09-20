@@ -2459,6 +2459,25 @@
       ],
       "missing": [],
       "evidence": "BanditRLProof/Algorithms/CausalHeterogeneousRegret.lean; runs/extended-topics-20260919/causal-heterogeneous-review.json; runs/extended-topics-20260919/causal-noisy-diagnostics-review.json"
+    },
+    {
+      "id": "MULTI-AGENT-STATIC-COORDINATION-OCCUPATION",
+      "title": "Static Musical Chairs actual coordination and finite expected occupation",
+      "chapter": "ucb",
+      "status": "compiled",
+      "informal": "Actual finite coordination law, local collision-bit update, fixed-arm invariants, derived1/(4n) hazard and marginal survival give finite expected unfixed occupation<=4n². Candidate correctness is an intermediate input. Exploration,2U regret charge and complete unknown-N MC remain open; topic incomplete.",
+      "declarations": [
+        "BanditRLProof.MusicalChairs.transition_unfixed_hazard_quarter",
+        "BanditRLProof.MusicalChairs.unfixed_survival",
+        "BanditRLProof.MusicalChairs.expected_unfixed_occupation_le"
+      ],
+      "depends_on": [
+        "BanditRLProof.MusicalChairs.transition_unfixed_hazard",
+        "BanditRLProof.MusicalChairs.stateLaw",
+        "BanditRLProof.MusicalChairs.expected_unfixed_eq_prob_sum"
+      ],
+      "missing": [],
+      "evidence": "BanditRLProof/Algorithms/MusicalChairsCoordinationTime.lean; runs/extended-topics-20260920/multi-agent-occupation-review.json; research-wiki/papers/extended-topics-musical-chairs-coordination.md"
     }
   ]
 }

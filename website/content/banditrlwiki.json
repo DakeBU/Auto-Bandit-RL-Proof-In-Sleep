@@ -2205,14 +2205,430 @@
       "id": "multi-agent",
       "title": "Multi-agent bandits",
       "kind": "setting",
-      "summary": "Interaction, communication and collision models must be specified before comparing guarantees.",
+      "summary": "Reviewed actual collision coordination, statewise fixation hazard, marginal survival and finite expected unfixed occupation<=4n². Unknown-N exploration and full regret remain open; topic incomplete.",
       "tags": [
         "communication",
         "collisions"
       ],
       "related_cases": [],
       "related_chapters": [],
-      "status": "source-audit-pending"
+      "status": "source-audit-pending",
+      "formalization": {
+        "schema_version": 1,
+        "title": "Actual static coordination and finite expected unfixed occupation",
+        "semantic_status": "accepted-with-explicit-delta",
+        "topic_complete": false,
+        "source": {
+          "title": "Multi-Player Bandits -- a Musical Chairs Approach",
+          "authors": "Jonathan Rosenski, Ohad Shamir and Liran Szlak",
+          "year": 2016,
+          "url": "https://proceedings.mlr.press/v48/rosenski16.pdf",
+          "sha256": "c56474f0c3e689c1819b11e2bca4d3e5dcaef6eddfd0173bb55ff6a84f11d99d"
+        },
+        "source_commit": "4e79ff440beafd3e3e08e93416706044e34a2f3e",
+        "scope": "Static coordination component with actual local collision-bit update, finite joint law, fixed-arm invariants and total expected unfixed occupation<=4n² over every finite prefix. No full unknown-N MC regret result.",
+        "qualifications": [
+          "Candidate sets are local-stage inputs. The quantitative endpoint assumes a common nonempty set of cardinality n; actual exploration must produce it later.",
+          "Finite-time marginals and one-step collision feedback are constructed. No full observable-history or history-conditioned path-law theorem is claimed.",
+          "The conservative static1/(4n) hazard and finite geometric sum are derived, without independent waiting times or a supplied fixation bound.",
+          "Total occupation counts unfixed players before each transition, including the initial state. It is not total completion time or pseudo-regret; the2U comparator charge remains open.",
+          "Six public-root component canaries cover collisions, successful draws, n=1, a specific1/4 event and all-horizon occupation<=16. They are not the required noisy full-learner canary.",
+          "Recent-source comparison, complete exploration/regret chain and all-topic ICLR evidence remain open. No topic completion, merge or deployment."
+        ],
+        "review_receipts": [
+          {
+            "path": "runs/extended-topics-20260920/multi-agent-occupation-review.json",
+            "sha256": "bf0ce4bc440a3efce02d8dc013f8d02081f8603de48ec28f4dc91c3e627920a0"
+          }
+        ],
+        "declarations": [
+          {
+            "name": "BanditRLProof.MusicalChairs.State",
+            "statement_sha256": "05b7cec51921f41234b762f7422b144d7263d58a74b1fe8ece225a59feefca5d",
+            "role": "model",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.action",
+            "statement_sha256": "e8f522bcb61d12aa50e8a1e32c469036d2567884f01b6afc21215a2bd3e58607",
+            "role": "model",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.CollisionFree",
+            "statement_sha256": "19096251a310b429b62d7008e7acd71669ffa8536d600571a2031f2bb28d9397",
+            "role": "model",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.step",
+            "statement_sha256": "d96e82a3d774d15b80efd5214b4a8a85527ec6b29ed018c35c97e648b4246385",
+            "role": "model",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.DistinctFixed",
+            "statement_sha256": "0966ab6465735f4bfe6579176f7f4fbcda46489c0d54c9fc27916e0e56ba2f23",
+            "role": "model",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.action_of_fixed",
+            "statement_sha256": "cb8767012827ce1427fa28dc9c3760b33a0ae63f93bbac66bb2bd080d8a6ba04",
+            "role": "producer",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.step_preserves_fixed",
+            "statement_sha256": "7133289e1d4871ffe803626bd62147052fa4b1e894afac3d223ac81a1e966157",
+            "role": "producer",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.step_fixed_action",
+            "statement_sha256": "42a4ae055d90936953bf5d02172e0a8c43259e28535b4b8305db84fbd9b4d0d0",
+            "role": "producer",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.new_fixed_collisionFree",
+            "statement_sha256": "e7b2f71bc24916ef06a43622706f7e7d2ae2f47f957e203a30ade29aa1019c62",
+            "role": "producer",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.step_distinct",
+            "statement_sha256": "f9e701631e3858baa1ea947773e6a7c6adf28b9616f44399c3195e1dfbfca38a",
+            "role": "producer",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.initial",
+            "statement_sha256": "a8c1d4bfca5eee7e39c59a3abaa13f24e137bb8969341b2828cfbe1ab12abb7c",
+            "role": "model",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.initial_distinct",
+            "statement_sha256": "3de15f2fa5574ad52672300b7a00970df07e7359c190b127862215214568ecd6",
+            "role": "producer",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.trajectory",
+            "statement_sha256": "440ff5077e8480d6fe031eeee382f6c097e25a5097dcb1c9c809d7230dcf4d48",
+            "role": "model",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.trajectory_distinct",
+            "statement_sha256": "c07f5cc74b1c5859be9c56785d911a61d86ea6ea947770bcd89e04cb88acb77f",
+            "role": "producer",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.action_local",
+            "statement_sha256": "67748aaefbb36015be66e83aca17376de3f7cef83e70b8e37dae4c88c748cf56",
+            "role": "producer",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.jointDraw",
+            "statement_sha256": "e0336fabc15431de8ccff950039a0100fedcd2bc56559f04657d284f380ddf29",
+            "role": "model",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.transition",
+            "statement_sha256": "1effa377ba70f8019af31888ab31a11a70d08bb0553c87e00167652c0e553e9c",
+            "role": "model",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.stateLaw",
+            "statement_sha256": "fc304672686b41552fb081350fe76b27cc52687d0b9d391364116ede1be041dc",
+            "role": "model",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.transition_distinct",
+            "statement_sha256": "446c8d1de5436f76421e0343d4d28a21dc051dc05121ef63bcca0deda6d06f36",
+            "role": "producer",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.stateLaw_distinct",
+            "statement_sha256": "0f29b2e64e3e8b94b1d71ae3a440e4c539b52b5bfe73a74de1a1365220a6cfd2",
+            "role": "producer",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.localUpdate",
+            "statement_sha256": "fd209b38d8b0175a27b6fb02e248892590121f1131e80ac109f92ce050237590",
+            "role": "model",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.collisionBit",
+            "statement_sha256": "62f6a434338dc4b9b6eb4a1211075c1176e26fe62fb4c894858193b737a3e061",
+            "role": "model",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.step_localUpdate",
+            "statement_sha256": "0c341400b0527260721bdfb165a28cddd5c4828ad7e45732593ab3889ba95187",
+            "role": "producer",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.jointDraw_mem",
+            "statement_sha256": "afa6e99c8701bc2c0924f3a55680a3419f371430141a4aa50a39a80eb6afbff7",
+            "role": "producer",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.FixedWithin",
+            "statement_sha256": "401be7a3f335b7cb63c8126635f2b71c71c656b850b8c5882b014350b6284fb4",
+            "role": "model",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.step_within",
+            "statement_sha256": "29d22e20cfe6033587427dd684ad03a612c6d9d5a02bc6e138dfb352c98a081d",
+            "role": "producer",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.stateLaw_within",
+            "statement_sha256": "186bca554e6ca1eebe9dfa4274d10ae791f3d6c279ecf0f3d49e26f91ef75ce5",
+            "role": "producer",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.jointDraw_rectangle",
+            "statement_sha256": "dced408cb55c73578eb5f2b2fb675fa90cd913f60bd3491e7837f20bc1cd82b2",
+            "role": "producer",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.jointDraw_rectangle_product",
+            "statement_sha256": "998834b5a9e6b045db8bfbdd581412a61901727332c2fe8e7ca3994d0ccd9514",
+            "role": "producer",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.fixationWindow",
+            "statement_sha256": "4bde0e4398b7a3af857443cea8936103ef5558c7e92a2c75108ed765449167e6",
+            "role": "model",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.fixationWindow_fixes",
+            "statement_sha256": "62ce75dbebb66013452eb1e366b7bac6c9e44edeba949277471c60badd6b5496",
+            "role": "producer",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.transition_fixation_lower",
+            "statement_sha256": "fbe00411c47a67469523e0cc2f3563e1b0275c91acc3896d7282004bb77be068",
+            "role": "producer",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.isolationWindow",
+            "statement_sha256": "4c2c8977356c4276fda14579f239eb3cc75815e168f1a263be9d7bb4a6b39bad",
+            "role": "model",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.isolationWindow_subset",
+            "statement_sha256": "49fd222e5fe9f6e709f94bd5ba7dbaba5fcaa8e3574b47cb53295c7ee14ba3b0",
+            "role": "producer",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.jointDraw_isolation",
+            "statement_sha256": "7d117d24d044a192a0e6f230afdda807be4ba49f9b1167811cd63df58607d359",
+            "role": "producer",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.transition_common_fixation_lower",
+            "statement_sha256": "ea218d7a43247a513237a54db3c6223234b0398d21bc48d65d2474c6f5f56119",
+            "role": "producer",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.exists_unoccupied",
+            "statement_sha256": "c3151b7b57285aae8448814d56810bd93277cc2f918baa87d7963448517cdf5e",
+            "role": "producer",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.transition_unfixed_hazard",
+            "statement_sha256": "979f7ed2aea82c3f5e3c9d08330e1c30485b94090a52c2f1ddfa3c6e0577c6bd",
+            "role": "producer",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.quarter_le_avoidance_succ",
+            "statement_sha256": "aacfb603cc6478279c76ccb83ad41315ef9524ca8024e09491e58e7c1a74ae76",
+            "role": "producer",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.quarter_le_avoidance",
+            "statement_sha256": "b87bec86b5ff6c6b9c62dae5326dbaa8481276b92fb1a30d531da0be6a8331a3",
+            "role": "producer",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.real_uniform_hazard_lower",
+            "statement_sha256": "7233ef42925826e47a61e3072dd4f0de166336e2339b94fe29ee09ec70d47aa6",
+            "role": "producer",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.uniform_hazard_lower",
+            "statement_sha256": "d81ce98dee580ebcf6f51353782a3f5d170580f4e9959948f9f9b62b0fb4a9c5",
+            "role": "producer",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.transition_unfixed_hazard_quarter",
+            "statement_sha256": "8b65f3d30af3a7f88f7c3826f3706bda537521068298177243416c988530ec66",
+            "role": "producer",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.event_add_compl",
+            "statement_sha256": "ae112db4600ff5316b2eadd54ff23107555c6a6f7d24731e3cd2ee2fecdd659a",
+            "role": "producer",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.transition_fixed_no_return",
+            "statement_sha256": "85dc32becacfa049137a3b0e12c84acf37cabffb41eb46c9c84e8746c5f5c925",
+            "role": "producer",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.transition_unfixed_le",
+            "statement_sha256": "80f01fd268b2597063443b95293a63d4b92f39ebbc88addbef41692b0dde9607",
+            "role": "producer",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.unfixed_survival",
+            "statement_sha256": "db24c1d60f567e26bfe669da2b027112e54d7b79884274885e86ca029c74132e",
+            "role": "endpoint",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.quarter_rate_le_one",
+            "statement_sha256": "69c175a1e67964cbbf21f1cbe8a7390c1f23af8f70aeef823acb51912dcec3f8",
+            "role": "producer",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.unfixed_survival_sum",
+            "statement_sha256": "6d25981ccde61253ee3080b0ab17d44caec0683c1a624d8b9197417b61c1c5cc",
+            "role": "endpoint",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.total_unfixed_occupation_le",
+            "statement_sha256": "1a5df5b104d8ca59462c6f65d895a5bc7eff6f81fce7d09b522536e1678d2739",
+            "role": "producer",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.unfixedCount",
+            "statement_sha256": "623ea08314b030a8d52c8544a5c42ca82553190f74dd98c381feed54558078f9",
+            "role": "model",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.unfixedCount_eq_sum",
+            "statement_sha256": "b2747c6da7da5fb65b58b4fd0895271cf3a4a8103ee587eca87bc7946c549ec5",
+            "role": "producer",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.expected_unfixed_eq_prob_sum",
+            "statement_sha256": "114990f46f8a5ecd6b953e7f3e7dad8adf7bb2354852fb7a095e6e7486f27ca9",
+            "role": "producer",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.expected_unfixed_occupation_le",
+            "statement_sha256": "485beee00881d09fdd5e7f73fcfe2410c0b20a12e2d64d8cb64f129a6ac9396c",
+            "role": "endpoint",
+            "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 coordination component; explicit common-set interface and conservative1/(4n) route, not full Theorem1",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json"
+          }
+        ],
+        "mathematical_reader": [
+          "The actual joint draw is uniform on the product of nonempty candidate sets. Restriction-event counting gives Pr(all draw_i in B_i)=product_i |C_i intersect B_i|/|C_i|. The transition keeps old fixed arms and fixes a new player exactly on collision-free feedback.",
+          "If the common candidate set has n arms and player i is unfixed, at most n-1 fixed labels are occupied. Cardinality produces an unused arm. A specific isolated-draw event yields actual fixation probability at least(1/n)((n-1)/n)^(n-1).",
+          "For n>=2, m=n-1 and x=m/(m+1) satisfy m log x>=-1 by1-1/x<=log x. Thus x^m>=exp(-1)>=1/4; n=1 is handled directly. This proves the actual statewise hazard1/(4n).",
+          "Fixed players never return to unfixed. The actual PMF bind recursion gives Pr(i unfixed at t)<=(1-1/(4n))^t. Finite geometric summation yields sum_(t<T)Pr(i unfixed)<=4n.",
+          "For U(s)=number of unfixed players, finite sum interchange proves sum_s p_t(s)U(s)=sum_i Pr(i unfixed). Summing gives total finite expected occupation<=4n². No independence of players waiting times, expected completion time, or full regret statement is inferred."
+        ]
+      }
     },
     {
       "id": "thompson-bayesian",
