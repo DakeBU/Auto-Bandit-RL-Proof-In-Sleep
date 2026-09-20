@@ -25,3 +25,16 @@ The original frozen contract is `LIPSCHITZ-HOO-CONTRACT.md` (47474f9), with the 
 Joint validation is recorded in `runs/extended-topics-20260917/hoo-rate-validation.json`; focused compilation alone is not that gate. The public full-rate canary is `Tests/HOORateCanary.lean`.
 
 Still mandatory: independent semantic source review of the entire chain and repairs; acceptance and shared topic/source registry/site mapping; compiled-reference/transfer and all-ten ICLR evidence under the frozen evaluation protocol. No controlled efficiency experiment or fresh HOO compiled-reference graph extraction is claimed. Exact model dimension/sharp model rate are not claimed and are unnecessary for the conservative full-rate canary. Accepted topics remain 0/10 until acceptance obligations are satisfied.
+
+
+## Semantic audit update (2026-09-20)
+
+The original kernel-model chain has passed the independent source-blind/source
+round trip with explicit deltas. The review detected the stronger global reward
+kernel premise; `HOO-REWARD-FAMILY-ADAPTER.md` explains its removal without
+changing the actual process in a separately compiled prototype. Evidence is
+bound in `runs/extended-topics-20260919/hoo-semantic-review.json`. The 28-module
+compiled-reference export is also now recorded in `hoo-compiled-references.json`;
+its direct references are descriptive reuse evidence, not causal efficiency.
+Production port, shared mapping, recent-source and all-topic acceptance work
+remain distinct.

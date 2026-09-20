@@ -14,3 +14,21 @@ Scope: repaired Bubeck et al. (2011) Algorithm1 / Theorem6 line frozen in 47474f
 | Nondegenerate final-rate witness | HOOCantorModel + HOOCantorRate; dimension_le_two, expected_actual_rate. Tests.HOORateCanary | Infinite binary arms, complete A1/A2, distinct means, every reward law non-Dirac, actual final rate without a dimension assumption; certificate <=2 is conservative, not exact dimension=2 |
 
 The statement-level local gate and standard-axiom audit do not settle source fidelity. The review must inspect hypotheses, construction, proof-term dependencies and source repairs, not merely theorem names or this ledger. Accepted topics remain 0/10 pending review, shared mapping and ICLR program evidence. No reviewer verdict is fabricated here.
+
+
+## Independent round trip checkpoint (2026-09-20)
+
+The 32-file packet (28 production modules and four canaries) has now undergone
+source-blind reconstruction, independent full-chain source comparison and
+separate source-repair review. The kernel-model chain is accepted with explicit
+initialization/index/logarithm/log-zero/fixed-choice deltas. Review found a real
+extra assumption: the original terminal API requires a globally measurable
+reward kernel. The [reward-family adapter](HOO-REWARD-FAMILY-ADAPTER.md) removes
+that assumption in a separately compiled prototype; supplementary blind/source
+reviews and hashes are recorded in `hoo-semantic-review.json`.
+
+The earlier table remains a location/obligation map, not a fresh production gate.
+The new adapter still needs production/public-root/canary integration. Recent
+comparison-source disposition, site/shared registry mapping and ICLR evidence
+remain mandatory; neither this checkpoint nor the old compiler gate completes
+the Lipschitz topic.
