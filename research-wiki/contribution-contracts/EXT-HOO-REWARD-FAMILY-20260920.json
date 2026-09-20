@@ -1,0 +1,110 @@
+{
+  "schema_version": "2.0",
+  "id": "EXT-HOO-REWARD-FAMILY-20260920",
+  "route": "extended-topics/lipschitz",
+  "frontier_cell": "lipschitz/hoo-source-model",
+  "source_facing": true,
+  "source": {
+    "kind": "paper",
+    "title": "X-Armed Bandits",
+    "version": "JMLR12(2011); SHA256dcbbc42ae1ddc5a21153594a542d593d85b4f18913d9776a16221e2e31be68ef",
+    "anchor": "Section2, Algorithm1, A1/A2, Definitions4-5, Theorem6 and AppendixA.1; explicit repaired source endpoint",
+    "url": "https://jmlr.org/papers/volume12/bubeck11a/bubeck11a.pdf"
+  },
+  "target": "Remove global reward-kernel measurability restriction while preserving actual HOO trajectory and complete all-horizon expected regret; publish independently reviewed chain",
+  "affected_files": [
+    "BanditRLProof.lean",
+    "BanditRLProof/Algorithms/HOORewardFamily.lean",
+    "research-wiki/papers/extended-topics-hoo-reward-family.md",
+    "website/content/results.json",
+    "website/content/banditrlwiki.json",
+    "website/scripts/build_site.py"
+  ],
+  "declarations": [
+    "BanditRLProof.HOO.RegularCovering.expected_pseudoRegret_rate_family",
+    "BanditRLProof.HOO.RegularCovering.expected_actual_eq_pseudoRegret_family",
+    "BanditRLProof.HOO.RegularCovering.expected_actualRegret_rate_family"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Reviewed HOORewardFamily prototype and full HOO chain",
+      "Shared Covering/arm/trajectory interfaces",
+      "Mathlib countable measurability, discrete measurable spaces and Markov kernels"
+    ],
+    "reused_declarations": [
+      "BanditRLProof.HOO.RegularCovering.expected_pseudoRegret_rate",
+      "BanditRLProof.HOO.RegularCovering.expected_actual_eq_pseudoRegret",
+      "BanditRLProof.HOO.RegularCovering.expected_actualRegret_rate",
+      "measurable_of_countable",
+      "measurable_from_top"
+    ],
+    "new_shared_declarations": [],
+    "known_consumers": [
+      "BanditRLProof.HOO.RegularCovering.expected_pseudoRegret_rate_family",
+      "BanditRLProof.HOO.RegularCovering.expected_actual_eq_pseudoRegret_family",
+      "BanditRLProof.HOO.RegularCovering.expected_actualRegret_rate_family",
+      "Tests.HOORewardFamilyCanary"
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Actual node kernel consumes arbitrary input reward laws at the unchanged fixed representatives; definitional discrete-domain transport removes a real source-model restriction instead of duplicating the proof."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/blind_decoder_h",
+    "source_reviewer": "/root/source_reviewer_a",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Original source repairs retained; production port and reader/canary independently reviewed separately. No global kernel or mean measurability needed; region measurability retained."
+  },
+  "graph_contribution": {
+    "lean_graph": "new-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Definitional measurable-space transport on the same process, no cross-setting functor claim.",
+    "focus_targets": [
+      "BanditRLProof.HOO.RegularCovering.expected_pseudoRegret_rate_family",
+      "BanditRLProof.HOO.RegularCovering.expected_actual_eq_pseudoRegret_family",
+      "BanditRLProof.HOO.RegularCovering.expected_actualRegret_rate_family"
+    ],
+    "visual_review": "Pending generated registry/anchor verification.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "no-change-with-reason: no book chapter acceptance",
+    "banditrlwiki": "updated: Lipschitz HOO reviewed reading map, topic remains incomplete",
+    "results_ledger": "updated: complete source-repaired family endpoint",
+    "roadmap": "updated: production checkpoint with recent comparison and global evidence still pending",
+    "website_surfaces": [
+      "website/content/results.json",
+      "website/content/banditrlwiki.json",
+      "compiler-derived global declaration registry/module graph"
+    ]
+  },
+  "truth_boundary": "Explicit initialization/index/log/log-zero/fixed-choice repairs; full rate for actual arbitrary stationary reward family under A1/A2, not sharp canary dimension, memory-complexity theorem, full topic completion or merge/live deployment.",
+  "verification": {
+    "focused_checks": [
+      "Public-root family canary9017jobs passed; three endpoints use only propext/Classical.choice/Quot.sound"
+    ],
+    "bandit_check": "passed: full shared root/Tests and437Python tests7skips in156.826s; production-full-gate.log",
+    "site_build": "pending",
+    "site_check": "pending",
+    "independent_review": "Accepted-with-explicit-delta exact production port, true new-interface canary consumers and reader; bound in hoo-production-review.json. Original32-file and prototype roundtrips retained. Independent9-reference mapping and inline mathematical explanation accepted in production-mapping-review.md."
+  },
+  "contributor": {
+    "name": "Codex",
+    "role": "Formalizer and review coordinator; independent reviewers named in semantic_roundtrip"
+  }
+}

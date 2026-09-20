@@ -1021,11 +1021,15 @@ def render_topic_formalization(page_path: str, topic: dict[str, Any]) -> str:
         node = SITE_MEMBERSHIPS["declaration:" + ref["name"]]
         rows.append(f'<tr><td>{html.escape(ref["role"])}</td><td><a href="{href_from(page_path, node["url"])}"><code>{html.escape(ref["name"])}</code></a></td><td>{html.escape(ref["source_locator"])}</td></tr>')
     qualifications = ''.join(f'<li>{html.escape(item)}</li>' for item in mapping["qualifications"])
+    reader = mapping.get("mathematical_reader", [])
+    reader_html = ("<section class='topic-mathematical-reader'><h3>Mathematical contract and proof</h3>"
+                   + "".join(f"<p>{html.escape(paragraph)}</p>" for paragraph in reader)
+                   + "</section>") if reader else ""
     return f'''<section id="formalization"><h2>{html.escape(mapping['title'])}</h2>
 <p>{html.escape(mapping['scope'])}</p><p>{review_note}</p>
 <p><a href="{html.escape(source['url'], quote=True)}">{html.escape(source['title'])}</a> · {html.escape(source['authors'])} · {source['year']}</p>
 <details><summary>Frozen source provenance</summary><p>PDF SHA-256: <code>{source['sha256']}</code></p><p>Compiled source snapshot: <code>{mapping['source_commit']}</code>. The page-wide banner separately reports this site's current Lean gate.</p></details>
-<ul>{qualifications}</ul><div class="table-wrap"><table><thead><tr><th>Role</th><th>Canonical Lean declaration</th><th>Source or instance scope</th></tr></thead><tbody>{''.join(rows)}</tbody></table></div>
+<ul>{qualifications}</ul>{reader_html}<div class="table-wrap"><table><thead><tr><th>Role</th><th>Canonical Lean declaration</th><th>Source or instance scope</th></tr></thead><tbody>{''.join(rows)}</tbody></table></div>
 <p><a href="{href_from(page_path, 'lean-graph/index.html')}">Shared graph</a> · <a href="{href_from(page_path, 'books/registry.json')}">Shared reference registry</a></p></section>'''
 
 

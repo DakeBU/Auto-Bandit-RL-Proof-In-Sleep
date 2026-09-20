@@ -130,6 +130,7 @@ import BanditRLProof.Algorithms.HOORegretAlgebra
 import BanditRLProof.Algorithms.HOODepthOptimization
 import BanditRLProof.Algorithms.HOORate
 import BanditRLProof.Algorithms.HOOActualRegret
+import BanditRLProof.Algorithms.HOORewardFamily
 import BanditRLProof.HOOCantorRate
 import BanditRLProof.HeavyTailFixedTilt
 import BanditRLProof.HeavyTailConfidence

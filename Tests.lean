@@ -80,6 +80,7 @@ import Tests.HOOCausalCanary
 import Tests.HOOCantorCanary
 import Tests.HOORegretCanary
 import Tests.HOORateCanary
+import Tests.HOORewardFamilyCanary
 import Tests.CUCBThresholdCanary
 import Tests.CUCBTrajectoryCanary
 import Tests.CUCBConcentrationCanary
