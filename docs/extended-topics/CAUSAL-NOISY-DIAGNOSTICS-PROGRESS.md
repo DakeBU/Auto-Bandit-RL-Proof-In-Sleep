@@ -15,10 +15,15 @@ bound in runs/extended-topics-20260919/causal-noisy-diagnostics-review.json.
 Focused build: 3605 jobs. Shared root: 9029 jobs. Tests: 9131 jobs. Full harness:
 437 tests with 7 skips, 153.198 seconds. Printed endpoints have only propext,
 Classical.choice and Quot.sound. The reader contains exact folded source files.
-Site/shared mapping refresh is in progress.
+Site and shared mapping checks passed, retaining 27 reviewed canonical declarations. Test declarations remain in Tests and the exact reader, rather than being duplicated in the public registry.
 
 The native heterogeneous bridge was closed in the preceding accepted packet.
 Remaining required causal work: parallel design and witness (see
 CAUSAL-PARALLEL-ROUTE.md), remaining classic/recent source screening, ICLR reuse
 and controlled evaluation evidence, and final whole-topic acceptance. No main
 merge, site deployment, causal-topic completion or all-ten completion is claimed.
+
+The separately reviewed mathematical parallel-allocation repair is accepted as
+a route only, not Lean implementation. Its immutable route and report hashes
+are bound in causal-parallel-repair-review.json; all listed Lean obligations
+remain open.

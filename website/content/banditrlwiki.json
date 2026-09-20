@@ -1829,7 +1829,7 @@
       "id": "causal",
       "title": "Causal bandits",
       "kind": "setting",
-      "summary": "Reviewed native heterogeneous finite-node intervention sampling and expected simple regret, with binary reward readout. Parallel allocation, remaining original noisy diagnostics, source screening and ICLR evidence remain open; topic incomplete.",
+      "summary": "Reviewed native heterogeneous finite-node actual expected simple regret and exact noisy diagnostics, including concentrated cost 8/3 and tuned T=1 regret 1/5. Parallel allocation/witness, remaining source screening and ICLR evidence remain open; topic incomplete.",
       "tags": [
         "interventions",
         "feedback"
@@ -1849,15 +1849,15 @@
           "url": "https://proceedings.neurips.cc/paper_files/paper/2016/file/b4288d9c0ec0a1841b3b3728321e7088-Paper.pdf",
           "sha256": "99aa9427e02e31883510dfcd0b11ba4f45097dc30dd98a094cbf13068f93b747"
         },
-        "source_commit": "f2ef02eec2fe197d5497d48e88527093b82bd77f",
-        "scope": "Native heterogeneous finite-node actual-law expected regret; common-alphabet producer retained; concrete noisy and heterogeneous joint/mean/uniform canaries. Frozen topic remains partial.",
+        "source_commit": "5ef0d1fa8c205f7b842183c14f0f666cc0f8e8d1",
+        "scope": "Native heterogeneous finite-node actual-law expected regret, heterogeneous canary, and complete frozen noisy coverage/cost/bias/conditional/T=1/uncovered diagnostics; parallel witness and whole-topic obligations remain open.",
         "qualifications": [
           "Each node has its own nonempty finite type; final performance theorem constructs the finite product codec internally. Binary readout extends the literal binary source reward node.",
           "Coverage is explicit; zero allocation weights are allowed only when Q covers every parent support.",
           "Unchanged source truncation tuning and fixed-order ties; coefficient and failure direction repairs disclosed.",
           "Uniform actual threshold uses m, with K substituted only in RHS. Optimal allocation minimizes cost, not a proved ordering of actual regrets.",
-          "Concrete noisy test proves joint factorization, three true means and uniform all-horizon bound; remaining concentrated and T=1 diagnostics open.",
-          "Parallel allocation bridge, remaining source audit and ICLR evidence remain required. No topic completion.",
+          "Frozen noisy test now proves concentrated coverage, cost 8/3, B=2 biases, conditional versus interventional means, an uncovered design, actual tuned T=1 recommendation and exact expected regret 1/5, plus concentrated all-horizon bound. The B=2 bias test is distinct from the actual one-round tuning.",
+          "Parallel allocation bridge and witness, remaining source audit and ICLR evidence remain required. No topic completion.",
           "Heterogeneous Fin3/Fin2 canary proves native factorization, means 5/12, 1/4, 3/4 and uniform all-horizon rate; no exact diagnostic cost or random recommendation distribution is claimed."
         ],
         "review_receipts": [
@@ -1868,6 +1868,10 @@
           {
             "path": "runs/extended-topics-20260919/causal-heterogeneous-review.json",
             "sha256": "768c9d7358ad92d878d70e6840c8187bd19705670e7634280bb16c0f624cf5ef"
+          },
+          {
+            "path": "runs/extended-topics-20260919/causal-noisy-diagnostics-review.json",
+            "sha256": "1c82ee814f73077e600f6521276372aaa1e952e542b17087060e5cf1f4578888"
           }
         ],
         "declarations": [
@@ -2066,9 +2070,10 @@
           "The observable estimator averages Y(P_a/Q)1{P_a/Q<=B}; it uses known parent laws and observed bits. Its mean differs from true intervention reward by nonnegative truncation bias at most m/B. The true reward mean is proved equal to the intervention integral.",
           "Bounded centered MGF at tilt 1/(2B), with B=sqrt(mT/L), L=log(2TK), gives simultaneous confidence radius sqrt(2mL/T)+3BL/T with failure at most 1/T.",
           "The least empirical maximizer satisfies regret <=2epsilon+m/B on the good event and <=1 everywhere. Integration gives (2sqrt(2)+7)sqrt(mL/T)+1/T and the cap 1. Since L>=1/2, explicit constant 3sqrt(2)+7 suffices.",
-          "Existing attained optimal-design and uniform-coverage theorems instantiate the same actual learner. The original noisy graph has true means 1/2, 3/10, 7/10; remaining parallel-design and exact diagnostic obligations stay open.",
+          "Existing attained optimal-design and uniform-coverage theorems instantiate the same actual learner. The original noisy graph has true means 1/2, 3/10, 7/10; the exact noisy diagnostics are now reviewed, while parallel-design and its witness remain open.",
           "Native dependent node tables define the joint before encoding. Induction proves its pushforward under a constructed finite product codec; intervention and parent laws, coverage, exact design cost and full product sample law are preserved.",
-          "The estimator, fixed-order recommendation and actual regret agree pathwise; integral transport yields the native expected-regret endpoint without an external codec premise. The additional Fin3/Fin2 canary has exact means 5/12, 1/4 and 3/4."
+          "The estimator, fixed-order recommendation and actual regret agree pathwise; integral transport yields the native expected-regret endpoint without an external codec premise. The additional Fin3/Fin2 canary has exact means 5/12, 1/4 and 3/4.",
+          "The local noisy canary derives all parent masses from the actual DAG. Sampling only observation still covers every intervention and has exact cost 8/3. At T=1 the source threshold lies strictly between 1 and 4/3, estimates are (Y,0,0), fixed-order ties recommend observation, and the actual expected regret is exactly 1/5. Conditional reward given W=1 is 3/4, distinct from intervention reward 7/10. These are local model diagnostics, not numerical claims attributed to the paper."
         ]
       }
     },
