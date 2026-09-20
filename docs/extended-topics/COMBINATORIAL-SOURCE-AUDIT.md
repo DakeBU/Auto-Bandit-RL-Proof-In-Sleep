@@ -78,3 +78,15 @@ In the 2016 Lemma 4 proof, p. 18, the claimed equality ell_n(d,pi) pi / ps = ell
 - Build the actual reward/feedback/oracle trajectory and adaptive concentration; prove both refined counting and terminal bounds.
 - Include a genuinely combinatorial, noisy, non-singleton canary; a scalar UCB wrapper is insufficient.
 - After implementation: combined root, Tests, full harness, axiom/semantic review, shared mappings and all-topic evidence. No combinatorial Lean gate was run for this documentation-only audit.
+
+
+## 2026-09-20 bounded follow-up
+
+The frozen CUCB full chain now has independent blind/source/repair acceptance
+with explicit deltas in `cucb-semantic-review.json`; earlier implementation and
+review-pending descriptions are historical. The recent CMOSS v2 logarithmic
+endpoint concern now has two explicit first-round witnesses and a separately
+reviewed zero-parameter domain observation. See [CMOSS endpoint boundary](CMOSS-ENDPOINT-BOUNDARY.md)
+and `cmoss-boundary-review.json`. This does not complete the CMOSS proof audit,
+certify a repaired rate, or accept unrestricted comparisons. Physical PDF
+page numbers were checked independently; extraction-based page30 was rejected.
