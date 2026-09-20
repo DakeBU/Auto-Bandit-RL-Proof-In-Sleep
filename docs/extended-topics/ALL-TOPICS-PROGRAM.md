@@ -14,7 +14,7 @@ a partial heavy-tail producer and transfer milestone, not topic completion.
 | Mandatory topic | Candidate line (not frozen until full audit) | Current state |
 |---|---|---|
 | heavy-tailed | Robust UCB, moment-derived truncated confidence and expected regret | proving / source repair |
-| lipschitz | Repaired HOO with geometric regret dependence | full source-repaired family rate independently accepted and jointly validated; ICLR evidence pending |
+| lipschitz | Repaired HOO with geometric regret dependence | full source-repaired family rate, mapping and descriptive case accepted; global evaluation pending |
 | combinatorial | CUCB with explicit feedback and oracle guarantees | full repaired endpoints compiled; independent acceptance pending |
 | causal | Causal best-intervention learning with identification assumptions | intervention, importance and optimal allocation infrastructure compiled; performance chain open |
 | multi-agent | Musical Chairs with collision and coordination cost | source audit pending |
@@ -32,7 +32,7 @@ recent primary work and all proof appendices, not abstract-based selection.
 
 Execution follows the strict table order: Heavy-tailed, Lipschitz, Combinatorial,
 Causal, Multi-agent, Thompson/Bayesian, Constrained, Corruption-tolerant, Matrix,
-Variance-aware. The heavy-tail topic-local source, representative mathematics, shared mapping and descriptive evidence checkpoints are accepted with their explicit scopes; the next topic-local work is Lipschitz. Before advancing, close the current topic-local obligations. Global all-target ICLR obligations remain mandatory at the final program join: the protocol itself requires all targets to be audited first, so it cannot be a prerequisite for auditing the second target. This scheduling distinction changes no completion criterion: keep topic_complete=false until every local and global obligation applies and passes. Difficulty is not permission to skip. Preserve already compiled later-topic milestones without treating them as accepted topics.
+Variance-aware. The heavy-tail topic-local source, representative mathematics, shared mapping and descriptive evidence checkpoints are accepted with their explicit scopes; Lipschitz now also has its repaired full endpoint, shared mapping and descriptive case independently accepted (lipschitz-case-validation.json), so the next topic-local work is Combinatorial. Before advancing, close the current topic-local obligations. Global all-target ICLR obligations remain mandatory at the final program join: the protocol itself requires all targets to be audited first, so it cannot be a prerequisite for auditing the second target. This scheduling distinction changes no completion criterion: keep topic_complete=false until every local and global obligation applies and passes. Difficulty is not permission to skip. Preserve already compiled later-topic milestones without treating them as accepted topics.
 
 The heavy-tail representative line now has a complete corrected expected-regret
 chain for the unchanged source-radius4 policy and an admissible finite Lean
