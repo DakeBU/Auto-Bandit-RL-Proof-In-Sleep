@@ -17,7 +17,7 @@ contract. The algorithm also knows T,p,nu, uses a common truncation threshold
 and randomized Boltzmann selection. It is a distinct source line, not a direct
 replacement for the BCL sample-ordinal estimator or unknown-parameter adaptation.
 
-The independent report flags these unresolved proof steps:
+The initial independent report flagged the following proof steps. Their final bounded adjudication and separately reviewed IPW repair are recorded below:
 
 - AppendixD Eq133 changes the truncation threshold of all earlier observations
   when s changes. Fixed-s independence does not by itself make this triangular
@@ -41,3 +41,33 @@ retains exact assumptions, equation anchors and additional limitations.
 
 Private report: `E:/ABRL/maintenance/extended-topics-20260919-claude/review-20260919/park26-full-audit.md`.
 Report SHA256: `e7ebf39d272c30615aa7c3373f51214ee3088eb8af8adc2c0c0082e4e3045eb7`.
+
+
+## Final bounded adjudication (2026-09-20)
+
+The [regret proof adjudication](PARK26-REGRET-ADJUDICATION.md) supplies an exact
+counterexample to the asserted Eq133 prefix supermartingale: under the source
+cutoffs, iid rewards in {-1,0}, K=2,T=8,nu=1/2, the conditional increment at
+3-to-4 exceeds one on an event of probability1/8. Eq285's general probability
+inference also fails by an explicit positive-propensity example. This second
+example is not asserted to be an actual H-BE trajectory. The ordinary-log gap
+bound requires a finite-time regime or changed expression. The main regret
+rate is neither disproved nor repaired by these findings.
+
+The [IPW derivation](PARK26-IPW-REPAIR.md) separates the positive-probability
+zero denominator, support/target mismatch and lost T exponent. AppendixC Eq66
+uses a target that need not equal the advertised uniform-policy value without
+full actionwise support. The repaired theorem explicitly assumes that support,
+a known floor d and independent conditional replays, and uses max(d/2,phat).
+It proves a complete unconditional L1 risk bound through a self-contained
+scalar martingale p-moment argument. Its optional conditional-risk statement
+names the joint event and the horizon-dependent Monte Carlo requirement.
+
+Independent mathematical and source reviews accept these bounded conclusions
+with explicit deltas. Receipt: `runs/extended-topics-20260919/park-adjudication-audit.json`.
+The source-selection decision is to retain H-BE as distinct recent prior art
+and decline unqualified import of the printed full regret results. Its rejected
+proof chain and unread external dependencies are not dependencies of the BCL
+representative endpoint or the new IPW repair. This closes the named Park
+source-disposition issue; it does not validate the entire paper, create a Lean
+result, or complete the heavy-tail topic.

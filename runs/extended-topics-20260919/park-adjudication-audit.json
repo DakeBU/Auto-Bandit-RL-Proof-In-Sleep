@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "date": "2026-09-20",
+  "base_commit": "29043e61ff9b250fae934ee8e25291132abcaecf",
+  "scope": "Bounded Park source adjudication and qualified stationary uniform-target IPW mathematical repair",
+  "semantic_verdict": "accepted-with-explicit-delta",
+  "source": {
+    "path": "E:\\ABRL\\maintenance\\extended-topics-20260917\\sources\\park26a.pdf",
+    "sha256": "c192f3345a20227243a822e8fc60d2fd0b8f71d44d5f5f3cc7e35f267d33d102"
+  },
+  "source_anchors": [
+    "Theorem3 Eq4; AppendixC Eq66,78-82,100,108-109",
+    "AppendixD Eq113-114,127,132-133,142",
+    "AppendixG Eq278-285",
+    "Theorem5 finite-time ordinary logarithm"
+  ],
+  "artifacts": [
+    {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260919-claude\\review-20260919\\park26-full-audit.md",
+      "sha256": "e7ebf39d272c30615aa7c3373f51214ee3088eb8af8adc2c0c0082e4e3045eb7"
+    },
+    {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260919-claude\\review-20260919\\park-ipw-adjudication.md",
+      "sha256": "eab2f7e004d8fdad018d0ca49880456393bc84a86223fe3edd62373e0b768ac5"
+    },
+    {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260919-claude\\review-20260919\\park-ipw-repair-review.md",
+      "sha256": "790cdb1736347362fd63bee4fd0caeb671a0db74054bb8d5b405e26792fe417f"
+    },
+    {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260919-claude\\review-20260919\\park-ipw-source-review.md",
+      "sha256": "ef3d82f608158f64d6356eb725c1403d10230eae9f5348e26a416a63579557e5"
+    },
+    {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260919-claude\\review-20260919\\park-regret-adjudication.md",
+      "sha256": "786129033e480e249e4c513d875d27f084048a904df1eca1f8e431eada62093d"
+    },
+    {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260919-claude\\review-20260919\\park-regret-repair-review.md",
+      "sha256": "9e70b4ac33e1ba785141bec36cd48885135aca07d134740653b57b902094b9d8"
+    },
+    {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260919-claude\\review-20260919\\park-regret-source-review.md",
+      "sha256": "08b51fa5a189c93fb1284f0784bc2ac13eff27e7cad84ef4df9c419918143a3d"
+    },
+    {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260919-claude\\review-20260919\\heavy-source-obligation-review.md",
+      "sha256": "d5e010ef2eb5f5a3d24a6f0d24f555cc4f420ff34147188941baa45935d8cb12"
+    }
+  ],
+  "public_derivations": [
+    {
+      "path": "E:\\ABRL\\worktrees\\research-extended-topics\\docs\\extended-topics\\PARK26-IPW-REPAIR.md",
+      "sha256": "39f57b1743464e46a4d4675f041a8e14908cd6c45c86f7741530d19038d9490f"
+    },
+    {
+      "path": "E:\\ABRL\\worktrees\\research-extended-topics\\docs\\extended-topics\\PARK26-REGRET-ADJUDICATION.md",
+      "sha256": "f01af3a9049d4481a72854282ee66e6830d4eeac4beb1fa07f81f6a0aaecc097"
+    }
+  ],
+  "accepted_obstructions": [
+    "Finite MC propensity may be zero: ordinary unconditional raw reciprocal risk is not finite",
+    "Selected-only support does not identify uniform target; AppendixC Eq66 defines a different quantity without overlap",
+    "Eq108 to109 cancels all T powers, not a decaying predictable-drift bound",
+    "Exact common-count prefix process Eq133 fails supermartingale condition for iid minus1/zero example",
+    "Eq285 general marginal-to-expected-inverse implication is false; example is not an actual H-BE trajectory",
+    "Theorem5 ordinary-log expression cannot be a uniform unrestricted finite-time nonnegative regret bound"
+  ],
+  "accepted_repair": {
+    "model": "Increasing history filtration, stationary raw p-moment reward laws, causal categorical logging with known actionwise pi>=d, conditionally independent fresh Bernoulli replays",
+    "estimator": "T^-1 sum R_t/(K max(d/2,phat_t))",
+    "risk": "4^(1/p) nu^(1/p)/(Kd)^((p-1)/p) T^(-(p-1)/p) + nu^(1/p)/(K d^2 sqrt(M))",
+    "producers": [
+      "Elementary scalar Holder-gradient martingale Lp inequality",
+      "Conditional true-propensity unbiasedness and raw p-moment",
+      "Clipped reciprocal projection and conditional Bernoulli variance",
+      "Explicit optional joint-good-event conditional risk with M >= (8/d)log(T/delta)"
+    ]
+  },
+  "dependency_disposition": {
+    "used": "Elementary proofs in public repair; Bernoulli MGF lower tail from reviewed Genalti reconstruction",
+    "rejected_for_import": "Park full H-BE regret proof due to Eq133 and Eq285 plus endpoint qualifications",
+    "not_required_for_selected_endpoint": "External arm decomposition, Ville application, lattice argument and lower-bound references in rejected H-BE chain; not accepted as production dependencies",
+    "not_assumed": "Unread Marcinkiewicz-Zygmund or von Bahr-Esseen theorem"
+  },
+  "boundaries": [
+    "No H-BE regret-rate counterexample or repaired complete regret theorem",
+    "No actual H-BE full-trajectory overlap instantiation",
+    "No author-issued erratum, novelty, experiment or Lean certification",
+    "No topic completion, main merge or deployment"
+  ],
+  "validation": {
+    "independent_math_review": "accepted",
+    "independent_source_review": "accepted-with-explicit-delta",
+    "numeric_sanity": "p2 nu0.5 c1=2e: b3=0.8660254 b4=1 lambda=0.09196986 conditional M4/M3 expectation=1.1230175",
+    "lean_rerun": false,
+    "harness_rerun": false,
+    "site_rerun": false,
+    "reason": "Documentation and audit receipt only; production declarations unchanged"
+  },
+  "graph_delta": {
+    "lean": "no-change: no Lean declarations",
+    "overview": "bounded source adjudication recorded; topic remains incomplete",
+    "functor": "no-change: no compiled transfer edge"
+  }
+}
