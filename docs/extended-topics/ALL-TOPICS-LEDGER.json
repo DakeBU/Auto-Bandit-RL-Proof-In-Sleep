@@ -38,6 +38,13 @@
         "controlled_evaluation": false
       },
       {
+        "topic": "combinatorial",
+        "path": "docs/extended-topics/ICLR-CUCB-CASE.md",
+        "review": "accepted-bounded-descriptive-case",
+        "receipt": "runs/extended-topics-20260919/cucb-case-validation.json",
+        "controlled_evaluation": false
+      },
+      {
         "topic": "causal",
         "path": "docs/extended-topics/ICLR-CAUSAL-CASE.md",
         "review": "accepted-bounded-descriptive-case",
@@ -551,11 +558,13 @@
       "source": {
         "candidate": "Lattimore--Lattimore--Reid, NIPS 2016 main and official supplement",
         "url": "https://arxiv.org/abs/1606.03203",
-        "full_audit_complete": false,
+        "full_audit_complete": true,
         "frozen": true,
         "hash_manifest": "docs/extended-topics/causal-source-hashes.json",
         "audit": "docs/extended-topics/CAUSAL-SOURCE-AUDIT.md",
-        "recent_audit_status": "2026 Algorithm 1, Theorem 4.4 printed proof, Lemmas 2.1/9.7 and mixture lemma inspected; qualifications recorded; external UCB and other results not audited"
+        "recent_audit_status": "Accepted bounded relevance/non-transfer disposition with separate repair review; see causal-source-disposition-review.json.",
+        "audit_note": "Bounded source-selection closure, not all candidate theorems certified: frozen repaired2016 endpoint and recent2026 relevant full-proof comparison, externalUCB version and independent finite-repair review. Metadata-only inventory and excluded lower/unknown-k/experimental claims remain explicit.",
+        "disposition": "docs/extended-topics/CAUSAL-SOURCE-DISPOSITION.md"
       },
       "algorithm": "Lattimore--Lattimore--Reid 2016 Algorithm 2: truncated importance estimates and actual argmax recommendation",
       "representative_endpoint": "Theorem 3 general-graph simple regret with explicit conservative coefficient 2 sqrt(2)+7; uniform and optimal allocation; parallel allocation bridge",
@@ -563,7 +572,7 @@
       "mandatory_obligations": [
         {
           "id": "classic_and_recent_primary_source_audit",
-          "status": "partial: selected classic and recent upper-bound proofs inspected with repairs; source adjudication and external dependency audit pending"
+          "status": "Closed bounded source-selection obligation: accepted frozen classic chain and complete relevant recent comparison with exact externalUCB version, mathematical repair review and explicit exclusions; not whole-literature certification."
         },
         {
           "id": "source_version_hash_and_definition_context",
@@ -666,13 +675,14 @@
         "runs/extended-topics-20260919/causal-noisy-diagnostics-validation.json",
         "runs/extended-topics-20260919/causal-parallel-review.json",
         "runs/extended-topics-20260919/causal-parallel-validation.json",
-        "runs/extended-topics-20260919/causal-case-validation.json"
+        "runs/extended-topics-20260919/causal-case-validation.json",
+        "runs/extended-topics-20260919/causal-source-disposition-review.json"
       ],
       "current_blockers": [
-        "Final bounded source-selection and finite-repair disposition review",
-        "All-topic controlled evaluation and manuscript synthesis"
+        "All-topic controlled evaluation under frozen executable protocol",
+        "Manuscript integration/typesetting and final whole-topic acceptance"
       ],
-      "next_action": "Finish bounded recent-source disposition and causal descriptive-case review; retain all-topic controlled evaluation obligations.",
+      "next_action": "Integrate accepted causal descriptive evidence into the all-topic evaluation and manuscript; preserve controlled-evaluation and final-acceptance obligations.",
       "contract": "docs/extended-topics/CAUSAL-CONTRACT.md",
       "diagnostic": "docs/extended-topics/causal_canary_diagnostic.py",
       "endpoint_note": "Actual algorithm-to-performance and mandatory allocation/canary chain is compiled and independently accepted with source deltas; topic remains incomplete for source/evaluation obligations.",

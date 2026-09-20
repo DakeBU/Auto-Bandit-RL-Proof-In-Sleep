@@ -1,5 +1,8 @@
 # Focused causal literature screen, 2026-09-18
 
+Current update (2026-09-20): the bounded source-selection obligation is now accepted in CAUSAL-SOURCE-DISPOSITION.md and runs/extended-topics-20260919/causal-source-disposition-review.json. The selected recent proof comparison and exact external UCB dependency have independent review, with separate mathematical-repair acceptance. Other candidates remain metadata-only; unaccepted lower bounds, unknown-k/Pareto chains and experiments are not transferred. The paragraphs below retain the dated 2026-09-18 inspection snapshot; their pending implementation/review statements are historical. Current production evidence is in the sampling, heterogeneous, noisy-diagnostics and parallel review/validation packets. Whole-topic and all-topic evaluation acceptance remain open.
+
+
 Purpose: freeze a source-faithful representative formalization, not rank
 research ideas or claim novelty. Search used public titles and keywords only.
 Queries included the 2016 title, causal bandits simple regret 2024/2025/2026,

@@ -1,5 +1,8 @@
 # Causal source audit, 2026-09-18
 
+Current update (2026-09-20): the bounded source-selection obligation is now accepted in CAUSAL-SOURCE-DISPOSITION.md and runs/extended-topics-20260919/causal-source-disposition-review.json. The selected recent proof comparison and exact external UCB dependency have independent review, with separate mathematical-repair acceptance. Other candidates remain metadata-only; unaccepted lower bounds, unknown-k/Pareto chains and experiments are not transferred. The paragraphs below retain the dated 2026-09-18 inspection snapshot; their pending implementation/review statements are historical. Current production evidence is in the sampling, heterogeneous, noisy-diagnostics and parallel review/validation packets. Whole-topic and all-topic evaluation acceptance remain open.
+
+
 Status: selected classic model, Algorithm 2, Theorem 3 proof and allocation
 bridge inspected; recent comparison partially inspected. Full classic/recent
 audit obligation remains open. No independent review is recorded.
