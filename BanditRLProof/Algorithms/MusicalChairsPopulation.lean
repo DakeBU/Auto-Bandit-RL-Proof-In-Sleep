@@ -275,4 +275,3 @@ theorem explorationEstimatesCorrect_probability {n k : ℕ} (hn : 0 < n) (hk : 1
       hn hk hnk (explorationLength_pos (by omega) eps delta hdelta hdelta1) nu eps))
 
 end BanditRLProof.MusicalChairs
-

@@ -1506,7 +1506,6 @@ theorem explorationEstimatesCorrect_probability {n k : ℕ} (hn : 0 < n) (hk : 1
       hn hk hnk (explorationLength_pos (by omega) eps delta hdelta hdelta1) nu eps))
 
 end BanditRLProof.MusicalChairs
-
 ```
 
 </details>
@@ -1817,8 +1816,6 @@ theorem source_exploration_good_probability {n k : ℕ} (hn : 0 < n) (hnk : n < 
     (hepsgap.le.trans (separating_gap_le_one hn hnk nu hb S hcard gap hgap)) hepsgap hgap hdelta hdelta1
 
 end BanditRLProof.MusicalChairs
-
-
 ```
 
 </details>
@@ -3616,7 +3613,6 @@ theorem source_expected_visibleRegret_le {n k H : ℕ} (hn : 0 < n) (hnk : n < k
   exact source_expected_realizedLearnerRegret_le hn hnk nu hb eps delta heps hepsgap hdelta hdelta1
 
 end BanditRLProof.MusicalChairs
-
 ```
 
 </details>

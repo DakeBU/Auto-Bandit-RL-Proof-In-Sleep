@@ -300,5 +300,3 @@ theorem source_exploration_good_probability {n k : ℕ} (hn : 0 < n) (hnk : n < 
     (hepsgap.le.trans (separating_gap_le_one hn hnk nu hb S hcard gap hgap)) hepsgap hgap hdelta hdelta1
 
 end BanditRLProof.MusicalChairs
-
-

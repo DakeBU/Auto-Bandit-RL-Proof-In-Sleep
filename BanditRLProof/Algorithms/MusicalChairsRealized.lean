@@ -593,4 +593,3 @@ theorem source_expected_visibleRegret_le {n k H : ℕ} (hn : 0 < n) (hnk : n < k
   exact source_expected_realizedLearnerRegret_le hn hnk nu hb eps delta heps hepsgap hdelta hdelta1
 
 end BanditRLProof.MusicalChairs
-

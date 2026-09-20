@@ -58,7 +58,7 @@ def main():
             path = 'BanditRLProof/Algorithms/' + name + '.lean'
             header = '\n'.join(dict.fromkeys(imports + ['import ' + parent]))
             header += '\n\nopen scoped Classical ENNReal\nset_option autoImplicit false\n\n'
-            outputs[path] = header + production.lstrip()
+            outputs[path] = (header + production.lstrip()).rstrip() + '\n'
             parent = 'BanditRLProof.Algorithms.' + name
         else:
             assert not production.strip(), 'Unowned non-canary declarations'
