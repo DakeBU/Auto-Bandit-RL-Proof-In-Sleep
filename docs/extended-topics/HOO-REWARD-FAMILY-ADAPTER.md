@@ -41,3 +41,8 @@ propext, Classical.choice and Quot.sound. This result remains a prototype
 until public-root/canary integration, reader/registry mapping and the joint
 project gate pass. Independent review is recorded in the HOO semantic receipt;
 whole Lipschitz topic and all-ten ICLR completion remain separate.
+
+
+## Production checkpoint (2026-09-20)
+
+The reward-family adapter is now integrated in the public shared library and its new public-root canary passes. Original-chain, prototype, production port and mapping reviews are independently accepted with explicit deltas. Joint root9017, Tests9116,437Python tests7skips and generated-site checks passed at clean code785af09. Nine canonical reading references and an inline mathematical explanation are verified. Receipt: `runs/extended-topics-20260919/hoo-production-validation.json`. Earlier prototype-only/pending-production wording is historical; all-topic ICLR and topic completion remain pending.

@@ -32,3 +32,8 @@ The new adapter still needs production/public-root/canary integration. Recent
 comparison-source disposition, site/shared registry mapping and ICLR evidence
 remain mandatory; neither this checkpoint nor the old compiler gate completes
 the Lipschitz topic.
+
+
+## Production checkpoint (2026-09-20)
+
+The reward-family adapter is now integrated in the public shared library and its new public-root canary passes. Original-chain, prototype, production port and mapping reviews are independently accepted with explicit deltas. Joint root9017, Tests9116,437Python tests7skips and generated-site checks passed at clean code785af09. Nine canonical reading references and an inline mathematical explanation are verified. Receipt: `runs/extended-topics-20260919/hoo-production-validation.json`. Earlier prototype-only/pending-production wording is historical; all-topic ICLR and topic completion remain pending.

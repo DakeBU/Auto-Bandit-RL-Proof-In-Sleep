@@ -14,7 +14,7 @@ a partial heavy-tail producer and transfer milestone, not topic completion.
 | Mandatory topic | Candidate line (not frozen until full audit) | Current state |
 |---|---|---|
 | heavy-tailed | Robust UCB, moment-derived truncated confidence and expected regret | proving / source repair |
-| lipschitz | Repaired HOO with geometric regret dependence | full repaired rate compiled; independent acceptance pending |
+| lipschitz | Repaired HOO with geometric regret dependence | full source-repaired family rate independently accepted and jointly validated; ICLR evidence pending |
 | combinatorial | CUCB with explicit feedback and oracle guarantees | full repaired endpoints compiled; independent acceptance pending |
 | causal | Causal best-intervention learning with identification assumptions | intervention, importance and optimal allocation infrastructure compiled; performance chain open |
 | multi-agent | Musical Chairs with collision and coordination cost | source audit pending |
