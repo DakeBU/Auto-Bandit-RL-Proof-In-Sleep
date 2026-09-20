@@ -7,12 +7,37 @@ Inspected full C.5–C.7 proofs, printed pp21–25, and corresponding statements
 rendered pp22 and24 to verify the two issues below. Earlier work inspected
 C.11/C.12 and stated I.1. This is not a full audit of the paper's RL theorem.
 
-Official NeurIPS2023 main-paper landing page remains accessible. Its linked
-supplement is a ZIP. Direct curl attempts through proceedings.neurips.cc,
-papers.neurips.cc, and TLS1.2/HTTP1.1 failed at handshake; the web tool cannot
-open the ZIP content. The published supplement has NOT been downloaded or
-compared. This note's findings concern v3 (March2024), not a claimed identical
-2023 published appendix. Access failures are not evidence of source identity.
+## Published supplement comparison (2026-09-20)
+
+The earlier download obstruction is resolved. The [official NeurIPS landing
+page](https://proceedings.neurips.cc/paper/2023/hash/b11393733b1ea5890100302ab8a0f74c-Abstract.html)
+links the Supplemental ZIP. An HTTP request redirects to HTTPS and returns
+HTTP200; a second download reproduces the same archive bytes. The ZIP passes
+CRC checks. Only `full.pdf` was extracted; bundled code was not executed.
+
+- ZIP SHA256: `4fa7ed0857cc07339ea8884a5bdc64d8039bc68513f043648bc45cb72dee087c`.
+- Published `full.pdf` SHA256: `af3f298ba5489c2931c00f41b42b76bb16b389d2217787d5c25d3060180784ef`.
+- Both PDFs contain 54 pages. With the same `pdftotext -layout`, page text is
+  exactly equal except pages1,11,13; all appendix pages14–54 agree.
+- Text differences concern the arXiv stamp/layout and Los Angeles spelling on
+  page1, funding acknowledgments on page11, and reference39 publication metadata
+  on page13. These do not change the audited score statement or its assumptions.
+- Direct 100dpi raster comparison of pages17,21–25 gives identical PPM bytes.
+  Visual inspection of published pages22 and24 confirms that the prefix
+  calibration implication and random-factor extraction below are present.
+- Independent all-page raster comparison additionally checks appendix pages14–54;
+  its evidence and verdict are bound in the version receipt. Text equality alone
+  does not imply pixel equality: the reviewer found an additional visual change
+  on page2, outside this appendix audit.
+
+The version comparison is recorded in
+`runs/extended-topics-20260919/huang-official-version-audit.json`;
+`compare_huang_versions.py` reproduces pinned-byte and exact page-text checks.
+The earlier v3 receipt remains an immutable historical audit. This comparison
+extends the existing C.2/C.4/C.5 finite-horizon repair's source applicability to
+the matching published appendix; it does not certify the whole paper, all-time
+wording, regression/RL chain, or a Lean implementation. The two PDF files are
+not byte-identical, and no claim of whole-document identity is made.
 
 ## Explicit finite-horizon reconstruction
 
@@ -152,7 +177,8 @@ The original main paper's broader regression curvature, perturbation, linear
 bandit and RL results are not all certified by this score audit. The bounds
 here preserve C.4/C.5/C.2 constants on an explicit finite horizon while
 repairing their displayed argument; no unrestricted all-time assertion,
-published-version equivalence, new Lean theorem, or topic completion follows.
+whole-document identity, new Lean theorem, or topic completion follows. The
+published appendix correspondence is separately established above.
 
 
 ## Source scope delta
@@ -172,8 +198,9 @@ exponential is a proof mechanism, not a certified cross-setting bridge here.
 The all-ten ledger remains active with zero completed topics. The existing
 BCL source-policy endpoint remains the primary frozen formalization target.
 No new Lean or site gate, main merge, deployment or controlled evaluation is
-claimed by this document. Published-supplement identity and the broader
-regression/RL results remain outside accepted scope.
+claimed by this document. The published appendix correspondence is covered by
+the new version receipt; the broader regression/RL results remain outside
+accepted scope.
 
 Evidence receipt: `runs/extended-topics-20260919/huang-v3-dependency-audit.json`.
 The receipt binds the unchanged private derivation and both independent reviews.
