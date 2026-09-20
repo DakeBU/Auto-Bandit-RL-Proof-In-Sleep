@@ -701,26 +701,33 @@
       "topic_complete": false,
       "setting": "Simultaneous players, collision feedback and stationary arm rewards",
       "source": {
-        "candidate": "Rosenski--Shamir--Szlak, ICML 2016; version/hash not yet frozen",
+        "candidate": "Rosenski--Shamir--Szlak, ICML 2016, static Algorithms 1/2 and Theorem 1; supplement A.1",
         "url": "https://proceedings.mlr.press/v48/rosenski16.html",
         "full_audit_complete": false,
-        "frozen": false
+        "frozen": true,
+        "classic_audit_complete": true,
+        "classic_scope": "Static A.1 chain only; DMC/MEGA excluded; recent full-proof comparison pending",
+        "main_sha256": "c56474f0c3e689c1819b11e2bca4d3e5dcaef6eddfd0173bb55ff6a84f11d99d",
+        "supplement_sha256": "4ffd4d0c3fc975ae04b3d5e96911bd58d66bc2206e9d9584e18fcbf0c5b305ad"
       },
-      "algorithm": "Musical Chairs representative source line",
-      "representative_endpoint": "Complete multi-player regret guarantee including collision/coordination cost",
-      "endpoint_frozen": false,
+      "algorithm": "Static unknown-N Musical Chairs; explicitly repaired all-player budget, total local policy and genuine random coordination",
+      "representative_endpoint": "For the actual arbitrary-[0,1]-reward learner: P(G)>=1-delta; conditional pseudo-regret <=NS+8N^2; unconditional expected pseudo-regret <=min(NT,NS+8N^2+delta NT), all finite horizons, plus source 2exp(2)N^2 residual and delta=1/T corollary",
+      "endpoint_frozen": true,
       "mandatory_obligations": [
         {
           "id": "classic_and_recent_primary_source_audit",
-          "status": "pending"
+          "status": "partial",
+          "note": "Classic static chain and separate repair reviewed; recent primary full-proof comparison open"
         },
         {
           "id": "source_version_hash_and_definition_context",
-          "status": "pending"
+          "status": "accepted",
+          "evidence": "runs/extended-topics-20260920/multi-agent-source-review.json"
         },
         {
           "id": "exact_algorithm_model_assumptions_and_endpoint_freeze",
-          "status": "pending"
+          "status": "accepted-with-explicit-source-repair",
+          "evidence": "docs/extended-topics/MULTI-AGENT-CONTRACT.md"
         },
         {
           "id": "all_mathematical_producers",
@@ -740,7 +747,8 @@
         },
         {
           "id": "semantic_review",
-          "status": "pending"
+          "status": "partial",
+          "note": "Mathematical repair and scratch semantic roundtrip only; full endpoint review open"
         },
         {
           "id": "axiom_audit",
@@ -764,7 +772,8 @@
         },
         {
           "id": "joint multi-player process",
-          "status": "open"
+          "status": "partial",
+          "note": "Compiled scratch coordination marginal recursion; full local feedback/reward history producer open"
         },
         {
           "id": "collision observation law",
@@ -798,7 +807,16 @@
       "current_blockers": [
         "Source/endpoint audit incomplete"
       ],
-      "next_action": "Audit fixed/dynamic player assumptions and theorem scope"
+      "next_action": "Audit fixed/dynamic player assumptions and theorem scope",
+      "contract": "docs/extended-topics/MULTI-AGENT-CONTRACT.md",
+      "proof_route": "docs/extended-topics/MULTI-AGENT-PROOF-ROUTE.md",
+      "source_review_receipt": "runs/extended-topics-20260920/multi-agent-source-review.json",
+      "prototype": {
+        "path": "runs/extended-topics-20260920/MusicalChairsCoordinationPrototype.lean",
+        "reader": "docs/extended-topics/MULTI-AGENT-PROTOTYPE.md",
+        "status": "focused-compiled-scratch; public-root integration not performed",
+        "boundary": "Actual coordination state PMFs and fixed-arm distinctness; no exploration, estimator, marginal/hazard, concentration or regret chain"
+      }
     },
     {
       "id": "thompson-bayesian",
