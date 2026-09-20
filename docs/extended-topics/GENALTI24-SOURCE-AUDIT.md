@@ -58,4 +58,9 @@ separate unresolved issues. This checkpoint is not whole-paper acceptance.
 The subsequent `genalti-supremum-audit.json` checkpoint adds a compiled EReal
 supremum non-infinity theorem, actual-process image-law membership, and a
 nonempty sharp K2/epsilon1 instance. Independent blind/source reviews accept
-the explicit enlarged-class contract; production integration remains open.
+the explicit enlarged-class contract; production integration was subsequently accepted in `genalti-production-validation.json`; this historical prototype checkpoint did not itself establish integration.
+
+
+## Root and guard adjudication (2026-09-20)
+
+[The root/guard derivation](GENALTI24-ROOT-ADJUDICATION.md) gives the complete positive-root classification, a pathwise second-round failure of literal Algorithm1, and a first-request failure even after correcting only the guard logarithm sign. The latter has a finite K2,T1024 admissible witness under explicit indexed-sample semantics retaining repeated observations. The exact unique-root guard uses c=(1+sqrt2)^2 with a strict nonzero-count threshold; equality gives nonunique roots. The numerical doubling factor2 bound requires a relative initial-scale condition, and the integer iteration bound needs rounding. These are separately reviewed mathematical results, not a repaired concentration/regret theorem or Lean implementation. See `runs/extended-topics-20260919/genalti-root-audit.json`.
