@@ -71,3 +71,18 @@ Concentrated allocation m=8/3, biases, conditional-observational distinction,
 the tuned T=1 exact regret, uncovered diagnostic and parallel witness remain
 open. Shared root/Tests integration is now being checked; no global acceptance,
 main merge, site deployment or ICLR evidence completion is claimed.
+
+Validation update: separate partial-canary source review accepted the exact
+joint law, means and uniform instance (report SHA256
+e4f22b8310a9db2b917bd8d786ee2e535b893bb6bd34fcb3fe1f758d6cdd4a51).
+Shared root 9024 jobs and Tests 9124 jobs passed. Full harness rerun passed
+437 Python tests with 7 skips in 153.828 seconds. The initial packaging error
+was caused by new untracked Lean files; tracking those files fixed it.
+The local site builds with a fresh Lean gate and passes its checker. Twelve
+production declaration links are bound to reviewed hashes; their scope has
+20 nodes and 22 edges, with all generated destinations verified. Test-only
+declarations remain in Tests and the reader, outside the public declaration
+registry. The production/review and validation JSON receipts are in
+`runs/extended-topics-20260919/causal-sampling-{review,validation}.json`.
+The research worktree remains active. All frozen gaps listed above remain
+mandatory; this is neither causal-topic completion nor all-ten-topic completion.
