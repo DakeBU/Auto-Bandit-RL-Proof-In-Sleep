@@ -1,6 +1,25 @@
 {
   "results": [
     {
+      "id": "CAUSAL-COMMON-ALPHABET-EXPECTED-REGRET",
+      "title": "Causal actual-sampling expected simple regret on a common finite alphabet",
+      "chapter": "ucb",
+      "status": "compiled",
+      "informal": "Actual intervention samples and fixed-order empirical recommendation satisfy R_T <= (2sqrt(2)+7)sqrt(m log(2TK)/T)+1/T and R_T<=1; explicit rate constant 3sqrt(2)+7. Internally derived confidence, binary reward readout and covered allocation. Independently reviewed common-alphabet scope; heterogeneous-domain transport, parallel allocation, remaining noisy diagnostics and ICLR evidence remain open.",
+      "declarations": [
+        "BanditRLProof.Causal.GraphModel.expected_simpleRegret_source_bound",
+        "BanditRLProof.Causal.GraphModel.expected_simpleRegret_explicit_rate",
+        "BanditRLProof.Causal.GraphModel.expected_simpleRegret_uniform",
+        "BanditRLProof.Causal.GraphModel.expected_simpleRegret_optimal"
+      ],
+      "depends_on": [
+        "BanditRLProof.Causal.GraphModel.sampleEstimate_source_confidence",
+        "BanditRLProof.Causal.GraphModel.simpleRegret_le_on_confidence"
+      ],
+      "missing": [],
+      "evidence": "BanditRLProof/Algorithms/CausalExpectedRegret.lean; BanditRLProof/Algorithms/CausalAllocationRegret.lean; runs/extended-topics-20260919/causal-sampling-review.json"
+    },
+    {
       "id": "HOO-REWARD-FAMILY-RATE",
       "title": "HOO full expected regret for arbitrary reward families",
       "chapter": "ucb",

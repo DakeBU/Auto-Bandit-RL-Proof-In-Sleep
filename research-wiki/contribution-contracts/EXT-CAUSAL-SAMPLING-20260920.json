@@ -1,0 +1,182 @@
+{
+  "schema_version": "2.0",
+  "id": "EXT-CAUSAL-SAMPLING-20260920",
+  "route": "extended-topics/causal",
+  "frontier_cell": "causal/common-alphabet-actual-expected-regret",
+  "source_facing": true,
+  "source": {
+    "kind": "paper",
+    "title": "Causal Bandits: Learning Good Interventions via Causal Inference",
+    "version": "NIPS2016 main and official supplement; frozen hashes in causal-source-hashes.json",
+    "anchor": "Algorithm2 main p5; Theorem3/Proposition4 main p6; complete Theorem3 proof supplement p14",
+    "url": "https://proceedings.neurips.cc/paper_files/paper/2016/file/b4288d9c0ec0a1841b3b3728321e7088-Paper.pdf"
+  },
+  "target": "Construct intervention samples, derive confidence internally, and prove actual expected simple regret in the common finite alphabet model; retain all frozen topic gaps.",
+  "affected_files": [
+    "BanditRLProof.lean",
+    "Tests.lean",
+    "BanditRLProof/Algorithms/CausalSampling.lean",
+    "BanditRLProof/Algorithms/CausalSampleMGF.lean",
+    "BanditRLProof/Algorithms/CausalTuning.lean",
+    "BanditRLProof/Algorithms/CausalConfidence.lean",
+    "BanditRLProof/Algorithms/CausalRecommendation.lean",
+    "BanditRLProof/Algorithms/CausalExpectedRegret.lean",
+    "BanditRLProof/Algorithms/CausalAllocationRegret.lean",
+    "Tests/CausalNoisyGraphCanary.lean",
+    "docs/extended-topics/CAUSAL-SAMPLING-PROGRESS.md",
+    "research-wiki/papers/extended-topics-causal-sampling.md",
+    "runs/extended-topics-20260919/causal-sampling-review.json",
+    "website/content/results.json",
+    "website/content/banditrlwiki.json"
+  ],
+  "declarations": [
+    "BanditRLProof.Causal.GraphModel.roundLaw",
+    "BanditRLProof.Causal.GraphModel.observation",
+    "BanditRLProof.Causal.GraphModel.roundLaw_observation",
+    "BanditRLProof.Causal.GraphModel.sampleLaw",
+    "BanditRLProof.Causal.GraphModel.sampleLaw_observation",
+    "BanditRLProof.Causal.GraphModel.integral_sample_observation",
+    "BanditRLProof.Causal.GraphModel.sampleWeightedBit",
+    "BanditRLProof.Causal.GraphModel.sampleWeightedBit_independent",
+    "BanditRLProof.Causal.GraphModel.sampleWeightedBit_mean",
+    "BanditRLProof.Causal.GraphModel.sampleWeightedBit_second_le",
+    "BanditRLProof.Causal.GraphModel.sampleWeightedBit_signed_mgf",
+    "BanditRLProof.Causal.GraphModel.sampleWeightedBit_signed_sum_mgf",
+    "BanditRLProof.Causal.GraphModel.sampleWeightedBit_signed_sum_tail",
+    "BanditRLProof.Causal.sourceThreshold",
+    "BanditRLProof.Causal.sourceRadius",
+    "BanditRLProof.Causal.sourceLog",
+    "BanditRLProof.Causal.sourceLog_pos",
+    "BanditRLProof.Causal.sourceLog_union_budget",
+    "BanditRLProof.Causal.sourceThreshold_pos",
+    "BanditRLProof.Causal.sourceThreshold_sq",
+    "BanditRLProof.Causal.sourceTilt_admissible",
+    "BanditRLProof.Causal.sourceTilt_budget",
+    "BanditRLProof.Causal.sourceTilt_exponent_le",
+    "BanditRLProof.Causal.sourceThreshold_scale",
+    "BanditRLProof.Causal.sourceThreshold_bias_scale",
+    "BanditRLProof.Causal.sourceRegret_scale",
+    "BanditRLProof.Causal.sourceLog_half_le",
+    "BanditRLProof.Causal.sourceResidual_le_scale",
+    "BanditRLProof.Causal.GraphModel.sampleEstimate",
+    "BanditRLProof.Causal.GraphModel.estimateCenter",
+    "BanditRLProof.Causal.GraphModel.sampleEstimate_centered_sum",
+    "BanditRLProof.Causal.GraphModel.sampleEstimate_signed_tail",
+    "BanditRLProof.Causal.GraphModel.sampleEstimate_abs_tail",
+    "BanditRLProof.Causal.GraphModel.sampleEstimate_simultaneous_tail",
+    "BanditRLProof.Causal.GraphModel.sampleEstimate_source_confidence",
+    "BanditRLProof.Causal.maximizingActions",
+    "BanditRLProof.Causal.maximizingActions_nonempty",
+    "BanditRLProof.Causal.orderedArgmax",
+    "BanditRLProof.Causal.score_le_orderedArgmax",
+    "BanditRLProof.Causal.orderedArgmax_le_of_maximal",
+    "BanditRLProof.Causal.GraphModel.rewardMean",
+    "BanditRLProof.Causal.GraphModel.rewardMean_eq_integral",
+    "BanditRLProof.Causal.GraphModel.rewardMean_bounds",
+    "BanditRLProof.Causal.GraphModel.sampleRecommendation",
+    "BanditRLProof.Causal.GraphModel.simpleRegret",
+    "BanditRLProof.Causal.GraphModel.simpleRegret_bounds",
+    "BanditRLProof.Causal.GraphModel.simpleRegret_le_on_confidence",
+    "BanditRLProof.Causal.GraphModel.expected_simpleRegret_le_tuned",
+    "BanditRLProof.Causal.GraphModel.expected_simpleRegret_bounds",
+    "BanditRLProof.Causal.GraphModel.expected_simpleRegret_source_bound",
+    "BanditRLProof.Causal.GraphModel.expected_simpleRegret_explicit_rate",
+    "BanditRLProof.Causal.GraphModel.expected_simpleRegret_uniform",
+    "BanditRLProof.Causal.GraphModel.expected_simpleRegret_optimal",
+    "Tests.CausalNoisyGraphCanary.xLaw",
+    "Tests.CausalNoisyGraphCanary.wLaw",
+    "Tests.CausalNoisyGraphCanary.yLaw",
+    "Tests.CausalNoisyGraphCanary.noisyTables",
+    "Tests.CausalNoisyGraphCanary.noisyGraph",
+    "Tests.CausalNoisyGraphCanary.actions",
+    "Tests.CausalNoisyGraphCanary.reward_not_intervened",
+    "Tests.CausalNoisyGraphCanary.actual_joint_factorization",
+    "Tests.CausalNoisyGraphCanary.assignmentEquiv",
+    "Tests.CausalNoisyGraphCanary.reward_means",
+    "Tests.CausalNoisyGraphCanary.uniform_actual_rate"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "CausalOrderedLaw/MarginalLaw/Importance/Allocation/OptimalAllocation",
+      "FiniteRealArgmax versus rational ETC selector",
+      "HeavyTailFixedTilt and Mathlib finite product laws/integrals"
+    ],
+    "reused_declarations": [
+      "BanditRLProof.Causal.GraphModel.mixture_parent_joint",
+      "BanditRLProof.Causal.weightedBit_mean",
+      "BanditRLProof.Causal.weightedBit_second_le",
+      "BanditRLProof.Causal.optimalAllocation",
+      "BanditRLProof.HeavyTail.bounded_centering_mgf",
+      "BanditRLProof.HeavyTail.independent_sum_mgf",
+      "BanditRLProof.FiniteRealArgmax.choose"
+    ],
+    "new_shared_declarations": [],
+    "known_consumers": [
+      "BanditRLProof.Causal.GraphModel.expected_simpleRegret_source_bound",
+      "BanditRLProof.Causal.GraphModel.expected_simpleRegret_uniform",
+      "Tests.CausalNoisyGraphCanary.uniform_actual_rate"
+    ],
+    "planned_consumers": [
+      "parallel-design actual regret instance"
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Adapt actual DAG laws and shared probability interfaces; fixed-order refinement supplies the frozen tie rule. Allocation corollaries change the actual sampling law, not only a scalar bound."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/causal_decoder",
+    "source_reviewer": "/root/source_reviewer_a",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Common finite alphabet actual-law expected regret; concrete noisy joint, means and uniform instance only. Frozen topic and canary remain partial. Constant/direction repair explicit; arbitrary heterogeneous node types are not yet transported."
+  },
+  "graph_contribution": {
+    "lean_graph": "new-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "No certified heterogeneous-domain transport or cross-setting functor is claimed.",
+    "focus_targets": [
+      "BanditRLProof.Causal.GraphModel.expected_simpleRegret_source_bound"
+    ],
+    "visual_review": "Pending new local generated-site validation; no live inspection claimed.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "no-change-with-reason: extended causal line does not complete a teaching chapter",
+    "banditrlwiki": "updated: common-alphabet reviewed partial chain; all frozen gaps retained",
+    "results_ledger": "updated: actual expected regret with explicit source repair and representation boundary",
+    "roadmap": "updated: CAUSAL-SAMPLING-PROGRESS.md records frozen remaining obligations",
+    "website_surfaces": [
+      "website/content/results.json",
+      "website/content/banditrlwiki.json",
+      "compiler-derived module graph"
+    ]
+  },
+  "truth_boundary": "Common finite alphabet actual-law expected regret; concrete noisy joint, means and uniform instance only. Frozen topic and canary remain partial. No main merge, deployment, whole-topic acceptance or ICLR evaluation completion.",
+  "verification": {
+    "focused_checks": [
+      "Seven modules: 3602 jobs passed",
+      "Concrete noisy test: 3603 jobs passed; printed axioms only propext/Classical.choice/Quot.sound"
+    ],
+    "bandit_check": "running; result to be recorded before acceptance",
+    "site_build": "pending",
+    "site_check": "pending",
+    "independent_review": "Seven modules and separate partial canary accepted with explicit scope delta; bound review hashes in causal-sampling-review.json"
+  },
+  "contributor": {
+    "name": "Codex",
+    "role": "Formalizer and review coordinator; independent reviewers named in semantic_roundtrip"
+  }
+}
