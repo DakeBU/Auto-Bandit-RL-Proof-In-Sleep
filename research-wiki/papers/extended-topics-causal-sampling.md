@@ -81,12 +81,20 @@ HeavyTail.bounded_centering_mgf and HeavyTail.independent_sum_mgf, and Mathlib
 finite product measures, coordinate independence and Bochner integration.
 Reading links do not claim additional proof dependencies or a certified functor.
 
-Independent production blind reconstruction SHA256:
-48438a0333a3d120e9fef12fe9c7396071e846bc19928f57a24164163eb3fb06.
-Independent production source review SHA256:
-cb4abe279e0227ba10d7638f43fa774c2f3f7275230b9c5698605f4385c11bc9.
-Both bind the seven module hashes and the common-alphabet boundary.
-Build and separate canary review status are recorded in the progress ledger.
+The historical sampling review and validation retain three invalid file hashes;
+their original byte provenance is unresolved. They are preserved as historical
+records, not used as current code bindings. Fresh distinct blind/source reviews
+cover all seven sampling modules, their noisy canary, and all five foundations
+at commit `132a8340f097b5e05bd17669980830b1f9c3d7e3`. Current bindings and
+explicit source deltas are in `runs/extended-topics-20260920/causal-review-rebinding.json`.
+The checker `tools/check_causal_review_bindings.py` verifies both commit and
+working-tree bytes with CRLF/bare-CR to LF normalization only. It checks identity
+and declared coverage, not the mathematical quality of review.
+
+`designCost_convex` is a separately reviewed design-geometry result. The attained
+optimizer proof uses compactness and continuity, not that convexity theorem;
+its downstream regret consumer does not make convexity an endpoint dependency.
+The optimizer is noncomputable classical choice, not a verified numerical solver.
 
 ## Exact Lean context, statements and proofs
 
@@ -96,7 +104,7 @@ finite-space and fixed-order assumptions remain visible.
 <details>
 <summary>CausalSampling - exact module</summary>
 
-SHA256: `a0080c394db683932138baeb6602af38c47f887fcd2b288c09a65848410729ac`
+SHA256 (UTF-8, CRLF/bare-CR normalized to LF): `f9f321a43fa1985ea35f7316bfe1c334b1174e12fa13c56c86c08a41926cf5b7`
 
 ```lean
 import BanditRLProof.Algorithms.CausalOptimalAllocation
@@ -228,7 +236,7 @@ end BanditRLProof.Causal
 <details>
 <summary>CausalSampleMGF - exact module</summary>
 
-SHA256: `faa2bc2080950878a6368aab3b4b9ff34946962910a8dc41633848933268792e`
+SHA256 (UTF-8, CRLF/bare-CR normalized to LF): `a9e5e3c4dedaff1174bd7692b3556100d377d485825f89bef7c0def6f64b61f9`
 
 ```lean
 import BanditRLProof.Algorithms.CausalSampling
@@ -340,7 +348,7 @@ end BanditRLProof.Causal
 <details>
 <summary>CausalTuning - exact module</summary>
 
-SHA256: `23f4d395daf9394dc87bd7df5b47092c6e89941f04e2edc01975daf85861bb3f`
+SHA256 (UTF-8, CRLF/bare-CR normalized to LF): `cf0a682aeed3a37e4667654f8a021efc9b241da4a9b62b11850ddb8cdc422292`
 
 ```lean
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
@@ -480,7 +488,7 @@ end BanditRLProof.Causal
 <details>
 <summary>CausalConfidence - exact module</summary>
 
-SHA256: `b0abb046f96cb0fad2a89a6f587963660423161b8c837c0b2a3d3fa678666e26`
+SHA256 (UTF-8, CRLF/bare-CR normalized to LF): `18b2b906701db662aca30477dcba9e6452b61981058fcf7f6a3a841ef18f37b9`
 
 ```lean
 import BanditRLProof.Algorithms.CausalSampleMGF
@@ -638,7 +646,7 @@ end BanditRLProof.Causal
 <details>
 <summary>CausalRecommendation - exact module</summary>
 
-SHA256: `d77a973f2af6474eb35ad9310bb7de366d26991847f7f23b3b3f12ecaf55396d`
+SHA256 (UTF-8, CRLF/bare-CR normalized to LF): `165acdcfeca542cdb1c6abcfa3097c335c1c07f5efccc1b82299ed2731b1c4a8`
 
 ```lean
 import BanditRLProof.Algorithms.CausalConfidence
@@ -786,7 +794,7 @@ end BanditRLProof.Causal
 <details>
 <summary>CausalExpectedRegret - exact module</summary>
 
-SHA256: `0eecb128db14117d39c598f7a4dd78b8753f28f4242d8ababb7aec98cddd13d3`
+SHA256 (UTF-8, CRLF/bare-CR normalized to LF): `0eecb128db14117d39c598f7a4dd78b8753f28f4242d8ababb7aec98cddd13d3`
 
 ```lean
 import BanditRLProof.Algorithms.CausalRecommendation
@@ -907,7 +915,7 @@ end BanditRLProof.Causal
 <details>
 <summary>CausalAllocationRegret - exact module</summary>
 
-SHA256: `95fd37703b483324520d91dd9810943687e55f91426027fb22ec53019fc76c6b`
+SHA256 (UTF-8, CRLF/bare-CR normalized to LF): `95fd37703b483324520d91dd9810943687e55f91426027fb22ec53019fc76c6b`
 
 ```lean
 import BanditRLProof.Algorithms.CausalExpectedRegret

@@ -1,12 +1,13 @@
 """Regression gates for shared book/setting references, without invoking Lean."""
 import copy
+import hashlib
 import json
 import unittest
 from unittest.mock import patch
 from pathlib import Path
 
 from website.scripts import build_site as site
-from website.scripts.book_registry import build_registry, membership_index
+from website.scripts.book_registry import build_registry, membership_index, verify_reviewed_module
 from website.scripts.check_site import declaration_has_expected_badge
 
 
@@ -25,6 +26,30 @@ class BookRegistryTests(unittest.TestCase):
         return build_registry(config or self.config, self.chapters, self.spine,
                               wiki or self.wiki, declarations or self.declarations,
                               verified, "fixture-commit")
+
+    def test_explicit_lf_receipt_accepts_eol_only_and_rejects_code_drift(self):
+        source = b"def a := 1\n"
+        evidence = {"normalization": "utf8-crlf-and-cr-to-lf-only",
+                    "production_hashes_lf": {"A.lean": hashlib.sha256(source).hexdigest()}}
+        verify_reviewed_module(evidence, "A.lean", source.replace(b"\n", b"\r\n"))
+        with self.assertRaisesRegex(ValueError, "module hash drift"):
+            verify_reviewed_module(evidence, "A.lean", b"def a := 2\n")
+        evidence["normalization"] = "unspecified"
+        with self.assertRaisesRegex(ValueError, "normalization"):
+            verify_reviewed_module(evidence, "A.lean", source)
+
+    def test_legacy_receipt_retains_raw_byte_check(self):
+        source = b"def a := 1\n"
+        evidence = {"production_hashes": {"A.lean": hashlib.sha256(source).hexdigest()}}
+        verify_reviewed_module(evidence, "A.lean", source)
+        with self.assertRaisesRegex(ValueError, "module hash drift"):
+            verify_reviewed_module(evidence, "A.lean", source.replace(b"\n", b"\r\n"))
+
+    def test_causal_sampling_declarations_use_current_rebinding(self):
+        topic = next(t for t in self.wiki["topics"] if t["id"] == "causal")
+        refs = topic["formalization"]["declarations"]
+        self.assertFalse(any(r["review_receipt"].endswith("causal-sampling-review.json") for r in refs))
+        self.assertEqual(12, sum(r["review_receipt"].endswith("causal-review-rebinding.json") for r in refs))
 
     def test_one_identity_across_books_preserves_every_indexed_declaration(self):
         registry = self.registry()

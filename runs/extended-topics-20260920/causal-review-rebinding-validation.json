@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "code_snapshot": "132a8340f097b5e05bd17669980830b1f9c3d7e3",
+  "scope": "Evidence correction and executable regression gate; no Lean source changes",
+  "semantic_receipt": "runs/extended-topics-20260920/causal-review-rebinding.json",
+  "semantic_receipt_sha256": "c2ef4c2e2fd78fba0a330ddcfc71088c7306afdedd64c4cde116468629f87e1e",
+  "tooling_review": {
+    "path": "E:\\ABRL\\maintenance\\extended-topics-20260920-causal-rebinding\\tooling-review-v2.md",
+    "sha256": "7e5baea82bb5ba7ea307826b0a5217cf0fb143cdd7eca1f57cfd7c9217970ca9",
+    "verdict": "accepted-bounded-tooling-review"
+  },
+  "publication_review": {
+    "path": "E:\\ABRL\\maintenance\\extended-topics-20260920-causal-rebinding\\publication-review-v2.md",
+    "sha256": "f004f0b4ea6672b3db3c369dabe8de7dd29fae1cbadb14474c73ad86a46086a3",
+    "verdict": "accepted-bounded-publication-review"
+  },
+  "checks": {
+    "focused_regressions": {
+      "tests": 9,
+      "exit_code": 0,
+      "independently_repeated": true
+    },
+    "commit_worktree_private_review_bindings": {
+      "files": 13,
+      "exit_code": 0,
+      "independently_repeated": true
+    },
+    "full_harness": {
+      "command": "python tools/bandit.py check",
+      "exit_code": 0,
+      "root_jobs": 9044,
+      "Tests_jobs": 9150,
+      "python_tests": 449,
+      "python_seconds": 181.378,
+      "skipped": 7,
+      "log": "E:\\ABRL\\maintenance\\extended-topics-20260920-causal-rebinding\\full-gate-rerun.log",
+      "sha256": "5ddf466c2c0bdf2c3a03eadd10579af73893f5ab144e578b893e04d15fbf7e7e"
+    },
+    "site_build": {
+      "exit_code": 0,
+      "log": "E:\\ABRL\\maintenance\\extended-topics-20260920-causal-rebinding\\site-build.log",
+      "sha256": "543da752c15804033469993211f189f3673b0fcd83d85d0636aac4fa0c5e07aa",
+      "command": "python website/scripts/build_site.py --lean-verified",
+      "source_dirty": true
+    },
+    "site_check": {
+      "exit_code": 0,
+      "log": "E:\\ABRL\\maintenance\\extended-topics-20260920-causal-rebinding\\site-check.log",
+      "sha256": "36686d3d7e9819fac9b2f6f86e17c9ca7b4f646079a649fba8966938e22a9fe7",
+      "command": "python website/scripts/check_site.py",
+      "includes_books_check": true
+    },
+    "committed_diff_contributor_gate": "pending",
+    "focused_registry_regressions": {
+      "tests": 18,
+      "exit_code": 0,
+      "independently_repeated": true
+    }
+  },
+  "initial_diagnostics": [
+    "Pre-commit contributor command reported N/A with zero changed paths; this is not counted as contributor acceptance. A committed-diff run remains required.",
+    "Original tooling review demonstrated tree-object-as-commit, malformed report digest, role whitespace alias and same-report-role acceptance. All fixed and covered by regressions before full gate.",
+    "Initial live test ran before additive receipt existed and failed; receipt created and all9 tests passed.",
+    "First full harness: root9044 and Tests9150 passed;446 Python tests yielded6 registry errors,7skips. Added required semantic_verdict, repointed12 references to fresh receipt and added explicit LF registry support;18 focused registry tests passed. Original failure retained."
+  ],
+  "preservation": "Historical receipts unchanged; invalid original hashes not retroactively certified",
+  "controlled_runs": [],
+  "efficiency_estimate": null,
+  "topic_complete": false,
+  "completed_topics": 0,
+  "main_merged": false,
+  "deployed": false,
+  "review_history_hashes": {
+    "tooling-review-v1.md": "d56eafd36ff5387353d822b8d815bf36a9d507e259ea31097244995947f604a2",
+    "publication-review-v1.md": "acf8af55acae97eacd4c948daa9f8042c6fbe70b78702401f533e37464b10310"
+  },
+  "first_full_gate": {
+    "exit_code": 1,
+    "log": "E:\\ABRL\\maintenance\\extended-topics-20260920-causal-rebinding\\full-gate.log",
+    "sha256": "8fd04e38377f7b05409690831564872ac827f4bf52c7eaba7b4b0502c03e0c26",
+    "python_tests": 446,
+    "errors": 6,
+    "skipped": 7
+  },
+  "verdict": "semantic-and-shared-gates-passed;committed-diff-contributor-check-pending"
+}

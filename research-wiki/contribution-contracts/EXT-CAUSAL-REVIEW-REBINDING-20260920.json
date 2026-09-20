@@ -1,0 +1,107 @@
+{
+  "schema_version": "2.0",
+  "id": "EXT-CAUSAL-REVIEW-REBINDING-20260920",
+  "route": "extended-topics/causal",
+  "frontier_cell": "causal/current-code-semantic-evidence-binding",
+  "source_facing": true,
+  "source": {
+    "kind": "paper",
+    "title": "Causal Bandits: Learning Good Interventions via Causal Inference",
+    "version": "NIPS2016 main and official supplement; frozen hashes in causal-source-hashes.json",
+    "anchor": "Algorithm2 main p5; Theorem3/Proposition4 main p6; complete Theorem3 proof supplement p14",
+    "url": "https://proceedings.neurips.cc/paper_files/paper/2016/file/b4288d9c0ec0a1841b3b3728321e7088-Paper.pdf"
+  },
+  "target": "Correct stale evidence bindings without changing Lean; complete five-module foundation semantic review and freshly bind sampling plus canary to current source.",
+  "affected_files": [
+    "research-wiki/papers/extended-topics-causal-sampling.md",
+    "website/content/banditrlwiki.json",
+    "website/scripts/book_registry.py"
+  ],
+  "declarations": [
+    "BanditRLProof.Causal.exists_optimal_allocation",
+    "BanditRLProof.Causal.designCost_convex",
+    "BanditRLProof.Causal.GraphModel.expected_simpleRegret_source_bound"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "CausalOrderedLaw/MarginalLaw/Importance/Allocation/OptimalAllocation",
+      "FiniteRealArgmax versus rational ETC selector",
+      "HeavyTailFixedTilt and Mathlib finite product laws/integrals"
+    ],
+    "reused_declarations": [
+      "BanditRLProof.Causal.GraphModel.mixture_parent_joint",
+      "BanditRLProof.Causal.weightedBit_mean",
+      "BanditRLProof.Causal.weightedBit_second_le",
+      "BanditRLProof.Causal.optimalAllocation",
+      "BanditRLProof.HeavyTail.bounded_centering_mgf",
+      "BanditRLProof.HeavyTail.independent_sum_mgf",
+      "BanditRLProof.FiniteRealArgmax.choose"
+    ],
+    "new_shared_declarations": [],
+    "known_consumers": [
+      "BanditRLProof.Causal.GraphModel.expected_simpleRegret_source_bound",
+      "BanditRLProof.Causal.GraphModel.expected_simpleRegret_uniform",
+      "Tests.CausalNoisyGraphCanary.uniform_actual_rate"
+    ],
+    "planned_consumers": [
+      "parallel-design actual regret instance"
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Reuse unchanged accepted mathematical implementation; additive evidence correction and actual commit/working-tree identity gate; no new wrappers or proofs."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/causal_sampling_redecode",
+    "source_reviewer": "/root/causal_rebinding_source",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Finite common alphabet and covered allocations; repaired constant/event direction retained. Foundation blind role separately /root/causal_foundation_redecode in additive receipt. Old invalid hashes not retroactively certified."
+  },
+  "graph_contribution": {
+    "lean_graph": "no-change-with-reason",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Evidence identity correction only; no mathematical transport or Lean dependency added.",
+    "focus_targets": [
+      "BanditRLProof.Causal.GraphModel.expected_simpleRegret_source_bound"
+    ],
+    "visual_review": "Exact reader code bodies compared with source; updated hash labels. Local structural site checks recorded separately; no browser visual review.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "no-change-with-reason: extended causal line does not complete a teaching chapter",
+    "banditrlwiki": "updated:12 declaration references now use current semantic receipt; historical mismatch qualifier retained",
+    "results_ledger": "no-change-with-reason: mathematical result statements and compiled status unchanged",
+    "roadmap": "updated: causal ledger binds fresh13-file semantic review and preserves total0/10",
+    "website_surfaces": [
+      "research-wiki/papers/extended-topics-causal-sampling.md",
+      "website/content/banditrlwiki.json"
+    ]
+  },
+  "truth_boundary": "No Lean source changes. Fresh evidence covers exactly12 production modules and one canary; five previously pending/unbound foundations now independently reviewed. Historical invalid hashes preserved. Checker proves byte identity and declared coverage, not mathematical correctness or reviewer independence. No merge/deployment or total-topic completion.",
+  "verification": {
+    "focused_checks": [
+      "New binding checker and9 regressions passed, including real13-file receipt and private report bytes"
+    ],
+    "bandit_check": "Passed fresh root9044, Tests9150, 449 Python tests with7 skipped; initial6 registry errors retained and fixed; exact logs in causal-review-rebinding-validation.json",
+    "site_build": "Passed --lean-verified following fresh root/Tests gate; source dirty metadata recorded",
+    "site_check": "Passed check_site.py including books check;871 HTML pages,796 modules,10434 declarations;12 canonical sampling references bound to new receipt",
+    "independent_review": "Fresh two source-blind decoders and separate anti-anchored source reviewer accepted explicit deltas; exact reports and LF source hashes in causal-review-rebinding.json. Checker implementation independently reviewed."
+  },
+  "contributor": {
+    "name": "Codex",
+    "role": "Formalizer and review coordinator; independent reviewers named in semantic_roundtrip"
+  }
+}

@@ -19,6 +19,24 @@ def unique(items, label):
     return result
 
 
+def verify_reviewed_module(evidence, module_path, raw):
+    """Legacy receipts bind raw bytes; explicit LF receipts bind only EOL-normalized bytes."""
+    if "production_hashes_lf" in evidence:
+        if evidence.get("normalization") != "utf8-crlf-and-cr-to-lf-only":
+            raise ValueError("unsupported topic module hash normalization")
+        if "production_hashes" in evidence:
+            raise ValueError("ambiguous topic module hash format")
+        raw.decode("utf-8", errors="strict")
+        raw = raw.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+        expected = evidence["production_hashes_lf"].get(module_path)
+    else:
+        expected = evidence.get("production_hashes", {}).get(module_path)
+    if not expected:
+        raise ValueError("topic receipt does not cover declaration or owning module")
+    if hashlib.sha256(raw).hexdigest() != expected:
+        raise ValueError("topic reviewed module hash drift")
+
+
 def topic_formalization_nodes(topic, nodes):
     """Resolve reading references; reviewed packets never imply topic completion."""
     mapping = topic.get("formalization")
@@ -67,12 +85,7 @@ def topic_formalization_nodes(topic, nodes):
         if reviewed:
             evidence = receipts[ref["review_receipt"]]
             module_path = nodes[node_id]["module"].replace(".", "/") + ".lean"
-            module_hash = evidence.get("production_hashes", {}).get(module_path)
-            if module_hash:
-                if hashlib.sha256((ROOT / module_path).read_bytes()).hexdigest() != module_hash:
-                    raise ValueError("topic reviewed module hash drift")
-            else:
-                raise ValueError("topic receipt does not cover declaration or owning module")
+            verify_reviewed_module(evidence, module_path, (ROOT / module_path).read_bytes())
         if ref.get("statement_sha256") != nodes[node_id]["statement_sha256"]:
             raise ValueError(f"topic statement hash drift: {node_id}")
         if ref.get("role") not in {"model", "algorithm", "producer", "endpoint", "canary", "reuse"} or not ref.get("source_locator"):
