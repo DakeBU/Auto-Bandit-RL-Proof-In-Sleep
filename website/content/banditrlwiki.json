@@ -2205,7 +2205,7 @@
       "id": "multi-agent",
       "title": "Multi-agent bandits",
       "kind": "setting",
-      "summary": "Reviewed actual static common-set coordination reaches real expected mean deficit<=8n^2; learned common set, unknown-N exploration and full regret remain open.",
+      "summary": "Reviewed static unknown-N learner constructs actual local feedback, learned candidates and full expected pseudo/visible regret; production integration in progress, recent-source and ICLR obligations open.",
       "tags": [
         "communication",
         "collisions"
@@ -2215,7 +2215,7 @@
       "status": "source-audit-pending",
       "formalization": {
         "schema_version": 1,
-        "title": "Actual static coordination: occupation and real expected mean regret",
+        "title": "Static unknown-N learner: actual local feedback and expected regret",
         "semantic_status": "accepted-with-explicit-delta",
         "topic_complete": false,
         "source": {
@@ -2225,16 +2225,16 @@
           "url": "https://proceedings.mlr.press/v48/rosenski16.pdf",
           "sha256": "c56474f0c3e689c1819b11e2bca4d3e5dcaef6eddfd0173bb55ff6a84f11d99d"
         },
-        "source_commit": "0b853ce17188070a8b720ab24ce911b18941dca7",
-        "scope": "Actual local coordination kernel, derived1/(4n) hazard, occupation<=4n^2 and actual2U comparator charge yield finite real expected common-set mean deficit<=8n^2. No full unknown-N learner or exploration conditioning.",
+        "source_commit": "d6e815d9378c3f7a2fbbb58dcecb92cdda91bbc8",
+        "scope": "Actual independent exploration/reward law, local inverse-collision population estimate and empirical ranking, learned continuation and full chronological visible feedback yield all-horizon expected pseudo and unconditional realized regret <=min(nH,nS+8n^2+delta*nH).",
         "qualifications": [
-          "Candidate sets are local-stage inputs. The quantitative endpoint assumes a common nonempty set of cardinality n; actual exploration must produce it later.",
-          "Finite-time marginals and one-step collision feedback are constructed. No full observable-history or history-conditioned path-law theorem is claimed.",
-          "The conservative static1/(4n) hazard and finite geometric sum are derived, without independent waiting times or a supplied fixation bound.",
-          "Occupation counts before each transition, including the initial state. The new actual2U deficit charge and exact supported real-expectation identity give coordination mean deficit<=8n^2; this is not total completion time.",
-          "The comparator is the supplied common n-arm set S, not automatically the global top-n set. Means are in[0,1]; reward laws, learned optimality, exploration conditioning and realized-reward identification remain separate obligations.",
-          "Ten public-root component canaries cover occupation and regret. The oneFixed two-player collision diagnostic is invariant-compatible but unreachable from the two-player all-unfixed common-set law; its separate expected-bound canary starts all-unfixed. No full-learner canary yet.",
-          "Recent-source comparison, complete exploration/regret chain and all-topic ICLR evidence remain open. No topic completion, merge or deployment."
+          "Primitive model: synchronized0<n<k, independent stationary arm laws supported on[0,1], separately sensed collision bit, known k/epsilon/delta and positive nth-next gap. True n/means are not learner inputs.",
+          "Exploration uses exactly S=ceil max(16k/epsilon^2 log(4k^2/delta),50k^2 log(4k/delta)); second logarithm is an explicit all-player budget repair. Inclusive source-loop indexing is reconciled to S observations.",
+          "All-collision fallback, zero-count mean, rounding/cap and fixed arm tie order make local candidates total/nonempty on bad histories. Correct candidates are derived on an actual probability>=1-delta event.",
+          "Actual learned kernel and feedback prefixes establish the selected static finite learner. No general filtration/condDistrib or cross-horizon projective-consistency theorem is claimed.",
+          "Pseudo-regret preserves n*min(H,S),8n^2,delta*nH and the cap nH; conditional normalized pseudo-regret and source residual/inverse-horizon corollaries retain their hypotheses. Realized/visible expectation equality is unconditional; reward-dependent-event conditioning is excluded.",
+          "Public-root noisy canary is being integrated: actual Bernoulli means(3/4,1/2,1/4), exact S, allH visible bound, full reward-law transient event mass>=3/64 and pseudo charge5/4. Zero-bit/ranking fixtures are separate diagnostics, not measured full-trace events.",
+          "Nine production modules and combined root/Tests compile (9151 jobs). Full harness/site acceptance and compiled-environment axiom audit are pending. Recent full-proof comparison and ICLR evidence remain open. Topic incomplete; no merge/deployment."
         ],
         "review_receipts": [
           {
@@ -2244,6 +2244,10 @@
           {
             "path": "runs/extended-topics-20260920/multi-agent-regret-review.json",
             "sha256": "618ab5fa065cc5696f8eb2d1c7e9a8a7a9027faf4f80ca3f983c3c26f6120eb3"
+          },
+          {
+            "path": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json",
+            "sha256": "9b8397a56eede7d41c8d3d67faa0d472660331b92940aaec70129615df45fd9f"
           }
         ],
         "declarations": [
@@ -2757,6 +2761,2092 @@
             "role": "endpoint",
             "source_locator": "Static Algorithm2 / supplement A.1 Lemma4 actual coordination charge; common-S interface and explicit8n^2 numerical route, not full Theorem1",
             "review_receipt": "runs/extended-topics-20260920/multi-agent-regret-review.json"
+          },
+          {
+            "name": "BanditRLProof.FinitePMF.iid",
+            "statement_sha256": "ef48611b9e8bb4af3b23c2a88c13bec42c0590d91459ddd79b48b7c79a2bd60c",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.FinitePMF.iid_apply",
+            "statement_sha256": "37bb18d181682bba2f3c41e9e5021ea4317d1380faf7f8e6bb7d1c33e9f17ec1",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.FinitePMF.iid_product_expectation",
+            "statement_sha256": "454ae40ee074fc02903fea2337b0816022e03e9d3d0411805f121401a68a36b9",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.FinitePMF.eventCount",
+            "statement_sha256": "0fdd5b076ecc3dc0e12b472c006374e97abea2f77e81436fed7b780e4886d7ff",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.FinitePMF.pow_eventCount",
+            "statement_sha256": "015131e8573398cd915c97039896c27f89cffa255f8ee45eeb7add631361fa69",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.FinitePMF.indicator_weight_sum",
+            "statement_sha256": "7f34b3cfcba4d372cf76e69d61c21d0a39e4c6e2d22fcbfe3a3d2bd0e30fecae",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.FinitePMF.iid_count_pgf",
+            "statement_sha256": "cc993f418b59cfd22a9e3174cbcf03f4ca32e2a6e7b06d23784f628d513570f2",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.explorationDraw",
+            "statement_sha256": "d9b0f80a72b6731ba4cb9db120a2eaf12027d3549c2ca44753d84552b01a9f2d",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.explorationLaw",
+            "statement_sha256": "9fbd2ecf6720d3f1bfe3754317b4f8558ece380db51ed268b164b81895f6503e",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.observes",
+            "statement_sha256": "fc255578a19dc3a0aa2196816a7b05f09bf1ec212645311f57b24fd0f6531606",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.observes_rectangle",
+            "statement_sha256": "cae9ffab8c362b384e07e3f4c560a1ed4b6db1f1cbc3139554c00a4de0c55af6",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.exploration_observes_probability",
+            "statement_sha256": "31deb4e07bfe3bfdcfbe6c7d113af08757700a3cfe24e4420291f23bcb81e1ba",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.exploration_collisionFree_split",
+            "statement_sha256": "c5a07de8fd2eff4e027796007a6bfaef0d1c293cbd5ac4e3e66530dbcb31189a",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.exploration_collisionFree_probability",
+            "statement_sha256": "042f7da6f24d3e66565cba8ed218fda6de16b454667bfe843fb562dbf3954d11",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.exploration_collision_probability",
+            "statement_sha256": "06d77a2d91dcec3654ae50f231d780d174e898f2980e409ac9c962fb049ea327",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.observationCount",
+            "statement_sha256": "c0a098020b4bd497ea1cc2f8de62723ee52073422477ff448f0c54c358645beb",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.collisionCount",
+            "statement_sha256": "cbe34cef9e92ae4d9e0bec868faae4d25f84af79d1727cd9f624b7e22c5c6764",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.observationCount_pgf",
+            "statement_sha256": "49a4c62f92b05099cc5179088224dfc3d2851e85b650a5ace25f99562db3fad0",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.collisionCount_pgf",
+            "statement_sha256": "3927b4a0f61a06434d5938536099b4755e091851daa79a9865cba15bace636e6",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.exploration_observes_lower",
+            "statement_sha256": "181d005db80b626cdc425c3873f439a64d7843e019823526eea086d35cb71570",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.observationCount_laplace",
+            "statement_sha256": "77f315f57352eacd277f1f3077d981834527fd7cae5b81d756f94253c9c1f08b",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.ExplorationFeedback",
+            "statement_sha256": "98cbf7a1dca62935113dfbff10c683c11ffecf5257e0ab76c46a72d965ddb5b3",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.explorationFeedback",
+            "statement_sha256": "466a28cd3af1906a4c6b81a53245438195ea936fea53146efc85fce7b95b39f5",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.localObservationCount",
+            "statement_sha256": "f0bdd47a23b9238ba0b64455c554b3e64f293aa6e33f19c8ed8aa69bfdeb1a3e",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.localCollisionCount",
+            "statement_sha256": "986229b5bb523c58d659d3b5579c5f28a44ee40f597cc86fc6b31f7445ac84ad",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.localRewardSum",
+            "statement_sha256": "9ceec005fe7a6dc69232d09237542c823fd5bd7c46534a78d7272274fe604966",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.localEmpiricalMean",
+            "statement_sha256": "9159df80c658ebe3f0c300a0180f02805c14bc5035d29725d9ff587a96999d0e",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.localObservationCount_eq",
+            "statement_sha256": "1437285043d28056c6814fe4381330fe902bf8e9cd47410c5314c49eca09cb7f",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.localCollisionCount_eq",
+            "statement_sha256": "ce14f314b16816d9a340acfb46123fe9a1a0839558a6e01edca62c0b000e1fbe",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.localRewardSum_eq",
+            "statement_sha256": "f0f988c7002c95645a306717674c37d134bf77d27c6360b9cf59d4d81844cbd5",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.rewardLaw",
+            "statement_sha256": "5ac3ba97bbd1970d244bc188e0d13c7ae6c5755b9449e0fc7757f1b3fad601ca",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.armMean",
+            "statement_sha256": "6581febd969b0a5ce11ce1eb9765c4cd61e1038ed4c9ef95b984e8405fd7a522",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.reward_coordinate_preserving",
+            "statement_sha256": "fa6982dbaa8e0216d63eaf3c22473838dba7482ee772a6a374f39b7edddb4717",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.reward_coordinate_mean",
+            "statement_sha256": "72189be7c1f49a6322d411655848ca021759938d894dc058e00a40eeb0e170ee",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.reward_coordinate_bounded",
+            "statement_sha256": "36c198481f873e6e9ccf411af4e0134a1111f8b6ffc74d1a30170fb01adf1f15",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.reward_coordinate_subGaussian",
+            "statement_sha256": "2a94a27223aab2510344ba974adab4f6caeacbba38f287ea644744bb3ac3d6f9",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.reward_time_independent",
+            "statement_sha256": "8d4b8f9aa1ac0dc353058ef1489605980e7e92ca45553762f60f1a609769a95e",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.selected_sum_subGaussian",
+            "statement_sha256": "1301f68559441aa4d8175a028eeace85eda102b11021197700fb9d274d0c2853",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.selected_sum_abs_tail",
+            "statement_sha256": "052ff791edfc2a2c62691e3ab7e3ad3758b38e9da97ab145bbd445aaee8d5155",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.selectedMean",
+            "statement_sha256": "d29bbbd78cda4a4b1389d4b4948c920a728c7d9d56577278d625b8e3cd58df9a",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.selected_centered_sum",
+            "statement_sha256": "80822ac1cb64965e6028678082448b0fbe020ea8dba3b1a9ca621f53d109412f",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.selectedMean_tail_pos",
+            "statement_sha256": "f431316b496b3804e28cf77dd2b78b31c6de0de39435691c6f8d61bdbbbbb7eb",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.selectedMean_tail",
+            "statement_sha256": "9c9b6b4cbccac011d50c6818d547d927969e50b2364b41b666558c5fe1116137",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.observedTimes",
+            "statement_sha256": "01119677b474f4e2876dd7e42255209bee509ca8d734d938a1a069d02b98c244",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.localEmpiricalMean_eq_selectedMean",
+            "statement_sha256": "ef8e4b4635eeb7684e3ff0b560d01b2cddaa90739eac20932c1e47ac555aa980",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.localEmpiricalMean_fixed_tail",
+            "statement_sha256": "2ef8bd8917205668fdc9df6ec384792c8e7c683a4bc735ec2eda3f51cfc46b7c",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.measurable_selectedMean",
+            "statement_sha256": "2e1a81d7120826a2172a3f6a68c0c4ace3fd9d88673e5076d0cbb46e13d2110b",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.measurable_jointEmpiricalMean",
+            "statement_sha256": "b1effe72f3b0414e5651c03a67c8f8f78fe832826f78481d7fd54f6a280084f1",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.explorationRewardLaw",
+            "statement_sha256": "a7190470f931d4c630d70382b680217f1e08066efc05f955e843dd465eb0798d",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.meanBadEvent",
+            "statement_sha256": "08f2e04bcf12b1f3bb1e108829503758bbb4523de4de1c4f33888b6f808bea2e",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.measurableSet_meanBadEvent",
+            "statement_sha256": "06fc951b26f663fb3c4177fb2e3bdced3e3e456a31fb8e6e216fefabaf262177",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.meanBadEvent_mixture",
+            "statement_sha256": "29534e593870cf18f1058b1c0353934c497e5ee65bc2a717caf13c19b057ea09",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.meanBadEvent_count_bound",
+            "statement_sha256": "300db0c9e56b218b3904327df39744a9593a80f0797d46068d23bac1ad035606",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.half_le_one_sub_exp_neg",
+            "statement_sha256": "bb5738557427822ec5655ac82a09c6c2125f366c5f7bd81befd9ffa216759467",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.count_mixture_exp_bound",
+            "statement_sha256": "5e759705e45aeebfa163e4dc5b563a13bb13c16939772df621227696e3b81974",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.explorationProbReal",
+            "statement_sha256": "8d19f7f09e6e6e5b7b11881bc05962465080aba4ecb24adf4e2535ecbeb8f4a7",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.explorationProbReal_nonneg",
+            "statement_sha256": "00a0136950cf695fd43895047142e6d6290cec86929f911d2c9823c39a0b7dbb",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.explorationProbReal_le_one",
+            "statement_sha256": "89ad412ada9e1b767ee5d48537b7baf419405ae779818492aa5a096d51bf2e9e",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.explorationProbReal_lower",
+            "statement_sha256": "85e165024b9fb0d81fb7fcd64feca143ad5a6e59f220e4ae2db4a3d2bad021a9",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.ofReal_explorationProbReal",
+            "statement_sha256": "458ff34bf9180b2f93ecd3a32f65eef4629d40582b3d3d90c5c2d9b37db70553",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.meanBadEvent_exponential_bound",
+            "statement_sha256": "48c5df7b550851e907561b9656d76b4353a25f729c8fb4367faf8cb5c8a48c31",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.allMeanBadEvent",
+            "statement_sha256": "a10836084cda74058c2d187bcf7346e594ff0ec42e59370b3087e64d4354c096",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.allMeanBadEvent_exponential_bound",
+            "statement_sha256": "0a1a0f39b3c3ed5c1cd27fa384f51e78c515eb9a4e50144f30b4d264f401cc95",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.mean_exploration_threshold",
+            "statement_sha256": "2d77db454c69fddf1d65f3436d2336b655441ad894c4c845e400553fdf6d689b",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.allMeanBadEvent_le_half_delta",
+            "statement_sha256": "c1f0a8d5b9c57988f2de58aea277019ab042eba2ae790d3afa5043c7941f5208",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.allMeanAccurate",
+            "statement_sha256": "7932fbe38a40b4edc300d0edfe6dd4f032977e4ab3b3849d96f08ba5d53c9640",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.allMeanAccurate_eq_compl",
+            "statement_sha256": "141be7324a462eb1e15c6b4b9c7d46eabb9679564cb6bd283e7894f1c1e38f68",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.allMeanAccurate_probability",
+            "statement_sha256": "02af4bcdf83f7cf0b42e5e94d3fd259ad3eeab0baccba2da91d9b248dd10d974",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.FinitePMF.iid_toMeasure_pi",
+            "statement_sha256": "6cbf15139eaff09b19b32bcb499935787671012ca742dc5458e89b284d03c262",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.FinitePMF.eventIndicator",
+            "statement_sha256": "31ec1dc54749ec8ee63fb539aa5c049782a30ee89957bfbe6e690aa6098edc87",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.FinitePMF.eventIndicator_mean",
+            "statement_sha256": "747d0b2643f1f31edd43339916c1762d9456142ff8076b7a6d67c5abec472129",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.FinitePMF.iid_indicator_mean",
+            "statement_sha256": "92d0f31e28f13891b2aeb5a26e59871c0f4ed95215fa84210a70537e1b45b9ca",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.FinitePMF.iid_indicator_subGaussian",
+            "statement_sha256": "09fa3fe51c26616ab0f228770db8fdf9638e9ef41b3d681ea42ae4ddc01e52f7",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.FinitePMF.iid_indicator_independent",
+            "statement_sha256": "af2c626869752c1b5baf418ebfde5e9362e0fba8fb14178f905ac2dac9a36d13",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.FinitePMF.eventCount_eq_sum",
+            "statement_sha256": "af679fef8632274fd982fbb87f5fd0ac135ce01a59142943b8d11b5e97b84a0d",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.FinitePMF.iid_centered_sum_subGaussian",
+            "statement_sha256": "c7e998b86728db94c70c7fc1e0de5ed1b6669b296295362e015d2161ef32a7f8",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.FinitePMF.iid_centered_sum_abs_tail",
+            "statement_sha256": "0afdd64e083bd549948104c1d407f1c6da479bbd1575cd2c281dcfa66ca8bb8e",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.FinitePMF.iid_frequency_tail",
+            "statement_sha256": "39b1fb976940e1655f06666763c855bf896e4101a043502d5049c5e2fd8f41cc",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.collisionProbReal",
+            "statement_sha256": "bbad1b3fd09cfeffafb640da40b103df07e7864b95059b3cda594dd38aa09694",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.collision_indicator_mean",
+            "statement_sha256": "5ac62782c291444b772e81a3a51458e8769a5001a0040fc4af3c029fc3d4ce2c",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.localCollisionRate",
+            "statement_sha256": "cfde2400f3b1969cd78ea6ed188d79b03f16ab4808b13d1019f05a8763fc3933",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.localCollisionRate_eq",
+            "statement_sha256": "e0ed6acaed5c7d541fca35341163e22e2f1533b2f2de83148fd6c3d6ffa28617",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.collisionBadEvent",
+            "statement_sha256": "548750cca96918fd77058c0cfd9fff7a2399568842fda685176c2fb0b6c16732",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.collisionBadEvent_bound",
+            "statement_sha256": "4ce46b3fe8d945570da4ff0e2de3019356691a781fe7365eea2ba275730ff06d",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.allCollisionBadEvent",
+            "statement_sha256": "e4aa50ae29cddd52fb0be15e011f7cc7fa28fa0ce59f42a3f16ba34220b6fe8f",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.allCollisionBadEvent_bound",
+            "statement_sha256": "f372e68d58bd762515ab3c3174c55f56ee0d339a83b998d400b2f41e75083e24",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.collision_exploration_threshold",
+            "statement_sha256": "7a7d1eb30f673eaa2728d7ce3e3c525cbfd117fc3f55690fd5a4f8038f7f6f3e",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.allCollisionBadEvent_le_half_delta",
+            "statement_sha256": "a20725544e6dbbfbdd1b3358a703f93d70e6d28d3649e1196008a4581354f7f4",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.allCollisionAccurate",
+            "statement_sha256": "89d75697736fe823c82b83337b3d4438e09a6b28a20748cdd8139c155afe0efc",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.allCollisionAccurate_eq_compl",
+            "statement_sha256": "77ea216c869ac678dd654f00ae6f4118663064607c703c5c632fdad8267ea31e",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.allCollisionAccurate_probability",
+            "statement_sha256": "3d51bd809fae6b376cbbf1cdc737fad6be4d2dd173927fa0ecfd21fedf285658",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.explorationRewardLaw_fst_event",
+            "statement_sha256": "34f83caaac278420de9d8de070d7f01b99660a68ddec0baf546ffe194695cddc",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.statisticsBadEvent",
+            "statement_sha256": "5ca3884af29ad07a0dc3d1ff46841bd3ac50a4883c1e9f7fff13dae5cd9b6dc1",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.statisticsBadEvent_le_delta",
+            "statement_sha256": "31d0b995d38a6059c2bd39bed6d28a4f279ffe04b7dca0b8d083edeefdc77768",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.explorationStatisticsAccurate",
+            "statement_sha256": "4b38fd06cc6a94397268df7fe997dc0b6589dd46a6c9c6dc19889baf2f83ff30",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.explorationStatisticsAccurate_eq_compl",
+            "statement_sha256": "74a8f9c17b44e9c8a0158e59d85c3a3c84821b12f17a3aace161c2366212fc13",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.explorationStatisticsAccurate_probability",
+            "statement_sha256": "d40f7feec0d6be6701ed5d95c3592a269d6a8278ceea37cade0ce2adc276fd2a",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.explorationLength",
+            "statement_sha256": "e776889d9e7f4da016898c5c48e645a5340cf5125848f19fa7a6c8a3a5c18c85",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.explorationLength_mean_budget",
+            "statement_sha256": "ba27c45626547d49c7a8bb4cb661a324bfebac47c83092df7ddf179062db9d52",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.explorationLength_collision_budget",
+            "statement_sha256": "fcbf06be4f87697adc2949e193e5d69184882c23e0b6ad37235d0754664d9ba6",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.explorationLength_pos",
+            "statement_sha256": "11d974a0c47bbcabb4593e4d6d2157173556e91c1daca03076a69912cee15090",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.explorationStatisticsAccurate_at_explorationLength",
+            "statement_sha256": "e297b390475bc4dd96b8b9c03ffecfb9738d6994bf90bce81e082564bb108f93",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.base_gamma_upper",
+            "statement_sha256": "9b859c2d57ccbd94e5dd989b100019c42f1e278c3b927fc28535c7a365a09c2f",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.base_neg_gamma_lower",
+            "statement_sha256": "6a0baca6c46a7f4670db6a32812ab59f783e82ddce340ca56e76ae39e5b1bfe1",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.avoidanceBase_eq",
+            "statement_sha256": "23fb8527e5e176a01576639a6ff25a47c623af7673761e85203f04871baae76f",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.avoidance_mass_lower",
+            "statement_sha256": "811d415645f64d17a0327e4fc6b8830ded6218a8c2679f1320f4de568c0a8d70",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.collision_accuracy_sandwich",
+            "statement_sha256": "1078d7bdd2c0089934708ad7a7b055a4805286c4954db6fc45dfafe9347b6170",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.collision_accuracy_survival_pos",
+            "statement_sha256": "af0a0d1c9e5b1b615ee2a18bd326fabb45df3e453c529cebc384ebdfb714c26a",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.population_inverse_margin",
+            "statement_sha256": "aca9ae55bd2f0ab5a268f325c3604fcb5fa92b5da8a7eb376bc25746f721074e",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.population_inverse_round",
+            "statement_sha256": "e72297e865049ab0b8ad02ff860f79229dd7f7ada66032d98ac0314ceccedffb",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.populationInverse",
+            "statement_sha256": "fa8dfe24fd4f07f1e09eedbabe8b44681f53e12122e6400b85552b2e2fc7e649",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.populationEstimate",
+            "statement_sha256": "12d5770891b456f1c35e30d8af545bfde795f2b311f234d7f6041378a2ca1d80",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.localPopulationEstimate",
+            "statement_sha256": "2fcaa490a4b3d80c914296c90c9163a0607d666d1f01217fbcca4e0bcdd5874e",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.localCollisionCount_le",
+            "statement_sha256": "77097b5a740c0fc85f1b1e7d3aa868cbbbb0a7e28f5d664ddfdd52beae58906f",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.noncollision_fraction_eq",
+            "statement_sha256": "bdcd879f2712de96fcc969ac2de2071aa707f2200dfb8cf3b01ad610691b3292",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.populationInverse_ge_one",
+            "statement_sha256": "16048c6563f225635df132f5e8129df614d3e379d7a43dbe69b1951ed80d081f",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.populationEstimate_le",
+            "statement_sha256": "6e9bfa2b748bcb24013adfef5c3c5468e2d653ed86ee41a37f0b4e0259c81650",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.populationEstimate_all_collision",
+            "statement_sha256": "70f4d3257358be513fedfc9d043393ff0793c4042b8057e661cc709bcd7b397b",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.populationEstimate_zero_collision",
+            "statement_sha256": "fc936e3fdff5787abf34c62581122f0c185ff77e32f7687c796acb4a9d0e663e",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.populationEstimate_correct",
+            "statement_sha256": "aeb095d2013bb3e9f493ba71f8f05d4a0ebfcbacbc0a1abb7bdec4c28ddd21f6",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.localPopulationEstimate_correct",
+            "statement_sha256": "4e90f3079a50034670049b7548084ab90de44a8e0660049aec517ff8c3dfda57",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.populationEstimate_regular_cast",
+            "statement_sha256": "fb5be65d8f38177147c5d9e4b470a73321a77a3159618a6e401bc292add2dca1",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.collisionCount_le",
+            "statement_sha256": "65f82c5b8bb5b3092c87890f8ba692034d45fcdd6b1031fe6ebfc0da746466b4",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.localPopulationEstimate_eq",
+            "statement_sha256": "671839f48728f97e83fce206abe072c348e9c6ff546ccf995ba86233c979af8d",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.populationRecovered",
+            "statement_sha256": "fb717aaaae1c2fec0a506be4307c4539334e7af02ff0fab81bb948e844177bdd",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.allCollisionAccurate_subset_populationRecovered",
+            "statement_sha256": "c49fd3f1f3d284d0ef9b6b08778e05ed5acbcc3eb7df0d4d36f3a19483d73bf5",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.populationRecovered_probability",
+            "statement_sha256": "f240815b180b753cd28531758be61418e5dc80673eccedff3210e1cffe4e4d61",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.explorationEstimatesCorrect",
+            "statement_sha256": "9475219074b2734ab3e816a1316ff91eca80680ff6b8612248bf32655dc746ec",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.explorationEstimatesCorrect_eq_inter",
+            "statement_sha256": "35d05cf559ca700d2106e8f4cfb4351edfdfb3742736aa72b235ecd54f81eb27",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.measurableSet_explorationEstimatesCorrect",
+            "statement_sha256": "cf71f41af2142dcc2e8b1919159e520a012db3b14aba7bb83d8852002fcc4a6f",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.explorationStatisticsAccurate_subset_estimatesCorrect",
+            "statement_sha256": "4d185da49387f5ed37fc505dc759ceb0c4f22a84684726d88741b32f4738f0a0",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.explorationEstimatesCorrect_probability",
+            "statement_sha256": "0564073f14daae901f4e7a22797f6f13e04acc46986c5d5530073ed95681f99f",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.scoreOrder",
+            "statement_sha256": "b527f41fcbe859bb9ec6279f07ee4ed9c9ae2b241fe86a80d2e9c32e6a6fa5b5",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.rankedArms",
+            "statement_sha256": "d64c516ff2cba0030502d17d270b11c2b053f4c9cbbc04dc8e938e84f8f5ef7a",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.topArms",
+            "statement_sha256": "a212d97e4a51560788dbf9f95b649759c0ee51acd7fb0b651beec20aca3b202f",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.topArms_card",
+            "statement_sha256": "7460522b32baa5444d753454442cb2d8363a4e7349e05d2d2f5bbb244054f31b",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.topArms_before_unselected",
+            "statement_sha256": "010f476869b04f972aa2279df55a9855747496e823c46d7a5d411e4adf8a32f4",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.topArms_eq_of_order_separated",
+            "statement_sha256": "637891a9452c053bc4a2e0947ba1f6f21964d8081f1c3b9b47fbb0ff3ee6faa4",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.topArms_eq_of_strict_separation",
+            "statement_sha256": "2a91a1e0252a97e08066ef9c09b2675cdafcf33c0bc199d9a8bee9c44971e9f2",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.topArms_eq_iff",
+            "statement_sha256": "bbf0dd7f0633db34f1c8f9b47cc325b61c1883b99a37878971e047bce7635789",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.populationEstimate_pos",
+            "statement_sha256": "c84b8e6d25d16531a95008782bceff5009eaf28c8f5cec24116030465c4a3ae8",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.localCandidateSet",
+            "statement_sha256": "19754e6a1613b1c363bf1cf3a8f23576d3d61d86e2a459c645a3e513fa2accf6",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.localCandidateSet_card",
+            "statement_sha256": "ecd44916eb017671cffc4e574fa83dacca82a3f2e3c1b6cfdd9b9a2b6d2bfe9d",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.localCandidateSet_nonempty",
+            "statement_sha256": "5d8d28ac9433c48792fe0205cea69a3315acd2765c19df6c5fab6c45408f7098",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.empirical_strict_separation",
+            "statement_sha256": "bbb102f5651a2c824b971e4ac81e6bf4d47ec83f32708901ee1a04dd3c231f39",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.localCandidateSet_correct",
+            "statement_sha256": "77c6a3144feee2d59ad092a641f5a8ed7f5cd75c0cd52967e641304152419595",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.localCandidateSet_eq_iff",
+            "statement_sha256": "4c7cd1f9b5cfe4294e43adc387bbcb5b482cfc2f74bfbb33a7e6d3fefc55adb6",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.measurableSet_localScoreOrder",
+            "statement_sha256": "c16b02d05b2ee1f10559e2a988fb203e5d4e096ab53b95b05449306333330b6a",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.explorationGoodEvent",
+            "statement_sha256": "6fb63097c7c3b2f752cb8242a69802a6c239fa32a1ea9b5bd4ebf056614e22fa",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.explorationGoodEvent_eq_comparisons",
+            "statement_sha256": "498a4f9d0491c54443961658f15e25585924edf9139ee6f5a34530c395a6e8ab",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.measurableSet_explorationGoodEvent",
+            "statement_sha256": "f819eb4ae6c5f17d0f768238eebf5fb2947e74abab8a5b0cefe015bb50bcb1ed",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.explorationEstimatesCorrect_subset_goodEvent",
+            "statement_sha256": "21047c22c96fef863f028d8bbe909b4501a83d57f21fdb8c71c6bd4ca3567a76",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.trueTopArms",
+            "statement_sha256": "60e21b9a634d3d4b526784119f8b9402e357f4194d64da4b89f34e0f6cd8be81",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.trueTopArms_eq_of_gap",
+            "statement_sha256": "67464063b8a49eb40615f0213979520ef604c59eda45070615226430841a0e81",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.explorationGoodEvent_probability",
+            "statement_sha256": "ab6b892f96a75e1c113a6309d40171becb5420013c3bac98be16039c8def6a90",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.explorationGoodEvent_trueTop_probability",
+            "statement_sha256": "95068637a340443e8f93604a686fff6a4806be4653a5a79cc66f5de3e0f53a88",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.armMean_mem_unitInterval",
+            "statement_sha256": "b45f2973164c5bc732ef827bb158dc5bd3fc5076e294cb8743a8c2b12fe50c66",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.separating_gap_le_one",
+            "statement_sha256": "758b8510e3c2fb4e1467600dcecc49674ae5016ab3a5bdc12735f9fd92070a65",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.source_exploration_good_probability",
+            "statement_sha256": "d0b37664be9e13ef101377bd9636cd11c9b3b630c1a350790a42778f124ef654",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.rankedArm",
+            "statement_sha256": "a6ad0c7868824036c0d4f907602c52ba8f7edc0d16e22cf1fae531552b08a6f3",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.rankIndex",
+            "statement_sha256": "434c5bcb87f43c89375a7fb2b21e7c65365d7dc5f3715ba2fa040f94c4eb01ef",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.rankedArm_rankIndex",
+            "statement_sha256": "c119ecc4871ea54971787c067810bd5fc736825d032594cbf447c7619ff47cbd",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.rankIndex_rankedArm",
+            "statement_sha256": "a8aca6e3b1d585cf4b20b144d528248cbb951edb7103d24cacf0d30bcd502a30",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.mem_topArms_iff_rankIndex",
+            "statement_sha256": "814d8074a36ff965662dbf260af60749ab84ae4fb0ddcb34fcbdb927d6225a03",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.ranked_score_antitone",
+            "statement_sha256": "f59db455464c66b803cd030420a2f85b0a60b2ccd46092b4e0610399fe6dc799",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.boundaryGap",
+            "statement_sha256": "fb435511121fd500eda566bbe107fd019e1785c6d85bf1101069285d9e1b846f",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.boundaryGap_nonneg",
+            "statement_sha256": "dd3ef8f1396642567b6d8c27a5d15490483162e1cecccf0d97b7c945efbe9831",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.boundaryGap_separates",
+            "statement_sha256": "b57a341aacfe085a5254452dd83f7f93c24108ebf06e8c60362c6c1ab0ad0af7",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.explorationGoodEvent_orderStatistic_probability",
+            "statement_sha256": "80e4469585c26aa6ec792c62859ce2997d5a304c315426064c6cce16a9eae3f2",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.measurableSet_actualCandidate_eq",
+            "statement_sha256": "cda15ab2cee3a87bc0b6a6324e9f3e86974520800d5da37e5ad8daf94aa82368",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.CandidateConfig",
+            "statement_sha256": "3ba0a9d12fcc35ca9f15870c8cead39670b711f578fff3cfa902df6b67ce0ff0",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.learnedConfig",
+            "statement_sha256": "bb3716d85307ac040c80b874c83a12b1412076fd28b94c82ae781f3b529903e4",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.measurable_learnedConfig",
+            "statement_sha256": "b44df7ab7b987915b11700d861f13951f3fb8e9b4adaa55baea9c8318b3d0fc2",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.configDrawPathKernel",
+            "statement_sha256": "33a0b775b2f101299fbe685a564626a3839be8bc63b560ba7a5c141adbfa9a0e",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.learnedDrawPathKernel",
+            "statement_sha256": "b989e9335b9f11c9aada587c378ee8b8f3f31e47a0fefee37b66612e3ea1fa61",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.learnedDrawPathKernel_apply",
+            "statement_sha256": "95b274a727f5f3dfc2c5bb997d8ca610b62bb7459e480427817a43e96fa11543",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.learnedDrawPathKernel_pi",
+            "statement_sha256": "573b81b88efa906222206a4e1f403c8f5909af8c6b8e9675dd2a86fe6f7457d4",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.learnedDrawPathKernel_time_independent",
+            "statement_sha256": "1a948372632526de501f5d41c71bd6bf1d863e222b150eca931435403231d9b0",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.commonConfig",
+            "statement_sha256": "5dfa26464d12f180ecf4bdd8d88d0e72fb6b8921997251b521c9e036bf3fe1c4",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.learnedConfig_eq_common_on_good",
+            "statement_sha256": "7f8b776b1a3e1502f5cf719f763ae03a4c38067c38fd63dd6e27b799d88caf38",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.learnedDrawPathKernel_on_good",
+            "statement_sha256": "999c4f0778d97c41fe1e6efb061ecf3415261c4ed77b2cf1cbd3a510850d2248",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.explorationContinuationLaw",
+            "statement_sha256": "746144cf47dd4182d17c7766f9083e5ca9c26bb134a926013853e76da48eda3f",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.explorationContinuationLaw_fst_event",
+            "statement_sha256": "5fc41e740d1cc136802ef3fc1136c70a613b4b088109bff156931f8c87b9ba78",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.explorationContinuationLaw_rectangle_on_good",
+            "statement_sha256": "4c33c9b854b370b4ce7edb44e5d9ffc8336cbab7ff2c9fd90299ca0295916ec3",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.explorationContinuationLaw_good_probability",
+            "statement_sha256": "921dd8d9d40d4057a0ad0c47651592233a01a24ad24cac954b67e4820fdfca97",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.trajectory_eq_of_prefix",
+            "statement_sha256": "8a10f57389b3e43863836b9955acf426c1ed8f6f371e02aa0dfdb4e216d867a3",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.extendedCoordinationDraws",
+            "statement_sha256": "47bff3e379246aa365b4e6b87838222aeeda07bc0208268e28b02c18a08960e6",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.continuationAction",
+            "statement_sha256": "ad8a6ec369487a268da159a00bc86f92e9e02dd90393d0576a5054471464ad68",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.continuationAction_prefix",
+            "statement_sha256": "1a4c2e1baf4c1caabdc9d30aea6f696e7e7f939a960db9ab1ba51a568cccbd00",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.continuationAction_fixed_stays",
+            "statement_sha256": "ac34bdaef9b09c136b903eddb9c7c90ee2e4d32a8df9e719c9a930eed1403bc9",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.explorationGoodEvent_positive",
+            "statement_sha256": "756ce5f11e2b8b135731c9d981f14eb5634f6e1590d646d0bb2ba3af139eec8f",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.explorationContinuationLaw_normalized_rectangle",
+            "statement_sha256": "cc6256cf3949760ca35204957d4b0c87fa61829376a0160fa5004bcbe266fea5",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.FinitePMF.iid_sum_snoc",
+            "statement_sha256": "2730acdfdb23730db9aebfe83ab40be45e6b3ed78a67f683093b4ead925e7293",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.FinitePMF.iid_snoc",
+            "statement_sha256": "027be7caba6e7b80886a8810669f5e86ac2a8cf196ba35bd85010112e10cd3e8",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.trajectory_snoc_prefix",
+            "statement_sha256": "e5b84a57336cc7078cdb0bceb16e7e6acd2af43899228283b4f7f711ad52fc90",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.trajectory_snoc_last",
+            "statement_sha256": "50d9731e5fa4c8c23f2b58b2cf420807d7a2dcbadf6c086708aa31cdb94a41b5",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.iid_trajectory_stateLaw",
+            "statement_sha256": "c72684cc88023eff7ed763d98016b74f069560a365a36b63ab68b76bcd701d8a",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.FinitePMF.iid_take",
+            "statement_sha256": "7ea72c7f52185e3583f9bbf43b212036333464f5da29af3bec76acfb451c00bf",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.FinitePMF.sum_map",
+            "statement_sha256": "a2555d40f840cc944d725d60f0b429fe90b0193440d2a4be19cf2f7a66a3f637",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.trajectory_take",
+            "statement_sha256": "d52f2bd20c585d653272bdae704ac31cb6f2f69c460ad97cb4a0614d275f02ca",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.iid_trajectory_marginal",
+            "statement_sha256": "f8320d6f97238aaad9e0b321b9222a83baafc7ee2ca4d77f06bbe1d3614af6ed",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.iid_last_state_draw",
+            "statement_sha256": "85d225bc9d26ff33d9ccede5c67e20d0c40be5692de86d6f3add1f24f0aa6ade",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.iid_round_state_draw",
+            "statement_sha256": "6730c84c06780518105ac5bf801027eb512bc20dc68a46ed76d3d25c394cffd7",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.FinitePMF.sum_map_real",
+            "statement_sha256": "11cee30c46090f7b7f396dc497e1b1aca4c5c7fde0148555cc6f17aa64faadab",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.FinitePMF.sum_bind_real",
+            "statement_sha256": "dd1c0d349f495a7adb288a8f9aa819790c0add474565b7d3f49b9f229b020d25",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.pathCoordinationRegret",
+            "statement_sha256": "013f995ba52d7a80632eacb05d687d47741c3e57eb808b537d06642cd42247fb",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.iid_round_regret_expectation",
+            "statement_sha256": "726714d441b07afc46d09588ec5d5a819e8a7d2ff04d2c892b52dfa881e07ad4",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.iid_path_regret_expectation",
+            "statement_sha256": "3084adb342057000c3ddb11bcfc9ccba3e805cc73175b79c3de411416c7488fa",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.iid_path_regret_le",
+            "statement_sha256": "dc15f96f24681daac2a5c00eb85fb40e8dcbbad82338c561159e1816e71624eb",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.learnedDrawPathKernel_state_marginal",
+            "statement_sha256": "8ebd49f576e395546da06ec6e8f31281ebde2fd07ee406fce1f7182f73da9e55",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.learnedDrawPathKernel_round_marginal",
+            "statement_sha256": "604a6dcfb854daadd63d0df01b5f1a2aaff947015ff7c25b3dac377bce2316ca",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.explorationContinuationLaw_restricted_path",
+            "statement_sha256": "307c9e2c703796511462af200e96706df83f2ad74f77b41971f46d40314080d9",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.explorationContinuationLaw_good_regret_integral",
+            "statement_sha256": "24b48cc4707adf7ac92c1ecce9ffd18646a43c938992e41f6f402557fafcd0ae",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.explorationContinuationLaw_conditional_coordination_regret",
+            "statement_sha256": "4aa5129edabf93ee6532dcfcec6b4ec86f8572f3593508f4c5e1f5d812219f9c",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.iid_continuationAction_marginal",
+            "statement_sha256": "1c92e424e11b6a560cf427ac61265925665582d9a4ee8833f93b75485be860f9",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.source_conditional_coordination_regret",
+            "statement_sha256": "2fba90a6453e75e0fff946b6d61b6a287e7b06071a530e9949e85839068d0d69",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.ordered_set_sum_max",
+            "statement_sha256": "a9dee5f1c63218e1b975b774576050356b79b3f783277009d3b094b48ea2f86c",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.topArms_sum_max",
+            "statement_sha256": "72254992d6b2172159c2ae98b1e6e11d300bea70616201173a535d0b48ea4b82",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.collisionFreePlayers",
+            "statement_sha256": "b8a514e976342bfdebd6309c4e5658fb10a6f9d915bd6afed1e4daee5a7cbedd",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.earnedArms",
+            "statement_sha256": "c8cc51c40082459a91ec191349241526cd70b4f609cbd34b4b6e8672303564e3",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.collisionFree_action_injective",
+            "statement_sha256": "8411293e674b71309f71a462427e6c4a8392a55e45b697f3e87478b7ec8273bf",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.earnedArms_card_le",
+            "statement_sha256": "76b28b505f6df0bbab98d50364999f1d3f0006b68e1d961bd6e09f82cebeb8cf",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.earnedArms_sum",
+            "statement_sha256": "27f7a9adec44e9140c1077baf81b76044b20ee5a96d6089f67b3fdd52eb04814",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.globalRoundRegret",
+            "statement_sha256": "07a2abb8cb51d2b42cc30c602eb0fd2d3c9a3d59ec9fd8350490ab55def1fcd5",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.globalRoundRegret_nonneg",
+            "statement_sha256": "e7f16b50013e154e72aa14c880920be3e2c6ed26e45e4ce9585cb581bf65e610",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.globalRoundRegret_le",
+            "statement_sha256": "d7fcc5e43c33155a7b998f08b1d2f44792e4228dd0535b390e3eb4f64571f19e",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.roundPseudoRegret_global",
+            "statement_sha256": "3efeaf37419f0579450c471298a28cc9233e01c6dcc584b4a061ee014b30f63d",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.learnerAction",
+            "statement_sha256": "f29e6d27b29d20fea8f4777264951c61ddb382f3dbf757e64945eb7363920727",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.learnerAction_explore",
+            "statement_sha256": "57684486a6a533967ee34c7240bcddc9ec5e30160c24a4c0619e2b126b8f9195",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.learnerAction_coordinate",
+            "statement_sha256": "f1108b8ca8d1dde533e34f224beaef0ccbe5b5ab81956fa160a5740d058d870a",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.explorationPrefixRegret",
+            "statement_sha256": "b5221fe3d4bcf8c54b1d7efa482d8d2206c02c3bc88285f5b8679659b91d1a17",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.learnerRegret",
+            "statement_sha256": "2470d11628317abff29221b833c5e1a560319ca3e0982045760854b59b6788a7",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.learnerRegret_split",
+            "statement_sha256": "70f65d1702f79902ef6745ba14ac175fcb7694166ace0ced75c06f10c4b3e235",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.explorationPrefixRegret_bounds",
+            "statement_sha256": "3445fef1947224f17b6bb1ce41a2dc23de60a2803905ceb180642ea9784defa5",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.learnerRegret_bounds",
+            "statement_sha256": "c1d26cb4befd562de597680b383995549021fdbdd1f7356a12dd6f4eb116cae4",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.learnerRegret_le_exploration_add",
+            "statement_sha256": "ab88e04ffe485f547f0b4d3119d0c949f4fad335f9ec46742c35591a9537a7fb",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.learnerAction_prefix",
+            "statement_sha256": "54e031c904e74ceea2e917acd85daa0e4712d9298f4cc9785600a639dc608813",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.integrable_learnerRegret",
+            "statement_sha256": "4bbf5b81021fb3831cf19141b159c0ce9e21cbe2afba467b79ef84295e257049",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.integrable_pathRegret_projection",
+            "statement_sha256": "48ffdbb87e0ae63f274e8c598df2a7679ce92a7232404fdd7c4d0781c3fbbddb",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.learnerRegret_good_integral_le",
+            "statement_sha256": "c8ae16c7247b6e135498e7260beb37923f47b63d0802b1f18c744cc720fba30b",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.learnerRegret_expected_le",
+            "statement_sha256": "1b05ef63a81f113cf0739a4ded2d357189aa82f28404a7eb8cd6e6a2b9200519",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.source_expected_learnerRegret_le",
+            "statement_sha256": "b96da1b5f2a7e61fde12db365aaedbdf13c45fe19c1b6cc329bd7b73008e22fd",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.source_conditional_learnerRegret_le",
+            "statement_sha256": "cd065c3a374840293c184c5b59983ca3c2afe637b855ad1e08e9b050d00085b9",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.source_expected_learnerRegret_coarse",
+            "statement_sha256": "8b3f6e9300fcd7e6846b55accd30819bd98faeab661e67fd08aeab28d0f38cab",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.coordination_residual_source_constant",
+            "statement_sha256": "15324f9167d44306837fc83cf3a65e5b71b3918e81884991085a2ddf5da66f5b",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.source_expected_learnerRegret_published_residual",
+            "statement_sha256": "5bec4c4e079d05946d76349a086c08b4c2602d0b2cee5b7ddfed0168ec78c8c0",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.source_expected_learnerRegret_inverse_horizon",
+            "statement_sha256": "4c6829a8113f6e47026e8502ffdb15d6879373fd17618158188c75ecebdde591",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.source_conditional_learnerRegret_published_residual",
+            "statement_sha256": "dcf9209ddacc330af7cd84928be4398460caceeed2dd9b9b0b24cbb9466ab9ec",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.reward_coordinate_integrable",
+            "statement_sha256": "63df92ac3357d57a526116270b4f80ae5492fb3e91621f7ea13467e1e4c59432",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.scheduleRealizedRegret",
+            "statement_sha256": "876bb520d4c2fdcdf6cd0fbfa75b4d52b1988e5c9e80e2e027fe23e55b768ed1",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.integrable_scheduleRealizedRegret",
+            "statement_sha256": "a43ae9fb36bd687eaccb4300c6d5a9a75f8d00bbc9773b2bd9529fc575efa155",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.scheduleRealizedRegret_mean",
+            "statement_sha256": "6ee6fcd0b002f25964bf590240efcf91ee0f6d0e443378755c716590dde163bd",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.measurable_scheduleRealizedRegret",
+            "statement_sha256": "278629ffcf2746d8a6d59585c815230c72e54db8c3a02f9a4e583691afd2d716",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.integrable_randomScheduleRegret",
+            "statement_sha256": "1468e1b6da6a66b0bd045ed680fb4154889e89d38b9ae5defa7be52f78949794",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.randomScheduleRegret_mean",
+            "statement_sha256": "fa910515bd12a7fb6463f3f657360372fb4b64d1d720b870f81d6cb4ce8ac039",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.explorationRealizedRegret",
+            "statement_sha256": "230b4a2cbb32d73f2f6b1bdec4bba16805b0c7fc8f027b5272863a938199c02e",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.continuationRealizedRegret",
+            "statement_sha256": "f75383f6fa4589f500fcb63d86d0b26384d3d25d6251e926de30d9cc9d7a2211",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.exploration_schedule_pseudo",
+            "statement_sha256": "e8fd36de8c3cff381f31d8ae1741904d6799f7f479fbf6fed01694799e17c059",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.continuation_schedule_pseudo",
+            "statement_sha256": "71e605c64960e07041d3be39fded65e78b333ab2690b05fb7271bf75f173adf4",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.integrable_explorationRealizedRegret",
+            "statement_sha256": "cae78b47ebbdc73170e5e3dc8b2bd170cbb2cdf55c12e147ff87553aa1b24dee",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.explorationRealizedRegret_mean",
+            "statement_sha256": "2c42496cef09c5a7d199c6e733c9f7f5caf52f189cb624dc5e21a2980403ff51",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.FullSample",
+            "statement_sha256": "a2db4c67cb1a9b1d283ef4961b73f39c9a11f45bf630bc4698ada5b0627c12e3",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.completeLearnerLaw",
+            "statement_sha256": "28bb90e1ac7a4c94f7b62de2f4f82331fca9968707ae91205e218285fdc83a4c",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.completeLearnerLaw_first_preserving",
+            "statement_sha256": "42a1ccc6d80e3c0296311440e99c817f2dc47c960a426b8d8408b764758992ef",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.explorationContinuationLaw_first_preserving",
+            "statement_sha256": "248c76b88909129f3ffb5cea8ec64212a4bf5bea3ead1660fa0b4a977a4627c1",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.completeLearnerLaw_exploration_preserving",
+            "statement_sha256": "1fded0e6ccccb3e33359fd154fb0e29008c031870ec5c5a9e99ba81501ade053",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.realizedLearnerRegret",
+            "statement_sha256": "a1fca4a5732758154b6e24e501034ba74f55aa585d52ae67a8c0188e95b38f15",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.integral_preserving_pullback",
+            "statement_sha256": "49d8178cc82f2c3efec39c698d1861af0a46291234845d9a988cec948b76422f",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.measurable_continuationSchedule",
+            "statement_sha256": "2705f2adbbc2a7969c159b7bfcf87266e048bda09c6ccc05b467123af0cdab73",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.integrable_realizedLearnerRegret",
+            "statement_sha256": "45f97bb41be7e84f0ff9188a41cb912d0cac74c4ae368b5ce3b8a2836c0469c6",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.continuationRealizedRegret_mean_joint",
+            "statement_sha256": "5268afd295616da95dcdf893a2e08cfc4f676f3cdc161f5e8656279da8ed660f",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.realizedLearnerRegret_expected_eq_pseudo",
+            "statement_sha256": "c47bb2405720c1ed2f56560d01c4abdcea019a9b3cc094370acf79eee3b9b592",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.source_expected_realizedLearnerRegret_le",
+            "statement_sha256": "d0494407f804844ed9686727af9f6c65b6a715f04a138dde20c9f2f09c9757a0",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.continuationFeedback",
+            "statement_sha256": "552bcb17e9d91b3b2f29e21ad426ae4b870784a8ef5a547f8f89f1b24bec8d13",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.learnerFeedback",
+            "statement_sha256": "9be8a2d076664abb171f299513befa9cf2bc4ac132a1e60d08630eea3dd824ce",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.learnerFeedback_explore",
+            "statement_sha256": "12d98e07c4b14b8ad034863e047e5b574e68eabcd76a0a3b379aed4339015de8",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.learnerFeedback_coordinate",
+            "statement_sha256": "da6a736244618ea0975e05ad22e5435729bb430f6a2b00dc99d817bb954c7e36",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.learnerFeedback_arm",
+            "statement_sha256": "32aaaba1a398a04891fd41c513f7f0f41857d9d2b64c195309c95b26aded62a7",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.learnerFeedback_collision",
+            "statement_sha256": "c6334b0d37a889585aeaea23f261f374fd6e7c463cfc720552c97fabd8faf742",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.learnerFeedback_completed_exploration",
+            "statement_sha256": "f76a33cdc735f592b1765a96a21daac9a7df230d657cc9fbc33ccbb2b5989562",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.learnedConfig_from_feedback",
+            "statement_sha256": "410dc1799fb60253f2c650c3c5f095689e5425dd495b3527b095d401967297b3",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.continuationFeedback_local_update",
+            "statement_sha256": "e20f04b141283bb8c0c28d0d6ef2eb9451e50b176b5f2069422942cd9ee656be",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.learnerFeedback_prefix",
+            "statement_sha256": "ba04b722e560dc00804d4b58fce1d7301ca2d395a5186f5b123b20d3c27ef74b",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.finite_sum_split_at",
+            "statement_sha256": "471429b13b9ec3e86f9ded68659f679b9e80ab540add6371f8abf3050af300fa",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.realizedLearnerRegret_eq_feedback",
+            "statement_sha256": "99a2bd143a0fc47bc8daf23d7d2065778cf7056a90aeea4e5fbfc4594846636c",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.measurable_feedback_mk",
+            "statement_sha256": "4c4bc9e8627e4f2b5686797b905e0058a7b6dd2c74287da50a3fbcb1ff474296",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.measurable_explorationFeedback",
+            "statement_sha256": "be1290d709cfdaf9ea7016f5ccee2bb1c9a3183416dfbbb526194830f44eefb3",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.measurable_continuationFeedback",
+            "statement_sha256": "55bf4d0deb4a9c90671ccdd1e12bdc4febaf90cec3cb78ca81838c2000081c30",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.measurable_learnerFeedback",
+            "statement_sha256": "560ef4119f9dc32b8eac83e0683900315fefc6334cccfc675d8098743b7cdc5d",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.measurable_learnerTrace",
+            "statement_sha256": "de814e5394732ff0d7d243b3bd63324db86c7b91ace7927d004f71e1a60f1645",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.visibleLearnerLaw",
+            "statement_sha256": "33e619b8e841470ac6e1894d8420f2f5f5942f3a5be143fc64ff6f07a04ccea0",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.visibleRegret",
+            "statement_sha256": "6d75f245189240ea2e13122147257483670be221934e2ac68ea6da5278a0cd8a",
+            "role": "model",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.measurable_feedback_reward",
+            "statement_sha256": "7ef07cc48bb2c94ab8a252ef7977823e379b8d2f1bdabf2edfd70d148f25bc76",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.measurable_visibleRegret",
+            "statement_sha256": "e92c83bb50ce1030ca16a2fbb96098175ee86c40ac5ea46f1ade29b1ac3f9cf1",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.visibleRegret_pullback",
+            "statement_sha256": "c93bbec7546100301d56fb9479ec717fa01824b2e9fe02717cf8255dd65c5045",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.integrable_visibleRegret",
+            "statement_sha256": "e92d93d912ddb0e835b03cb39a2802ccce3f620b7c88996bb6d25ef75df8f3b0",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.visibleRegret_expected_eq_realized",
+            "statement_sha256": "005a4cd73976163566e9b49a1abad71d92c3df22ae7998c265910268a5bda58f",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
+          },
+          {
+            "name": "BanditRLProof.MusicalChairs.source_expected_visibleRegret_le",
+            "statement_sha256": "745570395ad4faf9392f4815721e0949d52c55dbe0820c719915cf46990d7813",
+            "role": "producer",
+            "source_locator": "Static Algorithms1/2 and supplement A.1; explicit repaired budget and complete-law finite-horizon extension; see learner reader",
+            "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json"
           }
         ],
         "mathematical_reader": [
@@ -2766,7 +4856,13 @@
           "Fixed players never return to unfixed. The actual PMF bind recursion gives Pr(i unfixed at t)<=(1-1/(4n))^t. Finite geometric summation yields sum_(t<T)Pr(i unfixed)<=4n.",
           "For U(s)=number of unfixed players, finite sum interchange proves sum_s p_t(s)U(s)=sum_i Pr(i unfixed). Summing gives total finite expected occupation<=4n². No independence of players waiting times, expected completion time, or full regret statement is inferred.",
           "The actual real deficit is sum of means over S minus the sum of means of collision-free played actions. A fixed player hit by a collision must be hit by an unfixed player. Choosing a partner gives an injection, because two fixed players cannot share an arm. Thus at most U fixed players are hit, and at most2U reference arms are missing from successful fixed actions. Means in[0,1] give the actual per-round deficit<=2U.",
-          "All successful actions are distinct and, on the actual state/draw support, belong to S. Their sum is at most the S comparator, proving nonnegative supported deficit. Consequently the finite ENNReal expectation equals the ordinary real PMF-weighted deficit sum after toReal; no negative supported values are discarded. Summing the2U charge against the same constructed state/draw law and consuming occupation<=4n^2 gives actual finite expected coordination mean deficit<=8n^2. The full learner must still produce the true top-n S and the exploration-conditioned law."
+          "All successful actions are distinct and, on the actual state/draw support, belong to S. Their sum is at most the S comparator, proving nonnegative supported deficit. Consequently the finite ENNReal expectation equals the ordinary real PMF-weighted deficit sum after toReal; no negative supported values are discarded. Summing the2U charge against the same constructed state/draw law and consuming occupation<=4n^2 gives actual finite expected coordination mean deficit<=8n^2. The integrated exploration producer and learned-kernel factorization now supply the actual true top-n interface.",
+          "Actual iid uniform exploration gives q=(1/k)(1-1/k)^(n-1)>=1/(4k). Conditioning on the reward-independent action schedule fixes collision-free sample times; bounded independent reward MGFs and the count PGF yield P(|mean-mu|>=epsilon/2)<=2exp(-S epsilon^2/(16k)). The all-player/arm union pays delta/2.",
+          "Collision-frequency concentration gives |pHat-p|<=1/(10k). With b=1-1/k and q=b^(n-1)>=1/4, real-exponent bounds put the inverse estimate in[n-2/5,n+2/5], strictly within its rounding cell. The repaired all-player log(4k/delta) pays the remaining delta/2.",
+          "Finite sorting with a fixed tie order constructs local candidates. The numeric nth-next boundary gap plus strict epsilon/2 errors preserves selected/outside separation, so all actual local population estimates and top sets are correct on an event G with probability>=1-delta; no correct-set oracle is assumed.",
+          "The measurable learned path kernel is total on every exploration history. On G it factors to independent common-top-set draws. Actual path/state marginals transfer the8n^2 coordination bound. The all-history comparator and exact phase split then give E[R_H]<=min(nH,n*min(H,S)+8n^2+delta*nH), including H<S and H=0.",
+          "Fresh continuation reward arrays extend the same learned law. Finite schedule first moments, signed integrability and Fubini give unconditional expected realized=pseudo regret. Measurable chronological feedback pulls back the exact observed reward sum; its pushforward law supplies the visible regret endpoint. Conditioning this identity on reward-dependent G is not asserted.",
+          "The genuine noisy n2/k3 canary proves actual means/gap, source-good-event probability>=3/4 and all-horizon visible bound. A two-round collide-then-separate path has conditional mass1/16 and joint/full reward-law mass>=3/64, with mean coordination charge5/4. This is symbolic probability verification, not a Monte Carlo experiment."
         ]
       }
     },
