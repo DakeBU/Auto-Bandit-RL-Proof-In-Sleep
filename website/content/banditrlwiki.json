@@ -1829,7 +1829,7 @@
       "id": "causal",
       "title": "Causal bandits",
       "kind": "setting",
-      "summary": "Reviewed native heterogeneous finite-node actual expected simple regret and exact noisy diagnostics, including concentrated cost 8/3 and tuned T=1 regret 1/5. Parallel allocation/witness, remaining source screening and ICLR evidence remain open; topic incomplete.",
+      "summary": "Reviewed actual expected simple regret for finite causal DAGs, exact noisy diagnostics, repaired parallel allocation and full-support/deterministic witnesses. Remaining source screening and ICLR evidence are open; topic incomplete.",
       "tags": [
         "interventions",
         "feedback"
@@ -1850,14 +1850,14 @@
           "sha256": "99aa9427e02e31883510dfcd0b11ba4f45097dc30dd98a094cbf13068f93b747"
         },
         "source_commit": "5ef0d1fa8c205f7b842183c14f0f666cc0f8e8d1",
-        "scope": "Native heterogeneous finite-node actual-law expected regret, heterogeneous canary, and complete frozen noisy coverage/cost/bias/conditional/T=1/uncovered diagnostics; parallel witness and whole-topic obligations remain open.",
+        "scope": "Native heterogeneous finite-node actual-law expected regret; complete frozen noisy diagnostics; repaired parallel allocation, actual graph-law/cost bridge, true-cost regret consumers and both boundary witnesses. Remaining source screening and ICLR evidence are open.",
         "qualifications": [
           "Each node has its own nonempty finite type; final performance theorem constructs the finite product codec internally. Binary readout extends the literal binary source reward node.",
           "Coverage is explicit; zero allocation weights are allowed only when Q covers every parent support.",
           "Unchanged source truncation tuning and fixed-order ties; coefficient and failure direction repairs disclosed.",
           "Uniform actual threshold uses m, with K substituted only in RHS. Optimal allocation minimizes cost, not a proved ordering of actual regrets.",
           "Frozen noisy test now proves concentrated coverage, cost 8/3, B=2 biases, conditional versus interventional means, an uncovered design, actual tuned T=1 recommendation and exact expected regret 1/5, plus concentrated all-horizon bound. The B=2 bias test is distinct from the actual one-round tuning.",
-          "Parallel allocation bridge and witness, remaining source audit and ICLR evidence remain required. No topic completion.",
+          "Parallel bridge and witnesses are reviewed with strict rarity, normalized observation mass 1-D, N>=2 and known q. Actual thresholds retain designCost. Remaining source audit and ICLR evidence remain required; no topic completion.",
           "Heterogeneous Fin3/Fin2 canary proves native factorization, means 5/12, 1/4, 3/4 and uniform all-horizon rate; no exact diagnostic cost or random recommendation distribution is claimed."
         ],
         "review_receipts": [
@@ -1872,6 +1872,10 @@
           {
             "path": "runs/extended-topics-20260919/causal-noisy-diagnostics-review.json",
             "sha256": "1c82ee814f73077e600f6521276372aaa1e952e542b17087060e5cf1f4578888"
+          },
+          {
+            "path": "runs/extended-topics-20260919/causal-parallel-review.json",
+            "sha256": "c624c990f7f00b8235c00f8d391b6ca59a1236af893fc32eec84ccfbd88d88f5"
           }
         ],
         "declarations": [
@@ -2063,6 +2067,125 @@
             "role": "endpoint",
             "source_locator": "Algorithm2/Theorem3 native finite-node representation bridge; Proposition4 for uniform RHS; explicit repaired constants",
             "review_receipt": "runs/extended-topics-20260919/causal-heterogeneous-review.json"
+          },
+          {
+            "name": "BanditRLProof.Causal.ParallelParameters.rarity",
+            "statement_sha256": "d9ff13b4f0a8e233062d28cdf525dc9bab3a5fc319ddae1eed00b615a54a92d9",
+            "role": "model",
+            "source_locator": "Supplement p15 Proposition8 (arXiv v1 Proposition9), repaired allocation; known-q Algorithm2/Theorem3 consumer",
+            "review_receipt": "runs/extended-topics-20260919/causal-parallel-review.json"
+          },
+          {
+            "name": "BanditRLProof.Causal.ParallelParameters.rarity_spec",
+            "statement_sha256": "2caa4919da16029374dff21042fd7dc7ddf3e819d7075bf9183194e8b39996a5",
+            "role": "producer",
+            "source_locator": "Supplement p15 Proposition8 (arXiv v1 Proposition9), repaired allocation; known-q Algorithm2/Theorem3 consumer",
+            "review_receipt": "runs/extended-topics-20260919/causal-parallel-review.json"
+          },
+          {
+            "name": "BanditRLProof.Causal.ParallelParameters.rarity_minimal",
+            "statement_sha256": "8a07cf408f775732d017e2b79903e66a90c17e690892bcf7def19430205c1623",
+            "role": "producer",
+            "source_locator": "Supplement p15 Proposition8 (arXiv v1 Proposition9), repaired allocation; known-q Algorithm2/Theorem3 consumer",
+            "review_receipt": "runs/extended-topics-20260919/causal-parallel-review.json"
+          },
+          {
+            "name": "BanditRLProof.Causal.ParallelParameters.rareActions_card_le",
+            "statement_sha256": "8a3ee138e46f21da027f9c92476ce4632b6575413c7295719fc7da66e78faf2c",
+            "role": "producer",
+            "source_locator": "Supplement p15 Proposition8 (arXiv v1 Proposition9), repaired allocation; known-q Algorithm2/Theorem3 consumer",
+            "review_receipt": "runs/extended-topics-20260919/causal-parallel-review.json"
+          },
+          {
+            "name": "BanditRLProof.Causal.ParallelParameters.allocation",
+            "statement_sha256": "c5080a746f6e9755ea50e27eda017ff7de0a0fc422dd5e8893f2a44fdf98e4cd",
+            "role": "algorithm",
+            "source_locator": "Supplement p15 Proposition8 (arXiv v1 Proposition9), repaired allocation; known-q Algorithm2/Theorem3 consumer",
+            "review_receipt": "runs/extended-topics-20260919/causal-parallel-review.json"
+          },
+          {
+            "name": "BanditRLProof.Causal.ParallelParameters.allocationWeight_sum",
+            "statement_sha256": "fef2795bc486be3ba06075f881a397d2f2871aef9fe7467c1dcb9e0330d28f61",
+            "role": "producer",
+            "source_locator": "Supplement p15 Proposition8 (arXiv v1 Proposition9), repaired allocation; known-q Algorithm2/Theorem3 consumer",
+            "review_receipt": "runs/extended-topics-20260919/causal-parallel-review.json"
+          },
+          {
+            "name": "BanditRLProof.Causal.ParallelParameters.rootLaw",
+            "statement_sha256": "b3f0d23f2176b1283a0b62bf519dfeebb01be47303ca77f10471a4f8569511f8",
+            "role": "model",
+            "source_locator": "Supplement p15 Proposition8 (arXiv v1 Proposition9), repaired allocation; known-q Algorithm2/Theorem3 consumer",
+            "review_receipt": "runs/extended-topics-20260919/causal-parallel-review.json"
+          },
+          {
+            "name": "BanditRLProof.Causal.ParallelParameters.rootLaw_mass",
+            "statement_sha256": "01cc9bf92f8acecb45a7b77db2d58a6667995caf474ab39d74d0eeb11076e401",
+            "role": "producer",
+            "source_locator": "Supplement p15 Proposition8 (arXiv v1 Proposition9), repaired allocation; known-q Algorithm2/Theorem3 consumer",
+            "review_receipt": "runs/extended-topics-20260919/causal-parallel-review.json"
+          },
+          {
+            "name": "BanditRLProof.Causal.ParallelParameters.allocated_mass_domination",
+            "statement_sha256": "585e25afde6220f91f4589d33e1b71fbc358c033d57cdc3f50c81916617e0bcb",
+            "role": "producer",
+            "source_locator": "Supplement p15 Proposition8 (arXiv v1 Proposition9), repaired allocation; known-q Algorithm2/Theorem3 consumer",
+            "review_receipt": "runs/extended-topics-20260919/causal-parallel-review.json"
+          },
+          {
+            "name": "BanditRLProof.Causal.ParallelParameters.allocation_covers",
+            "statement_sha256": "7080790e2497f17214832a1cb968930fe6c2b18b9d285ff709ce6010dff3fa95",
+            "role": "producer",
+            "source_locator": "Supplement p15 Proposition8 (arXiv v1 Proposition9), repaired allocation; known-q Algorithm2/Theorem3 consumer",
+            "review_receipt": "runs/extended-topics-20260919/causal-parallel-review.json"
+          },
+          {
+            "name": "BanditRLProof.Causal.ParallelParameters.allocation_cost_le",
+            "statement_sha256": "d3dcb4be023a35403093498babed39a428d40c6cdba3c104e038887832a465d7",
+            "role": "endpoint",
+            "source_locator": "Supplement p15 Proposition8 (arXiv v1 Proposition9), repaired allocation; known-q Algorithm2/Theorem3 consumer",
+            "review_receipt": "runs/extended-topics-20260919/causal-parallel-review.json"
+          },
+          {
+            "name": "BanditRLProof.Causal.ParallelParameters.optimal_cost_le",
+            "statement_sha256": "43a8e77f0f250981b2ada50f2f3459ae9672411de480a45bf8c7aca8856428cd",
+            "role": "endpoint",
+            "source_locator": "Supplement p15 Proposition8 (arXiv v1 Proposition9), repaired allocation; known-q Algorithm2/Theorem3 consumer",
+            "review_receipt": "runs/extended-topics-20260919/causal-parallel-review.json"
+          },
+          {
+            "name": "BanditRLProof.Causal.ParallelParameters.graph",
+            "statement_sha256": "2a3f59ab80803d61016c852fc9e594f8231bf5070d8a7c0a65f8cac4bcacb7fa",
+            "role": "model",
+            "source_locator": "Supplement p15 Proposition8 (arXiv v1 Proposition9), repaired allocation; known-q Algorithm2/Theorem3 consumer",
+            "review_receipt": "runs/extended-topics-20260919/causal-parallel-review.json"
+          },
+          {
+            "name": "BanditRLProof.Causal.ParallelParameters.graph_parentLaw",
+            "statement_sha256": "d8ff66af01febeb00d53bd2fcfa873298d7e1c3b06df82e55123df878a7b4069",
+            "role": "producer",
+            "source_locator": "Supplement p15 Proposition8 (arXiv v1 Proposition9), repaired allocation; known-q Algorithm2/Theorem3 consumer",
+            "review_receipt": "runs/extended-topics-20260919/causal-parallel-review.json"
+          },
+          {
+            "name": "BanditRLProof.Causal.ParallelParameters.graph_designCost",
+            "statement_sha256": "b733d978616e10eb8c149e82265d762ac1ca152fd2e6641e9b90026705f28540",
+            "role": "producer",
+            "source_locator": "Supplement p15 Proposition8 (arXiv v1 Proposition9), repaired allocation; known-q Algorithm2/Theorem3 consumer",
+            "review_receipt": "runs/extended-topics-20260919/causal-parallel-review.json"
+          },
+          {
+            "name": "BanditRLProof.Causal.ParallelParameters.expected_simpleRegret_parallel",
+            "statement_sha256": "4cf15ab673cc34a0d5ef6ffc10fa01cffdf57a797508bec38b4b04c64751961e",
+            "role": "endpoint",
+            "source_locator": "Supplement p15 Proposition8 (arXiv v1 Proposition9), repaired allocation; known-q Algorithm2/Theorem3 consumer",
+            "review_receipt": "runs/extended-topics-20260919/causal-parallel-review.json"
+          },
+          {
+            "name": "BanditRLProof.Causal.ParallelParameters.expected_simpleRegret_parallel_optimal",
+            "statement_sha256": "7b6ac0661c4a42e1fd4cf8e4de63c575ddd9207cc2c15da63e87d969dceb50ae",
+            "role": "endpoint",
+            "source_locator": "Supplement p15 Proposition8 (arXiv v1 Proposition9), repaired allocation; known-q Algorithm2/Theorem3 consumer",
+            "review_receipt": "runs/extended-topics-20260919/causal-parallel-review.json"
           }
         ],
         "mathematical_reader": [
@@ -2070,10 +2193,11 @@
           "The observable estimator averages Y(P_a/Q)1{P_a/Q<=B}; it uses known parent laws and observed bits. Its mean differs from true intervention reward by nonnegative truncation bias at most m/B. The true reward mean is proved equal to the intervention integral.",
           "Bounded centered MGF at tilt 1/(2B), with B=sqrt(mT/L), L=log(2TK), gives simultaneous confidence radius sqrt(2mL/T)+3BL/T with failure at most 1/T.",
           "The least empirical maximizer satisfies regret <=2epsilon+m/B on the good event and <=1 everywhere. Integration gives (2sqrt(2)+7)sqrt(mL/T)+1/T and the cap 1. Since L>=1/2, explicit constant 3sqrt(2)+7 suffices.",
-          "Existing attained optimal-design and uniform-coverage theorems instantiate the same actual learner. The original noisy graph has true means 1/2, 3/10, 7/10; the exact noisy diagnostics are now reviewed, while parallel-design and its witness remain open.",
+          "Existing attained optimal-design and uniform-coverage theorems instantiate the same actual learner. The original noisy graph has true means 1/2, 3/10, 7/10; the exact noisy diagnostics are now reviewed, and the parallel-design bridge and witnesses are accepted separately with explicit source corrections.",
           "Native dependent node tables define the joint before encoding. Induction proves its pushforward under a constructed finite product codec; intervention and parent laws, coverage, exact design cost and full product sample law are preserved.",
           "The estimator, fixed-order recommendation and actual regret agree pathwise; integral transport yields the native expected-regret endpoint without an external codec premise. The additional Fin3/Fin2 canary has exact means 5/12, 1/4 and 3/4.",
-          "The local noisy canary derives all parent masses from the actual DAG. Sampling only observation still covers every intervention and has exact cost 8/3. At T=1 the source threshold lies strictly between 1 and 4/3, estimates are (Y,0,0), fixed-order ties recommend observation, and the actual expected regret is exactly 1/5. Conditional reward given W=1 is 3/4, distinct from intervention reward 7/10. These are local model diagnostics, not numerical claims attributed to the paper."
+          "The local noisy canary derives all parent masses from the actual DAG. Sampling only observation still covers every intervention and has exact cost 8/3. At T=1 the source threshold lies strictly between 1 and 4/3, estimates are (Y,0,0), fixed-order ties recommend observation, and the actual expected regret is exactly 1/5. Conditional reward given W=1 is 3/4, distinct from intervention reward 7/10. These are local model diagnostics, not numerical claims attributed to the paper.",
+          "Construct the integer rarity r, prove at most r strict rare interventions, allocate 1/(2r) to each and 1-D to observation. Actual intervention product laws give P_a<=2r Q, including deterministic roots; derive coverage and design cost<=2r. Injective actual parent-law transport connects both repaired and attained optimal designs to the real learner. Actual threshold uses its true cost; RHS relaxes to 2r. The N=2 fair and deterministic witnesses have exact costs 2 and 4."
         ]
       }
     },

@@ -1,11 +1,31 @@
 {
   "results": [
     {
+      "id": "CAUSAL-PARALLEL-ACTUAL-REGRET",
+      "title": "Repaired parallel causal allocation and actual expected simple regret",
+      "chapter": "ucb",
+      "status": "compiled",
+      "informal": "For N>=2 known independent binary roots, the constructed strict rarity r and normalized allocation have actual design cost<=2r, including q=0/1. Actual graph-law transport gives expected regret <=(2sqrt(2)+7)sqrt(2r log(2TK)/T)+1/T for the repaired design and the attained optimal design, each using its own true cost in the threshold. Local fair/deterministic witnesses have exact costs 2/4. Independent source correction and semantic review accepted; source screening and ICLR evidence remain open.",
+      "declarations": [
+        "BanditRLProof.Causal.ParallelParameters.allocation_cost_le",
+        "BanditRLProof.Causal.ParallelParameters.graph_designCost",
+        "BanditRLProof.Causal.ParallelParameters.expected_simpleRegret_parallel",
+        "BanditRLProof.Causal.ParallelParameters.expected_simpleRegret_parallel_optimal"
+      ],
+      "depends_on": [
+        "BanditRLProof.Causal.GraphModel.expected_simpleRegret_source_bound",
+        "BanditRLProof.Causal.GraphModel.expected_simpleRegret_optimal",
+        "BanditRLProof.Causal.designCost_map_injective"
+      ],
+      "missing": [],
+      "evidence": "BanditRLProof/Algorithms/CausalParallelDesign.lean; BanditRLProof/Algorithms/CausalParallelLaw.lean; BanditRLProof/Algorithms/CausalParallelRegret.lean; runs/extended-topics-20260919/causal-parallel-review.json"
+    },
+    {
       "id": "CAUSAL-COMMON-ALPHABET-EXPECTED-REGRET",
       "title": "Causal actual-sampling expected simple regret on a common finite alphabet",
       "chapter": "ucb",
       "status": "compiled",
-      "informal": "Actual intervention samples and fixed-order empirical recommendation satisfy R_T <= (2sqrt(2)+7)sqrt(m log(2TK)/T)+1/T and R_T<=1; explicit rate constant 3sqrt(2)+7. Internally derived confidence, binary reward readout and covered allocation. Independently reviewed common-alphabet scope; the separately reviewed native heterogeneous bridge is now available. Parallel allocation/witness, remaining source screening and ICLR evidence remain open. The frozen noisy diagnostic supplement proves concentrated cost 8/3, exact biases, conditional/interventional distinction and tuned one-round expected regret 1/5.",
+      "informal": "Actual intervention samples and fixed-order empirical recommendation satisfy R_T <= (2sqrt(2)+7)sqrt(m log(2TK)/T)+1/T and R_T<=1; explicit rate constant 3sqrt(2)+7. Internally derived confidence, binary reward readout and covered allocation. Independently reviewed common-alphabet scope; the separately reviewed native heterogeneous bridge is now available. Parallel allocation and boundary witnesses are now reviewed separately. Remaining source screening and ICLR evidence remain open. The frozen noisy diagnostic supplement proves concentrated cost 8/3, exact biases, conditional/interventional distinction and tuned one-round expected regret 1/5.",
       "declarations": [
         "BanditRLProof.Causal.GraphModel.expected_simpleRegret_source_bound",
         "BanditRLProof.Causal.GraphModel.expected_simpleRegret_explicit_rate",
@@ -2426,7 +2446,7 @@
       "title": "Native heterogeneous finite-node causal expected simple regret",
       "chapter": "ucb",
       "status": "compiled",
-      "informal": "Reviewed native heterogeneous finite-node intervention sampling and expected simple regret, with binary reward readout. Parallel allocation/witness, source screening and ICLR evidence remain open; topic incomplete. Actual joint and full sample-law pushforwards preserve estimator, ties, exact design cost and expectation. The final theorem constructs its finite codec internally and retains the repaired coefficient and 1/T residual. The frozen noisy diagnostic supplement proves concentrated cost 8/3, exact biases, conditional/interventional distinction and tuned one-round expected regret 1/5.",
+      "informal": "Reviewed native heterogeneous finite-node intervention sampling and expected simple regret, with binary reward readout. Parallel allocation and witnesses are now separately reviewed; source screening and ICLR evidence remain open, and the topic is incomplete. Actual joint and full sample-law pushforwards preserve estimator, ties, exact design cost and expectation. The final theorem constructs its finite codec internally and retains the repaired coefficient and 1/T residual. The frozen noisy diagnostic supplement proves concentrated cost 8/3, exact biases, conditional/interventional distinction and tuned one-round expected regret 1/5.",
       "declarations": [
         "BanditRLProof.Causal.NodeGraphModel.expected_simpleRegret_source_bound",
         "BanditRLProof.Causal.NodeGraphModel.expected_simpleRegret_explicit_rate",

@@ -96,6 +96,7 @@ import Tests.CausalOptimalAllocationCanary
 import Tests.CausalNoisyGraphCanary
 import Tests.CausalNoisyDiagnostics
 import Tests.CausalHeterogeneousCanary
+import Tests.CausalParallelCanary
 
 import Tests.HeavyTailSourceScheduleCanary
 

@@ -1,6 +1,6 @@
 # Exact diagnostics for the noisy causal learner
 
-This is the local three-node canary frozen in `docs/extended-topics/CAUSAL-CONTRACT.md`, not an example attributed to the 2016 paper. The imported performance theorem implements Lattimore, Lattimore and Reid's Algorithm 2 with the disclosed coefficient/probability-direction repairs. This packet tests that actual implementation; parallel allocation and whole-topic acceptance remain separate obligations.
+This is the local three-node canary frozen in `docs/extended-topics/CAUSAL-CONTRACT.md`, not an example attributed to the 2016 paper. The imported performance theorem implements Lattimore, Lattimore and Reid's Algorithm 2 with the disclosed coefficient/probability-direction repairs. This packet tests that actual implementation; parallel allocation is covered by the separate follow-up packet below, and whole-topic acceptance remains open.
 
 ## Actual model and parent laws
 
@@ -38,7 +38,7 @@ $$ E[R_T] \le (2\sqrt{2}+7)\sqrt{(8/3)\log(6T)/T}+1/T. $$
 
 ## Evidence and remaining boundaries
 
-Focused compilation passes 3605 jobs. Printed cost, bias, coverage counterexample, conditional ratio, exact expected regret and all-horizon endpoints depend only on propext, Classical.choice and Quot.sound. Independent blind/source semantic review accepted this scoped package; hashes are bound in runs/extended-topics-20260919/causal-noisy-diagnostics-review.json. Shared root (9029 jobs), Tests (9131 jobs) and full harness (437 tests, 7 skips) pass. The repaired parallel-design witness and symbolic allocation bridge, remaining source screening and ICLR evidence are still required. The entire causal topic and all-ten-topic Goal remain incomplete.
+Focused compilation passes 3605 jobs. Printed cost, bias, coverage counterexample, conditional ratio, exact expected regret and all-horizon endpoints depend only on propext, Classical.choice and Quot.sound. Independent blind/source semantic review accepted this scoped package; hashes are bound in runs/extended-topics-20260919/causal-noisy-diagnostics-review.json. Shared root (9029 jobs), Tests (9131 jobs) and full harness (437 tests, 7 skips) pass. The repaired parallel-design witness and symbolic allocation bridge are now reviewed separately; remaining source screening and ICLR evidence are still required. The entire causal topic and all-ten-topic Goal remain incomplete.
 
 ## Exact Lean context and proofs
 
@@ -392,3 +392,7 @@ end Tests.CausalNoisyGraphCanary
 ```
 
 </details>
+
+## Parallel follow-up
+
+The separately reviewed [parallel allocation and boundary witnesses](extended-topics-causal-parallel.md) now closes the parallel-design obligation. The historical validation numbers above belong to this noisy diagnostic packet; see causal-parallel-validation.json for the later combined gate. Remaining source screening and ICLR evidence remain open.
