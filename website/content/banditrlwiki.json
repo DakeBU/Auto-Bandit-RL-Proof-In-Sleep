@@ -1613,7 +1613,7 @@
       "id": "combinatorial",
       "title": "Combinatorial bandits",
       "kind": "setting",
-      "summary": "Triggered combinatorial semi-bandit CUCB: actual trajectory, nonlinear monotone smooth rewards, approximation oracle and source Theorems 1–2 compile with disclosed analysis repairs. Independent source-semantic acceptance remains pending.",
+      "summary": "Triggered combinatorial semi-bandit CUCB: actual causal trajectory, nonlinear monotone smooth rewards, approximation oracle and complete Theorems 1-2 independently reviewed under explicit model and analysis deltas. Topic and all-ten evidence remain incomplete.",
       "tags": [
         "oracle",
         "computation",
@@ -1624,8 +1624,8 @@
       "status": "source-audit-pending",
       "formalization": {
         "schema_version": 1,
-        "title": "CUCB: compiled source-qualified chain; independent review pending",
-        "semantic_status": "review-pending",
+        "title": "CUCB: reviewed full source-qualified regret chain",
+        "semantic_status": "accepted-with-explicit-delta",
         "source": {
           "title": "Combinatorial Multi-Armed Bandit and Its Extension to Probabilistically Triggered Arms",
           "authors": "Wei Chen, Yajun Wang, Yang Yuan and Qinshi Wang",
@@ -1633,154 +1633,195 @@
           "url": "https://jmlr.org/papers/volume17/14-298/14-298.pdf",
           "sha256": "6a29fc188cd1490c53864eb4f839e572551c171388fc27ba256a7e61424e856c"
         },
-        "source_commit": "6cfe836039f22f932fa2a71e1b0122212d49386a",
-        "scope": "Algorithm 1 and both source performance theorems, with primitive feedback/score/oracle assumptions and concrete noisy model witnesses. The recorded source snapshot passed the shared Lean root, Tests and full harness. This reading map is provisional until independent semantic review.",
+        "source_commit": "604e4b7011c51d9a65726051bb531ccf3b105df4",
+        "scope": "Algorithm 1 and both complete performance theorems under CUCB-CONTRACT, with actual primitive feedback, nonlinear scores, fresh oracle and concrete noisy consumers. Independent blind/source/repair acceptance is bound separately from current build and publication validation.",
         "qualifications": [
-          "The observed-arm marginal compatibility and inverse-range condition are explicit model clauses; their source interpretation awaits independent review.",
-          "The normalized analysis-only charge counter repairs mixed p=1/p<1 threshold comparison. The source learner is unchanged.",
-          "Finite Jensen is separately proved for actual counts; Theorem 2 endpoints use cutoff integration and preserve exact source constants and H=1.",
-          "The primary noisy model uses an input-maximizing oracle and proves actual R(1)=1/4. The supplementary uniform randomized oracle ignores input and is not an improved learner.",
-          "These are selected reading references, not a complete proof-dependency graph. The topic is not accepted; all-ten controlled evaluation has not run."
+          "Observed marginal compatibility is required: arbitrary outcome-dependent censoring is not covered. Fresh measurable oracle and inverse range on needed positive gaps are explicit.",
+          "Distinct selected subsets, nonempty possible-trigger sets and removal of never-triggerable arms; parameterized duplicate-subset application extensions are outside this contract.",
+          "Normalized analysis-only charging repairs mixed p=1/p<1 thresholds; conditional mixing, weighted counting and zero/small-horizon boundaries are explicit. The learner is unchanged.",
+          "The signed benchmark is H alpha beta OPT minus expected actual reward, not ordinary OPT regret. Both Theorem 2 trigger branches retain exact constants and residuals.",
+          "Finite concavity is separately proved for actual counts, not an actual dependency of the current common-cutoff endpoint proof.",
+          "The primary noisy input-dependent oracle model has R(1)=1/4; the supplementary uniform randomized oracle ignores input and is not a learning-improvement example.",
+          "Reading references are not proof edges. Recent-source complete disposition, ICLR evidence and whole-topic acceptance remain incomplete."
         ],
         "declarations": [
           {
             "name": "BanditRLProof.CUCB.FeedbackModel",
             "role": "model",
             "source_locator": "Section 2: primitive triggered feedback; observed-marginal compatibility made explicit",
-            "statement_sha256": "bf000aa46bdabd57ab4b095b77482499c239df24b8c4cdf84c8a996fdf040f8c"
+            "statement_sha256": "bf000aa46bdabd57ab4b095b77482499c239df24b8c4cdf84c8a996fdf040f8c",
+            "review_receipt": "runs/extended-topics-20260919/cucb-mapping-review-input.json"
           },
           {
             "name": "BanditRLProof.CUCB.SourceModel",
             "role": "model",
             "source_locator": "Section 2: monotone smooth reward and approximation oracle; inverse-range clarification",
-            "statement_sha256": "eb44a6c03195d204fa477f45d7f79b8eeaff6e271b80336c6da89173cee70c49"
+            "statement_sha256": "eb44a6c03195d204fa477f45d7f79b8eeaff6e271b80336c6da89173cee70c49",
+            "review_receipt": "runs/extended-topics-20260919/cucb-mapping-review-input.json"
           },
           {
             "name": "BanditRLProof.CUCB.cucbTrajectory",
             "role": "algorithm",
             "source_locator": "Algorithm 1: one causal CUCB trajectory, zero initial counts and initial indices one",
-            "statement_sha256": "5b0b02ebb00fa59bbfdf552706034708b40d13a548d63cf073f9dfeebfba87fb"
+            "statement_sha256": "5b0b02ebb00fa59bbfdf552706034708b40d13a548d63cf073f9dfeebfba87fb",
+            "review_receipt": "runs/extended-topics-20260919/cucb-mapping-review-input.json"
           },
           {
             "name": "BanditRLProof.CUCB.SourceModel.chargeData_sufficient",
             "role": "producer",
             "source_locator": "Analysis-counter repair: normalized charge choice handles mixed trigger probabilities",
-            "statement_sha256": "8066b653e4dce2b0c23f2d40934dc9d50ff290527664b7eafab78a05a72d93a1"
+            "statement_sha256": "8066b653e4dce2b0c23f2d40934dc9d50ff290527664b7eafab78a05a72d93a1",
+            "review_receipt": "runs/extended-topics-20260919/cucb-mapping-review-input.json"
           },
           {
             "name": "BanditRLProof.CUCB.FeedbackModel.nice_event_probability",
             "role": "producer",
             "source_locator": "Proof of confidence control from actual primitive laws",
-            "statement_sha256": "3ce5c15748c5666730221c2cd561ef2712385ba3318bda29a76d16be72ba0990"
+            "statement_sha256": "3ce5c15748c5666730221c2cd561ef2712385ba3318bda29a76d16be72ba0990",
+            "review_receipt": "runs/extended-topics-20260919/cucb-mapping-review-input.json"
           },
           {
             "name": "BanditRLProof.CUCB.FeedbackModel.charged_observation_tail",
             "role": "producer",
             "source_locator": "Proof of charged-trigger concentration under adaptive action selection",
-            "statement_sha256": "f69390ac17fdf2d6dfe54cb1e28e1104e598c1e2ebe5cc56ccd3c7050de1bba1"
+            "statement_sha256": "f69390ac17fdf2d6dfe54cb1e28e1104e598c1e2ebe5cc56ccd3c7050de1bba1",
+            "review_receipt": "runs/extended-topics-20260919/cucb-mapping-review-input.json"
           },
           {
             "name": "BanditRLProof.CUCB.SourceModel.approximationRegret_eq_gap_sum",
             "role": "producer",
             "source_locator": "Original signed approximation regret and actual-reward identity",
-            "statement_sha256": "85c317ad23446b4bc234c84aab6e6ed2a7f66227028f7f6b13a44669aec49c70"
+            "statement_sha256": "85c317ad23446b4bc234c84aab6e6ed2a7f66227028f7f6b13a44669aec49c70",
+            "review_receipt": "runs/extended-topics-20260919/cucb-mapping-review-input.json"
           },
           {
             "name": "BanditRLProof.CUCB.SourceModel.approximationRegret_le_underSampled_add_source_tail",
             "role": "producer",
             "source_locator": "Oracle failure credit cancellation and source tail constants",
-            "statement_sha256": "6fb1511608b48a9d29399666d26830d104e8b318e2d769493f0fc881ed309f77"
+            "statement_sha256": "6fb1511608b48a9d29399666d26830d104e8b318e2d769493f0fc881ed309f77",
+            "review_receipt": "runs/extended-topics-20260919/cucb-mapping-review-input.json"
           },
           {
             "name": "BanditRLProof.CUCB.SourceModel.theorem_one_refined_regret",
             "role": "endpoint",
             "source_locator": "Theorem 1: refined gap-dependent integral bound, with disclosed analysis repair",
-            "statement_sha256": "2d10a204bb9ce6f5e6e33b05befee8408900068ecf23502011ab7d6d57df1818"
+            "statement_sha256": "2d10a204bb9ce6f5e6e33b05befee8408900068ecf23502011ab7d6d57df1818",
+            "review_receipt": "runs/extended-topics-20260919/cucb-mapping-review-input.json"
           },
           {
             "name": "BanditRLProof.CUCB.SourceModel.polynomial_threshold_integral_probabilistic",
             "role": "producer",
             "source_locator": "Theorem 2: mixed-trigger polynomial envelope integrated on actual gap interval",
-            "statement_sha256": "358b339edc16f8dd1c63d86056844e57b44546a7ad72952f1bb67b3f715d2bfc"
+            "statement_sha256": "358b339edc16f8dd1c63d86056844e57b44546a7ad72952f1bb67b3f715d2bfc",
+            "review_receipt": "runs/extended-topics-20260919/cucb-mapping-review-input.json"
           },
           {
             "name": "BanditRLProof.CUCB.SourceModel.underChargeCount_power_sum_le",
             "role": "producer",
             "source_locator": "Finite concavity obligation on actual counts; separately proved, not used by cutoff endpoint route",
-            "statement_sha256": "b65e024c7c5937944b2f8ce954b5518974d622e10d890469c838b293e71ab44c"
+            "statement_sha256": "b65e024c7c5937944b2f8ce954b5518974d622e10d890469c838b293e71ab44c",
+            "review_receipt": "runs/extended-topics-20260919/cucb-mapping-review-input.json"
           },
           {
             "name": "BanditRLProof.CUCB.SourceModel.theorem_two_deterministic",
             "role": "endpoint",
             "source_locator": "Theorem 2: p*=1 branch, H>=1 including H=1",
-            "statement_sha256": "89389da4f54d28fe1ae2300743282f66260391891a63ac14ccc1cca760594637"
+            "statement_sha256": "89389da4f54d28fe1ae2300743282f66260391891a63ac14ccc1cca760594637",
+            "review_receipt": "runs/extended-topics-20260919/cucb-mapping-review-input.json"
           },
           {
             "name": "BanditRLProof.CUCB.SourceModel.theorem_two_probabilistic",
             "role": "endpoint",
             "source_locator": "Theorem 2: p*<1 branch, H>=1 including H=1",
-            "statement_sha256": "8eddde83425293c8eaf63c1fef280790fb572647164f392b4bcc138a4e94ed80"
+            "statement_sha256": "8eddde83425293c8eaf63c1fef280790fb572647164f392b4bcc138a4e94ed80",
+            "review_receipt": "runs/extended-topics-20260919/cucb-mapping-review-input.json"
           },
           {
             "name": "BanditRLProof.CUCB.FiniteExample.source",
             "role": "canary",
             "source_locator": "Constructed 64-atom nonlinear noisy model; not a source-paper example",
-            "statement_sha256": "f6d5ef25437eb87dd4ac61afc65c5f37911e235575fe62358308350db9667678"
+            "statement_sha256": "f6d5ef25437eb87dd4ac61afc65c5f37911e235575fe62358308350db9667678",
+            "review_receipt": "runs/extended-topics-20260919/cucb-mapping-review-input.json"
           },
           {
             "name": "BanditRLProof.CUCB.FiniteExample.noisy_each_arm",
             "role": "canary",
             "source_locator": "Each actual arm law has probability of one strictly between zero and one",
-            "statement_sha256": "6a577c1125aa66d9610f88f9168f98fd7ee5ba54789038254ebbb38ae041dd91"
+            "statement_sha256": "6a577c1125aa66d9610f88f9168f98fd7ee5ba54789038254ebbb38ae041dd91",
+            "review_receipt": "runs/extended-topics-20260919/cucb-mapping-review-input.json"
           },
           {
             "name": "BanditRLProof.CUCB.FiniteExample.regret_one_positive",
             "role": "canary",
             "source_locator": "Actual learning-trajectory R(1)=1/4",
-            "statement_sha256": "a6f1831d635afdaee39a5abf08dd38df74a84edb7a9ea1d65a723d4ee96ba642"
+            "statement_sha256": "a6f1831d635afdaee39a5abf08dd38df74a84edb7a9ea1d65a723d4ee96ba642",
+            "review_receipt": "runs/extended-topics-20260919/cucb-mapping-review-input.json"
           },
           {
             "name": "BanditRLProof.CUCB.FiniteExample.refined_regret",
             "role": "canary",
             "source_locator": "Concrete full Theorem 1 instance",
-            "statement_sha256": "3632f7dfd4828ddb8081dc9b1fa00a92e475a70f69e5a842b2cdfc4ded87f63b"
+            "statement_sha256": "3632f7dfd4828ddb8081dc9b1fa00a92e475a70f69e5a842b2cdfc4ded87f63b",
+            "review_receipt": "runs/extended-topics-20260919/cucb-mapping-review-input.json"
           },
           {
             "name": "BanditRLProof.CUCB.FiniteExample.probabilistic_regret",
             "role": "canary",
             "source_locator": "Concrete random-trigger Theorem 2 instance",
-            "statement_sha256": "966d02d3a3e151b14835aa8fe3b1d0ccbc3673917fb0799cbc9bebcb96bcc988"
+            "statement_sha256": "966d02d3a3e151b14835aa8fe3b1d0ccbc3673917fb0799cbc9bebcb96bcc988",
+            "review_receipt": "runs/extended-topics-20260919/cucb-mapping-review-input.json"
           },
           {
             "name": "BanditRLProof.CUCB.FiniteExample.randomizedSource",
             "role": "canary",
             "source_locator": "Supplementary uniform action oracle with beta=1/2; ignores input",
-            "statement_sha256": "53246c4c8675d311a799e1cc28986d8bbe7013e3c1ae2a1d067d6d05fd9b5375"
+            "statement_sha256": "53246c4c8675d311a799e1cc28986d8bbe7013e3c1ae2a1d067d6d05fd9b5375",
+            "review_receipt": "runs/extended-topics-20260919/cucb-mapping-review-input.json"
           },
           {
             "name": "BanditRLProof.CUCB.FiniteExample.randomized_probabilistic_regret",
             "role": "canary",
             "source_locator": "Actual signed-regret theorem for supplementary randomized oracle",
-            "statement_sha256": "75918a8f106179e46e395ae8bc4e197a74971c5b77b5445182bc89c2ae238dfa"
+            "statement_sha256": "75918a8f106179e46e395ae8bc4e197a74971c5b77b5445182bc89c2ae238dfa",
+            "review_receipt": "runs/extended-topics-20260919/cucb-mapping-review-input.json"
           },
           {
             "name": "BanditRLProof.CUCB.FiniteExample.deterministic_regret",
             "role": "canary",
             "source_locator": "Noisy full-observation recovery of Theorem 2",
-            "statement_sha256": "9f7df4c377cbf39340675c05a4c54e592d259053c7b9df1ab762b8321bcf9c94"
+            "statement_sha256": "9f7df4c377cbf39340675c05a4c54e592d259053c7b9df1ab762b8321bcf9c94",
+            "review_receipt": "runs/extended-topics-20260919/cucb-mapping-review-input.json"
           },
           {
             "name": "BanditRLProof.CUCB.FiniteExample.no_bad_regret",
             "role": "canary",
             "source_locator": "Alpha=1/3 no-bad-action boundary, all horizons",
-            "statement_sha256": "0f1dff63726b36ab60e52f09f2102003c45faf6b859b922359555d021feb57c9"
+            "statement_sha256": "0f1dff63726b36ab60e52f09f2102003c45faf6b859b922359555d021feb57c9",
+            "review_receipt": "runs/extended-topics-20260919/cucb-mapping-review-input.json"
           },
           {
             "name": "BanditRLProof.Thompson.uniformActionMeasure",
             "role": "reuse",
             "source_locator": "Existing shared finite uniform measure used by the concrete sample law and randomized oracle; not an efficiency experiment",
-            "statement_sha256": "677d33f78c8167529cb23a8ce7e9a281806b66a3cc72fd11d78049364bc793d1"
+            "statement_sha256": "677d33f78c8167529cb23a8ce7e9a281806b66a3cc72fd11d78049364bc793d1",
+            "review_receipt": "runs/extended-topics-20260919/cucb-mapping-review-input.json"
           }
+        ],
+        "topic_complete": false,
+        "review_receipts": [
+          {
+            "path": "runs/extended-topics-20260919/cucb-mapping-review-input.json",
+            "sha256": "954c0cb17dda23aa1cf2ba7e06ce6960c4d0763b77a38fb6d7103e343ff59bd0"
+          }
+        ],
+        "mathematical_reader": [
+          "Finite distinct feasible subsets act on m bounded base arms. The environment produces a mask, outcomes and a nonnegative integrable total reward. For every action a and arm i, law(observe i and value_i in B)=p_i^a D_i(B). This supports adaptive concentration while permitting dependence among arms. Minimum trigger probabilities are derived from actual laws.",
+          "At prefix length n, CUCB uses index one for zero observations, otherwise min(empirical mean + sqrt(3 log(n+1)/(2 count)),1). A fixed measurable approximation-oracle kernel draws the action before fresh environment feedback. One infinite causal trajectory serves every horizon; analysis counters and unknown true gaps do not enter the learner.",
+          "Let d(a)=alpha OPT-r(a), Delta=max_a max(0,d(a)), and R(H)=H alpha beta OPT-E sum reward. The actual reward identity gives R(H)=E sum d(A_t)-H alpha(1-beta)OPT. This signed credit cancels the oracle-failure charge after taking expectations.",
+          "Write ell_H(d,p)=log(H)c(d,p), with u=f^{-1}(d), c(d,1)=6/u^2 and c(d,p)=max(12/(u^2 p),24/p) for p<1. The repaired analysis charges argmin N_i/c(d,p_i). If that arm exceeds its threshold, all possible arms do. Charge is known after the action but before feedback; integrating the actual action mixture produces the trigger tail, with no extra number-of-actions factor.",
+          "Theorem 1 gives R(H)<=sum_i [d_i,min ell_H(d_i,min,p_i)+integral from d_i,min to d_i,max of ell_H(x,p_i) dx]+[1+(2+1{p*<1})pi^2/6]m Delta for H>=1. Empty bad-action families contribute zero. Distinct old integer counters and finite layer-cake integration retain the zero-counter residual. Confidence and trigger failures are derived and summed, not assumed.",
+          "For f(u)=gamma u^omega, gamma>0 and 0<omega<=1, Theorem 2 gives 2gamma/(2-omega)(6m log H)^(omega/2)H^(1-omega/2)+(1+pi^2/3)m Delta when p*=1. For p*<1 replace 6 by 12/p*, pi^2/3 by pi^2/2, and add sum_i(24 log H/p_i)Delta. A common cutoff and power-tail integration give both rates; H=1 is handled separately.",
+          "The concrete 64-atom model has three noisy arms and two distinct two-arm actions, product rewards, actual minimum trigger probabilities (1/2,1,1/2), and positive first-round regret 1/4. Other actual consumers cover a randomized beta=1/2 oracle, full-observation deterministic triggering and a no-bad-action boundary. Canonical links below expose exact statements and proofs."
         ]
       }
     },

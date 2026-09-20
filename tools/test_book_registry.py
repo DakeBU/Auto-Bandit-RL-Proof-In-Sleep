@@ -130,7 +130,8 @@ class BookRegistryTests(unittest.TestCase):
         registry = self.registry()
         topic = next(t for t in self.wiki["topics"] if t["id"] == "combinatorial")
         setting = next(t for t in registry["settings"] if t["id"] == "combinatorial")
-        self.assertEqual("mapped-review-pending", setting["status"])
+        self.assertEqual("mapped-reviewed-partial", setting["status"])
+        self.assertFalse(setting["formalization"]["topic_complete"])
         expected = {"declaration:" + r["name"] for r in topic["formalization"]["declarations"]}
         self.assertEqual(expected, set(setting["node_ids"]))
         nodes = membership_index(registry)

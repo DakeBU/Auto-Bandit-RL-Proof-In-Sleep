@@ -90,3 +90,35 @@ reviewed zero-parameter domain observation. See [CMOSS endpoint boundary](CMOSS-
 and `cmoss-boundary-review.json`. This does not complete the CMOSS proof audit,
 certify a repaired rate, or accept unrestricted comparisons. Physical PDF
 page numbers were checked independently; extraction-based page30 was rejected.
+
+
+## 2026-09-20 complete relevant CMOSS proof review
+
+The independent review now covers the complete model/Algorithm 1/Theorems 1 and 5
+(physical PDF pp.4-6), all Appendix A.1 (pp.10-17), and all Appendix A.2 (p.18).
+The version and full report are bound in
+`runs/extended-topics-20260919/cmoss-full-source-disposition.json`. This supersedes
+only the earlier pending-reading status, not the recorded endpoint findings.
+
+Disposition: do not import the printed CMOSS theorems as accepted comparison
+results. In the literal unfiltered Lemma 12, take m=4, k=2, T=100, delta=1/50
+and deterministic means (1/2,1/2,49/100,49/100). Every bad action has normalized
+gap 1/100. The big-gap cutoff exceeds all gaps, so the left side is zero; equal
+ratios cancel the difference terms, leaving a negative logarithmic boundary
+term ln(1/50). This refutes that auxiliary statement, not the final interior rate.
+Retaining the big-gap family and empty-family cases is a required repair.
+
+Other obligations include pre-round and zero-count accounting, clipped-score
+ordering, and explicit cardinality/domain conditions. The cascading argument
+requires compatible observed marginals (the allowed correlated-arm model does
+not provide them), consistent product-reward conventions, and a proof on the
+actual partially observed adaptive process. Replacing a false pathwise
+indicator bound by a conditional-expectation inequality alone does not provide
+that transfer. The absolute-value product telescope is valid; it is not an error.
+
+Some local constants and classification steps are repairable, but no complete
+repaired rate or Lean theorem is certified. This source review does not cover
+experiments, other versions or full external cited proofs. Exact top-k linear
+semi-bandits do not replace the frozen general nonlinear, triggered CUCB
+contract with a randomized approximation oracle. Topic and ICLR obligations
+remain open.

@@ -2383,6 +2383,24 @@
         "Execute and neutrally check all 450 matched runs, complete independent grading, and analyze the frozen target-level endpoints."
       ],
       "evidence": "evaluation/target-drift-v2/protocol.json; evaluation/target-drift-v2/external-comparator-plan.json; evaluation/target-drift-v2/external-comparator-plan.seal.json; evaluation/target-drift-v2/missing-run-policy.json; evaluation/target-drift-v2/paired-requirements.json; evaluation/target-drift-v2/adapter-contract.json; evaluation/target-drift-v2/agent-sandbox-contract.json; evaluation/target-drift-v2/agent-image-sources.json; evaluation/target-drift-v2/agent-image.Containerfile; evaluation/target-drift-v2/agent-image-candidate-32464814750.json; evaluation/target-drift-v2/agent-outer-boundary-candidate-32735680163.json; evaluation/target-drift-v2/agent-lifecycle-candidate-32436339541.json; evaluation/target-drift-v2/checker-sandbox-contract.json; evaluation/target-drift-v2/checker-isolation-probe.template.json; evaluation/target-drift-v2/checker-image.Containerfile; evaluation/target-drift-v2/checker-image-sbom.template.json; evaluation/target-drift-v2/checker-image-candidate-32137509103.json; evaluation/target-drift-v2/checker-image-candidate-32419343467.json; evaluation/target-drift-v2/execution-template.json; .github/workflows/target-drift-agent-image.yml; .github/workflows/target-drift-agent-lifecycle.yml; .github/workflows/target-drift-checker-image.yml; tools/audit_target_drift_wording.py; tools/validate_target_drift_suite_v2.py; tools/validate_target_drift_external_comparator.py; tools/codex_target_drift_adapter.py; tools/test_codex_target_drift_adapter.py; tools/target_drift_agent_pid1.py; tools/launch_target_drift_agent_container.py; tools/target_drift_agent_outer_controller.py; tools/target_drift_agent_outer_probe.py; tools/target_drift_agent_model_probe.py; tools/test_target_drift_agent_outer_boundary.py; tools/prepare_target_drift_agent_image.py; tools/record_target_drift_agent_image_probe.py; tools/test_target_drift_agent_image.py; tools/record_target_drift_agent_lifecycle_probe.py; tools/test_target_drift_agent_lifecycle.py; tools/prepare_target_drift_checker_image.py; tools/prepare_target_drift_checker_probe_config.py; tools/target_drift_checker_cache_manifest.py; tools/finalize_target_drift_config.py; tools/run_target_drift_execution.py; tools/run_target_drift_schedule.py; tools/prepare_target_drift_smoke.py; tools/run_target_drift_smoke.py; tools/test_target_drift_smoke.py; tools/check_target_drift_run.py; tools/launch_target_drift_checker_container.py; tools/check_target_drift_container_controller.py; tools/check_target_drift_inner.py; tools/record_target_drift_checker_isolation_probe.py; tools/build_target_drift_completion_ledger.py; tools/test_target_drift_completion_ledger.py; tools/prepare_target_drift_grading.py; tools/export_target_drift_grader_pack.py; tools/test_target_drift_grader_export.py; tools/test_target_drift_grading.py; tools/assemble_target_drift_grades.py; tools/analyze_target_drift_execution.py"
+    },
+    {
+      "id": "CUCB-FULL-REPAIRED-RATES",
+      "title": "Full triggered CUCB approximation regret with explicit analysis repairs",
+      "chapter": "ucb",
+      "status": "compiled",
+      "informal": "One actual causal CUCB trajectory satisfies the refined gap-integral Theorem1 and both polynomial Theorem2 branches, with exact constants and H=1. Observed-law compatibility, inverse range and normalized analysis charge are explicit; signed alpha-beta benchmark and oracle-failure credit are retained. Independent semantic acceptance is scoped to the frozen finite-subset model, not all applications or topic completion.",
+      "declarations": [
+        "BanditRLProof.CUCB.SourceModel.theorem_one_refined_regret",
+        "BanditRLProof.CUCB.SourceModel.theorem_two_deterministic",
+        "BanditRLProof.CUCB.SourceModel.theorem_two_probabilistic"
+      ],
+      "depends_on": [
+        "BanditRLProof.CUCB.SourceModel.expected_underSampledGap_le_refined",
+        "BanditRLProof.CUCB.SourceModel.approximationRegret_le_underSampled_add_source_tail"
+      ],
+      "missing": [],
+      "evidence": "BanditRLProof/Algorithms/CUCBRefinedRegret.lean"
     }
   ]
 }
