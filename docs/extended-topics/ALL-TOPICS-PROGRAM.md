@@ -32,9 +32,7 @@ recent primary work and all proof appendices, not abstract-based selection.
 
 Execution follows the strict table order: Heavy-tailed, Lipschitz, Combinatorial,
 Causal, Multi-agent, Thompson/Bayesian, Constrained, Corruption-tolerant, Matrix,
-Variance-aware. The current topic is Heavy-tailed. Close its acceptance obligations
-before advancing; difficulty is not permission to skip. Preserve the already
-compiled later-topic milestones without treating them as accepted topics.
+Variance-aware. The heavy-tail topic-local source, representative mathematics, shared mapping and descriptive evidence checkpoints are accepted with their explicit scopes; the next topic-local work is Lipschitz. Before advancing, close the current topic-local obligations. Global all-target ICLR obligations remain mandatory at the final program join: the protocol itself requires all targets to be audited first, so it cannot be a prerequisite for auditing the second target. This scheduling distinction changes no completion criterion: keep topic_complete=false until every local and global obligation applies and passes. Difficulty is not permission to skip. Preserve already compiled later-topic milestones without treating them as accepted topics.
 
 The heavy-tail representative line now has a complete corrected expected-regret
 chain for the unchanged source-radius4 policy and an admissible finite Lean
@@ -42,7 +40,7 @@ counterexample to the literal printed coefficient. The conservative adaptation
 and clipping transfer remain separately labeled. Independent reviews and joint
 validation are bound in the source-regret, clipping-review and counterexample
 receipts under `runs/extended-topics-20260919/`. These accepted results do not
-complete the topic: recent-source transitive audit and all-topic ICLR evidence remain open.
+complete the topic: the all-topic ICLR protocol, required evaluation and final integrated acceptance remain open. The bounded recent-source/dependency disposition is accepted in `heavy-dependency-disposition-audit.json`, including an explicit refusal to transfer unseen Yu/Li-Sun publication claims.
 The scoped shared mapping is accepted in
 `runs/extended-topics-20260919/heavy-tail-mapping-validation.json`.
 

@@ -345,5 +345,8 @@ explicit contract deltas. Evidence: `runs/extended-topics-20260919/huang-v3-depe
 This vector-score result does not itself permit the adaptive scalar
 projection in the original Tani argument. The direct stopped scalar proof
 above remains necessary. The fixed source is arXiv2306.06836v3, March2024;
-identity with the NeurIPS2023 published supplement is still unverified.
+the later official-version audit establishes correspondence of the audited score appendix passages with the NeurIPS2023 published supplement; see `huang-official-version-audit.json`. This supersedes the earlier version uncertainty only in that bounded scope.
 No complete Huang curvature/regression/RL theorem or Lean acceptance follows.
+
+
+The final dependency disposition is recorded in HEAVY-DEPENDENCY-DISPOSITION.md. The fixed-prefix scalar martingale tail used by the qualified repair has a separate elementary proof in HEAVY-SCALAR-BERNSTEIN.md; neither original variance peeling nor an adaptive projection of the vector theorem is inferred.

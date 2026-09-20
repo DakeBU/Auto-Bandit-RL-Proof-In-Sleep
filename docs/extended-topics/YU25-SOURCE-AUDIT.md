@@ -74,3 +74,20 @@ No Lean implementation, original-log2 confidence certification, corrupted
 policy regret, published-version equivalence, or complete heavy-topic
 acceptance follows from this audit. These findings do not replace the frozen
 BCL actual-policy performance and finite-counterexample endpoint.
+
+
+## Bounded publication non-transfer disposition (2026-09-20)
+
+The exact cited publication endpoint is https://openreview.net/pdf?id=8bnsoL2IyJ.
+This audit's direct retrieval returned HTTP403; the web view redirected to browser
+verification. No published PDF was obtained or compared, and search indexing is
+not full-proof inspection. The accepted log6 repair remains tied to the pinned
+arXivv2 and its separately stated proof. No defect, correction or theorem identity
+is transferred to TMLR2024. The original-log2 confidence and original corrupted
+policy regret are not accepted for import. This is a source-selection disposition,
+not certification of the inaccessible publication. Later independent acquisition
+can reopen that bounded comparison without changing the selected BCL endpoint.
+
+The elementary fixed-prefix martingale producer in HEAVY-SCALAR-BERNSTEIN.md
+supplies the scalar deterministic-envelope interface used in the repaired proof.
+See HEAVY-DEPENDENCY-DISPOSITION.md for the accepted/excluded dependency ledger.
