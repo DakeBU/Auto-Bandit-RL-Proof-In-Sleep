@@ -697,3 +697,5 @@ import BanditRLProof.Algorithms.CausalHeterogeneousLaw
 import BanditRLProof.Algorithms.CausalParallelRegret
 
 import BanditRLProof.Algorithms.HeavyTailRegretCap
+
+import BanditRLProof.Algorithms.MusicalChairsCoordinationTime

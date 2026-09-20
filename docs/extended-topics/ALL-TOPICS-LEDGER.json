@@ -697,7 +697,7 @@
     {
       "id": "multi-agent",
       "mandatory": true,
-      "status": "draft",
+      "status": "proving",
       "topic_complete": false,
       "setting": "Simultaneous players, collision feedback and stationary arm rewards",
       "source": {
@@ -786,7 +786,7 @@
         {
           "id": "coordination success/time",
           "status": "partial",
-          "note": "Actual statewise h_n=(1/n)((n-1)/n)^(n-1) fixation hazard compiled from finite joint law and unused-arm producer; 1/(4n), history/path adapter, survival and expected-time sum open"
+          "note": "Actual numerical1/(4n) hazard, bind survival, per-player finite sum<=4n and total expected unfixed occupancy<=4n² compiled; pseudo-regret charge and full-learning assembly open"
         },
         {
           "id": "complete multi-player regret",
@@ -824,6 +824,18 @@
         "status": "focused-compiled-scratch; not public-root integrated",
         "receipt": "runs/extended-topics-20260920/multi-agent-probability-review.json",
         "boundary": "Constructed rectangle law, one-step local collision-bit adapter, candidate preservation and actual statewise hazard h_n with unused-arm producer; no exploration, uniform numerical hazard bound, survival sum or regret"
+      },
+      "coordination_occupation": {
+        "modules": [
+          "BanditRLProof/Algorithms/MusicalChairsCoordination.lean",
+          "BanditRLProof/Algorithms/MusicalChairsCoordinationTime.lean"
+        ],
+        "canary": "Tests/MusicalChairsCoordinationCanary.lean",
+        "reader": "research-wiki/papers/extended-topics-musical-chairs-coordination.md",
+        "receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json",
+        "endpoint": "Actual finite expected unfixed occupation <=4n² for common n-arm candidates",
+        "status": "focused-compiled; final semantic and common gates pending",
+        "boundary": "No exploration-good event or 2U regret charge/full MC guarantee"
       }
     },
     {

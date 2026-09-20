@@ -104,3 +104,4 @@ import Tests.HeavyTailSourceRegretCanary
 import Tests.HeavyTailSourceCounterexampleCanary
 
 import Tests.HeavyTailRegretCapCanary
+import Tests.MusicalChairsCoordinationCanary
