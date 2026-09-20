@@ -121,3 +121,26 @@ name a fixed-algorithm class or prove its subset theorem; the universally
 quantified actual-process membership bridge supports that semantic application.
 The source review accepts the obstruction on this explicitly enlarged class,
 not a literal encoding of every symbol of the original Theorem2.
+
+
+## Shared-library acceptance (2026-09-20)
+
+The previously reviewed prototype is now integrated as
+`BanditRLProof/Algorithms/HeavyTailRegretCap.lean`, with unchanged declaration
+and proof bodies, a public-root import and `Tests/HeavyTailRegretCapCanary.lean`.
+The canary checks actual moments, the positive T1000 supremum2000, and an
+actual-process membership invocation. Independent source review accepted the
+production port and reader; a separate metadata review checked all new hashes.
+
+At code/site commit c65ccd36d74f58f8ea178eda7301555b5f31f78e the shared root9016,
+Tests9114 and full437Python tests (7skipped) passed. All three endpoint axiom
+reports use only the standard axioms. The site was generated with the fresh
+Lean gate, and site/link/anchor checks passed. Three separately sourced
+canonical references extend the existing ten; no BCL statement or receipt was
+replaced. See `runs/extended-topics-20260919/genalti-production-validation.json`
+for hashes, successful logs and initial failures with their fixes.
+
+The earlier prototype-only paragraphs describe the preceding snapshots. Current
+acceptance is the bounded production obstruction/adapter/sharp-slice packet,
+not full source-paper acceptance, a repaired asymptotic theorem, main merge,
+live publication, controlled evaluation or whole-topic completion.
