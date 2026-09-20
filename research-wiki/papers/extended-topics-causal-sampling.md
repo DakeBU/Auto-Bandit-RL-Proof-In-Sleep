@@ -1,8 +1,7 @@
 # Causal intervention sampling: reviewed common-alphabet performance chain
 
 This is a partial result for the frozen causal topic. The common finite alphabet
-model below is independently reviewed; the heterogeneous-domain transport,
-parallel-design bridge, remaining canary diagnostics and ICLR evidence remain open.
+model below is independently reviewed. The separately reviewed [native heterogeneous bridge](extended-topics-causal-heterogeneous.md) and [exact noisy diagnostics](extended-topics-causal-noisy-diagnostics.md) are now available. The parallel-design bridge/witness, remaining source audit and ICLR evidence remain open.
 
 ## Source and exact scope
 
@@ -65,16 +64,13 @@ printed proof, independently reviewed mathematically. The algorithm and
 truncation tuning are retained. This does not prove that a sharper constant
 is impossible. Fixed total-order ties are made explicit.
 
-The common V model is not a proved encoding of arbitrary distinct finite node
-types. Such a bridge must preserve support, interventions, observations,
-estimates and regret. The Boolean readout is not arbitrary real-valued reward.
+The separately reviewed native heterogeneous bridge now preserves support, interventions, observations, estimates and regret for distinct nonempty finite node types. This file retains the common-alphabet producer it reuses. The Boolean readout is not arbitrary real-valued reward.
 The learner definitions consume known parent laws and observed bits; there is
 no separate cross-model reward-table-invariance theorem in this packet.
 
 The concrete noisy X->W, X->Y, W->Y test constructs the joint law and derives
 means 1/2, 3/10, 7/10, then instantiates the uniform all-horizon bound.
-The concentrated allocation, m=8/3, biases, conditional-observation contrast,
-exact tuned T=1 regret, uncovered diagnostic and parallel witness remain open.
+The separate exact diagnostic packet now proves concentrated coverage and m=8/3, biases, the conditional-observation contrast, exact tuned T=1 regret and an uncovered diagnostic. The parallel witness remains open.
 Compilation of these partial results does not complete the causal topic.
 
 ## Actual reuse and evidence

@@ -1,0 +1,128 @@
+{
+  "schema_version": "2.0",
+  "id": "EXT-CAUSAL-NOISY-DIAGNOSTICS-20260920",
+  "route": "extended-topics/causal",
+  "frontier_cell": "causal/frozen-noisy-exact-diagnostics",
+  "source_facing": true,
+  "source": {
+    "kind": "paper",
+    "title": "Causal Bandits: Learning Good Interventions via Causal Inference",
+    "version": "NIPS2016 main and official supplement; frozen hashes in causal-source-hashes.json",
+    "anchor": "Frozen local CAUSAL-CONTRACT noisy canary; source Algorithm2 and repaired Theorem3 used for actual all-horizon consumer. Local example is not attributed to the paper.",
+    "url": "https://proceedings.neurips.cc/paper_files/paper/2016/file/b4288d9c0ec0a1841b3b3728321e7088-Paper.pdf"
+  },
+  "target": "Discharge the frozen noisy canary exact coverage, design cost, bias, conditional-versus-interventional reward, tuned T=1 recommendation/regret and actual concentrated all-horizon rate obligations.",
+  "affected_files": [
+    "research-wiki/papers/extended-topics-causal-noisy-diagnostics.md",
+    "research-wiki/papers/extended-topics-causal-sampling.md",
+    "research-wiki/papers/extended-topics-causal-heterogeneous.md",
+    "website/content/results.json",
+    "website/content/banditrlwiki.json"
+  ],
+  "declarations": [
+    "Tests.CausalNoisyGraphCanary.parentEquiv",
+    "Tests.CausalNoisyGraphCanary.parentEquiv_observation",
+    "Tests.CausalNoisyGraphCanary.parent_mass",
+    "Tests.CausalNoisyGraphCanary.parentLaws",
+    "Tests.CausalNoisyGraphCanary.concentrated",
+    "Tests.CausalNoisyGraphCanary.concentrated_mixture",
+    "Tests.CausalNoisyGraphCanary.concentrated_weights",
+    "Tests.CausalNoisyGraphCanary.concentrated_covers",
+    "Tests.CausalNoisyGraphCanary.concentrated_secondMoment",
+    "Tests.CausalNoisyGraphCanary.concentrated_cost",
+    "Tests.CausalNoisyGraphCanary.reward_parent_mass",
+    "Tests.CausalNoisyGraphCanary.concentrated_biases",
+    "Tests.CausalNoisyGraphCanary.uncovered_do_zero",
+    "Tests.CausalNoisyGraphCanary.observed_w_probability",
+    "Tests.CausalNoisyGraphCanary.observed_conditional_reward",
+    "Tests.CausalNoisyGraphCanary.conditional_differs_from_intervention",
+    "Tests.CausalNoisyGraphCanary.log_six_bounds",
+    "Tests.CausalNoisyGraphCanary.oneRoundThreshold",
+    "Tests.CausalNoisyGraphCanary.oneRoundThreshold_bounds",
+    "Tests.CausalNoisyGraphCanary.oneRound_estimates",
+    "Tests.CausalNoisyGraphCanary.oneRound_recommendation",
+    "Tests.CausalNoisyGraphCanary.oneRound_regret",
+    "Tests.CausalNoisyGraphCanary.oneRound_expected_regret",
+    "Tests.CausalNoisyGraphCanary.concentrated_actual_rate"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Tests.CausalNoisyGraphCanary actual joint and means",
+      "CausalImportance/Allocation finite mixture and cost",
+      "CausalRecommendation fixed-order argmax",
+      "CausalTuning source threshold",
+      "Mathlib Real.log_two bounds and exact PMF integrals"
+    ],
+    "reused_declarations": [
+      "Tests.CausalNoisyGraphCanary.actual_joint_factorization",
+      "Tests.CausalNoisyGraphCanary.reward_means",
+      "BanditRLProof.Causal.GraphModel.intervention_parent_mass",
+      "BanditRLProof.Causal.orderedArgmax_le_of_maximal",
+      "BanditRLProof.Causal.GraphModel.expected_simpleRegret_source_bound"
+    ],
+    "new_shared_declarations": [],
+    "known_consumers": [
+      "Tests.CausalNoisyGraphCanary.oneRound_expected_regret",
+      "Tests.CausalNoisyGraphCanary.concentrated_actual_rate"
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Derive exact parent probabilities from the existing actual DAG; evaluate the real estimator, order refinement and sample-law integral. No new production wrapper or duplicate probability model."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/causal_decoder",
+    "source_reviewer": "/root/source_reviewer_a",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Local noisy diagnostics match frozen contract; imported source-performance repairs retained. Parallel bridge/witness remains unimplemented."
+  },
+  "graph_contribution": {
+    "lean_graph": "reuse-only",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Concrete test consumes the established causal sampling and regret graph; no cross-setting conceptual mechanism is introduced.",
+    "focus_targets": [
+      "BanditRLProof.Causal.GraphModel.expected_simpleRegret_source_bound"
+    ],
+    "visual_review": "Pending refreshed site checks; no browser visual inspection claimed.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "no-change-with-reason: extended causal line does not complete a teaching chapter",
+    "banditrlwiki": "updated: planned exact noisy diagnostic closure with parallel and evidence obligations retained",
+    "results_ledger": "updated: planned exact noisy diagnostic evidence on existing causal result",
+    "roadmap": "updated: noisy progress and separately uncompiled parallel route",
+    "website_surfaces": [
+      "website/content/results.json",
+      "website/content/banditrlwiki.json",
+      "compiler-derived module graph"
+    ]
+  },
+  "truth_boundary": "Exact local noisy diagnostics only; parallel allocation and witness, remaining source audit and ICLR evidence remain open. No main merge, deployment or whole-topic completion.",
+  "verification": {
+    "focused_checks": [
+      "3605 focused build jobs; printed exact endpoints use only propext/Classical.choice/Quot.sound"
+    ],
+    "bandit_check": "Passed: root 9029 jobs, Tests 9131 jobs, 437 tests with 7 skips (153.198s)",
+    "site_build": "Pending final review and mapping refresh",
+    "site_check": "Pending final review and mapping refresh",
+    "independent_review": "Independent blind and source review accepted exact local diagnostics; two code files and two reports bound in causal-noisy-diagnostics-review.json"
+  },
+  "contributor": {
+    "name": "Codex",
+    "role": "Formalizer and review coordinator; independent reviewers named in semantic_roundtrip"
+  }
+}
