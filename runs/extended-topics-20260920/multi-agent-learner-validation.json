@@ -110,9 +110,15 @@
     {
       "stage": "initial committed-diff contributor gate",
       "reason": "Tests paths were listed in affected_files although the checker reserves that list for protected production surfaces",
-      "resolution": "Removed the two Tests paths from affected_files; full canary evidence remains in production_hashes,declared names,root build and promotion receipts;rerun pending"
+      "resolution": "Removed the two Tests paths from affected_files; full canary evidence remains in production_hashes,declared names,root build and promotion receipts;committed-diff rerun passed"
     }
   ],
-  "contributor_gate": "Pending diff-aware check after metadata commit",
+  "contributor_gate": {
+    "command": "python tools/check_contributor_contract.py --base d6e815d9378c3f7a2fbbb58dcecb92cdda91bbc8",
+    "exit_code": 0,
+    "checked_commit": "3dfd6a4785b004ed3e78210eefa3f9c2f108e267",
+    "log": "E:/ABRL/maintenance/extended-topics-20260920-multi-agent/learner-contributor-check-final.log",
+    "sha256": "86a4072d7c7005d8636000916152926f37fb38fd70a0bb6adc9590f81ac48714"
+  },
   "truth_boundary": "Selected static learner production and local joint gates accepted with explicit source repair. Recent-source comparison and ICLR evidence remain open; topic incomplete; no main merge/deploy."
 }
