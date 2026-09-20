@@ -63,3 +63,15 @@ now includes an independently reviewed, explicitly changed log6 finite-horizon
 GLM confidence proof. The original probability contract and the exact TMLR2024
 version comparison remain unverified; this mathematical repair is not Lean or
 regret acceptance. See YU25-SOURCE-AUDIT.md and its evidence receipt.
+
+
+## CUCB publication checkpoint 2026-09-20
+
+Code/site 7853623e13de040e2feccc7e7c2a8e4b18ff6eea has independent reader/mapping acceptance and passed
+public root, Tests, full harness (437 tests,7 skipped), contributor contract and
+local site checks. All23canonical references and13owner hashes were checked.
+The complete relevant CMOSS proof review yields a bounded non-import disposition,
+not a final interior-rate refutation. See cucb-production-validation.json and
+cmoss-full-source-disposition.json. CUCB descriptive ICLR evidence is next; all
+program evaluations and final integrated obligations remain mandatory,0/10complete.
+No main merge or deployment.
