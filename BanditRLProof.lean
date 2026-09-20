@@ -692,5 +692,7 @@ import BanditRLProof.Algorithms.CausalImportance
 import BanditRLProof.Algorithms.CausalAllocation
 import BanditRLProof.Algorithms.CausalOptimalAllocation
 import BanditRLProof.Algorithms.CausalAllocationRegret
+import BanditRLProof.Algorithms.CausalHeterogeneousRegret
+import BanditRLProof.Algorithms.CausalHeterogeneousLaw
 
 import BanditRLProof.Algorithms.HeavyTailRegretCap
