@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "status": "accepted-scratch-component",
+  "semantic_verdict": "accepted-with-explicit-delta",
+  "production_integrated": false,
+  "topic_complete": false,
+  "review_actors": {
+    "formalizer": "/root",
+    "blind_decoder": "/root/blind_decoder_b",
+    "source_reviewer": "/root/source_reviewer_a"
+  },
+  "source": {
+    "title": "Multi-Player Bandits -- a Musical Chairs Approach",
+    "anchor": "Static Algorithm1/2; Definition1/Theorem1 numeric Nth-(N+1)th gap; supplement A.1 Lemmas2-4; disclosed all-player budget repair",
+    "main_sha256": "c56474f0c3e689c1819b11e2bca4d3e5dcaef6eddfd0173bb55ff6a84f11d99d",
+    "supplement_sha256": "4ffd4d0c3fc975ae04b3d5e96911bd58d66bc2206e9d9584e18fcbf0c5b305ad"
+  },
+  "dependency_hashes": {
+    "BanditRLProof/Algorithms/MusicalChairsCoordination.lean": "7077674b2c4636a15b02b137ad08aac21ba0190bc0e6c58d03dfeea90413684d",
+    "BanditRLProof/Algorithms/MusicalChairsCoordinationTime.lean": "ff12d72240b7d02b88a839383e8c62c448d968953621d9e5cbc3e8ac5861ec72"
+  },
+  "base_commit": "36ca9f80a163ecb4339ea303a55cc1d6f4465300",
+  "scope": "Exact numeric sorted boundary-gap recovery event, actual measurable learned candidate configuration, fresh iid draw-path kernel, actual exploration/continuation compProd law, positive-good-event rectangle normalization, and finite causal continuation actions. No stateLaw pushforward/performance or full phase splice.",
+  "public_artifacts": {
+    "runs/extended-topics-20260920/MusicalChairsHandoffPrototype.lean": "24af303ef62b8671c1da0f28135c3ff410db315ca14948a69dab7bfc49ec1d39",
+    "docs/extended-topics/MULTI-AGENT-HANDOFF-PROGRESS.md": "7efc67f0849fc6ffe18f7c83b8b393422462fe13bf35f93f025e1af422786a5b"
+  },
+  "review_artifacts": {
+    "neutral-handoff.lean": {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\neutral-handoff.lean",
+      "sha256": "ad6cb6f9536d7b9bf903f1cf4f3496cf91e77bc0ff7e9ec3493543e0abc583bb"
+    },
+    "handoff-blind-v1.md": {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\handoff-blind-v1.md",
+      "sha256": "25c95451812c216449339e33cc424a3a5615bc6c8376b13eea09787677b85078"
+    },
+    "handoff-source-review-v1.md": {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\handoff-source-review-v1.md",
+      "sha256": "b7c18ccf0be7cf91ead0a644a8559043ec4f2ccf057543b774056098d71aa996"
+    }
+  },
+  "declarations": [
+    "BanditRLProof.MusicalChairs.rankedArm",
+    "BanditRLProof.MusicalChairs.rankIndex",
+    "BanditRLProof.MusicalChairs.rankedArm_rankIndex",
+    "BanditRLProof.MusicalChairs.rankIndex_rankedArm",
+    "BanditRLProof.MusicalChairs.mem_topArms_iff_rankIndex",
+    "BanditRLProof.MusicalChairs.ranked_score_antitone",
+    "BanditRLProof.MusicalChairs.boundaryGap",
+    "BanditRLProof.MusicalChairs.boundaryGap_nonneg",
+    "BanditRLProof.MusicalChairs.boundaryGap_separates",
+    "BanditRLProof.MusicalChairs.explorationGoodEvent_orderStatistic_probability",
+    "BanditRLProof.MusicalChairs.measurableSet_actualCandidate_eq",
+    "BanditRLProof.MusicalChairs.CandidateConfig",
+    "BanditRLProof.MusicalChairs.learnedConfig",
+    "BanditRLProof.MusicalChairs.measurable_learnedConfig",
+    "BanditRLProof.MusicalChairs.configDrawPathKernel",
+    "BanditRLProof.MusicalChairs.learnedDrawPathKernel",
+    "BanditRLProof.MusicalChairs.learnedDrawPathKernel_apply",
+    "BanditRLProof.MusicalChairs.learnedDrawPathKernel_pi",
+    "BanditRLProof.MusicalChairs.learnedDrawPathKernel_time_independent",
+    "BanditRLProof.MusicalChairs.commonConfig",
+    "BanditRLProof.MusicalChairs.learnedConfig_eq_common_on_good",
+    "BanditRLProof.MusicalChairs.learnedDrawPathKernel_on_good",
+    "BanditRLProof.MusicalChairs.explorationContinuationLaw",
+    "BanditRLProof.MusicalChairs.explorationContinuationLaw_fst_event",
+    "BanditRLProof.MusicalChairs.explorationContinuationLaw_rectangle_on_good",
+    "BanditRLProof.MusicalChairs.explorationContinuationLaw_good_probability",
+    "BanditRLProof.MusicalChairs.trajectory_eq_of_prefix",
+    "BanditRLProof.MusicalChairs.extendedCoordinationDraws",
+    "BanditRLProof.MusicalChairs.continuationAction",
+    "BanditRLProof.MusicalChairs.continuationAction_prefix",
+    "BanditRLProof.MusicalChairs.continuationAction_fixed_stays",
+    "BanditRLProof.MusicalChairs.explorationGoodEvent_positive",
+    "BanditRLProof.MusicalChairs.explorationContinuationLaw_normalized_rectangle",
+    "BanditRLProof.MusicalChairs.HandoffCanary.scrambled_boundary_gap",
+    "BanditRLProof.MusicalChairs.HandoffCanary.within_top_tie_gap",
+    "BanditRLProof.MusicalChairs.HandoffCanary.constant_boundary_gap",
+    "BanditRLProof.MusicalChairs.HandoffCanary.learned_actual_config",
+    "BanditRLProof.MusicalChairs.HandoffCanary.actual_future_product",
+    "BanditRLProof.MusicalChairs.HandoffCanary.separatedDraws",
+    "BanditRLProof.MusicalChairs.HandoffCanary.actual_first_action",
+    "BanditRLProof.MusicalChairs.HandoffCanary.actual_fixed_next_action",
+    "BanditRLProof.MusicalChairs.candidateConfig_fintype",
+    "BanditRLProof.MusicalChairs.candidateConfig_measurableSpace",
+    "BanditRLProof.MusicalChairs.candidateConfig_measurableSingleton",
+    "BanditRLProof.MusicalChairs.configDrawPathKernel_markov",
+    "BanditRLProof.MusicalChairs.learnedDrawPathKernel_markov",
+    "BanditRLProof.MusicalChairs.explorationContinuationLaw_probability"
+  ],
+  "new_scanned_declaration_count": 41,
+  "new_theorem_count": 29,
+  "new_definitions": 12,
+  "new_named_instances": 6,
+  "audited_new_declaration_count": 47,
+  "canary_theorems": 7,
+  "focused_compilation": {
+    "command": "lake env lean runs/extended-topics-20260920/MusicalChairsHandoffPrototype.lean",
+    "exit_code": 0,
+    "axiom_command": "lake env lean E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\handoff-axiom-audit.lean",
+    "axiom_exit_code": 0,
+    "axiom_log": "E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\handoff-axioms.log",
+    "axiom_log_sha256": "1dc0ceb55dfa178698c4b81bd9c5667f4db6580b50725d0aab325913740b1b07",
+    "allowed_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "exact_folded_code_verified": true
+  },
+  "unchanged_context": {
+    "runs/extended-topics-20260920/MusicalChairsRankingPrototype.lean": "27ad51ad463f5fc068f9eee87341a35df2eb1b9b1d46ea24fc5c3c822fdecfa2"
+  },
+  "joint_gate_status": "Not rerun or claimed for scratch; no public-root integration. Existing production acceptance remains scoped to coordination-regret code.",
+  "remaining": [
+    "Actual draw-path/state/action marginal connection to existing coordination stateLaw and performance",
+    "Global true-top comparator bounds and causal exploration/coordination phase splice for every finite horizon",
+    "Conditional/unconditional full regret including delta*n*T; any expected realized reward equality needs a fresh future reward model",
+    "Complete stochastic learner canary",
+    "Shared extraction/public root/Tests/harness/site acceptance",
+    "Recent-source audit and all-topic ICLR evidence"
+  ]
+}

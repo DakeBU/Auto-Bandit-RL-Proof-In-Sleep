@@ -72,3 +72,38 @@ import Tests.TextbookPartIVChapter14DominationCanary
 import Tests.MOSSPeelingCanary
 import Tests.MOSSStreamCanary
 import Tests.SubgaussianMinimaxCanary
+import Tests.HeavyTailCanary
+import Tests.HeavyTailRegretCanary
+import Tests.HeavyTailSourceConfidenceCanary
+import Tests.HeavyTailClippedCanary
+import Tests.HOOCausalCanary
+import Tests.HOOCantorCanary
+import Tests.HOORegretCanary
+import Tests.HOORateCanary
+import Tests.HOORewardFamilyCanary
+import Tests.CUCBThresholdCanary
+import Tests.CUCBTrajectoryCanary
+import Tests.CUCBConcentrationCanary
+import Tests.CUCBChargeCanary
+import Tests.CUCBSourceModelCanary
+
+import Tests.CUCBFiniteModelCanary
+import Tests.CausalOrderedLawCanary
+import Tests.CausalMarginalLawCanary
+import Tests.CausalImportanceCanary
+import Tests.CausalAllocationCanary
+import Tests.CausalOptimalAllocationCanary
+import Tests.CausalNoisyGraphCanary
+import Tests.CausalNoisyDiagnostics
+import Tests.CausalHeterogeneousCanary
+import Tests.CausalParallelCanary
+
+import Tests.HeavyTailSourceScheduleCanary
+
+import Tests.HeavyTailSourceRegretCanary
+import Tests.HeavyTailSourceCounterexampleCanary
+
+import Tests.HeavyTailRegretCapCanary
+import Tests.MusicalChairsCoordinationCanary
+import Tests.MusicalChairsCoordinationRegretCanary
+import Tests.MusicalChairsLearnerCanary

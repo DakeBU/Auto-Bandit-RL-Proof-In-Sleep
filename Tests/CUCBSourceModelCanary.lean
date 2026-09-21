@@ -1,0 +1,99 @@
+import BanditRLProof.Algorithms.CUCBFiniteConcavity
+import BanditRLProof.Algorithms.CUCBImpossibleCase
+import BanditRLProof.Algorithms.CUCBGapInverse
+import BanditRLProof.Algorithms.CUCBOracleSuccess
+import BanditRLProof.Algorithms.CUCBActualReward
+import BanditRLProof.Algorithms.CUCBSufficientSampling
+import BanditRLProof.Algorithms.CUCBRegretTail
+import BanditRLProof.Algorithms.CUCBRefinedRegret
+import BanditRLProof.Algorithms.CUCBPolynomialThreshold
+import BanditRLProof.PowerTailIntegral
+import BanditRLProof.Algorithms.CUCBPolynomialRegret
+
+/-! Source model and deterministic-trigger dependency checks.
+The required concrete noisy final-performance witness is still pending. -/
+namespace Tests.CUCBSourceModelCanary
+open BanditRLProof.CUCB
+
+#print axioms cucbTrajectory_ae_round_property
+#print axioms ChargeData.counters_le_observations_ae_of_one
+#print axioms FeedbackModel.minTrigger_pos
+#print axioms FeedbackModel.minTrigger_le_one
+#print axioms FeedbackModel.deterministic_counter_bound
+#print axioms FeedbackModel.charged_observation_tail
+#print axioms FeedbackModel.nice_event_probability
+#print axioms SourceModel.inverseGap_spec
+#print axioms SourceModel.chargeData_sufficient
+#print axioms SourceModel.not_bad_of_nice_and_sufficient_observations
+#print axioms SourceModel.maxPositiveGap_eq_zero_of_no_bad
+#print axioms SourceModel.counters_zero_of_no_bad
+
+#print axioms SourceModel.inverseAt_unique
+#print axioms SourceModel.inverseAt_gap
+#print axioms SourceModel.inverseAt_strictMono
+#print axioms SourceModel.gapThreshold_antitone
+#print axioms SourceModel.gapThreshold_intervalIntegrable
+#print axioms SourceModel.continuous_score
+#print axioms SourceModel.continuous_optimum
+#print axioms SourceModel.measurableSet_path_oracleSuccess
+#print axioms SourceModel.condExp_oracle_success
+#print axioms SourceModel.initial_oracle_success
+#print axioms SourceModel.oracle_failure_probability
+#print axioms SourceModel.integrable_round_reward
+#print axioms SourceModel.integral_joint_reward_eq_score
+#print axioms SourceModel.integrable_actual_reward
+#print axioms SourceModel.cumulative_actual_reward_expectation
+#print axioms SourceModel.approximationRegret_zero
+#print axioms SourceModel.approximationRegret_eq_mean
+#print axioms SourceModel.approximationRegret_eq_gap_sum
+#print axioms probabilistic_threshold_crossing
+#print axioms FeedbackModel.globalMinTrigger_pos
+#print axioms FeedbackModel.globalMinTrigger_eq_one_iff
+#print axioms SourceModel.trigger_shortfall_slice
+#print axioms SourceModel.trigger_shortfall_probability
+#print axioms SourceModel.trigger_shortfall_probability_of_one
+#print axioms SourceModel.trigger_shortfall_union_probability
+#print axioms SourceModel.sufficient_successful_charge_subset
+#print axioms SourceModel.sufficient_successful_charge_probability_of_all_one
+#print axioms SourceModel.sufficient_successful_charge_probability_source
+#print axioms SourceModel.gap_decomposition
+#print axioms SourceModel.measurableSet_sufficientSuccessfulCharge
+#print axioms SourceModel.integrable_actual_underSampledGap
+#print axioms SourceModel.expected_gap_decomposition
+#print axioms SourceModel.approximationRegret_le_underSampled_add_sufficient
+#print axioms SourceModel.sum_inverse_square_le
+#print axioms SourceModel.approximationRegret_le_underSampled_add_source_tail
+#print axioms ChargeData.counters_injOn_charges
+#print axioms ChargeData.card_charges_le
+#print axioms SourceModel.card_underChargeGapTail_le
+#print axioms SourceModel.badGap_bounds
+#print axioms BanditRLProof.FiniteGapLayerCake.sum_eq_layerCake
+#print axioms BanditRLProof.FiniteGapLayerCake.sum_le_refined_integral
+#print axioms SourceModel.underChargeWeight_le_refined
+#print axioms SourceModel.sum_underSampledGap_eq_weights
+#print axioms SourceModel.sum_underSampledGap_le_refined
+#print axioms SourceModel.theorem_one_refined_regret
+#print axioms SourceModel.approximationRegret_nonpos_of_no_bad
+#print axioms BanditRLProof.FiniteGapLayerCake.sum_le_cutoff_integral
+#print axioms SourceModel.sum_card_underChargeTimes_le
+#print axioms SourceModel.approximationRegret_le_gap_cutoff
+#print axioms SourceModel.approximationRegret_le_large_cutoff
+#print axioms SourceModel.inverseAt_polynomial
+#print axioms SourceModel.gapThreshold_polynomial_deterministic
+#print axioms SourceModel.gapThreshold_polynomial_probabilistic
+#print axioms SourceModel.gapThreshold_polynomial_upper
+#print axioms BanditRLProof.PowerTailIntegral.integral_power_tail_le
+#print axioms BanditRLProof.PowerTailIntegral.cutoff_balance
+#print axioms BanditRLProof.PowerTailIntegral.cutoff_objective
+#print axioms SourceModel.polynomial_threshold_integral_deterministic
+#print axioms SourceModel.polynomial_threshold_integral_probabilistic
+#print axioms SourceModel.polynomial_cutoff_regret_deterministic
+#print axioms SourceModel.polynomial_cutoff_regret_probabilistic
+#print axioms BanditRLProof.PowerTailIntegral.source_cutoff_normalization
+#print axioms SourceModel.approximationRegret_le_linear_gap
+#print axioms SourceModel.approximationRegret_one_le
+#print axioms SourceModel.theorem_two_deterministic
+#print axioms SourceModel.theorem_two_probabilistic
+#print axioms SourceModel.finite_power_sum_le
+#print axioms SourceModel.underChargeCount_power_sum_le
+end Tests.CUCBSourceModelCanary

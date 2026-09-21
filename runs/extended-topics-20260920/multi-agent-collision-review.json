@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "status": "accepted-scratch-component",
+  "semantic_verdict": "accepted-with-explicit-delta",
+  "production_integrated": false,
+  "topic_complete": false,
+  "review_actors": {
+    "formalizer": "/root",
+    "blind_decoder": "/root/blind_decoder_b",
+    "source_reviewer": "/root/source_reviewer_a"
+  },
+  "source": {
+    "title": "Multi-Player Bandits -- a Musical Chairs Approach",
+    "anchor": "Static Algorithm1 and supplement A.1 Lemma3; reviewed all-player union repair; prior mean component",
+    "main_sha256": "c56474f0c3e689c1819b11e2bca4d3e5dcaef6eddfd0173bb55ff6a84f11d99d",
+    "supplement_sha256": "4ffd4d0c3fc975ae04b3d5e96911bd58d66bc2206e9d9584e18fcbf0c5b305ad"
+  },
+  "dependency_hashes": {
+    "BanditRLProof/Algorithms/MusicalChairsCoordination.lean": "7077674b2c4636a15b02b137ad08aac21ba0190bc0e6c58d03dfeea90413684d",
+    "BanditRLProof/Algorithms/MusicalChairsCoordinationTime.lean": "ff12d72240b7d02b88a839383e8c62c448d968953621d9e5cbc3e8ac5861ec72"
+  },
+  "base_commit": "d1cbe96",
+  "scope": "Actual iid event-frequency and collision concentration; all-player delta/2; same joint action/reward statistics accuracy probability>=1-delta at exact positive natural ceiling/max exploration length. No Nhat, ranking or full learner.",
+  "public_artifacts": {
+    "runs/extended-topics-20260920/MusicalChairsCollisionPrototype.lean": "badf428d73b87c0438e825ec3b3ca30615e5599ecfa0e009db084d40c6f0c500",
+    "docs/extended-topics/MULTI-AGENT-COLLISION-PROGRESS.md": "0cbaeb872407f7686c090fd9315a9ed9ebad517a947c1783c15e417d73d18cab"
+  },
+  "review_artifacts": {
+    "neutral-collision.lean": {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\neutral-collision.lean",
+      "sha256": "390fb63a91ed9d13c664d7d4186e3c50d35f624e57b26926756d97689815e625"
+    },
+    "collision-blind-v1.md": {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\collision-blind-v1.md",
+      "sha256": "7828041ad45ffbe71247e7e3e9bd424337102cd4c29b6d7ad0cf3b9e06abb47e"
+    },
+    "collision-source-review-v1.md": {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\collision-source-review-v1.md",
+      "sha256": "c936050f3fa07c3378df26293ed856d9560fae00de1087eff0f341280fdc99dd"
+    }
+  },
+  "declarations": [
+    "BanditRLProof.FinitePMF.iid_toMeasure_pi",
+    "BanditRLProof.FinitePMF.eventIndicator",
+    "BanditRLProof.FinitePMF.eventIndicator_mean",
+    "BanditRLProof.FinitePMF.iid_indicator_mean",
+    "BanditRLProof.FinitePMF.iid_indicator_subGaussian",
+    "BanditRLProof.FinitePMF.iid_indicator_independent",
+    "BanditRLProof.FinitePMF.eventCount_eq_sum",
+    "BanditRLProof.FinitePMF.iid_centered_sum_subGaussian",
+    "BanditRLProof.FinitePMF.iid_centered_sum_abs_tail",
+    "BanditRLProof.FinitePMF.iid_frequency_tail",
+    "BanditRLProof.MusicalChairs.collisionProbReal",
+    "BanditRLProof.MusicalChairs.collision_indicator_mean",
+    "BanditRLProof.MusicalChairs.localCollisionRate",
+    "BanditRLProof.MusicalChairs.localCollisionRate_eq",
+    "BanditRLProof.MusicalChairs.collisionBadEvent",
+    "BanditRLProof.MusicalChairs.collisionBadEvent_bound",
+    "BanditRLProof.MusicalChairs.allCollisionBadEvent",
+    "BanditRLProof.MusicalChairs.allCollisionBadEvent_bound",
+    "BanditRLProof.MusicalChairs.collision_exploration_threshold",
+    "BanditRLProof.MusicalChairs.allCollisionBadEvent_le_half_delta",
+    "BanditRLProof.MusicalChairs.allCollisionAccurate",
+    "BanditRLProof.MusicalChairs.allCollisionAccurate_eq_compl",
+    "BanditRLProof.MusicalChairs.allCollisionAccurate_probability",
+    "BanditRLProof.MusicalChairs.explorationRewardLaw_fst_event",
+    "BanditRLProof.MusicalChairs.statisticsBadEvent",
+    "BanditRLProof.MusicalChairs.statisticsBadEvent_le_delta",
+    "BanditRLProof.MusicalChairs.explorationStatisticsAccurate",
+    "BanditRLProof.MusicalChairs.explorationStatisticsAccurate_eq_compl",
+    "BanditRLProof.MusicalChairs.explorationStatisticsAccurate_probability",
+    "BanditRLProof.MusicalChairs.CollisionCanary.two_players_three_arms_mean",
+    "BanditRLProof.MusicalChairs.CollisionCanary.mixed_local_rate",
+    "BanditRLProof.MusicalChairs.CollisionCanary.informative_tail",
+    "BanditRLProof.MusicalChairs.explorationLength",
+    "BanditRLProof.MusicalChairs.explorationLength_mean_budget",
+    "BanditRLProof.MusicalChairs.explorationLength_collision_budget",
+    "BanditRLProof.MusicalChairs.explorationLength_pos",
+    "BanditRLProof.MusicalChairs.explorationStatisticsAccurate_at_explorationLength"
+  ],
+  "new_declaration_count": 37,
+  "new_theorem_count": 28,
+  "new_definitions": 9,
+  "new_probability_instances": 0,
+  "canary_theorems": 3,
+  "focused_compilation": {
+    "command": "lake env lean runs/extended-topics-20260920/MusicalChairsCollisionPrototype.lean",
+    "exit_code": 0,
+    "axiom_command": "lake env lean E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\collision-axiom-audit.lean",
+    "axiom_exit_code": 0,
+    "axiom_log": "E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\collision-axioms.log",
+    "axiom_log_sha256": "beaf564df57595d25c1a1dccfb1fffa07dc0263f9e3c016788115b9efa995b2c",
+    "allowed_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "exact_folded_code_verified": true
+  },
+  "unchanged_context": {
+    "runs/extended-topics-20260920/MusicalChairsRewardPrototype.lean": "c4e2e9f508a36eb3e9c36530aac667d0ef58b3002873b6a20ef7b655046200fb"
+  },
+  "joint_gate_status": "Not rerun or claimed for scratch; no public-root integration. Prior production validation remains scoped to accepted coordination-regret code.",
+  "remaining": [
+    "inverse-log rounding and actual population recovery",
+    "empirical ranking and common true top-n set",
+    "full source good event implying estimator and candidate correctness",
+    "conditioning and fresh coordination continuation",
+    "complete causal unknown-N learner, full regret and nondegenerate canary",
+    "shared extraction/public root/Tests/harness/site acceptance",
+    "recent-source audit and all-topic ICLR evidence"
+  ]
+}

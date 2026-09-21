@@ -1,0 +1,1577 @@
+{
+  "schema_version": 1,
+  "program": "ABRL Extended Topics all-ten mandatory program",
+  "goal_status_observed": "paused",
+  "goal_thread": "01a0aedf-efda-78c3-9dc1-1f24264a3ba1",
+  "scope_amendment_date": "2026-09-17",
+  "base_library": "eedcda1db4d84f6bd69ec6ee50e174f6cf4056ac",
+  "prior_milestone": "4a32a9c4539fb08f2b6289e28ccbc92eb6a38c42",
+  "completed_topics": 0,
+  "completion_rule": "All 10 mandatory frozen representative lines, every required obligation, joint gates and ICLR evidence complete; no exemption by difficulty.",
+  "source_checklist": [
+    "Retrieve classic and recent primary PDFs",
+    "Read model, algorithm, exact theorem and entire proof including appendices",
+    "Freeze hash, theorem locator, notation and definitions",
+    "Separate source reconstruction, repair, adaptation and new result",
+    "Resolve raw/central moments, feedback, filtration, stopping and comparator",
+    "List every mandatory producer before proving",
+    "Record disagreements/failures without weakening endpoint"
+  ],
+  "evaluation": {
+    "status": "scope-expanded; formal run protocol v2 must freeze after all targets are audited",
+    "controlled_runs": [],
+    "effect_estimate": null,
+    "prior_two_target_protocol": "unexecuted historical design; not the full all-topic evaluation",
+    "descriptive_case_drafts": [
+      {
+        "topic": "heavy-tailed",
+        "path": "docs/extended-topics/ICLR-HEAVY-TAIL-CASE.md",
+        "review": "accepted-with-explicit-delta",
+        "receipt": "runs/extended-topics-20260919/heavy-tail-case-validation.json",
+        "controlled_evaluation": false
+      },
+      {
+        "topic": "lipschitz",
+        "path": "docs/extended-topics/ICLR-LIPSCHITZ-CASE.md",
+        "review": "accepted-with-explicit-scope",
+        "receipt": "runs/extended-topics-20260919/lipschitz-case-validation.json",
+        "controlled_evaluation": false
+      },
+      {
+        "topic": "combinatorial",
+        "path": "docs/extended-topics/ICLR-CUCB-CASE.md",
+        "review": "accepted-bounded-descriptive-case",
+        "receipt": "runs/extended-topics-20260919/cucb-case-validation.json",
+        "controlled_evaluation": false
+      },
+      {
+        "topic": "causal",
+        "path": "docs/extended-topics/ICLR-CAUSAL-CASE.md",
+        "review": "accepted-bounded-descriptive-case",
+        "receipt": "runs/extended-topics-20260919/causal-case-validation.json",
+        "controlled_evaluation": false
+      },
+      {
+        "topic": "multi-agent",
+        "path": "docs/extended-topics/ICLR-MULTI-AGENT-CASE.md",
+        "review": "accepted-bounded-descriptive-case",
+        "receipt": "runs/extended-topics-20260920/multi-agent-case-validation.json",
+        "controlled_evaluation": false
+      }
+    ]
+  },
+  "topics": [
+    {
+      "id": "heavy-tailed",
+      "mandatory": true,
+      "status": "proving",
+      "topic_complete": false,
+      "setting": "Known raw p-moment stationary finite-arm rewards, p in (1,2]",
+      "source": {
+        "candidate": "Bubeck--Cesa-Bianchi--Lugosi 2013; source hashes already frozen",
+        "url": "https://www.microsoft.com/en-us/research/wp-content/uploads/2017/01/BCL13.pdf",
+        "full_audit_complete": true,
+        "frozen": true,
+        "audit_note": "BCL representative source and exact corrected endpoint accepted; recent relevant proof reading and bounded accept/reject/non-transfer dispositions independently accepted in heavy-dependency-disposition-audit.json. Yu published2024 equivalence remains explicitly unverified and is not imported. This flag denotes source-selection audit closure, not acceptance of all candidate theorems."
+      },
+      "algorithm": "Unchanged BCL Figure1/Lemma1 radius-four source policy; explicitly corrected regret coefficient; conservative adaptation tracked separately",
+      "representative_endpoint": "Unchanged BCL radius-four policy: complete corrected finite-horizon expected pseudo-regret plus admissible finite negation of its literal printed coefficient",
+      "endpoint_frozen": true,
+      "mandatory_obligations": [
+        {
+          "id": "classic_and_recent_primary_source_audit",
+          "status": "Accepted bounded source-selection closure; full relevant reading and explicit claim-relative dispositions in heavy-dependency-disposition-audit.json; unseen Yu publication not imported"
+        },
+        {
+          "id": "source_version_hash_and_definition_context",
+          "status": "BCL published version and candidate/dependency hashes bound in scoped receipts; latest dependency disposition explicitly separates unverified Li-Sun2024 publication from inspected v2"
+        },
+        {
+          "id": "exact_algorithm_model_assumptions_and_endpoint_freeze",
+          "status": "Frozen unchanged source policy with explicit corrected regret guarantee and mandatory finite printed-coefficient obstruction; both now compiled and independently reviewed"
+        },
+        {
+          "id": "all_mathematical_producers",
+          "status": "Frozen BCL corrected actual-policy endpoint and finite obstruction compiled and independently accepted; recent-source mathematical repairs separately scoped with accepted dependency disposition"
+        },
+        {
+          "id": "actual_algorithm_to_performance_chain",
+          "status": "SourcePolicy.robust_expected_regret compiled for unchanged source policy with explicit enlarged leading coefficient; all horizons and additive5 retained"
+        },
+        {
+          "id": "public_reusable_interfaces",
+          "status": "Public root exposes corrected unchanged-source-policy and conservative regret in distinct namespaces, plus clipping transfer and finite source counterexample; combined acceptance recorded in counterexample-validation.json at 597ffe4"
+        },
+        {
+          "id": "nondegenerate_public_root_canary",
+          "status": "Noisy source-regret canary (means1 and1/2, epsilon1,u2,T1000000), long corrupted-prefix clipping transfer canary, and raw-moment finite expected-regret counterexample canary accepted in their scoped receipts"
+        },
+        {
+          "id": "semantic_review",
+          "status": "Conservative regret, corrected source-policy regret, clipping transfer and complete instantiated finite obstruction independently accepted with exact scope"
+        },
+        {
+          "id": "axiom_audit",
+          "status": "Corrected source-policy endpoint/count/canary and finite source-counterexample moment/count/expectation/negation audits use only propext, Classical.choice, Quot.sound; see source-regret-validation.json and counterexample-validation.json"
+        },
+        {
+          "id": "joint_root_Tests_full_harness",
+          "status": "Latest accepted production gate c65ccd3: root9016, Tests9114, full harness437tests7skips and site checks; genalti-production-validation.json. Production hashes and absence of subsequent Lean/site changes verified at source-disposition checkpoint; no new compilation claimed."
+        },
+        {
+          "id": "site_and_shared_registry_mapping",
+          "status": "Thirteen canonical reading references and six scoped review receipts accepted in latest Genalti production integration; not whole-topic acceptance or proof dependency edges."
+        },
+        {
+          "id": "bound_commit_reuse_transfer_failure_evidence",
+          "status": "Descriptive evidence exists: source-confidence reuse, source-policy/regret validation, clipping-reuse.json direct compiled references, and complete printed-coefficient counterexample. All-topic controlled evaluation and manuscript delivery remain pending"
+        },
+        {
+          "id": "ICLR_body_appendix_and_reproducible_results",
+          "status": "Heavy-tail descriptive Evaluation/appendix insertion drafted and independently source/evidence reviewed; reproducible receipt/Git-blob summary provided. All-topic v2, controlled execution and full manuscript synthesis remain pending. See heavy-tail-case-validation.json."
+        },
+        {
+          "id": "two-sided confidence and explicit radius tuning",
+          "status": "Source coefficient4 upper/lower confidence independently accepted with explicit generalizations; source-confidence-validation.json; source confidence included in latest combined gate"
+        },
+        {
+          "id": "causal measurable robust-UCB construction",
+          "status": "Actual SourcePolicy radius4, paper-round r^-2 policy compiled and independently accepted with explicit indexing/tie conventions; source-schedule-validation.json; included in latest combined gate"
+        },
+        {
+          "id": "actual-count peeling",
+          "status": "Actual adaptive latent-prefix source confidence and finite signed budgets2 accepted in source-schedule-validation.json; actual count/regret closure accepted in source-regret-validation.json"
+        },
+        {
+          "id": "selection/count and expected-regret endpoint",
+          "status": "Corrected unchanged-source-policy endpoint compiled, independently accepted with explicit delta and jointly validated"
+        },
+        {
+          "id": "source discrepancy adjudication",
+          "status": "Literal printed coefficient refuted by compiled admissible finite instance; corrected bound separately accepted"
+        }
+      ],
+      "reuse_candidates": [
+        "HeavyTailTruncation",
+        "HeavyTailFixedTilt",
+        "UCBArmStreamSource",
+        "RealMeanRegretPullCount"
+      ],
+      "upstream_dependencies": [
+        "shared finite history/probability model"
+      ],
+      "downstream_consumers": [
+        "cross-topic transfer",
+        "ICLR library utility evaluation"
+      ],
+      "acceptance_evidence": [
+        "PR #131 partial producer packet",
+        "f771f57 local root/Tests/harness/site gate",
+        "4a32a9c evidence receipt; not algorithm completion",
+        "runs/extended-topics-20260917/regret-validation.json: conservative full regret endpoint at 280378670ca4647440f795aae1905149eff0063b; semantic_acceptance=false",
+        "runs/extended-topics-20260919/regret-review-validation.json: full conservative endpoint semantic acceptance with explicit source delta; topic incomplete",
+        "runs/extended-topics-20260919/source-confidence-validation.json: original constant-four arbitrary-delta confidence, fresh joint gates and actual compiled reuse; not original algorithm/regret acceptance",
+        "SourceSchedule and SourcePolicy: actual source-parameter causal policy with raw-moment signed adaptive confidence and finite per-arm budgets2; packetE independent source/repair accepted; joint receipt source-schedule-validation.json",
+        "runs/extended-topics-20260919/source-regret-validation.json: corrected unchanged-source-policy complete expected-regret chain at bea700c; packetF accepted with explicit coefficient delta; shared gates passed",
+        "PacketG independent reviews accept reserved clipping transfer with explicit adaptation; larger random-prefix canary compiled; fresh direct compiled reuse evidence recorded",
+        "PacketH source-blind reconstruction, source and proof reviews accept complete finite source-policy counterexample; public-root raw-moment/expected-regret canary compiled",
+        "runs/extended-topics-20260919/ledger-reconciliation.json: verifies unchanged production hashes and explicit public-root imports behind updated obligation statuses; no fresh Lean run",
+        "runs/extended-topics-20260919/heavy-tail-mapping-validation.json: ten canonical statement references, five reviewed receipts, independent mapping acceptance, fresh combined gate and rendered destinations",
+        "docs/extended-topics/ICLR-HEAVY-TAIL-CASE.md and runs/extended-topics-20260919/heavy-tail-case-validation.json: reviewed descriptive case, initial-base versus development reuse separated; no controlled effect estimate",
+        "runs/extended-topics-20260919/genalti-production-validation.json: separately sourced finite-supremum obstruction and actual-law adapter production packet accepted, three canonical refs added; no topic completion"
+      ],
+      "current_blockers": [
+        "All-topic ICLR protocol, required evaluations, manuscript synthesis and final integrated acceptance remain pending"
+      ],
+      "next_action": "Retain topic_complete=false; carry global ICLR obligations to final all-topic join while proceeding in strict order to Lipschitz topic-local semantic/source acceptance.",
+      "compiled_endpoint": "BanditRLProof.HeavyTail.SourcePolicy.robust_expected_regret",
+      "endpoint_note": "Frozen unchanged source-policy corrected endpoint and finite printed-coefficient obstruction are locally compiled, semantically reviewed and jointly validated. Bounded recent-source/dependency selection audit and scoped shared mapping are accepted. Whole-topic completion still requires global all-topic ICLR delivery and final acceptance.",
+      "algorithm_to_regret_chain_compiled": true,
+      "independent_semantic_acceptance": false,
+      "confidence_review": "research-wiki/papers/extended-topics-heavy-tail-confidence.md",
+      "conservative_regret_semantic_acceptance": true,
+      "regret_review": "research-wiki/papers/extended-topics-heavy-tail-regret.md",
+      "source_constant_four_confidence": {
+        "status": "Compiled, independently source/repair accepted with explicit generalizations, public-root canary and fresh full harness/site gates passed",
+        "source_commit": "abf4d27e3560e41d65406d6e32485eee95eb9d30",
+        "targets": [
+          "BanditRLProof.HeavyTail.source_truncated_mean_upper_tail",
+          "BanditRLProof.HeavyTail.source_truncated_mean_lower_tail"
+        ],
+        "reader": "research-wiki/papers/extended-topics-heavy-tail-source-confidence.md",
+        "validation": "runs/extended-topics-20260919/source-confidence-validation.json",
+        "scope": "Source confidence only; existing conservative policy stays radius8/time^-4",
+        "reuse": "runs/extended-topics-20260919/source-confidence-reuse.json"
+      },
+      "recent_source_audits": [
+        {
+          "source": "Genalti et al COLT2024",
+          "status": "Bounded Genalti fixed-T supremum obstruction, actual-process image-law adapter and K2epsilon1 sharp slice integrated in public shared library; independent semantic/port/mapping reviews, root9016,Tests9114,437Python tests7skips and site checks passed. Root classification, literal/sign-only execution obstructions, exact guard and doubling bounds adjudicated; Theorem5 root and Theorem6 split-mean concentration reconstructed with source constants, explicit intersection-event semantics and sample multiplicity; fixed-prefix union transfers these events to adaptive counts in causal iid paired streams; separate reviews recorded. Complete corrected causal paired-policy expected pseudo-regret now mathematically reconstructed: pairing variance producer, index10, count threshold22^(1/q), rounded original-stream exploration, paired factor2 and odd residual; separate source/repair reviews. No Lean implementation of this corrected policy, literal120/46, Eq6 sufficiency, asymptotic lower repair or full-paper acceptance.",
+          "record": "docs/extended-topics/GENALTI24-SOURCE-AUDIT.md",
+          "evidence": "runs/extended-topics-20260919/genalti-production-validation.json",
+          "prior_evidence": "runs/extended-topics-20260919/genalti-supremum-audit.json",
+          "root_adjudication_evidence": "runs/extended-topics-20260919/genalti-root-audit.json",
+          "fixed_count_concentration_evidence": "runs/extended-topics-20260919/genalti-concentration-audit.json",
+          "corrected_positive_regret_evidence": "runs/extended-topics-20260919/genalti-corrected-regret-audit.json"
+        },
+        {
+          "source": "Park et al AISTATS2026",
+          "status": "Full relevant local proof chain read; bounded final source disposition independently accepted. Eq133 actual prefix-process counterexample, Eq285 probability-inference obstruction and finite-time gap-log boundary reject unqualified H-BE theorem import. Complete qualified clipped-IPW mathematical repair accepted with actionwise overlap and Eq66 target distinction; no Lean or full H-BE regret acceptance.",
+          "record": "docs/extended-topics/PARK26-SOURCE-AUDIT.md",
+          "evidence": "runs/extended-topics-20260919/park-adjudication-audit.json"
+        },
+        {
+          "source": "Yu et al UAI2025",
+          "status": "Relevant local proofs read; changed log6 GLM mathematical repair accepted. Bounded non-transfer disposition closes selection audit: published2024 equivalence and original-log2/corrupted-policy theorem remain unverified and are not imported.",
+          "record": "docs/extended-topics/YU25-SOURCE-AUDIT.md",
+          "evidence": "runs/extended-topics-20260919/glm-confidence-audit.json"
+        },
+        {
+          "source": "Tani et al UAI2026",
+          "status": "Complete qualified finite-horizon mathematical confidence-to-regret recovery independently accepted: actual first-update treatment, stopped scalar probability producers, original positive-time409 radius and corrected active-scale regret. Fixed-budget, beta0, zero-feature, consistent-K, attainment and measurability deltas explicit. Not original-written-proof equivalence or Lean acceptance; published-source/transitive-version audit remains open. Final claim-relative dependency disposition accepted; official Huang audited-score correspondence resolved in later receipt, and scalar Freedman interface replaced by reviewed elementary proof.",
+          "record": "docs/extended-topics/TANI26-SOURCE-AUDIT.md",
+          "evidence": "runs/extended-topics-20260919/tani-confidence-regret-audit.json",
+          "prior_evidence": "runs/extended-topics-20260919/tani-stopped-score-audit.json"
+        },
+        {
+          "source": "Huang et al NeurIPS2023 dependency, official supplemental full.pdf and pinned arXiv2306.06836v3 March2024",
+          "status": "C.4/C.5/C.2 finite-horizon score repair independently accepted with explicit deltas; random predictable MGF and prefix-calibration gaps repaired preserving constants4/8. Official2023 appendix correspondence verified by exact page text and independent raster comparison; existing qualified repair applies to matching published C.2/C.4/C.5. Whole-document identity, all-time wording, full regression/RL and Lean remain unaccepted.",
+          "record": "docs/extended-topics/HUANG23-SOURCE-AUDIT.md",
+          "evidence": "runs/extended-topics-20260919/huang-official-version-audit.json",
+          "prior_evidence": "runs/extended-topics-20260919/huang-v3-dependency-audit.json"
+        }
+      ],
+      "compiled_source_policy_endpoint": "BanditRLProof.HeavyTail.SourcePolicy.robust_expected_regret",
+      "source_policy_corrected_regret": {
+        "status": "Compiled; independent blind/source/separate repair accepted with explicit correction; public root, Tests, full harness and site gates passed",
+        "reader": "research-wiki/papers/extended-topics-heavy-tail-source-regret.md",
+        "formula": "sum over positive gaps: Delta * (2 log(max(T,1)) / (Delta/(8*u^(1/(1+epsilon))))^((1+epsilon)/epsilon) + 5)",
+        "scope": "Every natural horizon, actual causal source policy, raw moment hypotheses; first moments and confidence derived. Explicit correction, not the printed coefficient.",
+        "source_commit": "bea700c57218a08a3ae1f4f24bcf38fc83200046",
+        "validation": "runs/extended-topics-20260919/source-regret-validation.json"
+      },
+      "clipping_transfer": {
+        "semantic_status": "accepted-with-explicit-delta",
+        "scope": "Reserved estimator adaptation; same trace, finite outer measure; no corruption-policy regret or efficiency claim",
+        "reader": "research-wiki/papers/extended-topics-clipping-transfer.md",
+        "reuse": "runs/extended-topics-20260919/clipping-reuse.json",
+        "canary": "HeavyTailClippedCanary.long_corrupted_prefix",
+        "joint_validation": "Fresh root9014, Tests9110 and434Python tests7skips passed; site build/check passed"
+      },
+      "printed_coefficient_obstruction": {
+        "status": "Complete Lean certificate compiled; packetH independent source/proof accepted; root9015,Tests9112,full harness434tests7skips andsite gates passed",
+        "declaration": "BanditRLProof.HeavyTail.SourceCounterexample.literal_printed_bound_false",
+        "reader": "research-wiki/papers/extended-topics-heavy-tail-source-counterexample.md",
+        "scope": "Fixed permissible deterministic SourcePolicy tie convention, Dirac0/-1 laws, epsilon=u1,T2^50; no universal randomized-tie Lean claim",
+        "source_commit": "597ffe4",
+        "validation": "runs/extended-topics-20260919/counterexample-validation.json"
+      },
+      "conservative_compiled_endpoint": "BanditRLProof.HeavyTail.robust_expected_regret",
+      "independent_semantic_acceptance_scope": "The false value denotes unfinished whole-topic acceptance, not rejection of separately accepted source-confidence, source-policy, corrected-regret, clipping or counterexample packets.",
+      "source_dependency_disposition": "runs/extended-topics-20260919/heavy-dependency-disposition-audit.json",
+      "topic_local_source_audit_accepted": true
+    },
+    {
+      "id": "lipschitz",
+      "mandatory": true,
+      "status": "proving",
+      "topic_complete": false,
+      "setting": "Infinite binary covering tree; bounded stationary reward families; A1 general dissimilarity, A2 weak Lipschitz smoothness and actual near-optimality dimension. Complete source-repaired family endpoint independently accepted and jointly validated.",
+      "source": {
+        "candidate": "Bubeck et al. JMLR 2011 HOO Algorithm 1 / Theorem 6, explicitly repaired",
+        "url": "https://jmlr.org/papers/volume12/bubeck11a/bubeck11a.pdf",
+        "full_audit_complete": true,
+        "frozen": true,
+        "audit_note": "HOO selected source and complete relevant AppendixA1 independently reviewed; complete repaired chain accepted. Reward-family production adapter removes global-kernel restriction. Recent Log-Li complete relevant upper/lower proofs independently audited and explicitly not imported; external comparison references not assumed. See scoped receipts."
+      },
+      "algorithm": "Actual infinite binary-tree HOO with source-permitted deterministic ties and representatives; explicit indexing and log(max(n,2)) repair",
+      "representative_endpoint": "Full expected HOO regret at every horizon with near-optimality dimension d, every d-prime > d, environment-dependent horizon-independent constant; actual cumulative/pseudo-regret expectation identity",
+      "endpoint_frozen": true,
+      "mandatory_obligations": [
+        {
+          "id": "classic_and_recent_primary_source_audit",
+          "status": "Accepted selected HOO source-repaired endpoint plus bounded Log-Li non-import disposition; exact reading/version boundaries in receipts"
+        },
+        {
+          "id": "source_version_hash_and_definition_context",
+          "status": "Source hashes, Definitions4-5/logzero clarification, actual A1/A2 and all source deltas independently bound"
+        },
+        {
+          "id": "exact_algorithm_model_assumptions_and_endpoint_freeze",
+          "status": "Frozen repaired HOO now accepted under arbitrary stationary reward families; global kernel restriction removed"
+        },
+        {
+          "id": "all_mathematical_producers",
+          "status": "All seven frozen HOO obligations compiled and independently source-reviewed; production family adapter preserves actual probability law"
+        },
+        {
+          "id": "actual_algorithm_to_performance_chain",
+          "status": "Production arbitrary-family actual/pseudo full rate and expectation identity compiled, reviewed and jointly validated"
+        },
+        {
+          "id": "public_reusable_interfaces",
+          "status": "Public root imports HOORewardFamily and prior full HOO chain; no separate library"
+        },
+        {
+          "id": "nondegenerate_public_root_canary",
+          "status": "New public-root family consumer instantiates infinite-arm non-Dirac Cantor model with proved dimension<=2 at d=3; arbitrary-family equality consumer has no global measurability premise"
+        },
+        {
+          "id": "semantic_review",
+          "status": "Original32-file roundtrip, family prototype roundtrip, source repair, exact port/reader/canary and nine-reference mapping independently accepted"
+        },
+        {
+          "id": "axiom_audit",
+          "status": "Three new family endpoints and inherited audited chain use propext,Classical.choice,Quot.sound only"
+        },
+        {
+          "id": "joint_root_Tests_full_harness",
+          "status": "code785af09:root9017,Tests9116,437Python tests7skips, fullcheck passed; no main merge implied"
+        },
+        {
+          "id": "site_and_shared_registry_mapping",
+          "status": "Nine canonical statement/module/review-bound references, five inline proof paragraphs, generated links/anchors/sitechecks passed at clean785af09"
+        },
+        {
+          "id": "bound_commit_reuse_transfer_failure_evidence",
+          "status": "Historical graph0378:506 exported seeds but505 HOO-owned nodes;37 raw project proof pairs reduce to36 ownership-filtered HOO-to-other-project pairs,21 targets. Five target files unchanged from initial base and four absent. See HOO-CASE-EVIDENCE.md and lipschitz-case-summary.json; independent statistics review accepted within historical local scope; receipt lipschitz-statistics-review.json. Family adapter excluded from historical graph."
+        },
+        {
+          "id": "ICLR_body_appendix_and_reproducible_results",
+          "status": "Descriptive body/appendix draft and historical local replay independently accepted in lipschitz-case-validation.json; controlled evaluation, manuscript insertion, portable release and final global join remain pending."
+        },
+        {
+          "id": "geometry and partition assumptions",
+          "status": "source packing/limsup and actual disjoint three-way node partition compiled; source semantic acceptance recorded in hoo-production-validation.json"
+        },
+        {
+          "id": "optimistic tree policy",
+          "status": "compiled producer; independent acceptance recorded in hoo-production-validation.json"
+        },
+        {
+          "id": "confidence on adaptive node samples",
+          "status": "compiled actual-trajectory and U-index producers; independent acceptance recorded in hoo-production-validation.json"
+        },
+        {
+          "id": "visit counting",
+          "status": "compiled expected poor-region visits with additive four and repaired log(max(N,2)); independent acceptance recorded in hoo-production-validation.json"
+        },
+        {
+          "id": "approximation and full regret rate",
+          "status": "compiled: explicit geometric reduction, integer cutoff including horizon one, full pseudo/actual rate and equality of expectations"
+        }
+      ],
+      "reuse_candidates": [
+        "UCB confidence algebra",
+        "finite histories"
+      ],
+      "upstream_dependencies": [
+        "shared finite history/probability model"
+      ],
+      "downstream_consumers": [
+        "cross-topic transfer",
+        "ICLR library utility evaluation"
+      ],
+      "acceptance_evidence": [],
+      "current_blockers": [
+        "All-topic protocol, required controlled evaluations, manuscript synthesis, portable release and final integrated acceptance pending"
+      ],
+      "next_action": "Topic-local descriptive checkpoint accepted; proceed to Combinatorial independent source/repair review in strict order. Keep all global evaluation/release obligations mandatory and topic_complete=false.",
+      "contract": "docs/extended-topics/LIPSCHITZ-HOO-CONTRACT.md",
+      "contract_commit": "47474f9",
+      "compiled_producers": [
+        "finite tree backward min/max semantics and no fuel truncation",
+        "causal measurable history/action construction and fresh nodes",
+        "actual infinite reward trajectory and successor conditional law",
+        "weak Lipschitz regional gap, source Lemma 3 without attained supremum",
+        "covering representative and actual selected-arm law bridge",
+        "Actual regional conditional MGF and count-dependent upper/lower confidence",
+        "Supremum-preserving infinite branch without maximizer attainment",
+        "Actual B/search-path comparison and poor-region selection tail",
+        "Expected poor-region visits <= 8 log(max(N,2))/(gap-D)^2 + 4",
+        "Complete infinite binary-sequence A1/A2 noisy reward model with actual expected-visits instantiation",
+        "Finite complete depth levels and fixed-radius ambient disjoint-ball cardinality bound without triangle/symmetry",
+        "Whole-ball contained packing with attained finite natural packing number at every positive radius",
+        "Extended-real max-zero limsup near-optimality dimension with explicit log-zero convention",
+        "Limsup-derived fine-scale packing bound, A1-derived coarse-scale uniform constant and actual near-optimal-level power bound",
+        "Actual near-optimal/boundary node cover and pairwise disjoint three-way regret partition",
+        "Actual action injectivity gives shallow one-play contribution; prefix indicators give bad-subtree visits",
+        "Integrable actual regret and expected three-term bound, with derived boundary expected visits",
+        "One dimension-derived constant controls explicit expected regret sums for every cutoff and horizon",
+        "Explicit environment-only geometric coefficient and actual integer depth optimization including N=1",
+        "Full repaired expected pseudo-regret rate for every real exponent above actual near-optimality dimension",
+        "Bounded actual trajectory rewards and initial/successor-law derived expectation identity",
+        "Full repaired expected realized cumulative regret rate for one fixed infinite policy/law",
+        "Infinite-arm noisy final-rate witness with proved conservative dimension bound and no unproved dimension premise"
+      ],
+      "producer_acceptance": "Full source-repaired arbitrary-family HOO chain independently accepted with explicit deltas and jointly validated at code785af09; production receipt is authoritative. ICLR case and global program obligations remain pending; topic_complete=false.",
+      "validation": "runs/extended-topics-20260919/hoo-production-validation.json",
+      "progress_notes": [
+        "docs/extended-topics/HOO-CONFIDENCE-PROGRESS.md",
+        "docs/extended-topics/HOO-EXPECTED-VISITS-PROGRESS.md",
+        "docs/extended-topics/HOO-CANTOR-MODEL.md",
+        "docs/extended-topics/HOO-DIMENSION-PROGRESS.md",
+        "docs/extended-topics/HOO-REGRET-PARTITION-PROGRESS.md",
+        "docs/extended-topics/HOO-RATE-PROGRESS.md",
+        "docs/extended-topics/HOO-SOURCE-OBLIGATIONS.md",
+        "docs/extended-topics/HOO-CASE-EVIDENCE.md"
+      ],
+      "definition5_clarification_commit": "c88f0c8",
+      "algorithm_to_regret_chain_compiled": true,
+      "independent_semantic_acceptance": true,
+      "independent_review_checkpoint": "runs/extended-topics-20260919/hoo-semantic-review.json",
+      "production_acceptance": "runs/extended-topics-20260919/hoo-production-validation.json",
+      "recent_source_disposition": "runs/extended-topics-20260919/logli-source-disposition.json",
+      "descriptive_evidence_summary": "runs/extended-topics-20260919/lipschitz-case-summary.json",
+      "historical_rate_validation": "runs/extended-topics-20260917/hoo-rate-validation.json",
+      "descriptive_statistics_review": "runs/extended-topics-20260919/lipschitz-statistics-review.json",
+      "descriptive_case_acceptance": "runs/extended-topics-20260919/lipschitz-case-validation.json"
+    },
+    {
+      "id": "combinatorial",
+      "mandatory": true,
+      "status": "proving",
+      "topic_complete": false,
+      "setting": "General stochastic combinatorial semi-bandit with probabilistically triggered arms, nonlinear mean-based rewards and randomized approximation oracle",
+      "source": {
+        "candidate": "Chen--Wang--Yuan--Wang, JMLR 17(50), 2016, Algorithm 1 and Theorems 1/2; repaired analysis counters",
+        "audit_note": "docs/extended-topics/COMBINATORIAL-SOURCE-AUDIT.md",
+        "url": "https://jmlr.org/papers/v17/14-298.html",
+        "full_audit_complete": true,
+        "frozen": true,
+        "sha256": "6a29fc188cd1490c53864eb4f839e572551c171388fc27ba256a7e61424e856c",
+        "audit_scope": "Frozen Chen2016 model/Alg1/full Theorems1-2 proof; CMOSS v2 complete relevant Theorems1/5 proof reviewed with non-import disposition. Not all applications, versions or experiments."
+      },
+      "algorithm": "Source CUCB without forced initialization; clipped indices; fresh feasible oracle and triggered feedback",
+      "representative_endpoint": "Full Theorem 1 refined integral approximation-regret and Theorem 2 polynomial-smoothness bounds for both deterministic and probabilistic triggering",
+      "endpoint_frozen": true,
+      "mandatory_obligations": [
+        {
+          "id": "classic_and_recent_primary_source_audit",
+          "status": "accepted-with-explicit-scope; see semantic and recent-source receipts"
+        },
+        {
+          "id": "source_version_hash_and_definition_context",
+          "status": "accepted-with-explicit-scope; see semantic and recent-source receipts"
+        },
+        {
+          "id": "exact_algorithm_model_assumptions_and_endpoint_freeze",
+          "status": "accepted-with-explicit-scope; see semantic and recent-source receipts"
+        },
+        {
+          "id": "all_mathematical_producers",
+          "status": "compiled"
+        },
+        {
+          "id": "actual_algorithm_to_performance_chain",
+          "status": "compiled"
+        },
+        {
+          "id": "public_reusable_interfaces",
+          "status": "pending"
+        },
+        {
+          "id": "nondegenerate_public_root_canary",
+          "status": "compiled"
+        },
+        {
+          "id": "semantic_review",
+          "status": "Accepted-with-explicit-delta for frozen full CUCB chain and concrete consumers; see cucb-semantic-review.json. Not unrestricted source/application acceptance."
+        },
+        {
+          "id": "axiom_audit",
+          "status": "pending"
+        },
+        {
+          "id": "joint_root_Tests_full_harness",
+          "status": "passed-local; cucb-production-validation.json; topic incomplete"
+        },
+        {
+          "id": "site_and_shared_registry_mapping",
+          "status": "passed-local; cucb-production-validation.json; topic incomplete"
+        },
+        {
+          "id": "bound_commit_reuse_transfer_failure_evidence",
+          "status": "accepted bounded descriptive case; required controlled evaluation and all-topic synthesis remain pending"
+        },
+        {
+          "id": "ICLR_body_appendix_and_reproducible_results",
+          "status": "pending"
+        },
+        {
+          "id": "base-arm observation model",
+          "status": "compiled"
+        },
+        {
+          "id": "oracle feasibility and approximation contract",
+          "status": "compiled"
+        },
+        {
+          "id": "adaptive confidence producer",
+          "status": "compiled"
+        },
+        {
+          "id": "charging bad super-arms",
+          "status": "compiled"
+        },
+        {
+          "id": "terminal approximation regret",
+          "status": "compiled"
+        }
+      ],
+      "reuse_candidates": [
+        "finite-action kernels",
+        "UCB count algebra"
+      ],
+      "upstream_dependencies": [
+        "shared finite history/probability model"
+      ],
+      "downstream_consumers": [
+        "cross-topic transfer",
+        "ICLR library utility evaluation"
+      ],
+      "acceptance_evidence": [],
+      "current_blockers": [
+        "All-topic frozen evaluation protocol, required controlled evaluations, manuscript synthesis, portable release and final integrated acceptance pending"
+      ],
+      "next_action": "Local descriptive case accepted; proceed in listed order to Causal actual repeated sampling and full simple-regret chain. Retain every global evaluation/release obligation and topic_complete=false.",
+      "contract": "docs/extended-topics/CUCB-CONTRACT.md",
+      "contract_commit": "81a1998",
+      "progress_note": "The frozen full CUCB line now compiles Theorem1 and both exact Theorem2 branches from the actual learner/trajectory and primitive feedback/score/oracle assumptions. Actual observation/charged concentration, normalized analysis counters, oracle success, actual reward identity, signed cancellation, exact source tail, refined finite gap integral, actual once-per-round cutoff, polynomial inverse/thresholds/integrals, balanced cutoff and exact source powers are proved. Both Theorem2 terminals include H=1, cutoff>=Delta_max and mixed deterministic/probabilistic arms, preserving 6/12 constants, omega exponents, pi terms and per-arm24logH/p_i addition. Disclosed inverse-range clarification and normalized analysis-counter repair retained; learner unchanged. No supplied probability/count/regret premise or uniform realized-reward bound. Independent source/repair semantic acceptance, shared mappings and all-topic evaluation remain open. Topic incomplete; accepted topics0/10; no controlled evaluation run. Concrete 64-atom noisy SourceModel witnesses now compile: three nondegenerate Bernoulli arms, two distinct size-two actions, nonlinear product reward, actual observed marginal compatibility, exact means/rewards/trigger minima, input-maximizing oracle with actual R(1)=1/4, full Theorem1 and both Theorem2 instantiations, randomized beta=1/2 oracle case and no-bad boundary. See CUCB-FINITE-CANARIES.md. Independent semantic acceptance and evaluation are still pending. A provisional 23-reference source/role/statement-hash map is now registered in the shared topic/graph and rendered page; final semantic acceptance remains pending.",
+      "theorem_one_compiled": true,
+      "both_theorem_two_branches_compiled": true,
+      "all_frozen_performance_endpoints_compiled": true,
+      "algorithm_to_regret_chain_compiled": true,
+      "independent_semantic_acceptance": true,
+      "concrete_noisy_final_canary_compiled": true,
+      "deterministic_trigger_canary_compiled": true,
+      "no_bad_boundary_canary_compiled": true,
+      "shared_mapping_status": "provisional-review-pending",
+      "shared_mapping_reference_count": 23,
+      "semantic_review_checkpoint": "runs/extended-topics-20260919/cucb-review-checkpoint.json",
+      "semantic_obligation_map": "docs/extended-topics/CUCB-SOURCE-OBLIGATIONS.md",
+      "independent_review_checkpoint": "runs/extended-topics-20260919/cucb-semantic-review.json",
+      "production_acceptance": "runs/extended-topics-20260919/cucb-production-validation.json",
+      "recent_source_disposition": "runs/extended-topics-20260919/cmoss-full-source-disposition.json",
+      "descriptive_evidence_summary": "runs/extended-topics-20260919/cucb-case-summary.json",
+      "descriptive_case_acceptance": "runs/extended-topics-20260919/cucb-case-validation.json"
+    },
+    {
+      "id": "causal",
+      "mandatory": true,
+      "status": "proving",
+      "topic_complete": false,
+      "setting": "Finite observed DAG; known intervention reward-parent laws; binary reward; covered fixed allocation; fixed-budget simple regret",
+      "source": {
+        "candidate": "Lattimore--Lattimore--Reid, NIPS 2016 main and official supplement",
+        "url": "https://arxiv.org/abs/1606.03203",
+        "full_audit_complete": true,
+        "frozen": true,
+        "hash_manifest": "docs/extended-topics/causal-source-hashes.json",
+        "audit": "docs/extended-topics/CAUSAL-SOURCE-AUDIT.md",
+        "recent_audit_status": "Accepted bounded relevance/non-transfer disposition with separate repair review; see causal-source-disposition-review.json.",
+        "audit_note": "Bounded source-selection closure, not all candidate theorems certified: frozen repaired2016 endpoint and recent2026 relevant full-proof comparison, externalUCB version and independent finite-repair review. Metadata-only inventory and excluded lower/unknown-k/experimental claims remain explicit.",
+        "disposition": "docs/extended-topics/CAUSAL-SOURCE-DISPOSITION.md"
+      },
+      "algorithm": "Lattimore--Lattimore--Reid 2016 Algorithm 2: truncated importance estimates and actual argmax recommendation",
+      "representative_endpoint": "Theorem 3 general-graph simple regret with explicit conservative coefficient 2 sqrt(2)+7; uniform and optimal allocation; parallel allocation bridge",
+      "endpoint_frozen": true,
+      "mandatory_obligations": [
+        {
+          "id": "classic_and_recent_primary_source_audit",
+          "status": "Closed bounded source-selection obligation: accepted frozen classic chain and complete relevant recent comparison with exact externalUCB version, mathematical repair review and explicit exclusions; not whole-literature certification."
+        },
+        {
+          "id": "source_version_hash_and_definition_context",
+          "status": "documented"
+        },
+        {
+          "id": "exact_algorithm_model_assumptions_and_endpoint_freeze",
+          "status": "documented"
+        },
+        {
+          "id": "all_mathematical_producers",
+          "status": "Accepted scoped chain: actual intervention/parent/sample laws, centered MGF and derived confidence, bias and recommendation; native finite-node codec and repaired parallel law bridge. See sampling/heterogeneous/parallel review receipts."
+        },
+        {
+          "id": "actual_algorithm_to_performance_chain",
+          "status": "Compiled and independently accepted: actual Algorithm2 expected simple regret with coefficient 2sqrt(2)+7 and 1/T residual; cap1 and explicit asymptotic constant; uniform/attained optimal/parallel actual consumers."
+        },
+        {
+          "id": "public_reusable_interfaces",
+          "status": "Public root exposes all twenty causal modules through accepted endpoint imports; combined root 9032 jobs at parallel validation."
+        },
+        {
+          "id": "nondegenerate_public_root_canary",
+          "status": "Accepted actual noisy diagnostics, heterogeneous Fin3/Fin2 example, and fair/deterministic parallel witnesses with exact costs2/4; Tests9135 jobs."
+        },
+        {
+          "id": "semantic_review",
+          "status": "Fresh distinct blind/source review binds five foundation modules and seven sampling modules plus noisy canary to132a834 with explicit deltas. Supersedes three invalid historical sampling hashes; other heterogeneous/noisy/parallel reviews retained. Topic incomplete.",
+          "evidence": "runs/extended-topics-20260920/causal-review-rebinding.json"
+        },
+        {
+          "id": "axiom_audit",
+          "status": "Printed accepted endpoints use standard Lean axioms; full audit of all65 new parallel production/canary declarations bound in parallel validation."
+        },
+        {
+          "id": "joint_root_Tests_full_harness",
+          "status": "Passed at6ac086d: root9032, Tests9135, 437Python tests7skips; receipt296b091. No main merge."
+        },
+        {
+          "id": "site_and_shared_registry_mapping",
+          "status": "Passed local site and44 canonical declaration destinations at296b091; 59nodes68edges causal scope. No deployment."
+        },
+        {
+          "id": "bound_commit_reuse_transfer_failure_evidence",
+          "status": "Accepted bounded descriptive evidence at296b091;20 direct value/proof pairs to8targets,18 to unchanged baseline files and2 heavy-tail interfaces; independent extraction and prose review, byte-identical replay. Historical descriptive counts are unchanged; semantic-binding erratum and fresh13-file review are recorded separately in causal-review-rebinding.json."
+        },
+        {
+          "id": "ICLR_body_appendix_and_reproducible_results",
+          "status": "ICLR-CAUSAL-CASE.md Evaluation/appendix draft independently accepted; extraction/replay and hashes bound by causal-case-validation.json. Draft untypeset/unintegrated; all-topic controlled evaluation remains open."
+        },
+        {
+          "id": "causal/interventional law construction",
+          "status": "Compiled and accepted actual ordered DAG/parent law, native heterogeneous law transport and noisy/parallel actual instances."
+        },
+        {
+          "id": "identification conditions",
+          "status": "Reward nonintervention and covered-parent-law identity explicit; uniform, optimal and repaired parallel allocation supply support coverage, including deterministic coordinates."
+        },
+        {
+          "id": "observational importance estimator",
+          "status": "Actual repeated truncated importance statistic, true mean/second moment/bias and internally derived confidence compiled and accepted."
+        },
+        {
+          "id": "allocation/recommendation policy",
+          "status": "Actual fixed allocation sampling and fixed-order empirical maximizer compiled; attained optimal cost and actual regret consumers accepted."
+        },
+        {
+          "id": "complete learning guarantee",
+          "status": "Frozen Algorithm2 performance endpoint and mandatory allocation/canary results accepted at bounded mathematical scope; whole-topic source/evaluation acceptance remains open."
+        },
+        {
+          "id": "uniform allocation coverage and m <= K",
+          "status": "Compiled and accepted with actual-learner consumer; RHS relaxation keeps true-cost threshold."
+        },
+        {
+          "id": "convex design objective and attained covered optimum",
+          "status": "Compiled attained covered optimum and actual expected-regret consumer accepted; no numerical solver or actual-regret dominance claim."
+        },
+        {
+          "id": "parallel rare-action count and corrected normalized design bridge",
+          "status": "Closed: constructed strict rarity, normalized1-D observation mass, actual-law domination/coverage/cost<=2r, optimum and actual-regret consumers; independent reviews and fair/deterministic witnesses."
+        }
+      ],
+      "reuse_candidates": [
+        "history kernels",
+        "importance weighting"
+      ],
+      "upstream_dependencies": [
+        "shared finite history/probability model"
+      ],
+      "downstream_consumers": [
+        "cross-topic transfer",
+        "ICLR library utility evaluation"
+      ],
+      "acceptance_evidence": [
+        "runs/extended-topics-20260919/causal-sampling-review.json",
+        "runs/extended-topics-20260919/causal-sampling-validation.json",
+        "runs/extended-topics-20260919/causal-heterogeneous-review.json",
+        "runs/extended-topics-20260919/causal-heterogeneous-validation.json",
+        "runs/extended-topics-20260919/causal-noisy-diagnostics-review.json",
+        "runs/extended-topics-20260919/causal-noisy-diagnostics-validation.json",
+        "runs/extended-topics-20260919/causal-parallel-review.json",
+        "runs/extended-topics-20260919/causal-parallel-validation.json",
+        "runs/extended-topics-20260919/causal-case-validation.json",
+        "runs/extended-topics-20260919/causal-source-disposition-review.json",
+        "runs/extended-topics-20260920/causal-review-rebinding.json"
+      ],
+      "current_blockers": [
+        "All-topic controlled evaluation under frozen executable protocol",
+        "Manuscript integration/typesetting and final whole-topic acceptance"
+      ],
+      "next_action": "Integrate accepted causal descriptive evidence into the all-topic evaluation and manuscript; preserve controlled-evaluation and final-acceptance obligations.",
+      "contract": "docs/extended-topics/CAUSAL-CONTRACT.md",
+      "diagnostic": "docs/extended-topics/causal_canary_diagnostic.py",
+      "endpoint_note": "Actual algorithm-to-performance and mandatory allocation/canary chain is compiled and independently accepted with source deltas; topic remains incomplete for source/evaluation obligations.",
+      "producer_progress": "docs/extended-topics/CAUSAL-ORDERED-LAW-PROGRESS.md",
+      "marginal_progress": "docs/extended-topics/CAUSAL-MARGINAL-LAW-PROGRESS.md",
+      "importance_progress": "docs/extended-topics/CAUSAL-IMPORTANCE-PROGRESS.md",
+      "allocation_progress": "docs/extended-topics/CAUSAL-ALLOCATION-PROGRESS.md",
+      "optimal_allocation_progress": "docs/extended-topics/CAUSAL-OPTIMAL-ALLOCATION-PROGRESS.md",
+      "parallel_progress": "docs/extended-topics/CAUSAL-PARALLEL-PROGRESS.md",
+      "descriptive_case": "docs/extended-topics/ICLR-CAUSAL-CASE.md",
+      "evidence_binding_correction": {
+        "receipt": "runs/extended-topics-20260920/causal-review-rebinding.json",
+        "summary": "docs/extended-topics/CAUSAL-REVIEW-REBINDING.md",
+        "historical_sampling_hashes_valid": false,
+        "fresh_review_files": 13,
+        "foundation_modules_reviewed": 5,
+        "lean_changed": false
+      }
+    },
+    {
+      "id": "multi-agent",
+      "mandatory": true,
+      "status": "proving",
+      "topic_complete": false,
+      "setting": "Simultaneous players, collision feedback and stationary arm rewards",
+      "source": {
+        "candidate": "Rosenski--Shamir--Szlak, ICML 2016, static Algorithms 1/2 and Theorem 1; supplement A.1",
+        "url": "https://proceedings.mlr.press/v48/rosenski16.html",
+        "full_audit_complete": true,
+        "frozen": true,
+        "classic_audit_complete": true,
+        "classic_scope": "Static A.1 chain only; DMC/MEGA excluded; recent full-proof comparison pending",
+        "main_sha256": "c56474f0c3e689c1819b11e2bca4d3e5dcaef6eddfd0173bb55ff6a84f11d99d",
+        "supplement_sha256": "4ffd4d0c3fc975ae04b3d5e96911bd58d66bc2206e9d9584e18fcbf0c5b305ad",
+        "recent_audit_complete": true,
+        "audit_note": "Bounded classic/recent selection audit accepted: repaired2016 representative line retained; complete pertinent SynCDv1 proof and DPE initialization dependency read and independently reviewed; SynCD theorems not imported. Not acceptance of all candidate proofs."
+      },
+      "algorithm": "Static unknown-N Musical Chairs; explicitly repaired all-player budget, total local policy and genuine random coordination",
+      "representative_endpoint": "For the actual arbitrary-[0,1]-reward learner: P(G)>=1-delta; conditional pseudo-regret <=NS+8N^2; unconditional expected pseudo-regret <=min(NT,NS+8N^2+delta NT), all finite horizons, plus source 2exp(2)N^2 residual and delta=1/T corollary",
+      "endpoint_frozen": true,
+      "mandatory_obligations": [
+        {
+          "id": "classic_and_recent_primary_source_audit",
+          "status": "accepted-bounded-source-selection",
+          "note": "Bounded classic/recent selection audit accepted: repaired2016 representative line retained; complete pertinent SynCDv1 proof and DPE initialization dependency read and independently reviewed; SynCD theorems not imported. Not acceptance of all candidate proofs.",
+          "evidence": "runs/extended-topics-20260920/multi-agent-source-disposition-review.json"
+        },
+        {
+          "id": "source_version_hash_and_definition_context",
+          "status": "accepted",
+          "evidence": "runs/extended-topics-20260920/multi-agent-source-review.json"
+        },
+        {
+          "id": "exact_algorithm_model_assumptions_and_endpoint_freeze",
+          "status": "accepted-with-explicit-source-repair",
+          "evidence": "docs/extended-topics/MULTI-AGENT-CONTRACT.md"
+        },
+        {
+          "id": "all_mathematical_producers",
+          "status": "accepted-local-selected-static-scope",
+          "note": "Complete actual exploration/local population/ranking/learned continuation/reward/visible performance chain integrated in shared public root.",
+          "evidence": "runs/extended-topics-20260920/multi-agent-learner-validation.json"
+        },
+        {
+          "id": "actual_algorithm_to_performance_chain",
+          "status": "accepted-local-selected-static-scope",
+          "note": "Primitive-source all-horizon pseudo and unconditional realized/visible bounds, consumed by actual Bernoulli full-learner canary.",
+          "evidence": "runs/extended-topics-20260920/multi-agent-learner-validation.json"
+        },
+        {
+          "id": "public_reusable_interfaces",
+          "status": "accepted-local-selected-static-scope",
+          "note": "298 newly promoted production declarations plus73 existing coordination declarations;371 canonical reading references.",
+          "evidence": "runs/extended-topics-20260920/multi-agent-learner-validation.json"
+        },
+        {
+          "id": "nondegenerate_public_root_canary",
+          "status": "accepted-local-selected-static-scope",
+          "note": "Actual n2/k3 noisy full learner: derived means/gap, exact source duration, allH visible bound and complete-law transient event probability>=3/64.93 test declarations across12 diagnostic/canary blocks, not93 full learners.",
+          "evidence": "runs/extended-topics-20260920/multi-agent-learner-validation.json"
+        },
+        {
+          "id": "semantic_review",
+          "status": "accepted-local-selected-static-scope",
+          "note": "Distinct blind/source review of exact extraction/reader and independent371-reference publication audit accepted with explicit delta.",
+          "evidence": "runs/extended-topics-20260920/multi-agent-learner-validation.json"
+        },
+        {
+          "id": "axiom_audit",
+          "status": "accepted-local-selected-static-scope",
+          "note": "All410 promoted named declarations/instances audited through public-root test environment;only propext,Classical.choice,Quot.sound. EOF normalization independently verified semantically identical.",
+          "evidence": "runs/extended-topics-20260920/multi-agent-learner-validation.json"
+        },
+        {
+          "id": "joint_root_Tests_full_harness",
+          "status": "accepted-local-selected-static-scope",
+          "note": "Final combined root/Tests9151 jobs;full harness437 Python tests,7 skipped;exit0 including final site-generator repair.",
+          "evidence": "runs/extended-topics-20260920/multi-agent-learner-validation.json"
+        },
+        {
+          "id": "site_and_shared_registry_mapping",
+          "status": "accepted-local-selected-static-scope",
+          "note": "Verified site build/site/books checks;371 canonical module/statement/anchor checks;11347 graph search nodes retained;no deployment.",
+          "evidence": "runs/extended-topics-20260920/multi-agent-learner-validation.json"
+        },
+        {
+          "id": "bound_commit_reuse_transfer_failure_evidence",
+          "status": "accepted-bounded-descriptive-case",
+          "evidence": "runs/extended-topics-20260920/multi-agent-case-validation.json",
+          "note": "Zero direct outside-case ABRL proof/value references. The 902 cross-module pairs are internal case development, not initial-library reuse."
+        },
+        {
+          "id": "ICLR_body_appendix_and_reproducible_results",
+          "status": "partial",
+          "evidence": "runs/extended-topics-20260920/multi-agent-case-validation.json",
+          "note": "Descriptive body/appendix draft and independently replayed extraction accepted. All-topic controlled evaluation and manuscript integration remain open."
+        },
+        {
+          "id": "joint multi-player process",
+          "status": "accepted-local-selected-static-scope",
+          "note": "Constructed learned-candidate compProd law with fresh rewards, visible chronological feedback, local candidate/update identities and finite-prefix causality.",
+          "evidence": "runs/extended-topics-20260920/multi-agent-learner-validation.json"
+        },
+        {
+          "id": "collision observation law",
+          "status": "accepted-local-selected-static-scope",
+          "note": "Actual collision/count/local-feedback law and concentration integrated;population recovery derived,not assumed.",
+          "evidence": "runs/extended-topics-20260920/multi-agent-learner-validation.json"
+        },
+        {
+          "id": "exploration/ranking concentration",
+          "status": "accepted-local-selected-static-scope",
+          "note": "Actual local population/candidate correctness with probability>=1-delta at exact repaired source duration under numeric boundary gap.",
+          "evidence": "runs/extended-topics-20260920/multi-agent-learner-validation.json"
+        },
+        {
+          "id": "coordination success/time",
+          "status": "accepted-local-selected-static-scope",
+          "note": "Actual hazard/survival/occupation and2U charge give8n^2, transported into learned continuation with exact horizon splice.",
+          "evidence": "runs/extended-topics-20260920/multi-agent-learner-validation.json"
+        },
+        {
+          "id": "complete multi-player regret",
+          "status": "accepted-local-selected-static-scope",
+          "note": "All-horizon pseudo and unconditional realized/visible expected bounds with conditional/published/inverse-horizon pseudo corollaries;explicit residuals retained.",
+          "evidence": "runs/extended-topics-20260920/multi-agent-learner-validation.json"
+        }
+      ],
+      "reuse_candidates": [
+        "finite product kernels",
+        "occupancy/count algebra"
+      ],
+      "upstream_dependencies": [
+        "shared finite history/probability model"
+      ],
+      "downstream_consumers": [
+        "cross-topic transfer",
+        "ICLR library utility evaluation"
+      ],
+      "acceptance_evidence": [
+        "runs/extended-topics-20260920/multi-agent-occupation-validation.json",
+        "runs/extended-topics-20260920/multi-agent-regret-review.json",
+        "runs/extended-topics-20260920/multi-agent-regret-validation.json",
+        "runs/extended-topics-20260920/multi-agent-exploration-review.json",
+        "runs/extended-topics-20260920/multi-agent-reward-review.json",
+        "runs/extended-topics-20260920/multi-agent-collision-review.json",
+        "runs/extended-topics-20260920/multi-agent-population-review.json",
+        "runs/extended-topics-20260920/multi-agent-ranking-review.json",
+        "runs/extended-topics-20260920/multi-agent-handoff-review.json",
+        "runs/extended-topics-20260920/multi-agent-marginal-review.json",
+        "runs/extended-topics-20260920/multi-agent-comparator-review.json",
+        "runs/extended-topics-20260920/multi-agent-realized-review.json",
+        "runs/extended-topics-20260920/multi-agent-noisy-learner-review.json",
+        "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json",
+        "runs/extended-topics-20260920/multi-agent-learner-validation.json",
+        "runs/extended-topics-20260920/multi-agent-source-disposition-review.json"
+      ],
+      "current_blockers": [
+        "All-topic controlled evaluation, manuscript integration and final program acceptance remain open"
+      ],
+      "next_action": "Proceed in listed order to thompson-bayesian source audit and exact actual-posterior algorithm-to-performance contract; retain all-topic evaluation, manuscript and final acceptance obligations.",
+      "contract": "docs/extended-topics/MULTI-AGENT-CONTRACT.md",
+      "proof_route": "docs/extended-topics/MULTI-AGENT-PROOF-ROUTE.md",
+      "source_review_receipt": "runs/extended-topics-20260920/multi-agent-source-review.json",
+      "prototype": {
+        "path": "runs/extended-topics-20260920/MusicalChairsCoordinationPrototype.lean",
+        "reader": "docs/extended-topics/MULTI-AGENT-PROTOTYPE.md",
+        "status": "focused-compiled-scratch; public-root integration not performed",
+        "boundary": "Actual coordination state PMFs and fixed-arm distinctness; no exploration, estimator, marginal/hazard, concentration or regret chain"
+      },
+      "probability_prototype": {
+        "path": "runs/extended-topics-20260920/MusicalChairsProbabilityPrototype.lean",
+        "reader": "docs/extended-topics/MULTI-AGENT-PROBABILITY-PROGRESS.md",
+        "status": "focused-compiled-scratch; not public-root integrated",
+        "receipt": "runs/extended-topics-20260920/multi-agent-probability-review.json",
+        "boundary": "Constructed rectangle law, one-step local collision-bit adapter, candidate preservation and actual statewise hazard h_n with unused-arm producer; no exploration, uniform numerical hazard bound, survival sum or regret"
+      },
+      "coordination_occupation": {
+        "modules": [
+          "BanditRLProof/Algorithms/MusicalChairsCoordination.lean",
+          "BanditRLProof/Algorithms/MusicalChairsCoordinationTime.lean"
+        ],
+        "canary": "Tests/MusicalChairsCoordinationCanary.lean",
+        "reader": "research-wiki/papers/extended-topics-musical-chairs-coordination.md",
+        "receipt": "runs/extended-topics-20260920/multi-agent-occupation-review.json",
+        "endpoint": "Actual finite expected unfixed occupation <=4n² for common n-arm candidates",
+        "status": "Accepted local component: independent semantic review, public root/Tests/full harness and site/registry gates passed",
+        "boundary": "Occupation component alone; now consumed by separately reviewed actual2U charge/coordination mean regret. Full exploration-conditioned learner remains open.",
+        "validation": "runs/extended-topics-20260920/multi-agent-occupation-validation.json"
+      },
+      "coordination_regret": {
+        "module": "BanditRLProof/Algorithms/MusicalChairsCoordinationRegret.lean",
+        "canary": "Tests/MusicalChairsCoordinationRegretCanary.lean",
+        "reader": "research-wiki/papers/extended-topics-musical-chairs-regret.md",
+        "receipt": "runs/extended-topics-20260920/multi-agent-regret-review.json",
+        "validation": "runs/extended-topics-20260920/multi-agent-regret-validation.json",
+        "code_commit": "0b853ce17188070a8b720ab24ce911b18941dca7",
+        "endpoint": "Actual finite real expected common-set coordination mean deficit <=8n^2",
+        "status": "Accepted local component: independent semantic/promotion review, public root/Tests/full harness and site/registry checks passed",
+        "boundary": "No learned top-n set, exploration good-event conditioning or complete unknown-N learner. oneFixed diagnostic is not reachable from the two-player all-unfixed initial law."
+      },
+      "exploration_prototype": {
+        "path": "runs/extended-topics-20260920/MusicalChairsExplorationPrototype.lean",
+        "reader": "docs/extended-topics/MULTI-AGENT-EXPLORATION-PROGRESS.md",
+        "receipt": "runs/extended-topics-20260920/multi-agent-exploration-review.json",
+        "status": "Focused scratch compiled; all37 declarations/23theorems standard-axiom audited; independent blind/source accepted with explicit delta; not public-root integrated",
+        "endpoint": "Constructed iid action law, exact effective/collision probabilities, actual count PGFs/Laplace transform, q>=1/(4k), and deterministic local feedback/statistic identities",
+        "boundary": "No reward probability law, concentration, population estimator/ranking, good event, full learner or public-root integration"
+      },
+      "reward_mean_accuracy": {
+        "path": "runs/extended-topics-20260920/MusicalChairsRewardPrototype.lean",
+        "reader": "docs/extended-topics/MULTI-AGENT-REWARD-PROGRESS.md",
+        "receipt": "runs/extended-topics-20260920/multi-agent-reward-review.json",
+        "status": "Focused scratch compiled; 46 new named declarations including33 theorems and3 probability instances standard-axiom audited; independent blind/source accepted with explicit delta; not public-root integrated",
+        "endpoint": "Actual joint action/arbitrary bounded reward law yields simultaneous strict eps/2 mean accuracy with probability >=1-delta/2 at budget16k/eps^2 log(4k^2/delta)",
+        "boundary": "No population recovery, ranking, full good event, conditional continuation or complete learner; continuous canary validates admissibility but its small-horizon bound exceeds1"
+      },
+      "collision_joint_statistics": {
+        "path": "runs/extended-topics-20260920/MusicalChairsCollisionPrototype.lean",
+        "reader": "docs/extended-topics/MULTI-AGENT-COLLISION-PROGRESS.md",
+        "receipt": "runs/extended-topics-20260920/multi-agent-collision-review.json",
+        "status": "Focused scratch compiled;37 new declarations/28 theorems standard-axiom audited; independent blind/source accepted with explicit delta; not public-root integrated",
+        "endpoint": "Actual joint local mean/collision accuracy probability>=1-delta at exact natural ceiling/max exploration duration; actual all-player collision failure<=delta/2",
+        "boundary": "No Nhat, ranking, full source good event, conditional continuation or complete learner; natural duration and both budgets are derived, not supplied."
+      },
+      "population_recovery": {
+        "path": "runs/extended-topics-20260920/MusicalChairsPopulationPrototype.lean",
+        "reader": "docs/extended-topics/MULTI-AGENT-POPULATION-PROGRESS.md",
+        "receipt": "runs/extended-topics-20260920/multi-agent-population-review.json",
+        "status": "Focused scratch compiled;38 new declarations/32 theorems standard-axiom audited; independent blind/source accepted with explicit delta; not public-root integrated",
+        "endpoint": "Actual total local population estimates all equal n and means all accurate with joint probability>=1-delta at exact explorationLength; collision-only population probability>=1-delta/2",
+        "boundary": "No actual sorting/common true top-n candidate set, full source good event, conditional continuation or full learner. All-collision fallback and regular natural/integer cast agreement are proved."
+      },
+      "ranking_exploration_event": {
+        "path": "runs/extended-topics-20260920/MusicalChairsRankingPrototype.lean",
+        "reader": "docs/extended-topics/MULTI-AGENT-RANKING-PROGRESS.md",
+        "receipt": "runs/extended-topics-20260920/multi-agent-ranking-review.json",
+        "status": "Focused scratch compiled;44 new named declarations incl30theorems/4instances standard-axiom audited; independent blind/source accepted with explicit delta; not public-root integrated",
+        "endpoint": "Actual local Nhat/candidate correctness measurable event has probability>=1-delta for canonical trueTopArms at exact duration under explicit primitive cross-set gap; candidates nonempty on every valid history",
+        "boundary": "No numeric order-statistic gap function, actual continuation/full learner/regret or production acceptance. Fixed per-arm laws, independent arms/rounds/coins, not time-varying laws."
+      },
+      "numeric_gap_causal_handoff": {
+        "path": "runs/extended-topics-20260920/MusicalChairsHandoffPrototype.lean",
+        "reader": "docs/extended-topics/MULTI-AGENT-HANDOFF-PROGRESS.md",
+        "receipt": "runs/extended-topics-20260920/multi-agent-handoff-review.json",
+        "status": "Focused scratch compiled;47 new named declarations incl29theorems/6instances standard-axiom audited; seven canaries; distinct blind/source accepted with explicit delta; not public-root integrated",
+        "endpoint": "Exact numeric boundary-gap good-event producer; actual measurable learned candidates, fresh iid path kernel and compProd law; positive-good-event rectangle ratio and causal finite continuation actions",
+        "boundary": "No stateLaw marginal/performance transport, full phase splice, future reward law, full regret or production acceptance. Event ratio is not condDistrib; independence is per exploration history."
+      },
+      "actual_marginal_conditional_performance": {
+        "path": "runs/extended-topics-20260920/MusicalChairsMarginalPrototype.lean",
+        "reader": "docs/extended-topics/MULTI-AGENT-MARGINAL-PROGRESS.md",
+        "receipt": "runs/extended-topics-20260920/multi-agent-marginal-review.json",
+        "status": "Focused scratch compiled;34 named declarations including29theorems/2instances standard-axiom audited; six canaries; distinct blind/source accepted with explicit delta; not public-root integrated",
+        "endpoint": "Actual path/state/current-draw/action marginal identities and signed real expectation transport; normalized actual source-good-event coordination pseudo-regret <=8*n^2; positive kernel-mass transient canary",
+        "boundary": "No global comparator/bad-path bounds, total phase splice, exploration cost, unconditional delta*n*T regret, future reward law or production acceptance. Normalized event expectation, not regular conditional distribution."
+      },
+      "staged_action_pseudo_regret": {
+        "path": "runs/extended-topics-20260920/MusicalChairsComparatorPrototype.lean",
+        "reader": "docs/extended-topics/MULTI-AGENT-COMPARATOR-PROGRESS.md",
+        "receipt": "runs/extended-topics-20260920/multi-agent-comparator-review.json",
+        "status": "Focused scratch compiled;42 declarations including33theorems standard-axiom audited; seven canaries; distinct blind/source accepted with explicit delta; not public-root integrated",
+        "endpoint": "All-history comparator and actual phase splice; primitive-source all-horizon E[R_H]<=min(nH,n*min(H,S)+8*n^2+delta*nH), coarse endpoint, conditional/published residual and inverse-horizon corollary",
+        "boundary": "Mean-based staged-action pseudo-regret only. Future reward observations, unconditional realized-regret equality, complete local feedback trace, full noisy learner canary and production acceptance remain open; H<S optional conditioning uses latent later event."
+      },
+      "actual_rewards_visible_regret": {
+        "path": "runs/extended-topics-20260920/MusicalChairsRealizedPrototype.lean",
+        "reader": "docs/extended-topics/MULTI-AGENT-REALIZED-PROGRESS.md",
+        "receipt": "runs/extended-topics-20260920/multi-agent-realized-review.json",
+        "status": "Focused scratch compiled warning-free;57 new declarations/instances standard-axiom audited; three limited semantic canaries; distinct blind/source accepted with explicit delta; not public-root integrated",
+        "endpoint": "Actual fresh reward law and complete measurable local feedback; signed unconditional realized=pseudo identity and primitive-source expected visible regret <=min(nH,nS+8*n^2+delta*nH)",
+        "boundary": "No conditional realized equality on reward-dependent exploration event. Full noisy learner canary, public production gates, recent-source comparison and ICLR evidence remain open."
+      },
+      "full_noisy_learner_canary": {
+        "path": "runs/extended-topics-20260920/MusicalChairsNoisyLearnerPrototype.lean",
+        "reader": "docs/extended-topics/MULTI-AGENT-NOISY-LEARNER-PROGRESS.md",
+        "receipt": "runs/extended-topics-20260920/multi-agent-noisy-learner-review.json",
+        "status": "Focused scratch compiled warning-free;28 new declarations/instance standard-axiom audited; distinct blind/source accepted-with-explicit-delta; not public-root integrated",
+        "endpoint": "Actual Bernoulli means/gap and source good-event probability>=3/4; allH expected visible regret<=min(2H,2S+32+H/2); full noisy law transient event>=3/64 and mean coordination charge5/4",
+        "boundary": "Symbolic theorem instantiation, not simulation. Standalone zero-bit/ranking diagnostics are not measured full-trace events. Public-root canary and topic completion await joint gates and remaining source/evidence obligations."
+      },
+      "checkpoint_note": "Earlier prototype/component fields are historical checkpoints. Current integrated status is full_learner_production below;topic_complete remains false.",
+      "full_learner_production": {
+        "code_commit": "3d0265b41717401463ca35b832a87906c17b80e2",
+        "modules": [
+          "BanditRLProof/Algorithms/MusicalChairsExploration.lean",
+          "BanditRLProof/Algorithms/MusicalChairsReward.lean",
+          "BanditRLProof/Algorithms/MusicalChairsCollision.lean",
+          "BanditRLProof/Algorithms/MusicalChairsPopulation.lean",
+          "BanditRLProof/Algorithms/MusicalChairsRanking.lean",
+          "BanditRLProof/Algorithms/MusicalChairsHandoff.lean",
+          "BanditRLProof/Algorithms/MusicalChairsMarginal.lean",
+          "BanditRLProof/Algorithms/MusicalChairsLearnerRegret.lean",
+          "BanditRLProof/Algorithms/MusicalChairsRealized.lean",
+          "Tests/MusicalChairsLearnerCanary.lean"
+        ],
+        "reader": "research-wiki/papers/extended-topics-musical-chairs-learner.md",
+        "review_receipt": "runs/extended-topics-20260920/multi-agent-learner-promotion-review.json",
+        "validation": "runs/extended-topics-20260920/multi-agent-learner-validation.json",
+        "status": "accepted-local-selected-static-scope",
+        "boundary": "Selected static learner production and local joint gates accepted with explicit source repair. Bounded recent-source selection and descriptive case separately accepted. All-topic controlled evaluation, manuscript integration and final acceptance remain open; no main merge/deploy."
+      },
+      "recent_source_disposition": {
+        "summary": "docs/extended-topics/MULTI-AGENT-SOURCE-DISPOSITION.md",
+        "receipt": "runs/extended-topics-20260920/multi-agent-source-disposition-review.json",
+        "status": "accepted-bounded-source-selection-with-explicit-deltas",
+        "synCD_theorem_imported": false
+      },
+      "descriptive_case_acceptance": "runs/extended-topics-20260920/multi-agent-case-validation.json"
+    },
+    {
+      "id": "thompson-bayesian",
+      "mandatory": true,
+      "status": "draft",
+      "topic_complete": false,
+      "setting": "Finite actions and Bayesian latent environment; prior/posterior model to freeze",
+      "source": {
+        "candidate": "Russo--Van Roy, JMLR 2016; version/hash not yet frozen",
+        "url": "https://jmlr.org/papers/v17/14-087.html",
+        "full_audit_complete": false,
+        "frozen": false
+      },
+      "algorithm": "Thompson sampling with genuine posterior sampling",
+      "representative_endpoint": "Complete Bayesian regret bound with information-ratio producer, not an assumed ratio",
+      "endpoint_frozen": false,
+      "mandatory_obligations": [
+        {
+          "id": "classic_and_recent_primary_source_audit",
+          "status": "pending"
+        },
+        {
+          "id": "source_version_hash_and_definition_context",
+          "status": "pending"
+        },
+        {
+          "id": "exact_algorithm_model_assumptions_and_endpoint_freeze",
+          "status": "pending"
+        },
+        {
+          "id": "all_mathematical_producers",
+          "status": "pending"
+        },
+        {
+          "id": "actual_algorithm_to_performance_chain",
+          "status": "pending"
+        },
+        {
+          "id": "public_reusable_interfaces",
+          "status": "pending"
+        },
+        {
+          "id": "nondegenerate_public_root_canary",
+          "status": "pending"
+        },
+        {
+          "id": "semantic_review",
+          "status": "pending"
+        },
+        {
+          "id": "axiom_audit",
+          "status": "pending"
+        },
+        {
+          "id": "joint_root_Tests_full_harness",
+          "status": "pending"
+        },
+        {
+          "id": "site_and_shared_registry_mapping",
+          "status": "pending"
+        },
+        {
+          "id": "bound_commit_reuse_transfer_failure_evidence",
+          "status": "pending"
+        },
+        {
+          "id": "ICLR_body_appendix_and_reproducible_results",
+          "status": "pending"
+        },
+        {
+          "id": "Bayesian joint law",
+          "status": "open"
+        },
+        {
+          "id": "posterior update and sampling equality",
+          "status": "open"
+        },
+        {
+          "id": "information-gain and entropy chain rule",
+          "status": "open"
+        },
+        {
+          "id": "model-specific information-ratio bound",
+          "status": "open"
+        },
+        {
+          "id": "Bayesian regret endpoint",
+          "status": "open"
+        }
+      ],
+      "reuse_candidates": [
+        "ThompsonBayesRegretDecomposition",
+        "posterior interfaces"
+      ],
+      "upstream_dependencies": [
+        "shared finite history/probability model"
+      ],
+      "downstream_consumers": [
+        "cross-topic transfer",
+        "ICLR library utility evaluation"
+      ],
+      "acceptance_evidence": [],
+      "current_blockers": [
+        "Source/endpoint audit incomplete"
+      ],
+      "next_action": "Audit current posterior modules against full source theorem"
+    },
+    {
+      "id": "constrained",
+      "mandatory": true,
+      "status": "draft",
+      "topic_complete": false,
+      "setting": "Stochastic reward/resource consumption, finite budgets and stopping rule",
+      "source": {
+        "candidate": "Bandits with Knapsacks, Badanidiyuru--Kleinberg--Slivkins; version/hash not yet frozen",
+        "url": "https://arxiv.org/abs/1305.2545",
+        "full_audit_complete": false,
+        "frozen": false
+      },
+      "algorithm": "Source BwK algorithm after model/comparator audit",
+      "representative_endpoint": "Complete reward/regret guarantee with feasibility and resource stopping",
+      "endpoint_frozen": false,
+      "mandatory_obligations": [
+        {
+          "id": "classic_and_recent_primary_source_audit",
+          "status": "pending"
+        },
+        {
+          "id": "source_version_hash_and_definition_context",
+          "status": "pending"
+        },
+        {
+          "id": "exact_algorithm_model_assumptions_and_endpoint_freeze",
+          "status": "pending"
+        },
+        {
+          "id": "all_mathematical_producers",
+          "status": "pending"
+        },
+        {
+          "id": "actual_algorithm_to_performance_chain",
+          "status": "pending"
+        },
+        {
+          "id": "public_reusable_interfaces",
+          "status": "pending"
+        },
+        {
+          "id": "nondegenerate_public_root_canary",
+          "status": "pending"
+        },
+        {
+          "id": "semantic_review",
+          "status": "pending"
+        },
+        {
+          "id": "axiom_audit",
+          "status": "pending"
+        },
+        {
+          "id": "joint_root_Tests_full_harness",
+          "status": "pending"
+        },
+        {
+          "id": "site_and_shared_registry_mapping",
+          "status": "pending"
+        },
+        {
+          "id": "bound_commit_reuse_transfer_failure_evidence",
+          "status": "pending"
+        },
+        {
+          "id": "ICLR_body_appendix_and_reproducible_results",
+          "status": "pending"
+        },
+        {
+          "id": "resource process and feasibility",
+          "status": "open"
+        },
+        {
+          "id": "LP or source comparator",
+          "status": "open"
+        },
+        {
+          "id": "algorithm primal/dual update",
+          "status": "open"
+        },
+        {
+          "id": "concentration with stopping",
+          "status": "open"
+        },
+        {
+          "id": "terminal budget-aware reward/regret",
+          "status": "open"
+        }
+      ],
+      "reuse_candidates": [
+        "stopping-time machinery",
+        "finite histories"
+      ],
+      "upstream_dependencies": [
+        "shared finite history/probability model"
+      ],
+      "downstream_consumers": [
+        "cross-topic transfer",
+        "ICLR library utility evaluation"
+      ],
+      "acceptance_evidence": [],
+      "current_blockers": [
+        "Source/endpoint audit incomplete"
+      ],
+      "next_action": "Retrieve primary source and freeze comparator/overshoot convention"
+    },
+    {
+      "id": "corruption-tolerant",
+      "mandatory": true,
+      "status": "draft",
+      "topic_complete": false,
+      "setting": "Stochastic bandits with explicit adversary timing and L1 budget",
+      "source": {
+        "candidate": "Lykouris--Mirrokni--Paes Leme 2018; version/hash not yet frozen",
+        "url": "https://arxiv.org/abs/1803.09353",
+        "full_audit_complete": false,
+        "frozen": false
+      },
+      "algorithm": "Source corruption-robust bandit algorithm; clipping transfer remains subsidiary",
+      "representative_endpoint": "Complete corruption-dependent regret theorem, not just estimator stability",
+      "endpoint_frozen": false,
+      "mandatory_obligations": [
+        {
+          "id": "classic_and_recent_primary_source_audit",
+          "status": "pending"
+        },
+        {
+          "id": "source_version_hash_and_definition_context",
+          "status": "pending"
+        },
+        {
+          "id": "exact_algorithm_model_assumptions_and_endpoint_freeze",
+          "status": "pending"
+        },
+        {
+          "id": "all_mathematical_producers",
+          "status": "pending"
+        },
+        {
+          "id": "actual_algorithm_to_performance_chain",
+          "status": "pending"
+        },
+        {
+          "id": "public_reusable_interfaces",
+          "status": "pending"
+        },
+        {
+          "id": "nondegenerate_public_root_canary",
+          "status": "pending"
+        },
+        {
+          "id": "semantic_review",
+          "status": "pending"
+        },
+        {
+          "id": "axiom_audit",
+          "status": "pending"
+        },
+        {
+          "id": "joint_root_Tests_full_harness",
+          "status": "pending"
+        },
+        {
+          "id": "site_and_shared_registry_mapping",
+          "status": "pending"
+        },
+        {
+          "id": "bound_commit_reuse_transfer_failure_evidence",
+          "status": "pending"
+        },
+        {
+          "id": "ICLR_body_appendix_and_reproducible_results",
+          "status": "pending"
+        },
+        {
+          "id": "adversary filtration and budget",
+          "status": "open"
+        },
+        {
+          "id": "robust policy and estimator",
+          "status": "open"
+        },
+        {
+          "id": "confidence under corruption",
+          "status": "open"
+        },
+        {
+          "id": "robust count argument",
+          "status": "open"
+        },
+        {
+          "id": "corruption-dependent regret",
+          "status": "open"
+        }
+      ],
+      "reuse_candidates": [
+        "HeavyTailClipping",
+        "Tsallis corruption modules"
+      ],
+      "upstream_dependencies": [
+        "shared finite history/probability model"
+      ],
+      "downstream_consumers": [
+        "cross-topic transfer",
+        "ICLR library utility evaluation"
+      ],
+      "acceptance_evidence": [],
+      "current_blockers": [
+        "Source/endpoint audit incomplete"
+      ],
+      "next_action": "Audit known/unknown budget and selected/all-arm corruption conventions"
+    },
+    {
+      "id": "matrix",
+      "mandatory": true,
+      "status": "draft",
+      "topic_complete": false,
+      "setting": "Nonnegative stochastic rank-1 row/column reward model, assumptions to audit",
+      "source": {
+        "candidate": "Katariya et al., AISTATS 2017; version/hash not yet frozen",
+        "url": "https://proceedings.mlr.press/v54/katariya17a.html",
+        "full_audit_complete": false,
+        "frozen": false
+      },
+      "algorithm": "Rank1Elim representative matrix-learning line",
+      "representative_endpoint": "Complete rank-1 regret guarantee with row/column dependence, not flat-arm relabeling",
+      "endpoint_frozen": false,
+      "mandatory_obligations": [
+        {
+          "id": "classic_and_recent_primary_source_audit",
+          "status": "pending"
+        },
+        {
+          "id": "source_version_hash_and_definition_context",
+          "status": "pending"
+        },
+        {
+          "id": "exact_algorithm_model_assumptions_and_endpoint_freeze",
+          "status": "pending"
+        },
+        {
+          "id": "all_mathematical_producers",
+          "status": "pending"
+        },
+        {
+          "id": "actual_algorithm_to_performance_chain",
+          "status": "pending"
+        },
+        {
+          "id": "public_reusable_interfaces",
+          "status": "pending"
+        },
+        {
+          "id": "nondegenerate_public_root_canary",
+          "status": "pending"
+        },
+        {
+          "id": "semantic_review",
+          "status": "pending"
+        },
+        {
+          "id": "axiom_audit",
+          "status": "pending"
+        },
+        {
+          "id": "joint_root_Tests_full_harness",
+          "status": "pending"
+        },
+        {
+          "id": "site_and_shared_registry_mapping",
+          "status": "pending"
+        },
+        {
+          "id": "bound_commit_reuse_transfer_failure_evidence",
+          "status": "pending"
+        },
+        {
+          "id": "ICLR_body_appendix_and_reproducible_results",
+          "status": "pending"
+        },
+        {
+          "id": "rank-1 observation law and identifiability",
+          "status": "open"
+        },
+        {
+          "id": "row/column elimination algorithm",
+          "status": "open"
+        },
+        {
+          "id": "confidence with coupled sampling",
+          "status": "open"
+        },
+        {
+          "id": "elimination correctness",
+          "status": "open"
+        },
+        {
+          "id": "full structural regret dependence",
+          "status": "open"
+        }
+      ],
+      "reuse_candidates": [
+        "finite product actions",
+        "concentration/count interfaces"
+      ],
+      "upstream_dependencies": [
+        "shared finite history/probability model"
+      ],
+      "downstream_consumers": [
+        "cross-topic transfer",
+        "ICLR library utility evaluation"
+      ],
+      "acceptance_evidence": [],
+      "current_blockers": [
+        "Source/endpoint audit incomplete"
+      ],
+      "next_action": "Audit positivity and benign-instance assumptions from full theorem"
+    },
+    {
+      "id": "variance-aware",
+      "mandatory": true,
+      "status": "draft",
+      "topic_complete": false,
+      "setting": "Bounded stochastic rewards and empirical variance, source constants to audit",
+      "source": {
+        "candidate": "Audibert--Munos--Szepesvari, TCS 2009; author preprint version to compare",
+        "url": "https://imagine.enpc.fr/publications/papers/TCS08.pdf",
+        "full_audit_complete": false,
+        "frozen": false
+      },
+      "algorithm": "UCB-V source line",
+      "representative_endpoint": "Complete variance-sensitive expected regret including empirical-variance concentration",
+      "endpoint_frozen": false,
+      "mandatory_obligations": [
+        {
+          "id": "classic_and_recent_primary_source_audit",
+          "status": "pending"
+        },
+        {
+          "id": "source_version_hash_and_definition_context",
+          "status": "pending"
+        },
+        {
+          "id": "exact_algorithm_model_assumptions_and_endpoint_freeze",
+          "status": "pending"
+        },
+        {
+          "id": "all_mathematical_producers",
+          "status": "pending"
+        },
+        {
+          "id": "actual_algorithm_to_performance_chain",
+          "status": "pending"
+        },
+        {
+          "id": "public_reusable_interfaces",
+          "status": "pending"
+        },
+        {
+          "id": "nondegenerate_public_root_canary",
+          "status": "pending"
+        },
+        {
+          "id": "semantic_review",
+          "status": "pending"
+        },
+        {
+          "id": "axiom_audit",
+          "status": "pending"
+        },
+        {
+          "id": "joint_root_Tests_full_harness",
+          "status": "pending"
+        },
+        {
+          "id": "site_and_shared_registry_mapping",
+          "status": "pending"
+        },
+        {
+          "id": "bound_commit_reuse_transfer_failure_evidence",
+          "status": "pending"
+        },
+        {
+          "id": "ICLR_body_appendix_and_reproducible_results",
+          "status": "pending"
+        },
+        {
+          "id": "empirical variance statistic",
+          "status": "open"
+        },
+        {
+          "id": "empirical Bernstein producer",
+          "status": "open"
+        },
+        {
+          "id": "causal UCB-V policy",
+          "status": "open"
+        },
+        {
+          "id": "adaptive confidence/count proof",
+          "status": "open"
+        },
+        {
+          "id": "variance-sensitive regret and regime constraints",
+          "status": "open"
+        }
+      ],
+      "reuse_candidates": [
+        "ConcentrationVariance",
+        "fixed-tilt MGF",
+        "UCB count algebra"
+      ],
+      "upstream_dependencies": [
+        "shared finite history/probability model"
+      ],
+      "downstream_consumers": [
+        "cross-topic transfer",
+        "ICLR library utility evaluation"
+      ],
+      "acceptance_evidence": [],
+      "current_blockers": [
+        "Source/endpoint audit incomplete"
+      ],
+      "next_action": "Freeze exact published/preprint theorem and constants"
+    }
+  ],
+  "execution_order": [
+    "heavy-tailed",
+    "lipschitz",
+    "combinatorial",
+    "causal",
+    "multi-agent",
+    "thompson-bayesian",
+    "constrained",
+    "corruption-tolerant",
+    "matrix",
+    "variance-aware"
+  ],
+  "current_topic": "heavy-tailed",
+  "execution_policy": "Strict listed order; close current topic acceptance before advancing. Preserve existing later-topic milestones; difficulty does not authorize skipping.",
+  "merged_baseline": {
+    "source_commit": "ba81a53db30feb485d376e93d65c65d4e1368f1d",
+    "canonical_main": "b3201f8da93a39027666a9d102ac0bdb03c57830",
+    "validation": "Combined root (9006 jobs), Tests (9099 jobs), full harness (434 tests, 7 skipped), local site build/check passed; runs/extended-topics-20260919/confidence-review-validation.json"
+  },
+  "goal_status_note": "Goal tool reported paused on 2026-09-20; user requested continued work. This metadata does not change scheduler state."
+}

@@ -1,0 +1,94 @@
+{
+  "schema_version": "2.0",
+  "id": "EXT-HEAVY-CONFIDENCE-REVIEW-20260919",
+  "route": "extended-topics/heavy-tailed",
+  "frontier_cell": "heavy-tailed/conservative-scheduled-confidence",
+  "source_facing": true,
+  "source": {
+    "kind": "paper",
+    "title": "Bandits With Heavy Tail",
+    "version": "IEEE TIT 59(11), 2013; frozen published PDF SHA256 in docs/extended-topics/source-hashes.json",
+    "anchor": "Assumption 1 / Figure 1 p.7712; Proposition 1 proof / Lemma 1 pp.7713-7714",
+    "url": "https://www.microsoft.com/en-us/research/wp-content/uploads/2017/01/BCL13.pdf"
+  },
+  "target": "Independent semantic acceptance with explicit deltas for two existing conservative scheduled confidence declarations; no new Lean theorem",
+  "affected_files": [
+    "research-wiki/papers/extended-topics-heavy-tail-confidence.md"
+  ],
+  "declarations": [
+    "BanditRLProof.HeavyTail.scheduled_mean_tail",
+    "BanditRLProof.HeavyTail.scheduled_adaptive_mean_tail"
+  ],
+  "reuse_plan": {
+    "classification": "reuse",
+    "decision": "reuse_existing",
+    "searched_existing": [
+      "Inspected existing HeavyTailScheduledConfidence, HeavyTailConfidence, HeavyTailTuning and full local producer chain; no new declaration needed"
+    ],
+    "reused_declarations": [
+      "BanditRLProof.HeavyTail.scheduled_mean_tail",
+      "BanditRLProof.HeavyTail.scheduled_adaptive_mean_tail"
+    ],
+    "new_shared_declarations": [],
+    "known_consumers": [
+      "HeavyTail arm-law confidence and conservative robust-UCB regret chain"
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Review existing statements rather than introducing duplicate confidence wrappers."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/blind_decoder_a",
+    "source_reviewer": "/root/source_reviewer_a",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Radius 4 to 8; t^-2 to max(t,2)^-4 schedule; printed sum correction; two-sided events; independent nonidentical sequence and epsilon=0 extensions; outer-probability selected count. Separate repair reviewer /root/repair_reviewer_a accepted confidence adaptation only. Full regret and literal-source acceptance remain open."
+  },
+  "graph_contribution": {
+    "lean_graph": "no-change-with-reason",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Confidence semantic review adds no cross-setting mechanism or formal graph edge. Lean declarations unchanged.",
+    "focus_targets": [
+      "BanditRLProof.HeavyTail.scheduled_mean_tail",
+      "BanditRLProof.HeavyTail.scheduled_adaptive_mean_tail"
+    ],
+    "visual_review": "No graph geometry changed. Local site build/check passed; reader source/delta page added with folded Lean declarations.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "no-change-with-reason: No change: no teaching route completion; confidence-only review documented in research-wiki/papers/extended-topics-heavy-tail-confidence.md",
+    "banditrlwiki": "no-change-with-reason: No change: topic acceptance remains false; no topic completion badge warranted",
+    "results_ledger": "updated: ALL-TOPICS-LEDGER.json records compiled full conservative endpoint versus accepted confidence-only semantics",
+    "roadmap": "updated: ALL-TOPICS-PROGRAM.md records strict topic order and current Heavy-tailed obligations",
+    "website_surfaces": [
+      "No canonical website status changed: no new theorem or topic acceptance. Local site rebuilt and checked against merged source."
+    ]
+  },
+  "truth_boundary": "Two existing confidence declarations accepted as explicit conservative adaptation. No full-regret semantic acceptance, source exactness, topic completion, merge, deployment or controlled efficiency claim. Private reviews retained only in maintenance.",
+  "verification": {
+    "focused_checks": [
+      "Exact statement-only blind packet hashed; seven semantic slots reviewed; separate repair derivation checked endpoints",
+      "git diff --check"
+    ],
+    "bandit_check": "Passed merged ba81a53 root/Tests and 434 Python tests, 7 skipped; receipt in runs/extended-topics-20260919/confidence-review-validation.json",
+    "site_build": "Passed --lean-verified; manifest records documentation dirty truthfully",
+    "site_check": "Passed",
+    "independent_review": "Distinct blind decoder, source reviewer and separate repair reviewer; hashed private reports in validation receipt"
+  },
+  "contributor": {
+    "name": "Codex",
+    "role": "Formalizer and review coordinator; independent reviewers named in semantic_roundtrip"
+  }
+}

@@ -1,10 +1,13 @@
 """Regression gates for shared book/setting references, without invoking Lean."""
 import copy
+import hashlib
 import json
 import unittest
+from unittest.mock import patch
+from pathlib import Path
 
 from website.scripts import build_site as site
-from website.scripts.book_registry import build_registry, membership_index
+from website.scripts.book_registry import build_registry, membership_index, verify_reviewed_module, reviewed_module_matches
 from website.scripts.check_site import declaration_has_expected_badge
 
 
@@ -23,6 +26,30 @@ class BookRegistryTests(unittest.TestCase):
         return build_registry(config or self.config, self.chapters, self.spine,
                               wiki or self.wiki, declarations or self.declarations,
                               verified, "fixture-commit")
+
+    def test_explicit_lf_receipt_accepts_eol_only_and_rejects_code_drift(self):
+        source = b"def a := 1\n"
+        evidence = {"normalization": "utf8-crlf-and-cr-to-lf-only",
+                    "production_hashes_lf": {"A.lean": hashlib.sha256(source).hexdigest()}}
+        verify_reviewed_module(evidence, "A.lean", source.replace(b"\n", b"\r\n"))
+        with self.assertRaisesRegex(ValueError, "module hash drift"):
+            verify_reviewed_module(evidence, "A.lean", b"def a := 2\n")
+        evidence["normalization"] = "unspecified"
+        with self.assertRaisesRegex(ValueError, "normalization"):
+            verify_reviewed_module(evidence, "A.lean", source)
+
+    def test_legacy_receipt_retains_raw_byte_check(self):
+        source = b"def a := 1\n"
+        evidence = {"production_hashes": {"A.lean": hashlib.sha256(source).hexdigest()}}
+        verify_reviewed_module(evidence, "A.lean", source)
+        with self.assertRaisesRegex(ValueError, "module hash drift"):
+            verify_reviewed_module(evidence, "A.lean", source.replace(b"\n", b"\r\n"))
+
+    def test_causal_sampling_declarations_use_current_rebinding(self):
+        topic = next(t for t in self.wiki["topics"] if t["id"] == "causal")
+        refs = topic["formalization"]["declarations"]
+        self.assertFalse(any(r["review_receipt"].endswith("causal-sampling-review.json") for r in refs))
+        self.assertEqual(12, sum(r["review_receipt"].endswith("causal-review-rebinding.json") for r in refs))
 
     def test_one_identity_across_books_preserves_every_indexed_declaration(self):
         registry = self.registry()
@@ -71,10 +98,10 @@ class BookRegistryTests(unittest.TestCase):
                              {k: v for k, v in other.items() if k != "status"})
             self.assertEqual("stated" if node["status"] == "stated" else "compiled", other["status"])
 
-    def test_new_topics_have_no_claimed_results_or_compiled_counts(self):
+    def test_unmapped_topics_have_no_claimed_results_or_compiled_counts(self):
         registry = self.registry(verified=True)
         self.assertEqual(10, len(self.wiki["topics"]))
-        topic_ids = {t["id"] for t in self.wiki["topics"]}
+        topic_ids = {t["id"] for t in self.wiki["topics"] if not t.get("formalization")}
         for setting in registry["settings"]:
             if setting["id"] in topic_ids:
                 self.assertEqual([], setting["node_ids"])
@@ -123,6 +150,121 @@ class BookRegistryTests(unittest.TestCase):
             self.assertIn("Reinforcement Learning Book", breadcrumb)
         finally:
             site.SITE_CHAPTERS, site.SITE_BOOKS, site.SITE_TEXTBOOK_SPINE, site.SITE_REGISTRY = saved
+
+    def test_cucb_mapping_uses_canonical_nodes_without_preview_promotion(self):
+        registry = self.registry()
+        topic = next(t for t in self.wiki["topics"] if t["id"] == "combinatorial")
+        setting = next(t for t in registry["settings"] if t["id"] == "combinatorial")
+        self.assertEqual("mapped-reviewed-partial", setting["status"])
+        self.assertFalse(setting["formalization"]["topic_complete"])
+        expected = {"declaration:" + r["name"] for r in topic["formalization"]["declarations"]}
+        self.assertEqual(expected, set(setting["node_ids"]))
+        nodes = membership_index(registry)
+        for key in expected:
+            self.assertEqual("source", nodes[key]["status"])
+            self.assertIn("combinatorial", nodes[key]["settings"])
+
+    def test_topic_mapping_rejects_stale_or_dangling_references(self):
+        for mutation, message in [("hash", "statement hash drift"), ("name", "unknown topic declaration"), ("duplicate", "duplicate topic declaration")]:
+            with self.subTest(mutation=mutation):
+                wiki = copy.deepcopy(self.wiki)
+                refs = next(t for t in wiki["topics"] if t["id"] == "combinatorial")["formalization"]["declarations"]
+                if mutation == "hash":
+                    refs[0]["statement_sha256"] = "0" * 64
+                elif mutation == "name":
+                    refs[0]["name"] = "Not.A.Declaration"
+                else:
+                    refs.append(copy.deepcopy(refs[0]))
+                with self.assertRaisesRegex(ValueError, message):
+                    self.registry(wiki=wiki)
+
+    def test_topic_mapping_cannot_claim_independent_acceptance(self):
+        wiki = copy.deepcopy(self.wiki)
+        next(t for t in wiki["topics"] if t["id"] == "combinatorial")["formalization"]["semantic_status"] = "accepted"
+        with self.assertRaisesRegex(ValueError, "pending independent review"):
+            self.registry(wiki=wiki)
+
+    def test_reviewed_heavy_tail_membership_does_not_promote_preview_or_topic(self):
+        registry = self.registry()
+        setting = next(t for t in registry["settings"] if t["id"] == "heavy-tailed")
+        self.assertEqual("mapped-reviewed-partial", setting["status"])
+        self.assertFalse(setting["formalization"]["topic_complete"])
+        names = {r["name"] for r in setting["formalization"]["declarations"]}
+        self.assertIn("BanditRLProof.HeavyTail.SourcePolicy.robust_expected_regret", names)
+        self.assertIn("BanditRLProof.HeavyTail.SourceCounterexample.literal_printed_bound_false", names)
+        nodes = membership_index(registry)
+        for key in setting["node_ids"]:
+            self.assertEqual("source", nodes[key]["status"])
+            self.assertIn("heavy-tailed", nodes[key]["settings"])
+
+    def test_reviewed_mapping_rejects_proof_body_drift_with_same_statement(self):
+        original_read = Path.read_bytes
+        def changed_proof(path):
+            if path.as_posix().endswith("BanditRLProof/HeavyTailSourceConfidence.lean"):
+                return b"changed proof, same indexed statement"
+            return original_read(path)
+        with patch.object(Path, "read_bytes", changed_proof):
+            with self.assertRaisesRegex(ValueError, "reviewed module hash drift"):
+                self.registry()
+
+    def test_reviewed_mapping_accepts_line_ending_renderings_of_reviewed_modules(self):
+        original_read = Path.read_bytes
+        for rendering in ("crlf", "lf"):
+            def rerendered(path, rendering=rendering):
+                data = original_read(path)
+                if path.suffix == ".lean" or (path.suffix == ".json" and "runs" in path.parts):
+                    data = data.replace(b"\r\n", b"\n")
+                    if rendering == "crlf":
+                        data = data.replace(b"\n", b"\r\n")
+                return data
+            with self.subTest(rendering=rendering), patch.object(Path, "read_bytes", rerendered):
+                self.registry()
+
+    def test_reviewed_module_matches_is_line_ending_independent_but_content_bound(self):
+        import hashlib
+        lf = b"theorem a : 1 = 1 := rfl\nexample : True := trivial\n"
+        crlf = lf.replace(b"\n", b"\r\n")
+        mixed = b"theorem a : 1 = 1 := rfl\r\nexample : True := trivial\n"
+        for recorded_source in (lf, crlf, mixed):
+            recorded = hashlib.sha256(recorded_source).hexdigest()
+            for on_disk in (lf, crlf):
+                with self.subTest(recorded=recorded_source[:12], on_disk=on_disk[:12]):
+                    expected = recorded_source is not mixed
+                    self.assertEqual(expected, reviewed_module_matches(on_disk, recorded, "M.lean", "runs/r.json", []))
+        changed = lf.replace(b"1 = 1", b"1 = 2")
+        self.assertFalse(reviewed_module_matches(changed, hashlib.sha256(lf).hexdigest(), "M.lean", "runs/r.json", []))
+        recorded_mixed = hashlib.sha256(mixed).hexdigest()
+        canonical = hashlib.sha256(lf).hexdigest()
+        record = {"kind": "review-receipt-hash-normalization", "receipts": [{"receipt": "runs/r.json", "entries": [
+            {"path": "M.lean", "recorded_sha256": recorded_mixed, "canonical_lf_sha256": canonical, "bound": True}]}]}
+        self.assertTrue(reviewed_module_matches(crlf, recorded_mixed, "M.lean", "runs/r.json", [record]))
+        self.assertFalse(reviewed_module_matches(changed, recorded_mixed, "M.lean", "runs/r.json", [record]))
+        self.assertFalse(reviewed_module_matches(crlf, recorded_mixed, "M.lean", "runs/other.json", [record]))
+        unbound = copy.deepcopy(record)
+        unbound["receipts"][0]["entries"][0]["bound"] = False
+        self.assertFalse(reviewed_module_matches(crlf, recorded_mixed, "M.lean", "runs/r.json", [unbound]))
+
+    def test_reviewed_mapping_rejects_unbound_receipts_and_topic_promotion(self):
+        for mutation, message in [("hash", "receipt hash drift"),
+                                  ("path", "receipt path"),
+                                  ("reference", "lacks bound review receipt"),
+                                  ("coverage", "does not cover declaration"),
+                                  ("complete", "incomplete topic boundary")]:
+            with self.subTest(mutation=mutation):
+                wiki = copy.deepcopy(self.wiki)
+                mapping = next(t for t in wiki["topics"] if t["id"] == "heavy-tailed")["formalization"]
+                if mutation == "hash":
+                    mapping["review_receipts"][0]["sha256"] = "0" * 64
+                elif mutation == "path":
+                    mapping["review_receipts"][0]["path"] = "runs/../../README.md"
+                elif mutation == "reference":
+                    mapping["declarations"][0]["review_receipt"] = "runs/missing.json"
+                elif mutation == "coverage":
+                    mapping["declarations"][-1]["review_receipt"] = mapping["review_receipts"][0]["path"]
+                else:
+                    mapping["topic_complete"] = True
+                with self.assertRaisesRegex(ValueError, message):
+                    self.registry(wiki=wiki)
 
 
 if __name__ == "__main__":

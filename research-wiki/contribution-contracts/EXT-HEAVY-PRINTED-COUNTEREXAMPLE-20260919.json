@@ -1,0 +1,111 @@
+{
+  "schema_version": "2.0",
+  "id": "EXT-HEAVY-PRINTED-COUNTEREXAMPLE-20260919",
+  "route": "extended-topics/heavy-tailed",
+  "frontier_cell": "heavy-tailed/finite-printed-coefficient-obstruction",
+  "source_facing": true,
+  "source": {
+    "kind": "paper",
+    "title": "Bandits With Heavy Tail",
+    "version": "IEEE TIT 59(11), 2013; frozen published PDF SHA256 in docs/extended-topics/source-hashes.json",
+    "anchor": "Figure1/Lemma1 source policy and Theorem1 p7714 printed gap-dependent coefficient; explicit finite refutation rather than a repaired theorem presented as source",
+    "url": "https://www.microsoft.com/en-us/research/wp-content/uploads/2017/01/BCL13.pdf"
+  },
+  "target": "Prove an admissible finite expected-regret counterexample to the literal printed coefficient for the actual unchanged SourcePolicy, including exact truncation/counts and product law",
+  "affected_files": [
+    "BanditRLProof.lean",
+    "BanditRLProof/Algorithms/HeavyTailSourceCounterexample.lean",
+    "research-wiki/papers/extended-topics-heavy-tail-source-counterexample.md",
+    "research-wiki/papers/extended-topics-heavy-tail-source-regret.md",
+    "website/content/results.json",
+    "website/content/banditrlwiki.json",
+    "research-wiki/papers/extended-topics-heavy-tail-source-schedule.md",
+    "research-wiki/papers/extended-topics-heavy-tail-source-confidence.md"
+  ],
+  "declarations": [
+    "BanditRLProof.HeavyTail.SourceCounterexample.literal_printed_bound_false",
+    "BanditRLProof.HeavyTail.SourceCounterexample.printed_coefficient_counterexample",
+    "BanditRLProof.HeavyTail.SourceCounterexample.kernel_raw_moment"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Existing actual SourcePolicy history/latent-prefix and maximizing index interfaces",
+      "Finite pull-count partition/monotonicity and source product coordinate pushforward",
+      "Mathlib ceil, finite interval cardinality, elementary log and AE/Dirac integral APIs"
+    ],
+    "reused_declarations": [
+      "BanditRLProof.HeavyTail.SourcePolicy.robustMean_latent",
+      "BanditRLProof.HeavyTail.SourcePolicy.robustAction_maximizes",
+      "BanditRLProof.HeavyTail.SourcePolicy.robustIndex_history",
+      "BanditRLProof.finset_sum_pullCount_eq_time",
+      "BanditRLProof.UCB.armStreamMeasure_map_coord",
+      "BanditRLProof.realMeanRegret_eq_sum_gap_mul_pullCount"
+    ],
+    "new_shared_declarations": [],
+    "known_consumers": [
+      "BanditRLProof.HeavyTail.SourceCounterexample.literal_printed_bound_false"
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Reuse the actual policy and its law, not an abstract maximizing action premise. New finite ceil/log/index/count obstruction connects to existing expectation and regret semantics."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/blind_decoder_h",
+    "source_reviewer": "/root/source_reviewer_a",
+    "verdict": "accepted",
+    "remaining_semantic_delta": "A finite refutation of the literal source coefficient for one permissible deterministic tie rule. No formal claim for all randomized ties; corrected upper bound separately tracked."
+  },
+  "graph_contribution": {
+    "lean_graph": "new-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Finite source obstruction, not a new cross-setting functor or conceptual transfer.",
+    "focus_targets": [
+      "BanditRLProof.HeavyTail.SourceCounterexample.literal_printed_bound_false",
+      "BanditRLProof.HeavyTail.SourceCounterexample.printed_coefficient_counterexample",
+      "BanditRLProof.HeavyTail.SourceCounterexample.kernel_raw_moment"
+    ],
+    "visual_review": "Generated site and graph structure checked by check_site.py; browser visual inspection not rerun",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "no-change-with-reason: no textbook chapter closure",
+    "banditrlwiki": "updated: printed coefficient now has complete instantiated finite Lean counterexample",
+    "results_ledger": "updated: distinct finite source-coefficient obstruction milestone",
+    "roadmap": "updated: printed-counterexample diagnosis, source derivation and all-topic ledger; recent audits and ICLR remain open",
+    "website_surfaces": [
+      "website/content/results.json",
+      "website/content/banditrlwiki.json",
+      "compiler-derived declaration/module graph; generated outputs not edited"
+    ]
+  },
+  "truth_boundary": "Actual finite deterministic-tie source-policy counterexample only; not universal randomized-tie formalization, rejection of all paper estimators, heavy-topic completion, merge/live update or ICLR efficiency evidence.",
+  "verification": {
+    "focused_checks": [
+      "Public-root HeavyTailSourceCounterexampleCanary compiled9015jobs",
+      "Admissible moments, finite count lower bound, expected regret and literal positive-gap negation use only propext/Classical.choice/Quot.sound"
+    ],
+    "bandit_check": "passed: public root9015, Tests9112,434Python tests7skips in169.822s; counterexample-full-gate.log",
+    "site_build": "passed with --lean-verified after full gate; snapshot597ffe4",
+    "site_check": "passed; counterexample-site-check.log",
+    "independent_review": "PacketH independent source-blind decoder, source reviewer and separate proof/obstruction reviewer accepted; four frozen source hashes verified"
+  },
+  "contributor": {
+    "name": "Codex",
+    "role": "Formalizer and review coordinator; independent reviewers named in semantic_roundtrip"
+  }
+}

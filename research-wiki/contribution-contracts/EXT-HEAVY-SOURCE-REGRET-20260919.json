@@ -1,0 +1,108 @@
+{
+  "schema_version": "2.0",
+  "id": "EXT-HEAVY-SOURCE-REGRET-20260919",
+  "route": "extended-topics/heavy-tailed",
+  "frontier_cell": "heavy-tailed/corrected-source-policy-regret",
+  "source_facing": true,
+  "source": {
+    "kind": "paper",
+    "title": "Bandits With Heavy Tail",
+    "version": "IEEE TIT 59(11), 2013; frozen published PDF SHA256 in docs/extended-topics/source-hashes.json",
+    "anchor": "Figure1/Lemma1 policy and estimator; explicit correction to Theorem1 p7714 coefficient",
+    "url": "https://www.microsoft.com/en-us/research/wp-content/uploads/2017/01/BCL13.pdf"
+  },
+  "target": "Close raw-moment-to-expected-regret for unchanged source policy with explicit corrected leading coefficient and retained additive5Delta, all horizons and positive-gap sum",
+  "affected_files": [
+    "BanditRLProof.lean",
+    "BanditRLProof/HeavyTailSourceGap.lean",
+    "BanditRLProof/Algorithms/HeavyTailSourceAdaptive.lean",
+    "BanditRLProof/Algorithms/HeavyTailSourceExpectedCount.lean",
+    "BanditRLProof/Algorithms/HeavyTailSourceRegret.lean",
+    "research-wiki/papers/extended-topics-heavy-tail-source-regret.md",
+    "website/content/results.json",
+    "website/content/banditrlwiki.json"
+  ],
+  "declarations": [
+    "BanditRLProof.HeavyTail.SourcePolicy.robust_expected_regret",
+    "BanditRLProof.HeavyTail.SourcePolicy.robust_integral_count_le_budget"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "HeavyTailGapThreshold real-power inversion",
+      "HeavyTailExpectedCount.lintegration threshold producer and source signed probability budget",
+      "HeavyTailRegret first-moment producer and common integral regret decomposition"
+    ],
+    "reused_declarations": [
+      "BanditRLProof.HeavyTail.lintegral_pullCount_threshold",
+      "BanditRLProof.HeavyTail.integrable_id_of_raw_moment",
+      "BanditRLProof.HeavyTail.source_schedule_tail_sum_le_two",
+      "BanditRLProof.HeavyTail.SourcePolicy.robustMean_upper_tail",
+      "BanditRLProof.HeavyTail.SourcePolicy.robustMean_lower_tail",
+      "BanditRLProof.integral_realMeanRegret_eq_sum_gap_mul_integral_pullCount"
+    ],
+    "new_shared_declarations": [],
+    "known_consumers": [
+      "SourcePolicy.robust_expected_regret"
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Reuse source-policy confidence and shared count/regret integration; explicit corrected cutoff and strict signed events preserve the additive5 without changing the algorithm."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/blind_decoder_c",
+    "source_reviewer": "/root/source_reviewer_a",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Unchanged source policy; larger explicit valid leading coefficient. Printed coefficient has separate mathematical counterexample, whose full Lean certificate remains pending."
+  },
+  "graph_contribution": {
+    "lean_graph": "new-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Sharper local exponential remainder; no new cross-setting map or certified functor.",
+    "focus_targets": [
+      "BanditRLProof.HeavyTail.SourcePolicy.robust_expected_regret",
+      "BanditRLProof.HeavyTail.SourcePolicy.robust_integral_count_le_budget"
+    ],
+    "visual_review": "Generated site and graph structure checked by check_site.py; browser visual inspection not rerun",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "no-change-with-reason: probability interface is public; no teaching chapter completion changes",
+    "banditrlwiki": "updated: unchanged source-policy corrected expected regret compiled, topic remains incomplete",
+    "results_ledger": "updated: distinct corrected source-policy performance milestone",
+    "roadmap": "updated: SOURCE-REGRET derivation and all-topic ledger preserve finite obstruction and remaining obligations",
+    "website_surfaces": [
+      "website/content/results.json",
+      "website/content/banditrlwiki.json",
+      "compiler-derived module/declaration graph; no hand-edited generated output"
+    ]
+  },
+  "truth_boundary": "Corrected source-policy expected pseudo-regret only; not the rejected printed coefficient, Lean counterexample, whole-topic completion or ICLR evaluation.",
+  "verification": {
+    "focused_checks": [
+      "SourceGap, SourceAdaptive, SourceExpectedCount, SourceRegret modules compiled"
+    ],
+    "bandit_check": "passed: root9014, Tests9110, 434 Python tests, 7 skips; source-regret-full-gate.log",
+    "site_build": "passed with --lean-verified after full gate; source-regret-site-build.log",
+    "site_check": "passed; source-regret-site-check.log",
+    "independent_review": "PacketF blind reconstruction, independent source review and separate mathematical repair review accepted with explicit coefficient correction; six frozen code hashes verified"
+  },
+  "contributor": {
+    "name": "Codex",
+    "role": "Formalizer and review coordinator; independent reviewers named in semantic_roundtrip"
+  }
+}

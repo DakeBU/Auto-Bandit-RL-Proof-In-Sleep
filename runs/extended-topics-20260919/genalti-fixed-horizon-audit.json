@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "date": "2026-09-20",
+  "base_commit": "54b2c20579b88732d99c8d6dea704e1654e548e5",
+  "semantic_verdict": "mathematical-adjudication-accepted",
+  "scope": "Fixed-finite-horizon obstruction to Genalti Theorem2 Eq5 and necessary horizon dependence of Eq6",
+  "artifacts": [
+    {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260919-claude\\review-20260919\\genalti-fixed-horizon-adjudication.md",
+      "sha256": "53748493030d984a3fb0beefa501d0c967b16da9f784022aa8a1bfd1f56fabd6"
+    },
+    {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260919-claude\\review-20260919\\genalti-fixed-horizon-repair-review.md",
+      "sha256": "abd960d6224293a740d15ce436454b5b3d6aa7cda7b21928186890a45f1f16b9"
+    },
+    {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260919-claude\\review-20260919\\genalti-fixed-horizon-source-review.md",
+      "sha256": "d86dfc50f7a07533c51714518127d3b11e15a1f26a271a3f727e28342f75805e"
+    }
+  ],
+  "source": {
+    "path": "E:\\ABRL\\maintenance\\extended-topics-20260917\\sources\\genalti24a.pdf",
+    "sha256": "65eceb2cd402baa8c7f5b60d273a103fbd181cf6803a4b7f0d2f4092742fe5b6"
+  },
+  "prototype": {
+    "path": "E:\\ABRL\\worktrees\\research-extended-topics\\runs\\extended-topics-20260919\\GenaltiFiniteHorizon.lean",
+    "sha256": "603ccb99b072f0bb9f7d2716558fef5d0e13a304a3de079977c22e0f95e7b268"
+  },
+  "prototype_compile": {
+    "command": "lake env lean E:/ABRL/maintenance/extended-topics-20260919-claude/review-20260919/GenaltiFiniteHorizon.lean",
+    "cwd": "E:\\ABRL\\worktrees\\research-extended-topics",
+    "exec_session": 26098,
+    "exit_code": 0,
+    "warning": "unused hs in trace_regret_bounds",
+    "endpoint": "BanditRLProof.HeavyTail.GenaltiAudit.expected_normalized_regret_le",
+    "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ]
+  },
+  "accepted_mathematics": [
+    "Raw p-moment implies absolute mean <=u^(1/p)",
+    "Every measurable policy has normalized expected pseudo-regret <=2T at every finite T",
+    "Positive-scale joint supremum is finite; literal Eq5 infinity is impossible",
+    "Eq6, if valid, requires T>=(c1/2)^(p/(p-1))*rho^(1/p) for T>0",
+    "Universal cap sharp over policies, not a fixed-policy minimax claim"
+  ],
+  "prototype_only_implemented": [
+    "Moment-to-mean cap",
+    "Deterministic pathwise regret bounds",
+    "Arbitrary measurable-action expected normalized regret upper bound"
+  ],
+  "not_implemented": [
+    "Formal supremum obstruction",
+    "Formal sharpness witness",
+    "Formal necessary horizon-power inequality"
+  ],
+  "production_lean_integrated": false,
+  "production_semantic_acceptance": false,
+  "new_joint_lean_gate": false,
+  "new_site_gate": false,
+  "main_merged": false,
+  "live_deployed": false,
+  "topic_complete": false,
+  "remaining": [
+    "Original Eq6 construction, base/alternative distribution admissibility, restricted optimization and external KL dependencies are not certified",
+    "Other Genalti algorithm/root/concentration/regret issues remain unresolved",
+    "Prototype needs full semantic/publication integration before production acceptance",
+    "Heavy-tail recent audits and all-topic ICLR obligations remain active"
+  ],
+  "blind_packet": {
+    "path": "E:\\ABRL\\maintenance\\extended-topics-20260919-claude\\review-20260919\\packet-i.lean",
+    "sha256": "11ee5df93e9dc4f275cd03f25d7bd6790fa6c86df5f64b81ca768fa440f5bc28"
+  },
+  "blind_decoder": {
+    "path": "E:\\ABRL\\maintenance\\extended-topics-20260919-claude\\review-20260919\\decoder-i.md",
+    "sha256": "717e713c3cb38e11ccca0550f087a6617d62156f9322afb7c1aaac184a37c3c9"
+  },
+  "blind_packet_transformation": "After universal newline normalization, exact namespace-only replacement GenaltiAudit -> RawMomentRegretCap; checked character-for-character.",
+  "prototype_source_review": {
+    "path": "E:\\ABRL\\maintenance\\extended-topics-20260919-claude\\review-20260919\\genalti-cap-prototype-source-review.md",
+    "sha256": "99e8f9eb62ca8284f21a89d5e2d9c85973f8f7707500c71db73d8a4eacb2c6d9"
+  },
+  "prototype_semantic_acceptance": "accepted-with-explicit-delta; generic per-instance upper-cap only"
+}

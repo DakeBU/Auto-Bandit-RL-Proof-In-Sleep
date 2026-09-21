@@ -1,0 +1,200 @@
+{
+  "schema_version": 1,
+  "kind": "receipt-portability-local-validation",
+  "date": "2026-09-21",
+  "initial_head": "05dbb1cd624f9d1d0b0bcb930c62636cdb200a29",
+  "tested_implementation_commit": "bef2e716149869440e8d3a10546bff6119b9eb54",
+  "site_and_contract_commit": "3051203169699bd151ad7f7b6fe78a3ae0bc962d",
+  "branch": "codex/research-extended-topics",
+  "environment": "Codex Windows mixed-ending worktree, Python 3.8",
+  "normalization_record": "runs/extended-topics-20260921/topic-receipt-hash-normalization.json",
+  "ported_commits": [
+    "c11bc2e",
+    "1b27c84",
+    "4a53f8b",
+    "aa2d33e"
+  ],
+  "integration_notes": [
+    "Initial HEAD was ahead of requested baseline by two causal binding commits. Both explicit-LF and historical portable receipt checks are retained.",
+    "An initial Python 3.8 write_text(newline=...) failure left conflict markers in the intermediate cherry-pick commit; the following integration commit removed them before successful tests. Final source and diff checks contain no markers.",
+    "New normalization record has path-specific LF checkout policy. Existing receipt bytes and hashes are unchanged; their raw/LF/CRLF envelopes are accepted without JSON reserialization.",
+    "Full-branch manifest coverage added for 96 earlier production modules; two scratch-only manifests preserved byte-for-byte outside the production manifest registry.",
+    "Non-main branch push contract workflow now compares origin/main; event-specific PR, merge-group and main-push bases remain unchanged."
+  ],
+  "checks": [
+    {
+      "command": "python -m unittest tools.test_book_registry",
+      "exit_code": 0,
+      "tests": 20,
+      "log": "01-book-registry-all-renderings.log",
+      "scope": "Lean and receipt JSON LF/CRLF re-rendering; content mismatch rejection; current LF binding"
+    },
+    {
+      "command": "python tools/verify_review_receipt_hashes.py <15 historical mapped receipts> --also-checkout E:/ABRL/worktrees/research-extended-claude",
+      "exit_code": 1,
+      "receipts": 15,
+      "entries": 91,
+      "bound_entries": 82,
+      "unbound_entries": [
+        {
+          "receipt": "runs/extended-topics-20260919/source-schedule-validation.json",
+          "path": "BanditRLProof.lean"
+        },
+        {
+          "receipt": "runs/extended-topics-20260919/source-schedule-validation.json",
+          "path": "Tests.lean"
+        },
+        {
+          "receipt": "runs/extended-topics-20260919/source-schedule-validation.json",
+          "path": "website/scripts/build_site.py"
+        },
+        {
+          "receipt": "runs/extended-topics-20260919/source-regret-validation.json",
+          "path": "BanditRLProof.lean"
+        },
+        {
+          "receipt": "runs/extended-topics-20260919/source-regret-validation.json",
+          "path": "Tests.lean"
+        },
+        {
+          "receipt": "runs/extended-topics-20260919/counterexample-validation.json",
+          "path": "BanditRLProof.lean"
+        },
+        {
+          "receipt": "runs/extended-topics-20260919/counterexample-validation.json",
+          "path": "Tests.lean"
+        },
+        {
+          "receipt": "runs/extended-topics-20260919/hoo-production-review.json",
+          "path": "BanditRLProof.lean"
+        },
+        {
+          "receipt": "runs/extended-topics-20260919/hoo-production-review.json",
+          "path": "Tests.lean"
+        }
+      ],
+      "interpretation": "9 historical root/build-script entries differ after later additions; mapped production module entries bind. This is not a globally passing verifier run.",
+      "log": "02-receipt-verifier.log"
+    },
+    {
+      "command": "same verifier over all 16 current mapped receipts, plus python tools/check_causal_review_bindings.py",
+      "verifier_exit_code": 1,
+      "explicit_lf_checker_exit_code": 0,
+      "explicit_lf_files": 13,
+      "log": "02-current-mapped-verifier.log",
+      "note": "Portable legacy verifier skips production_hashes_lf; explicit-LF checker independently validates the added causal receipt."
+    },
+    {
+      "command": "python tools/check_contributor_contract.py --base 132a8340f097b5e05bd17669980830b1f9c3d7e3",
+      "exit_code": 0,
+      "at_commit": "25eb9dd",
+      "log": "03-contract.log",
+      "note": "Requested narrow checkpoint before full-branch manifest correction; final integration gate uses actual PR base, not this older incremental scope."
+    },
+    {
+      "command": "python tools/check_contributor_contract.py --base origin/main",
+      "base_commit": "b3201f8da93a39027666a9d102ac0bdb03c57830",
+      "exit_code": 0,
+      "production_paths": 159,
+      "log": "03-contract-main-final.log"
+    },
+    {
+      "command": "python tools/bandit.py check",
+      "exit_code": 0,
+      "root_jobs": 9044,
+      "tests_jobs": 9150,
+      "proof_graph_export": "passed",
+      "python_tests": 451,
+      "skipped": 7,
+      "python_seconds": 198.505,
+      "log": "04-bandit-check-final.log"
+    },
+    {
+      "command": "python website/scripts/build_site.py --lean-verified",
+      "exit_code": 0,
+      "log": "05-site-build.log"
+    },
+    {
+      "command": "python website/scripts/check_site.py",
+      "exit_code": 0,
+      "live_formalization_mappings": 121,
+      "lean_source_links": 11401,
+      "log": "06-site-check.log"
+    }
+  ],
+  "preservation": {
+    "existing_lean_and_receipt_diff_from_initial_head": [],
+    "mixed_production_files_preserved": [
+      "BanditRLProof/Algorithms/CUCBFiniteConcavity.lean",
+      "BanditRLProof/Algorithms/CUCBFiniteDeterministicExample.lean",
+      "BanditRLProof/Algorithms/CUCBFiniteSourceExample.lean",
+      "BanditRLProof/Algorithms/CausalRecommendation.lean",
+      "BanditRLProof/Algorithms/CausalSampling.lean",
+      "BanditRLProof/Algorithms/CausalTuning.lean",
+      "BanditRLProof/HOOCantorRate.lean",
+      "BanditRLProof/HOODimension.lean"
+    ],
+    "completed_topics": 0,
+    "topic_statuses_unchanged": true,
+    "claude_worktree": "read-only",
+    "lake_packages": "untouched",
+    "anonymous_snapshot": "untouched"
+  },
+  "claude_results": "Separate historical report CLAUDE-HANDOFF.md sections 6.1 correction and 7.2; not claimed as local results.",
+  "raw_log_directory": "E:/ABRL/maintenance/receipt-portability-20260921",
+  "raw_logs": {
+    "01-book-registry-all-renderings.log": {
+      "sha256": "9b40d523a62d2e588a4f90be08db0a6ee326f91e8c01d6106b9e9da1fd85d190",
+      "bytes": 124
+    },
+    "01-book-registry-retry.log": {
+      "sha256": "b302da9282b64cc754ffcd5561c016a95d40ff7b702a8556a117be77f07c6199",
+      "bytes": 124
+    },
+    "01-book-registry.log": {
+      "sha256": "e1eb6ed392c8e71af33d49c04f0968a8607a31cba8430b21925eddc138a32578",
+      "bytes": 15876
+    },
+    "02-current-mapped-verifier.log": {
+      "sha256": "ff1a9314e3522b7a453f35456952c151c90454d1e37caf0af2616aad99513080",
+      "bytes": 10807
+    },
+    "02-receipt-verifier.log": {
+      "sha256": "3d1ecfa8547a1e7d8c1f3ec231323e9a1bc9181163bb4ad809b33447dbf90bea",
+      "bytes": 10309
+    },
+    "03-contract-main-final.log": {
+      "sha256": "5e604e31980c3f084ba53f2fde9a21c0ce71d0a9b1ae1a0218bd952b5d8fe9dc",
+      "bytes": 9740
+    },
+    "03-contract-main.log": {
+      "sha256": "56b5501cb30306b915d439759637e59394c69314fd2b5327302c9f007814c9da",
+      "bytes": 9684
+    },
+    "03-contract.log": {
+      "sha256": "3743146c9d38b407be8b2a41f90ac6ca1bfe19ba9931ecf1816b80a430e2d3ba",
+      "bytes": 336
+    },
+    "04-bandit-check-final.log": {
+      "sha256": "2627a166be378f86a8724f3e8dd0c6609120b39e49d86a7eb9a9e922aa620a56",
+      "bytes": 3178463
+    },
+    "04-bandit-check.log": {
+      "sha256": "a265f071bacd1039746afd89a9aeb8b1b08e909a010b9c1070b07c3c17d5d682",
+      "bytes": 3178463
+    },
+    "05-site-build.log": {
+      "sha256": "0010b01399baa8603349b9ce4a306d79c0bc1eb7e84a171a45aa2b70e35b2ab6",
+      "bytes": 2333
+    },
+    "06-site-check.log": {
+      "sha256": "36686d3d7e9819fac9b2f6f86e17c9ca7b4f646079a649fba8966938e22a9fe7",
+      "bytes": 667
+    }
+  },
+  "remote_acceptance": {
+    "pr": 131,
+    "status": "pending final-head Linux Actions and authorized main merge; main/Pages success not yet claimed"
+  },
+  "anonymous_scope": "Existing papers/long/iclr2027/README.md already requires a fresh license-compliant anonymous Lean release. Only an inventory/scope note may be prepared after merge; refresh requires separate user authorization."
+}

@@ -1009,6 +1009,30 @@ def render_node_memberships(page_path: str, name: str) -> str:
 <details><summary>Canonical node identity</summary><code>{html.escape(node['id'])}</code><p>Reading membership is not a proof dependency. Exact assumptions remain in the Lean statement.</p></details></div>'''
 
 
+def render_topic_formalization(page_path: str, topic: dict[str, Any]) -> str:
+    mapping = topic.get("formalization")
+    if not mapping:
+        return ""
+    source = mapping["source"]
+    reviewed = mapping.get("semantic_status") == "accepted-with-explicit-delta"
+    review_note = "Mapped results independently reviewed with explicit scope differences; topic incomplete." if reviewed else "Independent semantic review pending."
+    rows = []
+    for ref in mapping["declarations"]:
+        node = SITE_MEMBERSHIPS["declaration:" + ref["name"]]
+        rows.append(f'<tr><td>{html.escape(ref["role"])}</td><td><a href="{href_from(page_path, node["url"])}"><code>{html.escape(ref["name"])}</code></a></td><td>{html.escape(ref["source_locator"])}</td></tr>')
+    qualifications = ''.join(f'<li>{html.escape(item)}</li>' for item in mapping["qualifications"])
+    reader = mapping.get("mathematical_reader", [])
+    reader_html = ("<section class='topic-mathematical-reader'><h3>Mathematical contract and proof</h3>"
+                   + "".join(f"<p>{html.escape(paragraph)}</p>" for paragraph in reader)
+                   + "</section>") if reader else ""
+    return f'''<section id="formalization"><h2>{html.escape(mapping['title'])}</h2>
+<p>{html.escape(mapping['scope'])}</p><p>{review_note}</p>
+<p><a href="{html.escape(source['url'], quote=True)}">{html.escape(source['title'])}</a> · {html.escape(source['authors'])} · {source['year']}</p>
+<details><summary>Frozen source provenance</summary><p>PDF SHA-256: <code>{source['sha256']}</code></p><p>Compiled source snapshot: <code>{mapping['source_commit']}</code>. The page-wide banner separately reports this site's current Lean gate.</p></details>
+<ul>{qualifications}</ul>{reader_html}<div class="table-wrap"><table><thead><tr><th>Role</th><th>Canonical Lean declaration</th><th>Source or instance scope</th></tr></thead><tbody>{''.join(rows)}</tbody></table></div>
+<p><a href="{href_from(page_path, 'lean-graph/index.html')}">Shared graph</a> · <a href="{href_from(page_path, 'books/registry.json')}">Shared reference registry</a></p></section>'''
+
+
 def render_topic_cards(page_path: str) -> str:
     cards = []
     for topic in SITE_BANDITRLWIKI.get("topics", []):
@@ -1065,12 +1089,17 @@ def build_books(output: Path, verified: bool, generated_at: str) -> None:
         fields = ''.join(f'<div><dt>{html.escape(field["label"])}</dt><dd>{html.escape(field["pending"])}</dd></div>' for field in SITE_BANDITRLWIKI["comparison_fields"])
         related = ''.join(f'<li><a href="{href_from(page_path, chapters[ref]["url"])}">{html.escape(chapters[ref]["title"])}</a></li>' for ref in topic["related_chapters"])
         related += ''.join(f'<li><a href="{href_from(page_path, f"banditrlwiki/cases/{ref}/index.html")}">{html.escape(ref)}</a></li>' for ref in topic["related_cases"])
+        formalization = render_topic_formalization(page_path, topic)
+        reviewed = topic.get("formalization", {}).get("semantic_status") == "accepted-with-explicit-delta"
+        lean_evidence = "Mapped results independently reviewed with explicit differences; topic acceptance remains incomplete." if reviewed else "Provisional source-qualified references below; independent semantic review pending." if formalization else "No result is claimed by this topic placeholder."
+        literature_evidence = "Mapped source and repairs reviewed within the disclosed scope; remaining source audits are incomplete." if reviewed else "Pending primary-source verification."
         body = f'''<nav class="book-breadcrumb" aria-label="Breadcrumb"><a href="{href_from(page_path, 'banditrlwiki/index.html#topics')}">BanditRLwiki · Settings and methods</a></nav>
 <section class="hero" id="topic"><p class="eyebrow">Legacy topic placeholder · {html.escape(topic['kind'])}</p><h1 class="page-title">{html.escape(topic['title'])}</h1><p class="lede">{html.escape(topic['summary'])}</p><p class="topic-tags">{' · '.join(html.escape(t) for t in topic['tags'])}</p><div class="callout warning"><strong>Navigation changed.</strong> This URL is retained for compatibility. Canonical classification now lives in <a href="{href_from(page_path, 'banditrlwiki/setting-atlas/index.html')}">Bandit Taxonomy</a>; techniques live in <a href="{href_from(page_path, 'banditrlwiki/technique-map/index.html')}">Technique Map</a>; theorem-level bounds live in the <a href="{href_from(page_path, 'banditrlwiki/index.html')}">Bound &amp; Source Atlas</a>; literature-open questions live in <a href="{href_from(page_path, 'banditrlwiki/frontier-problems/index.html')}">Frontier</a>.</div></section>
 <section id="comparison-contract"><h2>Result contract to fill</h2><p>A separate record is required for each exact model and guarantee. Compare bounds only when assumptions, feedback, metrics and parameter regimes match.</p><dl class="comparison-contract">{fields}</dl></section>
-<section id="evidence"><h2>Three separate evidence ledgers</h2><ul><li>Literature results: pending primary-source verification.</li><li>Lean mapping: no result is claimed by this topic placeholder.</li><li>Literature open problems: none asserted. Missing formalization is not an open mathematical problem.</li></ul></section>
+<section id="evidence"><h2>Three separate evidence ledgers</h2><ul><li>Literature results: {literature_evidence}</li><li>Lean mapping: {lean_evidence}</li><li>Literature open problems: none asserted. Missing formalization is not an open mathematical problem.</li></ul></section>
+{formalization}
 <section id="related"><h2>Related reading</h2>{'<ul>' + related + '</ul>' if related else '<p>Related routes await review.</p>'}<p>Related links suggest starting points; they are not evidence for an unverified setting.</p><p><a href="{href_from(page_path, 'books/bandit/index.html#extended-chapters')}">Back to Extended Chapters</a></p></section>'''
-        write_page(output, page_path, layout(page_path, topic["title"], body, [("topic", "Topic"), ("comparison-contract", "Result contract"), ("evidence", "Evidence"), ("related", "Related reading")], "banditrlwiki", verified, generated_at))
+        write_page(output, page_path, layout(page_path, topic["title"], body, [("topic", "Topic"), ("comparison-contract", "Result contract"), ("evidence", "Evidence")] + ([("formalization", "Lean mapping")] if formalization else []) + [("related", "Related reading")], "banditrlwiki", verified, generated_at))
 
 
 def render_book_map(
@@ -4538,9 +4567,16 @@ def build_lean_graph(
         if declaration_node:
             add_edge(declaration_node, laboratory_group, "audited in")
 
+    # Shard paths are internal lookup keys, not declaration permalinks. Long
+    # module slugs needlessly inflate the eagerly loaded search index.
     module_shards = {
-        module["name"]: f"modules/{module['slug']}.json" for module in modules
+        module["name"]: "modules/"
+        + hashlib.sha256(module["name"].encode("utf-8")).hexdigest()[:16]
+        + ".json"
+        for module in modules
     }
+    if len(set(module_shards.values())) != len(module_shards):
+        raise ValueError("Lean graph module shard hash collision")
     node_shards: dict[str, str] = {
         root_id: "overview.json",
         book_group: "views/book.json",
@@ -4768,6 +4804,8 @@ def build_lean_graph(
     search_shard_ids = {shard: index for index, shard in enumerate(search_shards)}
     search_entries: list[list[Any]] = []
     for node in nodes.values():
+        # The browser derives declaration/module labels from the ID. Omit the
+        # trailing empty strings while preserving every indexed node and shard.
         derived_label = node["id"].startswith(("declaration:", "module:"))
         search_entries.append(
             [
@@ -4775,16 +4813,14 @@ def build_lean_graph(
                 node["kind"],
                 node["status"],
                 search_shard_ids[node["shard"]],
-                "" if derived_label else node["label"],
-                "" if derived_label else node["subtitle"],
-            ]
+            ] + ([] if derived_label else [node["label"], node["subtitle"]])
         )
     search_index_path = graph_dir / "search-index.json"
     write_text_lf(
         search_index_path,
         json.dumps(
             {
-                "schema_version": 1,
+                "schema_version": 2,
                 "generated_at": generated_at,
                 "shards": search_shards,
                 "entries": search_entries,

@@ -1,0 +1,111 @@
+{
+  "schema_version": "2.0",
+  "id": "EXT-HEAVY-REGRET-REVIEW-20260919",
+  "route": "extended-topics/heavy-tailed",
+  "frontier_cell": "heavy-tailed/conservative-expected-pseudo-regret",
+  "source_facing": true,
+  "source": {
+    "kind": "paper",
+    "title": "Bandits With Heavy Tail",
+    "version": "IEEE TIT 59(11), 2013; frozen published PDF SHA256 in docs/extended-topics/source-hashes.json",
+    "anchor": "Figure 1 and Proposition 1 pp7712-7713; Lemma 1 and Theorem 1 pp7713-7714",
+    "url": "https://www.microsoft.com/en-us/research/wp-content/uploads/2017/01/BCL13.pdf"
+  },
+  "target": "Independent semantic acceptance with explicit deltas of complete existing conservative causal-policy-to-expected-pseudo-regret chain",
+  "affected_files": [
+    "BanditRLProof/Algorithms/ArmStreamPolicy.lean",
+    "BanditRLProof/Algorithms/HeavyTailAdaptive.lean",
+    "BanditRLProof/Algorithms/HeavyTailExpectedCount.lean",
+    "BanditRLProof/Algorithms/HeavyTailHistory.lean",
+    "BanditRLProof/Algorithms/HeavyTailRegret.lean",
+    "BanditRLProof/Algorithms/HeavyTailUCB.lean",
+    "BanditRLProof/HeavyTailArmLaw.lean",
+    "BanditRLProof/HeavyTailConfidence.lean",
+    "BanditRLProof/HeavyTailFixedTilt.lean",
+    "BanditRLProof/HeavyTailGapThreshold.lean",
+    "BanditRLProof/HeavyTailPowerSum.lean",
+    "BanditRLProof/HeavyTailScheduledConfidence.lean",
+    "BanditRLProof/HeavyTailTailSum.lean",
+    "BanditRLProof/HeavyTailTruncation.lean",
+    "BanditRLProof/HeavyTailTuning.lean",
+    "BanditRLProof/PowerCutoffNormalization.lean",
+    "BanditRLProof/PowerTailIntegral.lean",
+    "research-wiki/papers/extended-topics-heavy-tail-regret.md"
+  ],
+  "declarations": [
+    "BanditRLProof.HeavyTail.robust_expected_regret"
+  ],
+  "reuse_plan": {
+    "classification": "reuse",
+    "decision": "reuse_existing",
+    "searched_existing": [
+      "Reviewed full HeavyTailRegret/ExpectedCount/Adaptive/UCB/History, ArmStreamPolicy, ArmLaw/GapThreshold/TailSum and reused decomposition chain"
+    ],
+    "reused_declarations": [
+      "BanditRLProof.HeavyTail.robust_expected_regret"
+    ],
+    "new_shared_declarations": [],
+    "known_consumers": [
+      "Tests.HeavyTailRegretCanary"
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Review actual existing full chain; no duplicate algorithm or theorem."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/blind_decoder_b",
+    "source_reviewer": "/root/source_reviewer_a",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Full conservative endpoint only: radius4 to8, schedule and zero-based time convention, explicit initialization/ties, ceiling and tail residual differ. Separate repair-review-b accepted adaptation. Literal-source constants remain open."
+  },
+  "graph_contribution": {
+    "lean_graph": "no-change-with-reason",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Confidence semantic review adds no cross-setting mechanism or formal graph edge. Lean declarations unchanged.",
+    "focus_targets": [
+      "BanditRLProof.HeavyTail.robust_expected_regret"
+    ],
+    "visual_review": "No graph geometry changed. Existing validated site graph preserved; reader page describes exact full conservative bound, source deltas and folded Lean declaration.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "no-change-with-reason: full conservative endpoint reviewed in research-wiki/papers/extended-topics-heavy-tail-regret.md; no whole-topic acceptance",
+    "banditrlwiki": "no-change-with-reason: No change: topic acceptance remains false; no topic completion badge warranted",
+    "results_ledger": "updated: ALL-TOPICS-LEDGER records conservative regret semantic acceptance while literal-source and whole-topic obligations remain open",
+    "roadmap": "updated: Heavy-tailed remains current; exact-source and remaining evidence tracked",
+    "website_surfaces": [
+      "No canonical website status changed: no new theorem or topic acceptance. Local site rebuilt and checked against merged source."
+    ]
+  },
+  "truth_boundary": "Full conservative expected pseudo-regret endpoint accepted with explicit source delta; not exact published algorithm/constants, realized regret, or topic completion.",
+  "verification": {
+    "focused_checks": [
+      "Exact source/statement blind packet",
+      "Independent full-chain derivation and seven-slot source comparison",
+      "Lean/Tests/configuration tree identity with freshly validated ba81a53",
+      "git diff --check"
+    ],
+    "bandit_check": "Passed merged ba81a53 root/Tests and 434 Python tests, 7 skipped; receipt in runs/extended-topics-20260919/confidence-review-validation.json",
+    "site_build": "Passed --lean-verified; manifest records documentation dirty truthfully",
+    "site_check": "Passed",
+    "independent_review": "decoder-b, source-review-b and repair-review-b; hashes in regret-review-validation.json"
+  },
+  "contributor": {
+    "name": "Codex",
+    "role": "Formalizer and review coordinator; independent reviewers named in semantic_roundtrip"
+  },
+  "integration_scope_note": "For the complete PR against main b3201f8, affected_files also enumerates earlier production modules in this already documented chain. No Lean edits or new semantic verdicts are introduced by this manifest coverage correction; existing review scopes and truth boundaries remain in force."
+}

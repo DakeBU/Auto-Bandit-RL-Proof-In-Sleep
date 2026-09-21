@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "code_commit": "132a8340f097b5e05bd17669980830b1f9c3d7e3",
+  "normalization": "utf8-crlf-and-cr-to-lf-only",
+  "verdict": "accepted-with-explicit-delta",
+  "kind": "additive-current-code-semantic-review-not-retroactive-historical-certification",
+  "production_hashes_lf": {
+    "BanditRLProof/Algorithms/CausalOrderedLaw.lean": "5e5cc9af7cfa83db6885b57572ccb36cd94dd9f828e8f222b157bd1af2b86c1c",
+    "BanditRLProof/Algorithms/CausalMarginalLaw.lean": "bd634fb7679bd05462c0254c66bb16e7f1e5bc87d71332dcf5da19588a26ff82",
+    "BanditRLProof/Algorithms/CausalImportance.lean": "78a6dec3cdba6d9303d7ac1c2cb5af7f8df88c38afbf2b706be07418c108adfc",
+    "BanditRLProof/Algorithms/CausalAllocation.lean": "cdc3d8528aa962452bd3b7f2a6b3925f55e7b92171a107884781ae67188a9849",
+    "BanditRLProof/Algorithms/CausalOptimalAllocation.lean": "ad09afe945bdb49859634b1c0dccd1d2f9796b00dd9480054f9464fa830c043f",
+    "BanditRLProof/Algorithms/CausalSampling.lean": "f9f321a43fa1985ea35f7316bfe1c334b1174e12fa13c56c86c08a41926cf5b7",
+    "BanditRLProof/Algorithms/CausalSampleMGF.lean": "a9e5e3c4dedaff1174bd7692b3556100d377d485825f89bef7c0def6f64b61f9",
+    "BanditRLProof/Algorithms/CausalTuning.lean": "cf0a682aeed3a37e4667654f8a021efc9b241da4a9b62b11850ddb8cdc422292",
+    "BanditRLProof/Algorithms/CausalConfidence.lean": "18b2b906701db662aca30477dcba9e6452b61981058fcf7f6a3a841ef18f37b9",
+    "BanditRLProof/Algorithms/CausalRecommendation.lean": "165acdcfeca542cdb1c6abcfa3097c335c1c07f5efccc1b82299ed2731b1c4a8",
+    "BanditRLProof/Algorithms/CausalExpectedRegret.lean": "0eecb128db14117d39c598f7a4dd78b8753f28f4242d8ababb7aec98cddd13d3",
+    "BanditRLProof/Algorithms/CausalAllocationRegret.lean": "95fd37703b483324520d91dd9810943687e55f91426027fb22ec53019fc76c6b",
+    "Tests/CausalNoisyGraphCanary.lean": "9550b7f70584fddda2ac1e5cf5b93c2a066a5221c4bb1675b517000c5167746b"
+  },
+  "review_hashes": {
+    "foundation-blind-v1.md": "8662148234e4386ee6656d7e49505ede3932bfa41f0ca465228a5e22573a90c2",
+    "sampling-blind-v1.md": "4d14aa4d33b18c2f542d30b2b197066668783aaf1b3d7e2576e648ec836a3581",
+    "independent-source-review-v1.md": "09e27aab4bf72ad79cd2c3e1f80b30da9d2c3f2b4ae7e9a11ef4948ec7db46f4"
+  },
+  "historical_receipt_hashes_lf": {
+    "runs/extended-topics-20260919/causal-sampling-review.json": "16667b2eaa644df3a5f946da2b5de377ea68295514f05b1334aaeb182e18b531",
+    "runs/extended-topics-20260919/causal-sampling-validation.json": "fb1990af28ccf2d6960f2f93121945daf52c0f42e2b4a97fd0a5348389326715",
+    "runs/extended-topics-20260917/causal-ordered-law-validation.json": "835162d5b776226af2c2ef279e42e968ab20371366a15b597d99afbc9b7f111f",
+    "runs/extended-topics-20260917/causal-marginal-law-validation.json": "587678d57fe666f92f9b303216c7297b3ee306ab1187db8287597fa5d8d4ea09",
+    "runs/extended-topics-20260917/causal-importance-validation.json": "ca9de20817aa9bdb108f9c45010b2174ff23b76c7c6d3a80d8829745275cb837",
+    "runs/extended-topics-20260917/causal-allocation-validation.json": "2caf6c092708c256aae7a8f27590dbe89a0f0bd65182a400bd05766c125b6ed4"
+  },
+  "semantic_reviews": [
+    {
+      "group": "foundations",
+      "formalizer": "/root",
+      "blind_decoder": "/root/causal_foundation_redecode",
+      "source_reviewer": "/root/causal_rebinding_source",
+      "verdict": "accepted-with-explicit-delta",
+      "files": [
+        "BanditRLProof/Algorithms/CausalOrderedLaw.lean",
+        "BanditRLProof/Algorithms/CausalMarginalLaw.lean",
+        "BanditRLProof/Algorithms/CausalImportance.lean",
+        "BanditRLProof/Algorithms/CausalAllocation.lean",
+        "BanditRLProof/Algorithms/CausalOptimalAllocation.lean"
+      ],
+      "blind_report": "foundation-blind-v1.md",
+      "source_report": "independent-source-review-v1.md"
+    },
+    {
+      "group": "sampling-and-canary",
+      "formalizer": "/root",
+      "blind_decoder": "/root/causal_sampling_redecode",
+      "source_reviewer": "/root/causal_rebinding_source",
+      "verdict": "accepted-with-explicit-delta",
+      "files": [
+        "BanditRLProof/Algorithms/CausalSampling.lean",
+        "BanditRLProof/Algorithms/CausalSampleMGF.lean",
+        "BanditRLProof/Algorithms/CausalTuning.lean",
+        "BanditRLProof/Algorithms/CausalConfidence.lean",
+        "BanditRLProof/Algorithms/CausalRecommendation.lean",
+        "BanditRLProof/Algorithms/CausalExpectedRegret.lean",
+        "BanditRLProof/Algorithms/CausalAllocationRegret.lean",
+        "Tests/CausalNoisyGraphCanary.lean"
+      ],
+      "blind_report": "sampling-blind-v1.md",
+      "source_report": "independent-source-review-v1.md"
+    }
+  ],
+  "supersedes": {
+    "sampling": "Current semantic binding supersedes invalid historical production_hashes; historical logs/verdicts are preserved, not silently re-signed.",
+    "foundations": "Fresh five-module review supplies missing source/blind acceptance; old pending checkpoints remain historical.",
+    "reader": "Lean code bodies already match; stale SHA256 labels updated under explicit LF normalization."
+  },
+  "scope": "Finite common-alphabet DAG and covered allocations; source coefficient and failure-direction corrections disclosed. No executable optimizer or actual-regret dominance theorem. No topic completion.",
+  "historical_audit": {
+    "path": "runs/extended-topics-20260920/causal-historical-binding-audit.json",
+    "origin_of_invalid_hashes": "unknown; Git history does not establish what bytes the original actors reviewed"
+  },
+  "external_review": {
+    "report": "E:/ABRL/maintenance/extended-topics-20260919-claude/CLAUDE-HANDOFF.md",
+    "sha256": "bd4dc7d32f0d893b73633bf625f34092b739bd31b10ac7e03ec983956c7e9ba5",
+    "status": "independent supplied report; root did not rerun its reported 9052-job/53-name checks"
+  },
+  "topic_complete": false,
+  "completed_topics": 0,
+  "blind_packet_hashes_lf": {
+    "CausalOrderedLaw.lean": "7f3de4aed9454e30350f061667bca42751b23d4acdda17823cd15bcfe97a8a15",
+    "CausalMarginalLaw.lean": "14b087965255587908750e7a422b030b7b262cd8317ea745698b0a69c0b8a8fa",
+    "CausalImportance.lean": "24d186ab566a84234dc01c600e27410282d92467dae5d015778bea782a17c521",
+    "CausalAllocation.lean": "f55c1c87902c33f955afc758d840b1095029b2b7a77adedb1d8a901cdc577232",
+    "CausalOptimalAllocation.lean": "4c9694797393a3ad8c03f2e692c7af94a17706fe10c5cce3b7a3f8dc25d09226",
+    "CausalSampling.lean": "5e5f8026edfce3aa13cbfb46a864998e8d6b2453ce74046c6aa3db2c7f589ea2",
+    "CausalSampleMGF.lean": "77c2951ffbf50e8816d0bfe7b9aa68cc7daa42c9913c447e7aa34a635ee7828d",
+    "CausalTuning.lean": "3f5d4b8ca887dbc1d8f5fdcc81273f14dda6c27135af7aabc92436f5eafb0224",
+    "CausalConfidence.lean": "f8e15a0253470d51ae961810b5b0c40f1e353cc5df50ea3518065b4857b9579e",
+    "CausalRecommendation.lean": "164d85f40223785417a0fa07338042c711f6f88ae7c084dd6f5c30b9ad464fc9",
+    "CausalExpectedRegret.lean": "481fc33a61708a032d399c9295a4ed20879a32907379f7e0dd5b4085a7ff727d",
+    "CausalAllocationRegret.lean": "bbf5bd76ad354f4273c87b6bec057c7632a527a1e504cc40d14da927f485f54e",
+    "CausalNoisyGraphCanary.lean": "1234eccd73712ec54f1cddacc26314b06a806c1d0709099a755026f4bbd5f0a2"
+  },
+  "semantic_verdict": "accepted-with-explicit-delta"
+}

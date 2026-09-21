@@ -1,13 +1,189 @@
 {
   "results": [
     {
+      "id": "CAUSAL-PARALLEL-ACTUAL-REGRET",
+      "title": "Repaired parallel causal allocation and actual expected simple regret",
+      "chapter": "ucb",
+      "status": "compiled",
+      "informal": "For N>=2 known independent binary roots, the constructed strict rarity r and normalized allocation have actual design cost<=2r, including q=0/1. Actual graph-law transport gives expected regret <=(2sqrt(2)+7)sqrt(2r log(2TK)/T)+1/T for the repaired design and the attained optimal design, each using its own true cost in the threshold. Local fair/deterministic witnesses have exact costs 2/4. Independent source correction and semantic review accepted; source screening and ICLR evidence remain open.",
+      "declarations": [
+        "BanditRLProof.Causal.ParallelParameters.allocation_cost_le",
+        "BanditRLProof.Causal.ParallelParameters.graph_designCost",
+        "BanditRLProof.Causal.ParallelParameters.expected_simpleRegret_parallel",
+        "BanditRLProof.Causal.ParallelParameters.expected_simpleRegret_parallel_optimal"
+      ],
+      "depends_on": [
+        "BanditRLProof.Causal.GraphModel.expected_simpleRegret_source_bound",
+        "BanditRLProof.Causal.GraphModel.expected_simpleRegret_optimal",
+        "BanditRLProof.Causal.designCost_map_injective"
+      ],
+      "missing": [],
+      "evidence": "BanditRLProof/Algorithms/CausalParallelDesign.lean; BanditRLProof/Algorithms/CausalParallelLaw.lean; BanditRLProof/Algorithms/CausalParallelRegret.lean; runs/extended-topics-20260919/causal-parallel-review.json"
+    },
+    {
+      "id": "CAUSAL-COMMON-ALPHABET-EXPECTED-REGRET",
+      "title": "Causal actual-sampling expected simple regret on a common finite alphabet",
+      "chapter": "ucb",
+      "status": "compiled",
+      "informal": "Actual intervention samples and fixed-order empirical recommendation satisfy R_T <= (2sqrt(2)+7)sqrt(m log(2TK)/T)+1/T and R_T<=1; explicit rate constant 3sqrt(2)+7. Internally derived confidence, binary reward readout and covered allocation. Independently reviewed common-alphabet scope; the separately reviewed native heterogeneous bridge is now available. Parallel allocation and boundary witnesses are now reviewed separately. Remaining source screening and ICLR evidence remain open. The frozen noisy diagnostic supplement proves concentrated cost 8/3, exact biases, conditional/interventional distinction and tuned one-round expected regret 1/5.",
+      "declarations": [
+        "BanditRLProof.Causal.GraphModel.expected_simpleRegret_source_bound",
+        "BanditRLProof.Causal.GraphModel.expected_simpleRegret_explicit_rate",
+        "BanditRLProof.Causal.GraphModel.expected_simpleRegret_uniform",
+        "BanditRLProof.Causal.GraphModel.expected_simpleRegret_optimal"
+      ],
+      "depends_on": [
+        "BanditRLProof.Causal.GraphModel.sampleEstimate_source_confidence",
+        "BanditRLProof.Causal.GraphModel.simpleRegret_le_on_confidence"
+      ],
+      "missing": [],
+      "evidence": "BanditRLProof/Algorithms/CausalExpectedRegret.lean; BanditRLProof/Algorithms/CausalAllocationRegret.lean; runs/extended-topics-20260919/causal-sampling-review.json; runs/extended-topics-20260919/causal-noisy-diagnostics-review.json"
+    },
+    {
+      "id": "HOO-REWARD-FAMILY-RATE",
+      "title": "HOO full expected regret for arbitrary reward families",
+      "chapter": "ucb",
+      "status": "compiled",
+      "informal": "The same causal HOO trajectory with arbitrary arm-indexed probability reward laws satisfies the all-horizon source-repaired dimension rate, without global reward-kernel measurability. Actual and pseudo-regret expectations coincide. Fixed choices, log(max(N,2)) and other source repairs remain explicit; no whole-topic or efficiency claim.",
+      "declarations": [
+        "BanditRLProof.HOO.RegularCovering.expected_pseudoRegret_rate_family",
+        "BanditRLProof.HOO.RegularCovering.expected_actual_eq_pseudoRegret_family",
+        "BanditRLProof.HOO.RegularCovering.expected_actualRegret_rate_family"
+      ],
+      "depends_on": [
+        "BanditRLProof.HOO.RegularCovering.expected_pseudoRegret_rate",
+        "BanditRLProof.HOO.RegularCovering.expected_actual_eq_pseudoRegret",
+        "BanditRLProof.HOO.RegularCovering.expected_actualRegret_rate"
+      ],
+      "missing": [],
+      "evidence": "BanditRLProof/Algorithms/HOORewardFamily.lean"
+    },
+    {
+      "id": "HEAVY-TAIL-GENALTI-FINITE-SUPREMUM",
+      "title": "Finite raw-moment regret supremum and actual-law adapter",
+      "chapter": "ucb",
+      "status": "compiled",
+      "informal": "At each finite horizon, actual raw-moment arm laws and arbitrary probability trace laws yield normalized expected pseudo-regret at most2T; the EReal supremum is not positive infinity. The actual-process pushforward preserves the integral. A two-arm+1/-1 witness attains2T for epsilon1. This obstructs Genalti2024 Eq5 on positive scales, not asymptotic nonadaptivity or a fixed-algorithm lower bound.",
+      "declarations": [
+        "BanditRLProof.HeavyTail.GenaltiAudit.normalized_sSup_ne_top",
+        "BanditRLProof.HeavyTail.GenaltiAudit.process_value_mem",
+        "BanditRLProof.HeavyTail.GenaltiAudit.normalized_sSup_two_eq"
+      ],
+      "depends_on": [
+        "BanditRLProof.HeavyTail.GenaltiAudit.expected_normalized_regret_le",
+        "BanditRLProof.HeavyTail.GenaltiAudit.normalizedValues_le",
+        "BanditRLProof.HeavyTail.GenaltiAudit.cap_mem"
+      ],
+      "missing": [],
+      "evidence": "BanditRLProof/Algorithms/HeavyTailRegretCap.lean"
+    },
+    {
+      "id": "HEAVY-TAIL-PRINTED-REGRET-COUNTEREXAMPLE",
+      "title": "Finite counterexample to the printed source-policy regret coefficient",
+      "chapter": "ucb",
+      "status": "compiled",
+      "informal": "For the unchanged source-radius4/r^-2 policy with its permissible deterministic ties, valid Dirac0/-1 arm laws and epsilon=u=1, expected pseudo-regret at T=2^50 exceeds32logT+5. The actual finite count contradiction, raw-second-moment witness, product-law expectation bridge and positive-gap-sum negation compile. This rejects that literal printed coefficient, not every paper estimator or logarithmic regret order.",
+      "declarations": [
+        "BanditRLProof.HeavyTail.SourceCounterexample.literal_printed_bound_false",
+        "BanditRLProof.HeavyTail.SourceCounterexample.kernel_raw_moment"
+      ],
+      "depends_on": [
+        "BanditRLProof.HeavyTail.SourcePolicy.robustAction_maximizes",
+        "BanditRLProof.HeavyTail.SourcePolicy.robustMean_latent",
+        "BanditRLProof.HeavyTail.SourceCounterexample.expected_regret_eq_count"
+      ],
+      "missing": [],
+      "evidence": "BanditRLProof/Algorithms/HeavyTailSourceCounterexample.lean"
+    },
+    {
+      "id": "HEAVY-TAIL-CLIPPED-CORRUPTION-TRANSFER",
+      "title": "Clipped-prefix confidence under consumed-sample corruption",
+      "chapter": "ucb",
+      "status": "compiled",
+      "informal": "Independent clean coordinates with raw p moments produce clipped-mean confidence at any outcome-dependent positive count N<=t, enlarged by C/N for a pathwise consumed-prefix corruption budget. Nonmeasurable count/adversary events use finite outer measure. Explicit estimator adaptation on one action trace, not a corruption-robust policy regret theorem.",
+      "declarations": [
+        "BanditRLProof.HeavyTail.adaptive_corrupted_clipped_mean_tail",
+        "BanditRLProof.HeavyTail.observed_corrupted_clipped_mean_tail",
+        "BanditRLProof.HeavyTail.arm_corrupted_clipped_mean_tail"
+      ],
+      "depends_on": [
+        "BanditRLProof.HeavyTail.clipped_prefix_corruption_le",
+        "BanditRLProof.HeavyTail.scheduled_adaptive_clipped_mean_tail"
+      ],
+      "missing": [],
+      "evidence": "BanditRLProof/HeavyTailClippedTransfer.lean"
+    },
+    {
+      "id": "HEAVY-TAIL-CORRECTED-SOURCE-REGRET",
+      "title": "Corrected expected regret for source-parameter robust UCB",
+      "chapter": "ucb",
+      "status": "compiled",
+      "informal": "For the unchanged radius4/r^-2 causal policy, raw p moments imply expected pseudo-regret at most sum over positive gaps of Delta*(A+5), A=2log(max(T,1))/(Delta/(8u^(1/p)))^(p/epsilon). This explicit corrected coefficient is128u/Delta at epsilon1; the printed32 coefficient now has a complete finite Lean counterexample for the instantiated source tie rule.",
+      "declarations": [
+        "BanditRLProof.HeavyTail.SourcePolicy.robust_expected_regret",
+        "BanditRLProof.HeavyTail.SourcePolicy.robust_integral_count_le_budget"
+      ],
+      "depends_on": [
+        "BanditRLProof.HeavyTail.SourcePolicy.robust_large_count_tail",
+        "BanditRLProof.HeavyTail.lintegral_pullCount_threshold",
+        "BanditRLProof.HeavyTail.integrable_id_of_raw_moment"
+      ],
+      "missing": [],
+      "evidence": "BanditRLProof/Algorithms/HeavyTailSourceRegret.lean"
+    },
+    {
+      "id": "HEAVY-TAIL-SOURCE-SCHEDULE-CONFIDENCE",
+      "title": "Source-schedule causal robust-UCB confidence budgets",
+      "chapter": "ucb",
+      "status": "compiled",
+      "informal": "The actual history-based robust UCB with source radius4 and paper-round confidence parameter r^(-2) has each per-arm signed deviation probability at most t exp(-5L_t/4), L_t=2log(t+1), after initialization. Each signed finite-time event-probability sum is at most2. This does not establish the printed regret coefficient.",
+      "declarations": [
+        "BanditRLProof.HeavyTail.SourcePolicy.robustMean_upper_tail_sum",
+        "BanditRLProof.HeavyTail.SourcePolicy.robustMean_lower_tail_sum"
+      ],
+      "depends_on": [
+        "BanditRLProof.HeavyTail.source_adaptive_mean_upper_tail",
+        "BanditRLProof.HeavyTail.source_schedule_tail_sum_le_two",
+        "BanditRLProof.HeavyTail.truncated_observed_sum"
+      ],
+      "missing": [],
+      "evidence": "BanditRLProof/Algorithms/HeavyTailSourcePolicy.lean"
+    },
+    {
+      "id": "HEAVY-TAIL-SOURCE-CONFIDENCE-FOUR",
+      "title": "Sample-index truncated confidence with source radius four",
+      "chapter": "probability",
+      "status": "compiled",
+      "informal": "For independent common-mean samples with bounded raw (1+epsilon)-moments, each closed signed deviation of the unchanged sample-index truncated mean at radius 4 u^(1/(1+epsilon)) (L/n)^(epsilon/(1+epsilon)) has probability at most exp(-5L/4), for L>0. This strengthens the source delta bound at L=log(1/delta); The actual source policy and explicitly corrected regret now have separate accepted results; the literal printed coefficient is refuted separately.",
+      "declarations": [
+        "BanditRLProof.HeavyTail.source_truncated_mean_upper_tail",
+        "BanditRLProof.HeavyTail.source_truncated_mean_lower_tail",
+        "BanditRLProof.HeavyTail.source_truncated_mean_upper_tail_log_sharp",
+        "BanditRLProof.HeavyTail.source_truncated_mean_lower_tail_log_sharp"
+      ],
+      "depends_on": [
+        "BanditRLProof.HeavyTail.bounded_centering_mgf_unshifted_sharp",
+        "BanditRLProof.HeavyTail.independent_sum_mgf",
+        "BanditRLProof.HeavyTail.integral_truncate_bias_le",
+        "BanditRLProof.HeavyTail.power_threshold_bias_sum"
+      ],
+      "missing": [],
+      "evidence": "BanditRLProof/HeavyTailSourceConfidence.lean"
+    },
+    {
       "id": "FOUNDATION-REGRET-DECOMPOSITION",
       "title": "Finite-arm pseudo-regret decomposition",
       "chapter": "foundations",
       "status": "compiled",
       "informal": "Finite-horizon pseudo-regret equals the sum over arms of each gap multiplied by its pull count.",
-      "declarations": ["BanditRLProof.pseudoRegret_eq_finset_sum_gap_mul_pullCount"],
-      "depends_on": ["BanditRLProof.pullCount", "BanditRLProof.pseudoRegret", "BanditRLProof.FiniteBanditModel"],
+      "declarations": [
+        "BanditRLProof.pseudoRegret_eq_finset_sum_gap_mul_pullCount"
+      ],
+      "depends_on": [
+        "BanditRLProof.pullCount",
+        "BanditRLProof.pseudoRegret",
+        "BanditRLProof.FiniteBanditModel"
+      ],
       "missing": [],
       "evidence": "BanditRLProof/RegretDecomposition.lean"
     },
@@ -17,8 +193,12 @@
       "chapter": "probability",
       "status": "compiled",
       "informal": "A selected successor reward on the canonical generated trajectory inherits the centered conditional MGF bound supplied by its step kernel.",
-      "declarations": ["BanditRLProof.ConditionalExpectationReward.historyStepKernelFamily_centeredReward_succ_hasCondSubgaussianMGF_trajMeasure"],
-      "depends_on": ["BanditRLProof.Policy.MeasurablePolicy"],
+      "declarations": [
+        "BanditRLProof.ConditionalExpectationReward.historyStepKernelFamily_centeredReward_succ_hasCondSubgaussianMGF_trajMeasure"
+      ],
+      "depends_on": [
+        "BanditRLProof.Policy.MeasurablePolicy"
+      ],
       "missing": [],
       "evidence": "BanditRLProof/ConditionalRewardLawSource.lean"
     },
@@ -125,8 +305,12 @@
       "chapter": "etc",
       "status": "compiled",
       "informal": "The generated ETC policy under finite-arm sub-Gaussian reward laws satisfies the explicit exploration-plus-wrong-commit expected pseudo-regret bound.",
-      "declarations": ["BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalSubGaussianArmPerArmIntegralRegretBoundReal"],
-      "depends_on": ["BanditRLProof.pseudoRegret_eq_finset_sum_gap_mul_pullCount"],
+      "declarations": [
+        "BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalSubGaussianArmPerArmIntegralRegretBoundReal"
+      ],
+      "depends_on": [
+        "BanditRLProof.pseudoRegret_eq_finset_sum_gap_mul_pullCount"
+      ],
       "missing": [],
       "evidence": "BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean"
     },
@@ -152,9 +336,13 @@
       "chapter": "etc",
       "status": "compiled",
       "informal": "The local canonical ETC chapter route compiles; direct identity with the pinned LML declaration remains a separate cross-toolchain theorem-card route and is not claimed here.",
-      "declarations": ["BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalSubGaussianArmPerArmIntegralRegretBoundReal"],
+      "declarations": [
+        "BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalSubGaussianArmPerArmIntegralRegretBoundReal"
+      ],
       "depends_on": [],
-      "missing": ["Direct imported-LML symbol and toolchain identity remains cross-toolchain work."],
+      "missing": [
+        "Direct imported-LML symbol and toolchain identity remains cross-toolchain work."
+      ],
       "evidence": "tasks/BRL-ETC-PORT-001.md"
     },
     {
@@ -163,8 +351,12 @@
       "chapter": "ucb",
       "status": "compiled",
       "informal": "The generated selected-policy UCB action satisfies a textbook-shaped Real pseudo-regret gap-sum bound, including the zero-proxy case.",
-      "declarations": ["BanditRLProof.UCB.integral_real_pseudoRegret_selectedPolicySuccessorGeneratedUCBRegretAction_le_textbookGapSum_finiteArmSubgaussianLaws_without_proxy_positivity"],
-      "depends_on": ["BanditRLProof.pseudoRegret_eq_finset_sum_gap_mul_pullCount"],
+      "declarations": [
+        "BanditRLProof.UCB.integral_real_pseudoRegret_selectedPolicySuccessorGeneratedUCBRegretAction_le_textbookGapSum_finiteArmSubgaussianLaws_without_proxy_positivity"
+      ],
+      "depends_on": [
+        "BanditRLProof.pseudoRegret_eq_finset_sum_gap_mul_pullCount"
+      ],
       "missing": [],
       "evidence": "BanditRLProof/Algorithms/UCBFiniteArmSubGaussianRewardLaw.lean"
     },
@@ -174,7 +366,9 @@
       "chapter": "ucb",
       "status": "compiled",
       "informal": "For the compiled finite-arm sub-Gaussian source, expected pseudo-regret divided by the horizon tends to zero.",
-      "declarations": ["BanditRLProof.UCB.selectedPolicySuccessorFiniteArmSubgaussianExpectedAveragePseudoRegret_tendsto_zero"],
+      "declarations": [
+        "BanditRLProof.UCB.selectedPolicySuccessorFiniteArmSubgaussianExpectedAveragePseudoRegret_tendsto_zero"
+      ],
       "depends_on": [],
       "missing": [],
       "evidence": "BanditRLProof/Algorithms/UCBFiniteArmSubGaussianSampledAsymptotics.lean"
@@ -205,9 +399,14 @@
       "chapter": "ucb",
       "status": "partial",
       "informal": "Local ordinary-UCB and Real arm-stream one-policy results compile; only literal identity with the pinned upstream declaration remains a separate theorem-card/cross-toolchain gate.",
-      "declarations": ["BanditRLProof.UCB.integral_realKernelRegret_armStreamAction_le_lml_sum"],
+      "declarations": [
+        "BanditRLProof.UCB.integral_realKernelRegret_armStreamAction_le_lml_sum"
+      ],
       "depends_on": [],
-      "missing": ["Direct imported-LML symbol and toolchain identity remain cross-toolchain work; the local expected pull-count ledger is already compiled.", "Do not treat the upstream theorem card as a local proof term."],
+      "missing": [
+        "Direct imported-LML symbol and toolchain identity remain cross-toolchain work; the local expected pull-count ledger is already compiled.",
+        "Do not treat the upstream theorem card as a local proof term."
+      ],
       "evidence": "tasks/BRL-UCB-PORT-001.md"
     },
     {
@@ -232,7 +431,9 @@
       "chapter": "oful",
       "status": "compiled",
       "informal": "Clipped inverse-Gram quadratic widths are bounded by a dimension-scaled log-determinant growth term.",
-      "declarations": ["BanditRLProof.OFUL.sum_range_min_prefix_update_le_two_trace_average_log"],
+      "declarations": [
+        "BanditRLProof.OFUL.sum_range_min_prefix_update_le_two_trace_average_log"
+      ],
       "depends_on": [],
       "missing": [],
       "evidence": "BanditRLProof/OFULEllipticalPotential.lean"
@@ -247,7 +448,9 @@
         "BanditRLProof.OFUL.fixedDirectionCompensatedScore_hasMGFUpperBoundAt",
         "BanditRLProof.OFUL.measure_finiteHorizonRidgeEstimate_error_matrixNorm_gt_confidenceRadius_le"
       ],
-      "depends_on": ["BanditRLProof.OFUL.sum_range_min_prefix_update_le_two_trace_average_log"],
+      "depends_on": [
+        "BanditRLProof.OFUL.sum_range_min_prefix_update_le_two_trace_average_log"
+      ],
       "missing": [],
       "evidence": "BanditRLProof/OFULSelfNormalizedConfidence.lean; BanditRLProof/OFULConfidenceEllipsoid.lean"
     },
@@ -257,8 +460,12 @@
       "chapter": "oful",
       "status": "compiled",
       "informal": "A strict-fold finite-action selector turns ridge estimates and scheduled confidence radii into one measurable history algorithm without a terminal horizon parameter.",
-      "declarations": ["BanditRLProof.OFUL.finiteHistoryTelescopingScalarRidgeOptimisticAlgorithm"],
-      "depends_on": ["BanditRLProof.OFUL.measure_finiteHorizonRidgeEstimate_error_matrixNorm_gt_confidenceRadius_le"],
+      "declarations": [
+        "BanditRLProof.OFUL.finiteHistoryTelescopingScalarRidgeOptimisticAlgorithm"
+      ],
+      "depends_on": [
+        "BanditRLProof.OFUL.measure_finiteHorizonRidgeEstimate_error_matrixNorm_gt_confidenceRadius_le"
+      ],
       "missing": [],
       "evidence": "BanditRLProof/OFULScheduledAllTimeConfidence.lean"
     },
@@ -268,8 +475,12 @@
       "chapter": "oful",
       "status": "compiled",
       "informal": "A telescoping confidence-budget schedule controls one countable failure event for the generated scalar-ridge policy at every deterministic horizon.",
-      "declarations": ["BanditRLProof.OFUL.measure_telescopingCanonicalHistoryTrajectory_allTimeConfidenceFailureSet_le_of_linearSubgaussianEnvironment"],
-      "depends_on": ["BanditRLProof.OFUL.sum_range_min_prefix_update_le_two_trace_average_log"],
+      "declarations": [
+        "BanditRLProof.OFUL.measure_telescopingCanonicalHistoryTrajectory_allTimeConfidenceFailureSet_le_of_linearSubgaussianEnvironment"
+      ],
+      "depends_on": [
+        "BanditRLProof.OFUL.sum_range_min_prefix_update_le_two_trace_average_log"
+      ],
       "missing": [],
       "evidence": "BanditRLProof/OFULScheduledAllTimeConfidence.lean"
     },
@@ -279,8 +490,12 @@
       "chapter": "oful",
       "status": "compiled",
       "informal": "On the same canonical trajectory generated by the horizon-free telescoping policy, one outer-measure event controls the explicit pseudo-regret bound for every finite horizon.",
-      "declarations": ["BanditRLProof.OFUL.telescopingCanonicalStandardHighProbabilityPseudoRegret_nonneg_and_allHorizon_tail_le_explicitBound_of_linearSubgaussianEnvironment_of_featureBound_le_regularization"],
-      "depends_on": ["BanditRLProof.OFUL.measure_telescopingCanonicalHistoryTrajectory_allTimeConfidenceFailureSet_le_of_linearSubgaussianEnvironment"],
+      "declarations": [
+        "BanditRLProof.OFUL.telescopingCanonicalStandardHighProbabilityPseudoRegret_nonneg_and_allHorizon_tail_le_explicitBound_of_linearSubgaussianEnvironment_of_featureBound_le_regularization"
+      ],
+      "depends_on": [
+        "BanditRLProof.OFUL.measure_telescopingCanonicalHistoryTrajectory_allTimeConfidenceFailureSet_le_of_linearSubgaussianEnvironment"
+      ],
       "missing": [],
       "evidence": "BanditRLProof/OFULScheduledAllHorizonHighProbabilityRegretRate.lean"
     },
@@ -290,8 +505,12 @@
       "chapter": "oful",
       "status": "compiled",
       "informal": "For the separate horizon-indexed fixed-model policy family, the canonical expected pseudo-regret bound is little-o of the horizon, so the corresponding expected average tends to zero.",
-      "declarations": ["BanditRLProof.OFUL.canonicalStandardExpectedAveragePseudoRegret_tendsto_zero"],
-      "depends_on": ["BanditRLProof.OFUL.sum_range_min_prefix_update_le_two_trace_average_log"],
+      "declarations": [
+        "BanditRLProof.OFUL.canonicalStandardExpectedAveragePseudoRegret_tendsto_zero"
+      ],
+      "depends_on": [
+        "BanditRLProof.OFUL.sum_range_min_prefix_update_le_two_trace_average_log"
+      ],
       "missing": [],
       "evidence": "BanditRLProof/OFULExpectedRegretConsistency.lean"
     },
@@ -301,8 +520,12 @@
       "chapter": "oful",
       "status": "compiled",
       "informal": "For the same horizon-free telescoping generated policy, any stopping time bounded by a deterministic horizon has nonnegative expected stopped pseudo-regret bounded by the endpoint budget plus the explicit delta-weighted envelope.",
-      "declarations": ["BanditRLProof.OFUL.integral_stoppedValue_canonicalStandardHighProbabilityPseudoRegret_nonneg_and_le_endpoint_add_envelope_mul_delta_of_linearSubgaussianEnvironment_of_featureBound_le_regularization"],
-      "depends_on": ["BanditRLProof.OFUL.telescopingCanonicalStandardHighProbabilityPseudoRegret_nonneg_and_allHorizon_tail_le_explicitBound_of_linearSubgaussianEnvironment_of_featureBound_le_regularization"],
+      "declarations": [
+        "BanditRLProof.OFUL.integral_stoppedValue_canonicalStandardHighProbabilityPseudoRegret_nonneg_and_le_endpoint_add_envelope_mul_delta_of_linearSubgaussianEnvironment_of_featureBound_le_regularization"
+      ],
+      "depends_on": [
+        "BanditRLProof.OFUL.telescopingCanonicalStandardHighProbabilityPseudoRegret_nonneg_and_allHorizon_tail_le_explicitBound_of_linearSubgaussianEnvironment_of_featureBound_le_regularization"
+      ],
       "missing": [],
       "evidence": "BanditRLProof/OFULScheduledBoundedStoppingTimeExpectedRegret.lean"
     },
@@ -312,8 +535,12 @@
       "chapter": "oful",
       "status": "compiled",
       "informal": "Under an explicit square-integrable finite stopping-time contract, the stopped high-probability pseudo-regret is integrable and receives a second-moment-controlled expectation bound.",
-      "declarations": ["BanditRLProof.OFUL.integral_stoppedValue_canonicalStandardHighProbabilityPseudoRegret_nonneg_and_le_quadraticCoefficient_mul_stoppingTimeRoundSecondMoment_add_initialGap_mul_sqrt_stoppingTimeRoundSecondMoment_mul_sqrt_delta_and_stoppedViolation_measure_le_of_squareIntegrableFiniteStoppingTime"],
-      "depends_on": ["BanditRLProof.OFUL.SquareIntegrableFiniteStoppingTime"],
+      "declarations": [
+        "BanditRLProof.OFUL.integral_stoppedValue_canonicalStandardHighProbabilityPseudoRegret_nonneg_and_le_quadraticCoefficient_mul_stoppingTimeRoundSecondMoment_add_initialGap_mul_sqrt_stoppingTimeRoundSecondMoment_mul_sqrt_delta_and_stoppedViolation_measure_le_of_squareIntegrableFiniteStoppingTime"
+      ],
+      "depends_on": [
+        "BanditRLProof.OFUL.SquareIntegrableFiniteStoppingTime"
+      ],
       "missing": [],
       "evidence": "BanditRLProof/OFULScheduledUnboundedStoppingTimeExpectedRegretExactMoment.lean"
     },
@@ -323,7 +550,9 @@
       "chapter": "thompson",
       "status": "compiled",
       "informal": "When the observed environment-history pair has the canonical prior-likelihood joint law, the canonical posterior kernel is almost everywhere the conditional distribution of the environment given history.",
-      "declarations": ["BanditRLProof.PosteriorKernel.canonicalPosterior_kernel_ae_eq_condDistrib_of_pair_map_eq"],
+      "declarations": [
+        "BanditRLProof.PosteriorKernel.canonicalPosterior_kernel_ae_eq_condDistrib_of_pair_map_eq"
+      ],
       "depends_on": [],
       "missing": [],
       "evidence": "BanditRLProof/PosteriorKernel.lean"
@@ -334,8 +563,12 @@
       "chapter": "thompson",
       "status": "compiled",
       "informal": "Sampling an environment from the canonical posterior and applying the measurable best-action selector gives the same conditional action law as the posterior best action.",
-      "declarations": ["BanditRLProof.Thompson.canonicalSampler_condDistrib_action_ae_eq_bestAction"],
-      "depends_on": ["BanditRLProof.PosteriorKernel.canonicalPosterior_kernel_ae_eq_condDistrib_of_pair_map_eq"],
+      "declarations": [
+        "BanditRLProof.Thompson.canonicalSampler_condDistrib_action_ae_eq_bestAction"
+      ],
+      "depends_on": [
+        "BanditRLProof.PosteriorKernel.canonicalPosterior_kernel_ae_eq_condDistrib_of_pair_map_eq"
+      ],
       "missing": [],
       "evidence": "BanditRLProof/Algorithms/ThompsonCanonicalSampler.lean"
     },
@@ -345,8 +578,12 @@
       "chapter": "thompson",
       "status": "compiled",
       "informal": "For every round, the successor action on the recursively generated Thompson trajectory conditioned on its own finite history has the posterior-best-action conditional law.",
-      "declarations": ["BanditRLProof.Thompson.uniformReferenceThompsonAlgorithm_trajectory_condDistrib_action_ae_eq_bestAction"],
-      "depends_on": ["BanditRLProof.Thompson.canonicalSampler_condDistrib_action_ae_eq_bestAction"],
+      "declarations": [
+        "BanditRLProof.Thompson.uniformReferenceThompsonAlgorithm_trajectory_condDistrib_action_ae_eq_bestAction"
+      ],
+      "depends_on": [
+        "BanditRLProof.Thompson.canonicalSampler_condDistrib_action_ae_eq_bestAction"
+      ],
       "missing": [],
       "evidence": "BanditRLProof/Algorithms/ThompsonRecursiveSampler.lean"
     },
@@ -360,7 +597,9 @@
         "BanditRLProof.Thompson.integral_trajectoryBayesMeanRegret_eq_add_historyScore",
         "BanditRLProof.Thompson.integral_trajectoryBayesMeanRegret_eq_add_clippedUCB"
       ],
-      "depends_on": ["BanditRLProof.Thompson.uniformReferenceThompsonAlgorithm_trajectory_condDistrib_action_ae_eq_bestAction"],
+      "depends_on": [
+        "BanditRLProof.Thompson.uniformReferenceThompsonAlgorithm_trajectory_condDistrib_action_ae_eq_bestAction"
+      ],
       "missing": [],
       "evidence": "BanditRLProof/Algorithms/ThompsonBayesRegretDecomposition.lean; BanditRLProof/Algorithms/ThompsonClippedUCBScore.lean"
     },
@@ -370,8 +609,12 @@
       "chapter": "thompson",
       "status": "compiled",
       "informal": "The actual recursive trajectory reward coordinates agree almost everywhere with the next-unused-coordinate reward read from the selected arm's latent stream.",
-      "declarations": ["BanditRLProof.Thompson.canonicalLatentArmStreamTrajectory_reward_eq_rewardFromArmStream_ae"],
-      "depends_on": ["BanditRLProof.Thompson.uniformReferenceThompsonAlgorithm_trajectory_condDistrib_action_ae_eq_bestAction"],
+      "declarations": [
+        "BanditRLProof.Thompson.canonicalLatentArmStreamTrajectory_reward_eq_rewardFromArmStream_ae"
+      ],
+      "depends_on": [
+        "BanditRLProof.Thompson.uniformReferenceThompsonAlgorithm_trajectory_condDistrib_action_ae_eq_bestAction"
+      ],
       "missing": [],
       "evidence": "BanditRLProof/Algorithms/ThompsonStationaryReward.lean"
     },
@@ -400,9 +643,14 @@
       "chapter": "thompson",
       "status": "partial",
       "informal": "The stationary local endpoint is complete, but posterior-law producers outside that model and exact upstream compatibility remain separate obligations.",
-      "declarations": ["BanditRLProof.Thompson.stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_trajectoryBayesMeanRegret_le"],
+      "declarations": [
+        "BanditRLProof.Thompson.stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_trajectoryBayesMeanRegret_le"
+      ],
       "depends_on": [],
-      "missing": ["Add posterior-law producers for broader models.", "Close the exact upstream compatibility gate."],
+      "missing": [
+        "Add posterior-law producers for broader models.",
+        "Close the exact upstream compatibility gate."
+      ],
       "evidence": "tasks/BRL-TS-BAYES-001.md"
     },
     {
@@ -411,8 +659,12 @@
       "chapter": "exp3",
       "status": "compiled",
       "informal": "The generated predictable EXP3 process satisfies an explicit square-root expected-regret bound.",
-      "declarations": ["BanditRLProof.Exp3.sampledPredictable_expectedRegret_le_four_mul_sqrt"],
-      "depends_on": ["BanditRLProof.Exp3.hedge_regret_le_log_card_div_add_eta_mul_mixedSquaredLoss_of_nonneg"],
+      "declarations": [
+        "BanditRLProof.Exp3.sampledPredictable_expectedRegret_le_four_mul_sqrt"
+      ],
+      "depends_on": [
+        "BanditRLProof.Exp3.hedge_regret_le_log_card_div_add_eta_mul_mixedSquaredLoss_of_nonneg"
+      ],
       "missing": [],
       "evidence": "BanditRLProof/Exp3ExpectedRegret.lean"
     },
@@ -422,8 +674,12 @@
       "chapter": "exp3",
       "status": "compiled",
       "informal": "For each supplied positive horizon, finite comparator aggregation gives the generated horizon-tuned EXP3 law a best-supported-arm realized-regret tail; changing the horizon changes the parameters and law.",
-      "declarations": ["BanditRLProof.Exp3.sampledPredictable_allHorizonBernsteinSquareBestArmRealizedRegret_tail"],
-      "depends_on": ["BanditRLProof.Exp3.sampledPredictable_allHorizonBernsteinSquareRealizedRegret_tail"],
+      "declarations": [
+        "BanditRLProof.Exp3.sampledPredictable_allHorizonBernsteinSquareBestArmRealizedRegret_tail"
+      ],
+      "depends_on": [
+        "BanditRLProof.Exp3.sampledPredictable_allHorizonBernsteinSquareRealizedRegret_tail"
+      ],
       "missing": [
         "This is not one horizon-free policy with a simultaneous confidence event over all horizons."
       ],
@@ -435,8 +691,12 @@
       "chapter": "probability",
       "status": "compiled",
       "informal": "A countable union of indexwise deviation-and-variance events is controlled by the sum of their confidence shares and hence by a caller-supplied total budget.",
-      "declarations": ["BanditRLProof.Concentration.measure_iUnion_scheduled_deviation_ge_inter_variance_le_delta_of_fixedTilt_quadratic_tail"],
-      "depends_on": ["BanditRLProof.Concentration.measure_deviation_ge_inter_variance_le_delta_of_fixedTilt_quadratic_tail"],
+      "declarations": [
+        "BanditRLProof.Concentration.measure_iUnion_scheduled_deviation_ge_inter_variance_le_delta_of_fixedTilt_quadratic_tail"
+      ],
+      "depends_on": [
+        "BanditRLProof.Concentration.measure_deviation_ge_inter_variance_le_delta_of_fixedTilt_quadratic_tail"
+      ],
       "missing": [],
       "evidence": "BanditRLProof/ConcentrationQuadraticScheduled.lean; tasks/CONCENTRATION-QUADRATIC-COUNTABLE-SCHEDULED-TAIL.md"
     },
@@ -446,7 +706,9 @@
       "chapter": "exp3",
       "status": "compiled",
       "informal": "On one generated EXP3 trajectory law, geometric confidence shares control the joint selected-loss deviation and predictable-variance failures over every positive prefix by one outer budget.",
-      "declarations": ["BanditRLProof.Exp3.measure_sampledPredictableRealizedDeviationAllTimeFailureSet_le"],
+      "declarations": [
+        "BanditRLProof.Exp3.measure_sampledPredictableRealizedDeviationAllTimeFailureSet_le"
+      ],
       "depends_on": [
         "BanditRLProof.Concentration.measure_iUnion_scheduled_deviation_ge_inter_variance_le_delta_of_fixedTilt_quadratic_tail",
         "BanditRLProof.Concentration.tsum_ofReal_geometricConfidenceShare",
@@ -461,7 +723,9 @@
       "chapter": "exp3",
       "status": "compiled",
       "informal": "On one fixed generated EXP3 process, the realized selected loss minus its predictable counterpart stays below its geometrically scheduled radius at every positive prefix outside one failure event of outer mass at most delta.",
-      "declarations": ["BanditRLProof.Exp3.measure_sampledRealizedDeviationGeometricAllTimeFailureSet_le"],
+      "declarations": [
+        "BanditRLProof.Exp3.measure_sampledRealizedDeviationGeometricAllTimeFailureSet_le"
+      ],
       "depends_on": [
         "BanditRLProof.Exp3.selectedLossCenteredSecondMoment_le_one",
         "BanditRLProof.Exp3.sampledPredictableRealizedVariance_sum_le_horizon",
@@ -476,7 +740,9 @@
       "chapter": "exp3",
       "status": "compiled",
       "informal": "For one fixed generated EXP3 process and one supported comparator, every positive-prefix predictable-regret failure is covered by a single geometrically budgeted event.",
-      "declarations": ["BanditRLProof.Exp3.measure_sampledPredictableRegretGeometricAllTimeFailureSet_le"],
+      "declarations": [
+        "BanditRLProof.Exp3.measure_sampledPredictableRegretGeometricAllTimeFailureSet_le"
+      ],
       "depends_on": [
         "BanditRLProof.Exp3.sampledPredictable_highProbabilityRegret_tail_total_delta",
         "BanditRLProof.Concentration.tsum_ofReal_geometricConfidenceShare"
@@ -510,7 +776,9 @@
       "chapter": "exp3",
       "status": "compiled",
       "informal": "The best-arm realized-regret tail is controlled with the supplied sparsity-failure probability left explicit.",
-      "declarations": ["BanditRLProof.Exp3.sampledPredictable_allHorizonDoubleVarianceProbabilisticSparseLossBestArmRealizedRegret_tail_of_sparsityFailure_le"],
+      "declarations": [
+        "BanditRLProof.Exp3.sampledPredictable_allHorizonDoubleVarianceProbabilisticSparseLossBestArmRealizedRegret_tail_of_sparsityFailure_le"
+      ],
       "depends_on": [],
       "missing": [],
       "evidence": "BanditRLProof/Exp3MixedSquarePredictableVarianceSparseLossRealizedDoublePathwiseVarianceProbabilisticSparsityBestArmAllHorizon.lean"
@@ -521,7 +789,9 @@
       "chapter": "tsallis",
       "status": "compiled",
       "informal": "IID probability arm laws with exact model means and positive non-best gaps yield a logarithmic reciprocal-gap regret bound.",
-      "declarations": ["BanditRLProof.Tsallis.integral_sampledScheduledHalfTsallisFiniteArmIIDRewardLawRegret_le_log"],
+      "declarations": [
+        "BanditRLProof.Tsallis.integral_sampledScheduledHalfTsallisFiniteArmIIDRewardLawRegret_le_log"
+      ],
       "depends_on": [
         "BanditRLProof.Tsallis.integral_sampledScheduledHalfTsallisPredictableEnvironmentRegret_pointMass_le_sqrtSchedule_log_iidLossState",
         "BanditRLProof.Tsallis.iidLossStateMeanGap_finiteArmIIDRewardVectorLoss_eq_gap"
@@ -535,7 +805,9 @@
       "chapter": "tsallis",
       "status": "compiled",
       "informal": "A measurable predictable corruption model receives an internally selected refined or logarithmic regret bound.",
-      "declarations": ["BanditRLProof.Tsallis.integral_sampledScheduledHalfTsallisFiniteArmIIDHistoryAdaptiveExpectedCorruptedRewardLawRegret_le_allRegimes"],
+      "declarations": [
+        "BanditRLProof.Tsallis.integral_sampledScheduledHalfTsallisFiniteArmIIDHistoryAdaptiveExpectedCorruptedRewardLawRegret_le_allRegimes"
+      ],
       "depends_on": [],
       "missing": [],
       "evidence": "BanditRLProof/TsallisFiniteArmIIDHistoryAdaptiveExpectedCorruptedRewardLaw.lean"
@@ -546,8 +818,12 @@
       "chapter": "tsallis",
       "status": "compiled",
       "informal": "Predictable-environment regret to the actual moving best arm is bounded by the fixed-comparator route plus an explicit mean-drift penalty.",
-      "declarations": ["BanditRLProof.Tsallis.integral_sampledScheduledHalfTsallisFiniteArmIndependentDriftingMeanDynamicRegret_le_allRegimes"],
-      "depends_on": ["BanditRLProof.FiniteBanditModel"],
+      "declarations": [
+        "BanditRLProof.Tsallis.integral_sampledScheduledHalfTsallisFiniteArmIndependentDriftingMeanDynamicRegret_le_allRegimes"
+      ],
+      "depends_on": [
+        "BanditRLProof.FiniteBanditModel"
+      ],
       "missing": [],
       "evidence": "BanditRLProof/TsallisFiniteArmIndependentDriftingMeanDynamicRegret.lean"
     },
@@ -557,8 +833,12 @@
       "chapter": "tsallis",
       "status": "compiled",
       "informal": "A change-point schedule built from population-mean switches generates a single restart trajectory whose expected dynamic regret is bounded by the square-root switch-count rate under the route's support assumptions.",
-      "declarations": ["BanditRLProof.Tsallis.integral_sampledOracleRestartHalfTsallisFiniteArmIndependentGlobalMeanChangeDynamicRegret_le"],
-      "depends_on": ["BanditRLProof.Tsallis.sampledScheduledHalfTsallisPredictableMovingComparatorEnvironmentRegret_le_oracleRestartSwitchCountSqrt"],
+      "declarations": [
+        "BanditRLProof.Tsallis.integral_sampledOracleRestartHalfTsallisFiniteArmIndependentGlobalMeanChangeDynamicRegret_le"
+      ],
+      "depends_on": [
+        "BanditRLProof.Tsallis.sampledScheduledHalfTsallisPredictableMovingComparatorEnvironmentRegret_le_oracleRestartSwitchCountSqrt"
+      ],
       "missing": [],
       "evidence": "BanditRLProof/TsallisOracleRestartGlobalMeanSwitchCount.lean"
     },
@@ -568,8 +848,13 @@
       "chapter": "finite-horizon-rl",
       "status": "compiled",
       "informal": "Finite-horizon MDP data, measurable Markov policies, recursive value functions, optimal Bellman operators, and an attaining optimal policy are formalized locally.",
-      "declarations": ["BanditRLProof.FiniteHorizonRL.MDP", "BanditRLProof.FiniteHorizonRL.MDP.optimalValueAt_dominates_and_is_attained"],
-      "depends_on": ["BanditRLProof.FiniteHorizonRL.MarkovPolicy.valueRemaining"],
+      "declarations": [
+        "BanditRLProof.FiniteHorizonRL.MDP",
+        "BanditRLProof.FiniteHorizonRL.MDP.optimalValueAt_dominates_and_is_attained"
+      ],
+      "depends_on": [
+        "BanditRLProof.FiniteHorizonRL.MarkovPolicy.valueRemaining"
+      ],
       "missing": [],
       "evidence": "BanditRLProof/RL/FiniteHorizonMDP.lean; BanditRLProof/RL/FiniteHorizonOptimality.lean"
     },
@@ -579,8 +864,13 @@
       "chapter": "finite-horizon-rl",
       "status": "compiled",
       "informal": "A Markov policy's expected regret equals the occupancy-weighted Bellman optimality gap and is nonnegative; the optimal policy has zero regret.",
-      "declarations": ["BanditRLProof.FiniteHorizonRL.MarkovPolicy.expectedRegret_eq_occupancyGapRemaining", "BanditRLProof.FiniteHorizonRL.MDP.expectedRegret_eq_occupancyGap_nonneg_and_optimalPolicy_zero"],
-      "depends_on": ["BanditRLProof.FiniteHorizonRL.MDP.optimalValueAt_dominates_and_is_attained"],
+      "declarations": [
+        "BanditRLProof.FiniteHorizonRL.MarkovPolicy.expectedRegret_eq_occupancyGapRemaining",
+        "BanditRLProof.FiniteHorizonRL.MDP.expectedRegret_eq_occupancyGap_nonneg_and_optimalPolicy_zero"
+      ],
+      "depends_on": [
+        "BanditRLProof.FiniteHorizonRL.MDP.optimalValueAt_dominates_and_is_attained"
+      ],
       "missing": [],
       "evidence": "BanditRLProof/RL/FiniteHorizonOccupancyRegret.lean"
     },
@@ -590,8 +880,12 @@
       "chapter": "finite-horizon-rl",
       "status": "compiled",
       "informal": "With the explicit path-support, bounded-mean, sub-Gaussian, scheduling, and Standard Borel contracts, both the failure budget and average realized behavior-regret envelope tend to zero across windows.",
-      "declarations": ["BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeStochasticEmpiricalOptimisticSource.exploratorySource_trajectoryMeasure_projectedCumulativeInverseSqrtPathSupport_decayingExplorationAverageRealizedBehaviorConsistency_allWindows_of_standardBorel"],
-      "depends_on": ["BanditRLProof.FiniteHorizonRL.MarkovPolicy.expectedRegret_eq_occupancyGapRemaining"],
+      "declarations": [
+        "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeStochasticEmpiricalOptimisticSource.exploratorySource_trajectoryMeasure_projectedCumulativeInverseSqrtPathSupport_decayingExplorationAverageRealizedBehaviorConsistency_allWindows_of_standardBorel"
+      ],
+      "depends_on": [
+        "BanditRLProof.FiniteHorizonRL.MarkovPolicy.expectedRegret_eq_occupancyGapRemaining"
+      ],
       "missing": [],
       "evidence": "BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationRegularityClosedConsistency.lean"
     },
@@ -601,8 +895,12 @@
       "chapter": "finite-horizon-rl",
       "status": "compiled",
       "informal": "For each fixed threshold index and horizon greater than four, the genuine uncapped Mathlib hittingAfter has an L2 round count under the exact generated causal source.",
-      "declarations": ["BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledCausalSource_inverseSqrtThresholdUnboundedHittingAfter_squareIntegrableFiniteStoppingTime"],
-      "depends_on": ["BanditRLProof.OFUL.SquareIntegrableFiniteStoppingTime"],
+      "declarations": [
+        "BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledCausalSource_inverseSqrtThresholdUnboundedHittingAfter_squareIntegrableFiniteStoppingTime"
+      ],
+      "depends_on": [
+        "BanditRLProof.OFUL.SquareIntegrableFiniteStoppingTime"
+      ],
       "missing": [],
       "evidence": "BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterSquareIntegrableFiniteStoppingTime.lean"
     },
@@ -612,8 +910,13 @@
       "chapter": "finite-horizon-rl",
       "status": "compiled",
       "informal": "For every fixed inverse-sqrt threshold index and horizon greater than four, the exact average realized behavior-regret process stopped at the uncapped hit is integrable and its integral is at most that threshold.",
-      "declarations": ["BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledCausalSource_inverseSqrtThresholdUnboundedHittingAfter_stoppedAverageRealizedBehaviorRegret_integrable_and_integral_le_threshold"],
-      "depends_on": ["BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledCausalSource_inverseSqrtThresholdUnboundedHittingAfter_squareIntegrableFiniteStoppingTime", "BanditRLProof.integrable_stoppedValue_of_uniform_secondMoment_of_memLp_two_rounds"],
+      "declarations": [
+        "BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledCausalSource_inverseSqrtThresholdUnboundedHittingAfter_stoppedAverageRealizedBehaviorRegret_integrable_and_integral_le_threshold"
+      ],
+      "depends_on": [
+        "BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledCausalSource_inverseSqrtThresholdUnboundedHittingAfter_squareIntegrableFiniteStoppingTime",
+        "BanditRLProof.integrable_stoppedValue_of_uniform_secondMoment_of_memLp_two_rounds"
+      ],
       "missing": [],
       "evidence": "tasks/RL-FINITE-HORIZON-NATURAL-CAUSAL-INVERSE-SQRT-THRESHOLD-UNBOUNDED-HITTINGAFTER-INTEGRABLE-EXPECTED-UPPER-BOUND.md"
     },
@@ -623,8 +926,20 @@
       "chapter": "finite-horizon-rl",
       "status": "compiled",
       "informal": "One generated adaptive process now carries exact aggregate transition numerators and visit denominators, a previous-Q clipped recurrent planner, a strict-prefix measurable policy, joint same-source singleton-Bernstein and optimal-tail confidence, Bellman optimism, raw generated episode pseudo-regret, actual-count charge summation, and a generated-filtration Bellman martingale.",
-      "declarations": ["BanditRLProof.FiniteHorizonRL.sum_adaptiveCumulativeAggregateTransitionCountAt_eq_visitCountAt", "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.clippedQRemaining_of_aggregateVisitCount_pos", "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentSource_policyAt_succ", "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentSource_trajectoryMeasure_simultaneousTransitionFailureEvent_le_fifth", "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.AdaptiveEpisodeBatchSource.recurrentQTableOfTrajectory_dominatesOptimal", "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.AdaptiveEpisodeBatchSource.recurrentSource_generatedSuccessorPseudoRegret_le_charge_add_innovation", "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.totalGeneratedPairCharge_le_explicit", "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentSource_trajectoryMeasure_bellmanInnovation_sum_ge_threshold_le_fifth"],
-      "depends_on": ["BanditRLProof.FiniteHorizonRL.measurable_adaptiveCumulativeEmpiricalModelStateAt", "BanditRLProof.FiniteHorizonRL.MDP.expectedRegret_eq_occupancyGap_nonneg_and_optimalPolicy_zero"],
+      "declarations": [
+        "BanditRLProof.FiniteHorizonRL.sum_adaptiveCumulativeAggregateTransitionCountAt_eq_visitCountAt",
+        "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.clippedQRemaining_of_aggregateVisitCount_pos",
+        "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentSource_policyAt_succ",
+        "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentSource_trajectoryMeasure_simultaneousTransitionFailureEvent_le_fifth",
+        "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.AdaptiveEpisodeBatchSource.recurrentQTableOfTrajectory_dominatesOptimal",
+        "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.AdaptiveEpisodeBatchSource.recurrentSource_generatedSuccessorPseudoRegret_le_charge_add_innovation",
+        "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.totalGeneratedPairCharge_le_explicit",
+        "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentSource_trajectoryMeasure_bellmanInnovation_sum_ge_threshold_le_fifth"
+      ],
+      "depends_on": [
+        "BanditRLProof.FiniteHorizonRL.measurable_adaptiveCumulativeEmpiricalModelStateAt",
+        "BanditRLProof.FiniteHorizonRL.MDP.expectedRegret_eq_occupancyGap_nonneg_and_optimalPolicy_zero"
+      ],
       "missing": [],
       "evidence": "Tests/BookMapChapterNineCanary.lean"
     },
@@ -634,9 +949,21 @@
       "chapter": "finite-horizon-rl",
       "status": "compiled",
       "informal": "On the recurrent source's own trajectory measure, the probability that raw K-episode policy-value pseudo-regret exceeds 20 H sqrt(H) L sqrt(S A K) + 250 H^2 S^2 A L^2 is at most delta. The matching integrable expectation is at most that bound plus K H delta.",
-      "declarations": ["BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentSource_trajectoryMeasure_cumulativeEpisodePseudoRegret_gt_canonicalRegretBound_le", "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.integral_cumulativeEpisodePseudoRegret_recurrentSource_le_canonicalRegretBound_add_failure"],
-      "depends_on": ["BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.AdaptiveEpisodeBatchSource.recurrentSource_generatedSuccessorPseudoRegret_le_charge_add_innovation", "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.totalGeneratedPairCharge_le_explicit", "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentSource_trajectoryMeasure_bellmanInnovation_sum_ge_threshold_le_fifth", "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentSource_trajectoryMeasure_simultaneousTransitionFailureEvent_le_fifth"],
-      "missing": ["Bernstein/variance-aware minimax UCB-VI leading-rate theorem.", "Stochastic-reward and realized sampled-return UCBVI terminals.", "Posterior-sampling, model-free, and continuous-space RL extensions."],
+      "declarations": [
+        "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentSource_trajectoryMeasure_cumulativeEpisodePseudoRegret_gt_canonicalRegretBound_le",
+        "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.integral_cumulativeEpisodePseudoRegret_recurrentSource_le_canonicalRegretBound_add_failure"
+      ],
+      "depends_on": [
+        "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.AdaptiveEpisodeBatchSource.recurrentSource_generatedSuccessorPseudoRegret_le_charge_add_innovation",
+        "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.totalGeneratedPairCharge_le_explicit",
+        "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentSource_trajectoryMeasure_bellmanInnovation_sum_ge_threshold_le_fifth",
+        "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentSource_trajectoryMeasure_simultaneousTransitionFailureEvent_le_fifth"
+      ],
+      "missing": [
+        "Bernstein/variance-aware minimax UCB-VI leading-rate theorem.",
+        "Stochastic-reward and realized sampled-return UCBVI terminals.",
+        "Posterior-sampling, model-free, and continuous-space RL extensions."
+      ],
       "evidence": "Tests/BookMapChapterNineCanary.lean"
     },
     {
@@ -645,7 +972,9 @@
       "chapter": "frontier",
       "status": "compiled",
       "informal": "An adapted natural-valued spending process reaches a fixed budget at a stopping time.",
-      "declarations": ["BanditRLProof.Budget.isStoppingTime_budgetExhaustionTime_of_adapted"],
+      "declarations": [
+        "BanditRLProof.Budget.isStoppingTime_budgetExhaustionTime_of_adapted"
+      ],
       "depends_on": [],
       "missing": [],
       "evidence": "BanditRLProof/BudgetStoppingTime.lean"
@@ -656,9 +985,15 @@
       "chapter": "frontier",
       "status": "blocked",
       "informal": "Stopping-time and several positive-cost budget adapters compile, but there is no full resource process, feasibility invariant, primal-dual comparison, and BwK regret theorem.",
-      "declarations": ["BanditRLProof.Budget.isStoppingTime_budgetExhaustionTime_of_adapted"],
+      "declarations": [
+        "BanditRLProof.Budget.isStoppingTime_budgetExhaustionTime_of_adapted"
+      ],
       "depends_on": [],
-      "missing": ["Resource-consumption and feasibility model.", "Primal-dual comparison.", "Final resource-constrained regret assembly."],
+      "missing": [
+        "Resource-consumption and feasibility model.",
+        "Primal-dual comparison.",
+        "Final resource-constrained regret assembly."
+      ],
       "evidence": "research-wiki/theory-tree/lean-route-roadmap.json"
     },
     {
@@ -2087,6 +2422,99 @@
         "Execute and neutrally check all 450 matched runs, complete independent grading, and analyze the frozen target-level endpoints."
       ],
       "evidence": "evaluation/target-drift-v2/protocol.json; evaluation/target-drift-v2/external-comparator-plan.json; evaluation/target-drift-v2/external-comparator-plan.seal.json; evaluation/target-drift-v2/missing-run-policy.json; evaluation/target-drift-v2/paired-requirements.json; evaluation/target-drift-v2/adapter-contract.json; evaluation/target-drift-v2/agent-sandbox-contract.json; evaluation/target-drift-v2/agent-image-sources.json; evaluation/target-drift-v2/agent-image.Containerfile; evaluation/target-drift-v2/agent-image-candidate-32464814750.json; evaluation/target-drift-v2/agent-outer-boundary-candidate-32735680163.json; evaluation/target-drift-v2/agent-lifecycle-candidate-32436339541.json; evaluation/target-drift-v2/checker-sandbox-contract.json; evaluation/target-drift-v2/checker-isolation-probe.template.json; evaluation/target-drift-v2/checker-image.Containerfile; evaluation/target-drift-v2/checker-image-sbom.template.json; evaluation/target-drift-v2/checker-image-candidate-32137509103.json; evaluation/target-drift-v2/checker-image-candidate-32419343467.json; evaluation/target-drift-v2/execution-template.json; .github/workflows/target-drift-agent-image.yml; .github/workflows/target-drift-agent-lifecycle.yml; .github/workflows/target-drift-checker-image.yml; tools/audit_target_drift_wording.py; tools/validate_target_drift_suite_v2.py; tools/validate_target_drift_external_comparator.py; tools/codex_target_drift_adapter.py; tools/test_codex_target_drift_adapter.py; tools/target_drift_agent_pid1.py; tools/launch_target_drift_agent_container.py; tools/target_drift_agent_outer_controller.py; tools/target_drift_agent_outer_probe.py; tools/target_drift_agent_model_probe.py; tools/test_target_drift_agent_outer_boundary.py; tools/prepare_target_drift_agent_image.py; tools/record_target_drift_agent_image_probe.py; tools/test_target_drift_agent_image.py; tools/record_target_drift_agent_lifecycle_probe.py; tools/test_target_drift_agent_lifecycle.py; tools/prepare_target_drift_checker_image.py; tools/prepare_target_drift_checker_probe_config.py; tools/target_drift_checker_cache_manifest.py; tools/finalize_target_drift_config.py; tools/run_target_drift_execution.py; tools/run_target_drift_schedule.py; tools/prepare_target_drift_smoke.py; tools/run_target_drift_smoke.py; tools/test_target_drift_smoke.py; tools/check_target_drift_run.py; tools/launch_target_drift_checker_container.py; tools/check_target_drift_container_controller.py; tools/check_target_drift_inner.py; tools/record_target_drift_checker_isolation_probe.py; tools/build_target_drift_completion_ledger.py; tools/test_target_drift_completion_ledger.py; tools/prepare_target_drift_grading.py; tools/export_target_drift_grader_pack.py; tools/test_target_drift_grader_export.py; tools/test_target_drift_grading.py; tools/assemble_target_drift_grades.py; tools/analyze_target_drift_execution.py"
+    },
+    {
+      "id": "CUCB-FULL-REPAIRED-RATES",
+      "title": "Full triggered CUCB approximation regret with explicit analysis repairs",
+      "chapter": "ucb",
+      "status": "compiled",
+      "informal": "One actual causal CUCB trajectory satisfies the refined gap-integral Theorem1 and both polynomial Theorem2 branches, with exact constants and H=1. Observed-law compatibility, inverse range and normalized analysis charge are explicit; signed alpha-beta benchmark and oracle-failure credit are retained. Independent semantic acceptance is scoped to the frozen finite-subset model, not all applications or topic completion.",
+      "declarations": [
+        "BanditRLProof.CUCB.SourceModel.theorem_one_refined_regret",
+        "BanditRLProof.CUCB.SourceModel.theorem_two_deterministic",
+        "BanditRLProof.CUCB.SourceModel.theorem_two_probabilistic"
+      ],
+      "depends_on": [
+        "BanditRLProof.CUCB.SourceModel.expected_underSampledGap_le_refined",
+        "BanditRLProof.CUCB.SourceModel.approximationRegret_le_underSampled_add_source_tail"
+      ],
+      "missing": [],
+      "evidence": "BanditRLProof/Algorithms/CUCBRefinedRegret.lean"
+    },
+    {
+      "id": "CAUSAL-NATIVE-HETEROGENEOUS-EXPECTED-REGRET",
+      "title": "Native heterogeneous finite-node causal expected simple regret",
+      "chapter": "ucb",
+      "status": "compiled",
+      "informal": "Reviewed native heterogeneous finite-node intervention sampling and expected simple regret, with binary reward readout. Parallel allocation and witnesses are now separately reviewed; source screening and ICLR evidence remain open, and the topic is incomplete. Actual joint and full sample-law pushforwards preserve estimator, ties, exact design cost and expectation. The final theorem constructs its finite codec internally and retains the repaired coefficient and 1/T residual. The frozen noisy diagnostic supplement proves concentrated cost 8/3, exact biases, conditional/interventional distinction and tuned one-round expected regret 1/5.",
+      "declarations": [
+        "BanditRLProof.Causal.NodeGraphModel.expected_simpleRegret_source_bound",
+        "BanditRLProof.Causal.NodeGraphModel.expected_simpleRegret_explicit_rate",
+        "BanditRLProof.Causal.NodeGraphModel.expected_simpleRegret_uniform",
+        "BanditRLProof.Causal.NodeGraphModel.expected_simpleRegret_optimal"
+      ],
+      "depends_on": [
+        "BanditRLProof.Causal.NodeGraphModel.expected_simpleRegret_encoded",
+        "BanditRLProof.Causal.GraphModel.expected_simpleRegret_source_bound"
+      ],
+      "missing": [],
+      "evidence": "BanditRLProof/Algorithms/CausalHeterogeneousRegret.lean; runs/extended-topics-20260919/causal-heterogeneous-review.json; runs/extended-topics-20260919/causal-noisy-diagnostics-review.json"
+    },
+    {
+      "id": "MULTI-AGENT-STATIC-COORDINATION-OCCUPATION",
+      "title": "Static Musical Chairs actual coordination and finite expected occupation",
+      "chapter": "ucb",
+      "status": "compiled",
+      "informal": "Actual finite coordination law, local collision-bit update, fixed-arm invariants, derived1/(4n) hazard and marginal survival give finite expected unfixed occupation<=4n². Candidate correctness is an intermediate input. The2U charge and coordination mean-regret bound are now separately reviewed; the complete unknown-N learner is now separately source-reviewed and being integrated; topic incomplete.",
+      "declarations": [
+        "BanditRLProof.MusicalChairs.transition_unfixed_hazard_quarter",
+        "BanditRLProof.MusicalChairs.unfixed_survival",
+        "BanditRLProof.MusicalChairs.expected_unfixed_occupation_le"
+      ],
+      "depends_on": [
+        "BanditRLProof.MusicalChairs.transition_unfixed_hazard",
+        "BanditRLProof.MusicalChairs.stateLaw",
+        "BanditRLProof.MusicalChairs.expected_unfixed_eq_prob_sum"
+      ],
+      "missing": [],
+      "evidence": "BanditRLProof/Algorithms/MusicalChairsCoordinationTime.lean; runs/extended-topics-20260920/multi-agent-occupation-review.json; research-wiki/papers/extended-topics-musical-chairs-coordination.md"
+    },
+    {
+      "id": "MULTI-AGENT-STATIC-COORDINATION-REGRET",
+      "title": "Static Musical Chairs actual finite expected coordination mean regret",
+      "chapter": "ucb",
+      "status": "compiled",
+      "informal": "Actual real comparator deficit<=2U and support nonnegativity give finite expected common-set mean regret<=8n^2 through the constructed state/draw law. Exact real expectation conversion avoids positive-part substitution. This component takes common S; the separately reviewed full learner produces it from local exploration and transports the conditional law. Topic incomplete.",
+      "declarations": [
+        "BanditRLProof.MusicalChairs.roundPseudoRegret_le_twice_unfixed",
+        "BanditRLProof.MusicalChairs.expectedCoordinationRegret_real_le"
+      ],
+      "depends_on": [
+        "BanditRLProof.MusicalChairs.expected_unfixed_occupation_le",
+        "BanditRLProof.MusicalChairs.expectedCoordinationRegret_toReal",
+        "BanditRLProof.MusicalChairs.stateLaw_within"
+      ],
+      "missing": [],
+      "evidence": "BanditRLProof/Algorithms/MusicalChairsCoordinationRegret.lean; runs/extended-topics-20260920/multi-agent-regret-review.json; research-wiki/papers/extended-topics-musical-chairs-regret.md"
+    },
+    {
+      "id": "MULTI-AGENT-STATIC-LEARNER-REGRET",
+      "title": "Static unknown-N learner: actual expected visible regret",
+      "chapter": "ucb",
+      "status": "compiled",
+      "informal": "Shared production chain passed local acceptance: primitive bounded reward laws and actual local estimation/ranking/coordination imply allH expected pseudo and unconditional visible regret<=min(nH,nS+8n^2+delta*nH). Repaired all-player budget explicit. Full noisy public-root canary and shared acceptance passed. Bounded recent-source selection and descriptive case accepted, with zero direct outside-case ABRL proof/value references. All-topic controlled evaluation and manuscript integration remain open.",
+      "declarations": [
+        "BanditRLProof.MusicalChairs.source_expected_learnerRegret_coarse",
+        "BanditRLProof.MusicalChairs.realizedLearnerRegret_expected_eq_pseudo",
+        "BanditRLProof.MusicalChairs.source_expected_visibleRegret_le"
+      ],
+      "depends_on": [
+        "BanditRLProof.MusicalChairs.explorationGoodEvent_orderStatistic_probability",
+        "BanditRLProof.MusicalChairs.source_conditional_coordination_regret",
+        "BanditRLProof.MusicalChairs.learnerRegret_split"
+      ],
+      "missing": [],
+      "evidence": "BanditRLProof/Algorithms/MusicalChairsRealized.lean; runs/extended-topics-20260920/multi-agent-extraction.json; research-wiki/papers/extended-topics-musical-chairs-learner.md"
     }
   ]
 }

@@ -1,0 +1,139 @@
+{
+  "schema_version": 1,
+  "status": "accepted-scratch-component",
+  "semantic_verdict": "accepted-with-explicit-delta",
+  "production_integrated": false,
+  "topic_complete": false,
+  "review_actors": {
+    "formalizer": "/root",
+    "blind_decoder": "/root/blind_decoder_b",
+    "source_reviewer": "/root/source_reviewer_a"
+  },
+  "source": {
+    "title": "Multi-Player Bandits -- a Musical Chairs Approach",
+    "anchor": "Static Algorithms1/2 Definition1 Theorem1 with explicit conditioning; supplement A.1 Lemmas2-4; previously reviewed all-player budget repair retained",
+    "main_sha256": "c56474f0c3e689c1819b11e2bca4d3e5dcaef6eddfd0173bb55ff6a84f11d99d",
+    "supplement_sha256": "4ffd4d0c3fc975ae04b3d5e96911bd58d66bc2206e9d9584e18fcbf0c5b305ad"
+  },
+  "base_commit": "ea39c797b6dbb3463f3d90f789ed1fecbe2589c0",
+  "dependency_hashes": {
+    "BanditRLProof/Algorithms/MusicalChairsCoordination.lean": "7077674b2c4636a15b02b137ad08aac21ba0190bc0e6c58d03dfeea90413684d",
+    "BanditRLProof/Algorithms/MusicalChairsCoordinationTime.lean": "ff12d72240b7d02b88a839383e8c62c448d968953621d9e5cbc3e8ac5861ec72",
+    "BanditRLProof/Algorithms/MusicalChairsCoordinationRegret.lean": "ae1f7ddd238e9f6720682f2446ea1a0a7bcc9019fb42be264674c1ec68d5edea"
+  },
+  "scope": "Actual fresh reward law, complete chronological local feedback, signed integrability, unconditional realized=pseudo identity, measurable visible-law pushforward and primitive-source expected visible-regret bound. No conditional realized equality over the exploration reward-dependent event.",
+  "public_artifacts": {
+    "runs/extended-topics-20260920/MusicalChairsRealizedPrototype.lean": "ac6f6a16052b8ca8ef1e4f5ddcaf5c9e75c95cdb2b696b7749b2d0ad4f1f4462",
+    "docs/extended-topics/MULTI-AGENT-REALIZED-PROGRESS.md": "965844a97fda916f8f8b9f38c4ae23d6b7c2c7f1fb2157a72fa8e7964fca3495",
+    "docs/extended-topics/MULTI-AGENT-REALIZED-WORK.md": "9dc53ab66dbd45010544b31d0c3b29cca8003b41dadcaf243f6cd9df4ee3a6ad"
+  },
+  "review_artifacts": {
+    "neutral-realized.lean": {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\neutral-realized.lean",
+      "sha256": "ed2140149c537882cb249f3b2f538b87d1c116437aa656505706ab6fb56bc550"
+    },
+    "realized-blind-v1.md": {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\realized-blind-v1.md",
+      "sha256": "ee8b5d51cc3eb5f76bb14308a83c8ba89058222fbc070f87e6611af3f4fab42a"
+    },
+    "realized-source-review-v1.md": {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\realized-source-review-v1.md",
+      "sha256": "20e1d2cda0413f4c7c841159595efdb9aaf190edbeba29cd9a90be5041e38c67"
+    }
+  },
+  "declarations": [
+    "BanditRLProof.MusicalChairs.reward_coordinate_integrable",
+    "BanditRLProof.MusicalChairs.scheduleRealizedRegret",
+    "BanditRLProof.MusicalChairs.integrable_scheduleRealizedRegret",
+    "BanditRLProof.MusicalChairs.scheduleRealizedRegret_mean",
+    "BanditRLProof.MusicalChairs.measurable_scheduleRealizedRegret",
+    "BanditRLProof.MusicalChairs.integrable_randomScheduleRegret",
+    "BanditRLProof.MusicalChairs.randomScheduleRegret_mean",
+    "BanditRLProof.MusicalChairs.explorationRealizedRegret",
+    "BanditRLProof.MusicalChairs.continuationRealizedRegret",
+    "BanditRLProof.MusicalChairs.exploration_schedule_pseudo",
+    "BanditRLProof.MusicalChairs.continuation_schedule_pseudo",
+    "BanditRLProof.MusicalChairs.integrable_explorationRealizedRegret",
+    "BanditRLProof.MusicalChairs.explorationRealizedRegret_mean",
+    "BanditRLProof.MusicalChairs.FullSample",
+    "BanditRLProof.MusicalChairs.completeLearnerLaw",
+    "BanditRLProof.MusicalChairs.completeLearnerLaw_first_preserving",
+    "BanditRLProof.MusicalChairs.explorationContinuationLaw_first_preserving",
+    "BanditRLProof.MusicalChairs.completeLearnerLaw_exploration_preserving",
+    "BanditRLProof.MusicalChairs.realizedLearnerRegret",
+    "BanditRLProof.MusicalChairs.integral_preserving_pullback",
+    "BanditRLProof.MusicalChairs.measurable_continuationSchedule",
+    "BanditRLProof.MusicalChairs.integrable_realizedLearnerRegret",
+    "BanditRLProof.MusicalChairs.continuationRealizedRegret_mean_joint",
+    "BanditRLProof.MusicalChairs.realizedLearnerRegret_expected_eq_pseudo",
+    "BanditRLProof.MusicalChairs.source_expected_realizedLearnerRegret_le",
+    "BanditRLProof.MusicalChairs.continuationFeedback",
+    "BanditRLProof.MusicalChairs.learnerFeedback",
+    "BanditRLProof.MusicalChairs.learnerFeedback_explore",
+    "BanditRLProof.MusicalChairs.learnerFeedback_coordinate",
+    "BanditRLProof.MusicalChairs.learnerFeedback_arm",
+    "BanditRLProof.MusicalChairs.learnerFeedback_collision",
+    "BanditRLProof.MusicalChairs.learnerFeedback_completed_exploration",
+    "BanditRLProof.MusicalChairs.learnedConfig_from_feedback",
+    "BanditRLProof.MusicalChairs.continuationFeedback_local_update",
+    "BanditRLProof.MusicalChairs.learnerFeedback_prefix",
+    "BanditRLProof.MusicalChairs.finite_sum_split_at",
+    "BanditRLProof.MusicalChairs.realizedLearnerRegret_eq_feedback",
+    "BanditRLProof.MusicalChairs.measurable_feedback_mk",
+    "BanditRLProof.MusicalChairs.measurable_explorationFeedback",
+    "BanditRLProof.MusicalChairs.measurable_continuationFeedback",
+    "BanditRLProof.MusicalChairs.measurable_learnerFeedback",
+    "BanditRLProof.MusicalChairs.measurable_learnerTrace",
+    "BanditRLProof.MusicalChairs.visibleLearnerLaw",
+    "BanditRLProof.MusicalChairs.visibleRegret",
+    "BanditRLProof.MusicalChairs.measurable_feedback_reward",
+    "BanditRLProof.MusicalChairs.measurable_visibleRegret",
+    "BanditRLProof.MusicalChairs.visibleRegret_pullback",
+    "BanditRLProof.MusicalChairs.integrable_visibleRegret",
+    "BanditRLProof.MusicalChairs.visibleRegret_expected_eq_realized",
+    "BanditRLProof.MusicalChairs.source_expected_visibleRegret_le",
+    "BanditRLProof.MusicalChairs.RealizedCanary.oneFeedback",
+    "BanditRLProof.MusicalChairs.RealizedCanary.realized_deficit_negative",
+    "BanditRLProof.MusicalChairs.RealizedCanary.collision_zero_sensed",
+    "BanditRLProof.MusicalChairs.RealizedCanary.genuine_zero_not_collision",
+    "BanditRLProof.MusicalChairs.completeLearnerLaw_probability",
+    "BanditRLProof.MusicalChairs.explorationFeedback_measurableSpace",
+    "BanditRLProof.MusicalChairs.visibleLearnerLaw_probability"
+  ],
+  "new_scanned_declaration_count": 54,
+  "new_theorem_count": 43,
+  "new_definitions": 11,
+  "new_named_instances": 3,
+  "audited_new_declaration_count": 57,
+  "canary_theorems": 3,
+  "focused_compilation": {
+    "command": "lake env lean runs/extended-topics-20260920/MusicalChairsRealizedPrototype.lean",
+    "exit_code": 0,
+    "axiom_command": "lake env lean E:/ABRL/maintenance/extended-topics-20260920-multi-agent/realized-axiom-audit.lean",
+    "axiom_exit_code": 0,
+    "axiom_log": "E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\realized-axioms.log",
+    "axiom_log_sha256": "354815635976f19a3691cc5943287abeb5187d70843e16d89fb4ebb2748c751d",
+    "allowed_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "exact_folded_code_verified": true,
+    "warnings": 0
+  },
+  "unchanged_context": {
+    "runs/extended-topics-20260920/MusicalChairsComparatorPrototype.lean": "45d392017b120d320f5a9635f308211280358efa6f51ebcbdf48366dcb333174"
+  },
+  "joint_gate_status": "Not rerun or claimed for scratch; no public-root integration. Existing production acceptance remains scoped to coordination-regret code.",
+  "remaining": [
+    "Frozen full noisy unknown-N learner canary",
+    "Shared extraction/public root/Tests/harness/site acceptance",
+    "Recent-source audit and all-topic ICLR evidence"
+  ],
+  "excluded_claims": [
+    "Conditional realized=pseudo equality on reward-dependent exploration success",
+    "General filtration or cross-horizon projective consistency",
+    "High-probability realized regret",
+    "Standalone executable numerical estimator"
+  ]
+}

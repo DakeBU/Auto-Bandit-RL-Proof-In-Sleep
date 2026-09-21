@@ -1,0 +1,109 @@
+{
+  "schema_version": 1,
+  "status": "accepted-scratch-component",
+  "semantic_verdict": "accepted-with-explicit-delta",
+  "production_integrated": false,
+  "topic_complete": false,
+  "base_commit": "2e9ec9d",
+  "scope": "Constructed finite independent exploration action law, actual observation/collision probabilities, actual count PGFs/Laplace, lower observation probability and deterministic local statistics; no reward measure or concentration guarantee",
+  "public_artifacts": {
+    "runs/extended-topics-20260920/MusicalChairsExplorationPrototype.lean": "6c452be0d67a328588306d1a2d3982249fff0976b477d1bfc17ca2e887d6b422",
+    "docs/extended-topics/MULTI-AGENT-EXPLORATION-PROGRESS.md": "4ca673ff2d2839497ac8c979b7713cf4719857308e58314ea29425ed6fed1f80"
+  },
+  "review_artifacts": {
+    "neutral-exploration.lean": {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\neutral-exploration.lean",
+      "sha256": "39c4e5289e13234c754fea160cfe85571220483c662cd94548cb541d6f687578"
+    },
+    "exploration-blind-v1.md": {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\exploration-blind-v1.md",
+      "sha256": "89366f2e566c6274187280aa0a70761c9c1707e2d4c85812649fb83617a07cab"
+    },
+    "exploration-source-review-v1.md": {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\exploration-source-review-v1.md",
+      "sha256": "02b96153e4c6936cfa9c65bb6d1c281951c6861d5dbadb1ad44a7c62517917e3"
+    }
+  },
+  "review_actors": {
+    "formalizer": "/root",
+    "blind_decoder": "/root/blind_decoder_b",
+    "source_reviewer": "/root/source_reviewer_a"
+  },
+  "declarations": [
+    "BanditRLProof.FinitePMF.iid",
+    "BanditRLProof.FinitePMF.iid_apply",
+    "BanditRLProof.FinitePMF.iid_product_expectation",
+    "BanditRLProof.FinitePMF.eventCount",
+    "BanditRLProof.FinitePMF.pow_eventCount",
+    "BanditRLProof.FinitePMF.indicator_weight_sum",
+    "BanditRLProof.FinitePMF.iid_count_pgf",
+    "BanditRLProof.MusicalChairs.explorationDraw",
+    "BanditRLProof.MusicalChairs.explorationLaw",
+    "BanditRLProof.MusicalChairs.observes",
+    "BanditRLProof.MusicalChairs.observes_rectangle",
+    "BanditRLProof.MusicalChairs.exploration_observes_probability",
+    "BanditRLProof.MusicalChairs.exploration_collisionFree_split",
+    "BanditRLProof.MusicalChairs.exploration_collisionFree_probability",
+    "BanditRLProof.MusicalChairs.exploration_collision_probability",
+    "BanditRLProof.MusicalChairs.observationCount",
+    "BanditRLProof.MusicalChairs.collisionCount",
+    "BanditRLProof.MusicalChairs.observationCount_pgf",
+    "BanditRLProof.MusicalChairs.collisionCount_pgf",
+    "BanditRLProof.MusicalChairs.exploration_observes_lower",
+    "BanditRLProof.MusicalChairs.observationCount_laplace",
+    "BanditRLProof.MusicalChairs.ExplorationFeedback",
+    "BanditRLProof.MusicalChairs.explorationFeedback",
+    "BanditRLProof.MusicalChairs.localObservationCount",
+    "BanditRLProof.MusicalChairs.localCollisionCount",
+    "BanditRLProof.MusicalChairs.localRewardSum",
+    "BanditRLProof.MusicalChairs.localEmpiricalMean",
+    "BanditRLProof.MusicalChairs.localObservationCount_eq",
+    "BanditRLProof.MusicalChairs.localCollisionCount_eq",
+    "BanditRLProof.MusicalChairs.localRewardSum_eq",
+    "BanditRLProof.MusicalChairs.ExplorationCanary.effective_probability",
+    "BanditRLProof.MusicalChairs.ExplorationCanary.collision_probability",
+    "BanditRLProof.MusicalChairs.ExplorationCanary.effective_pgf",
+    "BanditRLProof.MusicalChairs.ExplorationCanary.mixedDraws",
+    "BanditRLProof.MusicalChairs.ExplorationCanary.mixed_counts",
+    "BanditRLProof.MusicalChairs.ExplorationCanary.free_zero_reward",
+    "BanditRLProof.MusicalChairs.ExplorationCanary.collision_zero_reward"
+  ],
+  "declaration_count": 37,
+  "theorem_count": 23,
+  "canary_theorems": 6,
+  "focused_compilation": {
+    "command": "lake env lean runs/extended-topics-20260920/MusicalChairsExplorationPrototype.lean",
+    "exit_code": 0,
+    "axiom_command": "lake env lean E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\exploration-axiom-audit.lean",
+    "axiom_exit_code": 0,
+    "axiom_log": "E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\exploration-axioms.log",
+    "axiom_log_sha256": "054d6e25b0d15f42bfcaabd150f116a4cc5c598e5f1b652ebc2361124034798e",
+    "allowed_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "exact_folded_code_verified": true
+  },
+  "source": {
+    "title": "Multi-Player Bandits -- a Musical Chairs Approach",
+    "anchor": "Static Algorithm1 and supplement A.1 Lemmas2/3",
+    "main_sha256": "c56474f0c3e689c1819b11e2bca4d3e5dcaef6eddfd0173bb55ff6a84f11d99d",
+    "supplement_sha256": "4ffd4d0c3fc975ae04b3d5e96911bd58d66bc2206e9d9584e18fcbf0c5b305ad"
+  },
+  "dependency_hashes": {
+    "BanditRLProof/Algorithms/MusicalChairsCoordination.lean": "7077674b2c4636a15b02b137ad08aac21ba0190bc0e6c58d03dfeea90413684d",
+    "BanditRLProof/Algorithms/MusicalChairsCoordinationTime.lean": "ff12d72240b7d02b88a839383e8c62c448d968953621d9e5cbc3e8ac5861ec72"
+  },
+  "joint_gate_status": "Not rerun or claimed for new scratch declarations. Existing production code/site unchanged from accepted coordination-regret checkpoint2e9ec9d; scratch not public-root imported.",
+  "remaining": [
+    "arbitrary bounded reward-array probability law and coupling with action schedules",
+    "conditional selected-reward laws and exact random-count concentration",
+    "collision-count concentration and all-player union bound",
+    "total Nhat inverse-log rounding and empirical ranking",
+    "actual good event and exploration-to-coordination conditioning",
+    "full learner canary and full regret",
+    "public shared-module extraction and root/Tests/harness/site/registry acceptance",
+    "recent source proof audit and all-topic ICLR evidence"
+  ]
+}

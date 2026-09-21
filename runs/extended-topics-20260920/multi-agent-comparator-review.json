@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "status": "accepted-scratch-component",
+  "semantic_verdict": "accepted-with-explicit-delta",
+  "production_integrated": false,
+  "topic_complete": false,
+  "review_actors": {
+    "formalizer": "/root",
+    "blind_decoder": "/root/blind_decoder_b",
+    "source_reviewer": "/root/source_reviewer_a"
+  },
+  "source": {
+    "title": "Multi-Player Bandits -- a Musical Chairs Approach",
+    "anchor": "Static Algorithms1/2 Definition1 Theorem1 with explicit conditioning; supplement A.1 Lemmas2-4; previously reviewed all-player budget repair retained",
+    "main_sha256": "c56474f0c3e689c1819b11e2bca4d3e5dcaef6eddfd0173bb55ff6a84f11d99d",
+    "supplement_sha256": "4ffd4d0c3fc975ae04b3d5e96911bd58d66bc2206e9d9584e18fcbf0c5b305ad"
+  },
+  "dependency_hashes": {
+    "BanditRLProof/Algorithms/MusicalChairsCoordination.lean": "7077674b2c4636a15b02b137ad08aac21ba0190bc0e6c58d03dfeea90413684d",
+    "BanditRLProof/Algorithms/MusicalChairsCoordinationTime.lean": "ff12d72240b7d02b88a839383e8c62c448d968953621d9e5cbc3e8ac5861ec72",
+    "BanditRLProof/Algorithms/MusicalChairsCoordinationRegret.lean": "ae1f7ddd238e9f6720682f2446ea1a0a7bcc9019fb42be264674c1ec68d5edea"
+  },
+  "base_commit": "9e944dea9d94a1f6d566b42df655434e30fc8c86",
+  "scope": "All-history true-top comparator and [0,n] round bounds, actual chronological phase splice and all-horizon real pseudo-regret split, actual good/bad expectation assembly with delta*n*H, primitive-source conditional/unconditional staged-action pseudo-regret, published residual and inverse-horizon tuning. Future observed reward process and realized-regret equality remain open.",
+  "public_artifacts": {
+    "runs/extended-topics-20260920/MusicalChairsComparatorPrototype.lean": "45d392017b120d320f5a9635f308211280358efa6f51ebcbdf48366dcb333174",
+    "docs/extended-topics/MULTI-AGENT-COMPARATOR-PROGRESS.md": "98277cff23ab21a7f790b9dccbdfe6f95486933e6f5ac6505ea58dc73d909c29"
+  },
+  "review_artifacts": {
+    "neutral-comparator.lean": {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\neutral-comparator.lean",
+      "sha256": "6de85fef9f43e3e8221c3267b79e8cc99c89c38aa9b04df9b080ddba5a26b5c2"
+    },
+    "comparator-blind-v1.md": {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\comparator-blind-v1.md",
+      "sha256": "1c1b767e8baa4f0dce68fd99182b185ba0613e85f7e79ae2fb9bcf263411a920"
+    },
+    "comparator-source-review-v1.md": {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\comparator-source-review-v1.md",
+      "sha256": "872739897c0cde883a265d4c87769f596ed6babbb4f5b3e224d779f76f065785"
+    }
+  },
+  "declarations": [
+    "BanditRLProof.MusicalChairs.ordered_set_sum_max",
+    "BanditRLProof.MusicalChairs.topArms_sum_max",
+    "BanditRLProof.MusicalChairs.collisionFreePlayers",
+    "BanditRLProof.MusicalChairs.earnedArms",
+    "BanditRLProof.MusicalChairs.collisionFree_action_injective",
+    "BanditRLProof.MusicalChairs.earnedArms_card_le",
+    "BanditRLProof.MusicalChairs.earnedArms_sum",
+    "BanditRLProof.MusicalChairs.globalRoundRegret",
+    "BanditRLProof.MusicalChairs.globalRoundRegret_nonneg",
+    "BanditRLProof.MusicalChairs.globalRoundRegret_le",
+    "BanditRLProof.MusicalChairs.roundPseudoRegret_global",
+    "BanditRLProof.MusicalChairs.learnerAction",
+    "BanditRLProof.MusicalChairs.learnerAction_explore",
+    "BanditRLProof.MusicalChairs.learnerAction_coordinate",
+    "BanditRLProof.MusicalChairs.explorationPrefixRegret",
+    "BanditRLProof.MusicalChairs.learnerRegret",
+    "BanditRLProof.MusicalChairs.learnerRegret_split",
+    "BanditRLProof.MusicalChairs.explorationPrefixRegret_bounds",
+    "BanditRLProof.MusicalChairs.learnerRegret_bounds",
+    "BanditRLProof.MusicalChairs.learnerRegret_le_exploration_add",
+    "BanditRLProof.MusicalChairs.learnerAction_prefix",
+    "BanditRLProof.MusicalChairs.integrable_learnerRegret",
+    "BanditRLProof.MusicalChairs.integrable_pathRegret_projection",
+    "BanditRLProof.MusicalChairs.learnerRegret_good_integral_le",
+    "BanditRLProof.MusicalChairs.learnerRegret_expected_le",
+    "BanditRLProof.MusicalChairs.source_expected_learnerRegret_le",
+    "BanditRLProof.MusicalChairs.source_conditional_learnerRegret_le",
+    "BanditRLProof.MusicalChairs.source_expected_learnerRegret_coarse",
+    "BanditRLProof.MusicalChairs.coordination_residual_source_constant",
+    "BanditRLProof.MusicalChairs.source_expected_learnerRegret_published_residual",
+    "BanditRLProof.MusicalChairs.source_expected_learnerRegret_inverse_horizon",
+    "BanditRLProof.MusicalChairs.ComparatorCanary.means",
+    "BanditRLProof.MusicalChairs.ComparatorCanary.arbitrary_bad_arm_deficit",
+    "BanditRLProof.MusicalChairs.ComparatorCanary.all_collide_deficit",
+    "BanditRLProof.MusicalChairs.ComparatorCanary.zero_player_deficit",
+    "BanditRLProof.MusicalChairs.ComparatorCanary.collisionExploration",
+    "BanditRLProof.MusicalChairs.ComparatorCanary.futureChangedExploration",
+    "BanditRLProof.MusicalChairs.ComparatorCanary.horizon_zero",
+    "BanditRLProof.MusicalChairs.ComparatorCanary.short_horizon_cost",
+    "BanditRLProof.MusicalChairs.ComparatorCanary.future_exploration_unused",
+    "BanditRLProof.MusicalChairs.ComparatorCanary.two_phase_transient_cost",
+    "BanditRLProof.MusicalChairs.source_conditional_learnerRegret_published_residual"
+  ],
+  "new_scanned_declaration_count": 42,
+  "new_theorem_count": 33,
+  "new_definitions": 9,
+  "new_named_instances": 0,
+  "audited_new_declaration_count": 42,
+  "canary_theorems": 7,
+  "focused_compilation": {
+    "command": "lake env lean runs/extended-topics-20260920/MusicalChairsComparatorPrototype.lean",
+    "exit_code": 0,
+    "axiom_command": "lake env lean E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\comparator-axiom-audit.lean",
+    "axiom_exit_code": 0,
+    "axiom_log": "E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\comparator-axioms.log",
+    "axiom_log_sha256": "7b36f6279b2111108a6f5f4759599e25a8a38bb629ed7116df78a5c3989858c0",
+    "allowed_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "exact_folded_code_verified": true
+  },
+  "unchanged_context": {
+    "runs/extended-topics-20260920/MusicalChairsMarginalPrototype.lean": "417531d31cd1f13b146d3ba9ad99902d0f3542b9d2616da6c1a8a069d4a1a2da"
+  },
+  "joint_gate_status": "Not rerun or claimed for scratch; no public-root integration. Existing production acceptance remains scoped to coordination-regret code.",
+  "remaining": [
+    "Actual future reward variables and post-exploration observations with complete visible local feedback trace",
+    "Unconditional expected realized-regret equality under fresh reward law; no inference of conditional equality on reward-dependent exploration event",
+    "Frozen full noisy unknown-N learner canary",
+    "Shared extraction/public root/Tests/harness/site acceptance",
+    "Recent-source audit and all-topic ICLR evidence"
+  ]
+}
