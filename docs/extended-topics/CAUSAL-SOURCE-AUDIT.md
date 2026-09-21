@@ -85,3 +85,14 @@ Qualifications before any formal reuse:
 These findings reinforce the frozen line's requirements for actual sampling,
 nonempty action sets and derived probability identities. They do not transfer
 the 2026 cumulative-regret theorem into the 2016 simple-regret contract.
+
+
+## Receipt hash portability (2026-09-21)
+
+The append-only normalization record is
+`runs/extended-topics-20260921/topic-receipt-hash-normalization.json`.
+PR #131 integrated its portable module/receipt validation into main without
+changing Lean proofs, historical receipt bytes, semantic verdicts or topic
+completion. Main/Pages acceptance is recorded in `ALL-TOPICS-LEDGER.json`
+under `merged_baseline`; local mixed-ending validation is separately recorded
+in `runs/extended-topics-20260921/receipt-portability-local-validation.json`.
