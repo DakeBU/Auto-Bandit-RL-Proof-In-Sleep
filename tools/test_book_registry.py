@@ -7,7 +7,11 @@ from unittest.mock import patch
 from pathlib import Path
 
 from website.scripts import build_site as site
+<<<<<<< HEAD
 from website.scripts.book_registry import build_registry, membership_index, verify_reviewed_module
+=======
+from website.scripts.book_registry import build_registry, membership_index, reviewed_module_matches
+>>>>>>> c11bc2e (Make reviewed-module hash checks line-ending independent)
 from website.scripts.check_site import declaration_has_expected_badge
 
 
@@ -206,6 +210,43 @@ class BookRegistryTests(unittest.TestCase):
         with patch.object(Path, "read_bytes", changed_proof):
             with self.assertRaisesRegex(ValueError, "reviewed module hash drift"):
                 self.registry()
+
+    def test_reviewed_mapping_accepts_line_ending_renderings_of_reviewed_modules(self):
+        original_read = Path.read_bytes
+        for rendering in ("crlf", "lf"):
+            def rerendered(path, rendering=rendering):
+                data = original_read(path)
+                if path.suffix == ".lean":
+                    data = data.replace(b"\r\n", b"\n")
+                    if rendering == "crlf":
+                        data = data.replace(b"\n", b"\r\n")
+                return data
+            with self.subTest(rendering=rendering), patch.object(Path, "read_bytes", rerendered):
+                self.registry()
+
+    def test_reviewed_module_matches_is_line_ending_independent_but_content_bound(self):
+        import hashlib
+        lf = b"theorem a : 1 = 1 := rfl\nexample : True := trivial\n"
+        crlf = lf.replace(b"\n", b"\r\n")
+        mixed = b"theorem a : 1 = 1 := rfl\r\nexample : True := trivial\n"
+        for recorded_source in (lf, crlf, mixed):
+            recorded = hashlib.sha256(recorded_source).hexdigest()
+            for on_disk in (lf, crlf):
+                with self.subTest(recorded=recorded_source[:12], on_disk=on_disk[:12]):
+                    expected = recorded_source is not mixed
+                    self.assertEqual(expected, reviewed_module_matches(on_disk, recorded, "M.lean", "runs/r.json", []))
+        changed = lf.replace(b"1 = 1", b"1 = 2")
+        self.assertFalse(reviewed_module_matches(changed, hashlib.sha256(lf).hexdigest(), "M.lean", "runs/r.json", []))
+        recorded_mixed = hashlib.sha256(mixed).hexdigest()
+        canonical = hashlib.sha256(lf).hexdigest()
+        record = {"kind": "review-receipt-hash-normalization", "receipts": [{"receipt": "runs/r.json", "entries": [
+            {"path": "M.lean", "recorded_sha256": recorded_mixed, "canonical_lf_sha256": canonical, "bound": True}]}]}
+        self.assertTrue(reviewed_module_matches(crlf, recorded_mixed, "M.lean", "runs/r.json", [record]))
+        self.assertFalse(reviewed_module_matches(changed, recorded_mixed, "M.lean", "runs/r.json", [record]))
+        self.assertFalse(reviewed_module_matches(crlf, recorded_mixed, "M.lean", "runs/other.json", [record]))
+        unbound = copy.deepcopy(record)
+        unbound["receipts"][0]["entries"][0]["bound"] = False
+        self.assertFalse(reviewed_module_matches(crlf, recorded_mixed, "M.lean", "runs/r.json", [unbound]))
 
     def test_reviewed_mapping_rejects_unbound_receipts_and_topic_promotion(self):
         for mutation, message in [("hash", "receipt hash drift"),

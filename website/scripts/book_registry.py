@@ -19,6 +19,7 @@ def unique(items, label):
     return result
 
 
+<<<<<<< HEAD
 def verify_reviewed_module(evidence, module_path, raw):
     """Legacy receipts bind raw bytes; explicit LF receipts bind only EOL-normalized bytes."""
     if "production_hashes_lf" in evidence:
@@ -35,6 +36,48 @@ def verify_reviewed_module(evidence, module_path, raw):
         raise ValueError("topic receipt does not cover declaration or owning module")
     if hashlib.sha256(raw).hexdigest() != expected:
         raise ValueError("topic reviewed module hash drift")
+=======
+def reviewed_module_matches(data, recorded, module_path, receipt_path, normalization_records):
+    """Line-ending-independent check of a reviewed module against its receipt hash.
+
+    A receipt hash was historically computed from one checkout's working-tree
+    bytes.  The same content is accepted whether the checkout renders it with
+    LF, CRLF, or the original raw bytes.  A recorded hash that no clean
+    checkout can reproduce (mixed line endings) is accepted only through a
+    bound normalization record that names the same receipt and module, repeats
+    the recorded value, and whose canonical LF hash equals the current content.
+    Any real content change still fails: the canonical LF hash must match.
+    """
+    lf = data.replace(b"\r\n", b"\n")
+    canonical = hashlib.sha256(lf).hexdigest()
+    renderings = {hashlib.sha256(data).hexdigest(), canonical,
+                  hashlib.sha256(lf.replace(b"\n", b"\r\n")).hexdigest()}
+    if recorded in renderings:
+        return True
+    for record in normalization_records:
+        for receipt in record.get("receipts", []):
+            if receipt.get("receipt") != receipt_path:
+                continue
+            for entry in receipt.get("entries", []):
+                if (entry.get("path") == module_path and entry.get("recorded_sha256") == recorded
+                        and entry.get("canonical_lf_sha256") == canonical and entry.get("bound") is True):
+                    return True
+    return False
+
+
+def _load_bound_runs_record(relative, expected_sha256, label):
+    path = (ROOT / relative).resolve()
+    try:
+        path.relative_to(ROOT / "runs")
+    except ValueError:
+        raise ValueError(f"invalid topic {label} path")
+    if not relative.startswith("runs/") or not path.is_file():
+        raise ValueError(f"invalid topic {label} path")
+    raw = path.read_bytes()
+    if hashlib.sha256(raw).hexdigest() != expected_sha256:
+        raise ValueError(f"topic {label} hash drift")
+    return json.loads(raw)
+>>>>>>> c11bc2e (Make reviewed-module hash checks line-ending independent)
 
 
 def topic_formalization_nodes(topic, nodes):
@@ -67,6 +110,13 @@ def topic_formalization_nodes(topic, nodes):
             if relative in receipts:
                 raise ValueError("duplicate topic review receipt")
             receipts[relative] = evidence
+    normalization_records = []
+    if reviewed:
+        for record in mapping.get("hash_normalization_records", []):
+            loaded = _load_bound_runs_record(record.get("path", ""), record.get("sha256"), "hash normalization record")
+            if loaded.get("kind") != "review-receipt-hash-normalization":
+                raise ValueError("topic hash normalization record has wrong kind")
+            normalization_records.append(loaded)
     if not re.fullmatch(r"[0-9a-f]{40}", mapping.get("source_commit", "")):
         raise ValueError("topic formalization needs an exact source commit")
     source = mapping.get("source", {})
@@ -85,7 +135,17 @@ def topic_formalization_nodes(topic, nodes):
         if reviewed:
             evidence = receipts[ref["review_receipt"]]
             module_path = nodes[node_id]["module"].replace(".", "/") + ".lean"
+<<<<<<< HEAD
             verify_reviewed_module(evidence, module_path, (ROOT / module_path).read_bytes())
+=======
+            module_hash = evidence.get("production_hashes", {}).get(module_path)
+            if module_hash:
+                if not reviewed_module_matches((ROOT / module_path).read_bytes(), module_hash, module_path,
+                                               ref["review_receipt"], normalization_records):
+                    raise ValueError("topic reviewed module hash drift")
+            else:
+                raise ValueError("topic receipt does not cover declaration or owning module")
+>>>>>>> c11bc2e (Make reviewed-module hash checks line-ending independent)
         if ref.get("statement_sha256") != nodes[node_id]["statement_sha256"]:
             raise ValueError(f"topic statement hash drift: {node_id}")
         if ref.get("role") not in {"model", "algorithm", "producer", "endpoint", "canary", "reuse"} or not ref.get("source_locator"):
