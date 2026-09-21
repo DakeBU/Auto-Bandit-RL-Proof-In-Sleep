@@ -212,7 +212,7 @@ class BookRegistryTests(unittest.TestCase):
         for rendering in ("crlf", "lf"):
             def rerendered(path, rendering=rendering):
                 data = original_read(path)
-                if path.suffix == ".lean":
+                if path.suffix == ".lean" or (path.suffix == ".json" and "runs" in path.parts):
                     data = data.replace(b"\r\n", b"\n")
                     if rendering == "crlf":
                         data = data.replace(b"\n", b"\r\n")

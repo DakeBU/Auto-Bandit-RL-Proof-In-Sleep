@@ -37,6 +37,13 @@ def verify_reviewed_module(evidence, module_path, raw):
         raise ValueError("topic reviewed module hash drift")
 
 
+def rendering_hashes(data):
+    """Exact byte hashes of the raw, LF and CRLF renderings; no JSON rewriting."""
+    lf = data.replace(b"\r\n", b"\n")
+    return {hashlib.sha256(data).hexdigest(), hashlib.sha256(lf).hexdigest(),
+            hashlib.sha256(lf.replace(b"\n", b"\r\n")).hexdigest()}
+
+
 def reviewed_module_matches(data, recorded, module_path, receipt_path, normalization_records):
     """Line-ending-independent check of a reviewed module against its receipt hash.
 
@@ -50,8 +57,7 @@ def reviewed_module_matches(data, recorded, module_path, receipt_path, normaliza
     """
     lf = data.replace(b"\r\n", b"\n")
     canonical = hashlib.sha256(lf).hexdigest()
-    renderings = {hashlib.sha256(data).hexdigest(), canonical,
-                  hashlib.sha256(lf.replace(b"\n", b"\r\n")).hexdigest()}
+    renderings = rendering_hashes(data)
     if recorded in renderings:
         return True
     for record in normalization_records:
@@ -74,7 +80,7 @@ def _load_bound_runs_record(relative, expected_sha256, label):
     if not relative.startswith("runs/") or not path.is_file():
         raise ValueError(f"invalid topic {label} path")
     raw = path.read_bytes()
-    if hashlib.sha256(raw).hexdigest() != expected_sha256:
+    if expected_sha256 not in rendering_hashes(raw):
         raise ValueError(f"topic {label} hash drift")
     return json.loads(raw)
 
@@ -101,7 +107,7 @@ def topic_formalization_nodes(topic, nodes):
             if not relative.startswith("runs/") or not path.is_file():
                 raise ValueError("invalid topic review receipt path")
             raw = path.read_bytes()
-            if hashlib.sha256(raw).hexdigest() != receipt.get("sha256"):
+            if receipt.get("sha256") not in rendering_hashes(raw):
                 raise ValueError("topic review receipt hash drift")
             evidence = json.loads(raw)
             if evidence.get("semantic_verdict") not in {"accepted", "accepted-with-explicit-delta"}:
