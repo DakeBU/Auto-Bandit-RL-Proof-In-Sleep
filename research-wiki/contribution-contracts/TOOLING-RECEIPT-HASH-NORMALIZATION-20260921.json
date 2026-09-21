@@ -14,10 +14,7 @@
   "target": "Make the reviewed-module hash check in the site registry independent of checkout line endings without changing any receipt bytes, and record a portable, append-only normalization of every mapped receipt.",
   "affected_files": [
     "website/scripts/book_registry.py",
-    "website/content/banditrlwiki.json",
-    "tools/verify_review_receipt_hashes.py",
-    "tools/test_book_registry.py",
-    "runs/extended-topics-20260921/topic-receipt-hash-normalization.json"
+    "website/content/banditrlwiki.json"
   ],
   "declarations": [],
   "reuse_plan": {
@@ -79,12 +76,13 @@
   "truth_boundary": "Receipt values remain those recorded at review time; the normalization record documents that each recorded value is the LF, CRLF or raw-working-tree rendering of content byte-identical to the committed blob at the same commit, with the raw case attested from a read-only second checkout. Root-file entries (BanditRLProof.lean, Tests.lean, website/scripts/build_site.py) in historical validation receipts legitimately drifted as the roots grew; they are not consulted by the registry and are not rebound. No theorem, review verdict, topic status, main merge or deployment is changed.",
   "verification": {
     "focused_checks": [
+      "Supporting non-protected files in the same change: tools/verify_review_receipt_hashes.py (portable verifier), tools/test_book_registry.py (two new regression tests), runs/extended-topics-20260921/topic-receipt-hash-normalization.json (append-only normalization record bound by sha256 from the five reviewed topic mappings)",
       "python tools/verify_review_receipt_hashes.py over all fifteen mapped receipts with --also-checkout of the Codex worktree at the same commit: every registry-consulted module entry bound (LF, CRLF, or attested raw rendering); exit 1 only for historical root-file entries not used by the registry",
       "python -m unittest tools.test_book_registry: 17 tests OK on a pure-CRLF checkout, including the new rendering-tolerance and content-bound tests; before the change 12 of 17 failed with 'topic reviewed module hash drift'"
     ],
     "bandit_check": "Not yet rerun for this change at commit time; to be recorded in the handoff before merge",
-    "site_build": "Failed before the change on this CRLF checkout with 'topic reviewed module hash drift'; rerun after the change is recorded in the handoff",
-    "site_check": "Rerun after the change is recorded in the handoff",
+    "site_build": "Failed before the change on this CRLF checkout with 'topic reviewed module hash drift'; after the change, python website/scripts/build_site.py exits 0 on the same checkout (without --lean-verified, pending the joint Lean gate)",
+    "site_check": "check_site.py after the plain build reports only 'site was not built with --lean-verified'; to be rerun after the joint Lean gate with --lean-verified",
     "independent_review": "None claimed for the tooling change itself; the underlying content identity was established by byte comparison, not by review"
   },
   "contributor": {
