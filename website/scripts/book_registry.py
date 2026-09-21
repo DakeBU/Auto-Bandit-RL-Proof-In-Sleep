@@ -19,7 +19,6 @@ def unique(items, label):
     return result
 
 
-<<<<<<< HEAD
 def verify_reviewed_module(evidence, module_path, raw):
     """Legacy receipts bind raw bytes; explicit LF receipts bind only EOL-normalized bytes."""
     if "production_hashes_lf" in evidence:
@@ -36,7 +35,8 @@ def verify_reviewed_module(evidence, module_path, raw):
         raise ValueError("topic receipt does not cover declaration or owning module")
     if hashlib.sha256(raw).hexdigest() != expected:
         raise ValueError("topic reviewed module hash drift")
-=======
+
+
 def reviewed_module_matches(data, recorded, module_path, receipt_path, normalization_records):
     """Line-ending-independent check of a reviewed module against its receipt hash.
 
@@ -77,7 +77,6 @@ def _load_bound_runs_record(relative, expected_sha256, label):
     if hashlib.sha256(raw).hexdigest() != expected_sha256:
         raise ValueError(f"topic {label} hash drift")
     return json.loads(raw)
->>>>>>> c11bc2e (Make reviewed-module hash checks line-ending independent)
 
 
 def topic_formalization_nodes(topic, nodes):
@@ -135,17 +134,16 @@ def topic_formalization_nodes(topic, nodes):
         if reviewed:
             evidence = receipts[ref["review_receipt"]]
             module_path = nodes[node_id]["module"].replace(".", "/") + ".lean"
-<<<<<<< HEAD
-            verify_reviewed_module(evidence, module_path, (ROOT / module_path).read_bytes())
-=======
-            module_hash = evidence.get("production_hashes", {}).get(module_path)
-            if module_hash:
-                if not reviewed_module_matches((ROOT / module_path).read_bytes(), module_hash, module_path,
-                                               ref["review_receipt"], normalization_records):
-                    raise ValueError("topic reviewed module hash drift")
+            if "production_hashes_lf" in evidence:
+                verify_reviewed_module(evidence, module_path, (ROOT / module_path).read_bytes())
             else:
-                raise ValueError("topic receipt does not cover declaration or owning module")
->>>>>>> c11bc2e (Make reviewed-module hash checks line-ending independent)
+                module_hash = evidence.get("production_hashes", {}).get(module_path)
+                if module_hash:
+                    if not reviewed_module_matches((ROOT / module_path).read_bytes(), module_hash, module_path,
+                                                   ref["review_receipt"], normalization_records):
+                        raise ValueError("topic reviewed module hash drift")
+                else:
+                    raise ValueError("topic receipt does not cover declaration or owning module")
         if ref.get("statement_sha256") != nodes[node_id]["statement_sha256"]:
             raise ValueError(f"topic statement hash drift: {node_id}")
         if ref.get("role") not in {"model", "algorithm", "producer", "endpoint", "canary", "reuse"} or not ref.get("source_locator"):

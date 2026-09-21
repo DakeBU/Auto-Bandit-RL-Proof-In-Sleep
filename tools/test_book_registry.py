@@ -7,11 +7,7 @@ from unittest.mock import patch
 from pathlib import Path
 
 from website.scripts import build_site as site
-<<<<<<< HEAD
-from website.scripts.book_registry import build_registry, membership_index, verify_reviewed_module
-=======
-from website.scripts.book_registry import build_registry, membership_index, reviewed_module_matches
->>>>>>> c11bc2e (Make reviewed-module hash checks line-ending independent)
+from website.scripts.book_registry import build_registry, membership_index, verify_reviewed_module, reviewed_module_matches
 from website.scripts.check_site import declaration_has_expected_badge
 
 
