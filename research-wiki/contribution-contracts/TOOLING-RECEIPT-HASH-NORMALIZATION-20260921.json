@@ -80,9 +80,9 @@
       "python tools/verify_review_receipt_hashes.py over all fifteen mapped receipts with --also-checkout of the Codex worktree at the same commit: every registry-consulted module entry bound (LF, CRLF, or attested raw rendering); exit 1 only for historical root-file entries not used by the registry",
       "python -m unittest tools.test_book_registry: 17 tests OK on a pure-CRLF checkout, including the new rendering-tolerance and content-bound tests; before the change 12 of 17 failed with 'topic reviewed module hash drift'"
     ],
-    "bandit_check": "Not yet rerun for this change at commit time; to be recorded in the handoff before merge",
-    "site_build": "Failed before the change on this CRLF checkout with 'topic reviewed module hash drift'; after the change, python website/scripts/build_site.py exits 0 on the same checkout (without --lean-verified, pending the joint Lean gate)",
-    "site_check": "check_site.py after the plain build reports only 'site was not built with --lean-verified'; to be rerun after the joint Lean gate with --lean-verified",
+    "bandit_check": "Passed after the change on a pure-CRLF checkout: lake build 9044 jobs, lake build Tests 9150 jobs, ProofGraphExport, 439 Python tests OK with 7 skips (182.3s); zero 'error:' lines, 572 linter/tactic warnings",
+    "site_build": "Failed before the change on this CRLF checkout with 'topic reviewed module hash drift'; after the change, python website/scripts/build_site.py --lean-verified exits 0 following the fresh joint Lean gate",
+    "site_check": "python website/scripts/check_site.py exits 0 after the verified build: internal links/anchors valid, README links valid, 121 Live Formalization mappings, GitHub Pages workflow complete",
     "independent_review": "None claimed for the tooling change itself; the underlying content identity was established by byte comparison, not by review"
   },
   "contributor": {
