@@ -14,7 +14,8 @@
   "target": "Make the reviewed-module hash check in the site registry independent of checkout line endings without changing any receipt bytes, and record a portable, append-only normalization of every mapped receipt.",
   "affected_files": [
     "website/scripts/book_registry.py",
-    "website/content/banditrlwiki.json"
+    "website/content/banditrlwiki.json",
+    ".github/workflows/contributor-contract.yml"
   ],
   "declarations": [],
   "reuse_plan": {
@@ -80,7 +81,8 @@
       "python tools/verify_review_receipt_hashes.py over all fifteen mapped receipts with --also-checkout of the Codex worktree at the same commit: every registry-consulted module entry bound (LF, CRLF, or attested raw rendering); exit 1 only for historical root-file entries not used by the registry",
       "python -m unittest tools.test_book_registry: 17 tests OK on a pure-CRLF checkout, including the new rendering-tolerance and content-bound tests; before the change 12 of 17 failed with 'topic reviewed module hash drift'",
       "Codex integration at initial HEAD 05dbb1cd624f9d1d0b0bcb930c62636cdb200a29 preserves explicit production_hashes_lf validation and current causal rebinding; legacy mappings use portable matching. A path-specific .gitattributes LF rule keeps the new normalization record byte-identical to its bound Git blob. Local registry tests: 20/20 passed. Local historical 15-receipt verifier exits 1 only for historical root/build-script drift; detailed independent local results follow in runs/extended-topics-20260921/receipt-portability-local-validation.json.",
-      "Codex Linux-blob preflight found every mapped receipt SHA bound to CRLF rendering. Registry now accepts exact raw/LF/CRLF renderings of the receipt and normalization-record JSON itself, without parsing/reserializing to obtain a hash. Existing rendering regression covers both Lean and runs JSON under LF and CRLF; all 20 tests pass. Receipt bytes and SHA fields are untouched."
+      "Codex Linux-blob preflight found every mapped receipt SHA bound to CRLF rendering. Registry now accepts exact raw/LF/CRLF renderings of the receipt and normalization-record JSON itself, without parsing/reserializing to obtain a hash. Existing rendering regression covers both Lean and runs JSON under LF and CRLF; all 20 tests pass. Receipt bytes and SHA fields are untouched.",
+      "PR contributor-contract run 35567794343 passed. Duplicate branch-push run 35567796533 failed because it compared the last push rather than the integration base and treated earlier chain coverage as stale. Non-main push/workflow-dispatch now uses origin/main, while PR, merge-group and main-push retain their event-specific base. The full integration diff is still checked; no gate is skipped."
     ],
     "bandit_check": "Passed after the change on a pure-CRLF checkout: lake build 9044 jobs, lake build Tests 9150 jobs, ProofGraphExport, 439 Python tests OK with 7 skips (182.3s); zero 'error:' lines, 572 linter/tactic warnings",
     "site_build": "Failed before the change on this CRLF checkout with 'topic reviewed module hash drift'; after the change, python website/scripts/build_site.py --lean-verified exits 0 following the fresh joint Lean gate",
