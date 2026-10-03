@@ -2,7 +2,7 @@ from pathlib import Path
 import json,hashlib,subprocess
 r=Path('runs/online-subgradient-interior-20261003')
 d=json.loads((r/'roundtrip-bindings.json').read_text(encoding='utf-8'))
-expected={'website/content/readings.json', 'BanditRLProof/OnlineSubgradientBasic.lean', 'BanditRLProof/OnlineConvexExtended.lean', 'runs/online-subgradient-interior-20261003/blind-packet.txt', 'BanditRLProof/OnlineConvexMinorant.lean', 'BanditRLProof/OnlineSubgradientInterior.lean', 'runs/online-subgradient-interior-20261003/independent-source-review.md', 'runs/online-subgradient-interior-20261003/blind-reconstruction.md', 'Tests/OnlineSubgradientInteriorCanary.lean', 'BanditRLProof/OnlineClosedProper.lean'}
+expected={'runs/online-subgradient-interior-20261003/blind-packet.txt', 'BanditRLProof/OnlineClosedProper.lean', 'BanditRLProof/OnlineSubgradientBasic.lean', 'runs/online-subgradient-interior-20261003/independent-source-review.md', 'website/content/readings.json', 'runs/online-subgradient-interior-20261003/blind-reconstruction.md', 'website/content/highlights.json', 'Tests/OnlineSubgradientInteriorCanary.lean', 'BanditRLProof/OnlineConvexExtended.lean', 'BanditRLProof/OnlineSubgradientInterior.lean', 'BanditRLProof/OnlineConvexMinorant.lean'}
 assert set(d['lf_hashes'])==expected
 for f,h in d['lf_hashes'].items():
  assert hashlib.sha256(Path(f).read_text(encoding='utf-8-sig').encode()).hexdigest()==h,f

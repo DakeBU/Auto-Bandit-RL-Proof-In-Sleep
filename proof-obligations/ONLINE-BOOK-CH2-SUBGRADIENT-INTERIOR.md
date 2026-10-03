@@ -5,9 +5,9 @@
 - [x] Canonical contact helper replaces duplicated foundational proof.
 - [x] Public focused build and nontrivial interval-center canary.
 - [x] Distinct blind/source review and byte binding.
-- [ ] Shared reader/registry/graph and contribution contract.
+- [x] Shared reader/registry/graph and contribution contract.
 - [x] Standard axioms and frozen-header audit.
-- [ ] Root/Tests/full harness, site and exact-base contribution gate.
+- [x] Root/Tests/full harness, site and exact-base contribution gate.
 - [ ] Scoped PR delivery.
 
 Theorem2.22 and remaining chapter/book results are not covered.

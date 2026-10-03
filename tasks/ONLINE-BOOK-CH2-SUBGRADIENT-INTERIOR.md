@@ -2,7 +2,7 @@
 
 Task id: `ONLINE-BOOK-CH2-SUBGRADIENT-INTERIOR`
 Kind: `theorem`
-Status: `candidate`
+Status: `accepted-local`
 Harness: `hierarchical`
 
 ## Goal
