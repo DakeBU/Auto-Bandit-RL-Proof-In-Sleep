@@ -1,0 +1,5 @@
+{
+  "huber_average_bound": "theorem huber_average_bound (delta Z : \u211d) (hd : 0 \u2264 delta) (hZ : 0 \u2264 Z)\n    (z : \u2115 \u2192 E) (y : \u2115 \u2192 \u211d) (x0 u : E) (T : \u2115) (hT : 0 < T)\n    (hz : \u2200 t < T, \u2016z t\u2016 \u2264 Z) :\n    regret fullSpace (1 / Real.sqrt T) (fun t => linearLoss delta (z t) (y t)) x0 u T / T \u2264\n      (\u2016x0 - u\u2016 ^ 2 + (delta * Z) ^ 2) / (2 * Real.sqrt T)",
+  "huber_rate_tendsto": "theorem huber_rate_tendsto (delta Z : \u211d) (x0 u : E) :\n    Filter.Tendsto (fun T : \u2115 => (\u2016x0 - u\u2016 ^ 2 + (delta * Z) ^ 2) / (2 * Real.sqrt T))\n      Filter.atTop (nhds 0)",
+  "huber_average_eventually": "theorem huber_average_eventually (delta Z : \u211d) (hd : 0 \u2264 delta) (hZ : 0 \u2264 Z)\n    (z : \u2115 \u2192 E) (y : \u2115 \u2192 \u211d) (x0 u : E) (hz : \u2200 t, \u2016z t\u2016 \u2264 Z)\n    (epsilon : \u211d) (he : 0 < epsilon) :\n    \u2200\u1da0 T : \u2115 in Filter.atTop,\n      regret fullSpace (1 / Real.sqrt T) (fun t => linearLoss delta (z t) (y t)) x0 u T / T < epsilon"
+}

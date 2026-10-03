@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineHuber.huber_regret_fixed",
+  "file": "BanditRLProof/OnlineHuber.lean",
+  "statement": "theorem huber_regret_fixed (delta Z eta : ℝ) (hd : 0 ≤ delta) (hZ : 0 ≤ Z) (heta : 0 < eta) (z : ℕ → E) (y : ℕ → ℝ) (x0 u : E) (T : ℕ) (hz : ∀ t < T, ‖z t‖ ≤ Z) : regret fullSpace eta (fun t => linearLoss delta (z t) (y t)) x0 u T ≤ ‖x0 - u‖ ^ 2 / (2 * eta) + eta / 2 * ((T : ℝ) * (delta * Z) ^ 2) - ‖iterate fullSpace eta (fun t => linearLoss delta (z t) (y t)) x0 T - u‖ ^ 2 / (2 * eta)",
+  "statement_hash": "c7a43cccd41c3b7cfbaf50da3cb4a0a839ed0c932f3355ca149382c1f32aa14a",
+  "source_assumptions": [],
+  "created_at": "2026-10-03T07:27:58+00:00"
+}

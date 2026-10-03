@@ -2641,6 +2641,77 @@
         "BanditRL.OnlineGradientDescent.guessing_zero_trajectory",
         "BanditRL.OnlineGradientDescent.guessing_tuned_eta_square"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineHuber.huber_convex",
+      "title": "Global Huber convexity",
+      "chapter": "online-huber",
+      "featured": false,
+      "teaching_order": 1,
+      "plain": "The actual derivative is a monotone clamp; both seams and threshold zero are included.",
+      "math": "\\(H_\\delta\\text{ is convex for }\\delta\\ge0\\)",
+      "intuition": "The actual derivative is a monotone clamp; both seams and threshold zero are included.",
+      "why": "Closes a source dependency in the same shared causal OGD graph.",
+      "position": "Orabona v10 printed15-16/PDF27-28.",
+      "proof_idea": "The actual derivative is a monotone clamp; both seams and threshold zero are included.",
+      "lean_notes": "No assumed gradient/regularity consumer; delta0 and unbounded predictors are retained.",
+      "dependencies": [
+        "BanditRL.OnlineHuber.huber_deriv_clamp",
+        "BanditRL.OnlineHuber.huber_hasDerivAt"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineHuber.huber_linear_hasGradientAt",
+      "title": "Actual feature gradient",
+      "chapter": "online-huber",
+      "featured": false,
+      "teaching_order": 2,
+      "plain": "Compose the scalar derivative with the inner-product functional and identify its Riesz gradient.",
+      "math": "\\(\\nabla\\ell(x)=H_\\delta^{\\prime}(\\langle z,x\\rangle-y)z\\)",
+      "intuition": "Compose the scalar derivative with the inner-product functional and identify its Riesz gradient.",
+      "why": "Closes a source dependency in the same shared causal OGD graph.",
+      "position": "Orabona v10 printed15-16/PDF27-28.",
+      "proof_idea": "Compose the scalar derivative with the inner-product functional and identify its Riesz gradient.",
+      "lean_notes": "No assumed gradient/regularity consumer; delta0 and unbounded predictors are retained.",
+      "dependencies": [
+        "BanditRL.OnlineHuber.huber_hasDerivAt"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineHuber.huber_regret_fixed",
+      "title": "Fixed-step regret with terminal residual",
+      "chapter": "online-huber",
+      "featured": false,
+      "teaching_order": 3,
+      "plain": "Apply the shared OGD theorem to actual Huber regularity and actual iterate gradients.",
+      "math": "\\(R_T(u)\\le\\|x_0-u\\|^2/(2\\eta)+\\eta T(\\delta Z)^2/2-\\|x_T-u\\|^2/(2\\eta)\\)",
+      "intuition": "Apply the shared OGD theorem to actual Huber regularity and actual iterate gradients.",
+      "why": "Closes a source dependency in the same shared causal OGD graph.",
+      "position": "Orabona v10 printed15-16/PDF27-28.",
+      "proof_idea": "Apply the shared OGD theorem to actual Huber regularity and actual iterate gradients.",
+      "lean_notes": "No assumed gradient/regularity consumer; delta0 and unbounded predictors are retained.",
+      "dependencies": [
+        "BanditRL.OnlineHuber.huber_regular",
+        "BanditRL.OnlineHuber.huber_linear_gradient_bound"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineHuber.huber_average_eventually",
+      "title": "Vanishing upper average regret",
+      "chapter": "online-huber",
+      "featured": false,
+      "teaching_order": 4,
+      "plain": "Select eta=1/sqrt(T), bound the upper envelope and prove it tends to zero.",
+      "math": "\\(\\forall\\epsilon>0,\\quad R_T(u)/T<\\epsilon\\text{ eventually}\\)",
+      "intuition": "Select eta=1/sqrt(T), bound the upper envelope and prove it tends to zero.",
+      "why": "Closes a source dependency in the same shared causal OGD graph.",
+      "position": "Orabona v10 printed15-16/PDF27-28.",
+      "proof_idea": "Select eta=1/sqrt(T), bound the upper envelope and prove it tends to zero.",
+      "lean_notes": "No assumed gradient/regularity consumer; delta0 and unbounded predictors are retained.",
+      "dependencies": [
+        "BanditRL.OnlineHuber.huber_average_bound",
+        "BanditRL.OnlineHuber.huber_rate_tendsto"
+      ]
     }
   ]
 }

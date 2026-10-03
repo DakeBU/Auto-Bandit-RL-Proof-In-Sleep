@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineHuber.huber_average_eventually",
+  "file": "tmp/online-huber-average-draft.lean",
+  "statement": "theorem huber_average_eventually (delta Z : ℝ) (hd : 0 ≤ delta) (hZ : 0 ≤ Z) (z : ℕ → E) (y : ℕ → ℝ) (x0 u : E) (hz : ∀ t, ‖z t‖ ≤ Z) (epsilon : ℝ) (he : 0 < epsilon) : ∀ᶠ T : ℕ in Filter.atTop, regret fullSpace (1 / Real.sqrt T) (fun t => linearLoss delta (z t) (y t)) x0 u T / T < epsilon",
+  "statement_hash": "fe1419545ec713b562d316c84cf18713913c5daec496969eb97cc34d2759c281",
+  "source_assumptions": [],
+  "created_at": "2026-10-03T07:25:41+00:00"
+}
