@@ -1,0 +1,30 @@
+tmp/online-normal-cone-full.lean:12:36: warning: unused variable `hVc`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+tmp/online-normal-cone-full.lean:34:17: warning: unused variable `hVn`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+tmp/online-normal-cone-full.lean:34:36: warning: unused variable `hVc`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+tmp/online-normal-cone-full.lean:78:10: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ‖(↑‖g‖)⁻¹ • g‖
+in the target expression
+  ‖‖g‖⁻¹ • g‖ ≤ 1
+
+E : Type u_1
+inst✝² : NormedAddCommGroup E
+inst✝¹ : InnerProductSpace ℝ E
+inst✝ : FiniteDimensional ℝ E
+x : E
+hx : ‖x‖ = 1
+g : E
+hg : g ∈ SourceNormalCone {y | ‖y‖ ≤ 1} x
+hg0 : ¬g = 0
+hgn : 0 < ‖g‖
+⊢ ‖‖g‖⁻¹ • g‖ ≤ 1
+'BanditRL.OnlineConvex.indicator_subdifferential_eq_normalCone' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'BanditRL.OnlineConvex.normalCone_interior_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BanditRL.OnlineConvex.normalCone_unitBall_boundary' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]

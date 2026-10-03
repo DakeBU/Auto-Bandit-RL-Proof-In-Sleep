@@ -1,0 +1,1 @@
+Actual narrow searches of local Online modules and pinned Mathlib convex directory found no normalCone definition under the searched names; this is bounded search, not API absence. Existing extendedIndicator/properness/domain/globalsupport interfaces located. Actual type probe required before proving; no body attempts yet.

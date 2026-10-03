@@ -3092,6 +3092,72 @@
         "BanditRL.OnlineConvex.abs_subgradient_zero",
         "BanditRL.OnlineConvex.abs_subgradient_negative"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.SourceNormalCone",
+      "title": "Feasible query and all feasible displacements",
+      "chapter": "online-normal-cone",
+      "featured": false,
+      "teaching_order": 0,
+      "plain": "Feasible query and all feasible displacements",
+      "math": "\\(N_V(x)=\\{g:x\\in V,\\ \\forall y\\in V,\\langle g,y-x\\rangle\\le0\\}\\)",
+      "intuition": "Use actual global support geometry to characterize the entire set.",
+      "why": "Required Example2.25 source definition/claim, not Chapter2 completion.",
+      "position": "Orabona v10 Example2.25 printed18/PDF30.",
+      "proof_idea": "Proper indicator support, actual interior displacement or normalized boundary normal and Cauchy equality.",
+      "lean_notes": "Original finite/nonemptyconvex source premises retained; no closed/boundedV added. Both directions proved, zero included.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.indicator_subdifferential_eq_normalCone",
+      "title": "Indicator support equals the normal cone",
+      "chapter": "online-normal-cone",
+      "featured": false,
+      "teaching_order": 1,
+      "plain": "Indicator support equals the normal cone",
+      "math": "\\(\\partial\\iota_V(x)=N_V(x)\\)",
+      "intuition": "Use actual global support geometry to characterize the entire set.",
+      "why": "Required Example2.25 source definition/claim, not Chapter2 completion.",
+      "position": "Orabona v10 Example2.25 printed18/PDF30.",
+      "proof_idea": "Proper indicator support, actual interior displacement or normalized boundary normal and Cauchy equality.",
+      "lean_notes": "Original finite/nonemptyconvex source premises retained; no closed/boundedV added. Both directions proved, zero included.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.SourceNormalCone"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.normalCone_interior_eq_zero",
+      "title": "Interior normals are exactly zero",
+      "chapter": "online-normal-cone",
+      "featured": false,
+      "teaching_order": 2,
+      "plain": "Interior normals are exactly zero",
+      "math": "\\(x\\in\\operatorname{int}V\\Rightarrow N_V(x)=\\{0\\}\\)",
+      "intuition": "Use actual global support geometry to characterize the entire set.",
+      "why": "Required Example2.25 source definition/claim, not Chapter2 completion.",
+      "position": "Orabona v10 Example2.25 printed18/PDF30.",
+      "proof_idea": "Proper indicator support, actual interior displacement or normalized boundary normal and Cauchy equality.",
+      "lean_notes": "Original finite/nonemptyconvex source premises retained; no closed/boundedV added. Both directions proved, zero included.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.SourceNormalCone"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.normalCone_unitBall_boundary",
+      "title": "Boundary normals form the full nonnegative ray",
+      "chapter": "online-normal-cone",
+      "featured": false,
+      "teaching_order": 3,
+      "plain": "Boundary normals form the full nonnegative ray",
+      "math": "\\(\\|x\\|=1\\Rightarrow N_B(x)=\\{\\alpha x:\\alpha\\ge0\\}\\)",
+      "intuition": "Use actual global support geometry to characterize the entire set.",
+      "why": "Required Example2.25 source definition/claim, not Chapter2 completion.",
+      "position": "Orabona v10 Example2.25 printed18/PDF30.",
+      "proof_idea": "Proper indicator support, actual interior displacement or normalized boundary normal and Cauchy equality.",
+      "lean_notes": "Original finite/nonemptyconvex source premises retained; no closed/boundedV added. Both directions proved, zero included.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.SourceNormalCone"
+      ]
     }
   ]
 }

@@ -1,0 +1,9 @@
+import BanditRLProof.OnlineSubgradientBasic
+
+noncomputable section
+open Set
+namespace BanditRL.OnlineConvex
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+
+def SourceNormalCone (V : Set E) (x : E) : Set E :=
+  {g | x ∈ V ∧ ∀ y ∈ V, inner ℝ g (y - x) ≤ 0}

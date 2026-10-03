@@ -1,0 +1,29 @@
+BanditRL.OnlineConvex.SourceSubdifferential.{u_1} {E : Type u_1} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+  (f : E → EReal) (x : E) : Set E
+BanditRL.OnlineConvex.extendedIndicator.{u_1} {E : Type u_1} (V : Set E) (x : E) : EReal
+BanditRL.OnlineConvex.sourceProper_indicator_iff.{u_1} {E : Type u_1} [TopologicalSpace E] (V : Set E) :
+  BanditRL.OnlineConvex.SourceProper (BanditRL.OnlineConvex.extendedIndicator V) ↔ V.Nonempty
+BanditRL.OnlineConvex.effectiveDomain_indicator.{u_1} {E : Type u_1} [AddCommGroup E] [Module ℝ E] (V : Set E) :
+  BanditRL.OnlineConvex.effectiveDomain (BanditRL.OnlineConvex.extendedIndicator V) = V
+BanditRL.OnlineConvex.subgradient_point_finite.{u_1} {E : Type u_1} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+  (f : E → EReal) (hf : BanditRL.OnlineConvex.SourceProper f) (x g : E)
+  (hg : g ∈ BanditRL.OnlineConvex.SourceSubdifferential f x) : x ∈ BanditRL.OnlineConvex.effectiveDomain f
+EReal.coe_le_coe_iff {x y : ℝ} : ↑x ≤ ↑y ↔ x ≤ y
+Metric.mem_nhds_iff.{u} {α : Type u} [PseudoMetricSpace α] {x : α} {s : Set α} :
+  s ∈ nhds x ↔ ∃ ε > 0, Metric.ball x ε ⊆ s
+mem_interior_iff_mem_nhds.{u} {X : Type u} [TopologicalSpace X] {x : X} {s : Set X} : x ∈ interior s ↔ s ∈ nhds x
+Metric.mem_ball.{u} {α : Type u} [PseudoMetricSpace α] {x y : α} {ε : ℝ} : y ∈ Metric.ball x ε ↔ dist y x < ε
+dist_eq_norm.{u_5} {E : Type u_5} [SeminormedAddCommGroup E] (a b : E) : dist a b = ‖a - b‖
+norm_smul.{u_1, u_2} {α : Type u_1} {β : Type u_2} [Norm α] [Norm β] [SMul α β] [NormSMulClass α β] (r : α) (x : β) :
+  ‖r • x‖ = ‖r‖ * ‖x‖
+real_inner_self_eq_norm_sq.{u_3} {F : Type u_3} [SeminormedAddCommGroup F] [InnerProductSpace ℝ F] (x : F) :
+  inner ℝ x x = ‖x‖ ^ 2
+real_inner_smul_left.{u_3} {F : Type u_3} [SeminormedAddCommGroup F] [InnerProductSpace ℝ F] (x y : F) (r : ℝ) :
+  inner ℝ (r • x) y = r * inner ℝ x y
+real_inner_smul_right.{u_3} {F : Type u_3} [SeminormedAddCommGroup F] [InnerProductSpace ℝ F] (x y : F) (r : ℝ) :
+  inner ℝ x (r • y) = r * inner ℝ x y
+real_inner_le_norm.{u_3} {F : Type u_3} [SeminormedAddCommGroup F] [InnerProductSpace ℝ F] (x y : F) :
+  inner ℝ x y ≤ ‖x‖ * ‖y‖
+norm_sub_sq_real.{u_3} {F : Type u_3} [SeminormedAddCommGroup F] [InnerProductSpace ℝ F] (x y : F) :
+  ‖x - y‖ ^ 2 = ‖x‖ ^ 2 - 2 * inner ℝ x y + ‖y‖ ^ 2
+norm_pos_iff.{u_5} {E : Type u_5} [NormedAddGroup E] {a : E} : 0 < ‖a‖ ↔ a ≠ 0

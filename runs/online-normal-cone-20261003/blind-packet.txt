@@ -1,0 +1,34 @@
+Neutral statement/context packet; no theorem body or source identity supplied. Imported definitions are reproduced below in their scoped mathematical context; headers have no proof assignment and this packet is not compiled.
+
+import BanditRLProof.OnlineSubgradientBasic
+
+noncomputable section
+open Set
+namespace NeutralConvex
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+
+def SourceNormalCone (V : Set E) (x : E) : Set E :=
+  {g | x ∈ V ∧ ∀ y ∈ V, inner ℝ g (y - x) ≤ 0}
+
+-- Imported shared definitions, with their actual scoped parameters:
+def effectiveDomain (f : E → EReal) : Set E := {x | f x < ⊤}
+def extendedIndicator (V : Set E) (x : E) : EReal := by
+  classical
+  exact if x ∈ V then 0 else ⊤
+def SourceSubdifferential (f : E → EReal) (x : E) : Set E :=
+  {g | ∀ y, f x + (inner ℝ g (y - x) : EReal) ≤ f y}
+
+theorem claim_1 [FiniteDimensional ℝ E]
+    (V : Set E) (hVn : V.Nonempty) (hVc : Convex ℝ V) (x : E) :
+    SourceSubdifferential (extendedIndicator V) x = SourceNormalCone V x
+
+theorem claim_2 [FiniteDimensional ℝ E]
+    (V : Set E) (hVn : V.Nonempty) (hVc : Convex ℝ V)
+    (x : E) (hx : x ∈ interior V) : SourceNormalCone V x = {(0 : E)}
+
+theorem claim_3 [FiniteDimensional ℝ E]
+    (x : E) (hx : ‖x‖ = 1) :
+    SourceNormalCone {y : E | ‖y‖ ≤ 1} x =
+      {g | ∃ α : ℝ, 0 ≤ α ∧ g = α • x}
+
+end NeutralConvex

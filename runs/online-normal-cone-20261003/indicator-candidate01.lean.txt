@@ -1,0 +1,33 @@
+import BanditRLProof.OnlineSubgradientBasic
+
+noncomputable section
+open Set
+namespace BanditRL.OnlineConvex
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+
+def SourceNormalCone (V : Set E) (x : E) : Set E :=
+  {g | x ∈ V ∧ ∀ y ∈ V, inner ℝ g (y - x) ≤ 0}
+
+theorem indicator_subdifferential_eq_normalCone [FiniteDimensional ℝ E]
+    (V : Set E) (hVn : V.Nonempty) (hVc : Convex ℝ V) (x : E) :
+    SourceSubdifferential (extendedIndicator V) x = SourceNormalCone V x := by
+  classical
+  ext g
+  constructor
+  · intro hg
+    have hf : SourceProper (extendedIndicator V) := (sourceProper_indicator_iff V).mpr hVn
+    have hxV : x ∈ V := by
+      simpa only [effectiveDomain_indicator] using
+        subgradient_point_finite (extendedIndicator V) hf x g hg
+    refine ⟨hxV, ?_⟩
+    intro y hy
+    have h := hg y
+    simpa [extendedIndicator, hxV, hy] using h
+  · intro hg y
+    by_cases hy : y ∈ V
+    · have h := EReal.coe_le_coe_iff.mpr (hg.2 y hy)
+      simpa [extendedIndicator, hg.1, hy] using h
+    · simp [extendedIndicator, hg.1, hy]
+
+end BanditRL.OnlineConvex
+#print axioms BanditRL.OnlineConvex.indicator_subdifferential_eq_normalCone

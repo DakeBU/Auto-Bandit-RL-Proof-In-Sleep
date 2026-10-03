@@ -1,0 +1,3 @@
+# Director
+
+Select all required Example2.25 claims: actual global indicator-cone equality, interiorzero and full unitball boundary ray equality. Keep nonempty/convex and finite source scope, allx/g/y quantifiers and exact closed ball/nonnegative α. Outside-domain behavior explicit; empty-set improper case excluded by original source. Freeze all three terminals and DAG before review. Choose one dependency-ready finite leaf only after stabilization; same-model staged root roles, medium; distinct automated semantic actors required by applicable roundtrip skill. No normal-cone proof assumed in an algorithm consumer.
