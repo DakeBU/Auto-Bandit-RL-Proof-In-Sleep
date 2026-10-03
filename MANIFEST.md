@@ -15403,3 +15403,4 @@ here during local harness runs.
 - `2026-09-14T07:15:05+00:00` `bandit.py new-task` `task` `tasks/ONLINE-BOOK-CH2-CLOSURES.md` - Orabona affine composition supremum and monotone composition
 - `2026-09-14T07:34:58+00:00` `bandit.py new-task` `task` `tasks/ONLINE-BOOK-CH2-SUMS.md` - Orabona nonnegative convex combinations with explicit upper addition
 - `2026-09-14T07:54:44+00:00` `bandit.py new-task` `task` `tasks/ONLINE-BOOK-CH2-FIRST-ORDER.md` - Orabona extended-real supporting gradient theorem
+- `2026-10-03T08:19:11+00:00` `bandit.py new-task` `task` `tasks/ONLINE-BOOK-CH2-CLOSED-PROPER.md` - Orabona closed/proper definitions and indicator equivalences

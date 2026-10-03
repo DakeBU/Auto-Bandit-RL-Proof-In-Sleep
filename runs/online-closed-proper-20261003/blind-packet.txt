@@ -1,0 +1,24 @@
+import BanditRLProof.OnlineConvexExtended
+import Mathlib.Topology.Semicontinuity.Basic
+import Mathlib.Tactic
+
+open Set
+namespace BanditRL.OnlineConvex
+variable {E : Type*} [TopologicalSpace E]
+
+def SourceClosed (f : E → EReal) : Prop :=
+  ∀ r : ℝ, IsClosed {x | f x ≤ (r : EReal)}
+
+def SourceProper (f : E → EReal) : Prop :=
+  (∀ x, f x ≠ ⊥) ∧ ∃ x, ∃ r : ℝ, f x = (r : EReal)
+
+
+noncomputable def extendedIndicator (V : Set E) (x : E) : EReal := if x ∈ V then 0 else ⊤
+theorem sourceClosed_iff_lowerSemicontinuous (f : E → EReal) :
+    SourceClosed f ↔ LowerSemicontinuous f
+
+theorem sourceClosed_indicator_iff (V : Set E) :
+    SourceClosed (extendedIndicator V) ↔ IsClosed V
+
+theorem sourceProper_indicator_iff (V : Set E) :
+    SourceProper (extendedIndicator V) ↔ V.Nonempty

@@ -1,0 +1,11 @@
+# Current checkpoint
+
+Branch codex/research-online-closed-proper, base23aa80a4 (Huber PR135). Three unchanged target headers moved to public OnlineClosedProper; shared root and Tests imports added. Focused build public-focused01.log completed9070jobs, includes root and public canary. All3targets and5printed canaries show only standard axioms. Native fences pass. No full Tests/harness/site/contributor acceptance for this new packet yet. No active local process.
+
+Next: distinct blind/source semantic review under current repository contract; shared source Book reader/registry and contribution manifest; full combined gate plus axiom/graph/source/site/shadow checks; scoped commit/PR. Reuse frozen parent closed/proper contract and actual proofs; do not redo. No section/Chapter2 completion.
+
+Huber PR135 delivered at23aa80a4 on codex/research-online-huber. Scoped contributor CI passes; full remote build pending at last check. Push contributor failure is older stack againstorigin/main (26uncovered production paths), recorded mandatory migration, not a Huber proof failure. Worktree remains E:/ABRL/worktrees/research-online-book and shared-base tree retained. Goal active.
+
+FINAL CHECKPOINT: closed/proper accepted-local and delivered draftPR136, headbb58075b, basePR135/23aa80a4. All local gate handles75154/92560/9323 terminatedsuccessfully; no local build remains running. Evidence acceptance-decision/evidence and contributor-gate01. Fullroot9194jobs,464tests7skips,site911pages11629links,5graphchecks,distinctreviewacceptedwithtopologydelta. Defaultshadow02drift from nativeglobaltrial was repaired by preserving exactnewrecord scoped and restoringverifiedpriorglobalbytes; shadow03hasnomismatches, noSGBfrontieredit.
+
+Nextsource scratch: docs/contracts/online-subgradient-basic-v1 + subgradient-candidate.lean.txt and subgradient-canary.lean.txt. subgradient_point_finite and theorem_2_21 actualbodiescompiledleaf02; quadraticglobal-supportcanary02standardaxioms. leaf01failedmissingweightidentity; canary01failedinnerproductorder and recovered sorryAx is rejected. Sourceinteriorexistence and Theorems2.22/2.23remainrequired. Newpacketpublicintegration/review/gatesneeded. Olderstack26filecontributormigrationstillrequired. Goalactive; worktreesretained.

@@ -1,0 +1,3 @@
+# Closed/proper conversion window
+
+Original draft/stabilization: online-closed-proper-v1 freezes exact context and three native headers before scratch proof. Public conversion: online-closed-proper-public-v1 changes only owning path and preserves all header hashes/full candidate source. Allowed integration edits: public module/canary and imports, shared Book route/reader/highlights, bounded evidence and contribution manifest. No edits to source target, Lean toolchain, global frontier, private manuscripts, or old contracts. Target change requires new version. Current reader repairs are schema/clarity only; failed logs preserved. This record is file-level convention, not a claim that one runtime enforces every paper phase.

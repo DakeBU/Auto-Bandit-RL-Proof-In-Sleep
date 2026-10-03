@@ -3017,6 +3017,174 @@
         ],
         "boundary": "Known-horizon fixed step; nonnegative threshold; complete real inner-product space specializes to source Euclidean vectors. No bounded predictor set, anytime schedule, or two-sided limiting-regret claim."
       }
+    },
+    {
+      "slug": "online-closed-proper",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10,21June2026",
+        "sections": "Section2.2.1, Definitions2.16/2.18 and Examples2.17/2.19",
+        "pages": "printed16/PDF28",
+        "pdf_page": 28,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "Closed function",
+          "meaning": "For every real r, the set {x | f(x)<=r} is closed. Function values may be either infinity."
+        },
+        {
+          "term": "Proper function",
+          "meaning": "Nowhere negative infinity and finite at some point; these are separate conditions."
+        },
+        {
+          "term": "Extended indicator",
+          "meaning": "I_V(x)=0 on V and positive infinity outside V; not the ordinary zero-outside indicator."
+        }
+      ],
+      "teaching_route": [
+        "BanditRL.OnlineConvex.sourceClosed_iff_lowerSemicontinuous",
+        "BanditRL.OnlineConvex.sourceClosed_indicator_iff",
+        "BanditRL.OnlineConvex.sourceProper_indicator_iff"
+      ],
+      "source_theorems": [
+        {
+          "label": "Definition2.16 and following semicontinuity equivalence",
+          "pages": "printed16",
+          "pdf_page": 28,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\operatorname{SourceClosed}(f)\\iff f\\text{ is lower semicontinuous}",
+          "fallback": "Take complements of real closed sublevels. The strict superlevel above negative infinity is the union of real strict superlevels; above positive infinity it is empty. This supplies every extended-real threshold.",
+          "plain": "Closedness and lower semicontinuity",
+          "relationship": "Literal real-cut and finite-witness definitions, generalized from Euclidean to arbitrary topological domains. The negative-infinity threshold is derived, not assumed.",
+          "contract": {
+            "model": "Extended-real functions on a topological domain, including the source Euclidean spaces.",
+            "assumptions": "No convexity, properness or separation premise for closedness. Proper means nowhere bottom and finite somewhere.",
+            "parameters": "Every cut value is real; function values include both infinities.",
+            "regret": "Not a regret claim; foundational definitions and equivalences.",
+            "guarantee": "Closedness and lower semicontinuity"
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Public closed/proper candidate",
+            "boundary": "Focused public build only; full packet acceptance tracked separately. No Chapter2 completion."
+          }
+        },
+        {
+          "label": "Example2.17",
+          "pages": "printed16",
+          "pdf_page": 28,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\operatorname{SourceClosed}(I_V)\\iff V\\text{ is closed}",
+          "fallback": "For a real cut r, the indicator sublevel is V when r>=0 and empty otherwise. In particular the cut0 recovers V.",
+          "plain": "Closed constraint indicators",
+          "relationship": "Literal real-cut and finite-witness definitions, generalized from Euclidean to arbitrary topological domains. The negative-infinity threshold is derived, not assumed.",
+          "contract": {
+            "model": "Extended-real functions on a topological domain, including the source Euclidean spaces.",
+            "assumptions": "No convexity, properness or separation premise for closedness. Proper means nowhere bottom and finite somewhere.",
+            "parameters": "Every cut value is real; function values include both infinities.",
+            "regret": "Not a regret claim; foundational definitions and equivalences.",
+            "guarantee": "Closed constraint indicators"
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Public closed/proper candidate",
+            "boundary": "Focused public build only; full packet acceptance tracked separately. No Chapter2 completion."
+          }
+        },
+        {
+          "label": "Definition2.18 and Example2.19",
+          "pages": "printed16",
+          "pdf_page": 28,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\operatorname{SourceProper}(I_V)\\iff V\\ne\\varnothing",
+          "fallback": "The indicator never equals negative infinity; it has a finite real value exactly when a point of V exists.",
+          "plain": "Proper constraint indicators",
+          "relationship": "Literal real-cut and finite-witness definitions, generalized from Euclidean to arbitrary topological domains. The negative-infinity threshold is derived, not assumed.",
+          "contract": {
+            "model": "Extended-real functions on a topological domain, including the source Euclidean spaces.",
+            "assumptions": "No convexity, properness or separation premise for closedness. Proper means nowhere bottom and finite somewhere.",
+            "parameters": "Every cut value is real; function values include both infinities.",
+            "regret": "Not a regret claim; foundational definitions and equivalences.",
+            "guarantee": "Proper constraint indicators"
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Public closed/proper candidate",
+            "boundary": "Focused public build only; full packet acceptance tracked separately. No Chapter2 completion."
+          }
+        }
+      ],
+      "proof_bridge": {
+        "title": "Real cuts suffice even at infinite values",
+        "summary": "The source definitions are used literally before relating them to the shared topological API.",
+        "steps": [
+          {
+            "title": "Closedness and lower semicontinuity",
+            "detail": "Take complements of real closed sublevels. The strict superlevel above negative infinity is the union of real strict superlevels; above positive infinity it is empty. This supplies every extended-real threshold.",
+            "math": "\\operatorname{SourceClosed}(f)\\iff f\\text{ is lower semicontinuous}",
+            "fallback": "Take complements of real closed sublevels. The strict superlevel above negative infinity is the union of real strict superlevels; above positive infinity it is empty. This supplies every extended-real threshold."
+          },
+          {
+            "title": "Closed constraint indicators",
+            "detail": "For a real cut r, the indicator sublevel is V when r>=0 and empty otherwise. In particular the cut0 recovers V.",
+            "math": "\\operatorname{SourceClosed}(I_V)\\iff V\\text{ is closed}",
+            "fallback": "For a real cut r, the indicator sublevel is V when r>=0 and empty otherwise. In particular the cut0 recovers V."
+          },
+          {
+            "title": "Proper constraint indicators",
+            "detail": "The indicator never equals negative infinity; it has a finite real value exactly when a point of V exists.",
+            "math": "\\operatorname{SourceProper}(I_V)\\iff V\\ne\\varnothing",
+            "fallback": "The indicator never equals negative infinity; it has a finite real value exactly when a point of V exists."
+          }
+        ],
+        "boundary": "Lean generalizes the source Euclidean domain to an arbitrary topological space. No Hausdorff or convexity hypothesis is needed for these claims; no subgradient theorem is thereby proved."
+      },
+      "worked_example": {
+        "title": "Closedness does not imply properness",
+        "intro": "On the real line, test infinite values, a nonempty closed interval, and the empty feasible set.",
+        "steps": [
+          {
+            "title": "Constant negative infinity",
+            "detail": "Every real sublevel is the full space, hence closed; nowhere-bottom fails.",
+            "math": "f(x)=-\\infty:\\quad f\\text{ closed},\\quad f\\text{ not proper}",
+            "fallback": "The public canary checks lower semicontinuity too."
+          },
+          {
+            "title": "Closed interval",
+            "detail": "The zero/top indicator of [0,1] is closed and proper because the interval is closed and contains0.",
+            "math": "I_{[0,1]}\\text{ is closed and proper}",
+            "fallback": "The shared extendedIndicator is used."
+          },
+          {
+            "title": "Empty set",
+            "detail": "Its indicator is everywhere positive infinity, so there is no finite witness and it is not proper.",
+            "math": "I_{\\varnothing}(x)=+\\infty",
+            "fallback": "No nonemptiness is smuggled into the definition."
+          }
+        ],
+        "takeaway": "Topological closedness and finite-value feasibility are distinct source conditions.",
+        "boundary": "These examples do not establish convexity or subgradient existence."
+      },
+      "algorithm": {
+        "title": "Definitions and proof flow",
+        "kind": "foundational equivalences",
+        "steps": [
+          {
+            "title": "Check all real cuts",
+            "detail": "Take complements and recover the missing infinite threshold by a union."
+          },
+          {
+            "title": "Evaluate indicator sublevels",
+            "detail": "Each real sublevel is the feasible set or the empty set."
+          },
+          {
+            "title": "Separate finiteness from closedness",
+            "detail": "Properness requires a finite witness as well as excluding negative infinity."
+          }
+        ]
+      }
     }
   ]
 }
