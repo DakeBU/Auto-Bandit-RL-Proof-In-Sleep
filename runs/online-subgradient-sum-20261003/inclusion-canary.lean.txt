@@ -1,0 +1,92 @@
+import Tests.OnlineSubgradientDifferentiabilityCanary
+import BanditRLProof.OnlineSubgradientDifferentiability
+
+noncomputable section
+open Set Filter
+open scoped Topology BigOperators
+namespace BanditRL.OnlineConvex
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
+
+def SourceSubgradientSum {ι : Type*} [Fintype ι]
+    (f : ι → E → EReal) (x : E) : Set E :=
+  {g | ∃ G : ι → E, (∀ i, G i ∈ SourceSubdifferential (f i) x) ∧ ∑ i, G i = g}
+
+theorem theorem_2_23_inclusion {ι : Type*} [Fintype ι]
+    (f : ι → E → EReal) (hp : ∀ i, SourceProper (f i)) (x : E) :
+    SourceSubgradientSum f x ⊆ SourceSubdifferential (fun y => ∑ i, f i y) x := by
+  classical
+  rintro g ⟨G, hG, rfl⟩ y
+  let coeHom : ℝ →+ EReal := ⟨⟨Real.toEReal, EReal.coe_zero⟩, EReal.coe_add⟩
+  have hcoe : ((∑ i, inner ℝ (G i) (y - x) : ℝ) : EReal) =
+      ∑ i, (inner ℝ (G i) (y - x) : EReal) :=
+    map_sum coeHom (fun i => inner ℝ (G i) (y - x)) Finset.univ
+  have hs := Finset.sum_le_sum (fun i (_ : i ∈ Finset.univ) => hG i y)
+  rw [Finset.sum_add_distrib] at hs
+  change (∑ i, f i x) + (inner ℝ (∑ i, G i) (y - x) : EReal) ≤ ∑ i, f i y
+  rw [sum_inner, hcoe]
+  exact hs
+
+end BanditRL.OnlineConvex
+#print axioms BanditRL.OnlineConvex.theorem_2_23_inclusion
+
+namespace SumRuleProbe
+open BanditRL.OnlineConvex Set
+open scoped BigOperators
+
+theorem quadratic_plus_constraint_support :
+    (2 : ℝ) ∈ SourceSubdifferential
+      (fun y : ℝ => ((y^2 : ℝ) : EReal) + extendedIndicator (Icc (0 : ℝ) 2) y) 1 := by
+  let f : Fin 2 → ℝ → EReal := fun i => if i = 0 then
+    (fun y => ((y^2 : ℝ) : EReal)) else extendedIndicator (Icc (0 : ℝ) 2)
+  have hp : ∀ i, SourceProper (f i) := by
+    intro i
+    fin_cases i
+    · change SourceProper (fun y : ℝ => ((y^2 : ℝ) : EReal))
+      exact ⟨(fun y => EReal.coe_ne_bot _), 0, 0, by norm_num⟩
+    · change SourceProper (extendedIndicator (Icc (0 : ℝ) 2))
+      exact (sourceProper_indicator_iff _).mpr ⟨0, by norm_num⟩
+  let G : Fin 2 → ℝ := fun i => if i = 0 then 2 else 0
+  have hG : ∀ i, G i ∈ SourceSubdifferential (f i) 1 := by
+    intro i
+    fin_cases i
+    · simpa only [f, G, if_pos rfl, mul_one] using SubgradientProbe.square_support 1
+    · change (0 : ℝ) ∈ SourceSubdifferential (extendedIndicator (Icc (0 : ℝ) 2)) 1
+      rw [ForwardSubgradientProbe.constrained_interval_singleton]
+      exact mem_singleton 0
+  have hm : (2 : ℝ) ∈ SourceSubgradientSum f 1 := by
+    refine ⟨G, hG, ?_⟩
+    norm_num [G, Fin.sum_univ_two]
+  have hs := theorem_2_23_inclusion f hp 1 hm
+  simpa only [f, Fin.sum_univ_two, if_pos rfl, if_neg (by decide : (1 : Fin 2) ≠ 0)] using hs
+
+theorem concave_quadratic_no_support (g : ℝ) :
+    g ∉ SourceSubdifferential (fun y : ℝ => ((-y^2 : ℝ) : EReal)) 0 := by
+  intro hg
+  have h1 := hg 1
+  have hm := hg (-1)
+  rw [← EReal.coe_add] at h1 hm
+  have h1r : -(0 : ℝ)^2 + (1 - 0) * g ≤ -(1 : ℝ)^2 := by exact_mod_cast h1
+  have hmr : -(0 : ℝ)^2 + (-1 - 0) * g ≤ -(-1 : ℝ)^2 := by exact_mod_cast hm
+  nlinarith
+
+theorem nonconvex_vacuous_inclusion (g : ℝ) :
+    g ∉ SourceSubgradientSum
+      (fun _ : Fin 1 => fun y : ℝ => ((-y^2 : ℝ) : EReal)) 0 := by
+  rintro ⟨G, hG, hsum⟩
+  exact concave_quadratic_no_support (G 0) (hG 0)
+
+theorem empty_family_zero_support :
+    (0 : ℝ) ∈ SourceSubdifferential
+      (fun y : ℝ => ∑ i : Fin 0, ((y^2 : ℝ) : EReal)) 1 := by
+  let f : Fin 0 → ℝ → EReal := fun _ y => ((y^2 : ℝ) : EReal)
+  have hp : ∀ i, SourceProper (f i) := fun i => Fin.elim0 i
+  have hm : (0 : ℝ) ∈ SourceSubgradientSum f 1 := by
+    refine ⟨(fun i => Fin.elim0 i), (fun i => Fin.elim0 i), ?_⟩
+    simp
+  exact theorem_2_23_inclusion f hp 1 hm
+
+#print axioms quadratic_plus_constraint_support
+#print axioms concave_quadratic_no_support
+#print axioms nonconvex_vacuous_inclusion
+#print axioms empty_family_zero_support
+end SumRuleProbe

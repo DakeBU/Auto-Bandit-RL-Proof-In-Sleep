@@ -1,0 +1,13 @@
+import BanditRLProof.OnlineConvexSums
+import BanditRLProof.OnlineSubgradientDifferentiability
+
+noncomputable section
+open Set Filter
+open scoped Topology BigOperators
+namespace BanditRL.OnlineConvex
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
+
+def SourceSubgradientSum {ι : Type*} [Fintype ι]
+    (f : ι → E → EReal) (x : E) : Set E :=
+  {g | ∃ G : ι → E, (∀ i, G i ∈ SourceSubdifferential (f i) x) ∧ ∑ i, G i = g}
+

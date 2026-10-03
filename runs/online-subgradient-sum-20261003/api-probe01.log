@@ -1,0 +1,13 @@
+Finset.sum_le_sum.{u_1, u_5} {ι : Type u_1} {N : Type u_5} [AddCommMonoid N] [Preorder N] {f g : ι → N} {s : Finset ι}
+  [AddLeftMono N] (h : ∀ i ∈ s, f i ≤ g i) : ∑ i ∈ s, f i ≤ ∑ i ∈ s, g i
+Finset.sum_add_distrib.{u_1, u_4} {ι : Type u_1} {M : Type u_4} {s : Finset ι} [AddCommMonoid M] {f g : ι → M} :
+  ∑ x ∈ s, (f x + g x) = ∑ x ∈ s, f x + ∑ x ∈ s, g x
+sum_inner.{u_1, u_2, u_4} {𝕜 : Type u_1} {E : Type u_2} [RCLike 𝕜] [SeminormedAddCommGroup E] [InnerProductSpace 𝕜 E]
+  {ι : Type u_4} (s : Finset ι) (f : ι → E) (x : E) : inner 𝕜 (∑ i ∈ s, f i) x = ∑ i ∈ s, inner 𝕜 (f i) x
+map_sum.{u_1, u_3, u_4, u_7} {ι : Type u_1} {M : Type u_3} {N : Type u_4} [AddCommMonoid M] [AddCommMonoid N]
+  {G : Type u_7} [FunLike G M N] [AddMonoidHomClass G M N] (g : G) (f : ι → M) (s : Finset ι) :
+  g (∑ x ∈ s, f x) = ∑ x ∈ s, g (f x)
+EReal.coe_add (x y : ℝ) : ↑(x + y) = ↑x + ↑y
+EReal.coe_zero : ↑0 = 0
+instAddCommMonoidEReal
+IsOrderedAddMonoid.toAddLeftMono

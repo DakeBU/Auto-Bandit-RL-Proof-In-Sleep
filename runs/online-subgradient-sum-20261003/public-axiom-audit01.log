@@ -1,0 +1,32 @@
+BanditRL.OnlineConvex.theorem_2_23_inclusion.{u_1, u_2} {E : Type u_1} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+  [FiniteDimensional ℝ E] {ι : Type u_2} [Fintype ι] (f : ι → E → EReal)
+  (hp : ∀ (i : ι), BanditRL.OnlineConvex.SourceProper (f i)) (x : E) :
+  BanditRL.OnlineConvex.SourceSubgradientSum f x ⊆ BanditRL.OnlineConvex.SourceSubdifferential (fun y => ∑ i, f i y) x
+BanditRL.OnlineConvex.theorem_2_23_equality.{u_1} {E : Type u_1} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+  [FiniteDimensional ℝ E] (n : ℕ) (f : Fin (n + 1) → E → EReal)
+  (hp : ∀ (i : Fin (n + 1)), BanditRL.OnlineConvex.SourceProper (f i))
+  (hc : ∀ (i : Fin (n + 1)), BanditRL.OnlineConvex.IsConvexExtended (f i))
+  (hclosed : ∀ (i : Fin (n + 1)), BanditRL.OnlineConvex.SourceClosed (f i))
+  (hqual :
+    ∃ z ∈ BanditRL.OnlineConvex.effectiveDomain (f (Fin.last n)),
+      ∀ (i : Fin (n + 1)), i ≠ Fin.last n → z ∈ interior (BanditRL.OnlineConvex.effectiveDomain (f i)))
+  (x : E) :
+  BanditRL.OnlineConvex.SourceSubdifferential (fun y => ∑ i, f i y) x = BanditRL.OnlineConvex.SourceSubgradientSum f x
+'BanditRL.OnlineConvex.upperAdd_eq_add_of_ne_bot' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BanditRL.OnlineConvex.ereal_finset_sum_ne_bot' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BanditRL.OnlineConvex.convex_finset_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BanditRL.OnlineConvex.finite_sum_point' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BanditRL.OnlineConvex.sum_finite_implies_components_finite' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BanditRL.OnlineConvex.interior_domain_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BanditRL.OnlineConvex.binary_subgradient_decomposition' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BanditRL.OnlineConvex.theorem_2_23_inclusion' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BanditRL.OnlineConvex.theorem_2_23_equality' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SumEqualityProbe.actual_three_component_decomposition' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SumEqualityProbe.nonzero_aggregate_support' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SumEqualityProbe.last_domain_boundary' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SumEqualityProbe.outside_domain_both_empty' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SumEqualityProbe.singleton_family_empty_interior' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SumRuleProbe.quadratic_plus_constraint_support' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SumRuleProbe.concave_quadratic_no_support' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SumRuleProbe.nonconvex_vacuous_inclusion' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SumRuleProbe.empty_family_zero_support' depends on axioms: [propext, Classical.choice, Quot.sound]

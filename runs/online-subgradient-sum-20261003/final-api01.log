@@ -1,0 +1,16 @@
+Fin.sum_univ_castSucc.{u_2} {M : Type u_2} [AddCommMonoid M] {n : ℕ} (f : Fin (n + 1) → M) :
+  ∑ i, f i = ∑ i, f i.castSucc + f (Fin.last n)
+Fin.sum_univ_one.{u_2} {M : Type u_2} [AddCommMonoid M] (f : Fin 1 → M) : ∑ i, f i = f 0
+Fin.lastCases.{u_1} {n : ℕ} {motive : Fin (n + 1) → Sort u_1} (last : motive (Fin.last n))
+  (cast : (i : Fin n) → motive i.castSucc) (i : Fin (n + 1)) : motive i
+Fin.castSucc_ne_last {n : ℕ} (i : Fin n) : i.castSucc ≠ Fin.last n
+Fin.snoc.{u_1} {n : ℕ} {α : Fin (n + 1) → Sort u_1} (p : (i : Fin n) → α i.castSucc) (x : α (Fin.last n))
+  (i : Fin (n + 1)) : α i
+Fin.snoc_castSucc.{u_1} {n : ℕ} {α : Fin (n + 1) → Sort u_1} (x : α (Fin.last n)) (p : (i : Fin n) → α i.castSucc)
+  (i : Fin n) : Fin.snoc p x i.castSucc = p i
+Fin.snoc_last.{u_1} {n : ℕ} {α : Fin (n + 1) → Sort u_1} (x : α (Fin.last n)) (p : (i : Fin n) → α i.castSucc) :
+  Fin.snoc p x (Fin.last n) = x
+EReal.coe_toReal {x : EReal} (hx : x ≠ ⊤) (h'x : x ≠ ⊥) : ↑x.toReal = x
+Fin.eq_zero (n : Fin 1) : n = 0
+tmp/sum-final-api.lean:12:7: error(lean.unknownIdentifier): Unknown constant `Set.mem_interior_iff_mem_nhds`
+BanditRL.OnlineConvex.SourceClosed.{u_1} {E : Type u_1} [TopologicalSpace E] (f : E → EReal) : Prop

@@ -2930,6 +2930,104 @@
       "dependencies": [
         "BanditRL.OnlineConvex.affine_support_of_finite_neighborhood"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.theorem_2_23_inclusion",
+      "title": "Every sum of supports supports the sum",
+      "chapter": "online-subgradient-sum",
+      "featured": false,
+      "teaching_order": 0,
+      "plain": "Add global inequalities for arbitrary proper components.",
+      "math": "\\(\\sum_i\\partial f_i(x)\\subseteq\\partial F(x)\\)",
+      "intuition": "Add global inequalities for arbitrary proper components.",
+      "why": "A dependency in the exact finite-sum source proof, not chapter completion.",
+      "position": "Orabona v10 Theorem 2.23 printed17–18/PDF29–30; intermediate declarations are actual proof dependencies.",
+      "proof_idea": "Add global inequalities for arbitrary proper components.",
+      "lean_notes": "Source terminals retain properness, the equality keeps convexity/closedness and exact mixed qualification. Query finiteness is derived internally.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.binary_subgradient_decomposition",
+      "title": "Construct two complementary supports",
+      "chapter": "online-subgradient-sum",
+      "featured": false,
+      "teaching_order": 1,
+      "plain": "Actual epigraph separation produces p and g-p, with the last qualifying point allowed on its domain boundary.",
+      "math": "\\(g=p+(g-p)\\)",
+      "intuition": "Actual epigraph separation produces p and g-p, with the last qualifying point allowed on its domain boundary.",
+      "why": "A dependency in the exact finite-sum source proof, not chapter completion.",
+      "position": "Orabona v10 Theorem 2.23 printed17–18/PDF29–30; intermediate declarations are actual proof dependencies.",
+      "proof_idea": "Actual epigraph separation produces p and g-p, with the last qualifying point allowed on its domain boundary.",
+      "lean_notes": "Source terminals retain properness, the equality keeps convexity/closedness and exact mixed qualification. Query finiteness is derived internally.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.supporting_functional_at_closure"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.convex_finset_sum",
+      "title": "Convexity of the actual finite sum",
+      "chapter": "online-subgradient-sum",
+      "featured": false,
+      "teaching_order": 2,
+      "plain": "Reuse upper-add convexity and no-bottom proper arithmetic.",
+      "math": "\\(F=\\sum_i f_i\\text{ is convex}\\)",
+      "intuition": "Reuse upper-add convexity and no-bottom proper arithmetic.",
+      "why": "A dependency in the exact finite-sum source proof, not chapter completion.",
+      "position": "Orabona v10 Theorem 2.23 printed17–18/PDF29–30; intermediate declarations are actual proof dependencies.",
+      "proof_idea": "Reuse upper-add convexity and no-bottom proper arithmetic.",
+      "lean_notes": "Source terminals retain properness, the equality keeps convexity/closedness and exact mixed qualification. Query finiteness is derived internally.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.convex_upperAdd"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.interior_domain_sum",
+      "title": "The prefix domain contains a neighborhood",
+      "chapter": "online-subgradient-sum",
+      "featured": false,
+      "teaching_order": 3,
+      "plain": "Finite intersections of component finite neighborhoods make the prefix sum finite near the common point.",
+      "math": "\\(z\\in\\bigcap_i\\operatorname{int}(\\operatorname{dom}f_i)\\Rightarrow z\\in\\operatorname{int}(\\operatorname{dom}\\sum_i f_i)\\)",
+      "intuition": "Finite intersections of component finite neighborhoods make the prefix sum finite near the common point.",
+      "why": "A dependency in the exact finite-sum source proof, not chapter completion.",
+      "position": "Orabona v10 Theorem 2.23 printed17–18/PDF29–30; intermediate declarations are actual proof dependencies.",
+      "proof_idea": "Finite intersections of component finite neighborhoods make the prefix sum finite near the common point.",
+      "lean_notes": "Source terminals retain properness, the equality keeps convexity/closedness and exact mixed qualification. Query finiteness is derived internally.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.sum_finite_implies_components_finite",
+      "title": "Derive finite component values",
+      "chapter": "online-subgradient-sum",
+      "featured": false,
+      "teaching_order": 4,
+      "plain": "No-bottom summands and a finite aggregate exclude a positive-infinite component.",
+      "math": "\\(\\sum_i a_i<+\\infty\\Rightarrow a_i<+\\infty\\)",
+      "intuition": "No-bottom summands and a finite aggregate exclude a positive-infinite component.",
+      "why": "A dependency in the exact finite-sum source proof, not chapter completion.",
+      "position": "Orabona v10 Theorem 2.23 printed17–18/PDF29–30; intermediate declarations are actual proof dependencies.",
+      "proof_idea": "No-bottom summands and a finite aggregate exclude a positive-infinite component.",
+      "lean_notes": "Source terminals retain properness, the equality keeps convexity/closedness and exact mixed qualification. Query finiteness is derived internally.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.theorem_2_23_equality",
+      "title": "The exact mixed-qualified sum rule",
+      "chapter": "online-subgradient-sum",
+      "featured": false,
+      "teaching_order": 5,
+      "plain": "Construct the full component witness family at every queried point.",
+      "math": "\\(\\partial F(x)=\\sum_i\\partial f_i(x)\\)",
+      "intuition": "Construct the full component witness family at every queried point.",
+      "why": "A dependency in the exact finite-sum source proof, not chapter completion.",
+      "position": "Orabona v10 Theorem 2.23 printed17–18/PDF29–30; intermediate declarations are actual proof dependencies.",
+      "proof_idea": "Construct the full component witness family at every queried point.",
+      "lean_notes": "Source terminals retain properness, the equality keeps convexity/closedness and exact mixed qualification. Query finiteness is derived internally.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.binary_subgradient_decomposition",
+        "BanditRL.OnlineConvex.theorem_2_23_inclusion",
+        "BanditRL.OnlineConvex.interior_domain_sum"
+      ]
     }
   ]
 }

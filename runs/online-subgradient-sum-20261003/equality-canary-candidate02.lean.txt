@@ -1,0 +1,480 @@
+import BanditRLProof.OnlineConvexSums
+import BanditRLProof.OnlineSubgradientDifferentiability
+import Tests.OnlineSubgradientBasicCanary
+
+noncomputable section
+open Set Filter
+open scoped Topology BigOperators
+namespace BanditRL.OnlineConvex
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
+
+def SourceSubgradientSum {ι : Type*} [Fintype ι]
+    (f : ι → E → EReal) (x : E) : Set E :=
+  {g | ∃ G : ι → E, (∀ i, G i ∈ SourceSubdifferential (f i) x) ∧ ∑ i, G i = g}
+
+
+theorem upperAdd_eq_add_of_ne_bot (a b : EReal) (ha : a ≠ ⊥) (hb : b ≠ ⊥) :
+    upperAdd a b = a + b := by
+  cases a <;> cases b <;> simp_all [upperAdd, ← EReal.coe_neg, ← EReal.coe_add, add_comm]
+
+theorem ereal_finset_sum_ne_bot {ι : Type*} (s : Finset ι) (a : ι → EReal)
+    (ha : ∀ i ∈ s, a i ≠ ⊥) :
+    (∑ i ∈ s, a i) ≠ ⊥ := by
+  classical
+  induction s using Finset.induction_on with
+  | empty => simp
+  | @insert i s his ih =>
+    rw [Finset.sum_insert his]
+    apply EReal.add_ne_bot_iff.mpr
+    exact ⟨ha i (Finset.mem_insert_self _ _), ih (fun j hj => ha j (Finset.mem_insert_of_mem hj))⟩
+
+theorem convex_finset_sum {ι : Type*} (s : Finset ι) (f : ι → E → EReal)
+    (hb : ∀ i ∈ s, ∀ y, f i y ≠ ⊥) (hc : ∀ i ∈ s, IsConvexExtended (f i)) :
+    IsConvexExtended (fun y => ∑ i ∈ s, f i y) := by
+  classical
+  induction s using Finset.induction_on with
+  | empty =>
+    change IsConvexExtended (fun _ : E => ((0 : ℝ) : EReal))
+    exact (convexExtended_coe_iff _).mpr (convexOn_const (c := (0 : ℝ)) convex_univ)
+  | @insert i s his ih =>
+    have hsbot : ∀ y, (∑ j ∈ s, f j y) ≠ ⊥ := fun y =>
+      ereal_finset_sum_ne_bot s (fun j => f j y) (fun j hj => hb j (Finset.mem_insert_of_mem hj) y)
+    have hsc : IsConvexExtended (fun y => ∑ j ∈ s, f j y) :=
+      ih (fun j hj => hb j (Finset.mem_insert_of_mem hj))
+        (fun j hj => hc j (Finset.mem_insert_of_mem hj))
+    have hcv := convex_upperAdd (f i) (fun y => ∑ j ∈ s, f j y)
+      (hc i (Finset.mem_insert_self _ _)) hsc
+    have he : (fun y => upperAdd (f i y) (∑ j ∈ s, f j y)) =
+        (fun y => ∑ j ∈ insert i s, f j y) := by
+      funext y
+      rw [Finset.sum_insert his, upperAdd_eq_add_of_ne_bot _ _
+        (hb i (Finset.mem_insert_self _ _) y) (hsbot y)]
+    rw [he] at hcv
+    exact hcv
+
+theorem finite_sum_point {ι : Type*} [Fintype ι] (f : ι → E → EReal) (x : E)
+    (hx : ∀ i, ∃ r : ℝ, f i x = (r : EReal)) :
+    ∃ r : ℝ, (∑ i, f i x) = (r : EReal) := by
+  classical
+  choose a ha using hx
+  let coeHom : ℝ →+ EReal := ⟨⟨Real.toEReal, EReal.coe_zero⟩, EReal.coe_add⟩
+  refine ⟨∑ i, a i, ?_⟩
+  calc
+    (∑ i, f i x) = ∑ i, ((a i : ℝ) : EReal) := by simp only [ha]
+    _ = ((∑ i, a i : ℝ) : EReal) := (map_sum coeHom a Finset.univ).symm
+
+theorem sum_finite_implies_components_finite {ι : Type*} [Fintype ι]
+    (a : ι → EReal) (hb : ∀ i, a i ≠ ⊥) (ht : (∑ i, a i) ≠ ⊤) :
+    ∀ i, ∃ r : ℝ, a i = (r : EReal) := by
+  classical
+  intro i
+  have hi : a i ≠ ⊤ := by
+    intro hitop
+    have he := Finset.add_sum_erase Finset.univ a (Finset.mem_univ i)
+    have hrest := ereal_finset_sum_ne_bot (Finset.univ.erase i) a (fun j _ => hb j)
+    rw [hitop, EReal.top_add_of_ne_bot hrest] at he
+    exact ht he.symm
+  exact ⟨(a i).toReal, (EReal.coe_toReal hi (hb i)).symm⟩
+
+theorem interior_domain_sum {ι : Type*} [Fintype ι] (f : ι → E → EReal)
+    (hb : ∀ i y, f i y ≠ ⊥) (z : E)
+    (hz : ∀ i, z ∈ interior (effectiveDomain (f i))) :
+    z ∈ interior (effectiveDomain (fun y => ∑ i, f i y)) := by
+  have he : ∀ᶠ y in 𝓝 z, ∀ i, ((f i y).toReal : EReal) = f i y :=
+    eventually_all.mpr (fun i => finitePart_eventually (f i) (hb i) z (hz i))
+  apply mem_interior_iff_mem_nhds.mpr
+  filter_upwards [he] with y hy
+  obtain ⟨r, hr⟩ := finite_sum_point f y (fun i => ⟨(f i y).toReal, (hy i).symm⟩)
+  change (∑ i, f i y) < ⊤
+  rw [hr]
+  exact EReal.coe_lt_top _
+
+theorem binary_subgradient_decomposition
+    (f h : E → EReal) (hpf : SourceProper f) (hph : SourceProper h)
+    (hcf : IsConvexExtended f) (hch : IsConvexExtended h)
+    (x : E) (hfx : ∃ a : ℝ, f x = (a : EReal))
+    (hhx : ∃ b : ℝ, h x = (b : EReal))
+    (g : E) (hgs : g ∈ SourceSubdifferential (fun y => f y + h y) x)
+    (hqual : ∃ z : E, z ∈ interior (effectiveDomain f) ∧ z ∈ effectiveDomain h) :
+    ∃ p : E, p ∈ SourceSubdifferential f x ∧ g - p ∈ SourceSubdifferential h x := by
+  classical
+  obtain ⟨r, hr⟩ := hfx
+  obtain ⟨s, hsval⟩ := hhx
+  obtain ⟨z, hzint, hzdom⟩ := hqual
+  let P : ((E × ℝ) × (E × ℝ)) →ₗ[ℝ] E × ℝ := {
+    toFun := fun w => (w.1.1 - w.2.1, w.1.2 + w.2.2 - inner ℝ g w.2.1)
+    map_add' := by
+      intro v w
+      ext <;> simp only [Prod.fst_add, Prod.snd_add, inner_add_right] <;> abel
+    map_smul' := by
+      intro a w
+      ext <;> simp [smul_sub, real_inner_smul_right, smul_eq_mul, mul_add, mul_sub] }
+  let C : Set (E × ℝ) := P '' (realEpigraph f ×ˢ realEpigraph h)
+  have hC : Convex ℝ C := (hcf.prod hch).linear_image P
+  let q : ℝ := r + s - inner ℝ g x
+  have hpoint : (0, q) ∈ C := by
+    refine ⟨((x, r), (x, s)), ⟨hr.le, hsval.le⟩, ?_⟩
+    simp [P, q]
+  have height_bound : ∀ t : ℝ, (0, t) ∈ C → q ≤ t := by
+    intro t ht
+    obtain ⟨⟨⟨u, a⟩, ⟨v, b⟩⟩, ⟨hu, hv⟩, he⟩ := ht
+    have huv : u = v := by
+      have he1 := congrArg Prod.fst he
+      change u - v = 0 at he1
+      exact sub_eq_zero.mp he1
+    subst u
+    have htval := congrArg Prod.snd he
+    change a + b - inner ℝ g v = t at htval
+    have hlow := (hgs v).trans (add_le_add hu hv)
+    change f x + h x + (inner ℝ g (v - x) : EReal) ≤ (a : EReal) + (b : EReal) at hlow
+    rw [hr, hsval, ← EReal.coe_add, ← EReal.coe_add, ← EReal.coe_add] at hlow
+    have hreal : r + s + inner ℝ g (v - x) ≤ a + b := by exact_mod_cast hlow
+    rw [inner_sub_right] at hreal
+    dsimp only [q]
+    linarith
+  have hnotint : (0, q) ∉ interior C := by
+    intro hi
+    have he : ∀ᶠ t : ℝ in 𝓝 q, (0, t) ∈ C :=
+      (continuous_const.prodMk continuous_id).continuousAt.eventually
+        (isOpen_interior.mem_nhds hi) |>.mono (fun t ht => interior_subset ht)
+    have hm : IsLocalMin (fun t : ℝ => t) q := he.mono (fun t ht => height_bound t ht)
+    have hz := hm.hasDerivAt_eq_zero (hasDerivAt_id q)
+    norm_num at hz
+  obtain ⟨L, hLne, hsupport⟩ := supporting_functional_at_closure C hC (0, q)
+    (subset_closure hpoint) hnotint
+  let A : E →L[ℝ] ℝ := L.comp (ContinuousLinearMap.inl ℝ E ℝ)
+  let c : ℝ := L (0, 1)
+  have hsplit (v : E) (t : ℝ) : L (v, t) = A v + t * c := by
+    change L (v, t) = L (v, 0) + t * L (0, 1)
+    calc
+      _ = L ((v, 0) + t • ((0 : E), (1 : ℝ))) := by simp
+      _ = _ := by rw [map_add, map_smul]; rfl
+  have hc0 : c ≤ 0 := by
+    have hp1 : (0, q + 1) ∈ C := by
+      refine ⟨((x, r + 1), (x, s)), ⟨?_, hsval.le⟩, ?_⟩
+      · change f x ≤ ((r + 1 : ℝ) : EReal)
+        rw [hr]
+        exact_mod_cast (show r ≤ r + 1 by linarith)
+      · simp [P, q]; ring
+    have hh := hsupport (0, q + 1) hp1
+    rw [hsplit, hsplit, map_zero] at hh
+    linarith
+  have hcne : c ≠ 0 := by
+    intro hc
+    have hzfin := EReal.coe_toReal (ne_of_lt hzdom) (hph.1 z)
+    have hm : IsMaxOn A (effectiveDomain f) z := by
+      intro u hu
+      have hufin := EReal.coe_toReal (ne_of_lt hu) (hpf.1 u)
+      have huC : (u - z, (f u).toReal + (h z).toReal - inner ℝ g z) ∈ C := by
+        refine ⟨((u, (f u).toReal), (z, (h z).toReal)), ⟨hufin.ge, hzfin.ge⟩, rfl⟩
+      have hh := hsupport _ huC
+      rw [hsplit, hsplit, hc, map_zero, map_sub] at hh
+      simp only [mul_zero, add_zero] at hh
+      exact sub_nonpos.mp hh
+    have hAz : A = 0 := (hm.isLocalMax (mem_interior_iff_mem_nhds.mp hzint)).hasFDerivAt_eq_zero A.hasFDerivAt
+    apply hLne
+    apply ContinuousLinearMap.ext
+    rintro ⟨u, t⟩
+    rw [hsplit, hAz, hc]
+    simp
+  have hc : c < 0 := lt_of_le_of_ne hc0 hcne
+  let p : E := (InnerProductSpace.toDual ℝ E).symm ((-c⁻¹) • A)
+  have hinner (v : E) : inner ℝ p v = - A v / c := by
+    rw [show p = (InnerProductSpace.toDual ℝ E).symm ((-c⁻¹) • A) from rfl,
+      InnerProductSpace.toDual_symm_apply]
+    change (-c⁻¹) * A v = - A v / c
+    simp only [div_eq_mul_inv]
+    ring
+  refine ⟨p, ?_, ?_⟩
+  · intro y
+    by_cases hy : f y = ⊤
+    · rw [hy]; exact le_top
+    have hyfin := EReal.coe_toReal hy (hpf.1 y)
+    have hCy : (y - x, (f y).toReal + s - inner ℝ g x) ∈ C := by
+      exact ⟨((y, (f y).toReal), (x, s)), ⟨hyfin.ge, hsval.le⟩, rfl⟩
+    have hh := hsupport _ hCy
+    rw [hsplit, hsplit, map_zero] at hh
+    dsimp only [q] at hh
+    have hb : (r * c - A (y - x)) / c ≤ (f y).toReal :=
+      (div_le_iff_of_neg hc).mpr (by linarith)
+    have he : r - A (y - x) / c = (r * c - A (y - x)) / c := by
+      field_simp
+    rw [hr, hinner, ← EReal.coe_add, ← hyfin]
+    apply EReal.coe_le_coe
+    rw [neg_div, ← sub_eq_add_neg, he]
+    exact hb
+  · intro y
+    by_cases hy : h y = ⊤
+    · rw [hy]; exact le_top
+    have hyfin := EReal.coe_toReal hy (hph.1 y)
+    have hCy : (x - y, r + (h y).toReal - inner ℝ g y) ∈ C := by
+      exact ⟨((x, r), (y, (h y).toReal)), ⟨hr.le, hyfin.ge⟩, rfl⟩
+    have hh := hsupport _ hCy
+    rw [hsplit, hsplit, map_zero, map_sub] at hh
+    dsimp only [q] at hh
+    have hb : (s * c + inner ℝ g (y - x) * c + A (y - x)) / c ≤ (h y).toReal := by
+      apply (div_le_iff_of_neg hc).mpr
+      rw [inner_sub_right, map_sub]
+      nlinarith
+    have he : s + (inner ℝ g (y - x) + A (y - x) / c) =
+        (s * c + inner ℝ g (y - x) * c + A (y - x)) / c := by
+      field_simp <;> ring
+    rw [hsval, inner_sub_left, hinner, ← EReal.coe_add, ← hyfin]
+    apply EReal.coe_le_coe
+    have he2 : s + (inner ℝ g (y - x) - -A (y - x) / c) =
+        s + (inner ℝ g (y - x) + A (y - x) / c) := by ring
+    rw [he2, he]
+    exact hb
+
+theorem theorem_2_23_inclusion {ι : Type*} [Fintype ι]
+    (f : ι → E → EReal) (hp : ∀ i, SourceProper (f i)) (x : E) :
+    SourceSubgradientSum f x ⊆ SourceSubdifferential (fun y => ∑ i, f i y) x := by
+  classical
+  rintro g ⟨G, hG, rfl⟩ y
+  let coeHom : ℝ →+ EReal := ⟨⟨Real.toEReal, EReal.coe_zero⟩, EReal.coe_add⟩
+  have hcoe : ((∑ i, inner ℝ (G i) (y - x) : ℝ) : EReal) =
+      ∑ i, (inner ℝ (G i) (y - x) : EReal) :=
+    map_sum coeHom (fun i => inner ℝ (G i) (y - x)) Finset.univ
+  have hs := Finset.sum_le_sum (fun i (_ : i ∈ Finset.univ) => hG i y)
+  rw [Finset.sum_add_distrib] at hs
+  change (∑ i, f i x) + (inner ℝ (∑ i, G i) (y - x) : EReal) ≤ ∑ i, f i y
+  rw [sum_inner, hcoe]
+  exact hs
+
+theorem theorem_2_23_equality (n : ℕ) (f : Fin (n + 1) → E → EReal)
+    (hp : ∀ i, SourceProper (f i)) (hc : ∀ i, IsConvexExtended (f i))
+    (hclosed : ∀ i, SourceClosed (f i))
+    (hqual : ∃ z : E, z ∈ effectiveDomain (f (Fin.last n)) ∧
+      ∀ i : Fin (n + 1), i ≠ Fin.last n → z ∈ interior (effectiveDomain (f i)))
+    (x : E) :
+    SourceSubdifferential (fun y => ∑ i, f i y) x = SourceSubgradientSum f x := by
+  classical
+  induction n with
+  | zero =>
+    apply Set.Subset.antisymm ?_ (theorem_2_23_inclusion f hp x)
+    intro g hg
+    have hg0 : g ∈ SourceSubdifferential (f 0) x := by
+      have he : (fun y => ∑ i, f i y) = f 0 := funext (fun y => Fin.sum_univ_one _)
+      rw [he] at hg
+      exact hg
+    refine ⟨fun _ => g, ?_, ?_⟩
+    · intro i
+      simpa only [Fin.eq_zero i] using hg0
+    · exact Fin.sum_univ_one _
+  | succ n ih =>
+    apply Set.Subset.antisymm ?_ (theorem_2_23_inclusion f hp x)
+    intro g hg
+    obtain ⟨z, hzlast, hz⟩ := hqual
+    let fp : Fin (n + 1) → E → EReal := fun i => f i.castSucc
+    let F : E → EReal := fun y => ∑ i, fp i y
+    let h : E → EReal := f (Fin.last (n + 1))
+    have hb : ∀ i y, f i y ≠ ⊥ := fun i => (hp i).1
+    have hpint : ∀ i : Fin (n + 1), z ∈ interior (effectiveDomain (fp i)) :=
+      fun i => hz i.castSucc (Fin.castSucc_ne_last i)
+    have hpz : ∀ i : Fin (n + 1), ∃ r : ℝ, fp i z = (r : EReal) := by
+      intro i
+      have himem : z ∈ effectiveDomain (fp i) := interior_subset (hpint i)
+      have hitop : fp i z ≠ ⊤ := ne_top_of_lt (show fp i z < ⊤ from himem)
+      exact ⟨(fp i z).toReal, (EReal.coe_toReal hitop (hb i.castSucc z)).symm⟩
+    have hlastz : ∃ r : ℝ, h z = (r : EReal) :=
+      ⟨(h z).toReal, (EReal.coe_toReal (ne_top_of_lt hzlast) (hb _ z)).symm⟩
+    have hFproper : SourceProper F := by
+      refine ⟨fun y => ereal_finset_sum_ne_bot Finset.univ (fun i => fp i y)
+        (fun i _ => hb i.castSucc y), ?_⟩
+      obtain ⟨r, hr⟩ := finite_sum_point fp z hpz
+      exact ⟨z, r, hr⟩
+    have hFconvex : IsConvexExtended F :=
+      convex_finset_sum Finset.univ fp (fun i _ => hb i.castSucc) (fun i _ => hc i.castSucc)
+    have hFint : z ∈ interior (effectiveDomain F) :=
+      interior_domain_sum fp (fun i => hb i.castSucc) z hpint
+    have hsumproper : SourceProper (fun y => ∑ i, f i y) := by
+      refine ⟨fun y => ereal_finset_sum_ne_bot Finset.univ (fun i => f i y)
+        (fun i _ => hb i y), ?_⟩
+      have hzall : ∀ i, ∃ r : ℝ, f i z = (r : EReal) := by
+        intro i
+        refine Fin.lastCases ?_ (fun j => ?_) i
+        · exact hlastz
+        · exact hpz j
+      obtain ⟨r, hr⟩ := finite_sum_point f z hzall
+      exact ⟨z, r, hr⟩
+    have hquery := subgradient_point_finite (fun y => ∑ i, f i y) hsumproper x g hg
+    have hxall := sum_finite_implies_components_finite (fun i => f i x)
+      (fun i => hb i x) (ne_top_of_lt hquery)
+    have hFx : ∃ r : ℝ, F x = (r : EReal) :=
+      finite_sum_point fp x (fun i => hxall i.castSucc)
+    have hhx : ∃ r : ℝ, h x = (r : EReal) := hxall _
+    have hgb : g ∈ SourceSubdifferential (fun y => F y + h y) x := by
+      simpa only [Fin.sum_univ_castSucc, F, h, fp] using hg
+    obtain ⟨p, hpF, hq⟩ := binary_subgradient_decomposition F h hFproper (hp _)
+      hFconvex (hc _) x hFx hhx g hgb ⟨z, hFint, hzlast⟩
+    have hpqual : ∃ w : E, w ∈ effectiveDomain (fp (Fin.last n)) ∧
+        ∀ i : Fin (n + 1), i ≠ Fin.last n → w ∈ interior (effectiveDomain (fp i)) :=
+      ⟨z, interior_subset (hpint _), fun i _ => hpint i⟩
+    have heq := ih fp (fun i => hp i.castSucc) (fun i => hc i.castSucc)
+      (fun i => hclosed i.castSucc) hpqual
+    have hpM : p ∈ SourceSubgradientSum fp x := by
+      rw [← heq]
+      exact hpF
+    obtain ⟨G, hG, hGp⟩ := hpM
+    refine ⟨Fin.snoc G (g - p), ?_, ?_⟩
+    · intro i
+      refine Fin.lastCases ?_ (fun j => ?_) i
+      · simpa only [Fin.snoc_last] using hq
+      · simpa only [Fin.snoc_castSucc] using hG j
+    · rw [Fin.sum_univ_castSucc]
+      simp only [Fin.snoc_castSucc, Fin.snoc_last, hGp]
+      abel
+
+end BanditRL.OnlineConvex
+#print axioms BanditRL.OnlineConvex.theorem_2_23_equality
+
+namespace SumEqualityProbe
+open BanditRL.OnlineConvex Set
+
+def square (y : ℝ) : EReal := ((y^2 : ℝ) : EReal)
+def interval : ℝ → EReal := extendedIndicator (Icc (0 : ℝ) 2)
+def family : Fin 3 → ℝ → EReal := ![square, square, interval]
+
+theorem square_proper : SourceProper square :=
+  ⟨fun y => EReal.coe_ne_bot _, 0, 0, by norm_num [square]⟩
+theorem square_domain : effectiveDomain square = univ := by
+  ext y
+  simp only [effectiveDomain, mem_setOf_eq, mem_univ, iff_true]
+  exact EReal.coe_lt_top _
+theorem square_convex : IsConvexExtended square := by
+  apply (convexExtended_iff_toReal square square_proper.1).mpr
+  rw [square_domain]
+  simpa only [square, EReal.toReal_coe] using SubgradientProbe.square_convex
+theorem square_closed : SourceClosed square := by
+  intro r
+  have he : {y : ℝ | square y ≤ (r : EReal)} = {y : ℝ | y^2 ≤ r} := by
+    ext y
+    exact EReal.coe_le_coe_iff
+  rw [he]
+  exact isClosed_le (continuous_id.pow 2) continuous_const
+theorem interval_proper : SourceProper interval :=
+  (sourceProper_indicator_iff _).mpr ⟨0, by norm_num⟩
+theorem interval_convex : IsConvexExtended interval :=
+  (convex_indicator_iff _).mpr (convex_Icc 0 2)
+theorem interval_closed : SourceClosed interval :=
+  (sourceClosed_indicator_iff _).mpr isClosed_Icc
+
+theorem family_proper : ∀ i, SourceProper (family i) := by
+  intro i
+  fin_cases i
+  · exact square_proper
+  · exact square_proper
+  · exact interval_proper
+theorem family_convex : ∀ i, IsConvexExtended (family i) := by
+  intro i
+  fin_cases i
+  · exact square_convex
+  · exact square_convex
+  · exact interval_convex
+theorem family_closed : ∀ i, SourceClosed (family i) := by
+  intro i
+  fin_cases i
+  · exact square_closed
+  · exact square_closed
+  · exact interval_closed
+theorem family_mixed_qualification :
+    ∃ z : ℝ, z ∈ effectiveDomain (family (Fin.last 2)) ∧
+      ∀ i : Fin 3, i ≠ Fin.last 2 → z ∈ interior (effectiveDomain (family i)) := by
+  refine ⟨0, ?_, ?_⟩
+  · change (0 : ℝ) ∈ effectiveDomain interval
+    rw [interval, effectiveDomain_indicator]
+    norm_num
+  · intro i hi
+    fin_cases i
+    · change (0 : ℝ) ∈ interior (effectiveDomain square)
+      rw [square_domain, interior_univ]
+      exact mem_univ _
+    · change (0 : ℝ) ∈ interior (effectiveDomain square)
+      rw [square_domain, interior_univ]
+      exact mem_univ _
+    · exact (hi rfl).elim
+
+theorem nonzero_aggregate_support :
+    (-1 : ℝ) ∈ SourceSubdifferential (fun y => ∑ i, family i y) 0 := by
+  intro y
+  simp only [Fin.sum_univ_three]
+  change square 0 + square 0 + interval 0 + (inner ℝ (-1 : ℝ) (y - 0) : EReal) ≤
+    square y + square y + interval y
+  have hz : interval 0 = 0 := by norm_num [interval, extendedIndicator]
+  have hs : square 0 = 0 := by norm_num [square]
+  rw [hs, hz]
+  by_cases hy : y ∈ Icc (0 : ℝ) 2
+  · have hhy : interval y = 0 := by simp only [interval, extendedIndicator, if_pos hy]
+    rw [hhy]
+    simp only [zero_add, add_zero, ← EReal.coe_add]
+    apply EReal.coe_le_coe
+    change (y - 0) * (-1) ≤ y^2 + y^2
+    nlinarith [hy.1, sq_nonneg y]
+  · have hhy : interval y = ⊤ := by simp only [interval, extendedIndicator, if_neg hy]
+    rw [hhy, EReal.add_top_of_ne_bot (EReal.add_ne_bot_iff.mpr ⟨square_proper.1 y, square_proper.1 y⟩)]
+    exact le_top
+
+theorem actual_three_component_decomposition :
+    ∃ G : Fin 3 → ℝ, (∀ i, G i ∈ SourceSubdifferential (family i) 0) ∧
+      ∑ i, G i = (-1 : ℝ) := by
+  have he := theorem_2_23_equality 2 family family_proper family_convex family_closed
+    family_mixed_qualification 0
+  have hg := nonzero_aggregate_support
+  rw [he] at hg
+  exact hg
+
+theorem last_domain_boundary :
+    (0 : ℝ) ∉ interior (effectiveDomain (family (Fin.last 2))) := by
+  change (0 : ℝ) ∉ interior (effectiveDomain interval)
+  rw [interval, effectiveDomain_indicator, interior_Icc]
+  norm_num
+
+theorem outside_domain_both_empty :
+    SourceSubdifferential (fun y => ∑ i, family i y) 3 = ∅ ∧
+      SourceSubgradientSum family 3 = ∅ := by
+  have he := theorem_2_23_equality 2 family family_proper family_convex family_closed
+    family_mixed_qualification 3
+  have hempty : SourceSubgradientSum family 3 = ∅ := by
+    apply eq_empty_iff_forall_notMem.mpr
+    rintro g ⟨G, hG, hs⟩
+    have hi := subgradient_point_finite interval interval_proper 3 (G (Fin.last 2)) (hG (Fin.last 2))
+    rw [interval, effectiveDomain_indicator] at hi
+    norm_num at hi
+  exact ⟨he.trans hempty, hempty⟩
+
+theorem singleton_family_empty_interior :
+    interior (effectiveDomain (extendedIndicator ({0} : Set ℝ))) = ∅ ∧
+      (7 : ℝ) ∈ SourceSubgradientSum (fun _ : Fin 1 => extendedIndicator ({0} : Set ℝ)) 0 := by
+  have hproper : SourceProper (extendedIndicator ({0} : Set ℝ)) :=
+    (sourceProper_indicator_iff _).mpr ⟨0, mem_singleton 0⟩
+  have hconvex : IsConvexExtended (extendedIndicator ({0} : Set ℝ)) :=
+    (convex_indicator_iff _).mpr (convex_singleton 0)
+  have hclosed : SourceClosed (extendedIndicator ({0} : Set ℝ)) :=
+    (sourceClosed_indicator_iff _).mpr isClosed_singleton
+  have hqual : ∃ z : ℝ, z ∈ effectiveDomain (extendedIndicator ({0} : Set ℝ)) ∧
+      ∀ i : Fin 1, i ≠ Fin.last 0 → z ∈ interior (effectiveDomain (extendedIndicator ({0} : Set ℝ))) := by
+    refine ⟨0, ?_, ?_⟩
+    · rw [effectiveDomain_indicator]
+      exact mem_singleton 0
+    · intro i hi
+      exact (hi (Subsingleton.elim _ _)).elim
+  have he := theorem_2_23_equality 0 (fun _ : Fin 1 => extendedIndicator ({0} : Set ℝ))
+    (fun _ => hproper) (fun _ => hconvex) (fun _ => hclosed) hqual 0
+  constructor
+  · rw [effectiveDomain_indicator]
+    exact interior_singleton (0 : ℝ)
+  · rw [← he]
+    intro y
+    simp only [Fin.sum_univ_one]
+    by_cases hy : y = 0
+    · subst y
+      norm_num [extendedIndicator]
+    · rw [show extendedIndicator ({0} : Set ℝ) y = ⊤ from by simp [extendedIndicator, hy]]
+      exact le_top
+
+#print axioms actual_three_component_decomposition
+#print axioms nonzero_aggregate_support
+#print axioms last_domain_boundary
+#print axioms outside_domain_both_empty
+#print axioms singleton_family_empty_interior
+end SumEqualityProbe

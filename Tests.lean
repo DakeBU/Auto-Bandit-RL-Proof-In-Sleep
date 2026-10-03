@@ -125,3 +125,4 @@ import Tests.OnlineClosedProperCanary
 import Tests.OnlineSubgradientBasicCanary
 import Tests.OnlineSubgradientInteriorCanary
 import Tests.OnlineSubgradientDifferentiabilityCanary
+import Tests.OnlineSubgradientSumCanary

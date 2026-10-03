@@ -1,0 +1,45 @@
+tmp/online-subgradient-sum-equality.lean:30:0: warning: automatically included section variable(s) unused in theorem `BanditRL.OnlineConvex.convex_finset_sum`:
+  [FiniteDimensional ℝ E]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ E] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+tmp/online-subgradient-sum-equality.lean:54:0: warning: automatically included section variable(s) unused in theorem `BanditRL.OnlineConvex.finite_sum_point`:
+  [NormedAddCommGroup E]
+  [InnerProductSpace ℝ E]
+  [FiniteDimensional ℝ E]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+tmp/online-subgradient-sum-equality.lean:220:17: warning: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+tmp/online-subgradient-sum-equality.lean:228:0: warning: automatically included section variable(s) unused in theorem `BanditRL.OnlineConvex.theorem_2_23_inclusion`:
+  [FiniteDimensional ℝ E]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ E] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+tmp/online-subgradient-sum-equality.lean:229:25: warning: unused variable `hp`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+tmp/online-subgradient-sum-equality.lean:256:6: error: Type mismatch: After simplification, term
+  hg
+ has type
+  g ∈ SourceSubdifferential (fun y => ∑ i, f i y) x
+but is expected to have type
+  g ∈ SourceSubdifferential (f 0) x
+tmp/online-subgradient-sum-equality.lean:273:46: error(lean.invalidField): Invalid field notation: Field projection operates on types of the form `C ...` where C is a constant. The expression
+  mem_interior_iff_mem_nhds.mp (hpint i)
+has type
+  (𝓝 z).1 (effectiveDomain (fp i))
+which does not have the necessary form.
+tmp/online-subgradient-sum-equality.lean:309:16: error: Function expected at
+  ih fp (fun i => hp i.castSucc) (fun i => hc i.castSucc) (fun i => hclosed i.castSucc) hpqual
+but this term has type
+  SourceSubdifferential (fun y => ∑ i, fp i y) x = SourceSubgradientSum fp x
+
+Note: Expected a function because this term is being applied to the argument
+  x
+'BanditRL.OnlineConvex.theorem_2_23_equality' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]

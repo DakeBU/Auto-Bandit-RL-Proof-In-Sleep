@@ -1,0 +1,3 @@
+theorem theorem_2_23_inclusion {ι : Type*} [Fintype ι]
+    (f : ι → E → EReal) (hp : ∀ i, SourceProper (f i)) (x : E) :
+    SourceSubgradientSum f x ⊆ SourceSubdifferential (fun y => ∑ i, f i y) x

@@ -1,0 +1,3 @@
+# Separate reviewer and gate decision
+
+Distinct full-source scratch and final actual public producer/canary/reader reviews: accepted-with-explicit-delta, no blocking repair. Source endpoints retain exact mixed qualification and all-x scope; empty-index inclusion/improper-aggregate convention is explicitly bounded. Technical root/Tests/fullharness/axiom/fence/actualgraph/site/contributor gates pass separately. Fixed43-file committed LF bindings and57raw rows pass with0supersessions. Source/header/contract bytes are unchanged from draft; lifecycle acceptance is recorded separately. This is local package acceptance, not a single runtime enforcement claim, external-human review, chapter/book completion, PR/merge/deployment or main/live acceptance.
