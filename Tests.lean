@@ -124,3 +124,4 @@ import Tests.OnlineHuberCanary
 import Tests.OnlineClosedProperCanary
 import Tests.OnlineSubgradientBasicCanary
 import Tests.OnlineSubgradientInteriorCanary
+import Tests.OnlineSubgradientDifferentiabilityCanary

@@ -1,0 +1,26 @@
+noncomputable section
+open Set Filter
+open scoped Topology
+namespace Neutral
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
+
+def effectiveDomain (f : E → EReal) : Set E := {x | f x < ⊤}
+def realEpigraph (f : E → EReal) : Set (E × ℝ) := {p | f p.1 ≤ (p.2 : EReal)}
+def IsConvexExtended (f : E → EReal) : Prop := Convex ℝ (realEpigraph f)
+def SourceSubdifferential (f : E → EReal) (x : E) : Set E :=
+  {g | ∀ y, f x + (inner ℝ g (y-x) : EReal) ≤ f y}
+
+def SourceDifferentiableAt (f : E → EReal) (x : E) : Prop :=
+  ∃ h : E → ℝ, (fun y => (h y : EReal)) =ᶠ[𝓝 x] f ∧ DifferentiableAt ℝ h x
+
+
+theorem local_equivalence (f : E → EReal) (hf : IsConvexExtended f)
+    (x : E) (hx : ∃ r : ℝ, f x = (r : EReal)) :
+    SourceDifferentiableAt f x ↔ ∃ g : E, SourceSubdifferential f x = {g}
+
+theorem singleton_subdifferential_interior (f : E → EReal) (hf : IsConvexExtended f)
+    (x : E) (hx : ∃ r : ℝ, f x = (r : EReal))
+    (g : E) (hg : SourceSubdifferential f x = {g}) :
+    x ∈ interior (effectiveDomain f)
+
+end Neutral

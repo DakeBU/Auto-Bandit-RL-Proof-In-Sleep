@@ -1,0 +1,44 @@
+import BanditRLProof.OnlineSubgradientInterior
+import BanditRLProof.OnlineConvexFirstOrder
+import Mathlib.Analysis.Calculus.LocalExtr.Basic
+
+noncomputable section
+open Set Filter
+open scoped Topology
+namespace BanditRL.OnlineConvex
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
+
+def SourceDifferentiableAt (f : E → EReal) (x : E) : Prop :=
+  ∃ h : E → ℝ, (fun y => (h y : EReal)) =ᶠ[𝓝 x] f ∧ DifferentiableAt ℝ h x
+
+theorem subgradient_limit_of_continuousAt
+    {ι : Type*} (l : Filter ι) [NeBot l]
+    (f : E → EReal) (hbot : ∀ y, f y ≠ ⊥)
+    (x g : E) (hx : x ∈ interior (effectiveDomain f))
+    (hcont : ContinuousAt (fun y => (f y).toReal) x)
+    (xs gs : ι → E) (hxs : Tendsto xs l (𝓝 x)) (hgs : Tendsto gs l (𝓝 g))
+    (hs : ∀ᶠ i in l, gs i ∈ SourceSubdifferential f (xs i)) :
+    g ∈ SourceSubdifferential f x := by
+  have hfinite := finitePart_eventually f hbot x hx
+  have hxfin := hfinite.self_of_nhds
+  have hefin := hxs.eventually hfinite
+  have hfconv := hcont.tendsto.comp hxs
+  intro y
+  by_cases hyt : f y = ⊤
+  · rw [hyt]
+    exact le_top
+  · have hyfin := EReal.coe_toReal hyt (hbot y)
+    have ht : Tendsto (fun i => (f (xs i)).toReal + inner ℝ (gs i) (y - xs i)) l
+        (𝓝 ((f x).toReal + inner ℝ g (y - x))) :=
+      hfconv.add (hgs.inner (tendsto_const_nhds.sub hxs))
+    have hbound : (f x).toReal + inner ℝ g (y - x) ≤ (f y).toReal := by
+      apply le_of_tendsto ht
+      filter_upwards [hs, hefin] with i hi hifin
+      have hb := hi y
+      rw [← hifin, ← hyfin, ← EReal.coe_add] at hb
+      exact_mod_cast hb
+    rw [← hxfin, ← hyfin, ← EReal.coe_add]
+    exact EReal.coe_le_coe hbound
+
+end BanditRL.OnlineConvex
+#print axioms BanditRL.OnlineConvex.subgradient_limit_of_continuousAt

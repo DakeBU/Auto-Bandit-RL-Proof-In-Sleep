@@ -1,0 +1,4 @@
+theorem subgradients_locally_bounded (f : E → EReal) (hbot : ∀ y, f y ≠ ⊥)
+    (hf : IsConvexExtended f) (x : E) (hx : x ∈ interior (effectiveDomain f)) :
+    ∃ r : ℝ, 0 < r ∧ ∃ K : ℝ≥0,
+      ∀ y ∈ Metric.ball x r, ∀ g ∈ SourceSubdifferential f y, ‖g‖ ≤ (K : ℝ)

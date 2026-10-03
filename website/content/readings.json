@@ -3453,6 +3453,137 @@
         "takeaway": "Extended values outside the constraint set are included in the same global theorem.",
         "boundary": "This application is an interior-point guarantee, not a boundary differentiability assertion."
       }
+    },
+    {
+      "slug": "online-subgradient-differentiability",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10,21June2026",
+        "sections": "Section 2.2.1, Theorem 2.22",
+        "pages": "printed17/PDF29",
+        "pdf_page": 29,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "Differentiable extended-real function",
+          "meaning": "A differentiable real representative agrees with f throughout a neighborhood of x. Differentiability of toReal alone is insufficient at an infinite-domain boundary."
+        },
+        {
+          "term": "Global subdifferential",
+          "meaning": "All g satisfying f(x)+inner(g,y-x)<=f(y) for every y in the whole space."
+        },
+        {
+          "term": "Finite point",
+          "meaning": "f(x) equals a real number; no properness, interior, closedness or boundedness is added as a theorem input."
+        }
+      ],
+      "algorithm": {
+        "title": "Recover the derivative",
+        "kind": "proof flow",
+        "steps": [
+          {
+            "title": "Force interior membership",
+            "detail": "A nonzero supporting normal at a domain boundary would perturb any support into a second one, contradicting the singleton."
+          },
+          {
+            "title": "Control neighboring supports",
+            "detail": "Convex local Lipschitzness yields a uniform norm bound; compactness and a genuine closed-graph limit identify every support cluster point."
+          },
+          {
+            "title": "Squeeze the derivative residual",
+            "detail": "The supports at x and y give a nonnegative residual bounded by norm(G(y)-g) times norm(y-x), which is little-o."
+          }
+        ]
+      },
+      "teaching_route": [
+        "BanditRL.OnlineConvex.singleton_subdifferential_interior",
+        "BanditRL.OnlineConvex.singleton_subdifferential_hasGradientAt",
+        "BanditRL.OnlineConvex.theorem_2_22",
+        "BanditRL.OnlineConvex.theorem_2_22_gradient"
+      ],
+      "source_theorems": [
+        {
+          "label": "Theorem 2.22",
+          "pages": "printed17",
+          "pdf_page": 29,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "f\\text{ differentiable at }x\\iff\\partial f(x)=\\{\\nabla f(x)\\}",
+          "fallback": "Differentiability iff singleton, with a separate gradient identity for every local real representative.",
+          "plain": "A convex extended-real function finite at x is differentiable there iff its subdifferential is a singleton, whose member is the gradient.",
+          "relationship": "Finite-dimensional real inner-product space represents Euclidean source; neighborhood real representatives express ordinary extended-real differentiability. Properness and interior membership are consequences, not extra assumptions.",
+          "contract": {
+            "model": "Extended-real convexity is convexity of the real-height epigraph; the support inequality is global.",
+            "assumptions": "Finite-dimensional real inner-product space, convex f, and f(x) finite. No closedness, bounded domain, properness or interior premise.",
+            "parameters": "For every f and x satisfying these assumptions. The gradient identity holds for every differentiable local real representative h agreeing near x.",
+            "regret": "No regret or algorithm guarantee.",
+            "guarantee": "SourceDifferentiableAt f x iff there exists g with SourceSubdifferential f x={g}; the singleton is {gradient h x}."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Public Theorem 2.22 candidate",
+            "boundary": "Focused public module and real constrained/quadratic/boundary canaries compile. Full root, harness, semantic reader and site acceptance are recorded separately. Not merged or deployed; chapter/book incomplete."
+          }
+        }
+      ],
+      "proof_bridge": {
+        "title": "From a singleton support to the actual derivative",
+        "summary": "The derivative is produced from the original convex function, not supplied as a premise.",
+        "steps": [
+          {
+            "title": "Derive the neighborhood",
+            "detail": "The finite support at x rules out negative-infinity values globally. If x were a boundary domain point, a nonzero supporting normal d would make both g and g+d global supports.",
+            "math": "\\partial f(x)=\\{g\\}\\Longrightarrow x\\in\\operatorname{int}(\\operatorname{dom}f)",
+            "fallback": "Convex separation and Riesz representation provide the actual normal."
+          },
+          {
+            "title": "Bound all nearby supports",
+            "detail": "Convexity gives actual local Lipschitzness. Testing a support inside a finite ball bounds its norm by the Lipschitz constant. Nearby supports have convergent subnets in a finite-dimensional compact closed ball.",
+            "math": "\\|G(y)\\|\\le K,\\qquad G(y)\\longrightarrow g",
+            "fallback": "The closed graph uses continuity of the original finite part. Every cluster point belongs to the original singleton."
+          },
+          {
+            "title": "Obtain the Frechet derivative",
+            "detail": "Compare the global support at x with the actual selected support at y, then use Cauchy-Schwarz.",
+            "math": "0\\le f(y)-f(x)-\\langle g,y-x\\rangle\\le\\|G(y)-g\\|\\,\\|y-x\\|",
+            "fallback": "The coefficient tends to zero, proving the full Frechet little-o residual, not merely directional derivatives."
+          },
+          {
+            "title": "Prove the forward direction and identify the gradient",
+            "detail": "An actual differentiable neighborhood representative is finite locally. A touching affine support produces global nowhere-bottom; convex first-order bounds give the gradient support, and every support must equal that gradient.",
+            "math": "\\partial f(x)=\\{\\nabla h(x)\\}",
+            "fallback": "The gradient companion quantifies over every admissible local representative."
+          }
+        ],
+        "boundary": "Finite-dimensional equivalence only; no general infinite-dimensional or subgradient sum/max rule. Later Chapter 2 and book obligations remain mandatory."
+      },
+      "worked_example": {
+        "title": "Interior and boundary behave differently",
+        "intro": "Use the genuine extended-real interval indicator and a nonzero quadratic gradient.",
+        "steps": [
+          {
+            "title": "Constrained interior",
+            "detail": "For the zero/top indicator of [0,2], the support set at 1 is {0}. The full reverse theorem produces actual differentiability.",
+            "math": "\\partial I_{[0,2]}(1)=\\{0\\}",
+            "fallback": "The public canary invokes both the gradient identity and the full equivalence."
+          },
+          {
+            "title": "Nonzero derivative",
+            "detail": "For f(y)=y squared at 1, the support set is {2}; the reverse gradient theorem produces HasGradientAt with gradient 2.",
+            "math": "\\nabla(y^2)|_{y=1}=2",
+            "fallback": "This prevents a zero-gradient-only test."
+          },
+          {
+            "title": "Finite boundary point",
+            "detail": "At 0 the interval indicator is finite but both 0 and -1 are supports. The equivalence proves it is not differentiable in the ambient real-representative sense.",
+            "math": "0,-1\\in\\partial I_{[0,2]}(0)",
+            "fallback": "No extra interior assumption is hidden in the terminal."
+          }
+        ],
+        "takeaway": "The source equivalence handles real nonzero derivatives and the true extended-real domain boundary.",
+        "boundary": "These examples do not prove any infinite-dimensional extension."
+      }
     }
   ]
 }

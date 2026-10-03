@@ -2832,6 +2832,104 @@
       "dependencies": [
         "BanditRL.OnlineConvex.supporting_functional_at_closure"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.affine_support_of_finite_neighborhood",
+      "title": "Affine contact from local finiteness",
+      "chapter": "online-subgradient-differentiability",
+      "featured": false,
+      "teaching_order": 0,
+      "plain": "A convex extended-real function finite near x has an affine support touching at x and valid globally.",
+      "math": "\\(a(x)+b=f(x),\\quad a(y)+b\\le f(y)\\)",
+      "intuition": "A convex extended-real function finite near x has an affine support touching at x and valid globally.",
+      "why": "A dependency in the exact Theorem 2.22 chain, not a chapter-completion claim.",
+      "position": "Orabona v10 Theorem 2.22, printed17/PDF29; intermediate declarations are proof dependencies.",
+      "proof_idea": "A convex extended-real function finite near x has an affine support touching at x and valid globally.",
+      "lean_notes": "Finite-dimensional real inner-product geometry. The source endpoint adds only convexity and finite-at-x; leaf-specific local hypotheses are derived in its proof.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.singleton_subdifferential_interior",
+      "title": "Singleton forces an interior point",
+      "chapter": "online-subgradient-differentiability",
+      "featured": false,
+      "teaching_order": 1,
+      "plain": "A finite point with a singleton global support set belongs to the ambient domain interior.",
+      "math": "\\(\\partial f(x)=\\{g\\}\\Longrightarrow x\\in\\operatorname{int}(\\operatorname{dom}f)\\)",
+      "intuition": "A finite point with a singleton global support set belongs to the ambient domain interior.",
+      "why": "A dependency in the exact Theorem 2.22 chain, not a chapter-completion claim.",
+      "position": "Orabona v10 Theorem 2.22, printed17/PDF29; intermediate declarations are proof dependencies.",
+      "proof_idea": "A finite point with a singleton global support set belongs to the ambient domain interior.",
+      "lean_notes": "Finite-dimensional real inner-product geometry. The source endpoint adds only convexity and finite-at-x; leaf-specific local hypotheses are derived in its proof.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.singleton_subgradient_tendsto",
+      "title": "Compactness identifies every support limit",
+      "chapter": "online-subgradient-differentiability",
+      "featured": false,
+      "teaching_order": 4,
+      "plain": "Nearby supports converge to the singleton element using the actual local uniform bound and closed-graph limit.",
+      "math": "\\(g_y\\longrightarrow g\\)",
+      "intuition": "Nearby supports converge to the singleton element using the actual local uniform bound and closed-graph limit.",
+      "why": "A dependency in the exact Theorem 2.22 chain, not a chapter-completion claim.",
+      "position": "Orabona v10 Theorem 2.22, printed17/PDF29; intermediate declarations are proof dependencies.",
+      "proof_idea": "Nearby supports converge to the singleton element using the actual local uniform bound and closed-graph limit.",
+      "lean_notes": "Finite-dimensional real inner-product geometry. The source endpoint adds only convexity and finite-at-x; leaf-specific local hypotheses are derived in its proof.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.singleton_subdifferential_hasGradientAt",
+      "title": "Recover the Frechet gradient",
+      "chapter": "online-subgradient-differentiability",
+      "featured": false,
+      "teaching_order": 5,
+      "plain": "Two genuine supporting inequalities squeeze the derivative residual by a coefficient tending to zero.",
+      "math": "\\(\\|f(y)-f(x)-\\langle g,y-x\\rangle\\|=o(\\|y-x\\|)\\)",
+      "intuition": "Two genuine supporting inequalities squeeze the derivative residual by a coefficient tending to zero.",
+      "why": "A dependency in the exact Theorem 2.22 chain, not a chapter-completion claim.",
+      "position": "Orabona v10 Theorem 2.22, printed17/PDF29; intermediate declarations are proof dependencies.",
+      "proof_idea": "Two genuine supporting inequalities squeeze the derivative residual by a coefficient tending to zero.",
+      "lean_notes": "Finite-dimensional real inner-product geometry. The source endpoint adds only convexity and finite-at-x; leaf-specific local hypotheses are derived in its proof.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.singleton_subdifferential_interior",
+        "BanditRL.OnlineConvex.singleton_subgradient_tendsto"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.theorem_2_22",
+      "title": "Differentiability iff singleton subdifferential",
+      "chapter": "online-subgradient-differentiability",
+      "featured": false,
+      "teaching_order": 6,
+      "plain": "Convex extended-real f finite at x is differentiable iff the global subdifferential is a singleton.",
+      "math": "\\(f\\text{ differentiable at }x\\iff\\exists g,\\partial f(x)=\\{g\\}\\)",
+      "intuition": "Convex extended-real f finite at x is differentiable iff the global subdifferential is a singleton.",
+      "why": "A dependency in the exact Theorem 2.22 chain, not a chapter-completion claim.",
+      "position": "Orabona v10 Theorem 2.22, printed17/PDF29; intermediate declarations are proof dependencies.",
+      "proof_idea": "Convex extended-real f finite at x is differentiable iff the global subdifferential is a singleton.",
+      "lean_notes": "Finite-dimensional real inner-product geometry. The source endpoint adds only convexity and finite-at-x; leaf-specific local hypotheses are derived in its proof.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.singleton_subdifferential_hasGradientAt",
+        "BanditRL.OnlineConvex.theorem_2_22_gradient"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.theorem_2_22_gradient",
+      "title": "The singleton is the actual gradient",
+      "chapter": "online-subgradient-differentiability",
+      "featured": false,
+      "teaching_order": 7,
+      "plain": "Every differentiable real representative agreeing with f near x has its gradient as the unique global subgradient.",
+      "math": "\\(\\partial f(x)=\\{\\nabla h(x)\\}\\)",
+      "intuition": "Every differentiable real representative agreeing with f near x has its gradient as the unique global subgradient.",
+      "why": "A dependency in the exact Theorem 2.22 chain, not a chapter-completion claim.",
+      "position": "Orabona v10 Theorem 2.22, printed17/PDF29; intermediate declarations are proof dependencies.",
+      "proof_idea": "Every differentiable real representative agreeing with f near x has its gradient as the unique global subgradient.",
+      "lean_notes": "Finite-dimensional real inner-product geometry. The source endpoint adds only convexity and finite-at-x; leaf-specific local hypotheses are derived in its proof.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.affine_support_of_finite_neighborhood"
+      ]
     }
   ]
 }

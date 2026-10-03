@@ -1,0 +1,7 @@
+# Singleton chain next boundary
+
+PR138 delivered51fdc047, prior interior producer accepted local. This branch has scratch compiled normal-perturbation singleton->interior, actual convex-continuity singleton->continuous, and earlier differentiability uniqueness. Full2.22 equivalence not proved. Version1 review identified missing gradient declaration; preserve rejection, review v2 explicit representative identity. Next actual missing analytic result is support boundedness/closed graph/finite-dimensional compactness leading to Frechet derivative; do not replace full endpoint by consumer assumptions or scalar-only result. No global SGB frontier changes, model medium requested, source v10 unchanged.
+
+Actual Theorem2.22 full iff and gradient now compiled publicly. Reverse support norm bound -> actual compactness/closed graph -> Frechet residual closes the source terminal. Final distinct review accepted-with-explicit-delta. Full-gate01 inventory failure must be repaired by committing candidate and rerunning; not yet accepted-local. Full-book Goal active.
+
+Theorem2.22 iff+gradient accepted-local with all scoped gates; failed raw receipt/schema/inventory attempts remain valid failure evidence with explicit repairs. Next source2.23: arbitrary-proper finite-sum inclusion and convex closed mixed-domain/interior equality both mandatory. Keep global SGB frontier and whole-book Goal unchanged. Do not assume an inclusion proves equality.

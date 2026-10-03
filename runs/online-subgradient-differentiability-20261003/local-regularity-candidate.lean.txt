@@ -1,0 +1,35 @@
+import BanditRLProof.OnlineSubgradientInterior
+import BanditRLProof.OnlineConvexFirstOrder
+import Mathlib.Analysis.Calculus.LocalExtr.Basic
+
+noncomputable section
+open Set Filter
+open scoped Topology
+namespace BanditRL.OnlineConvex
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
+
+def SourceDifferentiableAt (f : E → EReal) (x : E) : Prop :=
+  ∃ h : E → ℝ, (fun y => (h y : EReal)) =ᶠ[𝓝 x] f ∧ DifferentiableAt ℝ h x
+
+theorem sourceDifferentiableAt_regular (f : E → EReal) (x : E)
+    (hd : SourceDifferentiableAt f x) :
+    (∀ᶠ y in 𝓝 x, ∃ r : ℝ, f y = (r : EReal)) ∧
+      x ∈ interior (effectiveDomain f) ∧
+      DifferentiableAt ℝ (fun y => (f y).toReal) x := by
+  obtain ⟨h, he, hd⟩ := hd
+  have hfinite : ∀ᶠ y in 𝓝 x, ∃ r : ℝ, f y = (r : EReal) := by
+    filter_upwards [he] with y hy
+    exact ⟨h y, hy.symm⟩
+  refine ⟨hfinite, ?_, ?_⟩
+  · apply mem_interior_iff_mem_nhds.mpr
+    filter_upwards [hfinite] with y hy
+    obtain ⟨r, hr⟩ := hy
+    change f y < ⊤
+    rw [hr]
+    exact EReal.coe_lt_top _
+  · apply hd.congr_of_eventuallyEq
+    filter_upwards [he] with y hy
+    rw [← hy, EReal.toReal_coe]
+
+end BanditRL.OnlineConvex
+#print axioms BanditRL.OnlineConvex.sourceDifferentiableAt_regular

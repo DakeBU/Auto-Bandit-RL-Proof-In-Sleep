@@ -1,0 +1,5 @@
+theorem sourceDifferentiableAt_regular (f : E → EReal) (x : E)
+    (hd : SourceDifferentiableAt f x) :
+    (∀ᶠ y in 𝓝 x, ∃ r : ℝ, f y = (r : EReal)) ∧
+      x ∈ interior (effectiveDomain f) ∧
+      DifferentiableAt ℝ (fun y => (f y).toReal) x

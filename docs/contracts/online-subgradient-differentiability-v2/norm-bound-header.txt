@@ -1,0 +1,6 @@
+theorem subgradient_norm_le_lipschitz_ball (f : E → EReal) (x : E)
+    (r : ℝ) (hr : 0 < r) (K : ℝ≥0)
+    (hfinite : ∀ y ∈ Metric.ball x r, ∃ a : ℝ, f y = (a : EReal))
+    (hlip : LipschitzOnWith K (fun y => (f y).toReal) (Metric.ball x r))
+    (g : E) (hg : g ∈ SourceSubdifferential f x) :
+    ‖g‖ ≤ (K : ℝ)

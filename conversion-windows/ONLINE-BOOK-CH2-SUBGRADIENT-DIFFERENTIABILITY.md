@@ -1,0 +1,3 @@
+# Differentiability conversion window
+
+Source version and page are fixed. Full extended-real statement and local representative semantics are draft under versioned review; version1 missing-gradient coverage gap retained, version2 exact added endpoint in docs/contracts/online-subgradient-differentiability-v2. No silently added interior or properness hypotheses. Finite prerequisite headers frozen before scratch proof. Body-only allowed editing for scratch leaves; source-terminal changes require new contract version/review. Current source terminal remains unproved and unaccepted. Same actor director/architect/worker; distinct decoder/source actors review actual contract separately. No global frontier refresh or trial rewrite.

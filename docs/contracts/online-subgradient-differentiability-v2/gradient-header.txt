@@ -1,0 +1,5 @@
+theorem theorem_2_22_gradient (f : E → EReal) (hf : IsConvexExtended f)
+    (x : E) (hx : ∃ r : ℝ, f x = (r : EReal))
+    (h : E → ℝ) (he : (fun y => (h y : EReal)) =ᶠ[𝓝 x] f)
+    (hd : DifferentiableAt ℝ h x) :
+    SourceSubdifferential f x = {gradient h x}
