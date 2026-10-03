@@ -1,0 +1,1 @@
+Dependency-ready affine support equality first. Actual all-y displacement g-a and positivity yields unique affine slope. Then prove two-function family proper/convex/continuous/finite and actual maximum identity, apply full max theorem, classify active equalities, use ordinary pair hull/segment. No source weakening.

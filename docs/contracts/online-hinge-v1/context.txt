@@ -1,0 +1,6 @@
+import BanditRLProof.OnlineSubgradientMax
+noncomputable section
+open Set
+namespace BanditRL.OnlineConvex
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+def sourceHinge (z x : E) : EReal := ((max (1 - inner ℝ z x) 0 : ℝ) : EReal)

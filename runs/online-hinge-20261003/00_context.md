@@ -1,0 +1,1 @@
+Persistent real Chapters1-16 Goal ACTIVE; medium. New branch codex/research-online-hinge exact PR143 delivered head e263dc04d7e206e09939a74d4dbcc74f7036e82d, OPEN draft/unmerged. Source v10 cached digest verified. Pre-edit tracked worktree clean. Shared .lake/store/ignored artifacts retained. Current full Example2.27 terminal frozen before proof; no chapter/book acceptance.

@@ -15411,3 +15411,4 @@ here during local harness runs.
 - `2026-10-03T11:25:37+00:00` `bandit.py new-task` `task` `tasks/ONLINE-BOOK-CH2-SUBGRADIENT-ABSOLUTE.md` - Source absolute-value subdifferential: exact three branches
 - `2026-10-03T12:09:44+00:00` `bandit.py new-task` `task` `tasks/ONLINE-BOOK-CH2-NORMAL-CONE.md` - Source normal cone characterization, interior zero and unit-ball boundary ray
 - `2026-10-03T12:55:31+00:00` `bandit.py new-task` `task` `tasks/ONLINE-SUBGRADIENT-MAX.md` - Orabona Theorem2.26 finite maximum full subdifferential equality
+- `2026-10-03T14:07:37+00:00` `bandit.py new-task` `task` `tasks/ONLINE-HINGE.md` - Orabona Example 2.27 complete hinge subdifferential

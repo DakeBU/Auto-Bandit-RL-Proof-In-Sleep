@@ -1,0 +1,3 @@
+Task: `ONLINE-HINGE`
+
+Full exact hinge three-branch equality and five substantive canaries compile in scratch. Frozen source terminal unchanged. Affine producer proved; full maximum theorem actually instantiated with family qualifications. Source-body/public/root/Tests/full harness/site/immutable gates pending. Whole-book active, Chapter2 partial, PR143 delivered/unmerged.

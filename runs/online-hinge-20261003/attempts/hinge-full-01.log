@@ -1,0 +1,117 @@
+runs/online-hinge-20261003/attempts/hinge-full-01.lean:54:2: error: linarith failed to find a contradiction
+case h
+E : Type u_1
+inst✝¹ : NormedAddCommGroup E
+inst✝ : InnerProductSpace ℝ E
+a : E
+b : ℝ
+hd : (effectiveDomain fun y => ↑(inner ℝ a y + b)) = univ
+u : E
+hu : u ∈ univ
+v : E
+hv : v ∈ univ
+p q : ℝ
+hp : 0 ≤ p
+hq : 0 ≤ q
+hpq : p + q = 1
+a✝ : p * (inner ℝ a u + b) + q * (inner ℝ a v + b) < p * inner ℝ a u + q * inner ℝ a v + b
+⊢ False
+failed
+runs/online-hinge-20261003/attempts/hinge-full-01.lean:69:6: warning: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+runs/online-hinge-20261003/attempts/hinge-full-01.lean:75:6: error: Type mismatch: After simplification, term
+  hi
+ has type
+  1 - ↑(inner ℝ z x) ≤ -↑(inner ℝ z x) + 1 ∨ 1 - ↑(inner ℝ z x) ≤ 0
+but is expected to have type
+  1 - ↑(inner ℝ z x) ≤ SourceFiniteMax (hingeFamily z) x
+runs/online-hinge-20261003/attempts/hinge-full-01.lean:77:6: error: Type mismatch: After simplification, term
+  hi
+ has type
+  True
+but is expected to have type
+  0 ≤ SourceFiniteMax (hingeFamily z) x
+runs/online-hinge-20261003/attempts/hinge-full-01.lean:94:66: error: unsolved goals
+case h
+E : Type u_1
+inst✝¹ : NormedAddCommGroup E
+inst✝ : InnerProductSpace ℝ E
+z x : E
+h : 1 - inner ℝ z x < 0
+g : E
+⊢ g ∈ SourceSubdifferential (hingeFamily z false) x ∨
+      1 - ↑(inner ℝ z x) = 0 ∧ g ∈ SourceSubdifferential (hingeFamily z true) x ↔
+    g = 0
+runs/online-hinge-20261003/attempts/hinge-full-01.lean:97:37: warning: This simp argument is unused:
+  affine_subdifferential
+
+Hint: Omit it from the simp argument list.
+  simp only [SourceActiveSubgradientUnion, mem_setOf_eq, Bool.exists_bool,
+  ̵  ̵ ̵ ̵hinge_max_identity,
+  ̲  ̲ ̲ ̲hingeFamily, a̵f̵f̵i̵n̵e̵_̵s̵u̵b̵d̵i̵f̵f̵e̵r̵e̵n̵t̵i̵a̵l̵,̵ ̵Bool.false_eq_true,
+  ̵  ̵ ̵ ̵if_false, if_true, inner_zero_left, zero_add, inner_neg_left]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+runs/online-hinge-20261003/attempts/hinge-full-01.lean:99:56: warning: This simp argument is unused:
+  ne_of_lt h
+
+Hint: Omit it from the simp argument list.
+  simp [sourceHinge, max_eq_right h.le, neg_add_eq_sub,̵ ̵n̵e̵_̵o̵f̵_̵l̵t̵ ̵h̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+runs/online-hinge-20261003/attempts/hinge-full-01.lean:102:61: error: unsolved goals
+case h
+E : Type u_1
+inst✝¹ : NormedAddCommGroup E
+inst✝ : InnerProductSpace ℝ E
+z x : E
+h : 0 < 1 - inner ℝ z x
+g : E
+⊢ 0 = 1 - ↑(inner ℝ z x) ∧ g ∈ SourceSubdifferential (hingeFamily z false) x ∨
+      g ∈ SourceSubdifferential (hingeFamily z true) x ↔
+    g = -z
+runs/online-hinge-20261003/attempts/hinge-full-01.lean:105:37: warning: This simp argument is unused:
+  affine_subdifferential
+
+Hint: Omit it from the simp argument list.
+  simp only [SourceActiveSubgradientUnion, mem_setOf_eq, Bool.exists_bool,
+  ̵  ̵ ̵ ̵hinge_max_identity,
+  ̲  ̲ ̲ ̲hingeFamily, a̵f̵f̵i̵n̵e̵_̵s̵u̵b̵d̵i̵f̵f̵e̵r̵e̵n̵t̵i̵a̵l̵,̵ ̵Bool.false_eq_true,
+  ̵  ̵ ̵ ̵if_false, if_true, inner_zero_left, zero_add, inner_neg_left]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+runs/online-hinge-20261003/attempts/hinge-full-01.lean:107:55: warning: This simp argument is unused:
+  ne_of_gt h
+
+Hint: Omit it from the simp argument list.
+  simp [sourceHinge, max_eq_left h.le, neg_add_eq_sub, n̵e̵_̵o̵f̵_̵g̵t̵ ̵h̵,̵ ̵(ne_of_gt h).symm]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+runs/online-hinge-20261003/attempts/hinge-full-01.lean:107:67: warning: This simp argument is unused:
+  (ne_of_gt h).symm
+
+Hint: Omit it from the simp argument list.
+  simp [sourceHinge, max_eq_left h.le, neg_add_eq_sub, ne_of_gt h,̵ ̵(̵n̵e̵_̵o̵f̵_̵g̵t̵ ̵h̵)̵.̵s̵y̵m̵m̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+runs/online-hinge-20261003/attempts/hinge-full-01.lean:110:70: error: unsolved goals
+case h
+E : Type u_1
+inst✝¹ : NormedAddCommGroup E
+inst✝ : InnerProductSpace ℝ E
+z x : E
+h : 1 - inner ℝ z x = 0
+g : E
+⊢ g ∈ SourceSubdifferential (hingeFamily z false) x ∨ g ∈ SourceSubdifferential (hingeFamily z true) x ↔ g = 0 ∨ g = -z
+runs/online-hinge-20261003/attempts/hinge-full-01.lean:113:37: warning: This simp argument is unused:
+  affine_subdifferential
+
+Hint: Omit it from the simp argument list.
+  simp only [SourceActiveSubgradientUnion, mem_setOf_eq, Bool.exists_bool,
+  ̵  ̵ ̵ ̵hinge_max_identity,
+  ̲  ̲ ̲ ̲hingeFamily, a̵f̵f̵i̵n̵e̵_̵s̵u̵b̵d̵i̵f̵f̵e̵r̵e̵n̵t̵i̵a̵l̵,̵ ̵Bool.false_eq_true,
+  ̵  ̵ ̵ ̵if_false, if_true, inner_zero_left, zero_add, inner_neg_left]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+'BanditRL.OnlineConvex.example_2_27' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]

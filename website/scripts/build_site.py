@@ -1759,7 +1759,7 @@ def render_reading_guide(page_path: str, chapter: dict[str, Any], reading: dict[
 <section id="source-guide" class="source-guide">
   <p class="eyebrow">Textbook crosswalk</p>
   <h2>Read the mathematics before the Lean interface</h2>
-  <p class="section-intro">The Book Map is a curated formalization curriculum anchored in <em>Bandit Algorithms</em>, not a chapter-for-chapter reproduction of one book. Visible page labels use the numbered pages of its free online edition; source buttons use the PDF viewer's physical page index, which includes front matter and can therefore be larger. Companion papers cover algorithm-specific results.</p>
+  <p class="section-intro">This reading follows <em>{html.escape(reading["primary"]["title"])}</em>. Teaching routes group mathematical dependencies across the shared library. Visible page labels use the cited source's numbered pages; source buttons use the PDF viewer's physical page index, including front matter. Companion papers cover algorithm-specific results.</p>
   <div class="source-grid source-grid-{len(standard_companions) + 1}">{sources}</div>
   {advanced_sources_html}
   {notation_html}
