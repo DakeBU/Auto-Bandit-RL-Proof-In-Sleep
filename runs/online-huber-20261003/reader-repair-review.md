@@ -1,0 +1,5 @@
+# Reader repair review
+
+Added the four-step source-to-Lean formula proof bridge and explicit Euclidean/Hilbert, threshold, indexing and horizon deltas. First build rejected seven worked-example steps; repaired by using the existing separate proof_bridge schema. Next checker rejected a fourth notation-primer entry; moved the scope ledger to source relationship. Final build03/check02 passed. Both failed logs retained. Edge headless top-page capture02 visually inspected: no clipped prose, source attribution and local compiled boundary visible. Anchored captures were blank, so no proof-section visual success is claimed; its actual generated HTML contains the four steps and folded declaration links. No generated files committed.
+
+The extra direct test-file invocation failed because its module search path omitted the repository root; the corrected module invocation passed32book-registry tests (book-registry-contributor-repair02.log). GitHub Lean/documentation run37108086641 stopped at the missing-contribution-manifest gate before running Lean, confirming the same integration omission; remote-gate01.log preserves it.

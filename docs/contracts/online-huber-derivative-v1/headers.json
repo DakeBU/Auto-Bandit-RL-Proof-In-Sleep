@@ -1,0 +1,4 @@
+{
+  "hasDerivAt_join": "theorem hasDerivAt_join (f g df dg : \u211d \u2192 \u211d) (c x : \u211d)\n    (hf : \u2200 r, HasDerivAt f (df r) r) (hg : \u2200 r, HasDerivAt g (dg r) r)\n    (he : f c = g c) (hd : df c = dg c) :\n    HasDerivAt (fun r => if r \u2264 c then f r else g r)\n      (if x \u2264 c then df x else dg x) x",
+  "huber_hasDerivAt": "theorem huber_hasDerivAt (delta r : \u211d) (hd : 0 \u2264 delta) :\n    HasDerivAt (huber delta)\n      (if r \u2264 -delta then -delta else if r \u2264 delta then r else delta) r"
+}

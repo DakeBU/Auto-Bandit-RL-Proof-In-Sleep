@@ -1,0 +1,6 @@
+{
+  "huber_deriv_clamp": "theorem huber_deriv_clamp (delta r : \u211d) (hd : 0 \u2264 delta) :\n    deriv (huber delta) r = max (-delta) (min r delta)",
+  "huber_convex": "theorem huber_convex (delta : \u211d) (hd : 0 \u2264 delta) :\n    ConvexOn \u211d Set.univ (huber delta)",
+  "huber_deriv_bound": "theorem huber_deriv_bound (delta r : \u211d) (hd : 0 \u2264 delta) :\n    |deriv (huber delta) r| \u2264 delta",
+  "huber_deriv_source": "theorem huber_deriv_source (delta r : \u211d) (hd : 0 \u2264 delta) :\n    deriv (huber delta) r = if |r| \u2264 delta then r else delta * Real.sign r"
+}

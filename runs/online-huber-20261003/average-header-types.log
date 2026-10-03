@@ -1,0 +1,69 @@
+tmp/online-huber-average-draft.lean:111:31: warning: This simp argument is unused:
+  max_eq_left hlo
+
+Hint: Omit it from the simp argument list.
+  simp [hlo, min_eq_left hr,̵ ̵m̵a̵x̵_̵e̵q̵_̵l̵e̵f̵t̵ ̵h̵l̵o̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+tmp/online-huber-average-draft.lean:113:22: warning: This simp argument is unused:
+  min_eq_left hhi
+
+Hint: Omit it from the simp argument list.
+  simp [hlo, hhi, mi̵n̵_̵e̵q̵_̵l̵e̵f̵t̵ ̵h̵h̵i̵,̵ ̵m̵ax_eq_right (le_of_lt (not_le.mp hlo))]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+tmp/online-huber-average-draft.lean:167:46: warning: This simp argument is unused:
+  real_inner_smul_left
+
+Hint: Omit it from the simp argument list.
+  simp [InnerProductSpace.toDual_apply_apply,̵ ̵r̵e̵a̵l̵_̵i̵n̵n̵e̵r̵_̵s̵m̵u̵l̵_̵l̵e̵f̵t̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+tmp/online-huber-average-draft.lean:169:0: warning: automatically included section variable(s) unused in theorem `BanditRL.OnlineHuber.huber_linear_convex`:
+  [CompleteSpace E]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [CompleteSpace E] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+tmp/online-huber-average-draft.lean:208:5: warning: unused variable `hZ`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+tmp/online-huber-average-draft.lean:235:2: error: header probe only
+E : Type u_1
+inst✝² : NormedAddCommGroup E
+inst✝¹ : InnerProductSpace ℝ E
+inst✝ : CompleteSpace E
+delta Z : ℝ
+hd : 0 ≤ delta
+hZ : 0 ≤ Z
+z : ℕ → E
+y : ℕ → ℝ
+x0 u : E
+T : ℕ
+hT : 0 < T
+hz : ∀ t < T, ‖z t‖ ≤ Z
+⊢ regret fullSpace (1 / √↑T) (fun t => linearLoss delta (z t) (y t)) x0 u T / ↑T ≤
+    (‖x0 - u‖ ^ 2 + (delta * Z) ^ 2) / (2 * √↑T)
+tmp/online-huber-average-draft.lean:240:2: error: header probe only
+E : Type u_1
+inst✝² : NormedAddCommGroup E
+inst✝¹ : InnerProductSpace ℝ E
+inst✝ : CompleteSpace E
+delta Z : ℝ
+x0 u : E
+⊢ Tendsto (fun T => (‖x0 - u‖ ^ 2 + (delta * Z) ^ 2) / (2 * √↑T)) atTop (𝓝 0)
+tmp/online-huber-average-draft.lean:247:2: error: header probe only
+E : Type u_1
+inst✝² : NormedAddCommGroup E
+inst✝¹ : InnerProductSpace ℝ E
+inst✝ : CompleteSpace E
+delta Z : ℝ
+hd : 0 ≤ delta
+hZ : 0 ≤ Z
+z : ℕ → E
+y : ℕ → ℝ
+x0 u : E
+hz : ∀ (t : ℕ), ‖z t‖ ≤ Z
+epsilon : ℝ
+he : 0 < epsilon
+⊢ ∀ᶠ (T : ℕ) in atTop, regret fullSpace (1 / √↑T) (fun t => linearLoss delta (z t) (y t)) x0 u T / ↑T < epsilon

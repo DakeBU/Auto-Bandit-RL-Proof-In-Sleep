@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineHuber.project_fullSpace",
+  "file": "tmp/online-huber-ogd-draft.lean",
+  "statement": "theorem project_fullSpace (x : E) : project (fullSpace : Domain E) x = x",
+  "statement_hash": "1d6c2d61b6aedc10bc260d295018beceac88f45c00906083c72dba3892e78a16",
+  "source_assumptions": [],
+  "created_at": "2026-10-03T07:20:21+00:00"
+}
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineHuber.huber_regular",
+  "file": "tmp/online-huber-ogd-draft.lean",
+  "statement": "theorem huber_regular (delta y : ℝ) (hd : 0 ≤ delta) (z : E) : RegularLoss fullSpace (linearLoss delta z y)",
+  "statement_hash": "ba3b52e9999291e6cc53ff0acab95bba68086e8d1036dc6665bd69c57e7707e8",
+  "source_assumptions": [],
+  "created_at": "2026-10-03T07:20:22+00:00"
+}
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineHuber.huber_step",
+  "file": "tmp/online-huber-ogd-draft.lean",
+  "statement": "theorem huber_step (delta y eta : ℝ) (hd : 0 ≤ delta) (z x : E) : step fullSpace eta (linearLoss delta z y) x = x - eta • ((if |inner ℝ z x - y| ≤ delta then inner ℝ z x - y else delta * Real.sign (inner ℝ z x - y)) • z)",
+  "statement_hash": "34b7aee6b795f0641b2f7a019d0f00c4a7eb8a1c5e19d4345fe95c71e7fa6e51",
+  "source_assumptions": [],
+  "created_at": "2026-10-03T07:20:22+00:00"
+}
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineHuber.huber_regret_fixed",
+  "file": "tmp/online-huber-ogd-draft.lean",
+  "statement": "theorem huber_regret_fixed (delta Z eta : ℝ) (hd : 0 ≤ delta) (hZ : 0 ≤ Z) (heta : 0 < eta) (z : ℕ → E) (y : ℕ → ℝ) (x0 u : E) (T : ℕ) (hz : ∀ t < T, ‖z t‖ ≤ Z) : regret fullSpace eta (fun t => linearLoss delta (z t) (y t)) x0 u T ≤ ‖x0 - u‖ ^ 2 / (2 * eta) + eta / 2 * ((T : ℝ) * (delta * Z) ^ 2) - ‖iterate fullSpace eta (fun t => linearLoss delta (z t) (y t)) x0 T - u‖ ^ 2 / (2 * eta)",
+  "statement_hash": "c7a43cccd41c3b7cfbaf50da3cb4a0a839ed0c932f3355ca149382c1f32aa14a",
+  "source_assumptions": [],
+  "created_at": "2026-10-03T07:20:22+00:00"
+}

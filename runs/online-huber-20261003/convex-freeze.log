@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineHuber.huber_deriv_clamp",
+  "file": "tmp/online-huber-convex-draft.lean",
+  "statement": "theorem huber_deriv_clamp (delta r : ℝ) (hd : 0 ≤ delta) : deriv (huber delta) r = max (-delta) (min r delta)",
+  "statement_hash": "8cc7f0ad1f1f6ffcaa8bab7838fac6a72ac1c8f5a424ac5eefcb2dcc58c09c6d",
+  "source_assumptions": [],
+  "created_at": "2026-10-03T07:15:12+00:00"
+}
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineHuber.huber_convex",
+  "file": "tmp/online-huber-convex-draft.lean",
+  "statement": "theorem huber_convex (delta : ℝ) (hd : 0 ≤ delta) : ConvexOn ℝ Set.univ (huber delta)",
+  "statement_hash": "f9192ebf2c78687fca17e2e76fafe14fe69e0718ecdd49d2e17b79abb5154b60",
+  "source_assumptions": [],
+  "created_at": "2026-10-03T07:15:12+00:00"
+}
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineHuber.huber_deriv_bound",
+  "file": "tmp/online-huber-convex-draft.lean",
+  "statement": "theorem huber_deriv_bound (delta r : ℝ) (hd : 0 ≤ delta) : |deriv (huber delta) r| ≤ delta",
+  "statement_hash": "e8f2e25c71652e3d13112ce472ef878d0e6b5f45f33fb0d8149ef5196fe6ed7e",
+  "source_assumptions": [],
+  "created_at": "2026-10-03T07:15:13+00:00"
+}
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineHuber.huber_deriv_source",
+  "file": "tmp/online-huber-convex-draft.lean",
+  "statement": "theorem huber_deriv_source (delta r : ℝ) (hd : 0 ≤ delta) : deriv (huber delta) r = if |r| ≤ delta then r else delta * Real.sign r",
+  "statement_hash": "0e2deec5eba453a7bb4bdee3bd8484ecb6bf0ac58ce19a4baf251d441301ad2a",
+  "source_assumptions": [],
+  "created_at": "2026-10-03T07:15:13+00:00"
+}

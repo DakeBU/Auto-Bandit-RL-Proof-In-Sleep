@@ -1,0 +1,144 @@
+tmp/online-huber-average-proof.lean:111:31: warning: This simp argument is unused:
+  max_eq_left hlo
+
+Hint: Omit it from the simp argument list.
+  simp [hlo, min_eq_left hr,̵ ̵m̵a̵x̵_̵e̵q̵_̵l̵e̵f̵t̵ ̵h̵l̵o̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+tmp/online-huber-average-proof.lean:113:22: warning: This simp argument is unused:
+  min_eq_left hhi
+
+Hint: Omit it from the simp argument list.
+  simp [hlo, hhi, mi̵n̵_̵e̵q̵_̵l̵e̵f̵t̵ ̵h̵h̵i̵,̵ ̵m̵ax_eq_right (le_of_lt (not_le.mp hlo))]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+tmp/online-huber-average-proof.lean:167:46: warning: This simp argument is unused:
+  real_inner_smul_left
+
+Hint: Omit it from the simp argument list.
+  simp [InnerProductSpace.toDual_apply_apply,̵ ̵r̵e̵a̵l̵_̵i̵n̵n̵e̵r̵_̵s̵m̵u̵l̵_̵l̵e̵f̵t̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+tmp/online-huber-average-proof.lean:169:0: warning: automatically included section variable(s) unused in theorem `BanditRL.OnlineHuber.huber_linear_convex`:
+  [CompleteSpace E]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [CompleteSpace E] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+tmp/online-huber-average-proof.lean:208:5: warning: unused variable `hZ`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+tmp/online-huber-average-proof.lean:247:15: error: don't know how to synthesize implicit argument `b`
+  @Iff.mpr (?m.345 * √↑T ^ 2 = ?m.345 * ↑T) (√↑T ^ 2 = ↑T ∨ ?m.345 = 0) mul_eq_mul_left_iff (Or.inl hsq)
+context:
+E : Type u_1
+inst✝² : NormedAddCommGroup E
+inst✝¹ : InnerProductSpace ℝ E
+inst✝ : CompleteSpace E
+delta Z : ℝ
+hd : 0 ≤ delta
+hZ : 0 ≤ Z
+z : ℕ → E
+y : ℕ → ℝ
+x0 u : E
+T : ℕ
+hT : 0 < T
+hz : ∀ t < T, ‖z t‖ ≤ Z
+ht : 0 < ↑T
+hs : 0 < √↑T
+he : 0 < 1 / √↑T
+hb :
+  regret fullSpace (1 / √↑T) (fun t => linearLoss delta (z t) (y t)) x0 u T ≤
+    ‖x0 - u‖ ^ 2 / (2 * (1 / √↑T)) + 1 / √↑T / 2 * (↑T * (delta * Z) ^ 2) -
+      ‖iterate fullSpace (1 / √↑T) (fun t => linearLoss delta (z t) (y t)) x0 T - u‖ ^ 2 / (2 * (1 / √↑T))
+hr : 0 ≤ ‖iterate fullSpace (1 / √↑T) (fun t => linearLoss delta (z t) (y t)) x0 T - u‖ ^ 2 / (2 * (1 / √↑T))
+hsq : √↑T ^ 2 = ↑T
+⊢ Prop
+tmp/online-huber-average-proof.lean:247:15: error: don't know how to synthesize implicit argument `a`
+  @Iff.mpr (?m.345 * √↑T ^ 2 = ?m.345 * ↑T) (√↑T ^ 2 = ↑T ∨ ?m.345 = 0) mul_eq_mul_left_iff (Or.inl hsq)
+context:
+E : Type u_1
+inst✝² : NormedAddCommGroup E
+inst✝¹ : InnerProductSpace ℝ E
+inst✝ : CompleteSpace E
+delta Z : ℝ
+hd : 0 ≤ delta
+hZ : 0 ≤ Z
+z : ℕ → E
+y : ℕ → ℝ
+x0 u : E
+T : ℕ
+hT : 0 < T
+hz : ∀ t < T, ‖z t‖ ≤ Z
+ht : 0 < ↑T
+hs : 0 < √↑T
+he : 0 < 1 / √↑T
+hb :
+  regret fullSpace (1 / √↑T) (fun t => linearLoss delta (z t) (y t)) x0 u T ≤
+    ‖x0 - u‖ ^ 2 / (2 * (1 / √↑T)) + 1 / √↑T / 2 * (↑T * (delta * Z) ^ 2) -
+      ‖iterate fullSpace (1 / √↑T) (fun t => linearLoss delta (z t) (y t)) x0 T - u‖ ^ 2 / (2 * (1 / √↑T))
+hr : 0 ≤ ‖iterate fullSpace (1 / √↑T) (fun t => linearLoss delta (z t) (y t)) x0 T - u‖ ^ 2 / (2 * (1 / √↑T))
+hsq : √↑T ^ 2 = ↑T
+⊢ Prop
+tmp/online-huber-average-proof.lean:247:40: error: don't know how to synthesize implicit argument `b`
+  @Or.inl (√↑T ^ 2 = ↑T) (?m.345 = 0) hsq
+context:
+E : Type u_1
+inst✝² : NormedAddCommGroup E
+inst✝¹ : InnerProductSpace ℝ E
+inst✝ : CompleteSpace E
+delta Z : ℝ
+hd : 0 ≤ delta
+hZ : 0 ≤ Z
+z : ℕ → E
+y : ℕ → ℝ
+x0 u : E
+T : ℕ
+hT : 0 < T
+hz : ∀ t < T, ‖z t‖ ≤ Z
+ht : 0 < ↑T
+hs : 0 < √↑T
+he : 0 < 1 / √↑T
+hb :
+  regret fullSpace (1 / √↑T) (fun t => linearLoss delta (z t) (y t)) x0 u T ≤
+    ‖x0 - u‖ ^ 2 / (2 * (1 / √↑T)) + 1 / √↑T / 2 * (↑T * (delta * Z) ^ 2) -
+      ‖iterate fullSpace (1 / √↑T) (fun t => linearLoss delta (z t) (y t)) x0 T - u‖ ^ 2 / (2 * (1 / √↑T))
+hr : 0 ≤ ‖iterate fullSpace (1 / √↑T) (fun t => linearLoss delta (z t) (y t)) x0 T - u‖ ^ 2 / (2 * (1 / √↑T))
+hsq : √↑T ^ 2 = ↑T
+⊢ Prop
+tmp/online-huber-average-proof.lean:247:35: error: don't know how to synthesize placeholder
+context:
+E : Type u_1
+inst✝² : NormedAddCommGroup E
+inst✝¹ : InnerProductSpace ℝ E
+inst✝ : CompleteSpace E
+delta Z : ℝ
+hd : 0 ≤ delta
+hZ : 0 ≤ Z
+z : ℕ → E
+y : ℕ → ℝ
+x0 u : E
+T : ℕ
+hT : 0 < T
+hz : ∀ t < T, ‖z t‖ ≤ Z
+ht : 0 < ↑T
+hs : 0 < √↑T
+he : 0 < 1 / √↑T
+hb :
+  regret fullSpace (1 / √↑T) (fun t => linearLoss delta (z t) (y t)) x0 u T ≤
+    ‖x0 - u‖ ^ 2 / (2 * (1 / √↑T)) + 1 / √↑T / 2 * (↑T * (delta * Z) ^ 2) -
+      ‖iterate fullSpace (1 / √↑T) (fun t => linearLoss delta (z t) (y t)) x0 T - u‖ ^ 2 / (2 * (1 / √↑T))
+hr : 0 ≤ ‖iterate fullSpace (1 / √↑T) (fun t => linearLoss delta (z t) (y t)) x0 T - u‖ ^ 2 / (2 * (1 / √↑T))
+hsq : √↑T ^ 2 = ↑T
+⊢ ℝ
+tmp/online-huber-average-proof.lean:253:31: error: unsolved goals
+case h.e'_3
+E : Type u_1
+inst✝² : NormedAddCommGroup E
+inst✝¹ : InnerProductSpace ℝ E
+inst✝ : CompleteSpace E
+delta Z : ℝ
+x0 u : E
+h : Tendsto (fun T => (√↑T)⁻¹) atTop (𝓝 0)
+⊢ (fun T => (‖x0 - u‖ ^ 2 + (delta * Z) ^ 2) * ((√↑T)⁻¹ * 2⁻¹)) = fun x =>
+    (‖x0 - u‖ ^ 2 + (delta * Z) ^ 2) * (2⁻¹ * (√↑x)⁻¹)

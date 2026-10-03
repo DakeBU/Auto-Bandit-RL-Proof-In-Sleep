@@ -1,0 +1,5 @@
+# Contribution-gate repair
+
+The post-delivery diff-aware check against ce5ecc949fee79d50da65d9fd2c1a00e071bbe23 failed: no changed contribution manifest covers six production paths. Prior acceptance is scoped to Lean/harness/site plus same-actor semantic review; it is not completion of the newer contributor gate. The failed check is preserved in contributor-gate01.log. No frozen Lean target changes are authorized in this repair. A distinct source-blind decoder and source reviewer are now required by current repository instructions; prior role records remain historical.
+
+Distinct source-blind decoder reconstructed all19 targets; distinct anti-anchored source reviewer independently hash-checked/extracted the PDF and accepted with explicit deltas. Raw reviewed hashes checked against current bytes, with separate LF-normalized bindings for portability. Reader build03/check02 and32registry tests pass; no Lean changes. Covering contribution manifest is now ready for diff-aware validation after commit.

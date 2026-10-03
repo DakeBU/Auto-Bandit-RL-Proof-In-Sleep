@@ -1,0 +1,165 @@
+import Mathlib.Analysis.Convex.Deriv
+import Mathlib.Analysis.Calculus.Gradient.Basic
+import Mathlib.Analysis.InnerProductSpace.Projection.Minimal
+import Mathlib.Analysis.InnerProductSpace.PiL2
+import Mathlib.Tactic
+
+
+
+noncomputable section
+open Set Finset
+open scoped InnerProductSpace
+
+namespace BanditRL.OnlineGradientDescent
+
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]
+
+
+structure Domain (E : Type*) [NormedAddCommGroup E] [InnerProductSpace ℝ E] where
+  carrier : Set E
+  nonempty : carrier.Nonempty
+  closed : IsClosed carrier
+  convex : Convex ℝ carrier
+
+
+def project (V : Domain E) (z : E) : E :=
+  Classical.choose (exists_norm_eq_iInf_of_complete_convex V.nonempty
+    V.closed.isComplete V.convex z)
+
+
+def RegularLoss (V : Domain E) (f : E → ℝ) : Prop :=
+  ∃ U : Set E, IsOpen U ∧ V.carrier ⊆ U ∧ ConvexOn ℝ U f ∧ DifferentiableOn ℝ f U
+
+
+def step (V : Domain E) (η : ℝ) (f : E → ℝ) (x : E) : E :=
+  project V (x - η • gradient f x)
+
+
+def iterate (V : Domain E) (η : ℝ) (loss : ℕ → E → ℝ) (x₁ : E) : ℕ → E
+  | 0 => x₁
+  | t + 1 => step V η (loss t) (iterate V η loss x₁ t)
+
+
+def regret (V : Domain E) (η : ℝ) (loss : ℕ → E → ℝ) (x₁ u : E) (T : ℕ) : ℝ :=
+  ∑ t ∈ range T, (loss t (iterate V η loss x₁ t) - loss t u)
+
+
+
+end BanditRL.OnlineGradientDescent
+
+import Mathlib.Analysis.SpecificLimits.Basic
+
+import BanditRLProof.OnlineGradientDescent
+
+import Mathlib.Analysis.Calculus.Deriv.Comp
+
+import Mathlib.Data.Real.Sign
+
+import Mathlib.Analysis.Calculus.Deriv.Pow
+
+import Mathlib.Analysis.Calculus.Deriv.Mul
+
+import Mathlib.Analysis.Convex.Deriv
+
+import Mathlib.Analysis.Calculus.Deriv.Basic
+
+import Mathlib.Analysis.Calculus.Deriv.Add
+
+import Mathlib.Tactic
+
+open Set
+
+namespace BanditRL.OnlineHuber
+
+theorem hasDerivAt_ite_le (f g : ℝ → ℝ) (c d : ℝ)
+    (hf : HasDerivAt f d c) (hg : HasDerivAt g d c) (he : f c = g c) :
+    HasDerivAt (fun x => if x ≤ c then f x else g x) d c 
+
+noncomputable def huber (delta r : ℝ) : ℝ :=
+  if |r| ≤ delta then r ^ 2 / 2 else delta * (|r| - delta / 2)
+
+theorem huber_three_pieces (delta r : ℝ) (hd : 0 ≤ delta) :
+    huber delta r = if r ≤ -delta then -delta * r - delta ^ 2 / 2
+      else if r ≤ delta then r ^ 2 / 2 else delta * r - delta ^ 2 / 2 
+
+theorem huber_zero (r : ℝ) : huber 0 r = 0 
+
+open Filter Topology
+
+theorem hasDerivAt_join (f g df dg : ℝ → ℝ) (c x : ℝ)
+    (hf : ∀ r, HasDerivAt f (df r) r) (hg : ∀ r, HasDerivAt g (dg r) r)
+    (he : f c = g c) (hd : df c = dg c) :
+    HasDerivAt (fun r => if r ≤ c then f r else g r)
+      (if x ≤ c then df x else dg x) x 
+
+theorem huber_hasDerivAt (delta r : ℝ) (hd : 0 ≤ delta) :
+    HasDerivAt (huber delta)
+      (if r ≤ -delta then -delta else if r ≤ delta then r else delta) r 
+
+theorem huber_deriv_clamp (delta r : ℝ) (hd : 0 ≤ delta) :
+    deriv (huber delta) r = max (-delta) (min r delta) 
+
+theorem huber_convex (delta : ℝ) (hd : 0 ≤ delta) :
+    ConvexOn ℝ Set.univ (huber delta) 
+
+theorem huber_deriv_bound (delta r : ℝ) (hd : 0 ≤ delta) :
+    |deriv (huber delta) r| ≤ delta 
+
+theorem huber_deriv_source (delta r : ℝ) (hd : 0 ≤ delta) :
+    deriv (huber delta) r = if |r| ≤ delta then r else delta * Real.sign r 
+
+open scoped InnerProductSpace
+
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]
+
+theorem huber_linear_hasGradientAt (delta y : ℝ) (hd : 0 ≤ delta) (z x : E) :
+    HasGradientAt (fun w => huber delta (inner ℝ z w - y))
+      (deriv (huber delta) (inner ℝ z x - y) • z) x 
+
+theorem huber_linear_convex (delta y : ℝ) (hd : 0 ≤ delta) (z : E) :
+    ConvexOn ℝ Set.univ (fun w => huber delta (inner ℝ z w - y)) 
+
+theorem huber_linear_gradient_bound (delta y : ℝ) (hd : 0 ≤ delta) (z x : E) :
+    ‖gradient (fun w => huber delta (inner ℝ z w - y)) x‖ ≤ delta * ‖z‖ 
+
+open BanditRL.OnlineGradientDescent Finset
+
+def fullSpace : Domain E :=
+  ⟨Set.univ, Set.univ_nonempty, isClosed_univ, convex_univ⟩
+
+noncomputable def linearLoss (delta : ℝ) (z : E) (y : ℝ) (x : E) : ℝ :=
+  huber delta (inner ℝ z x - y)
+
+theorem project_fullSpace (x : E) : project (fullSpace : Domain E) x = x 
+
+theorem huber_regular (delta y : ℝ) (hd : 0 ≤ delta) (z : E) :
+    RegularLoss fullSpace (linearLoss delta z y) 
+
+theorem huber_step (delta y eta : ℝ) (hd : 0 ≤ delta) (z x : E) :
+    step fullSpace eta (linearLoss delta z y) x =
+      x - eta • ((if |inner ℝ z x - y| ≤ delta then inner ℝ z x - y
+        else delta * Real.sign (inner ℝ z x - y)) • z) 
+
+theorem huber_regret_fixed (delta Z eta : ℝ) (hd : 0 ≤ delta)
+    (hZ : 0 ≤ Z) (heta : 0 < eta) (z : ℕ → E) (y : ℕ → ℝ)
+    (x0 u : E) (T : ℕ) (hz : ∀ t < T, ‖z t‖ ≤ Z) :
+    regret fullSpace eta (fun t => linearLoss delta (z t) (y t)) x0 u T ≤
+      ‖x0 - u‖ ^ 2 / (2 * eta) + eta / 2 * ((T : ℝ) * (delta * Z) ^ 2) -
+      ‖iterate fullSpace eta (fun t => linearLoss delta (z t) (y t)) x0 T - u‖ ^ 2 /
+        (2 * eta) 
+
+theorem huber_average_bound (delta Z : ℝ) (hd : 0 ≤ delta) (hZ : 0 ≤ Z)
+    (z : ℕ → E) (y : ℕ → ℝ) (x0 u : E) (T : ℕ) (hT : 0 < T)
+    (hz : ∀ t < T, ‖z t‖ ≤ Z) :
+    regret fullSpace (1 / Real.sqrt T) (fun t => linearLoss delta (z t) (y t)) x0 u T / T ≤
+      (‖x0 - u‖ ^ 2 + (delta * Z) ^ 2) / (2 * Real.sqrt T) 
+
+theorem huber_rate_tendsto (delta Z : ℝ) (x0 u : E) :
+    Filter.Tendsto (fun T : ℕ => (‖x0 - u‖ ^ 2 + (delta * Z) ^ 2) / (2 * Real.sqrt T))
+      Filter.atTop (nhds 0) 
+
+theorem huber_average_eventually (delta Z : ℝ) (hd : 0 ≤ delta) (hZ : 0 ≤ Z)
+    (z : ℕ → E) (y : ℕ → ℝ) (x0 u : E) (hz : ∀ t, ‖z t‖ ≤ Z)
+    (epsilon : ℝ) (he : 0 < epsilon) :
+    ∀ᶠ T : ℕ in Filter.atTop,
+      regret fullSpace (1 / Real.sqrt T) (fun t => linearLoss delta (z t) (y t)) x0 u T / T < epsilon 

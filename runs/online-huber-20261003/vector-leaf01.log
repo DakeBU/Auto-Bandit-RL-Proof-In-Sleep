@@ -1,0 +1,56 @@
+tmp/online-huber-vector-proof.lean:110:31: warning: This simp argument is unused:
+  max_eq_left hlo
+
+Hint: Omit it from the simp argument list.
+  simp [hlo, min_eq_left hr,̵ ̵m̵a̵x̵_̵e̵q̵_̵l̵e̵f̵t̵ ̵h̵l̵o̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+tmp/online-huber-vector-proof.lean:112:22: warning: This simp argument is unused:
+  min_eq_left hhi
+
+Hint: Omit it from the simp argument list.
+  simp [hlo, hhi, mi̵n̵_̵e̵q̵_̵l̵e̵f̵t̵ ̵h̵h̵i̵,̵ ̵m̵ax_eq_right (le_of_lt (not_le.mp hlo))]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+tmp/online-huber-vector-proof.lean:160:13: error: don't know how to synthesize implicit argument `x`
+  @HasFDerivAt.sub_const ℝ DenselyNormedField.toNontriviallyNormedField E inst✝² inst✝¹.toNormedSpace ℝ
+    Real.normedAddCommGroup RCLike.toInnerProductSpaceReal.toNormedSpace (⇑((innerSL ℝ) z)) ((innerSL ℝ) z) ?m.65 y
+    (ContinuousLinearMap.hasFDerivAt ((innerSL ℝ) z))
+context:
+E : Type u_1
+inst✝² : NormedAddCommGroup E
+inst✝¹ : InnerProductSpace ℝ E
+inst✝ : CompleteSpace E
+delta y : ℝ
+hd : 0 ≤ delta
+z x : E
+⊢ E
+tmp/online-huber-vector-proof.lean:160:14: error: don't know how to synthesize implicit argument `x`
+  @ContinuousLinearMap.hasFDerivAt ℝ DenselyNormedField.toNontriviallyNormedField E inst✝².toAddCommGroup
+    inst✝¹.toModule PseudoMetricSpace.toUniformSpace.toTopologicalSpace ℝ Real.instAddCommGroup
+    RCLike.innerProductSpace.toModule PseudoMetricSpace.toUniformSpace.toTopologicalSpace ((innerSL ℝ) z) ?m.65
+context:
+E : Type u_1
+inst✝² : NormedAddCommGroup E
+inst✝¹ : InnerProductSpace ℝ E
+inst✝ : CompleteSpace E
+delta y : ℝ
+hd : 0 ≤ delta
+z x : E
+⊢ E
+tmp/online-huber-vector-proof.lean:160:7: error: failed to infer `have` declaration type
+tmp/online-huber-vector-proof.lean:159:55: error: unsolved goals
+E : Type u_1
+inst✝² : NormedAddCommGroup E
+inst✝¹ : InnerProductSpace ℝ E
+inst✝ : CompleteSpace E
+delta y : ℝ
+hd : 0 ≤ delta
+z x : E
+⊢ HasGradientAt (fun w => huber delta (⟪z, w⟫_ℝ - y)) (deriv (huber delta) (⟪z, x⟫_ℝ - y) • z) x
+tmp/online-huber-vector-proof.lean:168:0: warning: automatically included section variable(s) unused in theorem `BanditRL.OnlineHuber.huber_linear_convex`:
+  [CompleteSpace E]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [CompleteSpace E] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`

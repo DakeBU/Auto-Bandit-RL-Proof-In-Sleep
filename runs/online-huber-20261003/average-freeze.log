@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineHuber.huber_average_bound",
+  "file": "tmp/online-huber-average-draft.lean",
+  "statement": "theorem huber_average_bound (delta Z : ℝ) (hd : 0 ≤ delta) (hZ : 0 ≤ Z) (z : ℕ → E) (y : ℕ → ℝ) (x0 u : E) (T : ℕ) (hT : 0 < T) (hz : ∀ t < T, ‖z t‖ ≤ Z) : regret fullSpace (1 / Real.sqrt T) (fun t => linearLoss delta (z t) (y t)) x0 u T / T ≤ (‖x0 - u‖ ^ 2 + (delta * Z) ^ 2) / (2 * Real.sqrt T)",
+  "statement_hash": "e0d3116277740e6ced3b179b0356329fcee64bc37cf2a574e068466c59e65ce5",
+  "source_assumptions": [],
+  "created_at": "2026-10-03T07:25:41+00:00"
+}
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineHuber.huber_rate_tendsto",
+  "file": "tmp/online-huber-average-draft.lean",
+  "statement": "theorem huber_rate_tendsto (delta Z : ℝ) (x0 u : E) : Filter.Tendsto (fun T : ℕ => (‖x0 - u‖ ^ 2 + (delta * Z) ^ 2) / (2 * Real.sqrt T)) Filter.atTop (nhds 0)",
+  "statement_hash": "b5e9985a3c9da5b2dca5b6ecd2a5fad1b6b5c1eadafc4de0c41e477249e936e2",
+  "source_assumptions": [],
+  "created_at": "2026-10-03T07:25:41+00:00"
+}
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineHuber.huber_average_eventually",
+  "file": "tmp/online-huber-average-draft.lean",
+  "statement": "theorem huber_average_eventually (delta Z : ℝ) (hd : 0 ≤ delta) (hZ : 0 ≤ Z) (z : ℕ → E) (y : ℕ → ℝ) (x0 u : E) (hz : ∀ t, ‖z t‖ ≤ Z) (epsilon : ℝ) (he : 0 < epsilon) : ∀ᶠ T : ℕ in Filter.atTop, regret fullSpace (1 / Real.sqrt T) (fun t => linearLoss delta (z t) (y t)) x0 u T / T < epsilon",
+  "statement_hash": "fe1419545ec713b562d316c84cf18713913c5daec496969eb97cc34d2759c281",
+  "source_assumptions": [],
+  "created_at": "2026-10-03T07:25:41+00:00"
+}

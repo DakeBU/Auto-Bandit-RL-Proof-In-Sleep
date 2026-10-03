@@ -1,0 +1,70 @@
+tmp/online-huber-ogd-draft.lean:110:31: warning: This simp argument is unused:
+  max_eq_left hlo
+
+Hint: Omit it from the simp argument list.
+  simp [hlo, min_eq_left hr,̵ ̵m̵a̵x̵_̵e̵q̵_̵l̵e̵f̵t̵ ̵h̵l̵o̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+tmp/online-huber-ogd-draft.lean:112:22: warning: This simp argument is unused:
+  min_eq_left hhi
+
+Hint: Omit it from the simp argument list.
+  simp [hlo, hhi, mi̵n̵_̵e̵q̵_̵l̵e̵f̵t̵ ̵h̵h̵i̵,̵ ̵m̵ax_eq_right (le_of_lt (not_le.mp hlo))]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+tmp/online-huber-ogd-draft.lean:166:46: warning: This simp argument is unused:
+  real_inner_smul_left
+
+Hint: Omit it from the simp argument list.
+  simp [InnerProductSpace.toDual_apply_apply,̵ ̵r̵e̵a̵l̵_̵i̵n̵n̵e̵r̵_̵s̵m̵u̵l̵_̵l̵e̵f̵t̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+tmp/online-huber-ogd-draft.lean:168:0: warning: automatically included section variable(s) unused in theorem `BanditRL.OnlineHuber.huber_linear_convex`:
+  [CompleteSpace E]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [CompleteSpace E] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+tmp/online-huber-ogd-draft.lean:187:2: error: header probe only
+E : Type u_1
+inst✝² : NormedAddCommGroup E
+inst✝¹ : InnerProductSpace ℝ E
+inst✝ : CompleteSpace E
+x : E
+⊢ project fullSpace x = x
+tmp/online-huber-ogd-draft.lean:191:2: error: header probe only
+E : Type u_1
+inst✝² : NormedAddCommGroup E
+inst✝¹ : InnerProductSpace ℝ E
+inst✝ : CompleteSpace E
+delta y : ℝ
+hd : 0 ≤ delta
+z : E
+⊢ RegularLoss fullSpace (linearLoss delta z y)
+tmp/online-huber-ogd-draft.lean:197:2: error: header probe only
+E : Type u_1
+inst✝² : NormedAddCommGroup E
+inst✝¹ : InnerProductSpace ℝ E
+inst✝ : CompleteSpace E
+delta y eta : ℝ
+hd : 0 ≤ delta
+z x : E
+⊢ step fullSpace eta (linearLoss delta z y) x =
+    x - eta • (if |⟪z, x⟫_ℝ - y| ≤ delta then ⟪z, x⟫_ℝ - y else delta * (⟪z, x⟫_ℝ - y).sign) • z
+tmp/online-huber-ogd-draft.lean:206:2: error: header probe only
+E : Type u_1
+inst✝² : NormedAddCommGroup E
+inst✝¹ : InnerProductSpace ℝ E
+inst✝ : CompleteSpace E
+delta Z eta : ℝ
+hd : 0 ≤ delta
+hZ : 0 ≤ Z
+heta : 0 < eta
+z : ℕ → E
+y : ℕ → ℝ
+x0 u : E
+T : ℕ
+hz : ∀ t < T, ‖z t‖ ≤ Z
+⊢ regret fullSpace eta (fun t => linearLoss delta (z t) (y t)) x0 u T ≤
+    ‖x0 - u‖ ^ 2 / (2 * eta) + eta / 2 * (↑T * (delta * Z) ^ 2) -
+      ‖iterate fullSpace eta (fun t => linearLoss delta (z t) (y t)) x0 T - u‖ ^ 2 / (2 * eta)

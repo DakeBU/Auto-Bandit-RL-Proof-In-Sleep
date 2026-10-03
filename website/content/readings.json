@@ -2886,6 +2886,137 @@
         "takeaway": "The concrete update and the tuned guarantee refer to the same shared algorithm definition.",
         "boundary": "The lower witness and the separately proved global Chapter1 logarithmic guarantee support the comparison. No Chapter4 result or all-algorithm lower bound is claimed."
       }
+    },
+    {
+      "slug": "online-huber",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10, 21 June 2026",
+        "sections": "Section2.1.2, Example2.15 (Huber linear prediction)",
+        "pages": "printed15-16/PDF27-28",
+        "pdf_page": 27,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "Huber loss",
+          "meaning": "H_delta(r)=r²/2 for |r|<=delta, and delta*(|r|-delta/2) otherwise; delta>=0."
+        },
+        {
+          "term": "feature bound",
+          "meaning": "Feature vectors satisfy norm(z_t)<=Z; labels and predictor vectors are unrestricted."
+        },
+        {
+          "term": "known-horizon schedule",
+          "meaning": "For T>=1, eta=1/sqrt(T), independent of comparator and future losses."
+        }
+      ],
+      "algorithm": {
+        "title": "Shared full-space OGD",
+        "kind": "causal gradient update",
+        "steps": [
+          {
+            "title": "Predict before feedback",
+            "detail": "Use the current vector to predict inner(z_t,x_t); then observe the label."
+          },
+          {
+            "title": "Compute the true Huber gradient",
+            "detail": "Multiply z_t by the residual inside the threshold and by delta*sign(residual) outside."
+          },
+          {
+            "title": "Update in the full space",
+            "detail": "Subtract eta times the computed gradient. The shared projection is proved to be identity."
+          }
+        ]
+      },
+      "teaching_route": [
+        "BanditRL.OnlineHuber.huber_convex",
+        "BanditRL.OnlineHuber.huber_linear_hasGradientAt",
+        "BanditRL.OnlineHuber.huber_regret_fixed",
+        "BanditRL.OnlineHuber.huber_average_eventually"
+      ],
+      "source_theorems": [
+        {
+          "label": "Example2.15: Huber linear prediction",
+          "pages": "printed15-16",
+          "pdf_page": 27,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\frac{R_T(u)}T\\le\\frac{\\|x_0-u\\|^2+(\\delta Z)^2}{2\\sqrt T}\\longrightarrow0",
+          "fallback": "The displayed upper envelope tends to zero; average regret need not converge exactly to zero.",
+          "plain": "Convexity, the feature gradient and its bound are derived for the actual loss and recursion.",
+          "relationship": "The source states eta proportional to1/sqrt(T) and asymptotic average performance. The formalization selects proportionality constant1 and proves an explicit one-sided upper envelope. The source uses finite-dimensional Euclidean vectors. Lean proves the same formulas on a complete real inner-product space, which includes that source setting. The source threshold has an implicit nonnegative convention, made explicit in Lean; delta=0 is retained, and no negative threshold is claimed. The source proportional schedule is instantiated with constant1. Index0 is source round1, and iterate T is the point after T updates.",
+          "contract": {
+            "model": "Full real Euclidean space; loss is Huber of the linear prediction residual.",
+            "assumptions": "delta>=0, bounded features, arbitrary labels, initialization and comparator; T>=1 for tuning.",
+            "parameters": "One fixed step1/sqrt(T) for each known horizon, independent of comparator.",
+            "regret": "The same shared causal OGD recurrence against every fixed predictor.",
+            "guarantee": "Fixed-step residual bound, explicit average bound and eventual average regret<epsilon for each epsilon>0."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Actual Huber OGD proof chain",
+            "boundary": "Local proofs; full acceptance tracked separately. No anytime schedule or Chapter2 completion is claimed."
+          }
+        }
+      ],
+      "worked_example": {
+        "title": "A nonzero Huber update",
+        "intro": "Take scalar feature1, label0, threshold1, initial predictor2 and step1/2.",
+        "steps": [
+          {
+            "title": "Linear-loss branch",
+            "detail": "The residual2 exceeds threshold1, so the derivative is1.",
+            "math": "H_1^{\\prime}(2)=1",
+            "fallback": "The exact source branch applies."
+          },
+          {
+            "title": "Actual shared update",
+            "detail": "The full-space projection does nothing and the next predictor is3/2.",
+            "math": "x_1=2-\\tfrac12=\\tfrac32",
+            "fallback": "The canary invokes the shared step, not a separate recurrence."
+          },
+          {
+            "title": "Horizon-four upper average bound",
+            "detail": "At T4 the same step is1/2; initial2 and comparator0 yield upper average regret5/4.",
+            "math": "R_4(0)/4\\le5/4",
+            "fallback": "The bound follows from the source chain; it is not an equality of realized losses."
+          }
+        ],
+        "takeaway": "Scalar calculus, feature geometry and causal OGD are connected by actual proof dependencies.",
+        "boundary": "The horizon family and one-sided guarantee are explicit; later source results remain required."
+      },
+      "proof_bridge": {
+        "title": "From the scalar loss to causal average regret",
+        "summary": "The following derivation instantiates the shared projected OGD theorem with the actual Huber losses.",
+        "steps": [
+          {
+            "title": "Why the loss is convex and differentiable",
+            "detail": "At each seam the adjacent formulas and derivatives agree. The derivative is the monotone clamp of the residual, so the derivative criterion gives convexity.",
+            "math": "H_\\delta'(r)=\\max(-\\delta,\\min(r,\\delta))",
+            "fallback": "At delta0 both seams coincide and the loss is identically zero."
+          },
+          {
+            "title": "Compose with the observed feature",
+            "detail": "The inner-product functional has derivative z. The chain rule yields the actual gradient; its norm is bounded by delta times the feature norm. No bound on labels or predictor vectors enters.",
+            "math": "\\nabla\\ell_t(x)=H_\\delta'(\\langle z_t,x\\rangle-y_t)z_t,\\qquad\\|\\nabla\\ell_t(x)\\|\\le\\delta Z",
+            "fallback": "This derives regularity for the actual loss, rather than assuming a gradient-bound consumer."
+          },
+          {
+            "title": "Telescope the shared recursion",
+            "detail": "The shared projection is identity on the full space. Apply its convex differentiable OGD theorem to the same causal trajectory, retaining the final squared-distance term.",
+            "math": "R_T(u)\\le\\frac{\\|x_0-u\\|^2-\\|x_T-u\\|^2}{2\\eta}+\\frac{\\eta T(\\delta Z)^2}{2}",
+            "fallback": "Shared parent: BanditRL.OnlineGradientDescent.theorem_2_13_fixed; actual gradient and regularity are supplied by the preceding lemmas."
+          },
+          {
+            "title": "Pass to the upper average guarantee",
+            "detail": "Drop the nonpositive terminal contribution, substitute eta=1/sqrt(T), and divide by positive T. The reciprocal square-root limit makes this upper envelope smaller than each positive epsilon eventually.",
+            "math": "R_T(u)/T\\le(\\|x_0-u\\|^2+(\\delta Z)^2)/(2\\sqrt T)\\longrightarrow0",
+            "fallback": "Mathlib supplies derivative composition, the monotone-derivative convexity criterion and the reciprocal/square-root limits. The arrow applies to the upper envelope only."
+          }
+        ],
+        "boundary": "Known-horizon fixed step; nonnegative threshold; complete real inner-product space specializes to source Euclidean vectors. No bounded predictor set, anytime schedule, or two-sided limiting-regret claim."
+      }
     }
   ]
 }
