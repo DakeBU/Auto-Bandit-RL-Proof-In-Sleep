@@ -8,6 +8,6 @@
 - [x] Shared reader/registry/graph and contribution contract.
 - [x] Standard axioms and frozen-header audit.
 - [x] Root/Tests/full harness, site and exact-base contribution gate.
-- [ ] Scoped PR delivery.
+- [x] Scoped draft PR #138 delivered, stacked on #137.
 
 Theorem2.22 and remaining chapter/book results are not covered.
