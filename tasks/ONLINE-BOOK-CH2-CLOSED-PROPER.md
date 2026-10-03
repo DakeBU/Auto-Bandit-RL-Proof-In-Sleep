@@ -2,7 +2,7 @@
 
 Task id: `ONLINE-BOOK-CH2-CLOSED-PROPER`
 Kind: `theorem`
-Status: `candidate`
+Status: `accepted-local`
 Harness: `hierarchical`
 
 ## Exact source and target
@@ -17,3 +17,5 @@ The DAG has existing EReal/topology and extendedIndicator parents -> three indep
 
 ## Evidence and remaining gates
 Focused9070jobs includes public root/canary. Combined root/Tests9194jobs and full harness464tests/7existing skips passed. Standard-only axioms; independent source-blind decoder and distinct source reviewer accepted with explicit arbitrary-topology delta. Source/read inventory in runs/online-closed-proper-20261003. Site build02/check02 passed after preserving schema-failure01. Full-root graph export and contribution manifest/PR delivery remain pending at this checkpoint. Active global frontier remains unchanged.
+
+Final local gates passed; exact evidence: runs/online-closed-proper-20261003/acceptance-decision.md. Scoped PR delivery remains pending.
