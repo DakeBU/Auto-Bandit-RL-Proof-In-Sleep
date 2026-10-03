@@ -1,0 +1,96 @@
+import BanditRLProof.OnlineConvexSums
+import BanditRLProof.OnlineSubgradientDifferentiability
+
+noncomputable section
+open Set Filter
+open scoped Topology BigOperators
+namespace BanditRL.OnlineConvex
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
+
+def SourceSubgradientSum {ι : Type*} [Fintype ι]
+    (f : ι → E → EReal) (x : E) : Set E :=
+  {g | ∃ G : ι → E, (∀ i, G i ∈ SourceSubdifferential (f i) x) ∧ ∑ i, G i = g}
+
+theorem upperAdd_eq_add_of_ne_bot (a b : EReal) (ha : a ≠ ⊥) (hb : b ≠ ⊥) :
+    upperAdd a b = a + b := by
+  cases a <;> cases b <;> simp_all [upperAdd, ← EReal.coe_neg, ← EReal.coe_add, add_comm]
+
+theorem ereal_finset_sum_ne_bot {ι : Type*} (s : Finset ι) (a : ι → EReal)
+    (ha : ∀ i ∈ s, a i ≠ ⊥) :
+    (∑ i ∈ s, a i) ≠ ⊥ := by
+  classical
+  induction s using Finset.induction_on with
+  | empty => simp
+  | @insert i s his ih =>
+    rw [Finset.sum_insert his]
+    apply EReal.add_ne_bot_iff.mpr
+    exact ⟨ha i (Finset.mem_insert_self _ _), ih (fun j hj => ha j (Finset.mem_insert_of_mem hj))⟩
+
+theorem convex_finset_sum {ι : Type*} (s : Finset ι) (f : ι → E → EReal)
+    (hb : ∀ i ∈ s, ∀ y, f i y ≠ ⊥) (hc : ∀ i ∈ s, IsConvexExtended (f i)) :
+    IsConvexExtended (fun y => ∑ i ∈ s, f i y) := by
+  classical
+  induction s using Finset.induction_on with
+  | empty =>
+    change IsConvexExtended (fun _ : E => ((0 : ℝ) : EReal))
+    exact (convexExtended_coe_iff _).mpr (convexOn_const (c := (0 : ℝ)) convex_univ)
+  | @insert i s his ih =>
+    have hsbot : ∀ y, (∑ j ∈ s, f j y) ≠ ⊥ := fun y =>
+      ereal_finset_sum_ne_bot s (fun j => f j y) (fun j hj => hb j (Finset.mem_insert_of_mem hj) y)
+    have hsc : IsConvexExtended (fun y => ∑ j ∈ s, f j y) :=
+      ih (fun j hj => hb j (Finset.mem_insert_of_mem hj))
+        (fun j hj => hc j (Finset.mem_insert_of_mem hj))
+    have hcv := convex_upperAdd (f i) (fun y => ∑ j ∈ s, f j y)
+      (hc i (Finset.mem_insert_self _ _)) hsc
+    have he : (fun y => upperAdd (f i y) (∑ j ∈ s, f j y)) =
+        (fun y => ∑ j ∈ insert i s, f j y) := by
+      funext y
+      rw [Finset.sum_insert his, upperAdd_eq_add_of_ne_bot _ _
+        (hb i (Finset.mem_insert_self _ _) y) (hsbot y)]
+    rw [he] at hcv
+    exact hcv
+
+theorem finite_sum_point {ι : Type*} [Fintype ι] (f : ι → E → EReal) (x : E)
+    (hx : ∀ i, ∃ r : ℝ, f i x = (r : EReal)) :
+    ∃ r : ℝ, (∑ i, f i x) = (r : EReal) := by
+  classical
+  choose a ha using hx
+  let coeHom : ℝ →+ EReal := ⟨⟨Real.toEReal, EReal.coe_zero⟩, EReal.coe_add⟩
+  refine ⟨∑ i, a i, ?_⟩
+  calc
+    (∑ i, f i x) = ∑ i, ((a i : ℝ) : EReal) := by simp only [ha]
+    _ = ((∑ i, a i : ℝ) : EReal) := (map_sum coeHom a Finset.univ).symm
+
+theorem sum_finite_implies_components_finite {ι : Type*} [Fintype ι]
+    (a : ι → EReal) (hb : ∀ i, a i ≠ ⊥) (ht : (∑ i, a i) ≠ ⊤) :
+    ∀ i, ∃ r : ℝ, a i = (r : EReal) := by
+  classical
+  intro i
+  have hi : a i ≠ ⊤ := by
+    intro hitop
+    have he := Finset.add_sum_erase Finset.univ a (Finset.mem_univ i)
+    have hrest := ereal_finset_sum_ne_bot (Finset.univ.erase i) a (fun j _ => hb j)
+    rw [hitop, EReal.top_add_of_ne_bot hrest] at he
+    exact ht he.symm
+  exact ⟨(a i).toReal, (EReal.coe_toReal hi (hb i)).symm⟩
+
+theorem interior_domain_sum {ι : Type*} [Fintype ι] (f : ι → E → EReal)
+    (hb : ∀ i y, f i y ≠ ⊥) (z : E)
+    (hz : ∀ i, z ∈ interior (effectiveDomain (f i))) :
+    z ∈ interior (effectiveDomain (fun y => ∑ i, f i y)) := by
+  have he : ∀ᶠ y in 𝓝 z, ∀ i, ((f i y).toReal : EReal) = f i y :=
+    eventually_all.mpr (fun i => finitePart_eventually (f i) (hb i) z (hz i))
+  apply mem_interior_iff_mem_nhds.mpr
+  filter_upwards [he] with y hy
+  obtain ⟨r, hr⟩ := finite_sum_point f y (fun i => ⟨(f i y).toReal, (hy i).symm⟩)
+  change (∑ i, f i y) < ⊤
+  rw [hr]
+  exact EReal.coe_lt_top _
+
+end BanditRL.OnlineConvex
+#print axioms BanditRL.OnlineConvex.upperAdd_eq_add_of_ne_bot
+#print axioms BanditRL.OnlineConvex.ereal_finset_sum_ne_bot
+#print axioms BanditRL.OnlineConvex.convex_finset_sum
+#print axioms BanditRL.OnlineConvex.finite_sum_point
+#print axioms BanditRL.OnlineConvex.sum_finite_implies_components_finite
+#print axioms BanditRL.OnlineConvex.interior_domain_sum

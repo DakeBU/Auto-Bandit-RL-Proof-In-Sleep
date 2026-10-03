@@ -1,0 +1,120 @@
+{
+  "schema_version": "2.0",
+  "id": "ONLINE-SUBGRADIENT-SUM-20261003",
+  "route": "online-learning/chapter-2",
+  "frontier_cell": "online-subgradient-sum",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10, 2026-06-21; SHA256 cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchor": "Theorem2.23, Section2.2.1, printed17–18/PDF29–30",
+    "url": "https://arxiv.org/pdf/1912.13213v10"
+  },
+  "target": "Both source Theorem2.23 inclusion and exact mixed-qualified equality, with actual finite-family witness construction",
+  "affected_files": [
+    "BanditRLProof.lean",
+    "BanditRLProof/OnlineSubgradientSum.lean",
+    "website/content/books.json",
+    "website/content/chapters.json",
+    "website/content/readings.json",
+    "website/content/highlights.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineConvex.theorem_2_23_inclusion",
+    "BanditRL.OnlineConvex.binary_subgradient_decomposition",
+    "BanditRL.OnlineConvex.convex_finset_sum",
+    "BanditRL.OnlineConvex.interior_domain_sum",
+    "BanditRL.OnlineConvex.sum_finite_implies_components_finite",
+    "BanditRL.OnlineConvex.theorem_2_23_equality"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Actual existing SourceSubdifferential/proper/closed/effective-domain APIs",
+      "Actual convex_upperAdd and supporting_functional_at_closure",
+      "Pinned EReal arithmetic, additive embedding, Finset sums and finite-index API"
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineConvex.supporting_functional_at_closure",
+      "BanditRL.OnlineConvex.convex_upperAdd",
+      "BanditRL.OnlineConvex.subgradient_point_finite",
+      "BanditRL.OnlineConvex.finitePart_eventually"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineConvex.SourceSubgradientSum",
+      "BanditRL.OnlineConvex.binary_subgradient_decomposition"
+    ],
+    "known_consumers": [
+      "BanditRL.OnlineConvex.theorem_2_23_equality"
+    ],
+    "planned_consumers": [
+      "Source normal-cone/hinge and later composite-loss guarantees"
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Reuse actual epigraph support and sum convexity; construct new qualified support decomposition rather than assuming attainment or duplicating projection/convexity theory."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/sum_blind",
+    "source_reviewer": "/root/source_reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Finite-dimensional inner-product presentation of source Euclidean space; inclusion admits an empty finite family. Improper aggregate unguarded-support semantics explicitly bounded by vacuous component side. Source equality retains closedness despite stronger internal helper. Distinct automated full-source review; final public reader review pending, not external-human review."
+  },
+  "graph_contribution": {
+    "lean_graph": "new-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Finite-dimensional convex-analysis sum rule in the shared graph; no independent cross-setting transport.",
+    "focus_targets": [
+      "BanditRL.OnlineConvex.theorem_2_23_inclusion",
+      "BanditRL.OnlineConvex.binary_subgradient_decomposition",
+      "BanditRL.OnlineConvex.convex_finset_sum",
+      "BanditRL.OnlineConvex.interior_domain_sum",
+      "BanditRL.OnlineConvex.sum_finite_implies_components_finite",
+      "BanditRL.OnlineConvex.theorem_2_23_equality"
+    ],
+    "visual_review": "Pending actual graph export and reader screenshot; four curated teaching nodes do not exhaust proof dependencies.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated exact Theorem2.23 route; chapter/book incomplete",
+    "banditrlwiki": "no-change-with-reason: no Bandit setting claim; exact Online source ledger/retrieval carries this prerequisite.",
+    "results_ledger": "no-change-with-reason: no existing Bandit named milestone changes; source inventory records this package.",
+    "roadmap": "no-change-with-reason: global SGB frontier unchanged, sequential Online Chapter2 source obligations continue",
+    "website_surfaces": [
+      "website/content/books.json",
+      "website/content/chapters.json",
+      "website/content/highlights.json",
+      "website/content/readings.json"
+    ]
+  },
+  "truth_boundary": "Public compiled candidate for both source2.23 endpoints. Combined/graph/site/contribution/immutable reader gates pending; no Chapter2/book completion, merge, deployment or main/live update.",
+  "verification": {
+    "focused_checks": [
+      "public-focused02 actual module and nondegenerate canaries compiled",
+      "Full source header remains frozen; native public fence/axiom audit pending",
+      "Actual compiled graph pending"
+    ],
+    "bandit_check": "pending actual full root/Tests/harness gate",
+    "site_build": "pending actual Lean gate before --lean-verified",
+    "site_check": "pending",
+    "independent_review": "Distinct blind reconstruction and full-source scratch proof accepted-with-explicit-delta; public reader and immutable binding gates pending."
+  },
+  "contributor": {
+    "name": "Codex for Ji Cheng",
+    "role": "Formalization and integration; distinct automated semantic actors named above; source attribution retained"
+  }
+}

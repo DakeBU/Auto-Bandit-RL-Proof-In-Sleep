@@ -1,0 +1,29 @@
+import BanditRLProof.OnlineSubgradientDifferentiability
+
+noncomputable section
+open Set Filter
+open scoped Topology BigOperators
+namespace BanditRL.OnlineConvex
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
+
+def SourceSubgradientSum {ι : Type*} [Fintype ι]
+    (f : ι → E → EReal) (x : E) : Set E :=
+  {g | ∃ G : ι → E, (∀ i, G i ∈ SourceSubdifferential (f i) x) ∧ ∑ i, G i = g}
+
+theorem theorem_2_23_inclusion {ι : Type*} [Fintype ι]
+    (f : ι → E → EReal) (hp : ∀ i, SourceProper (f i)) (x : E) :
+    SourceSubgradientSum f x ⊆ SourceSubdifferential (fun y => ∑ i, f i y) x := by
+  classical
+  rintro g ⟨G, hG, rfl⟩ y
+  let coeHom : ℝ →+ EReal := ⟨⟨Real.toEReal, EReal.coe_zero⟩, EReal.coe_add⟩
+  have hcoe : ((∑ i, inner ℝ (G i) (y - x) : ℝ) : EReal) =
+      ∑ i, (inner ℝ (G i) (y - x) : EReal) :=
+    map_sum coeHom (fun i => inner ℝ (G i) (y - x)) Finset.univ
+  have hs := Finset.sum_le_sum (fun i (_ : i ∈ Finset.univ) => hG i y)
+  rw [Finset.sum_add_distrib] at hs
+  change (∑ i, f i x) + (inner ℝ (∑ i, G i) (y - x) : EReal) ≤ ∑ i, f i y
+  rw [sum_inner, hcoe]
+  exact hs
+
+end BanditRL.OnlineConvex
+#print axioms BanditRL.OnlineConvex.theorem_2_23_inclusion

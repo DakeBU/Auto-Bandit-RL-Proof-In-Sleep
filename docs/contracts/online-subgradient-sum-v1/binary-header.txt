@@ -1,0 +1,8 @@
+theorem binary_subgradient_decomposition
+    (f h : E → EReal) (hpf : SourceProper f) (hph : SourceProper h)
+    (hcf : IsConvexExtended f) (hch : IsConvexExtended h)
+    (x : E) (hfx : ∃ a : ℝ, f x = (a : EReal))
+    (hhx : ∃ b : ℝ, h x = (b : EReal))
+    (g : E) (hgs : g ∈ SourceSubdifferential (fun y => f y + h y) x)
+    (hqual : ∃ z : E, z ∈ interior (effectiveDomain f) ∧ z ∈ effectiveDomain h) :
+    ∃ p : E, p ∈ SourceSubdifferential f x ∧ g - p ∈ SourceSubdifferential h x

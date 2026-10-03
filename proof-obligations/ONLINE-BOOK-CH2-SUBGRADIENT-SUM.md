@@ -1,0 +1,16 @@
+# Source finite-sum proof obligations
+
+- [x] Pinned source pages reread and PDF digest verified.
+- [x] Full inclusion and exact mixed-qualified equality headers frozen with native statement fences.
+- [x] Actual ABRL/mathlib declaration retrieval and initial dependency DAG.
+- [x] Distinct blind reconstruction and source review; separate stabilized decision preserves original draft bytes.
+- [x] Scratch inclusion with nonzero square/indicator, nonconvex vacuity and empty-family canaries; repaired cast failure recorded.
+- [x] Genuine binary reverse decomposition from real epigraph separation; boundary-last-domain canary; scratch source review.
+- [x] Finite sum convexity, no-bottom, finite-point and interior prerequisites, standard-axiom compilation finite-helpers02.
+- [ ] Full positive-finite-family equality at every queried x, deriving query finiteness rather than adding a premise.
+- [ ] Singleton empty-interior, at least three components, last-domain boundary and outside-domain canaries.
+- [ ] Full distinct semantic review, public shared integration, frozen fingerprints, graph and public axiom audit.
+- [ ] Root/Tests/full harness/site/contributor/immutable review gates.
+- [ ] Scoped PR delivery. No chapter/book completion implied.
+
+DAG: existing proper/global-support/convex-sum interfaces -> summed-support inclusion; actual mixed-qualified binary separation -> finite sum interior/convex/proper prerequisites -> inductive witness family -> full equality. Explicit decomposition/attainment assumptions cannot replace the reverse producer. Original failed compiler/canary/API attempts remain in the run; error recovery sorryAx is rejected.

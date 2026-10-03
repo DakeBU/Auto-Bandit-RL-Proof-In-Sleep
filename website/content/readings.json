@@ -3584,6 +3584,159 @@
         "takeaway": "The source equivalence handles real nonzero derivatives and the true extended-real domain boundary.",
         "boundary": "These examples do not prove any infinite-dimensional extension."
       }
+    },
+    {
+      "slug": "online-subgradient-sum",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10,21June2026",
+        "sections": "Section 2.2.1, Theorem 2.23, printed17–18/PDF29–30",
+        "pages": "printed17/PDF29",
+        "pdf_page": 29,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "Finite Minkowski sum",
+          "meaning": "Actual vectors G(i) supporting each component, whose finite vector sum equals g. An empty component support set makes the Minkowski sum empty."
+        },
+        {
+          "term": "Mixed qualification",
+          "meaning": "One z is in dom(last) and the ambient interiors of all other component domains. It is independent of the queried x; last need not be interior."
+        },
+        {
+          "term": "Proper and closed",
+          "meaning": "Proper components never equal negative infinity and each has a finite value somewhere. Closed means every real sublevel set is closed. The unconditional sum may be improper if domains are disjoint."
+        }
+      ],
+      "algorithm": {
+        "title": "Construct the component supports",
+        "kind": "proof flow",
+        "steps": [
+          {
+            "title": "Sum global inequalities",
+            "detail": "Add the all-y supporting inequalities and use linearity of the inner product. No convexity or common-domain condition is needed for inclusion."
+          },
+          {
+            "title": "Separate the epigraph image",
+            "detail": "A true sum support bounds the zero-displacement slice of a linear image of two real epigraphs. A supporting functional has a strictly negative height coefficient by the mixed qualification."
+          },
+          {
+            "title": "Normalize and induct",
+            "detail": "Riesz representation constructs the first support and its complementary vector. Split off the last function and recursively construct the actual prefix support family."
+          }
+        ]
+      },
+      "teaching_route": [
+        "BanditRL.OnlineConvex.theorem_2_23_inclusion",
+        "BanditRL.OnlineConvex.binary_subgradient_decomposition",
+        "BanditRL.OnlineConvex.interior_domain_sum",
+        "BanditRL.OnlineConvex.theorem_2_23_equality"
+      ],
+      "source_theorems": [
+        {
+          "label": "Theorem 2.23 inclusion",
+          "pages": "printed17",
+          "pdf_page": 29,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\partial F(x)\\supseteq\\sum_{i=1}^m\\partial f_i(x)",
+          "fallback": "For proper components, every actual finite sum of component subgradients is a global subgradient of their sum, at every x.",
+          "plain": "For proper components, every actual finite sum of component subgradients is a global subgradient of their sum, at every x.",
+          "relationship": "The generic finite indexing also admits the empty family, yielding the zero support of the zero function. If the sum is identically positive infinity, the unguarded support predicate is not a meaningful existence claim: the component Minkowski side is empty.",
+          "contract": {
+            "model": "Global supporting inequalities for real-height convex epigraphs; actual extended-real finite function sum and witness-defined vector Minkowski sum.",
+            "assumptions": "Arbitrary proper components in a finite family. No convexity, closedness or common-domain premise.",
+            "parameters": "Every component function and every queried x. The common qualifying z, when required, is independent of x.",
+            "regret": "No regret or algorithm performance claim.",
+            "guarantee": "SourceSubgradientSum f x is a subset of SourceSubdifferential (sum f) x."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Public Theorem 2.23 candidate",
+            "boundary": "Focused module and public boundary canaries compile; combined root/harness, graph, reader and site gates are recorded separately. Not merged or deployed; chapter/book incomplete."
+          }
+        },
+        {
+          "label": "Theorem 2.23 equality",
+          "pages": "printed17",
+          "pdf_page": 29,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\partial F(x)=\\sum_{i=1}^m\\partial f_i(x),\\quad\\operatorname{dom}f_m\\cap\\bigcap_{i<m}\\operatorname{int}(\\operatorname{dom}f_i)\\ne\\varnothing",
+          "fallback": "For proper convex closed components and the exact mixed qualification, every sum-function support decomposes into actual component supports, at every x.",
+          "plain": "For proper convex closed components and the exact mixed qualification, every sum-function support decomposes into actual component supports, at every x.",
+          "relationship": "Finite-dimensional real inner-product space presents source Euclidean space. The internal binary producer is stronger without closedness; the source terminal retains every closedness premise. A singleton family requires only a nonempty domain, whose interior may be empty.",
+          "contract": {
+            "model": "Global supporting inequalities for real-height convex epigraphs; actual extended-real finite function sum and witness-defined vector Minkowski sum.",
+            "assumptions": "Positive finite family of proper convex closed extended-real functions; one common point in the last domain and all other domain interiors. No query-finiteness, boundedness or assumed decomposition premise.",
+            "parameters": "Every component function and every queried x. The common qualifying z, when required, is independent of x.",
+            "regret": "No regret or algorithm performance claim.",
+            "guarantee": "Exact equality at every queried point, including points outside the sum domain."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Public Theorem 2.23 candidate",
+            "boundary": "Focused module and public boundary canaries compile; combined root/harness, graph, reader and site gates are recorded separately. Not merged or deployed; chapter/book incomplete."
+          }
+        }
+      ],
+      "proof_bridge": {
+        "title": "From a sum support to actual component vectors",
+        "summary": "The reverse direction constructs a witness family; no decomposition or dual attainment is assumed.",
+        "steps": [
+          {
+            "title": "Derive query finiteness",
+            "detail": "The mixed common point makes the actual aggregate proper. A global aggregate support forces its queried value finite, then no-bottom arithmetic forces all component values finite.",
+            "math": "g\\in\\partial F(x)\\Longrightarrow F(x)<+\\infty\\Longrightarrow f_i(x)<+\\infty",
+            "fallback": "Query finiteness is proved internally, never added to the source theorem."
+          },
+          {
+            "title": "Obtain a real separating functional",
+            "detail": "Take the linear image of the product epigraphs with coordinates (u-v,a+b-inner(g,v)). The sum support places the contact point on its boundary. Independent local variation in the first domain forces a negative vertical coefficient.",
+            "math": "L(w,t)=A(w)+ct,\\qquad c<0",
+            "fallback": "This is actual finite-dimensional separation, including empty-interior image cases."
+          },
+          {
+            "title": "Construct complementary supports",
+            "detail": "Normalize -A/c and use Riesz representation. The resulting p and g-p satisfy the original global inequalities, including infinite test values.",
+            "math": "p\\in\\partial f(x),\\qquad g-p\\in\\partial h(x)",
+            "fallback": "The second qualifying point may lie on the domain boundary."
+          },
+          {
+            "title": "Extend to every positive finite family",
+            "detail": "The prefix domain contains the common point in its interior and its sum is proper and convex. Apply the binary producer, recursively decompose the prefix, and append the final vector.",
+            "math": "g=\\sum_iG_i,\\qquad G_i\\in\\partial f_i(x)",
+            "fallback": "The singleton case uses no domain interior. Outside-domain equality is retained."
+          }
+        ],
+        "boundary": "Both Theorem 2.23 endpoints only; later normal-cone, maximum, OSD and linearization results remain required. Teaching links are curated, not the complete proof-term graph."
+      },
+      "worked_example": {
+        "title": "A genuine last-domain boundary and a thin singleton",
+        "intro": "The public canaries invoke the full equality to construct witnesses, rather than assume the desired decomposition.",
+        "steps": [
+          {
+            "title": "Three components and a nonzero vector",
+            "detail": "Take two squares and the zero/top indicator of [0,2], at x=0. The actual aggregate has support -1; the theorem produces three component supports whose sum is -1.",
+            "math": "F(y)=2y^2+I_{[0,2]}(y),\\quad -1\\in\\partial F(0)",
+            "fallback": "The last qualifying point 0 is not in the last domain interior."
+          },
+          {
+            "title": "Query outside the domain",
+            "detail": "At x=3, both aggregate and Minkowski support sets are empty. The same all-x theorem applies.",
+            "math": "\\partial F(3)=\\sum_i\\partial f_i(3)=\\varnothing",
+            "fallback": "No finite-query premise is hidden."
+          },
+          {
+            "title": "Singleton family with empty interior",
+            "detail": "For the indicator of {0}, the domain interior is empty. The one-component equality still admits the genuine support 7 at 0.",
+            "math": "\\operatorname{int}\\{0\\}=\\varnothing,\\quad 7\\in\\partial I_{\\{0\\}}(0)",
+            "fallback": "Requiring every domain interior would incorrectly exclude this source case."
+          }
+        ],
+        "takeaway": "The exact mixed qualification handles real boundary geometry, all queried points and the singleton edge case.",
+        "boundary": "The arbitrary-proper inclusion additionally tests nonconvex vacuity and the empty-family extension. These are not a chapter-completion claim."
+      }
     }
   ]
 }

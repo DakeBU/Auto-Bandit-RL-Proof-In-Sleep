@@ -1,0 +1,7 @@
+theorem theorem_2_23_equality (n : ℕ) (f : Fin (n + 1) → E → EReal)
+    (hp : ∀ i, SourceProper (f i)) (hc : ∀ i, IsConvexExtended (f i))
+    (hclosed : ∀ i, SourceClosed (f i))
+    (hqual : ∃ z : E, z ∈ effectiveDomain (f (Fin.last n)) ∧
+      ∀ i : Fin (n + 1), i ≠ Fin.last n → z ∈ interior (effectiveDomain (f i)))
+    (x : E) :
+    SourceSubdifferential (fun y => ∑ i, f i y) x = SourceSubgradientSum f x

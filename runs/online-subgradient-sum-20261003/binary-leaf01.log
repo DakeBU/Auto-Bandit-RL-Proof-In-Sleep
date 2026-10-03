@@ -1,0 +1,136 @@
+tmp/online-subgradient-sum-binary.lean:50:8: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  f x
+in the target expression
+  (fun y => f y + h y) x + ↑(inner ℝ g (v - x)) ≤ ↑((v, a), v, b).1.2 + ↑((v, a), v, b).2.2
+
+E : Type u_1
+inst✝² : NormedAddCommGroup E
+inst✝¹ : InnerProductSpace ℝ E
+inst✝ : FiniteDimensional ℝ E
+f h : E → EReal
+hpf : SourceProper f
+hph : SourceProper h
+hcf : IsConvexExtended f
+hch : IsConvexExtended h
+x g : E
+hgs : g ∈ SourceSubdifferential (fun y => f y + h y) x
+r : ℝ
+hr : f x = ↑r
+s : ℝ
+hsval : h x = ↑s
+z : E
+hzint : z ∈ interior (effectiveDomain f)
+hzdom : z ∈ effectiveDomain h
+P : (E × ℝ) × E × ℝ →ₗ[ℝ] E × ℝ :=
+  { toFun := fun w => (w.1.1 - w.2.1, w.1.2 + w.2.2 - inner ℝ g w.2.1), map_add' := ⋯, map_smul' := ⋯ }
+C : Set (E × ℝ) := ⇑P '' realEpigraph f ×ˢ realEpigraph h
+hC : Convex ℝ C
+q : ℝ := r + s - inner ℝ g x
+hpoint : (0, q) ∈ C
+t a : ℝ
+v : E
+b : ℝ
+he : P ((v, a), v, b) = (0, t)
+hu : ((v, a), v, b).1 ∈ realEpigraph f
+hv : ((v, a), v, b).2 ∈ realEpigraph h
+htval : a + b - inner ℝ g v = t
+hlow : (fun y => f y + h y) x + ↑(inner ℝ g (v - x)) ≤ ↑((v, a), v, b).1.2 + ↑((v, a), v, b).2.2
+⊢ q ≤ t
+tmp/online-subgradient-sum-binary.lean:93:6: error: linarith failed to find a contradiction
+E : Type u_1
+inst✝² : NormedAddCommGroup E
+inst✝¹ : InnerProductSpace ℝ E
+inst✝ : FiniteDimensional ℝ E
+f h : E → EReal
+hpf : SourceProper f
+hph : SourceProper h
+hcf : IsConvexExtended f
+hch : IsConvexExtended h
+x g : E
+hgs : g ∈ SourceSubdifferential (fun y => f y + h y) x
+r : ℝ
+hr : f x = ↑r
+s : ℝ
+hsval : h x = ↑s
+z : E
+hzint : z ∈ interior (effectiveDomain f)
+hzdom : z ∈ effectiveDomain h
+P : (E × ℝ) × E × ℝ →ₗ[ℝ] E × ℝ :=
+  { toFun := fun w => (w.1.1 - w.2.1, w.1.2 + w.2.2 - inner ℝ g w.2.1), map_add' := ⋯, map_smul' := ⋯ }
+C : Set (E × ℝ) := ⇑P '' realEpigraph f ×ˢ realEpigraph h
+hC : Convex ℝ C
+q : ℝ := r + s - inner ℝ g x
+hpoint : (0, q) ∈ C
+height_bound : ∀ (t : ℝ), (0, t) ∈ C → q ≤ t
+hnotint : (0, q) ∉ interior C
+L : E × ℝ →L[ℝ] ℝ
+hLne : L ≠ 0
+hsupport : ∀ y ∈ C, L y ≤ L (0, q)
+A : E →L[ℝ] ℝ := L.comp (ContinuousLinearMap.inl ℝ E ℝ)
+c : ℝ := L (0, 1)
+hsplit : ∀ (v : E) (t : ℝ), L (v, t) = A v + t * c
+hc0 : c ≤ 0
+hc : c = 0
+hzfin : ↑(h z).toReal = h z
+u : E
+hu : u ∈ effectiveDomain f
+hufin : ↑(f u).toReal = f u
+huC : (u - z, (f u).toReal + (h z).toReal - inner ℝ g z) ∈ C
+hh : A u - A z ≤ 0
+⊢ False
+failed
+tmp/online-subgradient-sum-binary.lean:124:4: error: Type mismatch: After simplification, term
+  hb
+ has type
+  (r * c + -A (y + -x)) / c ≤ (f y).toReal
+but is expected to have type
+  r + -(A (y + -x) / c) ≤ (f y).toReal
+tmp/online-subgradient-sum-binary.lean:139:59: error: unsolved goals
+E : Type u_1
+inst✝² : NormedAddCommGroup E
+inst✝¹ : InnerProductSpace ℝ E
+inst✝ : FiniteDimensional ℝ E
+f h : E → EReal
+hpf : SourceProper f
+hph : SourceProper h
+hcf : IsConvexExtended f
+hch : IsConvexExtended h
+x g : E
+hgs : g ∈ SourceSubdifferential (fun y => f y + h y) x
+r : ℝ
+hr : f x = ↑r
+s : ℝ
+hsval : h x = ↑s
+z : E
+hzint : z ∈ interior (effectiveDomain f)
+hzdom : z ∈ effectiveDomain h
+P : (E × ℝ) × E × ℝ →ₗ[ℝ] E × ℝ :=
+  { toFun := fun w => (w.1.1 - w.2.1, w.1.2 + w.2.2 - inner ℝ g w.2.1), map_add' := ⋯, map_smul' := ⋯ }
+C : Set (E × ℝ) := ⇑P '' realEpigraph f ×ˢ realEpigraph h
+hC : Convex ℝ C
+q : ℝ := r + s - inner ℝ g x
+hpoint : (0, q) ∈ C
+height_bound : ∀ (t : ℝ), (0, t) ∈ C → q ≤ t
+hnotint : (0, q) ∉ interior C
+L : E × ℝ →L[ℝ] ℝ
+hLne : L ≠ 0
+hsupport : ∀ y ∈ C, L y ≤ L (0, q)
+A : E →L[ℝ] ℝ := L.comp (ContinuousLinearMap.inl ℝ E ℝ)
+c : ℝ := L (0, 1)
+hsplit : ∀ (v : E) (t : ℝ), L (v, t) = A v + t * c
+hc0 : c ≤ 0
+hcne : c ≠ 0
+hc : c < 0
+p : E := (InnerProductSpace.toDual ℝ E).symm (-c⁻¹ • A)
+hinner : ∀ (v : E), inner ℝ p v = -A v / c
+y : E
+hy : ¬h y = ⊤
+hyfin : ↑(h y).toReal = h y
+hCy : (x - y, r + (h y).toReal - inner ℝ g y) ∈ C
+hh : A x - A y + (r + (h y).toReal - inner ℝ g y) * c ≤ 0 + (r + s - inner ℝ g x) * c
+hb : (s * c + inner ℝ g (y - x) * c + A (y - x)) / c ≤ (h y).toReal
+⊢ s * c + (inner ℝ g (y - x) * c + A (y - x)) = c * (s + inner ℝ g (y - x)) + A (y - x)
+'BanditRL.OnlineConvex.binary_subgradient_decomposition' depends on axioms: [propext,
+ sorryAx,
+ Classical.choice,
+ Quot.sound]

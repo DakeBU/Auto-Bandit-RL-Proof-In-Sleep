@@ -1,0 +1,204 @@
+import Tests.OnlineSubgradientBasicCanary
+import BanditRLProof.OnlineSubgradientDifferentiability
+
+noncomputable section
+open Set Filter
+open scoped Topology BigOperators
+namespace BanditRL.OnlineConvex
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
+
+def SourceSubgradientSum {ι : Type*} [Fintype ι]
+    (f : ι → E → EReal) (x : E) : Set E :=
+  {g | ∃ G : ι → E, (∀ i, G i ∈ SourceSubdifferential (f i) x) ∧ ∑ i, G i = g}
+
+theorem binary_subgradient_decomposition
+    (f h : E → EReal) (hpf : SourceProper f) (hph : SourceProper h)
+    (hcf : IsConvexExtended f) (hch : IsConvexExtended h)
+    (x : E) (hfx : ∃ a : ℝ, f x = (a : EReal))
+    (hhx : ∃ b : ℝ, h x = (b : EReal))
+    (g : E) (hgs : g ∈ SourceSubdifferential (fun y => f y + h y) x)
+    (hqual : ∃ z : E, z ∈ interior (effectiveDomain f) ∧ z ∈ effectiveDomain h) :
+    ∃ p : E, p ∈ SourceSubdifferential f x ∧ g - p ∈ SourceSubdifferential h x := by
+  classical
+  obtain ⟨r, hr⟩ := hfx
+  obtain ⟨s, hsval⟩ := hhx
+  obtain ⟨z, hzint, hzdom⟩ := hqual
+  let P : ((E × ℝ) × (E × ℝ)) →ₗ[ℝ] E × ℝ := {
+    toFun := fun w => (w.1.1 - w.2.1, w.1.2 + w.2.2 - inner ℝ g w.2.1)
+    map_add' := by
+      intro v w
+      ext <;> simp only [Prod.fst_add, Prod.snd_add, inner_add_right] <;> abel
+    map_smul' := by
+      intro a w
+      ext <;> simp [smul_sub, real_inner_smul_right, smul_eq_mul, mul_add, mul_sub] }
+  let C : Set (E × ℝ) := P '' (realEpigraph f ×ˢ realEpigraph h)
+  have hC : Convex ℝ C := (hcf.prod hch).linear_image P
+  let q : ℝ := r + s - inner ℝ g x
+  have hpoint : (0, q) ∈ C := by
+    refine ⟨((x, r), (x, s)), ⟨hr.le, hsval.le⟩, ?_⟩
+    simp [P, q]
+  have height_bound : ∀ t : ℝ, (0, t) ∈ C → q ≤ t := by
+    intro t ht
+    obtain ⟨⟨⟨u, a⟩, ⟨v, b⟩⟩, ⟨hu, hv⟩, he⟩ := ht
+    have huv : u = v := by
+      have he1 := congrArg Prod.fst he
+      change u - v = 0 at he1
+      exact sub_eq_zero.mp he1
+    subst u
+    have htval := congrArg Prod.snd he
+    change a + b - inner ℝ g v = t at htval
+    have hlow := (hgs v).trans (add_le_add hu hv)
+    change f x + h x + (inner ℝ g (v - x) : EReal) ≤ (a : EReal) + (b : EReal) at hlow
+    rw [hr, hsval, ← EReal.coe_add, ← EReal.coe_add, ← EReal.coe_add] at hlow
+    have hreal : r + s + inner ℝ g (v - x) ≤ a + b := by exact_mod_cast hlow
+    rw [inner_sub_right] at hreal
+    dsimp only [q]
+    linarith
+  have hnotint : (0, q) ∉ interior C := by
+    intro hi
+    have he : ∀ᶠ t : ℝ in 𝓝 q, (0, t) ∈ C :=
+      (continuous_const.prodMk continuous_id).continuousAt.eventually
+        (isOpen_interior.mem_nhds hi) |>.mono (fun t ht => interior_subset ht)
+    have hm : IsLocalMin (fun t : ℝ => t) q := he.mono (fun t ht => height_bound t ht)
+    have hz := hm.hasDerivAt_eq_zero (hasDerivAt_id q)
+    norm_num at hz
+  obtain ⟨L, hLne, hsupport⟩ := supporting_functional_at_closure C hC (0, q)
+    (subset_closure hpoint) hnotint
+  let A : E →L[ℝ] ℝ := L.comp (ContinuousLinearMap.inl ℝ E ℝ)
+  let c : ℝ := L (0, 1)
+  have hsplit (v : E) (t : ℝ) : L (v, t) = A v + t * c := by
+    change L (v, t) = L (v, 0) + t * L (0, 1)
+    calc
+      _ = L ((v, 0) + t • ((0 : E), (1 : ℝ))) := by simp
+      _ = _ := by rw [map_add, map_smul]; rfl
+  have hc0 : c ≤ 0 := by
+    have hp1 : (0, q + 1) ∈ C := by
+      refine ⟨((x, r + 1), (x, s)), ⟨?_, hsval.le⟩, ?_⟩
+      · change f x ≤ ((r + 1 : ℝ) : EReal)
+        rw [hr]
+        exact_mod_cast (show r ≤ r + 1 by linarith)
+      · simp [P, q]; ring
+    have hh := hsupport (0, q + 1) hp1
+    rw [hsplit, hsplit, map_zero] at hh
+    linarith
+  have hcne : c ≠ 0 := by
+    intro hc
+    have hzfin := EReal.coe_toReal (ne_of_lt hzdom) (hph.1 z)
+    have hm : IsMaxOn A (effectiveDomain f) z := by
+      intro u hu
+      have hufin := EReal.coe_toReal (ne_of_lt hu) (hpf.1 u)
+      have huC : (u - z, (f u).toReal + (h z).toReal - inner ℝ g z) ∈ C := by
+        refine ⟨((u, (f u).toReal), (z, (h z).toReal)), ⟨hufin.ge, hzfin.ge⟩, rfl⟩
+      have hh := hsupport _ huC
+      rw [hsplit, hsplit, hc, map_zero, map_sub] at hh
+      simp only [mul_zero, add_zero] at hh
+      exact sub_nonpos.mp hh
+    have hAz : A = 0 := (hm.isLocalMax (mem_interior_iff_mem_nhds.mp hzint)).hasFDerivAt_eq_zero A.hasFDerivAt
+    apply hLne
+    apply ContinuousLinearMap.ext
+    rintro ⟨u, t⟩
+    rw [hsplit, hAz, hc]
+    simp
+  have hc : c < 0 := lt_of_le_of_ne hc0 hcne
+  let p : E := (InnerProductSpace.toDual ℝ E).symm ((-c⁻¹) • A)
+  have hinner (v : E) : inner ℝ p v = - A v / c := by
+    rw [show p = (InnerProductSpace.toDual ℝ E).symm ((-c⁻¹) • A) from rfl,
+      InnerProductSpace.toDual_symm_apply]
+    change (-c⁻¹) * A v = - A v / c
+    simp only [div_eq_mul_inv]
+    ring
+  refine ⟨p, ?_, ?_⟩
+  · intro y
+    by_cases hy : f y = ⊤
+    · rw [hy]; exact le_top
+    have hyfin := EReal.coe_toReal hy (hpf.1 y)
+    have hCy : (y - x, (f y).toReal + s - inner ℝ g x) ∈ C := by
+      exact ⟨((y, (f y).toReal), (x, s)), ⟨hyfin.ge, hsval.le⟩, rfl⟩
+    have hh := hsupport _ hCy
+    rw [hsplit, hsplit, map_zero] at hh
+    dsimp only [q] at hh
+    have hb : (r * c - A (y - x)) / c ≤ (f y).toReal :=
+      (div_le_iff_of_neg hc).mpr (by linarith)
+    have he : r - A (y - x) / c = (r * c - A (y - x)) / c := by
+      field_simp
+    rw [hr, hinner, ← EReal.coe_add, ← hyfin]
+    apply EReal.coe_le_coe
+    rw [neg_div, ← sub_eq_add_neg, he]
+    exact hb
+  · intro y
+    by_cases hy : h y = ⊤
+    · rw [hy]; exact le_top
+    have hyfin := EReal.coe_toReal hy (hph.1 y)
+    have hCy : (x - y, r + (h y).toReal - inner ℝ g y) ∈ C := by
+      exact ⟨((x, r), (y, (h y).toReal)), ⟨hr.le, hyfin.ge⟩, rfl⟩
+    have hh := hsupport _ hCy
+    rw [hsplit, hsplit, map_zero, map_sub] at hh
+    dsimp only [q] at hh
+    have hb : (s * c + inner ℝ g (y - x) * c + A (y - x)) / c ≤ (h y).toReal := by
+      apply (div_le_iff_of_neg hc).mpr
+      rw [inner_sub_right, map_sub]
+      nlinarith
+    have he : s + (inner ℝ g (y - x) + A (y - x) / c) =
+        (s * c + inner ℝ g (y - x) * c + A (y - x)) / c := by
+      field_simp <;> ring
+    rw [hsval, inner_sub_left, hinner, ← EReal.coe_add, ← hyfin]
+    apply EReal.coe_le_coe
+    have he2 : s + (inner ℝ g (y - x) - -A (y - x) / c) =
+        s + (inner ℝ g (y - x) + A (y - x) / c) := by ring
+    rw [he2, he]
+    exact hb
+
+end BanditRL.OnlineConvex
+#print axioms BanditRL.OnlineConvex.binary_subgradient_decomposition
+
+namespace BinarySumProbe
+open BanditRL.OnlineConvex Set
+
+theorem actual_decomposition_at_last_domain_boundary :
+    ∃ p : ℝ,
+      p ∈ SourceSubdifferential (fun y : ℝ => ((y^2 : ℝ) : EReal)) 0 ∧
+      (-1 : ℝ) - p ∈ SourceSubdifferential (extendedIndicator (Icc (0 : ℝ) 2)) 0 := by
+  let f : ℝ → EReal := fun y => ((y^2 : ℝ) : EReal)
+  let h : ℝ → EReal := extendedIndicator (Icc (0 : ℝ) 2)
+  have hpf : SourceProper f := ⟨(fun y => EReal.coe_ne_bot _), 0, 0, by norm_num [f]⟩
+  have hph : SourceProper h := (sourceProper_indicator_iff _).mpr ⟨0, by norm_num⟩
+  have hdom : effectiveDomain f = univ := by
+    ext y
+    simp only [effectiveDomain, mem_setOf_eq, mem_univ, iff_true]
+    exact EReal.coe_lt_top _
+  have hcf : IsConvexExtended f := by
+    apply (convexExtended_iff_toReal f hpf.1).mpr
+    rw [hdom]
+    simpa only [f, EReal.toReal_coe] using SubgradientProbe.square_convex
+  have hch : IsConvexExtended h := (convex_indicator_iff _).mpr (convex_Icc 0 2)
+  have hg : (-1 : ℝ) ∈ SourceSubdifferential (fun y => f y + h y) 0 := by
+    intro y
+    change ((0^2 : ℝ) : EReal) + h 0 + (inner ℝ (-1 : ℝ) (y - 0) : EReal) ≤ f y + h y
+    have hz : h 0 = 0 := by norm_num [h, extendedIndicator]
+    rw [hz, add_zero]
+    by_cases hy : y ∈ Icc (0 : ℝ) 2
+    · have hhy : h y = 0 := by simp only [h, extendedIndicator, if_pos hy]
+      rw [hhy, add_zero, ← EReal.coe_add]
+      apply EReal.coe_le_coe
+      change (0 : ℝ)^2 + (y - 0) * (-1) ≤ y^2
+      nlinarith [hy.1, sq_nonneg y]
+    · have hhy : h y = ⊤ := by simp only [h, extendedIndicator, if_neg hy]
+      rw [hhy, EReal.add_top_of_ne_bot (hpf.1 y)]
+      exact le_top
+  have hqual : ∃ z : ℝ, z ∈ interior (effectiveDomain f) ∧ z ∈ effectiveDomain h := by
+    refine ⟨0, ?_, ?_⟩
+    · rw [hdom, interior_univ]
+      exact mem_univ _
+    · rw [show effectiveDomain h = Icc (0 : ℝ) 2 from effectiveDomain_indicator _]
+      norm_num
+  exact binary_subgradient_decomposition f h hpf hph hcf hch 0
+    ⟨0, by norm_num [f]⟩ ⟨0, by norm_num [h, extendedIndicator]⟩ (-1) hg hqual
+
+theorem last_qualifier_is_not_interior :
+    (0 : ℝ) ∉ interior (effectiveDomain (extendedIndicator (Icc (0 : ℝ) 2))) := by
+  rw [effectiveDomain_indicator, interior_Icc]
+  norm_num
+
+#print axioms actual_decomposition_at_last_domain_boundary
+#print axioms last_qualifier_is_not_interior
+end BinarySumProbe

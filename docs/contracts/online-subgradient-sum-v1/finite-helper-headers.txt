@@ -1,0 +1,23 @@
+theorem upperAdd_eq_add_of_ne_bot (a b : EReal) (ha : a ≠ ⊥) (hb : b ≠ ⊥) :
+    upperAdd a b = a + b
+
+theorem ereal_finset_sum_ne_bot {ι : Type*} (s : Finset ι) (a : ι → EReal)
+    (ha : ∀ i ∈ s, a i ≠ ⊥) :
+    (∑ i ∈ s, a i) ≠ ⊥
+
+theorem convex_finset_sum {ι : Type*} (s : Finset ι) (f : ι → E → EReal)
+    (hb : ∀ i ∈ s, ∀ y, f i y ≠ ⊥) (hc : ∀ i ∈ s, IsConvexExtended (f i)) :
+    IsConvexExtended (fun y => ∑ i ∈ s, f i y)
+
+theorem finite_sum_point {ι : Type*} [Fintype ι] (f : ι → E → EReal) (x : E)
+    (hx : ∀ i, ∃ r : ℝ, f i x = (r : EReal)) :
+    ∃ r : ℝ, (∑ i, f i x) = (r : EReal)
+
+theorem sum_finite_implies_components_finite {ι : Type*} [Fintype ι]
+    (a : ι → EReal) (hb : ∀ i, a i ≠ ⊥) (ht : (∑ i, a i) ≠ ⊤) :
+    ∀ i, ∃ r : ℝ, a i = (r : EReal)
+
+theorem interior_domain_sum {ι : Type*} [Fintype ι] (f : ι → E → EReal)
+    (hb : ∀ i y, f i y ≠ ⊥) (z : E)
+    (hz : ∀ i, z ∈ interior (effectiveDomain (f i))) :
+    z ∈ interior (effectiveDomain (fun y => ∑ i, f i y))

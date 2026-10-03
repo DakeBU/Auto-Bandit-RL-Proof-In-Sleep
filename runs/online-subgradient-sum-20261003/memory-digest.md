@@ -1,0 +1,3 @@
+# Current sum-rule frontier
+
+PR139 Theorem2.22 locally accepted and delivered; source stack exact fd28baf92777b436548c9e379a1c4f233e1d3c81 remains unmerged. New branch codex/research-online-subgradient-sum retains the same isolated shared-project worktree. Both source2.23 inclusion and exact mixed-qualified equality are frozen draft targets. Actual sum/additive-hom/inner APIs are compatible. Await distinct source contract review before terminal bodies. The qualified equality is required even if inclusion closes easily. Whole-book Goal remains active; Chapter2 incomplete. No global SGB pointer edit or main/live assertion.
