@@ -16,3 +16,15 @@
 - [ ] Scoped PR delivery.
 
 No full2.22, chapter or whole-book acceptance.
+
+## Candidate evidence update
+
+- [x] Actual singleton-to-Frechet proof (reverse-gradient03 and full-theorem02).
+- [x] Full exact source iff and every-representative gradient endpoint compiled.
+- [x] Public shared-core integration and actual nondegenerate canaries compiled.
+- [x] Twelve frozen public statement checks, unchanged old minorant header.
+- [x] Distinct full mathematical proof and final reader/canary semantic receipts.
+- [ ] Full harness repair after initial untracked-source inventory rejection.
+- [ ] Actual graph, site, immutable review bindings, contribution and PR delivery gates.
+
+The earlier unchecked source-proof rows are superseded by this candidate evidence, not chapter/book acceptance.

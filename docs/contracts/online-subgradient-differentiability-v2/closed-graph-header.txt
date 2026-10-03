@@ -1,0 +1,8 @@
+theorem subgradient_limit_of_continuousAt
+    {ι : Type*} (l : Filter ι) [NeBot l]
+    (f : E → EReal) (hbot : ∀ y, f y ≠ ⊥)
+    (x g : E) (hx : x ∈ interior (effectiveDomain f))
+    (hcont : ContinuousAt (fun y => (f y).toReal) x)
+    (xs gs : ι → E) (hxs : Tendsto xs l (𝓝 x)) (hgs : Tendsto gs l (𝓝 g))
+    (hs : ∀ᶠ i in l, gs i ∈ SourceSubdifferential f (xs i)) :
+    g ∈ SourceSubdifferential f x

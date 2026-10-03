@@ -9,13 +9,16 @@ open scoped Topology
 namespace BanditRL.OnlineConvex
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDimensional ℝ E]
 
-theorem affine_support_of_domain_interior (f : E → EReal) (hbot : ∀ y, f y ≠ ⊥)
-    (hf : IsConvexExtended f) (x : E) (hx : x ∈ interior (effectiveDomain f)) :
+/-- A convex extended-real function finite near a point has a global affine support there.
+No properness or closedness premise is needed; the proof also forces nowhere-bottom. -/
+theorem affine_support_of_finite_neighborhood (f : E → EReal) (hf : IsConvexExtended f)
+    (x : E) (hneigh : ∀ᶠ y in 𝓝 x, ∃ r : ℝ, f y = (r : EReal)) :
     ∃ (a : E →L[ℝ] ℝ) (b : ℝ), ((a x + b : ℝ) : EReal) = f x ∧
       ∀ y, ((a y + b : ℝ) : EReal) ≤ f y := by
   classical
-  have hxdom : x ∈ effectiveDomain f := interior_subset hx
-  have hxfin := EReal.coe_toReal (ne_of_lt hxdom) (hbot x)
+  have hxfin : ((f x).toReal : EReal) = f x := by
+    obtain ⟨r, hr⟩ := hneigh.self_of_nhds
+    rw [hr, EReal.toReal_coe]
   let r : ℝ := (f x).toReal
   have hp : (x, r) ∈ realEpigraph f := by
     change f x ≤ ((f x).toReal : EReal)
@@ -52,14 +55,16 @@ theorem affine_support_of_domain_interior (f : E → EReal) (hbot : ∀ y, f y �
     linarith
   have hcne : c ≠ 0 := by
     intro hc
-    have hm : IsMaxOn A (effectiveDomain f) x := by
-      intro y hy
-      have hyfin := EReal.coe_toReal (ne_of_lt hy) (hbot y)
-      have hpy : (y, (f y).toReal) ∈ realEpigraph f := hyfin.ge
-      have hh := hs (y, (f y).toReal) hpy
+    have hm : IsLocalMax A x := by
+      filter_upwards [hneigh] with y hy
+      obtain ⟨ry, hry⟩ := hy
+      have hpy : (y, ry) ∈ realEpigraph f := by
+        change f y ≤ (ry : EReal)
+        exact hry.le
+      have hh := hs (y, ry) hpy
       rw [hsplit, hsplit, hc] at hh
       simpa using hh
-    have hAz : A = 0 := (hm.isLocalMax (mem_interior_iff_mem_nhds.mp hx)).hasFDerivAt_eq_zero A.hasFDerivAt
+    have hAz : A = 0 := hm.hasFDerivAt_eq_zero A.hasFDerivAt
     apply hL
     apply ContinuousLinearMap.ext
     intro p
@@ -67,6 +72,20 @@ theorem affine_support_of_domain_interior (f : E → EReal) (hbot : ∀ y, f y �
     rw [hsplit, hAz, hc]
     simp
   have hc : c < 0 := lt_of_le_of_ne hc0 hcne
+  have hbot : ∀ y, f y ≠ ⊥ := by
+    intro y hy
+    let t : ℝ := (A x + r * c - A y) / c - 1
+    have hpy : (y, t) ∈ realEpigraph f := by
+      change f y ≤ (t : EReal)
+      rw [hy]
+      exact bot_le
+    have hh := hs (y, t) hpy
+    rw [hsplit, hsplit] at hh
+    have ht : t * c = A x + r * c - A y - c := by
+      dsimp [t]
+      rw [sub_mul, div_mul_cancel₀ _ hcne, one_mul]
+    rw [ht] at hh
+    linarith
   refine ⟨(-c⁻¹) • A, r + A x / c, ?_, ?_⟩
   · change (((-c⁻¹) * A x + (r + A x / c) : ℝ) : EReal) = f x
     have he : (-c⁻¹) * A x + (r + A x / c) = r := by
@@ -89,6 +108,16 @@ theorem affine_support_of_domain_interior (f : E → EReal) (hbot : ∀ y, f y �
     change (((-c⁻¹) * A y + (r + A x / c) : ℝ) : EReal) ≤ f y
     rw [he, ← hyfin]
     exact_mod_cast hb
+
+
+theorem affine_support_of_domain_interior (f : E → EReal) (hbot : ∀ y, f y ≠ ⊥)
+    (hf : IsConvexExtended f) (x : E) (hx : x ∈ interior (effectiveDomain f)) :
+    ∃ (a : E →L[ℝ] ℝ) (b : ℝ), ((a x + b : ℝ) : EReal) = f x ∧
+      ∀ y, ((a y + b : ℝ) : EReal) ≤ f y := by
+  apply affine_support_of_finite_neighborhood f hf x
+  filter_upwards [isOpen_interior.mem_nhds hx] with y hy
+  have hydom : y ∈ effectiveDomain f := interior_subset hy
+  exact ⟨(f y).toReal, (EReal.coe_toReal (ne_of_lt hydom) (hbot y)).symm⟩
 
 theorem affine_minorant_of_domain_interior (f : E → EReal) (hbot : ∀ y, f y ≠ ⊥)
     (hf : IsConvexExtended f) (x : E) (hx : x ∈ interior (effectiveDomain f)) :

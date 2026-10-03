@@ -1,0 +1,8 @@
+theorem singleton_subgradient_tendsto
+    {ι : Type*} (l : Filter ι) [NeBot l]
+    (f : E → EReal) (hbot : ∀ y, f y ≠ ⊥) (hf : IsConvexExtended f)
+    (x g : E) (hx : x ∈ interior (effectiveDomain f))
+    (hg : SourceSubdifferential f x = {g})
+    (xs gs : ι → E) (hxs : Tendsto xs l (𝓝 x))
+    (hs : ∀ᶠ i in l, gs i ∈ SourceSubdifferential f (xs i)) :
+    Tendsto gs l (𝓝 g)

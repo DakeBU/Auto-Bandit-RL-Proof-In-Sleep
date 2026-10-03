@@ -1,0 +1,4 @@
+theorem singleton_subdifferential_hasGradientAt (f : E → EReal) (hf : IsConvexExtended f)
+    (x : E) (hx : ∃ r : ℝ, f x = (r : EReal))
+    (g : E) (hg : SourceSubdifferential f x = {g}) :
+    HasGradientAt (fun y => (f y).toReal) g x

@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineConvex.singleton_subgradient_tendsto",
+  "file": "tmp/online-subgradient-singleton-tendsto.lean",
+  "statement": "theorem singleton_subgradient_tendsto {ι : Type*} (l : Filter ι) [NeBot l] (f : E → EReal) (hbot : ∀ y, f y ≠ ⊥) (hf : IsConvexExtended f) (x g : E) (hx : x ∈ interior (effectiveDomain f)) (hg : SourceSubdifferential f x = {g}) (xs gs : ι → E) (hxs : Tendsto xs l (𝓝 x)) (hs : ∀ᶠ i in l, gs i ∈ SourceSubdifferential f (xs i)) : Tendsto gs l (𝓝 g)",
+  "statement_hash": "58912ecee2136c26a4e0050763bf3167ff4f33c7ab6608cd0c34fc04d55156ec",
+  "source_assumptions": [],
+  "created_at": "2026-10-03T09:36:35+00:00"
+}

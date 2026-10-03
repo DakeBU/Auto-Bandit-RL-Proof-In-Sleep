@@ -1,0 +1,249 @@
+import Mathlib.Analysis.Convex.Continuous
+import BanditRLProof.OnlineSubgradientInterior
+import BanditRLProof.OnlineConvexFirstOrder
+import Mathlib.Analysis.Calculus.LocalExtr.Basic
+
+noncomputable section
+open Set Filter
+open scoped Topology NNReal
+namespace BanditRL.OnlineConvex
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
+
+def SourceDifferentiableAt (f : E → EReal) (x : E) : Prop :=
+  ∃ h : E → ℝ, (fun y => (h y : EReal)) =ᶠ[𝓝 x] f ∧ DifferentiableAt ℝ h x
+
+theorem subgradient_norm_le_lipschitz_ball (f : E → EReal) (x : E)
+    (r : ℝ) (hr : 0 < r) (K : ℝ≥0)
+    (hfinite : ∀ y ∈ Metric.ball x r, ∃ a : ℝ, f y = (a : EReal))
+    (hlip : LipschitzOnWith K (fun y => (f y).toReal) (Metric.ball x r))
+    (g : E) (hg : g ∈ SourceSubdifferential f x) :
+    ‖g‖ ≤ (K : ℝ) := by
+  by_cases hg0 : g = 0
+  · simpa only [hg0, norm_zero] using K.coe_nonneg
+  have hgn : 0 < ‖g‖ := norm_pos_iff.mpr hg0
+  let t : ℝ := r / (2 * ‖g‖)
+  have ht : 0 < t := div_pos hr (mul_pos (by norm_num) hgn)
+  let z : E := x + t • g
+  have hdist : dist z x = t * ‖g‖ := by
+    simp only [z, dist_eq_norm, add_sub_cancel_left, norm_smul, Real.norm_of_nonneg ht.le]
+  have hscale : t * ‖g‖ = r / 2 := by
+    dsimp [t]
+    field_simp
+  have hz : z ∈ Metric.ball x r := by
+    rw [Metric.mem_ball, hdist, hscale]
+    linarith
+  have hx : x ∈ Metric.ball x r := by simpa using hr
+  have hxval : ((f x).toReal : EReal) = f x := by
+    obtain ⟨a, ha⟩ := hfinite x hx
+    rw [ha, EReal.toReal_coe]
+  have hzval : ((f z).toReal : EReal) = f z := by
+    obtain ⟨a, ha⟩ := hfinite z hz
+    rw [ha, EReal.toReal_coe]
+  have hs := hg z
+  rw [← hxval, ← hzval, ← EReal.coe_add] at hs
+  have hsreal : (f x).toReal + inner ℝ g (z - x) ≤ (f z).toReal := by exact_mod_cast hs
+  have hinner : inner ℝ g (z - x) = t * ‖g‖^2 := by
+    simp only [z, add_sub_cancel_left, inner_smul_right, real_inner_self_eq_norm_sq]
+  rw [hinner] at hsreal
+  have hl := hlip.dist_le_mul z hz x hx
+  rw [Real.dist_eq, hdist] at hl
+  have hdiff := (le_abs_self ((f z).toReal - (f x).toReal)).trans hl
+  have hp : 0 < t * ‖g‖ := mul_pos ht hgn
+  have hb : (t * ‖g‖) * ‖g‖ ≤ (t * ‖g‖) * (K : ℝ) := by
+    nlinarith [hsreal, hdiff]
+  exact le_of_mul_le_mul_left hb hp
+
+end BanditRL.OnlineConvex
+#print axioms BanditRL.OnlineConvex.subgradient_norm_le_lipschitz_ball
+
+namespace BanditRL.OnlineConvex
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
+theorem subgradients_locally_bounded (f : E → EReal) (hbot : ∀ y, f y ≠ ⊥)
+    (hf : IsConvexExtended f) (x : E) (hx : x ∈ interior (effectiveDomain f)) :
+    ∃ r : ℝ, 0 < r ∧ ∃ K : ℝ≥0,
+      ∀ y ∈ Metric.ball x r, ∀ g ∈ SourceSubdifferential f y, ‖g‖ ≤ (K : ℝ) := by
+  have hc := (convexExtended_iff_toReal f hbot).mp hf
+  obtain ⟨K, t, ht, hLip⟩ := hc.locallyLipschitzOn_interior hx
+  rw [isOpen_interior.nhdsWithin_eq hx] at ht
+  obtain ⟨R, hR, hsub⟩ := Metric.mem_nhds_iff.mp
+    (inter_mem ht (isOpen_interior.mem_nhds hx))
+  refine ⟨R / 2, half_pos hR, K, ?_⟩
+  intro y hy g hg
+  have hball : Metric.ball y (R / 2) ⊆ Metric.ball x R := Metric.ball_half_subset y hy
+  apply subgradient_norm_le_lipschitz_ball f y (R / 2) (half_pos hR) K ?_ ?_ g hg
+  · intro z hz
+    have hzint := (hsub (hball hz)).2
+    have hzdom : z ∈ effectiveDomain f := interior_subset hzint
+    exact ⟨(f z).toReal, (EReal.coe_toReal (ne_of_lt hzdom) (hbot z)).symm⟩
+  · exact hLip.mono (fun z hz => (hsub (hball hz)).1)
+
+end BanditRL.OnlineConvex
+#print axioms BanditRL.OnlineConvex.subgradients_locally_bounded
+
+namespace BanditRL.OnlineConvex
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
+theorem subgradient_limit_of_continuousAt
+    {ι : Type*} (l : Filter ι) [NeBot l]
+    (f : E → EReal) (hbot : ∀ y, f y ≠ ⊥)
+    (x g : E) (hx : x ∈ interior (effectiveDomain f))
+    (hcont : ContinuousAt (fun y => (f y).toReal) x)
+    (xs gs : ι → E) (hxs : Tendsto xs l (𝓝 x)) (hgs : Tendsto gs l (𝓝 g))
+    (hs : ∀ᶠ i in l, gs i ∈ SourceSubdifferential f (xs i)) :
+    g ∈ SourceSubdifferential f x := by
+  have hfinite := finitePart_eventually f hbot x hx
+  have hxfin := hfinite.self_of_nhds
+  have hefin := hxs.eventually hfinite
+  have hfconv := hcont.tendsto.comp hxs
+  intro y
+  by_cases hyt : f y = ⊤
+  · rw [hyt]
+    exact le_top
+  · have hyfin := EReal.coe_toReal hyt (hbot y)
+    have ht : Tendsto (fun i => (f (xs i)).toReal + inner ℝ (gs i) (y - xs i)) l
+        (𝓝 ((f x).toReal + inner ℝ g (y - x))) :=
+      hfconv.add (hgs.inner (tendsto_const_nhds.sub hxs))
+    have hbound : (f x).toReal + inner ℝ g (y - x) ≤ (f y).toReal := by
+      apply le_of_tendsto ht
+      filter_upwards [hs, hefin] with i hi hifin
+      have hb := hi y
+      rw [← hifin, ← hyfin, ← EReal.coe_add] at hb
+      exact_mod_cast hb
+    rw [← hxfin, ← hyfin, ← EReal.coe_add]
+    exact EReal.coe_le_coe hbound
+
+
+theorem singleton_subgradient_tendsto
+    {ι : Type*} (l : Filter ι) [NeBot l]
+    (f : E → EReal) (hbot : ∀ y, f y ≠ ⊥) (hf : IsConvexExtended f)
+    (x g : E) (hx : x ∈ interior (effectiveDomain f))
+    (hg : SourceSubdifferential f x = {g})
+    (xs gs : ι → E) (hxs : Tendsto xs l (𝓝 x))
+    (hs : ∀ᶠ i in l, gs i ∈ SourceSubdifferential f (xs i)) :
+    Tendsto gs l (𝓝 g) := by
+  obtain ⟨r, hr, K, hK⟩ := subgradients_locally_bounded f hbot hf x hx
+  have hm : ∀ᶠ i in l, gs i ∈ Metric.closedBall (0 : E) (K : ℝ) := by
+    filter_upwards [hs, hxs.eventually (Metric.ball_mem_nhds x hr)] with i hi hxi
+    simp only [Metric.mem_closedBall, dist_zero_right]
+    exact hK (xs i) hxi (gs i) hi
+  apply (isCompact_closedBall (0 : E) (K : ℝ)).tendsto_nhds_of_unique_mapClusterPt hm
+  intro z hz hcl
+  let l' : Filter ι := comap gs (𝓝 z) ⊓ l
+  haveI : NeBot l' := neBot_inf_comap_iff_map'.mpr hcl
+  have hxs' : Tendsto xs l' (𝓝 x) := hxs.mono_left inf_le_right
+  have hgs' : Tendsto gs l' (𝓝 z) := tendsto_comap.mono_left inf_le_left
+  have hs' : ∀ᶠ i in l', gs i ∈ SourceSubdifferential f (xs i) := hs.filter_mono inf_le_right
+  have hc := (convexExtended_iff_toReal f hbot).mp hf
+  have hcont := hc.continuousOn_interior.continuousAt (isOpen_interior.mem_nhds hx)
+  have hzmem := subgradient_limit_of_continuousAt l' f hbot x z hx hcont xs gs hxs' hgs' hs'
+  rw [hg, mem_singleton_iff] at hzmem
+  exact hzmem
+
+end BanditRL.OnlineConvex
+#print axioms BanditRL.OnlineConvex.singleton_subgradient_tendsto
+
+namespace BanditRL.OnlineConvex
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
+theorem singleton_subdifferential_interior (f : E → EReal) (hf : IsConvexExtended f)
+    (x : E) (hx : ∃ r : ℝ, f x = (r : EReal))
+    (g : E) (hg : SourceSubdifferential f x = {g}) :
+    x ∈ interior (effectiveDomain f) := by
+  classical
+  obtain ⟨r, hr⟩ := hx
+  have hxdom : x ∈ effectiveDomain f := by
+    change f x < ⊤
+    rw [hr]
+    exact EReal.coe_lt_top _
+  have hgs : g ∈ SourceSubdifferential f x := by rw [hg]; exact mem_singleton g
+  by_contra hxi
+  obtain ⟨a, hane, ha⟩ := supporting_functional_at_closure (effectiveDomain f)
+    (convex_effectiveDomain f hf) x (subset_closure hxdom) hxi
+  let d : E := (InnerProductSpace.toDual ℝ E).symm a
+  have hdrepr : InnerProductSpace.toDual ℝ E d = a :=
+    (InnerProductSpace.toDual ℝ E).apply_symm_apply a
+  have hdne : d ≠ 0 := by
+    intro hd
+    rw [hd, map_zero] at hdrepr
+    exact hane hdrepr.symm
+  have hbot : ∀ y, f y ≠ ⊥ := by
+    intro y hy
+    have h := hgs y
+    rw [hr, hy, ← EReal.coe_add] at h
+    exact (EReal.bot_lt_coe _).not_ge h
+  have hgd : g + d ∈ SourceSubdifferential f x := by
+    intro y
+    by_cases hyt : f y = ⊤
+    · rw [hyt]; exact le_top
+    · have hyfin := EReal.coe_toReal hyt (hbot y)
+      have hydom : y ∈ effectiveDomain f := by
+        change f y < ⊤
+        rw [← hyfin]
+        exact EReal.coe_lt_top _
+      have hn := ha y hydom
+      have hdinner : inner ℝ d (y - x) = a y - a x := by
+        rw [← InnerProductSpace.toDual_apply_apply, hdrepr, map_sub]
+      have hs := hgs y
+      rw [hr, ← hyfin, ← EReal.coe_add] at hs
+      have hsreal : r + inner ℝ g (y - x) ≤ (f y).toReal := by exact_mod_cast hs
+      rw [hr, ← hyfin, ← EReal.coe_add]
+      apply EReal.coe_le_coe
+      rw [inner_add_left, hdinner]
+      linarith
+  rw [hg, mem_singleton_iff] at hgd
+  apply hdne
+  apply add_left_cancel (a := g)
+  simpa using hgd
+
+
+theorem singleton_subdifferential_hasGradientAt (f : E → EReal) (hf : IsConvexExtended f)
+    (x : E) (hx : ∃ r : ℝ, f x = (r : EReal))
+    (g : E) (hg : SourceSubdifferential f x = {g}) :
+    HasGradientAt (fun y => (f y).toReal) g x := by
+  classical
+  have hi := singleton_subdifferential_interior f hf x hx g hg
+  obtain ⟨r, hr⟩ := hx
+  have hgs : g ∈ SourceSubdifferential f x := by rw [hg]; exact mem_singleton g
+  have hbot : ∀ y, f y ≠ ⊥ := by
+    intro y hy
+    have hb := hgs y
+    rw [hr, hy, ← EReal.coe_add] at hb
+    exact (EReal.bot_lt_coe _).not_ge hb
+  have hp : SourceProper f := ⟨hbot, x, r, hr⟩
+  let G : E → E := fun y => if hy : y ∈ interior (effectiveDomain f) then
+    (subgradient_exists_of_domain_interior f hp hf y hy).choose else 0
+  have hGmem : ∀ y ∈ interior (effectiveDomain f), G y ∈ SourceSubdifferential f y := by
+    intro y hy
+    dsimp only [G]
+    rw [dif_pos hy]
+    exact (subgradient_exists_of_domain_interior f hp hf y hy).choose_spec
+  have hG : Tendsto G (𝓝 x) (𝓝 g) := by
+    apply singleton_subgradient_tendsto (𝓝 x) f hbot hf x g hi hg id G tendsto_id
+    filter_upwards [isOpen_interior.mem_nhds hi] with y hy
+    exact hGmem y hy
+  have hn : Tendsto (fun y => ‖G y - g‖) (𝓝 x) (𝓝 (0 : ℝ)) := by
+    simpa only [sub_self, norm_zero] using (hG.sub (tendsto_const_nhds (x := g))).norm
+  have hxval : ((f x).toReal : EReal) = f x := by rw [hr, EReal.toReal_coe]
+  rw [hasGradientAt_iff_hasFDerivAt, hasFDerivAt_iff_isLittleO]
+  apply Asymptotics.isLittleO_iff.mpr
+  intro ε hε
+  filter_upwards [hn.eventually (gt_mem_nhds hε), isOpen_interior.mem_nhds hi] with y hyε hy
+  have hydom : y ∈ effectiveDomain f := interior_subset hy
+  have hyval := EReal.coe_toReal (ne_of_lt hydom) (hbot y)
+  have hlo := hgs y
+  rw [← hxval, ← hyval, ← EReal.coe_add] at hlo
+  have hloreal : (f x).toReal + inner ℝ g (y - x) ≤ (f y).toReal := by exact_mod_cast hlo
+  have hhi := hGmem y hy x
+  rw [← hyval, ← hxval, ← EReal.coe_add] at hhi
+  have hhireal : (f y).toReal + inner ℝ (G y) (x - y) ≤ (f x).toReal := by exact_mod_cast hhi
+  rw [← neg_sub y x, inner_neg_right] at hhireal
+  have hnonneg : 0 ≤ (f y).toReal - (f x).toReal - inner ℝ g (y - x) := by linarith
+  have hupp : (f y).toReal - (f x).toReal - inner ℝ g (y - x) ≤
+      inner ℝ (G y - g) (y - x) := by
+    rw [inner_sub_left]
+    linarith
+  change ‖(f y).toReal - (f x).toReal - inner ℝ g (y - x)‖ ≤ ε * ‖y - x‖
+  rw [Real.norm_eq_abs, abs_of_nonneg hnonneg]
+  exact hupp.trans ((real_inner_le_norm _ _).trans
+    (mul_le_mul_of_nonneg_right hyε.le (norm_nonneg _)))
+
+end BanditRL.OnlineConvex
+#print axioms BanditRL.OnlineConvex.singleton_subdifferential_hasGradientAt

@@ -1,0 +1,5 @@
+# Finite-neighborhood affine contact leaf v1
+
+Dependency of exact Theorem2.22 forward endpoint. A convex extended-real function actually finite on a neighborhood ofx yields a global affine minorant touching atx. No global nowhere-bottom assumption is allowed as input; it must be derived from the epigraph support and negative height coefficient. Finite-dimensional real normed geometry, global all-y conclusion. Existing canonical affine_support_of_domain_interior obtains the finite-neighborhood premise from hbot and domain interior and must reuse this core at eventual public integration. Initial proof may adapt the existing body in scratch only; no duplicated public geometric proof. Preserve all old consumer headers.
+
+Source contract remains docs/contracts/online-subgradient-differentiability-v2: full iff plus gradient identity with only convexity and finiteatx. This leaf is not the full2.22 or its reverse direction. Native header/context frozen before proof; no source theorem weakening. Same root actor director/architect/worker; distinct contract review already retained, independent proof/reader review required later.

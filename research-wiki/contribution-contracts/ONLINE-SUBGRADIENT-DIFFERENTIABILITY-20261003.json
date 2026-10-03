@@ -1,0 +1,125 @@
+{
+  "schema_version": "2.0",
+  "id": "ONLINE-SUBGRADIENT-DIFFERENTIABILITY-20261003",
+  "route": "online-learning/chapter-2",
+  "frontier_cell": "online-subgradient-differentiability",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10, 2026-06-21; SHA256 cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchor": "Theorem2.22, Section2.2.1, printed17/PDF29",
+    "url": "https://arxiv.org/pdf/1912.13213v10"
+  },
+  "target": "Exact Theorem2.22 singleton/differentiability equivalence and every-representative gradient identity",
+  "affected_files": [
+    "BanditRLProof.lean",
+    "BanditRLProof/OnlineConvexMinorant.lean",
+    "BanditRLProof/OnlineSubgradientDifferentiability.lean",
+    "website/content/books.json",
+    "website/content/chapters.json",
+    "website/content/readings.json",
+    "website/content/highlights.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineConvex.affine_support_of_finite_neighborhood",
+    "BanditRL.OnlineConvex.singleton_subdifferential_interior",
+    "BanditRL.OnlineConvex.subgradients_locally_bounded",
+    "BanditRL.OnlineConvex.subgradient_limit_of_continuousAt",
+    "BanditRL.OnlineConvex.singleton_subgradient_tendsto",
+    "BanditRL.OnlineConvex.singleton_subdifferential_hasGradientAt",
+    "BanditRL.OnlineConvex.theorem_2_22",
+    "BanditRL.OnlineConvex.theorem_2_22_gradient"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Actual supporting_functional_at_closure and affine_support_of_domain_interior",
+      "Actual subgradient_exists_of_domain_interior, theorem_2_7 and finitePart_eventually",
+      "Pinned Mathlib ConvexOn.locallyLipschitzOn_interior, IsCompact.tendsto_nhds_of_unique_mapClusterPt and Frechet little-o APIs"
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineConvex.supporting_functional_at_closure",
+      "BanditRL.OnlineConvex.subgradient_exists_of_domain_interior",
+      "BanditRL.OnlineConvex.theorem_2_7",
+      "BanditRL.OnlineConvex.SourceSubdifferential"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineConvex.affine_support_of_finite_neighborhood"
+    ],
+    "known_consumers": [
+      "BanditRL.OnlineConvex.affine_support_of_domain_interior",
+      "BanditRL.OnlineConvex.theorem_2_22_gradient"
+    ],
+    "planned_consumers": [
+      "Later source convex-analysis rules"
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "The old affine contact and forward gradient endpoint reuse one generic locally-finite epigraph support core; actual reverse derives all regularity rather than assume it."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/closed_blind",
+    "source_reviewer": "/root/source_reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Finite-dimensional inner-product representation of Euclidean space; local real representative for extended-real differentiability. No extra source proper/interior/closedness assumptions. Distinct automated full-proof and final reader/canary receipts; not external-human review."
+  },
+  "graph_contribution": {
+    "lean_graph": "new-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Finite-dimensional convex-analysis characterization in the existing shared graph, no independent cross-setting transport.",
+    "focus_targets": [
+      "BanditRL.OnlineConvex.affine_support_of_finite_neighborhood",
+      "BanditRL.OnlineConvex.singleton_subdifferential_interior",
+      "BanditRL.OnlineConvex.subgradients_locally_bounded",
+      "BanditRL.OnlineConvex.subgradient_limit_of_continuousAt",
+      "BanditRL.OnlineConvex.singleton_subgradient_tendsto",
+      "BanditRL.OnlineConvex.singleton_subdifferential_hasGradientAt",
+      "BanditRL.OnlineConvex.theorem_2_22",
+      "BanditRL.OnlineConvex.theorem_2_22_gradient"
+    ],
+    "visual_review": "Pending screenshot inspection; curated four-node teaching route is explicitly distinct from actual compiled proof dependencies.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: exact Theorem2.22 route, chapter/book remain incomplete",
+    "banditrlwiki": "no-change-with-reason: no Bandit setting claim; exact Online source ledger/retrieval carries this prerequisite.",
+    "results_ledger": "no-change-with-reason: no existing Bandit named milestone changes; source inventory records this package.",
+    "roadmap": "no-change-with-reason: global SGB frontier unchanged; sequential Online Chapter2 obligations continue",
+    "website_surfaces": [
+      "website/content/books.json",
+      "website/content/chapters.json",
+      "website/content/highlights.json",
+      "website/content/readings.json"
+    ]
+  },
+  "truth_boundary": "Public compiled candidate only until combined/graph/site/contribution/receipt gates pass. No Chapter2 or book completion, merge, deployment or infinite-dimensional extension.",
+  "verification": {
+    "focused_checks": [
+      "Actual public module and nondegenerate constrained/quadratic/boundary canaries compile",
+      "Twelve frozen statement checks and old minorant header preserved",
+      "Graph pending actual export and proof-value checks"
+    ],
+    "bandit_check": "full-gate01 root/Tests9200jobs passed; harness rejected initially untracked source. Repair pending real rerun.",
+    "site_build": "site-build02 succeeded after preserving site-build01 teaching-route schema rejection; root/Tests gate actually passed before --lean-verified.",
+    "site_check": "pending",
+    "independent_review": "Distinct automated v2 decoder, full source-proof reviewer and final public reader/canary reviewer accepted-with-explicit-delta. Raw/LF bindings pending."
+  },
+  "contributor": {
+    "name": "Codex for Ji Cheng",
+    "role": "Formalization and integration; distinct automated semantic actors named above; source attribution retained"
+  }
+}

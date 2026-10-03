@@ -1,0 +1,56 @@
+import BanditRLProof.OnlineSubgradientInterior
+import BanditRLProof.OnlineConvexFirstOrder
+import Mathlib.Analysis.Calculus.LocalExtr.Basic
+
+noncomputable section
+open Set Filter
+open scoped Topology NNReal
+namespace BanditRL.OnlineConvex
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
+
+def SourceDifferentiableAt (f : E → EReal) (x : E) : Prop :=
+  ∃ h : E → ℝ, (fun y => (h y : EReal)) =ᶠ[𝓝 x] f ∧ DifferentiableAt ℝ h x
+
+theorem subgradient_norm_le_lipschitz_ball (f : E → EReal) (x : E)
+    (r : ℝ) (hr : 0 < r) (K : ℝ≥0)
+    (hfinite : ∀ y ∈ Metric.ball x r, ∃ a : ℝ, f y = (a : EReal))
+    (hlip : LipschitzOnWith K (fun y => (f y).toReal) (Metric.ball x r))
+    (g : E) (hg : g ∈ SourceSubdifferential f x) :
+    ‖g‖ ≤ (K : ℝ) := by
+  by_cases hg0 : g = 0
+  · simpa only [hg0, norm_zero] using K.coe_nonneg
+  have hgn : 0 < ‖g‖ := norm_pos_iff.mpr hg0
+  let t : ℝ := r / (2 * ‖g‖)
+  have ht : 0 < t := div_pos hr (mul_pos (by norm_num) hgn)
+  let z : E := x + t • g
+  have hdist : dist z x = t * ‖g‖ := by
+    simp only [z, dist_eq_norm, add_sub_cancel_left, norm_smul, Real.norm_of_nonneg ht.le]
+  have hscale : t * ‖g‖ = r / 2 := by
+    dsimp [t]
+    field_simp
+  have hz : z ∈ Metric.ball x r := by
+    rw [Metric.mem_ball, hdist, hscale]
+    linarith
+  have hx : x ∈ Metric.ball x r := by simpa using hr
+  have hxval : ((f x).toReal : EReal) = f x := by
+    obtain ⟨a, ha⟩ := hfinite x hx
+    rw [ha, EReal.toReal_coe]
+  have hzval : ((f z).toReal : EReal) = f z := by
+    obtain ⟨a, ha⟩ := hfinite z hz
+    rw [ha, EReal.toReal_coe]
+  have hs := hg z
+  rw [← hxval, ← hzval, ← EReal.coe_add] at hs
+  have hsreal : (f x).toReal + inner ℝ g (z - x) ≤ (f z).toReal := by exact_mod_cast hs
+  have hinner : inner ℝ g (z - x) = t * ‖g‖^2 := by
+    simp only [z, add_sub_cancel_left, inner_smul_right, real_inner_self_eq_norm_sq]
+  rw [hinner] at hsreal
+  have hl := hlip.dist_le_mul z hz x hx
+  rw [Real.dist_eq, hdist] at hl
+  have hdiff := (le_abs_self ((f z).toReal - (f x).toReal)).trans hl
+  have hp : 0 < t * ‖g‖ := mul_pos ht hgn
+  have hb : (t * ‖g‖) * ‖g‖ ≤ (t * ‖g‖) * (K : ℝ) := by
+    nlinarith [hsreal, hdiff]
+  exact le_of_mul_le_mul_left hb hp
+
+end BanditRL.OnlineConvex
+#print axioms BanditRL.OnlineConvex.subgradient_norm_le_lipschitz_ball

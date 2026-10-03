@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineConvex.subgradient_norm_le_lipschitz_ball",
+  "file": "tmp/online-subgradient-norm-bound.lean",
+  "statement": "theorem subgradient_norm_le_lipschitz_ball (f : E → EReal) (x : E) (r : ℝ) (hr : 0 < r) (K : ℝ≥0) (hfinite : ∀ y ∈ Metric.ball x r, ∃ a : ℝ, f y = (a : EReal)) (hlip : LipschitzOnWith K (fun y => (f y).toReal) (Metric.ball x r)) (g : E) (hg : g ∈ SourceSubdifferential f x) : ‖g‖ ≤ (K : ℝ)",
+  "statement_hash": "7d0339c8af100ea2c5cc4f9e83fe2010fce4a2bb44ef92c719c8dee1596d13ff",
+  "source_assumptions": [],
+  "created_at": "2026-10-03T09:28:37+00:00"
+}

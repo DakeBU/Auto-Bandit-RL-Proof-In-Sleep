@@ -1,0 +1,252 @@
+import Tests.OnlineSubgradientBasicCanary
+import BanditRLProof.OnlineConvexMinorant
+import BanditRLProof.OnlineSubgradientInterior
+import BanditRLProof.OnlineConvexFirstOrder
+
+noncomputable section
+open Set Filter
+open scoped Topology
+namespace BanditRL.OnlineConvex
+variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDimensional ℝ E]
+
+theorem affine_support_of_finite_neighborhood (f : E → EReal) (hf : IsConvexExtended f)
+    (x : E) (hneigh : ∀ᶠ y in 𝓝 x, ∃ r : ℝ, f y = (r : EReal)) :
+    ∃ (a : E →L[ℝ] ℝ) (b : ℝ), ((a x + b : ℝ) : EReal) = f x ∧
+      ∀ y, ((a y + b : ℝ) : EReal) ≤ f y := by
+  classical
+  have hxfin : ((f x).toReal : EReal) = f x := by
+    obtain ⟨r, hr⟩ := hneigh.self_of_nhds
+    rw [hr, EReal.toReal_coe]
+  let r : ℝ := (f x).toReal
+  have hp : (x, r) ∈ realEpigraph f := by
+    change f x ≤ ((f x).toReal : EReal)
+    exact hxfin.ge
+  have hpnot : (x, r) ∉ interior (realEpigraph f) := by
+    intro hi
+    have he : ∀ᶠ t : ℝ in 𝓝 r, (x, t) ∈ realEpigraph f :=
+      (continuous_const.prodMk continuous_id).continuousAt.eventually
+        (isOpen_interior.mem_nhds hi) |>.mono (fun t ht => interior_subset ht)
+    have hm : IsLocalMin (fun t : ℝ => t) r := by
+      filter_upwards [he] with t ht
+      change r ≤ t
+      change f x ≤ (t : EReal) at ht
+      rw [← hxfin] at ht
+      exact_mod_cast ht
+    have hz := hm.hasDerivAt_eq_zero (hasDerivAt_id r)
+    norm_num at hz
+  obtain ⟨L, hL, hs⟩ := supporting_functional_at_closure (realEpigraph f) hf
+    (x, r) (subset_closure hp) hpnot
+  let A : E →L[ℝ] ℝ := L.comp (ContinuousLinearMap.inl ℝ E ℝ)
+  let c : ℝ := L (0, 1)
+  have hsplit (y : E) (t : ℝ) : L (y, t) = A y + t * c := by
+    change L (y, t) = L (y, 0) + t * L (0, 1)
+    calc
+      _ = L ((y, 0) + t • ((0 : E), (1 : ℝ))) := by simp
+      _ = _ := by rw [map_add, map_smul]; rfl
+  have hc0 : c ≤ 0 := by
+    have hp1 : (x, r + 1) ∈ realEpigraph f := by
+      change f x ≤ ((r + 1 : ℝ) : EReal)
+      rw [← hxfin]
+      exact_mod_cast (show r ≤ r + 1 by linarith)
+    have hh := hs (x, r + 1) hp1
+    rw [hsplit, hsplit] at hh
+    linarith
+  have hcne : c ≠ 0 := by
+    intro hc
+    have hm : IsLocalMax A x := by
+      filter_upwards [hneigh] with y hy
+      obtain ⟨ry, hry⟩ := hy
+      have hpy : (y, ry) ∈ realEpigraph f := by
+        change f y ≤ (ry : EReal)
+        exact hry.le
+      have hh := hs (y, ry) hpy
+      rw [hsplit, hsplit, hc] at hh
+      simpa using hh
+    have hAz : A = 0 := hm.hasFDerivAt_eq_zero A.hasFDerivAt
+    apply hL
+    apply ContinuousLinearMap.ext
+    intro p
+    rcases p with ⟨y, t⟩
+    rw [hsplit, hAz, hc]
+    simp
+  have hc : c < 0 := lt_of_le_of_ne hc0 hcne
+  have hbot : ∀ y, f y ≠ ⊥ := by
+    intro y hy
+    let t : ℝ := (A x + r * c - A y) / c - 1
+    have hpy : (y, t) ∈ realEpigraph f := by
+      change f y ≤ (t : EReal)
+      rw [hy]
+      exact bot_le
+    have hh := hs (y, t) hpy
+    rw [hsplit, hsplit] at hh
+    have ht : t * c = A x + r * c - A y - c := by
+      dsimp [t]
+      rw [sub_mul, div_mul_cancel₀ _ hcne, one_mul]
+    rw [ht] at hh
+    linarith
+  refine ⟨(-c⁻¹) • A, r + A x / c, ?_, ?_⟩
+  · change (((-c⁻¹) * A x + (r + A x / c) : ℝ) : EReal) = f x
+    have he : (-c⁻¹) * A x + (r + A x / c) = r := by
+      simp only [div_eq_mul_inv]
+      ring
+    rw [he]
+    exact hxfin
+  intro y
+  by_cases hy : f y = ⊤
+  · simp [hy]
+  · have hyfin := EReal.coe_toReal hy (hbot y)
+    have hpy : (y, (f y).toReal) ∈ realEpigraph f := hyfin.ge
+    have hh := hs (y, (f y).toReal) hpy
+    rw [hsplit, hsplit] at hh
+    have hb : (A x + r * c - A y) / c ≤ (f y).toReal :=
+      (div_le_iff_of_neg hc).mpr (by linarith)
+    have he : (-c⁻¹) * A y + (r + A x / c) = (A x + r * c - A y) / c := by
+      field_simp
+      ring
+    change (((-c⁻¹) * A y + (r + A x / c) : ℝ) : EReal) ≤ f y
+    rw [he, ← hyfin]
+    exact_mod_cast hb
+
+end BanditRL.OnlineConvex
+
+noncomputable section
+open Set Filter
+open scoped Topology
+namespace BanditRL.OnlineConvex
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
+
+def SourceDifferentiableAt (f : E → EReal) (x : E) : Prop :=
+  ∃ h : E → ℝ, (fun y => (h y : EReal)) =ᶠ[𝓝 x] f ∧ DifferentiableAt ℝ h x
+
+theorem sourceDifferentiableAt_regular (f : E → EReal) (x : E)
+    (hd : SourceDifferentiableAt f x) :
+    (∀ᶠ y in 𝓝 x, ∃ r : ℝ, f y = (r : EReal)) ∧
+      x ∈ interior (effectiveDomain f) ∧
+      DifferentiableAt ℝ (fun y => (f y).toReal) x := by
+  obtain ⟨h, he, hd⟩ := hd
+  have hfinite : ∀ᶠ y in 𝓝 x, ∃ r : ℝ, f y = (r : EReal) := by
+    filter_upwards [he] with y hy
+    exact ⟨h y, hy.symm⟩
+  refine ⟨hfinite, ?_, ?_⟩
+  · apply mem_interior_iff_mem_nhds.mpr
+    filter_upwards [hfinite] with y hy
+    obtain ⟨r, hr⟩ := hy
+    change f y < ⊤
+    rw [hr]
+    exact EReal.coe_lt_top _
+  · apply hd.congr_of_eventuallyEq
+    filter_upwards [he] with y hy
+    rw [← hy, EReal.toReal_coe]
+
+
+theorem subgradient_eq_gradient_at_interior (f : E → EReal) (hbot : ∀ z, f z ≠ ⊥)
+    (x : E) (hx : x ∈ interior (effectiveDomain f))
+    (hd : DifferentiableAt ℝ (fun z => (f z).toReal) x)
+    (g : E) (hg : g ∈ SourceSubdifferential f x) :
+    g = gradient (fun z => (f z).toReal) x := by
+  have he := finitePart_eventually f hbot x hx
+  have hxval := he.self_of_nhds
+  have hm : IsLocalMin (fun z => (f z).toReal - inner ℝ g z) x := by
+    filter_upwards [he] with z hz
+    have hb := hg z
+    rw [← hxval, ← hz, ← EReal.coe_add] at hb
+    have hr : (f x).toReal + inner ℝ g (z - x) ≤ (f z).toReal := by
+      exact_mod_cast hb
+    rw [inner_sub_right] at hr
+    linarith
+  have hd' := hd.hasGradientAt.hasFDerivAt
+  have hl : HasFDerivAt (fun z => inner ℝ g z) (InnerProductSpace.toDual ℝ E g) x :=
+    (InnerProductSpace.toDual ℝ E g).hasFDerivAt
+  have hz := hm.hasFDerivAt_eq_zero (hd'.sub hl)
+  have ht : InnerProductSpace.toDual ℝ E (gradient (fun z => (f z).toReal) x) =
+      InnerProductSpace.toDual ℝ E g := sub_eq_zero.mp hz
+  exact ((InnerProductSpace.toDual ℝ E).injective ht).symm
+
+
+theorem theorem_2_22_gradient (f : E → EReal) (hf : IsConvexExtended f)
+    (x : E) (hx : ∃ r : ℝ, f x = (r : EReal))
+    (h : E → ℝ) (he : (fun y => (h y : EReal)) =ᶠ[𝓝 x] f)
+    (hd : DifferentiableAt ℝ h x) :
+    SourceSubdifferential f x = {gradient h x} := by
+  have hn : ∀ᶠ y in 𝓝 x, ∃ r : ℝ, f y = (r : EReal) := by
+    filter_upwards [he] with y hy
+    exact ⟨h y, hy.symm⟩
+  obtain ⟨a, b, htouch, hminor⟩ := affine_support_of_finite_neighborhood f hf x hn
+  have hbot : ∀ y, f y ≠ ⊥ := by
+    intro y hy
+    have hm := hminor y
+    rw [hy] at hm
+    exact (EReal.bot_lt_coe _).not_ge hm
+  have hreg := sourceDifferentiableAt_regular f x ⟨h, he, hd⟩
+  have hrealEq : (fun y => (f y).toReal) =ᶠ[𝓝 x] h := by
+    filter_upwards [he] with y hy
+    rw [← hy, EReal.toReal_coe]
+  have hgrad : gradient (fun y => (f y).toReal) x = gradient h x :=
+    hreg.2.2.hasGradientAt.unique (hd.hasGradientAt.congr_of_eventuallyEq hrealEq)
+  have hs : gradient h x ∈ SourceSubdifferential f x := by
+    intro y
+    simpa only [hgrad] using theorem_2_7 f hbot hf x hreg.2.1 hreg.2.2 y
+  ext g
+  constructor
+  · intro hg
+    exact mem_singleton_iff.mpr
+      ((subgradient_eq_gradient_at_interior f hbot x hreg.2.1 hreg.2.2 g hg).trans hgrad)
+  · intro hg
+    have heq : g = gradient h x := mem_singleton_iff.mp hg
+    simpa only [heq] using hs
+
+theorem theorem_2_22_forward (f : E → EReal) (hf : IsConvexExtended f)
+    (x : E) (hx : ∃ r : ℝ, f x = (r : EReal))
+    (hd : SourceDifferentiableAt f x) :
+    ∃ g : E, SourceSubdifferential f x = {g} := by
+  obtain ⟨h, he, hd⟩ := hd
+  exact ⟨gradient h x, theorem_2_22_gradient f hf x hx h he hd⟩
+
+end BanditRL.OnlineConvex
+#print axioms BanditRL.OnlineConvex.theorem_2_22_forward
+
+namespace ForwardSubgradientProbe
+open BanditRL.OnlineConvex Set Filter
+open scoped Topology
+
+theorem constrained_interval_singleton :
+    SourceSubdifferential (extendedIndicator (Icc (0 : ℝ) 2)) 1 = {(0 : ℝ)} := by
+  have hi : (1 : ℝ) ∈ interior (Icc (0 : ℝ) 2) := by
+    rw [interior_Icc]
+    norm_num
+  have he : (fun _ : ℝ => ((0 : ℝ) : EReal)) =ᶠ[𝓝 (1 : ℝ)]
+      extendedIndicator (Icc (0 : ℝ) 2) := by
+    filter_upwards [isOpen_interior.mem_nhds hi] with y hy
+    have hymem := interior_subset hy
+    simp only [extendedIndicator, if_pos hymem, EReal.coe_zero]
+  have hc := (convex_indicator_iff (Icc (0 : ℝ) 2)).mpr (convex_Icc 0 2)
+  have hx : ∃ r : ℝ, extendedIndicator (Icc (0 : ℝ) 2) 1 = (r : EReal) := by
+    refine ⟨0, ?_⟩
+    norm_num [extendedIndicator]
+  simpa only [gradient_fun_const] using
+    theorem_2_22_gradient _ hc 1 hx (fun _ => (0 : ℝ)) he (differentiableAt_const 0)
+
+theorem quadratic_singleton_nonzero :
+    SourceSubdifferential (fun y : ℝ => ((y^2 : ℝ) : EReal)) 1 = {(2 : ℝ)} := by
+  let f : ℝ → EReal := fun y => ((y^2 : ℝ) : EReal)
+  have hbot : ∀ y, f y ≠ ⊥ := fun y => EReal.coe_ne_bot _
+  have hdom : effectiveDomain f = univ := by
+    ext y
+    simp only [effectiveDomain, mem_setOf_eq, mem_univ, iff_true]
+    exact EReal.coe_lt_top _
+  have hc : IsConvexExtended f := by
+    apply (convexExtended_iff_toReal f hbot).mpr
+    rw [hdom]
+    simpa only [f, EReal.toReal_coe] using SubgradientProbe.square_convex
+  have hset := theorem_2_22_gradient f hc 1 ⟨1, by norm_num [f]⟩
+    (fun y : ℝ => y^2) (Eventually.of_forall (fun y => rfl))
+    (differentiableAt_id.pow 2)
+  have hm : (2 : ℝ) ∈ SourceSubdifferential f 1 := by
+    simpa only [f, mul_one] using SubgradientProbe.square_support 1
+  rw [hset, mem_singleton_iff] at hm
+  change SourceSubdifferential f 1 = {(2 : ℝ)}
+  rw [hset, hm]
+
+#print axioms constrained_interval_singleton
+#print axioms quadratic_singleton_nonzero
+end ForwardSubgradientProbe

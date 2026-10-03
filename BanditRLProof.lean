@@ -720,3 +720,4 @@ import BanditRLProof.OnlineHuber
 import BanditRLProof.OnlineClosedProper
 import BanditRLProof.OnlineSubgradientBasic
 import BanditRLProof.OnlineSubgradientInterior
+import BanditRLProof.OnlineSubgradientDifferentiability
