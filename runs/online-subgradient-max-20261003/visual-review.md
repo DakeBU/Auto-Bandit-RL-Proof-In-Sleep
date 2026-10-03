@@ -1,0 +1,3 @@
+# Actual reader pixel inspection
+
+Hidden Edge1440x1800 screenshot tmp/max-reader-review.png inspected via view_image (display resized to1408x1760). Shared Books sidebar and OnlineLearning breadcrumb, finite-maximum title, exact source Theorem2.26/printed18/PDF30 primary card and the visible canonical-route-versus-textbook-completion notice are legible. This viewport shows the page hierarchy and source orientation only; it is not a claim of pixel-inspecting every lower proof/fold. Actual HTML/content semantic inspection separately required. No claim that a screenshot proves Lean dependencies. Actual compiled graph and native hashes provide separate proof evidence. No live deployment.
