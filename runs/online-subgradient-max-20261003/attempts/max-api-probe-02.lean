@@ -1,0 +1,12 @@
+import BanditRLProof.OnlineSubgradientDifferentiability
+import Mathlib.Data.Finset.Lattice.Fold
+#check add_le_add_right
+#check Finset.sup'_le_iff
+#check EReal.coe_toReal
+#check EReal.coe_add
+#check EReal.coe_smul
+#check IsCompact.convexHull
+#check isCompact_convexHull
+#check EReal.continuousOn_toReal
+#check ContinuousAt.eventually
+#check isOpen_Iio

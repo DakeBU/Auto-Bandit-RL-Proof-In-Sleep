@@ -1,0 +1,7 @@
+theorem theorem_2_26 [FiniteDimensional ℝ E]
+    {ι : Type*} [Fintype ι] [Nonempty ι] (f : ι → E → EReal)
+    (hp : ∀ i, SourceProper (f i)) (hc : ∀ i, IsConvexExtended (f i))
+    (x : E) (hx : ∀ i, x ∈ effectiveDomain (f i))
+    (hcont : ∀ i, ContinuousAt (f i) x) :
+    SourceSubdifferential (SourceFiniteMax f) x =
+      convexHull ℝ (SourceActiveSubgradientUnion f x)

@@ -1,0 +1,16 @@
+import BanditRLProof.OnlineSubgradientDifferentiability
+import Mathlib.Analysis.Convex.Join
+open Set
+#check isCompact_iff_isClosed_bounded
+#check IsClosed.isCompact_of_isBounded
+#check Metric.isBounded_closedBall
+#check Bornology.IsBounded.subset
+#check isClosed_iInter
+#check isClosed_le
+#check Continuous.inner
+#check BanditRL.OnlineConvex.subgradients_locally_bounded
+#check segment_eq_image
+#check segment_eq_image'
+#check Convex.convexHull_eq
+#check IsCompact.prod
+#check Set.not_nonempty_iff_eq_empty

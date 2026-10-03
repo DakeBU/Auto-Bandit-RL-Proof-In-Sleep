@@ -1,0 +1,11 @@
+add_le_add_right.{u_1} {α : Type u_1} [Add α] [LE α] [AddLeftMono α] {b c : α} (bc : b ≤ c) (a : α) : a + b ≤ a + c
+Finset.sup'_le_iff.{u_2, u_3} {α : Type u_2} {β : Type u_3} [SemilatticeSup α] {s : Finset β} (H : s.Nonempty)
+  (f : β → α) {a : α} : s.sup' H f ≤ a ↔ ∀ b ∈ s, f b ≤ a
+EReal.coe_toReal {x : EReal} (hx : x ≠ ⊤) (h'x : x ≠ ⊥) : ↑x.toReal = x
+EReal.coe_add (x y : ℝ) : ↑(x + y) = ↑x + ↑y
+tmp/max-api-probe-02.lean:7:7: error(lean.unknownIdentifier): Unknown constant `EReal.coe_smul`
+tmp/max-api-probe-02.lean:8:7: error(lean.unknownIdentifier): Unknown constant `IsCompact.convexHull`
+tmp/max-api-probe-02.lean:9:7: error(lean.unknownIdentifier): Unknown identifier `isCompact_convexHull`
+EReal.continuousOn_toReal : ContinuousOn EReal.toReal {⊥, ⊤}ᶜ
+tmp/max-api-probe-02.lean:11:7: error(lean.unknownIdentifier): Unknown constant `ContinuousAt.eventually`
+isOpen_Iio.{u} {α : Type u} [TopologicalSpace α] [LinearOrder α] [ClosedIciTopology α] {a : α} : IsOpen (Set.Iio a)

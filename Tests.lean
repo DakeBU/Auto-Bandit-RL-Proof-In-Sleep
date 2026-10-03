@@ -128,3 +128,4 @@ import Tests.OnlineSubgradientDifferentiabilityCanary
 import Tests.OnlineSubgradientSumCanary
 import Tests.OnlineSubgradientAbsoluteCanary
 import Tests.OnlineNormalConeCanary
+import Tests.OnlineSubgradientMaxCanary

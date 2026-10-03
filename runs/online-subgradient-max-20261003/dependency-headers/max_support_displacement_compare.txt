@@ -1,0 +1,8 @@
+theorem max_support_displacement_compare {ι : Type*} [Fintype ι] [Nonempty ι]
+    (f : ι → E → EReal) (hp : ∀ i, SourceProper (f i))
+    (x : E) (hx : ∀ i, x ∈ effectiveDomain (f i))
+    (y : E) (i : ι) (hy : y ∈ effectiveDomain (f i))
+    (hi : SourceFiniteMax f y = f i y) (g k : E)
+    (hg : g ∈ SourceSubdifferential (SourceFiniteMax f) x)
+    (hk : k ∈ SourceSubdifferential (f i) y) :
+    inner ℝ g (y - x) ≤ inner ℝ k (y - x)

@@ -1,0 +1,51 @@
+tmp/max-canary-03.lean:33:0: warning: automatically included section variable(s) unused in theorem `BanditRL.OnlineConvex.finiteMax_attained`:
+  [NormedAddCommGroup E]
+  [InnerProductSpace ℝ E]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NormedAddCommGroup E] [InnerProductSpace ℝ E] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+tmp/max-canary-03.lean:81:0: warning: automatically included section variable(s) unused in theorem `BanditRL.OnlineConvex.continuousAt_mem_domain_interior`:
+  [InnerProductSpace ℝ E]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [InnerProductSpace ℝ E] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+tmp/max-canary-03.lean:214:0: warning: automatically included section variable(s) unused in theorem `BanditRL.OnlineConvex.continuousAt_finite_toReal`:
+  [InnerProductSpace ℝ E]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [InnerProductSpace ℝ E] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+tmp/max-canary-03.lean:441:26: warning: This simp argument is unused:
+  hs
+
+Hint: Omit it from the simp argument list.
+  simp_all [h̵s̵,̵ ̵family]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+tmp/max-canary-03.lean:466:2: error: unsolved goals
+case a.false
+a✝ : false ∈ Finset.univ
+⊢ -↑2 ≤ 2
+
+case a.true
+a✝ : true ∈ Finset.univ
+⊢ ↑2 ≤ 2
+tmp/max-canary-03.lean:483:4: error: unsolved goals
+case h.mp.false
+hs : ∀ (i : Bool), SourceSubdifferential (family i) 2 = {if i = true then 1 else -1}
+g : ℝ
+hg : g ∈ SourceSubdifferential (family false) 2
+hi : -↑2 = 2
+⊢ g ∈ {1}
+tmp/max-canary-03.lean:487:4: error: unsolved goals
+case h.mpr.refine_1
+hs : ∀ (i : Bool), SourceSubdifferential (family i) 2 = {if i = true then 1 else -1}
+g : ℝ
+hg : g ∈ {1}
+⊢ ↑2 = 2
+'MaximumProbe.full_tie_hull_canary' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MaximumProbe.full_tie_interval_canary' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MaximumProbe.mixture_and_rejection_canary' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MaximumProbe.strict_active_canary' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]

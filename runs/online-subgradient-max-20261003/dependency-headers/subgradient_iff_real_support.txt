@@ -1,0 +1,4 @@
+theorem subgradient_iff_real_support (f : E → EReal)
+    (hbot : ∀ y, f y ≠ ⊥) (x : E) (hx : x ∈ effectiveDomain f) (g : E) :
+    g ∈ SourceSubdifferential f x ↔
+      ∀ y, f y ≠ ⊤ → (f x).toReal + inner ℝ g (y - x) ≤ (f y).toReal

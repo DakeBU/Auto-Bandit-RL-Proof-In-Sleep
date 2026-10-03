@@ -1,0 +1,18 @@
+Finset.univ_nonempty.{u_1} {α : Type u_1} [Fintype α] [Nonempty α] : Finset.univ.Nonempty
+Finset.le_sup'.{u_2, u_3} {α : Type u_2} {β : Type u_3} [SemilatticeSup α] {s : Finset β} (f : β → α) {b : β}
+  (h : b ∈ s) : f b ≤ s.sup' ⋯ f
+Finset.exists_mem_eq_sup'.{u_2, u_5} {α : Type u_2} {ι : Type u_5} [LinearOrder α] {s : Finset ι} (H : s.Nonempty)
+  (f : ι → α) : ∃ i ∈ s, s.sup' H f = f i
+tmp/max-api-probe.lean:7:7: error(lean.unknownIdentifier): Unknown constant `EReal.add_le_add_left`
+convexHull_min.{u_1, u_2} {𝕜 : Type u_1} {E : Type u_2} [Semiring 𝕜] [PartialOrder 𝕜] [AddCommMonoid E] [Module 𝕜 E]
+  {s t : Set E} : s ⊆ t → Convex 𝕜 t → (convexHull 𝕜) s ⊆ t
+convex_iff_forall_pos.{u_1, u_2} {𝕜 : Type u_1} {E : Type u_2} [Semiring 𝕜] [PartialOrder 𝕜] [AddCommMonoid E]
+  [Module 𝕜 E] {s : Set E} :
+  Convex 𝕜 s ↔ ∀ ⦃x : E⦄, x ∈ s → ∀ ⦃y : E⦄, y ∈ s → ∀ ⦃a b : 𝕜⦄, 0 < a → 0 < b → a + b = 1 → a • x + b • y ∈ s
+convex_halfSpace_le.{u_1, u_2, u_4} {𝕜 : Type u_1} {E : Type u_2} {β : Type u_4} [Semiring 𝕜] [PartialOrder 𝕜]
+  [AddCommMonoid E] [Module 𝕜 E] [AddCommMonoid β] [PartialOrder β] [IsOrderedAddMonoid β] [Module 𝕜 β]
+  [PosSMulMono 𝕜 β] {f : E → β} (h : IsLinearMap 𝕜 f) (r : β) : Convex 𝕜 {w | f w ≤ r}
+convex_iInter.{u_1, u_2, u_5} {𝕜 : Type u_1} {E : Type u_2} [Semiring 𝕜] [PartialOrder 𝕜] [AddCommMonoid E] [SMul 𝕜 E]
+  {ι : Sort u_5} {s : ι → Set E} (h : ∀ (i : ι), Convex 𝕜 (s i)) : Convex 𝕜 (⋂ i, s i)
+tmp/max-api-probe.lean:12:7: error(lean.unknownIdentifier): Unknown identifier `continuousAt_iff`
+tmp/max-api-probe.lean:13:7: error(lean.unknownIdentifier): Unknown constant `EReal.continuousAt_toReal`

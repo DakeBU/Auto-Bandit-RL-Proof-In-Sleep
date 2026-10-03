@@ -1,0 +1,13 @@
+geometric_hahn_banach_closed_point.{u_2} {E : Type u_2} [TopologicalSpace E] [AddCommGroup E] [Module ℝ E] {s : Set E}
+  {x : E} [IsTopologicalAddGroup E] [ContinuousSMul ℝ E] [LocallyConvexSpace ℝ E] (hs₁ : Convex ℝ s) (hs₂ : IsClosed s)
+  (disj : x ∉ s) : ∃ f u, (∀ a ∈ s, f a < u) ∧ u < f x
+RCLike.geometric_hahn_banach_closed_point.{u_1, u_2} {𝕜 : Type u_1} {E : Type u_2} [TopologicalSpace E] [AddCommGroup E]
+  [Module ℝ E] {s : Set E} {x : E} [RCLike 𝕜] [Module 𝕜 E] [IsScalarTower ℝ 𝕜 E] [IsTopologicalAddGroup E]
+  [ContinuousSMul 𝕜 E] [LocallyConvexSpace ℝ E] (hs₁ : Convex ℝ s) (hs₂ : IsClosed s) (disj : x ∉ s) :
+  ∃ f u, (∀ a ∈ s, RCLike.re (f a) < u) ∧ u < RCLike.re (f x)
+InnerProductSpace.toDual_symm_apply.{u_1, u_2} {𝕜 : Type u_1} {E : Type u_2} [RCLike 𝕜] [NormedAddCommGroup E]
+  [InnerProductSpace 𝕜 E] [CompleteSpace E] {x : E} {y : StrongDual 𝕜 E} :
+  inner 𝕜 ((InnerProductSpace.toDual 𝕜 E).symm y) x = y x
+real_inner_comm.{u_3} {F : Type u_3} [SeminormedAddCommGroup F] [InnerProductSpace ℝ F] (x y : F) :
+  inner ℝ y x = inner ℝ x y
+IsCompact.isClosed.{u_1} {X : Type u_1} [TopologicalSpace X] [T2Space X] {s : Set X} (hs : IsCompact s) : IsClosed s

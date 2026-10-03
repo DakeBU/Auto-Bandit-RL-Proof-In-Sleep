@@ -1,0 +1,15 @@
+import BanditRLProof.OnlineSubgradientDifferentiability
+import Mathlib.Data.Finset.Lattice.Fold
+noncomputable section
+open Set
+namespace BanditRL.OnlineConvex
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+
+def SourceFiniteMax {ι : Type*} [Fintype ι] [Nonempty ι]
+    (f : ι → E → EReal) (x : E) : EReal := by
+  classical
+  exact Finset.univ.sup' Finset.univ_nonempty (fun i => f i x)
+
+def SourceActiveSubgradientUnion {ι : Type*} [Fintype ι] [Nonempty ι]
+    (f : ι → E → EReal) (x : E) : Set E :=
+  {g | ∃ i, f i x = SourceFiniteMax f x ∧ g ∈ SourceSubdifferential (f i) x}

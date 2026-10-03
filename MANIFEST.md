@@ -15410,3 +15410,4 @@ here during local harness runs.
 - `2026-10-03T10:12:21+00:00` `bandit.py new-task` `task` `tasks/ONLINE-BOOK-CH2-SUBGRADIENT-SUM.md` - Source subgradient finite-sum inclusion and qualified equality
 - `2026-10-03T11:25:37+00:00` `bandit.py new-task` `task` `tasks/ONLINE-BOOK-CH2-SUBGRADIENT-ABSOLUTE.md` - Source absolute-value subdifferential: exact three branches
 - `2026-10-03T12:09:44+00:00` `bandit.py new-task` `task` `tasks/ONLINE-BOOK-CH2-NORMAL-CONE.md` - Source normal cone characterization, interior zero and unit-ball boundary ray
+- `2026-10-03T12:55:31+00:00` `bandit.py new-task` `task` `tasks/ONLINE-SUBGRADIENT-MAX.md` - Orabona Theorem2.26 finite maximum full subdifferential equality
