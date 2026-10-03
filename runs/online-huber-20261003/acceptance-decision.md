@@ -11,3 +11,7 @@ Earlier old-stack full-gate01/graph evidence is retained historically, not subst
 Delivery base ce5ecc949fee79d50da65d9fd2c1a00e071bbe23 combines currentmain6847b678a73db68dee5101d6f05c2453c1405afc with exact unmerged PR130 f24f62c12835190fd5476f4f67e98aa5a056a34f. All library/Test imports are retained; only registration conflicts were resolved, with no prior theorem-body changes. Huber source was gated at a3a0360a8cb95bedf614df3885c23a455b2d6c15. Earlier PR heads and canonical main were not rewritten. Final evidence/receipt commits follow without Lean/source/test/site changes.
 
 Next Definition2.16/Examples2.17,2.19 closedness/properness results are saved scratch candidates only, not public accepted results. Theorem2.22 and other required subgradient/linearization results remain open. Chapter2 and the full16-chapter Goal are not complete. No merge, deployment or worktree retirement was performed; both active worktrees and shared caches remain retained.
+
+
+## Post-delivery correction
+The diff-aware contributor gate introduced on the integrated main was omitted from the original acceptance list. It failed after delivery (contributor-gate01.log). The earlier accepted-local verdict certifies only its enumerated Lean/harness/site and same-model role checks. Full contribution acceptance is in repair until a covering manifest and distinct-actor semantic roundtrip pass; see contributor-repair.md. No mathematical source or proof bytes changed.

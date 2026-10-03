@@ -2945,7 +2945,7 @@
           "math": "\\frac{R_T(u)}T\\le\\frac{\\|x_0-u\\|^2+(\\delta Z)^2}{2\\sqrt T}\\longrightarrow0",
           "fallback": "The displayed upper envelope tends to zero; average regret need not converge exactly to zero.",
           "plain": "Convexity, the feature gradient and its bound are derived for the actual loss and recursion.",
-          "relationship": "The source states eta proportional to1/sqrt(T) and asymptotic average performance. The formalization selects proportionality constant1 and proves an explicit one-sided upper envelope.",
+          "relationship": "The source states eta proportional to1/sqrt(T) and asymptotic average performance. The formalization selects proportionality constant1 and proves an explicit one-sided upper envelope. The source uses finite-dimensional Euclidean vectors. Lean proves the same formulas on a complete real inner-product space, which includes that source setting. The source threshold has an implicit nonnegative convention, made explicit in Lean; delta=0 is retained, and no negative threshold is claimed. The source proportional schedule is instantiated with constant1. Index0 is source round1, and iterate T is the point after T updates.",
           "contract": {
             "model": "Full real Euclidean space; loss is Huber of the linear prediction residual.",
             "assumptions": "delta>=0, bounded features, arbitrary labels, initialization and comparator; T>=1 for tuning.",
@@ -2985,6 +2985,37 @@
         ],
         "takeaway": "Scalar calculus, feature geometry and causal OGD are connected by actual proof dependencies.",
         "boundary": "The horizon family and one-sided guarantee are explicit; later source results remain required."
+      },
+      "proof_bridge": {
+        "title": "From the scalar loss to causal average regret",
+        "summary": "The following derivation instantiates the shared projected OGD theorem with the actual Huber losses.",
+        "steps": [
+          {
+            "title": "Why the loss is convex and differentiable",
+            "detail": "At each seam the adjacent formulas and derivatives agree. The derivative is the monotone clamp of the residual, so the derivative criterion gives convexity.",
+            "math": "H_\\delta'(r)=\\max(-\\delta,\\min(r,\\delta))",
+            "fallback": "At delta0 both seams coincide and the loss is identically zero."
+          },
+          {
+            "title": "Compose with the observed feature",
+            "detail": "The inner-product functional has derivative z. The chain rule yields the actual gradient; its norm is bounded by delta times the feature norm. No bound on labels or predictor vectors enters.",
+            "math": "\\nabla\\ell_t(x)=H_\\delta'(\\langle z_t,x\\rangle-y_t)z_t,\\qquad\\|\\nabla\\ell_t(x)\\|\\le\\delta Z",
+            "fallback": "This derives regularity for the actual loss, rather than assuming a gradient-bound consumer."
+          },
+          {
+            "title": "Telescope the shared recursion",
+            "detail": "The shared projection is identity on the full space. Apply its convex differentiable OGD theorem to the same causal trajectory, retaining the final squared-distance term.",
+            "math": "R_T(u)\\le\\frac{\\|x_0-u\\|^2-\\|x_T-u\\|^2}{2\\eta}+\\frac{\\eta T(\\delta Z)^2}{2}",
+            "fallback": "Shared parent: BanditRL.OnlineGradientDescent.theorem_2_13_fixed; actual gradient and regularity are supplied by the preceding lemmas."
+          },
+          {
+            "title": "Pass to the upper average guarantee",
+            "detail": "Drop the nonpositive terminal contribution, substitute eta=1/sqrt(T), and divide by positive T. The reciprocal square-root limit makes this upper envelope smaller than each positive epsilon eventually.",
+            "math": "R_T(u)/T\\le(\\|x_0-u\\|^2+(\\delta Z)^2)/(2\\sqrt T)\\longrightarrow0",
+            "fallback": "Mathlib supplies derivative composition, the monotone-derivative convexity criterion and the reciprocal/square-root limits. The arrow applies to the upper envelope only."
+          }
+        ],
+        "boundary": "Known-horizon fixed step; nonnegative threshold; complete real inner-product space specializes to source Euclidean vectors. No bounded predictor set, anytime schedule, or two-sided limiting-regret claim."
       }
     }
   ]
