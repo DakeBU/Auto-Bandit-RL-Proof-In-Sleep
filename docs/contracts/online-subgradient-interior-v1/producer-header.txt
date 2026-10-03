@@ -1,0 +1,5 @@
+theorem subgradient_exists_of_domain_interior
+    {F : Type*} [NormedAddCommGroup F] [InnerProductSpace ℝ F] [FiniteDimensional ℝ F]
+    (f : F → EReal) (hf : SourceProper f) (hc : IsConvexExtended f)
+    (x : F) (hx : x ∈ interior (effectiveDomain f)) :
+    (SourceSubdifferential f x).Nonempty

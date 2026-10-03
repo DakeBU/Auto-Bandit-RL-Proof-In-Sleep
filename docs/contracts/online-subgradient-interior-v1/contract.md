@@ -1,0 +1,5 @@
+# Interior subgradient producer v1
+
+Orabona v10 printed17/PDF29 unnumbered assertion: proper convex functions are subdifferentiable on interior of their effective domain. Do not add closedness, boundedness, or differentiability. Stronger affine-support intermediate retains contact equality at the specified interior point; existing affine_minorant_of_domain_interior lacks that in its public type and is not sufficient by itself.
+
+Actual API audit: OnlineConvexMinorant proof constructs (-c^-1)A with b=f(x).toReal+A(x)/c after supporting_functional_at_closure; its expression satisfies contact by cancellation. Retrieve/adapt this proof, freeze strengthened terminal, then use InnerProductSpace.toDual_symm_apply for the source producer. Upon later public integration refactor the old minorant theorem to consume this canonical stronger helper; do not maintain duplicate foundational proofs. Current body-only scratch does not alter the live basic-subgradient gate. Source target and downstream existence statement require separate public acceptance.

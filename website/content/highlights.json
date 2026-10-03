@@ -2761,6 +2761,42 @@
       "dependencies": [
         "BanditRL.OnlineConvex.extendedIndicator"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.subgradient_point_finite",
+      "title": "Support points have finite values",
+      "chapter": "online-subgradient-basic",
+      "featured": false,
+      "teaching_order": 1,
+      "plain": "A finite witness contradicts the global support inequality if the support point has value positive infinity.",
+      "math": "\\(g\\in\\partial f(x),\\ f\\text{ proper}\\ \\Longrightarrow\\ x\\in\\operatorname{dom}f\\)",
+      "intuition": "A finite witness contradicts the global support inequality if the support point has value positive infinity.",
+      "why": "Closes a source subgradient prerequisite without presupposing convexity of the function.",
+      "position": "Orabona v10 printed16-17/PDF28-29.",
+      "proof_idea": "A finite witness contradicts the global support inequality if the support point has value positive infinity.",
+      "lean_notes": "Normed real inner-product space generalizes Euclidean source; Theorem2.21 is real-valued and requires convex V, but supports are global.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.SourceProper",
+        "BanditRL.OnlineConvex.SourceSubdifferential",
+        "BanditRL.OnlineConvex.effectiveDomain"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.theorem_2_21",
+      "title": "Everywhere subgradients imply convexity",
+      "chapter": "online-subgradient-basic",
+      "featured": false,
+      "teaching_order": 2,
+      "plain": "At a convex combination choose one global support, apply it at both endpoints, multiply by the nonnegative weights and cancel the linear terms.",
+      "math": "\\((\\forall x\\in V,\\ \\partial f(x)\\ne\\varnothing)\\Longrightarrow f|_V\\text{ convex}\\)",
+      "intuition": "At a convex combination choose one global support, apply it at both endpoints, multiply by the nonnegative weights and cancel the linear terms.",
+      "why": "Closes a source subgradient prerequisite without presupposing convexity of the function.",
+      "position": "Orabona v10 printed16-17/PDF28-29.",
+      "proof_idea": "At a convex combination choose one global support, apply it at both endpoints, multiply by the nonnegative weights and cancel the linear terms.",
+      "lean_notes": "Normed real inner-product space generalizes Euclidean source; Theorem2.21 is real-valued and requires convex V, but supports are global.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.SourceSubdifferential"
+      ]
     }
   ]
 }

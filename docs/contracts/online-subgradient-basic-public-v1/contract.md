@@ -1,0 +1,3 @@
+# Basic subgradient public conversion
+
+Path-only integration of two frozen targets and global EReal supporting-vector definition. No header/context/body change from compiled scratch. Source defines subgradients for proper functions; the support-set predicate is total on functions, with source claims restricted by explicit properness where relevant. Theorem2.21 remains real-valued, with global supports at all points of convex V, and concludes convexity of restriction. No boundedness/differentiability added. Normed real inner-product space generalizes finite-dimensional Euclidean source. Independent semantic/public gates required before acceptance.

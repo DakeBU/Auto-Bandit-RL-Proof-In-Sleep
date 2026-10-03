@@ -1,0 +1,23 @@
+import BanditRLProof.OnlineClosedProper
+import Mathlib.Analysis.InnerProductSpace.Basic
+import Mathlib.Analysis.Convex.Function
+import Mathlib.Tactic
+
+open Set
+namespace BanditRL.OnlineConvex
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+
+def SourceSubdifferential (f : E → EReal) (x : E) : Set E :=
+  {g | ∀ y, f x + (inner ℝ g (y - x) : EReal) ≤ f y}
+
+
+def SourceProper (f : E → EReal) : Prop := (∀ x, f x ≠ ⊥) ∧ ∃ x, ∃ r : ℝ, f x = (r : EReal)
+def effectiveDomain (f : E → EReal) : Set E := {x | f x < ⊤}
+
+theorem subgradient_point_finite (f : E → EReal) (hf : SourceProper f)
+    (x g : E) (hg : g ∈ SourceSubdifferential f x) :
+    x ∈ effectiveDomain f
+
+theorem theorem_2_21 (f : E → ℝ) (V : Set E) (hV : Convex ℝ V)
+    (hsub : ∀ x ∈ V, (SourceSubdifferential (fun y => (f y : EReal)) x).Nonempty) :
+    ConvexOn ℝ V f
