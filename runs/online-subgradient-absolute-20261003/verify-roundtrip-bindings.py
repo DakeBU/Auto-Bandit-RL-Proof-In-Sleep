@@ -12,7 +12,7 @@ expected={
  prefix+'blind-packet-v2.txt',prefix+'blind-reconstruction-v2.md',prefix+'draft-source-review.md',prefix+'full-source-review.md',prefix+'public-reader-review.md',
  prefix+'full-candidate02.lean.txt',prefix+'full-canary-candidate02.lean.txt',prefix+'full-leaf02.log',prefix+'full-canary02.log',prefix+'public-focused01.log',
  prefix+'full-gate01.log',prefix+'public-axioms01.log',prefix+'axiom-audit.json',prefix+'public-frozen-check.json',prefix+'compiled-dependencies.json',prefix+'graph-check01.log',
- prefix+'site-build02.log',prefix+'site-check02.log',prefix+'registry01.json',prefix+'contributor-gate01.log',prefix+'visual-review.md'
+ prefix+'site-build02.log',prefix+'site-check02.log',prefix+'site-build03.log',prefix+'site-check03.log',prefix+'registry01.json',prefix+'registry02.json',prefix+'contributor-gate01.log',prefix+'visual-review.md'
 }
 rawchecks=[];reviewed=set()
 for name in ['draft-source-review.md','full-source-review.md','public-reader-review.md']:

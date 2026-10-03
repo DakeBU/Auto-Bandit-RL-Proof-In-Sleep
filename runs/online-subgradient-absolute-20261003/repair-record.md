@@ -9,3 +9,5 @@ All failed snapshots remain evidence of failure, not compilation or acceptance.
 site-build01: actual reader schema requires at least three worked steps. Preserved failed log; split the existing invalid-slope/nonsingleton canary explanation into its own third step. Mathematical/Lean/source headers unchanged.
 
 diff-check01: one trailing empty line in the current obligation log removed; mathematical/contract/review bytes unchanged. Failure preserved, diff-check02 rerun separately.
+
+Final reader reviewer found an actual copied per-statement source anchor still printed17/PDF29 despite correct primary printed18/PDF30. Rejected01 statement snapshot preserved; changed only per-statement pages/pdf_page to printed18/PDF30. Original source/Lean/header bytes unchanged; rerun site and final review required.
