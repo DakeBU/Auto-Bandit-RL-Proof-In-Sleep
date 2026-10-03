@@ -1,0 +1,15 @@
+import Mathlib.Analysis.InnerProductSpace.Dual
+open Set
+open scoped Topology
+namespace Neutral
+variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDimensional ℝ E]
+def effectiveDomain (f : E → EReal) : Set E := {x | f x < ⊤}
+def realEpigraph (f : E → EReal) : Set (E × ℝ) := {p | f p.1 ≤ (p.2 : EReal)}
+def IsConvexExtended (f : E → EReal) : Prop := Convex ℝ (realEpigraph f)
+def SourceProper (f : E → EReal) : Prop := (∀ x, f x ≠ ⊥) ∧ ∃ x, ∃ r : ℝ, f x = (r : EReal)
+def SourceSubdifferential {F : Type*} [NormedAddCommGroup F] [InnerProductSpace ℝ F] (f : F → EReal) (x : F) : Set F := {g | ∀ y, f x + (inner ℝ g (y-x) : EReal) ≤ f y}
+
+theorem affine_support_of_domain_interior (f : E → EReal) (hbot : ∀ y, f y ≠ ⊥) (hf : IsConvexExtended f) (x : E) (hx : x ∈ interior (effectiveDomain f)) : ∃ (a : E →L[ℝ] ℝ) (b : ℝ), ((a x + b : ℝ) : EReal) = f x ∧ ∀ y, ((a y + b : ℝ) : EReal) ≤ f y
+
+theorem subgradient_exists_of_domain_interior {F : Type*} [NormedAddCommGroup F] [InnerProductSpace ℝ F] [FiniteDimensional ℝ F] (f : F → EReal) (hf : SourceProper f) (hc : IsConvexExtended f) (x : F) (hx : x ∈ interior (effectiveDomain f)) : (SourceSubdifferential f x).Nonempty
+end Neutral

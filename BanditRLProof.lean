@@ -719,3 +719,4 @@ import BanditRLProof.OnlineGuessingLower
 import BanditRLProof.OnlineHuber
 import BanditRLProof.OnlineClosedProper
 import BanditRLProof.OnlineSubgradientBasic
+import BanditRLProof.OnlineSubgradientInterior

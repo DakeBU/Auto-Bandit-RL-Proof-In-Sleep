@@ -283,6 +283,17 @@ class BookRegistryTests(unittest.TestCase):
         scope = next(c for c in self.chapters if c["slug"] == "online-subgradient-basic")
         self.assertIn("not Chapter2 completion", scope["completion_definition"])
 
+    def test_interior_subgradient_uses_shared_producer(self):
+        registry = self.registry()
+        nodes = membership_index(registry)
+        chapter = next(c for c in registry["chapters"] if c["id"] == "teaching:online-subgradient-interior")
+        key = "declaration:BanditRL.OnlineConvex.subgradient_exists_of_domain_interior"
+        self.assertIn(key, chapter["node_ids"])
+        self.assertEqual(["online-learning"], nodes[key]["books"])
+        self.assertIn("declaration:BanditRL.OnlineConvex.affine_support_of_domain_interior", nodes)
+        scope = next(c for c in self.chapters if c["slug"] == "online-subgradient-interior")
+        self.assertIn("not Chapter2 completion", scope["completion_definition"])
+
     def test_preview_badge_cannot_borrow_evidence_from_another_declaration(self):
         source = ('<details class="declaration" id="a"><summary>'
                   '<span class="status source">Source indexed</span></summary></details>'

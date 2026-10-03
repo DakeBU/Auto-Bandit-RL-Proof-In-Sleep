@@ -3330,6 +3330,129 @@
         "takeaway": "The definition connects both finite convexity and extended-real domain restrictions.",
         "boundary": "The example does not discharge the general interior-existence theorem."
       }
+    },
+    {
+      "slug": "online-subgradient-interior",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10,21June2026",
+        "sections": "Section2.2.1, unnumbered interior subdifferentiability assertion",
+        "pages": "printed17/PDF29",
+        "pdf_page": 29,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "Ambient interior",
+          "meaning": "The point lies in the ordinary topological interior of the effective domain, not its relative interior."
+        },
+        {
+          "term": "Touching affine support",
+          "meaning": "A continuous linear functional a and real b satisfy a(x)+b=f(x) and a(y)+b<=f(y) for all y."
+        },
+        {
+          "term": "Supporting vector",
+          "meaning": "Riesz representation gives g with a(v)=inner(g,v), hence f(x)+inner(g,y-x)<=f(y) globally."
+        }
+      ],
+      "algorithm": {
+        "title": "Construct a subgradient",
+        "kind": "proof flow",
+        "steps": [
+          {
+            "title": "Support the epigraph",
+            "detail": "A nonzero functional supports the epigraph at (x,f(x))."
+          },
+          {
+            "title": "Exclude a vertical support",
+            "detail": "Ambient domain interior forces its vertical coefficient to be strictly negative, so normalization yields affine contact."
+          },
+          {
+            "title": "Represent the linear functional",
+            "detail": "In a finite-dimensional real inner-product space the normalized functional has a representing vector."
+          }
+        ]
+      },
+      "teaching_route": [
+        "BanditRL.OnlineConvex.affine_support_of_domain_interior",
+        "BanditRL.OnlineConvex.subgradient_exists_of_domain_interior"
+      ],
+      "source_theorems": [
+        {
+          "label": "Section2.2.1 interior subdifferentiability",
+          "pages": "printed17",
+          "pdf_page": 29,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "x\\in\\operatorname{int}(\\operatorname{dom}f)\\Longrightarrow\\partial f(x)\\ne\\varnothing",
+          "fallback": "Riesz representation gives g with a(v)=inner(g,v), hence f(x)+inner(g,y-x)<=f(y) globally.",
+          "plain": "Every proper convex function admits a global subgradient at every interior point of its effective domain.",
+          "relationship": "Source finite-dimensional Euclidean space is represented by a finite-dimensional real inner-product space. The shared affine-contact helper uses the weaker nowhere-bottom assumption; the source-facing producer retains properness.",
+          "contract": {
+            "model": "Extended-real convexity means convexity of the epigraph with real heights.",
+            "assumptions": "Finite-dimensional real inner-product space; proper convex f; x in the ambient interior of its effective domain.",
+            "parameters": "For every admissible f and x, there exists g supporting f at x for all y in the whole space.",
+            "regret": "No regret or algorithm guarantee.",
+            "guarantee": "Nonempty global subdifferential at x."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Public interior-existence candidate",
+            "boundary": "Focused module/root/canary compilation passed; separate full acceptance required. No Chapter2 completion."
+          }
+        }
+      ],
+      "proof_bridge": {
+        "title": "From epigraph geometry to a global vector inequality",
+        "summary": "The contact equality supplies the missing term that a generic affine minorant alone cannot provide.",
+        "steps": [
+          {
+            "title": "Support at the actual function value",
+            "detail": "The epigraph point (x,f(x)) is not an interior epigraph point. Obtain a nonzero supporting functional L(y,t)=A(y)+ct.",
+            "math": "A(y)+ct\\le A(x)+cf(x)",
+            "fallback": "All finite epigraph heights participate; f(x) is finite by properness and domain membership."
+          },
+          {
+            "title": "Normalize and retain contact",
+            "detail": "Upward closure gives c<=0. If c=0, A has a local maximum at x, so A=0, contradicting L nonzero. Thus c<0; put a=-A/c and b=f(x)+A(x)/c.",
+            "math": "a(x)+b=f(x),\\qquad a(y)+b\\le f(y)",
+            "fallback": "Infinite values of f(y) are handled separately; closedness of the epigraph is not assumed."
+          },
+          {
+            "title": "Use the Riesz vector",
+            "detail": "Choose g representing a. Linearity and the contact identity give the required global inequality.",
+            "math": "f(x)+\\langle g,y-x\\rangle=a(x)+b+a(y-x)=a(y)+b\\le f(y)",
+            "fallback": "The old affine-minorant theorem now reuses this same stronger contact helper."
+          }
+        ],
+        "boundary": "No existence at arbitrary boundary points or in general infinite-dimensional spaces; differentiability and subgradient sum/max rules remain separate."
+      },
+      "worked_example": {
+        "title": "A genuine constrained domain",
+        "intro": "Use the zero/positive-infinity indicator of [0,2] on the real line at its center1.",
+        "steps": [
+          {
+            "title": "Establish proper convexity",
+            "detail": "The interval is nonempty and convex; its indicator is proper and convex.",
+            "math": "f=I_{[0,2]}",
+            "fallback": "Shared indicator lemmas provide the actual hypotheses."
+          },
+          {
+            "title": "Check the interior point",
+            "detail": "The effective domain is [0,2] and1 lies in (0,2).",
+            "math": "1\\in\\operatorname{int}[0,2]",
+            "fallback": "The public canary proves this with the exact domain and interior APIs."
+          },
+          {
+            "title": "Invoke the producer",
+            "detail": "The public theorem returns a vector supporting the indicator globally.",
+            "math": "\\exists g,\\ \\forall y,\\ f(1)+g(y-1)\\le f(y)",
+            "fallback": "The canary does not assume a support exists."
+          }
+        ],
+        "takeaway": "Extended values outside the constraint set are included in the same global theorem.",
+        "boundary": "This application is an interior-point guarantee, not a boundary differentiability assertion."
+      }
     }
   ]
 }

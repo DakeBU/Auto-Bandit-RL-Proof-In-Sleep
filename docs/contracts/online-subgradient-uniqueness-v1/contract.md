@@ -1,0 +1,5 @@
+# Gradient uniqueness prerequisite v1
+
+Source: Orabona v10 Theorem2.22, printed17/PDF29. The full source endpoint remains extended-real convex and finite at x, differentiable iff singleton subdifferential; it is not replaced by this leaf. This prerequisite proves uniqueness of any global support under explicit local finiteness/interior and differentiability. It requires no convexity because the support inequality itself makes the difference from the supporting affine map locally minimal. The source forward direction can later consume this with its actual local-differentiability producer and global convex gradient-support result. Converse/local-finiteness obligations remain mandatory and unproved here.
+
+Context/header frozen before proving. Allowed initial scratch tmp/online-subgradient-uniqueness.lean only; no public edits while the current interior graph export remains live. Retrieve finitePart_eventually, DifferentiableAt.hasGradientAt, IsLocalMin.hasFDerivAt_eq_zero and InnerProductSpace.toDual injectivity from the pinned actual APIs. No declaration count or scratch compilation is acceptance of Theorem2.22.

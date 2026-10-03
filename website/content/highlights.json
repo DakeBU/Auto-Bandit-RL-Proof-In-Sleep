@@ -2797,6 +2797,41 @@
       "dependencies": [
         "BanditRL.OnlineConvex.SourceSubdifferential"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.subgradient_exists_of_domain_interior",
+      "title": "Interior points admit global subgradients",
+      "chapter": "online-subgradient-interior",
+      "featured": false,
+      "teaching_order": 1,
+      "plain": "A proper convex extended-real function has a global supporting vector at every point of the interior of its effective domain.",
+      "math": "\\(x\\in\\operatorname{int}(\\operatorname{dom}f)\\Longrightarrow\\partial f(x)\\ne\\varnothing\\)",
+      "intuition": "An epigraph support at an interior domain point cannot be vertical.",
+      "why": "Provides the actual existence producer needed by later subgradient rules.",
+      "position": "Orabona v10 Section2.2.1, printed17/PDF29, unnumbered interior assertion.",
+      "proof_idea": "Construct an affine support touching f at x, then represent its linear part by an inner product.",
+      "lean_notes": "Finite-dimensional real inner-product space; proper extended-real convex f and ambient interior. No closedness or boundedness premise.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.affine_support_of_domain_interior",
+        "BanditRL.OnlineConvex.SourceSubdifferential"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.affine_support_of_domain_interior",
+      "title": "An affine support touching at the interior point",
+      "chapter": "online-subgradient-interior",
+      "featured": false,
+      "teaching_order": 0,
+      "plain": "A nowhere-bottom convex extended-real function has an affine global lower bound attaining its value at any specified interior domain point.",
+      "math": "\\(a(x)+b=f(x),\\quad\\forall y,\\ a(y)+b\\le f(y)\\)",
+      "intuition": "Retain the equality at the supported epigraph point when normalizing the separating functional.",
+      "why": "One canonical contact lemma serves both the existing minorant theorem and the new subgradient producer.",
+      "position": "Orabona v10 Section2.2.1, printed17/PDF29, unnumbered interior assertion.",
+      "proof_idea": "An interior domain point excludes a vertical epigraph support; a negative height coefficient can be normalized.",
+      "lean_notes": "Finite-dimensional real normed space; nowhere-bottom and interior membership imply a finite point, so the combined premises supply properness.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.supporting_functional_at_closure"
+      ]
     }
   ]
 }

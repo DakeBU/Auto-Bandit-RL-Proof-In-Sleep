@@ -9,9 +9,10 @@ open scoped Topology
 namespace BanditRL.OnlineConvex
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDimensional ℝ E]
 
-theorem affine_minorant_of_domain_interior (f : E → EReal) (hbot : ∀ y, f y ≠ ⊥)
+theorem affine_support_of_domain_interior (f : E → EReal) (hbot : ∀ y, f y ≠ ⊥)
     (hf : IsConvexExtended f) (x : E) (hx : x ∈ interior (effectiveDomain f)) :
-    ∃ (a : E →L[ℝ] ℝ) (b : ℝ), ∀ y, ((a y + b : ℝ) : EReal) ≤ f y := by
+    ∃ (a : E →L[ℝ] ℝ) (b : ℝ), ((a x + b : ℝ) : EReal) = f x ∧
+      ∀ y, ((a y + b : ℝ) : EReal) ≤ f y := by
   classical
   have hxdom : x ∈ effectiveDomain f := interior_subset hx
   have hxfin := EReal.coe_toReal (ne_of_lt hxdom) (hbot x)
@@ -66,7 +67,13 @@ theorem affine_minorant_of_domain_interior (f : E → EReal) (hbot : ∀ y, f y 
     rw [hsplit, hAz, hc]
     simp
   have hc : c < 0 := lt_of_le_of_ne hc0 hcne
-  refine ⟨(-c⁻¹) • A, r + A x / c, ?_⟩
+  refine ⟨(-c⁻¹) • A, r + A x / c, ?_, ?_⟩
+  · change (((-c⁻¹) * A x + (r + A x / c) : ℝ) : EReal) = f x
+    have he : (-c⁻¹) * A x + (r + A x / c) = r := by
+      simp only [div_eq_mul_inv]
+      ring
+    rw [he]
+    exact hxfin
   intro y
   by_cases hy : f y = ⊤
   · simp [hy]
@@ -83,7 +90,11 @@ theorem affine_minorant_of_domain_interior (f : E → EReal) (hbot : ∀ y, f y 
     rw [he, ← hyfin]
     exact_mod_cast hb
 
-variable [MeasurableSpace E] [BorelSpace E]
+theorem affine_minorant_of_domain_interior (f : E → EReal) (hbot : ∀ y, f y ≠ ⊥)
+    (hf : IsConvexExtended f) (x : E) (hx : x ∈ interior (effectiveDomain f)) :
+    ∃ (a : E →L[ℝ] ℝ) (b : ℝ), ∀ y, ((a y + b : ℝ) : EReal) ≤ f y := by
+  obtain ⟨a, b, _, hminor⟩ := affine_support_of_domain_interior f hbot hf x hx
+  exact ⟨a, b, hminor⟩
 
 theorem convex_affine_minorant (f : E → EReal) (hbot : ∀ x, f x ≠ ⊥)
     (hf : IsConvexExtended f) (hne : (effectiveDomain f).Nonempty) :

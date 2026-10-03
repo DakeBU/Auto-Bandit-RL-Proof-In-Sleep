@@ -1,0 +1,7 @@
+# Interior subgradient packet accepted-local
+
+Closes the actual Orabona v10 Section2.2.1 unnumbered ambient-interior existence assertion, printed17/PDF29. The canonical epigraph support is normalized while retaining contact at x; Riesz representation gives a vector with the global support inequality. No closedness/boundedness/differentiability assumption. The old affine-minorant terminal is unchanged and consumes the stronger helper.
+
+Distinct automated decoder/source actors accepted-with-explicit-delta, including separately reviewed final highlights. Exact raw receipts and11-file fixed-inventory LF worktree/commit binding are required. No external-human review. Two original statement fingerprints and old minorant header preserved. Public interval-indicator center canary and both targets use only standard axioms. Shared root/Tests9198jobs,466tests7existing skips,5actual proof-value graph checks,site915pages11640Leanlinks,shadow no mismatches, exact-base contribution gate passed.
+
+site-build01 rejected an external Mathlib name in a local-only dependency list; site-build02 rejected a missing helper highlight. Both failures and repair evidence are retained. site-build03/site-check03 pass; no Lean or reviewed reader changed. Scope is local acceptance only, PR delivery pending. Theorem2.22 and later Chapter2/body/appendix obligations remain mandatory; scratch uniqueness is a prerequisite, not full2.22. No merge/deployment or chapter/book completion.

@@ -1,0 +1,34 @@
+import BanditRLProof.OnlineConvexFirstOrder
+import BanditRLProof.OnlineSubgradientBasic
+import Mathlib.Analysis.Calculus.LocalExtr.Basic
+
+noncomputable section
+open Set Filter
+open scoped Topology
+namespace BanditRL.OnlineConvex
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]
+
+theorem subgradient_eq_gradient_at_interior (f : E → EReal) (hbot : ∀ z, f z ≠ ⊥)
+    (x : E) (hx : x ∈ interior (effectiveDomain f))
+    (hd : DifferentiableAt ℝ (fun z => (f z).toReal) x)
+    (g : E) (hg : g ∈ SourceSubdifferential f x) :
+    g = gradient (fun z => (f z).toReal) x := by
+  have he := finitePart_eventually f hbot x hx
+  have hxval := he.self_of_nhds
+  have hm : IsLocalMin (fun z => (f z).toReal - inner ℝ g z) x := by
+    filter_upwards [he] with z hz
+    have hb := hg z
+    rw [← hxval, ← hz, ← EReal.coe_add] at hb
+    have hr : (f x).toReal + inner ℝ g (z - x) ≤ (f z).toReal := by
+      exact_mod_cast hb
+    rw [inner_sub_right] at hr
+    linarith
+  have hd' := hd.hasGradientAt.hasFDerivAt
+  have hl : HasFDerivAt (fun z => inner ℝ g z) (InnerProductSpace.toDual ℝ E g) x :=
+    (InnerProductSpace.toDual ℝ E g).hasFDerivAt
+  have hz := hm.hasFDerivAt_eq_zero (hd'.sub hl)
+  have ht : InnerProductSpace.toDual ℝ E (gradient (fun z => (f z).toReal) x) =
+      InnerProductSpace.toDual ℝ E g := sub_eq_zero.mp hz
+  exact ((InnerProductSpace.toDual ℝ E).injective ht).symm
+
+end BanditRL.OnlineConvex
