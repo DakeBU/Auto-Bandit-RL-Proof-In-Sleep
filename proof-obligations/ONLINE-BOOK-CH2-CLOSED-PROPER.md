@@ -8,7 +8,7 @@
 - [x] Shared Book reader/registry and site checks.
 - [x] Full-root compiled dependency extraction.
 - [x] Diff-aware contribution manifest gate.
-- [ ] Scoped commit/push/PR receipt.
+- [x] Scoped commit/push/PR receipt: PR136, runs/online-closed-proper-20261003/delivery.md.
 
 Chapter2 subgradient/linearization and all remaining book obligations are not discharged by this packet.
 
