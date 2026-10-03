@@ -33,3 +33,5 @@ DAG: existing proper/global-support/convex-sum interfaces -> summed-support incl
 - [ ]Scoped draft PR delivery, recorded separately.
 
 This closes Theorem2.23, not later Chapter2 or the whole-book Goal.
+
+- [x]Scoped draft PR140 delivered/attached with exactPR139base and verified remote head 6a3670d3407b450d860a98e754a1da52c0b8e825. Theorem2.23 package delivered; later source obligations and book Goal remain mandatory.

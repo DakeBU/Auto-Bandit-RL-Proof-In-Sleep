@@ -19,3 +19,5 @@ Both exact source terminals now have actual public bodies in OnlineSubgradientSu
 ## Accepted-local package
 
 Both exact source2.23 endpoints accepted locally after separate full-source/public reader review and all technical/immutable gates. See acceptance-decision.md and acceptance-evidence.json. Earlier draft/stabilized/proving/candidate statements are preserved stage history; no frozen source/header bytes changed. PR delivery pending separate receipt. Chapter2/book Goal active.
+
+Delivered draft PR140 OPEN, verified head 6a3670d3407b450d860a98e754a1da52c0b8e825, stacked on exactPR139headfd28baf9. No merge/deployment/main/live claim. Retained checkout continues the book Goal.
