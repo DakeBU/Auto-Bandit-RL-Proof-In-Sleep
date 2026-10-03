@@ -18,3 +18,7 @@ Version2 full contract accepted-with-explicit-delta by the distinct reviewer; bo
 The prior unproved/no-public descriptions above are historical. The exact frozen iff and gradient companion now have actual public proof bodies in OnlineSubgradientDifferentiability. The reverse derives properness/interior, selects actual supports, obtains actual local norm bounds, uses the support closed graph and finite-dimensional compactness, then proves the Frechet little-o residual. The generic finite-neighborhood affine contact now owns the shared geometric core; old support/minorant headers are preserved adapters.
 
 Public focused build and constrained-interior/nonzero-quadratic/finite-boundary canaries compile; twelve native fences and the old minorant header are unchanged. Distinct automated full-proof and final-reader reviews accepted-with-explicit-delta. Root/Tests9200jobs passed, but full-gate01 rejected the initially untracked new Lean file in an export inventory test. Commit the candidate and rerun; do not call this accepted-local yet. Full graph/site/contribution/receipt gates still required. Chapter and book remain incomplete.
+
+## Accepted-local scope
+
+All package-specific combined, source/canary/reader, graph/site/contribution and immutable-review gates pass. See acceptance-decision.md and acceptance-evidence.json. Earlier candidate/failure entries are preserved history. Only exact Theorem2.22 and gradient identity are accepted here. PR delivery still separate; chapter/book Goal active.

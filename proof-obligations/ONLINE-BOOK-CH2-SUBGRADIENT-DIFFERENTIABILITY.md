@@ -28,3 +28,14 @@ No full2.22, chapter or whole-book acceptance.
 - [ ] Actual graph, site, immutable review bindings, contribution and PR delivery gates.
 
 The earlier unchecked source-proof rows are superseded by this candidate evidence, not chapter/book acceptance.
+
+## Accepted package gates
+
+- [x] Full repaired harness: root/Tests9200jobs,466tests7existing skips.
+- [x]15public axioms;12compiled proof-value graph checks; shared canonical registry/frozen endpoint hashes.
+- [x]917-page site/11660links; exact-base contributor gate and unchanged global shadow.
+- [x]27-file LF worktree/HEAD bindings,43raw receipt rows,3explicit historical supersessions.
+- [x]Distinguish local acceptance from merge/deployment and chapter/book completion.
+- [ ]Scoped PR delivery (separate receipt follows).
+
+Package source terminal closed. Chapter2 and whole-book obligations remain active.
