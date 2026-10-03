@@ -1,0 +1,41 @@
+tmp/online-huber-vector-draft.lean:110:31: warning: This simp argument is unused:
+  max_eq_left hlo
+
+Hint: Omit it from the simp argument list.
+  simp [hlo, min_eq_left hr,̵ ̵m̵a̵x̵_̵e̵q̵_̵l̵e̵f̵t̵ ̵h̵l̵o̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+tmp/online-huber-vector-draft.lean:112:22: warning: This simp argument is unused:
+  min_eq_left hhi
+
+Hint: Omit it from the simp argument list.
+  simp [hlo, hhi, mi̵n̵_̵e̵q̵_̵l̵e̵f̵t̵ ̵h̵h̵i̵,̵ ̵m̵ax_eq_right (le_of_lt (not_le.mp hlo))]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+tmp/online-huber-vector-draft.lean:160:2: error: header probe only
+E : Type u_1
+inst✝² : NormedAddCommGroup E
+inst✝¹ : InnerProductSpace ℝ E
+inst✝ : CompleteSpace E
+delta y : ℝ
+hd : 0 ≤ delta
+z x : E
+⊢ HasGradientAt (fun w => huber delta (⟪z, w⟫_ℝ - y)) (deriv (huber delta) (⟪z, x⟫_ℝ - y) • z) x
+tmp/online-huber-vector-draft.lean:164:2: error: header probe only
+E : Type u_1
+inst✝² : NormedAddCommGroup E
+inst✝¹ : InnerProductSpace ℝ E
+inst✝ : CompleteSpace E
+delta y : ℝ
+hd : 0 ≤ delta
+z : E
+⊢ ConvexOn ℝ univ fun w => huber delta (⟪z, w⟫_ℝ - y)
+tmp/online-huber-vector-draft.lean:168:2: error: header probe only
+E : Type u_1
+inst✝² : NormedAddCommGroup E
+inst✝¹ : InnerProductSpace ℝ E
+inst✝ : CompleteSpace E
+delta y : ℝ
+hd : 0 ≤ delta
+z x : E
+⊢ ‖gradient (fun w => huber delta (⟪z, w⟫_ℝ - y)) x‖ ≤ delta * ‖z‖

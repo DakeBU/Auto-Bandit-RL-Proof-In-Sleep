@@ -1,0 +1,177 @@
+import BanditRLProof.OnlineGradientDescent
+import Mathlib.Analysis.Calculus.Deriv.Comp
+import Mathlib.Data.Real.Sign
+import Mathlib.Analysis.Calculus.Deriv.Pow
+import Mathlib.Analysis.Calculus.Deriv.Mul
+import Mathlib.Analysis.Convex.Deriv
+import Mathlib.Analysis.Calculus.Deriv.Basic
+import Mathlib.Analysis.Calculus.Deriv.Add
+import Mathlib.Tactic
+
+open Set
+namespace BanditRL.OnlineHuber
+
+theorem hasDerivAt_ite_le (f g : ℝ → ℝ) (c d : ℝ)
+    (hf : HasDerivAt f d c) (hg : HasDerivAt g d c) (he : f c = g c) :
+    HasDerivAt (fun x => if x ≤ c then f x else g x) d c := by
+  have hl : HasDerivWithinAt (fun x => if x ≤ c then f x else g x) d (Iic c) c := by
+    apply hf.hasDerivWithinAt.congr
+    · intro x hx
+      simp [show x ≤ c from hx]
+    · simp
+  have hr : HasDerivWithinAt (fun x => if x ≤ c then f x else g x) d (Ioi c) c := by
+    apply hg.hasDerivWithinAt.congr
+    · intro x hx
+      simp [not_le.mpr (show c < x from hx)]
+    · simpa using he
+  have hu := hl.union hr
+  simpa only [Iic_union_Ioi, hasDerivWithinAt_univ] using hu
+noncomputable def huber (delta r : ℝ) : ℝ :=
+  if |r| ≤ delta then r ^ 2 / 2 else delta * (|r| - delta / 2)
+
+theorem huber_three_pieces (delta r : ℝ) (hd : 0 ≤ delta) :
+    huber delta r = if r ≤ -delta then -delta * r - delta ^ 2 / 2
+      else if r ≤ delta then r ^ 2 / 2 else delta * r - delta ^ 2 / 2 := by
+  by_cases hlo : r ≤ -delta
+  · have hr : r ≤ 0 := by linarith
+    by_cases hin : -r ≤ delta
+    · have he : r = -delta := by linarith
+      simp only [huber, abs_of_nonpos hr, if_pos hin, if_pos hlo]
+      rw [he]
+      ring
+    · simp only [huber, abs_of_nonpos hr, if_neg hin, if_pos hlo]
+      ring
+  · by_cases hhi : r ≤ delta
+    · have ha : |r| ≤ delta := abs_le.mpr ⟨le_of_lt (not_le.mp hlo), hhi⟩
+      simp only [huber, if_pos ha, if_neg hlo, if_pos hhi]
+    · have hr : 0 ≤ r := by linarith
+      simp only [huber, abs_of_nonneg hr, if_neg hhi, if_neg hlo]
+      ring
+
+theorem huber_zero (r : ℝ) : huber 0 r = 0 := by
+  unfold huber
+  split_ifs with h
+  · have hr : r = 0 := abs_nonpos_iff.mp h
+    simp [hr]
+  · ring
+
+open Filter Topology
+
+theorem hasDerivAt_join (f g df dg : ℝ → ℝ) (c x : ℝ)
+    (hf : ∀ r, HasDerivAt f (df r) r) (hg : ∀ r, HasDerivAt g (dg r) r)
+    (he : f c = g c) (hd : df c = dg c) :
+    HasDerivAt (fun r => if r ≤ c then f r else g r)
+      (if x ≤ c then df x else dg x) x := by
+  rcases lt_trichotomy x c with h | h | h
+  · simp only [if_pos (le_of_lt h)]
+    apply (hf x).congr_of_eventuallyEq
+    filter_upwards [eventually_lt_nhds h] with r hr
+    simp [le_of_lt hr]
+  · subst x
+    simp only [if_pos le_rfl]
+    exact hasDerivAt_ite_le f g c (df c) (hf c) (hd.symm ▸ hg c) he
+  · simp only [if_neg (not_le.mpr h)]
+    apply (hg x).congr_of_eventuallyEq
+    filter_upwards [eventually_gt_nhds h] with r hr
+    simp [not_le.mpr hr]
+
+theorem huber_hasDerivAt (delta r : ℝ) (hd : 0 ≤ delta) :
+    HasDerivAt (huber delta)
+      (if r ≤ -delta then -delta else if r ≤ delta then r else delta) r := by
+  have hq : ∀ x : ℝ, HasDerivAt (fun x : ℝ => x ^ 2 / 2) x x := by
+    intro x
+    simpa using ((hasDerivAt_id x).pow 2).div_const 2
+  have hp : ∀ x : ℝ, HasDerivAt (fun x => delta * x - delta ^ 2 / 2) delta x := by
+    intro x
+    simpa using ((hasDerivAt_id x).const_mul delta).sub_const (delta ^ 2 / 2)
+  have hm : ∀ x : ℝ, HasDerivAt (fun x => -delta * x - delta ^ 2 / 2) (-delta) x := by
+    intro x
+    simpa using ((hasDerivAt_id x).const_mul (-delta)).sub_const (delta ^ 2 / 2)
+  have hi : ∀ x : ℝ, HasDerivAt
+      (fun x => if x ≤ delta then x ^ 2 / 2 else delta * x - delta ^ 2 / 2)
+      (if x ≤ delta then x else delta) x := by
+    intro x
+    exact hasDerivAt_join _ _ _ _ delta x hq hp (by ring) rfl
+  have hboundary : -delta ≤ delta := by linarith
+  have hj := hasDerivAt_join
+    (fun x => -delta * x - delta ^ 2 / 2)
+    (fun x => if x ≤ delta then x ^ 2 / 2 else delta * x - delta ^ 2 / 2)
+    (fun _ => -delta) (fun x => if x ≤ delta then x else delta)
+    (-delta) r hm hi (by simp only [if_pos hboundary]; ring)
+    (by simp only [if_pos hboundary])
+  convert hj using 1
+  funext x
+  exact huber_three_pieces delta x hd
+theorem huber_deriv_clamp (delta r : ℝ) (hd : 0 ≤ delta) :
+    deriv (huber delta) r = max (-delta) (min r delta) := by
+  rw [(huber_hasDerivAt delta r hd).deriv]
+  by_cases hlo : r ≤ -delta
+  · have hr : r ≤ delta := by linarith
+    simp [hlo, min_eq_left hr, max_eq_left hlo]
+  · by_cases hhi : r ≤ delta
+    · simp [hlo, hhi, min_eq_left hhi, max_eq_right (le_of_lt (not_le.mp hlo))]
+    · have hdd : -delta ≤ delta := by linarith
+      simp [hlo, hhi, min_eq_right (le_of_lt (not_le.mp hhi)), max_eq_right hdd]
+
+theorem huber_convex (delta : ℝ) (hd : 0 ≤ delta) :
+    ConvexOn ℝ Set.univ (huber delta) := by
+  apply Monotone.convexOn_univ_of_deriv
+    (fun r => (huber_hasDerivAt delta r hd).differentiableAt)
+  intro x y hxy
+  rw [huber_deriv_clamp delta x hd, huber_deriv_clamp delta y hd]
+  exact max_le_max le_rfl (min_le_min hxy le_rfl)
+
+theorem huber_deriv_bound (delta r : ℝ) (hd : 0 ≤ delta) :
+    |deriv (huber delta) r| ≤ delta := by
+  rw [huber_deriv_clamp delta r hd]
+  apply abs_le.mpr
+  constructor
+  · exact le_max_left _ _
+  · exact max_le (by linarith) (min_le_right _ _)
+
+theorem huber_deriv_source (delta r : ℝ) (hd : 0 ≤ delta) :
+    deriv (huber delta) r = if |r| ≤ delta then r else delta * Real.sign r := by
+  rw [huber_deriv_clamp delta r hd]
+  by_cases ha : |r| ≤ delta
+  · obtain ⟨hl, hr⟩ := abs_le.mp ha
+    simp [ha, min_eq_left hr, max_eq_right hl]
+  · by_cases hr : r < 0
+    · have hlo : r ≤ -delta := by
+        rw [abs_of_neg hr] at ha
+        linarith
+      have hhi : r ≤ delta := by linarith
+      simp [ha, Real.sign_of_neg hr, min_eq_left hhi, max_eq_left hlo]
+    · have hnonneg : 0 ≤ r := le_of_not_gt hr
+      have hhi : delta ≤ r := by
+        rw [abs_of_nonneg hnonneg] at ha
+        linarith
+      have hpos : 0 < r := by
+        rw [abs_of_nonneg hnonneg] at ha
+        linarith
+      have hdd : -delta ≤ delta := by linarith
+      simp [ha, Real.sign_of_pos hpos, min_eq_right hhi, max_eq_right hdd]
+
+open scoped InnerProductSpace
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]
+
+theorem huber_linear_hasGradientAt (delta y : ℝ) (hd : 0 ≤ delta) (z x : E) :
+    HasGradientAt (fun w => huber delta (inner ℝ z w - y))
+      (deriv (huber delta) (inner ℝ z x - y) • z) x := by
+  have hf := ((innerSL ℝ z).hasFDerivAt (x := x)).sub_const y
+  have hg := (huber_hasDerivAt delta (inner ℝ z x - y) hd).differentiableAt.hasDerivAt
+  have hh := hg.comp_hasFDerivAt x hf
+  apply hasGradientAt_iff_hasFDerivAt.mpr
+  convert hh using 1
+  ext v
+  simp [InnerProductSpace.toDual_apply_apply, real_inner_smul_left]
+
+theorem huber_linear_convex (delta y : ℝ) (hd : 0 ≤ delta) (z : E) :
+    ConvexOn ℝ Set.univ (fun w => huber delta (inner ℝ z w - y)) := by
+  let a : E →ᵃ[ℝ] ℝ := (innerSL ℝ z).toLinearMap.toAffineMap - AffineMap.const ℝ E y
+  simpa [a, Function.comp_def] using (huber_convex delta hd).comp_affineMap a
+
+theorem huber_linear_gradient_bound (delta y : ℝ) (hd : 0 ≤ delta) (z x : E) :
+    ‖gradient (fun w => huber delta (inner ℝ z w - y)) x‖ ≤ delta * ‖z‖ := by
+  rw [(huber_linear_hasGradientAt delta y hd z x).gradient, norm_smul, Real.norm_eq_abs]
+  exact mul_le_mul_of_nonneg_right (huber_deriv_bound delta (inner ℝ z x - y) hd) (norm_nonneg z)
+end BanditRL.OnlineHuber
