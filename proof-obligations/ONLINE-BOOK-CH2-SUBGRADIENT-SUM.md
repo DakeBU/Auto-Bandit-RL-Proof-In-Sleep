@@ -14,3 +14,12 @@
 - [ ] Scoped PR delivery. No chapter/book completion implied.
 
 DAG: existing proper/global-support/convex-sum interfaces -> summed-support inclusion; actual mixed-qualified binary separation -> finite sum interior/convex/proper prerequisites -> inductive witness family -> full equality. Explicit decomposition/attainment assumptions cannot replace the reverse producer. Original failed compiler/canary/API attempts remain in the run; error recovery sorryAx is rejected.
+
+## Public candidate evidence
+
+- [x] Full all-query-point positive finite equality, query finiteness derived from proper aggregate support.
+- [x] Singleton empty-interior and actual three-component/nonzero/last-boundary/outside-domain public canaries.
+- [x] Public source endpoints, separate full-source scratch proof review, nine native fences and18targetaxioms.
+- [x] Root/Tests9202jobs,466tests7existing skips,12actualproof-valueedges, initial919page/11677linksite and exactPR139-base contributor gate.
+- [ ] Final public reader/source bytes, immutable committed binding and acceptance decision.
+- [ ] Scoped PR delivery. Whole-book Goal remains active.
