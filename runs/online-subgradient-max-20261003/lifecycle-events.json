@@ -19,8 +19,18 @@
       "stage": "candidate",
       "evidence": "scratch-candidate-decision.json",
       "claim": "Actual complete unchanged source equality and nondegenerate canaries compile; public root/tests pass, remaining gates pending"
+    },
+    {
+      "stage": "repair",
+      "evidence": "binding-capture.log; post-review-drift.json",
+      "claim": "Post-review task shadow refresh invalidated exactly one raw receipt row; preserved invalid historical evidence"
+    },
+    {
+      "stage": "accepted",
+      "evidence": "accepted-decision.json; binding-HEAD-check.log; final-reader-receipt-v2.json",
+      "claim": "Fixed source terminal closed, all package local gates pass; one explicit reviewed historical supersession"
     }
   ],
-  "accepted": false,
+  "accepted": true,
   "goal_complete": false
 }
