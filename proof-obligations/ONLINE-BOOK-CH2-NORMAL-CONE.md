@@ -32,3 +32,5 @@ Original draft entries retained history; all later Chapter2/older26path migratio
 - [ ]Scoped PR delivery separately recorded.
 
 Later Chapter2/book/older26path main-migration obligations remain required.
+
+Scoped draft PR#142 delivered/attached, stacked on unmerged PR#141 exact072bdhead; separate delivery receipt. Allthree sourceclaims locallyaccepted, no merge/deployment/Chapter2/book completion. Checkout/ignoreduniquecontent retained, continue mandatory Theorem2.26.
