@@ -1,0 +1,3 @@
+# Basic subgradient conversion
+
+Freeze source, global-support definition, quantified hypotheses and exact two headers in online-subgradient-basic-v1 before scratch work. Public conversion changes path only, preserving full source/hash in online-subgradient-basic-public-v1. Allowed: public module/canary/imports and this source reader/mapping/evidence. No weakening to differentiable f or restricting global support to V. No toolchain, private paper, global frontier or old source contract edits. A changed mathematical terminal requires a new version. File-level roles/records supplement native statement fences; no claim that one runtime enforces the whole paper lifecycle.
