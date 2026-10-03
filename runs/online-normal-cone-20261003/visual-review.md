@@ -1,0 +1,3 @@
+# Actual normal-cone reader visual inspection
+
+Root inspected actual tmp/normal-cone-reader-review.png pixels, hidden headless Edge1440x1800 after actual root/Tests compilation and successful sitecheck01. Screenshot file existence separately verified; renderexit0 alone not treated as artifact evidence. Readable shared Online Book breadcrumb, exact Example2.25 printed18/PDF30 primary source card, allthree source-claim summary and curated-route vs textbook-completion boundary. Three teaching route links and a definition highlight are not exhaustive compiled proof dependencies. Generated website/_site untouched; screenshot/browserprofile retained ignored in this checkout.

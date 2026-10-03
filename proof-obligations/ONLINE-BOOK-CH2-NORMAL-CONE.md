@@ -11,3 +11,14 @@
 - [ ]Combinedroot/Tests/fullharness/shadow/site/registry/contributor/committedbindings and scoped PR.
 
 Allthree source claims required; no package/chapter/book complete. Later max/hinge/affine/Lipschitz/OSD/linearization and older26path integration migration remain required. Originaldraftstages preserved.
+
+## Candidate stage evidence
+
+- [x]Actual shared/pinned API retrieval and distinct blind/source stabilization.
+- [x]Full indicator equality, interiorzero and reverse/converse unitballray bodies compiled unchanged.
+- [x]Actual public nondegenerate boundary/outside/singleton/interior/2D geometry canaries and shared root integration.
+- [x]Three frozen public source hashes and eight standard-only public axiom targets.
+- [x]Distinct full-source body review; scalar singleton interior property remains a separate context check.
+- [ ]Combined/graph/site/registry/contribution/final-reader/committed binding gates and scoped PR.
+
+Original draft entries retained history; all later Chapter2/older26path migration and book obligations remain required.
