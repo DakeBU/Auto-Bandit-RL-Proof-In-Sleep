@@ -15,3 +15,7 @@ Allowed body scope: tmp/online-subgradient-sum-inclusion.lean, tmp/online-subgra
 ## Public candidate update
 
 Both exact source terminals now have actual public bodies in OnlineSubgradientSum. Full-source scratch review accepted-with-explicit-delta. Public focused02 (9076jobs), root/Tests/full harness (9202jobs,466tests7existing skips),18targetaxioms,ninefences,12actualcompiledproof-valueedges and919page/11677link site candidate gates pass. Final public-byte/reader semantic review and committed immutable binding remain mandatory before accepted-local. Chapter2/book incomplete, global SGB frontier unchanged. Original draft/proving descriptions and failed logs remain history.
+
+## Accepted-local package
+
+Both exact source2.23 endpoints accepted locally after separate full-source/public reader review and all technical/immutable gates. See acceptance-decision.md and acceptance-evidence.json. Earlier draft/stabilized/proving/candidate statements are preserved stage history; no frozen source/header bytes changed. PR delivery pending separate receipt. Chapter2/book Goal active.
