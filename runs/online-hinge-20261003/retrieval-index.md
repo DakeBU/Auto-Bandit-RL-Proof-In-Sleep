@@ -1,0 +1,1 @@
+Actual declarations/memory/mathlib searches stored in retrieval-*.txt. Source cached digest and printed18 target reread. These bounded searches do not establish global absence. CLI retrieval-search guessed name unavailable; corrected actual list-lean-decls/search-memory help.

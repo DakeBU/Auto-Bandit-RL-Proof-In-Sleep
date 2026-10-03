@@ -4161,6 +4161,137 @@
         "takeaway": "Active supports may require convex mixing, while inactive functions contribute no supports; infinity away from the common query remains permitted.",
         "boundary": "Empty-index maximum has no value specified by this source; no Chapter2/book completion."
       }
+    },
+    {
+      "slug": "online-hinge",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10,21June2026",
+        "sections": "Section2.2.1, Example2.27, printed18/PDF30",
+        "pages": "printed18/PDF30",
+        "pdf_page": 30,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "Actual hinge and margin",
+          "meaning": "ell_z(y)=max(1-inner(z,y),0), m(x)=1-inner(z,x); z,x range over a finite-dimensional real Euclidean space."
+        },
+        {
+          "term": "Global subdifferential",
+          "meaning": "Every support g satisfies ell_z(x)+inner(g,y-x)<=ell_z(y) for all ambient y, including across the hinge boundary."
+        },
+        {
+          "term": "Boundary segment",
+          "meaning": "At m(x)=0 all -alpha z with 0<=alpha<=1 occur, including both endpoints. No nonzero assumption on z."
+        }
+      ],
+      "algorithm": {
+        "title": "Calculate the complete support set",
+        "kind": "proof flow",
+        "steps": [
+          {
+            "title": "Derive affine supports",
+            "detail": "The support of inner(a,y)+b is exactly{a}, from the actual all-y inequality at x+(g-a) and inner self positivity."
+          },
+          {
+            "title": "Apply the actual maximum rule",
+            "detail": "The two concrete affine functions inner(-z,y)+1 and0 are proper, convex, finite and continuous at every query; their actual finite maximum is precisely the hinge."
+          },
+          {
+            "title": "Classify activity and take the ordinary hull",
+            "detail": "Negative margin activates0 alone; positive margin activates the slope -z alone; zero margin activates both and gives their entire closed segment."
+          }
+        ]
+      },
+      "teaching_route": [
+        "BanditRL.OnlineConvex.sourceHinge",
+        "BanditRL.OnlineConvex.affine_subdifferential",
+        "BanditRL.OnlineConvex.hinge_subdifferential_hull",
+        "BanditRL.OnlineConvex.example_2_27"
+      ],
+      "source_theorems": [
+        {
+          "label": "Example2.27 hinge loss",
+          "pages": "printed18",
+          "pdf_page": 30,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\ell_z(x)=\\max(1-\\langle z,x\\rangle,0),\\qquad\\partial\\ell_z(x)=\\begin{cases}\\{0\\}&m(x)<0\\\\\\{-\\alpha z:0\\le\\alpha\\le1\\}&m(x)=0\\\\\\{-z\\}&m(x)>0\\end{cases}",
+          "fallback": "For the actual hinge: negative margin gives{0}, equality gives every -alpha z for alpha in[0,1], positive margin gives{-z}.",
+          "plain": "For every z and x in finite-dimensional real Euclidean space, the full ambient hinge subdifferential follows these three cases. At equality no boundary support is omitted.",
+          "relationship": "Coordinate-free finite-dimensional real inner-product space represents Rd. Finite real hinge is embedded into the shared EReal support definition; no nonzero z or bounded domain is assumed. The affine foundation is valid in arbitrary real inner-product spaces.",
+          "contract": {
+            "model": "Deterministic finite-dimensional real Euclidean convex analysis of the exact hinge loss.",
+            "assumptions": "No additional assumptions on z or x; full ambient global supports. Explicit finite dimension matches Rd. Both affine components are proved proper, convex, finite and continuous, rather than assumed qualifying.",
+            "parameters": "Every z,x and every candidate g; all test points y; all real alpha in the inclusive interval[0,1].",
+            "regret": "No algorithm or regret bound claimed.",
+            "guarantee": "Full three-branch equality, strict singleton cases and the entire boundary segment, including z=0."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Public Example2.27 candidate",
+            "boundary": "Full body and five nondegenerate canaries compile in scratch; public/combined/graph/reader/site/binding gates separately pending. Not merged/deployed; Chapter2/book incomplete."
+          }
+        }
+      ],
+      "proof_bridge": {
+        "title": "Global affine supports and the ordinary maximum hull",
+        "summary": "Compute the full support set through an actual application of Theorem2.26.",
+        "steps": [
+          {
+            "title": "Construct the unique affine support",
+            "detail": "If g supports inner(a,y)+b at x, test y=x+(g-a). The support inequality gives inner(g-a,g-a)<=0. Positivity forces g=a. Conversely, the affine identity verifies support at every y.",
+            "math": "\\partial(\\langle a,\\cdot\\rangle+b)(x)=\\{a\\}",
+            "fallback": "No supplied slope formula or differentiability oracle."
+          },
+          {
+            "title": "Qualify the two actual components",
+            "detail": "Use f0(y)=0 and f1(y)=inner(-z,y)+1. Their real affine algebra proves convex epigraphs; real embedding proves properness/finiteness; inner continuity proves ambient continuity. Finset maximum bounds identify their maximum with max(1-inner(z,y),0).",
+            "math": "\\ell_z=\\max(f_0,f_1),\\qquad\\partial\\ell_z(x)=\\operatorname{conv}\\!\\bigcup_{i\\in A(x)}\\partial f_i(x)",
+            "fallback": "All hypotheses of the earlier full maximum rule are actually established."
+          },
+          {
+            "title": "Retain exact activity in each branch",
+            "detail": "With m(x)=1-inner(z,x), if m<0 only f0 is active; if m>0 only f1 is active. At m=0 both are active and their support union is{0,-z}. Strict inequalities exclude the inactive component.",
+            "math": "U(x)=\\{0\\},\\ \\{0,-z\\},\\ \\{-z\\}\\quad\\text{for }m<0,\\ m=0,\\ m>0",
+            "fallback": "An active union alone is not the full boundary subdifferential."
+          },
+          {
+            "title": "Describe the ordinary pair hull",
+            "detail": "The ordinary convex hull of{0,-z} is the segment (1-alpha)0+alpha(-z)=-alpha z for alpha in[0,1]. Singleton hulls remain singletons. This gives both inclusions of all three source cases.",
+            "math": "\\operatorname{conv}\\{0,-z\\}=\\{-\\alpha z:0\\le\\alpha\\le1\\}",
+            "fallback": "No closure operation or selected-support shortcut."
+          }
+        ],
+        "boundary": "Example2.27 only. The affine composition chain rule2.28, Lipschitz2.30, source OSD/linearization, remaining Chapter2 and Chapters3–16 remain mandatory. Teaching route is curated, not all proof-term edges."
+      },
+      "worked_example": {
+        "title": "Strict branches, a genuine boundary mixture and z=0",
+        "intro": "The public canaries instantiate the actual full equality.",
+        "steps": [
+          {
+            "title": "Strict branches",
+            "detail": "For z=1 in R, x=0 gives margin1 and support{-1}; x=2 gives margin-1 and support{0}.",
+            "math": "\\partial\\ell_1(0)=\\{-1\\},\\qquad\\partial\\ell_1(2)=\\{0\\}",
+            "fallback": "Both sides of the kink retain the correct sign."
+          },
+          {
+            "title": "Entire boundary interval",
+            "detail": "For z=1 and x=1 the full support set is[-1,0]. The support -1/2 belongs, is absent from the active component union{0,-1}, and slope1 is excluded.",
+            "math": "\\partial\\ell_1(1)=[-1,0],\\quad-\\tfrac12\\notin\\{0,-1\\}",
+            "fallback": "Tests the ordinary hull and rejection, not just endpoint membership."
+          },
+          {
+            "title": "Zero vector",
+            "detail": "When z=0 the loss is constantly1 and the margin is always positive. Its global subdifferential is{0} at every x; no z nonzero premise is introduced.",
+            "math": "\\partial\\ell_0(x)=\\{0\\}",
+            "fallback": "The equality branch cannot arise at z=0."
+          }
+        ],
+        "takeaway": "Strict activity produces a singleton; a genuine tie produces an entire closed segment.",
+        "boundary": "No classification algorithm/regret bound, Chapter2/book completion or merge/deployment is claimed."
+      }
     }
   ]
 }

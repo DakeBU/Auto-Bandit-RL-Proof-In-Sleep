@@ -1,0 +1,1 @@
+Contract stabilized by distinct blind/source review before bodies. Finite leaf affine support: global query x+(g-a), coercion to real, inner self positivity gives g=a; reverse actual algebra for every y. Frozen terminal/header unchanged; full hinge terminal still pending.

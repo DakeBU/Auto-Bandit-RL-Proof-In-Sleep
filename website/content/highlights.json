@@ -3239,6 +3239,70 @@
         "BanditRL.OnlineConvex.isCompact_sourceSubdifferential",
         "BanditRL.OnlineConvex.isCompact_convexHull_finite_convex_union"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.sourceHinge",
+      "title": "Actual hinge loss",
+      "chapter": "online-hinge",
+      "featured": false,
+      "teaching_order": 0,
+      "plain": "Actual hinge loss",
+      "math": "\\(\\ell_z(x)=\\max(1-\\langle z,x\\rangle,0)\\)",
+      "intuition": "The actual two affine components give singleton supports, and ties require the full ordinary segment.",
+      "why": "Exact Example2.27 and its constructed dependencies, not an algorithm guarantee or chapter completion.",
+      "position": "Orabona v10 Example2.27 printed18/PDF30.",
+      "proof_idea": "Derive affine supports, qualify the concrete maximum, classify actual active indices and take the pair hull.",
+      "lean_notes": "Full global-support equalities, finite dimension for the source result and z=0 retained. Real functions embedded into EReal.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.affine_subdifferential",
+      "title": "Every affine support equals its slope",
+      "chapter": "online-hinge",
+      "featured": false,
+      "teaching_order": 1,
+      "plain": "Every affine support equals its slope",
+      "math": "\\(\\partial(\\langle a,\\cdot\\rangle+b)(x)=\\{a\\}\\)",
+      "intuition": "The actual two affine components give singleton supports, and ties require the full ordinary segment.",
+      "why": "Exact Example2.27 and its constructed dependencies, not an algorithm guarantee or chapter completion.",
+      "position": "Orabona v10 Example2.27 printed18/PDF30.",
+      "proof_idea": "Derive affine supports, qualify the concrete maximum, classify actual active indices and take the pair hull.",
+      "lean_notes": "Full global-support equalities, finite dimension for the source result and z=0 retained. Real functions embedded into EReal.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.hinge_subdifferential_hull",
+      "title": "Actually instantiate the full maximum rule",
+      "chapter": "online-hinge",
+      "featured": false,
+      "teaching_order": 2,
+      "plain": "Actually instantiate the full maximum rule",
+      "math": "\\(\\partial\\ell_z(x)=\\operatorname{conv}U(x)\\)",
+      "intuition": "The actual two affine components give singleton supports, and ties require the full ordinary segment.",
+      "why": "Exact Example2.27 and its constructed dependencies, not an algorithm guarantee or chapter completion.",
+      "position": "Orabona v10 Example2.27 printed18/PDF30.",
+      "proof_idea": "Derive affine supports, qualify the concrete maximum, classify actual active indices and take the pair hull.",
+      "lean_notes": "Full global-support equalities, finite dimension for the source result and z=0 retained. Real functions embedded into EReal.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.example_2_27",
+      "title": "The full three-branch hinge subdifferential",
+      "chapter": "online-hinge",
+      "featured": false,
+      "teaching_order": 3,
+      "plain": "The full three-branch hinge subdifferential",
+      "math": "\\(\\partial\\ell_z(x)=\\{0\\},\\ \\{-\\alpha z:0\\le\\alpha\\le1\\},\\ \\{-z\\}\\)",
+      "intuition": "The actual two affine components give singleton supports, and ties require the full ordinary segment.",
+      "why": "Exact Example2.27 and its constructed dependencies, not an algorithm guarantee or chapter completion.",
+      "position": "Orabona v10 Example2.27 printed18/PDF30.",
+      "proof_idea": "Derive affine supports, qualify the concrete maximum, classify actual active indices and take the pair hull.",
+      "lean_notes": "Full global-support equalities, finite dimension for the source result and z=0 retained. Real functions embedded into EReal.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.hinge_subdifferential_hull",
+        "convexHull_pair",
+        "segment_eq_image"
+      ]
     }
   ]
 }

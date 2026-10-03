@@ -1,0 +1,20 @@
+norm_eq_zero.{u_5} {E : Type u_5} [NormedAddGroup E] {a : E} : ‖a‖ = 0 ↔ a = 0
+inner_self_eq_zero.{u_1, u_2} {𝕜 : Type u_1} {E : Type u_2} [RCLike 𝕜] [NormedAddCommGroup E] [InnerProductSpace 𝕜 E]
+  {x : E} : inner 𝕜 x x = 0 ↔ x = 0
+ContinuousLinearMap.toLinearMap.{u_1, u_2, u_3, u_4} {R : Type u_1} {S : Type u_2} [Semiring R] [Semiring S]
+  {σ : R →+* S} {M : Type u_3} [TopologicalSpace M] [AddCommMonoid M] {M₂ : Type u_4} [TopologicalSpace M₂]
+  [AddCommMonoid M₂] [Module R M] [Module S M₂] (self : M →SL[σ] M₂) : M →ₛₗ[σ] M₂
+innerSL.{u_1, u_2} (𝕜 : Type u_1) {E : Type u_2} [RCLike 𝕜] [SeminormedAddCommGroup E] [InnerProductSpace 𝕜 E] :
+  E →L⋆[𝕜] E →L[𝕜] 𝕜
+real_inner_comm.{u_3} {F : Type u_3} [SeminormedAddCommGroup F] [InnerProductSpace ℝ F] (x y : F) :
+  inner ℝ y x = inner ℝ x y
+EReal.coe_le_coe_iff {x y : ℝ} : ↑x ≤ ↑y ↔ x ≤ y
+tmp/hinge-api-02.lean:9:7: error(lean.unknownIdentifier): Unknown constant `EReal.coe_sup`
+tmp/hinge-api-02.lean:10:7: error(lean.unknownIdentifier): Unknown identifier `map_max`
+max_eq_left.{u_1} {α : Type u_1} [LinearOrder α] {a b : α} (h : b ≤ a) : max a b = a
+max_eq_right.{u_1} {α : Type u_1} [LinearOrder α] {a b : α} (h : a ≤ b) : max a b = b
+convexHull_min.{u_1, u_2} {𝕜 : Type u_1} {E : Type u_2} [Semiring 𝕜] [PartialOrder 𝕜] [AddCommMonoid E] [Module 𝕜 E]
+  {s t : Set E} : s ⊆ t → Convex 𝕜 t → (convexHull 𝕜) s ⊆ t
+Convex.convexHull_eq.{u_1, u_2} {𝕜 : Type u_1} {E : Type u_2} [Semiring 𝕜] [PartialOrder 𝕜] [AddCommMonoid E]
+  [Module 𝕜 E] {s : Set E} : Convex 𝕜 s → (convexHull 𝕜) s = s
+Bool.forall_bool {p : Bool → Prop} : (∀ (b : Bool), p b) ↔ p false ∧ p true

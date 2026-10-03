@@ -1,0 +1,1 @@
+Close full hinge Example2.27 three-branch equality, not just a selected subgradient. Preserve boundary segment, z=0, all global queries. Reuse accepted-local full Theorem2.26. Staged root roles medium; semantic roles distinct automated actors.

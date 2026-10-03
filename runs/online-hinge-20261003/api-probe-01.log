@@ -1,0 +1,32 @@
+convexHull_pair.{u_1, u_2} {𝕜 : Type u_1} {E : Type u_2} [Semiring 𝕜] [PartialOrder 𝕜] [AddCommMonoid E] [Module 𝕜 E]
+  [IsOrderedRing 𝕜] (x y : E) : (convexHull 𝕜) {x, y} = segment 𝕜 x y
+convexHull_singleton.{u_1, u_2} {𝕜 : Type u_1} {E : Type u_2} [Semiring 𝕜] [PartialOrder 𝕜] [AddCommMonoid E]
+  [Module 𝕜 E] (x : E) : (convexHull 𝕜) {x} = {x}
+segment_eq_image.{u_1, u_2} (𝕜 : Type u_1) {E : Type u_2} [Ring 𝕜] [PartialOrder 𝕜] [AddRightMono 𝕜] [AddCommGroup E]
+  [Module 𝕜 E] (x y : E) : segment 𝕜 x y = (fun θ => (1 - θ) • x + θ • y) '' Icc 0 1
+inner_self_nonneg.{u_1, u_2} {𝕜 : Type u_1} {E : Type u_2} [RCLike 𝕜] [SeminormedAddCommGroup E] [InnerProductSpace 𝕜 E]
+  {x : E} : 0 ≤ RCLike.re (inner 𝕜 x x)
+real_inner_self_nonneg.{u_3} {F : Type u_3} [SeminormedAddCommGroup F] [InnerProductSpace ℝ F] {x : F} : 0 ≤ inner ℝ x x
+tmp/hinge-api-01.lean:8:7: error(lean.unknownIdentifier): Unknown identifier `real_inner_self_eq_zero`
+real_inner_self_eq_norm_sq.{u_3} {F : Type u_3} [SeminormedAddCommGroup F] [InnerProductSpace ℝ F] (x : F) :
+  inner ℝ x x = ‖x‖ ^ 2
+Continuous.inner continuous_const : Continuous ?m.14 → Continuous fun t => inner ?m.6 ?m.5 (?m.14 t)
+ConvexOn.{u_1, u_2, u_5} (𝕜 : Type u_1) {E : Type u_2} {β : Type u_5} [Semiring 𝕜] [PartialOrder 𝕜] [AddCommMonoid E]
+  [AddCommMonoid β] [PartialOrder β] [SMul 𝕜 E] [SMul 𝕜 β] (s : Set E) (f : E → β) : Prop
+Finset.sup'_le_iff.{u_2, u_3} {α : Type u_2} {β : Type u_3} [SemilatticeSup α] {s : Finset β} (H : s.Nonempty)
+  (f : β → α) {a : α} : s.sup' H f ≤ a ↔ ∀ b ∈ s, f b ≤ a
+Finset.le_sup'.{u_2, u_3} {α : Type u_2} {β : Type u_3} [SemilatticeSup α] {s : Finset β} (f : β → α) {b : β}
+  (h : b ∈ s) : f b ≤ s.sup' ⋯ f
+tmp/hinge-api-01.lean:14:7: error(lean.unknownIdentifier): Unknown constant `Finset.sup'_eq_sup'`
+tmp/hinge-api-01.lean:15:7: error(lean.unknownIdentifier): Unknown constant `EReal.coe_max`
+convexOn_const.{u_1, u_2, u_5} {𝕜 : Type u_1} {E : Type u_2} {β : Type u_5} [Semiring 𝕜] [PartialOrder 𝕜]
+  [AddCommMonoid E] [AddCommMonoid β] [PartialOrder β] [SMul 𝕜 E] [Module 𝕜 β] {s : Set E} (c : β) (hs : Convex 𝕜 s) :
+  ConvexOn 𝕜 s fun x => c
+LinearMap.convexOn.{u_1, u_2, u_5} {𝕜 : Type u_1} {E : Type u_2} {β : Type u_5} [Semiring 𝕜] [PartialOrder 𝕜]
+  [AddCommMonoid E] [AddCommMonoid β] [PartialOrder β] [Module 𝕜 E] [Module 𝕜 β] (f : E →ₗ[𝕜] β) {s : Set E}
+  (hs : Convex 𝕜 s) : ConvexOn 𝕜 s ⇑f
+tmp/hinge-api-01.lean:18:7: error(lean.unknownIdentifier): Unknown constant `ContinuousLinearMap.convexOn`
+inner_add_right.{u_1, u_2} {𝕜 : Type u_1} {E : Type u_2} [RCLike 𝕜] [SeminormedAddCommGroup E] [InnerProductSpace 𝕜 E]
+  (x y z : E) : inner 𝕜 x (y + z) = inner 𝕜 x y + inner 𝕜 x z
+inner_smul_right.{u_1, u_2} {𝕜 : Type u_1} {E : Type u_2} [RCLike 𝕜] [SeminormedAddCommGroup E] [InnerProductSpace 𝕜 E]
+  (x y : E) (r : 𝕜) : inner 𝕜 x (r • y) = r * inner 𝕜 x y

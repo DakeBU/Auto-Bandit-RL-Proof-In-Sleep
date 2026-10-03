@@ -1,0 +1,23 @@
+Neutral context and unproved mathematical headers only; no source identity or proof.
+import BanditRLProof.OnlineSubgradientMax
+noncomputable section
+open Set
+namespace NeutralSupport
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+def finiteKink (z x : E) : EReal := ((max (1 - inner ℝ z x) 0 : ℝ) : EReal)
+
+-- Shared mathematical context:
+def SourceSubdifferential (f : E → EReal) (x : E) : Set E :=
+  {g | ∀ y, f x + (inner ℝ g (y - x) : EReal) ≤ f y}
+
+theorem claim_1 (a : E) (b : ℝ) (x : E) :
+    SourceSubdifferential (fun y => ((inner ℝ a y + b : ℝ) : EReal)) x = {a}
+
+theorem claim_2 [FiniteDimensional ℝ E] (z x : E) :
+    SourceSubdifferential (finiteKink z) x =
+      if 1 - inner ℝ z x < 0 then {0}
+      else if 1 - inner ℝ z x = 0 then
+        {g | ∃ α ∈ Icc (0 : ℝ) 1, g = -(α • z)}
+      else {-z}
+
+end NeutralSupport

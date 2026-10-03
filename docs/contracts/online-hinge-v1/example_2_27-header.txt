@@ -1,0 +1,6 @@
+theorem example_2_27 [FiniteDimensional ℝ E] (z x : E) :
+    SourceSubdifferential (sourceHinge z) x =
+      if 1 - inner ℝ z x < 0 then {0}
+      else if 1 - inner ℝ z x = 0 then
+        {g | ∃ α ∈ Icc (0 : ℝ) 1, g = -(α • z)}
+      else {-z}

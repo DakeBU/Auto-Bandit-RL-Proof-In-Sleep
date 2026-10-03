@@ -1,0 +1,121 @@
+{
+  "schema_version": "2.0",
+  "id": "ONLINE-HINGE-20261003",
+  "route": "online-learning/chapter-2",
+  "frontier_cell": "online-hinge",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10, 2026-06-21; SHA256 cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchor": "Example2.27, Section2.2.1, printed18/PDF30",
+    "url": "https://arxiv.org/pdf/1912.13213v10"
+  },
+  "target": "Example2.27 exact full hinge-loss subdifferential in all three branches including z=0",
+  "affected_files": [
+    "BanditRLProof.lean",
+    "BanditRLProof/OnlineHinge.lean",
+    "website/content/books.json",
+    "website/content/chapters.json",
+    "website/content/readings.json",
+    "website/content/highlights.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineConvex.sourceHinge",
+    "BanditRL.OnlineConvex.affine_subdifferential",
+    "BanditRL.OnlineConvex.hinge_subdifferential_hull",
+    "BanditRL.OnlineConvex.example_2_27"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Actual native memory/declaration/theorem-card searches and pinned pair-hull/segment/affine API probes",
+      "Existing shared full maximum theorem2.26 and all-y source supports"
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineConvex.SourceSubdifferential",
+      "BanditRL.OnlineConvex.theorem_2_26",
+      "convexHull_pair",
+      "segment_eq_image",
+      "convexHull_singleton",
+      "inner_self_eq_zero"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineConvex.sourceHinge",
+      "BanditRL.OnlineConvex.affine_subdifferential",
+      "BanditRL.OnlineConvex.hinge_subdifferential_hull",
+      "BanditRL.OnlineConvex.example_2_27"
+    ],
+    "known_consumers": [
+      "BanditRL.OnlineConvex.hinge_subdifferential_hull",
+      "BanditRL.OnlineConvex.example_2_27",
+      "HingeProbe.boundary_interval",
+      "HingeProbe.actual_mixture_and_rejection"
+    ],
+    "planned_consumers": [
+      "Affine composite-loss applications; later online linear classification guarantees, not claimed complete"
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Actually instantiate the shared full maximum rule; prove affine support uniqueness and family regularity. Full source equality is project-local; generic affine-support facts are reusable mathlib-candidate growth."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/hinge_blind",
+    "source_reviewer": "/root/source_reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Coordinate-free finite-dimensional Rd and finite real hinge embedded in EReal. Distinct contract and actual-body review accepted; final reader/immutable gates separately required. No external-human review."
+  },
+  "graph_contribution": {
+    "lean_graph": "new-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Concrete instance of the existing finite-maximum support mechanism; no newly certified cross-setting transport.",
+    "focus_targets": [
+      "BanditRL.OnlineConvex.sourceHinge",
+      "BanditRL.OnlineConvex.affine_subdifferential",
+      "BanditRL.OnlineConvex.hinge_subdifferential_hull",
+      "BanditRL.OnlineConvex.example_2_27"
+    ],
+    "visual_review": "Native public proof graph and reader inspection pending.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: full Example2.27 route; Chapter2/book incomplete",
+    "banditrlwiki": "no-change-with-reason: no Bandit setting claim; exact Online source ledger/retrieval carries this prerequisite.",
+    "results_ledger": "no-change-with-reason: no existing Bandit named milestone changes; source inventory records this package.",
+    "roadmap": "no-change-with-reason: global SGB pointer unchanged; later Chapter2 source obligations remain mandatory",
+    "website_surfaces": [
+      "website/content/books.json",
+      "website/content/chapters.json",
+      "website/content/highlights.json",
+      "website/content/readings.json"
+    ]
+  },
+  "truth_boundary": "Exact full Example2.27 scratch body and five substantive canaries compile. Public combined/graph/site/final-reader/immutable gates separately pending. Package/chapter/book acceptance, merge/deploy/main/live not claimed.",
+  "verification": {
+    "focused_checks": [
+      "Full hinge scratch proof and five endpoints compile with standard axioms",
+      "Original two frozen statement hashes unchanged"
+    ],
+    "bandit_check": "pending public combined root/Tests/full harness",
+    "site_build": "pending actual combined Lean gate before lean-verified",
+    "site_check": "pending shared registry/native graph/site check",
+    "independent_review": "Distinct blind, source-contract and actual-body accepted-with-explicit-delta; final reader and immutable committed binding separately required."
+  },
+  "contributor": {
+    "name": "Codex for Ji Cheng",
+    "role": "Formalization and integration; distinct automated semantic actors named above; source attribution retained"
+  }
+}
