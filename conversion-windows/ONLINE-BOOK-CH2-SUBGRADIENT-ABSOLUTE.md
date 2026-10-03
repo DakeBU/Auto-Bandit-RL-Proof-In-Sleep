@@ -1,0 +1,5 @@
+# Source absolute-value conversion window
+
+Orabona v10 Example2.24 printed18/PDF30. f(x)=abs x on the real line has global subdifferential {1} for x>0, closedinterval[-1,1] for x=0, {-1} for x<0. Lean reuses SourceSubdifferential (finite EReal embedding of abs); scalar real inner product is multiplication. All y range over the whole real line. No stochastic/algorithm information order; exact set characterization, not a support selection.
+
+Native fences for three sign cases and all-x piecewise statement captured before bodies. Real total order justifies the final else branch; zero endpoint boundaries ±1 are inclusive. No higher-dimensional norm extension or relative derivative is implied. Finite embedding adds no functional regularity assumption. Draft review must stabilize these exact terminals; body repair cannot weaken them. All source/candidate/public/gate evidence remains separate. Native new-task generated this window once; filled with this reviewed-intent draft, no overwrite of another active frontier.

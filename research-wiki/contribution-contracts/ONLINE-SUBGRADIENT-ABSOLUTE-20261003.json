@@ -1,0 +1,119 @@
+{
+  "schema_version": "2.0",
+  "id": "ONLINE-SUBGRADIENT-ABSOLUTE-20261003",
+  "route": "online-learning/chapter-2",
+  "frontier_cell": "online-subgradient-absolute",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10, 2026-06-21; SHA256 cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchor": "Example2.24, Section2.2.1, printed18/PDF30",
+    "url": "https://arxiv.org/pdf/1912.13213v10"
+  },
+  "target": "Exact Example2.24 all-real absolute-value subdifferential and three sign leaves",
+  "affected_files": [
+    "BanditRLProof.lean",
+    "BanditRLProof/OnlineSubgradientAbsolute.lean",
+    "website/content/books.json",
+    "website/content/chapters.json",
+    "website/content/readings.json",
+    "website/content/highlights.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineConvex.abs_subgradient_positive",
+    "BanditRL.OnlineConvex.abs_subgradient_zero",
+    "BanditRL.OnlineConvex.abs_subgradient_negative",
+    "BanditRL.OnlineConvex.example_2_24"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Actual SourceSubdifferential definition and EReal finite addition/order",
+      "Actual pinned abs_of_pos/neg/nonneg, le_abs_self, neg_le_abs",
+      "Actual pinned sign-aware multiplication order, mul_eq_zero, singleton/closed-interval APIs"
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineConvex.SourceSubdifferential",
+      "EReal.coe_add",
+      "EReal.coe_le_coe_iff",
+      "le_abs_self",
+      "neg_le_abs"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineConvex.abs_subgradient_positive",
+      "BanditRL.OnlineConvex.abs_subgradient_zero",
+      "BanditRL.OnlineConvex.abs_subgradient_negative",
+      "BanditRL.OnlineConvex.example_2_24"
+    ],
+    "known_consumers": [
+      "BanditRL.OnlineConvex.example_2_24"
+    ],
+    "planned_consumers": [
+      "Scalar nonsmooth losses and later Chapter2 composite-loss guarantees"
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Reuse shared global supporting semantics and scalar order APIs; characterize the full actual support sets rather than assuming a chosen slope."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/absolute_blind",
+    "source_reviewer": "/root/source_reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Finite EReal embedding of real absolute value only. Distinct actual public proof review accepted-with-explicit-delta; final reader and immutable binding are separate mandatory gates, not external-human review."
+  },
+  "graph_contribution": {
+    "lean_graph": "new-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Real scalar convex-analysis example in the shared graph; no cross-setting transport.",
+    "focus_targets": [
+      "BanditRL.OnlineConvex.abs_subgradient_positive",
+      "BanditRL.OnlineConvex.abs_subgradient_zero",
+      "BanditRL.OnlineConvex.abs_subgradient_negative",
+      "BanditRL.OnlineConvex.example_2_24"
+    ],
+    "visual_review": "Root inspected hidden Edge1440x1800 tmp/subgradient-absolute-reader-review.png: readable shared Book/source hierarchy and explicit route vs textbook-completion boundary. Actual compiled root graph checks three terminal-to-leaf proof-value dependencies. Four teaching nodes are curated, not exhaustive.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: exact Example2.24 route; Chapter2/book remain incomplete",
+    "banditrlwiki": "no-change-with-reason: no Bandit setting claim; exact Online source ledger/retrieval carries this prerequisite.",
+    "results_ledger": "no-change-with-reason: no existing Bandit named milestone changes; source inventory records this package.",
+    "roadmap": "no-change-with-reason: global SGB pointer unchanged; later sequential Chapter2 obligations remain required",
+    "website_surfaces": [
+      "website/content/books.json",
+      "website/content/chapters.json",
+      "website/content/highlights.json",
+      "website/content/readings.json"
+    ]
+  },
+  "truth_boundary": "Exact Example2.24 all-query characterization compiled locally. Package acceptance and PR delivery are separate run receipts. No Chapter2/book completion, higher-dimensional norm claim, merge, deployment or main/live update.",
+  "verification": {
+    "focused_checks": [
+      "public-focused01: actual public module and three nondegenerate canaries compile (3289jobs)",
+      "Four original prebody fingerprints match actual public headers; seven actual public axiom targets standard only",
+      "Actual compiled-root graph: three required proof-value checks, 5 scoped nodes, 271 boundary nodes, 693 edges"
+    ],
+    "bandit_check": "full-gate01 passed root9075jobs/Tests9204jobs and466tests7existing skips",
+    "site_build": "site-build02 after actual combined Lean gate; site-build01 schema failure preserved",
+    "site_check": "site-check02 passed921pages11686Leanlinks; all four source hashes match unique shared canonical registry nodes",
+    "independent_review": "Distinct full-source public body receipt accepted-with-explicit-delta. Final actual public reader and fixed committed binding remain separately mandatory: public-reader-review.md and roundtrip-commit-check.json."
+  },
+  "contributor": {
+    "name": "Codex for Ji Cheng",
+    "role": "Formalization and integration; distinct automated semantic actors named above; source attribution retained"
+  }
+}

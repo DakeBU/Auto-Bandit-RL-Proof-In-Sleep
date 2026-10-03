@@ -1,0 +1,16 @@
+BanditRL.OnlineConvex.SourceSubdifferential.{u_1} {E : Type u_1} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+  (f : E → EReal) (x : E) : Set E
+EReal.coe_add (x y : ℝ) : ↑(x + y) = ↑x + ↑y
+EReal.coe_le_coe_iff {x y : ℝ} : ↑x ≤ ↑y ↔ x ≤ y
+abs_of_pos.{u_1} {α : Type u_1} [Lattice α] [AddGroup α] {a : α} [AddLeftMono α] (h : 0 < a) : |a| = a
+abs_of_neg.{u_1} {α : Type u_1} [Lattice α] [AddGroup α] {a : α} [AddLeftMono α] (h : a < 0) : |a| = -a
+le_abs_self.{u_1} {α : Type u_1} [Lattice α] [AddGroup α] (a : α) : a ≤ |a|
+neg_le_abs.{u_1} {α : Type u_1} [Lattice α] [AddGroup α] (a : α) : -a ≤ |a|
+mul_eq_zero.{u_1} {M₀ : Type u_1} [MulZeroClass M₀] [NoZeroDivisors M₀] {a b : M₀} : a * b = 0 ↔ a = 0 ∨ b = 0
+mul_le_mul_of_nonneg_left.{u_1} {α : Type u_1} [Mul α] [Zero α] [Preorder α] {a b c : α} [PosMulMono α] (hbc : b ≤ c)
+  (ha : 0 ≤ a) : a * b ≤ a * c
+mul_le_mul_of_nonpos_left.{u} {R : Type u} [Semiring R] [Preorder R] {a b c : R} [ExistsAddOfLE R] [PosMulMono R]
+  [AddRightMono R] [AddRightReflectLE R] (h : b ≤ a) (hc : c ≤ 0) : c * a ≤ c * b
+lt_of_le_of_ne.{u_1} {α : Type u_1} [PartialOrder α] {a b : α} : a ≤ b → a ≠ b → a < b
+Set.mem_Icc.{u_1} {α : Type u_1} [Preorder α] {a b x : α} : x ∈ Set.Icc a b ↔ a ≤ x ∧ x ≤ b
+Set.mem_singleton_iff.{u_1} {α : Type u_1} {a b : α} : a ∈ {b} ↔ a = b
