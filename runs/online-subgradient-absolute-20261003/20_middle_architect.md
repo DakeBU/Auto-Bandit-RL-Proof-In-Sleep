@@ -1,0 +1,3 @@
+# Architect leaf plan
+
+Retrieve actual SourceSubdifferential, real-inner coercion, finite EReal order embedding, abs_of_pos/neg, le_abs_self/neg_le_abs and scalar multiplication order APIs. Reuse the unchanged global-support definition. Positive/negative necessity evaluate actual support at0 and2x to force g=±1; sufficiency compares ±y with abs y. Zero necessity evaluates±1; sufficiency multiplies interval inequalities with sign-correct y cases. Assemble the same all-x source terminal. This is a proposed body route, not yet compiled. Allowed tmp/online-subgradient-absolute.lean and canary, plus versioned/run/task records; no public integration before true candidate and semantic review. Frozen source terminal stays fixed.

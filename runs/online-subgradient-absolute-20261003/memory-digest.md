@@ -1,0 +1,1 @@
+Prior exact Theorem2.23 both endpoints accepted-local and delivered draftPR140; retained checkout and ignored source/cache/graphs preserved. Whole-book active, older26path main migration unresolved. Source2.24 now frozen draft exactallrealpiecewise; no body or compilation claim. Do not discard zero interval, rely on presumed differentiability, or call this chapter completion.

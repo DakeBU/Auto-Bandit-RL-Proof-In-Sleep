@@ -1,0 +1,3 @@
+# Source absolute-value subdifferential package
+
+Real unbudgeted whole-book Goal verified active; PR140 Theorem2.23 accepted locally and delivered draft, not merged. New branch codex/research-online-subgradient-absolute from exactPR140headfb77be60b275255a3c0b409ebb1a8d65b5c5a263 in retained E:/ABRL/worktrees/research-online-book. Canonicalmain clean6847b678a73db68dee5101d6f05c2453c1405afc; explicit origin main fetch/ls-remote confirms same. Shared Git common dir E:/ABRL/research/.git and all existing worktrees inspected; no cleanup or main writes. Pinned PDF digest checked afresh. Next sequential Example2.24 only, before normal-cone/max/OSD/linearization obligations. Source/headers/DAG frozen before review/proof. No chapter/book completion.

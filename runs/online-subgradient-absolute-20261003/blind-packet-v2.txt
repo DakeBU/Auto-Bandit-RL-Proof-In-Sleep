@@ -1,0 +1,28 @@
+# Neutral reconstruction packet
+
+Use only this packet; do not search sources, prior conversation or source reviews. Reconstruct objects, quantifiers, assumptions, exact sets/constants and branch boundaries. No source identity is supplied. Imports merely provide actual mathematical types and tactics.
+
+import BanditRLProof.OnlineSubgradientBasic
+
+noncomputable section
+open Set
+namespace BanditRL.OnlineConvex
+
+Neutral imported definition (verbatim mathematical interface with its actual scoped typeclass context):
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+def SourceSubdifferential (f : E → EReal) (x : E) : Set E :=
+  {g | ∀ y, f x + (inner ℝ g (y - x) : EReal) ≤ f y}
+EReal real embedding is finite; inner ℝ on ℝ is ordinary real multiplication; Icc a b = {g | a≤g ∧ g≤b}. Set singleton membership means equality.
+
+theorem abs_subgradient_positive (x : ℝ) (hx : 0 < x) :
+    SourceSubdifferential (fun y : ℝ => ((|y| : ℝ) : EReal)) x = {(1 : ℝ)}
+
+theorem abs_subgradient_zero :
+    SourceSubdifferential (fun y : ℝ => ((|y| : ℝ) : EReal)) 0 = Icc (-1 : ℝ) 1
+
+theorem abs_subgradient_negative (x : ℝ) (hx : x < 0) :
+    SourceSubdifferential (fun y : ℝ => ((|y| : ℝ) : EReal)) x = {(-1 : ℝ)}
+
+theorem abs_subdifferential_all_points (x : ℝ) :
+    SourceSubdifferential (fun y : ℝ => ((|y| : ℝ) : EReal)) x =
+      if 0 < x then {(1 : ℝ)} else if x = 0 then Icc (-1 : ℝ) 1 else {(-1 : ℝ)}
