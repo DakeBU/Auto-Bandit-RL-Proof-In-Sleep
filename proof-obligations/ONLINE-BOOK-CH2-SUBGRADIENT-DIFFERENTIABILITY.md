@@ -39,3 +39,5 @@ The earlier unchecked source-proof rows are superseded by this candidate evidenc
 - [ ]Scoped PR delivery (separate receipt follows).
 
 Package source terminal closed. Chapter2 and whole-book obligations remain active.
+
+Scoped package delivered as OPEN draft PR139, stacked on exact PR138. Prior pending-delivery entries are historical. Local acceptance only; no merge/deployment/chapter/book completion. Delivery receipt retained.

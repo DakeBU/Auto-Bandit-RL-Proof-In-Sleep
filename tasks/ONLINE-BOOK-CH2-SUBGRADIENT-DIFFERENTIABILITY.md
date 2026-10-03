@@ -22,3 +22,5 @@ Public focused build and constrained-interior/nonzero-quadratic/finite-boundary 
 ## Accepted-local scope
 
 All package-specific combined, source/canary/reader, graph/site/contribution and immutable-review gates pass. See acceptance-decision.md and acceptance-evidence.json. Earlier candidate/failure entries are preserved history. Only exact Theorem2.22 and gradient identity are accepted here. PR delivery still separate; chapter/book Goal active.
+
+Scoped package delivered as OPEN draft PR139, stacked on exact PR138. Prior pending-delivery entries are historical. Local acceptance only; no merge/deployment/chapter/book completion. Delivery receipt retained.
