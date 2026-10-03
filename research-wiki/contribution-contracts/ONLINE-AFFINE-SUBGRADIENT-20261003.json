@@ -1,0 +1,109 @@
+{
+  "schema_version": "2.0",
+  "id": "ONLINE-AFFINE-SUBGRADIENT-20261003",
+  "route": "online-learning/chapter-2",
+  "frontier_cell": "online-affine-subgradient",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10, 2026-06-21; SHA256 cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchor": "Theorem2.28, Section2.2.1, printed18/PDF30",
+    "url": "https://arxiv.org/pdf/1912.13213v10"
+  },
+  "target": "Theorem2.28 actual proper-only affine global subgradient inclusion",
+  "affected_files": [
+    "BanditRLProof.lean",
+    "BanditRLProof/OnlineAffineSubgradient.lean",
+    "website/content/books.json",
+    "website/content/chapters.json",
+    "website/content/readings.json",
+    "website/content/highlights.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineConvex.theorem_2_28"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Actual declaration/memory/mathlib searches and adjoint/linear map API probe",
+      "Shared proper extended-real global supports"
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineConvex.SourceSubdifferential",
+      "BanditRL.OnlineConvex.SourceProper",
+      "ContinuousLinearMap.adjoint_inner_left",
+      "ContinuousLinearMap.map_sub"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineConvex.theorem_2_28"
+    ],
+    "known_consumers": [
+      "AffineProbe.nonzero_shifted_support",
+      "AffineProbe.proper_nonconvex_strict_inclusion"
+    ],
+    "planned_consumers": [
+      "Later composite-loss and Lipschitz/subgradient results; not claimed complete"
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Reuse the actual adjoint API directly; prove the source-faithful inclusion without imposing convexity or supplying a target inequality."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/hinge_blind",
+    "source_reviewer": "/root/source_reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Coordinate-free finite-dimensional spaces/actual adjoint. Shared literal all-point supports differ from finite-point-guarded convention if h is identically top; source image is empty there and no nonvacuous existence claim follows. Contract/body independently reviewed; final reader/binding pending. No external-human review."
+  },
+  "graph_contribution": {
+    "lean_graph": "new-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Concrete proven affine transport via an actual adjoint, not a certified general cross-setting functor.",
+    "focus_targets": [
+      "BanditRL.OnlineConvex.theorem_2_28"
+    ],
+    "visual_review": "Actual native public graph/reader inspection pending.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: exact Theorem2.28; Chapter2/book incomplete",
+    "banditrlwiki": "no-change-with-reason: no Bandit setting claim; exact Online source ledger/retrieval carries this prerequisite.",
+    "results_ledger": "no-change-with-reason: no existing Bandit named milestone changes; source inventory records this package.",
+    "roadmap": "no-change-with-reason: global SGB frontier remains unchanged; later required Chapter2 results remain open",
+    "website_surfaces": [
+      "website/content/books.json",
+      "website/content/chapters.json",
+      "website/content/highlights.json",
+      "website/content/readings.json",
+      "website/scripts/build_site.py"
+    ]
+  },
+  "truth_boundary": "Public focused source and five canaries3323jobs compile. Combined graph/site/finalreader/bindings and package/PR acceptance pending; no chapter/book/main/live completion.",
+  "verification": {
+    "focused_checks": [
+      "Public focused source/canaries3323jobs; actual adjoint/strict inclusion tests",
+      "Frozen statement hash unchanged"
+    ],
+    "bandit_check": "pending root/Tests/full harness",
+    "site_build": "pending actual combined Lean gate",
+    "site_check": "pending native/shared registry/site gate",
+    "independent_review": "Distinct sourcecontract/body accepted-with-explicit-delta; public/finalreader/immutable binding required."
+  },
+  "contributor": {
+    "name": "Codex for Ji Cheng",
+    "role": "Formalization and integration; distinct automated semantic actors named above; source attribution retained"
+  }
+}

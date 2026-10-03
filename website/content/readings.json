@@ -4292,6 +4292,129 @@
         "takeaway": "Strict activity produces a singleton; a genuine tie produces an entire closed segment.",
         "boundary": "No classification algorithm/regret bound, Chapter2/book completion or merge/deployment is claimed."
       }
+    },
+    {
+      "slug": "online-affine-subgradient",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10,21June2026",
+        "sections": "Section2.2.1, Theorem2.28, printed18/PDF30",
+        "pages": "printed18/PDF30",
+        "pdf_page": 30,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "Proper extended-real function",
+          "meaning": "f:F→(-infinity,+infinity] never takes -infinity and has a finite value somewhere. Convexity is not assumed."
+        },
+        {
+          "term": "Affine map and actual adjoint",
+          "meaning": "h(y)=f(Ay+b), with arbitrary A:E→F and b∈F; A* is the actual inner-product adjoint (matrix transpose in orthonormal coordinates). No rank hypothesis."
+        },
+        {
+          "term": "Global support and improper composition",
+          "meaning": "g∈∂f(v) means f(v)+inner(g,w-v)≤f(w) for every ambient w. The shared definition has no explicit finite-point guard. If h is identically +infinity its literal target supports may be all E; the source image is empty and the theorem remains vacuous in that case."
+        }
+      ],
+      "algorithm": {
+        "title": "Transport an actual support",
+        "kind": "proof flow",
+        "steps": [
+          {
+            "title": "Choose a source support",
+            "detail": "Take g from the actual global subdifferential at Ax+b; each image element is the actual A*g."
+          },
+          {
+            "title": "Test every affine image point",
+            "detail": "For every y∈E the defining source inequality holds at Ay+b. The difference is A(y-x), with the translation cancelling."
+          },
+          {
+            "title": "Use the adjoint identity",
+            "detail": "inner(g,A(y-x))=inner(A*g,y-x). This proves the full target all-y inequality. It gives inclusion, without claiming a converse."
+          }
+        ]
+      },
+      "teaching_route": [
+        "BanditRL.OnlineConvex.SourceSubdifferential",
+        "BanditRL.OnlineConvex.theorem_2_28"
+      ],
+      "source_theorems": [
+        {
+          "label": "Theorem2.28 affine subgradient inclusion",
+          "pages": "printed18",
+          "pdf_page": 30,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "h(y)=f(Ay+b),\\qquad A^{\\mathsf T}\\partial f(Ax+b)\\subseteq\\partial h(x)",
+          "fallback": "For proper f, every A-transpose g with g a global support of f at Ax+b globally supports h at x.",
+          "plain": "For arbitrary proper f and every affine map, transport global supports through the actual transpose. The source theorem does not require convexity, full rank, properness of h, or nonempty source supports.",
+          "relationship": "Finite-dimensional real inner-product spaces represent the source coordinate spaces. Continuous linear maps represent every finite matrix; the actual adjoint represents its transpose. Literal global-support convention at an identically-infinite composite is explicitly disclosed; no meaningful optimizer/existence claim is made there.",
+          "contract": {
+            "model": "Deterministic extended-real global supports in finite-dimensional real Euclidean spaces.",
+            "assumptions": "Only SourceProper f and the finite-dimensional real Euclidean setting; arbitrary A,b,x. No convexity of f, rank condition or properness of h is added.",
+            "parameters": "Every affine map, translation, query, source support and all test points.",
+            "regret": "No algorithm or regret guarantee claimed.",
+            "guarantee": "The actual adjoint image is included in the full global subdifferential of the actual composition, with no reverse/equality claim."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Public Theorem2.28 candidate",
+            "boundary": "Public source and five substantive canaries compile in focused3323job build. Combined/root/Tests/harness/nativegraph/site/finalreader/bindings pending separately. Not merged/deployed; Chapter2/book incomplete."
+          }
+        }
+      ],
+      "proof_bridge": {
+        "title": "Global support transported by the genuine adjoint",
+        "summary": "The proof uses the defining support inequality and affine linearity directly.",
+        "steps": [
+          {
+            "title": "Unpack the actual image",
+            "detail": "An image element has the form A*g for g supporting f at Ax+b. No user-supplied pullback or single-step inequality is assumed.",
+            "math": "g\\in\\partial f(Ax+b)",
+            "fallback": "The actual source global support is the input."
+          },
+          {
+            "title": "Apply source support at every Ay+b",
+            "detail": "Because source supports quantify over all F, substitute Ay+b for an arbitrary y in E. Linear subtraction cancels b.",
+            "math": "f(Ax+b)+\\langle g,A(y-x)\\rangle\\le f(Ay+b)",
+            "fallback": "The translation cancels; no future sequence or algorithm is involved."
+          },
+          {
+            "title": "Use the compiled adjoint identity",
+            "detail": "Mathlib ContinuousLinearMap.adjoint_inner_left gives the actual inner-product transpose identity. The resulting inequality is precisely the target global-support definition.",
+            "math": "f(Ax+b)+\\langle A^*g,y-x\\rangle\\le h(y)",
+            "fallback": "All target test points y are covered; inclusion is the exact endpoint."
+          }
+        ],
+        "boundary": "Properness is preserved as a source premise even though the transport algebra alone does not use it. Literal all-point support convention for improper h is disclosed above. The theorem does not assert equality, existence of supports, optimization, Chapter2/book completion or merger."
+      },
+      "worked_example": {
+        "title": "Nonzero map, nonzero shift and a strict inclusion",
+        "intro": "Public canaries evaluate the actual adjoint and prove both a positive witness and a failure of the converse.",
+        "steps": [
+          {
+            "title": "A genuine transported support",
+            "detail": "Take f(v)=|v|, A(y)=2y, b=1, x=-1/2. The source query is0. The source support1/2 transports through the actual transpose to1, globally supporting |2y+1| at -1/2.",
+            "math": "A^*(1/2)=1\\in\\partial|2\\cdot+1|(-1/2)",
+            "fallback": "Both the map and shift are nonzero; the output support is nonzero."
+          },
+          {
+            "title": "Proper nonconvex source",
+            "detail": "For f(v)=-|v|, the source is proper and its epigraph is proved nonconvex. At0, testing1 and-1 forces incompatible slopes, so its support set is empty.",
+            "math": "\\partial(-|\\cdot|)(0)=\\varnothing",
+            "fallback": "The nonconvex claim is proved, not merely asserted."
+          },
+          {
+            "title": "The inclusion can be strict",
+            "detail": "Take A=0,b=0,x=3 for the same proper nonconvex source. The composition is the finite zero function, whose global subdifferential is{0}; the actual source adjoint image is empty.",
+            "math": "A^*\\partial f(0)=\\varnothing\\subsetneq\\{0\\}=\\partial(f\\circ0)(3)",
+            "fallback": "The source theorem cannot be strengthened to equality or silently restricted to convex f."
+          }
+        ],
+        "takeaway": "The actual transpose transports supports, and the general proper-function result is only an inclusion.",
+        "boundary": "These examples are finite/proper composites. The disclosed identically-infinite convention is a separate semantic boundary, with no nonvacuous optimizer claim."
+      }
     }
   ]
 }

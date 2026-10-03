@@ -1,0 +1,4 @@
+theorem theorem_2_28 [FiniteDimensional ℝ E] [FiniteDimensional ℝ F]
+    (f : F → EReal) (hp : SourceProper f) (A : E →L[ℝ] F) (b : F) (x : E) :
+    A.adjoint '' (SourceSubdifferential f (A x + b)) ⊆
+      SourceSubdifferential (fun y => f (A y + b)) x

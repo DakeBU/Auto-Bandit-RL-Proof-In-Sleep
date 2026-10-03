@@ -3301,6 +3301,23 @@
       "dependencies": [
         "BanditRL.OnlineConvex.hinge_subdifferential_hull"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.theorem_2_28",
+      "title": "Transport global supports through an affine map",
+      "chapter": "online-affine-subgradient",
+      "featured": false,
+      "teaching_order": 0,
+      "plain": "Properness alone; the actual transpose gives an inclusion.",
+      "math": "\\(A^{\\mathsf T}\\partial f(Ax+b)\\subseteq\\partial(f(A\\cdot+b))(x)\\)",
+      "intuition": "Test the source support at every affine image and move A across the inner product.",
+      "why": "Exact source Theorem2.28 including nonconvex and rank-deficient cases.",
+      "position": "Orabona v10 Theorem2.28 printed18/PDF30.",
+      "proof_idea": "Unpack image membership, use map_sub and the actual adjoint identity.",
+      "lean_notes": "Finite-dimensional real inner-product spaces; SourceProper retained; no reverse equality; improper-composite convention disclosed in reader.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.SourceSubdifferential"
+      ]
     }
   ]
 }

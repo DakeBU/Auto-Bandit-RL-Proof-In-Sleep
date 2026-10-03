@@ -1,0 +1,1 @@
+Reuse actual adjoint_inner_left plus linear map subtraction and translation cancellation. Start from actual source global support and test actual Ay+b for every y. Nonzero shifted-map support and strict-inclusion proper nonconvex canary required. No h proper/nonempty support/invertibility premise added.

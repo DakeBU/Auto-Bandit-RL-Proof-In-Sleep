@@ -1,0 +1,21 @@
+Neutral context and header only, no source identity/body.
+import BanditRLProof.OnlineSubgradientBasic
+import Mathlib.Analysis.InnerProductSpace.Adjoint
+noncomputable section
+open Set
+namespace NeutralPullback
+variable {E F : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+  [NormedAddCommGroup F] [InnerProductSpace ℝ F]
+
+-- Shared mathematical context:
+def SourceSubdifferential {X : Type*} [NormedAddCommGroup X] [InnerProductSpace ℝ X]
+    (f : X → EReal) (x : X) : Set X :=
+  {g | ∀ y, f x + (inner ℝ g (y - x) : EReal) ≤ f y}
+def SourceProper {X : Type*} (f : X → EReal) : Prop :=
+  (∀ x, f x ≠ ⊥) ∧ ∃ x, ∃ r : ℝ, f x = (r : EReal)
+-- A.adjoint is the actual Hilbert adjoint: inner(A.adjoint g,v)=inner(g,A v).
+theorem claim_1 [FiniteDimensional ℝ E] [FiniteDimensional ℝ F]
+    (f : F → EReal) (hp : SourceProper f) (A : E →L[ℝ] F) (b : F) (x : E) :
+    A.adjoint '' (SourceSubdifferential f (A x + b)) ⊆
+      SourceSubdifferential (fun y => f (A y + b)) x
+end NeutralPullback

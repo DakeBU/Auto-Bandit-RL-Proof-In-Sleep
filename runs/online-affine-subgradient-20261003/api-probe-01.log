@@ -1,0 +1,27 @@
+ContinuousLinearMap.adjoint_inner_left.{u_1, u_2, u_3} {𝕜 : Type u_1} {E : Type u_2} {F : Type u_3} [RCLike 𝕜]
+  [NormedAddCommGroup E] [NormedAddCommGroup F] [InnerProductSpace 𝕜 E] [InnerProductSpace 𝕜 F] [CompleteSpace E]
+  [CompleteSpace F] (A : E →L[𝕜] F) (x : E) (y : F) : inner 𝕜 ((ContinuousLinearMap.adjoint A) y) x = inner 𝕜 y (A x)
+ContinuousLinearMap.adjoint_id.{u_1, u_2} {𝕜 : Type u_1} {E : Type u_2} [RCLike 𝕜] [NormedAddCommGroup E]
+  [InnerProductSpace 𝕜 E] [CompleteSpace E] :
+  ContinuousLinearMap.adjoint (ContinuousLinearMap.id 𝕜 E) = ContinuousLinearMap.id 𝕜 E
+ContinuousLinearMap.map_sub.{u_1, u_2, u_4, u_5} {R : Type u_1} [Ring R] {R₂ : Type u_2} [Ring R₂] {M : Type u_4}
+  [TopologicalSpace M] [AddCommGroup M] {M₂ : Type u_5} [TopologicalSpace M₂] [AddCommGroup M₂] [Module R M]
+  [Module R₂ M₂] {σ₁₂ : R →+* R₂} (f : M →SL[σ₁₂] M₂) (x y : M) : f (x - y) = f x - f y
+ContinuousLinearMap.smul_apply.{u_1, u_2, u_4, u_6, u_9} {R₁ : Type u_1} {R₂ : Type u_2} [Semiring R₁] [Semiring R₂]
+  {σ₁₂ : R₁ →+* R₂} {M₁ : Type u_4} [TopologicalSpace M₁] [AddCommMonoid M₁] {M₂ : Type u_6} [TopologicalSpace M₂]
+  [AddCommMonoid M₂] [Module R₁ M₁] [Module R₂ M₂] {S₂ : Type u_9} [DistribSMul S₂ M₂] [SMulCommClass R₂ S₂ M₂]
+  [ContinuousConstSMul S₂ M₂] (c : S₂) (f : M₁ →SL[σ₁₂] M₂) (x : M₁) : (c • f) x = c • f x
+ContinuousLinearMap.id_apply.{u_1, u_4} {R₁ : Type u_1} [Semiring R₁] {M₁ : Type u_4} [TopologicalSpace M₁]
+  [AddCommMonoid M₁] [Module R₁ M₁] (x : M₁) : (ContinuousLinearMap.id R₁ M₁) x = x
+tmp/affine-subgradient-api-01.lean:9:7: error(lean.unknownIdentifier): Unknown constant `ContinuousLinearMap.adjoint_smul`
+tmp/affine-subgradient-api-01.lean:10:7: error(lean.unknownIdentifier): Unknown constant `ContinuousLinearMap.adjoint_zero`
+LinearIsometryEquiv.map_smul.{u_1, u_5, u_6} {R : Type u_1} {E : Type u_5} {E₂ : Type u_6} [Semiring R]
+  [SeminormedAddCommGroup E] [SeminormedAddCommGroup E₂] [Module R E] [Module R E₂] {e : E ≃ₗᵢ[R] E₂} (c : R) (x : E) :
+  e (c • x) = c • e x
+LinearIsometryEquiv.map_zero.{u_1, u_2, u_5, u_6} {R : Type u_1} {R₂ : Type u_2} {E : Type u_5} {E₂ : Type u_6}
+  [Semiring R] [Semiring R₂] {σ₁₂ : R →+* R₂} {σ₂₁ : R₂ →+* R} [RingHomInvPair σ₁₂ σ₂₁] [RingHomInvPair σ₂₁ σ₁₂]
+  [SeminormedAddCommGroup E] [SeminormedAddCommGroup E₂] [Module R E] [Module R₂ E₂] (e : E ≃ₛₗᵢ[σ₁₂] E₂) : e 0 = 0
+BanditRL.OnlineConvex.SourceProper.{u_1} {E : Type u_1} (f : E → EReal) : Prop
+complete_of_proper
+complete_of_proper
+fun A => ContinuousLinearMap.adjoint A : (E →L[ℝ] F) → F →L[ℝ] E

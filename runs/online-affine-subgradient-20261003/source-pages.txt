@@ -1,0 +1,98 @@
+18                                 Online Subgradient Descent
+          Pm
+Hence, i=1 g i ∈ ∂F (z). Since this holds for every choice of g i ∈ ∂fi (z), we have
+∂F (z) ⊇ ∂f1 (z) + · · · + ∂fm (z).
+  For the second statement, see Bauschke and Combettes (2017, Corollary 16.50).
+
+Example 2.24 Let f (x) = |x|. Then, the subdifferential set ∂f (x) is
+                                     
+                                     {1},
+                                                 x > 0,
+                          ∂f (x) = [−1, 1], x = 0,
+                                     
+                                       {−1}, x < 0 .
+                                     
+
+Example 2.25 Let’s calculate the subgradient of the indicator function for a non-empty
+convex set V ⊂ Rd . By definition, g ∈ ∂ιV (x) if
+                          ιV (y) ≥ ιV (x) + ⟨g, y − x⟩,     ∀y ∈ Rd .
+This condition implies that x ∈ V and 0 ≥ ⟨g, y − x⟩ for all y ∈ V (because for y ∈         /V
+the inequality is always verified). The set of all g that satisfy the above inequality is called
+the normal cone to V at x and it is denoted by NV (x). Note that the normal cone for any
+x ∈ int V is {0} (Hint: take y = x + ϵg ). For example, for V = {x ∈ Rd : ∥x∥2 ≤ 1},
+NV (x) = {αx : α ≥ 0} for all x : ∥x∥2 = 1.
+  Another useful theorem is to calculate the subdifferential of the pointwise maximum of
+convex functions.
+Theorem 2.26 (Bauschke and Combettes, 2017, Theorem 18.5) T       Let (fi )i∈I be a finite set
+                                   d
+of proper convex functions from R to (−∞, +∞]. Suppose x ∈ i∈I dom fi and each fi
+is continuous at x. Set F = maxi∈I fi and let A(x) = {i ∈ I|fi (x) = F (x)} be the set
+of the active functions. Then, denoting by conv the convex hull, we have
+                                                [
+                               ∂F (x) = conv         ∂fi (x) .
+                                                 i∈A(x)
+
+Example 2.27 (Subgradients of the Hinge loss) Consider the hinge loss ℓ(x) = max(1 −
+⟨z, x⟩, 0) for z ∈ Rd . The subdifferential set is
+                             
+                             {0},
+                                                  1 − ⟨z, x⟩ < 0
+                   ∂ℓ(x) = {−αz : α ∈ [0, 1]}, 1 − ⟨z, x⟩ = 0 .
+                             
+                               {−z},               otherwise
+                             
+
+     Finally, we can show a result on the subgradient of affine transformations.
+Theorem 2.28 Let f : Rm → (−∞, +∞] be proper. Define h(x) = f (Ax + b), where
+A ∈ Rm×d and b ∈ Rm . Then, we have A⊤ ∂f (Ax + b) ⊆ ∂h(x).
+Proof For any g ∈ ∂f (Ax + b), we want to show that A⊤ g is a subgradient of h in x.
+From the definition of subgradient, for all y ∈ Rd we have
+               h(y) = f (Ay + b) ≥ f (Ax + b) + ⟨g, Ay + b − (Ax + b)⟩
+                     = h(x) + ⟨A⊤ g, y − x⟩,
+that implies our stated result.
+                               2.2 Online Subgradient Descent                               19
+
+  We also have a handy result that upper bounds the norm of subgradients of convex Lips-
+chitz functions.
+
+Definition 2.29 Let f : Rd → (−∞, +∞]. We say that f is L-Lipschitz over a set
+V ⊆ dom f with respect to a norm ∥ · ∥ if |f (x) − f (y)| ≤ L∥x − y∥, ∀x, y ∈ V .
+Theorem 2.30 Let f : Rd → (−∞, +∞] be convex and proper. Then, f is L-Lipschitz in
+int dom f with respect to the L2 norm iff for all x ∈ int dom f and g ∈ ∂f (x) we have
+∥g∥2 ≤ L.
+Proof First, we assume f to be L-Lipschitz, then |f (x) − f (y)| ≤ L∥x − y∥2 , ∀x, y ∈
+int dom f . Let g ∈ ∂f (x). If ∥g∥2 = 0, then the theorem is true. So, we can safely assume
+                                                              g
+it to be different from 0. For ϵ > 0 small enough y = x + ϵ ∥g∥ 2
+                                                                  ∈ int dom f , then
+
+      Lϵ = L∥x − y∥2 ≥ |f (y) − f (x)| ≥ f (y) − f (x) ≥ ⟨g, y − x⟩ = ϵ∥g∥2 ,
+that implies that ∥g∥2 ≤ L.
+   For the other implication, the subgradient definition and Cauchy–Schwarz inequality give
+                      f (x) − f (y) ≤ ∥g∥2 ∥x − y∥2 ≤ L∥x − y∥2 ,
+for any x, y ∈ int dom f . Taking g ∈ ∂f (y), we also get
+                               f (y) − f (x) ≤ L∥x − y∥2 .
+   Finally, let’s dispel the common misconception that a convex function must be differen-
+tiable on its domain except possibly at countably many points. For example, consider the
+convex function f : R2 → R defined as f (x) = |x1 | that is not differentiable on the line
+segment between v = (0, 0) and w = (0, 1).
+
+
+                            2.2.2 Analysis with Subgradients
+As I promised you, with the proper mathematical tools, analyzing online algorithms becomes
+easy. Indeed, switching from gradient to subgradient comes for free! In fact, our analysis of
+OGD with differentiable losses holds as is when using subgradients instead of gradients. The
+reason is that the only property of the gradients that we used in the proof of Theorem 2.13
+was that
+                              ℓt (xt ) − ℓt (u) ≤ ⟨g t , xt − u⟩,
+where g t = ∇ℓt (xt ). However, the exact same property holds when g t ∈ ∂ℓt (xt ). Hence,
+the regret bounds we proved hold as well, just replacing differentiability with subdifferen-
+tiability and gradients with subgradients. In particular, we have the following lemma.
+
+Lemma 2.31 Let V ⊆ Rd be a non-empty closed convex set, ℓt : Rd → (−∞, +∞] a
+function subdifferentiable on V , and ηt > 0. Set g t ∈ ∂ℓt (xt ) and xt+1 = ΠV (xt − ηt g t ).
+Then, ∀u ∈ V , we have
+                                              1            1              η2
+  ηt (ℓt (xt ) − ℓt (u)) ≤ ηt ⟨g t , xt − u⟩ ≤ ∥xt − u∥22 − ∥xt+1 − u∥22 + t ∥g t ∥22 .
+                                              2            2               2
+

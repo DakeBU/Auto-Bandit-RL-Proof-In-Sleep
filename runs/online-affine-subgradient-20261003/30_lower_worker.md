@@ -1,0 +1,1 @@
+After actual distinct source-contract acceptance, prove exact source inclusion in one bounded leaf. Start from actual image witness g and original global support, test Ay+b for every y, use actual map_sub/translation cancellation and adjoint_inner_left. Properness retained; no convexity/rank/nonempty premise/equality added. Frozen endpoint unchanged.
