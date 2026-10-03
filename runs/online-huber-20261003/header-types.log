@@ -1,0 +1,12 @@
+tmp/online-huber-derivative-draft.lean:62:2: error: header probe only
+f g df dg : ℝ → ℝ
+c x : ℝ
+hf : ∀ (r : ℝ), HasDerivAt f (df r) r
+hg : ∀ (r : ℝ), HasDerivAt g (dg r) r
+he : f c = g c
+hd : df c = dg c
+⊢ HasDerivAt (fun r => if r ≤ c then f r else g r) (if x ≤ c then df x else dg x) x
+tmp/online-huber-derivative-draft.lean:67:2: error: header probe only
+delta r : ℝ
+hd : 0 ≤ delta
+⊢ HasDerivAt (huber delta) (if r ≤ -delta then -delta else if r ≤ delta then r else delta) r
