@@ -18,3 +18,13 @@ Draft no body/compiled claim. Normal-cone/max/affine/Lipschitz/OSD/linearization
 - [x]Seven actual public axiom targets standard only; separate full source-body review accepted.
 - [ ]Root/Tests/fullharness, compiled graph, site/registry/contributor/final-reader and committed binding gates.
 - [ ]Scoped PR delivery; no Chapter2/book completion.
+
+## Accepted-local package gates
+
+- [x]Original Example2.24 terminal and leaves closed, separately reviewed in actual public bytes.
+- [x]Actual root/Tests/fullharness/axiom/fence/graph/final03site/sharedregistry/exactbasecontributor gates.
+- [x]Fixed worktree/committedHEAD LF inventory and raw receipt rows,0supersessions.
+- [x]Scoped local acceptance and whole-book partial ledger preserved.
+- [ ]Scoped PR delivery separately recorded.
+
+Later Chapter2 and whole-book obligations remain required.

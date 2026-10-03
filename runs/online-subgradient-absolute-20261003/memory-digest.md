@@ -3,3 +3,5 @@ Prior exact Theorem2.23 both endpoints accepted-local and delivered draftPR140; 
 Example2.24 exact three-case equality is a public compiled candidate, separately source-body reviewed. Zero is full closed[-1,1], nonzero singleton signs; both necessity and all-y sufficiency direct. No chosen-slope interface replacing characterization. Native four hashes and seven public axioms pass. Global SGB pointer and all later Chapter2/older26path migration obligations unchanged.
 
 Technical candidate gates passed; final separate public-reader and fixed worktree/committedHEAD bindings still required before local acceptance/PR. Source/draft headers unchanged, old failed outputs remain failures. Next source Example2.25 normal cone remains unproved, including interiorzero and unitballboundary ray; older26path migration remains mandatory.
+
+Exact Example2.24 accepted-local after final corrected source anchor review and committed bindings. Next mandatory Example2.25 normal-cone/interiorzero/unitballboundaryray, then max/hinge/affine/Lipschitz/OSD/linearization. Older26path migration remains unresolved; whole-book active, source/header bytes unchanged.

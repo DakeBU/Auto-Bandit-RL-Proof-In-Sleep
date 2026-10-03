@@ -13,3 +13,7 @@ Stack base exact unmerged PR140headfb77be60b275255a3c0b409ebb1a8d65b5c5a263, bra
 ## Stabilized → proving → public candidate
 
 Distinct v2 blind reconstruction and draft source review stabilized the four unchanged headers. Direct zero/positive/negative proofs and full terminal compile in full-leaf02; public-focused01 compiles actual shared module/canaries (3289jobs). Full-canary02 checks ±2/zero, both interval endpoints, fraction1/2, outside2 and nonsingleton zero. All four public native fences unchanged and seven public axiom targets standard only. Separate full-source-review accepts actual bodies with only finite EReal representation delta. Original failed full-leaf01/full-canary01 and source-capture history remain rejected evidence. Root/Tests/fullharness/graph/site/final-public-byte review pending; no accepted package/Chapter2/book claim.
+
+## Accepted-local package
+
+Exact Example2.24 accepted after separate final semantic/reader review, actual full gates and fixed committed bindings. See acceptance-evidence.json/acceptance-decision.md. Original draft/stabilized/proving/candidate records retain stage history; four frozen headers unchanged. Scoped PR delivery pending separate receipt. Chapter2/book Goal active.
