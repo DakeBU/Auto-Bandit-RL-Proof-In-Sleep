@@ -1,0 +1,3 @@
+# Architect
+
+Owner: same formalizer/root, not independent review. For the reverse direction, actual singleton support gives nowhere-bottom, supporting normal perturbation forces domain interior, convex API supplies local continuity. Next: nearby supports bounded/closed-graph + finite-dimensional compactness yield the Frechet derivative. Forward local representative already yields finite neighborhood/interior/actual toReal derivative. Generalize the canonical affine-contact core to finite-neighborhood premises if needed, so convexity supplies global support and then nowhere-bottom without adding it as a source assumption. Existing minorant/contact consumers must preserve frozen statements during any shared refactor.

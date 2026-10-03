@@ -1,5 +1,5 @@
 {
-  "status": "draft-v2-repair-review-pending",
+  "status": "stabilized-full-contract; proving-finite-prerequisites",
   "source": "Orabona arXiv1912.13213v10 printed17/PDF29",
   "source_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
   "scope": "full extended-real iff and gradient identity, not yet proved",
@@ -8,7 +8,8 @@
     "full-header.txt": "7029e22ec2d7e84879a3c97109e5d17709372628fa516b309c2d5391ef5e94b9",
     "gradient-header.txt": "fd8f6b3d690b24692f0ab8462f8ab9a842b9381c96717da81c217ecf9254381e",
     "interior-header.txt": "051a7e1df02b4405a9dcebc5a48a586aee4a9f909ff862e28fb5ea4deb66f9dd",
-    "continuity-header.txt": "7f1ac2d804d06287afacb7bb66cdf201cf82a7df996d3a3b492c33418b0b7af7"
+    "continuity-header.txt": "7f1ac2d804d06287afacb7bb66cdf201cf82a7df996d3a3b492c33418b0b7af7",
+    "local-regularity-header.txt": "af64d78681612e43dbf1f52d95a6d634b581fa8039e52438048103fdf44a8f18"
   },
   "dag": [
     {
@@ -55,6 +56,16 @@
         "actual convex gradient support",
         "differentiable-uniqueness"
       ]
+    },
+    {
+      "leaf": "differentiable-local-regularity",
+      "status": "scratch-compiled",
+      "dependencies": [
+        "actual local representative agreement",
+        "DifferentiableAt.congr_of_eventuallyEq"
+      ],
+      "conclusion": "neighborhood finite, ambient interior, actual toReal differentiability"
     }
-  ]
+  ],
+  "semantic_review": "runs/online-subgradient-differentiability-20261003/draft-source-review-v2.md"
 }

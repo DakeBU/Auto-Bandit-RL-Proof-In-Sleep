@@ -1,0 +1,3 @@
+# Reviewer decision and boundaries
+
+Distinct closed_blind and source_reviewer actors performed source-blind reconstruction and source review at requested medium. Version1 equivalence semantics accepted but complete-source coverage rejected for missing gradient header. Version2 generic local-representative gradient identity repairs that gap; separate v2 receipt accepts contract coverage with explicit representation deltas. Both original reports retained. This is automated contract review, not theorem/proof/public acceptance or external-human review. Full2.22 proof and chapter/book obligations remain required.
