@@ -15,3 +15,7 @@ Next Definition2.16/Examples2.17,2.19 closedness/properness results are saved sc
 
 ## Post-delivery correction
 The diff-aware contributor gate introduced on the integrated main was omitted from the original acceptance list. It failed after delivery (contributor-gate01.log). The earlier accepted-local verdict certifies only its enumerated Lean/harness/site and same-model role checks. Full contribution acceptance is in repair until a covering manifest and distinct-actor semantic roundtrip pass; see contributor-repair.md. No mathematical source or proof bytes changed.
+
+
+## Contribution repair accepted
+At commit585de250 the exact-PR-base contributor gate passes (contributor-gate02.log). Distinct automated source-blind decoder and anti-anchored source reviewer accepted all19targets with explicit semantic deltas; bindings and reports are retained. Reader build03/check02 and32registry tests pass; original Lean/root/Tests/graph bytes remain unchanged. Full local Huber contribution acceptance is restored, without rewriting the failed history. The origin/main audit separately fails for26production paths in the older unmerged Online stack. This packet does not self-certify those historical files; their new-contract migration remains a required integration obligation.
