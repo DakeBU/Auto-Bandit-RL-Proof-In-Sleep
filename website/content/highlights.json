@@ -2797,6 +2797,25 @@
       "dependencies": [
         "BanditRL.OnlineConvex.SourceSubdifferential"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.subgradient_exists_of_domain_interior",
+      "title": "Interior points admit global subgradients",
+      "chapter": "online-subgradient-interior",
+      "featured": false,
+      "teaching_order": 1,
+      "plain": "A proper convex extended-real function has a global supporting vector at every point of the interior of its effective domain.",
+      "math": "\\(x\\in\\operatorname{int}(\\operatorname{dom}f)\\Longrightarrow\\partial f(x)\\ne\\varnothing\\)",
+      "intuition": "An epigraph support at an interior domain point cannot be vertical.",
+      "why": "Provides the actual existence producer needed by later subgradient rules.",
+      "position": "Orabona v10 Section2.2.1, printed17/PDF29, unnumbered interior assertion.",
+      "proof_idea": "Construct an affine support touching f at x, then represent its linear part by an inner product.",
+      "lean_notes": "Finite-dimensional real inner-product space; proper extended-real convex f and ambient interior. No closedness or boundedness premise.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.affine_support_of_domain_interior",
+        "InnerProductSpace.toDual_symm_apply",
+        "BanditRL.OnlineConvex.SourceSubdifferential"
+      ]
     }
   ]
 }
