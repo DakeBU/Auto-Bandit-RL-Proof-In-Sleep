@@ -1,0 +1,9 @@
+# Source Example2.25 normal-cone package
+Task id: ONLINE-BOOK-CH2-NORMAL-CONE
+Kind: theorem
+Status: draft-contract-review
+Harness: hierarchical
+
+Three mandatory frozen exact statements: indicator subdifferential equals the actual normal cone at everyx, interior cone={0}, closed unit-ball boundary cone=nonnegative ray throughx. Source Orabona v10 printed18/PDF30, pinned PDF SHA256 in v1 contract. Finite-dimensional real inner-product space; source nonemptyconvexV preserved, no closed/boundedV input. Normalcone includes x∈V; outside-domain cone empty, original emptyV outside scope. Existing shared extendedIndicator/globalSourceSubdifferential reused. All three source equalities require both directions, no chosen normal or assumed cone characterization consumer.
+
+Source/headers/native hashes/DAG and conversion window frozen before actual proof. Distinct blind/source review needed for stabilization; actual local/pinned API probe before proving. Root director/architect/worker requestedAstra/medium; separate automated semantic actors, not external humans. Single bounded ready-leaf route, no globalSGB pointer mutation. Allowed scratch proof/canary plus versioned/run/task records until candidate. Branchcodex/research-online-normal-cone based on exact unmergedPR141head072bd774b27d4f773e419d255f12706ff7d12fce, retained E:/ABRL/worktrees/research-online-book. Canonicalmainclean6847b678a73db68dee5101d6f05c2453c1405afc freshly fetched; sharedGit/worktrees preserved. Later max/hinge/affine/Lipschitz/OSD/linearization, older26path migration and remaining Chapters3–16 required. No package/chapter/book completion.

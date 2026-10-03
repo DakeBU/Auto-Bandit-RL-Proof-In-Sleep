@@ -1,0 +1,1 @@
+PR141 exactabsolute package delivered/unmerged, all gate receipts retained. Normal-cone draft frozen allthree originalclaims; no body/compiled acceptance. EmptyV impropersupport differs and is outside originalnonemptyscope. No arbitraryclosed/boundedV added. Futuremax/hinge/affine/Lipschitz/OSD/linearization and older26path mainmigration remain mandatory; wholebookactive.

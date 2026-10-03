@@ -1,0 +1,3 @@
+# Source normal-cone package
+
+Real whole-book Goal freshly verified active. PR141 Example2.24 locally accepted/delivered/attached, finalhead072bd774b27d4f773e419d255f12706ff7d12fce OPENdraft/unmerged. New branchcodex/research-online-normal-cone from that exacthead in retained E:/ABRL/worktrees/research-online-book. Canonicalmain clean6847b678a73db68dee5101d6f05c2453c1405afc after explicitfetchoriginmain. All existing worktrees/commonstore inspected, no shared Git/.lake or main edits/cleanup. Fresh original page and digest verified. This package covers all three Example2.25 source claims, not just an interface. Same source graph/library/toolchain; no future competitive chapter proof writing. Draft targets before body attempts; no package/chapter/book completion.
