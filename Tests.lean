@@ -121,3 +121,4 @@ import Tests.OnlineGuessingOGDCanary
 import Tests.OnlineGuessingLowerCanary
 
 import Tests.OnlineHuberCanary
+import Tests.OnlineClosedProperCanary

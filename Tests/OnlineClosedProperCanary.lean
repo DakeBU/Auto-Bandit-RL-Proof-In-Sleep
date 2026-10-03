@@ -1,0 +1,28 @@
+import BanditRLProof
+
+namespace ClosedProperProbe
+open BanditRL.OnlineConvex Set
+theorem bottom_closed : SourceClosed (fun _ : ℝ => (⊥ : EReal)) := by
+  intro r
+  simp
+theorem bottom_lowerSemicontinuous : LowerSemicontinuous (fun _ : ℝ => (⊥ : EReal)) :=
+  (sourceClosed_iff_lowerSemicontinuous _).mp bottom_closed
+theorem bottom_not_proper : ¬ SourceProper (fun _ : ℝ => (⊥ : EReal)) := by
+  intro h
+  exact h.1 0 rfl
+theorem interval_closed : SourceClosed (extendedIndicator (Icc (0 : ℝ) 1)) :=
+  (sourceClosed_indicator_iff _).mpr isClosed_Icc
+theorem interval_proper : SourceProper (extendedIndicator (Icc (0 : ℝ) 1)) :=
+  (sourceProper_indicator_iff _).mpr ⟨0, by norm_num⟩
+theorem empty_not_proper : ¬ SourceProper (extendedIndicator (∅ : Set ℝ)) := by
+  rw [sourceProper_indicator_iff]
+  simp
+#print axioms BanditRL.OnlineConvex.sourceClosed_iff_lowerSemicontinuous
+#print axioms BanditRL.OnlineConvex.sourceClosed_indicator_iff
+#print axioms BanditRL.OnlineConvex.sourceProper_indicator_iff
+#print axioms bottom_lowerSemicontinuous
+#print axioms bottom_not_proper
+#print axioms interval_closed
+#print axioms interval_proper
+#print axioms empty_not_proper
+end ClosedProperProbe
