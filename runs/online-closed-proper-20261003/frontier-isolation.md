@@ -1,0 +1,3 @@
+# Frontier isolation repair
+
+The native trial-log command appended this task to the global runs/trials.jsonl. Default shadow02 then correctly reported recorded_verifier_drift against the existing SGB task. No frontier was changed. The exact new trial record is preserved in scoped-trials.jsonl; the global log was restored to its exact HEAD bytes only after asserting its sole addition was this one task record. The failed shadow report is retained. Final global shadow checks only the unrelated existing frontier remains unchanged; it does not claim to enforce this packet lifecycle. This packet uses native frozen statements/verifier evidence plus explicit file-level lifecycle and scoped trial records, as allowed by the paper distinction.

@@ -1,0 +1,12 @@
+import BanditRLProof.OnlineClosedProper
+import Mathlib.Analysis.InnerProductSpace.Basic
+import Mathlib.Analysis.Convex.Function
+import Mathlib.Tactic
+
+open Set
+namespace BanditRL.OnlineConvex
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+
+def SourceSubdifferential (f : E → EReal) (x : E) : Set E :=
+  {g | ∀ y, f x + (inner ℝ g (y - x) : EReal) ≤ f y}
+

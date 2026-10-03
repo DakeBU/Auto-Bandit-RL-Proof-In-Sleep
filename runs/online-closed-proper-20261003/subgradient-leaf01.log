@@ -1,0 +1,27 @@
+tmp/online-subgradient-basic.lean:41:2: error: linarith failed to find a contradiction
+case h
+E : Type u_1
+inst✝¹ : NormedAddCommGroup E
+inst✝ : InnerProductSpace ℝ E
+f : E → ℝ
+V : Set E
+hV : Convex ℝ V
+hsub : ∀ x ∈ V, (SourceSubdifferential (fun y => ↑(f y)) x).Nonempty
+x : E
+hx : x ∈ V
+y : E
+hy : y ∈ V
+a b : ℝ
+ha : 0 ≤ a
+hb : 0 ≤ b
+hab : a + b = 1
+g : E
+hg : g ∈ SourceSubdifferential (fun y => ↑(f y)) (a • x + b • y)
+h1 : f (a • x + b • y) + inner ℝ g (x - (a • x + b • y)) ≤ f x
+h2 : f (a • x + b • y) + inner ℝ g (y - (a • x + b • y)) ≤ f y
+hz : a * inner ℝ g (x - (a • x + b • y)) + b * inner ℝ g (y - (a • x + b • y)) = 0
+h1' : a * (f (a • x + b • y) + inner ℝ g (x - (a • x + b • y))) ≤ a * f x
+h2' : b * (f (a • x + b • y) + inner ℝ g (y - (a • x + b • y))) ≤ b * f y
+a✝ : a * f x + b * f y < f (a • x + b • y)
+⊢ False
+failed

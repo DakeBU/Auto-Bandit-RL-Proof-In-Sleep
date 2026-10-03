@@ -2712,6 +2712,55 @@
         "BanditRL.OnlineHuber.huber_average_bound",
         "BanditRL.OnlineHuber.huber_rate_tendsto"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.sourceClosed_iff_lowerSemicontinuous",
+      "title": "Closedness and lower semicontinuity",
+      "chapter": "online-closed-proper",
+      "featured": false,
+      "teaching_order": 1,
+      "plain": "Take complements of real closed sublevels. The strict superlevel above negative infinity is the union of real strict superlevels; above positive infinity it is empty. This supplies every extended-real threshold.",
+      "math": "\\(\\operatorname{SourceClosed}(f)\\iff f\\text{ is lower semicontinuous}\\)",
+      "intuition": "Take complements of real closed sublevels. The strict superlevel above negative infinity is the union of real strict superlevels; above positive infinity it is empty. This supplies every extended-real threshold.",
+      "why": "Closes a precise source prerequisite for subgradient analysis.",
+      "position": "Orabona v10 printed16/PDF28.",
+      "proof_idea": "Take complements of real closed sublevels. The strict superlevel above negative infinity is the union of real strict superlevels; above positive infinity it is empty. This supplies every extended-real threshold.",
+      "lean_notes": "General topological domain specializes to Euclidean space. No convexity or properness assumption is added to closedness; both infinities are allowed.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.sourceClosed_indicator_iff",
+      "title": "Closed constraint indicators",
+      "chapter": "online-closed-proper",
+      "featured": false,
+      "teaching_order": 2,
+      "plain": "For a real cut r, the indicator sublevel is V when r>=0 and empty otherwise. In particular the cut0 recovers V.",
+      "math": "\\(\\operatorname{SourceClosed}(I_V)\\iff V\\text{ is closed}\\)",
+      "intuition": "For a real cut r, the indicator sublevel is V when r>=0 and empty otherwise. In particular the cut0 recovers V.",
+      "why": "Closes a precise source prerequisite for subgradient analysis.",
+      "position": "Orabona v10 printed16/PDF28.",
+      "proof_idea": "For a real cut r, the indicator sublevel is V when r>=0 and empty otherwise. In particular the cut0 recovers V.",
+      "lean_notes": "General topological domain specializes to Euclidean space. No convexity or properness assumption is added to closedness; both infinities are allowed.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.extendedIndicator"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.sourceProper_indicator_iff",
+      "title": "Proper constraint indicators",
+      "chapter": "online-closed-proper",
+      "featured": false,
+      "teaching_order": 3,
+      "plain": "The indicator never equals negative infinity; it has a finite real value exactly when a point of V exists.",
+      "math": "\\(\\operatorname{SourceProper}(I_V)\\iff V\\ne\\varnothing\\)",
+      "intuition": "The indicator never equals negative infinity; it has a finite real value exactly when a point of V exists.",
+      "why": "Closes a precise source prerequisite for subgradient analysis.",
+      "position": "Orabona v10 printed16/PDF28.",
+      "proof_idea": "The indicator never equals negative infinity; it has a finite real value exactly when a point of V exists.",
+      "lean_notes": "General topological domain specializes to Euclidean space. No convexity or properness assumption is added to closedness; both infinities are allowed.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.extendedIndicator"
+      ]
     }
   ]
 }

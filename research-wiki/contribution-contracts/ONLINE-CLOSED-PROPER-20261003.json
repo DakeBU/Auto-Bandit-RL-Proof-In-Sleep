@@ -1,0 +1,113 @@
+{
+  "schema_version": "2.0",
+  "id": "ONLINE-CLOSED-PROPER-20261003",
+  "route": "online-learning/chapter-2",
+  "frontier_cell": "online-closed-proper",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10, 2026-06-21; SHA256 cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchor": "Definitions2.16/2.18, Examples2.17/2.19 and lower-semicontinuity note, printed16/PDF28",
+    "url": "https://arxiv.org/pdf/1912.13213v10"
+  },
+  "target": "Source real-cut closedness, properness and exact indicator equivalences as prerequisites for subgradient analysis",
+  "affected_files": [
+    "BanditRLProof.lean",
+    "BanditRLProof/OnlineClosedProper.lean",
+    "website/content/books.json",
+    "website/content/chapters.json",
+    "website/content/highlights.json",
+    "website/content/readings.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineConvex.SourceClosed",
+    "BanditRL.OnlineConvex.SourceProper",
+    "BanditRL.OnlineConvex.sourceClosed_iff_lowerSemicontinuous",
+    "BanditRL.OnlineConvex.sourceClosed_indicator_iff",
+    "BanditRL.OnlineConvex.sourceProper_indicator_iff"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Pinned lowerSemicontinuous_iff_isOpen_preimage and LowerSemicontinuous.isClosed_preimage",
+      "Shared OnlineConvexExtended.extendedIndicator and EReal.exists_between_coe_real"
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineConvex.extendedIndicator",
+      "EReal.exists_between_coe_real",
+      "lowerSemicontinuous_iff_isOpen_preimage",
+      "LowerSemicontinuous.isClosed_preimage"
+    ],
+    "new_shared_declarations": [],
+    "known_consumers": [
+      "Tests/OnlineClosedProperCanary.lean"
+    ],
+    "planned_consumers": [
+      "Source proper subgradient support and interior existence obligations"
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Bridge real-only source thresholds to all-EReal Mathlib semicontinuity and reuse the existing zero/top indicator; no duplicate per-Book foundations."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/closed_blind",
+    "source_reviewer": "/root/source_reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Arbitrary topological domain generalizes source Euclidean/Hausdorff scope; no extra separation/convexity/properness premise. Independent reader clarification receipt preserves original snapshot."
+  },
+  "graph_contribution": {
+    "lean_graph": "new-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Foundational source/topology equivalences reuse the existing extended-real representation; no new cross-setting transport or certified functor.",
+    "focus_targets": [
+      "BanditRL.OnlineConvex.sourceClosed_iff_lowerSemicontinuous",
+      "BanditRL.OnlineConvex.sourceClosed_indicator_iff",
+      "BanditRL.OnlineConvex.sourceProper_indicator_iff"
+    ],
+    "visual_review": "Edge rendered chapter reviewed at1440x1800; readable hierarchy, source locator and local compilation boundary. Screenshot tmp/closed-reader-review.png. Proof bridge/folded declarations checked in generated HTML. No graph geometry changed.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: shared online-closed-proper route and source definitions/examples; Chapter2 remains partial.",
+    "banditrlwiki": "no-change-with-reason: no Bandit setting claim; exact Online source ledger/retrieval carries this prerequisite.",
+    "results_ledger": "no-change-with-reason: no existing Bandit named milestone changes; source inventory records this package.",
+    "roadmap": "no-change-with-reason: active global SGB frontier preserved; next subgradient obligations remain required.",
+    "website_surfaces": [
+      "website/content/books.json",
+      "website/content/chapters.json",
+      "website/content/highlights.json",
+      "website/content/readings.json"
+    ]
+  },
+  "truth_boundary": "Only two definitions, three equivalences and specified source note/examples. Both infinite values and empty sets retained. No subgradient existence, Chapter2 or book completion; next Theorem2.21 scratch is not part of public acceptance. No merge/deployment.",
+  "verification": {
+    "focused_checks": [
+      "public-focused01:9070jobs including public root/canary",
+      "Three target/header hashes and full public source unchanged",
+      "Standard-only target and nondegenerate canary axioms",
+      "Full-root export:5required proof-value checks,9scopednodes116boundarynodes249edges"
+    ],
+    "bandit_check": "full-gate01.log: combinedroot/Tests9194jobs;464tests7existing skips; terminalexit0",
+    "site_build": "site-build02.log passed --lean-verified after full gate; initial missing-proof-flow failure retained",
+    "site_check": "site-check02.log passed911pages11629Leanlinks",
+    "independent_review": "Distinct /root/closed_blind and /root/source_reviewer accepted-with-explicit-delta, all GPT-6 Astra medium; independent-source-review.md and roundtrip-bindings.json. Not external human review."
+  },
+  "contributor": {
+    "name": "Codex for Ji Cheng",
+    "role": "Formalization and integration; distinct automated semantic actors named above; source attribution retained"
+  }
+}
