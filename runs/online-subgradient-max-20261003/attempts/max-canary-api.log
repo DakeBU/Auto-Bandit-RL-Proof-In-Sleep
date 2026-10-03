@@ -1,0 +1,15 @@
+convexOn_id.{u_1, u_5} {𝕜 : Type u_1} {β : Type u_5} [Semiring 𝕜] [PartialOrder 𝕜] [AddCommMonoid β] [PartialOrder β]
+  [SMul 𝕜 β] {s : Set β} (hs : Convex 𝕜 s) : ConvexOn 𝕜 s id
+concaveOn_id.{u_1, u_5} {𝕜 : Type u_1} {β : Type u_5} [Semiring 𝕜] [PartialOrder 𝕜] [AddCommMonoid β] [PartialOrder β]
+  [SMul 𝕜 β] {s : Set β} (hs : Convex 𝕜 s) : ConcaveOn 𝕜 s id
+ConcaveOn.neg.{u_1, u_2, u_5} {𝕜 : Type u_1} {E : Type u_2} {β : Type u_5} [Semiring 𝕜] [PartialOrder 𝕜]
+  [AddCommMonoid E] [AddCommGroup β] [PartialOrder β] [IsOrderedAddMonoid β] [SMul 𝕜 E] [Module 𝕜 β] {s : Set E}
+  {f : E → β} : ConcaveOn 𝕜 s f → ConvexOn 𝕜 s (-f)
+tmp/max-canary-api.lean:5:7: error(lean.unknownIdentifier): Unknown constant `EReal.continuous_coe`
+tmp/max-canary-api.lean:6:7: error(lean.unknownIdentifier): Unknown constant `EReal.continuous_coe_real`
+tmp/max-canary-api.lean:7:7: error(lean.unknownIdentifier): Unknown constant `Finset.univ_bool`
+tmp/max-canary-api.lean:8:7: error(lean.unknownIdentifier): Unknown constant `Finset.sup'_pair`
+Finset.sup'_insert.{u_2, u_3} {α : Type u_2} {β : Type u_3} [SemilatticeSup α] {s : Finset β} (H : s.Nonempty)
+  (f : β → α) [DecidableEq β] {b : β} : (insert b s).sup' ⋯ f = f b ⊔ s.sup' H f
+convexHull_pair.{u_1, u_2} {𝕜 : Type u_1} {E : Type u_2} [Semiring 𝕜] [PartialOrder 𝕜] [AddCommMonoid E] [Module 𝕜 E]
+  [IsOrderedRing 𝕜] (x y : E) : (convexHull 𝕜) {x, y} = segment 𝕜 x y

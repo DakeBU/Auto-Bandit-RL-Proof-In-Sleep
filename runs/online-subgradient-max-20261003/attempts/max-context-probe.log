@@ -1,0 +1,12 @@
+Finset.exists_mem_eq_sup'.{u_2, u_5} {α : Type u_2} {ι : Type u_5} [LinearOrder α] {s : Finset ι} (H : s.Nonempty)
+  (f : ι → α) : ∃ i ∈ s, s.sup' H f = f i
+EReal.coe_le_coe_iff {x y : ℝ} : ↑x ≤ ↑y ↔ x ≤ y
+IsOpen.mem_nhds isOpen_Iio : ?m.10 ∈ Iio ?m.7 → Iio ?m.7 ∈ nhds ?m.10
+mem_interior_iff_mem_nhds.{u} {X : Type u} [TopologicalSpace X] {x : X} {s : Set X} : x ∈ interior s ↔ s ∈ nhds x
+Convex.inter.{u_1, u_2} {𝕜 : Type u_1} {E : Type u_2} [Semiring 𝕜] [PartialOrder 𝕜] [AddCommMonoid E] [SMul 𝕜 E]
+  {s t : Set E} (hs : Convex 𝕜 s) (ht : Convex 𝕜 t) : Convex 𝕜 (s ∩ t)
+real_inner_smul_left.{u_3} {F : Type u_3} [SeminormedAddCommGroup F] [InnerProductSpace ℝ F] (x y : F) (r : ℝ) :
+  inner ℝ (r • x) y = r * inner ℝ x y
+EReal.toReal_le_toReal {x y : EReal} (h : x ≤ y) (hx : x ≠ ⊥) (hy : y ≠ ⊤) : x.toReal ≤ y.toReal
+convexHull_min.{u_1, u_2} {𝕜 : Type u_1} {E : Type u_2} [Semiring 𝕜] [PartialOrder 𝕜] [AddCommMonoid E] [Module 𝕜 E]
+  {s t : Set E} : s ⊆ t → Convex 𝕜 t → (convexHull 𝕜) s ⊆ t

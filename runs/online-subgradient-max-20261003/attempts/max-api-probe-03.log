@@ -1,0 +1,25 @@
+EReal.continuousOn_toReal : ContinuousOn EReal.toReal {⊥, ⊤}ᶜ
+ContinuousOn.continuousAt.{u_1, u_2} {α : Type u_1} {β : Type u_2} [TopologicalSpace α] [TopologicalSpace β] {f : α → β}
+  {s : Set α} {x : α} (h : ContinuousOn f s) (hx : s ∈ 𝓝 x) : ContinuousAt f x
+tmp/max-api-probe-03.lean:6:7: error(lean.unknownIdentifier): Unknown identifier `compl_mem_nhds_iff`
+tmp/max-api-probe-03.lean:7:7: error(lean.unknownIdentifier): Unknown constant `IsOpen.preimage_mem_nhds`
+ContinuousAt.preimage_mem_nhds.{u_1, u_2} {X : Type u_1} {Y : Type u_2} [TopologicalSpace X] [TopologicalSpace Y]
+  {f : X → Y} {x : X} {t : Set Y} (h : ContinuousAt f x) (ht : t ∈ 𝓝 (f x)) : f ⁻¹' t ∈ 𝓝 x
+IsClosed.preimage.{u_1, u_2} {X : Type u_1} {Y : Type u_2} [TopologicalSpace X] [TopologicalSpace Y] {f : X → Y}
+  (hf : Continuous f) {t : Set Y} (h : IsClosed t) : IsClosed (f ⁻¹' t)
+EReal.coe_add (x y : ℝ) : ↑(x + y) = ↑x + ↑y
+add_le_add.{u_1} {α : Type u_1} [Add α] [Preorder α] [AddLeftMono α] [AddRightMono α] {a b c d : α} (h₁ : a ≤ b)
+  (h₂ : c ≤ d) : a + c ≤ b + d
+EReal.coe_lt_top (x : ℝ) : ↑x < ⊤
+Convex.convexHull_eq.{u_1, u_2} {𝕜 : Type u_1} {E : Type u_2} [Semiring 𝕜] [PartialOrder 𝕜] [AddCommMonoid E]
+  [Module 𝕜 E] {s : Set E} : Convex 𝕜 s → (convexHull 𝕜) s = s
+convexHull_empty.{u_1, u_2} {𝕜 : Type u_1} {E : Type u_2} [Semiring 𝕜] [PartialOrder 𝕜] [AddCommMonoid E] [Module 𝕜 E] :
+  (convexHull 𝕜) ∅ = ∅
+convexHull_union.{u_2, u_3} {𝕜 : Type u_2} {E : Type u_3} [Field 𝕜] [LinearOrder 𝕜] [IsStrictOrderedRing 𝕜]
+  [AddCommGroup E] [Module 𝕜 E] {s t : Set E} (hs : s.Nonempty) (ht : t.Nonempty) :
+  (convexHull 𝕜) (s ∪ t) = convexJoin 𝕜 ((convexHull 𝕜) s) ((convexHull 𝕜) t)
+tmp/max-api-probe-03.lean:16:7: error(lean.unknownIdentifier): Unknown identifier `mem_segment_iff`
+CompactIccSpace.isCompact_Icc.{u_1} {α : Type u_1} {inst✝ : TopologicalSpace α} {inst✝¹ : Preorder α}
+  [self : CompactIccSpace α] {a b : α} : IsCompact (Icc a b)
+IsCompact.image.{u, v} {X : Type u} {Y : Type v} [TopologicalSpace X] [TopologicalSpace Y] {s : Set X} {f : X → Y}
+  (hs : IsCompact s) (hf : Continuous f) : IsCompact (f '' s)

@@ -1,0 +1,120 @@
+tmp/max-direction-witness-02.lean:32:0: warning: automatically included section variable(s) unused in theorem `BanditRL.OnlineConvex.finiteMax_attained`:
+  [NormedAddCommGroup E]
+  [InnerProductSpace ℝ E]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NormedAddCommGroup E] [InnerProductSpace ℝ E] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+tmp/max-direction-witness-02.lean:80:0: warning: automatically included section variable(s) unused in theorem `BanditRL.OnlineConvex.continuousAt_mem_domain_interior`:
+  [InnerProductSpace ℝ E]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [InnerProductSpace ℝ E] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+tmp/max-direction-witness-02.lean:213:0: warning: automatically included section variable(s) unused in theorem `BanditRL.OnlineConvex.continuousAt_finite_toReal`:
+  [InnerProductSpace ℝ E]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [InnerProductSpace ℝ E] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+tmp/max-direction-witness-02.lean:306:15: error: don't know how to synthesize implicit argument `f₁`
+  @Eventually.filter_mono ℕ (atTop ⊓ ?m.675) atTop inf_le_left
+    (fun x => qs (φ x) ∈ SourceSubdifferential (f (idx (φ x))) (ys (φ x)))
+    (Tendsto.eventually (StrictMono.tendsto_atTop hφ) hsub)
+context:
+E : Type u_1
+inst✝⁴ : NormedAddCommGroup E
+inst✝³ : InnerProductSpace ℝ E
+inst✝² : FiniteDimensional ℝ E
+ι : Type u_2
+inst✝¹ : Fintype ι
+inst✝ : Nonempty ι
+f : ι → E → EReal
+hp : ∀ (i : ι), SourceProper (f i)
+hc : ∀ (i : ι), IsConvexExtended (f i)
+x : E
+hx : ∀ (i : ι), x ∈ effectiveDomain (f i)
+hcont : ∀ (i : ι), ContinuousAt (f i) x
+g d : E
+hg : g ∈ SourceSubdifferential (SourceFiniteMax f) x
+hix : ∀ (i : ι), x ∈ interior (effectiveDomain (f i))
+ys : ℕ → E := ⋯
+ht : Tendsto ys atTop (𝓝 x)
+hin : ∀ᶠ (n : ℕ) in atTop, ∀ (i : ι), ys n ∈ interior (effectiveDomain (f i))
+K : ι → ℝ
+hK : ∀ (i : ι), 0 ≤ K i
+hKB : ∀ (i : ι), ∀ᶠ (y : E) in 𝓝 x, ∀ q ∈ SourceSubdifferential (f i) y, ‖q‖ ≤ K i
+hbseq : ∀ᶠ (n : ℕ) in atTop, ∀ (i : ι), ∀ q ∈ SourceSubdifferential (f i) (ys n), ‖q‖ ≤ K i
+idx : ℕ → ι
+hidx : ∀ (n : ℕ), SourceFiniteMax f (ys n) = f (idx n) (ys n)
+qs : ℕ → E
+hqs : ∀ (n : ℕ), ys n ∈ interior (effectiveDomain (f (idx n))) → qs n ∈ SourceSubdifferential (f (idx n)) (ys n)
+hsub : ∀ᶠ (n : ℕ) in atTop, qs n ∈ SourceSubdifferential (f (idx n)) (ys n)
+B : ℝ := ⋯
+hnorm : ∀ᶠ (n : ℕ) in atTop, qs n ∈ Metric.closedBall 0 B
+k : E
+hkB : k ∈ Metric.closedBall 0 B
+φ : ℕ → ℕ
+hφ : StrictMono φ
+hkt : Tendsto (qs ∘ φ) atTop (𝓝 k)
+hfreq : ∃ᶠ (n : ℕ) in atTop, ∃ i, idx (φ n) = i
+i : ι
+hi : ∃ᶠ (x : ℕ) in atTop, idx (φ x) = i
+l : Filter ℕ := ⋯
+this : l.NeBot
+hilt : ∀ᶠ (n : ℕ) in l, idx (φ n) = i
+hyt : Tendsto (ys ∘ φ) l (𝓝 x)
+hqt : Tendsto (qs ∘ φ) l (𝓝 k)
+⊢ Filter ℕ
+tmp/max-direction-witness-02.lean:306:62: error: don't know how to synthesize implicit argument `b`
+  @inf_le_left (Filter ℕ) CompleteLattice.toConditionallyCompleteLattice.toSemilatticeInf atTop ?m.675
+context:
+E : Type u_1
+inst✝⁴ : NormedAddCommGroup E
+inst✝³ : InnerProductSpace ℝ E
+inst✝² : FiniteDimensional ℝ E
+ι : Type u_2
+inst✝¹ : Fintype ι
+inst✝ : Nonempty ι
+f : ι → E → EReal
+hp : ∀ (i : ι), SourceProper (f i)
+hc : ∀ (i : ι), IsConvexExtended (f i)
+x : E
+hx : ∀ (i : ι), x ∈ effectiveDomain (f i)
+hcont : ∀ (i : ι), ContinuousAt (f i) x
+g d : E
+hg : g ∈ SourceSubdifferential (SourceFiniteMax f) x
+hix : ∀ (i : ι), x ∈ interior (effectiveDomain (f i))
+ys : ℕ → E := ⋯
+ht : Tendsto ys atTop (𝓝 x)
+hin : ∀ᶠ (n : ℕ) in atTop, ∀ (i : ι), ys n ∈ interior (effectiveDomain (f i))
+K : ι → ℝ
+hK : ∀ (i : ι), 0 ≤ K i
+hKB : ∀ (i : ι), ∀ᶠ (y : E) in 𝓝 x, ∀ q ∈ SourceSubdifferential (f i) y, ‖q‖ ≤ K i
+hbseq : ∀ᶠ (n : ℕ) in atTop, ∀ (i : ι), ∀ q ∈ SourceSubdifferential (f i) (ys n), ‖q‖ ≤ K i
+idx : ℕ → ι
+hidx : ∀ (n : ℕ), SourceFiniteMax f (ys n) = f (idx n) (ys n)
+qs : ℕ → E
+hqs : ∀ (n : ℕ), ys n ∈ interior (effectiveDomain (f (idx n))) → qs n ∈ SourceSubdifferential (f (idx n)) (ys n)
+hsub : ∀ᶠ (n : ℕ) in atTop, qs n ∈ SourceSubdifferential (f (idx n)) (ys n)
+B : ℝ := ⋯
+hnorm : ∀ᶠ (n : ℕ) in atTop, qs n ∈ Metric.closedBall 0 B
+k : E
+hkB : k ∈ Metric.closedBall 0 B
+φ : ℕ → ℕ
+hφ : StrictMono φ
+hkt : Tendsto (qs ∘ φ) atTop (𝓝 k)
+hfreq : ∃ᶠ (n : ℕ) in atTop, ∃ i, idx (φ n) = i
+i : ι
+hi : ∃ᶠ (x : ℕ) in atTop, idx (φ x) = i
+l : Filter ℕ := ⋯
+this : l.NeBot
+hilt : ∀ᶠ (n : ℕ) in l, idx (φ n) = i
+hyt : Tendsto (ys ∘ φ) l (𝓝 x)
+hqt : Tendsto (qs ∘ φ) l (𝓝 k)
+⊢ Filter ℕ
+tmp/max-direction-witness-02.lean:306:9: error: failed to infer `have` declaration type
+'BanditRL.OnlineConvex.max_subgradient_direction_witness' depends on axioms: [propext,
+ sorryAx,
+ Classical.choice,
+ Quot.sound]

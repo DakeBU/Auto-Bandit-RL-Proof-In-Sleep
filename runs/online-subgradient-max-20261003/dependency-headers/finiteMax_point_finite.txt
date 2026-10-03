@@ -1,0 +1,4 @@
+theorem finiteMax_point_finite {ι : Type*} [Fintype ι] [Nonempty ι]
+    (f : ι → E → EReal) (hp : ∀ i, SourceProper (f i))
+    (x : E) (hx : ∀ i, x ∈ effectiveDomain (f i)) :
+    ∃ a : ℝ, SourceFiniteMax f x = (a : EReal)

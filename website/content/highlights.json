@@ -3158,6 +3158,87 @@
       "dependencies": [
         "BanditRL.OnlineConvex.SourceNormalCone"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.SourceFiniteMax",
+      "title": "Actual finite pointwise maximum",
+      "chapter": "online-subgradient-max",
+      "featured": false,
+      "teaching_order": 0,
+      "plain": "Actual finite pointwise maximum",
+      "math": "\\(F(y)=\\max_i f_i(y)\\)",
+      "intuition": "Use actual global supports and continuity to retain the exact ordinary convex hull.",
+      "why": "Required Theorem2.26 source endpoint and its actual producer; not Chapter2 completion.",
+      "position": "Orabona v10 Theorem2.26 printed18/PDF30.",
+      "proof_idea": "Active lifting, compact convex joins, actual near-point max/support limit, and strict separation.",
+      "lean_notes": "Original proper/convex/all-domain/all-continuity assumptions and explicit finite dimension retained; no global closedness or supplied decomposition.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.SourceActiveSubgradientUnion",
+      "title": "Union of active global supports",
+      "chapter": "online-subgradient-max",
+      "featured": false,
+      "teaching_order": 1,
+      "plain": "Union of active global supports",
+      "math": "\\(U(x)=\\bigcup_{i:f_i(x)=F(x)}\\partial f_i(x)\\)",
+      "intuition": "Use actual global supports and continuity to retain the exact ordinary convex hull.",
+      "why": "Required Theorem2.26 source endpoint and its actual producer; not Chapter2 completion.",
+      "position": "Orabona v10 Theorem2.26 printed18/PDF30.",
+      "proof_idea": "Active lifting, compact convex joins, actual near-point max/support limit, and strict separation.",
+      "lean_notes": "Original proper/convex/all-domain/all-continuity assumptions and explicit finite dimension retained; no global closedness or supplied decomposition.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.max_subgradient_direction_witness",
+      "title": "An active limit support dominates each direction",
+      "chapter": "online-subgradient-max",
+      "featured": false,
+      "teaching_order": 2,
+      "plain": "An active limit support dominates each direction",
+      "math": "\\(\\forall d\\ \\exists k\\in U(x),\\ \\langle g,d\\rangle\\le\\langle k,d\\rangle\\)",
+      "intuition": "Use actual global supports and continuity to retain the exact ordinary convex hull.",
+      "why": "Required Theorem2.26 source endpoint and its actual producer; not Chapter2 completion.",
+      "position": "Orabona v10 Theorem2.26 printed18/PDF30.",
+      "proof_idea": "Active lifting, compact convex joins, actual near-point max/support limit, and strict separation.",
+      "lean_notes": "Original proper/convex/all-domain/all-continuity assumptions and explicit finite dimension retained; no global closedness or supplied decomposition.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.theorem_2_26",
+      "title": "Maximum supports equal the ordinary active hull",
+      "chapter": "online-subgradient-max",
+      "featured": false,
+      "teaching_order": 3,
+      "plain": "Maximum supports equal the ordinary active hull",
+      "math": "\\(\\partial F(x)=\\operatorname{conv}U(x)\\)",
+      "intuition": "Use actual global supports and continuity to retain the exact ordinary convex hull.",
+      "why": "Required Theorem2.26 source endpoint and its actual producer; not Chapter2 completion.",
+      "position": "Orabona v10 Theorem2.26 printed18/PDF30.",
+      "proof_idea": "Active lifting, compact convex joins, actual near-point max/support limit, and strict separation.",
+      "lean_notes": "Original proper/convex/all-domain/all-continuity assumptions and explicit finite dimension retained; no global closedness or supplied decomposition.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.max_subgradient_direction_witness",
+        "BanditRL.OnlineConvex.isCompact_active_subgradient_hull"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.isCompact_active_subgradient_hull",
+      "title": "The ordinary active hull is compact",
+      "chapter": "online-subgradient-max",
+      "featured": false,
+      "teaching_order": 2,
+      "plain": "Continuity at the finite query yields compact active subdifferentials; finite convex joins give a compact ordinary hull.",
+      "math": "\\(K=\\operatorname{conv}U(x)\\text{ is compact}\\)",
+      "intuition": "Use actual global supports and continuity to retain the exact ordinary convex hull.",
+      "why": "Required Theorem2.26 source endpoint and its actual producer; not Chapter2 completion.",
+      "position": "Orabona v10 Theorem2.26 printed18/PDF30.",
+      "proof_idea": "Active lifting, compact convex joins, actual near-point max/support limit, and strict separation.",
+      "lean_notes": "Original proper/convex/all-domain/all-continuity assumptions and explicit finite dimension retained; no global closedness or supplied decomposition.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.isCompact_sourceSubdifferential",
+        "BanditRL.OnlineConvex.isCompact_convexHull_finite_convex_union"
+      ]
     }
   ]
 }

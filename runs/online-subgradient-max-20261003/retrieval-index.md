@@ -1,0 +1,1 @@
+Actual retrieval: tmp/max-memory-retrieval.txt, tmp/max-declaration-retrieval.txt, tmp/max-card-retrieval.txt and tmp/max-api-probe.log. Pinned mathlib Finset.sup / existing shared interior/locally bounded/limit supports considered. Bounded searches do not establish API absence.

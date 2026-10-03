@@ -1,0 +1,13 @@
+import BanditRLProof.OnlineSubgradientDifferentiability
+import Mathlib.Data.Finset.Lattice.Fold
+open Set
+#check Finset.univ_nonempty
+#check Finset.le_sup'
+#check Finset.exists_mem_eq_sup'
+#check EReal.add_le_add_left
+#check convexHull_min
+#check convex_iff_forall_pos
+#check convex_halfSpace_le
+#check convex_iInter
+#check continuousAt_iff
+#check EReal.continuousAt_toReal

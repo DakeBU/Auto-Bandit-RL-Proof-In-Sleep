@@ -1,0 +1,26 @@
+tmp/max-compact-api.lean:4:7: error(lean.unknownIdentifier): Unknown identifier `isCompact_iff_isClosed_bounded`
+tmp/max-compact-api.lean:5:7: error(lean.unknownIdentifier): Unknown constant `IsClosed.isCompact_of_isBounded`
+Metric.isBounded_closedBall.{u} {α : Type u} {x : α} {r : ℝ} [PseudoMetricSpace α] :
+  Bornology.IsBounded (Metric.closedBall x r)
+Bornology.IsBounded.subset.{u_2} {α : Type u_2} {x✝ : Bornology α} {s t : Set α} (ht : Bornology.IsBounded t)
+  (hs : s ⊆ t) : Bornology.IsBounded s
+isClosed_iInter.{u, v} {X : Type u} {ι : Sort v} [TopologicalSpace X] {f : ι → Set X} (h : ∀ (i : ι), IsClosed (f i)) :
+  IsClosed (⋂ i, f i)
+isClosed_le.{u, v} {α : Type u} {β : Type v} [TopologicalSpace α] [Preorder α] [t : OrderClosedTopology α]
+  [TopologicalSpace β] {f g : β → α} (hf : Continuous f) (hg : Continuous g) : IsClosed {b | f b ≤ g b}
+Continuous.inner.{u_1, u_2, u_4} {𝕜 : Type u_1} {E : Type u_2} [RCLike 𝕜] [SeminormedAddCommGroup E]
+  [InnerProductSpace 𝕜 E] {α : Type u_4} [TopologicalSpace α] {f g : α → E} (hf : Continuous f) (hg : Continuous g) :
+  Continuous fun t => inner 𝕜 (f t) (g t)
+BanditRL.OnlineConvex.subgradients_locally_bounded.{u_1} {E : Type u_1} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+  [FiniteDimensional ℝ E] (f : E → EReal) (hbot : ∀ (y : E), f y ≠ ⊥) (hf : BanditRL.OnlineConvex.IsConvexExtended f)
+  (x : E) (hx : x ∈ interior (BanditRL.OnlineConvex.effectiveDomain f)) :
+  ∃ r, 0 < r ∧ ∃ K, ∀ y ∈ Metric.ball x r, ∀ g ∈ BanditRL.OnlineConvex.SourceSubdifferential f y, ‖g‖ ≤ ↑K
+segment_eq_image.{u_1, u_2} (𝕜 : Type u_1) {E : Type u_2} [Ring 𝕜] [PartialOrder 𝕜] [AddRightMono 𝕜] [AddCommGroup E]
+  [Module 𝕜 E] (x y : E) : segment 𝕜 x y = (fun θ => (1 - θ) • x + θ • y) '' Icc 0 1
+segment_eq_image'.{u_1, u_2} (𝕜 : Type u_1) {E : Type u_2} [Ring 𝕜] [PartialOrder 𝕜] [AddRightMono 𝕜] [AddCommGroup E]
+  [Module 𝕜 E] (x y : E) : segment 𝕜 x y = (fun θ => x + θ • (y - x)) '' Icc 0 1
+Convex.convexHull_eq.{u_1, u_2} {𝕜 : Type u_1} {E : Type u_2} [Semiring 𝕜] [PartialOrder 𝕜] [AddCommMonoid E]
+  [Module 𝕜 E] {s : Set E} : Convex 𝕜 s → (convexHull 𝕜) s = s
+IsCompact.prod.{u, v} {X : Type u} {Y : Type v} [TopologicalSpace X] [TopologicalSpace Y] {s : Set X} {t : Set Y}
+  (hs : IsCompact s) (ht : IsCompact t) : IsCompact (s ×ˢ t)
+Set.not_nonempty_iff_eq_empty.{u} {α : Type u} {s : Set α} : ¬s.Nonempty ↔ s = ∅

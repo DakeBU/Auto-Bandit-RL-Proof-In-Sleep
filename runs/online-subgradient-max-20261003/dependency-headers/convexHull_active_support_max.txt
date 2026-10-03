@@ -1,0 +1,5 @@
+theorem convexHull_active_support_max {ι : Type*} [Fintype ι] [Nonempty ι]
+    (f : ι → E → EReal) (hp : ∀ i, SourceProper (f i))
+    (x : E) (hx : ∀ i, x ∈ effectiveDomain (f i)) :
+    convexHull ℝ (SourceActiveSubgradientUnion f x) ⊆
+      SourceSubdifferential (SourceFiniteMax f) x

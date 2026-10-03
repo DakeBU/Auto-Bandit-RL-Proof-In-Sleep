@@ -1,0 +1,29 @@
+Filter.frequently_iff_neBot.{u} {α : Type u} {l : Filter α} {p : α → Prop} :
+  (∃ᶠ (x : α) in l, p x) ↔ (l ⊓ 𝓟 {x | p x}).NeBot
+tmp/max-limit-api.lean:6:7: error(lean.unknownIdentifier): Unknown constant `Filter.NeBot.inf_principal`
+Filter.frequently_exists.{u, u_2} {α : Type u} {ι : Sort u_2} [Finite ι] {l : Filter α} {p : ι → α → Prop} :
+  (∃ᶠ (x : α) in l, ∃ i, p i x) ↔ ∃ i, ∃ᶠ (x : α) in l, p i x
+Filter.eventually_inf_principal.{u} {α : Type u} {f : Filter α} {p : α → Prop} {s : Set α} :
+  (∀ᶠ (x : α) in f ⊓ 𝓟 s, p x) ↔ ∀ᶠ (x : α) in f, x ∈ s → p x
+Filter.tendsto_inf_left.{u_1, u_2} {α : Type u_1} {β : Type u_2} {f : α → β} {x₁ x₂ : Filter α} {y : Filter β}
+  (h : Tendsto f x₁ y) : Tendsto f (x₁ ⊓ x₂) y
+tmp/max-limit-api.lean:10:19: error(lean.invalidField): Invalid field `mono_left`: The environment does not contain `Iff.mono_left`, so it is not possible to project the field `mono_left` from an expression
+  tendsto_id'
+of type
+  Tendsto id ?m.2 ?m.3 ↔ ?m.2 ≤ ?m.3
+Filter.Tendsto.mono_left.{u_1, u_2} {α : Type u_1} {β : Type u_2} {f : α → β} {x y : Filter α} {z : Filter β}
+  (hx : Tendsto f x z) (h : y ≤ x) : Tendsto f y z
+le_of_tendsto_of_tendsto.{u, v} {α : Type u} {β : Type v} [TopologicalSpace α] [Preorder α] [t : OrderClosedTopology α]
+  {f g : β → α} {b : Filter β} {a₁ a₂ : α} [b.NeBot] (hf : Tendsto f b (𝓝 a₁)) (hg : Tendsto g b (𝓝 a₂))
+  (h : f ≤ᶠ[b] g) : a₁ ≤ a₂
+IsCompact.tendsto_subseq'.{u_1} {X : Type u_1} [TopologicalSpace X] [FirstCountableTopology X] {s : Set X} {x : ℕ → X}
+  (hs : IsCompact s) (hx : ∃ᶠ (n : ℕ) in atTop, x n ∈ s) : ∃ a ∈ s, ∃ φ, StrictMono φ ∧ Tendsto (x ∘ φ) atTop (𝓝 a)
+tendsto_one_div_add_atTop_nhds_zero_nat.{u_4} {𝕜 : Type u_4} [DivisionSemiring 𝕜] [CharZero 𝕜] [TopologicalSpace 𝕜]
+  [ContinuousSMul ℚ≥0 𝕜] : Tendsto (fun n => 1 / (↑n + 1)) atTop (𝓝 0)
+tendsto_inv_atTop_nhds_zero_nat.{u_4} {𝕜 : Type u_4} [DivisionSemiring 𝕜] [CharZero 𝕜] [TopologicalSpace 𝕜]
+  [ContinuousSMul ℚ≥0 𝕜] : Tendsto (fun n => (↑n)⁻¹) atTop (𝓝 0)
+InnerProductSpace.toDual_symm_apply.{u_1, u_2} {𝕜 : Type u_1} {E : Type u_2} [RCLike 𝕜] [NormedAddCommGroup E]
+  [InnerProductSpace 𝕜 E] [CompleteSpace E] {x : E} {y : StrongDual 𝕜 E} :
+  inner 𝕜 ((InnerProductSpace.toDual 𝕜 E).symm y) x = y x
+EReal.continuousOn_toReal : ContinuousOn EReal.toReal {⊥, ⊤}ᶜ
+isOpen_compl_singleton.{u_1} {X : Type u_1} [TopologicalSpace X] [T1Space X] {x : X} : IsOpen {x}ᶜ

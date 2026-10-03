@@ -1,0 +1,10 @@
+import BanditRLProof.OnlineSubgradientDifferentiability
+#check convexOn_id
+#check concaveOn_id
+#check ConcaveOn.neg
+#check EReal.continuous_coe
+#check EReal.continuous_coe_real
+#check Finset.univ_bool
+#check Finset.sup'_pair
+#check Finset.sup'_insert
+#check convexHull_pair

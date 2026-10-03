@@ -1,0 +1,40 @@
+Neutral mathematical context and headers only. No source identity or body. Not standalone compiled code.
+
+import BanditRLProof.OnlineSubgradientDifferentiability
+import Mathlib.Data.Finset.Lattice.Fold
+noncomputable section
+open Set
+namespace NeutralConvex
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+
+def SourceFiniteMax {ι : Type*} [Fintype ι] [Nonempty ι]
+    (f : ι → E → EReal) (x : E) : EReal := by
+  classical
+  exact Finset.univ.sup' Finset.univ_nonempty (fun i => f i x)
+
+def SourceActiveSubgradientUnion {ι : Type*} [Fintype ι] [Nonempty ι]
+    (f : ι → E → EReal) (x : E) : Set E :=
+  {g | ∃ i, f i x = SourceFiniteMax f x ∧ g ∈ SourceSubdifferential (f i) x}
+
+-- Shared imported definitions, as mathematical context:
+def effectiveDomain (f : E → EReal) : Set E := {x | f x < ⊤}
+def SourceProper (f : E → EReal) : Prop :=
+  (∀ x, f x ≠ ⊥) ∧ ∃ x, ∃ r : ℝ, f x = (r : EReal)
+def realEpigraph (f : E → EReal) : Set (E × ℝ) := {p | f p.1 ≤ (p.2 : EReal)}
+def IsConvexExtended (f : E → EReal) : Prop := Convex ℝ (realEpigraph f)
+def SourceSubdifferential (f : E → EReal) (x : E) : Set E :=
+  {g | ∀ y, f x + (inner ℝ g (y - x) : EReal) ≤ f y}
+
+theorem claim_1
+    {ι : Type*} [Fintype ι] [Nonempty ι] (f : ι → E → EReal) (x : E) :
+    SourceActiveSubgradientUnion f x ⊆ SourceSubdifferential (SourceFiniteMax f) x
+
+theorem claim_2 [FiniteDimensional ℝ E]
+    {ι : Type*} [Fintype ι] [Nonempty ι] (f : ι → E → EReal)
+    (hp : ∀ i, SourceProper (f i)) (hc : ∀ i, IsConvexExtended (f i))
+    (x : E) (hx : ∀ i, x ∈ effectiveDomain (f i))
+    (hcont : ∀ i, ContinuousAt (f i) x) :
+    SourceSubdifferential (SourceFiniteMax f) x =
+      convexHull ℝ (SourceActiveSubgradientUnion f x)
+
+end NeutralConvex

@@ -1,0 +1,1 @@
+Freeze entire Theorem2.26 equality with exact proper/convex/finite-domain/each-continuity source premises. Begin with actual active support producer, then close dependency DAG towards full reverse. A compiling inclusion cannot accept the source terminal. No source weakening for API convenience. One lower route; medium staged roles and distinct automated semantic actors.

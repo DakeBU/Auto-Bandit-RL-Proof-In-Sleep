@@ -1,0 +1,4 @@
+theorem isCompact_convexHull_finite_convex_union {ι : Type*}
+    (s : ι → Set E) (F : Finset ι)
+    (hc : ∀ i ∈ F, Convex ℝ (s i)) (hk : ∀ i ∈ F, IsCompact (s i)) :
+    IsCompact (convexHull ℝ (⋃ i ∈ F, s i))

@@ -1,0 +1,6 @@
+theorem isCompact_active_subgradient_hull [FiniteDimensional ℝ E]
+    {ι : Type*} [Fintype ι] [Nonempty ι] (f : ι → E → EReal)
+    (hp : ∀ i, SourceProper (f i)) (hc : ∀ i, IsConvexExtended (f i))
+    (x : E) (hx : ∀ i, x ∈ effectiveDomain (f i))
+    (hcont : ∀ i, ContinuousAt (f i) x) :
+    IsCompact (convexHull ℝ (SourceActiveSubgradientUnion f x))

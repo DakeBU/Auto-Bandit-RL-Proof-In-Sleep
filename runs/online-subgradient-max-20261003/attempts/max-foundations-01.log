@@ -1,0 +1,42 @@
+tmp/max-foundations-01.lean:29:0: warning: automatically included section variable(s) unused in theorem `BanditRL.OnlineConvex.finiteMax_attained`:
+  [NormedAddCommGroup E]
+  [InnerProductSpace ℝ E]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NormedAddCommGroup E] [InnerProductSpace ℝ E] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+tmp/max-foundations-01.lean:71:2: error: linarith failed to find a contradiction
+case h
+E : Type u_1
+inst✝¹ : NormedAddCommGroup E
+inst✝ : InnerProductSpace ℝ E
+f : E → EReal
+hbot : ∀ (y : E), f y ≠ ⊥
+x : E
+hx : x ∈ effectiveDomain f
+g : E
+hg : ∀ (y : E), f y ≠ ⊤ → (f x).toReal + inner ℝ g (y - x) ≤ (f y).toReal
+k : E
+hk : ∀ (y : E), f y ≠ ⊤ → (f x).toReal + inner ℝ k (y - x) ≤ (f y).toReal
+a b : ℝ
+ha : 0 ≤ a
+hb : 0 ≤ b
+hab : a + b = 1
+y : E
+hyt : f y ≠ ⊤
+h1 : a * ((f x).toReal + inner ℝ g (y - x)) ≤ a * (f y).toReal
+h2 : b * ((f x).toReal + inner ℝ k (y - x)) ≤ b * (f y).toReal
+a✝ : (f y).toReal < (f x).toReal + (a * inner ℝ g (y - x) + b * inner ℝ k (y - x))
+⊢ False
+failed
+tmp/max-foundations-01.lean:73:0: warning: automatically included section variable(s) unused in theorem `BanditRL.OnlineConvex.continuousAt_mem_domain_interior`:
+  [InnerProductSpace ℝ E]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [InnerProductSpace ℝ E] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+'BanditRL.OnlineConvex.finiteMax_attained' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BanditRL.OnlineConvex.finiteMax_point_finite' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BanditRL.OnlineConvex.subgradient_iff_real_support' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BanditRL.OnlineConvex.convex_sourceSubdifferential' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'BanditRL.OnlineConvex.continuousAt_mem_domain_interior' depends on axioms: [propext, Classical.choice, Quot.sound]

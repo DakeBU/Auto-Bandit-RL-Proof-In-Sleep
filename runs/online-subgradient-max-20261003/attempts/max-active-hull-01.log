@@ -1,0 +1,38 @@
+tmp/max-active-hull-01.lean:30:0: warning: automatically included section variable(s) unused in theorem `BanditRL.OnlineConvex.finiteMax_attained`:
+  [NormedAddCommGroup E]
+  [InnerProductSpace ℝ E]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NormedAddCommGroup E] [InnerProductSpace ℝ E] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+tmp/max-active-hull-01.lean:78:0: warning: automatically included section variable(s) unused in theorem `BanditRL.OnlineConvex.continuousAt_mem_domain_interior`:
+  [InnerProductSpace ℝ E]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [InnerProductSpace ℝ E] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+tmp/max-active-hull-01.lean:203:4: error: unsolved goals
+case neg
+E : Type u_1
+inst✝⁴ : NormedAddCommGroup E
+inst✝³ : InnerProductSpace ℝ E
+inst✝² : FiniteDimensional ℝ E
+ι : Type u_2
+inst✝¹ : Fintype ι
+inst✝ : Nonempty ι
+f : ι → E → EReal
+hp : ∀ (i : ι), SourceProper (f i)
+hc : ∀ (i : ι), IsConvexExtended (f i)
+x : E
+hx : ∀ (i : ι), x ∈ effectiveDomain (f i)
+hcont : ∀ (i : ι), ContinuousAt (f i) x
+s : ι → Set E := fun i => if f i x = SourceFiniteMax f x then SourceSubdifferential (f i) x else ∅
+he : SourceActiveSubgradientUnion f x = ⋃ i ∈ Finset.univ, s i
+i : ι
+a✝ : i ∈ Finset.univ
+hi : ¬f i x = SourceFiniteMax f x
+⊢ Convex ℝ ∅
+'BanditRL.OnlineConvex.isCompact_active_subgradient_hull' depends on axioms: [propext,
+ sorryAx,
+ Classical.choice,
+ Quot.sound]

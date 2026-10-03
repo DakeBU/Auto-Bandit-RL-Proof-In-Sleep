@@ -1,0 +1,45 @@
+tmp/max-canary-01.lean:33:0: warning: automatically included section variable(s) unused in theorem `BanditRL.OnlineConvex.finiteMax_attained`:
+  [NormedAddCommGroup E]
+  [InnerProductSpace ℝ E]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NormedAddCommGroup E] [InnerProductSpace ℝ E] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+tmp/max-canary-01.lean:81:0: warning: automatically included section variable(s) unused in theorem `BanditRL.OnlineConvex.continuousAt_mem_domain_interior`:
+  [InnerProductSpace ℝ E]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [InnerProductSpace ℝ E] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+tmp/max-canary-01.lean:214:0: warning: automatically included section variable(s) unused in theorem `BanditRL.OnlineConvex.continuousAt_finite_toReal`:
+  [InnerProductSpace ℝ E]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [InnerProductSpace ℝ E] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+tmp/max-canary-01.lean:378:4: error: Type mismatch: After simplification, term
+  ConcaveOn.neg (concaveOn_id convex_univ)
+ has type
+  ConcaveOn ℝ univ id
+but is expected to have type
+  ConvexOn ℝ {x | -↑x < ⊤} fun x => -x
+tmp/max-canary-01.lean:381:77: error: unsolved goals
+case false
+x : ℝ
+⊢ -↑x < ⊤
+tmp/max-canary-01.lean:385:48: error: `simp` made no progress
+tmp/max-canary-01.lean:385:48: error: `simp` made no progress
+tmp/max-canary-01.lean:417:4: error: Type mismatch: After simplification, term
+  h
+ has type
+  True
+but is expected to have type
+  0 ≤ SourceFiniteMax family 0
+tmp/max-canary-01.lean:428:26: warning: This simp argument is unused:
+  hs
+
+Hint: Omit it from the simp argument list.
+  simp_all [h̵s̵,̵ ̵family]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+'MaximumProbe.full_tie_hull_canary' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]

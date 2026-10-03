@@ -4030,6 +4030,137 @@
         "takeaway": "Normal geometry depends on the actual set and query, and the boundary ray includes exactly nonnegative radial vectors.",
         "boundary": "Empty V is outside the original nonempty-set scope; its improper identically-top unguarded support relation differs. No Chapter2/book completion."
       }
+    },
+    {
+      "slug": "online-subgradient-max",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10,21June2026",
+        "sections": "Section2.2.1, Theorem2.26, printed18/PDF30",
+        "pages": "printed18/PDF30",
+        "pdf_page": 30,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "Maximum and active indices",
+          "meaning": "F(y)=max over the actual finite nonempty family fi(y); A(x) contains every i with fi(x)=F(x). Ties are retained."
+        },
+        {
+          "term": "Global subdifferential",
+          "meaning": "g∈∂fi(x) means fi(x)+inner(g,y-x)≤fi(y) for every ambient y, including outside the effective domain."
+        },
+        {
+          "term": "Ordinary convex hull",
+          "meaning": "conv takes finite convex combinations. There is no closure in the source conclusion. Every proper convex component is finite and ambient-continuous at x; no global closedness is assumed."
+        }
+      ],
+      "algorithm": {
+        "title": "Prove both directions of the maximum rule",
+        "kind": "proof flow",
+        "steps": [
+          {
+            "title": "Lift active supports",
+            "detail": "An active function has the same value as F at x, and its value at every y is at most F(y). Its global support therefore supports F. Convexity of the support set extends this to the whole active hull."
+          },
+          {
+            "title": "Establish ordinary hull compactness",
+            "detail": "Continuity at finite x gives an actual neighborhood of finite values. Existing local support bounds make each closed subdifferential compact. A finite union of these convex compact sets has compact ordinary convex hull."
+          },
+          {
+            "title": "Construct the reverse",
+            "detail": "Along a separating direction choose actual nearby maximizers and actual subgradients, take a bounded subsequence and a repeated active index, and pass to the limit. The resulting active support contradicts strict separation."
+          }
+        ]
+      },
+      "teaching_route": [
+        "BanditRL.OnlineConvex.SourceFiniteMax",
+        "BanditRL.OnlineConvex.isCompact_active_subgradient_hull",
+        "BanditRL.OnlineConvex.max_subgradient_direction_witness",
+        "BanditRL.OnlineConvex.theorem_2_26"
+      ],
+      "source_theorems": [
+        {
+          "label": "Theorem2.26 finite maximum rule",
+          "pages": "printed18",
+          "pdf_page": 30,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "F=\\max_{i\\in I}f_i,\\quad A(x)=\\{i:f_i(x)=F(x)\\},\\qquad\\partial F(x)=\\operatorname{conv}\\!\\bigcup_{i\\in A(x)}\\partial f_i(x)",
+          "fallback": "The maximum subdifferential is exactly the ordinary convex hull of all active component subdifferentials.",
+          "plain": "For a finite family of proper convex functions, if every function is finite and continuous at x, every maximum support is a finite convex combination of active component supports, and every such combination supports the maximum.",
+          "relationship": "Source Euclidean space is represented by a finite-dimensional real inner-product space. Finite nonempty indexing makes the source maximum well-defined; EReal models the original extended values and ambient continuity. No component closedness or hull closure is introduced.",
+          "contract": {
+            "model": "Deterministic finite-dimensional real Euclidean convex analysis, actual finite maximum and full global supports.",
+            "assumptions": "Each component is proper and convex; x belongs to every effective domain; every component is ambient-continuous at x. The finite family is nonempty. No closedness, global finiteness, differentiability or supplied support decomposition.",
+            "parameters": "Every finite nonempty family, common query x and candidate support g. All ambient test y; all active indices and finite convex combinations.",
+            "regret": "No algorithm/regret claim.",
+            "guarantee": "Full set equality with ordinary convexHull, both directions, ties and inactive indices handled."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Public Theorem2.26",
+            "boundary": "Compiled locally with all source premises and both ordinary-hull directions. Package acceptance, scoped PR delivery and live status have separate evidence; Chapter2/book incomplete."
+          }
+        }
+      ],
+      "proof_bridge": {
+        "title": "An actual support decomposition through compactness and separation",
+        "summary": "The reverse representation is derived; it is not supplied as a hypothesis.",
+        "steps": [
+          {
+            "title": "Lift and take convex combinations",
+            "detail": "For an active index, fi(x)=F(x), and fi(y)≤F(y) at every y. Thus its global support inequality is an F-support. The F-support set is an intersection of real linear halfspaces at this finite query and is convex.",
+            "math": "\\operatorname{conv}\\!\\bigcup_{i\\in A(x)}\\partial f_i(x)\\subseteq\\partial F(x)",
+            "fallback": "Actual finite maximum order and all-y support inequalities."
+          },
+          {
+            "title": "Make the ordinary hull compact",
+            "detail": "Source continuity makes x an interior point of every effective domain. Actual local support boundedness and closed global inequalities give compact subdifferentials. Convex joins are continuous images of [0,1] times two compact sets; finite induction gives compact ordinary active hull. Inactive sets contribute the empty set.",
+            "math": "\\partial f_i(x)\\text{ compact},\\qquad K=\\operatorname{conv}\\!\\bigcup_{i\\in A(x)}\\partial f_i(x)\\text{ compact}",
+            "fallback": "No closure replacement or global closedness premise."
+          },
+          {
+            "title": "Construct a support dominating a direction",
+            "detail": "For g∈∂F(x) and any direction d take yn=x+d/(n+1), choose an actual maximizing index in and an actual component support qn at yn for all sufficiently large n. Local bounds yield a convergent subsequence. Finiteness yields one index recurring along it; continuity and the global-support limit theorem give k∈∂fi(x) with fi(x)=F(x).",
+            "math": "\\langle g,y_n-x\\rangle\\le\\langle q_n,y_n-x\\rangle,\\qquad\\langle g,d\\rangle\\le\\langle k,d\\rangle",
+            "fallback": "Both actual choices and the limit support are constructed."
+          },
+          {
+            "title": "Contradict strict separation",
+            "detail": "If g were outside K, compactness and convexity provide a continuous linear functional strictly larger at g than at every k∈K. Riesz represents it by a direction d. The constructed active k has at least the directional inner product of g, a contradiction. Hence g lies in the ordinary convex hull.",
+            "math": "g\\in\\partial F(x)\\Longrightarrow g\\in K",
+            "fallback": "Full reverse inclusion under precisely the frozen source assumptions."
+          }
+        ],
+        "boundary": "Theorem2.26 only. Hinge/affine/Lipschitz, OSD/linearization, older main-integration migration and Chapters3–16 remain mandatory. Curated teaching links are not the full proof-term dependency graph."
+      },
+      "worked_example": {
+        "title": "Tied supports, an inactive function and extended values",
+        "intro": "Actual public canaries apply the complete theorem to proper convex source instances.",
+        "steps": [
+          {
+            "title": "A genuine tie",
+            "detail": "For f1(y)=y and f2(y)=−y at0, the active union is exactly{−1,1}, but the maximum subdifferential is the whole interval[−1,1]. The slope1/2 belongs to the hull and is absent from the union;2 is excluded from the subdifferential.",
+            "math": "\\partial\\max(y,-y)(0)=[-1,1],\\quad\\tfrac12\\notin\\{-1,1\\}",
+            "fallback": "Exercises the hull and reverse characterization, not only active inclusion."
+          },
+          {
+            "title": "A strict maximum",
+            "detail": "At2 the function y is active and −y is inactive. The maximum subdifferential is{1}; the inactive component slope−1 is excluded.",
+            "math": "\\partial\\max(y,-y)(2)=\\{1\\}",
+            "fallback": "No union over all component supports."
+          },
+          {
+            "title": "A singleton extended-domain family",
+            "detail": "Use the indicator of[−1,1] as a one-function family. It is continuous and finite at0, whose subdifferential is{0}; at2 the maximum is+∞. This shows that global real-valuedness is not assumed.",
+            "math": "\\partial\\iota_{[-1,1]}(0)=\\{0\\},\\qquad\\iota_{[-1,1]}(2)=+\\infty",
+            "fallback": "Proper convex extended values and nonempty singleton indexing."
+          }
+        ],
+        "takeaway": "Active supports may require convex mixing, while inactive functions contribute no supports; infinity away from the common query remains permitted.",
+        "boundary": "Empty-index maximum has no value specified by this source; no Chapter2/book completion."
+      }
     }
   ]
 }
