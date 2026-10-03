@@ -22,3 +22,13 @@ Allthree source claims required; no package/chapter/book complete. Later max/hin
 - [ ]Combined/graph/site/registry/contribution/final-reader/committed binding gates and scoped PR.
 
 Original draft entries retained history; all later Chapter2/older26path migration and book obligations remain required.
+
+## Accepted-local package gates
+
+- [x]All three original source statements closed and separately reviewed in actual publicbytes.
+- [x]Actual root/Tests/fullharness/axiom/fence/graph/site/sharedregistry/exactbasecontributor gates.
+- [x]Fixed committed/worktree LF inventory and independently measured raw receipt rows,0supersessions.
+- [x]Scoped local acceptance/shared Book mapping/whole-book partial ledger retained.
+- [ ]Scoped PR delivery separately recorded.
+
+Later Chapter2/book/older26path main-migration obligations remain required.

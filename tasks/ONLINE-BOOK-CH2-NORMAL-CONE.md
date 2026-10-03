@@ -11,3 +11,7 @@ Source/headers/native hashes/DAG and conversion window frozen before actual proo
 ## Stabilized → proving → public candidate
 
 Fresh normal_blind and distinct draft source reviewer stabilized allthree unchanged source headers. Direct indicator/interior leaves firsttry compiled; unitball reverse normalization needed real RCLike coercion simplification, successfulfull-leaf03. Four nondegenerate public canaries and module compile3289jobs; frozen three native hashes unchanged, eight public axioms standardonly. Distinct full-source actual-body review accepted-with-explicit-delta. Fullroot/Tests/harness/graph/site/final-reader/committed gates still separate; no package/chapter completion.
+
+## Accepted-local package
+
+All three exact Example2.25 claims accepted after separate actual final reader review, full technical gates and fixed committed bindings. Acceptance-evidence/decision recorded separately; original draft/stabilized/proving/candidate records preserved, frozen headers unchanged. Scoped PR delivery pending separate receipt. Chapter2/book Goal active.
