@@ -8,8 +8,8 @@
 - [x] Full-root proof graph and six proof-value checks.
 - [x] Verified site/reader inspection.
 - [x] Exact-base contribution gate.
-- [ ] Scoped PR delivery.
+- [x] Scoped draft PR #137 delivery, stacked on #136.
 
 Interior existence and all later Chapter2 results remain required.
 
-All local acceptance gates passed; acceptance-decision.md records exact evidence. PR delivery pending.
+All local acceptance gates passed; acceptance-decision.md records exact evidence. Draft PR #137 delivered; no merge or deployment.
