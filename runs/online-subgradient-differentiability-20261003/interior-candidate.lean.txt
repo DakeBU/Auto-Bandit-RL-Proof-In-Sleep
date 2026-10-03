@@ -1,0 +1,65 @@
+import BanditRLProof.OnlineSubgradientInterior
+import BanditRLProof.OnlineConvexFirstOrder
+import Mathlib.Analysis.Calculus.LocalExtr.Basic
+
+noncomputable section
+open Set Filter
+open scoped Topology
+namespace BanditRL.OnlineConvex
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
+
+def SourceDifferentiableAt (f : E → EReal) (x : E) : Prop :=
+  ∃ h : E → ℝ, (fun y => (h y : EReal)) =ᶠ[𝓝 x] f ∧ DifferentiableAt ℝ h x
+
+theorem singleton_subdifferential_interior (f : E → EReal) (hf : IsConvexExtended f)
+    (x : E) (hx : ∃ r : ℝ, f x = (r : EReal))
+    (g : E) (hg : SourceSubdifferential f x = {g}) :
+    x ∈ interior (effectiveDomain f) := by
+  classical
+  obtain ⟨r, hr⟩ := hx
+  have hxdom : x ∈ effectiveDomain f := by
+    change f x < ⊤
+    rw [hr]
+    exact EReal.coe_lt_top _
+  have hgs : g ∈ SourceSubdifferential f x := by rw [hg]; exact mem_singleton g
+  by_contra hxi
+  obtain ⟨a, hane, ha⟩ := supporting_functional_at_closure (effectiveDomain f)
+    (convex_effectiveDomain f hf) x (subset_closure hxdom) hxi
+  let d : E := (InnerProductSpace.toDual ℝ E).symm a
+  have hdrepr : InnerProductSpace.toDual ℝ E d = a :=
+    (InnerProductSpace.toDual ℝ E).apply_symm_apply a
+  have hdne : d ≠ 0 := by
+    intro hd
+    rw [hd, map_zero] at hdrepr
+    exact hane hdrepr.symm
+  have hbot : ∀ y, f y ≠ ⊥ := by
+    intro y hy
+    have h := hgs y
+    rw [hr, hy, ← EReal.coe_add] at h
+    exact (EReal.bot_lt_coe _).not_ge h
+  have hgd : g + d ∈ SourceSubdifferential f x := by
+    intro y
+    by_cases hyt : f y = ⊤
+    · rw [hyt]; exact le_top
+    · have hyfin := EReal.coe_toReal hyt (hbot y)
+      have hydom : y ∈ effectiveDomain f := by
+        change f y < ⊤
+        rw [← hyfin]
+        exact EReal.coe_lt_top _
+      have hn := ha y hydom
+      have hdinner : inner ℝ d (y - x) = a y - a x := by
+        rw [← InnerProductSpace.toDual_apply_apply, hdrepr, map_sub]
+      have hs := hgs y
+      rw [hr, ← hyfin, ← EReal.coe_add] at hs
+      have hsreal : r + inner ℝ g (y - x) ≤ (f y).toReal := by exact_mod_cast hs
+      rw [hr, ← hyfin, ← EReal.coe_add]
+      apply EReal.coe_le_coe
+      rw [inner_add_left, hdinner]
+      linarith
+  rw [hg, mem_singleton_iff] at hgd
+  apply hdne
+  apply add_left_cancel (a := g)
+  simpa using hgd
+
+end BanditRL.OnlineConvex
+#print axioms BanditRL.OnlineConvex.singleton_subdifferential_interior

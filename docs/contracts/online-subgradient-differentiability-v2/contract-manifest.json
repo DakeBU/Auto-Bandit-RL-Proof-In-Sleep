@@ -1,0 +1,60 @@
+{
+  "status": "draft-v2-repair-review-pending",
+  "source": "Orabona arXiv1912.13213v10 printed17/PDF29",
+  "source_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+  "scope": "full extended-real iff and gradient identity, not yet proved",
+  "context_sha256": "0638affef80952cde5777ece5cdcf2fa8ec46efd2c3ada2c670de2b0df8f5348",
+  "header_sha256": {
+    "full-header.txt": "7029e22ec2d7e84879a3c97109e5d17709372628fa516b309c2d5391ef5e94b9",
+    "gradient-header.txt": "fd8f6b3d690b24692f0ab8462f8ab9a842b9381c96717da81c217ecf9254381e",
+    "interior-header.txt": "051a7e1df02b4405a9dcebc5a48a586aee4a9f909ff862e28fb5ea4deb66f9dd",
+    "continuity-header.txt": "7f1ac2d804d06287afacb7bb66cdf201cf82a7df996d3a3b492c33418b0b7af7"
+  },
+  "dag": [
+    {
+      "leaf": "singleton-interior",
+      "status": "scratch-compiled",
+      "dependencies": [
+        "supporting_functional_at_closure",
+        "convex_effectiveDomain",
+        "normal perturbation"
+      ]
+    },
+    {
+      "leaf": "singleton-continuity",
+      "status": "scratch-compiled",
+      "dependencies": [
+        "singleton-interior",
+        "actual-support-implies-nowhere-bottom",
+        "ConvexOn.continuousOn_interior"
+      ]
+    },
+    {
+      "leaf": "differentiable-uniqueness",
+      "status": "scratch-compiled",
+      "dependencies": [
+        "finitePart_eventually",
+        "IsLocalMin.hasFDerivAt_eq_zero"
+      ]
+    },
+    {
+      "leaf": "singleton-to-Frechet",
+      "status": "required-unproved",
+      "dependencies": [
+        "local support existence",
+        "local Lipschitz bound",
+        "support closed graph",
+        "finite-dimensional compactness"
+      ]
+    },
+    {
+      "leaf": "full-source-forward-and-gradient",
+      "status": "required-unproved",
+      "dependencies": [
+        "local representative implies convex nowhere-bottom",
+        "actual convex gradient support",
+        "differentiable-uniqueness"
+      ]
+    }
+  ]
+}

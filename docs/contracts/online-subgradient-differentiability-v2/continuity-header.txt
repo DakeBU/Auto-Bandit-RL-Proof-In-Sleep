@@ -1,0 +1,4 @@
+theorem singleton_subdifferential_continuousAt (f : E → EReal) (hf : IsConvexExtended f)
+    (x : E) (hx : ∃ r : ℝ, f x = (r : EReal))
+    (g : E) (hg : SourceSubdifferential f x = {g}) :
+    ContinuousAt (fun z => (f z).toReal) x

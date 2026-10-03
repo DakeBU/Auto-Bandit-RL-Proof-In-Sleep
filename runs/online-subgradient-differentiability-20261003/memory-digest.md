@@ -1,0 +1,3 @@
+# Singleton chain next boundary
+
+PR138 delivered51fdc047, prior interior producer accepted local. This branch has scratch compiled normal-perturbation singleton->interior, actual convex-continuity singleton->continuous, and earlier differentiability uniqueness. Full2.22 equivalence not proved. Version1 review identified missing gradient declaration; preserve rejection, review v2 explicit representative identity. Next actual missing analytic result is support boundedness/closed graph/finite-dimensional compactness leading to Frechet derivative; do not replace full endpoint by consumer assumptions or scalar-only result. No global SGB frontier changes, model medium requested, source v10 unchanged.

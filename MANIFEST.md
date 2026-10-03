@@ -15406,3 +15406,4 @@ here during local harness runs.
 - `2026-10-03T08:19:11+00:00` `bandit.py new-task` `task` `tasks/ONLINE-BOOK-CH2-CLOSED-PROPER.md` - Orabona closed/proper definitions and indicator equivalences
 - `2026-10-03T08:38:11+00:00` `bandit.py new-task` `task` `tasks/ONLINE-BOOK-CH2-SUBGRADIENT-BASIC.md` - Orabona global subgradient definition and Theorem2.21
 - `2026-10-03T08:43:16+00:00` `bandit.py new-task` `task` `tasks/ONLINE-BOOK-CH2-SUBGRADIENT-INTERIOR.md` - Interior subgradient existence from affine contact
+- `2026-10-03T09:09:36+00:00` `bandit.py new-task` `task` `tasks/ONLINE-BOOK-CH2-SUBGRADIENT-DIFFERENTIABILITY.md` - Extended-real singleton subdifferential and differentiability
