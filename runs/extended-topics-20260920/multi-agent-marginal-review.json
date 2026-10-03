@@ -1,0 +1,112 @@
+{
+  "schema_version": 1,
+  "status": "accepted-scratch-component",
+  "semantic_verdict": "accepted-with-explicit-delta",
+  "production_integrated": false,
+  "topic_complete": false,
+  "review_actors": {
+    "formalizer": "/root",
+    "blind_decoder": "/root/blind_decoder_b",
+    "source_reviewer": "/root/source_reviewer_a"
+  },
+  "source": {
+    "title": "Multi-Player Bandits -- a Musical Chairs Approach",
+    "anchor": "Static Algorithms1/2 and supplement A.1 Lemma4; actual unknown-population good-event conditioning under numeric source gap; prior all-player probability repair unchanged",
+    "main_sha256": "c56474f0c3e689c1819b11e2bca4d3e5dcaef6eddfd0173bb55ff6a84f11d99d",
+    "supplement_sha256": "4ffd4d0c3fc975ae04b3d5e96911bd58d66bc2206e9d9584e18fcbf0c5b305ad"
+  },
+  "dependency_hashes": {
+    "BanditRLProof/Algorithms/MusicalChairsCoordination.lean": "7077674b2c4636a15b02b137ad08aac21ba0190bc0e6c58d03dfeea90413684d",
+    "BanditRLProof/Algorithms/MusicalChairsCoordinationTime.lean": "ff12d72240b7d02b88a839383e8c62c448d968953621d9e5cbc3e8ac5861ec72",
+    "BanditRLProof/Algorithms/MusicalChairsCoordinationRegret.lean": "ae1f7ddd238e9f6720682f2446ea1a0a7bcc9019fb42be264674c1ec68d5edea"
+  },
+  "base_commit": "fbef55e8c9c23b1323233002b6d484a3561edca7",
+  "scope": "Actual finite iid path prefix/state/current-draw/played-action marginals, real path-deficit expectation transport, actual restricted exploration-continuation path measure, normalized conditional coordination regret <=8*n^2 including primitive-source specialization. No full learner phase splice or unconditional regret.",
+  "public_artifacts": {
+    "runs/extended-topics-20260920/MusicalChairsMarginalPrototype.lean": "417531d31cd1f13b146d3ba9ad99902d0f3542b9d2616da6c1a8a069d4a1a2da",
+    "docs/extended-topics/MULTI-AGENT-MARGINAL-PROGRESS.md": "2ec0994b4ae9d430017c12d7a8a41825dcc2d5238cead0db80bcb5ab1ea5887d"
+  },
+  "review_artifacts": {
+    "neutral-marginal.lean": {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\neutral-marginal.lean",
+      "sha256": "b50c21e1343b69ca0e6b82cee03ff265781320a57725afec7a61c75133211e0a"
+    },
+    "marginal-blind-v1.md": {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\marginal-blind-v1.md",
+      "sha256": "96c8729189edf9a7c66e9c018846f47758b1d6804d50a8bc5baa14b19d6aaf58"
+    },
+    "marginal-source-review-v1.md": {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\marginal-source-review-v1.md",
+      "sha256": "6dbc59ada9b4505bc630f5c9a542159601ae6581a8e80d0ff400e3cdaf84eadd"
+    }
+  },
+  "declarations": [
+    "BanditRLProof.FinitePMF.iid_sum_snoc",
+    "BanditRLProof.FinitePMF.iid_snoc",
+    "BanditRLProof.MusicalChairs.trajectory_snoc_prefix",
+    "BanditRLProof.MusicalChairs.trajectory_snoc_last",
+    "BanditRLProof.MusicalChairs.iid_trajectory_stateLaw",
+    "BanditRLProof.FinitePMF.iid_take",
+    "BanditRLProof.FinitePMF.sum_map",
+    "BanditRLProof.MusicalChairs.trajectory_take",
+    "BanditRLProof.MusicalChairs.iid_trajectory_marginal",
+    "BanditRLProof.MusicalChairs.iid_last_state_draw",
+    "BanditRLProof.MusicalChairs.iid_round_state_draw",
+    "BanditRLProof.FinitePMF.sum_map_real",
+    "BanditRLProof.FinitePMF.sum_bind_real",
+    "BanditRLProof.MusicalChairs.pathCoordinationRegret",
+    "BanditRLProof.MusicalChairs.iid_round_regret_expectation",
+    "BanditRLProof.MusicalChairs.iid_path_regret_expectation",
+    "BanditRLProof.MusicalChairs.iid_path_regret_le",
+    "BanditRLProof.MusicalChairs.learnedDrawPathKernel_state_marginal",
+    "BanditRLProof.MusicalChairs.learnedDrawPathKernel_round_marginal",
+    "BanditRLProof.MusicalChairs.explorationContinuationLaw_restricted_path",
+    "BanditRLProof.MusicalChairs.explorationContinuationLaw_good_regret_integral",
+    "BanditRLProof.MusicalChairs.explorationContinuationLaw_conditional_coordination_regret",
+    "BanditRLProof.MusicalChairs.MarginalCanary.means",
+    "BanditRLProof.MusicalChairs.MarginalCanary.transientDraws",
+    "BanditRLProof.MusicalChairs.MarginalCanary.zero_horizon_regret",
+    "BanditRLProof.MusicalChairs.MarginalCanary.actual_transient_regret",
+    "BanditRLProof.MusicalChairs.MarginalCanary.fixed_draws_not_actions_regret",
+    "BanditRLProof.MusicalChairs.MarginalCanary.two_player_actual_path_bound",
+    "BanditRLProof.MusicalChairs.MarginalCanary.allowed_draw_mass",
+    "BanditRLProof.MusicalChairs.MarginalCanary.actual_transient_path_mass",
+    "BanditRLProof.MusicalChairs.iid_continuationAction_marginal",
+    "BanditRLProof.MusicalChairs.source_conditional_coordination_regret",
+    "BanditRLProof.MusicalChairs.coordinationState_measurableSpace",
+    "BanditRLProof.MusicalChairs.coordinationState_measurableSingleton"
+  ],
+  "new_scanned_declaration_count": 32,
+  "new_theorem_count": 29,
+  "new_definitions": 3,
+  "new_named_instances": 2,
+  "audited_new_declaration_count": 34,
+  "canary_theorems": 6,
+  "focused_compilation": {
+    "command": "lake env lean runs/extended-topics-20260920/MusicalChairsMarginalPrototype.lean",
+    "exit_code": 0,
+    "axiom_command": "lake env lean E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\marginal-axiom-audit.lean",
+    "axiom_exit_code": 0,
+    "axiom_log": "E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\marginal-axioms.log",
+    "axiom_log_sha256": "6ff8716a67cb0d8b3416829abb14b0143381c743f13508912c95b6e24c57cb0f",
+    "allowed_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "exact_folded_code_verified": true
+  },
+  "unchanged_context": {
+    "runs/extended-topics-20260920/MusicalChairsHandoffPrototype.lean": "24af303ef62b8671c1da0f28135c3ff410db315ca14948a69dab7bfc49ec1d39"
+  },
+  "joint_gate_status": "Not rerun or claimed for scratch; no public-root integration. Existing production acceptance remains scoped to coordination-regret code.",
+  "remaining": [
+    "Global true-top comparator optimality and pathwise [0,n] round regret on arbitrary bad histories",
+    "Actual causal exploration/coordination phase splice for every total horizon, including horizons shorter than exploration",
+    "Initial exploration cost and unconditional full regret with delta*n*T; source constant/corollary",
+    "Any expected realized reward identity requires a separate fresh future reward model",
+    "Complete stochastic learner canary",
+    "Shared extraction/public root/Tests/harness/site acceptance",
+    "Recent-source audit and all-topic ICLR evidence"
+  ]
+}

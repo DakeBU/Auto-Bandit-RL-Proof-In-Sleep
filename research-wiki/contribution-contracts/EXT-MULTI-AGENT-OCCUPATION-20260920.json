@@ -1,0 +1,183 @@
+{
+  "schema_version": "2.0",
+  "id": "EXT-MULTI-AGENT-OCCUPATION-20260920",
+  "route": "extended-topics/multi-agent",
+  "frontier_cell": "multi-agent/actual-coordination-and-finite-expected-occupation",
+  "source_facing": true,
+  "source": {
+    "kind": "paper",
+    "title": "Multi-Player Bandits -- a Musical Chairs Approach",
+    "version": "ICML2016 PMLR48:155-163; official main/supplement hashes in multi-agent-source-review.json",
+    "anchor": "Static Algorithms1/2, Theorem1; supplement A.1 Lemmas2-4",
+    "url": "https://proceedings.mlr.press/v48/rosenski16.html"
+  },
+  "target": "Promote actual local coordination and exact probability producer, derive numerical1/(4n), bind-recursive survival and finite actual expected unfixed occupancy<=4n²; public-root component with concrete collision and boundary canaries. Not full MC regret.",
+  "affected_files": [
+    "BanditRLProof.lean",
+    "BanditRLProof/Algorithms/MusicalChairsCoordination.lean",
+    "BanditRLProof/Algorithms/MusicalChairsCoordinationTime.lean",
+    "research-wiki/papers/extended-topics-musical-chairs-coordination.md",
+    "website/content/banditrlwiki.json",
+    "website/content/results.json"
+  ],
+  "declarations": [
+    "BanditRLProof.MusicalChairs.State",
+    "BanditRLProof.MusicalChairs.action",
+    "BanditRLProof.MusicalChairs.CollisionFree",
+    "BanditRLProof.MusicalChairs.step",
+    "BanditRLProof.MusicalChairs.DistinctFixed",
+    "BanditRLProof.MusicalChairs.action_of_fixed",
+    "BanditRLProof.MusicalChairs.step_preserves_fixed",
+    "BanditRLProof.MusicalChairs.step_fixed_action",
+    "BanditRLProof.MusicalChairs.new_fixed_collisionFree",
+    "BanditRLProof.MusicalChairs.step_distinct",
+    "BanditRLProof.MusicalChairs.initial",
+    "BanditRLProof.MusicalChairs.initial_distinct",
+    "BanditRLProof.MusicalChairs.trajectory",
+    "BanditRLProof.MusicalChairs.trajectory_distinct",
+    "BanditRLProof.MusicalChairs.action_local",
+    "BanditRLProof.MusicalChairs.jointDraw",
+    "BanditRLProof.MusicalChairs.transition",
+    "BanditRLProof.MusicalChairs.stateLaw",
+    "BanditRLProof.MusicalChairs.transition_distinct",
+    "BanditRLProof.MusicalChairs.stateLaw_distinct",
+    "BanditRLProof.MusicalChairs.localUpdate",
+    "BanditRLProof.MusicalChairs.collisionBit",
+    "BanditRLProof.MusicalChairs.step_localUpdate",
+    "BanditRLProof.MusicalChairs.jointDraw_mem",
+    "BanditRLProof.MusicalChairs.FixedWithin",
+    "BanditRLProof.MusicalChairs.step_within",
+    "BanditRLProof.MusicalChairs.stateLaw_within",
+    "BanditRLProof.MusicalChairs.jointDraw_rectangle",
+    "BanditRLProof.MusicalChairs.jointDraw_rectangle_product",
+    "BanditRLProof.MusicalChairs.fixationWindow",
+    "BanditRLProof.MusicalChairs.fixationWindow_fixes",
+    "BanditRLProof.MusicalChairs.transition_fixation_lower",
+    "BanditRLProof.MusicalChairs.isolationWindow",
+    "BanditRLProof.MusicalChairs.isolationWindow_subset",
+    "BanditRLProof.MusicalChairs.jointDraw_isolation",
+    "BanditRLProof.MusicalChairs.transition_common_fixation_lower",
+    "BanditRLProof.MusicalChairs.exists_unoccupied",
+    "BanditRLProof.MusicalChairs.transition_unfixed_hazard",
+    "BanditRLProof.MusicalChairs.quarter_le_avoidance_succ",
+    "BanditRLProof.MusicalChairs.quarter_le_avoidance",
+    "BanditRLProof.MusicalChairs.real_uniform_hazard_lower",
+    "BanditRLProof.MusicalChairs.uniform_hazard_lower",
+    "BanditRLProof.MusicalChairs.transition_unfixed_hazard_quarter",
+    "BanditRLProof.MusicalChairs.event_add_compl",
+    "BanditRLProof.MusicalChairs.transition_fixed_no_return",
+    "BanditRLProof.MusicalChairs.transition_unfixed_le",
+    "BanditRLProof.MusicalChairs.unfixed_survival",
+    "BanditRLProof.MusicalChairs.quarter_rate_le_one",
+    "BanditRLProof.MusicalChairs.unfixed_survival_sum",
+    "BanditRLProof.MusicalChairs.total_unfixed_occupation_le",
+    "BanditRLProof.MusicalChairs.unfixedCount",
+    "BanditRLProof.MusicalChairs.unfixedCount_eq_sum",
+    "BanditRLProof.MusicalChairs.expected_unfixed_eq_prob_sum",
+    "BanditRLProof.MusicalChairs.expected_unfixed_occupation_le",
+    "Tests.MusicalChairsCoordinationCanary.two_player_hazard",
+    "Tests.MusicalChairsCoordinationCanary.two_player_isolation",
+    "Tests.MusicalChairsCoordinationCanary.collision_keeps_unfixed",
+    "Tests.MusicalChairsCoordinationCanary.separated_draws_fix",
+    "Tests.MusicalChairsCoordinationCanary.two_player_occupation",
+    "Tests.MusicalChairsCoordinationCanary.single_player_hazard"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "bandit.py search-memory collision: no hits",
+      "bandit.py list-lean-decls collision: no hits",
+      "research-wiki/mathlib/theorem-cards.md",
+      "Causal.nodeJoint: inspected, not imported",
+      "Mathlib Probability Distributions Uniform and ProbabilityMassFunction Monad/Constructions",
+      "Mathlib Probability Moments SubGaussian: sharp Hoeffding producers inspected, not yet consumed",
+      "uniformOfFintype targeted memory/declaration search: existing causal allocation wrappers do not supply product restriction counting",
+      "BanditRLProof search for toOuterMeasure_uniformOfFintype and Fintype.card_pi: no matching producer"
+    ],
+    "reused_declarations": [
+      "PMF.uniformOfFintype",
+      "PMF.map",
+      "PMF.bind",
+      "PMF.toOuterMeasure_bind_apply",
+      "PMF.toOuterMeasure_uniformOfFintype_apply",
+      "PMF.toOuterMeasure_map_apply",
+      "Fintype.card_congr",
+      "Fintype.card_pi",
+      "Real.one_sub_inv_le_log_of_pos",
+      "Real.exp_one_lt_three",
+      "ENNReal.tsum_geometric",
+      "BanditRLProof.MusicalChairs.transition_unfixed_hazard",
+      "BanditRLProof.MusicalChairs.step"
+    ],
+    "new_shared_declarations": [],
+    "known_consumers": [
+      "MusicalChairsCoordinationTime.transition_unfixed_hazard_quarter consumes the constructed common-set transition producer",
+      "unfixed_survival consumes transition/no-return through actual PMF bind",
+      "expected_unfixed_occupation_le consumes probability tails and exact finite-count expectation identity",
+      "public-root Tests.MusicalChairsCoordinationCanary"
+    ],
+    "planned_consumers": [
+      "actual full MC exploration-good event and 2U regret assembly"
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Promote one canonical coordination implementation; historical scratch files remain evidence only. Derive temporal probabilities from the actual kernel rather than assume geometric stopping times or import a source performance bound."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/blind_decoder_b",
+    "source_reviewer": "/root/source_reviewer_a",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Common candidate set of cardinality n is an intermediate input; source full learner must produce it. Endpoint is finite expected unfixed occupancy from actual marginals, not full path-conditioned regret or total completion time. Numerical/static constants explicitly reviewed."
+  },
+  "graph_contribution": {
+    "lean_graph": "new-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Same-source finite kernel and geometric survival mechanism; no independently validated cross-setting transport or certified functor claimed.",
+    "focus_targets": [
+      "BanditRLProof.MusicalChairs.expected_unfixed_occupation_le",
+      "BanditRLProof.MusicalChairs.unfixed_survival"
+    ],
+    "visual_review": "Structural inspection passed:54 canonical module/declaration links and anchors resolve; incomplete scope and exact code commit visible. No browser visual inspection performed.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "no-change-with-reason: no book theorem or public teaching route changes",
+    "banditrlwiki": "updated: exact reviewed coordination scope and declaration map; full topic incomplete",
+    "results_ledger": "updated: compiled finite expected occupation milestone, not full MC regret",
+    "roadmap": "updated: ALL-TOPICS-LEDGER and occupation progress identify remaining exploration and regret producers",
+    "website_surfaces": [
+      "website/content/banditrlwiki.json",
+      "website/content/results.json",
+      "compiler-derived module/declaration graph"
+    ]
+  },
+  "truth_boundary": "Actual coordination kernel and finite expected unfixed occupancy only. Full exploration reward/history law, local estimator, simultaneous ranking/count concentration, learned common sets, 2U comparator charge, same-process full regret, full-learner canary, recent proof audit and ICLR evaluation remain open. No main merge/deployment.",
+  "verification": {
+    "focused_checks": [
+      "Core3316/time3318/public root9034/canary9034 jobs passed",
+      "All60 declarations (44 theorems including6 canaries) audited with standard Lean axioms only",
+      "Exact folded code and review/public hashes verified"
+    ],
+    "bandit_check": "Passed: shared root9034 jobs, Tests9138 jobs;437 Python tests,7 skipped,175.766s; check passed",
+    "site_build": "Passed after fresh full gate: --lean-verified;786 modules,10117 declarations,0 placeholders",
+    "site_check": "Passed:861 HTML pages, all internal links/anchors valid; check_books.py exit0",
+    "independent_review": "Accepted with explicit scope delta by independent blind decoder and source reviewer; exact hashes and scopes in multi-agent-occupation-review.json"
+  },
+  "contributor": {
+    "name": "Codex with independent semantic reviewers",
+    "role": "User-directed mathematical repair, bounded scratch formalization and evidence preservation"
+  }
+}

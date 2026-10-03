@@ -1,0 +1,108 @@
+{
+  "schema_version": 1,
+  "status": "accepted-scratch-full-learner-canary",
+  "semantic_verdict": "accepted-with-explicit-delta",
+  "production_integrated": false,
+  "topic_complete": false,
+  "review_actors": {
+    "formalizer": "/root",
+    "blind_decoder": "/root/blind_decoder_b",
+    "source_reviewer": "/root/source_reviewer_a"
+  },
+  "source": {
+    "title": "Multi-Player Bandits -- a Musical Chairs Approach",
+    "anchor": "Static Algorithms1/2 Definition1 Theorem1 with explicit conditioning; supplement A.1 Lemmas2-4; previously reviewed all-player budget repair retained",
+    "main_sha256": "c56474f0c3e689c1819b11e2bca4d3e5dcaef6eddfd0173bb55ff6a84f11d99d",
+    "supplement_sha256": "4ffd4d0c3fc975ae04b3d5e96911bd58d66bc2206e9d9584e18fcbf0c5b305ad"
+  },
+  "base_commit": "3835b3e167f630dcc2e7b25920a6ca90a17bcad0",
+  "dependency_hashes": {
+    "BanditRLProof/Algorithms/MusicalChairsCoordination.lean": "7077674b2c4636a15b02b137ad08aac21ba0190bc0e6c58d03dfeea90413684d",
+    "BanditRLProof/Algorithms/MusicalChairsCoordinationTime.lean": "ff12d72240b7d02b88a839383e8c62c448d968953621d9e5cbc3e8ac5861ec72",
+    "BanditRLProof/Algorithms/MusicalChairsCoordinationRegret.lean": "ae1f7ddd238e9f6720682f2446ea1a0a7bcc9019fb42be264674c1ec68d5edea"
+  },
+  "scope": "Actual n2/k3 Bernoulli learner, means3/4,1/2,1/4, eps1/8 delta1/4 and exact explorationLength; actual local recovery probability>=3/4; all-horizon visible-regret bound; learned and full reward-law transient event mass>=3/64 with mean coordination charge5/4. Separate ranking/zero-bit diagnostics are not claimed as measured full-trace events.",
+  "public_artifacts": {
+    "runs/extended-topics-20260920/MusicalChairsNoisyLearnerPrototype.lean": "208d58bdac92469bf9550da00fe510f94e3ce062efb8a6c28f9ddf9f3df011d7",
+    "docs/extended-topics/MULTI-AGENT-NOISY-LEARNER-PROGRESS.md": "f5f5cc82029fa3ef0227eb576b75e1528f46d189655bb185e6123a67fd812a9b",
+    "docs/extended-topics/MULTI-AGENT-NOISY-LEARNER-WORK.md": "b95a6ef76d044f2d63ddd85f6de7facba09b71ffbebc2a25dfa448e4ee5ef183"
+  },
+  "review_artifacts": {
+    "neutral-noisy-learner.lean": {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\neutral-noisy-learner.lean",
+      "sha256": "954a11ef11fb385047b3bdf74bdecef12c5237d01df74b6d45834611bad8607c"
+    },
+    "noisy-learner-blind-v1.md": {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\noisy-learner-blind-v1.md",
+      "sha256": "c1b1bf8ef40fe473ef7359a895984e076b135a2c50e71aba5f0f2b3c4c0e4297"
+    },
+    "noisy-learner-source-review-v1.md": {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\noisy-learner-source-review-v1.md",
+      "sha256": "f4f3bba95d9c09976a6bea9e4cc7a81597391cdeb0790d9807a742729f6acccc"
+    }
+  },
+  "declarations": [
+    "BanditRLProof.MusicalChairs.NoisyLearnerCanary.successMass",
+    "BanditRLProof.MusicalChairs.NoisyLearnerCanary.law",
+    "BanditRLProof.MusicalChairs.NoisyLearnerCanary.law_bounded",
+    "BanditRLProof.MusicalChairs.NoisyLearnerCanary.law_integral",
+    "BanditRLProof.MusicalChairs.NoisyLearnerCanary.actual_means",
+    "BanditRLProof.MusicalChairs.NoisyLearnerCanary.success_and_failure_positive",
+    "BanditRLProof.MusicalChairs.NoisyLearnerCanary.top_set",
+    "BanditRLProof.MusicalChairs.NoisyLearnerCanary.ranked_list",
+    "BanditRLProof.MusicalChairs.NoisyLearnerCanary.numeric_gap",
+    "BanditRLProof.MusicalChairs.NoisyLearnerCanary.duration",
+    "BanditRLProof.MusicalChairs.NoisyLearnerCanary.good",
+    "BanditRLProof.MusicalChairs.NoisyLearnerCanary.measurable_good",
+    "BanditRLProof.MusicalChairs.NoisyLearnerCanary.learned_good_probability",
+    "BanditRLProof.MusicalChairs.NoisyLearnerCanary.actual_visible_regret_bound",
+    "BanditRLProof.MusicalChairs.NoisyLearnerCanary.transient_iid_mass",
+    "BanditRLProof.MusicalChairs.NoisyLearnerCanary.actual_good_transient_factorization",
+    "BanditRLProof.MusicalChairs.NoisyLearnerCanary.actual_good_transient_lower",
+    "BanditRLProof.MusicalChairs.NoisyLearnerCanary.actual_transient_charge",
+    "BanditRLProof.MusicalChairs.NoisyLearnerCanary.exact_effective_observation",
+    "BanditRLProof.MusicalChairs.NoisyLearnerCanary.exact_collision",
+    "BanditRLProof.MusicalChairs.NoisyLearnerCanary.actual_local_recovery",
+    "BanditRLProof.MusicalChairs.NoisyLearnerCanary.within_top_order_invariant",
+    "BanditRLProof.MusicalChairs.NoisyLearnerCanary.zero_reward_bit_distinction",
+    "BanditRLProof.MusicalChairs.NoisyLearnerCanary.zero_reward_has_positive_mass",
+    "BanditRLProof.MusicalChairs.NoisyLearnerCanary.actual_good_transient_lower_cast",
+    "BanditRLProof.MusicalChairs.NoisyLearnerCanary.completeTransientEvent",
+    "BanditRLProof.MusicalChairs.NoisyLearnerCanary.complete_transient_event_lower",
+    "BanditRLProof.MusicalChairs.NoisyLearnerCanary.law_probability"
+  ],
+  "new_scanned_declaration_count": 27,
+  "new_theorem_count": 22,
+  "new_definitions": 5,
+  "new_named_instances": 1,
+  "audited_new_declaration_count": 28,
+  "focused_compilation": {
+    "command": "lake env lean runs/extended-topics-20260920/MusicalChairsNoisyLearnerPrototype.lean",
+    "exit_code": 0,
+    "axiom_command": "lake env lean E:/ABRL/maintenance/extended-topics-20260920-multi-agent/noisy-learner-axiom-audit.lean",
+    "axiom_exit_code": 0,
+    "axiom_log": "E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\noisy-learner-axioms.log",
+    "axiom_log_sha256": "e775a1ce025940742354a0819a46005acc3429bc854993b84a4a90d202578a33",
+    "allowed_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "exact_folded_code_verified": true,
+    "warnings": 0
+  },
+  "unchanged_context": {
+    "runs/extended-topics-20260920/MusicalChairsRealizedPrototype.lean": "ac6f6a16052b8ca8ef1e4f5ddcaf5c9e75c95cdb2b696b7749b2d0ad4f1f4462"
+  },
+  "joint_gate_status": "Not rerun or claimed for scratch. Full-learner public-root canary acceptance requires production extraction and combined gates.",
+  "remaining": [
+    "Shared full learner and canary extraction/public root/Tests/harness/site acceptance",
+    "Recent-source audit and all-topic ICLR evidence"
+  ],
+  "excluded_claims": [
+    "Numerical Monte Carlo or executable policy simulation",
+    "Sublinear asymptotic rate with fixed delta1/4",
+    "Conditional realized-regret equality",
+    "Positive total realized-regret probability inferred from transient pseudo-regret"
+  ]
+}

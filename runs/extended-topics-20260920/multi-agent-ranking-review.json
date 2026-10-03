@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "status": "accepted-scratch-component",
+  "semantic_verdict": "accepted-with-explicit-delta",
+  "production_integrated": false,
+  "topic_complete": false,
+  "review_actors": {
+    "formalizer": "/root",
+    "blind_decoder": "/root/blind_decoder_b",
+    "source_reviewer": "/root/source_reviewer_a"
+  },
+  "source": {
+    "title": "Multi-Player Bandits -- a Musical Chairs Approach",
+    "anchor": "Static Algorithm1 empirical ranking; supplement A.1 Lemmas2/3; explicit cross-set gap formulation and all-player budget repair",
+    "main_sha256": "c56474f0c3e689c1819b11e2bca4d3e5dcaef6eddfd0173bb55ff6a84f11d99d",
+    "supplement_sha256": "4ffd4d0c3fc975ae04b3d5e96911bd58d66bc2206e9d9584e18fcbf0c5b305ad"
+  },
+  "dependency_hashes": {
+    "BanditRLProof/Algorithms/MusicalChairsCoordination.lean": "7077674b2c4636a15b02b137ad08aac21ba0190bc0e6c58d03dfeea90413684d",
+    "BanditRLProof/Algorithms/MusicalChairsCoordinationTime.lean": "ff12d72240b7d02b88a839383e8c62c448d968953621d9e5cbc3e8ac5861ec72"
+  },
+  "base_commit": "a8ffdb0",
+  "scope": "Actual fixed-tie sort/take/local candidate sets, all-history nonemptiness, gap transfer, measurable actual exploration event and probability>=1-delta for canonical true top-n set under primitive cross-set separation. No continuation or full learner/regret.",
+  "public_artifacts": {
+    "runs/extended-topics-20260920/MusicalChairsRankingPrototype.lean": "27ad51ad463f5fc068f9eee87341a35df2eb1b9b1d46ea24fc5c3c822fdecfa2",
+    "docs/extended-topics/MULTI-AGENT-RANKING-PROGRESS.md": "d553a5f2a8224b854e62b20e553481b57a112bcf6392ce3ed1e5e0a4eabd0e76"
+  },
+  "review_artifacts": {
+    "neutral-ranking.lean": {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\neutral-ranking.lean",
+      "sha256": "da3f4124a30c876bf7c0ddde506f5f5f7560db69b5e4848a52fc64a11fcd448d"
+    },
+    "ranking-blind-v1.md": {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\ranking-blind-v1.md",
+      "sha256": "c03ff421f96565de4f1fa6a3a2fd5e6b74eb0280d08bd9b074cf4daef86c052f"
+    },
+    "ranking-source-review-v1.md": {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\ranking-source-review-v1.md",
+      "sha256": "863d0da32a8120eb988f83ecd8383dac2d51f84d083a858ca5abb05cae718b8f"
+    }
+  },
+  "declarations": [
+    "BanditRLProof.MusicalChairs.scoreOrder",
+    "BanditRLProof.MusicalChairs.rankedArms",
+    "BanditRLProof.MusicalChairs.topArms",
+    "BanditRLProof.MusicalChairs.topArms_card",
+    "BanditRLProof.MusicalChairs.topArms_before_unselected",
+    "BanditRLProof.MusicalChairs.topArms_eq_of_order_separated",
+    "BanditRLProof.MusicalChairs.topArms_eq_of_strict_separation",
+    "BanditRLProof.MusicalChairs.topArms_eq_iff",
+    "BanditRLProof.MusicalChairs.populationEstimate_pos",
+    "BanditRLProof.MusicalChairs.localCandidateSet",
+    "BanditRLProof.MusicalChairs.localCandidateSet_card",
+    "BanditRLProof.MusicalChairs.localCandidateSet_nonempty",
+    "BanditRLProof.MusicalChairs.empirical_strict_separation",
+    "BanditRLProof.MusicalChairs.localCandidateSet_correct",
+    "BanditRLProof.MusicalChairs.localCandidateSet_eq_iff",
+    "BanditRLProof.MusicalChairs.measurableSet_localScoreOrder",
+    "BanditRLProof.MusicalChairs.explorationGoodEvent",
+    "BanditRLProof.MusicalChairs.explorationGoodEvent_eq_comparisons",
+    "BanditRLProof.MusicalChairs.measurableSet_explorationGoodEvent",
+    "BanditRLProof.MusicalChairs.explorationEstimatesCorrect_subset_goodEvent",
+    "BanditRLProof.MusicalChairs.trueTopArms",
+    "BanditRLProof.MusicalChairs.trueTopArms_eq_of_gap",
+    "BanditRLProof.MusicalChairs.explorationGoodEvent_probability",
+    "BanditRLProof.MusicalChairs.explorationGoodEvent_trueTop_probability",
+    "BanditRLProof.MusicalChairs.armMean_mem_unitInterval",
+    "BanditRLProof.MusicalChairs.separating_gap_le_one",
+    "BanditRLProof.MusicalChairs.source_exploration_good_probability",
+    "BanditRLProof.MusicalChairs.RankingCanary.scrambledScores",
+    "BanditRLProof.MusicalChairs.RankingCanary.tiedScores",
+    "BanditRLProof.MusicalChairs.RankingCanary.scrambled_sort",
+    "BanditRLProof.MusicalChairs.RankingCanary.tie_sort",
+    "BanditRLProof.MusicalChairs.RankingCanary.scrambled_candidates",
+    "BanditRLProof.MusicalChairs.RankingCanary.zero_request_empty",
+    "BanditRLProof.MusicalChairs.RankingCanary.large_request_all",
+    "BanditRLProof.MusicalChairs.RankingCanary.allCollisionFeedback",
+    "BanditRLProof.MusicalChairs.RankingCanary.all_collision_candidates",
+    "BanditRLProof.MusicalChairs.RankingCanary.oneObservedScore",
+    "BanditRLProof.MusicalChairs.RankingCanary.actual_player_zero_scores",
+    "BanditRLProof.MusicalChairs.RankingCanary.actual_player_one_scores",
+    "BanditRLProof.MusicalChairs.RankingCanary.actual_same_candidates",
+    "BanditRLProof.MusicalChairs.scoreOrder_decidable",
+    "BanditRLProof.MusicalChairs.scoreOrder_trans",
+    "BanditRLProof.MusicalChairs.scoreOrder_antisymm",
+    "BanditRLProof.MusicalChairs.scoreOrder_total"
+  ],
+  "new_scanned_declaration_count": 40,
+  "new_theorem_count": 30,
+  "new_definitions": 10,
+  "new_named_instances": 4,
+  "audited_new_declaration_count": 44,
+  "canary_theorems": 9,
+  "focused_compilation": {
+    "command": "lake env lean runs/extended-topics-20260920/MusicalChairsRankingPrototype.lean",
+    "exit_code": 0,
+    "axiom_command": "lake env lean E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\ranking-axiom-audit.lean",
+    "axiom_exit_code": 0,
+    "axiom_log": "E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\ranking-axioms.log",
+    "axiom_log_sha256": "654b5b1c0e0e1b4d9c487ece0ee29757dfc420a36030460f01c035cf60ce15b5",
+    "allowed_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "exact_folded_code_verified": true
+  },
+  "unchanged_context": {
+    "runs/extended-topics-20260920/MusicalChairsPopulationPrototype.lean": "dc2259b112fe86d42b19d4c491a5cb47381025cd0ea582813798fbfe1f69c81d"
+  },
+  "reader_correction": "Clarified fixed per-arm reward laws sampled independently across arms and rounds, independently of exploration action coins; code unchanged.",
+  "joint_gate_status": "Not rerun or claimed for scratch; no public-root integration. Existing production acceptance remains scoped to coordination-regret code.",
+  "remaining": [
+    "source numeric order-statistic gap adapter; current explicit cross-set separation representation is recorded",
+    "measurable learned-candidate kernel and actual fresh causal coordination continuation on all histories",
+    "same-process path/marginal connection to existing coordination performance",
+    "global true-top comparator optimality/boundedness and full conditional/unconditional regret with delta*n*T",
+    "complete stochastic learner canary",
+    "shared extraction/public root/Tests/harness/site acceptance",
+    "recent-source audit and all-topic ICLR evidence"
+  ]
+}

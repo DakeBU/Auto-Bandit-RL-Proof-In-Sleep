@@ -1,0 +1,152 @@
+{
+  "schema_version": 1,
+  "date": "2026-09-20",
+  "base_commit": "abcf3c9b1d8fc7fb08a3163354a486db90301a87",
+  "scope": "Genalti source-constant root and split-mean concentration, explicit intersection-event semantics, and prefix-to-adaptive-count transfer",
+  "source": {
+    "path": "E:\\ABRL\\maintenance\\extended-topics-20260917\\sources\\genalti24a.pdf",
+    "sha256": "65eceb2cd402baa8c7f5b60d273a103fbd181cf6803a4b7f0d2f4092742fe5b6"
+  },
+  "source_anchors": [
+    "Theorem5 Eq16 pp9-10 and proof24-26",
+    "Theorem6 Eq18 p10 and proof27-28",
+    "Algorithm1 paired samples p12",
+    "Theorem7 fixed-prefix proof context pp28-31"
+  ],
+  "artifacts": [
+    {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260919-claude\\review-20260919\\genalti-root-concentration.md",
+      "sha256": "438ba7fcd3cb76c4d57736189a7343585d55c56855a8a24d8ad2528de59d025e"
+    },
+    {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260919-claude\\review-20260919\\genalti-root-concentration-repair-review.md",
+      "sha256": "42ce3499e3b4d9964444fea9fc705cdd0c4166fc0571eba93cad41e453da93a9"
+    },
+    {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260919-claude\\review-20260919\\genalti-root-concentration-source-review.md",
+      "sha256": "f8226c08f1eb06c4a11413dd1b2ddf0efbd6275808c1a93720d798fa8488ec0a"
+    },
+    {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260919-claude\\review-20260919\\genalti-split-mean-concentration.md",
+      "sha256": "3a1e66e5b9dbc6432f634e844e5c53ff80ca6cae162f34d60523482a7cd8d077"
+    },
+    {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260919-claude\\review-20260919\\genalti-split-mean-repair-review.md",
+      "sha256": "37e775ca2f86ab656d36035a6c3d009639b99695e404ef0cc3c9f73e45d03fd2"
+    },
+    {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260919-claude\\review-20260919\\genalti-split-mean-source-review.md",
+      "sha256": "5195d175e4f9520ce590bdbf5cdea964e03c3fb1b35e5ad66c369a0658eff778"
+    },
+    {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260919-claude\\review-20260919\\genalti-adaptive-prefix-concentration.md",
+      "sha256": "4eb270223c63aced957aed3513cdcf59a7753b95647d23d92efa82627bfd40eb"
+    },
+    {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260919-claude\\review-20260919\\genalti-adaptive-prefix-repair-review.md",
+      "sha256": "0e482686f1da8b018ff7905be07a75feb33b22b1c5c9f3b3cf07fdf0a1ac837a"
+    },
+    {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260919-claude\\review-20260919\\genalti-adaptive-prefix-source-review.md",
+      "sha256": "234cd899d1335a43978e3bc9ab4d0b329285a39abf5fbcd1110d54d7c14f46cc"
+    }
+  ],
+  "public_derivations": [
+    {
+      "path": "E:\\ABRL\\worktrees\\research-extended-topics\\docs\\extended-topics\\GENALTI24-ROOT-CONCENTRATION.md",
+      "sha256": "1e5899ef76c78289ef94dc8a481915f1b1821f0a53e4e26a8007e804ad3d7088"
+    },
+    {
+      "path": "E:\\ABRL\\worktrees\\research-extended-topics\\docs\\extended-topics\\GENALTI24-SPLIT-MEAN-CONCENTRATION.md",
+      "sha256": "e01540ee33f6c681fd654ea162fb61b0050452befbb1d0be2ac59bfe72d90527"
+    },
+    {
+      "path": "E:\\ABRL\\worktrees\\research-extended-topics\\docs\\extended-topics\\GENALTI24-ADAPTIVE-PREFIX-CONCENTRATION.md",
+      "sha256": "e2725cb556468e7bdd71a4f72935a0c43d2897fb5e238495417f04657cbc8251"
+    }
+  ],
+  "prior_root_classification_receipt": {
+    "path": "E:\\ABRL\\worktrees\\research-extended-topics\\runs\\extended-topics-20260919\\genalti-root-audit.json",
+    "sha256": "c08ed59042c3748b8e5b79905a45220ac0ec35f7a7770299cd51b78020055c56"
+  },
+  "accepted_claims": [
+    "Root exists uniquely exactly on E={nonzero count>c log(1/delta)}; measurable extension provided",
+    "Fixed-count root intersection failure<=2delta with Eq16 constants; low-population-mass boundary handled",
+    "Sparse two-point sample disproves same-confidence conditional-on-existence reading of Theorem5",
+    "Signed uncentered MGF justifies ML/(3n) without false centered boundM",
+    "Split n+n=s mean intersection failure<=4delta with source constant8",
+    "Fixed-prefix union yields arbitrary measurable adaptive count confidence for explicitly represented causal iid paired streams",
+    "Fixed-arm per-round failure<=4(t-1)/t^3 and expected exception count<=4; two fixed arms<=8; random selected arm needs K union"
+  ],
+  "probability_ledger": [
+    {
+      "process": "sum bounded Yj in[0,1] at deterministic threshold",
+      "assumption": "independent fixed-count observations",
+      "mean": "sum EYj",
+      "proxy": "sum EYj in the exponential bound",
+      "event": "each signed sqrt deviation>sqrt(2L)",
+      "budget": "delta per tail",
+      "proof": "direct bounded MGF and Chernoff in root derivation",
+      "lean_status": "not implemented"
+    },
+    {
+      "process": "root of independent iid threshold sample",
+      "assumption": "fixed count, raw p-moment, exact unique-root event",
+      "event": "E and (root>B or population tail(root)>beta)",
+      "budget": "2delta",
+      "proof": "two deterministic thresholds; q<=beta branch trivial",
+      "lean_status": "not implemented"
+    },
+    {
+      "process": "sum signed truncated Xj at fixed threshold",
+      "assumption": "independent mean observations and threshold sample",
+      "mean": "integral x*indicator(abs(x)<=M)",
+      "proxy": "n EY^2; uncentered absolute boundM",
+      "event": "each signed centered mean exceeds sqrt(2v_M L/n)+ML/(3n)",
+      "budget": "delta per tail; integrate conditioning on threshold sample",
+      "proof": "direct uncentered MGF/sub-gamma optimization",
+      "lean_status": "not implemented"
+    },
+    {
+      "process": "split mean using sample root",
+      "assumption": "same root-good event shared across both signed tails",
+      "event": "E and absolute error>8u^(1/p)(L/s)^q",
+      "budget": "2delta+delta+delta=4delta",
+      "proof": "Holder bias and n=s/2 normalization",
+      "lean_status": "not implemented"
+    },
+    {
+      "process": "actual prefix at measurable random count",
+      "assumption": "explicit causal iid two-stream realization",
+      "event": "root exists and corresponding confidence error",
+      "budget": "fixed arm4(t-1)/t^3; finite expected exceptions<=4",
+      "proof": "finite prefix union and pathwise containment; no stopped conditional independence",
+      "lean_status": "not implemented"
+    }
+  ],
+  "semantic_verdict": "accepted-with-explicit-delta; separate source and mathematical reviews for all three derivations",
+  "mathematical_reconstruction_accepted": true,
+  "original_written_proof_accepted": false,
+  "same_confidence_conditional_on_root_existence_accepted": false,
+  "lean_implemented": false,
+  "full_repaired_algorithm_or_regret_accepted": false,
+  "new_lean_gate": false,
+  "new_site_gate": false,
+  "main_merged": false,
+  "live_deployed": false,
+  "topic_complete": false,
+  "remaining": [
+    "Empirical-variance index confidence and forced-exploration accounting",
+    "Eq57 power/constant correction and complete regret chain",
+    "Root guard repair remains explicit algorithm change",
+    "No odd-horizon behavior or complete measurable implementation accepted",
+    "Shared-library formalization and all-topic ICLR evidence outstanding"
+  ],
+  "surface_delta": {
+    "source_ledger": "updated",
+    "lean_graph": "no-change: mathematical audit only",
+    "overview_graph": "no-change: no topic completion or registry update",
+    "functor_hypergraph": "none-found: no certified bridge",
+    "site": "no-change: no generated publication"
+  }
+}

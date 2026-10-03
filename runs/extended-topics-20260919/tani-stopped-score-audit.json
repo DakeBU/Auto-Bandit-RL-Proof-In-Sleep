@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "date": "2026-09-20",
+  "base_commit": "dba187a4ab484e8399c6300f874f13e4a8cf6dc7",
+  "semantic_verdict": "accepted-with-explicit-delta",
+  "scope": "Direct finite-horizon stopped scalar Huber score concentration and pathwise stopped corruption adapter",
+  "prior_actual_gram_and_omd_receipt": {
+    "path": "E:\\ABRL\\worktrees\\research-extended-topics\\runs\\extended-topics-20260919\\tani-sharp-producers-audit.json",
+    "sha256": "cdaff18eaa26e508399ca2aabcb1baa9e646eda0bbd8d3cf83c24c79f45c7c15"
+  },
+  "artifacts": [
+    {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260919-claude\\review-20260919\\tani-stopped-scalar-score.md",
+      "sha256": "20b241b7f301e3746f8e92c70a95e1866c0a58e4374105f36087c272d751f86c"
+    },
+    {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260919-claude\\review-20260919\\tani-stopped-scalar-score-review.md",
+      "sha256": "18e21d00de2984c464ef019cb66be91e381c3584840c87977bd3eade1a9d5d16"
+    },
+    {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260919-claude\\review-20260919\\tani-stopped-corruption-adapter.md",
+      "sha256": "a20a3a4dfdf57827dbc82a228886c184803615736ea26c3cdc5b22c70b6bc5ca"
+    },
+    {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260919-claude\\review-20260919\\tani-stopped-corruption-review.md",
+      "sha256": "9e5d2ed9664e6812a6d4fd09f83e1b9ebc2deba559917f34cf4760cd158aed29"
+    },
+    {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260919-claude\\review-20260919\\tani-stopped-score-source-review.md",
+      "sha256": "ab7292f1d9e0a430778e0f7be08db8b8313545c7c55738f4b65bdfc2dbde7caa"
+    }
+  ],
+  "accepted_claims": [
+    "Clean stopped scalar score absolute value <= 4 sqrt(alpha*M) B_n tau0 ell n^a simultaneously for n<=T with probability >=1-delta",
+    "Actual corruption scale gives pathwise stopped clipped-score discrepancy <=B_n sqrt(K); C=0 gives zero discrepancy",
+    "At alpha=8 the actual past-beta scale yields sigma_s>=2sqrt(2)||X_s||_(Vprevious inverse) for s>=2, under explicit initial-beta convention"
+  ],
+  "material_deltas": [
+    "Direct scalar proof instead of vector-to-scalar reuse",
+    "Deterministic finite M retains first-round parameter dependence",
+    "Fixed supplied corruption upper bound and causal measurable inputs",
+    "Explicit positive beta0 separate from positive-time schedule",
+    "Zero-feature finite-threshold convention",
+    "Output differs from original Eq51 quadratic-penalty bound"
+  ],
+  "exact_eq51_proved": false,
+  "original_409_confidence_proved": false,
+  "first_round_floor_proved": false,
+  "full_confidence_proved": false,
+  "final_regret_proved": false,
+  "lean_implemented": false,
+  "new_lean_gate": false,
+  "new_site_gate": false,
+  "topic_complete": false,
+  "next_obligations": [
+    "first-round treatment",
+    "integrate scalar and corruption bounds into confidence recurrence",
+    "check constants and full probability induction",
+    "remaining Huang external source/version audit",
+    "full regret and measurable algorithm endpoint"
+  ]
+}

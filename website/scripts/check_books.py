@@ -3,6 +3,11 @@ import json
 from html.parser import HTMLParser
 from pathlib import Path
 
+try:
+    from .book_registry import topic_formalization_nodes
+except ImportError:
+    from book_registry import topic_formalization_nodes
+
 
 class Anchors(HTMLParser):
     def __init__(self):
@@ -77,6 +82,30 @@ def check_books(output):
             errors.append(f"planned book displays compiled coverage: {book['id']}")
     for topic in wiki["topics"]:
         source = (output / f"banditrlwiki/topics/{topic['id']}/index.html").read_text(encoding="utf-8")
+        mapping = topic.get("formalization")
+        if mapping:
+            setting = next((r for r in registry["settings"] if r["id"] == topic["id"]), {})
+            expected = {"declaration:" + ref["name"] for ref in mapping["declarations"]}
+            if set(setting.get("node_ids", [])) != expected or setting.get("formalization") != mapping:
+                errors.append(f"topic source mapping differs from canonical registry: {topic['id']}")
+            reviewed = mapping.get("semantic_status") == "accepted-with-explicit-delta"
+            expected_status = "mapped-reviewed-partial" if reviewed else "mapped-review-pending"
+            try:
+                topic_formalization_nodes(topic, nodes)
+            except (ValueError, KeyError, OSError) as error:
+                errors.append(f"invalid topic review evidence: {topic['id']}: {error}")
+            if setting.get("status") != expected_status:
+                errors.append(f"topic mapping promotes unreviewed source acceptance: {topic['id']}")
+            if reviewed and "topic incomplete" not in source:
+                errors.append(f"reviewed mapping omits incomplete topic boundary: {topic['id']}")
+            if 'id="formalization"' not in source or mapping["source"]["sha256"] not in source:
+                errors.append(f"topic source provenance is absent from rendered page: {topic['id']}")
+            for ref in mapping["declarations"]:
+                node = nodes.get("declaration:" + ref["name"], {})
+                if node.get("statement_sha256") != ref["statement_sha256"] or topic["id"] not in node.get("settings", []):
+                    errors.append(f"topic declaration hash or membership drift: {ref['name']}")
+                if ref["name"] not in source:
+                    errors.append(f"topic declaration missing from rendered page: {ref['name']}")
         if source.count("Pending source verification</dd>") != len(wiki["comparison_fields"]):
             errors.append(f"topic lacks the full pending comparison contract: {topic['id']}")
     return errors

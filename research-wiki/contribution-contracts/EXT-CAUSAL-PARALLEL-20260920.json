@@ -1,0 +1,185 @@
+{
+  "schema_version": "2.0",
+  "id": "EXT-CAUSAL-PARALLEL-20260920",
+  "route": "extended-topics/causal",
+  "frontier_cell": "causal/repaired-parallel-design-and-actual-regret",
+  "source_facing": true,
+  "source": {
+    "kind": "paper",
+    "title": "Causal Bandits: Learning Good Interventions via Causal Inference",
+    "version": "NIPS2016 main and official supplement; frozen hashes in causal-source-hashes.json",
+    "anchor": "Official supplement p15 Proposition8 (arXiv v1 Proposition9); known-parent-law Algorithm2 and repaired Theorem3.",
+    "url": "https://proceedings.neurips.cc/paper_files/paper/2016/file/b4288d9c0ec0a1841b3b3728321e7088-Paper.pdf"
+  },
+  "target": "Construct strict rarity, normalize the repaired allocation, prove actual-law coverage/cost and graph transfer, instantiate actual expected regret, and validate full-support/deterministic witnesses.",
+  "affected_files": [
+    "BanditRLProof.lean",
+    "BanditRLProof/Algorithms/CausalParallelDesign.lean",
+    "BanditRLProof/Algorithms/CausalParallelLaw.lean",
+    "BanditRLProof/Algorithms/CausalParallelRegret.lean",
+    "research-wiki/papers/extended-topics-causal-parallel.md",
+    "research-wiki/papers/extended-topics-causal-sampling.md",
+    "research-wiki/papers/extended-topics-causal-heterogeneous.md",
+    "research-wiki/papers/extended-topics-causal-noisy-diagnostics.md",
+    "website/content/results.json",
+    "website/content/banditrlwiki.json"
+  ],
+  "declarations": [
+    "BanditRLProof.Causal.ParallelParameters",
+    "BanditRLProof.Causal.ParallelParameters.rareIndices",
+    "BanditRLProof.Causal.ParallelParameters.exists_rarity",
+    "BanditRLProof.Causal.ParallelParameters.rarity",
+    "BanditRLProof.Causal.ParallelParameters.rarity_spec",
+    "BanditRLProof.Causal.ParallelParameters.rarity_minimal",
+    "BanditRLProof.Causal.ParallelParameters.valueProbability",
+    "BanditRLProof.Causal.ParallelParameters.valueProbability_nonneg",
+    "BanditRLProof.Causal.ParallelParameters.rarity_pos",
+    "BanditRLProof.Causal.ParallelParameters.rarity_reciprocal_le_half",
+    "BanditRLProof.Causal.ParallelParameters.rareActions",
+    "BanditRLProof.Causal.ParallelParameters.rareActions_card_le",
+    "BanditRLProof.Causal.ParallelParameters.rareWeight",
+    "BanditRLProof.Causal.ParallelParameters.atomicTotal",
+    "BanditRLProof.Causal.ParallelParameters.rareWeight_pos",
+    "BanditRLProof.Causal.ParallelParameters.atomicTotal_bounds",
+    "BanditRLProof.Causal.ParallelParameters.allocationWeight",
+    "BanditRLProof.Causal.ParallelParameters.allocationWeight_nonneg",
+    "BanditRLProof.Causal.ParallelParameters.allocationWeight_sum",
+    "BanditRLProof.Causal.ParallelParameters.allocation",
+    "BanditRLProof.Causal.ParallelParameters.allocation_mass",
+    "BanditRLProof.Causal.ParallelParameters.allocation_empty_ge_half",
+    "BanditRLProof.Causal.covers_of_mass_domination",
+    "BanditRLProof.Causal.ratio_le_of_mass_domination",
+    "BanditRLProof.Causal.secondMoment_le_of_mass_domination",
+    "BanditRLProof.Causal.mixture_mass_ge_component",
+    "BanditRLProof.Causal.ParallelParameters.rootTable",
+    "BanditRLProof.Causal.ParallelParameters.rootTable_mass",
+    "BanditRLProof.Causal.ParallelParameters.rootAction",
+    "BanditRLProof.Causal.ParallelParameters.rootLaw",
+    "BanditRLProof.Causal.ParallelParameters.rootLaw_mass",
+    "BanditRLProof.Causal.ParallelParameters.rootLaw_atom_mass",
+    "BanditRLProof.Causal.ParallelParameters.atomic_observational_domination",
+    "BanditRLProof.Causal.ParallelParameters.allocated_mass_domination",
+    "BanditRLProof.Causal.ParallelParameters.allocation_covers",
+    "BanditRLProof.Causal.ParallelParameters.allocation_cost_le",
+    "BanditRLProof.Causal.ParallelParameters.optimal_cost_le",
+    "BanditRLProof.Causal.ParallelParameters.graph",
+    "BanditRLProof.Causal.ParallelParameters.graphAction",
+    "BanditRLProof.Causal.ParallelParameters.graphAction_reward",
+    "BanditRLProof.Causal.ParallelParameters.graph_parentLaw",
+    "BanditRLProof.Causal.ParallelParameters.graph_parentConfig_injective",
+    "BanditRLProof.Causal.ParallelParameters.graph_allocation_covers",
+    "BanditRLProof.Causal.ParallelParameters.graph_designCost",
+    "BanditRLProof.Causal.ParallelParameters.graph_allocation_cost_le",
+    "BanditRLProof.Causal.ParallelParameters.graph_optimal_cost_le",
+    "BanditRLProof.Causal.ParallelParameters.expected_simpleRegret_parallel",
+    "BanditRLProof.Causal.ParallelParameters.expected_simpleRegret_parallel_optimal",
+    "Tests.CausalParallelCanary.fair",
+    "Tests.CausalParallelCanary.deterministic",
+    "Tests.CausalParallelCanary.two_node_rarity",
+    "Tests.CausalParallelCanary.fair_rare_empty",
+    "Tests.CausalParallelCanary.deterministic_rare_card",
+    "Tests.CausalParallelCanary.fair_weights",
+    "Tests.CausalParallelCanary.deterministic_weights",
+    "Tests.CausalParallelCanary.stateEquiv",
+    "Tests.CausalParallelCanary.fair_full_support",
+    "Tests.CausalParallelCanary.fair_secondMoment",
+    "Tests.CausalParallelCanary.fair_cost",
+    "Tests.CausalParallelCanary.deterministic_rare_secondMoment",
+    "Tests.CausalParallelCanary.deterministic_cost_tight",
+    "Tests.CausalParallelCanary.deterministic_observation_not_covering",
+    "Tests.CausalParallelCanary.noisyReward",
+    "Tests.CausalParallelCanary.fair_actual_rate",
+    "Tests.CausalParallelCanary.deterministic_actual_rate"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "CausalGraphicalModel joint factorization and actual prefix-parent law",
+      "CausalOptimalAllocation simplex construction and attained covered optimizer",
+      "CausalImportanceTransport injective pushforward/cost identity",
+      "CausalAllocationRegret actual fixed-budget learner",
+      "Mathlib Nat.find, Finset injective cardinality and product factorization"
+    ],
+    "reused_declarations": [
+      "BanditRLProof.Causal.allocationOfWeights",
+      "BanditRLProof.Causal.joint_factorization",
+      "BanditRLProof.Causal.GraphModel.parentLaw_prefix",
+      "BanditRLProof.Causal.designCost_map_injective",
+      "BanditRLProof.Causal.optimalAllocation_minimizes",
+      "BanditRLProof.Causal.GraphModel.expected_simpleRegret_source_bound",
+      "BanditRLProof.Causal.GraphModel.expected_simpleRegret_optimal"
+    ],
+    "new_shared_declarations": [
+      "BanditRLProof.Causal.covers_of_mass_domination",
+      "BanditRLProof.Causal.ratio_le_of_mass_domination",
+      "BanditRLProof.Causal.secondMoment_le_of_mass_domination",
+      "BanditRLProof.Causal.mixture_mass_ge_component"
+    ],
+    "known_consumers": [
+      "BanditRLProof.Causal.ParallelParameters.allocation_covers",
+      "BanditRLProof.Causal.ParallelParameters.allocation_cost_le",
+      "BanditRLProof.Causal.ParallelParameters.expected_simpleRegret_parallel",
+      "BanditRLProof.Causal.ParallelParameters.expected_simpleRegret_parallel_optimal"
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Actual parallel root construction and full-DAG adapter share the existing causal learner and attained optimizer; domination provides both support coverage and second-moment control."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/causal_decoder",
+    "source_reviewer": "/root/source_reviewer_a",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Explicit source repair: strict rarity and empty mass 1-D, actual designCost tuning, N>=2, known q, binary reward, finite action order/measurable instances. No unknown-q Algorithm1 or numerical optimizer claim. Concrete examples are local canaries."
+  },
+  "graph_contribution": {
+    "lean_graph": "new-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Same-setting causal instantiation uses the already formalized injective law transport; no new cross-setting conceptual mechanism.",
+    "focus_targets": [
+      "BanditRLProof.Causal.ParallelParameters.expected_simpleRegret_parallel",
+      "BanditRLProof.Causal.ParallelParameters.expected_simpleRegret_parallel_optimal"
+    ],
+    "visual_review": "Structural site, internal links/anchors and canonical destinations passed. Browser visual inspection not rerun.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "no-change-with-reason: extended causal result does not close a teaching chapter",
+    "banditrlwiki": "updated: repaired parallel allocation and both concrete witnesses; source-screening and ICLR remain open",
+    "results_ledger": "updated: actual parallel expected regret with true-cost tuning",
+    "roadmap": "updated: CAUSAL-PARALLEL-PROGRESS records bounded closure and remaining obligations",
+    "website_surfaces": [
+      "website/content/banditrlwiki.json",
+      "website/content/results.json",
+      "compiler-derived module and declaration graph"
+    ]
+  },
+  "truth_boundary": "Reviewed parallel design, actual laws and regret instances only. Remaining classic/recent source screening, all-topic ICLR evidence and final acceptance remain open. No main merge, deployment or topic completion.",
+  "verification": {
+    "focused_checks": [
+      "3606 production and 3607 canary jobs passed; six printed endpoints have only standard Lean axioms",
+      "All 65 new production/canary declarations audited: no axioms beyond propext, Classical.choice and Quot.sound."
+    ],
+    "bandit_check": "Passed: root 9032 jobs, Tests 9135 jobs, 437 Python tests with 7 skips (154.590s)",
+    "site_build": "Passed with --lean-verified after fresh complete Lean gate",
+    "site_check": "Passed; 44 canonical destinations valid, 59 nodes and 68 edges in causal scope",
+    "independent_review": "Independent production and canary blind/source reports bound by causal-parallel-review.json; separate mathematical repair receipt retained."
+  },
+  "contributor": {
+    "name": "Codex",
+    "role": "Formalizer and review coordinator; independent reviewers named in semantic_roundtrip"
+  }
+}

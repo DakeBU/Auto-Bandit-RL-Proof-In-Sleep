@@ -1,0 +1,189 @@
+{
+  "schema_version": "2.0",
+  "id": "EXT-CAUSAL-HETEROGENEOUS-20260920",
+  "route": "extended-topics/causal",
+  "frontier_cell": "causal/native-heterogeneous-expected-regret",
+  "source_facing": true,
+  "source": {
+    "kind": "paper",
+    "title": "Causal Bandits: Learning Good Interventions via Causal Inference",
+    "version": "NIPS2016 main and official supplement; frozen hashes in causal-source-hashes.json",
+    "anchor": "Algorithm2 main p5; Theorem3/Proposition4 main p6; complete Theorem3 proof supplement p14",
+    "url": "https://proceedings.neurips.cc/paper_files/paper/2016/file/b4288d9c0ec0a1841b3b3728321e7088-Paper.pdf"
+  },
+  "target": "Construct and certify the native heterogeneous finite-node representation bridge, actual sampling and expected simple regret, plus a concrete Fin3/Fin2 canary.",
+  "affected_files": [
+    "BanditRLProof.lean",
+    "BanditRLProof/Algorithms/CausalHeterogeneous.lean",
+    "BanditRLProof/Algorithms/CausalImportanceTransport.lean",
+    "BanditRLProof/Algorithms/CausalHeterogeneousSampling.lean",
+    "BanditRLProof/Algorithms/CausalHeterogeneousRegret.lean",
+    "BanditRLProof/Algorithms/CausalHeterogeneousLaw.lean",
+    "research-wiki/papers/extended-topics-causal-heterogeneous.md",
+    "website/content/results.json",
+    "website/content/banditrlwiki.json"
+  ],
+  "declarations": [
+    "BanditRLProof.Causal.NodeHistory",
+    "BanditRLProof.Causal.NodeTables",
+    "BanditRLProof.Causal.NodeTables.prefix",
+    "BanditRLProof.Causal.nodeJoint",
+    "BanditRLProof.Causal.NodeCodec",
+    "BanditRLProof.Causal.NodeCodec.prefix",
+    "BanditRLProof.Causal.NodeCodec.encodeAssignment",
+    "BanditRLProof.Causal.NodeCodec.decodeAssignment",
+    "BanditRLProof.Causal.NodeCodec.decode_encodeAssignment",
+    "BanditRLProof.Causal.NodeCodec.encodeTables",
+    "BanditRLProof.Causal.NodeCodec.encodeAssignment_snoc",
+    "BanditRLProof.Causal.NodeCodec.joint_encodeTables",
+    "BanditRLProof.Causal.NodeCodec.decode_joint_encodeTables",
+    "BanditRLProof.Causal.productNodeCodec",
+    "BanditRLProof.Causal.nodeIntervene",
+    "BanditRLProof.Causal.NodeCodec.encodeAction",
+    "BanditRLProof.Causal.NodeCodec.encodeTables_intervene",
+    "BanditRLProof.Causal.NodeCodec.joint_intervene",
+    "BanditRLProof.Causal.NodeGraphModel",
+    "BanditRLProof.Causal.NodeGraphModel.encodeGraph",
+    "BanditRLProof.Causal.NodeGraphModel.intervention_joint_encoded",
+    "BanditRLProof.Causal.NodeCodec.encoded_joint_valid",
+    "BanditRLProof.Causal.nodeHistory",
+    "BanditRLProof.Causal.NodeGraphModel.ParentConfig",
+    "BanditRLProof.Causal.NodeGraphModel.parentConfig",
+    "BanditRLProof.Causal.NodeGraphModel.encodeParent",
+    "BanditRLProof.Causal.NodeGraphModel.decodeParent",
+    "BanditRLProof.Causal.NodeGraphModel.decode_encodeParent",
+    "BanditRLProof.Causal.NodeGraphModel.parentLaw",
+    "BanditRLProof.Causal.NodeGraphModel.parentLaw_encoded",
+    "BanditRLProof.Causal.mass_map_injective",
+    "BanditRLProof.Causal.ratio_map_injective",
+    "BanditRLProof.Causal.mixture_map",
+    "BanditRLProof.Causal.covers_map_injective",
+    "BanditRLProof.Causal.weightedBit_map_injective",
+    "BanditRLProof.Causal.secondMoment_map_injective",
+    "BanditRLProof.Causal.designCost_map_injective",
+    "BanditRLProof.Causal.NodeGraphModel.roundLaw",
+    "BanditRLProof.Causal.NodeGraphModel.sampleLaw",
+    "BanditRLProof.Causal.NodeCodec.encodeRound",
+    "BanditRLProof.Causal.NodeCodec.encodeSamples",
+    "BanditRLProof.Causal.NodeGraphModel.roundLaw_encoded",
+    "BanditRLProof.Causal.NodeGraphModel.sampleLaw_encoded",
+    "BanditRLProof.Causal.NodeGraphModel.observation",
+    "BanditRLProof.Causal.NodeGraphModel.sampleWeightedBit",
+    "BanditRLProof.Causal.NodeGraphModel.sampleEstimate",
+    "BanditRLProof.Causal.NodeGraphModel.sampleWeightedBit_encoded",
+    "BanditRLProof.Causal.NodeGraphModel.sampleEstimate_encoded",
+    "BanditRLProof.Causal.NodeGraphModel.designCost_encoded",
+    "BanditRLProof.Causal.NodeGraphModel.rewardMean",
+    "BanditRLProof.Causal.NodeGraphModel.rewardMean_encoded",
+    "BanditRLProof.Causal.NodeGraphModel.sampleRecommendation",
+    "BanditRLProof.Causal.NodeGraphModel.simpleRegret",
+    "BanditRLProof.Causal.NodeGraphModel.sampleRecommendation_encoded",
+    "BanditRLProof.Causal.NodeGraphModel.simpleRegret_encoded",
+    "BanditRLProof.Causal.NodeGraphModel.expected_simpleRegret_encoded",
+    "BanditRLProof.Causal.NodeGraphModel.covers_encoded",
+    "BanditRLProof.Causal.NodeGraphModel.expected_simpleRegret_source_bound",
+    "BanditRLProof.Causal.NodeGraphModel.expected_simpleRegret_bounds",
+    "BanditRLProof.Causal.NodeGraphModel.expected_simpleRegret_explicit_rate",
+    "BanditRLProof.Causal.NodeGraphModel.expected_simpleRegret_uniform",
+    "BanditRLProof.Causal.NodeGraphModel.expected_simpleRegret_optimal",
+    "BanditRLProof.Causal.nodeJoint_snoc",
+    "BanditRLProof.Causal.nodeJoint_factorization",
+    "BanditRLProof.Causal.nodeJoint_normalized",
+    "BanditRLProof.Causal.nodeIntervention_factorization",
+    "Tests.CausalHeterogeneousCanary.Values",
+    "Tests.CausalHeterogeneousCanary.noisyReward",
+    "Tests.CausalHeterogeneousCanary.tables",
+    "Tests.CausalHeterogeneousCanary.graph",
+    "Tests.CausalHeterogeneousCanary.actions",
+    "Tests.CausalHeterogeneousCanary.rewardBit",
+    "Tests.CausalHeterogeneousCanary.reward_untouched",
+    "Tests.CausalHeterogeneousCanary.actions_zero",
+    "Tests.CausalHeterogeneousCanary.tables_zero",
+    "Tests.CausalHeterogeneousCanary.tables_one",
+    "Tests.CausalHeterogeneousCanary.assignmentEquiv",
+    "Tests.CausalHeterogeneousCanary.assignment_zero",
+    "Tests.CausalHeterogeneousCanary.assignment_one",
+    "Tests.CausalHeterogeneousCanary.actual_joint",
+    "Tests.CausalHeterogeneousCanary.reward_means",
+    "Tests.CausalHeterogeneousCanary.uniform_actual_rate"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "CausalOrderedLaw and CausalMarginalLaw native homogeneous joint",
+      "CausalImportance and CausalAllocation cost interfaces",
+      "Mathlib dependent Fin.snoc, PMF maps and Measure.pi_map_pi"
+    ],
+    "reused_declarations": [
+      "BanditRLProof.Causal.GraphModel.expected_simpleRegret_source_bound",
+      "BanditRLProof.Causal.optimalAllocation",
+      "BanditRLProof.Causal.orderedArgmax",
+      "BanditRLProof.Causal.uniform_covers"
+    ],
+    "new_shared_declarations": [],
+    "known_consumers": [
+      "BanditRLProof.Causal.NodeGraphModel.expected_simpleRegret_source_bound",
+      "Tests.CausalHeterogeneousCanary.uniform_actual_rate"
+    ],
+    "planned_consumers": [
+      "Native heterogeneous user instances and remaining parallel-design bridge"
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Native dependent recursion is independently defined; reuse the actual common-alphabet producer only after proving the entire sample-law, estimator, cost and regret transport."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/causal_decoder",
+    "source_reviewer": "/root/source_reviewer_a",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Native heterogeneous transport and separate law/canary supplement accepted. Binary event readout extends the literal binary reward node; source constant/direction repairs retained. All other frozen topic obligations remain."
+  },
+  "graph_contribution": {
+    "lean_graph": "new-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "This is a proved representation transport within one causal setting, not a recurring cross-setting conceptual functor.",
+    "focus_targets": [
+      "BanditRLProof.Causal.NodeGraphModel.expected_simpleRegret_source_bound"
+    ],
+    "visual_review": "Generated site structure, links, anchors and canonical destinations checked; browser visual inspection not rerun.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "no-change-with-reason: extended causal line does not complete a teaching chapter",
+    "banditrlwiki": "updated: native heterogeneous representation closure; all other frozen gaps retained",
+    "results_ledger": "updated: native heterogeneous actual-regret milestone",
+    "roadmap": "updated: CAUSAL-HETEROGENEOUS-ROUTE.md records implementation and remaining boundaries",
+    "website_surfaces": [
+      "website/content/results.json",
+      "website/content/banditrlwiki.json",
+      "compiler-derived module graph"
+    ]
+  },
+  "truth_boundary": "Native heterogeneous representation and expected-regret chain only. Parallel allocation, original noisy diagnostic obligations, remaining source audit and ICLR evidence remain incomplete; no main merge or deployment.",
+  "verification": {
+    "focused_checks": [
+      "Five production modules and concrete heterogeneous canary: 3608 jobs passed; printed endpoints use only propext/Classical.choice/Quot.sound"
+    ],
+    "bandit_check": "Passed: shared root 9029 jobs, Tests 9130 jobs, 437 Python tests with 7 skips (154.186s)",
+    "site_build": "Passed with --lean-verified after fresh full gate",
+    "site_check": "Passed check_site.py and canonical mapping verifier: 27 declarations, 39 nodes, 45 edges; all destinations valid",
+    "independent_review": "Four transport modules and separate native-law/canary supplement accepted with explicit delta; file and report hashes bound in causal-heterogeneous-review.json"
+  },
+  "contributor": {
+    "name": "Codex",
+    "role": "Formalizer and review coordinator; independent reviewers named in semantic_roundtrip"
+  }
+}

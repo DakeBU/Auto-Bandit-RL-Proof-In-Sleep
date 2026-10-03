@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "date": "2026-09-20",
+  "base_commit": "1a275dea5e057805339d4ee2774c103401324e8b",
+  "scope": "Explicit classic source repair and bounded compiled scratch coordination component; no full algorithm-to-regret acceptance",
+  "verdict": "accepted-with-explicit-delta",
+  "topic_complete": false,
+  "recent_source_audit_complete": false,
+  "production_root_integration": false,
+  "formalizer": "/root",
+  "blind_decoder": "/root/causal_decoder",
+  "source_reviewer": "/root/source_reviewer_a",
+  "repair_reviewer": "/root/repair_reviewer_a",
+  "private_review_root": "E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent",
+  "review_hashes": {
+    "static-source-review-v1.md": "4e419d4c721cf53fe8beaa6ff857d03b703a8fc7dbe235dacac7f13ac1bddb3f",
+    "static-repair-review-v1.md": "36efb31e95db788c7b04e2e047e19de35b95a8f3c48f8f2efcb4f1dc477903ae",
+    "coordination-blind-v1.md": "7cbb354ba5b4da2bb081c4e1aacb3221d0dde01e70318994ab33ece27dbece1e",
+    "static-contract-prototype-source-review-v1.md": "02c1807098537e477a49dd3e599b3d7b67b3fb8d318d23979819f2ac98f2f448"
+  },
+  "sources": [
+    {
+      "url": "https://proceedings.mlr.press/v48/rosenski16.pdf",
+      "private_path": "E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\sources\\rosenski2016-main.pdf",
+      "sha256": "c56474f0c3e689c1819b11e2bca4d3e5dcaef6eddfd0173bb55ff6a84f11d99d"
+    },
+    {
+      "url": "https://proceedings.mlr.press/v48/rosenski16-supp.pdf",
+      "private_path": "E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\sources\\rosenski2016-supplement.pdf",
+      "sha256": "4ffd4d0c3fc975ae04b3d5e96911bd58d66bc2206e9d9584e18fcbf0c5b305ad"
+    }
+  ],
+  "public_artifacts": {
+    "docs/extended-topics/MULTI-AGENT-CONTRACT.md": "e67a20684e98a2d114d773ba769cd5d1fb450b202ae81533ebc3d6d48d28571f",
+    "docs/extended-topics/MULTI-AGENT-PROOF-ROUTE.md": "13cde7edaa1ca2a9a97cdcca7e5447adfa1c7628ed5df4211fe6cb4de1da7b2d",
+    "docs/extended-topics/MULTI-AGENT-PROTOTYPE.md": "1a22c8fd7611fe72a0f53b95d04d5bb15dccdd10be54bb673ea7cb3372062965",
+    "runs/extended-topics-20260920/MusicalChairsCoordinationPrototype.lean": "cfb68cfa3a58b1057ca0fb6c85e50b48ecdbb520341ceed1f8e6af813baf1176"
+  },
+  "neutral_packet_sha256": "27580e4807a5d354f16d1e43d6226650666dd6ba1dbed7894c52e1ba0fad118d",
+  "build": {
+    "command": "lake env lean runs/extended-topics-20260920/MusicalChairsCoordinationPrototype.lean",
+    "exit_code": 0,
+    "log_sha256": "48d419042167f6f418d098fb5cdec3728c2856a2e005ed6677b5ab73f13f684c"
+  },
+  "axiom_audit": {
+    "theorems": [
+      "action_of_fixed",
+      "step_preserves_fixed",
+      "step_fixed_action",
+      "new_fixed_collisionFree",
+      "step_distinct",
+      "initial_distinct",
+      "trajectory_distinct",
+      "action_local",
+      "transition_distinct",
+      "stateLaw_distinct"
+    ],
+    "allowed_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "exit_code": 0,
+    "scan_source_sha256": "69107314ca987d999a351a89556f909c709d9eeefa12d69c4ecbfd004ab83e10",
+    "log_sha256": "df141eadfe78327f72d82ec29e1dd1ce8ba27eba97dc009d6af95a62dff29ab9"
+  },
+  "observed_failure_and_repair": "First compile required noncomputable trajectory annotation because it calls the classical transition; repaired without changing algorithm or theorem statements",
+  "folded_code_matches": true,
+  "bandit_check": {
+    "command": "python tools/bandit.py check",
+    "exit_code": 0,
+    "shared_root_jobs": 9032,
+    "Tests_jobs": 9135,
+    "python_tests": 437,
+    "skipped": 7,
+    "python_test_seconds": 185.493,
+    "log_sha256": "4b25e8f8389b396ab1ec9395ecf6e9990536908a348dad38b6f4b8cb2687832c",
+    "log_private_path": "E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\bandit-check.log",
+    "scratch_in_root": false
+  },
+  "site_build": "Not rerun; no production/public site changes",
+  "remaining": [
+    "actual local observable-history policy and arbitrary bounded reward joint process",
+    "exploration observation and collision law",
+    "sharp random-count concentration and all-player N estimator",
+    "actual common-top-set producer",
+    "conditional fixation hazard, survival expectation, regret charge and full endpoints",
+    "full-learner nondegenerate canary",
+    "recent primary full-proof comparison",
+    "public root and registry/reader integration",
+    "compiled reuse evidence and controlled all-topic evaluation"
+  ]
+}

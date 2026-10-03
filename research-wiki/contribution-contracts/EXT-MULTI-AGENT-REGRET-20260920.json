@@ -1,0 +1,139 @@
+{
+  "schema_version": "2.0",
+  "id": "EXT-MULTI-AGENT-REGRET-20260920",
+  "route": "extended-topics/multi-agent",
+  "frontier_cell": "multi-agent/actual-coordination-mean-regret",
+  "source_facing": true,
+  "source": {
+    "kind": "paper",
+    "title": "Multi-Player Bandits -- a Musical Chairs Approach",
+    "version": "ICML2016 PMLR48:155-163; official main/supplement hashes in multi-agent-source-review.json",
+    "anchor": "Static Algorithms1/2, Theorem1; supplement A.1 Lemmas2-4",
+    "url": "https://proceedings.mlr.press/v48/rosenski16.html"
+  },
+  "target": "Prove actual real comparator deficit <=2U, support nonnegativity, exact real finite state/draw expectation and coordination expected pseudo-regret <=8n^2; no full unknown-N learner claim.",
+  "affected_files": [
+    "BanditRLProof.lean",
+    "BanditRLProof/Algorithms/MusicalChairsCoordinationRegret.lean",
+    "research-wiki/papers/extended-topics-musical-chairs-regret.md",
+    "website/content/banditrlwiki.json",
+    "website/content/results.json"
+  ],
+  "declarations": [
+    "BanditRLProof.MusicalChairs.fixedPlayers",
+    "BanditRLProof.MusicalChairs.hitFixed",
+    "BanditRLProof.MusicalChairs.safeFixed",
+    "BanditRLProof.MusicalChairs.fixed_action_injective",
+    "BanditRLProof.MusicalChairs.hitFixed_partner",
+    "BanditRLProof.MusicalChairs.hitFixed_card_le",
+    "BanditRLProof.MusicalChairs.safeFixed_count",
+    "BanditRLProof.MusicalChairs.roundMeanReward",
+    "BanditRLProof.MusicalChairs.roundPseudoRegret",
+    "BanditRLProof.MusicalChairs.safeFixed_mem",
+    "BanditRLProof.MusicalChairs.safeFixed_arms_subset",
+    "BanditRLProof.MusicalChairs.safeFixed_reward_le",
+    "BanditRLProof.MusicalChairs.roundPseudoRegret_le_twice_unfixed",
+    "BanditRLProof.MusicalChairs.roundPseudoRegret_nonneg",
+    "BanditRLProof.MusicalChairs.expected_round_charge",
+    "BanditRLProof.MusicalChairs.expectedCoordinationRegret",
+    "BanditRLProof.MusicalChairs.expectedCoordinationRegret_le",
+    "BanditRLProof.MusicalChairs.expectedCoordinationRegret_toReal",
+    "BanditRLProof.MusicalChairs.expectedCoordinationRegret_real_le",
+    "Tests.MusicalChairsCoordinationRegretCanary.means",
+    "Tests.MusicalChairsCoordinationRegretCanary.oneFixed",
+    "Tests.MusicalChairsCoordinationRegretCanary.collision_positive_regret",
+    "Tests.MusicalChairsCoordinationRegretCanary.collision_one_unfixed",
+    "Tests.MusicalChairsCoordinationRegretCanary.separated_zero_regret",
+    "Tests.MusicalChairsCoordinationRegretCanary.two_player_expected"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "bandit.py search-memory collision",
+      "bandit.py list-lean-decls collision",
+      "research-wiki/mathlib/theorem-cards.md MLIB-FINSET-SUMS and MLIB-FINTYPE-FIN",
+      "Current MusicalChairs coordination/time modules and pinned Finset/ENNReal APIs"
+    ],
+    "reused_declarations": [
+      "BanditRLProof.MusicalChairs.action",
+      "BanditRLProof.MusicalChairs.CollisionFree",
+      "BanditRLProof.MusicalChairs.stateLaw_distinct",
+      "BanditRLProof.MusicalChairs.stateLaw_within",
+      "BanditRLProof.MusicalChairs.jointDraw_mem",
+      "BanditRLProof.MusicalChairs.expected_unfixed_occupation_le",
+      "Finset.card_le_card_of_injOn",
+      "Finset.sum_image",
+      "Finset.sum_sdiff",
+      "PMF.tsum_coe",
+      "ENNReal.toReal_sum"
+    ],
+    "new_shared_declarations": [],
+    "known_consumers": [
+      "expectedCoordinationRegret_le consumes actual2U charge and occupation bound",
+      "expectedCoordinationRegret_real_le consumes exact supported real expectation identity",
+      "Four public-root regret canaries"
+    ],
+    "planned_consumers": [
+      "Full unknown-N MC good-exploration conditional coordination adapter and unconditional regret"
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Construct missing actual reward/comparator charge; reuse existing kernel and occupation producer. No imported regret-bound premise or duplicated policy."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/blind_decoder_b",
+    "source_reviewer": "/root/source_reviewer_a",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Fixed common S supplied directly; actual finite marginal/current-draw expectation only; full exploration conditioning and learned top-n comparator open."
+  },
+  "graph_contribution": {
+    "lean_graph": "new-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Same-source finite kernel and geometric survival mechanism; no independently validated cross-setting transport or certified functor claimed.",
+    "focus_targets": [
+      "BanditRLProof.MusicalChairs.expectedCoordinationRegret_real_le",
+      "BanditRLProof.MusicalChairs.roundPseudoRegret_le_twice_unfixed"
+    ],
+    "visual_review": "Structural check only:73 canonical topic links/anchors, incomplete status, exact code commit, common-set and unreachable-diagnostic qualifications verified; no browser visual inspection",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "no-change-with-reason: no book theorem or public teaching route changes",
+    "banditrlwiki": "updated: exact reviewed coordination scope and declaration map; full topic incomplete",
+    "results_ledger": "updated: actual coordination mean-regret endpoint, not full unknown-N MC",
+    "roadmap": "updated: ALL-TOPICS-LEDGER and occupation progress identify remaining exploration and regret producers",
+    "website_surfaces": [
+      "website/content/banditrlwiki.json",
+      "website/content/results.json",
+      "compiler-derived module/declaration graph"
+    ]
+  },
+  "truth_boundary": "Actual static common-set coordination expected mean deficit <=8n^2. No exploration reward/history law, population estimation, learned optimal common set, full-history conditioning, realized reward expectation or full unknown-N regret. Diagnostic oneFixed canary is not reachable from the two-player initial law. No complete topic, main merge or deployment.",
+  "verification": {
+    "focused_checks": [
+      "Production module3319 jobs passed; scratch25 declarations17theorems compiled and standard-axiom audited",
+      "All25 production/public-root canary declarations independently axiom audited; standard Lean axioms only"
+    ],
+    "bandit_check": "Passed: root9035jobs,Tests9140jobs;437 Python tests7skips,172.916s;check passed",
+    "site_build": "Passed after fresh full gate with --lean-verified;787modules10136declarations0placeholders",
+    "site_check": "Passed check_site.py and check_books.py;73 canonical topic declaration links/anchors structurally checked",
+    "independent_review": "Independent blind/source review accepted exact scratch, production promotion, real expectation, canaries and folded reader; bound hashes in multi-agent-regret-review.json"
+  },
+  "contributor": {
+    "name": "Codex with independent semantic reviewers",
+    "role": "User-directed mathematical repair, bounded scratch formalization and evidence preservation"
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "date": "2026-09-20",
+  "base_commit": "2bba21dd61ca5e05908e8e08db8884f9046d965e",
+  "scope": "Complete qualified corrected Genalti positive algorithm-to-expected-pseudo-regret mathematical reconstruction",
+  "semantic_verdict": "accepted-with-explicit-delta",
+  "source": {
+    "path": "E:\\ABRL\\maintenance\\extended-topics-20260917\\sources\\genalti24a.pdf",
+    "sha256": "65eceb2cd402baa8c7f5b60d273a103fbd181cf6803a4b7f0d2f4092742fe5b6"
+  },
+  "comparison_source": {
+    "path": "E:\\ABRL\\maintenance\\extended-topics-20260917\\sources\\maurer-pontil09-colt.pdf",
+    "sha256": "4b06ea7eb3a832347df493948deb06a7053aa36d22eba6793d2a4e48ab3935c1"
+  },
+  "comparison_acquisition": {
+    "path": "E:\\ABRL\\maintenance\\extended-topics-20260917\\sources\\maurer-pontil09-acquisition.json",
+    "sha256": "a5cb7a0b45e78f545798fdc97accb87d6a34fdda2dbebbabbece96bc5ea88322"
+  },
+  "source_anchors": [
+    "Algorithm1 p12",
+    "Lemma1 Eq11 p9 / appendixLemma2 p23",
+    "Theorem7 Eq19 pp28-31",
+    "Theorem8 pp31-32"
+  ],
+  "artifacts": [
+    {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260919-claude\\review-20260919\\genalti-corrected-regret.md",
+      "sha256": "720e075d631a3e0b1ca5a9515616c23b4ab15f4e2a50728e6c4248a69266293a"
+    },
+    {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260919-claude\\review-20260919\\genalti-corrected-regret-repair-review.md",
+      "sha256": "6d1970a5754907007c97eae822b31d83f09fd241cedf00258fe3240ef533675e"
+    },
+    {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260919-claude\\review-20260919\\genalti-corrected-regret-source-review.md",
+      "sha256": "aade38c72b88d27ca5ce32f46121fcfb662134bf2053422f61735cf61a8ff684"
+    }
+  ],
+  "public_derivation": {
+    "path": "E:\\ABRL\\worktrees\\research-extended-topics\\docs\\extended-topics\\GENALTI24-CORRECTED-REGRET.md",
+    "sha256": "6830462732f64db4502991b47297ba0c44b584ed8d386006c7ca64d83ee0d483"
+  },
+  "prior_receipts": [
+    {
+      "path": "E:\\ABRL\\worktrees\\research-extended-topics\\runs\\extended-topics-20260919\\genalti-root-audit.json",
+      "sha256": "c08ed59042c3748b8e5b79905a45220ac0ec35f7a7770299cd51b78020055c56"
+    },
+    {
+      "path": "E:\\ABRL\\worktrees\\research-extended-topics\\runs\\extended-topics-20260919\\genalti-concentration-audit.json",
+      "sha256": "27f64ef82bb285434e3bd10d0537a02a798c4aa16894c71486a8b3cf26520caa"
+    }
+  ],
+  "actual_policy_contract": [
+    "K>=2 stationary iid finite raw p-moment arms, p in(1,2],u>=0",
+    "Independent paired streams with indexed sample multiplicity",
+    "Optimal arm has nonpositive discarded signed expectation at every positive cutoff",
+    "Corrected guard n=0 or nonzero count<=c log(t^3), c=(1+sqrt2)^2",
+    "Same empirical index form and bonus10; smallest-index maximizer, causal",
+    "H=floor(T/2) paired rounds; odd last pull assigned fixed arm1"
+  ],
+  "accepted_producers": [
+    "Unique positive root and measurable index/action construction",
+    "Random-pairing Jensen MGF gives both sample-standard-deviation tails without external self-bounding theorem",
+    "Empirical index optimism retains10 with fixed-count failure2delta",
+    "Shared root/upper-mean/upper-variance event gives suboptimal index coefficient D=34/3+4sqrt2+2sqrt6<22, failure4delta",
+    "Actual adaptive-count substitution via fixed-prefix union; fixed comparator/suboptimal pair failure6(t-1)/t^3",
+    "Strict count threshold A_i=L_H*(22u^(1/p)/Delta_i)^(1/q), q=(p-1)/p",
+    "Positive suboptimal nonzero mass derived from optimal-tail assumption, not added",
+    "Exploration selections pathwise<=original-stream waiting time for floor(cL_H)+1 successes; expectation bounded by min(H,r_H/q_i)",
+    "Physical paired factor2, ceil of count threshold, bad-round residual6 and odd residual2u^(1/p)",
+    "Gap-independent learning term88(KL_H)^q(uH)^(1/p) with explicitly retained mass-dependent residual"
+  ],
+  "expected_pseudoregret": "2 sum_(Delta_i>0) Delta_i [ceil(A_i)+min(H,(floor(cL_H)+1)/q_i)+6] + 2u^(1/p)1_(T odd)",
+  "explicit_deltas": [
+    "Printed guard changed to exact root-existence guard",
+    "New pairing-based variance proof; no assumed correctness of sourceEq58 scaling",
+    "Corrected reciprocal-exponent count coefficient; source120/46 not inherited",
+    "Strict integer crossing in forced exploration",
+    "Sample multiplicity and causal measurable ties explicit",
+    "Odd physical horizon completed with explicit final-action convention",
+    "Intersection-event concentration, not same-confidence conditioning on root existence"
+  ],
+  "complete_corrected_positive_mathematical_chain_accepted": true,
+  "literal_source_algorithm_or_constants_accepted": false,
+  "full_paper_lower_bounds_accepted": false,
+  "lean_implemented": false,
+  "numerical_solver_implemented": false,
+  "new_lean_gate": false,
+  "new_site_gate": false,
+  "main_merged": false,
+  "live_deployed": false,
+  "topic_complete": false,
+  "remaining": [
+    "No Lean implementation/public-root canary for this corrected policy",
+    "Original negative/adaptivity lower claims remain separately qualified; no full-paper acceptance",
+    "Exact or certified numerical implementation remains separate",
+    "Frozen primary BCL endpoint and all-ten topic/ICLR obligations unchanged"
+  ],
+  "surface_delta": {
+    "source_provenance": "updated",
+    "lean_graph": "no-change: no production declarations",
+    "overview_graph": "no-change: no completion/registry update",
+    "functor_hypergraph": "none-found: no compiled cross-topic bridge",
+    "site": "no-change: mathematical audit only"
+  }
+}

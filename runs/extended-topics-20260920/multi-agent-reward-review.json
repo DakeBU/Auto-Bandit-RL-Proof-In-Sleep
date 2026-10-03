@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "status": "accepted-scratch-component",
+  "semantic_verdict": "accepted-with-explicit-delta",
+  "production_integrated": false,
+  "topic_complete": false,
+  "review_actors": {
+    "formalizer": "/root",
+    "blind_decoder": "/root/blind_decoder_b",
+    "source_reviewer": "/root/source_reviewer_a"
+  },
+  "source": {
+    "title": "Multi-Player Bandits -- a Musical Chairs Approach",
+    "anchor": "Static Algorithm1 and supplement A.1 Lemmas2/3",
+    "main_sha256": "c56474f0c3e689c1819b11e2bca4d3e5dcaef6eddfd0173bb55ff6a84f11d99d",
+    "supplement_sha256": "4ffd4d0c3fc975ae04b3d5e96911bd58d66bc2206e9d9584e18fcbf0c5b305ad"
+  },
+  "dependency_hashes": {
+    "BanditRLProof/Algorithms/MusicalChairsCoordination.lean": "7077674b2c4636a15b02b137ad08aac21ba0190bc0e6c58d03dfeea90413684d",
+    "BanditRLProof/Algorithms/MusicalChairsCoordinationTime.lean": "ff12d72240b7d02b88a839383e8c62c448d968953621d9e5cbc3e8ac5861ec72"
+  },
+  "base_commit": "835bf25",
+  "scope": "Actual joint independent exploration action/arbitrary bounded reward law, random-count selected-mean concentration and simultaneous strict mean accuracy; no population recovery or ranking",
+  "public_artifacts": {
+    "runs/extended-topics-20260920/MusicalChairsRewardPrototype.lean": "c4e2e9f508a36eb3e9c36530aac667d0ef58b3002873b6a20ef7b655046200fb",
+    "docs/extended-topics/MULTI-AGENT-REWARD-PROGRESS.md": "04682b70e61c02ba6e2eeda5f0d0ab0fa53406f1bf5682176f88384ee5725db5"
+  },
+  "review_artifacts": {
+    "neutral-reward.lean": {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\neutral-reward.lean",
+      "sha256": "999c454bb0eabee99ee3409533d2ac9e6ce3ebf9bd10748e379e535e141486e3"
+    },
+    "reward-blind-v1.md": {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\reward-blind-v1.md",
+      "sha256": "778e74d61800b28645fec20785ebd083beb0b24ce60d50bab76699df58bc22cc"
+    },
+    "reward-source-review-v1.md": {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\reward-source-review-v1.md",
+      "sha256": "c3c381e1ad1d5db79a249858b967d108f0bd3f7f504f9c1189bfde48ed9cedca"
+    }
+  },
+  "declarations": [
+    "BanditRLProof.MusicalChairs.rewardLaw",
+    "BanditRLProof.MusicalChairs.armMean",
+    "BanditRLProof.MusicalChairs.reward_coordinate_preserving",
+    "BanditRLProof.MusicalChairs.reward_coordinate_mean",
+    "BanditRLProof.MusicalChairs.reward_coordinate_bounded",
+    "BanditRLProof.MusicalChairs.reward_coordinate_subGaussian",
+    "BanditRLProof.MusicalChairs.reward_time_independent",
+    "BanditRLProof.MusicalChairs.selected_sum_subGaussian",
+    "BanditRLProof.MusicalChairs.selected_sum_abs_tail",
+    "BanditRLProof.MusicalChairs.selectedMean",
+    "BanditRLProof.MusicalChairs.selected_centered_sum",
+    "BanditRLProof.MusicalChairs.selectedMean_tail_pos",
+    "BanditRLProof.MusicalChairs.selectedMean_tail",
+    "BanditRLProof.MusicalChairs.observedTimes",
+    "BanditRLProof.MusicalChairs.localEmpiricalMean_eq_selectedMean",
+    "BanditRLProof.MusicalChairs.localEmpiricalMean_fixed_tail",
+    "BanditRLProof.MusicalChairs.measurable_selectedMean",
+    "BanditRLProof.MusicalChairs.measurable_jointEmpiricalMean",
+    "BanditRLProof.MusicalChairs.explorationRewardLaw",
+    "BanditRLProof.MusicalChairs.meanBadEvent",
+    "BanditRLProof.MusicalChairs.measurableSet_meanBadEvent",
+    "BanditRLProof.MusicalChairs.meanBadEvent_mixture",
+    "BanditRLProof.MusicalChairs.meanBadEvent_count_bound",
+    "BanditRLProof.MusicalChairs.half_le_one_sub_exp_neg",
+    "BanditRLProof.MusicalChairs.count_mixture_exp_bound",
+    "BanditRLProof.MusicalChairs.explorationProbReal",
+    "BanditRLProof.MusicalChairs.explorationProbReal_nonneg",
+    "BanditRLProof.MusicalChairs.explorationProbReal_le_one",
+    "BanditRLProof.MusicalChairs.explorationProbReal_lower",
+    "BanditRLProof.MusicalChairs.ofReal_explorationProbReal",
+    "BanditRLProof.MusicalChairs.meanBadEvent_exponential_bound",
+    "BanditRLProof.MusicalChairs.allMeanBadEvent",
+    "BanditRLProof.MusicalChairs.allMeanBadEvent_exponential_bound",
+    "BanditRLProof.MusicalChairs.mean_exploration_threshold",
+    "BanditRLProof.MusicalChairs.allMeanBadEvent_le_half_delta",
+    "BanditRLProof.MusicalChairs.allMeanAccurate",
+    "BanditRLProof.MusicalChairs.allMeanAccurate_eq_compl",
+    "BanditRLProof.MusicalChairs.allMeanAccurate_probability",
+    "BanditRLProof.MusicalChairs.RewardCanary.unitUniform",
+    "BanditRLProof.MusicalChairs.RewardCanary.unitUniform_bounded",
+    "BanditRLProof.MusicalChairs.RewardCanary.continuous_reward_tail",
+    "BanditRLProof.MusicalChairs.RewardCanary.selected_single_value",
+    "BanditRLProof.MusicalChairs.RewardCanary.selected_empty_zero",
+    "BanditRLProof.MusicalChairs.rewardLaw_probability",
+    "BanditRLProof.MusicalChairs.explorationRewardLaw_probability",
+    "BanditRLProof.MusicalChairs.RewardCanary.unitUniform_probability"
+  ],
+  "scanned_new_declaration_count": 43,
+  "new_theorem_count": 33,
+  "new_probability_instances": 3,
+  "audited_new_declaration_count": 46,
+  "focused_compilation": {
+    "command": "lake env lean runs/extended-topics-20260920/MusicalChairsRewardPrototype.lean",
+    "exit_code": 0,
+    "axiom_command": "lake env lean E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\reward-axiom-audit.lean",
+    "axiom_exit_code": 0,
+    "axiom_log": "E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\reward-axioms.log",
+    "axiom_log_sha256": "ab855bb08a9e02e45bc87e898f630f2ff3b7845d8946f8d4174120f7dfbc358a",
+    "allowed_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "exact_folded_code_verified": true
+  },
+  "unchanged_context": {
+    "runs/extended-topics-20260920/MusicalChairsExplorationPrototype.lean": "6c452be0d67a328588306d1a2d3982249fff0976b477d1bfc17ca2e887d6b422"
+  },
+  "joint_gate_status": "Not rerun or claimed for scratch; no public-root integration. Previous production gate remains scoped to coordination-regret checkpoint.",
+  "remaining": [
+    "all-player collision-count concentration",
+    "inverse-log rounding and actual population recovery",
+    "empirical ranking and common true top-n set",
+    "ceiling/max exploration-duration instantiation and full good event",
+    "conditioning and fresh coordination continuation",
+    "complete causal unknown-N learner, full regret and nondegenerate canary",
+    "shared extraction/public root/Tests/harness/site acceptance",
+    "recent-source audit and all-topic ICLR evidence"
+  ]
+}

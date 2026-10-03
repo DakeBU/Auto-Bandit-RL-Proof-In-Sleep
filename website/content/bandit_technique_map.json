@@ -1,0 +1,436 @@
+{
+  "schema_version": "1.0",
+  "updated": "2026-09-19",
+  "title": "Bandit Technique Map",
+  "scope": "Conceptual map from bandit/RL settings and objectives to the proof/algorithmic techniques that materially change the analysis. These relations are teaching/research overlays, not Lean theorem dependencies.",
+  "edge_semantics": "conceptual-dashed; compiled-formal-solid",
+  "techniques": [
+    {
+      "id": "confidence-optimism",
+      "title": "Confidence sets → optimism → regret",
+      "category": "confidence / optimism",
+      "mechanism": "Construct a high-probability confidence object, choose an optimistic action/value, and charge instantaneous regret to confidence width before summing widths.",
+      "setting_ids": [
+        "mab",
+        "stochastic-bandits",
+        "linear",
+        "generalized-linear",
+        "kernel-bandits",
+        "gp-ucb",
+        "variance-aware",
+        "mdp-rl",
+        "linear-kernel-mdp"
+      ],
+      "lean_routes": [
+        "teaching:ucb",
+        "teaching:oful",
+        "teaching:finite-horizon-rl"
+      ],
+      "functor_family": "family:optimism-confidence-regret",
+      "status": "mapped"
+    },
+    {
+      "id": "elimination-testing",
+      "title": "Elimination / sequential testing",
+      "category": "pure exploration",
+      "mechanism": "Maintain confidence sets, eliminate implausible arms/hypotheses, and convert fixed-confidence testing error into sample-complexity bounds.",
+      "setting_ids": [
+        "best-arm-identification",
+        "thresholding",
+        "top-m-pure-exploration",
+        "elimination"
+      ],
+      "lean_routes": [
+        "teaching:etc",
+        "spine:chapter-14-information-theory",
+        "spine:chapter-16-instance-dependent"
+      ],
+      "functor_family": "family:information-change-of-measure",
+      "status": "mapped"
+    },
+    {
+      "id": "posterior-probability-matching",
+      "title": "Posterior sampling / probability matching",
+      "category": "Bayesian",
+      "mechanism": "Sample from a posterior or posterior-induced optimal-action law instead of constructing an explicit optimistic index.",
+      "setting_ids": [
+        "thompson",
+        "mab",
+        "contextual",
+        "linear",
+        "kernel-bandits"
+      ],
+      "lean_routes": [
+        "teaching:thompson"
+      ],
+      "functor_family": "family:posterior-randomization",
+      "status": "mapped"
+    },
+    {
+      "id": "robust-estimation",
+      "title": "Robust estimation / truncation / robust confidence",
+      "category": "robust statistics",
+      "mechanism": "Replace sub-Gaussian sample means by estimators or confidence sequences that survive heavy tails, contamination, censoring, or heterogeneous variance.",
+      "setting_ids": [
+        "heavy-tailed",
+        "corruption-tolerant",
+        "missing-outcome",
+        "variance-aware"
+      ],
+      "lean_routes": [
+        "teaching:probability",
+        "teaching:ucb"
+      ],
+      "functor_family": "family:robust-confidence",
+      "status": "mapped"
+    },
+    {
+      "id": "second-order-empirical-bernstein",
+      "title": "Second-order / empirical-Bernstein control",
+      "category": "variance adaptation",
+      "mechanism": "Use observed or intrinsic variance/second-moment information so regret scales with variance-like quantities rather than only ranges or worst-case proxies.",
+      "setting_ids": [
+        "variance-aware",
+        "semi-adversarial",
+        "adversarial-bandits"
+      ],
+      "lean_routes": [
+        "teaching:probability",
+        "teaching:tsallis"
+      ],
+      "functor_family": "family:robust-confidence",
+      "status": "mapped"
+    },
+    {
+      "id": "exponential-weights-ftrl",
+      "title": "Exponential weights / FTRL / mirror descent",
+      "category": "adversarial online learning",
+      "mechanism": "Telescope a regularized potential while controlling bandit estimators and stability, producing comparator regret under adversarial feedback.",
+      "setting_ids": [
+        "adversarial-bandits",
+        "semi-adversarial",
+        "ftrl-mirror-descent",
+        "parameter-free",
+        "model-selection"
+      ],
+      "lean_routes": [
+        "teaching:exp3",
+        "teaching:tsallis"
+      ],
+      "functor_family": "family:regularized-potential-stability",
+      "status": "mapped"
+    },
+    {
+      "id": "zooming-metric-localization",
+      "title": "Zooming / metric localization",
+      "category": "metric structure",
+      "mechanism": "Localize exploration to near-optimal regions of a metric action space; covering/packing or near-optimality dimension replaces ambient cardinality.",
+      "setting_ids": [
+        "lipschitz"
+      ],
+      "lean_routes": [],
+      "functor_family": "family:metric-localization",
+      "status": "source-map"
+    },
+    {
+      "id": "rkhs-information-gain",
+      "title": "RKHS confidence / information gain",
+      "category": "kernel methods",
+      "mechanism": "Control nonparametric uncertainty through RKHS geometry, posterior/kernel variance, and information-gain or effective-dimension quantities.",
+      "setting_ids": [
+        "kernel-bandits",
+        "gp-ucb",
+        "linear-kernel-mdp"
+      ],
+      "lean_routes": [],
+      "functor_family": "family:metric-localization",
+      "status": "source-map"
+    },
+    {
+      "id": "bandit-convex-smoothing",
+      "title": "Bandit convex smoothing / gradient estimation",
+      "category": "bandit convex optimization",
+      "mechanism": "Smooth a convex loss and build a one- or multi-point gradient estimator from bandit feedback, then apply convex optimization regret machinery.",
+      "setting_ids": [
+        "convex-bandits"
+      ],
+      "lean_routes": [],
+      "functor_family": "family:regularized-potential-stability",
+      "status": "source-map"
+    },
+    {
+      "id": "combinatorial-oracle-relaxation",
+      "title": "Combinatorial oracle / relaxation / semi-bandit estimation",
+      "category": "structured actions",
+      "mechanism": "Separate statistical learning from a combinatorial optimization oracle or relaxation; exploit coordinate/semi-bandit observations when available.",
+      "setting_ids": [
+        "combinatorial",
+        "matching",
+        "bandits-with-knapsacks",
+        "constrained"
+      ],
+      "lean_routes": [],
+      "functor_family": "family:oracle-relaxation",
+      "status": "source-map"
+    },
+    {
+      "id": "primal-dual-resource-control",
+      "title": "Primal–dual / Lagrangian resource control",
+      "category": "constraints / resources",
+      "mechanism": "Introduce dual prices or feasibility certificates so reward optimization and cumulative resource/safety constraints are controlled together.",
+      "setting_ids": [
+        "constrained",
+        "bandits-with-knapsacks",
+        "safe-bandits",
+        "constrained-safe-rl",
+        "risk-sensitive",
+        "multi-fidelity"
+      ],
+      "lean_routes": [],
+      "functor_family": "family:oracle-relaxation",
+      "status": "source-map"
+    },
+    {
+      "id": "causal-intervention-transfer",
+      "title": "Causal intervention / observational transfer",
+      "category": "causal structure",
+      "mechanism": "Use a structural causal model to transfer information across interventions or combine observational and interventional data.",
+      "setting_ids": [
+        "causal"
+      ],
+      "lean_routes": [],
+      "functor_family": "family:structured-information-transfer",
+      "status": "source-map"
+    },
+    {
+      "id": "graph-feedback-information",
+      "title": "Feedback-graph / partial-monitoring information structure",
+      "category": "feedback structure",
+      "mechanism": "Exploit which actions reveal information about which other actions; graph observability or feedback partitions determine the regret regime.",
+      "setting_ids": [
+        "graphical",
+        "partial-monitoring"
+      ],
+      "lean_routes": [],
+      "functor_family": "family:structured-information-transfer",
+      "status": "source-map"
+    },
+    {
+      "id": "preference-comparison",
+      "title": "Pairwise preference / dueling reductions",
+      "category": "preference feedback",
+      "mechanism": "Replace scalar reward observations by comparisons and analyze preference matrices, Condorcet/Borda structure, or reductions to ordinary bandits.",
+      "setting_ids": [
+        "dueling"
+      ],
+      "lean_routes": [],
+      "functor_family": "family:structured-information-transfer",
+      "status": "source-map"
+    },
+    {
+      "id": "structured-low-dimensionality",
+      "title": "Low-dimensional / sparse / factorized structure",
+      "category": "structural dimension",
+      "mechanism": "Exploit linear, sparse, low-rank, tensor, factorized, unimodal, or parametric structure so confidence and exploration depend on intrinsic rather than ambient complexity.",
+      "setting_ids": [
+        "linear",
+        "generalized-linear",
+        "matrix-low-rank",
+        "sparse-high-dimensional",
+        "factored",
+        "unimodal",
+        "mnl"
+      ],
+      "lean_routes": [
+        "teaching:oful"
+      ],
+      "functor_family": "family:structured-dimension",
+      "status": "mapped"
+    },
+    {
+      "id": "nonstationary-adaptation",
+      "title": "Change detection / windows / variation-budget adaptation",
+      "category": "time variation",
+      "mechanism": "Forget, restart, window, discount, or meta-combine learners so regret adapts to switches, drift, variation, delayed feedback, or changing arm availability.",
+      "setting_ids": [
+        "dynamic-nonstationary",
+        "delayed",
+        "sleeping",
+        "ballooning",
+        "rotting-rising-restless",
+        "batched-limited-adaptivity",
+        "parameter-free"
+      ],
+      "lean_routes": [],
+      "functor_family": "family:adaptation-meta",
+      "status": "source-map"
+    },
+    {
+      "id": "corralling-model-selection",
+      "title": "Corralling / model-selection meta-learning",
+      "category": "adaptation",
+      "mechanism": "Run several base learners or model classes under a master algorithm and pay only the unavoidable adaptation overhead.",
+      "setting_ids": [
+        "model-selection",
+        "parameter-free",
+        "semi-adversarial",
+        "multi-bandit"
+      ],
+      "lean_routes": [],
+      "functor_family": "family:adaptation-meta",
+      "status": "source-map"
+    },
+    {
+      "id": "distributed-coordination",
+      "title": "Distributed coordination / communication / collision control",
+      "category": "multi-agent / federated",
+      "mechanism": "Coordinate exploration across agents while accounting for communication, collisions, heterogeneity, decentralization, or strategic interaction.",
+      "setting_ids": [
+        "multi-agent",
+        "federated",
+        "multi-bandit",
+        "multi-agent-rl"
+      ],
+      "lean_routes": [],
+      "functor_family": "family:distributed-information",
+      "status": "source-map"
+    },
+    {
+      "id": "privacy-randomization",
+      "title": "Privacy accounting / randomized perturbation",
+      "category": "privacy",
+      "mechanism": "Inject and account for privacy-preserving noise while maintaining confidence or regret guarantees under central/local/joint privacy semantics.",
+      "setting_ids": [
+        "privacy"
+      ],
+      "lean_routes": [],
+      "functor_family": "family:robust-confidence",
+      "status": "source-map"
+    },
+    {
+      "id": "multiobjective-scalarization",
+      "title": "Scalarization / Pareto / multi-objective selection",
+      "category": "multi-objective",
+      "mechanism": "Replace one scalar reward with a vector criterion and use scalarization, Pareto identification, or preference-dependent selection without collapsing objectives silently.",
+      "setting_ids": [
+        "multi-objective",
+        "single-objective"
+      ],
+      "lean_routes": [],
+      "functor_family": "family:objective-transport",
+      "status": "source-map"
+    },
+    {
+      "id": "offline-coverage-concentrability",
+      "title": "Coverage / concentrability / pessimism",
+      "category": "offline RL",
+      "mechanism": "Replace online exploration by assumptions on dataset coverage or concentrability and use pessimistic value estimation to avoid unsupported actions.",
+      "setting_ids": [
+        "offline-rl"
+      ],
+      "lean_routes": [],
+      "functor_family": "family:coverage-vs-exploration",
+      "status": "source-map"
+    },
+    {
+      "id": "partial-observability-belief",
+      "title": "Belief-state / memory representation",
+      "category": "partial observability",
+      "mechanism": "Replace fully observed states by information states, beliefs, finite memory, or predictive representations before planning/learning.",
+      "setting_ids": [
+        "pomdp"
+      ],
+      "lean_routes": [],
+      "functor_family": "family:representation-lift",
+      "status": "source-map"
+    },
+    {
+      "id": "rl-bellman-optimism",
+      "title": "Bellman recursion + optimistic bonuses",
+      "category": "reinforcement learning",
+      "mechanism": "Propagate statistical uncertainty through Bellman recursion and control cumulative episodic regret via occupancy/bonus decompositions.",
+      "setting_ids": [
+        "mdp-rl",
+        "online-mdp",
+        "linear-kernel-mdp",
+        "constrained-safe-rl"
+      ],
+      "lean_routes": [
+        "teaching:finite-horizon-rl"
+      ],
+      "functor_family": "family:optimism-confidence-regret",
+      "status": "mapped"
+    },
+    {
+      "id": "llm-preference-routing",
+      "title": "Preference / routing / allocation reductions for LLM systems",
+      "category": "application bridge",
+      "mechanism": "Map an LLM-system decision problem—preference selection, model routing, evaluation, or inference-time allocation—to an explicit bandit/RL feedback and objective contract before applying theory.",
+      "setting_ids": [
+        "llm-bandits"
+      ],
+      "lean_routes": [],
+      "functor_family": "family:representation-lift",
+      "status": "application-bridge"
+    },
+    {
+      "id": "quantum-estimation-testing",
+      "title": "Quantum mean estimation / quantum testing / quantum design",
+      "category": "quantum access",
+      "mechanism": "Exploit coherent quantum reward-oracle access for faster mean estimation, and use quantum hypothesis-testing/polynomial-method lower bounds to characterize the new regret scale.",
+      "setting_ids": [
+        "quantum-bandits"
+      ],
+      "lean_routes": [
+        "teaching:probability",
+        "teaching:oful",
+        "spine:chapter-14-information-theory",
+        "spine:chapter-15-minimax-lower-bounds"
+      ],
+      "functor_family": "family:quantum-estimation-testing",
+      "status": "cross-library",
+      "source_refs": [
+        {
+          "title": "Quantum Multi-Armed Bandits and Stochastic Linear Bandits Enjoy Logarithmic Regrets",
+          "url": "https://ojs.aaai.org/index.php/AAAI/article/view/26202",
+          "year": 2023,
+          "role": "quantum reward-oracle upper bounds"
+        },
+        {
+          "title": "Quantum Multi-Armed Bandits and Linear Bandits: Lower Bounds and Algorithms",
+          "url": "https://arxiv.org/abs/2608.14319",
+          "year": 2026,
+          "role": "current lower bounds and improved finite-action quantum linear-bandit algorithms; preprint"
+        },
+        {
+          "title": "Multi-armed quantum bandits: Exploration versus exploitation when learning properties of quantum states",
+          "url": "https://doi.org/10.22331/q-2022-06-29-749",
+          "year": 2022,
+          "role": "distinct quantum-state/observable bandit model"
+        }
+      ],
+      "cross_library": [
+        {
+          "project": "ASPBE / QuantumComputinglib",
+          "repo": "https://github.com/DakeBU/Quantum-Computing-Block-Encoding",
+          "role": "quantum oracle/circuit/state/operator semantics and cross-library proof adapters"
+        },
+        {
+          "project": "Hayata-Yamasaki-Group/lean-quantum",
+          "repo": "https://github.com/Hayata-Yamasaki-Group/lean-quantum",
+          "role": "quantum states, channels, qudits and operator-theoretic semantics"
+        },
+        {
+          "project": "Timeroot/Lean-QuantumInfo",
+          "repo": "https://github.com/Timeroot/Lean-QuantumInfo",
+          "role": "finite-dimensional quantum-information/channel/entropy reference layer"
+        },
+        {
+          "project": "duckki/quantum-computing-lean",
+          "repo": "https://github.com/duckki/quantum-computing-lean",
+          "role": "finite gate/state/projector proof-style reference; license must be audited before code reuse"
+        }
+      ]
+    }
+  ]
+}

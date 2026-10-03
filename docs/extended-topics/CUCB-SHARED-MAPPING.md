@@ -1,0 +1,9 @@
+# Provisional CUCB shared source mapping
+
+2026-09-18. The combinatorial topic now has 23 selected canonical references in website/content/banditrlwiki.json. Each records its role (model, algorithm, producer, endpoint, canary or reuse), source/instance locator and SHA-256 of the exact scanned Lean statement. Names resolve to the existing shared declaration registry; no second theorem identity or per-book Lean project is created.
+
+The primary PDF title, authors, URL and frozen SHA-256 are recorded, as is the exact compiled source snapshot 6cfe836039f22f932fa2a71e1b0122212d49386a. The shared registry and graph attach the combinatorial setting membership to these existing nodes, including the reused Thompson uniform measure. The generated topic page links to their canonical module anchors and discloses observed-marginal compatibility, inverse range, the normalized analysis-counter repair, the separate finite-Jensen route and concrete-instance limitations.
+
+Status is mapped-review-pending. This is a provisional reading map, not independent source acceptance, a complete proof-dependency graph, a lower-bound comparison, or completed all-ten evaluation. Pending comparison fields and all other unmapped topics remain explicit. Current-site compilation status comes from its own build banner; the source snapshot's prior joint gate is a separate recorded fact.
+
+The builder rejects missing declarations, duplicate references, statement-hash drift, missing source provenance/roles and unsupported semantic acceptance. check_books verifies exact source-to-export mapping, reciprocal node membership, statement hashes and rendered references. Regression tests cover preview status separation, invalid references and attempted acceptance promotion. Final semantic mapping acceptance remains pending the required independent source/repair review.

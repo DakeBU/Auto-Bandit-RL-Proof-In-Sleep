@@ -1,0 +1,116 @@
+{
+  "schema_version": "2.0",
+  "id": "EXT-MULTI-AGENT-SOURCE-PROTOTYPE-20260920",
+  "route": "extended-topics/multi-agent",
+  "frontier_cell": "multi-agent/static-MC-source-repair-and-coordination-prototype",
+  "source_facing": true,
+  "source": {
+    "kind": "paper",
+    "title": "Multi-Player Bandits -- a Musical Chairs Approach",
+    "version": "ICML2016 PMLR48:155-163; official main/supplement hashes in multi-agent-source-review.json",
+    "anchor": "Static Algorithms1/2, Theorem1; supplement A.1 Lemmas2-4",
+    "url": "https://proceedings.mlr.press/v48/rosenski16.html"
+  },
+  "target": "Freeze the explicit static unknown-N source repair and prove only the scratch coordination transition/support invariant; no full MC or production acceptance.",
+  "affected_files": [
+    "docs/extended-topics/MULTI-AGENT-CONTRACT.md",
+    "docs/extended-topics/MULTI-AGENT-PROOF-ROUTE.md",
+    "docs/extended-topics/MULTI-AGENT-PROTOTYPE.md",
+    "docs/extended-topics/ALL-TOPICS-LEDGER.json",
+    "runs/extended-topics-20260920/MusicalChairsCoordinationPrototype.lean"
+  ],
+  "declarations": [
+    "MusicalChairsCoordinationPrototype.action_of_fixed",
+    "MusicalChairsCoordinationPrototype.step_preserves_fixed",
+    "MusicalChairsCoordinationPrototype.step_fixed_action",
+    "MusicalChairsCoordinationPrototype.new_fixed_collisionFree",
+    "MusicalChairsCoordinationPrototype.step_distinct",
+    "MusicalChairsCoordinationPrototype.initial_distinct",
+    "MusicalChairsCoordinationPrototype.trajectory_distinct",
+    "MusicalChairsCoordinationPrototype.action_local",
+    "MusicalChairsCoordinationPrototype.transition_distinct",
+    "MusicalChairsCoordinationPrototype.stateLaw_distinct"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "new_route_local",
+    "searched_existing": [
+      "bandit.py search-memory collision: no hits",
+      "bandit.py list-lean-decls collision: no hits",
+      "research-wiki/mathlib/theorem-cards.md",
+      "Causal.nodeJoint: inspected, not imported",
+      "Mathlib Probability Distributions Uniform and ProbabilityMassFunction Monad/Constructions",
+      "Mathlib Probability Moments SubGaussian: sharp Hoeffding producers inspected, not yet consumed"
+    ],
+    "reused_declarations": [
+      "PMF.uniformOfFintype",
+      "PMF.map",
+      "PMF.bind",
+      "PMF.mem_support_map_iff",
+      "PMF.mem_support_bind_iff"
+    ],
+    "new_shared_declarations": [],
+    "known_consumers": [
+      "scratch trajectory_distinct and stateLaw_distinct"
+    ],
+    "planned_consumers": [
+      "actual local-history MC exploration-to-coordination performance chain"
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Construct the actual source transition once and transport its deterministic invariant through map/bind; defer general probability leaves until the actual law adapter is built."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/causal_decoder",
+    "source_reviewer": "/root/source_reviewer_a",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Source-repaired exploration duration and sharper mathematical coordination bound are reviewed separately. Scratch supplies candidate sets and only proves fixed-arm invariance/action coordinate locality, not complete MC, local observation implementability, hazard, or regret."
+  },
+  "graph_contribution": {
+    "lean_graph": "no-change-with-reason",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "No cross-setting transport theorem or reviewed public conceptual bridge is delivered; random-count averaging remains route mathematics. Scratch is outside public root and registry.",
+    "focus_targets": [
+      "extended-topics/multi-agent/static-MC"
+    ],
+    "visual_review": "No generated site or graph changed; source PDF algorithms/formulas inspected as recorded in source audit.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "no-change-with-reason: no book theorem or public teaching route changes",
+    "banditrlwiki": "no-change-with-reason: source repair and scratch are not a published production MC endpoint",
+    "results_ledger": "updated: ALL-TOPICS-LEDGER freezes the contract, keeps draft status and topic_complete=false",
+    "roadmap": "updated: precise producers and red boundaries in MULTI-AGENT-CONTRACT and PROOF-ROUTE",
+    "website_surfaces": [
+      "no-change-with-reason: public root, Tests, registry, results.json, generated site and Functor Hypergraph unchanged; exact scratch is folded in the docs reader"
+    ]
+  },
+  "truth_boundary": "Source correction and compiled scratch only. No arbitrary-reward joint learner, population estimator, exploration concentration, quantitative hazard, complete regret, full-learner canary, recent full-proof comparison, production integration, controlled evaluation, merge or deployment.",
+  "verification": {
+    "focused_checks": [
+      "lake env lean runs/extended-topics-20260920/MusicalChairsCoordinationPrototype.lean: PASS",
+      "All10 scratch theorem #print axioms: only propext/Classical.choice/Quot.sound",
+      "Exact folded code and provenance hashes checked before commit"
+    ],
+    "bandit_check": "PASS: shared root9032, Tests9135; 437 Python tests, 7 skips, 185.493s; authoritative exit0, log hash in multi-agent-source-review.json. Scratch remains separately compiled, not root-imported.",
+    "site_build": "Not rerun: no site/public Lean production files changed",
+    "site_check": "Not rerun: no site/public Lean production files changed",
+    "independent_review": "Accepted-with-explicit-delta for exact contract and bounded scratch component; separate source repair, blind decoding and anti-anchored comparison bound in multi-agent-source-review.json"
+  },
+  "contributor": {
+    "name": "Codex with independent semantic reviewers",
+    "role": "User-directed mathematical repair, bounded scratch formalization and evidence preservation"
+  }
+}

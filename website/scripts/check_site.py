@@ -941,9 +941,16 @@ def main() -> int:
         for shard in search_shards:
             if not (output / "lean-graph" / shard).exists():
                 errors.append(f"lean-graph/search-index.json references missing shard {shard}")
+        search_schema = lean_graph_search.get("schema_version", 1)
+        if search_schema not in (1, 2):
+            errors.append("lean-graph/search-index.json has an unsupported schema version")
         for entry in lean_graph_search.get("entries", []):
-            if not isinstance(entry, list) or len(entry) != 6:
+            valid_length = len(entry) in ((4, 6) if search_schema == 2 else (6,)) if isinstance(entry, list) else False
+            if not valid_length:
                 errors.append("lean-graph/search-index.json contains a malformed entry")
+                break
+            if len(entry) == 4 and not str(entry[0]).startswith(("declaration:", "module:")):
+                errors.append("lean-graph/search-index.json omits a non-derived node label")
                 break
             search_node_ids.add(entry[0])
             if not isinstance(entry[3], int) or not 0 <= entry[3] < len(search_shards):

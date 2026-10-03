@@ -1,0 +1,108 @@
+{
+  "schema_version": "2.0",
+  "id": "EXT-HEAVY-GENALTI-SUPREMUM-20260920",
+  "route": "extended-topics/heavy-tailed",
+  "frontier_cell": "heavy-tailed/genalti-fixed-horizon-obstruction",
+  "source_facing": true,
+  "source": {
+    "kind": "paper",
+    "title": "[epsilon,u]-Adaptive Regret Minimization in Heavy-Tailed Bandits",
+    "version": "COLT2024/PMLR247; SHA25665eceb2cd402baa8c7f5b60d273a103fbd181cf6803a4b7f0d2f4092742fe5b6",
+    "anchor": "Eq1/Eq2 pp1-2; Theorem2 Eq5 p7; positive-scale fixed-horizon obstruction, not source lower-bound acceptance",
+    "url": "https://proceedings.mlr.press/v247/genalti24a.html"
+  },
+  "target": "Integrate the independently reviewed raw-moment cap, actual-process image-law adapter, extended-real supremum obstruction and nondegenerate sharp slice into the shared library",
+  "affected_files": [
+    "BanditRLProof.lean",
+    "BanditRLProof/Algorithms/HeavyTailRegretCap.lean",
+    "research-wiki/papers/extended-topics-heavy-tail-regret-cap.md",
+    "website/content/results.json",
+    "website/content/banditrlwiki.json"
+  ],
+  "declarations": [
+    "BanditRLProof.HeavyTail.GenaltiAudit.normalized_sSup_ne_top",
+    "BanditRLProof.HeavyTail.GenaltiAudit.process_value_mem",
+    "BanditRLProof.HeavyTail.GenaltiAudit.normalized_sSup_two_eq"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Prior reviewed GenaltiSupremum prototype",
+      "Shared realKernelMean/realMeanRegret and raw-moment integrability",
+      "Mathlib Jensen, probability image measures, integral_map and EReal complete lattice"
+    ],
+    "reused_declarations": [
+      "BanditRLProof.HeavyTail.integrable_id_of_raw_moment",
+      "BanditRLProof.realMeanRegret_eq_finset_sum_gap",
+      "BanditRLProof.realKernelMean",
+      "ConvexOn.map_integral_le",
+      "MeasureTheory.integral_map"
+    ],
+    "new_shared_declarations": [],
+    "known_consumers": [
+      "BanditRLProof.HeavyTail.GenaltiAudit.normalized_sSup_ne_top",
+      "BanditRLProof.HeavyTail.GenaltiAudit.normalized_sSup_two_eq",
+      "Tests.HeavyTailRegretCapCanary"
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Actual moment witnesses produce a universal cap; the image-law adapter transports the input process instead of replacing it. Prior runs files remain immutable evidence snapshots, not production imports."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/blind_decoder_h",
+    "source_reviewer": "/root/source_reviewer_a",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "K>=1,epsilon>=0 and all trace laws enlarge source; positive u only; general nonempty not formalized; equality onlyK2epsilon1. Port preserves the reviewed statement/proof bodies; production-port review accepted."
+  },
+  "graph_contribution": {
+    "lean_graph": "new-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Universal mean-gap upper obstruction, no certified cross-setting functor.",
+    "focus_targets": [
+      "BanditRLProof.HeavyTail.GenaltiAudit.normalized_sSup_ne_top",
+      "BanditRLProof.HeavyTail.GenaltiAudit.process_value_mem",
+      "BanditRLProof.HeavyTail.GenaltiAudit.normalized_sSup_two_eq"
+    ],
+    "visual_review": "Rendered topic links and all three canonical module anchors verified programmatically; no browser raster inspection claimed.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "no-change-with-reason: no book chapter acceptance",
+    "banditrlwiki": "updated: separately sourced Genalti obstruction in reviewed heavy-tail reading map",
+    "results_ledger": "updated: distinct finite-supremum source-obstruction milestone",
+    "roadmap": "updated: all-topic ledger retains0/10 and recent-source boundaries",
+    "website_surfaces": [
+      "website/content/results.json",
+      "website/content/banditrlwiki.json",
+      "compiler-derived global declaration registry/module graph"
+    ]
+  },
+  "truth_boundary": "Positive-scale fixed-finite-horizon obstruction on an enlarged trace-law class; not source Eq6 acceptance, each fixed algorithm sharpness, asymptotic repair, topic completion or merge/live publication.",
+  "verification": {
+    "focused_checks": [
+      "Production/public-root canary9016jobs passed; three endpoint axiom audits use onlypropext/Classical.choice/Quot.sound"
+    ],
+    "bandit_check": "passed: root9016,Tests9114,437Python tests7skips in157.353s; genalti-production-full-gate-final.log. Initial untracked-source packaging failure resolved by indexing new files.",
+    "site_build": "passed: clean c65ccd36d74f58f8ea178eda7301555b5f31f78e with fresh unchanged Lean gate",
+    "site_check": "passed; all internal links/anchors and 13 reading references valid at clean code/site commit c65ccd3",
+    "independent_review": "Prior packetJ plus exact production/reader/canary port independently accepted-with-explicit-delta; genalti-production-review.json"
+  },
+  "contributor": {
+    "name": "Codex",
+    "role": "Formalizer and review coordinator; independent reviewers named in semantic_roundtrip"
+  }
+}

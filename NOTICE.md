@@ -51,6 +51,16 @@ lean-stat-learning-theory source code.
   semantics, and accessibility behavior. No Samplinglib source, graph or
   theorem data, template, stylesheet, or prose is copied, and no shared
   verification status, endorsement, review, or maintenance is implied.
+- GapEntropy by Jiarui Yao, Jiaxi Zhao, and Xiangxin Zhou,
+  https://github.com/zhouxiangxin1998/GapEntropy, Apache-2.0 License. The
+  BanditRLwiki frontier registry and external Lean-graph bridge reference the
+  project's public theorem metadata, source alignment, toolchain, verification
+  boundary, and declaration names in order to study the 2026 resolution of the
+  Chen--Li gap-entropy and almost-instance-wise-optimality conjectures. No
+  GapEntropy Lean source file is vendored or imported by BanditRLlib in this
+  integration, and external kernel verification is not reported as local
+  BanditRLlib compilation. Any later source port or vendoring must preserve the
+  Apache-2.0 notice and freeze the exact upstream commit/toolchain.
 - Bubeck and Cesa-Bianchi, Regret Analysis of Stochastic and Nonstochastic
   Multi-armed Bandit Problems, https://arxiv.org/abs/1204.5721.
 - Lattimore and Szepesvári, Bandit Algorithms,

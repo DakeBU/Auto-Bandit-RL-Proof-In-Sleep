@@ -1,0 +1,139 @@
+{
+  "schema_version": "2.0",
+  "id": "EXT-MULTI-AGENT-PROBABILITY-20260920",
+  "route": "extended-topics/multi-agent",
+  "frontier_cell": "multi-agent/static-MC-actual-coordination-hazard-prototype",
+  "source_facing": true,
+  "source": {
+    "kind": "paper",
+    "title": "Multi-Player Bandits -- a Musical Chairs Approach",
+    "version": "ICML2016 PMLR48:155-163; official main/supplement hashes in multi-agent-source-review.json",
+    "anchor": "Static Algorithms1/2, Theorem1; supplement A.1 Lemmas2-4",
+    "url": "https://proceedings.mlr.press/v48/rosenski16.html"
+  },
+  "target": "Construct exact finite joint rectangle probabilities and derive statewise fixation hazard using an internally proved unused-arm witness; provide local collision-bit update and membership invariant. Scratch component only.",
+  "affected_files": [
+    "docs/extended-topics/MULTI-AGENT-PROBABILITY-PROGRESS.md",
+    "docs/extended-topics/ALL-TOPICS-LEDGER.json",
+    "runs/extended-topics-20260920/MusicalChairsProbabilityPrototype.lean"
+  ],
+  "declarations": [
+    "MusicalChairsProbabilityPrototype.action_of_fixed",
+    "MusicalChairsProbabilityPrototype.step_preserves_fixed",
+    "MusicalChairsProbabilityPrototype.step_fixed_action",
+    "MusicalChairsProbabilityPrototype.new_fixed_collisionFree",
+    "MusicalChairsProbabilityPrototype.step_distinct",
+    "MusicalChairsProbabilityPrototype.initial_distinct",
+    "MusicalChairsProbabilityPrototype.trajectory_distinct",
+    "MusicalChairsProbabilityPrototype.action_local",
+    "MusicalChairsProbabilityPrototype.transition_distinct",
+    "MusicalChairsProbabilityPrototype.stateLaw_distinct",
+    "MusicalChairsProbabilityPrototype.step_localUpdate",
+    "MusicalChairsProbabilityPrototype.jointDraw_mem",
+    "MusicalChairsProbabilityPrototype.step_within",
+    "MusicalChairsProbabilityPrototype.stateLaw_within",
+    "MusicalChairsProbabilityPrototype.jointDraw_rectangle",
+    "MusicalChairsProbabilityPrototype.jointDraw_rectangle_product",
+    "MusicalChairsProbabilityPrototype.fixationWindow_fixes",
+    "MusicalChairsProbabilityPrototype.transition_fixation_lower",
+    "MusicalChairsProbabilityPrototype.isolationWindow_subset",
+    "MusicalChairsProbabilityPrototype.jointDraw_isolation",
+    "MusicalChairsProbabilityPrototype.transition_common_fixation_lower",
+    "MusicalChairsProbabilityPrototype.exists_unoccupied",
+    "MusicalChairsProbabilityPrototype.transition_unfixed_hazard",
+    "MusicalChairsProbabilityPrototype.two_player_three_arm_hazard",
+    "MusicalChairsProbabilityPrototype.two_player_isolation_probability"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "new_route_local",
+    "searched_existing": [
+      "bandit.py search-memory collision: no hits",
+      "bandit.py list-lean-decls collision: no hits",
+      "research-wiki/mathlib/theorem-cards.md",
+      "Causal.nodeJoint: inspected, not imported",
+      "Mathlib Probability Distributions Uniform and ProbabilityMassFunction Monad/Constructions",
+      "Mathlib Probability Moments SubGaussian: sharp Hoeffding producers inspected, not yet consumed",
+      "uniformOfFintype targeted memory/declaration search: existing causal allocation wrappers do not supply product restriction counting",
+      "BanditRLProof search for toOuterMeasure_uniformOfFintype and Fintype.card_pi: no matching producer"
+    ],
+    "reused_declarations": [
+      "PMF.uniformOfFintype",
+      "PMF.map",
+      "PMF.bind",
+      "PMF.mem_support_map_iff",
+      "PMF.mem_support_bind_iff",
+      "PMF.toOuterMeasure_uniformOfFintype_apply",
+      "PMF.toOuterMeasure_map_apply",
+      "Fintype.card_congr",
+      "Fintype.card_pi",
+      "ENNReal.prod_div_distrib_of_ne_top",
+      "Finset.card_image_le"
+    ],
+    "new_shared_declarations": [],
+    "known_consumers": [
+      "jointDraw_isolation consumes jointDraw_rectangle_product",
+      "transition_fixation_lower consumes exact rectangle law",
+      "transition_unfixed_hazard consumes transition_common_fixation_lower and exists_unoccupied",
+      "two-player three-arm actual-law instances"
+    ],
+    "planned_consumers": [
+      "actual local-history MC exploration-to-coordination performance chain"
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Actual product restriction counting is missing locally; use upstream finite uniform-event cardinality rather than duplicate probability foundations. The copied first prototype is an immutable scratch checkpoint, not a second production library."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/blind_decoder_a",
+    "source_reviewer": "/root/source_reviewer_a",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Intermediate common candidate set and cardinality remain premises; full MC must produce them. Only transition-kernel hazard, not a full-history conditional law, expected waiting-time sum, regret, or learned candidates. Two-player1/4 is a specific event, not total success probability."
+  },
+  "graph_contribution": {
+    "lean_graph": "no-change-with-reason",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Finite rectangle counting and collision-kernel composition only; no new cross-setting conceptual transport, production graph node or certified functor.",
+    "focus_targets": [
+      "extended-topics/multi-agent/static-MC"
+    ],
+    "visual_review": "No generated site or graph changed; source PDF algorithms/formulas inspected as recorded in source audit.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "no-change-with-reason: no book theorem or public teaching route changes",
+    "banditrlwiki": "no-change-with-reason: source repair and scratch are not a published production MC endpoint",
+    "results_ledger": "updated: ALL-TOPICS-LEDGER records exact probability/hazard progress and keeps topic incomplete",
+    "roadmap": "updated: MULTI-AGENT-PROBABILITY-PROGRESS records exact numeric, path, survival, exploration and regret boundaries",
+    "website_surfaces": [
+      "no-change-with-reason: no production root, Tests, registry, website or graph change; scratch and exact folded reader only"
+    ]
+  },
+  "truth_boundary": "Statewise h_n hazard and local one-step feedback adapter only. No learned common-set producer, arbitrary reward exploration, numeric 1/(4n), history/path conditioning adapter, survival expectation, regret, full-learner canary, recent proof review, production integration, controlled evaluation, merge or deployment.",
+  "verification": {
+    "focused_checks": [
+      "Standalone new scratch compilation and all25 theorem axiom audit; final exit codes and hashes in multi-agent-probability-review.json",
+      "Exact folded code/provenance validation before commit"
+    ],
+    "bandit_check": "Not rerun: production library, Tests and harness unchanged from4b05e79; prior full gate root9032/Tests9135/437 Python7 skips is evidence only for that unchanged production. New scratch is separately compiled/audited.",
+    "site_build": "Not rerun: no site/public Lean production files changed",
+    "site_check": "Not rerun: no site/public Lean production files changed",
+    "independent_review": "Independent blind decoder and anti-anchored source reviewer accepted exact bounded component with explicit scope delta; hashes in multi-agent-probability-review.json"
+  },
+  "contributor": {
+    "name": "Codex with independent semantic reviewers",
+    "role": "User-directed mathematical repair, bounded scratch formalization and evidence preservation"
+  }
+}

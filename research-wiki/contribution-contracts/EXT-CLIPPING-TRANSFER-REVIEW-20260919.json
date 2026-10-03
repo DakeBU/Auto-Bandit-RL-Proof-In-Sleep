@@ -1,0 +1,110 @@
+{
+  "schema_version": "2.0",
+  "id": "EXT-CLIPPING-TRANSFER-REVIEW-20260919",
+  "route": "extended-topics/heavy-tailed",
+  "frontier_cell": "heavy-tailed/clipping-transfer",
+  "source_facing": true,
+  "source": {
+    "kind": "internal-design-contract",
+    "title": "Reserved TRANSFER-CLIP adaptation",
+    "version": "PROTOCOL.md first frozen at5cbbe67; development evidence, not blinded evaluation",
+    "anchor": "docs/extended-topics/PROTOCOL.md: Reserved transfer target (TRANSFER-CLIP)",
+    "url": "docs/extended-topics/PROTOCOL.md"
+  },
+  "target": "Accept the frozen TRANSFER-CLIP adaptation with actual raw-moment confidence producer, compiled reuse evidence and stronger nonvacuous-scale canary",
+  "affected_files": [
+    "BanditRLProof/HeavyTailClippedConfidence.lean",
+    "BanditRLProof/HeavyTailClippedMoments.lean",
+    "BanditRLProof/HeavyTailClippedScheduled.lean",
+    "BanditRLProof/HeavyTailClippedTransfer.lean",
+    "BanditRLProof/HeavyTailClipping.lean",
+    "research-wiki/papers/extended-topics-clipping-transfer.md",
+    "research-wiki/papers/extended-topics-heavy-tail-regret.md",
+    "research-wiki/papers/extended-topics-heavy-tail-source-regret.md",
+    "website/content/results.json"
+  ],
+  "declarations": [
+    "BanditRLProof.HeavyTail.adaptive_corrupted_clipped_mean_tail",
+    "BanditRLProof.HeavyTail.observed_corrupted_clipped_mean_tail",
+    "BanditRLProof.HeavyTail.arm_corrupted_clipped_mean_tail"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Existing clipping/truncation interfaces and compiled direct dependency extraction"
+    ],
+    "reused_declarations": [
+      "BanditRLProof.HeavyTail.clipped_prefix_corruption_le",
+      "BanditRLProof.HeavyTail.scheduled_adaptive_clipped_mean_tail",
+      "BanditRLProof.HeavyTail.bounded_centering_mgf",
+      "BanditRLProof.HeavyTail.sum_mean_tail_of_centered"
+    ],
+    "new_shared_declarations": [],
+    "known_consumers": [
+      "BanditRLProof.HeavyTail.adaptive_corrupted_clipped_mean_tail",
+      "BanditRLProof.HeavyTail.observed_corrupted_clipped_mean_tail",
+      "BanditRLProof.HeavyTail.arm_corrupted_clipped_mean_tail"
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Existing actual proof chain reuses clean concentration and Lipschitz corruption producers; this change records independent review and substantive canary evidence."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/blind_decoder_g",
+    "source_reviewer": "/root/source_reviewer_a",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Explicit original clipping adaptation, not BCL hard truncation or a corruption-robust policy guarantee. Arbitrary nonmeasurable counts/corruption use finite outer measure."
+  },
+  "graph_contribution": {
+    "lean_graph": "reuse-only",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Same-trace estimator perturbation transfer only; no new certified cross-policy or regret bridge.",
+    "focus_targets": [
+      "BanditRLProof.HeavyTail.adaptive_corrupted_clipped_mean_tail",
+      "BanditRLProof.HeavyTail.observed_corrupted_clipped_mean_tail",
+      "BanditRLProof.HeavyTail.arm_corrupted_clipped_mean_tail"
+    ],
+    "visual_review": "Generated site and graph structure checked by check_site.py; browser visual inspection not rerun",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "no-change-with-reason: estimator transfer adds no book chapter acceptance",
+    "banditrlwiki": "no-change-with-reason: same heavy-tailed setting, no new corruption-policy endpoint",
+    "results_ledger": "updated: distinct clipping-transfer confidence milestone",
+    "roadmap": "updated: clipping transfer evidence and all-topic ledger; topics remain0/10",
+    "website_surfaces": [
+      "website/content/results.json",
+      "research-wiki/papers/extended-topics-clipping-transfer.md"
+    ]
+  },
+  "truth_boundary": "Adapted clipped-estimator concentration under consumed-prefix corruption; no comparison of different policy traces, corruption regret, topic completion or efficiency experiment.",
+  "verification": {
+    "focused_checks": [
+      "New long_corrupted_prefix canary compiled; initial norm_num recursion failure retained separately",
+      "Five-module direct compiled graph:39focused nodes,655boundary nodes,2968edges; no dangling nodes"
+    ],
+    "bandit_check": "passed: root9014, Tests9110, 434 Python tests,7skips in166.176s; clipping-review-full-gate.log",
+    "site_build": "passed with --lean-verified after fresh full harness",
+    "site_check": "passed; clipping-review-site-check.log",
+    "independent_review": "PacketG source-blind decoder, independent specification review and separate mathematical review accepted with explicit adaptation/same-trace/outer-measure boundaries"
+  },
+  "contributor": {
+    "name": "Codex",
+    "role": "Formalizer and review coordinator; independent reviewers named in semantic_roundtrip"
+  },
+  "integration_scope_note": "For the complete PR against main b3201f8, affected_files also enumerates earlier production modules in this already documented chain. No Lean edits or new semantic verdicts are introduced by this manifest coverage correction; existing review scopes and truth boundaries remain in force."
+}

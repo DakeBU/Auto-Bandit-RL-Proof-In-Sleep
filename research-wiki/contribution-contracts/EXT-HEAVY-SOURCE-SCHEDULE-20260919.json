@@ -1,0 +1,116 @@
+{
+  "schema_version": "2.0",
+  "id": "EXT-HEAVY-SOURCE-SCHEDULE-20260919",
+  "route": "extended-topics/heavy-tailed",
+  "frontier_cell": "heavy-tailed/original-schedule-adaptive-confidence",
+  "source_facing": true,
+  "source": {
+    "kind": "paper",
+    "title": "Bandits With Heavy Tail",
+    "version": "IEEE TIT 59(11), 2013; frozen published PDF SHA256 in docs/extended-topics/source-hashes.json",
+    "anchor": "Figure1 p7712; Assumption1; Lemma1 sample-index truncation pp7713-7714",
+    "url": "https://www.microsoft.com/en-us/research/wp-content/uploads/2017/01/BCL13.pdf"
+  },
+  "target": "Actual source-parameter causal policy, signed adaptive-prefix confidence and finite per-arm one-sided event budgets <=2",
+  "affected_files": [
+    "BanditRLProof.lean",
+    "BanditRLProof/HeavyTailSourceSchedule.lean",
+    "BanditRLProof/Algorithms/HeavyTailSourcePolicy.lean",
+    "research-wiki/papers/extended-topics-heavy-tail-source-schedule.md",
+    "website/content/results.json",
+    "website/content/banditrlwiki.json",
+    "website/scripts/build_site.py",
+    "website/scripts/check_site.py"
+  ],
+  "declarations": [
+    "BanditRLProof.HeavyTail.SourcePolicy.robustMean_upper_tail_sum",
+    "BanditRLProof.HeavyTail.SourcePolicy.robustMean_lower_tail_sum",
+    "BanditRLProof.HeavyTail.source_schedule_tail_sum_le_two"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "HeavyTailScheduledConfidence finite prefix union pattern",
+      "HeavyTailHistory and ArmStreamPolicy causal construction and observed-prefix identity",
+      "Mathlib finite measure union and sqrt/rpow identities; existing conservative HeavyTailTailSum has a different exponent"
+    ],
+    "reused_declarations": [
+      "BanditRLProof.HeavyTail.source_truncated_mean_upper_tail_log_sharp",
+      "BanditRLProof.HeavyTail.truncated_observed_sum",
+      "BanditRLProof.HeavyTail.arm_coordinate_integral",
+      "BanditRLProof.HeavyTail.arm_coordinate_integrable",
+      "BanditRLProof.ArmStreamPolicy.action",
+      "MeasureTheory.measureReal_biUnion_finset_le"
+    ],
+    "new_shared_declarations": [
+      "BanditRLProof.HeavyTail.source_adaptive_mean_upper_tail",
+      "BanditRLProof.HeavyTail.source_schedule_tail_sum_le_two"
+    ],
+    "known_consumers": [
+      "SourcePolicy.robustMean_upper_tail_sum",
+      "SourcePolicy.robustMean_lower_tail_sum"
+    ],
+    "planned_consumers": [
+      "Original-policy regret counting; not yet proved"
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Reuse canonical finite-history and stationary-stream semantics, parameterize the new explicit source policy with original radius/log schedule, and derive all confidence from raw moments."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/blind_decoder_a",
+    "source_reviewer": "/root/source_reviewer_a",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Source Figure1 matched with deterministic ties and exact zero-based round conversion; raw sample-ordinal thresholds/radius4 preserved. Signed closed confidence, epsilon0 extension and finite budget2 are explicit derived strengthening/repair, not printed text. No regret theorem accepted."
+  },
+  "graph_contribution": {
+    "lean_graph": "new-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Sharper local exponential remainder; no new cross-setting map or certified functor.",
+    "focus_targets": [
+      "BanditRLProof.HeavyTail.SourcePolicy.robustMean_upper_tail_sum",
+      "BanditRLProof.HeavyTail.SourcePolicy.robustMean_lower_tail_sum",
+      "BanditRLProof.HeavyTail.source_schedule_tail_sum_le_two"
+    ],
+    "visual_review": "Inspected generated implementation-map source-policy milestone and declarations. Exact actual-frontend roundtrip preserves10686 decoded search nodes; full site coverage and anchors pass.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "no-change-with-reason: probability interface is public; no teaching chapter completion changes",
+    "banditrlwiki": "updated: source-schedule causal confidence milestone; topic remains pending",
+    "results_ledger": "updated: actual source-policy signed event-budget milestone",
+    "roadmap": "updated: SOURCE-SCHEDULE route distinguishes compiled confidence from unresolved regret",
+    "website_surfaces": [
+      "website/content/results.json",
+      "website/content/banditrlwiki.json",
+      "compiler-derived module/declaration graph; no hand-edited generated output"
+    ]
+  },
+  "truth_boundary": "Actual original-parameter policy confidence and finite signed budgets only; printed regret constants and whole-topic acceptance remain open.",
+  "verification": {
+    "focused_checks": [
+      "SourceSchedule and SourcePolicy modules compiled"
+    ],
+    "bandit_check": "Passed at44cec52, Lean identical to47492bf: root9010, Tests9105,434tests7skips165.458s; source-schedule-validation.json",
+    "site_build": "Passed --lean-verified after fresh shared Lean gate; manifest records47492bf and dirty documentation/generator state truthfully",
+    "site_check": "Passed with index1436579bytes below unchanged1.5MB cap; all10686 frontend-decoded entries identical",
+    "independent_review": "decoder-e amended after missing threshold context; source-review-e accepted-with-explicit-delta and separate repair-review-e accepted; frozen hashes match"
+  },
+  "contributor": {
+    "name": "Codex",
+    "role": "Formalizer and review coordinator; independent reviewers named in semantic_roundtrip"
+  }
+}

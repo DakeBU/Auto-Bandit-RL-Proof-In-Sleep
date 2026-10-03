@@ -1,0 +1,96 @@
+{
+  "schema_version": "2.0",
+  "id": "TOOLING-RECEIPT-HASH-NORMALIZATION-20260921",
+  "route": "publication-gate/receipt-binding",
+  "frontier_cell": "publication-gate/reviewed-module-hash-portability",
+  "source_facing": false,
+  "source": {
+    "kind": "repository",
+    "title": "BanditRLlib topic review receipts and site registry hash binding",
+    "version": "branch codex/extended-claude-assist at baseline 132a8340f097b5e05bd17669980830b1f9c3d7e3",
+    "anchor": "website/scripts/book_registry.py topic_formalization_nodes reviewed-module hash check; runs/extended-topics-20260919 and runs/extended-topics-20260920 review receipts",
+    "url": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep"
+  },
+  "target": "Make the reviewed-module hash check in the site registry independent of checkout line endings without changing any receipt bytes, and record a portable, append-only normalization of every mapped receipt.",
+  "affected_files": [
+    "website/scripts/book_registry.py",
+    "website/content/banditrlwiki.json",
+    ".github/workflows/contributor-contract.yml"
+  ],
+  "declarations": [],
+  "reuse_plan": {
+    "classification": "out_of_scope",
+    "decision": "out_of_scope",
+    "searched_existing": [
+      "website/scripts/book_registry.py receipt and module hash binding",
+      "tools/check_contributor_contract.py hash helpers",
+      "tools/validate_source_contract_audit.py",
+      "runs/extended-topics-20260919/verify_causal_mapping.py"
+    ],
+    "reused_declarations": [],
+    "new_shared_declarations": [],
+    "known_consumers": [
+      "website/scripts/build_site.py",
+      "website/scripts/check_site.py",
+      "tools/test_book_registry.py"
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "No Lean declaration is added or changed. The change is a publication-gate portability fix: receipt hashes recorded from one checkout's mixed line endings could not be reproduced on any clean LF or CRLF checkout, so build_site.py failed with 'topic reviewed module hash drift' outside that machine."
+  },
+  "reader_contract": {
+    "source_anchor_visible": false,
+    "natural_language_formula_proof": false,
+    "hidden_assumptions_visible": false,
+    "source_vs_lean_delta_visible": false,
+    "lean_folded": false,
+    "dependencies_visible": false,
+    "remaining_boundary_visible": false
+  },
+  "semantic_roundtrip": {
+    "required": false,
+    "status": "not-required",
+    "formalizer": "Claude (independent mathematical collaborator; tooling change only)",
+    "blind_decoder": "not-required",
+    "source_reviewer": "not-required",
+    "verdict": "not-required",
+    "remaining_semantic_delta": "none: no theorem statement, proof, receipt content or semantic verdict changes; reviewed modules were verified byte-identical to committed blobs after line-ending normalization"
+  },
+  "graph_contribution": {
+    "lean_graph": "no-change-with-reason",
+    "overview_graph": "no-change-with-reason",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Tooling and registry binding only; no mathematical mechanism.",
+    "focus_targets": [],
+    "visual_review": "Structural site build and check rerun locally on a CRLF checkout; browser visual inspection not rerun.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "no-change-with-reason: no teaching chapter content changes",
+    "banditrlwiki": "updated: hash_normalization_records added to the five reviewed topic mappings; no status, scope, declaration list or semantic verdict changes",
+    "results_ledger": "no-change-with-reason: no milestone status changes",
+    "roadmap": "no-change-with-reason: no route or frontier changes",
+    "website_surfaces": [
+      "website/content/banditrlwiki.json"
+    ]
+  },
+  "truth_boundary": "Receipt values remain those recorded at review time; the normalization record documents that each recorded value is the LF, CRLF or raw-working-tree rendering of content byte-identical to the committed blob at the same commit, with the raw case attested from a read-only second checkout. Root-file entries (BanditRLProof.lean, Tests.lean, website/scripts/build_site.py) in historical validation receipts legitimately drifted as the roots grew; they are not consulted by the registry and are not rebound. No theorem, review verdict, topic status, main merge or deployment is changed.",
+  "verification": {
+    "focused_checks": [
+      "Supporting non-protected files in the same change: tools/verify_review_receipt_hashes.py (portable verifier), tools/test_book_registry.py (two new regression tests), runs/extended-topics-20260921/topic-receipt-hash-normalization.json (append-only normalization record bound by sha256 from the five reviewed topic mappings)",
+      "python tools/verify_review_receipt_hashes.py over all fifteen mapped receipts with --also-checkout of the Codex worktree at the same commit: every registry-consulted module entry bound (LF, CRLF, or attested raw rendering); exit 1 only for historical root-file entries not used by the registry",
+      "python -m unittest tools.test_book_registry: 17 tests OK on a pure-CRLF checkout, including the new rendering-tolerance and content-bound tests; before the change 12 of 17 failed with 'topic reviewed module hash drift'",
+      "Codex integration at initial HEAD 05dbb1cd624f9d1d0b0bcb930c62636cdb200a29 preserves explicit production_hashes_lf validation and current causal rebinding; legacy mappings use portable matching. A path-specific .gitattributes LF rule keeps the new normalization record byte-identical to its bound Git blob. Local registry tests: 20/20 passed. Local historical 15-receipt verifier exits 1 only for historical root/build-script drift; detailed independent local results follow in runs/extended-topics-20260921/receipt-portability-local-validation.json.",
+      "Codex Linux-blob preflight found every mapped receipt SHA bound to CRLF rendering. Registry now accepts exact raw/LF/CRLF renderings of the receipt and normalization-record JSON itself, without parsing/reserializing to obtain a hash. Existing rendering regression covers both Lean and runs JSON under LF and CRLF; all 20 tests pass. Receipt bytes and SHA fields are untouched.",
+      "PR contributor-contract run 35567794343 passed. Duplicate branch-push run 35567796533 failed because it compared the last push rather than the integration base and treated earlier chain coverage as stale. Non-main push/workflow-dispatch now uses origin/main, while PR, merge-group and main-push retain their event-specific base. The full integration diff is still checked; no gate is skipped."
+    ],
+    "bandit_check": "Passed after the change on a pure-CRLF checkout: lake build 9044 jobs, lake build Tests 9150 jobs, ProofGraphExport, 439 Python tests OK with 7 skips (182.3s); zero 'error:' lines, 572 linter/tactic warnings",
+    "site_build": "Failed before the change on this CRLF checkout with 'topic reviewed module hash drift'; after the change, python website/scripts/build_site.py --lean-verified exits 0 following the fresh joint Lean gate",
+    "site_check": "python website/scripts/check_site.py exits 0 after the verified build: internal links/anchors valid, README links valid, 121 Live Formalization mappings, GitHub Pages workflow complete",
+    "independent_review": "None claimed for the tooling change itself; the underlying content identity was established by byte comparison, not by review"
+  },
+  "contributor": {
+    "name": "Claude Fable 5.1",
+    "role": "Independent mathematical collaborator; author of this tooling fix, no semantic review role claimed"
+  }
+}

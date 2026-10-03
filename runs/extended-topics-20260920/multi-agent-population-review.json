@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "status": "accepted-scratch-component",
+  "semantic_verdict": "accepted-with-explicit-delta",
+  "production_integrated": false,
+  "topic_complete": false,
+  "review_actors": {
+    "formalizer": "/root",
+    "blind_decoder": "/root/blind_decoder_b",
+    "source_reviewer": "/root/source_reviewer_a"
+  },
+  "source": {
+    "title": "Multi-Player Bandits -- a Musical Chairs Approach",
+    "anchor": "Static Algorithm1 local inverse-log estimator; supplement A.1 Lemma3; separately reviewed gamma2/5 inverse-margin repair and totality conventions",
+    "main_sha256": "c56474f0c3e689c1819b11e2bca4d3e5dcaef6eddfd0173bb55ff6a84f11d99d",
+    "supplement_sha256": "4ffd4d0c3fc975ae04b3d5e96911bd58d66bc2206e9d9584e18fcbf0c5b305ad"
+  },
+  "dependency_hashes": {
+    "BanditRLProof/Algorithms/MusicalChairsCoordination.lean": "7077674b2c4636a15b02b137ad08aac21ba0190bc0e6c58d03dfeea90413684d",
+    "BanditRLProof/Algorithms/MusicalChairsCoordinationTime.lean": "ff12d72240b7d02b88a839383e8c62c448d968953621d9e5cbc3e8ac5861ec72"
+  },
+  "base_commit": "bed583c",
+  "scope": "Actual total local population estimator, log/round correctness on collision accuracy, same joint-law mean/population correctness probability>=1-delta at exact explorationLength. No empirical ranking, learned common candidate set or complete learner.",
+  "public_artifacts": {
+    "runs/extended-topics-20260920/MusicalChairsPopulationPrototype.lean": "dc2259b112fe86d42b19d4c491a5cb47381025cd0ea582813798fbfe1f69c81d",
+    "docs/extended-topics/MULTI-AGENT-POPULATION-PROGRESS.md": "575f8266c6ab65ee6d9dcf1c75a1362556d935201f7fa6820bad02413c40c6b2"
+  },
+  "review_artifacts": {
+    "neutral-population.lean": {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\neutral-population.lean",
+      "sha256": "31327d9291ebc6793787f26e26393b82645e00c01bc24c1bd09bee29c6285aee"
+    },
+    "population-blind-v1.md": {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\population-blind-v1.md",
+      "sha256": "b432b828d86583b1ffe96f38474574cfab12f38bca7fc49bbc66400c47ac86f6"
+    },
+    "population-source-review-v1.md": {
+      "path": "E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\population-source-review-v1.md",
+      "sha256": "41f373d6f75fed869404e6b66c5b03b012e11af963b46025cbb7e1602a55b22d"
+    }
+  },
+  "declarations": [
+    "BanditRLProof.MusicalChairs.base_gamma_upper",
+    "BanditRLProof.MusicalChairs.base_neg_gamma_lower",
+    "BanditRLProof.MusicalChairs.avoidanceBase_eq",
+    "BanditRLProof.MusicalChairs.avoidance_mass_lower",
+    "BanditRLProof.MusicalChairs.collision_accuracy_sandwich",
+    "BanditRLProof.MusicalChairs.collision_accuracy_survival_pos",
+    "BanditRLProof.MusicalChairs.population_inverse_margin",
+    "BanditRLProof.MusicalChairs.population_inverse_round",
+    "BanditRLProof.MusicalChairs.populationInverse",
+    "BanditRLProof.MusicalChairs.populationEstimate",
+    "BanditRLProof.MusicalChairs.localPopulationEstimate",
+    "BanditRLProof.MusicalChairs.localCollisionCount_le",
+    "BanditRLProof.MusicalChairs.noncollision_fraction_eq",
+    "BanditRLProof.MusicalChairs.populationInverse_ge_one",
+    "BanditRLProof.MusicalChairs.populationEstimate_le",
+    "BanditRLProof.MusicalChairs.populationEstimate_all_collision",
+    "BanditRLProof.MusicalChairs.populationEstimate_zero_collision",
+    "BanditRLProof.MusicalChairs.populationEstimate_correct",
+    "BanditRLProof.MusicalChairs.localPopulationEstimate_correct",
+    "BanditRLProof.MusicalChairs.populationEstimate_regular_cast",
+    "BanditRLProof.MusicalChairs.collisionCount_le",
+    "BanditRLProof.MusicalChairs.localPopulationEstimate_eq",
+    "BanditRLProof.MusicalChairs.populationRecovered",
+    "BanditRLProof.MusicalChairs.allCollisionAccurate_subset_populationRecovered",
+    "BanditRLProof.MusicalChairs.populationRecovered_probability",
+    "BanditRLProof.MusicalChairs.explorationEstimatesCorrect",
+    "BanditRLProof.MusicalChairs.explorationEstimatesCorrect_eq_inter",
+    "BanditRLProof.MusicalChairs.measurableSet_explorationEstimatesCorrect",
+    "BanditRLProof.MusicalChairs.explorationStatisticsAccurate_subset_estimatesCorrect",
+    "BanditRLProof.MusicalChairs.explorationEstimatesCorrect_probability",
+    "BanditRLProof.MusicalChairs.PopulationCanary.exact_mean_recovers_two",
+    "BanditRLProof.MusicalChairs.PopulationCanary.lower_margin_recovers_two",
+    "BanditRLProof.MusicalChairs.PopulationCanary.upper_margin_recovers_two",
+    "BanditRLProof.MusicalChairs.PopulationCanary.zero_collision_returns_one",
+    "BanditRLProof.MusicalChairs.PopulationCanary.all_collision_returns_cap",
+    "BanditRLProof.MusicalChairs.PopulationCanary.draws",
+    "BanditRLProof.MusicalChairs.PopulationCanary.actual_collision_count",
+    "BanditRLProof.MusicalChairs.PopulationCanary.actual_local_estimate"
+  ],
+  "new_declaration_count": 38,
+  "new_theorem_count": 32,
+  "new_definitions": 6,
+  "new_probability_instances": 0,
+  "canary_theorems": 7,
+  "focused_compilation": {
+    "command": "lake env lean runs/extended-topics-20260920/MusicalChairsPopulationPrototype.lean",
+    "exit_code": 0,
+    "axiom_command": "lake env lean E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\population-axiom-audit.lean",
+    "axiom_exit_code": 0,
+    "axiom_log": "E:\\ABRL\\maintenance\\extended-topics-20260920-multi-agent\\population-axioms.log",
+    "axiom_log_sha256": "558f1ef4cda2dd901efe9c67b631b7cb483e91e270a4a459181b62f6bd4ba8f4",
+    "allowed_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "exact_folded_code_verified": true
+  },
+  "unchanged_context": {
+    "runs/extended-topics-20260920/MusicalChairsCollisionPrototype.lean": "badf428d73b87c0438e825ec3b3ca30615e5599ecfa0e009db084d40c6f0c500"
+  },
+  "joint_gate_status": "Not rerun or claimed for scratch; no public-root integration. Existing production acceptance remains scoped to coordination-regret code.",
+  "remaining": [
+    "actual empirical sort with fixed tie rule and common true top-n set",
+    "nonempty candidate outputs for every valid history including bad-event paths",
+    "full source good event connecting actual estimator/candidate correctness",
+    "conditioning and fresh coordination continuation",
+    "complete causal unknown-N learner, full regret and nondegenerate canary",
+    "shared extraction/public root/Tests/harness/site acceptance",
+    "recent-source audit and all-topic ICLR evidence"
+  ]
+}

@@ -1,0 +1,147 @@
+{
+  "schema_version": "2.0",
+  "id": "EXT-CUCB-REVIEWED-MAPPING-20260920",
+  "route": "extended-topics/combinatorial",
+  "frontier_cell": "combinatorial/cucb-full-source-chain",
+  "source_facing": true,
+  "source": {
+    "kind": "paper",
+    "title": "Combinatorial Multi-Armed Bandit and Its Extension to Probabilistically Triggered Arms",
+    "version": "JMLR17(50),2016; SHA2566a29fc188cd1490c53864eb4f839e572551c171388fc27ba256a7e61424e856c",
+    "anchor": "Section2, Algorithm1, Theorems1-2 and complete Section3.1; explicit model/proof deltas",
+    "url": "https://jmlr.org/papers/volume17/14-298/14-298.pdf"
+  },
+  "target": "Publish independently reviewed full CUCB chain with exact reading references, mathematical reader and visible model/analysis boundaries",
+  "affected_files": [
+    "BanditRLProof/Algorithms/CUCBActualReward.lean",
+    "BanditRLProof/Algorithms/CUCBCharge.lean",
+    "BanditRLProof/Algorithms/CUCBChargedConcentration.lean",
+    "BanditRLProof/Algorithms/CUCBChargedConditional.lean",
+    "BanditRLProof/Algorithms/CUCBChargedMGF.lean",
+    "BanditRLProof/Algorithms/CUCBConcentration.lean",
+    "BanditRLProof/Algorithms/CUCBConditionalMGF.lean",
+    "BanditRLProof/Algorithms/CUCBConfidence.lean",
+    "BanditRLProof/Algorithms/CUCBDeterministicTrigger.lean",
+    "BanditRLProof/Algorithms/CUCBFeedbackModel.lean",
+    "BanditRLProof/Algorithms/CUCBFiniteConcavity.lean",
+    "BanditRLProof/Algorithms/CUCBFiniteDeterministicExample.lean",
+    "BanditRLProof/Algorithms/CUCBFiniteExample.lean",
+    "BanditRLProof/Algorithms/CUCBFiniteSourceExample.lean",
+    "BanditRLProof/Algorithms/CUCBGapCutoff.lean",
+    "BanditRLProof/Algorithms/CUCBGapInverse.lean",
+    "BanditRLProof/Algorithms/CUCBHistory.lean",
+    "BanditRLProof/Algorithms/CUCBImpossibleCase.lean",
+    "BanditRLProof/Algorithms/CUCBNiceEvent.lean",
+    "BanditRLProof/Algorithms/CUCBObservationMGF.lean",
+    "BanditRLProof/Algorithms/CUCBOracleMeasurable.lean",
+    "BanditRLProof/Algorithms/CUCBOracleSuccess.lean",
+    "BanditRLProof/Algorithms/CUCBPolynomialIntegral.lean",
+    "BanditRLProof/Algorithms/CUCBPolynomialRegret.lean",
+    "BanditRLProof/Algorithms/CUCBPolynomialThreshold.lean",
+    "BanditRLProof/Algorithms/CUCBRefinedRegret.lean",
+    "BanditRLProof/Algorithms/CUCBRegretDecomposition.lean",
+    "BanditRLProof/Algorithms/CUCBRegretTail.lean",
+    "BanditRLProof/Algorithms/CUCBRewardKernel.lean",
+    "BanditRLProof/Algorithms/CUCBRoundMGF.lean",
+    "BanditRLProof/Algorithms/CUCBSourceModel.lean",
+    "BanditRLProof/Algorithms/CUCBSufficientSampling.lean",
+    "BanditRLProof/Algorithms/CUCBThreshold.lean",
+    "BanditRLProof/Algorithms/CUCBThresholdTail.lean",
+    "BanditRLProof/Algorithms/CUCBTrajectory.lean",
+    "BanditRLProof/Algorithms/CUCBTriggerMGF.lean",
+    "BanditRLProof/Algorithms/CUCBUnderCount.lean",
+    "BanditRLProof/Algorithms/CUCBUnderCountIntegral.lean",
+    "BanditRLProof/ConcentrationConditionalMGF.lean",
+    "BanditRLProof/FiniteGapCutoff.lean",
+    "BanditRLProof/FiniteGapLayerCake.lean",
+    "research-wiki/papers/extended-topics-cucb-reviewed.md",
+    "website/content/banditrlwiki.json",
+    "website/content/results.json"
+  ],
+  "declarations": [
+    "BanditRLProof.CUCB.SourceModel.theorem_one_refined_regret",
+    "BanditRLProof.CUCB.SourceModel.theorem_two_deterministic",
+    "BanditRLProof.CUCB.SourceModel.theorem_two_probabilistic"
+  ],
+  "reuse_plan": {
+    "classification": "reuse",
+    "decision": "reuse_existing",
+    "searched_existing": [
+      "Existing 38CUCB production modules and six canaries",
+      "Independent blind/source/repair reviews",
+      "Canonical declaration scanner and existing23readingreferences"
+    ],
+    "reused_declarations": [
+      "BanditRLProof.CUCB.SourceModel.theorem_one_refined_regret",
+      "BanditRLProof.CUCB.SourceModel.theorem_two_deterministic",
+      "BanditRLProof.CUCB.SourceModel.theorem_two_probabilistic",
+      "BanditRLProof.Thompson.uniformActionMeasure"
+    ],
+    "new_shared_declarations": [],
+    "known_consumers": [
+      "CUCBFiniteSourceExample",
+      "CUCBFiniteDeterministicExample",
+      "Tests.CUCBFiniteModelCanary"
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Publication maps unchanged independently reviewed declarations; no new wrapper or alternate project."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/blind_decoder_h",
+    "source_reviewer": "/root/source_reviewer_a",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Explicit observed-marginal compatibility, inverse range, measurable fresh oracle, finite distinct-subset model, normalized analysis charging and probability/counting/cutoff repairs. Fullchain accepted; independent publication review separately recorded."
+  },
+  "graph_contribution": {
+    "lean_graph": "reuse-only",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "No new transport theorem or conceptual bridge; reviewed reading membership only.",
+    "focus_targets": [
+      "BanditRLProof.CUCB.SourceModel.theorem_one_refined_regret",
+      "BanditRLProof.CUCB.SourceModel.theorem_two_deterministic",
+      "BanditRLProof.CUCB.SourceModel.theorem_two_probabilistic"
+    ],
+    "visual_review": "Pending generated HTML and exact canonical reference checks; no raster claim.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "no-change-with-reason: no book chapter acceptance",
+    "banditrlwiki": "updated: reviewed CUCB reading map, topic incomplete",
+    "results_ledger": "updated: full repaired endpoints already compiled",
+    "roadmap": "updated: semantic acceptance with recent-source/evidence obligations open",
+    "website_surfaces": [
+      "website/content/banditrlwiki.json",
+      "website/content/results.json",
+      "existing canonical declaration registry memberships"
+    ]
+  },
+  "truth_boundary": "Fixed fresh environment/oracle and compatible observed marginals, inverse range, finite distinct subset family. No unrestricted censoring/application extension, whole-topic completion, controlled efficiency or merge/live claim.",
+  "verification": {
+    "focused_checks": [
+      "Focused finite-model canary3647jobs passed; receipt cucb-review-checkpoint.json"
+    ],
+    "bandit_check": "Passed: public root and Tests; 437 Python tests in152.083s,7skipped. Prior failed stale mapping assertion retained in first-run log; rerun log production-full-gate-rerun.log.",
+    "site_build": "Pending post-commit build; final outcome recorded in cucb-production-validation.json.",
+    "site_check": "Pending post-commit check; final outcome recorded in cucb-production-validation.json.",
+    "independent_review": "Full44-file blind/source and separate repair accepted in cucb-semantic-review.json; independent reader/mapping accepted by source_reviewer_a, report sha256828245d6ba82a4a96abe13827b5d203233504e1e42cb1d4d22e7f6d544e74466."
+  },
+  "contributor": {
+    "name": "Codex",
+    "role": "Formalizer and review coordinator; independent reviewers named in semantic_roundtrip"
+  },
+  "integration_scope_note": "For the complete PR against main b3201f8, affected_files also enumerates earlier production modules in this already documented chain. No Lean edits or new semantic verdicts are introduced by this manifest coverage correction; existing review scopes and truth boundaries remain in force."
+}
