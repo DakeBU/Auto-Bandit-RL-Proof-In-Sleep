@@ -1,6 +1,6 @@
-import json,hashlib
+import json,hashlib,sys
 from pathlib import Path
-run=Path('runs/online-huber-20261003');raw=Path('tmp/online-huber-full-graph.json').read_bytes();g=json.loads(raw)
+run=Path('runs/online-huber-20261003');raw=Path(sys.argv[1] if len(sys.argv)>1 else 'tmp/online-huber-full-graph.json').read_bytes();g=json.loads(raw)
 ns='BanditRL.OnlineHuber.';ogd='BanditRL.OnlineGradientDescent.'
 local=list(json.loads(Path('docs/contracts/online-huber-public-v1/headers.json').read_text(encoding='utf-8')))+['huber','fullSpace','linearLoss']
 nodes=[n for n in g['nodes'] if any(n['name']==ns+x or n['name'].startswith(ns+x+'.') for x in local)]
@@ -15,5 +15,5 @@ source=Path('BanditRLProof/OnlineHuber.lean').read_text(encoding='utf-8-sig');di
 assert digest==json.loads((run/'public-frozen-check.json').read_text(encoding='utf-8-sig'))['source_lf_sha256']
 boundary={e['target'] for e in edges}-names
 out={'schema_version':1,'scope':'Example2.15 actual Huber OGD proof chain; direct proof constants, not an execution trace','extraction':g['extraction'],'lean_version':g['lean_version'],'full_export_sha256':hashlib.sha256(raw).hexdigest(),'full_export_counts':g['counts'],'source_lf_sha256':digest,'required_chain_checks':checks,'nodes':nodes+[n for n in g['nodes'] if n['name'] in boundary],'edges':edges}
-(run/'compiled-dependencies.json').write_text(json.dumps(out,indent=2)+'\n',encoding='utf-8')
+(run/(sys.argv[2] if len(sys.argv)>2 else 'compiled-dependencies.json')).write_text(json.dumps(out,indent=2)+'\n',encoding='utf-8')
 print({'scope_nodes':len(nodes),'boundary_nodes':len(boundary),'edges':len(edges),'chain_checks':len(checks)})

@@ -1,0 +1,4 @@
+{
+  "prefix": "import BanditRLProof.OnlineConvexExtended\nimport Mathlib.Topology.Semicontinuity.Basic\nimport Mathlib.Tactic\n\nopen Set\nnamespace BanditRL.OnlineConvex\nvariable {E : Type*} [TopologicalSpace E]\n\ndef SourceClosed (f : E \u2192 EReal) : Prop :=\n  \u2200 r : \u211d, IsClosed {x | f x \u2264 (r : EReal)}\n\ndef SourceProper (f : E \u2192 EReal) : Prop :=\n  (\u2200 x, f x \u2260 \u22a5) \u2227 \u2203 x, \u2203 r : \u211d, f x = (r : EReal)\n\n",
+  "sha256": "934cf1b092234ab3a783eb464593256e8085995c85ccbd1fa7682dbb60662df5"
+}
