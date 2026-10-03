@@ -1,0 +1,112 @@
+{
+  "schema_version": "2.0",
+  "id": "ONLINE-SUBGRADIENT-BASIC-20261003",
+  "route": "online-learning/chapter-2",
+  "frontier_cell": "online-subgradient-basic",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10, 2026-06-21; SHA256 cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchor": "Definition2.20, following finite-domain inclusion, and Theorem2.21; printed16-17/PDF28-29",
+    "url": "https://arxiv.org/pdf/1912.13213v10"
+  },
+  "target": "Global extended-real support definition, proper support-domain inclusion, and real-valued Theorem2.21",
+  "affected_files": [
+    "BanditRLProof.lean",
+    "BanditRLProof/OnlineSubgradientBasic.lean",
+    "website/content/books.json",
+    "website/content/chapters.json",
+    "website/content/highlights.json",
+    "website/content/readings.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineConvex.SourceSubdifferential",
+    "BanditRL.OnlineConvex.subgradient_point_finite",
+    "BanditRL.OnlineConvex.theorem_2_21"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Shared SourceProper/effectiveDomain and existing first-order convexity API",
+      "Pinned EReal.coe_add/coe_le_coe_iff and real inner-product bilinearity; no matching global subdifferential interface found"
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineConvex.SourceProper",
+      "BanditRL.OnlineConvex.effectiveDomain",
+      "EReal.coe_add",
+      "EReal.coe_le_coe_iff"
+    ],
+    "new_shared_declarations": [],
+    "known_consumers": [
+      "Tests/OnlineSubgradientBasicCanary.lean"
+    ],
+    "planned_consumers": [
+      "Interior source subgradient existence",
+      "Source subgradient sum and maximum rules"
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "One global EReal support predicate supports finite-domain and real-convexity source results; existing properness/domain definitions reused."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/closed_blind",
+    "source_reviewer": "/root/source_reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Normed inner-product space generalizes Euclidean space. Support predicate total beyond proper functions while source claims retain properness. Domain inclusion drops unnecessary convexity; real-valued/global-support hypotheses of Theorem2.21 preserved."
+  },
+  "graph_contribution": {
+    "lean_graph": "new-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "This packet defines a local source supporting-vector interface and proves two source consequences; no cross-setting transport theorem or new conceptual functor.",
+    "focus_targets": [
+      "BanditRL.OnlineConvex.SourceSubdifferential",
+      "BanditRL.OnlineConvex.subgradient_point_finite",
+      "BanditRL.OnlineConvex.theorem_2_21"
+    ],
+    "visual_review": "Edge rendered chapter inspected at1440x1800: readable source/route hierarchy and explicit local-only compilation boundary. Screenshot tmp/subgradient-reader-review.png; exact folded statements and proof bridge inspected in generated HTML. No graph geometry change.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: shared online-subgradient-basic route for Definition2.20/domain inclusion/Theorem2.21 only.",
+    "banditrlwiki": "no-change-with-reason: no Bandit setting claim; exact Online source ledger/retrieval carries this prerequisite.",
+    "results_ledger": "no-change-with-reason: no existing Bandit named milestone changes; source inventory records this package.",
+    "roadmap": "no-change-with-reason: global frontier unchanged; interior existence and later Chapter2 results remain required.",
+    "website_surfaces": [
+      "website/content/books.json",
+      "website/content/chapters.json",
+      "website/content/highlights.json",
+      "website/content/readings.json"
+    ]
+  },
+  "truth_boundary": "No arbitrary-point subgradient existence; interior producer is scratch only. No singleton/differentiability equivalence, sum/max rule, Chapter2 or total book closure. No merge/deployment.",
+  "verification": {
+    "focused_checks": [
+      "public-focused01 and public-canary02 passed9071jobs with actual root and standard-only target/canary axioms",
+      "Two original native headers and entire source LF hash unchanged",
+      "Eight reviewed file inventories match working-tree and immutable commit LF bytes",
+      "Full-root graph:6required proof-value checks,5scopednodes254boundarynodes344edges"
+    ],
+    "bandit_check": "full-gate02 passed: root/Tests9196jobs,465tests7existing skips. Earlier untracked-source failure in full-gate01 preserved; repaired by candidate commit without Lean changes.",
+    "site_build": "site-build01 passed --lean-verified after full gate",
+    "site_check": "site-check01 passed913pages11635Leanlinks",
+    "independent_review": "Distinct /root/closed_blind and /root/source_reviewer accepted-with-explicit-delta, including reader hash receipt; automated GPT-6 Astra medium actors, not external human review."
+  },
+  "contributor": {
+    "name": "Codex for Ji Cheng",
+    "role": "Formalization and integration; distinct automated semantic actors named above; source attribution retained"
+  }
+}

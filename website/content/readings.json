@@ -3185,6 +3185,151 @@
           }
         ]
       }
+    },
+    {
+      "slug": "online-subgradient-basic",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10,21June2026",
+        "sections": "Section2.2.1, Definition2.20 and Theorem2.21",
+        "pages": "printed16-17/PDF28-29",
+        "pdf_page": 28,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "Global support set",
+          "meaning": "g belongs to the subdifferential at x when f(x)+inner(g,y-x)<=f(y) for every y in the entire space."
+        },
+        {
+          "term": "Proper and finite domain",
+          "meaning": "Proper means nowhere negative infinity and finite somewhere. The effective domain excludes positive infinity."
+        },
+        {
+          "term": "Restriction to V",
+          "meaning": "Theorem2.21 takes a real-valued function on the whole space and a convex V; the conclusion is convexity on V."
+        }
+      ],
+      "algorithm": {
+        "title": "Two supporting-hyperplane arguments",
+        "kind": "proof flow",
+        "steps": [
+          {
+            "title": "Use a finite witness",
+            "detail": "A global support cannot touch positive infinity for a proper function."
+          },
+          {
+            "title": "Choose a support at the mixture",
+            "detail": "Convexity of V puts each convex combination in V, where a support exists."
+          },
+          {
+            "title": "Add weighted lower bounds",
+            "detail": "The linear terms cancel and leave the convexity inequality."
+          }
+        ]
+      },
+      "teaching_route": [
+        "BanditRL.OnlineConvex.subgradient_point_finite",
+        "BanditRL.OnlineConvex.theorem_2_21"
+      ],
+      "source_theorems": [
+        {
+          "label": "Definition2.20 and proper support-domain inclusion",
+          "pages": "printed16-17",
+          "pdf_page": 28,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "g\\in\\partial f(x)\\Rightarrow x\\in\\operatorname{dom}f",
+          "fallback": "Proper functions admit no global support at an infinite-value point.",
+          "plain": "Proper functions admit no global support at an infinite-value point.",
+          "relationship": "The total support-set predicate is defined for all EReal-valued functions; source claims impose properness where needed. Source Euclidean space is generalized to a normed real inner-product space. The finite-domain consequence needs no convexity assumption.",
+          "contract": {
+            "model": "Global extended-real support inequality; Theorem2.21 specializes to globally real-valued f.",
+            "assumptions": "Proper f for support-domain inclusion; convex V and a support at every x in V for Theorem2.21.",
+            "parameters": "All y range over the whole space, even when convexity is concluded only on V.",
+            "regret": "No regret or algorithm guarantee.",
+            "guarantee": "Proper functions admit no global support at an infinite-value point."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Public subgradient candidates",
+            "boundary": "Focused compilation; separate full acceptance required. No interior existence or Chapter2 completion."
+          }
+        },
+        {
+          "label": "Theorem2.21",
+          "pages": "printed16-17",
+          "pdf_page": 29,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\forall x\\in V,\\ \\partial f(x)\\ne\\varnothing\\Rightarrow f|_V\\text{ convex}",
+          "fallback": "A real-valued function with global subgradients at every point of a convex V is convex on V.",
+          "plain": "A real-valued function with global subgradients at every point of a convex V is convex on V.",
+          "relationship": "The total support-set predicate is defined for all EReal-valued functions; source claims impose properness where needed. Source Euclidean space is generalized to a normed real inner-product space. The finite-domain consequence needs no convexity assumption.",
+          "contract": {
+            "model": "Global extended-real support inequality; Theorem2.21 specializes to globally real-valued f.",
+            "assumptions": "Proper f for support-domain inclusion; convex V and a support at every x in V for Theorem2.21.",
+            "parameters": "All y range over the whole space, even when convexity is concluded only on V.",
+            "regret": "No regret or algorithm guarantee.",
+            "guarantee": "A real-valued function with global subgradients at every point of a convex V is convex on V."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Public subgradient candidates",
+            "boundary": "Focused compilation; separate full acceptance required. No interior existence or Chapter2 completion."
+          }
+        }
+      ],
+      "proof_bridge": {
+        "title": "Global supporting inequalities imply the source conclusions",
+        "summary": "The same support-set definition feeds both results; no differentiability or pre-assumed convexity of f is used.",
+        "steps": [
+          {
+            "title": "Exclude an infinite touching value",
+            "detail": "Properness gives a point w with finite f(w). If f(x)=positive infinity, its support inequality at w would require positive infinity<=f(w), impossible.",
+            "math": "f(x)=+\\infty\\ \\Longrightarrow\\ f(w)\\ge+\\infty+\\langle g,w-x\\rangle=+\\infty",
+            "fallback": "SourceProper also excludes negative infinity, so membership of the effective domain means finite value."
+          },
+          {
+            "title": "Support the convex combination",
+            "detail": "For nonnegative a,b with a+b=1, let z=ax+by. Convex V puts z in V. Choose g in the global subdifferential at z and test it at x and y.",
+            "math": "f(x)\\ge f(z)+\\langle g,x-z\\rangle,\\quad f(y)\\ge f(z)+\\langle g,y-z\\rangle",
+            "fallback": "Theorem2.21 is real-valued, allowing ordinary ordered-ring arithmetic after the EReal coercions."
+          },
+          {
+            "title": "Cancel the linear terms",
+            "detail": "Multiply by a and b and add. Since a(x-z)+b(y-z)=0, only f(z) remains on the supported side.",
+            "math": "a f(x)+b f(y)\\ge(a+b)f(z)+\\langle g,a(x-z)+b(y-z)\\rangle=f(z)",
+            "fallback": "This is exactly convexity of the restriction to V."
+          }
+        ],
+        "boundary": "No assertion that an arbitrary convex extended-real function has a subgradient at every point; interior existence and later rules remain open."
+      },
+      "worked_example": {
+        "title": "Quadratic supports and an infeasible support point",
+        "intro": "On the real line, use the quadratic and the zero/top indicator of [0,1].",
+        "steps": [
+          {
+            "title": "Nonzero supporting slope",
+            "detail": "At x the slope2x globally supports the quadratic because the residual is a square.",
+            "math": "y^2-x^2-2x(y-x)=(y-x)^2\\ge0",
+            "fallback": "The public canary constructs a support at every real x."
+          },
+          {
+            "title": "Recover convexity",
+            "detail": "Apply Theorem2.21 to those supports on the full real line.",
+            "math": "x\\mapsto x^2\\text{ is convex}",
+            "fallback": "The canary uses the public theorem and its support producer."
+          },
+          {
+            "title": "No support outside the interval",
+            "detail": "The interval indicator is proper, while its value at2 is positive infinity. The finite-domain theorem rules out every support vector there.",
+            "math": "\\partial I_{[0,1]}(2)=\\varnothing",
+            "fallback": "This tests the infinite-value boundary through the shared extendedIndicator."
+          }
+        ],
+        "takeaway": "The definition connects both finite convexity and extended-real domain restrictions.",
+        "boundary": "The example does not discharge the general interior-existence theorem."
+      }
     }
   ]
 }
