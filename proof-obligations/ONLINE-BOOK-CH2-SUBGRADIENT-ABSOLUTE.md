@@ -28,3 +28,5 @@ Draft no body/compiled claim. Normal-cone/max/affine/Lipschitz/OSD/linearization
 - [ ]Scoped PR delivery separately recorded.
 
 Later Chapter2 and whole-book obligations remain required.
+
+Scoped draft PR#141 delivered and attached, based on unmerged PR#140 exactfb77head; final delivery receipt recorded separately. Package locally accepted, no merge/deployment/Chapter2/book completion. Checkout and ignored unique content retained; continuing next source obligation.

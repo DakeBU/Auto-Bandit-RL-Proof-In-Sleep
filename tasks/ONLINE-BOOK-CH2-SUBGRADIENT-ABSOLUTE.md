@@ -17,3 +17,5 @@ Distinct v2 blind reconstruction and draft source review stabilized the four unc
 ## Accepted-local package
 
 Exact Example2.24 accepted after separate final semantic/reader review, actual full gates and fixed committed bindings. See acceptance-evidence.json/acceptance-decision.md. Original draft/stabilized/proving/candidate records retain stage history; four frozen headers unchanged. Scoped PR delivery pending separate receipt. Chapter2/book Goal active.
+
+Scoped draft PR#141 delivered and attached, based on unmerged PR#140 exactfb77head; final delivery receipt recorded separately. Package locally accepted, no merge/deployment/Chapter2/book completion. Checkout and ignored unique content retained; continuing next source obligation.
