@@ -1,0 +1,3 @@
+# Lower worker selection
+
+Actor root, requested GPT6Astra/medium, single route. Distinct neutral decoder and source reviewer stabilize the unchanged headers. First finite leaf abs_subgradient_zero: terminal exactIcc[-1,1] and whole-ambient global support semantics; allowed body only tmp/online-subgradient-absolute-zero.lean and zero canary. Necessity evaluates actual support at±1; sufficiency uses actual interval inequalities with sign-correct multiplication for every y. Positive/negative leaves and the original all-x piecewise theorem remain mandatory. No public/root/site edit or acceptance yet. Original missing-context blind receipt and rejected native metadata capture preserved; v2 explicitly resolves context only, no Lean statement repair.

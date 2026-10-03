@@ -722,3 +722,4 @@ import BanditRLProof.OnlineSubgradientBasic
 import BanditRLProof.OnlineSubgradientInterior
 import BanditRLProof.OnlineSubgradientDifferentiability
 import BanditRLProof.OnlineSubgradientSum
+import BanditRLProof.OnlineSubgradientAbsolute

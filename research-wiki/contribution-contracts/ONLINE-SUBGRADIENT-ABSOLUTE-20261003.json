@@ -1,0 +1,118 @@
+{
+  "schema_version": "2.0",
+  "id": "ONLINE-SUBGRADIENT-ABSOLUTE-20261003",
+  "route": "online-learning/chapter-2",
+  "frontier_cell": "online-subgradient-absolute",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10, 2026-06-21; SHA256 cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchor": "Example2.24, Section2.2.1, printed18/PDF30",
+    "url": "https://arxiv.org/pdf/1912.13213v10"
+  },
+  "target": "Exact Example2.24 all-real absolute-value subdifferential and three sign leaves",
+  "affected_files": [
+    "BanditRLProof.lean",
+    "BanditRLProof/OnlineSubgradientAbsolute.lean",
+    "website/content/books.json",
+    "website/content/chapters.json",
+    "website/content/readings.json",
+    "website/content/highlights.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineConvex.abs_subgradient_positive",
+    "BanditRL.OnlineConvex.abs_subgradient_zero",
+    "BanditRL.OnlineConvex.abs_subgradient_negative",
+    "BanditRL.OnlineConvex.example_2_24"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Actual SourceSubdifferential definition and EReal finite addition/order",
+      "Actual pinned abs_of_pos/neg/nonneg, le_abs_self, neg_le_abs",
+      "Actual pinned sign-aware multiplication order, mul_eq_zero, singleton/closed-interval APIs"
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineConvex.SourceSubdifferential",
+      "EReal.coe_add",
+      "EReal.coe_le_coe_iff",
+      "le_abs_self",
+      "neg_le_abs"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineConvex.abs_subgradient_positive",
+      "BanditRL.OnlineConvex.abs_subgradient_zero",
+      "BanditRL.OnlineConvex.abs_subgradient_negative",
+      "BanditRL.OnlineConvex.example_2_24"
+    ],
+    "known_consumers": [
+      "BanditRL.OnlineConvex.example_2_24"
+    ],
+    "planned_consumers": [
+      "Scalar nonsmooth losses and later Chapter2 composite-loss guarantees"
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Reuse shared global supporting semantics and scalar order APIs; characterize the full actual support sets rather than assuming a chosen slope."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "source-reviewed",
+    "formalizer": "/root",
+    "blind_decoder": "/root/absolute_blind",
+    "source_reviewer": "/root/source_reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Finite EReal embedding of real absolute value only. Draft contract stabilized separately; actual public-body and reader receipt pending, not external-human review."
+  },
+  "graph_contribution": {
+    "lean_graph": "new-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Real scalar convex-analysis example in the shared graph; no cross-setting transport.",
+    "focus_targets": [
+      "BanditRL.OnlineConvex.abs_subgradient_positive",
+      "BanditRL.OnlineConvex.abs_subgradient_zero",
+      "BanditRL.OnlineConvex.abs_subgradient_negative",
+      "BanditRL.OnlineConvex.example_2_24"
+    ],
+    "visual_review": "Pending actual compiled proof graph and reader screenshot.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: exact Example2.24 route; Chapter2/book remain incomplete",
+    "banditrlwiki": "no-change-with-reason: no Bandit setting claim; exact Online source ledger/retrieval carries this prerequisite.",
+    "results_ledger": "no-change-with-reason: no existing Bandit named milestone changes; source inventory records this package.",
+    "roadmap": "no-change-with-reason: global SGB pointer unchanged; later sequential Chapter2 obligations remain required",
+    "website_surfaces": [
+      "website/content/books.json",
+      "website/content/chapters.json",
+      "website/content/highlights.json",
+      "website/content/readings.json"
+    ]
+  },
+  "truth_boundary": "Four source declarations compiled locally; separate full/public semantic, combined/root/Tests/harness, graph/site and immutable receipt gates pending. No chapter/book completion, merge, deployment or main/live update.",
+  "verification": {
+    "focused_checks": [
+      "public-focused01 compiles actual module and fractional/endpoint/outside/nonsingleton/nonzero source canaries",
+      "Four native prebody fences unchanged; separate actual public axioms pending"
+    ],
+    "bandit_check": "pending full root/Tests/harness",
+    "site_build": "pending actual combined Lean gate before lean-verified",
+    "site_check": "pending",
+    "independent_review": "Fresh source-blind reconstruction and contract-only review; full-source/public-reader receipts pending separately."
+  },
+  "contributor": {
+    "name": "Codex for Ji Cheng",
+    "role": "Formalization and integration; distinct automated semantic actors named above; source attribution retained"
+  }
+}

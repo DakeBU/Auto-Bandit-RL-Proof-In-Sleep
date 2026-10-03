@@ -1,0 +1,61 @@
+import BanditRLProof.OnlineSubgradientBasic
+
+noncomputable section
+open Set
+namespace BanditRL.OnlineConvex
+
+theorem abs_subgradient_zero :
+    SourceSubdifferential (fun y : ℝ => ((|y| : ℝ) : EReal)) 0 = Icc (-1 : ℝ) 1 := by
+  ext g
+  constructor
+  · intro hg
+    have h1 := hg 1
+    have hm := hg (-1)
+    rw [← EReal.coe_add] at h1 hm
+    change (((|(0 : ℝ)| + (1 - 0) * g : ℝ) : EReal)) ≤ ((|(1 : ℝ)| : ℝ) : EReal) at h1
+    change (((|(0 : ℝ)| + (-1 - 0) * g : ℝ) : EReal)) ≤ ((|(-1 : ℝ)| : ℝ) : EReal) at hm
+    have h1r := EReal.coe_le_coe_iff.mp h1
+    have hmr := EReal.coe_le_coe_iff.mp hm
+    norm_num at h1r hmr
+    exact ⟨by linarith, h1r⟩
+  · intro hg y
+    rw [← EReal.coe_add]
+    apply EReal.coe_le_coe
+    change |(0 : ℝ)| + (y - 0) * g ≤ |y|
+    simp only [abs_zero, sub_zero, zero_add]
+    by_cases hy : 0 ≤ y
+    · rw [abs_of_nonneg hy]
+      simpa only [mul_one] using mul_le_mul_of_nonneg_left hg.2 hy
+    · have hyneg : y < 0 := lt_of_not_ge hy
+      rw [abs_of_neg hyneg]
+      simpa only [mul_neg_one] using mul_le_mul_of_nonpos_left hg.1 hyneg.le
+
+end BanditRL.OnlineConvex
+#print axioms BanditRL.OnlineConvex.abs_subgradient_zero
+
+namespace AbsoluteZeroProbe
+open BanditRL.OnlineConvex Set
+
+theorem zero_boundary_canary :
+    (-1 : ℝ) ∈ SourceSubdifferential (fun y : ℝ => ((|y| : ℝ) : EReal)) 0 ∧
+    (1 : ℝ) ∈ SourceSubdifferential (fun y : ℝ => ((|y| : ℝ) : EReal)) 0 ∧
+    (1 / 2 : ℝ) ∈ SourceSubdifferential (fun y : ℝ => ((|y| : ℝ) : EReal)) 0 ∧
+    (2 : ℝ) ∉ SourceSubdifferential (fun y : ℝ => ((|y| : ℝ) : EReal)) 0 := by
+  norm_num [abs_subgradient_zero]
+
+theorem zero_is_not_a_singleton :
+    ¬ ∃ g : ℝ, SourceSubdifferential (fun y : ℝ => ((|y| : ℝ) : EReal)) 0 = {g} := by
+  rintro ⟨g, hg⟩
+  have hm : (-1 : ℝ) ∈ ({g} : Set ℝ) := by
+    rw [← hg, abs_subgradient_zero]
+    norm_num
+  have hp : (1 : ℝ) ∈ ({g} : Set ℝ) := by
+    rw [← hg, abs_subgradient_zero]
+    norm_num
+  have hm' : (-1 : ℝ) = g := hm
+  have hp' : (1 : ℝ) = g := hp
+  linarith
+
+#print axioms zero_boundary_canary
+#print axioms zero_is_not_a_singleton
+end AbsoluteZeroProbe

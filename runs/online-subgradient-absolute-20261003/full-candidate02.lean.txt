@@ -1,0 +1,101 @@
+import BanditRLProof.OnlineSubgradientBasic
+
+noncomputable section
+open Set
+namespace BanditRL.OnlineConvex
+
+theorem abs_subgradient_zero :
+    SourceSubdifferential (fun y : ℝ => ((|y| : ℝ) : EReal)) 0 = Icc (-1 : ℝ) 1 := by
+  ext g
+  constructor
+  · intro hg
+    have h1 := hg 1
+    have hm := hg (-1)
+    rw [← EReal.coe_add] at h1 hm
+    change (((|(0 : ℝ)| + (1 - 0) * g : ℝ) : EReal)) ≤ ((|(1 : ℝ)| : ℝ) : EReal) at h1
+    change (((|(0 : ℝ)| + (-1 - 0) * g : ℝ) : EReal)) ≤ ((|(-1 : ℝ)| : ℝ) : EReal) at hm
+    have h1r := EReal.coe_le_coe_iff.mp h1
+    have hmr := EReal.coe_le_coe_iff.mp hm
+    norm_num at h1r hmr
+    exact ⟨by linarith, h1r⟩
+  · intro hg y
+    rw [← EReal.coe_add]
+    apply EReal.coe_le_coe
+    change |(0 : ℝ)| + (y - 0) * g ≤ |y|
+    simp only [abs_zero, sub_zero, zero_add]
+    by_cases hy : 0 ≤ y
+    · rw [abs_of_nonneg hy]
+      simpa only [mul_one] using mul_le_mul_of_nonneg_left hg.2 hy
+    · have hyneg : y < 0 := lt_of_not_ge hy
+      rw [abs_of_neg hyneg]
+      simpa only [mul_neg_one] using mul_le_mul_of_nonpos_left hg.1 hyneg.le
+
+
+theorem abs_subgradient_positive (x : ℝ) (hx : 0 < x) :
+    SourceSubdifferential (fun y : ℝ => ((|y| : ℝ) : EReal)) x = {(1 : ℝ)} := by
+  ext g
+  change g ∈ SourceSubdifferential (fun y : ℝ => ((|y| : ℝ) : EReal)) x ↔ g = (1 : ℝ)
+  constructor
+  · intro hg
+    have h0 := hg 0
+    have h2 := hg (2 * x)
+    rw [← EReal.coe_add] at h0 h2
+    have h0r := EReal.coe_le_coe_iff.mp h0
+    have h2r := EReal.coe_le_coe_iff.mp h2
+    change |x| + (0 - x) * g ≤ |(0 : ℝ)| at h0r
+    change |x| + (2*x - x) * g ≤ |2*x| at h2r
+    rw [abs_of_pos hx, abs_zero] at h0r
+    rw [abs_of_pos hx, abs_of_pos (show 0 < 2*x by linarith)] at h2r
+    have he : x * (g - 1) = 0 := by nlinarith
+    have hg' : g - 1 = 0 := (mul_eq_zero.mp he).resolve_left (ne_of_gt hx)
+    linarith
+  · intro hg
+    subst g
+    intro y
+    rw [← EReal.coe_add]
+    apply EReal.coe_le_coe
+    change |x| + (y - x) * 1 ≤ |y|
+    rw [abs_of_pos hx]
+    nlinarith [le_abs_self y]
+
+theorem abs_subgradient_negative (x : ℝ) (hx : x < 0) :
+    SourceSubdifferential (fun y : ℝ => ((|y| : ℝ) : EReal)) x = {(-1 : ℝ)} := by
+  ext g
+  change g ∈ SourceSubdifferential (fun y : ℝ => ((|y| : ℝ) : EReal)) x ↔ g = (-1 : ℝ)
+  constructor
+  · intro hg
+    have h0 := hg 0
+    have h2 := hg (2 * x)
+    rw [← EReal.coe_add] at h0 h2
+    have h0r := EReal.coe_le_coe_iff.mp h0
+    have h2r := EReal.coe_le_coe_iff.mp h2
+    change |x| + (0 - x) * g ≤ |(0 : ℝ)| at h0r
+    change |x| + (2*x - x) * g ≤ |2*x| at h2r
+    rw [abs_of_neg hx, abs_zero] at h0r
+    rw [abs_of_neg hx, abs_of_neg (show 2*x < 0 by linarith)] at h2r
+    have he : x * (g + 1) = 0 := by nlinarith
+    have hg' : g + 1 = 0 := (mul_eq_zero.mp he).resolve_left (ne_of_lt hx)
+    linarith
+  · intro hg
+    subst g
+    intro y
+    rw [← EReal.coe_add]
+    apply EReal.coe_le_coe
+    change |x| + (y - x) * (-1) ≤ |y|
+    rw [abs_of_neg hx]
+    nlinarith [neg_le_abs y]
+
+theorem example_2_24 (x : ℝ) :
+    SourceSubdifferential (fun y : ℝ => ((|y| : ℝ) : EReal)) x =
+      if 0 < x then {(1 : ℝ)} else if x = 0 then Icc (-1 : ℝ) 1 else {(-1 : ℝ)} := by
+  split_ifs with hp hz
+  · exact abs_subgradient_positive x hp
+  · subst x
+    exact abs_subgradient_zero
+  · exact abs_subgradient_negative x (lt_of_le_of_ne (le_of_not_gt hp) hz)
+
+end BanditRL.OnlineConvex
+#print axioms BanditRL.OnlineConvex.abs_subgradient_zero
+#print axioms BanditRL.OnlineConvex.abs_subgradient_positive
+#print axioms BanditRL.OnlineConvex.abs_subgradient_negative
+#print axioms BanditRL.OnlineConvex.example_2_24
