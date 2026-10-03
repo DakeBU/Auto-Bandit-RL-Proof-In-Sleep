@@ -1,0 +1,107 @@
+import BanditRLProof.OnlineSubgradientBasic
+
+noncomputable section
+open Set
+namespace BanditRL.OnlineConvex
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+
+def SourceNormalCone (V : Set E) (x : E) : Set E :=
+  {g | x ∈ V ∧ ∀ y ∈ V, inner ℝ g (y - x) ≤ 0}
+
+theorem indicator_subdifferential_eq_normalCone [FiniteDimensional ℝ E]
+    (V : Set E) (hVn : V.Nonempty) (hVc : Convex ℝ V) (x : E) :
+    SourceSubdifferential (extendedIndicator V) x = SourceNormalCone V x := by
+  classical
+  ext g
+  constructor
+  · intro hg
+    have hf : SourceProper (extendedIndicator V) := (sourceProper_indicator_iff V).mpr hVn
+    have hxV : x ∈ V := by
+      simpa only [effectiveDomain_indicator] using
+        subgradient_point_finite (extendedIndicator V) hf x g hg
+    refine ⟨hxV, ?_⟩
+    intro y hy
+    have h := hg y
+    simpa [extendedIndicator, hxV, hy] using h
+  · intro hg y
+    by_cases hy : y ∈ V
+    · have h := EReal.coe_le_coe_iff.mpr (hg.2 y hy)
+      simpa [extendedIndicator, hg.1, hy] using h
+    · simp [extendedIndicator, hg.1, hy]
+
+
+theorem normalCone_interior_eq_zero [FiniteDimensional ℝ E]
+    (V : Set E) (hVn : V.Nonempty) (hVc : Convex ℝ V)
+    (x : E) (hx : x ∈ interior V) : SourceNormalCone V x = {(0 : E)} := by
+  classical
+  ext g
+  change g ∈ SourceNormalCone V x ↔ g = 0
+  constructor
+  · intro hg
+    by_contra hg0
+    have hgn : 0 < ‖g‖ := norm_pos_iff.mpr hg0
+    obtain ⟨r, hr, hball⟩ := Metric.mem_nhds_iff.mp (mem_interior_iff_mem_nhds.mp hx)
+    let a : ℝ := r / (2 * ‖g‖)
+    have ha : 0 < a := div_pos hr (by positivity)
+    have hnorm : ‖a • g‖ = r / 2 := by
+      rw [norm_smul_of_nonneg ha.le]
+      dsimp [a]
+      field_simp [ne_of_gt hgn]
+    have hy : x + a • g ∈ V := hball (by
+      rw [Metric.mem_ball, dist_eq_norm]
+      simp only [add_sub_cancel_left, hnorm]
+      linarith)
+    have h := hg.2 (x + a • g) hy
+    simp only [add_sub_cancel_left, real_inner_smul_right, real_inner_self_eq_norm_sq] at h
+    have hp : 0 < a * ‖g‖ ^ 2 := mul_pos ha (sq_pos_of_pos hgn)
+    linarith
+  · intro hg
+    subst g
+    refine ⟨interior_subset hx, ?_⟩
+    intro y hy
+    simp
+
+
+theorem normalCone_unitBall_boundary [FiniteDimensional ℝ E]
+    (x : E) (hx : ‖x‖ = 1) :
+    SourceNormalCone {y : E | ‖y‖ ≤ 1} x =
+      {g | ∃ α : ℝ, 0 ≤ α ∧ g = α • x} := by
+  classical
+  ext g
+  constructor
+  · intro hg
+    by_cases hg0 : g = 0
+    · subst g
+      exact ⟨0, le_rfl, by simp⟩
+    have hgn : 0 < ‖g‖ := norm_pos_iff.mpr hg0
+    have hy : ‖(‖g‖⁻¹ : ℝ) • g‖ ≤ 1 := by
+      simpa using (norm_smul_inv_norm (𝕜 := ℝ) hg0).le
+    have h := hg.2 ((‖g‖⁻¹ : ℝ) • g) hy
+    rw [inner_sub_right, real_inner_smul_right, real_inner_self_eq_norm_sq] at h
+    have hn : ‖g‖⁻¹ * ‖g‖ ^ 2 = ‖g‖ := by
+      field_simp [ne_of_gt hgn]
+    rw [hn] at h
+    have hcs := real_inner_le_norm g x
+    rw [hx, mul_one] at hcs
+    have he : inner ℝ g x = ‖g‖ := by linarith
+    refine ⟨‖g‖, norm_nonneg g, ?_⟩
+    have hsq : ‖g - ‖g‖ • x‖ ^ 2 = 0 := by
+      rw [norm_sub_sq_real, norm_smul_of_nonneg (norm_nonneg g),
+        real_inner_smul_right, he, hx]
+      ring
+    have hn0 : ‖g - ‖g‖ • x‖ = 0 := by
+      nlinarith [norm_nonneg (g - ‖g‖ • x)]
+    exact sub_eq_zero.mp (norm_eq_zero.mp hn0)
+  · rintro ⟨a, ha, rfl⟩
+    refine ⟨hx.le, ?_⟩
+    intro y hy
+    change ‖y‖ ≤ 1 at hy
+    rw [real_inner_smul_left, inner_sub_right, real_inner_self_eq_norm_sq, hx]
+    have hcs := real_inner_le_norm x y
+    rw [hx, one_mul] at hcs
+    exact mul_nonpos_of_nonneg_of_nonpos ha (by nlinarith)
+
+end BanditRL.OnlineConvex
+#print axioms BanditRL.OnlineConvex.indicator_subdifferential_eq_normalCone
+#print axioms BanditRL.OnlineConvex.normalCone_interior_eq_zero
+#print axioms BanditRL.OnlineConvex.normalCone_unitBall_boundary

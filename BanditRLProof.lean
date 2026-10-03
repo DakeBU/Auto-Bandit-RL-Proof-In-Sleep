@@ -723,3 +723,4 @@ import BanditRLProof.OnlineSubgradientInterior
 import BanditRLProof.OnlineSubgradientDifferentiability
 import BanditRLProof.OnlineSubgradientSum
 import BanditRLProof.OnlineSubgradientAbsolute
+import BanditRLProof.OnlineNormalCone
