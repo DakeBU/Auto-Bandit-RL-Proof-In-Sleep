@@ -1,0 +1,7 @@
+# Basic subgradient packet accepted-local
+
+Definition2.20 global support set, proper subdifferential-domain inclusion, and exact real-valued Theorem2.21 are publicly closed. Global support quantifier is not restricted to V; convexity is concluded only on convex V. Properness excludes bottom and supplies a finite witness for domain inclusion. Source Euclidean scope generalizes to normed real inner-product spaces; the support predicate is total outside proper functions but source claims preserve their hypotheses. Dropping redundant convexity from the domain lemma is explicit.
+
+Distinct automated blind/source actors accepted the deltas and final reader, with8-file fixed-inventory working-tree/commit LF hash checks. Not external human review. Two original statement hashes/full source remain unchanged. Root/Tests9196jobs,465tests7skips, standard-only target and quadratic/outside-interval canaries,6full-root proof-value checks,site913pages11635links,globalshadowwithnomismatch,andexact-basecontributorgatepassed.
+
+Initial fullgate01 failed because source was untracked; candidate commit repaired repository tracking, fullgate02 passed without theorem edits. Preserve original error. Current commitf7ec919c8ffd593196874a621ce279feaf97103a. Later interior producer/contact helper compile in scratch with interval-center canary, but require separate public refactor/review/gates. Interior assertion, Theorem2.22/sum/max rules and all remaining chapter/book obligations are not accepted by this packet. No merge or deployment.
