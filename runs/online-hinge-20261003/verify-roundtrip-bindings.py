@@ -21,7 +21,7 @@ expected={
  prefix+'full-harness-03.log',prefix+'full-harness-03-exit.json',prefix+'public-axioms.log',prefix+'public-axioms-exit.json',prefix+'axiom-audit.json',
  prefix+'public-affine-fence.json',prefix+'public-hinge-fence.json',prefix+'compiled-dependencies.json',prefix+'graph-check.log',prefix+'registry.json',
  prefix+'site-build-04.log',prefix+'site-check-04.log',prefix+'site-build-04-exit.json',prefix+'site-check-04-exit.json',
- prefix+'contributor-gate-02.log',prefix+'contributor-gate-02-exit.json',prefix+'global-frontier-preservation.json',prefix+'scoped-frontier-shadow.json',
+ prefix+'contributor-gate-03.log',prefix+'contributor-gate-03-exit.json',prefix+'global-frontier-preservation.json',prefix+'scoped-frontier-shadow.json',
  prefix+'visual-review.md',prefix+'visual-receipt.json'
 }
 rawchecks=[];reviewed=set()
