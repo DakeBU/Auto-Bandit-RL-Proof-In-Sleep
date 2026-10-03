@@ -130,3 +130,4 @@ import Tests.OnlineSubgradientAbsoluteCanary
 import Tests.OnlineNormalConeCanary
 import Tests.OnlineSubgradientMaxCanary
 import Tests.OnlineHingeCanary
+import Tests.OnlineAffineSubgradientCanary

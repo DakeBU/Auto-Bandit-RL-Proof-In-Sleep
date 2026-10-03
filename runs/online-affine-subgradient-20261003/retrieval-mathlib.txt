@@ -1,0 +1,29 @@
+124:theorem adjoint_inner_left (A : E →L[𝕜] F) (x : E) (y : F) : ⟪(A†) y, x⟫ = ⟪y, A x⟫ :=
+146:  have h : ⟪(A† ∘L A) x, x⟫ = ⟪A x, A x⟫ := by rw [← adjoint_inner_left]; rfl
+165:  refine ⟨fun h x y => by rw [h, adjoint_inner_left], fun h => ?_⟩
+167:  exact ext_inner_right 𝕜 fun y => by simp only [adjoint_inner_left, h x y]
+174:theorem adjoint_id : (ContinuousLinearMap.id 𝕜 E)† = ContinuousLinearMap.id 𝕜 E := by
+194:    simp [← T.adjoint_inner_left, hx _]
+196:    simp_all [T.adjoint_inner_left]
+213:  rw [LinearMap.mem_ker, ← inner_self_eq_zero (𝕜 := 𝕜), coe_coe, ← adjoint_inner_left]
+289:  simp [adjoint_inner_left]
+301:  ext; simp [adjoint_inner_left]
+354:    ext fun x => ext_inner_right 𝕜 fun y => (A.adjoint_inner_left y x).symm ▸ (hA x y).symm⟩
+387:    LinearMap.sub_apply, inner_sub_left, coe_coe, mul_apply, adjoint_inner_left,
+459:  grind [T.adjoint_inner_left]
+544:theorem adjoint_inner_left (A : E →ₗ[𝕜] F) (x : E) (y : F) : ⟪adjoint A y, x⟫ = ⟪y, A x⟫ := by
+548:  exact ContinuousLinearMap.adjoint_inner_left _ x y
+562:  rw [adjoint_inner_right, adjoint_inner_left]
+577:  refine ⟨fun h x y => by rw [h, adjoint_inner_left], fun h => ?_⟩
+579:  exact ext_inner_right 𝕜 fun y => by simp only [adjoint_inner_left, h x y]
+586:theorem adjoint_id : (LinearMap.id (R := 𝕜) (M := E)).adjoint = LinearMap.id := by
+652:  refine ⟨fun h x y => by rw [h, adjoint_inner_left], fun h => ?_⟩
+654:  exact ext_inner_right_basis b₂ fun i₂ => by simp only [adjoint_inner_left, h i₁ i₂]
+658:  refine ⟨fun h x y => by rw [h, adjoint_inner_left], fun h => Basis.ext b fun i => ?_⟩
+659:  exact ext_inner_right 𝕜 fun y => by simp only [h i, adjoint_inner_left]
+663:  refine ⟨fun h x y => by rw [h, adjoint_inner_left], fun h => ?_⟩
+665:  exact ext_inner_right_basis b fun i => by simp only [h i, adjoint_inner_left]
+698:  simp [adjoint_inner_left]
+724:  simp [adjoint_inner_left, adjoint_inner_right]
+808:    simpa [star_eq_adjoint, adjoint_inner_left] using h x y
+809:  · simp [← adjoint_inner_left, ← comp_apply, h]

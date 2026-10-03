@@ -1,0 +1,1 @@
+Freeze exact proper-only affine pullback inclusion. Do not add convexity or promote to equality; actual A-transpose and actual composition. One dependency-ready leaf, medium roles, distinct automated semantic actors. Chapter/book remain incomplete.

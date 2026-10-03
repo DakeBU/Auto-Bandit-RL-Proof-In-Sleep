@@ -1,0 +1,24 @@
+runs/online-affine-subgradient-20261003/attempts/affine-canary-01.lean:12:21: warning: unused variable `hp`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-affine-subgradient-20261003/attempts/affine-canary-01.lean:54:2: error: Type mismatch
+  hout
+has type
+  1 ∈ SourceSubdifferential (fun y => ↑|doubleMap y + 1|) (-(1 / 2))
+but is expected to have type
+  1 ∈ SourceSubdifferential (fun y => ↑|doubleMap y + 1|) (-1 / 2)
+runs/online-affine-subgradient-20261003/attempts/affine-canary-01.lean:67:8: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ↑?x + ↑?y
+in the target expression
+  negAbsLoss 0 + ↑(inner ℝ g (1 - 0)) ≤ negAbsLoss 1
+
+case h.mp
+g : ℝ
+hg : g ∈ SourceSubdifferential negAbsLoss 0
+h1 : negAbsLoss 0 + ↑(inner ℝ g (1 - 0)) ≤ negAbsLoss 1
+hm : negAbsLoss 0 + ↑(inner ℝ g (-1 - 0)) ≤ negAbsLoss (-1)
+⊢ g ∈ ∅
+'AffineProbe.double_adjoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AffineProbe.nonzero_shifted_support' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'AffineProbe.neg_abs_support_empty' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'AffineProbe.proper_nonconvex_strict_inclusion' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
