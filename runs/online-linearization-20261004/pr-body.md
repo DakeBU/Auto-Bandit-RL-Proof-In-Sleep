@@ -1,0 +1,11 @@
+An OLO learner can serve OCO only if the linear feedback and regret use the learner's actual causal outputs. This package realizes the Section 2.3 reduction of Orabona v10 with a finite vector history, legal current supports, same-run regret comparison, universal-bound transport, and a feasible canonical producer.
+
+Stacked on OPEN draft #149, exact base `410693c31d8e1343c6b023886304520c2a834a11`; main has not received that dependency. Eighteen frozen proof terminals and thirty shared registry nodes cover this bounded package. Structural identities and adapters are explicitly library refinements; the source has one unnumbered reduction card. A supplied universal OLO bound is not a performance guarantee for arbitrary learners.
+
+Validation: focused public/canary builds, shared root (9084 jobs), Tests (9222 jobs), full harness (466 tests, 7 existing skips), 65 named standard-or-none axiom audits, 19 compiled proof-value dependency checks, 25 nondegenerate canaries, applicable contributor gate covering all 9 production paths, and clean final05 site/registry checks. Distinct automated blind/source/body/reader roles accepted with explicit semantic deltas; no independent human or external-model review claim. Immutable acceptance rechecks 1076 raw evidence rows.
+
+Site growth exposed the unchanged 1.5 MB search-index limit. Schema 3 interns kinds/statuses, preserves all 11732 entries, and supports the legacy browser format; the actual production decoder's lossless audit passes at 1297766 bytes. The original overflow, inherited source-location repair, and rejected contributor N/A interpretation are retained.
+
+Full `git diff --check` fails on retained raw logs and exactly three frozen unproved signature-probe files; the scoped check passes every other production/proof/document file. This exception is documented in `runs/online-linearization-20261004/diff-check-boundary.md`.
+
+Evidence: `runs/online-linearization-20261004/accepted-decision.json`, `accepted-binding-audit.json`, `final-reader-receipt-v2.json`, and `docs/contracts/online-linearization-v1/`. The clean site binds source commit `5e96d0c08dfe5631bc9a5e6a92cc4bda71120f53`; subsequent commits add evidence only. Chapter 2, coordinate scaling, scalar step optimization, older-production migration, and Chapters 3–16 remain required. This is compiled-local/PR-ready, not merged or live.
