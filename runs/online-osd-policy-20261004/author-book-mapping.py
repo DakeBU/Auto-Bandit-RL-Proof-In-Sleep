@@ -86,7 +86,7 @@ rows = [
   'Use the existing Classical.choose membership theorem at a feasible query with nonempty global supports.',[osd+'currentSubgradient_mem'],False),
  ('canonical_output','Exact canonical trajectory bridge',r'X_t^{p_{\rm canonical}}=\operatorname{iterate}_{\rm old}(t)',
   'The general history implementation recovers the previous canonical recurrence at every time and every input regime.',
-  'Induct on time, unfold the same projection update and current selector, and rewrite the previous output equality. No legality or positive-rate premise is needed.',[ns+'output_succ',osd+'iterate'],True),
+  'Induct on time, unfold the same projection update and current selector, and rewrite the previous output equality. No legality or positive-rate premise is needed.',[ns+'output_succ',osd+'iterate'],False),
  ('canonical_selected','Exact canonical selected-vector bridge',r'g_t^{p_{\rm canonical}}=G(f_t,\operatorname{iterate}_{\rm old}(t))',
   'The selected vector agrees exactly with the old currentSubgradient value, including the total-function fallback branch.',
   'Unfold the policy application and rewrite canonical_output.',[ns+'canonical_output',osd+'currentSubgradient'],False),
