@@ -1,0 +1,5 @@
+# Site check02 actual algorithm registration repair
+
+Actual lean-verified site build02 succeeded, but full site checker02 exited1 with three exact failures: new OSD page has one explicit pseudocode block while the maintained required-algorithm set expects0; its stable target expectation is correspondingly0; and highlights has no featured OSD teaching notes. Preserve both actual logs/exits.
+
+Repair registers actual source Algorithm2.2 `online-osd` in BOTH existing build required-pseudocode and checker required-pseudocode sets. This strengthens the requirement to exactly one pseudocode block and stable deep-link, without changing/relaxing validation logic or creating a source-excluded algorithm. Select the same four primary source terminals as featured notes; all15 source theorem highlights/all21module nodes remain canonical shared Book members. Two one-line production registrations are explicitly covered in the contribution manifest and must be independently included in final reader/raw review. No Lean/statement/body/source contract changed. Actual site03 + full final harness and contributor gate reruns required; build02 alone not site acceptance.

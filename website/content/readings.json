@@ -4613,23 +4613,28 @@
             "title": "Project the genuine update",
             "detail": "Use the shared nearest-point projection on Xt-eta(t)gt. Its existing projection theorem and support inequality produce the full Lemma2.31 chain, then divide by the positive current eta."
           }
-        ]
+        ],
+        "pseudocode": {
+          "title": "Projected OSD with a prescribed schedule",
+          "intro": "Source Algorithm2.2 has current-loss support feedback; the formal implementation fixes one permitted choice.",
+          "formula_label": "Actual update and output order",
+          "math": "X_0=x_1\\in V,\\qquad g_t\\in\\partial f_t(X_t),\\qquad X_{t+1}=\\Pi_V(X_t-\\eta_tg_t)",
+          "fallback": "Each next point is the projection of the current point minus its positive step times the actual current-loss support.",
+          "lines": [
+            "Prescribe nonempty closed convex V, feasible x1 and positive played learning rates.",
+            "Initialize X0=x1.",
+            "For each zero-based t below the horizon, output the already determined Xt.",
+            "Observe the current proper loss ft, subdifferentiable on V, and pay its finite value at Xt.",
+            "Choose the canonical current-function/current-point support gt from partial ft(Xt).",
+            "Set X(t+1) to the actual nearest projection of Xt-eta(t)gt onto V."
+          ],
+          "relationship": "This fixes one mathematical allowed source selection, with actual support correctness, feasible outputs and strict-prefix invariance proved separately. The preview selects four main performance statements; all producer/causality declarations remain linked in the same underlying shared module and graph."
+        }
       },
       "teaching_route": [
         "BanditRL.OnlineSubgradientDescent.lemma_2_31",
-        "BanditRL.OnlineSubgradientDescent.currentSubgradient_mem",
-        "BanditRL.OnlineSubgradientDescent.finite_loss",
-        "BanditRL.OnlineSubgradientDescent.iterate_mem",
-        "BanditRL.OnlineSubgradientDescent.iterate_prefix",
-        "BanditRL.OnlineSubgradientDescent.iterate_support",
-        "BanditRL.OnlineSubgradientDescent.iterate_finite_loss",
-        "BanditRL.OnlineSubgradientDescent.one_step_chain",
-        "BanditRL.OnlineSubgradientDescent.one_step",
         "BanditRL.OnlineSubgradientDescent.regret_fixed",
-        "BanditRL.OnlineSubgradientDescent.regret_fixed_coarse",
-        "BanditRL.OnlineSubgradientDescent.regret_variable_bound",
         "BanditRL.OnlineSubgradientDescent.regret_variable",
-        "BanditRL.OnlineSubgradientDescent.regret_tuned_distance",
         "BanditRL.OnlineSubgradientDescent.regret_tuned"
       ],
       "source_theorems": [
@@ -4794,7 +4799,8 @@
             "math": "\\eta=\\frac{D}{G\\sqrt T},\\quad R_T(u)\\le DG\\sqrt T\\quad(\\forall u\\in V)",
             "fallback": "One horizon-specific run serves every feasible comparator."
           }
-        ]
+        ],
+        "boundary": "This proof flow concerns the actual canonical noncomputable source support selection and its same-trajectory finite-horizon bounds. Strict-prefix equality assumes externally prescribed equal past steps/whole losses and a common initialization. No executable oracle, boundary Lipschitz shortcut, anytime tuning, Example2.32 or whole Chapter2/book closure is claimed; all producer declarations remain in the shared module/registry beyond this four-declaration preview."
       },
       "worked_example": {
         "title": "Non-smooth losses and actual clipping",
