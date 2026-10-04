@@ -1,0 +1,2 @@
+BanditRL.OnlineGradientDescent.weighted_potential_sum [theorem] BanditRLProof/OnlineGradientDescentVariable.lean:58
+  theorem weighted_potential_sum (a η : ℕ → ℝ) (C : ℝ) (T : ℕ) (hT : 0 < T) (hη : ∀ t < T, 0 < η t) (hmono : ∀ t, t + 1 < T → η (t + 1) ≤ η t) (hbound : ∀ t < T, a t ≤ C) : (∑ t ∈ range T, (a t - a (t + 1)) / (2 * η t)) ≤ C / (2 * η (T - 1)) - a T / (2 * η (T - 1))

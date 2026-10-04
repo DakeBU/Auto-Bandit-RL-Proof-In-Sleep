@@ -1,0 +1,4 @@
+theorem canonical_output (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (t : ℕ) :
+    output V η loss x₁ canonicalPolicy t =
+      BanditRL.OnlineSubgradientDescent.iterate V η loss x₁ t

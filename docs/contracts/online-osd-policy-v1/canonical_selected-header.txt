@@ -1,0 +1,5 @@
+theorem canonical_selected (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (t : ℕ) :
+    selected V η loss x₁ canonicalPolicy t =
+      BanditRL.OnlineSubgradientDescent.currentSubgradient (loss t)
+        (BanditRL.OnlineSubgradientDescent.iterate V η loss x₁ t)

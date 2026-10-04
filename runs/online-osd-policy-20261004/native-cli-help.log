@@ -1,0 +1,75 @@
+usage: bandit.py [-h]
+                 {init,new-task,conversion-window,agent-brief,trial-log,trial-summary,harness-compare,agent-note,reference-index,list-literature,list-papers,list-mathlib,list-scenarios,list-weapons,list-lean-decls,search-memory,list-routes,route-plan,screen-plan,render-roadmap-assets,blueprint-refresh,memory-refresh,frontier-shadow,frontier-replay,frontier-refresh,memory-record,memory-packet,retrieval-record,statement-fence,safe-verify,frontier-dispatch,lifecycle-event,export-proof,run-cycle,sleep-run,unfinished,review-prompt,extended-pro-prompt,review-status,review-response-template,extended-pro-response-template,review-handoff,extended-pro-handoff,review-record-response,extended-pro-record-response,check,next-task}
+                 ...
+
+ABRL local harness helper
+
+positional arguments:
+  {init,new-task,conversion-window,agent-brief,trial-log,trial-summary,harness-compare,agent-note,reference-index,list-literature,list-papers,list-mathlib,list-scenarios,list-weapons,list-lean-decls,search-memory,list-routes,route-plan,screen-plan,render-roadmap-assets,blueprint-refresh,memory-refresh,frontier-shadow,frontier-replay,frontier-refresh,memory-record,memory-packet,retrieval-record,statement-fence,safe-verify,frontier-dispatch,lifecycle-event,export-proof,run-cycle,sleep-run,unfinished,review-prompt,extended-pro-prompt,review-status,review-response-template,extended-pro-response-template,review-handoff,extended-pro-handoff,review-record-response,extended-pro-record-response,check,next-task}
+    init                initialize work directories
+    new-task            create task, conversion window, and proof ledger
+    conversion-window   create a conversion window
+    agent-brief         create an agent brief
+    trial-log           append a trial record
+    trial-summary       rewrite trial summary CSV
+    harness-compare     compare matched hierarchical and master-worker trial
+                        evidence
+    agent-note          append a role note to run dialogue
+    reference-index     refresh LML, Mathlib, textbook, paper, scenario,
+                        weapon, and local Lean indexes
+    list-literature     list built-in theorem cards
+    list-papers         list bandit paper and survey cards
+    list-mathlib        list Mathlib retrieval cards
+    list-scenarios      list bandit scenario cards
+    list-weapons        list proof weapon inspiration cards
+    list-lean-decls     list local Lean declarations
+    search-memory       search theorem, Mathlib, textbook, paper, scenario,
+                        weapon, route, spine, local leaf, and Lean declaration
+                        cards
+    list-routes         list structured theorem-route roadmaps
+    route-plan          print one structured theorem-route plan
+    screen-plan         print a screen/codex execution plan for a task and
+                        optional route
+    render-roadmap-assets
+                        render structured Lean route roadmap PNG diagrams
+    blueprint-refresh   refresh proof blueprint snapshot
+    memory-refresh      refresh retrieval memory
+    frontier-shadow     read-only reconstruction of trials, memory, and active
+                        frontier
+    frontier-replay     shadow replay historical task transitions with bounded
+                        memory
+    frontier-refresh    write the authoritative active-frontier record after
+                        shadow review
+    memory-record       append one validated typed lifecycle-memory record
+    memory-packet       render bounded task- and role-scoped lifecycle memory
+    retrieval-record    record local-first theorem/API retrieval evidence
+    statement-fence     capture an immutable Lean declaration header
+    safe-verify         check a declaration fence and forbidden Lean
+                        placeholders
+    frontier-dispatch   dispatch one ready DAG leaf after the shadow gate
+    lifecycle-event     append one stable session-tree or directive event
+    export-proof        create Markdown and LaTeX proof export skeletons
+    run-cycle           create or execute one evidence-tracked prompt deck
+    sleep-run           create or execute repeated evidence-tracked cycles
+    unfinished          list unfinished proof leaves and backlog rows
+    review-prompt       print the current local review prompt
+    extended-pro-prompt
+                        print a legacy Extended Pro review prompt
+    review-status       print the current review boundary status
+    review-response-template
+                        print the current local review response template
+    extended-pro-response-template
+                        print a legacy Extended Pro response template
+    review-handoff      print the current local review handoff packet
+    extended-pro-handoff
+                        print a legacy manual Extended Pro handoff packet
+    review-record-response
+                        record a completed local review response artifact
+    extended-pro-record-response
+                        record a completed legacy Extended Pro response
+                        artifact
+    check               run Lean build gate and placeholder scan
+    next-task           list known tasks
+
+optional arguments:
+  -h, --help            show this help message and exit
