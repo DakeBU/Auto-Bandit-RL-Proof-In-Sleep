@@ -1,0 +1,153 @@
+{
+  "schema_version": "2.0",
+  "id": "ONLINE-GUESSING-OSD-20261004",
+  "route": "online-learning/chapter-2",
+  "frontier_cell": "online-guessing-osd",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10, 2026-06-21; SHA256 cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchor": "Example2.32 printed20/PDF32; game printed1-3/PDF13-15; tuning printed15/PDF27",
+    "url": "https://arxiv.org/pdf/1912.13213v10"
+  },
+  "target": "Example2.32 full shifted support equality and actual projected absolute-loss guessing with same-run all-comparator sqrtT bound; additional one-sided average horizon-family corollary",
+  "affected_files": [
+    "BanditRLProof.lean",
+    "BanditRLProof/OnlineGuessingSubgradient.lean",
+    "website/content/books.json",
+    "website/content/chapters.json",
+    "website/content/readings.json",
+    "website/content/highlights.json",
+    "website/scripts/build_site.py",
+    "website/scripts/check_site.py"
+  ],
+  "declarations": [
+    "BanditRL.OnlineGuessingSubgradient.loss_subdifferential_translate",
+    "BanditRL.OnlineGuessingSubgradient.loss_subgradient_positive",
+    "BanditRL.OnlineGuessingSubgradient.loss_subgradient_zero",
+    "BanditRL.OnlineGuessingSubgradient.loss_subgradient_negative",
+    "BanditRL.OnlineGuessingSubgradient.example_2_32_subdifferential",
+    "BanditRL.OnlineGuessingSubgradient.loss_on_unitInterval",
+    "BanditRL.OnlineGuessingSubgradient.loss_subgradient_bound",
+    "BanditRL.OnlineGuessingSubgradient.current_subgradient_bound",
+    "BanditRL.OnlineGuessingSubgradient.loss_step_clamp",
+    "BanditRL.OnlineGuessingSubgradient.guessing_prefix",
+    "BanditRL.OnlineGuessingSubgradient.example_2_32",
+    "BanditRL.OnlineGuessingSubgradient.example_2_32_average_eventually"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Actual native list-lean-decls/abs/tuned/projection retrieval and mathlib API probe before tactics",
+      "Full shifted equality cannot be replaced by the existing one-way affine support inclusion"
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineConvex.SourceSubdifferential",
+      "BanditRL.OnlineConvex.abs_subgradient_positive",
+      "BanditRL.OnlineConvex.abs_subgradient_zero",
+      "BanditRL.OnlineConvex.abs_subgradient_negative",
+      "BanditRL.OnlineSubgradientDescent.currentSubgradient_mem",
+      "BanditRL.OnlineSubgradientDescent.iterate_prefix",
+      "BanditRL.OnlineSubgradientDescent.regret_tuned",
+      "BanditRL.OnlineGradientDescent.project_unitInterval"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineGuessingSubgradient.loss_subdifferential_translate",
+      "BanditRL.OnlineGuessingSubgradient.loss_subgradient_positive",
+      "BanditRL.OnlineGuessingSubgradient.loss_subgradient_zero",
+      "BanditRL.OnlineGuessingSubgradient.loss_subgradient_negative",
+      "BanditRL.OnlineGuessingSubgradient.example_2_32_subdifferential",
+      "BanditRL.OnlineGuessingSubgradient.loss_on_unitInterval",
+      "BanditRL.OnlineGuessingSubgradient.loss_subgradient_bound",
+      "BanditRL.OnlineGuessingSubgradient.current_subgradient_bound",
+      "BanditRL.OnlineGuessingSubgradient.loss_step_clamp",
+      "BanditRL.OnlineGuessingSubgradient.guessing_prefix",
+      "BanditRL.OnlineGuessingSubgradient.example_2_32",
+      "BanditRL.OnlineGuessingSubgradient.example_2_32_average_eventually"
+    ],
+    "known_consumers": [
+      "GuessingOSDProbe.four_round_real_regret",
+      "GuessingOSDProbe.four_round_fixed_with_terminal",
+      "GuessingOSDProbe.all_comparators_four",
+      "GuessingOSDProbe.invalid_future_does_not_change_output"
+    ],
+    "planned_consumers": [
+      "Required generic legal/history-adaptive source support family and source guarantees; Chapter2 completeness"
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Translate entire actual absolute support sets and reuse the genuine existing OSD trajectory/projection/tuning. No duplicated per-Book library, no assumed regret or stability consumer."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/hinge_blind",
+    "source_reviewer": "/root/source_reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Scalar global finite absolute-loss helpers, zero-based indices, one noncomputable canonical support choice, exact positive-horizon source upper bound and additional one-sided eventual horizon-family statement. Actual distinct source contract/body/canary review accepted. Final reader and immutable binding remain separate; no human external review."
+  },
+  "graph_contribution": {
+    "lean_graph": "new-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "A scalar loss specialization of the same shared OSD/projection chain, no separately certified cross-setting functor.",
+    "focus_targets": [
+      "BanditRL.OnlineGuessingSubgradient.loss_subdifferential_translate",
+      "BanditRL.OnlineGuessingSubgradient.loss_subgradient_positive",
+      "BanditRL.OnlineGuessingSubgradient.loss_subgradient_zero",
+      "BanditRL.OnlineGuessingSubgradient.loss_subgradient_negative",
+      "BanditRL.OnlineGuessingSubgradient.example_2_32_subdifferential",
+      "BanditRL.OnlineGuessingSubgradient.loss_on_unitInterval",
+      "BanditRL.OnlineGuessingSubgradient.loss_subgradient_bound",
+      "BanditRL.OnlineGuessingSubgradient.current_subgradient_bound",
+      "BanditRL.OnlineGuessingSubgradient.loss_step_clamp",
+      "BanditRL.OnlineGuessingSubgradient.guessing_prefix",
+      "BanditRL.OnlineGuessingSubgradient.example_2_32",
+      "BanditRL.OnlineGuessingSubgradient.example_2_32_average_eventually"
+    ],
+    "visual_review": "Compiled native proof-value graph and actual local rendered reader inspection pending; curated teaching dependencies are not yet claimed as actual export.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: Example2.32 source-qualified shared Book route; required generic legal/adaptive support-family obligation explicitly added; Chapter2/whole Book incomplete",
+    "banditrlwiki": "no-change-with-reason: no new Bandit-specific setting or guarantee; shared Online source mapping carries reusable algorithm",
+    "results_ledger": "no-change-with-reason: existing Bandit milestones unchanged; source inventory carries current candidate",
+    "roadmap": "no-change-with-reason: persistent book Goal remains active, Chapter2 partial, Chapters3-16 unenumerated; historical global SGB frontier untouched",
+    "website_surfaces": [
+      "website/content/books.json",
+      "website/content/chapters.json",
+      "website/content/readings.json",
+      "website/content/highlights.json",
+      "website/scripts/build_site.py",
+      "website/scripts/check_site.py"
+    ],
+    "inherited_source_caption": "Existing source-caption/folded Lean renderer inherited; only required pseudocode slug added to both existing mandatory algorithm sets, preserving check strength."
+  },
+  "truth_boundary": "Actual public12frozen proofs and nondegenerate canary compile3322/3323;47actual-name standard axioms,actualPUBLIC-path native hashes,distinct body/source review accepted. Root/Tests/full harness/compiledgraph/site/reader/bindings/PR separate gates pending. Canonical known-horizon family only; generic legal/adaptive algorithm family, Chapter2/Book and older26migration remain required; main/live unchanged.",
+  "verification": {
+    "focused_checks": [
+      "Actual public-focused02 passes3322jobs; canary-focused02 passes3323; all12actualPUBLIC-path hashes match immutablev2",
+      "47actual public/test named checks and standard3-or-none axioms",
+      "True trajectory1,.5,1,.5,1; real regret1,energy4,terminal1/4,fixedRHS1,allcomparators,actual5/4clipping andinvalidfuture prefix"
+    ],
+    "bandit_check": "Combined root/Tests/full harness pending; focused success does not imply their gates.",
+    "site_build": "Pending real combined gate; no lean-verified before actual applicable gate.",
+    "site_check": "Pending actual new source route/Book/anchors/folded statements/registry and source fingerprints.",
+    "independent_review": "Distinct neutralblind/sourcecontractv1/v2/actualpublicbody+canary accepted-with-explicit-delta. Final reader/rawbinding pending. Tests and source-inventory/coverage actualmandatory reviewed surfaces are outside production-only affected_files schema."
+  },
+  "contributor": {
+    "name": "Codex for Ji Cheng",
+    "role": "Formalization and integration; distinct automated semantic actors named above; source attribution retained"
+  }
+}

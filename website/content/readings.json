@@ -4834,6 +4834,219 @@
         "takeaway": "Actual source supports and projection produce the trajectory and both exact residual bounds.",
         "boundary": "Example2.32 shifted absolute-loss game, remaining Chapter2 mapping and older-stack migration remain required. No whole-book, anytime tuning, arbitrary adaptive tie rule, executable oracle or merged/live claim."
       }
+    },
+    {
+      "slug": "online-guessing-osd",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10,21June2026",
+        "sections": "Example2.32 with original guessing game and explicit Algorithm2.2/Theorem2.13 transfer",
+        "pages": "printed1-3,15,19-20/PDF13-15,27,31-32",
+        "pdf_page": 32,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "Matched label",
+          "meaning": "Partial |x-y| at x=y is the full [-1,1]. Canonical choice is proved to belong to it, not to equal0."
+        },
+        {
+          "term": "Known horizon and all comparators",
+          "meaning": "T>=1 prescribes eta=1/sqrt(T) before one run. Its outputs and current supports do not depend on u. All u in [0,1] satisfy the same real absolute-loss regret bound."
+        },
+        {
+          "term": "One-sided average family",
+          "meaning": "The eventual upper epsilon result uses separately prescribed horizons. It does not assert signed regret/T tends to0 or a single anytime schedule."
+        }
+      ],
+      "algorithm": {
+        "title": "Output, reveal label, choose support, clamp",
+        "kind": "source algorithm instance",
+        "steps": [
+          {
+            "title": "Output first",
+            "detail": "Initialize feasible X0=x1. Xt is determined by strict past labels/steps; output it before y_t is revealed."
+          },
+          {
+            "title": "Use the actual current loss",
+            "detail": "After reveal, f_t(x)=|x-y_t| is proper and globally supported. Full three-case classification proves the actual chosen support has norm<=1, including every tie choice."
+          },
+          {
+            "title": "Clamp the genuine update",
+            "detail": "Use the shared projection of Xt-eta*g_t onto [0,1]. The public identity identifies it with min(1,max(0,...))."
+          }
+        ],
+        "pseudocode": {
+          "title": "Absolute-loss projected OSD for a prescribed horizon",
+          "intro": "This is one permitted canonical support choice for Example2.32, with source labels revealed after each output.",
+          "formula_label": "True recurrence and fixed tuning",
+          "math": "X_0=x_1\\in[0,1],\\quad\\eta=1/\\sqrt T,\\quad g_t\\in\\partial|X_t-y_t|,\\quad X_{t+1}=\\Pi_{[0,1]}(X_t-\\eta g_t)",
+          "fallback": "Output the current point, reveal the label, choose its actual global support, and clamp the update to [0,1].",
+          "lines": [
+            "Prescribe T>=1, feasible x1, and eta=1/sqrt(T).",
+            "Initialize X0=x1.",
+            "For zero-based t<T, output the already determined Xt.",
+            "Reveal y_t in [0,1] and pay |Xt-y_t|.",
+            "Choose the canonical current-loss support gt; at Xt=y_t the complete interval [-1,1] is legal.",
+            "Set X(t+1)=min(1,max(0,Xt-eta*gt))."
+          ],
+          "relationship": "Strict-prefix equality, support correctness, actual projection, and the same-trajectory all-comparator source guarantee are proved in the shared library. No comparator or future labels are input to the selector; external initialization/tuning are prescribed."
+        }
+      },
+      "teaching_route": [
+        "BanditRL.OnlineGuessingSubgradient.example_2_32_subdifferential",
+        "BanditRL.OnlineGuessingSubgradient.loss_step_clamp",
+        "BanditRL.OnlineGuessingSubgradient.example_2_32",
+        "BanditRL.OnlineGuessingSubgradient.example_2_32_average_eventually"
+      ],
+      "source_theorems": [
+        {
+          "label": "Example2.32 full shifted support classification",
+          "pages": "printed20; game printed1-3; tuning printed15",
+          "pdf_page": 32,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\partial |x-y|=\\begin{cases}\\{1\\}&x>y\\\\[-1,1]&x=y\\\\\\{-1\\}&x<y\\end{cases}",
+          "fallback": "At a match the entire interval [-1,1] is valid, including nonzero supports. Helpers extend to every real x,y, as an explicit stronger global identity.",
+          "plain": "At a match the entire interval [-1,1] is valid, including nonzero supports. Helpers extend to every real x,y, as an explicit stronger global identity.",
+          "relationship": "The full support set, not only one selected sign.",
+          "contract": {
+            "model": "Scalar real guessing with the shared nonempty closed convex [0,1] domain; finite absolute-loss EReal coercions.",
+            "assumptions": "Arbitrary real x,y; global supporting inequality against every real comparison point.",
+            "parameters": "Lean output index0 is source x1. Canonical noncomputable current-function/current-point support; source can choose any legal support, whose general family remains required separately.",
+            "regret": "The full support set, not only one selected sign.",
+            "guarantee": "The full support set, not only one selected sign."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Actual public producer and canary proofs",
+            "boundary": "Actual public focused02/canary02 and47-name standard axiom checks passed; body/source review and combined root/Tests/harness/graph/site/reader/bindings/PR package acceptance remain separate. Canonical noncomputable permitted support choice; arbitrary legal/history-adaptive support families, remaining Chapter2 and older-stack migration are required. No whole-book, anytime, executable-oracle or merged/live claim."
+          }
+        },
+        {
+          "label": "Actual projected source update",
+          "pages": "printed20; game printed1-3; tuning printed15",
+          "pdf_page": 32,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "X_{t+1}=\\min\\{1,\\max\\{0,X_t-\\eta_tG(f_t,X_t)\\}\\}",
+          "fallback": "This is the existing nearest-point projection applied to the actual chosen current support. No zero tie is assumed.",
+          "plain": "This is the existing nearest-point projection applied to the actual chosen current support. No zero tie is assumed.",
+          "relationship": "Same actual canonical current-choice OSD trajectory, output before observing label.",
+          "contract": {
+            "model": "Scalar real guessing with the shared nonempty closed convex [0,1] domain; finite absolute-loss EReal coercions.",
+            "assumptions": "The clamp identity allows any real eta,x,y. For source-valid runs X0 and labels lie in [0,1] and played eta is positive.",
+            "parameters": "Lean output index0 is source x1. Canonical noncomputable current-function/current-point support; source can choose any legal support, whose general family remains required separately.",
+            "regret": "Same actual canonical current-choice OSD trajectory, output before observing label.",
+            "guarantee": "Same actual canonical current-choice OSD trajectory, output before observing label."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Actual public producer and canary proofs",
+            "boundary": "Actual public focused02/canary02 and47-name standard axiom checks passed; body/source review and combined root/Tests/harness/graph/site/reader/bindings/PR package acceptance remain separate. Canonical noncomputable permitted support choice; arbitrary legal/history-adaptive support families, remaining Chapter2 and older-stack migration are required. No whole-book, anytime, executable-oracle or merged/live claim."
+          }
+        },
+        {
+          "label": "Example2.32 known-horizon guarantee",
+          "pages": "printed20; game printed1-3; tuning printed15",
+          "pdf_page": 32,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\eta=1/\\sqrt T,\\quad\\sum_{t=1}^T(|x_t-y_t|-|u-y_t|)\\le\\sqrt T\\quad(\\forall u\\in[0,1])",
+          "fallback": "Diameter and every actual support norm are at most1. The same eta and trajectory serve every comparator; there is no assumed one-step regret inequality.",
+          "plain": "Diameter and every actual support norm are at most1. The same eta and trajectory serve every comparator; there is no assumed one-step regret inequality.",
+          "relationship": "Finite real absolute-loss regret of this same horizon-tuned run.",
+          "contract": {
+            "model": "Scalar real guessing with the shared nonempty closed convex [0,1] domain; finite absolute-loss EReal coercions.",
+            "assumptions": "T>=1, externally prescribed feasible x1, every played label in [0,1]; no stochastic or independence assumption.",
+            "parameters": "Lean output index0 is source x1. Canonical noncomputable current-function/current-point support; source can choose any legal support, whose general family remains required separately.",
+            "regret": "Finite real absolute-loss regret of this same horizon-tuned run.",
+            "guarantee": "Finite real absolute-loss regret of this same horizon-tuned run."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Actual public producer and canary proofs",
+            "boundary": "Actual public focused02/canary02 and47-name standard axiom checks passed; body/source review and combined root/Tests/harness/graph/site/reader/bindings/PR package acceptance remain separate. Canonical noncomputable permitted support choice; arbitrary legal/history-adaptive support families, remaining Chapter2 and older-stack migration are required. No whole-book, anytime, executable-oracle or merged/live claim."
+          }
+        },
+        {
+          "label": "Additional one-sided average corollary",
+          "pages": "printed20; game printed1-3; tuning printed15",
+          "pdf_page": 32,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\forall\\epsilon>0,\\quad R_T^{(\\eta=1/\\sqrt T)}(u)/T<\\epsilon\\quad\\text{eventually in }T",
+          "fallback": "The finite source bound divided by positive T is at most1/sqrt(T), which tends to0. This states an upper epsilon condition, not signed convergence of regret to0.",
+          "plain": "The finite source bound divided by positive T is at most1/sqrt(T), which tends to0. This states an upper epsilon condition, not signed convergence of regret to0.",
+          "relationship": "Only eventual upper control of the horizon-family average; no absolute-value or anytime bound.",
+          "contract": {
+            "model": "Scalar real guessing with the shared nonempty closed convex [0,1] domain; finite absolute-loss EReal coercions.",
+            "assumptions": "All labels in [0,1], fixed feasible x1,u, epsilon>0; a separate prescribed eta is used for each T.",
+            "parameters": "Lean output index0 is source x1. Canonical noncomputable current-function/current-point support; source can choose any legal support, whose general family remains required separately.",
+            "regret": "Only eventual upper control of the horizon-family average; no absolute-value or anytime bound.",
+            "guarantee": "Only eventual upper control of the horizon-family average; no absolute-value or anytime bound."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Actual public producer and canary proofs",
+            "boundary": "Actual public focused02/canary02 and47-name standard axiom checks passed; body/source review and combined root/Tests/harness/graph/site/reader/bindings/PR package acceptance remain separate. Canonical noncomputable permitted support choice; arbitrary legal/history-adaptive support families, remaining Chapter2 and older-stack migration are required. No whole-book, anytime, executable-oracle or merged/live claim."
+          }
+        }
+      ],
+      "proof_bridge": {
+        "title": "Translated supports to a real regret producer",
+        "summary": "Translate the entire absolute-value subdifferential and instantiate the existing actual OSD tuned bound.",
+        "steps": [
+          {
+            "title": "Translate every supporting inequality",
+            "detail": "Testing z+y in one direction and z-y in the other gives equality of the entire global support set. The three full absolute-value sets therefore give the shifted source identity.",
+            "math": "\\partial|x-y|=\\partial|\\cdot|(x-y)",
+            "fallback": "No affine-inclusion shortcut loses the reverse inclusion."
+          },
+          {
+            "title": "Produce supports and norm bounds",
+            "detail": "Every loss is a finite proper absolute value. Full three-case sets give nonempty supports and ||g||<=1 for every actual support; choose_spec connects the current selector to this bound.",
+            "math": "g\\in\\partial|x-y|\\Rightarrow |g|\\le1",
+            "fallback": "The match case retains all supports in [-1,1]."
+          },
+          {
+            "title": "Tune the same recurrence",
+            "detail": "Feasible points have pairwise distance<=1. Instantiate the shared OSD theorem at D=G=1,T>0 on the actual recursively projected trajectory; finite EReal conversion gives real absolute losses.",
+            "math": "R_T(u)\\le\\sqrt T",
+            "fallback": "The source-valid label premise remains explicit even though the global Lipschitz helper proves a stronger bound."
+          },
+          {
+            "title": "Only an upper average corollary",
+            "detail": "Divide the finite source bound by T>0 and use sqrt(T)/T=1/sqrt(T). Tendsto of the reciprocal supplies eventual epsilon upper control.",
+            "math": "R_T^{(T)}(u)/T\\le1/\\sqrt T",
+            "fallback": "Signed convergence, absolute BigO and anytime behavior are not asserted."
+          }
+        ],
+        "boundary": "Actual public focused02/canary02 and47-name standard axiom checks passed; body/source review and combined root/Tests/harness/graph/site/reader/bindings/PR package acceptance remain separate. Canonical noncomputable permitted support choice; arbitrary legal/history-adaptive support families, remaining Chapter2 and older-stack migration are required. No whole-book, anytime, executable-oracle or merged/live claim."
+      },
+      "worked_example": {
+        "title": "An actual four-round nonsmooth run",
+        "intro": "Alternating labels0,1,0,1 with x1=1 and eta=.5 force nonzero unique supports at all four played outputs.",
+        "steps": [
+          {
+            "title": "Computed from the real recurrence",
+            "detail": "The true canonical selected supports are1,-1,1,-1, so outputs are1,.5,1,.5,1. Against u=.5, played losses total3 and comparator losses total2.",
+            "math": "R_4(1/2)=1",
+            "fallback": "All choices and outputs are proved, not supplied as premises."
+          },
+          {
+            "title": "Positive terminal and exact fixed bound",
+            "detail": "Energy is4, initial-distance contribution1/4, terminal subtraction1/4, and fixed RHS is exactly1. Eta=.5 equals the source-optimal1/sqrt(4); every comparator satisfies the source coarse bound2.",
+            "math": "\\frac14+\\frac14\\cdot4-\\frac14=1",
+            "fallback": "The exact fixed bound retains a nonzero terminal distance."
+          },
+          {
+            "title": "True clipping and strict-prefix causality",
+            "detail": "Starting at1/4 with label1 and eta1 gives actual support-1, raw5/4 and projection1. Separately, replacing labels from time4 by999 and steps by-99 leaves the past outputX4 unchanged.",
+            "math": "\\Pi_{[0,1]}(5/4)=1",
+            "fallback": "Invalid future data are used only to test prefix causality, not source-valid performance."
+          }
+        ],
+        "takeaway": "A faithful support producer connects the source nonsmooth example to an actual projected algorithm and its real regret.",
+        "boundary": "Actual public focused02/canary02 and47-name standard axiom checks passed; body/source review and combined root/Tests/harness/graph/site/reader/bindings/PR package acceptance remain separate. Canonical noncomputable permitted support choice; arbitrary legal/history-adaptive support families, remaining Chapter2 and older-stack migration are required. No whole-book, anytime, executable-oracle or merged/live claim."
+      }
     }
   ]
 }

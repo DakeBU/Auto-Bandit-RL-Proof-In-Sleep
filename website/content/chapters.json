@@ -889,6 +889,32 @@
         "No closed-domain Lipschitz-to-boundary-support shortcut; tuning bounds actual selected supports.",
         "Chapter2/Chapters3–16 mandatory; no merge/live claim."
       ]
+    },
+    {
+      "slug": "online-guessing-osd",
+      "title": "Absolute-loss guessing by projected subgradient descent",
+      "short_title": "Absolute-loss guessing",
+      "status": "compiled",
+      "summary": "Full shifted absolute-loss support sets, actual causal clipping recurrence, and the same horizon-tuned run with regret at most sqrt(T).",
+      "audience": "Readers of Orabona Example2.32 and the original [0,1] guessing game.",
+      "completion_definition": "Source Example2.32 support classification and one permitted canonical projected OSD implementation with its sqrt(T) guarantee; the additional eventual result is only one-sided horizon-family control.",
+      "completion_blockers": [
+        "Combined technical, distinct source/body and final reader/raw binding/PR gates are separate.",
+        "Arbitrary legal/history-adaptive support-policy coverage and whole Chapter2/book remain required."
+      ],
+      "learning_goals": [
+        "Keep the complete support interval at a tie.",
+        "Output before observing the label, then project the actual selected support update.",
+        "Use one fixed known-horizon run for every feasible comparator."
+      ],
+      "module_globs": [
+        "BanditRLProof/OnlineGuessingSubgradient.lean"
+      ],
+      "open_gaps": [
+        "Noncomputable choice is one permitted rule; it is not an executable oracle or all adaptive choices.",
+        "Optimal eta requires T>=1; the average corollary compares separately tuned horizons, not a single anytime run.",
+        "Chapter2 unnumbered mapping and older-stack migration remain required."
+      ]
     }
   ]
 }

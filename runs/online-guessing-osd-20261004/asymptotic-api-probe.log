@@ -1,0 +1,7 @@
+Real.tendsto_sqrt_atTop : Tendsto (fun x => √x) atTop atTop
+tendsto_inv_atTop_zero.{u_1} {𝕜 : Type u_1} [Semifield 𝕜] [LinearOrder 𝕜] [IsStrictOrderedRing 𝕜] [TopologicalSpace 𝕜]
+  [OrderTopology 𝕜] : Tendsto (fun r => r⁻¹) atTop (nhds 0)
+tendsto_natCast_atTop_atTop.{u_2} {R : Type u_2} [Semiring R] [PartialOrder R] [IsOrderedRing R] [Archimedean R] :
+  Tendsto Nat.cast atTop atTop
+eventually_lt_nhds.{u} {α : Type u} [TopologicalSpace α] [LinearOrder α] [ClosedIciTopology α] {a b : α} (hab : a < b) :
+  ∀ᶠ (x : α) in nhds a, x < b

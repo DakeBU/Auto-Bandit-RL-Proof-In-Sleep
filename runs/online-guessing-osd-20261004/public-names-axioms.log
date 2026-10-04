@@ -1,0 +1,202 @@
+BanditRL.OnlineGuessingSubgradient.loss (y x : ℝ) : EReal
+'BanditRL.OnlineGuessingSubgradient.loss' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineGuessingSubgradient.loss_subdifferential_translate (y x : ℝ) :
+  BanditRL.OnlineConvex.SourceSubdifferential (BanditRL.OnlineGuessingSubgradient.loss y) x =
+    BanditRL.OnlineConvex.SourceSubdifferential (fun z => ↑|z|) (x - y)
+'BanditRL.OnlineGuessingSubgradient.loss_subdifferential_translate' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BanditRL.OnlineGuessingSubgradient.loss_subgradient_positive (y x : ℝ) (hxy : y < x) :
+  BanditRL.OnlineConvex.SourceSubdifferential (BanditRL.OnlineGuessingSubgradient.loss y) x = {1}
+'BanditRL.OnlineGuessingSubgradient.loss_subgradient_positive' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BanditRL.OnlineGuessingSubgradient.loss_subgradient_zero (y : ℝ) :
+  BanditRL.OnlineConvex.SourceSubdifferential (BanditRL.OnlineGuessingSubgradient.loss y) y = Set.Icc (-1) 1
+'BanditRL.OnlineGuessingSubgradient.loss_subgradient_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineGuessingSubgradient.loss_subgradient_negative (y x : ℝ) (hxy : x < y) :
+  BanditRL.OnlineConvex.SourceSubdifferential (BanditRL.OnlineGuessingSubgradient.loss y) x = {-1}
+'BanditRL.OnlineGuessingSubgradient.loss_subgradient_negative' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BanditRL.OnlineGuessingSubgradient.example_2_32_subdifferential (y x : ℝ) :
+  BanditRL.OnlineConvex.SourceSubdifferential (BanditRL.OnlineGuessingSubgradient.loss y) x =
+    if y < x then {1} else if x = y then Set.Icc (-1) 1 else {-1}
+'BanditRL.OnlineGuessingSubgradient.example_2_32_subdifferential' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BanditRL.OnlineGuessingSubgradient.loss_on_unitInterval (y : ℝ) :
+  BanditRL.OnlineSubgradientDescent.SubdifferentiableOn BanditRL.OnlineGradientDescent.unitInterval
+    (BanditRL.OnlineGuessingSubgradient.loss y)
+'BanditRL.OnlineGuessingSubgradient.loss_on_unitInterval' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineGuessingSubgradient.loss_subgradient_bound (y x g : ℝ)
+  (hg : g ∈ BanditRL.OnlineConvex.SourceSubdifferential (BanditRL.OnlineGuessingSubgradient.loss y) x) : ‖g‖ ≤ 1
+'BanditRL.OnlineGuessingSubgradient.loss_subgradient_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineGuessingSubgradient.current_subgradient_bound (y x : ℝ) (hx : x ∈ Set.Icc 0 1) :
+  ‖BanditRL.OnlineSubgradientDescent.currentSubgradient (BanditRL.OnlineGuessingSubgradient.loss y) x‖ ≤ 1
+'BanditRL.OnlineGuessingSubgradient.current_subgradient_bound' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BanditRL.OnlineGuessingSubgradient.loss_step_clamp (η y x : ℝ) :
+  BanditRL.OnlineSubgradientDescent.step BanditRL.OnlineGradientDescent.unitInterval η
+      (BanditRL.OnlineGuessingSubgradient.loss y) x =
+    min
+      (max (x - η * BanditRL.OnlineSubgradientDescent.currentSubgradient (BanditRL.OnlineGuessingSubgradient.loss y) x)
+        0)
+      1
+'BanditRL.OnlineGuessingSubgradient.loss_step_clamp' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineGuessingSubgradient.guessing_prefix (η η' y y' : ℕ → ℝ) (x₁ : ℝ) (t : ℕ) (hη : ∀ s < t, η s = η' s)
+  (hy : ∀ s < t, y s = y' s) :
+  BanditRL.OnlineSubgradientDescent.iterate BanditRL.OnlineGradientDescent.unitInterval η
+      (fun s => BanditRL.OnlineGuessingSubgradient.loss (y s)) x₁ t =
+    BanditRL.OnlineSubgradientDescent.iterate BanditRL.OnlineGradientDescent.unitInterval η'
+      (fun s => BanditRL.OnlineGuessingSubgradient.loss (y' s)) x₁ t
+'BanditRL.OnlineGuessingSubgradient.guessing_prefix' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineGuessingSubgradient.example_2_32 (y : ℕ → ℝ) (x₁ : ℝ) (hx₁ : x₁ ∈ Set.Icc 0 1) (T : ℕ) (hT : 0 < T)
+  (hy : ∀ t < T, y t ∈ Set.Icc 0 1) (u : ℝ) :
+  u ∈ Set.Icc 0 1 →
+    ∑ t ∈ Finset.range T,
+        (|BanditRL.OnlineSubgradientDescent.iterate BanditRL.OnlineGradientDescent.unitInterval (fun x => 1 / √↑T)
+                (fun s => BanditRL.OnlineGuessingSubgradient.loss (y s)) x₁ t -
+              y t| -
+          |u - y t|) ≤
+      √↑T
+'BanditRL.OnlineGuessingSubgradient.example_2_32' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineGuessingSubgradient.example_2_32_average_eventually (y : ℕ → ℝ) (x₁ : ℝ) (hx₁ : x₁ ∈ Set.Icc 0 1)
+  (hy : ∀ (t : ℕ), y t ∈ Set.Icc 0 1) (u : ℝ) (hu : u ∈ Set.Icc 0 1) (ε : ℝ) (hε : 0 < ε) :
+  ∀ᶠ (T : ℕ) in Filter.atTop,
+    (∑ t ∈ Finset.range T,
+          (|BanditRL.OnlineSubgradientDescent.iterate BanditRL.OnlineGradientDescent.unitInterval (fun x => 1 / √↑T)
+                  (fun s => BanditRL.OnlineGuessingSubgradient.loss (y s)) x₁ t -
+                y t| -
+            |u - y t|)) /
+        ↑T <
+      ε
+'BanditRL.OnlineGuessingSubgradient.example_2_32_average_eventually' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+GuessingOSDProbe.interval : BanditRL.OnlineGradientDescent.Domain ℝ
+'GuessingOSDProbe.interval' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingOSDProbe.shifted_positive :
+  BanditRL.OnlineConvex.SourceSubdifferential (BanditRL.OnlineGuessingSubgradient.loss (1 / 3)) (2 / 3) = {1}
+'GuessingOSDProbe.shifted_positive' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingOSDProbe.shifted_negative :
+  BanditRL.OnlineConvex.SourceSubdifferential (BanditRL.OnlineGuessingSubgradient.loss (2 / 3)) (1 / 3) = {-1}
+'GuessingOSDProbe.shifted_negative' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingOSDProbe.shifted_equal :
+  BanditRL.OnlineConvex.SourceSubdifferential (BanditRL.OnlineGuessingSubgradient.loss (1 / 2)) (1 / 2) = Set.Icc (-1) 1
+'GuessingOSDProbe.shifted_equal' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingOSDProbe.nonzero_tie_support :
+  1 / 3 ∈ BanditRL.OnlineConvex.SourceSubdifferential (BanditRL.OnlineGuessingSubgradient.loss (1 / 2)) (1 / 2)
+'GuessingOSDProbe.nonzero_tie_support' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingOSDProbe.invalid_tie_support :
+  2 ∉ BanditRL.OnlineConvex.SourceSubdifferential (BanditRL.OnlineGuessingSubgradient.loss (1 / 2)) (1 / 2)
+'GuessingOSDProbe.invalid_tie_support' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingOSDProbe.canonical_tie_in_full_interval :
+  BanditRL.OnlineSubgradientDescent.currentSubgradient (BanditRL.OnlineGuessingSubgradient.loss (1 / 2)) (1 / 2) ∈
+    Set.Icc (-1) 1
+'GuessingOSDProbe.canonical_tie_in_full_interval' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingOSDProbe.chosen_above :
+  BanditRL.OnlineSubgradientDescent.currentSubgradient (BanditRL.OnlineGuessingSubgradient.loss 0) 1 = 1
+'GuessingOSDProbe.chosen_above' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingOSDProbe.chosen_below :
+  BanditRL.OnlineSubgradientDescent.currentSubgradient (BanditRL.OnlineGuessingSubgradient.loss 1) (1 / 2) = -1
+'GuessingOSDProbe.chosen_below' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingOSDProbe.labels (t : ℕ) : ℝ
+'GuessingOSDProbe.labels' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingOSDProbe.losses (t : ℕ) : ℝ → EReal
+'GuessingOSDProbe.losses' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingOSDProbe.eta : ℕ → ℝ
+'GuessingOSDProbe.eta' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingOSDProbe.output (t : ℕ) : ℝ
+'GuessingOSDProbe.output' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingOSDProbe.labels_feasible (t : ℕ) : GuessingOSDProbe.labels t ∈ Set.Icc 0 1
+'GuessingOSDProbe.labels_feasible' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingOSDProbe.output_zero : GuessingOSDProbe.output 0 = 1
+'GuessingOSDProbe.output_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingOSDProbe.output_one : GuessingOSDProbe.output 1 = 1 / 2
+'GuessingOSDProbe.output_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingOSDProbe.output_two : GuessingOSDProbe.output 2 = 1
+'GuessingOSDProbe.output_two' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingOSDProbe.output_three : GuessingOSDProbe.output 3 = 1 / 2
+'GuessingOSDProbe.output_three' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingOSDProbe.output_four : GuessingOSDProbe.output 4 = 1
+'GuessingOSDProbe.output_four' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingOSDProbe.four_round_real_regret :
+  BanditRL.OnlineSubgradientDescent.regret GuessingOSDProbe.interval GuessingOSDProbe.eta GuessingOSDProbe.losses 1
+      (1 / 2) 4 =
+    1
+'GuessingOSDProbe.four_round_real_regret' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingOSDProbe.four_round_fixed_with_terminal :
+  BanditRL.OnlineSubgradientDescent.regret GuessingOSDProbe.interval GuessingOSDProbe.eta GuessingOSDProbe.losses 1
+      (1 / 2) 4 ≤
+    ‖1 - 1 / 2‖ ^ 2 / (2 * (1 / 2)) +
+        1 / 2 / 2 *
+          ∑ t ∈ Finset.range 4,
+            ‖BanditRL.OnlineSubgradientDescent.currentSubgradient (GuessingOSDProbe.losses t)
+                  (GuessingOSDProbe.output t)‖ ^
+              2 -
+      ‖GuessingOSDProbe.output 4 - 1 / 2‖ ^ 2 / (2 * (1 / 2))
+'GuessingOSDProbe.four_round_fixed_with_terminal' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingOSDProbe.four_round_energy :
+  ∑ t ∈ Finset.range 4,
+      ‖BanditRL.OnlineSubgradientDescent.currentSubgradient (GuessingOSDProbe.losses t) (GuessingOSDProbe.output t)‖ ^
+        2 =
+    4
+'GuessingOSDProbe.four_round_energy' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingOSDProbe.four_round_positive_terminal : ‖GuessingOSDProbe.output 4 - 1 / 2‖ ^ 2 / (2 * (1 / 2)) = 1 / 4
+'GuessingOSDProbe.four_round_positive_terminal' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingOSDProbe.four_round_bound_rhs_exact :
+  ‖1 - 1 / 2‖ ^ 2 / (2 * (1 / 2)) +
+        1 / 2 / 2 *
+          ∑ t ∈ Finset.range 4,
+            ‖BanditRL.OnlineSubgradientDescent.currentSubgradient (GuessingOSDProbe.losses t)
+                  (GuessingOSDProbe.output t)‖ ^
+              2 -
+      ‖GuessingOSDProbe.output 4 - 1 / 2‖ ^ 2 / (2 * (1 / 2)) =
+    1
+'GuessingOSDProbe.four_round_bound_rhs_exact' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingOSDProbe.horizon_four_tuned_same_eta : 1 / √↑4 = 1 / 2
+'GuessingOSDProbe.horizon_four_tuned_same_eta' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingOSDProbe.all_comparators_four (u : ℝ) :
+  u ∈ Set.Icc 0 1 →
+    ∑ t ∈ Finset.range 4, (|GuessingOSDProbe.output t - GuessingOSDProbe.labels t| - |u - GuessingOSDProbe.labels t|) ≤
+      2
+'GuessingOSDProbe.all_comparators_four' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingOSDProbe.chosen_clipping :
+  BanditRL.OnlineSubgradientDescent.currentSubgradient (BanditRL.OnlineGuessingSubgradient.loss 1) (1 / 4) = -1
+'GuessingOSDProbe.chosen_clipping' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingOSDProbe.actual_raw_overshoot_and_clamp :
+  1 / 4 - 1 * BanditRL.OnlineSubgradientDescent.currentSubgradient (BanditRL.OnlineGuessingSubgradient.loss 1) (1 / 4) =
+      5 / 4 ∧
+    BanditRL.OnlineSubgradientDescent.step GuessingOSDProbe.interval 1 (BanditRL.OnlineGuessingSubgradient.loss 1)
+        (1 / 4) =
+      1
+'GuessingOSDProbe.actual_raw_overshoot_and_clamp' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingOSDProbe.futureLabels (t : ℕ) : ℝ
+'GuessingOSDProbe.futureLabels' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingOSDProbe.futureEta (t : ℕ) : ℝ
+'GuessingOSDProbe.futureEta' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingOSDProbe.invalid_future_does_not_change_output :
+  BanditRL.OnlineSubgradientDescent.iterate GuessingOSDProbe.interval GuessingOSDProbe.futureEta
+      (fun s => BanditRL.OnlineGuessingSubgradient.loss (GuessingOSDProbe.futureLabels s)) 1 4 =
+    GuessingOSDProbe.output 4
+'GuessingOSDProbe.invalid_future_does_not_change_output' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingOSDProbe.no_future_feasibility_assumed :
+  GuessingOSDProbe.futureLabels 4 = 999 ∧ GuessingOSDProbe.futureEta 4 = -99
+'GuessingOSDProbe.no_future_feasibility_assumed' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingOSDProbe.zero_horizon_regret :
+  BanditRL.OnlineSubgradientDescent.regret GuessingOSDProbe.interval GuessingOSDProbe.eta GuessingOSDProbe.losses 1
+      (1 / 2) 0 =
+    0
+'GuessingOSDProbe.zero_horizon_regret' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingOSDProbe.eventual_one_sided_horizon_family (u ε : ℝ) (hu : u ∈ Set.Icc 0 1) (hε : 0 < ε) :
+  ∀ᶠ (T : ℕ) in Filter.atTop,
+    (∑ t ∈ Finset.range T,
+          (|BanditRL.OnlineSubgradientDescent.iterate GuessingOSDProbe.interval (fun x => 1 / √↑T)
+                  (fun s => BanditRL.OnlineGuessingSubgradient.loss (GuessingOSDProbe.labels s)) 1 t -
+                GuessingOSDProbe.labels t| -
+            |u - GuessingOSDProbe.labels t|)) /
+        ↑T <
+      ε
+'GuessingOSDProbe.eventual_one_sided_horizon_family' depends on axioms: [propext, Classical.choice, Quot.sound]

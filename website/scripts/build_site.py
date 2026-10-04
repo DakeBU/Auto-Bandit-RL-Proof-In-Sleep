@@ -78,6 +78,7 @@ MODULE_PAGE_SIZE = 30
 TEACHING_PREVIEW_COUNT = 4
 PSEUDOCODE_CHAPTERS = {
     "online-osd",
+    "online-guessing-osd",
     "etc",
     "ucb",
     "oful",
