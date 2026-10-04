@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "OSDAlgorithmProbe.zero_horizon",
+  "file": "Tests/OnlineSubgradientDescentCanary.lean",
+  "statement": "theorem zero_horizon : regret interval (fun _ => (3 : ℝ)) losses 1 0 0 = 0 ∧ regret interval (fun _ => (3 : ℝ)) losses 1 0 0 ≤ ‖(1 : ℝ) - 0‖ ^ 2 / (2 * 3) + (3 : ℝ) / 2 * (∑ t ∈ range 0, ‖currentSubgradient (losses t) (iterate interval (fun _ => (3 : ℝ)) losses 1 t)‖ ^ 2) - ‖iterate interval (fun _ => (3 : ℝ)) losses 1 0 - 0‖ ^ 2 / (2 * 3)",
+  "statement_hash": "b845f23abc435c82666b0396f5840b0a44014d4df903c3402d50bbdd4cc90d50",
+  "source_assumptions": [],
+  "created_at": "2026-10-04T06:14:49+00:00"
+}

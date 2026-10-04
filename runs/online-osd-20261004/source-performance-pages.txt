@@ -1,0 +1,436 @@
+PHYSICAL PDF PAGE 25
+2.1 Online Learning with Convex Differentiable Losses13
+Therefore,
+∥y−x∥ 2
+2 =∥y−Π V(x) + ΠV(x)−x∥ 2
+2
+=∥y−Π V(x)∥2
+2 + 2⟨y−Π V(x),Π V(x)−x⟩+∥Π V(x)−x∥ 2
+2
+≥ ∥y−ΠV(x)∥2
+2 .
+The next lemma upper bounds the regret in a single iteration of Algorithm 2.1.
+Lemma 2.12LetV ⊆R d be a non-empty closed convex set,ℓt be convex and differentiable
+on an open set containingV, andη t >0. Setg t =∇ℓ t(xt)andx t+1 = ΠV(xt −η tgt).
+Then,∀u∈ V, the following inequality holds
+ηt(ℓt(xt)−ℓ t(u))≤η t⟨gt,xt −u⟩ ≤1
+2∥xt −u∥ 2
+2 − 1
+2∥xt+1 −u∥ 2
+2 + η2
+t
+2 ∥gt∥2
+2 .
+ProofFrom Proposition 2.11 and Theorem 2.7, we have that
+∥xt+1 −u∥ 2
+2 − ∥xt −u∥ 2
+2 ≤ ∥xt −η tgt −u∥ 2
+2 − ∥xt −u∥ 2
+2
+=−2η t⟨gt,xt −u⟩+η 2
+t ∥gt∥2
+2
+≤ −2ηt(ℓt(xt)−ℓ t(u)) +η 2
+t ∥gt∥2
+2 .
+Reordering, we have the stated bound.
+We can prove the following regret guarantee for Algorithm 2.1.
+Theorem 2.13LetV ⊆R d be a non-empty closed convex set with diameterD, that is,
+D:= sup x,y∈V ∥x−y∥ 2. Letℓ 1, . . . , ℓT be an arbitrary sequence of convex and differ-
+entiable functions on an open set containingV. Pick anyx 1 ∈ Vand assume0< ηt+1 ≤
+ηt, t= 1, . . . , T−1. Then,∀u∈ V, Algorithm 2.1 satisfies the following regret bound
+TX
+t=1
+(ℓt(xt)−ℓ t(u))≤ D2
+2ηT
++
+TX
+t=1
+ηt
+2 ∥gt∥2
+2 − 1
+2ηT
+∥xT+1 −u∥ 2
+2 .
+Moreover, ifηt is constant, i.e.,η t =η∀t= 1, . . . , T, for allu∈ V, we have
+TX
+t=1
+(ℓt(xt)−ℓ t(u))≤ ∥u−x 1∥2
+2
+2η + η
+2
+TX
+t=1
+∥gt∥2
+2 − 1
+2η ∥xT+1 −u∥ 2
+2 .
+ProofDividing the inequality in Lemma 2.12 byη t and summing overt= 1, . . . , T, we
+
+PHYSICAL PDF PAGE 26
+14Online Subgradient Descent
+have
+TX
+t=1
+(ℓt(xt)−ℓ t(u))≤
+TX
+t=1
+∥xt −u∥ 2
+2
+2ηt
+− ∥xt+1 −u∥ 2
+2
+2ηt
+
++
+TX
+t=1
+ηt∥gt∥2
+2
+2
+= ∥x1 −u∥ 2
+2
+2η1
+− ∥xT+1 −u∥ 2
+2
+2ηT
++
+T−1X
+t=1
+ 1
+ηt+1
+− 1
+ηt
+ ∥xt+1 −u∥ 2
+2
+2 +
+TX
+t=1
+ηt∥gt∥2
+2
+2
+≤ D2
+2η1
++ D2
+2
+T−1X
+t=1
+ 1
+ηt+1
+− 1
+ηt
+
++
+TX
+t=1
+ηt∥gt∥2
+2
+2 − ∥xT+1 −u∥ 2
+2
+2ηT
+= D2
+2η1
++D 2
+ 1
+2ηT
+− 1
+2η1
+
++
+TX
+t=1
+ηt∥gt∥2
+2
+2 − ∥xT+1 −u∥ 2
+2
+2ηT
+= D2
+2ηT
++
+TX
+t=1
+ηt
+2 ∥gt∥2
+2 − 1
+2ηT
+∥xT+1 −u∥ 2
+2 .
+In the same way, whenη t is constant, we have
+TX
+t=1
+(ℓt(xt)−ℓ t(u))≤
+TX
+t=1
+ 1
+2η ∥xt −u∥ 2
+2 − 1
+2η ∥xt+1 −u∥ 2
+2
+
++ η
+2
+TX
+t=1
+∥gt∥2
+2
+= 1
+2η ∥x1 −u∥ 2
+2 − 1
+2η ∥xT+1 −u∥ 2
+2 + η
+2
+TX
+t=1
+∥gt∥2
+2 .
+We can immediately observe a few things.
+•The terms∥g t∥2
+2 are due to the fact that we outputx t before knowing the lossℓ t. Indeed,
+these terms become non-positive if we were allowed to observeℓ t before producingx t,
+see Section 15.5.1.
+•In the case of constantη, the bound holds even whenD=∞. Moreover, the first term in
+the regret depends on ourinitial condition, that is, how farx 1 is from the competitoru.
+•The last term in both bounds is non-positive, so it is usually discarded. Yet, some advanced
+proofs require it, so it is good to be aware of it.
+•If we want to use time-varying learning rates, we need to control the terms∥x t −u∥2
+2. To
+do it, we assume a bounded domainV. However, this assumption is false in most of the
+machine learning applications. We will also see in Section 5.2 that this is not an artifact of
+the proof, that is, OGD can fail in unbounded domains with time-varying learning rates.
+That said, in the stochastic setting, you can still use a time-varying learning rate in SGD
+with an unbounded domain, as we will see in Chapter 3.
+•Another important observation is that the regret bound helps us choose the learning rates
+ηt. Indeed, it is the only guideline we have. Any other choice that is not justified by a
+regret analysis is not justified at all.
+As we said, the presence of untuned parameters like the learning rates makes no sense in
+online learning. So, we have to decide on a strategy to set them. A simple choice is to find
+the constant learning rate that minimizes the bounds for a fixed number of iterations. We
+
+PHYSICAL PDF PAGE 27
+2.1 Online Learning with Convex Differentiable Losses15
+have to consider the expression
+∥u−x 1∥2
+2
+2η + η
+2
+TX
+t=1
+∥gt∥2
+2
+and minimize with respect toη. It is easy to see that the optimalηis ∥u−x1∥2√PT
+t=1 ∥gt∥2
+2
+, that would
+give the regret bound
+∥u−x 1∥2
+vuut
+TX
+t=1
+∥gt∥2
+2 .
+However, we have a problem: in order to use this stepsize, we should know all the future gra-
+dients (that depend onηitself!), and the distance between the optimal solution and the initial
+point. This is clearly impossible: remember that the adversary can choose the sequence of
+functions. Hence, it can observe your choice of learning rates and decide the sequence so
+that your learning rate is no longer the correct one!
+Indeed, it turns out that this kind of rate is completely impossible because it is ruled out by
+a lower bound we will show in Chapter 5. Yet, we will see that it is indeed possible to achieve
+very similar rates usingadaptive(Section 4.2) andparameter-freealgorithms (Chapter 13).
+For the moment, we can observe that we might be happy to minimize a loose upper bound.
+In particular, assume that the norm of the gradients is bounded byL, that is∥g t∥2 ≤L.
+Also, assuming a bounded diameter, we can upper bound∥u−x 1∥2 byD. Hence, we have
+η⋆ = argmin
+η
+D2
+2η + ηL2T
+2 = D
+L
+√
+T
+,
+that gives a regret bound of
+DL
+√
+T .(2.1)
+So, indeed, the regret is sublinear in time. In Chapter 5, we will also prove that the this regret
+upper bound is optimal up to constant multiplicative factors.
+Example 2.14Consider the guessing game of the first chapter; we can easily solve it with
+OGD. Indeed, we just need to calculate the gradients, prove that they are bounded, and find
+a way to calculate the projection of a real number in[0,1]. So,ℓ ′
+t(x) = 2(x−y t), that is
+bounded forx, yt ∈[0,1]. The projection on[0,1]is justΠ [0,1](x) = min(max(x,0),1).
+With the optimal learning rate, the resulting regret would beO(
+√
+T), which is worse than
+the one we found in the first chapter. Hence, OGD with this choice of the learning rate is
+suboptimal for this problem. We will see how to make it optimal in Chapter 4.
+Example 2.15Let’s consider an example of the OCO setting. Consider the problem of
+predicting at daytthe opening price of a stock based on a linear combination of the opening
+prices of the pastddays, represented by a vectorz t ∈R d. So, our prediction at timetwill
+be⟨z t,xt⟩and the feasible set isV=R d. Once we make our prediction, we receive the
+true opening pricey t, and we pay theHuber loss, a convex loss function robust to outliers,
+
+PHYSICAL PDF PAGE 31
+2.2 Online Subgradient Descent19
+We also have a handy result that upper bounds the norm of subgradients of convexLips-
+chitzfunctions.
+Definition 2.29Letf:R d →(−∞,+∞]. We say thatfisL-Lipschitzover a set
+V ⊆domfwith respect to a norm∥ · ∥if|f(x)−f(y)| ≤L∥x−y∥,∀x,y∈ V.
+Theorem 2.30Letf:R d →(−∞,+∞]be convex and proper. Then,fisL-Lipschitz in
+int domfwith respect to the L 2 norm iff for allx∈int domfandg∈∂f(x)we have
+∥g∥2 ≤L.
+ProofFirst, we assumefto beL-Lipschitz, then|f(x)−f(y)| ≤L∥x−y∥ 2,∀x,y∈
+int domf. Letg∈∂f(x). If∥g∥ 2 = 0, then the theorem is true. So, we can safely assume
+it to be different from 0. Forϵ >0small enoughy=x+ϵ g
+∥g∥2
+∈int domf, then
+Lϵ=L∥x−y∥ 2 ≥ |f(y)−f(x)| ≥f(y)−f(x)≥ ⟨g,y−x⟩=ϵ∥g∥ 2,
+that implies that∥g∥ 2 ≤L.
+For the other implication, the subgradient definition and Cauchy–Schwarz inequality give
+f(x)−f(y)≤ ∥g∥ 2∥x−y∥ 2 ≤L∥x−y∥ 2,
+for anyx,y∈int domf. Takingg∈∂f(y), we also get
+f(y)−f(x)≤L∥x−y∥ 2 .
+Finally, let’s dispel the common misconception that a convex function must be differen-
+tiable on its domain except possibly at countably many points. For example, consider the
+convex functionf:R 2 →Rdefined asf(x) =|x 1|that is not differentiable on the line
+segment betweenv= (0,0)andw= (0,1).
+2.2.2 Analysis with Subgradients
+As I promised you, with the proper mathematical tools, analyzing online algorithms becomes
+easy. Indeed, switching from gradient to subgradient comes for free! In fact, our analysis of
+OGD with differentiable losses holds as is when using subgradients instead of gradients. The
+reason is that the only property of the gradients that we used in the proof of Theorem 2.13
+was that
+ℓt(xt)−ℓ t(u)≤ ⟨gt,xt −u⟩,
+whereg t =∇ℓ t(xt). However, the exact same property holds wheng t ∈∂ℓ t(xt). Hence,
+the regret bounds we proved hold as well, just replacing differentiability with subdifferen-
+tiability and gradients with subgradients. In particular, we have the following lemma.
+Lemma 2.31LetV ⊆R d be a non-empty closed convex set,ℓ t :R d →(−∞,+∞]a
+function subdifferentiable onV, andη t >0. Setg t ∈∂ℓ t(xt)andx t+1 = ΠV(xt −η tgt).
+Then,∀u∈ V, we have
+ηt(ℓt(xt)−ℓ t(u))≤η t⟨gt,xt −u⟩ ≤1
+2∥xt −u∥ 2
+2 − 1
+2∥xt+1 −u∥ 2
+2 + η2
+t
+2 ∥gt∥2
+2 .
+
+PHYSICAL PDF PAGE 32
+20Online Subgradient Descent
+Algorithm 2.2Projected Online Subgradient Descent (OSD)
+Require:Non-empty closed convex setV ⊆R d,x 1 ∈ V,η1, . . . , ηT >0
+1:fort= 1toTdo
+2:Outputx t ∈ V
+3:Pay the lossℓ t(xt), whereℓ t is subdifferentiable onV
+4:Setg t ∈∂ℓ t(xt)
+5:x t+1 = ΠV(xt −η tgt) = argminy∈V ∥xt −η tgt −y∥ 2
+6:end for
+So, we can state theOnline Subgradient Descent (OSD)algorithm in Algorithm 2.2,
+where the only difference from Algorithm 2.1 is line 4.
+Example 2.32Consider the guessing game of the first chapter again, but now change the
+loss function to the absolute loss of the difference:ℓ t(x) =|x−y t|. Now we will need to
+use OSD, because the functions are non-differentiable. We can easily see that
+∂ℓt(x) =
+
+
+
+{1}, x > y t
+[−1,1], x=y t
+{−1}, x < yt .
+Again, running OSD with the optimal learning rate on this problem will give us immediately
+a regret ofO(
+√
+T)asT→ ∞, without having to design a specific strategy for it.
+2.2.3 Unit Analysis Bits
+One might wonder why I did not “simplify the math” by removing some of the constants in
+the bounds, for example, by setting the Lipschitz constantLto1. While this is very common
+in machine learning papers, this is a bad idea because it makes it (i) difficult to check the
+correctness of an equation, and (ii) difficult to correctly implement the algorithm. To explain
+why this is the case, we will have to consider the concepts of “units”.
+When we look at a mathematical formula coming from a physical model, we are used
+to the idea that each quantity has a “unit” of measurement, e.g., meters, seconds, Joules.
+A fundamental principle is that any physically meaningful equation must be dimensionally
+consistent. That is, the units on the left-hand side of an equation must be the same as the
+units on the right-hand side. For example, you cannot sum a quantity measured in meters
+with one measured in seconds.
+It turns out that this simple idea is not limited to physical models and it can be used as
+a sanity check foranymathematical formula, including the ones we see in online learning.
+Let’s assign a symbolic unit to each quantity we are dealing with. For example, let’s denote
+the units of our predictionsxby[x]and the units of the lossℓby[ℓ]. We can now check
+each formula by following a few simple rules. First, we have to make sure that each term
+has the same units. Another rule to keep in mind is that transcendental functions are only
+defined on unitless quantities. So, for example, we can take logarithms and exponentials of
+ratios of quantities with the same units, to obtain a unitless quantity, but not of quantities
+
+PHYSICAL PDF PAGE 33
+2.2 Online Subgradient Descent21
+with units. Finally, while probabilities are unitless, the probability density function has the
+units of inverse of the random variable it represents, because it represents the probability per
+unit of the variable it is defined over.
+The importance of this check cannot be overstated. When we see an equation where the
+units do not match, either it is plainly wrong, or there is a constant with units hidden some-
+where. Moreover, the dimensional analysis will immediately tell us the dependence of a
+quantity on the others. Let’s do a practical example considering OSD.
+Consider the OSD update in Algorithm 2.2, whereV=R d:x t+1 =x t −ηg t. For
+this equation to be coherent, the termηg t must have the same units asx t. Let’s see if this
+gives us some constraints on the units of the learning rateη. The units ofg t, from the
+definition of subgradient, are the units of the loss divided by the units of the variable we are
+subdifferentiating with respect to. So, we have
+[gt] = [ℓ]
+[x] .
+Now, from the consistency of the update rule, we must have[xt] = [ηgt] = [η][gt]. Hence,
+we can derive the units of the learning rate:
+[η] = [x]
+[gt] = [x]
+[ℓ]/[x] = [x]2
+[ℓ] .
+This shows thatthe learning rate is not a unitless quantity. So, even without deriving the
+regret guarantee, from the unit analysis, we immediately know that the learning rate must
+depend on the problem characteristics in a certain way.
+Finally, let’s perform a sanity check on the regret bound for OSD with a constant learning
+rate (that is, the one in Theorem 2.13):
+TX
+t=1
+(ℓt(xt)−ℓ t(u))≤ ∥u−x 1∥2
+2
+2η + η
+2
+TX
+t=1
+∥gt∥2
+2 .
+The left-hand side is a sum of losses, so its unit is[ℓ]. Let’s check the two terms on the
+right-hand side, to verify that they also have the unit of[ℓ]. For the first term, we have
+∥u−x 1∥2
+2
+η
+
+= [x]2
+[η] = [x]2
+[x]2/[ℓ] = [ℓ].
+For the second term, we have
+"
+η
+TX
+t=1
+∥gt∥2
+2
+#
+= [η][gt]2 = [x]2
+[ℓ]
+[ℓ]2
+[x]2 = [ℓ].
+Let me stress that having a formula with wrong units is not only a theoretical issue, but
+a very practical one. Indeed, constants with hidden units in any algorithm can be prob-
+lematic. Let’s show it with an example. For example, suppose our variablex t represents a
+location in meters, and we use a learning rate schedule such asη= 1/
+√
+T. Now, suppose
+we change our unit of measurement forx t from meters to kilometers. Our new variable is
+x′
+t =x t/1000. Since this is merely a change of units, the underlying learning problem is
+identical, and we should expect the algorithm’s behavior to be invariant. However, the gradi-
+ent with respect to the new variable isg ′
+t =∇ x′ℓt(1000x′
+t) = 1000∇xℓt(xt) = 1000gt.

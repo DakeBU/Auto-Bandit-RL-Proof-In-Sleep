@@ -1,0 +1,3 @@
+# Neutral packet imported metric interface completion
+
+Decoder v1 correctly marked the Metric.diam/Bornology interface boundary. Preserve original packet/reconstruction/receipt. New packet v2 adds exact Metric.ediam/Metric.diam definitions and actual metric bounded-ball equivalence/diameter theorem from the pinned local Mathlib files EMetricSpace/Diam.lean and MetricSpace/Bounded.lean plus Bornology/Basic.lean. Frozen source headers/context/native statement hashes remain byte-identical; no target proof or source identity supplied. Request a distinct fresh decoding before final source-contract stabilization, rather than treating the incompletely decoded interface as automatically understood.

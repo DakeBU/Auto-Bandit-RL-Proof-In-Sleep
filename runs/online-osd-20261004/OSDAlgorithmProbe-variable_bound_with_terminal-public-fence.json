@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "OSDAlgorithmProbe.variable_bound_with_terminal",
+  "file": "Tests/OnlineSubgradientDescentCanary.lean",
+  "statement": "theorem variable_bound_with_terminal : regret interval variableEta losses 1 0 2 ≤ (2 : ℝ) ^ 2 / (2 * variableEta (2 - 1)) + (∑ t ∈ range 2, variableEta t / 2 * ‖currentSubgradient (losses t) (iterate interval variableEta losses 1 t)‖ ^ 2) - ‖iterate interval variableEta losses 1 2 - 0‖ ^ 2 / (2 * variableEta (2 - 1))",
+  "statement_hash": "20c3616de2a481fc3b64071b65effa42a933b3adc380303c68584c73fbb64d05",
+  "source_assumptions": [],
+  "created_at": "2026-10-04T06:14:48+00:00"
+}

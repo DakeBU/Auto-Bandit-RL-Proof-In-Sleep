@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineSubgradientDescent.regret_tuned",
+  "file": "runs/online-osd-20261004/attempts/osd-performance-01.lean",
+  "statement": "theorem regret_tuned (V : Domain (E := E)) (loss : ℕ → E → EReal) (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (T : ℕ) (hT : 0 < T) (D G : ℝ) (hD : 0 < D) (hG : 0 < G) (hdiam : ∀ x ∈ V.carrier, ∀ y ∈ V.carrier, ‖x - y‖ ≤ D) (hloss : ∀ t < T, SubdifferentiableOn V (loss t)) (hgrad : ∀ t < T, ‖currentSubgradient (loss t) (iterate V (fun _ => D / (G * Real.sqrt T)) loss x₁ t)‖ ≤ G) : ∀ u ∈ V.carrier, regret V (fun _ => D / (G * Real.sqrt T)) loss x₁ u T ≤ D * G * Real.sqrt T",
+  "statement_hash": "92c67b89457da0885d80685ece7b5000f96ffc3b6bca29329c5cbb406847bc77",
+  "source_assumptions": [],
+  "created_at": "2026-10-04T05:56:32+00:00"
+}

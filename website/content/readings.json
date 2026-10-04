@@ -4571,6 +4571,263 @@
         "takeaway": "Full interior equivalence requires actual finite values, all actual supports and the explicitly nonnegative constant convention.",
         "boundary": "No full-domain norm bound, differentiability, source algorithm regret, Chapter2/book completion or merge/deployment claim."
       }
+    },
+    {
+      "slug": "online-osd",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10,21June2026",
+        "sections": "Section2.2.2 Lemma2.31/Algorithm2.2 and explicit Theorem2.13/eq2.1 transfer; printed21 constant-step formula",
+        "pages": "printed13-15,19-21/PDF25-27,31-33",
+        "pdf_page": 31,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "True global support and finite values",
+          "meaning": "Proper f never takes minus infinity and has a finite ambient witness. g in partial f(x) tests every ambient y. Properness plus that actual support prove f(x) is finite before toReal differences."
+        },
+        {
+          "term": "Actual current-only choice",
+          "meaning": "G(f,x) chooses one support from the true nonempty global support set, otherwise zero. Source-valid feasible queries use the nonempty branch. It is a noncomputable whole-function choice, not an executable oracle or every possible adaptive tie rule."
+        },
+        {
+          "term": "Round and endpoint indices",
+          "meaning": "Lean X0=x1, Xt is the output before loss(t), and X(t+1) is its projected update. At horizon T, last played eta is eta(T-1), terminal is X(T). Initialization and learning-rate schedule are externally prescribed."
+        }
+      ],
+      "algorithm": {
+        "title": "Output, observe, support, project",
+        "kind": "source algorithm",
+        "steps": [
+          {
+            "title": "Output the feasible current point",
+            "detail": "Start from the prescribed x1 in V. Projection membership proves every later output feasible. Strict-prefix induction compares equal past losses and schedules, so current/future loss changes do not change the current point."
+          },
+          {
+            "title": "Observe the current loss and choose its support",
+            "detail": "Subdifferentiability on V gives a true global support at the actual feasible query. The canonical current-only selector is proved to belong to that set; no desired step inequality is supplied."
+          },
+          {
+            "title": "Project the genuine update",
+            "detail": "Use the shared nearest-point projection on Xt-eta(t)gt. Its existing projection theorem and support inequality produce the full Lemma2.31 chain, then divide by the positive current eta."
+          }
+        ]
+      },
+      "teaching_route": [
+        "BanditRL.OnlineSubgradientDescent.lemma_2_31",
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient_mem",
+        "BanditRL.OnlineSubgradientDescent.finite_loss",
+        "BanditRL.OnlineSubgradientDescent.iterate_mem",
+        "BanditRL.OnlineSubgradientDescent.iterate_prefix",
+        "BanditRL.OnlineSubgradientDescent.iterate_support",
+        "BanditRL.OnlineSubgradientDescent.iterate_finite_loss",
+        "BanditRL.OnlineSubgradientDescent.one_step_chain",
+        "BanditRL.OnlineSubgradientDescent.one_step",
+        "BanditRL.OnlineSubgradientDescent.regret_fixed",
+        "BanditRL.OnlineSubgradientDescent.regret_fixed_coarse",
+        "BanditRL.OnlineSubgradientDescent.regret_variable_bound",
+        "BanditRL.OnlineSubgradientDescent.regret_variable",
+        "BanditRL.OnlineSubgradientDescent.regret_tuned_distance",
+        "BanditRL.OnlineSubgradientDescent.regret_tuned"
+      ],
+      "source_theorems": [
+        {
+          "label": "Lemma2.31 full arbitrary-current conjunction",
+          "pages": "printed19",
+          "pdf_page": 31,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\eta(f(x)-f(u))\\le\\eta\\langle g,x-u\\rangle\\le\\frac{\\|x-u\\|^2-\\|\\Pi_V(x-\\eta g)-u\\|^2}{2}+\\frac{\\eta^2}{2}\\|g\\|^2",
+          "fallback": "Both inequalities hold for any actual global support at an arbitrary ambient current point and every feasible comparator.",
+          "plain": "Both inequalities hold for any actual global support at an arbitrary ambient current point and every feasible comparator.",
+          "relationship": "Full source lemma: no current-point feasibility narrowing. Algorithm specializations separately prove feasibility and choose g.",
+          "contract": {
+            "model": "Finite-dimensional real Euclidean space and actual nonempty closed convex V.",
+            "assumptions": "f proper and subdifferentiable on V; eta>0; u in V; supplied actual g in partial f(x), with x not required feasible.",
+            "parameters": "Same actual support choice and recursively projected trajectory, every feasible comparator; Lean0 = source1.",
+            "regret": "Finite real losses are produced from properness/supports; regret sums this same trajectory.",
+            "guarantee": "Both eta-scaled inequalities and the negative projected terminal distance."
+          },
+          "local_status": {
+            "status": "partial",
+            "label": "Public focused compile and semantic body review",
+            "boundary": "Actual public focused3324jobs and53-name standard-axiom audit; distinct public-body accepted with explicit selection/indexing/finite-value deltas. Combined root/Tests/harness/graph/registry/site/final binding/PR acceptance separately required. Chapter2/book incomplete; no merge/deploy."
+          }
+        },
+        {
+          "label": "Algorithm2.2 causal projected OSD",
+          "pages": "printed20",
+          "pdf_page": 32,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "X_0=x_1\\in V,\\quad g_t=G(f_t,X_t)\\in\\partial f_t(X_t),\\quad X_{t+1}=\\Pi_V(X_t-\\eta_tg_t)",
+          "fallback": "The actual recursive mathematical algorithm outputs before the current loss and uses a genuine selected support.",
+          "plain": "The actual recursive mathematical algorithm outputs before the current loss and uses a genuine selected support.",
+          "relationship": "Source allows any support; this implementation fixes one noncomputable permitted choice. Prefix compares full functions and prescribed past schedules, and does not certify future-independent external initialization.",
+          "contract": {
+            "model": "Finite-dimensional real Euclidean space and actual nonempty closed convex V.",
+            "assumptions": "Feasible prescribed initialization, proper current losses subdifferentiable on V; positive played eta for performance.",
+            "parameters": "Same actual support choice and recursively projected trajectory, every feasible comparator; Lean0 = source1.",
+            "regret": "Finite real losses are produced from properness/supports; regret sums this same trajectory.",
+            "guarantee": "All-round feasibility, strict-prefix equality, selected support and actual finite played/comparator values."
+          },
+          "local_status": {
+            "status": "partial",
+            "label": "Public focused compile and semantic body review",
+            "boundary": "Actual public focused3324jobs and53-name standard-axiom audit; distinct public-body accepted with explicit selection/indexing/finite-value deltas. Combined root/Tests/harness/graph/registry/site/final binding/PR acceptance separately required. Chapter2/book incomplete; no merge/deploy."
+          }
+        },
+        {
+          "label": "Printed19 transfer: fixed Theorem2.13",
+          "pages": "printed19",
+          "pdf_page": 31,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "R_T(u)\\le\\frac{\\|x_1-u\\|^2}{2\\eta}+\\frac\\eta2\\sum_{t=1}^T\\|g_t\\|^2-\\frac{\\|x_{T+1}-u\\|^2}{2\\eta}",
+          "fallback": "The exact fixed-step regret bound holds on the same subgradient trajectory, with its negative terminal residual.",
+          "plain": "The exact fixed-step regret bound holds on the same subgradient trajectory, with its negative terminal residual.",
+          "relationship": "Printed19 explicitly transfers gradient results to subgradients. No standalone desired regret/stability inequality is an input.",
+          "contract": {
+            "model": "Finite-dimensional real Euclidean space and actual nonempty closed convex V.",
+            "assumptions": "eta>0, feasible x1,u, each played loss proper/subdifferentiable on V; no bounded-domain premise. T0 allowed.",
+            "parameters": "Same actual support choice and recursively projected trajectory, every feasible comparator; Lean0 = source1.",
+            "regret": "Finite real losses are produced from properness/supports; regret sums this same trajectory.",
+            "guarantee": "Full residual bound from genuine same-trajectory telescoping."
+          },
+          "local_status": {
+            "status": "partial",
+            "label": "Public focused compile and semantic body review",
+            "boundary": "Actual public focused3324jobs and53-name standard-axiom audit; distinct public-body accepted with explicit selection/indexing/finite-value deltas. Combined root/Tests/harness/graph/registry/site/final binding/PR acceptance separately required. Chapter2/book incomplete; no merge/deploy."
+          }
+        },
+        {
+          "label": "Printed19 transfer: decreasing Theorem2.13",
+          "pages": "printed19",
+          "pdf_page": 31,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "R_T(u)\\le\\frac{D^2}{2\\eta_T}+\\sum_{t=1}^T\\frac{\\eta_t}{2}\\|g_t\\|^2-\\frac{\\|x_{T+1}-u\\|^2}{2\\eta_T}",
+          "fallback": "Decreasing positive played steps use the last played eta and retain the terminal distance.",
+          "plain": "Decreasing positive played steps use the last played eta and retain the terminal distance.",
+          "relationship": "Actual real Metric.diam requires boundedness because toReal of infinite ediam is0. D0/singleton allowed for this bound.",
+          "contract": {
+            "model": "Finite-dimensional real Euclidean space and actual nonempty closed convex V.",
+            "assumptions": "T>=1; positive nonincreasing eta through played rounds; losses proper/subdifferentiable; bounded V for Metric.diam, or actual uniform D upper bound.",
+            "parameters": "Same actual support choice and recursively projected trajectory, every feasible comparator; Lean0 = source1.",
+            "regret": "Finite real losses are produced from properness/supports; regret sums this same trajectory.",
+            "guarantee": "The full variable bound, including negative terminal residual."
+          },
+          "local_status": {
+            "status": "partial",
+            "label": "Public focused compile and semantic body review",
+            "boundary": "Actual public focused3324jobs and53-name standard-axiom audit; distinct public-body accepted with explicit selection/indexing/finite-value deltas. Combined root/Tests/harness/graph/registry/site/final binding/PR acceptance separately required. Chapter2/book incomplete; no merge/deploy."
+          }
+        },
+        {
+          "label": "Printed19 transfer of tuned equation2.1",
+          "pages": "printed19",
+          "pdf_page": 31,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\eta=\\frac{D}{G\\sqrt T},\\quad R_T(u)\\le DG\\sqrt T\\quad(\\forall u\\in V)",
+          "fallback": "One prescribed horizon-tuned trajectory satisfies DG sqrt(T) for every feasible comparator.",
+          "plain": "One prescribed horizon-tuned trajectory satisfies DG sqrt(T) for every feasible comparator.",
+          "relationship": "Source printed15 uses L, renamed G. This is horizon-specific and never optimizes using future gradients. Closed-V Lipschitzness alone is not assumed to bound boundary supports.",
+          "contract": {
+            "model": "Finite-dimensional real Euclidean space and actual nonempty closed convex V.",
+            "assumptions": "T>=1,D>0,G>0; all feasible pair distances<=D; actual chosen supports on this very eta-dependent trajectory have norms<=G.",
+            "parameters": "Same actual support choice and recursively projected trajectory, every feasible comparator; Lean0 = source1.",
+            "regret": "Finite real losses are produced from properness/supports; regret sums this same trajectory.",
+            "guarantee": "Uniform feasible-comparator bound with eta=D/(G sqrt T)."
+          },
+          "local_status": {
+            "status": "partial",
+            "label": "Public focused compile and semantic body review",
+            "boundary": "Actual public focused3324jobs and53-name standard-axiom audit; distinct public-body accepted with explicit selection/indexing/finite-value deltas. Combined root/Tests/harness/graph/registry/site/final binding/PR acceptance separately required. Chapter2/book incomplete; no merge/deploy."
+          }
+        },
+        {
+          "label": "Printed21 coarse fixed-step formula",
+          "pages": "printed21",
+          "pdf_page": 33,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "R_T(u)\\le\\frac{\\|x_1-u\\|^2}{2\\eta}+\\frac\\eta2\\sum_{t=1}^T\\|g_t\\|^2",
+          "fallback": "Drop only the known nonnegative subtracted residual from the full fixed bound.",
+          "plain": "Drop only the known nonnegative subtracted residual from the full fixed bound.",
+          "relationship": "This coarse corollary does not replace the full residual terminal.",
+          "contract": {
+            "model": "Finite-dimensional real Euclidean space and actual nonempty closed convex V.",
+            "assumptions": "Same fixed source hypotheses; no boundedness added.",
+            "parameters": "Same actual support choice and recursively projected trajectory, every feasible comparator; Lean0 = source1.",
+            "regret": "Finite real losses are produced from properness/supports; regret sums this same trajectory.",
+            "guarantee": "The displayed printed21 formula as a separate corollary."
+          },
+          "local_status": {
+            "status": "partial",
+            "label": "Public focused compile and semantic body review",
+            "boundary": "Actual public focused3324jobs and53-name standard-axiom audit; distinct public-body accepted with explicit selection/indexing/finite-value deltas. Combined root/Tests/harness/graph/registry/site/final binding/PR acceptance separately required. Chapter2/book incomplete; no merge/deploy."
+          }
+        }
+      ],
+      "proof_bridge": {
+        "title": "Real supports generate the exact potential chain",
+        "summary": "Every performance theorem acts on the same actual recursive outputs.",
+        "steps": [
+          {
+            "title": "Construct finite regret terms",
+            "detail": "Properness gives a finite ambient witness. The supporting inequality excludes positive infinity at any supported query; no minus infinity is possible. Feasible comparator supports give its finite value too.",
+            "math": "f_t(X_t),f_t(u)\\in\\mathbb R",
+            "fallback": "Real conversion is justified before subtracting values."
+          },
+          {
+            "title": "Obtain the actual single-step bound",
+            "detail": "Apply global support at u and the existing nearest-projection distance theorem to Xt-eta(t)gt. Expand its squared norm; the two inequalities retain the projected terminal.",
+            "math": "\\eta(f(x)-f(u))\\le\\eta\\langle g,x-u\\rangle\\le\\frac{\\|x-u\\|^2-\\|\\Pi_V(x-\\eta g)-u\\|^2}{2}+\\frac{\\eta^2}{2}\\|g\\|^2",
+            "fallback": "No regret or stability premise supplied."
+          },
+          {
+            "title": "Accumulate the same trajectory",
+            "detail": "Fixed eta cancels consecutive potentials by induction. Positive decreasing eta reuses the generic weighted-potential sum with actual feasible distances bounded by D squared. Both retain the final subtraction.",
+            "math": "R_T(u)\\le\\frac{\\|x_1-u\\|^2}{2\\eta}+\\frac\\eta2\\sum_{t=1}^T\\|g_t\\|^2-\\frac{\\|x_{T+1}-u\\|^2}{2\\eta}",
+            "fallback": "The terminal point is the true recursive update."
+          },
+          {
+            "title": "Tune a prescribed run",
+            "detail": "With positive T,D,G, bound initial distance and the actual selected-support energy. Algebra with sqrt(T)^2=T gives DG sqrt(T). Norm bounds are premises about these chosen supports, not a boundary Lipschitz shortcut.",
+            "math": "\\eta=\\frac{D}{G\\sqrt T},\\quad R_T(u)\\le DG\\sqrt T\\quad(\\forall u\\in V)",
+            "fallback": "One horizon-specific run serves every feasible comparator."
+          }
+        ]
+      },
+      "worked_example": {
+        "title": "Non-smooth losses and actual clipping",
+        "intro": "The public fixtures instantiate the actual choice, recurrence and source bounds.",
+        "steps": [
+          {
+            "title": "Two nonzero supports and actual projections",
+            "detail": "For f(x)=|x|, V=[-1,1], x1=1 and eta3, the full support classification forces chosen slopes1 and-1. Raw updates-2 and2 project to-1 and1; two played losses are1+1 and comparator0 pays0.",
+            "math": "1\\to-1\\to1,\\quad R_2(0)=2",
+            "fallback": "Neither slopes nor trajectory/regret are supplied as assumptions."
+          },
+          {
+            "title": "Positive fixed and variable terminal residuals",
+            "detail": "The fixed terminal subtraction is1/6. A truly decreasing schedule3 then2 has the same terminal1 and subtraction1/4; its exact variable bound is directly instantiated.",
+            "math": "\\frac{\\|X_2\\|^2}{2\\cdot3}=\\frac16,\\quad\\frac{\\|X_2\\|^2}{2\\cdot2}=\\frac14",
+            "fallback": "Dropping the residual would change the displayed bound."
+          },
+          {
+            "title": "All-comparator tuning and prefix perturbation",
+            "detail": "The full absolute-value support sets prove the actual chosen norm bound1 at every feasible query, giving tuned2 sqrt(T). Changing eta/loss at time2 and later, even to negative99/top loss, leaves outputX2 equal1 because the played prefix is unchanged.",
+            "math": "R_T(u)\\le2\\sqrt T\\quad(u\\in[-1,1])",
+            "fallback": "Causality tests actual recursion and unconstrained future data."
+          },
+          {
+            "title": "Arbitrary ambient current point and empty horizon",
+            "detail": "A separate affine fixture has x2 outside V, actual support3, eta2 and raw update-4 projected to-1, exercising the full standalone lemma. The fixed theorem is also instantiated at T0 with exact cancellation.",
+            "math": "x=2\\notin[-1,1],\\quad\\Pi_{[-1,1]}(-4)=-1",
+            "fallback": "Standalone x is arbitrary; source-valid algorithm outputs remain feasible."
+          }
+        ],
+        "takeaway": "Actual source supports and projection produce the trajectory and both exact residual bounds.",
+        "boundary": "Example2.32 shifted absolute-loss game, remaining Chapter2 mapping and older-stack migration remain required. No whole-book, anytime tuning, arbitrary adaptive tie rule, executable oracle or merged/live claim."
+      }
     }
   ]
 }

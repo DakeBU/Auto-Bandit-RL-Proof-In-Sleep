@@ -1,0 +1,162 @@
+{
+  "schema_version": "2.0",
+  "id": "ONLINE-OSD-20261004",
+  "route": "online-learning/chapter-2",
+  "frontier_cell": "online-osd",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10, 2026-06-21; SHA256 cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchor": "Lemma2.31/Algorithm2.2 printed19-20/PDF31-32, explicit Theorem2.13/eq2.1 transfer and printed21 fixed formula",
+    "url": "https://arxiv.org/pdf/1912.13213v10"
+  },
+  "target": "Full arbitrary-current projected-support lemma plus actual causal current-choice algorithm and same-trajectory fixed/decreasing/tuned regret",
+  "affected_files": [
+    "BanditRLProof.lean",
+    "BanditRLProof/OnlineSubgradientDescent.lean",
+    "Tests.lean",
+    "Tests/OnlineSubgradientDescentCanary.lean",
+    "website/content/books.json",
+    "website/content/chapters.json",
+    "website/content/readings.json",
+    "website/content/highlights.json",
+    "docs/contracts/online-book-v1/source-inventory.json",
+    "docs/contracts/online-book-v1/coverage.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineSubgradientDescent.lemma_2_31",
+    "BanditRL.OnlineSubgradientDescent.currentSubgradient_mem",
+    "BanditRL.OnlineSubgradientDescent.finite_loss",
+    "BanditRL.OnlineSubgradientDescent.iterate_mem",
+    "BanditRL.OnlineSubgradientDescent.iterate_prefix",
+    "BanditRL.OnlineSubgradientDescent.iterate_support",
+    "BanditRL.OnlineSubgradientDescent.iterate_finite_loss",
+    "BanditRL.OnlineSubgradientDescent.one_step_chain",
+    "BanditRL.OnlineSubgradientDescent.one_step",
+    "BanditRL.OnlineSubgradientDescent.regret_fixed",
+    "BanditRL.OnlineSubgradientDescent.regret_fixed_coarse",
+    "BanditRL.OnlineSubgradientDescent.regret_variable_bound",
+    "BanditRL.OnlineSubgradientDescent.regret_variable",
+    "BanditRL.OnlineSubgradientDescent.regret_tuned_distance",
+    "BanditRL.OnlineSubgradientDescent.regret_tuned"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Actual native search-memory/list-lean-decls and mathlib-card retrieval logs before tactics",
+      "Actual shared projection/EReal/norm API probe and weighted potential declarations"
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineConvex.SourceProper",
+      "BanditRL.OnlineConvex.SourceSubdifferential",
+      "BanditRL.OnlineConvex.subgradient_point_finite",
+      "BanditRL.OnlineGradientDescent.project",
+      "BanditRL.OnlineGradientDescent.project_spec",
+      "BanditRL.OnlineGradientDescent.proposition_2_11",
+      "BanditRL.OnlineGradientDescent.weighted_potential_sum",
+      "EReal.coe_toReal"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineSubgradientDescent.lemma_2_31",
+      "BanditRL.OnlineSubgradientDescent.currentSubgradient_mem",
+      "BanditRL.OnlineSubgradientDescent.finite_loss",
+      "BanditRL.OnlineSubgradientDescent.iterate_mem",
+      "BanditRL.OnlineSubgradientDescent.iterate_prefix",
+      "BanditRL.OnlineSubgradientDescent.iterate_support",
+      "BanditRL.OnlineSubgradientDescent.iterate_finite_loss",
+      "BanditRL.OnlineSubgradientDescent.one_step_chain",
+      "BanditRL.OnlineSubgradientDescent.one_step",
+      "BanditRL.OnlineSubgradientDescent.regret_fixed",
+      "BanditRL.OnlineSubgradientDescent.regret_fixed_coarse",
+      "BanditRL.OnlineSubgradientDescent.regret_variable_bound",
+      "BanditRL.OnlineSubgradientDescent.regret_variable",
+      "BanditRL.OnlineSubgradientDescent.regret_tuned_distance",
+      "BanditRL.OnlineSubgradientDescent.regret_tuned"
+    ],
+    "known_consumers": [
+      "OSDOutsideProbe.arbitrary_current_and_actual_clipping",
+      "OSDAlgorithmProbe.fixed_clipped_two_round",
+      "OSDAlgorithmProbe.variable_bound_with_terminal",
+      "OSDAlgorithmProbe.tuned_all_comparators"
+    ],
+    "planned_consumers": [
+      "Example2.32 shifted absolute-loss game; next required package, not claimed closed"
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Existing gradient consumers cannot certify a subgradient producer. Reuse actual projection/generic potential and proper support APIs to construct actual causal algorithm and exact terminal bounds."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/hinge_blind",
+    "source_reviewer": "/root/source_reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Coordinate-free finite-dimensional Euclidean space, EReal inherited properness/produced finite values, zero-based indices and one noncomputable canonical permitted current support rule. Full standalone x arbitrary, no bounded fixed eta premise. Distinct header/body/public-canary reviews actually accepted; final reader/bindings/combined package pending; no human review."
+  },
+  "graph_contribution": {
+    "lean_graph": "new-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "A shared Euclidean support/projection chain, no separately certified cross-setting functor.",
+    "focus_targets": [
+      "BanditRL.OnlineSubgradientDescent.lemma_2_31",
+      "BanditRL.OnlineSubgradientDescent.currentSubgradient_mem",
+      "BanditRL.OnlineSubgradientDescent.finite_loss",
+      "BanditRL.OnlineSubgradientDescent.iterate_mem",
+      "BanditRL.OnlineSubgradientDescent.iterate_prefix",
+      "BanditRL.OnlineSubgradientDescent.iterate_support",
+      "BanditRL.OnlineSubgradientDescent.iterate_finite_loss",
+      "BanditRL.OnlineSubgradientDescent.one_step_chain",
+      "BanditRL.OnlineSubgradientDescent.one_step",
+      "BanditRL.OnlineSubgradientDescent.regret_fixed",
+      "BanditRL.OnlineSubgradientDescent.regret_fixed_coarse",
+      "BanditRL.OnlineSubgradientDescent.regret_variable_bound",
+      "BanditRL.OnlineSubgradientDescent.regret_variable",
+      "BanditRL.OnlineSubgradientDescent.regret_tuned_distance",
+      "BanditRL.OnlineSubgradientDescent.regret_tuned"
+    ],
+    "visual_review": "Actual public proof-term graph export/check and reader visualization still pending. Teaching edges are curated; native formal-solid proof-value evidence required separately.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: source Lemma2.31/Algorithm2.2/explicit same-trajectory performance transfer",
+    "banditrlwiki": "no-change-with-reason: no new Bandit-specific setting or guarantee; shared Online source mapping carries reusable algorithm",
+    "results_ledger": "no-change-with-reason: existing Bandit milestones unchanged; source inventory carries current candidate",
+    "roadmap": "no-change-with-reason: persistent book Goal remains active, Chapter2 partial, Chapters3-16 unenumerated; historical global SGB frontier untouched",
+    "website_surfaces": [
+      "website/content/books.json",
+      "website/content/chapters.json",
+      "website/content/readings.json",
+      "website/content/highlights.json"
+    ],
+    "inherited_source_caption": "no-change-with-reason: existing source-caption/folded-Lean renderer inherited unchanged from exact PR146 base"
+  },
+  "truth_boundary": "Public focused3324jobs, exact15source/algorithm/performance fences,53actual names standard3-or-none, distinct public source/canary review accepted. Full combined/native graph/shared registry/site/final reader/binding/PR required separately. Old v2/current-feasible narrowing rejected and retained; actual full arbitrary-x v3 proved. Example2.32/Chapter2/book/older migration still open; no main/live claim.",
+  "verification": {
+    "focused_checks": [
+      "Actual public focused3324jobs",
+      "15frozen native public statements unchanged",
+      "53actual public names use only standard3 or no axioms"
+    ],
+    "bandit_check": "Root/Tests/full tools/bandit.py check actual gate evidence separately recorded; not yet all complete at this metadata draft",
+    "site_build": "Not yet run; lean-verified only after actual combined gate",
+    "site_check": "Not yet run; shared canonical fingerprints/native graph checks separately required",
+    "independent_review": "Distinct neutral decoder/source-contract/scratch-body/public-body-and-canary reviews actually accepted-with-explicit-delta. Actual distinct reviewer native trial; final reader/raw-binding remains pending."
+  },
+  "contributor": {
+    "name": "Codex for Ji Cheng",
+    "role": "Formalization and integration; distinct automated semantic actors named above; source attribution retained"
+  }
+}

@@ -1,0 +1,5 @@
+theorem iterate_finite_loss (V : Domain (E := E)) (η : ℕ → ℝ)
+    (loss : ℕ → E → EReal) (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (t : ℕ)
+    (hloss : SubdifferentiableOn V (loss t)) (u : E) (hu : u ∈ V.carrier) :
+    loss t (iterate V η loss x₁ t) = ((loss t (iterate V η loss x₁ t)).toReal : EReal) ∧
+    loss t u = ((loss t u).toReal : EReal)

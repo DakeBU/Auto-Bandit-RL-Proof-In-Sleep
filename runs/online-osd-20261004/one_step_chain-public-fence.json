@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineSubgradientDescent.one_step_chain",
+  "file": "BanditRLProof/OnlineSubgradientDescent.lean",
+  "statement": "theorem one_step_chain (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (t : ℕ) (hη : 0 < η t) (hloss : SubdifferentiableOn V (loss t)) (u : E) (hu : u ∈ V.carrier) : η t * ((loss t (iterate V η loss x₁ t)).toReal - (loss t u).toReal) ≤ η t * inner ℝ (currentSubgradient (loss t) (iterate V η loss x₁ t)) (iterate V η loss x₁ t - u) ∧ η t * inner ℝ (currentSubgradient (loss t) (iterate V η loss x₁ t)) (iterate V η loss x₁ t - u) ≤ ‖iterate V η loss x₁ t - u‖ ^ 2 / 2 - ‖iterate V η loss x₁ (t + 1) - u‖ ^ 2 / 2 + (η t) ^ 2 / 2 * ‖currentSubgradient (loss t) (iterate V η loss x₁ t)‖ ^ 2",
+  "statement_hash": "6df555e9e8e6c8fe31f0cfec2acf0b170dc07352e99080ca06fd04c263c57a5a",
+  "source_assumptions": [],
+  "created_at": "2026-10-04T06:05:06+00:00"
+}

@@ -132,3 +132,4 @@ import Tests.OnlineSubgradientMaxCanary
 import Tests.OnlineHingeCanary
 import Tests.OnlineAffineSubgradientCanary
 import Tests.OnlineLipschitzSubgradientCanary
+import Tests.OnlineSubgradientDescentCanary

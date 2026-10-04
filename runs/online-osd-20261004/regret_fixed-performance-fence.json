@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineSubgradientDescent.regret_fixed",
+  "file": "runs/online-osd-20261004/attempts/osd-performance-01.lean",
+  "statement": "theorem regret_fixed (V : Domain (E := E)) (η : ℝ) (hη : 0 < η) (loss : ℕ → E → EReal) (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (T : ℕ) (hloss : ∀ t < T, SubdifferentiableOn V (loss t)) (u : E) (hu : u ∈ V.carrier) : regret V (fun _ => η) loss x₁ u T ≤ ‖x₁ - u‖ ^ 2 / (2 * η) + η / 2 * (∑ t ∈ range T, ‖currentSubgradient (loss t) (iterate V (fun _ => η) loss x₁ t)‖ ^ 2) - ‖iterate V (fun _ => η) loss x₁ T - u‖ ^ 2 / (2 * η)",
+  "statement_hash": "6ca0824f5344b8c60e6397106fd7f4c127b489cad80e4ae9b091fe7f1ae8745a",
+  "source_assumptions": [],
+  "created_at": "2026-10-04T05:56:31+00:00"
+}
