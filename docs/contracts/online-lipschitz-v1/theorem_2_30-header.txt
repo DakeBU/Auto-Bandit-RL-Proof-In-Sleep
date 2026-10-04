@@ -1,0 +1,5 @@
+theorem theorem_2_30 [FiniteDimensional ℝ E]
+    (f : E → EReal) (hp : SourceProper f) (hc : IsConvexExtended f) (L : ℝ≥0) :
+    SourceLipschitzOn f (interior (effectiveDomain f)) L ↔
+      ∀ x ∈ interior (effectiveDomain f), ∀ g ∈ SourceSubdifferential f x,
+        ‖g‖ ≤ (L : ℝ)

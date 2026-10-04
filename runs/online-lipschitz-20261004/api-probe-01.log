@@ -1,0 +1,21 @@
+LipschitzOnWith.of_dist_le_mul.{u, v} {α : Type u} {β : Type v} [PseudoMetricSpace α] [PseudoMetricSpace β] {K : NNReal}
+  {s : Set α} {f : α → β} : (∀ x ∈ s, ∀ y ∈ s, dist (f x) (f y) ≤ ↑K * dist x y) → LipschitzOnWith K f s
+LipschitzOnWith.dist_le_mul.{u, v} {α : Type u} {β : Type v} [PseudoMetricSpace α] [PseudoMetricSpace β] {K : NNReal}
+  {s : Set α} {f : α → β} : LipschitzOnWith K f s → ∀ x ∈ s, ∀ y ∈ s, dist (f x) (f y) ≤ ↑K * dist x y
+Metric.mem_nhds_iff.{u} {α : Type u} [PseudoMetricSpace α] {x : α} {s : Set α} :
+  s ∈ nhds x ↔ ∃ ε > 0, Metric.ball x ε ⊆ s
+norm_inner_le_norm.{u_1, u_2} {𝕜 : Type u_1} {E : Type u_2} [RCLike 𝕜] [SeminormedAddCommGroup E]
+  [InnerProductSpace 𝕜 E] (x y : E) : ‖inner 𝕜 x y‖ ≤ ‖x‖ * ‖y‖
+tmp/lipschitz-api-01.lean:6:7: error(lean.unknownIdentifier): Unknown identifier `real_inner_sub_right`
+EReal.coe_toReal {x : EReal} (hx : x ≠ ⊤) (h'x : x ≠ ⊥) : ↑x.toReal = x
+BanditRL.OnlineConvex.subgradient_exists_of_domain_interior.{u_1} {F : Type u_1} [NormedAddCommGroup F]
+  [InnerProductSpace ℝ F] [FiniteDimensional ℝ F] (f : F → EReal) (hf : BanditRL.OnlineConvex.SourceProper f)
+  (hc : BanditRL.OnlineConvex.IsConvexExtended f) (x : F)
+  (hx : x ∈ interior (BanditRL.OnlineConvex.effectiveDomain f)) :
+  (BanditRL.OnlineConvex.SourceSubdifferential f x).Nonempty
+BanditRL.OnlineConvex.subgradient_norm_le_lipschitz_ball.{u_1} {E : Type u_1} [NormedAddCommGroup E]
+  [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (f : E → EReal) (x : E) (r : ℝ) (hr : 0 < r) (K : NNReal)
+  (hfinite : ∀ y ∈ Metric.ball x r, ∃ a, f y = ↑a) (hlip : LipschitzOnWith K (fun y => (f y).toReal) (Metric.ball x r))
+  (g : E) (hg : g ∈ BanditRL.OnlineConvex.SourceSubdifferential f x) : ‖g‖ ≤ ↑K
+NNReal.coe_nonneg (r : NNReal) : 0 ≤ ↑r
+abs_le.mpr : -?m.6 ≤ ?m.5 ∧ ?m.5 ≤ ?m.6 → |?m.5| ≤ ?m.6

@@ -1,0 +1,1 @@
+Actual shared norm-ball/interior-existence declaration headers in retrieval-declarations.txt/retrieval-interior.txt; actual memory/card logs and pinned API probe in run. No API absence claim from bounded search. Source card for this leaf: ONLINE-LIPSCHITZ-ORABONA-V10-2.29-2.30; contract and pinned source pages here.

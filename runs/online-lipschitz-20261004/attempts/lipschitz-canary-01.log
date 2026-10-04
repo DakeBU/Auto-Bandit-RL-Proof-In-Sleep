@@ -1,0 +1,74 @@
+runs/online-lipschitz-20261004/attempts/lipschitz-canary-01.lean:159:41: error: Application type mismatch: The argument
+  le_rfl
+has type
+  ?m.13 ≤ ?m.13
+but is expected to have type
+  0 ∈ Ici 0
+in the application
+  Exists.intro 0 le_rfl
+runs/online-lipschitz-20261004/attempts/lipschitz-canary-01.lean:169:65: error: Application type mismatch: The argument
+  hx
+has type
+  x ∈ Ioi 0
+but is expected to have type
+  ?m.40 < ?m.41
+in the application
+  le_of_lt hx
+runs/online-lipschitz-20261004/attempts/lipschitz-canary-01.lean:169:14: error: unsolved goals
+hi : interior (effectiveDomain halflineLoss) = Ioi 0
+x : ℝ
+hx : x ∈ Ioi 0
+⊢ 0 ≤ x
+runs/online-lipschitz-20261004/attempts/lipschitz-canary-01.lean:172:52: error: Application type mismatch: The argument
+  hx
+has type
+  x ∈ Ioi 0
+but is expected to have type
+  ?m.60 < ?m.61
+in the application
+  le_of_lt hx
+runs/online-lipschitz-20261004/attempts/lipschitz-canary-01.lean:172:65: error: Application type mismatch: The argument
+  hy
+has type
+  y ∈ Ioi 0
+but is expected to have type
+  ?m.60 < ?m.61
+in the application
+  le_of_lt hy
+runs/online-lipschitz-20261004/attempts/lipschitz-canary-01.lean:170:2: error: unsolved goals
+case refine_2
+hi : interior (effectiveDomain halflineLoss) = Ioi 0
+x : ℝ
+hx : x ∈ Ioi 0
+y : ℝ
+hy : y ∈ Ioi 0
+⊢ (if 0 ≤ x then 0 else ⊤).toReal - (if 0 ≤ y then 0 else ⊤).toReal = 0
+runs/online-lipschitz-20261004/attempts/lipschitz-canary-01.lean:165:51: warning: This simp argument is unused:
+  interior_Ici
+
+Hint: Omit it from the simp argument list.
+  simp [halflineLoss, effectiveDomain_indicator,̵ ̵i̵n̵t̵e̵r̵i̵o̵r̵_̵I̵c̵i̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+runs/online-lipschitz-20261004/attempts/lipschitz-canary-01.lean:189:6: error: Type mismatch: After simplification, term
+  hr
+ has type
+  (0 : EReal) ≤ ↑2 * ↑y
+but is expected to have type
+  (0 : ℝ) ≤ inner ℝ 2 y
+runs/online-lipschitz-20261004/attempts/lipschitz-canary-01.lean:191:2: error: unsolved goals
+case refine_3
+x y : ℝ
+⊢ (if 0 ≤ x then 0 else ⊤).toReal - (if 0 ≤ y then 0 else ⊤).toReal = 0
+runs/online-lipschitz-20261004/attempts/lipschitz-canary-01.lean:193:2: error: unsolved goals
+case refine_4
+hl : SourceLipschitzOn halflineLoss univ 0
+a : ℝ
+ha : (if 1 ≤ 0 then 0 else ⊤) = ↑a
+⊢ False
+'LipschitzProbe.abs_all_supports_and_nonzero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LipschitzProbe.linear_three_reverse' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LipschitzProbe.zero_constant' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LipschitzProbe.singleton_empty_interior_and_boundary' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LipschitzProbe.halfline_interior_not_whole_domain' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'LipschitzProbe.zero_dimension' depends on axioms: [propext, Classical.choice, Quot.sound]
