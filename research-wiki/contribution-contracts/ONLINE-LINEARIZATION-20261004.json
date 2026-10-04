@@ -1,0 +1,201 @@
+{
+  "schema_version": "2.0",
+  "id": "ONLINE-LINEARIZATION-20261004",
+  "route": "online-learning/chapter-2",
+  "frontier_cell": "online-linearization",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10, 2026-06-21; SHA256 cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchor": "Section2.3 printed22/PDF34 unnumbered maintext regret reduction; structural finitehistory implementation/adapters explicitly library refinements.",
+    "url": "https://arxiv.org/pdf/1912.13213v10"
+  },
+  "target": "Orabona v10 Section2.3 genuine causal convex-to-linear regret reduction on the same learner/generated feedback trajectory, universal bound transport and feasible canonical producer",
+  "affected_files": [
+    "BanditRLProof.lean",
+    "BanditRLProof/OnlineLinearization.lean",
+    "website/content/books.json",
+    "website/content/chapters.json",
+    "website/content/readings.json",
+    "website/content/highlights.json",
+    "website/scripts/build_site.py",
+    "website/scripts/check_site.py",
+    "website/static/lean-graph.js"
+  ],
+  "declarations": [
+    "BanditRL.OnlineLinearization.Domain",
+    "BanditRL.OnlineLinearization.LinearPolicy",
+    "BanditRL.OnlineLinearization.SupportPolicy",
+    "BanditRL.OnlineLinearization.Feasible",
+    "BanditRL.OnlineLinearization.outputHistory",
+    "BanditRL.OnlineLinearization.history",
+    "BanditRL.OnlineLinearization.output",
+    "BanditRL.OnlineLinearization.selected",
+    "BanditRL.OnlineLinearization.LegalFeedback",
+    "BanditRL.OnlineLinearization.linearRun",
+    "BanditRL.OnlineLinearization.linearLoss",
+    "BanditRL.OnlineLinearization.regret",
+    "BanditRL.OnlineLinearization.outputHistory_last",
+    "BanditRL.OnlineLinearization.history_zero",
+    "BanditRL.OnlineLinearization.history_succ",
+    "BanditRL.OnlineLinearization.history_castSucc",
+    "BanditRL.OnlineLinearization.history_selected",
+    "BanditRL.OnlineLinearization.output_linear_run",
+    "BanditRL.OnlineLinearization.outputHistory_played",
+    "BanditRL.OnlineLinearization.output_mem",
+    "BanditRL.OnlineLinearization.history_prefix",
+    "BanditRL.OnlineLinearization.output_prefix",
+    "BanditRL.OnlineLinearization.oracle_feedback",
+    "BanditRL.OnlineLinearization.canonical_feedback",
+    "BanditRL.OnlineLinearization.trajectory_finite_loss",
+    "BanditRL.OnlineLinearization.support_gap",
+    "BanditRL.OnlineLinearization.linearLoss_gap",
+    "BanditRL.OnlineLinearization.regret_comparison",
+    "BanditRL.OnlineLinearization.regret_transfer",
+    "BanditRL.OnlineLinearization.canonical_regret_comparison"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Actual native memory/declaration retrieval and typed-context/APIprobe beforeproofs."
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineSubgradientDescent.lemma_2_31",
+      "BanditRL.OnlineSubgradientDescent.finite_loss",
+      "BanditRL.OnlineSubgradientPolicy.canonicalPolicy_legal",
+      "BanditRL.OnlineLearning.comparatorRegret_eq_sum"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineLinearization.Domain",
+      "BanditRL.OnlineLinearization.LinearPolicy",
+      "BanditRL.OnlineLinearization.SupportPolicy",
+      "BanditRL.OnlineLinearization.Feasible",
+      "BanditRL.OnlineLinearization.outputHistory",
+      "BanditRL.OnlineLinearization.history",
+      "BanditRL.OnlineLinearization.output",
+      "BanditRL.OnlineLinearization.selected",
+      "BanditRL.OnlineLinearization.LegalFeedback",
+      "BanditRL.OnlineLinearization.linearRun",
+      "BanditRL.OnlineLinearization.linearLoss",
+      "BanditRL.OnlineLinearization.regret",
+      "BanditRL.OnlineLinearization.outputHistory_last",
+      "BanditRL.OnlineLinearization.history_zero",
+      "BanditRL.OnlineLinearization.history_succ",
+      "BanditRL.OnlineLinearization.history_castSucc",
+      "BanditRL.OnlineLinearization.history_selected",
+      "BanditRL.OnlineLinearization.output_linear_run",
+      "BanditRL.OnlineLinearization.outputHistory_played",
+      "BanditRL.OnlineLinearization.output_mem",
+      "BanditRL.OnlineLinearization.history_prefix",
+      "BanditRL.OnlineLinearization.output_prefix",
+      "BanditRL.OnlineLinearization.oracle_feedback",
+      "BanditRL.OnlineLinearization.canonical_feedback",
+      "BanditRL.OnlineLinearization.trajectory_finite_loss",
+      "BanditRL.OnlineLinearization.support_gap",
+      "BanditRL.OnlineLinearization.linearLoss_gap",
+      "BanditRL.OnlineLinearization.regret_comparison",
+      "BanditRL.OnlineLinearization.regret_transfer",
+      "BanditRL.OnlineLinearization.canonical_regret_comparison"
+    ],
+    "known_consumers": [
+      "LinearizationProbe.actual_public_comparison",
+      "LinearizationProbe.actual_public_transfer",
+      "LinearizationProbe.canonical_producer_instance"
+    ],
+    "planned_consumers": [
+      "Remaining Chapter2 gate; laterOLO algorithms may instantiate the same shared reducer."
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Reuse global support/finite loss and comparatorregret definitions; actualfinitehistory learner feedback producer plus same-run comparison is new, not anotherperbook project or assumeddesiredstepbound."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/normal_blind",
+    "source_reviewer": "/root/source_reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Cleanv3 contract and actual18publicbody/25canary review accepted-with-explicit-delta;108reviewedrawbindings,65actualstandard3-or-none axiomrecords. Deterministic fixedexogenous finitehistory, ambientcomparison vsfeasiblecanonicalproducer, finiteERealvalues,0-based/T0 and universalOLOinput boundaries explicit. Finalreader/packagegates independentpending; no human/externalreview."
+  },
+  "graph_contribution": {
+    "lean_graph": "new-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Source reduction realized in the same Euclidean support/linear-loss graph; no separately certified functor.",
+    "focus_targets": [
+      "BanditRL.OnlineLinearization.Domain",
+      "BanditRL.OnlineLinearization.LinearPolicy",
+      "BanditRL.OnlineLinearization.SupportPolicy",
+      "BanditRL.OnlineLinearization.Feasible",
+      "BanditRL.OnlineLinearization.outputHistory",
+      "BanditRL.OnlineLinearization.history",
+      "BanditRL.OnlineLinearization.output",
+      "BanditRL.OnlineLinearization.selected",
+      "BanditRL.OnlineLinearization.LegalFeedback",
+      "BanditRL.OnlineLinearization.linearRun",
+      "BanditRL.OnlineLinearization.linearLoss",
+      "BanditRL.OnlineLinearization.regret",
+      "BanditRL.OnlineLinearization.outputHistory_last",
+      "BanditRL.OnlineLinearization.history_zero",
+      "BanditRL.OnlineLinearization.history_succ",
+      "BanditRL.OnlineLinearization.history_castSucc",
+      "BanditRL.OnlineLinearization.history_selected",
+      "BanditRL.OnlineLinearization.output_linear_run",
+      "BanditRL.OnlineLinearization.outputHistory_played",
+      "BanditRL.OnlineLinearization.output_mem",
+      "BanditRL.OnlineLinearization.history_prefix",
+      "BanditRL.OnlineLinearization.output_prefix",
+      "BanditRL.OnlineLinearization.oracle_feedback",
+      "BanditRL.OnlineLinearization.canonical_feedback",
+      "BanditRL.OnlineLinearization.trajectory_finite_loss",
+      "BanditRL.OnlineLinearization.support_gap",
+      "BanditRL.OnlineLinearization.linearLoss_gap",
+      "BanditRL.OnlineLinearization.regret_comparison",
+      "BanditRL.OnlineLinearization.regret_transfer",
+      "BanditRL.OnlineLinearization.canonical_regret_comparison"
+    ],
+    "visual_review": "Actualnative proofvalue export:19required proofvalue checks,30scope164boundary741edges; renderedreader/registry independentlypending.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: source-qualified Section2.3 same-run reduction in one registry; Chapter2/wholeBook incomplete.",
+    "banditrlwiki": "no-change-with-reason: no new Bandit-specific setting or guarantee; shared Online source mapping carries reusable algorithm",
+    "results_ledger": "no-change-with-reason: Bandit results unchanged; Online source inventory carries the scoped package.",
+    "roadmap": "no-change-with-reason: persistent whole-book Goal remains active, Chapter2 partial, future chapters unenumerated and historical SGB pointer untouched.",
+    "website_surfaces": [
+      "website/content/books.json",
+      "website/content/chapters.json",
+      "website/content/readings.json",
+      "website/content/highlights.json",
+      "website/scripts/build_site.py",
+      "website/scripts/check_site.py",
+      "website/static/lean-graph.js"
+    ],
+    "inherited_source_caption": "One genuine unnumbered source performancecard, all18individualnotes; structural/library refinements explicitly notprintedtheorems."
+  },
+  "truth_boundary": "Actual18publicfrozen proofs,25canaries,root9084/Tests9222/full466tests7existing skips and65namedstandard3-or-none axioms passlocally;19nativeproofvalue dependencies checked. Distinctsource/bodysemanticreview accepted108rawbindings with explicitfixedexogenous/deterministic/ambient/index/finitevalue/universalOLOinput deltas. Finalreader/officialsite/rawaudit/stackedPR independentpending. Chapter2 andold26migration/Chapters3-16 remainrequired; no merged/live/optimal/randomized/executableclaim.",
+  "verification": {
+    "focused_checks": [
+      "Actual18frozenpublic proofs3322jobs,25canaries3323jobs;65namedchecks/axioms standard3-or-none."
+    ],
+    "bandit_check": "Actual root9084/Tests9222 and fullharness01/02 pass466tests,7existing skips; full02 applies to schema3/staticdecoder repair. Frozen18Lean/context unaffected.",
+    "site_build": "Applicablefull02 Lean gate passed; official01 snapshot failed only unchanged1.5MB indexgate. Schema3 repair02 passes allsitechecks, final committed regeneration/reader/rawbindings separate.",
+    "site_check": "ActualrealJS decoder losslesscompares all11732nodes andeverydecoded field/search/shard between schemav2/3; legacystring entries work, invalidlookup fails. Index1297766<1500000 unchangedfence; no nodes dropped. Finalcommittedsite/registry/finalreader separate.",
+    "independent_review": "Distinctautomated sourceblinddecoder/source reviewer, medium; no human/external-modelreview."
+  },
+  "contributor": {
+    "name": "Codex for Ji Cheng",
+    "role": "Formalization and integration; distinct automated semantic actors named above; source attribution retained"
+  }
+}

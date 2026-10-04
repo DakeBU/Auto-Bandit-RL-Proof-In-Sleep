@@ -1,0 +1,73 @@
+Tests/OnlineLinearizationCanary.lean:27:2: error: `simp` made no progress
+Tests/OnlineLinearizationCanary.lean:30:77: error: unsolved goals
+z y : ℝ
+⊢ z + inner ℝ 1 (y - z) ≤ y
+Tests/OnlineLinearizationCanary.lean:32:16: warning: This simp argument is unused:
+  RCLike.inner_apply
+
+Hint: Omit it from the simp argument list.
+  simp [affine, R̵C̵L̵i̵k̵e̵.̵i̵n̵n̵e̵r̵_̵a̵p̵p̵l̵y̵,̵ ̵← EReal.coe_add]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Tests/OnlineLinearizationCanary.lean:58:29: error: unsolved goals
+⊢ outputHistory learner (history learner losses policy 0) 0 = 0
+Tests/OnlineLinearizationCanary.lean:59:29: warning: This simp argument is unused:
+  outputHistory_last
+
+Hint: Omit it from the simp argument list.
+  simp [g, selected, policy, o̵u̵t̵p̵u̵t̵H̵i̵s̵t̵o̵r̵y̵_̵l̵a̵s̵t̵,̵ ̵learner]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Tests/OnlineLinearizationCanary.lean:59:49: warning: This simp argument is unused:
+  learner
+
+Hint: Omit it from the simp argument list.
+  simp [g, selected, policy, outputHistory_last,̵ ̵l̵e̵a̵r̵n̵e̵r̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Tests/OnlineLinearizationCanary.lean:65:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  output ?A ?loss ?p ?t
+in the target expression
+  x 1 = 1
+
+⊢ x 1 = 1
+Tests/OnlineLinearizationCanary.lean:69:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  output ?A ?loss ?p ?t
+in the target expression
+  x 2 = 0
+
+⊢ x 2 = 0
+Tests/OnlineLinearizationCanary.lean:76:8: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  g 0
+in the target expression
+  selected learner losses policy 0 ∈ SourceSubdifferential (losses 0) (output learner losses policy 0)
+
+case inl
+ht : 0 < 2
+⊢ selected learner losses policy 0 ∈ SourceSubdifferential (losses 0) (output learner losses policy 0)
+Tests/OnlineLinearizationCanary.lean:78:8: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  g 1
+in the target expression
+  selected learner losses policy 1 ∈ SourceSubdifferential (losses 1) (output learner losses policy 1)
+
+case inr
+ht : 1 < 2
+⊢ selected learner losses policy 1 ∈ SourceSubdifferential (losses 1) (output learner losses policy 1)
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+Tests/OnlineLinearizationCanary.lean:109:49: error: unsolved goals
+v : ℕ → ℝ
+u : ℝ
+⊢ -inner ℝ (v 1) (v 0) - inner ℝ (v 0) u - inner ℝ (v 1) u = -(u * v 0) - u * v 1 - v 0 * v 1
+Tests/OnlineLinearizationCanary.lean:111:44: warning: This simp argument is unused:
+  RCLike.inner_apply
+
+Hint: Omit it from the simp argument list.
+  simp [BanditRL.OnlineLearning.comparatorRegret, Finset.sum_range_succ, linearRun, learner,
+  ̲  ̲ ̲ ̲Fin.sum_univ_succ, linearLoss, R̵C̵L̵i̵k̵e̵.̵i̵n̵n̵e̵r̵_̵a̵p̵p̵l̵y̵,̵ ̵bound]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`

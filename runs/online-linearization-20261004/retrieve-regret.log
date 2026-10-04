@@ -1,0 +1,2 @@
+BanditRL.OnlineLearning.comparatorRegret_eq_sum [theorem] BanditRLProof/OnlineLearningRegret.lean:21
+  theorem comparatorRegret_eq_sum {X : Type*} (loss : ℕ → X → ℝ) (prediction : ℕ → X) (u : X) (T : ℕ) : comparatorRegret loss prediction u T = ∑ t ∈ Finset.range T, (loss t (prediction t) - loss t u)

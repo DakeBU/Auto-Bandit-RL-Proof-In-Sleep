@@ -1,0 +1,134 @@
+∀ (A : LinearPolicy) (t : ℕ) (h : Fin t → E), outputHistory A h (Fin.last t) = A t h : Prop
+∀ (A : LinearPolicy) (loss : ℕ → E → EReal) (p : SupportPolicy), history A loss p 0 = Fin.elim0 : Prop
+∀ (A : LinearPolicy) (loss : ℕ → E → EReal) (p : SupportPolicy) (t : ℕ),
+  history A loss p (t + 1) = Fin.snoc (history A loss p t) (selected A loss p t) : Prop
+∀ (A : LinearPolicy) (loss : ℕ → E → EReal) (p : SupportPolicy) (t : ℕ) (i : Fin t),
+  history A loss p (t + 1) i.castSucc = history A loss p t i : Prop
+∀ (A : LinearPolicy) (loss : ℕ → E → EReal) (p : SupportPolicy) (t : ℕ) (i : Fin t),
+  history A loss p t i = selected A loss p ↑i : Prop
+∀ (A : LinearPolicy) (loss : ℕ → E → EReal) (p : SupportPolicy) (t : ℕ),
+  output A loss p t = linearRun A (selected A loss p) t : Prop
+∀ (A : LinearPolicy) (loss : ℕ → E → EReal) (p : SupportPolicy) (t : ℕ) (i : Fin (t + 1)),
+  outputHistory A (history A loss p t) i = output A loss p ↑i : Prop
+∀ (V : Domain) (A : LinearPolicy),
+  Feasible V A → ∀ (loss : ℕ → E → EReal) (p : SupportPolicy) (t : ℕ), output A loss p t ∈ V.carrier : Prop
+runs/online-linearization-20261004/leaves/types-v1.lean:55:61: warning: unused variable `hA`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (A : LinearPolicy) (loss loss' : ℕ → E → EReal) (p : SupportPolicy) (t : ℕ),
+  (∀ s < t, loss s = loss' s) → history A loss p t = history A loss' p t : Prop
+runs/online-linearization-20261004/leaves/types-v1.lean:58:105: warning: unused variable `hloss`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (A : LinearPolicy) (loss loss' : ℕ → E → EReal) (p : SupportPolicy) (t : ℕ),
+  (∀ s < t, loss s = loss' s) → output A loss p t = output A loss' p t : Prop
+runs/online-linearization-20261004/leaves/types-v1.lean:61:105: warning: unused variable `hloss`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (V : Domain) (A : LinearPolicy),
+  Feasible V A →
+    ∀ (loss : ℕ → E → EReal) (p : SupportPolicy),
+      OnlineSubgradientPolicy.OracleLaw V p →
+        ∀ (T : ℕ), (∀ t < T, OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) → LegalFeedback A loss p T : Prop
+runs/online-linearization-20261004/leaves/types-v1.lean:64:61: warning: unused variable `hA`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-linearization-20261004/leaves/types-v1.lean:64:133: warning: unused variable `hp`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-linearization-20261004/leaves/types-v1.lean:64:195: warning: unused variable `hloss`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (V : Domain) (A : LinearPolicy),
+  Feasible V A →
+    ∀ (loss : ℕ → E → EReal) (T : ℕ),
+      (∀ t < T, OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) →
+        LegalFeedback A loss OnlineSubgradientPolicy.canonicalPolicy T : Prop
+runs/online-linearization-20261004/leaves/types-v1.lean:67:61: warning: unused variable `hA`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-linearization-20261004/leaves/types-v1.lean:67:112: warning: unused variable `hloss`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (V : Domain) (A : LinearPolicy),
+  Feasible V A →
+    ∀ (loss : ℕ → E → EReal) (p : SupportPolicy) (T : ℕ),
+      (∀ t < T, OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) →
+        ∀ t < T, loss t (output A loss p t) = ↑(loss t (output A loss p t)).toReal : Prop
+runs/online-linearization-20261004/leaves/types-v1.lean:70:61: warning: unused variable `hA`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-linearization-20261004/leaves/types-v1.lean:70:141: warning: unused variable `hloss`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-linearization-20261004/leaves/types-v1.lean:70:233: warning: unused variable `ht`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (V : Domain) (f : E → EReal),
+  OnlineSubgradientDescent.SubdifferentiableOn V f →
+    ∀ (x g u : E),
+      u ∈ V.carrier → g ∈ SourceSubdifferential f x → (f x).toReal - (f u).toReal ≤ inner ℝ g (x - u) : Prop
+runs/online-linearization-20261004/leaves/types-v1.lean:73:49: warning: unused variable `hf`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-linearization-20261004/leaves/types-v1.lean:73:126: warning: unused variable `hu`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-linearization-20261004/leaves/types-v1.lean:73:147: warning: unused variable `hg`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (g x u : E), linearLoss g x - linearLoss g u = inner ℝ g (x - u) : Prop
+∀ (V : Domain) (A : LinearPolicy) (loss : ℕ → E → EReal) (p : SupportPolicy) (T : ℕ),
+  (∀ t < T, OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) →
+    LegalFeedback A loss p T →
+      ∀ u ∈ V.carrier,
+        regret A loss p u T ≤
+          OnlineLearning.comparatorRegret (fun t => linearLoss (selected A loss p t)) (linearRun A (selected A loss p))
+            u T : Prop
+runs/online-linearization-20261004/leaves/types-v1.lean:79:121: warning: unused variable `hloss`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-linearization-20261004/leaves/types-v1.lean:79:205: warning: unused variable `hlegal`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-linearization-20261004/leaves/types-v1.lean:79:249: warning: unused variable `hu`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (V : Domain) (A : LinearPolicy) (loss : ℕ → E → EReal) (p : SupportPolicy) (T : ℕ),
+  (∀ t < T, OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) →
+    LegalFeedback A loss p T →
+      ∀ (B : (ℕ → E) → E → ℕ → ℝ),
+        (∀ (g : ℕ → E),
+            ∀ u ∈ V.carrier,
+              OnlineLearning.comparatorRegret (fun t => linearLoss (g t)) (linearRun A g) u T ≤ B g u T) →
+          ∀ u ∈ V.carrier, regret A loss p u T ≤ B (selected A loss p) u T : Prop
+runs/online-linearization-20261004/leaves/types-v1.lean:82:121: warning: unused variable `hloss`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-linearization-20261004/leaves/types-v1.lean:82:205: warning: unused variable `hlegal`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-linearization-20261004/leaves/types-v1.lean:82:267: warning: unused variable `hB`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-linearization-20261004/leaves/types-v1.lean:82:404: warning: unused variable `hu`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (V : Domain) (A : LinearPolicy),
+  Feasible V A →
+    ∀ (loss : ℕ → E → EReal) (T : ℕ),
+      (∀ t < T, OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) →
+        ∀ u ∈ V.carrier,
+          regret A loss OnlineSubgradientPolicy.canonicalPolicy u T ≤
+            OnlineLearning.comparatorRegret
+              (fun t => linearLoss (selected A loss OnlineSubgradientPolicy.canonicalPolicy t))
+              (linearRun A (selected A loss OnlineSubgradientPolicy.canonicalPolicy)) u T : Prop
+runs/online-linearization-20261004/leaves/types-v1.lean:85:61: warning: unused variable `hA`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-linearization-20261004/leaves/types-v1.lean:85:112: warning: unused variable `hloss`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-linearization-20261004/leaves/types-v1.lean:85:204: warning: unused variable `hu`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`

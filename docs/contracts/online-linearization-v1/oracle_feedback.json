@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineLinearization.oracle_feedback",
+  "file": "runs/online-linearization-20261004/leaves/target-v1.lean.txt",
+  "statement": "theorem oracle_feedback (V : Domain (E := E)) (A : LinearPolicy (E := E)) (hA : Feasible V A) (loss : ℕ → E → EReal) (p : SupportPolicy (E := E)) (hp : BanditRL.OnlineSubgradientPolicy.OracleLaw V p) (T : ℕ) (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) : LegalFeedback A loss p T",
+  "statement_hash": "8ca64162079fadf098d19e77a477f1a7f818e92931b02077d8a37919bb2c5461",
+  "source_assumptions": [
+    "(hA : Feasible V A)",
+    "(hp : BanditRL.OnlineSubgradientPolicy.OracleLaw V p)",
+    "(hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t))"
+  ],
+  "created_at": "2026-10-04T10:33:26+00:00"
+}

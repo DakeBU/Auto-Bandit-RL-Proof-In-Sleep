@@ -1,0 +1,1 @@
+V2 neutral compile rejected implicit E in upstream Law/Default and missing classical decidability context for choice. Neutral compilation is tested explicitly, no theorem body proof. V3 restores exact implicit E and classical choice implementation. Actual source18headers/context unchanged. V1 diagnostic and V2 failedprobe immutable; use ONLY v3cleanblind evidence.

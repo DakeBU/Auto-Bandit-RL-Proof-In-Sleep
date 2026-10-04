@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "record_id": "frontier-c6e4cb22d1609fd3",
+  "updated_at": "2026-10-04T11:05:19+00:00",
+  "root_objective": "Persistent Orabona Chapters1-16 Goal; C2-linearization candidate only, chapter/book remain incomplete",
+  "current_leaf": {
+    "id": "ONLINE-LINEARIZATION-20261004",
+    "kind": "lean",
+    "status": "gate-pending",
+    "statement": "theorem regret_comparison (V : Domain (E := E)) (A : LinearPolicy (E := E)) (loss : ℕ → E → EReal) (p : SupportPolicy (E := E)) (T : ℕ) (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) (hlegal : LegalFeedback A loss p T) (u : E) (hu : u ∈ V.carrier) : regret A loss p u T ≤ BanditRL.OnlineLearning.comparatorRegret (fun t => linearLoss (selected A loss p t)) (linearRun A (selected A loss p)) u T",
+    "statement_hash": "1baefd915e42e1234188456e458311f977d3f8f377096a9b5b5f0dbb458cf097",
+    "declaration": "BanditRL.OnlineLinearization.regret_comparison",
+    "file": "BanditRLProof/OnlineLinearization.lean",
+    "source_status": "accepted",
+    "dependencies": [
+      {
+        "kind": "lean",
+        "name": "BanditRL.OnlineLinearization.support_gap",
+        "status": "compiled"
+      },
+      {
+        "kind": "lean",
+        "name": "BanditRL.OnlineLinearization.output_linear_run",
+        "status": "compiled"
+      },
+      {
+        "kind": "review",
+        "name": "public-body",
+        "status": "accepted"
+      },
+      {
+        "kind": "harness",
+        "name": "full-bandit",
+        "status": "pending"
+      }
+    ]
+  },
+  "dag": {
+    "nodes": [
+      {
+        "id": "ONLINE-LINEARIZATION-20261004",
+        "kind": "lean",
+        "status": "blocked",
+        "dependencies": [
+          {
+            "kind": "lean",
+            "name": "BanditRL.OnlineLinearization.support_gap",
+            "status": "compiled"
+          },
+          {
+            "kind": "lean",
+            "name": "BanditRL.OnlineLinearization.output_linear_run",
+            "status": "compiled"
+          },
+          {
+            "kind": "review",
+            "name": "public-body",
+            "status": "accepted"
+          },
+          {
+            "kind": "harness",
+            "name": "full-bandit",
+            "status": "pending"
+          }
+        ],
+        "dispatch_count": 0
+      }
+    ]
+  },
+  "last_accepted_verifier": {
+    "trial_index": 3,
+    "time": "2026-10-04T11:02:02+00:00",
+    "task": "ONLINE-LINEARIZATION-20261004",
+    "role": "reviewer",
+    "kind": "review",
+    "status": "compiled",
+    "lean": "",
+    "notes": "Actual distinctsourcebodyreview accepted-with-explicit-delta 18publicproofs/25canaries,108rawrows,65standardaxiomnames. Packagegates/reader/site/PR remainpending.",
+    "run_id": "online-linearization-20261004"
+  },
+  "memory_policy": {
+    "recent_role_relevant_limit": 5,
+    "explicit_verified_lemma_ids": [],
+    "whole_history_default": false
+  },
+  "shadow_gate": {
+    "status": "pending",
+    "analyzed_trial_rows": 4,
+    "mismatches": [],
+    "replay_transitions": 0
+  },
+  "mutation_policy": {
+    "canonical_path_queue": true,
+    "cross_process_lock": true,
+    "same_file_serialized": true,
+    "disjoint_files_parallel": true
+  },
+  "autonomous_execution": {
+    "enabled": false,
+    "requires_deterministic_gates": true,
+    "requires_explicit_user_request": true
+  }
+}

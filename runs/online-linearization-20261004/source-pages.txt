@@ -1,0 +1,207 @@
+                                 2.2 Online Subgradient Descent                              21
+
+with units. Finally, while probabilities are unitless, the probability density function has the
+units of inverse of the random variable it represents, because it represents the probability per
+unit of the variable it is defined over.
+   The importance of this check cannot be overstated. When we see an equation where the
+units do not match, either it is plainly wrong, or there is a constant with units hidden some-
+where. Moreover, the dimensional analysis will immediately tell us the dependence of a
+quantity on the others. Let’s do a practical example considering OSD.
+   Consider the OSD update in Algorithm 2.2, where V = Rd : xt+1 = xt − ηg t . For
+this equation to be coherent, the term ηg t must have the same units as xt . Let’s see if this
+gives us some constraints on the units of the learning rate η . The units of g t , from the
+definition of subgradient, are the units of the loss divided by the units of the variable we are
+subdifferentiating with respect to. So, we have
+                                                      [ℓ]
+                                           [g t ] =       .
+                                                      [x]
+Now, from the consistency of the update rule, we must have [xt ] = [ηg t ] = [η][g t ]. Hence,
+we can derive the units of the learning rate:
+                                         [x]        [x]     [x]2
+                                 [η] =          =         =      .
+                                         [g t ]   [ℓ]/[x]    [ℓ]
+This shows that the learning rate is not a unitless quantity. So, even without deriving the
+regret guarantee, from the unit analysis, we immediately know that the learning rate must
+depend on the problem characteristics in a certain way.
+   Finally, let’s perform a sanity check on the regret bound for OSD with a constant learning
+rate (that is, the one in Theorem 2.13):
+                   T                                              T
+                   X                              ∥u − x1 ∥22 η X
+                          (ℓt (xt ) − ℓt (u)) ≤              +      ∥g ∥2 .
+                    t=1
+                                                     2η        2 t=1 t 2
+The left-hand side is a sum of losses, so its unit is [ℓ]. Let’s check the two terms on the
+right-hand side, to verify that they also have the unit of [ℓ]. For the first term, we have
+                            ∥u − x1 ∥22      [x]2       [x]2
+                                       
+                                          =        =             = [ℓ] .
+                                 η            [η]     [x]2 /[ℓ]
+For the second term, we have
+                      " T            #
+                         X                          [x]2 [ℓ]2
+                       η           2
+                             ∥g t ∥2 = [η][g t ]2 =           = [ℓ] .
+                         t=1
+                                                     [ℓ] [x]2
+   Let me stress that having a formula with wrong units is not only a theoretical issue, but
+a very practical one. Indeed, constants with hidden units in any algorithm can be prob-
+lematic. Let’s show it with an example. For example, suppose our variable √ xt represents a
+location in meters, and we use a learning rate schedule such as η = 1/ T . Now, suppose
+we change our unit of measurement for xt from meters to kilometers. Our new variable is
+x′t = xt /1000. Since this is merely a change of units, the underlying learning problem is
+identical, and we should expect the algorithm’s behavior to be invariant. However, the gradi-
+ent with respect to the new variable is g ′t = ∇x′ ℓt (1000x′t ) = 1000∇x ℓt (xt ) = 1000g t .
+22                                    Online Subgradient Descent
+                                                          √
+If we still use the dimensionless learning rate η = 1/ T√, the update in the new coordinate
+system becomes x′t+1 = x′t − ηg ′t = xt /1000 − (1/ T )(1000g t ). Converting back to
+                                                                 √
+meters by multiplying by 1000, we get xt+1 = xt − (10002 / T )g t . The effective learning
+rate has been scaled by a factor of one million, which will drastically change the algorithm’s
+path, all because of a simple change in units.
+   This failure occurs because of the constant with hidden units in the learning rate, which
+hides the fact that we should change the learning rate when we change the units of xt . In
+fact, the correct learning rate η has units of [x]2 /[ℓ] and should have been scaled by a factor
+of (1/1000)2 = 1/1000000 when we switched the units of xt from meters to kilometers.
+
+
+              2.3 Linear Regret: From Convex Losses to Linear Losses
+Let’s take a deeper look at this step:
+
+                           ℓt (xt ) − ℓt (u) ≤ ⟨g t , xt − u⟩,             ∀u ∈ V .
+Summing over time, we have
+                   T
+                   X                                 T
+                                                     X
+                          (ℓt (xt ) − ℓt (u)) ≤             ⟨g t , xt − u⟩,        ∀u ∈ V .
+                    t=1                               t=1
+
+
+Now, define the linear (and convex) losses ℓ̃t (x) := ⟨g t , x⟩, so we have
+                 T
+                 X                                  T
+                                                    X
+                       (ℓt (xt ) − ℓt (u)) ≤              (ℓ̃t (xt ) − ℓ̃t (u)),    ∀u ∈ V .
+                 t=1                                t=1
+
+This is more powerful than it seems: we upper-bounded the regret with respect to the convex
+losses ℓt with a regret with respect to another sequence of linear losses. This is important
+because it implies that we can build online algorithms that deal only with linear losses, and
+through the reduction above, they can be seamlessly used as OCO algorithms! Note that this
+does not imply that this reduction is always optimal, as we saw in Example 2.14. But, it
+allows us to easily construct optimal OCO algorithms in many interesting cases.
+   So, we will often consider just the problem of minimizing the linear regret
+                              T
+                              X                     T
+                                                    X
+                                    ⟨g t , xt ⟩ −         ⟨g t , u⟩,   ∀u ∈ V,
+                              t=1                   t=1
+
+for an arbitrary sequence of vectors g 1 , . . . , g T ∈ Rd . This problem is called Online Linear
+Optimization (OLO).
+
+
+                                            2.4 History Bits
+Shor (1964) first introduced the subgradient descent method using a related concept of gen-
+eralized gradients for non-differentiable functions. The concept of subgradients and the pos-
+sibility of developing a calculus for them appeared for the first time in Rockafellar (1963).
+                                          2.5 Exercises                                      23
+
+Projected OGD with time-varying learning rate and the name “Online Convex Optimiza-
+tion” were introduced by Zinkevich (2003), but the OCO framework was introduced earlier
+by Gordon (1999a,b), which also introduced the idea of reducing OCO to OLO.
+   Before the OCO framework, the online learning community focused on specific losses
+and mostly linear predictors, see Cesa-Bianchi and Lugosi (2006). Moreover, the concept
+of subgradients is also a recent addition to the online learning literature, and the earliest
+papers using subgradients of loss functions seem to be Zhang (2004); Shalev-Shwartz and
+Singer (2006b). However, subgradients were implicitly used in previous analyses too, see
+for example Cesa-Bianchi (1999, Theorem 4).
+   It is impossible not to notice that the literature on OCO is heavily biased toward the use of
+bounded domains. Yet, there are very few practical applications of OCO where the domain
+is bounded. Moreover, as shown in Theorem 2.13, it is possible to have a sublinear regret
+even in unbounded domains. I speculate that the insistence on using bounded domains is
+due to two main reasons: (i) the less general definition of regret (derived from the setting of
+learning with experts (Section 6.8)) as
+                                 T
+                                 X                      T
+                                                        X
+                                       ℓt (xt ) − min         ℓt (u)
+                                                u∈V
+                                 t=1                    t=1
+
+that requires the existence of a minimizer of the sum of the losses, and (ii) the fact that OSD
+with time-varying learning rates has a vacuous regret upper bound on unbounded domains.
+However, we now know that both issues can easily be fixed: (i) by defining the regret with
+respect to arbitrary competitors, and (ii) by using different algorithms, for example Follow-
+the-Regularized-Leader (FTRL) which we will see in Chapter 7. Indeed, even in offline
+optimization, the existence of a minimizer is not required to guarantee that the suboptimality
+gap goes to zero, as we will see in Example 3.2. So, it is probably time for the community
+to stop using the crutch of bounded domains just to avoid technical difficulties.
+
+
+                                     2.5 Exercises
+                           PT     1
+                                       √
+Problem 2.1 Prove that        t=1 t ≤ 2 T − 1.
+                                 √
+
+Problem 2.2 Using the inequality in the previous exercise, prove that the learning rate
+ηt = LD√t gives rise to a regret only a constant multiplicative factor worse than the one in
+(2.1).
+Problem 2.3 Calculate the subdifferential set of the ϵ-insensitive loss: f (x) = max(|x −
+y| − ϵ, 0). It is a loss used in regression problems where we do not want to penalize predic-
+tions x within ±ϵ of the correct value y .
+Problem 2.4 Using the definition of subgradient, find the subdifferential set of f (x) =
+∥x∥2 , x ∈ Rd .
+Problem 2.5 Consider Projected Online Subgradient Descent for the Example 2.10 on the
+failure of Follow-the-Leader: can we use it on that problem? Would it guarantee sublinear
+regret? How would the behaviour of the algorithm differ from FTL?
+                                                    3
+
+                       Online-to-Batch Conversions
+
+
+
+In this chapter, we take a break from online learning theory and see some applications of
+online learning to other domains. For example, we may wonder what the connection is be-
+tween online learning and stochastic optimization. Given that projected Online Subgradient
+Descent (OSD) looks basically the same as projected stochastic (sub)gradient descent, they
+must have something in common. Indeed, for example, we can reduce stochastic optimiza-
+tion of convex functions to Online Convex Optimization (OCO). Let’s see how.
+
+
+                3.1 From Online Learning to Stochastic Optimization
+Theorem 3.1 Let V be a non-empty closed convex set of Rd , F (x) = E[f (x, ξ)] where
+the expectation is with respect to ξ drawn from a distribution ρ over some vector space D,
+and f : Rd × D → (−∞, +∞] is convex and subdifferentiable in the first argument on
+V . Draw T samples ξ1 , . . . , ξ T i.i.d. from ρ and construct the sequence of losses ℓt (x) =
+αt f (x, ξ t ), where αt > 0 are deterministic. Run any Online Convex Optimization (OCO)
+algorithm over the losses ℓt on V , to construct the sequence of predictions x1 , . . . , xT . The
+algorithm may be randomized, but its internal randomness is independent of ξ 1 , . . . , ξ T .
+Then, we have
+               "               T
+                                         !#
+                        1     X                          E[RegretT (u)]
+           E F PT                  αt xt      ≤ F (u) +     PT           , ∀u ∈ V,
+                       t=1 αt t=1                              t=1 αt
+
+where the expectation is with respect to ξ 1 , . . . , ξ T and the internal randomness of the
+algorithm.
+Proof   We first show that
+                                 " T            #          " T             #
+                                  X                         X
+                             E          αt F (xt ) = E               ℓt (xt ) .                 (3.1)
+                                  t=1                          t=1
+
+In fact, from the linearity of the expectation we have
+                                 " T          #   T
+                                  X              X
+                               E      ℓt (xt ) =     E [ℓt (xt )] .
+                                   t=1                   t=1
+
+Then, from the law of total expectation, letting Ft−1 be the sigma-algebra generated by
+ξ 1 , . . . , ξ t−1 and the internal random bits used by the algorithm to compute xt , we have
+    E [ℓt (xt )] = E [E [ℓt (xt ) | Ft−1 ]] = E [E [αt f (xt , ξ t ) | Ft−1 ]] = E [αt F (xt )] ,
+
+                                                    24
+

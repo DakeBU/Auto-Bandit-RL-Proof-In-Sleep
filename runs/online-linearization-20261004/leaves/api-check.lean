@@ -1,0 +1,12 @@
+import BanditRLProof.OnlineSubgradientPolicy
+import BanditRLProof.OnlineLearningRegret
+#check Fin.snoc_last
+#check Fin.snoc_castSucc
+#check Fin.lastCases
+#check Fin.castLE
+#check Finset.sum_le_sum
+#check inner_sub_right
+#check BanditRL.OnlineSubgradientDescent.lemma_2_31
+#check BanditRL.OnlineSubgradientDescent.finite_loss
+#check BanditRL.OnlineSubgradientPolicy.canonicalPolicy_legal
+#check BanditRL.OnlineLearning.comparatorRegret_eq_sum
