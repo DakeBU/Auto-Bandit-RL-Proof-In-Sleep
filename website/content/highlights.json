@@ -4499,6 +4499,195 @@
         "BanditRL.OnlineLinearization.canonical_feedback",
         "BanditRL.OnlineLinearization.regret_comparison"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineOptimalStep.gap_identity",
+      "title": "Exact square gap above the scalar minimum",
+      "chapter": "online-optimal-step",
+      "featured": false,
+      "teaching_order": 0,
+      "plain": "For nonnegative frozen coefficients and a positive step, the exact excess is a nonnegative square quotient.",
+      "math": "F(\\eta)-\\sqrt A\\sqrt B=(\\sqrt A-\\eta\\sqrt B)^2/(2\\eta)",
+      "intuition": "For nonnegative frozen coefficients and a positive step, the exact excess is a nonnegative square quotient.",
+      "why": "Make the source scalar minimum and its admissibility conditions precise.",
+      "position": "Orabona v10 printed 15 / PDF 27. Library gap, equality or degenerate-case refinement; not a separately printed source theorem.",
+      "proof_idea": "Use the square identities for real square roots, clear the positive denominator, and expand.",
+      "lean_notes": "Real A and B are frozen nonnegative coefficients. The nondegenerate source argmin requires A>0 and B>0; eta ranges over positive reals. With A=R² the distance adapter requires R>0 and B>0. Exogenous D,G>0 and natural T≥1 give A=D² and B=G²T; G names the source L. Real sqrt and division are total, but eta=0 is inadmissible for the optimization and the online algorithms. No loss sequence or learner is an input to these scalar functions; actual OGD/OSD regret guarantees are proved separately. Library gap, equality or degenerate-case refinement; not a separately printed source theorem.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineOptimalStep.lower_bound",
+      "title": "Every positive step has the scalar lower bound",
+      "chapter": "online-optimal-step",
+      "featured": false,
+      "teaching_order": 1,
+      "plain": "The square gap is nonnegative for every positive eta, including either zero coefficient.",
+      "math": "\\sqrt A\\sqrt B\\le F(\\eta)",
+      "intuition": "The square gap is nonnegative for every positive eta, including either zero coefficient.",
+      "why": "Make the source scalar minimum and its admissibility conditions precise.",
+      "position": "Orabona v10 printed 15 / PDF 27. Library gap, equality or degenerate-case refinement; not a separately printed source theorem.",
+      "proof_idea": "Apply the gap identity and nonnegativity of its quotient.",
+      "lean_notes": "Real A and B are frozen nonnegative coefficients. The nondegenerate source argmin requires A>0 and B>0; eta ranges over positive reals. With A=R² the distance adapter requires R>0 and B>0. Exogenous D,G>0 and natural T≥1 give A=D² and B=G²T; G names the source L. Real sqrt and division are total, but eta=0 is inadmissible for the optimization and the online algorithms. No loss sequence or learner is an input to these scalar functions; actual OGD/OSD regret guarantees are proved separately. Library gap, equality or degenerate-case refinement; not a separately printed source theorem.",
+      "dependencies": [
+        "BanditRL.OnlineOptimalStep.gap_identity"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineOptimalStep.optimal_positive",
+      "title": "The nondegenerate optimizer is admissible",
+      "chapter": "online-optimal-step",
+      "featured": false,
+      "teaching_order": 2,
+      "plain": "Both strictly positive coefficients are needed for the source optimizer to be a positive step.",
+      "math": "A,B>0\\Longrightarrow\\eta_*={\\sqrt A}/{\\sqrt B}>0",
+      "intuition": "Both strictly positive coefficients are needed for the source optimizer to be a positive step.",
+      "why": "Make the source scalar minimum and its admissibility conditions precise.",
+      "position": "Orabona v10 printed 15 / PDF 27. Library gap, equality or degenerate-case refinement; not a separately printed source theorem.",
+      "proof_idea": "Real square roots of positive inputs and their quotient are positive.",
+      "lean_notes": "Real A and B are frozen nonnegative coefficients. The nondegenerate source argmin requires A>0 and B>0; eta ranges over positive reals. With A=R² the distance adapter requires R>0 and B>0. Exogenous D,G>0 and natural T≥1 give A=D² and B=G²T; G names the source L. Real sqrt and division are total, but eta=0 is inadmissible for the optimization and the online algorithms. No loss sequence or learner is an input to these scalar functions; actual OGD/OSD regret guarantees are proved separately. Library gap, equality or degenerate-case refinement; not a separately printed source theorem.",
+      "dependencies": [
+        "BanditRL.OnlineOptimalStep.optimalStep"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineOptimalStep.optimal_value",
+      "title": "The optimizer attains the scalar lower bound",
+      "chapter": "online-optimal-step",
+      "featured": false,
+      "teaching_order": 3,
+      "plain": "At the positive square-root ratio, the exact square gap vanishes.",
+      "math": "F(\\eta_*)=\\sqrt A\\sqrt B",
+      "intuition": "At the positive square-root ratio, the exact square gap vanishes.",
+      "why": "Make the source scalar minimum and its admissibility conditions precise.",
+      "position": "Orabona v10 printed 15 / PDF 27. Library gap, equality or degenerate-case refinement; not a separately printed source theorem.",
+      "proof_idea": "Cancel the nonzero square-root denominator in the gap identity.",
+      "lean_notes": "Real A and B are frozen nonnegative coefficients. The nondegenerate source argmin requires A>0 and B>0; eta ranges over positive reals. With A=R² the distance adapter requires R>0 and B>0. Exogenous D,G>0 and natural T≥1 give A=D² and B=G²T; G names the source L. Real sqrt and division are total, but eta=0 is inadmissible for the optimization and the online algorithms. No loss sequence or learner is an input to these scalar functions; actual OGD/OSD regret guarantees are proved separately. Library gap, equality or degenerate-case refinement; not a separately printed source theorem.",
+      "dependencies": [
+        "BanditRL.OnlineOptimalStep.gap_identity",
+        "BanditRL.OnlineOptimalStep.optimal_positive"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineOptimalStep.optimal_unique",
+      "title": "Equality characterizes the positive optimizer",
+      "chapter": "online-optimal-step",
+      "featured": false,
+      "teaching_order": 4,
+      "plain": "When both coefficients are positive, no other positive step attains the minimum.",
+      "math": "F(\\eta)=F(\\eta_*)\\iff\\eta=\\eta_*\\quad(A,B,\\eta>0)",
+      "intuition": "When both coefficients are positive, no other positive step attains the minimum.",
+      "why": "Make the source scalar minimum and its admissibility conditions precise.",
+      "position": "Orabona v10 printed 15 / PDF 27. Library gap, equality or degenerate-case refinement; not a separately printed source theorem.",
+      "proof_idea": "A zero square gap forces sqrt A = eta sqrt B; divide by the positive sqrt B.",
+      "lean_notes": "Real A and B are frozen nonnegative coefficients. The nondegenerate source argmin requires A>0 and B>0; eta ranges over positive reals. With A=R² the distance adapter requires R>0 and B>0. Exogenous D,G>0 and natural T≥1 give A=D² and B=G²T; G names the source L. Real sqrt and division are total, but eta=0 is inadmissible for the optimization and the online algorithms. No loss sequence or learner is an input to these scalar functions; actual OGD/OSD regret guarantees are proved separately. Library gap, equality or degenerate-case refinement; not a separately printed source theorem.",
+      "dependencies": [
+        "BanditRL.OnlineOptimalStep.gap_identity",
+        "BanditRL.OnlineOptimalStep.optimal_value"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineOptimalStep.source_argmin",
+      "title": "The source unnumbered scalar minimization",
+      "chapter": "online-optimal-step",
+      "featured": true,
+      "teaching_order": 5,
+      "plain": "The square-root ratio is an attained universal minimum for the two coefficients held fixed.",
+      "math": "\\eta_*>0,\\quad F(\\eta_*)=\\sqrt{AB},\\quad\\forall\\eta>0,\\ F(\\eta_*)\\le F(\\eta)",
+      "intuition": "The square-root ratio is an attained universal minimum for the two coefficients held fixed.",
+      "why": "Make the source scalar minimum and its admissibility conditions precise.",
+      "position": "Orabona v10 printed 15 / PDF 27. Source unnumbered scalar calculation, instantiated with frozen coefficients.",
+      "proof_idea": "Combine positivity, attained value and the universal scalar lower bound.",
+      "lean_notes": "Real A and B are frozen nonnegative coefficients. The nondegenerate source argmin requires A>0 and B>0; eta ranges over positive reals. With A=R² the distance adapter requires R>0 and B>0. Exogenous D,G>0 and natural T≥1 give A=D² and B=G²T; G names the source L. Real sqrt and division are total, but eta=0 is inadmissible for the optimization and the online algorithms. No loss sequence or learner is an input to these scalar functions; actual OGD/OSD regret guarantees are proved separately. Source unnumbered scalar calculation, instantiated with frozen coefficients.",
+      "dependencies": [
+        "BanditRL.OnlineOptimalStep.optimal_positive",
+        "BanditRL.OnlineOptimalStep.optimal_value",
+        "BanditRL.OnlineOptimalStep.lower_bound"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineOptimalStep.distance_energy_argmin",
+      "title": "Comparator-distance and realized-energy calculation",
+      "chapter": "online-optimal-step",
+      "featured": true,
+      "teaching_order": 6,
+      "plain": "Substituting the squared comparator distance gives the source algebraic optimizer for a frozen energy.",
+      "math": "\\eta_*={R}/{\\sqrt B},\\quad F(\\eta_*)=R\\sqrt B\\quad(R,B>0)",
+      "intuition": "Substituting the squared comparator distance gives the source algebraic optimizer for a frozen energy.",
+      "why": "Make the source scalar minimum and its admissibility conditions precise.",
+      "position": "Orabona v10 printed 15 / PDF 27. Source unnumbered scalar calculation, instantiated with frozen coefficients.",
+      "proof_idea": "Rewrite sqrt(R²)=R and apply the same scalar minimum.",
+      "lean_notes": "Real A and B are frozen nonnegative coefficients. The nondegenerate source argmin requires A>0 and B>0; eta ranges over positive reals. With A=R² the distance adapter requires R>0 and B>0. Exogenous D,G>0 and natural T≥1 give A=D² and B=G²T; G names the source L. Real sqrt and division are total, but eta=0 is inadmissible for the optimization and the online algorithms. No loss sequence or learner is an input to these scalar functions; actual OGD/OSD regret guarantees are proved separately. Source unnumbered scalar calculation, instantiated with frozen coefficients.",
+      "dependencies": [
+        "BanditRL.OnlineOptimalStep.source_argmin"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineOptimalStep.diameter_argmin",
+      "title": "Optimize the exogenous diameter-gradient upper bound",
+      "chapter": "online-optimal-step",
+      "featured": true,
+      "teaching_order": 7,
+      "plain": "Positive externally supplied D,G and horizon T determine the optimizer of the loose two-term bound.",
+      "math": "\\eta_*={D}/{(G\\sqrt T)},\\quad F(\\eta_*)=DG\\sqrt T\\quad(D,G>0,T\\ge1)",
+      "intuition": "Positive externally supplied D,G and horizon T determine the optimizer of the loose two-term bound.",
+      "why": "Make the source scalar minimum and its admissibility conditions precise.",
+      "position": "Orabona v10 printed 15 / PDF 27. Source unnumbered scalar calculation, instantiated with frozen coefficients.",
+      "proof_idea": "Substitute A=D² and B=G²T, split the square root of the product and reuse the distance-energy minimum.",
+      "lean_notes": "Real A and B are frozen nonnegative coefficients. The nondegenerate source argmin requires A>0 and B>0; eta ranges over positive reals. With A=R² the distance adapter requires R>0 and B>0. Exogenous D,G>0 and natural T≥1 give A=D² and B=G²T; G names the source L. Real sqrt and division are total, but eta=0 is inadmissible for the optimization and the online algorithms. No loss sequence or learner is an input to these scalar functions; actual OGD/OSD regret guarantees are proved separately. Source unnumbered scalar calculation, instantiated with frozen coefficients.",
+      "dependencies": [
+        "BanditRL.OnlineOptimalStep.distance_energy_argmin"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineOptimalStep.zero_distance_decreases",
+      "title": "Zero distance has no positive minimizer",
+      "chapter": "online-optimal-step",
+      "featured": false,
+      "teaching_order": 8,
+      "plain": "If only the distance coefficient vanishes, halving any positive step strictly improves the scalar cost.",
+      "math": "B,\\eta>0\\Longrightarrow F_{0,B}(\\eta/2)<F_{0,B}(\\eta)",
+      "intuition": "If only the distance coefficient vanishes, halving any positive step strictly improves the scalar cost.",
+      "why": "Make the source scalar minimum and its admissibility conditions precise.",
+      "position": "Orabona v10 printed 15 / PDF 27. Library gap, equality or degenerate-case refinement; not a separately printed source theorem.",
+      "proof_idea": "The reciprocal-distance term is zero, leaving a strictly increasing positive linear term.",
+      "lean_notes": "Real A and B are frozen nonnegative coefficients. The nondegenerate source argmin requires A>0 and B>0; eta ranges over positive reals. With A=R² the distance adapter requires R>0 and B>0. Exogenous D,G>0 and natural T≥1 give A=D² and B=G²T; G names the source L. Real sqrt and division are total, but eta=0 is inadmissible for the optimization and the online algorithms. No loss sequence or learner is an input to these scalar functions; actual OGD/OSD regret guarantees are proved separately. Library gap, equality or degenerate-case refinement; not a separately printed source theorem.",
+      "dependencies": [
+        "BanditRL.OnlineOptimalStep.upperBound"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineOptimalStep.zero_energy_decreases",
+      "title": "Zero energy has no positive minimizer",
+      "chapter": "online-optimal-step",
+      "featured": false,
+      "teaching_order": 9,
+      "plain": "If only the energy coefficient vanishes, doubling any positive step strictly improves the scalar cost.",
+      "math": "A,\\eta>0\\Longrightarrow F_{A,0}(2\\eta)<F_{A,0}(\\eta)",
+      "intuition": "If only the energy coefficient vanishes, doubling any positive step strictly improves the scalar cost.",
+      "why": "Make the source scalar minimum and its admissibility conditions precise.",
+      "position": "Orabona v10 printed 15 / PDF 27. Library gap, equality or degenerate-case refinement; not a separately printed source theorem.",
+      "proof_idea": "The energy term is zero, so doubling the denominator halves the positive remaining term.",
+      "lean_notes": "Real A and B are frozen nonnegative coefficients. The nondegenerate source argmin requires A>0 and B>0; eta ranges over positive reals. With A=R² the distance adapter requires R>0 and B>0. Exogenous D,G>0 and natural T≥1 give A=D² and B=G²T; G names the source L. Real sqrt and division are total, but eta=0 is inadmissible for the optimization and the online algorithms. No loss sequence or learner is an input to these scalar functions; actual OGD/OSD regret guarantees are proved separately. Library gap, equality or degenerate-case refinement; not a separately printed source theorem.",
+      "dependencies": [
+        "BanditRL.OnlineOptimalStep.upperBound"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineOptimalStep.zero_coefficients",
+      "title": "Both zero coefficients give zero cost",
+      "chapter": "online-optimal-step",
+      "featured": false,
+      "teaching_order": 10,
+      "plain": "Both coefficients zero make the totalized real expression zero; positive-step admissibility is still separate.",
+      "math": "F_{0,0}(\\eta)=0",
+      "intuition": "Both coefficients zero make the totalized real expression zero; positive-step admissibility is still separate.",
+      "why": "Make the source scalar minimum and its admissibility conditions precise.",
+      "position": "Orabona v10 printed 15 / PDF 27. Library gap, equality or degenerate-case refinement; not a separately printed source theorem.",
+      "proof_idea": "Simplify both zero numerator and zero energy term.",
+      "lean_notes": "Real A and B are frozen nonnegative coefficients. The nondegenerate source argmin requires A>0 and B>0; eta ranges over positive reals. With A=R² the distance adapter requires R>0 and B>0. Exogenous D,G>0 and natural T≥1 give A=D² and B=G²T; G names the source L. Real sqrt and division are total, but eta=0 is inadmissible for the optimization and the online algorithms. No loss sequence or learner is an input to these scalar functions; actual OGD/OSD regret guarantees are proved separately. Library gap, equality or degenerate-case refinement; not a separately printed source theorem.",
+      "dependencies": [
+        "BanditRL.OnlineOptimalStep.upperBound"
+      ]
     }
   ]
 }

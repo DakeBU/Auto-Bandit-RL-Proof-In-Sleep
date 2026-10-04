@@ -1,0 +1,12 @@
+import Mathlib.Data.Real.Sqrt
+import Mathlib.Tactic
+#check Real.sq_sqrt
+#check Real.sqrt_pos
+#check Real.sqrt_mul
+#check Real.sqrt_sq
+#check div_pos
+#check div_mul_cancel₀
+#check sub_eq_zero
+#check pow_eq_zero
+#check sq_nonneg
+#check Nat.cast_pos

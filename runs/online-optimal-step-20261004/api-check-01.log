@@ -1,0 +1,13 @@
+Real.sq_sqrt {x : ℝ} (h : 0 ≤ x) : √x ^ 2 = x
+Real.sqrt_pos {x : ℝ} : 0 < √x ↔ 0 < x
+Real.sqrt_mul {x : ℝ} (hx : 0 ≤ x) (y : ℝ) : √(x * y) = √x * √y
+Real.sqrt_sq {x : ℝ} (h : 0 ≤ x) : √(x ^ 2) = x
+div_pos.{u_3} {G₀ : Type u_3} [GroupWithZero G₀] [PartialOrder G₀] [PosMulReflectLT G₀] {a b : G₀} (ha : 0 < a)
+  (hb : 0 < b) : 0 < a / b
+div_mul_cancel₀.{u_3} {G₀ : Type u_3} [GroupWithZero G₀] {b : G₀} (a : G₀) (h : b ≠ 0) : a / b * b = a
+sub_eq_zero.{u_3} {G : Type u_3} [AddGroup G] {a b : G} : a - b = 0 ↔ a = b
+pow_eq_zero.{u_3} {R : Type u_3} {x : R} [Zero R] [Pow R ℕ] [IsReduced R] {n : ℕ} (h : x ^ n = 0) : x = 0
+sq_nonneg.{u} {R : Type u} [Semiring R] [LinearOrder R] [ExistsAddOfLE R] [PosMulMono R] [AddLeftMono R] (a : R) :
+  0 ≤ a ^ 2
+Nat.cast_pos.{u_3} {α : Type u_3} [Semiring α] [PartialOrder α] [IsOrderedRing α] [Nontrivial α] {n : ℕ} :
+  0 < ↑n ↔ 0 < n
