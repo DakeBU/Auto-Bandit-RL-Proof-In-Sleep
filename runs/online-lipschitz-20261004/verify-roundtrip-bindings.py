@@ -24,8 +24,8 @@ expected={
  prefix+'public-theorem-fence.json',prefix+'public-definition-fence.json',prefix+'compiled-dependencies.json',prefix+'graph-check.log',prefix+'registry.json',
  prefix+'site-build-02.log',prefix+'site-check-02.log',prefix+'site-build-02-exit.json',prefix+'site-check-02-exit.json',
  prefix+'contributor-gate-02.log',prefix+'contributor-gate-02-exit.json',prefix+'global-frontier-preservation.json',prefix+'scoped-frontier-shadow.json',
- prefix+'visual-review.md',prefix+'visual-receipt.json',
- prefix+'active-frontier.json',prefix+'trials.jsonl',prefix+'scoped-memory-digest.md'
+ prefix+'visual-review.md',prefix+'visual-receipt.json',prefix+'reader-summary-repair.md',prefix+'diff-evidence.json',
+ prefix+'active-frontier.json',prefix+'trials.jsonl',prefix+'scoped-memory-digest.md',prefix+'public-terminal-retrieval.txt',prefix+'public-definition-retrieval.txt',prefix+'final-reader-packet.md'
 }
 rawchecks=[];reviewed=set()
 for name in ['source-contract-receipt.json','source-body-receipt.json','public-body-receipt.json','final-reader-receipt.json']:
