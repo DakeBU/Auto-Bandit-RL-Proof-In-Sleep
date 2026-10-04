@@ -15414,3 +15414,4 @@ here during local harness runs.
 - `2026-10-03T14:07:37+00:00` `bandit.py new-task` `task` `tasks/ONLINE-HINGE.md` - Orabona Example 2.27 complete hinge subdifferential
 - `2026-10-03T15:03:37+00:00` `bandit.py new-task` `task` `tasks/ONLINE-AFFINE-SUBGRADIENT.md` - Orabona Theorem 2.28 proper affine pullback inclusion
 - `2026-10-03T16:02:16+00:00` `bandit.py new-task` `task` `tasks/ONLINE-LIPSCHITZ.md` - Orabona Definition2.29 and Theorem2.30 full Lipschitz subgradient equivalence
+- `2026-10-04T05:10:49+00:00` `bandit.py new-task` `task` `tasks/ONLINE-OSD.md` - Source Lemma2.31 and causal Algorithm2.2 subgradient performance chain

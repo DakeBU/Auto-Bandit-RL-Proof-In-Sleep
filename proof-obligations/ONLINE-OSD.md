@@ -1,0 +1,3 @@
+# ONLINE-OSD obligations
+
+All draft/open, exact DAG runs/online-osd-20261004/proof-obligations.json. First dependency-ready finite support gap/projection one-step requires independent semantic stabilization. Actual selection, feasibility, strict-prefix causality, fixed terminal negative distance, variable nonincreasing positive schedule with source diameter conditions, tunedDGsqrtT and all mandatory public/semantic/axiom/combined/site/registry/binding/PR gates remain open. Example2.32 separate mandatory subsequent package; historical Prop2.11/Lemma2.12 mapping audit and older mainmigration remain open. No standalone source single-step consumer or interface count is full OSD completion.

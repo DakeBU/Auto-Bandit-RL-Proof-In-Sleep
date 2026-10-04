@@ -1,0 +1,49 @@
+'BanditRL.OnlineSubgradientDescent.lemma_2_31' depends on axioms: [propext, Classical.choice, Quot.sound]
+runs/online-osd-20261004/attempts/osd-outside-canary-01.lean:81:2: error: 'change' tactic failed, pattern
+  (w + 1) * (-4 + 1) ≤ 0
+is not definitionally equal to target
+  ⟪-4 - -1, w - -1⟫_ℝ ≤ 0
+runs/online-osd-20261004/attempts/osd-outside-canary-01.lean:93:4: error: Type mismatch: After simplification, term
+  project_neg_four
+ has type
+  BanditRL.OnlineGradientDescent.project interval (-4) = -1
+but is expected to have type
+  BanditRL.OnlineGradientDescent.project interval (2 - 2 * 3) = -1
+runs/online-osd-20261004/attempts/osd-outside-canary-01.lean:94:4: error: Type mismatch
+  lemma_2_31 interval linearLoss linear_on 2
+    (Mathlib.Meta.NormNum.isNat_lt_true (Mathlib.Meta.NormNum.isNat_ofNat ℝ Nat.cast_zero)
+      (Mathlib.Meta.NormNum.isNat_ofNat ℝ (Eq.refl 2)) (Eq.refl false))
+    2 0
+    (of_eq_true
+      (Eq.trans Set.mem_Icc._simp_1
+        (Eq.trans
+          (Eq.trans
+            (congr
+              (congrArg And
+                (eq_true
+                  (Mathlib.Meta.NormNum.isInt_le_true
+                    (Mathlib.Meta.NormNum.isInt_neg (Eq.refl Neg.neg)
+                      (Mathlib.Meta.NormNum.IsNat.to_isInt (Mathlib.Meta.NormNum.isNat_ofNat ℝ Nat.cast_one))
+                      (Eq.refl (Int.negOfNat 1)))
+                    (Mathlib.Meta.NormNum.IsNat.to_isInt (Mathlib.Meta.NormNum.isNat_ofNat ℝ Nat.cast_zero))
+                    (Eq.refl true))))
+              (eq_true
+                (Mathlib.Meta.NormNum.isNat_le_true (Mathlib.Meta.NormNum.isNat_ofNat ℝ Nat.cast_zero)
+                  (Mathlib.Meta.NormNum.isNat_ofNat ℝ Nat.cast_one) (Eq.refl true))))
+            (and_self True))
+          (eq_true True.intro))))
+    3 support_at_two
+has type
+  2 * ((linearLoss 2).toReal - (linearLoss 0).toReal) ≤ 2 * ⟪3, 2 - 0⟫_ℝ ∧
+    2 * ⟪3, 2 - 0⟫_ℝ ≤
+      ‖2 - 0‖ ^ 2 / 2 - ‖BanditRL.OnlineGradientDescent.project interval (2 - (2 : ℝ) • 3) - 0‖ ^ 2 / 2 +
+        2 ^ 2 / 2 * ‖3‖ ^ 2
+but is expected to have type
+  2 * ((linearLoss 2).toReal - (linearLoss 0).toReal) ≤ 2 * ⟪3, 2 - 0⟫_ℝ ∧
+    2 * ⟪3, 2 - 0⟫_ℝ ≤
+      ‖2 - 0‖ ^ 2 / 2 - ‖BanditRL.OnlineGradientDescent.project interval (2 - (2 : ℕ) • 3) - 0‖ ^ 2 / 2 +
+        2 ^ 2 / 2 * ‖3‖ ^ 2
+'OSDOutsideProbe.arbitrary_current_and_actual_clipping' depends on axioms: [propext,
+ sorryAx,
+ Classical.choice,
+ Quot.sound]
