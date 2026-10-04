@@ -1,0 +1,229 @@
+                       2.1 Online Learning with Convex Differentiable Losses              13
+
+Therefore,
+
+        ∥y − x∥22 = ∥y − ΠV (x) + ΠV (x) − x∥22
+                  = ∥y − ΠV (x)∥22 + 2⟨y − ΠV (x), ΠV (x) − x⟩ + ∥ΠV (x) − x∥22
+                  ≥ ∥y − ΠV (x)∥22 .
+
+  The next lemma upper bounds the regret in a single iteration of Algorithm 2.1.
+
+Lemma 2.12 Let V ⊆ Rd be a non-empty closed convex set, ℓt be convex and differentiable
+on an open set containing V , and ηt > 0. Set g t = ∇ℓt (xt ) and xt+1 = ΠV (xt − ηt g t ).
+Then, ∀u ∈ V , the following inequality holds
+
+                                              1            1              η2
+  ηt (ℓt (xt ) − ℓt (u)) ≤ ηt ⟨g t , xt − u⟩ ≤ ∥xt − u∥22 − ∥xt+1 − u∥22 + t ∥g t ∥22 .
+                                              2            2               2
+
+Proof     From Proposition 2.11 and Theorem 2.7, we have that
+
+                ∥xt+1 − u∥22 − ∥xt − u∥22 ≤ ∥xt − ηt g t − u∥22 − ∥xt − u∥22
+                                          = −2ηt ⟨g t , xt − u⟩ + ηt2 ∥g t ∥22
+                                          ≤ −2ηt (ℓt (xt ) − ℓt (u)) + ηt2 ∥g t ∥22 .
+
+Reordering, we have the stated bound.
+
+  We can prove the following regret guarantee for Algorithm 2.1.
+
+Theorem 2.13 Let V ⊆ Rd be a non-empty closed convex set with diameter D, that is,
+D := supx,y∈V ∥x − y∥2 . Let ℓ1 , . . . , ℓT be an arbitrary sequence of convex and differ-
+entiable functions on an open set containing V . Pick any x1 ∈ V and assume 0 < ηt+1 ≤
+ηt , t = 1, . . . , T − 1. Then, ∀u ∈ V , Algorithm 2.1 satisfies the following regret bound
+
+             T                                    T
+             X                             D2    X   ηt             1
+                   (ℓt (xt ) − ℓt (u)) ≤       +        ∥g t ∥22 −      ∥xT +1 − u∥22 .
+             t=1
+                                           2ηT   t=1
+                                                     2             2η T
+
+
+
+Moreover, if ηt is constant, i.e., ηt = η ∀t = 1, . . . , T , for all u ∈ V , we have
+
+          T                                             T
+          X                             ∥u − x1 ∥22 η X               1
+                (ℓt (xt ) − ℓt (u)) ≤              +       ∥g t ∥22 − ∥xT +1 − u∥22 .
+          t=1
+                                           2η        2 t=1           2η
+
+Proof     Dividing the inequality in Lemma 2.12 by ηt and summing over t = 1, . . . , T , we
+14                                     Online Subgradient Descent
+
+have
+T                             T                                        T
+                                  ∥xt − u∥2        ∥xt+1 − u∥22            ηt ∥g t ∥22
+X                             X                                    X
+                                                   2
+     (ℓt (xt ) − ℓt (u)) ≤                     −                    +
+ t=1                        t=1
+                                      2ηt                 2ηt          t=1
+                                                                               2
+                                            T −1                                        T
+          ∥x1 − u∥22 ∥xT +1 − u∥22 X                           1 ∥xt+1 − u∥22 X ηt ∥g t ∥22
+                                                               
+                                                       1
+      =                −                 +                 −                      +
+              2η1              2ηT          t=1
+                                                    ηt+1 ηt              2             t=1
+                                                                                           2
+                      T −1                   T
+          D2     D2 X                             ηt ∥g t ∥22 ∥xT +1 − u∥22
+                                        X
+                              1      1
+      ≤        +                  −       +                   −
+          2η1      2 t=1 ηt+1 ηt             t=1
+                                                        2            2ηT
+                                          T
+          D2                                  ηt ∥g t ∥22 ∥xT +1 − u∥22
+                                    X
+                    2    1       1
+      =        +D            −        +                   −
+          2η1           2ηT     2η1     t=1
+                                                  2              2ηT
+                T
+         D2    X   ηt             1
+       =     +        ∥g t ∥22 −      ∥xT +1 − u∥22 .
+         2ηT   t=1
+                   2             2η T
+
+     In the same way, when ηt is constant, we have
+      T                              T                                           T
+      X                              X   1                      1               ηX
+             (ℓt (xt ) − ℓt (u)) ≤              ∥xt − u∥22 −                2
+                                                                  ∥xt+1 − u∥2 +      ∥g ∥2
+       t=1                           t=1
+                                           2η                  2η               2 t=1 t 2
+                                                T
+                1         2   1          2   ηX
+             =    ∥x1 − u∥2 − ∥xT +1 − u∥2 +      ∥g ∥2 .
+               2η            2η              2 t=1 t 2
+
+     We can immediately observe a few things.
+
+• The terms ∥g t ∥22 are due to the fact that we output xt before knowing the loss ℓt . Indeed,
+  these terms become non-positive if we were allowed to observe ℓt before producing xt ,
+  see Section 15.5.1.
+• In the case of constant η , the bound holds even when D = ∞. Moreover, the first term in
+  the regret depends on our initial condition, that is, how far x1 is from the competitor u.
+• The last term in both bounds is non-positive, so it is usually discarded. Yet, some advanced
+  proofs require it, so it is good to be aware of it.
+• If we want to use time-varying learning rates, we need to control the terms ∥xt − u∥22 . To
+  do it, we assume a bounded domain V . However, this assumption is false in most of the
+  machine learning applications. We will also see in Section 5.2 that this is not an artifact of
+  the proof, that is, OGD can fail in unbounded domains with time-varying learning rates.
+  That said, in the stochastic setting, you can still use a time-varying learning rate in SGD
+  with an unbounded domain, as we will see in Chapter 3.
+• Another important observation is that the regret bound helps us choose the learning rates
+  ηt . Indeed, it is the only guideline we have. Any other choice that is not justified by a
+  regret analysis is not justified at all.
+
+   As we said, the presence of untuned parameters like the learning rates makes no sense in
+online learning. So, we have to decide on a strategy to set them. A simple choice is to find
+the constant learning rate that minimizes the bounds for a fixed number of iterations. We
+                    2.1 Online Learning with Convex Differentiable Losses                      15
+
+have to consider the expression
+                                                  T
+                                  ∥u − x1 ∥22 η X
+                                             +      ∥g ∥2
+                                     2η        2 t=1 t 2
+
+and minimize with respect to η . It is easy to see that the optimal η is √∥u−x
+                                                                          PT
+                                                                              1 ∥2
+                                                                                   2
+                                                                                     , that would
+                                                                            t=1 ∥g t ∥2
+give the regret bound
+                                            v
+                                            u T
+                                            uX
+                                   ∥u − x ∥ t
+                                           1 2  ∥g ∥2 .  t 2
+                                                  t=1
+
+However, we have a problem: in order to use this stepsize, we should know all the future gra-
+dients (that depend on η itself!), and the distance between the optimal solution and the initial
+point. This is clearly impossible: remember that the adversary can choose the sequence of
+functions. Hence, it can observe your choice of learning rates and decide the sequence so
+that your learning rate is no longer the correct one!
+   Indeed, it turns out that this kind of rate is completely impossible because it is ruled out by
+a lower bound we will show in Chapter 5. Yet, we will see that it is indeed possible to achieve
+very similar rates using adaptive (Section 4.2) and parameter-free algorithms (Chapter 13).
+For the moment, we can observe that we might be happy to minimize a loose upper bound.
+In particular, assume that the norm of the gradients is bounded by L, that is ∥g t ∥2 ≤ L.
+Also, assuming a bounded diameter, we can upper bound ∥u − x1 ∥2 by D. Hence, we have
+
+                                            D2 ηL2 T   D
+                           η ⋆ = argmin        +     = √ ,
+                                      η     2η   2    L T
+that gives a regret bound of
+                                             √
+                                           DL T .                                           (2.1)
+
+So, indeed, the regret is sublinear in time. In Chapter 5, we will also prove that the this regret
+upper bound is optimal up to constant multiplicative factors.
+
+Example 2.14 Consider the guessing game of the first chapter; we can easily solve it with
+OGD. Indeed, we just need to calculate the gradients, prove that they are bounded, and find
+a way to calculate the projection of a real number in [0, 1]. So, ℓ′t (x) = 2(x − yt ), that is
+bounded for x, yt ∈ [0, 1]. The projection on [0, 1] is just Π[0,1] (x) = min(max(x, 0), 1).
+                                                                     √
+With the optimal learning rate, the resulting regret would be O( T ), which is worse than
+the one we found in the first chapter. Hence, OGD with this choice of the learning rate is
+suboptimal for this problem. We will see how to make it optimal in Chapter 4.
+
+Example 2.15 Let’s consider an example of the OCO setting. Consider the problem of
+predicting at day t the opening price of a stock based on a linear combination of the opening
+prices of the past d days, represented by a vector z t ∈ Rd . So, our prediction at time t will
+be ⟨z t , xt ⟩ and the feasible set is V = Rd . Once we make our prediction, we receive the
+true opening price yt , and we pay the Huber loss, a convex loss function robust to outliers,
+16                                Online Subgradient Descent
+
+on the difference between our prediction and the opening price:
+                        (
+                          1
+                            (⟨z t , x⟩ − yt )2 ,       for |⟨z t , x⟩ − yt | ≤ δ,
+               ℓt (x) = 2                        1
+                          δ(|⟨z t , x⟩ − yt | − 2 δ), otherwise
+where δ is the threshold that decides what counts as an outlier, and it should be penalized
+                              √a quadratic one. For this problem, we can use OGD with
+with a linear error rather than
+constant learning rate η ∝ 1/ T . So, we just need to calculate the gradients:
+                          (
+                           (⟨z t , x⟩ − yt )z t ,       for |⟨z t , x⟩ − yt | ≤ δ,
+              ∇ℓt (x) =
+                           δsign(⟨z t , x⟩ − yt )z t , otherwise.
+Assuming that all ∥z t ∥2 are bounded, we also have that the gradients are bounded, satis-
+fying the assumptions of Theorem 2.13. Hence, running OGD, on average, the performance
+of the algorithm will approach the performance of any fixed linear predictor.
+
+
+                              2.2 Online Subgradient Descent
+In the previous section, we introduced Projected Online Gradient Descent. However, the
+differentiability assumption for the ℓt is quite strong. What happens when the losses are
+convex but not differentiable? For example, ℓt (x) = |x−10|. Note that this situation is more
+common than one would think. For example, the hinge loss, ℓt (x) = max(1−yt ⟨z t , x⟩, 0),
+is not differentiable. It turns out that we can just use OGD, substituting subgradients for the
+gradients. For this, we need some more convex analysis.
+
+
+                         2.2.1 Convex Analysis Bits: Subgradients
+First, we need a couple of technical definitions.
+Definition 2.16 A function f : Rd → [−∞, +∞] is closed iff {x : f (x) ≤ α} is closed
+for every α ∈ R.
+   Note that in any Euclidean space (and more generally in any Hausdorff space) a function
+is closed iff it is lower semicontinuous (Bauschke and Combettes, 2017, Lemma 1.24).
+Example 2.17 The indicator function of a set V ⊂ Rd is closed iff V is closed.
+Definition 2.18     If a function f is nowhere −∞ and finite somewhere, then f is called
+proper.
+   In this book, we are mainly interested in convex proper functions, which better conform
+to our intuition of what a convex function looks like.
+Example 2.19 The indicator function of a set V ⊂ Rd is proper iff V is non-empty.
+     Let’s now define formally what a subgradient is.
+Definition 2.20 For a proper function f : Rd → (−∞, +∞], we define a subgradient of
+f in x ∈ Rd as a vector g ∈ Rd that satisfies
+                          f (y) ≥ f (x) + ⟨g, y − x⟩,       ∀y ∈ Rd .
+

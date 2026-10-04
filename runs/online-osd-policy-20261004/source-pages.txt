@@ -1,0 +1,150 @@
+                               2.2 Online Subgradient Descent                               19
+
+  We also have a handy result that upper bounds the norm of subgradients of convex Lips-
+chitz functions.
+
+Definition 2.29 Let f : Rd → (−∞, +∞]. We say that f is L-Lipschitz over a set
+V ⊆ dom f with respect to a norm ∥ · ∥ if |f (x) − f (y)| ≤ L∥x − y∥, ∀x, y ∈ V .
+Theorem 2.30 Let f : Rd → (−∞, +∞] be convex and proper. Then, f is L-Lipschitz in
+int dom f with respect to the L2 norm iff for all x ∈ int dom f and g ∈ ∂f (x) we have
+∥g∥2 ≤ L.
+Proof First, we assume f to be L-Lipschitz, then |f (x) − f (y)| ≤ L∥x − y∥2 , ∀x, y ∈
+int dom f . Let g ∈ ∂f (x). If ∥g∥2 = 0, then the theorem is true. So, we can safely assume
+                                                              g
+it to be different from 0. For ϵ > 0 small enough y = x + ϵ ∥g∥ 2
+                                                                  ∈ int dom f , then
+
+      Lϵ = L∥x − y∥2 ≥ |f (y) − f (x)| ≥ f (y) − f (x) ≥ ⟨g, y − x⟩ = ϵ∥g∥2 ,
+that implies that ∥g∥2 ≤ L.
+   For the other implication, the subgradient definition and Cauchy–Schwarz inequality give
+                      f (x) − f (y) ≤ ∥g∥2 ∥x − y∥2 ≤ L∥x − y∥2 ,
+for any x, y ∈ int dom f . Taking g ∈ ∂f (y), we also get
+                               f (y) − f (x) ≤ L∥x − y∥2 .
+   Finally, let’s dispel the common misconception that a convex function must be differen-
+tiable on its domain except possibly at countably many points. For example, consider the
+convex function f : R2 → R defined as f (x) = |x1 | that is not differentiable on the line
+segment between v = (0, 0) and w = (0, 1).
+
+
+                            2.2.2 Analysis with Subgradients
+As I promised you, with the proper mathematical tools, analyzing online algorithms becomes
+easy. Indeed, switching from gradient to subgradient comes for free! In fact, our analysis of
+OGD with differentiable losses holds as is when using subgradients instead of gradients. The
+reason is that the only property of the gradients that we used in the proof of Theorem 2.13
+was that
+                              ℓt (xt ) − ℓt (u) ≤ ⟨g t , xt − u⟩,
+where g t = ∇ℓt (xt ). However, the exact same property holds when g t ∈ ∂ℓt (xt ). Hence,
+the regret bounds we proved hold as well, just replacing differentiability with subdifferen-
+tiability and gradients with subgradients. In particular, we have the following lemma.
+
+Lemma 2.31 Let V ⊆ Rd be a non-empty closed convex set, ℓt : Rd → (−∞, +∞] a
+function subdifferentiable on V , and ηt > 0. Set g t ∈ ∂ℓt (xt ) and xt+1 = ΠV (xt − ηt g t ).
+Then, ∀u ∈ V , we have
+                                              1            1              η2
+  ηt (ℓt (xt ) − ℓt (u)) ≤ ηt ⟨g t , xt − u⟩ ≤ ∥xt − u∥22 − ∥xt+1 − u∥22 + t ∥g t ∥22 .
+                                              2            2               2
+20                               Online Subgradient Descent
+
+Algorithm 2.2 Projected Online Subgradient Descent (OSD)
+Require: Non-empty closed convex set V ⊆ Rd , x1 ∈ V , η1 , . . . , ηT > 0
+ 1: for t = 1 to T do
+ 2:    Output xt ∈ V
+ 3:    Pay the loss ℓt (xt ), where ℓt is subdifferentiable on V
+ 4:    Set g t ∈ ∂ℓt (xt )
+ 5:    xt+1 = ΠV (xt − ηt g t ) = argminy∈V ∥xt − ηt g t − y∥2
+ 6: end for
+
+
+
+  So, we can state the Online Subgradient Descent (OSD) algorithm in Algorithm 2.2,
+where the only difference from Algorithm 2.1 is line 4.
+Example 2.32 Consider the guessing game of the first chapter again, but now change the
+loss function to the absolute loss of the difference: ℓt (x) = |x − yt |. Now we will need to
+use OSD, because the functions are non-differentiable. We can easily see that
+                                          
+                                          {1},
+                                                      x > yt
+                               ∂ℓt (x) = [−1, 1], x = yt
+                                          
+                                            {−1}, x < yt .
+                                          
+
+Again, running√OSD with the optimal learning rate on this problem will give us immediately
+a regret of O( T ) as T → ∞, without having to design a specific strategy for it.
+
+
+
+                                  2.2.3 Unit Analysis Bits
+One might wonder why I did not “simplify the math” by removing some of the constants in
+the bounds, for example, by setting the Lipschitz constant L to 1. While this is very common
+in machine learning papers, this is a bad idea because it makes it (i) difficult to check the
+correctness of an equation, and (ii) difficult to correctly implement the algorithm. To explain
+why this is the case, we will have to consider the concepts of “units”.
+   When we look at a mathematical formula coming from a physical model, we are used
+to the idea that each quantity has a “unit” of measurement, e.g., meters, seconds, Joules.
+A fundamental principle is that any physically meaningful equation must be dimensionally
+consistent. That is, the units on the left-hand side of an equation must be the same as the
+units on the right-hand side. For example, you cannot sum a quantity measured in meters
+with one measured in seconds.
+   It turns out that this simple idea is not limited to physical models and it can be used as
+a sanity check for any mathematical formula, including the ones we see in online learning.
+Let’s assign a symbolic unit to each quantity we are dealing with. For example, let’s denote
+the units of our predictions x by [x] and the units of the loss ℓ by [ℓ]. We can now check
+each formula by following a few simple rules. First, we have to make sure that each term
+has the same units. Another rule to keep in mind is that transcendental functions are only
+defined on unitless quantities. So, for example, we can take logarithms and exponentials of
+ratios of quantities with the same units, to obtain a unitless quantity, but not of quantities
+                                 2.2 Online Subgradient Descent                              21
+
+with units. Finally, while probabilities are unitless, the probability density function has the
+units of inverse of the random variable it represents, because it represents the probability per
+unit of the variable it is defined over.
+   The importance of this check cannot be overstated. When we see an equation where the
+units do not match, either it is plainly wrong, or there is a constant with units hidden some-
+where. Moreover, the dimensional analysis will immediately tell us the dependence of a
+quantity on the others. Let’s do a practical example considering OSD.
+   Consider the OSD update in Algorithm 2.2, where V = Rd : xt+1 = xt − ηg t . For
+this equation to be coherent, the term ηg t must have the same units as xt . Let’s see if this
+gives us some constraints on the units of the learning rate η . The units of g t , from the
+definition of subgradient, are the units of the loss divided by the units of the variable we are
+subdifferentiating with respect to. So, we have
+                                                      [ℓ]
+                                           [g t ] =       .
+                                                      [x]
+Now, from the consistency of the update rule, we must have [xt ] = [ηg t ] = [η][g t ]. Hence,
+we can derive the units of the learning rate:
+                                         [x]        [x]     [x]2
+                                 [η] =          =         =      .
+                                         [g t ]   [ℓ]/[x]    [ℓ]
+This shows that the learning rate is not a unitless quantity. So, even without deriving the
+regret guarantee, from the unit analysis, we immediately know that the learning rate must
+depend on the problem characteristics in a certain way.
+   Finally, let’s perform a sanity check on the regret bound for OSD with a constant learning
+rate (that is, the one in Theorem 2.13):
+                   T                                              T
+                   X                              ∥u − x1 ∥22 η X
+                          (ℓt (xt ) − ℓt (u)) ≤              +      ∥g ∥2 .
+                    t=1
+                                                     2η        2 t=1 t 2
+The left-hand side is a sum of losses, so its unit is [ℓ]. Let’s check the two terms on the
+right-hand side, to verify that they also have the unit of [ℓ]. For the first term, we have
+                            ∥u − x1 ∥22      [x]2       [x]2
+                                       
+                                          =        =             = [ℓ] .
+                                 η            [η]     [x]2 /[ℓ]
+For the second term, we have
+                      " T            #
+                         X                          [x]2 [ℓ]2
+                       η           2
+                             ∥g t ∥2 = [η][g t ]2 =           = [ℓ] .
+                         t=1
+                                                     [ℓ] [x]2
+   Let me stress that having a formula with wrong units is not only a theoretical issue, but
+a very practical one. Indeed, constants with hidden units in any algorithm can be prob-
+lematic. Let’s show it with an example. For example, suppose our variable √ xt represents a
+location in meters, and we use a learning rate schedule such as η = 1/ T . Now, suppose
+we change our unit of measurement for xt from meters to kilometers. Our new variable is
+x′t = xt /1000. Since this is merely a change of units, the underlying learning problem is
+identical, and we should expect the algorithm’s behavior to be invariant. However, the gradi-
+ent with respect to the new variable is g ′t = ∇x′ ℓt (1000x′t ) = 1000∇x ℓt (xt ) = 1000g t .
+

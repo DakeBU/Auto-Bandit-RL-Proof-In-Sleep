@@ -1,0 +1,203 @@
+{
+  "schema_version": "2.0",
+  "id": "ONLINE-OSD-POLICY-20261004",
+  "route": "online-learning/chapter-2",
+  "frontier_cell": "online-osd-policy",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10, 2026-06-21; SHA256 cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchor": "Algorithm2.2 printed20/PDF32, Lemma2.31/transfer printed19/PDF31, constant-rate formula printed21/PDF33; Theorem2.13/eq2.1 printed13-15/PDF25-27",
+    "url": "https://arxiv.org/pdf/1912.13213v10"
+  },
+  "target": "Algorithm2.2 deterministic finite-history legal-support family, full source step chain and same-run fixed/decreasing/tuned regret; canonical identity bridges",
+  "affected_files": [
+    "BanditRLProof.lean",
+    "BanditRLProof/OnlineSubgradientPolicy.lean",
+    "website/content/books.json",
+    "website/content/chapters.json",
+    "website/content/readings.json",
+    "website/content/highlights.json",
+    "website/scripts/build_site.py",
+    "website/scripts/check_site.py"
+  ],
+  "declarations": [
+    "BanditRL.OnlineSubgradientPolicy.Domain",
+    "BanditRL.OnlineSubgradientPolicy.SupportPolicy",
+    "BanditRL.OnlineSubgradientPolicy.history",
+    "BanditRL.OnlineSubgradientPolicy.output",
+    "BanditRL.OnlineSubgradientPolicy.selected",
+    "BanditRL.OnlineSubgradientPolicy.OracleLaw",
+    "BanditRL.OnlineSubgradientPolicy.canonicalPolicy",
+    "BanditRL.OnlineSubgradientPolicy.LegalFeedback",
+    "BanditRL.OnlineSubgradientPolicy.regret",
+    "BanditRL.OnlineSubgradientPolicy.history_zero",
+    "BanditRL.OnlineSubgradientPolicy.history_succ",
+    "BanditRL.OnlineSubgradientPolicy.output_zero",
+    "BanditRL.OnlineSubgradientPolicy.output_succ",
+    "BanditRL.OnlineSubgradientPolicy.history_mem",
+    "BanditRL.OnlineSubgradientPolicy.output_mem",
+    "BanditRL.OnlineSubgradientPolicy.history_prefix",
+    "BanditRL.OnlineSubgradientPolicy.output_prefix",
+    "BanditRL.OnlineSubgradientPolicy.oracle_feedback",
+    "BanditRL.OnlineSubgradientPolicy.trajectory_finite_loss",
+    "BanditRL.OnlineSubgradientPolicy.one_step_chain",
+    "BanditRL.OnlineSubgradientPolicy.one_step",
+    "BanditRL.OnlineSubgradientPolicy.regret_fixed",
+    "BanditRL.OnlineSubgradientPolicy.regret_fixed_coarse",
+    "BanditRL.OnlineSubgradientPolicy.regret_variable_bound",
+    "BanditRL.OnlineSubgradientPolicy.regret_variable",
+    "BanditRL.OnlineSubgradientPolicy.regret_tuned_distance",
+    "BanditRL.OnlineSubgradientPolicy.regret_tuned",
+    "BanditRL.OnlineSubgradientPolicy.canonicalPolicy_legal",
+    "BanditRL.OnlineSubgradientPolicy.canonical_output",
+    "BanditRL.OnlineSubgradientPolicy.canonical_selected"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Actual native declaration search and frozen context/signature probe before tactics."
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineSubgradientDescent.lemma_2_31",
+      "BanditRL.OnlineSubgradientDescent.finite_loss",
+      "BanditRL.OnlineSubgradientDescent.currentSubgradient_mem",
+      "BanditRL.OnlineGradientDescent.weighted_potential_sum",
+      "BanditRL.OnlineGradientDescent.project_spec"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineSubgradientPolicy.Domain",
+      "BanditRL.OnlineSubgradientPolicy.SupportPolicy",
+      "BanditRL.OnlineSubgradientPolicy.history",
+      "BanditRL.OnlineSubgradientPolicy.output",
+      "BanditRL.OnlineSubgradientPolicy.selected",
+      "BanditRL.OnlineSubgradientPolicy.OracleLaw",
+      "BanditRL.OnlineSubgradientPolicy.canonicalPolicy",
+      "BanditRL.OnlineSubgradientPolicy.LegalFeedback",
+      "BanditRL.OnlineSubgradientPolicy.regret",
+      "BanditRL.OnlineSubgradientPolicy.history_zero",
+      "BanditRL.OnlineSubgradientPolicy.history_succ",
+      "BanditRL.OnlineSubgradientPolicy.output_zero",
+      "BanditRL.OnlineSubgradientPolicy.output_succ",
+      "BanditRL.OnlineSubgradientPolicy.history_mem",
+      "BanditRL.OnlineSubgradientPolicy.output_mem",
+      "BanditRL.OnlineSubgradientPolicy.history_prefix",
+      "BanditRL.OnlineSubgradientPolicy.output_prefix",
+      "BanditRL.OnlineSubgradientPolicy.oracle_feedback",
+      "BanditRL.OnlineSubgradientPolicy.trajectory_finite_loss",
+      "BanditRL.OnlineSubgradientPolicy.one_step_chain",
+      "BanditRL.OnlineSubgradientPolicy.one_step",
+      "BanditRL.OnlineSubgradientPolicy.regret_fixed",
+      "BanditRL.OnlineSubgradientPolicy.regret_fixed_coarse",
+      "BanditRL.OnlineSubgradientPolicy.regret_variable_bound",
+      "BanditRL.OnlineSubgradientPolicy.regret_variable",
+      "BanditRL.OnlineSubgradientPolicy.regret_tuned_distance",
+      "BanditRL.OnlineSubgradientPolicy.regret_tuned",
+      "BanditRL.OnlineSubgradientPolicy.canonicalPolicy_legal",
+      "BanditRL.OnlineSubgradientPolicy.canonical_output",
+      "BanditRL.OnlineSubgradientPolicy.canonical_selected"
+    ],
+    "known_consumers": [
+      "OSDPolicyProbe.history_changes_actual_support",
+      "OSDPolicyProbe.offPath_actual_fixed",
+      "OSDPolicyProbe.harmonic_actual_variable",
+      "OSDPolicyProbe.zero_horizon_actual_fixed"
+    ],
+    "planned_consumers": [
+      "Remaining Chapter2 source targets and accepted older-stack migration."
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Reuse the shared source support/projection theory, add an actual finite-history policy recurrence and derive its performance from played membership; no duplicated per-Book project or assumed regret consumer."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/normal_blind",
+    "source_reviewer": "/root/source_reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Clean v3 decoder+source contract accepted; distinct actual21body review and additional7canary overlay accepted with raw174/199bindings and explicit historicalTest supersession. Actual122axiom names. Final reader and immutable package bindings separate; no external human/model independence. Reader01 attribution-only rejected candidate is retained; its finalreader-v2 replacement must separately pass before package acceptance."
+  },
+  "graph_contribution": {
+    "lean_graph": "new-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "The same Euclidean projection/support mechanism with a broader finite-feedback policy interface; no separately certified cross-setting functor.",
+    "focus_targets": [
+      "BanditRL.OnlineSubgradientPolicy.Domain",
+      "BanditRL.OnlineSubgradientPolicy.SupportPolicy",
+      "BanditRL.OnlineSubgradientPolicy.history",
+      "BanditRL.OnlineSubgradientPolicy.output",
+      "BanditRL.OnlineSubgradientPolicy.selected",
+      "BanditRL.OnlineSubgradientPolicy.OracleLaw",
+      "BanditRL.OnlineSubgradientPolicy.canonicalPolicy",
+      "BanditRL.OnlineSubgradientPolicy.LegalFeedback",
+      "BanditRL.OnlineSubgradientPolicy.regret",
+      "BanditRL.OnlineSubgradientPolicy.history_zero",
+      "BanditRL.OnlineSubgradientPolicy.history_succ",
+      "BanditRL.OnlineSubgradientPolicy.output_zero",
+      "BanditRL.OnlineSubgradientPolicy.output_succ",
+      "BanditRL.OnlineSubgradientPolicy.history_mem",
+      "BanditRL.OnlineSubgradientPolicy.output_mem",
+      "BanditRL.OnlineSubgradientPolicy.history_prefix",
+      "BanditRL.OnlineSubgradientPolicy.output_prefix",
+      "BanditRL.OnlineSubgradientPolicy.oracle_feedback",
+      "BanditRL.OnlineSubgradientPolicy.trajectory_finite_loss",
+      "BanditRL.OnlineSubgradientPolicy.one_step_chain",
+      "BanditRL.OnlineSubgradientPolicy.one_step",
+      "BanditRL.OnlineSubgradientPolicy.regret_fixed",
+      "BanditRL.OnlineSubgradientPolicy.regret_fixed_coarse",
+      "BanditRL.OnlineSubgradientPolicy.regret_variable_bound",
+      "BanditRL.OnlineSubgradientPolicy.regret_variable",
+      "BanditRL.OnlineSubgradientPolicy.regret_tuned_distance",
+      "BanditRL.OnlineSubgradientPolicy.regret_tuned",
+      "BanditRL.OnlineSubgradientPolicy.canonicalPolicy_legal",
+      "BanditRL.OnlineSubgradientPolicy.canonical_output",
+      "BanditRL.OnlineSubgradientPolicy.canonical_selected"
+    ],
+    "visual_review": "Actual compiled proof-value export passes21required checks,30scope473boundary2325edges. Complete rendered reader and exact shared-registry checks remain separate, not inferred from graph.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: source-qualified Algorithm2.2 policy family and sharp source performance in the same registry; Chapter2/whole Book remain incomplete.",
+    "banditrlwiki": "no-change-with-reason: no new Bandit-specific setting or guarantee; shared Online source mapping carries reusable algorithm",
+    "results_ledger": "no-change-with-reason: Bandit results unchanged; Online source inventory carries the scoped package.",
+    "roadmap": "no-change-with-reason: persistent whole-book Goal remains active, Chapter2 partial, future chapters unenumerated and historical SGB pointer untouched.",
+    "website_surfaces": [
+      "website/content/books.json",
+      "website/content/chapters.json",
+      "website/content/readings.json",
+      "website/content/highlights.json",
+      "website/scripts/build_site.py",
+      "website/scripts/check_site.py"
+    ],
+    "inherited_source_caption": "Existing source-caption and folded-Lean renderer inherited; this route has individual formulas/proof arguments for all21 theorems and required algorithm pseudocode."
+  },
+  "truth_boundary": "Actual21public frozen proofs and74canaries, focused3320/3324,root9083/Tests9220,full466tests7existing skips,122named standard3-or-none axioms and21proof-value dependency checks pass locally. Distinct source/body reviews accepted with explicit finite-history/deterministic/index/finite-value deltas. Final reader/rawbindings/stackedPR delivery separate. Chapter2/older26migration and Chapters3-16 remain required; no merged/live/anytime/randomized-law assertion.",
+  "verification": {
+    "focused_checks": [
+      "Actual21public frozenproofs3320jobs and74canaries3324jobs; all21actualPUBLICfences match the immutable statements.",
+      "122actual public/Test named checks and standard3-or-none axioms.",
+      "Actual oppositehistory support choices, falseoffpathlaw with legalplay, fixedregret1/2/energy3/terminal1/4, harmonicrealregret1/3/lasteta1/8/terminal1/144, trueemptyfallback with nonlegality and T0nonzerodistancecancellation."
+    ],
+    "bandit_check": "Actual root9083/Tests9220 and full-harness02 pass466tests7existing skips. Original full-harness01 tracking-only failure retained. Final committed gate/scoped contributor/reader/raw bindings separate.",
+    "site_build": "Actual applicable full03 gate passes466tests7existing skips. Site03 passes937pages835modules10721declarations257highlights, source_dirtyfalse at ca921d2. Reader01 attribution repair changes presentation only; final04 regeneration and finalreader-v2 are separate real gates.",
+    "site_check": "Site03 technical checks and unchanged1499464<1500000index fence pass. Reader01 correctly rejects three structural/algorithm source-theorem cards; source/body/targets remain unchanged. Four genuine source performance cards and all21public theorem notes remain after explicit reader repair.",
+    "independent_review": "Distinct automated neutral decoder and source reviewer; first body receipt and additional canary overlay scoped separately. No external human review."
+  },
+  "contributor": {
+    "name": "Codex for Ji Cheng",
+    "role": "Formalization and integration; distinct automated semantic actors named above; source attribution retained"
+  }
+}

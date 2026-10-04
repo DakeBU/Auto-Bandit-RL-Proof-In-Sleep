@@ -610,9 +610,23 @@
       "meaning": "Algorithm 2.2; both fixed and decreasing-step residual bounds and tuned guarantee",
       "printed_page": 19,
       "pdf_page": 31,
-      "status": "draft",
-      "lean_name": null,
-      "required": true
+      "status": "public-compiled-local actual finite-history policy package; sourcebody/canary accepted; final package gates/delivery pending",
+      "lean_name": "BanditRL.OnlineSubgradientPolicy.regret_tuned",
+      "required": true,
+      "lean_names": [
+        "BanditRL.OnlineSubgradientPolicy.history",
+        "BanditRL.OnlineSubgradientPolicy.selected",
+        "BanditRL.OnlineSubgradientPolicy.output_succ",
+        "BanditRL.OnlineSubgradientPolicy.history_mem",
+        "BanditRL.OnlineSubgradientPolicy.output_prefix",
+        "BanditRL.OnlineSubgradientPolicy.one_step_chain",
+        "BanditRL.OnlineSubgradientPolicy.regret_fixed",
+        "BanditRL.OnlineSubgradientPolicy.regret_variable",
+        "BanditRL.OnlineSubgradientPolicy.regret_tuned",
+        "BanditRL.OnlineSubgradientPolicy.canonical_output"
+      ],
+      "evidence": "runs/online-osd-policy-20261004",
+      "boundary": "All fixed exogenous deterministic finite-history support policies with played legality; actualrecurrence/same-run bounds and canonical equality. Pathwise source coverage; no randomized-law/measurability/independence/executable oracle assertion. Chapter2 and older26migration required; package candidate is not merged/live."
     },
     {
       "source_id": "C2-linearization",
@@ -678,7 +692,13 @@
         "BanditRL.OnlineSubgradientDescent.iterate_finite_loss"
       ],
       "evidence": "runs\\online-osd-20261004",
-      "boundary": "Accepted canonical permitted current-choice instantiation with reviewed exact source scope; generic legal/history-adaptive source support-family coverage and full Chapter2 remain mandatory. Historical raw accepted evidence is scoped to PR147 accepted commit, not automatically refreshed for this new package."
+      "boundary": "Accepted canonical permitted current-choice instantiation with reviewed exact source scope; generic legal/history-adaptive source support-family coverage and full Chapter2 remain mandatory. Historical raw accepted evidence is scoped to PR147 accepted commit, not automatically refreshed for this new package.",
+      "policy_family_extension": {
+        "lean_name": "BanditRL.OnlineSubgradientPolicy.history",
+        "evidence": "runs/online-osd-policy-20261004",
+        "status": "compiled/sourcebodyaccepted; finalpackagegates pending",
+        "boundary": "Canonical old contract and raw historical evidence remain scoped separately. General fixed exogenous finite-history played-legal policy family is proved, with stochastic-law assumptions outside this deterministic pathwise package."
+      }
     },
     {
       "source_id": "Unnumbered 2.2.2 OGD-to-OSD performance transfer",
@@ -694,7 +714,13 @@
         "BanditRL.OnlineSubgradientDescent.regret_tuned"
       ],
       "evidence": "runs\\online-osd-20261004",
-      "boundary": "Accepted canonical permitted current-choice instantiation with reviewed exact source scope; generic legal/history-adaptive source support-family coverage and full Chapter2 remain mandatory. Historical raw accepted evidence is scoped to PR147 accepted commit, not automatically refreshed for this new package."
+      "boundary": "Accepted canonical permitted current-choice instantiation with reviewed exact source scope; generic legal/history-adaptive source support-family coverage and full Chapter2 remain mandatory. Historical raw accepted evidence is scoped to PR147 accepted commit, not automatically refreshed for this new package.",
+      "policy_family_extension": {
+        "lean_name": "BanditRL.OnlineSubgradientPolicy.regret_fixed",
+        "evidence": "runs/online-osd-policy-20261004",
+        "status": "compiled/sourcebodyaccepted; finalpackagegates pending",
+        "boundary": "Canonical old contract and raw historical evidence remain scoped separately. General fixed exogenous finite-history played-legal policy family is proved, with stochastic-law assumptions outside this deterministic pathwise package."
+      }
     },
     {
       "source_id": "Unnumbered 2.2.3 fixed OSD regret formula",
@@ -708,19 +734,37 @@
         "BanditRL.OnlineSubgradientDescent.regret_fixed_coarse"
       ],
       "evidence": "runs\\online-osd-20261004",
-      "boundary": "Accepted canonical permitted current-choice instantiation with reviewed exact source scope; generic legal/history-adaptive source support-family coverage and full Chapter2 remain mandatory. Historical raw accepted evidence is scoped to PR147 accepted commit, not automatically refreshed for this new package."
+      "boundary": "Accepted canonical permitted current-choice instantiation with reviewed exact source scope; generic legal/history-adaptive source support-family coverage and full Chapter2 remain mandatory. Historical raw accepted evidence is scoped to PR147 accepted commit, not automatically refreshed for this new package.",
+      "policy_family_extension": {
+        "lean_name": "BanditRL.OnlineSubgradientPolicy.regret_fixed_coarse",
+        "evidence": "runs/online-osd-policy-20261004",
+        "status": "compiled/sourcebodyaccepted; finalpackagegates pending",
+        "boundary": "Canonical old contract and raw historical evidence remain scoped separately. General fixed exogenous finite-history played-legal policy family is proved, with stochastic-law assumptions outside this deterministic pathwise package."
+      }
     },
     {
       "source_id": "Algorithm 2.2 arbitrary legal/history-adaptive support family",
       "printed_page": 20,
       "pdf_page": 32,
       "kind": "Algorithm/performance completeness obligation",
-      "status": "draft",
-      "lean_name": null,
+      "status": "public-compiled-local actual finite-history policy package; sourcebody/canary accepted; final package gates/delivery pending",
+      "lean_name": "BanditRL.OnlineSubgradientPolicy.regret_tuned",
       "required": true,
       "meaning": "Define genuine recursive projected outputs under any current/history-adapted legal support rule; derive support/feasibility/prefix and same-trajectory fixed/variable/tuned regret. Canonical current-choice implementation is one member, not universal coverage.",
-      "evidence": "runs/online-osd-20261004/accepted-decision.json",
-      "boundary": "Explicit required remaining source algorithm family, no exclusion for difficulty."
+      "evidence": "runs/online-osd-policy-20261004",
+      "boundary": "All fixed exogenous deterministic finite-history support policies with played legality; actualrecurrence/same-run bounds and canonical equality. Pathwise source coverage; no randomized-law/measurability/independence/executable oracle assertion. Chapter2 and older26migration required; package candidate is not merged/live.",
+      "lean_names": [
+        "BanditRL.OnlineSubgradientPolicy.history",
+        "BanditRL.OnlineSubgradientPolicy.selected",
+        "BanditRL.OnlineSubgradientPolicy.output_succ",
+        "BanditRL.OnlineSubgradientPolicy.history_mem",
+        "BanditRL.OnlineSubgradientPolicy.output_prefix",
+        "BanditRL.OnlineSubgradientPolicy.one_step_chain",
+        "BanditRL.OnlineSubgradientPolicy.regret_fixed",
+        "BanditRL.OnlineSubgradientPolicy.regret_variable",
+        "BanditRL.OnlineSubgradientPolicy.regret_tuned",
+        "BanditRL.OnlineSubgradientPolicy.canonical_output"
+      ]
     }
   ],
   "optional_exercises": {

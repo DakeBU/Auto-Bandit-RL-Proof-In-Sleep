@@ -1,0 +1,1 @@
+Canary06 actualexit1 onlyin monoinstance: singleline nested `by omega; interval_cases` keptfollowing tactics inside proof of Natbound hb, alreadyclosed. Body-only explicitmultiline separates that proof from the remaining harmonic-step monotonicity. All6706nativeheadersunchanged; allvariable/tuned/future/zero/canonical statements kept.

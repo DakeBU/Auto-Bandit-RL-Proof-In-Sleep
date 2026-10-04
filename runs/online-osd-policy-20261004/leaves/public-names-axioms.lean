@@ -1,0 +1,62 @@
+import BanditRLProof.OnlineSubgradientPolicy
+
+#check BanditRL.OnlineSubgradientPolicy.Domain
+#print axioms BanditRL.OnlineSubgradientPolicy.Domain
+#check BanditRL.OnlineSubgradientPolicy.SupportPolicy
+#print axioms BanditRL.OnlineSubgradientPolicy.SupportPolicy
+#check BanditRL.OnlineSubgradientPolicy.history
+#print axioms BanditRL.OnlineSubgradientPolicy.history
+#check BanditRL.OnlineSubgradientPolicy.output
+#print axioms BanditRL.OnlineSubgradientPolicy.output
+#check BanditRL.OnlineSubgradientPolicy.selected
+#print axioms BanditRL.OnlineSubgradientPolicy.selected
+#check BanditRL.OnlineSubgradientPolicy.OracleLaw
+#print axioms BanditRL.OnlineSubgradientPolicy.OracleLaw
+#check BanditRL.OnlineSubgradientPolicy.canonicalPolicy
+#print axioms BanditRL.OnlineSubgradientPolicy.canonicalPolicy
+#check BanditRL.OnlineSubgradientPolicy.LegalFeedback
+#print axioms BanditRL.OnlineSubgradientPolicy.LegalFeedback
+#check BanditRL.OnlineSubgradientPolicy.regret
+#print axioms BanditRL.OnlineSubgradientPolicy.regret
+#check BanditRL.OnlineSubgradientPolicy.history_zero
+#print axioms BanditRL.OnlineSubgradientPolicy.history_zero
+#check BanditRL.OnlineSubgradientPolicy.history_succ
+#print axioms BanditRL.OnlineSubgradientPolicy.history_succ
+#check BanditRL.OnlineSubgradientPolicy.output_zero
+#print axioms BanditRL.OnlineSubgradientPolicy.output_zero
+#check BanditRL.OnlineSubgradientPolicy.output_succ
+#print axioms BanditRL.OnlineSubgradientPolicy.output_succ
+#check BanditRL.OnlineSubgradientPolicy.history_mem
+#print axioms BanditRL.OnlineSubgradientPolicy.history_mem
+#check BanditRL.OnlineSubgradientPolicy.output_mem
+#print axioms BanditRL.OnlineSubgradientPolicy.output_mem
+#check BanditRL.OnlineSubgradientPolicy.history_prefix
+#print axioms BanditRL.OnlineSubgradientPolicy.history_prefix
+#check BanditRL.OnlineSubgradientPolicy.output_prefix
+#print axioms BanditRL.OnlineSubgradientPolicy.output_prefix
+#check BanditRL.OnlineSubgradientPolicy.oracle_feedback
+#print axioms BanditRL.OnlineSubgradientPolicy.oracle_feedback
+#check BanditRL.OnlineSubgradientPolicy.trajectory_finite_loss
+#print axioms BanditRL.OnlineSubgradientPolicy.trajectory_finite_loss
+#check BanditRL.OnlineSubgradientPolicy.one_step_chain
+#print axioms BanditRL.OnlineSubgradientPolicy.one_step_chain
+#check BanditRL.OnlineSubgradientPolicy.one_step
+#print axioms BanditRL.OnlineSubgradientPolicy.one_step
+#check BanditRL.OnlineSubgradientPolicy.regret_fixed
+#print axioms BanditRL.OnlineSubgradientPolicy.regret_fixed
+#check BanditRL.OnlineSubgradientPolicy.regret_fixed_coarse
+#print axioms BanditRL.OnlineSubgradientPolicy.regret_fixed_coarse
+#check BanditRL.OnlineSubgradientPolicy.regret_variable_bound
+#print axioms BanditRL.OnlineSubgradientPolicy.regret_variable_bound
+#check BanditRL.OnlineSubgradientPolicy.regret_variable
+#print axioms BanditRL.OnlineSubgradientPolicy.regret_variable
+#check BanditRL.OnlineSubgradientPolicy.regret_tuned_distance
+#print axioms BanditRL.OnlineSubgradientPolicy.regret_tuned_distance
+#check BanditRL.OnlineSubgradientPolicy.regret_tuned
+#print axioms BanditRL.OnlineSubgradientPolicy.regret_tuned
+#check BanditRL.OnlineSubgradientPolicy.canonicalPolicy_legal
+#print axioms BanditRL.OnlineSubgradientPolicy.canonicalPolicy_legal
+#check BanditRL.OnlineSubgradientPolicy.canonical_output
+#print axioms BanditRL.OnlineSubgradientPolicy.canonical_output
+#check BanditRL.OnlineSubgradientPolicy.canonical_selected
+#print axioms BanditRL.OnlineSubgradientPolicy.canonical_selected

@@ -1,0 +1,24 @@
+{
+  "command": [
+    "python",
+    "-X",
+    "utf8",
+    "tools/bandit.py",
+    "statement-fence",
+    "--declaration",
+    "BanditRL.OnlineSubgradientPolicy.trajectory_finite_loss",
+    "--file",
+    "tmp/online-osd-policy-target-v1.lean",
+    "--output",
+    "docs\\contracts\\online-osd-policy-v1\\trajectory_finite_loss.json",
+    "--source-assumption",
+    "(hx\u2081 : x\u2081 \u2208 V.carrier)",
+    "--source-assumption",
+    "(hloss : BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t))",
+    "--source-assumption",
+    "(hu : u \u2208 V.carrier)"
+  ],
+  "exit_code": 0,
+  "started_at": "2026-10-04T08:27:58.126198+00:00",
+  "ended_at": "2026-10-04T08:27:58.342140+00:00"
+}

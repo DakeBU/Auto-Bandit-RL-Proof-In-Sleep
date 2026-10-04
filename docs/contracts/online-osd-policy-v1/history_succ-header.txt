@@ -1,0 +1,6 @@
+theorem history_succ (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) :
+    history V η loss x₁ p (t + 1) =
+      Fin.snoc (history V η loss x₁ p t)
+        (BanditRL.OnlineGradientDescent.project V
+          (output V η loss x₁ p t - η t • selected V η loss x₁ p t))

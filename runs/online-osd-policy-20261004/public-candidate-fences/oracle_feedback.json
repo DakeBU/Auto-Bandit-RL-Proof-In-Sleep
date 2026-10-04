@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineSubgradientPolicy.oracle_feedback",
+  "file": "BanditRLProof/OnlineSubgradientPolicy.lean",
+  "statement": "theorem oracle_feedback (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (hx₁ : x₁ ∈ V.carrier) (T : ℕ) (hp : OracleLaw V p) (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) : LegalFeedback V η loss x₁ p T",
+  "statement_hash": "f9ec04f4ccf403b1787b79996d71f7bc2a2973ff54dde2576f606667f588eb73",
+  "source_assumptions": [
+    "(hx₁ : x₁ ∈ V.carrier)",
+    "(hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t))",
+    "(hp : OracleLaw V p)"
+  ],
+  "created_at": "2026-10-04T08:55:17+00:00"
+}

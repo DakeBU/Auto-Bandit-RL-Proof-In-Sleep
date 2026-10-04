@@ -1,0 +1,4 @@
+BanditRL.OnlineSubgradientDescent.finite_loss [theorem] BanditRLProof/OnlineSubgradientDescent.lean:80
+  theorem finite_loss (V : Domain (E := E)) (f : E → EReal) (hf : SubdifferentiableOn V f) (x : E) (hx : x ∈ V.carrier) : f x = ((f x).toReal : EReal)
+BanditRL.OnlineSubgradientDescent.iterate_finite_loss [theorem] BanditRLProof/OnlineSubgradientDescent.lean:112
+  theorem iterate_finite_loss (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (t : ℕ) (hloss : SubdifferentiableOn V (loss t)) (u : E) (hu : u ∈ V.carrier) : loss t (iterate V η loss x₁ t) = ((loss t (iterate V η loss x₁ t)).toReal : EReal) ∧ loss t u = ((loss t u).toReal : EReal)

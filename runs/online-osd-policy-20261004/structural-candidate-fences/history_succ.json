@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineSubgradientPolicy.history_succ",
+  "file": "runs/online-osd-policy-20261004/leaves/policy-structural-01.lean",
+  "statement": "theorem history_succ (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) : history V η loss x₁ p (t + 1) = Fin.snoc (history V η loss x₁ p t) (BanditRL.OnlineGradientDescent.project V (output V η loss x₁ p t - η t • selected V η loss x₁ p t))",
+  "statement_hash": "d1c07adb1b7dac0a730844e6a60f1714976d2c4893784043cb963968c5aa745a",
+  "source_assumptions": [],
+  "created_at": "2026-10-04T08:45:28+00:00"
+}

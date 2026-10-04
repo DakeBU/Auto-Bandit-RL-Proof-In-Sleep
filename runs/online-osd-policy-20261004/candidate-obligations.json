@@ -1,0 +1,454 @@
+{
+  "stage": "candidate",
+  "terminal": [
+    "regret_fixed",
+    "regret_variable",
+    "regret_tuned",
+    "canonical_output"
+  ],
+  "nodes": [
+    {
+      "id": "history_zero",
+      "depends_on": [],
+      "status": "compiled-public-candidate",
+      "file": "BanditRLProof/OnlineSubgradientPolicy.lean",
+      "external_ready": [
+        "BanditRL.OnlineSubgradientDescent.lemma_2_31",
+        "BanditRL.OnlineGradientDescent.project_spec",
+        "BanditRL.OnlineGradientDescent.weighted_potential_sum",
+        "BanditRL.OnlineSubgradientDescent.finite_loss",
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient_mem",
+        "Fin.snoc_last",
+        "Fin.snoc_castSucc"
+      ],
+      "evidence": [
+        "public-focused-01-exit.json",
+        "public-guard-history_zero.log"
+      ]
+    },
+    {
+      "id": "history_succ",
+      "depends_on": [],
+      "status": "compiled-public-candidate",
+      "file": "BanditRLProof/OnlineSubgradientPolicy.lean",
+      "external_ready": [
+        "BanditRL.OnlineSubgradientDescent.lemma_2_31",
+        "BanditRL.OnlineGradientDescent.project_spec",
+        "BanditRL.OnlineGradientDescent.weighted_potential_sum",
+        "BanditRL.OnlineSubgradientDescent.finite_loss",
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient_mem",
+        "Fin.snoc_last",
+        "Fin.snoc_castSucc"
+      ],
+      "evidence": [
+        "public-focused-01-exit.json",
+        "public-guard-history_succ.log"
+      ]
+    },
+    {
+      "id": "output_zero",
+      "depends_on": [
+        "history_zero"
+      ],
+      "status": "compiled-public-candidate",
+      "file": "BanditRLProof/OnlineSubgradientPolicy.lean",
+      "external_ready": [
+        "BanditRL.OnlineSubgradientDescent.lemma_2_31",
+        "BanditRL.OnlineGradientDescent.project_spec",
+        "BanditRL.OnlineGradientDescent.weighted_potential_sum",
+        "BanditRL.OnlineSubgradientDescent.finite_loss",
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient_mem",
+        "Fin.snoc_last",
+        "Fin.snoc_castSucc"
+      ],
+      "evidence": [
+        "public-focused-01-exit.json",
+        "public-guard-output_zero.log"
+      ]
+    },
+    {
+      "id": "output_succ",
+      "depends_on": [
+        "history_succ"
+      ],
+      "status": "compiled-public-candidate",
+      "file": "BanditRLProof/OnlineSubgradientPolicy.lean",
+      "external_ready": [
+        "BanditRL.OnlineSubgradientDescent.lemma_2_31",
+        "BanditRL.OnlineGradientDescent.project_spec",
+        "BanditRL.OnlineGradientDescent.weighted_potential_sum",
+        "BanditRL.OnlineSubgradientDescent.finite_loss",
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient_mem",
+        "Fin.snoc_last",
+        "Fin.snoc_castSucc"
+      ],
+      "evidence": [
+        "public-focused-01-exit.json",
+        "public-guard-output_succ.log"
+      ]
+    },
+    {
+      "id": "history_mem",
+      "depends_on": [
+        "history_succ",
+        "history_zero"
+      ],
+      "status": "compiled-public-candidate",
+      "file": "BanditRLProof/OnlineSubgradientPolicy.lean",
+      "external_ready": [
+        "BanditRL.OnlineSubgradientDescent.lemma_2_31",
+        "BanditRL.OnlineGradientDescent.project_spec",
+        "BanditRL.OnlineGradientDescent.weighted_potential_sum",
+        "BanditRL.OnlineSubgradientDescent.finite_loss",
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient_mem",
+        "Fin.snoc_last",
+        "Fin.snoc_castSucc"
+      ],
+      "evidence": [
+        "public-focused-01-exit.json",
+        "public-guard-history_mem.log"
+      ]
+    },
+    {
+      "id": "output_mem",
+      "depends_on": [
+        "history_mem"
+      ],
+      "status": "compiled-public-candidate",
+      "file": "BanditRLProof/OnlineSubgradientPolicy.lean",
+      "external_ready": [
+        "BanditRL.OnlineSubgradientDescent.lemma_2_31",
+        "BanditRL.OnlineGradientDescent.project_spec",
+        "BanditRL.OnlineGradientDescent.weighted_potential_sum",
+        "BanditRL.OnlineSubgradientDescent.finite_loss",
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient_mem",
+        "Fin.snoc_last",
+        "Fin.snoc_castSucc"
+      ],
+      "evidence": [
+        "public-focused-01-exit.json",
+        "public-guard-output_mem.log"
+      ]
+    },
+    {
+      "id": "history_prefix",
+      "depends_on": [
+        "history_succ",
+        "history_zero"
+      ],
+      "status": "compiled-public-candidate",
+      "file": "BanditRLProof/OnlineSubgradientPolicy.lean",
+      "external_ready": [
+        "BanditRL.OnlineSubgradientDescent.lemma_2_31",
+        "BanditRL.OnlineGradientDescent.project_spec",
+        "BanditRL.OnlineGradientDescent.weighted_potential_sum",
+        "BanditRL.OnlineSubgradientDescent.finite_loss",
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient_mem",
+        "Fin.snoc_last",
+        "Fin.snoc_castSucc"
+      ],
+      "evidence": [
+        "public-focused-01-exit.json",
+        "public-guard-history_prefix.log"
+      ]
+    },
+    {
+      "id": "output_prefix",
+      "depends_on": [
+        "history_prefix"
+      ],
+      "status": "compiled-public-candidate",
+      "file": "BanditRLProof/OnlineSubgradientPolicy.lean",
+      "external_ready": [
+        "BanditRL.OnlineSubgradientDescent.lemma_2_31",
+        "BanditRL.OnlineGradientDescent.project_spec",
+        "BanditRL.OnlineGradientDescent.weighted_potential_sum",
+        "BanditRL.OnlineSubgradientDescent.finite_loss",
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient_mem",
+        "Fin.snoc_last",
+        "Fin.snoc_castSucc"
+      ],
+      "evidence": [
+        "public-focused-01-exit.json",
+        "public-guard-output_prefix.log"
+      ]
+    },
+    {
+      "id": "oracle_feedback",
+      "depends_on": [
+        "output_mem"
+      ],
+      "status": "compiled-public-candidate",
+      "file": "BanditRLProof/OnlineSubgradientPolicy.lean",
+      "external_ready": [
+        "BanditRL.OnlineSubgradientDescent.lemma_2_31",
+        "BanditRL.OnlineGradientDescent.project_spec",
+        "BanditRL.OnlineGradientDescent.weighted_potential_sum",
+        "BanditRL.OnlineSubgradientDescent.finite_loss",
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient_mem",
+        "Fin.snoc_last",
+        "Fin.snoc_castSucc"
+      ],
+      "evidence": [
+        "public-focused-01-exit.json",
+        "public-guard-oracle_feedback.log"
+      ]
+    },
+    {
+      "id": "trajectory_finite_loss",
+      "depends_on": [
+        "output_mem"
+      ],
+      "status": "compiled-public-candidate",
+      "file": "BanditRLProof/OnlineSubgradientPolicy.lean",
+      "external_ready": [
+        "BanditRL.OnlineSubgradientDescent.lemma_2_31",
+        "BanditRL.OnlineGradientDescent.project_spec",
+        "BanditRL.OnlineGradientDescent.weighted_potential_sum",
+        "BanditRL.OnlineSubgradientDescent.finite_loss",
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient_mem",
+        "Fin.snoc_last",
+        "Fin.snoc_castSucc"
+      ],
+      "evidence": [
+        "public-focused-01-exit.json",
+        "public-guard-trajectory_finite_loss.log"
+      ]
+    },
+    {
+      "id": "one_step_chain",
+      "depends_on": [
+        "output_succ"
+      ],
+      "status": "compiled-public-candidate",
+      "file": "BanditRLProof/OnlineSubgradientPolicy.lean",
+      "external_ready": [
+        "BanditRL.OnlineSubgradientDescent.lemma_2_31",
+        "BanditRL.OnlineGradientDescent.project_spec",
+        "BanditRL.OnlineGradientDescent.weighted_potential_sum",
+        "BanditRL.OnlineSubgradientDescent.finite_loss",
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient_mem",
+        "Fin.snoc_last",
+        "Fin.snoc_castSucc"
+      ],
+      "evidence": [
+        "public-focused-01-exit.json",
+        "public-guard-one_step_chain.log"
+      ]
+    },
+    {
+      "id": "one_step",
+      "depends_on": [
+        "one_step_chain"
+      ],
+      "status": "compiled-public-candidate",
+      "file": "BanditRLProof/OnlineSubgradientPolicy.lean",
+      "external_ready": [
+        "BanditRL.OnlineSubgradientDescent.lemma_2_31",
+        "BanditRL.OnlineGradientDescent.project_spec",
+        "BanditRL.OnlineGradientDescent.weighted_potential_sum",
+        "BanditRL.OnlineSubgradientDescent.finite_loss",
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient_mem",
+        "Fin.snoc_last",
+        "Fin.snoc_castSucc"
+      ],
+      "evidence": [
+        "public-focused-01-exit.json",
+        "public-guard-one_step.log"
+      ]
+    },
+    {
+      "id": "regret_fixed",
+      "depends_on": [
+        "one_step_chain",
+        "output_zero"
+      ],
+      "status": "compiled-public-candidate",
+      "file": "BanditRLProof/OnlineSubgradientPolicy.lean",
+      "external_ready": [
+        "BanditRL.OnlineSubgradientDescent.lemma_2_31",
+        "BanditRL.OnlineGradientDescent.project_spec",
+        "BanditRL.OnlineGradientDescent.weighted_potential_sum",
+        "BanditRL.OnlineSubgradientDescent.finite_loss",
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient_mem",
+        "Fin.snoc_last",
+        "Fin.snoc_castSucc"
+      ],
+      "evidence": [
+        "public-focused-01-exit.json",
+        "public-guard-regret_fixed.log"
+      ]
+    },
+    {
+      "id": "regret_fixed_coarse",
+      "depends_on": [
+        "regret_fixed"
+      ],
+      "status": "compiled-public-candidate",
+      "file": "BanditRLProof/OnlineSubgradientPolicy.lean",
+      "external_ready": [
+        "BanditRL.OnlineSubgradientDescent.lemma_2_31",
+        "BanditRL.OnlineGradientDescent.project_spec",
+        "BanditRL.OnlineGradientDescent.weighted_potential_sum",
+        "BanditRL.OnlineSubgradientDescent.finite_loss",
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient_mem",
+        "Fin.snoc_last",
+        "Fin.snoc_castSucc"
+      ],
+      "evidence": [
+        "public-focused-01-exit.json",
+        "public-guard-regret_fixed_coarse.log"
+      ]
+    },
+    {
+      "id": "regret_variable_bound",
+      "depends_on": [
+        "one_step",
+        "output_mem"
+      ],
+      "status": "compiled-public-candidate",
+      "file": "BanditRLProof/OnlineSubgradientPolicy.lean",
+      "external_ready": [
+        "BanditRL.OnlineSubgradientDescent.lemma_2_31",
+        "BanditRL.OnlineGradientDescent.project_spec",
+        "BanditRL.OnlineGradientDescent.weighted_potential_sum",
+        "BanditRL.OnlineSubgradientDescent.finite_loss",
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient_mem",
+        "Fin.snoc_last",
+        "Fin.snoc_castSucc"
+      ],
+      "evidence": [
+        "public-focused-01-exit.json",
+        "public-guard-regret_variable_bound.log"
+      ]
+    },
+    {
+      "id": "regret_variable",
+      "depends_on": [
+        "regret_variable_bound"
+      ],
+      "status": "compiled-public-candidate",
+      "file": "BanditRLProof/OnlineSubgradientPolicy.lean",
+      "external_ready": [
+        "BanditRL.OnlineSubgradientDescent.lemma_2_31",
+        "BanditRL.OnlineGradientDescent.project_spec",
+        "BanditRL.OnlineGradientDescent.weighted_potential_sum",
+        "BanditRL.OnlineSubgradientDescent.finite_loss",
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient_mem",
+        "Fin.snoc_last",
+        "Fin.snoc_castSucc"
+      ],
+      "evidence": [
+        "public-focused-01-exit.json",
+        "public-guard-regret_variable.log"
+      ]
+    },
+    {
+      "id": "regret_tuned_distance",
+      "depends_on": [
+        "regret_fixed"
+      ],
+      "status": "compiled-public-candidate",
+      "file": "BanditRLProof/OnlineSubgradientPolicy.lean",
+      "external_ready": [
+        "BanditRL.OnlineSubgradientDescent.lemma_2_31",
+        "BanditRL.OnlineGradientDescent.project_spec",
+        "BanditRL.OnlineGradientDescent.weighted_potential_sum",
+        "BanditRL.OnlineSubgradientDescent.finite_loss",
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient_mem",
+        "Fin.snoc_last",
+        "Fin.snoc_castSucc"
+      ],
+      "evidence": [
+        "public-focused-01-exit.json",
+        "public-guard-regret_tuned_distance.log"
+      ]
+    },
+    {
+      "id": "regret_tuned",
+      "depends_on": [
+        "regret_tuned_distance"
+      ],
+      "status": "compiled-public-candidate",
+      "file": "BanditRLProof/OnlineSubgradientPolicy.lean",
+      "external_ready": [
+        "BanditRL.OnlineSubgradientDescent.lemma_2_31",
+        "BanditRL.OnlineGradientDescent.project_spec",
+        "BanditRL.OnlineGradientDescent.weighted_potential_sum",
+        "BanditRL.OnlineSubgradientDescent.finite_loss",
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient_mem",
+        "Fin.snoc_last",
+        "Fin.snoc_castSucc"
+      ],
+      "evidence": [
+        "public-focused-01-exit.json",
+        "public-guard-regret_tuned.log"
+      ]
+    },
+    {
+      "id": "canonicalPolicy_legal",
+      "depends_on": [],
+      "status": "compiled-public-candidate",
+      "file": "BanditRLProof/OnlineSubgradientPolicy.lean",
+      "external_ready": [
+        "BanditRL.OnlineSubgradientDescent.lemma_2_31",
+        "BanditRL.OnlineGradientDescent.project_spec",
+        "BanditRL.OnlineGradientDescent.weighted_potential_sum",
+        "BanditRL.OnlineSubgradientDescent.finite_loss",
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient_mem",
+        "Fin.snoc_last",
+        "Fin.snoc_castSucc"
+      ],
+      "evidence": [
+        "public-focused-01-exit.json",
+        "public-guard-canonicalPolicy_legal.log"
+      ]
+    },
+    {
+      "id": "canonical_output",
+      "depends_on": [
+        "output_succ",
+        "output_zero"
+      ],
+      "status": "compiled-public-candidate",
+      "file": "BanditRLProof/OnlineSubgradientPolicy.lean",
+      "external_ready": [
+        "BanditRL.OnlineSubgradientDescent.lemma_2_31",
+        "BanditRL.OnlineGradientDescent.project_spec",
+        "BanditRL.OnlineGradientDescent.weighted_potential_sum",
+        "BanditRL.OnlineSubgradientDescent.finite_loss",
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient_mem",
+        "Fin.snoc_last",
+        "Fin.snoc_castSucc"
+      ],
+      "evidence": [
+        "public-focused-01-exit.json",
+        "public-guard-canonical_output.log"
+      ]
+    },
+    {
+      "id": "canonical_selected",
+      "depends_on": [
+        "canonical_output"
+      ],
+      "status": "compiled-public-candidate",
+      "file": "BanditRLProof/OnlineSubgradientPolicy.lean",
+      "external_ready": [
+        "BanditRL.OnlineSubgradientDescent.lemma_2_31",
+        "BanditRL.OnlineGradientDescent.project_spec",
+        "BanditRL.OnlineGradientDescent.weighted_potential_sum",
+        "BanditRL.OnlineSubgradientDescent.finite_loss",
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient_mem",
+        "Fin.snoc_last",
+        "Fin.snoc_castSucc"
+      ],
+      "evidence": [
+        "public-focused-01-exit.json",
+        "public-guard-canonical_selected.log"
+      ]
+    }
+  ],
+  "source_review_pending": true,
+  "chapter_complete": false,
+  "scope": "all21 public frozen terminal bodies compile with actual native fences; semantic body review accepted for first candidate and extra7canaries under separate overlay; package gates still pending"
+}

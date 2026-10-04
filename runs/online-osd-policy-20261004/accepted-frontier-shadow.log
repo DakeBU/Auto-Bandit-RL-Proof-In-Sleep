@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "mode": "shadow-read-only",
+  "analyzed_at": "2026-10-04T10:18:15+00:00",
+  "trials_path": "E:\\ABRL\\worktrees\\research-online-book\\runs\\online-osd-policy-20261004\\accepted-scoped-trials.jsonl",
+  "trial_rows": 6,
+  "status_counts": {
+    "accepted": 2,
+    "compiled": 3,
+    "queued": 1
+  },
+  "inferred_frontier": {
+    "selected_task": "ONLINE-OSD-POLICY-20261004",
+    "selected_leaf": "ONLINE-OSD-POLICY-20261004",
+    "source_status": "accepted",
+    "last_accepted_verifier": {
+      "trial_index": 5,
+      "time": "2026-10-04T10:16:45+00:00",
+      "task": "ONLINE-OSD-POLICY-20261004",
+      "role": "reviewer",
+      "kind": "review",
+      "status": "accepted",
+      "lean": "",
+      "notes": "Actual bounded policy package local terminal accepted after source/body/canary/fullrootTests/harness/nativegraph/registry/site/complete repairedreader and immutable rawbyte gates.21targets unchanged; one canarysupersession and rejectedreaderattribution repair retained. This terminal is a package milestone only, wholeChapter2/BookGoal remains active.",
+      "run_id": "online-osd-policy-20261004"
+    }
+  },
+  "memory_digest": {
+    "path": "E:\\ABRL\\worktrees\\research-online-book\\runs\\online-osd-policy-20261004\\memory-digest-accepted.md",
+    "task": "ONLINE-OSD-POLICY-20261004"
+  },
+  "recorded_frontier": {
+    "schema_version": 1,
+    "record_id": "frontier-2fc4ad17c672b84c",
+    "updated_at": "2026-10-04T10:18:14+00:00",
+    "root_objective": "Persistent Orabona Chapters1-16 Goal; accepted finite-history policy package only, Chapter2/book remain incomplete",
+    "current_leaf": {
+      "id": "ONLINE-OSD-POLICY-20261004",
+      "kind": "lean",
+      "status": "accepted",
+      "statement": "theorem regret_tuned (V : Domain (E := E)) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (hx₁ : x₁ ∈ V.carrier) (T : ℕ) (hT : 0 < T) (D G : ℝ) (hD : 0 < D) (hG : 0 < G) (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) (hlegal : LegalFeedback V (fun _ => D / (G * Real.sqrt T)) loss x₁ p T) (hdiam : ∀ x ∈ V.carrier, ∀ y ∈ V.carrier, ‖x - y‖ ≤ D) (hgrad : ∀ t < T, ‖selected V (fun _ => D / (G * Real.sqrt T)) loss x₁ p t‖ ≤ G) : ∀ u ∈ V.carrier, regret V (fun _ => D / (G * Real.sqrt T)) loss x₁ p u T ≤ D * G * Real.sqrt T",
+      "statement_hash": "b4a42ca7ae5b9ec84949a598555031f5cb8180b18792ac56c7d9ef54cd982586",
+      "declaration": "BanditRL.OnlineSubgradientPolicy.regret_tuned",
+      "file": "BanditRLProof/OnlineSubgradientPolicy.lean",
+      "source_status": "accepted",
+      "dependencies": [
+        {
+          "kind": "lean",
+          "name": "BanditRL.OnlineSubgradientPolicy.regret_fixed",
+          "status": "compiled"
+        },
+        {
+          "kind": "lean",
+          "name": "BanditRL.OnlineSubgradientPolicy.regret_variable",
+          "status": "compiled"
+        },
+        {
+          "kind": "review",
+          "name": "final-reader-v2",
+          "status": "accepted"
+        }
+      ]
+    },
+    "dag": {
+      "nodes": [
+        {
+          "id": "ONLINE-OSD-POLICY-20261004",
+          "kind": "lean",
+          "status": "accepted",
+          "dependencies": [
+            {
+              "kind": "lean",
+              "name": "BanditRL.OnlineSubgradientPolicy.regret_fixed",
+              "status": "compiled"
+            },
+            {
+              "kind": "lean",
+              "name": "BanditRL.OnlineSubgradientPolicy.regret_variable",
+              "status": "compiled"
+            },
+            {
+              "kind": "review",
+              "name": "final-reader-v2",
+              "status": "accepted"
+            }
+          ],
+          "dispatch_count": 0
+        }
+      ]
+    },
+    "last_accepted_verifier": {
+      "trial_index": 5,
+      "time": "2026-10-04T10:16:45+00:00",
+      "task": "ONLINE-OSD-POLICY-20261004",
+      "role": "reviewer",
+      "kind": "review",
+      "status": "accepted",
+      "lean": "",
+      "notes": "Actual bounded policy package local terminal accepted after source/body/canary/fullrootTests/harness/nativegraph/registry/site/complete repairedreader and immutable rawbyte gates.21targets unchanged; one canarysupersession and rejectedreaderattribution repair retained. This terminal is a package milestone only, wholeChapter2/BookGoal remains active.",
+      "run_id": "online-osd-policy-20261004"
+    },
+    "memory_policy": {
+      "recent_role_relevant_limit": 5,
+      "explicit_verified_lemma_ids": [],
+      "whole_history_default": false
+    },
+    "shadow_gate": {
+      "status": "pending",
+      "analyzed_trial_rows": 6,
+      "mismatches": [],
+      "replay_transitions": 0
+    },
+    "mutation_policy": {
+      "canonical_path_queue": true,
+      "cross_process_lock": true,
+      "same_file_serialized": true,
+      "disjoint_files_parallel": true
+    },
+    "autonomous_execution": {
+      "enabled": false,
+      "requires_deterministic_gates": true,
+      "requires_explicit_user_request": true
+    }
+  },
+  "mismatches": [],
+  "would_mutate": false
+}

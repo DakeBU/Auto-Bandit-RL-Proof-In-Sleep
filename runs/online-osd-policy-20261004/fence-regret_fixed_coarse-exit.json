@@ -1,0 +1,28 @@
+{
+  "command": [
+    "python",
+    "-X",
+    "utf8",
+    "tools/bandit.py",
+    "statement-fence",
+    "--declaration",
+    "BanditRL.OnlineSubgradientPolicy.regret_fixed_coarse",
+    "--file",
+    "tmp/online-osd-policy-target-v1.lean",
+    "--output",
+    "docs\\contracts\\online-osd-policy-v1\\regret_fixed_coarse.json",
+    "--source-assumption",
+    "(hx\u2081 : x\u2081 \u2208 V.carrier)",
+    "--source-assumption",
+    "(h\u03b7 : 0 < \u03b7)",
+    "--source-assumption",
+    "(hloss : \u2200 t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t))",
+    "--source-assumption",
+    "(hu : u \u2208 V.carrier)",
+    "--source-assumption",
+    "(hlegal : LegalFeedback V (fun _ => \u03b7) loss x\u2081 p T)"
+  ],
+  "exit_code": 0,
+  "started_at": "2026-10-04T08:27:59.024164+00:00",
+  "ended_at": "2026-10-04T08:27:59.238996+00:00"
+}

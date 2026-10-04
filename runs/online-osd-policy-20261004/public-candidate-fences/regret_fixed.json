@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineSubgradientPolicy.regret_fixed",
+  "file": "BanditRLProof/OnlineSubgradientPolicy.lean",
+  "statement": "theorem regret_fixed (V : Domain (E := E)) (η : ℝ) (hη : 0 < η) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (hx₁ : x₁ ∈ V.carrier) (T : ℕ) (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) (hlegal : LegalFeedback V (fun _ => η) loss x₁ p T) (u : E) (hu : u ∈ V.carrier) : regret V (fun _ => η) loss x₁ p u T ≤ ‖x₁ - u‖ ^ 2 / (2 * η) + η / 2 * (∑ t ∈ range T, ‖selected V (fun _ => η) loss x₁ p t‖ ^ 2) - ‖output V (fun _ => η) loss x₁ p T - u‖ ^ 2 / (2 * η)",
+  "statement_hash": "17aa0af510352714290d221f1b0fdd2deecb5161479cbfe4a6c1c601c80dfc20",
+  "source_assumptions": [
+    "(hx₁ : x₁ ∈ V.carrier)",
+    "(hη : 0 < η)",
+    "(hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t))",
+    "(hu : u ∈ V.carrier)",
+    "(hlegal : LegalFeedback V (fun _ => η) loss x₁ p T)"
+  ],
+  "created_at": "2026-10-04T08:55:19+00:00"
+}

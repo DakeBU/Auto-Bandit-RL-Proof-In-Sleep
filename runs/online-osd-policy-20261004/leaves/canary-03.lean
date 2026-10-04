@@ -1,0 +1,295 @@
+import BanditRLProof.OnlineSubgradientPolicy
+import BanditRLProof.OnlineGuessingSubgradient
+
+/-! Actual history-sensitive legal feedback: identical current loss/current point
+at time1, opposite chosen supports because the first past constant loss differs.
+The flat round preserves the common point; later nonzero supports move it. -/
+noncomputable section
+namespace OSDPolicyProbe
+open Set Finset BanditRL.OnlineConvex
+open BanditRL.OnlineSubgradientPolicy
+open BanditRL.OnlineGuessingSubgradient
+abbrev V := BanditRL.OnlineGradientDescent.unitInterval
+def flat (c x : ℝ) : EReal := (c : EReal)
+def preferred (t : ℕ) (past : Fin t → ℝ → EReal) : ℝ :=
+  if ht : 0 < t then if (past ⟨0, ht⟩ 0).toReal = 0 then 1 else -1 else 0
+def policy : SupportPolicy (E := ℝ) := by
+  classical
+  exact fun t past h f =>
+    if preferred t past ∈ SourceSubdifferential f (h (Fin.last t)) then preferred t past
+    else BanditRL.OnlineSubgradientDescent.currentSubgradient f (h (Fin.last t))
+def lossA (t : ℕ) : ℝ → EReal := if t = 0 then flat 0 else loss (1 / 2)
+def lossB (t : ℕ) : ℝ → EReal := if t = 0 then flat 1 else loss (1 / 2)
+def eta : ℕ → ℝ := fun _ => 1 / 2
+abbrev a (t : ℕ) : ℝ := output V eta lossA (1 / 2) policy t
+abbrev b (t : ℕ) : ℝ := output V eta lossB (1 / 2) policy t
+abbrev ga (t : ℕ) : ℝ := selected V eta lossA (1 / 2) policy t
+abbrev gb (t : ℕ) : ℝ := selected V eta lossB (1 / 2) policy t
+
+theorem flat_on (c : ℝ) : BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (flat c) := by
+  constructor
+  · refine ⟨?_, 0, c, rfl⟩
+    intro x; simp [flat]
+  · intro x hx
+    refine ⟨0, ?_⟩
+    simp [SourceSubdifferential, flat]
+
+theorem policy_oracle : OracleLaw V policy := by
+  classical
+  intro t past h f hf hx
+  change (if preferred t past ∈ SourceSubdifferential f (h (Fin.last t)) then
+    preferred t past else BanditRL.OnlineSubgradientDescent.currentSubgradient f (h (Fin.last t))) ∈ _
+  split_ifs with hg
+  · exact hg
+  · exact BanditRL.OnlineSubgradientDescent.currentSubgradient_mem V f hf _ hx
+
+theorem lossA_on (t : ℕ) : BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (lossA t) := by
+  unfold lossA; split_ifs
+  · exact flat_on 0
+  · exact loss_on_unitInterval _
+
+theorem lossB_on (t : ℕ) : BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (lossB t) := by
+  unfold lossB; split_ifs
+  · exact flat_on 1
+  · exact loss_on_unitInterval _
+
+theorem pref_A (t : ℕ) (ht : 0 < t) : preferred t (fun i => lossA i.val) = 1 := by
+  simp [preferred, ht, lossA, flat]
+
+theorem pref_B (t : ℕ) (ht : 0 < t) : preferred t (fun i => lossB i.val) = -1 := by
+  simp [preferred, ht, lossB, flat]
+
+theorem selected_eq_preferred (η : ℕ → ℝ) (f : ℕ → ℝ → EReal) (t : ℕ)
+    (hg : preferred t (fun i => f i.val) ∈ SourceSubdifferential (f t)
+      (output V η f (1 / 2) policy t)) :
+    selected V η f (1 / 2) policy t = preferred t (fun i => f i.val) := by
+  classical
+  change (if preferred t (fun i => f i.val) ∈ SourceSubdifferential (f t)
+    (output V η f (1 / 2) policy t) then _ else _) = _
+  rw [if_pos hg]
+
+theorem selected_singleton (η : ℕ → ℝ) (f : ℕ → ℝ → EReal) (t : ℕ)
+    (hf : BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (f t))
+    (g : ℝ) (hs : SourceSubdifferential (f t) (output V η f (1 / 2) policy t) = {g}) :
+    selected V η f (1 / 2) policy t = g := by
+  have hg := policy_oracle t (fun i => f i.val) (history V η f (1 / 2) policy t) (f t)
+    hf (output_mem V η f (1 / 2) policy (by norm_num [V, BanditRL.OnlineGradientDescent.unitInterval]) t)
+  change selected V η f (1 / 2) policy t ∈ SourceSubdifferential (f t)
+    (output V η f (1 / 2) policy t) at hg
+  rw [hs] at hg
+  exact hg
+
+theorem a_tie (t : ℕ) (ht : 0 < t) (hx : a t = 1 / 2) : ga t = 1 := by
+  have hf : lossA t = loss (1 / 2) := by simp [lossA, Nat.ne_of_gt ht]
+  have hg : preferred t (fun i => lossA i.val) ∈ SourceSubdifferential (lossA t) (a t) := by
+    rw [pref_A t ht, hf, hx, loss_subgradient_zero]; norm_num
+  exact (selected_eq_preferred eta lossA t hg).trans (pref_A t ht)
+
+theorem b_tie (t : ℕ) (ht : 0 < t) (hx : b t = 1 / 2) : gb t = -1 := by
+  have hf : lossB t = loss (1 / 2) := by simp [lossB, Nat.ne_of_gt ht]
+  have hg : preferred t (fun i => lossB i.val) ∈ SourceSubdifferential (lossB t) (b t) := by
+    rw [pref_B t ht, hf, hx, loss_subgradient_zero]; norm_num
+  exact (selected_eq_preferred eta lossB t hg).trans (pref_B t ht)
+
+theorem a_below (t : ℕ) (ht : 0 < t) (hx : a t < 1 / 2) : ga t = -1 := by
+  apply selected_singleton eta lossA t (lossA_on t) (-1)
+  simpa only [lossA, if_neg (Nat.ne_of_gt ht)] using loss_subgradient_negative (1 / 2) (a t) hx
+
+theorem b_above (t : ℕ) (ht : 0 < t) (hx : 1 / 2 < b t) : gb t = 1 := by
+  apply selected_singleton eta lossB t (lossB_on t) 1
+  simpa only [lossB, if_neg (Nat.ne_of_gt ht)] using loss_subgradient_positive (1 / 2) (b t) hx
+
+theorem a_zero : a 0 = 1 / 2 := rfl
+theorem b_zero : b 0 = 1 / 2 := rfl
+
+theorem ga_zero : ga 0 = 0 := by
+  have hg : preferred 0 (fun i => lossA i.val) ∈ SourceSubdifferential (lossA 0) (a 0) := by
+    simp [preferred, lossA, flat, SourceSubdifferential]
+  simpa [preferred, ga] using selected_eq_preferred eta lossA 0 hg
+
+theorem gb_zero : gb 0 = 0 := by
+  have hg : preferred 0 (fun i => lossB i.val) ∈ SourceSubdifferential (lossB 0) (b 0) := by
+    simp [preferred, lossB, flat, SourceSubdifferential]
+  simpa [preferred, gb] using selected_eq_preferred eta lossB 0 hg
+
+theorem a_one : a 1 = 1 / 2 := by
+  change output V eta lossA (1 / 2) policy (0 + 1) = _
+  rw [output_succ]
+  change BanditRL.OnlineGradientDescent.project V (a 0 - eta 0 • ga 0) = _
+  rw [ga_zero, a_zero, V, BanditRL.OnlineGradientDescent.project_unitInterval]
+  norm_num [eta]
+
+theorem b_one : b 1 = 1 / 2 := by
+  change output V eta lossB (1 / 2) policy (0 + 1) = _
+  rw [output_succ]
+  change BanditRL.OnlineGradientDescent.project V (b 0 - eta 0 • gb 0) = _
+  rw [gb_zero, b_zero, V, BanditRL.OnlineGradientDescent.project_unitInterval]
+  norm_num [eta]
+
+theorem ga_one : ga 1 = 1 := a_tie 1 (by norm_num) a_one
+theorem gb_one : gb 1 = -1 := b_tie 1 (by norm_num) b_one
+
+theorem a_two : a 2 = 0 := by
+  change output V eta lossA (1 / 2) policy (1 + 1) = _
+  rw [output_succ]
+  change BanditRL.OnlineGradientDescent.project V (a 1 - eta 1 • ga 1) = _
+  rw [ga_one, a_one, V, BanditRL.OnlineGradientDescent.project_unitInterval]
+  norm_num [eta]
+
+theorem b_two : b 2 = 1 := by
+  change output V eta lossB (1 / 2) policy (1 + 1) = _
+  rw [output_succ]
+  change BanditRL.OnlineGradientDescent.project V (b 1 - eta 1 • gb 1) = _
+  rw [gb_one, b_one, V, BanditRL.OnlineGradientDescent.project_unitInterval]
+  norm_num [eta]
+
+theorem ga_two : ga 2 = -1 := a_below 2 (by norm_num) (by rw [a_two]; norm_num)
+theorem gb_two : gb 2 = 1 := b_above 2 (by norm_num) (by rw [b_two]; norm_num)
+
+theorem a_three : a 3 = 1 / 2 := by
+  change output V eta lossA (1 / 2) policy (2 + 1) = _
+  rw [output_succ]
+  change BanditRL.OnlineGradientDescent.project V (a 2 - eta 2 • ga 2) = _
+  rw [ga_two, a_two, V, BanditRL.OnlineGradientDescent.project_unitInterval]
+  norm_num [eta]
+
+theorem b_three : b 3 = 1 / 2 := by
+  change output V eta lossB (1 / 2) policy (2 + 1) = _
+  rw [output_succ]
+  change BanditRL.OnlineGradientDescent.project V (b 2 - eta 2 • gb 2) = _
+  rw [gb_two, b_two, V, BanditRL.OnlineGradientDescent.project_unitInterval]
+  norm_num [eta]
+
+theorem ga_three : ga 3 = 1 := a_tie 3 (by norm_num) a_three
+theorem gb_three : gb 3 = -1 := b_tie 3 (by norm_num) b_three
+
+theorem a_four : a 4 = 0 := by
+  change output V eta lossA (1 / 2) policy (3 + 1) = _
+  rw [output_succ]
+  change BanditRL.OnlineGradientDescent.project V (a 3 - eta 3 • ga 3) = _
+  rw [ga_three, a_three, V, BanditRL.OnlineGradientDescent.project_unitInterval]
+  norm_num [eta]
+
+theorem b_four : b 4 = 1 := by
+  change output V eta lossB (1 / 2) policy (3 + 1) = _
+  rw [output_succ]
+  change BanditRL.OnlineGradientDescent.project V (b 3 - eta 3 • gb 3) = _
+  rw [gb_three, b_three, V, BanditRL.OnlineGradientDescent.project_unitInterval]
+  norm_num [eta]
+
+
+theorem history_changes_actual_support :
+    a 1 = b 1 ∧ lossA 1 = lossB 1 ∧ ga 1 = 1 ∧ gb 1 = -1 ∧ ga 1 ≠ gb 1 := by
+  rw [a_one, b_one, ga_one, gb_one]; norm_num [lossA, lossB]
+
+theorem legalA (T : ℕ) : LegalFeedback V eta lossA (1 / 2) policy T :=
+  oracle_feedback V eta lossA (1 / 2) policy
+    (by norm_num [V, BanditRL.OnlineGradientDescent.unitInterval]) T policy_oracle
+    (fun t _ => lossA_on t)
+
+theorem legalB (T : ℕ) : LegalFeedback V eta lossB (1 / 2) policy T :=
+  oracle_feedback V eta lossB (1 / 2) policy
+    (by norm_num [V, BanditRL.OnlineGradientDescent.unitInterval]) T policy_oracle
+    (fun t _ => lossB_on t)
+
+theorem a_real_regret : regret V eta lossA (1 / 2) policy (1 / 2) 4 = 1 / 2 := by
+  simp only [regret, sum_range_succ, sum_range_zero, zero_add]
+  change ((lossA 0 (a 0)).toReal - (lossA 0 (1 / 2)).toReal) +
+    ((lossA 1 (a 1)).toReal - (lossA 1 (1 / 2)).toReal) +
+    ((lossA 2 (a 2)).toReal - (lossA 2 (1 / 2)).toReal) +
+    ((lossA 3 (a 3)).toReal - (lossA 3 (1 / 2)).toReal) = 1 / 2
+  rw [a_zero, a_one, a_two, a_three]; norm_num [lossA, flat, loss]
+
+theorem b_real_regret : regret V eta lossB (1 / 2) policy (1 / 2) 4 = 1 / 2 := by
+  simp only [regret, sum_range_succ, sum_range_zero, zero_add]
+  change ((lossB 0 (b 0)).toReal - (lossB 0 (1 / 2)).toReal) +
+    ((lossB 1 (b 1)).toReal - (lossB 1 (1 / 2)).toReal) +
+    ((lossB 2 (b 2)).toReal - (lossB 2 (1 / 2)).toReal) +
+    ((lossB 3 (b 3)).toReal - (lossB 3 (1 / 2)).toReal) = 1 / 2
+  rw [b_zero, b_one, b_two, b_three]; norm_num [lossB, flat, loss]
+
+theorem a_energy : (∑ t ∈ range 4, ‖ga t‖ ^ 2) = (3 : ℝ) := by
+  simp only [sum_range_succ, sum_range_zero, zero_add, ga_zero, ga_one, ga_two, ga_three]
+  norm_num
+
+theorem b_energy : (∑ t ∈ range 4, ‖gb t‖ ^ 2) = (3 : ℝ) := by
+  simp only [sum_range_succ, sum_range_zero, zero_add, gb_zero, gb_one, gb_two, gb_three]
+  norm_num
+
+theorem a_positive_terminal : ‖a 4 - 1 / 2‖ ^ 2 / (2 * (1 / 2)) = (1 : ℝ) / 4 := by
+  rw [a_four]; norm_num
+
+theorem b_positive_terminal : ‖b 4 - 1 / 2‖ ^ 2 / (2 * (1 / 2)) = (1 : ℝ) / 4 := by
+  rw [b_four]; norm_num
+
+theorem a_exact_fixed_bound : regret V eta lossA (1 / 2) policy (1 / 2) 4 ≤
+    ‖(1 / 2 : ℝ) - 1 / 2‖ ^ 2 / (2 * (1 / 2)) +
+      (1 / 2 : ℝ) / 2 * (∑ t ∈ range 4, ‖ga t‖ ^ 2) -
+      ‖a 4 - 1 / 2‖ ^ 2 / (2 * (1 / 2)) := by
+  exact regret_fixed V (1 / 2) (by norm_num) lossA (1 / 2) policy
+    (by norm_num [V, BanditRL.OnlineGradientDescent.unitInterval]) 4
+    (fun t _ => lossA_on t) (legalA 4) (1 / 2)
+    (by norm_num [V, BanditRL.OnlineGradientDescent.unitInterval])
+
+theorem a_fixed_rhs_equality :
+    ‖(1 / 2 : ℝ) - 1 / 2‖ ^ 2 / (2 * (1 / 2)) +
+      (1 / 2 : ℝ) / 2 * (∑ t ∈ range 4, ‖ga t‖ ^ 2) -
+      ‖a 4 - 1 / 2‖ ^ 2 / (2 * (1 / 2)) = 1 / 2 := by
+  rw [a_energy, a_positive_terminal]; norm_num
+
+def offPathPolicy : SupportPolicy (E := ℝ) := by
+  classical
+  exact fun t past h f => if t = 0 ∧ h (Fin.last t) ≠ 1 / 2 then 999 else policy t past h f
+
+theorem offPath_history_eq (η : ℕ → ℝ) (f : ℕ → ℝ → EReal) (t : ℕ) :
+    history V η f (1 / 2) offPathPolicy t = history V η f (1 / 2) policy t := by
+  induction t with
+  | zero => rfl
+  | succ t ih =>
+    rw [history_succ, history_succ]
+    by_cases ht : t = 0
+    · subst t; simp [output, selected, offPathPolicy, history]
+    · simp [output, selected, offPathPolicy, ih, ht]
+
+theorem offPath_output_eq (η : ℕ → ℝ) (f : ℕ → ℝ → EReal) (t : ℕ) :
+    output V η f (1 / 2) offPathPolicy t = output V η f (1 / 2) policy t := by
+  exact congrArg (fun h : Fin (t + 1) → ℝ => h (Fin.last t)) (offPath_history_eq η f t)
+
+theorem offPath_selected_eq (η : ℕ → ℝ) (f : ℕ → ℝ → EReal) (t : ℕ) :
+    selected V η f (1 / 2) offPathPolicy t = selected V η f (1 / 2) policy t := by
+  classical
+  unfold selected offPathPolicy
+  rw [offPath_history_eq]
+  by_cases ht : t = 0
+  · subst t; simp [history]
+  · simp [ht]
+
+theorem offPath_legalA (η : ℕ → ℝ) (T : ℕ) :
+    LegalFeedback V η lossA (1 / 2) offPathPolicy T := by
+  have hg := oracle_feedback V η lossA (1 / 2) policy
+    (by norm_num [V, BanditRL.OnlineGradientDescent.unitInterval]) T policy_oracle
+    (fun t _ => lossA_on t)
+  intro t ht
+  rw [offPath_selected_eq, offPath_output_eq]
+  exact hg t ht
+
+theorem offPath_not_oracle : ¬ OracleLaw V offPathPolicy := by
+  intro hp
+  have hg := hp 0 (fun i => Fin.elim0 i) (fun _ => (3 / 4 : ℝ)) (flat 0) (flat_on 0)
+    (by norm_num [V, BanditRL.OnlineGradientDescent.unitInterval])
+  have h999 : (999 : ℝ) ∈ SourceSubdifferential (flat 0) (3 / 4) := by
+    simpa [offPathPolicy] using hg
+  have htest := h999 (1 : ℝ)
+  norm_num [flat] at htest
+
+theorem offPath_actual_fixed : regret V eta lossA (1 / 2) offPathPolicy (1 / 2) 4 ≤
+    ‖(1 / 2 : ℝ) - 1 / 2‖ ^ 2 / (2 * (1 / 2)) +
+      (1 / 2 : ℝ) / 2 * (∑ t ∈ range 4,
+        ‖selected V eta lossA (1 / 2) offPathPolicy t‖ ^ 2) -
+      ‖output V eta lossA (1 / 2) offPathPolicy 4 - 1 / 2‖ ^ 2 / (2 * (1 / 2)) := by
+  exact regret_fixed V (1 / 2) (by norm_num) lossA (1 / 2) offPathPolicy
+    (by norm_num [V, BanditRL.OnlineGradientDescent.unitInterval]) 4
+    (fun t _ => lossA_on t) (offPath_legalA eta 4) (1 / 2)
+    (by norm_num [V, BanditRL.OnlineGradientDescent.unitInterval])
+
+end OSDPolicyProbe
