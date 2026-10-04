@@ -1,0 +1,176 @@
+{
+  "stage": "accepted-bounded-canonical-package",
+  "nodes": [
+    {
+      "id": "loss_subdifferential_translate",
+      "declaration": "BanditRL.OnlineGuessingSubgradient.loss_subdifferential_translate",
+      "status": "actual-scratch-body-compiled-frozen-header",
+      "depends_on": [],
+      "evidence": [
+        "guessing-performance-02.log",
+        "guessing-performance-02-exit.json",
+        "actual-performance-candidate-bindings.json"
+      ]
+    },
+    {
+      "id": "loss_subgradient_positive",
+      "declaration": "BanditRL.OnlineGuessingSubgradient.loss_subgradient_positive",
+      "status": "actual-scratch-body-compiled-frozen-header",
+      "depends_on": [
+        "loss_subdifferential_translate"
+      ],
+      "evidence": [
+        "guessing-performance-02.log",
+        "guessing-performance-02-exit.json",
+        "actual-performance-candidate-bindings.json"
+      ]
+    },
+    {
+      "id": "loss_subgradient_zero",
+      "declaration": "BanditRL.OnlineGuessingSubgradient.loss_subgradient_zero",
+      "status": "actual-scratch-body-compiled-frozen-header",
+      "depends_on": [
+        "loss_subdifferential_translate"
+      ],
+      "evidence": [
+        "guessing-performance-02.log",
+        "guessing-performance-02-exit.json",
+        "actual-performance-candidate-bindings.json"
+      ]
+    },
+    {
+      "id": "loss_subgradient_negative",
+      "declaration": "BanditRL.OnlineGuessingSubgradient.loss_subgradient_negative",
+      "status": "actual-scratch-body-compiled-frozen-header",
+      "depends_on": [
+        "loss_subdifferential_translate"
+      ],
+      "evidence": [
+        "guessing-performance-02.log",
+        "guessing-performance-02-exit.json",
+        "actual-performance-candidate-bindings.json"
+      ]
+    },
+    {
+      "id": "example_2_32_subdifferential",
+      "declaration": "BanditRL.OnlineGuessingSubgradient.example_2_32_subdifferential",
+      "status": "actual-scratch-body-compiled-frozen-header",
+      "depends_on": [
+        "loss_subgradient_positive",
+        "loss_subgradient_zero",
+        "loss_subgradient_negative"
+      ],
+      "evidence": [
+        "guessing-performance-02.log",
+        "guessing-performance-02-exit.json",
+        "actual-performance-candidate-bindings.json"
+      ]
+    },
+    {
+      "id": "loss_on_unitInterval",
+      "declaration": "BanditRL.OnlineGuessingSubgradient.loss_on_unitInterval",
+      "status": "actual-scratch-body-compiled-frozen-header",
+      "depends_on": [
+        "loss_subgradient_positive",
+        "loss_subgradient_zero",
+        "loss_subgradient_negative"
+      ],
+      "evidence": [
+        "guessing-performance-02.log",
+        "guessing-performance-02-exit.json",
+        "actual-performance-candidate-bindings.json"
+      ]
+    },
+    {
+      "id": "loss_subgradient_bound",
+      "declaration": "BanditRL.OnlineGuessingSubgradient.loss_subgradient_bound",
+      "status": "actual-scratch-body-compiled-frozen-header",
+      "depends_on": [
+        "loss_subgradient_positive",
+        "loss_subgradient_zero",
+        "loss_subgradient_negative"
+      ],
+      "evidence": [
+        "guessing-performance-02.log",
+        "guessing-performance-02-exit.json",
+        "actual-performance-candidate-bindings.json"
+      ]
+    },
+    {
+      "id": "current_subgradient_bound",
+      "declaration": "BanditRL.OnlineGuessingSubgradient.current_subgradient_bound",
+      "status": "actual-scratch-body-compiled-frozen-header",
+      "depends_on": [
+        "loss_on_unitInterval",
+        "loss_subgradient_bound"
+      ],
+      "evidence": [
+        "guessing-performance-02.log",
+        "guessing-performance-02-exit.json",
+        "actual-performance-candidate-bindings.json"
+      ]
+    },
+    {
+      "id": "loss_step_clamp",
+      "declaration": "BanditRL.OnlineGuessingSubgradient.loss_step_clamp",
+      "status": "actual-scratch-body-compiled-frozen-header",
+      "depends_on": [
+        "BanditRL.OnlineGradientDescent.project_unitInterval"
+      ],
+      "evidence": [
+        "guessing-performance-02.log",
+        "guessing-performance-02-exit.json",
+        "actual-performance-candidate-bindings.json"
+      ]
+    },
+    {
+      "id": "guessing_prefix",
+      "declaration": "BanditRL.OnlineGuessingSubgradient.guessing_prefix",
+      "status": "actual-scratch-body-compiled-frozen-header",
+      "depends_on": [
+        "BanditRL.OnlineSubgradientDescent.iterate_prefix"
+      ],
+      "evidence": [
+        "guessing-performance-02.log",
+        "guessing-performance-02-exit.json",
+        "actual-performance-candidate-bindings.json"
+      ]
+    },
+    {
+      "id": "example_2_32",
+      "declaration": "BanditRL.OnlineGuessingSubgradient.example_2_32",
+      "status": "actual-scratch-body-compiled-frozen-header",
+      "depends_on": [
+        "loss_on_unitInterval",
+        "current_subgradient_bound",
+        "BanditRL.OnlineSubgradientDescent.regret_tuned"
+      ],
+      "evidence": [
+        "guessing-performance-02.log",
+        "guessing-performance-02-exit.json",
+        "actual-performance-candidate-bindings.json"
+      ]
+    },
+    {
+      "id": "example_2_32_average_eventually",
+      "declaration": "BanditRL.OnlineGuessingSubgradient.example_2_32_average_eventually",
+      "status": "actual-scratch-body-compiled-frozen-header",
+      "depends_on": [
+        "example_2_32"
+      ],
+      "evidence": [
+        "guessing-performance-02.log",
+        "guessing-performance-02-exit.json",
+        "actual-performance-candidate-bindings.json"
+      ]
+    }
+  ],
+  "package_gates": "public realnonzero shifted/tie/casual canary, immutablefences,axioms,root,Tests,fullharness,contributor,shared registry/nativegraph,source/body/reader/binding,PR",
+  "chapter_complete": false,
+  "book_complete": false,
+  "remaining_universal_policy_obligation": true,
+  "package_accepted": false,
+  "proofs_closed": 12,
+  "remaining_frozen_terminals": 0,
+  "acceptance_evidence": "accepted-decision.json"
+}
