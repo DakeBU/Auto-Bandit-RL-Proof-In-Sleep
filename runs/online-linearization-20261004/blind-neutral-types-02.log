@@ -1,0 +1,136 @@
+runs/online-linearization-20261004/leaves/neutral-types-v2.lean:17:35: error: don't know how to synthesize implicit argument `E`
+  @Support (?m.9 V)
+context:
+E : Type u_1
+inst✝² : NormedAddCommGroup E
+inst✝¹ : InnerProductSpace ℝ E
+inst✝ : FiniteDimensional ℝ E
+V : Domain
+⊢ Type ?u.6291
+
+Note: Because this declaration's type has been explicitly provided, all parameter types and holes (e.g., `_`) in its header are resolved before its body is processed; information from the declaration body cannot be used to infer what these values should be
+runs/online-linearization-20261004/leaves/neutral-types-v2.lean:18:42: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  Decidable (Supports f x).Nonempty
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+runs/online-linearization-20261004/leaves/neutral-types-v2.lean:19:14: error: don't know how to synthesize implicit argument `E`
+  @Support ?m.6
+context:
+E : Type u_1
+inst✝² : NormedAddCommGroup E
+inst✝¹ : InnerProductSpace ℝ E
+inst✝ : FiniteDimensional ℝ E
+⊢ Type ?u.7633
+
+Note: Because this declaration's type has been explicitly provided, all parameter types and holes (e.g., `_`) in its header are resolved before its body is processed; information from the declaration body cannot be used to infer what these values should be
+∀ (A : LinearPolicy) (t : ℕ) (h : Fin t → E), outputHistory A h (Fin.last t) = A t h : Prop
+∀ (A : LinearPolicy) (loss : ℕ → E → EReal) (p : SupportPolicy), history A loss p 0 = Fin.elim0 : Prop
+∀ (A : LinearPolicy) (loss : ℕ → E → EReal) (p : SupportPolicy) (t : ℕ),
+  history A loss p (t + 1) = Fin.snoc (history A loss p t) (selected A loss p t) : Prop
+∀ (A : LinearPolicy) (loss : ℕ → E → EReal) (p : SupportPolicy) (t : ℕ) (i : Fin t),
+  history A loss p (t + 1) i.castSucc = history A loss p t i : Prop
+∀ (A : LinearPolicy) (loss : ℕ → E → EReal) (p : SupportPolicy) (t : ℕ) (i : Fin t),
+  history A loss p t i = selected A loss p ↑i : Prop
+∀ (A : LinearPolicy) (loss : ℕ → E → EReal) (p : SupportPolicy) (t : ℕ),
+  output A loss p t = linearRun A (selected A loss p) t : Prop
+∀ (A : LinearPolicy) (loss : ℕ → E → EReal) (p : SupportPolicy) (t : ℕ) (i : Fin (t + 1)),
+  outputHistory A (history A loss p t) i = output A loss p ↑i : Prop
+∀ (V : Domain) (A : LinearPolicy),
+  Feasible V A → ∀ (loss : ℕ → E → EReal) (p : SupportPolicy) (t : ℕ), output A loss p t ∈ V.carrier : Prop
+runs/online-linearization-20261004/leaves/neutral-types-v2.lean:62:61: warning: unused variable `hA`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (A : LinearPolicy) (loss loss' : ℕ → E → EReal) (p : SupportPolicy) (t : ℕ),
+  (∀ s < t, loss s = loss' s) → history A loss p t = history A loss' p t : Prop
+runs/online-linearization-20261004/leaves/neutral-types-v2.lean:64:105: warning: unused variable `hloss`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (A : LinearPolicy) (loss loss' : ℕ → E → EReal) (p : SupportPolicy) (t : ℕ),
+  (∀ s < t, loss s = loss' s) → output A loss p t = output A loss' p t : Prop
+runs/online-linearization-20261004/leaves/neutral-types-v2.lean:66:105: warning: unused variable `hloss`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (V : Domain) (A : LinearPolicy),
+  Feasible V A →
+    ∀ (loss : ℕ → E → EReal) (p : SupportPolicy),
+      Law V p → ∀ (T : ℕ), (∀ t < T, Regular V (loss t)) → LegalFeedback A loss p T : Prop
+runs/online-linearization-20261004/leaves/neutral-types-v2.lean:68:61: warning: unused variable `hA`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-linearization-20261004/leaves/neutral-types-v2.lean:68:133: warning: unused variable `hp`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-linearization-20261004/leaves/neutral-types-v2.lean:68:156: warning: unused variable `hloss`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-linearization-20261004/leaves/neutral-types-v2.lean:71:25: error(lean.unknownIdentifier): Unknown identifier `Default`
+∀ (V : Domain) (A : LinearPolicy),
+  Feasible V A → ∀ (loss : ℕ → E → EReal) (T : ℕ), (∀ t < T, Regular V (loss t)) → LegalFeedback A loss sorry T : Prop
+∀ (V : Domain) (A : LinearPolicy),
+  Feasible V A →
+    ∀ (loss : ℕ → E → EReal) (p : SupportPolicy) (T : ℕ),
+      (∀ t < T, Regular V (loss t)) → ∀ t < T, loss t (output A loss p t) = ↑(loss t (output A loss p t)).toReal : Prop
+runs/online-linearization-20261004/leaves/neutral-types-v2.lean:72:61: warning: unused variable `hA`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-linearization-20261004/leaves/neutral-types-v2.lean:72:141: warning: unused variable `hloss`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-linearization-20261004/leaves/neutral-types-v2.lean:72:187: warning: unused variable `ht`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (V : Domain) (f : E → EReal),
+  Regular V f → ∀ (x g u : E), u ∈ V.carrier → g ∈ Supports f x → (f x).toReal - (f u).toReal ≤ inner ℝ g (x - u) : Prop
+runs/online-linearization-20261004/leaves/neutral-types-v2.lean:74:49: warning: unused variable `hf`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-linearization-20261004/leaves/neutral-types-v2.lean:74:80: warning: unused variable `hu`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-linearization-20261004/leaves/neutral-types-v2.lean:74:101: warning: unused variable `hg`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (g x u : E), linearLoss g x - linearLoss g u = inner ℝ g (x - u) : Prop
+∀ (V : Domain) (A : LinearPolicy) (loss : ℕ → E → EReal) (p : SupportPolicy) (T : ℕ),
+  (∀ t < T, Regular V (loss t)) →
+    LegalFeedback A loss p T →
+      ∀ u ∈ V.carrier,
+        regret A loss p u T ≤
+          Comparator (fun t => linearLoss (selected A loss p t)) (linearRun A (selected A loss p)) u T : Prop
+runs/online-linearization-20261004/leaves/neutral-types-v2.lean:78:121: warning: unused variable `hloss`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-linearization-20261004/leaves/neutral-types-v2.lean:78:159: warning: unused variable `hlegal`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-linearization-20261004/leaves/neutral-types-v2.lean:78:203: warning: unused variable `hu`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (V : Domain) (A : LinearPolicy) (loss : ℕ → E → EReal) (p : SupportPolicy) (T : ℕ),
+  (∀ t < T, Regular V (loss t)) →
+    LegalFeedback A loss p T →
+      ∀ (B : (ℕ → E) → E → ℕ → ℝ),
+        (∀ (g : ℕ → E), ∀ u ∈ V.carrier, Comparator (fun t => linearLoss (g t)) (linearRun A g) u T ≤ B g u T) →
+          ∀ u ∈ V.carrier, regret A loss p u T ≤ B (selected A loss p) u T : Prop
+runs/online-linearization-20261004/leaves/neutral-types-v2.lean:80:121: warning: unused variable `hloss`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-linearization-20261004/leaves/neutral-types-v2.lean:80:159: warning: unused variable `hlegal`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-linearization-20261004/leaves/neutral-types-v2.lean:80:221: warning: unused variable `hB`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-linearization-20261004/leaves/neutral-types-v2.lean:80:328: warning: unused variable `hu`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-linearization-20261004/leaves/neutral-types-v2.lean:83:18: error(lean.unknownIdentifier): Unknown identifier `Default`
+runs/online-linearization-20261004/leaves/neutral-types-v2.lean:83:81: error(lean.unknownIdentifier): Unknown identifier `Default`
+runs/online-linearization-20261004/leaves/neutral-types-v2.lean:83:123: error(lean.unknownIdentifier): Unknown identifier `Default`
+∀ (V : Domain) (A : LinearPolicy),
+  Feasible V A →
+    ∀ (loss : ℕ → E → EReal) (T : ℕ),
+      (∀ t < T, Regular V (loss t)) →
+        ∀ u ∈ V.carrier,
+          regret A loss sorry u T ≤
+            Comparator (fun t => linearLoss (selected A loss sorry t)) (linearRun A (selected A loss sorry)) u T : Prop

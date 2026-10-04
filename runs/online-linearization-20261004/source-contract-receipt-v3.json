@@ -1,0 +1,486 @@
+{
+  "actor": "/root/source_reviewer",
+  "requested_model": "GPT-6 Astra",
+  "requested_reasoning_effort": "medium",
+  "runtime_model_independently_verified": false,
+  "external_human_review": false,
+  "external_model_review": false,
+  "verdict": "accepted-with-explicit-delta",
+  "scope": "18 unproved source contract headers and actual causal definition context; stabilization only",
+  "fixed_input_rows": 52,
+  "raw_drift": [],
+  "source_pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+  "source_anchor": "Section2.3 printed22/physical34; Definition2.20 physical28-29",
+  "clean_blind_version": 3,
+  "clean_blind_actor": "/root/normal_blind",
+  "native_headers_checked": 18,
+  "target_proof_acceptance": false,
+  "per_target_seven_slots": [
+    {
+      "target": "outputHistory_last",
+      "objects": "A,h and reconstructed output tuple",
+      "quantifiers": "All A,t,h",
+      "hypotheses": "Ambient only",
+      "conclusion": "Last coordinate equals A t h",
+      "constants": "Input length t; output t+1",
+      "information": "Only supplied past vectors",
+      "boundary": "t0 permitted; initial output need not be zero",
+      "verdict": "accepted-with-explicit-delta"
+    },
+    {
+      "target": "history_zero",
+      "objects": "Actual vector history",
+      "quantifiers": "All A,loss,p",
+      "hypotheses": "None beyond ambient",
+      "conclusion": "H0=empty function",
+      "constants": "Length0",
+      "information": "No current feedback yet",
+      "boundary": "Does not assert x0=0",
+      "verdict": "accepted-with-explicit-delta"
+    },
+    {
+      "target": "history_succ",
+      "objects": "Consecutive histories and selected g",
+      "quantifiers": "All runs,t",
+      "hypotheses": "No legality/regularity",
+      "conclusion": "H(t+1)=snoc H(t) g(t)",
+      "constants": "One append",
+      "information": "Current loss read only for appended support",
+      "boundary": "Selected may be illegal without a premise",
+      "verdict": "accepted-with-explicit-delta"
+    },
+    {
+      "target": "history_castSucc",
+      "objects": "Old history coordinates",
+      "quantifiers": "All runs,t,i<t",
+      "hypotheses": "Finite index only",
+      "conclusion": "Old entry unchanged on append",
+      "constants": "No shift; new index t excluded",
+      "information": "Past persistence",
+      "boundary": "No i at t0",
+      "verdict": "accepted-with-explicit-delta"
+    },
+    {
+      "target": "history_selected",
+      "objects": "History and actual selected sequence",
+      "quantifiers": "All runs,t,i<t",
+      "hypotheses": "No extra premises",
+      "conclusion": "H(t)[i]=selected(i)",
+      "constants": "Exact same index",
+      "information": "Same run; no current vector in history",
+      "boundary": "t0 coordinate quantifier empty",
+      "verdict": "accepted-with-explicit-delta"
+    },
+    {
+      "target": "output_linear_run",
+      "objects": "Actual play and linearRun of actual selected sequence",
+      "quantifiers": "All runs,t",
+      "hypotheses": "No legality or feasibility",
+      "conclusion": "Exact same output under same A",
+      "constants": "Coefficient1 equality",
+      "information": "linearRun queries only indices below t",
+      "boundary": "Not an unrelated vector sequence",
+      "verdict": "accepted-with-explicit-delta"
+    },
+    {
+      "target": "outputHistory_played",
+      "objects": "Reconstructed and actual output tuples",
+      "quantifiers": "All runs,t,i<=t",
+      "hypotheses": "No extra premises",
+      "conclusion": "Reconstruction equals actual output(i)",
+      "constants": "Includes current output, not next",
+      "information": "Earlier outputs use appropriate prefixes",
+      "boundary": "t0 single initial output",
+      "verdict": "accepted-with-explicit-delta"
+    },
+    {
+      "target": "output_mem",
+      "objects": "Domain and actual output",
+      "quantifiers": "All feasible A,loss,p,t",
+      "hypotheses": "Universal Feasible V A",
+      "conclusion": "Actual output in V",
+      "constants": "No numerical bound",
+      "information": "Feasibility does not require loss legality",
+      "boundary": "All off-path histories covered by input feasibility",
+      "verdict": "accepted-with-explicit-delta"
+    },
+    {
+      "target": "history_prefix",
+      "objects": "Two loss streams/common A,p",
+      "quantifiers": "Every t and pair of streams",
+      "hypotheses": "Whole-function equality for s<t",
+      "conclusion": "Equal actual vector histories at t",
+      "constants": "Strict cutoff",
+      "information": "Conditional on fixed A,p",
+      "boundary": "Current selected vectors may differ",
+      "verdict": "accepted-with-explicit-delta"
+    },
+    {
+      "target": "output_prefix",
+      "objects": "Paired actual plays",
+      "quantifiers": "Every paired run,t",
+      "hypotheses": "Same A,p; strict-past loss equality",
+      "conclusion": "Equal current output",
+      "constants": "Strict cutoff, initial A0 common",
+      "information": "No future/current loss affects play",
+      "boundary": "Not independence of externally chosen policies",
+      "verdict": "accepted-with-explicit-delta"
+    },
+    {
+      "target": "oracle_feedback",
+      "objects": "Actual run and universal support law",
+      "quantifiers": "All feasible A,legal-law p,T",
+      "hypotheses": "Feasible; OracleLaw; regular losses below T",
+      "conclusion": "Played LegalFeedback",
+      "constants": "0<=t<T",
+      "information": "Off-path law sufficient, not main-terminal requirement",
+      "boundary": "T0 vacuous; no converse",
+      "verdict": "accepted-with-explicit-delta"
+    },
+    {
+      "target": "canonical_feedback",
+      "objects": "Canonical chooser run",
+      "quantifiers": "All feasible A,regular losses,T",
+      "hypotheses": "Feasible and prefix regularity",
+      "conclusion": "Played legality without caller-supplied law",
+      "constants": "Current chooser fallback0 unused on valid points",
+      "information": "Classical current choice",
+      "boundary": "No executable or unique selection claim",
+      "verdict": "accepted-with-explicit-delta"
+    },
+    {
+      "target": "trajectory_finite_loss",
+      "objects": "Played EReal value",
+      "quantifiers": "Every feasible run,T,t<T",
+      "hypotheses": "Feasible and prefix regularity",
+      "conclusion": "Value equals finite-real embedding of toReal",
+      "constants": "Exact equality, no magnitude bound",
+      "information": "Does not require selected p to be legal",
+      "boundary": "No eligible t at T0",
+      "verdict": "accepted-with-explicit-delta"
+    },
+    {
+      "target": "support_gap",
+      "objects": "One proper globally supported loss",
+      "quantifiers": "All ambient x,g and feasible u",
+      "hypotheses": "Regular V f; hu; actual global hg",
+      "conclusion": "Finite real gap <= inner g (x-u)",
+      "constants": "Unit coefficient, no slack",
+      "information": "No algorithm assumption",
+      "boundary": "x need not belong to V; finiteness derived",
+      "verdict": "accepted-with-explicit-delta"
+    },
+    {
+      "target": "linearLoss_gap",
+      "objects": "Real inner-product linear loss",
+      "quantifiers": "All g,x,u",
+      "hypotheses": "Ambient inner product only",
+      "conclusion": "Loss difference equals inner g (x-u)",
+      "constants": "Exact unit coefficient",
+      "information": "Algebraic identity",
+      "boundary": "Zero vectors/dimension0 allowed",
+      "verdict": "accepted-with-explicit-delta"
+    },
+    {
+      "target": "regret_comparison",
+      "objects": "Actual run and OLO regret on generated supports",
+      "quantifiers": "All A,p,loss,T and feasible u",
+      "hypotheses": "Prefix regularity; played legality; hu",
+      "conclusion": "Original regret <= linear regret on same A/path",
+      "constants": "Factor1; no additive term or norm bound",
+      "information": "Generated adaptively; exact output_linear_run needed",
+      "boundary": "No Feasible/OracleLaw premise; stronger algebraic ambient-play comparison; T0",
+      "verdict": "accepted-with-explicit-delta"
+    },
+    {
+      "target": "regret_transfer",
+      "objects": "Same run and arbitrary real bound functional B",
+      "quantifiers": "Fixed T; hB all full g and all feasible comparators",
+      "hypotheses": "Comparison premises plus universal OLO hB",
+      "conclusion": "Original regret <= B(actual selected,u,T)",
+      "constants": "No prescribed rate/sign; B may depend on full g",
+      "information": "Universal pathwise bound instantiated on adaptive g",
+      "boundary": "Conditional reduction, not bound producer; not expectation-only or anytime",
+      "verdict": "accepted-with-explicit-delta"
+    },
+    {
+      "target": "canonical_regret_comparison",
+      "objects": "Feasible learner and canonical actual run",
+      "quantifiers": "All feasible A,regular prefix,T,u in V",
+      "hypotheses": "Feasible, regularity, hu; no supplied legality",
+      "conclusion": "Exact comparison using canonical selected sequence and same A",
+      "constants": "Factor1, T0 included",
+      "information": "Current classical chooser supplies legal feedback",
+      "boundary": "Source-feasible implementation adapter, not new numbered source theorem",
+      "verdict": "accepted-with-explicit-delta"
+    }
+  ],
+  "required_header_repairs": [],
+  "remaining_scope": [
+    "all 18 actual proof bodies",
+    "nondegenerate canaries",
+    "public integration and combined gates",
+    "source reader and immutable binding",
+    "PR delivery"
+  ],
+  "reviewed_files": [
+    {
+      "path": "runs/online-linearization-20261004/source-binding.json",
+      "sha256": "678a9e1ddaec74a2916d1e0f4804118bea6b3bc7e9e147734c4bae93992d629e"
+    },
+    {
+      "path": "runs/online-linearization-20261004/source-pages.txt",
+      "sha256": "0267283cba2567b3ff620e2e521962cdd0bc6e5ad2b715b158ce7855c7a07f26"
+    },
+    {
+      "path": "runs/online-linearization-20261004/source-card.md",
+      "sha256": "8e4c2febc3d9fef6806fad4f545ba931a2f18bb729755420e63e3f0575ad1691"
+    },
+    {
+      "path": "runs/online-linearization-20261004/blind-packet-v1.md",
+      "sha256": "8fa339b23741cd83f1d2e0c3b1710ab93b88ded4a4a7101be2bd441728800ce1"
+    },
+    {
+      "path": "runs/online-linearization-20261004/leaves/target-v1.lean.txt",
+      "sha256": "eca6ecd2a774d5bfbf2ca09fd7149daf4aa3f64f046d745265152f2d88badc19"
+    },
+    {
+      "path": "runs/online-linearization-20261004/leaves/context-v1.lean.txt",
+      "sha256": "9ec3e2b701f36ce5eae78732304b3b87a5dcb4f8225924b355ace8b7488aa5be"
+    },
+    {
+      "path": "runs/online-linearization-20261004/leaves/types-v1.lean",
+      "sha256": "acf2c877df828e96fdb55addecad4a445b5ba1c4ab64e7c514cf20b98933e700"
+    },
+    {
+      "path": "runs/online-linearization-20261004/draft-types-01.log",
+      "sha256": "b55db884677326dbfcabe6e3429cfa756654e99b3cbecb2e90b9ed989263444c"
+    },
+    {
+      "path": "runs/online-linearization-20261004/draft-types-01-exit.json",
+      "sha256": "12534f8b882af454cdbd7a2613662bda4029c6210aa0bf5e80d2be167c2e7817"
+    },
+    {
+      "path": "docs/contracts/online-linearization-v1/canonical_feedback-header.txt",
+      "sha256": "760d2ecabdffa7b48d70ef09c5802da0651b40c1feeb0e12c76cac6fa61aca75"
+    },
+    {
+      "path": "docs/contracts/online-linearization-v1/canonical_feedback.json",
+      "sha256": "6487cfa6bfe4fb84b2d3b53a14ba54aa6b981ae90576b7a94681cfce4c781dc1"
+    },
+    {
+      "path": "docs/contracts/online-linearization-v1/canonical_regret_comparison-header.txt",
+      "sha256": "3b7a863740f496ae0c710b95bda666eec365e96741b254291f80d49d3906eed2"
+    },
+    {
+      "path": "docs/contracts/online-linearization-v1/canonical_regret_comparison.json",
+      "sha256": "628f33c771abbd045026609791541afdb11358cb0458cb190a4f62f97c1ad5de"
+    },
+    {
+      "path": "docs/contracts/online-linearization-v1/context.lean.txt",
+      "sha256": "bdaedf3be81cea1b729845d4433e0e7926d9c63bfd561a41149e6c9dafceac4c"
+    },
+    {
+      "path": "docs/contracts/online-linearization-v1/history_castSucc-header.txt",
+      "sha256": "c13d5cf0176c2be95a8842a813fbb9331aff955e6d3ea6b4757a786c7a53ed52"
+    },
+    {
+      "path": "docs/contracts/online-linearization-v1/history_castSucc.json",
+      "sha256": "d65ff388fb0f9afafbd218aee4b22147fbfc70a30149bfe3e2ae43a2ec7984fb"
+    },
+    {
+      "path": "docs/contracts/online-linearization-v1/history_prefix-header.txt",
+      "sha256": "bc6c7fa34a06393f2f5a724dee5d1c7dd23e2c2e7786fe0b1bd8032f14d32fc2"
+    },
+    {
+      "path": "docs/contracts/online-linearization-v1/history_prefix.json",
+      "sha256": "214ada18324696df4b3084e9769cc19e217d2ad0f3f3114aa783aa0722f69518"
+    },
+    {
+      "path": "docs/contracts/online-linearization-v1/history_selected-header.txt",
+      "sha256": "f6fdf438fb7944dbb1077c998c7b875219eb2cd851a5fa9535d63c49a94a0c23"
+    },
+    {
+      "path": "docs/contracts/online-linearization-v1/history_selected.json",
+      "sha256": "5592ec451e486e58f641d3b7b8fc113b2935ba5f1f58c5d21800283ced331ced"
+    },
+    {
+      "path": "docs/contracts/online-linearization-v1/history_succ-header.txt",
+      "sha256": "37fa8219737d266f604b10adea530102a218af786b6a24d43a7041e2a928b2b3"
+    },
+    {
+      "path": "docs/contracts/online-linearization-v1/history_succ.json",
+      "sha256": "04e7c36998ae6b8a070ffbfbf0322e3c68dc553b5100e5903dadabdf547d82b0"
+    },
+    {
+      "path": "docs/contracts/online-linearization-v1/history_zero-header.txt",
+      "sha256": "1cde80b88a5e7e1887591149b2e45b197ddf145609af62b5702b3eaa1a959889"
+    },
+    {
+      "path": "docs/contracts/online-linearization-v1/history_zero.json",
+      "sha256": "0ef72c4d3dacb2c79d2ee5c05a9dd26bd1b7c3cd29f6458822137b5ac31ced80"
+    },
+    {
+      "path": "docs/contracts/online-linearization-v1/linearLoss_gap-header.txt",
+      "sha256": "db742a269f68436661269b02d41ac09a494c1c9c6a245df630b010c59d2c7cd3"
+    },
+    {
+      "path": "docs/contracts/online-linearization-v1/linearLoss_gap.json",
+      "sha256": "0cd19e1c4ddfb3c624b018fd00eaeea7642e119b681a02870f84e21c399e2407"
+    },
+    {
+      "path": "docs/contracts/online-linearization-v1/oracle_feedback-header.txt",
+      "sha256": "581a546e30e4cc92339c337ebb20c74fbb2b9c5ab4dae55e81507ccb206c9946"
+    },
+    {
+      "path": "docs/contracts/online-linearization-v1/oracle_feedback.json",
+      "sha256": "51e911bcfd7cc44a89409fb70ea7f49deb42accfbe2795768c0a17714c2522b5"
+    },
+    {
+      "path": "docs/contracts/online-linearization-v1/output_linear_run-header.txt",
+      "sha256": "e9d416b8d36d46070f8e875c25e34beb303b28f627a6dff7ab9801edcfb9b1b7"
+    },
+    {
+      "path": "docs/contracts/online-linearization-v1/output_linear_run.json",
+      "sha256": "3451005f4ca3fbfc284a86a6b220cbcd6d893f6c9c6c31984be67e126b6a64ca"
+    },
+    {
+      "path": "docs/contracts/online-linearization-v1/output_mem-header.txt",
+      "sha256": "d77eb66fa66bbb34fdf81400b9209cce5a135754f971c121b39ee4c10bc68c80"
+    },
+    {
+      "path": "docs/contracts/online-linearization-v1/output_mem.json",
+      "sha256": "aae4178189a996b8fd4d6bb99f66fac7afb0bf34d390783c2e022a4f13d5c084"
+    },
+    {
+      "path": "docs/contracts/online-linearization-v1/output_prefix-header.txt",
+      "sha256": "4eac8a36c4ea69db0fb564df06d5dee8407ed3a517a6c6c054f67b552459a9a7"
+    },
+    {
+      "path": "docs/contracts/online-linearization-v1/output_prefix.json",
+      "sha256": "e12eb1e4a703ca3539a1e33ec58fc156cc9b630c5ed24d07306c00f3bd2d933d"
+    },
+    {
+      "path": "docs/contracts/online-linearization-v1/outputHistory_last-header.txt",
+      "sha256": "580388e8e7428c98eeb300992e5e35b6a6a20cc97dff039153954644970d6335"
+    },
+    {
+      "path": "docs/contracts/online-linearization-v1/outputHistory_last.json",
+      "sha256": "42b6413b0671fc9ac1be9b86cc12b49f3df05f636281dcaacdf9f19036408cb5"
+    },
+    {
+      "path": "docs/contracts/online-linearization-v1/outputHistory_played-header.txt",
+      "sha256": "df04ad85352fb33b9c431b2603a72d68380ceb2f9fd101075164c5ee503e9cb6"
+    },
+    {
+      "path": "docs/contracts/online-linearization-v1/outputHistory_played.json",
+      "sha256": "7b9ff1a51be9c50c2cacfe6910cd8ab8255d0f2f96ac14d90d9cc31cc0810b1c"
+    },
+    {
+      "path": "docs/contracts/online-linearization-v1/regret_comparison-header.txt",
+      "sha256": "1e9d4e83d217172dbc06f7a9c8077ff474757e429d34bcec878ac40431219714"
+    },
+    {
+      "path": "docs/contracts/online-linearization-v1/regret_comparison.json",
+      "sha256": "2cc634775684d4f35932e2fd880d14a2f4190628c323c987ec5bd2175a29d744"
+    },
+    {
+      "path": "docs/contracts/online-linearization-v1/regret_transfer-header.txt",
+      "sha256": "2d69556f6d54dcc219b0121f662285136e4e3050dbabcb6022351f46da71c009"
+    },
+    {
+      "path": "docs/contracts/online-linearization-v1/regret_transfer.json",
+      "sha256": "11bfab33548d01b5bc7f63376d5d4ab69d7da1d352f2bce2feaaa27c9f661b02"
+    },
+    {
+      "path": "docs/contracts/online-linearization-v1/support_gap-header.txt",
+      "sha256": "a38adcd0f43051fc5f1dadcbddcacd4e0c291571fa09bb505311af0280951089"
+    },
+    {
+      "path": "docs/contracts/online-linearization-v1/support_gap.json",
+      "sha256": "3f33e87a2e83016b86be4546a7527457cdb6ec419cf58bb9c8735a3d675cadae"
+    },
+    {
+      "path": "docs/contracts/online-linearization-v1/trajectory_finite_loss-header.txt",
+      "sha256": "f119e9cb531bb54beccaf76d238e18b75d1d3b22b05014fc0845e915cebdab0d"
+    },
+    {
+      "path": "docs/contracts/online-linearization-v1/trajectory_finite_loss.json",
+      "sha256": "740eab398df26f85f0230688695d2d75f285a48a568fb6e762f644b7ee83cd77"
+    },
+    {
+      "path": "runs/online-linearization-20261004/blind-packet-v3.md",
+      "sha256": "964805de5c70073daab3df66cd0ba003b8acd832708a7d7bb6388e11aee49bb1"
+    },
+    {
+      "path": "runs/online-linearization-20261004/blind-presentation-repair-v2.md",
+      "sha256": "88ff1621a9fb242e80ed59e872514696ec9ae51339b0ef6200557e748c04cac0"
+    },
+    {
+      "path": "runs/online-linearization-20261004/blind-presentation-repair-v3.md",
+      "sha256": "0d7b9a36a3883d7e32ebd5a51d2a7492a22f170faf4aee74eaf1c98c7654e7ce"
+    },
+    {
+      "path": "runs/online-linearization-20261004/leaves/neutral-types-v3.lean",
+      "sha256": "03b0426b2cacd8dcc689f9737eed4062c54009bfdf66fdd1890f11d75bb6d4c2"
+    },
+    {
+      "path": "runs/online-linearization-20261004/blind-neutral-types-03.log",
+      "sha256": "f844d7782396e70190978d8bb2fcd69a6e0ee99c006c728b089afd873b893d1d"
+    },
+    {
+      "path": "runs/online-linearization-20261004/blind-neutral-types-03-exit.json",
+      "sha256": "36169ace5f94fee7aa878e5902aa78ab5cb2f29dd0674eda88d4ac890335003f"
+    },
+    {
+      "path": "runs/online-linearization-20261004/source-review-packet-v3.md",
+      "sha256": "ab842b6899e13929bafe04536883c01c1763098e21ceab466a073765a59b10b4"
+    },
+    {
+      "path": "runs/online-linearization-20261004/contract-source-inputs-v3.json",
+      "sha256": "e70b85bab1f3fd272ddb7c4b41d90d1ef534f26c3d5229216c19e3149bbb2d63"
+    },
+    {
+      "path": "runs/online-linearization-20261004/blind-reconstruction-v3.md",
+      "sha256": "69644a4fee4faa4f6441a4ed8ddd7b16aca1a9558b3838204545c384fa6f4542"
+    },
+    {
+      "path": "runs/online-linearization-20261004/blind-receipt-v3.json",
+      "sha256": "74d1bbcad14fb6008b3268f52eb5201e03d9deac3920274c32db25167503ee88"
+    },
+    {
+      "path": "../research-online-ogd/tmp/pdfs/orabona-v10.pdf",
+      "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17"
+    },
+    {
+      "path": "BanditRLProof/OnlineSubgradientPolicy.lean",
+      "sha256": "ac8fbfb3eee3c92ebb79b44f33beec33b500105bb7e54df5176c14e886c2c662"
+    },
+    {
+      "path": "BanditRLProof/OnlineSubgradientDescent.lean",
+      "sha256": "6ba8586e1691babc2db3e0c0fcddb69b4236e16f9f192c464b4c04262e854f1c"
+    },
+    {
+      "path": "BanditRLProof/OnlineClosedProper.lean",
+      "sha256": "9a5fcfb9e26a2a35d8e5bb7ef7b7a7dfd65a7f1c8daab03faebb51e41d54e7c6"
+    },
+    {
+      "path": "BanditRLProof/OnlineSubgradientBasic.lean",
+      "sha256": "4c17a466091b88d90451be897a2f01afa204b41933191244e0093e48396d1962"
+    },
+    {
+      "path": "BanditRLProof/OnlineLearningRegret.lean",
+      "sha256": "231eda88cb1c45bf3bc9209bfbdd696fbfbe8a64b00303113a23cbc4dff3ca5b"
+    },
+    {
+      "path": "BanditRLProof/OnlineGradientDescent.lean",
+      "sha256": "e7edba540c2f60032bb4a34aaf0768b3107b94276b67b6f41fc289009c8924c1"
+    },
+    {
+      "path": ".lake/packages/mathlib/Mathlib/Data/EReal/Basic.lean",
+      "sha256": "bf69a9ed4bc39134bbefac1a43b187e2f1e66fd43f352d0810ab89474f054922"
+    }
+  ],
+  "report": "runs/online-linearization-20261004/source-contract-review-v3.md",
+  "report_sha256": "e3695503ff5fadf805f245ec3844a26db1ce5f3e062c38d12fd321109c0ccaa5"
+}

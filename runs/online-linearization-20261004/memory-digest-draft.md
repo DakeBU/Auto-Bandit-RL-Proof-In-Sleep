@@ -1,0 +1,2 @@
+# Draft digest
+Source/statement API search and finite-history typed context are real evidence. new-task created conversion window; separate conversion-window command refused overwrite, raw rejection retained, then fill initial stub explicitly. Several guessed nonexistent paths/globs produced readonly retrieval errors; no source or toolchain change. Stop guessing paths, use rg actual file inventory. No bodies yet, no proof claim. Next freeze/review18 targets, then single dependency-ready structural route.

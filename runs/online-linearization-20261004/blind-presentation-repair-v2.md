@@ -1,0 +1,1 @@
+V1 neutral Domain was presented with explicit E but parameter removed at use sites. Original packet unchanged, no proof/source contamination. V2 explicit AmbientDomain plus implicit Domain alias restores original actual typed parameters. Actual18frozenheaders/context unchanged. Only v2 clean reconstruction can be stabilization evidence.

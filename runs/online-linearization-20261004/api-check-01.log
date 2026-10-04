@@ -1,0 +1,28 @@
+Fin.snoc_last.{u_1} {n : ℕ} {α : Fin (n + 1) → Sort u_1} (x : α (Fin.last n)) (p : (i : Fin n) → α i.castSucc) :
+  Fin.snoc p x (Fin.last n) = x
+Fin.snoc_castSucc.{u_1} {n : ℕ} {α : Fin (n + 1) → Sort u_1} (x : α (Fin.last n)) (p : (i : Fin n) → α i.castSucc)
+  (i : Fin n) : Fin.snoc p x i.castSucc = p i
+Fin.lastCases.{u_1} {n : ℕ} {motive : Fin (n + 1) → Sort u_1} (last : motive (Fin.last n))
+  (cast : (i : Fin n) → motive i.castSucc) (i : Fin (n + 1)) : motive i
+Fin.castLE {n m : ℕ} (h : n ≤ m) (i : Fin n) : Fin m
+Finset.sum_le_sum.{u_1, u_5} {ι : Type u_1} {N : Type u_5} [AddCommMonoid N] [Preorder N] {f g : ι → N} {s : Finset ι}
+  [AddLeftMono N] (h : ∀ i ∈ s, f i ≤ g i) : ∑ i ∈ s, f i ≤ ∑ i ∈ s, g i
+inner_sub_right.{u_1, u_2} {𝕜 : Type u_1} {E : Type u_2} [RCLike 𝕜] [SeminormedAddCommGroup E] [InnerProductSpace 𝕜 E]
+  (x y z : E) : inner 𝕜 x (y - z) = inner 𝕜 x y - inner 𝕜 x z
+BanditRL.OnlineSubgradientDescent.lemma_2_31.{u_1} {E : Type u_1} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+  [FiniteDimensional ℝ E] (V : BanditRL.OnlineSubgradientDescent.Domain) (f : E → EReal)
+  (hf : BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V f) (η : ℝ) (hη : 0 < η) (x u : E) (hu : u ∈ V.carrier)
+  (g : E) (hg : g ∈ BanditRL.OnlineConvex.SourceSubdifferential f x) :
+  η * ((f x).toReal - (f u).toReal) ≤ η * inner ℝ g (x - u) ∧
+    η * inner ℝ g (x - u) ≤
+      ‖x - u‖ ^ 2 / 2 - ‖BanditRL.OnlineGradientDescent.project V (x - η • g) - u‖ ^ 2 / 2 + η ^ 2 / 2 * ‖g‖ ^ 2
+BanditRL.OnlineSubgradientDescent.finite_loss.{u_1} {E : Type u_1} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+  [FiniteDimensional ℝ E] (V : BanditRL.OnlineSubgradientDescent.Domain) (f : E → EReal)
+  (hf : BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V f) (x : E) (hx : x ∈ V.carrier) : f x = ↑(f x).toReal
+BanditRL.OnlineSubgradientPolicy.canonicalPolicy_legal.{u_1} {E : Type u_1} [NormedAddCommGroup E]
+  [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (V : BanditRL.OnlineSubgradientPolicy.Domain) :
+  BanditRL.OnlineSubgradientPolicy.OracleLaw V BanditRL.OnlineSubgradientPolicy.canonicalPolicy
+BanditRL.OnlineLearning.comparatorRegret_eq_sum.{u_1} {X : Type u_1} (loss : ℕ → X → ℝ) (prediction : ℕ → X) (u : X)
+  (T : ℕ) :
+  BanditRL.OnlineLearning.comparatorRegret loss prediction u T =
+    ∑ t ∈ Finset.range T, (loss t (prediction t) - loss t u)
