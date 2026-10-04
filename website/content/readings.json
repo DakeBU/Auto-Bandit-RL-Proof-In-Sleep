@@ -5424,6 +5424,190 @@
         "takeaway": "The example derives a nontrivial universal linear guarantee before transporting it; it does not assume a regret bound just for its chosen feedback.",
         "boundary": "Actual public18 proofs and25canaries compile locally. The learner and support policy are fixed exogenous deterministic finite-history parameters. Comparison uses the same actual vector-feedback trajectory; a universal OLO performance bound is an input to transport, not a guarantee produced for arbitrary learners. Feasible/canonical adapters implement OCO. Randomized laws, measurability, independence and executable choice are separate. Package/root/harness/reader acceptance and PR delivery have their own evidence. Chapter2, older26production migration and Chapters3-16 remain required; no merged/live update."
       }
+    },
+    {
+      "slug": "online-optimal-step",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10, 21 June 2026",
+        "sections": "Section 2.1.2, unnumbered scalar step-size minimization and warning about future gradients; printed 15 / PDF 27",
+        "pages": "printed p. 15; PDF p. 27",
+        "pdf_page": 27,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "Frozen coefficients",
+          "meaning": "F(eta)=A/(2 eta)+eta B/2. A and B remain fixed inside the universal scalar comparison."
+        },
+        {
+          "term": "Source future-feedback warning",
+          "meaning": "Actual g_t depends on eta through the causal iterates. Minimizing with a realized B does not optimize regret after rerunning the algorithm at another eta."
+        },
+        {
+          "term": "Positive and degenerate boundaries",
+          "meaning": "Real A and B are frozen nonnegative coefficients. The nondegenerate source argmin requires A>0 and B>0; eta ranges over positive reals. With A=R² the distance adapter requires R>0 and B>0. Exogenous D,G>0 and natural T≥1 give A=D² and B=G²T; G names the source L. Real sqrt and division are total, but eta=0 is inadmissible for the optimization and the online algorithms. No loss sequence or learner is an input to these scalar functions; actual OGD/OSD regret guarantees are proved separately."
+        }
+      ],
+      "algorithm": {
+        "title": "Calculate a step from externally supplied positive bounds",
+        "kind": "scalar calculation, not a new source algorithm",
+        "steps": [
+          {
+            "title": "Fix the loose coefficients",
+            "detail": "Use positive supplied D,G and known natural T≥1.",
+            "math": "A=D^2,\\quad B=G^2T",
+            "fallback": "Use positive supplied D,G and known natural T≥1."
+          },
+          {
+            "title": "Calculate the admissible step",
+            "detail": "The public positivity assumptions keep the denominator positive.",
+            "math": "\\eta_*={D\\over G\\sqrt T}>0",
+            "fallback": "The public positivity assumptions keep the denominator positive."
+          },
+          {
+            "title": "Apply the existing algorithm theorem",
+            "detail": "To derive actual regret, retain all hypotheses of the already proved causal OGD/OSD guarantee.",
+            "math": "F(\\eta_*)=DG\\sqrt T",
+            "fallback": "To derive actual regret, retain all hypotheses of the already proved causal OGD/OSD guarantee."
+          }
+        ],
+        "pseudocode": {
+          "title": "Exogenous scalar tuning",
+          "intro": "This is a scalar calculation. Future realized gradient energy is not an input to an online algorithm.",
+          "formula_label": "Known-horizon loose-bound optimizer",
+          "math": "\\eta_*={D\\over G\\sqrt T}",
+          "fallback": "D/(G sqrt T) for D,G>0 and T≥1.",
+          "lines": [
+            "Receive exogenous positive D,G and a known horizon T≥1.",
+            "Compute eta = D/(G sqrt T).",
+            "Invoke the existing causal OGD/OSD guarantee only with its actual loss, feedback, domain and bound hypotheses."
+          ],
+          "relationship": "The sharp fixed-step terminal residual remains in the original shared OGD theorem; scalar minimization here concerns its coarser two-term bound."
+        }
+      },
+      "teaching_route": [
+        "BanditRL.OnlineOptimalStep.gap_identity",
+        "BanditRL.OnlineOptimalStep.source_argmin",
+        "BanditRL.OnlineOptimalStep.distance_energy_argmin",
+        "BanditRL.OnlineOptimalStep.diameter_argmin"
+      ],
+      "source_theorems": [
+        {
+          "label": "Unnumbered distance-energy scalar minimum",
+          "pages": "Printed 15 / PDF 27",
+          "pdf_page": 27,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\min_{\\eta>0}\\left({R^2\\over2\\eta}+{\\eta B\\over2}\\right)=R\\sqrt B,\\quad\\eta_*={R\\over\\sqrt B}",
+          "fallback": "For positive frozen distance R and energy B, the minimum is R sqrt B, attained at R/sqrt B.",
+          "plain": "The displayed calculation holds the comparator distance and realized gradient energy fixed.",
+          "relationship": "Public source_argmin and distance_energy_argmin prove the attained universal scalar minimum. The source explicitly warns that gradients depend on eta and the comparator distance is unavailable. This is not an online learner.",
+          "contract": {
+            "model": "Scalar minimization of the coarse two-term bound after OGD analysis.",
+            "assumptions": "R>0, B>0, eta>0; A=R² and B=sum of squared gradients are held fixed during this calculation.",
+            "parameters": "Real coefficients. The source uses x1; shared causal iterates use Lean index 0. No learner receives future feedback here.",
+            "regret": "The optimized expression is an upper-bound expression, not actual regret across rerun trajectories.",
+            "guarantee": "An attained universal minimum over positive eta with unique optimizer for positive coefficients."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Actual scalar argmin proofs",
+            "boundary": "This package proves the scalar minimization with its two coefficients fixed. It does not choose an online step size using future gradients, or minimize actual regret across trajectories rerun with different eta. The original sharp fixed-step OGD bound, including its negative terminal-distance term, remains in the shared library. This calculation minimizes the coarser two-term bound. Chapter 2, the older production migration and Chapters 3–16 remain required. Compilation, package acceptance, PR delivery and merged/live status are separate; no merged/live update is claimed."
+          }
+        },
+        {
+          "label": "Unnumbered exogenous D/L/T loose-bound minimum",
+          "pages": "Printed 15 / PDF 27",
+          "pdf_page": 27,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\min_{\\eta>0}\\left({D^2\\over2\\eta}+{\\eta G^2 T\\over2}\\right)=DG\\sqrt T,\\quad\\eta_*={D\\over G\\sqrt T}",
+          "fallback": "For positive D,G and T≥1, the loose bound is minimized at D/(G sqrt T), with value DG sqrt T.",
+          "plain": "This implementable formula uses externally supplied positive bounds and a positive known horizon.",
+          "relationship": "Public diameter_argmin proves this scalar calculation. Existing public OGD/OSD theorems separately connect the bounds to actual causal algorithm regret. It does not remove their hypotheses or the sharp fixed-step residual.",
+          "contract": {
+            "model": "Exogenous diameter/gradient/horizon scalar upper bound.",
+            "assumptions": "D>0, G>0 and natural T≥1. A=D², B=G²T. The source names the gradient bound L; Lean names it G.",
+            "parameters": "The scalar theorem requires no domain; using it for OGD/OSD regret requires their existing feasible domain, actual feedback and diameter/gradient hypotheses.",
+            "regret": "Minimum of the coarse positive-step upper-bound expression.",
+            "guarantee": "Positive known-horizon scalar optimizer and value DG sqrt T; no anytime or globally optimal realized-regret claim."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Actual D/G/T scalar minimum",
+            "boundary": "This package proves the scalar minimization with its two coefficients fixed. It does not choose an online step size using future gradients, or minimize actual regret across trajectories rerun with different eta. The original sharp fixed-step OGD bound, including its negative terminal-distance term, remains in the shared library. This calculation minimizes the coarser two-term bound. Chapter 2, the older production migration and Chapters 3–16 remain required. Compilation, package acceptance, PR delivery and merged/live status are separate; no merged/live update is claimed."
+          }
+        }
+      ],
+      "proof_bridge": {
+        "title": "A square gap proves the minimum",
+        "summary": "Use one exact algebraic identity, then instantiate its fixed coefficients. The teaching route and actual proof-value graph are shown separately.",
+        "steps": [
+          {
+            "title": "Exact square gap above the scalar minimum",
+            "detail": "For nonnegative frozen coefficients and a positive step, the exact excess is a nonnegative square quotient.",
+            "math": "F(\\eta)-\\sqrt A\\sqrt B=(\\sqrt A-\\eta\\sqrt B)^2/(2\\eta)",
+            "fallback": "For nonnegative frozen coefficients and a positive step, the exact excess is a nonnegative square quotient."
+          },
+          {
+            "title": "The source unnumbered scalar minimization",
+            "detail": "The square-root ratio is an attained universal minimum for the two coefficients held fixed.",
+            "math": "\\eta_*>0,\\quad F(\\eta_*)=\\sqrt{AB},\\quad\\forall\\eta>0,\\ F(\\eta_*)\\le F(\\eta)",
+            "fallback": "The square-root ratio is an attained universal minimum for the two coefficients held fixed."
+          },
+          {
+            "title": "Optimize the exogenous diameter-gradient upper bound",
+            "detail": "Positive externally supplied D,G and horizon T determine the optimizer of the loose two-term bound.",
+            "math": "\\eta_*={D}/{(G\\sqrt T)},\\quad F(\\eta_*)=DG\\sqrt T\\quad(D,G>0,T\\ge1)",
+            "fallback": "Positive externally supplied D,G and horizon T determine the optimizer of the loose two-term bound."
+          },
+          {
+            "title": "Check zero boundaries",
+            "detail": "One zero coefficient gives strict improvements for every positive eta. T=0 is outside the positive-horizon formula; totalized division at eta=0 is not admissible.",
+            "math": "A=0<B:\\ \\eta\\mapsto\\eta/2;\\quad B=0<A:\\ \\eta\\mapsto2\\eta",
+            "fallback": "One zero coefficient gives strict improvements for every positive eta. T=0 is outside the positive-horizon formula; totalized division at eta=0 is not admissible."
+          }
+        ],
+        "boundary": "This package proves the scalar minimization with its two coefficients fixed. It does not choose an online step size using future gradients, or minimize actual regret across trajectories rerun with different eta. The original sharp fixed-step OGD bound, including its negative terminal-distance term, remains in the shared library. This calculation minimizes the coarser two-term bound. Chapter 2, the older production migration and Chapters 3–16 remain required. Compilation, package acceptance, PR delivery and merged/live status are separate; no merged/live update is claimed."
+      },
+      "worked_example": {
+        "title": "Strict scalar minimum and a genuine future-energy warning",
+        "intro": "Named public canaries instantiate the scalar producers, then use actual projected OGD on the same quadratic losses to check the source warning.",
+        "steps": [
+          {
+            "title": "A nonzero strict optimum",
+            "detail": "A=9, B=4 gives eta=3/2 and value 6; eta=1 costs 13/2. Equality holds only at the optimizer.",
+            "math": "F_{9,4}(3/2)=6<13/2=F_{9,4}(1)",
+            "fallback": "A=9, B=4 gives eta=3/2 and value 6; eta=1 costs 13/2. Equality holds only at the optimizer."
+          },
+          {
+            "title": "Exogenous horizon tuning",
+            "detail": "D=3,G=2,T=4 gives eta=3/4 and loose-bound value 12; T=1 is also tested.",
+            "math": "F_{9,16}(3/4)=12",
+            "fallback": "D=3,G=2,T=4 gives eta=3/4 and loose-bound value 12; T=1 is also tested."
+          },
+          {
+            "title": "Actual same-loss OGD paths",
+            "detail": "On real unbounded V, initial x0=0 and every loss (x−1)²/2, actual projection and gradient give x1=eta, g0=−1, g1=eta−1.",
+            "math": "B_2(\\eta)=1+(\\eta-1)^2",
+            "fallback": "On real unbounded V, initial x0=0 and every loss (x−1)²/2, actual projection and gradient give x1=eta, g0=−1, g1=eta−1."
+          },
+          {
+            "title": "Energy varies when rerunning",
+            "detail": "The same loss sequence gives energy 1 at eta=1 and energy 2 at eta=2. This prevents treating the realized energy as a constant across runs.",
+            "math": "B_2(1)=1\\ne2=B_2(2)",
+            "fallback": "The same loss sequence gives energy 1 at eta=1 and energy 2 at eta=2. This prevents treating the realized energy as a constant across runs."
+          },
+          {
+            "title": "Zero horizon is inadmissible for the tuning theorem",
+            "detail": "At T=0 the totalized D/(G sqrt T) is zero, whereas every positive eta has a strictly better doubled step for A=9,B=0.",
+            "math": "T=0:\\quad D/(G\\sqrt T)=0;\\quad F_{9,0}(2\\eta)<F_{9,0}(\\eta)\\ (\\eta>0)",
+            "fallback": "At T=0 the totalized D/(G sqrt T) is zero, whereas every positive eta has a strictly better doubled step for A=9,B=0."
+          }
+        ],
+        "takeaway": "The universal scalar minimum is proved with fixed coefficients; the actual OGD counterexample demonstrates why it cannot select a future-informed online optimizer.",
+        "boundary": "This package proves the scalar minimization with its two coefficients fixed. It does not choose an online step size using future gradients, or minimize actual regret across trajectories rerun with different eta. The original sharp fixed-step OGD bound, including its negative terminal-distance term, remains in the shared library. This calculation minimizes the coarser two-term bound. Chapter 2, the older production migration and Chapters 3–16 remain required. Compilation, package acceptance, PR delivery and merged/live status are separate; no merged/live update is claimed."
+      }
     }
   ]
 }

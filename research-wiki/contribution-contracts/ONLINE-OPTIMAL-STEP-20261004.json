@@ -1,0 +1,149 @@
+{
+  "schema_version": "2.0",
+  "id": "ONLINE-OPTIMAL-STEP-20261004",
+  "route": "online-learning/chapter-2",
+  "frontier_cell": "online-optimal-step",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10, 21 June 2026; SHA256 cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchor": "Section 2.1.2, unnumbered scalar step-size minimization and warning about future gradients; printed 15 / PDF 27",
+    "url": "https://arxiv.org/pdf/1912.13213v10"
+  },
+  "target": "Unnumbered fixed-coefficient scalar minimization, attained unique positive optimizer, distance-energy and exogenous D/G/T adapters, with explicit degenerate/future-feedback boundaries.",
+  "affected_files": [
+    "BanditRLProof.lean",
+    "BanditRLProof/OnlineOptimalStep.lean",
+    "website/content/books.json",
+    "website/content/chapters.json",
+    "website/content/readings.json",
+    "website/content/highlights.json",
+    "website/scripts/build_site.py",
+    "website/scripts/check_site.py"
+  ],
+  "declarations": [
+    "BanditRL.OnlineOptimalStep.upperBound",
+    "BanditRL.OnlineOptimalStep.optimalStep",
+    "BanditRL.OnlineOptimalStep.gap_identity",
+    "BanditRL.OnlineOptimalStep.lower_bound",
+    "BanditRL.OnlineOptimalStep.optimal_positive",
+    "BanditRL.OnlineOptimalStep.optimal_value",
+    "BanditRL.OnlineOptimalStep.optimal_unique",
+    "BanditRL.OnlineOptimalStep.source_argmin",
+    "BanditRL.OnlineOptimalStep.distance_energy_argmin",
+    "BanditRL.OnlineOptimalStep.diameter_argmin",
+    "BanditRL.OnlineOptimalStep.zero_distance_decreases",
+    "BanditRL.OnlineOptimalStep.zero_energy_decreases",
+    "BanditRL.OnlineOptimalStep.zero_coefficients"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Actual native memory/declaration retrieval and mathlib square-root/API type probes before proof bodies."
+    ],
+    "reused_declarations": [
+      "Real.sq_sqrt",
+      "Real.sqrt_mul",
+      "Real.sqrt_pos",
+      "Real.sqrt_sq"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineOptimalStep.upperBound",
+      "BanditRL.OnlineOptimalStep.optimalStep",
+      "BanditRL.OnlineOptimalStep.gap_identity",
+      "BanditRL.OnlineOptimalStep.lower_bound",
+      "BanditRL.OnlineOptimalStep.optimal_positive",
+      "BanditRL.OnlineOptimalStep.optimal_value",
+      "BanditRL.OnlineOptimalStep.optimal_unique",
+      "BanditRL.OnlineOptimalStep.source_argmin",
+      "BanditRL.OnlineOptimalStep.distance_energy_argmin",
+      "BanditRL.OnlineOptimalStep.diameter_argmin",
+      "BanditRL.OnlineOptimalStep.zero_distance_decreases",
+      "BanditRL.OnlineOptimalStep.zero_energy_decreases",
+      "BanditRL.OnlineOptimalStep.zero_coefficients"
+    ],
+    "known_consumers": [
+      "OptimalStepProbe.public_argmin",
+      "OptimalStepProbe.unique",
+      "OptimalStepProbe.tuned",
+      "OptimalStepProbe.zero_horizon_boundary"
+    ],
+    "planned_consumers": [
+      "Remaining Chapter 2 acceptance and later adaptive-step analyses."
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Reuse pinned mathlib scalar sqrt identities; the shared gap identity closes the source minimum. No new per-book project or duplicated projection theory."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/normal_blind",
+    "source_reviewer": "/root/source_reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Frozen eleven-target source contract and neutral decoding accepted; actual eleven public bodies, two definitions and original22 canaries accepted, additive T0 canary v2 accepted with202 exact raw bindings. Coefficients fixed, positivity/zero/totalized-division and future-feedback boundaries explicit. No human/external review."
+  },
+  "graph_contribution": {
+    "lean_graph": "new-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Scalar substitution in the same shared graph; no separately certified functor.",
+    "focus_targets": [
+      "BanditRL.OnlineOptimalStep.upperBound",
+      "BanditRL.OnlineOptimalStep.optimalStep",
+      "BanditRL.OnlineOptimalStep.gap_identity",
+      "BanditRL.OnlineOptimalStep.lower_bound",
+      "BanditRL.OnlineOptimalStep.optimal_positive",
+      "BanditRL.OnlineOptimalStep.optimal_value",
+      "BanditRL.OnlineOptimalStep.optimal_unique",
+      "BanditRL.OnlineOptimalStep.source_argmin",
+      "BanditRL.OnlineOptimalStep.distance_energy_argmin",
+      "BanditRL.OnlineOptimalStep.diameter_argmin",
+      "BanditRL.OnlineOptimalStep.zero_distance_decreases",
+      "BanditRL.OnlineOptimalStep.zero_energy_decreases",
+      "BanditRL.OnlineOptimalStep.zero_coefficients"
+    ],
+    "visual_review": "Actual compiled proof-value export and source reader are separately pending.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: source-qualified scalar calculation in one registry; Chapter 2 and whole-book obligations remain open.",
+    "banditrlwiki": "no-change-with-reason: this scalar Online Learning calculation adds no new Bandit setting.",
+    "results_ledger": "no-change-with-reason: Bandit results unchanged; the Online source inventory records this package.",
+    "roadmap": "no-change-with-reason: persistent whole-book Goal remains active; Chapter 2 partial; future chapters unenumerated; historical SGB pointer untouched.",
+    "website_surfaces": [
+      "website/content/books.json",
+      "website/content/chapters.json",
+      "website/content/readings.json",
+      "website/content/highlights.json",
+      "website/scripts/build_site.py",
+      "website/scripts/check_site.py"
+    ],
+    "inherited_source_caption": "Two unnumbered source calculation cards and eleven individual public notes; gap/equality/zero refinements are not claimed as eleven printed theorems."
+  },
+  "truth_boundary": "This package proves the scalar minimization with its two coefficients fixed. It does not choose an online step size using future gradients, or minimize actual regret across trajectories rerun with different eta. The original sharp fixed-step OGD bound, including its negative terminal-distance term, remains in the shared library. This calculation minimizes the coarser two-term bound. Chapter 2, the older production migration and Chapters 3–16 remain required. Compilation, package acceptance, PR delivery and merged/live status are separate; no merged/live update is claimed.",
+  "verification": {
+    "focused_checks": [
+      "Actual11 public proofs3285jobs;23 canaries9086jobs;41 named checks/axioms standard3-or-none."
+    ],
+    "bandit_check": "Actual root9085 and post-extension Tests9224 passed. Full harness is separately pending.",
+    "site_build": "Use lean-verified only after the applicable combined Lean gate; generated website/_site untouched.",
+    "site_check": "Registry, performance, reader and immutable acceptance are separately pending.",
+    "independent_review": "Distinct automated blind decoder/source reviewer, medium; no human or external-model review."
+  },
+  "contributor": {
+    "name": "Codex for Ji Cheng",
+    "role": "Formalization and integration; distinct required automated semantic actors, source attribution retained"
+  }
+}

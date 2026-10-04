@@ -658,9 +658,16 @@
       "meaning": "Scalar minimization of A/(2 eta)+eta B/2 with positive A,B; distinguish hindsight from implementable tuning",
       "printed_page": 15,
       "pdf_page": 27,
-      "status": "draft",
-      "lean_name": null,
-      "required": true
+      "status": "compiled-candidate",
+      "lean_name": "BanditRL.OnlineOptimalStep.source_argmin",
+      "required": true,
+      "lean_names": [
+        "BanditRL.OnlineOptimalStep.source_argmin",
+        "BanditRL.OnlineOptimalStep.distance_energy_argmin",
+        "BanditRL.OnlineOptimalStep.diameter_argmin"
+      ],
+      "evidence": "runs/online-optimal-step-20261004",
+      "boundary": "This package proves the scalar minimization with its two coefficients fixed. It does not choose an online step size using future gradients, or minimize actual regret across trajectories rerun with different eta. The original sharp fixed-step OGD bound, including its negative terminal-distance term, remains in the shared library. This calculation minimizes the coarser two-term bound. Chapter 2, the older production migration and Chapters 3–16 remain required. Compilation, package acceptance, PR delivery and merged/live status are separate; no merged/live update is claimed."
     },
     {
       "source_id": "Section 2.2.1: subdifferential domain inclusion",

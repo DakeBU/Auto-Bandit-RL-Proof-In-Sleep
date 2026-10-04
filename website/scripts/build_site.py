@@ -81,6 +81,7 @@ PSEUDOCODE_CHAPTERS = {
     "online-guessing-osd",
     "online-osd-policy",
     "online-linearization",
+    "online-optimal-step",
     "etc",
     "ucb",
     "oful",

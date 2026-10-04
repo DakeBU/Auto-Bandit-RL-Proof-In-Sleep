@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "record_id": "frontier-61723a2f3e80c50e",
+  "updated_at": "2026-10-04T12:54:03+00:00",
+  "root_objective": "Persistent Orabona Chapters1-16 Goal; C2-optimal-step candidate only, chapter/book remain incomplete",
+  "current_leaf": {
+    "id": "ONLINE-OPTIMAL-STEP-20261004",
+    "kind": "lean",
+    "status": "gate-pending",
+    "statement": "theorem source_argmin (A B : ℝ) (hA : 0 < A) (hB : 0 < B) : 0 < optimalStep A B ∧ upperBound A B (optimalStep A B) = Real.sqrt (A * B) ∧ ∀ η : ℝ, 0 < η → upperBound A B (optimalStep A B) ≤ upperBound A B η",
+    "statement_hash": "a4befb932b34288b9b58bbd081e2a18927cbce7f659b4c81945e993ec6430d06",
+    "declaration": "BanditRL.OnlineOptimalStep.source_argmin",
+    "file": "BanditRLProof/OnlineOptimalStep.lean",
+    "source_status": "accepted",
+    "dependencies": [
+      {
+        "kind": "lean",
+        "name": "BanditRL.OnlineOptimalStep.lower_bound",
+        "status": "compiled"
+      },
+      {
+        "kind": "lean",
+        "name": "BanditRL.OnlineOptimalStep.optimal_value",
+        "status": "compiled"
+      },
+      {
+        "kind": "review",
+        "name": "public-body",
+        "status": "accepted"
+      },
+      {
+        "kind": "harness",
+        "name": "full-bandit",
+        "status": "pending"
+      }
+    ]
+  },
+  "dag": {
+    "nodes": [
+      {
+        "id": "ONLINE-OPTIMAL-STEP-20261004",
+        "kind": "lean",
+        "status": "blocked",
+        "dependencies": [
+          {
+            "kind": "lean",
+            "name": "BanditRL.OnlineOptimalStep.lower_bound",
+            "status": "compiled"
+          },
+          {
+            "kind": "lean",
+            "name": "BanditRL.OnlineOptimalStep.optimal_value",
+            "status": "compiled"
+          },
+          {
+            "kind": "review",
+            "name": "public-body",
+            "status": "accepted"
+          },
+          {
+            "kind": "harness",
+            "name": "full-bandit",
+            "status": "pending"
+          }
+        ],
+        "dispatch_count": 0
+      }
+    ]
+  },
+  "last_accepted_verifier": {
+    "trial_index": 3,
+    "time": "2026-10-04T12:52:35+00:00",
+    "task": "ONLINE-OPTIMAL-STEP-20261004",
+    "role": "reviewer",
+    "kind": "review",
+    "status": "compiled",
+    "lean": "",
+    "notes": "Distinct actual body v1 and additive T0 v2 accepted with explicit delta;11 public proofs,23 canaries,202 v2 raw rows,41 standard axiom names. Full package gates remain pending.",
+    "run_id": "online-optimal-step-20261004"
+  },
+  "memory_policy": {
+    "recent_role_relevant_limit": 5,
+    "explicit_verified_lemma_ids": [],
+    "whole_history_default": false
+  },
+  "shadow_gate": {
+    "status": "pending",
+    "analyzed_trial_rows": 4,
+    "mismatches": [],
+    "replay_transitions": 0
+  },
+  "mutation_policy": {
+    "canonical_path_queue": true,
+    "cross_process_lock": true,
+    "same_file_serialized": true,
+    "disjoint_files_parallel": true
+  },
+  "autonomous_execution": {
+    "enabled": false,
+    "requires_deterministic_gates": true,
+    "requires_explicit_user_request": true
+  }
+}
