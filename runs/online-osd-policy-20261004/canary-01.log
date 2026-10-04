@@ -1,0 +1,111 @@
+Tests/OnlineSubgradientPolicyCanary.lean:13:12: warning: unused variable `x`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+Tests/OnlineSubgradientPolicyCanary.lean:77:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  SourceSubdifferential (f t) (output V η f (1 / 2) policy t)
+in the target expression
+  policy t (fun i => f ↑i) (history V η f (1 / 2) policy t) (f t) ∈
+    SourceSubdifferential (f t) (history V η f (1 / 2) policy t (Fin.last t))
+
+η : ℕ → ℝ
+f : ℕ → ℝ → EReal
+t : ℕ
+hf : BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (f t)
+g : ℝ
+hs : SourceSubdifferential (f t) (output V η f (1 / 2) policy t) = {g}
+hg :
+  policy t (fun i => f ↑i) (history V η f (1 / 2) policy t) (f t) ∈
+    SourceSubdifferential (f t) (history V η f (1 / 2) policy t (Fin.last t))
+⊢ selected V η f (1 / 2) policy t = g
+Tests/OnlineSubgradientPolicyCanary.lean:106:2: error: Type mismatch: After simplification, term
+  selected_eq_preferred eta lossA 0 hg
+ has type
+  selected V eta lossA 2⁻¹ policy 0 = 0
+but is expected to have type
+  ga 0 = 0
+Tests/OnlineSubgradientPolicyCanary.lean:111:2: error: Type mismatch: After simplification, term
+  selected_eq_preferred eta lossB 0 hg
+ has type
+  selected V eta lossB 2⁻¹ policy 0 = 0
+but is expected to have type
+  gb 0 = 0
+Tests/OnlineSubgradientPolicyCanary.lean:115:19: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ga 0
+in the target expression
+  BanditRL.OnlineGradientDescent.project V
+      (output V eta lossA (1 / 2) policy 0 - eta 0 • selected V eta lossA (1 / 2) policy 0) =
+    1 / 2
+
+⊢ BanditRL.OnlineGradientDescent.project V
+      (output V eta lossA (1 / 2) policy 0 - eta 0 • selected V eta lossA (1 / 2) policy 0) =
+    1 / 2
+Tests/OnlineSubgradientPolicyCanary.lean:120:19: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  gb 0
+in the target expression
+  BanditRL.OnlineGradientDescent.project V
+      (output V eta lossB (1 / 2) policy 0 - eta 0 • selected V eta lossB (1 / 2) policy 0) =
+    1 / 2
+
+⊢ BanditRL.OnlineGradientDescent.project V
+      (output V eta lossB (1 / 2) policy 0 - eta 0 • selected V eta lossB (1 / 2) policy 0) =
+    1 / 2
+Tests/OnlineSubgradientPolicyCanary.lean:128:19: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ga 1
+in the target expression
+  BanditRL.OnlineGradientDescent.project V
+      (output V eta lossA (1 / 2) policy 1 - eta 1 • selected V eta lossA (1 / 2) policy 1) =
+    0
+
+⊢ BanditRL.OnlineGradientDescent.project V
+      (output V eta lossA (1 / 2) policy 1 - eta 1 • selected V eta lossA (1 / 2) policy 1) =
+    0
+Tests/OnlineSubgradientPolicyCanary.lean:133:19: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  gb 1
+in the target expression
+  BanditRL.OnlineGradientDescent.project V
+      (output V eta lossB (1 / 2) policy 1 - eta 1 • selected V eta lossB (1 / 2) policy 1) =
+    1
+
+⊢ BanditRL.OnlineGradientDescent.project V
+      (output V eta lossB (1 / 2) policy 1 - eta 1 • selected V eta lossB (1 / 2) policy 1) =
+    1
+Tests/OnlineSubgradientPolicyCanary.lean:141:19: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ga 2
+in the target expression
+  BanditRL.OnlineGradientDescent.project V
+      (output V eta lossA (1 / 2) policy 2 - eta 2 • selected V eta lossA (1 / 2) policy 2) =
+    1 / 2
+
+⊢ BanditRL.OnlineGradientDescent.project V
+      (output V eta lossA (1 / 2) policy 2 - eta 2 • selected V eta lossA (1 / 2) policy 2) =
+    1 / 2
+Tests/OnlineSubgradientPolicyCanary.lean:146:19: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  gb 2
+in the target expression
+  BanditRL.OnlineGradientDescent.project V
+      (output V eta lossB (1 / 2) policy 2 - eta 2 • selected V eta lossB (1 / 2) policy 2) =
+    1 / 2
+
+⊢ BanditRL.OnlineGradientDescent.project V
+      (output V eta lossB (1 / 2) policy 2 - eta 2 • selected V eta lossB (1 / 2) policy 2) =
+    1 / 2
+Tests/OnlineSubgradientPolicyCanary.lean:154:19: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ga 3
+in the target expression
+  BanditRL.OnlineGradientDescent.project V
+      (output V eta lossA (1 / 2) policy 3 - eta 3 • selected V eta lossA (1 / 2) policy 3) =
+    0
+
+⊢ BanditRL.OnlineGradientDescent.project V
+      (output V eta lossA (1 / 2) policy 3 - eta 3 • selected V eta lossA (1 / 2) policy 3) =
+    0
+Tests/OnlineSubgradientPolicyCanary.lean:159:19: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  gb 3
+in the target expression
+  BanditRL.OnlineGradientDescent.project V
+      (output V eta lossB (1 / 2) policy 3 - eta 3 • selected V eta lossB (1 / 2) policy 3) =
+    1
+
+⊢ BanditRL.OnlineGradientDescent.project V
+      (output V eta lossB (1 / 2) policy 3 - eta 3 • selected V eta lossB (1 / 2) policy 3) =
+    1

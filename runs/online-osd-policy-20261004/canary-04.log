@@ -1,0 +1,17 @@
+Tests/OnlineSubgradientPolicyCanary.lean:13:12: warning: unused variable `x`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+Tests/OnlineSubgradientPolicyCanary.lean:258:6: error: unsolved goals
+case pos
+η : ℕ → ℝ
+f : ℕ → ℝ → EReal
+ih : history V η f (1 / 2) offPathPolicy 0 = history V η f (1 / 2) policy 0
+⊢ policy 0 (fun i => f ↑i) (fun x => 2⁻¹) (f 0) = selected V η f 2⁻¹ policy 0
+Tests/OnlineSubgradientPolicyCanary.lean:290:60: error: unsolved goals
+hp : OracleLaw V offPathPolicy
+hg :
+  offPathPolicy 0 (fun i => i.elim0) (fun x => 3 / 4) (flat 0) ∈
+    SourceSubdifferential (flat 0) ((fun x => 3 / 4) (Fin.last 0))
+h999 : 999 ∈ SourceSubdifferential (flat 0) (3 / 4)
+htest : inner ℝ 999 (1 / 4) ≤ 0
+⊢ False

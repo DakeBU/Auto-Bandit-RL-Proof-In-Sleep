@@ -1,0 +1,226 @@
+# Public body candidate review — arbitrary legal OSD policy
+
+**Verdict: accepted-with-explicit-delta**, limited to the actual public body candidate and nondegenerate canaries. No blocking mathematical repair found. This is not final package, combined harness, reader/site, immutable binding, PR, Chapter2 or book acceptance.
+
+Actor `/root/source_reviewer`, distinct automated source reviewer; requested GPT-6 Astra / medium, runtime identity not independently attested. No external-human or external-model review claim. Root formalizer, clean `/root/normal_blind` decoder and this reviewer remain separate. Worktree `E:/ABRL/worktrees/research-online-book`, branch `codex/research-online-osd-policy`, inspected HEAD `57b82709616133549f857be9af9195b020f1b89c`. The actual new public module/tests were working-tree candidate bytes, not a claim that this HEAD already contains them. Existing content was preserved; only this report/receipt were written.
+
+## Source and byte stability
+
+Pinned original v10 PDF was freshly hashed as `cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17`. Original physical31–32 were freshly re-extracted for the transfer, Lemma2.31 and Algorithm2.2; the original physical25–28 and33 source/definitions/tuning were read in the preceding continuous contract review and remain unchanged. This body review relies on the actual source and proofs, not merely the earlier contract verdict.
+
+All138 supplied raw input rows match. All83 earlier inspected contract/source/API rows match with zero drift. Independently extracted all21 actual PUBLIC declaration headers and compared native hashes/premise arrays to frozen source fences: every match holds and every fence points to `BanditRLProof/OnlineSubgradientPolicy.lean`. The21 recorded public guards all report success. The actual candidate-binding file also binds that complete public module hash. Draft-path checks are not substituted for these checks. Clean blind v3 remains the source-blind evidence; v1 missing-context and v2 proof-contamination history remain preserved and unaccepted as clean reconstruction.
+
+## Seven semantic slots and body assessment
+
+1. **Objects/spaces.** Actual finite-dimensional real inner-product E, shared nonempty closed convex Domain and nearest projection match coordinate-free source R^d. The new finite typed history is built by Nat.rec and Fin.snoc, retaining old outputs and appending the actual update. The actual source support relation is global in every ambient query. Properness excludes bottom and provides a finite witness; shared finite_loss/subgradient_point_finite provide genuine finite conversions, not arbitrary EReal.toReal values.
+2. **Quantifiers/order.** Arbitrary supplied policy p remains a parameter throughout. No performance proof specializes it to the canonical selector or assumes OracleLaw. LegalFeedback is used only at actual played indices t<T. Regret_tuned quantifies all feasible u after fixing a single schedule and trajectory. The one-step leaf has no initial/current feasibility assumption beyond its actual supplied support; the reused Lemma2.31 establishes finite values there from properness and global support.
+3. **Assumptions/regularity.** Initial feasibility, comparator feasibility, source subdifferentiability/properness, positive played eta and variable-prefix monotonicity are exactly retained. Fixed bounds require no bounded domain. Variable diameter conversion uses actual boundedness. Tuned D,G,T positivity is explicit; the norm bound concerns selected vectors on the specified tuned run. No desired one-step or cumulative inequality is accepted as input. The fixed proof's unused hx1 warning does not add or remove any source premise.
+4. **Conclusions/metric.** history_zero/history_succ are definitional; output_succ extracts the last snoc coordinate. history_mem inducts over last/earlier coordinates and uses project_spec. The prefix induction proves equality of the full typed past-loss input and full output history before invoking the common policy. one_step_chain rewrites the actual successor and applies the real global-support Lemma2.31 to the actual selected vector; one_step divides by positive eta. Fixed regret inductively sums the two inequalities and telescopes, retaining the exact negative terminal. Variable regret supplies the actual squared-distance sequence and feasible-domain bound to weighted_potential_sum, then sums actual one_step bounds. No proxy next point or imagined sequence enters.
+5. **Constants/indexing/asymptotics.** Both one-step inequalities retain eta scaling, half squared distances and eta² norm²/2. Divided and cumulative coefficients are correct. Variable denominators are eta(T-1), and terminal output T corresponds to source x_(T+1). Fixed T0 is handled directly by the body. Tuning bounds actual energy by T*G², controls initial distance by D², discards only a proved nonnegative residual, and uses sqrt(T)²=T to derive DGsqrtT for eta=D/(GsqrtT). There is no retrospective energy optimizer, anytime or signed-limit assertion.
+6. **Feedback/probability.** The common-policy prefix proof covers strict-past loss/schedule agreement; current loss may change without altering current output. The policy sees past whole functions, output history and current whole loss. Arbitrary exogenous closures/initialization/schedules are held fixed, not proved independent of outside future information. The statements are deterministic pathwise full information, not a randomized adaptive-adversary/measurability theorem. This limitation is explicit in the public module comment.
+7. **Boundary/scope.** Structural recursion, feasibility and canonical identities allow illegal inputs/negative steps without claiming regret guarantees. Optional universal OracleLaw has a sufficient adapter only. canonicalPolicy_legal uses actual shared chooser correctness; canonical_output proves equality of recursive trajectories by induction, and canonical_selected follows from that equality. Neither bridge supplies a fake numerical tie value. Coordinate-free representation, zero-based indexing, structural T0 extension, positive tuning and pathwise/exogenous policy limits remain explicit deltas. No source weakening or added global convexity/differentiability was found.
+
+## Actual canary evidence
+
+I read the entire public canary definitions and67 theorem bodies, including the conditional selector and counterexample witnesses, rather than treating compilation as semantic evidence.
+
+- Two genuine histories start at1/2 with different flat first losses, then have the same current loss and point at time1. The policy reads the first past loss and chooses+1 versus-1. Actual projection produces A outputs1/2,1/2,0,1/2,0 and B outputs1/2,1/2,1,1/2,1. Thus history sensitivity is real, not a name or an assumed selected vector. Supports are obtained by actual membership tests, canonical fallback correctness and exact global absolute-loss support classification.
+- Both flows prove regret1/2, energy3, and positive fixed terminal1/4. The actual public fixed theorem is instantiated, and its RHS is separately proved exactly1/2. This tests the negative terminal quantitatively.
+- offPathPolicy returns999 at a feasible off-path initial point3/4 for a constant loss. Applying its supposed global support inequality at y=1 gives the actual contradiction999/4<=0. Thus universal OracleLaw is false. Its real history from1/2 equals the lawful policy by induction, so played legality still holds. Actual public fixed and all-comparator tuned bounds are instantiated without universal legality. The tuned norm bound is genuinely derived from supports, not assumed target regret.
+- Harmonic eta=(1/2)/(t+1) is genuinely variable on nonzero-support rounds:1/4,1/6,1/8. Actual outputs are1/2,1/2,1/4,5/12,13/24; supports0,1,-1,-1. The canaries prove regret1/3, weighted energy13/48, last eta1/8 and positive terminal1/144, then instantiate the actual variable-bound theorem with those same data.
+- Future loss becomes bottom and eta becomes-99 starting at4; the actual prefix theorem keeps output4 unchanged. The T0 canary proves zero regret directly from its definition. The canonical_invalid_future_bridge is an identity under invalid inputs, not a numerical test of the empty-support zero fallback: a constant-bottom function has all supports under the literal relation. The general canonical bridge body does cover empty-support cases, but this concrete fixture does not separately demonstrate fallback=0. These are reporting limits, not missing proofs of the frozen endpoints.
+
+## Compiler/guard evidence and retained failures
+
+Actual public focused build exits0 with3320 jobs. Actual focused canary build exits0 with **3324 jobs** (the rough3321-ish request estimate is superseded by its raw log). Structural/support/performance leaf commands exit0, but the proof judgment above comes from the actual public bodies. The actual public axiom log covers every one of the30 public declarations (21 theorems plus definitions/aliases); independent parsing finds only propext, Classical.choice, Quot.sound or an empty axiom list. No custom axiom or sorryAx is accepted. This is a30-name public audit, not a separately requested67-name canary axiom audit.
+
+The retained root command exits0 and its actual log ends at9083 jobs. This observation is separate from combined Tests/full harness and cannot certify those gates. I did not rely on any concurrently running/unread combined result.
+
+Canary01,03,04,06 genuinely failed, while02,05,07 succeeded at their respective stages. Final focused canary succeeds. Earlier failed declaration headers were independently recomputed against the final file:30,47,47,67 headers respectively, with no changes. I inspected preserved sources/differences and repair notes: alias folding and rewrite alignment, off-path policy application/history induction, explicit scalar-inner arithmetic, and a multiline nested-tactic parsing fix. New later fixtures explain growing counts. The early rough34(?) count is corrected by actual30, as the preserved repair05 notes. Failed outputs are historical diagnostics, never proof evidence. Public21 source headers and definitions were not weakened to obtain compilation.
+
+## Decision limits and remaining work
+
+Accept the inspected actual body candidate with the explicit deltas above. No mandatory code/header repair is requested. Downstream prose must preserve the two concrete canary limitations (T0 definitional identity and invalid-input canonical bridge, not tested numerical fallback). Nondegenerate legal feedback and off-path-law separation are materially demonstrated.
+
+Full combined Tests/harness, final axiom/compiled-dependency package, registry/site/reader, immutable raw/LF/worktree/HEAD binding, local acceptance overlay and PR delivery remain separate required gates. Neither chapter/book completion nor main/live publication is established. No native reviewer trial was appended by this review; no proofs, contracts, source metadata or old receipts were edited.
+
+## Raw inspected-file table
+
+All138 fixed body inputs are included, plus previously inspected immutable83 source/context rows and additional actually read files. The shared module/mathlib semantic scope is the relevant definitions/interfaces; roots are inspected for new imports; historical canaries for actual preserved headers and repair differences; logs for actual commands, diagnostics, axiom entries and terminal evidence. Whole-byte hashing is not a claim to recertify unrelated content. Hashes are raw, without JSON reserialization or newline normalization.
+
+| Path | SHA256 raw |
+|---|---|
+| `../research-online-ogd/tmp/pdfs/orabona-v10.pdf` | `cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17` |
+| `.agents/skills/bandit-semantic-roundtrip/SKILL.md` | `7ee7b72b8a84ab954966dc13900952c3439bd8d4e97877b622c1ca0a7aa85477` |
+| `.lake/packages/mathlib/Mathlib/Data/EReal/Basic.lean` | `bf69a9ed4bc39134bbefac1a43b187e2f1e66fd43f352d0810ab89474f054922` |
+| `.lake/packages/mathlib/Mathlib/Topology/Bornology/Basic.lean` | `f997a90d63f89d1408d41a59013cbfdf91cbdfcb754fe875fcbbaf01b6ff1efa` |
+| `.lake/packages/mathlib/Mathlib/Topology/EMetricSpace/Diam.lean` | `c48649a49c61e45bc9bb5b702b026786430c18e3f9d8952e557d0ca538b621a9` |
+| `.lake/packages/mathlib/Mathlib/Topology/MetricSpace/Bounded.lean` | `335de2c940e85c657f308cf0fd0039bfb7884f79c936e6a07ac446ecbe4058d3` |
+| `BanditRLProof.lean` | `5c7d96acb7065abff813f5de08955336ff65790fb0e46df173683b1f5b9ab01f` |
+| `BanditRLProof/OnlineClosedProper.lean` | `9a5fcfb9e26a2a35d8e5bb7ef7b7a7dfd65a7f1c8daab03faebb51e41d54e7c6` |
+| `BanditRLProof/OnlineGradientDescent.lean` | `e7edba540c2f60032bb4a34aaf0768b3107b94276b67b6f41fc289009c8924c1` |
+| `BanditRLProof/OnlineGradientDescentVariable.lean` | `674bbb07ace34bfb03019fa6a933d3ea02cf7ebf0972e1e36a9c65b82efe772f` |
+| `BanditRLProof/OnlineGuessingSubgradient.lean` | `95d206190d443939115037f9bf6d0eeb1e3229f3ae52eb4150927fbe69e89348` |
+| `BanditRLProof/OnlineSubgradientBasic.lean` | `4c17a466091b88d90451be897a2f01afa204b41933191244e0093e48396d1962` |
+| `BanditRLProof/OnlineSubgradientDescent.lean` | `6ba8586e1691babc2db3e0c0fcddb69b4236e16f9f192c464b4c04262e854f1c` |
+| `BanditRLProof/OnlineSubgradientPolicy.lean` | `ac8fbfb3eee3c92ebb79b44f33beec33b500105bb7e54df5176c14e886c2c662` |
+| `Tests.lean` | `0f5190d5b7d36712804bd8653b569bc305d7c914a78c40b533ee5c171b83f784` |
+| `Tests/OnlineSubgradientPolicyCanary.lean` | `a70d4f155f53960fe29234ca4065556fcffae123b423e15299c2cd053ae43258` |
+| `docs/contracts/online-osd-policy-v1/canonicalPolicy_legal-header.txt` | `26d18639d611207579e0ab562a6033e1e2dd0c8ef2bdab6fc9aaed8634ec70f2` |
+| `docs/contracts/online-osd-policy-v1/canonicalPolicy_legal.json` | `e99d2bb591ec42b6624a0a2e12bcf5dafa7cf5b151a28393ca57c9d9682efb0f` |
+| `docs/contracts/online-osd-policy-v1/canonical_output-header.txt` | `fc6fdc7275144b35ec71e288e3ae7514d6384a6f7212e1f63c8032b9b6941543` |
+| `docs/contracts/online-osd-policy-v1/canonical_output.json` | `408b28026d1c63eb7c3eac3414c37571e2e2424d02609d785a30c460d84d6285` |
+| `docs/contracts/online-osd-policy-v1/canonical_selected-header.txt` | `472b4e1ea27e71766fe921e97ff9752c0118fc63da611e59f3b12ab952b34fab` |
+| `docs/contracts/online-osd-policy-v1/canonical_selected.json` | `e4dab383fe7725cb7c2adffd433256364336ec3d7cf4461ec913ba8cda51442d` |
+| `docs/contracts/online-osd-policy-v1/context.lean.txt` | `ee72b114bb52c78457ab2ebe40f50b92d4fa57fd2cb31f61bff817857b5d6955` |
+| `docs/contracts/online-osd-policy-v1/history_mem-header.txt` | `9468a05fdb0220c548b125edce2cdb6f0f34b800af9e5dafde513a543232e161` |
+| `docs/contracts/online-osd-policy-v1/history_mem.json` | `3921cc2f4e6c037c2b02a5fd1276bf0d85f930dd54d3da7230b81c6de7414bf4` |
+| `docs/contracts/online-osd-policy-v1/history_prefix-header.txt` | `1ca72256d383ab8d1e37713d389469a4fbfc8fee39048d5db8be4043b60da7fb` |
+| `docs/contracts/online-osd-policy-v1/history_prefix.json` | `235c485ed22f716fadfea56725d28847b6aadfd5dacd00930b51a90c7e7efa8f` |
+| `docs/contracts/online-osd-policy-v1/history_succ-header.txt` | `5eae2449132cfdef3384d03567d9042a1759a2e40f30b7be6f4bfb2eacb6979e` |
+| `docs/contracts/online-osd-policy-v1/history_succ.json` | `b134690216d09fbd8be0e73bdd959d2f6d28ae7337e5ab5f595d426625dcebe7` |
+| `docs/contracts/online-osd-policy-v1/history_zero-header.txt` | `d63910bf80ed414eb9332b01948f47b43a1f5552df1fd728b204c6d866947a67` |
+| `docs/contracts/online-osd-policy-v1/history_zero.json` | `d13e02d9949e036236fa7f08a97bf03e568cd2c711453030c8b3bf30cedb98fa` |
+| `docs/contracts/online-osd-policy-v1/one_step-header.txt` | `fcfaf7d9ec3a58e78927639b14d14f800212d6af8d5da7772a37232b9d9e0f9a` |
+| `docs/contracts/online-osd-policy-v1/one_step.json` | `65798cb678f7192285a1a3cadc9fb1f973b88011c44439eaed88f02191169591` |
+| `docs/contracts/online-osd-policy-v1/one_step_chain-header.txt` | `1796e67373a24b89353a64956396bb1060d0b2ab1f00c8482d5400d803fde41a` |
+| `docs/contracts/online-osd-policy-v1/one_step_chain.json` | `e1a0c8b53ab431e061e799f691a5d265c4a950fd4d532a1925fe821ee35da72f` |
+| `docs/contracts/online-osd-policy-v1/oracle_feedback-header.txt` | `a1df9e198e87f0e700cadd42bd025d15c4ce40ea19a9007953090fe063b8ca7b` |
+| `docs/contracts/online-osd-policy-v1/oracle_feedback.json` | `17caf1dfcf88dca7820a4e700361c27c9e6d5e14ef0b791ce070d3eb004ab3db` |
+| `docs/contracts/online-osd-policy-v1/output_mem-header.txt` | `1bcd9773a20c778839c473ce4c377531b555051cba7ed1a4c4066fc4763a657a` |
+| `docs/contracts/online-osd-policy-v1/output_mem.json` | `7ce02843f330bf09fe36dce90b635151dbc3dee82a79e98d45b24996e69d2bed` |
+| `docs/contracts/online-osd-policy-v1/output_prefix-header.txt` | `1ed169261ba2cab28c36752102861146be49c277b27689d90cb1ac15c6579f20` |
+| `docs/contracts/online-osd-policy-v1/output_prefix.json` | `4da01f6c5786e2bdd963de645e404ba901758db3abaa30fa325beec268728d4f` |
+| `docs/contracts/online-osd-policy-v1/output_succ-header.txt` | `f22f6c538f980ac448a20f42db832c3f2a0f0c15fa65b669054dddcff7749863` |
+| `docs/contracts/online-osd-policy-v1/output_succ.json` | `a4623134cd3cc77cf21d3b8c33ddc19eabfd90c0c503cb958092629388efee15` |
+| `docs/contracts/online-osd-policy-v1/output_zero-header.txt` | `dad71d11b63884ce10acc85a4ea13e6f654af9a6836f0295ad57261270f04863` |
+| `docs/contracts/online-osd-policy-v1/output_zero.json` | `85065091fab587b1d5fc6b9600bbdab0e26c96a7d9bf476b4ec874012272b2c9` |
+| `docs/contracts/online-osd-policy-v1/regret_fixed-header.txt` | `1e489df9b030fd45da35e6039ab47034df6f4c6a0feed66fd0cefc5e81970594` |
+| `docs/contracts/online-osd-policy-v1/regret_fixed.json` | `301c7bbd2f942c138d33c87691fcdcbca1321f511471df58e572d06f730181a7` |
+| `docs/contracts/online-osd-policy-v1/regret_fixed_coarse-header.txt` | `f4271fae5c084793fb36d24f24cba5964d43318a05c21ffc99c4ed3a84c9eb83` |
+| `docs/contracts/online-osd-policy-v1/regret_fixed_coarse.json` | `c2d2e352c56c0c891c9c32009f1f0f42f6101d2ad5a2d120676a5793875319e6` |
+| `docs/contracts/online-osd-policy-v1/regret_tuned-header.txt` | `7a469e76a8cbbdc07919c6dceeabb50c87a70f6ba52212c8ffeffab630884192` |
+| `docs/contracts/online-osd-policy-v1/regret_tuned.json` | `3412f9eff9663a85186db07f6228613b1694995030361fc97810f9c96d9c6dfc` |
+| `docs/contracts/online-osd-policy-v1/regret_tuned_distance-header.txt` | `df0b87a329d3e27e5d16f0de063142d22afd39b79b7d1ecb297b9a6113dd201a` |
+| `docs/contracts/online-osd-policy-v1/regret_tuned_distance.json` | `9a597bd2a4282d696ce346a6e7ca142689c9c76a6c012feae6d453c9a8eafc21` |
+| `docs/contracts/online-osd-policy-v1/regret_variable-header.txt` | `e72d28e3ea73f00d64c7ea88decf56de951383cf66da77d83553d64d420dc7d2` |
+| `docs/contracts/online-osd-policy-v1/regret_variable.json` | `39091cb2a39306fef3aa9221440d67958518a837e9c1516f4815fa8aa77676d9` |
+| `docs/contracts/online-osd-policy-v1/regret_variable_bound-header.txt` | `e67b0da485e6cf69e0a788146bc692af708c3cfff170f022a33058bcfa7d7361` |
+| `docs/contracts/online-osd-policy-v1/regret_variable_bound.json` | `275396a5b0edad4254045b08e5dbb1afeb158382b9d1a7881853e16877941278` |
+| `docs/contracts/online-osd-policy-v1/trajectory_finite_loss-header.txt` | `70712b8a584a197c6b433802afcd64a05f64325479e166b68f064deddf82481e` |
+| `docs/contracts/online-osd-policy-v1/trajectory_finite_loss.json` | `7c0b92f5925ce4e03c6ad8c0bc1787d2c408011ce7c00b2954aff3e732d74d08` |
+| `runs/online-osd-policy-20261004/blind-context-extraction-audit-v3.json` | `5712d530050057bc9c9e4852d89a20e8688426a89abc1c2b710b9ae3e2de23e1` |
+| `runs/online-osd-policy-20261004/blind-context-repair-v3.md` | `e51781513af24a9e9edda7762940630c3861ca89c20a30b55e6ec35cf9a83c47` |
+| `runs/online-osd-policy-20261004/blind-context-repair.md` | `af01a158dde2ca35ebc214798eea41edce65efdd14dbe940c28f78af0f4c2c77` |
+| `runs/online-osd-policy-20261004/blind-imported-context-v2.md` | `2dbc2ee0a8126000fe92750e3487c7af604fb59158779faffb6619d1b8f0ce3f` |
+| `runs/online-osd-policy-20261004/blind-imported-context-v3.md` | `bd1bd489ab50d9ce880ba1067266fa60f10b7a2f955040c356a9090fdc292b50` |
+| `runs/online-osd-policy-20261004/blind-neutral-name-map.json` | `7dd91a0eb1ab717b4081ce36390eefca4025a4811c23f71dcb7e4f7ee0e79058` |
+| `runs/online-osd-policy-20261004/blind-packet-v1.md` | `256e2b80e7d3b4c7862edf64659376bde9dfe55cd9855f3b1ed38645e24a2abc` |
+| `runs/online-osd-policy-20261004/blind-packet-v2.md` | `b265670fd56efa3b97dbeef650703ab6eb47aaac186c16e91dba1969d83cadec` |
+| `runs/online-osd-policy-20261004/blind-packet-v3.md` | `652d0efc210cf8f2e26e5d822095e7df7128cae7899fc432f627b315333c41f2` |
+| `runs/online-osd-policy-20261004/blind-receipt-v1.json` | `4447da85a835c4d46c20cbaa10674f3ebf15c3b269d99c15878d0ffdb7bf2b60` |
+| `runs/online-osd-policy-20261004/blind-receipt-v3.json` | `dd0fc7283a9853d27d71eb72859f291928aa193b651b33a6b0517050b575f6e5` |
+| `runs/online-osd-policy-20261004/blind-reconstruction-v1.md` | `86f5d6c24a1ea6ab6b2888ce845d87f33e7fddf6ee6c8c97d8ec7c2d1c1ca4a1` |
+| `runs/online-osd-policy-20261004/blind-reconstruction-v3.md` | `d15c6760f2c0523f866f036f47f9ffb1d6b1f4d950dd465dc9692536c8bd29a6` |
+| `runs/online-osd-policy-20261004/canary-01-exit.json` | `c6b93508daf2c387f6edf9b241a0a4a62b510ddf4a9d420e0e23821adcd2e2db` |
+| `runs/online-osd-policy-20261004/canary-01.log` | `927d785b3ceb56f42a923f8ed9590acb79427735ce4b2d69d2e97d23f0e11b6d` |
+| `runs/online-osd-policy-20261004/canary-02-exit.json` | `793cff0d66f3805de587b61f410884f07ef062dea8785a3472e142e873fa1805` |
+| `runs/online-osd-policy-20261004/canary-02.log` | `698531a2a8baa365ccb2ea595dd79cf6ef5b20f433b207f0b54b7dac34b431b8` |
+| `runs/online-osd-policy-20261004/canary-03-exit.json` | `746f36890c6ef538cc737496d7d52b4dc5b1f5ac231609f84c129d260c8de83c` |
+| `runs/online-osd-policy-20261004/canary-03.log` | `f52c073433bc554b2aeab00c4e9ea542e6da6be41a533bc6e97f25b67a80ee84` |
+| `runs/online-osd-policy-20261004/canary-04-exit.json` | `e49984e50b47566c5f2cba6608a2ea1571643088c732fcab1d130e5405dc8bd4` |
+| `runs/online-osd-policy-20261004/canary-04.log` | `19df35f2c9f57dc5350258db3b2494a540b3832b6fe3f18795e5d49a2aaa9d84` |
+| `runs/online-osd-policy-20261004/canary-05-exit.json` | `a5e42b2c964267ce59048583e18fa43f271f17692ef0b3439ce1524119373759` |
+| `runs/online-osd-policy-20261004/canary-05.log` | `698531a2a8baa365ccb2ea595dd79cf6ef5b20f433b207f0b54b7dac34b431b8` |
+| `runs/online-osd-policy-20261004/canary-06-exit.json` | `cfe822abb7e7dd53be4807e13bf3628ba5e0afa5564415752c163842c730094e` |
+| `runs/online-osd-policy-20261004/canary-06.log` | `26fbee8feb126804fadfba101690c7c21c3c1c25c04fdea911887eec730c18bb` |
+| `runs/online-osd-policy-20261004/canary-07-exit.json` | `09e9873eab776e284239973c81c5ee7041bf19d27149358adcbb06021e83b30a` |
+| `runs/online-osd-policy-20261004/canary-07.log` | `698531a2a8baa365ccb2ea595dd79cf6ef5b20f433b207f0b54b7dac34b431b8` |
+| `runs/online-osd-policy-20261004/canary-focused-01-exit.json` | `c1ff0e36719fcef03d27da6b0556c91d76e3511e0c3e1e7fecff0c74668c28de` |
+| `runs/online-osd-policy-20261004/canary-focused-01.log` | `ce3b04254efe2f4d22d84474b7cbca5496591841cc690a21aba5c8c67afae94f` |
+| `runs/online-osd-policy-20261004/canary-header-repair-04.json` | `c0da457482fbd99d9ab3453e7ecf6ffaee925e28151f7cb3d0c71cc29d5e4ee7` |
+| `runs/online-osd-policy-20261004/canary-repair-02.md` | `5d3530fa2ddc824f20d7419c01743d386248c3a9d1e05d1c42622ab4353dd1ce` |
+| `runs/online-osd-policy-20261004/canary-repair-04.md` | `676e650b1a6947f6e2ad2898606d2b7a72a7f355ba33eb6a691e823d5f61d5c9` |
+| `runs/online-osd-policy-20261004/canary-repair-05.md` | `7fbd9d5a8c8b447f3fe9d0d17df7fc973f1037c258c4f8222563ef75e0712bf2` |
+| `runs/online-osd-policy-20261004/canary-repair-07.md` | `aad253204491216cd44e13ba3c8967163859ae7cbfa114e21a8b7e77133ab14f` |
+| `runs/online-osd-policy-20261004/canary-source-evidence.json` | `aa8503328db93201ce9bd484c628468b789f630d86dd787afcbf869906e831b9` |
+| `runs/online-osd-policy-20261004/contract-source-inputs-v1.json` | `ddd8fe1611e9bfa8311b1228d89fc2ceab31fd402140c018a7605c5eb18abe35` |
+| `runs/online-osd-policy-20261004/contract-source-inputs-v2.json` | `d260e6cdbae5bcf339b44bcd0c2c8ddaecd3eb25748aad341b2ff64293cf038f` |
+| `runs/online-osd-policy-20261004/contract-source-inputs-v3.json` | `14c0f6ee9ed0c0490126ea4f0407a0186605a789d9e6e2b3be2ee197d504594d` |
+| `runs/online-osd-policy-20261004/draft-freeze.json` | `6511db7d8ec2a1771859332186466d608dad5ca31b4baba67344a958a61043f7` |
+| `runs/online-osd-policy-20261004/leaves/canary-01.lean` | `1eab464fc5fb5c4d8d66e4f69e7b0d876bca1da3bfba4dbe57d55e3eb9865c88` |
+| `runs/online-osd-policy-20261004/leaves/canary-03.lean` | `622665ae9d8b674b2f39046178ede7a8e445b9017f1b5a882c2471faccdabfaa` |
+| `runs/online-osd-policy-20261004/leaves/canary-04.lean` | `6fc0fbe65420c7de967ee20c688d5293012135ffb8166d7163cb5c1e0d7d02eb` |
+| `runs/online-osd-policy-20261004/leaves/canary-06.lean` | `d795abc99ea1eefb54a13a35ea92976b19c12520d0b03e82d6434474ddce1c06` |
+| `runs/online-osd-policy-20261004/ogd-source-pages.txt` | `9eb73c470ca04f3cee26996847bb9ea0851004dbcd745265e5cb0efeb87c7894` |
+| `runs/online-osd-policy-20261004/packet-contamination-v2.md` | `f2fca99bfd4344c85bdd15cb66a3d363d55f7a6a818b504782e8af74940f8f79` |
+| `runs/online-osd-policy-20261004/performance-01-exit.json` | `a8ab8b7419e373cef21715754590809c20ba6583bc2c0af6e4ba8cba0cc644ee` |
+| `runs/online-osd-policy-20261004/performance-01.log` | `05eb4bdf2f250ae5a464399d222b214e2da492fe902721ffb8e7015296e94fae` |
+| `runs/online-osd-policy-20261004/proof-obligations.json` | `a09ae91ba23ebd39a8554fab27d31d603ad1066e84be76cb3cff743a8747b3d4` |
+| `runs/online-osd-policy-20261004/public-actual-candidate-bindings.json` | `418a142921ffe5920e7d5cbe76a7b22be161a4a5698c64cb51b993152d42e0b4` |
+| `runs/online-osd-policy-20261004/public-axiom-audit.json` | `184b64abd731cdb51a73502bfeb43cd9ce311ee231fa055d1c7ea318d27d0a72` |
+| `runs/online-osd-policy-20261004/public-axioms-01-exit.json` | `3b0dc9c0e6f6cb7a0a81fc2f90d8140c4d1fac8a74b2cfb57ba8973a6f86e35c` |
+| `runs/online-osd-policy-20261004/public-axioms-01.log` | `453b73dde8b01d16fcf9900e0cc9b322c15528b5e2c1987ba8706f31c0df7ee2` |
+| `runs/online-osd-policy-20261004/public-body-inputs.json` | `8997b4c3f19a5ea274177ff1312945b64e3dbbb5a838e124bfcbc9a4414d2f8e` |
+| `runs/online-osd-policy-20261004/public-body-review-packet.md` | `35a1e8e2259c4819ec38ab909e4059f93a50be0ccf99eb8495bc37b03ebffd57` |
+| `runs/online-osd-policy-20261004/public-candidate-fences/canonicalPolicy_legal.json` | `6d95235a6af7ba60f4a08fd41787149dd1b0c0386029df25b93b91ddb6a9e241` |
+| `runs/online-osd-policy-20261004/public-candidate-fences/canonical_output.json` | `1e66e6865e6b62d4b319d26dee02e97f27f659671cec415fbc8528580929d6a5` |
+| `runs/online-osd-policy-20261004/public-candidate-fences/canonical_selected.json` | `2ab2ad5438fbacbe521995cac11f0b1674639fe103ebec992546bcfa9d3e17e5` |
+| `runs/online-osd-policy-20261004/public-candidate-fences/history_mem.json` | `386b5714df9cb71c9dbafa6f23c8618cc3a152ea8700ea44f893f7b67c7537c7` |
+| `runs/online-osd-policy-20261004/public-candidate-fences/history_prefix.json` | `add407f359f899209afa0b2b630230e71931d7f9280d16ba95c9fd23d40bfc07` |
+| `runs/online-osd-policy-20261004/public-candidate-fences/history_succ.json` | `68f6a39da8db1afb7234572396f492c8c268116fe0974b9bec0e33538a3c7d3d` |
+| `runs/online-osd-policy-20261004/public-candidate-fences/history_zero.json` | `ef9c82ebc8a1ef263f93687817150756296ac64840914c8ed9c95d83be13ad66` |
+| `runs/online-osd-policy-20261004/public-candidate-fences/one_step.json` | `4042f6d169a0ba4052cfa306524db8edcb80cc5f37ae681e18b883eb67d9d70f` |
+| `runs/online-osd-policy-20261004/public-candidate-fences/one_step_chain.json` | `ddfac55788926bcb595588f5494c78a85d31b9887778feaeb0f5ef24738df592` |
+| `runs/online-osd-policy-20261004/public-candidate-fences/oracle_feedback.json` | `877656321192a5cd2550ce257d787304197dc551d55e470e46e5995cb0fec0b0` |
+| `runs/online-osd-policy-20261004/public-candidate-fences/output_mem.json` | `cf6a005495f463465e2d7f1ae2678a76513c763df377b0f05597fcced84b3179` |
+| `runs/online-osd-policy-20261004/public-candidate-fences/output_prefix.json` | `4b6cf9b6d760ce39cf1591f178e6d66c5df8e1f50467d3696f463304e72e487f` |
+| `runs/online-osd-policy-20261004/public-candidate-fences/output_succ.json` | `d80f4a3c9440caf8594063b7277679f114d0f9f0f0cb614c879b8d44df226fff` |
+| `runs/online-osd-policy-20261004/public-candidate-fences/output_zero.json` | `86c40ec50c6b73a111a0d9ba64ffb14da3ea9790a66b6901a1d02c736eed3f7b` |
+| `runs/online-osd-policy-20261004/public-candidate-fences/regret_fixed.json` | `bfadb93acbc05c26108dfdd06d34aeb1ac3d1a6f0afa46cd89d8c676a90e3910` |
+| `runs/online-osd-policy-20261004/public-candidate-fences/regret_fixed_coarse.json` | `cb5f05b55104c8cfafef5acf7284e0ecb9bb00237c97e2e97d970c35390515c8` |
+| `runs/online-osd-policy-20261004/public-candidate-fences/regret_tuned.json` | `2cdba2d25e94b88fc17920f6c6e4af19a9bfa279049670c478e9a6abf8895424` |
+| `runs/online-osd-policy-20261004/public-candidate-fences/regret_tuned_distance.json` | `5a8693c7d345dde3c0a84879aba211699e15bc5dd731dfa8a69e6f5597b897bd` |
+| `runs/online-osd-policy-20261004/public-candidate-fences/regret_variable.json` | `1e2090a3c13403dcce4ef3c27ea6a898fb09c465761422d7b8094d78c40931cf` |
+| `runs/online-osd-policy-20261004/public-candidate-fences/regret_variable_bound.json` | `b6262917a7268ea59704d74903b13f3315ffda7691c76f09a1d54f4bec77ae23` |
+| `runs/online-osd-policy-20261004/public-candidate-fences/trajectory_finite_loss.json` | `cefac627d060ec1a2ad9d716ece35a3ee763abfcb6b76868a816f6543d48c283` |
+| `runs/online-osd-policy-20261004/public-focused-01-exit.json` | `a671ae048c5187f99039187dadb127154cfea57a169d32bea35e2ebd66429944` |
+| `runs/online-osd-policy-20261004/public-focused-01.log` | `fee22b065b582fc70b437e6c319a992f9dafa518e6263f2bc61da70df7b729ba` |
+| `runs/online-osd-policy-20261004/public-guard-canonicalPolicy_legal.log` | `9daf410b06675492d2c69fec3e6e6a7f65d24f7dc9a8a98d7d73acd1deec8b72` |
+| `runs/online-osd-policy-20261004/public-guard-canonical_output.log` | `855a477d650d5dfe28cdc156f5d4cf0c1fc566bb86488e92766c4d37b70f60d9` |
+| `runs/online-osd-policy-20261004/public-guard-canonical_selected.log` | `9f904632db71ae019961d38be1d01c43968635aba6d11e4c4278192e38ba4a5a` |
+| `runs/online-osd-policy-20261004/public-guard-history_mem.log` | `04e739ed468d39611ff947fdf8d4360e60466a7e0ef59da336a21f9dba714f1f` |
+| `runs/online-osd-policy-20261004/public-guard-history_prefix.log` | `b63377504610b6ed14e8a414285555eb86c7eb968e1a386978a75a210a671dc4` |
+| `runs/online-osd-policy-20261004/public-guard-history_succ.log` | `714e89f088b14400771471ab6163eeffdd31e855d01465ef7073119576b6e191` |
+| `runs/online-osd-policy-20261004/public-guard-history_zero.log` | `1d6a09346ae76dd2fd9e748086708b3ca25622ee959c0adc2af0e7fa16b5d4e7` |
+| `runs/online-osd-policy-20261004/public-guard-one_step.log` | `f3aad85542b04455f7d0235eb692a2da188509c18be2e6a1c454917434087f14` |
+| `runs/online-osd-policy-20261004/public-guard-one_step_chain.log` | `59797f58b5e0ff0b29d781a1d88b9809fa5945559caec3379f6abc3bc310863b` |
+| `runs/online-osd-policy-20261004/public-guard-oracle_feedback.log` | `c3a32c84610bfe821e9b71df2db356576dac509b4e8d19e7af49420a0ad45cb5` |
+| `runs/online-osd-policy-20261004/public-guard-output_mem.log` | `a173059a3a5dccb75d633f509e0d8feeef306ddbd2cf006dfc4e6314ef21f647` |
+| `runs/online-osd-policy-20261004/public-guard-output_prefix.log` | `ea681c5f7b76233418c4f4ffd3ba020a5b020b5b08187e1347452b50d3c4b9f6` |
+| `runs/online-osd-policy-20261004/public-guard-output_succ.log` | `c3f6fc90fe191b5153a9ed016765ac8394b514900d7fbe55cfa4186c04590bbd` |
+| `runs/online-osd-policy-20261004/public-guard-output_zero.log` | `e9052817553123db0bbe181568bb71c162ad937309233b9035be52ad010a3c93` |
+| `runs/online-osd-policy-20261004/public-guard-regret_fixed.log` | `2a9bb87aaa0d32af5a4ec6e22e2705520acd28c37d12e9a14234273a1618c41d` |
+| `runs/online-osd-policy-20261004/public-guard-regret_fixed_coarse.log` | `4bc7416489dc5231ab3f988d4415b935a78172ca61913a1a955328105bce2c40` |
+| `runs/online-osd-policy-20261004/public-guard-regret_tuned.log` | `1a4d86e9b12aea90447e7b81d55de2924b6c6d01d96328dc065b629d8a4d1534` |
+| `runs/online-osd-policy-20261004/public-guard-regret_tuned_distance.log` | `74a8f250f5a181bfe9723ac4fece01d80c7df643cde47bac626b8f1e31eb05e4` |
+| `runs/online-osd-policy-20261004/public-guard-regret_variable.log` | `bd2b4c6471bb323d6afc56afc5457b8ac9e6f981d818d07b8ed3b83762ba4375` |
+| `runs/online-osd-policy-20261004/public-guard-regret_variable_bound.log` | `b3b5a1aeccde0c79e5830fc5430eea2dc05b159342fa0045f54f0bc8b04e8241` |
+| `runs/online-osd-policy-20261004/public-guard-trajectory_finite_loss.log` | `31783fb3c3d94f4f3d9550b9e65aabdd3d4e12d4a0262c4d3a53dd8d92668574` |
+| `runs/online-osd-policy-20261004/root-01-exit.json` | `09c2d91e86520d0dad040a78add4563b2bd6911a554a07afc1e401b1f1358ecd` |
+| `runs/online-osd-policy-20261004/root-01.log` | `613ce01fe0704b14e4a1d69c8bfb09476ee901ad7ebffa2faa113c3a5e89063b` |
+| `runs/online-osd-policy-20261004/signature-probe-01-exit.json` | `fe34781dd07788b4fd807fda911f279e6a319976e3312b56e3ec84529e677d24` |
+| `runs/online-osd-policy-20261004/signature-probe-01.log` | `85f94e67c55660b4c182e79b4b9a5dfc46eeee322956569a9a4a5cac5f045496` |
+| `runs/online-osd-policy-20261004/source-card.md` | `2612f0fe7d4f2a58c471aca3f648b38e1f023532917ebfa9ebc8d83c40f45d9e` |
+| `runs/online-osd-policy-20261004/source-contract-receipt-v3.json` | `801ab621798c4a3e5fd83935c1d65cf27e7bacbb06af2a2c94e9f4ddaf326bae` |
+| `runs/online-osd-policy-20261004/source-contract-review-v3.md` | `b55a0e29505749a020f05e7139d2740e6125d980fb9eef32f40fb1792bdc3152` |
+| `runs/online-osd-policy-20261004/source-pages.txt` | `0c251c80c372ea61d3c83a867ad584edb813315ba3b4ffa64b29d5a323de8539` |
+| `runs/online-osd-policy-20261004/source-review-packet-v1.md` | `3d1a0ecfa3125be57476e052f30393d91518abe35ae4de1e9861c10109e8075e` |
+| `runs/online-osd-policy-20261004/source-review-packet-v2.md` | `dd884b483c6fefd9e34eddda99108d700e83c4ff5439238ad6eeebba4f525ac7` |
+| `runs/online-osd-policy-20261004/source-review-packet-v3.md` | `1a8f68e05be036fff452dd15509bf707e861332906c88d8a7c490bd2f477378c` |
+| `runs/online-osd-policy-20261004/structural-01-exit.json` | `0ba74fe5df1dd140fda54d227cc3baa13bf690ca189534a34428cf94d3f93dae` |
+| `runs/online-osd-policy-20261004/structural-01.log` | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` |
+| `runs/online-osd-policy-20261004/support-01-exit.json` | `bd6a9482c0575f1512cee3dce2f79db189b65d38d8f7d219a76b4186f98ad34f` |
+| `runs/online-osd-policy-20261004/support-01.log` | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` |
+| `runs/online-osd-policy-20261004/workflow-audit.json` | `f282730842b924aec578d88845aa6090779597727cb8099e542afa65220bc910` |
+| `tmp/online-osd-policy-signature-v1.lean` | `f36ca271bce614126737780c7d1319b2c46ee819f5a5c469de65a3cf3f4542e0` |

@@ -3827,6 +3827,370 @@
       "dependencies": [
         "BanditRL.OnlineGuessingSubgradient.example_2_32"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientPolicy.history_zero",
+      "title": "Initial finite history",
+      "chapter": "online-osd-policy",
+      "featured": false,
+      "teaching_order": 0,
+      "plain": "The time-zero history has one entry, the prescribed initialization.",
+      "math": "H_0=(x_1)",
+      "intuition": "The time-zero history has one entry, the prescribed initialization.",
+      "why": "Connect source Algorithm2.2 to its genuine selected-vector/projected trajectory and same-run bound.",
+      "position": "Orabona v10 printed19-21/PDF31-33; Theorem2.13 and eq2.1 printed13-15/PDF25-27.",
+      "proof_idea": "Reduce the dependent Nat.rec at zero.",
+      "lean_notes": "Finite-dimensional real inner-product space; shared nonempty closed convex V. Proper EReal losses exclude bottom and have an ambient finite witness; global supports are nonempty at feasible points. Properness and actual supports justify finite toReal loss differences. Only played support membership enters performance. Fixed eta>0 allows T=0 and unbounded V. Variable steps need T>0 and positive nonincreasing played steps with pairwise diameter control. Tuning needs D,G,T>0 and actual selected-norm bounds on the same horizon-prescribed trajectory. Prefix comparisons hold the policy and initialization fixed; they do not impose independence on external parameters.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientPolicy.history_succ",
+      "title": "Append the actual projected update",
+      "chapter": "online-osd-policy",
+      "featured": false,
+      "teaching_order": 1,
+      "plain": "The old finite history is preserved and its last entry is the actual projected next point.",
+      "math": "H_{t+1}=H_t\\mathbin{\\|}\\Pi_V(X_t-\\eta_tg_t)",
+      "intuition": "The old finite history is preserved and its last entry is the actual projected next point.",
+      "why": "Connect source Algorithm2.2 to its genuine selected-vector/projected trajectory and same-run bound.",
+      "position": "Orabona v10 printed19-21/PDF31-33; Theorem2.13 and eq2.1 printed13-15/PDF25-27.",
+      "proof_idea": "Unfold the successor branch of Nat.rec and the last-entry/selected-vector definitions.",
+      "lean_notes": "Finite-dimensional real inner-product space; shared nonempty closed convex V. Proper EReal losses exclude bottom and have an ambient finite witness; global supports are nonempty at feasible points. Properness and actual supports justify finite toReal loss differences. Only played support membership enters performance. Fixed eta>0 allows T=0 and unbounded V. Variable steps need T>0 and positive nonincreasing played steps with pairwise diameter control. Tuning needs D,G,T>0 and actual selected-norm bounds on the same horizon-prescribed trajectory. Prefix comparisons hold the policy and initialization fixed; they do not impose independence on external parameters.",
+      "dependencies": [
+        "BanditRL.OnlineSubgradientPolicy.history"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientPolicy.output_zero",
+      "title": "Prescribed first output",
+      "chapter": "online-osd-policy",
+      "featured": false,
+      "teaching_order": 2,
+      "plain": "The first output is chosen before any observed loss.",
+      "math": "X_0=x_1",
+      "intuition": "The first output is chosen before any observed loss.",
+      "why": "Connect source Algorithm2.2 to its genuine selected-vector/projected trajectory and same-run bound.",
+      "position": "Orabona v10 printed19-21/PDF31-33; Theorem2.13 and eq2.1 printed13-15/PDF25-27.",
+      "proof_idea": "Reduce the initial history and its only coordinate.",
+      "lean_notes": "Finite-dimensional real inner-product space; shared nonempty closed convex V. Proper EReal losses exclude bottom and have an ambient finite witness; global supports are nonempty at feasible points. Properness and actual supports justify finite toReal loss differences. Only played support membership enters performance. Fixed eta>0 allows T=0 and unbounded V. Variable steps need T>0 and positive nonincreasing played steps with pairwise diameter control. Tuning needs D,G,T>0 and actual selected-norm bounds on the same horizon-prescribed trajectory. Prefix comparisons hold the policy and initialization fixed; they do not impose independence on external parameters.",
+      "dependencies": [
+        "BanditRL.OnlineSubgradientPolicy.history_zero"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientPolicy.output_succ",
+      "title": "Algorithm2.2 actual update",
+      "chapter": "online-osd-policy",
+      "featured": true,
+      "teaching_order": 3,
+      "plain": "Apply the same externally fixed history policy to the actual history and current loss.",
+      "math": "X_{t+1}=\\Pi_V(X_t-\\eta_tg_t)",
+      "intuition": "Apply the same externally fixed history policy to the actual history and current loss.",
+      "why": "Connect source Algorithm2.2 to its genuine selected-vector/projected trajectory and same-run bound.",
+      "position": "Orabona v10 printed19-21/PDF31-33; Theorem2.13 and eq2.1 printed13-15/PDF25-27.",
+      "proof_idea": "Evaluate Fin.snoc at its last coordinate; this yields the update used in every performance theorem.",
+      "lean_notes": "Finite-dimensional real inner-product space; shared nonempty closed convex V. Proper EReal losses exclude bottom and have an ambient finite witness; global supports are nonempty at feasible points. Properness and actual supports justify finite toReal loss differences. Only played support membership enters performance. Fixed eta>0 allows T=0 and unbounded V. Variable steps need T>0 and positive nonincreasing played steps with pairwise diameter control. Tuning needs D,G,T>0 and actual selected-norm bounds on the same horizon-prescribed trajectory. Prefix comparisons hold the policy and initialization fixed; they do not impose independence on external parameters.",
+      "dependencies": [
+        "BanditRL.OnlineSubgradientPolicy.history",
+        "BanditRL.OnlineSubgradientPolicy.selected"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientPolicy.history_mem",
+      "title": "Every stored output is feasible",
+      "chapter": "online-osd-policy",
+      "featured": false,
+      "teaching_order": 4,
+      "plain": "Feasible initialization and actual nearest projection keep every history coordinate in V.",
+      "math": "x_1\\in V\\Longrightarrow\\forall i\\le t,\\ H_t(i)\\in V",
+      "intuition": "Feasible initialization and actual nearest projection keep every history coordinate in V.",
+      "why": "Connect source Algorithm2.2 to its genuine selected-vector/projected trajectory and same-run bound.",
+      "position": "Orabona v10 printed19-21/PDF31-33; Theorem2.13 and eq2.1 printed13-15/PDF25-27.",
+      "proof_idea": "Induct on time, split the last coordinate from castSucc coordinates, and use projection membership.",
+      "lean_notes": "Finite-dimensional real inner-product space; shared nonempty closed convex V. Proper EReal losses exclude bottom and have an ambient finite witness; global supports are nonempty at feasible points. Properness and actual supports justify finite toReal loss differences. Only played support membership enters performance. Fixed eta>0 allows T=0 and unbounded V. Variable steps need T>0 and positive nonincreasing played steps with pairwise diameter control. Tuning needs D,G,T>0 and actual selected-norm bounds on the same horizon-prescribed trajectory. Prefix comparisons hold the policy and initialization fixed; they do not impose independence on external parameters.",
+      "dependencies": [
+        "BanditRL.OnlineSubgradientPolicy.history_succ",
+        "BanditRL.OnlineGradientDescent.project_spec"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientPolicy.output_mem",
+      "title": "Current output feasibility",
+      "chapter": "online-osd-policy",
+      "featured": false,
+      "teaching_order": 5,
+      "plain": "The current point is a member of the same domain at every time, even for invalid future data.",
+      "math": "x_1\\in V\\Longrightarrow X_t\\in V",
+      "intuition": "The current point is a member of the same domain at every time, even for invalid future data.",
+      "why": "Connect source Algorithm2.2 to its genuine selected-vector/projected trajectory and same-run bound.",
+      "position": "Orabona v10 printed19-21/PDF31-33; Theorem2.13 and eq2.1 printed13-15/PDF25-27.",
+      "proof_idea": "Apply history_mem at the last finite coordinate.",
+      "lean_notes": "Finite-dimensional real inner-product space; shared nonempty closed convex V. Proper EReal losses exclude bottom and have an ambient finite witness; global supports are nonempty at feasible points. Properness and actual supports justify finite toReal loss differences. Only played support membership enters performance. Fixed eta>0 allows T=0 and unbounded V. Variable steps need T>0 and positive nonincreasing played steps with pairwise diameter control. Tuning needs D,G,T>0 and actual selected-norm bounds on the same horizon-prescribed trajectory. Prefix comparisons hold the policy and initialization fixed; they do not impose independence on external parameters.",
+      "dependencies": [
+        "BanditRL.OnlineSubgradientPolicy.history_mem"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientPolicy.history_prefix",
+      "title": "Finite-history causality",
+      "chapter": "online-osd-policy",
+      "featured": false,
+      "teaching_order": 6,
+      "plain": "Equal strict-past whole losses and rates give the same actual history for one common policy and initialization.",
+      "math": "(\\forall s<t,\\ f_s=f'_s,\\eta_s=\\eta'_s)\\Longrightarrow H_t=H'_t",
+      "intuition": "Equal strict-past whole losses and rates give the same actual history for one common policy and initialization.",
+      "why": "Connect source Algorithm2.2 to its genuine selected-vector/projected trajectory and same-run bound.",
+      "position": "Orabona v10 printed19-21/PDF31-33; Theorem2.13 and eq2.1 printed13-15/PDF25-27.",
+      "proof_idea": "Induct on time; identify the finite past-function input and old history before applying the same policy.",
+      "lean_notes": "Finite-dimensional real inner-product space; shared nonempty closed convex V. Proper EReal losses exclude bottom and have an ambient finite witness; global supports are nonempty at feasible points. Properness and actual supports justify finite toReal loss differences. Only played support membership enters performance. Fixed eta>0 allows T=0 and unbounded V. Variable steps need T>0 and positive nonincreasing played steps with pairwise diameter control. Tuning needs D,G,T>0 and actual selected-norm bounds on the same horizon-prescribed trajectory. Prefix comparisons hold the policy and initialization fixed; they do not impose independence on external parameters.",
+      "dependencies": [
+        "BanditRL.OnlineSubgradientPolicy.history_succ"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientPolicy.output_prefix",
+      "title": "Current output ignores future data",
+      "chapter": "online-osd-policy",
+      "featured": true,
+      "teaching_order": 7,
+      "plain": "Changing the current or future losses cannot change the already determined output.",
+      "math": "(\\forall s<t,\\ f_s=f'_s,\\eta_s=\\eta'_s)\\Longrightarrow X_t=X'_t",
+      "intuition": "Changing the current or future losses cannot change the already determined output.",
+      "why": "Connect source Algorithm2.2 to its genuine selected-vector/projected trajectory and same-run bound.",
+      "position": "Orabona v10 printed19-21/PDF31-33; Theorem2.13 and eq2.1 printed13-15/PDF25-27.",
+      "proof_idea": "Apply congrArg to the last coordinate of history_prefix. External policy parameters remain fixed.",
+      "lean_notes": "Finite-dimensional real inner-product space; shared nonempty closed convex V. Proper EReal losses exclude bottom and have an ambient finite witness; global supports are nonempty at feasible points. Properness and actual supports justify finite toReal loss differences. Only played support membership enters performance. Fixed eta>0 allows T=0 and unbounded V. Variable steps need T>0 and positive nonincreasing played steps with pairwise diameter control. Tuning needs D,G,T>0 and actual selected-norm bounds on the same horizon-prescribed trajectory. Prefix comparisons hold the policy and initialization fixed; they do not impose independence on external parameters.",
+      "dependencies": [
+        "BanditRL.OnlineSubgradientPolicy.history_prefix"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientPolicy.oracle_feedback",
+      "title": "Optional off-path law supplies played legality",
+      "chapter": "online-osd-policy",
+      "featured": false,
+      "teaching_order": 8,
+      "plain": "A universal legal oracle is a sufficient adapter, while performance also applies without it.",
+      "math": "\\operatorname{OracleLaw}(p)\\Longrightarrow g_t\\in\\partial f_t(X_t)\\ (t<T)",
+      "intuition": "A universal legal oracle is a sufficient adapter, while performance also applies without it.",
+      "why": "Connect source Algorithm2.2 to its genuine selected-vector/projected trajectory and same-run bound.",
+      "position": "Orabona v10 printed19-21/PDF31-33; Theorem2.13 and eq2.1 printed13-15/PDF25-27.",
+      "proof_idea": "Query the law on the actual finite history and use output_mem. The main performance hypotheses ask only LegalFeedback.",
+      "lean_notes": "Finite-dimensional real inner-product space; shared nonempty closed convex V. Proper EReal losses exclude bottom and have an ambient finite witness; global supports are nonempty at feasible points. Properness and actual supports justify finite toReal loss differences. Only played support membership enters performance. Fixed eta>0 allows T=0 and unbounded V. Variable steps need T>0 and positive nonincreasing played steps with pairwise diameter control. Tuning needs D,G,T>0 and actual selected-norm bounds on the same horizon-prescribed trajectory. Prefix comparisons hold the policy and initialization fixed; they do not impose independence on external parameters.",
+      "dependencies": [
+        "BanditRL.OnlineSubgradientPolicy.output_mem"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientPolicy.trajectory_finite_loss",
+      "title": "Finite played and comparator losses",
+      "chapter": "online-osd-policy",
+      "featured": false,
+      "teaching_order": 9,
+      "plain": "Finite real regret is justified before EReal values are converted with toReal.",
+      "math": "f_t(X_t),f_t(u)\\in\\mathbb R\\quad(X_t,u\\in V)",
+      "intuition": "Finite real regret is justified before EReal values are converted with toReal.",
+      "why": "Connect source Algorithm2.2 to its genuine selected-vector/projected trajectory and same-run bound.",
+      "position": "Orabona v10 printed19-21/PDF31-33; Theorem2.13 and eq2.1 printed13-15/PDF25-27.",
+      "proof_idea": "Use feasible output membership and the reused proper-function/subgradient finite-value theorem.",
+      "lean_notes": "Finite-dimensional real inner-product space; shared nonempty closed convex V. Proper EReal losses exclude bottom and have an ambient finite witness; global supports are nonempty at feasible points. Properness and actual supports justify finite toReal loss differences. Only played support membership enters performance. Fixed eta>0 allows T=0 and unbounded V. Variable steps need T>0 and positive nonincreasing played steps with pairwise diameter control. Tuning needs D,G,T>0 and actual selected-norm bounds on the same horizon-prescribed trajectory. Prefix comparisons hold the policy and initialization fixed; they do not impose independence on external parameters.",
+      "dependencies": [
+        "BanditRL.OnlineSubgradientPolicy.output_mem",
+        "BanditRL.OnlineSubgradientDescent.finite_loss"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientPolicy.one_step_chain",
+      "title": "Actual support-to-projection inequality",
+      "chapter": "online-osd-policy",
+      "featured": true,
+      "teaching_order": 10,
+      "plain": "A genuine played global support and positive current step give the full source Lemma2.31 chain.",
+      "math": "\\eta_t(f_t(X_t)-f_t(u))\\le\\eta_t\\langle g_t,X_t-u\\rangle\\le\\frac{\\|X_t-u\\|^2-\\|X_{t+1}-u\\|^2+\\eta_t^2\\|g_t\\|^2}{2}",
+      "intuition": "A genuine played global support and positive current step give the full source Lemma2.31 chain.",
+      "why": "Connect source Algorithm2.2 to its genuine selected-vector/projected trajectory and same-run bound.",
+      "position": "Orabona v10 printed19-21/PDF31-33; Theorem2.13 and eq2.1 printed13-15/PDF25-27.",
+      "proof_idea": "Instantiate the existing full lemma with the actual selected vector and rewrite output_succ. No desired one-step bound is supplied.",
+      "lean_notes": "Finite-dimensional real inner-product space; shared nonempty closed convex V. Proper EReal losses exclude bottom and have an ambient finite witness; global supports are nonempty at feasible points. Properness and actual supports justify finite toReal loss differences. Only played support membership enters performance. Fixed eta>0 allows T=0 and unbounded V. Variable steps need T>0 and positive nonincreasing played steps with pairwise diameter control. Tuning needs D,G,T>0 and actual selected-norm bounds on the same horizon-prescribed trajectory. Prefix comparisons hold the policy and initialization fixed; they do not impose independence on external parameters.",
+      "dependencies": [
+        "BanditRL.OnlineSubgradientPolicy.output_succ",
+        "BanditRL.OnlineSubgradientDescent.lemma_2_31"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientPolicy.one_step",
+      "title": "Divide by the positive played rate",
+      "chapter": "online-osd-policy",
+      "featured": false,
+      "teaching_order": 11,
+      "plain": "The two-point potential term follows from the actual source support/projection chain.",
+      "math": "f_t(X_t)-f_t(u)\\le\\frac{\\|X_t-u\\|^2-\\|X_{t+1}-u\\|^2}{2\\eta_t}+\\frac{\\eta_t}{2}\\|g_t\\|^2",
+      "intuition": "The two-point potential term follows from the actual source support/projection chain.",
+      "why": "Connect source Algorithm2.2 to its genuine selected-vector/projected trajectory and same-run bound.",
+      "position": "Orabona v10 printed19-21/PDF31-33; Theorem2.13 and eq2.1 printed13-15/PDF25-27.",
+      "proof_idea": "Compose both inequalities and multiply through the positive eta; field_simp verifies the denominator identity.",
+      "lean_notes": "Finite-dimensional real inner-product space; shared nonempty closed convex V. Proper EReal losses exclude bottom and have an ambient finite witness; global supports are nonempty at feasible points. Properness and actual supports justify finite toReal loss differences. Only played support membership enters performance. Fixed eta>0 allows T=0 and unbounded V. Variable steps need T>0 and positive nonincreasing played steps with pairwise diameter control. Tuning needs D,G,T>0 and actual selected-norm bounds on the same horizon-prescribed trajectory. Prefix comparisons hold the policy and initialization fixed; they do not impose independence on external parameters.",
+      "dependencies": [
+        "BanditRL.OnlineSubgradientPolicy.one_step_chain"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientPolicy.regret_fixed",
+      "title": "Fixed rate with negative terminal",
+      "chapter": "online-osd-policy",
+      "featured": true,
+      "teaching_order": 12,
+      "plain": "For eta>0, every horizon including zero, every legal played policy and feasible comparator satisfy the same-run bound; no bounded-domain premise.",
+      "math": "R_T(u)\\le\\frac{\\|x_1-u\\|^2}{2\\eta}+\\frac\\eta2\\sum_{t<T}\\|g_t\\|^2-\\frac{\\|X_T-u\\|^2}{2\\eta}",
+      "intuition": "For eta>0, every horizon including zero, every legal played policy and feasible comparator satisfy the same-run bound; no bounded-domain premise.",
+      "why": "Connect source Algorithm2.2 to its genuine selected-vector/projected trajectory and same-run bound.",
+      "position": "Orabona v10 printed19-21/PDF31-33; Theorem2.13 and eq2.1 printed13-15/PDF25-27.",
+      "proof_idea": "Induct on T for the scaled regret. Prefix legality/loss hypotheses restrict to the old run; append the actual one-step chain and cancel its intermediate distance. Divide by eta.",
+      "lean_notes": "Finite-dimensional real inner-product space; shared nonempty closed convex V. Proper EReal losses exclude bottom and have an ambient finite witness; global supports are nonempty at feasible points. Properness and actual supports justify finite toReal loss differences. Only played support membership enters performance. Fixed eta>0 allows T=0 and unbounded V. Variable steps need T>0 and positive nonincreasing played steps with pairwise diameter control. Tuning needs D,G,T>0 and actual selected-norm bounds on the same horizon-prescribed trajectory. Prefix comparisons hold the policy and initialization fixed; they do not impose independence on external parameters.",
+      "dependencies": [
+        "BanditRL.OnlineSubgradientPolicy.one_step_chain",
+        "BanditRL.OnlineSubgradientPolicy.output_zero"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientPolicy.regret_fixed_coarse",
+      "title": "Source constant-rate coarse formula",
+      "chapter": "online-osd-policy",
+      "featured": false,
+      "teaching_order": 13,
+      "plain": "The source printed21 formula is a consequence of the sharper retained-terminal result.",
+      "math": "R_T(u)\\le\\frac{\\|x_1-u\\|^2}{2\\eta}+\\frac\\eta2\\sum_{t<T}\\|g_t\\|^2",
+      "intuition": "The source printed21 formula is a consequence of the sharper retained-terminal result.",
+      "why": "Connect source Algorithm2.2 to its genuine selected-vector/projected trajectory and same-run bound.",
+      "position": "Orabona v10 printed19-21/PDF31-33; Theorem2.13 and eq2.1 printed13-15/PDF25-27.",
+      "proof_idea": "Prove the removed endpoint quotient is nonnegative and weaken the sharp fixed bound.",
+      "lean_notes": "Finite-dimensional real inner-product space; shared nonempty closed convex V. Proper EReal losses exclude bottom and have an ambient finite witness; global supports are nonempty at feasible points. Properness and actual supports justify finite toReal loss differences. Only played support membership enters performance. Fixed eta>0 allows T=0 and unbounded V. Variable steps need T>0 and positive nonincreasing played steps with pairwise diameter control. Tuning needs D,G,T>0 and actual selected-norm bounds on the same horizon-prescribed trajectory. Prefix comparisons hold the policy and initialization fixed; they do not impose independence on external parameters.",
+      "dependencies": [
+        "BanditRL.OnlineSubgradientPolicy.regret_fixed"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientPolicy.regret_variable_bound",
+      "title": "Decreasing rates with explicit diameter",
+      "chapter": "online-osd-policy",
+      "featured": false,
+      "teaching_order": 14,
+      "plain": "Positive nonincreasing played steps and pairwise distance<=D control the weighted potential; the final denominator uses the last played rate.",
+      "math": "R_T(u)\\le\\frac{D^2}{2\\eta_{T-1}}+\\frac12\\sum_{t<T}\\eta_t\\|g_t\\|^2-\\frac{\\|X_T-u\\|^2}{2\\eta_{T-1}}",
+      "intuition": "Positive nonincreasing played steps and pairwise distance<=D control the weighted potential; the final denominator uses the last played rate.",
+      "why": "Connect source Algorithm2.2 to its genuine selected-vector/projected trajectory and same-run bound.",
+      "position": "Orabona v10 printed19-21/PDF31-33; Theorem2.13 and eq2.1 printed13-15/PDF25-27.",
+      "proof_idea": "Sum the actual one-step inequalities and apply weighted_potential_sum to actual squared output distances, using output_mem and pairwise control.",
+      "lean_notes": "Finite-dimensional real inner-product space; shared nonempty closed convex V. Proper EReal losses exclude bottom and have an ambient finite witness; global supports are nonempty at feasible points. Properness and actual supports justify finite toReal loss differences. Only played support membership enters performance. Fixed eta>0 allows T=0 and unbounded V. Variable steps need T>0 and positive nonincreasing played steps with pairwise diameter control. Tuning needs D,G,T>0 and actual selected-norm bounds on the same horizon-prescribed trajectory. Prefix comparisons hold the policy and initialization fixed; they do not impose independence on external parameters.",
+      "dependencies": [
+        "BanditRL.OnlineSubgradientPolicy.one_step",
+        "BanditRL.OnlineSubgradientPolicy.output_mem",
+        "BanditRL.OnlineGradientDescent.weighted_potential_sum"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientPolicy.regret_variable",
+      "title": "Source decreasing-rate diameter branch",
+      "chapter": "online-osd-policy",
+      "featured": true,
+      "teaching_order": 15,
+      "plain": "At T>0 a bounded V supplies its actual metric diameter, with the negative endpoint retained.",
+      "math": "R_T(u)\\le\\frac{\\operatorname{diam}(V)^2-\\|X_T-u\\|^2}{2\\eta_{T-1}}+\\frac12\\sum_{t<T}\\eta_t\\|g_t\\|^2",
+      "intuition": "At T>0 a bounded V supplies its actual metric diameter, with the negative endpoint retained.",
+      "why": "Connect source Algorithm2.2 to its genuine selected-vector/projected trajectory and same-run bound.",
+      "position": "Orabona v10 printed19-21/PDF31-33; Theorem2.13 and eq2.1 printed13-15/PDF25-27.",
+      "proof_idea": "Instantiate explicit pairwise control with Metric.diam using boundedness and both points in V.",
+      "lean_notes": "Finite-dimensional real inner-product space; shared nonempty closed convex V. Proper EReal losses exclude bottom and have an ambient finite witness; global supports are nonempty at feasible points. Properness and actual supports justify finite toReal loss differences. Only played support membership enters performance. Fixed eta>0 allows T=0 and unbounded V. Variable steps need T>0 and positive nonincreasing played steps with pairwise diameter control. Tuning needs D,G,T>0 and actual selected-norm bounds on the same horizon-prescribed trajectory. Prefix comparisons hold the policy and initialization fixed; they do not impose independence on external parameters.",
+      "dependencies": [
+        "BanditRL.OnlineSubgradientPolicy.regret_variable_bound"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientPolicy.regret_tuned_distance",
+      "title": "Tuning for one comparator distance",
+      "chapter": "online-osd-policy",
+      "featured": false,
+      "teaching_order": 16,
+      "plain": "D,G,T>0 and a distance bound give a tuned guarantee without requiring the entire domain bounded.",
+      "math": "\\eta=\\frac{D}{G\\sqrt T},\\ \\|x_1-u\\|\\le D,\\ \\|g_t\\|\\le G\\Longrightarrow R_T(u)\\le DG\\sqrt T",
+      "intuition": "D,G,T>0 and a distance bound give a tuned guarantee without requiring the entire domain bounded.",
+      "why": "Connect source Algorithm2.2 to its genuine selected-vector/projected trajectory and same-run bound.",
+      "position": "Orabona v10 printed19-21/PDF31-33; Theorem2.13 and eq2.1 printed13-15/PDF25-27.",
+      "proof_idea": "Bound initial squared distance and the actual support energy, discard the nonnegative terminal subtraction, and verify the positive tuned-rate identity with sqrt(T)^2=T.",
+      "lean_notes": "Finite-dimensional real inner-product space; shared nonempty closed convex V. Proper EReal losses exclude bottom and have an ambient finite witness; global supports are nonempty at feasible points. Properness and actual supports justify finite toReal loss differences. Only played support membership enters performance. Fixed eta>0 allows T=0 and unbounded V. Variable steps need T>0 and positive nonincreasing played steps with pairwise diameter control. Tuning needs D,G,T>0 and actual selected-norm bounds on the same horizon-prescribed trajectory. Prefix comparisons hold the policy and initialization fixed; they do not impose independence on external parameters.",
+      "dependencies": [
+        "BanditRL.OnlineSubgradientPolicy.regret_fixed"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientPolicy.regret_tuned",
+      "title": "Same tuned run for all comparators",
+      "chapter": "online-osd-policy",
+      "featured": true,
+      "teaching_order": 17,
+      "plain": "One horizon-prescribed policy/trajectory serves every comparator when pairwise distances<=D and the actual selected norms<=G.",
+      "math": "\\eta=\\frac{D}{G\\sqrt T}\\Longrightarrow\\forall u\\in V,\\ R_T(u)\\le DG\\sqrt T",
+      "intuition": "One horizon-prescribed policy/trajectory serves every comparator when pairwise distances<=D and the actual selected norms<=G.",
+      "why": "Connect source Algorithm2.2 to its genuine selected-vector/projected trajectory and same-run bound.",
+      "position": "Orabona v10 printed19-21/PDF31-33; Theorem2.13 and eq2.1 printed13-15/PDF25-27.",
+      "proof_idea": "Apply the one-comparator tuned theorem with the initial point and arbitrary feasible u. LegalFeedback and the norm bounds refer to this same tuned run.",
+      "lean_notes": "Finite-dimensional real inner-product space; shared nonempty closed convex V. Proper EReal losses exclude bottom and have an ambient finite witness; global supports are nonempty at feasible points. Properness and actual supports justify finite toReal loss differences. Only played support membership enters performance. Fixed eta>0 allows T=0 and unbounded V. Variable steps need T>0 and positive nonincreasing played steps with pairwise diameter control. Tuning needs D,G,T>0 and actual selected-norm bounds on the same horizon-prescribed trajectory. Prefix comparisons hold the policy and initialization fixed; they do not impose independence on external parameters.",
+      "dependencies": [
+        "BanditRL.OnlineSubgradientPolicy.regret_tuned_distance"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientPolicy.canonicalPolicy_legal",
+      "title": "The old current chooser is a legal policy",
+      "chapter": "online-osd-policy",
+      "featured": false,
+      "teaching_order": 18,
+      "plain": "The prior current-function/current-point choice is one member of the general history-policy family.",
+      "math": "\\operatorname{OracleLaw}(p_{\\rm canonical})",
+      "intuition": "The prior current-function/current-point choice is one member of the general history-policy family.",
+      "why": "Connect source Algorithm2.2 to its genuine selected-vector/projected trajectory and same-run bound.",
+      "position": "Orabona v10 printed19-21/PDF31-33; Theorem2.13 and eq2.1 printed13-15/PDF25-27.",
+      "proof_idea": "Use the existing Classical.choose membership theorem at a feasible query with nonempty global supports.",
+      "lean_notes": "Finite-dimensional real inner-product space; shared nonempty closed convex V. Proper EReal losses exclude bottom and have an ambient finite witness; global supports are nonempty at feasible points. Properness and actual supports justify finite toReal loss differences. Only played support membership enters performance. Fixed eta>0 allows T=0 and unbounded V. Variable steps need T>0 and positive nonincreasing played steps with pairwise diameter control. Tuning needs D,G,T>0 and actual selected-norm bounds on the same horizon-prescribed trajectory. Prefix comparisons hold the policy and initialization fixed; they do not impose independence on external parameters.",
+      "dependencies": [
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient_mem"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientPolicy.canonical_output",
+      "title": "Exact canonical trajectory bridge",
+      "chapter": "online-osd-policy",
+      "featured": true,
+      "teaching_order": 19,
+      "plain": "The general history implementation recovers the previous canonical recurrence at every time and every input regime.",
+      "math": "X_t^{p_{\\rm canonical}}=\\operatorname{iterate}_{\\rm old}(t)",
+      "intuition": "The general history implementation recovers the previous canonical recurrence at every time and every input regime.",
+      "why": "Connect source Algorithm2.2 to its genuine selected-vector/projected trajectory and same-run bound.",
+      "position": "Orabona v10 printed19-21/PDF31-33; Theorem2.13 and eq2.1 printed13-15/PDF25-27.",
+      "proof_idea": "Induct on time, unfold the same projection update and current selector, and rewrite the previous output equality. No legality or positive-rate premise is needed.",
+      "lean_notes": "Finite-dimensional real inner-product space; shared nonempty closed convex V. Proper EReal losses exclude bottom and have an ambient finite witness; global supports are nonempty at feasible points. Properness and actual supports justify finite toReal loss differences. Only played support membership enters performance. Fixed eta>0 allows T=0 and unbounded V. Variable steps need T>0 and positive nonincreasing played steps with pairwise diameter control. Tuning needs D,G,T>0 and actual selected-norm bounds on the same horizon-prescribed trajectory. Prefix comparisons hold the policy and initialization fixed; they do not impose independence on external parameters.",
+      "dependencies": [
+        "BanditRL.OnlineSubgradientPolicy.output_succ",
+        "BanditRL.OnlineSubgradientDescent.iterate"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientPolicy.canonical_selected",
+      "title": "Exact canonical selected-vector bridge",
+      "chapter": "online-osd-policy",
+      "featured": false,
+      "teaching_order": 20,
+      "plain": "The selected vector agrees exactly with the old currentSubgradient value, including the total-function fallback branch.",
+      "math": "g_t^{p_{\\rm canonical}}=G(f_t,\\operatorname{iterate}_{\\rm old}(t))",
+      "intuition": "The selected vector agrees exactly with the old currentSubgradient value, including the total-function fallback branch.",
+      "why": "Connect source Algorithm2.2 to its genuine selected-vector/projected trajectory and same-run bound.",
+      "position": "Orabona v10 printed19-21/PDF31-33; Theorem2.13 and eq2.1 printed13-15/PDF25-27.",
+      "proof_idea": "Unfold the policy application and rewrite canonical_output.",
+      "lean_notes": "Finite-dimensional real inner-product space; shared nonempty closed convex V. Proper EReal losses exclude bottom and have an ambient finite witness; global supports are nonempty at feasible points. Properness and actual supports justify finite toReal loss differences. Only played support membership enters performance. Fixed eta>0 allows T=0 and unbounded V. Variable steps need T>0 and positive nonincreasing played steps with pairwise diameter control. Tuning needs D,G,T>0 and actual selected-norm bounds on the same horizon-prescribed trajectory. Prefix comparisons hold the policy and initialization fixed; they do not impose independence on external parameters.",
+      "dependencies": [
+        "BanditRL.OnlineSubgradientPolicy.canonical_output",
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient"
+      ]
     }
   ]
 }

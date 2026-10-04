@@ -1,0 +1,48 @@
+BanditRL.OnlineSubgradientPolicy.history_zero.{u_1} {E : Type u_1} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+  [FiniteDimensional ℝ E] (V : BanditRL.OnlineSubgradientPolicy.Domain) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E)
+  (p : BanditRL.OnlineSubgradientPolicy.SupportPolicy) :
+  BanditRL.OnlineSubgradientPolicy.history V η loss x₁ p 0 = fun x => x₁
+'BanditRL.OnlineSubgradientPolicy.history_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineSubgradientPolicy.history_succ.{u_1} {E : Type u_1} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+  [FiniteDimensional ℝ E] (V : BanditRL.OnlineSubgradientPolicy.Domain) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E)
+  (p : BanditRL.OnlineSubgradientPolicy.SupportPolicy) (t : ℕ) :
+  BanditRL.OnlineSubgradientPolicy.history V η loss x₁ p (t + 1) =
+    Fin.snoc (BanditRL.OnlineSubgradientPolicy.history V η loss x₁ p t)
+      (BanditRL.OnlineGradientDescent.project V
+        (BanditRL.OnlineSubgradientPolicy.output V η loss x₁ p t -
+          η t • BanditRL.OnlineSubgradientPolicy.selected V η loss x₁ p t))
+'BanditRL.OnlineSubgradientPolicy.history_succ' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineSubgradientPolicy.output_zero.{u_1} {E : Type u_1} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+  [FiniteDimensional ℝ E] (V : BanditRL.OnlineSubgradientPolicy.Domain) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E)
+  (p : BanditRL.OnlineSubgradientPolicy.SupportPolicy) : BanditRL.OnlineSubgradientPolicy.output V η loss x₁ p 0 = x₁
+'BanditRL.OnlineSubgradientPolicy.output_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineSubgradientPolicy.output_succ.{u_1} {E : Type u_1} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+  [FiniteDimensional ℝ E] (V : BanditRL.OnlineSubgradientPolicy.Domain) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E)
+  (p : BanditRL.OnlineSubgradientPolicy.SupportPolicy) (t : ℕ) :
+  BanditRL.OnlineSubgradientPolicy.output V η loss x₁ p (t + 1) =
+    BanditRL.OnlineGradientDescent.project V
+      (BanditRL.OnlineSubgradientPolicy.output V η loss x₁ p t -
+        η t • BanditRL.OnlineSubgradientPolicy.selected V η loss x₁ p t)
+'BanditRL.OnlineSubgradientPolicy.output_succ' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineSubgradientPolicy.history_mem.{u_1} {E : Type u_1} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+  [FiniteDimensional ℝ E] (V : BanditRL.OnlineSubgradientPolicy.Domain) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E)
+  (p : BanditRL.OnlineSubgradientPolicy.SupportPolicy) (hx₁ : x₁ ∈ V.carrier) (t : ℕ) (i : Fin (t + 1)) :
+  BanditRL.OnlineSubgradientPolicy.history V η loss x₁ p t i ∈ V.carrier
+'BanditRL.OnlineSubgradientPolicy.history_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineSubgradientPolicy.output_mem.{u_1} {E : Type u_1} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+  [FiniteDimensional ℝ E] (V : BanditRL.OnlineSubgradientPolicy.Domain) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E)
+  (p : BanditRL.OnlineSubgradientPolicy.SupportPolicy) (hx₁ : x₁ ∈ V.carrier) (t : ℕ) :
+  BanditRL.OnlineSubgradientPolicy.output V η loss x₁ p t ∈ V.carrier
+'BanditRL.OnlineSubgradientPolicy.output_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineSubgradientPolicy.history_prefix.{u_1} {E : Type u_1} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+  [FiniteDimensional ℝ E] (V : BanditRL.OnlineSubgradientPolicy.Domain) (η η' : ℕ → ℝ) (loss loss' : ℕ → E → EReal)
+  (x₁ : E) (p : BanditRL.OnlineSubgradientPolicy.SupportPolicy) (t : ℕ) (hη : ∀ s < t, η s = η' s)
+  (hloss : ∀ s < t, loss s = loss' s) :
+  BanditRL.OnlineSubgradientPolicy.history V η loss x₁ p t = BanditRL.OnlineSubgradientPolicy.history V η' loss' x₁ p t
+'BanditRL.OnlineSubgradientPolicy.history_prefix' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineSubgradientPolicy.output_prefix.{u_1} {E : Type u_1} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+  [FiniteDimensional ℝ E] (V : BanditRL.OnlineSubgradientPolicy.Domain) (η η' : ℕ → ℝ) (loss loss' : ℕ → E → EReal)
+  (x₁ : E) (p : BanditRL.OnlineSubgradientPolicy.SupportPolicy) (t : ℕ) (hη : ∀ s < t, η s = η' s)
+  (hloss : ∀ s < t, loss s = loss' s) :
+  BanditRL.OnlineSubgradientPolicy.output V η loss x₁ p t = BanditRL.OnlineSubgradientPolicy.output V η' loss' x₁ p t
+'BanditRL.OnlineSubgradientPolicy.output_prefix' depends on axioms: [propext, Classical.choice, Quot.sound]

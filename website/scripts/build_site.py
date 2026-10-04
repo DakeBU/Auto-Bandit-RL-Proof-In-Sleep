@@ -79,6 +79,7 @@ TEACHING_PREVIEW_COUNT = 4
 PSEUDOCODE_CHAPTERS = {
     "online-osd",
     "online-guessing-osd",
+    "online-osd-policy",
     "etc",
     "ucb",
     "oful",

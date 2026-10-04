@@ -1,0 +1,67 @@
+Tests/OnlineSubgradientPolicyCanary.lean:13:12: warning: unused variable `x`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+Tests/OnlineSubgradientPolicyCanary.lean:252:4: error: unsolved goals
+case neg
+η : ℕ → ℝ
+f : ℕ → ℝ → EReal
+t : ℕ
+ih : history V η f (1 / 2) offPathPolicy t = history V η f (1 / 2) policy t
+ht : ¬t = 0
+⊢ history V η f 2⁻¹ offPathPolicy t = history V η f 2⁻¹ policy t ∧
+    BanditRL.OnlineGradientDescent.project V
+        (history V η f 2⁻¹ offPathPolicy t (Fin.last t) -
+          η t * policy t (fun i => f ↑i) (history V η f 2⁻¹ offPathPolicy t) (f t)) =
+      BanditRL.OnlineGradientDescent.project V
+        (history V η f 2⁻¹ policy t (Fin.last t) - η t * policy t (fun i => f ↑i) (history V η f 2⁻¹ policy t) (f t))
+Tests/OnlineSubgradientPolicyCanary.lean:252:45: warning: This simp argument is unused:
+  ih
+
+Hint: Omit it from the simp argument list.
+  simp [output, selected, offPathPolicy, i̵h,̵ ̵h̵t]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Tests/OnlineSubgradientPolicyCanary.lean:262:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  history V ?η ?f (1 / 2) offPathPolicy ?t
+in the target expression
+  (if
+        t = 0 ∧
+          history V η f (1 / 2) (fun t past h f => if t = 0 ∧ h (Fin.last t) ≠ 1 / 2 then 999 else policy t past h f) t
+              (Fin.last t) ≠
+            1 / 2 then
+      999
+    else
+      policy t (fun i => f ↑i)
+        (history V η f (1 / 2) (fun t past h f => if t = 0 ∧ h (Fin.last t) ≠ 1 / 2 then 999 else policy t past h f) t)
+        (f t)) =
+    policy t (fun i => f ↑i) (history V η f (1 / 2) policy t) (f t)
+
+η : ℕ → ℝ
+f : ℕ → ℝ → EReal
+t : ℕ
+⊢ (if
+        t = 0 ∧
+          history V η f (1 / 2) (fun t past h f => if t = 0 ∧ h (Fin.last t) ≠ 1 / 2 then 999 else policy t past h f) t
+              (Fin.last t) ≠
+            1 / 2 then
+      999
+    else
+      policy t (fun i => f ↑i)
+        (history V η f (1 / 2) (fun t past h f => if t = 0 ∧ h (Fin.last t) ≠ 1 / 2 then 999 else policy t past h f) t)
+        (f t)) =
+    policy t (fun i => f ↑i) (history V η f (1 / 2) policy t) (f t)
+Tests/OnlineSubgradientPolicyCanary.lean:281:4: error: Type mismatch: After simplification, term
+  hg
+ has type
+  (if 3 / 4 = 2⁻¹ then policy 0 (fun i => i.elim0) (fun x => 3 / 4) (flat 0) else 999) ∈
+    SourceSubdifferential (flat 0) (3 / 4)
+but is expected to have type
+  999 ∈ SourceSubdifferential (flat 0) (3 / 4)
+Tests/OnlineSubgradientPolicyCanary.lean:276:60: error: unsolved goals
+hp : OracleLaw V offPathPolicy
+hg :
+  offPathPolicy 0 (fun i => i.elim0) (fun x => 3 / 4) (flat 0) ∈
+    SourceSubdifferential (flat 0) ((fun x => 3 / 4) (Fin.last 0))
+h999 : 999 ∈ SourceSubdifferential (flat 0) (3 / 4)
+htest : inner ℝ 999 (1 / 4) ≤ 0
+⊢ False

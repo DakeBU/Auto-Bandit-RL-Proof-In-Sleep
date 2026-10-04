@@ -15416,3 +15416,4 @@ here during local harness runs.
 - `2026-10-03T16:02:16+00:00` `bandit.py new-task` `task` `tasks/ONLINE-LIPSCHITZ.md` - Orabona Definition2.29 and Theorem2.30 full Lipschitz subgradient equivalence
 - `2026-10-04T05:10:49+00:00` `bandit.py new-task` `task` `tasks/ONLINE-OSD.md` - Source Lemma2.31 and causal Algorithm2.2 subgradient performance chain
 - `2026-10-04T06:57:00+00:00` `bandit.py new-task` `task` `tasks/ONLINE-GUESSING-OSD.md` - Shifted absolute-loss guessing: full supports and actual causal OSD guarantee
+- `2026-10-04T08:23:05+00:00` `bandit.py new-task` `task` `tasks/ONLINE-OSD-POLICY-20261004.md` - Orabona Algorithm 2.2 arbitrary legal history-adaptive support policy
