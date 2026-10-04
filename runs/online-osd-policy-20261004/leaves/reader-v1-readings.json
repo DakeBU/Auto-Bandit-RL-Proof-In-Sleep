@@ -5104,7 +5104,7 @@
             "Apply p to strict-past whole losses, actual outputs through Xt and current ft; require gt in the true global support set at Xt.",
             "Append the actual nearest projection of Xt-eta(t)gt to the history."
           ],
-          "relationship": "The stronger universal OracleLaw is optional. Canonical bridges recover the prior current-only chooser exactly; invalid-input fallback is tested separately from valid-source performance. Output recursion, prefix equality and exact old-canonical bridges are library structural consequences, documented in individual Lean notes; they are not printed source theorems."
+          "relationship": "The stronger universal OracleLaw is optional. Canonical bridges recover the prior current-only chooser exactly; invalid-input fallback is tested separately from valid-source performance."
         }
       },
       "teaching_route": [
@@ -5114,6 +5114,50 @@
         "BanditRL.OnlineSubgradientPolicy.regret_tuned"
       ],
       "source_theorems": [
+        {
+          "label": "Algorithm2.2 actual update",
+          "pages": "printed13-15,19-21/PDF25-27,31-33",
+          "pdf_page": 31,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "X_{t+1}=\\Pi_V(X_t-\\eta_tg_t)",
+          "fallback": "Apply the same externally fixed history policy to the actual history and current loss.",
+          "plain": "Apply the same externally fixed history policy to the actual history and current loss.",
+          "relationship": "Evaluate Fin.snoc at its last coordinate; this yields the update used in every performance theorem.",
+          "contract": {
+            "model": "Finite-dimensional real Euclidean path with the shared nearest projection and finite-history support policy.",
+            "assumptions": "Fixed shared domain/policy/initialization. Structural equalities need no source legality, rate positivity or loss propriety. Prefix equality requires equal strict-past whole loss functions and step values.",
+            "parameters": "Finite-dimensional real inner-product space; shared nonempty closed convex V. Proper EReal losses exclude bottom and have an ambient finite witness; global supports are nonempty at feasible points. Properness and actual supports justify finite toReal loss differences. Only played support membership enters performance. Fixed eta>0 allows T=0 and unbounded V. Variable steps need T>0 and positive nonincreasing played steps with pairwise diameter control. Tuning needs D,G,T>0 and actual selected-norm bounds on the same horizon-prescribed trajectory. Prefix comparisons hold the policy and initialization fixed; they do not impose independence on external parameters.",
+            "regret": "Finite real played loss minus finite comparator loss, summed over t<T. Structural equalities are stated directly.",
+            "guarantee": "Apply the same externally fixed history policy to the actual history and current loss."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Actual public source-policy proof",
+            "boundary": "Actual public proofs and canaries compile locally. This package models a fixed exogenous deterministic support policy with finite loss/output history and the current whole loss. Performance needs legality at played points only. Source round1 is Lean0; output(T) is source x_(T+1). Noncomputable mathematical projection/choice is permitted. Randomized laws, measurability, independence, executable oracles and anytime tuning are separate. Final package gates and PR delivery are recorded separately. Chapter2, older stack migration and Chapters3-16 remain required; no merged/live claim."
+          }
+        },
+        {
+          "label": "Current output ignores future data",
+          "pages": "printed13-15,19-21/PDF25-27,31-33",
+          "pdf_page": 31,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "(\\forall s<t,\\ f_s=f'_s,\\eta_s=\\eta'_s)\\Longrightarrow X_t=X'_t",
+          "fallback": "Changing the current or future losses cannot change the already determined output.",
+          "plain": "Changing the current or future losses cannot change the already determined output.",
+          "relationship": "Apply congrArg to the last coordinate of history_prefix. External policy parameters remain fixed.",
+          "contract": {
+            "model": "Finite-dimensional real Euclidean path with the shared nearest projection and finite-history support policy.",
+            "assumptions": "Fixed shared domain/policy/initialization. Structural equalities need no source legality, rate positivity or loss propriety. Prefix equality requires equal strict-past whole loss functions and step values.",
+            "parameters": "Finite-dimensional real inner-product space; shared nonempty closed convex V. Proper EReal losses exclude bottom and have an ambient finite witness; global supports are nonempty at feasible points. Properness and actual supports justify finite toReal loss differences. Only played support membership enters performance. Fixed eta>0 allows T=0 and unbounded V. Variable steps need T>0 and positive nonincreasing played steps with pairwise diameter control. Tuning needs D,G,T>0 and actual selected-norm bounds on the same horizon-prescribed trajectory. Prefix comparisons hold the policy and initialization fixed; they do not impose independence on external parameters.",
+            "regret": "Finite real played loss minus finite comparator loss, summed over t<T. Structural equalities are stated directly.",
+            "guarantee": "Changing the current or future losses cannot change the already determined output."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Actual public source-policy proof",
+            "boundary": "Actual public proofs and canaries compile locally. This package models a fixed exogenous deterministic support policy with finite loss/output history and the current whole loss. Performance needs legality at played points only. Source round1 is Lean0; output(T) is source x_(T+1). Noncomputable mathematical projection/choice is permitted. Randomized laws, measurability, independence, executable oracles and anytime tuning are separate. Final package gates and PR delivery are recorded separately. Chapter2, older stack migration and Chapters3-16 remain required; no merged/live claim."
+          }
+        },
         {
           "label": "Actual support-to-projection inequality",
           "pages": "printed13-15,19-21/PDF25-27,31-33",
@@ -5195,6 +5239,28 @@
             "parameters": "Finite-dimensional real inner-product space; shared nonempty closed convex V. Proper EReal losses exclude bottom and have an ambient finite witness; global supports are nonempty at feasible points. Properness and actual supports justify finite toReal loss differences. Only played support membership enters performance. Fixed eta>0 allows T=0 and unbounded V. Variable steps need T>0 and positive nonincreasing played steps with pairwise diameter control. Tuning needs D,G,T>0 and actual selected-norm bounds on the same horizon-prescribed trajectory. Prefix comparisons hold the policy and initialization fixed; they do not impose independence on external parameters.",
             "regret": "Finite real played loss minus finite comparator loss, summed over t<T. Structural equalities are stated directly.",
             "guarantee": "One horizon-prescribed policy/trajectory serves every comparator when pairwise distances<=D and the actual selected norms<=G."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Actual public source-policy proof",
+            "boundary": "Actual public proofs and canaries compile locally. This package models a fixed exogenous deterministic support policy with finite loss/output history and the current whole loss. Performance needs legality at played points only. Source round1 is Lean0; output(T) is source x_(T+1). Noncomputable mathematical projection/choice is permitted. Randomized laws, measurability, independence, executable oracles and anytime tuning are separate. Final package gates and PR delivery are recorded separately. Chapter2, older stack migration and Chapters3-16 remain required; no merged/live claim."
+          }
+        },
+        {
+          "label": "Exact canonical trajectory bridge",
+          "pages": "printed13-15,19-21/PDF25-27,31-33",
+          "pdf_page": 31,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "X_t^{p_{\\rm canonical}}=\\operatorname{iterate}_{\\rm old}(t)",
+          "fallback": "The general history implementation recovers the previous canonical recurrence at every time and every input regime.",
+          "plain": "The general history implementation recovers the previous canonical recurrence at every time and every input regime.",
+          "relationship": "Induct on time, unfold the same projection update and current selector, and rewrite the previous output equality. No legality or positive-rate premise is needed.",
+          "contract": {
+            "model": "Finite-dimensional real Euclidean path with the shared nearest projection and finite-history support policy.",
+            "assumptions": "Fixed shared domain/policy/initialization. Structural equalities need no source legality, rate positivity or loss propriety. Prefix equality requires equal strict-past whole loss functions and step values.",
+            "parameters": "Finite-dimensional real inner-product space; shared nonempty closed convex V. Proper EReal losses exclude bottom and have an ambient finite witness; global supports are nonempty at feasible points. Properness and actual supports justify finite toReal loss differences. Only played support membership enters performance. Fixed eta>0 allows T=0 and unbounded V. Variable steps need T>0 and positive nonincreasing played steps with pairwise diameter control. Tuning needs D,G,T>0 and actual selected-norm bounds on the same horizon-prescribed trajectory. Prefix comparisons hold the policy and initialization fixed; they do not impose independence on external parameters.",
+            "regret": "Finite real played loss minus finite comparator loss, summed over t<T. Structural equalities are stated directly.",
+            "guarantee": "The general history implementation recovers the previous canonical recurrence at every time and every input regime."
           },
           "local_status": {
             "status": "compiled",

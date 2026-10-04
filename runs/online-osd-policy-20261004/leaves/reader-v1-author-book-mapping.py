@@ -162,7 +162,7 @@ reading={'slug':slug,'primary':primary,
    item('Boundary instances','T0 actually instantiates regret_fixed and cancels two positive1/36 distances. A spike loss has empty support at0; its total-function canonical selected vector and output are0, and played legality is proved false. No performance claim is made for that invalid loss.',r'R_0=\tfrac1{36}-\tfrac1{36}=0;\quad\partial f(0)=\varnothing,\ G(f,0)=0')],
   'takeaway':'A policy may depend on observed history while all regret quantities come from the same actual causal projection recurrence.',
   'boundary':boundary}}
-for n in ['one_step_chain','regret_fixed','regret_variable','regret_tuned']:
+for n in ['output_succ','output_prefix','one_step_chain','regret_fixed','regret_variable','regret_tuned','canonical_output']:
     _,title,math,plain,proof,_,_=next(a for a in rows if a[0]==n)
     if n=='regret_fixed': assumptions='eta>0, T>=0, feasible x1/u, proper losses with global supports nonempty on V and actual played LegalFeedback; no bounded domain.'
     elif n=='regret_variable': assumptions='T>0, positive nonincreasing played rates, bounded V, feasible x1/u, proper subdifferentiable losses on V and actual played LegalFeedback.'
