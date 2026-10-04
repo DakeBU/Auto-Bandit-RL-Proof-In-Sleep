@@ -3691,7 +3691,7 @@
       "featured": true,
       "teaching_order": 4,
       "plain": "Example2.32 three-case identity",
-      "math": "\\(\\partial |x-y|=\\begin{cases}\\{1\\}&x>y\\\\ \\left[-1,1\\right]&x=y\\\\\\{-1\\}&x<y\\end{cases}\\)",
+      "math": "\\(\\partial |x-y|=\\begin{cases}\\{1\\}&x>y\\\\[-1,1]&x=y\\\\\\{-1\\}&x<y\\end{cases}\\)",
       "intuition": "Full source support sets certify the actual current choice, projection and finite regret.",
       "why": "A genuine producer chain for one permitted canonical source algorithm, without assumed regret or stability inequalities.",
       "position": "Orabona v10 Example2.32 printed20/PDF32, with game printed1-3 and tuning printed15.",
@@ -3823,9 +3823,10 @@
       "why": "A genuine producer chain for one permitted canonical source algorithm, without assumed regret or stability inequalities.",
       "position": "Orabona v10 Example2.32 printed20/PDF32, with game printed1-3 and tuning printed15.",
       "proof_idea": "Entire shifted support equality, complete sign/match cases, choice correctness, shared nearest projection, actual same-trajectory tuning, positive-division limit.",
-      "lean_notes": "Scalar real global helpers; finite EReal absolute values; feasible [0,1] source labels/initialization; zero-based index; T>=1 for tuning. Noncomputable canonical choice, not all adaptive tie rules; eventual corollary one-sided horizon family. The limit proof also calls mathlib Real.tendsto_sqrt_atTop; actual compiled graph records it. This local teaching-link list uses project registry names only.",
+      "lean_notes": "Scalar real global helpers; finite EReal absolute values; feasible [0,1] source labels/initialization; zero-based index; T>=1 for tuning. Noncomputable canonical choice, not all adaptive tie rules; eventual corollary one-sided horizon family.",
       "dependencies": [
-        "BanditRL.OnlineGuessingSubgradient.example_2_32"
+        "BanditRL.OnlineGuessingSubgradient.example_2_32",
+        "Real.tendsto_sqrt_atTop"
       ]
     }
   ]

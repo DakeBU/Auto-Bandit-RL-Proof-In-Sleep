@@ -4810,7 +4810,11 @@ def build_lean_graph(
             module_core_ids,
         )
 
-    search_shards = sorted(set(node_shards.values()))
+    # Frequent shards get shorter numeric indices. The schema, every node ID,
+    # and its decoded shard path stay unchanged; only the lookup-table order
+    # changes. This preserves the eager-index size gate as the library grows.
+    shard_frequencies = Counter(node["shard"] for node in nodes.values())
+    search_shards = sorted(shard_frequencies, key=lambda shard: (-shard_frequencies[shard], shard))
     search_shard_ids = {shard: index for index, shard in enumerate(search_shards)}
     search_entries: list[list[Any]] = []
     for node in nodes.values():
