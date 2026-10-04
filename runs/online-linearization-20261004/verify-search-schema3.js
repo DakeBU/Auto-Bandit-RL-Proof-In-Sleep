@@ -1,0 +1,31 @@
+const fs = require('fs');
+const crypto = require('crypto');
+const path = require('path');
+const run = path.dirname(__filename);
+const jsPath = 'website/static/lean-graph.js';
+const source = fs.readFileSync(jsPath,'utf8');
+const start = source.indexOf('  const searchNodeFromEntry =');
+const end = source.indexOf('  const ensureSearchData =', start);
+if (start < 0 || end < 0) throw new Error('actual production decoder not found');
+const decode = Function(source.slice(start,end) + '\nreturn searchNodeFromEntry;')();
+const oldPath = 'tmp/online-linearization-site-final01/lean-graph/search-index.json';
+const newPath = 'tmp/online-linearization-site-repair02/lean-graph/search-index.json';
+const load = p => JSON.parse(fs.readFileSync(p,'utf8'));
+const old = load(oldPath), current = load(newPath);
+if(old.schema_version !== 2 || current.schema_version !== 3) throw new Error('unexpected schemas');
+const decoded = payload => new Map(payload.entries.map(entry => {
+  const node = decode(entry,payload.shards,payload.kinds,payload.statuses);
+  return [node.id, JSON.stringify(node)];
+}));
+const a = decoded(old), b = decoded(current);
+if(a.size !== old.entries.length || b.size !== current.entries.length || a.size !== b.size) throw new Error('node loss or duplicate');
+for(const [id,node] of a) if(b.get(id) !== node) throw new Error('decoded field/search difference: '+id);
+const bad = [...current.entries[0]];bad[1]=current.kinds.length;
+let rejected=false;
+try{decode(bad,current.shards,current.kinds,current.statuses);}catch{rejected=true;}
+if(!rejected)throw new Error('invalid dictionary index was not rejected');
+const sha = p => crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');
+const result={status:'passed',actual_production_decoder:jsPath,decoder_sha256:sha(jsPath),old:{path:oldPath,sha256:sha(oldPath),schema:2,bytes:fs.statSync(oldPath).size},current:{path:newPath,sha256:sha(newPath),schema:3,bytes:fs.statSync(newPath).size},all_decoded_nodes_identical:a.size,compared_fields:['id','kind','status','shard','label','subtitle','search'],legacy_string_entries_supported:true,invalid_dictionary_index_rejected:true,unchanged_limit:1500000};
+if(result.current.bytes>=result.unchanged_limit)throw new Error('unchanged byte gate still exceeded');
+fs.writeFileSync(path.join(run,'search-schema3-lossless-audit.json'),JSON.stringify(result,null,2)+'\n');
+console.log(JSON.stringify(result));

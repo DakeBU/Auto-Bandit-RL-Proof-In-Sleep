@@ -5266,6 +5266,164 @@
         "takeaway": "A policy may depend on observed history while all regret quantities come from the same actual causal projection recurrence.",
         "boundary": "Actual public proofs and canaries compile locally. This package models a fixed exogenous deterministic support policy with finite loss/output history and the current whole loss. Performance needs legality at played points only. Source round1 is Lean0; output(T) is source x_(T+1). Noncomputable mathematical projection/choice is permitted. Randomized laws, measurability, independence, executable oracles and anytime tuning are separate. Final package gates and PR delivery are recorded separately. Chapter2, older stack migration and Chapters3-16 remain required; no merged/live claim."
       }
+    },
+    {
+      "slug": "online-linearization",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10,21June2026",
+        "sections": "Section2.2.2 Lemma2.31/Algorithm2.2 and explicit Theorem2.13/eq2.1 transfer; printed21 constant-step formula",
+        "pages": "Section2.3 printed22/PDF34",
+        "pdf_page": 34,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "Learner A and generated vectors",
+          "meaning": "A_t receives exactly t prior vectors. Current p sees past whole losses, reconstructed played outputs and current whole loss after X_t is determined."
+        },
+        {
+          "term": "Same outputs",
+          "meaning": "X_t equals A_t on the generated prefix; the linear loss is inner(g_t,x) and both regrets evaluate exactly these X_t."
+        },
+        {
+          "term": "Source and library boundary",
+          "meaning": "Finite-dimensional real Euclidean space and shared nonempty closed convex V; no boundedness. Proper EReal loss excludes bottom and has a finite ambient witness; global supports on V and actual played supports justify finite played/comparator values before toReal. Round1=Lean0; T0 is an algebraic extension. Comparator and horizon are evaluation parameters, not policy inputs. Main comparison may use ambient outputs with legal supports; feasible/canonical adapters supply domain membership. A universal hB is quantified over all vector sequences at the specified T. Policies remain externally fixed in strict-past comparisons."
+        }
+      ],
+      "algorithm": {
+        "title": "Run one causal linear learner using observed supports",
+        "kind": "library realization of source reduction",
+        "steps": [
+          {
+            "title": "Output",
+            "detail": "Apply A_t to the actual strict-past vector history.",
+            "math": "X_t=A_t(H_t)",
+            "fallback": "Apply A_t to the actual strict-past vector history."
+          },
+          {
+            "title": "Observe and choose",
+            "detail": "Observe current proper subdifferentiable loss and select a genuine support at this X_t.",
+            "math": "g_t\\in\\partial f_t(X_t)",
+            "fallback": "Observe current proper subdifferentiable loss and select a genuine support at this X_t."
+          },
+          {
+            "title": "Append feedback",
+            "detail": "Append g_t to H_t and continue with the same learner.",
+            "math": "H_{t+1}=H_t\\mathbin{\\|}g_t",
+            "fallback": "Append g_t to H_t and continue with the same learner."
+          }
+        ],
+        "pseudocode": {
+          "title": "Finite-history implementation of Section2.3",
+          "intro": "The source describes a reduction; this recursion is a library implementation, not a separately printed source algorithm.",
+          "formula_label": "Actual feedback and next learner query",
+          "math": "X_t=A_t((g_s)_{s<t}),\\quad g_t=p(t,(f_s)_{s<t},(X_s)_{s\\le t},f_t),\\quad X_{t+1}=A_{t+1}((g_s)_{s\\le t})",
+          "fallback": "Output using past vectors, observe the current loss, choose a support and append it.",
+          "lines": [
+            "Fix one exogenous causal linear learner A and support policy p.",
+            "Initialize H0 as empty; A0 chooses the first point before a loss is read.",
+            "At t output A_t(H_t), then observe f_t and its finite played value.",
+            "Apply p to finite observed history and current whole f_t; require genuine support membership at X_t.",
+            "Append g_t and query the same A for the next round."
+          ],
+          "relationship": "Optional Feasible/OracleLaw and the existing canonical chooser provide actual legal OCO feedback; central comparison needs played legality only."
+        }
+      },
+      "teaching_route": [
+        "BanditRL.OnlineLinearization.output_linear_run",
+        "BanditRL.OnlineLinearization.support_gap",
+        "BanditRL.OnlineLinearization.regret_comparison",
+        "BanditRL.OnlineLinearization.regret_transfer"
+      ],
+      "source_theorems": [
+        {
+          "label": "Section2.3 unnumbered convex-to-linear regret comparison",
+          "pages": "Printed22/PDF34",
+          "pdf_page": 34,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "R_T^{\\rm convex}(u)\\le\\sum_{t<T}\\langle g_t,X_t\\rangle-\\sum_{t<T}\\langle g_t,u\\rangle",
+          "fallback": "Every actual legal support bounds one played loss gap; the accumulated bound is linear regret at the same outputs.",
+          "plain": "Every actual legal support bounds one played loss gap; the accumulated bound is linear regret at the same outputs.",
+          "relationship": "Sum support_gap, rewrite linearLoss_gap and identify the same linearRun via output_linear_run. Structural identities and performance transport wrappers are library refinements, not additional printed source theorems.",
+          "contract": {
+            "model": "Online convex optimization in finite-dimensional real Euclidean space.",
+            "assumptions": "Proper losses subdifferentiable on the shared nonempty closed convex V; actual g_t is a global support at the same played X_t; feasible comparator u. Feasible learner/canonical adapters realize OCO, while the main algebraic comparison also permits ambient played points with genuine supports.",
+            "parameters": "Source1-based versus Lean0-based rounds; T0 algebraic extension, no bounded-domain requirement. Fixed exogenous deterministic learner/policy, fullinformation pathwise setting.",
+            "regret": "Finite played loss minus finite comparator loss, summed on the same actual causal trajectory.",
+            "guarantee": "Convex regret <= linear comparator regret of the same learner on its actual generated supports. No universal optimality or numerical guarantee for arbitrary learner."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Actual public same-trajectory reduction",
+            "boundary": "Actual public18 proofs and25canaries compile locally. The learner and support policy are fixed exogenous deterministic finite-history parameters. Comparison uses the same actual vector-feedback trajectory; a universal OLO performance bound is an input to transport, not a guarantee produced for arbitrary learners. Feasible/canonical adapters implement OCO. Randomized laws, measurability, independence and executable choice are separate. Package/root/harness/reader acceptance and PR delivery have their own evidence. Chapter2, older26production migration and Chapters3-16 remain required; no merged/live update."
+          }
+        }
+      ],
+      "proof_bridge": {
+        "title": "Why the source reduction preserves the run",
+        "summary": "Actual support feedback produces one vector sequence; history correspondence identifies both prediction sequences before any regret inequality.",
+        "steps": [
+          {
+            "title": "Identify feedback histories",
+            "detail": "Each stored vector is the actual support selected at that earlier round.",
+            "math": "H_t(i)=g_i\\quad(i<t)",
+            "fallback": "Each stored vector is the actual support selected at that earlier round."
+          },
+          {
+            "title": "Keep the same outputs",
+            "detail": "Running the linear policy on generated supports gives the original reduction outputs exactly.",
+            "math": "X_t=A_t((g_s)_{s<t})",
+            "fallback": "Running the linear policy on generated supports gives the original reduction outputs exactly."
+          },
+          {
+            "title": "Sum the true support gaps",
+            "detail": "Every actual legal support bounds one played loss gap; the accumulated bound is linear regret at the same outputs.",
+            "math": "R_T^{\\rm convex}(u)\\le\\sum_{t<T}\\langle g_t,X_t\\rangle-\\sum_{t<T}\\langle g_t,u\\rangle",
+            "fallback": "Every actual legal support bounds one played loss gap; the accumulated bound is linear regret at the same outputs."
+          },
+          {
+            "title": "Transport a separately established bound",
+            "detail": "A bound proved for every vector sequence applies to the actually generated supports of the same learner.",
+            "math": "(\\forall v\\in E^{\\mathbb N},\\,\\forall u\\in V,\\ R_T^{\\rm linear}(A,v,u)\\le B(v,u,T))\\Longrightarrow R_T^{\\rm convex}(u)\\le B(g,u,T)",
+            "fallback": "A bound proved for every vector sequence applies to the actually generated supports of the same learner."
+          }
+        ],
+        "boundary": "Actual public18 proofs and25canaries compile locally. The learner and support policy are fixed exogenous deterministic finite-history parameters. Comparison uses the same actual vector-feedback trajectory; a universal OLO performance bound is an input to transport, not a guarantee produced for arbitrary learners. Feasible/canonical adapters implement OCO. Randomized laws, measurability, independence and executable choice are separate. Package/root/harness/reader acceptance and PR delivery have their own evidence. Chapter2, older26production migration and Chapters3-16 remain required; no merged/live update."
+      },
+      "worked_example": {
+        "title": "A strict reduction with nonzero feedback",
+        "intro": "On real unbounded V, A_t is minus the sum of earlier vectors. First loss is (x-1)^2/2; second is x.",
+        "steps": [
+          {
+            "title": "Actual causal path",
+            "detail": "The genuine recursion outputs0,1 then terminal0 and selects -1,1.",
+            "math": "(X_0,X_1,X_2)=(0,1,0),\\quad(g_0,g_1)=(-1,1)",
+            "fallback": "The genuine recursion outputs0,1 then terminal0 and selects -1,1."
+          },
+          {
+            "title": "Strict regret slack",
+            "detail": "Against u=1, actual convex regret is1/2 while same-run linear regret is1. Energy2 and endpointdistance1 are nonzero.",
+            "math": "R_2^{\\rm convex}(1)=\\tfrac12<1=R_2^{\\rm linear}(1),\\quad\\sum g_t^2=2,\\quad|X_2-1|^2=1",
+            "fallback": "Against u=1, actual convex regret is1/2 while same-run linear regret is1. Energy2 and endpointdistance1 are nonzero."
+          },
+          {
+            "title": "A universal OLO producer",
+            "detail": "For every two-vector sequence and comparator, the same learner has an exact potential identity; public regret_transfer then applies to the generated sequence.",
+            "math": "R_2^{\\rm linear}(v,u)=\\tfrac{u^2}{2}+\\tfrac{v_0^2+v_1^2}{2}-\\tfrac{(-v_0-v_1-u)^2}{2}",
+            "fallback": "For every two-vector sequence and comparator, the same learner has an exact potential identity; public regret_transfer then applies to the generated sequence."
+          },
+          {
+            "title": "Producer and causal boundary tests",
+            "detail": "Canonical legal feedback actually instantiates the source comparison. Current/future invalid losses leave output1 unchanged; the actual T0 theorem has empty sums.",
+            "math": "f_s=f_s^\\prime\\ (s<1)\\Longrightarrow X_1=X_1^\\prime;\\quad R_0=0",
+            "fallback": "Canonical legal feedback actually instantiates the source comparison. Current/future invalid losses leave output1 unchanged; the actual T0 theorem has empty sums."
+          }
+        ],
+        "takeaway": "The example derives a nontrivial universal linear guarantee before transporting it; it does not assume a regret bound just for its chosen feedback.",
+        "boundary": "Actual public18 proofs and25canaries compile locally. The learner and support policy are fixed exogenous deterministic finite-history parameters. Comparison uses the same actual vector-feedback trajectory; a universal OLO performance bound is an input to transport, not a guarantee produced for arbitrary learners. Feasible/canonical adapters implement OCO. Randomized laws, measurability, independence and executable choice are separate. Package/root/harness/reader acceptance and PR delivery have their own evidence. Chapter2, older26production migration and Chapters3-16 remain required; no merged/live update."
+      }
     }
   ]
 }

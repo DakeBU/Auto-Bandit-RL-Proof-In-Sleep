@@ -4191,6 +4191,314 @@
         "BanditRL.OnlineSubgradientPolicy.canonical_output",
         "BanditRL.OnlineSubgradientDescent.currentSubgradient"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLinearization.outputHistory_last",
+      "title": "Current output from the vector prefix",
+      "chapter": "online-linearization",
+      "featured": false,
+      "teaching_order": 0,
+      "plain": "The reconstructed last output is exactly the prescribed learner output on its finite past vectors.",
+      "math": "F_t(H)_t=A_t(H)",
+      "intuition": "The reconstructed last output is exactly the prescribed learner output on its finite past vectors.",
+      "why": "Make the causal source reduction use one actual learner/feedback trajectory.",
+      "position": "Orabona v10 Section2.3 printed22/PDF34. Library implementation/refinement or adapter of Section2.3; not a separately printed source theorem.",
+      "proof_idea": "Unfold the last finite index and its prefix restriction.",
+      "lean_notes": "Finite-dimensional real Euclidean space and shared nonempty closed convex V; no boundedness. Proper EReal loss excludes bottom and has a finite ambient witness; global supports on V and actual played supports justify finite played/comparator values before toReal. Round1=Lean0; T0 is an algebraic extension. Comparator and horizon are evaluation parameters, not policy inputs. Main comparison may use ambient outputs with legal supports; feasible/canonical adapters supply domain membership. A universal hB is quantified over all vector sequences at the specified T. Policies remain externally fixed in strict-past comparisons. Library implementation/refinement or adapter of Section2.3; not a separately printed source theorem.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineLinearization.history_zero",
+      "title": "Empty initial vector history",
+      "chapter": "online-linearization",
+      "featured": false,
+      "teaching_order": 1,
+      "plain": "The learner starts with an empty feedback history; its first output need not be zero.",
+      "math": "H_0=\\varnothing",
+      "intuition": "The learner starts with an empty feedback history; its first output need not be zero.",
+      "why": "Make the causal source reduction use one actual learner/feedback trajectory.",
+      "position": "Orabona v10 Section2.3 printed22/PDF34. Library implementation/refinement or adapter of Section2.3; not a separately printed source theorem.",
+      "proof_idea": "Reduce the dependent Nat.rec at zero.",
+      "lean_notes": "Finite-dimensional real Euclidean space and shared nonempty closed convex V; no boundedness. Proper EReal loss excludes bottom and has a finite ambient witness; global supports on V and actual played supports justify finite played/comparator values before toReal. Round1=Lean0; T0 is an algebraic extension. Comparator and horizon are evaluation parameters, not policy inputs. Main comparison may use ambient outputs with legal supports; feasible/canonical adapters supply domain membership. A universal hB is quantified over all vector sequences at the specified T. Policies remain externally fixed in strict-past comparisons. Library implementation/refinement or adapter of Section2.3; not a separately printed source theorem.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineLinearization.history_succ",
+      "title": "Append actual current support",
+      "chapter": "online-linearization",
+      "featured": false,
+      "teaching_order": 2,
+      "plain": "The current loss is read after output, and the selected current support is appended.",
+      "math": "H_{t+1}=H_t\\mathbin{\\|}g_t",
+      "intuition": "The current loss is read after output, and the selected current support is appended.",
+      "why": "Make the causal source reduction use one actual learner/feedback trajectory.",
+      "position": "Orabona v10 Section2.3 printed22/PDF34. Library implementation/refinement or adapter of Section2.3; not a separately printed source theorem.",
+      "proof_idea": "Reduce the successor branch and the actual selected definition.",
+      "lean_notes": "Finite-dimensional real Euclidean space and shared nonempty closed convex V; no boundedness. Proper EReal loss excludes bottom and has a finite ambient witness; global supports on V and actual played supports justify finite played/comparator values before toReal. Round1=Lean0; T0 is an algebraic extension. Comparator and horizon are evaluation parameters, not policy inputs. Main comparison may use ambient outputs with legal supports; feasible/canonical adapters supply domain membership. A universal hB is quantified over all vector sequences at the specified T. Policies remain externally fixed in strict-past comparisons. Library implementation/refinement or adapter of Section2.3; not a separately printed source theorem.",
+      "dependencies": [
+        "BanditRL.OnlineLinearization.history",
+        "BanditRL.OnlineLinearization.selected"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLinearization.history_castSucc",
+      "title": "Keep earlier vector feedback",
+      "chapter": "online-linearization",
+      "featured": false,
+      "teaching_order": 3,
+      "plain": "Appending current feedback preserves every earlier vector coordinate.",
+      "math": "H_{t+1}(i)=H_t(i)\\quad(i<t)",
+      "intuition": "Appending current feedback preserves every earlier vector coordinate.",
+      "why": "Make the causal source reduction use one actual learner/feedback trajectory.",
+      "position": "Orabona v10 Section2.3 printed22/PDF34. Library implementation/refinement or adapter of Section2.3; not a separately printed source theorem.",
+      "proof_idea": "Use history_succ and Fin.snoc_castSucc.",
+      "lean_notes": "Finite-dimensional real Euclidean space and shared nonempty closed convex V; no boundedness. Proper EReal loss excludes bottom and has a finite ambient witness; global supports on V and actual played supports justify finite played/comparator values before toReal. Round1=Lean0; T0 is an algebraic extension. Comparator and horizon are evaluation parameters, not policy inputs. Main comparison may use ambient outputs with legal supports; feasible/canonical adapters supply domain membership. A universal hB is quantified over all vector sequences at the specified T. Policies remain externally fixed in strict-past comparisons. Library implementation/refinement or adapter of Section2.3; not a separately printed source theorem.",
+      "dependencies": [
+        "BanditRL.OnlineLinearization.history_succ"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLinearization.history_selected",
+      "title": "Stored feedback is the selected sequence",
+      "chapter": "online-linearization",
+      "featured": false,
+      "teaching_order": 4,
+      "plain": "Each stored vector is the actual support selected at that earlier round.",
+      "math": "H_t(i)=g_i\\quad(i<t)",
+      "intuition": "Each stored vector is the actual support selected at that earlier round.",
+      "why": "Make the causal source reduction use one actual learner/feedback trajectory.",
+      "position": "Orabona v10 Section2.3 printed22/PDF34. Library implementation/refinement or adapter of Section2.3; not a separately printed source theorem.",
+      "proof_idea": "Induct on t and split the last coordinate from previous castSucc coordinates.",
+      "lean_notes": "Finite-dimensional real Euclidean space and shared nonempty closed convex V; no boundedness. Proper EReal loss excludes bottom and has a finite ambient witness; global supports on V and actual played supports justify finite played/comparator values before toReal. Round1=Lean0; T0 is an algebraic extension. Comparator and horizon are evaluation parameters, not policy inputs. Main comparison may use ambient outputs with legal supports; feasible/canonical adapters supply domain membership. A universal hB is quantified over all vector sequences at the specified T. Policies remain externally fixed in strict-past comparisons. Library implementation/refinement or adapter of Section2.3; not a separately printed source theorem.",
+      "dependencies": [
+        "BanditRL.OnlineLinearization.history_succ",
+        "BanditRL.OnlineLinearization.history_castSucc"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLinearization.output_linear_run",
+      "title": "The same learner and the same outputs",
+      "chapter": "online-linearization",
+      "featured": true,
+      "teaching_order": 5,
+      "plain": "Running the linear policy on generated supports gives the original reduction outputs exactly.",
+      "math": "X_t=A_t((g_s)_{s<t})",
+      "intuition": "Running the linear policy on generated supports gives the original reduction outputs exactly.",
+      "why": "Make the causal source reduction use one actual learner/feedback trajectory.",
+      "position": "Orabona v10 Section2.3 printed22/PDF34. Library implementation/refinement or adapter of Section2.3; not a separately printed source theorem.",
+      "proof_idea": "Identify every coordinate of history via history_selected and apply A.",
+      "lean_notes": "Finite-dimensional real Euclidean space and shared nonempty closed convex V; no boundedness. Proper EReal loss excludes bottom and has a finite ambient witness; global supports on V and actual played supports justify finite played/comparator values before toReal. Round1=Lean0; T0 is an algebraic extension. Comparator and horizon are evaluation parameters, not policy inputs. Main comparison may use ambient outputs with legal supports; feasible/canonical adapters supply domain membership. A universal hB is quantified over all vector sequences at the specified T. Policies remain externally fixed in strict-past comparisons. Library implementation/refinement or adapter of Section2.3; not a separately printed source theorem.",
+      "dependencies": [
+        "BanditRL.OnlineLinearization.history_selected"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLinearization.outputHistory_played",
+      "title": "Reconstructed outputs are actual plays",
+      "chapter": "online-linearization",
+      "featured": false,
+      "teaching_order": 6,
+      "plain": "The support policy receives genuine played outputs reconstructed from past vectors.",
+      "math": "F_t(H_t)_i=X_i\\quad(i\\le t)",
+      "intuition": "The support policy receives genuine played outputs reconstructed from past vectors.",
+      "why": "Make the causal source reduction use one actual learner/feedback trajectory.",
+      "position": "Orabona v10 Section2.3 printed22/PDF34. Library implementation/refinement or adapter of Section2.3; not a separately printed source theorem.",
+      "proof_idea": "Identify both prefixes with the same actual selected coordinates.",
+      "lean_notes": "Finite-dimensional real Euclidean space and shared nonempty closed convex V; no boundedness. Proper EReal loss excludes bottom and has a finite ambient witness; global supports on V and actual played supports justify finite played/comparator values before toReal. Round1=Lean0; T0 is an algebraic extension. Comparator and horizon are evaluation parameters, not policy inputs. Main comparison may use ambient outputs with legal supports; feasible/canonical adapters supply domain membership. A universal hB is quantified over all vector sequences at the specified T. Policies remain externally fixed in strict-past comparisons. Library implementation/refinement or adapter of Section2.3; not a separately printed source theorem.",
+      "dependencies": [
+        "BanditRL.OnlineLinearization.history_selected"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLinearization.output_mem",
+      "title": "Feasible learner yields feasible plays",
+      "chapter": "online-linearization",
+      "featured": false,
+      "teaching_order": 7,
+      "plain": "A universally feasible linear learner remains feasible in the actual convex-loss reduction.",
+      "math": "(\\forall t,H,\\ A_t(H)\\in V)\\Longrightarrow X_t\\in V",
+      "intuition": "A universally feasible linear learner remains feasible in the actual convex-loss reduction.",
+      "why": "Make the causal source reduction use one actual learner/feedback trajectory.",
+      "position": "Orabona v10 Section2.3 printed22/PDF34. Library implementation/refinement or adapter of Section2.3; not a separately printed source theorem.",
+      "proof_idea": "Apply its finite-history feasibility law to the generated history.",
+      "lean_notes": "Finite-dimensional real Euclidean space and shared nonempty closed convex V; no boundedness. Proper EReal loss excludes bottom and has a finite ambient witness; global supports on V and actual played supports justify finite played/comparator values before toReal. Round1=Lean0; T0 is an algebraic extension. Comparator and horizon are evaluation parameters, not policy inputs. Main comparison may use ambient outputs with legal supports; feasible/canonical adapters supply domain membership. A universal hB is quantified over all vector sequences at the specified T. Policies remain externally fixed in strict-past comparisons. Library implementation/refinement or adapter of Section2.3; not a separately printed source theorem.",
+      "dependencies": [
+        "BanditRL.OnlineLinearization.history"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLinearization.history_prefix",
+      "title": "Strict-past loss invariance",
+      "chapter": "online-linearization",
+      "featured": false,
+      "teaching_order": 8,
+      "plain": "With common fixed A and p, equal strict-past whole losses give equal feedback histories.",
+      "math": "(\\forall s<t,\\ f_s=f_s^\\prime)\\Longrightarrow H_t=H_t^\\prime",
+      "intuition": "With common fixed A and p, equal strict-past whole losses give equal feedback histories.",
+      "why": "Make the causal source reduction use one actual learner/feedback trajectory.",
+      "position": "Orabona v10 Section2.3 printed22/PDF34. Library implementation/refinement or adapter of Section2.3; not a separately printed source theorem.",
+      "proof_idea": "Induct; identify the old history, finite past losses and current loss of each earlier append.",
+      "lean_notes": "Finite-dimensional real Euclidean space and shared nonempty closed convex V; no boundedness. Proper EReal loss excludes bottom and has a finite ambient witness; global supports on V and actual played supports justify finite played/comparator values before toReal. Round1=Lean0; T0 is an algebraic extension. Comparator and horizon are evaluation parameters, not policy inputs. Main comparison may use ambient outputs with legal supports; feasible/canonical adapters supply domain membership. A universal hB is quantified over all vector sequences at the specified T. Policies remain externally fixed in strict-past comparisons. Library implementation/refinement or adapter of Section2.3; not a separately printed source theorem.",
+      "dependencies": [
+        "BanditRL.OnlineLinearization.history_succ"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLinearization.output_prefix",
+      "title": "Current and future losses are unread",
+      "chapter": "online-linearization",
+      "featured": false,
+      "teaching_order": 9,
+      "plain": "Current and future losses cannot change the already determined output, with exogenous A,p fixed.",
+      "math": "(\\forall s<t,\\ f_s=f_s^\\prime)\\Longrightarrow X_t=X_t^\\prime",
+      "intuition": "Current and future losses cannot change the already determined output, with exogenous A,p fixed.",
+      "why": "Make the causal source reduction use one actual learner/feedback trajectory.",
+      "position": "Orabona v10 Section2.3 printed22/PDF34. Library implementation/refinement or adapter of Section2.3; not a separately printed source theorem.",
+      "proof_idea": "Apply the same A_t to history_prefix.",
+      "lean_notes": "Finite-dimensional real Euclidean space and shared nonempty closed convex V; no boundedness. Proper EReal loss excludes bottom and has a finite ambient witness; global supports on V and actual played supports justify finite played/comparator values before toReal. Round1=Lean0; T0 is an algebraic extension. Comparator and horizon are evaluation parameters, not policy inputs. Main comparison may use ambient outputs with legal supports; feasible/canonical adapters supply domain membership. A universal hB is quantified over all vector sequences at the specified T. Policies remain externally fixed in strict-past comparisons. Library implementation/refinement or adapter of Section2.3; not a separately printed source theorem.",
+      "dependencies": [
+        "BanditRL.OnlineLinearization.history_prefix"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLinearization.oracle_feedback",
+      "title": "Optional universal support law",
+      "chapter": "online-linearization",
+      "featured": false,
+      "teaching_order": 10,
+      "plain": "A stronger off-path law suffices for actual played legality; it is not a comparison premise.",
+      "math": "\\operatorname{OracleLaw}(p)\\Longrightarrow g_t\\in\\partial f_t(X_t)\\ (t<T)",
+      "intuition": "A stronger off-path law suffices for actual played legality; it is not a comparison premise.",
+      "why": "Make the causal source reduction use one actual learner/feedback trajectory.",
+      "position": "Orabona v10 Section2.3 printed22/PDF34. Library implementation/refinement or adapter of Section2.3; not a separately printed source theorem.",
+      "proof_idea": "Query the law on the actual reconstructed output history and use its feasible last point.",
+      "lean_notes": "Finite-dimensional real Euclidean space and shared nonempty closed convex V; no boundedness. Proper EReal loss excludes bottom and has a finite ambient witness; global supports on V and actual played supports justify finite played/comparator values before toReal. Round1=Lean0; T0 is an algebraic extension. Comparator and horizon are evaluation parameters, not policy inputs. Main comparison may use ambient outputs with legal supports; feasible/canonical adapters supply domain membership. A universal hB is quantified over all vector sequences at the specified T. Policies remain externally fixed in strict-past comparisons. Library implementation/refinement or adapter of Section2.3; not a separately printed source theorem.",
+      "dependencies": [
+        "BanditRL.OnlineLinearization.outputHistory_last"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLinearization.canonical_feedback",
+      "title": "Canonical support producer",
+      "chapter": "online-linearization",
+      "featured": false,
+      "teaching_order": 11,
+      "plain": "The existing current-loss chooser supplies legal feedback for a feasible learner and proper subdifferentiable losses.",
+      "math": "g_t=\\operatorname{Choose}(\\partial f_t(X_t))\\in\\partial f_t(X_t)",
+      "intuition": "The existing current-loss chooser supplies legal feedback for a feasible learner and proper subdifferentiable losses.",
+      "why": "Make the causal source reduction use one actual learner/feedback trajectory.",
+      "position": "Orabona v10 Section2.3 printed22/PDF34. Library implementation/refinement or adapter of Section2.3; not a separately printed source theorem.",
+      "proof_idea": "Instantiate oracle_feedback with the existing canonicalPolicy_legal producer.",
+      "lean_notes": "Finite-dimensional real Euclidean space and shared nonempty closed convex V; no boundedness. Proper EReal loss excludes bottom and has a finite ambient witness; global supports on V and actual played supports justify finite played/comparator values before toReal. Round1=Lean0; T0 is an algebraic extension. Comparator and horizon are evaluation parameters, not policy inputs. Main comparison may use ambient outputs with legal supports; feasible/canonical adapters supply domain membership. A universal hB is quantified over all vector sequences at the specified T. Policies remain externally fixed in strict-past comparisons. Library implementation/refinement or adapter of Section2.3; not a separately printed source theorem.",
+      "dependencies": [
+        "BanditRL.OnlineLinearization.oracle_feedback",
+        "BanditRL.OnlineSubgradientPolicy.canonicalPolicy_legal"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLinearization.trajectory_finite_loss",
+      "title": "Finite played loss before coercion",
+      "chapter": "online-linearization",
+      "featured": false,
+      "teaching_order": 12,
+      "plain": "Properness and support existence at feasible outputs establish a finite real loss value.",
+      "math": "f_t(X_t)=\\iota(\\operatorname{toReal}(f_t(X_t)))",
+      "intuition": "Properness and support existence at feasible outputs establish a finite real loss value.",
+      "why": "Make the causal source reduction use one actual learner/feedback trajectory.",
+      "position": "Orabona v10 Section2.3 printed22/PDF34. Library implementation/refinement or adapter of Section2.3; not a separately printed source theorem.",
+      "proof_idea": "Use the shared finite_loss producer at the actual feasible output.",
+      "lean_notes": "Finite-dimensional real Euclidean space and shared nonempty closed convex V; no boundedness. Proper EReal loss excludes bottom and has a finite ambient witness; global supports on V and actual played supports justify finite played/comparator values before toReal. Round1=Lean0; T0 is an algebraic extension. Comparator and horizon are evaluation parameters, not policy inputs. Main comparison may use ambient outputs with legal supports; feasible/canonical adapters supply domain membership. A universal hB is quantified over all vector sequences at the specified T. Policies remain externally fixed in strict-past comparisons. Library implementation/refinement or adapter of Section2.3; not a separately printed source theorem.",
+      "dependencies": [
+        "BanditRL.OnlineLinearization.output_mem",
+        "BanditRL.OnlineSubgradientDescent.finite_loss"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLinearization.support_gap",
+      "title": "True global support gives the loss gap",
+      "chapter": "online-linearization",
+      "featured": false,
+      "teaching_order": 13,
+      "plain": "A genuine global support at an arbitrary ambient x bounds its finite loss gap against feasible u.",
+      "math": "f(x)-f(u)\\le\\langle g,x-u\\rangle",
+      "intuition": "A genuine global support at an arbitrary ambient x bounds its finite loss gap against feasible u.",
+      "why": "Make the causal source reduction use one actual learner/feedback trajectory.",
+      "position": "Orabona v10 Section2.3 printed22/PDF34. Library implementation/refinement or adapter of Section2.3; not a separately printed source theorem.",
+      "proof_idea": "Reuse the first support inequality of Lemma2.31 at eta1; properness/supports justify finiteness.",
+      "lean_notes": "Finite-dimensional real Euclidean space and shared nonempty closed convex V; no boundedness. Proper EReal loss excludes bottom and has a finite ambient witness; global supports on V and actual played supports justify finite played/comparator values before toReal. Round1=Lean0; T0 is an algebraic extension. Comparator and horizon are evaluation parameters, not policy inputs. Main comparison may use ambient outputs with legal supports; feasible/canonical adapters supply domain membership. A universal hB is quantified over all vector sequences at the specified T. Policies remain externally fixed in strict-past comparisons. Library implementation/refinement or adapter of Section2.3; not a separately printed source theorem.",
+      "dependencies": [
+        "BanditRL.OnlineSubgradientDescent.lemma_2_31"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLinearization.linearLoss_gap",
+      "title": "Difference of linear losses",
+      "chapter": "online-linearization",
+      "featured": false,
+      "teaching_order": 14,
+      "plain": "The comparator difference of inner-product losses is the inner product with the displacement.",
+      "math": "\\widetilde f_g(x)-\\widetilde f_g(u)=\\langle g,x-u\\rangle",
+      "intuition": "The comparator difference of inner-product losses is the inner product with the displacement.",
+      "why": "Make the causal source reduction use one actual learner/feedback trajectory.",
+      "position": "Orabona v10 Section2.3 printed22/PDF34. Library implementation/refinement or adapter of Section2.3; not a separately printed source theorem.",
+      "proof_idea": "Use inner_sub_right.",
+      "lean_notes": "Finite-dimensional real Euclidean space and shared nonempty closed convex V; no boundedness. Proper EReal loss excludes bottom and has a finite ambient witness; global supports on V and actual played supports justify finite played/comparator values before toReal. Round1=Lean0; T0 is an algebraic extension. Comparator and horizon are evaluation parameters, not policy inputs. Main comparison may use ambient outputs with legal supports; feasible/canonical adapters supply domain membership. A universal hB is quantified over all vector sequences at the specified T. Policies remain externally fixed in strict-past comparisons. Library implementation/refinement or adapter of Section2.3; not a separately printed source theorem.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineLinearization.regret_comparison",
+      "title": "Section2.3 same-trajectory linear regret",
+      "chapter": "online-linearization",
+      "featured": true,
+      "teaching_order": 15,
+      "plain": "Every actual legal support bounds one played loss gap; the accumulated bound is linear regret at the same outputs.",
+      "math": "R_T^{\\rm convex}(u)\\le\\sum_{t<T}\\langle g_t,X_t\\rangle-\\sum_{t<T}\\langle g_t,u\\rangle",
+      "intuition": "Every actual legal support bounds one played loss gap; the accumulated bound is linear regret at the same outputs.",
+      "why": "Make the causal source reduction use one actual learner/feedback trajectory.",
+      "position": "Orabona v10 Section2.3 printed22/PDF34. Source Section2.3 unnumbered regret reduction.",
+      "proof_idea": "Sum support_gap, rewrite linearLoss_gap and identify the same linearRun via output_linear_run.",
+      "lean_notes": "Finite-dimensional real Euclidean space and shared nonempty closed convex V; no boundedness. Proper EReal loss excludes bottom and has a finite ambient witness; global supports on V and actual played supports justify finite played/comparator values before toReal. Round1=Lean0; T0 is an algebraic extension. Comparator and horizon are evaluation parameters, not policy inputs. Main comparison may use ambient outputs with legal supports; feasible/canonical adapters supply domain membership. A universal hB is quantified over all vector sequences at the specified T. Policies remain externally fixed in strict-past comparisons. Source Section2.3 unnumbered regret reduction.",
+      "dependencies": [
+        "BanditRL.OnlineLinearization.support_gap",
+        "BanditRL.OnlineLinearization.linearLoss_gap",
+        "BanditRL.OnlineLinearization.output_linear_run",
+        "BanditRL.OnlineLearning.comparatorRegret_eq_sum"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLinearization.regret_transfer",
+      "title": "Transport a supplied universal OLO bound",
+      "chapter": "online-linearization",
+      "featured": true,
+      "teaching_order": 16,
+      "plain": "A bound proved for every vector sequence applies to the actually generated supports of the same learner.",
+      "math": "(\\forall v\\in E^{\\mathbb N},\\,\\forall u\\in V,\\ R_T^{\\rm linear}(A,v,u)\\le B(v,u,T))\\Longrightarrow R_T^{\\rm convex}(u)\\le B(g,u,T)",
+      "intuition": "A bound proved for every vector sequence applies to the actually generated supports of the same learner.",
+      "why": "Make the causal source reduction use one actual learner/feedback trajectory.",
+      "position": "Orabona v10 Section2.3 printed22/PDF34. Library implementation/refinement or adapter of Section2.3; not a separately printed source theorem.",
+      "proof_idea": "Compose regret_comparison with hB instantiated on selected; this does not produce hB for arbitrary A.",
+      "lean_notes": "Finite-dimensional real Euclidean space and shared nonempty closed convex V; no boundedness. Proper EReal loss excludes bottom and has a finite ambient witness; global supports on V and actual played supports justify finite played/comparator values before toReal. Round1=Lean0; T0 is an algebraic extension. Comparator and horizon are evaluation parameters, not policy inputs. Main comparison may use ambient outputs with legal supports; feasible/canonical adapters supply domain membership. A universal hB is quantified over all vector sequences at the specified T. Policies remain externally fixed in strict-past comparisons. Library implementation/refinement or adapter of Section2.3; not a separately printed source theorem.",
+      "dependencies": [
+        "BanditRL.OnlineLinearization.regret_comparison"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLinearization.canonical_regret_comparison",
+      "title": "Feasible OCO implementation adapter",
+      "chapter": "online-linearization",
+      "featured": false,
+      "teaching_order": 17,
+      "plain": "Feasibility plus proper subdifferentiability supplies a complete canonical feedback producer for the source comparison.",
+      "math": "R_T^{\\rm convex}(u;A,p_{\\rm canonical})\\le R_T^{\\rm linear}(A,g,u)",
+      "intuition": "Feasibility plus proper subdifferentiability supplies a complete canonical feedback producer for the source comparison.",
+      "why": "Make the causal source reduction use one actual learner/feedback trajectory.",
+      "position": "Orabona v10 Section2.3 printed22/PDF34. Library implementation/refinement or adapter of Section2.3; not a separately printed source theorem.",
+      "proof_idea": "Use canonical_feedback, then apply regret_comparison on that identical run.",
+      "lean_notes": "Finite-dimensional real Euclidean space and shared nonempty closed convex V; no boundedness. Proper EReal loss excludes bottom and has a finite ambient witness; global supports on V and actual played supports justify finite played/comparator values before toReal. Round1=Lean0; T0 is an algebraic extension. Comparator and horizon are evaluation parameters, not policy inputs. Main comparison may use ambient outputs with legal supports; feasible/canonical adapters supply domain membership. A universal hB is quantified over all vector sequences at the specified T. Policies remain externally fixed in strict-past comparisons. Library implementation/refinement or adapter of Section2.3; not a separately printed source theorem.",
+      "dependencies": [
+        "BanditRL.OnlineLinearization.canonical_feedback",
+        "BanditRL.OnlineLinearization.regret_comparison"
+      ]
     }
   ]
 }

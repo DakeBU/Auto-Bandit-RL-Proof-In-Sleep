@@ -942,15 +942,33 @@ def main() -> int:
             if not (output / "lean-graph" / shard).exists():
                 errors.append(f"lean-graph/search-index.json references missing shard {shard}")
         search_schema = lean_graph_search.get("schema_version", 1)
-        if search_schema not in (1, 2):
+        if search_schema not in (1, 2, 3):
             errors.append("lean-graph/search-index.json has an unsupported schema version")
+        search_kinds = lean_graph_search.get("kinds", [])
+        search_statuses = lean_graph_search.get("statuses", [])
+        if search_schema == 3:
+            for label, table in (("kinds", search_kinds), ("statuses", search_statuses)):
+                if (not isinstance(table, list) or not table
+                        or any(not isinstance(value, str) or not value for value in table)
+                        or len(set(table)) != len(table)):
+                    errors.append(f"lean-graph/search-index.json has an invalid {label} dictionary")
+                    if label == "kinds":
+                        search_kinds = []
+                    else:
+                        search_statuses = []
         for entry in lean_graph_search.get("entries", []):
-            valid_length = len(entry) in ((4, 6) if search_schema == 2 else (6,)) if isinstance(entry, list) else False
+            valid_length = len(entry) in ((4, 6) if search_schema in (2, 3) else (6,)) if isinstance(entry, list) else False
             if not valid_length:
                 errors.append("lean-graph/search-index.json contains a malformed entry")
                 break
             if len(entry) == 4 and not str(entry[0]).startswith(("declaration:", "module:")):
                 errors.append("lean-graph/search-index.json omits a non-derived node label")
+                break
+            if search_schema == 3 and (
+                not isinstance(entry[1], int) or not 0 <= entry[1] < len(search_kinds)
+                or not isinstance(entry[2], int) or not 0 <= entry[2] < len(search_statuses)
+            ):
+                errors.append("lean-graph/search-index.json contains an invalid kind/status dictionary index")
                 break
             search_node_ids.add(entry[0])
             if not isinstance(entry[3], int) or not 0 <= entry[3] < len(search_shards):
@@ -977,6 +995,18 @@ def main() -> int:
             errors.append("lean-graph/graph.json: duplicate node ids")
         if search_node_ids != graph_node_id_set:
             errors.append("lean-graph/search-index.json does not cover the full graph node set")
+        if lean_graph_search.get("schema_version") == 3:
+            canonical_search_nodes = {node["id"]: node for node in graph_nodes}
+            for entry in lean_graph_search.get("entries", []):
+                node = canonical_search_nodes.get(entry[0])
+                if (node is None or not isinstance(entry[1], int)
+                        or not 0 <= entry[1] < len(search_kinds)
+                        or not isinstance(entry[2], int) or not 0 <= entry[2] < len(search_statuses)):
+                    continue  # The malformed-entry gate above reports these failures.
+                if (search_kinds[entry[1]] != node.get("kind")
+                        or search_statuses[entry[2]] != node.get("status")):
+                    errors.append("lean-graph/search-index.json decoded kind/status differs from canonical graph")
+                    break
         if lean_graph.get("root") not in graph_node_id_set:
             errors.append("lean-graph/graph.json: root does not name a graph node")
         for required_node in (
@@ -1475,6 +1505,7 @@ def main() -> int:
         "online-osd",
         "online-guessing-osd",
         "online-osd-policy",
+        "online-linearization",
         "etc",
         "ucb",
         "oful",

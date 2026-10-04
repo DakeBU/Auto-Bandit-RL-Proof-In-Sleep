@@ -1,0 +1,60 @@
+BanditRL.OnlineLinearization.Domain [abbrev] BanditRLProof/OnlineLinearization.lean:25
+  abbrev Domain
+BanditRL.OnlineLinearization.LinearPolicy [abbrev] BanditRLProof/OnlineLinearization.lean:26
+  abbrev LinearPolicy
+BanditRL.OnlineLinearization.SupportPolicy [abbrev] BanditRLProof/OnlineLinearization.lean:27
+  abbrev SupportPolicy
+BanditRL.OnlineLinearization.Feasible [def] BanditRLProof/OnlineLinearization.lean:28
+  def Feasible (V : Domain (E := E)) (A : LinearPolicy (E := E)) : Prop
+BanditRL.OnlineLinearization.outputHistory [def] BanditRLProof/OnlineLinearization.lean:31
+  def outputHistory (A : LinearPolicy (E := E)) {t : ℕ} (h : Fin t → E) : Fin (t + 1) → E
+BanditRL.OnlineLinearization.history [def] BanditRLProof/OnlineLinearization.lean:34
+  def history (A : LinearPolicy (E := E)) (loss : ℕ → E → EReal) (p : SupportPolicy (E := E)) : (t : ℕ) → Fin t → E
+BanditRL.OnlineLinearization.output [def] BanditRLProof/OnlineLinearization.lean:38
+  def output (A : LinearPolicy (E := E)) (loss : ℕ → E → EReal) (p : SupportPolicy (E := E)) (t : ℕ) : E
+BanditRL.OnlineLinearization.selected [def] BanditRLProof/OnlineLinearization.lean:40
+  def selected (A : LinearPolicy (E := E)) (loss : ℕ → E → EReal) (p : SupportPolicy (E := E)) (t : ℕ) : E
+BanditRL.OnlineLinearization.LegalFeedback [def] BanditRLProof/OnlineLinearization.lean:43
+  def LegalFeedback (A : LinearPolicy (E := E)) (loss : ℕ → E → EReal) (p : SupportPolicy (E := E)) (T : ℕ) : Prop
+BanditRL.OnlineLinearization.linearRun [def] BanditRLProof/OnlineLinearization.lean:46
+  def linearRun (A : LinearPolicy (E := E)) (g : ℕ → E) (t : ℕ) : E
+BanditRL.OnlineLinearization.linearLoss [def] BanditRLProof/OnlineLinearization.lean:48
+  def linearLoss (g x : E) : ℝ
+BanditRL.OnlineLinearization.regret [def] BanditRLProof/OnlineLinearization.lean:49
+  def regret (A : LinearPolicy (E := E)) (loss : ℕ → E → EReal) (p : SupportPolicy (E := E)) (u : E) (T : ℕ) : ℝ
+BanditRL.OnlineLinearization.outputHistory_last [theorem] BanditRLProof/OnlineLinearization.lean:52
+  theorem outputHistory_last (A : LinearPolicy (E := E)) (t : ℕ) (h : Fin t → E) : outputHistory A h (Fin.last t) = A t h
+BanditRL.OnlineLinearization.history_zero [theorem] BanditRLProof/OnlineLinearization.lean:56
+  theorem history_zero (A : LinearPolicy (E := E)) (loss : ℕ → E → EReal) (p : SupportPolicy (E := E)) : history A loss p 0 = Fin.elim0
+BanditRL.OnlineLinearization.history_succ [theorem] BanditRLProof/OnlineLinearization.lean:60
+  theorem history_succ (A : LinearPolicy (E := E)) (loss : ℕ → E → EReal) (p : SupportPolicy (E := E)) (t : ℕ) : history A loss p (t + 1) = Fin.snoc (history A loss p t) (selected A loss p t)
+BanditRL.OnlineLinearization.history_castSucc [theorem] BanditRLProof/OnlineLinearization.lean:64
+  theorem history_castSucc (A : LinearPolicy (E := E)) (loss : ℕ → E → EReal) (p : SupportPolicy (E := E)) (t : ℕ) (i : Fin t) : history A loss p (t + 1) i.castSucc = history A loss p t i
+BanditRL.OnlineLinearization.history_selected [theorem] BanditRLProof/OnlineLinearization.lean:68
+  theorem history_selected (A : LinearPolicy (E := E)) (loss : ℕ → E → EReal) (p : SupportPolicy (E := E)) (t : ℕ) (i : Fin t) : history A loss p t i = selected A loss p i.val
+BanditRL.OnlineLinearization.output_linear_run [theorem] BanditRLProof/OnlineLinearization.lean:78
+  theorem output_linear_run (A : LinearPolicy (E := E)) (loss : ℕ → E → EReal) (p : SupportPolicy (E := E)) (t : ℕ) : output A loss p t = linearRun A (selected A loss p) t
+BanditRL.OnlineLinearization.outputHistory_played [theorem] BanditRLProof/OnlineLinearization.lean:85
+  theorem outputHistory_played (A : LinearPolicy (E := E)) (loss : ℕ → E → EReal) (p : SupportPolicy (E := E)) (t : ℕ) (i : Fin (t + 1)) : outputHistory A (history A loss p t) i = output A loss p i.val
+BanditRL.OnlineLinearization.output_mem [theorem] BanditRLProof/OnlineLinearization.lean:92
+  theorem output_mem (V : Domain (E := E)) (A : LinearPolicy (E := E)) (hA : Feasible V A) (loss : ℕ → E → EReal) (p : SupportPolicy (E := E)) (t : ℕ) : output A loss p t ∈ V.carrier
+BanditRL.OnlineLinearization.history_prefix [theorem] BanditRLProof/OnlineLinearization.lean:96
+  theorem history_prefix (A : LinearPolicy (E := E)) (loss loss' : ℕ → E → EReal) (p : SupportPolicy (E := E)) (t : ℕ) (hloss : ∀ s < t, loss s = loss' s) : history A loss p t = history A loss' p t
+BanditRL.OnlineLinearization.output_prefix [theorem] BanditRLProof/OnlineLinearization.lean:109
+  theorem output_prefix (A : LinearPolicy (E := E)) (loss loss' : ℕ → E → EReal) (p : SupportPolicy (E := E)) (t : ℕ) (hloss : ∀ s < t, loss s = loss' s) : output A loss p t = output A loss' p t
+BanditRL.OnlineLinearization.oracle_feedback [theorem] BanditRLProof/OnlineLinearization.lean:113
+  theorem oracle_feedback (V : Domain (E := E)) (A : LinearPolicy (E := E)) (hA : Feasible V A) (loss : ℕ → E → EReal) (p : SupportPolicy (E := E)) (hp : BanditRL.OnlineSubgradientPolicy.OracleLaw V p) (T : ℕ) (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) : LegalFeedback A loss p T
+BanditRL.OnlineLinearization.canonical_feedback [theorem] BanditRLProof/OnlineLinearization.lean:123
+  theorem canonical_feedback (V : Domain (E := E)) (A : LinearPolicy (E := E)) (hA : Feasible V A) (loss : ℕ → E → EReal) (T : ℕ) (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) : LegalFeedback A loss BanditRL.OnlineSubgradientPolicy.canonicalPolicy T
+BanditRL.OnlineLinearization.trajectory_finite_loss [theorem] BanditRLProof/OnlineLinearization.lean:128
+  theorem trajectory_finite_loss (V : Domain (E := E)) (A : LinearPolicy (E := E)) (hA : Feasible V A) (loss : ℕ → E → EReal) (p : SupportPolicy (E := E)) (T : ℕ) (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) (t : ℕ) (ht : t < T) : loss t (output A loss p t) = ((loss t (output A loss p t)).toReal : EReal)
+BanditRL.OnlineLinearization.support_gap [theorem] BanditRLProof/OnlineLinearization.lean:133
+  theorem support_gap (V : Domain (E := E)) (f : E → EReal) (hf : BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V f) (x g u : E) (hu : u ∈ V.carrier) (hg : g ∈ SourceSubdifferential f x) : (f x).toReal - (f u).toReal ≤ inner ℝ g (x - u)
+BanditRL.OnlineLinearization.linearLoss_gap [theorem] BanditRLProof/OnlineLinearization.lean:138
+  theorem linearLoss_gap (g x u : E) : linearLoss g x - linearLoss g u = inner ℝ g (x - u)
+BanditRL.OnlineLinearization.regret_comparison [theorem] BanditRLProof/OnlineLinearization.lean:142
+  theorem regret_comparison (V : Domain (E := E)) (A : LinearPolicy (E := E)) (loss : ℕ → E → EReal) (p : SupportPolicy (E := E)) (T : ℕ) (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) (hlegal : LegalFeedback A loss p T) (u : E) (hu : u ∈ V.carrier) : regret A loss p u T ≤ BanditRL.OnlineLearning.comparatorRegret (fun t => linearLoss (selected A loss p t)) (linearRun A (selected A loss p)) u T
+BanditRL.OnlineLinearization.regret_transfer [theorem] BanditRLProof/OnlineLinearization.lean:152
+  theorem regret_transfer (V : Domain (E := E)) (A : LinearPolicy (E := E)) (loss : ℕ → E → EReal) (p : SupportPolicy (E := E)) (T : ℕ) (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) (hlegal : LegalFeedback A loss p T) (B : (ℕ → E) → E → ℕ → ℝ) (hB : ∀ g u, u ∈ V.carrier → BanditRL.OnlineLearning.comparatorRegret (fun t => linearLoss (g t)) (linearRun A g) u T ≤ B g u T) (u : E) (hu : u ∈ V.carrier) : regret A loss p u T ≤ B (selected A loss p) u T
+BanditRL.OnlineLinearization.canonical_regret_comparison [theorem] BanditRLProof/OnlineLinearization.lean:157
+  theorem canonical_regret_comparison (V : Domain (E := E)) (A : LinearPolicy (E := E)) (hA : Feasible V A) (loss : ℕ → E → EReal) (T : ℕ) (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) (u : E) (hu : u ∈ V.carrier) : regret A loss BanditRL.OnlineSubgradientPolicy.canonicalPolicy u T ≤ BanditRL.OnlineLearning.comparatorRegret (fun t => linearLoss (selected A loss BanditRL.OnlineSubgradientPolicy.canonicalPolicy t)) (linearRun A (selected A loss BanditRL.OnlineSubgradientPolicy.canonicalPolicy)) u T

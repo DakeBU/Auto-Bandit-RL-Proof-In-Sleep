@@ -80,6 +80,7 @@ PSEUDOCODE_CHAPTERS = {
     "online-osd",
     "online-guessing-osd",
     "online-osd-policy",
+    "online-linearization",
     "etc",
     "ucb",
     "oful",
@@ -4817,6 +4818,11 @@ def build_lean_graph(
     shard_frequencies = Counter(node["shard"] for node in nodes.values())
     search_shards = sorted(shard_frequencies, key=lambda shard: (-shard_frequencies[shard], shard))
     search_shard_ids = {shard: index for index, shard in enumerate(search_shards)}
+    # Intern repeated kind/status strings; every ID, decoded field and shard stays intact.
+    search_kinds = sorted({node["kind"] for node in nodes.values()})
+    search_statuses = sorted({node["status"] for node in nodes.values()})
+    search_kind_ids = {kind: index for index, kind in enumerate(search_kinds)}
+    search_status_ids = {status: index for index, status in enumerate(search_statuses)}
     search_entries: list[list[Any]] = []
     for node in nodes.values():
         # The browser derives declaration/module labels from the ID. Omit the
@@ -4825,8 +4831,8 @@ def build_lean_graph(
         search_entries.append(
             [
                 node["id"],
-                node["kind"],
-                node["status"],
+                search_kind_ids[node["kind"]],
+                search_status_ids[node["status"]],
                 search_shard_ids[node["shard"]],
             ] + ([] if derived_label else [node["label"], node["subtitle"]])
         )
@@ -4835,9 +4841,11 @@ def build_lean_graph(
         search_index_path,
         json.dumps(
             {
-                "schema_version": 2,
+                "schema_version": 3,
                 "generated_at": generated_at,
                 "shards": search_shards,
+                "kinds": search_kinds,
+                "statuses": search_statuses,
                 "entries": search_entries,
             },
             ensure_ascii=False,

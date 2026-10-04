@@ -135,3 +135,4 @@ import Tests.OnlineLipschitzSubgradientCanary
 import Tests.OnlineSubgradientDescentCanary
 import Tests.OnlineGuessingSubgradientCanary
 import Tests.OnlineSubgradientPolicyCanary
+import Tests.OnlineLinearizationCanary

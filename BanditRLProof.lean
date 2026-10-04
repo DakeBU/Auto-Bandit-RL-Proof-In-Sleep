@@ -731,3 +731,4 @@ import BanditRLProof.OnlineLipschitzSubgradient
 import BanditRLProof.OnlineSubgradientDescent
 import BanditRLProof.OnlineGuessingSubgradient
 import BanditRLProof.OnlineSubgradientPolicy
+import BanditRLProof.OnlineLinearization

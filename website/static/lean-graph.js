@@ -653,8 +653,13 @@
     return promise;
   };
 
-  const searchNodeFromEntry = (entry, shards) => {
-    const [id, kind, status, shardIndex, storedLabel, storedSubtitle] = entry;
+  const searchNodeFromEntry = (entry, shards, kinds = [], statuses = []) => {
+    const [id, encodedKind, encodedStatus, shardIndex, storedLabel, storedSubtitle] = entry;
+    const kind = typeof encodedKind === "number" ? kinds[encodedKind] : encodedKind;
+    const status = typeof encodedStatus === "number" ? statuses[encodedStatus] : encodedStatus;
+    if (typeof kind !== "string" || typeof status !== "string") {
+      throw new Error("Invalid graph search kind/status dictionary index");
+    }
     const identity = id.slice(id.indexOf(":") + 1);
     const isDeclaration = id.startsWith("declaration:");
     const isModule = id.startsWith("module:");
@@ -683,7 +688,7 @@
       search.setAttribute("aria-busy", "true");
       searchDataPromise = fetchGraph(app.dataset.graphSearchSource)
         .then((payload) => {
-          searchNodes = payload.entries.map((entry) => searchNodeFromEntry(entry, payload.shards));
+          searchNodes = payload.entries.map((entry) => searchNodeFromEntry(entry, payload.shards, payload.kinds, payload.statuses));
           search.removeAttribute("aria-busy");
           return true;
         })
