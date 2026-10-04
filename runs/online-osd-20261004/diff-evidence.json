@@ -1,0 +1,29 @@
+{
+  "raw": {
+    "command": [
+      "git",
+      "diff",
+      "--check",
+      "ce3552aaec0ec062cc955718ee7823946c16a2c1",
+      "--",
+      "."
+    ],
+    "exit_code": 2,
+    "scope": "exact committed delta including immutable raw compiler/gate output"
+  },
+  "source_and_nonlog": {
+    "command": [
+      "git",
+      "diff",
+      "--check",
+      "ce3552aaec0ec062cc955718ee7823946c16a2c1",
+      "--",
+      ".",
+      ":(exclude)**/*.log"
+    ],
+    "exit_code": 0,
+    "scope": "all source/nonlog evidence; raw .log verifier output excluded",
+    "passed": true
+  },
+  "truth_boundary": "Raw logs may contain compiler-emitted trailing whitespace; retained unchanged, no full raw whitespace pass claim"
+}
