@@ -1,0 +1,96 @@
+import BanditRLProof.OnlineGuessingSubgradient
+import Tests.OnlineGuessingSubgradientCanary
+#check BanditRL.OnlineGuessingSubgradient.loss
+#print axioms BanditRL.OnlineGuessingSubgradient.loss
+#check BanditRL.OnlineGuessingSubgradient.loss_subdifferential_translate
+#print axioms BanditRL.OnlineGuessingSubgradient.loss_subdifferential_translate
+#check BanditRL.OnlineGuessingSubgradient.loss_subgradient_positive
+#print axioms BanditRL.OnlineGuessingSubgradient.loss_subgradient_positive
+#check BanditRL.OnlineGuessingSubgradient.loss_subgradient_zero
+#print axioms BanditRL.OnlineGuessingSubgradient.loss_subgradient_zero
+#check BanditRL.OnlineGuessingSubgradient.loss_subgradient_negative
+#print axioms BanditRL.OnlineGuessingSubgradient.loss_subgradient_negative
+#check BanditRL.OnlineGuessingSubgradient.example_2_32_subdifferential
+#print axioms BanditRL.OnlineGuessingSubgradient.example_2_32_subdifferential
+#check BanditRL.OnlineGuessingSubgradient.loss_on_unitInterval
+#print axioms BanditRL.OnlineGuessingSubgradient.loss_on_unitInterval
+#check BanditRL.OnlineGuessingSubgradient.loss_subgradient_bound
+#print axioms BanditRL.OnlineGuessingSubgradient.loss_subgradient_bound
+#check BanditRL.OnlineGuessingSubgradient.current_subgradient_bound
+#print axioms BanditRL.OnlineGuessingSubgradient.current_subgradient_bound
+#check BanditRL.OnlineGuessingSubgradient.loss_step_clamp
+#print axioms BanditRL.OnlineGuessingSubgradient.loss_step_clamp
+#check BanditRL.OnlineGuessingSubgradient.guessing_prefix
+#print axioms BanditRL.OnlineGuessingSubgradient.guessing_prefix
+#check BanditRL.OnlineGuessingSubgradient.example_2_32
+#print axioms BanditRL.OnlineGuessingSubgradient.example_2_32
+#check BanditRL.OnlineGuessingSubgradient.example_2_32_average_eventually
+#print axioms BanditRL.OnlineGuessingSubgradient.example_2_32_average_eventually
+#check GuessingOSDProbe.interval
+#print axioms GuessingOSDProbe.interval
+#check GuessingOSDProbe.shifted_positive
+#print axioms GuessingOSDProbe.shifted_positive
+#check GuessingOSDProbe.shifted_negative
+#print axioms GuessingOSDProbe.shifted_negative
+#check GuessingOSDProbe.shifted_equal
+#print axioms GuessingOSDProbe.shifted_equal
+#check GuessingOSDProbe.nonzero_tie_support
+#print axioms GuessingOSDProbe.nonzero_tie_support
+#check GuessingOSDProbe.invalid_tie_support
+#print axioms GuessingOSDProbe.invalid_tie_support
+#check GuessingOSDProbe.canonical_tie_in_full_interval
+#print axioms GuessingOSDProbe.canonical_tie_in_full_interval
+#check GuessingOSDProbe.chosen_above
+#print axioms GuessingOSDProbe.chosen_above
+#check GuessingOSDProbe.chosen_below
+#print axioms GuessingOSDProbe.chosen_below
+#check GuessingOSDProbe.labels
+#print axioms GuessingOSDProbe.labels
+#check GuessingOSDProbe.losses
+#print axioms GuessingOSDProbe.losses
+#check GuessingOSDProbe.eta
+#print axioms GuessingOSDProbe.eta
+#check GuessingOSDProbe.output
+#print axioms GuessingOSDProbe.output
+#check GuessingOSDProbe.labels_feasible
+#print axioms GuessingOSDProbe.labels_feasible
+#check GuessingOSDProbe.output_zero
+#print axioms GuessingOSDProbe.output_zero
+#check GuessingOSDProbe.output_one
+#print axioms GuessingOSDProbe.output_one
+#check GuessingOSDProbe.output_two
+#print axioms GuessingOSDProbe.output_two
+#check GuessingOSDProbe.output_three
+#print axioms GuessingOSDProbe.output_three
+#check GuessingOSDProbe.output_four
+#print axioms GuessingOSDProbe.output_four
+#check GuessingOSDProbe.four_round_real_regret
+#print axioms GuessingOSDProbe.four_round_real_regret
+#check GuessingOSDProbe.four_round_fixed_with_terminal
+#print axioms GuessingOSDProbe.four_round_fixed_with_terminal
+#check GuessingOSDProbe.four_round_energy
+#print axioms GuessingOSDProbe.four_round_energy
+#check GuessingOSDProbe.four_round_positive_terminal
+#print axioms GuessingOSDProbe.four_round_positive_terminal
+#check GuessingOSDProbe.four_round_bound_rhs_exact
+#print axioms GuessingOSDProbe.four_round_bound_rhs_exact
+#check GuessingOSDProbe.horizon_four_tuned_same_eta
+#print axioms GuessingOSDProbe.horizon_four_tuned_same_eta
+#check GuessingOSDProbe.all_comparators_four
+#print axioms GuessingOSDProbe.all_comparators_four
+#check GuessingOSDProbe.chosen_clipping
+#print axioms GuessingOSDProbe.chosen_clipping
+#check GuessingOSDProbe.actual_raw_overshoot_and_clamp
+#print axioms GuessingOSDProbe.actual_raw_overshoot_and_clamp
+#check GuessingOSDProbe.futureLabels
+#print axioms GuessingOSDProbe.futureLabels
+#check GuessingOSDProbe.futureEta
+#print axioms GuessingOSDProbe.futureEta
+#check GuessingOSDProbe.invalid_future_does_not_change_output
+#print axioms GuessingOSDProbe.invalid_future_does_not_change_output
+#check GuessingOSDProbe.no_future_feasibility_assumed
+#print axioms GuessingOSDProbe.no_future_feasibility_assumed
+#check GuessingOSDProbe.zero_horizon_regret
+#print axioms GuessingOSDProbe.zero_horizon_regret
+#check GuessingOSDProbe.eventual_one_sided_horizon_family
+#print axioms GuessingOSDProbe.eventual_one_sided_horizon_family

@@ -1473,6 +1473,7 @@ def main() -> int:
     chapter_source_boundaries = 0
     algorithm_pseudocode_chapters = {
         "online-osd",
+        "online-guessing-osd",
         "etc",
         "ucb",
         "oful",

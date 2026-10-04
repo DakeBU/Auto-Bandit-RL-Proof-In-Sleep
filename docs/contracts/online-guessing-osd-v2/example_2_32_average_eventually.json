@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineGuessingSubgradient.example_2_32_average_eventually",
+  "file": "tmp/online-guessing-osd-target-v1.lean",
+  "statement": "theorem example_2_32_average_eventually (y : ℕ → ℝ) (x₁ : ℝ) (hx₁ : x₁ ∈ Icc (0 : ℝ) 1) (hy : ∀ t, y t ∈ Icc (0 : ℝ) 1) (u : ℝ) (hu : u ∈ Icc (0 : ℝ) 1) (ε : ℝ) (hε : 0 < ε) : ∀ᶠ T : ℕ in atTop, (∑ t ∈ range T, (|iterate BanditRL.OnlineGradientDescent.unitInterval (fun _ => 1 / Real.sqrt T) (fun s => loss (y s)) x₁ t - y t| - |u - y t|)) / T < ε",
+  "statement_hash": "c5d20f92abd0795e0705289afb672fbbf2d7916f3c6c22a2c0968755451fb5ec",
+  "source_assumptions": [
+    "(hx₁ : x₁ ∈ Icc (0 : ℝ) 1)",
+    "(hy : ∀ t, y t ∈ Icc (0 : ℝ) 1)",
+    "(hu : u ∈ Icc (0 : ℝ) 1)",
+    "(hε : 0 < ε)"
+  ],
+  "created_at": "2026-10-04T07:17:39+00:00"
+}

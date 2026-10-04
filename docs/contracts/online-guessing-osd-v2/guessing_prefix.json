@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineGuessingSubgradient.guessing_prefix",
+  "file": "tmp/online-guessing-osd-target-v1.lean",
+  "statement": "theorem guessing_prefix (η η' : ℕ → ℝ) (y y' : ℕ → ℝ) (x₁ : ℝ) (t : ℕ) (hη : ∀ s < t, η s = η' s) (hy : ∀ s < t, y s = y' s) : iterate BanditRL.OnlineGradientDescent.unitInterval η (fun s => loss (y s)) x₁ t = iterate BanditRL.OnlineGradientDescent.unitInterval η' (fun s => loss (y' s)) x₁ t",
+  "statement_hash": "ec289b2db0389f0d7d7422489aa265bda340ab47927fec31cd667f13ce9998fc",
+  "source_assumptions": [
+    "(hη : ∀ s < t, η s = η' s)",
+    "(hy : ∀ s < t, y s = y' s)"
+  ],
+  "created_at": "2026-10-04T07:17:39+00:00"
+}

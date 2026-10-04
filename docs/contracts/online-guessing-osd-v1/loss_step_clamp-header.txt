@@ -1,0 +1,3 @@
+theorem loss_step_clamp (η y x : ℝ) :
+    step BanditRL.OnlineGradientDescent.unitInterval η (loss y) x =
+      min (max (x - η * currentSubgradient (loss y) x) 0) 1

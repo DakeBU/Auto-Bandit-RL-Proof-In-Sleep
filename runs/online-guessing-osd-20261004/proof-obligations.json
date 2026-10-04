@@ -1,0 +1,112 @@
+{
+  "stage": "draft",
+  "nodes": [
+    {
+      "id": "loss_subdifferential_translate",
+      "declaration": "BanditRL.OnlineGuessingSubgradient.loss_subdifferential_translate",
+      "status": "draft",
+      "depends_on": []
+    },
+    {
+      "id": "loss_subgradient_positive",
+      "declaration": "BanditRL.OnlineGuessingSubgradient.loss_subgradient_positive",
+      "status": "draft",
+      "depends_on": [
+        "loss_subdifferential_translate"
+      ]
+    },
+    {
+      "id": "loss_subgradient_zero",
+      "declaration": "BanditRL.OnlineGuessingSubgradient.loss_subgradient_zero",
+      "status": "draft",
+      "depends_on": [
+        "loss_subdifferential_translate"
+      ]
+    },
+    {
+      "id": "loss_subgradient_negative",
+      "declaration": "BanditRL.OnlineGuessingSubgradient.loss_subgradient_negative",
+      "status": "draft",
+      "depends_on": [
+        "loss_subdifferential_translate"
+      ]
+    },
+    {
+      "id": "example_2_32_subdifferential",
+      "declaration": "BanditRL.OnlineGuessingSubgradient.example_2_32_subdifferential",
+      "status": "draft",
+      "depends_on": [
+        "loss_subgradient_positive",
+        "loss_subgradient_zero",
+        "loss_subgradient_negative"
+      ]
+    },
+    {
+      "id": "loss_on_unitInterval",
+      "declaration": "BanditRL.OnlineGuessingSubgradient.loss_on_unitInterval",
+      "status": "draft",
+      "depends_on": [
+        "loss_subgradient_positive",
+        "loss_subgradient_zero",
+        "loss_subgradient_negative"
+      ]
+    },
+    {
+      "id": "loss_subgradient_bound",
+      "declaration": "BanditRL.OnlineGuessingSubgradient.loss_subgradient_bound",
+      "status": "draft",
+      "depends_on": [
+        "loss_subgradient_positive",
+        "loss_subgradient_zero",
+        "loss_subgradient_negative"
+      ]
+    },
+    {
+      "id": "current_subgradient_bound",
+      "declaration": "BanditRL.OnlineGuessingSubgradient.current_subgradient_bound",
+      "status": "draft",
+      "depends_on": [
+        "loss_on_unitInterval",
+        "loss_subgradient_bound"
+      ]
+    },
+    {
+      "id": "loss_step_clamp",
+      "declaration": "BanditRL.OnlineGuessingSubgradient.loss_step_clamp",
+      "status": "draft",
+      "depends_on": [
+        "BanditRL.OnlineGradientDescent.project_unitInterval"
+      ]
+    },
+    {
+      "id": "guessing_prefix",
+      "declaration": "BanditRL.OnlineGuessingSubgradient.guessing_prefix",
+      "status": "draft",
+      "depends_on": [
+        "BanditRL.OnlineSubgradientDescent.iterate_prefix"
+      ]
+    },
+    {
+      "id": "example_2_32",
+      "declaration": "BanditRL.OnlineGuessingSubgradient.example_2_32",
+      "status": "draft",
+      "depends_on": [
+        "loss_on_unitInterval",
+        "current_subgradient_bound",
+        "BanditRL.OnlineSubgradientDescent.regret_tuned"
+      ]
+    },
+    {
+      "id": "example_2_32_average_eventually",
+      "declaration": "BanditRL.OnlineGuessingSubgradient.example_2_32_average_eventually",
+      "status": "draft",
+      "depends_on": [
+        "example_2_32"
+      ]
+    }
+  ],
+  "package_gates": "public realnonzero shifted/tie/casual canary, immutablefences,axioms,root,Tests,fullharness,contributor,shared registry/nativegraph,source/body/reader/binding,PR",
+  "chapter_complete": false,
+  "book_complete": false,
+  "remaining_universal_policy_obligation": true
+}

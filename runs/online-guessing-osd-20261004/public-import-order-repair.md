@@ -1,0 +1,1 @@
+Public build01 failed: module documentation was placed before imports. The captured command replays the same observed failure. Build02 moves the three unchanged imports to the beginning; theorem headers and bodies are unchanged. This is a layout repair, not a revised target.
