@@ -1,0 +1,8 @@
+# ONLINE-OPTIMAL-STEP-20261004
+Status: draft:11typed unproved frozen targets, source review pending.
+Target file: BanditRLProof/OnlineOptimalStep.lean
+Source: printed15/PDF27 Orabona v10 frozen-coefficient scalar minimization; wholeGoalactive.
+Contract: docs/contracts/online-optimal-step-v1
+Bounded terminal: attained global minimum of frozen positive-coefficient scalar bound on eta>0, exact source distance/gradient-energy substitution and exogenous D/G/T tuning; explicit zero-coefficient alternatives. Close source_argmin/diameter_argmin; definition count alone no progress. Never treat eta-dependent realized energy as frozen across rerun trajectories. No future-information algorithm or Chapter5 impossibility theorem in this package. WholeGoalactive.
+
+Freeze2actualdefs/11Propheaders; firstleafgap_identity uses Real.sq_sqrt and positive-denominator field/ring algebra. Then lower_bound from square>=0; optimal_positive/value; optimal_unique from gapzero; source_argmin combinespositive/min/value using sqrt_mul. Distance-energy adapter sqrt_sq withRpositive; diameter adapter sqrt(G²T)=GsqrtT and natcastpositive. Zero-boundary lemmas independently show strict alternatives orzero. Singlelowerroute,no dependency/toolchain upgrade. Allowbody-onlynewpublicmodule/leaves withsamefrozencontext/headers;newTests/evidence/sourceBookmetadata afterproofs. Anycontext/header change requiresnewversion/source+blindreview. NativeoptimalStep/upperBound retrieval: no match; currentequation2.1 hasregretproducer rather than scalarargmin. Actualmathlibsqrt/AMGM APIs inspected. No copiedsharedproject/projection/regretdefinition.

@@ -1,0 +1,101 @@
+∀ (A B η : ℝ), 0 ≤ A → 0 ≤ B → 0 < η → upperBound A B η - √A * √B = (√A - η * √B) ^ 2 / (2 * η) : Prop
+runs/online-optimal-step-20261004/leaves/types-v2.lean:9:23: warning: unused variable `hA`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-optimal-step-20261004/leaves/types-v2.lean:9:36: warning: unused variable `hB`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-optimal-step-20261004/leaves/types-v2.lean:9:49: warning: unused variable `hη`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (A B η : ℝ), 0 ≤ A → 0 ≤ B → 0 < η → √A * √B ≤ upperBound A B η : Prop
+runs/online-optimal-step-20261004/leaves/types-v2.lean:12:23: warning: unused variable `hA`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-optimal-step-20261004/leaves/types-v2.lean:12:36: warning: unused variable `hB`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-optimal-step-20261004/leaves/types-v2.lean:12:49: warning: unused variable `hη`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (A B : ℝ), 0 < A → 0 < B → 0 < optimalStep A B : Prop
+runs/online-optimal-step-20261004/leaves/types-v2.lean:14:21: warning: unused variable `hA`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-optimal-step-20261004/leaves/types-v2.lean:14:34: warning: unused variable `hB`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (A B : ℝ), 0 < A → 0 < B → upperBound A B (optimalStep A B) = √A * √B : Prop
+runs/online-optimal-step-20261004/leaves/types-v2.lean:16:21: warning: unused variable `hA`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-optimal-step-20261004/leaves/types-v2.lean:16:34: warning: unused variable `hB`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (A B η : ℝ),
+  0 < A → 0 < B → 0 < η → (upperBound A B η = upperBound A B (optimalStep A B) ↔ η = optimalStep A B) : Prop
+runs/online-optimal-step-20261004/leaves/types-v2.lean:18:23: warning: unused variable `hA`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-optimal-step-20261004/leaves/types-v2.lean:18:36: warning: unused variable `hB`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-optimal-step-20261004/leaves/types-v2.lean:18:49: warning: unused variable `hη`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (A B : ℝ),
+  0 < A →
+    0 < B →
+      0 < optimalStep A B ∧
+        upperBound A B (optimalStep A B) = √(A * B) ∧
+          ∀ (η : ℝ), 0 < η → upperBound A B (optimalStep A B) ≤ upperBound A B η : Prop
+runs/online-optimal-step-20261004/leaves/types-v2.lean:20:21: warning: unused variable `hA`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-optimal-step-20261004/leaves/types-v2.lean:20:34: warning: unused variable `hB`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (R B : ℝ),
+  0 < R →
+    0 < B →
+      optimalStep (R ^ 2) B = R / √B ∧
+        upperBound (R ^ 2) B (R / √B) = R * √B ∧
+          ∀ (η : ℝ), 0 < η → upperBound (R ^ 2) B (R / √B) ≤ upperBound (R ^ 2) B η : Prop
+runs/online-optimal-step-20261004/leaves/types-v2.lean:24:21: warning: unused variable `hR`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-optimal-step-20261004/leaves/types-v2.lean:24:34: warning: unused variable `hB`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (D G : ℝ) (T : ℕ),
+  0 < D →
+    0 < G →
+      0 < T →
+        optimalStep (D ^ 2) (G ^ 2 * ↑T) = D / (G * √↑T) ∧
+          upperBound (D ^ 2) (G ^ 2 * ↑T) (D / (G * √↑T)) = D * G * √↑T ∧
+            ∀ (η : ℝ),
+              0 < η → upperBound (D ^ 2) (G ^ 2 * ↑T) (D / (G * √↑T)) ≤ upperBound (D ^ 2) (G ^ 2 * ↑T) η : Prop
+runs/online-optimal-step-20261004/leaves/types-v2.lean:28:29: warning: unused variable `hD`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-optimal-step-20261004/leaves/types-v2.lean:28:42: warning: unused variable `hG`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-optimal-step-20261004/leaves/types-v2.lean:28:55: warning: unused variable `hT`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (B η : ℝ), 0 < B → 0 < η → 0 < η / 2 ∧ upperBound 0 B (η / 2) < upperBound 0 B η : Prop
+runs/online-optimal-step-20261004/leaves/types-v2.lean:35:21: warning: unused variable `hB`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-optimal-step-20261004/leaves/types-v2.lean:35:34: warning: unused variable `hη`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (A η : ℝ), 0 < A → 0 < η → 0 < 2 * η ∧ upperBound A 0 (2 * η) < upperBound A 0 η : Prop
+runs/online-optimal-step-20261004/leaves/types-v2.lean:37:21: warning: unused variable `hA`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-optimal-step-20261004/leaves/types-v2.lean:37:34: warning: unused variable `hη`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (η : ℝ), upperBound 0 0 η = 0 : Prop
