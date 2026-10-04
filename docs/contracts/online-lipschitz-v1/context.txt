@@ -1,0 +1,12 @@
+import BanditRLProof.OnlineSubgradientDifferentiability
+noncomputable section
+open Set
+open scoped Topology NNReal
+namespace BanditRL.OnlineConvex
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+
+/-- Finite values on V and the actual all-pairs Lipschitz inequality.
+The constant is explicitly nonnegative, including zero. -/
+def SourceLipschitzOn (f : E → EReal) (V : Set E) (L : ℝ≥0) : Prop :=
+  (∀ x ∈ V, ∃ a : ℝ, f x = (a : EReal)) ∧
+    ∀ x ∈ V, ∀ y ∈ V, |(f x).toReal - (f y).toReal| ≤ (L : ℝ) * ‖x - y‖

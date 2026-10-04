@@ -1,0 +1,1 @@
+Freeze full iff on interior of effective domain with every global support. Existing proper/convex interior existence is actual dependency, never supplied as an extra premise. Explicit nonnegative constant convention, zero and zero dimension/empty interior kept; no boundary extension. One leaf, medium, no parallel proofworker.

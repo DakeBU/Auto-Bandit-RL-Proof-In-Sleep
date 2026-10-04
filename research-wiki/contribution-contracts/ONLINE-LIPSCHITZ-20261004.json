@@ -1,0 +1,119 @@
+{
+  "schema_version": "2.0",
+  "id": "ONLINE-LIPSCHITZ-20261004",
+  "route": "online-learning/chapter-2",
+  "frontier_cell": "online-lipschitz",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10, 2026-06-21; SHA256 cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchor": "Definition2.29/Theorem2.30 printed19/PDF31; nonnegative convention explicit",
+    "url": "https://arxiv.org/pdf/1912.13213v10"
+  },
+  "target": "Definition2.29/full Theorem2.30 interior-domain iff under explicit NNReal nonnegative convention",
+  "affected_files": [
+    "BanditRLProof.lean",
+    "BanditRLProof/OnlineLipschitzSubgradient.lean",
+    "website/content/books.json",
+    "website/content/chapters.json",
+    "website/content/readings.json",
+    "website/content/highlights.json",
+    "website/scripts/build_site.py"
+  ],
+  "declarations": [
+    "BanditRL.OnlineConvex.SourceLipschitzOn",
+    "BanditRL.OnlineConvex.theorem_2_30"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Actual memory/declaration/card queries; pinned exact norm-ball/interior-existence headers",
+      "Actual mathlib sign/norm/metric API probes with failed name retained"
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineConvex.SourceSubdifferential",
+      "BanditRL.OnlineConvex.SourceProper",
+      "BanditRL.OnlineConvex.subgradient_norm_le_lipschitz_ball",
+      "BanditRL.OnlineConvex.subgradient_exists_of_domain_interior",
+      "LipschitzOnWith.of_dist_le_mul",
+      "abs_real_inner_le_norm",
+      "EReal.coe_toReal"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineConvex.SourceLipschitzOn",
+      "BanditRL.OnlineConvex.theorem_2_30"
+    ],
+    "known_consumers": [
+      "LipschitzProbe.abs_all_supports_and_nonzero",
+      "LipschitzProbe.linear_three_reverse",
+      "LipschitzProbe.halfline_interior_not_whole_domain"
+    ],
+    "planned_consumers": [
+      "SourceOSD regret under Lipschitz losses; not claimed complete"
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Reuse actual normalized-support perturbation and actual proper-convex interior supports. Add full iff/finite definition without assuming existence or erasing source boundaries."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/hinge_blind",
+    "source_reviewer": "/root/source_reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "NNReal explicitly encodes ordinary nonnegative Lipschitz constant, including0. Printed omitted condition/source proof case and compiled negativeL/dim0 audit disclosed; no all-realL claim. Coordinate-free finite Euclidean model and finite EReal witnesses. Distinct contract/actualbody accepted; public/finalreader/immutable pending. No independent-human review."
+  },
+  "graph_contribution": {
+    "lean_graph": "new-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Euclidean convex-analysis equivalence inside the shared library, no separately certified cross-setting functor.",
+    "focus_targets": [
+      "BanditRL.OnlineConvex.SourceLipschitzOn",
+      "BanditRL.OnlineConvex.theorem_2_30"
+    ],
+    "visual_review": "Native compiled full graph checks all4actual norm-ball/interior-existence/Cauchy-Schwarz/EReal finite-conversion value dependencies: 2scoped 229boundary 260edges. Actual first viewport inspection separately recorded; complete HTML folds require distinct final reader review.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: finite Definition2.29/full interior2.30; Chapter2/book incomplete",
+    "banditrlwiki": "no-change-with-reason: no Bandit setting claim; exact Online source ledger/retrieval carries this prerequisite.",
+    "results_ledger": "no-change-with-reason: no existing Bandit named milestone changes; source inventory records this package.",
+    "roadmap": "no-change-with-reason: global SGB pointer preserved; later required Chapter2/sourceOSD remains open",
+    "website_surfaces": [
+      "website/content/books.json",
+      "website/content/chapters.json",
+      "website/content/highlights.json",
+      "website/content/readings.json",
+      "website/scripts/build_site.py"
+    ],
+    "inherited_source_caption": "no-change-with-reason: source-caption renderer inherited from exact PR145 base; current shared example summary separately repaired to remove a false fixed step count"
+  },
+  "truth_boundary": "Exact Definition2.29/full Theorem2.30 NNReal interior iff and six substantive canaries plus actual negativeL/dimension0 audit pass local focused/root/Tests/full harness, standard axioms/native graph/shared registry/site. Distinct contract/body/public accepted-with-explicit-delta; final reader/immutable package acceptance and PR delivery required separately. Chapter2/book incomplete, no unrestrictedrealL/boundary extension/main/live claim.",
+  "verification": {
+    "focused_checks": [
+      "Public focused3322jobs; both frozen native fingerprints unchanged",
+      "28 actual public names use standard3 only (or no axioms)",
+      "Native compiled graph4 actual proof-value checks; 2scoped 229boundary 260edges"
+    ],
+    "bandit_check": "Actual root9080/Tests9214; full tools/bandit.py check466tests/7existing skips. Final canonical metadata gate separately recorded.",
+    "site_build": "Actual lean-verified site01 passes after combined gate; actual viewport finds hard-coded example step-count mismatch and shared summary is repaired. Final committed metadata/site02 and full harness rerun required.",
+    "site_check": "Actual site01 check passes; two unique shared OnlineBook nodes match exact native fingerprints. Counts in actual site-check log.",
+    "independent_review": "Distinct neutral blind/contract/actualbody/public-body accepted-with-explicit-delta, actual reviewer trial. Complete final-reader and immutable binding required; no external-human review."
+  },
+  "contributor": {
+    "name": "Codex for Ji Cheng",
+    "role": "Formalization and integration; distinct automated semantic actors named above; source attribution retained"
+  }
+}

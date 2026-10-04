@@ -1,0 +1,32 @@
+{
+  "checks": [
+    {
+      "scope": "full-recorded-diff",
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "5464e7d3a93fdec4da498e878d249703365f7d7d",
+        "HEAD"
+      ],
+      "exit_code": 2,
+      "log": "full-recorded-diff.log"
+    },
+    {
+      "scope": "source-and-nonlog-diff",
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "5464e7d3a93fdec4da498e878d249703365f7d7d",
+        "HEAD",
+        "--",
+        ".",
+        ":(exclude)runs/**/*.log"
+      ],
+      "exit_code": 0,
+      "log": "source-and-nonlog-diff.log"
+    }
+  ],
+  "boundary": "Raw compiler logs preserve emitted trailing whitespace; full diff check reports those actual log lines. All source/nonlog changes pass. No raw log cleaning or claim full raw-diff whitespace pass."
+}

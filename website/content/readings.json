@@ -4414,6 +4414,163 @@
         "takeaway": "The actual transpose transports supports, and the general proper-function result is only an inclusion.",
         "boundary": "These examples are finite/proper composites. The disclosed identically-infinite convention is a separate semantic boundary, with no nonvacuous optimizer claim."
       }
+    },
+    {
+      "slug": "online-lipschitz",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10,21June2026",
+        "sections": "Section2.2.1, Definition2.29/Theorem2.30, printed19/PDF31",
+        "pages": "printed19/PDF31",
+        "pdf_page": 31,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "Finite values and the actual domain",
+          "meaning": "SourceProper f excludes minus infinity and supplies a finite witness; U=int{x:f(x)<plus infinity}. SourceLipschitzOn requires actual finite real values at every point in V before its absolute-difference inequality."
+        },
+        {
+          "term": "All global supports, only interior queries",
+          "meaning": "g∈∂f(x) tests f(x)+inner(g,y-x)≤f(y) at every ambient y. The norm conclusion ranges over every such g at every x∈U; it does not extend to boundary queries."
+        },
+        {
+          "term": "Explicit nonnegative constant",
+          "meaning": "L∈NNReal means L≥0, with L=0 allowed. This makes the source proof’s ordinary nonnegative Lipschitz convention explicit. An unrestricted negative-L reading fails for the admitted zero-dimensional extension; the compiled proper convex constant-zero fixture records this delta."
+        }
+      ],
+      "algorithm": {
+        "title": "Prove both implications on the actual domain interior",
+        "kind": "proof flow",
+        "steps": [
+          {
+            "title": "Restrict the actual pair bound to a ball",
+            "detail": "Every interior query has a positive-radius ambient ball in U. The pair bound and finite values hold on that actual ball, so the existing normalized-support perturbation proves the bound for every g."
+          },
+          {
+            "title": "Construct supports at both pair points",
+            "detail": "Proper convexity and interior membership give actual global supports gx,gy via the accepted interior-existence theorem, not an extra support-existence assumption."
+          },
+          {
+            "title": "Use finite conversion and both signs",
+            "detail": "Convert their supporting inequalities at finite x,y to real inequalities. Cauchy-Schwarz and the uniform norm bound control f(x)-f(y) and f(y)-f(x), giving the full absolute difference."
+          }
+        ]
+      },
+      "teaching_route": [
+        "BanditRL.OnlineConvex.SourceLipschitzOn",
+        "BanditRL.OnlineConvex.theorem_2_30"
+      ],
+      "source_theorems": [
+        {
+          "label": "Definition2.29 finite all-pairs Lipschitz property",
+          "pages": "printed19",
+          "pdf_page": 31,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "V\\subseteq\\operatorname{dom} f,\\quad |f(x)-f(y)|\\le L\\|x-y\\|\\quad\\forall x,y\\in V,\\quad L\\ge0",
+          "fallback": "Actual finite values on V plus the all-pairs bound, with an explicitly nonnegative Lipschitz constant.",
+          "plain": "A Lipschitz property concerns actual finite values on its stated set. Real projections of infinite values do not satisfy the required finite-value witness.",
+          "relationship": "The source codomain excludes minus infinity. The shared EReal definition explicitly requires finite witnesses on V; under properness this matches V subsetdom f. NNReal makes the ordinary nonnegative constant convention explicit, rather than claiming arbitrary realL.",
+          "contract": {
+            "model": "Finite values of an extended-real function on a stated normed set.",
+            "assumptions": "Every point of V has an actual real-value witness; one fixed nonnegative L, including zero.",
+            "parameters": "Every x,y∈V, not a selected pair or representative at infinity.",
+            "regret": "No algorithm/regret claimed.",
+            "guarantee": "The finite all-pairs inequality with the actual norm."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Public Definition2.29 finite all-pairs Lipschitz property proof",
+            "boundary": "Actual public source/six substantive canaries and separate negativeL audit pass local focused/root/Tests/full harness, standard axioms/native graph/shared registry/site. Distinct NNReal convention review accepted; final reader/immutable package acceptance and PR delivery separate. No merge/deploy; Chapter2/book incomplete."
+          }
+        },
+        {
+          "label": "Theorem2.30 full interior Lipschitz/subgradient equivalence",
+          "pages": "printed19",
+          "pdf_page": 31,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "f\\ \\text{proper convex},\\ L\\ge0,\\ U=\\operatorname{int}\\operatorname{dom}f:\\quad \\bigl[|f(x)-f(y)|\\le L\\|x-y\\|\\ \\forall x,y\\in U\\bigr]\\Longleftrightarrow\\bigl[\\|g\\|\\le L\\ \\forall x\\in U,\\ g\\in\\partial f(x)\\bigr]",
+          "fallback": "For proper convex f and nonnegative L, finite all-pairs Lipschitz on domain interior iff every global support at every interior query has norm at most L.",
+          "plain": "The actual full equivalence includes both directions and every support. Proper convexity supplies the supports needed for the reverse proof.",
+          "relationship": "Coordinate-free finite-dimensional real inner-product spaces represent Rd/L2. Nonnegative NNReal (zero allowed) is an explicit source-convention delta: the printed theorem does not write L>=0, while its zero-support proof case uses it. The compiled negative-L dimension0 audit refutes unrestricted realL for the admitted extension; this is not an assertion of a contradiction if dimension is separately assumed positive. Empty interior and dimension0 are retained; no boundary, closedness or differentiability extension.",
+          "contract": {
+            "model": "Proper convex extended-real function in finite-dimensional real Euclidean space; U is ambient domain interior.",
+            "assumptions": "SourceProper and extended convexity, explicitly nonnegative L including zero. No nonempty interior, positive dimension, closedness, differentiability or supplied support-existence assumption.",
+            "parameters": "Every interior point, every ordered interior pair and every actual global support; one fixed L.",
+            "regret": "No online algorithm or regret guarantee claimed.",
+            "guarantee": "Full iff on U, with actual finite values, no whole-domain/boundary or unrestricted negativeL claim."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Public Theorem2.30 full interior Lipschitz/subgradient equivalence proof",
+            "boundary": "Actual public source/six substantive canaries and separate negativeL audit pass local focused/root/Tests/full harness, standard axioms/native graph/shared registry/site. Distinct NNReal convention review accepted; final reader/immutable package acceptance and PR delivery separate. No merge/deploy; Chapter2/book incomplete."
+          }
+        }
+      ],
+      "proof_bridge": {
+        "title": "Actual supports and two signs establish the full iff",
+        "summary": "Forward uses an actual open ball; reverse actually obtains both global supports.",
+        "steps": [
+          {
+            "title": "Finite values prevent an infinity projection shortcut",
+            "detail": "At an interior point properness excludes bottom and domain membership excludes top, yielding f(x)=coe(toReal f(x)). SourceLipschitzOn separately requires actual finite witnesses on its set.",
+            "math": "f(x)\\in\\mathbb R\\quad(x\\in U)",
+            "fallback": "No arbitrary representative at an infinite value."
+          },
+          {
+            "title": "Perturb along every given support",
+            "detail": "Choose a positive radius with ball(x,r) subsetU. The earlier norm-ball theorem uses z=x+t g with t=r/(2||g||) for g≠0; source support and Lipschitz give t||g||²≤L t||g||. The zero support case uses L≥0.",
+            "math": "\\|g\\|\\le L",
+            "fallback": "The actual perturbation proof is reused, not an assumed stability consumer."
+          },
+          {
+            "title": "Derive actual source supports at x and y",
+            "detail": "The existing proper-convex interior theorem constructs gx∈∂f(x) and gy∈∂f(y). No subgradient-existence hypothesis is added. Both support inequalities are ambient global.",
+            "math": "f(x)+\\langle g_x,y-x\\rangle\\le f(y),\\quad f(y)+\\langle g_y,x-y\\rangle\\le f(x)",
+            "fallback": "The producer supplies both supports from the source assumptions."
+          },
+          {
+            "title": "Bound both real differences",
+            "detail": "Finite EReal conversion gives ordinary real inequalities. Negative inner products are bounded by their absolute value, Cauchy-Schwarz and L times the actual displacement norm. The two signs give the absolute bound for every pair.",
+            "math": "-L\\|x-y\\|\\le f(x)-f(y)\\le L\\|x-y\\|",
+            "fallback": "Full converse with the same L, without a selected-gradient shortcut."
+          }
+        ],
+        "boundary": "Nonnegative convention and zero-dimensional audit explicitly disclosed adjacent to the source guarantee. Empty U is vacuous on both sides; boundary supports need not obey the bound. Remaining Chapter2/OSD/linearization and Chapters3–16 remain mandatory. Teaching route is curated; actual compiled dependencies are separately exported."
+      },
+      "worked_example": {
+        "title": "Nonzero supports and the finite/boundary checks",
+        "intro": "Public canaries exercise both implications and the source boundaries.",
+        "steps": [
+          {
+            "title": "Absolute value and slope3",
+            "detail": "For f(x)=|x|, actual pair Lipschitz1 yields the bound for all supports; source±1 supports at±2 make it nonzero and tight. Conversely the full affine support set{3} yields Lipschitz3 for the actual slope3 loss.",
+            "math": "\\partial|\\cdot|(2)=\\{1\\},\\quad\\partial|\\cdot|(-2)=\\{-1\\},\\quad\\partial(3\\cdot)(x)=\\{3\\}",
+            "fallback": "Both directions have constructed concrete data."
+          },
+          {
+            "title": "Empty interior, zero constant and dimension0",
+            "detail": "The singleton indicator has empty ambient domain interior, so both interior conditions are vacuous despite nonzero boundary support3. The constant-zero loss tests L=0; constant9 on EuclideanSpace real(Fin0) tests dimension0.",
+            "math": "U_{I_{\\{0\\}}}=\\varnothing",
+            "fallback": "No positivity/nonempty-interior premise silently added."
+          },
+          {
+            "title": "Halfline boundary and infinity guard",
+            "detail": "The indicator of[0,infinity) is Lipschitz0 on its domain interior and all interior supports are0, while boundary support−2 violates the zero norm bound. Its toReal projection is0 everywhere, including infinite values, but SourceLipschitzOn on the entire ambient line is false because finite witnesses fail.",
+            "math": "-2\\in\\partial I_{[0,\\infty)}(0),\\quad\\|-2\\|>0",
+            "fallback": "Finite-value and interior restrictions are essential, not cosmetic."
+          },
+          {
+            "title": "Explicit negative-L source audit",
+            "detail": "On the admitted zero-dimensional space the proper convex constant-zero loss obeys every literal pair inequality with L=−1 (all distances0), but support0 violates norm0≤−1. The actual compiled audit justifies explicitly restricting the Lipschitz constant to NNReal while keeping zero dimension.",
+            "math": "0\\le(-1)0\\quad\\text{but}\\quad0\\not\\le-1",
+            "fallback": "This delta is disclosed; the formal theorem does not claim unrestricted realL."
+          }
+        ],
+        "takeaway": "Full interior equivalence requires actual finite values, all actual supports and the explicitly nonnegative constant convention.",
+        "boundary": "No full-domain norm bound, differentiability, source algorithm regret, Chapter2/book completion or merge/deployment claim."
+      }
     }
   ]
 }

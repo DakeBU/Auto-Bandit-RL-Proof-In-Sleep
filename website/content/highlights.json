@@ -3318,6 +3318,39 @@
       "dependencies": [
         "BanditRL.OnlineConvex.SourceSubdifferential"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.SourceLipschitzOn",
+      "title": "Finite all-pairs Lipschitz property",
+      "chapter": "online-lipschitz",
+      "featured": false,
+      "teaching_order": 0,
+      "plain": "Finite all-pairs Lipschitz property",
+      "math": "\\(L\\ge0,\\quad|f(x)-f(y)|\\le L\\|x-y\\|\\)",
+      "intuition": "Finite values before differences; all global supports at interior queries; the nonnegative convention is explicit.",
+      "why": "Definition2.29/full2.30 source package only, no boundary or unrestrictedrealL extension.",
+      "position": "Orabona v10 Definition2.29/Theorem2.30 printed19/PDF31.",
+      "proof_idea": "Actual local-ball normalized perturbation; actual supports at both points; finite conversion and Cauchy-Schwarz with two signs.",
+      "lean_notes": "NNReal includes0, dimension0/emptyinterior allowed; source delta and actual negativeL audit adjacent in reader.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.theorem_2_30",
+      "title": "Full interior equivalence for every global support",
+      "chapter": "online-lipschitz",
+      "featured": false,
+      "teaching_order": 1,
+      "plain": "Full interior equivalence for every global support",
+      "math": "\\(f\\text{ proper convex},\\ L\\ge0:\\quad\\operatorname{Lip}_L(f|_U)\\Longleftrightarrow\\|g\\|\\le L\\ (x\\in U,g\\in\\partial f(x))\\)",
+      "intuition": "Finite values before differences; all global supports at interior queries; the nonnegative convention is explicit.",
+      "why": "Definition2.29/full2.30 source package only, no boundary or unrestrictedrealL extension.",
+      "position": "Orabona v10 Definition2.29/Theorem2.30 printed19/PDF31.",
+      "proof_idea": "Actual local-ball normalized perturbation; actual supports at both points; finite conversion and Cauchy-Schwarz with two signs.",
+      "lean_notes": "NNReal includes0, dimension0/emptyinterior allowed; source delta and actual negativeL audit adjacent in reader.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.subgradient_norm_le_lipschitz_ball",
+        "BanditRL.OnlineConvex.subgradient_exists_of_domain_interior"
+      ]
     }
   ]
 }

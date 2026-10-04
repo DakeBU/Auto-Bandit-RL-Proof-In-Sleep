@@ -1,0 +1,11 @@
+inner_sub_right.{u_1, u_2} {𝕜 : Type u_1} {E : Type u_2} [RCLike 𝕜] [SeminormedAddCommGroup E] [InnerProductSpace 𝕜 E]
+  (x y z : E) : inner 𝕜 x (y - z) = inner 𝕜 x y - inner 𝕜 x z
+neg_le_abs.{u_1} {α : Type u_1} [Lattice α] [AddGroup α] (a : α) : -a ≤ |a|
+norm_sub_rev.{u_5} {E : Type u_5} [SeminormedAddGroup E] (a b : E) : ‖a - b‖ = ‖b - a‖
+real_inner_le_norm.{u_3} {F : Type u_3} [SeminormedAddCommGroup F] [InnerProductSpace ℝ F] (x y : F) :
+  inner ℝ x y ≤ ‖x‖ * ‖y‖
+abs_abs_sub_abs_le_abs_sub.{u_1} {G : Type u_1} [AddCommGroup G] [LinearOrder G] [IsOrderedAddMonoid G] (a b : G) :
+  ||a| - |b|| ≤ |a - b|
+Metric.mem_nhds_iff.{u} {α : Type u} [PseudoMetricSpace α] {x : α} {s : Set α} :
+  s ∈ nhds x ↔ ∃ ε > 0, Metric.ball x ε ⊆ s
+NNReal.coe_nonneg (r : NNReal) : 0 ≤ ↑r

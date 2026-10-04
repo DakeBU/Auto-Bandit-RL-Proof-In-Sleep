@@ -1779,7 +1779,7 @@ def render_chapter_compass(page_path: str, chapter: dict[str, Any], reading: dic
     algorithm = reading["algorithm"]
     theorem_count = int(bool(reading.get("source_theorem"))) + len(reading.get("source_theorems", []))
     example_note = (
-        " Includes a three-step worked example."
+        " Includes a worked example."
         if reading.get("worked_example")
         else ""
     )

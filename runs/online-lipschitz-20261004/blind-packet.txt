@@ -1,0 +1,13 @@
+Neutral mathematical context, no source identity or bodies.
+Let E be a real normed additive group with real inner product. EReal is the extended real line, coe embeds real finite values. Let effectiveDomain f={x|f x<top}. SourceProper f means (forall x, f x !=bottom) and exists x,r real, f x=coe r. IsConvexExtended f means convexity over real scalars of the real epigraph {(x,r)|f x<=coe r}. SourceSubdifferential f x={g|forall y, f x+coe(inner g (y-x))<=f y}. NNReal denotes nonnegative real numbers, includes zero. The norm is induced by the inner product.
+/-- Finite values on V and the actual all-pairs Lipschitz inequality.
+The constant is explicitly nonnegative, including zero. -/
+def PairBound (f : E → EReal) (V : Set E) (L : ℝ≥0) : Prop :=
+  (∀ x ∈ V, ∃ a : ℝ, f x = (a : EReal)) ∧
+    ∀ x ∈ V, ∀ y ∈ V, |(f x).toReal - (f y).toReal| ≤ (L : ℝ) * ‖x - y‖
+
+theorem claim_1 [FiniteDimensional ℝ E]
+    (f : E → EReal) (hp : SourceProper f) (hc : IsConvexExtended f) (L : ℝ≥0) :
+    PairBound f (interior (effectiveDomain f)) L ↔
+      ∀ x ∈ interior (effectiveDomain f), ∀ g ∈ SourceSubdifferential f x,
+        ‖g‖ ≤ (L : ℝ)
