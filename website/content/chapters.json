@@ -850,7 +850,7 @@
       "audience": "Readers of Orabona Definition2.29 and Theorem2.30.",
       "completion_definition": "Definition2.29 and Theorem2.30 under the explicit nonnegative Lipschitz convention; Chapter2/book remain incomplete.",
       "completion_blockers": [
-        "Lemma2.31, source subgradient algorithm/linearization, Example2.32 and remaining Chapter2 mapping obligations."
+        "Example2.32, remaining Chapter2 source mapping and older-stack migration remain required; full Chapter2/book not complete."
       ],
       "learning_goals": [
         "Keep finite function values before taking real differences.",
@@ -862,6 +862,32 @@
       ],
       "open_gaps": [
         "Remaining Chapter2 and Chapters3–16 mandatory; no unqualified realL or boundary extension."
+      ]
+    },
+    {
+      "slug": "online-osd",
+      "title": "Causal projected online subgradient descent",
+      "short_title": "Projected OSD",
+      "status": "compiled",
+      "summary": "The actual current support and projection recurrence, with finite losses, strict-prefix causality and fixed/decreasing/tuned regret bounds.",
+      "audience": "Readers of Orabona Lemma2.31, Algorithm2.2 and the Theorem2.13 transfer.",
+      "completion_definition": "This source package: full single-step lemma and one permitted canonical causal OSD implementation plus its exact performance bounds. Whole Chapter2/book remain separate.",
+      "completion_blockers": [
+        "Final reader/immutable binding/PR delivery required separately for package acceptance.",
+        "Example2.32 shifted absolute-loss game, remaining source mapping and older-stack migration remain required for Chapter2."
+      ],
+      "learning_goals": [
+        "Derive finite values from proper functions and actual supports.",
+        "Verify current-only choice, feasible outputs and strict-prefix causality.",
+        "Keep the terminal distance in fixed and decreasing-step regret bounds."
+      ],
+      "module_globs": [
+        "BanditRLProof/OnlineSubgradientDescent.lean"
+      ],
+      "open_gaps": [
+        "Noncomputable whole-function support choice is not an executable oracle.",
+        "No closed-domain Lipschitz-to-boundary-support shortcut; tuning bounds actual selected supports.",
+        "Chapter2/Chapters3–16 mandatory; no merge/live claim."
       ]
     }
   ]

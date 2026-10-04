@@ -1,0 +1,4 @@
+theorem iterate_prefix (V : Domain (E := E)) (η η' : ℕ → ℝ)
+    (loss loss' : ℕ → E → EReal) (x₁ : E) (t : ℕ)
+    (hη : ∀ s < t, η s = η' s) (hloss : ∀ s < t, loss s = loss' s) :
+    iterate V η loss x₁ t = iterate V η' loss' x₁ t

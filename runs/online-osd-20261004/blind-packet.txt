@@ -1,0 +1,30 @@
+import BanditRLProof.OnlineGradientDescentVariable
+import BanditRLProof.OnlineLipschitzSubgradient
+noncomputable section
+open Set Finset BanditRL.OnlineConvex
+open scoped InnerProductSpace
+namespace BanditRL.OnlineSubgradientDescent
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
+abbrev Domain := BanditRL.OnlineGradientDescent.Domain E
+/-- Proper function with a global support at every feasible point. -/
+def SubdifferentiableOn (V : Domain (E := E)) (f : E → EReal) : Prop :=
+  SourceProper f ∧ ∀ x ∈ V.carrier, (SourceSubdifferential f x).Nonempty
+/-- Current function/point only; no comparator, horizon or future losses. -/
+def currentSubgradient (f : E → EReal) (x : E) : E :=
+  if h : (SourceSubdifferential f x).Nonempty then Classical.choose h else 0
+def step (V : Domain (E := E)) (η : ℝ) (f : E → EReal) (x : E) : E :=
+  BanditRL.OnlineGradientDescent.project V (x - η • currentSubgradient f x)
+def iterate (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) : ℕ → E
+  | 0 => x₁
+  | t + 1 => step V (η t) (loss t) (iterate V η loss x₁ t)
+def regret (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ u : E) (T : ℕ) : ℝ :=
+  ∑ t ∈ range T, ((loss t (iterate V η loss x₁ t)).toReal - (loss t u).toReal)
+theorem projectedSupportInequality (V : Domain (E := E)) (f : E → EReal) (hf : SubdifferentiableOn V f)
+    (η : ℝ) (hη : 0 < η) (x u : E) (hx : x ∈ V.carrier) (hu : u ∈ V.carrier)
+    (g : E) (hg : g ∈ SourceSubdifferential f x) :
+    η * ((f x).toReal - (f u).toReal) ≤ η * inner ℝ g (x - u) ∧
+    η * inner ℝ g (x - u) ≤
+      ‖x - u‖ ^ 2 / 2 -
+      ‖BanditRL.OnlineGradientDescent.project V (x - η • g) - u‖ ^ 2 / 2 +
+      η ^ 2 / 2 * ‖g‖ ^ 2
+-- Reconstruct only this statement/context; no source identity, proof, verdict, file-search or title inference.

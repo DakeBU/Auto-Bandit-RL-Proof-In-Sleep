@@ -1,0 +1,15 @@
+EReal.coe_toReal {x : EReal} (hx : x ≠ ⊤) (h'x : x ≠ ⊥) : ↑x.toReal = x
+EReal.coe_add (x y : ℝ) : ↑(x + y) = ↑x + ↑y
+EReal.coe_le_coe_iff {x y : ℝ} : ↑x ≤ ↑y ↔ x ≤ y
+norm_sub_sq_real.{u_3} {F : Type u_3} [SeminormedAddCommGroup F] [InnerProductSpace ℝ F] (x y : F) :
+  ‖x - y‖ ^ 2 = ‖x‖ ^ 2 - 2 * ⟪x, y⟫_ℝ + ‖y‖ ^ 2
+inner_neg_right.{u_1, u_2} {𝕜 : Type u_1} {E : Type u_2} [RCLike 𝕜] [SeminormedAddCommGroup E] [InnerProductSpace 𝕜 E]
+  (x y : E) : ⟪x, -y⟫_𝕜 = -⟪x, y⟫_𝕜
+pow_le_pow_left₀.{u_2} {M₀ : Type u_2} [MonoidWithZero M₀] [Preorder M₀] {a b : M₀} [PosMulMono M₀] [MulPosMono M₀]
+  (ha : 0 ≤ a) (hab : a ≤ b) (n : ℕ) : a ^ n ≤ b ^ n
+BanditRL.OnlineGradientDescent.proposition_2_11.{u_1} {E : Type u_1} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+  [CompleteSpace E] (V : OnlineGradientDescent.Domain E) (z u : E) (hu : u ∈ V.carrier) :
+  ‖OnlineGradientDescent.project V z - u‖ ≤ ‖z - u‖
+BanditRL.OnlineGradientDescent.project_spec.{u_1} {E : Type u_1} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+  [CompleteSpace E] (V : OnlineGradientDescent.Domain E) (z : E) :
+  OnlineGradientDescent.project V z ∈ V.carrier ∧ ‖z - OnlineGradientDescent.project V z‖ = ⨅ w, ‖z - ↑w‖

@@ -1,0 +1,5 @@
+# Site build01 actual schema repair
+
+Actual build_site --lean-verified exited1 before generating the new page because a reading preview accepts one to4 unique declaration names, while new metadata incorrectly supplied all15. Preserve failed log/exit. Repair selects four exact primary source terminals (full lemma, fixed, variable, tuned) for the bounded preview only. All15 public theorem/highlight declarations and all21 module nodes remain in the shared canonical registry/Book membership; no mathematical target or source obligation is excluded. Full source/causal declaration text remains accessible through the shared module.
+
+Read actual validation implementation before rerun: proof_bridge additionally requires a nonempty explicit boundary. Add the truthful boundary and actual source algorithm pseudocode using the already-supported fields. No renderer/schema/test guard changed. The source algorithm information order and noncomputable permitted-choice delta are visible. Actual reader/complete folds review is still required; no first-build success claim.

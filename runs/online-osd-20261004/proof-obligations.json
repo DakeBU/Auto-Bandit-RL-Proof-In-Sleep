@@ -1,0 +1,69 @@
+{
+  "stage": "draft",
+  "obligations": [
+    {
+      "id": "finite-support-gap",
+      "status": "unproved",
+      "deps": [
+        "subgradient_point_finite",
+        "proper-loss"
+      ]
+    },
+    {
+      "id": "lemma-2.31",
+      "status": "unproved",
+      "deps": [
+        "finite-support-gap",
+        "proposition_2_11"
+      ]
+    },
+    {
+      "id": "actual-current-selector",
+      "status": "unproved",
+      "deps": [
+        "subdifferentiableOn"
+      ]
+    },
+    {
+      "id": "causal-feasible-iterate",
+      "status": "unproved",
+      "deps": [
+        "actual-current-selector",
+        "project_spec"
+      ]
+    },
+    {
+      "id": "fixed-terminal",
+      "status": "unproved",
+      "deps": [
+        "lemma-2.31",
+        "causal-feasible-iterate"
+      ]
+    },
+    {
+      "id": "variable-terminal",
+      "status": "unproved",
+      "deps": [
+        "lemma-2.31",
+        "causal-feasible-iterate",
+        "weighted_potential_sum"
+      ]
+    },
+    {
+      "id": "tuned-DGsqrtT",
+      "status": "unproved",
+      "deps": [
+        "fixed-terminal"
+      ]
+    },
+    {
+      "id": "public-canary-axioms-combined-reader-bindings",
+      "status": "unproved",
+      "deps": [
+        "all-terminals"
+      ]
+    }
+  ],
+  "chapter_complete": false,
+  "book_complete": false
+}

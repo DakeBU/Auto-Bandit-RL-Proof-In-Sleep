@@ -1,0 +1,55 @@
+# OSD v2 single-step/source-context contract review
+
+Verdict: **rejected** for stabilization as the full source Lemma2.31. Required repair: create a new v3 header omitting the extra current-point premise hx : x in V.carrier, with a fresh native hash and blind/source review. V2 still describes a valid narrower feasible-trajectory application and structurally suitable definitions, but that does not close the literal source lemma. Actor `/root/source_reviewer`, requested GPT-6 Astra / medium; distinct automated reviewer, not external-human.
+
+Original pinned PDF independently hashes to `cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17`. Original physical28–33 was freshly extracted with relevant Definition2.20 (28/29), Lemma2.31 (31), Algorithm2.2/Example2.32 (32) and performance discussion (33) read. Run source-pages/source-card were cross-checked. Active five-file v2 contract, complete neutral packet/reconstruction/receipt, staged role/DAG/context records and repair evidence were read. Actual shared SourceProper/SourceSubdifferential/subgradient_point_finite and OGD Domain/project/project_spec/proposition2.11 interfaces and relevant bodies were inspected. Whole dependency files are hashed, but unrelated OGD gradient theorems are not newly audited.
+
+## Seven semantic slots
+
+1. **Objects/model.** Finite-dimensional real inner-product space faithfully represents source Euclidean Rd. Domain contains the actual nonempty, closed and convex feasible set; the imported projection is a constructed nearest-point choice, not an arbitrary next point. Finite dimension supplies the existing projection's completeness. No probability, boundedness or interior/full-dimension assumption is introduced.
+2. **Source assumptions/properness.** Definition2.20 explicitly begins with a proper function; the next paragraph defines subdifferentiability as nonempty subdifferential. Thus SubdifferentiableOn's SourceProper plus a global support at every feasible point is faithful inheritance for Lemma2.31, not an added global convexity or differentiability premise. Feasible current x is explicit in the header, reflecting Algorithm2.2's output invariant; the standalone printed lemma does not restate that invariant. This is a genuine restriction relative to the literal source lemma, not merely notation: Algorithm2.2 is presented after the lemma and its feasibility invariant does not justify weakening the standalone lemma target. The source lemma applies whenever g is a global support at x; it does not explicitly require x in V. Every feasible comparator u and arbitrary current support g are included.
+3. **Finite values.** At any feasible v, a support exists. Comparing it with the properness finite witness excludes top at v; properness excludes bottom. Actual subgradient_point_finite implements the first exclusion without convexity. Hence x,u have real finite witnesses before the desired toReal loss difference. A future proof must perform these conversions; unconditional toReal in the generic regret definition alone is not such a proof.
+4. **Exact single-step guarantee.** Both eta-scaled inequalities appear as a conjunction, with eta>0, eta times the same inner(g,x-u), initial half squared distance, negative half squared distance of the actual projection of x-eta*g, and eta^2/2 times norm(g)^2. Neither residual nor eta factor is lost. g is any true global support at x, not required to equal the selected one. Source order and signs match. No desired one-step bound is a hypothesis.
+5. **Information and construction.** currentSubgradient accepts only current f and x, chooses an actual member when the global support set is nonempty and returns0 otherwise. No comparator, horizon or future-loss input is present. It receives the whole current function/global support set, not a finite-query executable oracle. iterate0=x1; iterate(t+1) uses loss(t), eta(t), iterate(t), so source round1 corresponds to Lean0 and iterateT to source x_(T+1). Structural information flow agrees with output-before-current-loss update in Algorithm2.2. Initialization and schedule are externally prescribed; definitions alone do not prevent a caller from supplying future-informed parameters. No formal prefix-causality theorem has yet been proved.
+6. **Degeneracies and admissibility.** Positive eta is the single-step scope; zero/negative eta are only admitted by unconditional definitions, not by the theorem. Zero dimension, singleton/lower-dimensional or unbounded feasible sets and empty domain interior are allowed. Domain itself cannot be empty. Generic iterate permits an infeasible initial point and generic regret permits infinite projections; valid source-use theorems must prove feasible initialization/iteration, selected-support membership and all finite losses/comparator values. T=0 is a defined empty regret sum, but no fixed/variable/tuned performance theorem is accepted here.
+7. **Source/reconstruction/status.** V2 blind reconstruction now accurately includes the shared projection and proper/support semantics and identifies the preceding limitations. Context03 has actual exit0 and selector standard3 axioms, but only definitions/context compiled; the main lemma body does not exist in this packet. V1 missing Decidable and omitted imported semantics remain historical rejected context evidence. Context02 missing input followed a Python preparation syntax error, not Lean proof progress; context03 is the successful separate run. No failed sorryAx print establishes a theorem.
+
+## Stabilized boundary and remaining mandatory work
+
+The rejected v2 active lemma fingerprint is `4719c6742c12d7ff0946f5fa7c96e9f9031d8ba12c830917aaa6f42df04fe9f8`. Acceptable representation/context deltas are coordinate-free finite-dimensional Euclidean space, EReal with properness inherited from Definition2.20, and zero-based indexing. The extra feasible-current-query premise is NOT accepted as full source-lemma fidelity. Local classical repairs conditional selection implementation, without changing mathematics. The contract's retained initial 'Draft v1' narrative is historical; active-contract/manifest/v2 paragraph identify the actual version2 under review.
+
+The structural definitions are semantically suitable, but the single-step header is NOT stabilized for full source coverage. Additional independent check: hg at any ambient x plus SourceProper f gives x in effectiveDomain via the existing subgradient_point_finite; hp excludes bottom. Thus finite f(x) needs no hx. Comparator finiteness follows from hu and subdifferentiability on V. The actual proposition_2_11 accepts arbitrary z and only feasible u, so its application at z=x-eta*g also needs no hx. Dropping hx preserves the same proof route and both inequalities, and strengthens the proposed contract back to the source literal scope. Create v3 rather than silently alter frozen v2. A feasible algorithm application may later supply x in V for selection correctness, but it must not narrow this independent lemma. Selection correctness, feasibility and strict-prefix causality remain proof obligations. The fixed-step negative terminal residual, variable positive/nonincreasing schedule/diameter branches, tuned DGsqrtT and all-round finite regret must each receive exact frozen headers and separate source review before proof/acceptance. Listing them in the manifest/DAG is not a frozen or completed performance contract. Source printed19 transfer and printed21 fixed-step discussion do not waive this requirement. Example2.32 remains a separate mandatory subsequent package.
+
+No proof-body/public/root/Tests/harness/reader/site/binding/PR acceptance or algorithm-causality/performance certification is made. No implementation, DAG, contract, prior receipt, trial or frontier was edited. Persistent Goal, Chapter2/book, older migration, main/live remain incomplete.
+
+## Raw SHA256 inventory
+
+Exact raw bytes; no normalization or JSON reserialization. Scope of inspection is specified above.
+
+| File | Raw SHA256 |
+|---|---|
+| `docs/contracts/online-osd-v2/context.txt` | `b162f92f05924622d248b0673321078b35330dc3980f7b53c1adc4ba64087a5c` |
+| `docs/contracts/online-osd-v2/contract-manifest.json` | `c6b0b805ea55c15f05d876570addca6297b6e8562e9cb9c03622cc581c0e4eed` |
+| `docs/contracts/online-osd-v2/contract.md` | `b1b3e1428fcecbde13c5396675d2b483287f5eca540a9e25ffb77c5271a16a64` |
+| `docs/contracts/online-osd-v2/lemma_2_31-header.txt` | `f0a97dd2e79050e43c54c778145e75f3a04d57279d72f3d0c842af19cdf6720d` |
+| `docs/contracts/online-osd-v2/lemma_2_31.json` | `6f04ea43a2ba05bf24b5d97e0497c23f4b30330d4e83b29666a7f6e73cd841a0` |
+| `runs/online-osd-20261004/00_context.md` | `9f4f6bba220dd39a643586fb37380fed443f1b4610f39c34951712786af96741` |
+| `runs/online-osd-20261004/10_upper_director.md` | `9d35acae75c4333e7573618b745b27aa3b697740aaf669af6b48b812f80b85fa` |
+| `runs/online-osd-20261004/20_middle_architect.md` | `a8bbed2bb0b02a7ba5bd03028473034a47da70491ebfe8c99c692cac93a30e13` |
+| `runs/online-osd-20261004/active-contract.json` | `74f9f3a08b39848b8ebd622f6edf10486091617447dcc0683fc74498cfff893c` |
+| `runs/online-osd-20261004/source-card.md` | `667368f322ec7712c3298ec3c229c3d2e072c770c3c891eb1d4704e0b35ef7c1` |
+| `runs/online-osd-20261004/source-pages.txt` | `2a4035ddbdaaf1fe4b3cc331fb2b5f6dedf86c1657fe68b98d6c0d82fab054d1` |
+| `runs/online-osd-20261004/proof-obligations.json` | `b246444e752eab2556cda6e0cbada7c64010616a7654f7cf91b5627eded6a987` |
+| `runs/online-osd-20261004/blind-packet-v2.txt` | `d223b982c612a33dde3639f96a4f9610e7e789f05dbbbd03fb1a36660657c3e0` |
+| `runs/online-osd-20261004/blind-reconstruction-v2.md` | `f4b985539a0aa8d46ce89106f582c0e15cc317900f71006e65e2f22aeef48de0` |
+| `runs/online-osd-20261004/blind-receipt-v2.json` | `955465e07f68050d3a36c8729cde734d72b7194bce185a835eee7be5ed8927a7` |
+| `runs/online-osd-20261004/context-and-packet-repair.md` | `669e5edd7e142d832a4721bda11b1f4398b713b0029e60f4a4d7e7e3ace7b221` |
+| `runs/online-osd-20261004/preparation-invocation-repair.md` | `e32dc020259b7eb7a9fbb5230d5eadb613fed3baaa7875247f7934e9e7550732` |
+| `runs/online-osd-20261004/context-probe-01-exit.json` | `7ad53288a00e1223a4d3437f48e17fa1ddc3cc9db921fd266213be9a2616612e` |
+| `runs/online-osd-20261004/context-probe-02-exit.json` | `68eb7272d46a04c987cf1d6a1d91ab208bbf1032277afc4c762cee743b5bcbc7` |
+| `runs/online-osd-20261004/context-probe-03.log` | `ca4e75580856533bbb825429aeb98b023082f53c3495f3233a544cffb6857194` |
+| `runs/online-osd-20261004/context-probe-03-exit.json` | `a50f37d35ca5e0f0ae948630d13491aa2228d7c959a989005cea475d777d4b86` |
+| `BanditRLProof/OnlineGradientDescent.lean` | `e7edba540c2f60032bb4a34aaf0768b3107b94276b67b6f41fc289009c8924c1` |
+| `BanditRLProof/OnlineSubgradientBasic.lean` | `4c17a466091b88d90451be897a2f01afa204b41933191244e0093e48396d1962` |
+| `BanditRLProof/OnlineClosedProper.lean` | `9a5fcfb9e26a2a35d8e5bb7ef7b7a7dfd65a7f1c8daab03faebb51e41d54e7c6` |
+| `../research-online-ogd/tmp/pdfs/orabona-v10.pdf` | `cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17` |

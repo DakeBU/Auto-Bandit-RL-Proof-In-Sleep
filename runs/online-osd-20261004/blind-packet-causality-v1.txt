@@ -1,0 +1,87 @@
+Shared semantic definitions for interpreting the following packet (imported interfaces, not new local assumptions):
+structure BanditRL.OnlineGradientDescent.Domain (E : Type*) [NormedAddCommGroup E] [InnerProductSpace ℝ E] where
+  carrier : Set E
+  nonempty : carrier.Nonempty
+  closed : IsClosed carrier
+  convex : Convex ℝ carrier
+SourceProper (f : E → EReal) := (∀ x, f x ≠ ⊥) ∧ ∃ x, ∃ r : ℝ, f x = (r : EReal)
+SourceSubdifferential (f : E → EReal) (x : E) := {g | ∀ y, f x + (inner ℝ g (y - x) : EReal) ≤ f y}
+The imported project V z is Classical.choose(exists_norm_eq_iInf_of_complete_convex V.nonempty V.closed.isComplete V.convex z).
+Its actual shared specification is: project V z ∈ V.carrier ∧ ‖z - project V z‖ = ⨅ w : V.carrier, ‖z - w‖.
+Finite-dimensional real inner-product spaces supply completeness for this imported operator. Its actual norm-minimal choice is not a freely postulated next point.
+EReal.toReal maps finite coe(r) to r and both infinite endpoints to0; unconditional projection is not a finite-value witness.
+
+import BanditRLProof.OnlineGradientDescentVariable
+import BanditRLProof.OnlineLipschitzSubgradient
+noncomputable section
+open Set Finset BanditRL.OnlineConvex
+open scoped InnerProductSpace
+namespace BanditRL.OnlineSubgradientDescent
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
+abbrev Domain := BanditRL.OnlineGradientDescent.Domain E
+def SubdifferentiableOn (V : Domain (E := E)) (f : E → EReal) : Prop :=
+  SourceProper f ∧ ∀ x ∈ V.carrier, (SourceSubdifferential f x).Nonempty
+def currentSubgradient (f : E → EReal) (x : E) : E :=
+  by
+    classical
+    exact if h : (SourceSubdifferential f x).Nonempty then Classical.choose h else 0
+def step (V : Domain (E := E)) (η : ℝ) (f : E → EReal) (x : E) : E :=
+  BanditRL.OnlineGradientDescent.project V (x - η • currentSubgradient f x)
+def iterate (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) : ℕ → E
+  | 0 => x₁
+  | t + 1 => step V (η t) (loss t) (iterate V η loss x₁ t)
+def regret (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ u : E) (T : ℕ) : ℝ :=
+  ∑ t ∈ range T, ((loss t (iterate V η loss x₁ t)).toReal - (loss t u).toReal)
+
+theorem currentSubgradient_mem (V : Domain (E := E)) (f : E → EReal)
+    (hf : SubdifferentiableOn V f) (x : E) (hx : x ∈ V.carrier) :
+    currentSubgradient f x ∈ SourceSubdifferential f x
+
+theorem finite_loss (V : Domain (E := E)) (f : E → EReal)
+    (hf : SubdifferentiableOn V f) (x : E) (hx : x ∈ V.carrier) :
+    f x = ((f x).toReal : EReal)
+
+theorem iterate_mem (V : Domain (E := E)) (η : ℕ → ℝ)
+    (loss : ℕ → E → EReal) (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (t : ℕ) :
+    iterate V η loss x₁ t ∈ V.carrier
+
+theorem iterate_prefix (V : Domain (E := E)) (η η' : ℕ → ℝ)
+    (loss loss' : ℕ → E → EReal) (x₁ : E) (t : ℕ)
+    (hη : ∀ s < t, η s = η' s) (hloss : ∀ s < t, loss s = loss' s) :
+    iterate V η loss x₁ t = iterate V η' loss' x₁ t
+
+theorem iterate_support (V : Domain (E := E)) (η : ℕ → ℝ)
+    (loss : ℕ → E → EReal) (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (t : ℕ)
+    (hloss : SubdifferentiableOn V (loss t)) :
+    currentSubgradient (loss t) (iterate V η loss x₁ t) ∈
+      SourceSubdifferential (loss t) (iterate V η loss x₁ t)
+
+theorem iterate_finite_loss (V : Domain (E := E)) (η : ℕ → ℝ)
+    (loss : ℕ → E → EReal) (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (t : ℕ)
+    (hloss : SubdifferentiableOn V (loss t)) (u : E) (hu : u ∈ V.carrier) :
+    loss t (iterate V η loss x₁ t) = ((loss t (iterate V η loss x₁ t)).toReal : EReal) ∧
+    loss t u = ((loss t u).toReal : EReal)
+
+theorem one_step_chain (V : Domain (E := E)) (η : ℕ → ℝ)
+    (loss : ℕ → E → EReal) (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (t : ℕ)
+    (hη : 0 < η t) (hloss : SubdifferentiableOn V (loss t))
+    (u : E) (hu : u ∈ V.carrier) :
+    η t * ((loss t (iterate V η loss x₁ t)).toReal - (loss t u).toReal) ≤
+      η t * inner ℝ (currentSubgradient (loss t) (iterate V η loss x₁ t))
+        (iterate V η loss x₁ t - u) ∧
+    η t * inner ℝ (currentSubgradient (loss t) (iterate V η loss x₁ t))
+        (iterate V η loss x₁ t - u) ≤
+      ‖iterate V η loss x₁ t - u‖ ^ 2 / 2 -
+      ‖iterate V η loss x₁ (t + 1) - u‖ ^ 2 / 2 +
+      (η t) ^ 2 / 2 * ‖currentSubgradient (loss t) (iterate V η loss x₁ t)‖ ^ 2
+
+theorem one_step (V : Domain (E := E)) (η : ℕ → ℝ)
+    (loss : ℕ → E → EReal) (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (t : ℕ)
+    (hη : 0 < η t) (hloss : SubdifferentiableOn V (loss t))
+    (u : E) (hu : u ∈ V.carrier) :
+    (loss t (iterate V η loss x₁ t)).toReal - (loss t u).toReal ≤
+      (‖iterate V η loss x₁ t - u‖ ^ 2 -
+        ‖iterate V η loss x₁ (t + 1) - u‖ ^ 2) / (2 * η t) +
+      η t / 2 * ‖currentSubgradient (loss t) (iterate V η loss x₁ t)‖ ^ 2
+end BanditRL.OnlineSubgradientDescent
+Reconstruct these declarations and their dependencies only; no proofs or source identifiers are supplied.

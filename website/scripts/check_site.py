@@ -1472,6 +1472,7 @@ def main() -> int:
     chapter_source_theorems = 0
     chapter_source_boundaries = 0
     algorithm_pseudocode_chapters = {
+        "online-osd",
         "etc",
         "ucb",
         "oful",

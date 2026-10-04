@@ -1,0 +1,8 @@
+theorem lemma_2_31 (V : Domain (E := E)) (f : E → EReal) (hf : SubdifferentiableOn V f)
+    (η : ℝ) (hη : 0 < η) (x u : E) (hx : x ∈ V.carrier) (hu : u ∈ V.carrier)
+    (g : E) (hg : g ∈ SourceSubdifferential f x) :
+    η * ((f x).toReal - (f u).toReal) ≤ η * inner ℝ g (x - u) ∧
+    η * inner ℝ g (x - u) ≤
+      ‖x - u‖ ^ 2 / 2 -
+      ‖BanditRL.OnlineGradientDescent.project V (x - η • g) - u‖ ^ 2 / 2 +
+      η ^ 2 / 2 * ‖g‖ ^ 2

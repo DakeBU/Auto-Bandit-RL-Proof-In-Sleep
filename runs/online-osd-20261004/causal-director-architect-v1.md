@@ -1,0 +1,9 @@
+# Additional causal/performance director and architect boundary
+
+Actor root, requested Astra/medium, staged roles; distinct blind/source actors handle review, not independent human/external validation.
+
+Director: source Lemma2.31 full arbitrary-current scratch body is compiled/sourcebody-reviewed only. The next finite ready frontier is actual canonical support correctness, feasible recursive trajectory, strict-prefix causality and same-trajectory single-step. Newly frozen causal headers have no proof yet and must be source-reviewed before tactic work. Performance headers separately draft frozen. Main/Tests/harness/Book/PR package remains open.
+
+Architect: retrieve actual Classical.choose_spec/dif_pos, subgradient_point_finite, EReal.coe_toReal, actual project_spec and existing recursive-prefix pattern. Selector nonempty is derived from source all-feasible supports. Finiteness is produced using properness and actual support, never toReal alone. Membership uses projection_spec; prefix proof induction transports both schedule and entire current-loss equality at each strict preceding time. Current choice/next recurrence instantiate full lemma; divide by positive eta for normalized step. Then fixed induction telescopes this same trajectory; variable reuse is generic weighted_potential_sum, not gradient-loss theorem consumer; tuned producer uses actual selected norm bounds and algebraic sqrt identity. No toolchain/dependency changes, no headers edited while proving, no free regret premise. API/cards retrieval logs and actual native retrieval record are separate evidence, not compilation.
+
+Permit new attempts/evidence after exact independent contract acceptance. Old raw reviewed snapshots remain immutable. Need public nondifferentiable causal canary plus full combined gates/sourcebody review before accepted package. Example2.32/older migration/chapter remaining source rows still open.

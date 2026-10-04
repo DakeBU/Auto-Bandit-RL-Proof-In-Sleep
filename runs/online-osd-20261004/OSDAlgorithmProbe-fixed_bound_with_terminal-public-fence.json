@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "OSDAlgorithmProbe.fixed_bound_with_terminal",
+  "file": "Tests/OnlineSubgradientDescentCanary.lean",
+  "statement": "theorem fixed_bound_with_terminal : regret interval (fun _ => (3 : ℝ)) losses 1 0 2 ≤ ‖(1 : ℝ) - 0‖ ^ 2 / (2 * 3) + (3 : ℝ) / 2 * (∑ t ∈ range 2, ‖currentSubgradient (losses t) (iterate interval (fun _ => (3 : ℝ)) losses 1 t)‖ ^ 2) - ‖iterate interval (fun _ => (3 : ℝ)) losses 1 2 - 0‖ ^ 2 / (2 * 3)",
+  "statement_hash": "eb9f2060181846a62f8f0737560756537908f0b5015d43c4832c9111f4cb1e52",
+  "source_assumptions": [],
+  "created_at": "2026-10-04T06:14:47+00:00"
+}

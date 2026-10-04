@@ -1,0 +1,45 @@
+Shared semantic definitions for interpreting the following packet (imported interfaces, not new local assumptions):
+structure BanditRL.OnlineGradientDescent.Domain (E : Type*) [NormedAddCommGroup E] [InnerProductSpace ℝ E] where
+  carrier : Set E
+  nonempty : carrier.Nonempty
+  closed : IsClosed carrier
+  convex : Convex ℝ carrier
+SourceProper (f : E → EReal) := (∀ x, f x ≠ ⊥) ∧ ∃ x, ∃ r : ℝ, f x = (r : EReal)
+SourceSubdifferential (f : E → EReal) (x : E) := {g | ∀ y, f x + (inner ℝ g (y - x) : EReal) ≤ f y}
+The imported project V z is Classical.choose(exists_norm_eq_iInf_of_complete_convex V.nonempty V.closed.isComplete V.convex z).
+Its actual shared specification is: project V z ∈ V.carrier ∧ ‖z - project V z‖ = ⨅ w : V.carrier, ‖z - w‖.
+Finite-dimensional real inner-product spaces supply completeness for this imported operator. Its actual norm-minimal choice is not a freely postulated next point.
+EReal.toReal maps finite coe(r) to r and both infinite endpoints to0; unconditional projection is not a finite-value witness.
+
+import BanditRLProof.OnlineGradientDescentVariable
+import BanditRLProof.OnlineLipschitzSubgradient
+noncomputable section
+open Set Finset BanditRL.OnlineConvex
+open scoped InnerProductSpace
+namespace BanditRL.OnlineSubgradientDescent
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
+abbrev Domain := BanditRL.OnlineGradientDescent.Domain E
+/-- Proper function with a global support at every feasible point. -/
+def SubdifferentiableOn (V : Domain (E := E)) (f : E → EReal) : Prop :=
+  SourceProper f ∧ ∀ x ∈ V.carrier, (SourceSubdifferential f x).Nonempty
+/-- Current function/point only; no comparator, horizon or future losses. -/
+def currentSubgradient (f : E → EReal) (x : E) : E :=
+  by
+    classical
+    exact if h : (SourceSubdifferential f x).Nonempty then Classical.choose h else 0
+def step (V : Domain (E := E)) (η : ℝ) (f : E → EReal) (x : E) : E :=
+  BanditRL.OnlineGradientDescent.project V (x - η • currentSubgradient f x)
+def iterate (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) : ℕ → E
+  | 0 => x₁
+  | t + 1 => step V (η t) (loss t) (iterate V η loss x₁ t)
+def regret (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ u : E) (T : ℕ) : ℝ :=
+  ∑ t ∈ range T, ((loss t (iterate V η loss x₁ t)).toReal - (loss t u).toReal)
+theorem projectedSupportInequality (V : Domain (E := E)) (f : E → EReal) (hf : SubdifferentiableOn V f)
+    (η : ℝ) (hη : 0 < η) (x u : E) (hx : x ∈ V.carrier) (hu : u ∈ V.carrier)
+    (g : E) (hg : g ∈ SourceSubdifferential f x) :
+    η * ((f x).toReal - (f u).toReal) ≤ η * inner ℝ g (x - u) ∧
+    η * inner ℝ g (x - u) ≤
+      ‖x - u‖ ^ 2 / 2 -
+      ‖BanditRL.OnlineGradientDescent.project V (x - η • g) - u‖ ^ 2 / 2 +
+      η ^ 2 / 2 * ‖g‖ ^ 2
+Reconstruct only this complete semantic packet, do not infer identity/read source or theorem proofs.

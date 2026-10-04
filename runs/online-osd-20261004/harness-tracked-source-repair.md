@@ -1,0 +1,5 @@
+# Full harness01 actual tracking fence repair
+
+Actual full tools/bandit.py check exit1, 440tests/7existing skips/error1. AnonymousSupplementTests.setUpClass failed when its temporary archive builder rejected untracked Lean source BanditRLProof/OnlineSubgradientDescent.lean. All source/Tests builds and public axioms passed separately; this command as a whole is not accepted. Its test class setup error prevented further test methods from running; no full466test claim for harness01. Raw log/exit preserved.
+
+Repair is the already-authorized scoped source/evidence commit so the real new module/test are tracked, then rerun the unchanged complete harness. No protected anonymous snapshot/manuscript or builder/test rule is edited; the harness test generates only its existing temporary sandbox artifacts. Source/header/algorithm/statement proof bodies unchanged. This is a repository tracking fence failure, not an excuse to skip anonymous testing or the combined gate. Chapter/program/package acceptance still pending.

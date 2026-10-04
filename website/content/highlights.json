@@ -3351,6 +3351,267 @@
         "BanditRL.OnlineConvex.subgradient_norm_le_lipschitz_ball",
         "BanditRL.OnlineConvex.subgradient_exists_of_domain_interior"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientDescent.lemma_2_31",
+      "title": "Full projected-support single-step chain",
+      "chapter": "online-osd",
+      "featured": true,
+      "teaching_order": 0,
+      "plain": "Full projected-support single-step chain",
+      "math": "\\(\\eta(f(x)-f(u))\\le\\eta\\langle g,x-u\\rangle\\le\\frac{\\|x-u\\|^2-\\|\\Pi_V(x-\\eta g)-u\\|^2}{2}+\\frac{\\eta^2}{2}\\|g\\|^2\\)",
+      "intuition": "Actual current supports and the true projection create the trajectory; properness and support prove finite regret values.",
+      "why": "This is an explicit producer chain for one allowed source OSD choice, without assumed regret or step bounds.",
+      "position": "Orabona v10 Lemma2.31/Algorithm2.2 printed19-20/PDF31-32; printed19 transfer of Theorem2.13 and eq2.1.",
+      "proof_idea": "Choice correctness, actual projection feasibility, strict-prefix induction, support/finite conversion, same-trajectory telescoping and weighted potential.",
+      "lean_notes": "Finite-dimensional Euclidean space; EReal properness inherited from source support definition; zero-based indices. Fixed T0/unbounded V admitted; variable T>=1 and bounded diameter; tuning T,D,G positive.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.subgradient_point_finite",
+        "BanditRL.OnlineGradientDescent.proposition_2_11"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientDescent.currentSubgradient_mem",
+      "title": "Choose an actual current global support",
+      "chapter": "online-osd",
+      "featured": false,
+      "teaching_order": 1,
+      "plain": "Choose an actual current global support",
+      "math": "\\(X_{t+1}=\\Pi_V(X_t-\\eta_t g_t),\\quad g_t\\in\\partial f_t(X_t)\\)",
+      "intuition": "Actual current supports and the true projection create the trajectory; properness and support prove finite regret values.",
+      "why": "This is an explicit producer chain for one allowed source OSD choice, without assumed regret or step bounds.",
+      "position": "Orabona v10 Lemma2.31/Algorithm2.2 printed19-20/PDF31-32; printed19 transfer of Theorem2.13 and eq2.1.",
+      "proof_idea": "Choice correctness, actual projection feasibility, strict-prefix induction, support/finite conversion, same-trajectory telescoping and weighted potential.",
+      "lean_notes": "Finite-dimensional Euclidean space; EReal properness inherited from source support definition; zero-based indices. Fixed T0/unbounded V admitted; variable T>=1 and bounded diameter; tuning T,D,G positive.",
+      "dependencies": [
+        "BanditRL.OnlineSubgradientDescent.SubdifferentiableOn"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientDescent.finite_loss",
+      "title": "Feasible supported losses have actual finite values",
+      "chapter": "online-osd",
+      "featured": false,
+      "teaching_order": 2,
+      "plain": "Feasible supported losses have actual finite values",
+      "math": "\\(X_{t+1}=\\Pi_V(X_t-\\eta_t g_t),\\quad g_t\\in\\partial f_t(X_t)\\)",
+      "intuition": "Actual current supports and the true projection create the trajectory; properness and support prove finite regret values.",
+      "why": "This is an explicit producer chain for one allowed source OSD choice, without assumed regret or step bounds.",
+      "position": "Orabona v10 Lemma2.31/Algorithm2.2 printed19-20/PDF31-32; printed19 transfer of Theorem2.13 and eq2.1.",
+      "proof_idea": "Choice correctness, actual projection feasibility, strict-prefix induction, support/finite conversion, same-trajectory telescoping and weighted potential.",
+      "lean_notes": "Finite-dimensional Euclidean space; EReal properness inherited from source support definition; zero-based indices. Fixed T0/unbounded V admitted; variable T>=1 and bounded diameter; tuning T,D,G positive.",
+      "dependencies": [
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient_mem",
+        "BanditRL.OnlineConvex.subgradient_point_finite"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientDescent.iterate_mem",
+      "title": "All recursive outputs are feasible",
+      "chapter": "online-osd",
+      "featured": false,
+      "teaching_order": 3,
+      "plain": "All recursive outputs are feasible",
+      "math": "\\(X_{t+1}=\\Pi_V(X_t-\\eta_t g_t),\\quad g_t\\in\\partial f_t(X_t)\\)",
+      "intuition": "Actual current supports and the true projection create the trajectory; properness and support prove finite regret values.",
+      "why": "This is an explicit producer chain for one allowed source OSD choice, without assumed regret or step bounds.",
+      "position": "Orabona v10 Lemma2.31/Algorithm2.2 printed19-20/PDF31-32; printed19 transfer of Theorem2.13 and eq2.1.",
+      "proof_idea": "Choice correctness, actual projection feasibility, strict-prefix induction, support/finite conversion, same-trajectory telescoping and weighted potential.",
+      "lean_notes": "Finite-dimensional Euclidean space; EReal properness inherited from source support definition; zero-based indices. Fixed T0/unbounded V admitted; variable T>=1 and bounded diameter; tuning T,D,G positive.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescent.project_spec"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientDescent.iterate_prefix",
+      "title": "Strict-prefix agreement fixes the current output",
+      "chapter": "online-osd",
+      "featured": false,
+      "teaching_order": 4,
+      "plain": "Strict-prefix agreement fixes the current output",
+      "math": "\\((\\eta_s,f_s)=(\\eta'_s,f'_s)\\ (s<t)\\Longrightarrow X_t=X'_t\\)",
+      "intuition": "Actual current supports and the true projection create the trajectory; properness and support prove finite regret values.",
+      "why": "This is an explicit producer chain for one allowed source OSD choice, without assumed regret or step bounds.",
+      "position": "Orabona v10 Lemma2.31/Algorithm2.2 printed19-20/PDF31-32; printed19 transfer of Theorem2.13 and eq2.1.",
+      "proof_idea": "Choice correctness, actual projection feasibility, strict-prefix induction, support/finite conversion, same-trajectory telescoping and weighted potential.",
+      "lean_notes": "Finite-dimensional Euclidean space; EReal properness inherited from source support definition; zero-based indices. Fixed T0/unbounded V admitted; variable T>=1 and bounded diameter; tuning T,D,G positive.",
+      "dependencies": [
+        "BanditRL.OnlineSubgradientDescent.iterate"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientDescent.iterate_support",
+      "title": "Actual current support along the actual trajectory",
+      "chapter": "online-osd",
+      "featured": false,
+      "teaching_order": 5,
+      "plain": "Actual current support along the actual trajectory",
+      "math": "\\(X_{t+1}=\\Pi_V(X_t-\\eta_t g_t),\\quad g_t\\in\\partial f_t(X_t)\\)",
+      "intuition": "Actual current supports and the true projection create the trajectory; properness and support prove finite regret values.",
+      "why": "This is an explicit producer chain for one allowed source OSD choice, without assumed regret or step bounds.",
+      "position": "Orabona v10 Lemma2.31/Algorithm2.2 printed19-20/PDF31-32; printed19 transfer of Theorem2.13 and eq2.1.",
+      "proof_idea": "Choice correctness, actual projection feasibility, strict-prefix induction, support/finite conversion, same-trajectory telescoping and weighted potential.",
+      "lean_notes": "Finite-dimensional Euclidean space; EReal properness inherited from source support definition; zero-based indices. Fixed T0/unbounded V admitted; variable T>=1 and bounded diameter; tuning T,D,G positive.",
+      "dependencies": [
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient_mem",
+        "BanditRL.OnlineSubgradientDescent.iterate_mem"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientDescent.iterate_finite_loss",
+      "title": "Played and comparator losses are truly finite",
+      "chapter": "online-osd",
+      "featured": false,
+      "teaching_order": 6,
+      "plain": "Played and comparator losses are truly finite",
+      "math": "\\(X_{t+1}=\\Pi_V(X_t-\\eta_t g_t),\\quad g_t\\in\\partial f_t(X_t)\\)",
+      "intuition": "Actual current supports and the true projection create the trajectory; properness and support prove finite regret values.",
+      "why": "This is an explicit producer chain for one allowed source OSD choice, without assumed regret or step bounds.",
+      "position": "Orabona v10 Lemma2.31/Algorithm2.2 printed19-20/PDF31-32; printed19 transfer of Theorem2.13 and eq2.1.",
+      "proof_idea": "Choice correctness, actual projection feasibility, strict-prefix induction, support/finite conversion, same-trajectory telescoping and weighted potential.",
+      "lean_notes": "Finite-dimensional Euclidean space; EReal properness inherited from source support definition; zero-based indices. Fixed T0/unbounded V admitted; variable T>=1 and bounded diameter; tuning T,D,G positive.",
+      "dependencies": [
+        "BanditRL.OnlineSubgradientDescent.finite_loss",
+        "BanditRL.OnlineSubgradientDescent.iterate_mem"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientDescent.one_step_chain",
+      "title": "Full chain for the selected support and next iterate",
+      "chapter": "online-osd",
+      "featured": false,
+      "teaching_order": 7,
+      "plain": "Full chain for the selected support and next iterate",
+      "math": "\\(X_{t+1}=\\Pi_V(X_t-\\eta_t g_t),\\quad g_t\\in\\partial f_t(X_t)\\)",
+      "intuition": "Actual current supports and the true projection create the trajectory; properness and support prove finite regret values.",
+      "why": "This is an explicit producer chain for one allowed source OSD choice, without assumed regret or step bounds.",
+      "position": "Orabona v10 Lemma2.31/Algorithm2.2 printed19-20/PDF31-32; printed19 transfer of Theorem2.13 and eq2.1.",
+      "proof_idea": "Choice correctness, actual projection feasibility, strict-prefix induction, support/finite conversion, same-trajectory telescoping and weighted potential.",
+      "lean_notes": "Finite-dimensional Euclidean space; EReal properness inherited from source support definition; zero-based indices. Fixed T0/unbounded V admitted; variable T>=1 and bounded diameter; tuning T,D,G positive.",
+      "dependencies": [
+        "BanditRL.OnlineSubgradientDescent.lemma_2_31",
+        "BanditRL.OnlineSubgradientDescent.iterate_support"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientDescent.one_step",
+      "title": "Positive-step normalized distance bound",
+      "chapter": "online-osd",
+      "featured": false,
+      "teaching_order": 8,
+      "plain": "Positive-step normalized distance bound",
+      "math": "\\(X_{t+1}=\\Pi_V(X_t-\\eta_t g_t),\\quad g_t\\in\\partial f_t(X_t)\\)",
+      "intuition": "Actual current supports and the true projection create the trajectory; properness and support prove finite regret values.",
+      "why": "This is an explicit producer chain for one allowed source OSD choice, without assumed regret or step bounds.",
+      "position": "Orabona v10 Lemma2.31/Algorithm2.2 printed19-20/PDF31-32; printed19 transfer of Theorem2.13 and eq2.1.",
+      "proof_idea": "Choice correctness, actual projection feasibility, strict-prefix induction, support/finite conversion, same-trajectory telescoping and weighted potential.",
+      "lean_notes": "Finite-dimensional Euclidean space; EReal properness inherited from source support definition; zero-based indices. Fixed T0/unbounded V admitted; variable T>=1 and bounded diameter; tuning T,D,G positive.",
+      "dependencies": [
+        "BanditRL.OnlineSubgradientDescent.one_step_chain"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientDescent.regret_fixed",
+      "title": "Fixed step with the terminal distance retained",
+      "chapter": "online-osd",
+      "featured": true,
+      "teaching_order": 9,
+      "plain": "Fixed step with the terminal distance retained",
+      "math": "\\(R_T(u)\\le\\frac{\\|x_1-u\\|^2}{2\\eta}+\\frac\\eta2\\sum_{t=1}^T\\|g_t\\|^2-\\frac{\\|x_{T+1}-u\\|^2}{2\\eta}\\)",
+      "intuition": "Actual current supports and the true projection create the trajectory; properness and support prove finite regret values.",
+      "why": "This is an explicit producer chain for one allowed source OSD choice, without assumed regret or step bounds.",
+      "position": "Orabona v10 Lemma2.31/Algorithm2.2 printed19-20/PDF31-32; printed19 transfer of Theorem2.13 and eq2.1.",
+      "proof_idea": "Choice correctness, actual projection feasibility, strict-prefix induction, support/finite conversion, same-trajectory telescoping and weighted potential.",
+      "lean_notes": "Finite-dimensional Euclidean space; EReal properness inherited from source support definition; zero-based indices. Fixed T0/unbounded V admitted; variable T>=1 and bounded diameter; tuning T,D,G positive.",
+      "dependencies": [
+        "BanditRL.OnlineSubgradientDescent.one_step_chain"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientDescent.regret_fixed_coarse",
+      "title": "The printed constant-step bound after dropping the residual",
+      "chapter": "online-osd",
+      "featured": false,
+      "teaching_order": 10,
+      "plain": "The printed constant-step bound after dropping the residual",
+      "math": "\\(R_T(u)\\le\\frac{\\|x_1-u\\|^2}{2\\eta}+\\frac\\eta2\\sum_{t=1}^T\\|g_t\\|^2\\)",
+      "intuition": "Actual current supports and the true projection create the trajectory; properness and support prove finite regret values.",
+      "why": "This is an explicit producer chain for one allowed source OSD choice, without assumed regret or step bounds.",
+      "position": "Orabona v10 Lemma2.31/Algorithm2.2 printed19-20/PDF31-32; printed19 transfer of Theorem2.13 and eq2.1.",
+      "proof_idea": "Choice correctness, actual projection feasibility, strict-prefix induction, support/finite conversion, same-trajectory telescoping and weighted potential.",
+      "lean_notes": "Finite-dimensional Euclidean space; EReal properness inherited from source support definition; zero-based indices. Fixed T0/unbounded V admitted; variable T>=1 and bounded diameter; tuning T,D,G positive.",
+      "dependencies": [
+        "BanditRL.OnlineSubgradientDescent.regret_fixed"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientDescent.regret_variable_bound",
+      "title": "Decreasing steps with a uniform diameter upper bound",
+      "chapter": "online-osd",
+      "featured": false,
+      "teaching_order": 11,
+      "plain": "Decreasing steps with a uniform diameter upper bound",
+      "math": "\\(X_{t+1}=\\Pi_V(X_t-\\eta_t g_t),\\quad g_t\\in\\partial f_t(X_t)\\)",
+      "intuition": "Actual current supports and the true projection create the trajectory; properness and support prove finite regret values.",
+      "why": "This is an explicit producer chain for one allowed source OSD choice, without assumed regret or step bounds.",
+      "position": "Orabona v10 Lemma2.31/Algorithm2.2 printed19-20/PDF31-32; printed19 transfer of Theorem2.13 and eq2.1.",
+      "proof_idea": "Choice correctness, actual projection feasibility, strict-prefix induction, support/finite conversion, same-trajectory telescoping and weighted potential.",
+      "lean_notes": "Finite-dimensional Euclidean space; EReal properness inherited from source support definition; zero-based indices. Fixed T0/unbounded V admitted; variable T>=1 and bounded diameter; tuning T,D,G positive.",
+      "dependencies": [
+        "BanditRL.OnlineSubgradientDescent.one_step",
+        "BanditRL.OnlineGradientDescent.weighted_potential_sum"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientDescent.regret_variable",
+      "title": "Decreasing steps with the actual bounded metric diameter",
+      "chapter": "online-osd",
+      "featured": true,
+      "teaching_order": 12,
+      "plain": "Decreasing steps with the actual bounded metric diameter",
+      "math": "\\(R_T(u)\\le\\frac{D^2}{2\\eta_T}+\\sum_{t=1}^T\\frac{\\eta_t}{2}\\|g_t\\|^2-\\frac{\\|x_{T+1}-u\\|^2}{2\\eta_T}\\)",
+      "intuition": "Actual current supports and the true projection create the trajectory; properness and support prove finite regret values.",
+      "why": "This is an explicit producer chain for one allowed source OSD choice, without assumed regret or step bounds.",
+      "position": "Orabona v10 Lemma2.31/Algorithm2.2 printed19-20/PDF31-32; printed19 transfer of Theorem2.13 and eq2.1.",
+      "proof_idea": "Choice correctness, actual projection feasibility, strict-prefix induction, support/finite conversion, same-trajectory telescoping and weighted potential.",
+      "lean_notes": "Finite-dimensional Euclidean space; EReal properness inherited from source support definition; zero-based indices. Fixed T0/unbounded V admitted; variable T>=1 and bounded diameter; tuning T,D,G positive.",
+      "dependencies": [
+        "BanditRL.OnlineSubgradientDescent.regret_variable_bound"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientDescent.regret_tuned_distance",
+      "title": "Tune one trajectory using an initial distance upper bound",
+      "chapter": "online-osd",
+      "featured": false,
+      "teaching_order": 13,
+      "plain": "Tune one trajectory using an initial distance upper bound",
+      "math": "\\(X_{t+1}=\\Pi_V(X_t-\\eta_t g_t),\\quad g_t\\in\\partial f_t(X_t)\\)",
+      "intuition": "Actual current supports and the true projection create the trajectory; properness and support prove finite regret values.",
+      "why": "This is an explicit producer chain for one allowed source OSD choice, without assumed regret or step bounds.",
+      "position": "Orabona v10 Lemma2.31/Algorithm2.2 printed19-20/PDF31-32; printed19 transfer of Theorem2.13 and eq2.1.",
+      "proof_idea": "Choice correctness, actual projection feasibility, strict-prefix induction, support/finite conversion, same-trajectory telescoping and weighted potential.",
+      "lean_notes": "Finite-dimensional Euclidean space; EReal properness inherited from source support definition; zero-based indices. Fixed T0/unbounded V admitted; variable T>=1 and bounded diameter; tuning T,D,G positive.",
+      "dependencies": [
+        "BanditRL.OnlineSubgradientDescent.regret_fixed"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientDescent.regret_tuned",
+      "title": "One horizon-tuned trajectory for every comparator",
+      "chapter": "online-osd",
+      "featured": true,
+      "teaching_order": 14,
+      "plain": "One horizon-tuned trajectory for every comparator",
+      "math": "\\(\\eta=\\frac{D}{G\\sqrt T},\\quad R_T(u)\\le DG\\sqrt T\\quad(\\forall u\\in V)\\)",
+      "intuition": "Actual current supports and the true projection create the trajectory; properness and support prove finite regret values.",
+      "why": "This is an explicit producer chain for one allowed source OSD choice, without assumed regret or step bounds.",
+      "position": "Orabona v10 Lemma2.31/Algorithm2.2 printed19-20/PDF31-32; printed19 transfer of Theorem2.13 and eq2.1.",
+      "proof_idea": "Choice correctness, actual projection feasibility, strict-prefix induction, support/finite conversion, same-trajectory telescoping and weighted potential.",
+      "lean_notes": "Finite-dimensional Euclidean space; EReal properness inherited from source support definition; zero-based indices. Fixed T0/unbounded V admitted; variable T>=1 and bounded diameter; tuning T,D,G positive.",
+      "dependencies": [
+        "BanditRL.OnlineSubgradientDescent.regret_tuned_distance"
+      ]
     }
   ]
 }
