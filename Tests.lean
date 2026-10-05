@@ -139,3 +139,4 @@ import Tests.OnlineLinearizationCanary
 import Tests.OnlineOptimalStepCanary
 import Tests.OnlineUnitScalingCanary
 import Tests.OnlineGradientDescentSourceCanary
+import Tests.OnlineConstraintFiniteLossCanary

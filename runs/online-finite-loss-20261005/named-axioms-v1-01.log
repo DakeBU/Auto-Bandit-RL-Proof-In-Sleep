@@ -1,0 +1,53 @@
+@BanditRL.OnlineConvex.finite_add_indicator_iff : ∀ {E : Type u_1} (f : E → EReal) (V : Set E) (x : E),
+  (∃ r, f x + BanditRL.OnlineConvex.extendedIndicator V x = ↑r) ↔ x ∈ V ∧ ∃ r, f x = ↑r
+'BanditRL.OnlineConvex.finite_add_indicator_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.effectiveDomain_add_indicator : ∀ {E : Type u_1} (f : E → EReal),
+  (∀ (x : E), f x ≠ ⊥) →
+    ∀ (V : Set E),
+      (BanditRL.OnlineConvex.effectiveDomain fun x => f x + BanditRL.OnlineConvex.extendedIndicator V x) =
+        BanditRL.OnlineConvex.effectiveDomain f ∩ V
+'BanditRL.OnlineConvex.effectiveDomain_add_indicator' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConstraintFiniteLossCanary.nonconstant_finite_inside : (∃ r,
+    2 + BanditRL.OnlineConvex.extendedIndicator (Set.Ici 0) 2 = ↑r) ∧
+  (∃ r, 3 + BanditRL.OnlineConvex.extendedIndicator (Set.Ici 0) 3 = ↑r) ∧ 2 ≠ 3
+'Tests.OnlineConstraintFiniteLossCanary.nonconstant_finite_inside' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Tests.OnlineConstraintFiniteLossCanary.finite_outside_not_finite : ¬∃ r,
+    -1 + BanditRL.OnlineConvex.extendedIndicator (Set.Ici 0) (-1) = ↑r
+'Tests.OnlineConstraintFiniteLossCanary.finite_outside_not_finite' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Tests.OnlineConstraintFiniteLossCanary.top_inside_not_finite : ¬∃ r,
+    ⊤ + BanditRL.OnlineConvex.extendedIndicator (Set.Ici 0) 2 = ↑r
+'Tests.OnlineConstraintFiniteLossCanary.top_inside_not_finite' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Tests.OnlineConstraintFiniteLossCanary.bottom_anywhere_not_finite : ∀ (V : Set ℝ) (x : ℝ),
+  ¬∃ r, ⊥ + BanditRL.OnlineConvex.extendedIndicator V x = ↑r
+'Tests.OnlineConstraintFiniteLossCanary.bottom_anywhere_not_finite' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Tests.OnlineConstraintFiniteLossCanary.empty_set_no_finite_loss : ∀ (f : ℝ → EReal) (x : ℝ),
+  ¬∃ r, f x + BanditRL.OnlineConvex.extendedIndicator ∅ x = ↑r
+'Tests.OnlineConstraintFiniteLossCanary.empty_set_no_finite_loss' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Tests.OnlineConstraintFiniteLossCanary.real_domain_intersection : (BanditRL.OnlineConvex.effectiveDomain fun x =>
+    ↑x + BanditRL.OnlineConvex.extendedIndicator (Set.Ici 0) x) =
+  Set.Ici 0
+'Tests.OnlineConstraintFiniteLossCanary.real_domain_intersection' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Tests.OnlineConstraintFiniteLossCanary.bottom_outside_domain_leak : (0 ∈
+    BanditRL.OnlineConvex.effectiveDomain fun x => ⊥ + BanditRL.OnlineConvex.extendedIndicator ∅ 0) ∧
+  0 ∉ (BanditRL.OnlineConvex.effectiveDomain fun x => ⊥) ∩ ∅
+'Tests.OnlineConstraintFiniteLossCanary.bottom_outside_domain_leak' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Tests.OnlineConstraintFiniteLossCanary.domain_identity_without_noBottom_false : (BanditRL.OnlineConvex.effectiveDomain
+    fun x => ⊥ + BanditRL.OnlineConvex.extendedIndicator ∅ x) ≠
+  (BanditRL.OnlineConvex.effectiveDomain fun x => ⊥) ∩ ∅
+'Tests.OnlineConstraintFiniteLossCanary.domain_identity_without_noBottom_false' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

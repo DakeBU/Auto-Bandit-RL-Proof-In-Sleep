@@ -1,0 +1,21 @@
+BanditRLProof/OnlineConvexExtended.lean:33:def extendedIndicator (V : Set E) (x : E) : EReal := by
+BanditRLProof/OnlineConvexExtended.lean:51:  have hpx : (x, (f x).toReal) ∈ realEpigraph f := EReal.le_coe_toReal (ne_of_lt hx)
+BanditRLProof/OnlineConvexExtended.lean:52:  have hpy : (y, (f y).toReal) ∈ realEpigraph f := EReal.le_coe_toReal (ne_of_lt hy)
+BanditRLProof/OnlineConvexExtended.lean:58:    effectiveDomain (extendedIndicator V) = V := by
+BanditRLProof/OnlineConvexExtended.lean:61:  by_cases hx : x ∈ V <;> simp [effectiveDomain, extendedIndicator, hx]
+BanditRLProof/OnlineConvexExtended.lean:64:    IsConvexExtended (extendedIndicator V) ↔ Convex ℝ V := by
+BanditRLProof/OnlineConvexExtended.lean:67:    simpa only [effectiveDomain_indicator] using convex_effectiveDomain (extendedIndicator V) hf
+BanditRLProof/OnlineConvexExtended.lean:69:    change Convex ℝ (realEpigraph (extendedIndicator V))
+BanditRLProof/OnlineConvexExtended.lean:70:    have he : realEpigraph (extendedIndicator V) = V ×ˢ Ici (0 : ℝ) := by
+BanditRLProof/OnlineConvexExtended.lean:73:      by_cases hx : p.1 ∈ V <;> simp [realEpigraph, extendedIndicator, hx]
+BanditRLProof/OnlineConvexExtended.lean:88:      f p.1 = ((f p.1).toReal : EReal) := (EReal.coe_toReal (ne_of_lt hx) (hbot p.1)).symm
+BanditRLProof/OnlineConvexExtended.lean:108:    rw [← EReal.coe_toReal (ne_of_lt hz) (hbot _),
+BanditRLProof/OnlineConvexExtended.lean:109:      ← EReal.coe_toReal (ne_of_lt hx) (hbot _),
+BanditRLProof/OnlineConvexExtended.lean:110:      ← EReal.coe_toReal (ne_of_lt hy) (hbot _),
+BanditRLProof/OnlineConvexExtended.lean:128:    IsConvexExtended (fun x => f x + extendedIndicator V x) := by
+BanditRLProof/OnlineConvexExtended.lean:129:  have he : realEpigraph (fun x => f x + extendedIndicator V x) =
+BanditRLProof/OnlineConvexExtended.lean:134:    · simp [realEpigraph, extendedIndicator, hx]
+BanditRLProof/OnlineConvexExtended.lean:135:    · simp [realEpigraph, extendedIndicator, hx, EReal.add_top_of_ne_bot (hbot p.1)]
+BanditRLProof/OnlineConvexExtended.lean:136:  change Convex ℝ (realEpigraph (fun x => f x + extendedIndicator V x))
+.lake/packages/mathlib/Mathlib/Data/EReal/Operations.lean:94:theorem add_top_of_ne_bot {x : EReal} (h : x ≠ ⊥) : x + ⊤ = ⊤ := by
+.lake/packages/mathlib/Mathlib/Data/EReal/Operations.lean:179:  cases y <;> simp_all only [not_false_eq_true, ne_eq, add_top_of_ne_bot, not_true_eq_false,

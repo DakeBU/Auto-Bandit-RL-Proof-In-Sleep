@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "record_id": "frontier-8507f50eb1db5e1a",
+  "updated_at": "2026-10-05T11:11:19+00:00",
+  "root_objective": "Persistent Orabona Chapters1-16 Goal; only two finite-loss terminals candidate, Chapter2/book incomplete",
+  "current_leaf": {
+    "id": "ONLINE-FINITE-LOSS-20261005",
+    "kind": "lean",
+    "status": "gate-pending",
+    "statement": "theorem finite_add_indicator_iff {E : Type*} (f : E → EReal) (V : Set E) (x : E) : (∃ r : ℝ, f x + extendedIndicator V x = (r : EReal)) ↔ x ∈ V ∧ ∃ r : ℝ, f x = (r : EReal)",
+    "statement_hash": "4a0d5bd07182a76279e21ef48d9ee0fd4a058b1a52a7ca4f63224493679c1330",
+    "declaration": "BanditRL.OnlineConvex.finite_add_indicator_iff",
+    "file": "BanditRLProof/OnlineConstraintFiniteLoss.lean",
+    "source_status": "source-body-reviewed",
+    "dependencies": [
+      {
+        "kind": "lean",
+        "name": "BanditRL.OnlineConvex.extendedIndicator",
+        "status": "compiled"
+      },
+      {
+        "kind": "review",
+        "name": "source-body",
+        "status": "accepted"
+      }
+    ]
+  },
+  "dag": {
+    "nodes": [
+      {
+        "id": "ONLINE-FINITE-LOSS-20261005",
+        "kind": "lean",
+        "status": "gate-pending",
+        "dependencies": [
+          {
+            "kind": "lean",
+            "name": "BanditRL.OnlineConvex.extendedIndicator",
+            "status": "compiled"
+          },
+          {
+            "kind": "review",
+            "name": "source-body",
+            "status": "accepted"
+          }
+        ],
+        "dispatch_count": 0
+      }
+    ]
+  },
+  "last_accepted_verifier": {
+    "trial_index": 1,
+    "time": "2026-10-05T11:11:18+00:00",
+    "task": "ONLINE-FINITE-LOSS-20261005",
+    "role": "lower",
+    "kind": "build",
+    "status": "compiled",
+    "lean": "BanditRLProof/OnlineConstraintFiniteLoss.lean",
+    "notes": "Exact source-stabilized public body/axioms/canaries verified; distinct body review accepted-with-explicit-delta. Full package pending.",
+    "run_id": "online-finite-loss-20261005"
+  },
+  "memory_policy": {
+    "recent_role_relevant_limit": 5,
+    "explicit_verified_lemma_ids": [],
+    "whole_history_default": false
+  },
+  "shadow_gate": {
+    "status": "pending",
+    "analyzed_trial_rows": 2,
+    "mismatches": [],
+    "replay_transitions": 0
+  },
+  "mutation_policy": {
+    "canonical_path_queue": true,
+    "cross_process_lock": true,
+    "same_file_serialized": true,
+    "disjoint_files_parallel": true
+  },
+  "autonomous_execution": {
+    "enabled": false,
+    "requires_deterministic_gates": true,
+    "requires_explicit_user_request": true
+  }
+}
