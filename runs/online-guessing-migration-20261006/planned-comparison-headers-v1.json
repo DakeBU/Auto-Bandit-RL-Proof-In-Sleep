@@ -1,0 +1,11 @@
+{
+  "status": "planned-exact-terminals-no-body-or-compilation-claim",
+  "headers": [
+    "theorem meanPredict_zero_cumulativeLoss (T : ℕ) (hT : 0 < T) :\n    (∑ t ∈ range T,\n      (BanditRL.OnlineLearning.meanPredict (fun _ : ℕ => (0 : ℝ)) t)^2) = 1/4 := by",
+    "theorem guessing_vs_mean_lower (n : ℕ) (hn : 0 < n) :\n    (n : ℝ)/4 - 1/4 ≤\n      regret unitInterval (1/(2*Real.sqrt (((2*n)^2 : ℕ) : ℝ)))\n        (fun _ x => (x-0)^2) 1 0 ((2*n)^2) -\n      (∑ t ∈ range ((2*n)^2),\n        (BanditRL.OnlineLearning.meanPredict (fun _ : ℕ => (0 : ℝ)) t)^2) := by",
+    "theorem guessing_vs_mean_unbounded (C : ℝ) (N : ℕ) :\n    ∃ n : ℕ, N < n ∧\n      C < regret unitInterval (1/(2*Real.sqrt (((2*n)^2 : ℕ) : ℝ)))\n        (fun _ x => (x-0)^2) 1 0 ((2*n)^2) -\n      (∑ t ∈ range ((2*n)^2),\n        (BanditRL.OnlineLearning.meanPredict (fun _ : ℕ => (0 : ℝ)) t)^2) := by"
+  ],
+  "public_module": "BanditRLProof/OnlineGuessingComparison.lean",
+  "new_proofs": 3,
+  "new_definitions": 0
+}

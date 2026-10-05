@@ -1,3 +1,15 @@
+/-
+Derived support for Orabona v10 Example 2.14's comparison, printed p15/PDF27.
+Same actual interval square-loss OGD, initial 1, all labels 0, comparator 0;
+positive n and known square horizon T=(2*n)^2, source step 1/(2*sqrt T)=1/(4*n).
+Actual geometric trajectory yields regret at least n/4=sqrt T/8. The numerical
+lower witness is not printed in the book, not every initialization/algorithm,
+and not a Chapter 4 minimax claim. The eta identity alone also permits n=0
+under total real division; no legal tuned zero-horizon guarantee follows.
+OnlineGuessingComparison directly compares the source mean predictor (initial
+1/2) on the same zero stream, with all initialization/horizon boundaries visible.
+-/
+
 import BanditRLProof.OnlineGuessingOGD
 
 noncomputable section

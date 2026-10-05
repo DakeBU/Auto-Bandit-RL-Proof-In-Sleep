@@ -715,6 +715,7 @@ import BanditRLProof.OnlineJensen
 import BanditRLProof.OnlineFTLFailure
 import BanditRLProof.OnlineGuessingOGD
 import BanditRLProof.OnlineGuessingLower
+import BanditRLProof.OnlineGuessingComparison
 
 import BanditRLProof.OnlineHuber
 import BanditRLProof.OnlineClosedProper

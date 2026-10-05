@@ -1,0 +1,74 @@
+{
+  "project_unitInterval": {
+    "file": "BanditRLProof/OnlineGuessingOGD.lean",
+    "statement": "theorem project_unitInterval (z : ℝ) : project unitInterval z = min (max z 0) 1",
+    "statement_hash": "74e296da20d13f398c5ad1761937b336b7a959365d4ae9a294211a202aeb52ee",
+    "state": "retained-public-body-not-currently-source-accepted"
+  },
+  "square_regular": {
+    "file": "BanditRLProof/OnlineGuessingOGD.lean",
+    "statement": "theorem square_regular (y : ℝ) : RegularLoss unitInterval (fun x : ℝ => (x-y)^2)",
+    "statement_hash": "8695f4370529aa657c45adf5b588919c6beb84abb8e9bd056211b91aba1a23b9",
+    "state": "retained-public-body-not-currently-source-accepted"
+  },
+  "gradient_square": {
+    "file": "BanditRLProof/OnlineGuessingOGD.lean",
+    "statement": "theorem gradient_square (y x : ℝ) : gradient (fun x : ℝ => (x-y)^2) x = 2 * (x-y)",
+    "statement_hash": "42c40493d4c43e991f63b66c4b9c2c4e239a80a3214cceb195605ede181841f4",
+    "state": "retained-public-body-not-currently-source-accepted"
+  },
+  "gradient_square_bound": {
+    "file": "BanditRLProof/OnlineGuessingOGD.lean",
+    "statement": "theorem gradient_square_bound (y x : ℝ) (hy : y ∈ Icc (0 : ℝ) 1) (hx : x ∈ Icc (0 : ℝ) 1) : ‖gradient (fun x : ℝ => (x-y)^2) x‖ ≤ 2",
+    "statement_hash": "4a764e490eb6a43c07bf3b973b7859de4e8ab75f77a5f351f348afb09c7fb190",
+    "state": "retained-public-body-not-currently-source-accepted"
+  },
+  "square_step_clamp": {
+    "file": "BanditRLProof/OnlineGuessingOGD.lean",
+    "statement": "theorem square_step_clamp (η y x : ℝ) : step unitInterval η (fun x : ℝ => (x-y)^2) x = min (max (x - 2 * η * (x-y)) 0) 1",
+    "statement_hash": "2f92641d1018ae93c21a2bf66421beacc65f4bdc39feadf618b67a4883b87f16",
+    "state": "retained-public-body-not-currently-source-accepted"
+  },
+  "example_2_14": {
+    "file": "BanditRLProof/OnlineGuessingOGD.lean",
+    "statement": "theorem example_2_14 (y : ℕ → ℝ) (x0 : ℝ) (hx0 : x0 ∈ Icc (0 : ℝ) 1) (T : ℕ) (hT : 0 < T) (hy : ∀ t < T, y t ∈ Icc (0 : ℝ) 1) : ∀ u ∈ Icc (0 : ℝ) 1, regret unitInterval (1 / (2 * Real.sqrt T)) (fun t x => (x-y t)^2) x0 u T ≤ 2 * Real.sqrt T",
+    "statement_hash": "e9e684185cc6529bb8cfb4c36aca24b4ac87b4f2e1bbc5bdb4776f18f44ced8c",
+    "state": "retained-public-body-not-currently-source-accepted"
+  },
+  "guessing_zero_trajectory": {
+    "file": "BanditRLProof/OnlineGuessingLower.lean",
+    "statement": "theorem guessing_zero_trajectory (n : ℕ) (hn : 0 < n) (t : ℕ) : iterate unitInterval (1/(4*(n:ℝ))) (fun _ x => (x-0)^2) 1 t = (1 - 1/(2*(n:ℝ)))^t",
+    "statement_hash": "f60570876fc0bcc04b467c5a568aa5ea1d0b08accc012fa28cc5fb07e450bd56",
+    "state": "retained-public-body-not-currently-source-accepted"
+  },
+  "guessing_tuned_eta_square": {
+    "file": "BanditRLProof/OnlineGuessingLower.lean",
+    "statement": "theorem guessing_tuned_eta_square (n : ℕ) : 1/(2*Real.sqrt (((2*n)^2 : ℕ) : ℝ)) = 1/(4*(n:ℝ))",
+    "statement_hash": "bdc383809eb58df7f902620edaf4e85b8dc02bea962bfd1234f224f32b3bce41",
+    "state": "retained-public-body-not-currently-source-accepted"
+  },
+  "guessing_squared_horizon_lower": {
+    "file": "BanditRLProof/OnlineGuessingLower.lean",
+    "statement": "theorem guessing_squared_horizon_lower (n : ℕ) (hn : 0 < n) : (n:ℝ)/4 ≤ regret unitInterval (1/(2*Real.sqrt (((2*n)^2 : ℕ) : ℝ))) (fun _ x => (x-0)^2) 1 0 ((2*n)^2)",
+    "statement_hash": "8c990acef734ccaea3a69e9a593f56f74fca18338a66e44ea7d74c9fe1662d8b",
+    "state": "retained-public-body-not-currently-source-accepted"
+  },
+  "meanPredict_zero_cumulativeLoss": {
+    "file": "BanditRLProof/OnlineGuessingComparison.lean",
+    "statement": "theorem meanPredict_zero_cumulativeLoss (T : ℕ) (hT : 0 < T) :\n    (∑ t ∈ range T,\n      (BanditRL.OnlineLearning.meanPredict (fun _ : ℕ => (0 : ℝ)) t)^2) = 1/4",
+    "statement_hash": "732235ffdac5aac0ee2f5c0bcb170850d511e27dd320f3843547ce76f2c2e56d",
+    "state": "planned-type-expression-checked-no-body"
+  },
+  "guessing_vs_mean_lower": {
+    "file": "BanditRLProof/OnlineGuessingComparison.lean",
+    "statement": "theorem guessing_vs_mean_lower (n : ℕ) (hn : 0 < n) :\n    (n : ℝ)/4 - 1/4 ≤\n      regret unitInterval (1/(2*Real.sqrt (((2*n)^2 : ℕ) : ℝ)))\n        (fun _ x => (x-0)^2) 1 0 ((2*n)^2) -\n      (∑ t ∈ range ((2*n)^2),\n        (BanditRL.OnlineLearning.meanPredict (fun _ : ℕ => (0 : ℝ)) t)^2)",
+    "statement_hash": "592818577c4713e87ee2443c9bcb4d287b12fd443b006f08b234e72d62eca6e0",
+    "state": "planned-type-expression-checked-no-body"
+  },
+  "guessing_vs_mean_unbounded": {
+    "file": "BanditRLProof/OnlineGuessingComparison.lean",
+    "statement": "theorem guessing_vs_mean_unbounded (C : ℝ) (N : ℕ) :\n    ∃ n : ℕ, N < n ∧\n      C < regret unitInterval (1/(2*Real.sqrt (((2*n)^2 : ℕ) : ℝ)))\n        (fun _ x => (x-0)^2) 1 0 ((2*n)^2) -\n      (∑ t ∈ range ((2*n)^2),\n        (BanditRL.OnlineLearning.meanPredict (fun _ : ℕ => (0 : ℝ)) t)^2)",
+    "statement_hash": "d8c3da8740880ceef1e4ab5d6a3195fe02f93c5779438d4a6edb8a375e0b9b6c",
+    "state": "planned-type-expression-checked-no-body"
+  }
+}
