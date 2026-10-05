@@ -46,24 +46,25 @@ binding=load(run/'public-actual-bindings-v2.json')
 assert sha(public)==binding['public_module_sha256'] and sha('Tests/OnlineGradientDescentSourceCanary.lean')==binding['public_canary_sha256']
 assert len(binding['actual_named_lookup_and_axioms'])==75
 assert all(set(xs)<={'propext','Classical.choice','Quot.sound'} for xs in binding['actual_named_lookup_and_axioms'].values())
-gates=['root-v2-02','Tests-v2-02','full-harness-v2-02','contributor-exact-v2-03','graph-verify-v2-01',
-    'site-final01-build','site-final01-check','registry-final01','browser-final01','review-history-v2-01',
-    'current-diff-v2-01','candidate-frontier-refresh-v2','candidate-frontier-shadow-v2']
+gates=['root-v2-02','Tests-v2-02','full-harness-v2-02','contributor-exact-v2-04','graph-verify-v2-01',
+    'site-final02-build','site-final02-check','registry-final02','browser-final02','review-history-v2-01',
+    'current-diff-v2-02','candidate-frontier-refresh-v2','candidate-frontier-shadow-v2']
 for label in gates:assert load(run/(label+'-exit.json'))['exit_code']==0,label
 full=(run/'full-harness-v2-02.log').read_text(encoding='utf-8')
 assert 'Ran 466 tests' in full and 'OK (skipped=7)' in full and 'check passed' in full
-exact=(run/'contributor-exact-v2-03.log').read_text(encoding='utf-8')
+exact=(run/'contributor-exact-v2-04.log').read_text(encoding='utf-8')
 assert 'affected production paths: 7' in exact and 'changed contribution contracts: 1' in exact
 assert 'Contributor contract passed.' in exact and 'N/A' not in exact
 assert load(run/'contributor-exact-v2-02-exit.json')['exit_code']!=0
 assert load(run/'diff-check-v2-01-exit.json')['exit_code']!=0
+assert load(run/'site-final01-check-exit.json')['exit_code']!=0
 assert load(run/'current-scoped-diffcheck-v2.json')['status']=='passed'
 graph=load(run/'compiled-dependencies-v2.json')
 assert graph['scope_nodes']==38 and len(graph['required_proof_value_checks'])==33
 assert sha(graph['full_export_path'])==graph['full_export_sha256']
-registry=load(run/'registry-final01.json');assert registry['status']=='passed' and len(registry['checks'])==14
+registry=load(run/'registry-final02.json');assert registry['status']=='passed' and len(registry['checks'])==14
 assert registry['preserved_base_node_ids_and_urls']==10790 and sha(registry['registry_path'])==registry['registry_sha256']
-site=load('tmp/online-ogd-migration-site-final01/site-manifest.json')
+site=load('tmp/online-ogd-migration-site-final02/site-manifest.json')
 assert site['source_dirty'] is False and site['lean_verified'] is True
 assert site['source_commit']==inputs['site_commit']==registry['source_commit']
 assert sha('../research-online-ogd/tmp/pdfs/orabona-v10.pdf')=='cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17'
