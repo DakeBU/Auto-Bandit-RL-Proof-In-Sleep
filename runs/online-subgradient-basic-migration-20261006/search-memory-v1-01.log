@@ -1,0 +1,261 @@
+route: ROUTE-TSALLIS-INF-FTRL: Tsallis-INF and finite-arm FTRL best-of-both-worlds
+lean: BanditRL.OnlineConvex.theorem_2_28 [theorem] BanditRLProof/OnlineAffineSubgradient.lean:18
+  theorem theorem_2_28 [FiniteDimensional ℝ E] [FiniteDimensional ℝ F] (f : F → EReal) (hp : SourceProper f) (A : E →L[ℝ] F) (b : F) (x : E) : A.adjoint '' (SourceSubdifferential f (A x + b)) ⊆ SourceSubdifferential (fun y => f (A y + b)) x
+lean: BanditRL.OnlineGuessingSubgradient.loss [def] BanditRLProof/OnlineGuessingSubgradient.lean:25
+  def loss (y x : ℝ) : EReal
+lean: BanditRL.OnlineGuessingSubgradient.loss_subdifferential_translate [theorem] BanditRLProof/OnlineGuessingSubgradient.lean:27
+  theorem loss_subdifferential_translate (y x : ℝ) : SourceSubdifferential (loss y) x = SourceSubdifferential (fun z : ℝ => ((|z| : ℝ) : EReal)) (x - y)
+lean: BanditRL.OnlineGuessingSubgradient.loss_subgradient_positive [theorem] BanditRLProof/OnlineGuessingSubgradient.lean:40
+  theorem loss_subgradient_positive (y x : ℝ) (hxy : y < x) : SourceSubdifferential (loss y) x = {(1 : ℝ)}
+lean: BanditRL.OnlineGuessingSubgradient.loss_subgradient_zero [theorem] BanditRLProof/OnlineGuessingSubgradient.lean:45
+  theorem loss_subgradient_zero (y : ℝ) : SourceSubdifferential (loss y) y = Icc (-1 : ℝ) 1
+lean: BanditRL.OnlineGuessingSubgradient.loss_subgradient_negative [theorem] BanditRLProof/OnlineGuessingSubgradient.lean:50
+  theorem loss_subgradient_negative (y x : ℝ) (hxy : x < y) : SourceSubdifferential (loss y) x = {(-1 : ℝ)}
+lean: BanditRL.OnlineGuessingSubgradient.example_2_32_subdifferential [theorem] BanditRLProof/OnlineGuessingSubgradient.lean:55
+  theorem example_2_32_subdifferential (y x : ℝ) : SourceSubdifferential (loss y) x = if y < x then {(1 : ℝ)} else if x = y then Icc (-1 : ℝ) 1 else {(-1 : ℝ)}
+lean: BanditRL.OnlineGuessingSubgradient.loss_on_unitInterval [theorem] BanditRLProof/OnlineGuessingSubgradient.lean:64
+  theorem loss_on_unitInterval (y : ℝ) : SubdifferentiableOn BanditRL.OnlineGradientDescent.unitInterval (loss y)
+lean: BanditRL.OnlineGuessingSubgradient.loss_subgradient_bound [theorem] BanditRLProof/OnlineGuessingSubgradient.lean:78
+  theorem loss_subgradient_bound (y x g : ℝ) (hg : g ∈ SourceSubdifferential (loss y) x) : ‖g‖ ≤ 1
+lean: BanditRL.OnlineGuessingSubgradient.current_subgradient_bound [theorem] BanditRLProof/OnlineGuessingSubgradient.lean:93
+  theorem current_subgradient_bound (y x : ℝ) (hx : x ∈ Icc (0 : ℝ) 1) : ‖currentSubgradient (loss y) x‖ ≤ 1
+lean: BanditRL.OnlineGuessingSubgradient.loss_step_clamp [theorem] BanditRLProof/OnlineGuessingSubgradient.lean:100
+  theorem loss_step_clamp (η y x : ℝ) : step BanditRL.OnlineGradientDescent.unitInterval η (loss y) x = min (max (x - η * currentSubgradient (loss y) x) 0) 1
+lean: BanditRL.OnlineGuessingSubgradient.guessing_prefix [theorem] BanditRLProof/OnlineGuessingSubgradient.lean:105
+  theorem guessing_prefix (η η' : ℕ → ℝ) (y y' : ℕ → ℝ) (x₁ : ℝ) (t : ℕ) (hη : ∀ s < t, η s = η' s) (hy : ∀ s < t, y s = y' s) : iterate BanditRL.OnlineGradientDescent.unitInterval η (fun s => loss (y s)) x₁ t = iterate BanditRL.OnlineGradientDescent.unitInterval η' (fun s => loss (y' s)) x₁ t
+lean: BanditRL.OnlineGuessingSubgradient.example_2_32 [theorem] BanditRLProof/OnlineGuessingSubgradient.lean:113
+  theorem example_2_32 (y : ℕ → ℝ) (x₁ : ℝ) (hx₁ : x₁ ∈ Icc (0 : ℝ) 1) (T : ℕ) (hT : 0 < T) (hy : ∀ t < T, y t ∈ Icc (0 : ℝ) 1) : ∀ u ∈ Icc (0 : ℝ) 1, (∑ t ∈ range T, (|iterate BanditRL.OnlineGradientDescent.unitInterval (fun _ => 1 / Real.sqrt T) (fun s => loss (y s)) x₁ t - y t| - |u - y t|)) ≤ Real.sqrt T
+lean: BanditRL.OnlineGuessingSubgradient.example_2_32_average_eventually [theorem] BanditRLProof/OnlineGuessingSubgradient.lean:133
+  theorem example_2_32_average_eventually (y : ℕ → ℝ) (x₁ : ℝ) (hx₁ : x₁ ∈ Icc (0 : ℝ) 1) (hy : ∀ t, y t ∈ Icc (0 : ℝ) 1) (u : ℝ) (hu : u ∈ Icc (0 : ℝ) 1) (ε : ℝ) (hε : 0 < ε) : ∀ᶠ T : ℕ in atTop, (∑ t ∈ range T, (|iterate BanditRL.OnlineGradientDescent.unitInterval (fun _ => 1 / Real.sqrt T) (fun s => loss (y s)) x₁ t - y t| - |u - y t|)) / T < ε
+lean: BanditRL.OnlineConvex.hinge_subdifferential_hull [theorem] BanditRLProof/OnlineHinge.lean:103
+  theorem hinge_subdifferential_hull [FiniteDimensional ℝ E] (z x : E) : SourceSubdifferential (sourceHinge z) x = convexHull ℝ (SourceActiveSubgradientUnion (hingeFamily z) x)
+lean: BanditRL.OnlineConvex.hinge_active_negative [theorem] BanditRLProof/OnlineHinge.lean:131
+  theorem hinge_active_negative (z x : E) (h : 1 - inner ℝ z x < 0) : SourceActiveSubgradientUnion (hingeFamily z) x = {(0 : E)}
+lean: BanditRL.OnlineConvex.hinge_active_positive [theorem] BanditRLProof/OnlineHinge.lean:144
+  theorem hinge_active_positive (z x : E) (h : 0 < 1 - inner ℝ z x) : SourceActiveSubgradientUnion (hingeFamily z) x = {-z}
+lean: BanditRL.OnlineConvex.hinge_active_zero [theorem] BanditRLProof/OnlineHinge.lean:157
+  theorem hinge_active_zero (z x : E) (h : 1 - inner ℝ z x = 0) : SourceActiveSubgradientUnion (hingeFamily z) x = {(0 : E), -z}
+lean: BanditRL.OnlineLinearization.oracle_feedback [theorem] BanditRLProof/OnlineLinearization.lean:113
+  theorem oracle_feedback (V : Domain (E := E)) (A : LinearPolicy (E := E)) (hA : Feasible V A) (loss : ℕ → E → EReal) (p : SupportPolicy (E := E)) (hp : BanditRL.OnlineSubgradientPolicy.OracleLaw V p) (T : ℕ) (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) : LegalFeedback A loss p T
+lean: BanditRL.OnlineLinearization.canonical_feedback [theorem] BanditRLProof/OnlineLinearization.lean:123
+  theorem canonical_feedback (V : Domain (E := E)) (A : LinearPolicy (E := E)) (hA : Feasible V A) (loss : ℕ → E → EReal) (T : ℕ) (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) : LegalFeedback A loss BanditRL.OnlineSubgradientPolicy.canonicalPolicy T
+lean: BanditRL.OnlineLinearization.trajectory_finite_loss [theorem] BanditRLProof/OnlineLinearization.lean:128
+  theorem trajectory_finite_loss (V : Domain (E := E)) (A : LinearPolicy (E := E)) (hA : Feasible V A) (loss : ℕ → E → EReal) (p : SupportPolicy (E := E)) (T : ℕ) (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) (t : ℕ) (ht : t < T) : loss t (output A loss p t) = ((loss t (output A loss p t)).toReal : EReal)
+lean: BanditRL.OnlineLinearization.support_gap [theorem] BanditRLProof/OnlineLinearization.lean:133
+  theorem support_gap (V : Domain (E := E)) (f : E → EReal) (hf : BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V f) (x g u : E) (hu : u ∈ V.carrier) (hg : g ∈ SourceSubdifferential f x) : (f x).toReal - (f u).toReal ≤ inner ℝ g (x - u)
+lean: BanditRL.OnlineLinearization.regret_comparison [theorem] BanditRLProof/OnlineLinearization.lean:142
+  theorem regret_comparison (V : Domain (E := E)) (A : LinearPolicy (E := E)) (loss : ℕ → E → EReal) (p : SupportPolicy (E := E)) (T : ℕ) (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) (hlegal : LegalFeedback A loss p T) (u : E) (hu : u ∈ V.carrier) : regret A loss p u T ≤ BanditRL.OnlineLearning.comparatorRegret (fun t => linearLoss (selected A loss p t)) (linearRun A (selected A loss p)) u T
+lean: BanditRL.OnlineLinearization.regret_transfer [theorem] BanditRLProof/OnlineLinearization.lean:152
+  theorem regret_transfer (V : Domain (E := E)) (A : LinearPolicy (E := E)) (loss : ℕ → E → EReal) (p : SupportPolicy (E := E)) (T : ℕ) (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) (hlegal : LegalFeedback A loss p T) (B : (ℕ → E) → E → ℕ → ℝ) (hB : ∀ g u, u ∈ V.carrier → BanditRL.OnlineLearning.comparatorRegret (fun t => linearLoss (g t)) (linearRun A g) u T ≤ B g u T) (u : E) (hu : u ∈ V.carrier) : regret A loss p u T ≤ B (selected A loss p) u T
+lean: BanditRL.OnlineLinearization.canonical_regret_comparison [theorem] BanditRLProof/OnlineLinearization.lean:157
+  theorem canonical_regret_comparison (V : Domain (E := E)) (A : LinearPolicy (E := E)) (hA : Feasible V A) (loss : ℕ → E → EReal) (T : ℕ) (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) (u : E) (hu : u ∈ V.carrier) : regret A loss BanditRL.OnlineSubgradientPolicy.canonicalPolicy u T ≤ BanditRL.OnlineLearning.comparatorRegret (fun t => linearLoss (selected A loss BanditRL.OnlineSubgradientPolicy.canonicalPolicy t)) (linearRun A (selected A loss BanditRL.OnlineSubgradientPolicy.canonicalPolicy)) u T
+lean: BanditRL.OnlineConvex.SourceLipschitzOn [def] BanditRLProof/OnlineLipschitzSubgradient.lean:23
+  def SourceLipschitzOn (f : E → EReal) (V : Set E) (L : ℝ≥0) : Prop
+lean: BanditRL.OnlineConvex.theorem_2_30 [theorem] BanditRLProof/OnlineLipschitzSubgradient.lean:27
+  theorem theorem_2_30 [FiniteDimensional ℝ E] (f : E → EReal) (hp : SourceProper f) (hc : IsConvexExtended f) (L : ℝ≥0) : SourceLipschitzOn f (interior (effectiveDomain f)) L ↔ ∀ x ∈ interior (effectiveDomain f), ∀ g ∈ SourceSubdifferential f x, ‖g‖ ≤ (L : ℝ)
+lean: BanditRL.OnlineConvex.abs_subgradient_zero [theorem] BanditRLProof/OnlineSubgradientAbsolute.lean:18
+  theorem abs_subgradient_zero : SourceSubdifferential (fun y : ℝ => ((|y| : ℝ) : EReal)) 0 = Icc (-1 : ℝ) 1
+lean: BanditRL.OnlineConvex.abs_subgradient_positive [theorem] BanditRLProof/OnlineSubgradientAbsolute.lean:45
+  theorem abs_subgradient_positive (x : ℝ) (hx : 0 < x) : SourceSubdifferential (fun y : ℝ => ((|y| : ℝ) : EReal)) x = {(1 : ℝ)}
+lean: BanditRL.OnlineConvex.abs_subgradient_negative [theorem] BanditRLProof/OnlineSubgradientAbsolute.lean:72
+  theorem abs_subgradient_negative (x : ℝ) (hx : x < 0) : SourceSubdifferential (fun y : ℝ => ((|y| : ℝ) : EReal)) x = {(-1 : ℝ)}
+lean: BanditRL.OnlineConvex.example_2_24 [theorem] BanditRLProof/OnlineSubgradientAbsolute.lean:99
+  theorem example_2_24 (x : ℝ) : SourceSubdifferential (fun y : ℝ => ((|y| : ℝ) : EReal)) x = if 0 < x then {(1 : ℝ)} else if x = 0 then Icc (-1 : ℝ) 1 else {(-1 : ℝ)}
+lean: BanditRL.OnlineConvex.SourceSubdifferential [def] BanditRLProof/OnlineSubgradientBasic.lean:10
+  def SourceSubdifferential (f : E → EReal) (x : E) : Set E
+lean: BanditRL.OnlineConvex.subgradient_point_finite [theorem] BanditRLProof/OnlineSubgradientBasic.lean:13
+  theorem subgradient_point_finite (f : E → EReal) (hf : SourceProper f) (x g : E) (hg : g ∈ SourceSubdifferential f x) : x ∈ effectiveDomain f
+lean: BanditRL.OnlineConvex.theorem_2_21 [theorem] BanditRLProof/OnlineSubgradientBasic.lean:23
+  theorem theorem_2_21 (f : E → ℝ) (V : Set E) (hV : Convex ℝ V) (hsub : ∀ x ∈ V, (SourceSubdifferential (fun y => (f y : EReal)) x).Nonempty) : ConvexOn ℝ V f
+lean: BanditRL.OnlineSubgradientDescent.Domain [abbrev] BanditRLProof/OnlineSubgradientDescent.lean:24
+  abbrev Domain
+lean: BanditRL.OnlineSubgradientDescent.SubdifferentiableOn [def] BanditRLProof/OnlineSubgradientDescent.lean:26
+  def SubdifferentiableOn (V : Domain (E := E)) (f : E → EReal) : Prop
+lean: BanditRL.OnlineSubgradientDescent.currentSubgradient [def] BanditRLProof/OnlineSubgradientDescent.lean:29
+  def currentSubgradient (f : E → EReal) (x : E) : E
+lean: BanditRL.OnlineSubgradientDescent.step [def] BanditRLProof/OnlineSubgradientDescent.lean:33
+  def step (V : Domain (E := E)) (η : ℝ) (f : E → EReal) (x : E) : E
+lean: BanditRL.OnlineSubgradientDescent.iterate [def] BanditRLProof/OnlineSubgradientDescent.lean:35
+  def iterate (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) : ℕ → E | 0 => x₁ | t + 1 => step V (η t) (loss t) (iterate V η loss x₁ t)
+lean: BanditRL.OnlineSubgradientDescent.regret [def] BanditRLProof/OnlineSubgradientDescent.lean:38
+  def regret (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ u : E) (T : ℕ) : ℝ
+lean: BanditRL.OnlineSubgradientDescent.lemma_2_31 [theorem] BanditRLProof/OnlineSubgradientDescent.lean:40
+  theorem lemma_2_31 (V : Domain (E := E)) (f : E → EReal) (hf : SubdifferentiableOn V f) (η : ℝ) (hη : 0 < η) (x u : E) (hu : u ∈ V.carrier) (g : E) (hg : g ∈ SourceSubdifferential f x) : η * ((f x).toReal - (f u).toReal) ≤ η * inner ℝ g (x - u) ∧ η * inner ℝ g (x - u) ≤ ‖x - u‖ ^ 2 / 2 - ‖BanditRL.OnlineGradientDescent.project V (x - η • g) - u‖ ^ 2 / 2 + η ^ 2 / 2 * ‖g‖ ^ 2
+lean: BanditRL.OnlineSubgradientDescent.currentSubgradient_mem [theorem] BanditRLProof/OnlineSubgradientDescent.lean:71
+  theorem currentSubgradient_mem (V : Domain (E := E)) (f : E → EReal) (hf : SubdifferentiableOn V f) (x : E) (hx : x ∈ V.carrier) : currentSubgradient f x ∈ SourceSubdifferential f x
+lean: BanditRL.OnlineSubgradientDescent.finite_loss [theorem] BanditRLProof/OnlineSubgradientDescent.lean:80
+  theorem finite_loss (V : Domain (E := E)) (f : E → EReal) (hf : SubdifferentiableOn V f) (x : E) (hx : x ∈ V.carrier) : f x = ((f x).toReal : EReal)
+lean: BanditRL.OnlineSubgradientDescent.iterate_mem [theorem] BanditRLProof/OnlineSubgradientDescent.lean:87
+  theorem iterate_mem (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (t : ℕ) : iterate V η loss x₁ t ∈ V.carrier
+lean: BanditRL.OnlineSubgradientDescent.iterate_prefix [theorem] BanditRLProof/OnlineSubgradientDescent.lean:94
+  theorem iterate_prefix (V : Domain (E := E)) (η η' : ℕ → ℝ) (loss loss' : ℕ → E → EReal) (x₁ : E) (t : ℕ) (hη : ∀ s < t, η s = η' s) (hloss : ∀ s < t, loss s = loss' s) : iterate V η loss x₁ t = iterate V η' loss' x₁ t
+lean: BanditRL.OnlineSubgradientDescent.iterate_support [theorem] BanditRLProof/OnlineSubgradientDescent.lean:105
+  theorem iterate_support (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (t : ℕ) (hloss : SubdifferentiableOn V (loss t)) : currentSubgradient (loss t) (iterate V η loss x₁ t) ∈ SourceSubdifferential (loss t) (iterate V η loss x₁ t)
+lean: BanditRL.OnlineSubgradientDescent.iterate_finite_loss [theorem] BanditRLProof/OnlineSubgradientDescent.lean:112
+  theorem iterate_finite_loss (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (t : ℕ) (hloss : SubdifferentiableOn V (loss t)) (u : E) (hu : u ∈ V.carrier) : loss t (iterate V η loss x₁ t) = ((loss t (iterate V η loss x₁ t)).toReal : EReal) ∧ loss t u = ((loss t u).toReal : EReal)
+lean: BanditRL.OnlineSubgradientDescent.one_step_chain [theorem] BanditRLProof/OnlineSubgradientDescent.lean:120
+  theorem one_step_chain (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (t : ℕ) (hη : 0 < η t) (hloss : SubdifferentiableOn V (loss t)) (u : E) (hu : u ∈ V.carrier) : η t * ((loss t (iterate V η loss x₁ t)).toReal - (loss t u).toReal) ≤ η t * inner ℝ (currentSubgradient (loss t) (iterate V η loss x₁ t)) (iterate V η loss x₁ t - u) ∧ η t * inner ℝ (currentSubgradient (loss t) (iterate V η loss x₁ t)) (iterate V η loss x₁ t - u) ≤ ‖iterate V η loss x₁ t - u‖ ^ 2 / 2 - ‖iterate V η loss x₁ (t + 1) - u‖ ^ 2 / 2 + (η t) ^ 2 / 2 * ‖currentSubgradient (loss t) (iterate V η loss x₁ t)‖ ^ 2
+lean: BanditRL.OnlineSubgradientDescent.one_step [theorem] BanditRLProof/OnlineSubgradientDescent.lean:137
+  theorem one_step (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (t : ℕ) (hη : 0 < η t) (hloss : SubdifferentiableOn V (loss t)) (u : E) (hu : u ∈ V.carrier) : (loss t (iterate V η loss x₁ t)).toReal - (loss t u).toReal ≤ (‖iterate V η loss x₁ t - u‖ ^ 2 - ‖iterate V η loss x₁ (t + 1) - u‖ ^ 2) / (2 * η t) + η t / 2 * ‖currentSubgradient (loss t) (iterate V η loss x₁ t)‖ ^ 2
+lean: BanditRL.OnlineSubgradientDescent.regret_fixed [theorem] BanditRLProof/OnlineSubgradientDescent.lean:159
+  theorem regret_fixed (V : Domain (E := E)) (η : ℝ) (hη : 0 < η) (loss : ℕ → E → EReal) (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (T : ℕ) (hloss : ∀ t < T, SubdifferentiableOn V (loss t)) (u : E) (hu : u ∈ V.carrier) : regret V (fun _ => η) loss x₁ u T ≤ ‖x₁ - u‖ ^ 2 / (2 * η) + η / 2 * (∑ t ∈ range T, ‖currentSubgradient (loss t) (iterate V (fun _ => η) loss x₁ t)‖ ^ 2) - ‖iterate V (fun _ => η) loss x₁ T - u‖ ^ 2 / (2 * η)
+lean: BanditRL.OnlineSubgradientDescent.regret_fixed_coarse [theorem] BanditRLProof/OnlineSubgradientDescent.lean:186
+  theorem regret_fixed_coarse (V : Domain (E := E)) (η : ℝ) (hη : 0 < η) (loss : ℕ → E → EReal) (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (T : ℕ) (hloss : ∀ t < T, SubdifferentiableOn V (loss t)) (u : E) (hu : u ∈ V.carrier) : regret V (fun _ => η) loss x₁ u T ≤ ‖x₁ - u‖ ^ 2 / (2 * η) + η / 2 * (∑ t ∈ range T, ‖currentSubgradient (loss t) (iterate V (fun _ => η) loss x₁ t)‖ ^ 2)
+lean: BanditRL.OnlineSubgradientDescent.regret_variable_bound [theorem] BanditRLProof/OnlineSubgradientDescent.lean:196
+  theorem regret_variable_bound (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (T : ℕ) (hT : 0 < T) (hη : ∀ t < T, 0 < η t) (hmono : ∀ t, t + 1 < T → η (t + 1) ≤ η t) (hloss : ∀ t < T, SubdifferentiableOn V (loss t)) (D : ℝ) (hdiam : ∀ x ∈ V.carrier, ∀ y ∈ V.carrier, ‖x - y‖ ≤ D) (u : E) (hu : u ∈ V.carrier) : regret V η loss x₁ u T ≤ D ^ 2 / (2 * η (T - 1)) + (∑ t ∈ range T, η t / 2 * ‖currentSubgradient (loss t) (iterate V η loss x₁ t)‖ ^ 2) - ‖iterate V η loss x₁ T - u‖ ^ 2 / (2 * η (T - 1))
+lean: BanditRL.OnlineSubgradientDescent.regret_variable [theorem] BanditRLProof/OnlineSubgradientDescent.lean:216
+  theorem regret_variable (V : Domain (E := E)) (hV : Bornology.IsBounded V.carrier) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (T : ℕ) (hT : 0 < T) (hη : ∀ t < T, 0 < η t) (hmono : ∀ t, t + 1 < T → η (t + 1) ≤ η t) (hloss : ∀ t < T, SubdifferentiableOn V (loss t)) (u : E) (hu : u ∈ V.carrier) : regret V η loss x₁ u T ≤ (Metric.diam V.carrier) ^ 2 / (2 * η (T - 1)) + (∑ t ∈ range T, η t / 2 * ‖currentSubgradient (loss t) (iterate V η loss x₁ t)‖ ^ 2) - ‖iterate V η loss x₁ T - u‖ ^ 2 / (2 * η (T - 1))
+lean: BanditRL.OnlineSubgradientDescent.regret_tuned_distance [theorem] BanditRLProof/OnlineSubgradientDescent.lean:229
+  theorem regret_tuned_distance (V : Domain (E := E)) (loss : ℕ → E → EReal) (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (T : ℕ) (hT : 0 < T) (D G : ℝ) (hD : 0 < D) (hG : 0 < G) (hloss : ∀ t < T, SubdifferentiableOn V (loss t)) (u : E) (hu : u ∈ V.carrier) (hdist : ‖x₁ - u‖ ≤ D) (hgrad : ∀ t < T, ‖currentSubgradient (loss t) (iterate V (fun _ => D / (G * Real.sqrt T)) loss x₁ t)‖ ≤ G) : regret V (fun _ => D / (G * Real.sqrt T)) loss x₁ u T ≤ D * G * Real.sqrt T
+lean: BanditRL.OnlineSubgradientDescent.regret_tuned [theorem] BanditRLProof/OnlineSubgradientDescent.lean:263
+  theorem regret_tuned (V : Domain (E := E)) (loss : ℕ → E → EReal) (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (T : ℕ) (hT : 0 < T) (D G : ℝ) (hD : 0 < D) (hG : 0 < G) (hdiam : ∀ x ∈ V.carrier, ∀ y ∈ V.carrier, ‖x - y‖ ≤ D) (hloss : ∀ t < T, SubdifferentiableOn V (loss t)) (hgrad : ∀ t < T, ‖currentSubgradient (loss t) (iterate V (fun _ => D / (G * Real.sqrt T)) loss x₁ t)‖ ≤ G) : ∀ u ∈ V.carrier, regret V (fun _ => D / (G * Real.sqrt T)) loss x₁ u T ≤ D * G * Real.sqrt T
+lean: BanditRL.OnlineConvex.SourceDifferentiableAt [def] BanditRLProof/OnlineSubgradientDifferentiability.lean:14
+  def SourceDifferentiableAt (f : E → EReal) (x : E) : Prop
+lean: BanditRL.OnlineConvex.subgradient_norm_le_lipschitz_ball [theorem] BanditRLProof/OnlineSubgradientDifferentiability.lean:17
+  theorem subgradient_norm_le_lipschitz_ball (f : E → EReal) (x : E) (r : ℝ) (hr : 0 < r) (K : ℝ≥0) (hfinite : ∀ y ∈ Metric.ball x r, ∃ a : ℝ, f y = (a : EReal)) (hlip : LipschitzOnWith K (fun y => (f y).toReal) (Metric.ball x r)) (g : E) (hg : g ∈ SourceSubdifferential f x) : ‖g‖ ≤ (K : ℝ)
+lean: BanditRL.OnlineConvex.subgradients_locally_bounded [theorem] BanditRLProof/OnlineSubgradientDifferentiability.lean:62
+  theorem subgradients_locally_bounded (f : E → EReal) (hbot : ∀ y, f y ≠ ⊥) (hf : IsConvexExtended f) (x : E) (hx : x ∈ interior (effectiveDomain f)) : ∃ r : ℝ, 0 < r ∧ ∃ K : ℝ≥0, ∀ y ∈ Metric.ball x r, ∀ g ∈ SourceSubdifferential f y, ‖g‖ ≤ (K : ℝ)
+lean: BanditRL.OnlineConvex.subgradient_limit_of_continuousAt [theorem] BanditRLProof/OnlineSubgradientDifferentiability.lean:85
+  theorem subgradient_limit_of_continuousAt {ι : Type*} (l : Filter ι) [NeBot l] (f : E → EReal) (hbot : ∀ y, f y ≠ ⊥) (x g : E) (hx : x ∈ interior (effectiveDomain f)) (hcont : ContinuousAt (fun y => (f y).toReal) x) (xs gs : ι → E) (hxs : Tendsto xs l (𝓝 x)) (hgs : Tendsto gs l (𝓝 g)) (hs : ∀ᶠ i in l, gs i ∈ SourceSubdifferential f (xs i)) : g ∈ SourceSubdifferential f x
+lean: BanditRL.OnlineConvex.singleton_subgradient_tendsto [theorem] BanditRLProof/OnlineSubgradientDifferentiability.lean:115
+  theorem singleton_subgradient_tendsto {ι : Type*} (l : Filter ι) [NeBot l] (f : E → EReal) (hbot : ∀ y, f y ≠ ⊥) (hf : IsConvexExtended f) (x g : E) (hx : x ∈ interior (effectiveDomain f)) (hg : SourceSubdifferential f x = {g}) (xs gs : ι → E) (hxs : Tendsto xs l (𝓝 x)) (hs : ∀ᶠ i in l, gs i ∈ SourceSubdifferential f (xs i)) : Tendsto gs l (𝓝 g)
+lean: BanditRL.OnlineConvex.singleton_subdifferential_interior [theorem] BanditRLProof/OnlineSubgradientDifferentiability.lean:145
+  theorem singleton_subdifferential_interior (f : E → EReal) (hf : IsConvexExtended f) (x : E) (hx : ∃ r : ℝ, f x = (r : EReal)) (g : E) (hg : SourceSubdifferential f x = {g}) : x ∈ interior (effectiveDomain f)
+lean: BanditRL.OnlineConvex.singleton_subdifferential_hasGradientAt [theorem] BanditRLProof/OnlineSubgradientDifferentiability.lean:196
+  theorem singleton_subdifferential_hasGradientAt (f : E → EReal) (hf : IsConvexExtended f) (x : E) (hx : ∃ r : ℝ, f x = (r : EReal)) (g : E) (hg : SourceSubdifferential f x = {g}) : HasGradientAt (fun y => (f y).toReal) g x
+lean: BanditRL.OnlineConvex.sourceDifferentiableAt_regular [theorem] BanditRLProof/OnlineSubgradientDifferentiability.lean:247
+  theorem sourceDifferentiableAt_regular (f : E → EReal) (x : E) (hd : SourceDifferentiableAt f x) : (∀ᶠ y in 𝓝 x, ∃ r : ℝ, f y = (r : EReal)) ∧ x ∈ interior (effectiveDomain f) ∧ DifferentiableAt ℝ (fun y => (f y).toReal) x
+lean: BanditRL.OnlineConvex.subgradient_eq_gradient_at_interior [theorem] BanditRLProof/OnlineSubgradientDifferentiability.lean:268
+  theorem subgradient_eq_gradient_at_interior (f : E → EReal) (hbot : ∀ z, f z ≠ ⊥) (x : E) (hx : x ∈ interior (effectiveDomain f)) (hd : DifferentiableAt ℝ (fun z => (f z).toReal) x) (g : E) (hg : g ∈ SourceSubdifferential f x) : g = gradient (fun z => (f z).toReal) x
+lean: BanditRL.OnlineConvex.theorem_2_22_gradient [theorem] BanditRLProof/OnlineSubgradientDifferentiability.lean:293
+  theorem theorem_2_22_gradient (f : E → EReal) (hf : IsConvexExtended f) (x : E) (hx : ∃ r : ℝ, f x = (r : EReal)) (h : E → ℝ) (he : (fun y => (h y : EReal)) =ᶠ[𝓝 x] f) (hd : DifferentiableAt ℝ h x) : SourceSubdifferential f x = {gradient h x}
+lean: BanditRL.OnlineConvex.theorem_2_22_forward [theorem] BanditRLProof/OnlineSubgradientDifferentiability.lean:325
+  theorem theorem_2_22_forward (f : E → EReal) (hf : IsConvexExtended f) (x : E) (hx : ∃ r : ℝ, f x = (r : EReal)) (hd : SourceDifferentiableAt f x) : ∃ g : E, SourceSubdifferential f x = {g}
+lean: BanditRL.OnlineConvex.theorem_2_22 [theorem] BanditRLProof/OnlineSubgradientDifferentiability.lean:336
+  theorem theorem_2_22 (f : E → EReal) (hf : IsConvexExtended f) (x : E) (hx : ∃ r : ℝ, f x = (r : EReal)) : SourceDifferentiableAt f x ↔ ∃ g : E, SourceSubdifferential f x = {g}
+lean: BanditRL.OnlineConvex.subgradient_exists_of_domain_interior [theorem] BanditRLProof/OnlineSubgradientInterior.lean:10
+  theorem subgradient_exists_of_domain_interior {F : Type*} [NormedAddCommGroup F] [InnerProductSpace ℝ F] [FiniteDimensional ℝ F] (f : F → EReal) (hf : SourceProper f) (hc : IsConvexExtended f) (x : F) (hx : x ∈ interior (effectiveDomain f)) : (SourceSubdifferential f x).Nonempty
+lean: BanditRL.OnlineConvex.SourceFiniteMax [def] BanditRLProof/OnlineSubgradientMax.lean:25
+  def SourceFiniteMax {ι : Type*} [Fintype ι] [Nonempty ι] (f : ι → E → EReal) (x : E) : EReal
+lean: BanditRL.OnlineConvex.SourceActiveSubgradientUnion [def] BanditRLProof/OnlineSubgradientMax.lean:31
+  def SourceActiveSubgradientUnion {ι : Type*} [Fintype ι] [Nonempty ι] (f : ι → E → EReal) (x : E) : Set E
+lean: BanditRL.OnlineConvex.active_subgradient_support_max [theorem] BanditRLProof/OnlineSubgradientMax.lean:35
+  theorem active_subgradient_support_max {ι : Type*} [Fintype ι] [Nonempty ι] (f : ι → E → EReal) (x : E) : SourceActiveSubgradientUnion f x ⊆ SourceSubdifferential (SourceFiniteMax f) x
+lean: BanditRL.OnlineConvex.finiteMax_attained [theorem] BanditRLProof/OnlineSubgradientMax.lean:47
+  theorem finiteMax_attained {ι : Type*} [Fintype ι] [Nonempty ι] (f : ι → E → EReal) (x : E) : ∃ i, SourceFiniteMax f x = f i x
+lean: BanditRL.OnlineConvex.finiteMax_point_finite [theorem] BanditRLProof/OnlineSubgradientMax.lean:53
+  theorem finiteMax_point_finite {ι : Type*} [Fintype ι] [Nonempty ι] (f : ι → E → EReal) (hp : ∀ i, SourceProper (f i)) (x : E) (hx : ∀ i, x ∈ effectiveDomain (f i)) : ∃ a : ℝ, SourceFiniteMax f x = (a : EReal)
+lean: BanditRL.OnlineConvex.subgradient_iff_real_support [theorem] BanditRLProof/OnlineSubgradientMax.lean:60
+  theorem subgradient_iff_real_support (f : E → EReal) (hbot : ∀ y, f y ≠ ⊥) (x : E) (hx : x ∈ effectiveDomain f) (g : E) : g ∈ SourceSubdifferential f x ↔ ∀ y, f y ≠ ⊤ → (f x).toReal + inner ℝ g (y - x) ≤ (f y).toReal
+lean: BanditRL.OnlineConvex.convex_sourceSubdifferential [theorem] BanditRLProof/OnlineSubgradientMax.lean:80
+  theorem convex_sourceSubdifferential (f : E → EReal) (hbot : ∀ y, f y ≠ ⊥) (x : E) (hx : x ∈ effectiveDomain f) : Convex ℝ (SourceSubdifferential f x)
+lean: BanditRL.OnlineConvex.continuousAt_mem_domain_interior [theorem] BanditRLProof/OnlineSubgradientMax.lean:95
+  theorem continuousAt_mem_domain_interior (f : E → EReal) (x : E) (hx : x ∈ effectiveDomain f) (hc : ContinuousAt f x) : x ∈ interior (effectiveDomain f)
+lean: BanditRL.OnlineConvex.finiteMax_ne_bot [theorem] BanditRLProof/OnlineSubgradientMax.lean:102
+  theorem finiteMax_ne_bot {ι : Type*} [Fintype ι] [Nonempty ι] (f : ι → E → EReal) (hp : ∀ i, SourceProper (f i)) (y : E) : SourceFiniteMax f y ≠ ⊥
+lean: BanditRL.OnlineConvex.convexHull_active_support_max [theorem] BanditRLProof/OnlineSubgradientMax.lean:109
+  theorem convexHull_active_support_max {ι : Type*} [Fintype ι] [Nonempty ι] (f : ι → E → EReal) (hp : ∀ i, SourceProper (f i)) (x : E) (hx : ∀ i, x ∈ effectiveDomain (f i)) : convexHull ℝ (SourceActiveSubgradientUnion f x) ⊆ SourceSubdifferential (SourceFiniteMax f) x
+lean: BanditRL.OnlineConvex.isClosed_sourceSubdifferential [theorem] BanditRLProof/OnlineSubgradientMax.lean:122
+  theorem isClosed_sourceSubdifferential (f : E → EReal) (hbot : ∀ y, f y ≠ ⊥) (x : E) (hx : x ∈ effectiveDomain f) : IsClosed (SourceSubdifferential f x)
+lean: BanditRL.OnlineConvex.isCompact_sourceSubdifferential [theorem] BanditRLProof/OnlineSubgradientMax.lean:135
+  theorem isCompact_sourceSubdifferential [FiniteDimensional ℝ E] (f : E → EReal) (hp : SourceProper f) (hf : IsConvexExtended f) (x : E) (hx : x ∈ interior (effectiveDomain f)) : IsCompact (SourceSubdifferential f x)
+lean: BanditRL.OnlineConvex.isCompact_convexJoin [theorem] BanditRLProof/OnlineSubgradientMax.lean:148
+  theorem isCompact_convexJoin (s t : Set E) (hs : IsCompact s) (ht : IsCompact t) : IsCompact (convexJoin ℝ s t)
+lean: BanditRL.OnlineConvex.isCompact_convexHull_finite_convex_union [theorem] BanditRLProof/OnlineSubgradientMax.lean:168
+  theorem isCompact_convexHull_finite_convex_union {ι : Type*} (s : ι → Set E) (F : Finset ι) (hc : ∀ i ∈ F, Convex ℝ (s i)) (hk : ∀ i ∈ F, IsCompact (s i)) : IsCompact (convexHull ℝ (⋃ i ∈ F, s i))
+lean: BanditRL.OnlineConvex.isCompact_active_subgradient_hull [theorem] BanditRLProof/OnlineSubgradientMax.lean:195
+  theorem isCompact_active_subgradient_hull [FiniteDimensional ℝ E] {ι : Type*} [Fintype ι] [Nonempty ι] (f : ι → E → EReal) (hp : ∀ i, SourceProper (f i)) (hc : ∀ i, IsConvexExtended (f i)) (x : E) (hx : ∀ i, x ∈ effectiveDomain (f i)) (hcont : ∀ i, ContinuousAt (f i) x) : IsCompact (convexHull ℝ (SourceActiveSubgradientUnion f x))
+lean: BanditRL.OnlineConvex.continuousAt_finite_toReal [theorem] BanditRLProof/OnlineSubgradientMax.lean:228
+  theorem continuousAt_finite_toReal (f : E → EReal) (x : E) (ht : f x ≠ ⊤) (hb : f x ≠ ⊥) (hc : ContinuousAt f x) : ContinuousAt (fun y => (f y).toReal) x
+lean: BanditRL.OnlineConvex.max_support_displacement_compare [theorem] BanditRLProof/OnlineSubgradientMax.lean:236
+  theorem max_support_displacement_compare {ι : Type*} [Fintype ι] [Nonempty ι] (f : ι → E → EReal) (hp : ∀ i, SourceProper (f i)) (x : E) (hx : ∀ i, x ∈ effectiveDomain (f i)) (y : E) (i : ι) (hy : y ∈ effectiveDomain (f i)) (hi : SourceFiniteMax f y = f i y) (g k : E) (hg : g ∈ SourceSubdifferential (SourceFiniteMax f) x) (hk : k ∈ SourceSubdifferential (f i) y) : inner ℝ g (y - x) ≤ inner ℝ k (y - x)
+lean: BanditRL.OnlineConvex.max_subgradient_direction_witness [theorem] BanditRLProof/OnlineSubgradientMax.lean:262
+  theorem max_subgradient_direction_witness [FiniteDimensional ℝ E] {ι : Type*} [Fintype ι] [Nonempty ι] (f : ι → E → EReal) (hp : ∀ i, SourceProper (f i)) (hc : ∀ i, IsConvexExtended (f i)) (x : E) (hx : ∀ i, x ∈ effectiveDomain (f i)) (hcont : ∀ i, ContinuousAt (f i) x) (g d : E) (hg : g ∈ SourceSubdifferential (SourceFiniteMax f) x) : ∃ k ∈ SourceActiveSubgradientUnion f x, inner ℝ g d ≤ inner ℝ k d
+lean: BanditRL.OnlineConvex.theorem_2_26 [theorem] BanditRLProof/OnlineSubgradientMax.lean:355
+  theorem theorem_2_26 [FiniteDimensional ℝ E] {ι : Type*} [Fintype ι] [Nonempty ι] (f : ι → E → EReal) (hp : ∀ i, SourceProper (f i)) (hc : ∀ i, IsConvexExtended (f i)) (x : E) (hx : ∀ i, x ∈ effectiveDomain (f i)) (hcont : ∀ i, ContinuousAt (f i) x) : SourceSubdifferential (SourceFiniteMax f) x = convexHull ℝ (SourceActiveSubgradientUnion f x)
+lean: BanditRL.OnlineSubgradientPolicy.Domain [abbrev] BanditRLProof/OnlineSubgradientPolicy.lean:25
+  abbrev Domain
+lean: BanditRL.OnlineSubgradientPolicy.SupportPolicy [abbrev] BanditRLProof/OnlineSubgradientPolicy.lean:26
+  abbrev SupportPolicy
+lean: BanditRL.OnlineSubgradientPolicy.history [def] BanditRLProof/OnlineSubgradientPolicy.lean:28
+  def history (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) : (t : ℕ) → Fin (t + 1) → E
+lean: BanditRL.OnlineSubgradientPolicy.output [def] BanditRLProof/OnlineSubgradientPolicy.lean:34
+  def output (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) : E
+lean: BanditRL.OnlineSubgradientPolicy.selected [def] BanditRLProof/OnlineSubgradientPolicy.lean:37
+  def selected (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) : E
+lean: BanditRL.OnlineSubgradientPolicy.OracleLaw [def] BanditRLProof/OnlineSubgradientPolicy.lean:40
+  def OracleLaw (V : Domain (E := E)) (p : SupportPolicy (E := E)) : Prop
+lean: BanditRL.OnlineSubgradientPolicy.canonicalPolicy [def] BanditRLProof/OnlineSubgradientPolicy.lean:43
+  def canonicalPolicy : SupportPolicy (E := E)
+lean: BanditRL.OnlineSubgradientPolicy.LegalFeedback [def] BanditRLProof/OnlineSubgradientPolicy.lean:46
+  def LegalFeedback (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (T : ℕ) : Prop
+lean: BanditRL.OnlineSubgradientPolicy.regret [def] BanditRLProof/OnlineSubgradientPolicy.lean:49
+  def regret (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (u : E) (T : ℕ) : ℝ
+lean: BanditRL.OnlineSubgradientPolicy.history_zero [theorem] BanditRLProof/OnlineSubgradientPolicy.lean:52
+  theorem history_zero (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) : history V η loss x₁ p 0 = fun _ => x₁
+lean: BanditRL.OnlineSubgradientPolicy.history_succ [theorem] BanditRLProof/OnlineSubgradientPolicy.lean:57
+  theorem history_succ (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) : history V η loss x₁ p (t + 1) = Fin.snoc (history V η loss x₁ p t) (BanditRL.OnlineGradientDescent.project V (output V η loss x₁ p t - η t • selected V η loss x₁ p t))
+lean: BanditRL.OnlineSubgradientPolicy.output_zero [theorem] BanditRLProof/OnlineSubgradientPolicy.lean:65
+  theorem output_zero (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) : output V η loss x₁ p 0 = x₁
+lean: BanditRL.OnlineSubgradientPolicy.output_succ [theorem] BanditRLProof/OnlineSubgradientPolicy.lean:70
+  theorem output_succ (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) : output V η loss x₁ p (t + 1) = BanditRL.OnlineGradientDescent.project V (output V η loss x₁ p t - η t • selected V η loss x₁ p t)
+lean: BanditRL.OnlineSubgradientPolicy.history_mem [theorem] BanditRLProof/OnlineSubgradientPolicy.lean:77
+  theorem history_mem (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (hx₁ : x₁ ∈ V.carrier) (t : ℕ) (i : Fin (t + 1)) : history V η loss x₁ p t i ∈ V.carrier
+lean: BanditRL.OnlineSubgradientPolicy.output_mem [theorem] BanditRLProof/OnlineSubgradientPolicy.lean:88
+  theorem output_mem (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (hx₁ : x₁ ∈ V.carrier) (t : ℕ) : output V η loss x₁ p t ∈ V.carrier
+lean: BanditRL.OnlineSubgradientPolicy.history_prefix [theorem] BanditRLProof/OnlineSubgradientPolicy.lean:93
+  theorem history_prefix (V : Domain (E := E)) (η η' : ℕ → ℝ) (loss loss' : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) (hη : ∀ s < t, η s = η' s) (hloss : ∀ s < t, loss s = loss' s) : history V η loss x₁ p t = history V η' loss' x₁ p t
+lean: BanditRL.OnlineSubgradientPolicy.output_prefix [theorem] BanditRLProof/OnlineSubgradientPolicy.lean:108
+  theorem output_prefix (V : Domain (E := E)) (η η' : ℕ → ℝ) (loss loss' : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) (hη : ∀ s < t, η s = η' s) (hloss : ∀ s < t, loss s = loss' s) : output V η loss x₁ p t = output V η' loss' x₁ p t
+lean: BanditRL.OnlineSubgradientPolicy.oracle_feedback [theorem] BanditRLProof/OnlineSubgradientPolicy.lean:116
+  theorem oracle_feedback (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (hx₁ : x₁ ∈ V.carrier) (T : ℕ) (hp : OracleLaw V p) (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) : LegalFeedback V η loss x₁ p T
+lean: BanditRL.OnlineSubgradientPolicy.trajectory_finite_loss [theorem] BanditRLProof/OnlineSubgradientPolicy.lean:125
+  theorem trajectory_finite_loss (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (hx₁ : x₁ ∈ V.carrier) (t : ℕ) (hloss : BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) (u : E) (hu : u ∈ V.carrier) : loss t (output V η loss x₁ p t) = ((loss t (output V η loss x₁ p t)).toReal : EReal) ∧ loss t u = ((loss t u).toReal : EReal)
+lean: BanditRL.OnlineSubgradientPolicy.one_step_chain [theorem] BanditRLProof/OnlineSubgradientPolicy.lean:135
+  theorem one_step_chain (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) (hη : 0 < η t) (hloss : BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) (hg : selected V η loss x₁ p t ∈ SourceSubdifferential (loss t) (output V η loss x₁ p t)) (u : E) (hu : u ∈ V.carrier) : η t * ((loss t (output V η loss x₁ p t)).toReal - (loss t u).toReal) ≤ η t * inner ℝ (selected V η loss x₁ p t) (output V η loss x₁ p t - u) ∧ η t * inner ℝ (selected V η loss x₁ p t) (output V η loss x₁ p t - u) ≤ ‖output V η loss x₁ p t - u‖ ^ 2 / 2 - ‖output V η loss x₁ p (t + 1) - u‖ ^ 2 / 2 + (η t) ^ 2 / 2 * ‖selected V η loss x₁ p t‖ ^ 2
+lean: BanditRL.OnlineSubgradientPolicy.one_step [theorem] BanditRLProof/OnlineSubgradientPolicy.lean:150
+  theorem one_step (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) (hη : 0 < η t) (hloss : BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) (hg : selected V η loss x₁ p t ∈ SourceSubdifferential (loss t) (output V η loss x₁ p t)) (u : E) (hu : u ∈ V.carrier) : (loss t (output V η loss x₁ p t)).toReal - (loss t u).toReal ≤ (‖output V η loss x₁ p t - u‖ ^ 2 - ‖output V η loss x₁ p (t + 1) - u‖ ^ 2) / (2 * η t) + η t / 2 * ‖selected V η loss x₁ p t‖ ^ 2
+lean: BanditRL.OnlineSubgradientPolicy.regret_fixed [theorem] BanditRLProof/OnlineSubgradientPolicy.lean:171
+  theorem regret_fixed (V : Domain (E := E)) (η : ℝ) (hη : 0 < η) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (hx₁ : x₁ ∈ V.carrier) (T : ℕ) (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) (hlegal : LegalFeedback V (fun _ => η) loss x₁ p T) (u : E) (hu : u ∈ V.carrier) : regret V (fun _ => η) loss x₁ p u T ≤ ‖x₁ - u‖ ^ 2 / (2 * η) + η / 2 * (∑ t ∈ range T, ‖selected V (fun _ => η) loss x₁ p t‖ ^ 2) - ‖output V (fun _ => η) loss x₁ p T - u‖ ^ 2 / (2 * η)
+lean: BanditRL.OnlineSubgradientPolicy.regret_fixed_coarse [theorem] BanditRLProof/OnlineSubgradientPolicy.lean:198
+  theorem regret_fixed_coarse (V : Domain (E := E)) (η : ℝ) (hη : 0 < η) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (hx₁ : x₁ ∈ V.carrier) (T : ℕ) (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) (hlegal : LegalFeedback V (fun _ => η) loss x₁ p T) (u : E) (hu : u ∈ V.carrier) : regret V (fun _ => η) loss x₁ p u T ≤ ‖x₁ - u‖ ^ 2 / (2 * η) + η / 2 * (∑ t ∈ range T, ‖selected V (fun _ => η) loss x₁ p t‖ ^ 2)
+lean: BanditRL.OnlineSubgradientPolicy.regret_variable_bound [theorem] BanditRLProof/OnlineSubgradientPolicy.lean:209
+  theorem regret_variable_bound (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (hx₁ : x₁ ∈ V.carrier) (T : ℕ) (hT : 0 < T) (hη : ∀ t < T, 0 < η t) (hmono : ∀ t, t + 1 < T → η (t + 1) ≤ η t) (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) (hlegal : LegalFeedback V η loss x₁ p T) (D : ℝ) (hdiam : ∀ x ∈ V.carrier, ∀ y ∈ V.carrier, ‖x - y‖ ≤ D) (u : E) (hu : u ∈ V.carrier) : regret V η loss x₁ p u T ≤ D ^ 2 / (2 * η (T - 1)) + (∑ t ∈ range T, η t / 2 * ‖selected V η loss x₁ p t‖ ^ 2) - ‖output V η loss x₁ p T - u‖ ^ 2 / (2 * η (T - 1))
+lean: BanditRL.OnlineSubgradientPolicy.regret_variable [theorem] BanditRLProof/OnlineSubgradientPolicy.lean:230
+  theorem regret_variable (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (hx₁ : x₁ ∈ V.carrier) (T : ℕ) (hT : 0 < T) (hη : ∀ t < T, 0 < η t) (hmono : ∀ t, t + 1 < T → η (t + 1) ≤ η t) (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) (hlegal : LegalFeedback V η loss x₁ p T) (hV : Bornology.IsBounded V.carrier) (u : E) (hu : u ∈ V.carrier) : regret V η loss x₁ p u T ≤ (Metric.diam V.carrier) ^ 2 / (2 * η (T - 1)) + (∑ t ∈ range T, η t / 2 * ‖selected V η loss x₁ p t‖ ^ 2) - ‖output V η loss x₁ p T - u‖ ^ 2 / (2 * η (T - 1))
+lean: BanditRL.OnlineSubgradientPolicy.regret_tuned_distance [theorem] BanditRLProof/OnlineSubgradientPolicy.lean:243
+  theorem regret_tuned_distance (V : Domain (E := E)) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (hx₁ : x₁ ∈ V.carrier) (T : ℕ) (hT : 0 < T) (D G : ℝ) (hD : 0 < D) (hG : 0 < G) (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) (hlegal : LegalFeedback V (fun _ => D / (G * Real.sqrt T)) loss x₁ p T) (u : E) (hu : u ∈ V.carrier) (hdist : ‖x₁ - u‖ ≤ D) (hgrad : ∀ t < T, ‖selected V (fun _ => D / (G * Real.sqrt T)) loss x₁ p t‖ ≤ G) : regret V (fun _ => D / (G * Real.sqrt T)) loss x₁ p u T ≤ D * G * Real.sqrt T
+lean: BanditRL.OnlineSubgradientPolicy.regret_tuned [theorem] BanditRLProof/OnlineSubgradientPolicy.lean:276
+  theorem regret_tuned (V : Domain (E := E)) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (hx₁ : x₁ ∈ V.carrier) (T : ℕ) (hT : 0 < T) (D G : ℝ) (hD : 0 < D) (hG : 0 < G) (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) (hlegal : LegalFeedback V (fun _ => D / (G * Real.sqrt T)) loss x₁ p T) (hdiam : ∀ x ∈ V.carrier, ∀ y ∈ V.carrier, ‖x - y‖ ≤ D) (hgrad : ∀ t < T, ‖selected V (fun _ => D / (G * Real.sqrt T)) loss x₁ p t‖ ≤ G) : ∀ u ∈ V.carrier, regret V (fun _ => D / (G * Real.sqrt T)) loss x₁ p u T ≤ D * G * Real.sqrt T
+lean: BanditRL.OnlineSubgradientPolicy.canonicalPolicy_legal [theorem] BanditRLProof/OnlineSubgradientPolicy.lean:289
+  theorem canonicalPolicy_legal (V : Domain (E := E)) : OracleLaw V (canonicalPolicy (E := E))
+lean: BanditRL.OnlineSubgradientPolicy.canonical_output [theorem] BanditRLProof/OnlineSubgradientPolicy.lean:294
+  theorem canonical_output (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (t : ℕ) : output V η loss x₁ canonicalPolicy t = BanditRL.OnlineSubgradientDescent.iterate V η loss x₁ t
+lean: BanditRL.OnlineSubgradientPolicy.canonical_selected [theorem] BanditRLProof/OnlineSubgradientPolicy.lean:309
+  theorem canonical_selected (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (t : ℕ) : selected V η loss x₁ canonicalPolicy t = BanditRL.OnlineSubgradientDescent.currentSubgradient (loss t) (BanditRL.OnlineSubgradientDescent.iterate V η loss x₁ t)
+lean: BanditRL.OnlineConvex.SourceSubgradientSum [def] BanditRLProof/OnlineSubgradientSum.lean:27
+  def SourceSubgradientSum {ι : Type*} [Fintype ι] (f : ι → E → EReal) (x : E) : Set E
+lean: BanditRL.OnlineConvex.upperAdd_eq_add_of_ne_bot [theorem] BanditRLProof/OnlineSubgradientSum.lean:32
+  theorem upperAdd_eq_add_of_ne_bot (a b : EReal) (ha : a ≠ ⊥) (hb : b ≠ ⊥) : upperAdd a b = a + b
+lean: BanditRL.OnlineConvex.ereal_finset_sum_ne_bot [theorem] BanditRLProof/OnlineSubgradientSum.lean:36
+  theorem ereal_finset_sum_ne_bot {ι : Type*} (s : Finset ι) (a : ι → EReal) (ha : ∀ i ∈ s, a i ≠ ⊥) : (∑ i ∈ s, a i) ≠ ⊥
+lean: BanditRL.OnlineConvex.convex_finset_sum [theorem] BanditRLProof/OnlineSubgradientSum.lean:47
+  theorem convex_finset_sum {ι : Type*} (s : Finset ι) (f : ι → E → EReal) (hb : ∀ i ∈ s, ∀ y, f i y ≠ ⊥) (hc : ∀ i ∈ s, IsConvexExtended (f i)) : IsConvexExtended (fun y => ∑ i ∈ s, f i y)
+lean: BanditRL.OnlineConvex.finite_sum_point [theorem] BanditRLProof/OnlineSubgradientSum.lean:71
+  theorem finite_sum_point {ι : Type*} [Fintype ι] (f : ι → E → EReal) (x : E) (hx : ∀ i, ∃ r : ℝ, f i x = (r : EReal)) : ∃ r : ℝ, (∑ i, f i x) = (r : EReal)
+lean: BanditRL.OnlineConvex.sum_finite_implies_components_finite [theorem] BanditRLProof/OnlineSubgradientSum.lean:82
+  theorem sum_finite_implies_components_finite {ι : Type*} [Fintype ι] (a : ι → EReal) (hb : ∀ i, a i ≠ ⊥) (ht : (∑ i, a i) ≠ ⊤) : ∀ i, ∃ r : ℝ, a i = (r : EReal)
+lean: BanditRL.OnlineConvex.interior_domain_sum [theorem] BanditRLProof/OnlineSubgradientSum.lean:95
+  theorem interior_domain_sum {ι : Type*} [Fintype ι] (f : ι → E → EReal) (hb : ∀ i y, f i y ≠ ⊥) (z : E) (hz : ∀ i, z ∈ interior (effectiveDomain (f i))) : z ∈ interior (effectiveDomain (fun y => ∑ i, f i y))
+lean: BanditRL.OnlineConvex.binary_subgradient_decomposition [theorem] BanditRLProof/OnlineSubgradientSum.lean:109
+  theorem binary_subgradient_decomposition (f h : E → EReal) (hpf : SourceProper f) (hph : SourceProper h) (hcf : IsConvexExtended f) (hch : IsConvexExtended h) (x : E) (hfx : ∃ a : ℝ, f x = (a : EReal)) (hhx : ∃ b : ℝ, h x = (b : EReal)) (g : E) (hgs : g ∈ SourceSubdifferential (fun y => f y + h y) x) (hqual : ∃ z : E, z ∈ interior (effectiveDomain f) ∧ z ∈ effectiveDomain h) : ∃ p : E, p ∈ SourceSubdifferential f x ∧ g - p ∈ SourceSubdifferential h x
+lean: BanditRL.OnlineConvex.theorem_2_23_inclusion [theorem] BanditRLProof/OnlineSubgradientSum.lean:247
+  theorem theorem_2_23_inclusion {ι : Type*} [Fintype ι] (f : ι → E → EReal) (hp : ∀ i, SourceProper (f i)) (x : E) : SourceSubgradientSum f x ⊆ SourceSubdifferential (fun y => ∑ i, f i y) x
+lean: BanditRL.OnlineConvex.theorem_2_23_equality [theorem] BanditRLProof/OnlineSubgradientSum.lean:263
+  theorem theorem_2_23_equality (n : ℕ) (f : Fin (n + 1) → E → EReal) (hp : ∀ i, SourceProper (f i)) (hc : ∀ i, IsConvexExtended (f i)) (hclosed : ∀ i, SourceClosed (f i)) (hqual : ∃ z : E, z ∈ effectiveDomain (f (Fin.last n)) ∧ ∀ i : Fin (n + 1), i ≠ Fin.last n → z ∈ interior (effectiveDomain (f i))) (x : E) : SourceSubdifferential (fun y => ∑ i, f i y) x = SourceSubgradientSum f x
+lean: BanditRL.OnlineUnitScaling.subgradient_scaled [theorem] BanditRLProof/OnlineUnitScaling.lean:46
+  theorem subgradient_scaled (c : ℝ) (hc : 0 < c) (f : E → EReal) (hf : SourceProper f) (y g : E) (hg : g ∈ SourceSubdifferential f (c • y)) : c • g ∈ SourceSubdifferential (scaledLoss c f) y
+lean: BanditRL.OnlineUnitScaling.subdifferentiable_scaled [theorem] BanditRLProof/OnlineUnitScaling.lean:62
+  theorem subdifferentiable_scaled (c : ℝ) (hc : 0 < c) (f : E → EReal) (hf : BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V f) : BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (scaledLoss c f)
+lean: BanditRL.OnlineUnitScaling.regret_fixed_scaled [theorem] BanditRLProof/OnlineUnitScaling.lean:180
+  theorem regret_fixed_scaled (c : ℝ) (hc : 0 < c) (η : ℝ) (hη : 0 < η) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (T : ℕ) (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) (hlegal : LegalFeedback V (fun _ => η) loss x₁ p T) (u : E) : regret V (scaledEta c (fun _ => η)) (fun s => scaledLoss c (loss s)) (c⁻¹ • x₁) (scaledPolicy c p) (c⁻¹ • u) T ≤ ‖x₁ - u‖ ^ 2 / (2 * η) + η / 2 * (∑ t ∈ range T, ‖selected V (fun _ => η) loss x₁ p t‖ ^ 2) - ‖output V (fun _ => η) loss x₁ p T - u‖ ^ 2 / (2 * η)

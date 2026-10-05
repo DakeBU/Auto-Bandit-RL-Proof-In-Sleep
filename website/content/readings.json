@@ -3283,7 +3283,7 @@
         "title": "Online Learning: A Modern Introduction Using Convex Optimization",
         "authors": "Francesco Orabona",
         "edition": "arXiv:1912.13213v10,21June2026",
-        "sections": "Section2.2.1, Definition2.20 and Theorem2.21",
+        "sections": "Section2.2.1, Definition2.20, required adjacent outside-domain/dom-subdifferential inclusion group, Theorem2.21; two numbered anchors, two retained proofs/one definition",
         "pages": "printed16-17/PDF28-29",
         "pdf_page": 28,
         "url": "https://arxiv.org/pdf/1912.13213v10"
@@ -3291,15 +3291,15 @@
       "notation": [
         {
           "term": "Global support set",
-          "meaning": "g belongs to the subdifferential at x when f(x)+inner(g,y-x)<=f(y) for every y in the entire space."
+          "meaning": "Definition2.20 is printed for PROPER f. Actual complete SourceSubdifferential is a wider predicate on all EReal functions, faithful when restricted to proper functions. Convexity is not a definition premise; no unrestricted source equivalence. Global supports test ALL ambient y."
         },
         {
           "term": "Proper and finite domain",
-          "meaning": "Proper means nowhere negative infinity and finite somewhere. The effective domain excludes positive infinity."
+          "meaning": "Generic bottom points and identically-top functions admit all vectors as supports. effectiveDomain means f(x)<top and includes bottom generically; SourceProper excludes bottom and supplies an actual finite point. Actual inner-product E has zero and is nonempty; V may be empty/full/unbounded."
         },
         {
           "term": "Restriction to V",
-          "meaning": "Theorem2.21 takes a real-valued function on the whole space and a convex V; the conclusion is convexity on V."
+          "meaning": "Theorem2.21 uses globally REAL f, Convex V and forall x in V exists g forall ambient y supporting inequality. Support existence is the printed hypothesis, not a produced general existence theorem or desired convexity input. No merely finite-on-V EReal extension. Source finite Euclidean scope specializes arbitrary real-inner-product Lean scope, a stronger generalization with no CompleteSpace/FiniteDimensional premise. Ambient E nonempty via zero; empty V allowed. Weights a,b>=0,a+b=1 include endpoints0/1."
         }
       ],
       "algorithm": {
@@ -3308,15 +3308,15 @@
         "steps": [
           {
             "title": "Use a finite witness",
-            "detail": "A global support cannot touch positive infinity for a proper function."
+            "detail": "Actual subgradient_point_finite requires SourceProper and global support, but drops convexity from the adjacent source observation: a stronger theorem. A finite global witness rules out f(x)=top. Universal x,g membership->domain exactly yields {x|S(f,x).Nonempty} subset effectiveDomain and empty support outside domain by unpacking g/contradiction. No converse or existence producer."
           },
           {
             "title": "Choose a support at the mixture",
-            "detail": "Convexity of V puts each convex combination in V, where a support exists."
+            "detail": "Theorem2.21 uses globally REAL f, Convex V and forall x in V exists g forall ambient y supporting inequality. Support existence is the printed hypothesis, not a produced general existence theorem or desired convexity input. No merely finite-on-V EReal extension. Choose a support at the convex mixture using ConvexV."
           },
           {
             "title": "Add weighted lower bounds",
-            "detail": "The linear terms cancel and leave the convexity inequality."
+            "detail": "Source finite Euclidean scope specializes arbitrary real-inner-product Lean scope, a stronger generalization with no CompleteSpace/FiniteDimensional premise. Ambient E nonempty via zero; empty V allowed. Weights a,b>=0,a+b=1 include endpoints0/1. Weighted lower bounds cancel actual inner displacements to produce function convexity."
           }
         ]
       },
@@ -3333,18 +3333,18 @@
           "math": "g\\in\\partial f(x)\\Rightarrow x\\in\\operatorname{dom}f",
           "fallback": "Proper functions admit no global support at an infinite-value point.",
           "plain": "Proper functions admit no global support at an infinite-value point.",
-          "relationship": "The total support-set predicate is defined for all EReal-valued functions; source claims impose properness where needed. Source Euclidean space is generalized to a normed real inner-product space. The finite-domain consequence needs no convexity assumption.",
+          "relationship": "Definition2.20 is printed for PROPER f. Actual complete SourceSubdifferential is a wider predicate on all EReal functions, faithful when restricted to proper functions. Convexity is not a definition premise; no unrestricted source equivalence. Source finite Euclidean scope specializes arbitrary real-inner-product Lean scope, a stronger generalization with no CompleteSpace/FiniteDimensional premise. Ambient E nonempty via zero; empty V allowed. Weights a,b>=0,a+b=1 include endpoints0/1. Two numbered anchors plus one REQUIRED adjacent unnumbered result group; two retained proofs/one complete definition/zero new math code,nodes. Two independently ready leaves shareS, no mutual proof value edges. Actual3scopednodes320direct type/value references, not full/canary export.",
           "contract": {
-            "model": "Global extended-real support inequality; Theorem2.21 specializes to globally real-valued f.",
-            "assumptions": "Proper f for support-domain inclusion; convex V and a support at every x in V for Theorem2.21.",
-            "parameters": "All y range over the whole space, even when convexity is concluded only on V.",
-            "regret": "No regret or algorithm guarantee.",
-            "guarantee": "Proper functions admit no global support at an infinite-value point."
+            "model": "Definition2.20 is printed for PROPER f. Actual complete SourceSubdifferential is a wider predicate on all EReal functions, faithful when restricted to proper functions. Convexity is not a definition premise; no unrestricted source equivalence. Generic bottom points and identically-top functions admit all vectors as supports. effectiveDomain means f(x)<top and includes bottom generically; SourceProper excludes bottom and supplies an actual finite point. Actual inner-product E has zero and is nonempty; V may be empty/full/unbounded.",
+            "assumptions": "Actual SourceProper f and g global support at x; no convexity/closedness/differentiability. Source proper+convex observation has convexity dropped in stronger actual theorem.",
+            "parameters": "Actual subgradient_point_finite requires SourceProper and global support, but drops convexity from the adjacent source observation: a stronger theorem. A finite global witness rules out f(x)=top. Universal x,g membership->domain exactly yields {x|S(f,x).Nonempty} subset effectiveDomain and empty support outside domain by unpacking g/contradiction. No converse or existence producer.",
+            "regret": "Foundational support/domain/convexity conclusions only; no algorithm or regret guarantee.",
+            "guarantee": "Universal support-point domain membership, equivalently dom subdifferential subset domf and empty support outside domf for proper f."
           },
           "local_status": {
             "status": "compiled",
-            "label": "Public subgradient candidates",
-            "boundary": "Focused compilation; separate full acceptance required. No interior existence or Chapter2 completion."
+            "label": "Retained subgradient bodies, freshly checked",
+            "boundary": "Distinct CONTRACT/BODY, actual6named kernel dependency checks/2nativeguards and whole3canaries; combinedrootTests/fullharness/site/finalreader/PR acceptance separate. Source properconvex interior existence and relative-interior footnote, Theorems2.22/2.23 and later Chapter2 main-text/appendix/legacy matching remain REQUIRED separately, including already compiled bodies. Not Chapter2 completion; Chapter1 migration/Chapter2mandatorytotalnull/incomplete/Chapters3-16mandatoryunenumerated/wholeGoalACTIVE. No merge/deploy/live update."
           }
         },
         {
@@ -3355,45 +3355,45 @@
           "math": "\\forall x\\in V,\\ \\partial f(x)\\ne\\varnothing\\Rightarrow f|_V\\text{ convex}",
           "fallback": "A real-valued function with global subgradients at every point of a convex V is convex on V.",
           "plain": "A real-valued function with global subgradients at every point of a convex V is convex on V.",
-          "relationship": "The total support-set predicate is defined for all EReal-valued functions; source claims impose properness where needed. Source Euclidean space is generalized to a normed real inner-product space. The finite-domain consequence needs no convexity assumption.",
+          "relationship": "Definition2.20 is printed for PROPER f. Actual complete SourceSubdifferential is a wider predicate on all EReal functions, faithful when restricted to proper functions. Convexity is not a definition premise; no unrestricted source equivalence. Source finite Euclidean scope specializes arbitrary real-inner-product Lean scope, a stronger generalization with no CompleteSpace/FiniteDimensional premise. Ambient E nonempty via zero; empty V allowed. Weights a,b>=0,a+b=1 include endpoints0/1. Two numbered anchors plus one REQUIRED adjacent unnumbered result group; two retained proofs/one complete definition/zero new math code,nodes. Two independently ready leaves shareS, no mutual proof value edges. Actual3scopednodes320direct type/value references, not full/canary export.",
           "contract": {
-            "model": "Global extended-real support inequality; Theorem2.21 specializes to globally real-valued f.",
-            "assumptions": "Proper f for support-domain inclusion; convex V and a support at every x in V for Theorem2.21.",
-            "parameters": "All y range over the whole space, even when convexity is concluded only on V.",
-            "regret": "No regret or algorithm guarantee.",
-            "guarantee": "A real-valued function with global subgradients at every point of a convex V is convex on V."
+            "model": "Theorem2.21 uses globally REAL f, Convex V and forall x in V exists g forall ambient y supporting inequality. Support existence is the printed hypothesis, not a produced general existence theorem or desired convexity input. No merely finite-on-V EReal extension.",
+            "assumptions": "Theorem2.21 uses globally REAL f, Convex V and forall x in V exists g forall ambient y supporting inequality. Support existence is the printed hypothesis, not a produced general existence theorem or desired convexity input. No merely finite-on-V EReal extension.",
+            "parameters": "Source finite Euclidean scope specializes arbitrary real-inner-product Lean scope, a stronger generalization with no CompleteSpace/FiniteDimensional premise. Ambient E nonempty via zero; empty V allowed. Weights a,b>=0,a+b=1 include endpoints0/1. Supports remain global even when conclusion is only on V.",
+            "regret": "Foundational support/domain/convexity conclusions only; no algorithm or regret guarantee.",
+            "guarantee": "ConvexOn real V f, containing ConvexV and the weighted Jensen inequality, including zero weights."
           },
           "local_status": {
             "status": "compiled",
-            "label": "Public subgradient candidates",
-            "boundary": "Focused compilation; separate full acceptance required. No interior existence or Chapter2 completion."
+            "label": "Retained subgradient bodies, freshly checked",
+            "boundary": "Distinct CONTRACT/BODY, actual6named kernel dependency checks/2nativeguards and whole3canaries; combinedrootTests/fullharness/site/finalreader/PR acceptance separate. Source properconvex interior existence and relative-interior footnote, Theorems2.22/2.23 and later Chapter2 main-text/appendix/legacy matching remain REQUIRED separately, including already compiled bodies. Not Chapter2 completion; Chapter1 migration/Chapter2mandatorytotalnull/incomplete/Chapters3-16mandatoryunenumerated/wholeGoalACTIVE. No merge/deploy/live update."
           }
         }
       ],
       "proof_bridge": {
         "title": "Global supporting inequalities imply the source conclusions",
-        "summary": "The same support-set definition feeds both results; no differentiability or pre-assumed convexity of f is used.",
+        "summary": "Two independently ready proofs share the full support predicate; teaching order is not a mutual theorem dependency chain.",
         "steps": [
           {
             "title": "Exclude an infinite touching value",
-            "detail": "Properness gives a point w with finite f(w). If f(x)=positive infinity, its support inequality at w would require positive infinity<=f(w), impossible.",
+            "detail": "Actual subgradient_point_finite requires SourceProper and global support, but drops convexity from the adjacent source observation: a stronger theorem. A finite global witness rules out f(x)=top. Universal x,g membership->domain exactly yields {x|S(f,x).Nonempty} subset effectiveDomain and empty support outside domain by unpacking g/contradiction. No converse or existence producer.",
             "math": "f(x)=+\\infty\\ \\Longrightarrow\\ f(w)\\ge+\\infty+\\langle g,w-x\\rangle=+\\infty",
             "fallback": "SourceProper also excludes negative infinity, so membership of the effective domain means finite value."
           },
           {
             "title": "Support the convex combination",
-            "detail": "For nonnegative a,b with a+b=1, let z=ax+by. Convex V puts z in V. Choose g in the global subdifferential at z and test it at x and y.",
+            "detail": "Theorem2.21 uses globally REAL f, Convex V and forall x in V exists g forall ambient y supporting inequality. Support existence is the printed hypothesis, not a produced general existence theorem or desired convexity input. No merely finite-on-V EReal extension. Choose g at z=a*x+b*y inV and test both endpoints.",
             "math": "f(x)\\ge f(z)+\\langle g,x-z\\rangle,\\quad f(y)\\ge f(z)+\\langle g,y-z\\rangle",
             "fallback": "Theorem2.21 is real-valued, allowing ordinary ordered-ring arithmetic after the EReal coercions."
           },
           {
             "title": "Cancel the linear terms",
-            "detail": "Multiply by a and b and add. Since a(x-z)+b(y-z)=0, only f(z) remains on the supported side.",
+            "detail": "Multiply inequalities by nonnegative a,b, including0/1. Actual inner_sub_right/real_inner_smul_right and a+b=1 cancel weighted displacements; produce ConvexOn, without assuming desired function convexity.",
             "math": "a f(x)+b f(y)\\ge(a+b)f(z)+\\langle g,a(x-z)+b(y-z)\\rangle=f(z)",
             "fallback": "This is exactly convexity of the restriction to V."
           }
         ],
-        "boundary": "No assertion that an arbitrary convex extended-real function has a subgradient at every point; interior existence and later rules remain open."
+        "boundary": "Definition2.20 is printed for PROPER f. Actual complete SourceSubdifferential is a wider predicate on all EReal functions, faithful when restricted to proper functions. Convexity is not a definition premise; no unrestricted source equivalence. Generic bottom points and identically-top functions admit all vectors as supports. effectiveDomain means f(x)<top and includes bottom generically; SourceProper excludes bottom and supplies an actual finite point. Actual inner-product E has zero and is nonempty; V may be empty/full/unbounded. Two numbered anchors plus one REQUIRED adjacent unnumbered result group; two retained proofs/one complete definition/zero new math code,nodes. Two independently ready leaves shareS, no mutual proof value edges. Actual3scopednodes320direct type/value references, not full/canary export. Source properconvex interior existence and relative-interior footnote, Theorems2.22/2.23 and later Chapter2 main-text/appendix/legacy matching remain REQUIRED separately, including already compiled bodies. Not Chapter2 completion; Chapter1 migration/Chapter2mandatorytotalnull/incomplete/Chapters3-16mandatoryunenumerated/wholeGoalACTIVE. No merge/deploy/live update."
       },
       "worked_example": {
         "title": "Quadratic supports and an infeasible support point",
@@ -3401,25 +3401,25 @@
         "steps": [
           {
             "title": "Nonzero supporting slope",
-            "detail": "At x the slope2x globally supports the quadratic because the residual is a square.",
+            "detail": "For EVERY realx, actual slope2x globally supports y^2 via nonnegative square residual; a real nonconstant producer, no supplied desired convexity.",
             "math": "y^2-x^2-2x(y-x)=(y-x)^2\\ge0",
             "fallback": "The public canary constructs a support at every real x."
           },
           {
             "title": "Recover convexity",
-            "detail": "Apply Theorem2.21 to those supports on the full real line.",
+            "detail": "Apply actual public Theorem2.21 to that support producer on real univ; square convexity is derived.",
             "math": "x\\mapsto x^2\\text{ is convex}",
             "fallback": "The canary uses the public theorem and its support producer."
           },
           {
             "title": "No support outside the interval",
-            "detail": "The interval indicator is proper, while its value at2 is positive infinity. The finite-domain theorem rules out every support vector there.",
+            "detail": "Shared canonical zero-on[0,1]/top-outside indicator is actually proved proper via the accepted indicator iff and point0. Public point-domain theorem/effectiveDomain identity exclude EVERYg at2.",
             "math": "\\partial I_{[0,1]}(2)=\\varnothing",
             "fallback": "This tests the infinite-value boundary through the shared extendedIndicator."
           }
         ],
         "takeaway": "The definition connects both finite convexity and extended-real domain restrictions.",
-        "boundary": "The example does not discharge the general interior-existence theorem."
+        "boundary": "Whole unchanged3genuine canary proofs: global quadratic2x support for every realx, actual Theorem2.21 produces square convexity on univ, and everyg ruled out at2 outside canonical real[0,1] indicator with actual properness produced via shared indicator theorem. All6named checks include complete definition;2nativeguards are separate from compilation. Generic bottom/top all-vector cases are semantic boundary observations, not additional claimed canary tests. Source properconvex interior existence and relative-interior footnote, Theorems2.22/2.23 and later Chapter2 main-text/appendix/legacy matching remain REQUIRED separately, including already compiled bodies. Not Chapter2 completion; Chapter1 migration/Chapter2mandatorytotalnull/incomplete/Chapters3-16mandatoryunenumerated/wholeGoalACTIVE. No merge/deploy/live update."
       }
     },
     {

@@ -1,0 +1,1 @@
+rg initially targeted nonexistent tools/tests, twice failed path IO. Actual rg --files tools then exact tools/test_book_registry.py discovered the fixture. Existing required literal not Chapter2 completion already preserved in selected chapter completion_definition; no source/test edit or failure fabricated. Errors only in tool transcript.

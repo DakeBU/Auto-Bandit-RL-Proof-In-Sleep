@@ -2771,10 +2771,10 @@
       "plain": "A finite witness contradicts the global support inequality if the support point has value positive infinity.",
       "math": "\\(g\\in\\partial f(x),\\ f\\text{ proper}\\ \\Longrightarrow\\ x\\in\\operatorname{dom}f\\)",
       "intuition": "A finite witness contradicts the global support inequality if the support point has value positive infinity.",
-      "why": "Closes a source subgradient prerequisite without presupposing convexity of the function.",
-      "position": "Orabona v10 printed16-17/PDF28-29.",
-      "proof_idea": "A finite witness contradicts the global support inequality if the support point has value positive infinity.",
-      "lean_notes": "Normed real inner-product space generalizes Euclidean source; Theorem2.21 is real-valued and requires convex V, but supports are global.",
+      "why": "Source-qualified reuse in SAME shared Lean/Book registry; no new proof-count gain or Chapter2 completion.",
+      "position": "Orabona v10 printed16-17/PDF28-29;2numberedanchors+required adjacent unnumbered domain group/2retainedproof1definition/0newnodes.",
+      "proof_idea": "Actual subgradient_point_finite requires SourceProper and global support, but drops convexity from the adjacent source observation: a stronger theorem. A finite global witness rules out f(x)=top. Universal x,g membership->domain exactly yields {x|S(f,x).Nonempty} subset effectiveDomain and empty support outside domain by unpacking g/contradiction. No converse or existence producer.",
+      "lean_notes": "Definition2.20 is printed for PROPER f. Actual complete SourceSubdifferential is a wider predicate on all EReal functions, faithful when restricted to proper functions. Convexity is not a definition premise; no unrestricted source equivalence. Generic bottom points and identically-top functions admit all vectors as supports. effectiveDomain means f(x)<top and includes bottom generically; SourceProper excludes bottom and supplies an actual finite point. Actual inner-product E has zero and is nonempty; V may be empty/full/unbounded. Actual subgradient_point_finite requires SourceProper and global support, but drops convexity from the adjacent source observation: a stronger theorem. A finite global witness rules out f(x)=top. Universal x,g membership->domain exactly yields {x|S(f,x).Nonempty} subset effectiveDomain and empty support outside domain by unpacking g/contradiction. No converse or existence producer.",
       "dependencies": [
         "BanditRL.OnlineConvex.SourceProper",
         "BanditRL.OnlineConvex.SourceSubdifferential",
@@ -2790,10 +2790,10 @@
       "plain": "At a convex combination choose one global support, apply it at both endpoints, multiply by the nonnegative weights and cancel the linear terms.",
       "math": "\\((\\forall x\\in V,\\ \\partial f(x)\\ne\\varnothing)\\Longrightarrow f|_V\\text{ convex}\\)",
       "intuition": "At a convex combination choose one global support, apply it at both endpoints, multiply by the nonnegative weights and cancel the linear terms.",
-      "why": "Closes a source subgradient prerequisite without presupposing convexity of the function.",
-      "position": "Orabona v10 printed16-17/PDF28-29.",
-      "proof_idea": "At a convex combination choose one global support, apply it at both endpoints, multiply by the nonnegative weights and cancel the linear terms.",
-      "lean_notes": "Normed real inner-product space generalizes Euclidean source; Theorem2.21 is real-valued and requires convex V, but supports are global.",
+      "why": "Source-qualified reuse in SAME shared Lean/Book registry; no new proof-count gain or Chapter2 completion.",
+      "position": "Orabona v10 printed16-17/PDF28-29;2numberedanchors+required adjacent unnumbered domain group/2retainedproof1definition/0newnodes.",
+      "proof_idea": "Support at convex mixture; global tests at both endpoints; nonnegative weights incl0/1 cancel actual inner displacements. Theorem2.21 uses globally REAL f, Convex V and forall x in V exists g forall ambient y supporting inequality. Support existence is the printed hypothesis, not a produced general existence theorem or desired convexity input. No merely finite-on-V EReal extension.",
+      "lean_notes": "Theorem2.21 uses globally REAL f, Convex V and forall x in V exists g forall ambient y supporting inequality. Support existence is the printed hypothesis, not a produced general existence theorem or desired convexity input. No merely finite-on-V EReal extension. Source finite Euclidean scope specializes arbitrary real-inner-product Lean scope, a stronger generalization with no CompleteSpace/FiniteDimensional premise. Ambient E nonempty via zero; empty V allowed. Weights a,b>=0,a+b=1 include endpoints0/1.",
       "dependencies": [
         "BanditRL.OnlineConvex.SourceSubdifferential"
       ]
