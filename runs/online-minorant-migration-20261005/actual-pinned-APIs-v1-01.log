@@ -1,0 +1,22 @@
+@BanditRL.OnlineConvex.supporting_functional_at_closure : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] [FiniteDimensional ℝ E] (s : Set E),
+  Convex ℝ s → ∀ x ∈ closure s, x ∉ interior s → ∃ a, a ≠ 0 ∧ ∀ y ∈ s, a y ≤ a x
+@Set.Nonempty.intrinsicInterior : ∀ {V : Type u_1} [inst : NormedAddCommGroup V] [inst_1 : NormedSpace ℝ V]
+  [FiniteDimensional ℝ V] {s : Set V}, Convex ℝ s → s.Nonempty → (intrinsicInterior ℝ s).Nonempty
+@mem_intrinsicInterior : ∀ {𝕜 : Type u_1} {V : Type u_2} {P : Type u_3} [inst : Ring 𝕜] [inst_1 : AddCommGroup V]
+  [inst_2 : Module 𝕜 V] [inst_3 : TopologicalSpace P] [inst_4 : AddTorsor V P] {s : Set P} {x : P},
+  x ∈ intrinsicInterior 𝕜 s ↔ ∃ y ∈ interior (Subtype.val ⁻¹' s), ↑y = x
+@LinearMap.exists_extend : ∀ {K : Type u_1} {V : Type u_2} {V' : Type u_3} [inst : DivisionRing K]
+  [inst_1 : AddCommGroup V] [inst_2 : AddCommGroup V'] [inst_3 : Module K V] [inst_4 : Module K V'] {p : Submodule K V}
+  (f : ↥p →ₗ[K] V'), ∃ g, g ∘ₗ p.subtype = f
+AffineIsometryEquiv.vaddConst : (𝕜 : Type u_1) →
+  {V : Type u_2} →
+    {P : Type u_3} →
+      [inst : NormedField 𝕜] →
+        [inst_1 : SeminormedAddCommGroup V] →
+          [inst_2 : NormedSpace 𝕜 V] → [inst_3 : PseudoMetricSpace P] → [inst_4 : NormedAddTorsor V P] → P → V ≃ᵃⁱ[𝕜] P
+@IsLocalMax.hasFDerivAt_eq_zero : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E] {f : E → ℝ}
+  {f' : StrongDual ℝ E} {a : E}, IsLocalMax f a → HasFDerivAt f f' a → f' = 0
+@IsLocalMin.hasDerivAt_eq_zero : ∀ {f : ℝ → ℝ} {f' a : ℝ}, IsLocalMin f a → HasDerivAt f f' a → f' = 0
+@BanditRL.OnlineConvex.convex_effectiveDomain : ∀ {E : Type u_1} [inst : AddCommGroup E] [inst_1 : Module ℝ E]
+  (f : E → EReal), BanditRL.OnlineConvex.IsConvexExtended f → Convex ℝ (BanditRL.OnlineConvex.effectiveDomain f)

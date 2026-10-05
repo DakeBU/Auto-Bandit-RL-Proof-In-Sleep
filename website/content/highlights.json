@@ -2438,15 +2438,15 @@
       "chapter": "online-minorant",
       "featured": false,
       "teaching_order": 1,
-      "plain": "Affine minorant from a domain interior point",
+      "plain": "With no-bottom, convex real epigraph and an ambient domain-interior point, retain the global continuous affine bound from touching support.",
       "math": "\\(\\exists a,b,\\ \\forall x,\\ a(x)+b\\le f(x)\\)",
-      "intuition": "The supporting functional has a strictly negative vertical coefficient; divide the support inequality.",
-      "why": "Supplies the affine integrable lower bound needed for the source Jensen theorem.",
-      "position": "Orabona v10 printedp11/PDF23.",
-      "proof_idea": "The supporting functional has a strictly negative vertical coefficient; divide the support inequality.",
-      "lean_notes": "The global target retains the original frozen quantifiers and does not assume a closed or full-dimensional domain.",
+      "intuition": "With no-bottom, convex real epigraph and an ambient domain-interior point, retain the global continuous affine bound from touching support.",
+      "why": "Supplies a future integrable affine lower bound for the separately reviewed Jensen negative-part producer; this package does not accept that producer or Jensen.",
+      "position": "Library dependency of Orabona v10 Theorem2.9, printedp11/PDF23; not an additional printed source result.",
+      "proof_idea": "Directly obtain affine_support_of_domain_interior and discard its contact equality. The negative-vertical-coefficient producer is upstream in the finite-neighbourhood support helper.",
+      "lean_notes": "Finite-dimensional real normed E, no supplied Borel/measurable/probability/CompleteSpace/inner-product parameter. This helper still needs AMBIENT domain interior; it does not discharge the general terminal or claim relative interior suffices here. The output slope mayzero. Two curated teaching links represent four public results, not the exhaustive actual graph.",
       "dependencies": [
-        "BanditRL.OnlineConvex.supporting_functional_at_closure"
+        "BanditRL.OnlineConvex.affine_support_of_domain_interior"
       ]
     },
     {
@@ -2455,13 +2455,13 @@
       "chapter": "online-minorant",
       "featured": false,
       "teaching_order": 2,
-      "plain": "Global affine minorant without domain regularity",
+      "plain": "No-bottom, convex real epigraph and merely nonempty effective domain yield a continuous real affine bound at every ambient point, including top outside.",
       "math": "\\(\\exists a,b,\\ \\forall x,\\ a(x)+b\\le f(x)\\)",
-      "intuition": "Use relative interior in the affine span, apply the interior helper, and extend the functional.",
-      "why": "Supplies the affine integrable lower bound needed for the source Jensen theorem.",
-      "position": "Orabona v10 printedp11/PDF23.",
-      "proof_idea": "Use relative interior in the affine span, apply the interior helper, and extend the functional.",
-      "lean_notes": "The global target retains the original frozen quantifiers and does not assume a closed or full-dimensional domain.",
+      "intuition": "No-bottom, convex real epigraph and merely nonempty effective domain yield a continuous real affine bound at every ambient point, including top outside.",
+      "why": "Supplies a future integrable affine lower bound for the separately reviewed Jensen negative-part producer; this package does not accept that producer or Jensen.",
+      "position": "Library dependency of Orabona v10 Theorem2.9, printedp11/PDF23; not an additional printed source result.",
+      "proof_idea": "Generate intrinsic interior in the domain affine span, pull back to the translated direction space, prove its actual ambient interior, apply the helper, extend its linear functional and correct the intercept.",
+      "lean_notes": "No closedness, lsc, ambient-interior, full dimension, measurable loss or loss differentiability premise. Actual finite-dimensional real normed scope has no supplied Borel/probability/CompleteSpace/inner-product parameter; no arbitrary infinite-dimensional extension. Slopes mayzero; no uniqueness, normalization, chosen boundary contact or quantitative norm bound. The nonclosed lower-dimensional coordinate/topoutside canary tests only this geometric dependency.",
       "dependencies": [
         "BanditRL.OnlineConvex.affine_minorant_of_domain_interior"
       ]

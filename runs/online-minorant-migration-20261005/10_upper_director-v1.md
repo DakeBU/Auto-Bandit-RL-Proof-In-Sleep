@@ -1,0 +1,1 @@
+Select necessary general affine-minorant dependency after barycenter package accepted/delivered. No loss-integrability/interior/closedness assumption may enter parent/general terminal. Four existing proofs/currentactualtypes rechecked beforefreeze; distinctautomatedAstra/mediumactors, singlelower route, zero newcode/nodes.

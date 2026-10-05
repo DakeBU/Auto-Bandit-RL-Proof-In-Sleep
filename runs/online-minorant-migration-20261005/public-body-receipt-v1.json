@@ -1,0 +1,682 @@
+{
+  "schema": "abrl.public-body-review-receipt.v1",
+  "actor": {
+    "task": "/root/source_reviewer",
+    "role": "distinct automated source reviewer",
+    "requested_model": "GPT-6 Astra",
+    "requested_reasoning": "medium",
+    "runtime_model_attested": false,
+    "human_review": false,
+    "external_model_review": false
+  },
+  "verdict": "accepted-with-explicit-delta",
+  "scope": "four actual retained producer bodies and nonclosed coordinate-loss canary only",
+  "target_verdicts": {
+    "BanditRL.OnlineConvex.affine_support_of_finite_neighborhood": "accepted-with-explicit-delta: actual library producer body, not Jensen acceptance",
+    "BanditRL.OnlineConvex.affine_support_of_domain_interior": "accepted-with-explicit-delta: actual library producer body, not Jensen acceptance",
+    "BanditRL.OnlineConvex.affine_minorant_of_domain_interior": "accepted-with-explicit-delta: actual library producer body, not Jensen acceptance",
+    "BanditRL.OnlineConvex.convex_affine_minorant": "accepted-with-explicit-delta: actual library producer body, not Jensen acceptance"
+  },
+  "mathematical_repairs": [],
+  "required_repairs": [],
+  "required_reader_corrections": [
+    "Explicitly identify four retained library dependencies, not four printed source theorems. Historical parent Jensen compilation is separate from current migration acceptance; negative-part and source Jensen revalidation remain required.",
+    "State all four actual types use finite-dimensional real normed E with no supplied MeasurableSpace/BorelSpace/probability/inner-product/CompleteSpace parameter. Preserve old Borel prose as historical stale evidence, rather than using it to describe current types.",
+    "Explain genuine finite-neighborhood values in the first helper, not point-finiteness alone; it has no supplied global no-bottom premise and derives nowhere-bottom. Auxiliary identity/linear-map Fermat arguments do not assume differentiability of the loss.",
+    "Distinguish touching support in the first two declarations from the last two minorant-only conclusions. Continuous linear a may be zero; no uniqueness, normalization, chosen boundary contact or quantitative slope bound is asserted.",
+    "Distinguish the ambient interior assumptions retained by both domain-interior helpers from mere nonempty domain in convex_affine_minorant. The general producer passes to intrinsic affine-span interior, extends the actual functional and corrects the intercept; no closedness/lsc/full-dimensional premise or oracle.",
+    "Correct proof/dependency notes: affine_minorant_of_domain_interior directly discards contact from affine_support_of_domain_interior; the negative-vertical producer is upstream. Two representative links may be a curated route, but must not imply only two public results or an exhaustive actual graph.",
+    "Keep the nonclosed lower-dimensional coordinate-loss canary and all-ambient bound including top outside explicit; it is not a Jensen probability-loss test. Its upperAdd has an everywhere-finite coordinate operand, so it does not settle mixed-infinity convention generally."
+  ],
+  "fixed_input_count": 158,
+  "prior_contract_rows_verified": 98,
+  "raw_mismatches": [],
+  "reviewed_files": [
+    {
+      "path": "../research-online-ogd/tmp/pdfs/orabona-v10.pdf",
+      "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17"
+    },
+    {
+      "path": ".agents/skills/bandit-semantic-roundtrip/SKILL.md",
+      "sha256": "7ee7b72b8a84ab954966dc13900952c3439bd8d4e97877b622c1ca0a7aa85477"
+    },
+    {
+      "path": ".lake/packages/mathlib/Mathlib/Analysis/Calculus/LocalExtr/Basic.lean",
+      "sha256": "ec09dfe037c654dc65051e22fd9e1d76055ef340089a631c304b700d0406109e"
+    },
+    {
+      "path": ".lake/packages/mathlib/Mathlib/Analysis/Convex/Intrinsic.lean",
+      "sha256": "18a4430e0da13f6a6df60fc55c7461d1fbd0e47b3733bbba955444b643a24046"
+    },
+    {
+      "path": ".lake/packages/mathlib/Mathlib/Analysis/Normed/Affine/Isometry.lean",
+      "sha256": "57fd48cf122ec2a9c9f6741321c8abeb5961c7eada3b12b785f5cd8be22f6f5d"
+    },
+    {
+      "path": ".lake/packages/mathlib/Mathlib/Analysis/Normed/Module/FiniteDimension.lean",
+      "sha256": "924331d5d45705496da51396e437b8b2d99f0c8672436240bd42506368aa81f3"
+    },
+    {
+      "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Basis/VectorSpace.lean",
+      "sha256": "adcc636be22ad37643e008cb82b513b0b53eaadc2b5c4b7fcc38f1c74bf1dfdb"
+    },
+    {
+      "path": "BanditRLProof/OnlineConvexBarycenter.lean",
+      "sha256": "beb198b8be313c36a73eb1e20acdc8b8845d40d18d70f169c129a35c338f36c0"
+    },
+    {
+      "path": "BanditRLProof/OnlineConvexExtended.lean",
+      "sha256": "bd30bb95a46ccdc3f6d25f808c175af5fee71d075c2b46ffcf6508f15f1ed66a"
+    },
+    {
+      "path": "BanditRLProof/OnlineConvexMinorant.lean",
+      "sha256": "8ca81ca0b79248a15df47556057175fd6b4712d33a082508c543bd7760a15742"
+    },
+    {
+      "path": "BanditRLProof/OnlineConvexSums.lean",
+      "sha256": "0abd620cb419fec2899146a3f201401aaa410d01409a33c81836b54dcfd932ca"
+    },
+    {
+      "path": "BanditRLProof/OnlineJensen.lean",
+      "sha256": "7b4ff2c15f08288c47499673842d334e0a719efcccc90a59a41cf3ed40d62a98"
+    },
+    {
+      "path": "Tests/OnlineConvexBarycenterCanary.lean",
+      "sha256": "55c0367f7302b5a6963aca4420f1d91cf4ae9cea97d270097a1506f3e7188ee5"
+    },
+    {
+      "path": "Tests/OnlineConvexMinorantCanary.lean",
+      "sha256": "6155e01119b5fe11ccce85dce9954302fb6868a05579c44a4df13b3a571d0bee"
+    },
+    {
+      "path": "conversion-windows/ONLINE-MINORANT-MIGRATION-20261005.md",
+      "sha256": "6715df28f697f21993cc0febf56893d5281a36052cf5758214626b5d55097d6d"
+    },
+    {
+      "path": "docs/contracts/online-minorant-interior-v1/affine_minorant_of_domain_interior.json",
+      "sha256": "d462ddf01230605808b7964119229fe41268e672cb1a726d3ddd5062df9f27e4"
+    },
+    {
+      "path": "docs/contracts/online-minorant-interior-v1/context.json",
+      "sha256": "3928ae97056b66d13cdcb5ad061633624d5c00b4ad53b86a58b75e3b4f5ee444"
+    },
+    {
+      "path": "docs/contracts/online-minorant-interior-v1/contract.md",
+      "sha256": "783ea570035fcc9e070b6a844880f2c608d4cb4081a36dfd0c5c3f58a3474e26"
+    },
+    {
+      "path": "docs/contracts/online-minorant-interior-v1/headers.json",
+      "sha256": "b44da4b4033b0f4ccde517d2d00f04245e5474e5d8c6e68d7414600ec80a82d6"
+    },
+    {
+      "path": "docs/contracts/online-minorant-migration-v1/affine_minorant_of_domain_interior-header.txt",
+      "sha256": "e16cefb3e30853d0df6ec288ce03a4758d780c6a9a2f8a86706ac69c22b5572e"
+    },
+    {
+      "path": "docs/contracts/online-minorant-migration-v1/affine_minorant_of_domain_interior.json",
+      "sha256": "dd9b877532e0a48c63b85c836cb6e44335e7da0825aeddf229b41cc5101ea388"
+    },
+    {
+      "path": "docs/contracts/online-minorant-migration-v1/affine_support_of_domain_interior-header.txt",
+      "sha256": "fda28878ba9fa50df397d14a5e84a77633b65ff0eae910d7400d9117ffa14411"
+    },
+    {
+      "path": "docs/contracts/online-minorant-migration-v1/affine_support_of_domain_interior.json",
+      "sha256": "5db5c71696ae56c4503ad5676f7e508d5b312920624d6b582c05c0a6937a8cc3"
+    },
+    {
+      "path": "docs/contracts/online-minorant-migration-v1/affine_support_of_finite_neighborhood-header.txt",
+      "sha256": "ee5209701c49ae62f99ee486fd7770167a64f2de81877feb1c03edbaff66bbb2"
+    },
+    {
+      "path": "docs/contracts/online-minorant-migration-v1/affine_support_of_finite_neighborhood.json",
+      "sha256": "4f824209315e12bc1bb44e352e92a4fccce4ddfb573dbdfc9235333cc862a025"
+    },
+    {
+      "path": "docs/contracts/online-minorant-migration-v1/convex_affine_minorant-header.txt",
+      "sha256": "d15bc60b7b96d4ecd80fe67518dd4fabfdda6aace2dcb240b0dfb11af38a6b7f"
+    },
+    {
+      "path": "docs/contracts/online-minorant-migration-v1/convex_affine_minorant.json",
+      "sha256": "7599f9bcb7e91849b9fed7a2296f58c4edd2897e624712babafe60f25eb19d37"
+    },
+    {
+      "path": "docs/contracts/online-minorant-migration-v1/scoped-contexts.json",
+      "sha256": "3ccb611c3c7f88afdcd9a8dd8622df32391751715e3aaabd4a68e8e164566273"
+    },
+    {
+      "path": "docs/contracts/online-minorant-migration-v1/source-card.json",
+      "sha256": "db310db9797d1f84248fc7b0acd4cc020ae4d653d09d9401ead4bbdc79c2b9e8"
+    },
+    {
+      "path": "docs/contracts/online-minorant-migration-v1/source-intent.md",
+      "sha256": "78f3c4ee825b9a11b7b07e479cd7577d3d117b54478da8d4d8e309ad08ca025d"
+    },
+    {
+      "path": "docs/contracts/online-minorant-v1/affine_minorant_of_domain_interior.json",
+      "sha256": "df0151726f506cd1f733ebc75063f0e67ec38c26a84c7593caa2e274479adcdb"
+    },
+    {
+      "path": "docs/contracts/online-minorant-v1/context.json",
+      "sha256": "5a902bd362fbbb4fb34d7fe74eb3dc4d1ea3cadcb7e701bfea971d8e74b06e2d"
+    },
+    {
+      "path": "docs/contracts/online-minorant-v1/contract.md",
+      "sha256": "f696c9e06754a67e1f11a2ed5c0909b5d8c3998e333324342666d34cb3d40d84"
+    },
+    {
+      "path": "docs/contracts/online-minorant-v1/convex_affine_minorant.json",
+      "sha256": "8b0adbdd981fae61863b01c57b45b65c786f78abaa225dbab844976228071170"
+    },
+    {
+      "path": "docs/contracts/online-minorant-v1/headers.json",
+      "sha256": "db5c8317b09887f18c3be6e8890966b4e52596fe35a7c8d70cfc878d8c844cb9"
+    },
+    {
+      "path": "lake-manifest.json",
+      "sha256": "87c3e616f86244550ef39e7415186b11c1d4cf4bef20173196a619d9d4d48f48"
+    },
+    {
+      "path": "lakefile.lean",
+      "sha256": "0164f3b5b5bdcbb237ab15ae8b44da83e183f4b97d5f3832aa4a57f27dc69d45"
+    },
+    {
+      "path": "lean-toolchain",
+      "sha256": "b15a57f8ea4c890197465ce1156667ae13d9ed4ab8a9f263a920bf010d967d82"
+    },
+    {
+      "path": "proof-obligations/ONLINE-MINORANT-MIGRATION-20261005.md",
+      "sha256": "b9a1bd0b373e474237a62503a6e4f4dba303ac73bc1db185b1fcfa86be4c4be9"
+    },
+    {
+      "path": "runs/online-barycenter-migration-20261005/accepted-decision-v1.json",
+      "sha256": "5f23be0e6b4dc407d991084751dacadd21379b2755d84118e5150dd5c28388b9"
+    },
+    {
+      "path": "runs/online-barycenter-migration-20261005/native-acceptance-overlay-v1.json",
+      "sha256": "9ed4667e7e1f1d8bd7a3514b52f1692cd4bd47cd415f09168a01a0b8fe99bff4"
+    },
+    {
+      "path": "runs/online-barycenter-migration-20261005/pr-delivery-v1.json",
+      "sha256": "a2cbf7ccb2f87d1ddd164f033f307959023b417e0dbc473ca94a40155a696a97"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/00_context.md",
+      "sha256": "fb39430747b720926f5dfc19969381c6348ee168c1c7e48fa3e50ef922b48862"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/10_upper_director-v1.md",
+      "sha256": "c4512591da5fc40f121416818a354bd91d0abea8f2df3ed35423006f67f87927"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/20_architect-v1.md",
+      "sha256": "fcbf463ecaac798a95ff4be2106189aff99c66c573b0225e13bb0e7c9bf1269b"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/30_lower_worker-body-audit-v1.md",
+      "sha256": "2d792fb6c17fb999bfddb9edd8fc047af7944aacdf8c28462d07b85946324dd2"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/actual-pinned-APIs-v1-01-exit.json",
+      "sha256": "79b00d1afc5daf80284a1bfe6e730d8176425bec461d0d181df0653e4b78ad9a"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/actual-pinned-APIs-v1-01.log",
+      "sha256": "2749f4bff9c2e41d56f0bcd7284c5eff2d8f908e120887123d3304456727ee5c"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/actual-public-types-v1-01-exit.json",
+      "sha256": "b35bdcd89984897a0fd43925348ec37c925b960454812c0017195f10876af3ce"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/actual-public-types-v1-01.log",
+      "sha256": "e9bc82336d6067ab4141871126fec2a1fb119b693efc327b31edd8eba6f7f2c3"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/actual-scoped-graph-v1-01-exit.json",
+      "sha256": "7d6becbc6731d69b7267a939dc85a62f0fadc76b5fde1da0b5482e4fb0c6284f"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/actual-scoped-graph-v1-01.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/auxiliary-body-guards-before-execution-v1.json",
+      "sha256": "4eafeb6eb33eb04bd82cfeb85504908e2b3d592b0fc3e77c7823dd88b47b2a56"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/auxiliary-integration-preparation-v1.json",
+      "sha256": "7a5b67969ad02b073d24e15e5c8eccf0894e2e54af211c80ff6d8077165fc653"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/auxiliary-proving-before-execution-v1.json",
+      "sha256": "86f99dcdc863781813e349d08ba27ff9cbc7e1dbed0072dca0c20c826747eef7"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/auxiliary-run-command-before-execution-v1.json",
+      "sha256": "b8f56b146ab9f58f38e4d9ad7908ce48d3191951a711ac4c8e76032dfc1dd572"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/blind-packet-v1.md",
+      "sha256": "ca4d2588864c378b1d0eb87ec3e327bad879dbe46c9abaded4ec1f376367996c"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/blind-receipt-v1.json",
+      "sha256": "1b6d5f4c9d430e13ca6148340818288a482e6e9571c1cba7c16acc7f3ee7a223"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/blind-reconstruction-v1.md",
+      "sha256": "db9c792614a90044f1d34d0082182bf7a320788c91204e24ae914a42e3a4b2ee"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/browser-v1.py",
+      "sha256": "a1933508be1f44b7fd1049083d639d843e4baf1dc7f7ca55d09f4782ea73a89f"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/check-scoped-diff-v1.py",
+      "sha256": "a3a049d3f8317312b5866ef7312c3c9372fdb841d051adca83e88bec95f7b251"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/commit-owned-v1.py",
+      "sha256": "95632ed183fd670cddc66200a4207dc7188022328ee26fbed01d596917bdbcf4"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/compiled-scoped-graph-v1.json",
+      "sha256": "3d27fa4e385b720336f7c177e63541a28dcd5d677e2c1e1bfdf779c3d3d0786d"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/contract-binding-audit-v1.json",
+      "sha256": "9dee4ae2f15a5d02220bc839cf742da73a818ff4618247ff53e2b484eaa4f390"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/contract-source-inputs-v1.json",
+      "sha256": "0ad803fa120fa9b99eda0541562431954049ab757157f6c776c13a39de141238"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/draft-fence-affine_minorant_of_domain_interior-v1-exit.json",
+      "sha256": "cd9c5e8c1779beae00d893beb5d39192567e6a89303697c7abc31b96dfa38651"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/draft-fence-affine_minorant_of_domain_interior-v1.log",
+      "sha256": "ddc47d1bc3283c8e1fcd820a65148dbf98a0ff2b31f5fa542b894be89325e887"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/draft-fence-affine_support_of_domain_interior-v1-exit.json",
+      "sha256": "ab0c9532f48039abcc71c539b63fac9f8aa934b0782bcc55c4e65020f3ff78d5"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/draft-fence-affine_support_of_domain_interior-v1.log",
+      "sha256": "e2f752e9fb7d482cb88ff3280a2bc53b15ee84f4fd61188e27b77daafe065e3d"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/draft-fence-affine_support_of_finite_neighborhood-v1-exit.json",
+      "sha256": "e14df72067b3267c200ae2265f4604de4dae09d8e5c476dc4f44c71222925338"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/draft-fence-affine_support_of_finite_neighborhood-v1.log",
+      "sha256": "8305375df1b3efcbf601489c99b2d417debe1db4145884a2cb18737baff908ca"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/draft-fence-convex_affine_minorant-v1-exit.json",
+      "sha256": "6d37642636b563d6032eeb237c497856709422de86b4613a165fe44dc4724bd9"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/draft-fence-convex_affine_minorant-v1.log",
+      "sha256": "77ece4e174af31605e36da55882aceed8fb4b08dc896ce5c752ae3a22df02b38"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/draft-freeze-v1.json",
+      "sha256": "c51f0031ba572ba9e7cc6cad2ddcd6de98e6a0259722bc3af4c58bfdf5f577c0"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/draft-lifecycle-v1-exit.json",
+      "sha256": "5f66fed3349011035c9bc4cfd34d54abdda96ceeca4006bfc9ba64cecf0c1a4b"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/draft-lifecycle-v1.log",
+      "sha256": "08175fe8d91805267a9d076de08c6bacb9c5e16dc6d17cc6a5b5176d314b6be6"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/existing-public-retrieval-v1-exit.json",
+      "sha256": "a82a1dc5ef693b4481c6373883670f548a4ebbfc25dacc17a3866c1d1648b1df"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/existing-public-retrieval-v1.log",
+      "sha256": "5cab7c5763b9a9ce1a661c7976ab3054a190d7395bd2fa961e0958fb86b3c16f"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/focused-v1-01-exit.json",
+      "sha256": "d068b53ab1f7e22f54ea0a776a09a21adf459d6cb3e7e9135683ad06387c96a0"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/focused-v1-01.log",
+      "sha256": "4e6e3612f6233deb7d64444b8f1668276d609ce30cf19de87c36f003526b434f"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/historical-raw-supersession-v1.json",
+      "sha256": "38fc7eef2fcdefca7adb60eddcb2e26d29b265bd59da35a7efbb4e6b1f86f03a"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/initial-type-probe-before-execution-v1.json",
+      "sha256": "d0e5b6bb0a4b1addbecdfcf6e80c584071fe609a43c4c178a0ad494a8f84d5a1"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/integrate-reader-v1.py",
+      "sha256": "2168398b029f923fbdd308be4f29e8b38f2ad2e9d11356d17eb9944491186254"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/leaves/actual-pinned-APIs-v1.lean",
+      "sha256": "3647ce27d61cd9fe40428c203340f771539eae0df773618e36398a3e40576e15"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/leaves/actual-public-types-v1.lean",
+      "sha256": "064832a5ef9d36b6cc3ed8dbc5c00745c67571aad0182648db226a4bd439e811"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/leaves/export-scoped-dependencies-v1.lean",
+      "sha256": "86074098ff462dd0a630ba91cbf4607e357f732a9944442dcda49457950c60a7"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/leaves/pre-integration-BanditRLProof--OnlineConvexMinorant.lean.txt",
+      "sha256": "33fc76b3f18e2686963ca59a895f320b21f8b437b0d27ff2d16bba37e7b08ea7"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/leaves/pre-integration-website--content--chapters.json.txt",
+      "sha256": "7cc2d8dd7665c130c37e611f77439f9d384884c2da2f06eea11fa8e11eb70fdc"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/leaves/pre-integration-website--content--highlights.json.txt",
+      "sha256": "9b0688b50cdb4231f714cca3f58792e31f86ccc75813b0f06e179a287bd29ab9"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/leaves/pre-integration-website--content--readings.json.txt",
+      "sha256": "4dcca8ea9603ffe94449f5dc7b8e5089909f9406584bae36e093f360c17ad00f"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/leaves/public-axioms-v1.lean",
+      "sha256": "632060895cbbe5a11ee2a8b83e0321d2022d4bb086deec989b7588856318358c"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/native-draft-fences/affine_minorant_of_domain_interior.json",
+      "sha256": "ddc47d1bc3283c8e1fcd820a65148dbf98a0ff2b31f5fa542b894be89325e887"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/native-draft-fences/affine_support_of_domain_interior.json",
+      "sha256": "e2f752e9fb7d482cb88ff3280a2bc53b15ee84f4fd61188e27b77daafe065e3d"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/native-draft-fences/affine_support_of_finite_neighborhood.json",
+      "sha256": "8305375df1b3efcbf601489c99b2d417debe1db4145884a2cb18737baff908ca"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/native-draft-fences/convex_affine_minorant.json",
+      "sha256": "77ece4e174af31605e36da55882aceed8fb4b08dc896ce5c752ae3a22df02b38"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/original-OnlineConvexMinorant.lean.txt",
+      "sha256": "33fc76b3f18e2686963ca59a895f320b21f8b437b0d27ff2d16bba37e7b08ea7"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/original-OnlineConvexMinorantCanary.lean.txt",
+      "sha256": "6155e01119b5fe11ccce85dce9954302fb6868a05579c44a4df13b3a571d0bee"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/pinned-API-probe-before-execution-v1.json",
+      "sha256": "cb6f96949d4ebf2ef471633758661721503ccfc644e71efdaff979dd0aab0eca"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/prepare-body-review-v1.py",
+      "sha256": "17d81a5a56952d675d21aba0941daed07890fdf1ff11259baee079f4313d66c1"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/prepare-draft-v1-01-exit.json",
+      "sha256": "1efc1165fe53eb29dca08adbaca4448cfed2f7511ef6e235b4dfd9e5ece0fe49"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/prepare-draft-v1-01.log",
+      "sha256": "1a36cd3894fd8880c0fd986ed920973a5b27c39289de3850f128872234f4eafc"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/prepare-draft-v1.py",
+      "sha256": "479ab198104644dc24bd7d01bdfb646260c7bc375e84797950fd160f52ad4dc4"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/prepare-integration-helpers-v1.py",
+      "sha256": "06a7ae9fc76cb4eaa703996daf112e82dde3d74d733fc6a8dd7165b2931818c6"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/prepare-proving-v1-01-exit.json",
+      "sha256": "ebb38ac646f568e31ab6d3dd312e0141726640dae8bd2eae596210c3797fbd27"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/prepare-proving-v1-01.log",
+      "sha256": "ad02a79d3a28a5667f2a041c56ff153685cf1c7fbf8be0cdab6a5361b8630240"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/prepare-proving-v1.py",
+      "sha256": "5989c3a1885261ce2f9d91ac30de6859e4cc6ff95d1ff9ba99f2a4b93512dd74"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/prepare-source-review-v1-01-exit.json",
+      "sha256": "dd0855f219eef98ffae5d70e49db0d368408798ea89bff72c3d2df1c42c0c681"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/prepare-source-review-v1-01.log",
+      "sha256": "0121dbe52908d4af49f00f501b92b6988da39f7b05c81bfc47fd5d4381b4c017"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/prepare-source-review-v1.py",
+      "sha256": "fdae1aa1f84875cb198a7d4eccb9578f62707a0476991af5ca2db3106bced526"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/prior-contract-binding-v1.json",
+      "sha256": "b8f426c29722a3961124291752e8d661cb298708cfaebd5c01bb532cb9dbee5c"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/proof-obligations-proving-v1.json",
+      "sha256": "7df2b4cc28666882b34c19baa4a1417597e472064e145d6f6f1f6a4b12f4adfd"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/proof-obligations-v1.json",
+      "sha256": "d639bf8a2e1b3cb78d6b4c21b179ddfbea10c9f4315795a03651f2ce8cd98d92"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/proving-lifecycle-v1-exit.json",
+      "sha256": "2451da7b164c73521d7ea323b04707b679dc8e373f7319aa12d9421f54b39c10"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/proving-lifecycle-v1.log",
+      "sha256": "5b19fd9367715e87b095c915151d0a6cb75eeec5f94e4c81e3d8f75634abc2b7"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/public-actual-bindings-v1.json",
+      "sha256": "3c9d928e66070226b3f384875266dddf4a0016a7471e69db4a261b4c1e1f5192"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/public-axioms-v1-01-exit.json",
+      "sha256": "9f2e84b5665e7b93bb83e8d689d812e840e0093e17026812f8c3027597c8c433"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/public-axioms-v1-01.log",
+      "sha256": "eda87fb757f7263a383308c5c043cf7db94eba364d5c43c94b7c9e13eaf6bfcf"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/public-body-inputs-v1.json",
+      "sha256": "beae9f48cc4354446ebf72aa3e1b9c1fe994ce1e9e6a1b000fdc85e1ba771420"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/public-body-review-packet-v1.md",
+      "sha256": "9fd5425cb5a6ae7650ca6737df743adb9ff76661fddba1d4618ecdcb7a59927a"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/public-body-v1-01-exit.json",
+      "sha256": "c30b79dcc6df5118828936f084b2ac7f8c4a211d92c2dc6ab79fc8093fc2be2f"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/public-body-v1-01.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/public-canary-v1-01-exit.json",
+      "sha256": "cb349da0476154d0fa10ec2969ff51cafafc07f2adbfd97cac8ec3c10b399d48"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/public-canary-v1-01.log",
+      "sha256": "7db3e7b44c796c0d02cfabf208473d012c60cd92091ea4659ec926eef0207eb2"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/public-comment-qualification-v1.json",
+      "sha256": "1492bdf511f90533bae95568ba10b2c044eba1b7353d948caa1bca45cf491bc7"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/public-named-declarations-v1.json",
+      "sha256": "3bfdb5b4e7174a39323bfa75cf6d56a59b71bf98da59f45f415cfd5e51fcf27d"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/public-safe-guard-audit-v1.json",
+      "sha256": "1ecf4771a6c405447b8fca6da95d151d44488f496c2d0a57da7e56a6649eb44c"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/qualify-public-module-v1-01-exit.json",
+      "sha256": "6f47a432f1f258df83b5a8a573243d8487c014c10056f731af0a1d17d67158c9"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/qualify-public-module-v1-01.log",
+      "sha256": "19cfe5b07ea6cb8a3b7c06c67da1a385014e94b191916d21e00cdb2a940c1f56"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/qualify-public-module-v1.py",
+      "sha256": "71b123029ec726063e189737feef27dfc41da985b26a54f7cc464fdb6a42b59c"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/ready-dependencies-v1.json",
+      "sha256": "bd98e781a3cf4ace47e2c456dc27bd15662729e22ed93ed21ac870d91a74e42e"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/retained-body-trial-v1-exit.json",
+      "sha256": "d5f8b64ad789c4ec58275755e39e62038679c2342f9731fb324366d7bf19f499"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/retained-body-trial-v1.log",
+      "sha256": "0f4e75b6e175351d2df5459ab6daac273099206e7b95d3394c045f2e04d6b6e9"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/retained-module-types-v1-01-exit.json",
+      "sha256": "271c922872224b97ddcc5406ea64001f76602ff0f098c2f485671affc600d7e8"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/retained-module-types-v1-01.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/run-command.py",
+      "sha256": "c513b8a171af602dd3f72af15823ed5f1308faccdb8526d5dcca87ddcbf86887"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/safe-public-v1-affine_minorant_of_domain_interior-exit.json",
+      "sha256": "417a9e40f27263b9a3b15621867e146d3ae6a018abf1199e50ea06f34f94226c"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/safe-public-v1-affine_minorant_of_domain_interior.log",
+      "sha256": "b13312dbbac190b24848b8837d6890ccc990ab6b57ebd6f0611a31db887bd04e"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/safe-public-v1-affine_support_of_domain_interior-exit.json",
+      "sha256": "0c2a72ed83fe4e9f99ba74a7f08332a88cedb11e4e7c7277a3304780aa909481"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/safe-public-v1-affine_support_of_domain_interior.log",
+      "sha256": "af11999b7170390691887c5e2bb271ba09c1916c1b771825a8dd214a28047131"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/safe-public-v1-affine_support_of_finite_neighborhood-exit.json",
+      "sha256": "4cd43bf652d22b05efeccf8bc5477f08d5ecf66372b606f343bc36151612aa35"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/safe-public-v1-affine_support_of_finite_neighborhood.log",
+      "sha256": "5d528971520e9089c93d1d73ccc0a4dfafa6b711af8bdbe42bce5b400014e951"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/safe-public-v1-convex_affine_minorant-exit.json",
+      "sha256": "a05a6abf98690cc97370d8108b3884e36b2ddaf5b1537dd06d8ad8a078d127d2"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/safe-public-v1-convex_affine_minorant.log",
+      "sha256": "05fffdb8d3e03173edfda9fd939b3bc6b9779c23820e4c350abc4736ba603eb7"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/source-contract-receipt-v1.json",
+      "sha256": "cacc472c07570c1fb0fbf2d9afd0e76f965c1fa2310d916686583451cb3d0baa"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/source-contract-review-v1.md",
+      "sha256": "a71a2972167a698df58987c79ef6224996d569131ade651942bd40625aeefe50"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/source-printed11-pdf23.txt",
+      "sha256": "34427f62320e4592569f9537025a692ffa127a39b1b8377d025b8655c8bb7781"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/source-review-packet-v1.md",
+      "sha256": "64302a61caa7ce1f139c28ed00b3f0d4b5f3d15748723544c23c4b1d03d7be9d"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/stabilized-lifecycle-v1-exit.json",
+      "sha256": "1f52c23e5033549fba261a9a4f9b97f4eb43afcfe15f9ddf86ac210311efffbb"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/stabilized-lifecycle-v1.log",
+      "sha256": "100c3ec126a51ec0a6368f3a8e2bd4bb079b13f452e3f87d311bb57b9db91b95"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/verify-history-bindings-v1.py",
+      "sha256": "8de1873d343305d0c1f8644222e30d1c7ee64ae1e1c7200f256d26c38ea36037"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/verify-public-fences-v1-01-exit.json",
+      "sha256": "75c9b5c97a6692515160ddbaf6ac4435a234031439551a3b3f337589c3cdb77c"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/verify-public-fences-v1-01.log",
+      "sha256": "aa1ff06fcde0b066d67abf8320442938ec6772e97bac3fbfdbfdd693e682528a"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/verify-public-fences-v1.py",
+      "sha256": "64e45e94864e1e0cddedbe378ceaf49a0dc544a3abcf606aef684a4415cfa2dc"
+    },
+    {
+      "path": "runs/online-minorant-migration-20261005/verify-registry-v1.py",
+      "sha256": "eba3a64fd9847bc6dee114815ed4a0afdf5f42895f12d1c88697184085fbea52"
+    },
+    {
+      "path": "tasks/ONLINE-MINORANT-MIGRATION-20261005.md",
+      "sha256": "c57df006217ed5928529d7c161ff3a320a011cc0ea77407110c2d9abb78d7de7"
+    },
+    {
+      "path": "tmp/online-minorant-migration-scoped-graph-v1.json",
+      "sha256": "3d27fa4e385b720336f7c177e63541a28dcd5d677e2c1e1bfdf779c3d3d0786d"
+    },
+    {
+      "path": "tools/abrl_lifecycle.py",
+      "sha256": "7615541e66a372e939ea2d18684ce78a8f3d8f1202894840ef7fdfdc703c4310"
+    },
+    {
+      "path": "website/content/chapters.json",
+      "sha256": "7cc2d8dd7665c130c37e611f77439f9d384884c2da2f06eea11fa8e11eb70fdc"
+    },
+    {
+      "path": "website/content/highlights.json",
+      "sha256": "9b0688b50cdb4231f714cca3f58792e31f86ccc75813b0f06e179a287bd29ab9"
+    },
+    {
+      "path": "website/content/readings.json",
+      "sha256": "4dcca8ea9603ffe94449f5dc7b8e5089909f9406584bae36e093f360c17ad00f"
+    }
+  ],
+  "report": "runs/online-minorant-migration-20261005/public-body-review-v1.md",
+  "report_sha256": "acb03d228cbc113910cbcff66f8be4d04b43a540e0921d55d67f8c9cfdb0a901",
+  "parent_jensen_accepted": false,
+  "package_accepted": false,
+  "chapter_complete": false,
+  "goal_complete": false
+}
