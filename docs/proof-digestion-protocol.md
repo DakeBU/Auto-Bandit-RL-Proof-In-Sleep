@@ -99,8 +99,10 @@ well-definedness theorem. If uniqueness is part of the source semantics, prove
 
     exists unique x such that Phi(x)
 
-before using classical choice. A fallback/default branch that invents
-off-source behavior is rejected.
+before using classical choice. Land the definition together with a separately
+named, sorry-free theorem proving its complete source characterization and
+uniqueness; audit the definition and characterization as one semantic unit.
+A fallback/default branch that invents off-source behavior is rejected.
 
 For quotient/representative objects, record the equivalence relation and
 representative-independence obligations.
