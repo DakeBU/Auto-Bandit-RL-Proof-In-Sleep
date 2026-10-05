@@ -303,20 +303,23 @@
       "title": "Projected OGD: Orabona Chapter 2",
       "short_title": "Projected OGD",
       "status": "compiled",
-      "summary": "Actual projected gradient recursion, fixed and decreasing-step regret with terminal residuals, and fixed-horizon tuning.",
+      "summary": "The same causal projected algorithm with repaired arbitrary-open source regularity, sharp fixed/decreasing-step regret and fixed-horizon tuning.",
       "audience": "Readers of convex optimization and online learning; this route shares the canonical Lean declaration graph.",
-      "completion_definition": "Algorithm 2.1, Proposition 2.11, Lemma 2.12, both fixed and positive nonincreasing-step branches of Theorem 2.13, and Eq. (2.1), arXiv:1912.13213v10. This is not completion of all Chapter 2; convex analysis, subgradient and linearization results remain required.",
+      "completion_definition": "Algorithm 2.1, Proposition 2.11, Lemma 2.12, both fixed and positive nonincreasing-step branches of Theorem 2.13, and Eq. (2.1), arXiv:1912.13213v10. This is not completion of all Chapter 2; convex analysis, subgradient and linearization results remain required. Source-facing loss bounds use OnlineGradientDescentSource through the proved arbitrary-open adapter; old RegularLoss declarations retain their stronger scope. Package and chapter gates are distinct.",
       "completion_blockers": [
-        "Remaining Chapter 2 convex analysis, subgradient and linearization results are required future packages."
+        "Remaining Chapter 2 convex analysis, subgradient and linearization results are required future packages.",
+        "Current source-repair package final harness/graph/reader/site/PR gates remain pending; historical scope is preserved separately."
       ],
       "learning_goals": [
         "Follow the actual projected recurrence and strict-prefix information flow.",
         "Keep the negative terminal residual for fixed and decreasing learning rates.",
-        "Distinguish fixed-step unbounded-domain analysis from diameter-based tuning."
+        "Distinguish fixed-step unbounded-domain analysis from diameter-based tuning.",
+        "Distinguish arbitrary open differentiability neighborhoods from the retained stronger convex-neighborhood predicate."
       ],
       "module_globs": [
         "BanditRLProof/OnlineGradientDescent.lean",
-        "BanditRLProof/OnlineGradientDescentVariable.lean"
+        "BanditRLProof/OnlineGradientDescentVariable.lean",
+        "BanditRLProof/OnlineGradientDescentSource.lean"
       ],
       "open_gaps": [
         "Remaining Chapter 2 convex analysis, subgradient and linearization results are not completed.",

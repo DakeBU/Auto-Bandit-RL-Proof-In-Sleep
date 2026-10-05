@@ -1,0 +1,130 @@
+{
+  "stage": "draft",
+  "scope": "current old OGD semantic migration",
+  "required": [
+    {
+      "name": "project_spec",
+      "state": "existing-compiled-unreviewed-this-pass",
+      "file": "BanditRLProof/OnlineGradientDescent.lean",
+      "statement": "theorem project_spec (V : Domain E) (z : E) : project V z \u2208 V.carrier \u2227 \u2016z - project V z\u2016 = \u2a05 w : V.carrier, \u2016z - w\u2016",
+      "statement_hash": "f76ef4ab7059d5d51673e198f80ca9804d39ef9be01cc06f0c4496bce976db05"
+    },
+    {
+      "name": "project_eq_of_variational",
+      "state": "existing-compiled-unreviewed-this-pass",
+      "file": "BanditRLProof/OnlineGradientDescent.lean",
+      "statement": "theorem project_eq_of_variational (V : Domain E) (z p : E) (hp : p \u2208 V.carrier) (h : \u2200 w \u2208 V.carrier, inner \u211d (z - p) (w - p) \u2264 0) : project V z = p",
+      "statement_hash": "a794d9a8ddeca478ca1af0d65ab179b99a0f6782c79a0564e08867e5658d9ced"
+    },
+    {
+      "name": "proposition_2_11",
+      "state": "existing-compiled-unreviewed-this-pass",
+      "file": "BanditRLProof/OnlineGradientDescent.lean",
+      "statement": "theorem proposition_2_11 (V : Domain E) (z u : E) (hu : u \u2208 V.carrier) : \u2016project V z - u\u2016 \u2264 \u2016z - u\u2016",
+      "statement_hash": "2301613177d9df0628389413ce97b96716c57b656d9d52df1fa89eb488aba27c"
+    },
+    {
+      "name": "first_order",
+      "state": "existing-compiled-unreviewed-this-pass",
+      "file": "BanditRLProof/OnlineGradientDescent.lean",
+      "statement": "theorem first_order (V : Domain E) (f : E \u2192 \u211d) (hf : RegularLoss V f) (x u : E) (hx : x \u2208 V.carrier) (hu : u \u2208 V.carrier) : f x - f u \u2264 inner \u211d (gradient f x) (x - u)",
+      "statement_hash": "a371d530100bcc667a8d7adc7d8a45626a06f0bf7cdea8191fb729c495c0daa4"
+    },
+    {
+      "name": "lemma_2_12",
+      "state": "existing-compiled-unreviewed-this-pass",
+      "file": "BanditRLProof/OnlineGradientDescent.lean",
+      "statement": "theorem lemma_2_12 (V : Domain E) (f : E \u2192 \u211d) (hf : RegularLoss V f) (\u03b7 : \u211d) (h\u03b7 : 0 < \u03b7) (x u : E) (hx : x \u2208 V.carrier) (hu : u \u2208 V.carrier) : \u03b7 * (f x - f u) \u2264 \u03b7 * inner \u211d (gradient f x) (x - u) \u2227 \u03b7 * inner \u211d (gradient f x) (x - u) \u2264 \u2016x - u\u2016 ^ 2 / 2 - \u2016step V \u03b7 f x - u\u2016 ^ 2 / 2 + \u03b7 ^ 2 / 2 * \u2016gradient f x\u2016 ^ 2",
+      "statement_hash": "ff186a1cacbb9615ca64de39790f06b4dd314db1430f13e463d6bf79ae186ba1"
+    },
+    {
+      "name": "iterate_mem",
+      "state": "existing-compiled-unreviewed-this-pass",
+      "file": "BanditRLProof/OnlineGradientDescent.lean",
+      "statement": "theorem iterate_mem (V : Domain E) (\u03b7 : \u211d) (loss : \u2115 \u2192 E \u2192 \u211d) (x\u2081 : E) (hx\u2081 : x\u2081 \u2208 V.carrier) (t : \u2115) : iterate V \u03b7 loss x\u2081 t \u2208 V.carrier",
+      "statement_hash": "6410317da71dd4182bb6567456f127ad153fd9fcd8a15c69c6413383828eec1a"
+    },
+    {
+      "name": "iterate_prefix",
+      "state": "existing-compiled-unreviewed-this-pass",
+      "file": "BanditRLProof/OnlineGradientDescent.lean",
+      "statement": "theorem iterate_prefix (V : Domain E) (\u03b7 : \u211d) (loss loss' : \u2115 \u2192 E \u2192 \u211d) (x\u2081 : E) (t : \u2115) (h : \u2200 s < t, loss s = loss' s) : iterate V \u03b7 loss x\u2081 t = iterate V \u03b7 loss' x\u2081 t",
+      "statement_hash": "4518f781065e7dd10c7585086f5dad92b601541d03c1c5bc162faba50d24dac2"
+    },
+    {
+      "name": "theorem_2_13_fixed",
+      "state": "existing-compiled-unreviewed-this-pass",
+      "file": "BanditRLProof/OnlineGradientDescent.lean",
+      "statement": "theorem theorem_2_13_fixed (V : Domain E) (\u03b7 : \u211d) (h\u03b7 : 0 < \u03b7) (loss : \u2115 \u2192 E \u2192 \u211d) (x\u2081 : E) (hx\u2081 : x\u2081 \u2208 V.carrier) (T : \u2115) (hloss : \u2200 t < T, RegularLoss V (loss t)) (u : E) (hu : u \u2208 V.carrier) : regret V \u03b7 loss x\u2081 u T \u2264 \u2016x\u2081 - u\u2016 ^ 2 / (2 * \u03b7) + \u03b7 / 2 * (\u2211 t \u2208 range T, \u2016gradient (loss t) (iterate V \u03b7 loss x\u2081 t)\u2016 ^ 2) - \u2016iterate V \u03b7 loss x\u2081 T - u\u2016 ^ 2 / (2 * \u03b7)",
+      "statement_hash": "3e457967e2f7884bea9e413427583bf3401902ed2708c5dbae996ddc2b2d3bb4"
+    },
+    {
+      "name": "equation_2_1_distance",
+      "state": "existing-compiled-unreviewed-this-pass",
+      "file": "BanditRLProof/OnlineGradientDescent.lean",
+      "statement": "theorem equation_2_1_distance (V : Domain E) (loss : \u2115 \u2192 E \u2192 \u211d) (x\u2081 : E) (hx\u2081 : x\u2081 \u2208 V.carrier) (T : \u2115) (hT : 0 < T) (D G : \u211d) (hD : 0 < D) (hG : 0 < G) (hloss : \u2200 t < T, RegularLoss V (loss t)) (u : E) (hu : u \u2208 V.carrier) (hdist : \u2016x\u2081 - u\u2016 \u2264 D) (hgrad : \u2200 t < T, \u2016gradient (loss t) (iterate V (D / (G * Real.sqrt T)) loss x\u2081 t)\u2016 \u2264 G) : regret V (D / (G * Real.sqrt T)) loss x\u2081 u T \u2264 D * G * Real.sqrt T",
+      "statement_hash": "2102a0ed89d0e6051bab98db2e0803b27f99431d11234fff833e00f296d7b90f"
+    },
+    {
+      "name": "equation_2_1",
+      "state": "existing-compiled-unreviewed-this-pass",
+      "file": "BanditRLProof/OnlineGradientDescent.lean",
+      "statement": "theorem equation_2_1 (V : Domain E) (loss : \u2115 \u2192 E \u2192 \u211d) (x\u2081 : E) (hx\u2081 : x\u2081 \u2208 V.carrier) (T : \u2115) (hT : 0 < T) (D G : \u211d) (hD : 0 < D) (hG : 0 < G) (hdiam : \u2200 x \u2208 V.carrier, \u2200 y \u2208 V.carrier, \u2016x - y\u2016 \u2264 D) (hloss : \u2200 t < T, RegularLoss V (loss t)) (hgrad : \u2200 t < T, \u2016gradient (loss t) (iterate V (D / (G * Real.sqrt T)) loss x\u2081 t)\u2016 \u2264 G) : \u2200 u \u2208 V.carrier, regret V (D / (G * Real.sqrt T)) loss x\u2081 u T \u2264 D * G * Real.sqrt T",
+      "statement_hash": "ec5e70a9ed85ff11001db2ac55a645e2058cca7d5a24b48568cc774a6d20aa3d"
+    },
+    {
+      "name": "iterateVariable_mem",
+      "state": "existing-compiled-unreviewed-this-pass",
+      "file": "BanditRLProof/OnlineGradientDescentVariable.lean",
+      "statement": "theorem iterateVariable_mem (V : Domain E) (\u03b7 : \u2115 \u2192 \u211d) (loss : \u2115 \u2192 E \u2192 \u211d) (x\u2081 : E) (hx\u2081 : x\u2081 \u2208 V.carrier) (t : \u2115) : iterateVariable V \u03b7 loss x\u2081 t \u2208 V.carrier",
+      "statement_hash": "bcd583c2f9941ecc03c70fe2554c8263623065fc1c5207fa99ddc87a5fdc83a5"
+    },
+    {
+      "name": "iterateVariable_prefix",
+      "state": "existing-compiled-unreviewed-this-pass",
+      "file": "BanditRLProof/OnlineGradientDescentVariable.lean",
+      "statement": "theorem iterateVariable_prefix (V : Domain E) (\u03b7 : \u2115 \u2192 \u211d) (loss loss' : \u2115 \u2192 E \u2192 \u211d) (x\u2081 : E) (t : \u2115) (h : \u2200 s < t, loss s = loss' s) : iterateVariable V \u03b7 loss x\u2081 t = iterateVariable V \u03b7 loss' x\u2081 t",
+      "statement_hash": "6c30c9a8f6cd0772091053312a570a789b1ee85c37bac0062baa1e639562cc84"
+    },
+    {
+      "name": "variable_one_step",
+      "state": "existing-compiled-unreviewed-this-pass",
+      "file": "BanditRLProof/OnlineGradientDescentVariable.lean",
+      "statement": "theorem variable_one_step (V : Domain E) (\u03b7 : \u2115 \u2192 \u211d) (loss : \u2115 \u2192 E \u2192 \u211d) (x\u2081 : E) (hx\u2081 : x\u2081 \u2208 V.carrier) (t : \u2115) (h\u03b7 : 0 < \u03b7 t) (hloss : RegularLoss V (loss t)) (u : E) (hu : u \u2208 V.carrier) : loss t (iterateVariable V \u03b7 loss x\u2081 t) - loss t u \u2264 (\u2016iterateVariable V \u03b7 loss x\u2081 t - u\u2016 ^ 2 - \u2016iterateVariable V \u03b7 loss x\u2081 (t + 1) - u\u2016 ^ 2) / (2 * \u03b7 t) + \u03b7 t / 2 * \u2016gradient (loss t) (iterateVariable V \u03b7 loss x\u2081 t)\u2016 ^ 2",
+      "statement_hash": "42fdcfcfde0d72f5143573bf65bb53582dac3196b790892fa891eb7377a55c0a"
+    },
+    {
+      "name": "weighted_potential_sum",
+      "state": "existing-compiled-unreviewed-this-pass",
+      "file": "BanditRLProof/OnlineGradientDescentVariable.lean",
+      "statement": "theorem weighted_potential_sum (a \u03b7 : \u2115 \u2192 \u211d) (C : \u211d) (T : \u2115) (hT : 0 < T) (h\u03b7 : \u2200 t < T, 0 < \u03b7 t) (hmono : \u2200 t, t + 1 < T \u2192 \u03b7 (t + 1) \u2264 \u03b7 t) (hbound : \u2200 t < T, a t \u2264 C) : (\u2211 t \u2208 range T, (a t - a (t + 1)) / (2 * \u03b7 t)) \u2264 C / (2 * \u03b7 (T - 1)) - a T / (2 * \u03b7 (T - 1))",
+      "statement_hash": "77999a99cdffcb9135a25288c2a0edc7cd847ad12f7bcb1c542cca272e5c5683"
+    },
+    {
+      "name": "theorem_2_13_variable_bound",
+      "state": "existing-compiled-unreviewed-this-pass",
+      "file": "BanditRLProof/OnlineGradientDescentVariable.lean",
+      "statement": "theorem theorem_2_13_variable_bound (V : Domain E) (\u03b7 : \u2115 \u2192 \u211d) (loss : \u2115 \u2192 E \u2192 \u211d) (x\u2081 : E) (hx\u2081 : x\u2081 \u2208 V.carrier) (T : \u2115) (hT : 0 < T) (h\u03b7 : \u2200 t < T, 0 < \u03b7 t) (hmono : \u2200 t, t + 1 < T \u2192 \u03b7 (t + 1) \u2264 \u03b7 t) (hloss : \u2200 t < T, RegularLoss V (loss t)) (D : \u211d) (hdiam : \u2200 x \u2208 V.carrier, \u2200 y \u2208 V.carrier, \u2016x - y\u2016 \u2264 D) (u : E) (hu : u \u2208 V.carrier) : regretVariable V \u03b7 loss x\u2081 u T \u2264 D ^ 2 / (2 * \u03b7 (T - 1)) + (\u2211 t \u2208 range T, \u03b7 t / 2 * \u2016gradient (loss t) (iterateVariable V \u03b7 loss x\u2081 t)\u2016 ^ 2) - \u2016iterateVariable V \u03b7 loss x\u2081 T - u\u2016 ^ 2 / (2 * \u03b7 (T - 1))",
+      "statement_hash": "b886af8e364d2a44e1a658924c043f5cd460ab4a3f16a47505dac670244e63e7"
+    },
+    {
+      "name": "theorem_2_13_variable",
+      "state": "existing-compiled-unreviewed-this-pass",
+      "file": "BanditRLProof/OnlineGradientDescentVariable.lean",
+      "statement": "theorem theorem_2_13_variable (V : Domain E) (hV : Bornology.IsBounded V.carrier) (\u03b7 : \u2115 \u2192 \u211d) (loss : \u2115 \u2192 E \u2192 \u211d) (x\u2081 : E) (hx\u2081 : x\u2081 \u2208 V.carrier) (T : \u2115) (hT : 0 < T) (h\u03b7 : \u2200 t < T, 0 < \u03b7 t) (hmono : \u2200 t, t + 1 < T \u2192 \u03b7 (t + 1) \u2264 \u03b7 t) (hloss : \u2200 t < T, RegularLoss V (loss t)) (u : E) (hu : u \u2208 V.carrier) : regretVariable V \u03b7 loss x\u2081 u T \u2264 (Metric.diam V.carrier) ^ 2 / (2 * \u03b7 (T - 1)) + (\u2211 t \u2208 range T, \u03b7 t / 2 * \u2016gradient (loss t) (iterateVariable V \u03b7 loss x\u2081 t)\u2016 ^ 2) - \u2016iterateVariable V \u03b7 loss x\u2081 T - u\u2016 ^ 2 / (2 * \u03b7 (T - 1))",
+      "statement_hash": "a2b618da718d2c866a28f52bbda35af4d6abf0f367c2f94843d48be16d2941d6"
+    }
+  ],
+  "chapter_complete": false,
+  "book_complete": false,
+  "goal_complete": false,
+  "new_proofs": 0,
+  "mandatory_remaining": [
+    "neutral typed reconstruction",
+    "source contract/body review",
+    "any source-premise repair",
+    "current focused/publiccanary/axioms/combined/graph/Book gates",
+    "contribution migration",
+    "remaining historical24 paths and full chapter enumeration"
+  ]
+}

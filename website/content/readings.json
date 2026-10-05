@@ -1465,6 +1465,14 @@
         {
           "term": "D, G",
           "meaning": "A priori positive diameter and gradient norm upper bounds; the source calls G by L."
+        },
+        {
+          "term": "SourceRegularLoss → FeasibleRegularLoss",
+          "meaning": "Convexity on V and a supplied ambient real extension differentiable on an arbitrary open U containing V. U need not be convex. source_to_feasible proves the conversion to FeasibleRegularLoss: convexity on V and ambient derivatives at every feasible point. On a thin V the supplied extension fixes the gradient; extension independence is not claimed."
+        },
+        {
+          "term": "Historical RegularLoss",
+          "meaning": "The retained historical API requires a convex open differentiability neighborhood. Its proofs remain valid under that stronger premise; the source cards below now use the repaired shared declarations."
         }
       ],
       "algorithm": {
@@ -1491,9 +1499,9 @@
       },
       "teaching_route": [
         "BanditRL.OnlineGradientDescent.iterate",
-        "BanditRL.OnlineGradientDescent.lemma_2_12",
-        "BanditRL.OnlineGradientDescent.theorem_2_13_fixed",
-        "BanditRL.OnlineGradientDescent.equation_2_1"
+        "BanditRL.OnlineGradientDescentSource.lemma_2_12",
+        "BanditRL.OnlineGradientDescentSource.theorem_2_13_fixed",
+        "BanditRL.OnlineGradientDescentSource.equation_2_1"
       ],
       "source_theorems": [
         {
@@ -1506,16 +1514,16 @@
           "plain": "Projection cannot increase distance to a feasible comparator.",
           "relationship": "Exact shared declaration: BanditRL.OnlineGradientDescent.proposition_2_11. Use the Hilbert projection variational inequality and expand squared distance.",
           "contract": {
-            "model": "Finite-dimensional real Euclidean projected OGD; Lean additionally supports real Hilbert spaces.",
+            "model": "Projection onto a nonempty closed convex set in real Euclidean space; Lean supports complete real Hilbert spaces.",
             "assumptions": "Nonempty closed convex V; feasible comparator.",
-            "parameters": "Fixed eta, horizon T, initial point x1 and comparator u; tuning uses eta=D/(G sqrt T).",
-            "regret": "Deterministic cumulative loss difference on the same generated trajectory.",
+            "parameters": "Arbitrary ambient point z and feasible comparator u; no loss, learning rate or horizon.",
+            "regret": "Pointwise comparison of distances; no regret functional.",
             "guarantee": "Projection cannot increase distance to a feasible comparator."
           },
           "local_status": {
             "status": "compiled",
-            "label": "Scoped fixed-step proof",
-            "boundary": "Only the named interface is covered by this entry. The decreasing-step branch has its own source-qualified entry. Remaining Chapter 2, general OMD and Tsallis dual guarantees are not completed."
+            "label": "Compiled local source-repair candidate",
+            "boundary": "Compiled local OGD source-repair candidate, with distinct source/body review. Full harness, actual graph, shared Book registry, final reader/site and PR gates remain separate. This is not all Chapter2 or the whole book, and is not merged or live."
           }
         },
         {
@@ -1526,18 +1534,18 @@
           "math": "\\eta(\\ell_t(x_t)-\\ell_t(u))\\le\\eta\\langle g_t,x_t-u\\rangle\\le\\frac{\\|x_t-u\\|^2-\\|x_{t+1}-u\\|^2+\\eta^2\\|g_t\\|^2}{2}",
           "fallback": "Convexity linearizes loss; projection turns that inner product into a potential decrease plus gradient energy.",
           "plain": "Convexity linearizes loss; projection turns that inner product into a potential decrease plus gradient energy.",
-          "relationship": "Exact shared declaration: BanditRL.OnlineGradientDescent.lemma_2_12. Derive first_order through a differentiable convex affine restriction, then expand the actual projected update.",
+          "relationship": "Exact shared declaration: BanditRL.OnlineGradientDescentSource.lemma_2_12. Derive the loss comparison from feasible-set convexity and the ambient derivative. Prove the linear gradient, then specialize the retained quadratic projection lemma to the genuine linear loss with this gradient. Both inequalities use the same original step. Convexity on V and a supplied ambient real extension differentiable on an arbitrary open U containing V. U need not be convex. source_to_feasible proves the conversion to FeasibleRegularLoss: convexity on V and ambient derivatives at every feasible point. On a thin V the supplied extension fixes the gradient; extension independence is not claimed.",
           "contract": {
             "model": "Finite-dimensional real Euclidean projected OGD; Lean additionally supports real Hilbert spaces.",
-            "assumptions": "Nonempty closed convex V; feasible comparator. Positive step and convex differentiable losses on an open neighborhood of V.",
-            "parameters": "Fixed eta, horizon T, initial point x1 and comparator u; tuning uses eta=D/(G sqrt T).",
-            "regret": "Deterministic cumulative loss difference on the same generated trajectory.",
+            "assumptions": "Nonempty closed convex V, feasible x and u, eta>0. Convexity on V and a supplied ambient real extension differentiable on an arbitrary open U containing V. U need not be convex. source_to_feasible proves the conversion to FeasibleRegularLoss: convexity on V and ambient derivatives at every feasible point. On a thin V the supplied extension fixes the gradient; extension independence is not claimed.",
+            "parameters": "A single current loss, current feasible point x, feasible comparator u and positive step eta; x_next is the same actual projected update.",
+            "regret": "One-round loss difference and its gradient linearization; no cumulative horizon premise.",
             "guarantee": "Convexity linearizes loss; projection turns that inner product into a potential decrease plus gradient energy."
           },
           "local_status": {
             "status": "compiled",
-            "label": "Scoped fixed-step proof",
-            "boundary": "Only the named interface is covered by this entry. The decreasing-step branch has its own source-qualified entry. Remaining Chapter 2, general OMD and Tsallis dual guarantees are not completed."
+            "label": "Compiled local source-repair candidate",
+            "boundary": "Compiled local OGD source-repair candidate, with distinct source/body review. Full harness, actual graph, shared Book registry, final reader/site and PR gates remain separate. This is not all Chapter2 or the whole book, and is not merged or live."
           }
         },
         {
@@ -1548,18 +1556,18 @@
           "math": "R_T(u)\\le\\frac{\\|x_1-u\\|^2}{2\\eta}+\\frac\\eta2\\sum_{t=1}^T\\|g_t\\|^2-\\frac{\\|x_{T+1}-u\\|^2}{2\\eta}",
           "fallback": "Cumulative comparator regret retains the negative terminal squared distance, with no bounded-domain premise.",
           "plain": "Cumulative comparator regret retains the negative terminal squared distance, with no bounded-domain premise.",
-          "relationship": "Exact shared declaration: BanditRL.OnlineGradientDescent.theorem_2_13_fixed. Sum the generated trajectory one-step inequality and telescope; divide by the positive fixed step.",
+          "relationship": "Exact shared declaration: BanditRL.OnlineGradientDescentSource.theorem_2_13_fixed. Sum the generated trajectory one-step inequality and telescope; divide by the positive fixed step. The proved source_to_feasible adapter supplies the source arbitrary-open regularity on the same old projected recurrence.",
           "contract": {
             "model": "Finite-dimensional real Euclidean projected OGD; Lean additionally supports real Hilbert spaces.",
-            "assumptions": "Nonempty closed convex V; feasible comparator. Positive step and convex differentiable losses on an open neighborhood of V.",
-            "parameters": "Fixed eta, horizon T, initial point x1 and comparator u; tuning uses eta=D/(G sqrt T).",
+            "assumptions": "Nonempty closed convex V, feasible initial point and comparator, eta>0; no bounded-domain premise. Convexity on V and a supplied ambient real extension differentiable on an arbitrary open U containing V. U need not be convex. source_to_feasible proves the conversion to FeasibleRegularLoss: convexity on V and ambient derivatives at every feasible point. On a thin V the supplied extension fixes the gradient; extension independence is not claimed.",
+            "parameters": "Fixed eta and any natural horizon T, including T=0 where the two distances cancel.",
             "regret": "Deterministic cumulative loss difference on the same generated trajectory.",
             "guarantee": "Cumulative comparator regret retains the negative terminal squared distance, with no bounded-domain premise."
           },
           "local_status": {
             "status": "compiled",
-            "label": "Scoped fixed-step proof",
-            "boundary": "Only the named interface is covered by this entry. The decreasing-step branch has its own source-qualified entry. Remaining Chapter 2, general OMD and Tsallis dual guarantees are not completed."
+            "label": "Compiled local source-repair candidate",
+            "boundary": "Compiled local OGD source-repair candidate, with distinct source/body review. Full harness, actual graph, shared Book registry, final reader/site and PR gates remain separate. This is not all Chapter2 or the whole book, and is not merged or live."
           }
         },
         {
@@ -1570,18 +1578,18 @@
           "math": "\\eta=\\frac{D}{G\\sqrt T},\\qquad R_T(u)\\le DG\\sqrt T",
           "fallback": "A priori diameter and gradient bounds yield the source square-root regret rate.",
           "plain": "A priori diameter and gradient bounds yield the source square-root regret rate.",
-          "relationship": "Exact shared declaration: BanditRL.OnlineGradientDescent.equation_2_1. Bound initial distance and gradient energy, then simplify the positive horizon-tuned step.",
+          "relationship": "Exact shared declaration: BanditRL.OnlineGradientDescentSource.equation_2_1. Bound initial distance and gradient energy, then simplify the positive horizon-tuned step. The proved source_to_feasible adapter supplies the source arbitrary-open regularity on the same old projected recurrence.",
           "contract": {
             "model": "Finite-dimensional real Euclidean projected OGD; Lean additionally supports real Hilbert spaces.",
-            "assumptions": "Nonempty closed convex V; feasible comparator. Positive step and convex differentiable losses on an open neighborhood of V. T >= 1 and positive bounds D, G on diameter and trajectory gradient norms.",
-            "parameters": "Fixed eta, horizon T, initial point x1 and comparator u; tuning uses eta=D/(G sqrt T).",
+            "assumptions": "Nonempty closed convex V, feasible initial point; T,D,G>0; pairwise distances<=D and gradient norms<=G on this actual tuned trajectory. Convexity on V and a supplied ambient real extension differentiable on an arbitrary open U containing V. U need not be convex. source_to_feasible proves the conversion to FeasibleRegularLoss: convexity on V and ambient derivatives at every feasible point. On a thin V the supplied extension fixes the gradient; extension independence is not claimed.",
+            "parameters": "One horizon-prescribed eta=D/(G sqrtT) before the conclusion for all feasible comparators. No zero-parameter or anytime claim.",
             "regret": "Deterministic cumulative loss difference on the same generated trajectory.",
             "guarantee": "A priori diameter and gradient bounds yield the source square-root regret rate."
           },
           "local_status": {
             "status": "compiled",
-            "label": "Scoped fixed-step proof",
-            "boundary": "Only the named interface is covered by this entry. The decreasing-step branch has its own source-qualified entry. Remaining Chapter 2, general OMD and Tsallis dual guarantees are not completed."
+            "label": "Compiled local source-repair candidate",
+            "boundary": "Compiled local OGD source-repair candidate, with distinct source/body review. Full harness, actual graph, shared Book registry, final reader/site and PR gates remain separate. This is not all Chapter2 or the whole book, and is not merged or live."
           }
         },
         {
@@ -1592,18 +1600,18 @@
           "math": "R_T(u)\\le\\frac{D^2}{2\\eta_T}+\\sum_{t=1}^T\\frac{\\eta_t}{2}\\|g_t\\|^2-\\frac{\\|x_{T+1}-u\\|^2}{2\\eta_T}",
           "fallback": "Decreasing learning rates give a finite-diameter regret bound with the negative terminal squared distance retained.",
           "plain": "The same generated trajectory determines all gradients and the terminal residual.",
-          "relationship": "Exact shared declaration: BanditRL.OnlineGradientDescent.theorem_2_13_variable. Sum actual variable_one_step inequalities through weighted_potential_sum; boundedness supplies the finite Metric.diam interface.",
+          "relationship": "Exact shared declaration: BanditRL.OnlineGradientDescentSource.theorem_2_13_variable. Sum actual variable_one_step inequalities through weighted_potential_sum; boundedness supplies the finite Metric.diam interface. The proved source_to_feasible adapter supplies the source arbitrary-open regularity on the same old projected recurrence.",
           "contract": {
             "model": "Projected OGD in finite-dimensional real Euclidean space; the Lean interface supports real Hilbert spaces.",
-            "assumptions": "Nonempty closed convex bounded V; feasible initial point and comparator; convex differentiable losses on open neighborhoods; positive nonincreasing learning rates; T>=1.",
-            "parameters": "Source D is the exact finite diameter; the separate theorem_2_13_variable_bound accepts any pairwise-distance upper bound. Zero diameter is allowed.",
+            "assumptions": "Nonempty closed convex bounded V; feasible initial point and comparator; T>=1; positive adjacent nonincreasing prescribed steps. Convexity on V and a supplied ambient real extension differentiable on an arbitrary open U containing V. U need not be convex. source_to_feasible proves the conversion to FeasibleRegularLoss: convexity on V and ambient derivatives at every feasible point. On a thin V the supplied extension fixes the gradient; extension independence is not claimed.",
+            "parameters": "Exact finite Metric.diam V. Both distance denominators use the last played step eta(T-1); D=0 is allowed.",
             "regret": "Deterministic cumulative comparator loss difference for iterateVariable; source eta_T is Lean eta(T-1).",
             "guarantee": "D squared over twice the final step, plus weighted gradient energy, minus the terminal squared distance over twice the final step."
           },
           "local_status": {
             "status": "compiled",
-            "label": "Scoped decreasing-step proof",
-            "boundary": "Only Theorem2.13 decreasing-step branch and its actual recursion are covered; remaining Chapter2 results are required separate packages."
+            "label": "Compiled local source-repair candidate",
+            "boundary": "Compiled local OGD source-repair candidate, with distinct source/body review. Full harness, actual graph, shared Book registry, final reader/site and PR gates remain separate. This is not all Chapter2 or the whole book, and is not merged or live."
           }
         }
       ],
@@ -1631,7 +1639,7 @@
           }
         ],
         "takeaway": "Both the projection and the terminal residual matter in a changing-loss instance.",
-        "boundary": "This exact-real example is kernel-checked in Tests.OnlineGradientDescentCanary; it is not a numerical experiment. The tuned-rate test uses its own specified trajectory."
+        "boundary": "This exact-real example is kernel-checked in Tests.OnlineGradientDescentCanary; it is not a numerical experiment. The tuned-rate test uses its own specified trajectory. The repaired endpoints are instantiated in Tests.OnlineGradientDescentSourceCanary. A separate exact plane canary uses V={(x,0)}, f(x,y)=max(exp(-x),y), U={y<exp(-x)}. It proves U open/nonconvex, V unbounded, actual gradient(-1,0) at0 and next(1,0) for eta1, positive regret 1-exp(-2) against(2,0), and terminal square1. This is not a Lean proof that every alternative convex differentiability neighborhood fails. The horizon-tuned interval bound does not claim each tuned iterate clips."
       }
     },
     {

@@ -1,0 +1,59 @@
+import Mathlib.Topology.MetricSpace.Bounded
+import Mathlib.Analysis.Convex.Deriv
+import Mathlib.Analysis.Calculus.Gradient.Basic
+import Mathlib.Analysis.InnerProductSpace.Projection.Minimal
+import Mathlib.Analysis.InnerProductSpace.PiL2
+import Mathlib.Tactic
+
+
+
+noncomputable section
+open Set Finset
+open scoped InnerProductSpace
+
+namespace NeutralMigration
+
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]
+
+
+structure Q0 (E : Type*) [NormedAddCommGroup E] [InnerProductSpace ℝ E] where
+  carrier : Set E
+  nonempty : carrier.Nonempty
+  closed : IsClosed carrier
+  convex : Convex ℝ carrier
+
+
+def Q1 (V : Q0 E) (z : E) : E :=
+  Classical.choose (exists_norm_eq_iInf_of_complete_convex V.nonempty
+    V.closed.isComplete V.convex z)
+
+
+def Q2 (V : Q0 E) (f : E → ℝ) : Prop :=
+  ∃ U : Set E, IsOpen U ∧ V.carrier ⊆ U ∧ ConvexOn ℝ U f ∧ DifferentiableOn ℝ f U
+
+
+def Q3 (V : Q0 E) (η : ℝ) (f : E → ℝ) (x : E) : E :=
+  Q1 V (x - η • gradient f x)
+
+
+def Q4 (V : Q0 E) (η : ℝ) (loss : ℕ → E → ℝ) (x₁ : E) : ℕ → E
+  | 0 => x₁
+  | t + 1 => Q3 V η (loss t) (Q4 V η loss x₁ t)
+
+
+def Q5 (V : Q0 E) (η : ℝ) (loss : ℕ → E → ℝ) (x₁ u : E) (T : ℕ) : ℝ :=
+  ∑ t ∈ range T, (loss t (Q4 V η loss x₁ t) - loss t u)
+
+
+
+def Q6 (V : Q0 E) (η : ℕ → ℝ) (loss : ℕ → E → ℝ) (x₁ : E) : ℕ → E
+  | 0 => x₁
+  | t + 1 => Q3 V (η t) (loss t) (Q6 V η loss x₁ t)
+
+
+def Q7 (V : Q0 E) (η : ℕ → ℝ) (loss : ℕ → E → ℝ)
+    (x₁ u : E) (T : ℕ) : ℝ :=
+  ∑ t ∈ range T, (loss t (Q6 V η loss x₁ t) - loss t u)
+
+
+end NeutralMigration

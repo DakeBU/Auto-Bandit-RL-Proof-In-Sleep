@@ -1,0 +1,62 @@
+{
+  "status": "passed",
+  "headers": {
+    "source_to_feasible": {
+      "statement": "theorem source_to_feasible (V : Domain E) (f : E \u2192 \u211d) (hf : SourceRegularLoss V f) : FeasibleRegularLoss V f",
+      "statement_hash": "f8e1e9a9fa54be0ce5c0a475cd2eb9f1cb4e6d5952232c4504e7dd61da8fe51a"
+    },
+    "regular_to_feasible": {
+      "statement": "theorem regular_to_feasible (V : Domain E) (f : E \u2192 \u211d) (hf : RegularLoss V f) : FeasibleRegularLoss V f",
+      "statement_hash": "e0e5d3a46190ba3a8141e949a812289323ce72ca58f57d39c5ae94df738e78b6"
+    },
+    "linear_regular": {
+      "statement": "theorem linear_regular (V : Domain E) (g : E) : RegularLoss V (fun z => inner \u211d g z)",
+      "statement_hash": "649ee8af6916b37981f379dde4c347e5fa1cb50856f9ee83745bc7df3e8eb984"
+    },
+    "gradient_linear": {
+      "statement": "theorem gradient_linear (g x : E) : gradient (fun z => inner \u211d g z) x = g",
+      "statement_hash": "67caaee1c88c722aa87c5bf75bdfb30a3e1f133fbdedc53546577d2d71dbcbd9"
+    },
+    "first_order": {
+      "statement": "theorem first_order (V : Domain E) (f : E \u2192 \u211d) (hf : FeasibleRegularLoss V f) (x u : E) (hx : x \u2208 V.carrier) (hu : u \u2208 V.carrier) : f x - f u \u2264 inner \u211d (gradient f x) (x - u)",
+      "statement_hash": "a7a5b6ce779055f0fab88f539e643279297322fb8e0f10ad7826e4068223680f"
+    },
+    "lemma_2_12": {
+      "statement": "theorem lemma_2_12 (V : Domain E) (f : E \u2192 \u211d) (hf : FeasibleRegularLoss V f) (\u03b7 : \u211d) (h\u03b7 : 0 < \u03b7) (x u : E) (hx : x \u2208 V.carrier) (hu : u \u2208 V.carrier) : \u03b7 * (f x - f u) \u2264 \u03b7 * inner \u211d (gradient f x) (x - u) \u2227 \u03b7 * inner \u211d (gradient f x) (x - u) \u2264 \u2016x - u\u2016 ^ 2 / 2 - \u2016step V \u03b7 f x - u\u2016 ^ 2 / 2 + \u03b7 ^ 2 / 2 * \u2016gradient f x\u2016 ^ 2",
+      "statement_hash": "eed9c690eb624b6e8e1f1f536900ae25126a901ac7039bc62bcd89dfba76382b"
+    },
+    "theorem_2_13_fixed": {
+      "statement": "theorem theorem_2_13_fixed (V : Domain E) (\u03b7 : \u211d) (h\u03b7 : 0 < \u03b7) (loss : \u2115 \u2192 E \u2192 \u211d) (x\u2081 : E) (hx\u2081 : x\u2081 \u2208 V.carrier) (T : \u2115) (hloss : \u2200 t < T, FeasibleRegularLoss V (loss t)) (u : E) (hu : u \u2208 V.carrier) : regret V \u03b7 loss x\u2081 u T \u2264 \u2016x\u2081 - u\u2016 ^ 2 / (2 * \u03b7) + \u03b7 / 2 * (\u2211 t \u2208 range T, \u2016gradient (loss t) (iterate V \u03b7 loss x\u2081 t)\u2016 ^ 2) - \u2016iterate V \u03b7 loss x\u2081 T - u\u2016 ^ 2 / (2 * \u03b7)",
+      "statement_hash": "bc812920a17ad0120087fd3c0cec8adcd137a7331f385c411894c87e3c6c8986"
+    },
+    "variable_one_step": {
+      "statement": "theorem variable_one_step (V : Domain E) (\u03b7 : \u2115 \u2192 \u211d) (loss : \u2115 \u2192 E \u2192 \u211d) (x\u2081 : E) (hx\u2081 : x\u2081 \u2208 V.carrier) (t : \u2115) (h\u03b7 : 0 < \u03b7 t) (hloss : FeasibleRegularLoss V (loss t)) (u : E) (hu : u \u2208 V.carrier) : loss t (iterateVariable V \u03b7 loss x\u2081 t) - loss t u \u2264 (\u2016iterateVariable V \u03b7 loss x\u2081 t - u\u2016 ^ 2 - \u2016iterateVariable V \u03b7 loss x\u2081 (t + 1) - u\u2016 ^ 2) / (2 * \u03b7 t) + \u03b7 t / 2 * \u2016gradient (loss t) (iterateVariable V \u03b7 loss x\u2081 t)\u2016 ^ 2",
+      "statement_hash": "44b9e27a41e32289642634e77b5337b194414f1fb285c44b44d675f24dba8763"
+    },
+    "theorem_2_13_variable_bound": {
+      "statement": "theorem theorem_2_13_variable_bound (V : Domain E) (\u03b7 : \u2115 \u2192 \u211d) (loss : \u2115 \u2192 E \u2192 \u211d) (x\u2081 : E) (hx\u2081 : x\u2081 \u2208 V.carrier) (T : \u2115) (hT : 0 < T) (h\u03b7 : \u2200 t < T, 0 < \u03b7 t) (hmono : \u2200 t, t + 1 < T \u2192 \u03b7 (t + 1) \u2264 \u03b7 t) (hloss : \u2200 t < T, FeasibleRegularLoss V (loss t)) (D : \u211d) (hdiam : \u2200 x \u2208 V.carrier, \u2200 y \u2208 V.carrier, \u2016x - y\u2016 \u2264 D) (u : E) (hu : u \u2208 V.carrier) : regretVariable V \u03b7 loss x\u2081 u T \u2264 D ^ 2 / (2 * \u03b7 (T - 1)) + (\u2211 t \u2208 range T, \u03b7 t / 2 * \u2016gradient (loss t) (iterateVariable V \u03b7 loss x\u2081 t)\u2016 ^ 2) - \u2016iterateVariable V \u03b7 loss x\u2081 T - u\u2016 ^ 2 / (2 * \u03b7 (T - 1))",
+      "statement_hash": "6c560c38b4703eaec4c7ece312373d8aa32246b7e8de5b163801ce07b26bb845"
+    },
+    "theorem_2_13_variable": {
+      "statement": "theorem theorem_2_13_variable (V : Domain E) (hV : Bornology.IsBounded V.carrier) (\u03b7 : \u2115 \u2192 \u211d) (loss : \u2115 \u2192 E \u2192 \u211d) (x\u2081 : E) (hx\u2081 : x\u2081 \u2208 V.carrier) (T : \u2115) (hT : 0 < T) (h\u03b7 : \u2200 t < T, 0 < \u03b7 t) (hmono : \u2200 t, t + 1 < T \u2192 \u03b7 (t + 1) \u2264 \u03b7 t) (hloss : \u2200 t < T, FeasibleRegularLoss V (loss t)) (u : E) (hu : u \u2208 V.carrier) : regretVariable V \u03b7 loss x\u2081 u T \u2264 (Metric.diam V.carrier) ^ 2 / (2 * \u03b7 (T - 1)) + (\u2211 t \u2208 range T, \u03b7 t / 2 * \u2016gradient (loss t) (iterateVariable V \u03b7 loss x\u2081 t)\u2016 ^ 2) - \u2016iterateVariable V \u03b7 loss x\u2081 T - u\u2016 ^ 2 / (2 * \u03b7 (T - 1))",
+      "statement_hash": "a2e245b1ae6956dbe503326db11d53a1a2f509ddec20c9f6de3fb7684f177119"
+    },
+    "equation_2_1_distance": {
+      "statement": "theorem equation_2_1_distance (V : Domain E) (loss : \u2115 \u2192 E \u2192 \u211d) (x\u2081 : E) (hx\u2081 : x\u2081 \u2208 V.carrier) (T : \u2115) (hT : 0 < T) (D G : \u211d) (hD : 0 < D) (hG : 0 < G) (hloss : \u2200 t < T, FeasibleRegularLoss V (loss t)) (u : E) (hu : u \u2208 V.carrier) (hdist : \u2016x\u2081 - u\u2016 \u2264 D) (hgrad : \u2200 t < T, \u2016gradient (loss t) (iterate V (D / (G * Real.sqrt T)) loss x\u2081 t)\u2016 \u2264 G) : regret V (D / (G * Real.sqrt T)) loss x\u2081 u T \u2264 D * G * Real.sqrt T",
+      "statement_hash": "5993e955540d98b50be715bfd21535428398b536d6bdc6d7043d3319f8516f2a"
+    },
+    "equation_2_1": {
+      "statement": "theorem equation_2_1 (V : Domain E) (loss : \u2115 \u2192 E \u2192 \u211d) (x\u2081 : E) (hx\u2081 : x\u2081 \u2208 V.carrier) (T : \u2115) (hT : 0 < T) (D G : \u211d) (hD : 0 < D) (hG : 0 < G) (hdiam : \u2200 x \u2208 V.carrier, \u2200 y \u2208 V.carrier, \u2016x - y\u2016 \u2264 D) (hloss : \u2200 t < T, FeasibleRegularLoss V (loss t)) (hgrad : \u2200 t < T, \u2016gradient (loss t) (iterate V (D / (G * Real.sqrt T)) loss x\u2081 t)\u2016 \u2264 G) : \u2200 u \u2208 V.carrier, regret V (D / (G * Real.sqrt T)) loss x\u2081 u T \u2264 D * G * Real.sqrt T",
+      "statement_hash": "bdc8c47e546e74414ee64ddaff58accf743448efed02575e136fcc650da28d02"
+    }
+  },
+  "frozen_headers": 12,
+  "context_semantic_tokens_unchanged": true,
+  "old_lean_code_tokens_unchanged": true,
+  "native_public_safe_verifications": 12,
+  "draft_capture_caveat": "Original draft fences used source-intent paths as source_assumption metadata. Creation captured headers only; such paths are not header substrings required by safe-verify. Original captures/receipts remain unchanged. These separate public fences preserve actual Lean hypothesis fragments; source-card/PDF fingerprints remain separate raw evidence.",
+  "public_module_sha256": "627df452453bbdfa2ecf4ddac8b5b85bfd750c74f1db5b81a26e6e20ca2eeec7",
+  "public_canary_sha256": "1a7c22676285c09d4d3354ada355ef0e03fc6a3957a6e27f916a6d6a84ea24f7",
+  "body_review": "pending",
+  "package_accepted": false
+}

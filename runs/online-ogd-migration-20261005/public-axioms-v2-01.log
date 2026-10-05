@@ -1,0 +1,554 @@
+@BanditRL.OnlineGradientDescentSource.FeasibleRegularLoss : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] →
+    [inst_1 : InnerProductSpace ℝ E] → BanditRL.OnlineGradientDescent.Domain E → (E → ℝ) → Prop
+'BanditRL.OnlineGradientDescentSource.FeasibleRegularLoss' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineGradientDescentSource.SourceRegularLoss : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] →
+    [inst_1 : InnerProductSpace ℝ E] → BanditRL.OnlineGradientDescent.Domain E → (E → ℝ) → Prop
+'BanditRL.OnlineGradientDescentSource.SourceRegularLoss' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineGradientDescentSource.source_to_feasible : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [CompleteSpace E] (V : BanditRL.OnlineGradientDescent.Domain E) (f : E → ℝ),
+  BanditRL.OnlineGradientDescentSource.SourceRegularLoss V f →
+    BanditRL.OnlineGradientDescentSource.FeasibleRegularLoss V f
+'BanditRL.OnlineGradientDescentSource.source_to_feasible' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineGradientDescentSource.regular_to_feasible : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [CompleteSpace E] (V : BanditRL.OnlineGradientDescent.Domain E) (f : E → ℝ),
+  BanditRL.OnlineGradientDescent.RegularLoss V f → BanditRL.OnlineGradientDescentSource.FeasibleRegularLoss V f
+'BanditRL.OnlineGradientDescentSource.regular_to_feasible' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineGradientDescentSource.linear_regular : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [CompleteSpace E] (V : BanditRL.OnlineGradientDescent.Domain E) (g : E),
+  BanditRL.OnlineGradientDescent.RegularLoss V fun z => inner ℝ g z
+'BanditRL.OnlineGradientDescentSource.linear_regular' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineGradientDescentSource.gradient_linear : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : CompleteSpace E] (g x : E), gradient (fun z => inner ℝ g z) x = g
+'BanditRL.OnlineGradientDescentSource.gradient_linear' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineGradientDescentSource.first_order : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : CompleteSpace E] (V : BanditRL.OnlineGradientDescent.Domain E) (f : E → ℝ),
+  BanditRL.OnlineGradientDescentSource.FeasibleRegularLoss V f →
+    ∀ (x u : E), x ∈ V.carrier → u ∈ V.carrier → f x - f u ≤ inner ℝ (gradient f x) (x - u)
+'BanditRL.OnlineGradientDescentSource.first_order' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineGradientDescentSource.lemma_2_12 : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : CompleteSpace E] (V : BanditRL.OnlineGradientDescent.Domain E) (f : E → ℝ),
+  BanditRL.OnlineGradientDescentSource.FeasibleRegularLoss V f →
+    ∀ (η : ℝ),
+      0 < η →
+        ∀ (x u : E),
+          x ∈ V.carrier →
+            u ∈ V.carrier →
+              η * (f x - f u) ≤ η * inner ℝ (gradient f x) (x - u) ∧
+                η * inner ℝ (gradient f x) (x - u) ≤
+                  ‖x - u‖ ^ 2 / 2 - ‖BanditRL.OnlineGradientDescent.step V η f x - u‖ ^ 2 / 2 +
+                    η ^ 2 / 2 * ‖gradient f x‖ ^ 2
+'BanditRL.OnlineGradientDescentSource.lemma_2_12' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineGradientDescentSource.theorem_2_13_fixed : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : CompleteSpace E] (V : BanditRL.OnlineGradientDescent.Domain E) (η : ℝ),
+  0 < η →
+    ∀ (loss : ℕ → E → ℝ),
+      ∀ x₁ ∈ V.carrier,
+        ∀ (T : ℕ),
+          (∀ t < T, BanditRL.OnlineGradientDescentSource.FeasibleRegularLoss V (loss t)) →
+            ∀ u ∈ V.carrier,
+              BanditRL.OnlineGradientDescent.regret V η loss x₁ u T ≤
+                ‖x₁ - u‖ ^ 2 / (2 * η) +
+                    η / 2 *
+                      ∑ t ∈ Finset.range T,
+                        ‖gradient (loss t) (BanditRL.OnlineGradientDescent.iterate V η loss x₁ t)‖ ^ 2 -
+                  ‖BanditRL.OnlineGradientDescent.iterate V η loss x₁ T - u‖ ^ 2 / (2 * η)
+'BanditRL.OnlineGradientDescentSource.theorem_2_13_fixed' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineGradientDescentSource.variable_one_step : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : CompleteSpace E] (V : BanditRL.OnlineGradientDescent.Domain E) (η : ℕ → ℝ)
+  (loss : ℕ → E → ℝ),
+  ∀ x₁ ∈ V.carrier,
+    ∀ (t : ℕ),
+      0 < η t →
+        BanditRL.OnlineGradientDescentSource.FeasibleRegularLoss V (loss t) →
+          ∀ u ∈ V.carrier,
+            loss t (BanditRL.OnlineGradientDescent.iterateVariable V η loss x₁ t) - loss t u ≤
+              (‖BanditRL.OnlineGradientDescent.iterateVariable V η loss x₁ t - u‖ ^ 2 -
+                    ‖BanditRL.OnlineGradientDescent.iterateVariable V η loss x₁ (t + 1) - u‖ ^ 2) /
+                  (2 * η t) +
+                η t / 2 * ‖gradient (loss t) (BanditRL.OnlineGradientDescent.iterateVariable V η loss x₁ t)‖ ^ 2
+'BanditRL.OnlineGradientDescentSource.variable_one_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineGradientDescentSource.theorem_2_13_variable_bound : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : CompleteSpace E] (V : BanditRL.OnlineGradientDescent.Domain E) (η : ℕ → ℝ)
+  (loss : ℕ → E → ℝ),
+  ∀ x₁ ∈ V.carrier,
+    ∀ (T : ℕ),
+      0 < T →
+        (∀ t < T, 0 < η t) →
+          (∀ (t : ℕ), t + 1 < T → η (t + 1) ≤ η t) →
+            (∀ t < T, BanditRL.OnlineGradientDescentSource.FeasibleRegularLoss V (loss t)) →
+              ∀ (D : ℝ),
+                (∀ x ∈ V.carrier, ∀ y ∈ V.carrier, ‖x - y‖ ≤ D) →
+                  ∀ u ∈ V.carrier,
+                    BanditRL.OnlineGradientDescent.regretVariable V η loss x₁ u T ≤
+                      D ^ 2 / (2 * η (T - 1)) +
+                          ∑ t ∈ Finset.range T,
+                            η t / 2 *
+                              ‖gradient (loss t) (BanditRL.OnlineGradientDescent.iterateVariable V η loss x₁ t)‖ ^ 2 -
+                        ‖BanditRL.OnlineGradientDescent.iterateVariable V η loss x₁ T - u‖ ^ 2 / (2 * η (T - 1))
+'BanditRL.OnlineGradientDescentSource.theorem_2_13_variable_bound' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BanditRL.OnlineGradientDescentSource.theorem_2_13_variable : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : CompleteSpace E] (V : BanditRL.OnlineGradientDescent.Domain E),
+  Bornology.IsBounded V.carrier →
+    ∀ (η : ℕ → ℝ) (loss : ℕ → E → ℝ),
+      ∀ x₁ ∈ V.carrier,
+        ∀ (T : ℕ),
+          0 < T →
+            (∀ t < T, 0 < η t) →
+              (∀ (t : ℕ), t + 1 < T → η (t + 1) ≤ η t) →
+                (∀ t < T, BanditRL.OnlineGradientDescentSource.FeasibleRegularLoss V (loss t)) →
+                  ∀ u ∈ V.carrier,
+                    BanditRL.OnlineGradientDescent.regretVariable V η loss x₁ u T ≤
+                      Metric.diam V.carrier ^ 2 / (2 * η (T - 1)) +
+                          ∑ t ∈ Finset.range T,
+                            η t / 2 *
+                              ‖gradient (loss t) (BanditRL.OnlineGradientDescent.iterateVariable V η loss x₁ t)‖ ^ 2 -
+                        ‖BanditRL.OnlineGradientDescent.iterateVariable V η loss x₁ T - u‖ ^ 2 / (2 * η (T - 1))
+'BanditRL.OnlineGradientDescentSource.theorem_2_13_variable' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineGradientDescentSource.equation_2_1_distance : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : CompleteSpace E] (V : BanditRL.OnlineGradientDescent.Domain E)
+  (loss : ℕ → E → ℝ),
+  ∀ x₁ ∈ V.carrier,
+    ∀ (T : ℕ),
+      0 < T →
+        ∀ (D G : ℝ),
+          0 < D →
+            0 < G →
+              (∀ t < T, BanditRL.OnlineGradientDescentSource.FeasibleRegularLoss V (loss t)) →
+                ∀ u ∈ V.carrier,
+                  ‖x₁ - u‖ ≤ D →
+                    (∀ t < T,
+                        ‖gradient (loss t) (BanditRL.OnlineGradientDescent.iterate V (D / (G * √↑T)) loss x₁ t)‖ ≤ G) →
+                      BanditRL.OnlineGradientDescent.regret V (D / (G * √↑T)) loss x₁ u T ≤ D * G * √↑T
+'BanditRL.OnlineGradientDescentSource.equation_2_1_distance' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineGradientDescentSource.equation_2_1 : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : CompleteSpace E] (V : BanditRL.OnlineGradientDescent.Domain E)
+  (loss : ℕ → E → ℝ),
+  ∀ x₁ ∈ V.carrier,
+    ∀ (T : ℕ),
+      0 < T →
+        ∀ (D G : ℝ),
+          0 < D →
+            0 < G →
+              (∀ x ∈ V.carrier, ∀ y ∈ V.carrier, ‖x - y‖ ≤ D) →
+                (∀ t < T, BanditRL.OnlineGradientDescentSource.FeasibleRegularLoss V (loss t)) →
+                  (∀ t < T,
+                      ‖gradient (loss t) (BanditRL.OnlineGradientDescent.iterate V (D / (G * √↑T)) loss x₁ t)‖ ≤ G) →
+                    ∀ u ∈ V.carrier, BanditRL.OnlineGradientDescent.regret V (D / (G * √↑T)) loss x₁ u T ≤ D * G * √↑T
+'BanditRL.OnlineGradientDescentSource.equation_2_1' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGradientDescentSource.Plane : Type
+'Tests.OnlineGradientDescentSource.Plane' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGradientDescentSource.e0 : Tests.OnlineGradientDescentSource.Plane
+'Tests.OnlineGradientDescentSource.e0' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGradientDescentSource.e1 : Tests.OnlineGradientDescentSource.Plane
+'Tests.OnlineGradientDescentSource.e1' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGradientDescentSource.e00 : inner ℝ Tests.OnlineGradientDescentSource.e0
+    Tests.OnlineGradientDescentSource.e0 =
+  1
+'Tests.OnlineGradientDescentSource.e00' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGradientDescentSource.e01 : inner ℝ Tests.OnlineGradientDescentSource.e0
+    Tests.OnlineGradientDescentSource.e1 =
+  0
+'Tests.OnlineGradientDescentSource.e01' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGradientDescentSource.e10 : inner ℝ Tests.OnlineGradientDescentSource.e1
+    Tests.OnlineGradientDescentSource.e0 =
+  0
+'Tests.OnlineGradientDescentSource.e10' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGradientDescentSource.e11 : inner ℝ Tests.OnlineGradientDescentSource.e1
+    Tests.OnlineGradientDescentSource.e1 =
+  1
+'Tests.OnlineGradientDescentSource.e11' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGradientDescentSource.norm_e0 : ‖Tests.OnlineGradientDescentSource.e0‖ = 1
+'Tests.OnlineGradientDescentSource.norm_e0' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGradientDescentSource.norm_e1 : ‖Tests.OnlineGradientDescentSource.e1‖ = 1
+'Tests.OnlineGradientDescentSource.norm_e1' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGradientDescentSource.axis : BanditRL.OnlineGradientDescent.Domain Tests.OnlineGradientDescentSource.Plane
+'Tests.OnlineGradientDescentSource.axis' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGradientDescentSource.maxExp : Tests.OnlineGradientDescentSource.Plane → ℝ
+'Tests.OnlineGradientDescentSource.maxExp' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGradientDescentSource.smoothRegion : Set Tests.OnlineGradientDescentSource.Plane
+'Tests.OnlineGradientDescentSource.smoothRegion' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGradientDescentSource.region_open : IsOpen Tests.OnlineGradientDescentSource.smoothRegion
+'Tests.OnlineGradientDescentSource.region_open' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGradientDescentSource.axis_in_region : Tests.OnlineGradientDescentSource.axis.carrier ⊆
+  Tests.OnlineGradientDescentSource.smoothRegion
+'Tests.OnlineGradientDescentSource.axis_in_region' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGradientDescentSource.maxExp_on_region : ∀ z ∈ Tests.OnlineGradientDescentSource.smoothRegion,
+  Tests.OnlineGradientDescentSource.maxExp z = Real.exp (-inner ℝ Tests.OnlineGradientDescentSource.e0 z)
+'Tests.OnlineGradientDescentSource.maxExp_on_region' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGradientDescentSource.maxExp_eventually : ∀ z ∈ Tests.OnlineGradientDescentSource.smoothRegion,
+  Tests.OnlineGradientDescentSource.maxExp =ᶠ[nhds z] fun w =>
+    Real.exp (-inner ℝ Tests.OnlineGradientDescentSource.e0 w)
+'Tests.OnlineGradientDescentSource.maxExp_eventually' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGradientDescentSource.maxExp_source : BanditRL.OnlineGradientDescentSource.SourceRegularLoss
+  Tests.OnlineGradientDescentSource.axis Tests.OnlineGradientDescentSource.maxExp
+'Tests.OnlineGradientDescentSource.maxExp_source' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGradientDescentSource.region_not_convex : ¬Convex ℝ Tests.OnlineGradientDescentSource.smoothRegion
+'Tests.OnlineGradientDescentSource.region_not_convex' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGradientDescentSource.gradient_at_zero : gradient Tests.OnlineGradientDescentSource.maxExp 0 =
+  -Tests.OnlineGradientDescentSource.e0
+'Tests.OnlineGradientDescentSource.gradient_at_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGradientDescentSource.project_e0 : BanditRL.OnlineGradientDescent.project
+    Tests.OnlineGradientDescentSource.axis Tests.OnlineGradientDescentSource.e0 =
+  Tests.OnlineGradientDescentSource.e0
+'Tests.OnlineGradientDescentSource.project_e0' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGradientDescentSource.axis_first_point : BanditRL.OnlineGradientDescent.iterate
+    Tests.OnlineGradientDescentSource.axis 1 (fun x => Tests.OnlineGradientDescentSource.maxExp) 0 1 =
+  Tests.OnlineGradientDescentSource.e0
+'Tests.OnlineGradientDescentSource.axis_first_point' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGradientDescentSource.maxExp_zero : Tests.OnlineGradientDescentSource.maxExp 0 = 1
+'Tests.OnlineGradientDescentSource.maxExp_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGradientDescentSource.maxExp_two : Tests.OnlineGradientDescentSource.maxExp
+    (2 • Tests.OnlineGradientDescentSource.e0) =
+  Real.exp (-2)
+'Tests.OnlineGradientDescentSource.maxExp_two' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGradientDescentSource.positive_regret : 0 <
+  BanditRL.OnlineGradientDescent.regret Tests.OnlineGradientDescentSource.axis 1
+    (fun x => Tests.OnlineGradientDescentSource.maxExp) 0 (2 • Tests.OnlineGradientDescentSource.e0) 1
+'Tests.OnlineGradientDescentSource.positive_regret' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGradientDescentSource.terminal_distance : ‖BanditRL.OnlineGradientDescent.iterate
+          Tests.OnlineGradientDescentSource.axis 1 (fun x => Tests.OnlineGradientDescentSource.maxExp) 0 1 -
+        2 • Tests.OnlineGradientDescentSource.e0‖ ^
+    2 =
+  1
+'Tests.OnlineGradientDescentSource.terminal_distance' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGradientDescentSource.source_nondegenerate : gradient Tests.OnlineGradientDescentSource.maxExp 0 =
+    -Tests.OnlineGradientDescentSource.e0 ∧
+  ‖gradient Tests.OnlineGradientDescentSource.maxExp 0‖ = 1 ∧
+    BanditRL.OnlineGradientDescent.iterate Tests.OnlineGradientDescentSource.axis 1
+          (fun x => Tests.OnlineGradientDescentSource.maxExp) 0 1 =
+        Tests.OnlineGradientDescentSource.e0 ∧
+      0 <
+          BanditRL.OnlineGradientDescent.regret Tests.OnlineGradientDescentSource.axis 1
+            (fun x => Tests.OnlineGradientDescentSource.maxExp) 0 (2 • Tests.OnlineGradientDescentSource.e0) 1 ∧
+        ‖BanditRL.OnlineGradientDescent.iterate Tests.OnlineGradientDescentSource.axis 1
+                  (fun x => Tests.OnlineGradientDescentSource.maxExp) 0 1 -
+                2 • Tests.OnlineGradientDescentSource.e0‖ ^
+            2 =
+          1
+'Tests.OnlineGradientDescentSource.source_nondegenerate' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGradientDescentSource.repaired_one_step : 1 *
+      (Tests.OnlineGradientDescentSource.maxExp 0 -
+        Tests.OnlineGradientDescentSource.maxExp (2 • Tests.OnlineGradientDescentSource.e0)) ≤
+    1 * inner ℝ (gradient Tests.OnlineGradientDescentSource.maxExp 0) (0 - 2 • Tests.OnlineGradientDescentSource.e0) ∧
+  1 * inner ℝ (gradient Tests.OnlineGradientDescentSource.maxExp 0) (0 - 2 • Tests.OnlineGradientDescentSource.e0) ≤
+    ‖0 - 2 • Tests.OnlineGradientDescentSource.e0‖ ^ 2 / 2 -
+        ‖BanditRL.OnlineGradientDescent.step Tests.OnlineGradientDescentSource.axis 1
+                  Tests.OnlineGradientDescentSource.maxExp 0 -
+                2 • Tests.OnlineGradientDescentSource.e0‖ ^
+            2 /
+          2 +
+      1 ^ 2 / 2 * ‖gradient Tests.OnlineGradientDescentSource.maxExp 0‖ ^ 2
+'Tests.OnlineGradientDescentSource.repaired_one_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGradientDescentSource.repaired_fixed_endpoint : BanditRL.OnlineGradientDescent.regret
+    Tests.OnlineGradientDescentSource.axis 1 (fun x => Tests.OnlineGradientDescentSource.maxExp) 0
+    (2 • Tests.OnlineGradientDescentSource.e0) 1 ≤
+  ‖0 - 2 • Tests.OnlineGradientDescentSource.e0‖ ^ 2 / (2 * 1) +
+      1 / 2 *
+        ∑ t ∈ Finset.range 1,
+          ‖gradient Tests.OnlineGradientDescentSource.maxExp
+                (BanditRL.OnlineGradientDescent.iterate Tests.OnlineGradientDescentSource.axis 1
+                  (fun x => Tests.OnlineGradientDescentSource.maxExp) 0 t)‖ ^
+            2 -
+    ‖BanditRL.OnlineGradientDescent.iterate Tests.OnlineGradientDescentSource.axis 1
+              (fun x => Tests.OnlineGradientDescentSource.maxExp) 0 1 -
+            2 • Tests.OnlineGradientDescentSource.e0‖ ^
+        2 /
+      (2 * 1)
+'Tests.OnlineGradientDescentSource.repaired_fixed_endpoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGradientDescentSource.axis_unbounded : ¬Bornology.IsBounded Tests.OnlineGradientDescentSource.axis.carrier
+'Tests.OnlineGradientDescentSource.axis_unbounded' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGradientDescentSource.active_projection_fixed : BanditRL.OnlineGradientDescent.regret
+    Tests.OnlineGradientDescent.interval 1 Tests.OnlineGradientDescent.losses 0 0 2 ≤
+  ‖0 - 0‖ ^ 2 / (2 * 1) +
+      1 / 2 *
+        ∑ t ∈ Finset.range 2,
+          ‖gradient (Tests.OnlineGradientDescent.losses t)
+                (BanditRL.OnlineGradientDescent.iterate Tests.OnlineGradientDescent.interval 1
+                  Tests.OnlineGradientDescent.losses 0 t)‖ ^
+            2 -
+    ‖BanditRL.OnlineGradientDescent.iterate Tests.OnlineGradientDescent.interval 1 Tests.OnlineGradientDescent.losses 0
+              2 -
+            0‖ ^
+        2 /
+      (2 * 1)
+'Tests.OnlineGradientDescentSource.active_projection_fixed' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGradientDescentSource.active_projection_variable : BanditRL.OnlineGradientDescent.regretVariable
+    Tests.OnlineGradientDescent.interval Tests.OnlineGradientDescentVariable.rates Tests.OnlineGradientDescent.losses 0
+    0 2 ≤
+  Metric.diam Tests.OnlineGradientDescent.interval.carrier ^ 2 /
+        (2 * Tests.OnlineGradientDescentVariable.rates (2 - 1)) +
+      ∑ t ∈ Finset.range 2,
+        Tests.OnlineGradientDescentVariable.rates t / 2 *
+          ‖gradient (Tests.OnlineGradientDescent.losses t)
+                (BanditRL.OnlineGradientDescent.iterateVariable Tests.OnlineGradientDescent.interval
+                  Tests.OnlineGradientDescentVariable.rates Tests.OnlineGradientDescent.losses 0 t)‖ ^
+            2 -
+    ‖BanditRL.OnlineGradientDescent.iterateVariable Tests.OnlineGradientDescent.interval
+              Tests.OnlineGradientDescentVariable.rates Tests.OnlineGradientDescent.losses 0 2 -
+            0‖ ^
+        2 /
+      (2 * Tests.OnlineGradientDescentVariable.rates (2 - 1))
+'Tests.OnlineGradientDescentSource.active_projection_variable' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Tests.OnlineGradientDescentSource.active_projection_tuned : ∀ u ∈ Tests.OnlineGradientDescent.interval.carrier,
+  BanditRL.OnlineGradientDescent.regret Tests.OnlineGradientDescent.interval (1 / (2 * √2))
+      Tests.OnlineGradientDescent.losses 0 u 2 ≤
+    1 * 2 * √2
+'Tests.OnlineGradientDescentSource.active_projection_tuned' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGradientDescentSource.fixed_zero_round : BanditRL.OnlineGradientDescent.regret
+    Tests.OnlineGradientDescentSource.axis 1 (fun x => Tests.OnlineGradientDescentSource.maxExp) 0
+    (2 • Tests.OnlineGradientDescentSource.e0) 0 ≤
+  ‖0 - 2 • Tests.OnlineGradientDescentSource.e0‖ ^ 2 / (2 * 1) +
+      1 / 2 *
+        ∑ t ∈ Finset.range 0,
+          ‖gradient Tests.OnlineGradientDescentSource.maxExp
+                (BanditRL.OnlineGradientDescent.iterate Tests.OnlineGradientDescentSource.axis 1
+                  (fun x => Tests.OnlineGradientDescentSource.maxExp) 0 t)‖ ^
+            2 -
+    ‖BanditRL.OnlineGradientDescent.iterate Tests.OnlineGradientDescentSource.axis 1
+              (fun x => Tests.OnlineGradientDescentSource.maxExp) 0 0 -
+            2 • Tests.OnlineGradientDescentSource.e0‖ ^
+        2 /
+      (2 * 1)
+'Tests.OnlineGradientDescentSource.fixed_zero_round' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGradientDescentSource.zero_round_cancellation : BanditRL.OnlineGradientDescent.regret
+      Tests.OnlineGradientDescentSource.axis 1 (fun x => Tests.OnlineGradientDescentSource.maxExp) 0
+      (2 • Tests.OnlineGradientDescentSource.e0) 0 =
+    0 ∧
+  ‖0 - 2 • Tests.OnlineGradientDescentSource.e0‖ ^ 2 / (2 * 1) +
+        1 / 2 *
+          ∑ t ∈ Finset.range 0,
+            ‖gradient Tests.OnlineGradientDescentSource.maxExp
+                  (BanditRL.OnlineGradientDescent.iterate Tests.OnlineGradientDescentSource.axis 1
+                    (fun x => Tests.OnlineGradientDescentSource.maxExp) 0 t)‖ ^
+              2 -
+      ‖BanditRL.OnlineGradientDescent.iterate Tests.OnlineGradientDescentSource.axis 1
+                (fun x => Tests.OnlineGradientDescentSource.maxExp) 0 0 -
+              2 • Tests.OnlineGradientDescentSource.e0‖ ^
+          2 /
+        (2 * 1) =
+    0
+'Tests.OnlineGradientDescentSource.zero_round_cancellation' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGradientDescentSource.pointDomain : BanditRL.OnlineGradientDescent.Domain ℝ
+'Tests.OnlineGradientDescentSource.pointDomain' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGradientDescentSource.variable_one_round_zero_diameter : BanditRL.OnlineGradientDescent.regretVariable
+    Tests.OnlineGradientDescentSource.pointDomain (fun x => 1) (fun x x_1 => inner ℝ 1 x_1) 0 0 1 ≤
+  0 ^ 2 / (2 * 1) +
+      ∑ t ∈ Finset.range 1,
+        1 / 2 *
+          ‖gradient (fun x => inner ℝ 1 x)
+                (BanditRL.OnlineGradientDescent.iterateVariable Tests.OnlineGradientDescentSource.pointDomain
+                  (fun x => 1) (fun x x_1 => inner ℝ 1 x_1) 0 t)‖ ^
+            2 -
+    ‖BanditRL.OnlineGradientDescent.iterateVariable Tests.OnlineGradientDescentSource.pointDomain (fun x => 1)
+              (fun x x_1 => inner ℝ 1 x_1) 0 1 -
+            0‖ ^
+        2 /
+      (2 * 1)
+'Tests.OnlineGradientDescentSource.variable_one_round_zero_diameter' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Tests.OnlineGradientDescentSource.prefix_future_independence : BanditRL.OnlineGradientDescent.iterate
+    Tests.OnlineGradientDescent.interval 1 Tests.OnlineGradientDescent.losses 0 2 =
+  BanditRL.OnlineGradientDescent.iterate Tests.OnlineGradientDescent.interval 1
+    (fun t => if t < 2 then Tests.OnlineGradientDescent.losses t else fun x => 100 * x) 0 2
+'Tests.OnlineGradientDescentSource.prefix_future_independence' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BanditRL.OnlineGradientDescent.Domain : (E : Type u_1) →
+  [inst : NormedAddCommGroup E] → [InnerProductSpace ℝ E] → Type u_1
+'BanditRL.OnlineGradientDescent.Domain' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineGradientDescent.project : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] →
+    [inst_1 : InnerProductSpace ℝ E] → [CompleteSpace E] → BanditRL.OnlineGradientDescent.Domain E → E → E
+'BanditRL.OnlineGradientDescent.project' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineGradientDescent.RegularLoss : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] →
+    [inst_1 : InnerProductSpace ℝ E] → BanditRL.OnlineGradientDescent.Domain E → (E → ℝ) → Prop
+'BanditRL.OnlineGradientDescent.RegularLoss' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineGradientDescent.step : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] →
+    [inst_1 : InnerProductSpace ℝ E] → [CompleteSpace E] → BanditRL.OnlineGradientDescent.Domain E → ℝ → (E → ℝ) → E → E
+'BanditRL.OnlineGradientDescent.step' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineGradientDescent.iterate : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] →
+    [inst_1 : InnerProductSpace ℝ E] →
+      [CompleteSpace E] → BanditRL.OnlineGradientDescent.Domain E → ℝ → (ℕ → E → ℝ) → E → ℕ → E
+'BanditRL.OnlineGradientDescent.iterate' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineGradientDescent.regret : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] →
+    [inst_1 : InnerProductSpace ℝ E] →
+      [CompleteSpace E] → BanditRL.OnlineGradientDescent.Domain E → ℝ → (ℕ → E → ℝ) → E → E → ℕ → ℝ
+'BanditRL.OnlineGradientDescent.regret' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineGradientDescent.iterateVariable : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] →
+    [inst_1 : InnerProductSpace ℝ E] →
+      [CompleteSpace E] → BanditRL.OnlineGradientDescent.Domain E → (ℕ → ℝ) → (ℕ → E → ℝ) → E → ℕ → E
+'BanditRL.OnlineGradientDescent.iterateVariable' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineGradientDescent.regretVariable : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] →
+    [inst_1 : InnerProductSpace ℝ E] →
+      [CompleteSpace E] → BanditRL.OnlineGradientDescent.Domain E → (ℕ → ℝ) → (ℕ → E → ℝ) → E → E → ℕ → ℝ
+'BanditRL.OnlineGradientDescent.regretVariable' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineGradientDescent.project_spec : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : CompleteSpace E] (V : BanditRL.OnlineGradientDescent.Domain E) (z : E),
+  BanditRL.OnlineGradientDescent.project V z ∈ V.carrier ∧
+    ‖z - BanditRL.OnlineGradientDescent.project V z‖ = ⨅ w, ‖z - ↑w‖
+'BanditRL.OnlineGradientDescent.project_spec' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineGradientDescent.project_eq_of_variational : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : CompleteSpace E] (V : BanditRL.OnlineGradientDescent.Domain E) (z p : E),
+  p ∈ V.carrier → (∀ w ∈ V.carrier, inner ℝ (z - p) (w - p) ≤ 0) → BanditRL.OnlineGradientDescent.project V z = p
+'BanditRL.OnlineGradientDescent.project_eq_of_variational' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineGradientDescent.proposition_2_11 : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : CompleteSpace E] (V : BanditRL.OnlineGradientDescent.Domain E) (z u : E),
+  u ∈ V.carrier → ‖BanditRL.OnlineGradientDescent.project V z - u‖ ≤ ‖z - u‖
+'BanditRL.OnlineGradientDescent.proposition_2_11' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineGradientDescent.first_order : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : CompleteSpace E] (V : BanditRL.OnlineGradientDescent.Domain E) (f : E → ℝ),
+  BanditRL.OnlineGradientDescent.RegularLoss V f →
+    ∀ (x u : E), x ∈ V.carrier → u ∈ V.carrier → f x - f u ≤ inner ℝ (gradient f x) (x - u)
+'BanditRL.OnlineGradientDescent.first_order' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineGradientDescent.lemma_2_12 : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : CompleteSpace E] (V : BanditRL.OnlineGradientDescent.Domain E) (f : E → ℝ),
+  BanditRL.OnlineGradientDescent.RegularLoss V f →
+    ∀ (η : ℝ),
+      0 < η →
+        ∀ (x u : E),
+          x ∈ V.carrier →
+            u ∈ V.carrier →
+              η * (f x - f u) ≤ η * inner ℝ (gradient f x) (x - u) ∧
+                η * inner ℝ (gradient f x) (x - u) ≤
+                  ‖x - u‖ ^ 2 / 2 - ‖BanditRL.OnlineGradientDescent.step V η f x - u‖ ^ 2 / 2 +
+                    η ^ 2 / 2 * ‖gradient f x‖ ^ 2
+'BanditRL.OnlineGradientDescent.lemma_2_12' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineGradientDescent.iterate_mem : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : CompleteSpace E] (V : BanditRL.OnlineGradientDescent.Domain E) (η : ℝ)
+  (loss : ℕ → E → ℝ), ∀ x₁ ∈ V.carrier, ∀ (t : ℕ), BanditRL.OnlineGradientDescent.iterate V η loss x₁ t ∈ V.carrier
+'BanditRL.OnlineGradientDescent.iterate_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineGradientDescent.iterate_prefix : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : CompleteSpace E] (V : BanditRL.OnlineGradientDescent.Domain E) (η : ℝ)
+  (loss loss' : ℕ → E → ℝ) (x₁ : E) (t : ℕ),
+  (∀ s < t, loss s = loss' s) →
+    BanditRL.OnlineGradientDescent.iterate V η loss x₁ t = BanditRL.OnlineGradientDescent.iterate V η loss' x₁ t
+'BanditRL.OnlineGradientDescent.iterate_prefix' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineGradientDescent.theorem_2_13_fixed : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : CompleteSpace E] (V : BanditRL.OnlineGradientDescent.Domain E) (η : ℝ),
+  0 < η →
+    ∀ (loss : ℕ → E → ℝ),
+      ∀ x₁ ∈ V.carrier,
+        ∀ (T : ℕ),
+          (∀ t < T, BanditRL.OnlineGradientDescent.RegularLoss V (loss t)) →
+            ∀ u ∈ V.carrier,
+              BanditRL.OnlineGradientDescent.regret V η loss x₁ u T ≤
+                ‖x₁ - u‖ ^ 2 / (2 * η) +
+                    η / 2 *
+                      ∑ t ∈ Finset.range T,
+                        ‖gradient (loss t) (BanditRL.OnlineGradientDescent.iterate V η loss x₁ t)‖ ^ 2 -
+                  ‖BanditRL.OnlineGradientDescent.iterate V η loss x₁ T - u‖ ^ 2 / (2 * η)
+'BanditRL.OnlineGradientDescent.theorem_2_13_fixed' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineGradientDescent.equation_2_1_distance : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : CompleteSpace E] (V : BanditRL.OnlineGradientDescent.Domain E)
+  (loss : ℕ → E → ℝ),
+  ∀ x₁ ∈ V.carrier,
+    ∀ (T : ℕ),
+      0 < T →
+        ∀ (D G : ℝ),
+          0 < D →
+            0 < G →
+              (∀ t < T, BanditRL.OnlineGradientDescent.RegularLoss V (loss t)) →
+                ∀ u ∈ V.carrier,
+                  ‖x₁ - u‖ ≤ D →
+                    (∀ t < T,
+                        ‖gradient (loss t) (BanditRL.OnlineGradientDescent.iterate V (D / (G * √↑T)) loss x₁ t)‖ ≤ G) →
+                      BanditRL.OnlineGradientDescent.regret V (D / (G * √↑T)) loss x₁ u T ≤ D * G * √↑T
+'BanditRL.OnlineGradientDescent.equation_2_1_distance' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineGradientDescent.equation_2_1 : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : CompleteSpace E] (V : BanditRL.OnlineGradientDescent.Domain E)
+  (loss : ℕ → E → ℝ),
+  ∀ x₁ ∈ V.carrier,
+    ∀ (T : ℕ),
+      0 < T →
+        ∀ (D G : ℝ),
+          0 < D →
+            0 < G →
+              (∀ x ∈ V.carrier, ∀ y ∈ V.carrier, ‖x - y‖ ≤ D) →
+                (∀ t < T, BanditRL.OnlineGradientDescent.RegularLoss V (loss t)) →
+                  (∀ t < T,
+                      ‖gradient (loss t) (BanditRL.OnlineGradientDescent.iterate V (D / (G * √↑T)) loss x₁ t)‖ ≤ G) →
+                    ∀ u ∈ V.carrier, BanditRL.OnlineGradientDescent.regret V (D / (G * √↑T)) loss x₁ u T ≤ D * G * √↑T
+'BanditRL.OnlineGradientDescent.equation_2_1' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineGradientDescent.iterateVariable_mem : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : CompleteSpace E] (V : BanditRL.OnlineGradientDescent.Domain E) (η : ℕ → ℝ)
+  (loss : ℕ → E → ℝ),
+  ∀ x₁ ∈ V.carrier, ∀ (t : ℕ), BanditRL.OnlineGradientDescent.iterateVariable V η loss x₁ t ∈ V.carrier
+'BanditRL.OnlineGradientDescent.iterateVariable_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineGradientDescent.iterateVariable_prefix : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : CompleteSpace E] (V : BanditRL.OnlineGradientDescent.Domain E) (η : ℕ → ℝ)
+  (loss loss' : ℕ → E → ℝ) (x₁ : E) (t : ℕ),
+  (∀ s < t, loss s = loss' s) →
+    BanditRL.OnlineGradientDescent.iterateVariable V η loss x₁ t =
+      BanditRL.OnlineGradientDescent.iterateVariable V η loss' x₁ t
+'BanditRL.OnlineGradientDescent.iterateVariable_prefix' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineGradientDescent.variable_one_step : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : CompleteSpace E] (V : BanditRL.OnlineGradientDescent.Domain E) (η : ℕ → ℝ)
+  (loss : ℕ → E → ℝ),
+  ∀ x₁ ∈ V.carrier,
+    ∀ (t : ℕ),
+      0 < η t →
+        BanditRL.OnlineGradientDescent.RegularLoss V (loss t) →
+          ∀ u ∈ V.carrier,
+            loss t (BanditRL.OnlineGradientDescent.iterateVariable V η loss x₁ t) - loss t u ≤
+              (‖BanditRL.OnlineGradientDescent.iterateVariable V η loss x₁ t - u‖ ^ 2 -
+                    ‖BanditRL.OnlineGradientDescent.iterateVariable V η loss x₁ (t + 1) - u‖ ^ 2) /
+                  (2 * η t) +
+                η t / 2 * ‖gradient (loss t) (BanditRL.OnlineGradientDescent.iterateVariable V η loss x₁ t)‖ ^ 2
+'BanditRL.OnlineGradientDescent.variable_one_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineGradientDescent.weighted_potential_sum : ∀ (a η : ℕ → ℝ) (C : ℝ) (T : ℕ),
+  0 < T →
+    (∀ t < T, 0 < η t) →
+      (∀ (t : ℕ), t + 1 < T → η (t + 1) ≤ η t) →
+        (∀ t < T, a t ≤ C) →
+          ∑ t ∈ Finset.range T, (a t - a (t + 1)) / (2 * η t) ≤ C / (2 * η (T - 1)) - a T / (2 * η (T - 1))
+'BanditRL.OnlineGradientDescent.weighted_potential_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineGradientDescent.theorem_2_13_variable_bound : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : CompleteSpace E] (V : BanditRL.OnlineGradientDescent.Domain E) (η : ℕ → ℝ)
+  (loss : ℕ → E → ℝ),
+  ∀ x₁ ∈ V.carrier,
+    ∀ (T : ℕ),
+      0 < T →
+        (∀ t < T, 0 < η t) →
+          (∀ (t : ℕ), t + 1 < T → η (t + 1) ≤ η t) →
+            (∀ t < T, BanditRL.OnlineGradientDescent.RegularLoss V (loss t)) →
+              ∀ (D : ℝ),
+                (∀ x ∈ V.carrier, ∀ y ∈ V.carrier, ‖x - y‖ ≤ D) →
+                  ∀ u ∈ V.carrier,
+                    BanditRL.OnlineGradientDescent.regretVariable V η loss x₁ u T ≤
+                      D ^ 2 / (2 * η (T - 1)) +
+                          ∑ t ∈ Finset.range T,
+                            η t / 2 *
+                              ‖gradient (loss t) (BanditRL.OnlineGradientDescent.iterateVariable V η loss x₁ t)‖ ^ 2 -
+                        ‖BanditRL.OnlineGradientDescent.iterateVariable V η loss x₁ T - u‖ ^ 2 / (2 * η (T - 1))
+'BanditRL.OnlineGradientDescent.theorem_2_13_variable_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineGradientDescent.theorem_2_13_variable : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : CompleteSpace E] (V : BanditRL.OnlineGradientDescent.Domain E),
+  Bornology.IsBounded V.carrier →
+    ∀ (η : ℕ → ℝ) (loss : ℕ → E → ℝ),
+      ∀ x₁ ∈ V.carrier,
+        ∀ (T : ℕ),
+          0 < T →
+            (∀ t < T, 0 < η t) →
+              (∀ (t : ℕ), t + 1 < T → η (t + 1) ≤ η t) →
+                (∀ t < T, BanditRL.OnlineGradientDescent.RegularLoss V (loss t)) →
+                  ∀ u ∈ V.carrier,
+                    BanditRL.OnlineGradientDescent.regretVariable V η loss x₁ u T ≤
+                      Metric.diam V.carrier ^ 2 / (2 * η (T - 1)) +
+                          ∑ t ∈ Finset.range T,
+                            η t / 2 *
+                              ‖gradient (loss t) (BanditRL.OnlineGradientDescent.iterateVariable V η loss x₁ t)‖ ^ 2 -
+                        ‖BanditRL.OnlineGradientDescent.iterateVariable V η loss x₁ T - u‖ ^ 2 / (2 * η (T - 1))
+'BanditRL.OnlineGradientDescent.theorem_2_13_variable' depends on axioms: [propext, Classical.choice, Quot.sound]

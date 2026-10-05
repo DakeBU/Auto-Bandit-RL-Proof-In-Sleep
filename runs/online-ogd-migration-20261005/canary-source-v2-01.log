@@ -1,0 +1,103 @@
+Tests/OnlineGradientDescentSourceCanary.lean:12:12: error: unexpected token ':='; expected command
+Tests/OnlineGradientDescentSourceCanary.lean:19:12: warning: This simp argument is unused:
+  EuclideanSpace.inner_single_left
+
+Hint: Omit it from the simp argument list.
+  simp [e0,̵ ̵E̵u̵c̵l̵i̵d̵e̵a̵n̵S̵p̵a̵c̵e̵.̵i̵n̵n̵e̵r̵_̵s̵i̵n̵g̵l̵e̵_̵l̵e̵f̵t̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Tests/OnlineGradientDescentSourceCanary.lean:20:43: error: unsolved goals
+⊢ ⟪EuclideanSpace.single 0 1, EuclideanSpace.single 1 1⟫_ℝ = 0
+Tests/OnlineGradientDescentSourceCanary.lean:21:16: warning: This simp argument is unused:
+  EuclideanSpace.inner_single_left
+
+Hint: Omit it from the simp argument list.
+  simp [e0, e1,̵ ̵E̵u̵c̵l̵i̵d̵e̵a̵n̵S̵p̵a̵c̵e̵.̵i̵n̵n̵e̵r̵_̵s̵i̵n̵g̵l̵e̵_̵l̵e̵f̵t̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Tests/OnlineGradientDescentSourceCanary.lean:22:43: error: unsolved goals
+⊢ ⟪EuclideanSpace.single 1 1, EuclideanSpace.single 0 1⟫_ℝ = 0
+Tests/OnlineGradientDescentSourceCanary.lean:23:16: warning: This simp argument is unused:
+  EuclideanSpace.inner_single_left
+
+Hint: Omit it from the simp argument list.
+  simp [e0, e1,̵ ̵E̵u̵c̵l̵i̵d̵e̵a̵n̵S̵p̵a̵c̵e̵.̵i̵n̵n̵e̵r̵_̵s̵i̵n̵g̵l̵e̵_̵l̵e̵f̵t̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Tests/OnlineGradientDescentSourceCanary.lean:25:12: warning: This simp argument is unused:
+  EuclideanSpace.inner_single_left
+
+Hint: Omit it from the simp argument list.
+  simp [e1,̵ ̵E̵u̵c̵l̵i̵d̵e̵a̵n̵S̵p̵a̵c̵e̵.̵i̵n̵n̵e̵r̵_̵s̵i̵n̵g̵l̵e̵_̵l̵e̵f̵t̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Tests/OnlineGradientDescentSourceCanary.lean:34:12: error: unsolved goals
+x : Plane
+hx : x ∈ {z | ⟪e1, z⟫_ℝ = 0}
+y : Plane
+hy : y ∈ {z | ⟪e1, z⟫_ℝ = 0}
+a b : ℝ
+ha : 0 ≤ a
+hb : 0 ≤ b
+hab : a + b = 1
+⊢ a * ⟪e1, x⟫_ℝ + b * ⟪e1, y⟫_ℝ = 0
+Tests/OnlineGradientDescentSourceCanary.lean:36:64: warning: This simp argument is unused:
+  hx
+
+Hint: Omit it from the simp argument list.
+  simp only [mem_setOf_eq, inner_add_right, inner_smul_right, hx̵,̵ ̵h̵y, mul_zero, add_zero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Tests/OnlineGradientDescentSourceCanary.lean:36:68: warning: This simp argument is unused:
+  hy
+
+Hint: Omit it from the simp argument list.
+  simp only [mem_setOf_eq, inner_add_right, inner_smul_right, hx, h̵y̵,̵ ̵mul_zero, add_zero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Tests/OnlineGradientDescentSourceCanary.lean:36:72: warning: This simp argument is unused:
+  mul_zero
+
+Hint: Omit it from the simp argument list.
+  simp only [mem_setOf_eq, inner_add_right, inner_smul_right, hx, hy, m̵u̵l̵_̵z̵e̵r̵o̵,̵ ̵add_zero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Tests/OnlineGradientDescentSourceCanary.lean:36:82: warning: This simp argument is unused:
+  add_zero
+
+Hint: Omit it from the simp argument list.
+  simp only [mem_setOf_eq, inner_add_right, inner_smul_right, hx, hy, mul_zero,̵ ̵a̵d̵d̵_̵z̵e̵r̵o̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Tests/OnlineGradientDescentSourceCanary.lean:48:28: error(lean.invalidField): Invalid field `exp`: The environment does not contain `Continuous.exp`, so it is not possible to project the field `exp` from an expression
+  Continuous.neg h0
+of type `Continuous fun x => -⟪e0, x⟫_ℝ`
+Tests/OnlineGradientDescentSourceCanary.lean:66:24: error(lean.unknownIdentifier): Unknown identifier `S.SourceRegularLoss`
+Tests/OnlineGradientDescentSourceCanary.lean:68:2: error: No goals to be solved
+Tests/OnlineGradientDescentSourceCanary.lean:86:4: error: Type mismatch: After simplification, term
+  Real.add_one_lt_exp
+    (Mathlib.Meta.NormNum.isNat_eq_false (Mathlib.Meta.NormNum.isNat_ofNat ℝ Nat.cast_one)
+      (Mathlib.Meta.NormNum.isNat_ofNat ℝ Nat.cast_zero) (Eq.refl false))
+ has type
+  1 + 1 < Real.exp 1
+but is expected to have type
+  ⟪e1, -e0 + 2 • e1⟫_ℝ < Real.exp (-⟪e0, -e0 + 2 • e1⟫_ℝ)
+Tests/OnlineGradientDescentSourceCanary.lean:81:55: error: unsolved goals
+h : Convex ℝ smoothRegion
+ha : -e0 + 2 • e1 ∈ smoothRegion
+hb : e0 ∈ smoothRegion
+he : (1 / 2) • (-e0 + 2 • e1) + (1 / 2) • e0 = e1
+hm : ‖e1‖ < 1
+⊢ False
+Tests/OnlineGradientDescentSourceCanary.lean:87:58: warning: declaration uses `sorry`
+Tests/OnlineGradientDescentSourceCanary.lean:100:51: warning: declaration uses `sorry`
+Tests/OnlineGradientDescentSourceCanary.lean:103:55: warning: declaration uses `sorry`
+Tests/OnlineGradientDescentSourceCanary.lean:117:2: warning: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+Tests/OnlineGradientDescentSourceCanary.lean:143:2: error(lean.unknownIdentifier): Unknown identifier `S.lemma_2_12`
+Tests/OnlineGradientDescentSourceCanary.lean:152:2: error(lean.unknownIdentifier): Unknown identifier `S.theorem_2_13_fixed`
+Tests/OnlineGradientDescentSourceCanary.lean:156:0: error: Invalid name after `end`: Expected `OnlineGradientDescentSource.S`, but found `Tests.OnlineGradientDescentSource`
+
+Hint: If you meant to end the outer scope(s) `Tests.OnlineGradientDescentSource`, you must end all the intervening scopes `Tests.OnlineGradientDescentSource.S`:
+  end Tests.OnlineGradientDescentSource.̲S̲

@@ -15420,3 +15420,4 @@ here during local harness runs.
 - `2026-10-04T10:28:37+00:00` `bandit.py new-task` `task` `tasks/ONLINE-LINEARIZATION-20261004.md` - Orabona v10 Section 2.3 causal convex-to-linear regret reduction
 - `2026-10-04T12:04:01+00:00` `bandit.py new-task` `task` `tasks/ONLINE-OPTIMAL-STEP-20261004.md` - Orabona Chapter2 frozen-coefficient scalar stepsize argmin
 - `2026-10-04T13:25:59+00:00` `bandit.py new-task` `task` `tasks/ONLINE-UNIT-SCALING-20261004.md` - Orabona Chapter2 actual OSD coordinate and step-unit scaling
+- `2026-10-05T06:48:18+00:00` `bandit.py new-task` `task` `tasks/ONLINE-OGD-MIGRATION-20261005.md` - Orabona Chapter2 existing OGD exact source and semantic migration

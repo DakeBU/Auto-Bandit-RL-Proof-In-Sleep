@@ -1,0 +1,14 @@
+import BanditRLProof.OnlineGradientDescentVariable
+import BanditRLProof.OnlineConvexFirstOrder
+#check @DifferentiableOn.differentiableAt
+#check @ConvexOn.subset
+#check @LinearMap.convexOn
+#check @ContinuousLinearMap.hasFDerivAt
+#check @ContinuousLinearMap.differentiable
+#check @hasGradientAt_iff_hasFDerivAt
+#check @InnerProductSpace.toDual
+#check @InnerProductSpace.toDual_apply_apply
+#check @HasGradientAt.gradient
+#check @BanditRL.OnlineConvex.convex_gradient_lower_bound
+#check @BanditRL.OnlineGradientDescent.lemma_2_12
+#check @BanditRL.OnlineGradientDescent.weighted_potential_sum

@@ -11,6 +11,9 @@ Orabona, arXiv:1912.13213v10, Algorithm 2.1, Proposition 2.11,
 Lemma 2.12, Theorem 2.13 (constant step only), and Eq. (2.1).
 Time `t = 0` denotes source round 1; `iterate ... T` is source `x_(T+1)`.
 The Hilbert-space interfaces specialize to finite-dimensional real Euclidean spaces.
+Loss-dependent declarations below use the stronger historical `RegularLoss` predicate.
+`OnlineGradientDescentSource` supplies the arbitrary-open source regularity interface
+on the same algorithms. Projection and causal feasibility statements need no loss regularity.
 -/
 
 noncomputable section
@@ -33,7 +36,9 @@ def project (V : Domain E) (z : E) : E :=
   Classical.choose (exists_norm_eq_iInf_of_complete_convex V.nonempty
     V.closed.isComplete V.convex z)
 
-/-- Source regularity: convex and differentiable on an open neighborhood of the domain. -/
+/-- Historical stronger regularity: convex and differentiable on a convex open neighborhood.
+For the source arbitrary-open hypothesis, use `OnlineGradientDescentSource.SourceRegularLoss`
+and its proved `source_to_feasible` adapter. This predicate is retained for compatibility. -/
 def RegularLoss (V : Domain E) (f : E → ℝ) : Prop :=
   ∃ U : Set E, IsOpen U ∧ V.carrier ⊆ U ∧ ConvexOn ℝ U f ∧ DifferentiableOn ℝ f U
 
