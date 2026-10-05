@@ -1,0 +1,97 @@
+{
+  "schema_version": "2.0",
+  "id": "ABRL-PROOF-DIGESTION-PROTOCOL-2026-10",
+  "route": "repository publication / proof digestion",
+  "frontier_cell": "governance-proof-digestion",
+  "source_facing": false,
+  "source": {
+    "kind": "internal-design",
+    "title": "BanditRLlib Statement-Seal, Source Proof Graph, and Purification protocol",
+    "version": "2026-10-05",
+    "anchor": "docs/proof-digestion-protocol.md",
+    "url": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep"
+  },
+  "target": "Make source-facing theorem interfaces immutable before proof search; separate exhaustive source-proof topology from Lean implementation topology; represent alternative proofs as OR-routes; and require post-merge purification into a compressed Bandit/RL spine.",
+  "affected_files": [
+    "AGENTS.md",
+    "CONTRIBUTING.md",
+    "docs/theorem-publication-protocol.md"
+  ],
+  "declarations": [],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "BanditRLlib AGENTS.md, theorem publication protocol, semantic round trip, Lean Graph, Functor Hypergraph, contribution contract",
+      "Samplinglib source-fidelity, shared-leaf, graph-memory and theorem publication protocols",
+      "Scott N. Armstrong Lean autoformalization workflow concepts: frozen public declarations, source dependency graph, binder/definition audit, OR-routes and post-proof cleanup"
+    ],
+    "reused_declarations": [],
+    "new_shared_declarations": [],
+    "known_consumers": [
+      "future BanditRLlib paper/book Source Anchors",
+      "future BanditRLwiki proof-route publications"
+    ],
+    "planned_consumers": [
+      "ABRL contributors and coding agents",
+      "researcher-facing compressed Bandit/RL graph views"
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Adapt the source-first ideas into BanditRLlib's existing zero-sorry, semantic-roundtrip and three-graph publication architecture rather than replacing that architecture or weakening existing gates."
+  },
+  "reader_contract": {
+    "source_anchor_visible": false,
+    "natural_language_formula_proof": false,
+    "hidden_assumptions_visible": false,
+    "source_vs_lean_delta_visible": false,
+    "lean_folded": false,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": false,
+    "status": "not-required",
+    "formalizer": "OpenAI ChatGPT GPT-5.6 Sol",
+    "blind_decoder": "",
+    "source_reviewer": "",
+    "verdict": "not-required: this is a repository protocol/governance change and does not claim a new source theorem",
+    "remaining_semantic_delta": "Future source-facing Anchors must implement the new Statement Seal, binder/definition audit, source-proof coverage and purification record in addition to the existing semantic round trip."
+  },
+  "graph_contribution": {
+    "lean_graph": "no-change-with-reason",
+    "overview_graph": "no-change-with-reason",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "The change defines graph truth contracts and a compressed-spine lifecycle but adds no theorem node, route milestone, or new conceptual transport.",
+    "focus_targets": [
+      "docs/proof-digestion-protocol.md",
+      "docs/theorem-publication-protocol.md",
+      "README.md#-news"
+    ],
+    "visual_review": "Documentation-only protocol change; no generated graph layout is altered. README/news and protocol links should be inspected in rendered Markdown before merge.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "no-change-with-reason: no textbook theorem status changes.",
+    "banditrlwiki": "no-change-with-reason: no case or frontier result changes.",
+    "results_ledger": "no-change-with-reason: no compiled theorem milestone changes.",
+    "roadmap": "no-change-with-reason: the lifecycle/protocol changes, not the mathematical frontier.",
+    "website_surfaces": [
+      "Repository News records the new Statement-Seal and Proof-Digestion protocol."
+    ]
+  },
+  "truth_boundary": "This PR changes protocol and reader-compression requirements only. It does not retroactively certify old Source Proof Graph coverage, purify historical modules, prove any new Bandit/RL theorem, or claim that graph decomposition automatically measures scientific novelty.",
+  "verification": {
+    "focused_checks": [
+      "python3 tools/check_contributor_contract.py --base <merge-base>",
+      "git diff --check"
+    ],
+    "bandit_check": "required in PR CI before merge",
+    "site_build": "required in PR CI before merge",
+    "site_check": "required in PR CI before merge",
+    "independent_review": "Maintainer review required for the new protocol semantics before merge; no theorem-level independent source review is claimed by this manifest."
+  },
+  "contributor": {
+    "name": "OpenAI ChatGPT GPT-5.6 Sol",
+    "role": "protocol integration contributor"
+  }
+}
