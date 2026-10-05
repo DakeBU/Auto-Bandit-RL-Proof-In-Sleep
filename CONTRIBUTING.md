@@ -17,8 +17,8 @@ current target branch and read:
 4. `docs/theorem-publication-protocol.md`
 5. `docs/proof-digestion-protocol.md`
 6. `.agents/skills/bandit-substantive-advance/SKILL.md`
-6. `.agents/skills/bandit-semantic-roundtrip/SKILL.md`
-7. the relevant domain skill and exact source/route files.
+7. `.agents/skills/bandit-semantic-roundtrip/SKILL.md`
+8. the relevant domain skill and exact source/route files.
 
 The reusable bootstrap for coding agents is
 `.agents/prompts/collaborator-contribution.md`. Repository-local instructions
