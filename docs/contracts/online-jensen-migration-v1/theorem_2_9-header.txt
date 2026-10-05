@@ -1,0 +1,1 @@
+theorem theorem_2_9 (μ : Measure Ω) [IsProbabilityMeasure μ] (f : E → EReal) (hbot : ∀ x, f x ≠ ⊥) (hf : IsConvexExtended f) (hfm : Measurable f) (X : Ω → E) (hXm : Measurable X) (hX : Integrable X μ) (hdom : ∀ᵐ ω ∂μ, X ω ∈ effectiveDomain f) : f (∫ ω, X ω ∂μ) ≤ signedExpectation μ (fun ω => f (X ω))

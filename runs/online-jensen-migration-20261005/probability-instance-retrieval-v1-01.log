@@ -1,0 +1,30 @@
+Tests.OnlineJensenInfinite.instIsProbabilityMeasureNatLaw
+Tests.OnlineJensenFinite.instIsProbabilityMeasureRealLaw
+Tests.OnlineJensenInfinite.X (n : ℕ) : ℝ
+Tests.OnlineJensenInfinite.X_integrable :
+  MeasureTheory.Integrable Tests.OnlineJensenInfinite.X Tests.OnlineJensenInfinite.law
+Tests.OnlineJensenInfinite.atom (n : ℕ) : Tests.OnlineJensenInfinite.law {n} = ENNReal.ofReal ((1 / 4) ^ n * (3 / 4))
+Tests.OnlineJensenInfinite.instIsProbabilityMeasureNatLaw :
+  MeasureTheory.IsProbabilityMeasure Tests.OnlineJensenInfinite.law
+Tests.OnlineJensenInfinite.law : MeasureTheory.Measure ℕ
+Tests.OnlineJensenInfinite.source_infinite_instance :
+  (↑((∫ (n : ℕ), Tests.OnlineJensenInfinite.X n ∂Tests.OnlineJensenInfinite.law) ^ 2) ≤
+      BanditRL.OnlineConvex.signedExpectation Tests.OnlineJensenInfinite.law fun n =>
+        ↑(Tests.OnlineJensenInfinite.X n ^ 2)) ∧
+    (BanditRL.OnlineConvex.signedExpectation Tests.OnlineJensenInfinite.law fun n =>
+        ↑(Tests.OnlineJensenInfinite.X n ^ 2)) =
+      ⊤
+Tests.OnlineJensenInfinite.square_infinite :
+  ∫⁻ (n : ℕ), ENNReal.ofReal (Tests.OnlineJensenInfinite.X n ^ 2) ∂Tests.OnlineJensenInfinite.law = ⊤
+Tests.OnlineJensenInfinite.weighted (n : ℕ) :
+  Tests.OnlineJensenInfinite.X n * ((1 / 4) ^ n * (3 / 4)) = (1 / 2) ^ n * (3 / 4)
+Tests.OnlineJensenFinite.instIsProbabilityMeasureRealLaw :
+  MeasureTheory.IsProbabilityMeasure Tests.OnlineJensenFinite.law
+Tests.OnlineJensenFinite.integrable_atom_function (g : ℝ → ℝ) : MeasureTheory.Integrable g Tests.OnlineJensenFinite.law
+Tests.OnlineJensenFinite.law : MeasureTheory.Measure ℝ
+Tests.OnlineJensenFinite.mean : ∫ (x : ℝ), x ∂Tests.OnlineJensenFinite.law = 2
+Tests.OnlineJensenFinite.source_finite_instance :
+  ↑((∫ (x : ℝ), x ∂Tests.OnlineJensenFinite.law) ^ 2) ≤
+    BanditRL.OnlineConvex.signedExpectation Tests.OnlineJensenFinite.law fun x => ↑(x ^ 2)
+Tests.OnlineJensenFinite.square_expectation :
+  (BanditRL.OnlineConvex.signedExpectation Tests.OnlineJensenFinite.law fun x => ↑(x ^ 2)) = ↑5

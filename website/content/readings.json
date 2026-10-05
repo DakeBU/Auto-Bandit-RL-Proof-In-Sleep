@@ -2590,7 +2590,7 @@
         "title": "Online Learning: A Modern Introduction Using Convex Optimization",
         "authors": "Francesco Orabona",
         "edition": "arXiv:1912.13213v10, 21 June 2026",
-        "sections": "Section2.1.1, Theorem2.9 (Jensen inequality)",
+        "sections": "Section2.1.1, one printed Theorem2.9 and its necessary finite-negative-part library producer",
         "pages": "printedp11/PDF23",
         "pdf_page": 23,
         "url": "https://arxiv.org/pdf/1912.13213v10"
@@ -2598,15 +2598,15 @@
       "notation": [
         {
           "term": "signed expectation",
-          "meaning": "Positive integral minus negative integral; the theorem proves the negative integral finite."
+          "meaning": "Total positive-minus-negative EReal expression outside admissible inputs. Here the actual producer proves finite negative part, so both-infinite ambiguity is excluded and positive-infinite loss expectation is legitimate. No finite expected loss or use of toReal at infinity as a finite loss is promised."
         },
         {
           "term": "integrable X",
-          "meaning": "The random vector is integrable; its convex loss need not be."
+          "meaning": "Source E[X] exists means ordinary finite Lebesgue coordinate expectations. In finite-dimensional Euclidean space these correspond to genuine Bochner Integrable X via integrable_pi_iff/integrable_piLp_iff; principal-value means and total nonintegrable-zero fallback are excluded. The convex loss need not be integrable."
         },
         {
           "term": "effective domain",
-          "meaning": "X lies where f is finite almost surely; this set need not be closed."
+          "meaning": "With global no-bottom, f<top means finite values; X belongs almost surely, not necessarily everywhere. Domain need not be closed, measurable as a set or full-dimensional. Actual finite-dimensional real normed E retains MeasurableSpace/BorelSpace; no supplied CompleteSpace/inner-product parameter or infinite-dimensional claim. Probability mass1, separate Measurable f, Measurable X and Integrable X remain explicit."
         }
       ],
       "algorithm": {
@@ -2615,15 +2615,15 @@
         "steps": [
           {
             "title": "Control the negative part",
-            "detail": "A global affine minorant supplies an integrable lower bound."
+            "detail": "Probability and AE domain membership supply a nonempty-domain witness. The actual global affine minorant gives a(X)+b, genuinely integrable because X is integrable. Pointwise domination bounds the negative loss part by this real affine negative part, whose integral is proved finite. Negative-part finiteness is produced, not assumed."
           },
           {
             "title": "Handle infinite positive part",
-            "detail": "A finite negative part makes the signed expectation legitimately positive infinity."
+            "detail": "An infinite positive integral with the produced finite negative integral makes the signed expectation legitimately positive infinity. This branch supplies f(mean)≤top; it does not separately promise mean-domain membership or a finite expected loss."
           },
           {
             "title": "Use the finite epigraph mean",
-            "detail": "An integrable real representative Y of the loss gives (X,Y) in the convex epigraph almost surely; its mean stays in that epigraph."
+            "detail": "If the positive integral is finite, measurability and AE finite embedding produce Y=toReal(f(X)). Actual finite positive/negative parts make their maxima integrable, hence their difference Y integrable. The genuinely integrable pair (X,Y) lies AE in the original convex real epigraph; its mean stays in that potentially nonclosed epigraph. Pair-integral and AE signed real-integral compatibility yield the exact source inequality."
           }
         ]
       },
@@ -2640,18 +2640,18 @@
           "math": "f(\\mathbb E X)\\le\\mathbb E[f(X)]",
           "fallback": "A measurable convex extended-real loss at the mean is bounded by its possibly infinite expected loss.",
           "plain": "Only X is assumed integrable; loss integrability and a closed domain are not assumed.",
-          "relationship": "The public theorem preserves every source hypothesis and allows positive-infinite expected loss. Finite-dimensional real normed spaces include the source Euclidean setting. No closedness or loss-integrability assumption is added.",
+          "relationship": "One printed Theorem2.9 plus its necessary negative-part library producer, not two printed results. Source finite-mean wording is explicitly interpreted as ordinary finite Lebesgue coordinate expectations, corresponding to genuine Bochner Integrable X in finite-dimensional Euclidean spaces. Actual finite-dimensional real normed measurable/Borel generality includes those source instances. No loss-integrability, closedness, lsc, full-dimensional-domain or finite-support-law assumption is added. Historical compilation and this distinct contract/body review remain separate from the final recorded package decision.",
           "contract": {
-            "model": "Finite-dimensional real random vectors under a probability law.",
-            "assumptions": "Measurable convex loss never negative infinity; measurable integrable X lies in the effective domain almost surely.",
-            "parameters": "Arbitrary probability space and finite dimension.",
+            "model": "Finite-dimensional real normed measurable/Borel vectors, including source Euclidean spaces, under an arbitrary probability law of mass1.",
+            "assumptions": "Global no-bottom measurable convex extended loss; separate measurable X, genuinely Integrable X and AE below-top domain membership. No loss-integrability or closed/full-dimensional-domain premise.",
+            "parameters": "Arbitrary probability space and finite dimension, including dimension0; no supplied CompleteSpace/inner-product parameter, no infinite-dimensional source claim.",
             "regret": "An expectation inequality, not a regret bound.",
             "guarantee": "The required source endpoint allows positive-infinite expected loss and must prove finite negative part."
           },
           "local_status": {
             "status": "compiled",
-            "label": "Full source Jensen and finite negative part",
-            "boundary": "Theorem2.9 only; later required Chapter2 results remain incomplete."
+            "label": "Source Jensen and produced finite negative part, freshly recompiled",
+            "boundary": "Exactly one source theorem and one necessary producer. Frozen producer measurability premises stay in its signature even where its body does not use them. Final package evidence is recorded separately; Chapter2 mandatory total remains null/incomplete and the whole book Goal active."
           }
         }
       ],
@@ -2661,7 +2661,7 @@
         "steps": [
           {
             "title": "Verify the probability law",
-            "detail": "The geometric masses sum to one.",
+            "detail": "The normalized geometric probability masses sum to one; the actual anonymous IsProbabilityMeasure instance is retrieved and included in the named audit.",
             "math": "\\Pr(N=n)=\\frac34\\left(\\frac14\\right)^n",
             "fallback": "The canary uses a real probability measure, not unnormalized counting measure."
           },
@@ -2678,8 +2678,8 @@
             "fallback": "The proof does not assume integrability of the loss."
           }
         ],
-        "takeaway": "Input integrability and finite sample losses do not force finite expected loss.",
-        "boundary": "Additional public canaries cover a finite nonconstant law and a nonclosed lower-dimensional loss domain."
+        "takeaway": "Genuinely integrable input and finite loss at every sample do not force finite expected loss; the source terminal permits legitimate positive infinity after producing finite negative part.",
+        "boundary": "The whole unchanged canary has13proofs/3definitions/2probability instances. Separate normalized halfdirac1+halfdirac3 proves mean2/square expectation5 and a nonconstant finite source instance; separate lower-dimensional nonclosed coordinate/top-outside loss uses a genuine probability law, measurable loss and AE domain membership. Counting-measure foundation examples are not these source probability tests. All20named audits include both actual anonymous probability instances."
       }
     },
     {

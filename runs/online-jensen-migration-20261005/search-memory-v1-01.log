@@ -1,0 +1,9 @@
+local: LOCAL-LEAF-TSALLIS-CONJUGATE-POTENTIAL-STABILITY: BanditRLProof.TsallisConjugatePotentialStability
+local: LOCAL-LEAF-TSALLIS-SCHEDULED-EXPECTED-REGRET: BanditRLProof.TsallisScheduledExpectedRegret
+local: LOCAL-LEAF-TSALLIS-SCHEDULED-REFINED-EXPECTED-PENALTY: BanditRLProof.TsallisScheduledRefinedExpectedPenalty
+local: LOCAL-LEAF-TSALLIS-SCHEDULED-REFINED-STABILITY-PENALTY-ASSEMBLY: BanditRLProof.TsallisScheduledRefinedStabilityPenalty
+local: LOCAL-LEAF-TSALLIS-SCHEDULED-SUBOPTIMAL-EXPECTED-BOUND: BanditRLProof.TsallisScheduledSuboptimalExpectedBound
+lean: BanditRL.OnlineConvex.jensen_negativeIntegral_ne_top [theorem] BanditRLProof/OnlineJensen.lean:12
+  theorem jensen_negativeIntegral_ne_top (μ : Measure Ω) [IsProbabilityMeasure μ] (f : E → EReal) (hbot : ∀ x, f x ≠ ⊥) (hf : IsConvexExtended f) (hfm : Measurable f) (X : Ω → E) (hXm : Measurable X) (hX : Integrable X μ) (hdom : ∀ᵐ ω ∂μ, X ω ∈ effectiveDomain f) : negativeIntegral μ (fun ω => f (X ω)) ≠ ∞
+lean: BanditRL.OnlineConvex.theorem_2_9 [theorem] BanditRLProof/OnlineJensen.lean:27
+  theorem theorem_2_9 (μ : Measure Ω) [IsProbabilityMeasure μ] (f : E → EReal) (hbot : ∀ x, f x ≠ ⊥) (hf : IsConvexExtended f) (hfm : Measurable f) (X : Ω → E) (hXm : Measurable X) (hX : Integrable X μ) (hdom : ∀ᵐ ω ∂μ, X ω ∈ effectiveDomain f) : f (∫ ω, X ω ∂μ) ≤ signedExpectation μ (fun ω => f (X ω))
