@@ -8,6 +8,26 @@ The purpose is not merely to produce compiling Lean. It is to make bandit/RL
 proofs easier to inspect, compare, and reuse without leaving machine-generated
 bookkeeping as the public mathematical interface.
 
+## 0. Three declaration levels
+
+Use the full source audit only where mathematical meaning is public.
+
+- **A. Source Anchor** — a theorem/definition tied to a paper, textbook or
+  explicit original-result contract. It requires Statement Seal, binder or
+  definition audit, source-proof coverage/topology review, semantic round trip,
+  Proof Seal, publication and purification.
+- **B. Canonical Library Node** — a reusable Bandit/RL lemma or interface.
+  Require Lean proof/axiom cleanliness, search/reuse evidence, canonicality,
+  real or plausible consumers, and duplicate/wrapper purification. Do not
+  pretend it is a source theorem when it is library infrastructure.
+- **C. Internal Provider** — a private or theorem-local implementation helper.
+  Require compilation, no fake closure or assumption smuggling, and
+  reachability/dead-code cleanup. It earns no independent source-formalization
+  credit.
+
+Do not make every internal helper pay the Source-Anchor review cost; concentrate
+the strongest audit on the constitutional public mathematical interface.
+
 This protocol complements AGENTS.md, docs/theorem-publication-protocol.md, and
 docs/contributor-codex-contract.md.
 
