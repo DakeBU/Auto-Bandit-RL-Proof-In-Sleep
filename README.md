@@ -22,6 +22,7 @@ This repository has two connected contributions:
 
 ## 📰 News
 
+- **2026-10 — Proof digestion protocol.** BanditRLlib now seals source-facing theorem interfaces before proof search, reconstructs exhaustive Source Proof Graphs separately from Lean dependency graphs, and requires post-merge purification into a compressed researcher-facing spine; proof ingredients are graph edges, never smuggled public hypotheses.
 - **2026-09 — Harness self-comparison.** Structured logs can compare hierarchical and master–worker runs and prepare a bounded GPT diagnosis; zero valid matched pairs means no winner is claimed.
 - **2026-09 — Textbook spine.** Ten teaching chapters and Part-IV Chapters 13–17 now link source pages, algorithms, theorem statements, Lean evidence, and named gaps.
 - **2026-09 — SGB frontier.** The finite missing-pull regret consumer compiles, while the source phase trigger and Theorem 2 terminal remain open.
