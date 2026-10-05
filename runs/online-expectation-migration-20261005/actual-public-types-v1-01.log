@@ -1,0 +1,36 @@
+@BanditRL.OnlineConvex.positiveIntegral : {Ω : Type u_1} →
+  [inst : MeasurableSpace Ω] → MeasureTheory.Measure Ω → (Ω → EReal) → ENNReal
+@BanditRL.OnlineConvex.negativeIntegral : {Ω : Type u_1} →
+  [inst : MeasurableSpace Ω] → MeasureTheory.Measure Ω → (Ω → EReal) → ENNReal
+@BanditRL.OnlineConvex.signedExpectation : {Ω : Type u_1} →
+  [inst : MeasurableSpace Ω] → MeasureTheory.Measure Ω → (Ω → EReal) → EReal
+@BanditRL.OnlineConvex.positiveIntegral_coe : ∀ {Ω : Type u_1} [inst : MeasurableSpace Ω] (μ : MeasureTheory.Measure Ω)
+  (f : Ω → ℝ), (BanditRL.OnlineConvex.positiveIntegral μ fun ω => ↑(f ω)) = ∫⁻ (ω : Ω), ENNReal.ofReal (f ω) ∂μ
+@BanditRL.OnlineConvex.negativeIntegral_coe : ∀ {Ω : Type u_1} [inst : MeasurableSpace Ω] (μ : MeasureTheory.Measure Ω)
+  (f : Ω → ℝ), (BanditRL.OnlineConvex.negativeIntegral μ fun ω => ↑(f ω)) = ∫⁻ (ω : Ω), ENNReal.ofReal (-f ω) ∂μ
+@BanditRL.OnlineConvex.positiveIntegral_coe_ne_top : ∀ {Ω : Type u_1} [inst : MeasurableSpace Ω]
+  (μ : MeasureTheory.Measure Ω) (f : Ω → ℝ),
+  MeasureTheory.Integrable f μ → (BanditRL.OnlineConvex.positiveIntegral μ fun ω => ↑(f ω)) ≠ ⊤
+@BanditRL.OnlineConvex.negativeIntegral_coe_ne_top : ∀ {Ω : Type u_1} [inst : MeasurableSpace Ω]
+  (μ : MeasureTheory.Measure Ω) (f : Ω → ℝ),
+  MeasureTheory.Integrable f μ → (BanditRL.OnlineConvex.negativeIntegral μ fun ω => ↑(f ω)) ≠ ⊤
+@BanditRL.OnlineConvex.signedExpectation_coe_integrable : ∀ {Ω : Type u_1} [inst : MeasurableSpace Ω]
+  (μ : MeasureTheory.Measure Ω) (f : Ω → ℝ),
+  MeasureTheory.Integrable f μ → (BanditRL.OnlineConvex.signedExpectation μ fun ω => ↑(f ω)) = ↑(∫ (ω : Ω), f ω ∂μ)
+@BanditRL.OnlineConvex.signedExpectation_of_nonneg : ∀ {Ω : Type u_1} [inst : MeasurableSpace Ω]
+  (μ : MeasureTheory.Measure Ω) (f : Ω → EReal),
+  (∀ᵐ (ω : Ω) ∂μ, 0 ≤ f ω) → BanditRL.OnlineConvex.signedExpectation μ f = ↑(BanditRL.OnlineConvex.positiveIntegral μ f)
+@BanditRL.OnlineConvex.signedExpectation_eq_top : ∀ {Ω : Type u_1} [inst : MeasurableSpace Ω]
+  (μ : MeasureTheory.Measure Ω) (f : Ω → EReal),
+  BanditRL.OnlineConvex.positiveIntegral μ f = ⊤ →
+    BanditRL.OnlineConvex.negativeIntegral μ f ≠ ⊤ → BanditRL.OnlineConvex.signedExpectation μ f = ⊤
+@MeasureTheory.integral_eq_lintegral_pos_part_sub_lintegral_neg_part : ∀ {α : Type u_1} {m : MeasurableSpace α}
+  {μ : MeasureTheory.Measure α} {f : α → ℝ},
+  MeasureTheory.Integrable f μ →
+    ∫ (a : α), f a ∂μ = (∫⁻ (a : α), ENNReal.ofReal (f a) ∂μ).toReal - (∫⁻ (a : α), ENNReal.ofReal (-f a) ∂μ).toReal
+@MeasureTheory.lintegral_ofReal_ne_top_iff_integrable : ∀ {α : Type u_1} {m : MeasurableSpace α}
+  {μ : MeasureTheory.Measure α} {f : α → ℝ},
+  MeasureTheory.AEStronglyMeasurable f μ →
+    0 ≤ᵐ[μ] f → (∫⁻ (a : α), ENNReal.ofReal (f a) ∂μ ≠ ⊤ ↔ MeasureTheory.Integrable f μ)
+EReal.sub_top : ∀ (x : EReal), x - ⊤ = ⊥
+@EReal.top_sub : ∀ {x : EReal}, x ≠ ⊤ → ⊤ - x = ⊤

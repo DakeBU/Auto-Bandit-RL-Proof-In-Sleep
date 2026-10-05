@@ -15426,3 +15426,5 @@ here during local harness runs.
 - `2026-10-05T10:44:05+00:00` `bandit.py new-task` `task` `tasks/ONLINE-FINITE-LOSS-20261005.md` - Finite constrained loss and exact effective domain
 - `2026-10-05T11:36:13+00:00` `bandit.py new-task` `task` `tasks/ONLINE-FIRST-ORDER-MIGRATION-20261005.md` - Revalidate source-faithful supporting-gradient Theorem 2.7
 - `2026-10-05T12:22:37+00:00` `bandit.py new-task` `task` `tasks/ONLINE-OPTIMALITY-MIGRATION-20261005.md` - Revalidate Orabona Theorem 2.8 and interior optimality consequence
+
+- Expectation representation migration 20261005: seven retained proofs/three definitions, zero new proof code/nodes; arbitrary-measure/finite-part/actual Integrable/nonprobability canary and parent-Jensen boundaries qualified. Distinct contract/body reviewed; final reader/integration/PR gates pending. See runs/online-expectation-migration-20261005.

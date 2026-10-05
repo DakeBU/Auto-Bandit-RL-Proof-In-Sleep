@@ -1,3 +1,18 @@
+/-
+Representation dependency for Orabona, Online Learning, arXiv:1912.13213v10,
+Theorem 2.9, printed p.11/PDF p.23. These seven helpers and three definitions
+are library foundations, not seven printed source results or Jensen acceptance.
+The definitions use total ENNReal lintegrals and EReal subtraction for arbitrary
+measures/functions. Mathematical signed-integral use needs an appropriate
+measurable interpretation and at least one finite part. Both parts infinite
+is not a legitimate signed expectation; pinned total top-top equals bottom.
+Real Bochner compatibility retains actual Integrable, and the positive-infinite
+branch explicitly requires finite negative part. No parent loss integrability
+premise is introduced; Jensen must prove negative-part finiteness separately.
+The two-atom mass-two and infinite counting-measure canaries are signed-integral
+examples, not probability Jensen examples or normalized expectations.
+All ten retained headers, definitions/proof tokens and canary bytes unchanged.
+-/
 import BanditRLProof.OnlineConvexExtended
 import Mathlib.MeasureTheory.Integral.Bochner.Basic
 import Mathlib.MeasureTheory.Constructions.BorelSpace.Real
