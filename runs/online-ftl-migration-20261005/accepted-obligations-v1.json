@@ -1,0 +1,101 @@
+{
+  "stage": "accepted-local-retained-source-migration",
+  "required": [
+    {
+      "name": "prefixCoefficient_eq_sum",
+      "statement_hash": "105c5e561b81ef97dd9f54f0d4d13272ca17e269ef5086fc15c84805b76bc8ad",
+      "dependencies": [],
+      "state": "accepted-local-retained-proof",
+      "evidence": [
+        "public-body-receipt-v1.json",
+        "final-reader-receipt-v1.json",
+        "accepted-binding-audit-v1.json"
+      ]
+    },
+    {
+      "name": "linearFTLPredict_prefix",
+      "statement_hash": "ada42cabc545b68541576d9f551893fa0eda8f20312c1106d54fb7265d6e22c2",
+      "dependencies": [
+        "prefixCoefficient_eq_sum"
+      ],
+      "state": "accepted-local-retained-proof",
+      "evidence": [
+        "public-body-receipt-v1.json",
+        "final-reader-receipt-v1.json",
+        "accepted-binding-audit-v1.json"
+      ]
+    },
+    {
+      "name": "linearFTLPredict_mem",
+      "statement_hash": "c0922f939381b540f7145b061927f23c803542ef7bf69fb4ad31c922946c17df",
+      "dependencies": [],
+      "state": "accepted-local-retained-proof",
+      "evidence": [
+        "public-body-receipt-v1.json",
+        "final-reader-receipt-v1.json",
+        "accepted-binding-audit-v1.json"
+      ]
+    },
+    {
+      "name": "linearFTLPredict_minimizes",
+      "statement_hash": "7f1024de390828c124f80c965d17fd86c3864fcca79e31cf025e2bc5e7750be3",
+      "dependencies": [
+        "prefixCoefficient_eq_sum"
+      ],
+      "state": "accepted-local-retained-proof",
+      "evidence": [
+        "public-body-receipt-v1.json",
+        "final-reader-receipt-v1.json",
+        "accepted-binding-audit-v1.json"
+      ]
+    },
+    {
+      "name": "failure_prefixCoefficient",
+      "statement_hash": "98cb970c828514bce1bf6d1d5663b530638ffe91dc0358d8a29c9e93c5675d3b",
+      "dependencies": [],
+      "state": "accepted-local-retained-proof",
+      "evidence": [
+        "public-body-receipt-v1.json",
+        "final-reader-receipt-v1.json",
+        "accepted-binding-audit-v1.json"
+      ]
+    },
+    {
+      "name": "failure_prediction",
+      "statement_hash": "7d2c8f84b6196bf351fcf83b24c38af19aff6bc4d1e82472d781f8ac43d86603",
+      "dependencies": [
+        "failure_prefixCoefficient"
+      ],
+      "state": "accepted-local-retained-proof",
+      "evidence": [
+        "public-body-receipt-v1.json",
+        "final-reader-receipt-v1.json",
+        "accepted-binding-audit-v1.json"
+      ]
+    },
+    {
+      "name": "example_2_10",
+      "statement_hash": "f8bea31d7214806d930fc1e5a670d52855b36f96a9e7ed0895eef01797d0b89b",
+      "dependencies": [
+        "failure_prediction"
+      ],
+      "state": "accepted-local-retained-proof",
+      "evidence": [
+        "public-body-receipt-v1.json",
+        "final-reader-receipt-v1.json",
+        "accepted-binding-audit-v1.json"
+      ]
+    }
+  ],
+  "terminal": "BanditRL.OnlineLearning.example_2_10",
+  "edit_scope": "Allowed edits after reviewed stabilization:source-qualified comments in OnlineFTLFailure only, task-local contracts/evidence and scoped shared Book/manifest integration. No old header/definition/body rewrite; any semantic target change needs a new version/review. Same Lean/Lake project/registry; no per-book project/globalSGB overwrite. Whole Goal remains active; Chapter2 and other20main migration paths remain mandatory after this single-file scope is accepted.",
+  "package_accepted": true,
+  "chapter_accepted": false,
+  "goal_complete": false,
+  "source_contract_verdict": "accepted-with-explicit-delta",
+  "new_proofs": 0,
+  "dependency_readiness": "runs\\online-ftl-migration-20261005\\ready-dependencies-v1.json",
+  "remaining_package_gates": [
+    "stacked draft PR delivery"
+  ]
+}
