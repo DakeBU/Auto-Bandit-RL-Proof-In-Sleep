@@ -8,7 +8,7 @@ def write(n,x):
     with (run/n).open('w',encoding='utf-8',newline='\n') as f:
         if isinstance(x,str):f.write(x+'\n')
         else:json.dump(x,f,ensure_ascii=False,indent=2);f.write('\n')
-gates=['root-v1-01','Tests-v1-01','full-harness-v1-01','contributor-exact-v1-01','site-final01-build','site-final01-check','registry-final01','browser-final01','review-history-v2-01','scoped-diff-v2-01','public-axioms-v2-01','candidate-frontier-refresh-v1','candidate-frontier-shadow-v1']
+gates=['root-v1-01','Tests-v1-01','full-harness-v1-01','contributor-exact-v1-02','site-final01-build','site-final01-check','registry-final01','browser-final01','review-history-v2-01','scoped-diff-v2-01','public-axioms-v2-01','candidate-frontier-refresh-v1','candidate-frontier-shadow-v1']
 for n in gates:assert load(run/(n+'-exit.json'))['exit_code']==0,n
 full=(run/'full-harness-v1-01.log').read_text(encoding='utf-8');assert 'Ran 466 tests' in full and 'OK (skipped=7)' in full and 'check passed' in full
 contributor=(run/'contributor-exact-v1-01.log').read_text(encoding='utf-8');assert 'affected production paths: 7' in contributor and 'changed contribution contracts: 1' in contributor and 'Contributor contract passed.' in contributor and 'N/A' not in contributor
