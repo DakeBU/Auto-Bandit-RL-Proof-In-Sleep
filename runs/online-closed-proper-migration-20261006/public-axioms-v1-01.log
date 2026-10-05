@@ -1,0 +1,27 @@
+@BanditRL.OnlineConvex.sourceClosed_iff_lowerSemicontinuous : ∀ {E : Type u_1} [inst : TopologicalSpace E]
+  (f : E → EReal), BanditRL.OnlineConvex.SourceClosed f ↔ LowerSemicontinuous f
+'BanditRL.OnlineConvex.sourceClosed_iff_lowerSemicontinuous' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.sourceClosed_indicator_iff : ∀ {E : Type u_1} [inst : TopologicalSpace E] (V : Set E),
+  BanditRL.OnlineConvex.SourceClosed (BanditRL.OnlineConvex.extendedIndicator V) ↔ IsClosed V
+'BanditRL.OnlineConvex.sourceClosed_indicator_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.sourceProper_indicator_iff : ∀ {E : Type u_1} [TopologicalSpace E] (V : Set E),
+  BanditRL.OnlineConvex.SourceProper (BanditRL.OnlineConvex.extendedIndicator V) ↔ V.Nonempty
+'BanditRL.OnlineConvex.sourceProper_indicator_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.SourceClosed : {E : Type u_1} → [TopologicalSpace E] → (E → EReal) → Prop
+'BanditRL.OnlineConvex.SourceClosed' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.SourceProper : {E : Type u_1} → (E → EReal) → Prop
+'BanditRL.OnlineConvex.SourceProper' depends on axioms: [propext, Classical.choice, Quot.sound]
+ClosedProperProbe.bottom_closed : BanditRL.OnlineConvex.SourceClosed fun x => ⊥
+'ClosedProperProbe.bottom_closed' depends on axioms: [propext, Classical.choice, Quot.sound]
+ClosedProperProbe.bottom_lowerSemicontinuous : LowerSemicontinuous fun x => ⊥
+'ClosedProperProbe.bottom_lowerSemicontinuous' depends on axioms: [propext, Classical.choice, Quot.sound]
+ClosedProperProbe.bottom_not_proper : ¬BanditRL.OnlineConvex.SourceProper fun x => ⊥
+'ClosedProperProbe.bottom_not_proper' depends on axioms: [propext, Classical.choice, Quot.sound]
+ClosedProperProbe.interval_closed : BanditRL.OnlineConvex.SourceClosed
+  (BanditRL.OnlineConvex.extendedIndicator (Set.Icc 0 1))
+'ClosedProperProbe.interval_closed' depends on axioms: [propext, Classical.choice, Quot.sound]
+ClosedProperProbe.interval_proper : BanditRL.OnlineConvex.SourceProper
+  (BanditRL.OnlineConvex.extendedIndicator (Set.Icc 0 1))
+'ClosedProperProbe.interval_proper' depends on axioms: [propext, Classical.choice, Quot.sound]
+ClosedProperProbe.empty_not_proper : ¬BanditRL.OnlineConvex.SourceProper (BanditRL.OnlineConvex.extendedIndicator ∅)
+'ClosedProperProbe.empty_not_proper' depends on axioms: [propext, Classical.choice, Quot.sound]

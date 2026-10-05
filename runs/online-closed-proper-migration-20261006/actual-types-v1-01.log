@@ -1,0 +1,34 @@
+@BanditRL.OnlineConvex.sourceClosed_iff_lowerSemicontinuous.{u_1} : ∀ {E : Type u_1} [inst : TopologicalSpace.{u_1} E]
+  (f : E → EReal),
+  Iff (@BanditRL.OnlineConvex.SourceClosed.{u_1} E inst f)
+    (@LowerSemicontinuous.{u_1, 0} E EReal inst (@PartialOrder.toPreorder.{0} EReal instPartialOrderEReal) f)
+@BanditRL.OnlineConvex.sourceClosed_indicator_iff.{u_1} : ∀ {E : Type u_1} [inst : TopologicalSpace.{u_1} E]
+  (V : Set.{u_1} E),
+  Iff (@BanditRL.OnlineConvex.SourceClosed.{u_1} E inst (@BanditRL.OnlineConvex.extendedIndicator.{u_1} E V))
+    (@IsClosed.{u_1} E inst V)
+@BanditRL.OnlineConvex.sourceProper_indicator_iff.{u_1} : ∀ {E : Type u_1} [TopologicalSpace.{u_1} E] (V : Set.{u_1} E),
+  Iff (@BanditRL.OnlineConvex.SourceProper.{u_1} E (@BanditRL.OnlineConvex.extendedIndicator.{u_1} E V))
+    (@Set.Nonempty.{u_1} E V)
+@BanditRL.OnlineConvex.SourceClosed.{u_1} : {E : Type u_1} → [TopologicalSpace.{u_1} E] → (E → EReal) → Prop
+@BanditRL.OnlineConvex.SourceProper.{u_1} : {E : Type u_1} → (E → EReal) → Prop
+ClosedProperProbe.bottom_closed : @BanditRL.OnlineConvex.SourceClosed.{0} Real
+  (@UniformSpace.toTopologicalSpace.{0} Real (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+  fun x => @Bot.bot.{0} EReal instBotEReal
+ClosedProperProbe.bottom_lowerSemicontinuous : @LowerSemicontinuous.{0, 0} Real EReal
+  (@UniformSpace.toTopologicalSpace.{0} Real (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+  (@PartialOrder.toPreorder.{0} EReal instPartialOrderEReal) fun x => @Bot.bot.{0} EReal instBotEReal
+ClosedProperProbe.bottom_not_proper : Not
+  (@BanditRL.OnlineConvex.SourceProper.{0} Real fun x => @Bot.bot.{0} EReal instBotEReal)
+ClosedProperProbe.interval_closed : @BanditRL.OnlineConvex.SourceClosed.{0} Real
+  (@UniformSpace.toTopologicalSpace.{0} Real (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+  (@BanditRL.OnlineConvex.extendedIndicator.{0} Real
+    (@Set.Icc.{0} Real Real.instPreorder (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))
+      (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))))
+ClosedProperProbe.interval_proper : @BanditRL.OnlineConvex.SourceProper.{0} Real
+  (@BanditRL.OnlineConvex.extendedIndicator.{0} Real
+    (@Set.Icc.{0} Real Real.instPreorder (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))
+      (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))))
+ClosedProperProbe.empty_not_proper : Not
+  (@BanditRL.OnlineConvex.SourceProper.{0} Real
+    (@BanditRL.OnlineConvex.extendedIndicator.{0} Real
+      (@EmptyCollection.emptyCollection.{0} (Set.{0} Real) (@Set.instEmptyCollection.{0} Real))))

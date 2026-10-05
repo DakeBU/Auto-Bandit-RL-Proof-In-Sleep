@@ -1,0 +1,8 @@
+lean: BanditRL.OnlineConvex.SourceClosed [def] BanditRLProof/OnlineClosedProper.lean:9
+  def SourceClosed (f : E → EReal) : Prop
+lean: BanditRL.OnlineConvex.sourceClosed_iff_lowerSemicontinuous [theorem] BanditRLProof/OnlineClosedProper.lean:15
+  theorem sourceClosed_iff_lowerSemicontinuous (f : E → EReal) : SourceClosed f ↔ LowerSemicontinuous f
+lean: BanditRL.OnlineConvex.sourceClosed_indicator_iff [theorem] BanditRLProof/OnlineClosedProper.lean:41
+  theorem sourceClosed_indicator_iff (V : Set E) : SourceClosed (extendedIndicator V) ↔ IsClosed V
+lean: BanditRL.OnlineConvex.theorem_2_23_equality [theorem] BanditRLProof/OnlineSubgradientSum.lean:263
+  theorem theorem_2_23_equality (n : ℕ) (f : Fin (n + 1) → E → EReal) (hp : ∀ i, SourceProper (f i)) (hc : ∀ i, IsConvexExtended (f i)) (hclosed : ∀ i, SourceClosed (f i)) (hqual : ∃ z : E, z ∈ effectiveDomain (f (Fin.last n)) ∧ ∀ i : Fin (n + 1), i ≠ Fin.last n → z ∈ interior (effectiveDomain (f i))) (x : E) : SourceSubdifferential (fun y => ∑ i, f i y) x = SourceSubgradientSum f x
