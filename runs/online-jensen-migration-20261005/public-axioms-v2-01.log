@@ -1,0 +1,81 @@
+@BanditRL.OnlineConvex.jensen_negativeIntegral_ne_top : ∀ {Ω : Type u_1} [inst : MeasurableSpace Ω] {E : Type u_2}
+  [inst_1 : NormedAddCommGroup E] [inst_2 : NormedSpace ℝ E] [FiniteDimensional ℝ E] [inst_4 : MeasurableSpace E]
+  [BorelSpace E] (μ : MeasureTheory.Measure Ω) [MeasureTheory.IsProbabilityMeasure μ] (f : E → EReal),
+  (∀ (x : E), f x ≠ ⊥) →
+    BanditRL.OnlineConvex.IsConvexExtended f →
+      Measurable f →
+        ∀ (X : Ω → E),
+          Measurable X →
+            MeasureTheory.Integrable X μ →
+              (∀ᵐ (ω : Ω) ∂μ, X ω ∈ BanditRL.OnlineConvex.effectiveDomain f) →
+                (BanditRL.OnlineConvex.negativeIntegral μ fun ω => f (X ω)) ≠ ⊤
+'BanditRL.OnlineConvex.jensen_negativeIntegral_ne_top' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.theorem_2_9 : ∀ {Ω : Type u_1} [inst : MeasurableSpace Ω] {E : Type u_2}
+  [inst_1 : NormedAddCommGroup E] [inst_2 : NormedSpace ℝ E] [FiniteDimensional ℝ E] [inst_4 : MeasurableSpace E]
+  [BorelSpace E] (μ : MeasureTheory.Measure Ω) [MeasureTheory.IsProbabilityMeasure μ] (f : E → EReal),
+  (∀ (x : E), f x ≠ ⊥) →
+    BanditRL.OnlineConvex.IsConvexExtended f →
+      Measurable f →
+        ∀ (X : Ω → E),
+          Measurable X →
+            MeasureTheory.Integrable X μ →
+              (∀ᵐ (ω : Ω) ∂μ, X ω ∈ BanditRL.OnlineConvex.effectiveDomain f) →
+                f (∫ (ω : Ω), X ω ∂μ) ≤ BanditRL.OnlineConvex.signedExpectation μ fun ω => f (X ω)
+'BanditRL.OnlineConvex.theorem_2_9' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineJensenInfinite.law : MeasureTheory.Measure ℕ
+'Tests.OnlineJensenInfinite.law' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineJensenInfinite.X : ℕ → ℝ
+'Tests.OnlineJensenInfinite.X' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineJensenInfinite.atom : ∀ (n : ℕ), Tests.OnlineJensenInfinite.law {n} = ENNReal.ofReal ((1 / 4) ^ n * (3 / 4))
+'Tests.OnlineJensenInfinite.atom' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineJensenInfinite.weighted : ∀ (n : ℕ),
+  Tests.OnlineJensenInfinite.X n * ((1 / 4) ^ n * (3 / 4)) = (1 / 2) ^ n * (3 / 4)
+'Tests.OnlineJensenInfinite.weighted' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineJensenInfinite.X_integrable : MeasureTheory.Integrable Tests.OnlineJensenInfinite.X
+  Tests.OnlineJensenInfinite.law
+'Tests.OnlineJensenInfinite.X_integrable' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineJensenInfinite.square_infinite : ∫⁻ (n : ℕ),
+    ENNReal.ofReal (Tests.OnlineJensenInfinite.X n ^ 2) ∂Tests.OnlineJensenInfinite.law =
+  ⊤
+'Tests.OnlineJensenInfinite.square_infinite' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineJensenInfinite.source_infinite_instance : (↑((∫ (n : ℕ),
+          Tests.OnlineJensenInfinite.X n ∂Tests.OnlineJensenInfinite.law) ^
+        2) ≤
+    BanditRL.OnlineConvex.signedExpectation Tests.OnlineJensenInfinite.law fun n =>
+      ↑(Tests.OnlineJensenInfinite.X n ^ 2)) ∧
+  (BanditRL.OnlineConvex.signedExpectation Tests.OnlineJensenInfinite.law fun n =>
+      ↑(Tests.OnlineJensenInfinite.X n ^ 2)) =
+    ⊤
+'Tests.OnlineJensenInfinite.source_infinite_instance' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineJensenInfinite.instIsProbabilityMeasureNatLaw : MeasureTheory.IsProbabilityMeasure
+  Tests.OnlineJensenInfinite.law
+'Tests.OnlineJensenInfinite.instIsProbabilityMeasureNatLaw' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineJensenFinite.law : MeasureTheory.Measure ℝ
+'Tests.OnlineJensenFinite.law' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineJensenFinite.integrable_atom_function : ∀ (g : ℝ → ℝ),
+  MeasureTheory.Integrable g Tests.OnlineJensenFinite.law
+'Tests.OnlineJensenFinite.integrable_atom_function' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineJensenFinite.mean : ∫ (x : ℝ), x ∂Tests.OnlineJensenFinite.law = 2
+'Tests.OnlineJensenFinite.mean' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineJensenFinite.square_expectation : (BanditRL.OnlineConvex.signedExpectation Tests.OnlineJensenFinite.law
+    fun x => ↑(x ^ 2)) =
+  ↑5
+'Tests.OnlineJensenFinite.square_expectation' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineJensenFinite.source_finite_instance : ↑((∫ (x : ℝ), x ∂Tests.OnlineJensenFinite.law) ^ 2) ≤
+  BanditRL.OnlineConvex.signedExpectation Tests.OnlineJensenFinite.law fun x => ↑(x ^ 2)
+'Tests.OnlineJensenFinite.source_finite_instance' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineJensenFinite.instIsProbabilityMeasureRealLaw : MeasureTheory.IsProbabilityMeasure
+  Tests.OnlineJensenFinite.law
+'Tests.OnlineJensenFinite.instIsProbabilityMeasureRealLaw' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineJensenNonclosed.measurable_ray : MeasurableSet Tests.OnlineConvexBarycenter.ray
+'Tests.OnlineJensenNonclosed.measurable_ray' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineJensenNonclosed.loss_measurable : Measurable Tests.OnlineConvexMinorant.loss
+'Tests.OnlineJensenNonclosed.loss_measurable' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineJensenNonclosed.source_nonclosed_instance : Tests.OnlineConvexMinorant.loss
+    (∫ (x : ℝ), Tests.OnlineConvexBarycenter.vector x ∂Tests.OnlineConvexBarycenter.law) ≤
+  BanditRL.OnlineConvex.signedExpectation Tests.OnlineConvexBarycenter.law fun x =>
+    Tests.OnlineConvexMinorant.loss (Tests.OnlineConvexBarycenter.vector x)
+'Tests.OnlineJensenNonclosed.source_nonclosed_instance' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineJensenNonclosed.domain_is_nonclosed : ¬IsClosed
+    (BanditRL.OnlineConvex.effectiveDomain Tests.OnlineConvexMinorant.loss)
+'Tests.OnlineJensenNonclosed.domain_is_nonclosed' depends on axioms: [propext, Classical.choice, Quot.sound]

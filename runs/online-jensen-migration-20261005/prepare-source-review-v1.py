@@ -1,0 +1,49 @@
+"""Bind the exact Jensen source/mean interpretation and actual compiled dependency frontier."""
+from pathlib import Path
+import hashlib,json
+run=Path(__file__).parent
+sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()
+load=lambda p:json.loads(Path(p).read_text(encoding='utf-8'))
+
+def write(n,x):
+ p=run/n;assert not p.exists(),p
+ with p.open('w',encoding='utf-8',newline='\n') as f:
+  if isinstance(x,str):f.write(x.rstrip('\n')+'\n')
+  else:json.dump(x,f,ensure_ascii=False,indent=2);f.write('\n')
+
+for label in ['retained-module-types-v1-01','actual-public-types-v2-01','actual-scoped-graph-v1-01','existing-public-retrieval-v1','list-mathlib-v1-01','list-papers-v1-01','list-weapons-v1-01','search-memory-v1-01']:assert load(run/(label+'-exit.json'))['exit_code']==0,label
+assert load(run/'actual-public-types-v1-01-exit.json')['exit_code']!=0
+freeze=load(run/'draft-freeze-v1.json')
+for p,h in dict(freeze['module'],**freeze['canary']).items():assert sha(p)==h,p
+blind=load(run/'blind-receipt-v1.json');assert sha(run/'blind-packet-v1.md') in json.dumps(blind) and sha(run/'blind-reconstruction-v1.md') in json.dumps(blind)
+gp='tmp/online-jensen-migration-scoped-graph-v1.json';graph=load(gp)
+assert graph['root_module']=='BanditRLProof' and graph['extraction']['source']=='compiled-environment'
+assert {n['name'].rsplit('.',1)[-1] for n in graph['nodes']}==set(freeze['headers'])
+assert all(n['has_value'] and n['kind']=='theorem' for n in graph['nodes'])
+pairs=[[e['source'],e['target']] for e in graph['edges'] if e['target'].startswith('BanditRL.OnlineConvex.') and (e['kind']=='value' or e['also_in_value'])]
+for a,b in [('jensen_negativeIntegral_ne_top','convex_affine_minorant'),('jensen_negativeIntegral_ne_top','negativeIntegral_coe_ne_top'),('theorem_2_9','jensen_negativeIntegral_ne_top'),('theorem_2_9','signedExpectation_eq_top'),('theorem_2_9','signedExpectation_coe_integrable'),('theorem_2_9','integral_mem_convex_finiteDimensional')]:assert ['BanditRL.OnlineConvex.'+a,'BanditRL.OnlineConvex.'+b] in pairs
+write('ready-dependencies-v1.json',dict(status='actual-compiled-scoped-ready',graph_path=gp,graph_sha256=sha(gp),scope_nodes=len(graph['nodes']),actual_edges=len(graph['edges']),project_proof_pairs=pairs,edge_boundary='Direct type/value references include definition uses, not all theorem-to-theorem pairs.',new_export=True,full_graph_export=False,canary_graph_export=False,existing_retained_bodies=True,package_accepted=False))
+(run/'compiled-scoped-graph-v1.json').write_bytes(Path(gp).read_bytes())
+write('source-review-packet-v1.md','''Required distinct anti-anchored CONTRACT review GPT-6 Astra / medium. Independently hash ALL contract-source-inputs-v1.json rows. Re-read exact Orabona v10 Theorem2.9 p11/PDF23; inspect two actual headers/contexts/@types/producer bodies, neutral reconstruction, pinned Euclidean integrability APIs and actual two-node direct dependency graph. Two retained proofs, no productiondefs/new code/nodes. ONE printed source result plus ONE necessary library negative-part producer; earlier v1/v2/v3 same-actor historical acceptance is not current distinct review.
+
+Critical source wording: E[X] exists. Decide explicitly whether ordinary finite Lebesgue coordinate expectations justify actual Bochner Integrable X in finite-dimensional Euclidean spaces. Actual integrable_pi_iff / integrable_piLp_iff are verified; do not silently interpret principal-value means or use Lean's nonintegrable-zero total integral. If source interpretation is unresolved, report it rather than assuming source equivalence. Global measurable random-element X/Borel target and measurable extended loss correspond to source; finite-dimensional real normed generality explicit, no arbitrary infinite-dimensional claim. Actual two @types retain MeasurableSpace E/BorelSpace E but no supplied CompleteSpace/inner-product class. Probability mass1 essential; no unnormalized-law conclusion.
+
+No-bottom preserves f:R^d→(-infinity,+infinity]; convex predicate is convex real-height epigraph, domain=f<top. AE domain plus no-bottom gives sampled finiteness, not everywhere membership or MeasurableSet domain. No closedness/lsc/full-dimension/finite-support/boundedness/loss differentiability/loss Integrable premise. Finite negative part is OUTPUT of N01, not supplied; both frozen headers keep hfm/hXm though first body may not use them. General minorant, accepted separately, gives actual integrable real affine a(X)+b and pointwise domination, real compatibility proves finite negative part. No support/minorant/integrability/finite-negative/Jensen oracle inserted.
+
+N02 invokes producer. Positive-integral-infinite branch has legitimate signed top because negative finite. Finite-positive branch actually proves measurable real Y, AE embedding of finite sampled loss, finite positive and negative part integrals, actual integrability by difference, actual integrable joint epigraph-valued (X,Y), and original NONCLOSED epigraph mean membership via accepted finite-rank barycenter. integral_pair and AE signed real-integral compatibility yield exact f(mean)≤signedExpectation. No closure-only substitute or assumed Integrable loss; top branch does not promise f(mean) finite/domain membership. Both-infinite total-definition convention unreachable, not legitimate expectation. No regret rate/strict inequality/mean-loss finiteness promise.
+
+Unchanged meaningful whole canary13proofs/3defs/2probinstances: normalized two-atom nonconstant law with mean2/square5; normalized geometric3/4 law, input2^n integrable/finite each sample, square positive integral infinite; nonclosed lower-dimensional coordinate/top-outside domain probability instance and original source bound. Not counting-measure foundation evidence. Actual generated instance names still need explicit later named audit; planned20 names2public+13proofs+3defs+2instances, 2native guards. Readiness types/module/dependency export ONLY; fresh complete canary/axioms/root/Tests/full/site/final reader not yet claimed.
+
+Current reader generally describes source Jensen but finite-mean wording/class scope, exact producer steps, total expectation boundaries and normalized canary detail must be checked for missing/incorrect claims. Identify reader corrections separately from mathematical repairs; do not weaken target to match a closed/integrable-real-loss mathlib theorem. Single lower ready negative-part producer before terminal; actual existing proof-token retention planned. Exactly TWO public proofs and TWO curated links/highlights; source labels distinguish one result/one prerequisite. Shared registry stable nodes/old URLs; all other Books unchanged. No graph-derived discovery/functor claim.
+
+Stacked OPEN draft PR162 exact2b4586db952b0e4ed0b7630f2d471c75a9af0f74, not main. Main relative still12legacycontracts before current package. Legacy14 before current acceptance; Chapter2 null/incomplete/GoalACTIVEunbudgeted. Native commands and role/file contracts distinct. API v1 wrong qualified integral_pair failed/preserved, v2 global declaration succeeded; no mathematical repair. reference-index intentionally not run because actual command rewrites global unrelated indices outside user-prescribed bounded window; read-only retrieval/actual scoped compiled environment fresh. Prior accepted receipts/reports/snapshots untouched. Write ONLY source-contract-review-v1.md/source-contract-receipt-v1.json here with actor.task=/root/source_reviewer, verdict/two target_verdicts/seven slots/finite-mean decision, mathematical_repairs separatelyrequired_reader_corrections, ALL reviewed raw rows/report SHA. Do not modify inputs, claim human/external/runtime attestation, accept whole chapter/book, or merge/deploy.''')
+paths={p.as_posix() for p in run.rglob('*') if p.is_file()}
+for folder in ['docs/contracts/online-jensen-migration-v1','docs/contracts/online-jensen-v1','docs/contracts/online-jensen-v2','docs/contracts/online-jensen-v3']:
+ paths.update(p.as_posix() for p in Path(folder).rglob('*') if p.is_file())
+paths.update(['BanditRLProof/OnlineJensen.lean','Tests/OnlineJensenCanary.lean','BanditRLProof/OnlineExpectation.lean','BanditRLProof/OnlineConvexMinorant.lean','BanditRLProof/OnlineConvexBarycenter.lean','BanditRLProof/OnlineConvexExtended.lean','Tests/OnlineConvexMinorantCanary.lean','Tests/OnlineConvexBarycenterCanary.lean','../research-online-ogd/tmp/pdfs/orabona-v10.pdf',gp,'.agents/skills/bandit-semantic-roundtrip/SKILL.md',
+ '.lake/packages/mathlib/Mathlib/MeasureTheory/SpecificCodomains/Pi.lean','.lake/packages/mathlib/Mathlib/MeasureTheory/SpecificCodomains/WithLp.lean','.lake/packages/mathlib/Mathlib/MeasureTheory/Function/L1Space/Integrable.lean','.lake/packages/mathlib/Mathlib/MeasureTheory/Integral/Bochner/ContinuousLinearMap.lean','.lake/packages/mathlib/Mathlib/Analysis/Convex/Integral.lean',
+ 'website/content/readings.json','website/content/highlights.json','website/content/chapters.json','lean-toolchain','lakefile.lean','lake-manifest.json','tasks/ONLINE-JENSEN-MIGRATION-20261005.md','conversion-windows/ONLINE-JENSEN-MIGRATION-20261005.md','proof-obligations/ONLINE-JENSEN-MIGRATION-20261005.md',
+ 'runs/online-minorant-migration-20261005/accepted-decision-v1.json','runs/online-minorant-migration-20261005/native-acceptance-overlay-v1.json','runs/online-minorant-migration-20261005/pr-delivery-v1.json','runs/online-barycenter-migration-20261005/accepted-decision-v1.json','runs/online-expectation-migration-20261005/accepted-decision-v1.json'])
+for p in paths:assert Path(p).is_file(),p
+write('contract-source-inputs-v1.json',dict(scope='Source Theorem2.9 and its actual finite-negative-part producer; chapter/book incomplete',rows=[dict(path=p,sha256=sha(p)) for p in sorted(paths)]))
+print('Jensen contract fixed inputs',len(paths),'actual nodes',len(graph['nodes']),'direct edges',len(graph['edges']),'; distinct review pending.')

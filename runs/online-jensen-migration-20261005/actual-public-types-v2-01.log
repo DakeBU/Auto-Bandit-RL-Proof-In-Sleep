@@ -1,0 +1,63 @@
+@BanditRL.OnlineConvex.jensen_negativeIntegral_ne_top : ∀ {Ω : Type u_1} [inst : MeasurableSpace Ω] {E : Type u_2}
+  [inst_1 : NormedAddCommGroup E] [inst_2 : NormedSpace ℝ E] [FiniteDimensional ℝ E] [inst_4 : MeasurableSpace E]
+  [BorelSpace E] (μ : MeasureTheory.Measure Ω) [MeasureTheory.IsProbabilityMeasure μ] (f : E → EReal),
+  (∀ (x : E), f x ≠ ⊥) →
+    BanditRL.OnlineConvex.IsConvexExtended f →
+      Measurable f →
+        ∀ (X : Ω → E),
+          Measurable X →
+            MeasureTheory.Integrable X μ →
+              (∀ᵐ (ω : Ω) ∂μ, X ω ∈ BanditRL.OnlineConvex.effectiveDomain f) →
+                (BanditRL.OnlineConvex.negativeIntegral μ fun ω => f (X ω)) ≠ ⊤
+@BanditRL.OnlineConvex.theorem_2_9 : ∀ {Ω : Type u_1} [inst : MeasurableSpace Ω] {E : Type u_2}
+  [inst_1 : NormedAddCommGroup E] [inst_2 : NormedSpace ℝ E] [FiniteDimensional ℝ E] [inst_4 : MeasurableSpace E]
+  [BorelSpace E] (μ : MeasureTheory.Measure Ω) [MeasureTheory.IsProbabilityMeasure μ] (f : E → EReal),
+  (∀ (x : E), f x ≠ ⊥) →
+    BanditRL.OnlineConvex.IsConvexExtended f →
+      Measurable f →
+        ∀ (X : Ω → E),
+          Measurable X →
+            MeasureTheory.Integrable X μ →
+              (∀ᵐ (ω : Ω) ∂μ, X ω ∈ BanditRL.OnlineConvex.effectiveDomain f) →
+                f (∫ (ω : Ω), X ω ∂μ) ≤ BanditRL.OnlineConvex.signedExpectation μ fun ω => f (X ω)
+@MeasureTheory.integrable_pi_iff : ∀ {X : Type u_1} {mX : MeasurableSpace X} {μ : MeasureTheory.Measure X}
+  {ι : Type u_2} [inst : Fintype ι] {E : ι → Type u_3} [inst_1 : (i : ι) → NormedAddCommGroup (E i)]
+  {f : X → (i : ι) → E i}, MeasureTheory.Integrable f μ ↔ ∀ (i : ι), MeasureTheory.Integrable (fun x => f x i) μ
+@MeasureTheory.integrable_piLp_iff : ∀ {X : Type u_1} {mX : MeasurableSpace X} {μ : MeasureTheory.Measure X}
+  {q : ENNReal} [inst : Fact (1 ≤ q)] {ι : Type u_2} [inst_1 : Fintype ι] {E : ι → Type u_3}
+  [inst_2 : (i : ι) → NormedAddCommGroup (E i)] {f : X → PiLp q E},
+  MeasureTheory.Integrable f μ ↔ ∀ (i : ι), MeasureTheory.Integrable (fun x => (f x).ofLp i) μ
+@MeasureTheory.integrable_prod : ∀ {α : Type u_1} {m : MeasurableSpace α} {μ : MeasureTheory.Measure α} {E : Type u_2}
+  {F : Type u_3} [inst : NormedAddCommGroup E] [NormedSpace ℝ E] [inst_2 : NormedAddCommGroup F] [NormedSpace ℝ F]
+  {f : α → E × F},
+  MeasureTheory.Integrable f μ ↔
+    MeasureTheory.Integrable (fun x => (f x).1) μ ∧ MeasureTheory.Integrable (fun x => (f x).2) μ
+@MeasureTheory.lintegral_ofReal_ne_top_iff_integrable : ∀ {α : Type u_1} {m : MeasurableSpace α}
+  {μ : MeasureTheory.Measure α} {f : α → ℝ},
+  MeasureTheory.AEStronglyMeasurable f μ →
+    0 ≤ᵐ[μ] f → (∫⁻ (a : α), ENNReal.ofReal (f a) ∂μ ≠ ⊤ ↔ MeasureTheory.Integrable f μ)
+@integral_pair : ∀ {X : Type u_1} {E : Type u_2} {F : Type u_3} [inst : MeasurableSpace X] {μ : MeasureTheory.Measure X}
+  [inst_1 : NormedAddCommGroup E] [inst_2 : NormedAddCommGroup F] [inst_3 : NormedSpace ℝ E] [inst_4 : NormedSpace ℝ F]
+  [CompleteSpace E] [CompleteSpace F] {f : X → E} {g : X → F},
+  MeasureTheory.Integrable f μ →
+    MeasureTheory.Integrable g μ → ∫ (x : X), (f x, g x) ∂μ = (∫ (x : X), f x ∂μ, ∫ (x : X), g x ∂μ)
+@BanditRL.OnlineConvex.convex_affine_minorant : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] [FiniteDimensional ℝ E] (f : E → EReal),
+  (∀ (x : E), f x ≠ ⊥) →
+    BanditRL.OnlineConvex.IsConvexExtended f →
+      (BanditRL.OnlineConvex.effectiveDomain f).Nonempty → ∃ a b, ∀ (x : E), ↑(a x + b) ≤ f x
+@BanditRL.OnlineConvex.integral_mem_convex_finiteDimensional : ∀ {Ω : Type u_2} [inst : MeasurableSpace Ω]
+  {E : Type u_1} [inst_1 : NormedAddCommGroup E] [inst_2 : NormedSpace ℝ E] [FiniteDimensional ℝ E]
+  [inst_4 : MeasurableSpace E] [BorelSpace E] (μ : MeasureTheory.Measure Ω) [MeasureTheory.IsProbabilityMeasure μ]
+  (s : Set E),
+  Convex ℝ s → ∀ (X : Ω → E), MeasureTheory.Integrable X μ → (∀ᵐ (ω : Ω) ∂μ, X ω ∈ s) → ∫ (ω : Ω), X ω ∂μ ∈ s
+@BanditRL.OnlineConvex.negativeIntegral_coe_ne_top : ∀ {Ω : Type u_1} [inst : MeasurableSpace Ω]
+  (μ : MeasureTheory.Measure Ω) (f : Ω → ℝ),
+  MeasureTheory.Integrable f μ → (BanditRL.OnlineConvex.negativeIntegral μ fun ω => ↑(f ω)) ≠ ⊤
+@BanditRL.OnlineConvex.signedExpectation_coe_integrable : ∀ {Ω : Type u_1} [inst : MeasurableSpace Ω]
+  (μ : MeasureTheory.Measure Ω) (f : Ω → ℝ),
+  MeasureTheory.Integrable f μ → (BanditRL.OnlineConvex.signedExpectation μ fun ω => ↑(f ω)) = ↑(∫ (ω : Ω), f ω ∂μ)
+@BanditRL.OnlineConvex.signedExpectation_eq_top : ∀ {Ω : Type u_1} [inst : MeasurableSpace Ω]
+  (μ : MeasureTheory.Measure Ω) (f : Ω → EReal),
+  BanditRL.OnlineConvex.positiveIntegral μ f = ⊤ →
+    BanditRL.OnlineConvex.negativeIntegral μ f ≠ ⊤ → BanditRL.OnlineConvex.signedExpectation μ f = ⊤

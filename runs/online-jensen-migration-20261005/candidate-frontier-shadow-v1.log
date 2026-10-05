@@ -1,0 +1,155 @@
+{
+  "schema_version": 1,
+  "mode": "shadow-read-only",
+  "analyzed_at": "2026-10-05T15:52:23+00:00",
+  "trials_path": "E:\\ABRL\\worktrees\\research-online-book\\runs\\online-jensen-migration-20261005\\candidate-scoped-trials-v1.jsonl",
+  "trial_rows": 1,
+  "status_counts": {
+    "compiled": 1
+  },
+  "inferred_frontier": {
+    "selected_task": "ONLINE-JENSEN-MIGRATION-20261005",
+    "selected_leaf": "ONLINE-JENSEN-MIGRATION-20261005",
+    "source_status": "compiled",
+    "last_accepted_verifier": {
+      "trial_index": 0,
+      "time": "2026-10-05T15:39:34+00:00",
+      "task": "ONLINE-JENSEN-MIGRATION-20261005",
+      "role": "lower",
+      "kind": "build",
+      "status": "compiled",
+      "lean": "BanditRLProof/OnlineJensen.lean",
+      "notes": "Actual retained negative-finite producer/source Jensen bodies and unchanged three probability canaries13proofs3defs2probinstances/20namedaxioms/2guards passed. No new proof code; distinct BODY and package acceptance pending, Chapter2/Book incomplete.",
+      "run_id": "online-jensen-migration-20261005"
+    }
+  },
+  "memory_digest": {
+    "path": "E:\\ABRL\\worktrees\\research-online-book\\runs\\online-jensen-migration-20261005\\memory-digest-candidate-v1.md",
+    "task": ""
+  },
+  "recorded_frontier": {
+    "schema_version": 1,
+    "record_id": "frontier-4d0af29a2887f34d",
+    "updated_at": "2026-10-05T15:52:23+00:00",
+    "root_objective": "Persistent Orabona Chapters1-16 Goal; only source Jensen/negative-part candidate, Chapter2/book incomplete",
+    "current_leaf": {
+      "id": "ONLINE-JENSEN-MIGRATION-20261005",
+      "kind": "lean",
+      "status": "gate-pending",
+      "statement": "theorem theorem_2_9 (μ : Measure Ω) [IsProbabilityMeasure μ] (f : E → EReal) (hbot : ∀ x, f x ≠ ⊥) (hf : IsConvexExtended f) (hfm : Measurable f) (X : Ω → E) (hXm : Measurable X) (hX : Integrable X μ) (hdom : ∀ᵐ ω ∂μ, X ω ∈ effectiveDomain f) : f (∫ ω, X ω ∂μ) ≤ signedExpectation μ (fun ω => f (X ω))",
+      "statement_hash": "3e8cc15d2050c68aa53f147381f06fa9839fe3aa4da7aaa46d41c7cc17dc2052",
+      "declaration": "BanditRL.OnlineConvex.theorem_2_9",
+      "file": "BanditRLProof/OnlineJensen.lean",
+      "source_status": "source-body-reviewed",
+      "dependencies": [
+        {
+          "kind": "lean",
+          "name": "BanditRL.OnlineConvex.jensen_negativeIntegral_ne_top",
+          "status": "compiled"
+        },
+        {
+          "kind": "lean",
+          "name": "BanditRL.OnlineConvex.convex_affine_minorant",
+          "status": "compiled"
+        },
+        {
+          "kind": "lean",
+          "name": "BanditRL.OnlineConvex.integral_mem_convex_finiteDimensional",
+          "status": "compiled"
+        },
+        {
+          "kind": "lean",
+          "name": "BanditRL.OnlineConvex.signedExpectation_eq_top",
+          "status": "compiled"
+        },
+        {
+          "kind": "lean",
+          "name": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+          "status": "compiled"
+        },
+        {
+          "kind": "review",
+          "name": "source-body",
+          "status": "accepted"
+        }
+      ]
+    },
+    "dag": {
+      "nodes": [
+        {
+          "id": "ONLINE-JENSEN-MIGRATION-20261005",
+          "kind": "lean",
+          "status": "gate-pending",
+          "dependencies": [
+            {
+              "kind": "lean",
+              "name": "BanditRL.OnlineConvex.jensen_negativeIntegral_ne_top",
+              "status": "compiled"
+            },
+            {
+              "kind": "lean",
+              "name": "BanditRL.OnlineConvex.convex_affine_minorant",
+              "status": "compiled"
+            },
+            {
+              "kind": "lean",
+              "name": "BanditRL.OnlineConvex.integral_mem_convex_finiteDimensional",
+              "status": "compiled"
+            },
+            {
+              "kind": "lean",
+              "name": "BanditRL.OnlineConvex.signedExpectation_eq_top",
+              "status": "compiled"
+            },
+            {
+              "kind": "lean",
+              "name": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+              "status": "compiled"
+            },
+            {
+              "kind": "review",
+              "name": "source-body",
+              "status": "accepted"
+            }
+          ],
+          "dispatch_count": 0
+        }
+      ]
+    },
+    "last_accepted_verifier": {
+      "trial_index": 0,
+      "time": "2026-10-05T15:39:34+00:00",
+      "task": "ONLINE-JENSEN-MIGRATION-20261005",
+      "role": "lower",
+      "kind": "build",
+      "status": "compiled",
+      "lean": "BanditRLProof/OnlineJensen.lean",
+      "notes": "Actual retained negative-finite producer/source Jensen bodies and unchanged three probability canaries13proofs3defs2probinstances/20namedaxioms/2guards passed. No new proof code; distinct BODY and package acceptance pending, Chapter2/Book incomplete.",
+      "run_id": "online-jensen-migration-20261005"
+    },
+    "memory_policy": {
+      "recent_role_relevant_limit": 5,
+      "explicit_verified_lemma_ids": [],
+      "whole_history_default": false
+    },
+    "shadow_gate": {
+      "status": "pending",
+      "analyzed_trial_rows": 1,
+      "mismatches": [],
+      "replay_transitions": 0
+    },
+    "mutation_policy": {
+      "canonical_path_queue": true,
+      "cross_process_lock": true,
+      "same_file_serialized": true,
+      "disjoint_files_parallel": true
+    },
+    "autonomous_execution": {
+      "enabled": false,
+      "requires_deterministic_gates": true,
+      "requires_explicit_user_request": true
+    }
+  },
+  "mismatches": [],
+  "would_mutate": false
+}
