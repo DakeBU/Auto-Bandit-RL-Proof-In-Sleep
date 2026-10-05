@@ -1,0 +1,118 @@
+BanditRL.OnlineGradientDescent.guessing_zero_trajectory [theorem] BanditRLProof/OnlineGuessingLower.lean:7
+  theorem guessing_zero_trajectory (n : ℕ) (hn : 0 < n) (t : ℕ) : iterate unitInterval (1/(4*(n:ℝ))) (fun _ x => (x-0)^2) 1 t = (1 - 1/(2*(n:ℝ)))^t
+BanditRL.OnlineGradientDescent.guessing_tuned_eta_square [theorem] BanditRLProof/OnlineGuessingLower.lean:31
+  theorem guessing_tuned_eta_square (n : ℕ) : 1/(2*Real.sqrt (((2*n)^2 : ℕ) : ℝ)) = 1/(4*(n:ℝ))
+BanditRL.OnlineGradientDescent.guessing_squared_horizon_lower [theorem] BanditRLProof/OnlineGuessingLower.lean:37
+  theorem guessing_squared_horizon_lower (n : ℕ) (hn : 0 < n) : (n:ℝ)/4 ≤ regret unitInterval (1/(2*Real.sqrt (((2*n)^2 : ℕ) : ℝ))) (fun _ x => (x-0)^2) 1 0 ((2*n)^2)
+BanditRL.OnlineGradientDescent.unitInterval [def] BanditRLProof/OnlineGuessingOGD.lean:8
+  def unitInterval : Domain ℝ where
+BanditRL.OnlineGradientDescent.project_unitInterval [theorem] BanditRLProof/OnlineGuessingOGD.lean:14
+  theorem project_unitInterval (z : ℝ) : project unitInterval z = min (max z 0) 1
+BanditRL.OnlineGradientDescent.square_regular [theorem] BanditRLProof/OnlineGuessingOGD.lean:38
+  theorem square_regular (y : ℝ) : RegularLoss unitInterval (fun x : ℝ => (x-y)^2)
+BanditRL.OnlineGradientDescent.gradient_square [theorem] BanditRLProof/OnlineGuessingOGD.lean:45
+  theorem gradient_square (y x : ℝ) : gradient (fun x : ℝ => (x-y)^2) x = 2 * (x-y)
+BanditRL.OnlineGradientDescent.gradient_square_bound [theorem] BanditRLProof/OnlineGuessingOGD.lean:49
+  theorem gradient_square_bound (y x : ℝ) (hy : y ∈ Icc (0 : ℝ) 1) (hx : x ∈ Icc (0 : ℝ) 1) : ‖gradient (fun x : ℝ => (x-y)^2) x‖ ≤ 2
+BanditRL.OnlineGradientDescent.square_step_clamp [theorem] BanditRLProof/OnlineGuessingOGD.lean:54
+  theorem square_step_clamp (η y x : ℝ) : step unitInterval η (fun x : ℝ => (x-y)^2) x = min (max (x - 2 * η * (x-y)) 0) 1
+BanditRL.OnlineGradientDescent.example_2_14 [theorem] BanditRLProof/OnlineGuessingOGD.lean:62
+  theorem example_2_14 (y : ℕ → ℝ) (x0 : ℝ) (hx0 : x0 ∈ Icc (0 : ℝ) 1) (T : ℕ) (hT : 0 < T) (hy : ∀ t < T, y t ∈ Icc (0 : ℝ) 1) : ∀ u ∈ Icc (0 : ℝ) 1, regret unitInterval (1 / (2 * Real.sqrt T)) (fun t x => (x-y t)^2) x0 u T ≤ 2 * Real.sqrt T
+BanditRL.OnlineGuessingSubgradient.loss [def] BanditRLProof/OnlineGuessingSubgradient.lean:25
+  def loss (y x : ℝ) : EReal
+BanditRL.OnlineGuessingSubgradient.loss_subdifferential_translate [theorem] BanditRLProof/OnlineGuessingSubgradient.lean:27
+  theorem loss_subdifferential_translate (y x : ℝ) : SourceSubdifferential (loss y) x = SourceSubdifferential (fun z : ℝ => ((|z| : ℝ) : EReal)) (x - y)
+BanditRL.OnlineGuessingSubgradient.loss_subgradient_positive [theorem] BanditRLProof/OnlineGuessingSubgradient.lean:40
+  theorem loss_subgradient_positive (y x : ℝ) (hxy : y < x) : SourceSubdifferential (loss y) x = {(1 : ℝ)}
+BanditRL.OnlineGuessingSubgradient.loss_subgradient_zero [theorem] BanditRLProof/OnlineGuessingSubgradient.lean:45
+  theorem loss_subgradient_zero (y : ℝ) : SourceSubdifferential (loss y) y = Icc (-1 : ℝ) 1
+BanditRL.OnlineGuessingSubgradient.loss_subgradient_negative [theorem] BanditRLProof/OnlineGuessingSubgradient.lean:50
+  theorem loss_subgradient_negative (y x : ℝ) (hxy : x < y) : SourceSubdifferential (loss y) x = {(-1 : ℝ)}
+BanditRL.OnlineGuessingSubgradient.example_2_32_subdifferential [theorem] BanditRLProof/OnlineGuessingSubgradient.lean:55
+  theorem example_2_32_subdifferential (y x : ℝ) : SourceSubdifferential (loss y) x = if y < x then {(1 : ℝ)} else if x = y then Icc (-1 : ℝ) 1 else {(-1 : ℝ)}
+BanditRL.OnlineGuessingSubgradient.loss_on_unitInterval [theorem] BanditRLProof/OnlineGuessingSubgradient.lean:64
+  theorem loss_on_unitInterval (y : ℝ) : SubdifferentiableOn BanditRL.OnlineGradientDescent.unitInterval (loss y)
+BanditRL.OnlineGuessingSubgradient.loss_subgradient_bound [theorem] BanditRLProof/OnlineGuessingSubgradient.lean:78
+  theorem loss_subgradient_bound (y x g : ℝ) (hg : g ∈ SourceSubdifferential (loss y) x) : ‖g‖ ≤ 1
+BanditRL.OnlineGuessingSubgradient.current_subgradient_bound [theorem] BanditRLProof/OnlineGuessingSubgradient.lean:93
+  theorem current_subgradient_bound (y x : ℝ) (hx : x ∈ Icc (0 : ℝ) 1) : ‖currentSubgradient (loss y) x‖ ≤ 1
+BanditRL.OnlineGuessingSubgradient.loss_step_clamp [theorem] BanditRLProof/OnlineGuessingSubgradient.lean:100
+  theorem loss_step_clamp (η y x : ℝ) : step BanditRL.OnlineGradientDescent.unitInterval η (loss y) x = min (max (x - η * currentSubgradient (loss y) x) 0) 1
+BanditRL.OnlineGuessingSubgradient.guessing_prefix [theorem] BanditRLProof/OnlineGuessingSubgradient.lean:105
+  theorem guessing_prefix (η η' : ℕ → ℝ) (y y' : ℕ → ℝ) (x₁ : ℝ) (t : ℕ) (hη : ∀ s < t, η s = η' s) (hy : ∀ s < t, y s = y' s) : iterate BanditRL.OnlineGradientDescent.unitInterval η (fun s => loss (y s)) x₁ t = iterate BanditRL.OnlineGradientDescent.unitInterval η' (fun s => loss (y' s)) x₁ t
+BanditRL.OnlineGuessingSubgradient.example_2_32 [theorem] BanditRLProof/OnlineGuessingSubgradient.lean:113
+  theorem example_2_32 (y : ℕ → ℝ) (x₁ : ℝ) (hx₁ : x₁ ∈ Icc (0 : ℝ) 1) (T : ℕ) (hT : 0 < T) (hy : ∀ t < T, y t ∈ Icc (0 : ℝ) 1) : ∀ u ∈ Icc (0 : ℝ) 1, (∑ t ∈ range T, (|iterate BanditRL.OnlineGradientDescent.unitInterval (fun _ => 1 / Real.sqrt T) (fun s => loss (y s)) x₁ t - y t| - |u - y t|)) ≤ Real.sqrt T
+BanditRL.OnlineGuessingSubgradient.example_2_32_average_eventually [theorem] BanditRLProof/OnlineGuessingSubgradient.lean:133
+  theorem example_2_32_average_eventually (y : ℕ → ℝ) (x₁ : ℝ) (hx₁ : x₁ ∈ Icc (0 : ℝ) 1) (hy : ∀ t, y t ∈ Icc (0 : ℝ) 1) (u : ℝ) (hu : u ∈ Icc (0 : ℝ) 1) (ε : ℝ) (hε : 0 < ε) : ∀ᶠ T : ℕ in atTop, (∑ t ∈ range T, (|iterate BanditRL.OnlineGradientDescent.unitInterval (fun _ => 1 / Real.sqrt T) (fun s => loss (y s)) x₁ t - y t| - |u - y t|)) / T < ε
+Tests.OnlineGuessingOGD.labels [def] Tests/OnlineGuessingOGDCanary.lean:5
+  noncomputable def labels (t : ℕ) : ℝ
+Tests.OnlineGuessingOGD.losses [def] Tests/OnlineGuessingOGDCanary.lean:6
+  noncomputable def losses (t : ℕ) (x : ℝ) : ℝ
+GuessingOSDProbe.interval [abbrev] Tests/OnlineGuessingSubgradientCanary.lean:10
+  abbrev interval
+GuessingOSDProbe.shifted_positive [theorem] Tests/OnlineGuessingSubgradientCanary.lean:12
+  theorem shifted_positive : SourceSubdifferential (loss (1 / 3)) (2 / 3) = {(1 : ℝ)}
+GuessingOSDProbe.shifted_negative [theorem] Tests/OnlineGuessingSubgradientCanary.lean:15
+  theorem shifted_negative : SourceSubdifferential (loss (2 / 3)) (1 / 3) = {(-1 : ℝ)}
+GuessingOSDProbe.shifted_equal [theorem] Tests/OnlineGuessingSubgradientCanary.lean:18
+  theorem shifted_equal : SourceSubdifferential (loss (1 / 2)) (1 / 2) = Icc (-1 : ℝ) 1
+GuessingOSDProbe.nonzero_tie_support [theorem] Tests/OnlineGuessingSubgradientCanary.lean:21
+  theorem nonzero_tie_support : (1 / 3 : ℝ) ∈ SourceSubdifferential (loss (1 / 2)) (1 / 2)
+GuessingOSDProbe.invalid_tie_support [theorem] Tests/OnlineGuessingSubgradientCanary.lean:24
+  theorem invalid_tie_support : (2 : ℝ) ∉ SourceSubdifferential (loss (1 / 2)) (1 / 2)
+GuessingOSDProbe.canonical_tie_in_full_interval [theorem] Tests/OnlineGuessingSubgradientCanary.lean:27
+  theorem canonical_tie_in_full_interval : currentSubgradient (loss (1 / 2)) (1 / 2) ∈ Icc (-1 : ℝ) 1
+GuessingOSDProbe.chosen_above [theorem] Tests/OnlineGuessingSubgradientCanary.lean:33
+  theorem chosen_above : currentSubgradient (loss 0) 1 = 1
+GuessingOSDProbe.chosen_below [theorem] Tests/OnlineGuessingSubgradientCanary.lean:39
+  theorem chosen_below : currentSubgradient (loss 1) (1 / 2) = -1
+GuessingOSDProbe.labels [def] Tests/OnlineGuessingSubgradientCanary.lean:45
+  def labels (t : ℕ) : ℝ
+GuessingOSDProbe.losses [def] Tests/OnlineGuessingSubgradientCanary.lean:46
+  def losses (t : ℕ) : ℝ → EReal
+GuessingOSDProbe.eta [def] Tests/OnlineGuessingSubgradientCanary.lean:47
+  def eta : ℕ → ℝ
+GuessingOSDProbe.output [def] Tests/OnlineGuessingSubgradientCanary.lean:48
+  def output (t : ℕ) : ℝ
+GuessingOSDProbe.labels_feasible [theorem] Tests/OnlineGuessingSubgradientCanary.lean:50
+  theorem labels_feasible (t : ℕ) : labels t ∈ Icc (0 : ℝ) 1
+GuessingOSDProbe.output_zero [theorem] Tests/OnlineGuessingSubgradientCanary.lean:53
+  theorem output_zero : output 0 = 1
+GuessingOSDProbe.output_one [theorem] Tests/OnlineGuessingSubgradientCanary.lean:55
+  theorem output_one : output 1 = 1 / 2
+GuessingOSDProbe.output_two [theorem] Tests/OnlineGuessingSubgradientCanary.lean:59
+  theorem output_two : output 2 = 1
+GuessingOSDProbe.output_three [theorem] Tests/OnlineGuessingSubgradientCanary.lean:63
+  theorem output_three : output 3 = 1 / 2
+GuessingOSDProbe.output_four [theorem] Tests/OnlineGuessingSubgradientCanary.lean:67
+  theorem output_four : output 4 = 1
+GuessingOSDProbe.four_round_real_regret [theorem] Tests/OnlineGuessingSubgradientCanary.lean:71
+  theorem four_round_real_regret : regret interval eta losses 1 (1 / 2) 4 = 1
+GuessingOSDProbe.four_round_fixed_with_terminal [theorem] Tests/OnlineGuessingSubgradientCanary.lean:80
+  theorem four_round_fixed_with_terminal : regret interval eta losses 1 (1 / 2) 4 ≤ ‖(1 : ℝ) - 1 / 2‖ ^ 2 / (2 * (1 / 2)) + (1 / 2 : ℝ) / 2 * (∑ t ∈ range 4, ‖currentSubgradient (losses t) (output t)‖ ^ 2) - ‖output 4 - 1 / 2‖ ^ 2 / (2 * (1 / 2))
+GuessingOSDProbe.four_round_energy [theorem] Tests/OnlineGuessingSubgradientCanary.lean:91
+  theorem four_round_energy : (∑ t ∈ range 4, ‖currentSubgradient (losses t) (output t)‖ ^ 2) = (4 : ℝ)
+GuessingOSDProbe.four_round_positive_terminal [theorem] Tests/OnlineGuessingSubgradientCanary.lean:97
+  theorem four_round_positive_terminal : ‖output 4 - 1 / 2‖ ^ 2 / (2 * (1 / 2)) = (1 : ℝ) / 4
+GuessingOSDProbe.four_round_bound_rhs_exact [theorem] Tests/OnlineGuessingSubgradientCanary.lean:101
+  theorem four_round_bound_rhs_exact : ‖(1 : ℝ) - 1 / 2‖ ^ 2 / (2 * (1 / 2)) + (1 / 2 : ℝ) / 2 * (∑ t ∈ range 4, ‖currentSubgradient (losses t) (output t)‖ ^ 2) - ‖output 4 - 1 / 2‖ ^ 2 / (2 * (1 / 2)) = 1
+GuessingOSDProbe.horizon_four_tuned_same_eta [theorem] Tests/OnlineGuessingSubgradientCanary.lean:108
+  theorem horizon_four_tuned_same_eta : (1 : ℝ) / Real.sqrt (4 : ℕ) = 1 / 2
+GuessingOSDProbe.all_comparators_four [theorem] Tests/OnlineGuessingSubgradientCanary.lean:111
+  theorem all_comparators_four : ∀ u ∈ Icc (0 : ℝ) 1, (∑ t ∈ range 4, (|output t - labels t| - |u - labels t|)) ≤ 2
+GuessingOSDProbe.chosen_clipping [theorem] Tests/OnlineGuessingSubgradientCanary.lean:119
+  theorem chosen_clipping : currentSubgradient (loss 1) (1 / 4) = -1
+GuessingOSDProbe.actual_raw_overshoot_and_clamp [theorem] Tests/OnlineGuessingSubgradientCanary.lean:125
+  theorem actual_raw_overshoot_and_clamp : (1 / 4 : ℝ) - 1 * currentSubgradient (loss 1) (1 / 4) = 5 / 4 ∧ step interval 1 (loss 1) (1 / 4) = 1
+GuessingOSDProbe.futureLabels [def] Tests/OnlineGuessingSubgradientCanary.lean:130
+  def futureLabels (t : ℕ) : ℝ
+GuessingOSDProbe.futureEta [def] Tests/OnlineGuessingSubgradientCanary.lean:131
+  def futureEta (t : ℕ) : ℝ
+GuessingOSDProbe.invalid_future_does_not_change_output [theorem] Tests/OnlineGuessingSubgradientCanary.lean:133
+  theorem invalid_future_does_not_change_output : iterate interval futureEta (fun s => loss (futureLabels s)) 1 4 = output 4
+GuessingOSDProbe.no_future_feasibility_assumed [theorem] Tests/OnlineGuessingSubgradientCanary.lean:139
+  theorem no_future_feasibility_assumed : futureLabels 4 = 999 ∧ futureEta 4 = -99
+GuessingOSDProbe.zero_horizon_regret [theorem] Tests/OnlineGuessingSubgradientCanary.lean:142
+  theorem zero_horizon_regret : regret interval eta losses 1 (1 / 2) 0 = 0
+GuessingOSDProbe.eventual_one_sided_horizon_family [theorem] Tests/OnlineGuessingSubgradientCanary.lean:145
+  theorem eventual_one_sided_horizon_family (u ε : ℝ) (hu : u ∈ Icc (0 : ℝ) 1) (hε : 0 < ε) : ∀ᶠ T : ℕ in atTop, (∑ t ∈ range T, (|iterate interval (fun _ => 1 / Real.sqrt T) (fun s => loss (labels s)) 1 t - labels t| - |u - labels t|)) / T < ε

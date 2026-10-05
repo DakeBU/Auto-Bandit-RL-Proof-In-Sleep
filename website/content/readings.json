@@ -2794,16 +2794,16 @@
       },
       "notation": [
         {
-          "term": "square loss",
-          "meaning": "The actual loss is(x-y_t)^2, with prediction and observation in[0,1]."
+          "term": "real squared-loss stream",
+          "meaning": "Real labels and predictions in [0,1]; loss(x-y_t)^2. Unrestricted real gradient/clamp identities are separate from the feasible regret guarantee."
         },
         {
-          "term": "clamp",
-          "meaning": "The selected Hilbert projection equals min(max(z,0),1)."
+          "term": "predict then reveal",
+          "meaning": "Time0 is source round1. Output the point using only past labels, then observe the current label and update the next point."
         },
         {
-          "term": "horizon-tuned step",
-          "meaning": "For T>=1 use1/(2sqrtT), with diameter1 and gradient bound2."
+          "term": "known-horizon algorithm family",
+          "meaning": "For each T>0 fix eta=1/(2sqrtT) using D1/G2, not future gradients. The comparison has T=(2n)^2, OGDinitial1, meaninitial1/2, the same zero labels."
         }
       ],
       "algorithm": {
@@ -2811,24 +2811,28 @@
         "kind": "causal projected update",
         "steps": [
           {
-            "title": "Evaluate the current square-loss gradient",
-            "detail": "At x, the actual gradient is2(x-y_t)."
+            "title": "Predict before the current label",
+            "detail": "The actual OGD iterate at time t uses only strict-prefix losses; every feasible initial point and comparator is allowed for the upper guarantee."
           },
           {
-            "title": "Take and project the step",
-            "detail": "Clamp x-2eta(x-y_t) into[0,1], exactly the shared project/step."
+            "title": "Differentiate and project the actual square loss",
+            "detail": "Its ambient gradient is2(x-y_t); global square regularity is proved, and actual projection clamps x-2eta(x-y_t) into[0,1]. Feasibility produces gradient norm<=2."
           },
           {
-            "title": "Apply the tuned source bound",
-            "detail": "Feasibility gives gradient norm<=2 along the same recurrence, hence regret<=2sqrtT for every feasible comparator."
+            "title": "Use a horizon known in advance",
+            "detail": "For T>0 the shared same-trajectory tuned bound gives2sqrtT with eta1/(2sqrtT). This is a derived constant for the printed O(sqrtT), not future-gradient optimization."
+          },
+          {
+            "title": "Compare actual algorithms on the same zero stream",
+            "detail": "For square horizons, the actual OGD initial1 learns geometrically slowly. The source mean predictor starts1/2 and then predicts the zero strict-prefix average. Subtract their produced losses, rather than comparing two upper bounds."
           }
         ]
       },
       "teaching_route": [
         "BanditRL.OnlineGradientDescent.project_unitInterval",
-        "BanditRL.OnlineGradientDescent.gradient_square",
+        "BanditRL.OnlineGradientDescent.square_step_clamp",
         "BanditRL.OnlineGradientDescent.example_2_14",
-        "BanditRL.OnlineGradientDescent.guessing_squared_horizon_lower"
+        "BanditRL.OnlineGradientDescent.guessing_vs_mean_unbounded"
       ],
       "source_theorems": [
         {
@@ -2839,7 +2843,7 @@
           "math": "R_T(u)\\le 2\\sqrt T,\\qquad\\eta=\\frac1{2\\sqrt T}",
           "fallback": "The source O(sqrtT) upper-regret claim is established with an explicit valid constant2.",
           "plain": "The square-loss gradient bound and clamp are derived for the actual OGD algorithm.",
-          "relationship": "The source states an O(sqrtT) rate. This public instance makes its constant explicit using D=1,G=2 in the shared theorem; it does not attribute that printed constant to the book.",
+          "relationship": "Printed O(sqrtT), derived explicit2sqrtT using D1/G2; real labels[0,1]. Actual global square regularity, gradient and feasible projection are produced before the same causal bound. No extra stronger-neighborhood assumption or printed numerical2 attribution.",
           "contract": {
             "model": "Predictions, observations and comparator in[0,1]; squared loss.",
             "assumptions": "Arbitrary feasible initial value, T>=1, observations feasible for all rounds before T.",
@@ -2850,7 +2854,7 @@
           "local_status": {
             "status": "compiled",
             "label": "Concrete square-loss OGD source instance",
-            "boundary": "Example2.14 only; Huber and later Chapter2 results remain required."
+            "boundary": "One source example and derived comparison only; other mandatory source/appendix/legacy audits, some with compiled code, remain required. This is not completion of Chapter2 or Chapter1 migration."
           }
         },
         {
@@ -2860,25 +2864,47 @@
           "url": "https://arxiv.org/pdf/1912.13213v10",
           "math": "T=(2n)^2,\\qquad R_T(0)\\ge n/4=\\sqrt T/8",
           "fallback": "All labels0 and initial1 produce square-root regret on arbitrarily large square horizons under the same tuned step.",
-          "plain": "A weaker upper bound alone would not establish actual suboptimality; this witness supplies a real lower bound.",
-          "relationship": "The numerical lower witness is a derived strengthening that substantiates the source prose comparison; it is not a numerical theorem printed in the book. It covers an admissible fixed initialization, not every initialization simultaneously. The global logarithmic FTL guarantee is mapped in Chapter1.",
+          "plain": "The actual geometric OGD trajectory gives n/4 loss; the actual source mean predictor gives1/4 on the same zero stream, so their gap is at least n/4-1/4.",
+          "relationship": "Derived fixed-initialization lower witness, not a printed numerical theorem: OGDinitial1/allzero labels/comparator0/positive square horizons. The actual mean predictor initial1/2 on the SAME stream has loss1/4. New direct gap refinements support the comparison, not equal initialization/every stream/every initialization/all algorithms/minimax/Chapter4 optimality.",
           "contract": {
             "model": "Same unit-interval squared-loss OGD, all labels0, initial1, comparator0.",
             "assumptions": "n>=1, T=(2n)^2 and the same source step1/(2sqrtT)=1/(4n).",
             "parameters": "Arbitrarily large square horizons.",
             "regret": "Actual causal OGD regret, not a postulated prediction sequence.",
-            "guarantee": "Exact trajectory(1-1/(2n))^t; first n losses at least1/4 each."
+            "guarantee": "Exact OGD trajectory and regret>=n/4, actual mean cumulative loss1/4, gap>=n/4-1/4; for every real C and natural N, some n>N has gap>C."
           },
           "local_status": {
             "status": "compiled",
             "label": "Actual lower witness for the comparison",
-            "boundary": "This is not a lower bound against every online algorithm or every initialization."
+            "boundary": "Positive n only; the separate eta identity at n0 is total-division algebra, not a legal zero-horizon guarantee. At n1 the displayed gap lower bound is zero, not strict superiority."
+          }
+        },
+        {
+          "label": "Example2.14: derived direct comparison refinements",
+          "pages": "printedp15; source mean predictor printedp4",
+          "pdf_page": 27,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "B_T=1/4\\ (T>0),\\quad R_{(2n)^2}(0)-B_{(2n)^2}\\ge n/4-1/4,\\quad\\forall C\\in\\mathbb R\\ \\forall N\\in\\mathbb N\\ \\exists n>N:\\ C<R_{(2n)^2}(0)-B_{(2n)^2}.",
+          "fallback": "The same zero labels yield exact mean-predictor loss one quarter and an OGD loss gap exceeding every threshold at some index beyond every cutoff.",
+          "plain": "This is a direct comparison of two actual causal algorithms, with different disclosed fixed initializations.",
+          "relationship": "Three newly proved derived supporting statements, not three source-numbered results. The tail-existence terminal is literal exists n>N, not a formal Tendsto claim or one anytime run. The source Theorem1.3 logarithmic guarantee is an inspected shared dependency; this package does not accept all Chapter1 contracts.",
+          "contract": {
+            "model": "Same deterministic real zero stream/unit interval/squared losses.",
+            "assumptions": "Mean initial1/2; OGD initial1/comparator0; n>0 and T=(2n)^2. Zero comparator has zero optimal loss on this stream.",
+            "parameters": "Known-horizon OGD family eta=1/(4n); C any real and N any natural, with no extra positivity assumption on C.",
+            "regret": "OGD comparator0 regret equals its cumulative loss; subtract the actual mean-predictor cumulative loss, also its comparator0 regret on this stream.",
+            "guarantee": "Produced exact mean loss and actual lower gap, then an actual natural witness n>N with strict gap>C."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Actual direct same-stream comparison",
+            "boundary": "Not uniform over streams, initializations or algorithms; no Chapter1/2/book completion, merged/main/live or Chapter4 result."
           }
         }
       ],
       "worked_example": {
         "title": "Projection and tuning are separate checks",
-        "intro": "Start at1/2 and reveal labels1 then0. The actual square-loss update can hit both interval endpoints.",
+        "intro": "Clipping checks start at1/2 with labels1 then0 and eta1. Tuned bounds and comparisons are separate actual runs; the zero-stream comparison uses OGDinitial1 and meaninitial1/2.",
         "steps": [
           {
             "title": "Project above the interval",
@@ -2903,10 +2929,53 @@
             "detail": "With all labels0, initial1 and horizon64, the same tuned step is1/16; regret is at least1 and the first next point is7/8.",
             "math": "x_2=7/8,\\qquad R_{64}(0)\\ge1",
             "fallback": "This separate source-admissible stream establishes a lower bound, rather than inferring one from the upper guarantee."
+          },
+          {
+            "title": "Compare both actual losses",
+            "detail": "At n4, horizon64 and eta1/16, OGD loss is at least1; the actual mean predictor on those same zero labels has loss1/4. The new public canary proves their gap>=3/4.",
+            "math": "R_{64}(0)-B_{64}\\ge1-1/4=3/4.",
+            "fallback": "This is a genuine two-algorithm comparison, not an arithmetic simulation or an inference from upper bounds."
           }
         ],
         "takeaway": "The concrete update and the tuned guarantee refer to the same shared algorithm definition.",
-        "boundary": "The lower witness and the separately proved global Chapter1 logarithmic guarantee support the comparison. No Chapter4 result or all-algorithm lower bound is claimed."
+        "boundary": "Different clipping/tuned runs and fixed initializations disclosed. The new threshold result is a known-horizon family/tail-existence statement on zero labels; no every-stream/equal-initialization/Chapter4 result or full Chapter1/2 acceptance."
+      },
+      "proof_bridge": {
+        "title": "Produce both losses before comparing them",
+        "summary": "Use the true algorithms, their causal definitions and positive known-horizon steps. The comparison never assumes the desired stability, regret or divergence bound.",
+        "steps": [
+          {
+            "title": "Construct the source instance",
+            "detail": "The actual interval variational projection gives clamp; differentiating globally convex square loss gives2(x-y). Feasible iterates make D1/G2 valid, so the same recurrence has regret<=2sqrtT.",
+            "math": "x_{t+1}=\\min(\\max(x_t-2\\eta(x_t-y_t),0),1).",
+            "fallback": "Actual clamp and current gradient feed the same iterate, not a supplied prediction sequence."
+          },
+          {
+            "title": "Produce the OGD lower witness",
+            "detail": "For allzero labels, initial1 and positive n, the true source step is1/(4n) and iterate=(1-1/(2n))^t. Bernoulli gives the first n values>=1/2; summing nonnegative square losses to T=(2n)^2 gives at least n/4.",
+            "math": "x_t=(1-1/(2n))^t,\\quad R_{(2n)^2}(0)\\ge n/4.",
+            "fallback": "This valid fixed initialization and square-horizon subsequence is not every initialization or every algorithm."
+          },
+          {
+            "title": "Produce the mean predictor loss",
+            "detail": "Unfold the actual source predictor: time0 is1/2, and each positive strict-prefix mean on zero labels is0. A finite conditional sum gives loss1/4 for every positive horizon; comparator0 has zero optimal square loss.",
+            "math": "m_0=1/2,\\quad m_t=0\\ (t>0),\\quad B_T=1/4\\ (T>0).",
+            "fallback": "Different disclosed initializations, same stream; the mean loss is produced from its actual definition."
+          },
+          {
+            "title": "Subtract produced bounds",
+            "detail": "Subtract the actual mean loss from the actual OGD lower bound at the same positive square horizon.",
+            "math": "R_{(2n)^2}(0)-B_{(2n)^2}\\ge n/4-1/4.",
+            "fallback": "At n1 the displayed lower gap is zero; strict positivity for every n is not asserted."
+          },
+          {
+            "title": "Produce a later threshold witness",
+            "detail": "Choose an actual natural n with n>max(4C+1,N). Then n>N and n/4-1/4>C; apply the produced gap lower. N bounds the index n, and horizons grow with it. This is a family of separately horizon-tuned runs.",
+            "math": "n>\\max(4C+1,N)\\ \\Longrightarrow\\ C<R_{(2n)^2}(0)-B_{(2n)^2}.",
+            "fallback": "C may be any real. The formal terminal states a later existential witness for each threshold/cutoff, not a formal all-large-n limit."
+          }
+        ],
+        "boundary": "Printed Example2.14, derived constant/lower/comparison distinguished. Three new proofs plus nine retained proofs/one retained domain definition, not twelve new source theorems. Required Chapter1 migrations/other Chapter2 main-text and appendix audits remain; some already have compiled code, and Chapter2 total is still null/incomplete. No merge/live/anytime/minimax claim."
       }
     },
     {

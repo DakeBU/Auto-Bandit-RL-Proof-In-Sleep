@@ -1,0 +1,772 @@
+{
+  "actor": {
+    "task": "/root/source_reviewer",
+    "role": "distinct automated source reviewer",
+    "requested_model": "GPT-6 Astra",
+    "requested_reasoning": "medium",
+    "runtime_model_attested": false,
+    "human_review": false,
+    "external_model_review": false
+  },
+  "verdict": "accepted-with-explicit-delta",
+  "scope": "12 exact contracts only:9 retained proofs and3 planned comparison targets;1 retained domain definition",
+  "fixed_rows_verified": 143,
+  "raw_mismatches": [],
+  "target_verdicts": {
+    "BanditRL.OnlineGradientDescent.project_unitInterval": {
+      "verdict": "accepted-with-explicit-delta",
+      "scope": "contract stabilization only; no fresh body acceptance",
+      "seven_slots": {
+        "model": "Real line; closed convex [0,1].",
+        "assumptions": "Any real z.",
+        "information": "No probability or observations.",
+        "algorithm": "Actual selected metric projection.",
+        "parameters": "No parameter restriction.",
+        "quantifiers": "Every z.",
+        "guarantee": "Exact clamp equality; library identity matching printed projection."
+      }
+    },
+    "BanditRL.OnlineGradientDescent.square_regular": {
+      "verdict": "accepted-with-explicit-delta",
+      "scope": "contract stabilization only; no fresh body acceptance",
+      "seven_slots": {
+        "model": "Real square loss on unit interval.",
+        "assumptions": "Any real label y; global regularity is produced.",
+        "information": "No oracle or future data.",
+        "algorithm": "The existing stronger RegularLoss interface is discharged on univ.",
+        "parameters": "No horizon/step.",
+        "quantifiers": "Every real y.",
+        "guarantee": "RegularLoss certificate; no stronger consumer premise added to source instance."
+      }
+    },
+    "BanditRL.OnlineGradientDescent.gradient_square": {
+      "verdict": "accepted-with-explicit-delta",
+      "scope": "contract stabilization only; no fresh body acceptance",
+      "seven_slots": {
+        "model": "Ambient real derivative of square loss.",
+        "assumptions": "Any real x,y.",
+        "information": "Current label only when used in update.",
+        "algorithm": "Actual shared gradient, not a chosen surrogate.",
+        "parameters": "No step/horizon.",
+        "quantifiers": "Every x,y.",
+        "guarantee": "Exact 2(x-y), including outside feasible interval."
+      }
+    },
+    "BanditRL.OnlineGradientDescent.gradient_square_bound": {
+      "verdict": "accepted-with-explicit-delta",
+      "scope": "contract stabilization only; no fresh body acceptance",
+      "seven_slots": {
+        "model": "Real interval predictions and labels.",
+        "assumptions": "Both x and y in [0,1].",
+        "information": "Current actual loss.",
+        "algorithm": "Norm of actual gradient.",
+        "parameters": "Envelope G=2.",
+        "quantifiers": "All feasible x,y.",
+        "guarantee": "Uniform norm <=2; no binary-only restriction."
+      }
+    },
+    "BanditRL.OnlineGradientDescent.square_step_clamp": {
+      "verdict": "accepted-with-explicit-delta",
+      "scope": "contract stabilization only; no fresh body acceptance",
+      "seven_slots": {
+        "model": "Same real projection and square loss.",
+        "assumptions": "Any real eta,x,y.",
+        "information": "Update consumes current label after prediction.",
+        "algorithm": "Actual step equals clamp of x-2eta(x-y).",
+        "parameters": "Eta may be zero or negative in this algebraic identity.",
+        "quantifiers": "Every real triple.",
+        "guarantee": "Identity only; no guarantee for negative step."
+      }
+    },
+    "BanditRL.OnlineGradientDescent.example_2_14": {
+      "verdict": "accepted-with-explicit-delta",
+      "scope": "contract stabilization only; no fresh body acceptance",
+      "seven_slots": {
+        "model": "Unit interval real squared-loss OGD.",
+        "assumptions": "Feasible arbitrary x0; T>0; all labels t<T feasible.",
+        "information": "Output t depends on strict past; eta knows T, not future gradients or comparator.",
+        "algorithm": "Actual shared iterate/regret, same trajectory for all u.",
+        "parameters": "Eta=1/(2sqrt T), D=1,G=2.",
+        "quantifiers": "Every feasible u on every eligible finite label prefix.",
+        "guarantee": "Regret <=2sqrt T; explicit constant derived from source O(sqrt T), not printed constant."
+      }
+    },
+    "BanditRL.OnlineGradientDescent.guessing_zero_trajectory": {
+      "verdict": "accepted-with-explicit-delta",
+      "scope": "contract stabilization only; no fresh body acceptance",
+      "seven_slots": {
+        "model": "Same interval OGD, all-zero labels.",
+        "assumptions": "n>0; initial1.",
+        "information": "Known n fixed before play; zero stream supplies actual current losses.",
+        "algorithm": "Actual projected recursion; contraction stays feasible so clamp inactive.",
+        "parameters": "Eta=1/(4n).",
+        "quantifiers": "Every natural time t.",
+        "guarantee": "Exact geometric trajectory; derived witness not printed theorem."
+      }
+    },
+    "BanditRL.OnlineGradientDescent.guessing_tuned_eta_square": {
+      "verdict": "accepted-with-explicit-delta",
+      "scope": "contract stabilization only; no fresh body acceptance",
+      "seven_slots": {
+        "model": "Real scalar identity for natural square horizon.",
+        "assumptions": "All n, including 0.",
+        "information": "No algorithm information claim.",
+        "algorithm": "Identifies two step expressions.",
+        "parameters": "T=(2n)^2.",
+        "quantifiers": "Every n.",
+        "guarantee": "Equality by total division at n=0; not a T=0 performance theorem."
+      }
+    },
+    "BanditRL.OnlineGradientDescent.guessing_squared_horizon_lower": {
+      "verdict": "accepted-with-explicit-delta",
+      "scope": "contract stabilization only; no fresh body acceptance",
+      "seven_slots": {
+        "model": "Zero-label square loss; init1; comparator0.",
+        "assumptions": "n>0.",
+        "information": "Separate known-horizon run for each n.",
+        "algorithm": "Same actual tuned OGD regret and geometric trajectory.",
+        "parameters": "T=(2n)^2, eta=1/(4n).",
+        "quantifiers": "Every positive n, not every T or initialization.",
+        "guarantee": "R>=n/4=sqrt(T)/8 via first n nonnegative losses; derived lower witness."
+      }
+    },
+    "BanditRL.OnlineGradientDescent.meanPredict_zero_cumulativeLoss": {
+      "verdict": "accepted-with-explicit-delta",
+      "scope": "contract stabilization only; no fresh body acceptance",
+      "seven_slots": {
+        "model": "Existing Chapter1 meanPredict on same zero stream.",
+        "assumptions": "T>0; meanPredict initial1/2 then strict-prefix empirical mean.",
+        "information": "No current/future label used in output.",
+        "algorithm": "Actual imported predictor, not an assumed loss oracle.",
+        "parameters": "Any positive T.",
+        "quantifiers": "Every positive T.",
+        "guarantee": "Planned exact cumulative loss1/4; at T=0 sum0 instead. Derived refinement."
+      }
+    },
+    "BanditRL.OnlineGradientDescent.guessing_vs_mean_lower": {
+      "verdict": "accepted-with-explicit-delta",
+      "scope": "contract stabilization only; no fresh body acceptance",
+      "seven_slots": {
+        "model": "Same zero stream; OGD init1 vs meanPredict init1/2.",
+        "assumptions": "n>0.",
+        "information": "Both are causal; OGD horizon-dependent as above.",
+        "algorithm": "Subtract actual mean loss from actual OGD regret versus0.",
+        "parameters": "T=(2n)^2 and source tuned eta.",
+        "quantifiers": "Every positive n.",
+        "guarantee": "Planned gap>=n/4-1/4. Comparator0 has zero optimal loss, so loss/regret comparison agrees here."
+      }
+    },
+    "BanditRL.OnlineGradientDescent.guessing_vs_mean_unbounded": {
+      "verdict": "accepted-with-explicit-delta",
+      "scope": "contract stabilization only; no fresh body acceptance",
+      "seven_slots": {
+        "model": "Same specific stream and different fixed initializations.",
+        "assumptions": "Arbitrary C real and N natural.",
+        "information": "Family of known-horizon runs, not one anytime run.",
+        "algorithm": "Same exact difference as preceding target.",
+        "parameters": "Existential n>N; eta depends on its horizon.",
+        "quantifiers": "For every C,N exists n>N with strict gap>C.",
+        "guarantee": "Planned arbitrary-tail witness, not an all-stream/same-init/minimax/log-vs-sqrt theorem."
+      }
+    }
+  },
+  "mathematical_repairs": [],
+  "required_repairs": [],
+  "required_reader_corrections": [
+    "Explicitly present real labels in [0,1], unrestricted-real helper identities, and square regularity as produced rather than a new source premise.",
+    "Show prediction before label reveal and update for the next round; distinguish known-horizon tuning from future-gradient optimization and retain all-comparator same-trajectory scope.",
+    "Preserve attribution: printed O(sqrt T), derived constant2, derived fixed-initialization lower witness, and three newly planned comparison refinements are different claims.",
+    "Publish the actual meanPredict initial1/2 and strict-prefix mean; comparison uses the same zero stream but OGD initial1. Do not imply identical initialization or a uniform comparison on every stream.",
+    "Publish exact positive-horizon mean loss1/4, gap lower n/4-1/4, and forall C,N exists n>N only after actual new proofs pass. Explain comparator0 has zero optimal loss on this stream.",
+    "Keep n>0 and square horizons explicit; n=0 eta identity is total-division algebra only. At n=1 the displayed gap lower bound is zero, not strict superiority.",
+    "Retain distinct eta1 clipping demo, eta1/4 four-round upper demo, and eta1/16 horizon64 lower demo; planned n4 gap>=3/4 needs a genuine new canary.",
+    "Update stale local status stating Huber and all later Chapter2 results remain unproved; distinguish separately accepted packages from remaining mandatory migrations and Chapter1/Chapter2/book completion. Do not increase retained-proof counts as though all12 were new."
+  ],
+  "remaining_gates": [
+    "new bodies and canary",
+    "fresh retained-body review",
+    "public/native/axiom/combined root/Tests/harness",
+    "reader/site/registry/dependency/contributor",
+    "immutable acceptance and delivery"
+  ],
+  "reviewed_files": [
+    {
+      "path": "../research-online-ogd/tmp/pdfs/orabona-v10.pdf",
+      "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17"
+    },
+    {
+      "path": ".agents/skills/bandit-semantic-roundtrip/SKILL.md",
+      "sha256": "7ee7b72b8a84ab954966dc13900952c3439bd8d4e97877b622c1ca0a7aa85477"
+    },
+    {
+      "path": ".lake/packages/mathlib/Mathlib/Algebra/BigOperators/Group/Finset/Piecewise.lean",
+      "sha256": "730654846749dd5df981f9c0316df8000f2eec322913e6a527ed4d83d40c735a"
+    },
+    {
+      "path": ".lake/packages/mathlib/Mathlib/Algebra/Order/Archimedean/Basic.lean",
+      "sha256": "8521f32dfc65d2996777210a9b5451a35acd8d7bd396efddf53ba7cc5a9c3966"
+    },
+    {
+      "path": ".lake/packages/mathlib/Mathlib/NumberTheory/Harmonic/Bounds.lean",
+      "sha256": "92f1c8224c4353a057c306ea1b8f35ff51e02b82462916fcd5820491fce11db5"
+    },
+    {
+      "path": "BanditRLProof.lean",
+      "sha256": "cd2bb9d20e81a61dd5ddcc06321aff2bdb61be778661f256fab08ac84c6d23a2"
+    },
+    {
+      "path": "BanditRLProof/OnlineGradientDescent.lean",
+      "sha256": "9300cb2735da9f125e404f78b86509df47fe65a5f4d89abc469e071bdffdb871"
+    },
+    {
+      "path": "BanditRLProof/OnlineGradientDescentSource.lean",
+      "sha256": "627df452453bbdfa2ecf4ddac8b5b85bfd750c74f1db5b81a26e6e20ca2eeec7"
+    },
+    {
+      "path": "BanditRLProof/OnlineGuessingLower.lean",
+      "sha256": "bbf06a687b6008a90ebeaaf872db75f95f7e94469956cd155d5a813f11e9259f"
+    },
+    {
+      "path": "BanditRLProof/OnlineGuessingOGD.lean",
+      "sha256": "6e99965d95e7016bc40c2f39e51f7dff4bf381c42b028e39584f703302eda8bd"
+    },
+    {
+      "path": "BanditRLProof/OnlineLearningFTL.lean",
+      "sha256": "8aee4c971fffbc79f2426fb308f50ec02b664b42a90fe1f85620a313df4c7a06"
+    },
+    {
+      "path": "BanditRLProof/OnlineLearningFoundations.lean",
+      "sha256": "e23ebdca2f7ce21a16173c93390fd24d16ba36e403c9d084233f7480e75408b8"
+    },
+    {
+      "path": "BanditRLProof/OnlineLearningMean.lean",
+      "sha256": "d65b3e5d5d2e33a0fd94722f1d7d9a09819c963c693e28bf854fae00f5280aa1"
+    },
+    {
+      "path": "Tests.lean",
+      "sha256": "1d4a8b05e8a624e76a0085ee8cf0a81708437c0fb3f9b6ecf3bbf53bcc89214e"
+    },
+    {
+      "path": "Tests/OnlineGuessingLowerCanary.lean",
+      "sha256": "20643deff68cc6eb55a962dc0731a4acfd7b5a0850d332626a6f4a5b7e783228"
+    },
+    {
+      "path": "Tests/OnlineGuessingOGDCanary.lean",
+      "sha256": "3698a8dbf3d8d5c7c53c8830593b474d204d6e0d0c8686feea608385ffcdf2e2"
+    },
+    {
+      "path": "conversion-windows/ONLINE-GUESSING-MIGRATION-20261006.md",
+      "sha256": "475913b991f6934a788dad31dcc9b3b4234136e8b925e322869aa012c8ac0416"
+    },
+    {
+      "path": "docs/contracts/online-guessing-lower-v2/context.json",
+      "sha256": "67acb4524b29fed8e139b038624f2304aace13dae74d564be737a539589cd62b"
+    },
+    {
+      "path": "docs/contracts/online-guessing-lower-v2/contract.md",
+      "sha256": "aa8bc760cb4d9eb35cec183c233ef19bdd39277cc5d03324a67831253c665c73"
+    },
+    {
+      "path": "docs/contracts/online-guessing-lower-v2/guessing_squared_horizon_lower.json",
+      "sha256": "a9960a7b805c20c9b82e058f0e10c2308794ecfc4b54974c44e4a80a94afc937"
+    },
+    {
+      "path": "docs/contracts/online-guessing-lower-v2/guessing_tuned_eta_square.json",
+      "sha256": "aa2f41f7bc5a97def7f44295353f735c6f80d4c6973d1d2806bb536ba97ac9b5"
+    },
+    {
+      "path": "docs/contracts/online-guessing-lower-v2/guessing_zero_trajectory.json",
+      "sha256": "0ad060e1c89d03174bd30d46a3d24ed8c2cd30c133f1bc21be8b0514fa61ba6a"
+    },
+    {
+      "path": "docs/contracts/online-guessing-lower-v2/headers.json",
+      "sha256": "b126528d368cf1c635b90d436d18e45e86760dd96deba1155afcad8108e239ae"
+    },
+    {
+      "path": "docs/contracts/online-guessing-migration-v1/dependency-DAG-v1.json",
+      "sha256": "be4ebf8cc7cdac4360275c0e8074b62f72297e218c9d8b1a3339505c559d2312"
+    },
+    {
+      "path": "docs/contracts/online-guessing-migration-v1/headers-native-v2.json",
+      "sha256": "661636f4854e1155c85e068495cb3921b4be19dac4dd043dd94842653bf092cc"
+    },
+    {
+      "path": "docs/contracts/online-guessing-migration-v1/headers.json",
+      "sha256": "31910139878f29d17ba4215643e5ac9499f321cbe26720318cfd254c568e3941"
+    },
+    {
+      "path": "docs/contracts/online-guessing-migration-v1/source-card.json",
+      "sha256": "a4aa9297967d7fae159706054d7119cec53ca80b977ddcc96579909325b9b35c"
+    },
+    {
+      "path": "docs/contracts/online-guessing-migration-v1/source-intent.md",
+      "sha256": "caeac7a705bd84ad535dc9fc751889fbaa2b72f0c208d4b95e0b17759a65aedf"
+    },
+    {
+      "path": "docs/contracts/online-guessing-ogd-v2/context.json",
+      "sha256": "2166cfae186f1095bcc9186c9298d08bedd07d8d980045151ef431d565dee3e2"
+    },
+    {
+      "path": "docs/contracts/online-guessing-ogd-v2/contract.md",
+      "sha256": "ea88711ce24bd22966ffe95e4880fc023bcbc23efafc6ff4e250587abbdd59b7"
+    },
+    {
+      "path": "docs/contracts/online-guessing-ogd-v2/example_2_14.json",
+      "sha256": "8d8f53bce3bfbd799517f100ce74e15b9c35555eb676e0eb9d6002a33a608a71"
+    },
+    {
+      "path": "docs/contracts/online-guessing-ogd-v2/gradient_square.json",
+      "sha256": "c077740370bf7f70f9feb1d23099cb892116fec9b2009673c99779c52799e66e"
+    },
+    {
+      "path": "docs/contracts/online-guessing-ogd-v2/gradient_square_bound.json",
+      "sha256": "3a9f16ed757a29de0804460af6f80a8753cf6673986392967979ed14064de9e9"
+    },
+    {
+      "path": "docs/contracts/online-guessing-ogd-v2/headers.json",
+      "sha256": "3c37930731c04ea9b9c8c09b029beefb91b579a7f425faf7501b1a54c2be50d5"
+    },
+    {
+      "path": "docs/contracts/online-guessing-ogd-v2/project_unitInterval.json",
+      "sha256": "543550f3be34ceb3a81f5c5e09a3a054b1eefeb2810cb91c83dd69f2efff5e85"
+    },
+    {
+      "path": "docs/contracts/online-guessing-ogd-v2/square_regular.json",
+      "sha256": "bfe07623342f44e7e9a25fdf1da95f497824d5dd9195f0fc023ede8cf8c86f51"
+    },
+    {
+      "path": "docs/contracts/online-guessing-ogd-v2/square_step_clamp.json",
+      "sha256": "aa6c331d8a1f951c19929728864408e4a875a1ca71354ad1812e7b772e8f0140"
+    },
+    {
+      "path": "lake-manifest.json",
+      "sha256": "87c3e616f86244550ef39e7415186b11c1d4cf4bef20173196a619d9d4d48f48"
+    },
+    {
+      "path": "lakefile.lean",
+      "sha256": "0164f3b5b5bdcbb237ab15ae8b44da83e183f4b97d5f3832aa4a57f27dc69d45"
+    },
+    {
+      "path": "lean-toolchain",
+      "sha256": "b15a57f8ea4c890197465ce1156667ae13d9ed4ab8a9f263a920bf010d967d82"
+    },
+    {
+      "path": "proof-obligations/ONLINE-GUESSING-MIGRATION-20261006.md",
+      "sha256": "0f675f272a1358b8029f4f89663847702018c97f01bb45c4395669feeea6aea0"
+    },
+    {
+      "path": "runs/active_frontier.json",
+      "sha256": "567e5873aa2549a83f2820d758069213808da822a93087129877385a1addf7c3"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/00_context.md",
+      "sha256": "d9a83c7f56f8323304a75c8626fbd28318d085c3e609515c972b84bedff3d29c"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/10_upper_director-v1.md",
+      "sha256": "8e19ee47fc1adb908527b234cfbb5f5d675ebf95a371967d9e168d5bdeb3b259"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/20_architect-v1.md",
+      "sha256": "865d8d25de300b6b436c17b008c21cc1ead846be3c4ee493b80989d36fa1628e"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/actual-types-v1-01-exit.json",
+      "sha256": "3b7d103b0543763af6d5bcdfb76f8009ad2608492441e7257680f67f39cbebdf"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/actual-types-v1-01.log",
+      "sha256": "045c706948ed627da0d831c189e0a283cb9111689bcb24991195e78f3c76f5cb"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/blind-packet-v1.md",
+      "sha256": "8dd65e42c2e140fe37ae6fcda1671d3a7cfce50ab8168f8630e9a87ff768c8c4"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/blind-receipt-v1.json",
+      "sha256": "9fd9f15b443a6771852f67fce0c66cf1ab21c5a3e50c0e43161c047d9115e4e2"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/blind-reconstruction-v1.md",
+      "sha256": "30340688bbb1318e599a0fbd2167446fe9499995742868eb7e3920477112858c"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/bootstrap-before-use-v1.json",
+      "sha256": "cafc21bdf86dcebe9bc88d949e2b372b7ee9b0c669f3c192282458a7c9689003"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/bootstrap-generated-before-use-v1.json",
+      "sha256": "63946e50fb215b806a2f9b65ed0cca80eab96e532348377a6faa2010421d16c0"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/bootstrap-v1.py",
+      "sha256": "aae56b123fda3a02c190eec6f00afad176e3b7f9e973f42225e82f6ba914e35c"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/compiled-retained-graph-v1.json",
+      "sha256": "d0f274fe8d77f3eec25f5b4b27a56ec80f7e384f2ac5675fae358b4c41f6c7e0"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/draft-fence-example_2_14-v1-exit.json",
+      "sha256": "2b7fcd689161f0c60e304fd6d6226d653584cab68f862fc6c0e784d75b2ecc67"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/draft-fence-example_2_14-v1.log",
+      "sha256": "2f192794e5a9b806111fcf636f6743116bb6a7734202516603cc36fcd1ce2777"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/draft-fence-gradient_square-v1-exit.json",
+      "sha256": "55d4f60c1f626e7fbe28383811d2419379578e168cc959bb60b94c72a72a6a35"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/draft-fence-gradient_square-v1.log",
+      "sha256": "4ec6dda7f4b6e37152b9c4ea5d919dc00f0a4b1569b7788cdcc66cc0cc55243d"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/draft-fence-gradient_square_bound-v1-exit.json",
+      "sha256": "d4d24e030fa6b26b4f1d9a1e5016f0a6a3ae0d886fdc07deb26ccc7c9cf12135"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/draft-fence-gradient_square_bound-v1.log",
+      "sha256": "1e0d335f618c189057ed59b1feb202cf98d9fb812298201ed860725a162eec33"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/draft-fence-guessing_squared_horizon_lower-v1-exit.json",
+      "sha256": "5c302f0e45a3b8bd7dc2bc38eb49e6d02b87e08a7feacac0306950d6ebb35337"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/draft-fence-guessing_squared_horizon_lower-v1.log",
+      "sha256": "215b5857a3828db01394059a1f096df848d2b5ece4920789fbf704faba3a63d1"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/draft-fence-guessing_tuned_eta_square-v1-exit.json",
+      "sha256": "8b419a23c00fbae5f0878bafcd43be0f08626d9b4041a0778bcc2253c28e9211"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/draft-fence-guessing_tuned_eta_square-v1.log",
+      "sha256": "f908bcf2b42032fb6a225dc8e24af60ad6beff58ef0f733ab08a703c861449a4"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/draft-fence-guessing_zero_trajectory-v1-exit.json",
+      "sha256": "6e4326441c632d2210561a1683eb7b829f10e1591e192db755ed10d01aa64e07"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/draft-fence-guessing_zero_trajectory-v1.log",
+      "sha256": "aee9421f1a26e716b8b5e38306979f1f406dcd4c43dacc5e7f775478bc96ea68"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/draft-fence-project_unitInterval-v1-exit.json",
+      "sha256": "e04982ded505cf5305f33b2863bd406b3221d18be88dfcf8d41fef410299a096"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/draft-fence-project_unitInterval-v1.log",
+      "sha256": "e696d1dd997f8b64c3f8232b469bd77e0eeaea839ecbd5d21c634249cc44d52e"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/draft-fence-square_regular-v1-exit.json",
+      "sha256": "ba98e22ccbd010f4e3a245a589d86195ac0eb3c7596fff4638eb556f17f8c302"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/draft-fence-square_regular-v1.log",
+      "sha256": "e5e2255c1944cf52347b59ee479a8146841e488b2ab2535e25b43be9afaf23a9"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/draft-fence-square_step_clamp-v1-exit.json",
+      "sha256": "9f3db015c08e637386721ffa6a4872670f74a2bd8f814026a4aa029671a8a7e1"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/draft-fence-square_step_clamp-v1.log",
+      "sha256": "e86eec74e85626b8a1de3aaf014b32e5966d18284dde772b4bfe0bc6926a1c37"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/draft-freeze-v1.json",
+      "sha256": "88894bd81ab80763d1cc7fd581bf64339ad6bee2a2d65900e008201e97187150"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/draft-freeze-v2.json",
+      "sha256": "f4feb4899f844bedd7c52455e18f149afec61dec6f52f76de1196a399e14a107"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/draft-generated-before-use-v1.json",
+      "sha256": "5b1f49a7241054c81cdcc9e8cd32ff680eb7a7e91d7fafe17ecb0bad0056547b"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/draft-lifecycle-v1-exit.json",
+      "sha256": "7c023589c788ef3b12064bf5caeb7a1255b7fffc6ccae6ca5a1797dc1cd8f754"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/draft-lifecycle-v1.log",
+      "sha256": "d7a4985eeac6d25a97d1e6fa5ada0f9671697817ee829c8071377446a172d835"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/fingerprint-correction-v2.json",
+      "sha256": "a869ffc61f2279ce76823df911030570bc46ac3b4584583e03a1e033bad6f227"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/leaves/actual-types-v1.lean",
+      "sha256": "a1c5b0078d82fd6ee92623546ddce9bcbb47e485fdd5b3ea3def8721622ff23e"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/leaves/export-retained-dependencies-v1.lean",
+      "sha256": "5c733fc18c6f83c4f35fba9fa6bb9780dcdf4fe991562dacc830fcdc0f6b58a5"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/list-mathlib-v1-01-exit.json",
+      "sha256": "560be078e927568126dc80217bd51064b1866c96fdd6ae94d5c91a185bda92dd"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/list-mathlib-v1-01.log",
+      "sha256": "884fab88619a3d1adcafe89eecddd2d98f4be5c6fa61262862134dde9e51d225"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/list-papers-v1-01-exit.json",
+      "sha256": "2661050dfff66b4d3023653fa7ee6734562bd501941a3db717e64bdb839f267a"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/list-papers-v1-01.log",
+      "sha256": "9acd333996a893a7b5ccad3e674ece26ef05c8b737e7816b33043b121583a619"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/list-weapons-v1-01-exit.json",
+      "sha256": "e0851783de3c97c3a493b639e5c8c3e0f07b01cc6e624889a8a68a26b2b13bdf"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/list-weapons-v1-01.log",
+      "sha256": "a6e4b78de1a30fcf5a0ee66b868eb3ac1bfa68d2250c713f61e690ae064f7ef6"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/local-lookup-v1-01-exit.json",
+      "sha256": "03502d633cc0fd274bc2b1633b004d9c4a3bf77e582531a833fef068a5c3245c"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/local-lookup-v1-01.log",
+      "sha256": "3bc216aebe09c265e1491ad66ff11f190519de8af9eabe1db65f81677924e21a"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/mean-local-lookup-v1-01-exit.json",
+      "sha256": "8f80b27ca30485aa87f240bd740cfba9f0faf91f8229076309bd48967eee64d2"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/mean-local-lookup-v1-01.log",
+      "sha256": "a2f4f887d918538f215cb6f91d83a3cf534ba892ca2bff77c9c93c992c82231f"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/native-draft-fences/example_2_14.json",
+      "sha256": "2f192794e5a9b806111fcf636f6743116bb6a7734202516603cc36fcd1ce2777"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/native-draft-fences/gradient_square.json",
+      "sha256": "4ec6dda7f4b6e37152b9c4ea5d919dc00f0a4b1569b7788cdcc66cc0cc55243d"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/native-draft-fences/gradient_square_bound.json",
+      "sha256": "1e0d335f618c189057ed59b1feb202cf98d9fb812298201ed860725a162eec33"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/native-draft-fences/guessing_squared_horizon_lower.json",
+      "sha256": "215b5857a3828db01394059a1f096df848d2b5ece4920789fbf704faba3a63d1"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/native-draft-fences/guessing_tuned_eta_square.json",
+      "sha256": "f908bcf2b42032fb6a225dc8e24af60ad6beff58ef0f733ab08a703c861449a4"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/native-draft-fences/guessing_zero_trajectory.json",
+      "sha256": "aee9421f1a26e716b8b5e38306979f1f406dcd4c43dacc5e7f775478bc96ea68"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/native-draft-fences/project_unitInterval.json",
+      "sha256": "e696d1dd997f8b64c3f8232b469bd77e0eeaea839ecbd5d21c634249cc44d52e"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/native-draft-fences/square_regular.json",
+      "sha256": "e5e2255c1944cf52347b59ee479a8146841e488b2ab2535e25b43be9afaf23a9"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/native-draft-fences/square_step_clamp.json",
+      "sha256": "e86eec74e85626b8a1de3aaf014b32e5966d18284dde772b4bfe0bc6926a1c37"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/normalize-draft-before-use-v2.json",
+      "sha256": "aaa0624e3db6c4aa0e142c4d46615965275403976096d4c2caade51bec95e53c"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/normalize-draft-fingerprints-v2-01-exit.json",
+      "sha256": "b7c4b5f9e0584ab5ba669ae900de8e9b824d651594463ddabf4f56835794a244"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/normalize-draft-fingerprints-v2-01.log",
+      "sha256": "f54de0fccf3249e8a0c7248fb3c0e9fc07fd8c090297b3c8d4407a557b253622"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/normalize-draft-fingerprints-v2.py",
+      "sha256": "6ae1e5c52059cc6fdf02c9e98d6801955331bb01e225003ef90c6e4455f6302e"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/original-OnlineGuessingLower.lean.txt",
+      "sha256": "bbf06a687b6008a90ebeaaf872db75f95f7e94469956cd155d5a813f11e9259f"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/original-OnlineGuessingLowerCanary.lean.txt",
+      "sha256": "20643deff68cc6eb55a962dc0731a4acfd7b5a0850d332626a6f4a5b7e783228"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/original-OnlineGuessingOGD.lean.txt",
+      "sha256": "6e99965d95e7016bc40c2f39e51f7dff4bf381c42b028e39584f703302eda8bd"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/original-OnlineGuessingOGDCanary.lean.txt",
+      "sha256": "3698a8dbf3d8d5c7c53c8830593b474d204d6e0d0c8686feea608385ffcdf2e2"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/planned-comparison-headers-v1.json",
+      "sha256": "99c5e2c25f852321345ae54fe6f670eba15f9f65097bd3eee6a4738f837df81c"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/prepare-draft-before-use-v1.json",
+      "sha256": "a1d6dfa52467f1b51107174bbec101e666197132bccfe37c1c0b0d4267e7eb8d"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/prepare-draft-v1-01-exit.json",
+      "sha256": "aef3fec13b24acabf17e48c96b44277283c65bb96282ddb97e0414a341fb3c4c"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/prepare-draft-v1-01.log",
+      "sha256": "b7ba77bcc3aa93cfcc6ab29d96080da8fabf5380085335ca037b0b087b265d55"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/prepare-draft-v1.py",
+      "sha256": "adc3e04d5305ada3322dd5ff551ce880c9465993ac071cd8bbcde30867a17cbd"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/prepare-source-review-before-use-v1.json",
+      "sha256": "3b1aa55ec18ed7afe03d27ff26040f1c2435b93111ea3f5650eccb8331f35768"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/prepare-source-review-before-use-v2.json",
+      "sha256": "6d8e1912f9c1992727ce1807a121a45ed95cd110c438112988914f2cd861c3ab"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/prepare-source-review-v1-01-exit.json",
+      "sha256": "8c5621a84e29c41d7d6d17560e6ec4d0a17c3388d0334ed71a00e7f9742c7cc4"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/prepare-source-review-v1-01.log",
+      "sha256": "e634699c884880ca40dba8aed2f076eb79b714c9518e215fc9b0beb5a53458bc"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/prepare-source-review-v1.py",
+      "sha256": "6c5cb4b09e288566ee4533de5dba58015df7ed4bbea35b7fd27dce53454103b2"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/prepare-source-review-v2.py",
+      "sha256": "04621632731fca5499b689bbf5325d27dde1bfa18f8fd1c3aae2caa7dd8bf120"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/proof-obligations-v1.json",
+      "sha256": "6622a10a9433f51b233fb23c39871695f276ba26bbfb70e5a9f12ae18da17249"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/ready-dependencies-v1.json",
+      "sha256": "3059656e6552df7b2a8db3e2ab618a807ec1f982c1d6bbf3eb4c4c9804aa5d3b"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/retained-headers-v1.json",
+      "sha256": "acfbb58063de716953651f34e17f899f052738e6c45a98faeb38a93d91dd9569"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/retained-modules-v1-01-exit.json",
+      "sha256": "3669cbdaab333765813f6d8029afb535bae4573813a6c7ef74fe7d9084ed83b7"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/retained-modules-v1-01.log",
+      "sha256": "36e4ed5aebae94c51b06dab8086afc677f6b5eb8120cb473d62c27c8912910d5"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/retained-scoped-graph-v1-01-exit.json",
+      "sha256": "d796daf476460f09983248bc6238c2f2279ca814ea28679117532fd7f0c01680"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/retained-scoped-graph-v1-01.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/retrieval-decision-v1.md",
+      "sha256": "c51718ce11229dae0640defd142da630894c4ce66a5cd2244d480b0fce600015"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/run-command.py",
+      "sha256": "c513b8a171af602dd3f72af15823ed5f1308faccdb8526d5dcca87ddcbf86887"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/search-memory-v1-01-exit.json",
+      "sha256": "bce6eb8769c364baafd3046f074b6708a8f4f350c602a7b3dcbd0a34d2d8af74"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/search-memory-v1-01.log",
+      "sha256": "6af47cac5d5d64648ef08a601ccabf6a012ee2ae30d0a621bc69a1a90689d152"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/source-chapter1-pdf13-19.txt",
+      "sha256": "b83b3604d44cee9e4ff25bfa71eb220e15c4f20e46fffee31127c35637adce17"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/source-input-discovery-correction-v2.json",
+      "sha256": "fdfd64301defbc0e356073d511f1ebf71b6d1d72fe8309fb31a0def5b5137d45"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/source-printed15-pdf27.txt",
+      "sha256": "aed61245f25b365224da1ea1ca3a2d3f8439365707e6cca6e1f08b05087eaf42"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/source-review-packet-v1.md",
+      "sha256": "110026f34b8fbfc4fe8be115c06bad53d8fc17801c6a039ca7064a20bc7bbcaf"
+    },
+    {
+      "path": "runs/online-guessing-ogd-20260914/04_reviewer.md",
+      "sha256": "7ff7cedd4c8f7663eaefa86590cf21d418d420355b047c0f3d955c9976c6ebb0"
+    },
+    {
+      "path": "runs/online-guessing-ogd-20260914/acceptance-decision.md",
+      "sha256": "807da4dd1e3c4b8c1a21bf2c8c17ae7f347e525c07fe391b922e0903d90be117"
+    },
+    {
+      "path": "runs/online-jensen-migration-20261005/accepted-decision-v1.json",
+      "sha256": "4a2e03a000e990331454f06cb3aedb288adeebc53c37417af25ecbcd86721807"
+    },
+    {
+      "path": "runs/online-jensen-migration-20261005/delivery-v1.md",
+      "sha256": "6f9318ce0aad9d78acd2e405f2a27a4e617af7b5429239a14aa653803b4d4fed"
+    },
+    {
+      "path": "runs/online-ogd-migration-20261005/accepted-decision-v2.json",
+      "sha256": "66c503c32d952339073282157e13bbf4b0db1093422aed9579672f4b54a2ffbf"
+    },
+    {
+      "path": "tasks/ONLINE-GUESSING-MIGRATION-20261006.md",
+      "sha256": "af611cfbf7da0b4280922b4478cba323da5647cced7c7a56aff5951c3410fa1c"
+    },
+    {
+      "path": "tmp/online-guessing-migration-retained-graph-v1.json",
+      "sha256": "d0f274fe8d77f3eec25f5b4b27a56ec80f7e384f2ac5675fae358b4c41f6c7e0"
+    },
+    {
+      "path": "website/content/chapters.json",
+      "sha256": "f906d8d1000806a22ce3d4ea52cd5ae44754ea4342efd458dcd9a73b4ff13b56"
+    },
+    {
+      "path": "website/content/highlights.json",
+      "sha256": "d59abc153e2594b21e0f71b7ab128e0251a4b81bf38544434a8a0de3b87ae2f5"
+    },
+    {
+      "path": "website/content/readings.json",
+      "sha256": "a59fb55bdffd3c1b62de1594d0c4a14be031a126d05ec771c9807bbdd756366e"
+    },
+    {
+      "path": "runs/online-guessing-migration-20261006/contract-source-inputs-v1.json",
+      "sha256": "58086558f460201adc5008c8092dd4fdb5926261c5d19c2b770a5723556037d4"
+    }
+  ],
+  "report": "runs/online-guessing-migration-20261006/source-contract-review-v1.md",
+  "report_sha256": "96d3c6e1ef273210a2e804734f0ed79158d1c322d020ea103fdb72a1ca9f5893"
+}

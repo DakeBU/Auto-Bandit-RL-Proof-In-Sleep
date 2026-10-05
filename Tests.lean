@@ -119,6 +119,7 @@ import Tests.OnlineJensenCanary
 import Tests.OnlineFTLFailureCanary
 import Tests.OnlineGuessingOGDCanary
 import Tests.OnlineGuessingLowerCanary
+import Tests.OnlineGuessingComparisonCanary
 
 import Tests.OnlineHuberCanary
 import Tests.OnlineClosedProperCanary

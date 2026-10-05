@@ -2559,7 +2559,7 @@
       "full_name": "BanditRL.OnlineGradientDescent.project_unitInterval",
       "title": "Interval projection equals clamp",
       "chapter": "online-guessing-ogd",
-      "featured": false,
+      "featured": true,
       "teaching_order": 1,
       "plain": "Interval projection equals clamp",
       "math": "\\(\\Pi_{[0,1]}z=\\min(\\max(z,0),1)\\)",
@@ -2576,7 +2576,7 @@
       "full_name": "BanditRL.OnlineGradientDescent.gradient_square",
       "title": "Exact square-loss gradient",
       "chapter": "online-guessing-ogd",
-      "featured": false,
+      "featured": true,
       "teaching_order": 2,
       "plain": "Exact square-loss gradient",
       "math": "\\(\\nabla\\ell_t(x)=2(x-y_t)\\)",
@@ -2591,7 +2591,7 @@
       "full_name": "BanditRL.OnlineGradientDescent.square_step_clamp",
       "title": "Concrete projected square-loss update",
       "chapter": "online-guessing-ogd",
-      "featured": false,
+      "featured": true,
       "teaching_order": 3,
       "plain": "Concrete projected square-loss update",
       "math": "\\(x_{t+1}=\\min(\\max(x_t-2\\eta(x_t-y_t),0),1)\\)",
@@ -2609,7 +2609,7 @@
       "full_name": "BanditRL.OnlineGradientDescent.example_2_14",
       "title": "Explicit square-root regret bound",
       "chapter": "online-guessing-ogd",
-      "featured": false,
+      "featured": true,
       "teaching_order": 4,
       "plain": "Explicit square-root regret bound",
       "math": "\\(R_T(u)\\le2\\sqrt T\\)",
@@ -2628,7 +2628,7 @@
       "full_name": "BanditRL.OnlineGradientDescent.guessing_squared_horizon_lower",
       "title": "A true square-root lower witness",
       "chapter": "online-guessing-ogd",
-      "featured": false,
+      "featured": true,
       "teaching_order": 5,
       "plain": "Constant zero labels yield a square-root regret lower bound for the tuned OGD.",
       "math": "\\(R_{(2n)^2}(0)\\ge n/4\\)",
@@ -5336,6 +5336,59 @@
       "dependencies": [
         "BanditRL.OnlineConvex.effectiveDomain",
         "BanditRL.OnlineConvex.extendedIndicator"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescent.guessing_vs_mean_unbounded",
+      "title": "Actual unbounded gap beyond each cutoff",
+      "chapter": "online-guessing-ogd",
+      "featured": true,
+      "teaching_order": 6,
+      "plain": "Actual unbounded gap beyond each cutoff",
+      "math": "\\(\\forall C,N\\ \\exists n>N:\\ C<R_{(2n)^2}(0)-B_{(2n)^2}.\\)",
+      "intuition": "Choose n>max(4C+1,N) using the actual Archimedean API, then use the produced lower gap.",
+      "why": "Directly supports source Example2.14 comparison with produced losses.",
+      "position": "Derived supporting result for Orabona v10 printedp15/PDF27; actual mean predictor printedp4/PDF16.",
+      "proof_idea": "Choose n>max(4C+1,N) using the actual Archimedean API, then use the produced lower gap.",
+      "lean_notes": "Tail-existence for separately known-horizon runs, same zero stream/different fixed initializations; not a Tendsto/anytime/every-stream result.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescent.guessing_vs_mean_lower"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescent.meanPredict_zero_cumulativeLoss",
+      "title": "Actual mean-predictor loss on zero labels",
+      "chapter": "online-guessing-ogd",
+      "featured": false,
+      "teaching_order": 7,
+      "plain": "Actual mean-predictor loss on zero labels",
+      "math": "\\(B_T=1/4\\quad(T>0).\\)",
+      "intuition": "Unfold the true initial1/2 and strict-prefix empirical mean0; only the first finite-sum term survives.",
+      "why": "Directly supports source Example2.14 comparison with produced losses.",
+      "position": "Derived supporting result for Orabona v10 printedp15/PDF27; actual mean predictor printedp4/PDF16.",
+      "proof_idea": "Unfold the true initial1/2 and strict-prefix empirical mean0; only the first finite-sum term survives.",
+      "lean_notes": "Positive horizon needed; zero comparator is optimal on this stream.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.meanPredict",
+        "BanditRL.OnlineLearning.empiricalMean"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescent.guessing_vs_mean_lower",
+      "title": "Produced two-algorithm loss-gap lower",
+      "chapter": "online-guessing-ogd",
+      "featured": false,
+      "teaching_order": 8,
+      "plain": "Produced two-algorithm loss-gap lower",
+      "math": "\\(R_{(2n)^2}(0)-B_{(2n)^2}\\ge n/4-1/4.\\)",
+      "intuition": "Subtract produced exact mean loss from the actual OGD lower at the same positive square horizon.",
+      "why": "Directly supports source Example2.14 comparison with produced losses.",
+      "position": "Derived supporting result for Orabona v10 printedp15/PDF27; actual mean predictor printedp4/PDF16.",
+      "proof_idea": "Subtract produced exact mean loss from the actual OGD lower at the same positive square horizon.",
+      "lean_notes": "At n1 displayed gap lower is0; fixed initializations differ.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescent.guessing_squared_horizon_lower",
+        "BanditRL.OnlineGradientDescent.meanPredict_zero_cumulativeLoss"
       ]
     }
   ]

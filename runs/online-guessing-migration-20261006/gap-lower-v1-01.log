@@ -1,0 +1,14 @@
+runs/online-guessing-migration-20261006/leaves/gap-lower-v1.lean:19:2: warning: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+'BanditRL.OnlineGradientDescent.meanPredict_zero_cumulativeLoss' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+meanPredict_zero_cumulativeLoss : ∀ (T : ℕ),
+  0 < T → ∑ t ∈ Finset.range T, OnlineLearning.meanPredict (fun x => 0) t ^ 2 = 1 / 4
+'BanditRL.OnlineGradientDescent.guessing_vs_mean_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+guessing_vs_mean_lower : ∀ (n : ℕ),
+  0 < n →
+    ↑n / 4 - 1 / 4 ≤
+      regret unitInterval (1 / (2 * √↑((2 * n) ^ 2))) (fun x x_1 => (x_1 - 0) ^ 2) 1 0 ((2 * n) ^ 2) -
+        ∑ t ∈ Finset.range ((2 * n) ^ 2), OnlineLearning.meanPredict (fun x => 0) t ^ 2

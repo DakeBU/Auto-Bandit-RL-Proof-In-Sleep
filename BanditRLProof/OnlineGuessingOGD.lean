@@ -1,3 +1,15 @@
+/-
+Orabona v10 Example 2.14, printed p15/PDF27: real labels/predictions in [0,1].
+Actual projection, ambient square gradient and global square regularity are
+produced. The same strict-prefix OGD recurrence with known-horizon positive
+step 1/(2*sqrt T), T>0, yields derived constant 2 in the printed O(sqrt T) rate
+for every feasible initial point/comparator. Unrestricted-real helper identities
+do not supply an arbitrary-step regret guarantee. Existing stronger RegularLoss
+is discharged on all real space, not imposed as an extra source premise.
+OnlineGuessingLower and OnlineGuessingComparison give separate derived lower
+and same-zero-stream comparison results; no Chapter 4 or full-chapter claim.
+-/
+
 import BanditRLProof.OnlineGradientDescent
 import Mathlib.Analysis.Convex.Mul
 

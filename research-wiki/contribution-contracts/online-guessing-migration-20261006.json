@@ -1,0 +1,142 @@
+{
+  "schema_version": "2.0",
+  "id": "ONLINE-GUESSING-MIGRATION-20261006",
+  "route": "online-learning/chapter-2",
+  "frontier_cell": "online-guessing-ogd",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10,21 June2026; SHA256 cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchor": "Example2.14 printed15/PDF27; source mean predictor/Theorem1.3 printed4/PDF16 dependency. Three new comparisons derived, not printed numerical theorems.",
+    "url": "https://arxiv.org/pdf/1912.13213v10"
+  },
+  "target": "Revalidate one source Example2.14 and close actual same-zero-stream OGD-vs-mean unbounded loss-gap comparison:9retained3newproofs1retaineddomain.",
+  "affected_files": [
+    "BanditRLProof/OnlineGuessingOGD.lean",
+    "BanditRLProof/OnlineGuessingLower.lean",
+    "BanditRLProof/OnlineGuessingComparison.lean",
+    "BanditRLProof.lean",
+    "Tests/OnlineGuessingComparisonCanary.lean",
+    "Tests.lean",
+    "website/content/readings.json",
+    "website/content/highlights.json",
+    "website/content/chapters.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineGradientDescent.project_unitInterval",
+    "BanditRL.OnlineGradientDescent.square_regular",
+    "BanditRL.OnlineGradientDescent.gradient_square",
+    "BanditRL.OnlineGradientDescent.gradient_square_bound",
+    "BanditRL.OnlineGradientDescent.square_step_clamp",
+    "BanditRL.OnlineGradientDescent.example_2_14",
+    "BanditRL.OnlineGradientDescent.guessing_zero_trajectory",
+    "BanditRL.OnlineGradientDescent.guessing_tuned_eta_square",
+    "BanditRL.OnlineGradientDescent.guessing_squared_horizon_lower",
+    "BanditRL.OnlineGradientDescent.meanPredict_zero_cumulativeLoss",
+    "BanditRL.OnlineGradientDescent.guessing_vs_mean_lower",
+    "BanditRL.OnlineGradientDescent.guessing_vs_mean_unbounded",
+    "BanditRL.OnlineGradientDescent.unitInterval"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Actual interval/gradient/regularity/same-trajectory tuned and lower APIs; actual meanPredict/empiricalMean/prefix/minimizer/theorem1.3; native sum_ite_eq and exists_nat_gt/pinned cards; compiled retained10nodes1733edges and public13nodes2113edges."
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineGradientDescent.project_unitInterval",
+      "BanditRL.OnlineGradientDescent.square_regular",
+      "BanditRL.OnlineGradientDescent.gradient_square",
+      "BanditRL.OnlineGradientDescent.gradient_square_bound",
+      "BanditRL.OnlineGradientDescent.square_step_clamp",
+      "BanditRL.OnlineGradientDescent.example_2_14",
+      "BanditRL.OnlineGradientDescent.guessing_zero_trajectory",
+      "BanditRL.OnlineGradientDescent.guessing_tuned_eta_square",
+      "BanditRL.OnlineGradientDescent.guessing_squared_horizon_lower",
+      "BanditRL.OnlineLearning.meanPredict",
+      "BanditRL.OnlineLearning.empiricalMean"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineGradientDescent.meanPredict_zero_cumulativeLoss",
+      "BanditRL.OnlineGradientDescent.guessing_vs_mean_lower",
+      "BanditRL.OnlineGradientDescent.guessing_vs_mean_unbounded"
+    ],
+    "known_consumers": [
+      "BanditRL.OnlineGradientDescent.guessing_vs_mean_lower",
+      "BanditRL.OnlineGradientDescent.guessing_vs_mean_unbounded",
+      "Tests.OnlineGuessingComparison.actual_zero_stream_gap"
+    ],
+    "planned_consumers": [
+      "Chapter2 final source comparison audit; no competing Chapter3 proof writing."
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Only three actual source-specific comparison proofs added, with produced finite mean loss/gap/natural witness; same shared Lean library, not a per-book project or duplicate algorithms."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/normal_blind",
+    "source_reviewer": "/root/source_reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Source/contract/BODY distinctly accepted-with-explicit-delta; printed O(sqrtT)/derivedconstant/lower/directcomparison, samezero stream/differentinitializations/known-horizonfamily/tail-existence visible. Corrected final reader/package gates pending. No human/external/runtime-model attestation."
+  },
+  "graph_contribution": {
+    "lean_graph": "new-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Same scalar feedback/loss setting, direct algorithm performance comparison; no new cross-setting transport or graph-derived discovery.",
+    "focus_targets": [
+      "BanditRL.OnlineGradientDescent.project_unitInterval",
+      "BanditRL.OnlineGradientDescent.square_regular",
+      "BanditRL.OnlineGradientDescent.gradient_square",
+      "BanditRL.OnlineGradientDescent.gradient_square_bound",
+      "BanditRL.OnlineGradientDescent.square_step_clamp",
+      "BanditRL.OnlineGradientDescent.example_2_14",
+      "BanditRL.OnlineGradientDescent.guessing_zero_trajectory",
+      "BanditRL.OnlineGradientDescent.guessing_tuned_eta_square",
+      "BanditRL.OnlineGradientDescent.guessing_squared_horizon_lower",
+      "BanditRL.OnlineGradientDescent.meanPredict_zero_cumulativeLoss",
+      "BanditRL.OnlineGradientDescent.guessing_vs_mean_lower",
+      "BanditRL.OnlineGradientDescent.guessing_vs_mean_unbounded",
+      "BanditRL.OnlineGradientDescent.unitInterval"
+    ],
+    "visual_review": "Actual compiled scope13nodes2113directtype/valueedges including definitions;3newcomparisonproofnodes planned registry delta, not full/canary export. Old IDs/URLs preservation/site/actualbrowser pending.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: same online-guessing-ogd route/sourcequalified3derivedcomparison highlights, four curated representative links/eight reader corrections/three original canary scenarios plus genuine two-algorithm gap.",
+    "banditrlwiki": "no-change-with-reason: no new Bandit setting.",
+    "results_ledger": "no-change-with-reason: additive scoped task acceptance overlay follows gates; historical chapter inventories untouched, Chapter2 total null.",
+    "roadmap": "no-change-with-reason: whole-book Goal remains active, Chapter2 incomplete and global SGB untouched.",
+    "website_surfaces": [
+      "website/content/readings.json",
+      "website/content/highlights.json",
+      "website/content/chapters.json"
+    ]
+  },
+  "truth_boundary": "One Example2.14:9retainedproofs1domain/3newcomparisonproofs0definitions. Real[0,1] labels; actual projection/gradient/global regularity/same-causal OGD/known positive horizon. Different valid fixed initializations on samezero stream, exact mean loss1/4, gap>=n/4-1/4 and forallC,Nexistsn>N gap>C. Derived results not printed numerical claims; no every-init/every-stream/minimax/anytime/Tendsto/Chapter4 guarantee. Whole6canaryproofs2defs/21namedaxes12guards, frozen12headers/proof tokens/old2canarybytes. Parser-only import marker repair/raw failures retained, no math repair. Full Tests/harness/site/final source acceptance pending; Chapter1migration/Chapter2null/wholeBook/main/live not complete.",
+  "verification": {
+    "focused_checks": [
+      "Three successful frozen scratch leaves, actualpublic focusedv2/root9089/threecanaries/21namedstandard3-or-noneaxes/12nativeguards. Initial doc-comment-before-import failure preserved and repaired by ignored block marker only, all12headers/mathproof tokens fixed."
+    ],
+    "bandit_check": "Current root9089 passed before Tests; full Tests/harness pending authoritative completion.",
+    "site_build": "Clean lean-verified build only after fresh applicable combined Lean gate.",
+    "site_check": "Shared13proof/domainnodes/all10806oldIDsURLs plus3newproofnodes to verify after fresh combined gates.",
+    "independent_review": "Three distinct required automated actors, requested GPT-6 Astra/medium; no human/external review or independently attested runtime model."
+  },
+  "contributor": {
+    "name": "Codex for Ji Cheng",
+    "role": "Formalizer/integrator with distinct required automated semantic actors; source attribution retained"
+  }
+}
