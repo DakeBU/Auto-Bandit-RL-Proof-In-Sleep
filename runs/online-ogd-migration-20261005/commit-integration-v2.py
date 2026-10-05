@@ -3,6 +3,7 @@ from pathlib import Path
 import subprocess,sys
 run=Path(__file__).parent
 paths=['BanditRLProof/OnlineGradientDescentVariable.lean',
+    'website/content/readings.json','website/content/highlights.json',
     'research-wiki/contribution-contracts/ONLINE-OGD-MIGRATION-20261005.json',
     str(run),'runs/lifecycle_sessions.jsonl','runs/trials.jsonl']
 def call(args):

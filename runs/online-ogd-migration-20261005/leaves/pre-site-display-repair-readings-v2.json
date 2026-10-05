@@ -1460,11 +1460,19 @@
         },
         {
           "term": "g_t",
-          "meaning": "Gradient of the supplied ambient real extension of the current loss at x_t. On a thin V its restriction alone does not fix the full ambient gradient; extension independence is not claimed."
+          "meaning": "Gradient of the current convex differentiable loss at x_t."
         },
         {
           "term": "D, G",
           "meaning": "A priori positive diameter and gradient norm upper bounds; the source calls G by L."
+        },
+        {
+          "term": "SourceRegularLoss → FeasibleRegularLoss",
+          "meaning": "Convexity on V and a supplied ambient real extension differentiable on an arbitrary open U containing V. U need not be convex. source_to_feasible proves the conversion to FeasibleRegularLoss: convexity on V and ambient derivatives at every feasible point. On a thin V the supplied extension fixes the gradient; extension independence is not claimed."
+        },
+        {
+          "term": "Historical RegularLoss",
+          "meaning": "The retained historical API requires a convex open differentiability neighborhood. Its proofs remain valid under that stronger premise; the source cards below now use the repaired shared declarations."
         }
       ],
       "algorithm": {
