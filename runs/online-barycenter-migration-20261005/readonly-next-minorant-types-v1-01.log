@@ -1,0 +1,19 @@
+@BanditRL.OnlineConvex.affine_support_of_finite_neighborhood : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] [FiniteDimensional ℝ E] (f : E → EReal),
+  BanditRL.OnlineConvex.IsConvexExtended f →
+    ∀ (x : E), (∀ᶠ (y : E) in nhds x, ∃ r, f y = ↑r) → ∃ a b, ↑(a x + b) = f x ∧ ∀ (y : E), ↑(a y + b) ≤ f y
+@BanditRL.OnlineConvex.affine_support_of_domain_interior : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] [FiniteDimensional ℝ E] (f : E → EReal),
+  (∀ (y : E), f y ≠ ⊥) →
+    BanditRL.OnlineConvex.IsConvexExtended f →
+      ∀ x ∈ interior (BanditRL.OnlineConvex.effectiveDomain f), ∃ a b, ↑(a x + b) = f x ∧ ∀ (y : E), ↑(a y + b) ≤ f y
+@BanditRL.OnlineConvex.affine_minorant_of_domain_interior : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] [FiniteDimensional ℝ E] (f : E → EReal),
+  (∀ (y : E), f y ≠ ⊥) →
+    BanditRL.OnlineConvex.IsConvexExtended f →
+      ∀ x ∈ interior (BanditRL.OnlineConvex.effectiveDomain f), ∃ a b, ∀ (y : E), ↑(a y + b) ≤ f y
+@BanditRL.OnlineConvex.convex_affine_minorant : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] [FiniteDimensional ℝ E] (f : E → EReal),
+  (∀ (x : E), f x ≠ ⊥) →
+    BanditRL.OnlineConvex.IsConvexExtended f →
+      (BanditRL.OnlineConvex.effectiveDomain f).Nonempty → ∃ a b, ∀ (x : E), ↑(a x + b) ≤ f x

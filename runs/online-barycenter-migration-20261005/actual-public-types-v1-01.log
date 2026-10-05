@@ -1,0 +1,31 @@
+@BanditRL.OnlineConvex.supporting_functional_ae_eq_mean : ∀ {Ω : Type u_1} {E : Type u_2} [inst : MeasurableSpace Ω]
+  [inst_1 : NormedAddCommGroup E] [inst_2 : NormedSpace ℝ E] [CompleteSpace E] (μ : MeasureTheory.Measure Ω)
+  [MeasureTheory.IsProbabilityMeasure μ] (X : Ω → E),
+  MeasureTheory.Integrable X μ →
+    ∀ (a : E →L[ℝ] ℝ), (∀ᵐ (ω : Ω) ∂μ, a (X ω) ≤ a (∫ (ω : Ω), X ω ∂μ)) → ∀ᵐ (ω : Ω) ∂μ, a (X ω) = a (∫ (ω : Ω), X ω ∂μ)
+@BanditRL.OnlineConvex.supporting_functional_at_closure : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] [FiniteDimensional ℝ E] (s : Set E),
+  Convex ℝ s → ∀ x ∈ closure s, x ∉ interior s → ∃ a, a ≠ 0 ∧ ∀ y ∈ s, a y ≤ a x
+@BanditRL.OnlineConvex.integral_mem_convex_finiteDimensional : ∀ {Ω : Type u_2} [inst : MeasurableSpace Ω]
+  {E : Type u_1} [inst_1 : NormedAddCommGroup E] [inst_2 : NormedSpace ℝ E] [FiniteDimensional ℝ E]
+  [inst_4 : MeasurableSpace E] [BorelSpace E] (μ : MeasureTheory.Measure Ω) [MeasureTheory.IsProbabilityMeasure μ]
+  (s : Set E),
+  Convex ℝ s → ∀ (X : Ω → E), MeasureTheory.Integrable X μ → (∀ᵐ (ω : Ω) ∂μ, X ω ∈ s) → ∫ (ω : Ω), X ω ∂μ ∈ s
+@MeasureTheory.integral_eq_iff_of_ae_le : ∀ {α : Type u_1} {m : MeasurableSpace α} {μ : MeasureTheory.Measure α}
+  {f g : α → ℝ},
+  MeasureTheory.Integrable f μ →
+    MeasureTheory.Integrable g μ → f ≤ᵐ[μ] g → (∫ (a : α), f a ∂μ = ∫ (a : α), g a ∂μ ↔ f =ᵐ[μ] g)
+@Convex.integral_mem : ∀ {α : Type u_1} {E : Type u_2} {m0 : MeasurableSpace α} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] [CompleteSpace E] {μ : MeasureTheory.Measure α} {s : Set E} {f : α → E}
+  [MeasureTheory.IsProbabilityMeasure μ],
+  Convex ℝ s → IsClosed s → (∀ᵐ (x : α) ∂μ, f x ∈ s) → MeasureTheory.Integrable f μ → ∫ (x : α), f x ∂μ ∈ s
+@geometric_hahn_banach_of_nonempty_interior_point : ∀ {E : Type u_1} [inst : TopologicalSpace E]
+  [inst_1 : AddCommGroup E] [inst_2 : Module ℝ E] {x : E} [IsTopologicalAddGroup E] [ContinuousSMul ℝ E] {A : Set E},
+  Convex ℝ A → x ∉ interior A → (interior A).Nonempty → ∃ f, f ≠ 0 ∧ ∀ a ∈ A, f a ≤ f x
+@Submodule.finrank_lt : ∀ {K : Type u_1} {V : Type u_2} [inst : DivisionRing K] [inst_1 : AddCommGroup V]
+  [inst_2 : Module K V] [FiniteDimensional K V] {s : Submodule K V}, s ≠ ⊤ → Module.finrank K ↥s < Module.finrank K V
+@ContinuousLinearMap.integral_comp_comm : ∀ {X : Type u_1} {E : Type u_2} {Fₗ : Type u_3} [inst : MeasurableSpace X]
+  {μ : MeasureTheory.Measure X} {𝕜 : Type u_4} [inst_1 : RCLike 𝕜] [inst_2 : NormedAddCommGroup E]
+  [inst_3 : NormedSpace 𝕜 E] [inst_4 : NormedAddCommGroup Fₗ] [inst_5 : NormedSpace 𝕜 Fₗ] [inst_6 : NormedSpace ℝ Fₗ]
+  [CompleteSpace Fₗ] [inst_8 : NormedSpace ℝ E] [CompleteSpace E] (L : E →L[𝕜] Fₗ) {φ : X → E},
+  MeasureTheory.Integrable φ μ → ∫ (x : X), L (φ x) ∂μ = L (∫ (x : X), φ x ∂μ)

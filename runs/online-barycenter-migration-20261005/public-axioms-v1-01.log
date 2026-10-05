@@ -1,0 +1,49 @@
+@BanditRL.OnlineConvex.supporting_functional_ae_eq_mean : ∀ {Ω : Type u_1} {E : Type u_2} [inst : MeasurableSpace Ω]
+  [inst_1 : NormedAddCommGroup E] [inst_2 : NormedSpace ℝ E] [CompleteSpace E] (μ : MeasureTheory.Measure Ω)
+  [MeasureTheory.IsProbabilityMeasure μ] (X : Ω → E),
+  MeasureTheory.Integrable X μ →
+    ∀ (a : E →L[ℝ] ℝ), (∀ᵐ (ω : Ω) ∂μ, a (X ω) ≤ a (∫ (ω : Ω), X ω ∂μ)) → ∀ᵐ (ω : Ω) ∂μ, a (X ω) = a (∫ (ω : Ω), X ω ∂μ)
+'BanditRL.OnlineConvex.supporting_functional_ae_eq_mean' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.supporting_functional_at_closure : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] [FiniteDimensional ℝ E] (s : Set E),
+  Convex ℝ s → ∀ x ∈ closure s, x ∉ interior s → ∃ a, a ≠ 0 ∧ ∀ y ∈ s, a y ≤ a x
+'BanditRL.OnlineConvex.supporting_functional_at_closure' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.integral_mem_convex_finiteDimensional : ∀ {Ω : Type u_2} [inst : MeasurableSpace Ω]
+  {E : Type u_1} [inst_1 : NormedAddCommGroup E] [inst_2 : NormedSpace ℝ E] [FiniteDimensional ℝ E]
+  [inst_4 : MeasurableSpace E] [BorelSpace E] (μ : MeasureTheory.Measure Ω) [MeasureTheory.IsProbabilityMeasure μ]
+  (s : Set E),
+  Convex ℝ s → ∀ (X : Ω → E), MeasureTheory.Integrable X μ → (∀ᵐ (ω : Ω) ∂μ, X ω ∈ s) → ∫ (ω : Ω), X ω ∂μ ∈ s
+'BanditRL.OnlineConvex.integral_mem_convex_finiteDimensional' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexBarycenter.law : MeasureTheory.Measure ℝ
+'Tests.OnlineConvexBarycenter.law' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexBarycenter.law_probability : MeasureTheory.IsProbabilityMeasure Tests.OnlineConvexBarycenter.law
+'Tests.OnlineConvexBarycenter.law_probability' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexBarycenter.vector : ℝ → ℝ × ℝ
+'Tests.OnlineConvexBarycenter.vector' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexBarycenter.ray : Set (ℝ × ℝ)
+'Tests.OnlineConvexBarycenter.ray' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexBarycenter.ray_convex : Convex ℝ Tests.OnlineConvexBarycenter.ray
+'Tests.OnlineConvexBarycenter.ray_convex' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexBarycenter.ray_not_closed : ¬IsClosed Tests.OnlineConvexBarycenter.ray
+'Tests.OnlineConvexBarycenter.ray_not_closed' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexBarycenter.vector_integrable : MeasureTheory.Integrable Tests.OnlineConvexBarycenter.vector
+  Tests.OnlineConvexBarycenter.law
+'Tests.OnlineConvexBarycenter.vector_integrable' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexBarycenter.vector_in_ray : ∀ᵐ (x : ℝ) ∂Tests.OnlineConvexBarycenter.law,
+  Tests.OnlineConvexBarycenter.vector x ∈ Tests.OnlineConvexBarycenter.ray
+'Tests.OnlineConvexBarycenter.vector_in_ray' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexBarycenter.mean_in_ray : ∫ (x : ℝ),
+    Tests.OnlineConvexBarycenter.vector x ∂Tests.OnlineConvexBarycenter.law ∈
+  Tests.OnlineConvexBarycenter.ray
+'Tests.OnlineConvexBarycenter.mean_in_ray' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexBarycenter.vector_mean : ∫ (x : ℝ),
+    Tests.OnlineConvexBarycenter.vector x ∂Tests.OnlineConvexBarycenter.law =
+  (2, 0)
+'Tests.OnlineConvexBarycenter.vector_mean' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexBarycenter.nondegenerate_nonclosed : ∫ (x : ℝ),
+      Tests.OnlineConvexBarycenter.vector x ∂Tests.OnlineConvexBarycenter.law ∈
+    Tests.OnlineConvexBarycenter.ray ∧
+  ∫ (x : ℝ), Tests.OnlineConvexBarycenter.vector x ∂Tests.OnlineConvexBarycenter.law = (2, 0) ∧
+    ¬IsClosed Tests.OnlineConvexBarycenter.ray ∧
+      Tests.OnlineConvexBarycenter.vector 1 ≠ Tests.OnlineConvexBarycenter.vector 3
+'Tests.OnlineConvexBarycenter.nondegenerate_nonclosed' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -1,0 +1,40 @@
+2.1 Online Learning with Convex Differentiable Losses11
+The proofs are left as exercises.
+A very important property ofdifferentiableconvex functions is that we can construct a
+linear lower bound to the function.
+Theorem 2.7(Rockafellar, 1970, Theorem 25.1 and Corollary 25.1.1)Supposef:R d →
+(−∞,+∞]is a convex function and letx∈int domf. Iffis differentiable atxthen
+f(y)≥f(x) +⟨∇f(x),y−x⟩,∀y∈R d .
+We will also use the first-order optimality condition for differentiable convex functions:
+Theorem 2.8LetVbe a non-empty convex set,x ⋆ ∈ V, andfa function convex and differ-
+entiable over an open set that containsV. Then,x ⋆ ∈argmin x∈V f(x)iff⟨∇f(x ⋆),y−
+x⋆⟩ ≥0,∀y∈ V.
+ProofLet us first assume thatx ⋆ satisfies⟨∇f(x ⋆),y−x ⋆⟩ ≥0,∀y∈ V. Then, by
+Theorem 2.7, for anyy∈ V, we have that
+f(y)≥f(x ⋆) +⟨∇f(x ⋆),y−x ⋆⟩ ≥f(x⋆),
+that is,x ⋆ is the minimizer offoverV.
+Now, assume thatx⋆ is the minimizer offoverVand assume that there existsy∈ Vsuch
+that⟨∇f(x ⋆),y−x ⋆⟩<0. Considerz(α) =αy+(1−α)x ⋆ whereα∈[0,1]. Note that
+z(α)∈ Vand denote byh(α) =f(z(α)). We have thath ′(0) =⟨∇f(x ⋆),y−x ⋆⟩<0.
+Hence, by the definition of derivative, forα⋆ >0sufficiently small we haveh(α ⋆)< h(0),
+that is,f(z(α ⋆))< f(x⋆), which contradicts thatx ⋆ is the minimizer overV.
+In words, at the constrained minimum, the gradient makes an angle of90 ◦ or less with
+all the feasible variationsy−x ⋆, hence we cannot decrease the function any further by
+moving insideV. Moreover, ifx ⋆ ∈intV, by choosingϵsmall enough such thaty=
+x⋆ −ϵ∇f(x ⋆)∈ V, we obtain thatx⋆ is a minimum iff∇f(x ⋆) =0.
+Another critical property of convex functions is Jensen’s inequality.
+Theorem 2.9(Jensen’s inequality)Letf:R d →(−∞,+∞]be a measurable convex
+function andxbe anR d-valued random element on some probability space such thatE[x]
+exists andx∈domfwith probability 1. Then, we have
+E[f(x)]≥f(E[x]).
+We can now see our first OCO algorithm in the case that the functions are convex and
+differentiable.
+2.1.2 Online Gradient Descent
+In the first chapter, we saw a simple strategy to obtain a logarithmic regret in the guessing
+game. The strategy was to use the best prediction over the past, that is, theFollow-the-
+Leader (FTL)strategy. In formulas,
+xt = argmin
+x∈V
+t−1X
+i=1
+ℓi(x),
