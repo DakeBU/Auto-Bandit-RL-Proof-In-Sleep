@@ -1,0 +1,90 @@
+BanditRLProof.LowerBounds.bretagnolleHuberScale_le_half_commonDensityAffinity_sq [theorem] BanditRLProof/LowerBounds/AffinityKL.lean:91
+  theorem bretagnolleHuberScale_le_half_commonDensityAffinity_sq {α : Type*} [MeasurableSpace α] (P Q μ : Measure α) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] [SigmaFinite μ] (hQ : Q ≪ μ) : bretagnolleHuberScale (relativeEntropy P Q) ≤ (1 / 2 : ℝ) * commonDensityAffinity P Q μ ^ 2
+BanditRLProof.LowerBounds.bretagnolleHuberScale_le_commonDensityOverlap [theorem] BanditRLProof/LowerBounds/CommonDensityOverlap.lean:174
+  theorem bretagnolleHuberScale_le_commonDensityOverlap {α : Type*} [MeasurableSpace α] (P Q μ : Measure α) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] [SigmaFinite μ] (hP : P ≪ μ) (hQ : Q ≪ μ) : bretagnolleHuberScale (relativeEntropy P Q) ≤ commonDensityOverlap P Q μ
+BanditRLProof.LowerBounds.binaryBretagnolleHuberCore [theorem] BanditRLProof/LowerBounds/InformationTheory.lean:531
+  theorem binaryBretagnolleHuberCore {p q : Real} (hp : KLUCB.IsBernoulliParameter p) (hq0 : 0 < q) (hq1 : q < 1) : (1 / 2 : Real) * Real.exp (-KLUCB.bernoulliKLCore p q) ≤ p + (1 - q)
+BanditRLProof.LowerBounds.bretagnolleHuberScale [def] BanditRLProof/LowerBounds/InformationTheory.lean:576
+  noncomputable def bretagnolleHuberScale (d : ENNReal) : Real
+BanditRLProof.LowerBounds.bretagnolleHuberScale_nonneg [theorem] BanditRLProof/LowerBounds/InformationTheory.lean:579
+  theorem bretagnolleHuberScale_nonneg (d : ENNReal) : 0 ≤ bretagnolleHuberScale d
+BanditRLProof.LowerBounds.binaryBretagnolleHuber [theorem] BanditRLProof/LowerBounds/InformationTheory.lean:588
+  theorem binaryBretagnolleHuber {p q : Real} (hp : KLUCB.IsBernoulliParameter p) (hq : KLUCB.IsBernoulliParameter q) : bretagnolleHuberScale (bernoulliRelativeEntropy p q) ≤ p + (1 - q)
+BanditRLProof.LowerBounds.bretagnolleHuberScale_antitone [theorem] BanditRLProof/LowerBounds/InformationTheory.lean:669
+  theorem bretagnolleHuberScale_antitone {d D : ENNReal} (h : d ≤ D) : bretagnolleHuberScale D ≤ bretagnolleHuberScale d
+BanditRLProof.LowerBounds.bretagnolleHuber [theorem] BanditRLProof/LowerBounds/InformationTheory.lean:688
+  theorem bretagnolleHuber {α : Type*} [MeasurableSpace α] {P Q : Measure α} [IsProbabilityMeasure P] [IsProbabilityMeasure Q] {A : Set α} (hA : MeasurableSet A) : bretagnolleHuberScale (relativeEntropy P Q) ≤ P.real A + Q.real Aᶜ
+BanditRLProof.LowerBounds.bretagnolleHuberScale_expectedPulls_mul_armKL_le_majorityErrors [theorem] BanditRLProof/LowerBounds/InstanceDependent.lean:1201
+  theorem bretagnolleHuberScale_expectedPulls_mul_armKL_le_majorityErrors {K : Nat} {Reward : Type*} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw referenceArmLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw] (changedArm : Fin K) (lastRound : Nat) (hsame : forall arm, arm ≠ changedArm -> armLaw arm = referenceArmLaw arm) : bretagnolleHuberScale (canonicalRealizedExpectedPullCountThrough algorithm armLaw lastRound changedArm * InformationTheory.klDiv (armLaw changedArm) (referenceArmLaw changedArm)) <= (canonicalBanditHistoryMeasure algorithm armLaw lastRound).real (oneArmMajorityPullEvent (Reward := Reward) changedArm lastRound) + (canonicalBanditHistoryMeasure algorithm referenceArmLaw lastRound).real (oneArmMajorityPullEvent (Reward := Reward) changedArm lastRound)ᶜ
+BanditRLProof.LowerBounds.bretagnolleHuberScale_mul_eq_exp [theorem] BanditRLProof/LowerBounds/InstanceDependent.lean:1237
+  theorem bretagnolleHuberScale_mul_eq_exp {expectedPull armInformation : ENNReal} (hpull : expectedPull ≠ ∞) (hinformation : armInformation ≠ ∞) : bretagnolleHuberScale (expectedPull * armInformation) = (1 / 2 : Real) * Real.exp (-(expectedPull.toReal * armInformation.toReal))
+BanditRL.OnlineHuber.hasDerivAt_ite_le [theorem] BanditRLProof/OnlineHuber.lean:15
+  theorem hasDerivAt_ite_le (f g : ℝ → ℝ) (c d : ℝ) (hf : HasDerivAt f d c) (hg : HasDerivAt g d c) (he : f c = g c) : HasDerivAt (fun x => if x ≤ c then f x else g x) d c
+BanditRL.OnlineHuber.huber [def] BanditRLProof/OnlineHuber.lean:30
+  noncomputable def huber (delta r : ℝ) : ℝ
+BanditRL.OnlineHuber.huber_three_pieces [theorem] BanditRLProof/OnlineHuber.lean:33
+  theorem huber_three_pieces (delta r : ℝ) (hd : 0 ≤ delta) : huber delta r = if r ≤ -delta then -delta * r - delta ^ 2 / 2 else if r ≤ delta then r ^ 2 / 2 else delta * r - delta ^ 2 / 2
+BanditRL.OnlineHuber.huber_zero [theorem] BanditRLProof/OnlineHuber.lean:52
+  theorem huber_zero (r : ℝ) : huber 0 r = 0
+BanditRL.OnlineHuber.hasDerivAt_join [theorem] BanditRLProof/OnlineHuber.lean:61
+  theorem hasDerivAt_join (f g df dg : ℝ → ℝ) (c x : ℝ) (hf : ∀ r, HasDerivAt f (df r) r) (hg : ∀ r, HasDerivAt g (dg r) r) (he : f c = g c) (hd : df c = dg c) : HasDerivAt (fun r => if r ≤ c then f r else g r) (if x ≤ c then df x else dg x) x
+BanditRL.OnlineHuber.huber_hasDerivAt [theorem] BanditRLProof/OnlineHuber.lean:79
+  theorem huber_hasDerivAt (delta r : ℝ) (hd : 0 ≤ delta) : HasDerivAt (huber delta) (if r ≤ -delta then -delta else if r ≤ delta then r else delta) r
+BanditRL.OnlineHuber.huber_deriv_clamp [theorem] BanditRLProof/OnlineHuber.lean:106
+  theorem huber_deriv_clamp (delta r : ℝ) (hd : 0 ≤ delta) : deriv (huber delta) r = max (-delta) (min r delta)
+BanditRL.OnlineHuber.huber_convex [theorem] BanditRLProof/OnlineHuber.lean:117
+  theorem huber_convex (delta : ℝ) (hd : 0 ≤ delta) : ConvexOn ℝ Set.univ (huber delta)
+BanditRL.OnlineHuber.huber_deriv_bound [theorem] BanditRLProof/OnlineHuber.lean:125
+  theorem huber_deriv_bound (delta r : ℝ) (hd : 0 ≤ delta) : |deriv (huber delta) r| ≤ delta
+BanditRL.OnlineHuber.huber_deriv_source [theorem] BanditRLProof/OnlineHuber.lean:133
+  theorem huber_deriv_source (delta r : ℝ) (hd : 0 ≤ delta) : deriv (huber delta) r = if |r| ≤ delta then r else delta * Real.sign r
+BanditRL.OnlineHuber.huber_linear_hasGradientAt [theorem] BanditRLProof/OnlineHuber.lean:158
+  theorem huber_linear_hasGradientAt (delta y : ℝ) (hd : 0 ≤ delta) (z x : E) : HasGradientAt (fun w => huber delta (inner ℝ z w - y)) (deriv (huber delta) (inner ℝ z x - y) • z) x
+BanditRL.OnlineHuber.huber_linear_convex [theorem] BanditRLProof/OnlineHuber.lean:169
+  theorem huber_linear_convex (delta y : ℝ) (hd : 0 ≤ delta) (z : E) : ConvexOn ℝ Set.univ (fun w => huber delta (inner ℝ z w - y))
+BanditRL.OnlineHuber.huber_linear_gradient_bound [theorem] BanditRLProof/OnlineHuber.lean:174
+  theorem huber_linear_gradient_bound (delta y : ℝ) (hd : 0 ≤ delta) (z x : E) : ‖gradient (fun w => huber delta (inner ℝ z w - y)) x‖ ≤ delta * ‖z‖
+BanditRL.OnlineHuber.fullSpace [def] BanditRLProof/OnlineHuber.lean:181
+  def fullSpace : Domain E
+BanditRL.OnlineHuber.linearLoss [def] BanditRLProof/OnlineHuber.lean:184
+  noncomputable def linearLoss (delta : ℝ) (z : E) (y : ℝ) (x : E) : ℝ
+BanditRL.OnlineHuber.project_fullSpace [theorem] BanditRLProof/OnlineHuber.lean:187
+  theorem project_fullSpace (x : E) : project (fullSpace : Domain E) x = x
+BanditRL.OnlineHuber.huber_regular [theorem] BanditRLProof/OnlineHuber.lean:192
+  theorem huber_regular (delta y : ℝ) (hd : 0 ≤ delta) (z : E) : RegularLoss fullSpace (linearLoss delta z y)
+BanditRL.OnlineHuber.huber_step [theorem] BanditRLProof/OnlineHuber.lean:198
+  theorem huber_step (delta y eta : ℝ) (hd : 0 ≤ delta) (z x : E) : step fullSpace eta (linearLoss delta z y) x = x - eta • ((if |inner ℝ z x - y| ≤ delta then inner ℝ z x - y else delta * Real.sign (inner ℝ z x - y)) • z)
+BanditRL.OnlineHuber.huber_regret_fixed [theorem] BanditRLProof/OnlineHuber.lean:207
+  theorem huber_regret_fixed (delta Z eta : ℝ) (hd : 0 ≤ delta) (hZ : 0 ≤ Z) (heta : 0 < eta) (z : ℕ → E) (y : ℕ → ℝ) (x0 u : E) (T : ℕ) (hz : ∀ t < T, ‖z t‖ ≤ Z) : regret fullSpace eta (fun t => linearLoss delta (z t) (y t)) x0 u T ≤ ‖x0 - u‖ ^ 2 / (2 * eta) + eta / 2 * ((T : ℝ) * (delta * Z) ^ 2) - ‖iterate fullSpace eta (fun t => linearLoss delta (z t) (y t)) x0 T - u‖ ^ 2 / (2 * eta)
+BanditRL.OnlineHuber.huber_average_bound [theorem] BanditRLProof/OnlineHuber.lean:230
+  theorem huber_average_bound (delta Z : ℝ) (hd : 0 ≤ delta) (hZ : 0 ≤ Z) (z : ℕ → E) (y : ℕ → ℝ) (x0 u : E) (T : ℕ) (hT : 0 < T) (hz : ∀ t < T, ‖z t‖ ≤ Z) : regret fullSpace (1 / Real.sqrt T) (fun t => linearLoss delta (z t) (y t)) x0 u T / T ≤ (‖x0 - u‖ ^ 2 + (delta * Z) ^ 2) / (2 * Real.sqrt T)
+BanditRL.OnlineHuber.huber_rate_tendsto [theorem] BanditRLProof/OnlineHuber.lean:251
+  theorem huber_rate_tendsto (delta Z : ℝ) (x0 u : E) : Filter.Tendsto (fun T : ℕ => (‖x0 - u‖ ^ 2 + (delta * Z) ^ 2) / (2 * Real.sqrt T)) Filter.atTop (nhds 0)
+BanditRL.OnlineHuber.huber_average_eventually [theorem] BanditRLProof/OnlineHuber.lean:259
+  theorem huber_average_eventually (delta Z : ℝ) (hd : 0 ≤ delta) (hZ : 0 ≤ Z) (z : ℕ → E) (y : ℕ → ℝ) (x0 u : E) (hz : ∀ t, ‖z t‖ ≤ Z) (epsilon : ℝ) (he : 0 < epsilon) : ∀ᶠ T : ℕ in Filter.atTop, regret fullSpace (1 / Real.sqrt T) (fun t => linearLoss delta (z t) (y t)) x0 u T / T < epsilon
+HuberDerivativeProbe.lower_seam [theorem] Tests/OnlineHuberCanary.lean:15
+  theorem lower_seam : HasDerivAt (huber 2) (-2) (-2)
+HuberDerivativeProbe.upper_seam [theorem] Tests/OnlineHuberCanary.lean:17
+  theorem upper_seam : HasDerivAt (huber 2) 2 2
+HuberDerivativeProbe.zero_threshold [theorem] Tests/OnlineHuberCanary.lean:19
+  theorem zero_threshold : HasDerivAt (huber 0) 0 (-7)
+HuberDerivativeProbe.quadratic_interior [theorem] Tests/OnlineHuberCanary.lean:21
+  theorem quadratic_interior : HasDerivAt (huber 2) 1 1
+HuberDerivativeProbe.affine_exterior [theorem] Tests/OnlineHuberCanary.lean:23
+  theorem affine_exterior : HasDerivAt (huber 2) 2 3
+HuberVectorProbe.nonzero_feature [theorem] Tests/OnlineHuberCanary.lean:36
+  theorem nonzero_feature : gradient (fun w : ℝ => huber 2 (inner ℝ 3 w - 1)) 2 = 6
+HuberVectorProbe.zero_threshold [theorem] Tests/OnlineHuberCanary.lean:41
+  theorem zero_threshold : gradient (fun w : ℝ => huber 0 (inner ℝ 3 w - 1)) 2 = 0
+HuberVectorProbe.feature_bound [theorem] Tests/OnlineHuberCanary.lean:45
+  theorem feature_bound : ‖gradient (fun w : ℝ => huber 2 (inner ℝ 3 w - 1)) 2‖ ≤ 6
+HuberVectorProbe.global_convex [theorem] Tests/OnlineHuberCanary.lean:49
+  theorem global_convex : ConvexOn ℝ Set.univ (fun w : ℝ => huber 2 (inner ℝ 3 w - 1))
+HuberOGDProbe.actual_step [theorem] Tests/OnlineHuberCanary.lean:66
+  theorem actual_step : step (fullSpace : Domain ℝ) (1/2) (linearLoss 1 (1 : ℝ) 0) 2 = 3/2
+HuberOGDProbe.residual_bound [theorem] Tests/OnlineHuberCanary.lean:70
+  theorem residual_bound (T : ℕ) : regret fullSpace (1/2) (fun _ => linearLoss 1 (1 : ℝ) 0) 2 0 T ≤ ‖(2 : ℝ) - 0‖ ^ 2 / (2 * (1/2)) + (1/2) / 2 * ((T : ℝ) * (1 * 1) ^ 2) - ‖iterate fullSpace (1/2) (fun _ => linearLoss 1 (1 : ℝ) 0) 2 T - 0‖ ^ 2 / (2*(1/2))
+Tests.OnlineHuber.average_four [theorem] Tests/OnlineHuberCanary.lean:87
+  theorem average_four : regret fullSpace (1 / Real.sqrt 4) (fun _ => linearLoss 1 (1 : ℝ) 0) 2 0 4 / 4 ≤ 5/4
+Tests.OnlineHuber.eventually_tenth [theorem] Tests/OnlineHuberCanary.lean:93
+  theorem eventually_tenth : ∀ᶠ T : ℕ in Filter.atTop, regret fullSpace (1 / Real.sqrt T) (fun _ => linearLoss 1 (1 : ℝ) 0) 2 0 T / T < 1/10
