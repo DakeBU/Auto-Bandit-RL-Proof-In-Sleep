@@ -1,0 +1,13 @@
+@BanditRL.OnlineConvex.subgradient_point_finite : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] (f : E → EReal),
+  BanditRL.OnlineConvex.SourceProper f →
+    ∀ (x g : E), g ∈ BanditRL.OnlineConvex.SourceSubdifferential f x → x ∈ BanditRL.OnlineConvex.effectiveDomain f
+@BanditRL.OnlineConvex.theorem_2_21 : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E]
+  (f : E → ℝ) (V : Set E),
+  Convex ℝ V → (∀ x ∈ V, (BanditRL.OnlineConvex.SourceSubdifferential (fun y => ↑(f y)) x).Nonempty) → ConvexOn ℝ V f
+@BanditRL.OnlineConvex.SourceSubdifferential : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] → [InnerProductSpace ℝ E] → (E → EReal) → E → Set E
+SubgradientProbe.square_support : ∀ (x : ℝ), 2 * x ∈ BanditRL.OnlineConvex.SourceSubdifferential (fun y => ↑(y ^ 2)) x
+SubgradientProbe.square_convex : ConvexOn ℝ Set.univ fun x => x ^ 2
+SubgradientProbe.interval_outside_no_support : ∀ (g : ℝ),
+  g ∉ BanditRL.OnlineConvex.SourceSubdifferential (BanditRL.OnlineConvex.extendedIndicator (Set.Icc 0 1)) 2

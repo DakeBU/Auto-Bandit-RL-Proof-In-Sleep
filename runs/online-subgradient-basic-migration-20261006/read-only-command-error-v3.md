@@ -1,0 +1,1 @@
+A future read-only file query listed actual OnlineSubgradientDifferentiability.lean, but the following rg still guessed absent OnlineSubgradientSingleton.lean and returned path IO error. No files modified, no mathematical/gate evidence created. Error remains in tool transcript; future dependency audit stops here until current package delivery.

@@ -1,3 +1,31 @@
+/-
+Orabona v10 printed16-17/PDF28-29: Definition2.20, the required adjacent
+outside-domain/dom-subdifferential inclusion observation, and Theorem2.21.
+Two retained proofs, one complete definition; zero new math code/nodes.
+The printed definition explicitly restricts to proper functions. The generic
+SourceSubdifferential predicate accepts all EReal functions, a wider library
+scope faithful on proper functions. At bottom points and for identically top
+functions every vector supports; outside-domain emptiness needs properness.
+EffectiveDomain excludes top but includes bottom generically; SourceProper
+excludes bottom and supplies a genuine finite global witness. The point-domain
+proof uses that witness/support, drops source convexity (stronger theorem),
+and exactly gives dom subdifferential inclusion and outside emptiness via
+witness unpacking. No converse or support-existence producer is claimed.
+Theorem2.21 uses globally real f, Convex V, and existing GLOBAL supports at
+EVERY point of V, tested at ALL ambient y. This is the printed hypothesis;
+ConvexOn is produced by nonnegative weighted supports and inner cancellation,
+including weights0/1. No merely finite-on-V extended-real extension is claimed.
+Actual arbitrary real inner-product scope generalizes finite Euclidean source;
+no CompleteSpace/FiniteDimensional premises. Ambient E has zero/nonempty;
+V may be empty/full/unbounded. Two independent leaves share the definition,
+not a mutual theorem dependency chain. Three scoped nodes/320 direct references
+are not full/canary graph export. Whole3canaries/6named kernel dependency
+checks/2nativeguards are distinct from combined acceptance gates.
+Initial context source-properness prose was corrected before stabilization;
+original draft history remains preserved. Interior existence and the stronger
+relative-interior footnote, Theorems2.22/2.23, Chapter2 and the persistent
+Chapters1-16 Goal remain mandatory/incomplete.
+-/
 import BanditRLProof.OnlineClosedProper
 import Mathlib.Analysis.InnerProductSpace.Basic
 import Mathlib.Analysis.Convex.Function

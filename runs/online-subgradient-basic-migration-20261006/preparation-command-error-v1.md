@@ -1,0 +1,1 @@
+Inline AST/hash preparation first used unsupported encoding utf8-sig and failed LookupError before creating hash record or executing the integrator. Corrected to utf-8-sig; same unexecuted helper, no production edits. Original failure exists in tool transcript only; no invented raw command log.
