@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "record_id": "frontier-f26551100b8376f6",
+  "updated_at": "2026-10-05T11:31:35+00:00",
+  "root_objective": "Persistent Orabona Chapters1-16 Goal; two finite-loss terminals accepted only, Chapter2/book incomplete",
+  "current_leaf": {
+    "id": "ONLINE-FINITE-LOSS-20261005",
+    "kind": "lean",
+    "status": "accepted",
+    "statement": "theorem finite_add_indicator_iff {E : Type*} (f : E → EReal) (V : Set E) (x : E) : (∃ r : ℝ, f x + extendedIndicator V x = (r : EReal)) ↔ x ∈ V ∧ ∃ r : ℝ, f x = (r : EReal)",
+    "statement_hash": "4a0d5bd07182a76279e21ef48d9ee0fd4a058b1a52a7ca4f63224493679c1330",
+    "declaration": "BanditRL.OnlineConvex.finite_add_indicator_iff",
+    "file": "BanditRLProof\\OnlineConstraintFiniteLoss.lean",
+    "source_status": "source-reviewed",
+    "dependencies": [
+      {
+        "kind": "lean",
+        "name": "BanditRL.OnlineConvex.extendedIndicator",
+        "status": "compiled"
+      },
+      {
+        "kind": "review",
+        "name": "source-reader",
+        "status": "accepted"
+      }
+    ]
+  },
+  "dag": {
+    "nodes": [
+      {
+        "id": "ONLINE-FINITE-LOSS-20261005",
+        "kind": "lean",
+        "status": "accepted",
+        "dependencies": [
+          {
+            "kind": "lean",
+            "name": "BanditRL.OnlineConvex.extendedIndicator",
+            "status": "compiled"
+          },
+          {
+            "kind": "review",
+            "name": "source-reader",
+            "status": "accepted"
+          }
+        ],
+        "dispatch_count": 0
+      }
+    ]
+  },
+  "last_accepted_verifier": {
+    "trial_index": 3,
+    "time": "2026-10-05T11:31:35+00:00",
+    "task": "ONLINE-FINITE-LOSS-20261005",
+    "role": "reviewer",
+    "kind": "review",
+    "status": "accepted",
+    "lean": "",
+    "notes": "Two fixed terminals accepted by distinct final reviewer; precise native attempt binding added after flag validation failure. Chapter/book incomplete.",
+    "run_id": "online-finite-loss-20261005"
+  },
+  "memory_policy": {
+    "recent_role_relevant_limit": 5,
+    "explicit_verified_lemma_ids": [],
+    "whole_history_default": false
+  },
+  "shadow_gate": {
+    "status": "pending",
+    "analyzed_trial_rows": 4,
+    "mismatches": [],
+    "replay_transitions": 0
+  },
+  "mutation_policy": {
+    "canonical_path_queue": true,
+    "cross_process_lock": true,
+    "same_file_serialized": true,
+    "disjoint_files_parallel": true
+  },
+  "autonomous_execution": {
+    "enabled": false,
+    "requires_deterministic_gates": true,
+    "requires_explicit_user_request": true
+  }
+}
