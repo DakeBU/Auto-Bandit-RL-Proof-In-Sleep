@@ -1,6 +1,16 @@
 import BanditRLProof.OnlineGradientDescent
 import Mathlib.Topology.MetricSpace.Bounded
 
+/-!
+The variable-step recurrence is shared by both OGD interfaces. The historical
+performance theorems below use `RegularLoss`, which requires convexity on an open
+differentiability neighborhood. The source-facing bounds in
+`BanditRL.OnlineGradientDescentSource` instead accept convexity on the feasible
+set and ambient derivatives there; `source_to_feasible` produces these premises
+from a supplied extension differentiable on an arbitrary open neighborhood.
+They use this same `iterateVariable` and retain the negative terminal residual.
+-/
+
 noncomputable section
 open Set Finset
 open scoped InnerProductSpace

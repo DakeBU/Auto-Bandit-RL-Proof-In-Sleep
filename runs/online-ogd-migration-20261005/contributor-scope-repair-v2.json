@@ -1,0 +1,25 @@
+{
+  "status": "repair-authored",
+  "failed_gate": "contributor-exact-v2-02",
+  "candidate_manifest_snapshot": "runs/online-ogd-migration-20261005/leaves/pre-contributor-repair-manifest-v2.json",
+  "candidate_manifest_sha256": "d0b817ffc45964a5f247b8dfc3c19d1c56464cef063fec90bfb306a5e2cad00d",
+  "actual_production_scope": [
+    "BanditRLProof.lean",
+    "BanditRLProof/OnlineGradientDescent.lean",
+    "BanditRLProof/OnlineGradientDescentVariable.lean",
+    "BanditRLProof/OnlineGradientDescentSource.lean",
+    "website/content/chapters.json",
+    "website/content/readings.json",
+    "website/content/highlights.json"
+  ],
+  "tested_nonproduction_paths": [
+    "Tests.lean",
+    "Tests/OnlineGradientDescentSourceCanary.lean"
+  ],
+  "old_variable_raw_before_sha256": "674bbb07ace34bfb03019fa6a933d3ea02cf7ebf0972e1e36a9c65b82efe772f",
+  "old_variable_snapshot": "runs/online-ogd-migration-20261005/leaves/pre-integration-BanditRLProof--OnlineGradientDescentVariable.lean.txt",
+  "old_variable_raw_after_sha256": "9fd385b55d76ff0fe5e1988d553007fb46f59f6864e5534ec867a7c820ecbea0",
+  "old_variable_code_tokens_unchanged": true,
+  "reason": "Actual checker only permits changed protected/production paths. Tests are evidence rather than production manifest paths. Retained variable API receives the same explicit historical stronger-regularity qualification as the fixed module; all old code/header tokens remain unchanged. No source boundary or theorem weakening.",
+  "pending": "Fresh root/Tests/full harness, commit and actual exact-base contributor rerun; final reader independently checks comment delta and raw supersession."
+}

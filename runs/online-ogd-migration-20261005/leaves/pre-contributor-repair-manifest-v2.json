@@ -17,6 +17,8 @@
     "BanditRLProof/OnlineGradientDescent.lean",
     "BanditRLProof/OnlineGradientDescentVariable.lean",
     "BanditRLProof/OnlineGradientDescentSource.lean",
+    "Tests.lean",
+    "Tests/OnlineGradientDescentSourceCanary.lean",
     "website/content/chapters.json",
     "website/content/readings.json",
     "website/content/highlights.json"
@@ -217,12 +219,11 @@
   "truth_boundary": "Supplied ambient extension on arbitrary open U containing V; convexity only on V. No extension existence or extension-independent gradient is claimed for thin V. Old RegularLoss assumes convexity on an open neighborhood and remains a valid stronger interface; old16 statements/bodies independently reviewed without rewriting historical contracts. Fixed terminal needs no bounded V and includes T0 cancellation. Variable terminal needs positive nonincreasing finite-prefix eta and T>=1, uses eta(T-1), allows zero diameter. Tuned D,G,T positive and gradient bounds refer to the same actual tuned run. The max-exp canary proves one open U is nonconvex, not that every alternative convex open U is impossible. Deterministic pathwise bound only; no randomized-law claim. Two historical OGD files audited here; remaining historical production migration and full Chapter2 enumeration remain mandatory. Local compilation/stacked PR do not update main/live.",
   "verification": {
     "focused_checks": [
-      "12 actual public proofs,2 definitions,30 public canary theorems,75 unique actual #check/#print axioms standard-or-none,12 actual public safe-fence checks.",
-      "Tests.lean imports Tests/OnlineGradientDescentSourceCanary.lean; these tested paths are not classified as production by the actual contributor checker."
+      "12 actual public proofs,2 definitions,30 public canary theorems,75 unique actual #check/#print axioms standard-or-none,12 actual public safe-fence checks."
     ],
-    "bandit_check": "Combined root9087jobs, Tests9228jobs and complete tools/bandit.py check passed:466 tests/7 existing skips. Source-comment qualification only, fresh integrated gate follows.",
+    "bandit_check": "Combined root9087jobs and Tests9228jobs passed; complete tools/bandit.py check pending.",
     "site_build": "lean-verified only after applicable full Lean/harness gate; generated_site untouched.",
-    "site_check": "Exact stacked manifest scope repaired after real failure; clean registry/reader/immutable gates pending.",
+    "site_check": "Clean registry/reader/final immutable gates pending.",
     "independent_review": "Distinct required automated semantic actors, requested Astra/medium; runtime model not independently attested; no human/external review."
   },
   "contributor": {
