@@ -1,0 +1,126 @@
+{
+  "schema_version": 1,
+  "mode": "shadow-read-only",
+  "analyzed_at": "2026-10-05T12:49:56+00:00",
+  "trials_path": "E:\\ABRL\\worktrees\\research-online-book\\runs\\online-optimality-migration-20261005\\accepted-scoped-trials-v1.jsonl",
+  "trial_rows": 2,
+  "status_counts": {
+    "accepted": 1,
+    "compiled": 1
+  },
+  "inferred_frontier": {
+    "selected_task": "ONLINE-OPTIMALITY-MIGRATION-20261005",
+    "selected_leaf": "ONLINE-OPTIMALITY-MIGRATION-20261005",
+    "source_status": "accepted",
+    "last_accepted_verifier": {
+      "trial_index": 1,
+      "time": "2026-10-05T12:49:55+00:00",
+      "task": "ONLINE-OPTIMALITY-MIGRATION-20261005",
+      "role": "reviewer",
+      "kind": "review",
+      "status": "accepted",
+      "lean": "",
+      "notes": "Same named actual compiled reuse bundle accepted after separate finalsource/reader and integratedgates;4retainedcontracts/no newproofs, no chapter/bookcompletion/timingexperimentclaim.",
+      "run_id": "online-optimality-migration-20261005"
+    }
+  },
+  "memory_digest": {
+    "path": "E:\\ABRL\\worktrees\\research-online-book\\runs\\online-optimality-migration-20261005\\memory-digest-accepted-v1.md",
+    "task": ""
+  },
+  "recorded_frontier": {
+    "schema_version": 1,
+    "record_id": "frontier-723cf71ba5b7c98d",
+    "updated_at": "2026-10-05T12:49:56+00:00",
+    "root_objective": "Persistent Orabona Chapters1-16 Goal; only retained optimality chain accepted, Chapter2/book incomplete",
+    "current_leaf": {
+      "id": "ONLINE-OPTIMALITY-MIGRATION-20261005",
+      "kind": "lean",
+      "status": "accepted",
+      "statement": "theorem theorem_2_8 (f : E → EReal) (V U : Set E) (hV : Convex ℝ V) (hne : V.Nonempty) (x : E) (hx : x ∈ V) (hU : IsOpen U) (hVU : V ⊆ U) (hfin : ∀ z ∈ U, f z ≠ ⊤ ∧ f z ≠ ⊥) (hf : ConvexOn ℝ V (fun z => (f z).toReal)) (hd : DifferentiableOn ℝ (fun z => (f z).toReal) U) : IsMinOn f V x ↔ ∀ y ∈ V, 0 ≤ inner ℝ (gradient (fun z => (f z).toReal) x) (y - x)",
+      "statement_hash": "51f3cfbe81af8317a1330596632cefc6b74a4a707a2891f9962960990924cc05",
+      "declaration": "BanditRL.OnlineConvex.theorem_2_8",
+      "file": "BanditRLProof/OnlineConvexOptimality.lean",
+      "source_status": "source-reviewed",
+      "dependencies": [
+        {
+          "kind": "lean",
+          "name": "BanditRL.OnlineConvex.minOn_real_iff_gradient",
+          "status": "compiled"
+        },
+        {
+          "kind": "lean",
+          "name": "BanditRL.OnlineConvex.minOn_finitePart_iff",
+          "status": "compiled"
+        },
+        {
+          "kind": "review",
+          "name": "source-reader",
+          "status": "accepted"
+        }
+      ]
+    },
+    "dag": {
+      "nodes": [
+        {
+          "id": "ONLINE-OPTIMALITY-MIGRATION-20261005",
+          "kind": "lean",
+          "status": "accepted",
+          "dependencies": [
+            {
+              "kind": "lean",
+              "name": "BanditRL.OnlineConvex.minOn_real_iff_gradient",
+              "status": "compiled"
+            },
+            {
+              "kind": "lean",
+              "name": "BanditRL.OnlineConvex.minOn_finitePart_iff",
+              "status": "compiled"
+            },
+            {
+              "kind": "review",
+              "name": "source-reader",
+              "status": "accepted"
+            }
+          ],
+          "dispatch_count": 0
+        }
+      ]
+    },
+    "last_accepted_verifier": {
+      "trial_index": 1,
+      "time": "2026-10-05T12:49:55+00:00",
+      "task": "ONLINE-OPTIMALITY-MIGRATION-20261005",
+      "role": "reviewer",
+      "kind": "review",
+      "status": "accepted",
+      "lean": "",
+      "notes": "Same named actual compiled reuse bundle accepted after separate finalsource/reader and integratedgates;4retainedcontracts/no newproofs, no chapter/bookcompletion/timingexperimentclaim.",
+      "run_id": "online-optimality-migration-20261005"
+    },
+    "memory_policy": {
+      "recent_role_relevant_limit": 5,
+      "explicit_verified_lemma_ids": [],
+      "whole_history_default": false
+    },
+    "shadow_gate": {
+      "status": "pending",
+      "analyzed_trial_rows": 2,
+      "mismatches": [],
+      "replay_transitions": 0
+    },
+    "mutation_policy": {
+      "canonical_path_queue": true,
+      "cross_process_lock": true,
+      "same_file_serialized": true,
+      "disjoint_files_parallel": true
+    },
+    "autonomous_execution": {
+      "enabled": false,
+      "requires_deterministic_gates": true,
+      "requires_explicit_user_request": true
+    }
+  },
+  "mismatches": [],
+  "would_mutate": false
+}
