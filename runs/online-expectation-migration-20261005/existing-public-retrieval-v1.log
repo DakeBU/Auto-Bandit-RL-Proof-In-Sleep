@@ -1,0 +1,14 @@
+BanditRL.OnlineConvex.signedExpectation [def] BanditRLProof/OnlineExpectation.lean:19
+  def signedExpectation (μ : Measure Ω) (f : Ω → EReal) : EReal
+BanditRL.OnlineConvex.signedExpectation_coe_integrable [theorem] BanditRLProof/OnlineExpectation.lean:43
+  theorem signedExpectation_coe_integrable (μ : Measure Ω) (f : Ω → ℝ) (hf : Integrable f μ) : signedExpectation μ (fun ω => (f ω : EReal)) = ((∫ ω, f ω ∂μ : ℝ) : EReal)
+BanditRL.OnlineConvex.signedExpectation_of_nonneg [theorem] BanditRLProof/OnlineExpectation.lean:53
+  theorem signedExpectation_of_nonneg (μ : Measure Ω) (f : Ω → EReal) (hf : ∀ᵐ ω ∂μ, 0 ≤ f ω) : signedExpectation μ f = (positiveIntegral μ f : EReal)
+BanditRL.OnlineConvex.signedExpectation_eq_top [theorem] BanditRLProof/OnlineExpectation.lean:66
+  theorem signedExpectation_eq_top (μ : Measure Ω) (f : Ω → EReal) (hp : positiveIntegral μ f = ∞) (hn : negativeIntegral μ f ≠ ∞) : signedExpectation μ f = ⊤
+BanditRL.OnlineConvex.theorem_2_9 [theorem] BanditRLProof/OnlineJensen.lean:27
+  theorem theorem_2_9 (μ : Measure Ω) [IsProbabilityMeasure μ] (f : E → EReal) (hbot : ∀ x, f x ≠ ⊥) (hf : IsConvexExtended f) (hfm : Measurable f) (X : Ω → E) (hXm : Measurable X) (hX : Integrable X μ) (hdom : ∀ᵐ ω ∂μ, X ω ∈ effectiveDomain f) : f (∫ ω, X ω ∂μ) ≤ signedExpectation μ (fun ω => f (X ω))
+Tests.OnlineExpectation.signed_two_atoms [theorem] Tests/OnlineExpectationCanary.lean:15
+  theorem signed_two_atoms : signedExpectation twoAtoms (fun x : ℝ => (x : EReal)) = ((2 : ℝ) : EReal)
+Tests.OnlineExpectation.finite_values_infinite_integral [theorem] Tests/OnlineExpectationCanary.lean:46
+  theorem finite_values_infinite_integral : signedExpectation Measure.count growing = ⊤ ∧ growing 0 = 1 ∧ growing 1 = 2 ∧ (∀ n, growing n ≠ ⊤ ∧ growing n ≠ ⊥)

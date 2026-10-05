@@ -1,0 +1,1 @@
+Select necessary signed-expectation representation dependency before Jensen. Retain positive-infinite branch; arbitrary measure foundation canary is not a probability Jensen example. Stabilize exact definition semantics/finite part legitimacy and all7helpers before retained body replay; single lower route, required distinct actors GPT6Astra/medium.

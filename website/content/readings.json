@@ -2293,7 +2293,7 @@
         "title": "Online Learning: A Modern Introduction Using Convex Optimization",
         "authors": "Francesco Orabona",
         "edition": "arXiv:1912.13213v10, 21 June 2026",
-        "sections": "Section2.1.1, Theorem2.9 proof dependency (full source theorem mapped separately)",
+        "sections": "Section2.1.1, necessary representation dependency of Theorem2.9; seven library helpers and three definitions, not printed source results",
         "pages": "printedp11/PDF23",
         "pdf_page": 23,
         "url": "https://arxiv.org/pdf/1912.13213v10"
@@ -2301,15 +2301,15 @@
       "notation": [
         {
           "term": "positiveIntegral",
-          "meaning": "The ENNReal integral of the positive part."
+          "meaning": "Total ENNReal lower integral of f.toENNReal on arbitrary measure/sample space; no function measurability, integrability, probability or normalization premise in the definition."
         },
         {
           "term": "negativeIntegral",
-          "meaning": "The negative-part ENNReal integral; the shared Jensen prerequisite proves it finite under source assumptions."
+          "meaning": "Total ENNReal lower integral of (-f).toENNReal, the magnitude of the negative part. A separate Jensen producer must prove this finite under source assumptions."
         },
         {
           "term": "signedExpectation",
-          "meaning": "Positive minus negative integral in EReal; at least one part must be finite for mathematical use."
+          "meaning": "Unnormalized EReal difference of the two parts. Legitimate signed-integral interpretation needs appropriate measurability and at least one finite part. Both infinite gives formal bottom here, not a valid signed expectation."
         }
       ],
       "algorithm": {
@@ -2318,15 +2318,15 @@
         "steps": [
           {
             "title": "Split positive and negative parts",
-            "detail": "Both parts are nonnegative extended integrals."
+            "detail": "Both parts are total nonnegative extended lower integrals, even without a supplied measurability premise; this does not certify classical measurable expectation semantics."
           },
           {
             "title": "Prove a finite part",
-            "detail": "Integrable real functions have both parts finite. Full Jensen will need an affine lower bound to prove the negative part finite."
+            "detail": "Actual Bochner Integrable real f includes a.e. strong measurability and finite norm integral, proving both parts finite and exact embedded-real compatibility. This does not extend to a nonintegrable default-zero Bochner integral. Jensen must separately produce finite negative part via an affine minorant; loss integrability is not a source premise."
           },
           {
             "title": "Retain infinite positive mass",
-            "detail": "If the positive part is infinite and the negative part finite, the signed result is positive infinity."
+            "detail": "A.e. nonnegativity alone gives the formal negative-zero reduction without extra measurable/integrable premises. The positive-infinite helper separately retains negative part != infinity, excluding both-infinite arithmetic."
           }
         ]
       },
@@ -2338,14 +2338,14 @@
       ],
       "source_theorems": [
         {
-          "label": "Theorem2.9: Jensen inequality (shared source theorem)",
+          "label": "Theorem2.9: separately mapped parent Jensen endpoint",
           "pages": "printedp11",
           "pdf_page": 23,
           "url": "https://arxiv.org/pdf/1912.13213v10",
           "math": "f(\\mathbb E X)\\le\\mathbb E[f(X)]",
           "fallback": "A measurable convex extended-real loss at the mean is bounded by its possibly infinite expected loss.",
           "plain": "Only X is assumed integrable; loss integrability and a closed domain are not assumed.",
-          "relationship": "This page explains a dependency of the shared theorem_2_9, mapped in Source Jensen. It is not an additional numbered theorem attributed to the book.",
+          "relationship": "This page revalidates seven representation helpers and three definitions, not seven printed results or Jensen itself. The historical shared theorem_2_9 proof is retained and compiled; it and its affine-minorant/nonclosed-barycenter dependencies require separate distinct semantic revalidation. This foundation receipt does not accept that parent or its negative-part producer.",
           "contract": {
             "model": "Finite-dimensional real random vectors under a probability law.",
             "assumptions": "Measurable convex loss never negative infinity; measurable integrable X lies in the effective domain almost surely.",
@@ -2355,18 +2355,18 @@
           },
           "local_status": {
             "status": "compiled",
-            "label": "Dependency and shared Jensen source theorem compiled",
-            "boundary": "This dependency page does not imply completion of Chapter2."
+            "label": "Representation foundations recompiled; historical parent retained for separate revalidation",
+            "boundary": "Only seven retained library proofs and three unchanged definitions are reviewed here; source Theorem2.9, later dependencies, Chapter2 and the whole book are not accepted by this package."
           }
         }
       ],
       "worked_example": {
         "title": "Finite values can have an infinite integral",
-        "intro": "The representation canary integrates n+1 over natural numbers with counting measure; a second test integrates the identity over atoms at -1 and 3.",
+        "intro": "The identity integral over dirac(-1)+dirac(3) is 2 under a measure of mass TWO, not probability expectation1. Growing n+1 under infinite counting measure tests the positive-infinite signed-integral branch; neither law is a Jensen probability instance.",
         "steps": [
           {
             "title": "Keep signed finite values",
-            "detail": "The two-atom integral combines negative and positive values to give two.",
+            "detail": "Both signed atoms contribute to the unnormalized integral2. There is no division by total mass2 in these definitions.",
             "math": "(-1)+3=2",
             "fallback": "Both signs contribute; this measure has total mass two."
           },
@@ -2378,13 +2378,13 @@
           },
           {
             "title": "Separate the source theorem",
-            "detail": "Counting measure is not a probability measure. The separate Source Jensen canary uses a geometric probability law for infinite expected loss.",
+            "detail": "Counting measure has infinite mass and is not a probability law. The historical Source Jensen geometric probability canary is separate and requires its own distinct revalidation.",
             "math": "\\mu(\\mathbb N)=+\\infty",
             "fallback": "This is a foundation test, not a full Jensen instance."
           }
         ],
         "takeaway": "The representation preserves both finite signed integrals and legitimate infinite results.",
-        "boundary": "This is a dependency example. The full theorem and its finite, infinite-probability and nonclosed-domain canaries are mapped in Source Jensen."
+        "boundary": "Only these nonprobability foundation canaries are freshly replayed in this package. The probability-law infinite-loss and nonclosed-domain parent canaries remain separate review obligations."
       }
     },
     {

@@ -1,0 +1,15 @@
+import BanditRLProof
+#check @BanditRL.OnlineConvex.positiveIntegral
+#check @BanditRL.OnlineConvex.negativeIntegral
+#check @BanditRL.OnlineConvex.signedExpectation
+#check @BanditRL.OnlineConvex.positiveIntegral_coe
+#check @BanditRL.OnlineConvex.negativeIntegral_coe
+#check @BanditRL.OnlineConvex.positiveIntegral_coe_ne_top
+#check @BanditRL.OnlineConvex.negativeIntegral_coe_ne_top
+#check @BanditRL.OnlineConvex.signedExpectation_coe_integrable
+#check @BanditRL.OnlineConvex.signedExpectation_of_nonneg
+#check @BanditRL.OnlineConvex.signedExpectation_eq_top
+#check @MeasureTheory.integral_eq_lintegral_pos_part_sub_lintegral_neg_part
+#check @MeasureTheory.lintegral_ofReal_ne_top_iff_integrable
+#check @EReal.sub_top
+#check @EReal.top_sub

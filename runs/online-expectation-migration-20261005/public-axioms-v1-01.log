@@ -1,0 +1,63 @@
+@BanditRL.OnlineConvex.positiveIntegral : {Ω : Type u_1} →
+  [inst : MeasurableSpace Ω] → MeasureTheory.Measure Ω → (Ω → EReal) → ENNReal
+'BanditRL.OnlineConvex.positiveIntegral' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.negativeIntegral : {Ω : Type u_1} →
+  [inst : MeasurableSpace Ω] → MeasureTheory.Measure Ω → (Ω → EReal) → ENNReal
+'BanditRL.OnlineConvex.negativeIntegral' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.signedExpectation : {Ω : Type u_1} →
+  [inst : MeasurableSpace Ω] → MeasureTheory.Measure Ω → (Ω → EReal) → EReal
+'BanditRL.OnlineConvex.signedExpectation' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.positiveIntegral_coe : ∀ {Ω : Type u_1} [inst : MeasurableSpace Ω] (μ : MeasureTheory.Measure Ω)
+  (f : Ω → ℝ), (BanditRL.OnlineConvex.positiveIntegral μ fun ω => ↑(f ω)) = ∫⁻ (ω : Ω), ENNReal.ofReal (f ω) ∂μ
+'BanditRL.OnlineConvex.positiveIntegral_coe' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.negativeIntegral_coe : ∀ {Ω : Type u_1} [inst : MeasurableSpace Ω] (μ : MeasureTheory.Measure Ω)
+  (f : Ω → ℝ), (BanditRL.OnlineConvex.negativeIntegral μ fun ω => ↑(f ω)) = ∫⁻ (ω : Ω), ENNReal.ofReal (-f ω) ∂μ
+'BanditRL.OnlineConvex.negativeIntegral_coe' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.positiveIntegral_coe_ne_top : ∀ {Ω : Type u_1} [inst : MeasurableSpace Ω]
+  (μ : MeasureTheory.Measure Ω) (f : Ω → ℝ),
+  MeasureTheory.Integrable f μ → (BanditRL.OnlineConvex.positiveIntegral μ fun ω => ↑(f ω)) ≠ ⊤
+'BanditRL.OnlineConvex.positiveIntegral_coe_ne_top' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.negativeIntegral_coe_ne_top : ∀ {Ω : Type u_1} [inst : MeasurableSpace Ω]
+  (μ : MeasureTheory.Measure Ω) (f : Ω → ℝ),
+  MeasureTheory.Integrable f μ → (BanditRL.OnlineConvex.negativeIntegral μ fun ω => ↑(f ω)) ≠ ⊤
+'BanditRL.OnlineConvex.negativeIntegral_coe_ne_top' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.signedExpectation_coe_integrable : ∀ {Ω : Type u_1} [inst : MeasurableSpace Ω]
+  (μ : MeasureTheory.Measure Ω) (f : Ω → ℝ),
+  MeasureTheory.Integrable f μ → (BanditRL.OnlineConvex.signedExpectation μ fun ω => ↑(f ω)) = ↑(∫ (ω : Ω), f ω ∂μ)
+'BanditRL.OnlineConvex.signedExpectation_coe_integrable' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.signedExpectation_of_nonneg : ∀ {Ω : Type u_1} [inst : MeasurableSpace Ω]
+  (μ : MeasureTheory.Measure Ω) (f : Ω → EReal),
+  (∀ᵐ (ω : Ω) ∂μ, 0 ≤ f ω) → BanditRL.OnlineConvex.signedExpectation μ f = ↑(BanditRL.OnlineConvex.positiveIntegral μ f)
+'BanditRL.OnlineConvex.signedExpectation_of_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.signedExpectation_eq_top : ∀ {Ω : Type u_1} [inst : MeasurableSpace Ω]
+  (μ : MeasureTheory.Measure Ω) (f : Ω → EReal),
+  BanditRL.OnlineConvex.positiveIntegral μ f = ⊤ →
+    BanditRL.OnlineConvex.negativeIntegral μ f ≠ ⊤ → BanditRL.OnlineConvex.signedExpectation μ f = ⊤
+'BanditRL.OnlineConvex.signedExpectation_eq_top' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineExpectation.twoAtoms : MeasureTheory.Measure ℝ
+'Tests.OnlineExpectation.twoAtoms' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineExpectation.identity_integrable : MeasureTheory.Integrable (fun x => x) Tests.OnlineExpectation.twoAtoms
+'Tests.OnlineExpectation.identity_integrable' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineExpectation.signed_two_atoms : (BanditRL.OnlineConvex.signedExpectation Tests.OnlineExpectation.twoAtoms
+    fun x => ↑x) =
+  ↑2
+'Tests.OnlineExpectation.signed_two_atoms' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineExpectation.growing : ℕ → EReal
+'Tests.OnlineExpectation.growing' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineExpectation.growing_nonnegative : ∀ (n : ℕ), 0 ≤ Tests.OnlineExpectation.growing n
+'Tests.OnlineExpectation.growing_nonnegative' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineExpectation.growing_positive_infinite : BanditRL.OnlineConvex.positiveIntegral MeasureTheory.Measure.count
+    Tests.OnlineExpectation.growing =
+  ⊤
+'Tests.OnlineExpectation.growing_positive_infinite' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineExpectation.growing_negative_zero : BanditRL.OnlineConvex.negativeIntegral MeasureTheory.Measure.count
+    Tests.OnlineExpectation.growing =
+  0
+'Tests.OnlineExpectation.growing_negative_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineExpectation.finite_values_infinite_integral : BanditRL.OnlineConvex.signedExpectation
+      MeasureTheory.Measure.count Tests.OnlineExpectation.growing =
+    ⊤ ∧
+  Tests.OnlineExpectation.growing 0 = 1 ∧
+    Tests.OnlineExpectation.growing 1 = 2 ∧
+      ∀ (n : ℕ), Tests.OnlineExpectation.growing n ≠ ⊤ ∧ Tests.OnlineExpectation.growing n ≠ ⊥
+'Tests.OnlineExpectation.finite_values_infinite_integral' depends on axioms: [propext, Classical.choice, Quot.sound]

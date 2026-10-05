@@ -1,0 +1,20 @@
+import BanditRLProof.OnlineConvexExtended
+import Mathlib.MeasureTheory.Integral.Bochner.Basic
+import Mathlib.MeasureTheory.Constructions.BorelSpace.Real
+
+noncomputable section
+open Set Filter MeasureTheory
+open scoped ENNReal
+namespace BanditRL.OnlineConvex
+variable {Ω : Type*} [MeasurableSpace Ω]
+
+def positiveIntegral (μ : Measure Ω) (f : Ω → EReal) : ℝ≥0∞ :=
+  ∫⁻ ω, (f ω).toENNReal ∂μ
+
+def negativeIntegral (μ : Measure Ω) (f : Ω → EReal) : ℝ≥0∞ :=
+  ∫⁻ ω, (-f ω).toENNReal ∂μ
+
+/-- Signed positive-minus-negative expectation. Mathematical use requires at least one
+part to be finite; Jensen's source assumptions will prove the negative part finite. -/
+def signedExpectation (μ : Measure Ω) (f : Ω → EReal) : EReal :=
+  (positiveIntegral μ f : EReal) - (negativeIntegral μ f : EReal)

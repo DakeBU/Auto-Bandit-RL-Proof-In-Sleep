@@ -1,0 +1,163 @@
+.lake/packages/mathlib/Mathlib/MeasureTheory/Integral/Bochner/Basic.lean SHA256 ce6b984f1a4b0ba00688574d9e90785a5d5a7f7c27c3230c501909792d0e2495
+471:       hF_meas h_bound bound_integrable h_cont
+472:   · simp [integral, hG, continuous_const]
+473: 
+474: /-- The Bochner integral of a real-valued function `f : α → ℝ` is the difference between the
+475:   integral of the positive part of `f` and the integral of the negative part of `f`. -/
+476: theorem integral_eq_lintegral_pos_part_sub_lintegral_neg_part {f : α → ℝ} (hf : Integrable f μ) :
+477:     ∫ a, f a ∂μ =
+478:       ENNReal.toReal (∫⁻ a, .ofReal (f a) ∂μ) - ENNReal.toReal (∫⁻ a, .ofReal (-f a) ∂μ) := by
+479:   let f₁ := hf.toL1 f
+480:   -- Go to the `L¹` space
+481:   have eq₁ : ENNReal.toReal (∫⁻ a, ENNReal.ofReal (f a) ∂μ) = ‖Lp.posPart f₁‖ := by
+482:     rw [L1.norm_def]
+483:     congr 1
+484:     apply lintegral_congr_ae
+485:     filter_upwards [Lp.coeFn_posPart f₁, hf.coeFn_toL1] with _ h₁ h₂
+486:     rw [h₁, h₂, ENNReal.ofReal]
+487:     congr 1
+488:     apply NNReal.eq
+489:     rw [Real.nnnorm_of_nonneg (le_max_right _ _)]
+490:     rw [Real.coe_toNNReal', NNReal.coe_mk]
+491:   -- Go to the `L¹` space
+.lake/packages/mathlib/Mathlib/MeasureTheory/Function/L1Space/Integrable.lean SHA256 e38fe37ad58e7a3d606e87419f5e02972526c4b7ac84378b85dac1148c34a437
+921: lemma integrable_toReal_iff {f : α → ℝ≥0∞} (hf : AEMeasurable f μ) (hf_ne_top : ∀ᵐ x ∂μ, f x ≠ ∞) :
+922:     Integrable (fun x ↦ (f x).toReal) μ ↔ ∫⁻ x, f x ∂μ ≠ ∞ := by
+923:   rw [Integrable, hasFiniteIntegral_toReal_iff hf_ne_top]
+924:   simp only [hf.ennreal_toReal.aestronglyMeasurable, ne_eq, true_and]
+925: 
+926: lemma lintegral_ofReal_ne_top_iff_integrable {f : α → ℝ}
+927:     (hfm : AEStronglyMeasurable f μ) (hf : 0 ≤ᵐ[μ] f) :
+928:     ∫⁻ a, ENNReal.ofReal (f a) ∂μ ≠ ∞ ↔ Integrable f μ := by
+929:   rw [Integrable, hasFiniteIntegral_iff_ofReal hf]
+930:   simp [hfm]
+931: 
+932: end ENNReal
+933: 
+934: section PosPart
+935: 
+936: /-! ### Lemmas used for defining the positive part of an `L¹` function -/
+937: 
+938: 
+939: @[fun_prop]
+940: theorem Integrable.pos_part {f : α → ℝ} (hf : Integrable f μ) :
+941:     Integrable (fun a => max (f a) 0) μ := by
+942:   constructor <;> fun_prop
+943: 
+944: @[fun_prop]
+945: theorem Integrable.neg_part {f : α → ℝ} (hf : Integrable f μ) :
+946:     Integrable (fun a => max (-f a) 0) μ :=
+947:   hf.neg.pos_part
+948: 
+949: end PosPart
+950: 
+951: section IsBoundedSMul
+952: 
+953: variable {𝕜 : Type*}
+.lake/packages/mathlib/Mathlib/Data/EReal/Operations.lean SHA256 50717cddbcd70f8650cf25c4bd37f07e07de14ee8117099a4d9f7aee6d36a791
+326: proof_wanted recENNReal_neg_coe_ennreal {motive : EReal → Sort*} (coe : ∀ x : ℝ≥0∞, motive x)
+327:     (neg_coe : ∀ x : ℝ≥0∞, 0 < x → motive (-x)) {x : ℝ≥0∞} (hx : 0 < x) :
+328:     recENNReal coe neg_coe (-x) = neg_coe x hx
+329: 
+330: /-!
+331: ### Subtraction
+332: 
+333: Subtraction on `EReal` is defined by `x - y = x + (-y)`. Since addition is badly behaved at some
+334: points, so is subtraction. There is no standard algebraic typeclass involving subtraction that is
+335: registered on `EReal`, beyond `SubNegZeroMonoid`, because of this bad behavior.
+336: -/
+337: 
+338: @[simp]
+339: theorem bot_sub (x : EReal) : ⊥ - x = ⊥ :=
+340:   bot_add x
+341: 
+342: @[simp]
+343: theorem sub_top (x : EReal) : x - ⊤ = ⊥ :=
+344:   add_bot x
+345: 
+346: @[simp]
+347: theorem top_sub_bot : (⊤ : EReal) - ⊥ = ⊤ :=
+348:   rfl
+349: 
+350: @[simp]
+351: theorem top_sub_coe (x : ℝ) : (⊤ : EReal) - x = ⊤ :=
+352:   rfl
+353: 
+354: @[simp]
+355: theorem coe_sub_bot (x : ℝ) : (x : EReal) - ⊥ = ⊤ :=
+356:   rfl
+357: 
+358: @[simp]
+359: lemma sub_bot {x : EReal} (h : x ≠ ⊥) : x - ⊥ = ⊤ := by
+360:   cases x <;> tauto
+361: 
+362: @[simp]
+363: lemma top_sub {x : EReal} (hx : x ≠ ⊤) : ⊤ - x = ⊤ := by
+364:   cases x <;> tauto
+365: 
+366: @[simp]
+367: lemma sub_self {x : EReal} (h_top : x ≠ ⊤) (h_bot : x ≠ ⊥) : x - x = 0 := by
+368:   cases x <;> simp_all [← coe_sub]
+369: 
+370: lemma sub_self_le_zero {x : EReal} : x - x ≤ 0 := by
+.lake/packages/mathlib/Mathlib/Data/EReal/Basic.lean SHA256 bf69a9ed4bc39134bbefac1a43b187e2f1e66fd43f352d0810ab89474f054922
+681: theorem coe_ennreal_nsmul (n : ℕ) (x : ℝ≥0∞) : (↑(n • x) : EReal) = n • (x : EReal) :=
+682:   map_nsmul (⟨⟨(↑), coe_ennreal_zero⟩, coe_ennreal_add⟩ : ℝ≥0∞ →+ EReal) _ _
+683: 
+684: /-! ### toENNReal -/
+685: 
+686: /-- `x.toENNReal` returns `x` if it is nonnegative, `0` otherwise. -/
+687: noncomputable def toENNReal (x : EReal) : ℝ≥0∞ :=
+688:   if x = ⊤ then ⊤
+689:   else ENNReal.ofReal x.toReal
+690: 
+691: @[simp] lemma toENNReal_top : (⊤ : EReal).toENNReal = ⊤ := rfl
+692: 
+693: @[simp]
+694: lemma toENNReal_of_ne_top {x : EReal} (hx : x ≠ ⊤) : x.toENNReal = ENNReal.ofReal x.toReal :=
+695:   if_neg hx
+696: 
+697: @[simp]
+698: lemma toENNReal_eq_top_iff {x : EReal} : x.toENNReal = ⊤ ↔ x = ⊤ := by
+699:   by_cases h : x = ⊤
+700:   · simp [h]
+701:   · simp [h, toENNReal]
+702: 
+703: lemma toENNReal_ne_top_iff {x : EReal} : x.toENNReal ≠ ⊤ ↔ x ≠ ⊤ := toENNReal_eq_top_iff.not
+704: 
+705: @[simp]
+706: lemma toENNReal_of_nonpos {x : EReal} (hx : x ≤ 0) : x.toENNReal = 0 := by
+707:   rw [toENNReal, if_neg (fun h ↦ ?_)]
+708:   · exact ENNReal.ofReal_of_nonpos (toReal_nonpos hx)
+709:   · exact zero_ne_top <| top_le_iff.mp <| h ▸ hx
+710: 
+711: lemma toENNReal_bot : (⊥ : EReal).toENNReal = 0 := toENNReal_of_nonpos bot_le
+712: lemma toENNReal_zero : (0 : EReal).toENNReal = 0 := toENNReal_of_nonpos le_rfl
+713: 
+714: lemma toENNReal_eq_zero_iff {x : EReal} : x.toENNReal = 0 ↔ x ≤ 0 := by
+715:   induction x <;> simp [toENNReal]
+716: 
+717: lemma toENNReal_ne_zero_iff {x : EReal} : x.toENNReal ≠ 0 ↔ 0 < x := by
+718:   simp [toENNReal_eq_zero_iff.not]
+719: 
+720: @[simp]
+721: lemma toENNReal_pos_iff {x : EReal} : 0 < x.toENNReal ↔ 0 < x := by
+722:   rw [pos_iff_ne_zero, toENNReal_ne_zero_iff]
+723: 
+724: @[simp]
+725: lemma coe_toENNReal {x : EReal} (hx : 0 ≤ x) : (x.toENNReal : EReal) = x := by
+726:   rw [toENNReal]
+727:   by_cases h_top : x = ⊤
+728:   · rw [if_pos h_top, h_top]
+729:     rfl
+730:   rw [if_neg h_top]
+731:   simp only [coe_ennreal_ofReal, hx, toReal_nonneg, max_eq_left]
+732:   exact coe_toReal h_top fun _ ↦ by simp_all only [le_bot_iff, zero_ne_bot]
+733: 
+734: lemma coe_toENNReal_eq_max {x : EReal} : x.toENNReal = max 0 x := by
+735:   rcases le_total 0 x with (hx | hx)
+736:   · rw [coe_toENNReal hx, max_eq_right hx]
+737:   · rw [toENNReal_of_nonpos hx, max_eq_left hx, coe_ennreal_zero]
+738: 
+739: @[simp]
+740: lemma toENNReal_coe {x : ℝ≥0∞} : (x : EReal).toENNReal = x := by
