@@ -1,0 +1,141 @@
+Tests/OnlineUnitScalingCanary.lean:16:39: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  Inv ℕ
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+Tests/OnlineUnitScalingCanary.lean:18:39: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  Inv ℕ
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+Tests/OnlineUnitScalingCanary.lean:20:31: error: unexpected token ':'; expected ')'
+Tests/OnlineUnitScalingCanary.lean:24:10: error: unexpected token ':'; expected ')'
+Tests/OnlineUnitScalingCanary.lean:38:2: error: Type mismatch: After simplification, term
+  hg
+ has type
+  gradient (fun z => 1000 * z) x = 1000 * gradient (fun z => z) (1000 * x)
+but is expected to have type
+  gradient (fun z => 1000 * z) x = 1000
+Tests/OnlineUnitScalingCanary.lean:41:2: error: Type mismatch: After simplification, term
+  affine_subdifferential 1 0 x
+ has type
+  SourceSubdifferential (fun y => ↑⟪1, y⟫_ℝ) x = {1}
+but is expected to have type
+  SourceSubdifferential (loss t) x = {1}
+Tests/OnlineUnitScalingCanary.lean:72:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  output V (scaledEta 1000 ?η) (fun s => scaledLoss 1000 (?loss s)) (1000⁻¹ • ?x₁) (scaledPolicy 1000 ?p) ?t
+in the target expression
+  good 1 = -1 / 1000
+
+⊢ good 1 = -1 / 1000
+Tests/OnlineUnitScalingCanary.lean:78:2: error: 'change' tactic failed, pattern
+  1000 * bad 1 = ?m.33
+is not definitionally equal to target
+  1000 • output V eta (fun s => scaledLoss 1000 (loss s)) (1000⁻¹ • 0) (scaledPolicy 1000 policy) 1 =
+    -(1000 ^ 2 * eta 0)
+Tests/OnlineUnitScalingCanary.lean:89:7: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  Inv ℕ
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+Tests/OnlineUnitScalingCanary.lean:90:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  selected V (scaledEta 1000 ?η) (fun s => scaledLoss 1000 (?loss s)) (1000⁻¹ • ?x₁) (scaledPolicy 1000 ?p) ?t
+in the target expression
+  selected V (scaledEta 1000 eta) (fun s => scaledLoss 1000 (loss s)) (1000⁻¹ • 0) (scaledPolicy 1000 policy) 0 = 1000
+
+⊢ selected V (scaledEta 1000 eta) (fun s => scaledLoss 1000 (loss s)) (1000⁻¹ • 0) (scaledPolicy 1000 policy) 0 = 1000
+Tests/OnlineUnitScalingCanary.lean:95:7: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  Inv ℕ
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+Tests/OnlineUnitScalingCanary.lean:96:2: error: (deterministic) timeout at `isDefEq`, maximum number of heartbeats (200000) has been reached
+
+Note: Use `set_option maxHeartbeats <num>` to set the limit.
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
+Tests/OnlineUnitScalingCanary.lean:104:7: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  Inv ℕ
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+Tests/OnlineUnitScalingCanary.lean:104:53: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  Inv ℕ
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+Tests/OnlineUnitScalingCanary.lean:105:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  regret V (scaledEta 1000 ?η) (fun s => scaledLoss 1000 (?loss s)) (1000⁻¹ • ?x₁) (scaledPolicy 1000 ?p) (1000⁻¹ • ?u)
+    ?T
+in the target expression
+  regret V (scaledEta 1000 eta) (fun s => scaledLoss 1000 (loss s)) (1000⁻¹ • 0) (scaledPolicy 1000 policy)
+      (1000⁻¹ • -2) 1 =
+    2
+
+⊢ regret V (scaledEta 1000 eta) (fun s => scaledLoss 1000 (loss s)) (1000⁻¹ • 0) (scaledPolicy 1000 policy)
+      (1000⁻¹ • -2) 1 =
+    2
+Tests/OnlineUnitScalingCanary.lean:112:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  output V ?η loss 0 policy 1
+in the target expression
+  ‖old 1 - -2‖ ^ 2 = 1
+
+⊢ ‖old 1 - -2‖ ^ 2 = 1
+Tests/OnlineUnitScalingCanary.lean:117:43: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  Inv ℕ
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+Tests/OnlineUnitScalingCanary.lean:119:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ∑ t ∈ Finset.range ?T,
+    ‖selected V (scaledEta 1000 ?η) (fun s => scaledLoss 1000 (?loss s)) (1000⁻¹ • ?x₁) (scaledPolicy 1000 ?p) t‖ ^ 2
+in the target expression
+  ∑ t ∈ Finset.range 1,
+      ‖selected V (scaledEta 1000 eta) (fun s => scaledLoss 1000 (loss s)) (1000⁻¹ • 0) (scaledPolicy 1000 policy) t‖ ^
+        2 =
+    1000000
+
+⊢ ∑ t ∈ Finset.range 1,
+      ‖selected V (scaledEta 1000 eta) (fun s => scaledLoss 1000 (loss s)) (1000⁻¹ • 0) (scaledPolicy 1000 policy) t‖ ^
+        2 =
+    1000000
+Tests/OnlineUnitScalingCanary.lean:122:27: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  Inv ℕ
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+Tests/OnlineUnitScalingCanary.lean:122:46: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  Inv ℕ
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+Tests/OnlineUnitScalingCanary.lean:123:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ‖1000⁻¹ • ?x - 1000⁻¹ • ?u‖ ^ 2
+in the target expression
+  ‖1000⁻¹ • 0 - 1000⁻¹ • -2‖ ^ 2 = 4 / 1000000
+
+⊢ ‖1000⁻¹ • 0 - 1000⁻¹ • -2‖ ^ 2 = 4 / 1000000
+Tests/OnlineUnitScalingCanary.lean:128:7: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  Inv ℕ
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+Tests/OnlineUnitScalingCanary.lean:128:53: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  Inv ℕ
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+Tests/OnlineUnitScalingCanary.lean:132:2: error: (deterministic) timeout at `isDefEq`, maximum number of heartbeats (200000) has been reached
+
+Note: Use `set_option maxHeartbeats <num>` to set the limit.
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
+Tests/OnlineUnitScalingCanary.lean:153:7: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  Inv ℕ
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+Tests/OnlineUnitScalingCanary.lean:162:7: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  Inv ℕ
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+Tests/OnlineUnitScalingCanary.lean:162:53: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  Inv ℕ
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+Tests/OnlineUnitScalingCanary.lean:167:7: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  Inv ℕ
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+Tests/OnlineUnitScalingCanary.lean:167:53: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  Inv ℕ
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.

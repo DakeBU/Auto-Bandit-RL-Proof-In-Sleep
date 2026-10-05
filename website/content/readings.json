@@ -5610,6 +5610,194 @@
         "takeaway": "The universal scalar minimum is proved with fixed coefficients; the actual OGD counterexample demonstrates why it cannot select a future-informed online optimizer.",
         "boundary": "This package proves the scalar minimization with its two coefficients fixed. It does not choose an online step size using future gradients, or minimize actual regret across trajectories rerun with different eta. The original sharp fixed-step OGD bound, including its negative terminal-distance term, remains in the shared library. This calculation minimizes the coarser two-term bound. Chapter 2, the older production migration and Chapters 3–16 remain required. Compilation, package acceptance, PR delivery and merged/live status are separate; no merged/live update is claimed."
       }
+    },
+    {
+      "slug": "online-unit-scaling",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10, 21 June 2026",
+        "sections": "Section2.2, unnumbered dimensional analysis and meters-to-kilometers OSD example; printed21–22 / PDF33–34",
+        "pages": "printed pp.21–22; PDF pp.33–34",
+        "pdf_page": 33,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "Two separate models",
+          "meaning": "An additive group records multiplicative unit exponents. Real scalar maps separately convert actual numerical coordinates."
+        },
+        {
+          "term": "Transported policy",
+          "meaning": "E is a finite-dimensional real inner-product space; V is the already shared fullSpace, with actual nearest projection. New coordinates y=x/c use f′(y)=f(cy), g′=cg and eta′=eta/c². scaledPolicy inverse-transforms only finite past whole loss functions, the finite played-output tuple and the current whole loss, queries the original fixed exogenous p, then scales its answer by c. No future loss, comparator or horizon is supplied to p. This is deterministic full-information mathematical choice, not an executable gradient oracle. Source round1 is Lean0; output at T is the source terminal x_(T+1). T0 is allowed in structural/fixed-positive-step statements; source1/sqrtT requires T≥1."
+        },
+        {
+          "term": "Boundary",
+          "meaning": "This package formalizes the unnumbered dimensional argument and coordinate example on printed21–22, with an explicit transport of the same finite-history policy. Unit exponents are an abstract additive model, not numerical physical quantities. The numerical algorithm is the shared whole-space causal OSD recurrence. Invertible transport assumes a fixed c>0; the two real calculus helpers allow arbitrary c. Structural identities for arbitrary schedules and EReal losses are algebraic, not finite-regret guarantees for improper losses. The sharp bound requires positive eta, proper full-space subdifferentiable losses and actual played legality, and keeps the negative terminal residual. Loss-value units are unchanged. No constrained-domain transport, independent canonical-choice equivariance, randomized-law transport or universal worse-regret claim is made. Chapter2 full acceptance, older production migration and Chapters3–16 remain mandatory. Local compilation and a stacked PR do not update main/live."
+        }
+      ],
+      "algorithm": {
+        "title": "Transport the same causal learner into new coordinates",
+        "kind": "source OSD coordinate conversion with explicit policy refinement",
+        "steps": [
+          {
+            "title": "Convert coordinates and losses",
+            "detail": "Use a fixed positive c and inverse coordinates.",
+            "math": "y=x/c,\\quad f'_t(y)=f_t(cy)",
+            "fallback": "Use a fixed positive c and inverse coordinates."
+          },
+          {
+            "title": "Convert the step and observed inputs",
+            "detail": "Divide the step by c² and reconstruct original-coordinate finite observations before querying p.",
+            "math": "\\eta'_t=\\eta_t/c^2,\\quad g'_t=cg_t",
+            "fallback": "Divide the step by c² and reconstruct original-coordinate finite observations before querying p."
+          },
+          {
+            "title": "Use the actual shared update",
+            "detail": "The existing nearest projection is identity on the whole space.",
+            "math": "y_{t+1}=y_t-\\eta'_t g'_t",
+            "fallback": "The existing nearest projection is identity on the whole space."
+          }
+        ],
+        "pseudocode": {
+          "title": "Coordinate conversion without future feedback",
+          "intro": "One fixed exogenous policy is explicitly transported; an independent choice function is not assumed equivariant.",
+          "formula_label": "Correct step in new coordinates",
+          "math": "\\eta'_t=\\eta_t/c^2",
+          "fallback": "eta_new(t)=eta(t)/c² for fixed c>0.",
+          "lines": [
+            "Fix c>0 and convert initialization to x0/c.",
+            "Observe finite past whole losses, the finite played-output tuple and the current whole loss in the new coordinates.",
+            "Inverse-pull back those observed functions and multiply played points by c before querying the same original policy.",
+            "Multiply its returned support by c and use eta(t)/c² in the existing whole-space OSD update.",
+            "Compare actual outputs and regret with the converted comparator; retain proper/played-legal and positive-step hypotheses for performance."
+          ],
+          "relationship": "The source1000 example is a special case. Keeping eta numerically unchanged corresponds to the original algorithm actually run with effective schedule c² eta."
+        }
+      },
+      "teaching_route": [
+        "BanditRL.OnlineUnitScaling.unit_exponents",
+        "BanditRL.OnlineUnitScaling.subgradient_scaled",
+        "BanditRL.OnlineUnitScaling.history_scaling",
+        "BanditRL.OnlineUnitScaling.wrong_step_output",
+        "BanditRL.OnlineUnitScaling.regret_scaling",
+        "BanditRL.OnlineUnitScaling.regret_fixed_scaled"
+      ],
+      "source_theorems": [
+        {
+          "label": "Unnumbered dimensional consistency of OSD and its coarse bound",
+          "pages": "Printed21 / PDF33",
+          "pdf_page": 33,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "[g]=[\\ell]/[x],\\quad[\\eta]=[x]^2/[\\ell],\\quad[R_T]=[\\ell]",
+          "fallback": "Gradient has loss per point unit; eta has squared-point per loss unit; both regret-bound terms have loss unit.",
+          "plain": "Dimensional consistency of x−eta g determines the step dimension; the two coarse regret terms agree with the loss dimension.",
+          "relationship": "unit_exponents and regret_unit_exponents use an abstract additive exponent model. Numerical coordinate/trajectory theorems are separate.",
+          "contract": {
+            "model": "Whole-space OSD dimensional consistency; additive exponent abstraction.",
+            "assumptions": "An additive commutative group of exponents and the update consistency equation. No numerical or probabilistic performance follows from units alone.",
+            "parameters": "X is point unit exponent, L loss exponent, H step exponent; multiplication/division of units becomes addition/subtraction.",
+            "regret": "Both coarse bound terms have loss dimension; this is coherence, not a new regret inequality.",
+            "guarantee": "The exact step exponent and two loss-dimension identities."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Actual dimension identities",
+            "boundary": "This package formalizes the unnumbered dimensional argument and coordinate example on printed21–22, with an explicit transport of the same finite-history policy. Unit exponents are an abstract additive model, not numerical physical quantities. The numerical algorithm is the shared whole-space causal OSD recurrence. Invertible transport assumes a fixed c>0; the two real calculus helpers allow arbitrary c. Structural identities for arbitrary schedules and EReal losses are algebraic, not finite-regret guarantees for improper losses. The sharp bound requires positive eta, proper full-space subdifferentiable losses and actual played legality, and keeps the negative terminal residual. Loss-value units are unchanged. No constrained-domain transport, independent canonical-choice equivariance, randomized-law transport or universal worse-regret claim is made. Chapter2 full acceptance, older production migration and Chapters3–16 remain mandatory. Local compilation and a stacked PR do not update main/live."
+          }
+        },
+        {
+          "label": "Unnumbered meters-to-kilometers actual OSD example",
+          "pages": "Printed21–22 / PDF33–34",
+          "pdf_page": 33,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "y=x/1000,\\quad g_{\\rm new}=1000g,\\quad\\eta_{\\rm new}=\\eta/10^6;\\quad\\eta_{\\rm effective}=10^6\\eta",
+          "fallback": "Changing meters to kilometers requires dividing eta by one million; the same numerical eta instead multiplies its physical effect by one million.",
+          "plain": "Correct coordinate conversion preserves the entire actual history and regret; uncompensated conversion corresponds to an actually rerun original algorithm at c² eta.",
+          "relationship": "history_scaling/output_scaling/regret_scaling prove the same-run correspondence; wrong_step_output regenerates feedback on the effective-step run. The real chain rule and proper EReal support transport are explicit refinements.",
+          "contract": {
+            "model": "The shared whole-space causal OSD algorithm with one fixed exogenous support policy.",
+            "assumptions": "Fixed c>0; structural identities allow arbitrary schedules/losses. The sharp regret bound additionally requires eta>0, proper full-space support existence, and legal actual played feedback.",
+            "parameters": "The source uses c=1000. The policy receives finite past whole losses, the finite played-output tuple and current whole loss only; no comparator/horizon/future loss input.",
+            "regret": "Correctly converted comparator u/c and loss-value units unchanged; finite regret interpretation requires the performance hypotheses.",
+            "guarantee": "Exact actual histories/feedback/regret correspondence, effective schedule c² eta for the uncompensated run, and the sharp fixed-step bound retaining its terminal residual."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Actual causal trajectory and regret transport",
+            "boundary": "This package formalizes the unnumbered dimensional argument and coordinate example on printed21–22, with an explicit transport of the same finite-history policy. Unit exponents are an abstract additive model, not numerical physical quantities. The numerical algorithm is the shared whole-space causal OSD recurrence. Invertible transport assumes a fixed c>0; the two real calculus helpers allow arbitrary c. Structural identities for arbitrary schedules and EReal losses are algebraic, not finite-regret guarantees for improper losses. The sharp bound requires positive eta, proper full-space subdifferentiable losses and actual played legality, and keeps the negative terminal residual. Loss-value units are unchanged. No constrained-domain transport, independent canonical-choice equivariance, randomized-law transport or universal worse-regret claim is made. Chapter2 full acceptance, older production migration and Chapters3–16 remain mandatory. Local compilation and a stacked PR do not update main/live."
+          }
+        }
+      ],
+      "proof_bridge": {
+        "title": "Transport observed inputs, then prove the actual recurrence",
+        "summary": "Single-step algebra feeds a finite-history induction on the shared algorithm. Teaching links and actual compiled proof-value dependencies are separate.",
+        "steps": [
+          {
+            "title": "Transport an actual global support",
+            "detail": "For a proper extended-real loss, a global support at the old-coordinate point yields a global support at the new-coordinate point.",
+            "math": "g\\in\\partial f(cy)\\Longrightarrow cg\\in\\partial(f(c\\cdot))(y)",
+            "fallback": "For a proper extended-real loss, a global support at the old-coordinate point yields a global support at the new-coordinate point."
+          },
+          {
+            "title": "Correctly scaled steps commute with coordinates",
+            "detail": "The new-coordinate step eta/c² preserves the same physical update for any supplied vector.",
+            "math": "c^{-1}(x-\\eta g)=c^{-1}x-(\\eta/c^2)(cg)",
+            "fallback": "The new-coordinate step eta/c² preserves the same physical update for any supplied vector."
+          },
+          {
+            "title": "The entire actual history is preserved",
+            "detail": "Correct coordinate, loss, schedule and policy transport preserve every point in the actual shared finite history.",
+            "math": "H'_t(i)=c^{-1}H_t(i)\\quad(i\\in\\operatorname{Fin}(t+1))",
+            "fallback": "Correct coordinate, loss, schedule and policy transport preserve every point in the actual shared finite history."
+          },
+          {
+            "title": "The same-run regret is invariant",
+            "detail": "The shared converted loss-difference sums match at the converted comparator. Finite performance requires the separate proper/legal assumptions.",
+            "math": "R'_T(u/c)=R_T(u)",
+            "fallback": "The shared converted loss-difference sums match at the converted comparator. Finite performance requires the separate proper/legal assumptions."
+          },
+          {
+            "title": "Retain the sharp actual regret guarantee",
+            "detail": "For positive eta and proper full-space subdifferentiable losses with legal played feedback, the transformed run satisfies the same sharp fixed-step bound.",
+            "math": "R'_T(u/c)\\le{\\|x_0-u\\|^2\\over2\\eta}+{\\eta\\over2}\\sum_{t<T}\\|g_t\\|^2-{\\|x_T-u\\|^2\\over2\\eta}",
+            "fallback": "For positive eta and proper full-space subdifferentiable losses with legal played feedback, the transformed run satisfies the same sharp fixed-step bound."
+          }
+        ],
+        "boundary": "This package formalizes the unnumbered dimensional argument and coordinate example on printed21–22, with an explicit transport of the same finite-history policy. Unit exponents are an abstract additive model, not numerical physical quantities. The numerical algorithm is the shared whole-space causal OSD recurrence. Invertible transport assumes a fixed c>0; the two real calculus helpers allow arbitrary c. Structural identities for arbitrary schedules and EReal losses are algebraic, not finite-regret guarantees for improper losses. The sharp bound requires positive eta, proper full-space subdifferentiable losses and actual played legality, and keeps the negative terminal residual. Loss-value units are unchanged. No constrained-domain transport, independent canonical-choice equivariance, randomized-law transport or universal worse-regret claim is made. Chapter2 full acceptance, older production migration and Chapters3–16 remain mandatory. Local compilation and a stacked PR do not update main/live."
+      },
+      "worked_example": {
+        "title": "A genuine nonzero one-million path difference",
+        "intro": "The named canaries use actual current real gradients on the full real line, loss f(x)=x, eta=1 and x0=0.",
+        "steps": [
+          {
+            "title": "Correctly scale the gradient and step",
+            "detail": "The actual original gradient is1, the transformed selected vector is1000, and eta_new is1/1000000.",
+            "math": "g=1,\\quad g'=1000,\\quad\\eta'=10^{-6}",
+            "fallback": "The actual original gradient is1, the transformed selected vector is1000, and eta_new is1/1000000."
+          },
+          {
+            "title": "Compare actual next outputs",
+            "detail": "The correctly scaled output is−1/1000; the unchanged numerical step gives−1000, which back-converts to−1000000 meters.",
+            "math": "y_1^{\\rm good}=-1/1000,\\quad y_1^{\\rm bad}=-1000",
+            "fallback": "The correctly scaled output is−1/1000; the unchanged numerical step gives−1000, which back-converts to−1000000 meters."
+          },
+          {
+            "title": "Keep the sharp endpoint",
+            "detail": "At u=−2 and T=1 actual regret is2, actual energy is1 and terminal squared distance is1; the sharp RHS is exactly2.",
+            "math": "R_1=2=4/2+1/2-1/2",
+            "fallback": "At u=−2 and T=1 actual regret is2, actual energy is1 and terminal squared distance is1; the sharp RHS is exactly2."
+          },
+          {
+            "title": "Check boundaries",
+            "detail": "c1 preserves output; c0 has no inverse loss identity; T0 fixed-positive-step endpoints cancel but1/sqrt0 is not a positive source schedule.",
+            "math": "c>0,\\quad\\eta>0,\\quad T\\ge1\\text{ for }1/\\sqrt T",
+            "fallback": "c1 preserves output; c0 has no inverse loss identity; T0 fixed-positive-step endpoints cancel but1/sqrt0 is not a positive source schedule."
+          }
+        ],
+        "takeaway": "Unit conversion preserves the physical learner only when its step and observed policy inputs are transported coherently. A nonzero actual path can change under an uncompensated step; no universal worse-regret statement is made.",
+        "boundary": "This package formalizes the unnumbered dimensional argument and coordinate example on printed21–22, with an explicit transport of the same finite-history policy. Unit exponents are an abstract additive model, not numerical physical quantities. The numerical algorithm is the shared whole-space causal OSD recurrence. Invertible transport assumes a fixed c>0; the two real calculus helpers allow arbitrary c. Structural identities for arbitrary schedules and EReal losses are algebraic, not finite-regret guarantees for improper losses. The sharp bound requires positive eta, proper full-space subdifferentiable losses and actual played legality, and keeps the negative terminal residual. Loss-value units are unchanged. No constrained-domain transport, independent canonical-choice equivariance, randomized-law transport or universal worse-regret claim is made. Chapter2 full acceptance, older production migration and Chapters3–16 remain mandatory. Local compilation and a stacked PR do not update main/live."
+      }
     }
   ]
 }

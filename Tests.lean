@@ -137,3 +137,4 @@ import Tests.OnlineGuessingSubgradientCanary
 import Tests.OnlineSubgradientPolicyCanary
 import Tests.OnlineLinearizationCanary
 import Tests.OnlineOptimalStepCanary
+import Tests.OnlineUnitScalingCanary

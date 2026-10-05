@@ -1,0 +1,189 @@
+{
+  "schema_version": "2.0",
+  "id": "ONLINE-UNIT-SCALING-20261004",
+  "route": "online-learning/chapter-2",
+  "frontier_cell": "online-unit-scaling",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10, 21 June 2026; SHA256 cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchor": "Section2.2, unnumbered dimensional analysis and meters-to-kilometers OSD example; printed21–22 / PDF33–34",
+    "url": "https://arxiv.org/pdf/1912.13213v10"
+  },
+  "target": "Unnumbered dimensional consistency and actual whole-space coordinate/policy transport, effective uncompensated schedule and sharp fixed-step regret.",
+  "affected_files": [
+    "BanditRLProof.lean",
+    "BanditRLProof/OnlineUnitScaling.lean",
+    "website/content/books.json",
+    "website/content/chapters.json",
+    "website/content/readings.json",
+    "website/content/highlights.json",
+    "website/scripts/build_site.py",
+    "website/scripts/check_site.py"
+  ],
+  "declarations": [
+    "BanditRL.OnlineUnitScaling.V",
+    "BanditRL.OnlineUnitScaling.scaledLoss",
+    "BanditRL.OnlineUnitScaling.scaledEta",
+    "BanditRL.OnlineUnitScaling.scaledPolicy",
+    "BanditRL.OnlineUnitScaling.unit_exponents",
+    "BanditRL.OnlineUnitScaling.regret_unit_exponents",
+    "BanditRL.OnlineUnitScaling.inverse_loss",
+    "BanditRL.OnlineUnitScaling.proper_scaled_loss",
+    "BanditRL.OnlineUnitScaling.subgradient_scaled",
+    "BanditRL.OnlineUnitScaling.subdifferentiable_scaled",
+    "BanditRL.OnlineUnitScaling.hasGradientAt_scaled",
+    "BanditRL.OnlineUnitScaling.gradient_scaled",
+    "BanditRL.OnlineUnitScaling.step_scaling",
+    "BanditRL.OnlineUnitScaling.wrong_step_scaling",
+    "BanditRL.OnlineUnitScaling.scaled_eta_positive",
+    "BanditRL.OnlineUnitScaling.history_scaling",
+    "BanditRL.OnlineUnitScaling.output_scaling",
+    "BanditRL.OnlineUnitScaling.selected_scaling",
+    "BanditRL.OnlineUnitScaling.legal_feedback_scaling",
+    "BanditRL.OnlineUnitScaling.loss_value_scaling",
+    "BanditRL.OnlineUnitScaling.regret_scaling",
+    "BanditRL.OnlineUnitScaling.wrong_step_output",
+    "BanditRL.OnlineUnitScaling.distance_square_scaling",
+    "BanditRL.OnlineUnitScaling.energy_scaling",
+    "BanditRL.OnlineUnitScaling.upper_bound_scaling",
+    "BanditRL.OnlineUnitScaling.regret_fixed_scaled"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Actual memory/declaration/mathlib retrieval and API type checks before proof bodies."
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineConvex.theorem_2_28",
+      "BanditRL.OnlineHuber.fullSpace",
+      "BanditRL.OnlineHuber.project_fullSpace",
+      "BanditRL.OnlineSubgradientPolicy.history_succ",
+      "BanditRL.OnlineSubgradientPolicy.regret_fixed",
+      "HasFDerivAt.comp"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineUnitScaling.V",
+      "BanditRL.OnlineUnitScaling.scaledLoss",
+      "BanditRL.OnlineUnitScaling.scaledEta",
+      "BanditRL.OnlineUnitScaling.scaledPolicy",
+      "BanditRL.OnlineUnitScaling.unit_exponents",
+      "BanditRL.OnlineUnitScaling.regret_unit_exponents",
+      "BanditRL.OnlineUnitScaling.inverse_loss",
+      "BanditRL.OnlineUnitScaling.proper_scaled_loss",
+      "BanditRL.OnlineUnitScaling.subgradient_scaled",
+      "BanditRL.OnlineUnitScaling.subdifferentiable_scaled",
+      "BanditRL.OnlineUnitScaling.hasGradientAt_scaled",
+      "BanditRL.OnlineUnitScaling.gradient_scaled",
+      "BanditRL.OnlineUnitScaling.step_scaling",
+      "BanditRL.OnlineUnitScaling.wrong_step_scaling",
+      "BanditRL.OnlineUnitScaling.scaled_eta_positive",
+      "BanditRL.OnlineUnitScaling.history_scaling",
+      "BanditRL.OnlineUnitScaling.output_scaling",
+      "BanditRL.OnlineUnitScaling.selected_scaling",
+      "BanditRL.OnlineUnitScaling.legal_feedback_scaling",
+      "BanditRL.OnlineUnitScaling.loss_value_scaling",
+      "BanditRL.OnlineUnitScaling.regret_scaling",
+      "BanditRL.OnlineUnitScaling.wrong_step_output",
+      "BanditRL.OnlineUnitScaling.distance_square_scaling",
+      "BanditRL.OnlineUnitScaling.energy_scaling",
+      "BanditRL.OnlineUnitScaling.upper_bound_scaling",
+      "BanditRL.OnlineUnitScaling.regret_fixed_scaled"
+    ],
+    "known_consumers": [
+      "UnitScalingProbe.physical_path_difference",
+      "UnitScalingProbe.correct_regret",
+      "UnitScalingProbe.actual_sharp_bound"
+    ],
+    "planned_consumers": [
+      "Complete Chapter2 semantic/production migration and later invariance analyses."
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Use existing whole-space projection, support and actual causal history APIs; no independent per-book project or duplicated public recursion."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/normal_blind",
+    "source_reviewer": "/root/source_reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Distinct source contract and actual22 public bodies/30 canaries accepted with explicit dimension/support/policy/sharp/T0 refinements. Final reader/package gates separately pending; no human/external review claim."
+  },
+  "graph_contribution": {
+    "lean_graph": "new-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Explicit coordinate transport of the same shared causal recurrence; no separately certified functor.",
+    "focus_targets": [
+      "BanditRL.OnlineUnitScaling.V",
+      "BanditRL.OnlineUnitScaling.scaledLoss",
+      "BanditRL.OnlineUnitScaling.scaledEta",
+      "BanditRL.OnlineUnitScaling.scaledPolicy",
+      "BanditRL.OnlineUnitScaling.unit_exponents",
+      "BanditRL.OnlineUnitScaling.regret_unit_exponents",
+      "BanditRL.OnlineUnitScaling.inverse_loss",
+      "BanditRL.OnlineUnitScaling.proper_scaled_loss",
+      "BanditRL.OnlineUnitScaling.subgradient_scaled",
+      "BanditRL.OnlineUnitScaling.subdifferentiable_scaled",
+      "BanditRL.OnlineUnitScaling.hasGradientAt_scaled",
+      "BanditRL.OnlineUnitScaling.gradient_scaled",
+      "BanditRL.OnlineUnitScaling.step_scaling",
+      "BanditRL.OnlineUnitScaling.wrong_step_scaling",
+      "BanditRL.OnlineUnitScaling.scaled_eta_positive",
+      "BanditRL.OnlineUnitScaling.history_scaling",
+      "BanditRL.OnlineUnitScaling.output_scaling",
+      "BanditRL.OnlineUnitScaling.selected_scaling",
+      "BanditRL.OnlineUnitScaling.legal_feedback_scaling",
+      "BanditRL.OnlineUnitScaling.loss_value_scaling",
+      "BanditRL.OnlineUnitScaling.regret_scaling",
+      "BanditRL.OnlineUnitScaling.wrong_step_output",
+      "BanditRL.OnlineUnitScaling.distance_square_scaling",
+      "BanditRL.OnlineUnitScaling.energy_scaling",
+      "BanditRL.OnlineUnitScaling.upper_bound_scaling",
+      "BanditRL.OnlineUnitScaling.regret_fixed_scaled"
+    ],
+    "visual_review": "Actual compiled dependencies and reader acceptance separately pending.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: source-qualified unit argument in the same registry; Chapter2 and whole-book remain incomplete.",
+    "banditrlwiki": "no-change-with-reason: no new Bandit setting.",
+    "results_ledger": "no-change-with-reason: Bandit results unchanged; Online source inventory records this package.",
+    "roadmap": "no-change-with-reason: persistent whole-book Goal active, global historical SGB pointer unchanged.",
+    "website_surfaces": [
+      "website/content/books.json",
+      "website/content/chapters.json",
+      "website/content/readings.json",
+      "website/content/highlights.json",
+      "website/scripts/build_site.py",
+      "website/scripts/check_site.py"
+    ],
+    "inherited_source_caption": "Two unnumbered source cards and22 public notes; not22 separately printed source theorems."
+  },
+  "truth_boundary": "This package formalizes the unnumbered dimensional argument and coordinate example on printed21–22, with an explicit transport of the same finite-history policy. Unit exponents are an abstract additive model, not numerical physical quantities. The numerical algorithm is the shared whole-space causal OSD recurrence. Invertible transport assumes a fixed c>0; the two real calculus helpers allow arbitrary c. Structural identities for arbitrary schedules and EReal losses are algebraic, not finite-regret guarantees for improper losses. The sharp bound requires positive eta, proper full-space subdifferentiable losses and actual played legality, and keeps the negative terminal residual. Loss-value units are unchanged. No constrained-domain transport, independent canonical-choice equivariance, randomized-law transport or universal worse-regret claim is made. Chapter2 full acceptance, older production migration and Chapters3–16 remain mandatory. Local compilation and a stacked PR do not update main/live.",
+  "verification": {
+    "focused_checks": [
+      "Actual public22 bodies focused3327jobs; actual canary30 focused9086jobs;62 named #check/#print axioms standard3-or-none."
+    ],
+    "bandit_check": "Root9086 and Tests9226 passed; complete tools/bandit.py check currently running.",
+    "site_build": "Use lean-verified only after the applicable combined gate; generated_site untouched.",
+    "site_check": "Registry/reader/immutable acceptance separately pending.",
+    "independent_review": "Distinct required automated semantic actors, requested Astra/medium; no human/external review."
+  },
+  "contributor": {
+    "name": "Codex for Ji Cheng",
+    "role": "Formalization/integration with distinct required automated semantic actors; source attribution retained"
+  }
+}
