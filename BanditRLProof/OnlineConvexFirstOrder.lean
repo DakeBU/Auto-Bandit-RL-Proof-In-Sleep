@@ -1,3 +1,18 @@
+/-
+Source: Orabona, Online Learning, arXiv:1912.13213v10, Theorem 2.7,
+printed p.11 / PDF p.23. The source terminal assumes globally no negative
+infinity, convexity, ambient interior of effectiveDomain and differentiability
+at x. It compares every y, including the positive-infinity branch outside
+the domain. The canonical real function F(z)=(f z).toReal agrees with f only
+locally near x after embedding, as proved by finitePart_eventually; infinite
+values are not globally replaced by zero. Complete real inner-product spaces
+explicitly generalize the source Euclidean setting.
+finitePart_eventually is a local representation helper; convex_gradient_lower_bound
+is a generalized everywhere-real ConvexOn helper on V with x,y in V and an
+ambient derivative at x. It needs neither open V nor the extended-real local
+representation bridge. These helpers are not additional printed theorems.
+This migration preserves all three headers, proof tokens and canary bytes.
+-/
 import BanditRLProof.OnlineConvexExtended
 import Mathlib.Analysis.Convex.Deriv
 import Mathlib.Analysis.Calculus.Gradient.Basic

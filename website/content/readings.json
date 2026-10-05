@@ -2102,11 +2102,11 @@
       "notation": [
         {
           "term": "gradient",
-          "meaning": "The gradient of the finite real representation, which agrees locally with f."
+          "meaning": "Canonical F(z)=(f(z)).toReal is everywhere real-valued; its embedding equals f locally near the ambient-interior point x, under global noBottom. The gradient is of this F at x."
         },
         {
           "term": "interior domain",
-          "meaning": "An open neighborhood where all function values are finite."
+          "meaning": "Ambient interior of {z | f(z)<positive infinity}; global noBottom makes values finite on that neighborhood. Relative interior is not substituted."
         },
         {
           "term": "y - x",
@@ -2119,11 +2119,11 @@
         "steps": [
           {
             "title": "Identify a finite neighborhood",
-            "detail": "Interior membership and exclusion of negative infinity give a locally exact real representation."
+            "detail": "Global noBottom and ambient interior supply a neighborhood identity between f and the embedding of canonical F(z)=(f(z)).toReal. This identity is local."
           },
           {
             "title": "Differentiate a line",
-            "detail": "Compare the derivative at x along the line to y with its convex secant slope."
+            "detail": "The generalized real helper assumes everywhere-real f, ConvexOn V, x/y in V and an ambient derivative at x. It uses a convex affine-line secant; V need not be open and that helper does not use the extended-real representation lemma."
           },
           {
             "title": "Keep all comparators",
@@ -2144,19 +2144,19 @@
           "url": "https://arxiv.org/pdf/1912.13213v10",
           "math": "f(x)+\\langle\\nabla f(x),y-x\\rangle\\le f(y),\\qquad\\forall y",
           "fallback": "A differentiable interior point of an extended-real convex function has a global supporting-gradient bound.",
-          "plain": "The comparator may lie outside the effective domain.",
-          "relationship": "Exact shared endpoint BanditRL.OnlineConvex.theorem_2_7; the old OGD first_order remains a real-valued specialization.",
+          "plain": "Under global noBottom, convexity, ambient-interior membership and differentiability of canonical F at x, the comparator is every y, including positive infinity outside the domain.",
+          "relationship": "Exact shared extended-real endpoint theorem_2_7; finitePart_eventually is a local representation helper and convex_gradient_lower_bound a generalized everywhere-real ConvexOn helper, not additional printed theorems. Historical OnlineGradientDescent.first_order uses stronger RegularLoss: convexity and differentiability on a convex open neighborhood containing V. Separately, OnlineGradientDescentSource.source_to_feasible derives feasible-set convexity and ambient derivatives from the source arbitrary-open differentiability neighborhood; its first_order reuses the real helper. Neither connection is an equivalence between these regularity predicates.",
           "contract": {
             "model": "Extended-real convex functions on complete real inner-product spaces, including finite-dimensional Euclidean space.",
-            "assumptions": "No negative infinity; x in interior effective domain; differentiability at x of the locally exact finite representation.",
+            "assumptions": "Global noBottom and convex real-height epigraph; x in ambient interior of effectiveDomain; DifferentiableAt of canonical F(z)=(f(z)).toReal at x. finitePart_eventually proves local embedding identity near x; no global identity with f or global convexity of F is asserted.",
             "parameters": "Every comparator y, including points outside the domain.",
             "regret": "A first-order convex-analysis inequality, not a regret theorem.",
-            "guarantee": "The source supporting-gradient lower bound with infinite outside-domain values retained."
+            "guarantee": "f(x)+embedded inner(gradient F x,y-x) <= f(y) for every y; outside-domain f(y)=positive infinity remains in the conclusion. No bounded/closed domain or global differentiability hypothesis."
           },
           "local_status": {
             "status": "compiled",
             "label": "Full extended-real supporting bound",
-            "boundary": "Later Chapter2 results remain incomplete; Jensen is mapped separately."
+            "boundary": "Theorem2.7 and two explicitly classified library helpers only; Chapter2 and the whole book remain incomplete. Later source and legacy migration obligations, including Jensen mapped separately, are still required."
           }
         }
       ],

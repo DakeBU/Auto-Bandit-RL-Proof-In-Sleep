@@ -1,0 +1,15 @@
+@BanditRL.OnlineConvex.finitePart_eventually : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [InnerProductSpace ℝ E]
+  [CompleteSpace E] (f : E → EReal),
+  (∀ (z : E), f z ≠ ⊥) →
+    ∀ x ∈ interior (BanditRL.OnlineConvex.effectiveDomain f), ∀ᶠ (z : E) in nhds x, ↑(f z).toReal = f z
+@BanditRL.OnlineConvex.convex_gradient_lower_bound : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : CompleteSpace E] (V : Set E) (f : E → ℝ),
+  ConvexOn ℝ V f → ∀ (x y : E), x ∈ V → y ∈ V → DifferentiableAt ℝ f x → f x + inner ℝ (gradient f x) (y - x) ≤ f y
+@BanditRL.OnlineConvex.theorem_2_7 : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E]
+  [inst_2 : CompleteSpace E] (f : E → EReal),
+  (∀ (z : E), f z ≠ ⊥) →
+    BanditRL.OnlineConvex.IsConvexExtended f →
+      ∀ x ∈ interior (BanditRL.OnlineConvex.effectiveDomain f),
+        DifferentiableAt ℝ (fun z => (f z).toReal) x →
+          ∀ (y : E), f x + ↑(inner ℝ (gradient (fun z => (f z).toReal) x) (y - x)) ≤ f y
+@EReal.coe_toReal : ∀ {x : EReal}, x ≠ ⊤ → x ≠ ⊥ → ↑x.toReal = x
