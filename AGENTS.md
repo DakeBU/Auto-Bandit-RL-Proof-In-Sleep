@@ -19,9 +19,9 @@ Every collaborator and every Codex/ChatGPT/Claude agent acting for a collaborato
 4. `docs/theorem-publication-protocol.md`
 5. `docs/proof-digestion-protocol.md`
 6. `.agents/skills/bandit-substantive-advance/SKILL.md`
-6. `.agents/skills/bandit-semantic-roundtrip/SKILL.md`
-7. the relevant domain skill under `.agents/skills/`
-8. the exact route/source files being changed.
+7. `.agents/skills/bandit-semantic-roundtrip/SKILL.md`
+8. the relevant domain skill under `.agents/skills/`
+9. the exact route/source files being changed.
 
 Repository-local instructions override copied prompts from chat.
 
