@@ -1,3 +1,23 @@
+/-
+Orabona v10, printed16/PDF28: Definitions2.16/2.18, Examples2.17/2.19,
+and the required unnumbered closedness/lower-semicontinuity equivalence.
+Three retained proofs and two complete definitions; zero new math code/nodes.
+The source gives Euclidean and more generally Hausdorff sufficient scope;
+actual arbitrary topological scope is a stronger generalization, no T2 premise.
+SourceClosed uses REAL cuts; the proof derives bottom strict superlevels by
+the union of real cuts, handles top by empty, and admits both infinite values.
+No convexity/properness/no-bottom or closed-epigraph replacement is assumed.
+SourceProper itself has no topology binder; the ACTUAL proper-indicator iff
+still retains TopologicalSpace E. No Nonempty E or closed/convex V premise.
+The SAME canonical zero-on-V/top-outside extendedIndicator is reused.
+Direct indicator cuts and genuine finite witnesses prove the two indicator
+equivalences independently; reading order is not a theorem dependency chain.
+Empty ambient: closedness vacuous, properness false. Full indicator properness
+is exactly ambient nonemptiness. Bottom-improper examples use the real line.
+Whole six canary proofs and all eleven named kernel dependency checks include bottom_closed.
+All original headers/proof/definition bytes and whole canary remain fixed.
+Chapter2 and the persistent Chapters1-16 Goal remain incomplete.
+-/
 import BanditRLProof.OnlineConvexExtended
 import Mathlib.Topology.Semicontinuity.Basic
 import Mathlib.Tactic

@@ -3115,7 +3115,7 @@
         "title": "Online Learning: A Modern Introduction Using Convex Optimization",
         "authors": "Francesco Orabona",
         "edition": "arXiv:1912.13213v10,21June2026",
-        "sections": "Section2.2.1, Definitions2.16/2.18 and Examples2.17/2.19",
+        "sections": "Section2.2.1, Definitions2.16/2.18, Examples2.17/2.19 and required unnumbered closedness/LSC equivalence; four numbered anchors, three retained proofs and two definitions",
         "pages": "printed16/PDF28",
         "pdf_page": 28,
         "url": "https://arxiv.org/pdf/1912.13213v10"
@@ -3123,15 +3123,15 @@
       "notation": [
         {
           "term": "Closed function",
-          "meaning": "For every real r, the set {x | f(x)<=r} is closed. Function values may be either infinity."
+          "meaning": "SourceClosed(f) means every REAL-r sublevel is closed. Values include both infinities. Actual [TopologicalSpace E] suffices; source Euclidean/more generally Hausdorff scope is generalized, no T2 needed."
         },
         {
           "term": "Proper function",
-          "meaning": "Nowhere negative infinity and finite at some point; these are separate conditions."
+          "meaning": "SourceProper(f) is nowhere bottom AND an actual point with finite-real value. The definition has no topology binder; actual proper-indicator iff retains [TopologicalSpace E]. No Nonempty E is assumed."
         },
         {
           "term": "Extended indicator",
-          "meaning": "I_V(x)=0 on V and positive infinity outside V; not the ordinary zero-outside indicator."
+          "meaning": "The SAME canonical extendedIndicator is0 on V/top outside, distinct from ordinary Set.indicator. No closed/convex/nonempty premise on V to state either iff."
         }
       ],
       "teaching_route": [
@@ -3148,18 +3148,18 @@
           "math": "\\operatorname{SourceClosed}(f)\\iff f\\text{ is lower semicontinuous}",
           "fallback": "Take complements of real closed sublevels. The strict superlevel above negative infinity is the union of real strict superlevels; above positive infinity it is empty. This supplies every extended-real threshold.",
           "plain": "Closedness and lower semicontinuity",
-          "relationship": "Literal real-cut and finite-witness definitions, generalized from Euclidean to arbitrary topological domains. The negative-infinity threshold is derived, not assumed.",
+          "relationship": "Four numbered anchors comprise two definitions and two indicator examples, plus one REQUIRED unnumbered LSC equivalence. Three retained proofs/two full definitions/zero new math code or nodes. Source Euclidean and stated Hausdorff sufficient scope specialize actual arbitrary-topological scope, a stronger generalization. Reading order is not a proof dependency chain.",
           "contract": {
-            "model": "Extended-real functions on a topological domain, including the source Euclidean spaces.",
-            "assumptions": "No convexity, properness or separation premise for closedness. Proper means nowhere bottom and finite somewhere.",
-            "parameters": "Every cut value is real; function values include both infinities.",
-            "regret": "Not a regret claim; foundational definitions and equivalences.",
+            "model": "EReal-valued function on arbitrary topological E; source Euclidean and stated Hausdorff domains are included.",
+            "assumptions": "Only TopologicalSpace E. No T2/Hausdorff, convexity, properness, no-bottom, finite dimension or nonempty ambient premise. No closed-effective-domain or closed-epigraph substitute.",
+            "parameters": "SourceClosed quantifies REAL thresholds. LSC covers all EReal thresholds: bottom strict superlevel is the real-density union, finite cuts by complements, top empty.",
+            "regret": "Foundational definitions/equivalences, no regret or subgradient guarantee.",
             "guarantee": "Closedness and lower semicontinuity"
           },
           "local_status": {
             "status": "compiled",
-            "label": "Public closed/proper candidate",
-            "boundary": "Focused public build only; full packet acceptance tracked separately. No Chapter2 completion."
+            "label": "Retained closed/proper bodies, freshly checked",
+            "boundary": "Distinct CONTRACT/BODY, complete11namedaxes/3nativeguards and whole6canaries checked separately from combined/root/Tests/harness/site/finalreader/PR. Not Chapter2 completion; mandatory total null/incomplete and whole-book Goal active."
           }
         },
         {
@@ -3170,18 +3170,18 @@
           "math": "\\operatorname{SourceClosed}(I_V)\\iff V\\text{ is closed}",
           "fallback": "For a real cut r, the indicator sublevel is V when r>=0 and empty otherwise. In particular the cut0 recovers V.",
           "plain": "Closed constraint indicators",
-          "relationship": "Literal real-cut and finite-witness definitions, generalized from Euclidean to arbitrary topological domains. The negative-infinity threshold is derived, not assumed.",
+          "relationship": "Four numbered anchors comprise two definitions and two indicator examples, plus one REQUIRED unnumbered LSC equivalence. Three retained proofs/two full definitions/zero new math code or nodes. Source Euclidean and stated Hausdorff sufficient scope specialize actual arbitrary-topological scope, a stronger generalization. Reading order is not a proof dependency chain.",
           "contract": {
-            "model": "Extended-real functions on a topological domain, including the source Euclidean spaces.",
-            "assumptions": "No convexity, properness or separation premise for closedness. Proper means nowhere bottom and finite somewhere.",
-            "parameters": "Every cut value is real; function values include both infinities.",
-            "regret": "Not a regret claim; foundational definitions and equivalences.",
+            "model": "Same canonical zero-on-V/top-outside extendedIndicator on arbitrary topological E.",
+            "assumptions": "Only TopologicalSpace E; all V, including empty/full/nonclosed/nonconvex. Neither Vclosed nor Vnonempty is assumed for the iff.",
+            "parameters": "Direct real-r cuts equal V if r>=0 and empty if r<0; r0 yields necessity. No call to the preceding LSC theorem.",
+            "regret": "Foundational definitions/equivalences, no regret or subgradient guarantee.",
             "guarantee": "Closed constraint indicators"
           },
           "local_status": {
             "status": "compiled",
-            "label": "Public closed/proper candidate",
-            "boundary": "Focused public build only; full packet acceptance tracked separately. No Chapter2 completion."
+            "label": "Retained closed/proper bodies, freshly checked",
+            "boundary": "Distinct CONTRACT/BODY, complete11namedaxes/3nativeguards and whole6canaries checked separately from combined/root/Tests/harness/site/finalreader/PR. Not Chapter2 completion; mandatory total null/incomplete and whole-book Goal active."
           }
         },
         {
@@ -3192,45 +3192,45 @@
           "math": "\\operatorname{SourceProper}(I_V)\\iff V\\ne\\varnothing",
           "fallback": "The indicator never equals negative infinity; it has a finite real value exactly when a point of V exists.",
           "plain": "Proper constraint indicators",
-          "relationship": "Literal real-cut and finite-witness definitions, generalized from Euclidean to arbitrary topological domains. The negative-infinity threshold is derived, not assumed.",
+          "relationship": "Four numbered anchors comprise two definitions and two indicator examples, plus one REQUIRED unnumbered LSC equivalence. Three retained proofs/two full definitions/zero new math code or nodes. Source Euclidean and stated Hausdorff sufficient scope specialize actual arbitrary-topological scope, a stronger generalization. Reading order is not a proof dependency chain.",
           "contract": {
-            "model": "Extended-real functions on a topological domain, including the source Euclidean spaces.",
-            "assumptions": "No convexity, properness or separation premise for closedness. Proper means nowhere bottom and finite somewhere.",
-            "parameters": "Every cut value is real; function values include both infinities.",
-            "regret": "Not a regret claim; foundational definitions and equivalences.",
+            "model": "Same canonical indicator; SourceProper itself applies to every type without topology, while this actual iff has TopologicalSpace E.",
+            "assumptions": "No Nonempty E, closed/convex V or Vnonempty premise. Finite-somewhere and nowhere-bottom are both required.",
+            "parameters": "A finite indicator value forces membership; a member witnesses value0 and nowhere-bottom. Empty E has no proper functions; full indicator proper iff E nonempty.",
+            "regret": "Foundational definitions/equivalences, no regret or subgradient guarantee.",
             "guarantee": "Proper constraint indicators"
           },
           "local_status": {
             "status": "compiled",
-            "label": "Public closed/proper candidate",
-            "boundary": "Focused public build only; full packet acceptance tracked separately. No Chapter2 completion."
+            "label": "Retained closed/proper bodies, freshly checked",
+            "boundary": "Distinct CONTRACT/BODY, complete11namedaxes/3nativeguards and whole6canaries checked separately from combined/root/Tests/harness/site/finalreader/PR. Not Chapter2 completion; mandatory total null/incomplete and whole-book Goal active."
           }
         }
       ],
       "proof_bridge": {
         "title": "Real cuts suffice even at infinite values",
-        "summary": "The source definitions are used literally before relating them to the shared topological API.",
+        "summary": "Three independently ready retained equivalences share complete definitions and the canonical indicator. The teaching order does not assert theorem-to-theorem proof edges.",
         "steps": [
           {
             "title": "Closedness and lower semicontinuity",
-            "detail": "Take complements of real closed sublevels. The strict superlevel above negative infinity is the union of real strict superlevels; above positive infinity it is empty. This supplies every extended-real threshold.",
+            "detail": "Complement finite real cuts. EReal.exists_between_coe_real makes the bottom strict superlevel a union of real strict superlevels; top is empty. Reverse direction uses actual closed preimages. No bottom exclusion/properness/convexity/T2 premise.",
             "math": "\\operatorname{SourceClosed}(f)\\iff f\\text{ is lower semicontinuous}",
             "fallback": "Take complements of real closed sublevels. The strict superlevel above negative infinity is the union of real strict superlevels; above positive infinity it is empty. This supplies every extended-real threshold."
           },
           {
             "title": "Closed constraint indicators",
-            "detail": "For a real cut r, the indicator sublevel is V when r>=0 and empty otherwise. In particular the cut0 recovers V.",
+            "detail": "Calculate the canonical indicator real cut directly: V if r>=0, empty otherwise. Cut0 proves necessity and all exact cuts give sufficiency. This proof does not call the preceding LSC theorem.",
             "math": "\\operatorname{SourceClosed}(I_V)\\iff V\\text{ is closed}",
             "fallback": "For a real cut r, the indicator sublevel is V when r>=0 and empty otherwise. In particular the cut0 recovers V."
           },
           {
             "title": "Proper constraint indicators",
-            "detail": "The indicator never equals negative infinity; it has a finite real value exactly when a point of V exists.",
+            "detail": "A finite indicator value forces a point of V; a member gives value0 and nowhere-bottom. SourceProper core has no topology, although actual properiff keeps [TopologicalSpace E]. No closed/convex/nonempty ambient assumption.",
             "math": "\\operatorname{SourceProper}(I_V)\\iff V\\ne\\varnothing",
             "fallback": "The indicator never equals negative infinity; it has a finite real value exactly when a point of V exists."
           }
         ],
-        "boundary": "Lean generalizes the source Euclidean domain to an arbitrary topological space. No Hausdorff or convexity hypothesis is needed for these claims; no subgradient theorem is thereby proved."
+        "boundary": "Source Euclidean/more generally Hausdorff sufficient scope is strengthened to arbitrary topology. Source sublevel closedness is not a proved epigraph-closure equivalence. Actual5scopednodes213direct type/value references include2definitions, not full/canary export; no mutual theorem value edges between3proofs. Same10809registryIDsURLs expected/0new. No subgradient theorem or Chapter2 completion."
       },
       "worked_example": {
         "title": "Closedness does not imply properness",
@@ -3238,13 +3238,13 @@
         "steps": [
           {
             "title": "Constant negative infinity",
-            "detail": "Every real sublevel is the full space, hence closed; nowhere-bottom fails.",
+            "detail": "On the REAL line, constant bottom has every real sublevel full, is closed/LSC, and fails nowhere-bottom. Empty ambient is different: all functions closed but none proper since no finite witness.",
             "math": "f(x)=-\\infty:\\quad f\\text{ closed},\\quad f\\text{ not proper}",
             "fallback": "The public canary checks lower semicontinuity too."
           },
           {
             "title": "Closed interval",
-            "detail": "The zero/top indicator of [0,1] is closed and proper because the interval is closed and contains0.",
+            "detail": "The genuinely nonconstant canonical zero/top indicator of real[0,1] is closed/proper, with member0. The full indicator on arbitrary E is proper exactly when E is nonempty.",
             "math": "I_{[0,1]}\\text{ is closed and proper}",
             "fallback": "The shared extendedIndicator is used."
           },
@@ -3256,7 +3256,7 @@
           }
         ],
         "takeaway": "Topological closedness and finite-value feasibility are distinct source conditions.",
-        "boundary": "These examples do not establish convexity or subgradient existence."
+        "boundary": "Whole unchanged6proof canary: bottom closed/LSC/improper, nonconstant real interval indicator closed/proper, empty indicator improper. All11namedaxes include bottom_closed omitted by old print list;3nativeguards are separate from compilation. Empty ambient/full-set boundaries follow public statements, not additional claimed canary tests. No convexity/subgradient-existence result."
       },
       "algorithm": {
         "title": "Definitions and proof flow",
@@ -3264,15 +3264,15 @@
         "steps": [
           {
             "title": "Check all real cuts",
-            "detail": "Take complements and recover the missing infinite threshold by a union."
+            "detail": "Real-cut complements plus actual real density derive bottom strict superlevel; top empty. Includes bottom-valued losses on arbitrary topology."
           },
           {
             "title": "Evaluate indicator sublevels",
-            "detail": "Each real sublevel is the feasible set or the empty set."
+            "detail": "Calculate indicator cuts independently of the LSC theorem, without any convexity or properness premise."
           },
           {
             "title": "Separate finiteness from closedness",
-            "detail": "Properness requires a finite witness as well as excluding negative infinity."
+            "detail": "Finite witness and nowhere-bottom are distinct. Empty ambient has no witness; actual properiff topology binder is API context, not a mathematical properness condition."
           }
         ]
       }
