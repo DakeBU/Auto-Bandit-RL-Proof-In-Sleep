@@ -1,3 +1,22 @@
+/-
+Source: Orabona, Online Learning, arXiv:1912.13213v10, Example 2.10,
+printed p.12 / PDF p.24. This retained implementation uses zero-based time:
+Lean 0 is source round 1. The exceptional first coefficient is -1/2; later
+Lean odd/even coefficients are +1 and -1. Every feasible initial x0 is allowed.
+
+prefixCoefficient and linearFTLPredict are actual recursive-past definitions.
+The prefix theorem proves causality for a fixed x0. Generic positive-time
+zero-prefix ties select -1, a permitted concrete FTL selection; the source
+failure stream has no such ties. The historical objective inequality alone
+does not require feasible x0 at time 0 because both objectives are empty.
+Combine linearFTLPredict_mem with linearFTLPredict_minimizes for feasible FTL.
+
+example_2_10 proves the actual played-loss regret against comparator 0, exactly
+T - 1 - x0/2 and at least T - 3/2, for T >= 1. It is a counterexample for this
+FTL family, not a lower bound for every online algorithm. The six helpers and
+three definitions are library refinements of one printed example. This
+migration preserves all existing definition, statement and proof code.
+-/
 import BanditRLProof.OnlineLearningFTL
 import Mathlib.Tactic
 

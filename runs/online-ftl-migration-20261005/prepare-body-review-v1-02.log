@@ -1,0 +1,12 @@
+retained-body-trial-v1-02 exit 1 seconds 0.218
+Failure tail only; full raw output is retained in retained-body-trial-v1-02.log
+--status must be one of ('queued', 'running', 'executed', 'blocked', 'failed', 'compiled', 'accepted', 'rejected')
+
+Traceback (most recent call last):
+  File "runs/online-ftl-migration-20261005/prepare-body-review-v1.py", line 24, in <module>
+    gate('retained-body-trial-v1-02',sys.executable,'-X','utf8','tools/bandit.py','trial-log',
+  File "runs/online-ftl-migration-20261005/prepare-body-review-v1.py", line 11, in gate
+    def gate(label,*args):subprocess.run([sys.executable,'-X','utf8',str(run/'run-command.py'),label,*args],check=True)
+  File "C:\Users\admin\AppData\Local\Programs\Python\Python38\lib\subprocess.py", line 516, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe', '-X', 'utf8', 'runs\\online-ftl-migration-20261005\\run-command.py', 'retained-body-trial-v1-02', 'C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe', '-X', 'utf8', 'tools/bandit.py', 'trial-log', '--task', 'ONLINE-FTL-MIGRATION-20261005', '--role', 'lower', '--kind', 'build', '--status', 'passed', '--run-id', 'online-ftl-migration-20261005', '--lean', 'BanditRLProof/OnlineFTLFailure.lean', '--statement-hash', 'f8bea31d7214806d930fc1e5a670d52855b36f96a9e7ed0895eef01797d0b89b', '--reused-declaration', 'BanditRL.OnlineLearning.example_2_10', '--verifier-evidence', 'runs\\online-ftl-migration-20261005\\retained-body-elaboration-v1-01.log', '--progress-class', 'retrieval-reuse', '--notes', 'Fresh actual public body elaboration, two nondegenerate canaries and12 named axioms passed; retained7 proofs, zero new bodies; body/package review pending.']' returned non-zero exit status 1.

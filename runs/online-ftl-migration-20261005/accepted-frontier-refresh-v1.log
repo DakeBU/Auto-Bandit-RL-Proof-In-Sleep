@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "record_id": "frontier-a564bb8a915eb493",
+  "updated_at": "2026-10-05T09:41:03+00:00",
+  "root_objective": "Persistent Orabona Chapters1-16 Goal; retained FTL source package accepted only, Chapter2/book incomplete",
+  "current_leaf": {
+    "id": "ONLINE-FTL-MIGRATION-20261005",
+    "kind": "lean",
+    "status": "accepted",
+    "statement": "theorem example_2_10 (x0 : ℝ) (hx0 : x0 ∈ Icc (-1 : ℝ) 1) (T : ℕ) (hT : 0 < T) : (∑ t ∈ range T, failureCoefficient t * linearFTLPredict failureCoefficient x0 t) - (∑ t ∈ range T, failureCoefficient t * (0 : ℝ)) = (T : ℝ) - 1 - x0 / 2 ∧ (T : ℝ) - 3/2 ≤ (∑ t ∈ range T, failureCoefficient t * linearFTLPredict failureCoefficient x0 t) - (∑ t ∈ range T, failureCoefficient t * (0 : ℝ))",
+    "statement_hash": "f8bea31d7214806d930fc1e5a670d52855b36f96a9e7ed0895eef01797d0b89b",
+    "declaration": "BanditRL.OnlineLearning.example_2_10",
+    "file": "BanditRLProof/OnlineFTLFailure.lean",
+    "source_status": "accepted",
+    "dependencies": [
+      {
+        "kind": "lean",
+        "name": "BanditRL.OnlineLearning.failure_prediction",
+        "status": "compiled"
+      },
+      {
+        "kind": "review",
+        "name": "final-reader",
+        "status": "accepted"
+      },
+      {
+        "kind": "harness",
+        "name": "full-bandit",
+        "status": "passed"
+      }
+    ]
+  },
+  "dag": {
+    "nodes": [
+      {
+        "id": "ONLINE-FTL-MIGRATION-20261005",
+        "kind": "lean",
+        "status": "blocked",
+        "dependencies": [
+          {
+            "kind": "lean",
+            "name": "BanditRL.OnlineLearning.failure_prediction",
+            "status": "compiled"
+          },
+          {
+            "kind": "review",
+            "name": "final-reader",
+            "status": "accepted"
+          },
+          {
+            "kind": "harness",
+            "name": "full-bandit",
+            "status": "passed"
+          }
+        ],
+        "dispatch_count": 0
+      }
+    ]
+  },
+  "last_accepted_verifier": {
+    "trial_index": 1,
+    "time": "2026-10-05T09:41:03+00:00",
+    "task": "ONLINE-FTL-MIGRATION-20261005",
+    "role": "reviewer",
+    "kind": "review",
+    "status": "accepted",
+    "lean": "",
+    "notes": "Distinct final reader and raw binding audit accept one retained FTL source path. Seven proofs reused, zero new bodies; full466/7 and same shared registry/site passed. Chapter/book incomplete, stacked PR pending.",
+    "run_id": "online-ftl-migration-20261005"
+  },
+  "memory_policy": {
+    "recent_role_relevant_limit": 5,
+    "explicit_verified_lemma_ids": [],
+    "whole_history_default": false
+  },
+  "shadow_gate": {
+    "status": "pending",
+    "analyzed_trial_rows": 2,
+    "mismatches": [],
+    "replay_transitions": 0
+  },
+  "mutation_policy": {
+    "canonical_path_queue": true,
+    "cross_process_lock": true,
+    "same_file_serialized": true,
+    "disjoint_files_parallel": true
+  },
+  "autonomous_execution": {
+    "enabled": false,
+    "requires_deterministic_gates": true,
+    "requires_explicit_user_request": true
+  }
+}

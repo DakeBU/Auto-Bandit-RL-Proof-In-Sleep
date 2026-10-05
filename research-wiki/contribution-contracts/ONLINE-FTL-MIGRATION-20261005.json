@@ -1,0 +1,125 @@
+{
+  "schema_version": "2.0",
+  "id": "ONLINE-FTL-MIGRATION-20261005",
+  "route": "online-learning/chapter-2",
+  "frontier_cell": "online-ftl-failure",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10,21 June2026; SHA256 cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchor": "Section2.1.2 Example2.10; printed12/PDF24",
+    "url": "https://arxiv.org/pdf/1912.13213v10"
+  },
+  "target": "Independently revalidate retained causal FTL implementation and exact source counterexample; qualify source/initialization/tie/minimization boundaries without changing proof code.",
+  "affected_files": [
+    "BanditRLProof/OnlineFTLFailure.lean",
+    "website/content/readings.json",
+    "website/content/highlights.json",
+    "website/content/chapters.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineLearning.prefixCoefficient",
+    "BanditRL.OnlineLearning.linearFTLPredict",
+    "BanditRL.OnlineLearning.failureCoefficient",
+    "BanditRL.OnlineLearning.prefixCoefficient_eq_sum",
+    "BanditRL.OnlineLearning.linearFTLPredict_prefix",
+    "BanditRL.OnlineLearning.linearFTLPredict_mem",
+    "BanditRL.OnlineLearning.linearFTLPredict_minimizes",
+    "BanditRL.OnlineLearning.failure_prefixCoefficient",
+    "BanditRL.OnlineLearning.failure_prediction",
+    "BanditRL.OnlineLearning.example_2_10"
+  ],
+  "reuse_plan": {
+    "classification": "reuse",
+    "decision": "reuse_existing",
+    "searched_existing": [
+      "Native actual public declarations and actual compiled shared graph10 scope nodes/six required value pairs."
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineLearning.prefixCoefficient",
+      "BanditRL.OnlineLearning.linearFTLPredict",
+      "BanditRL.OnlineLearning.failureCoefficient",
+      "BanditRL.OnlineLearning.prefixCoefficient_eq_sum",
+      "BanditRL.OnlineLearning.linearFTLPredict_prefix",
+      "BanditRL.OnlineLearning.linearFTLPredict_mem",
+      "BanditRL.OnlineLearning.linearFTLPredict_minimizes",
+      "BanditRL.OnlineLearning.failure_prefixCoefficient",
+      "BanditRL.OnlineLearning.failure_prediction",
+      "BanditRL.OnlineLearning.example_2_10"
+    ],
+    "new_shared_declarations": [],
+    "known_consumers": [
+      "Tests.OnlineFTLFailure.six_rounds",
+      "Tests.OnlineFTLFailure.actual_predictions"
+    ],
+    "planned_consumers": [
+      "Complete Chapter2 source and historical production audits."
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Reuse the same seven proof bodies/three definitions, zero new nodes and no duplicate per-book library."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/normal_blind",
+    "source_reviewer": "/root/source_reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Distinct source-contract and actual-body reviews accepted. Fixed x0, zero-based indices and concrete generic tie selection explicit; initial feasibility separate from minimization. Final reader/package review pending; no human/external review."
+  },
+  "graph_contribution": {
+    "lean_graph": "reuse-only",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Retained FTL source counterexample, no functor claim.",
+    "focus_targets": [
+      "BanditRL.OnlineLearning.prefixCoefficient",
+      "BanditRL.OnlineLearning.linearFTLPredict",
+      "BanditRL.OnlineLearning.failureCoefficient",
+      "BanditRL.OnlineLearning.prefixCoefficient_eq_sum",
+      "BanditRL.OnlineLearning.linearFTLPredict_prefix",
+      "BanditRL.OnlineLearning.linearFTLPredict_mem",
+      "BanditRL.OnlineLearning.linearFTLPredict_minimizes",
+      "BanditRL.OnlineLearning.failure_prefixCoefficient",
+      "BanditRL.OnlineLearning.failure_prediction",
+      "BanditRL.OnlineLearning.example_2_10"
+    ],
+    "visual_review": "Reused actual compiled graph with10 unchanged FTL nodes and six required value pairs; shared registry/site final checks pending.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: same three old FTL reader nodes and URLs, with causality and feasible-minimization formulas corrected.",
+    "banditrlwiki": "no-change-with-reason: no new Bandit setting.",
+    "results_ledger": "no-change-with-reason: additive task acceptance overlay follows gates; historical source inventory untouched.",
+    "roadmap": "no-change-with-reason: whole-book Goal remains active, Chapter2 incomplete and global SGB untouched.",
+    "website_surfaces": [
+      "website/content/readings.json",
+      "website/content/highlights.json",
+      "website/content/chapters.json"
+    ]
+  },
+  "truth_boundary": "One retained source FTL example, seven existing proofs/three definitions and no new proof code. Zero-based indexing; feasible fixed initial input; concrete generic -1 tie choice; source witness later prefixes neverzero. Historical minimization inequality alone has no initial feasibility premise, supplied separately for algorithm interpretation. Exact deterministic comparator0 regret T-1-x0/2 >=T-3/2 for T>=1, not optimal-comparator equality/all-algorithm lower bound/randomized-law theorem. Remaining historical production audits/full Chapter2 source contract and Chapters3-16 mandatory. Local compilation/stacked draftPR do not update main/live.",
+  "verification": {
+    "focused_checks": [
+      "Fresh actual retained-body elaboration, two public nondegenerate canaries,12 exact named #check/#print axioms standard3-or-none, seven actual native safe guards."
+    ],
+    "bandit_check": "Fresh combined root/Tests/full harness pending.",
+    "site_build": "lean-verified only after applicable fresh combined gate; generated_site untouched.",
+    "site_check": "Clean registry/site/reader acceptance pending.",
+    "independent_review": "Three distinct required automated actors, requested GPT-6 Astra/medium; no human/external review or independently attested runtime model."
+  },
+  "contributor": {
+    "name": "Codex for Ji Cheng",
+    "role": "Formalizer/integrator with distinct required automated semantic actors; source attribution retained"
+  }
+}

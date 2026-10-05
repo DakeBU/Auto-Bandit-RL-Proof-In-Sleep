@@ -1,0 +1,18 @@
+import BanditRLProof.OnlineLearningFTL
+import Mathlib.Tactic
+
+noncomputable section
+open Set Finset
+namespace BanditRL.OnlineLearning
+
+def prefixCoefficient (z : ℕ → ℝ) : ℕ → ℝ
+  | 0 => 0
+  | t+1 => prefixCoefficient z t + z t
+
+def linearFTLPredict (z : ℕ → ℝ) (x0 : ℝ) (t : ℕ) : ℝ :=
+  if t = 0 then x0 else if prefixCoefficient z t < 0 then 1 else -1
+
+def failureCoefficient (t : ℕ) : ℝ :=
+  if t = 0 then -(1/2) else if t % 2 = 1 then 1 else -1
+
+end BanditRL.OnlineLearning
