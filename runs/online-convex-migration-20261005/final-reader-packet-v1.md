@@ -1,20 +1,4 @@
-"""Freeze final corrected readers only after actual applicable package gates."""
-from pathlib import Path
-import hashlib,json
-run=Path(__file__).parent
-def load(p):return json.loads(Path(p).read_text(encoding='utf-8'))
-def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
-def write(n,x):
-    with (run/n).open('w',encoding='utf-8',newline='\n') as f:
-        if isinstance(x,str):f.write(x+'\n')
-        else:json.dump(x,f,ensure_ascii=False,indent=2);f.write('\n')
-gates=['root-v1-01','Tests-v1-01','full-harness-v1-01','contributor-exact-v1-03','site-final02-build','site-final02-check','registry-final02-repair-v1','browser-final02','review-history-v2-01','scoped-diff-v3-01','public-axioms-v2-01','candidate-frontier-refresh-v1','candidate-frontier-shadow-v1']
-for n in gates:assert load(run/(n+'-exit.json'))['exit_code']==0,n
-full=(run/'full-harness-v1-01.log').read_text(encoding='utf-8');assert 'Ran 466 tests' in full and 'OK (skipped=7)' in full and 'check passed' in full
-contributor=(run/'contributor-exact-v1-01.log').read_text(encoding='utf-8');assert 'affected production paths: 7' in contributor and 'changed contribution contracts: 1' in contributor and 'Contributor contract passed.' in contributor and 'N/A' not in contributor
-site=Path('tmp/online-convex-migration-site-final02');manifest=load(site/'site-manifest.json');assert manifest['source_dirty'] is False and manifest['lean_verified'] is True
-registry=load(run/'registry-final02.json');assert registry['status']=='passed' and len(registry['checks'])==27 and registry['new_registry_nodes']==0
-packet='''Required distinct final source/reader/package review, requested GPT-6 Astra / medium. Search for mismatch, independently raw-rehash final-reader-inputs-v1.json. Bounded scope four retained convex modules22 proof bodies/five definitions, four actual public canary modules and53 named axiom targets; ZERO new proof/registry node count. Separate source CONTRACT and actual BODY reviews accepted-with-explicit-delta; they do not certify current readers or wholeChapter. Source Def2.2/Def2.3/Thm2.4/Examples2.5/2.6 and named p9-10 domain/indicator/four closure endpoints. Both-infinity definition, real heights, domain includes bottom, noBottom/convex domain/strict weights in Thm2.4, ordinary indicator addition noBottom, real-valued monotone composition and global Monotone g, arbitrary affine/index/empty domains. Source real Euclidean instance generalized to real modules/normed/inner-product spaces; helper bridges/laws are refinements, not22 original printed theorems.
+Required distinct final source/reader/package review, requested GPT-6 Astra / medium. Search for mismatch, independently raw-rehash final-reader-inputs-v1.json. Bounded scope four retained convex modules22 proof bodies/five definitions, four actual public canary modules and53 named axiom targets; ZERO new proof/registry node count. Separate source CONTRACT and actual BODY reviews accepted-with-explicit-delta; they do not certify current readers or wholeChapter. Source Def2.2/Def2.3/Thm2.4/Examples2.5/2.6 and named p9-10 domain/indicator/four closure endpoints. Both-infinity definition, real heights, domain includes bottom, noBottom/convex domain/strict weights in Thm2.4, ordinary indicator addition noBottom, real-valued monotone composition and global Monotone g, arbitrary affine/index/empty domains. Source real Euclidean instance generalized to real modules/normed/inner-product spaces; helper bridges/laws are refinements, not22 original printed theorems.
 
 General weighted sum uses named upperAdd=-(-a+-b), top-dominant convex-analysis addition. Rockafellar primary printed6/PDF17 supports this attributed interpretation; Orabona does NOT state it literally. Zero-times-infinity=0 scalar convention explicit, both infinity/improper/disjoint/zero/positive weights covered by current canaries. Ordinary EReal sum has actual public nonconvex spike counterexample.22 native headers and all original Lean code tokens unchanged; only four source qualification COMMENTs changed. Four canary bytes unchanged, but all freshly elaborated along with actual public modules.53 actual named axioms standard3-or-none,22 safe guards and focused build passed. Fresh combined root/Tests and full466tests7existing skips passed. Reused compiled shared-root graph27 scope nodes/13 required actual proof-value pairs, same root/toolchain/code; NO new export/canary graph. Teaching relationships differ from actual proof-value edges.
 
@@ -30,15 +14,4 @@ Site repair: site01 check failed only because closure notation had four entries 
 
 Registry helper repair: first site02 registry check failed because version substitution referenced nonexistent historical FTL site02; separate repaired helper restores exact actually-verified FTL site01 baseline, all27/native/uniqueness/Book/old-ID/URL assertions unchanged. Failed script/log remain.
 
-Write ONLY final-reader-review-v1.md/final-reader-receipt-v1.json with seven-slot comparison, per-reader correction/gap disposition, required_repairs, exact reviewed_files/reportSHA, scope and remaining mandatory obligations. Package source/reader gate only; draft PR delivery still follows decision. No chapter/book/Goal/main/live/merge/deploy certification or input edits.'''
-write('final-reader-packet-v1.md',packet)
-freeze=load(run/'draft-freeze-v1.json')
-surfaces=list(freeze['modules'])+list(freeze['canaries'])+['BanditRLProof.lean','Tests.lean','website/content/books.json','website/content/chapters.json','website/content/readings.json','website/content/highlights.json','research-wiki/contribution-contracts/ONLINE-CONVEX-MIGRATION-20261005.json','docs/contracts/online-book-v1/source-inventory.json','docs/contracts/online-book-v1/coverage.json','website/scripts/build_site.py','website/scripts/check_site.py','lean-toolchain','lakefile.lean','runs/active_frontier.json']
-paths=set(surfaces);paths.update(r['path'] for r in load(run/'public-body-inputs-v1.json')['rows'])
-paths.update(p.as_posix() for p in run.rglob('*') if p.is_file() and p.name not in ['final-reader-inputs-v1.json','final-reader-review-v1.md','final-reader-receipt-v1.json'])
-paths.update((site/n).as_posix() for n in ['site-manifest.json','books/registry.json','chapters/online-convex/index.html','chapters/online-convex-closures/index.html'])
-paths.add('tmp/online-convex-migration-reader-final02.png')
-write('final-reader-inputs-v1.json',dict(scope='four retained convex foundation modules only; finite-loss consequence/Chapter2/book still required',canonical_surfaces=surfaces,
-    site_commit=manifest['source_commit'],site_source_clean=True,retained_proofs=22,definitions=5,new_proofs=0,canary_modules=4,actual_named_axioms=53,
-    registry_scope_nodes=27,preserved_registry_nodes=registry['preserved_base_node_ids_and_urls'],rows=[dict(path=p,sha256=sha(p)) for p in sorted(paths)]))
-print('Final convex source/reader/package inputs frozen:',len(paths),'raw rows; clean site',manifest['source_commit'])
+Write ONLY final-reader-review-v1.md/final-reader-receipt-v1.json with seven-slot comparison, per-reader correction/gap disposition, required_repairs, exact reviewed_files/reportSHA, scope and remaining mandatory obligations. Package source/reader gate only; draft PR delivery still follows decision. No chapter/book/Goal/main/live/merge/deploy certification or input edits.

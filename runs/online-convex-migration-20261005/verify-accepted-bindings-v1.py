@@ -22,7 +22,7 @@ for p in inventory['canonical_surfaces']:assert sha(p)==reviewed[p]
 registry=load(run/'registry-final02.json');assert registry['status']=='passed' and len(registry['checks'])==27
 assert load(run/'finite-loss-constraint-gap-v1.json')['status']=='mandatory-pending-new-contract'
 assert load(run/'review-history-audit-v2.json')['status']=='passed'
-gates=load(run/'public-actual-bindings-v1.json')['actual_passed_gates']+['root-v1-01','Tests-v1-01','full-harness-v1-01','contributor-exact-v1-03','site-final02-build','site-final02-check','registry-final02','browser-final02','review-history-v2-01','scoped-diff-v3-01','public-axioms-v2-01','candidate-frontier-refresh-v1','candidate-frontier-shadow-v1']
+gates=load(run/'public-actual-bindings-v1.json')['actual_passed_gates']+['root-v1-01','Tests-v1-01','full-harness-v1-01','contributor-exact-v1-03','site-final02-build','site-final02-check','registry-final02-repair-v1','browser-final02','review-history-v2-01','scoped-diff-v3-01','public-axioms-v2-01','candidate-frontier-refresh-v1','candidate-frontier-shadow-v1']
 for label in gates:assert load(run/(label+'-exit.json'))['exit_code']==0,label
 diff=load(run/'scoped-diff-v3.json')
 result=dict(status='passed',raw_review_rows_verified=len(rows),rows=rows,final_fixed_input_rows=len(inventory['rows']),
