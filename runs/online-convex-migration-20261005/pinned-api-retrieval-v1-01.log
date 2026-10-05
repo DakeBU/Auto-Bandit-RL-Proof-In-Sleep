@@ -1,0 +1,21 @@
+.lake/packages/mathlib/Mathlib/Data/EReal/Basic.lean:395:theorem le_coe_toReal {x : EReal} (h : x ≠ ⊤) : x ≤ x.toReal := by
+.lake/packages/mathlib/Mathlib/Data/EReal/Basic.lean:411:    exact ⟨x.toReal, le_coe_toReal h⟩
+.lake/packages/mathlib/Mathlib/Analysis/Normed/Module/Convex.lean:22:* `convexOn_univ_norm`, `convexOn_univ_dist` : norm and distance to a fixed point is convex on
+.lake/packages/mathlib/Mathlib/Analysis/Normed/Module/Convex.lean:43:and `convexOn_univ_norm`. -/
+.lake/packages/mathlib/Mathlib/Analysis/Normed/Module/Convex.lean:53:theorem convexOn_univ_norm : ConvexOn ℝ univ (norm : E → ℝ) :=
+.lake/packages/mathlib/Mathlib/Analysis/Normed/Module/Convex.lean:134:    exact convex_iInter₂ fun _ _ => hs.thickening _
+.lake/packages/mathlib/Mathlib/Analysis/Convex\Basic.lean:96:theorem convex_iInter {ι : Sort*} {s : ι → Set E} (h : ∀ i, Convex 𝕜 (s i)) :
+.lake/packages/mathlib/Mathlib/Analysis/Convex\Basic.lean:100:theorem convex_iInter₂ {ι : Sort*} {κ : ι → Sort*} {s : (i : ι) → κ i → Set E}
+.lake/packages/mathlib/Mathlib/Analysis/Convex\Basic.lean:102:  convex_iInter fun i => convex_iInter <| h i
+.lake/packages/mathlib/Mathlib/Analysis/Convex\Basic.lean:138:theorem convex_iff_forall_pos :
+.lake/packages/mathlib/Mathlib/Analysis/Convex\Basic.lean:145:  refine convex_iff_forall_pos.trans ⟨fun h x hx y hy _ => h hx hy, ?_⟩
+.lake/packages/mathlib/Mathlib/Analysis/Convex\Birkhoff.lean:212:  have ⟨_, ⟨σ, rfl⟩, hσ⟩ := convexOn_univ_norm.exists_ge_of_mem_convexHull (by simp) hM
+.lake/packages/mathlib/Mathlib/Analysis/Convex\Body.lean:93:  apply convex_iff_forall_pos.mp K.convex hx (h_symm x hx)
+.lake/packages/mathlib/Mathlib/Analysis/Convex\Gauge.lean:205:    exact convex_iInter fun i => convex_iInter fun _ => hs.smul _
+.lake/packages/mathlib/Mathlib/Analysis/Convex\Function.lean:266:theorem convexOn_iff_convex_epigraph :
+.lake/packages/mathlib/Mathlib/Analysis/Convex\Function.lean:272:  convexOn_iff_convex_epigraph (β := βᵒᵈ)
+.lake/packages/mathlib/Mathlib/Analysis/Convex\Function.lean:311:theorem convexOn_iff_forall_pos {s : Set E} {f : E → β} :
+.lake/packages/mathlib/Mathlib/Analysis/Convex\Function.lean:330:  convexOn_iff_forall_pos (β := βᵒᵈ)
+.lake/packages/mathlib/Mathlib/Analysis/Convex\Function.lean:337:  rw [convexOn_iff_forall_pos]
+.lake/packages/mathlib/Mathlib/Analysis/Convex\Function.lean:529:  convex_iff_forall_pos.2 fun x hx y hy a b ha hb hab =>
+.lake/packages/mathlib/Mathlib/Analysis/Convex\Mul.lean:183:    refine (convexOn_iff_forall_pos.2 ⟨convex_Ioi _, ?_⟩).pow (fun x (hx : 0 < x) ↦ by positivity) _

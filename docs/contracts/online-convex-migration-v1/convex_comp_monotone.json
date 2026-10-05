@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "name": "BanditRL.OnlineConvex.convex_comp_monotone",
+  "statement": "theorem convex_comp_monotone {E : Type*} [AddCommGroup E] [Module ℝ E] (f : E → ℝ) (g : ℝ → ℝ) (hf : IsConvexExtended (fun x => (f x : EReal))) (hg : IsConvexExtended (fun x => (g x : EReal))) (hmono : Monotone g) : IsConvexExtended (fun x => (g (f x) : EReal))",
+  "statement_hash": "0ea6f3facc3303dd2518063174d26dc70ce3661e080164dd285427ce7a61a672",
+  "source_assumptions": [
+    "(hf : IsConvexExtended (fun x => (f x : EReal)))",
+    "(hg : IsConvexExtended (fun x => (g x : EReal)))",
+    "(hmono : Monotone g)"
+  ],
+  "dependencies": [
+    "convexExtended_coe_iff"
+  ],
+  "file": "BanditRLProof/OnlineConvexClosures.lean",
+  "classification": "reuse-existing-public-proof",
+  "evidence_permission": "historical same-model acceptance is not distinct source certification; fresh review/build gates required"
+}

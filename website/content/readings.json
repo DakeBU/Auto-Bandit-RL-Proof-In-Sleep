@@ -1858,7 +1858,7 @@
           "math": "f(\\theta x+(1-\\theta)y)\\le\\theta f(x)+(1-\\theta)f(y),\\quad x,y\\in\\operatorname{dom}f,\\;0<\\theta<1",
           "fallback": "For a function that never takes negative infinity and has convex effective domain, epigraph convexity is equivalent to the interior-weight inequality.",
           "plain": "Infinite values outside the effective domain are retained.",
-          "relationship": "Source interface: BanditRL.OnlineConvex.theorem_2_4. The exact finite-domain epigraph bridge permits reuse of the shared real-valued convexity API.",
+          "relationship": "The shared theorem_2_4 keeps no negative infinity, convex effective domain, domain points and strict interior weights. Proved finite-value epigraph bridges reuse the real ConvexOn API; domain cardinality need not be finite.",
           "contract": {
             "model": "Extended-real functions on a finite-dimensional real vector space; the Lean interfaces support real vector spaces.",
             "assumptions": "Theorem 2.4 excludes negative infinity and assumes a convex effective domain. Definition 2.3 itself permits both infinities.",
@@ -1891,7 +1891,7 @@
           "local_status": {
             "status": "compiled",
             "label": "Constraint foundation",
-            "boundary": "General weighted combinations, affine composition and supremum closure remain separate required obligations."
+            "boundary": "Named indicator-domain, indicator-convexity and indicator-addition-convexity endpoints only. The separate finite-loss/domain-of-sum intersection endpoint remains required; x in V alone does not ensure finite f. Four closure constructions have retained shared implementations with separately recorded migration acceptance. Chapter2 and whole-book acceptance remain incomplete."
           }
         },
         {
@@ -1902,7 +1902,7 @@
           "math": "f(x)=\\langle z,x\\rangle+b,\\qquad h(x)=\\|x\\|",
           "fallback": "Affine functions and norms are convex.",
           "plain": "Finite real functions embed into the same extended-real epigraph definition.",
-          "relationship": "Exact source instances: BanditRL.OnlineConvex.example_2_5 and example_2_6; the real embedding iff is proved once in the shared library.",
+          "relationship": "Exact shared example_2_5 and example_2_6, including the norm proof left as a main-text exercise. The real coercion iff is a library refinement; real normed/inner-product generality includes the source Euclidean instances.",
           "contract": {
             "model": "Real inner-product spaces for affine functions; real normed spaces for norms. Both include finite-dimensional Euclidean space.",
             "assumptions": "Arbitrary affine slope and constant; any norm. No boundedness or nonzero-value assumption.",
@@ -1967,6 +1967,10 @@
         {
           "term": "iota_V",
           "meaning": "Zero on V, positive infinity outside V."
+        },
+        {
+          "term": "upperAdd",
+          "meaning": "Named top-dominant addition -(-a+-b); ordinary EReal addition is bottom-dominant. Attributed interpretation of the unstated source convention, with zero-times-infinity=zero in scalar multiplication."
         }
       ],
       "algorithm": {
@@ -2005,7 +2009,7 @@
           "relationship": "Exact shared declarations: convex_comp_affine, convex_iSup and convex_comp_monotone in BanditRL.OnlineConvex. The nonnegative-combination result is documented in the separate upper-addition source card.",
           "contract": {
             "model": "Extended-real epigraph convexity for affine maps and suprema; real-valued functions for monotone composition.",
-            "assumptions": "Arbitrary affine map and arbitrary index; convex f and g with globally nondecreasing g in the real composition case.",
+            "assumptions": "Arbitrary affine map and arbitrary index for extended-real inputs, including empty index. Composition keeps globally real-valued convex f and g and globally nondecreasing g; g is not applied to infinite values.",
             "parameters": "All input points; empty family included.",
             "regret": "These are convexity-preservation implications, not regret bounds.",
             "guarantee": "Convexity of the three named constructions."
@@ -2023,8 +2027,8 @@
           "url": "https://arxiv.org/pdf/1912.13213v10",
           "math": "a f(x)\\mathbin{+_{\\mathrm{upper}}}b g(x),\\qquad a,b\\ge0",
           "fallback": "Nonnegative scaling and convex upper addition preserve extended-real epigraph convexity.",
-          "plain": "At mixed infinities, upper addition returns positive infinity; this differs from ordinary mathlib EReal addition.",
-          "relationship": "BanditRL.OnlineConvex.convex_nonneg_linear_combination. The unstated Orabona convention is interpreted explicitly using the primary-source convex-analysis convention documented in docs/contracts/online-convex-sums-v1; the ordinary-addition counterexample is publicly tested.",
+          "plain": "At mixed infinities, named upper addition returns positive infinity; the convention is an explicitly attributed interpretation and is not printed by Orabona. Ordinary mathlib EReal addition differs.",
+          "relationship": "Same canonical convex_nonneg_linear_combination. Orabona leaves mixed-infinity addition unspecified; the explicit top-dominant interpretation is supported by Rockafellar, Conjugate Duality and Optimization, printed p6/PDF17, author-hosted https://sites.math.washington.edu/~rtr/papers/rtr054-ConjugateDuality.pdf (SHA256 29d57ab07857b8270c175343746c77b4138f2db6161ae20174a0bba076991b0e). The ordinary-addition counterexample is publicly tested. Current reviewed contract: docs/contracts/online-convex-migration-v1; prior sums contract remains historical.",
           "contract": {
             "model": "Arbitrary extended-real epigraph-convex functions on real vector spaces.",
             "assumptions": "Convex f and g, nonnegative real coefficients; top-dominant upperAdd and zero-times-infinity=zero are explicit operations.",

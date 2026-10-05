@@ -15422,3 +15422,4 @@ here during local harness runs.
 - `2026-10-04T13:25:59+00:00` `bandit.py new-task` `task` `tasks/ONLINE-UNIT-SCALING-20261004.md` - Orabona Chapter2 actual OSD coordinate and step-unit scaling
 - `2026-10-05T06:48:18+00:00` `bandit.py new-task` `task` `tasks/ONLINE-OGD-MIGRATION-20261005.md` - Orabona Chapter2 existing OGD exact source and semantic migration
 - `2026-10-05T08:46:27+00:00` `bandit.py new-task` `task` `tasks/ONLINE-FTL-MIGRATION-20261005.md` - Orabona Example2.10 actual causal FTL counterexample independent production migration
+- `2026-10-05T09:51:49+00:00` `bandit.py new-task` `task` `tasks/ONLINE-CONVEX-MIGRATION-20261005.md` - Convex analysis source migration, Orabona Chapter 2

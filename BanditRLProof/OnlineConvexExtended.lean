@@ -1,3 +1,14 @@
+/-
+Source: Orabona, Online Learning, arXiv:1912.13213v10, Definitions 2.2-2.3,
+Theorem 2.4 and intervening domain/indicator consequences; printed pp.9-10,
+PDF pp.21-22. General epigraph convexity uses real heights and permits both
+infinities; effectiveDomain includes bottom. Empty sets/domains are allowed.
+Theorem 2.4 separately retains noBottom, convex effective domain, domain points
+and strictly interior real weights. Ordinary indicator addition retains its
+printed noBottom premise. Proved toReal bridges do not identify infinite values
+with zero. Abstract real modules include the source Euclidean instances.
+The migration preserves every existing definition, header and proof token.
+-/
 import Mathlib.Analysis.Convex.Function
 import Mathlib.Data.EReal.Basic
 import Mathlib.Tactic

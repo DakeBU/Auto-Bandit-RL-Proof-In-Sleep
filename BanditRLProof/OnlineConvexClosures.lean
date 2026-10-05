@@ -1,3 +1,12 @@
+/-
+Source: Orabona v10, three unnumbered closure bullets, printed p.10 / PDF p.22.
+Affine precomposition and arbitrary indexed suprema permit both infinities,
+empty domains, noninjective maps and empty index types. Monotone composition
+keeps globally REAL-valued f and g and globally nondecreasing g, as printed;
+it does not extend g to infinite inputs. Real-module generality includes the
+source Euclidean spaces. The fourth, weighted-sum bullet uses the explicit
+operation in OnlineConvexSums. All existing proof/definition code is preserved.
+-/
 import BanditRLProof.OnlineConvexExamples
 
 noncomputable section

@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "name": "BanditRL.OnlineConvex.convex_nonneg_linear_combination",
+  "statement": "theorem convex_nonneg_linear_combination {E : Type*} [AddCommGroup E] [Module ℝ E] (f g : E → EReal) (hf : IsConvexExtended f) (hg : IsConvexExtended g) (a b : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) : IsConvexExtended (fun x => upperAdd ((a : EReal) * f x) ((b : EReal) * g x))",
+  "statement_hash": "42ec92568ec463e2544b6496370f2095f7f83391ebc43cd83f76b41db31bb365",
+  "source_assumptions": [
+    "(hf : IsConvexExtended f)",
+    "(hg : IsConvexExtended g)",
+    "(ha : 0 ≤ a)",
+    "(hb : 0 ≤ b)"
+  ],
+  "dependencies": [
+    "convex_upperAdd",
+    "convex_nonneg_mul"
+  ],
+  "file": "BanditRLProof/OnlineConvexSums.lean",
+  "classification": "reuse-existing-public-proof",
+  "evidence_permission": "historical same-model acceptance is not distinct source certification; fresh review/build gates required"
+}
