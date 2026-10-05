@@ -1,0 +1,40 @@
+@BanditRL.OnlineConvex.finitePart_eventually : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [InnerProductSpace ℝ E]
+  [CompleteSpace E] (f : E → EReal),
+  (∀ (z : E), f z ≠ ⊥) →
+    ∀ x ∈ interior (BanditRL.OnlineConvex.effectiveDomain f), ∀ᶠ (z : E) in nhds x, ↑(f z).toReal = f z
+'BanditRL.OnlineConvex.finitePart_eventually' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.convex_gradient_lower_bound : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : CompleteSpace E] (V : Set E) (f : E → ℝ),
+  ConvexOn ℝ V f → ∀ (x y : E), x ∈ V → y ∈ V → DifferentiableAt ℝ f x → f x + inner ℝ (gradient f x) (y - x) ≤ f y
+'BanditRL.OnlineConvex.convex_gradient_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.theorem_2_7 : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E]
+  [inst_2 : CompleteSpace E] (f : E → EReal),
+  (∀ (z : E), f z ≠ ⊥) →
+    BanditRL.OnlineConvex.IsConvexExtended f →
+      ∀ x ∈ interior (BanditRL.OnlineConvex.effectiveDomain f),
+        DifferentiableAt ℝ (fun z => (f z).toReal) x →
+          ∀ (y : E), f x + ↑(inner ℝ (gradient (fun z => (f z).toReal) x) (y - x)) ≤ f y
+'BanditRL.OnlineConvex.theorem_2_7' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexFirstOrder.loss : ℝ → EReal
+'Tests.OnlineConvexFirstOrder.loss' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexFirstOrder.loss_noBot : ∀ (x : ℝ), Tests.OnlineConvexFirstOrder.loss x ≠ ⊥
+'Tests.OnlineConvexFirstOrder.loss_noBot' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexFirstOrder.loss_domain : BanditRL.OnlineConvex.effectiveDomain Tests.OnlineConvexFirstOrder.loss =
+  Set.Ioi 0
+'Tests.OnlineConvexFirstOrder.loss_domain' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexFirstOrder.loss_convex : BanditRL.OnlineConvex.IsConvexExtended Tests.OnlineConvexFirstOrder.loss
+'Tests.OnlineConvexFirstOrder.loss_convex' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexFirstOrder.interior_one : 1 ∈
+  interior (BanditRL.OnlineConvex.effectiveDomain Tests.OnlineConvexFirstOrder.loss)
+'Tests.OnlineConvexFirstOrder.interior_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexFirstOrder.loss_hasDeriv : HasDerivAt (fun x => (Tests.OnlineConvexFirstOrder.loss x).toReal) 1 1
+'Tests.OnlineConvexFirstOrder.loss_hasDeriv' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexFirstOrder.loss_gradient : gradient (fun x => (Tests.OnlineConvexFirstOrder.loss x).toReal) 1 = 1
+'Tests.OnlineConvexFirstOrder.loss_gradient' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexFirstOrder.instantiated_bound : ∀ (y : ℝ),
+  Tests.OnlineConvexFirstOrder.loss 1 + ↑(y - 1) ≤ Tests.OnlineConvexFirstOrder.loss y
+'Tests.OnlineConvexFirstOrder.instantiated_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexFirstOrder.nondegenerate : Tests.OnlineConvexFirstOrder.loss 1 = ↑1 ∧
+  Tests.OnlineConvexFirstOrder.loss 2 = ↑2 ∧
+    Tests.OnlineConvexFirstOrder.loss (-1) = ⊤ ∧ gradient (fun x => (Tests.OnlineConvexFirstOrder.loss x).toReal) 1 ≠ 0
+'Tests.OnlineConvexFirstOrder.nondegenerate' depends on axioms: [propext, Classical.choice, Quot.sound]

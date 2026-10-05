@@ -1,0 +1,56 @@
+.lake/packages/mathlib/Mathlib/Data/EReal/Basic.lean:391:theorem coe_toReal {x : EReal} (hx : x ≠ ⊤) (h'x : x ≠ ⊥) : (x.toReal : EReal) = x := by
+.lake/packages/mathlib/Mathlib/Data/EReal/Basic.lean:395:theorem le_coe_toReal {x : EReal} (h : x ≠ ⊤) : x ≤ x.toReal := by
+.lake/packages/mathlib/Mathlib/Data/EReal/Basic.lean:398:  · simp only [le_refl, coe_toReal h h']
+.lake/packages/mathlib/Mathlib/Data/EReal/Basic.lean:400:theorem coe_toReal_le {x : EReal} (h : x ≠ ⊥) : ↑x.toReal ≤ x := by
+.lake/packages/mathlib/Mathlib/Data/EReal/Basic.lean:403:  · simp only [le_refl, coe_toReal h' h]
+.lake/packages/mathlib/Mathlib/Data/EReal/Basic.lean:411:    exact ⟨x.toReal, le_coe_toReal h⟩
+.lake/packages/mathlib/Mathlib/Data/EReal/Basic.lean:419:    exact ⟨x.toReal, coe_toReal_le h⟩
+.lake/packages/mathlib/Mathlib/Data/EReal/Basic.lean:732:  exact coe_toReal h_top fun _ ↦ by simp_all only [le_bot_iff, zero_ne_bot]
+.lake/packages/mathlib/Mathlib/Analysis/Calculus/Gradient/Basic.lean:102:theorem hasGradientAt_iff_hasFDerivAt :
+.lake/packages/mathlib/Mathlib/Analysis/Calculus/Gradient/Basic.lean:106:theorem hasFDerivAt_iff_hasGradientAt {frechet : StrongDual 𝕜 F} :
+.lake/packages/mathlib/Mathlib/Analysis/Calculus/Gradient/Basic.lean:108:  rw [hasGradientAt_iff_hasFDerivAt, (toDual 𝕜 F).apply_symm_apply frechet]
+.lake/packages/mathlib/Mathlib/Analysis/Calculus/Gradient/Basic.lean:114:alias ⟨HasGradientAt.hasFDerivAt, _⟩ := hasGradientAt_iff_hasFDerivAt
+.lake/packages/mathlib/Mathlib/Analysis/Calculus/Gradient/Basic.lean:116:alias ⟨HasFDerivAt.hasGradientAt, _⟩ := hasFDerivAt_iff_hasGradientAt
+.lake/packages/mathlib/Mathlib/Analysis/Calculus/Gradient/Basic.lean:124:  (toDual 𝕜 F).injective (hf.hasFDerivAt.unique hg.hasFDerivAt)
+.lake/packages/mathlib/Mathlib/Analysis/Calculus/Gradient/Basic.lean:126:theorem DifferentiableAt.hasGradientAt (h : DifferentiableAt 𝕜 f x) :
+.lake/packages/mathlib/Mathlib/Analysis/Calculus/Gradient/Basic.lean:128:  rw [hasGradientAt_iff_hasFDerivAt, gradient, (toDual 𝕜 F).apply_symm_apply (fderiv 𝕜 f x)]
+.lake/packages/mathlib/Mathlib/Analysis/Calculus/Gradient/Basic.lean:129:  exact h.hasFDerivAt
+.lake/packages/mathlib/Mathlib/Analysis/Calculus/Gradient/Basic.lean:133:  h.hasFDerivAt.differentiableAt
+.lake/packages/mathlib/Mathlib/Analysis/Calculus/Gradient/Basic.lean:147:  rw [hasGradientWithinAt_iff_hasFDerivWithinAt, hasGradientAt_iff_hasFDerivAt]
+.lake/packages/mathlib/Mathlib/Analysis/Calculus/Gradient/Basic.lean:150:theorem DifferentiableOn.hasGradientAt (h : DifferentiableOn 𝕜 f s) (hs : s ∈ 𝓝 x) :
+.lake/packages/mathlib/Mathlib/Analysis/Calculus/Gradient/Basic.lean:152:  (h.hasFDerivAt hs).hasGradientAt
+.lake/packages/mathlib/Mathlib/Analysis/Calculus/Gradient/Basic.lean:155:  h.differentiableAt.hasGradientAt.unique h
+.lake/packages/mathlib/Mathlib/Analysis/Calculus/Gradient/Basic.lean:168:theorem HasDerivAtFilter.hasGradientAtFilter (h : HasDerivAtFilter g g' (L' ×ˢ pure u)) :
+.lake/packages/mathlib/Mathlib/Analysis/Calculus/Gradient/Basic.lean:175:  rw [hasGradientAt_iff_hasFDerivAt, hasFDerivAt_iff_hasDerivAt] at h
+.lake/packages/mathlib/Mathlib/Analysis/Calculus/Gradient/Basic.lean:178:theorem HasDerivAt.hasGradientAt (h : HasDerivAt g g' u) : HasGradientAt g (conj g') u := by
+.lake/packages/mathlib/Mathlib/Analysis/Calculus/Gradient/Basic.lean:179:  rw [hasGradientAt_iff_hasFDerivAt, hasFDerivAt_iff_hasDerivAt]
+.lake/packages/mathlib/Mathlib/Analysis/Calculus/Gradient/Basic.lean:184:  · rw [h.hasGradientAt.hasDerivAt.deriv, RCLike.conj_conj]
+.lake/packages/mathlib/Mathlib/Analysis/Calculus/Gradient/Basic.lean:196:theorem HasDerivAtFilter.hasGradientAtFilter' (h : HasDerivAtFilter g g' (L' ×ˢ pure u)) :
+.lake/packages/mathlib/Mathlib/Analysis/Calculus/Gradient/Basic.lean:197:    HasGradientAtFilter g g' u L' := h.hasGradientAtFilter
+.lake/packages/mathlib/Mathlib/Analysis/Calculus/Gradient/Basic.lean:202:theorem HasDerivAt.hasGradientAt' (h : HasDerivAt g g' u) :
+.lake/packages/mathlib/Mathlib/Analysis/Calculus/Gradient/Basic.lean:203:    HasGradientAt g g' u := h.hasGradientAt
+.lake/packages/mathlib/Mathlib/Analysis/Calculus/Gradient/Basic.lean:213:theorem hasGradientAtFilter_iff_isLittleO :
+.lake/packages/mathlib/Mathlib/Analysis/Calculus/Gradient/Basic.lean:216:  hasFDerivAtFilter_iff_isLittleO.trans <| by simp [Function.comp_def]
+.lake/packages/mathlib/Mathlib/Analysis/Calculus/Gradient/Basic.lean:221:  hasGradientAtFilter_iff_isLittleO
+.lake/packages/mathlib/Mathlib/Analysis/Calculus/Gradient/Basic.lean:228:theorem hasGradientAt_iff_isLittleO : HasGradientAt f f' x ↔
+.lake/packages/mathlib/Mathlib/Analysis/Calculus/Gradient/Basic.lean:230:  hasGradientAtFilter_iff_isLittleO
+.lake/packages/mathlib/Mathlib/Analysis/Calculus/Gradient/Basic.lean:232:theorem hasGradientAt_iff_tendsto :
+.lake/packages/mathlib/Mathlib/Analysis/Calculus/Gradient/Basic.lean:235:  hasFDerivAt_iff_tendsto
+.lake/packages/mathlib/Mathlib/Analysis/Calculus/Gradient/Basic.lean:249:theorem hasGradientAt_iff_isLittleO_nhds_zero : HasGradientAt f f' x ↔
+.lake/packages/mathlib/Mathlib/Analysis/Calculus/Gradient/Basic.lean:251:  hasFDerivAt_iff_isLittleO_nhds_zero
+.lake/packages/mathlib/Mathlib/Analysis/Calculus/Gradient/Basic.lean:263:  rw [h.hasFDerivAt.fderiv, toDual_apply_apply]
+.lake/packages/mathlib/Mathlib/Analysis/Calculus/Gradient/Basic.lean:271:  rw [h.hasGradientAt.fderiv_apply]
+.lake/packages/mathlib/Mathlib/Analysis/Calculus/Gradient/Basic.lean:279:  rw [← inner_conj_symm, h.hasGradientAt.fderiv_apply]
+.lake/packages/mathlib/Mathlib/Analysis/Calculus/Gradient/Basic.lean:289:theorem Filter.EventuallyEq.hasGradientAtFilter_iff (h₀ : f₀ =ᶠ[L] f₁) (hx : f₀ x = f₁ x)
+.lake/packages/mathlib/Mathlib/Analysis/Calculus/Gradient/Basic.lean:291:  (h₀.prodMap <| by assumption).hasFDerivAtFilter_iff <| by simp [h₁]
+.lake/packages/mathlib/Mathlib/Analysis/Calculus/Gradient/Basic.lean:295:  rwa [hL.hasGradientAtFilter_iff hx rfl]
+.lake/packages/mathlib/Mathlib/Analysis/Calculus/Gradient/Basic.lean:336:theorem hasGradientAtFilter_const : HasGradientAtFilter (fun _ => c) 0 x L := by
+.lake/packages/mathlib/Mathlib/Analysis/Calculus/Gradient/Basic.lean:337:  rw [HasGradientAtFilter, map_zero]; exact hasFDerivAtFilter_const c _
+.lake/packages/mathlib/Mathlib/Analysis/Calculus/Gradient/Basic.lean:340:  hasGradientAtFilter_const _ _ _
+.lake/packages/mathlib/Mathlib/Analysis/Calculus/Gradient/Basic.lean:342:theorem hasGradientAt_const : HasGradientAt (fun _ => c) 0 x :=
+.lake/packages/mathlib/Mathlib/Analysis/Calculus/Gradient/Basic.lean:343:  hasGradientAtFilter_const _ _ _
+.lake/packages/mathlib/Mathlib/Analysis/Convex/Deriv.lean:595:lemma le_slope_of_hasDerivAt (hfc : ConvexOn ℝ S f) (hx : x ∈ S) (hy : y ∈ S) (hxy : x < y)
+.lake/packages/mathlib/Mathlib/Analysis/Convex/Deriv.lean:600:/-- Reformulation of `ConvexOn.le_slope_of_hasDerivAt` using `deriv` -/
+.lake/packages/mathlib/Mathlib/Analysis/Convex/Deriv.lean:604:  le_slope_of_hasDerivAt hfc hx hy hxy hfd.hasDerivAt
+.lake/packages/mathlib/Mathlib/Analysis/Convex/Deriv.lean:924:lemma le_slope_of_hasDerivAt (hfc : ConcaveOn ℝ S f) (hx : x ∈ S) (hy : y ∈ S) (hxy : x < y)
+.lake/packages/mathlib/Mathlib/Analysis/Convex/Deriv.lean:932:  hfc.le_slope_of_hasDerivAt hx hy hxy hfd.hasDerivAt

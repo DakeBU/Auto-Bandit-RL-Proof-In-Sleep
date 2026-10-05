@@ -15424,3 +15424,4 @@ here during local harness runs.
 - `2026-10-05T08:46:27+00:00` `bandit.py new-task` `task` `tasks/ONLINE-FTL-MIGRATION-20261005.md` - Orabona Example2.10 actual causal FTL counterexample independent production migration
 - `2026-10-05T09:51:49+00:00` `bandit.py new-task` `task` `tasks/ONLINE-CONVEX-MIGRATION-20261005.md` - Convex analysis source migration, Orabona Chapter 2
 - `2026-10-05T10:44:05+00:00` `bandit.py new-task` `task` `tasks/ONLINE-FINITE-LOSS-20261005.md` - Finite constrained loss and exact effective domain
+- `2026-10-05T11:36:13+00:00` `bandit.py new-task` `task` `tasks/ONLINE-FIRST-ORDER-MIGRATION-20261005.md` - Revalidate source-faithful supporting-gradient Theorem 2.7
