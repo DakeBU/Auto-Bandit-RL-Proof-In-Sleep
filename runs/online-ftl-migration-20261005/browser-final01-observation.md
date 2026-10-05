@@ -1,0 +1,5 @@
+# Actual FTL reader first-viewport observation
+
+Root inspected the actual task-owned headless Edge screenshot at tmp/online-ftl-migration-reader-final01.png, native1440x1800 (tool display resized1408x1760). The compiled-declarations banner, same shared Books navigation, FTL counterexample title, canonical-route scope warning, three learning goals and exact pinned source card are visible with no text clipping in this viewport. The warning distinguishes local canonical route compilation from textbook-chapter completion. The source card shows Orabona v10/21June2026 and printed12/PDF24. This is first-viewport evidence only; no lower-fold pixel or physical-device claim.
+
+Root separately read generated HTML for the source assumptions, actual historical-minimization algorithm, six-round nonzero-initial example, comparator0 metric and exact regret. The corrected prefix/minimization formula nodes and their scoped notes remain in the same old reader route and registry. Final distinct semantic source/reader review is still required. The task-owned local server stopped and isolated profile/screenshot remain retained.

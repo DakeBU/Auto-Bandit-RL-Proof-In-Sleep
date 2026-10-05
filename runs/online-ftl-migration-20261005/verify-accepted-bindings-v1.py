@@ -40,7 +40,7 @@ assert len(binding['actual_named_lookup_and_axioms'])==12
 assert all(set(a)<={'propext','Classical.choice','Quot.sound'} for a in binding['actual_named_lookup_and_axioms'].values())
 gates=['root-v1-01','Tests-v1-01','full-harness-v1-02','contributor-exact-v1-01',
     'site-final01-build','site-final01-check','registry-final01','browser-final01','review-history-v1-02',
-    'scoped-diff-v1-01','candidate-frontier-refresh-v1','candidate-frontier-shadow-v1']
+    'scoped-diff-v1-02','candidate-frontier-refresh-v1','candidate-frontier-shadow-v1']
 for n in gates:assert load(run/(n+'-exit.json'))['exit_code']==0,n
 full=(run/'full-harness-v1-02.log').read_text(encoding='utf-8')
 assert 'Ran 466 tests' in full and 'OK (skipped=7)' in full and 'check passed' in full
@@ -57,7 +57,7 @@ assert sha(registry['registry_path'])==registry['registry_sha256']
 site=load('tmp/online-ftl-migration-site-final01/site-manifest.json')
 assert site['source_dirty'] is False and site['lean_verified'] is True
 assert site['source_commit']==inputs['site_commit']==registry['source_commit']
-assert load(run/'scoped-diff-v1.json')['status']=='passed'
+assert load(run/'scoped-diff-v2.json')['status']=='passed'
 assert load(run/'full-diff-v1-01-exit.json')['exit_code']!=0
 assert sha('../research-online-ogd/tmp/pdfs/orabona-v10.pdf')==freeze['source_pdf_sha256']
 assert sha('runs/active_frontier.json')=='567e5873aa2549a83f2820d758069213808da822a93087129877385a1addf7c3'
@@ -67,7 +67,7 @@ result=dict(status='passed',raw_review_rows_verified=count,authorized_historical
     shared_registry_scope_nodes=10,new_registry_nodes=0,preserved_old_registry_nodes=registry['preserved_base_node_ids_and_urls'],
     final_clean_site_commit=site['source_commit'],root_jobs=9087,Tests_jobs=9228,full_tests=466,existing_skips=7,
     contributor_production_paths=4,full_git_diff_check_passed=False,scoped_diff_check_passed=True,
-    whitespace_exception=load(run/'scoped-diff-v1.json')['reason'],
+    whitespace_exception=load(run/'scoped-diff-v2.json')['reason'],
     chapter_complete=False,book_complete=False,goal_complete=False,merged=False,deployed=False)
 with (run/'accepted-binding-audit-v1.json').open('w',encoding='utf-8',newline='\n') as f:json.dump(result,f,indent=2);f.write('\n')
 print('Final byte-exact FTL/source/reader package gates passed:',count,'raw rows; retained7 proofs, no chapter/Goal completion.')
