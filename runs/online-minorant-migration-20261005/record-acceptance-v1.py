@@ -1,0 +1,62 @@
+"""Accept only the independently reviewed minorant dependency, keeping the whole Goal active."""
+from pathlib import Path
+import hashlib,json,re,subprocess,sys
+sys.path.insert(0,str(Path(__file__).resolve().parents[2]))
+from tools.abrl_lifecycle import lean_declaration_header,_strip_lean_comments
+run=Path(__file__).parent;task='ONLINE-MINORANT-MIGRATION-20261005'
+load=lambda p:json.loads(Path(p).read_text(encoding='utf-8'));cache={}
+
+def sha(p):
+ if p not in cache:cache[p]=hashlib.sha256(Path(p).read_bytes()).hexdigest()
+ return cache[p]
+
+def write(n,x):
+ p=run/n;assert not p.exists(),p
+ with p.open('w',encoding='utf-8',newline='\n') as f:
+  if isinstance(x,str):f.write(x.rstrip('\n')+'\n')
+  else:json.dump(x,f,ensure_ascii=False,indent=2);f.write('\n')
+
+def gate(label,*args):subprocess.run([sys.executable,'-X','utf8',str(run/'run-command.py'),label,*args],check=True)
+snapshots={}
+history_names=['runs/online-ogd-migration-20261005/historical-raw-supersession-v2.json']
+history_names += ['runs/'+n+'-20261005/historical-raw-supersession-v1.json' for n in ['online-ftl-migration','online-convex-migration','online-finite-loss','online-first-order-migration','online-optimality-migration','online-expectation-migration','online-barycenter-migration']]
+history_names.append(str(run/'historical-raw-supersession-v1.json'))
+for name in history_names:
+ for row in load(name)['rows']:
+  assert sha(row['snapshot'])==row['raw_sha256'];snapshots[(row['path'],row['raw_sha256'])]=row['snapshot']
+rows=[]
+for name in ['source-contract-receipt-v1.json','public-body-receipt-v1.json','final-reader-receipt-v1.json']:
+ receipt=load(run/name);assert receipt['actor']['task']=='/root/source_reviewer' and receipt['verdict'] in ['accepted','accepted-with-explicit-delta']
+ assert not receipt.get('mathematical_repairs',[]) and not receipt.get('required_repairs',[]) and sha(receipt['report'])==receipt['report_sha256']
+ reviewed={row['path']:row['sha256'] for row in receipt['reviewed_files']}
+ if name=='final-reader-receipt-v1.json':
+  for row in load(run/'final-reader-inputs-v1.json')['rows']:assert reviewed[row['path']]==row['sha256']
+ for p,h in reviewed.items():
+  resolved=p if sha(p)==h else snapshots[(p,h)];assert sha(resolved)==h
+  rows.append(dict(receipt=name,path=p,sha256=h,resolved=resolved))
+integrated=load(run/'integrated-gates-overlay-v1.json')
+for label in integrated['actual_passed_gates']:assert load(run/(label+'-exit.json'))['exit_code']==0,label
+freeze=load(run/'draft-freeze-v1.json');public=Path('BanditRLProof/OnlineConvexMinorant.lean')
+assert public.read_bytes().endswith((run/'original-OnlineConvexMinorant.lean.txt').read_bytes())
+tokens=lambda s:re.sub(r'\s+',' ',_strip_lean_comments(s)).strip()
+assert tokens(public.read_text(encoding='utf-8'))==tokens((run/'original-OnlineConvexMinorant.lean.txt').read_text(encoding='utf-8'))
+for n,h in freeze['headers'].items():assert hashlib.sha256(lean_declaration_header(public,n).encode()).hexdigest()==h
+for p,h in freeze['canary'].items():assert sha(p)==h
+assert sha('runs/active_frontier.json')=='567e5873aa2549a83f2820d758069213808da822a93087129877385a1addf7c3'
+boundary=dict(parent_accepted=False,chapter_complete=False,goal_complete=False)
+write('accepted-binding-audit-v1.json',dict(status='passed',raw_review_rows=len(rows),rows=rows,all_final_fixed_inputs_rechecked=True,frozen_headers=freeze['headers'],all_proof_tokens_and_canary_bytes_unchanged=True,prior_final_history_bindings='history-binding-audit-v1.json',prior_accepted_reports_receipts_unmodified=True))
+write('accepted-decision-v1.json',dict(status='accepted-with-explicit-delta',scope='four retained affine-support/minorant dependency proofs only',source_parent='Orabona v10 Theorem2.9 printed11/PDF23',source_parent_accepted=False,frozen_headers=freeze['headers'],explicit_delta='Necessary library dependencies, not four printed results. Actual finite-dimensional real normed contexts without supplied Borel/measure/probability/CompleteSpace/inner-product classes. Finite-neighbourhood support derives no-bottom; touching-support and pure-minorant conclusions distinguished. General nonempty-domain producer generates intrinsic affine-span interior and actual ambient extension, without closure/lsc/full-dimension oracle.',retained_public_proofs=4,retained_public_definitions=0,new_public_proofs=0,new_definitions=0,public_canary_proofs=6,public_canary_definitions=1,public_canary_probability_instances=0,named_axiom_audits=11,native_guards=4,new_registry_nodes=0,old_registry_IDs_URLs_preserved=10806,root_jobs=integrated['root_jobs'],Tests_jobs=integrated['Tests_jobs'],full_tests=466,existing_skips=7,root_Tests_execution_overlapped=False,site_source_commit=load(run/'registry-v1.json')['source_commit'],stacked_base='f68646457a12de93ee6cb8d585a4162f9f0a112c',stacked_base_PR=161,final_review_receipt='final-reader-receipt-v1.json',final_review_report_sha256=receipt['report_sha256'],compiled_scope_graph='compiled-scoped-graph-v1.json',full_graph_export=False,canary_graph_export=False,mathematical_repairs=[],reader_corrections='Seven contract/body reader corrections applied and independently rechecked; no tests or mathematical targets changed.',main_relative_gate=integrated['main_relative_gate'],full_whitespace_gate=integrated['full_whitespace_gate'],scoped_whitespace_gate=integrated['scoped_whitespace_gate'],chapter_mandatory_total=None,PR_delivery_pending=True,merged=False,live=False,**boundary))
+write('accepted-obligations-v1.json',dict(required=[dict(name=n,statement_hash=h,state='accepted-scoped-retained-minorant-dependency') for n,h in freeze['headers'].items()],parent_jensen_and_negative_part_producer_accepted=False,new_proofs=0,new_definitions=0,remaining_chapter_legacy_migrations=14,legacy_migrations_before=15,exact_accepted_legacy_delta='OnlineConvexMinorant only; no new mathematical proof-count gain',chapter_total=None,future_chapters='3-16 unenumerated mandatory',main_missing_changed_production_contract_paths=12,**boundary))
+write('source-inventory-acceptance-overlay-v1.json',dict(base_inventory='docs/contracts/online-book-v1/source-inventory.json',base_sha256=sha('docs/contracts/online-book-v1/source-inventory.json'),additive_only=True,source_anchor='Theorem2.9 necessary affine-minorant dependency, printed11/PDF23; parent not accepted here',accepted_public_names=['BanditRL.OnlineConvex.'+n for n in freeze['headers']],delta='Four retained library proofs; support produces negative vertical coefficient and global no-bottom, general minorant uses actual affine-span restriction/linear extension/intercept.',**boundary))
+write('contribution-acceptance-overlay-v1.json',dict(manifest='research-wiki/contribution-contracts/online-minorant-migration-20261005.json',manifest_sha256=sha('research-wiki/contribution-contracts/online-minorant-migration-20261005.json'),source_contract='source-contract-receipt-v1.json',body='public-body-receipt-v1.json',reader='final-reader-receipt-v1.json',integrated='integrated-gates-overlay-v1.json',accepted_decision='accepted-decision-v1.json',semantic_status='accepted-with-explicit-delta',earlier_candidate_pending_fields_superseded_additively=True,**boundary))
+write('memory-digest-accepted-v1.md','Only four retained affine-support/minorant proofs/no production definitions/new proof code/nodes accepted; not Jensen. Actual finite-dimensional real normed scopes, no supplied Borel/measure/probability/CompleteSpace/inner-product classes. Genuine finite neighbourhood derives no-bottom/negative vertical coefficient, auxiliary Fermat not loss differentiability. First two touch f(x), last two only give global bounds; slopes mayzero. Ambient domain interior remains in two helpers; general nonempty-domain terminal actually generates intrinsic affine-span interior/restricted ambient interior/linear extension/continuity/intercept, no closure/lsc/full-dimension oracle. Bytefixed nonclosed lower-dimensional coordinate/top-outside geometric canary six proofs/one definition, not probability Jensen-loss. Eleven named axioms/four guards/root9088Tests9230/full466tests7skips/exact stacked four production one manifest/clean local site four nodes10806old IDsURLs/first viewport/history snapshots passed. Root/Tests sequential; no math repair/test edits. Legacy15→14 only OnlineConvexMinorant, main-relative12gaps/Chapter2null/wholeGoalACTIVE. PR pending/unmerged/live unchanged/worktree retained.')
+write('retrieval-index-accepted-v1.md','Accepted decision/bindings/obligations/overlays here; exact four headers/actual contexts in online-minorant-migration-v1. Public OnlineConvexMinorant/unchanged nonclosed lower-dimensional canary six proofs one definition/eleven named axioms four guards/scoped actual compiled four nodes896 direct type/value edges, not full/canary export. Distinct contract/body/final source-reader receipts/raw snapshots; shared Book registry/source-qualified teaching route. Next source Jensen negative-part producer and theorem; remaining Chapter2 and whole Book Goal active.')
+write('program-milestone-v1.json',dict(total_Goal='Chapters1-16 active unbudgeted',bounded_milestone='Retained affine-support/minorant dependency accepted, not Jensen acceptance',legacy_remaining_before=15,legacy_remaining_after=14,new_proofs=0,new_definitions=0,new_registry_nodes=0,chapter2_mandatory_total=None,chapter2_complete=False,chapters3_16='unenumerated mandatory',main_updated=False,live_updated=False,**boundary))
+gate('accepted-reviewer-trial-v1',sys.executable,'-X','utf8','tools/bandit.py','trial-log','--task',task,'--role','reviewer','--kind','review','--status','accepted','--run-id',run.name,'--attempt-id','MINORANT-RETAINED-BODIES-V1','--statement-hash',freeze['headers']['convex_affine_minorant'],'--reused-declaration','BanditRL.OnlineConvex.convex_affine_minorant','--verifier-evidence',str(run/'final-reader-receipt-v1.json'),'--harness','hierarchical','--progress-class','retrieval-reuse','--reviewer-validated','--notes','Same named actual compiled minorant bundle accepted after distinct final source/reader and integrated gates; four retained proofs/zero new code. No Jensen/chapter/book completion or productivity experiment.')
+trials=[json.loads(s) for s in Path('runs/trials.jsonl').read_text(encoding='utf-8').splitlines() if s.strip()]
+write('accepted-scoped-trials-v1.jsonl','\n'.join(json.dumps(t) for t in trials if t.get('task')==task))
+gate('accepted-lifecycle-v1',sys.executable,'-X','utf8','tools/bandit.py','lifecycle-event','--session',task,'--event','accepted','--payload-json',json.dumps(dict(run_id=run.name,accepted_decision=str(run/'accepted-decision-v1.json'),retained_proofs=4,retained_definitions=0,new_proofs=0,merged=False,live=False,**boundary)))
+gate('accepted-frontier-refresh-v1',sys.executable,'-X','utf8','tools/bandit.py','frontier-refresh','--root-objective','Persistent Orabona Chapters1-16 Goal; only affine-minorant dependency accepted, Jensen/Chapter2/book incomplete','--leaf',task,'--kind','lean','--statement',lean_declaration_header(public,'convex_affine_minorant'),'--declaration','BanditRL.OnlineConvex.convex_affine_minorant','--file',public.as_posix(),'--source-status','source-reviewed','--leaf-status','accepted','--dependency','lean:BanditRL.OnlineConvex.affine_support_of_finite_neighborhood:compiled','--dependency','lean:BanditRL.OnlineConvex.affine_support_of_domain_interior:compiled','--dependency','lean:BanditRL.OnlineConvex.affine_minorant_of_domain_interior:compiled','--dependency','lean:BanditRL.OnlineConvex.supporting_functional_at_closure:compiled','--dependency','lean:BanditRL.OnlineConvex.convex_effectiveDomain:compiled','--dependency','review:source-reader:accepted','--trials',str(run/'accepted-scoped-trials-v1.jsonl'),'--output',str(run/'accepted-frontier-v1.json'),'--shadow-status','pending')
+gate('accepted-frontier-shadow-v1',sys.executable,'-X','utf8','tools/bandit.py','frontier-shadow','--trials',str(run/'accepted-scoped-trials-v1.jsonl'),'--memory-digest',str(run/'memory-digest-accepted-v1.md'),'--frontier',str(run/'accepted-frontier-v1.json'))
+write('native-acceptance-overlay-v1.json',dict(status='passed',accepted_decision='accepted-decision-v1.json',accepted_decision_sha256=sha(run/'accepted-decision-v1.json'),actual_attempt='MINORANT-RETAINED-BODIES-V1',frontier='accepted-frontier-v1.json',shadow='accepted-frontier-shadow-v1',**boundary))
+print('Scoped minorant dependency accepted; whole Goal ACTIVE, stacked PR delivery pending.')
