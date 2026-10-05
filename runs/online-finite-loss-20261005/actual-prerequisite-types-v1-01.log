@@ -1,0 +1,6 @@
+@BanditRL.OnlineConvex.effectiveDomain : {E : Type u_1} → (E → EReal) → Set E
+@BanditRL.OnlineConvex.extendedIndicator : {E : Type u_1} → Set E → E → EReal
+EReal.add_top_of_ne_bot {x : EReal} (h : x ≠ ⊥) : x + ⊤ = ⊤
+EReal.coe_ne_top (x : ℝ) : ↑x ≠ ⊤
+EReal.coe_ne_bot (x : ℝ) : ↑x ≠ ⊥
+EReal.coe_toReal {x : EReal} (hx : x ≠ ⊤) (h'x : x ≠ ⊥) : ↑x.toReal = x

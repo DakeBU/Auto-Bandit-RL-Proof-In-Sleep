@@ -5302,6 +5302,41 @@
       "dependencies": [
         "BanditRL.OnlineGradientDescentSource.equation_2_1_distance"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.finite_add_indicator_iff",
+      "title": "Finite loss requires feasibility and finite original loss",
+      "chapter": "online-convex",
+      "featured": true,
+      "teaching_order": 7,
+      "plain": "The constrained value is finite exactly when the point is feasible and its original loss is finite.",
+      "math": "\\((\\exists r\\in\\mathbb R:\\ f(x)+\\iota_V(x)=r)\\iff x\\in V\\land(\\exists s\\in\\mathbb R:\\ f(x)=s)\\)",
+      "intuition": "At feasible points the indicator adds zero. Outside V, adding positive infinity never yields a finite real, including the negative-infinity case.",
+      "why": "Close the unnumbered main-text finite-loss obligation used for both the prediction and comparator.",
+      "position": "Orabona v10 Section2.1.1, printed9-10/PDF21-22; explicit iff refinement of the source necessary condition.",
+      "proof_idea": "Split on x in V. Inside, f(x)+0=f(x). Outside, split f(x) into bottom, finite and top: the sums are bottom, top and top, and none equals an embedded real.",
+      "lean_notes": "The source printed9-10/PDF21-22 gives a necessary condition: finite constrained loss requires x in V. The iff is an explicit library refinement adding finite original f(x). Arbitrary carriers generalize Rd for this algebra. Ordinary bottom-dominant EReal addition is retained. Finite-real witness existence excludes both infinities; below-top effectiveDomain includes bottom. No noBottom premise on finite_add_indicator_iff; global noBottom is essential on effectiveDomain_add_indicator. Convexity/topology/nonempty V are unnecessary here. Two new compiled-local finite-loss/domain proofs close only the explicitly frozen unnumbered consequence and its separately hypothesized domain helper; not completion of Chapter 2 or Chapters1-16. Remaining main-text source/migration audit is mandatory. No merge or live publication is implied.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.extendedIndicator"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.effectiveDomain_add_indicator",
+      "title": "Effective domain of a constrained loss",
+      "chapter": "online-convex",
+      "featured": true,
+      "teaching_order": 8,
+      "plain": "Under global noBottom, the constrained effective domain is the original effective domain intersected with V.",
+      "math": "\\(\\operatorname{dom}(f+\\iota_V)=\\operatorname{dom}f\\cap V,\\quad \\forall x:\\ f(x)\\ne-\\infty\\)",
+      "intuition": "Below top becomes a finite-value test only when bottom is excluded. Without that premise, bottom outside V leaks into the domain.",
+      "why": "Support the constraint algebra with the exact shared effective-domain definition, while exposing its stronger hypothesis.",
+      "position": "Separate algebraic helper associated with Orabona v10 printed9-10/PDF21-22; not a printed numbered theorem.",
+      "proof_idea": "At x in V, adding zero preserves f(x)<top. Outside V, noBottom makes f(x)+top=top. Thus membership is exactly the intersection. The public constant-bottom/empty-V canary refutes dropping noBottom.",
+      "lean_notes": "The source printed9-10/PDF21-22 gives a necessary condition: finite constrained loss requires x in V. The iff is an explicit library refinement adding finite original f(x). Arbitrary carriers generalize Rd for this algebra. Ordinary bottom-dominant EReal addition is retained. Finite-real witness existence excludes both infinities; below-top effectiveDomain includes bottom. No noBottom premise on finite_add_indicator_iff; global noBottom is essential on effectiveDomain_add_indicator. Convexity/topology/nonempty V are unnecessary here. Two new compiled-local finite-loss/domain proofs close only the explicitly frozen unnumbered consequence and its separately hypothesized domain helper; not completion of Chapter 2 or Chapters1-16. Remaining main-text source/migration audit is mandatory. No merge or live publication is implied.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.effectiveDomain",
+        "BanditRL.OnlineConvex.extendedIndicator"
+      ]
     }
   ]
 }

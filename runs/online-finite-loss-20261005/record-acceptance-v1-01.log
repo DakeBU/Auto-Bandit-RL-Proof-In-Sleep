@@ -1,0 +1,12 @@
+accepted-reviewer-trial-v1 exit 1 seconds 0.219
+Failure tail only; full raw output is retained in accepted-reviewer-trial-v1.log
+--reviewer-validated requires the reviewed --attempt-id
+
+Traceback (most recent call last):
+  File "runs/online-finite-loss-20261005/record-acceptance-v1.py", line 58, in <module>
+    gate('accepted-reviewer-trial-v1',sys.executable,'-X','utf8','tools/bandit.py','trial-log','--task',task,'--role','reviewer','--kind','review','--status','accepted',
+  File "runs/online-finite-loss-20261005/record-acceptance-v1.py", line 14, in gate
+    def gate(label,*args):subprocess.run([sys.executable,'-X','utf8',str(run/'run-command.py'),label,*args],check=True)
+  File "C:\Users\admin\AppData\Local\Programs\Python\Python38\lib\subprocess.py", line 516, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe', '-X', 'utf8', 'runs\\online-finite-loss-20261005\\run-command.py', 'accepted-reviewer-trial-v1', 'C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe', '-X', 'utf8', 'tools/bandit.py', 'trial-log', '--task', 'ONLINE-FINITE-LOSS-20261005', '--role', 'reviewer', '--kind', 'review', '--status', 'accepted', '--run-id', 'online-finite-loss-20261005', '--notes', 'Only two fixed finite-loss/domain endpoints accepted after distinct final source/reader review and integrated gates; Chapter2/book incomplete.', '--verifier-evidence', 'runs\\online-finite-loss-20261005\\final-reader-receipt-v1.json', '--harness', 'hierarchical', '--progress-class', 'terminal', '--reviewer-validated']' returned non-zero exit status 1.

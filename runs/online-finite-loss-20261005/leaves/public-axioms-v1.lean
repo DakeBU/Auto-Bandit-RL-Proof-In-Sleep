@@ -1,0 +1,23 @@
+import BanditRLProof
+import Tests.OnlineConstraintFiniteLossCanary
+
+#check @BanditRL.OnlineConvex.finite_add_indicator_iff
+#print axioms BanditRL.OnlineConvex.finite_add_indicator_iff
+#check @BanditRL.OnlineConvex.effectiveDomain_add_indicator
+#print axioms BanditRL.OnlineConvex.effectiveDomain_add_indicator
+#check @Tests.OnlineConstraintFiniteLossCanary.nonconstant_finite_inside
+#print axioms Tests.OnlineConstraintFiniteLossCanary.nonconstant_finite_inside
+#check @Tests.OnlineConstraintFiniteLossCanary.finite_outside_not_finite
+#print axioms Tests.OnlineConstraintFiniteLossCanary.finite_outside_not_finite
+#check @Tests.OnlineConstraintFiniteLossCanary.top_inside_not_finite
+#print axioms Tests.OnlineConstraintFiniteLossCanary.top_inside_not_finite
+#check @Tests.OnlineConstraintFiniteLossCanary.bottom_anywhere_not_finite
+#print axioms Tests.OnlineConstraintFiniteLossCanary.bottom_anywhere_not_finite
+#check @Tests.OnlineConstraintFiniteLossCanary.empty_set_no_finite_loss
+#print axioms Tests.OnlineConstraintFiniteLossCanary.empty_set_no_finite_loss
+#check @Tests.OnlineConstraintFiniteLossCanary.real_domain_intersection
+#print axioms Tests.OnlineConstraintFiniteLossCanary.real_domain_intersection
+#check @Tests.OnlineConstraintFiniteLossCanary.bottom_outside_domain_leak
+#print axioms Tests.OnlineConstraintFiniteLossCanary.bottom_outside_domain_leak
+#check @Tests.OnlineConstraintFiniteLossCanary.domain_identity_without_noBottom_false
+#print axioms Tests.OnlineConstraintFiniteLossCanary.domain_identity_without_noBottom_false
