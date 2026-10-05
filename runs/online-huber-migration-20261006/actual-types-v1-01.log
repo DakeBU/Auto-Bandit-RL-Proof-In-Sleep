@@ -1,0 +1,1171 @@
+BanditRL.OnlineHuber.hasDerivAt_ite_le : ∀ (f g : Real → Real) (c d : Real),
+  @HasDerivAt.{0, 0} Real (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real
+      Real.instAddCommGroup
+      (@NormedSpace.toModule.{0, 0} Real Real Real.normedField
+        (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+          (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+            (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+              (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+        (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+          (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+            (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+              (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+          (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike)))
+      (@UniformSpace.toTopologicalSpace.{0} Real (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace)) ⋯
+      f d c →
+    @HasDerivAt.{0, 0} Real (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real
+        Real.instAddCommGroup
+        (@NormedSpace.toModule.{0, 0} Real Real Real.normedField
+          (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+            (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+              (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+          (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+            (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+              (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                  (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+            (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike)))
+        (@UniformSpace.toTopologicalSpace.{0} Real (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+        ⋯ g d c →
+      @Eq.{1} Real (f c) (g c) →
+        @HasDerivAt.{0, 0} Real (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real
+          Real.instAddCommGroup
+          (@NormedSpace.toModule.{0, 0} Real Real Real.normedField
+            (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+              (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                  (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+            (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                    (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+              (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike)))
+          (@UniformSpace.toTopologicalSpace.{0} Real
+            (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+          ⋯ (fun x => @ite.{1} Real (@LE.le.{0} Real Real.instLE x c) (x.decidableLE c) (f x) (g x)) d c
+BanditRL.OnlineHuber.huber_three_pieces : ∀ (delta r : Real),
+  @LE.le.{0} Real Real.instLE (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) delta →
+    @Eq.{1} Real (BanditRL.OnlineHuber.huber delta r)
+      (@ite.{1} Real (@LE.le.{0} Real Real.instLE r (@Neg.neg.{0} Real Real.instNeg delta))
+        (r.decidableLE (@Neg.neg.{0} Real Real.instNeg delta))
+        (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
+          (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) (@Neg.neg.{0} Real Real.instNeg delta)
+            r)
+          (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+            (@HPow.hPow.{0, 0, 0} Real Nat Real (@instHPow.{0, 0} Real Nat (@Monoid.toPow.{0} Real Real.instMonoid))
+              delta (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+            (@OfNat.ofNat.{0} Real (nat_lit 2) (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast ⋯))))
+        (@ite.{1} Real (@LE.le.{0} Real Real.instLE r delta) (r.decidableLE delta)
+          (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+            (@HPow.hPow.{0, 0, 0} Real Nat Real (@instHPow.{0, 0} Real Nat (@Monoid.toPow.{0} Real Real.instMonoid)) r
+              (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+            (@OfNat.ofNat.{0} Real (nat_lit 2) (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast ⋯)))
+          (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
+            (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) delta r)
+            (@HDiv.hDiv.{0, 0, 0} Real Real Real
+              (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+              (@HPow.hPow.{0, 0, 0} Real Nat Real (@instHPow.{0, 0} Real Nat (@Monoid.toPow.{0} Real Real.instMonoid))
+                delta (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+              (@OfNat.ofNat.{0} Real (nat_lit 2) (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast ⋯))))))
+BanditRL.OnlineHuber.huber_zero : ∀ (r : Real),
+  @Eq.{1} Real
+    (BanditRL.OnlineHuber.huber (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) r)
+    (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))
+BanditRL.OnlineHuber.hasDerivAt_join : ∀ (f g df dg : Real → Real) (c x : Real),
+  (∀ (r : Real),
+      @HasDerivAt.{0, 0} Real (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real
+        Real.instAddCommGroup
+        (@NormedSpace.toModule.{0, 0} Real Real Real.normedField
+          (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+            (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+              (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+          (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+            (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+              (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                  (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+            (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike)))
+        (@UniformSpace.toTopologicalSpace.{0} Real (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+        ⋯ f (df r) r) →
+    (∀ (r : Real),
+        @HasDerivAt.{0, 0} Real (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real
+          Real.instAddCommGroup
+          (@NormedSpace.toModule.{0, 0} Real Real Real.normedField
+            (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+              (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                  (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+            (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                    (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+              (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike)))
+          (@UniformSpace.toTopologicalSpace.{0} Real
+            (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+          ⋯ g (dg r) r) →
+      @Eq.{1} Real (f c) (g c) →
+        @Eq.{1} Real (df c) (dg c) →
+          @HasDerivAt.{0, 0} Real (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real
+            Real.instAddCommGroup
+            (@NormedSpace.toModule.{0, 0} Real Real Real.normedField
+              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                    (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+              (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+                (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+                  (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                    (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                      (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+                (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike)))
+            (@UniformSpace.toTopologicalSpace.{0} Real
+              (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+            ⋯ (fun r => @ite.{1} Real (@LE.le.{0} Real Real.instLE r c) (r.decidableLE c) (f r) (g r))
+            (@ite.{1} Real (@LE.le.{0} Real Real.instLE x c) (x.decidableLE c) (df x) (dg x)) x
+BanditRL.OnlineHuber.huber_hasDerivAt : ∀ (delta r : Real),
+  @LE.le.{0} Real Real.instLE (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) delta →
+    @HasDerivAt.{0, 0} Real (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real
+      Real.instAddCommGroup
+      (@NormedSpace.toModule.{0, 0} Real Real Real.normedField
+        (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+          (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+            (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+              (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+        (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+          (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+            (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+              (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+          (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike)))
+      (@UniformSpace.toTopologicalSpace.{0} Real (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace)) ⋯
+      (BanditRL.OnlineHuber.huber delta)
+      (@ite.{1} Real (@LE.le.{0} Real Real.instLE r (@Neg.neg.{0} Real Real.instNeg delta))
+        (r.decidableLE (@Neg.neg.{0} Real Real.instNeg delta)) (@Neg.neg.{0} Real Real.instNeg delta)
+        (@ite.{1} Real (@LE.le.{0} Real Real.instLE r delta) (r.decidableLE delta) r delta))
+      r
+BanditRL.OnlineHuber.huber_deriv_clamp : ∀ (delta r : Real),
+  @LE.le.{0} Real Real.instLE (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) delta →
+    @Eq.{1} Real
+      (@deriv.{0, 0} Real (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real
+        Real.instAddCommGroup
+        (@NormedSpace.toModule.{0, 0} Real Real Real.normedField
+          (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+            (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+              (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+          (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+            (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+              (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                  (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+            (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike)))
+        (@UniformSpace.toTopologicalSpace.{0} Real (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+        (BanditRL.OnlineHuber.huber delta) r)
+      (@max.{0} Real Real.instMax (@Neg.neg.{0} Real Real.instNeg delta) (@min.{0} Real Real.instMin r delta))
+BanditRL.OnlineHuber.huber_convex : ∀ (delta : Real),
+  @LE.le.{0} Real Real.instLE (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) delta →
+    @ConvexOn.{0, 0, 0} Real Real Real Real.semiring Real.partialOrder Real.instAddCommMonoid Real.instAddCommMonoid
+      Real.partialOrder
+      (@Algebra.toSMul.{0, 0} Real Real Real.instCommSemiring (@CommSemiring.toSemiring.{0} Real Real.instCommSemiring)
+        (@Algebra.id.{0} Real Real.instCommSemiring))
+      (@Algebra.toSMul.{0, 0} Real Real Real.instCommSemiring (@CommSemiring.toSemiring.{0} Real Real.instCommSemiring)
+        (@Algebra.id.{0} Real Real.instCommSemiring))
+      (@Set.univ.{0} Real) (BanditRL.OnlineHuber.huber delta)
+BanditRL.OnlineHuber.huber_deriv_bound : ∀ (delta r : Real),
+  @LE.le.{0} Real Real.instLE (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) delta →
+    @LE.le.{0} Real Real.instLE
+      (@abs.{0} Real Real.lattice Real.instAddGroup
+        (@deriv.{0, 0} Real (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real
+          Real.instAddCommGroup
+          (@NormedSpace.toModule.{0, 0} Real Real Real.normedField
+            (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+              (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                  (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+            (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                    (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+              (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike)))
+          (@UniformSpace.toTopologicalSpace.{0} Real
+            (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+          (BanditRL.OnlineHuber.huber delta) r))
+      delta
+BanditRL.OnlineHuber.huber_deriv_source : ∀ (delta r : Real),
+  @LE.le.{0} Real Real.instLE (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) delta →
+    @Eq.{1} Real
+      (@deriv.{0, 0} Real (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real
+        Real.instAddCommGroup
+        (@NormedSpace.toModule.{0, 0} Real Real Real.normedField
+          (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+            (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+              (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+          (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+            (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+              (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                  (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+            (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike)))
+        (@UniformSpace.toTopologicalSpace.{0} Real (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+        (BanditRL.OnlineHuber.huber delta) r)
+      (@ite.{1} Real (@LE.le.{0} Real Real.instLE (@abs.{0} Real Real.lattice Real.instAddGroup r) delta)
+        ((@abs.{0} Real Real.lattice Real.instAddGroup r).decidableLE delta) r
+        (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) delta r.sign))
+@BanditRL.OnlineHuber.huber_linear_hasGradientAt.{u_1} : ∀ {E : Type u_1} [inst : NormedAddCommGroup.{u_1} E]
+  [inst_1 :
+    @InnerProductSpace.{0, u_1} Real E Real.instRCLike (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst)]
+  [inst_2 :
+    @CompleteSpace.{u_1} E
+      (@PseudoMetricSpace.toUniformSpace.{u_1} E
+        (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+          (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst)))]
+  (delta y : Real),
+  @LE.le.{0} Real Real.instLE (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) delta →
+    ∀ (z x : E),
+      @HasGradientAt.{0, u_1} Real E Real.instRCLike inst inst_1 inst_2
+        (fun w =>
+          BanditRL.OnlineHuber.huber delta
+            (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
+              (@inner.{0, u_1} Real E
+                (@InnerProductSpace.toInner.{0, u_1} Real E Real.instRCLike
+                  (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst) inst_1)
+                z w)
+              y))
+        (@HSMul.hSMul.{0, u_1, u_1} Real E E
+          (@instHSMul.{0, u_1} Real E
+            (@SMulZeroClass.toSMul.{0, u_1} Real E
+              (@AddZero.toZero.{u_1} E
+                (@AddZeroClass.toAddZero.{u_1} E
+                  (@AddMonoid.toAddZeroClass.{u_1} E
+                    (@ESeminormedAddMonoid.toAddMonoid.{u_1} E
+                      (@UniformSpace.toTopologicalSpace.{u_1} E
+                        (@PseudoMetricSpace.toUniformSpace.{u_1} E
+                          (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+                            (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst))))
+                      (@ESeminormedAddCommMonoid.toESeminormedAddMonoid.{u_1} E
+                        (@UniformSpace.toTopologicalSpace.{u_1} E
+                          (@PseudoMetricSpace.toUniformSpace.{u_1} E
+                            (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+                              (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst))))
+                        (@ENormedAddCommMonoid.toESeminormedAddCommMonoid.{u_1} E
+                          (@UniformSpace.toTopologicalSpace.{u_1} E
+                            (@PseudoMetricSpace.toUniformSpace.{u_1} E
+                              (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+                                (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst))))
+                          (@NormedAddCommGroup.toENormedAddCommMonoid.{u_1} E inst)))))))
+              (@DistribSMul.toSMulZeroClass.{0, u_1} Real E
+                (@AddMonoid.toAddZeroClass.{u_1} E
+                  (@ESeminormedAddMonoid.toAddMonoid.{u_1} E
+                    (@UniformSpace.toTopologicalSpace.{u_1} E
+                      (@PseudoMetricSpace.toUniformSpace.{u_1} E
+                        (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+                          (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst))))
+                    (@ESeminormedAddCommMonoid.toESeminormedAddMonoid.{u_1} E
+                      (@UniformSpace.toTopologicalSpace.{u_1} E
+                        (@PseudoMetricSpace.toUniformSpace.{u_1} E
+                          (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+                            (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst))))
+                      (@ENormedAddCommMonoid.toESeminormedAddCommMonoid.{u_1} E
+                        (@UniformSpace.toTopologicalSpace.{u_1} E
+                          (@PseudoMetricSpace.toUniformSpace.{u_1} E
+                            (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+                              (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst))))
+                        (@NormedAddCommGroup.toENormedAddCommMonoid.{u_1} E inst)))))
+                (@DistribMulAction.toDistribSMul.{0, u_1} Real E Real.instMonoid
+                  (@ESeminormedAddMonoid.toAddMonoid.{u_1} E
+                    (@UniformSpace.toTopologicalSpace.{u_1} E
+                      (@PseudoMetricSpace.toUniformSpace.{u_1} E
+                        (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+                          (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst))))
+                    (@ESeminormedAddCommMonoid.toESeminormedAddMonoid.{u_1} E
+                      (@UniformSpace.toTopologicalSpace.{u_1} E
+                        (@PseudoMetricSpace.toUniformSpace.{u_1} E
+                          (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+                            (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst))))
+                      (@ENormedAddCommMonoid.toESeminormedAddCommMonoid.{u_1} E
+                        (@UniformSpace.toTopologicalSpace.{u_1} E
+                          (@PseudoMetricSpace.toUniformSpace.{u_1} E
+                            (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+                              (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst))))
+                        (@NormedAddCommGroup.toENormedAddCommMonoid.{u_1} E inst))))
+                  (@Module.toDistribMulAction.{0, u_1} Real E Real.semiring
+                    (@ESeminormedAddCommMonoid.toAddCommMonoid.{u_1} E
+                      (@UniformSpace.toTopologicalSpace.{u_1} E
+                        (@PseudoMetricSpace.toUniformSpace.{u_1} E
+                          (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+                            (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst))))
+                      (@ENormedAddCommMonoid.toESeminormedAddCommMonoid.{u_1} E
+                        (@UniformSpace.toTopologicalSpace.{u_1} E
+                          (@PseudoMetricSpace.toUniformSpace.{u_1} E
+                            (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+                              (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst))))
+                        (@NormedAddCommGroup.toENormedAddCommMonoid.{u_1} E inst)))
+                    (@NormedSpace.toModule.{0, u_1} Real E Real.normedField
+                      (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst)
+                      (@InnerProductSpace.toNormedSpace.{0, u_1} Real E Real.instRCLike
+                        (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst) inst_1)))))))
+          (@deriv.{0, 0} Real (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real
+            Real.instAddCommGroup
+            (@NormedSpace.toModule.{0, 0} Real Real Real.normedField
+              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                    (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+              (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+                (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+                  (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                    (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                      (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+                (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike)))
+            (@UniformSpace.toTopologicalSpace.{0} Real
+              (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+            (BanditRL.OnlineHuber.huber delta)
+            (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
+              (@inner.{0, u_1} Real E
+                (@InnerProductSpace.toInner.{0, u_1} Real E Real.instRCLike
+                  (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst) inst_1)
+                z x)
+              y))
+          z)
+        x
+@BanditRL.OnlineHuber.huber_linear_convex.{u_1} : ∀ {E : Type u_1} [inst : NormedAddCommGroup.{u_1} E]
+  [inst_1 :
+    @InnerProductSpace.{0, u_1} Real E Real.instRCLike (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst)]
+  [@CompleteSpace.{u_1} E
+      (@PseudoMetricSpace.toUniformSpace.{u_1} E
+        (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+          (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst)))]
+  (delta y : Real),
+  @LE.le.{0} Real Real.instLE (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) delta →
+    ∀ (z : E),
+      @ConvexOn.{0, u_1, 0} Real E Real Real.semiring Real.partialOrder
+        (@ESeminormedAddCommMonoid.toAddCommMonoid.{u_1} E
+          (@UniformSpace.toTopologicalSpace.{u_1} E
+            (@PseudoMetricSpace.toUniformSpace.{u_1} E
+              (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+                (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst))))
+          (@ENormedAddCommMonoid.toESeminormedAddCommMonoid.{u_1} E
+            (@UniformSpace.toTopologicalSpace.{u_1} E
+              (@PseudoMetricSpace.toUniformSpace.{u_1} E
+                (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+                  (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst))))
+            (@NormedAddCommGroup.toENormedAddCommMonoid.{u_1} E inst)))
+        Real.instAddCommMonoid Real.partialOrder
+        (@SMulZeroClass.toSMul.{0, u_1} Real E
+          (@AddZero.toZero.{u_1} E
+            (@AddZeroClass.toAddZero.{u_1} E
+              (@AddMonoid.toAddZeroClass.{u_1} E
+                (@ESeminormedAddMonoid.toAddMonoid.{u_1} E
+                  (@UniformSpace.toTopologicalSpace.{u_1} E
+                    (@PseudoMetricSpace.toUniformSpace.{u_1} E
+                      (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+                        (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst))))
+                  (@ESeminormedAddCommMonoid.toESeminormedAddMonoid.{u_1} E
+                    (@UniformSpace.toTopologicalSpace.{u_1} E
+                      (@PseudoMetricSpace.toUniformSpace.{u_1} E
+                        (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+                          (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst))))
+                    (@ENormedAddCommMonoid.toESeminormedAddCommMonoid.{u_1} E
+                      (@UniformSpace.toTopologicalSpace.{u_1} E
+                        (@PseudoMetricSpace.toUniformSpace.{u_1} E
+                          (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+                            (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst))))
+                      (@NormedAddCommGroup.toENormedAddCommMonoid.{u_1} E inst)))))))
+          (@DistribSMul.toSMulZeroClass.{0, u_1} Real E
+            (@AddMonoid.toAddZeroClass.{u_1} E
+              (@ESeminormedAddMonoid.toAddMonoid.{u_1} E
+                (@UniformSpace.toTopologicalSpace.{u_1} E
+                  (@PseudoMetricSpace.toUniformSpace.{u_1} E
+                    (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+                      (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst))))
+                (@ESeminormedAddCommMonoid.toESeminormedAddMonoid.{u_1} E
+                  (@UniformSpace.toTopologicalSpace.{u_1} E
+                    (@PseudoMetricSpace.toUniformSpace.{u_1} E
+                      (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+                        (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst))))
+                  (@ENormedAddCommMonoid.toESeminormedAddCommMonoid.{u_1} E
+                    (@UniformSpace.toTopologicalSpace.{u_1} E
+                      (@PseudoMetricSpace.toUniformSpace.{u_1} E
+                        (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+                          (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst))))
+                    (@NormedAddCommGroup.toENormedAddCommMonoid.{u_1} E inst)))))
+            (@DistribMulAction.toDistribSMul.{0, u_1} Real E Real.instMonoid
+              (@ESeminormedAddMonoid.toAddMonoid.{u_1} E
+                (@UniformSpace.toTopologicalSpace.{u_1} E
+                  (@PseudoMetricSpace.toUniformSpace.{u_1} E
+                    (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+                      (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst))))
+                (@ESeminormedAddCommMonoid.toESeminormedAddMonoid.{u_1} E
+                  (@UniformSpace.toTopologicalSpace.{u_1} E
+                    (@PseudoMetricSpace.toUniformSpace.{u_1} E
+                      (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+                        (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst))))
+                  (@ENormedAddCommMonoid.toESeminormedAddCommMonoid.{u_1} E
+                    (@UniformSpace.toTopologicalSpace.{u_1} E
+                      (@PseudoMetricSpace.toUniformSpace.{u_1} E
+                        (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+                          (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst))))
+                    (@NormedAddCommGroup.toENormedAddCommMonoid.{u_1} E inst))))
+              (@Module.toDistribMulAction.{0, u_1} Real E Real.semiring
+                (@ESeminormedAddCommMonoid.toAddCommMonoid.{u_1} E
+                  (@UniformSpace.toTopologicalSpace.{u_1} E
+                    (@PseudoMetricSpace.toUniformSpace.{u_1} E
+                      (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+                        (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst))))
+                  (@ENormedAddCommMonoid.toESeminormedAddCommMonoid.{u_1} E
+                    (@UniformSpace.toTopologicalSpace.{u_1} E
+                      (@PseudoMetricSpace.toUniformSpace.{u_1} E
+                        (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+                          (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst))))
+                    (@NormedAddCommGroup.toENormedAddCommMonoid.{u_1} E inst)))
+                (@NormedSpace.toModule.{0, u_1} Real E Real.normedField
+                  (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst)
+                  (@InnerProductSpace.toNormedSpace.{0, u_1} Real E Real.instRCLike
+                    (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst) inst_1))))))
+        (@Algebra.toSMul.{0, 0} Real Real Real.instCommSemiring
+          (@CommSemiring.toSemiring.{0} Real Real.instCommSemiring) (@Algebra.id.{0} Real Real.instCommSemiring))
+        (@Set.univ.{u_1} E) fun w =>
+        BanditRL.OnlineHuber.huber delta
+          (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
+            (@inner.{0, u_1} Real E
+              (@InnerProductSpace.toInner.{0, u_1} Real E Real.instRCLike
+                (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst) inst_1)
+              z w)
+            y)
+@BanditRL.OnlineHuber.huber_linear_gradient_bound.{u_1} : ∀ {E : Type u_1} [inst : NormedAddCommGroup.{u_1} E]
+  [inst_1 :
+    @InnerProductSpace.{0, u_1} Real E Real.instRCLike (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst)]
+  [inst_2 :
+    @CompleteSpace.{u_1} E
+      (@PseudoMetricSpace.toUniformSpace.{u_1} E
+        (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+          (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst)))]
+  (delta y : Real),
+  @LE.le.{0} Real Real.instLE (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) delta →
+    ∀ (z x : E),
+      @LE.le.{0} Real Real.instLE
+        (@norm.{u_1} E (@NormedAddCommGroup.toNorm.{u_1} E inst)
+          (@gradient.{0, u_1} Real E Real.instRCLike inst inst_1 inst_2
+            (fun w =>
+              BanditRL.OnlineHuber.huber delta
+                (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
+                  (@inner.{0, u_1} Real E
+                    (@InnerProductSpace.toInner.{0, u_1} Real E Real.instRCLike
+                      (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst) inst_1)
+                    z w)
+                  y))
+            x))
+        (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) delta
+          (@norm.{u_1} E (@NormedAddCommGroup.toNorm.{u_1} E inst) z))
+@BanditRL.OnlineHuber.project_fullSpace.{u_1} : ∀ {E : Type u_1} [inst : NormedAddCommGroup.{u_1} E]
+  [inst_1 :
+    @InnerProductSpace.{0, u_1} Real E Real.instRCLike (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst)]
+  [inst_2 :
+    @CompleteSpace.{u_1} E
+      (@PseudoMetricSpace.toUniformSpace.{u_1} E
+        (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+          (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst)))]
+  (x : E),
+  @Eq.{u_1 + 1} E
+    (@BanditRL.OnlineGradientDescent.project.{u_1} E inst inst_1 inst_2
+      (@BanditRL.OnlineHuber.fullSpace.{u_1} E inst inst_1) x)
+    x
+@BanditRL.OnlineHuber.huber_regular.{u_1} : ∀ {E : Type u_1} [inst : NormedAddCommGroup.{u_1} E]
+  [inst_1 :
+    @InnerProductSpace.{0, u_1} Real E Real.instRCLike (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst)]
+  [@CompleteSpace.{u_1} E
+      (@PseudoMetricSpace.toUniformSpace.{u_1} E
+        (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+          (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst)))]
+  (delta y : Real),
+  @LE.le.{0} Real Real.instLE (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) delta →
+    ∀ (z : E),
+      @BanditRL.OnlineGradientDescent.RegularLoss.{u_1} E inst inst_1
+        (@BanditRL.OnlineHuber.fullSpace.{u_1} E inst inst_1)
+        (@BanditRL.OnlineHuber.linearLoss.{u_1} E inst inst_1 delta z y)
+@BanditRL.OnlineHuber.huber_step.{u_1} : ∀ {E : Type u_1} [inst : NormedAddCommGroup.{u_1} E]
+  [inst_1 :
+    @InnerProductSpace.{0, u_1} Real E Real.instRCLike (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst)]
+  [inst_2 :
+    @CompleteSpace.{u_1} E
+      (@PseudoMetricSpace.toUniformSpace.{u_1} E
+        (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+          (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst)))]
+  (delta y eta : Real),
+  @LE.le.{0} Real Real.instLE (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) delta →
+    ∀ (z x : E),
+      @Eq.{u_1 + 1} E
+        (@BanditRL.OnlineGradientDescent.step.{u_1} E inst inst_1 inst_2
+          (@BanditRL.OnlineHuber.fullSpace.{u_1} E inst inst_1) eta
+          (@BanditRL.OnlineHuber.linearLoss.{u_1} E inst inst_1 delta z y) x)
+        (@HSub.hSub.{u_1, u_1, u_1} E E E
+          (@instHSub.{u_1} E
+            (@SubNegMonoid.toSub.{u_1} E
+              (@AddGroup.toSubNegMonoid.{u_1} E
+                (@NormedAddGroup.toAddGroup.{u_1} E (@NormedAddCommGroup.toNormedAddGroup.{u_1} E inst)))))
+          x
+          (@HSMul.hSMul.{0, u_1, u_1} Real E E
+            (@instHSMul.{0, u_1} Real E
+              (@SMulZeroClass.toSMul.{0, u_1} Real E
+                (@AddZero.toZero.{u_1} E
+                  (@AddZeroClass.toAddZero.{u_1} E
+                    (@AddMonoid.toAddZeroClass.{u_1} E
+                      (@ESeminormedAddMonoid.toAddMonoid.{u_1} E
+                        (@UniformSpace.toTopologicalSpace.{u_1} E
+                          (@PseudoMetricSpace.toUniformSpace.{u_1} E
+                            (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+                              (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst))))
+                        (@ESeminormedAddCommMonoid.toESeminormedAddMonoid.{u_1} E
+                          (@UniformSpace.toTopologicalSpace.{u_1} E
+                            (@PseudoMetricSpace.toUniformSpace.{u_1} E
+                              (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+                                (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst))))
+                          (@ENormedAddCommMonoid.toESeminormedAddCommMonoid.{u_1} E
+                            (@UniformSpace.toTopologicalSpace.{u_1} E
+                              (@PseudoMetricSpace.toUniformSpace.{u_1} E
+                                (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+                                  (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst))))
+                            (@NormedAddCommGroup.toENormedAddCommMonoid.{u_1} E inst)))))))
+                (@DistribSMul.toSMulZeroClass.{0, u_1} Real E
+                  (@AddMonoid.toAddZeroClass.{u_1} E
+                    (@ESeminormedAddMonoid.toAddMonoid.{u_1} E
+                      (@UniformSpace.toTopologicalSpace.{u_1} E
+                        (@PseudoMetricSpace.toUniformSpace.{u_1} E
+                          (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+                            (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst))))
+                      (@ESeminormedAddCommMonoid.toESeminormedAddMonoid.{u_1} E
+                        (@UniformSpace.toTopologicalSpace.{u_1} E
+                          (@PseudoMetricSpace.toUniformSpace.{u_1} E
+                            (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+                              (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst))))
+                        (@ENormedAddCommMonoid.toESeminormedAddCommMonoid.{u_1} E
+                          (@UniformSpace.toTopologicalSpace.{u_1} E
+                            (@PseudoMetricSpace.toUniformSpace.{u_1} E
+                              (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+                                (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst))))
+                          (@NormedAddCommGroup.toENormedAddCommMonoid.{u_1} E inst)))))
+                  (@DistribMulAction.toDistribSMul.{0, u_1} Real E Real.instMonoid
+                    (@ESeminormedAddMonoid.toAddMonoid.{u_1} E
+                      (@UniformSpace.toTopologicalSpace.{u_1} E
+                        (@PseudoMetricSpace.toUniformSpace.{u_1} E
+                          (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+                            (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst))))
+                      (@ESeminormedAddCommMonoid.toESeminormedAddMonoid.{u_1} E
+                        (@UniformSpace.toTopologicalSpace.{u_1} E
+                          (@PseudoMetricSpace.toUniformSpace.{u_1} E
+                            (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+                              (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst))))
+                        (@ENormedAddCommMonoid.toESeminormedAddCommMonoid.{u_1} E
+                          (@UniformSpace.toTopologicalSpace.{u_1} E
+                            (@PseudoMetricSpace.toUniformSpace.{u_1} E
+                              (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+                                (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst))))
+                          (@NormedAddCommGroup.toENormedAddCommMonoid.{u_1} E inst))))
+                    (@Module.toDistribMulAction.{0, u_1} Real E Real.semiring
+                      (@ESeminormedAddCommMonoid.toAddCommMonoid.{u_1} E
+                        (@UniformSpace.toTopologicalSpace.{u_1} E
+                          (@PseudoMetricSpace.toUniformSpace.{u_1} E
+                            (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+                              (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst))))
+                        (@ENormedAddCommMonoid.toESeminormedAddCommMonoid.{u_1} E
+                          (@UniformSpace.toTopologicalSpace.{u_1} E
+                            (@PseudoMetricSpace.toUniformSpace.{u_1} E
+                              (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+                                (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst))))
+                          (@NormedAddCommGroup.toENormedAddCommMonoid.{u_1} E inst)))
+                      (@NormedSpace.toModule.{0, u_1} Real E Real.normedField
+                        (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst)
+                        (@InnerProductSpace.toNormedSpace.{0, u_1} Real E Real.instRCLike
+                          (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst) inst_1)))))))
+            eta
+            (@HSMul.hSMul.{0, u_1, u_1} Real E E
+              (@instHSMul.{0, u_1} Real E
+                (@SMulZeroClass.toSMul.{0, u_1} Real E
+                  (@AddZero.toZero.{u_1} E
+                    (@AddZeroClass.toAddZero.{u_1} E
+                      (@AddMonoid.toAddZeroClass.{u_1} E
+                        (@ESeminormedAddMonoid.toAddMonoid.{u_1} E
+                          (@UniformSpace.toTopologicalSpace.{u_1} E
+                            (@PseudoMetricSpace.toUniformSpace.{u_1} E
+                              (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+                                (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst))))
+                          (@ESeminormedAddCommMonoid.toESeminormedAddMonoid.{u_1} E
+                            (@UniformSpace.toTopologicalSpace.{u_1} E
+                              (@PseudoMetricSpace.toUniformSpace.{u_1} E
+                                (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+                                  (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst))))
+                            (@ENormedAddCommMonoid.toESeminormedAddCommMonoid.{u_1} E
+                              (@UniformSpace.toTopologicalSpace.{u_1} E
+                                (@PseudoMetricSpace.toUniformSpace.{u_1} E
+                                  (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+                                    (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst))))
+                              (@NormedAddCommGroup.toENormedAddCommMonoid.{u_1} E inst)))))))
+                  (@DistribSMul.toSMulZeroClass.{0, u_1} Real E
+                    (@AddMonoid.toAddZeroClass.{u_1} E
+                      (@ESeminormedAddMonoid.toAddMonoid.{u_1} E
+                        (@UniformSpace.toTopologicalSpace.{u_1} E
+                          (@PseudoMetricSpace.toUniformSpace.{u_1} E
+                            (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+                              (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst))))
+                        (@ESeminormedAddCommMonoid.toESeminormedAddMonoid.{u_1} E
+                          (@UniformSpace.toTopologicalSpace.{u_1} E
+                            (@PseudoMetricSpace.toUniformSpace.{u_1} E
+                              (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+                                (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst))))
+                          (@ENormedAddCommMonoid.toESeminormedAddCommMonoid.{u_1} E
+                            (@UniformSpace.toTopologicalSpace.{u_1} E
+                              (@PseudoMetricSpace.toUniformSpace.{u_1} E
+                                (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+                                  (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst))))
+                            (@NormedAddCommGroup.toENormedAddCommMonoid.{u_1} E inst)))))
+                    (@DistribMulAction.toDistribSMul.{0, u_1} Real E Real.instMonoid
+                      (@ESeminormedAddMonoid.toAddMonoid.{u_1} E
+                        (@UniformSpace.toTopologicalSpace.{u_1} E
+                          (@PseudoMetricSpace.toUniformSpace.{u_1} E
+                            (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+                              (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst))))
+                        (@ESeminormedAddCommMonoid.toESeminormedAddMonoid.{u_1} E
+                          (@UniformSpace.toTopologicalSpace.{u_1} E
+                            (@PseudoMetricSpace.toUniformSpace.{u_1} E
+                              (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+                                (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst))))
+                          (@ENormedAddCommMonoid.toESeminormedAddCommMonoid.{u_1} E
+                            (@UniformSpace.toTopologicalSpace.{u_1} E
+                              (@PseudoMetricSpace.toUniformSpace.{u_1} E
+                                (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+                                  (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst))))
+                            (@NormedAddCommGroup.toENormedAddCommMonoid.{u_1} E inst))))
+                      (@Module.toDistribMulAction.{0, u_1} Real E Real.semiring
+                        (@ESeminormedAddCommMonoid.toAddCommMonoid.{u_1} E
+                          (@UniformSpace.toTopologicalSpace.{u_1} E
+                            (@PseudoMetricSpace.toUniformSpace.{u_1} E
+                              (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+                                (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst))))
+                          (@ENormedAddCommMonoid.toESeminormedAddCommMonoid.{u_1} E
+                            (@UniformSpace.toTopologicalSpace.{u_1} E
+                              (@PseudoMetricSpace.toUniformSpace.{u_1} E
+                                (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+                                  (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst))))
+                            (@NormedAddCommGroup.toENormedAddCommMonoid.{u_1} E inst)))
+                        (@NormedSpace.toModule.{0, u_1} Real E Real.normedField
+                          (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst)
+                          (@InnerProductSpace.toNormedSpace.{0, u_1} Real E Real.instRCLike
+                            (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst) inst_1)))))))
+              (@ite.{1} Real
+                (@LE.le.{0} Real Real.instLE
+                  (@abs.{0} Real Real.lattice Real.instAddGroup
+                    (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
+                      (@inner.{0, u_1} Real E
+                        (@InnerProductSpace.toInner.{0, u_1} Real E Real.instRCLike
+                          (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst) inst_1)
+                        z x)
+                      y))
+                  delta)
+                ((@abs.{0} Real Real.lattice Real.instAddGroup
+                      (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
+                        (@inner.{0, u_1} Real E
+                          (@InnerProductSpace.toInner.{0, u_1} Real E Real.instRCLike
+                            (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst) inst_1)
+                          z x)
+                        y)).decidableLE
+                  delta)
+                (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
+                  (@inner.{0, u_1} Real E
+                    (@InnerProductSpace.toInner.{0, u_1} Real E Real.instRCLike
+                      (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst) inst_1)
+                    z x)
+                  y)
+                (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) delta
+                  (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
+                      (@inner.{0, u_1} Real E
+                        (@InnerProductSpace.toInner.{0, u_1} Real E Real.instRCLike
+                          (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst) inst_1)
+                        z x)
+                      y).sign))
+              z)))
+@BanditRL.OnlineHuber.huber_regret_fixed.{u_1} : ∀ {E : Type u_1} [inst : NormedAddCommGroup.{u_1} E]
+  [inst_1 :
+    @InnerProductSpace.{0, u_1} Real E Real.instRCLike (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst)]
+  [inst_2 :
+    @CompleteSpace.{u_1} E
+      (@PseudoMetricSpace.toUniformSpace.{u_1} E
+        (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+          (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst)))]
+  (delta Z eta : Real),
+  @LE.le.{0} Real Real.instLE (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) delta →
+    @LE.le.{0} Real Real.instLE (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) Z →
+      @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) eta →
+        ∀ (z : Nat → E) (y : Nat → Real) (x0 u : E) (T : Nat),
+          (∀ (t : Nat),
+              @LT.lt.{0} Nat instLTNat t T →
+                @LE.le.{0} Real Real.instLE (@norm.{u_1} E (@NormedAddCommGroup.toNorm.{u_1} E inst) (z t)) Z) →
+            @LE.le.{0} Real Real.instLE
+              (@BanditRL.OnlineGradientDescent.regret.{u_1} E inst inst_1 inst_2
+                (@BanditRL.OnlineHuber.fullSpace.{u_1} E inst inst_1) eta
+                (fun t => @BanditRL.OnlineHuber.linearLoss.{u_1} E inst inst_1 delta (z t) (y t)) x0 u T)
+              (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
+                (@HAdd.hAdd.{0, 0, 0} Real Real Real (@instHAdd.{0} Real Real.instAdd)
+                  (@HDiv.hDiv.{0, 0, 0} Real Real Real
+                    (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+                    (@HPow.hPow.{0, 0, 0} Real Nat Real
+                      (@instHPow.{0, 0} Real Nat (@Monoid.toPow.{0} Real Real.instMonoid))
+                      (@norm.{u_1} E (@NormedAddCommGroup.toNorm.{u_1} E inst)
+                        (@HSub.hSub.{u_1, u_1, u_1} E E E
+                          (@instHSub.{u_1} E
+                            (@SubNegMonoid.toSub.{u_1} E
+                              (@AddGroup.toSubNegMonoid.{u_1} E
+                                (@NormedAddGroup.toAddGroup.{u_1} E
+                                  (@NormedAddCommGroup.toNormedAddGroup.{u_1} E inst)))))
+                          x0 u))
+                      (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                    (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                      (@OfNat.ofNat.{0} Real (nat_lit 2) (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast ⋯))
+                      eta))
+                  (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                    (@HDiv.hDiv.{0, 0, 0} Real Real Real
+                      (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid)) eta
+                      (@OfNat.ofNat.{0} Real (nat_lit 2)
+                        (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast ⋯)))
+                    (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                      (@Nat.cast.{0} Real Real.instNatCast T)
+                      (@HPow.hPow.{0, 0, 0} Real Nat Real
+                        (@instHPow.{0, 0} Real Nat (@Monoid.toPow.{0} Real Real.instMonoid))
+                        (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) delta Z)
+                        (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))))
+                (@HDiv.hDiv.{0, 0, 0} Real Real Real
+                  (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+                  (@HPow.hPow.{0, 0, 0} Real Nat Real
+                    (@instHPow.{0, 0} Real Nat (@Monoid.toPow.{0} Real Real.instMonoid))
+                    (@norm.{u_1} E (@NormedAddCommGroup.toNorm.{u_1} E inst)
+                      (@HSub.hSub.{u_1, u_1, u_1} E E E
+                        (@instHSub.{u_1} E
+                          (@SubNegMonoid.toSub.{u_1} E
+                            (@AddGroup.toSubNegMonoid.{u_1} E
+                              (@NormedAddGroup.toAddGroup.{u_1} E
+                                (@NormedAddCommGroup.toNormedAddGroup.{u_1} E inst)))))
+                        (@BanditRL.OnlineGradientDescent.iterate.{u_1} E inst inst_1 inst_2
+                          (@BanditRL.OnlineHuber.fullSpace.{u_1} E inst inst_1) eta
+                          (fun t => @BanditRL.OnlineHuber.linearLoss.{u_1} E inst inst_1 delta (z t) (y t)) x0 T)
+                        u))
+                    (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                  (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                    (@OfNat.ofNat.{0} Real (nat_lit 2) (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast ⋯))
+                    eta)))
+@BanditRL.OnlineHuber.huber_average_bound.{u_1} : ∀ {E : Type u_1} [inst : NormedAddCommGroup.{u_1} E]
+  [inst_1 :
+    @InnerProductSpace.{0, u_1} Real E Real.instRCLike (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst)]
+  [inst_2 :
+    @CompleteSpace.{u_1} E
+      (@PseudoMetricSpace.toUniformSpace.{u_1} E
+        (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+          (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst)))]
+  (delta Z : Real),
+  @LE.le.{0} Real Real.instLE (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) delta →
+    @LE.le.{0} Real Real.instLE (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) Z →
+      ∀ (z : Nat → E) (y : Nat → Real) (x0 u : E) (T : Nat),
+        @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) T →
+          (∀ (t : Nat),
+              @LT.lt.{0} Nat instLTNat t T →
+                @LE.le.{0} Real Real.instLE (@norm.{u_1} E (@NormedAddCommGroup.toNorm.{u_1} E inst) (z t)) Z) →
+            @LE.le.{0} Real Real.instLE
+              (@HDiv.hDiv.{0, 0, 0} Real Real Real
+                (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+                (@BanditRL.OnlineGradientDescent.regret.{u_1} E inst inst_1 inst_2
+                  (@BanditRL.OnlineHuber.fullSpace.{u_1} E inst inst_1)
+                  (@HDiv.hDiv.{0, 0, 0} Real Real Real
+                    (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+                    (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+                    (@Nat.cast.{0} Real Real.instNatCast T).sqrt)
+                  (fun t => @BanditRL.OnlineHuber.linearLoss.{u_1} E inst inst_1 delta (z t) (y t)) x0 u T)
+                (@Nat.cast.{0} Real Real.instNatCast T))
+              (@HDiv.hDiv.{0, 0, 0} Real Real Real
+                (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+                (@HAdd.hAdd.{0, 0, 0} Real Real Real (@instHAdd.{0} Real Real.instAdd)
+                  (@HPow.hPow.{0, 0, 0} Real Nat Real
+                    (@instHPow.{0, 0} Real Nat (@Monoid.toPow.{0} Real Real.instMonoid))
+                    (@norm.{u_1} E (@NormedAddCommGroup.toNorm.{u_1} E inst)
+                      (@HSub.hSub.{u_1, u_1, u_1} E E E
+                        (@instHSub.{u_1} E
+                          (@SubNegMonoid.toSub.{u_1} E
+                            (@AddGroup.toSubNegMonoid.{u_1} E
+                              (@NormedAddGroup.toAddGroup.{u_1} E
+                                (@NormedAddCommGroup.toNormedAddGroup.{u_1} E inst)))))
+                        x0 u))
+                    (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                  (@HPow.hPow.{0, 0, 0} Real Nat Real
+                    (@instHPow.{0, 0} Real Nat (@Monoid.toPow.{0} Real Real.instMonoid))
+                    (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) delta Z)
+                    (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                  (@OfNat.ofNat.{0} Real (nat_lit 2) (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast ⋯))
+                  (@Nat.cast.{0} Real Real.instNatCast T).sqrt))
+@BanditRL.OnlineHuber.huber_rate_tendsto.{u_1} : ∀ {E : Type u_1} [inst : NormedAddCommGroup.{u_1} E]
+  [@InnerProductSpace.{0, u_1} Real E Real.instRCLike (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst)]
+  [@CompleteSpace.{u_1} E
+      (@PseudoMetricSpace.toUniformSpace.{u_1} E
+        (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+          (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst)))]
+  (delta Z : Real) (x0 u : E),
+  @Filter.Tendsto.{0, 0} Nat Real
+    (fun T =>
+      @HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+        (@HAdd.hAdd.{0, 0, 0} Real Real Real (@instHAdd.{0} Real Real.instAdd)
+          (@HPow.hPow.{0, 0, 0} Real Nat Real (@instHPow.{0, 0} Real Nat (@Monoid.toPow.{0} Real Real.instMonoid))
+            (@norm.{u_1} E (@NormedAddCommGroup.toNorm.{u_1} E inst)
+              (@HSub.hSub.{u_1, u_1, u_1} E E E
+                (@instHSub.{u_1} E
+                  (@SubNegMonoid.toSub.{u_1} E
+                    (@AddGroup.toSubNegMonoid.{u_1} E
+                      (@NormedAddGroup.toAddGroup.{u_1} E (@NormedAddCommGroup.toNormedAddGroup.{u_1} E inst)))))
+                x0 u))
+            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+          (@HPow.hPow.{0, 0, 0} Real Nat Real (@instHPow.{0, 0} Real Nat (@Monoid.toPow.{0} Real Real.instMonoid))
+            (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) delta Z)
+            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+        (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+          (@OfNat.ofNat.{0} Real (nat_lit 2) (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast ⋯))
+          (@Nat.cast.{0} Real Real.instNatCast T).sqrt))
+    (@Filter.atTop.{0} Nat Nat.instPreorder)
+    (@nhds.{0} Real
+      (@UniformSpace.toTopologicalSpace.{0} Real (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+      (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)))
+@BanditRL.OnlineHuber.huber_average_eventually.{u_1} : ∀ {E : Type u_1} [inst : NormedAddCommGroup.{u_1} E]
+  [inst_1 :
+    @InnerProductSpace.{0, u_1} Real E Real.instRCLike (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst)]
+  [inst_2 :
+    @CompleteSpace.{u_1} E
+      (@PseudoMetricSpace.toUniformSpace.{u_1} E
+        (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} E
+          (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst)))]
+  (delta Z : Real),
+  @LE.le.{0} Real Real.instLE (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) delta →
+    @LE.le.{0} Real Real.instLE (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) Z →
+      ∀ (z : Nat → E) (y : Nat → Real) (x0 u : E),
+        (∀ (t : Nat), @LE.le.{0} Real Real.instLE (@norm.{u_1} E (@NormedAddCommGroup.toNorm.{u_1} E inst) (z t)) Z) →
+          ∀ (epsilon : Real),
+            @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))
+                epsilon →
+              @Filter.Eventually.{0} Nat
+                (fun T =>
+                  @LT.lt.{0} Real Real.instLT
+                    (@HDiv.hDiv.{0, 0, 0} Real Real Real
+                      (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+                      (@BanditRL.OnlineGradientDescent.regret.{u_1} E inst inst_1 inst_2
+                        (@BanditRL.OnlineHuber.fullSpace.{u_1} E inst inst_1)
+                        (@HDiv.hDiv.{0, 0, 0} Real Real Real
+                          (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+                          (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+                          (@Nat.cast.{0} Real Real.instNatCast T).sqrt)
+                        (fun t => @BanditRL.OnlineHuber.linearLoss.{u_1} E inst inst_1 delta (z t) (y t)) x0 u T)
+                      (@Nat.cast.{0} Real Real.instNatCast T))
+                    epsilon)
+                (@Filter.atTop.{0} Nat Nat.instPreorder)
+BanditRL.OnlineHuber.huber : Real → Real → Real
+@BanditRL.OnlineHuber.fullSpace.{u_1} : {E : Type u_1} →
+  [inst : NormedAddCommGroup.{u_1} E] →
+    [inst_1 :
+        @InnerProductSpace.{0, u_1} Real E Real.instRCLike
+          (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst)] →
+      @BanditRL.OnlineGradientDescent.Domain.{u_1} E inst inst_1
+@BanditRL.OnlineHuber.linearLoss.{u_1} : {E : Type u_1} →
+  [inst : NormedAddCommGroup.{u_1} E] →
+    [@InnerProductSpace.{0, u_1} Real E Real.instRCLike (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} E inst)] →
+      Real → E → Real → E → Real
+HuberSeamProbe.upper_join : @HasDerivAt.{0, 0} Real
+  (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real Real.instAddCommGroup
+  (@LieAlgebra.toModule.{0, 0} Real Real Real.commRing (@LieRing.ofAssociativeRing.{0} Real Real.instRing)
+    (@LieAlgebra.ofAssociativeAlgebra.{0, 0} Real Real.instRing Real Real.commRing
+      (@Algebra.id.{0} Real (@CommRing.toCommSemiring.{0} Real Real.commRing))))
+  (@UniformSpace.toTopologicalSpace.{0} Real (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace)) ⋯
+  (fun x =>
+    @ite.{1} Real
+      (@LE.le.{0} Real Real.instLE x (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))
+      (x.decidableLE (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))
+      (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+        (@HPow.hPow.{0, 0, 0} Real Nat Real (@instHPow.{0, 0} Real Nat (@Monoid.toPow.{0} Real Real.instMonoid)) x
+          (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+        (@OfNat.ofNat.{0} Real (nat_lit 2) (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast ⋯)))
+      (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub) x
+        (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+          (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+          (@OfNat.ofNat.{0} Real (nat_lit 2) (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast ⋯)))))
+  (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+  (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+HuberDerivativeProbe.lower_seam : @HasDerivAt.{0, 0} Real
+  (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real Real.instAddCommGroup
+  (@LieAlgebra.toModule.{0, 0} Real Real Real.commRing (@LieRing.ofAssociativeRing.{0} Real Real.instRing)
+    (@LieAlgebra.ofAssociativeAlgebra.{0, 0} Real Real.instRing Real Real.commRing
+      (@Algebra.id.{0} Real (@CommRing.toCommSemiring.{0} Real Real.commRing))))
+  (@UniformSpace.toTopologicalSpace.{0} Real (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace)) ⋯
+  (BanditRL.OnlineHuber.huber
+    (@OfNat.ofNat.{0} Real (nat_lit 2) (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast ⋯)))
+  (@Neg.neg.{0} Real Real.instNeg
+    (@OfNat.ofNat.{0} Real (nat_lit 2) (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast ⋯)))
+  (@Neg.neg.{0} Real Real.instNeg
+    (@OfNat.ofNat.{0} Real (nat_lit 2) (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast ⋯)))
+HuberDerivativeProbe.upper_seam : @HasDerivAt.{0, 0} Real
+  (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real Real.instAddCommGroup
+  (@LieAlgebra.toModule.{0, 0} Real Real Real.commRing (@LieRing.ofAssociativeRing.{0} Real Real.instRing)
+    (@LieAlgebra.ofAssociativeAlgebra.{0, 0} Real Real.instRing Real Real.commRing
+      (@Algebra.id.{0} Real (@CommRing.toCommSemiring.{0} Real Real.commRing))))
+  (@UniformSpace.toTopologicalSpace.{0} Real (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace)) ⋯
+  (BanditRL.OnlineHuber.huber
+    (@OfNat.ofNat.{0} Real (nat_lit 2) (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast ⋯)))
+  (@OfNat.ofNat.{0} Real (nat_lit 2) (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast ⋯))
+  (@OfNat.ofNat.{0} Real (nat_lit 2) (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast ⋯))
+HuberDerivativeProbe.zero_threshold : @HasDerivAt.{0, 0} Real
+  (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real Real.instAddCommGroup
+  (@LieAlgebra.toModule.{0, 0} Real Real Real.commRing (@LieRing.ofAssociativeRing.{0} Real Real.instRing)
+    (@LieAlgebra.ofAssociativeAlgebra.{0, 0} Real Real.instRing Real Real.commRing
+      (@Algebra.id.{0} Real (@CommRing.toCommSemiring.{0} Real Real.commRing))))
+  (@UniformSpace.toTopologicalSpace.{0} Real (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace)) ⋯
+  (BanditRL.OnlineHuber.huber (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)))
+  (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))
+  (@Neg.neg.{0} Real Real.instNeg
+    (@OfNat.ofNat.{0} Real (nat_lit 7) (@instOfNatAtLeastTwo.{0} Real (nat_lit 7) Real.instNatCast ⋯)))
+HuberDerivativeProbe.quadratic_interior : @HasDerivAt.{0, 0} Real
+  (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real Real.instAddCommGroup
+  (@LieAlgebra.toModule.{0, 0} Real Real Real.commRing (@LieRing.ofAssociativeRing.{0} Real Real.instRing)
+    (@LieAlgebra.ofAssociativeAlgebra.{0, 0} Real Real.instRing Real Real.commRing
+      (@Algebra.id.{0} Real (@CommRing.toCommSemiring.{0} Real Real.commRing))))
+  (@UniformSpace.toTopologicalSpace.{0} Real (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace)) ⋯
+  (BanditRL.OnlineHuber.huber
+    (@OfNat.ofNat.{0} Real (nat_lit 2) (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast ⋯)))
+  (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+  (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+HuberDerivativeProbe.affine_exterior : @HasDerivAt.{0, 0} Real
+  (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real Real.instAddCommGroup
+  (@LieAlgebra.toModule.{0, 0} Real Real Real.commRing (@LieRing.ofAssociativeRing.{0} Real Real.instRing)
+    (@LieAlgebra.ofAssociativeAlgebra.{0, 0} Real Real.instRing Real Real.commRing
+      (@Algebra.id.{0} Real (@CommRing.toCommSemiring.{0} Real Real.commRing))))
+  (@UniformSpace.toTopologicalSpace.{0} Real (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace)) ⋯
+  (BanditRL.OnlineHuber.huber
+    (@OfNat.ofNat.{0} Real (nat_lit 2) (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast ⋯)))
+  (@OfNat.ofNat.{0} Real (nat_lit 2) (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast ⋯))
+  (@OfNat.ofNat.{0} Real (nat_lit 3) (@instOfNatAtLeastTwo.{0} Real (nat_lit 3) Real.instNatCast ⋯))
+HuberVectorProbe.nonzero_feature : @Eq.{1} Real
+  (@gradient.{0, 0} Real Real Real.instRCLike Real.normedAddCommGroup
+    (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike) Real.instCompleteSpace
+    (fun w =>
+      BanditRL.OnlineHuber.huber
+        (@OfNat.ofNat.{0} Real (nat_lit 2) (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast ⋯))
+        (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
+          (@inner.{0, 0} Real Real
+            (@InnerProductSpace.toInner.{0, 0} Real Real Real.instRCLike
+              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                    (@NormedCommRing.toSeminormedCommRing.{0} Real
+                      (@NormedField.toNormedCommRing.{0} Real
+                        (@DenselyNormedField.toNormedField.{0} Real
+                          (@RCLike.toDenselyNormedField.{0} Real Real.instRCLike)))))))
+              (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+            (@OfNat.ofNat.{0} Real (nat_lit 3) (@instOfNatAtLeastTwo.{0} Real (nat_lit 3) Real.instNatCast ⋯)) w)
+          (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))))
+    (@OfNat.ofNat.{0} Real (nat_lit 2) (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast ⋯)))
+  (@OfNat.ofNat.{0} Real (nat_lit 6) (@instOfNatAtLeastTwo.{0} Real (nat_lit 6) Real.instNatCast ⋯))
+HuberVectorProbe.zero_threshold : @Eq.{1} Real
+  (@gradient.{0, 0} Real Real Real.instRCLike Real.normedAddCommGroup
+    (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike) Real.instCompleteSpace
+    (fun w =>
+      BanditRL.OnlineHuber.huber (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))
+        (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
+          (@inner.{0, 0} Real Real
+            (@InnerProductSpace.toInner.{0, 0} Real Real Real.instRCLike
+              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                    (@NormedCommRing.toSeminormedCommRing.{0} Real
+                      (@NormedField.toNormedCommRing.{0} Real
+                        (@DenselyNormedField.toNormedField.{0} Real
+                          (@RCLike.toDenselyNormedField.{0} Real Real.instRCLike)))))))
+              (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+            (@OfNat.ofNat.{0} Real (nat_lit 3) (@instOfNatAtLeastTwo.{0} Real (nat_lit 3) Real.instNatCast ⋯)) w)
+          (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))))
+    (@OfNat.ofNat.{0} Real (nat_lit 2) (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast ⋯)))
+  (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))
+HuberVectorProbe.feature_bound : @LE.le.{0} Real Real.instLE
+  (@norm.{0} Real Real.norm
+    (@gradient.{0, 0} Real Real Real.instRCLike Real.normedAddCommGroup
+      (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike) Real.instCompleteSpace
+      (fun w =>
+        BanditRL.OnlineHuber.huber
+          (@OfNat.ofNat.{0} Real (nat_lit 2) (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast ⋯))
+          (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
+            (@inner.{0, 0} Real Real
+              (@InnerProductSpace.toInner.{0, 0} Real Real Real.instRCLike
+                (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+                  (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                    (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                      (@NormedCommRing.toSeminormedCommRing.{0} Real
+                        (@NormedField.toNormedCommRing.{0} Real
+                          (@DenselyNormedField.toNormedField.{0} Real
+                            (@RCLike.toDenselyNormedField.{0} Real Real.instRCLike)))))))
+                (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+              (@OfNat.ofNat.{0} Real (nat_lit 3) (@instOfNatAtLeastTwo.{0} Real (nat_lit 3) Real.instNatCast ⋯)) w)
+            (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))))
+      (@OfNat.ofNat.{0} Real (nat_lit 2) (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast ⋯))))
+  (@OfNat.ofNat.{0} Real (nat_lit 6) (@instOfNatAtLeastTwo.{0} Real (nat_lit 6) Real.instNatCast ⋯))
+HuberVectorProbe.global_convex : @ConvexOn.{0, 0, 0} Real Real Real Real.semiring Real.partialOrder
+  Real.instAddCommMonoid Real.instAddCommMonoid Real.partialOrder
+  (@Algebra.toSMul.{0, 0} Real Real Real.instCommSemiring (@CommSemiring.toSemiring.{0} Real Real.instCommSemiring)
+    (@Algebra.id.{0} Real Real.instCommSemiring))
+  (@Algebra.toSMul.{0, 0} Real Real Real.instCommSemiring (@CommSemiring.toSemiring.{0} Real Real.instCommSemiring)
+    (@Algebra.id.{0} Real Real.instCommSemiring))
+  (@Set.univ.{0} Real) fun w =>
+  BanditRL.OnlineHuber.huber
+    (@OfNat.ofNat.{0} Real (nat_lit 2) (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast ⋯))
+    (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
+      (@inner.{0, 0} Real Real
+        (@InnerProductSpace.toInner.{0, 0} Real Real Real.instRCLike
+          (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+            (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+              (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                (@NormedCommRing.toSeminormedCommRing.{0} Real
+                  (@NormedField.toNormedCommRing.{0} Real
+                    (@DenselyNormedField.toNormedField.{0} Real
+                      (@RCLike.toDenselyNormedField.{0} Real Real.instRCLike)))))))
+          (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+        (@OfNat.ofNat.{0} Real (nat_lit 3) (@instOfNatAtLeastTwo.{0} Real (nat_lit 3) Real.instNatCast ⋯)) w)
+      (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))
+HuberOGDProbe.actual_step : @Eq.{1} Real
+  (@BanditRL.OnlineGradientDescent.step.{0} Real Real.normedAddCommGroup
+    (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike) Real.instCompleteSpace
+    (@BanditRL.OnlineHuber.fullSpace.{0} Real Real.normedAddCommGroup
+      (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+    (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+      (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+      (@OfNat.ofNat.{0} Real (nat_lit 2) (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast ⋯)))
+    (@BanditRL.OnlineHuber.linearLoss.{0} Real Real.normedAddCommGroup
+      (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike)
+      (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+      (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+      (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)))
+    (@OfNat.ofNat.{0} Real (nat_lit 2) (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast ⋯)))
+  (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+    (@OfNat.ofNat.{0} Real (nat_lit 3) (@instOfNatAtLeastTwo.{0} Real (nat_lit 3) Real.instNatCast ⋯))
+    (@OfNat.ofNat.{0} Real (nat_lit 2) (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast ⋯)))
+HuberOGDProbe.residual_bound : ∀ (T : Nat),
+  @LE.le.{0} Real Real.instLE
+    (@BanditRL.OnlineGradientDescent.regret.{0} Real Real.normedAddCommGroup
+      (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike) Real.instCompleteSpace
+      (@BanditRL.OnlineHuber.fullSpace.{0} Real Real.normedAddCommGroup
+        (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+      (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+        (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+        (@OfNat.ofNat.{0} Real (nat_lit 2) (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast ⋯)))
+      (fun x =>
+        @BanditRL.OnlineHuber.linearLoss.{0} Real Real.normedAddCommGroup
+          (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike)
+          (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+          (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+          (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)))
+      (@OfNat.ofNat.{0} Real (nat_lit 2) (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast ⋯))
+      (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) T)
+    (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
+      (@HAdd.hAdd.{0, 0, 0} Real Real Real (@instHAdd.{0} Real Real.instAdd)
+        (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+          (@HPow.hPow.{0, 0, 0} Real Nat Real (@instHPow.{0, 0} Real Nat (@Monoid.toPow.{0} Real Real.instMonoid))
+            (@norm.{0} Real Real.norm
+              (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
+                (@OfNat.ofNat.{0} Real (nat_lit 2) (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast ⋯))
+                (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))))
+            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+          (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+            (@OfNat.ofNat.{0} Real (nat_lit 2) (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast ⋯))
+            (@HDiv.hDiv.{0, 0, 0} Real Real Real
+              (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+              (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+              (@OfNat.ofNat.{0} Real (nat_lit 2) (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast ⋯)))))
+        (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+          (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+            (@HDiv.hDiv.{0, 0, 0} Real Real Real
+              (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+              (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+              (@OfNat.ofNat.{0} Real (nat_lit 2) (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast ⋯)))
+            (@OfNat.ofNat.{0} Real (nat_lit 2) (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast ⋯)))
+          (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) (@Nat.cast.{0} Real Real.instNatCast T)
+            (@HPow.hPow.{0, 0, 0} Real Nat Real (@instHPow.{0, 0} Real Nat (@Monoid.toPow.{0} Real Real.instMonoid))
+              (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+                (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))
+              (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))))
+      (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+        (@HPow.hPow.{0, 0, 0} Real Nat Real (@instHPow.{0, 0} Real Nat (@Monoid.toPow.{0} Real Real.instMonoid))
+          (@norm.{0} Real Real.norm
+            (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
+              (@BanditRL.OnlineGradientDescent.iterate.{0} Real Real.normedAddCommGroup
+                (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike) Real.instCompleteSpace
+                (@BanditRL.OnlineHuber.fullSpace.{0} Real Real.normedAddCommGroup
+                  (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+                (@HDiv.hDiv.{0, 0, 0} Real Real Real
+                  (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+                  (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+                  (@OfNat.ofNat.{0} Real (nat_lit 2) (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast ⋯)))
+                (fun x =>
+                  @BanditRL.OnlineHuber.linearLoss.{0} Real Real.normedAddCommGroup
+                    (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike)
+                    (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+                    (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+                    (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)))
+                (@OfNat.ofNat.{0} Real (nat_lit 2) (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast ⋯)) T)
+              (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))))
+          (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+        (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+          (@OfNat.ofNat.{0} Real (nat_lit 2) (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast ⋯))
+          (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+            (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+            (@OfNat.ofNat.{0} Real (nat_lit 2) (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast ⋯))))))
+Tests.OnlineHuber.average_four : @LE.le.{0} Real Real.instLE
+  (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+    (@BanditRL.OnlineGradientDescent.regret.{0} Real Real.normedAddCommGroup
+      (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike) Real.instCompleteSpace
+      (@BanditRL.OnlineHuber.fullSpace.{0} Real Real.normedAddCommGroup
+        (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+      (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+        (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+        (Real.sqrt (@OfNat.ofNat.{0} Real (nat_lit 4) (@instOfNatAtLeastTwo.{0} Real (nat_lit 4) Real.instNatCast ⋯))))
+      (fun x =>
+        @BanditRL.OnlineHuber.linearLoss.{0} Real Real.normedAddCommGroup
+          (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike)
+          (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+          (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+          (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)))
+      (@OfNat.ofNat.{0} Real (nat_lit 2) (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast ⋯))
+      (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))
+      (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4))))
+    (@OfNat.ofNat.{0} Real (nat_lit 4) (@instOfNatAtLeastTwo.{0} Real (nat_lit 4) Real.instNatCast ⋯)))
+  (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+    (@OfNat.ofNat.{0} Real (nat_lit 5) (@instOfNatAtLeastTwo.{0} Real (nat_lit 5) Real.instNatCast ⋯))
+    (@OfNat.ofNat.{0} Real (nat_lit 4) (@instOfNatAtLeastTwo.{0} Real (nat_lit 4) Real.instNatCast ⋯)))
+Tests.OnlineHuber.eventually_tenth : @Filter.Eventually.{0} Nat
+  (fun T =>
+    @LT.lt.{0} Real Real.instLT
+      (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+        (@BanditRL.OnlineGradientDescent.regret.{0} Real Real.normedAddCommGroup
+          (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike) Real.instCompleteSpace
+          (@BanditRL.OnlineHuber.fullSpace.{0} Real Real.normedAddCommGroup
+            (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+          (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+            (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+            (@Nat.cast.{0} Real Real.instNatCast T).sqrt)
+          (fun x =>
+            @BanditRL.OnlineHuber.linearLoss.{0} Real Real.normedAddCommGroup
+              (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike)
+              (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+              (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+              (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)))
+          (@OfNat.ofNat.{0} Real (nat_lit 2) (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast ⋯))
+          (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) T)
+        (@Nat.cast.{0} Real Real.instNatCast T))
+      (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+        (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+        (@OfNat.ofNat.{0} Real (nat_lit 10) (@instOfNatAtLeastTwo.{0} Real (nat_lit 10) Real.instNatCast ⋯))))
+  (@Filter.atTop.{0} Nat Nat.instPreorder)

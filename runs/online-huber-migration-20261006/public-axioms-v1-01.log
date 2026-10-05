@@ -1,0 +1,163 @@
+BanditRL.OnlineHuber.hasDerivAt_ite_le : ∀ (f g : ℝ → ℝ) (c d : ℝ),
+  HasDerivAt f d c → HasDerivAt g d c → f c = g c → HasDerivAt (fun x => if x ≤ c then f x else g x) d c
+'BanditRL.OnlineHuber.hasDerivAt_ite_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineHuber.huber_three_pieces : ∀ (delta r : ℝ),
+  0 ≤ delta →
+    BanditRL.OnlineHuber.huber delta r =
+      if r ≤ -delta then -delta * r - delta ^ 2 / 2 else if r ≤ delta then r ^ 2 / 2 else delta * r - delta ^ 2 / 2
+'BanditRL.OnlineHuber.huber_three_pieces' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineHuber.huber_zero : ∀ (r : ℝ), BanditRL.OnlineHuber.huber 0 r = 0
+'BanditRL.OnlineHuber.huber_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineHuber.hasDerivAt_join : ∀ (f g df dg : ℝ → ℝ) (c x : ℝ),
+  (∀ (r : ℝ), HasDerivAt f (df r) r) →
+    (∀ (r : ℝ), HasDerivAt g (dg r) r) →
+      f c = g c → df c = dg c → HasDerivAt (fun r => if r ≤ c then f r else g r) (if x ≤ c then df x else dg x) x
+'BanditRL.OnlineHuber.hasDerivAt_join' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineHuber.huber_hasDerivAt : ∀ (delta r : ℝ),
+  0 ≤ delta →
+    HasDerivAt (BanditRL.OnlineHuber.huber delta) (if r ≤ -delta then -delta else if r ≤ delta then r else delta) r
+'BanditRL.OnlineHuber.huber_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineHuber.huber_deriv_clamp : ∀ (delta r : ℝ),
+  0 ≤ delta → deriv (BanditRL.OnlineHuber.huber delta) r = max (-delta) (min r delta)
+'BanditRL.OnlineHuber.huber_deriv_clamp' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineHuber.huber_convex : ∀ (delta : ℝ), 0 ≤ delta → ConvexOn ℝ Set.univ (BanditRL.OnlineHuber.huber delta)
+'BanditRL.OnlineHuber.huber_convex' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineHuber.huber_deriv_bound : ∀ (delta r : ℝ),
+  0 ≤ delta → |deriv (BanditRL.OnlineHuber.huber delta) r| ≤ delta
+'BanditRL.OnlineHuber.huber_deriv_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineHuber.huber_deriv_source : ∀ (delta r : ℝ),
+  0 ≤ delta → deriv (BanditRL.OnlineHuber.huber delta) r = if |r| ≤ delta then r else delta * r.sign
+'BanditRL.OnlineHuber.huber_deriv_source' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineHuber.huber_linear_hasGradientAt : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : CompleteSpace E] (delta y : ℝ),
+  0 ≤ delta →
+    ∀ (z x : E),
+      HasGradientAt (fun w => BanditRL.OnlineHuber.huber delta (inner ℝ z w - y))
+        (deriv (BanditRL.OnlineHuber.huber delta) (inner ℝ z x - y) • z) x
+'BanditRL.OnlineHuber.huber_linear_hasGradientAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineHuber.huber_linear_convex : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [CompleteSpace E] (delta y : ℝ),
+  0 ≤ delta → ∀ (z : E), ConvexOn ℝ Set.univ fun w => BanditRL.OnlineHuber.huber delta (inner ℝ z w - y)
+'BanditRL.OnlineHuber.huber_linear_convex' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineHuber.huber_linear_gradient_bound : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : CompleteSpace E] (delta y : ℝ),
+  0 ≤ delta → ∀ (z x : E), ‖gradient (fun w => BanditRL.OnlineHuber.huber delta (inner ℝ z w - y)) x‖ ≤ delta * ‖z‖
+'BanditRL.OnlineHuber.huber_linear_gradient_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineHuber.project_fullSpace : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : CompleteSpace E] (x : E),
+  BanditRL.OnlineGradientDescent.project BanditRL.OnlineHuber.fullSpace x = x
+'BanditRL.OnlineHuber.project_fullSpace' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineHuber.huber_regular : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E]
+  [CompleteSpace E] (delta y : ℝ),
+  0 ≤ delta →
+    ∀ (z : E),
+      BanditRL.OnlineGradientDescent.RegularLoss BanditRL.OnlineHuber.fullSpace
+        (BanditRL.OnlineHuber.linearLoss delta z y)
+'BanditRL.OnlineHuber.huber_regular' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineHuber.huber_step : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E]
+  [inst_2 : CompleteSpace E] (delta y eta : ℝ),
+  0 ≤ delta →
+    ∀ (z x : E),
+      BanditRL.OnlineGradientDescent.step BanditRL.OnlineHuber.fullSpace eta (BanditRL.OnlineHuber.linearLoss delta z y)
+          x =
+        x - eta • (if |inner ℝ z x - y| ≤ delta then inner ℝ z x - y else delta * (inner ℝ z x - y).sign) • z
+'BanditRL.OnlineHuber.huber_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineHuber.huber_regret_fixed : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : CompleteSpace E] (delta Z eta : ℝ),
+  0 ≤ delta →
+    0 ≤ Z →
+      0 < eta →
+        ∀ (z : ℕ → E) (y : ℕ → ℝ) (x0 u : E) (T : ℕ),
+          (∀ t < T, ‖z t‖ ≤ Z) →
+            BanditRL.OnlineGradientDescent.regret BanditRL.OnlineHuber.fullSpace eta
+                (fun t => BanditRL.OnlineHuber.linearLoss delta (z t) (y t)) x0 u T ≤
+              ‖x0 - u‖ ^ 2 / (2 * eta) + eta / 2 * (↑T * (delta * Z) ^ 2) -
+                ‖BanditRL.OnlineGradientDescent.iterate BanditRL.OnlineHuber.fullSpace eta
+                          (fun t => BanditRL.OnlineHuber.linearLoss delta (z t) (y t)) x0 T -
+                        u‖ ^
+                    2 /
+                  (2 * eta)
+'BanditRL.OnlineHuber.huber_regret_fixed' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineHuber.huber_average_bound : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : CompleteSpace E] (delta Z : ℝ),
+  0 ≤ delta →
+    0 ≤ Z →
+      ∀ (z : ℕ → E) (y : ℕ → ℝ) (x0 u : E) (T : ℕ),
+        0 < T →
+          (∀ t < T, ‖z t‖ ≤ Z) →
+            BanditRL.OnlineGradientDescent.regret BanditRL.OnlineHuber.fullSpace (1 / √↑T)
+                  (fun t => BanditRL.OnlineHuber.linearLoss delta (z t) (y t)) x0 u T /
+                ↑T ≤
+              (‖x0 - u‖ ^ 2 + (delta * Z) ^ 2) / (2 * √↑T)
+'BanditRL.OnlineHuber.huber_average_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineHuber.huber_rate_tendsto : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [InnerProductSpace ℝ E]
+  [CompleteSpace E] (delta Z : ℝ) (x0 u : E),
+  Filter.Tendsto (fun T => (‖x0 - u‖ ^ 2 + (delta * Z) ^ 2) / (2 * √↑T)) Filter.atTop (nhds 0)
+'BanditRL.OnlineHuber.huber_rate_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineHuber.huber_average_eventually : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : CompleteSpace E] (delta Z : ℝ),
+  0 ≤ delta →
+    0 ≤ Z →
+      ∀ (z : ℕ → E) (y : ℕ → ℝ) (x0 u : E),
+        (∀ (t : ℕ), ‖z t‖ ≤ Z) →
+          ∀ (epsilon : ℝ),
+            0 < epsilon →
+              ∀ᶠ (T : ℕ) in Filter.atTop,
+                BanditRL.OnlineGradientDescent.regret BanditRL.OnlineHuber.fullSpace (1 / √↑T)
+                      (fun t => BanditRL.OnlineHuber.linearLoss delta (z t) (y t)) x0 u T /
+                    ↑T <
+                  epsilon
+'BanditRL.OnlineHuber.huber_average_eventually' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineHuber.huber : ℝ → ℝ → ℝ
+'BanditRL.OnlineHuber.huber' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineHuber.fullSpace : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] → [inst_1 : InnerProductSpace ℝ E] → BanditRL.OnlineGradientDescent.Domain E
+'BanditRL.OnlineHuber.fullSpace' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineHuber.linearLoss : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] → [InnerProductSpace ℝ E] → ℝ → E → ℝ → E → ℝ
+'BanditRL.OnlineHuber.linearLoss' depends on axioms: [propext, Classical.choice, Quot.sound]
+HuberSeamProbe.upper_join : HasDerivAt (fun x => if x ≤ 1 then x ^ 2 / 2 else x - 1 / 2) 1 1
+'HuberSeamProbe.upper_join' depends on axioms: [propext, Classical.choice, Quot.sound]
+HuberDerivativeProbe.lower_seam : HasDerivAt (BanditRL.OnlineHuber.huber 2) (-2) (-2)
+'HuberDerivativeProbe.lower_seam' depends on axioms: [propext, Classical.choice, Quot.sound]
+HuberDerivativeProbe.upper_seam : HasDerivAt (BanditRL.OnlineHuber.huber 2) 2 2
+'HuberDerivativeProbe.upper_seam' depends on axioms: [propext, Classical.choice, Quot.sound]
+HuberDerivativeProbe.zero_threshold : HasDerivAt (BanditRL.OnlineHuber.huber 0) 0 (-7)
+'HuberDerivativeProbe.zero_threshold' depends on axioms: [propext, Classical.choice, Quot.sound]
+HuberDerivativeProbe.quadratic_interior : HasDerivAt (BanditRL.OnlineHuber.huber 2) 1 1
+'HuberDerivativeProbe.quadratic_interior' depends on axioms: [propext, Classical.choice, Quot.sound]
+HuberDerivativeProbe.affine_exterior : HasDerivAt (BanditRL.OnlineHuber.huber 2) 2 3
+'HuberDerivativeProbe.affine_exterior' depends on axioms: [propext, Classical.choice, Quot.sound]
+HuberVectorProbe.nonzero_feature : gradient (fun w => BanditRL.OnlineHuber.huber 2 (inner ℝ 3 w - 1)) 2 = 6
+'HuberVectorProbe.nonzero_feature' depends on axioms: [propext, Classical.choice, Quot.sound]
+HuberVectorProbe.zero_threshold : gradient (fun w => BanditRL.OnlineHuber.huber 0 (inner ℝ 3 w - 1)) 2 = 0
+'HuberVectorProbe.zero_threshold' depends on axioms: [propext, Classical.choice, Quot.sound]
+HuberVectorProbe.feature_bound : ‖gradient (fun w => BanditRL.OnlineHuber.huber 2 (inner ℝ 3 w - 1)) 2‖ ≤ 6
+'HuberVectorProbe.feature_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+HuberVectorProbe.global_convex : ConvexOn ℝ Set.univ fun w => BanditRL.OnlineHuber.huber 2 (inner ℝ 3 w - 1)
+'HuberVectorProbe.global_convex' depends on axioms: [propext, Classical.choice, Quot.sound]
+HuberOGDProbe.actual_step : BanditRL.OnlineGradientDescent.step BanditRL.OnlineHuber.fullSpace (1 / 2)
+    (BanditRL.OnlineHuber.linearLoss 1 1 0) 2 =
+  3 / 2
+'HuberOGDProbe.actual_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+HuberOGDProbe.residual_bound : ∀ (T : ℕ),
+  BanditRL.OnlineGradientDescent.regret BanditRL.OnlineHuber.fullSpace (1 / 2)
+      (fun x => BanditRL.OnlineHuber.linearLoss 1 1 0) 2 0 T ≤
+    ‖2 - 0‖ ^ 2 / (2 * (1 / 2)) + 1 / 2 / 2 * (↑T * (1 * 1) ^ 2) -
+      ‖BanditRL.OnlineGradientDescent.iterate BanditRL.OnlineHuber.fullSpace (1 / 2)
+                (fun x => BanditRL.OnlineHuber.linearLoss 1 1 0) 2 T -
+              0‖ ^
+          2 /
+        (2 * (1 / 2))
+'HuberOGDProbe.residual_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineHuber.average_four : BanditRL.OnlineGradientDescent.regret BanditRL.OnlineHuber.fullSpace (1 / √4)
+      (fun x => BanditRL.OnlineHuber.linearLoss 1 1 0) 2 0 4 /
+    4 ≤
+  5 / 4
+'Tests.OnlineHuber.average_four' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineHuber.eventually_tenth : ∀ᶠ (T : ℕ) in Filter.atTop,
+  BanditRL.OnlineGradientDescent.regret BanditRL.OnlineHuber.fullSpace (1 / √↑T)
+        (fun x => BanditRL.OnlineHuber.linearLoss 1 1 0) 2 0 T /
+      ↑T <
+    1 / 10
+'Tests.OnlineHuber.eventually_tenth' depends on axioms: [propext, Classical.choice, Quot.sound]

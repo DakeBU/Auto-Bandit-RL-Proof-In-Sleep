@@ -1,0 +1,116 @@
+{
+  "hasDerivAt_ite_le": {
+    "file": "BanditRLProof/OnlineHuber.lean",
+    "statement": "theorem hasDerivAt_ite_le (f g : ℝ → ℝ) (c d : ℝ) (hf : HasDerivAt f d c) (hg : HasDerivAt g d c) (he : f c = g c) : HasDerivAt (fun x => if x ≤ c then f x else g x) d c",
+    "statement_hash": "4ce2de247c35439f57bdf46183ef9a1c9cd543bef6e784e9c20082dc56b4fdfe",
+    "context_hash": "d26eb9e6687e0f3f92835b57002240ee870b8d774031c7d9a446f4ec66d8e373"
+  },
+  "huber_three_pieces": {
+    "file": "BanditRLProof/OnlineHuber.lean",
+    "statement": "theorem huber_three_pieces (delta r : ℝ) (hd : 0 ≤ delta) : huber delta r = if r ≤ -delta then -delta * r - delta ^ 2 / 2 else if r ≤ delta then r ^ 2 / 2 else delta * r - delta ^ 2 / 2",
+    "statement_hash": "535593e8cdb264c1b8235db0433335e73c1b273033d63b435f54d1a4f03ae87d",
+    "context_hash": "d26eb9e6687e0f3f92835b57002240ee870b8d774031c7d9a446f4ec66d8e373"
+  },
+  "huber_zero": {
+    "file": "BanditRLProof/OnlineHuber.lean",
+    "statement": "theorem huber_zero (r : ℝ) : huber 0 r = 0",
+    "statement_hash": "80f866c5c3d62b4420383f58d9826d75fb90fe7512afd8770c7d2ea65d5a0e77",
+    "context_hash": "d26eb9e6687e0f3f92835b57002240ee870b8d774031c7d9a446f4ec66d8e373"
+  },
+  "hasDerivAt_join": {
+    "file": "BanditRLProof/OnlineHuber.lean",
+    "statement": "theorem hasDerivAt_join (f g df dg : ℝ → ℝ) (c x : ℝ) (hf : ∀ r, HasDerivAt f (df r) r) (hg : ∀ r, HasDerivAt g (dg r) r) (he : f c = g c) (hd : df c = dg c) : HasDerivAt (fun r => if r ≤ c then f r else g r) (if x ≤ c then df x else dg x) x",
+    "statement_hash": "12bb854124ac6c38a4d22b59093052220c8b111fe0f3c4fad515ee0160a352bd",
+    "context_hash": "d26eb9e6687e0f3f92835b57002240ee870b8d774031c7d9a446f4ec66d8e373"
+  },
+  "huber_hasDerivAt": {
+    "file": "BanditRLProof/OnlineHuber.lean",
+    "statement": "theorem huber_hasDerivAt (delta r : ℝ) (hd : 0 ≤ delta) : HasDerivAt (huber delta) (if r ≤ -delta then -delta else if r ≤ delta then r else delta) r",
+    "statement_hash": "f323f2deab97420d2c616a472d456d7fe326f7f28faaefff87cb74efea6b8968",
+    "context_hash": "d26eb9e6687e0f3f92835b57002240ee870b8d774031c7d9a446f4ec66d8e373"
+  },
+  "huber_deriv_clamp": {
+    "file": "BanditRLProof/OnlineHuber.lean",
+    "statement": "theorem huber_deriv_clamp (delta r : ℝ) (hd : 0 ≤ delta) : deriv (huber delta) r = max (-delta) (min r delta)",
+    "statement_hash": "8cc7f0ad1f1f6ffcaa8bab7838fac6a72ac1c8f5a424ac5eefcb2dcc58c09c6d",
+    "context_hash": "d26eb9e6687e0f3f92835b57002240ee870b8d774031c7d9a446f4ec66d8e373"
+  },
+  "huber_convex": {
+    "file": "BanditRLProof/OnlineHuber.lean",
+    "statement": "theorem huber_convex (delta : ℝ) (hd : 0 ≤ delta) : ConvexOn ℝ Set.univ (huber delta)",
+    "statement_hash": "f9192ebf2c78687fca17e2e76fafe14fe69e0718ecdd49d2e17b79abb5154b60",
+    "context_hash": "d26eb9e6687e0f3f92835b57002240ee870b8d774031c7d9a446f4ec66d8e373"
+  },
+  "huber_deriv_bound": {
+    "file": "BanditRLProof/OnlineHuber.lean",
+    "statement": "theorem huber_deriv_bound (delta r : ℝ) (hd : 0 ≤ delta) : |deriv (huber delta) r| ≤ delta",
+    "statement_hash": "e8f2e25c71652e3d13112ce472ef878d0e6b5f45f33fb0d8149ef5196fe6ed7e",
+    "context_hash": "d26eb9e6687e0f3f92835b57002240ee870b8d774031c7d9a446f4ec66d8e373"
+  },
+  "huber_deriv_source": {
+    "file": "BanditRLProof/OnlineHuber.lean",
+    "statement": "theorem huber_deriv_source (delta r : ℝ) (hd : 0 ≤ delta) : deriv (huber delta) r = if |r| ≤ delta then r else delta * Real.sign r",
+    "statement_hash": "0e2deec5eba453a7bb4bdee3bd8484ecb6bf0ac58ce19a4baf251d441301ad2a",
+    "context_hash": "d26eb9e6687e0f3f92835b57002240ee870b8d774031c7d9a446f4ec66d8e373"
+  },
+  "huber_linear_hasGradientAt": {
+    "file": "BanditRLProof/OnlineHuber.lean",
+    "statement": "theorem huber_linear_hasGradientAt (delta y : ℝ) (hd : 0 ≤ delta) (z x : E) : HasGradientAt (fun w => huber delta (inner ℝ z w - y)) (deriv (huber delta) (inner ℝ z x - y) • z) x",
+    "statement_hash": "caf0f78552cef8124708fa3d79903195aad6e48641ca8bbb446af19ddd3af740",
+    "context_hash": "d26eb9e6687e0f3f92835b57002240ee870b8d774031c7d9a446f4ec66d8e373"
+  },
+  "huber_linear_convex": {
+    "file": "BanditRLProof/OnlineHuber.lean",
+    "statement": "theorem huber_linear_convex (delta y : ℝ) (hd : 0 ≤ delta) (z : E) : ConvexOn ℝ Set.univ (fun w => huber delta (inner ℝ z w - y))",
+    "statement_hash": "ae00876f13fdf1cfd102526d5bd5ba10e93549fad073d3f4050775e5b197f8c3",
+    "context_hash": "d26eb9e6687e0f3f92835b57002240ee870b8d774031c7d9a446f4ec66d8e373"
+  },
+  "huber_linear_gradient_bound": {
+    "file": "BanditRLProof/OnlineHuber.lean",
+    "statement": "theorem huber_linear_gradient_bound (delta y : ℝ) (hd : 0 ≤ delta) (z x : E) : ‖gradient (fun w => huber delta (inner ℝ z w - y)) x‖ ≤ delta * ‖z‖",
+    "statement_hash": "9e4b73a6a76d184a0480495afcfd2ae0dc2f95e4d8e4a344d3c3731c3f145696",
+    "context_hash": "d26eb9e6687e0f3f92835b57002240ee870b8d774031c7d9a446f4ec66d8e373"
+  },
+  "project_fullSpace": {
+    "file": "BanditRLProof/OnlineHuber.lean",
+    "statement": "theorem project_fullSpace (x : E) : project (fullSpace : Domain E) x = x",
+    "statement_hash": "1d6c2d61b6aedc10bc260d295018beceac88f45c00906083c72dba3892e78a16",
+    "context_hash": "d26eb9e6687e0f3f92835b57002240ee870b8d774031c7d9a446f4ec66d8e373"
+  },
+  "huber_regular": {
+    "file": "BanditRLProof/OnlineHuber.lean",
+    "statement": "theorem huber_regular (delta y : ℝ) (hd : 0 ≤ delta) (z : E) : RegularLoss fullSpace (linearLoss delta z y)",
+    "statement_hash": "ba3b52e9999291e6cc53ff0acab95bba68086e8d1036dc6665bd69c57e7707e8",
+    "context_hash": "d26eb9e6687e0f3f92835b57002240ee870b8d774031c7d9a446f4ec66d8e373"
+  },
+  "huber_step": {
+    "file": "BanditRLProof/OnlineHuber.lean",
+    "statement": "theorem huber_step (delta y eta : ℝ) (hd : 0 ≤ delta) (z x : E) : step fullSpace eta (linearLoss delta z y) x = x - eta • ((if |inner ℝ z x - y| ≤ delta then inner ℝ z x - y else delta * Real.sign (inner ℝ z x - y)) • z)",
+    "statement_hash": "34b7aee6b795f0641b2f7a019d0f00c4a7eb8a1c5e19d4345fe95c71e7fa6e51",
+    "context_hash": "d26eb9e6687e0f3f92835b57002240ee870b8d774031c7d9a446f4ec66d8e373"
+  },
+  "huber_regret_fixed": {
+    "file": "BanditRLProof/OnlineHuber.lean",
+    "statement": "theorem huber_regret_fixed (delta Z eta : ℝ) (hd : 0 ≤ delta) (hZ : 0 ≤ Z) (heta : 0 < eta) (z : ℕ → E) (y : ℕ → ℝ) (x0 u : E) (T : ℕ) (hz : ∀ t < T, ‖z t‖ ≤ Z) : regret fullSpace eta (fun t => linearLoss delta (z t) (y t)) x0 u T ≤ ‖x0 - u‖ ^ 2 / (2 * eta) + eta / 2 * ((T : ℝ) * (delta * Z) ^ 2) - ‖iterate fullSpace eta (fun t => linearLoss delta (z t) (y t)) x0 T - u‖ ^ 2 / (2 * eta)",
+    "statement_hash": "c7a43cccd41c3b7cfbaf50da3cb4a0a839ed0c932f3355ca149382c1f32aa14a",
+    "context_hash": "d26eb9e6687e0f3f92835b57002240ee870b8d774031c7d9a446f4ec66d8e373"
+  },
+  "huber_average_bound": {
+    "file": "BanditRLProof/OnlineHuber.lean",
+    "statement": "theorem huber_average_bound (delta Z : ℝ) (hd : 0 ≤ delta) (hZ : 0 ≤ Z) (z : ℕ → E) (y : ℕ → ℝ) (x0 u : E) (T : ℕ) (hT : 0 < T) (hz : ∀ t < T, ‖z t‖ ≤ Z) : regret fullSpace (1 / Real.sqrt T) (fun t => linearLoss delta (z t) (y t)) x0 u T / T ≤ (‖x0 - u‖ ^ 2 + (delta * Z) ^ 2) / (2 * Real.sqrt T)",
+    "statement_hash": "e0d3116277740e6ced3b179b0356329fcee64bc37cf2a574e068466c59e65ce5",
+    "context_hash": "d26eb9e6687e0f3f92835b57002240ee870b8d774031c7d9a446f4ec66d8e373"
+  },
+  "huber_rate_tendsto": {
+    "file": "BanditRLProof/OnlineHuber.lean",
+    "statement": "theorem huber_rate_tendsto (delta Z : ℝ) (x0 u : E) : Filter.Tendsto (fun T : ℕ => (‖x0 - u‖ ^ 2 + (delta * Z) ^ 2) / (2 * Real.sqrt T)) Filter.atTop (nhds 0)",
+    "statement_hash": "b5e9985a3c9da5b2dca5b6ecd2a5fad1b6b5c1eadafc4de0c41e477249e936e2",
+    "context_hash": "d26eb9e6687e0f3f92835b57002240ee870b8d774031c7d9a446f4ec66d8e373"
+  },
+  "huber_average_eventually": {
+    "file": "BanditRLProof/OnlineHuber.lean",
+    "statement": "theorem huber_average_eventually (delta Z : ℝ) (hd : 0 ≤ delta) (hZ : 0 ≤ Z) (z : ℕ → E) (y : ℕ → ℝ) (x0 u : E) (hz : ∀ t, ‖z t‖ ≤ Z) (epsilon : ℝ) (he : 0 < epsilon) : ∀ᶠ T : ℕ in Filter.atTop, regret fullSpace (1 / Real.sqrt T) (fun t => linearLoss delta (z t) (y t)) x0 u T / T < epsilon",
+    "statement_hash": "fe1419545ec713b562d316c84cf18713913c5daec496969eb97cc34d2759c281",
+    "context_hash": "d26eb9e6687e0f3f92835b57002240ee870b8d774031c7d9a446f4ec66d8e373"
+  }
+}

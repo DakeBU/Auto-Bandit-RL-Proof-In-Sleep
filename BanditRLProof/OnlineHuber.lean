@@ -1,3 +1,24 @@
+/-
+Orabona v10 Example 2.15, printed pp.15-16/PDF pp.27-28. One printed
+example; nineteen retained supporting proofs and three complete definitions.
+The source's ordinary Huber threshold convention is made explicit as delta>=0,
+including delta0; negative thresholds are not convex/differentiable in general.
+Actual Complete real Hilbert-space generality includes source finite Euclidean
+spaces. Features are available before prediction and labels afterwards; arbitrary
+deterministic streams generalize the stock-history illustration without a stock law.
+Scalar seam calculus, vector gradient/global convexity, full-space projection
+identity and global RegularLoss are produced, not desired consumer hypotheses.
+No bounded predictor domain, label/residual bound or diameter condition is added.
+The positive fixed-step endpoint retains the negative terminal distance for T>=0.
+For T>0, coefficient1 eta_T=1/sqrt(T) is one printed proportional-step instance:
+a family of known-horizon constant-step runs, not one anytime eta_t trajectory.
+The numerical average upper envelope tends0. The actual signed average regret
+is only eventually below every positive epsilon for each fixed comparator;
+it can stay negative and need not tend0. No uniform cutoff for unbounded
+comparators, moving comparator or Chapter4 strongly-convex guarantee is claimed.
+All original headers/proof/definition bytes and whole canary remain fixed.
+Chapter2 and the persistent Chapters1-16 Goal remain incomplete.
+-/
 import Mathlib.Analysis.SpecificLimits.Basic
 import BanditRLProof.OnlineGradientDescent
 import Mathlib.Analysis.Calculus.Deriv.Comp
