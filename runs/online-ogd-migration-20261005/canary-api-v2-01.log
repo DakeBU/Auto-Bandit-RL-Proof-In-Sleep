@@ -1,0 +1,38 @@
+@ConvexOn.congr : ∀ {𝕜 : Type u_1} {E : Type u_2} {β : Type u_3} [inst : Semiring 𝕜] [inst_1 : PartialOrder 𝕜]
+  [inst_2 : AddCommMonoid E] [inst_3 : AddCommMonoid β] [inst_4 : PartialOrder β] [inst_5 : SMul 𝕜 E]
+  [inst_6 : SMul 𝕜 β] {s : Set E} {f g : E → β}, ConvexOn 𝕜 s f → Set.EqOn f g s → ConvexOn 𝕜 s g
+runs/online-ogd-migration-20261005/leaves/canary-api-v2.lean:5:8: error(lean.unknownIdentifier): Unknown constant `ConvexOn.max`
+@ConvexOn.comp_linearMap : ∀ {𝕜 : Type u_1} {E : Type u_2} {F : Type u_3} {β : Type u_4} [inst : Semiring 𝕜]
+  [inst_1 : PartialOrder 𝕜] [inst_2 : AddCommMonoid E] [inst_3 : AddCommMonoid F] [inst_4 : AddCommMonoid β]
+  [inst_5 : PartialOrder β] [inst_6 : Module 𝕜 E] [inst_7 : Module 𝕜 F] [inst_8 : SMul 𝕜 β] {f : F → β} {s : Set F},
+  ConvexOn 𝕜 s f → ∀ (g : E →ₗ[𝕜] F), ConvexOn 𝕜 (⇑g ⁻¹' s) (f ∘ ⇑g)
+runs/online-ogd-migration-20261005/leaves/canary-api-v2.lean:7:8: error(lean.unknownIdentifier): Unknown identifier `convex_ker`
+@isClosed_eq : ∀ {X : Type u_1} {Y : Type u_2} [inst : TopologicalSpace X] [inst_1 : TopologicalSpace Y] [T2Space X]
+  {f g : Y → X}, Continuous f → Continuous g → IsClosed {y | f y = g y}
+@isOpen_lt : ∀ {α : Type u_1} {β : Type u_2} [inst : TopologicalSpace α] [inst_1 : LinearOrder α]
+  [OrderClosedTopology α] [inst_3 : TopologicalSpace β] {f g : β → α},
+  Continuous f → Continuous g → IsOpen {b | f b < g b}
+@ContinuousLinearMap.continuous : ∀ {R₁ : Type u_1} {R₂ : Type u_2} [inst : Semiring R₁] [inst_1 : Semiring R₂]
+  {σ₁₂ : R₁ →+* R₂} {M₁ : Type u_3} [inst_2 : TopologicalSpace M₁] [inst_3 : AddCommMonoid M₁] {M₂ : Type u_4}
+  [inst_4 : TopologicalSpace M₂] [inst_5 : AddCommMonoid M₂] [inst_6 : Module R₁ M₁] [inst_7 : Module R₂ M₂]
+  (f : M₁ →SL[σ₁₂] M₂), Continuous ⇑f
+@DifferentiableAt.congr_of_eventuallyEq : ∀ {𝕜 : Type u_1} [inst : NontriviallyNormedField 𝕜] {E : Type u_2}
+  [inst_1 : AddCommGroup E] [inst_2 : Module 𝕜 E] [inst_3 : TopologicalSpace E] {F : Type u_3} [inst_4 : AddCommGroup F]
+  [inst_5 : Module 𝕜 F] [inst_6 : TopologicalSpace F] {f f₁ : E → F} {x : E},
+  DifferentiableAt 𝕜 f x → f₁ =ᶠ[nhds x] f → DifferentiableAt 𝕜 f₁ x
+@HasGradientAt.congr_of_eventuallyEq : ∀ {𝕜 : Type u_1} {F : Type u_2} [inst : RCLike 𝕜] [inst_1 : NormedAddCommGroup F]
+  [inst_2 : InnerProductSpace 𝕜 F] [inst_3 : CompleteSpace F] {f : F → 𝕜} {f' x : F} {f₁ : F → 𝕜},
+  HasGradientAt f f' x → f₁ =ᶠ[nhds x] f → HasGradientAt f₁ f' x
+@HasFDerivAt.congr_of_eventuallyEq : ∀ {𝕜 : Type u_1} [inst : NontriviallyNormedField 𝕜] {E : Type u_2}
+  [inst_1 : AddCommGroup E] [inst_2 : Module 𝕜 E] [inst_3 : TopologicalSpace E] {F : Type u_3} [inst_4 : AddCommGroup F]
+  [inst_5 : Module 𝕜 F] [inst_6 : TopologicalSpace F] {f f₁ : E → F} {f' : E →L[𝕜] F} {x : E},
+  HasFDerivAt f f' x → f₁ =ᶠ[nhds x] f → HasFDerivAt f₁ f' x
+@HasFDerivAt.exp : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E] {f : E → ℝ}
+  {f' : StrongDual ℝ E} {x : E}, HasFDerivAt f f' x → HasFDerivAt (fun x => Real.exp (f x)) (Real.exp (f x) • f') x
+@Real.add_one_lt_exp : ∀ {x : ℝ}, x ≠ 0 → x + 1 < Real.exp x
+@EuclideanSpace.inner_single_left : ∀ {ι : Type u_1} {𝕜 : Type u_2} [inst : RCLike 𝕜] [inst_1 : DecidableEq ι]
+  [inst_2 : Fintype ι] (i : ι) (a : 𝕜) (v : EuclideanSpace 𝕜 ι),
+  inner 𝕜 (EuclideanSpace.single i a) v = (starRingEnd 𝕜) a * v.ofLp i
+PiLp.single_apply : ∀ (p : ENNReal) (𝕜 : Type u_1) {ι : Type u_2} [inst : DecidableEq ι] [inst_1 : Zero 𝕜] (i : ι)
+  (a : 𝕜) (j : ι), (PiLp.single p i a).ofLp j = if j = i then a else 0
+runs/online-ogd-migration-20261005/leaves/canary-api-v2.lean:18:8: error(lean.unknownIdentifier): Unknown constant `InnerProductSpace.toDual_smul`

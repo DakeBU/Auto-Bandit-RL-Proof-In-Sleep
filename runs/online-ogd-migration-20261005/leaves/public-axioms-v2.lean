@@ -1,0 +1,153 @@
+import BanditRLProof
+import Tests.OnlineGradientDescentSourceCanary
+
+#check @BanditRL.OnlineGradientDescentSource.FeasibleRegularLoss
+#print axioms BanditRL.OnlineGradientDescentSource.FeasibleRegularLoss
+#check @BanditRL.OnlineGradientDescentSource.SourceRegularLoss
+#print axioms BanditRL.OnlineGradientDescentSource.SourceRegularLoss
+#check @BanditRL.OnlineGradientDescentSource.source_to_feasible
+#print axioms BanditRL.OnlineGradientDescentSource.source_to_feasible
+#check @BanditRL.OnlineGradientDescentSource.regular_to_feasible
+#print axioms BanditRL.OnlineGradientDescentSource.regular_to_feasible
+#check @BanditRL.OnlineGradientDescentSource.linear_regular
+#print axioms BanditRL.OnlineGradientDescentSource.linear_regular
+#check @BanditRL.OnlineGradientDescentSource.gradient_linear
+#print axioms BanditRL.OnlineGradientDescentSource.gradient_linear
+#check @BanditRL.OnlineGradientDescentSource.first_order
+#print axioms BanditRL.OnlineGradientDescentSource.first_order
+#check @BanditRL.OnlineGradientDescentSource.lemma_2_12
+#print axioms BanditRL.OnlineGradientDescentSource.lemma_2_12
+#check @BanditRL.OnlineGradientDescentSource.theorem_2_13_fixed
+#print axioms BanditRL.OnlineGradientDescentSource.theorem_2_13_fixed
+#check @BanditRL.OnlineGradientDescentSource.variable_one_step
+#print axioms BanditRL.OnlineGradientDescentSource.variable_one_step
+#check @BanditRL.OnlineGradientDescentSource.theorem_2_13_variable_bound
+#print axioms BanditRL.OnlineGradientDescentSource.theorem_2_13_variable_bound
+#check @BanditRL.OnlineGradientDescentSource.theorem_2_13_variable
+#print axioms BanditRL.OnlineGradientDescentSource.theorem_2_13_variable
+#check @BanditRL.OnlineGradientDescentSource.equation_2_1_distance
+#print axioms BanditRL.OnlineGradientDescentSource.equation_2_1_distance
+#check @BanditRL.OnlineGradientDescentSource.equation_2_1
+#print axioms BanditRL.OnlineGradientDescentSource.equation_2_1
+#check @Tests.OnlineGradientDescentSource.Plane
+#print axioms Tests.OnlineGradientDescentSource.Plane
+#check @Tests.OnlineGradientDescentSource.e0
+#print axioms Tests.OnlineGradientDescentSource.e0
+#check @Tests.OnlineGradientDescentSource.e1
+#print axioms Tests.OnlineGradientDescentSource.e1
+#check @Tests.OnlineGradientDescentSource.e00
+#print axioms Tests.OnlineGradientDescentSource.e00
+#check @Tests.OnlineGradientDescentSource.e01
+#print axioms Tests.OnlineGradientDescentSource.e01
+#check @Tests.OnlineGradientDescentSource.e10
+#print axioms Tests.OnlineGradientDescentSource.e10
+#check @Tests.OnlineGradientDescentSource.e11
+#print axioms Tests.OnlineGradientDescentSource.e11
+#check @Tests.OnlineGradientDescentSource.norm_e0
+#print axioms Tests.OnlineGradientDescentSource.norm_e0
+#check @Tests.OnlineGradientDescentSource.norm_e1
+#print axioms Tests.OnlineGradientDescentSource.norm_e1
+#check @Tests.OnlineGradientDescentSource.axis
+#print axioms Tests.OnlineGradientDescentSource.axis
+#check @Tests.OnlineGradientDescentSource.maxExp
+#print axioms Tests.OnlineGradientDescentSource.maxExp
+#check @Tests.OnlineGradientDescentSource.smoothRegion
+#print axioms Tests.OnlineGradientDescentSource.smoothRegion
+#check @Tests.OnlineGradientDescentSource.region_open
+#print axioms Tests.OnlineGradientDescentSource.region_open
+#check @Tests.OnlineGradientDescentSource.axis_in_region
+#print axioms Tests.OnlineGradientDescentSource.axis_in_region
+#check @Tests.OnlineGradientDescentSource.maxExp_on_region
+#print axioms Tests.OnlineGradientDescentSource.maxExp_on_region
+#check @Tests.OnlineGradientDescentSource.maxExp_eventually
+#print axioms Tests.OnlineGradientDescentSource.maxExp_eventually
+#check @Tests.OnlineGradientDescentSource.maxExp_source
+#print axioms Tests.OnlineGradientDescentSource.maxExp_source
+#check @Tests.OnlineGradientDescentSource.region_not_convex
+#print axioms Tests.OnlineGradientDescentSource.region_not_convex
+#check @Tests.OnlineGradientDescentSource.gradient_at_zero
+#print axioms Tests.OnlineGradientDescentSource.gradient_at_zero
+#check @Tests.OnlineGradientDescentSource.project_e0
+#print axioms Tests.OnlineGradientDescentSource.project_e0
+#check @Tests.OnlineGradientDescentSource.axis_first_point
+#print axioms Tests.OnlineGradientDescentSource.axis_first_point
+#check @Tests.OnlineGradientDescentSource.maxExp_zero
+#print axioms Tests.OnlineGradientDescentSource.maxExp_zero
+#check @Tests.OnlineGradientDescentSource.maxExp_two
+#print axioms Tests.OnlineGradientDescentSource.maxExp_two
+#check @Tests.OnlineGradientDescentSource.positive_regret
+#print axioms Tests.OnlineGradientDescentSource.positive_regret
+#check @Tests.OnlineGradientDescentSource.terminal_distance
+#print axioms Tests.OnlineGradientDescentSource.terminal_distance
+#check @Tests.OnlineGradientDescentSource.source_nondegenerate
+#print axioms Tests.OnlineGradientDescentSource.source_nondegenerate
+#check @Tests.OnlineGradientDescentSource.repaired_one_step
+#print axioms Tests.OnlineGradientDescentSource.repaired_one_step
+#check @Tests.OnlineGradientDescentSource.repaired_fixed_endpoint
+#print axioms Tests.OnlineGradientDescentSource.repaired_fixed_endpoint
+#check @Tests.OnlineGradientDescentSource.axis_unbounded
+#print axioms Tests.OnlineGradientDescentSource.axis_unbounded
+#check @Tests.OnlineGradientDescentSource.active_projection_fixed
+#print axioms Tests.OnlineGradientDescentSource.active_projection_fixed
+#check @Tests.OnlineGradientDescentSource.active_projection_variable
+#print axioms Tests.OnlineGradientDescentSource.active_projection_variable
+#check @Tests.OnlineGradientDescentSource.active_projection_tuned
+#print axioms Tests.OnlineGradientDescentSource.active_projection_tuned
+#check @Tests.OnlineGradientDescentSource.fixed_zero_round
+#print axioms Tests.OnlineGradientDescentSource.fixed_zero_round
+#check @Tests.OnlineGradientDescentSource.zero_round_cancellation
+#print axioms Tests.OnlineGradientDescentSource.zero_round_cancellation
+#check @Tests.OnlineGradientDescentSource.pointDomain
+#print axioms Tests.OnlineGradientDescentSource.pointDomain
+#check @Tests.OnlineGradientDescentSource.variable_one_round_zero_diameter
+#print axioms Tests.OnlineGradientDescentSource.variable_one_round_zero_diameter
+#check @Tests.OnlineGradientDescentSource.prefix_future_independence
+#print axioms Tests.OnlineGradientDescentSource.prefix_future_independence
+#check @BanditRL.OnlineGradientDescent.Domain
+#print axioms BanditRL.OnlineGradientDescent.Domain
+#check @BanditRL.OnlineGradientDescent.project
+#print axioms BanditRL.OnlineGradientDescent.project
+#check @BanditRL.OnlineGradientDescent.RegularLoss
+#print axioms BanditRL.OnlineGradientDescent.RegularLoss
+#check @BanditRL.OnlineGradientDescent.step
+#print axioms BanditRL.OnlineGradientDescent.step
+#check @BanditRL.OnlineGradientDescent.iterate
+#print axioms BanditRL.OnlineGradientDescent.iterate
+#check @BanditRL.OnlineGradientDescent.regret
+#print axioms BanditRL.OnlineGradientDescent.regret
+#check @BanditRL.OnlineGradientDescent.iterateVariable
+#print axioms BanditRL.OnlineGradientDescent.iterateVariable
+#check @BanditRL.OnlineGradientDescent.regretVariable
+#print axioms BanditRL.OnlineGradientDescent.regretVariable
+#check @BanditRL.OnlineGradientDescent.project_spec
+#print axioms BanditRL.OnlineGradientDescent.project_spec
+#check @BanditRL.OnlineGradientDescent.project_eq_of_variational
+#print axioms BanditRL.OnlineGradientDescent.project_eq_of_variational
+#check @BanditRL.OnlineGradientDescent.proposition_2_11
+#print axioms BanditRL.OnlineGradientDescent.proposition_2_11
+#check @BanditRL.OnlineGradientDescent.first_order
+#print axioms BanditRL.OnlineGradientDescent.first_order
+#check @BanditRL.OnlineGradientDescent.lemma_2_12
+#print axioms BanditRL.OnlineGradientDescent.lemma_2_12
+#check @BanditRL.OnlineGradientDescent.iterate_mem
+#print axioms BanditRL.OnlineGradientDescent.iterate_mem
+#check @BanditRL.OnlineGradientDescent.iterate_prefix
+#print axioms BanditRL.OnlineGradientDescent.iterate_prefix
+#check @BanditRL.OnlineGradientDescent.theorem_2_13_fixed
+#print axioms BanditRL.OnlineGradientDescent.theorem_2_13_fixed
+#check @BanditRL.OnlineGradientDescent.equation_2_1_distance
+#print axioms BanditRL.OnlineGradientDescent.equation_2_1_distance
+#check @BanditRL.OnlineGradientDescent.equation_2_1
+#print axioms BanditRL.OnlineGradientDescent.equation_2_1
+#check @BanditRL.OnlineGradientDescent.iterateVariable_mem
+#print axioms BanditRL.OnlineGradientDescent.iterateVariable_mem
+#check @BanditRL.OnlineGradientDescent.iterateVariable_prefix
+#print axioms BanditRL.OnlineGradientDescent.iterateVariable_prefix
+#check @BanditRL.OnlineGradientDescent.variable_one_step
+#print axioms BanditRL.OnlineGradientDescent.variable_one_step
+#check @BanditRL.OnlineGradientDescent.weighted_potential_sum
+#print axioms BanditRL.OnlineGradientDescent.weighted_potential_sum
+#check @BanditRL.OnlineGradientDescent.theorem_2_13_variable_bound
+#print axioms BanditRL.OnlineGradientDescent.theorem_2_13_variable_bound
+#check @BanditRL.OnlineGradientDescent.theorem_2_13_variable
+#print axioms BanditRL.OnlineGradientDescent.theorem_2_13_variable

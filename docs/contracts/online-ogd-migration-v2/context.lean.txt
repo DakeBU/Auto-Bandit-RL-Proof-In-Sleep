@@ -1,0 +1,19 @@
+import BanditRLProof.OnlineGradientDescentVariable
+import BanditRLProof.OnlineConvexFirstOrder
+import Mathlib.Tactic
+
+noncomputable section
+open Set Finset
+open scoped InnerProductSpace
+namespace BanditRL.OnlineGradientDescentSource
+open BanditRL.OnlineGradientDescent
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]
+
+def FeasibleRegularLoss (V : Domain E) (f : E → ℝ) : Prop :=
+  ConvexOn ℝ V.carrier f ∧ ∀ x ∈ V.carrier, DifferentiableAt ℝ f x
+
+def SourceRegularLoss (V : Domain E) (f : E → ℝ) : Prop :=
+  ∃ U : Set E, IsOpen U ∧ V.carrier ⊆ U ∧
+    ConvexOn ℝ V.carrier f ∧ DifferentiableOn ℝ f U
+
+end BanditRL.OnlineGradientDescentSource

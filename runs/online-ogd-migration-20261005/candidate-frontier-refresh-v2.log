@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "record_id": "frontier-67fcb011d60c716e",
+  "updated_at": "2026-10-05T08:18:07+00:00",
+  "root_objective": "Persistent Orabona Chapters1-16 Goal; OGD source repair candidate only, Chapter2/book incomplete",
+  "current_leaf": {
+    "id": "ONLINE-OGD-MIGRATION-20261005",
+    "kind": "lean",
+    "status": "gate-pending",
+    "statement": "theorem theorem_2_13_fixed (V : Domain E) (η : ℝ) (hη : 0 < η) (loss : ℕ → E → ℝ) (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (T : ℕ) (hloss : ∀ t < T, FeasibleRegularLoss V (loss t)) (u : E) (hu : u ∈ V.carrier) : regret V η loss x₁ u T ≤ ‖x₁ - u‖ ^ 2 / (2 * η) + η / 2 * (∑ t ∈ range T, ‖gradient (loss t) (iterate V η loss x₁ t)‖ ^ 2) - ‖iterate V η loss x₁ T - u‖ ^ 2 / (2 * η)",
+    "statement_hash": "bc812920a17ad0120087fd3c0cec8adcd137a7331f385c411894c87e3c6c8986",
+    "declaration": "BanditRL.OnlineGradientDescentSource.theorem_2_13_fixed",
+    "file": "BanditRLProof/OnlineGradientDescentSource.lean",
+    "source_status": "source-body-reviewed",
+    "dependencies": [
+      {
+        "kind": "lean",
+        "name": "BanditRL.OnlineGradientDescentSource.lemma_2_12",
+        "status": "compiled"
+      },
+      {
+        "kind": "lean",
+        "name": "BanditRL.OnlineGradientDescentSource.source_to_feasible",
+        "status": "compiled"
+      },
+      {
+        "kind": "review",
+        "name": "source-body",
+        "status": "accepted"
+      }
+    ]
+  },
+  "dag": {
+    "nodes": [
+      {
+        "id": "ONLINE-OGD-MIGRATION-20261005",
+        "kind": "lean",
+        "status": "gate-pending",
+        "dependencies": [
+          {
+            "kind": "lean",
+            "name": "BanditRL.OnlineGradientDescentSource.lemma_2_12",
+            "status": "compiled"
+          },
+          {
+            "kind": "lean",
+            "name": "BanditRL.OnlineGradientDescentSource.source_to_feasible",
+            "status": "compiled"
+          },
+          {
+            "kind": "review",
+            "name": "source-body",
+            "status": "accepted"
+          }
+        ],
+        "dispatch_count": 0
+      }
+    ]
+  },
+  "last_accepted_verifier": {
+    "trial_index": 3,
+    "time": "2026-10-05T08:14:13+00:00",
+    "task": "ONLINE-OGD-MIGRATION-20261005",
+    "role": "reviewer",
+    "kind": "review",
+    "status": "compiled",
+    "lean": "",
+    "notes": "Actual12 public bodies/30 canaries/75axioms/root9087Tests9228/38graph accepted by distinct source-body review; package/chapter/book incomplete; pending full harness/site/final reader/immutable/PR.",
+    "run_id": "online-ogd-migration-20261005"
+  },
+  "memory_policy": {
+    "recent_role_relevant_limit": 5,
+    "explicit_verified_lemma_ids": [],
+    "whole_history_default": false
+  },
+  "shadow_gate": {
+    "status": "pending",
+    "analyzed_trial_rows": 4,
+    "mismatches": [],
+    "replay_transitions": 0
+  },
+  "mutation_policy": {
+    "canonical_path_queue": true,
+    "cross_process_lock": true,
+    "same_file_serialized": true,
+    "disjoint_files_parallel": true
+  },
+  "autonomous_execution": {
+    "enabled": false,
+    "requires_deterministic_gates": true,
+    "requires_explicit_user_request": true
+  }
+}

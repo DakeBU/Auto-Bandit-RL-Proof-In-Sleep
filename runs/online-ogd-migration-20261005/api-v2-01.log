@@ -1,0 +1,50 @@
+@DifferentiableOn.differentiableAt : ∀ {𝕜 : Type u_1} [inst : NontriviallyNormedField 𝕜] {E : Type u_2}
+  [inst_1 : AddCommGroup E] [inst_2 : Module 𝕜 E] [inst_3 : TopologicalSpace E] {F : Type u_3} [inst_4 : AddCommGroup F]
+  [inst_5 : Module 𝕜 F] [inst_6 : TopologicalSpace F] {f : E → F} {x : E} {s : Set E},
+  DifferentiableOn 𝕜 f s → s ∈ nhds x → DifferentiableAt 𝕜 f x
+@ConvexOn.subset : ∀ {𝕜 : Type u_1} {E : Type u_2} {β : Type u_3} [inst : Semiring 𝕜] [inst_1 : PartialOrder 𝕜]
+  [inst_2 : AddCommMonoid E] [inst_3 : AddCommMonoid β] [inst_4 : PartialOrder β] [inst_5 : SMul 𝕜 E]
+  [inst_6 : SMul 𝕜 β] {s : Set E} {f : E → β} {t : Set E}, ConvexOn 𝕜 t f → s ⊆ t → Convex 𝕜 s → ConvexOn 𝕜 s f
+@LinearMap.convexOn : ∀ {𝕜 : Type u_1} {E : Type u_2} {β : Type u_3} [inst : Semiring 𝕜] [inst_1 : PartialOrder 𝕜]
+  [inst_2 : AddCommMonoid E] [inst_3 : AddCommMonoid β] [inst_4 : PartialOrder β] [inst_5 : Module 𝕜 E]
+  [inst_6 : Module 𝕜 β] (f : E →ₗ[𝕜] β) {s : Set E}, Convex 𝕜 s → ConvexOn 𝕜 s ⇑f
+@ContinuousLinearMap.hasFDerivAt : ∀ {𝕜 : Type u_1} [inst : NontriviallyNormedField 𝕜] {E : Type u_2}
+  [inst_1 : AddCommGroup E] [inst_2 : Module 𝕜 E] [inst_3 : TopologicalSpace E] {F : Type u_3} [inst_4 : AddCommGroup F]
+  [inst_5 : Module 𝕜 F] [inst_6 : TopologicalSpace F] (f : E →L[𝕜] F) {x : E}, HasFDerivAt (⇑f) f x
+@ContinuousLinearMap.differentiable : ∀ {𝕜 : Type u_1} [inst : NontriviallyNormedField 𝕜] {E : Type u_2}
+  [inst_1 : AddCommGroup E] [inst_2 : Module 𝕜 E] [inst_3 : TopologicalSpace E] {F : Type u_3} [inst_4 : AddCommGroup F]
+  [inst_5 : Module 𝕜 F] [inst_6 : TopologicalSpace F] (f : E →L[𝕜] F), Differentiable 𝕜 ⇑f
+@hasGradientAt_iff_hasFDerivAt : ∀ {𝕜 : Type u_1} {F : Type u_2} [inst : RCLike 𝕜] [inst_1 : NormedAddCommGroup F]
+  [inst_2 : InnerProductSpace 𝕜 F] [inst_3 : CompleteSpace F] {f : F → 𝕜} {f' x : F},
+  HasGradientAt f f' x ↔ HasFDerivAt f ((InnerProductSpace.toDual 𝕜 F) f') x
+InnerProductSpace.toDual : (𝕜 : Type u_1) →
+  (E : Type u_2) →
+    [inst : RCLike 𝕜] →
+      [inst_1 : NormedAddCommGroup E] → [inst_2 : InnerProductSpace 𝕜 E] → [CompleteSpace E] → E ≃ₗᵢ⋆[𝕜] StrongDual 𝕜 E
+@InnerProductSpace.toDual_apply_apply : ∀ {𝕜 : Type u_1} {E : Type u_2} [inst : RCLike 𝕜]
+  [inst_1 : NormedAddCommGroup E] [inst_2 : InnerProductSpace 𝕜 E] [inst_3 : CompleteSpace E] {x y : E},
+  ((InnerProductSpace.toDual 𝕜 E) x) y = inner 𝕜 x y
+@HasGradientAt.gradient : ∀ {𝕜 : Type u_1} {F : Type u_2} [inst : RCLike 𝕜] [inst_1 : NormedAddCommGroup F]
+  [inst_2 : InnerProductSpace 𝕜 F] [inst_3 : CompleteSpace F] {f : F → 𝕜} {f' x : F},
+  HasGradientAt f f' x → gradient f x = f'
+@BanditRL.OnlineConvex.convex_gradient_lower_bound : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : CompleteSpace E] (V : Set E) (f : E → ℝ),
+  ConvexOn ℝ V f → ∀ (x y : E), x ∈ V → y ∈ V → DifferentiableAt ℝ f x → f x + inner ℝ (gradient f x) (y - x) ≤ f y
+@BanditRL.OnlineGradientDescent.lemma_2_12 : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : CompleteSpace E] (V : BanditRL.OnlineGradientDescent.Domain E) (f : E → ℝ),
+  BanditRL.OnlineGradientDescent.RegularLoss V f →
+    ∀ (η : ℝ),
+      0 < η →
+        ∀ (x u : E),
+          x ∈ V.carrier →
+            u ∈ V.carrier →
+              η * (f x - f u) ≤ η * inner ℝ (gradient f x) (x - u) ∧
+                η * inner ℝ (gradient f x) (x - u) ≤
+                  ‖x - u‖ ^ 2 / 2 - ‖BanditRL.OnlineGradientDescent.step V η f x - u‖ ^ 2 / 2 +
+                    η ^ 2 / 2 * ‖gradient f x‖ ^ 2
+BanditRL.OnlineGradientDescent.weighted_potential_sum : ∀ (a η : ℕ → ℝ) (C : ℝ) (T : ℕ),
+  0 < T →
+    (∀ t < T, 0 < η t) →
+      (∀ (t : ℕ), t + 1 < T → η (t + 1) ≤ η t) →
+        (∀ t < T, a t ≤ C) →
+          ∑ t ∈ Finset.range T, (a t - a (t + 1)) / (2 * η t) ≤ C / (2 * η (T - 1)) - a T / (2 * η (T - 1))

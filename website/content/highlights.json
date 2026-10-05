@@ -1870,7 +1870,7 @@
       "full_name": "BanditRL.OnlineGradientDescent.iterate",
       "title": "Algorithm 2.1: projected OGD",
       "chapter": "online-ogd",
-      "featured": false,
+      "featured": true,
       "teaching_order": 1,
       "plain": "The next iterate uses the current gradient after the current prediction is output.",
       "math": "\\(x_{t+1}=\\Pi_V(x_t-\\eta\\nabla\\ell_t(x_t))\\)",
@@ -1900,7 +1900,7 @@
     },
     {
       "full_name": "BanditRL.OnlineGradientDescent.lemma_2_12",
-      "title": "Lemma 2.12: one-step regret",
+      "title": "Lemma 2.12: one-step regret (historical stronger interface)",
       "chapter": "online-ogd",
       "featured": false,
       "teaching_order": 3,
@@ -1908,9 +1908,9 @@
       "math": "\\(\\eta(\\ell_t(x_t)-\\ell_t(u))\\le\\eta\\langle g_t,x_t-u\\rangle\\le\\frac{\\|x_t-u\\|^2-\\|x_{t+1}-u\\|^2+\\eta^2\\|g_t\\|^2}{2}\\)",
       "intuition": "Convexity linearizes loss; projection turns that inner product into a potential decrease plus gradient energy.",
       "why": "This supplies the next interface in the same source-aligned projected OGD chain.",
-      "position": "Orabona v10 Chapter 2 fixed-step package; not the whole chapter.",
+      "position": "Historical stronger-assumption interface in the same shared library; source cards use the repaired namespace.",
       "proof_idea": "Derive first_order through a differentiable convex affine restriction, then expand the actual projected update.",
-      "lean_notes": "Real Hilbert-space statements specialize to finite-dimensional Euclidean space. Lean time 0 is source round 1. No probabilistic regret claim.",
+      "lean_notes": "Real Hilbert-space statements specialize to finite-dimensional Euclidean space. Lean time 0 is source round 1. No probabilistic regret claim. Uses RegularLoss with a convex open differentiability neighborhood. The repaired arbitrary-open source endpoint is BanditRL.OnlineGradientDescentSource.lemma_2_12. Old links and true proofs are retained.",
       "dependencies": [
         "BanditRL.OnlineGradientDescent.first_order",
         "BanditRL.OnlineGradientDescent.proposition_2_11",
@@ -1919,7 +1919,7 @@
     },
     {
       "full_name": "BanditRL.OnlineGradientDescent.theorem_2_13_fixed",
-      "title": "Theorem 2.13: fixed step only",
+      "title": "Theorem 2.13: fixed step only (historical stronger interface)",
       "chapter": "online-ogd",
       "featured": false,
       "teaching_order": 4,
@@ -1927,9 +1927,9 @@
       "math": "\\(R_T(u)\\le\\frac{\\|x_1-u\\|^2}{2\\eta}+\\frac\\eta2\\sum_{t=1}^T\\|g_t\\|^2-\\frac{\\|x_{T+1}-u\\|^2}{2\\eta}\\)",
       "intuition": "Cumulative comparator regret retains the negative terminal squared distance, with no bounded-domain premise.",
       "why": "This supplies the next interface in the same source-aligned projected OGD chain.",
-      "position": "Orabona v10 Chapter 2 fixed-step package; not the whole chapter.",
+      "position": "Historical stronger-assumption interface in the same shared library; source cards use the repaired namespace.",
       "proof_idea": "Sum the generated trajectory one-step inequality and telescope; divide by the positive fixed step.",
-      "lean_notes": "Real Hilbert-space statements specialize to finite-dimensional Euclidean space. Lean time 0 is source round 1. No probabilistic regret claim.",
+      "lean_notes": "Real Hilbert-space statements specialize to finite-dimensional Euclidean space. Lean time 0 is source round 1. No probabilistic regret claim. Uses RegularLoss with a convex open differentiability neighborhood. The repaired arbitrary-open source endpoint is BanditRL.OnlineGradientDescentSource.theorem_2_13_fixed. Old links and true proofs are retained.",
       "dependencies": [
         "BanditRL.OnlineGradientDescent.lemma_2_12",
         "BanditRL.OnlineGradientDescent.iterate_mem",
@@ -1938,7 +1938,7 @@
     },
     {
       "full_name": "BanditRL.OnlineGradientDescent.equation_2_1",
-      "title": "Equation (2.1): horizon tuning",
+      "title": "Equation (2.1): horizon tuning (historical stronger interface)",
       "chapter": "online-ogd",
       "featured": false,
       "teaching_order": 5,
@@ -1946,9 +1946,9 @@
       "math": "\\(\\eta=\\frac{D}{G\\sqrt T},\\qquad R_T(u)\\le DG\\sqrt T\\)",
       "intuition": "A priori diameter and gradient bounds yield the source square-root regret rate.",
       "why": "This supplies the next interface in the same source-aligned projected OGD chain.",
-      "position": "Orabona v10 Chapter 2 fixed-step package; not the whole chapter.",
+      "position": "Historical stronger-assumption interface in the same shared library; source cards use the repaired namespace.",
       "proof_idea": "Bound initial distance and gradient energy, then simplify the positive horizon-tuned step.",
-      "lean_notes": "Real Hilbert-space statements specialize to finite-dimensional Euclidean space. Lean time 0 is source round 1. No probabilistic regret claim.",
+      "lean_notes": "Real Hilbert-space statements specialize to finite-dimensional Euclidean space. Lean time 0 is source round 1. No probabilistic regret claim. Uses RegularLoss with a convex open differentiability neighborhood. The repaired arbitrary-open source endpoint is BanditRL.OnlineGradientDescentSource.equation_2_1. Old links and true proofs are retained.",
       "dependencies": [
         "BanditRL.OnlineGradientDescent.theorem_2_13_fixed",
         "BanditRL.OnlineGradientDescent.equation_2_1_distance"
@@ -5057,6 +5057,250 @@
       "dependencies": [
         "BanditRL.OnlineUnitScaling.regret_scaling",
         "BanditRL.OnlineSubgradientPolicy.regret_fixed"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescentSource.FeasibleRegularLoss",
+      "title": "Feasible-point loss regularity",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 10,
+      "plain": "Convexity on V and ambient derivatives at every feasible point.",
+      "math": "\\(\\operatorname{ConvexOn}(V,f)\\ \\land\\ \\forall x\\in V,\\ f\\text{ differentiable at }x\\)",
+      "intuition": "Convexity on V and ambient derivatives at every feasible point.",
+      "why": "One repaired source chain using the existing shared projected algorithm.",
+      "position": "Orabona v10 printed12–15/PDF24–27; library refinement, not an extra printed source result.",
+      "proof_idea": "This is the weaker library interface; boundary/thin-domain points are included.",
+      "lean_notes": "Convexity on V and a supplied ambient real extension differentiable on an arbitrary open U containing V. U need not be convex. source_to_feasible proves the conversion to FeasibleRegularLoss: convexity on V and ambient derivatives at every feasible point. On a thin V the supplied extension fixes the gradient; extension independence is not claimed. Compiled local OGD source-repair candidate, with distinct source/body review. Full harness, actual graph, shared Book registry, final reader/site and PR gates remain separate. This is not all Chapter2 or the whole book, and is not merged or live.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescentSource.SourceRegularLoss",
+      "title": "Arbitrary-open source regularity",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 11,
+      "plain": "Convexity on V and a supplied ambient real extension differentiable on an arbitrary open U containing V. U need not be convex. source_to_feasible proves the conversion to FeasibleRegularLoss: convexity on V and ambient derivatives at every feasible point. On a thin V the supplied extension fixes the gradient; extension independence is not claimed.",
+      "math": "\\(\\exists U\\supseteq V:\\ U\\text{ open},\\ f\\text{ convex on }V,\\ f\\text{ differentiable on }U\\)",
+      "intuition": "Convexity on V and a supplied ambient real extension differentiable on an arbitrary open U containing V. U need not be convex. source_to_feasible proves the conversion to FeasibleRegularLoss: convexity on V and ambient derivatives at every feasible point. On a thin V the supplied extension fixes the gradient; extension independence is not claimed.",
+      "why": "One repaired source chain using the existing shared projected algorithm.",
+      "position": "Orabona v10 printed12–15/PDF24–27; library refinement, not an extra printed source result.",
+      "proof_idea": "A supplied ambient extension; not an extension-existence or extension-independence theorem.",
+      "lean_notes": "Convexity on V and a supplied ambient real extension differentiable on an arbitrary open U containing V. U need not be convex. source_to_feasible proves the conversion to FeasibleRegularLoss: convexity on V and ambient derivatives at every feasible point. On a thin V the supplied extension fixes the gradient; extension independence is not claimed. Compiled local OGD source-repair candidate, with distinct source/body review. Full harness, actual graph, shared Book registry, final reader/site and PR gates remain separate. This is not all Chapter2 or the whole book, and is not merged or live.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescentSource.source_to_feasible",
+      "title": "Source hypothesis supplies the weaker interface",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 12,
+      "plain": "Every point of V lies in the open differentiability neighborhood.",
+      "math": "\\(\\mathrm{SourceRegularLoss}(V,f)\\Rightarrow\\mathrm{FeasibleRegularLoss}(V,f)\\)",
+      "intuition": "Every point of V lies in the open differentiability neighborhood.",
+      "why": "One repaired source chain using the existing shared projected algorithm.",
+      "position": "Orabona v10 printed12–15/PDF24–27; library refinement, not an extra printed source result.",
+      "proof_idea": "Openness supplies a neighborhood at each feasible point; DifferentiableOn gives the ambient derivative.",
+      "lean_notes": "Convexity on V and a supplied ambient real extension differentiable on an arbitrary open U containing V. U need not be convex. source_to_feasible proves the conversion to FeasibleRegularLoss: convexity on V and ambient derivatives at every feasible point. On a thin V the supplied extension fixes the gradient; extension independence is not claimed. Compiled local OGD source-repair candidate, with distinct source/body review. Full harness, actual graph, shared Book registry, final reader/site and PR gates remain separate. This is not all Chapter2 or the whole book, and is not merged or live.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescentSource.SourceRegularLoss",
+        "BanditRL.OnlineGradientDescentSource.FeasibleRegularLoss"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescentSource.regular_to_feasible",
+      "title": "Compatibility with the historical predicate",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 13,
+      "plain": "The retained stronger predicate also supplies the repaired interface.",
+      "math": "\\(\\mathrm{RegularLoss}(V,f)\\Rightarrow\\mathrm{FeasibleRegularLoss}(V,f)\\)",
+      "intuition": "The retained stronger predicate also supplies the repaired interface.",
+      "why": "One repaired source chain using the existing shared projected algorithm.",
+      "position": "Orabona v10 printed12–15/PDF24–27; library refinement, not an extra printed source result.",
+      "proof_idea": "Restrict convexity from the old U to convex V and take local ambient derivatives. No reverse implication.",
+      "lean_notes": "Convexity on V and a supplied ambient real extension differentiable on an arbitrary open U containing V. U need not be convex. source_to_feasible proves the conversion to FeasibleRegularLoss: convexity on V and ambient derivatives at every feasible point. On a thin V the supplied extension fixes the gradient; extension independence is not claimed. Compiled local OGD source-repair candidate, with distinct source/body review. Full harness, actual graph, shared Book registry, final reader/site and PR gates remain separate. This is not all Chapter2 or the whole book, and is not merged or live.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescent.RegularLoss",
+        "BanditRL.OnlineGradientDescentSource.FeasibleRegularLoss"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescentSource.linear_regular",
+      "title": "True linear loss satisfies the stronger interface",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 14,
+      "plain": "The function z ↦ inner(g,z) is globally convex and differentiable.",
+      "math": "\\(f_g(z)=\\langle g,z\\rangle\\)",
+      "intuition": "The function z ↦ inner(g,z) is globally convex and differentiable.",
+      "why": "One repaired source chain using the existing shared projected algorithm.",
+      "position": "Orabona v10 printed12–15/PDF24–27; library refinement, not an extra printed source result.",
+      "proof_idea": "The continuous Riesz dual supplies an actual linear map and derivative, including g=0 and unbounded V.",
+      "lean_notes": "Convexity on V and a supplied ambient real extension differentiable on an arbitrary open U containing V. U need not be convex. source_to_feasible proves the conversion to FeasibleRegularLoss: convexity on V and ambient derivatives at every feasible point. On a thin V the supplied extension fixes the gradient; extension independence is not claimed. Compiled local OGD source-repair candidate, with distinct source/body review. Full harness, actual graph, shared Book registry, final reader/site and PR gates remain separate. This is not all Chapter2 or the whole book, and is not merged or live.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescent.RegularLoss"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescentSource.gradient_linear",
+      "title": "Actual gradient of the linear loss",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 15,
+      "plain": "The gradient of inner(g,·) equals g at every ambient point.",
+      "math": "\\(\\nabla f_g(x)=g\\)",
+      "intuition": "The gradient of inner(g,·) equals g at every ambient point.",
+      "why": "One repaired source chain using the existing shared projected algorithm.",
+      "position": "Orabona v10 printed12–15/PDF24–27; library refinement, not an extra printed source result.",
+      "proof_idea": "Use the derivative of the continuous dual and the Riesz gradient identity; this is a producer, not an oracle assumption.",
+      "lean_notes": "Convexity on V and a supplied ambient real extension differentiable on an arbitrary open U containing V. U need not be convex. source_to_feasible proves the conversion to FeasibleRegularLoss: convexity on V and ambient derivatives at every feasible point. On a thin V the supplied extension fixes the gradient; extension independence is not claimed. Compiled local OGD source-repair candidate, with distinct source/body review. Full harness, actual graph, shared Book registry, final reader/site and PR gates remain separate. This is not all Chapter2 or the whole book, and is not merged or live.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescentSource.first_order",
+      "title": "Feasible-set first-order comparison",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 16,
+      "plain": "Loss comparison follows from convexity on V and the ambient derivative.",
+      "math": "\\(f(x)-f(u)\\le\\langle\\nabla f(x),x-u\\rangle\\)",
+      "intuition": "Loss comparison follows from convexity on V and the ambient derivative.",
+      "why": "One repaired source chain using the existing shared projected algorithm.",
+      "position": "Orabona v10 printed12–15/PDF24–27; library refinement, not an extra printed source result.",
+      "proof_idea": "Apply the existing feasible convex_gradient_lower_bound and reverse the displacement.",
+      "lean_notes": "Convexity on V and a supplied ambient real extension differentiable on an arbitrary open U containing V. U need not be convex. source_to_feasible proves the conversion to FeasibleRegularLoss: convexity on V and ambient derivatives at every feasible point. On a thin V the supplied extension fixes the gradient; extension independence is not claimed. Compiled local OGD source-repair candidate, with distinct source/body review. Full harness, actual graph, shared Book registry, final reader/site and PR gates remain separate. This is not all Chapter2 or the whole book, and is not merged or live.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescentSource.FeasibleRegularLoss",
+        "BanditRL.OnlineConvex.convex_gradient_lower_bound"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescentSource.lemma_2_12",
+      "title": "Lemma 2.12 with source regularity",
+      "chapter": "online-ogd",
+      "featured": true,
+      "teaching_order": 17,
+      "plain": "Both source one-step inequalities hold for the same actual projected update.",
+      "math": "\\(\\eta(f(x)-f(u))\\le\\eta\\langle g,x-u\\rangle\\le\\tfrac12\\|x-u\\|^2-\\tfrac12\\|x^+-u\\|^2+\\tfrac{\\eta^2}2\\|g\\|^2\\)",
+      "intuition": "Both source one-step inequalities hold for the same actual projected update.",
+      "why": "One repaired source chain using the existing shared projected algorithm.",
+      "position": "Orabona v10 printed12–15/PDF24–27; library refinement, not an extra printed source result.",
+      "proof_idea": "Proved first-order bound plus genuine affine specialization of the retained quadratic lemma. No assumed one-step bound.",
+      "lean_notes": "Convexity on V and a supplied ambient real extension differentiable on an arbitrary open U containing V. U need not be convex. source_to_feasible proves the conversion to FeasibleRegularLoss: convexity on V and ambient derivatives at every feasible point. On a thin V the supplied extension fixes the gradient; extension independence is not claimed. Compiled local OGD source-repair candidate, with distinct source/body review. Full harness, actual graph, shared Book registry, final reader/site and PR gates remain separate. This is not all Chapter2 or the whole book, and is not merged or live.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescentSource.first_order",
+        "BanditRL.OnlineGradientDescentSource.linear_regular",
+        "BanditRL.OnlineGradientDescentSource.gradient_linear",
+        "BanditRL.OnlineGradientDescent.lemma_2_12",
+        "BanditRL.OnlineGradientDescent.step"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescentSource.theorem_2_13_fixed",
+      "title": "Theorem 2.13 fixed step with source regularity",
+      "chapter": "online-ogd",
+      "featured": true,
+      "teaching_order": 18,
+      "plain": "No bounded-domain premise; the negative terminal distance is retained.",
+      "math": "\\(R_T(u)\\le\\frac{\\|x_1-u\\|^2}{2\\eta}+\\frac\\eta2\\sum_t\\|g_t\\|^2-\\frac{\\|x_{T+1}-u\\|^2}{2\\eta}\\)",
+      "intuition": "No bounded-domain premise; the negative terminal distance is retained.",
+      "why": "One repaired source chain using the existing shared projected algorithm.",
+      "position": "Orabona v10 printed12–15/PDF24–27; library refinement, not an extra printed source result.",
+      "proof_idea": "Sum the actual same-run one-step chain by induction, telescope and divide by eta>0. T=0 is a canceling extension.",
+      "lean_notes": "Convexity on V and a supplied ambient real extension differentiable on an arbitrary open U containing V. U need not be convex. source_to_feasible proves the conversion to FeasibleRegularLoss: convexity on V and ambient derivatives at every feasible point. On a thin V the supplied extension fixes the gradient; extension independence is not claimed. Compiled local OGD source-repair candidate, with distinct source/body review. Full harness, actual graph, shared Book registry, final reader/site and PR gates remain separate. This is not all Chapter2 or the whole book, and is not merged or live.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescentSource.lemma_2_12",
+        "BanditRL.OnlineGradientDescent.iterate_mem",
+        "BanditRL.OnlineGradientDescent.regret"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescentSource.variable_one_step",
+      "title": "Actual variable-step loss comparison",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 19,
+      "plain": "The current scheduled update supplies its divided one-step inequality.",
+      "math": "\\(\\ell_t(x_t)-\\ell_t(u)\\le\\frac{\\|x_t-u\\|^2-\\|x_{t+1}-u\\|^2}{2\\eta_t}+\\frac{\\eta_t}2\\|g_t\\|^2\\)",
+      "intuition": "The current scheduled update supplies its divided one-step inequality.",
+      "why": "One repaired source chain using the existing shared projected algorithm.",
+      "position": "Orabona v10 printed12–15/PDF24–27; library refinement, not an extra printed source result.",
+      "proof_idea": "Use new lemma_2_12 and actual iterateVariable feasibility; only current eta_t must be positive here.",
+      "lean_notes": "Convexity on V and a supplied ambient real extension differentiable on an arbitrary open U containing V. U need not be convex. source_to_feasible proves the conversion to FeasibleRegularLoss: convexity on V and ambient derivatives at every feasible point. On a thin V the supplied extension fixes the gradient; extension independence is not claimed. Compiled local OGD source-repair candidate, with distinct source/body review. Full harness, actual graph, shared Book registry, final reader/site and PR gates remain separate. This is not all Chapter2 or the whole book, and is not merged or live.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescentSource.lemma_2_12",
+        "BanditRL.OnlineGradientDescent.iterateVariable_mem"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescentSource.theorem_2_13_variable_bound",
+      "title": "Sharp decreasing-step diameter-upper-bound interface",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 20,
+      "plain": "A pairwise distance upper bound supplies the weighted potential telescope.",
+      "math": "\\(R_T(u)\\le\\frac{D^2}{2\\eta_T}+\\sum_t\\frac{\\eta_t}2\\|g_t\\|^2-\\frac{\\|x_{T+1}-u\\|^2}{2\\eta_T}\\)",
+      "intuition": "A pairwise distance upper bound supplies the weighted potential telescope.",
+      "why": "One repaired source chain using the existing shared projected algorithm.",
+      "position": "Orabona v10 printed12–15/PDF24–27; library refinement, not an extra printed source result.",
+      "proof_idea": "T>=1, positive adjacent nonincreasing used steps; Lean last step is eta(T-1). D=0 allowed. Preserve the negative terminal.",
+      "lean_notes": "Convexity on V and a supplied ambient real extension differentiable on an arbitrary open U containing V. U need not be convex. source_to_feasible proves the conversion to FeasibleRegularLoss: convexity on V and ambient derivatives at every feasible point. On a thin V the supplied extension fixes the gradient; extension independence is not claimed. Compiled local OGD source-repair candidate, with distinct source/body review. Full harness, actual graph, shared Book registry, final reader/site and PR gates remain separate. This is not all Chapter2 or the whole book, and is not merged or live.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescentSource.variable_one_step",
+        "BanditRL.OnlineGradientDescent.weighted_potential_sum",
+        "BanditRL.OnlineGradientDescent.iterateVariable_mem"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescentSource.theorem_2_13_variable",
+      "title": "Theorem 2.13 exact finite diameter",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 21,
+      "plain": "Boundedness makes Metric.diam the source diameter in the repaired same-run bound.",
+      "math": "\\(D=\\operatorname{diam}(V)\\)",
+      "intuition": "Boundedness makes Metric.diam the source diameter in the repaired same-run bound.",
+      "why": "One repaired source chain using the existing shared projected algorithm.",
+      "position": "Orabona v10 printed12–15/PDF24–27; library refinement, not an extra printed source result.",
+      "proof_idea": "Apply the pairwise-bound producer with Metric.dist_le_diam_of_mem. No compactness or convex-open-neighborhood assumption.",
+      "lean_notes": "Convexity on V and a supplied ambient real extension differentiable on an arbitrary open U containing V. U need not be convex. source_to_feasible proves the conversion to FeasibleRegularLoss: convexity on V and ambient derivatives at every feasible point. On a thin V the supplied extension fixes the gradient; extension independence is not claimed. Compiled local OGD source-repair candidate, with distinct source/body review. Full harness, actual graph, shared Book registry, final reader/site and PR gates remain separate. This is not all Chapter2 or the whole book, and is not merged or live.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescentSource.theorem_2_13_variable_bound"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescentSource.equation_2_1_distance",
+      "title": "Positive horizon tuning for one comparator",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 22,
+      "plain": "An initial-distance bound and actual tuned-run gradient bounds give DG sqrtT.",
+      "math": "\\(\\eta=\\frac{D}{G\\sqrt T},\\qquad R_T(u)\\le DG\\sqrt T\\)",
+      "intuition": "An initial-distance bound and actual tuned-run gradient bounds give DG sqrtT.",
+      "why": "One repaired source chain using the existing shared projected algorithm.",
+      "position": "Orabona v10 printed12–15/PDF24–27; library refinement, not an extra printed source result.",
+      "proof_idea": "D,G,T>0. Bound the initial distance and energy in the fixed sharp producer, then discard the nonnegative terminal magnitude. No future-gradient optimizer.",
+      "lean_notes": "Convexity on V and a supplied ambient real extension differentiable on an arbitrary open U containing V. U need not be convex. source_to_feasible proves the conversion to FeasibleRegularLoss: convexity on V and ambient derivatives at every feasible point. On a thin V the supplied extension fixes the gradient; extension independence is not claimed. Compiled local OGD source-repair candidate, with distinct source/body review. Full harness, actual graph, shared Book registry, final reader/site and PR gates remain separate. This is not all Chapter2 or the whole book, and is not merged or live.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescentSource.theorem_2_13_fixed"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescentSource.equation_2_1",
+      "title": "Equation (2.1) with arbitrary-open regularity",
+      "chapter": "online-ogd",
+      "featured": true,
+      "teaching_order": 23,
+      "plain": "One prescribed tuned trajectory satisfies DG sqrtT for every feasible comparator.",
+      "math": "\\(\\forall u\\in V,\\ R_T(u)\\le DG\\sqrt T\\)",
+      "intuition": "One prescribed tuned trajectory satisfies DG sqrtT for every feasible comparator.",
+      "why": "One repaired source chain using the existing shared projected algorithm.",
+      "position": "Orabona v10 printed12–15/PDF24–27; library refinement, not an extra printed source result.",
+      "proof_idea": "Positive D,G,T, pairwise domain distances<=D, actual tuned-run gradient norms<=G. No comparator-dependent rerun or anytime bound.",
+      "lean_notes": "Convexity on V and a supplied ambient real extension differentiable on an arbitrary open U containing V. U need not be convex. source_to_feasible proves the conversion to FeasibleRegularLoss: convexity on V and ambient derivatives at every feasible point. On a thin V the supplied extension fixes the gradient; extension independence is not claimed. Compiled local OGD source-repair candidate, with distinct source/body review. Full harness, actual graph, shared Book registry, final reader/site and PR gates remain separate. This is not all Chapter2 or the whole book, and is not merged or live.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescentSource.equation_2_1_distance"
       ]
     }
   ]

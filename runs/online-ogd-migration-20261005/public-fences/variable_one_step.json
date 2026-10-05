@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineGradientDescentSource.variable_one_step",
+  "file": "BanditRLProof/OnlineGradientDescentSource.lean",
+  "statement": "theorem variable_one_step (V : Domain E) (η : ℕ → ℝ) (loss : ℕ → E → ℝ) (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (t : ℕ) (hη : 0 < η t) (hloss : FeasibleRegularLoss V (loss t)) (u : E) (hu : u ∈ V.carrier) : loss t (iterateVariable V η loss x₁ t) - loss t u ≤ (‖iterateVariable V η loss x₁ t - u‖ ^ 2 - ‖iterateVariable V η loss x₁ (t + 1) - u‖ ^ 2) / (2 * η t) + η t / 2 * ‖gradient (loss t) (iterateVariable V η loss x₁ t)‖ ^ 2",
+  "statement_hash": "44b9e27a41e32289642634e77b5337b194414f1fb285c44b44d675f24dba8763",
+  "source_assumptions": [
+    "(hx₁ : x₁ ∈ V.carrier)",
+    "(hη : 0 < η t)",
+    "(hloss : FeasibleRegularLoss V (loss t))",
+    "(hu : u ∈ V.carrier)"
+  ],
+  "created_at": "2026-10-05T07:46:37+00:00"
+}

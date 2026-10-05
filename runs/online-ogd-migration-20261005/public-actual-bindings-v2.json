@@ -1,0 +1,475 @@
+{
+  "status": "compiled-local-candidate",
+  "public_module_sha256": "627df452453bbdfa2ecf4ddac8b5b85bfd750c74f1db5b81a26e6e20ca2eeec7",
+  "public_canary_sha256": "1a7c22676285c09d4d3354ada355ef0e03fc6a3957a6e27f916a6d6a84ea24f7",
+  "public_headers": {
+    "source_to_feasible": "theorem source_to_feasible (V : Domain E) (f : E \u2192 \u211d) (hf : SourceRegularLoss V f) : FeasibleRegularLoss V f",
+    "regular_to_feasible": "theorem regular_to_feasible (V : Domain E) (f : E \u2192 \u211d) (hf : RegularLoss V f) : FeasibleRegularLoss V f",
+    "linear_regular": "theorem linear_regular (V : Domain E) (g : E) : RegularLoss V (fun z => inner \u211d g z)",
+    "gradient_linear": "theorem gradient_linear (g x : E) : gradient (fun z => inner \u211d g z) x = g",
+    "first_order": "theorem first_order (V : Domain E) (f : E \u2192 \u211d) (hf : FeasibleRegularLoss V f) (x u : E) (hx : x \u2208 V.carrier) (hu : u \u2208 V.carrier) : f x - f u \u2264 inner \u211d (gradient f x) (x - u)",
+    "lemma_2_12": "theorem lemma_2_12 (V : Domain E) (f : E \u2192 \u211d) (hf : FeasibleRegularLoss V f) (\u03b7 : \u211d) (h\u03b7 : 0 < \u03b7) (x u : E) (hx : x \u2208 V.carrier) (hu : u \u2208 V.carrier) : \u03b7 * (f x - f u) \u2264 \u03b7 * inner \u211d (gradient f x) (x - u) \u2227 \u03b7 * inner \u211d (gradient f x) (x - u) \u2264 \u2016x - u\u2016 ^ 2 / 2 - \u2016step V \u03b7 f x - u\u2016 ^ 2 / 2 + \u03b7 ^ 2 / 2 * \u2016gradient f x\u2016 ^ 2",
+    "theorem_2_13_fixed": "theorem theorem_2_13_fixed (V : Domain E) (\u03b7 : \u211d) (h\u03b7 : 0 < \u03b7) (loss : \u2115 \u2192 E \u2192 \u211d) (x\u2081 : E) (hx\u2081 : x\u2081 \u2208 V.carrier) (T : \u2115) (hloss : \u2200 t < T, FeasibleRegularLoss V (loss t)) (u : E) (hu : u \u2208 V.carrier) : regret V \u03b7 loss x\u2081 u T \u2264 \u2016x\u2081 - u\u2016 ^ 2 / (2 * \u03b7) + \u03b7 / 2 * (\u2211 t \u2208 range T, \u2016gradient (loss t) (iterate V \u03b7 loss x\u2081 t)\u2016 ^ 2) - \u2016iterate V \u03b7 loss x\u2081 T - u\u2016 ^ 2 / (2 * \u03b7)",
+    "variable_one_step": "theorem variable_one_step (V : Domain E) (\u03b7 : \u2115 \u2192 \u211d) (loss : \u2115 \u2192 E \u2192 \u211d) (x\u2081 : E) (hx\u2081 : x\u2081 \u2208 V.carrier) (t : \u2115) (h\u03b7 : 0 < \u03b7 t) (hloss : FeasibleRegularLoss V (loss t)) (u : E) (hu : u \u2208 V.carrier) : loss t (iterateVariable V \u03b7 loss x\u2081 t) - loss t u \u2264 (\u2016iterateVariable V \u03b7 loss x\u2081 t - u\u2016 ^ 2 - \u2016iterateVariable V \u03b7 loss x\u2081 (t + 1) - u\u2016 ^ 2) / (2 * \u03b7 t) + \u03b7 t / 2 * \u2016gradient (loss t) (iterateVariable V \u03b7 loss x\u2081 t)\u2016 ^ 2",
+    "theorem_2_13_variable_bound": "theorem theorem_2_13_variable_bound (V : Domain E) (\u03b7 : \u2115 \u2192 \u211d) (loss : \u2115 \u2192 E \u2192 \u211d) (x\u2081 : E) (hx\u2081 : x\u2081 \u2208 V.carrier) (T : \u2115) (hT : 0 < T) (h\u03b7 : \u2200 t < T, 0 < \u03b7 t) (hmono : \u2200 t, t + 1 < T \u2192 \u03b7 (t + 1) \u2264 \u03b7 t) (hloss : \u2200 t < T, FeasibleRegularLoss V (loss t)) (D : \u211d) (hdiam : \u2200 x \u2208 V.carrier, \u2200 y \u2208 V.carrier, \u2016x - y\u2016 \u2264 D) (u : E) (hu : u \u2208 V.carrier) : regretVariable V \u03b7 loss x\u2081 u T \u2264 D ^ 2 / (2 * \u03b7 (T - 1)) + (\u2211 t \u2208 range T, \u03b7 t / 2 * \u2016gradient (loss t) (iterateVariable V \u03b7 loss x\u2081 t)\u2016 ^ 2) - \u2016iterateVariable V \u03b7 loss x\u2081 T - u\u2016 ^ 2 / (2 * \u03b7 (T - 1))",
+    "theorem_2_13_variable": "theorem theorem_2_13_variable (V : Domain E) (hV : Bornology.IsBounded V.carrier) (\u03b7 : \u2115 \u2192 \u211d) (loss : \u2115 \u2192 E \u2192 \u211d) (x\u2081 : E) (hx\u2081 : x\u2081 \u2208 V.carrier) (T : \u2115) (hT : 0 < T) (h\u03b7 : \u2200 t < T, 0 < \u03b7 t) (hmono : \u2200 t, t + 1 < T \u2192 \u03b7 (t + 1) \u2264 \u03b7 t) (hloss : \u2200 t < T, FeasibleRegularLoss V (loss t)) (u : E) (hu : u \u2208 V.carrier) : regretVariable V \u03b7 loss x\u2081 u T \u2264 (Metric.diam V.carrier) ^ 2 / (2 * \u03b7 (T - 1)) + (\u2211 t \u2208 range T, \u03b7 t / 2 * \u2016gradient (loss t) (iterateVariable V \u03b7 loss x\u2081 t)\u2016 ^ 2) - \u2016iterateVariable V \u03b7 loss x\u2081 T - u\u2016 ^ 2 / (2 * \u03b7 (T - 1))",
+    "equation_2_1_distance": "theorem equation_2_1_distance (V : Domain E) (loss : \u2115 \u2192 E \u2192 \u211d) (x\u2081 : E) (hx\u2081 : x\u2081 \u2208 V.carrier) (T : \u2115) (hT : 0 < T) (D G : \u211d) (hD : 0 < D) (hG : 0 < G) (hloss : \u2200 t < T, FeasibleRegularLoss V (loss t)) (u : E) (hu : u \u2208 V.carrier) (hdist : \u2016x\u2081 - u\u2016 \u2264 D) (hgrad : \u2200 t < T, \u2016gradient (loss t) (iterate V (D / (G * Real.sqrt T)) loss x\u2081 t)\u2016 \u2264 G) : regret V (D / (G * Real.sqrt T)) loss x\u2081 u T \u2264 D * G * Real.sqrt T",
+    "equation_2_1": "theorem equation_2_1 (V : Domain E) (loss : \u2115 \u2192 E \u2192 \u211d) (x\u2081 : E) (hx\u2081 : x\u2081 \u2208 V.carrier) (T : \u2115) (hT : 0 < T) (D G : \u211d) (hD : 0 < D) (hG : 0 < G) (hdiam : \u2200 x \u2208 V.carrier, \u2200 y \u2208 V.carrier, \u2016x - y\u2016 \u2264 D) (hloss : \u2200 t < T, FeasibleRegularLoss V (loss t)) (hgrad : \u2200 t < T, \u2016gradient (loss t) (iterate V (D / (G * Real.sqrt T)) loss x\u2081 t)\u2016 \u2264 G) : \u2200 u \u2208 V.carrier, regret V (D / (G * Real.sqrt T)) loss x\u2081 u T \u2264 D * G * Real.sqrt T"
+  },
+  "public_theorems": 12,
+  "public_definitions": 2,
+  "canary_theorems": 30,
+  "canary_context_definitions_and_alias": 7,
+  "actual_named_lookup_and_axioms": {
+    "BanditRL.OnlineGradientDescentSource.FeasibleRegularLoss": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "BanditRL.OnlineGradientDescentSource.SourceRegularLoss": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "BanditRL.OnlineGradientDescentSource.source_to_feasible": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "BanditRL.OnlineGradientDescentSource.regular_to_feasible": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "BanditRL.OnlineGradientDescentSource.linear_regular": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "BanditRL.OnlineGradientDescentSource.gradient_linear": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "BanditRL.OnlineGradientDescentSource.first_order": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "BanditRL.OnlineGradientDescentSource.lemma_2_12": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "BanditRL.OnlineGradientDescentSource.theorem_2_13_fixed": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "BanditRL.OnlineGradientDescentSource.variable_one_step": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "BanditRL.OnlineGradientDescentSource.theorem_2_13_variable_bound": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "BanditRL.OnlineGradientDescentSource.theorem_2_13_variable": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "BanditRL.OnlineGradientDescentSource.equation_2_1_distance": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "BanditRL.OnlineGradientDescentSource.equation_2_1": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Tests.OnlineGradientDescentSource.Plane": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Tests.OnlineGradientDescentSource.e0": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Tests.OnlineGradientDescentSource.e1": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Tests.OnlineGradientDescentSource.e00": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Tests.OnlineGradientDescentSource.e01": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Tests.OnlineGradientDescentSource.e10": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Tests.OnlineGradientDescentSource.e11": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Tests.OnlineGradientDescentSource.norm_e0": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Tests.OnlineGradientDescentSource.norm_e1": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Tests.OnlineGradientDescentSource.axis": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Tests.OnlineGradientDescentSource.maxExp": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Tests.OnlineGradientDescentSource.smoothRegion": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Tests.OnlineGradientDescentSource.region_open": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Tests.OnlineGradientDescentSource.axis_in_region": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Tests.OnlineGradientDescentSource.maxExp_on_region": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Tests.OnlineGradientDescentSource.maxExp_eventually": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Tests.OnlineGradientDescentSource.maxExp_source": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Tests.OnlineGradientDescentSource.region_not_convex": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Tests.OnlineGradientDescentSource.gradient_at_zero": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Tests.OnlineGradientDescentSource.project_e0": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Tests.OnlineGradientDescentSource.axis_first_point": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Tests.OnlineGradientDescentSource.maxExp_zero": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Tests.OnlineGradientDescentSource.maxExp_two": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Tests.OnlineGradientDescentSource.positive_regret": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Tests.OnlineGradientDescentSource.terminal_distance": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Tests.OnlineGradientDescentSource.source_nondegenerate": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Tests.OnlineGradientDescentSource.repaired_one_step": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Tests.OnlineGradientDescentSource.repaired_fixed_endpoint": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Tests.OnlineGradientDescentSource.axis_unbounded": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Tests.OnlineGradientDescentSource.active_projection_fixed": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Tests.OnlineGradientDescentSource.active_projection_variable": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Tests.OnlineGradientDescentSource.active_projection_tuned": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Tests.OnlineGradientDescentSource.fixed_zero_round": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Tests.OnlineGradientDescentSource.zero_round_cancellation": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Tests.OnlineGradientDescentSource.pointDomain": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Tests.OnlineGradientDescentSource.variable_one_round_zero_diameter": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Tests.OnlineGradientDescentSource.prefix_future_independence": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "BanditRL.OnlineGradientDescent.Domain": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "BanditRL.OnlineGradientDescent.project": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "BanditRL.OnlineGradientDescent.RegularLoss": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "BanditRL.OnlineGradientDescent.step": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "BanditRL.OnlineGradientDescent.iterate": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "BanditRL.OnlineGradientDescent.regret": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "BanditRL.OnlineGradientDescent.iterateVariable": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "BanditRL.OnlineGradientDescent.regretVariable": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "BanditRL.OnlineGradientDescent.project_spec": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "BanditRL.OnlineGradientDescent.project_eq_of_variational": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "BanditRL.OnlineGradientDescent.proposition_2_11": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "BanditRL.OnlineGradientDescent.first_order": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "BanditRL.OnlineGradientDescent.lemma_2_12": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "BanditRL.OnlineGradientDescent.iterate_mem": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "BanditRL.OnlineGradientDescent.iterate_prefix": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "BanditRL.OnlineGradientDescent.theorem_2_13_fixed": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "BanditRL.OnlineGradientDescent.equation_2_1_distance": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "BanditRL.OnlineGradientDescent.equation_2_1": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "BanditRL.OnlineGradientDescent.iterateVariable_mem": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "BanditRL.OnlineGradientDescent.iterateVariable_prefix": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "BanditRL.OnlineGradientDescent.variable_one_step": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "BanditRL.OnlineGradientDescent.weighted_potential_sum": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "BanditRL.OnlineGradientDescent.theorem_2_13_variable_bound": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "BanditRL.OnlineGradientDescent.theorem_2_13_variable": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ]
+  },
+  "actual_axiom_count": 75,
+  "root_jobs": 9087,
+  "Tests_jobs": 9228,
+  "actual_passed_gates": [
+    "root-v2-01",
+    "Tests-v2-01",
+    "public-canary-v2-01",
+    "public-axioms-v2-01",
+    "prepare-public-gates-v2-01",
+    "body-adapters-v2-01",
+    "body-one-step-v2-01",
+    "body-cumulative-v2-01"
+  ],
+  "preserved_historical_review_deltas": [
+    {
+      "receipt_version": 1,
+      "path": "BanditRLProof.lean",
+      "original_sha256": "ec4c531329bc808fa055e92c5d3035fb318b92c58c62948cd218c52f157a29e1",
+      "preserved_original": "runs\\online-ogd-migration-20261005\\leaves\\pre-integration-BanditRLProof.lean.txt",
+      "current_sha256": "d16d741b3bca1b4f7c30fbad7a2b5b3e8283d079cf49695720f4b256fb3b5bfb",
+      "explicit_delta": "public imports or old source comment only"
+    },
+    {
+      "receipt_version": 1,
+      "path": "BanditRLProof/OnlineGradientDescent.lean",
+      "original_sha256": "e7edba540c2f60032bb4a34aaf0768b3107b94276b67b6f41fc289009c8924c1",
+      "preserved_original": "runs\\online-ogd-migration-20261005\\leaves\\pre-integration-BanditRLProof--OnlineGradientDescent.lean.txt",
+      "current_sha256": "9300cb2735da9f125e404f78b86509df47fe65a5f4d89abc469e071bdffdb871",
+      "explicit_delta": "public imports or old source comment only"
+    },
+    {
+      "receipt_version": 1,
+      "path": "Tests.lean",
+      "original_sha256": "da5f0b84ea0ff79ed17f276ee8283ae7222b82b7771a3f75fdb49b8a92c8aeb5",
+      "preserved_original": "runs\\online-ogd-migration-20261005\\leaves\\pre-integration-Tests.lean.txt",
+      "current_sha256": "693654a3126313f0e7db548ff08f6ee961e8b7656602fb56dc590a1cdbe0a825",
+      "explicit_delta": "public imports or old source comment only"
+    },
+    {
+      "receipt_version": 2,
+      "path": "BanditRLProof.lean",
+      "original_sha256": "ec4c531329bc808fa055e92c5d3035fb318b92c58c62948cd218c52f157a29e1",
+      "preserved_original": "runs\\online-ogd-migration-20261005\\leaves\\pre-integration-BanditRLProof.lean.txt",
+      "current_sha256": "d16d741b3bca1b4f7c30fbad7a2b5b3e8283d079cf49695720f4b256fb3b5bfb",
+      "explicit_delta": "public imports or old source comment only"
+    },
+    {
+      "receipt_version": 2,
+      "path": "BanditRLProof/OnlineGradientDescent.lean",
+      "original_sha256": "e7edba540c2f60032bb4a34aaf0768b3107b94276b67b6f41fc289009c8924c1",
+      "preserved_original": "runs\\online-ogd-migration-20261005\\leaves\\pre-integration-BanditRLProof--OnlineGradientDescent.lean.txt",
+      "current_sha256": "9300cb2735da9f125e404f78b86509df47fe65a5f4d89abc469e071bdffdb871",
+      "explicit_delta": "public imports or old source comment only"
+    },
+    {
+      "receipt_version": 2,
+      "path": "Tests.lean",
+      "original_sha256": "da5f0b84ea0ff79ed17f276ee8283ae7222b82b7771a3f75fdb49b8a92c8aeb5",
+      "preserved_original": "runs\\online-ogd-migration-20261005\\leaves\\pre-integration-Tests.lean.txt",
+      "current_sha256": "693654a3126313f0e7db548ff08f6ee961e8b7656602fb56dc590a1cdbe0a825",
+      "explicit_delta": "public imports or old source comment only"
+    }
+  ],
+  "native_actual_public_fences_and_safe_guards": 12,
+  "old16_headers_and_all_code_tokens_unchanged": true,
+  "body_review": "pending",
+  "full_harness": "pending",
+  "graph": "pending",
+  "site": "pending",
+  "PR": "pending",
+  "chapter_complete": false,
+  "book_complete": false,
+  "goal_complete": false,
+  "main_updated": false,
+  "live_updated": false
+}
