@@ -15,7 +15,8 @@ current target branch and read:
 2. `CONTRIBUTING.md`
 3. `docs/contributor-codex-contract.md`
 4. `docs/theorem-publication-protocol.md`
-5. `.agents/skills/bandit-substantive-advance/SKILL.md`
+5. `docs/proof-digestion-protocol.md`
+6. `.agents/skills/bandit-substantive-advance/SKILL.md`
 6. `.agents/skills/bandit-semantic-roundtrip/SKILL.md`
 7. the relevant domain skill and exact source/route files.
 
@@ -68,7 +69,12 @@ fails closed.
 
 Lean compilation certifies a proposition, not that it is the theorem cited in a
 paper or book. For every source-facing theorem, follow
-`.agents/skills/bandit-semantic-roundtrip/SKILL.md`.
+`.agents/skills/bandit-semantic-roundtrip/SKILL.md` and
+`docs/proof-digestion-protocol.md`. Freeze the exact theorem interface before
+proof search; treat proof ingredients as edges rather than binders; reconstruct
+the source proof topology independently of Lean implementation topology; and
+run the purification gate after integration before calling the result fully
+digested for researchers.
 
 The formalizer, source-blind decoder, and anti-anchored source reviewer must be
 distinct actors. The reader must expose the source anchor, natural-language
