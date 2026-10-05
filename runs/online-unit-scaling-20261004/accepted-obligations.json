@@ -1,0 +1,449 @@
+{
+  "stage": "accepted-local",
+  "required": [
+    {
+      "name": "unit_exponents",
+      "state": "accepted-local",
+      "statement_hash": "ebd39e10bfa45cd813522503bfb123a0c399bcce96b06c23261d573d1032f7ed",
+      "dependencies": [],
+      "evidence": [
+        "public-actual-bindings.json",
+        "public-focused-01-exit.json",
+        "public-body-receipt-v1.json",
+        "final-reader-receipt.json",
+        "accepted-binding-audit.json"
+      ]
+    },
+    {
+      "name": "regret_unit_exponents",
+      "state": "accepted-local",
+      "statement_hash": "a2949be95480c94a8130326f2293d7f73c6e281a6ad4508a1d45a94c7ae16d70",
+      "dependencies": [],
+      "evidence": [
+        "public-actual-bindings.json",
+        "public-focused-01-exit.json",
+        "public-body-receipt-v1.json",
+        "final-reader-receipt.json",
+        "accepted-binding-audit.json"
+      ]
+    },
+    {
+      "name": "inverse_loss",
+      "state": "accepted-local",
+      "statement_hash": "261a4d7098d07b9faf6c78f4dc0dba4d0e8e25cc241c5ae58ef7a5a76f698bdd",
+      "dependencies": [
+        "scalar inverse identities"
+      ],
+      "evidence": [
+        "public-actual-bindings.json",
+        "public-focused-01-exit.json",
+        "public-body-receipt-v1.json",
+        "final-reader-receipt.json",
+        "accepted-binding-audit.json"
+      ]
+    },
+    {
+      "name": "proper_scaled_loss",
+      "state": "accepted-local",
+      "statement_hash": "fef13ad47631d35b40a396962d9bed059c66a1ddbd723b2b63aa8058fce12cf5",
+      "dependencies": [
+        "inverse scalar identities",
+        "SourceProper definition"
+      ],
+      "evidence": [
+        "public-actual-bindings.json",
+        "public-focused-01-exit.json",
+        "public-body-receipt-v1.json",
+        "final-reader-receipt.json",
+        "accepted-binding-audit.json"
+      ]
+    },
+    {
+      "name": "subgradient_scaled",
+      "state": "accepted-local",
+      "statement_hash": "d5f3d25c148103b097aecfe68ff3c293d63135762056fb056be923d98620c060",
+      "dependencies": [
+        "BanditRL.OnlineConvex.theorem_2_28",
+        "scalar adjoint identities"
+      ],
+      "evidence": [
+        "public-actual-bindings.json",
+        "public-focused-01-exit.json",
+        "public-body-receipt-v1.json",
+        "final-reader-receipt.json",
+        "accepted-binding-audit.json"
+      ]
+    },
+    {
+      "name": "subdifferentiable_scaled",
+      "state": "accepted-local",
+      "statement_hash": "7d4fdcb0150464d5e262a8572bd61eabfb92e0f58497442495641138794b0189",
+      "dependencies": [
+        "proper_scaled_loss",
+        "subgradient_scaled"
+      ],
+      "evidence": [
+        "public-actual-bindings.json",
+        "public-focused-01-exit.json",
+        "public-body-receipt-v1.json",
+        "final-reader-receipt.json",
+        "accepted-binding-audit.json"
+      ]
+    },
+    {
+      "name": "hasGradientAt_scaled",
+      "state": "accepted-local",
+      "statement_hash": "693b7b03ce2efdb9d495a9063b58cf025237c8171bf06a78eb770e9c8f6810f2",
+      "dependencies": [
+        "HasFDerivAt.comp",
+        "hasGradientAt_iff_hasFDerivAt",
+        "continuous scalar linear map"
+      ],
+      "evidence": [
+        "public-actual-bindings.json",
+        "public-focused-01-exit.json",
+        "public-body-receipt-v1.json",
+        "final-reader-receipt.json",
+        "accepted-binding-audit.json"
+      ]
+    },
+    {
+      "name": "gradient_scaled",
+      "state": "accepted-local",
+      "statement_hash": "413db8a5eecf6a6b4aadbe61926fa551ebed240a9d4f3010f584462420fb7ab1",
+      "dependencies": [
+        "hasGradientAt_scaled"
+      ],
+      "evidence": [
+        "public-actual-bindings.json",
+        "public-focused-01-exit.json",
+        "public-body-receipt-v1.json",
+        "final-reader-receipt.json",
+        "accepted-binding-audit.json"
+      ]
+    },
+    {
+      "name": "step_scaling",
+      "state": "accepted-local",
+      "statement_hash": "22623815fe6747895bfc31e54632ad183add9368085546bd5095f0d2b3314723",
+      "dependencies": [
+        "real field/module algebra"
+      ],
+      "evidence": [
+        "public-actual-bindings.json",
+        "public-focused-01-exit.json",
+        "public-body-receipt-v1.json",
+        "final-reader-receipt.json",
+        "accepted-binding-audit.json"
+      ]
+    },
+    {
+      "name": "wrong_step_scaling",
+      "state": "accepted-local",
+      "statement_hash": "8beaddd8f6a9896578a39df38e95eeef58536d5d7bcad54a8fb7f95778459c3f",
+      "dependencies": [
+        "real field/module algebra"
+      ],
+      "evidence": [
+        "public-actual-bindings.json",
+        "public-focused-01-exit.json",
+        "public-body-receipt-v1.json",
+        "final-reader-receipt.json",
+        "accepted-binding-audit.json"
+      ]
+    },
+    {
+      "name": "scaled_eta_positive",
+      "state": "accepted-local",
+      "statement_hash": "d9015c0ae8fe1a21936a48d06fd43d218f34c98d15cf5b40d27c634bcae3f76a",
+      "dependencies": [
+        "positive square denominator"
+      ],
+      "evidence": [
+        "public-actual-bindings.json",
+        "public-focused-01-exit.json",
+        "public-body-receipt-v1.json",
+        "final-reader-receipt.json",
+        "accepted-binding-audit.json"
+      ]
+    },
+    {
+      "name": "history_scaling",
+      "state": "accepted-local",
+      "statement_hash": "b9e0b6f2377bf4fa89f785cd803984c07d3681523f0b9a58f414fafc984c1d00",
+      "dependencies": [
+        "inverse_loss",
+        "step_scaling",
+        "BanditRL.OnlineSubgradientPolicy.history_succ",
+        "BanditRL.OnlineHuber.project_fullSpace"
+      ],
+      "evidence": [
+        "public-actual-bindings.json",
+        "public-focused-01-exit.json",
+        "public-body-receipt-v1.json",
+        "final-reader-receipt.json",
+        "accepted-binding-audit.json"
+      ]
+    },
+    {
+      "name": "output_scaling",
+      "state": "accepted-local",
+      "statement_hash": "b20d3555b3334e6a02a79509c635e46b44ef2bd30e21fa608aba72e1bf149d2e",
+      "dependencies": [
+        "history_scaling"
+      ],
+      "evidence": [
+        "public-actual-bindings.json",
+        "public-focused-01-exit.json",
+        "public-body-receipt-v1.json",
+        "final-reader-receipt.json",
+        "accepted-binding-audit.json"
+      ]
+    },
+    {
+      "name": "selected_scaling",
+      "state": "accepted-local",
+      "statement_hash": "bd3afbe3be581cedb69dfebb44337b19b2cc30674dfe8a1b60fab59ac4b395b8",
+      "dependencies": [
+        "history_scaling",
+        "inverse_loss"
+      ],
+      "evidence": [
+        "public-actual-bindings.json",
+        "public-focused-01-exit.json",
+        "public-body-receipt-v1.json",
+        "final-reader-receipt.json",
+        "accepted-binding-audit.json"
+      ]
+    },
+    {
+      "name": "legal_feedback_scaling",
+      "state": "accepted-local",
+      "statement_hash": "8b165e4db484e4c08b8a6bcc572adc69e76469ecbb004914740f15f3288dc049",
+      "dependencies": [
+        "output_scaling",
+        "selected_scaling",
+        "subgradient_scaled"
+      ],
+      "evidence": [
+        "public-actual-bindings.json",
+        "public-focused-01-exit.json",
+        "public-body-receipt-v1.json",
+        "final-reader-receipt.json",
+        "accepted-binding-audit.json"
+      ]
+    },
+    {
+      "name": "loss_value_scaling",
+      "state": "accepted-local",
+      "statement_hash": "b71633725c3b8d9125f8ad6004c7aa63729eaf65da9fddbbeb250bd1db9eaf9f",
+      "dependencies": [
+        "output_scaling"
+      ],
+      "evidence": [
+        "public-actual-bindings.json",
+        "public-focused-01-exit.json",
+        "public-body-receipt-v1.json",
+        "final-reader-receipt.json",
+        "accepted-binding-audit.json"
+      ]
+    },
+    {
+      "name": "regret_scaling",
+      "state": "accepted-local",
+      "statement_hash": "3bbbdc5e16b52f6b49d65965993b02f9109b2d53fb3a881d4337fc7d04c310ff",
+      "dependencies": [
+        "loss_value_scaling",
+        "scalar inverse identities"
+      ],
+      "evidence": [
+        "public-actual-bindings.json",
+        "public-focused-01-exit.json",
+        "public-body-receipt-v1.json",
+        "final-reader-receipt.json",
+        "accepted-binding-audit.json"
+      ]
+    },
+    {
+      "name": "wrong_step_output",
+      "state": "accepted-local",
+      "statement_hash": "72c808560de132931acb487689e75dfcc44cd625755a7004b4b5073271b4b9f4",
+      "dependencies": [
+        "output_scaling",
+        "schedule scalar cancellation"
+      ],
+      "evidence": [
+        "public-actual-bindings.json",
+        "public-focused-01-exit.json",
+        "public-body-receipt-v1.json",
+        "final-reader-receipt.json",
+        "accepted-binding-audit.json"
+      ]
+    },
+    {
+      "name": "distance_square_scaling",
+      "state": "accepted-local",
+      "statement_hash": "f5e3982906943fb4c3b5461a87cb6ebb5ad820502f9a0e2094c7f90d4594b220",
+      "dependencies": [
+        "norm_smul",
+        "positive coordinate inverse"
+      ],
+      "evidence": [
+        "public-actual-bindings.json",
+        "public-focused-01-exit.json",
+        "public-body-receipt-v1.json",
+        "final-reader-receipt.json",
+        "accepted-binding-audit.json"
+      ]
+    },
+    {
+      "name": "energy_scaling",
+      "state": "accepted-local",
+      "statement_hash": "189caf79021b3630d984011b2648cfff6185f3d51627990dd4929b521fa24756",
+      "dependencies": [
+        "selected_scaling",
+        "norm_smul"
+      ],
+      "evidence": [
+        "public-actual-bindings.json",
+        "public-focused-01-exit.json",
+        "public-body-receipt-v1.json",
+        "final-reader-receipt.json",
+        "accepted-binding-audit.json"
+      ]
+    },
+    {
+      "name": "upper_bound_scaling",
+      "state": "accepted-local",
+      "statement_hash": "26858ef4cff3497ef5c9b130d3c6f8484b5ae4a960101e19be109b8c9e8caeb4",
+      "dependencies": [
+        "BanditRL.OnlineOptimalStep.upperBound",
+        "real field algebra"
+      ],
+      "evidence": [
+        "public-actual-bindings.json",
+        "public-focused-01-exit.json",
+        "public-body-receipt-v1.json",
+        "final-reader-receipt.json",
+        "accepted-binding-audit.json"
+      ]
+    },
+    {
+      "name": "regret_fixed_scaled",
+      "state": "accepted-local",
+      "statement_hash": "e183a80660e5d151f317ed0ade141335007e700f1464090d6c089bbdc2d61e81",
+      "dependencies": [
+        "regret_scaling",
+        "BanditRL.OnlineSubgradientPolicy.regret_fixed"
+      ],
+      "evidence": [
+        "public-actual-bindings.json",
+        "public-focused-01-exit.json",
+        "public-body-receipt-v1.json",
+        "final-reader-receipt.json",
+        "accepted-binding-audit.json"
+      ]
+    }
+  ],
+  "terminal": [
+    "unit_exponents",
+    "regret_unit_exponents",
+    "history_scaling",
+    "wrong_step_output",
+    "regret_scaling",
+    "upper_bound_scaling",
+    "regret_fixed_scaled"
+  ],
+  "dependency_graph": {
+    "unit_exponents": [],
+    "regret_unit_exponents": [],
+    "inverse_loss": [
+      "scalar inverse identities"
+    ],
+    "proper_scaled_loss": [
+      "inverse scalar identities",
+      "SourceProper definition"
+    ],
+    "subgradient_scaled": [
+      "BanditRL.OnlineConvex.theorem_2_28",
+      "scalar adjoint identities"
+    ],
+    "subdifferentiable_scaled": [
+      "proper_scaled_loss",
+      "subgradient_scaled"
+    ],
+    "hasGradientAt_scaled": [
+      "HasFDerivAt.comp",
+      "hasGradientAt_iff_hasFDerivAt",
+      "continuous scalar linear map"
+    ],
+    "gradient_scaled": [
+      "hasGradientAt_scaled"
+    ],
+    "step_scaling": [
+      "real field/module algebra"
+    ],
+    "wrong_step_scaling": [
+      "real field/module algebra"
+    ],
+    "scaled_eta_positive": [
+      "positive square denominator"
+    ],
+    "history_scaling": [
+      "inverse_loss",
+      "step_scaling",
+      "BanditRL.OnlineSubgradientPolicy.history_succ",
+      "BanditRL.OnlineHuber.project_fullSpace"
+    ],
+    "output_scaling": [
+      "history_scaling"
+    ],
+    "selected_scaling": [
+      "history_scaling",
+      "inverse_loss"
+    ],
+    "legal_feedback_scaling": [
+      "output_scaling",
+      "selected_scaling",
+      "subgradient_scaled"
+    ],
+    "loss_value_scaling": [
+      "output_scaling"
+    ],
+    "regret_scaling": [
+      "loss_value_scaling",
+      "scalar inverse identities"
+    ],
+    "wrong_step_output": [
+      "output_scaling",
+      "schedule scalar cancellation"
+    ],
+    "distance_square_scaling": [
+      "norm_smul",
+      "positive coordinate inverse"
+    ],
+    "energy_scaling": [
+      "selected_scaling",
+      "norm_smul"
+    ],
+    "upper_bound_scaling": [
+      "BanditRL.OnlineOptimalStep.upperBound",
+      "real field algebra"
+    ],
+    "regret_fixed_scaled": [
+      "regret_scaling",
+      "BanditRL.OnlineSubgradientPolicy.regret_fixed"
+    ]
+  },
+  "remaining_gates": [
+    "stacked draft PR delivery"
+  ],
+  "chapter_complete": false,
+  "book_complete": false,
+  "first_dependency_ready_leaf": "unit_exponents; proof starts only after source-contract acceptance",
+  "public_proofs": 22,
+  "canary_theorems": 30,
+  "actual_axiom_names": 62,
+  "package_accepted": true,
+  "chapter_accepted": false
+}

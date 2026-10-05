@@ -1,0 +1,45 @@
+hasGradientAt_iff_hasFDerivAt.{u_1, u_2} {𝕜 : Type u_1} {F : Type u_2} [RCLike 𝕜] [NormedAddCommGroup F]
+  [InnerProductSpace 𝕜 F] [CompleteSpace F] {f : F → 𝕜} {f' x : F} :
+  HasGradientAt f f' x ↔ HasFDerivAt f ((InnerProductSpace.toDual 𝕜 F) f') x
+HasGradientAt.hasFDerivAt.{u_1, u_2} {𝕜 : Type u_1} {F : Type u_2} [RCLike 𝕜] [NormedAddCommGroup F]
+  [InnerProductSpace 𝕜 F] [CompleteSpace F] {f : F → 𝕜} {f' x : F} :
+  HasGradientAt f f' x → HasFDerivAt f ((InnerProductSpace.toDual 𝕜 F) f') x
+HasFDerivAt.comp.{u_1, u_2, u_3, u_4} {𝕜 : Type u_1} [NontriviallyNormedField 𝕜] {E : Type u_2} [NormedAddCommGroup E]
+  [NormedSpace 𝕜 E] {F : Type u_3} [NormedAddCommGroup F] [NormedSpace 𝕜 F] {G : Type u_4} [NormedAddCommGroup G]
+  [NormedSpace 𝕜 G] {f : E → F} {f' : E →L[𝕜] F} (x : E) {g : F → G} {g' : F →L[𝕜] G} (hg : HasFDerivAt g g' (f x))
+  (hf : HasFDerivAt f f' x) : HasFDerivAt (g ∘ f) (g'.comp f') x
+ContinuousLinearMap.hasFDerivAt.{u_1, u_2, u_3} {𝕜 : Type u_1} [NontriviallyNormedField 𝕜] {E : Type u_2}
+  [AddCommGroup E] [Module 𝕜 E] [TopologicalSpace E] {F : Type u_3} [AddCommGroup F] [Module 𝕜 F] [TopologicalSpace F]
+  (f : E →L[𝕜] F) {x : E} : HasFDerivAt (⇑f) f x
+MulActionSemiHomClass.map_smulₛₗ.{u_8, u_9, u_10, u_11, u_12} {F : Type u_8} {M : outParam (Type u_9)}
+  {N : outParam (Type u_10)} {φ : outParam (M → N)} {X : outParam (Type u_11)} {Y : outParam (Type u_12)}
+  {inst✝ : SMul M X} {inst✝¹ : SMul N Y} {inst✝² : FunLike F X Y} [self : MulActionSemiHomClass F φ X Y] (f : F) (c : M)
+  (x : X) : f (c • x) = φ c • f x
+ContinuousLinearMap.adjoint_id.{u_1, u_2} {𝕜 : Type u_1} {E : Type u_2} [RCLike 𝕜] [NormedAddCommGroup E]
+  [InnerProductSpace 𝕜 E] [CompleteSpace E] :
+  ContinuousLinearMap.adjoint (ContinuousLinearMap.id 𝕜 E) = ContinuousLinearMap.id 𝕜 E
+BanditRL.OnlineConvex.theorem_2_28.{u_1, u_2} {E : Type u_1} {F : Type u_2} [NormedAddCommGroup E]
+  [InnerProductSpace ℝ E] [NormedAddCommGroup F] [InnerProductSpace ℝ F] [FiniteDimensional ℝ E] [FiniteDimensional ℝ F]
+  (f : F → EReal) (hp : SourceProper f) (A : E →L[ℝ] F) (b : F) (x : E) :
+  ⇑(ContinuousLinearMap.adjoint A) '' SourceSubdifferential f (A x + b) ⊆ SourceSubdifferential (fun y => f (A y + b)) x
+inv_smul_smul₀.{u_4, u_5} {α : Type u_4} {β : Type u_5} [GroupWithZero α] [MulAction α β] {a : α} (ha : a ≠ 0) (x : β) :
+  a⁻¹ • a • x = x
+smul_inv_smul₀.{u_4, u_5} {α : Type u_4} {β : Type u_5} [GroupWithZero α] [MulAction α β] {a : α} (ha : a ≠ 0) (x : β) :
+  a • a⁻¹ • x = x
+real_inner_smul_left.{u_3} {F : Type u_3} [SeminormedAddCommGroup F] [InnerProductSpace ℝ F] (x y : F) (r : ℝ) :
+  ⟪r • x, y⟫_ℝ = r * ⟪x, y⟫_ℝ
+real_inner_smul_right.{u_3} {F : Type u_3} [SeminormedAddCommGroup F] [InnerProductSpace ℝ F] (x y : F) (r : ℝ) :
+  ⟪x, r • y⟫_ℝ = r * ⟪x, y⟫_ℝ
+norm_smul.{u_1, u_2} {α : Type u_1} {β : Type u_2} [Norm α] [Norm β] [SMul α β] [NormSMulClass α β] (r : α) (x : β) :
+  ‖r • x‖ = ‖r‖ * ‖x‖
+Fin.lastCases.{u_1} {n : ℕ} {motive : Fin (n + 1) → Sort u_1} (last : motive (Fin.last n))
+  (cast : (i : Fin n) → motive i.castSucc) (i : Fin (n + 1)) : motive i
+BanditRL.OnlineSubgradientPolicy.regret_fixed.{u_1} {E : Type u_1} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+  [FiniteDimensional ℝ E] (V : Domain) (η : ℝ) (hη : 0 < η) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy)
+  (hx₁ : x₁ ∈ V.carrier) (T : ℕ) (hloss : ∀ t < T, OnlineSubgradientDescent.SubdifferentiableOn V (loss t))
+  (hlegal : LegalFeedback V (fun x => η) loss x₁ p T) (u : E) (hu : u ∈ V.carrier) :
+  regret V (fun x => η) loss x₁ p u T ≤
+    ‖x₁ - u‖ ^ 2 / (2 * η) + η / 2 * ∑ t ∈ Finset.range T, ‖selected V (fun x => η) loss x₁ p t‖ ^ 2 -
+      ‖output V (fun x => η) loss x₁ p T - u‖ ^ 2 / (2 * η)
+BanditRL.OnlineHuber.project_fullSpace.{u_1} {E : Type u_1} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+  [CompleteSpace E] (x : E) : OnlineGradientDescent.project OnlineHuber.fullSpace x = x

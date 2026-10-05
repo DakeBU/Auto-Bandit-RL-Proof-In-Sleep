@@ -1,0 +1,177 @@
+∀ {D : Type u_2} [inst : AddCommGroup D] (X L H : D), H + (L - X) = X → H = X + X - L : Prop
+runs/online-unit-scaling-20261004/leaves/types-v1.lean:21:52: warning: unused variable `h`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ {D : Type u_2} [inst : AddCommGroup D] (X L : D), X + X - (X + X - L) = L ∧ X + X - L + (L - X) + (L - X) = L : Prop
+∀ (c : ℝ), 0 < c → ∀ (f : E → EReal), scaledLoss c⁻¹ (scaledLoss c f) = f : Prop
+runs/online-unit-scaling-20261004/leaves/types-v1.lean:25:19: warning: unused variable `hc`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (c : ℝ), 0 < c → ∀ (f : E → EReal), SourceProper f → SourceProper (scaledLoss c f) : Prop
+runs/online-unit-scaling-20261004/leaves/types-v1.lean:27:19: warning: unused variable `hc`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-unit-scaling-20261004/leaves/types-v1.lean:27:48: warning: unused variable `hf`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (c : ℝ),
+  0 < c →
+    ∀ (f : E → EReal),
+      SourceProper f →
+        ∀ (y g : E), g ∈ SourceSubdifferential f (c • y) → c • g ∈ SourceSubdifferential (scaledLoss c f) y : Prop
+runs/online-unit-scaling-20261004/leaves/types-v1.lean:29:19: warning: unused variable `hc`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-unit-scaling-20261004/leaves/types-v1.lean:29:48: warning: unused variable `hf`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-unit-scaling-20261004/leaves/types-v1.lean:29:80: warning: unused variable `hg`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (c : ℝ),
+  0 < c →
+    ∀ (f : E → EReal),
+      OnlineSubgradientDescent.SubdifferentiableOn V f →
+        OnlineSubgradientDescent.SubdifferentiableOn V (scaledLoss c f) : Prop
+runs/online-unit-scaling-20261004/leaves/types-v1.lean:31:19: warning: unused variable `hc`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-unit-scaling-20261004/leaves/types-v1.lean:31:48: warning: unused variable `hf`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (c : ℝ) (f : E → ℝ) (y g : E), HasGradientAt f g (c • y) → HasGradientAt (fun z => f (c • z)) (c • g) y : Prop
+runs/online-unit-scaling-20261004/leaves/types-v1.lean:33:41: warning: unused variable `hf`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (c : ℝ) (f : E → ℝ) (y : E),
+  DifferentiableAt ℝ f (c • y) → gradient (fun z => f (c • z)) y = c • gradient f (c • y) : Prop
+runs/online-unit-scaling-20261004/leaves/types-v1.lean:35:39: warning: unused variable `hf`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (c : ℝ), 0 < c → ∀ (η : ℝ) (x g : E), c⁻¹ • (x - η • g) = c⁻¹ • x - (η / c ^ 2) • c • g : Prop
+runs/online-unit-scaling-20261004/leaves/types-v1.lean:37:19: warning: unused variable `hc`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (c : ℝ), 0 < c → ∀ (η : ℝ) (x g : E), c • (c⁻¹ • x - η • c • g) = x - (c ^ 2 * η) • g : Prop
+runs/online-unit-scaling-20261004/leaves/types-v1.lean:39:19: warning: unused variable `hc`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (c : ℝ), 0 < c → ∀ (η : ℕ → ℝ) (t : ℕ), 0 < η t → 0 < scaledEta c η t : Prop
+runs/online-unit-scaling-20261004/leaves/types-v1.lean:41:19: warning: unused variable `hc`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-unit-scaling-20261004/leaves/types-v1.lean:41:52: warning: unused variable `hη`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (c : ℝ),
+  0 < c →
+    ∀ (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy) (t : ℕ),
+      history V (scaledEta c η) (fun s => scaledLoss c (loss s)) (c⁻¹ • x₁) (scaledPolicy c p) t = fun i =>
+        c⁻¹ • history V η loss x₁ p t i : Prop
+runs/online-unit-scaling-20261004/leaves/types-v1.lean:43:19: warning: unused variable `hc`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (c : ℝ),
+  0 < c →
+    ∀ (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy) (t : ℕ),
+      output V (scaledEta c η) (fun s => scaledLoss c (loss s)) (c⁻¹ • x₁) (scaledPolicy c p) t =
+        c⁻¹ • output V η loss x₁ p t : Prop
+runs/online-unit-scaling-20261004/leaves/types-v1.lean:45:19: warning: unused variable `hc`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (c : ℝ),
+  0 < c →
+    ∀ (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy) (t : ℕ),
+      selected V (scaledEta c η) (fun s => scaledLoss c (loss s)) (c⁻¹ • x₁) (scaledPolicy c p) t =
+        c • selected V η loss x₁ p t : Prop
+runs/online-unit-scaling-20261004/leaves/types-v1.lean:47:19: warning: unused variable `hc`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (c : ℝ),
+  0 < c →
+    ∀ (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy) (T : ℕ),
+      (∀ t < T, SourceProper (loss t)) →
+        LegalFeedback V η loss x₁ p T →
+          LegalFeedback V (scaledEta c η) (fun s => scaledLoss c (loss s)) (c⁻¹ • x₁) (scaledPolicy c p) T : Prop
+runs/online-unit-scaling-20261004/leaves/types-v1.lean:49:19: warning: unused variable `hc`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-unit-scaling-20261004/leaves/types-v1.lean:49:113: warning: unused variable `hproper`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-unit-scaling-20261004/leaves/types-v1.lean:49:156: warning: unused variable `hlegal`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (c : ℝ),
+  0 < c →
+    ∀ (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy) (t : ℕ),
+      scaledLoss c (loss t)
+          (output V (scaledEta c η) (fun s => scaledLoss c (loss s)) (c⁻¹ • x₁) (scaledPolicy c p) t) =
+        loss t (output V η loss x₁ p t) : Prop
+runs/online-unit-scaling-20261004/leaves/types-v1.lean:51:19: warning: unused variable `hc`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (c : ℝ),
+  0 < c →
+    ∀ (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy) (u : E) (T : ℕ),
+      regret V (scaledEta c η) (fun s => scaledLoss c (loss s)) (c⁻¹ • x₁) (scaledPolicy c p) (c⁻¹ • u) T =
+        regret V η loss x₁ p u T : Prop
+runs/online-unit-scaling-20261004/leaves/types-v1.lean:53:19: warning: unused variable `hc`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (c : ℝ),
+  0 < c →
+    ∀ (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy) (t : ℕ),
+      c • output V η (fun s => scaledLoss c (loss s)) (c⁻¹ • x₁) (scaledPolicy c p) t =
+        output V (fun s => c ^ 2 * η s) loss x₁ p t : Prop
+runs/online-unit-scaling-20261004/leaves/types-v1.lean:55:19: warning: unused variable `hc`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (c : ℝ), 0 < c → ∀ (x u : E), ‖c⁻¹ • x - c⁻¹ • u‖ ^ 2 = ‖x - u‖ ^ 2 / c ^ 2 : Prop
+runs/online-unit-scaling-20261004/leaves/types-v1.lean:57:19: warning: unused variable `hc`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (c : ℝ),
+  0 < c →
+    ∀ (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy) (T : ℕ),
+      ∑ t ∈ Finset.range T,
+          ‖selected V (scaledEta c η) (fun s => scaledLoss c (loss s)) (c⁻¹ • x₁) (scaledPolicy c p) t‖ ^ 2 =
+        c ^ 2 * ∑ t ∈ Finset.range T, ‖selected V η loss x₁ p t‖ ^ 2 : Prop
+runs/online-unit-scaling-20261004/leaves/types-v1.lean:59:19: warning: unused variable `hc`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (c : ℝ),
+  0 < c →
+    ∀ (A B η : ℝ),
+      0 < η →
+        OnlineOptimalStep.upperBound (A / c ^ 2) (c ^ 2 * B) (η / c ^ 2) = OnlineOptimalStep.upperBound A B η : Prop
+runs/online-unit-scaling-20261004/leaves/types-v1.lean:61:19: warning: unused variable `hc`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-unit-scaling-20261004/leaves/types-v1.lean:61:44: warning: unused variable `hη`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (c : ℝ),
+  0 < c →
+    ∀ (η : ℝ),
+      0 < η →
+        ∀ (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy) (T : ℕ),
+          (∀ t < T, OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) →
+            LegalFeedback V (fun x => η) loss x₁ p T →
+              ∀ (u : E),
+                regret V (scaledEta c fun x => η) (fun s => scaledLoss c (loss s)) (c⁻¹ • x₁) (scaledPolicy c p)
+                    (c⁻¹ • u) T ≤
+                  ‖x₁ - u‖ ^ 2 / (2 * η) + η / 2 * ∑ t ∈ Finset.range T, ‖selected V (fun x => η) loss x₁ p t‖ ^ 2 -
+                    ‖output V (fun x => η) loss x₁ p T - u‖ ^ 2 / (2 * η) : Prop
+runs/online-unit-scaling-20261004/leaves/types-v1.lean:63:19: warning: unused variable `hc`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-unit-scaling-20261004/leaves/types-v1.lean:63:40: warning: unused variable `hη`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-unit-scaling-20261004/leaves/types-v1.lean:63:122: warning: unused variable `hloss`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-unit-scaling-20261004/leaves/types-v1.lean:63:206: warning: unused variable `hlegal`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`

@@ -1,0 +1,71 @@
+runs/online-unit-scaling-20261004/leaves/body-05.lean:32:0: warning: automatically included section variable(s) unused in theorem `BanditRL.OnlineUnitScaling.inverse_loss`:
+  [FiniteDimensional ℝ E]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ E] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+runs/online-unit-scaling-20261004/leaves/body-05.lean:37:0: warning: automatically included section variable(s) unused in theorem `BanditRL.OnlineUnitScaling.proper_scaled_loss`:
+  [FiniteDimensional ℝ E]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ E] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+runs/online-unit-scaling-20261004/leaves/body-05.lean:46:36: warning: unused variable `hc`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+runs/online-unit-scaling-20261004/leaves/body-05.lean:90:0: warning: automatically included section variable(s) unused in theorem `BanditRL.OnlineUnitScaling.step_scaling`:
+  [FiniteDimensional ℝ E]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ E] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+runs/online-unit-scaling-20261004/leaves/body-05.lean:94:8: warning: 'ring' tactic does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+runs/online-unit-scaling-20261004/leaves/body-05.lean:94:8: warning: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+runs/online-unit-scaling-20261004/leaves/body-05.lean:97:0: warning: automatically included section variable(s) unused in theorem `BanditRL.OnlineUnitScaling.wrong_step_scaling`:
+  [FiniteDimensional ℝ E]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ E] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+runs/online-unit-scaling-20261004/leaves/body-05.lean:150:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  scaledLoss c (?loss ?t)
+    (output V (scaledEta c ?η) (fun s => scaledLoss c (?loss s)) (c⁻¹ • ?x₁) (scaledPolicy c ?p) ?t)
+in the target expression
+  ((fun s => scaledLoss c (loss s)) t
+          (output V (scaledEta c η) (fun s => scaledLoss c (loss s)) (c⁻¹ • x₁) (scaledPolicy c p) t)).toReal -
+      ((fun s => scaledLoss c (loss s)) t (c⁻¹ • u)).toReal =
+    (loss t (output V η loss x₁ p t)).toReal - (loss t u).toReal
+
+E : Type u_1
+inst✝² : NormedAddCommGroup E
+inst✝¹ : InnerProductSpace ℝ E
+inst✝ : FiniteDimensional ℝ E
+c : ℝ
+hc : 0 < c
+η : ℕ → ℝ
+loss : ℕ → E → EReal
+x₁ : E
+p : SupportPolicy
+u : E
+T t : ℕ
+ht : t ∈ Finset.range T
+⊢ ((fun s => scaledLoss c (loss s)) t
+          (output V (scaledEta c η) (fun s => scaledLoss c (loss s)) (c⁻¹ • x₁) (scaledPolicy c p) t)).toReal -
+      ((fun s => scaledLoss c (loss s)) t (c⁻¹ • u)).toReal =
+    (loss t (output V η loss x₁ p t)).toReal - (loss t u).toReal
+runs/online-unit-scaling-20261004/leaves/body-05.lean:163:0: warning: automatically included section variable(s) unused in theorem `BanditRL.OnlineUnitScaling.distance_square_scaling`:
+  [FiniteDimensional ℝ E]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ E] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+runs/online-unit-scaling-20261004/leaves/body-05.lean:179:6: warning: 'ring' tactic does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+runs/online-unit-scaling-20261004/leaves/body-05.lean:179:6: warning: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`

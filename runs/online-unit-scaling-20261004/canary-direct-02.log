@@ -1,0 +1,15 @@
+Tests/OnlineUnitScalingCanary.lean:39:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  gradient (fun z => z) (1000 • x)
+in the target expression
+  gradient (fun z => 1000 * z) x = 1000 * gradient (fun z => z) (1000 * x)
+
+x : ℝ
+hg : gradient (fun z => 1000 * z) x = 1000 * gradient (fun z => z) (1000 * x)
+hid : gradient (fun z => z) (1000 • x) = 1
+⊢ gradient (fun z => 1000 * z) x = 1000
+Tests/OnlineUnitScalingCanary.lean:43:2: error: Type mismatch: After simplification, term
+  affine_subdifferential 1 0 x
+ has type
+  SourceSubdifferential (fun y => ↑⟪1, y⟫_ℝ) x = {1}
+but is expected to have type
+  SourceSubdifferential (loss t) x = {1}

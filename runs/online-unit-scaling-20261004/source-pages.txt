@@ -1,0 +1,128 @@
+PDF33 / printed21
+2.2 Online Subgradient Descent21
+with units. Finally, while probabilities are unitless, the probability density function has the
+units of inverse of the random variable it represents, because it represents the probability per
+unit of the variable it is defined over.
+The importance of this check cannot be overstated. When we see an equation where the
+units do not match, either it is plainly wrong, or there is a constant with units hidden some-
+where. Moreover, the dimensional analysis will immediately tell us the dependence of a
+quantity on the others. Let’s do a practical example considering OSD.
+Consider the OSD update in Algorithm 2.2, whereV=R d:x t+1 =x t −ηg t. For
+this equation to be coherent, the termηg t must have the same units asx t. Let’s see if this
+gives us some constraints on the units of the learning rateη. The units ofg t, from the
+definition of subgradient, are the units of the loss divided by the units of the variable we are
+subdifferentiating with respect to. So, we have
+[gt] = [ℓ]
+[x] .
+Now, from the consistency of the update rule, we must have[xt] = [ηgt] = [η][gt]. Hence,
+we can derive the units of the learning rate:
+[η] = [x]
+[gt] = [x]
+[ℓ]/[x] = [x]2
+[ℓ] .
+This shows thatthe learning rate is not a unitless quantity. So, even without deriving the
+regret guarantee, from the unit analysis, we immediately know that the learning rate must
+depend on the problem characteristics in a certain way.
+Finally, let’s perform a sanity check on the regret bound for OSD with a constant learning
+rate (that is, the one in Theorem 2.13):
+TX
+t=1
+(ℓt(xt)−ℓ t(u))≤ ∥u−x 1∥2
+2
+2η + η
+2
+TX
+t=1
+∥gt∥2
+2 .
+The left-hand side is a sum of losses, so its unit is[ℓ]. Let’s check the two terms on the
+right-hand side, to verify that they also have the unit of[ℓ]. For the first term, we have
+∥u−x 1∥2
+2
+η
+
+= [x]2
+[η] = [x]2
+[x]2/[ℓ] = [ℓ].
+For the second term, we have
+"
+η
+TX
+t=1
+∥gt∥2
+2
+#
+= [η][gt]2 = [x]2
+[ℓ]
+[ℓ]2
+[x]2 = [ℓ].
+Let me stress that having a formula with wrong units is not only a theoretical issue, but
+a very practical one. Indeed, constants with hidden units in any algorithm can be prob-
+lematic. Let’s show it with an example. For example, suppose our variablex t represents a
+location in meters, and we use a learning rate schedule such asη= 1/
+√
+T. Now, suppose
+we change our unit of measurement forx t from meters to kilometers. Our new variable is
+x′
+t =x t/1000. Since this is merely a change of units, the underlying learning problem is
+identical, and we should expect the algorithm’s behavior to be invariant. However, the gradi-
+ent with respect to the new variable isg ′
+t =∇ x′ℓt(1000x′
+t) = 1000∇xℓt(xt) = 1000gt.
+
+PDF34 / printed22
+22Online Subgradient Descent
+If we still use the dimensionless learning rateη= 1/
+√
+T, the update in the new coordinate
+system becomesx ′
+t+1 =x ′
+t −ηg ′
+t =x t/1000−(1/
+√
+T)(1000g t). Converting back to
+meters by multiplying by 1000, we getxt+1 =x t −(10002/
+√
+T)g t. The effective learning
+rate has been scaled by a factor of one million, which will drastically change the algorithm’s
+path, all because of a simple change in units.
+This failure occurs because of the constant with hidden units in the learning rate, which
+hides the fact that we should change the learning rate when we change the units ofx t. In
+fact, the correct learning rateηhas units of[x] 2/[ℓ]and should have been scaled by a factor
+of(1/1000) 2 = 1/1000000when we switched the units ofx t from meters to kilometers.
+2.3 Linear Regret: From Convex Losses to Linear Losses
+Let’s take a deeper look at this step:
+ℓt(xt)−ℓ t(u)≤ ⟨gt,xt −u⟩,∀u∈ V.
+Summing over time, we have
+TX
+t=1
+(ℓt(xt)−ℓ t(u))≤
+TX
+t=1
+⟨gt,xt −u⟩,∀u∈ V.
+Now, define the linear (and convex) losses ˜ℓt(x) :=⟨g t,x⟩, so we have
+TX
+t=1
+(ℓt(xt)−ℓ t(u))≤
+TX
+t=1
+(˜ℓt(xt)− ˜ℓt(u)),∀u∈ V.
+This is more powerful than it seems: we upper-bounded the regret with respect to the convex
+lossesℓ t with a regret with respect to another sequence of linear losses. This is important
+because it implies that we can build online algorithms that deal only with linear losses, and
+through the reduction above, they can be seamlessly used as OCO algorithms! Note that this
+does not imply that this reduction is always optimal, as we saw in Example 2.14. But, it
+allows us to easily construct optimal OCO algorithms in many interesting cases.
+So, we will often consider just the problem of minimizing thelinear regret
+TX
+t=1
+⟨gt,xt⟩ −
+TX
+t=1
+⟨gt,u⟩,∀u∈ V,
+for an arbitrary sequence of vectorsg1, . . . ,gT ∈R d. This problem is calledOnline Linear
+Optimization (OLO).
+2.4 History Bits
+Shor (1964) first introduced the subgradient descent method using a related concept of gen-
+eralized gradients for non-differentiable functions. The concept of subgradients and the pos-
+sibility of developing a calculus for them appeared for the first time in Rockafellar (1963).

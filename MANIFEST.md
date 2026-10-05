@@ -15419,3 +15419,4 @@ here during local harness runs.
 - `2026-10-04T08:23:05+00:00` `bandit.py new-task` `task` `tasks/ONLINE-OSD-POLICY-20261004.md` - Orabona Algorithm 2.2 arbitrary legal history-adaptive support policy
 - `2026-10-04T10:28:37+00:00` `bandit.py new-task` `task` `tasks/ONLINE-LINEARIZATION-20261004.md` - Orabona v10 Section 2.3 causal convex-to-linear regret reduction
 - `2026-10-04T12:04:01+00:00` `bandit.py new-task` `task` `tasks/ONLINE-OPTIMAL-STEP-20261004.md` - Orabona Chapter2 frozen-coefficient scalar stepsize argmin
+- `2026-10-04T13:25:59+00:00` `bandit.py new-task` `task` `tasks/ONLINE-UNIT-SCALING-20261004.md` - Orabona Chapter2 actual OSD coordinate and step-unit scaling

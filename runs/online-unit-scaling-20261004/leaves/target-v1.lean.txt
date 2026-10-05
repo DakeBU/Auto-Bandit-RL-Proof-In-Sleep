@@ -1,0 +1,87 @@
+import BanditRLProof.OnlineSubgradientPolicy
+import BanditRLProof.OnlineHuber
+import BanditRLProof.OnlineAffineSubgradient
+import BanditRLProof.OnlineOptimalStep
+import Mathlib.Analysis.Calculus.FDeriv.Linear
+import Mathlib.Tactic
+
+noncomputable section
+open Set Finset BanditRL.OnlineConvex BanditRL.OnlineSubgradientPolicy
+open scoped InnerProductSpace
+namespace BanditRL.OnlineUnitScaling
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
+
+abbrev V : Domain (E := E) := BanditRL.OnlineHuber.fullSpace
+def scaledLoss (c : ℝ) (f : E → EReal) : E → EReal := fun y => f (c • y)
+def scaledEta (c : ℝ) (η : ℕ → ℝ) : ℕ → ℝ := fun t => η t / c ^ 2
+def scaledPolicy (c : ℝ) (p : SupportPolicy (E := E)) : SupportPolicy (E := E) :=
+  fun t past h f => c • p t (fun i => scaledLoss c⁻¹ (past i))
+    (fun i => c • h i) (scaledLoss c⁻¹ f)
+
+theorem unit_exponents {D : Type*} [AddCommGroup D] (X L H : D) (h : H + (L - X) = X) :
+    H = X + X - L := by
+
+theorem regret_unit_exponents {D : Type*} [AddCommGroup D] (X L : D) :
+    (X + X - (X + X - L) = L) ∧ ((X + X - L) + (L - X) + (L - X) = L) := by
+
+theorem inverse_loss (c : ℝ) (hc : 0 < c) (f : E → EReal) :
+    scaledLoss c⁻¹ (scaledLoss c f) = f := by
+
+theorem proper_scaled_loss (c : ℝ) (hc : 0 < c) (f : E → EReal) (hf : SourceProper f) :
+    SourceProper (scaledLoss c f) := by
+
+theorem subgradient_scaled (c : ℝ) (hc : 0 < c) (f : E → EReal) (hf : SourceProper f) (y g : E) (hg : g ∈ SourceSubdifferential f (c • y)) :
+    c • g ∈ SourceSubdifferential (scaledLoss c f) y := by
+
+theorem subdifferentiable_scaled (c : ℝ) (hc : 0 < c) (f : E → EReal) (hf : BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V f) :
+    BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (scaledLoss c f) := by
+
+theorem hasGradientAt_scaled (c : ℝ) (f : E → ℝ) (y g : E) (hf : HasGradientAt f g (c • y)) :
+    HasGradientAt (fun z => f (c • z)) (c • g) y := by
+
+theorem gradient_scaled (c : ℝ) (f : E → ℝ) (y : E) (hf : DifferentiableAt ℝ f (c • y)) :
+    gradient (fun z => f (c • z)) y = c • gradient f (c • y) := by
+
+theorem step_scaling (c : ℝ) (hc : 0 < c) (η : ℝ) (x g : E) :
+    c⁻¹ • (x - η • g) = c⁻¹ • x - (η / c ^ 2) • (c • g) := by
+
+theorem wrong_step_scaling (c : ℝ) (hc : 0 < c) (η : ℝ) (x g : E) :
+    c • (c⁻¹ • x - η • (c • g)) = x - (c ^ 2 * η) • g := by
+
+theorem scaled_eta_positive (c : ℝ) (hc : 0 < c) (η : ℕ → ℝ) (t : ℕ) (hη : 0 < η t) :
+    0 < scaledEta c η t := by
+
+theorem history_scaling (c : ℝ) (hc : 0 < c) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) :
+    history V (scaledEta c η) (fun s => scaledLoss c (loss s)) (c⁻¹ • x₁) (scaledPolicy c p) t = fun i => c⁻¹ • history V η loss x₁ p t i := by
+
+theorem output_scaling (c : ℝ) (hc : 0 < c) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) :
+    output V (scaledEta c η) (fun s => scaledLoss c (loss s)) (c⁻¹ • x₁) (scaledPolicy c p) t = c⁻¹ • output V η loss x₁ p t := by
+
+theorem selected_scaling (c : ℝ) (hc : 0 < c) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) :
+    selected V (scaledEta c η) (fun s => scaledLoss c (loss s)) (c⁻¹ • x₁) (scaledPolicy c p) t = c • selected V η loss x₁ p t := by
+
+theorem legal_feedback_scaling (c : ℝ) (hc : 0 < c) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (T : ℕ) (hproper : ∀ t < T, SourceProper (loss t)) (hlegal : LegalFeedback V η loss x₁ p T) :
+    LegalFeedback V (scaledEta c η) (fun s => scaledLoss c (loss s)) (c⁻¹ • x₁) (scaledPolicy c p) T := by
+
+theorem loss_value_scaling (c : ℝ) (hc : 0 < c) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) :
+    scaledLoss c (loss t) (output V (scaledEta c η) (fun s => scaledLoss c (loss s)) (c⁻¹ • x₁) (scaledPolicy c p) t) = loss t (output V η loss x₁ p t) := by
+
+theorem regret_scaling (c : ℝ) (hc : 0 < c) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (u : E) (T : ℕ) :
+    regret V (scaledEta c η) (fun s => scaledLoss c (loss s)) (c⁻¹ • x₁) (scaledPolicy c p) (c⁻¹ • u) T = regret V η loss x₁ p u T := by
+
+theorem wrong_step_output (c : ℝ) (hc : 0 < c) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) :
+    c • output V η (fun s => scaledLoss c (loss s)) (c⁻¹ • x₁) (scaledPolicy c p) t = output V (fun s => c ^ 2 * η s) loss x₁ p t := by
+
+theorem distance_square_scaling (c : ℝ) (hc : 0 < c) (x u : E) :
+    ‖c⁻¹ • x - c⁻¹ • u‖ ^ 2 = ‖x - u‖ ^ 2 / c ^ 2 := by
+
+theorem energy_scaling (c : ℝ) (hc : 0 < c) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (T : ℕ) :
+    (∑ t ∈ range T, ‖selected V (scaledEta c η) (fun s => scaledLoss c (loss s)) (c⁻¹ • x₁) (scaledPolicy c p) t‖ ^ 2) = c ^ 2 * (∑ t ∈ range T, ‖selected V η loss x₁ p t‖ ^ 2) := by
+
+theorem upper_bound_scaling (c : ℝ) (hc : 0 < c) (A B η : ℝ) (hη : 0 < η) :
+    BanditRL.OnlineOptimalStep.upperBound (A / c ^ 2) (c ^ 2 * B) (η / c ^ 2) = BanditRL.OnlineOptimalStep.upperBound A B η := by
+
+theorem regret_fixed_scaled (c : ℝ) (hc : 0 < c) (η : ℝ) (hη : 0 < η) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (T : ℕ) (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) (hlegal : LegalFeedback V (fun _ => η) loss x₁ p T) (u : E) :
+    regret V (scaledEta c (fun _ => η)) (fun s => scaledLoss c (loss s)) (c⁻¹ • x₁) (scaledPolicy c p) (c⁻¹ • u) T ≤ ‖x₁ - u‖ ^ 2 / (2 * η) + η / 2 * (∑ t ∈ range T, ‖selected V (fun _ => η) loss x₁ p t‖ ^ 2) - ‖output V (fun _ => η) loss x₁ p T - u‖ ^ 2 / (2 * η) := by
+
+end BanditRL.OnlineUnitScaling
