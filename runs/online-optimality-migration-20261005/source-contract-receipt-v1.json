@@ -1,0 +1,410 @@
+{
+  "schema": "abrl.source-contract-review-receipt.v1",
+  "actor": {
+    "task": "/root/source_reviewer",
+    "role": "distinct automated source reviewer",
+    "requested_model": "GPT-6 Astra",
+    "requested_reasoning": "medium",
+    "runtime_model_attested": false,
+    "human_review": false,
+    "external_model_review": false
+  },
+  "verdict": "accepted-with-explicit-delta",
+  "scope": "four retained contracts only",
+  "target_verdicts": {
+    "BanditRL.OnlineConvex.minOn_real_iff_gradient": "accepted-with-explicit-delta",
+    "BanditRL.OnlineConvex.minOn_finitePart_iff": "accepted-with-explicit-delta",
+    "BanditRL.OnlineConvex.theorem_2_8": "accepted-with-explicit-delta",
+    "BanditRL.OnlineConvex.interior_min_iff_gradient_zero": "accepted-with-explicit-delta"
+  },
+  "mathematical_repairs": [],
+  "required_repairs": [],
+  "required_reader_corrections": [
+    "Label the real criterion and finite-order bridge as library helpers, Theorem 2.8 as the printed theorem, and interior_min_iff_gradient_zero as its mandatory following unnumbered source consequence; do not imply four printed theorems.",
+    "Replace generic real-helper notes with its exact everywhere-real ConvexOn V, x membership and ambient derivative at x assumptions; no open set or finite-part bridge is required.",
+    "Replace generic finite-bridge notes: only x membership and both-infinities exclusion on V are required; no convexity, open neighborhood or derivative premise.",
+    "Describe ConvexOn V as a weaker convexity requirement giving a stronger theorem, not a strengthening of the source premise or an equivalence of assumptions. Source convexity on a neighborhood implies this restriction; actual target does not require convex U.",
+    "Make canonical F, finiteness on arbitrary open U and local embedded equality explicit; no global noBottom/finite/convex F condition outside U. Preserve ambient-interior qualification for gradient-zero, membership separate from IsMinOn, and retained differentiability despite the total derivative fallback."
+  ],
+  "fixed_rows_verified": 89,
+  "raw_mismatches": [],
+  "reviewed_files": [
+    {
+      "path": "../research-online-ogd/tmp/pdfs/orabona-v10.pdf",
+      "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17"
+    },
+    {
+      "path": ".agents/skills/bandit-semantic-roundtrip/SKILL.md",
+      "sha256": "7ee7b72b8a84ab954966dc13900952c3439bd8d4e97877b622c1ca0a7aa85477"
+    },
+    {
+      "path": ".lake/packages/mathlib/Mathlib/Analysis/Calculus/Gradient/Basic.lean",
+      "sha256": "c7a80e952f6f577c441b92802fc5020fa63b564b75418fb96e29d4f6813020ca"
+    },
+    {
+      "path": ".lake/packages/mathlib/Mathlib/Analysis/Calculus/LocalExtr/Basic.lean",
+      "sha256": "ec09dfe037c654dc65051e22fd9e1d76055ef340089a631c304b700d0406109e"
+    },
+    {
+      "path": ".lake/packages/mathlib/Mathlib/Analysis/Convex/Deriv.lean",
+      "sha256": "2022754e5f0c541b8ca4271231c95713996d9f4ac1f997e3973ec9e6c7bec7c4"
+    },
+    {
+      "path": ".lake/packages/mathlib/Mathlib/Data/EReal/Basic.lean",
+      "sha256": "bf69a9ed4bc39134bbefac1a43b187e2f1e66fd43f352d0810ab89474f054922"
+    },
+    {
+      "path": ".lake/packages/mathlib/Mathlib/Order/Filter/Extr.lean",
+      "sha256": "02b73ed141a3bc3e38da7a237f369cbdf8aad80dfa155572cc13e588334a4679"
+    },
+    {
+      "path": "BanditRLProof/OnlineConvexExtended.lean",
+      "sha256": "bd30bb95a46ccdc3f6d25f808c175af5fee71d075c2b46ffcf6508f15f1ed66a"
+    },
+    {
+      "path": "BanditRLProof/OnlineConvexFirstOrder.lean",
+      "sha256": "f2fcaccf9273a9b2a37e820da9885fbebc7f0e2693e84d073c1e32949073eb6c"
+    },
+    {
+      "path": "BanditRLProof/OnlineConvexOptimality.lean",
+      "sha256": "d344a22aca81221f865f3af1ccef6bb2bf445ae6f2f7cf7e97bfe5f88805ac1b"
+    },
+    {
+      "path": "Tests/OnlineConvexFirstOrderCanary.lean",
+      "sha256": "031451c1602cdcb5bd79054c589f6b9c9045d43273b2b1540b77d7bef768af6c"
+    },
+    {
+      "path": "Tests/OnlineConvexOptimalityCanary.lean",
+      "sha256": "9b6f671e8a528cdfe51dc7db7dd6de9340ce6ec1af1d1866a93dcb5b32b00e3d"
+    },
+    {
+      "path": "conversion-windows/ONLINE-OPTIMALITY-MIGRATION-20261005.md",
+      "sha256": "4fa2f342b338e8aebe298c9d3caa747b798a3f19e6bffe31dfaec5a866d1f84d"
+    },
+    {
+      "path": "docs/contracts/online-optimality-migration-v1/context.lean.txt",
+      "sha256": "1a34342fc7afc4552b6657071b9d1ac4a77796b5fdf66e57c2817dc3e3f8adb6"
+    },
+    {
+      "path": "docs/contracts/online-optimality-migration-v1/interior_min_iff_gradient_zero-header.txt",
+      "sha256": "c8232f23a0343f7e95ee9c6aadd2edd1d230e8a21ad3b37eab4aa07bdbdd3a92"
+    },
+    {
+      "path": "docs/contracts/online-optimality-migration-v1/interior_min_iff_gradient_zero.json",
+      "sha256": "e0c3a75ee1fc6172c64a71e2ead5de767ddb17fc4c34249c86fc9dee07773d3c"
+    },
+    {
+      "path": "docs/contracts/online-optimality-migration-v1/minOn_finitePart_iff-header.txt",
+      "sha256": "57b9f05b4fc060e74b5c8ca80357a23adf5d6a11bd1086289f5a41e36566c485"
+    },
+    {
+      "path": "docs/contracts/online-optimality-migration-v1/minOn_finitePart_iff.json",
+      "sha256": "4564cae4edafeeb28c00a2fa6445ebbd1e7c25fedc00de4a29206c233157ff21"
+    },
+    {
+      "path": "docs/contracts/online-optimality-migration-v1/minOn_real_iff_gradient-header.txt",
+      "sha256": "04d48f3b50142e7b5934205f465ed4e1de5ad82c7f445de86e079c455ef3f635"
+    },
+    {
+      "path": "docs/contracts/online-optimality-migration-v1/minOn_real_iff_gradient.json",
+      "sha256": "10bf50f16b5a8a84681df9cb23970a269fc277d75f7752b3046f206888ced553"
+    },
+    {
+      "path": "docs/contracts/online-optimality-migration-v1/source-card.json",
+      "sha256": "d30da5aafd465a8d59e3fa122d335969bfd66f412729b5573db4736eb4851181"
+    },
+    {
+      "path": "docs/contracts/online-optimality-migration-v1/source-intent.md",
+      "sha256": "57e6af9274912f62f233bebf106f706c883713eb13d77e99e26ff9e33dd2a960"
+    },
+    {
+      "path": "docs/contracts/online-optimality-migration-v1/theorem_2_8-header.txt",
+      "sha256": "a645cdfc0f759f4d6acbde11c7a921a866633f9b1b4bb0890a6ae3ebe5c5cb35"
+    },
+    {
+      "path": "docs/contracts/online-optimality-migration-v1/theorem_2_8.json",
+      "sha256": "d773c935a5133cc6e01a48fe99fcb33da712180b7accb0f26b86bbb908382966"
+    },
+    {
+      "path": "docs/contracts/online-optimality-v1/context.json",
+      "sha256": "8d78d606eca8f126630da4cb2c7eea6899d16f0cdf57367df22c734eb95bb741"
+    },
+    {
+      "path": "docs/contracts/online-optimality-v1/contract.md",
+      "sha256": "3b7207dee5f5b4c3e3b52415feb3178db49506f5214de62a6e56870085bb7e4e"
+    },
+    {
+      "path": "docs/contracts/online-optimality-v1/headers.json",
+      "sha256": "98760c94f2d8a7b0aba28d62e2231c98b4869a66f504b5f461d203c9ad1287b4"
+    },
+    {
+      "path": "docs/contracts/online-optimality-v1/interior_min_iff_gradient_zero.json",
+      "sha256": "cc495aa4dbd7f321ca28f26b7eb559c5522dd01fb9af2bbacc4e859a48fe887c"
+    },
+    {
+      "path": "docs/contracts/online-optimality-v1/minOn_finitePart_iff.json",
+      "sha256": "a345b2d4abd508bcfff85ccc532891029fa6045b28d8bd51f6b92de9b6ba6c48"
+    },
+    {
+      "path": "docs/contracts/online-optimality-v1/minOn_real_iff_gradient.json",
+      "sha256": "6b21f0b535a07a413a3428c1f4f351924949a5e22b9954ab8a430d5d53d72f42"
+    },
+    {
+      "path": "docs/contracts/online-optimality-v1/theorem_2_8.json",
+      "sha256": "cccaab81f91388e53c1a2d1be8be56e6e52e1a48e726024e09a6c1fdc2214f7c"
+    },
+    {
+      "path": "lake-manifest.json",
+      "sha256": "87c3e616f86244550ef39e7415186b11c1d4cf4bef20173196a619d9d4d48f48"
+    },
+    {
+      "path": "lakefile.lean",
+      "sha256": "0164f3b5b5bdcbb237ab15ae8b44da83e183f4b97d5f3832aa4a57f27dc69d45"
+    },
+    {
+      "path": "lean-toolchain",
+      "sha256": "b15a57f8ea4c890197465ce1156667ae13d9ed4ab8a9f263a920bf010d967d82"
+    },
+    {
+      "path": "proof-obligations/ONLINE-OPTIMALITY-MIGRATION-20261005.md",
+      "sha256": "d7dab595a605b72218cd747334c49bf6826b67fd8c092c28f25289defed87fe2"
+    },
+    {
+      "path": "runs/online-first-order-migration-20261005/accepted-decision-v1.json",
+      "sha256": "2b5d59dbc78014ffc8c85e6fb333d9879cd833a0dba1223b46be59678abc4a8f"
+    },
+    {
+      "path": "runs/online-first-order-migration-20261005/native-acceptance-overlay-v1.json",
+      "sha256": "4c149fc45ec50d98c2190f51f5a7730e57d327c6d4900a37dda55329e591fb14"
+    },
+    {
+      "path": "runs/online-first-order-migration-20261005/pr-delivery-v1.json",
+      "sha256": "e5b057ceace37a4454366b4a2197dc481ce3fdf0b5f02755c79be51c0246acce"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/00_context.md",
+      "sha256": "0da664cbbdb379a67134afbe7d0134efa8c6036c5aed64da1e7fcd3c81110a09"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/10_upper_director-v1.md",
+      "sha256": "6edaf614e112f08a5dd285374ff009a745e616303b22516f73ec1cd05205cb03"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/20_architect-v1.md",
+      "sha256": "5df33984127a58a26ae5baef2b51ac075cc1a722b4aebf2330dddf494a0d08e5"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/actual-pinned-API-retrieval-v1-01-exit.json",
+      "sha256": "860965f1972aaa0e2b2cd06061b8c9b6450c8f09242ec86398bac24b38430e1a"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/actual-pinned-API-retrieval-v1-01.log",
+      "sha256": "f1721d711ddb6aaa952d260d6f88144b52dcf10284fdc5e46eac899c68f00f79"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/actual-public-types-v1-01-exit.json",
+      "sha256": "f4858add9c165f5ff0d19f84c28dcd83639c1407ed530e41b1e2e5bbabae9f47"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/actual-public-types-v1-01.log",
+      "sha256": "f70a4e2d4b4b548dafef9314097aa320a12d18c8748da47e60e59097824e7553"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/actual-scoped-graph-v1-01-exit.json",
+      "sha256": "238be44f13bfe5e92b064db8dae402835a4514dd266beaadca55e1a6abceffde"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/actual-scoped-graph-v1-01.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/blind-packet-v1.md",
+      "sha256": "4e1e1518278ede435073f62a8a238a3174119f653870b9ef07b02ef9532eb326"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/blind-receipt-v1.json",
+      "sha256": "4d1fa15ba5abec1749ffeb2f8d579899a512adc9c193a552b2badbe39a842f5d"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/blind-reconstruction-v1.md",
+      "sha256": "a70e98140df6d6c726027a7c1158b5d9e53ef43ee1f743fdb19b14876217f5aa"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/compiled-scoped-graph-v1.json",
+      "sha256": "258457366c2b0300d34ac3f2bf44b8b54658073b5bc2bac79172579a683827ea"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/contract-source-inputs-v1.json",
+      "sha256": "1e66a046cf03902392af7f030a86d23aa1ff0c5f5b023cafb15a6bf42ad96196"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/draft-fence-interior_min_iff_gradient_zero-v1-exit.json",
+      "sha256": "04bd5f982f5a8590927205a831452185712cf674c832933e5eb519c53f978da9"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/draft-fence-interior_min_iff_gradient_zero-v1.log",
+      "sha256": "410d0d0b7a229adc0cf71c1fdbe5450fcbe4a7b5180e2aafafe6d9138d3d569c"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/draft-fence-minOn_finitePart_iff-v1-exit.json",
+      "sha256": "6aabcd68f494acf5330f2c1b89249090f930c8c6ca0f9f773c377c20f6f52384"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/draft-fence-minOn_finitePart_iff-v1.log",
+      "sha256": "c4675971fd93d56f0104ce9fc4152b5b9cfc44642abfc64ec72cd08190697356"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/draft-fence-minOn_real_iff_gradient-v1-exit.json",
+      "sha256": "cab11ef44496bbf2c5972a7e665fccebf493a9bd17f464da2bb894e3b82768c2"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/draft-fence-minOn_real_iff_gradient-v1.log",
+      "sha256": "ba6ff48e7999244bfcb152da514acb687baedbf5fdfdc24843d69a765e9fc407"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/draft-fence-theorem_2_8-v1-exit.json",
+      "sha256": "0144ecb602655add073cadf5cd1b4d322a2d31fdc59a318bb895306b78679a45"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/draft-fence-theorem_2_8-v1.log",
+      "sha256": "50f19f116f024d75ffb15a1930ae71ecb2e925d0119a59eb7093bb5a95b61e52"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/draft-freeze-v1.json",
+      "sha256": "1a4b16162a6da2361b5dfc9e595fab250fd9423500d10212915654a35532108e"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/draft-lifecycle-v1-exit.json",
+      "sha256": "a6bb666682681464660a1d7f31be522d4f14b4ac6526b542b1809fd18d5b2a72"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/draft-lifecycle-v1.log",
+      "sha256": "057d03f4150ad8f51b8647f84cc1e1536ce7980834b3f7205348583550a8af6f"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/existing-public-retrieval-v1-exit.json",
+      "sha256": "8d1d13eaa82ab2772c7a8270ecdaa1e9ca01cec2ac6d201e3de0035cf268dcba"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/existing-public-retrieval-v1.log",
+      "sha256": "5bfe436222dcba53f64eeb756930ae3adf2b3c0af29f7df2c1cb289360730097"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/leaves/actual-public-types-v1.lean",
+      "sha256": "43b8d2817e36354b9f3e33277faa87cbc82f716b66db8e211db4702517ae3b27"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/leaves/export-scoped-dependencies-v1.lean",
+      "sha256": "3275d519824797f901159c6c9a649e0177f7c71d92356d4f81aea0583cfa400c"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/native-draft-fences/interior_min_iff_gradient_zero.json",
+      "sha256": "410d0d0b7a229adc0cf71c1fdbe5450fcbe4a7b5180e2aafafe6d9138d3d569c"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/native-draft-fences/minOn_finitePart_iff.json",
+      "sha256": "c4675971fd93d56f0104ce9fc4152b5b9cfc44642abfc64ec72cd08190697356"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/native-draft-fences/minOn_real_iff_gradient.json",
+      "sha256": "ba6ff48e7999244bfcb152da514acb687baedbf5fdfdc24843d69a765e9fc407"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/native-draft-fences/theorem_2_8.json",
+      "sha256": "50f19f116f024d75ffb15a1930ae71ecb2e925d0119a59eb7093bb5a95b61e52"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/new-task-v1-01-exit.json",
+      "sha256": "f7b1b59b98995c952d67ae34c299c6c0a8cca6b89741e44f68f8f07d5153dd49"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/new-task-v1-01.log",
+      "sha256": "261ddf3f6a5d2d69d9cd57f3035070010b3cec4e5bf774d5a91d5c8f3034bd48"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/original-OnlineConvexOptimality.lean.txt",
+      "sha256": "d344a22aca81221f865f3af1ccef6bb2bf445ae6f2f7cf7e97bfe5f88805ac1b"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/original-OnlineConvexOptimalityCanary.lean.txt",
+      "sha256": "9b6f671e8a528cdfe51dc7db7dd6de9340ce6ec1af1d1866a93dcb5b32b00e3d"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/prepare-draft-v1-01-exit.json",
+      "sha256": "ef9e013ba7ffc43f399ad205387af57568e16b80282148c721b8ada4ff238019"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/prepare-draft-v1-01.log",
+      "sha256": "26cba334670492ed6f9ff1c5cea9488fd26b59b99c0705903de80ae8dc700e2b"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/prepare-draft-v1.py",
+      "sha256": "c871ca66683cbc4cccfe56f5be541766a9f9f530c101b96e8efed66445fce5db"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/prepare-source-review-v1.py",
+      "sha256": "19e047cc6b2a75cf4e3710bee9e32e2b82dc49a50475fb721cdc558219906747"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/proof-obligations-v1.json",
+      "sha256": "e1504fe40e6e7b41ef81b02bdb5804d202b56e5d8c0273369ba553813ee66ee8"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/ready-dependencies-v1.json",
+      "sha256": "c2fddee2d8453bfcdc38fab9338a390ad6ba679b464d84e35ae0510abfc51666"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/retained-module-types-v1-01-exit.json",
+      "sha256": "f96d4e6beba0eaff5430f160afd9d275aaa36257796074cc01ccfe3a312dcad5"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/retained-module-types-v1-01.log",
+      "sha256": "9b112e6daa6b3de9a6eeb488a1dd00209bbce0f64911dee43a1fe1580aec524c"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/run-command.py",
+      "sha256": "c513b8a171af602dd3f72af15823ed5f1308faccdb8526d5dcca87ddcbf86887"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/source-printed10-11-pdf22-23.txt",
+      "sha256": "aa1beb88cb259fd36ccd1131074d331b44cf2d0e8fd768c0c60023881d0071da"
+    },
+    {
+      "path": "runs/online-optimality-migration-20261005/source-review-packet-v1.md",
+      "sha256": "e5ee7ea073e9e0d3dc53fdd5c0f0ea7ff3e46767e5e2e7845d1ce9ab2fcf7da3"
+    },
+    {
+      "path": "tasks/ONLINE-OPTIMALITY-MIGRATION-20261005.md",
+      "sha256": "1baab747439a4c987079657150b7ebf8d7ca14abd2ea34c19ad0d9fc52395be9"
+    },
+    {
+      "path": "tmp/online-optimality-migration-scoped-graph-v1.json",
+      "sha256": "258457366c2b0300d34ac3f2bf44b8b54658073b5bc2bac79172579a683827ea"
+    },
+    {
+      "path": "tools/abrl_lifecycle.py",
+      "sha256": "7615541e66a372e939ea2d18684ce78a8f3d8f1202894840ef7fdfdc703c4310"
+    },
+    {
+      "path": "website/content/chapters.json",
+      "sha256": "b5a628fe0ea139e68800b76b6a758718107aef653b13ae3a5689365af7f0e258"
+    },
+    {
+      "path": "website/content/highlights.json",
+      "sha256": "bb1b125ec8102d7f37732b8380c40c39b942d4a13852ea85e4cbd390d2251181"
+    },
+    {
+      "path": "website/content/readings.json",
+      "sha256": "c0e6b55ff60780ed82eba4585f2e105c75b152b43842e775ccd8e138dc15a8d2"
+    }
+  ],
+  "report": "runs/online-optimality-migration-20261005/source-contract-review-v1.md",
+  "report_sha256": "702bb9f68f91bf60e7119fc9d676ca5aedc36dad1844a833c4c2863dd2f22446",
+  "remaining_gates": [
+    "body/canary/axioms/native guards",
+    "combined root/Tests/full harness",
+    "reader/site/registry/contributor",
+    "final reader/immutable binding/PR"
+  ],
+  "hash_convention": "SHA256 exact raw bytes, no normalization"
+}

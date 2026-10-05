@@ -1,0 +1,18 @@
+{
+  "name": "BanditRL.OnlineConvex.interior_min_iff_gradient_zero",
+  "statement": "theorem interior_min_iff_gradient_zero (f : E → EReal) (V U : Set E) (hV : Convex ℝ V) (hne : V.Nonempty) (x : E) (hx : x ∈ V) (hxi : x ∈ interior V) (hU : IsOpen U) (hVU : V ⊆ U) (hfin : ∀ z ∈ U, f z ≠ ⊤ ∧ f z ≠ ⊥) (hf : ConvexOn ℝ V (fun z => (f z).toReal)) (hd : DifferentiableOn ℝ (fun z => (f z).toReal) U) : IsMinOn f V x ↔ gradient (fun z => (f z).toReal) x = 0",
+  "statement_hash": "cb1fdeab02bd6c6651b31786fbb244016bacedce7b65c8c4959e6869733fb550",
+  "source_assumptions": [
+    "(hV : Convex ℝ V)",
+    "(hne : V.Nonempty)",
+    "(hx : x ∈ V)",
+    "(hU : IsOpen U)",
+    "(hVU : V ⊆ U)",
+    "(hfin : ∀ z ∈ U, f z ≠ ⊤ ∧ f z ≠ ⊥)",
+    "(hf : ConvexOn ℝ V (fun z => (f z).toReal))",
+    "(hd : DifferentiableOn ℝ (fun z => (f z).toReal) U)",
+    "(hxi : x ∈ interior V)"
+  ],
+  "classification": "retained-unnumbered-main-consequence",
+  "context_hash": "1a34342fc7afc4552b6657071b9d1ac4a77796b5fdf66e57c2817dc3e3f8adb6"
+}

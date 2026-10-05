@@ -1,0 +1,9 @@
+import BanditRLProof
+#check @BanditRL.OnlineConvex.minOn_real_iff_gradient
+#check @BanditRL.OnlineConvex.minOn_finitePart_iff
+#check @BanditRL.OnlineConvex.theorem_2_8
+#check @BanditRL.OnlineConvex.interior_min_iff_gradient_zero
+#check @IsLocalMinOn.hasFDerivWithinAt_nonneg
+#check @sub_mem_posTangentConeAt_of_segment_subset
+#check @IsLocalMin.fderiv_eq_zero
+#check @EReal.coe_toReal

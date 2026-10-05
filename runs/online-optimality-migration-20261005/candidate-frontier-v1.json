@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "record_id": "frontier-be940680a5b46b0b",
+  "updated_at": "2026-10-05T12:39:46+00:00",
+  "root_objective": "Persistent Orabona Chapters1-16 Goal; only retained optimality chain candidate, Chapter2/book incomplete",
+  "current_leaf": {
+    "id": "ONLINE-OPTIMALITY-MIGRATION-20261005",
+    "kind": "lean",
+    "status": "gate-pending",
+    "statement": "theorem theorem_2_8 (f : E → EReal) (V U : Set E) (hV : Convex ℝ V) (hne : V.Nonempty) (x : E) (hx : x ∈ V) (hU : IsOpen U) (hVU : V ⊆ U) (hfin : ∀ z ∈ U, f z ≠ ⊤ ∧ f z ≠ ⊥) (hf : ConvexOn ℝ V (fun z => (f z).toReal)) (hd : DifferentiableOn ℝ (fun z => (f z).toReal) U) : IsMinOn f V x ↔ ∀ y ∈ V, 0 ≤ inner ℝ (gradient (fun z => (f z).toReal) x) (y - x)",
+    "statement_hash": "51f3cfbe81af8317a1330596632cefc6b74a4a707a2891f9962960990924cc05",
+    "declaration": "BanditRL.OnlineConvex.theorem_2_8",
+    "file": "BanditRLProof/OnlineConvexOptimality.lean",
+    "source_status": "source-body-reviewed",
+    "dependencies": [
+      {
+        "kind": "lean",
+        "name": "BanditRL.OnlineConvex.minOn_real_iff_gradient",
+        "status": "compiled"
+      },
+      {
+        "kind": "lean",
+        "name": "BanditRL.OnlineConvex.minOn_finitePart_iff",
+        "status": "compiled"
+      },
+      {
+        "kind": "review",
+        "name": "source-body",
+        "status": "accepted"
+      }
+    ]
+  },
+  "dag": {
+    "nodes": [
+      {
+        "id": "ONLINE-OPTIMALITY-MIGRATION-20261005",
+        "kind": "lean",
+        "status": "gate-pending",
+        "dependencies": [
+          {
+            "kind": "lean",
+            "name": "BanditRL.OnlineConvex.minOn_real_iff_gradient",
+            "status": "compiled"
+          },
+          {
+            "kind": "lean",
+            "name": "BanditRL.OnlineConvex.minOn_finitePart_iff",
+            "status": "compiled"
+          },
+          {
+            "kind": "review",
+            "name": "source-body",
+            "status": "accepted"
+          }
+        ],
+        "dispatch_count": 0
+      }
+    ]
+  },
+  "last_accepted_verifier": {
+    "trial_index": 0,
+    "time": "2026-10-05T12:35:27+00:00",
+    "task": "ONLINE-OPTIMALITY-MIGRATION-20261005",
+    "role": "lower",
+    "kind": "build",
+    "status": "compiled",
+    "lean": "BanditRLProof/OnlineConvexOptimality.lean",
+    "notes": "Actual4retainedbody module/byte-unchanged meaningful canary/13namedaxioms/4nativeguards passed. No newproofcode; distinctbody/package review pending.",
+    "run_id": "online-optimality-migration-20261005"
+  },
+  "memory_policy": {
+    "recent_role_relevant_limit": 5,
+    "explicit_verified_lemma_ids": [],
+    "whole_history_default": false
+  },
+  "shadow_gate": {
+    "status": "pending",
+    "analyzed_trial_rows": 1,
+    "mismatches": [],
+    "replay_transitions": 0
+  },
+  "mutation_policy": {
+    "canonical_path_queue": true,
+    "cross_process_lock": true,
+    "same_file_serialized": true,
+    "disjoint_files_parallel": true
+  },
+  "autonomous_execution": {
+    "enabled": false,
+    "requires_deterministic_gates": true,
+    "requires_explicit_user_request": true
+  }
+}

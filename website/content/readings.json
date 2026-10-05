@@ -2201,15 +2201,15 @@
       "notation": [
         {
           "term": "IsMinOn",
-          "meaning": "The point has no larger value than every feasible comparator; membership is a separate premise."
+          "meaning": "Value comparison f(x)<=f(y) for every y in V; IsMinOn does not supply membership, and x in V is an explicit hypothesis."
         },
         {
           "term": "finite part",
-          "meaning": "A real representation valid on the finite open neighborhood."
+          "meaning": "Canonical F(z)=(f(z)).toReal. Both infinities are excluded on the supplied open U, so embedded F=f on U and locally near feasible x. No global equality/finite/noBottom/convex F outside U."
         },
         {
           "term": "feasible direction",
-          "meaning": "The vector y-x for y in V; its gradient inner product is nonnegative at a minimum."
+          "meaning": "The displacement y-x for every y in V; actual gradient of F at x pairs nonnegatively at a constrained minimum. Gradient-zero equivalence additionally requires ambient interior V."
         }
       ],
       "algorithm": {
@@ -2218,15 +2218,15 @@
         "steps": [
           {
             "title": "Use feasible segments",
-            "detail": "Convexity keeps segments inside V, so a minimum has nonnegative directional derivatives."
+            "detail": "The everywhere-real helper assumes ConvexOn V, x membership and an ambient derivative at x. Actual minimum derivatives on convex feasible segments are nonnegative; no open set or EReal bridge is needed by this helper."
           },
           {
             "title": "Use the supporting plane",
-            "detail": "Nonnegative inner products and the supporting bound imply minimum value."
+            "detail": "The supporting bound proves sufficiency. The separate finite-order bridge compares canonical real and EReal minima using x membership and finite values only on V; it needs no convexity, openness or derivative."
           },
           {
             "title": "Specialize to interior points",
-            "detail": "Fermat gives gradient zero for interior minima; the converse follows from the criterion."
+            "detail": "Ambient interior V makes a constrained minimum local in the whole space. Actual differentiability on open U is retained, so Fermat/gradient-zero has derivative meaning despite the total fderiv fallback."
           }
         ]
       },
@@ -2238,25 +2238,25 @@
       ],
       "source_theorems": [
         {
-          "label": "Theorem2.8: first-order optimality",
+          "label": "Theorem2.8 and following unnumbered interior consequence",
           "pages": "printedp11",
           "pdf_page": 23,
           "url": "https://arxiv.org/pdf/1912.13213v10",
           "math": "x\\in\\operatorname{argmin}_{z\\in V} f(z)\\iff\\langle\\nabla f(x),y-x\\rangle\\ge0\\quad\\forall y\\in V",
           "fallback": "A convex differentiable function is minimized precisely when all feasible directional inner products are nonnegative.",
-          "plain": "An interior minimum has zero gradient; a boundary minimum need not.",
-          "relationship": "Shared theorem_2_8 deliberately needs convexity only on V. The source neighborhood-convexity assumption implies this by restriction, as checked in the public canary. This is a stronger result, not equivalence of assumption sets.",
+          "plain": "Every feasible directional inner product characterizes the given constrained minimum. The following mandatory unnumbered source consequence adds ambient interior V for gradient-zero equivalence; boundary gradients may be nonzero.",
+          "relationship": "Shared theorem_2_8 weakens source neighborhood convexity to ConvexOn V F, yielding a stronger theorem, not a stronger premise or equivalence of assumptions. Source neighborhood convexity restricts to V; the public canary constructs ConvexOn U then restricts it. Actual U need not be convex. minOn_real_iff_gradient and minOn_finitePart_iff are generalized real and finite-order library helpers, not printed theorems. interior_min_iff_gradient_zero represents the mandatory following unnumbered main-text consequence.",
           "contract": {
-            "model": "Complete real inner-product spaces, including Euclidean spaces; finite differentiable loss on an open neighborhood U of V.",
-            "assumptions": "V nonempty convex; x in V; open U contains V; finite loss and differentiability on U; convexity of the finite representation on V.",
+            "model": "Complete real inner-product spaces explicitly generalize source Euclidean spaces; EReal f and canonical F(z)=(f(z)).toReal, finite and differentiable on supplied open U containing V.",
+            "assumptions": "Nonempty convex V, explicit x in V; arbitrary open U contains V; f excludes both infinities on U, so embedded F=f there and locally near x; DifferentiableOn F U; ConvexOn V F. No convex U or global noBottom/finite/convex F premise outside U. Ambient interior V is additional for gradient-zero equivalence; the differentiability premise is retained.",
             "parameters": "Every feasible y; interior membership is additional for gradient-zero equivalence.",
             "regret": "A convex optimality characterization, not a regret theorem.",
-            "guarantee": "EReal minimum iff every feasible gradient inner product is nonnegative; interior minimum iff gradient zero."
+            "guarantee": "Original EReal IsMinOn f V x iff every feasible inner(gradient F x,y-x)>=0; with ambient interior V, iff gradient F x=0. No optimizer existence, uniqueness, closedness, boundedness or zero minimum-value claim."
           },
           "local_status": {
             "status": "compiled",
             "label": "Optimality and interior consequence",
-            "boundary": "Later Chapter2 results remain incomplete; Jensen is mapped separately."
+            "boundary": "Theorem2.8, its mandatory following unnumbered consequence and two explicitly classified library helpers only; Chapter2 and the whole book remain incomplete, including later source and legacy migrations/Jensen mapped separately."
           }
         }
       ],
