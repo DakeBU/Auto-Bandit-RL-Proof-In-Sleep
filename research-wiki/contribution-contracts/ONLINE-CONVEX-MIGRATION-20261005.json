@@ -1,0 +1,181 @@
+{
+  "schema_version": "2.0",
+  "id": "ONLINE-CONVEX-MIGRATION-20261005",
+  "route": "online-learning/chapter-2",
+  "frontier_cell": "online-convex",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10,21 June2026; SHA256 cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchor": "Section2.1.1; Def2.2/Def2.3/Thm2.4/Examples2.5/2.6 and unnumbered domain/indicator/four closure rules; printed9-10/PDF21-22. Explicit Rockafellar convention interpretation printed6/PDF17.",
+    "url": "https://arxiv.org/pdf/1912.13213v10"
+  },
+  "target": "Distinctly revalidate four retained extended-convexity/example/closure production modules and correct source-qualified readers without changing proof code.",
+  "affected_files": [
+    "BanditRLProof/OnlineConvexExtended.lean",
+    "BanditRLProof/OnlineConvexExamples.lean",
+    "BanditRLProof/OnlineConvexClosures.lean",
+    "BanditRLProof/OnlineConvexSums.lean",
+    "website/content/readings.json",
+    "website/content/highlights.json",
+    "website/content/chapters.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineConvex.definition_2_2",
+    "BanditRL.OnlineConvex.convex_effectiveDomain",
+    "BanditRL.OnlineConvex.effectiveDomain_indicator",
+    "BanditRL.OnlineConvex.convex_indicator_iff",
+    "BanditRL.OnlineConvex.realEpigraph_toReal",
+    "BanditRL.OnlineConvex.convexExtended_iff_toReal",
+    "BanditRL.OnlineConvex.theorem_2_4",
+    "BanditRL.OnlineConvex.convex_add_indicator",
+    "BanditRL.OnlineConvex.convexExtended_coe_iff",
+    "BanditRL.OnlineConvex.example_2_5",
+    "BanditRL.OnlineConvex.example_2_6",
+    "BanditRL.OnlineConvex.convex_comp_affine",
+    "BanditRL.OnlineConvex.convex_iSup",
+    "BanditRL.OnlineConvex.convex_comp_monotone",
+    "BanditRL.OnlineConvex.upperAdd_coe",
+    "BanditRL.OnlineConvex.upperAdd_top",
+    "BanditRL.OnlineConvex.top_upperAdd",
+    "BanditRL.OnlineConvex.upperAdd_le_coe_iff",
+    "BanditRL.OnlineConvex.convex_upperAdd",
+    "BanditRL.OnlineConvex.positive_mul_le_coe_iff",
+    "BanditRL.OnlineConvex.convex_nonneg_mul",
+    "BanditRL.OnlineConvex.convex_nonneg_linear_combination",
+    "BanditRL.OnlineConvex.effectiveDomain",
+    "BanditRL.OnlineConvex.realEpigraph",
+    "BanditRL.OnlineConvex.IsConvexExtended",
+    "BanditRL.OnlineConvex.extendedIndicator",
+    "BanditRL.OnlineConvex.upperAdd"
+  ],
+  "reuse_plan": {
+    "classification": "reuse",
+    "decision": "reuse_existing",
+    "searched_existing": [
+      "Actual27 public declarations/pinned mathlib APIs/compiled shared graph27nodes13 required proof-value pairs."
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineConvex.definition_2_2",
+      "BanditRL.OnlineConvex.convex_effectiveDomain",
+      "BanditRL.OnlineConvex.effectiveDomain_indicator",
+      "BanditRL.OnlineConvex.convex_indicator_iff",
+      "BanditRL.OnlineConvex.realEpigraph_toReal",
+      "BanditRL.OnlineConvex.convexExtended_iff_toReal",
+      "BanditRL.OnlineConvex.theorem_2_4",
+      "BanditRL.OnlineConvex.convex_add_indicator",
+      "BanditRL.OnlineConvex.convexExtended_coe_iff",
+      "BanditRL.OnlineConvex.example_2_5",
+      "BanditRL.OnlineConvex.example_2_6",
+      "BanditRL.OnlineConvex.convex_comp_affine",
+      "BanditRL.OnlineConvex.convex_iSup",
+      "BanditRL.OnlineConvex.convex_comp_monotone",
+      "BanditRL.OnlineConvex.upperAdd_coe",
+      "BanditRL.OnlineConvex.upperAdd_top",
+      "BanditRL.OnlineConvex.top_upperAdd",
+      "BanditRL.OnlineConvex.upperAdd_le_coe_iff",
+      "BanditRL.OnlineConvex.convex_upperAdd",
+      "BanditRL.OnlineConvex.positive_mul_le_coe_iff",
+      "BanditRL.OnlineConvex.convex_nonneg_mul",
+      "BanditRL.OnlineConvex.convex_nonneg_linear_combination",
+      "BanditRL.OnlineConvex.effectiveDomain",
+      "BanditRL.OnlineConvex.realEpigraph",
+      "BanditRL.OnlineConvex.IsConvexExtended",
+      "BanditRL.OnlineConvex.extendedIndicator",
+      "BanditRL.OnlineConvex.upperAdd"
+    ],
+    "new_shared_declarations": [],
+    "known_consumers": [
+      "Tests.OnlineConvexExtendedCanary",
+      "Tests.OnlineConvexExamplesCanary",
+      "Tests.OnlineConvexClosuresCanary",
+      "Tests.OnlineConvexSumsCanary"
+    ],
+    "planned_consumers": [
+      "Remaining Chapter2 production/source audit and later sequential chapters."
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Same22 proof bodies/five definitions reused, no new graph nodes or per-book duplicate library."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/normal_blind",
+    "source_reviewer": "/root/source_reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Distinct source-contract/body review; general real spaces, named top-dominant convention and zero-product interpretation explicit. Final corrected reader/package review pending; no human/external review."
+  },
+  "graph_contribution": {
+    "lean_graph": "reuse-only",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Retained source convex-analysis foundations; no functor claim.",
+    "focus_targets": [
+      "BanditRL.OnlineConvex.definition_2_2",
+      "BanditRL.OnlineConvex.convex_effectiveDomain",
+      "BanditRL.OnlineConvex.effectiveDomain_indicator",
+      "BanditRL.OnlineConvex.convex_indicator_iff",
+      "BanditRL.OnlineConvex.realEpigraph_toReal",
+      "BanditRL.OnlineConvex.convexExtended_iff_toReal",
+      "BanditRL.OnlineConvex.theorem_2_4",
+      "BanditRL.OnlineConvex.convex_add_indicator",
+      "BanditRL.OnlineConvex.convexExtended_coe_iff",
+      "BanditRL.OnlineConvex.example_2_5",
+      "BanditRL.OnlineConvex.example_2_6",
+      "BanditRL.OnlineConvex.convex_comp_affine",
+      "BanditRL.OnlineConvex.convex_iSup",
+      "BanditRL.OnlineConvex.convex_comp_monotone",
+      "BanditRL.OnlineConvex.upperAdd_coe",
+      "BanditRL.OnlineConvex.upperAdd_top",
+      "BanditRL.OnlineConvex.top_upperAdd",
+      "BanditRL.OnlineConvex.upperAdd_le_coe_iff",
+      "BanditRL.OnlineConvex.convex_upperAdd",
+      "BanditRL.OnlineConvex.positive_mul_le_coe_iff",
+      "BanditRL.OnlineConvex.convex_nonneg_mul",
+      "BanditRL.OnlineConvex.convex_nonneg_linear_combination",
+      "BanditRL.OnlineConvex.effectiveDomain",
+      "BanditRL.OnlineConvex.realEpigraph",
+      "BanditRL.OnlineConvex.IsConvexExtended",
+      "BanditRL.OnlineConvex.extendedIndicator",
+      "BanditRL.OnlineConvex.upperAdd"
+    ],
+    "visual_review": "Actual corrected reader/registry/site checks pending; teaching links distinguished from actual compiled graph.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: same two convex reader routes/ten highlights/old URLs; source hypotheses and interpretation corrected.",
+    "banditrlwiki": "no-change-with-reason: no new Bandit setting.",
+    "results_ledger": "no-change-with-reason: additive task acceptance overlay follows gates; historical source inventory untouched.",
+    "roadmap": "no-change-with-reason: whole-book Goal remains active, Chapter2 incomplete and global SGB untouched.",
+    "website_surfaces": [
+      "website/content/readings.json",
+      "website/content/highlights.json",
+      "website/content/chapters.json"
+    ]
+  },
+  "truth_boundary": "Four retained modules22 proofs/five definitions, zero new proofs/registry nodes. General both-infinity epigraphs/real heights, explicit noBottom/convex-domain Thm2.4, real-valued monotone composition and named upperAdd convention not printed by Orabona. Existing canaries replayed including ordinary-sum counterexample/empty/zero/positive cases. Chapter2 mandatory_total still null; remaining historical source/migration and whole Chapters1-16 obligations not excluded. Local compilation/stacked PR do not update main/live. The separately detected finite-loss/domain-of-sum intersection consequence remains mandatory and is not accepted by these22 endpoints.",
+  "verification": {
+    "focused_checks": [
+      "Fresh actual4 public modules/4 canary modules/53 named axioms standard3-or-none/22 actual safe guards."
+    ],
+    "bandit_check": "Fresh combined root/Tests/full harness pending.",
+    "site_build": "Clean lean-verified build only after fresh applicable combined gate.",
+    "site_check": "Same shared27 canonical nodes/old URLs and corrected reader validation pending.",
+    "independent_review": "Three distinct required automated actors, requested GPT-6 Astra/medium; no human/external review or independently attested runtime model."
+  },
+  "contributor": {
+    "name": "Codex for Ji Cheng",
+    "role": "Formalizer/integrator with distinct required automated semantic actors; source attribution retained"
+  }
+}

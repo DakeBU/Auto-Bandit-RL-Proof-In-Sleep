@@ -1,3 +1,14 @@
+/-
+Source: Orabona v10, nonnegative-combination bullet, printed p.10 / PDF p.22.
+Orabona does not print a mixed-infinity addition convention. This module
+explicitly interprets that bullet with Rockafellar's top-dominant convex-sum
+convention (Conjugate Duality and Optimization, printed p.6 / PDF p.17).
+upperAdd is a named operation, not ordinary mathlib EReal addition. The latter
+has a public nonconvex-sum counterexample. Both infinities, improper/disjoint
+domains, zero weights and EReal zero-times-infinity=zero remain included.
+Finite-height witness/scaling laws are supporting refinements. The convention
+is attributed interpretation, not literal Orabona text. Existing code is preserved.
+-/
 import BanditRLProof.OnlineConvexClosures
 
 noncomputable section

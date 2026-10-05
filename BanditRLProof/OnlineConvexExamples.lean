@@ -1,3 +1,12 @@
+/-
+Source: Orabona v10, Examples 2.5 and 2.6, printed p.10 / PDF p.22.
+Every affine inner-product function and every norm is convex under the shared
+real-height extended-real epigraph definition. Example 2.6 remains mandatory
+main text although its proof is left as an exercise. The finite coercion iff
+is a library bridge, not another numbered source theorem. General real normed
+and inner-product spaces include the source finite-dimensional instances.
+No boundedness or nonzero slope/value assumption. Existing code is preserved.
+-/
 import BanditRLProof.OnlineConvexExtended
 import Mathlib.Analysis.Normed.Module.Convex
 import Mathlib.Analysis.InnerProductSpace.Basic

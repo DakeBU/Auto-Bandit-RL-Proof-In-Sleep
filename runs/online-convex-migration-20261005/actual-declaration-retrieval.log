@@ -1,0 +1,258 @@
+BanditRL.OnlineConvex.theorem_2_28 [theorem] BanditRLProof/OnlineAffineSubgradient.lean:18
+  theorem theorem_2_28 [FiniteDimensional ℝ E] [FiniteDimensional ℝ F] (f : F → EReal) (hp : SourceProper f) (A : E →L[ℝ] F) (b : F) (x : E) : A.adjoint '' (SourceSubdifferential f (A x + b)) ⊆ SourceSubdifferential (fun y => f (A y + b)) x
+BanditRL.OnlineConvex.SourceClosed [def] BanditRLProof/OnlineClosedProper.lean:9
+  def SourceClosed (f : E → EReal) : Prop
+BanditRL.OnlineConvex.SourceProper [def] BanditRLProof/OnlineClosedProper.lean:12
+  def SourceProper (f : E → EReal) : Prop
+BanditRL.OnlineConvex.sourceClosed_iff_lowerSemicontinuous [theorem] BanditRLProof/OnlineClosedProper.lean:15
+  theorem sourceClosed_iff_lowerSemicontinuous (f : E → EReal) : SourceClosed f ↔ LowerSemicontinuous f
+BanditRL.OnlineConvex.sourceClosed_indicator_iff [theorem] BanditRLProof/OnlineClosedProper.lean:41
+  theorem sourceClosed_indicator_iff (V : Set E) : SourceClosed (extendedIndicator V) ↔ IsClosed V
+BanditRL.OnlineConvex.sourceProper_indicator_iff [theorem] BanditRLProof/OnlineClosedProper.lean:59
+  theorem sourceProper_indicator_iff (V : Set E) : SourceProper (extendedIndicator V) ↔ V.Nonempty
+BanditRL.OnlineConvex.supporting_functional_ae_eq_mean [theorem] BanditRLProof/OnlineConvexBarycenter.lean:17
+  theorem supporting_functional_ae_eq_mean (μ : Measure Ω) [IsProbabilityMeasure μ] (X : Ω → E) (hX : Integrable X μ) (a : E →L[ℝ] ℝ) (hle : ∀ᵐ ω ∂μ, a (X ω) ≤ a (∫ ω, X ω ∂μ)) : ∀ᵐ ω ∂μ, a (X ω) = a (∫ ω, X ω ∂μ)
+BanditRL.OnlineConvex.supporting_functional_at_closure [theorem] BanditRLProof/OnlineConvexBarycenter.lean:30
+  theorem supporting_functional_at_closure (s : Set E) (hs : Convex ℝ s) (x : E) (hx : x ∈ closure s) (hxi : x ∉ interior s) : ∃ a : E →L[ℝ] ℝ, a ≠ 0 ∧ ∀ y ∈ s, a y ≤ a x
+BanditRL.OnlineConvex.integral_mem_convex_finiteDimensional [theorem] BanditRLProof/OnlineConvexBarycenter.lean:59
+  theorem integral_mem_convex_finiteDimensional (μ : Measure Ω) [IsProbabilityMeasure μ] (s : Set E) (hs : Convex ℝ s) (X : Ω → E) (hX : Integrable X μ) (hmem : ∀ᵐ ω ∂μ, X ω ∈ s) : (∫ ω, X ω ∂μ) ∈ s
+BanditRL.OnlineConvex.convex_comp_affine [theorem] BanditRLProof/OnlineConvexClosures.lean:7
+  theorem convex_comp_affine {E F : Type*} [AddCommGroup E] [Module ℝ E] [AddCommGroup F] [Module ℝ F] (f : F → EReal) (hf : IsConvexExtended f) (A : E →ᵃ[ℝ] F) : IsConvexExtended (fun x => f (A x))
+BanditRL.OnlineConvex.convex_iSup [theorem] BanditRLProof/OnlineConvexClosures.lean:14
+  theorem convex_iSup {ι E : Type*} [AddCommGroup E] [Module ℝ E] (f : ι → E → EReal) (hf : ∀ i, IsConvexExtended (f i)) : IsConvexExtended (fun x => ⨆ i, f i x)
+BanditRL.OnlineConvex.convex_comp_monotone [theorem] BanditRLProof/OnlineConvexClosures.lean:24
+  theorem convex_comp_monotone {E : Type*} [AddCommGroup E] [Module ℝ E] (f : E → ℝ) (g : ℝ → ℝ) (hf : IsConvexExtended (fun x => (f x : EReal))) (hg : IsConvexExtended (fun x => (g x : EReal))) (hmono : Monotone g) : IsConvexExtended (fun x => (g (f x) : EReal))
+BanditRL.OnlineConvex.convexExtended_coe_iff [theorem] BanditRLProof/OnlineConvexExamples.lean:9
+  theorem convexExtended_coe_iff {E : Type*} [AddCommGroup E] [Module ℝ E] (f : E → ℝ) : IsConvexExtended (fun x => (f x : EReal)) ↔ ConvexOn ℝ univ f
+BanditRL.OnlineConvex.example_2_5 [theorem] BanditRLProof/OnlineConvexExamples.lean:18
+  theorem example_2_5 {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] (z : E) (b : ℝ) : IsConvexExtended (fun x => ((inner ℝ z x + b : ℝ) : EReal))
+BanditRL.OnlineConvex.example_2_6 [theorem] BanditRLProof/OnlineConvexExamples.lean:26
+  theorem example_2_6 {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] : IsConvexExtended (fun x : E => ((‖x‖ : ℝ) : EReal))
+BanditRL.OnlineConvex.effectiveDomain [def] BanditRLProof/OnlineConvexExtended.lean:13
+  def effectiveDomain (f : E → EReal) : Set E
+BanditRL.OnlineConvex.realEpigraph [def] BanditRLProof/OnlineConvexExtended.lean:16
+  def realEpigraph (f : E → EReal) : Set (E × ℝ)
+BanditRL.OnlineConvex.IsConvexExtended [def] BanditRLProof/OnlineConvexExtended.lean:19
+  def IsConvexExtended (f : E → EReal) : Prop
+BanditRL.OnlineConvex.extendedIndicator [def] BanditRLProof/OnlineConvexExtended.lean:22
+  def extendedIndicator (V : Set E) (x : E) : EReal
+BanditRL.OnlineConvex.definition_2_2 [theorem] BanditRLProof/OnlineConvexExtended.lean:26
+  theorem definition_2_2 (V : Set E) : Convex ℝ V ↔ ∀ x ∈ V, ∀ y ∈ V, ∀ θ : ℝ, 0 < θ → θ < 1 → θ • x + (1 - θ) • y ∈ V
+BanditRL.OnlineConvex.convex_effectiveDomain [theorem] BanditRLProof/OnlineConvexExtended.lean:37
+  theorem convex_effectiveDomain (f : E → EReal) (hf : IsConvexExtended f) : Convex ℝ (effectiveDomain f)
+BanditRL.OnlineConvex.effectiveDomain_indicator [theorem] BanditRLProof/OnlineConvexExtended.lean:46
+  theorem effectiveDomain_indicator (V : Set E) : effectiveDomain (extendedIndicator V) = V
+BanditRL.OnlineConvex.convex_indicator_iff [theorem] BanditRLProof/OnlineConvexExtended.lean:52
+  theorem convex_indicator_iff (V : Set E) : IsConvexExtended (extendedIndicator V) ↔ Convex ℝ V
+BanditRL.OnlineConvex.realEpigraph_toReal [theorem] BanditRLProof/OnlineConvexExtended.lean:66
+  theorem realEpigraph_toReal (f : E → EReal) (hbot : ∀ x, f x ≠ ⊥) : realEpigraph f = {p : E × ℝ | p.1 ∈ effectiveDomain f ∧ (f p.1).toReal ≤ p.2}
+BanditRL.OnlineConvex.convexExtended_iff_toReal [theorem] BanditRLProof/OnlineConvexExtended.lean:80
+  theorem convexExtended_iff_toReal (f : E → EReal) (hbot : ∀ x, f x ≠ ⊥) : IsConvexExtended f ↔ ConvexOn ℝ (effectiveDomain f) (fun x => (f x).toReal)
+BanditRL.OnlineConvex.theorem_2_4 [theorem] BanditRLProof/OnlineConvexExtended.lean:87
+  theorem theorem_2_4 (f : E → EReal) (hbot : ∀ x, f x ≠ ⊥) (hdom : Convex ℝ (effectiveDomain f)) : IsConvexExtended f ↔ ∀ x ∈ effectiveDomain f, ∀ y ∈ effectiveDomain f, ∀ θ : ℝ, 0 < θ → θ < 1 → f (θ • x + (1 - θ) • y) ≤ (θ : EReal) * f x + ((1 - θ : ℝ) : EReal) * f y
+BanditRL.OnlineConvex.convex_add_indicator [theorem] BanditRLProof/OnlineConvexExtended.lean:115
+  theorem convex_add_indicator (f : E → EReal) (hbot : ∀ x, f x ≠ ⊥) (hf : IsConvexExtended f) (V : Set E) (hV : Convex ℝ V) : IsConvexExtended (fun x => f x + extendedIndicator V x)
+BanditRL.OnlineConvex.finitePart_eventually [theorem] BanditRLProof/OnlineConvexFirstOrder.lean:11
+  theorem finitePart_eventually (f : E → EReal) (hbot : ∀ z, f z ≠ ⊥) (x : E) (hx : x ∈ interior (effectiveDomain f)) : ∀ᶠ z in 𝓝 x, ((f z).toReal : EReal) = f z
+BanditRL.OnlineConvex.convex_gradient_lower_bound [theorem] BanditRLProof/OnlineConvexFirstOrder.lean:18
+  theorem convex_gradient_lower_bound (V : Set E) (f : E → ℝ) (hf : ConvexOn ℝ V f) (x y : E) (hx : x ∈ V) (hy : y ∈ V) (hd : DifferentiableAt ℝ f x) : f x + inner ℝ (gradient f x) (y - x) ≤ f y
+BanditRL.OnlineConvex.theorem_2_7 [theorem] BanditRLProof/OnlineConvexFirstOrder.lean:34
+  theorem theorem_2_7 (f : E → EReal) (hbot : ∀ z, f z ≠ ⊥) (hf : IsConvexExtended f) (x : E) (hx : x ∈ interior (effectiveDomain f)) (hd : DifferentiableAt ℝ (fun z => (f z).toReal) x) (y : E) : f x + ((inner ℝ (gradient (fun z => (f z).toReal) x) (y - x) : ℝ) : EReal) ≤ f y
+BanditRL.OnlineConvex.affine_support_of_finite_neighborhood [theorem] BanditRLProof/OnlineConvexMinorant.lean:14
+  theorem affine_support_of_finite_neighborhood (f : E → EReal) (hf : IsConvexExtended f) (x : E) (hneigh : ∀ᶠ y in 𝓝 x, ∃ r : ℝ, f y = (r : EReal)) : ∃ (a : E →L[ℝ] ℝ) (b : ℝ), ((a x + b : ℝ) : EReal) = f x ∧ ∀ y, ((a y + b : ℝ) : EReal) ≤ f y
+BanditRL.OnlineConvex.affine_support_of_domain_interior [theorem] BanditRLProof/OnlineConvexMinorant.lean:113
+  theorem affine_support_of_domain_interior (f : E → EReal) (hbot : ∀ y, f y ≠ ⊥) (hf : IsConvexExtended f) (x : E) (hx : x ∈ interior (effectiveDomain f)) : ∃ (a : E →L[ℝ] ℝ) (b : ℝ), ((a x + b : ℝ) : EReal) = f x ∧ ∀ y, ((a y + b : ℝ) : EReal) ≤ f y
+BanditRL.OnlineConvex.affine_minorant_of_domain_interior [theorem] BanditRLProof/OnlineConvexMinorant.lean:122
+  theorem affine_minorant_of_domain_interior (f : E → EReal) (hbot : ∀ y, f y ≠ ⊥) (hf : IsConvexExtended f) (x : E) (hx : x ∈ interior (effectiveDomain f)) : ∃ (a : E →L[ℝ] ℝ) (b : ℝ), ∀ y, ((a y + b : ℝ) : EReal) ≤ f y
+BanditRL.OnlineConvex.convex_affine_minorant [theorem] BanditRLProof/OnlineConvexMinorant.lean:128
+  theorem convex_affine_minorant (f : E → EReal) (hbot : ∀ x, f x ≠ ⊥) (hf : IsConvexExtended f) (hne : (effectiveDomain f).Nonempty) : ∃ (a : E →L[ℝ] ℝ) (b : ℝ), ∀ x, ((a x + b : ℝ) : EReal) ≤ f x
+BanditRL.OnlineConvex.minOn_real_iff_gradient [theorem] BanditRLProof/OnlineConvexOptimality.lean:10
+  theorem minOn_real_iff_gradient (V : Set E) (f : E → ℝ) (hf : ConvexOn ℝ V f) (x : E) (hx : x ∈ V) (hd : DifferentiableAt ℝ f x) : IsMinOn f V x ↔ ∀ y ∈ V, 0 ≤ inner ℝ (gradient f x) (y - x)
+BanditRL.OnlineConvex.minOn_finitePart_iff [theorem] BanditRLProof/OnlineConvexOptimality.lean:24
+  theorem minOn_finitePart_iff (f : E → EReal) (V : Set E) (x : E) (hx : x ∈ V) (hfin : ∀ z ∈ V, f z ≠ ⊤ ∧ f z ≠ ⊥) : IsMinOn f V x ↔ IsMinOn (fun z => (f z).toReal) V x
+BanditRL.OnlineConvex.theorem_2_8 [theorem] BanditRLProof/OnlineConvexOptimality.lean:42
+  theorem theorem_2_8 (f : E → EReal) (V U : Set E) (hV : Convex ℝ V) (hne : V.Nonempty) (x : E) (hx : x ∈ V) (hU : IsOpen U) (hVU : V ⊆ U) (hfin : ∀ z ∈ U, f z ≠ ⊤ ∧ f z ≠ ⊥) (hf : ConvexOn ℝ V (fun z => (f z).toReal)) (hd : DifferentiableOn ℝ (fun z => (f z).toReal) U) : IsMinOn f V x ↔ ∀ y ∈ V, 0 ≤ inner ℝ (gradient (fun z => (f z).toReal) x) (y - x)
+BanditRL.OnlineConvex.interior_min_iff_gradient_zero [theorem] BanditRLProof/OnlineConvexOptimality.lean:52
+  theorem interior_min_iff_gradient_zero (f : E → EReal) (V U : Set E) (hV : Convex ℝ V) (hne : V.Nonempty) (x : E) (hx : x ∈ V) (hxi : x ∈ interior V) (hU : IsOpen U) (hVU : V ⊆ U) (hfin : ∀ z ∈ U, f z ≠ ⊤ ∧ f z ≠ ⊥) (hf : ConvexOn ℝ V (fun z => (f z).toReal)) (hd : DifferentiableOn ℝ (fun z => (f z).toReal) U) : IsMinOn f V x ↔ gradient (fun z => (f z).toReal) x = 0
+BanditRL.OnlineConvex.upperAdd [def] BanditRLProof/OnlineConvexSums.lean:8
+  def upperAdd (a b : EReal) : EReal
+BanditRL.OnlineConvex.upperAdd_coe [theorem] BanditRLProof/OnlineConvexSums.lean:10
+  theorem upperAdd_coe (a b : ℝ) : upperAdd (a : EReal) (b : EReal) = ((a + b : ℝ) : EReal)
+BanditRL.OnlineConvex.upperAdd_top [theorem] BanditRLProof/OnlineConvexSums.lean:13
+  theorem upperAdd_top (a : EReal) : upperAdd a ⊤ = ⊤
+BanditRL.OnlineConvex.top_upperAdd [theorem] BanditRLProof/OnlineConvexSums.lean:16
+  theorem top_upperAdd (a : EReal) : upperAdd ⊤ a = ⊤
+BanditRL.OnlineConvex.upperAdd_le_coe_iff [theorem] BanditRLProof/OnlineConvexSums.lean:19
+  theorem upperAdd_le_coe_iff (a b : EReal) (h : ℝ) : upperAdd a b ≤ (h : EReal) ↔ ∃ r s : ℝ, a ≤ (r : EReal) ∧ b ≤ (s : EReal) ∧ r + s ≤ h
+BanditRL.OnlineConvex.convex_upperAdd [theorem] BanditRLProof/OnlineConvexSums.lean:36
+  theorem convex_upperAdd {E : Type*} [AddCommGroup E] [Module ℝ E] (f g : E → EReal) (hf : IsConvexExtended f) (hg : IsConvexExtended g) : IsConvexExtended (fun x => upperAdd (f x) (g x))
+BanditRL.OnlineConvex.positive_mul_le_coe_iff [theorem] BanditRLProof/OnlineConvexSums.lean:51
+  theorem positive_mul_le_coe_iff (a : ℝ) (ha : 0 < a) (z : EReal) (h : ℝ) : (a : EReal) * z ≤ (h : EReal) ↔ z ≤ ((h / a : ℝ) : EReal)
+BanditRL.OnlineConvex.convex_nonneg_mul [theorem] BanditRLProof/OnlineConvexSums.lean:60
+  theorem convex_nonneg_mul {E : Type*} [AddCommGroup E] [Module ℝ E] (f : E → EReal) (hf : IsConvexExtended f) (a : ℝ) (ha : 0 ≤ a) : IsConvexExtended (fun x => (a : EReal) * f x)
+BanditRL.OnlineConvex.convex_nonneg_linear_combination [theorem] BanditRLProof/OnlineConvexSums.lean:77
+  theorem convex_nonneg_linear_combination {E : Type*} [AddCommGroup E] [Module ℝ E] (f g : E → EReal) (hf : IsConvexExtended f) (hg : IsConvexExtended g) (a b : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) : IsConvexExtended (fun x => upperAdd ((a : EReal) * f x) ((b : EReal) * g x))
+BanditRL.OnlineConvex.positiveIntegral [def] BanditRLProof/OnlineExpectation.lean:11
+  def positiveIntegral (μ : Measure Ω) (f : Ω → EReal) : ℝ≥0∞
+BanditRL.OnlineConvex.negativeIntegral [def] BanditRLProof/OnlineExpectation.lean:14
+  def negativeIntegral (μ : Measure Ω) (f : Ω → EReal) : ℝ≥0∞
+BanditRL.OnlineConvex.signedExpectation [def] BanditRLProof/OnlineExpectation.lean:19
+  def signedExpectation (μ : Measure Ω) (f : Ω → EReal) : EReal
+BanditRL.OnlineConvex.positiveIntegral_coe [theorem] BanditRLProof/OnlineExpectation.lean:22
+  theorem positiveIntegral_coe (μ : Measure Ω) (f : Ω → ℝ) : positiveIntegral μ (fun ω => (f ω : EReal)) = ∫⁻ ω, ENNReal.ofReal (f ω) ∂μ
+BanditRL.OnlineConvex.negativeIntegral_coe [theorem] BanditRLProof/OnlineExpectation.lean:26
+  theorem negativeIntegral_coe (μ : Measure Ω) (f : Ω → ℝ) : negativeIntegral μ (fun ω => (f ω : EReal)) = ∫⁻ ω, ENNReal.ofReal (-f ω) ∂μ
+BanditRL.OnlineConvex.positiveIntegral_coe_ne_top [theorem] BanditRLProof/OnlineExpectation.lean:30
+  theorem positiveIntegral_coe_ne_top (μ : Measure Ω) (f : Ω → ℝ) (hf : Integrable f μ) : positiveIntegral μ (fun ω => (f ω : EReal)) ≠ ∞
+BanditRL.OnlineConvex.negativeIntegral_coe_ne_top [theorem] BanditRLProof/OnlineExpectation.lean:38
+  theorem negativeIntegral_coe_ne_top (μ : Measure Ω) (f : Ω → ℝ) (hf : Integrable f μ) : negativeIntegral μ (fun ω => (f ω : EReal)) ≠ ∞
+BanditRL.OnlineConvex.signedExpectation_coe_integrable [theorem] BanditRLProof/OnlineExpectation.lean:43
+  theorem signedExpectation_coe_integrable (μ : Measure Ω) (f : Ω → ℝ) (hf : Integrable f μ) : signedExpectation μ (fun ω => (f ω : EReal)) = ((∫ ω, f ω ∂μ : ℝ) : EReal)
+BanditRL.OnlineConvex.signedExpectation_of_nonneg [theorem] BanditRLProof/OnlineExpectation.lean:53
+  theorem signedExpectation_of_nonneg (μ : Measure Ω) (f : Ω → EReal) (hf : ∀ᵐ ω ∂μ, 0 ≤ f ω) : signedExpectation μ f = (positiveIntegral μ f : EReal)
+BanditRL.OnlineConvex.signedExpectation_eq_top [theorem] BanditRLProof/OnlineExpectation.lean:66
+  theorem signedExpectation_eq_top (μ : Measure Ω) (f : Ω → EReal) (hp : positiveIntegral μ f = ∞) (hn : negativeIntegral μ f ≠ ∞) : signedExpectation μ f = ⊤
+BanditRL.OnlineConvex.sourceHinge [def] BanditRLProof/OnlineHinge.lean:15
+  def sourceHinge (z x : E) : EReal
+BanditRL.OnlineConvex.affine_subdifferential [theorem] BanditRLProof/OnlineHinge.lean:17
+  theorem affine_subdifferential (a : E) (b : ℝ) (x : E) : SourceSubdifferential (fun y => ((inner ℝ a y + b : ℝ) : EReal)) x = {a}
+BanditRL.OnlineConvex.hingeFamily [def] BanditRLProof/OnlineHinge.lean:44
+  def hingeFamily (z : E) (i : Bool) (y : E) : EReal
+BanditRL.OnlineConvex.affine_proper [theorem] BanditRLProof/OnlineHinge.lean:47
+  theorem affine_proper (a : E) (b : ℝ) : SourceProper (fun y => ((inner ℝ a y + b : ℝ) : EReal))
+BanditRL.OnlineConvex.affine_convex [theorem] BanditRLProof/OnlineHinge.lean:51
+  theorem affine_convex (a : E) (b : ℝ) : IsConvexExtended (fun y => ((inner ℝ a y + b : ℝ) : EReal))
+BanditRL.OnlineConvex.affine_continuous [theorem] BanditRLProof/OnlineHinge.lean:66
+  theorem affine_continuous (a : E) (b : ℝ) (x : E) : ContinuousAt (fun y => ((inner ℝ a y + b : ℝ) : EReal)) x
+BanditRL.OnlineConvex.hinge_max_identity [theorem] BanditRLProof/OnlineHinge.lean:71
+  theorem hinge_max_identity (z : E) : SourceFiniteMax (hingeFamily z) = sourceHinge z
+BanditRL.OnlineConvex.hinge_subdifferential_hull [theorem] BanditRLProof/OnlineHinge.lean:103
+  theorem hinge_subdifferential_hull [FiniteDimensional ℝ E] (z x : E) : SourceSubdifferential (sourceHinge z) x = convexHull ℝ (SourceActiveSubgradientUnion (hingeFamily z) x)
+BanditRL.OnlineConvex.hinge_family_support [theorem] BanditRLProof/OnlineHinge.lean:117
+  theorem hinge_family_support (z : E) (i : Bool) (x : E) : SourceSubdifferential (hingeFamily z i) x = {if i then -z else 0}
+BanditRL.OnlineConvex.hinge_family_false [theorem] BanditRLProof/OnlineHinge.lean:121
+  theorem hinge_family_false (z x : E) : hingeFamily z false x = ((0 : ℝ) : EReal)
+BanditRL.OnlineConvex.hinge_family_true [theorem] BanditRLProof/OnlineHinge.lean:124
+  theorem hinge_family_true (z x : E) : hingeFamily z true x = ((1 - inner ℝ z x : ℝ) : EReal)
+BanditRL.OnlineConvex.hinge_active_negative [theorem] BanditRLProof/OnlineHinge.lean:131
+  theorem hinge_active_negative (z x : E) (h : 1 - inner ℝ z x < 0) : SourceActiveSubgradientUnion (hingeFamily z) x = {(0 : E)}
+BanditRL.OnlineConvex.hinge_active_positive [theorem] BanditRLProof/OnlineHinge.lean:144
+  theorem hinge_active_positive (z x : E) (h : 0 < 1 - inner ℝ z x) : SourceActiveSubgradientUnion (hingeFamily z) x = {-z}
+BanditRL.OnlineConvex.hinge_active_zero [theorem] BanditRLProof/OnlineHinge.lean:157
+  theorem hinge_active_zero (z x : E) (h : 1 - inner ℝ z x = 0) : SourceActiveSubgradientUnion (hingeFamily z) x = {(0 : E), -z}
+BanditRL.OnlineConvex.example_2_27 [theorem] BanditRLProof/OnlineHinge.lean:168
+  theorem example_2_27 [FiniteDimensional ℝ E] (z x : E) : SourceSubdifferential (sourceHinge z) x = if 1 - inner ℝ z x < 0 then {0} else if 1 - inner ℝ z x = 0 then {g | ∃ α ∈ Icc (0 : ℝ) 1, g = -(α • z)} else {-z}
+BanditRL.OnlineConvex.jensen_negativeIntegral_ne_top [theorem] BanditRLProof/OnlineJensen.lean:12
+  theorem jensen_negativeIntegral_ne_top (μ : Measure Ω) [IsProbabilityMeasure μ] (f : E → EReal) (hbot : ∀ x, f x ≠ ⊥) (hf : IsConvexExtended f) (hfm : Measurable f) (X : Ω → E) (hXm : Measurable X) (hX : Integrable X μ) (hdom : ∀ᵐ ω ∂μ, X ω ∈ effectiveDomain f) : negativeIntegral μ (fun ω => f (X ω)) ≠ ∞
+BanditRL.OnlineConvex.theorem_2_9 [theorem] BanditRLProof/OnlineJensen.lean:27
+  theorem theorem_2_9 (μ : Measure Ω) [IsProbabilityMeasure μ] (f : E → EReal) (hbot : ∀ x, f x ≠ ⊥) (hf : IsConvexExtended f) (hfm : Measurable f) (X : Ω → E) (hXm : Measurable X) (hX : Integrable X μ) (hdom : ∀ᵐ ω ∂μ, X ω ∈ effectiveDomain f) : f (∫ ω, X ω ∂μ) ≤ signedExpectation μ (fun ω => f (X ω))
+BanditRL.OnlineConvex.SourceLipschitzOn [def] BanditRLProof/OnlineLipschitzSubgradient.lean:23
+  def SourceLipschitzOn (f : E → EReal) (V : Set E) (L : ℝ≥0) : Prop
+BanditRL.OnlineConvex.theorem_2_30 [theorem] BanditRLProof/OnlineLipschitzSubgradient.lean:27
+  theorem theorem_2_30 [FiniteDimensional ℝ E] (f : E → EReal) (hp : SourceProper f) (hc : IsConvexExtended f) (L : ℝ≥0) : SourceLipschitzOn f (interior (effectiveDomain f)) L ↔ ∀ x ∈ interior (effectiveDomain f), ∀ g ∈ SourceSubdifferential f x, ‖g‖ ≤ (L : ℝ)
+BanditRL.OnlineConvex.SourceNormalCone [def] BanditRLProof/OnlineNormalCone.lean:22
+  def SourceNormalCone (V : Set E) (x : E) : Set E
+BanditRL.OnlineConvex.indicator_subdifferential_eq_normalCone [theorem] BanditRLProof/OnlineNormalCone.lean:25
+  theorem indicator_subdifferential_eq_normalCone [FiniteDimensional ℝ E] (V : Set E) (hVn : V.Nonempty) (hVc : Convex ℝ V) (x : E) : SourceSubdifferential (extendedIndicator V) x = SourceNormalCone V x
+BanditRL.OnlineConvex.normalCone_interior_eq_zero [theorem] BanditRLProof/OnlineNormalCone.lean:47
+  theorem normalCone_interior_eq_zero [FiniteDimensional ℝ E] (V : Set E) (hVn : V.Nonempty) (hVc : Convex ℝ V) (x : E) (hx : x ∈ interior V) : SourceNormalCone V x = {(0 : E)}
+BanditRL.OnlineConvex.normalCone_unitBall_boundary [theorem] BanditRLProof/OnlineNormalCone.lean:79
+  theorem normalCone_unitBall_boundary [FiniteDimensional ℝ E] (x : E) (hx : ‖x‖ = 1) : SourceNormalCone {y : E | ‖y‖ ≤ 1} x = {g | ∃ α : ℝ, 0 ≤ α ∧ g = α • x}
+BanditRL.OnlineConvex.abs_subgradient_zero [theorem] BanditRLProof/OnlineSubgradientAbsolute.lean:18
+  theorem abs_subgradient_zero : SourceSubdifferential (fun y : ℝ => ((|y| : ℝ) : EReal)) 0 = Icc (-1 : ℝ) 1
+BanditRL.OnlineConvex.abs_subgradient_positive [theorem] BanditRLProof/OnlineSubgradientAbsolute.lean:45
+  theorem abs_subgradient_positive (x : ℝ) (hx : 0 < x) : SourceSubdifferential (fun y : ℝ => ((|y| : ℝ) : EReal)) x = {(1 : ℝ)}
+BanditRL.OnlineConvex.abs_subgradient_negative [theorem] BanditRLProof/OnlineSubgradientAbsolute.lean:72
+  theorem abs_subgradient_negative (x : ℝ) (hx : x < 0) : SourceSubdifferential (fun y : ℝ => ((|y| : ℝ) : EReal)) x = {(-1 : ℝ)}
+BanditRL.OnlineConvex.example_2_24 [theorem] BanditRLProof/OnlineSubgradientAbsolute.lean:99
+  theorem example_2_24 (x : ℝ) : SourceSubdifferential (fun y : ℝ => ((|y| : ℝ) : EReal)) x = if 0 < x then {(1 : ℝ)} else if x = 0 then Icc (-1 : ℝ) 1 else {(-1 : ℝ)}
+BanditRL.OnlineConvex.SourceSubdifferential [def] BanditRLProof/OnlineSubgradientBasic.lean:10
+  def SourceSubdifferential (f : E → EReal) (x : E) : Set E
+BanditRL.OnlineConvex.subgradient_point_finite [theorem] BanditRLProof/OnlineSubgradientBasic.lean:13
+  theorem subgradient_point_finite (f : E → EReal) (hf : SourceProper f) (x g : E) (hg : g ∈ SourceSubdifferential f x) : x ∈ effectiveDomain f
+BanditRL.OnlineConvex.theorem_2_21 [theorem] BanditRLProof/OnlineSubgradientBasic.lean:23
+  theorem theorem_2_21 (f : E → ℝ) (V : Set E) (hV : Convex ℝ V) (hsub : ∀ x ∈ V, (SourceSubdifferential (fun y => (f y : EReal)) x).Nonempty) : ConvexOn ℝ V f
+BanditRL.OnlineConvex.SourceDifferentiableAt [def] BanditRLProof/OnlineSubgradientDifferentiability.lean:14
+  def SourceDifferentiableAt (f : E → EReal) (x : E) : Prop
+BanditRL.OnlineConvex.subgradient_norm_le_lipschitz_ball [theorem] BanditRLProof/OnlineSubgradientDifferentiability.lean:17
+  theorem subgradient_norm_le_lipschitz_ball (f : E → EReal) (x : E) (r : ℝ) (hr : 0 < r) (K : ℝ≥0) (hfinite : ∀ y ∈ Metric.ball x r, ∃ a : ℝ, f y = (a : EReal)) (hlip : LipschitzOnWith K (fun y => (f y).toReal) (Metric.ball x r)) (g : E) (hg : g ∈ SourceSubdifferential f x) : ‖g‖ ≤ (K : ℝ)
+BanditRL.OnlineConvex.subgradients_locally_bounded [theorem] BanditRLProof/OnlineSubgradientDifferentiability.lean:62
+  theorem subgradients_locally_bounded (f : E → EReal) (hbot : ∀ y, f y ≠ ⊥) (hf : IsConvexExtended f) (x : E) (hx : x ∈ interior (effectiveDomain f)) : ∃ r : ℝ, 0 < r ∧ ∃ K : ℝ≥0, ∀ y ∈ Metric.ball x r, ∀ g ∈ SourceSubdifferential f y, ‖g‖ ≤ (K : ℝ)
+BanditRL.OnlineConvex.subgradient_limit_of_continuousAt [theorem] BanditRLProof/OnlineSubgradientDifferentiability.lean:85
+  theorem subgradient_limit_of_continuousAt {ι : Type*} (l : Filter ι) [NeBot l] (f : E → EReal) (hbot : ∀ y, f y ≠ ⊥) (x g : E) (hx : x ∈ interior (effectiveDomain f)) (hcont : ContinuousAt (fun y => (f y).toReal) x) (xs gs : ι → E) (hxs : Tendsto xs l (𝓝 x)) (hgs : Tendsto gs l (𝓝 g)) (hs : ∀ᶠ i in l, gs i ∈ SourceSubdifferential f (xs i)) : g ∈ SourceSubdifferential f x
+BanditRL.OnlineConvex.singleton_subgradient_tendsto [theorem] BanditRLProof/OnlineSubgradientDifferentiability.lean:115
+  theorem singleton_subgradient_tendsto {ι : Type*} (l : Filter ι) [NeBot l] (f : E → EReal) (hbot : ∀ y, f y ≠ ⊥) (hf : IsConvexExtended f) (x g : E) (hx : x ∈ interior (effectiveDomain f)) (hg : SourceSubdifferential f x = {g}) (xs gs : ι → E) (hxs : Tendsto xs l (𝓝 x)) (hs : ∀ᶠ i in l, gs i ∈ SourceSubdifferential f (xs i)) : Tendsto gs l (𝓝 g)
+BanditRL.OnlineConvex.singleton_subdifferential_interior [theorem] BanditRLProof/OnlineSubgradientDifferentiability.lean:145
+  theorem singleton_subdifferential_interior (f : E → EReal) (hf : IsConvexExtended f) (x : E) (hx : ∃ r : ℝ, f x = (r : EReal)) (g : E) (hg : SourceSubdifferential f x = {g}) : x ∈ interior (effectiveDomain f)
+BanditRL.OnlineConvex.singleton_subdifferential_hasGradientAt [theorem] BanditRLProof/OnlineSubgradientDifferentiability.lean:196
+  theorem singleton_subdifferential_hasGradientAt (f : E → EReal) (hf : IsConvexExtended f) (x : E) (hx : ∃ r : ℝ, f x = (r : EReal)) (g : E) (hg : SourceSubdifferential f x = {g}) : HasGradientAt (fun y => (f y).toReal) g x
+BanditRL.OnlineConvex.sourceDifferentiableAt_regular [theorem] BanditRLProof/OnlineSubgradientDifferentiability.lean:247
+  theorem sourceDifferentiableAt_regular (f : E → EReal) (x : E) (hd : SourceDifferentiableAt f x) : (∀ᶠ y in 𝓝 x, ∃ r : ℝ, f y = (r : EReal)) ∧ x ∈ interior (effectiveDomain f) ∧ DifferentiableAt ℝ (fun y => (f y).toReal) x
+BanditRL.OnlineConvex.subgradient_eq_gradient_at_interior [theorem] BanditRLProof/OnlineSubgradientDifferentiability.lean:268
+  theorem subgradient_eq_gradient_at_interior (f : E → EReal) (hbot : ∀ z, f z ≠ ⊥) (x : E) (hx : x ∈ interior (effectiveDomain f)) (hd : DifferentiableAt ℝ (fun z => (f z).toReal) x) (g : E) (hg : g ∈ SourceSubdifferential f x) : g = gradient (fun z => (f z).toReal) x
+BanditRL.OnlineConvex.theorem_2_22_gradient [theorem] BanditRLProof/OnlineSubgradientDifferentiability.lean:293
+  theorem theorem_2_22_gradient (f : E → EReal) (hf : IsConvexExtended f) (x : E) (hx : ∃ r : ℝ, f x = (r : EReal)) (h : E → ℝ) (he : (fun y => (h y : EReal)) =ᶠ[𝓝 x] f) (hd : DifferentiableAt ℝ h x) : SourceSubdifferential f x = {gradient h x}
+BanditRL.OnlineConvex.theorem_2_22_forward [theorem] BanditRLProof/OnlineSubgradientDifferentiability.lean:325
+  theorem theorem_2_22_forward (f : E → EReal) (hf : IsConvexExtended f) (x : E) (hx : ∃ r : ℝ, f x = (r : EReal)) (hd : SourceDifferentiableAt f x) : ∃ g : E, SourceSubdifferential f x = {g}
+BanditRL.OnlineConvex.theorem_2_22 [theorem] BanditRLProof/OnlineSubgradientDifferentiability.lean:336
+  theorem theorem_2_22 (f : E → EReal) (hf : IsConvexExtended f) (x : E) (hx : ∃ r : ℝ, f x = (r : EReal)) : SourceDifferentiableAt f x ↔ ∃ g : E, SourceSubdifferential f x = {g}
+BanditRL.OnlineConvex.subgradient_exists_of_domain_interior [theorem] BanditRLProof/OnlineSubgradientInterior.lean:10
+  theorem subgradient_exists_of_domain_interior {F : Type*} [NormedAddCommGroup F] [InnerProductSpace ℝ F] [FiniteDimensional ℝ F] (f : F → EReal) (hf : SourceProper f) (hc : IsConvexExtended f) (x : F) (hx : x ∈ interior (effectiveDomain f)) : (SourceSubdifferential f x).Nonempty
+BanditRL.OnlineConvex.SourceFiniteMax [def] BanditRLProof/OnlineSubgradientMax.lean:25
+  def SourceFiniteMax {ι : Type*} [Fintype ι] [Nonempty ι] (f : ι → E → EReal) (x : E) : EReal
+BanditRL.OnlineConvex.SourceActiveSubgradientUnion [def] BanditRLProof/OnlineSubgradientMax.lean:31
+  def SourceActiveSubgradientUnion {ι : Type*} [Fintype ι] [Nonempty ι] (f : ι → E → EReal) (x : E) : Set E
+BanditRL.OnlineConvex.active_subgradient_support_max [theorem] BanditRLProof/OnlineSubgradientMax.lean:35
+  theorem active_subgradient_support_max {ι : Type*} [Fintype ι] [Nonempty ι] (f : ι → E → EReal) (x : E) : SourceActiveSubgradientUnion f x ⊆ SourceSubdifferential (SourceFiniteMax f) x
+BanditRL.OnlineConvex.finiteMax_attained [theorem] BanditRLProof/OnlineSubgradientMax.lean:47
+  theorem finiteMax_attained {ι : Type*} [Fintype ι] [Nonempty ι] (f : ι → E → EReal) (x : E) : ∃ i, SourceFiniteMax f x = f i x
+BanditRL.OnlineConvex.finiteMax_point_finite [theorem] BanditRLProof/OnlineSubgradientMax.lean:53
+  theorem finiteMax_point_finite {ι : Type*} [Fintype ι] [Nonempty ι] (f : ι → E → EReal) (hp : ∀ i, SourceProper (f i)) (x : E) (hx : ∀ i, x ∈ effectiveDomain (f i)) : ∃ a : ℝ, SourceFiniteMax f x = (a : EReal)
+BanditRL.OnlineConvex.subgradient_iff_real_support [theorem] BanditRLProof/OnlineSubgradientMax.lean:60
+  theorem subgradient_iff_real_support (f : E → EReal) (hbot : ∀ y, f y ≠ ⊥) (x : E) (hx : x ∈ effectiveDomain f) (g : E) : g ∈ SourceSubdifferential f x ↔ ∀ y, f y ≠ ⊤ → (f x).toReal + inner ℝ g (y - x) ≤ (f y).toReal
+BanditRL.OnlineConvex.convex_sourceSubdifferential [theorem] BanditRLProof/OnlineSubgradientMax.lean:80
+  theorem convex_sourceSubdifferential (f : E → EReal) (hbot : ∀ y, f y ≠ ⊥) (x : E) (hx : x ∈ effectiveDomain f) : Convex ℝ (SourceSubdifferential f x)
+BanditRL.OnlineConvex.continuousAt_mem_domain_interior [theorem] BanditRLProof/OnlineSubgradientMax.lean:95
+  theorem continuousAt_mem_domain_interior (f : E → EReal) (x : E) (hx : x ∈ effectiveDomain f) (hc : ContinuousAt f x) : x ∈ interior (effectiveDomain f)
+BanditRL.OnlineConvex.finiteMax_ne_bot [theorem] BanditRLProof/OnlineSubgradientMax.lean:102
+  theorem finiteMax_ne_bot {ι : Type*} [Fintype ι] [Nonempty ι] (f : ι → E → EReal) (hp : ∀ i, SourceProper (f i)) (y : E) : SourceFiniteMax f y ≠ ⊥
+BanditRL.OnlineConvex.convexHull_active_support_max [theorem] BanditRLProof/OnlineSubgradientMax.lean:109
+  theorem convexHull_active_support_max {ι : Type*} [Fintype ι] [Nonempty ι] (f : ι → E → EReal) (hp : ∀ i, SourceProper (f i)) (x : E) (hx : ∀ i, x ∈ effectiveDomain (f i)) : convexHull ℝ (SourceActiveSubgradientUnion f x) ⊆ SourceSubdifferential (SourceFiniteMax f) x
+BanditRL.OnlineConvex.isClosed_sourceSubdifferential [theorem] BanditRLProof/OnlineSubgradientMax.lean:122
+  theorem isClosed_sourceSubdifferential (f : E → EReal) (hbot : ∀ y, f y ≠ ⊥) (x : E) (hx : x ∈ effectiveDomain f) : IsClosed (SourceSubdifferential f x)
+BanditRL.OnlineConvex.isCompact_sourceSubdifferential [theorem] BanditRLProof/OnlineSubgradientMax.lean:135
+  theorem isCompact_sourceSubdifferential [FiniteDimensional ℝ E] (f : E → EReal) (hp : SourceProper f) (hf : IsConvexExtended f) (x : E) (hx : x ∈ interior (effectiveDomain f)) : IsCompact (SourceSubdifferential f x)
+BanditRL.OnlineConvex.isCompact_convexJoin [theorem] BanditRLProof/OnlineSubgradientMax.lean:148
+  theorem isCompact_convexJoin (s t : Set E) (hs : IsCompact s) (ht : IsCompact t) : IsCompact (convexJoin ℝ s t)
+BanditRL.OnlineConvex.isCompact_convexHull_finite_convex_union [theorem] BanditRLProof/OnlineSubgradientMax.lean:168
+  theorem isCompact_convexHull_finite_convex_union {ι : Type*} (s : ι → Set E) (F : Finset ι) (hc : ∀ i ∈ F, Convex ℝ (s i)) (hk : ∀ i ∈ F, IsCompact (s i)) : IsCompact (convexHull ℝ (⋃ i ∈ F, s i))
+BanditRL.OnlineConvex.isCompact_active_subgradient_hull [theorem] BanditRLProof/OnlineSubgradientMax.lean:195
+  theorem isCompact_active_subgradient_hull [FiniteDimensional ℝ E] {ι : Type*} [Fintype ι] [Nonempty ι] (f : ι → E → EReal) (hp : ∀ i, SourceProper (f i)) (hc : ∀ i, IsConvexExtended (f i)) (x : E) (hx : ∀ i, x ∈ effectiveDomain (f i)) (hcont : ∀ i, ContinuousAt (f i) x) : IsCompact (convexHull ℝ (SourceActiveSubgradientUnion f x))
+BanditRL.OnlineConvex.continuousAt_finite_toReal [theorem] BanditRLProof/OnlineSubgradientMax.lean:228
+  theorem continuousAt_finite_toReal (f : E → EReal) (x : E) (ht : f x ≠ ⊤) (hb : f x ≠ ⊥) (hc : ContinuousAt f x) : ContinuousAt (fun y => (f y).toReal) x
+BanditRL.OnlineConvex.max_support_displacement_compare [theorem] BanditRLProof/OnlineSubgradientMax.lean:236
+  theorem max_support_displacement_compare {ι : Type*} [Fintype ι] [Nonempty ι] (f : ι → E → EReal) (hp : ∀ i, SourceProper (f i)) (x : E) (hx : ∀ i, x ∈ effectiveDomain (f i)) (y : E) (i : ι) (hy : y ∈ effectiveDomain (f i)) (hi : SourceFiniteMax f y = f i y) (g k : E) (hg : g ∈ SourceSubdifferential (SourceFiniteMax f) x) (hk : k ∈ SourceSubdifferential (f i) y) : inner ℝ g (y - x) ≤ inner ℝ k (y - x)
+BanditRL.OnlineConvex.max_subgradient_direction_witness [theorem] BanditRLProof/OnlineSubgradientMax.lean:262
+  theorem max_subgradient_direction_witness [FiniteDimensional ℝ E] {ι : Type*} [Fintype ι] [Nonempty ι] (f : ι → E → EReal) (hp : ∀ i, SourceProper (f i)) (hc : ∀ i, IsConvexExtended (f i)) (x : E) (hx : ∀ i, x ∈ effectiveDomain (f i)) (hcont : ∀ i, ContinuousAt (f i) x) (g d : E) (hg : g ∈ SourceSubdifferential (SourceFiniteMax f) x) : ∃ k ∈ SourceActiveSubgradientUnion f x, inner ℝ g d ≤ inner ℝ k d
+BanditRL.OnlineConvex.theorem_2_26 [theorem] BanditRLProof/OnlineSubgradientMax.lean:355
+  theorem theorem_2_26 [FiniteDimensional ℝ E] {ι : Type*} [Fintype ι] [Nonempty ι] (f : ι → E → EReal) (hp : ∀ i, SourceProper (f i)) (hc : ∀ i, IsConvexExtended (f i)) (x : E) (hx : ∀ i, x ∈ effectiveDomain (f i)) (hcont : ∀ i, ContinuousAt (f i) x) : SourceSubdifferential (SourceFiniteMax f) x = convexHull ℝ (SourceActiveSubgradientUnion f x)
+BanditRL.OnlineConvex.SourceSubgradientSum [def] BanditRLProof/OnlineSubgradientSum.lean:27
+  def SourceSubgradientSum {ι : Type*} [Fintype ι] (f : ι → E → EReal) (x : E) : Set E
+BanditRL.OnlineConvex.upperAdd_eq_add_of_ne_bot [theorem] BanditRLProof/OnlineSubgradientSum.lean:32
+  theorem upperAdd_eq_add_of_ne_bot (a b : EReal) (ha : a ≠ ⊥) (hb : b ≠ ⊥) : upperAdd a b = a + b
+BanditRL.OnlineConvex.ereal_finset_sum_ne_bot [theorem] BanditRLProof/OnlineSubgradientSum.lean:36
+  theorem ereal_finset_sum_ne_bot {ι : Type*} (s : Finset ι) (a : ι → EReal) (ha : ∀ i ∈ s, a i ≠ ⊥) : (∑ i ∈ s, a i) ≠ ⊥
+BanditRL.OnlineConvex.convex_finset_sum [theorem] BanditRLProof/OnlineSubgradientSum.lean:47
+  theorem convex_finset_sum {ι : Type*} (s : Finset ι) (f : ι → E → EReal) (hb : ∀ i ∈ s, ∀ y, f i y ≠ ⊥) (hc : ∀ i ∈ s, IsConvexExtended (f i)) : IsConvexExtended (fun y => ∑ i ∈ s, f i y)
+BanditRL.OnlineConvex.finite_sum_point [theorem] BanditRLProof/OnlineSubgradientSum.lean:71
+  theorem finite_sum_point {ι : Type*} [Fintype ι] (f : ι → E → EReal) (x : E) (hx : ∀ i, ∃ r : ℝ, f i x = (r : EReal)) : ∃ r : ℝ, (∑ i, f i x) = (r : EReal)
+BanditRL.OnlineConvex.sum_finite_implies_components_finite [theorem] BanditRLProof/OnlineSubgradientSum.lean:82
+  theorem sum_finite_implies_components_finite {ι : Type*} [Fintype ι] (a : ι → EReal) (hb : ∀ i, a i ≠ ⊥) (ht : (∑ i, a i) ≠ ⊤) : ∀ i, ∃ r : ℝ, a i = (r : EReal)
+BanditRL.OnlineConvex.interior_domain_sum [theorem] BanditRLProof/OnlineSubgradientSum.lean:95
+  theorem interior_domain_sum {ι : Type*} [Fintype ι] (f : ι → E → EReal) (hb : ∀ i y, f i y ≠ ⊥) (z : E) (hz : ∀ i, z ∈ interior (effectiveDomain (f i))) : z ∈ interior (effectiveDomain (fun y => ∑ i, f i y))
+BanditRL.OnlineConvex.binary_subgradient_decomposition [theorem] BanditRLProof/OnlineSubgradientSum.lean:109
+  theorem binary_subgradient_decomposition (f h : E → EReal) (hpf : SourceProper f) (hph : SourceProper h) (hcf : IsConvexExtended f) (hch : IsConvexExtended h) (x : E) (hfx : ∃ a : ℝ, f x = (a : EReal)) (hhx : ∃ b : ℝ, h x = (b : EReal)) (g : E) (hgs : g ∈ SourceSubdifferential (fun y => f y + h y) x) (hqual : ∃ z : E, z ∈ interior (effectiveDomain f) ∧ z ∈ effectiveDomain h) : ∃ p : E, p ∈ SourceSubdifferential f x ∧ g - p ∈ SourceSubdifferential h x
+BanditRL.OnlineConvex.theorem_2_23_inclusion [theorem] BanditRLProof/OnlineSubgradientSum.lean:247
+  theorem theorem_2_23_inclusion {ι : Type*} [Fintype ι] (f : ι → E → EReal) (hp : ∀ i, SourceProper (f i)) (x : E) : SourceSubgradientSum f x ⊆ SourceSubdifferential (fun y => ∑ i, f i y) x
+BanditRL.OnlineConvex.theorem_2_23_equality [theorem] BanditRLProof/OnlineSubgradientSum.lean:263
+  theorem theorem_2_23_equality (n : ℕ) (f : Fin (n + 1) → E → EReal) (hp : ∀ i, SourceProper (f i)) (hc : ∀ i, IsConvexExtended (f i)) (hclosed : ∀ i, SourceClosed (f i)) (hqual : ∃ z : E, z ∈ effectiveDomain (f (Fin.last n)) ∧ ∀ i : Fin (n + 1), i ≠ Fin.last n → z ∈ interior (effectiveDomain (f i))) (x : E) : SourceSubdifferential (fun y => ∑ i, f i y) x = SourceSubgradientSum f x

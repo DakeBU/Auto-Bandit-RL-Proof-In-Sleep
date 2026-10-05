@@ -2031,7 +2031,7 @@
       "featured": false,
       "teaching_order": 1,
       "plain": "The source open-weight definition agrees with the shared convex-set API.",
-      "math": "\\(\\theta x+(1-\\theta)y\\in V\\quad(0<\\theta<1)\\)",
+      "math": "\\(\\forall x,y\\in V,\\;0<\\theta<1:\\;\\theta x+(1-\\theta)y\\in V\\)",
       "intuition": "The source open-weight definition agrees with the shared convex-set API.",
       "why": "This is a source-qualified Chapter 2 foundation in the shared Lean graph.",
       "position": "Orabona v10, printed pages 9-10.",
@@ -2081,13 +2081,13 @@
       "chapter": "online-convex",
       "featured": false,
       "teaching_order": 4,
-      "plain": "Epigraph convexity is equivalent to the source weighted inequality under its finite-domain conditions.",
-      "math": "\\(f(\\theta x+(1-\\theta)y)\\le\\theta f(x)+(1-\\theta)f(y)\\)",
-      "intuition": "Epigraph convexity is equivalent to the source weighted inequality under its finite-domain conditions.",
+      "plain": "For f that never takes negative infinity and has convex effective domain, epigraph convexity is equivalent to the interior-weight inequality on domain points.",
+      "math": "\\(f\\text{ convex}\\iff\\forall x,y\\in\\operatorname{dom}f,\\;0<\\theta<1:\\;f(\\theta x+(1-\\theta)y)\\le\\theta f(x)+(1-\\theta)f(y)\\)",
+      "intuition": "For f that never takes negative infinity and has convex effective domain, epigraph convexity is equivalent to the interior-weight inequality on domain points.",
       "why": "This is a source-qualified Chapter 2 foundation in the shared Lean graph.",
       "position": "Orabona v10, printed pages 9-10.",
       "proof_idea": "Prove the exact real-height epigraph bridge and apply the existing real-valued positive-weight convexity equivalence.",
-      "lean_notes": "Definition 2.3 permits both infinities. Theorem 2.4 and indicator addition retain their explicit no-negative-infinity conditions. Remaining Chapter 2 results are not completed.",
+      "lean_notes": "Explicit noBottom and convex effective domain; the domain may be unbounded, empty or infinite in cardinality. Real epigraph heights and strict interior weights; finite-value conversions are proved, not assumed.",
       "dependencies": [
         "BanditRL.OnlineConvex.convexExtended_iff_toReal"
       ]
@@ -2172,7 +2172,7 @@
       "why": "An exact main-text closure operation used to recognize convex losses.",
       "position": "Orabona v10 printed page10/PDF22, unnumbered closure bullets.",
       "proof_idea": "Combine f convexity, global monotonicity, and g convexity through the finite embedding iff.",
-      "lean_notes": "No extra domain/image-convexity, finite-value or nonempty-index hypotheses are introduced.",
+      "lean_notes": "Globally real-valued convex f and g, with global Monotone g, exactly as printed. No extension of g to infinite values or extra convex-image premise. General real-module inputs include the source Euclidean setting.",
       "dependencies": [
         "BanditRL.OnlineConvex.convexExtended_coe_iff"
       ]
@@ -2189,7 +2189,7 @@
       "why": "Completes the remaining closure operation under an explicitly documented convex-analysis convention.",
       "position": "Orabona v10 printedp10/PDF22, with upper-addition interpretation recorded in the source contract.",
       "proof_idea": "Decompose finite upper heights into two real witnesses, combine epigraph points, then split scaling into zero and positive cases.",
-      "lean_notes": "No noBot, properness, nonempty-domain or positive-only coefficient restriction. Ordinary EReal addition has a public counterexample.",
+      "lean_notes": "No noBottom, properness, common-domain or positive-only coefficient restriction. Named upperAdd uses an explicitly attributed Rockafellar convention not printed by Orabona; scalar multiplication includes zero-times-infinity=zero. Ordinary EReal addition has the public spike counterexample.",
       "dependencies": [
         "BanditRL.OnlineConvex.convex_upperAdd",
         "BanditRL.OnlineConvex.convex_nonneg_mul"

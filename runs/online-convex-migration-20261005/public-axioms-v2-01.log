@@ -1,0 +1,176 @@
+@BanditRL.OnlineConvex.definition_2_2 : ∀ {E : Type u_1} [inst : AddCommGroup E] [inst_1 : Module ℝ E] (V : Set E),
+  Convex ℝ V ↔ ∀ x ∈ V, ∀ y ∈ V, ∀ (θ : ℝ), 0 < θ → θ < 1 → θ • x + (1 - θ) • y ∈ V
+'BanditRL.OnlineConvex.definition_2_2' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.convex_effectiveDomain : ∀ {E : Type u_1} [inst : AddCommGroup E] [inst_1 : Module ℝ E]
+  (f : E → EReal), BanditRL.OnlineConvex.IsConvexExtended f → Convex ℝ (BanditRL.OnlineConvex.effectiveDomain f)
+'BanditRL.OnlineConvex.convex_effectiveDomain' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.effectiveDomain_indicator : ∀ {E : Type u_1} [inst : AddCommGroup E] [Module ℝ E] (V : Set E),
+  BanditRL.OnlineConvex.effectiveDomain (BanditRL.OnlineConvex.extendedIndicator V) = V
+'BanditRL.OnlineConvex.effectiveDomain_indicator' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.convex_indicator_iff : ∀ {E : Type u_1} [inst : AddCommGroup E] [inst_1 : Module ℝ E]
+  (V : Set E), BanditRL.OnlineConvex.IsConvexExtended (BanditRL.OnlineConvex.extendedIndicator V) ↔ Convex ℝ V
+'BanditRL.OnlineConvex.convex_indicator_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.realEpigraph_toReal : ∀ {E : Type u_1} [inst : AddCommGroup E] [Module ℝ E] (f : E → EReal),
+  (∀ (x : E), f x ≠ ⊥) →
+    BanditRL.OnlineConvex.realEpigraph f = {p | p.1 ∈ BanditRL.OnlineConvex.effectiveDomain f ∧ (f p.1).toReal ≤ p.2}
+'BanditRL.OnlineConvex.realEpigraph_toReal' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.convexExtended_iff_toReal : ∀ {E : Type u_1} [inst : AddCommGroup E] [inst_1 : Module ℝ E]
+  (f : E → EReal),
+  (∀ (x : E), f x ≠ ⊥) →
+    (BanditRL.OnlineConvex.IsConvexExtended f ↔
+      ConvexOn ℝ (BanditRL.OnlineConvex.effectiveDomain f) fun x => (f x).toReal)
+'BanditRL.OnlineConvex.convexExtended_iff_toReal' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.theorem_2_4 : ∀ {E : Type u_1} [inst : AddCommGroup E] [inst_1 : Module ℝ E] (f : E → EReal),
+  (∀ (x : E), f x ≠ ⊥) →
+    Convex ℝ (BanditRL.OnlineConvex.effectiveDomain f) →
+      (BanditRL.OnlineConvex.IsConvexExtended f ↔
+        ∀ x ∈ BanditRL.OnlineConvex.effectiveDomain f,
+          ∀ y ∈ BanditRL.OnlineConvex.effectiveDomain f,
+            ∀ (θ : ℝ), 0 < θ → θ < 1 → f (θ • x + (1 - θ) • y) ≤ ↑θ * f x + ↑(1 - θ) * f y)
+'BanditRL.OnlineConvex.theorem_2_4' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.convex_add_indicator : ∀ {E : Type u_1} [inst : AddCommGroup E] [inst_1 : Module ℝ E]
+  (f : E → EReal),
+  (∀ (x : E), f x ≠ ⊥) →
+    BanditRL.OnlineConvex.IsConvexExtended f →
+      ∀ (V : Set E),
+        Convex ℝ V → BanditRL.OnlineConvex.IsConvexExtended fun x => f x + BanditRL.OnlineConvex.extendedIndicator V x
+'BanditRL.OnlineConvex.convex_add_indicator' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.convexExtended_coe_iff : ∀ {E : Type u_1} [inst : AddCommGroup E] [inst_1 : Module ℝ E]
+  (f : E → ℝ), (BanditRL.OnlineConvex.IsConvexExtended fun x => ↑(f x)) ↔ ConvexOn ℝ Set.univ f
+'BanditRL.OnlineConvex.convexExtended_coe_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.example_2_5 : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E]
+  (z : E) (b : ℝ), BanditRL.OnlineConvex.IsConvexExtended fun x => ↑(inner ℝ z x + b)
+'BanditRL.OnlineConvex.example_2_5' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.example_2_6 : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E],
+  BanditRL.OnlineConvex.IsConvexExtended fun x => ↑‖x‖
+'BanditRL.OnlineConvex.example_2_6' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.convex_comp_affine : ∀ {E : Type u_1} {F : Type u_2} [inst : AddCommGroup E]
+  [inst_1 : Module ℝ E] [inst_2 : AddCommGroup F] [inst_3 : Module ℝ F] (f : F → EReal),
+  BanditRL.OnlineConvex.IsConvexExtended f → ∀ (A : E →ᵃ[ℝ] F), BanditRL.OnlineConvex.IsConvexExtended fun x => f (A x)
+'BanditRL.OnlineConvex.convex_comp_affine' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.convex_iSup : ∀ {ι : Type u_1} {E : Type u_2} [inst : AddCommGroup E] [inst_1 : Module ℝ E]
+  (f : ι → E → EReal),
+  (∀ (i : ι), BanditRL.OnlineConvex.IsConvexExtended (f i)) → BanditRL.OnlineConvex.IsConvexExtended fun x => ⨆ i, f i x
+'BanditRL.OnlineConvex.convex_iSup' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.convex_comp_monotone : ∀ {E : Type u_1} [inst : AddCommGroup E] [inst_1 : Module ℝ E] (f : E → ℝ)
+  (g : ℝ → ℝ),
+  (BanditRL.OnlineConvex.IsConvexExtended fun x => ↑(f x)) →
+    (BanditRL.OnlineConvex.IsConvexExtended fun x => ↑(g x)) →
+      Monotone g → BanditRL.OnlineConvex.IsConvexExtended fun x => ↑(g (f x))
+'BanditRL.OnlineConvex.convex_comp_monotone' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineConvex.upperAdd_coe : ∀ (a b : ℝ), BanditRL.OnlineConvex.upperAdd ↑a ↑b = ↑(a + b)
+'BanditRL.OnlineConvex.upperAdd_coe' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineConvex.upperAdd_top : ∀ (a : EReal), BanditRL.OnlineConvex.upperAdd a ⊤ = ⊤
+'BanditRL.OnlineConvex.upperAdd_top' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineConvex.top_upperAdd : ∀ (a : EReal), BanditRL.OnlineConvex.upperAdd ⊤ a = ⊤
+'BanditRL.OnlineConvex.top_upperAdd' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineConvex.upperAdd_le_coe_iff : ∀ (a b : EReal) (h : ℝ),
+  BanditRL.OnlineConvex.upperAdd a b ≤ ↑h ↔ ∃ r s, a ≤ ↑r ∧ b ≤ ↑s ∧ r + s ≤ h
+'BanditRL.OnlineConvex.upperAdd_le_coe_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.convex_upperAdd : ∀ {E : Type u_1} [inst : AddCommGroup E] [inst_1 : Module ℝ E]
+  (f g : E → EReal),
+  BanditRL.OnlineConvex.IsConvexExtended f →
+    BanditRL.OnlineConvex.IsConvexExtended g →
+      BanditRL.OnlineConvex.IsConvexExtended fun x => BanditRL.OnlineConvex.upperAdd (f x) (g x)
+'BanditRL.OnlineConvex.convex_upperAdd' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineConvex.positive_mul_le_coe_iff : ∀ (a : ℝ), 0 < a → ∀ (z : EReal) (h : ℝ), ↑a * z ≤ ↑h ↔ z ≤ ↑(h / a)
+'BanditRL.OnlineConvex.positive_mul_le_coe_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.convex_nonneg_mul : ∀ {E : Type u_1} [inst : AddCommGroup E] [inst_1 : Module ℝ E]
+  (f : E → EReal),
+  BanditRL.OnlineConvex.IsConvexExtended f → ∀ (a : ℝ), 0 ≤ a → BanditRL.OnlineConvex.IsConvexExtended fun x => ↑a * f x
+'BanditRL.OnlineConvex.convex_nonneg_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.convex_nonneg_linear_combination : ∀ {E : Type u_1} [inst : AddCommGroup E] [inst_1 : Module ℝ E]
+  (f g : E → EReal),
+  BanditRL.OnlineConvex.IsConvexExtended f →
+    BanditRL.OnlineConvex.IsConvexExtended g →
+      ∀ (a b : ℝ),
+        0 ≤ a →
+          0 ≤ b → BanditRL.OnlineConvex.IsConvexExtended fun x => BanditRL.OnlineConvex.upperAdd (↑a * f x) (↑b * g x)
+'BanditRL.OnlineConvex.convex_nonneg_linear_combination' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.effectiveDomain : {E : Type u_1} → (E → EReal) → Set E
+'BanditRL.OnlineConvex.effectiveDomain' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.realEpigraph : {E : Type u_1} → (E → EReal) → Set (E × ℝ)
+'BanditRL.OnlineConvex.realEpigraph' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.IsConvexExtended : {E : Type u_1} → [inst : AddCommGroup E] → [Module ℝ E] → (E → EReal) → Prop
+'BanditRL.OnlineConvex.IsConvexExtended' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.extendedIndicator : {E : Type u_1} → Set E → E → EReal
+'BanditRL.OnlineConvex.extendedIndicator' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineConvex.upperAdd : EReal → EReal → EReal
+'BanditRL.OnlineConvex.upperAdd' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexExtended.restrictedLinear : ℝ → EReal
+'Tests.OnlineConvexExtended.restrictedLinear' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexExtended.domain_linear : BanditRL.OnlineConvex.effectiveDomain
+    Tests.OnlineConvexExtended.restrictedLinear =
+  Set.Ici 0
+'Tests.OnlineConvexExtended.domain_linear' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexExtended.no_bot_linear : ∀ (x : ℝ), Tests.OnlineConvexExtended.restrictedLinear x ≠ ⊥
+'Tests.OnlineConvexExtended.no_bot_linear' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexExtended.convex_linear : BanditRL.OnlineConvex.IsConvexExtended
+  Tests.OnlineConvexExtended.restrictedLinear
+'Tests.OnlineConvexExtended.convex_linear' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexExtended.nondegenerate : Tests.OnlineConvexExtended.restrictedLinear (-1) = ⊤ ∧
+  Tests.OnlineConvexExtended.restrictedLinear 0 = 0 ∧
+    Tests.OnlineConvexExtended.restrictedLinear 2 = ↑2 ∧
+      (1, 1) ∈ BanditRL.OnlineConvex.realEpigraph Tests.OnlineConvexExtended.restrictedLinear ∧
+        (1, 0) ∉ BanditRL.OnlineConvex.realEpigraph Tests.OnlineConvexExtended.restrictedLinear
+'Tests.OnlineConvexExtended.nondegenerate' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexExamples.affine : ℝ → EReal
+'Tests.OnlineConvexExamples.affine' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexExamples.affine_convex : BanditRL.OnlineConvex.IsConvexExtended Tests.OnlineConvexExamples.affine
+'Tests.OnlineConvexExamples.affine_convex' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexExamples.norm_convex : BanditRL.OnlineConvex.IsConvexExtended fun x => ↑|x|
+'Tests.OnlineConvexExamples.norm_convex' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexExamples.nondegenerate : Tests.OnlineConvexExamples.affine 0 = ↑(-1) ∧
+  Tests.OnlineConvexExamples.affine 2 = ↑3 ∧
+    (2, 3) ∈ BanditRL.OnlineConvex.realEpigraph Tests.OnlineConvexExamples.affine ∧
+      (2, 2) ∉ BanditRL.OnlineConvex.realEpigraph Tests.OnlineConvexExamples.affine
+'Tests.OnlineConvexExamples.nondegenerate' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexExamples.norm_midpoint : 0 < ↑|(-2)| ∧ ↑|1 / 2 * -2 + 1 / 2 * 2| = 0
+'Tests.OnlineConvexExamples.norm_midpoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexClosures.shift : ℝ →ᵃ[ℝ] ℝ
+'Tests.OnlineConvexClosures.shift' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexClosures.shifted_indicator_convex : BanditRL.OnlineConvex.IsConvexExtended fun x =>
+  BanditRL.OnlineConvex.extendedIndicator (Set.Ici 0) (Tests.OnlineConvexClosures.shift x)
+'Tests.OnlineConvexClosures.shifted_indicator_convex' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexClosures.shifted_values : BanditRL.OnlineConvex.extendedIndicator (Set.Ici 0)
+      (Tests.OnlineConvexClosures.shift (-2)) =
+    ⊤ ∧
+  BanditRL.OnlineConvex.extendedIndicator (Set.Ici 0) (Tests.OnlineConvexClosures.shift 0) = 0
+'Tests.OnlineConvexClosures.shifted_values' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexClosures.family : Bool → ℝ → EReal
+'Tests.OnlineConvexClosures.family' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexClosures.family_convex : ∀ (i : Bool),
+  BanditRL.OnlineConvex.IsConvexExtended (Tests.OnlineConvexClosures.family i)
+'Tests.OnlineConvexClosures.family_convex' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexClosures.supremum_convex : BanditRL.OnlineConvex.IsConvexExtended fun x =>
+  ⨆ i, Tests.OnlineConvexClosures.family i x
+'Tests.OnlineConvexClosures.supremum_convex' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexClosures.supremum_values : ⨆ i, Tests.OnlineConvexClosures.family i 1 = 0 ∧
+  ⨆ i, Tests.OnlineConvexClosures.family i 3 = ⊤
+'Tests.OnlineConvexClosures.supremum_values' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexClosures.outer : ℝ → ℝ
+'Tests.OnlineConvexClosures.outer' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexClosures.outer_monotone : Monotone Tests.OnlineConvexClosures.outer
+'Tests.OnlineConvexClosures.outer_monotone' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexClosures.composed_norm_convex : BanditRL.OnlineConvex.IsConvexExtended fun x =>
+  ↑(Tests.OnlineConvexClosures.outer ‖x‖)
+'Tests.OnlineConvexClosures.composed_norm_convex' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexSums.spike : ℝ → ℝ → EReal
+'Tests.OnlineConvexSums.spike' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexSums.spike_convex : ∀ (c : ℝ), BanditRL.OnlineConvex.IsConvexExtended (Tests.OnlineConvexSums.spike c)
+'Tests.OnlineConvexSums.spike_convex' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexSums.naive_sum_not_convex : ¬BanditRL.OnlineConvex.IsConvexExtended fun x =>
+    Tests.OnlineConvexSums.spike 0 x + Tests.OnlineConvexSums.spike 2 x
+'Tests.OnlineConvexSums.naive_sum_not_convex' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexSums.upper_spikes_convex : BanditRL.OnlineConvex.IsConvexExtended fun x =>
+  BanditRL.OnlineConvex.upperAdd (Tests.OnlineConvexSums.spike 0 x) (Tests.OnlineConvexSums.spike 2 x)
+'Tests.OnlineConvexSums.upper_spikes_convex' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexSums.mixed_infinity_values : BanditRL.OnlineConvex.upperAdd (Tests.OnlineConvexSums.spike 0 0)
+      (Tests.OnlineConvexSums.spike 2 0) =
+    ⊤ ∧
+  Tests.OnlineConvexSums.spike 0 0 + Tests.OnlineConvexSums.spike 2 0 = ⊥ ∧
+    BanditRL.OnlineConvex.upperAdd (Tests.OnlineConvexSums.spike 0 1) (Tests.OnlineConvexSums.spike 2 1) = ⊤
+'Tests.OnlineConvexSums.mixed_infinity_values' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexSums.positive_combination : BanditRL.OnlineConvex.IsConvexExtended fun x =>
+  BanditRL.OnlineConvex.upperAdd (↑2 * ↑‖x‖) (↑3 * ↑‖x‖)
+'Tests.OnlineConvexSums.positive_combination' depends on axioms: [propext, Classical.choice, Quot.sound]
