@@ -2674,11 +2674,11 @@
       "notation": [
         {
           "term": "prefix coefficient",
-          "meaning": "The sum of exactly the coefficients revealed before the current round."
+          "meaning": "S_t is the sum of precisely Lean indices i<t; current and future coefficients are not read."
         },
         {
           "term": "initial prediction x0",
-          "meaning": "Any point in[-1,1]; source x1 is Lean x0."
+          "meaning": "A fixed input x0 in [-1,1], corresponding to source x1. Prefix causality compares streams with this same input."
         },
         {
           "term": "comparator0",
@@ -2695,7 +2695,7 @@
           },
           {
             "title": "Choose the historical minimizer",
-            "detail": "Use x0 on the first round. Later choose1 for a negative cumulative coefficient, otherwise-1; ties have zero historical loss."
+            "detail": "At Lean time0 output feasible x0. At positive times choose1 if S_t<0 and -1 otherwise; zero-prefix ties choose -1. The source witness has S_t=+/-1/2 at every positive time."
           },
           {
             "title": "Evaluate the alternating stream",
@@ -2717,18 +2717,18 @@
           "math": "R_T(0)=T-1-\\frac{x_1}{2}\\ge T-\\frac32",
           "fallback": "Every later round incurs loss1; the initial loss is minus half the initial decision.",
           "plain": "An actual FTL strategy can have linear regret on convex linear losses.",
-          "relationship": "The same implemented predictor is proved causal, feasible and a historical-loss minimizer. The source alternation and regret are derived from that predictor, not assumed.",
+          "relationship": "The actual recursion is proved causal for fixed x0. Combine the membership and prefix-objective inequality for a feasible FTL selection, including time0. The later source witness has no ties; the exact played-loss regret and its lower bound are derived, not assumed. Six helpers and three definitions refine this one printed example.",
           "contract": {
             "model": "Linear losses z_t x on V=[-1,1].",
-            "assumptions": "Any initial x1 in V; T>=1; z1=-1/2, then alternating+1,-1.",
+            "assumptions": "Fixed x1 in [-1,1], T>=1. Source z1=-1/2, z_t=+1 on even t and -1 on odd t>1. Lean time0 corresponds to source round1; positive-time generic zero-prefix ties choose -1.",
             "parameters": "All positive integer horizons and feasible initial choices.",
-            "regret": "Exact regret against the fixed comparator0.",
+            "regret": "Deterministic actual played-loss regret against the fixed feasible comparator0; no expectation or optimal-hindsight-comparator equality.",
             "guarantee": "T-1-x1/2, hence at least T-3/2."
           },
           "local_status": {
             "status": "compiled",
             "label": "Causal FTL and exact source counterexample",
-            "boundary": "Example2.10 only; Chapter2 remains incomplete."
+            "boundary": "Example2.10 and its retained structural helpers only. Concrete generic tie selection and fixed-initial-input causality; no all-algorithm lower bound. Fresh integrated/package gates are recorded separately; Chapter2 and the whole book remain incomplete."
           }
         }
       ],
@@ -2756,7 +2756,7 @@
           }
         ],
         "takeaway": "Convexity alone does not protect unregularized FTL from alternating losses.",
-        "boundary": "The example contrasts with the separately proved projected OGD guarantees; it is not a lower bound against every online algorithm."
+        "boundary": "The canary evaluates a nonzero initial value1/3 and uses the actual producer theorem for29/6. This FTL counterexample is not a lower bound against every online algorithm; T0 is excluded from the source identity."
       }
     },
     {
