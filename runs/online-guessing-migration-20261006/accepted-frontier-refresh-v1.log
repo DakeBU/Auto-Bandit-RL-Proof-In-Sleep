@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "record_id": "frontier-9971bccafe6c9e2b",
+  "updated_at": "2026-10-05T17:23:42+00:00",
+  "root_objective": "Persistent Orabona Chapters1-16 Goal; guessing example/derivedcomparison accepted, Chapter2/book incomplete",
+  "current_leaf": {
+    "id": "ONLINE-GUESSING-MIGRATION-20261006",
+    "kind": "lean",
+    "status": "accepted",
+    "statement": "theorem guessing_vs_mean_unbounded (C : ℝ) (N : ℕ) : ∃ n : ℕ, N < n ∧ C < regret unitInterval (1/(2*Real.sqrt (((2*n)^2 : ℕ) : ℝ))) (fun _ x => (x-0)^2) 1 0 ((2*n)^2) - (∑ t ∈ range ((2*n)^2), (BanditRL.OnlineLearning.meanPredict (fun _ : ℕ => (0 : ℝ)) t)^2)",
+    "statement_hash": "a2a866bff8d028a3f4f3009e9ac8e33252a1d326158a29b838ad95576fc8255f",
+    "declaration": "BanditRL.OnlineGradientDescent.guessing_vs_mean_unbounded",
+    "file": "BanditRLProof/OnlineGuessingComparison.lean",
+    "source_status": "source-reviewed",
+    "dependencies": [
+      {
+        "kind": "lean",
+        "name": "BanditRL.OnlineGradientDescent.guessing_vs_mean_lower",
+        "status": "compiled"
+      },
+      {
+        "kind": "lean",
+        "name": "BanditRL.OnlineGradientDescent.meanPredict_zero_cumulativeLoss",
+        "status": "compiled"
+      },
+      {
+        "kind": "lean",
+        "name": "BanditRL.OnlineGradientDescent.guessing_squared_horizon_lower",
+        "status": "compiled"
+      },
+      {
+        "kind": "review",
+        "name": "source-reader",
+        "status": "accepted"
+      }
+    ]
+  },
+  "dag": {
+    "nodes": [
+      {
+        "id": "ONLINE-GUESSING-MIGRATION-20261006",
+        "kind": "lean",
+        "status": "accepted",
+        "dependencies": [
+          {
+            "kind": "lean",
+            "name": "BanditRL.OnlineGradientDescent.guessing_vs_mean_lower",
+            "status": "compiled"
+          },
+          {
+            "kind": "lean",
+            "name": "BanditRL.OnlineGradientDescent.meanPredict_zero_cumulativeLoss",
+            "status": "compiled"
+          },
+          {
+            "kind": "lean",
+            "name": "BanditRL.OnlineGradientDescent.guessing_squared_horizon_lower",
+            "status": "compiled"
+          },
+          {
+            "kind": "review",
+            "name": "source-reader",
+            "status": "accepted"
+          }
+        ],
+        "dispatch_count": 0
+      }
+    ]
+  },
+  "last_accepted_verifier": {
+    "trial_index": 3,
+    "time": "2026-10-05T17:23:41+00:00",
+    "task": "ONLINE-GUESSING-MIGRATION-20261006",
+    "role": "reviewer",
+    "kind": "review",
+    "status": "accepted",
+    "lean": "",
+    "notes": "Same actual compiled comparison bundle accepted after distinct source/reader and integrated gates. One printedexample9retained3newproofs1domain. Actual terminal closed, not Chapter2/book/productivity experiment.",
+    "run_id": "online-guessing-migration-20261006"
+  },
+  "memory_policy": {
+    "recent_role_relevant_limit": 5,
+    "explicit_verified_lemma_ids": [],
+    "whole_history_default": false
+  },
+  "shadow_gate": {
+    "status": "pending",
+    "analyzed_trial_rows": 4,
+    "mismatches": [],
+    "replay_transitions": 0
+  },
+  "mutation_policy": {
+    "canonical_path_queue": true,
+    "cross_process_lock": true,
+    "same_file_serialized": true,
+    "disjoint_files_parallel": true
+  },
+  "autonomous_execution": {
+    "enabled": false,
+    "requires_deterministic_gates": true,
+    "requires_explicit_user_request": true
+  }
+}
