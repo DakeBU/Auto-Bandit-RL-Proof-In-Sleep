@@ -1,0 +1,42 @@
+@BanditRL.OnlineConvex.affine_support_of_finite_neighborhood : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] [FiniteDimensional ℝ E] (f : E → EReal),
+  BanditRL.OnlineConvex.IsConvexExtended f →
+    ∀ (x : E), (∀ᶠ (y : E) in nhds x, ∃ r, f y = ↑r) → ∃ a b, ↑(a x + b) = f x ∧ ∀ (y : E), ↑(a y + b) ≤ f y
+'BanditRL.OnlineConvex.affine_support_of_finite_neighborhood' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.affine_support_of_domain_interior : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] [FiniteDimensional ℝ E] (f : E → EReal),
+  (∀ (y : E), f y ≠ ⊥) →
+    BanditRL.OnlineConvex.IsConvexExtended f →
+      ∀ x ∈ interior (BanditRL.OnlineConvex.effectiveDomain f), ∃ a b, ↑(a x + b) = f x ∧ ∀ (y : E), ↑(a y + b) ≤ f y
+'BanditRL.OnlineConvex.affine_support_of_domain_interior' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.affine_minorant_of_domain_interior : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] [FiniteDimensional ℝ E] (f : E → EReal),
+  (∀ (y : E), f y ≠ ⊥) →
+    BanditRL.OnlineConvex.IsConvexExtended f →
+      ∀ x ∈ interior (BanditRL.OnlineConvex.effectiveDomain f), ∃ a b, ∀ (y : E), ↑(a y + b) ≤ f y
+'BanditRL.OnlineConvex.affine_minorant_of_domain_interior' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.convex_affine_minorant : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] [FiniteDimensional ℝ E] (f : E → EReal),
+  (∀ (x : E), f x ≠ ⊥) →
+    BanditRL.OnlineConvex.IsConvexExtended f →
+      (BanditRL.OnlineConvex.effectiveDomain f).Nonempty → ∃ a b, ∀ (x : E), ↑(a x + b) ≤ f x
+'BanditRL.OnlineConvex.convex_affine_minorant' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexMinorant.loss : ℝ × ℝ → EReal
+'Tests.OnlineConvexMinorant.loss' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexMinorant.loss_formula : ∀ (p : ℝ × ℝ),
+  Tests.OnlineConvexMinorant.loss p = if p ∈ Tests.OnlineConvexBarycenter.ray then ↑p.1 else ⊤
+'Tests.OnlineConvexMinorant.loss_formula' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexMinorant.loss_noBot : ∀ (p : ℝ × ℝ), Tests.OnlineConvexMinorant.loss p ≠ ⊥
+'Tests.OnlineConvexMinorant.loss_noBot' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexMinorant.loss_convex : BanditRL.OnlineConvex.IsConvexExtended Tests.OnlineConvexMinorant.loss
+'Tests.OnlineConvexMinorant.loss_convex' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexMinorant.loss_domain : BanditRL.OnlineConvex.effectiveDomain Tests.OnlineConvexMinorant.loss =
+  Tests.OnlineConvexBarycenter.ray
+'Tests.OnlineConvexMinorant.loss_domain' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexMinorant.global_minorant : ∃ a b, ∀ (p : ℝ × ℝ), ↑(a p + b) ≤ Tests.OnlineConvexMinorant.loss p
+'Tests.OnlineConvexMinorant.global_minorant' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexMinorant.nondegenerate_nonclosed : Tests.OnlineConvexMinorant.loss (1, 0) = 1 ∧
+  Tests.OnlineConvexMinorant.loss (3, 0) = 3 ∧
+    Tests.OnlineConvexMinorant.loss (0, 1) = ⊤ ∧
+      ¬IsClosed (BanditRL.OnlineConvex.effectiveDomain Tests.OnlineConvexMinorant.loss)
+'Tests.OnlineConvexMinorant.nondegenerate_nonclosed' depends on axioms: [propext, Classical.choice, Quot.sound]

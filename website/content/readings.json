@@ -2492,7 +2492,7 @@
         "title": "Online Learning: A Modern Introduction Using Convex Optimization",
         "authors": "Francesco Orabona",
         "edition": "arXiv:1912.13213v10, 21 June 2026",
-        "sections": "Section2.1.1, Theorem2.9 proof dependency (full source theorem mapped separately)",
+        "sections": "Section2.1.1, necessary affine-support/minorant dependency of Theorem2.9; four retained library results, not four printed source results",
         "pages": "printedp11/PDF23",
         "pdf_page": 23,
         "url": "https://arxiv.org/pdf/1912.13213v10"
@@ -2500,15 +2500,15 @@
       "notation": [
         {
           "term": "proper function",
-          "meaning": "No negative infinity and nonempty effective domain."
+          "meaning": "For the general terminal: global no-bottom and nonempty effective domain f<top, so domain points are genuinely finite. The finite-neighbourhood helper instead derives global no-bottom. All actual types use finite-dimensional real normed E, without supplied Borel, measurable, probability, inner-product or CompleteSpace classes; old Borel prose is historical stale evidence."
         },
         {
           "term": "affine minorant",
-          "meaning": "A continuous linear functional plus a real constant lies below f everywhere."
+          "meaning": "A continuous real linear a plus real b lies below f at ALL ambient points, including top outside domain. The first two helpers additionally touch f at chosen x; the last two conclusions give only the global bound. a may be zero, without uniqueness, normalization, chosen boundary contact or quantitative norm bounds."
         },
         {
           "term": "relative interior",
-          "meaning": "Interior inside the affine span, which can have lower ambient dimension."
+          "meaning": "The general producer generates intrinsic interior within the affine span, translates to its direction space and proves ambient interior there, then extends the actual linear functional and corrects the intercept. Ambient domain-interior assumptions remain in the two interior helpers; only domain nonempty is needed by the general terminal."
         }
       ],
       "algorithm": {
@@ -2517,15 +2517,15 @@
         "steps": [
           {
             "title": "Separate at a finite epigraph boundary",
-            "detail": "At a domain interior point, the vertical separator coefficient is strictly negative."
+            "detail": "The finite-neighbourhood support helper needs actual eventually-everywhere finite values, not just finite at x. Epigraph boundary and nonzero separation produce a vertical coefficient proved negative before division, and derive global no-bottom. Fermat applies to auxiliary identity/linear functions, not loss differentiability. Domain-interior support produces that neighbourhood and touches f(x); the interior minorant helper directly drops contact from this support."
           },
           {
             "title": "Use relative interior",
-            "detail": "Pull f back to the affine-span direction space, where the domain has an interior point."
+            "detail": "With no-bottom, convex real epigraph and nonempty domain only, generate intrinsic affine-span interior and restrict/translate f into its direction space. Actual ambient interior there permits the helper; no closedness, lsc, full ambient dimension, measurable loss or desired-minorant oracle is added."
           },
           {
             "title": "Extend the functional",
-            "detail": "Extend the linear part to the ambient finite-dimensional space and adjust the constant."
+            "detail": "Actually extend the restricted linear map to ambient finite-dimensional E, obtain continuity and adjust the intercept; prove the bound everywhere, with top outside domain handled explicitly. No particular boundary contact, nonzero output slope or quantitative bound is promised."
           }
         ]
       },
@@ -2535,14 +2535,14 @@
       ],
       "source_theorems": [
         {
-          "label": "Theorem2.9: Jensen inequality (shared source theorem)",
+          "label": "Theorem2.9: separately mapped parent Jensen endpoint",
           "pages": "printedp11",
           "pdf_page": 23,
           "url": "https://arxiv.org/pdf/1912.13213v10",
           "math": "f(\\mathbb E X)\\le\\mathbb E[f(X)]",
           "fallback": "A measurable convex extended-real loss at the mean is bounded by its possibly infinite expected loss.",
           "plain": "Only X is assumed integrable; loss integrability and a closed domain are not assumed.",
-          "relationship": "This page explains a dependency of the shared theorem_2_9, mapped in Source Jensen. It is not an additional numbered theorem attributed to the book.",
+          "relationship": "This page revalidates four retained library dependencies, not four printed results or Jensen itself. The two teaching links are selected representatives, not the full public declaration set or exhaustive actual graph. Historical shared theorem_2_9 compilation remains separate; its finite-negative-part producer and source probability-loss canaries require distinct revalidation. No loss-integrability premise is added to that source parent.",
           "contract": {
             "model": "Finite-dimensional real random vectors under a probability law.",
             "assumptions": "Measurable convex loss never negative infinity; measurable integrable X lies in the effective domain almost surely.",
@@ -2552,14 +2552,14 @@
           },
           "local_status": {
             "status": "compiled",
-            "label": "Dependency and shared Jensen source theorem compiled",
-            "boundary": "This dependency page does not imply completion of Chapter2."
+            "label": "Affine-support/minorant dependency recompiled; historical Jensen parent awaits separate revalidation",
+            "boundary": "Only four retained library proofs, no production definitions or new proof code/nodes; this package does not accept source Jensen, Chapter2 or the whole book."
           }
         }
       ],
       "worked_example": {
         "title": "A varying finite loss on a nonclosed ray",
-        "intro": "On points (x,0) with x>0, set f(x,0)=x; set f to positive infinity elsewhere.",
+        "intro": "The actual canary loss equals coordinate p.1 on the nonclosed lower-dimensional ray {(x,0):x>0}, and top outside. The base coordinate is finite everywhere in its upperAdd representation, so this example does not settle mixed-infinity conventions generally.",
         "steps": [
           {
             "title": "Check the domain",
@@ -2580,8 +2580,8 @@
             "fallback": "The domain restriction is part of the actual extended-real function."
           }
         ],
-        "takeaway": "The global theorem handles lower-dimensional nonclosed domains.",
-        "boundary": "This is a dependency example. The full theorem and its finite, infinite-probability and nonclosed-domain canaries are mapped in Source Jensen."
+        "takeaway": "The general public theorem handles this lower-dimensional nonclosed domain and gives an all-ambient affine inequality, without a chosen contact or nonzero-slope guarantee.",
+        "boundary": "Six retained canary proofs and one definition verify formula, no-bottom, convexity, exact domain, global minorant and values1/3/top with nonclosed domain. This geometric dependency test is not a probability Jensen-loss test; parent and its probability canaries remain separate revalidation obligations."
       }
     },
     {

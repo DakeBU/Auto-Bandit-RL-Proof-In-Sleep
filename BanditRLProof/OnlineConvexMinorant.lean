@@ -1,3 +1,19 @@
+/-
+Four necessary affine-support/minorant library dependencies of Orabona v10
+Theorem 2.9 (printed p.11/PDF p.23), not four printed results or Jensen acceptance.
+All actual public types use finite-dimensional real normed E, without supplied
+Borel/measurable/probability/CompleteSpace parameters. Finite-neighbourhood
+support requires neighbourhood finiteness, produces global no-bottom, and uses
+Fermat only for auxiliary identity/linear functions. Its separator's vertical
+coefficient is proved negative before division; the output slope may be zero.
+The two ambient-domain-interior helpers respectively retain or drop contact.
+The global minorant assumes only no-bottom, convex real epigraph and nonempty
+effective domain. Its body produces the intrinsic-interior affine-span
+restriction, direction-space interior and actual linear extension/intercept
+correction, without closedness, lsc or loss differentiability assumptions.
+All four original headers/proof bytes remain fixed in the 20261005 migration.
+Jensen's finite-negative-part producer, Chapter 2 and the whole Goal stay open.
+-/
 import BanditRLProof.OnlineConvexBarycenter
 import BanditRLProof.OnlineConvexExtended
 import Mathlib.Analysis.Calculus.LocalExtr.Basic
