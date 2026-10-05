@@ -15428,3 +15428,5 @@ here during local harness runs.
 - `2026-10-05T12:22:37+00:00` `bandit.py new-task` `task` `tasks/ONLINE-OPTIMALITY-MIGRATION-20261005.md` - Revalidate Orabona Theorem 2.8 and interior optimality consequence
 
 - Expectation representation migration 20261005: seven retained proofs/three definitions, zero new proof code/nodes; arbitrary-measure/finite-part/actual Integrable/nonprobability canary and parent-Jensen boundaries qualified. Distinct contract/body reviewed; final reader/integration/PR gates pending. See runs/online-expectation-migration-20261005.
+
+- Nonclosed convex-barycenter migration 20261005: three retained proofs/no production definitions/zero new code/nodes; complete-normed AE equality, finite-dimensional ambient support and probability/integrable/AE actual-set barycenter scopes qualified. Distinct contract/body reviewed; final reader/integration/PR pending. See runs/online-barycenter-migration-20261005.

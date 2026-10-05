@@ -2393,7 +2393,7 @@
         "title": "Online Learning: A Modern Introduction Using Convex Optimization",
         "authors": "Francesco Orabona",
         "edition": "arXiv:1912.13213v10, 21 June 2026",
-        "sections": "Section2.1.1, Theorem2.9 proof dependency (full source theorem mapped separately)",
+        "sections": "Section2.1.1, necessary nonclosed-barycenter dependency of Theorem2.9; three retained library results, not three printed source results",
         "pages": "printedp11/PDF23",
         "pdf_page": 23,
         "url": "https://arxiv.org/pdf/1912.13213v10"
@@ -2401,15 +2401,15 @@
       "notation": [
         {
           "term": "convex set s",
-          "meaning": "The set need not be closed and may have empty ambient interior."
+          "meaning": "Actual mean membership in s itself under a probability law, finite-dimensional real normed Borel space, genuine Integrable X and AE membership. No closedness, full ambient interior, boundedness, finite support or measurable-set premise."
         },
         {
           "term": "supporting functional",
-          "meaning": "A nonzero continuous linear map bounded above on s by its value at the mean."
+          "meaning": "The geometric helper produces a nonzero continuous real linear map with a(y)<=a(x) on s, at a closure point outside ambient interior. Non-strict support at level a(x); no strict separation, relative-interior or zero-level normalization."
         },
         {
           "term": "kernel lift",
-          "meaning": "The centered random vector belongs to the functional kernel almost surely, a strictly lower-dimensional space."
+          "meaning": "Only the barycenter body centers X-mean, constructs a proper-kernel representative equal almost everywhere, proves its integrability and integral0, then uses strict finite-rank descent and affine preimage convexity."
         }
       ],
       "algorithm": {
@@ -2418,15 +2418,15 @@
         "steps": [
           {
             "title": "Locate the mean in the closure",
-            "detail": "Reuse the existing closed-convex-set integral theorem for the closure only."
+            "detail": "Pinned closed-convex integral theory puts the mean in closure s. This intermediate result cannot replace the terminal membership in the original nonclosed s."
           },
           {
             "title": "Use a supporting hyperplane",
-            "detail": "If the mean were outside s, separate at the mean and prove the functional is constant almost surely."
+            "detail": "A hypothetical missing mean yields a nonzero support functional: Hahn-Banach for nonempty ambient interior, or a proper affine-span annihilator otherwise. Integrability, linear integral commutation and probability mass1 prove equality of functional VALUES a(X)=a(mean X) almost everywhere, not that X or the map a is constant."
           },
           {
             "title": "Reduce dimension",
-            "detail": "Lift the centered vector into the proper kernel, preserve its integral, and apply induction to the preimage of s."
+            "detail": "Construct the centered proper-kernel lift, prove integrability by subtype isometry and its actual mean0 by integral commutation. Affine preimage convexity and AE membership survive; strict kernel-rank descent allows strong induction to conclude membership in s itself. These properties are produced, not assumed."
           }
         ]
       },
@@ -2437,14 +2437,14 @@
       ],
       "source_theorems": [
         {
-          "label": "Theorem2.9: Jensen inequality (shared source theorem)",
+          "label": "Theorem2.9: separately mapped parent Jensen endpoint",
           "pages": "printedp11",
           "pdf_page": 23,
           "url": "https://arxiv.org/pdf/1912.13213v10",
           "math": "f(\\mathbb E X)\\le\\mathbb E[f(X)]",
           "fallback": "A measurable convex extended-real loss at the mean is bounded by its possibly infinite expected loss.",
           "plain": "Only X is assumed integrable; loss integrability and a closed domain are not assumed.",
-          "relationship": "This page explains a dependency of the shared theorem_2_9, mapped in Source Jensen. It is not an additional numbered theorem attributed to the book.",
+          "relationship": "This page revalidates three retained library dependencies, not three printed results or Jensen itself. Historical theorem_2_9 compilation is retained; source Jensen, its affine-minorant negative-part producer and probability-loss canaries require separate distinct revalidation. This receipt accepts only the barycenter dependency.",
           "contract": {
             "model": "Finite-dimensional real random vectors under a probability law.",
             "assumptions": "Measurable convex loss never negative infinity; measurable integrable X lies in the effective domain almost surely.",
@@ -2454,14 +2454,14 @@
           },
           "local_status": {
             "status": "compiled",
-            "label": "Dependency and shared Jensen source theorem compiled",
-            "boundary": "This dependency page does not imply completion of Chapter2."
+            "label": "Barycenter dependency recompiled; historical Jensen parent awaits separate revalidation",
+            "boundary": "This package does not accept Orabona Theorem2.9, Chapter2 or the whole book. Three retained proofs, no definitions or new proof code/nodes."
           }
         }
       ],
       "worked_example": {
         "title": "A nonclosed ray in a line",
-        "intro": "Choose (1,0) and (3,0) with equal probability. The convex set consists of (x,0) with x>0.",
+        "intro": "The verified law is half dirac1 plus half dirac3, of total mass1. The distinct support vectors (1,0) and (3,0) lie in the nonclosed lower-dimensional ray {(x,0):x>0}; its mean is (2,0).",
         "steps": [
           {
             "title": "Keep the set nonclosed",
@@ -2482,8 +2482,8 @@
             "fallback": "The source interface accepts a nonclosed lower-dimensional convex set."
           }
         ],
-        "takeaway": "Finite-dimensional convexity suffices for mean membership, even without closedness.",
-        "boundary": "This is a dependency example. The full theorem and its finite, infinite-probability and nonclosed-domain canaries are mapped in Source Jensen."
+        "takeaway": "The public general theorem reaches the original nonclosed ray, with genuine integrability and probability normalization. Its proof does not impose finite support on arbitrary X.",
+        "boundary": "This freshly replayed nonconstant probability canary tests only the barycenter dependency. Source Jensen and its probability infinite-loss/nonclosed-domain canaries remain separate revalidation obligations."
       }
     },
     {

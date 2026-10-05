@@ -1,3 +1,17 @@
+/-
+Necessary nonclosed-convex-set barycenter dependency of Orabona v10 Theorem 2.9
+(printed p.11/PDF p.23), not three printed source results or Jensen acceptance.
+The AE functional-value equality helper uses a complete real normed space and
+probability/integrability; the supplied functional may be zero. The geometric
+helper uses finite dimension and ambient interior, producing nonzero non-strict
+support at level a(x), without a measure. The actual-set barycenter retains its
+finite-dimensional Borel context, probability, Integrable X and AE membership.
+No closedness, full ambient interior or finite support is assumed. Its body
+produces the centered proper-kernel lift, integrability, zero mean and strict
+rank descent, then recurses to membership in the original set itself.
+All three declaration headers and original proof bytes remain fixed in the
+20261005 retained migration; Chapter 2 and the whole-book Goal remain open.
+-/
 import Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap
 import Mathlib.Analysis.Convex.Integral
 import Mathlib.Analysis.LocallyConvex.Separation
