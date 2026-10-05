@@ -132,6 +132,20 @@ Missing source bridges are explicit SOURCE_GAP nodes rather than silently
 supplied from memory. Each edge cites the consumer use-site and shows where
 conditional premises are discharged.
 
+
+### Independent topology review
+
+The extractor may not approve its own source graph. A distinct reviewer receives
+the raw source and proposed topology, but not implementation Lean or the
+extractor's private rationale, and actively searches for omitted probability
+regions, false AND/OR structure, wrong edge direction, hidden external inputs,
+quantifier drift, and undischarged event/adaptivity premises.
+
+For a large paper/book route, use a fresh global root-closure review that traces
+each sealed Anchor through the whole source graph and verifies that every
+substantive proof paragraph has a disposition. Database lint is structural
+evidence only, not a completeness verdict.
+
 ## 5. Alternative proof routes are OR-routes
 
 A target with two sufficient routes
