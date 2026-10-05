@@ -1,6 +1,6 @@
 # BanditRLlib contributor and Codex contract
 
-This contract applies to humans and coding agents contributing mathematics, source mappings, theorem-facing website material, routes, or graph metadata.
+This contract applies to humans and coding agents contributing mathematics, source mappings, theorem-facing website material, routes, or graph metadata. Source-facing work also follows `docs/proof-digestion-protocol.md`.
 
 ## 1. Search and reuse before declaring
 
@@ -54,9 +54,13 @@ The formalizer cannot self-certify the decoder or source-review stages. A theore
 
 Repairs are separate objects: source theorem, actual Lean theorem, semantic mismatch, proposed repaired theorem.
 
-## 4. Three graph views must be classified
+## 4. Four mathematical graph views, plus Overview navigation
 
-Every substantive contribution records `graph_contribution`.
+The current contribution schema still stores Lean/Overview/Functor integration fields, but source-facing Anchors additionally follow the four-view proof-digestion stack.
+
+### Source Proof Graph
+
+Answers **how the source proved the result**. It is reconstructed independently of implementation Lean, covers every substantive source region, retains `SOURCE_GAP` nodes, and uses OR-routes for alternative sufficient proofs.
 
 ### Lean Graph
 
@@ -64,11 +68,9 @@ Allowed classifications: `new-node`, `reuse-only`, `integration-node`, `no-chang
 
 Solid edges are reserved for compiler-backed structure/reviewed formal dependency relations. Source mappings, planned consumers, semantic links, and conceptual bridges are dashed overlays.
 
-### Overview / route-progress
+### Compressed Bandit/RL Spine
 
-Allowed classifications: `updated`, `no-change-with-reason`.
-
-Update affected books, setting/frontier placement, result/milestone status, and route progress. Never hand-edit a completion percentage or badge.
+Answers **which primitives recur after implementation bookkeeping is removed**. It is the reviewed output of purification and keeps a lossless drill-down to the source and Lean graphs.
 
 ### Functor Hypergraph
 
@@ -81,6 +83,10 @@ Allowed classifications:
 A candidate recurring mechanism needs stable `family:`, `transport:`, or `concept:` IDs, source domains, formula or proof skeleton, mechanism, hypothesis map, conclusion map, source IDs, candidate local Lean substrates, and a failure boundary.
 
 The creator may propose a conceptual mirror but should not be the only validator. A conceptual edge is never rendered as a solid Lean dependency.
+
+### Overview / route-progress (navigation)
+
+Allowed classifications: `updated`, `no-change-with-reason`. Overview places books, settings, frontiers and milestones around the four mathematical views; it is not another proof semantics. Never hand-edit a completion percentage or badge.
 
 ## 5. Route, progress, and website synchronization
 
