@@ -17,7 +17,8 @@ Every collaborator and every Codex/ChatGPT/Claude agent acting for a collaborato
 2. `CONTRIBUTING.md`
 3. `docs/contributor-codex-contract.md`
 4. `docs/theorem-publication-protocol.md`
-5. `.agents/skills/bandit-substantive-advance/SKILL.md`
+5. `docs/proof-digestion-protocol.md`
+6. `.agents/skills/bandit-substantive-advance/SKILL.md`
 6. `.agents/skills/bandit-semantic-roundtrip/SKILL.md`
 7. the relevant domain skill under `.agents/skills/`
 8. the exact route/source files being changed.
@@ -58,7 +59,7 @@ If a lower-level lemma has at least two real consumers, prefer one canonical sha
 
 ## Source and reader publication contract
 
-Every new or changed source-facing production declaration follows `docs/theorem-publication-protocol.md`.
+Every new or changed source-facing production declaration follows `docs/theorem-publication-protocol.md` and `docs/proof-digestion-protocol.md`. The exact source-facing signature is sealed before proof search; every binder is expanded/classified; proof ingredients remain dependency edges rather than new public hypotheses; source proof topology is reconstructed independently of implementation Lean; and a merged proof is not reader-facing complete until purification removes dead/duplicate/wrapper-only residue and exposes the compressed Bandit/RL spine.
 
 The reader-facing page must keep the following adjacent and in mathematical order:
 
