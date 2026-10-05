@@ -1,0 +1,37 @@
+@BanditRL.OnlineConvex.minOn_real_iff_gradient : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : CompleteSpace E] (V : Set E) (f : E → ℝ),
+  ConvexOn ℝ V f → ∀ x ∈ V, DifferentiableAt ℝ f x → (IsMinOn f V x ↔ ∀ y ∈ V, 0 ≤ inner ℝ (gradient f x) (y - x))
+@BanditRL.OnlineConvex.minOn_finitePart_iff : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [InnerProductSpace ℝ E]
+  [CompleteSpace E] (f : E → EReal) (V : Set E),
+  ∀ x ∈ V, (∀ z ∈ V, f z ≠ ⊤ ∧ f z ≠ ⊥) → (IsMinOn f V x ↔ IsMinOn (fun z => (f z).toReal) V x)
+@BanditRL.OnlineConvex.theorem_2_8 : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E]
+  [inst_2 : CompleteSpace E] (f : E → EReal) (V U : Set E),
+  Convex ℝ V →
+    V.Nonempty →
+      ∀ x ∈ V,
+        IsOpen U →
+          V ⊆ U →
+            (∀ z ∈ U, f z ≠ ⊤ ∧ f z ≠ ⊥) →
+              (ConvexOn ℝ V fun z => (f z).toReal) →
+                DifferentiableOn ℝ (fun z => (f z).toReal) U →
+                  (IsMinOn f V x ↔ ∀ y ∈ V, 0 ≤ inner ℝ (gradient (fun z => (f z).toReal) x) (y - x))
+@BanditRL.OnlineConvex.interior_min_iff_gradient_zero : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : CompleteSpace E] (f : E → EReal) (V U : Set E),
+  Convex ℝ V →
+    V.Nonempty →
+      ∀ x ∈ V,
+        x ∈ interior V →
+          IsOpen U →
+            V ⊆ U →
+              (∀ z ∈ U, f z ≠ ⊤ ∧ f z ≠ ⊥) →
+                (ConvexOn ℝ V fun z => (f z).toReal) →
+                  DifferentiableOn ℝ (fun z => (f z).toReal) U →
+                    (IsMinOn f V x ↔ gradient (fun z => (f z).toReal) x = 0)
+@IsLocalMinOn.hasFDerivWithinAt_nonneg : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E]
+  {f : E → ℝ} {f' : StrongDual ℝ E} {s : Set E} {a y : E},
+  IsLocalMinOn f s a → HasFDerivWithinAt f f' s a → y ∈ posTangentConeAt s a → 0 ≤ f' y
+@sub_mem_posTangentConeAt_of_segment_subset : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E]
+  {s : Set E} {x y : E}, segment ℝ x y ⊆ s → y - x ∈ posTangentConeAt s x
+@IsLocalMin.fderiv_eq_zero : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E] {f : E → ℝ}
+  {a : E}, IsLocalMin f a → fderiv ℝ f a = 0
+@EReal.coe_toReal : ∀ {x : EReal}, x ≠ ⊤ → x ≠ ⊥ → ↑x.toReal = x

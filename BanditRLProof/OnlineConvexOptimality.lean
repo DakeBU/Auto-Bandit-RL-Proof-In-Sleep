@@ -1,3 +1,21 @@
+/-
+Source: Orabona, Online Learning, arXiv:1912.13213v10, Theorem 2.8
+and the following unnumbered interior-gradient-zero consequence; printed p.11,
+PDF p.23. The actual terminal explicitly generalizes source neighborhood
+convexity to convexity only on V. U is arbitrary open, contains V and supplies
+finite values and differentiability of canonical F(z)=(f z).toReal. Finite
+embeddings on U justify that derivative locally; no global finite/noBottom
+or convexity premise outside U is added. This is not equivalence of premise sets.
+minOn_real_iff_gradient is an everywhere-real library helper on V, with x in V
+and an ambient derivative at x; no open-set or EReal bridge premise. The finite
+minimum-order helper needs finite values only on V and explicit x membership,
+not convexity, openness or differentiability. These are not printed theorems.
+IsMinOn compares values but does not supply membership. Boundary minima need
+only nonnegative feasible inner products; zero-gradient iff additionally needs
+ambient interior V. No existence, uniqueness, closedness or boundedness claim.
+Complete real inner-product spaces explicitly generalize source Euclidean spaces.
+All four existing headers/proof tokens and public canary bytes are preserved.
+-/
 import BanditRLProof.OnlineConvexFirstOrder
 import Mathlib.Analysis.Calculus.LocalExtr.Basic
 

@@ -1,0 +1,106 @@
+{
+  "schema_version": "2.0",
+  "id": "ONLINE-OPTIMALITY-MIGRATION-20261005",
+  "route": "online-learning/chapter-2",
+  "frontier_cell": "online-optimality",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10,21 June2026; SHA256 cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchor": "Theorem2.8 and following mandatory unnumbered interior-gradientzero consequence, printed11/PDF23; weaker convexity only on V explicit, two library helpers not printed results.",
+    "url": "https://arxiv.org/pdf/1912.13213v10"
+  },
+  "target": "Distinctly revalidate retained Theorem2.8/mandatory interiorzero consequence/two library helpers and qualify only their existing Book reader without changing proof code.",
+  "affected_files": [
+    "BanditRLProof/OnlineConvexOptimality.lean",
+    "website/content/readings.json",
+    "website/content/highlights.json",
+    "website/content/chapters.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineConvex.minOn_real_iff_gradient",
+    "BanditRL.OnlineConvex.minOn_finitePart_iff",
+    "BanditRL.OnlineConvex.theorem_2_8",
+    "BanditRL.OnlineConvex.interior_min_iff_gradient_zero"
+  ],
+  "reuse_plan": {
+    "classification": "reuse",
+    "decision": "reuse_existing",
+    "searched_existing": [
+      "Actual4public declarations/native types, pinned tangentcone/derivative/IsMinOn/EReal APIs and fresh compiled shared-root4node510edge scopedgraph."
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineConvex.minOn_real_iff_gradient",
+      "BanditRL.OnlineConvex.minOn_finitePart_iff",
+      "BanditRL.OnlineConvex.theorem_2_8",
+      "BanditRL.OnlineConvex.interior_min_iff_gradient_zero"
+    ],
+    "new_shared_declarations": [],
+    "known_consumers": [
+      "Tests.OnlineConvexOptimalityCanary"
+    ],
+    "planned_consumers": [
+      "Remaining Chapter2 first-order/subgradient/source chain"
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Four unchanged proofs/zero definitions/new proof code/nodes; shared project and source-compatible convexity restriction reused."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/normal_blind",
+    "source_reviewer": "/root/source_reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Distinct source-contract/body review; complete Hilbert generality/canonical finite-neighborhood derivative/weaker ConvexOn V premise stronger theorem explicit. Final corrected reader/package review pending; no human/external/runtime attestation."
+  },
+  "graph_contribution": {
+    "lean_graph": "reuse-only",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Retained convex optimality foundations; no cross-setting functor claim.",
+    "focus_targets": [
+      "BanditRL.OnlineConvex.minOn_real_iff_gradient",
+      "BanditRL.OnlineConvex.minOn_finitePart_iff",
+      "BanditRL.OnlineConvex.theorem_2_8",
+      "BanditRL.OnlineConvex.interior_min_iff_gradient_zero"
+    ],
+    "visual_review": "Fresh actual compiled scoped4node510edge graph; corrected reader/registry/site gates pending.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: same online-optimality route/4highlights/4links; helper assumptions/source-weakening/interior/canonical derivative qualifications corrected.",
+    "banditrlwiki": "no-change-with-reason: no new Bandit setting.",
+    "results_ledger": "no-change-with-reason: additive task acceptance overlay follows gates; historical source inventory untouched.",
+    "roadmap": "no-change-with-reason: whole-book Goal remains active, Chapter2 incomplete and global SGB untouched.",
+    "website_surfaces": [
+      "website/content/readings.json",
+      "website/content/highlights.json",
+      "website/content/chapters.json"
+    ]
+  },
+  "truth_boundary": "Four retained proofs/zero definitions/new proof code/registry nodes. Source terminal finite/differentiable canonical F on arbitrary open U containing nonempty convex V; weaker convexity only on V explicit, no convexU/global noBottom/finite/convexF outsideU. Real helper no open/EReal bridge; finite bridge finiteV only/no convexity/topology/derivative. IsMinOn membership separate; zero-gradient iff extra ambient interior, retained actual derivative. No existence/uniqueness/closedness/boundedness claim. This is not completion of Chapter 2 or Chapters1-16; all remaining source/legacy obligations retained and stacked PR/local compilation do not update main/live.",
+  "verification": {
+    "focused_checks": [
+      "Fresh actual module/canary/focused build;13 named standard3-or-none axiom audits;4 native guards; unchanged4headers/proof tokens/canary bytes."
+    ],
+    "bandit_check": "Fresh combined root/Tests/full harness pending.",
+    "site_build": "Clean lean-verified build only after fresh applicable combined gate.",
+    "site_check": "Same4canonicalnodes/oldIDsURLs/source-qualified reader checks pending.",
+    "independent_review": "Three distinct required automated actors, requested GPT-6 Astra/medium; no human/external review or independently attested runtime model."
+  },
+  "contributor": {
+    "name": "Codex for Ji Cheng",
+    "role": "Formalizer/integrator with distinct required automated semantic actors; source attribution retained"
+  }
+}

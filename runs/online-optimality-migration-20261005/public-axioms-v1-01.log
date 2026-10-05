@@ -1,0 +1,62 @@
+@BanditRL.OnlineConvex.minOn_real_iff_gradient : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : CompleteSpace E] (V : Set E) (f : E → ℝ),
+  ConvexOn ℝ V f → ∀ x ∈ V, DifferentiableAt ℝ f x → (IsMinOn f V x ↔ ∀ y ∈ V, 0 ≤ inner ℝ (gradient f x) (y - x))
+'BanditRL.OnlineConvex.minOn_real_iff_gradient' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.minOn_finitePart_iff : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [InnerProductSpace ℝ E]
+  [CompleteSpace E] (f : E → EReal) (V : Set E),
+  ∀ x ∈ V, (∀ z ∈ V, f z ≠ ⊤ ∧ f z ≠ ⊥) → (IsMinOn f V x ↔ IsMinOn (fun z => (f z).toReal) V x)
+'BanditRL.OnlineConvex.minOn_finitePart_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.theorem_2_8 : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E]
+  [inst_2 : CompleteSpace E] (f : E → EReal) (V U : Set E),
+  Convex ℝ V →
+    V.Nonempty →
+      ∀ x ∈ V,
+        IsOpen U →
+          V ⊆ U →
+            (∀ z ∈ U, f z ≠ ⊤ ∧ f z ≠ ⊥) →
+              (ConvexOn ℝ V fun z => (f z).toReal) →
+                DifferentiableOn ℝ (fun z => (f z).toReal) U →
+                  (IsMinOn f V x ↔ ∀ y ∈ V, 0 ≤ inner ℝ (gradient (fun z => (f z).toReal) x) (y - x))
+'BanditRL.OnlineConvex.theorem_2_8' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.interior_min_iff_gradient_zero : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : CompleteSpace E] (f : E → EReal) (V U : Set E),
+  Convex ℝ V →
+    V.Nonempty →
+      ∀ x ∈ V,
+        x ∈ interior V →
+          IsOpen U →
+            V ⊆ U →
+              (∀ z ∈ U, f z ≠ ⊤ ∧ f z ≠ ⊥) →
+                (ConvexOn ℝ V fun z => (f z).toReal) →
+                  DifferentiableOn ℝ (fun z => (f z).toReal) U →
+                    (IsMinOn f V x ↔ gradient (fun z => (f z).toReal) x = 0)
+'BanditRL.OnlineConvex.interior_min_iff_gradient_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexOptimality.loss_finite : ∀ z ∈ Set.Ioi 0,
+  Tests.OnlineConvexFirstOrder.loss z ≠ ⊤ ∧ Tests.OnlineConvexFirstOrder.loss z ≠ ⊥
+'Tests.OnlineConvexOptimality.loss_finite' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexOptimality.loss_differentiable : DifferentiableOn ℝ
+  (fun z => (Tests.OnlineConvexFirstOrder.loss z).toReal) (Set.Ioi 0)
+'Tests.OnlineConvexOptimality.loss_differentiable' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexOptimality.loss_convex_on_open : ConvexOn ℝ (Set.Ioi 0) fun z =>
+  (Tests.OnlineConvexFirstOrder.loss z).toReal
+'Tests.OnlineConvexOptimality.loss_convex_on_open' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexOptimality.boundary_minimum : IsMinOn Tests.OnlineConvexFirstOrder.loss (Set.Ici 1) 1
+'Tests.OnlineConvexOptimality.boundary_minimum' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexOptimality.boundary_nondegenerate : IsMinOn Tests.OnlineConvexFirstOrder.loss (Set.Ici 1) 1 ∧
+  gradient (fun z => (Tests.OnlineConvexFirstOrder.loss z).toReal) 1 = 1 ∧
+    Tests.OnlineConvexFirstOrder.loss (1 / 2) < Tests.OnlineConvexFirstOrder.loss 1 ∧
+      Tests.OnlineConvexFirstOrder.loss 2 > Tests.OnlineConvexFirstOrder.loss 1
+'Tests.OnlineConvexOptimality.boundary_nondegenerate' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexOptimality.quadratic : ℝ → EReal
+'Tests.OnlineConvexOptimality.quadratic' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexOptimality.quadratic_gradient : gradient (fun z => (Tests.OnlineConvexOptimality.quadratic z).toReal)
+    0 =
+  0
+'Tests.OnlineConvexOptimality.quadratic_gradient' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexOptimality.interior_minimum : IsMinOn Tests.OnlineConvexOptimality.quadratic (Set.Ioi (-1)) 0
+'Tests.OnlineConvexOptimality.interior_minimum' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineConvexOptimality.interior_nondegenerate : IsMinOn Tests.OnlineConvexOptimality.quadratic (Set.Ioi (-1)) 0 ∧
+  Tests.OnlineConvexOptimality.quadratic 0 = 0 ∧
+    Tests.OnlineConvexOptimality.quadratic 1 = 1 ∧
+      gradient (fun z => (Tests.OnlineConvexOptimality.quadratic z).toReal) 0 = 0
+'Tests.OnlineConvexOptimality.interior_nondegenerate' depends on axioms: [propext, Classical.choice, Quot.sound]
