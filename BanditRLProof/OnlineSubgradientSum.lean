@@ -1,3 +1,34 @@
+/-
+Orabona v10 Theorem 2.23, printed 17-18/PDF 29-30: ONE numbered result,
+TWO branches, nine retained proofs and one full witness definition.
+Inclusion uses only proper components, every queried x, and actual simultaneous
+component vectors. No convexity, closedness, query finiteness or common finite
+point is supplied. Empty-index inclusion is an explicit library extension.
+Generic SourceSubdifferential extends the proper-function Definition 2.20:
+an identically top aggregate admits every vector by the formal inequality.
+Disjoint proper component domains yield that aggregate with an EMPTY Minkowski
+side. Proper components alone do not imply proper sum. Ordinary EReal addition
+agrees with upperAdd here because component properness excludes bottom;
+the operations differ for mixed infinities.
+Equality has a positive Fin(n+1) family, all components proper/convex/CLOSED,
+and an independent z in the LAST domain and all OTHER AMBIENT interiors.
+The last point may be a boundary. For a singleton only the qualification's
+other-interior condition vanishes; proper/convex/closed premises still remain.
+The main proof derives aggregate properness, queried and component finiteness.
+The stronger binary helper omits closedness but explicitly takes query-finite
+inputs. Its epigraph-product linear image, actual support contact and nonzero
+separation give a strictly NEGATIVE height coefficient via interior variation.
+Normalization and Riesz construct actual p and g-p. Prefix interior/properness
+and recursive equality construct the full vector family with Fin.snoc.
+Six vector proofs retain finite-dimensional real inner-product classes;
+three scalar proofs have no E; the full M definition has no finite-dimensional
+binder. Completeness is derived, zero dimension and zero vectors allowed.
+Convexity is REAL-height epigraph convexity; closedness means REAL sublevels,
+not necessarily a closed effective domain. No algorithm or selection oracle.
+Twenty old canary proofs/three definitions remain unchanged; REAL singleton
+empty interior is a real-line example, not a zero-dimensional universal fact.
+Adjacent Example 2.24 and remaining Chapter 1/2/book obligations stay required.
+-/
 import BanditRLProof.OnlineConvexSums
 import BanditRLProof.OnlineSubgradientDifferentiability
 

@@ -1,0 +1,127 @@
+{
+  "schema_version": "2.0",
+  "id": "ONLINE-SUBGRADIENT-SUM-MIGRATION-20261007",
+  "route": "online-learning/chapter-2",
+  "frontier_cell": "online-subgradient-sum",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10,21 June2026; SHA256 cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchor": "ONE Theorem2.23 printed17-18/PDF29-30; TWO mandatory branches, nine retained proof refinements and one complete vector-witness definition.",
+    "url": "https://arxiv.org/pdf/1912.13213v10"
+  },
+  "target": "T2.23 both source branches: nine retained actual proofs/one complete M definition, zero new math/TEST/registry nodes; exact source and generic convention audit.",
+  "affected_files": [
+    "BanditRLProof/OnlineSubgradientSum.lean",
+    "website/content/readings.json",
+    "website/content/highlights.json",
+    "website/content/chapters.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineConvex.upperAdd_eq_add_of_ne_bot",
+    "BanditRL.OnlineConvex.ereal_finset_sum_ne_bot",
+    "BanditRL.OnlineConvex.convex_finset_sum",
+    "BanditRL.OnlineConvex.finite_sum_point",
+    "BanditRL.OnlineConvex.sum_finite_implies_components_finite",
+    "BanditRL.OnlineConvex.interior_domain_sum",
+    "BanditRL.OnlineConvex.binary_subgradient_decomposition",
+    "BanditRL.OnlineConvex.theorem_2_23_inclusion",
+    "BanditRL.OnlineConvex.theorem_2_23_equality",
+    "BanditRL.OnlineConvex.SourceSubgradientSum"
+  ],
+  "reuse_plan": {
+    "classification": "reuse",
+    "decision": "reuse_existing",
+    "searched_existing": [
+      "Actual nine public @types/full M/frozen headers/bodies and pinned APIs; selected33nodes2844refs/22valuepairs, old10nodes1146refs exact."
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineConvex.upperAdd_eq_add_of_ne_bot",
+      "BanditRL.OnlineConvex.ereal_finset_sum_ne_bot",
+      "BanditRL.OnlineConvex.convex_finset_sum",
+      "BanditRL.OnlineConvex.finite_sum_point",
+      "BanditRL.OnlineConvex.sum_finite_implies_components_finite",
+      "BanditRL.OnlineConvex.interior_domain_sum",
+      "BanditRL.OnlineConvex.binary_subgradient_decomposition",
+      "BanditRL.OnlineConvex.theorem_2_23_inclusion",
+      "BanditRL.OnlineConvex.theorem_2_23_equality",
+      "BanditRL.OnlineConvex.SourceSubgradientSum"
+    ],
+    "new_shared_declarations": [],
+    "known_consumers": [
+      "SumEqualityProbe.actual_three_component_decomposition",
+      "SumEqualityProbe.singleton_family_empty_interior",
+      "SumRuleProbe.quadratic_plus_constraint_support"
+    ],
+    "planned_consumers": [
+      "Required later Chapter2 subgradient/linearization and source-matched reuse."
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Reuse full actual separation/induction chain; no duplicate wrapper, TEST or per-Book library."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/differentiability_blind",
+    "source_reviewer": "/root/source_reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Printed Definition 2.20 restricts proper functions; generic SourceSubdifferential extends the supporting inequality to ALL EReal functions. With disjoint proper component domains the sum is identically top: its formal support set is ALL vectors and the component Minkowski side is EMPTY. Proper components alone do not make the aggregate proper. No aggregate-proper premise is silently added to unqualified inclusion. Ordinary EReal addition differs from top-dominant upperAdd at mixed infinities. Each proper component excludes bottom, so the two agree here. A component finite witness somewhere need not be a common finite point. EffectiveDomain f means f(x)<top; proper components exclude its generic bottom case. Six vector proof declarations retain finite-dimensional real inner-product classes; three scalar EReal proofs have no E. The full witness definition itself has no finite-dimensional binder. Completeness is derived; zero dimension and zero vectors allowed. Convexity uses REAL-height epigraphs; CLOSED means all REAL sublevels closed, not necessarily closed effective domain. Equality quantifies EVERY queried x for a positive Fin(n+1) family. ALL components are proper, convex and CLOSED. An independent z is in the LAST domain and every OTHER AMBIENT domain interior; last may be boundary. For a singleton the other-interior condition is vacuous, while all proper/convex/closed hypotheses remain. Do not replace by all interiors, relative interiors, closure or qualification at the queried x. Distinct CONTRACT/BODY accepted; package FINAL pending, three automated actors/requested Astra medium/no humanexternal/runtime attestation."
+  },
+  "graph_contribution": {
+    "lean_graph": "reuse-only",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Source-qualified shared registry reuse; no separately certified setting functor/discovery.",
+    "focus_targets": [
+      "BanditRL.OnlineConvex.upperAdd_eq_add_of_ne_bot",
+      "BanditRL.OnlineConvex.ereal_finset_sum_ne_bot",
+      "BanditRL.OnlineConvex.convex_finset_sum",
+      "BanditRL.OnlineConvex.finite_sum_point",
+      "BanditRL.OnlineConvex.sum_finite_implies_components_finite",
+      "BanditRL.OnlineConvex.interior_domain_sum",
+      "BanditRL.OnlineConvex.binary_subgradient_decomposition",
+      "BanditRL.OnlineConvex.theorem_2_23_inclusion",
+      "BanditRL.OnlineConvex.theorem_2_23_equality",
+      "BanditRL.OnlineConvex.SourceSubgradientSum"
+    ],
+    "visual_review": "ONE printed Theorem 2.23 with TWO conclusion branches; nine retained proofs plus one full definition are refinements, not nine source results or new mathematics. Zero new production proofs, TEST proofs or canonical registry nodes. Actual selected export has33nodes/2844 direct type-value references, including all20canary proofs/3TESTdefinitions;22 required value pairs. Readiness10nodes/1146references is separate and exactly retained; neither is a full registry export. Module import is not a direct T2.22 proof-value edge. Preserve all10811 old IDs/URLs and original four curated links; all ten canonical module links remain.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: original four curated links retained, full M/ten canonical names and exact source boundary visible.",
+    "banditrlwiki": "no-change-with-reason: no new Bandit setting.",
+    "results_ledger": "no-change-with-reason: additive scoped package overlay follows full gates/PR; historical chapter inventory unchanged, Chapter2total null.",
+    "roadmap": "no-change-with-reason: whole-book Goal remains active, Chapter2 incomplete and global SGB untouched.",
+    "website_surfaces": [
+      "website/content/readings.json",
+      "website/content/highlights.json",
+      "website/content/chapters.json"
+    ]
+  },
+  "truth_boundary": "SourceSubgradientSum f x means actual simultaneous vectors G(i), each globally supporting the same f(i) at the same x, and their exact finite vector sum equals g. An empty component support makes this witness set empty. Inclusion quantifies EVERY x and an arbitrary Fintype family of proper components, with no convexity, closedness, query-finiteness or common finite point. Empty-index inclusion produces the zero support as an explicit library extension, not a printed positive-family equality. Printed Definition 2.20 restricts proper functions; generic SourceSubdifferential extends the supporting inequality to ALL EReal functions. With disjoint proper component domains the sum is identically top: its formal support set is ALL vectors and the component Minkowski side is EMPTY. Proper components alone do not make the aggregate proper. No aggregate-proper premise is silently added to unqualified inclusion. Ordinary EReal addition differs from top-dominant upperAdd at mixed infinities. Each proper component excludes bottom, so the two agree here. A component finite witness somewhere need not be a common finite point. EffectiveDomain f means f(x)<top; proper components exclude its generic bottom case. Equality quantifies EVERY queried x for a positive Fin(n+1) family. ALL components are proper, convex and CLOSED. An independent z is in the LAST domain and every OTHER AMBIENT domain interior; last may be boundary. For a singleton the other-interior condition is vacuous, while all proper/convex/closed hypotheses remain. Do not replace by all interiors, relative interiors, closure or qualification at the queried x. Six vector proof declarations retain finite-dimensional real inner-product classes; three scalar EReal proofs have no E. The full witness definition itself has no finite-dimensional binder. Completeness is derived; zero dimension and zero vectors allowed. Convexity uses REAL-height epigraphs; CLOSED means all REAL sublevels closed, not necessarily closed effective domain. The stronger binary interface omits closedness and explicitly takes finite query values. Build the linear image of two actual real epigraphs; aggregate support gives contact and noninterior. A nonzero separating L(v,t)=A(v)+ct has c<=0 from upward heights. If c=0, variation at the qualifying interior point forces A=0 and L=0, a contradiction; hence c<0. Normalize and use Riesz to produce actual global p and g-p, treating top branches before toReal. The mixed point yields prefix interior and an actual common finite value, so prefix/full sums are proper and prefix convex. Actual aggregate support then forces query finiteness and no-bottom summation forces every component finite. Apply the binary producer, recursively decompose the prefix, and use Fin.snoc to construct all component vectors and their exact sum. Public closedness hypotheses remain and are passed recursively; no decomposition or dual-attainment oracle is assumed. ONE printed Theorem 2.23 with TWO conclusion branches; nine retained proofs plus one full definition are refinements, not nine source results or new mathematics. Zero new production proofs, TEST proofs or canonical registry nodes. Actual selected export has33nodes/2844 direct type-value references, including all20canary proofs/3TESTdefinitions;22 required value pairs. Readiness10nodes/1146references is separate and exactly retained; neither is a full registry export. Module import is not a direct T2.22 proof-value edge. Whole20 old canary proofs/3definitions freshly checked. Full equality constructs nonzero -1 for two quadratics+interval at0, permits last boundary0, gives both sets empty at3, and permits real singleton{0} support7 with empty REAL interior. Inclusion is genuinely invoked for quadratic+constraint support2 and empty-index zero. Concave fixture proves support absence and family vacuity; it does not itself invoke inclusion or prove a named nonconvexity theorem. Real singleton empty interior is not a zero-dimensional universal assertion. This package covers both T2.23 branches only. Example2.24 and all remaining Chapter1/2 main-text, source-contract and necessary appendix obligations stay REQUIRED; Chapter2 mandatorytotal null/incomplete, Chapters3-16 unenumerated, whole Goal ACTIVE. No merge/deploy/main/live update, no external Cor16.50 or Optlib reconstruction claim.",
+  "verification": {
+    "focused_checks": [
+      "Fresh nine retained proofs/full M/whole20canary proofs3defs/29named standard-or-none kernel checks/nine native guards/33nodes2844refs."
+    ],
+    "bandit_check": "Fresh sequential root/Tests/full harness required after source-comment integration.",
+    "site_build": "Clean local lean-verified build only after current combined Lean gate.",
+    "site_check": "All10811oldIDsURLs/zero new canonical nodes; original four curated links/allten canonical module links; allother Book subtrees unchanged.",
+    "independent_review": "Three distinct required automated actors, requested GPT-6 Astra/medium; no human/external review or independently attested runtime model.",
+    "owned_test_files": []
+  },
+  "contributor": {
+    "name": "Codex for Ji Cheng",
+    "role": "Formalizer/integrator with distinct required automated semantic actors; source attribution retained"
+  }
+}

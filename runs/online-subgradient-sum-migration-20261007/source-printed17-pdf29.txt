@@ -1,0 +1,51 @@
+2.2 Online Subgradient Descent17
+Basically, a subgradient offinxis any vectorgthat allows us to construct a linear
+lower bound tof. Note that the subgradient might not be unique, so we denote thesetof
+subgradients offinxby∂f(x), called thesubdifferential offatx. A functionfis
+subdifferentiableatxif∂f(x)̸=∅.
+Observe that iffis proper and convex, then∂f(x)is empty forx/∈domf, because
+the inequality cannot be satisfied whenf(x) = +∞. Also, the domain of∂f, denoted by
+dom∂f, is the set of allx∈R d such that∂f(x)is non-empty; it is a subset ofdomf.
+A proper convex functionfis always 1 subdifferentiable onint domf(Rockafellar, 1970,
+Theorem 23.4).
+Note that we did not assume the functionfto be convex in the definition of a subgradient.
+However, the following theorem tells us that if we have subgradients everywhere, then the
+function must be convex.
+Theorem 2.21Letf:R d →RandV ⊆R d be a convex set. If∂f(x)̸=∅for allx∈ V,
+then the restriction offtoVis convex.
+ProofFor anyx 1,x2 ∈ Vand for anyλ∈[0,1], considery=λx 1 + (1−λ)x 2 ∈ V
+andg∈∂f(y). Then, we have
+f(x1)≥f(y) +⟨g,x 1 −y⟩=f(y) + (1−λ)⟨g,x 1 −x 2⟩,
+f(x2)≥f(y) +⟨g,x 2 −y⟩=f(y) +λ⟨g,x 2 −x 1⟩.
+Multiplying the first inequality byλand the second one by1−λand adding them together,
+we have
+λf(x1) + (1−λ)f(x 2)≥f(y) =f(λx 1 + (1−λ)x 2),
+that implies the convexity offinV.
+The unique subgradient of a differentiable function is just the gradient, as quantified in
+the next theorem.
+Theorem 2.22(Rockafellar, 1970, Theorem 25.1)If the functionf:R d →[−∞,+∞]
+is convex and finite inx, it is differentiable inxiff the subdifferential consists of a single
+element, that turns out to be∇f(x).
+We can also calculate subgradients of the sum of functions.
+Theorem 2.23Letf 1, . . . , fm be proper functions onRd, andF=f 1 +···+f m. Then,
+∂F(x)⊇∂f 1(x) +···+∂f m(x),∀x. Note that if one of the sets∂f i(x)is empty, the
+right-hand side is empty and the inclusion is vacuous. Moreover, iff 1, . . . , fm are also
+convex, closed, anddomf m ∩ Tm−1
+i=1 int domfi ̸=∅, then actually∂F(x) =∂f 1(x) +
+···+∂f m(x),∀x.
+ProofFor anyz, when the right-hand side is non-empty, chooseg i ∈∂f i(z)fori=
+1, . . . , m. From the definition of subgradient, we have
+F(x) =
+mX
+i=1
+fi(x)≥
+mX
+i=1
+(fi(z) +⟨g i,x−z⟩) =F(z) +
+* mX
+i=1
+gi,x−z
++
+.
+1 The stronger version of this theorem uses therelative interiorof the domain off, however, we never need to
+use it, so we will keep it simple.
