@@ -1,0 +1,20 @@
+from common import *
+s=(RUN/'verify-history-bindings-v3.py').read_text(encoding='utf-8')
+s=s.replace("str(run/'historical-raw-supersession-reader-v2.json')", "str(run/'historical-raw-supersession-reader-v2.json'),str(run/'historical-raw-supersession-command-collision-v1.json')")
+s=s.replace("snapshots[(row['path'],row['raw_sha256'])]=row", "snapshots[(str(Path(row['path']).resolve()),row['raw_sha256'])]=row")
+s=s.replace("s=snapshots[(row['path'],row['sha256'])]", "s=snapshots[(str(Path(row['path']).resolve()),row['sha256'])]")
+s=s.replace('history-binding-audit-v2.json','history-binding-audit-v3.json')
+write(RUN/'verify-history-bindings-v4.py',s)
+s=(RUN/'bind-integrated-gates-v3.py').read_text(encoding='utf-8').replace('history-bindings-v2-01','history-bindings-v3-01')
+s=s.replace("'browser-v2-01']", "'browser-v2-01','formula-render-v2-01']")
+s=s.replace("failure_repairs=[", "failure_repairs=[dict(failure='history-bindings-v2-01 failed after repeated native wrapper label overwrote four command evidence files',repair='Exact old raw blobs recovered from committed b2b548 Git, aliases resolved, rejected receipt unchanged; current replaced bytes separately bound and future labels unique'),")
+write(RUN/'bind-integrated-gates-v4.py',s)
+for old,new in [('review-packets-v3.py','review-packets-v4.py'),('record-acceptance-v4.py','record-acceptance-v5.py'),('prepare-pr-payload-v3.py','prepare-pr-payload-v4.py')]:
+ s=(RUN/old).read_text(encoding='utf-8').replace('history-binding-audit-v2.json','history-binding-audit-v3.json')
+ if old.startswith('prepare-pr'):
+  s=s.replace('Rejected receipt and all raw failure logs/unexecuted adapter versions remain.', 'The history-v2 gate also failed after repeated native wrapper labels overwrote four earlier command evidence files; exact old raw blobs were recovered from already committed Git and cryptographically bound without rewriting the rejected receipt. History-v3 passed. Rejected receipt and all raw failure logs/unexecuted adapter versions remain.')
+ write(RUN/new,s)
+s=(RUN/'preserve-native-prefix-v2.py').read_text(encoding='utf-8').replace("'final':'final-reader-receipt-v1.json'", "'final':'final-reader-receipt-v2.json'")
+s=s.replace("stage+'-reviewed-'", "stage+'-v2-reviewed-'").replace("stage+'-v1.json'", "stage+'-v2.json'")
+write(RUN/'preserve-native-prefix-v3.py',s)
+generated('evidence-site-acceptance-helpers-before-use-v4.json',[RUN/n for n in ['verify-history-bindings-v4.py','bind-integrated-gates-v4.py','review-packets-v4.py','record-acceptance-v5.py','prepare-pr-payload-v4.py','preserve-native-prefix-v3.py']])

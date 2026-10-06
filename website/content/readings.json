@@ -3853,7 +3853,7 @@
         "title": "Online Learning: A Modern Introduction Using Convex Optimization",
         "authors": "Francesco Orabona",
         "edition": "arXiv:1912.13213v10,21June2026",
-        "sections": "Section2.2.1, Example2.24, printed18/PDF30",
+        "sections": "Section2.2.1, Example2.24, printed18/PDF30; ONE example and THREE exhaustive sign cases",
         "pages": "printed18/PDF30",
         "pdf_page": 30,
         "url": "https://arxiv.org/pdf/1912.13213v10"
@@ -3861,15 +3861,15 @@
       "notation": [
         {
           "term": "Global scalar support",
-          "meaning": "A real slope g satisfies |x|+g(y-x)≤|y| for every real test y. This is a whole set characterization, not a selected slope."
+          "meaning": "A real slope g satisfies |x|+g(y-x)≤|y| for every real test y. This is a whole set characterization, not a selected slope. ONE printed Example2.24, THREE cases, four retained proof refinements and zero production definitions/new mathematical or TEST declarations. All four actual signatures specialize to scalar ℝ; no E/finite-dimensional/completeness binder or added convexity/differentiability/domain/support premise."
         },
         {
           "term": "Closed interval at zero",
-          "meaning": "Icc(-1,1) contains both endpoints and every fractional slope between them."
+          "meaning": "Icc(-1,1) contains both endpoints and every fractional slope between them. At zero, tests y=1,-1 give -1≤g≤1. Conversely, any g in the FULL CLOSED interval globally supports: multiply the upper bound when y≥0 and the lower bound with reversed order when y<0. Both endpoints and every interior slope remain; choosing only0 or asserting existence is weaker."
         },
         {
           "term": "Finite EReal embedding",
-          "meaning": "The scalar absolute value is always finite. Its EReal embedding preserves addition and order and reuses the shared Lean support definition."
+          "meaning": "The scalar absolute value is always finite. Its EReal embedding preserves addition and order and reuses the shared Lean support definition. The shared global SourceSubdifferential predicate permits arbitrary EReal functions, wider than the printed proper-function definition. Here y↦|y| is finite and proper at EVERY real y, and its real EReal embedding preserves addition and order. The complete support definition is borrowed shared context, not a new owned declaration."
         }
       ],
       "algorithm": {
@@ -3878,15 +3878,15 @@
         "steps": [
           {
             "title": "Test necessary inequalities",
-            "detail": "At nonzero x, use y=0 and y=2x to force the unique slope. At zero, y=1 and y=-1 force both interval bounds."
+            "detail": "At nonzero x, actual tests y=0 and y=2x give x(g-1)=0 for positive x or x(g+1)=0 for negative x. The strict sign guarantees x≠0 for cancellation. The inequalities y≤|y| and -y≤|y| prove sufficiency at EVERY real y. At zero, tests y=1,-1 give -1≤g≤1. Conversely, any g in the FULL CLOSED interval globally supports: multiply the upper bound when y≥0 and the lower bound with reversed order when y<0. Both endpoints and every interior slope remain; choosing only0 or asserting existence is weaker."
           },
           {
             "title": "Prove every proposed slope works",
-            "detail": "For ±1 use y≤|y| and -y≤|y| for every y. At zero, split the sign of y and multiply the interval inequalities in the correct order."
+            "detail": "Prove both directions with every global test y. At zero, tests y=1,-1 give -1≤g≤1. Conversely, any g in the FULL CLOSED interval globally supports: multiply the upper bound when y≥0 and the lower bound with reversed order when y<0. Both endpoints and every interior slope remain; choosing only0 or asserting existence is weaker. At nonzero x, actual tests y=0 and y=2x give x(g-1)=0 for positive x or x(g+1)=0 for negative x. The strict sign guarantees x≠0 for cancellation. The inequalities y≤|y| and -y≤|y| prove sufficiency at EVERY real y."
           },
           {
             "title": "Cover every real query",
-            "detail": "Combine strict positive, zero and strict negative cases without any extra premise."
+            "detail": "The exact allx terminal dispatches the three proved equalities, deriving x<0 in the final else. No support inequality is assumed as a consumer premise."
           }
         ]
       },
@@ -3902,21 +3902,21 @@
           "pages": "printed18",
           "pdf_page": 30,
           "url": "https://arxiv.org/pdf/1912.13213v10",
-          "math": "\\partial|\\cdot|(x)=\\begin{cases}\\{1\\}&x>0\\\\[-1,1]&x=0\\\\\\{-1\\}&x<0\\end{cases}",
+          "math": "\\partial|\\cdot|(x)=\\begin{cases}\\{1\\}&x>0\\\\{[-1,1]}&x=0\\\\\\{-1\\}&x<0\\end{cases}",
           "fallback": "The subdifferential is {1} at positive x, the closed interval [-1,1] at zero, and {-1} at negative x.",
           "plain": "Every global support slope is characterized exactly, at every real query.",
-          "relationship": "The source real scalar function is finitely embedded into EReal to reuse the shared global support predicate. No additional hypothesis or dimension generalization.",
+          "relationship": "ONE printed Example2.24, THREE cases, four retained proof refinements and zero production definitions/new mathematical or TEST declarations. All four actual signatures specialize to scalar ℝ; no E/finite-dimensional/completeness binder or added convexity/differentiability/domain/support premise. The shared global SourceSubdifferential predicate permits arbitrary EReal functions, wider than the printed proper-function definition. Here y↦|y| is finite and proper at EVERY real y, and its real EReal embedding preserves addition and order. The complete support definition is borrowed shared context, not a new owned declaration. Whole three existing canary proofs were freshly checked: endpoints -1/1, fractional1/2 and exclusion2 at zero; impossibility of ANY singleton answer; full all-query source terminal instantiated at2,-2,0. Zero new TEST declarations.",
           "contract": {
-            "model": "Real scalar absolute value, deterministic global supporting inequalities.",
-            "assumptions": "None for the all-query source terminal. Sign leaves have only their corresponding strict sign premise.",
-            "parameters": "Every real x, every candidate slope g, and every real test y in the support definition.",
-            "regret": "No algorithm or regret claim.",
-            "guarantee": "Exact three-case set equality, including both zero-interval endpoints."
+            "model": "Scalar real absolute value and global support at every real test point. The shared global SourceSubdifferential predicate permits arbitrary EReal functions, wider than the printed proper-function definition. Here y↦|y| is finite and proper at EVERY real y, and its real EReal embedding preserves addition and order. The complete support definition is borrowed shared context, not a new owned declaration.",
+            "assumptions": "None for the allx terminal. Positive/negative leaves have only their strict sign hypothesis; zero leaf has no supplied slope/support premise.",
+            "parameters": "Every real query x and every real candidate slope g; the support definition quantifies every ambient real y.",
+            "regret": "No algorithm/probability/feedback/regret or measurable/computable selection guarantee.",
+            "guarantee": "Complete three-case set equality, including the full CLOSED [-1,1] at zero."
           },
           "local_status": {
             "status": "compiled",
-            "label": "Public Example2.24 candidate",
-            "boundary": "Public focused build and nondegenerate canaries compile. Combined gates and separate semantic/public-reader reviews are individually recorded; not merged/deployed, chapter/book incomplete."
+            "label": "Exact retained source terminal and whole canary checked",
+            "boundary": "Current exact retained bodies/whole canary compile; seven unique named kernel checks use standard foundations or none, four frozen-header guards pass. Selected compiled graph has seven proof nodes/zero definitions/1024 direct type/value occurrences, including actual source-to-branches and canary-to-source edges. Four-node/666 readiness is separate and retained exactly; neither is a full registry graph export. Distinct CONTRACT/BODY source reviews accepted; current combined rootTests/fullharness/site/FINAL/PR remain separate gates. Only scalar Example2.24. Example2.25 normal cones and all remaining Chapter1/2 main-text/source-contract/necessary appendix obligations stay REQUIRED. Chapter2 mandatorytotal is null/incomplete; Chapters3–16 unenumerated and whole Goal ACTIVE. No multidimensional norm, algorithm/probability/regret/selection guarantee, merge/deploy/main/live update."
           }
         }
       ],
@@ -3926,13 +3926,13 @@
         "steps": [
           {
             "title": "Positive and negative uniqueness",
-            "detail": "The two tests 0 and 2x bound the same scalar slope in opposite directions. The nonzero sign premise lets multiplication cancellation force g=1 or g=-1.",
+            "detail": "At nonzero x, actual tests y=0 and y=2x give x(g-1)=0 for positive x or x(g+1)=0 for negative x. The strict sign guarantees x≠0 for cancellation. The inequalities y≤|y| and -y≤|y| prove sufficiency at EVERY real y.",
             "math": "g\\in\\partial|\\cdot|(x),\\ x>0\\Rightarrow g=1;\\quad x<0\\Rightarrow g=-1",
             "fallback": "Both uniqueness and global support are proved."
           },
           {
             "title": "All zero slopes",
-            "detail": "Tests at ±1 give -1≤g≤1. Conversely these interval inequalities, multiplied by y with its proper sign, prove gy≤|y| for every y.",
+            "detail": "At zero, tests y=1,-1 give -1≤g≤1. Conversely, any g in the FULL CLOSED interval globally supports: multiply the upper bound when y≥0 and the lower bound with reversed order when y<0. Both endpoints and every interior slope remain; choosing only0 or asserting existence is weaker.",
             "math": "g\\in\\partial|\\cdot|(0)\\Longleftrightarrow -1\\le g\\le1",
             "fallback": "Includes both endpoints and fractional slopes."
           },
@@ -3943,11 +3943,11 @@
             "fallback": "Every real query is covered."
           }
         ],
-        "boundary": "Example2.24 only. Later Chapter2 and all remaining book chapters stay required. Curated teaching nodes are distinct from the compiled proof graph."
+        "boundary": "The shared global SourceSubdifferential predicate permits arbitrary EReal functions, wider than the printed proper-function definition. Here y↦|y| is finite and proper at EVERY real y, and its real EReal embedding preserves addition and order. The complete support definition is borrowed shared context, not a new owned declaration. ONE printed Example2.24, THREE cases, four retained proof refinements and zero production definitions/new mathematical or TEST declarations. All four actual signatures specialize to scalar ℝ; no E/finite-dimensional/completeness binder or added convexity/differentiability/domain/support premise. Current exact retained bodies/whole canary compile; seven unique named kernel checks use standard foundations or none, four frozen-header guards pass. Selected compiled graph has seven proof nodes/zero definitions/1024 direct type/value occurrences, including actual source-to-branches and canary-to-source edges. Four-node/666 readiness is separate and retained exactly; neither is a full registry graph export. Only scalar Example2.24. Example2.25 normal cones and all remaining Chapter1/2 main-text/source-contract/necessary appendix obligations stay REQUIRED. Chapter2 mandatorytotal is null/incomplete; Chapters3–16 unenumerated and whole Goal ACTIVE. No multidimensional norm, algorithm/probability/regret/selection guarantee, merge/deploy/main/live update."
       },
       "worked_example": {
         "title": "Fractional and boundary slopes at the kink",
-        "intro": "Public canaries invoke the actual source equalities.",
+        "intro": "Whole three existing canary proofs were freshly checked: endpoints -1/1, fractional1/2 and exclusion2 at zero; impossibility of ANY singleton answer; full all-query source terminal instantiated at2,-2,0. Zero new TEST declarations.",
         "steps": [
           {
             "title": "Zero has many supports",
@@ -3969,7 +3969,7 @@
           }
         ],
         "takeaway": "The nonsmooth point has the full closed interval, while nonzero points have unique slopes.",
-        "boundary": "No higher-dimensional norm, hinge, OSD or book-completion claim."
+        "boundary": "Only scalar Example2.24. Example2.25 normal cones and all remaining Chapter1/2 main-text/source-contract/necessary appendix obligations stay REQUIRED. Chapter2 mandatorytotal is null/incomplete; Chapters3–16 unenumerated and whole Goal ACTIVE. No multidimensional norm, algorithm/probability/regret/selection guarantee, merge/deploy/main/live update."
       }
     },
     {

@@ -1,0 +1,26 @@
+{
+  "abs_subgradient_zero": {
+    "statement": "theorem abs_subgradient_zero : SourceSubdifferential (fun y : ℝ => ((|y| : ℝ) : EReal)) 0 = Icc (-1 : ℝ) 1",
+    "file": "BanditRLProof/OnlineSubgradientAbsolute.lean",
+    "statement_hash": "e878c47ef95faa47b1418c365baea538ad208382d41cb020cb1d4724132ada34",
+    "context_hash": "31978bb157e60dfe2a4591d24509246b364040d44ddb7f1aeec3de7bf4273533"
+  },
+  "abs_subgradient_positive": {
+    "statement": "theorem abs_subgradient_positive (x : ℝ) (hx : 0 < x) : SourceSubdifferential (fun y : ℝ => ((|y| : ℝ) : EReal)) x = {(1 : ℝ)}",
+    "file": "BanditRLProof/OnlineSubgradientAbsolute.lean",
+    "statement_hash": "7c28bc210670ae091789b68390cafca47f511cd3884a86e142611be79a001620",
+    "context_hash": "31978bb157e60dfe2a4591d24509246b364040d44ddb7f1aeec3de7bf4273533"
+  },
+  "abs_subgradient_negative": {
+    "statement": "theorem abs_subgradient_negative (x : ℝ) (hx : x < 0) : SourceSubdifferential (fun y : ℝ => ((|y| : ℝ) : EReal)) x = {(-1 : ℝ)}",
+    "file": "BanditRLProof/OnlineSubgradientAbsolute.lean",
+    "statement_hash": "72cc1d3ac4754af80a367ad2bec624bbdf45eca740ab79a29cc03f7ca3547a6e",
+    "context_hash": "31978bb157e60dfe2a4591d24509246b364040d44ddb7f1aeec3de7bf4273533"
+  },
+  "example_2_24": {
+    "statement": "theorem example_2_24 (x : ℝ) : SourceSubdifferential (fun y : ℝ => ((|y| : ℝ) : EReal)) x = if 0 < x then {(1 : ℝ)} else if x = 0 then Icc (-1 : ℝ) 1 else {(-1 : ℝ)}",
+    "file": "BanditRLProof/OnlineSubgradientAbsolute.lean",
+    "statement_hash": "4b044c75e8628878dea1648d15454734fb5eed6107330fca567ada3502f2cf1b",
+    "context_hash": "31978bb157e60dfe2a4591d24509246b364040d44ddb7f1aeec3de7bf4273533"
+  }
+}

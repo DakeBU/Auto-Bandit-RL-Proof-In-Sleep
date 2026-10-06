@@ -1,0 +1,1 @@
+Actual four retained scalar support bodies revalidated only after distinct CONTRACT. Preserve global-y two directions/inclusive zero interval/strict-sign nonzero cancellation/allx actual dispatch. Whole threecanary proofs/0defs unchanged; no new math/TEST/registry nodes or supplied support oracle. Source package and whole Goal not closed.

@@ -1,0 +1,12 @@
+import BanditRLProof.OnlineSubgradientAbsolute
+#check @EReal.coe_add
+#check @EReal.coe_le_coe
+#check @EReal.coe_le_coe_iff
+#check @abs_of_pos
+#check @abs_of_neg
+#check @abs_of_nonneg
+#check @le_abs_self
+#check @neg_le_abs
+#check @mul_le_mul_of_nonneg_left
+#check @mul_le_mul_of_nonpos_left
+#check @mul_eq_zero
