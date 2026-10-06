@@ -1,0 +1,1 @@
+Exact11headers/fullgermdefinition/@types/pinned actualAPI/21compiledselectednodes3026refs20valuepairs/current9genuinecanaries/kernelchecks/nativeguards/CONTRACT BODY FINAL/rawhistory/qualifiedpublicSHA/applicablecurrentrootTestsfull/site12sharedlinks4curatedroute. AcceptedT2.22only, no newproduction mathematical nodes, T2.23/remainingChapter1/2 mandatory; wholeGoal ACTIVE.
