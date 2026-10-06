@@ -1,0 +1,21 @@
+from common_v2 import *
+prior=Path('runs/online-normal-cone-migration-20261007');created=[]
+def helper(n,t):
+ compile(t,n,'exec');p=RUN/n;write(p,t);created.append(p)
+t=(prior/'verify-history-bindings-v1.py').read_text(encoding='utf-8')
+t=t.replace("run=Path(__file__).parent;prior=", "current=Path(__file__).parent;run=Path('runs/online-normal-cone-migration-20261007');prior=")
+t=t.replace("]:\n for row in load(p)['rows']:",",str(run/'historical-raw-supersession-final-v1.json'),str(current/'historical-raw-supersession-v1.json'),str(current/'historical-raw-supersession-contract-v1.json'),str(current/'historical-raw-supersession-body-v1.json')]:\n for row in load(p)['rows']:",1)
+t=t.replace("receipts=[run/'source-contract-receipt-v1.json'","receipts=[current/'source-contract-receipt-v1.json',current/'public-body-receipt-v1.json',run/'final-reader-receipt-v1.json',run/'source-contract-receipt-v1.json'",1)
+t=t.replace("snap={r['path']:r for r in load(run/'historical-raw-supersession-v2.json')['rows']}","snap={r['path']:r for r in load(current/'historical-raw-supersession-v1.json')['rows']}")
+t=t.replace("!='online-normal-cone'","!='online-subgradient-max'").replace("out=run/'history-binding-audit-v1.json'","out=current/'history-binding-audit-v1.json'").replace('only_online_normal_cone_subtree_changed','only_online_subgradient_max_subtree_changed').replace('selected Ex2.25 normal cone subtree only','selected T2.26 finite-maximum subtree only')
+helper('verify-history-bindings-v1.py',t)
+t=(prior/'check-scoped-diff-v3.py').read_text(encoding='utf-8').replace("base='9cb6dc7f111f2d1c4925cfbfb3d29b9410f2bc0d'","base='"+BASE+"'").replace('manifest-before-normal-entry-v1.txt','manifest-before-max-entry-v1.txt')
+helper('check-scoped-diff-v1.py',t)
+t=(prior/'commit-owned-v1.py').read_text(encoding='utf-8').replace('OnlineNormalCone','OnlineSubgradientMax').replace('online-normal-cone','online-subgradient-max').replace('NORMAL-CONE','SUBGRADIENT-MAX');helper('commit-owned-v1.py',t)
+t=(prior/'verify-registry-v1.py').read_text(encoding='utf-8').replace('from common import *','from common_v2 import *').replace('online-normal-cone','online-subgradient-max').replace('onlinenormalcone','onlinesubgradientmax')
+t=t.replace("old=load('tmp/online-subgradient-absolute-migration-site-v2/books/registry.json')","old=load('tmp/online-normal-cone-migration-site-v1/books/registry.json')").replace("['original_three_routes_retained']","['original_four_routes_retained']").replace('original_three_routes_and_three_notation_entries','original_four_routes_and_three_notation_entries')
+t=t.replace("print('All10811 oldIDsURLs preserved; four exact sourcequalified canonical links; no new nodes.')","print('All10811 oldIDsURLs preserved; NINETEEN exact publiccanonicalnodes/FIVEhighlights/FOURcuratedlinks; no new nodes.')")
+helper('verify-registry-v1.py',t)
+t=(prior/'browser-v1.py').read_text(encoding='utf-8').replace('from common import *','from common_v2 import *').replace('online-normal-cone','online-subgradient-max');helper('browser-v1.py',t)
+generated('future-gate-helpers-before-use-v1.json',created)
+print('Future bounded history/scoped-whitespace/explicit-commit/19publicnode registry/browser helpers generated and hashbound; none used yet and no mathematical/reader mutation.')

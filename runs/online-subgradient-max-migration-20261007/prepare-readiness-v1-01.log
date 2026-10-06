@@ -1,0 +1,39 @@
+retained-focused-v1-01 exit 0 seconds 2.25
+actual-types-v1-01 exit 0 seconds 9.563
+pinned-APIs-v1-01 exit 1 seconds 9.64
+Failure tail only; full raw output is retained in pinned-APIs-v1-01.log
+} [inst : Semiring 𝕜] [inst_1 : PartialOrder 𝕜]
+  [inst_2 : AddCommMonoid E] [inst_3 : Module 𝕜 E] (s : Set E), s ⊆ (convexHull 𝕜) s
+@mem_convexJoin : ∀ {𝕜 : Type u_1} {E : Type u_2} [inst : Semiring 𝕜] [inst_1 : PartialOrder 𝕜]
+  [inst_2 : AddCommMonoid E] [inst_3 : Module 𝕜 E] {s t : Set E} {x : E},
+  x ∈ convexJoin 𝕜 s t ↔ ∃ a ∈ s, ∃ b ∈ t, x ∈ segment 𝕜 a b
+segment_eq_image : ∀ (𝕜 : Type u_1) {E : Type u_2} [inst : Ring 𝕜] [inst_1 : PartialOrder 𝕜] [AddRightMono 𝕜]
+  [inst_3 : AddCommGroup E] [inst_4 : Module 𝕜 E] (x y : E),
+  segment 𝕜 x y = (fun θ => (1 - θ) • x + θ • y) '' Set.Icc 0 1
+@IsCompact.tendsto_subseq' : ∀ {X : Type u_1} [inst : TopologicalSpace X] [FirstCountableTopology X] {s : Set X}
+  {x : ℕ → X},
+  IsCompact s →
+    (∃ᶠ (n : ℕ) in Filter.atTop, x n ∈ s) → ∃ a ∈ s, ∃ φ, StrictMono φ ∧ Filter.Tendsto (x ∘ φ) Filter.atTop (nhds a)
+E:\ABRL\worktrees\research-online-book\runs\online-subgradient-max-migration-20261007\leaves\pinned-APIs-v1.lean:14:8: error(lean.unknownIdentifier): Unknown identifier `frequently_exists`
+E:\ABRL\worktrees\research-online-book\runs\online-subgradient-max-migration-20261007\leaves\pinned-APIs-v1.lean:15:8: error(lean.unknownIdentifier): Unknown identifier `eventually_all`
+E:\ABRL\worktrees\research-online-book\runs\online-subgradient-max-migration-20261007\leaves\pinned-APIs-v1.lean:16:8: error(lean.unknownIdentifier): Unknown identifier `frequently_iff_neBot`
+@geometric_hahn_banach_closed_point : ∀ {E : Type u_1} [inst : TopologicalSpace E] [inst_1 : AddCommGroup E]
+  [inst_2 : Module ℝ E] {s : Set E} {x : E} [IsTopologicalAddGroup E] [ContinuousSMul ℝ E] [LocallyConvexSpace ℝ E],
+  Convex ℝ s → IsClosed s → x ∉ s → ∃ f u, (∀ a ∈ s, f a < u) ∧ u < f x
+@InnerProductSpace.toDual_symm_apply : ∀ {𝕜 : Type u_1} {E : Type u_2} [inst : RCLike 𝕜] [inst_1 : NormedAddCommGroup E]
+  [inst_2 : InnerProductSpace 𝕜 E] [inst_3 : CompleteSpace E] {x : E} {y : StrongDual 𝕜 E},
+  inner 𝕜 ((InnerProductSpace.toDual 𝕜 E).symm y) x = y x
+EReal.continuousOn_toReal : ContinuousOn EReal.toReal {⊥, ⊤}ᶜ
+@EReal.coe_toReal : ∀ {x : EReal}, x ≠ ⊤ → x ≠ ⊥ → ↑x.toReal = x
+@le_of_tendsto_of_tendsto : ∀ {α : Type u_1} {β : Type u_2} [inst : TopologicalSpace α] [inst_1 : Preorder α]
+  [t : OrderClosedTopology α] {f g : β → α} {b : Filter β} {a₁ a₂ : α} [b.NeBot],
+  Filter.Tendsto f b (nhds a₁) → Filter.Tendsto g b (nhds a₂) → f ≤ᶠ[b] g → a₁ ≤ a₂
+
+Traceback (most recent call last):
+  File "runs/online-subgradient-max-migration-20261007/prepare-readiness-v1.py", line 23, in <module>
+    gate('pinned-APIs-v1-01','lake','env','lean',RUN/'leaves/pinned-APIs-v1.lean')
+  File "E:\ABRL\worktrees\research-online-book\runs\online-subgradient-max-migration-20261007\common_v2.py", line 14, in gate
+    subprocess.run([sys.executable,'-B','-X','utf8',str(RUN/'run-command.py'),label,*map(str,args)],check=True)
+  File "C:\Users\admin\AppData\Local\Programs\Python\Python38\lib\subprocess.py", line 516, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe', '-B', '-X', 'utf8', 'E:\\ABRL\\worktrees\\research-online-book\\runs\\online-subgradient-max-migration-20261007\\run-command.py', 'pinned-APIs-v1-01', 'lake', 'env', 'lean', 'E:\\ABRL\\worktrees\\research-online-book\\runs\\online-subgradient-max-migration-20261007\\leaves\\pinned-APIs-v1.lean']' returned non-zero exit status 1.

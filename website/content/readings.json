@@ -4146,7 +4146,7 @@
         "title": "Online Learning: A Modern Introduction Using Convex Optimization",
         "authors": "Francesco Orabona",
         "edition": "arXiv:1912.13213v10,21June2026",
-        "sections": "Section2.2.1, Theorem2.26, printed18/PDF30",
+        "sections": "Section2.2.1, Theorem2.26 printed18/PDF30; one source result, sixteen retained supporting proofs/two full definitions",
         "pages": "printed18/PDF30",
         "pdf_page": 30,
         "url": "https://arxiv.org/pdf/1912.13213v10"
@@ -4154,15 +4154,15 @@
       "notation": [
         {
           "term": "Maximum and active indices",
-          "meaning": "F(y)=max over the actual finite nonempty family fi(y); A(x) contains every i with fi(x)=F(x). Ties are retained."
+          "meaning": "F is the actual finite NONEMPTY pointwise maximum; A includes every attaining index, including ties. The maximum definition works on arbitrary E with a finite nonempty index. The active union and global support definitions use the intrinsic real inner-product structure, without finite dimension or function regularity premises. Borrowed properness/domain/real epigraph definitions work on arbitrary E; the convexity predicate needs AddCommGroup E and Module real E. Helpers keep their actual individual signatures; finite dimension is explicit only where required. Finite nonempty indexing makes the printed finite maximum well defined. The finite-dimensional real inner-product presentation includes the source Euclidean instances; no separate coordinate-isometry or setting-functor certificate is claimed. Completeness follows from finite dimension where used, with no extra CompleteSpace or positive-dimension assumption."
         },
         {
           "term": "Global subdifferential",
-          "meaning": "g∈∂fi(x) means fi(x)+inner(g,y-x)≤fi(y) for every ambient y, including outside the effective domain."
+          "meaning": "g in support(f,x) tests f(x)+inner(g,y−x)≤f(y) for EVERY ambient y. The shared global support predicate allows arbitrary EReal functions, including improper inputs, whereas the printed convention is proper-function scoped. The source terminal requires EVERY component proper and x in EVERY effective domain: component properness alone does not provide a common domain point. These hypotheses give a finite maximum at x and no bottom maximum anywhere, hence a proper source maximum. Positive infinity away from x remains permitted. All nineteen existing canary proofs and two noncomputable TEST definitions were checked unchanged. Scalar Bool functions ±y: at0 the active union is {-1,1} and the FULL maximum support is [-1,1]; slope1/2 belongs to the support but not the union, and2 is excluded. At2 only+1 is a support, with inactive−1 excluded. The singleton indicator of[-1,1] is proper/convex, ambient-continuous at0 with maxsupport{0}, and its maximum equals top at2. No new canary or two-dimensional Max test is claimed."
         },
         {
           "term": "Ordinary convex hull",
-          "meaning": "conv takes finite convex combinations. There is no closure in the source conclusion. Every proper convex component is finite and ambient-continuous at x; no global closedness is assumed."
+          "meaning": "Ordinary convexHull uses finite convex combinations, with no closure. Every component is proper and convex, x belongs to every effective domain, and EVERY component, including inactive ones, is continuous at x into EReal in the AMBIENT topology. No relative-domain continuity, global finiteness, component closedness, bounded domain, supplied support decomposition or closure of the hull is assumed. ONE printed Theorem 2.26, with sixteen supporting library proofs and two complete retained definitions. Seventeen retained proofs and nineteen old canary proofs plus two TEST definitions; zero new mathematical, TEST or registry nodes."
         }
       ],
       "algorithm": {
@@ -4171,15 +4171,15 @@
         "steps": [
           {
             "title": "Lift active supports",
-            "detail": "An active function has the same value as F at x, and its value at every y is at most F(y). Its global support therefore supports F. Convexity of the support set extends this to the whole active hull."
+            "detail": "An attaining component has fi(x)=F(x) and fi(y)≤F(y) for every ambient y. Its full global support therefore supports F. The maximum support set is convex at this finite query, so the ordinary active convex hull supports F. The active lifting result needs no properness/convexity/continuity; hull-forward needs properness/common finite query but not convexity of the fi or continuity. Those weaker-premise foundations are not the full numbered source terminal."
           },
           {
             "title": "Establish ordinary hull compactness",
-            "detail": "Continuity at finite x gives an actual neighborhood of finite values. Existing local support bounds make each closed subdifferential compact. A finite union of these convex compact sets has compact ordinary convex hull."
+            "detail": "Ambient continuity and finite query values give actual interior neighborhoods of the effective domains. Shared local support boundedness and closed global inequalities make component supports compact. A convex join is the continuous image of [0,1] times two compact sets; finite induction gives compactness of the ordinary active hull, with inactive sets empty. The generic finite-convex-union helper permits an empty selected Finset; the domain-interior continuity helper permits a bottom query value, unlike the source terminal."
           },
           {
             "title": "Construct the reverse",
-            "detail": "Along a separating direction choose actual nearby maximizers and actual subgradients, take a bounded subsequence and a repeated active index, and pass to the limit. The resulting active support contradicts strict separation."
+            "detail": "For g supporting F and EACH direction d, use yn=x+d/(n+1), choose actual maximizing indices and actual component supports at sufficiently large n, and use the finite family local bounds for a compact subsequence. One finite index recurs; the restricted frequent-index filter is NeBot. Continuity makes that index active at x, and the global support limit yields k in its full support set. Actual displacement comparison gives inner(g,d)≤inner(k,d). This k depends on d, including d=0; no single k for all directions and no supplied witness is claimed. If g were outside the ordinary active hull, its compactness and convexity give strict separation by a continuous linear functional. Riesz supplies the corresponding direction d. The constructed active k has at least the directional value of g, contradicting separation. Thus every maximum support belongs to the ordinary hull; both equality directions are proved without a closure replacement."
           }
         ]
       },
@@ -4198,18 +4198,18 @@
           "math": "F=\\max_{i\\in I}f_i,\\quad A(x)=\\{i:f_i(x)=F(x)\\},\\qquad\\partial F(x)=\\operatorname{conv}\\!\\bigcup_{i\\in A(x)}\\partial f_i(x)",
           "fallback": "The maximum subdifferential is exactly the ordinary convex hull of all active component subdifferentials.",
           "plain": "For a finite family of proper convex functions, if every function is finite and continuous at x, every maximum support is a finite convex combination of active component supports, and every such combination supports the maximum.",
-          "relationship": "Source Euclidean space is represented by a finite-dimensional real inner-product space. Finite nonempty indexing makes the source maximum well-defined; EReal models the original extended values and ambient continuity. No component closedness or hull closure is introduced.",
+          "relationship": "ONE printed Theorem 2.26, with sixteen supporting library proofs and two complete retained definitions. Seventeen retained proofs and nineteen old canary proofs plus two TEST definitions; zero new mathematical, TEST or registry nodes. The maximum definition works on arbitrary E with a finite nonempty index. The active union and global support definitions use the intrinsic real inner-product structure, without finite dimension or function regularity premises. Borrowed properness/domain/real epigraph definitions work on arbitrary E; the convexity predicate needs AddCommGroup E and Module real E. Helpers keep their actual individual signatures; finite dimension is explicit only where required. Finite nonempty indexing makes the printed finite maximum well defined. The finite-dimensional real inner-product presentation includes the source Euclidean instances; no separate coordinate-isometry or setting-functor certificate is claimed. Completeness follows from finite dimension where used, with no extra CompleteSpace or positive-dimension assumption. The shared global support predicate allows arbitrary EReal functions, including improper inputs, whereas the printed convention is proper-function scoped. The source terminal requires EVERY component proper and x in EVERY effective domain: component properness alone does not provide a common domain point. These hypotheses give a finite maximum at x and no bottom maximum anywhere, hence a proper source maximum. Positive infinity away from x remains permitted. All nineteen existing canary proofs and two noncomputable TEST definitions were checked unchanged. Scalar Bool functions ±y: at0 the active union is {-1,1} and the FULL maximum support is [-1,1]; slope1/2 belongs to the support but not the union, and2 is excluded. At2 only+1 is a support, with inactive−1 excluded. The singleton indicator of[-1,1] is proper/convex, ambient-continuous at0 with maxsupport{0}, and its maximum equals top at2. No new canary or two-dimensional Max test is claimed.",
           "contract": {
-            "model": "Deterministic finite-dimensional real Euclidean convex analysis, actual finite maximum and full global supports.",
-            "assumptions": "Each component is proper and convex; x belongs to every effective domain; every component is ambient-continuous at x. The finite family is nonempty. No closedness, global finiteness, differentiability or supplied support decomposition.",
-            "parameters": "Every finite nonempty family, common query x and candidate support g. All ambient test y; all active indices and finite convex combinations.",
-            "regret": "No algorithm/regret claim.",
-            "guarantee": "Full set equality with ordinary convexHull, both directions, ties and inactive indices handled."
+            "model": "Static finite-dimensional real Euclidean convex analysis. Finite nonempty indexing makes the printed finite maximum well defined. The finite-dimensional real inner-product presentation includes the source Euclidean instances; no separate coordinate-isometry or setting-functor certificate is claimed. Completeness follows from finite dimension where used, with no extra CompleteSpace or positive-dimension assumption.",
+            "assumptions": "Every component is proper and convex, x belongs to every effective domain, and EVERY component, including inactive ones, is continuous at x into EReal in the AMBIENT topology. No relative-domain continuity, global finiteness, component closedness, bounded domain, supplied support decomposition or closure of the hull is assumed.",
+            "parameters": "Every finite nonempty family/common query x/candidate g; EVERY ambient test y, ALL active indices/finite convex combinations. Directional witness k depends on the chosen d.",
+            "regret": "No algorithm/regret/probability/feedback/computable or measurable selection claim.",
+            "guarantee": "Complete ordinary active-support convexHull equality, both directions/all candidate vectors; ties and inactive functions retained exactly."
           },
           "local_status": {
             "status": "compiled",
-            "label": "Public Theorem2.26",
-            "boundary": "Compiled locally with all source premises and both ordinary-hull directions. Package acceptance, scoped PR delivery and live status have separate evidence; Chapter2/book incomplete."
+            "label": "Retained full theorem and whole canary checked",
+            "boundary": "Fresh exact producer elaboration and whole canary focused build; 40 unique named kernel checks and 19 frozen-header guards. Selected 40 compiled nodes (36 proofs/four definitions), 3402 direct type/value occurrences and 21 required actual producer/canary pairs. Separate readiness nineteen nodes/1795 occurrences/sixteen pairs is preserved. These selected graphs and the curated teaching route are not the full declaration registry graph. Distinct CONTRACT/BODY accepted; combined rootTests/fullharness/site/FINAL/immutable acceptance/PR remain separate. Only Theorem2.26 and its necessary retained dependencies. Next hinge Example2.27 and all remaining Chapter1/2 main-text and necessary appendix obligations remain REQUIRED; nine OTHER Chapter1 main-relative contributor-contract gaps are not waived. Chapter2 mandatory total is null/incomplete; Chapters3–16 unenumerated; whole Goal ACTIVE. No algorithm/regret/probability/feedback/computable or measurable selection guarantee, merge/deploy/main/live update or worktree retirement."
           }
         }
       ],
@@ -4219,34 +4219,34 @@
         "steps": [
           {
             "title": "Lift and take convex combinations",
-            "detail": "For an active index, fi(x)=F(x), and fi(y)≤F(y) at every y. Thus its global support inequality is an F-support. The F-support set is an intersection of real linear halfspaces at this finite query and is convex.",
+            "detail": "An attaining component has fi(x)=F(x) and fi(y)≤F(y) for every ambient y. Its full global support therefore supports F. The maximum support set is convex at this finite query, so the ordinary active convex hull supports F. The active lifting result needs no properness/convexity/continuity; hull-forward needs properness/common finite query but not convexity of the fi or continuity. Those weaker-premise foundations are not the full numbered source terminal.",
             "math": "\\operatorname{conv}\\!\\bigcup_{i\\in A(x)}\\partial f_i(x)\\subseteq\\partial F(x)",
             "fallback": "Actual finite maximum order and all-y support inequalities."
           },
           {
             "title": "Make the ordinary hull compact",
-            "detail": "Source continuity makes x an interior point of every effective domain. Actual local support boundedness and closed global inequalities give compact subdifferentials. Convex joins are continuous images of [0,1] times two compact sets; finite induction gives compact ordinary active hull. Inactive sets contribute the empty set.",
+            "detail": "Ambient continuity and finite query values give actual interior neighborhoods of the effective domains. Shared local support boundedness and closed global inequalities make component supports compact. A convex join is the continuous image of [0,1] times two compact sets; finite induction gives compactness of the ordinary active hull, with inactive sets empty. The generic finite-convex-union helper permits an empty selected Finset; the domain-interior continuity helper permits a bottom query value, unlike the source terminal.",
             "math": "\\partial f_i(x)\\text{ compact},\\qquad K=\\operatorname{conv}\\!\\bigcup_{i\\in A(x)}\\partial f_i(x)\\text{ compact}",
             "fallback": "No closure replacement or global closedness premise."
           },
           {
             "title": "Construct a support dominating a direction",
-            "detail": "For g∈∂F(x) and any direction d take yn=x+d/(n+1), choose an actual maximizing index in and an actual component support qn at yn for all sufficiently large n. Local bounds yield a convergent subsequence. Finiteness yields one index recurring along it; continuity and the global-support limit theorem give k∈∂fi(x) with fi(x)=F(x).",
+            "detail": "For g supporting F and EACH direction d, use yn=x+d/(n+1), choose actual maximizing indices and actual component supports at sufficiently large n, and use the finite family local bounds for a compact subsequence. One finite index recurs; the restricted frequent-index filter is NeBot. Continuity makes that index active at x, and the global support limit yields k in its full support set. Actual displacement comparison gives inner(g,d)≤inner(k,d). This k depends on d, including d=0; no single k for all directions and no supplied witness is claimed.",
             "math": "\\langle g,y_n-x\\rangle\\le\\langle q_n,y_n-x\\rangle,\\qquad\\langle g,d\\rangle\\le\\langle k,d\\rangle",
             "fallback": "Both actual choices and the limit support are constructed."
           },
           {
             "title": "Contradict strict separation",
-            "detail": "If g were outside K, compactness and convexity provide a continuous linear functional strictly larger at g than at every k∈K. Riesz represents it by a direction d. The constructed active k has at least the directional inner product of g, a contradiction. Hence g lies in the ordinary convex hull.",
+            "detail": "If g were outside the ordinary active hull, its compactness and convexity give strict separation by a continuous linear functional. Riesz supplies the corresponding direction d. The constructed active k has at least the directional value of g, contradicting separation. Thus every maximum support belongs to the ordinary hull; both equality directions are proved without a closure replacement.",
             "math": "g\\in\\partial F(x)\\Longrightarrow g\\in K",
             "fallback": "Full reverse inclusion under precisely the frozen source assumptions."
           }
         ],
-        "boundary": "Theorem2.26 only. Hinge/affine/Lipschitz, OSD/linearization, older main-integration migration and Chapters3–16 remain mandatory. Curated teaching links are not the full proof-term dependency graph."
+        "boundary": "ONE printed Theorem 2.26, with sixteen supporting library proofs and two complete retained definitions. Seventeen retained proofs and nineteen old canary proofs plus two TEST definitions; zero new mathematical, TEST or registry nodes. The maximum definition works on arbitrary E with a finite nonempty index. The active union and global support definitions use the intrinsic real inner-product structure, without finite dimension or function regularity premises. Borrowed properness/domain/real epigraph definitions work on arbitrary E; the convexity predicate needs AddCommGroup E and Module real E. Helpers keep their actual individual signatures; finite dimension is explicit only where required. Finite nonempty indexing makes the printed finite maximum well defined. The finite-dimensional real inner-product presentation includes the source Euclidean instances; no separate coordinate-isometry or setting-functor certificate is claimed. Completeness follows from finite dimension where used, with no extra CompleteSpace or positive-dimension assumption. The shared global support predicate allows arbitrary EReal functions, including improper inputs, whereas the printed convention is proper-function scoped. The source terminal requires EVERY component proper and x in EVERY effective domain: component properness alone does not provide a common domain point. These hypotheses give a finite maximum at x and no bottom maximum anywhere, hence a proper source maximum. Positive infinity away from x remains permitted. Fresh exact producer elaboration and whole canary focused build; 40 unique named kernel checks and 19 frozen-header guards. Selected 40 compiled nodes (36 proofs/four definitions), 3402 direct type/value occurrences and 21 required actual producer/canary pairs. Separate readiness nineteen nodes/1795 occurrences/sixteen pairs is preserved. These selected graphs and the curated teaching route are not the full declaration registry graph. Only Theorem2.26 and its necessary retained dependencies. Next hinge Example2.27 and all remaining Chapter1/2 main-text and necessary appendix obligations remain REQUIRED; nine OTHER Chapter1 main-relative contributor-contract gaps are not waived. Chapter2 mandatory total is null/incomplete; Chapters3–16 unenumerated; whole Goal ACTIVE. No algorithm/regret/probability/feedback/computable or measurable selection guarantee, merge/deploy/main/live update or worktree retirement."
       },
       "worked_example": {
         "title": "Tied supports, an inactive function and extended values",
-        "intro": "Actual public canaries apply the complete theorem to proper convex source instances.",
+        "intro": "All nineteen existing canary proofs and two noncomputable TEST definitions were checked unchanged. Scalar Bool functions ±y: at0 the active union is {-1,1} and the FULL maximum support is [-1,1]; slope1/2 belongs to the support but not the union, and2 is excluded. At2 only+1 is a support, with inactive−1 excluded. The singleton indicator of[-1,1] is proper/convex, ambient-continuous at0 with maxsupport{0}, and its maximum equals top at2. No new canary or two-dimensional Max test is claimed.",
         "steps": [
           {
             "title": "A genuine tie",
@@ -4268,7 +4268,7 @@
           }
         ],
         "takeaway": "Active supports may require convex mixing, while inactive functions contribute no supports; infinity away from the common query remains permitted.",
-        "boundary": "Empty-index maximum has no value specified by this source; no Chapter2/book completion."
+        "boundary": "Only Theorem2.26 and its necessary retained dependencies. Next hinge Example2.27 and all remaining Chapter1/2 main-text and necessary appendix obligations remain REQUIRED; nine OTHER Chapter1 main-relative contributor-contract gaps are not waived. Chapter2 mandatory total is null/incomplete; Chapters3–16 unenumerated; whole Goal ACTIVE. No algorithm/regret/probability/feedback/computable or measurable selection guarantee, merge/deploy/main/live update or worktree retirement."
       }
     },
     {

@@ -1,0 +1,224 @@
+@BanditRL.OnlineConvex.SourceFiniteMax.{u_1,
+    u_2} : {E : Type u_1} → {ι : Type u_2} → [Fintype.{u_2} ι] → [Nonempty.{u_2 + 1} ι] → (ι → E → EReal) → E → EReal
+@BanditRL.OnlineConvex.SourceActiveSubgradientUnion.{u_1,
+    u_2} : {E : Type u_1} →
+  [inst : NormedAddCommGroup.{u_1} E] →
+    [InnerProductSpace.{0, u_1} Real E] →
+      {ι : Type u_2} → [Fintype.{u_2} ι] → [Nonempty.{u_2 + 1} ι] → (ι → E → EReal) → E → Set.{u_1} E
+@BanditRL.OnlineConvex.active_subgradient_support_max.{u_1,
+    u_2} : ∀ {E : Type u_1} [inst : NormedAddCommGroup.{u_1} E] [inst_1 : InnerProductSpace.{0, u_1} Real E]
+  {ι : Type u_2} [inst_2 : Fintype.{u_2} ι] [inst_3 : Nonempty.{u_2 + 1} ι] (f : ι → E → EReal) (x : E),
+  Subset.{u_1} (BanditRL.OnlineConvex.SourceActiveSubgradientUnion.{u_1, u_2} f x)
+    (BanditRL.OnlineConvex.SourceSubdifferential.{u_1} (BanditRL.OnlineConvex.SourceFiniteMax.{u_1, u_2} f) x)
+@BanditRL.OnlineConvex.finiteMax_attained.{u_1,
+    u_2} : ∀ {E : Type u_1} [inst : NormedAddCommGroup.{u_1} E] [InnerProductSpace.{0, u_1} Real E] {ι : Type u_2}
+  [inst : Fintype.{u_2} ι] [inst_1 : Nonempty.{u_2 + 1} ι] (f : ι → E → EReal) (x : E),
+  ∃ i, Eq.{1} (BanditRL.OnlineConvex.SourceFiniteMax.{u_1, u_2} f x) (f i x)
+@BanditRL.OnlineConvex.finiteMax_point_finite.{u_1,
+    u_2} : ∀ {E : Type u_1} [inst : NormedAddCommGroup.{u_1} E] [InnerProductSpace.{0, u_1} Real E] {ι : Type u_2}
+  [inst : Fintype.{u_2} ι] [inst_1 : Nonempty.{u_2 + 1} ι] (f : ι → E → EReal),
+  (∀ (i : ι), BanditRL.OnlineConvex.SourceProper.{u_1} (f i)) →
+    ∀ (x : E),
+      (∀ (i : ι), Membership.mem.{u_1, u_1} (BanditRL.OnlineConvex.effectiveDomain.{u_1} (f i)) x) →
+        ∃ a, Eq.{1} (BanditRL.OnlineConvex.SourceFiniteMax.{u_1, u_2} f x) ↑a
+@BanditRL.OnlineConvex.subgradient_iff_real_support.{u_1} : ∀ {E : Type u_1} [inst : NormedAddCommGroup.{u_1} E]
+  [inst_1 : InnerProductSpace.{0, u_1} Real E] (f : E → EReal),
+  (∀ (y : E), Ne.{1} (f y) Bot.bot.{0}) →
+    ∀ (x : E),
+      Membership.mem.{u_1, u_1} (BanditRL.OnlineConvex.effectiveDomain.{u_1} f) x →
+        ∀ (g : E),
+          Iff (Membership.mem.{u_1, u_1} (BanditRL.OnlineConvex.SourceSubdifferential.{u_1} f x) g)
+            (∀ (y : E),
+              Ne.{1} (f y) Top.top.{0} →
+                LE.le.{0}
+                  (HAdd.hAdd.{0, 0, 0} (EReal.toReal (f x)) (inner.{0, u_1} Real g (HSub.hSub.{u_1, u_1, u_1} y x)))
+                  (EReal.toReal (f y)))
+@BanditRL.OnlineConvex.convex_sourceSubdifferential.{u_1} : ∀ {E : Type u_1} [inst : NormedAddCommGroup.{u_1} E]
+  [inst_1 : InnerProductSpace.{0, u_1} Real E] (f : E → EReal),
+  (∀ (y : E), Ne.{1} (f y) Bot.bot.{0}) →
+    ∀ (x : E),
+      Membership.mem.{u_1, u_1} (BanditRL.OnlineConvex.effectiveDomain.{u_1} f) x →
+        Convex.{0, u_1} Real (BanditRL.OnlineConvex.SourceSubdifferential.{u_1} f x)
+@BanditRL.OnlineConvex.continuousAt_mem_domain_interior.{u_1} : ∀ {E : Type u_1} [inst : NormedAddCommGroup.{u_1} E]
+  [InnerProductSpace.{0, u_1} Real E] (f : E → EReal) (x : E),
+  Membership.mem.{u_1, u_1} (BanditRL.OnlineConvex.effectiveDomain.{u_1} f) x →
+    ContinuousAt.{u_1, 0} f x →
+      Membership.mem.{u_1, u_1} (interior.{u_1} (BanditRL.OnlineConvex.effectiveDomain.{u_1} f)) x
+@BanditRL.OnlineConvex.finiteMax_ne_bot.{u_1,
+    u_2} : ∀ {E : Type u_1} [inst : NormedAddCommGroup.{u_1} E] [InnerProductSpace.{0, u_1} Real E] {ι : Type u_2}
+  [inst : Fintype.{u_2} ι] [inst_1 : Nonempty.{u_2 + 1} ι] (f : ι → E → EReal),
+  (∀ (i : ι), BanditRL.OnlineConvex.SourceProper.{u_1} (f i)) →
+    ∀ (y : E), Ne.{1} (BanditRL.OnlineConvex.SourceFiniteMax.{u_1, u_2} f y) Bot.bot.{0}
+@BanditRL.OnlineConvex.convexHull_active_support_max.{u_1,
+    u_2} : ∀ {E : Type u_1} [inst : NormedAddCommGroup.{u_1} E] [inst_1 : InnerProductSpace.{0, u_1} Real E]
+  {ι : Type u_2} [inst_2 : Fintype.{u_2} ι] [inst_3 : Nonempty.{u_2 + 1} ι] (f : ι → E → EReal),
+  (∀ (i : ι), BanditRL.OnlineConvex.SourceProper.{u_1} (f i)) →
+    ∀ (x : E),
+      (∀ (i : ι), Membership.mem.{u_1, u_1} (BanditRL.OnlineConvex.effectiveDomain.{u_1} (f i)) x) →
+        Subset.{u_1} ((convexHull.{0, u_1} Real) (BanditRL.OnlineConvex.SourceActiveSubgradientUnion.{u_1, u_2} f x))
+          (BanditRL.OnlineConvex.SourceSubdifferential.{u_1} (BanditRL.OnlineConvex.SourceFiniteMax.{u_1, u_2} f) x)
+@BanditRL.OnlineConvex.isClosed_sourceSubdifferential.{u_1} : ∀ {E : Type u_1} [inst : NormedAddCommGroup.{u_1} E]
+  [inst_1 : InnerProductSpace.{0, u_1} Real E] (f : E → EReal),
+  (∀ (y : E), Ne.{1} (f y) Bot.bot.{0}) →
+    ∀ (x : E),
+      Membership.mem.{u_1, u_1} (BanditRL.OnlineConvex.effectiveDomain.{u_1} f) x →
+        IsClosed.{u_1} (BanditRL.OnlineConvex.SourceSubdifferential.{u_1} f x)
+@BanditRL.OnlineConvex.isCompact_sourceSubdifferential.{u_1} : ∀ {E : Type u_1} [inst : NormedAddCommGroup.{u_1} E]
+  [inst_1 : InnerProductSpace.{0, u_1} Real E] [FiniteDimensional.{0, u_1} Real E] (f : E → EReal),
+  BanditRL.OnlineConvex.SourceProper.{u_1} f →
+    BanditRL.OnlineConvex.IsConvexExtended.{u_1} f →
+      ∀ (x : E),
+        Membership.mem.{u_1, u_1} (interior.{u_1} (BanditRL.OnlineConvex.effectiveDomain.{u_1} f)) x →
+          IsCompact.{u_1} (BanditRL.OnlineConvex.SourceSubdifferential.{u_1} f x)
+@BanditRL.OnlineConvex.isCompact_convexJoin.{u_1} : ∀ {E : Type u_1} [inst : NormedAddCommGroup.{u_1} E]
+  [inst_1 : InnerProductSpace.{0, u_1} Real E] (s t : Set.{u_1} E),
+  IsCompact.{u_1} s → IsCompact.{u_1} t → IsCompact.{u_1} (convexJoin.{0, u_1} Real s t)
+@BanditRL.OnlineConvex.isCompact_convexHull_finite_convex_union.{u_1,
+    u_2} : ∀ {E : Type u_1} [inst : NormedAddCommGroup.{u_1} E] [inst_1 : InnerProductSpace.{0, u_1} Real E]
+  {ι : Type u_2} (s : ι → Set.{u_1} E) (F : Finset.{u_2} ι),
+  (∀ (i : ι), Membership.mem.{u_2, u_2} F i → Convex.{0, u_1} Real (s i)) →
+    (∀ (i : ι), Membership.mem.{u_2, u_2} F i → IsCompact.{u_1} (s i)) →
+      IsCompact.{u_1} ((convexHull.{0, u_1} Real) (⋃ i, ⋃ (_ : Membership.mem.{u_2, u_2} F i), s i))
+@BanditRL.OnlineConvex.isCompact_active_subgradient_hull.{u_1,
+    u_2} : ∀ {E : Type u_1} [inst : NormedAddCommGroup.{u_1} E] [inst_1 : InnerProductSpace.{0, u_1} Real E]
+  [FiniteDimensional.{0, u_1} Real E] {ι : Type u_2} [inst_3 : Fintype.{u_2} ι] [inst_4 : Nonempty.{u_2 + 1} ι]
+  (f : ι → E → EReal),
+  (∀ (i : ι), BanditRL.OnlineConvex.SourceProper.{u_1} (f i)) →
+    (∀ (i : ι), BanditRL.OnlineConvex.IsConvexExtended.{u_1} (f i)) →
+      ∀ (x : E),
+        (∀ (i : ι), Membership.mem.{u_1, u_1} (BanditRL.OnlineConvex.effectiveDomain.{u_1} (f i)) x) →
+          (∀ (i : ι), ContinuousAt.{u_1, 0} (f i) x) →
+            IsCompact.{u_1}
+              ((convexHull.{0, u_1} Real) (BanditRL.OnlineConvex.SourceActiveSubgradientUnion.{u_1, u_2} f x))
+@BanditRL.OnlineConvex.continuousAt_finite_toReal.{u_1} : ∀ {E : Type u_1} [inst : NormedAddCommGroup.{u_1} E]
+  [InnerProductSpace.{0, u_1} Real E] (f : E → EReal) (x : E),
+  Ne.{1} (f x) Top.top.{0} →
+    Ne.{1} (f x) Bot.bot.{0} → ContinuousAt.{u_1, 0} f x → ContinuousAt.{u_1, 0} (fun y => EReal.toReal (f y)) x
+@BanditRL.OnlineConvex.max_support_displacement_compare.{u_1,
+    u_2} : ∀ {E : Type u_1} [inst : NormedAddCommGroup.{u_1} E] [inst_1 : InnerProductSpace.{0, u_1} Real E]
+  {ι : Type u_2} [inst_2 : Fintype.{u_2} ι] [inst_3 : Nonempty.{u_2 + 1} ι] (f : ι → E → EReal),
+  (∀ (i : ι), BanditRL.OnlineConvex.SourceProper.{u_1} (f i)) →
+    ∀ (x : E),
+      (∀ (i : ι), Membership.mem.{u_1, u_1} (BanditRL.OnlineConvex.effectiveDomain.{u_1} (f i)) x) →
+        ∀ (y : E) (i : ι),
+          Membership.mem.{u_1, u_1} (BanditRL.OnlineConvex.effectiveDomain.{u_1} (f i)) y →
+            Eq.{1} (BanditRL.OnlineConvex.SourceFiniteMax.{u_1, u_2} f y) (f i y) →
+              ∀ (g k : E),
+                Membership.mem.{u_1, u_1}
+                    (BanditRL.OnlineConvex.SourceSubdifferential.{u_1}
+                      (BanditRL.OnlineConvex.SourceFiniteMax.{u_1, u_2} f) x)
+                    g →
+                  Membership.mem.{u_1, u_1} (BanditRL.OnlineConvex.SourceSubdifferential.{u_1} (f i) y) k →
+                    LE.le.{0} (inner.{0, u_1} Real g (HSub.hSub.{u_1, u_1, u_1} y x))
+                      (inner.{0, u_1} Real k (HSub.hSub.{u_1, u_1, u_1} y x))
+@BanditRL.OnlineConvex.max_subgradient_direction_witness.{u_1,
+    u_2} : ∀ {E : Type u_1} [inst : NormedAddCommGroup.{u_1} E] [inst_1 : InnerProductSpace.{0, u_1} Real E]
+  [FiniteDimensional.{0, u_1} Real E] {ι : Type u_2} [inst_3 : Fintype.{u_2} ι] [inst_4 : Nonempty.{u_2 + 1} ι]
+  (f : ι → E → EReal),
+  (∀ (i : ι), BanditRL.OnlineConvex.SourceProper.{u_1} (f i)) →
+    (∀ (i : ι), BanditRL.OnlineConvex.IsConvexExtended.{u_1} (f i)) →
+      ∀ (x : E),
+        (∀ (i : ι), Membership.mem.{u_1, u_1} (BanditRL.OnlineConvex.effectiveDomain.{u_1} (f i)) x) →
+          (∀ (i : ι), ContinuousAt.{u_1, 0} (f i) x) →
+            ∀ (g d : E),
+              Membership.mem.{u_1, u_1}
+                  (BanditRL.OnlineConvex.SourceSubdifferential.{u_1}
+                    (BanditRL.OnlineConvex.SourceFiniteMax.{u_1, u_2} f) x)
+                  g →
+                ∃ k,
+                  And (Membership.mem.{u_1, u_1} (BanditRL.OnlineConvex.SourceActiveSubgradientUnion.{u_1, u_2} f x) k)
+                    (LE.le.{0} (inner.{0, u_1} Real g d) (inner.{0, u_1} Real k d))
+@BanditRL.OnlineConvex.theorem_2_26.{u_1,
+    u_2} : ∀ {E : Type u_1} [inst : NormedAddCommGroup.{u_1} E] [inst_1 : InnerProductSpace.{0, u_1} Real E]
+  [FiniteDimensional.{0, u_1} Real E] {ι : Type u_2} [inst_3 : Fintype.{u_2} ι] [inst_4 : Nonempty.{u_2 + 1} ι]
+  (f : ι → E → EReal),
+  (∀ (i : ι), BanditRL.OnlineConvex.SourceProper.{u_1} (f i)) →
+    (∀ (i : ι), BanditRL.OnlineConvex.IsConvexExtended.{u_1} (f i)) →
+      ∀ (x : E),
+        (∀ (i : ι), Membership.mem.{u_1, u_1} (BanditRL.OnlineConvex.effectiveDomain.{u_1} (f i)) x) →
+          (∀ (i : ι), ContinuousAt.{u_1, 0} (f i) x) →
+            Eq.{u_1 + 1}
+              (BanditRL.OnlineConvex.SourceSubdifferential.{u_1} (BanditRL.OnlineConvex.SourceFiniteMax.{u_1, u_2} f) x)
+              ((convexHull.{0, u_1} Real) (BanditRL.OnlineConvex.SourceActiveSubgradientUnion.{u_1, u_2} f x))
+MaximumProbe.family_proper : ∀ (i : Bool), BanditRL.OnlineConvex.SourceProper.{0} (MaximumProbe.family i)
+MaximumProbe.family_domain : ∀ (i : Bool) (x : Real),
+  Membership.mem.{0, 0} (BanditRL.OnlineConvex.effectiveDomain.{0} (MaximumProbe.family i)) x
+MaximumProbe.family_convex : ∀ (i : Bool), BanditRL.OnlineConvex.IsConvexExtended.{0} (MaximumProbe.family i)
+MaximumProbe.family_continuous : ∀ (i : Bool) (x : Real), ContinuousAt.{0, 0} (MaximumProbe.family i) x
+MaximumProbe.affine_support : ∀ (a x : Real),
+  Eq.{1} (BanditRL.OnlineConvex.SourceSubdifferential.{0} (fun y => ↑(HMul.hMul.{0, 0, 0} a y)) x) (singleton.{0, 0} a)
+MaximumProbe.maximum_zero : Eq.{1} (BanditRL.OnlineConvex.SourceFiniteMax.{0, 0} MaximumProbe.family 0) 0
+MaximumProbe.tie_active_union : Eq.{1} (BanditRL.OnlineConvex.SourceActiveSubgradientUnion.{0, 0} MaximumProbe.family 0)
+  (insert.{0, 0} (-1) (singleton.{0, 0} 1))
+MaximumProbe.full_tie_hull_canary : Eq.{1}
+  (BanditRL.OnlineConvex.SourceSubdifferential.{0} (BanditRL.OnlineConvex.SourceFiniteMax.{0, 0} MaximumProbe.family) 0)
+  ((convexHull.{0, 0} Real) (insert.{0, 0} (-1) (singleton.{0, 0} 1)))
+MaximumProbe.full_tie_interval_canary : Eq.{1}
+  (BanditRL.OnlineConvex.SourceSubdifferential.{0} (BanditRL.OnlineConvex.SourceFiniteMax.{0, 0} MaximumProbe.family) 0)
+  (Set.Icc.{0} (-1) 1)
+MaximumProbe.mixture_and_rejection_canary : And
+  (Membership.mem.{0, 0}
+    (BanditRL.OnlineConvex.SourceSubdifferential.{0} (BanditRL.OnlineConvex.SourceFiniteMax.{0, 0} MaximumProbe.family)
+      0)
+    (1 / 2))
+  (And (1 / 2 ∉ BanditRL.OnlineConvex.SourceActiveSubgradientUnion.{0, 0} MaximumProbe.family 0)
+    (2 ∉
+      BanditRL.OnlineConvex.SourceSubdifferential.{0} (BanditRL.OnlineConvex.SourceFiniteMax.{0, 0} MaximumProbe.family)
+        0))
+MaximumProbe.maximum_two : Eq.{1} (BanditRL.OnlineConvex.SourceFiniteMax.{0, 0} MaximumProbe.family 2) ↑2
+MaximumProbe.inactive_union_canary : Eq.{1}
+  (BanditRL.OnlineConvex.SourceActiveSubgradientUnion.{0, 0} MaximumProbe.family 2) (singleton.{0, 0} 1)
+MaximumProbe.strict_active_canary : And
+  (Eq.{1}
+    (BanditRL.OnlineConvex.SourceSubdifferential.{0} (BanditRL.OnlineConvex.SourceFiniteMax.{0, 0} MaximumProbe.family)
+      2)
+    (singleton.{0, 0} 1))
+  (-1 ∉
+    BanditRL.OnlineConvex.SourceSubdifferential.{0} (BanditRL.OnlineConvex.SourceFiniteMax.{0, 0} MaximumProbe.family)
+      2)
+MaximumExtendedProbe.constrained_proper : ∀ (i : Unit),
+  BanditRL.OnlineConvex.SourceProper.{0} (MaximumExtendedProbe.constrained i)
+MaximumExtendedProbe.constrained_convex : ∀ (i : Unit),
+  BanditRL.OnlineConvex.IsConvexExtended.{0} (MaximumExtendedProbe.constrained i)
+MaximumExtendedProbe.constrained_domain : ∀ (i : Unit),
+  Membership.mem.{0, 0} (BanditRL.OnlineConvex.effectiveDomain.{0} (MaximumExtendedProbe.constrained i)) 0
+MaximumExtendedProbe.constrained_continuous : ∀ (i : Unit), ContinuousAt.{0, 0} (MaximumExtendedProbe.constrained i) 0
+MaximumExtendedProbe.singleton_max : ∀ (y : Real),
+  Eq.{1} (BanditRL.OnlineConvex.SourceFiniteMax.{0, 0} MaximumExtendedProbe.constrained y)
+    (MaximumExtendedProbe.constrained Unit.unit y)
+MaximumExtendedProbe.singleton_extended_domain_canary : And
+  (Eq.{1}
+    (BanditRL.OnlineConvex.SourceSubdifferential.{0}
+      (BanditRL.OnlineConvex.SourceFiniteMax.{0, 0} MaximumExtendedProbe.constrained) 0)
+    (singleton.{0, 0} 0))
+  (Eq.{1} (BanditRL.OnlineConvex.SourceFiniteMax.{0, 0} MaximumExtendedProbe.constrained 2) Top.top.{0})
+MaximumProbe.family : Bool → Real → EReal
+MaximumExtendedProbe.constrained : Unit → Real → EReal
+def BanditRL.OnlineConvex.SourceFiniteMax.{u_1, u_2} : {E : Type u_1} →
+  {ι : Type u_2} → [Fintype.{u_2} ι] → [Nonempty.{u_2 + 1} ι] → (ι → E → EReal) → E → EReal :=
+fun {E} {ι} [Fintype.{u_2} ι] [Nonempty.{u_2 + 1} ι] f x => Finset.sup'.{0, u_2} Finset.univ.{u_2} ⋯ fun i => f i x
+def BanditRL.OnlineConvex.SourceActiveSubgradientUnion.{u_1, u_2} : {E : Type u_1} →
+  [inst : NormedAddCommGroup.{u_1} E] →
+    [InnerProductSpace.{0, u_1} Real E] →
+      {ι : Type u_2} → [Fintype.{u_2} ι] → [Nonempty.{u_2 + 1} ι] → (ι → E → EReal) → E → Set.{u_1} E :=
+fun {E} [NormedAddCommGroup.{u_1} E] [InnerProductSpace.{0, u_1} Real E] {ι} [Fintype.{u_2} ι] [Nonempty.{u_2 + 1} ι] f
+    x =>
+  setOf.{u_1} fun g =>
+    ∃ i,
+      And (Eq.{1} (f i x) (BanditRL.OnlineConvex.SourceFiniteMax.{u_1, u_2} f x))
+        (Membership.mem.{u_1, u_1} (BanditRL.OnlineConvex.SourceSubdifferential.{u_1} (f i) x) g)
+def BanditRL.OnlineConvex.SourceSubdifferential.{u_1} : {E : Type u_1} →
+  [inst : NormedAddCommGroup.{u_1} E] → [InnerProductSpace.{0, u_1} Real E] → (E → EReal) → E → Set.{u_1} E :=
+fun {E} [NormedAddCommGroup.{u_1} E] [InnerProductSpace.{0, u_1} Real E] f x =>
+  setOf.{u_1} fun g =>
+    ∀ (y : E), LE.le.{0} (HAdd.hAdd.{0, 0, 0} (f x) ↑(inner.{0, u_1} Real g (HSub.hSub.{u_1, u_1, u_1} y x))) (f y)
+def BanditRL.OnlineConvex.SourceProper.{u_1} : {E : Type u_1} → (E → EReal) → Prop :=
+fun {E} f => And (∀ (x : E), Ne.{1} (f x) Bot.bot.{0}) (∃ x r, Eq.{1} (f x) ↑r)
+def BanditRL.OnlineConvex.effectiveDomain.{u_1} : {E : Type u_1} → (E → EReal) → Set.{u_1} E :=
+fun {E} f => setOf.{u_1} fun x => LT.lt.{0} (f x) Top.top.{0}
+def BanditRL.OnlineConvex.realEpigraph.{u_1} : {E : Type u_1} → (E → EReal) → Set.{u_1} (Prod.{u_1, 0} E Real) :=
+fun {E} f => setOf.{u_1} fun p => LE.le.{0} (f p.1) ↑p.2
+def BanditRL.OnlineConvex.IsConvexExtended.{u_1} : {E : Type u_1} →
+  [inst : AddCommGroup.{u_1} E] → [Module.{0, u_1} Real E] → (E → EReal) → Prop :=
+fun {E} [AddCommGroup.{u_1} E] [Module.{0, u_1} Real E] f =>
+  Convex.{0, u_1} Real (BanditRL.OnlineConvex.realEpigraph.{u_1} f)

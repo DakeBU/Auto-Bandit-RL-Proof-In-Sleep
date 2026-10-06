@@ -1,0 +1,63 @@
+@BanditRL.OnlineConvex.subgradient_exists_of_domain_interior : ∀ {F : Type u_1} [inst : NormedAddCommGroup F]
+  [inst_1 : InnerProductSpace ℝ F] [FiniteDimensional ℝ F] (f : F → EReal),
+  BanditRL.OnlineConvex.SourceProper f →
+    BanditRL.OnlineConvex.IsConvexExtended f →
+      ∀ x ∈ interior (BanditRL.OnlineConvex.effectiveDomain f),
+        (BanditRL.OnlineConvex.SourceSubdifferential f x).Nonempty
+@BanditRL.OnlineConvex.subgradients_locally_bounded : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (f : E → EReal),
+  (∀ (y : E), f y ≠ ⊥) →
+    BanditRL.OnlineConvex.IsConvexExtended f →
+      ∀ x ∈ interior (BanditRL.OnlineConvex.effectiveDomain f),
+        ∃ r, 0 < r ∧ ∃ K, ∀ y ∈ Metric.ball x r, ∀ g ∈ BanditRL.OnlineConvex.SourceSubdifferential f y, ‖g‖ ≤ ↑K
+@BanditRL.OnlineConvex.subgradient_limit_of_continuousAt : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] {ι : Type u_2} (l : Filter ι) [l.NeBot] (f : E → EReal),
+  (∀ (y : E), f y ≠ ⊥) →
+    ∀ (x g : E),
+      x ∈ interior (BanditRL.OnlineConvex.effectiveDomain f) →
+        ContinuousAt (fun y => (f y).toReal) x →
+          ∀ (xs gs : ι → E),
+            Filter.Tendsto xs l (nhds x) →
+              Filter.Tendsto gs l (nhds g) →
+                (∀ᶠ (i : ι) in l, gs i ∈ BanditRL.OnlineConvex.SourceSubdifferential f (xs i)) →
+                  g ∈ BanditRL.OnlineConvex.SourceSubdifferential f x
+@Finset.le_sup' : ∀ {α : Type u_1} {β : Type u_2} [inst : SemilatticeSup α] {s : Finset β} (f : β → α) {b : β}
+  (h : b ∈ s), f b ≤ s.sup' ⋯ f
+@Finset.exists_mem_eq_sup' : ∀ {α : Type u_1} {ι : Type u_2} [inst : LinearOrder α] {s : Finset ι} (H : s.Nonempty)
+  (f : ι → α), ∃ i ∈ s, s.sup' H f = f i
+@Finset.sup'_le_iff : ∀ {α : Type u_1} {β : Type u_2} [inst : SemilatticeSup α] {s : Finset β} (H : s.Nonempty)
+  (f : β → α) {a : α}, s.sup' H f ≤ a ↔ ∀ b ∈ s, f b ≤ a
+@convexHull_min : ∀ {𝕜 : Type u_1} {E : Type u_2} [inst : Semiring 𝕜] [inst_1 : PartialOrder 𝕜]
+  [inst_2 : AddCommMonoid E] [inst_3 : Module 𝕜 E] {s t : Set E}, s ⊆ t → Convex 𝕜 t → (convexHull 𝕜) s ⊆ t
+@convexHull_union : ∀ {𝕜 : Type u_1} {E : Type u_2} [inst : Field 𝕜] [inst_1 : LinearOrder 𝕜] [IsStrictOrderedRing 𝕜]
+  [inst_3 : AddCommGroup E] [inst_4 : Module 𝕜 E] {s t : Set E},
+  s.Nonempty → t.Nonempty → (convexHull 𝕜) (s ∪ t) = convexJoin 𝕜 ((convexHull 𝕜) s) ((convexHull 𝕜) t)
+subset_convexHull : ∀ (𝕜 : Type u_1) {E : Type u_2} [inst : Semiring 𝕜] [inst_1 : PartialOrder 𝕜]
+  [inst_2 : AddCommMonoid E] [inst_3 : Module 𝕜 E] (s : Set E), s ⊆ (convexHull 𝕜) s
+@mem_convexJoin : ∀ {𝕜 : Type u_1} {E : Type u_2} [inst : Semiring 𝕜] [inst_1 : PartialOrder 𝕜]
+  [inst_2 : AddCommMonoid E] [inst_3 : Module 𝕜 E] {s t : Set E} {x : E},
+  x ∈ convexJoin 𝕜 s t ↔ ∃ a ∈ s, ∃ b ∈ t, x ∈ segment 𝕜 a b
+segment_eq_image : ∀ (𝕜 : Type u_1) {E : Type u_2} [inst : Ring 𝕜] [inst_1 : PartialOrder 𝕜] [AddRightMono 𝕜]
+  [inst_3 : AddCommGroup E] [inst_4 : Module 𝕜 E] (x y : E),
+  segment 𝕜 x y = (fun θ => (1 - θ) • x + θ • y) '' Set.Icc 0 1
+@IsCompact.tendsto_subseq' : ∀ {X : Type u_1} [inst : TopologicalSpace X] [FirstCountableTopology X] {s : Set X}
+  {x : ℕ → X},
+  IsCompact s →
+    (∃ᶠ (n : ℕ) in Filter.atTop, x n ∈ s) → ∃ a ∈ s, ∃ φ, StrictMono φ ∧ Filter.Tendsto (x ∘ φ) Filter.atTop (nhds a)
+@Filter.frequently_exists : ∀ {α : Type u_1} {ι : Sort u_2} [Finite ι] {l : Filter α} {p : ι → α → Prop},
+  (∃ᶠ (x : α) in l, ∃ i, p i x) ↔ ∃ i, ∃ᶠ (x : α) in l, p i x
+@Filter.eventually_all : ∀ {α : Type u_1} {ι : Sort u_2} [Finite ι] {l : Filter α} {p : ι → α → Prop},
+  (∀ᶠ (x : α) in l, ∀ (i : ι), p i x) ↔ ∀ (i : ι), ∀ᶠ (x : α) in l, p i x
+@Filter.frequently_iff_neBot : ∀ {α : Type u_1} {l : Filter α} {p : α → Prop},
+  (∃ᶠ (x : α) in l, p x) ↔ (l ⊓ Filter.principal {x | p x}).NeBot
+@geometric_hahn_banach_closed_point : ∀ {E : Type u_1} [inst : TopologicalSpace E] [inst_1 : AddCommGroup E]
+  [inst_2 : Module ℝ E] {s : Set E} {x : E} [IsTopologicalAddGroup E] [ContinuousSMul ℝ E] [LocallyConvexSpace ℝ E],
+  Convex ℝ s → IsClosed s → x ∉ s → ∃ f u, (∀ a ∈ s, f a < u) ∧ u < f x
+@InnerProductSpace.toDual_symm_apply : ∀ {𝕜 : Type u_1} {E : Type u_2} [inst : RCLike 𝕜] [inst_1 : NormedAddCommGroup E]
+  [inst_2 : InnerProductSpace 𝕜 E] [inst_3 : CompleteSpace E] {x : E} {y : StrongDual 𝕜 E},
+  inner 𝕜 ((InnerProductSpace.toDual 𝕜 E).symm y) x = y x
+EReal.continuousOn_toReal : ContinuousOn EReal.toReal {⊥, ⊤}ᶜ
+@EReal.coe_toReal : ∀ {x : EReal}, x ≠ ⊤ → x ≠ ⊥ → ↑x.toReal = x
+@le_of_tendsto_of_tendsto : ∀ {α : Type u_1} {β : Type u_2} [inst : TopologicalSpace α] [inst_1 : Preorder α]
+  [t : OrderClosedTopology α] {f g : β → α} {b : Filter β} {a₁ a₂ : α} [b.NeBot],
+  Filter.Tendsto f b (nhds a₁) → Filter.Tendsto g b (nhds a₂) → f ≤ᶠ[b] g → a₁ ≤ a₂
