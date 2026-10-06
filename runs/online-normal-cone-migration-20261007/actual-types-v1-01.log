@@ -1,0 +1,45 @@
+@BanditRL.OnlineConvex.SourceNormalCone : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] → [InnerProductSpace ℝ E] → Set E → E → Set E
+@BanditRL.OnlineConvex.indicator_subdifferential_eq_normalCone : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (V : Set E),
+  V.Nonempty →
+    Convex ℝ V →
+      ∀ (x : E),
+        BanditRL.OnlineConvex.SourceSubdifferential (BanditRL.OnlineConvex.extendedIndicator V) x =
+          BanditRL.OnlineConvex.SourceNormalCone V x
+@BanditRL.OnlineConvex.normalCone_interior_eq_zero : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (V : Set E),
+  V.Nonempty → Convex ℝ V → ∀ x ∈ interior V, BanditRL.OnlineConvex.SourceNormalCone V x = {0}
+@BanditRL.OnlineConvex.normalCone_unitBall_boundary : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (x : E),
+  ‖x‖ = 1 → BanditRL.OnlineConvex.SourceNormalCone {y | ‖y‖ ≤ 1} x = {g | ∃ α, 0 ≤ α ∧ g = α • x}
+NormalIndicatorProbe.interval_boundary_and_outside_canary : -1 ∈
+    BanditRL.OnlineConvex.SourceSubdifferential (BanditRL.OnlineConvex.extendedIndicator (Set.Icc 0 1)) 0 ∧
+  1 ∉ BanditRL.OnlineConvex.SourceSubdifferential (BanditRL.OnlineConvex.extendedIndicator (Set.Icc 0 1)) 0 ∧
+    BanditRL.OnlineConvex.SourceSubdifferential (BanditRL.OnlineConvex.extendedIndicator (Set.Icc 0 1)) 2 = ∅
+NormalIndicatorProbe.thin_singleton_all_normals_canary : BanditRL.OnlineConvex.SourceSubdifferential
+      (BanditRL.OnlineConvex.extendedIndicator {0}) 0 =
+    Set.univ ∧
+  7 ∈ BanditRL.OnlineConvex.SourceSubdifferential (BanditRL.OnlineConvex.extendedIndicator {0}) 0
+NormalGeometryProbe.interval_interior_canary : BanditRL.OnlineConvex.SourceSubdifferential
+    (BanditRL.OnlineConvex.extendedIndicator (Set.Icc 0 1)) (1 / 2) =
+  {0}
+NormalGeometryProbe.e0 : EuclideanSpace ℝ (Fin 2)
+NormalGeometryProbe.e1 : EuclideanSpace ℝ (Fin 2)
+NormalGeometryProbe.two_dimensional_unit_boundary_canary : 2 • NormalGeometryProbe.e0 ∈
+    BanditRL.OnlineConvex.SourceNormalCone {y | ‖y‖ ≤ 1} NormalGeometryProbe.e0 ∧
+  0 ∈ BanditRL.OnlineConvex.SourceNormalCone {y | ‖y‖ ≤ 1} NormalGeometryProbe.e0 ∧
+    NormalGeometryProbe.e1 ∉ BanditRL.OnlineConvex.SourceNormalCone {y | ‖y‖ ≤ 1} NormalGeometryProbe.e0 ∧
+      -NormalGeometryProbe.e0 ∉ BanditRL.OnlineConvex.SourceNormalCone {y | ‖y‖ ≤ 1} NormalGeometryProbe.e0
+def BanditRL.OnlineConvex.SourceNormalCone.{u_1} : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] → [InnerProductSpace ℝ E] → Set E → E → Set E :=
+fun {E} [NormedAddCommGroup E] [InnerProductSpace ℝ E] V x => {g | x ∈ V ∧ ∀ y ∈ V, inner ℝ g (y - x) ≤ 0}
+def BanditRL.OnlineConvex.SourceSubdifferential.{u_1} : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] → [InnerProductSpace ℝ E] → (E → EReal) → E → Set E :=
+fun {E} [NormedAddCommGroup E] [InnerProductSpace ℝ E] f x => {g | ∀ (y : E), f x + ↑(inner ℝ g (y - x)) ≤ f y}
+def BanditRL.OnlineConvex.extendedIndicator.{u_1} : {E : Type u_1} → Set E → E → EReal :=
+fun {E} V x => if x ∈ V then 0 else ⊤
+def BanditRL.OnlineConvex.SourceProper.{u_1} : {E : Type u_1} → (E → EReal) → Prop :=
+fun {E} f => (∀ (x : E), f x ≠ ⊥) ∧ ∃ x r, f x = ↑r
+def BanditRL.OnlineConvex.effectiveDomain.{u_1} : {E : Type u_1} → (E → EReal) → Set E :=
+fun {E} f => {x | f x < ⊤}

@@ -3978,7 +3978,7 @@
         "title": "Online Learning: A Modern Introduction Using Convex Optimization",
         "authors": "Francesco Orabona",
         "edition": "arXiv:1912.13213v10,21June2026",
-        "sections": "Section2.2.1, Example2.25, printed18/PDF30",
+        "sections": "Section2.2.1, Example2.25 printed18/PDF30; ONE example, THREE mandatory equalities and ONE necessary normal definition",
         "pages": "printed18/PDF30",
         "pdf_page": 30,
         "url": "https://arxiv.org/pdf/1912.13213v10"
@@ -3986,15 +3986,15 @@
       "notation": [
         {
           "term": "Normal cone",
-          "meaning": "N_V(x) contains exactly g with x∈V and inner(g,y-x)≤0 for every y∈V. Including x∈V makes it empty outside V."
+          "meaning": "N_V(x) explicitly contains exactly g with x∈V AND inner(g,y-x)≤0 for EVERY y∈V. Its definition has no FD/nonempty/convexity assumption; outsideV or emptyV normals are empty. ONE printed Example2.25, THREE mandatory set equalities, THREE retained proofs and ONE full retained owned normal definition. Zero new mathematical, TEST or registry nodes. Full owned SourceNormalCone has intrinsic real inner-product classes but NO FD/nonempty/convexity premise; it explicitly includes x∈V. All THREE theorem signatures retain FD; first TWO nonempty convexV. No general closed/bounded/full-dimensionalV/CompleteSpace/positive-dimension premise."
         },
         {
           "term": "Constraint indicator",
-          "meaning": "ι_V is zero in V and positive infinity outside V. This is the existing shared EReal indicator, distinct from a zero-outside Set.indicator."
+          "meaning": "Zero in V and positive infinity outside V, the existing shared EReal constraint indicator. Finite-dimensional real inner-product presentation includes the source Euclidean instances; no separately certified coordinate isometry or functor. Shared global SourceSubdifferential admits arbitrary improper EReal functions, wider than the source proper-function definition. Nonempty V makes its zero/top indicator proper. Empty V would yield every vector for generic alltop support but empty feasible normals; this theorem excludes it. Borrowed S/indicator/proper/domain APIs are shared context, not owned or new definitions."
         },
         {
           "term": "Interior and boundary",
-          "meaning": "Interior is ambient interior. The unit ball is closed norm≤1, the query boundary is normx=1 and the outward ray includes every α≥0, including0."
+          "meaning": "Interior is AMBIENT. Closed unit ball norm≤1, boundary normx=1 and FULL real α≥0 ray includes0. No relative-interior/full-dimensional assumption; zeroD norm1 impossible. Whole FOUR unchanged existing canary proofs plus TWO noncomputable TEST basis definitions e0/e1 were freshly checked. Interval[0,1]: -1 accepted/+1 excluded at0, outside2 supportempty, interior½ support{0}. Singleton0 supportuniv and7 are proved; that canary does NOT itself prove empty ambient interior. Actual real EuclideanSpace(Fin2) unitquery e0: outward2e0/zero accepted, transversee1/inward-e0 excluded. No new tests or scalar-only substitution."
         }
       ],
       "algorithm": {
@@ -4003,15 +4003,15 @@
         "steps": [
           {
             "title": "Use the actual indicator support",
-            "detail": "Nonempty V makes the indicator proper. A global support forces x∈V, then the support inequality is exactly the feasible displacement condition; outside test values are automatically top."
+            "detail": "Nonempty V produces actual indicator properness. The shared support-domain theorem forces queried x∈V. At every feasible y, the global support inequality reduces to inner(g,y-x)≤0; outside y its upper value is top. Conversely actual feasible normality gives global support at EVERY ambient y. Exact equality holds for EVERY query and candidate vector, including outside-query emptiness."
           },
           {
             "title": "Move along an interior normal",
-            "detail": "A small positive displacement along a nonzero alleged normal stays inside the actual neighborhood and makes its self-inner product positive, a contradiction."
+            "detail": "AMBIENT interior supplies an actual metric ball around x inside V. If g≠0, choose a=r/(2‖g‖)>0 so actual y=x+ag lies in that ball; normality gives a‖g‖²≤0, contradicting positivity. Zero satisfies all inequalities and x is feasible. Ambient interior is not relative interior; no conclusion of zero normals is supplied at a thin set with empty ambient interior."
           },
           {
             "title": "Normalize a boundary normal",
-            "detail": "Test the actual normalized nonzero g in the unit ball. Cauchy gives equality, then the squared norm of g-‖g‖x is zero. Conversely every α≥0 supports the ball."
+            "detail": "The set is the CLOSED unit ball ‖y‖≤1, query ‖x‖=1. Zero gives α=0. For g≠0 test actual y=g/‖g‖; normality and Cauchy imply inner(g,x)=‖g‖. The squared difference ‖g-‖g‖x‖²=0 produces g=‖g‖x and α=‖g‖≥0. Conversely EVERY real α≥0 satisfies ALL feasible-y inequalities by Cauchy. Whole ray equality includes zero and both directions; radiality is produced, not assumed. In zero dimension no norm1 query exists, so this boundary result is vacuous without adding d>0."
           }
         ]
       },
@@ -4029,18 +4029,18 @@
           "math": "\\partial\\iota_V(x)=N_V(x)",
           "fallback": "Exact full indicator support equality at every query, including outside V.",
           "plain": "Exact full indicator support equality at every query, including outside V.",
-          "relationship": "Source Euclidean space is presented by a finite-dimensional real inner-product space. Existing zero/top indicator and EReal supporting relation are reused. No source premise removed or closed/bounded V added.",
+          "relationship": "ONE printed Example2.25, THREE mandatory set equalities, THREE retained proofs and ONE full retained owned normal definition. Zero new mathematical, TEST or registry nodes. Full owned SourceNormalCone has intrinsic real inner-product classes but NO FD/nonempty/convexity premise; it explicitly includes x∈V. All THREE theorem signatures retain FD; first TWO nonempty convexV. No general closed/bounded/full-dimensionalV/CompleteSpace/positive-dimension premise. Finite-dimensional real inner-product presentation includes the source Euclidean instances; no separately certified coordinate isometry or functor. Shared global SourceSubdifferential admits arbitrary improper EReal functions, wider than the source proper-function definition. Nonempty V makes its zero/top indicator proper. Empty V would yield every vector for generic alltop support but empty feasible normals; this theorem excludes it. Borrowed S/indicator/proper/domain APIs are shared context, not owned or new definitions. Whole FOUR unchanged existing canary proofs plus TWO noncomputable TEST basis definitions e0/e1 were freshly checked. Interval[0,1]: -1 accepted/+1 excluded at0, outside2 supportempty, interior½ support{0}. Singleton0 supportuniv and7 are proved; that canary does NOT itself prove empty ambient interior. Actual real EuclideanSpace(Fin2) unitquery e0: outward2e0/zero accepted, transversee1/inward-e0 excluded. No new tests or scalar-only substitution.",
           "contract": {
-            "model": "Deterministic finite-dimensional real Euclidean convex analysis with actual normal cone.",
-            "assumptions": "Finite-dimensional real inner-product space; nonempty convexV. No closed/bounded or full-dimensionalV premise.",
-            "parameters": "Every queriedx and candidate normalg; all ambient testy in support and all feasibley in cone.",
-            "regret": "No algorithm/regret claim.",
-            "guarantee": "SourceSubdifferential (extendedIndicator V) x = SourceNormalCone V x."
+            "model": "Finite-dimensional real inner-product Euclidean source instance. Finite-dimensional real inner-product presentation includes the source Euclidean instances; no separately certified coordinate isometry or functor. Shared global SourceSubdifferential admits arbitrary improper EReal functions, wider than the source proper-function definition. Nonempty V makes its zero/top indicator proper. Empty V would yield every vector for generic alltop support but empty feasible normals; this theorem excludes it. Borrowed S/indicator/proper/domain APIs are shared context, not owned or new definitions.",
+            "assumptions": "Explicit FD/nonemptyconvexV; every ambientquery x including outsideV. No query-feasibility, generalclosed/boundedV premise.",
+            "parameters": "Every candidate g, EVERY ambient support test y and EVERY feasible normal test y.",
+            "regret": "No algorithm/regret/probability/feedback/computable or measurable vector selection claim.",
+            "guarantee": "Complete indicator subdifferential equals full feasible normal set, both directions/allqueries incloutsideempty."
           },
           "local_status": {
             "status": "compiled",
-            "label": "Public Example2.25 candidate",
-            "boundary": "Focused public proof/canary build compiles; combined and distinct semantic/public-reader/immutable gates separately recorded. Not merged/deployed, Chapter2/book incomplete."
+            "label": "Exact retained source producer and whole canary checked",
+            "boundary": "Current exact retained public bodies and whole canary checked; TEN unique named kernel checks cover sevenproofs/ownedN/twoTESTdefs with standard foundations or none, FOUR frozen-header guards. Selected TEN compiled nodes (seven proofs/three definitions), 1581 direct type/value occurrences and 15 required actualproducer-canary pairs. Separate readiness FOUR nodes/818 references/eightpairs retained exactly; neither is full registry graph export. Teaching route links are curated, not exhaustive proof-term dependencies. Distinct CONTRACT/BODYv2 accepted; combined rootTests/fullharness/site/FINAL/PR remain separate. Only Example2.25 three source claims and its necessary definition. T2.26 and all remaining Chapter1/2 main-text/source-contract/necessary appendix obligations remain REQUIRED; nineOTHERChapter1main-relative contract gaps not waived. Chapter2mandatorytotal null/incomplete; Chapters3–16unenumerated; totalGoal ACTIVE. No algorithm/regret/probability/feedback/measurable or executable selection guarantee, merge/deploy/main/live or worktree retirement."
           }
         },
         {
@@ -4051,18 +4051,18 @@
           "math": "x\\in\\operatorname{int}V\\Longrightarrow N_V(x)=\\{0\\}",
           "fallback": "Interior normals are exactly zero, proved from an actual feasible neighborhood.",
           "plain": "Interior normals are exactly zero, proved from an actual feasible neighborhood.",
-          "relationship": "Source Euclidean space is presented by a finite-dimensional real inner-product space. Existing zero/top indicator and EReal supporting relation are reused. No source premise removed or closed/bounded V added.",
+          "relationship": "ONE printed Example2.25, THREE mandatory set equalities, THREE retained proofs and ONE full retained owned normal definition. Zero new mathematical, TEST or registry nodes. Full owned SourceNormalCone has intrinsic real inner-product classes but NO FD/nonempty/convexity premise; it explicitly includes x∈V. All THREE theorem signatures retain FD; first TWO nonempty convexV. No general closed/bounded/full-dimensionalV/CompleteSpace/positive-dimension premise. Finite-dimensional real inner-product presentation includes the source Euclidean instances; no separately certified coordinate isometry or functor. Shared global SourceSubdifferential admits arbitrary improper EReal functions, wider than the source proper-function definition. Nonempty V makes its zero/top indicator proper. Empty V would yield every vector for generic alltop support but empty feasible normals; this theorem excludes it. Borrowed S/indicator/proper/domain APIs are shared context, not owned or new definitions. Whole FOUR unchanged existing canary proofs plus TWO noncomputable TEST basis definitions e0/e1 were freshly checked. Interval[0,1]: -1 accepted/+1 excluded at0, outside2 supportempty, interior½ support{0}. Singleton0 supportuniv and7 are proved; that canary does NOT itself prove empty ambient interior. Actual real EuclideanSpace(Fin2) unitquery e0: outward2e0/zero accepted, transversee1/inward-e0 excluded. No new tests or scalar-only substitution.",
           "contract": {
-            "model": "Deterministic finite-dimensional real Euclidean convex analysis with actual normal cone.",
-            "assumptions": "Same nonemptyconvex finite-dimensional setting; x in ambient interiorV. No assumed zero-normal bound or closedV premise.",
-            "parameters": "Every interior queryx and every candidate normalg.",
-            "regret": "No algorithm/regret claim.",
-            "guarantee": "SourceNormalCone V x = {0}."
+            "model": "Finite-dimensional real inner-product Euclidean source instance. Finite-dimensional real inner-product presentation includes the source Euclidean instances; no separately certified coordinate isometry or functor. Shared global SourceSubdifferential admits arbitrary improper EReal functions, wider than the source proper-function definition. Nonempty V makes its zero/top indicator proper. Empty V would yield every vector for generic alltop support but empty feasible normals; this theorem excludes it. Borrowed S/indicator/proper/domain APIs are shared context, not owned or new definitions.",
+            "assumptions": "Explicit FD/nonemptyconvexV, x in actual AMBIENT interiorV. No relative-interior or closedV replacement.",
+            "parameters": "Every eligible interiorquery x and every candidate g.",
+            "regret": "No algorithm/regret/probability/feedback/computable or measurable vector selection claim.",
+            "guarantee": "Entire normal set equals singletonzero, including actual membership of0."
           },
           "local_status": {
             "status": "compiled",
-            "label": "Public Example2.25 candidate",
-            "boundary": "Focused public proof/canary build compiles; combined and distinct semantic/public-reader/immutable gates separately recorded. Not merged/deployed, Chapter2/book incomplete."
+            "label": "Exact retained source producer and whole canary checked",
+            "boundary": "Current exact retained public bodies and whole canary checked; TEN unique named kernel checks cover sevenproofs/ownedN/twoTESTdefs with standard foundations or none, FOUR frozen-header guards. Selected TEN compiled nodes (seven proofs/three definitions), 1581 direct type/value occurrences and 15 required actualproducer-canary pairs. Separate readiness FOUR nodes/818 references/eightpairs retained exactly; neither is full registry graph export. Teaching route links are curated, not exhaustive proof-term dependencies. Distinct CONTRACT/BODYv2 accepted; combined rootTests/fullharness/site/FINAL/PR remain separate. Only Example2.25 three source claims and its necessary definition. T2.26 and all remaining Chapter1/2 main-text/source-contract/necessary appendix obligations remain REQUIRED; nineOTHERChapter1main-relative contract gaps not waived. Chapter2mandatorytotal null/incomplete; Chapters3–16unenumerated; totalGoal ACTIVE. No algorithm/regret/probability/feedback/measurable or executable selection guarantee, merge/deploy/main/live or worktree retirement."
           }
         },
         {
@@ -4073,18 +4073,18 @@
           "math": "\\|x\\|=1\\Longrightarrow N_{\\{y:\\|y\\|\\le1\\}}(x)=\\{\\alpha x:\\alpha\\ge0\\}",
           "fallback": "Every boundary normal is a nonnegative radial multiple, and every such multiple is a normal.",
           "plain": "Every boundary normal is a nonnegative radial multiple, and every such multiple is a normal.",
-          "relationship": "Source Euclidean space is presented by a finite-dimensional real inner-product space. Existing zero/top indicator and EReal supporting relation are reused. No source premise removed or closed/bounded V added.",
+          "relationship": "ONE printed Example2.25, THREE mandatory set equalities, THREE retained proofs and ONE full retained owned normal definition. Zero new mathematical, TEST or registry nodes. Full owned SourceNormalCone has intrinsic real inner-product classes but NO FD/nonempty/convexity premise; it explicitly includes x∈V. All THREE theorem signatures retain FD; first TWO nonempty convexV. No general closed/bounded/full-dimensionalV/CompleteSpace/positive-dimension premise. Finite-dimensional real inner-product presentation includes the source Euclidean instances; no separately certified coordinate isometry or functor. Shared global SourceSubdifferential admits arbitrary improper EReal functions, wider than the source proper-function definition. Nonempty V makes its zero/top indicator proper. Empty V would yield every vector for generic alltop support but empty feasible normals; this theorem excludes it. Borrowed S/indicator/proper/domain APIs are shared context, not owned or new definitions. Whole FOUR unchanged existing canary proofs plus TWO noncomputable TEST basis definitions e0/e1 were freshly checked. Interval[0,1]: -1 accepted/+1 excluded at0, outside2 supportempty, interior½ support{0}. Singleton0 supportuniv and7 are proved; that canary does NOT itself prove empty ambient interior. Actual real EuclideanSpace(Fin2) unitquery e0: outward2e0/zero accepted, transversee1/inward-e0 excluded. No new tests or scalar-only substitution.",
           "contract": {
-            "model": "Deterministic finite-dimensional real Euclidean convex analysis with actual normal cone.",
-            "assumptions": "Finite-dimensional real inner-product space and normx=1. Closed unit ball with normy≤1; α≥0 includeszero.",
-            "parameters": "Every unit queryx and every candidate normalg, with actual existential realα.",
-            "regret": "No algorithm/regret claim.",
-            "guarantee": "Exact whole-ray set equality; reverse radiality is proved, not assumed."
+            "model": "Finite-dimensional real inner-product Euclidean source instance. Finite-dimensional real inner-product presentation includes the source Euclidean instances; no separately certified coordinate isometry or functor. Shared global SourceSubdifferential admits arbitrary improper EReal functions, wider than the source proper-function definition. Nonempty V makes its zero/top indicator proper. Empty V would yield every vector for generic alltop support but empty feasible normals; this theorem excludes it. Borrowed S/indicator/proper/domain APIs are shared context, not owned or new definitions.",
+            "assumptions": "Explicit FD and normx=1, CLOSEDunitballnormy≤1. No assumed direction/multiplier or positive dimension.",
+            "parameters": "Every unit queryx/every candidateg/realα≥0 including0; EVERY feasibley.",
+            "regret": "No algorithm/regret/probability/feedback/computable or measurable vector selection claim.",
+            "guarantee": "FULL nonnegative radial-ray equality, produced and proved in both directions. Zero-dimensional case has no unitquery."
           },
           "local_status": {
             "status": "compiled",
-            "label": "Public Example2.25 candidate",
-            "boundary": "Focused public proof/canary build compiles; combined and distinct semantic/public-reader/immutable gates separately recorded. Not merged/deployed, Chapter2/book incomplete."
+            "label": "Exact retained source producer and whole canary checked",
+            "boundary": "Current exact retained public bodies and whole canary checked; TEN unique named kernel checks cover sevenproofs/ownedN/twoTESTdefs with standard foundations or none, FOUR frozen-header guards. Selected TEN compiled nodes (seven proofs/three definitions), 1581 direct type/value occurrences and 15 required actualproducer-canary pairs. Separate readiness FOUR nodes/818 references/eightpairs retained exactly; neither is full registry graph export. Teaching route links are curated, not exhaustive proof-term dependencies. Distinct CONTRACT/BODYv2 accepted; combined rootTests/fullharness/site/FINAL/PR remain separate. Only Example2.25 three source claims and its necessary definition. T2.26 and all remaining Chapter1/2 main-text/source-contract/necessary appendix obligations remain REQUIRED; nineOTHERChapter1main-relative contract gaps not waived. Chapter2mandatorytotal null/incomplete; Chapters3–16unenumerated; totalGoal ACTIVE. No algorithm/regret/probability/feedback/measurable or executable selection guarantee, merge/deploy/main/live or worktree retirement."
           }
         }
       ],
@@ -4094,28 +4094,28 @@
         "steps": [
           {
             "title": "Derive actual query feasibility",
-            "detail": "Properness of the nonempty-set indicator and the shared support-domain theorem force x∈V. For y∈V the support inequality is exactly inner(g,y-x)≤0; for y outsideV the upper value is top.",
+            "detail": "Nonempty V produces actual indicator properness. The shared support-domain theorem forces queried x∈V. At every feasible y, the global support inequality reduces to inner(g,y-x)≤0; outside y its upper value is top. Conversely actual feasible normality gives global support at EVERY ambient y. Exact equality holds for EVERY query and candidate vector, including outside-query emptiness.",
             "math": "g\\in\\partial\\iota_V(x)\\Longleftrightarrow x\\in V\\text{ and }\\forall y\\in V,\\langle g,y-x\\rangle\\le0",
             "fallback": "Every x, including outside-domain emptiness."
           },
           {
             "title": "Exclude nonzero interior normals",
-            "detail": "A real metric ball aroundx lies insideV. A positive step x+ag in this ball gives a‖g‖²≤0. If g is nonzero this is positive; zero directly satisfies the inequalities.",
+            "detail": "AMBIENT interior supplies an actual metric ball around x inside V. If g≠0, choose a=r/(2‖g‖)>0 so actual y=x+ag lies in that ball; normality gives a‖g‖²≤0, contradicting positivity. Zero satisfies all inequalities and x is feasible. Ambient interior is not relative interior; no conclusion of zero normals is supplied at a thin set with empty ambient interior.",
             "math": "a>0,\\quad a\\|g\\|^2\\le0\\Longrightarrow g=0",
             "fallback": "Uses the actual ambient neighborhood, not a consumer bound."
           },
           {
             "title": "Construct the full boundary ray",
-            "detail": "For nonzero g, choose y=g/‖g‖. Normality and Cauchy imply inner(g,x)=‖g‖. The squared distance fromg to‖g‖x vanishes; α=‖g‖≥0. Zero usesα=0. Converse follows from Cauchy for all feasibley.",
+            "detail": "The set is the CLOSED unit ball ‖y‖≤1, query ‖x‖=1. Zero gives α=0. For g≠0 test actual y=g/‖g‖; normality and Cauchy imply inner(g,x)=‖g‖. The squared difference ‖g-‖g‖x‖²=0 produces g=‖g‖x and α=‖g‖≥0. Conversely EVERY real α≥0 satisfies ALL feasible-y inequalities by Cauchy. Whole ray equality includes zero and both directions; radiality is produced, not assumed. In zero dimension no norm1 query exists, so this boundary result is vacuous without adding d>0.",
             "math": "\\|g-\\|g\\|x\\|^2=0,\\quad g=\\|g\\|x",
             "fallback": "Both ray directions, zero and all vectors retained."
           }
         ],
-        "boundary": "All three Example2.25 claims only; later max/hinge/affine/Lipschitz/OSD/linearization remain required. Curated teaching links differ from compiled proof-term dependencies."
+        "boundary": "ONE printed Example2.25, THREE mandatory set equalities, THREE retained proofs and ONE full retained owned normal definition. Zero new mathematical, TEST or registry nodes. Full owned SourceNormalCone has intrinsic real inner-product classes but NO FD/nonempty/convexity premise; it explicitly includes x∈V. All THREE theorem signatures retain FD; first TWO nonempty convexV. No general closed/bounded/full-dimensionalV/CompleteSpace/positive-dimension premise. Finite-dimensional real inner-product presentation includes the source Euclidean instances; no separately certified coordinate isometry or functor. Shared global SourceSubdifferential admits arbitrary improper EReal functions, wider than the source proper-function definition. Nonempty V makes its zero/top indicator proper. Empty V would yield every vector for generic alltop support but empty feasible normals; this theorem excludes it. Borrowed S/indicator/proper/domain APIs are shared context, not owned or new definitions. Current exact retained public bodies and whole canary checked; TEN unique named kernel checks cover sevenproofs/ownedN/twoTESTdefs with standard foundations or none, FOUR frozen-header guards. Selected TEN compiled nodes (seven proofs/three definitions), 1581 direct type/value occurrences and 15 required actualproducer-canary pairs. Separate readiness FOUR nodes/818 references/eightpairs retained exactly; neither is full registry graph export. Teaching route links are curated, not exhaustive proof-term dependencies. Only Example2.25 three source claims and its necessary definition. T2.26 and all remaining Chapter1/2 main-text/source-contract/necessary appendix obligations remain REQUIRED; nineOTHERChapter1main-relative contract gaps not waived. Chapter2mandatorytotal null/incomplete; Chapters3–16unenumerated; totalGoal ACTIVE. No algorithm/regret/probability/feedback/measurable or executable selection guarantee, merge/deploy/main/live or worktree retirement."
       },
       "worked_example": {
         "title": "Boundary, thin set and genuine two-dimensional normals",
-        "intro": "Actual public canaries instantiate the source equalities.",
+        "intro": "Whole FOUR unchanged existing canary proofs plus TWO noncomputable TEST basis definitions e0/e1 were freshly checked. Interval[0,1]: -1 accepted/+1 excluded at0, outside2 supportempty, interior½ support{0}. Singleton0 supportuniv and7 are proved; that canary does NOT itself prove empty ambient interior. Actual real EuclideanSpace(Fin2) unitquery e0: outward2e0/zero accepted, transversee1/inward-e0 excluded. No new tests or scalar-only substitution.",
         "steps": [
           {
             "title": "Interval boundary and outside query",
@@ -4125,7 +4125,7 @@
           },
           {
             "title": "A nonempty set with empty interior",
-            "detail": "For V={0}, every real slope is a normal at0, including7. This is allowed by the source and is not mistaken for an interior point.",
+            "detail": "For V={0} in ℝ the actual canary proves every real slope is a support, including7. The separate elementary fact that this singleton has empty ambient interior explains why the interior theorem is inapplicable; the canary does not itself prove that topological fact.",
             "math": "N_{\\{0\\}}(0)=\\mathbb R",
             "fallback": "No hidden full-dimensional requirement."
           },
@@ -4137,7 +4137,7 @@
           }
         ],
         "takeaway": "Normal geometry depends on the actual set and query, and the boundary ray includes exactly nonnegative radial vectors.",
-        "boundary": "Empty V is outside the original nonempty-set scope; its improper identically-top unguarded support relation differs. No Chapter2/book completion."
+        "boundary": "Only Example2.25 three source claims and its necessary definition. T2.26 and all remaining Chapter1/2 main-text/source-contract/necessary appendix obligations remain REQUIRED; nineOTHERChapter1main-relative contract gaps not waived. Chapter2mandatorytotal null/incomplete; Chapters3–16unenumerated; totalGoal ACTIVE. No algorithm/regret/probability/feedback/measurable or executable selection guarantee, merge/deploy/main/live or worktree retirement."
       }
     },
     {

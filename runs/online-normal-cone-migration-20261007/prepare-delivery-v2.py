@@ -1,0 +1,25 @@
+from common import *
+pr=load(RUN/'created-PR-v1.json');a=load(RUN/'accepted-decision-v1.json');reg=load(RUN/'registry-v1.json')
+assert pr['state']=='open' and pr['draft'] and not pr['merged']
+assert pr['base']['ref']=='codex/research-online-subgradient-absolute-migration' and pr['head']['ref']=='codex/research-online-normal-cone-migration'
+assert load(RUN/'base-PR171-fresh-v1.json')['head']['sha']==BASE
+assert a['source_package_accepted'] and not a['chapter_complete'] and not a['goal_complete']
+assert load(RUN/'native-acceptance-overlay-v1.json')['status']=='passed' and not load(RUN/'app-attach-v1.json').get('isError',False)
+for label in ['create-pr-v1-01','push-creation-v1-01','contributor-final-v1-01','scoped-diff-final-v1-01','committed-raw-audit-v1-01']:passed(label)
+paths=['accepted-decision-v1.json','accepted-binding-audit-v1.json','final-reader-receipt-v1.json','native-acceptance-overlay-v1.json','integrated-gates-overlay-v1.json','registry-v1.json','committed-raw-audit-v1.json','created-PR-v1.json','pr-payload-v1.json','pr-payload-before-API-v1.json','app-attach-v1.json','formula-visual-review-v1.json','formula-render-v2.json']
+counts={k:a[k] for k in ['retained_public_proofs','retained_definitions','new_public_proofs','new_definitions','new_test_proofs','new_registry_nodes','source_body_examples','source_claims']}
+write(RUN/'delivery-obligations-overlay-v1.json',dict(status='scoped-accepted-draft-PR-delivered',PR=pr['html_url'],number=pr['number'],creation_head=pr['head']['sha'],source_site_commit=reg['source_commit'],branch=pr['head']['ref'],exact_base_PR=171,exact_base_head=BASE,creation_state='OPEN-DRAFT-unmerged',app_attached=True,rows=[dict(path=(RUN/p).as_posix(),sha256=sha(RUN/p)) for p in paths],legacy_before=4,legacy_remaining=3,legacy_delta_only=['OnlineNormalCone'],Chapter1_complete=False,chapter2_mandatory_total=None,chapter2_complete=False,goal_complete=False,merged=False,live=False,main_updated=False,worktree='E:/ABRL/worktrees/research-online-book',worktree_disposition='Retained for continuous same-project Chapter2 work; next branch only after final DIRECT clean/local/remote/REST and ALLcurrentrun NONIGNORED Gitblob equality verification.',final_head_boundary='Later metadatahead and allcurrentrun rawbytes checked DIRECT without recursive self-head artifact.',**counts))
+body=f"""# Example2.25 package delivered
+
+OPEN draft PR{pr['number']}: {pr['html_url']}, app attached/unmerged. Branch {pr['head']['ref']}, exact stacked PR171 base {BASE}. Creation head {pr['head']['sha']}; clean applicable site source {reg['source_commit']}; final metadata head verified DIRECT afterwards. Canonical main/live unchanged.
+
+ONE body Example2.25/THREE mandatory equalities/THREE retainedproofs/ONE full normal definition/ZERO new math/TEST/registry nodes. {a['explicit_delta']}
+
+Distinct required automated CONTRACT/BODYv2/FINAL accepted-with-explicit-delta, requested Astra/medium/honest priorhistory/nohuman/external/runtimeattestation. Current postcomment root9089/Tests9234/full466tests7existing skips/whole4oldcanaryproof2real2DTESTdefs/10namedstandard kernelchecks/4guards/exact-base contributor/scopedwhitespace/59702historicalrawrows/sitecheck passed. Cachedjobs included. Selected10nodes1581refs15valuepairs and readiness4nodes818refs8pairs separate/notfullregistrygraph. All10811oldIDsURLs/4canonical3originalcuratedlinks/3notationentries preserved. Firstviewport and THREE actualexpanded sourcecard screenshots inspected; allformulae readable inclfullclosedunitball/nonnegativealpha0. Defaulttall screenshot has collapsedcards/limiteddefaultviewport evidence, not visibility of hiddenformulas.
+
+All failures retained: wrongborrowedowner guess/partialsnapshots; immutableoldindex guard; BODYv1 stale two nativeappend-log resolution pointers, exactprefixsnapshots/correctedv2accepted; FINAL-helper literalnewline SyntaxError beforewrite/use; whitespacevalidator absolute-vs-relative mismatch, exactrawlogs preserved/version3scopedv2passed. Rawlogs/extractions/snapshots/pre-integrationMANIFEST/actualDOM retained with explicit scoped whitespaceexceptions; production/JSON/scripts/ordinarydocs checked. No mathematicalweakening or silentrepair. New deliveryhelperpreparer nestedquote error before execution preserved/version2 fixes onlyquotation; PRparagraph helperv1 corrected beforefirstuse to realnewlines. Native command gates distinct from file/prompt/role conventions. New postFINAL-freeze preparerdiagnostics are separately additive, not retrospective changes to fixedreviewinputs.
+
+Legacy4->3 ONLY OnlineNormalCone AFTERrealPR. Next T2.26 and allremainingChapter1/2/necessaryappendix maintext REQUIRED; nineOTHERChapter1mainrelative contributorcontracts stillmissing/mandatory. Chapter2totalnull/incomplete,3–16unenumerated; persistentGoalACTIVE/unbudgeted. No merge/deploy/mainlive/retirement. Checkout retained for continuousnextpackage after DIRECT clean/head/ALLrawblob checks.
+"""
+write(RUN/'delivery-v1.md',body);fixed(True)
+print('Actual scoped NormalCone PR',pr['number'],'delivered; final DIRECT clean/head/ALLraw checks pending.')

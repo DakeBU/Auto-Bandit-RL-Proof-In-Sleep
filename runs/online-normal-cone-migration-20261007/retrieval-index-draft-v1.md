@@ -1,0 +1,1 @@
+Source card ORABONA-V10-EX2.25; shared indicator/proper-domain/EReal APIs and ambient metric/Cauchy/normsubsq. Three retained proof bodies/full SourceNormalCone; no newgeneric lemma/toolchaindependency/compatibility claim. Current pinned retrieval/probe/compiled graph remains required.

@@ -1,0 +1,10 @@
+{
+  "section": "noncomputable section; open Set; namespace BanditRL.OnlineConvex",
+  "ambient": "variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]",
+  "owned_normal_definition": "def SourceNormalCone (V : Set E) (x : E) : Set E :=\n  {g | x ∈ V ∧ ∀ y ∈ V, inner ℝ g (y - x) ≤ 0}",
+  "borrowed_support_definition": "def SourceSubdifferential (f : E → EReal) (x : E) : Set E :=\n  {g | ∀ y, f x + (inner ℝ g (y - x) : EReal) ≤ f y}",
+  "borrowed_indicator_definition": "def extendedIndicator (V : Set E) (x : E) : EReal := by\n  classical\n  exact if x ∈ V then 0 else ⊤",
+  "owned_normal_definition_sha256": "9d43b99b2d0942be142460a0e8552b776bf5698cfe8f215b0471d9b9bbacc2f4",
+  "finite_dimensional_terminal_binders_explicit": true,
+  "borrowed_definitions_are_not_owned_or_new": true
+}

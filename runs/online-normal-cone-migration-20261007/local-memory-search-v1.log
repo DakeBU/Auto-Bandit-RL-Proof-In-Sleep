@@ -1,0 +1,8 @@
+lean: BanditRL.OnlineConvex.SourceNormalCone [def] BanditRLProof/OnlineNormalCone.lean:22
+  def SourceNormalCone (V : Set E) (x : E) : Set E
+lean: BanditRL.OnlineConvex.indicator_subdifferential_eq_normalCone [theorem] BanditRLProof/OnlineNormalCone.lean:25
+  theorem indicator_subdifferential_eq_normalCone [FiniteDimensional ℝ E] (V : Set E) (hVn : V.Nonempty) (hVc : Convex ℝ V) (x : E) : SourceSubdifferential (extendedIndicator V) x = SourceNormalCone V x
+lean: BanditRL.OnlineConvex.normalCone_interior_eq_zero [theorem] BanditRLProof/OnlineNormalCone.lean:47
+  theorem normalCone_interior_eq_zero [FiniteDimensional ℝ E] (V : Set E) (hVn : V.Nonempty) (hVc : Convex ℝ V) (x : E) (hx : x ∈ interior V) : SourceNormalCone V x = {(0 : E)}
+lean: BanditRL.OnlineConvex.normalCone_unitBall_boundary [theorem] BanditRLProof/OnlineNormalCone.lean:79
+  theorem normalCone_unitBall_boundary [FiniteDimensional ℝ E] (x : E) (hx : ‖x‖ = 1) : SourceNormalCone {y : E | ‖y‖ ≤ 1} x = {g | ∃ α : ℝ, 0 ≤ α ∧ g = α • x}

@@ -1,0 +1,12 @@
+import BanditRLProof
+import Tests.OnlineNormalConeCanary
+#print axioms BanditRL.OnlineConvex.SourceNormalCone
+#print axioms BanditRL.OnlineConvex.indicator_subdifferential_eq_normalCone
+#print axioms BanditRL.OnlineConvex.normalCone_interior_eq_zero
+#print axioms BanditRL.OnlineConvex.normalCone_unitBall_boundary
+#print axioms NormalIndicatorProbe.interval_boundary_and_outside_canary
+#print axioms NormalIndicatorProbe.thin_singleton_all_normals_canary
+#print axioms NormalGeometryProbe.interval_interior_canary
+#print axioms NormalGeometryProbe.e0
+#print axioms NormalGeometryProbe.e1
+#print axioms NormalGeometryProbe.two_dimensional_unit_boundary_canary
