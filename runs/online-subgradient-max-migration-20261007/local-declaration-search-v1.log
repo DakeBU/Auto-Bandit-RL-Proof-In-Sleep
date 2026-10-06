@@ -1,0 +1,10 @@
+BanditRL.OnlineConvex.hinge_subdifferential_hull [theorem] BanditRLProof/OnlineHinge.lean:103
+  theorem hinge_subdifferential_hull [FiniteDimensional ℝ E] (z x : E) : SourceSubdifferential (sourceHinge z) x = convexHull ℝ (SourceActiveSubgradientUnion (hingeFamily z) x)
+BanditRL.OnlineConvex.convexHull_active_support_max [theorem] BanditRLProof/OnlineSubgradientMax.lean:109
+  theorem convexHull_active_support_max {ι : Type*} [Fintype ι] [Nonempty ι] (f : ι → E → EReal) (hp : ∀ i, SourceProper (f i)) (x : E) (hx : ∀ i, x ∈ effectiveDomain (f i)) : convexHull ℝ (SourceActiveSubgradientUnion f x) ⊆ SourceSubdifferential (SourceFiniteMax f) x
+BanditRL.OnlineConvex.isCompact_convexHull_finite_convex_union [theorem] BanditRLProof/OnlineSubgradientMax.lean:168
+  theorem isCompact_convexHull_finite_convex_union {ι : Type*} (s : ι → Set E) (F : Finset ι) (hc : ∀ i ∈ F, Convex ℝ (s i)) (hk : ∀ i ∈ F, IsCompact (s i)) : IsCompact (convexHull ℝ (⋃ i ∈ F, s i))
+BanditRL.OnlineConvex.isCompact_active_subgradient_hull [theorem] BanditRLProof/OnlineSubgradientMax.lean:195
+  theorem isCompact_active_subgradient_hull [FiniteDimensional ℝ E] {ι : Type*} [Fintype ι] [Nonempty ι] (f : ι → E → EReal) (hp : ∀ i, SourceProper (f i)) (hc : ∀ i, IsConvexExtended (f i)) (x : E) (hx : ∀ i, x ∈ effectiveDomain (f i)) (hcont : ∀ i, ContinuousAt (f i) x) : IsCompact (convexHull ℝ (SourceActiveSubgradientUnion f x))
+BanditRL.OnlineConvex.theorem_2_26 [theorem] BanditRLProof/OnlineSubgradientMax.lean:355
+  theorem theorem_2_26 [FiniteDimensional ℝ E] {ι : Type*} [Fintype ι] [Nonempty ι] (f : ι → E → EReal) (hp : ∀ i, SourceProper (f i)) (hc : ∀ i, IsConvexExtended (f i)) (x : E) (hx : ∀ i, x ∈ effectiveDomain (f i)) (hcont : ∀ i, ContinuousAt (f i) x) : SourceSubdifferential (SourceFiniteMax f) x = convexHull ℝ (SourceActiveSubgradientUnion f x)

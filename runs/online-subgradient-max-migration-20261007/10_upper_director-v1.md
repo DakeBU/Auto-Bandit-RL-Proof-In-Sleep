@@ -1,0 +1,1 @@
+Only Theorem2.26 fullordinaryactive-hull equality with its16retainedfoundations/2defs. Default singlelower reuse route; dependencies actually search/probe/compiledgraph before source stabilization; no declaration-count/provisionalforward-inclusion completion. RemainGoalactive/allotherrequiredtargets retained.

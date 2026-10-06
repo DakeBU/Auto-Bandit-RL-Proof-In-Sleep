@@ -1,0 +1,41 @@
+{
+  "section": "noncomputable section; open Set Filter Topology; namespace BanditRL.OnlineConvex",
+  "ambient": "variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]",
+  "owned_definitions": {
+    "SourceFiniteMax": "def SourceFiniteMax {ι : Type*} [Fintype ι] [Nonempty ι]\n    (f : ι → E → EReal) (x : E) : EReal := by\n  classical\n  exact Finset.univ.sup' Finset.univ_nonempty (fun i => f i x)\n\n/-- Full global supports of all functions attaining the maximum at the query. -/",
+    "SourceActiveSubgradientUnion": "def SourceActiveSubgradientUnion {ι : Type*} [Fintype ι] [Nonempty ι]\n    (f : ι → E → EReal) (x : E) : Set E :=\n  {g | ∃ i, f i x = SourceFiniteMax f x ∧ g ∈ SourceSubdifferential (f i) x}"
+  },
+  "owned_full_body_sha256": {
+    "SourceFiniteMax": "974e7c9117c9b339226008948bb5de98e3a2793c7d1403c3d0668311b79de468",
+    "SourceActiveSubgradientUnion": "d458158877ed4dde5a75ab9b1c3108de19e39c0bee4a5ce9200c233ae2fdf10a"
+  },
+  "borrowed_definitions": {
+    "SourceSubdifferential": {
+      "body": "def SourceSubdifferential (f : E → EReal) (x : E) : Set E :=\n  {g | ∀ y, f x + (inner ℝ g (y - x) : EReal) ≤ f y}",
+      "owner": "BanditRLProof/OnlineSubgradientBasic.lean",
+      "owner_sha256": "af3d3f56e4a64cd8adbe47368caf5382e63b428f01da29a121c28c8014f352a5"
+    },
+    "SourceProper": {
+      "body": "def SourceProper (f : E → EReal) : Prop :=\n  (∀ x, f x ≠ ⊥) ∧ ∃ x, ∃ r : ℝ, f x = (r : EReal)",
+      "owner": "BanditRLProof/OnlineClosedProper.lean",
+      "owner_sha256": "c66f00c33b45fb8a0e11583eeadf506e176c16166ce2af02f41f0674507cebe7"
+    },
+    "effectiveDomain": {
+      "body": "def effectiveDomain (f : E → EReal) : Set E := {x | f x < ⊤}\n\n/-- Epigraph heights are real, as in the source subset of R^(d+1). -/",
+      "owner": "BanditRLProof/OnlineConvexExtended.lean",
+      "owner_sha256": "bd30bb95a46ccdc3f6d25f808c175af5fee71d075c2b46ffcf6508f15f1ed66a"
+    },
+    "realEpigraph": {
+      "body": "def realEpigraph (f : E → EReal) : Set (E × ℝ) := {p | f p.1 ≤ (p.2 : EReal)}\n\n/-- Definition 2.3 permits both infinite function values. -/",
+      "owner": "BanditRLProof/OnlineConvexExtended.lean",
+      "owner_sha256": "bd30bb95a46ccdc3f6d25f808c175af5fee71d075c2b46ffcf6508f15f1ed66a"
+    },
+    "IsConvexExtended": {
+      "body": "def IsConvexExtended (f : E → EReal) : Prop := Convex ℝ (realEpigraph f)\n\n/-- Extended-real constraint indicator, distinct from the zero-outside Set.indicator. -/",
+      "owner": "BanditRLProof/OnlineConvexExtended.lean",
+      "owner_sha256": "bd30bb95a46ccdc3f6d25f808c175af5fee71d075c2b46ffcf6508f15f1ed66a"
+    }
+  },
+  "borrowed_context_not_owned_or_new": true,
+  "actual_implicit_binders": "Must verify actual @types; do not infer blanket FD/inner-product binders from section variables. SourceFiniteMax does not use inner product; helper signatures vary."
+}

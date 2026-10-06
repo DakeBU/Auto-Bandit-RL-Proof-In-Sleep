@@ -1,0 +1,2 @@
+BanditRL.OnlineConvex.max_subgradient_direction_witness [theorem] BanditRLProof/OnlineSubgradientMax.lean:262
+  theorem max_subgradient_direction_witness [FiniteDimensional ℝ E] {ι : Type*} [Fintype ι] [Nonempty ι] (f : ι → E → EReal) (hp : ∀ i, SourceProper (f i)) (hc : ∀ i, IsConvexExtended (f i)) (x : E) (hx : ∀ i, x ∈ effectiveDomain (f i)) (hcont : ∀ i, ContinuousAt (f i) x) (g d : E) (hg : g ∈ SourceSubdifferential (SourceFiniteMax f) x) : ∃ k ∈ SourceActiveSubgradientUnion f x, inner ℝ g d ≤ inner ℝ k d

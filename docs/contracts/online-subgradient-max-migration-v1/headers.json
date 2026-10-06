@@ -1,0 +1,97 @@
+{
+  "SourceFiniteMax": {
+    "statement": "def SourceFiniteMax {ι : Type*} [Fintype ι] [Nonempty ι] (f : ι → E → EReal) (x : E) : EReal",
+    "hash": "20c097e42d7008a2b53e0b09354e556c0140e574f397a1a8d91298540d1e1c70",
+    "kind": "definition"
+  },
+  "SourceActiveSubgradientUnion": {
+    "statement": "def SourceActiveSubgradientUnion {ι : Type*} [Fintype ι] [Nonempty ι] (f : ι → E → EReal) (x : E) : Set E",
+    "hash": "5771267e3b5cc90ede269578220645c9aad7aef739c6bda35772b893ccb194cd",
+    "kind": "definition"
+  },
+  "active_subgradient_support_max": {
+    "statement": "theorem active_subgradient_support_max {ι : Type*} [Fintype ι] [Nonempty ι] (f : ι → E → EReal) (x : E) : SourceActiveSubgradientUnion f x ⊆ SourceSubdifferential (SourceFiniteMax f) x",
+    "hash": "12bd49590dff0e709d2a7ec2e80851c30ecd3adaf3bbd33cc26e2032c3abc86f",
+    "kind": "theorem"
+  },
+  "finiteMax_attained": {
+    "statement": "theorem finiteMax_attained {ι : Type*} [Fintype ι] [Nonempty ι] (f : ι → E → EReal) (x : E) : ∃ i, SourceFiniteMax f x = f i x",
+    "hash": "0a16b3ef682ddeb055e34974bfb417ec5adefef9b5c1d330e8a2963508e3f8cd",
+    "kind": "theorem"
+  },
+  "finiteMax_point_finite": {
+    "statement": "theorem finiteMax_point_finite {ι : Type*} [Fintype ι] [Nonempty ι] (f : ι → E → EReal) (hp : ∀ i, SourceProper (f i)) (x : E) (hx : ∀ i, x ∈ effectiveDomain (f i)) : ∃ a : ℝ, SourceFiniteMax f x = (a : EReal)",
+    "hash": "d7909e555bd2b1aabc1e51f23bd9fc65487e6dc655d27d0769e035232cf93411",
+    "kind": "theorem"
+  },
+  "subgradient_iff_real_support": {
+    "statement": "theorem subgradient_iff_real_support (f : E → EReal) (hbot : ∀ y, f y ≠ ⊥) (x : E) (hx : x ∈ effectiveDomain f) (g : E) : g ∈ SourceSubdifferential f x ↔ ∀ y, f y ≠ ⊤ → (f x).toReal + inner ℝ g (y - x) ≤ (f y).toReal",
+    "hash": "12753f00ae27200c66e50e000e0bb8829d3eeee4937f5acb4f6e8d07de240168",
+    "kind": "theorem"
+  },
+  "convex_sourceSubdifferential": {
+    "statement": "theorem convex_sourceSubdifferential (f : E → EReal) (hbot : ∀ y, f y ≠ ⊥) (x : E) (hx : x ∈ effectiveDomain f) : Convex ℝ (SourceSubdifferential f x)",
+    "hash": "98b24ba8c7634056783186529caf334c284ecfb86fa61d9c2b4b7c140b0cf062",
+    "kind": "theorem"
+  },
+  "continuousAt_mem_domain_interior": {
+    "statement": "theorem continuousAt_mem_domain_interior (f : E → EReal) (x : E) (hx : x ∈ effectiveDomain f) (hc : ContinuousAt f x) : x ∈ interior (effectiveDomain f)",
+    "hash": "8dcd39584a5a5bf3d0d467d98229ef23331085714c974fa939825816fa55e985",
+    "kind": "theorem"
+  },
+  "finiteMax_ne_bot": {
+    "statement": "theorem finiteMax_ne_bot {ι : Type*} [Fintype ι] [Nonempty ι] (f : ι → E → EReal) (hp : ∀ i, SourceProper (f i)) (y : E) : SourceFiniteMax f y ≠ ⊥",
+    "hash": "741bb6739a653fc2872843ec3281093b3b073118131133d54e7b39d67372be1e",
+    "kind": "theorem"
+  },
+  "convexHull_active_support_max": {
+    "statement": "theorem convexHull_active_support_max {ι : Type*} [Fintype ι] [Nonempty ι] (f : ι → E → EReal) (hp : ∀ i, SourceProper (f i)) (x : E) (hx : ∀ i, x ∈ effectiveDomain (f i)) : convexHull ℝ (SourceActiveSubgradientUnion f x) ⊆ SourceSubdifferential (SourceFiniteMax f) x",
+    "hash": "ff996c484c26cb41b400b19c0bdb9ae2ba9971b95747886a4b2ff204f7f93823",
+    "kind": "theorem"
+  },
+  "isClosed_sourceSubdifferential": {
+    "statement": "theorem isClosed_sourceSubdifferential (f : E → EReal) (hbot : ∀ y, f y ≠ ⊥) (x : E) (hx : x ∈ effectiveDomain f) : IsClosed (SourceSubdifferential f x)",
+    "hash": "98ed2624f80ddf499255a7c492d86c9685c6cd261aad6eac71fd99a3462ea798",
+    "kind": "theorem"
+  },
+  "isCompact_sourceSubdifferential": {
+    "statement": "theorem isCompact_sourceSubdifferential [FiniteDimensional ℝ E] (f : E → EReal) (hp : SourceProper f) (hf : IsConvexExtended f) (x : E) (hx : x ∈ interior (effectiveDomain f)) : IsCompact (SourceSubdifferential f x)",
+    "hash": "79156a20d0c44a5b22d327d38eb6553e0f198efe5bac25da381026d5758226b4",
+    "kind": "theorem"
+  },
+  "isCompact_convexJoin": {
+    "statement": "theorem isCompact_convexJoin (s t : Set E) (hs : IsCompact s) (ht : IsCompact t) : IsCompact (convexJoin ℝ s t)",
+    "hash": "985a352f5578d2fe5f360684d7efa867be69638179ae33bb1343e5f1f842fbbd",
+    "kind": "theorem"
+  },
+  "isCompact_convexHull_finite_convex_union": {
+    "statement": "theorem isCompact_convexHull_finite_convex_union {ι : Type*} (s : ι → Set E) (F : Finset ι) (hc : ∀ i ∈ F, Convex ℝ (s i)) (hk : ∀ i ∈ F, IsCompact (s i)) : IsCompact (convexHull ℝ (⋃ i ∈ F, s i))",
+    "hash": "47c4519e5e35f8b620c148b1cb215f437deca6c728b7090ae1c3321f90fdedc6",
+    "kind": "theorem"
+  },
+  "isCompact_active_subgradient_hull": {
+    "statement": "theorem isCompact_active_subgradient_hull [FiniteDimensional ℝ E] {ι : Type*} [Fintype ι] [Nonempty ι] (f : ι → E → EReal) (hp : ∀ i, SourceProper (f i)) (hc : ∀ i, IsConvexExtended (f i)) (x : E) (hx : ∀ i, x ∈ effectiveDomain (f i)) (hcont : ∀ i, ContinuousAt (f i) x) : IsCompact (convexHull ℝ (SourceActiveSubgradientUnion f x))",
+    "hash": "4b4b50cf2e67d908ebf749117b21b2e9c4001707c3940cec7b98b8b3a6c63345",
+    "kind": "theorem"
+  },
+  "continuousAt_finite_toReal": {
+    "statement": "theorem continuousAt_finite_toReal (f : E → EReal) (x : E) (ht : f x ≠ ⊤) (hb : f x ≠ ⊥) (hc : ContinuousAt f x) : ContinuousAt (fun y => (f y).toReal) x",
+    "hash": "94f443733ca7b7ac8dfd7ec7d0f5f632c3a25d8f68464222b561af1afe7f996e",
+    "kind": "theorem"
+  },
+  "max_support_displacement_compare": {
+    "statement": "theorem max_support_displacement_compare {ι : Type*} [Fintype ι] [Nonempty ι] (f : ι → E → EReal) (hp : ∀ i, SourceProper (f i)) (x : E) (hx : ∀ i, x ∈ effectiveDomain (f i)) (y : E) (i : ι) (hy : y ∈ effectiveDomain (f i)) (hi : SourceFiniteMax f y = f i y) (g k : E) (hg : g ∈ SourceSubdifferential (SourceFiniteMax f) x) (hk : k ∈ SourceSubdifferential (f i) y) : inner ℝ g (y - x) ≤ inner ℝ k (y - x)",
+    "hash": "e9ddf37524a5c92f31797da4294494a48ed61f0fae1e4685ce82307e3a714ec5",
+    "kind": "theorem"
+  },
+  "max_subgradient_direction_witness": {
+    "statement": "theorem max_subgradient_direction_witness [FiniteDimensional ℝ E] {ι : Type*} [Fintype ι] [Nonempty ι] (f : ι → E → EReal) (hp : ∀ i, SourceProper (f i)) (hc : ∀ i, IsConvexExtended (f i)) (x : E) (hx : ∀ i, x ∈ effectiveDomain (f i)) (hcont : ∀ i, ContinuousAt (f i) x) (g d : E) (hg : g ∈ SourceSubdifferential (SourceFiniteMax f) x) : ∃ k ∈ SourceActiveSubgradientUnion f x, inner ℝ g d ≤ inner ℝ k d",
+    "hash": "0463f4649dc9291b7b78b08acf4e00709811ab39eea035b78af1465586553196",
+    "kind": "theorem"
+  },
+  "theorem_2_26": {
+    "statement": "theorem theorem_2_26 [FiniteDimensional ℝ E] {ι : Type*} [Fintype ι] [Nonempty ι] (f : ι → E → EReal) (hp : ∀ i, SourceProper (f i)) (hc : ∀ i, IsConvexExtended (f i)) (x : E) (hx : ∀ i, x ∈ effectiveDomain (f i)) (hcont : ∀ i, ContinuousAt (f i) x) : SourceSubdifferential (SourceFiniteMax f) x = convexHull ℝ (SourceActiveSubgradientUnion f x)",
+    "hash": "de3991d62d3727578ba8d7fe329d62563899d8e2959e66c7565c0844be980578",
+    "kind": "theorem"
+  }
+}

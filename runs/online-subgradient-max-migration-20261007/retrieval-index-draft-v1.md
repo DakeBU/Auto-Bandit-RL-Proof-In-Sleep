@@ -1,0 +1,1 @@
+SourceORABONA-V10-T2.26; MLIB-CONVEX-LINALG/finitefamily/compactjoin/sequences/HB/Riesz. Current sharedlocal support/interior/localbounded/limit and pinned Finset/convexHull/compactfilter APIs need actual probe/typedgraph. Reuse-only, no newgeneric theorem/compatibleexternalrebuild/globalindex rewrite.

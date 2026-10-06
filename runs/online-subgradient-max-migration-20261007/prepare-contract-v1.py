@@ -1,0 +1,39 @@
+from common_v2 import *
+f=fixed()
+for n in ['retained-focused-v1-01','actual-types-v1-01','pinned-APIs-v2-01','compiled-ready-graph-v1-01']:passed(n)
+assert 'Build completed successfully' in (RUN/'retained-focused-v1-01.log').read_text(encoding='utf-8')
+g=load(RUN/'compiled-ready-graph-v1.json');assert len(g['nodes'])==19 and sum(n['kind']=='theorem' for n in g['nodes'])==17 and sum(n['kind']=='definition' for n in g['nodes'])==2 and all(n['has_value'] for n in g['nodes'])
+pairs={(e['source'],e['target']) for e in g['edges'] if e['kind']=='value' or e['also_in_value']}
+required=[('theorem_2_26',n) for n in ['convexHull_active_support_max','isCompact_active_subgradient_hull','max_subgradient_direction_witness']]+[('max_subgradient_direction_witness',n) for n in ['finiteMax_attained','subgradient_exists_of_domain_interior','subgradients_locally_bounded','max_support_displacement_compare','subgradient_limit_of_continuousAt','continuousAt_finite_toReal']]+[('isCompact_active_subgradient_hull',n) for n in ['isCompact_convexHull_finite_convex_union','convex_sourceSubdifferential','isCompact_sourceSubdifferential','continuousAt_mem_domain_interior']]+[('isCompact_convexHull_finite_convex_union','isCompact_convexJoin'),('isCompact_sourceSubdifferential','subgradients_locally_bounded'),('convexHull_active_support_max','active_subgradient_support_max')]
+for a,b in required:assert (PRE+a,PRE+b) in pairs,(a,b)
+write(RUN/'ready-dependencies-v1.json',dict(status='passed',nodes=19,proof_nodes=17,definition_nodes=2,direct_references=len(g['edges']),graph_sha256=sha(RUN/'compiled-ready-graph-v1.json'),required_value_pairs=[(PRE+a,PRE+b) for a,b in required],actual_project_value_pairs=sorted([list(p) for p in pairs if p[1].startswith('BanditRL.')]),full_graph_export=False,canary_graph=False,source_package_accepted=False))
+for n,h in f['headers'].items():
+ path=RUN/'native-draft-fences'/(n+'.json');native('draft-fence-'+n+'-v1','statement-fence','--declaration',PRE+n,'--file',PUBLIC,'--output',path);assert load(path)['statement_hash']==h
+native('local-declaration-search-v1','list-lean-decls','convexHull','--statement')
+native('local-declaration-search-v2','list-lean-decls','max_subgradient','--statement')
+native('local-memory-search-v1','search-memory','finite maximum subgradient convex hull')
+native('retrieval-record-v1','retrieval-record','--task',TASK,'--query','finite maximum full active support ordinary convexHull compactness actual direction witness','--candidate',PRE+'theorem_2_26','--candidate',PRE+'max_subgradient_direction_witness','--candidate',PRE+'isCompact_convexHull_finite_convex_union','--candidate','Filter.frequently_exists','--candidate','geometric_hahn_banach_closed_point','--compiled-scratch',RUN/'actual-types-v1-01.log','--provenance','MLIB-CONVEX-LINALG; all20 pinned APIs checked in corrected probe. v1 unqualified Filter name errors retained. Existing full producer bodies compiled, no newgeneric theorem, external compatible rebuild or pins changed.','--output',RUN/'retrieval-record-v1.json')
+context=load(CONTRACT/'scoped-contexts-v2.json');mapping={'SourceFiniteMax':'M','SourceActiveSubgradientUnion':'U','SourceSubdifferential':'S','SourceProper':'P','effectiveDomain':'D','realEpigraph':'Q','IsConvexExtended':'C',**{n:'C'+str(i+1).zfill(2) for i,n in enumerate(f['proof_names'])}}
+def neutral(t):
+ for n in sorted(mapping,key=len,reverse=True):
+  t=re.sub(r'\b'+re.escape(PRE+n)+r'\b',mapping[n],t);t=re.sub(r'\b'+re.escape(n)+r'\b',mapping[n],t)
+ return t
+actual=(RUN/'actual-types-v1-01.log').read_text(encoding='utf-8');actual=actual[:actual.index('@MaximumProbe.')]
+packet='''Restricted neutral reconstruction packet; requested GPT-6 Astra/medium. Read ONLY this packet. No repository/source lookup, proof bodies, source identity, prior verdict or inherited history. Write ONLY blind-reconstruction-v1.md and blind-receipt-v1.json adjacent to this packet; bind exact raw packet/report SHA and actor.task. Reconstruct all SEVENTEEN proof targets C01-C17 separately in natural language and LaTeX with seven semantic slots (objects/spaces; quantifiers; assumptions; conclusions; constants; information/probability; boundaries). Separate two owned definitions M/U from five borrowed contexts S/P/D/Q/C. Do not guess numbered source identity, count supporting lemmas as separate source results, or certify source acceptance, whole chapter/Goal, external-human review/runtime model.
+
+```lean
+noncomputable section
+open Set Filter Topology
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+'''+ '\n\n'.join(neutral(context['borrowed_definitions'][n]['body']) for n in ['SourceSubdifferential','SourceProper','effectiveDomain','realEpigraph','IsConvexExtended'])+'\n\n'+'\n\n'.join(neutral(context['owned_definitions'][n]) for n in f['definition_names'])+'\n```\n\nExact neutral headers:\n```lean\n'+'\n\n'.join(neutral(load(CONTRACT/'headers.json')[n]['statement']) for n in f['proof_names'])+'\n```\n\nActual compiled neutral public types:\n```text\n'+neutral(actual)+'''
+```
+
+EReal includes top and bottom. S universally tests EVERY ambient y. P prohibits bottom EVERYWHERE and requires an actual finite witness; D uses value<top. C is real epigraph convexity. M is actual nonempty finite maximum, U includes ALL supports of every actual attaining component. Use actual inferred binders: M is on arbitrary E, while U uses real inner-product structure; each proof may retain section classes and some add finite dimensionality explicitly. Norm is that compatible real inner-product norm. Full C17 uses finite-dimensional E; finite NONEMPTY index; every component proper/convex; common finite query; EVERY component AMBIENT EReal ContinuityAt at that query; full ordinary convexHull equality BOTH directions for ALL candidate vectors. No closed hull, merely one-way inclusion, supplied decomposition, assumed direction witness, relative-domain continuity, globally finite function, extra boundedness/closedness/positive dimension/computability/measurable selection/feedback/regret/probability guarantee. Distinguish stronger foundational premise scopes from C17. Reconstruct direction witness C16 from its actual universal g/d, existential active k, and inner-product inequality without seeing proof.
+'''
+assert 'theorem_2_26' not in packet and 'Orabona' not in packet and PRE not in packet
+write(RUN/'blind-packet-v1.md',packet);generated('blind-generated-before-use-v1.json',[RUN/'blind-packet-v1.md'])
+private=Path('E:/ABRL/papers/long/main/harness.tex');assert sha(private)=='31370babc09de16f536d2f975902b035fe02ba3c290deb3380501efd24a848e6'
+write(RUN/'authoritative-private-workflow-binding-v1.json',dict(path=private.as_posix(),sha256=sha(private),unchanged_private_source=True,private_content_not_copied=True,paper_title='ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory',commands_versus_role_file_conventions_distinct=True))
+write(RUN/'source-visual-read-v1.json',dict(path='tmp/online-subgradient-sum-source-pdf30-v1.png',sha256=sha('tmp/online-subgradient-sum-source-pdf30-v1.png'),actually_viewed_this_round=True,source_formal_result='Theorem2.26',printed18_PDF30=True,content='finite proper convex family; common domain query; each component continuous; actual maximum; actual active set; ordinary convex hull full equality',not_canonical_main_live_or_chapter_completion=True))
+event('draft',dict(frozen_headers=f['headers'],retained_proofs=17,retained_definitions=2,new_production_proofs=0,source_formal_results=1,source_package_accepted=False,API_probe_failed_v1_preserved=True,pre_use_context_and_exporter_corrections_preserved=True))
+print('Nineteen native fences/1795 actual compiled readiness references/16 required value pairs; restricted neutral packet ready, CONTRACT pending.')
