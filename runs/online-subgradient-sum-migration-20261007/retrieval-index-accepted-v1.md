@@ -1,0 +1,1 @@
+Actual9headers/fullM/@types/pinned19APIs/33selectednodes2844refs22valuepairs/whole20actualcanaries3defs/29kernelchecks9nativeguards/CONTRACT BODY FINAL/rawhistory/qualifiedsourceSHA/currentapplicablecombinedgates/10sharedlinks4curatedroutes. AcceptedONLY T2.23bothbranches; zero newmath, nextEx2.24 mandatory/wholeGoal ACTIVE.

@@ -1,0 +1,24 @@
+"""Prepare an accepted, scoped draft package on the exact unmerged parent."""
+from pathlib import Path
+import hashlib,json
+run=Path(__file__).parent
+load=lambda p:json.loads(Path(p).read_text(encoding='utf-8'))
+a=load(run/'accepted-decision-v1.json');reg=load(run/'registry-v1.json')
+assert a['source_package_accepted'] and not a['chapter_complete'] and not a['goal_complete']
+assert load(run/'native-acceptance-overlay-v1.json')['status']=='passed'
+body=f'''Orabona v10 Theorem 2.23 has two branches: inclusion for arbitrary proper components, and exact decomposition under all proper/convex/closed premises and the mixed qualification. This package source-qualifies nine existing production proof refinements and the complete simultaneous-vector Minkowski definition. Every theorem/proof/definition body, shared dependency, project root and old canary remains unchanged; zero new mathematical or TEST declarations are claimed.
+
+The unconditional inclusion supplies no convexity, query-finiteness or common finite point. The library's generic support inequality extends the printed proper-function definition: disjoint proper domains yield an identically infinite aggregate with all vectors formally supporting it and an empty component Minkowski side. Component properness excludes bottom and legitimizes ordinary addition versus top-dominant upperAdd; it does not imply aggregate properness. The equality keeps independent z in the LAST domain and all OTHER AMBIENT interiors, retains every closedness hypothesis and allows last-boundary/singleton cases. Aggregate properness and query/component finiteness are derived.
+
+The actual reverse producer uses an epigraph-product linear image, nonzero separation, a strictly negative height coefficient, normalization/Riesz and recursive Fin.snoc vector construction. It assumes no decomposition or dual-attainment oracle. The stronger binary helper's no-closedness/query-finite interface is distinct from the full source terminal. Six vector proofs retain finite-dimensional real inner-product classes, three scalar proofs have no E, and the definition itself has no finite-dimensional binder. Completeness is derived and zero dimension is allowed. ONE printed result/TWO branches; nine proofs are refinements, not nine source results.
+
+Validation: fresh sequential post-comment root9089/Tests9234 jobs, full466-test harness with7existing skips, all20oldcanary proofs/3definitions,29unique named standard kernel-foundation checks without sorryAx, nine native statement guards, exact stacked contributor/scoped whitespace/historical raw bindings and site build/check. Cached jobs included. The selected actual graph has33nodes/2844direct references/22required producer-canary pairs; readiness10nodes1146refs is separate, neither is full graph. ALL10811old registry IDsURLs preserved/zero new nodes, ten canonical module links and original four curated links. Actual first browser viewport reviewed; no lowerfold/device claim.
+
+Distinct automated CONTRACT/BODY/FINAL accepted with explicit deltas and eleven reader obligations checked, requested Astra/medium; no human/external/runtime-model attestation. Preparation failures and unused versions retained; no mathematical repair hidden. FINAL report SHA `{a['final_review_report_sha256']}`. Evidence: `runs/{run.name}/accepted-decision-v1.json`, `integrated-gates-overlay-v1.json`, `final-reader-receipt-v1.json`, `registry-v1.json`; contract `docs/contracts/online-subgradient-sum-migration-v1/`. Clean applicable local site source `{reg['source_commit']}`, later delivery metadata HEAD separately checked.
+
+Stacked on OPEN draft PR169 exact head`52c24a9971a5d7953a129227b61384061ea3493e`, unmerged. Legacy6->5 ONLY OnlineSubgradientSum after actual delivery. Example2.24 and all remaining Chapter1/2/necessary appendix obligations, including nineOTHERChapter1 main-relative contract gaps, remain REQUIRED. Chapter2total null/incomplete, Chapters3-16unenumerated, whole-book GoalACTIVE. No merge/deploy/main/live update or worktree retirement.
+'''
+payload=dict(title='Orabona 2.23: audit both sum-rule branches and actual decomposition',head='codex/research-online-subgradient-sum-migration',base='codex/research-online-subgradient-differentiability-migration',draft=True,body=body)
+p=run/'pr-payload-v1.json';assert not p.exists();p.write_bytes((json.dumps(payload,ensure_ascii=False,indent=2)+'\n').encode())
+q=run/'pr-payload-before-API-v1.json';assert not q.exists();q.write_bytes((json.dumps(dict(path=p.as_posix(),sha256=hashlib.sha256(p.read_bytes()).hexdigest(),prepared_before_API=True,actual_newlines=True,requested_action='draft creation only, unmerged'),indent=2)+'\n').encode())
+print('Accepted-package draft payload frozen; push/fresh parent/duplicate checks separately required.')

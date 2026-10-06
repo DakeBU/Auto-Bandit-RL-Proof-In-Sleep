@@ -1,0 +1,45 @@
+@BanditRL.OnlineConvex.supporting_functional_at_closure : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] [FiniteDimensional ℝ E] (s : Set E),
+  Convex ℝ s → ∀ x ∈ closure s, x ∉ interior s → ∃ a, a ≠ 0 ∧ ∀ y ∈ s, a y ≤ a x
+@BanditRL.OnlineConvex.subgradient_point_finite : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] (f : E → EReal),
+  BanditRL.OnlineConvex.SourceProper f →
+    ∀ (x g : E), g ∈ BanditRL.OnlineConvex.SourceSubdifferential f x → x ∈ BanditRL.OnlineConvex.effectiveDomain f
+@BanditRL.OnlineConvex.convex_upperAdd : ∀ {E : Type u_1} [inst : AddCommGroup E] [inst_1 : Module ℝ E]
+  (f g : E → EReal),
+  BanditRL.OnlineConvex.IsConvexExtended f →
+    BanditRL.OnlineConvex.IsConvexExtended g →
+      BanditRL.OnlineConvex.IsConvexExtended fun x => BanditRL.OnlineConvex.upperAdd (f x) (g x)
+@BanditRL.OnlineConvex.finitePart_eventually : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [InnerProductSpace ℝ E]
+  [CompleteSpace E] (f : E → EReal),
+  (∀ (z : E), f z ≠ ⊥) →
+    ∀ x ∈ interior (BanditRL.OnlineConvex.effectiveDomain f), ∀ᶠ (z : E) in 𝓝 x, ↑(f z).toReal = f z
+@Convex.prod : ∀ {𝕜 : Type u_1} {E : Type u_2} {F : Type u_3} [inst : Semiring 𝕜] [inst_1 : PartialOrder 𝕜]
+  [inst_2 : AddCommMonoid E] [inst_3 : AddCommMonoid F] [inst_4 : SMul 𝕜 E] [inst_5 : SMul 𝕜 F] {s : Set E} {t : Set F},
+  Convex 𝕜 s → Convex 𝕜 t → Convex 𝕜 (s ×ˢ t)
+@Convex.linear_image : ∀ {𝕜 : Type u_1} {E : Type u_2} {F : Type u_3} [inst : Semiring 𝕜] [inst_1 : PartialOrder 𝕜]
+  [inst_2 : AddCommMonoid E] [inst_3 : AddCommMonoid F] [inst_4 : Module 𝕜 E] [inst_5 : Module 𝕜 F] {s : Set E},
+  Convex 𝕜 s → ∀ (f : E →ₗ[𝕜] F), Convex 𝕜 (⇑f '' s)
+@IsMaxOn.isLocalMax : ∀ {α : Type u_1} {β : Type u_2} [inst : TopologicalSpace α] [inst_1 : Preorder β] {f : α → β}
+  {s : Set α} {a : α}, IsMaxOn f s a → s ∈ 𝓝 a → IsLocalMax f a
+@IsLocalMax.hasFDerivAt_eq_zero : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E] {f : E → ℝ}
+  {f' : StrongDual ℝ E} {a : E}, IsLocalMax f a → HasFDerivAt f f' a → f' = 0
+@IsLocalMin.hasDerivAt_eq_zero : ∀ {f : ℝ → ℝ} {f' a : ℝ}, IsLocalMin f a → HasDerivAt f f' a → f' = 0
+@InnerProductSpace.toDual_symm_apply : ∀ {𝕜 : Type u_1} {E : Type u_2} [inst : RCLike 𝕜] [inst_1 : NormedAddCommGroup E]
+  [inst_2 : InnerProductSpace 𝕜 E] [inst_3 : CompleteSpace E] {x : E} {y : StrongDual 𝕜 E},
+  inner 𝕜 ((InnerProductSpace.toDual 𝕜 E).symm y) x = y x
+@complete_of_proper : ∀ {α : Type u_1} [inst : PseudoMetricSpace α] [ProperSpace α], CompleteSpace α
+@EReal.add_ne_bot_iff : ∀ {x y : EReal}, x + y ≠ ⊥ ↔ x ≠ ⊥ ∧ y ≠ ⊥
+@EReal.coe_toReal : ∀ {x : EReal}, x ≠ ⊤ → x ≠ ⊥ → ↑x.toReal = x
+@EReal.top_add_of_ne_bot : ∀ {x : EReal}, x ≠ ⊥ → ⊤ + x = ⊤
+@Fin.sum_univ_castSucc : ∀ {M : Type u_1} [inst : AddCommMonoid M] {n : ℕ} (f : Fin (n + 1) → M),
+  ∑ i, f i = ∑ i, f i.castSucc + f (Fin.last n)
+@Fin.snoc_last : ∀ {n : ℕ} {α : Fin (n + 1) → Sort u_1} (x : α (Fin.last n)) (p : (i : Fin n) → α i.castSucc),
+  Fin.snoc p x (Fin.last n) = x
+@Fin.snoc_castSucc : ∀ {n : ℕ} {α : Fin (n + 1) → Sort u_1} (x : α (Fin.last n)) (p : (i : Fin n) → α i.castSucc)
+  (i : Fin n), Fin.snoc p x i.castSucc = p i
+@Finset.add_sum_erase : ∀ {ι : Type u_1} {M : Type u_2} [inst : AddCommMonoid M] [inst_1 : DecidableEq ι] (s : Finset ι)
+  (f : ι → M) {a : ι}, a ∈ s → f a + ∑ x ∈ s.erase a, f x = ∑ x ∈ s, f x
+@sum_inner : ∀ {𝕜 : Type u_1} {E : Type u_2} [inst : RCLike 𝕜] [inst_1 : SeminormedAddCommGroup E]
+  [inst_2 : InnerProductSpace 𝕜 E] {ι : Type u_3} (s : Finset ι) (f : ι → E) (x : E),
+  inner 𝕜 (∑ i ∈ s, f i) x = ∑ i ∈ s, inner 𝕜 (f i) x

@@ -3700,40 +3700,40 @@
         "title": "Online Learning: A Modern Introduction Using Convex Optimization",
         "authors": "Francesco Orabona",
         "edition": "arXiv:1912.13213v10,21June2026",
-        "sections": "Section 2.2.1, Theorem 2.23, printed17–18/PDF29–30",
+        "sections": "Section2.2.1, Theorem2.23; ONE numbered result, TWO branches, nine retained proofs and one complete witness definition",
         "pages": "printed17–18/PDF29–30",
         "pdf_page": 29,
         "url": "https://arxiv.org/pdf/1912.13213v10"
       },
       "notation": [
         {
-          "term": "Finite Minkowski sum",
-          "meaning": "Actual vectors G(i) supporting each component, whose finite vector sum equals g. An empty component support set makes the Minkowski sum empty."
+          "term": "Actual vector witnesses",
+          "meaning": "SourceSubgradientSum f x means actual simultaneous vectors G(i), each globally supporting the same f(i) at the same x, and their exact finite vector sum equals g. An empty component support makes this witness set empty. Six vector proof declarations retain finite-dimensional real inner-product classes; three scalar EReal proofs have no E. The full witness definition itself has no finite-dimensional binder. Completeness is derived; zero dimension and zero vectors allowed. Convexity uses REAL-height epigraphs; CLOSED means all REAL sublevels closed, not necessarily closed effective domain."
         },
         {
-          "term": "Mixed qualification",
-          "meaning": "One z is in dom(last) and the ambient interiors of all other component domains. It is independent of the queried x; last need not be interior."
+          "term": "Exact mixed qualification",
+          "meaning": "Equality quantifies EVERY queried x for a positive Fin(n+1) family. ALL components are proper, convex and CLOSED. An independent z is in the LAST domain and every OTHER AMBIENT domain interior; last may be boundary. For a singleton the other-interior condition is vacuous, while all proper/convex/closed hypotheses remain. Do not replace by all interiors, relative interiors, closure or qualification at the queried x."
         },
         {
-          "term": "Proper and closed",
-          "meaning": "Proper components never equal negative infinity and each has a finite value somewhere. Closed means every real sublevel set is closed. The unconditional sum may be improper if domains are disjoint."
+          "term": "Proper components and a possibly improper sum",
+          "meaning": "Printed Definition 2.20 restricts proper functions; generic SourceSubdifferential extends the supporting inequality to ALL EReal functions. With disjoint proper component domains the sum is identically top: its formal support set is ALL vectors and the component Minkowski side is EMPTY. Proper components alone do not make the aggregate proper. No aggregate-proper premise is silently added to unqualified inclusion. Ordinary EReal addition differs from top-dominant upperAdd at mixed infinities. Each proper component excludes bottom, so the two agree here. A component finite witness somewhere need not be a common finite point. EffectiveDomain f means f(x)<top; proper components exclude its generic bottom case."
         }
       ],
       "algorithm": {
-        "title": "Construct the component supports",
+        "title": "Construct actual component supports",
         "kind": "proof flow",
         "steps": [
           {
-            "title": "Sum global inequalities",
-            "detail": "Add the all-y supporting inequalities and use linearity of the inner product. No convexity or common-domain condition is needed for inclusion."
+            "title": "Sum actual support inequalities",
+            "detail": "Inclusion quantifies EVERY x and an arbitrary Fintype family of proper components, with no convexity, closedness, query-finiteness or common finite point. Empty-index inclusion produces the zero support as an explicit library extension, not a printed positive-family equality. SourceSubgradientSum f x means actual simultaneous vectors G(i), each globally supporting the same f(i) at the same x, and their exact finite vector sum equals g. An empty component support makes this witness set empty."
           },
           {
-            "title": "Separate the epigraph image",
-            "detail": "A true sum support bounds the zero-displacement slice of a linear image of two real epigraphs. A supporting functional has a strictly negative height coefficient by the mixed qualification."
+            "title": "Force a strictly negative height coefficient",
+            "detail": "The stronger binary interface omits closedness and explicitly takes finite query values. Build the linear image of two actual real epigraphs; aggregate support gives contact and noninterior. A nonzero separating L(v,t)=A(v)+ct has c<=0 from upward heights. If c=0, variation at the qualifying interior point forces A=0 and L=0, a contradiction; hence c<0. Normalize and use Riesz to produce actual global p and g-p, treating top branches before toReal."
           },
           {
-            "title": "Normalize and induct",
-            "detail": "Riesz representation constructs the first support and its complementary vector. Split off the last function and recursively construct the actual prefix support family."
+            "title": "Construct the full family",
+            "detail": "The mixed point yields prefix interior and an actual common finite value, so prefix/full sums are proper and prefix convex. Actual aggregate support then forces query finiteness and no-bottom summation forces every component finite. Apply the binary producer, recursively decompose the prefix, and use Fin.snoc to construct all component vectors and their exact sum. Public closedness hypotheses remain and are passed recursively; no decomposition or dual-attainment oracle is assumed."
           }
         ]
       },
@@ -3752,18 +3752,18 @@
           "math": "\\partial F(x)\\supseteq\\sum_{i=1}^m\\partial f_i(x)",
           "fallback": "For proper components, every actual finite sum of component subgradients is a global subgradient of their sum, at every x.",
           "plain": "For proper components, every actual finite sum of component subgradients is a global subgradient of their sum, at every x.",
-          "relationship": "The generic finite indexing also admits the empty family, yielding the zero support of the zero function. If the sum is identically positive infinity, the unguarded support predicate is not a meaningful existence claim: the component Minkowski side is empty.",
+          "relationship": "Inclusion quantifies EVERY x and an arbitrary Fintype family of proper components, with no convexity, closedness, query-finiteness or common finite point. Empty-index inclusion produces the zero support as an explicit library extension, not a printed positive-family equality. Printed Definition 2.20 restricts proper functions; generic SourceSubdifferential extends the supporting inequality to ALL EReal functions. With disjoint proper component domains the sum is identically top: its formal support set is ALL vectors and the component Minkowski side is EMPTY. Proper components alone do not make the aggregate proper. No aggregate-proper premise is silently added to unqualified inclusion. Ordinary EReal addition differs from top-dominant upperAdd at mixed infinities. Each proper component excludes bottom, so the two agree here. A component finite witness somewhere need not be a common finite point. EffectiveDomain f means f(x)<top; proper components exclude its generic bottom case. Six vector proof declarations retain finite-dimensional real inner-product classes; three scalar EReal proofs have no E. The full witness definition itself has no finite-dimensional binder. Completeness is derived; zero dimension and zero vectors allowed. Convexity uses REAL-height epigraphs; CLOSED means all REAL sublevels closed, not necessarily closed effective domain. ONE printed Theorem 2.23 with TWO conclusion branches; nine retained proofs plus one full definition are refinements, not nine source results or new mathematics. Zero new production proofs, TEST proofs or canonical registry nodes. Actual selected export has33nodes/2844 direct type-value references, including all20canary proofs/3TESTdefinitions;22 required value pairs. Readiness10nodes/1146references is separate and exactly retained; neither is a full registry export. Module import is not a direct T2.22 proof-value edge.",
           "contract": {
-            "model": "Global supporting inequalities for real-height convex epigraphs; actual extended-real finite function sum and witness-defined vector Minkowski sum.",
-            "assumptions": "Arbitrary proper components in a finite family. No convexity, closedness or common-domain premise.",
-            "parameters": "Every component function and every queried x. The common qualifying z, when required, is independent of x.",
-            "regret": "No regret or algorithm performance claim.",
+            "model": "EReal ordinary finite sum and actual witness-defined Minkowski sum; global supports test ALL ambient points. Six vector proof declarations retain finite-dimensional real inner-product classes; three scalar EReal proofs have no E. The full witness definition itself has no finite-dimensional binder. Completeness is derived; zero dimension and zero vectors allowed. Convexity uses REAL-height epigraphs; CLOSED means all REAL sublevels closed, not necessarily closed effective domain.",
+            "assumptions": "Inclusion quantifies EVERY x and an arbitrary Fintype family of proper components, with no convexity, closedness, query-finiteness or common finite point. Empty-index inclusion produces the zero support as an explicit library extension, not a printed positive-family equality.",
+            "parameters": "All component functions and every queried x; equality qualification point z is independent of x.",
+            "regret": "No algorithm, probability, regret or measurable/computable selection guarantee.",
             "guarantee": "SourceSubgradientSum f x is a subset of SourceSubdifferential (sum f) x."
           },
           "local_status": {
             "status": "compiled",
-            "label": "Both public Theorem 2.23 endpoints compiled locally",
-            "boundary": "Root/Tests 9202 jobs, full 466-test harness (7 existing skips), public canaries, 18-target axiom audit and actual proof dependencies pass. Final source/reader binding and local acceptance are separately recorded. Not merged or deployed; chapter/book incomplete."
+            "label": "Exact retained bodies and whole public canary checked",
+            "boundary": "Current focused3319/whole-canary9091 jobs;29unique kernel checks standard foundations or none, nine native guards. Distinct CONTRACT/BODY accepted. Fresh combined root/Tests/full harness and site/FINAL/PR separately pending; cached jobs included. This package covers both T2.23 branches only. Example2.24 and all remaining Chapter1/2 main-text, source-contract and necessary appendix obligations stay REQUIRED; Chapter2 mandatorytotal null/incomplete, Chapters3-16 unenumerated, whole Goal ACTIVE. No merge/deploy/main/live update, no external Cor16.50 or Optlib reconstruction claim."
           }
         },
         {
@@ -3774,24 +3774,24 @@
           "math": "\\partial F(x)=\\sum_{i=1}^m\\partial f_i(x),\\quad\\operatorname{dom}f_m\\cap\\bigcap_{i<m}\\operatorname{int}(\\operatorname{dom}f_i)\\ne\\varnothing",
           "fallback": "For proper convex closed components and the exact mixed qualification, every sum-function support decomposes into actual component supports, at every x.",
           "plain": "For proper convex closed components and the exact mixed qualification, every sum-function support decomposes into actual component supports, at every x.",
-          "relationship": "Finite-dimensional real inner-product space presents source Euclidean space. The internal binary producer is stronger without closedness; the source terminal retains every closedness premise. A singleton family requires only a nonempty domain, whose interior may be empty.",
+          "relationship": "Equality quantifies EVERY queried x for a positive Fin(n+1) family. ALL components are proper, convex and CLOSED. An independent z is in the LAST domain and every OTHER AMBIENT domain interior; last may be boundary. For a singleton the other-interior condition is vacuous, while all proper/convex/closed hypotheses remain. Do not replace by all interiors, relative interiors, closure or qualification at the queried x. The stronger binary interface omits closedness and explicitly takes finite query values. Build the linear image of two actual real epigraphs; aggregate support gives contact and noninterior. A nonzero separating L(v,t)=A(v)+ct has c<=0 from upward heights. If c=0, variation at the qualifying interior point forces A=0 and L=0, a contradiction; hence c<0. Normalize and use Riesz to produce actual global p and g-p, treating top branches before toReal. The mixed point yields prefix interior and an actual common finite value, so prefix/full sums are proper and prefix convex. Actual aggregate support then forces query finiteness and no-bottom summation forces every component finite. Apply the binary producer, recursively decompose the prefix, and use Fin.snoc to construct all component vectors and their exact sum. Public closedness hypotheses remain and are passed recursively; no decomposition or dual-attainment oracle is assumed. Six vector proof declarations retain finite-dimensional real inner-product classes; three scalar EReal proofs have no E. The full witness definition itself has no finite-dimensional binder. Completeness is derived; zero dimension and zero vectors allowed. Convexity uses REAL-height epigraphs; CLOSED means all REAL sublevels closed, not necessarily closed effective domain. ONE printed Theorem 2.23 with TWO conclusion branches; nine retained proofs plus one full definition are refinements, not nine source results or new mathematics. Zero new production proofs, TEST proofs or canonical registry nodes. Actual selected export has33nodes/2844 direct type-value references, including all20canary proofs/3TESTdefinitions;22 required value pairs. Readiness10nodes/1146references is separate and exactly retained; neither is a full registry export. Module import is not a direct T2.22 proof-value edge.",
           "contract": {
-            "model": "Global supporting inequalities for real-height convex epigraphs; actual extended-real finite function sum and witness-defined vector Minkowski sum.",
-            "assumptions": "Positive finite family of proper convex closed extended-real functions; one common point in the last domain and all other domain interiors. No query-finiteness, boundedness or assumed decomposition premise.",
-            "parameters": "Every component function and every queried x. The common qualifying z, when required, is independent of x.",
-            "regret": "No regret or algorithm performance claim.",
+            "model": "EReal ordinary finite sum and actual witness-defined Minkowski sum; global supports test ALL ambient points. Six vector proof declarations retain finite-dimensional real inner-product classes; three scalar EReal proofs have no E. The full witness definition itself has no finite-dimensional binder. Completeness is derived; zero dimension and zero vectors allowed. Convexity uses REAL-height epigraphs; CLOSED means all REAL sublevels closed, not necessarily closed effective domain.",
+            "assumptions": "Equality quantifies EVERY queried x for a positive Fin(n+1) family. ALL components are proper, convex and CLOSED. An independent z is in the LAST domain and every OTHER AMBIENT domain interior; last may be boundary. For a singleton the other-interior condition is vacuous, while all proper/convex/closed hypotheses remain. Do not replace by all interiors, relative interiors, closure or qualification at the queried x.",
+            "parameters": "All component functions and every queried x; equality qualification point z is independent of x.",
+            "regret": "No algorithm, probability, regret or measurable/computable selection guarantee.",
             "guarantee": "Exact equality at every queried point, including points outside the sum domain."
           },
           "local_status": {
             "status": "compiled",
-            "label": "Both public Theorem 2.23 endpoints compiled locally",
-            "boundary": "Root/Tests 9202 jobs, full 466-test harness (7 existing skips), public canaries, 18-target axiom audit and actual proof dependencies pass. Final source/reader binding and local acceptance are separately recorded. Not merged or deployed; chapter/book incomplete."
+            "label": "Exact retained bodies and whole public canary checked",
+            "boundary": "Current focused3319/whole-canary9091 jobs;29unique kernel checks standard foundations or none, nine native guards. Distinct CONTRACT/BODY accepted. Fresh combined root/Tests/full harness and site/FINAL/PR separately pending; cached jobs included. This package covers both T2.23 branches only. Example2.24 and all remaining Chapter1/2 main-text, source-contract and necessary appendix obligations stay REQUIRED; Chapter2 mandatorytotal null/incomplete, Chapters3-16 unenumerated, whole Goal ACTIVE. No merge/deploy/main/live update, no external Cor16.50 or Optlib reconstruction claim."
           }
         }
       ],
       "proof_bridge": {
         "title": "From a sum support to actual component vectors",
-        "summary": "The reverse direction constructs a witness family; no decomposition or dual attainment is assumed.",
+        "summary": "Actual inclusion and reverse component-vector construction under the exact source mixed qualification.",
         "steps": [
           {
             "title": "Derive query finiteness",
@@ -3801,7 +3801,7 @@
           },
           {
             "title": "Obtain a real separating functional",
-            "detail": "Take the linear image of the product epigraphs with coordinates (u-v,a+b-inner(g,v)). The sum support places the contact point on its boundary. Independent local variation in the first domain forces a negative vertical coefficient.",
+            "detail": "The stronger binary interface omits closedness and explicitly takes finite query values. Build the linear image of two actual real epigraphs; aggregate support gives contact and noninterior. A nonzero separating L(v,t)=A(v)+ct has c<=0 from upward heights. If c=0, variation at the qualifying interior point forces A=0 and L=0, a contradiction; hence c<0. Normalize and use Riesz to produce actual global p and g-p, treating top branches before toReal.",
             "math": "L(w,t)=A(w)+ct,\\qquad c<0",
             "fallback": "This is actual finite-dimensional separation, including empty-interior image cases."
           },
@@ -3813,12 +3813,12 @@
           },
           {
             "title": "Extend to every positive finite family",
-            "detail": "The prefix domain contains the common point in its interior and its sum is proper and convex. Apply the binary producer, recursively decompose the prefix, and append the final vector.",
+            "detail": "The mixed point yields prefix interior and an actual common finite value, so prefix/full sums are proper and prefix convex. Actual aggregate support then forces query finiteness and no-bottom summation forces every component finite. Apply the binary producer, recursively decompose the prefix, and use Fin.snoc to construct all component vectors and their exact sum. Public closedness hypotheses remain and are passed recursively; no decomposition or dual-attainment oracle is assumed.",
             "math": "g=\\sum_iG_i,\\qquad G_i\\in\\partial f_i(x)",
             "fallback": "The singleton case uses no domain interior. Outside-domain equality is retained."
           }
         ],
-        "boundary": "Both Theorem 2.23 endpoints only; later normal-cone, maximum, OSD and linearization results remain required. Teaching links are curated, not the complete proof-term graph."
+        "boundary": "Printed Definition 2.20 restricts proper functions; generic SourceSubdifferential extends the supporting inequality to ALL EReal functions. With disjoint proper component domains the sum is identically top: its formal support set is ALL vectors and the component Minkowski side is EMPTY. Proper components alone do not make the aggregate proper. No aggregate-proper premise is silently added to unqualified inclusion. Ordinary EReal addition differs from top-dominant upperAdd at mixed infinities. Each proper component excludes bottom, so the two agree here. A component finite witness somewhere need not be a common finite point. EffectiveDomain f means f(x)<top; proper components exclude its generic bottom case. Six vector proof declarations retain finite-dimensional real inner-product classes; three scalar EReal proofs have no E. The full witness definition itself has no finite-dimensional binder. Completeness is derived; zero dimension and zero vectors allowed. Convexity uses REAL-height epigraphs; CLOSED means all REAL sublevels closed, not necessarily closed effective domain. ONE printed Theorem 2.23 with TWO conclusion branches; nine retained proofs plus one full definition are refinements, not nine source results or new mathematics. Zero new production proofs, TEST proofs or canonical registry nodes. Actual selected export has33nodes/2844 direct type-value references, including all20canary proofs/3TESTdefinitions;22 required value pairs. Readiness10nodes/1146references is separate and exactly retained; neither is a full registry export. Module import is not a direct T2.22 proof-value edge. This package covers both T2.23 branches only. Example2.24 and all remaining Chapter1/2 main-text, source-contract and necessary appendix obligations stay REQUIRED; Chapter2 mandatorytotal null/incomplete, Chapters3-16 unenumerated, whole Goal ACTIVE. No merge/deploy/main/live update, no external Cor16.50 or Optlib reconstruction claim."
       },
       "worked_example": {
         "title": "A genuine last-domain boundary and a thin singleton",
@@ -3838,13 +3838,13 @@
           },
           {
             "title": "Singleton family with empty interior",
-            "detail": "For the indicator of {0}, the domain interior is empty. The one-component equality still admits the genuine support 7 at 0.",
+            "detail": "On the REAL line, indicator{0} is proper, convex and closed; its domain has empty REAL interior. With one component the other-interior condition is vacuous, so the full equality produces genuine support7 at0. The retained regularity hypotheses do not vanish.",
             "math": "\\operatorname{int}\\{0\\}=\\varnothing,\\quad 7\\in\\partial I_{\\{0\\}}(0)",
             "fallback": "Requiring every domain interior would incorrectly exclude this source case."
           }
         ],
         "takeaway": "The exact mixed qualification handles real boundary geometry, all queried points and the singleton edge case.",
-        "boundary": "The arbitrary-proper inclusion additionally tests nonconvex vacuity and the empty-family extension. These are not a chapter-completion claim."
+        "boundary": "Whole20 old canary proofs/3definitions freshly checked. Full equality constructs nonzero -1 for two quadratics+interval at0, permits last boundary0, gives both sets empty at3, and permits real singleton{0} support7 with empty REAL interior. Inclusion is genuinely invoked for quadratic+constraint support2 and empty-index zero. Concave fixture proves support absence and family vacuity; it does not itself invoke inclusion or prove a named nonconvexity theorem. Real singleton empty interior is not a zero-dimensional universal assertion. This package covers both T2.23 branches only. Example2.24 and all remaining Chapter1/2 main-text, source-contract and necessary appendix obligations stay REQUIRED; Chapter2 mandatorytotal null/incomplete, Chapters3-16 unenumerated, whole Goal ACTIVE. No merge/deploy/main/live update, no external Cor16.50 or Optlib reconstruction claim."
       }
     },
     {

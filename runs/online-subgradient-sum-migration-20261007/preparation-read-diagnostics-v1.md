@@ -1,0 +1,1 @@
+Read-only CLI preparation: lifecycle-guard --help failed with invalid subcommand (the actual CLI exposes statement-fence and safe-verify). This was not an executed guard or mutation; preserve the tool transcript, use actual root/help commands. No gate weakening or mathematical acceptance.

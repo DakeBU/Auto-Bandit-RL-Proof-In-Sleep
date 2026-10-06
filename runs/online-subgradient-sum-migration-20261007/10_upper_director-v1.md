@@ -1,0 +1,1 @@
+Close exactly both source sum-rule branches via actual producer reuse, preserve allquery/mixedqualification/closed terminal and every actual witness. Nine retainedproofs1complete definition/zero newmathnodes; initial read-only readiness not acceptance. T2.24later/Chapter1/2/wholeGoal remainrequired.

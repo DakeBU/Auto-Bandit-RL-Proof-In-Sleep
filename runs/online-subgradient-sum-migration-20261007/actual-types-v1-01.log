@@ -1,0 +1,95 @@
+BanditRL.OnlineConvex.upperAdd_eq_add_of_ne_bot : ∀ (a b : EReal),
+  a ≠ ⊥ → b ≠ ⊥ → BanditRL.OnlineConvex.upperAdd a b = a + b
+@BanditRL.OnlineConvex.ereal_finset_sum_ne_bot : ∀ {ι : Type u_1} (s : Finset ι) (a : ι → EReal),
+  (∀ i ∈ s, a i ≠ ⊥) → ∑ i ∈ s, a i ≠ ⊥
+@BanditRL.OnlineConvex.convex_finset_sum : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] {ι : Type u_2} (s : Finset ι) (f : ι → E → EReal),
+  (∀ i ∈ s, ∀ (y : E), f i y ≠ ⊥) →
+    (∀ i ∈ s, BanditRL.OnlineConvex.IsConvexExtended (f i)) →
+      BanditRL.OnlineConvex.IsConvexExtended fun y => ∑ i ∈ s, f i y
+@BanditRL.OnlineConvex.finite_sum_point : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] {ι : Type u_2} [inst : Fintype ι] (f : ι → E → EReal)
+  (x : E), (∀ (i : ι), ∃ r, f i x = ↑r) → ∃ r, ∑ i, f i x = ↑r
+@BanditRL.OnlineConvex.sum_finite_implies_components_finite : ∀ {ι : Type u_1} [inst : Fintype ι] (a : ι → EReal),
+  (∀ (i : ι), a i ≠ ⊥) → ∑ i, a i ≠ ⊤ → ∀ (i : ι), ∃ r, a i = ↑r
+@BanditRL.OnlineConvex.interior_domain_sum : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] {ι : Type u_2} [inst_3 : Fintype ι] (f : ι → E → EReal),
+  (∀ (i : ι) (y : E), f i y ≠ ⊥) →
+    ∀ (z : E),
+      (∀ (i : ι), z ∈ interior (BanditRL.OnlineConvex.effectiveDomain (f i))) →
+        z ∈ interior (BanditRL.OnlineConvex.effectiveDomain fun y => ∑ i, f i y)
+@BanditRL.OnlineConvex.binary_subgradient_decomposition : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (f h : E → EReal),
+  BanditRL.OnlineConvex.SourceProper f →
+    BanditRL.OnlineConvex.SourceProper h →
+      BanditRL.OnlineConvex.IsConvexExtended f →
+        BanditRL.OnlineConvex.IsConvexExtended h →
+          ∀ (x : E),
+            (∃ a, f x = ↑a) →
+              (∃ b, h x = ↑b) →
+                ∀ g ∈ BanditRL.OnlineConvex.SourceSubdifferential (fun y => f y + h y) x,
+                  (∃ z ∈ interior (BanditRL.OnlineConvex.effectiveDomain f),
+                      z ∈ BanditRL.OnlineConvex.effectiveDomain h) →
+                    ∃ p ∈ BanditRL.OnlineConvex.SourceSubdifferential f x,
+                      g - p ∈ BanditRL.OnlineConvex.SourceSubdifferential h x
+@BanditRL.OnlineConvex.theorem_2_23_inclusion : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] {ι : Type u_2} [inst_3 : Fintype ι] (f : ι → E → EReal),
+  (∀ (i : ι), BanditRL.OnlineConvex.SourceProper (f i)) →
+    ∀ (x : E),
+      BanditRL.OnlineConvex.SourceSubgradientSum f x ⊆
+        BanditRL.OnlineConvex.SourceSubdifferential (fun y => ∑ i, f i y) x
+@BanditRL.OnlineConvex.theorem_2_23_equality : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (n : ℕ) (f : Fin (n + 1) → E → EReal),
+  (∀ (i : Fin (n + 1)), BanditRL.OnlineConvex.SourceProper (f i)) →
+    (∀ (i : Fin (n + 1)), BanditRL.OnlineConvex.IsConvexExtended (f i)) →
+      (∀ (i : Fin (n + 1)), BanditRL.OnlineConvex.SourceClosed (f i)) →
+        (∃ z ∈ BanditRL.OnlineConvex.effectiveDomain (f (Fin.last n)),
+            ∀ (i : Fin (n + 1)), i ≠ Fin.last n → z ∈ interior (BanditRL.OnlineConvex.effectiveDomain (f i))) →
+          ∀ (x : E),
+            BanditRL.OnlineConvex.SourceSubdifferential (fun y => ∑ i, f i y) x =
+              BanditRL.OnlineConvex.SourceSubgradientSum f x
+@BanditRL.OnlineConvex.SourceSubgradientSum : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] → [InnerProductSpace ℝ E] → {ι : Type u_2} → [Fintype ι] → (ι → E → EReal) → E → Set E
+SumEqualityProbe.square_proper : BanditRL.OnlineConvex.SourceProper SumEqualityProbe.square
+SumEqualityProbe.square_domain : BanditRL.OnlineConvex.effectiveDomain SumEqualityProbe.square = Set.univ
+SumEqualityProbe.square_convex : BanditRL.OnlineConvex.IsConvexExtended SumEqualityProbe.square
+SumEqualityProbe.square_closed : BanditRL.OnlineConvex.SourceClosed SumEqualityProbe.square
+SumEqualityProbe.interval_proper : BanditRL.OnlineConvex.SourceProper SumEqualityProbe.interval
+SumEqualityProbe.interval_convex : BanditRL.OnlineConvex.IsConvexExtended SumEqualityProbe.interval
+SumEqualityProbe.interval_closed : BanditRL.OnlineConvex.SourceClosed SumEqualityProbe.interval
+SumEqualityProbe.family_proper : ∀ (i : Fin 3), BanditRL.OnlineConvex.SourceProper (SumEqualityProbe.family i)
+SumEqualityProbe.family_convex : ∀ (i : Fin 3), BanditRL.OnlineConvex.IsConvexExtended (SumEqualityProbe.family i)
+SumEqualityProbe.family_closed : ∀ (i : Fin 3), BanditRL.OnlineConvex.SourceClosed (SumEqualityProbe.family i)
+SumEqualityProbe.family_mixed_qualification : ∃
+  z ∈ BanditRL.OnlineConvex.effectiveDomain (SumEqualityProbe.family (Fin.last 2)),
+  ∀ (i : Fin 3), i ≠ Fin.last 2 → z ∈ interior (BanditRL.OnlineConvex.effectiveDomain (SumEqualityProbe.family i))
+SumEqualityProbe.nonzero_aggregate_support : -1 ∈
+  BanditRL.OnlineConvex.SourceSubdifferential (fun y => ∑ i, SumEqualityProbe.family i y) 0
+SumEqualityProbe.actual_three_component_decomposition : ∃ G,
+  (∀ (i : Fin 3), G i ∈ BanditRL.OnlineConvex.SourceSubdifferential (SumEqualityProbe.family i) 0) ∧ ∑ i, G i = -1
+SumEqualityProbe.last_domain_boundary : 0 ∉
+  interior (BanditRL.OnlineConvex.effectiveDomain (SumEqualityProbe.family (Fin.last 2)))
+SumEqualityProbe.outside_domain_both_empty : BanditRL.OnlineConvex.SourceSubdifferential
+      (fun y => ∑ i, SumEqualityProbe.family i y) 3 =
+    ∅ ∧
+  BanditRL.OnlineConvex.SourceSubgradientSum SumEqualityProbe.family 3 = ∅
+SumEqualityProbe.singleton_family_empty_interior : interior
+      (BanditRL.OnlineConvex.effectiveDomain (BanditRL.OnlineConvex.extendedIndicator {0})) =
+    ∅ ∧
+  7 ∈ BanditRL.OnlineConvex.SourceSubgradientSum (fun x => BanditRL.OnlineConvex.extendedIndicator {0}) 0
+SumRuleProbe.quadratic_plus_constraint_support : 2 ∈
+  BanditRL.OnlineConvex.SourceSubdifferential
+    (fun y => ↑(y ^ 2) + BanditRL.OnlineConvex.extendedIndicator (Set.Icc 0 2) y) 1
+SumRuleProbe.concave_quadratic_no_support : ∀ (g : ℝ),
+  g ∉ BanditRL.OnlineConvex.SourceSubdifferential (fun y => ↑(-y ^ 2)) 0
+SumRuleProbe.nonconvex_vacuous_inclusion : ∀ (g : ℝ),
+  g ∉ BanditRL.OnlineConvex.SourceSubgradientSum (fun x y => ↑(-y ^ 2)) 0
+SumRuleProbe.empty_family_zero_support : 0 ∈ BanditRL.OnlineConvex.SourceSubdifferential (fun y => ∑ i, ↑(y ^ 2)) 1
+SumEqualityProbe.square : ℝ → EReal
+SumEqualityProbe.interval : ℝ → EReal
+SumEqualityProbe.family : Fin 3 → ℝ → EReal
+def BanditRL.OnlineConvex.SourceSubgradientSum.{u_1, u_2} : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] →
+    [InnerProductSpace ℝ E] → {ι : Type u_2} → [Fintype ι] → (ι → E → EReal) → E → Set E :=
+fun {E} [NormedAddCommGroup E] [InnerProductSpace ℝ E] {ι} [Fintype ι] f x =>
+  {g | ∃ G, (∀ (i : ι), G i ∈ BanditRL.OnlineConvex.SourceSubdifferential (f i) x) ∧ ∑ i, G i = g}
