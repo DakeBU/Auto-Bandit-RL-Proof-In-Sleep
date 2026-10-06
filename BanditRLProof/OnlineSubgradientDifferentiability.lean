@@ -1,3 +1,29 @@
+/-
+Orabona v10 Theorem2.22, printed17/PDF29: one source result, eleven retained
+proofs and one complete definition, zero new production mathematical nodes.
+Convex EReal f finite at x is genuinely ambient locally real differentiable
+iff its GLOBAL subdifferential is a singleton. The unique vector is the gradient
+of EVERY differentiable real representative agreeing with f near x.
+SourceDifferentiableAt expresses that full real germ; mere toReal smoothness
+or differentiability within the domain is insufficient. A real singleton
+indicator has smooth zero toReal, no true ambient germ, and every global support.
+The full terminal assumes neither properness nor domain interior nor closedness:
+actual finite-neighborhood contact/global support derives nowhere-bottom;
+nonzero boundary normal perturbation forces interior in the reverse direction.
+Local convex Lipschitz bounds, nontrivial-filter global inequality limits and
+finite-dimensional compactness yield nearby selected-support convergence.
+Two actual support inequalities squeeze the derivative residual to little-o.
+Selection is proof-internal, not an algorithm or computational support oracle.
+Forward contact and the accepted convex first-order theorem produce global
+gradient support; derivative-zero local minimum and Riesz prove uniqueness.
+All queries remain ambient, including top outside the finite neighborhood.
+The eleven proofs use finite-dimensional real inner-product spaces with
+derived completeness; zero dimension allowed. The definition's actual type
+omits finite dimension. Helper noBottom/interior/NeBot/Lipschitz/continuity
+premises are not extra source-terminal hypotheses. No infinite-dimensional
+equivalence or arbitrary nonconvex global-support claim is made.
+Theorem2.23 and remaining Chapter1/2/whole-book obligations remain required.
+-/
 import Mathlib.Analysis.Convex.Continuous
 import BanditRLProof.OnlineSubgradientInterior
 import BanditRLProof.OnlineConvexFirstOrder

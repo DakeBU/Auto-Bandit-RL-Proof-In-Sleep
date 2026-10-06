@@ -1,0 +1,34 @@
+"""Record actual created/attached draft PR without overwriting acceptance-time history."""
+from pathlib import Path
+import hashlib,json
+run=Path(__file__).parent
+load=lambda p:json.loads(Path(p).read_text(encoding='utf-8'))
+sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()
+pr=load(run/'created-PR-v1.json');a=load(run/'accepted-decision-v1.json');reg=load(run/'registry-v1.json')
+assert pr['state']=='open' and pr['draft'] and not pr['merged']
+assert pr['base']['ref']=='codex/research-online-subgradient-interior-migration' and pr['head']['ref']=='codex/research-online-subgradient-differentiability-migration'
+assert load(run/'base-PR168-fresh-v1.json')['head']['sha']=='4cf116c2ee42caa37e5a956ebbbfddfb0bc046f2'
+assert a['source_package_accepted'] and not a['chapter_complete'] and not a['goal_complete']
+assert load(run/'native-acceptance-overlay-v1.json')['status']=='passed'
+for label in ['create-pr-v1-01','push-creation-v1-01','contributor-final-v1-01','scoped-diff-v3-01']:
+ assert load(run/(label+'-exit.json'))['exit_code']==0,label
+paths=['accepted-decision-v1.json','accepted-binding-audit-v1.json','final-reader-receipt-v1.json','native-acceptance-overlay-v1.json','integrated-gates-overlay-v1.json','registry-v1.json','committed-raw-audit-v1.json','created-PR-v1.json','pr-payload-v1.json','pr-payload-before-API-v1.json']
+data=dict(status='scoped-accepted-draft-PR-delivered',PR=pr['html_url'],number=pr['number'],creation_head=pr['head']['sha'],source_site_commit=reg['source_commit'],branch=pr['head']['ref'],exact_base_PR=168,exact_base_head='4cf116c2ee42caa37e5a956ebbbfddfb0bc046f2',creation_state='OPEN-DRAFT-unmerged',app_attached=True,rows=[dict(path=(run/p).as_posix(),sha256=sha(run/p)) for p in paths],legacy_before=7,legacy_remaining=6,retained_proofs=11,retained_definitions=1,new_proofs=0,new_definitions=0,new_test_proofs=3,new_registry_nodes=0,source_numbered_anchors=1,source_unnumbered_required_results=0,Chapter1_complete=False,chapter2_mandatory_total=None,chapter2_complete=False,goal_complete=False,merged=False,live=False,main_updated=False,worktree='E:/ABRL/worktrees/research-online-book',worktree_disposition='Retained for continuous same-project Chapter2 work; next branch only after final direct clean/local/remote/REST and ALLcurrentrunGitblob equality verification.',final_head_boundary='Final metadata head and ALLcurrentrun raw blobs checked directly afterwards, no recursive self-head artifact.')
+body=f'''# Theorem 2.22 package delivered
+
+OPEN draft PR{pr['number']}: {pr['html_url']}, attached to the chat, unmerged. Branch {pr['head']['ref']} on exact OPEN draftPR168 4cf116c2ee42caa37e5a956ebbbfddfb0bc046f2. Creation head {pr['head']['sha']}; clean applicable site source {reg['source_commit']}; final metadata head checked directly afterwards. Canonical main/live unchanged.
+
+Orabona v10 printed17/PDF29: ONE printed Theorem2.22, eleven retained public proof refinements and one complete retained real-germ definition, ZERO new production mathematical nodes. Full equivalence from convex EReal/finitepoint only; unique member equals the gradient of EVERY agreeing differentiable real representative. Ambient local finite real germ differs from smoothness of the toReal cast or relative-domain derivative. Main noBottom/properness/interior are derived; intermediate NeBot/ball/Lipschitz/continuity hypotheses do not add terminal assumptions. FiniteD real inner product, derived completeness, dimension0 allowed; definition itself noFD, no infinite-dimensional full iff claim. Reverse actual original-domain nonzero normal/local support bounds/compact unique cluster/two inequalities/littleO; forward actual affine contact/Theorem2.7/local minimum/Riesz uniqueness/representative congruence. Internal choice not an algorithm. Introductory unique-subgradient prose retains convex scope.
+
+Three new TEST diagnostic proofs show a real singleton indicator has a smooth toReal cast, fails the genuine ambient real germ, and admits EVERY support vector. Six old constrained/quadratic/nonzero-gradient/boundary canaries retained. First TEST v1 API-name failure preserved; v2 fixes only proof script with all three test headers frozen. All original public theorem headers/proof bodies/complete definition and shared dependencies unchanged, ordinary leading comment only.
+
+Distinct automated CONTRACT/BODY/FINAL accepted-with-explicit-delta; final report SHA {a['final_review_report_sha256']}; nine reader requirements independently checked. Twenty named standard kernel foundation checks without sorryAx/eleven native guards/sequential post-comment root9089 Tests9234/fullharnessv2 466tests7existing skips/exactstackedcontributor/scoped whitespace/history37508rawrows/site checks passed. Cached jobs are included, not every-job clean rebuild. Selected actual graph21nodes3026direct refs/20valuepairs is distinct from12node1880readiness and not fullgraph. ALL10811old registryIDsURLs retained/ZEROnewcanonicalmathnodes; twelve complete module/registry links and original four curated teaching routes. Actual first browser viewport inspected, no lowerfold/device claim; server stopped/profile retained/generated _site untouched.
+
+Actual sitebuildv1 FAIL because twelve declarations were placed in a curated-route field limited to four. Reader-only v2 restores original four links, preserving all twelve canonical module/registry links and full real-germ explanation; generator/checker and frozen mathematics unchanged. Fresh fullharnessv2/sitebuildv2 passed. Manifest enum corrections occurred BEFORE first gate and are not fabricated executed failures. Source preparation/rendering/path/API failures, unused versions and raw snapshots preserved. Exact scoped CRLF/realblank checks enumerate raw evidence exceptions; run-local * -text protects this run, no blanket old-platform recertification. Native command gates distinct from prompt/file conventions; actors requested Astra/medium/restricted packet, no human/external/runtime model attestation.
+
+Legacy7->6 ONLY OnlineSubgradientDifferentiability. Zero new production proofs are not counted as source mathematical growth; three TEST diagnostics remain test-only. T2.23 and all other Chapter1/2 main-text/appendix obligations remain REQUIRED. Nine OTHER Chapter1 production contracts still fail main-relative diagnostic. Chapter2 mandatory totalnull/incomplete, Chapters3-16unenumerated, wholeGoalACTIVE/unbudgeted. No merge/deploy/main/live update or retirement. Next same-project Chapter2 obligation only after direct final clean/head/rawblob checks.
+'''
+for name,value in [('delivery-obligations-overlay-v1.json',data),('delivery-v1.md',body)]:
+ p=run/name;assert not p.exists()
+ p.write_bytes((value.rstrip('\n')+'\n' if isinstance(value,str) else json.dumps(value,ensure_ascii=False,indent=2)+'\n').encode('utf-8'))
+print('Actual PR',pr['number'],'delivered; final direct clean/head/raw checks pending.')

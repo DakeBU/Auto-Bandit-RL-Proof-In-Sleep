@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineConvex.subgradient_limit_of_continuousAt",
+  "file": "BanditRLProof/OnlineSubgradientDifferentiability.lean",
+  "statement": "theorem subgradient_limit_of_continuousAt {ι : Type*} (l : Filter ι) [NeBot l] (f : E → EReal) (hbot : ∀ y, f y ≠ ⊥) (x g : E) (hx : x ∈ interior (effectiveDomain f)) (hcont : ContinuousAt (fun y => (f y).toReal) x) (xs gs : ι → E) (hxs : Tendsto xs l (𝓝 x)) (hgs : Tendsto gs l (𝓝 g)) (hs : ∀ᶠ i in l, gs i ∈ SourceSubdifferential f (xs i)) : g ∈ SourceSubdifferential f x",
+  "statement_hash": "7573a5b844acffca367a12c0addd26da6501cfd9eaec9611054bd9e32d85759e",
+  "source_assumptions": [],
+  "created_at": "2026-10-06T17:22:19+00:00"
+}

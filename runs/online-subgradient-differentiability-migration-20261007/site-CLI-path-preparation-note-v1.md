@@ -1,0 +1,1 @@
+Readonly guessed website/build_site.py and website/check_site.py paths absent2. Actual rg and prior exact command sidecars establish website/scripts/build_site.py and website/scripts/check_site.py; actual --help is read before use. No source/Lean/reader/gate mutation; original tool transcript retains errors.

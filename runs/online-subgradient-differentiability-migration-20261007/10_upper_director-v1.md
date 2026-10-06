@@ -1,0 +1,1 @@
+Close exactly T2.22 equivalence plus explicit gradient identity via existing full producer chain, preserving all source terminal assumptions. Retained11proof1definition, no new production mathgain. Current contract and source acceptance pending; T2.23/laterChapter2/Chapter1/wholeGoal mandatory.

@@ -1,0 +1,36 @@
+import BanditRLProof
+import Tests.OnlineSubgradientDifferentiabilityCanary
+#check @BanditRL.OnlineConvex.subgradient_norm_le_lipschitz_ball
+#print axioms BanditRL.OnlineConvex.subgradient_norm_le_lipschitz_ball
+#check @BanditRL.OnlineConvex.subgradients_locally_bounded
+#print axioms BanditRL.OnlineConvex.subgradients_locally_bounded
+#check @BanditRL.OnlineConvex.subgradient_limit_of_continuousAt
+#print axioms BanditRL.OnlineConvex.subgradient_limit_of_continuousAt
+#check @BanditRL.OnlineConvex.singleton_subgradient_tendsto
+#print axioms BanditRL.OnlineConvex.singleton_subgradient_tendsto
+#check @BanditRL.OnlineConvex.singleton_subdifferential_interior
+#print axioms BanditRL.OnlineConvex.singleton_subdifferential_interior
+#check @BanditRL.OnlineConvex.singleton_subdifferential_hasGradientAt
+#print axioms BanditRL.OnlineConvex.singleton_subdifferential_hasGradientAt
+#check @BanditRL.OnlineConvex.sourceDifferentiableAt_regular
+#print axioms BanditRL.OnlineConvex.sourceDifferentiableAt_regular
+#check @BanditRL.OnlineConvex.subgradient_eq_gradient_at_interior
+#print axioms BanditRL.OnlineConvex.subgradient_eq_gradient_at_interior
+#check @BanditRL.OnlineConvex.theorem_2_22_gradient
+#print axioms BanditRL.OnlineConvex.theorem_2_22_gradient
+#check @BanditRL.OnlineConvex.theorem_2_22_forward
+#print axioms BanditRL.OnlineConvex.theorem_2_22_forward
+#check @BanditRL.OnlineConvex.theorem_2_22
+#print axioms BanditRL.OnlineConvex.theorem_2_22
+#check @ForwardSubgradientProbe.constrained_interval_singleton
+#print axioms ForwardSubgradientProbe.constrained_interval_singleton
+#check @ForwardSubgradientProbe.quadratic_singleton_nonzero
+#print axioms ForwardSubgradientProbe.quadratic_singleton_nonzero
+#check @DifferentiabilityProbe.constrained_interval_differentiable
+#print axioms DifferentiabilityProbe.constrained_interval_differentiable
+#check @DifferentiabilityProbe.quadratic_derivative_nonzero
+#print axioms DifferentiabilityProbe.quadratic_derivative_nonzero
+#check @DifferentiabilityProbe.interval_boundary_supports
+#print axioms DifferentiabilityProbe.interval_boundary_supports
+#check @DifferentiabilityProbe.interval_boundary_not_differentiable
+#print axioms DifferentiabilityProbe.interval_boundary_not_differentiable

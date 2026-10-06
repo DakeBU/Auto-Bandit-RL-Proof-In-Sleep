@@ -1,0 +1,4 @@
+BanditRL.OnlineConvex.singleton_subdifferential_interior [theorem] BanditRLProof/OnlineSubgradientDifferentiability.lean:145
+  theorem singleton_subdifferential_interior (f : E → EReal) (hf : IsConvexExtended f) (x : E) (hx : ∃ r : ℝ, f x = (r : EReal)) (g : E) (hg : SourceSubdifferential f x = {g}) : x ∈ interior (effectiveDomain f)
+BanditRL.OnlineConvex.singleton_subdifferential_hasGradientAt [theorem] BanditRLProof/OnlineSubgradientDifferentiability.lean:196
+  theorem singleton_subdifferential_hasGradientAt (f : E → EReal) (hf : IsConvexExtended f) (x : E) (hx : ∃ r : ℝ, f x = (r : EReal)) (g : E) (hg : SourceSubdifferential f x = {g}) : HasGradientAt (fun y => (f y).toReal) g x

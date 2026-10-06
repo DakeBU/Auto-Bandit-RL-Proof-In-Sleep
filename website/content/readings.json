@@ -3575,40 +3575,40 @@
         "title": "Online Learning: A Modern Introduction Using Convex Optimization",
         "authors": "Francesco Orabona",
         "edition": "arXiv:1912.13213v10,21June2026",
-        "sections": "Section 2.2.1, Theorem 2.22",
+        "sections": "Section2.2.1, Theorem2.22; one source result, eleven retained proofs and one full local-real definition",
         "pages": "printed17/PDF29",
         "pdf_page": 29,
         "url": "https://arxiv.org/pdf/1912.13213v10"
       },
       "notation": [
         {
-          "term": "Differentiable extended-real function",
-          "meaning": "A differentiable real representative agrees with f throughout a neighborhood of x. Differentiability of toReal alone is insufficient at an infinite-domain boundary."
+          "term": "Ambient real germ",
+          "meaning": "SourceDifferentiableAt means a real differentiable representative h agrees with f throughout an AMBIENT neighborhood of x. It entails actual local finiteness, not merely smoothness of toReal or differentiation within the domain/affine span. The gradient identity holds for EVERY such representative."
         },
         {
-          "term": "Global subdifferential",
-          "meaning": "All g satisfying f(x)+inner(g,y-x)<=f(y) for every y in the whole space."
+          "term": "Finite point and global supports",
+          "meaning": "Theorem2.22 assumes convex real-height epigraph and an actual finite real value at x. Properness/noBottom and ambient interior are DERIVED in its directions; no closedness/lsc/boundedness/Lipschitz/interior oracle is added. Supports test ALL ambient y, including top outside the finite neighborhood."
         },
         {
-          "term": "Finite point",
-          "meaning": "f(x) equals a real number; no properness, interior, closedness or boundedness is added as a theorem input."
+          "term": "Scope and intermediate hypotheses",
+          "meaning": "The eleven proof declarations use finite-dimensional real inner-product spaces, with completeness derived and dimension0 allowed; ambient space has zero and is nonempty. The complete real-germ definition itself has no finite-dimension binder. No arbitrary infinite-dimensional equivalence is claimed. NoBottom, NeBot, finite positive ball, local Lipschitz and continuity premises belong to particular intermediate interfaces, not the full source terminal. The generic support predicate permits all EReal functions; each theorem direction here derives noBottom before finite-part conversion."
         }
       ],
       "algorithm": {
-        "title": "Recover the derivative",
+        "title": "Produce both directions of the equivalence",
         "kind": "proof flow",
         "steps": [
           {
-            "title": "Force interior membership",
-            "detail": "A nonzero supporting normal at a domain boundary would perturb any support into a second one, contradicting the singleton."
+            "title": "Produce the singleton from a real germ",
+            "detail": "A real germ supplies finite-neighborhood affine CONTACT, hence global noBottom. Regularity and accepted Theorem2.7 produce actual global gradient support. A local minimum of the supported residual has derivative zero; Riesz injectivity gives uniqueness. Eventual equality of real representatives gives the same gradient."
           },
           {
-            "title": "Control neighboring supports",
-            "detail": "Convex local Lipschitzness yields a uniform norm bound; compactness and a genuine closed-graph limit identify every support cluster point."
+            "title": "Force interior from a singleton",
+            "detail": "Actual nonzero boundary normal would add a distinct global support. No interior input is assumed."
           },
           {
-            "title": "Squeeze the derivative residual",
-            "detail": "The supports at x and y give a nonnegative residual bounded by norm(G(y)-g) times norm(y-x), which is little-o."
+            "title": "Produce the derivative from global inequalities",
+            "detail": "A nonzero supporting normal at a domain boundary would give a second support g+d, so a singleton forces ambient interior. Convex local Lipschitzness bounds every nearby support; genuine nonbottom-filter limits and finite-dimensional compactness identify the selected support limit. Two actual global inequalities bound the nonnegative remainder by norm(G(y)-g)*norm(y-x), yielding the Frechet derivative. Proof-internal choice is not an algorithm or computational oracle."
           }
         ]
       },
@@ -3624,80 +3624,74 @@
           "pages": "printed17",
           "pdf_page": 29,
           "url": "https://arxiv.org/pdf/1912.13213v10",
-          "math": "f\\text{ differentiable at }x\\iff\\partial f(x)=\\{\\nabla f(x)\\}",
-          "fallback": "Differentiability iff singleton, with a separate gradient identity for every local real representative.",
+          "math": "f\\text{ locally real differentiable at }x\\iff\\exists g,\\;\\partial f(x)=\\{g\\}",
+          "fallback": "True ambient local-real differentiability iff singleton global subdifferential; its element is the gradient of every agreeing differentiable real representative.",
           "plain": "A convex extended-real function finite at x is differentiable there iff its subdifferential is a singleton, whose member is the gradient.",
-          "relationship": "Finite-dimensional real inner-product space represents Euclidean source; neighborhood real representatives express ordinary extended-real differentiability. Properness and interior membership are consequences, not extra assumptions.",
+          "relationship": "SourceDifferentiableAt means a real differentiable representative h agrees with f throughout an AMBIENT neighborhood of x. It entails actual local finiteness, not merely smoothness of toReal or differentiation within the domain/affine span. The gradient identity holds for EVERY such representative. The eleven proof declarations use finite-dimensional real inner-product spaces, with completeness derived and dimension0 allowed; ambient space has zero and is nonempty. The complete real-germ definition itself has no finite-dimension binder. No arbitrary infinite-dimensional equivalence is claimed. ONE printed source Theorem2.22; eleven retained proof declarations and one complete definition are a proof refinement, not eleven printed results. Zero new production mathematics or canonical registry nodes. Actual selected graph21nodes3026direct references includes11producerproofs/1definition/9canaryproofs;20required value pairs; not a full registry graph. Earlier12node1880readiness is separate and exactly retained.",
           "contract": {
-            "model": "Extended-real convexity is convexity of the real-height epigraph; the support inequality is global.",
-            "assumptions": "Finite-dimensional real inner-product space, convex f, and f(x) finite. No closedness, bounded domain, properness or interior premise.",
-            "parameters": "For every f and x satisfying these assumptions. The gradient identity holds for every differentiable local real representative h agreeing near x.",
-            "regret": "No regret or algorithm guarantee.",
-            "guarantee": "SourceDifferentiableAt f x iff there exists g with SourceSubdifferential f x={g}; the singleton is {gradient h x}."
+            "model": "EReal with both infinities, convex REAL-height epigraph and global support inequality.",
+            "assumptions": "Theorem2.22 assumes convex real-height epigraph and an actual finite real value at x. Properness/noBottom and ambient interior are DERIVED in its directions; no closedness/lsc/boundedness/Lipschitz/interior oracle is added. Supports test ALL ambient y, including top outside the finite neighborhood.",
+            "parameters": "Every f,x with finite f(x); every local differentiable real representative h agreeing in the ambient neighborhood.",
+            "regret": "No algorithm, regret or measurable support-selection guarantee.",
+            "guarantee": "SourceDifferentiableAt f x iff exists g, S(f,x)={g}; for every agreeing differentiable h, S(f,x)={gradient h x}."
           },
           "local_status": {
             "status": "compiled",
-            "label": "Public Theorem 2.22 candidate",
-            "boundary": "Focused public module and real constrained/quadratic/boundary canaries compile. Full root, harness, semantic reader and site acceptance are recorded separately. Not merged or deployed; chapter/book incomplete."
+            "label": "Full retained terminal and diagnostic bodies checked",
+            "boundary": "Distinct CONTRACT/BODY accepted; actual20named kernelchecks/11guards/9genuinecanaryproofs. CombinedrootTests/harness/reader/siteFINAL/PR are separately recorded; cachedjobs are included. This package covers T2.22 equivalence AND gradient identity only. T2.23 and all remaining Chapter1/2 main-text/necessary appendix/source-contract obligations remain REQUIRED. Chapter2 mandatory totalnull/incomplete; Chapters3-16unenumerated; wholeGoalACTIVE. No merge/deploy/main/live update."
           }
         }
       ],
       "proof_bridge": {
         "title": "From a singleton support to the actual derivative",
-        "summary": "The derivative is produced from the original convex function, not supplied as a premise.",
+        "summary": "The source-shaped iff and explicit gradient identity are produced by the actual forward and reverse chains.",
         "steps": [
           {
-            "title": "Derive the neighborhood",
-            "detail": "The finite support at x rules out negative-infinity values globally. If x were a boundary domain point, a nonzero supporting normal d would make both g and g+d global supports.",
-            "math": "\\partial f(x)=\\{g\\}\\Longrightarrow x\\in\\operatorname{int}(\\operatorname{dom}f)",
-            "fallback": "Convex separation and Riesz representation provide the actual normal."
-          },
-          {
-            "title": "Bound all nearby supports",
-            "detail": "Convexity gives actual local Lipschitzness. Testing a support inside a finite ball bounds its norm by the Lipschitz constant. Nearby supports have convergent subnets in a finite-dimensional compact closed ball.",
-            "math": "\\|G(y)\\|\\le K,\\qquad G(y)\\longrightarrow g",
-            "fallback": "The closed graph uses continuity of the original finite part. Every cluster point belongs to the original singleton."
-          },
-          {
-            "title": "Obtain the Frechet derivative",
-            "detail": "Compare the global support at x with the actual selected support at y, then use Cauchy-Schwarz.",
-            "math": "0\\le f(y)-f(x)-\\langle g,y-x\\rangle\\le\\|G(y)-g\\|\\,\\|y-x\\|",
-            "fallback": "The coefficient tends to zero, proving the full Frechet little-o residual, not merely directional derivatives."
-          },
-          {
-            "title": "Prove the forward direction and identify the gradient",
-            "detail": "An actual differentiable neighborhood representative is finite locally. A touching affine support produces global nowhere-bottom; convex first-order bounds give the gradient support, and every support must equal that gradient.",
+            "title": "A genuine real germ supplies contact",
+            "detail": "A real germ supplies finite-neighborhood affine CONTACT, hence global noBottom. Regularity and accepted Theorem2.7 produce actual global gradient support. A local minimum of the supported residual has derivative zero; Riesz injectivity gives uniqueness. Eventual equality of real representatives gives the same gradient.",
             "math": "\\partial f(x)=\\{\\nabla h(x)\\}",
-            "fallback": "The gradient companion quantifies over every admissible local representative."
+            "fallback": "Every locally agreeing differentiable representative has the same gradient."
+          },
+          {
+            "title": "A singleton forces ambient interior",
+            "detail": "Use a nonzero normal of the ORIGINAL domain to construct g+d; equality of the global support set contradicts d nonzero.",
+            "math": "\\partial f(x)=\\{g\\}\\Longrightarrow x\\in\\operatorname{int}(\\operatorname{dom}f)",
+            "fallback": "Domain interior and noBottom are consequences, not main inputs."
+          },
+          {
+            "title": "Squeeze the residual to a Frechet derivative",
+            "detail": "A nonzero supporting normal at a domain boundary would give a second support g+d, so a singleton forces ambient interior. Convex local Lipschitzness bounds every nearby support; genuine nonbottom-filter limits and finite-dimensional compactness identify the selected support limit. Two actual global inequalities bound the nonnegative remainder by norm(G(y)-g)*norm(y-x), yielding the Frechet derivative. Proof-internal choice is not an algorithm or computational oracle.",
+            "math": "0\\le f(y)-f(x)-\\langle g,y-x\\rangle\\le\\|G(y)-g\\|\\,\\|y-x\\|",
+            "fallback": "Support convergence makes the residual little-o of the displacement."
           }
         ],
-        "boundary": "Finite-dimensional equivalence only; no general infinite-dimensional or subgradient sum/max rule. Later Chapter 2 and book obligations remain mandatory."
+        "boundary": "NoBottom, NeBot, finite positive ball, local Lipschitz and continuity premises belong to particular intermediate interfaces, not the full source terminal. The generic support predicate permits all EReal functions; each theorem direction here derives noBottom before finite-part conversion. The eleven proof declarations use finite-dimensional real inner-product spaces, with completeness derived and dimension0 allowed; ambient space has zero and is nonempty. The complete real-germ definition itself has no finite-dimension binder. No arbitrary infinite-dimensional equivalence is claimed. ONE printed source Theorem2.22; eleven retained proof declarations and one complete definition are a proof refinement, not eleven printed results. Zero new production mathematics or canonical registry nodes. Actual selected graph21nodes3026direct references includes11producerproofs/1definition/9canaryproofs;20required value pairs; not a full registry graph. Earlier12node1880readiness is separate and exactly retained. This package covers T2.22 equivalence AND gradient identity only. T2.23 and all remaining Chapter1/2 main-text/necessary appendix/source-contract obligations remain REQUIRED. Chapter2 mandatory totalnull/incomplete; Chapters3-16unenumerated; wholeGoalACTIVE. No merge/deploy/main/live update."
       },
       "worked_example": {
-        "title": "Interior and boundary behave differently",
-        "intro": "Use the genuine extended-real interval indicator and a nonzero quadratic gradient.",
+        "title": "A smooth finite-part cast can still fail true differentiability",
+        "intro": "A proper real singleton indicator exposes why the extended-real germ must retain actual local finiteness.",
         "steps": [
           {
-            "title": "Constrained interior",
-            "detail": "For the zero/top indicator of [0,2], the support set at 1 is {0}. The full reverse theorem produces actual differentiability.",
-            "math": "\\partial I_{[0,2]}(1)=\\{0\\}",
-            "fallback": "The public canary invokes both the gradient identity and the full equivalence."
+            "title": "Check the misleading finite-part cast",
+            "detail": "The singleton indicator is0 at1 and top elsewhere, so its toReal is identicallyzero. The first new test proves ambient DifferentiableAt of that cast.",
+            "math": "I_{\\{1\\}}(y).\\mathrm{toReal}=0",
+            "fallback": "Smoothness of this total cast alone discards infinite values."
           },
           {
-            "title": "Nonzero derivative",
-            "detail": "For f(y)=y squared at 1, the support set is {2}; the reverse gradient theorem produces HasGradientAt with gradient 2.",
-            "math": "\\nabla(y^2)|_{y=1}=2",
-            "fallback": "This prevents a zero-gradient-only test."
+            "title": "Exclude the genuine ambient germ",
+            "detail": "The actual regularity producer would put1 in the ambient interior of its singleton effective domain. That interior is empty in the REAL line, and the second new test derives the contradiction.",
+            "math": "\\operatorname{int}_{\\mathbb R}\\{1\\}=\\varnothing",
+            "fallback": "No real neighborhood can agree with the top values off1."
           },
           {
-            "title": "Finite boundary point",
-            "detail": "At 0 the interval indicator is finite but both 0 and -1 are supports. The equivalence proves it is not differentiable in the ambient real-representative sense.",
-            "math": "0,-1\\in\\partial I_{[0,2]}(0)",
-            "fallback": "No extra interior assumption is hidden in the terminal."
+            "title": "Check global supports and nonzero genuine cases",
+            "detail": "The third new test proves EVERY real g supports at1. Keep all six old indicator/quadratic/boundary tests, including actual gradient2 for the quadratic at1.",
+            "math": "\\partial I_{\\{1\\}}(1)=\\mathbb R",
+            "fallback": "A singleton domain does not mean a singleton subdifferential."
           }
         ],
-        "takeaway": "The source equivalence handles real nonzero derivatives and the true extended-real domain boundary.",
-        "boundary": "These examples do not prove any infinite-dimensional extension."
+        "takeaway": "The full source terminal distinguishes the real germ from a smooth cast and produces the genuine gradient when appropriate.",
+        "boundary": "Six unchanged old proofs instantiate genuine constrained [0,2] at1, nonzero quadratic gradient2 at1, the reverse equivalence/derivative and boundary0 with supports0/-1. Three NEW TEST-only singleton{1} diagnostics actually compile: toReal is identicallyzero and smooth, the genuine ambient germ fails by regularity and empty interior, and EVERY real vector supports. This real singleton empty-interior fact does not extend to dimension0.20named standard kernel checks/11nativeguards are separate from compilation. Source introductory differentiability prose is under the convex theorem hypothesis; arbitrary differentiable nonconvex functions need not have global supports. This package covers T2.22 equivalence AND gradient identity only. T2.23 and all remaining Chapter1/2 main-text/necessary appendix/source-contract obligations remain REQUIRED. Chapter2 mandatory totalnull/incomplete; Chapters3-16unenumerated; wholeGoalACTIVE. No merge/deploy/main/live update."
       }
     },
     {

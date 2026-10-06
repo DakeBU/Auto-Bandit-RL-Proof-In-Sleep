@@ -1,0 +1,15 @@
+import BanditRLProof
+namespace Tests.OnlineDifferentiabilityBoundary
+open BanditRL.OnlineConvex Set Filter
+open scoped Topology
+
+theorem singleton_toReal_differentiable :
+    DifferentiableAt ℝ (fun y : ℝ => (extendedIndicator ({1} : Set ℝ) y).toReal) 1 := by
+
+theorem singleton_not_sourceDifferentiable :
+    ¬ SourceDifferentiableAt (extendedIndicator ({1} : Set ℝ)) 1 := by
+
+theorem singleton_global_supports (g : ℝ) :
+    g ∈ SourceSubdifferential (extendedIndicator ({1} : Set ℝ)) 1 := by
+
+end Tests.OnlineDifferentiabilityBoundary
