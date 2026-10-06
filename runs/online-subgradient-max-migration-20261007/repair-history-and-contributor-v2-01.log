@@ -1,0 +1,21 @@
+repair-lifecycle-v1 exit 0 seconds 0.234
+candidate-lifecycle-v2 exit 0 seconds 0.219
+history-bindings-v2-01 exit 0 seconds 5.047
+27b48257cdbbb755415832cbf3c4771e2d08fa12
+contributor-exact-v1-01 exit 1 seconds 0.109
+Failure tail only; full raw output is retained in contributor-exact-v1-01.log
+CONTRIBUTOR CONTRACT FAILED
+ - research-wiki\contribution-contracts\online-subgradient-max-migration-20261007.json: progress_updates.teaching_route must start with updated: or no-change-with-reason:
+contributor base: bd70b48eaff11accad19e5009efbdce3efd4b8c5
+changed paths: 463
+affected production paths: 4
+changed contribution contracts: 1
+
+Traceback (most recent call last):
+  File "runs/online-subgradient-max-migration-20261007/repair-history-and-contributor-v2.py", line 11, in <module>
+    gate('contributor-exact-v1-01',sys.executable,'-B','-X','utf8','tools/check_contributor_contract.py','--base',BASE)
+  File "E:\ABRL\worktrees\research-online-book\runs\online-subgradient-max-migration-20261007\common_v2.py", line 14, in gate
+    subprocess.run([sys.executable,'-B','-X','utf8',str(RUN/'run-command.py'),label,*map(str,args)],check=True)
+  File "C:\Users\admin\AppData\Local\Programs\Python\Python38\lib\subprocess.py", line 516, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe', '-B', '-X', 'utf8', 'E:\\ABRL\\worktrees\\research-online-book\\runs\\online-subgradient-max-migration-20261007\\run-command.py', 'contributor-exact-v1-01', 'C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe', '-B', '-X', 'utf8', 'tools/check_contributor_contract.py', '--base', 'bd70b48eaff11accad19e5009efbdce3efd4b8c5']' returned non-zero exit status 1.
