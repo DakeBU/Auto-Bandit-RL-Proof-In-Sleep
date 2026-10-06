@@ -1,0 +1,1 @@
+Only T2.28draft; sourceproper/nonconvex permitted; inclusionONLY. CoordinatefreeFD/adjoint delta explicit, hpunusedretained/allquery genericproper convention. Legacy1pendingPR notallmandatorycount; Chapter2incomplete/3-16unenumerated/wholeGoalACTIVE.

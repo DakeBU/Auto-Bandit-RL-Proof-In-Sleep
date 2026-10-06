@@ -1,0 +1,1 @@
+Imagewitness g -> actual hg(Ay+b) all targety -> cancel translation and map_sub -> actual adjoint_inner_left -> exact EReal support. FDcompleteness instances, no sourcefinitequery added; outdomain emptyimage boundary explicit. Canaries catch nonzero map+translation and proper nonconvex strict inclusion/rankzero.

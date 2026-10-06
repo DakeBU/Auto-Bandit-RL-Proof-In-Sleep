@@ -1,0 +1,62 @@
+@BanditRL.OnlineConvex.theorem_2_28.{u_1,
+    u_2} : ∀ {E : Type u_1} {F : Type u_2} [inst : NormedAddCommGroup.{u_1} E]
+  [inst_1 : InnerProductSpace.{0, u_1} Real E] [inst_2 : NormedAddCommGroup.{u_2} F]
+  [inst_3 : InnerProductSpace.{0, u_2} Real F] [inst_4 : FiniteDimensional.{0, u_1} Real E]
+  [inst_5 : FiniteDimensional.{0, u_2} Real F] (f : F → EReal),
+  BanditRL.OnlineConvex.SourceProper.{u_2} f →
+    ∀ (A : ContinuousLinearMap.{0, 0, u_1, u_2} (RingHom.id.{0} Real) E F) (b : F) (x : E),
+      Subset.{u_1}
+        (Set.image.{u_2, u_1} (⇑(ContinuousLinearMap.adjoint.{0, u_1, u_2} A))
+          (BanditRL.OnlineConvex.SourceSubdifferential.{u_2} f (HAdd.hAdd.{u_2, u_2, u_2} (A x) b)))
+        (BanditRL.OnlineConvex.SourceSubdifferential.{u_1} (fun y => f (HAdd.hAdd.{u_2, u_2, u_2} (A y) b)) x)
+AffineProbe.double_adjoint : ∀ (g : Real),
+  Eq.{1} ((ContinuousLinearMap.adjoint.{0, 0, 0} AffineProbe.doubleMap) g) (HMul.hMul.{0, 0, 0} 2 g)
+AffineProbe.absolute_proper : BanditRL.OnlineConvex.SourceProper.{0} fun y => ↑(abs.{0} y)
+AffineProbe.nonzero_shifted_support : Membership.mem.{0, 0}
+  (BanditRL.OnlineConvex.SourceSubdifferential.{0}
+    (fun y => ↑(abs.{0} (HAdd.hAdd.{0, 0, 0} (AffineProbe.doubleMap y) 1))) (-1 / 2))
+  1
+AffineProbe.neg_abs_proper : BanditRL.OnlineConvex.SourceProper.{0} AffineProbe.negAbsLoss
+AffineProbe.neg_abs_support_empty : Eq.{1} (BanditRL.OnlineConvex.SourceSubdifferential.{0} AffineProbe.negAbsLoss 0)
+  EmptyCollection.emptyCollection.{0}
+AffineProbe.neg_abs_not_convex : Not (BanditRL.OnlineConvex.IsConvexExtended.{0} AffineProbe.negAbsLoss)
+AffineProbe.proper_nonconvex_strict_inclusion : And
+  (Not (BanditRL.OnlineConvex.IsConvexExtended.{0} AffineProbe.negAbsLoss))
+  (And
+    (Subset.{0}
+      (Set.image.{0, 0} (⇑(ContinuousLinearMap.adjoint.{0, 0, 0} 0))
+        (BanditRL.OnlineConvex.SourceSubdifferential.{0} AffineProbe.negAbsLoss 0))
+      (BanditRL.OnlineConvex.SourceSubdifferential.{0} (fun y => AffineProbe.negAbsLoss (HAdd.hAdd.{0, 0, 0} (0 y) 0))
+        3))
+    (And
+      (Eq.{1}
+        (Set.image.{0, 0} (⇑(ContinuousLinearMap.adjoint.{0, 0, 0} 0))
+          (BanditRL.OnlineConvex.SourceSubdifferential.{0} AffineProbe.negAbsLoss 0))
+        EmptyCollection.emptyCollection.{0})
+      (And
+        (Eq.{1}
+          (BanditRL.OnlineConvex.SourceSubdifferential.{0}
+            (fun y => AffineProbe.negAbsLoss (HAdd.hAdd.{0, 0, 0} (0 y) 0)) 3)
+          (singleton.{0, 0} 0))
+        (Ne.{1}
+          (Set.image.{0, 0} (⇑(ContinuousLinearMap.adjoint.{0, 0, 0} 0))
+            (BanditRL.OnlineConvex.SourceSubdifferential.{0} AffineProbe.negAbsLoss 0))
+          (BanditRL.OnlineConvex.SourceSubdifferential.{0}
+            (fun y => AffineProbe.negAbsLoss (HAdd.hAdd.{0, 0, 0} (0 y) 0)) 3)))))
+AffineProbe.doubleMap : ContinuousLinearMap.{0, 0, 0, 0} (RingHom.id.{0} Real) Real Real
+AffineProbe.negAbsLoss : Real → EReal
+def BanditRL.OnlineConvex.SourceSubdifferential.{u_1} : {E : Type u_1} →
+  [inst : NormedAddCommGroup.{u_1} E] → [InnerProductSpace.{0, u_1} Real E] → (E → EReal) → E → Set.{u_1} E :=
+fun {E} [NormedAddCommGroup.{u_1} E] [InnerProductSpace.{0, u_1} Real E] f x =>
+  setOf.{u_1} fun g =>
+    ∀ (y : E), LE.le.{0} (HAdd.hAdd.{0, 0, 0} (f x) ↑(inner.{0, u_1} Real g (HSub.hSub.{u_1, u_1, u_1} y x))) (f y)
+def BanditRL.OnlineConvex.SourceProper.{u_1} : {E : Type u_1} → (E → EReal) → Prop :=
+fun {E} f => And (∀ (x : E), Ne.{1} (f x) Bot.bot.{0}) (∃ x r, Eq.{1} (f x) ↑r)
+def BanditRL.OnlineConvex.effectiveDomain.{u_1} : {E : Type u_1} → (E → EReal) → Set.{u_1} E :=
+fun {E} f => setOf.{u_1} fun x => LT.lt.{0} (f x) Top.top.{0}
+def BanditRL.OnlineConvex.realEpigraph.{u_1} : {E : Type u_1} → (E → EReal) → Set.{u_1} (Prod.{u_1, 0} E Real) :=
+fun {E} f => setOf.{u_1} fun p => LE.le.{0} (f p.1) ↑p.2
+def BanditRL.OnlineConvex.IsConvexExtended.{u_1} : {E : Type u_1} →
+  [inst : AddCommGroup.{u_1} E] → [Module.{0, u_1} Real E] → (E → EReal) → Prop :=
+fun {E} [AddCommGroup.{u_1} E] [Module.{0, u_1} Real E] f =>
+  Convex.{0, u_1} Real (BanditRL.OnlineConvex.realEpigraph.{u_1} f)

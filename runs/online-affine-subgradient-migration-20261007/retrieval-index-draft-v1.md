@@ -1,0 +1,1 @@
+ORABONA-V10-T2.28; MLIB-CONVEX-LINALG. Actual sharedglobal-support+proper+map_sub+adjoint_inner_left. LocalMathlib retrieval/pinned#check/types/graph mustpass, no externalOptlib or coordinate certificate claimed.
