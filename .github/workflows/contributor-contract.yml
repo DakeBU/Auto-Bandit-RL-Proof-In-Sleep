@@ -20,7 +20,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Test contributor contract invariants
-        run: python3 -m unittest tools.test_contributor_contract
+        run: python3 -m unittest tools.test_contributor_contract tools.test_process_memory
 
       - name: Validate evidence-routed process memory
         run: python3 tools/check_process_memory.py check
