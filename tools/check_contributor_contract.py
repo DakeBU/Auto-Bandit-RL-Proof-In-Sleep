@@ -51,6 +51,7 @@ PRODUCTION_EXACT = {
     "tools/check_process_memory.py",
     "tools/check_contributor_contract.py",
     "tools/test_contributor_contract.py",
+    "tools/test_process_memory.py",
     "tools/test_bandit_taxonomy_techniques.py",
     ".github/CODEOWNERS",
     ".github/pull_request_template.md",
