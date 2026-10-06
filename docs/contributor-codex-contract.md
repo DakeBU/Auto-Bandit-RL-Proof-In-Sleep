@@ -1,6 +1,6 @@
 # BanditRLlib contributor and Codex contract
 
-This contract applies to humans and coding agents contributing mathematics, source mappings, theorem-facing website material, routes, or graph metadata. Source-facing work also follows `docs/proof-digestion-protocol.md`.
+This contract applies to humans and coding agents contributing mathematics, source mappings, theorem-facing website material, routes, or graph metadata. Source-facing work also follows `docs/proof-digestion-protocol.md` and `docs/evidence-routed-memory-protocol.md`.
 
 ## 1. Search and reuse before declaring
 
@@ -53,6 +53,8 @@ For every source-facing theorem:
 The formalizer cannot self-certify the decoder or source-review stages. A theorem with rejected or incomplete source fidelity may remain useful local mathematics, but it cannot be labelled as faithful source formalization.
 
 Repairs are separate objects: source theorem, actual Lean theorem, semantic mismatch, proposed repaired theorem.
+
+New source-facing substantive manifests should use schema 3.0. Its `learning_contract` records curated process-memory consultation, typed failure class, salvage status, evidence-gated serial/parallel admission, common-blind-spot review, and reader-backpressure / Exposition-Seal state. `REFUTED` and independently reviewed `SOURCE_INVALID` may retire mathematics; `API_BLOCKED`, `ENV_BLOCKED`, and `IMPLEMENTATION_FAILED` are routing evidence only.
 
 ## 4. Four mathematical graph views, plus Overview navigation
 
@@ -127,6 +129,7 @@ Exploration workers should avoid editing unrelated global aggregators. The stabi
 Before merge, run:
 
 ```bash
+python3 tools/check_process_memory.py check
 python3 tools/check_contributor_contract.py --base BASE_COMMIT
 python3 tools/bandit.py check
 python3 website/scripts/build_site.py --lean-verified
@@ -146,6 +149,6 @@ The contract checker fails closed when changed production surfaces are not cover
 
 ## 9. PR disclosure
 
-The PR must state the exact mathematical/source delta, reuse decision, remaining truth boundary, semantic round-trip status, reader-page delta, route/progress delta, Lean Graph delta, Functor Hypergraph delta, and commands actually run.
+The PR must state the exact mathematical/source delta, reuse decision, remaining truth boundary, semantic round-trip status, typed failure/salvage state when relevant, process-memory IDs used, parallel-direction/common-blind-spot status, reader-page/Exposition-Seal delta, route/progress delta, Lean Graph delta, Functor Hypergraph delta, and commands actually run.
 
 Generated site output is never committed.
