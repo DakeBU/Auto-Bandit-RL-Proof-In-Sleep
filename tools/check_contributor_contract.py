@@ -427,7 +427,7 @@ def validate_contract(path: Path) -> tuple[dict[str, Any] | None, list[str]]:
             cross = learning.get("cross_route_blind_spot_audit")
             require_keys(
                 cross,
-                {"required", "status", "evidence"},
+                {"required", "status", "evidence", "canonical_route", "selection_reason"},
                 f"{path}:learning_contract.cross_route_blind_spot_audit",
                 errors,
             )
@@ -438,13 +438,19 @@ def validate_contract(path: Path) -> tuple[dict[str, Any] | None, list[str]]:
                     errors.append(f"{path.relative_to(ROOT)}: invalid cross-route status")
                 if isinstance(parallel, dict) and parallel.get("decision") == "parallel" and cross.get("required") is not True:
                     errors.append(f"{path.relative_to(ROOT)}: parallel directions require common-blind-spot audit")
-                if cross.get("status") == "accepted" and not nonempty_string(cross.get("evidence")):
-                    errors.append(f"{path.relative_to(ROOT)}: accepted cross-route audit requires evidence")
+                if cross.get("status") == "accepted":
+                    for field in ("evidence", "canonical_route", "selection_reason"):
+                        if not nonempty_string(cross.get(field)):
+                            errors.append(f"{path.relative_to(ROOT)}: accepted cross-route audit requires {field}")
 
             reader_learning = learning.get("reader_backpressure")
             require_keys(
                 reader_learning,
-                {"purification_status", "exposition_seal_status", "reader_debt_delta"},
+                {
+                    "purification_status", "exposition_seal_status", "reader_debt_delta",
+                    "exposition_evidence", "source_expansion_nodes", "lean_expansion_nodes",
+                    "assumptions_preserved", "boundary_preserved",
+                },
                 f"{path}:learning_contract.reader_backpressure",
                 errors,
             )
@@ -455,6 +461,21 @@ def validate_contract(path: Path) -> tuple[dict[str, Any] | None, list[str]]:
                     errors.append(f"{path.relative_to(ROOT)}: invalid exposition_seal_status")
                 if not isinstance(reader_learning.get("reader_debt_delta"), int):
                     errors.append(f"{path.relative_to(ROOT)}: reader_debt_delta must be integer")
+                for field in ("source_expansion_nodes", "lean_expansion_nodes"):
+                    if not string_list(reader_learning.get(field)):
+                        errors.append(f"{path.relative_to(ROOT)}: {field} must be a string list")
+                for field in ("assumptions_preserved", "boundary_preserved"):
+                    if not isinstance(reader_learning.get(field), bool):
+                        errors.append(f"{path.relative_to(ROOT)}: {field} must be boolean")
+                if not isinstance(reader_learning.get("exposition_evidence"), str):
+                    errors.append(f"{path.relative_to(ROOT)}: exposition_evidence must be a string")
+                if reader_learning.get("exposition_seal_status") == "accepted":
+                    if not nonempty_string(reader_learning.get("exposition_evidence")):
+                        errors.append(f"{path.relative_to(ROOT)}: accepted Exposition Seal requires evidence")
+                    if not reader_learning.get("source_expansion_nodes") or not reader_learning.get("lean_expansion_nodes"):
+                        errors.append(f"{path.relative_to(ROOT)}: accepted Exposition Seal requires source and Lean expansion nodes")
+                    if reader_learning.get("assumptions_preserved") is not True or reader_learning.get("boundary_preserved") is not True:
+                        errors.append(f"{path.relative_to(ROOT)}: accepted Exposition Seal must preserve assumptions and boundary")
                 if reader_learning.get("purification_status") == "purified" and reader_learning.get("exposition_seal_status") != "accepted":
                     errors.append(f"{path.relative_to(ROOT)}: PURIFIED requires accepted Exposition Seal")
                 if data.get("source_facing") and reader_learning.get("purification_status") == "not-applicable":
