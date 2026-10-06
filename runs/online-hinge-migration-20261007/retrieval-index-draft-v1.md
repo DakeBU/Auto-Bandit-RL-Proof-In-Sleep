@@ -1,0 +1,1 @@
+ORABONA-V10-EX2.27; MLIB-CONVEX-LINALG. Local fullT2.26/affinesupport/actualBoolmax, upstreaminner positivity/convexHull_pair/singleton/segment_eq_image need freshactual#checks. Reuse-existing only; no Optlib compatibility/upstream rebuilding claimed.

@@ -4277,7 +4277,7 @@
         "title": "Online Learning: A Modern Introduction Using Convex Optimization",
         "authors": "Francesco Orabona",
         "edition": "arXiv:1912.13213v10,21June2026",
-        "sections": "Section2.2.1, Example2.27, printed18/PDF30",
+        "sections": "Section2.2.1, Example2.27 printed18/PDF30; one example with three branches, twelve supporting proofs/two retained definitions",
         "pages": "printed18/PDF30",
         "pdf_page": 30,
         "url": "https://arxiv.org/pdf/1912.13213v10"
@@ -4285,15 +4285,15 @@
       "notation": [
         {
           "term": "Actual hinge and margin",
-          "meaning": "ell_z(y)=max(1-inner(z,y),0), m(x)=1-inner(z,x); z,x range over a finite-dimensional real Euclidean space."
+          "meaning": "Actual loss ell_z(y)=max(1-inner(z,y),0), margin m(x)=1-inner(z,x). Both owned definitions and every public helper retain intrinsic NormedAddCommGroup E and InnerProductSpace real E. Only hinge_subdifferential_hull and example_2_27 explicitly add finite dimension. Borrowed properness/domain/real epigraph definitions have arbitrary ambient E, epigraph convexity uses AddCommGroup/Module real, and the actual finite maximum needs only an arbitrary E and finite nonempty index. Borrowed S/U use intrinsic real inner-product structure; U additionally has finite nonempty indexing, with no FD or function regularity premise. Finite-dimensional real inner-product spaces include the source Euclidean instances; no separately certified coordinate-isometry or setting functor. Finite-dimensional completeness is derived where the upstream maximum rule needs it; no extra CompleteSpace or positive-dimension premise."
         },
         {
           "term": "Global subdifferential",
-          "meaning": "Every support g satisfies ell_z(x)+inner(g,y-x)<=ell_z(y) for all ambient y, including across the hinge boundary."
+          "meaning": "g supports ell_z at x iff ell_z(x)+inner(g,y-x)<=ell_z(y) for EVERY ambient y. The shared global support predicate accepts arbitrary EReal functions, including improper ones, beyond the printed proper-function convention. Here the actual hinge and both real affine components are finite everywhere, proper, convex and ambient-continuous, so this source instance has no excluded domain query. These component facts are constructed rather than supplied."
         },
         {
           "term": "Boundary segment",
-          "meaning": "At m(x)=0 all -alpha z with 0<=alpha<=1 occur, including both endpoints. No nonzero assumption on z."
+          "meaning": "At m(x)=0 the WHOLE set{-alpha z:alpha in[0,1]} includes both endpoints and every mixture. Every z,x and every candidate support g; every ambient support-test y. No nonzero z, norm or domain bound, label/data constraint, supplied support formula, differentiability oracle or selected-support assumption. All FIVE unchanged scalar canaries: z1,x2 full{0}; z1,x0 full{-1}; z1,x1 fullinterval[-1,0]; actual -1/2 belongs to the full support but not the active union and +1 is rejected; z0 gives{0} at EVERY scalar x. For z0 the margin is1 and the loss is constant1, so this is the positive-margin branch, not a boundary test. No new or actual2D hinge canary is claimed."
         }
       ],
       "algorithm": {
@@ -4302,15 +4302,15 @@
         "steps": [
           {
             "title": "Derive affine supports",
-            "detail": "The support of inner(a,y)+b is exactly{a}, from the actual all-y inequality at x+(g-a) and inner self positivity."
+            "detail": "A vector g supporting inner(a,y)+b is tested at y=x+(g-a). The actual supporting inequality forces inner(g-a,g-a)<=0, hence g=a. Conversely, the affine identity gives support at EVERY ambient y. This proves the full affine singleton without finite dimension."
           },
           {
             "title": "Apply the actual maximum rule",
-            "detail": "The two concrete affine functions inner(-z,y)+1 and0 are proper, convex, finite and continuous at every query; their actual finite maximum is precisely the hinge."
+            "detail": "The complete retained hingeFamily definition maps Bool false to the affine slope0/offset0 and Bool true to slope-z/offset1. Its two concrete components are f0(y)=0 and f1(y)=inner(-z,y)+1; the definition itself has no finite-dimension or function-regularity premise. Properness, convex epigraphs, finite query values and ambient continuity are proved from real affine algebra. Actual finite-maximum bounds identify their maximum with the hinge, then the full Theorem2.26 yields the ordinary hull of ALL active component supports."
           },
           {
             "title": "Classify activity and take the ordinary hull",
-            "detail": "Negative margin activates0 alone; positive margin activates the slope -z alone; zero margin activates both and gives their entire closed segment."
+            "detail": "For m(x)=1-inner(z,x), negative margin activates only f0 and gives{0}; positive margin only f1 and gives{-z}; zero margin activates both and gives the active union{0,-z}. Strict signs exclude the inactive component. The active union itself omits genuine boundary mixtures. The ordinary convex hull of{0,-z} is the entire segment{-alpha z:alpha in[0,1]}, including both endpoints and every intermediate mixture; singleton hulls remain singletons. Both inclusions of the three-branch equality follow, without a hull closure or membership-only replacement."
           }
         ]
       },
@@ -4329,18 +4329,18 @@
           "math": "\\ell_z(x)=\\max(1-\\langle z,x\\rangle,0),\\qquad\\partial\\ell_z(x)=\\begin{cases}\\{0\\}&m(x)<0\\\\\\{-\\alpha z:0\\le\\alpha\\le1\\}&m(x)=0\\\\\\{-z\\}&m(x)>0\\end{cases}",
           "fallback": "For the actual hinge: negative margin gives{0}, equality gives every -alpha z for alpha in[0,1], positive margin gives{-z}.",
           "plain": "For every z and x in finite-dimensional real Euclidean space, the full ambient hinge subdifferential follows these three cases. At equality no boundary support is omitted.",
-          "relationship": "Coordinate-free finite-dimensional real inner-product space represents Rd. Finite real hinge is embedded into the shared EReal support definition; no nonzero z or bounded domain is assumed. The affine foundation is valid in arbitrary real inner-product spaces.",
+          "relationship": "ONE main-text Example2.27, THREE branches of ONE full set equality, with twelve supporting library proofs and two complete retained definitions. THIRTEEN retained proofs, FIVE old canary proofs, zero new mathematical/TEST/registry nodes. Finite-dimensional real inner-product spaces include the source Euclidean instances; no separately certified coordinate-isometry or setting functor. Finite-dimensional completeness is derived where the upstream maximum rule needs it; no extra CompleteSpace or positive-dimension premise. The shared global support predicate accepts arbitrary EReal functions, including improper ones, beyond the printed proper-function convention. Here the actual hinge and both real affine components are finite everywhere, proper, convex and ambient-continuous, so this source instance has no excluded domain query. These component facts are constructed rather than supplied.",
           "contract": {
-            "model": "Deterministic finite-dimensional real Euclidean convex analysis of the exact hinge loss.",
-            "assumptions": "No additional assumptions on z or x; full ambient global supports. Explicit finite dimension matches Rd. Both affine components are proved proper, convex, finite and continuous, rather than assumed qualifying.",
-            "parameters": "Every z,x and every candidate g; all test points y; all real alpha in the inclusive interval[0,1].",
-            "regret": "No algorithm or regret bound claimed.",
-            "guarantee": "Full three-branch equality, strict singleton cases and the entire boundary segment, including z=0."
+            "model": "Static finite-dimensional real Euclidean convex analysis of the actual hinge. Finite-dimensional real inner-product spaces include the source Euclidean instances; no separately certified coordinate-isometry or setting functor. Finite-dimensional completeness is derived where the upstream maximum rule needs it; no extra CompleteSpace or positive-dimension premise.",
+            "assumptions": "Every z,x and every candidate support g; every ambient support-test y. No nonzero z, norm or domain bound, label/data constraint, supplied support formula, differentiability oracle or selected-support assumption. Both owned definitions and every public helper retain intrinsic NormedAddCommGroup E and InnerProductSpace real E. Only hinge_subdifferential_hull and example_2_27 explicitly add finite dimension. Borrowed properness/domain/real epigraph definitions have arbitrary ambient E, epigraph convexity uses AddCommGroup/Module real, and the actual finite maximum needs only an arbitrary E and finite nonempty index. Borrowed S/U use intrinsic real inner-product structure; U additionally has finite nonempty indexing, with no FD or function regularity premise.",
+            "parameters": "Every z,x/candidate g and EVERY ambient support-test y; ALL alpha in inclusive[0,1].",
+            "regret": "No algorithm/regret/probability/feedback/computable or measurable selection claim.",
+            "guarantee": "Full three-branch set equality with strict singleton cases and entire boundary segment. z0 is allowed and lies in the positive-margin constant1 branch."
           },
           "local_status": {
             "status": "compiled",
-            "label": "Public Example2.27 proof",
-            "boundary": "Public source and all five canaries pass local focused/root/Tests/full harness, standard axiom and native graph checks. Final reader/immutable/package/PR evidence separate. No merge/deploy; Chapter2/book incomplete."
+            "label": "Retained actual hinge equality and whole old canary checked",
+            "boundary": "Fresh actual producer-body elaboration and wholecanary build, 20 unique standard kernel checks and 15 frozen-header guards. Selected 20 compiled nodes (18 proofs/two definitions), 2161 direct type/value occurrences and 29 required actual producer/canary pairs. Separate readiness15nodes1367occurrences23pairs retained. Selected graphs and curated teaching links are not the full shared registry graph. Distinct CONTRACT/BODY accepted; fresh combined rootTests/fullharness/site/FINAL/native acceptance/PR remain separate. Only Example2.27 and its necessary retained foundations. Next Theorem2.28 affine transport and all remaining Chapter1/2 maintext and necessary appendix obligations REQUIRED, including nine OTHER Chapter1 main-relative contributor-contract gaps. Chapter2 mandatory total null/incomplete; Chapters3-16 unenumerated; whole Goal ACTIVE. No algorithm/regret/probability/feedback/computable or measurable selection guarantee, merge/deploy/main/live update or worktree retirement."
           }
         }
       ],
@@ -4350,34 +4350,34 @@
         "steps": [
           {
             "title": "Construct the unique affine support",
-            "detail": "If g supports inner(a,y)+b at x, test y=x+(g-a). The support inequality gives inner(g-a,g-a)<=0. Positivity forces g=a. Conversely, the affine identity verifies support at every y.",
+            "detail": "A vector g supporting inner(a,y)+b is tested at y=x+(g-a). The actual supporting inequality forces inner(g-a,g-a)<=0, hence g=a. Conversely, the affine identity gives support at EVERY ambient y. This proves the full affine singleton without finite dimension.",
             "math": "\\partial(\\langle a,\\cdot\\rangle+b)(x)=\\{a\\}",
             "fallback": "No supplied slope formula or differentiability oracle."
           },
           {
             "title": "Qualify the two actual components",
-            "detail": "Use f0(y)=0 and f1(y)=inner(-z,y)+1. Their real affine algebra proves convex epigraphs; real embedding proves properness/finiteness; inner continuity proves ambient continuity. Finset maximum bounds identify their maximum with max(1-inner(z,y),0).",
+            "detail": "The complete retained hingeFamily definition maps Bool false to the affine slope0/offset0 and Bool true to slope-z/offset1. Its two concrete components are f0(y)=0 and f1(y)=inner(-z,y)+1; the definition itself has no finite-dimension or function-regularity premise. Properness, convex epigraphs, finite query values and ambient continuity are proved from real affine algebra. Actual finite-maximum bounds identify their maximum with the hinge, then the full Theorem2.26 yields the ordinary hull of ALL active component supports.",
             "math": "\\ell_z=\\max(f_0,f_1),\\qquad\\partial\\ell_z(x)=\\operatorname{conv}\\!\\bigcup_{i\\in A(x)}\\partial f_i(x)",
             "fallback": "All hypotheses of the earlier full maximum rule are actually established."
           },
           {
             "title": "Retain exact activity in each branch",
-            "detail": "With m(x)=1-inner(z,x), if m<0 only f0 is active; if m>0 only f1 is active. At m=0 both are active and their support union is{0,-z}. Strict inequalities exclude the inactive component.",
+            "detail": "For m(x)=1-inner(z,x), negative margin activates only f0 and gives{0}; positive margin only f1 and gives{-z}; zero margin activates both and gives the active union{0,-z}. Strict signs exclude the inactive component. The active union itself omits genuine boundary mixtures.",
             "math": "U(x)=\\{0\\},\\ \\{0,-z\\},\\ \\{-z\\}\\quad\\text{for }m<0,\\ m=0,\\ m>0",
             "fallback": "An active union alone is not the full boundary subdifferential."
           },
           {
             "title": "Describe the ordinary pair hull",
-            "detail": "The ordinary convex hull of{0,-z} is the segment (1-alpha)0+alpha(-z)=-alpha z for alpha in[0,1]. Singleton hulls remain singletons. This gives both inclusions of all three source cases. The actual Mathlib facts are convexHull_pair and segment_eq_image; they appear as external proof dependencies, not project declaration links.",
+            "detail": "The ordinary convex hull of{0,-z} is the entire segment{-alpha z:alpha in[0,1]}, including both endpoints and every intermediate mixture; singleton hulls remain singletons. Both inclusions of the three-branch equality follow, without a hull closure or membership-only replacement.",
             "math": "\\operatorname{conv}\\{0,-z\\}=\\{-\\alpha z:0\\le\\alpha\\le1\\}",
             "fallback": "No closure operation or selected-support shortcut."
           }
         ],
-        "boundary": "Example2.27 only. The affine composition chain rule2.28, Lipschitz2.30, source OSD/linearization, remaining Chapter2 and Chapters3–16 remain mandatory. Teaching route is curated, not all proof-term edges."
+        "boundary": "ONE main-text Example2.27, THREE branches of ONE full set equality, with twelve supporting library proofs and two complete retained definitions. THIRTEEN retained proofs, FIVE old canary proofs, zero new mathematical/TEST/registry nodes. Both owned definitions and every public helper retain intrinsic NormedAddCommGroup E and InnerProductSpace real E. Only hinge_subdifferential_hull and example_2_27 explicitly add finite dimension. Borrowed properness/domain/real epigraph definitions have arbitrary ambient E, epigraph convexity uses AddCommGroup/Module real, and the actual finite maximum needs only an arbitrary E and finite nonempty index. Borrowed S/U use intrinsic real inner-product structure; U additionally has finite nonempty indexing, with no FD or function regularity premise. The shared global support predicate accepts arbitrary EReal functions, including improper ones, beyond the printed proper-function convention. Here the actual hinge and both real affine components are finite everywhere, proper, convex and ambient-continuous, so this source instance has no excluded domain query. These component facts are constructed rather than supplied. Fresh actual producer-body elaboration and wholecanary build, 20 unique standard kernel checks and 15 frozen-header guards. Selected 20 compiled nodes (18 proofs/two definitions), 2161 direct type/value occurrences and 29 required actual producer/canary pairs. Separate readiness15nodes1367occurrences23pairs retained. Selected graphs and curated teaching links are not the full shared registry graph. Only Example2.27 and its necessary retained foundations. Next Theorem2.28 affine transport and all remaining Chapter1/2 maintext and necessary appendix obligations REQUIRED, including nine OTHER Chapter1 main-relative contributor-contract gaps. Chapter2 mandatory total null/incomplete; Chapters3-16 unenumerated; whole Goal ACTIVE. No algorithm/regret/probability/feedback/computable or measurable selection guarantee, merge/deploy/main/live update or worktree retirement."
       },
       "worked_example": {
         "title": "Strict branches, a genuine boundary mixture and z=0",
-        "intro": "The public canaries instantiate the actual full equality.",
+        "intro": "All FIVE unchanged scalar canaries: z1,x2 full{0}; z1,x0 full{-1}; z1,x1 fullinterval[-1,0]; actual -1/2 belongs to the full support but not the active union and +1 is rejected; z0 gives{0} at EVERY scalar x. For z0 the margin is1 and the loss is constant1, so this is the positive-margin branch, not a boundary test. No new or actual2D hinge canary is claimed.",
         "steps": [
           {
             "title": "Strict branches",
@@ -4399,7 +4399,7 @@
           }
         ],
         "takeaway": "Strict activity produces a singleton; a genuine tie produces an entire closed segment.",
-        "boundary": "No classification algorithm/regret bound, Chapter2/book completion or merge/deployment is claimed."
+        "boundary": "Only Example2.27 and its necessary retained foundations. Next Theorem2.28 affine transport and all remaining Chapter1/2 maintext and necessary appendix obligations REQUIRED, including nine OTHER Chapter1 main-relative contributor-contract gaps. Chapter2 mandatory total null/incomplete; Chapters3-16 unenumerated; whole Goal ACTIVE. No algorithm/regret/probability/feedback/computable or measurable selection guarantee, merge/deploy/main/live update or worktree retirement."
       }
     },
     {

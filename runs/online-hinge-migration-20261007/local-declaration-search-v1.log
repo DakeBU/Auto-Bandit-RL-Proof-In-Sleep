@@ -1,0 +1,30 @@
+BanditRL.OnlineConvex.sourceHinge [def] BanditRLProof/OnlineHinge.lean:15
+  def sourceHinge (z x : E) : EReal
+BanditRL.OnlineConvex.affine_subdifferential [theorem] BanditRLProof/OnlineHinge.lean:17
+  theorem affine_subdifferential (a : E) (b : ℝ) (x : E) : SourceSubdifferential (fun y => ((inner ℝ a y + b : ℝ) : EReal)) x = {a}
+BanditRL.OnlineConvex.hingeFamily [def] BanditRLProof/OnlineHinge.lean:44
+  def hingeFamily (z : E) (i : Bool) (y : E) : EReal
+BanditRL.OnlineConvex.affine_proper [theorem] BanditRLProof/OnlineHinge.lean:47
+  theorem affine_proper (a : E) (b : ℝ) : SourceProper (fun y => ((inner ℝ a y + b : ℝ) : EReal))
+BanditRL.OnlineConvex.affine_convex [theorem] BanditRLProof/OnlineHinge.lean:51
+  theorem affine_convex (a : E) (b : ℝ) : IsConvexExtended (fun y => ((inner ℝ a y + b : ℝ) : EReal))
+BanditRL.OnlineConvex.affine_continuous [theorem] BanditRLProof/OnlineHinge.lean:66
+  theorem affine_continuous (a : E) (b : ℝ) (x : E) : ContinuousAt (fun y => ((inner ℝ a y + b : ℝ) : EReal)) x
+BanditRL.OnlineConvex.hinge_max_identity [theorem] BanditRLProof/OnlineHinge.lean:71
+  theorem hinge_max_identity (z : E) : SourceFiniteMax (hingeFamily z) = sourceHinge z
+BanditRL.OnlineConvex.hinge_subdifferential_hull [theorem] BanditRLProof/OnlineHinge.lean:103
+  theorem hinge_subdifferential_hull [FiniteDimensional ℝ E] (z x : E) : SourceSubdifferential (sourceHinge z) x = convexHull ℝ (SourceActiveSubgradientUnion (hingeFamily z) x)
+BanditRL.OnlineConvex.hinge_family_support [theorem] BanditRLProof/OnlineHinge.lean:117
+  theorem hinge_family_support (z : E) (i : Bool) (x : E) : SourceSubdifferential (hingeFamily z i) x = {if i then -z else 0}
+BanditRL.OnlineConvex.hinge_family_false [theorem] BanditRLProof/OnlineHinge.lean:121
+  theorem hinge_family_false (z x : E) : hingeFamily z false x = ((0 : ℝ) : EReal)
+BanditRL.OnlineConvex.hinge_family_true [theorem] BanditRLProof/OnlineHinge.lean:124
+  theorem hinge_family_true (z x : E) : hingeFamily z true x = ((1 - inner ℝ z x : ℝ) : EReal)
+BanditRL.OnlineConvex.hinge_active_negative [theorem] BanditRLProof/OnlineHinge.lean:131
+  theorem hinge_active_negative (z x : E) (h : 1 - inner ℝ z x < 0) : SourceActiveSubgradientUnion (hingeFamily z) x = {(0 : E)}
+BanditRL.OnlineConvex.hinge_active_positive [theorem] BanditRLProof/OnlineHinge.lean:144
+  theorem hinge_active_positive (z x : E) (h : 0 < 1 - inner ℝ z x) : SourceActiveSubgradientUnion (hingeFamily z) x = {-z}
+BanditRL.OnlineConvex.hinge_active_zero [theorem] BanditRLProof/OnlineHinge.lean:157
+  theorem hinge_active_zero (z x : E) (h : 1 - inner ℝ z x = 0) : SourceActiveSubgradientUnion (hingeFamily z) x = {(0 : E), -z}
+BanditRL.OnlineConvex.example_2_27 [theorem] BanditRLProof/OnlineHinge.lean:168
+  theorem example_2_27 [FiniteDimensional ℝ E] (z x : E) : SourceSubdifferential (sourceHinge z) x = if 1 - inner ℝ z x < 0 then {0} else if 1 - inner ℝ z x = 0 then {g | ∃ α ∈ Icc (0 : ℝ) 1, g = -(α • z)} else {-z}
