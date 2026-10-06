@@ -1,0 +1,111 @@
+@BanditRL.OnlineConvex.subgradient_norm_le_lipschitz_ball : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (f : E → EReal) (x : E) (r : ℝ),
+  0 < r →
+    ∀ (K : NNReal),
+      (∀ y ∈ Metric.ball x r, ∃ a, f y = ↑a) →
+        LipschitzOnWith K (fun y => (f y).toReal) (Metric.ball x r) →
+          ∀ g ∈ BanditRL.OnlineConvex.SourceSubdifferential f x, ‖g‖ ≤ ↑K
+'BanditRL.OnlineConvex.subgradient_norm_le_lipschitz_ball' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.subgradients_locally_bounded : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (f : E → EReal),
+  (∀ (y : E), f y ≠ ⊥) →
+    BanditRL.OnlineConvex.IsConvexExtended f →
+      ∀ x ∈ interior (BanditRL.OnlineConvex.effectiveDomain f),
+        ∃ r, 0 < r ∧ ∃ K, ∀ y ∈ Metric.ball x r, ∀ g ∈ BanditRL.OnlineConvex.SourceSubdifferential f y, ‖g‖ ≤ ↑K
+'BanditRL.OnlineConvex.subgradients_locally_bounded' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.subgradient_limit_of_continuousAt : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] {ι : Type u_2} (l : Filter ι) [l.NeBot] (f : E → EReal),
+  (∀ (y : E), f y ≠ ⊥) →
+    ∀ (x g : E),
+      x ∈ interior (BanditRL.OnlineConvex.effectiveDomain f) →
+        ContinuousAt (fun y => (f y).toReal) x →
+          ∀ (xs gs : ι → E),
+            Filter.Tendsto xs l (nhds x) →
+              Filter.Tendsto gs l (nhds g) →
+                (∀ᶠ (i : ι) in l, gs i ∈ BanditRL.OnlineConvex.SourceSubdifferential f (xs i)) →
+                  g ∈ BanditRL.OnlineConvex.SourceSubdifferential f x
+'BanditRL.OnlineConvex.subgradient_limit_of_continuousAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.singleton_subgradient_tendsto : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] {ι : Type u_2} (l : Filter ι) [l.NeBot] (f : E → EReal),
+  (∀ (y : E), f y ≠ ⊥) →
+    BanditRL.OnlineConvex.IsConvexExtended f →
+      ∀ (x g : E),
+        x ∈ interior (BanditRL.OnlineConvex.effectiveDomain f) →
+          BanditRL.OnlineConvex.SourceSubdifferential f x = {g} →
+            ∀ (xs gs : ι → E),
+              Filter.Tendsto xs l (nhds x) →
+                (∀ᶠ (i : ι) in l, gs i ∈ BanditRL.OnlineConvex.SourceSubdifferential f (xs i)) →
+                  Filter.Tendsto gs l (nhds g)
+'BanditRL.OnlineConvex.singleton_subgradient_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.singleton_subdifferential_interior : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (f : E → EReal),
+  BanditRL.OnlineConvex.IsConvexExtended f →
+    ∀ (x : E),
+      (∃ r, f x = ↑r) →
+        ∀ (g : E),
+          BanditRL.OnlineConvex.SourceSubdifferential f x = {g} → x ∈ interior (BanditRL.OnlineConvex.effectiveDomain f)
+'BanditRL.OnlineConvex.singleton_subdifferential_interior' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.singleton_subdifferential_hasGradientAt : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (f : E → EReal),
+  BanditRL.OnlineConvex.IsConvexExtended f →
+    ∀ (x : E),
+      (∃ r, f x = ↑r) →
+        ∀ (g : E), BanditRL.OnlineConvex.SourceSubdifferential f x = {g} → HasGradientAt (fun y => (f y).toReal) g x
+'BanditRL.OnlineConvex.singleton_subdifferential_hasGradientAt' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BanditRL.OnlineConvex.sourceDifferentiableAt_regular : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (f : E → EReal) (x : E),
+  BanditRL.OnlineConvex.SourceDifferentiableAt f x →
+    (∀ᶠ (y : E) in nhds x, ∃ r, f y = ↑r) ∧
+      x ∈ interior (BanditRL.OnlineConvex.effectiveDomain f) ∧ DifferentiableAt ℝ (fun y => (f y).toReal) x
+'BanditRL.OnlineConvex.sourceDifferentiableAt_regular' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.subgradient_eq_gradient_at_interior : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (f : E → EReal),
+  (∀ (z : E), f z ≠ ⊥) →
+    ∀ x ∈ interior (BanditRL.OnlineConvex.effectiveDomain f),
+      DifferentiableAt ℝ (fun z => (f z).toReal) x →
+        ∀ g ∈ BanditRL.OnlineConvex.SourceSubdifferential f x, g = gradient (fun z => (f z).toReal) x
+'BanditRL.OnlineConvex.subgradient_eq_gradient_at_interior' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.theorem_2_22_gradient : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (f : E → EReal),
+  BanditRL.OnlineConvex.IsConvexExtended f →
+    ∀ (x : E),
+      (∃ r, f x = ↑r) →
+        ∀ (h : E → ℝ),
+          (fun y => ↑(h y)) =ᶠ[nhds x] f →
+            DifferentiableAt ℝ h x → BanditRL.OnlineConvex.SourceSubdifferential f x = {gradient h x}
+'BanditRL.OnlineConvex.theorem_2_22_gradient' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.theorem_2_22_forward : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (f : E → EReal),
+  BanditRL.OnlineConvex.IsConvexExtended f →
+    ∀ (x : E),
+      (∃ r, f x = ↑r) →
+        BanditRL.OnlineConvex.SourceDifferentiableAt f x → ∃ g, BanditRL.OnlineConvex.SourceSubdifferential f x = {g}
+'BanditRL.OnlineConvex.theorem_2_22_forward' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.theorem_2_22 : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E]
+  [FiniteDimensional ℝ E] (f : E → EReal),
+  BanditRL.OnlineConvex.IsConvexExtended f →
+    ∀ (x : E),
+      (∃ r, f x = ↑r) →
+        (BanditRL.OnlineConvex.SourceDifferentiableAt f x ↔ ∃ g, BanditRL.OnlineConvex.SourceSubdifferential f x = {g})
+'BanditRL.OnlineConvex.theorem_2_22' depends on axioms: [propext, Classical.choice, Quot.sound]
+ForwardSubgradientProbe.constrained_interval_singleton : BanditRL.OnlineConvex.SourceSubdifferential
+    (BanditRL.OnlineConvex.extendedIndicator (Set.Icc 0 2)) 1 =
+  {0}
+'ForwardSubgradientProbe.constrained_interval_singleton' depends on axioms: [propext, Classical.choice, Quot.sound]
+ForwardSubgradientProbe.quadratic_singleton_nonzero : BanditRL.OnlineConvex.SourceSubdifferential (fun y => ↑(y ^ 2))
+    1 =
+  {2}
+'ForwardSubgradientProbe.quadratic_singleton_nonzero' depends on axioms: [propext, Classical.choice, Quot.sound]
+DifferentiabilityProbe.constrained_interval_differentiable : BanditRL.OnlineConvex.SourceDifferentiableAt
+  (BanditRL.OnlineConvex.extendedIndicator (Set.Icc 0 2)) 1
+'DifferentiabilityProbe.constrained_interval_differentiable' depends on axioms: [propext, Classical.choice, Quot.sound]
+DifferentiabilityProbe.quadratic_derivative_nonzero : HasGradientAt (fun y => y ^ 2) 2 1
+'DifferentiabilityProbe.quadratic_derivative_nonzero' depends on axioms: [propext, Classical.choice, Quot.sound]
+DifferentiabilityProbe.interval_boundary_supports : ∀ g ≤ 0,
+  g ∈ BanditRL.OnlineConvex.SourceSubdifferential (BanditRL.OnlineConvex.extendedIndicator (Set.Icc 0 2)) 0
+'DifferentiabilityProbe.interval_boundary_supports' depends on axioms: [propext, Classical.choice, Quot.sound]
+DifferentiabilityProbe.interval_boundary_not_differentiable : ¬BanditRL.OnlineConvex.SourceDifferentiableAt
+    (BanditRL.OnlineConvex.extendedIndicator (Set.Icc 0 2)) 0
+'DifferentiabilityProbe.interval_boundary_not_differentiable' depends on axioms: [propext, Classical.choice, Quot.sound]

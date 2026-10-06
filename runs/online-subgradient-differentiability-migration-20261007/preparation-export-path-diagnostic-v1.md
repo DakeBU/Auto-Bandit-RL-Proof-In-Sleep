@@ -1,0 +1,1 @@
+Readonly guessed current Interior export-scoped-dependencies-v1.lean absent; actual rg lists export-retained-dependencies and export-public-dependencies. Reused actual Basic exporter after reading it. No theorem/gate mutation. Source rendering defaultPython lacked pypdfium2; actual installed Poppler succeeded, raw v2 output and actual viewed PNG separately retained.

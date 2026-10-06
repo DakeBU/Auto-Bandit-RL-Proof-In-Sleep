@@ -143,3 +143,5 @@ import Tests.OnlineGradientDescentSourceCanary
 import Tests.OnlineConstraintFiniteLossCanary
 
 import Tests.OnlineRelativeSubgradientCanary
+
+import Tests.OnlineDifferentiabilityBoundaryCanary

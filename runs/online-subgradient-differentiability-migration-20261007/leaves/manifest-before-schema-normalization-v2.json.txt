@@ -1,0 +1,137 @@
+{
+  "schema_version": "2.0",
+  "id": "ONLINE-SUBGRADIENT-DIFFERENTIABILITY-MIGRATION-20261007",
+  "route": "online-learning/chapter-2",
+  "frontier_cell": "online-subgradient-differentiability",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10,21 June2026; SHA256 cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchor": "Theorem2.22 printed17/PDF29, one printed result; eleven proof refinements and one full local-real definition; bothiff directions AND gradient identity.",
+    "url": "https://arxiv.org/pdf/1912.13213v10"
+  },
+  "target": "Close source Theorem2.22 complete equivalence and every-representative gradient identity; retain11actualproofs/fullrealgermdefinition, zero new productionmathnodes.",
+  "affected_files": [
+    "BanditRLProof/OnlineSubgradientDifferentiability.lean",
+    "website/content/readings.json",
+    "website/content/highlights.json",
+    "website/content/chapters.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineConvex.subgradient_norm_le_lipschitz_ball",
+    "BanditRL.OnlineConvex.subgradients_locally_bounded",
+    "BanditRL.OnlineConvex.subgradient_limit_of_continuousAt",
+    "BanditRL.OnlineConvex.singleton_subgradient_tendsto",
+    "BanditRL.OnlineConvex.singleton_subdifferential_interior",
+    "BanditRL.OnlineConvex.singleton_subdifferential_hasGradientAt",
+    "BanditRL.OnlineConvex.sourceDifferentiableAt_regular",
+    "BanditRL.OnlineConvex.subgradient_eq_gradient_at_interior",
+    "BanditRL.OnlineConvex.theorem_2_22_gradient",
+    "BanditRL.OnlineConvex.theorem_2_22_forward",
+    "BanditRL.OnlineConvex.theorem_2_22",
+    "BanditRL.OnlineConvex.SourceDifferentiableAt"
+  ],
+  "reuse_plan": {
+    "classification": "existing_exact",
+    "decision": "reuse_existing",
+    "searched_existing": [
+      "Actual eleven public @types/full definition/frozen headers/body and pinned API retrieval.",
+      "Actual21selected compiled nodes3026refs/20producer-canary pairs; old12node1880graph retained."
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineConvex.subgradient_norm_le_lipschitz_ball",
+      "BanditRL.OnlineConvex.subgradients_locally_bounded",
+      "BanditRL.OnlineConvex.subgradient_limit_of_continuousAt",
+      "BanditRL.OnlineConvex.singleton_subgradient_tendsto",
+      "BanditRL.OnlineConvex.singleton_subdifferential_interior",
+      "BanditRL.OnlineConvex.singleton_subdifferential_hasGradientAt",
+      "BanditRL.OnlineConvex.sourceDifferentiableAt_regular",
+      "BanditRL.OnlineConvex.subgradient_eq_gradient_at_interior",
+      "BanditRL.OnlineConvex.theorem_2_22_gradient",
+      "BanditRL.OnlineConvex.theorem_2_22_forward",
+      "BanditRL.OnlineConvex.theorem_2_22",
+      "BanditRL.OnlineConvex.SourceDifferentiableAt"
+    ],
+    "new_shared_declarations": [],
+    "known_consumers": [
+      "Tests.OnlineDifferentiabilityBoundary.singleton_not_sourceDifferentiable",
+      "ForwardSubgradientProbe.quadratic_singleton_nonzero",
+      "DifferentiabilityProbe.constrained_interval_differentiable"
+    ],
+    "planned_consumers": [
+      "Mandatory laterChapter2 analytic/subgradient proof dependencies"
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Reuse actual full iff/gradient producer chain; only3new diagnostic TEST proofs, no duplicate source wrappers or perBook library."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/differentiability_blind",
+    "source_reviewer": "/root/source_reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "SourceDifferentiableAt means a real differentiable representative h agrees with f throughout an AMBIENT neighborhood of x. It entails actual local finiteness, not merely smoothness of toReal or differentiation within the domain/affine span. The gradient identity holds for EVERY such representative. The eleven proof declarations use finite-dimensional real inner-product spaces, with completeness derived and dimension0 allowed; ambient space has zero and is nonempty. The complete real-germ definition itself has no finite-dimension binder. No arbitrary infinite-dimensional equivalence is claimed. NoBottom, NeBot, finite positive ball, local Lipschitz and continuity premises belong to particular intermediate interfaces, not the full source terminal. The generic support predicate permits all EReal functions; each theorem direction here derives noBottom before finite-part conversion. Distinct CONTRACT/BODY accepted; package FINAL pending; requestedAstra/medium/no humanexternal runtimeattestation."
+  },
+  "graph_contribution": {
+    "lean_graph": "reuse-existing",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Source-qualified shared proof reuse; no setting composition/discovery claim.",
+    "focus_targets": [
+      "BanditRL.OnlineConvex.subgradient_norm_le_lipschitz_ball",
+      "BanditRL.OnlineConvex.subgradients_locally_bounded",
+      "BanditRL.OnlineConvex.subgradient_limit_of_continuousAt",
+      "BanditRL.OnlineConvex.singleton_subgradient_tendsto",
+      "BanditRL.OnlineConvex.singleton_subdifferential_interior",
+      "BanditRL.OnlineConvex.singleton_subdifferential_hasGradientAt",
+      "BanditRL.OnlineConvex.sourceDifferentiableAt_regular",
+      "BanditRL.OnlineConvex.subgradient_eq_gradient_at_interior",
+      "BanditRL.OnlineConvex.theorem_2_22_gradient",
+      "BanditRL.OnlineConvex.theorem_2_22_forward",
+      "BanditRL.OnlineConvex.theorem_2_22",
+      "BanditRL.OnlineConvex.SourceDifferentiableAt"
+    ],
+    "visual_review": "ONE printed source Theorem2.22; eleven retained proof declarations and one complete definition are a proof refinement, not eleven printed results. Zero new production mathematics or canonical registry nodes. Actual selected graph21nodes3026direct references includes11producerproofs/1definition/9canaryproofs;20required value pairs; not a full registry graph. Earlier12node1880readiness is separate and exactly retained. Preserve all10811oldIDsURLs/0newnodes after applicable sitegates.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: preserve old links, show full real-germ definition and exact source iff/gradient boundary with actual producer dependencies.",
+    "banditrlwiki": "no-change-with-reason: no new Bandit setting.",
+    "results_ledger": "no-change-with-reason: additive package overlay follows fullgates/PR; original chapter inventory untouched, Chapter2 totalnull/incomplete.",
+    "roadmap": "no-change-with-reason: whole-book Goal remains active, Chapter2 incomplete and global SGB untouched.",
+    "website_surfaces": [
+      "website/content/readings.json",
+      "website/content/highlights.json",
+      "website/content/chapters.json"
+    ]
+  },
+  "truth_boundary": "SourceDifferentiableAt means a real differentiable representative h agrees with f throughout an AMBIENT neighborhood of x. It entails actual local finiteness, not merely smoothness of toReal or differentiation within the domain/affine span. The gradient identity holds for EVERY such representative. Theorem2.22 assumes convex real-height epigraph and an actual finite real value at x. Properness/noBottom and ambient interior are DERIVED in its directions; no closedness/lsc/boundedness/Lipschitz/interior oracle is added. Supports test ALL ambient y, including top outside the finite neighborhood. The eleven proof declarations use finite-dimensional real inner-product spaces, with completeness derived and dimension0 allowed; ambient space has zero and is nonempty. The complete real-germ definition itself has no finite-dimension binder. No arbitrary infinite-dimensional equivalence is claimed. NoBottom, NeBot, finite positive ball, local Lipschitz and continuity premises belong to particular intermediate interfaces, not the full source terminal. The generic support predicate permits all EReal functions; each theorem direction here derives noBottom before finite-part conversion. ONE printed source Theorem2.22; eleven retained proof declarations and one complete definition are a proof refinement, not eleven printed results. Zero new production mathematics or canonical registry nodes. Actual selected graph21nodes3026direct references includes11producerproofs/1definition/9canaryproofs;20required value pairs; not a full registry graph. Earlier12node1880readiness is separate and exactly retained. Six unchanged old proofs instantiate genuine constrained [0,2] at1, nonzero quadratic gradient2 at1, the reverse equivalence/derivative and boundary0 with supports0/-1. Three NEW TEST-only singleton{1} diagnostics actually compile: toReal is identicallyzero and smooth, the genuine ambient germ fails by regularity and empty interior, and EVERY real vector supports. This real singleton empty-interior fact does not extend to dimension0.20named standard kernel checks/11nativeguards are separate from compilation. This package covers T2.22 equivalence AND gradient identity only. T2.23 and all remaining Chapter1/2 main-text/necessary appendix/source-contract obligations remain REQUIRED. Chapter2 mandatory totalnull/incomplete; Chapters3-16unenumerated; wholeGoalACTIVE. No merge/deploy/main/live update.",
+  "verification": {
+    "focused_checks": [
+      "Fresh11retainedproofs/one full definition/6old+3newactualcanaryproofs/20namedstandard-or-none kernelchecks/11nativeguards/21nodes3026refs."
+    ],
+    "bandit_check": "Fresh sequential root/Tests/fullharness separately required after scope-comment integration.",
+    "site_build": "Clean local lean-verified site only after current combinedgate.",
+    "site_check": "Same10811oldIDsURLs/0new canonical nodes; allotherBooksubtrees unchanged.",
+    "independent_review": "Three distinct required automated actors, requested GPT-6 Astra/medium; no human/external review or independently attested runtime model.",
+    "owned_test_files": [
+      "Tests/OnlineDifferentiabilityBoundaryCanary.lean",
+      "Tests.lean"
+    ]
+  },
+  "contributor": {
+    "name": "Codex for Ji Cheng",
+    "role": "Formalizer/integrator with distinct required automated semantic actors; source attribution retained"
+  }
+}

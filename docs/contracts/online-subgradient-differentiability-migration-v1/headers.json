@@ -1,0 +1,68 @@
+{
+  "subgradient_norm_le_lipschitz_ball": {
+    "file": "BanditRLProof/OnlineSubgradientDifferentiability.lean",
+    "statement": "theorem subgradient_norm_le_lipschitz_ball (f : E → EReal) (x : E) (r : ℝ) (hr : 0 < r) (K : ℝ≥0) (hfinite : ∀ y ∈ Metric.ball x r, ∃ a : ℝ, f y = (a : EReal)) (hlip : LipschitzOnWith K (fun y => (f y).toReal) (Metric.ball x r)) (g : E) (hg : g ∈ SourceSubdifferential f x) : ‖g‖ ≤ (K : ℝ)",
+    "statement_hash": "7d0339c8af100ea2c5cc4f9e83fe2010fce4a2bb44ef92c719c8dee1596d13ff",
+    "context_hash": "22415309433d0e8465553ab3b05d0f893726022fde0b9d7fdcdcd8ef72410c77"
+  },
+  "subgradients_locally_bounded": {
+    "file": "BanditRLProof/OnlineSubgradientDifferentiability.lean",
+    "statement": "theorem subgradients_locally_bounded (f : E → EReal) (hbot : ∀ y, f y ≠ ⊥) (hf : IsConvexExtended f) (x : E) (hx : x ∈ interior (effectiveDomain f)) : ∃ r : ℝ, 0 < r ∧ ∃ K : ℝ≥0, ∀ y ∈ Metric.ball x r, ∀ g ∈ SourceSubdifferential f y, ‖g‖ ≤ (K : ℝ)",
+    "statement_hash": "5b0b9237a6777829f506f3335b4674a2ad642e699ace650c74d6c7fd9b17dccb",
+    "context_hash": "22415309433d0e8465553ab3b05d0f893726022fde0b9d7fdcdcd8ef72410c77"
+  },
+  "subgradient_limit_of_continuousAt": {
+    "file": "BanditRLProof/OnlineSubgradientDifferentiability.lean",
+    "statement": "theorem subgradient_limit_of_continuousAt {ι : Type*} (l : Filter ι) [NeBot l] (f : E → EReal) (hbot : ∀ y, f y ≠ ⊥) (x g : E) (hx : x ∈ interior (effectiveDomain f)) (hcont : ContinuousAt (fun y => (f y).toReal) x) (xs gs : ι → E) (hxs : Tendsto xs l (𝓝 x)) (hgs : Tendsto gs l (𝓝 g)) (hs : ∀ᶠ i in l, gs i ∈ SourceSubdifferential f (xs i)) : g ∈ SourceSubdifferential f x",
+    "statement_hash": "7573a5b844acffca367a12c0addd26da6501cfd9eaec9611054bd9e32d85759e",
+    "context_hash": "22415309433d0e8465553ab3b05d0f893726022fde0b9d7fdcdcd8ef72410c77"
+  },
+  "singleton_subgradient_tendsto": {
+    "file": "BanditRLProof/OnlineSubgradientDifferentiability.lean",
+    "statement": "theorem singleton_subgradient_tendsto {ι : Type*} (l : Filter ι) [NeBot l] (f : E → EReal) (hbot : ∀ y, f y ≠ ⊥) (hf : IsConvexExtended f) (x g : E) (hx : x ∈ interior (effectiveDomain f)) (hg : SourceSubdifferential f x = {g}) (xs gs : ι → E) (hxs : Tendsto xs l (𝓝 x)) (hs : ∀ᶠ i in l, gs i ∈ SourceSubdifferential f (xs i)) : Tendsto gs l (𝓝 g)",
+    "statement_hash": "58912ecee2136c26a4e0050763bf3167ff4f33c7ab6608cd0c34fc04d55156ec",
+    "context_hash": "22415309433d0e8465553ab3b05d0f893726022fde0b9d7fdcdcd8ef72410c77"
+  },
+  "singleton_subdifferential_interior": {
+    "file": "BanditRLProof/OnlineSubgradientDifferentiability.lean",
+    "statement": "theorem singleton_subdifferential_interior (f : E → EReal) (hf : IsConvexExtended f) (x : E) (hx : ∃ r : ℝ, f x = (r : EReal)) (g : E) (hg : SourceSubdifferential f x = {g}) : x ∈ interior (effectiveDomain f)",
+    "statement_hash": "9d5f4a81ddc30eaf251bad071be3fc64505a3213a883a59e9079dae81f961570",
+    "context_hash": "22415309433d0e8465553ab3b05d0f893726022fde0b9d7fdcdcd8ef72410c77"
+  },
+  "singleton_subdifferential_hasGradientAt": {
+    "file": "BanditRLProof/OnlineSubgradientDifferentiability.lean",
+    "statement": "theorem singleton_subdifferential_hasGradientAt (f : E → EReal) (hf : IsConvexExtended f) (x : E) (hx : ∃ r : ℝ, f x = (r : EReal)) (g : E) (hg : SourceSubdifferential f x = {g}) : HasGradientAt (fun y => (f y).toReal) g x",
+    "statement_hash": "3786894aca0977d32dcd392ebc3a3200957f4673265b6b10f1fc1d3ef7a08fe9",
+    "context_hash": "22415309433d0e8465553ab3b05d0f893726022fde0b9d7fdcdcd8ef72410c77"
+  },
+  "sourceDifferentiableAt_regular": {
+    "file": "BanditRLProof/OnlineSubgradientDifferentiability.lean",
+    "statement": "theorem sourceDifferentiableAt_regular (f : E → EReal) (x : E) (hd : SourceDifferentiableAt f x) : (∀ᶠ y in 𝓝 x, ∃ r : ℝ, f y = (r : EReal)) ∧ x ∈ interior (effectiveDomain f) ∧ DifferentiableAt ℝ (fun y => (f y).toReal) x",
+    "statement_hash": "51d6c7ebad71166b06c80699c5091f66cb275208d3adcd4c1785f04861a5caf2",
+    "context_hash": "22415309433d0e8465553ab3b05d0f893726022fde0b9d7fdcdcd8ef72410c77"
+  },
+  "subgradient_eq_gradient_at_interior": {
+    "file": "BanditRLProof/OnlineSubgradientDifferentiability.lean",
+    "statement": "theorem subgradient_eq_gradient_at_interior (f : E → EReal) (hbot : ∀ z, f z ≠ ⊥) (x : E) (hx : x ∈ interior (effectiveDomain f)) (hd : DifferentiableAt ℝ (fun z => (f z).toReal) x) (g : E) (hg : g ∈ SourceSubdifferential f x) : g = gradient (fun z => (f z).toReal) x",
+    "statement_hash": "084cc2754694867b21dc98fe6cf00ac4ab73d43cbadfdc1890511521af40ac86",
+    "context_hash": "22415309433d0e8465553ab3b05d0f893726022fde0b9d7fdcdcd8ef72410c77"
+  },
+  "theorem_2_22_gradient": {
+    "file": "BanditRLProof/OnlineSubgradientDifferentiability.lean",
+    "statement": "theorem theorem_2_22_gradient (f : E → EReal) (hf : IsConvexExtended f) (x : E) (hx : ∃ r : ℝ, f x = (r : EReal)) (h : E → ℝ) (he : (fun y => (h y : EReal)) =ᶠ[𝓝 x] f) (hd : DifferentiableAt ℝ h x) : SourceSubdifferential f x = {gradient h x}",
+    "statement_hash": "ec1c07a05fe9061747e8446c64e3d58b188c29190002b2df9761a4274724102f",
+    "context_hash": "22415309433d0e8465553ab3b05d0f893726022fde0b9d7fdcdcd8ef72410c77"
+  },
+  "theorem_2_22_forward": {
+    "file": "BanditRLProof/OnlineSubgradientDifferentiability.lean",
+    "statement": "theorem theorem_2_22_forward (f : E → EReal) (hf : IsConvexExtended f) (x : E) (hx : ∃ r : ℝ, f x = (r : EReal)) (hd : SourceDifferentiableAt f x) : ∃ g : E, SourceSubdifferential f x = {g}",
+    "statement_hash": "ac4732e75b15a128a7f48af680b943f54cd1b9520f17bca6f1ed733e199702f8",
+    "context_hash": "22415309433d0e8465553ab3b05d0f893726022fde0b9d7fdcdcd8ef72410c77"
+  },
+  "theorem_2_22": {
+    "file": "BanditRLProof/OnlineSubgradientDifferentiability.lean",
+    "statement": "theorem theorem_2_22 (f : E → EReal) (hf : IsConvexExtended f) (x : E) (hx : ∃ r : ℝ, f x = (r : EReal)) : SourceDifferentiableAt f x ↔ ∃ g : E, SourceSubdifferential f x = {g}",
+    "statement_hash": "56b8c09f3795351f2ce8b4bd70727fdc49b9ea1ba16fbd538473f76685ca690c",
+    "context_hash": "22415309433d0e8465553ab3b05d0f893726022fde0b9d7fdcdcd8ef72410c77"
+  }
+}

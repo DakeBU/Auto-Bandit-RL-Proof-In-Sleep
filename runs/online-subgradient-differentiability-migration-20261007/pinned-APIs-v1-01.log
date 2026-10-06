@@ -1,0 +1,41 @@
+@BanditRL.OnlineConvex.supporting_functional_at_closure : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] [FiniteDimensional ℝ E] (s : Set E),
+  Convex ℝ s → ∀ x ∈ closure s, x ∉ interior s → ∃ a, a ≠ 0 ∧ ∀ y ∈ s, a y ≤ a x
+@BanditRL.OnlineConvex.affine_support_of_finite_neighborhood : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] [FiniteDimensional ℝ E] (f : E → EReal),
+  BanditRL.OnlineConvex.IsConvexExtended f →
+    ∀ (x : E), (∀ᶠ (y : E) in 𝓝 x, ∃ r, f y = ↑r) → ∃ a b, ↑(a x + b) = f x ∧ ∀ (y : E), ↑(a y + b) ≤ f y
+@BanditRL.OnlineConvex.subgradient_exists_of_domain_interior : ∀ {F : Type u_1} [inst : NormedAddCommGroup F]
+  [inst_1 : InnerProductSpace ℝ F] [FiniteDimensional ℝ F] (f : F → EReal),
+  BanditRL.OnlineConvex.SourceProper f →
+    BanditRL.OnlineConvex.IsConvexExtended f →
+      ∀ x ∈ interior (BanditRL.OnlineConvex.effectiveDomain f),
+        (BanditRL.OnlineConvex.SourceSubdifferential f x).Nonempty
+@BanditRL.OnlineConvex.theorem_2_7 : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E]
+  [inst_2 : CompleteSpace E] (f : E → EReal),
+  (∀ (z : E), f z ≠ ⊥) →
+    BanditRL.OnlineConvex.IsConvexExtended f →
+      ∀ x ∈ interior (BanditRL.OnlineConvex.effectiveDomain f),
+        DifferentiableAt ℝ (fun z => (f z).toReal) x →
+          ∀ (y : E), f x + ↑(inner ℝ (gradient (fun z => (f z).toReal) x) (y - x)) ≤ f y
+@ConvexOn.locallyLipschitzOn_interior : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E]
+  {C : Set E} {f : E → ℝ} [FiniteDimensional ℝ E], ConvexOn ℝ C f → LocallyLipschitzOn (interior C) f
+@IsCompact.tendsto_nhds_of_unique_mapClusterPt : ∀ {X : Type u_1} [inst : TopologicalSpace X] {s : Set X} {Y : Type u_2}
+  {l : Filter Y} {y : X} {f : Y → X},
+  IsCompact s → (∀ᶠ (x : Y) in l, f x ∈ s) → (∀ x ∈ s, MapClusterPt x l f → x = y) → Tendsto f l (𝓝 y)
+@hasFDerivAt_iff_isLittleO : ∀ {𝕜 : Type u_1} [inst : NontriviallyNormedField 𝕜] {E : Type u_2}
+  [inst_1 : SeminormedAddCommGroup E] [inst_2 : NormedSpace 𝕜 E] {F : Type u_3} [inst_3 : SeminormedAddCommGroup F]
+  [inst_4 : NormedSpace 𝕜 F] {f : E → F} {f' : E →L[𝕜] F} {x : E},
+  HasFDerivAt f f' x ↔ (fun x' => f x' - f x - f' (x' - x)) =o[𝓝 x] fun x' => x' - x
+@IsLocalMin.hasFDerivAt_eq_zero : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E] {f : E → ℝ}
+  {f' : StrongDual ℝ E} {a : E}, IsLocalMin f a → HasFDerivAt f f' a → f' = 0
+InnerProductSpace.toDual : (𝕜 : Type u_1) →
+  (E : Type u_2) →
+    [inst : RCLike 𝕜] →
+      [inst_1 : NormedAddCommGroup E] → [inst_2 : InnerProductSpace 𝕜 E] → [CompleteSpace E] → E ≃ₗᵢ⋆[𝕜] StrongDual 𝕜 E
+@complete_of_proper : ∀ {α : Type u_1} [inst : PseudoMetricSpace α] [ProperSpace α], CompleteSpace α
+@interior_singleton : ∀ {X : Type u_1} [inst : TopologicalSpace X] (x : X) [(𝓝[≠] x).NeBot], interior {x} = ∅
+@DifferentiableAt.congr_of_eventuallyEq : ∀ {𝕜 : Type u_1} [inst : NontriviallyNormedField 𝕜] {E : Type u_2}
+  [inst_1 : AddCommGroup E] [inst_2 : Module 𝕜 E] [inst_3 : TopologicalSpace E] {F : Type u_3} [inst_4 : AddCommGroup F]
+  [inst_5 : Module 𝕜 F] [inst_6 : TopologicalSpace F] {f f₁ : E → F} {x : E},
+  DifferentiableAt 𝕜 f x → f₁ =ᶠ[𝓝 x] f → DifferentiableAt 𝕜 f₁ x
