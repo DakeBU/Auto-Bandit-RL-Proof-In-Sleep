@@ -1,0 +1,12 @@
+import Tests.OnlineAffineSubgradientCanary
+#check @ContinuousLinearMap.adjoint
+#check @ContinuousLinearMap.adjoint_inner_left
+#check @ContinuousLinearMap.map_sub
+#check @BanditRL.OnlineConvex.SourceSubdifferential
+#check @BanditRL.OnlineConvex.SourceProper
+#check @BanditRL.OnlineConvex.abs_subgradient_zero
+#check @BanditRL.OnlineConvex.affine_subdifferential
+#check @Set.mem_image_of_mem
+#check @EReal.coe_add
+#check @EReal.coe_le_coe_iff
+#check @EReal.coe_ne_bot

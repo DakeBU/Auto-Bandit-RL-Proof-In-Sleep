@@ -1,0 +1,1 @@
+Close only exact full-image inclusion for actual affine composition without convexity/rank/extra proper-composite/equality premise; reuse_existing one lower leaf. Required remaining entire maintext persists. Originalbody proof and sourcecontract/hp retained; no wrapper.

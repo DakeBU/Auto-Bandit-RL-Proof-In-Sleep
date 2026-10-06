@@ -1,0 +1,1 @@
+ONE retained actual theorem body re-elaborated after distinct CONTRACT. Fullimagewitnessg -> actual hg(Ay+b) everyy -> actual map_sub/translationcancellation -> actual adjoint_inner_left -> EReal support. Sourceproper retained though algebraically unused. WHOLE7oldscalarcanaryproof2TESTdefs fixed,0newmath/TEST. Compiler success is not source/chapter/Goal acceptance.

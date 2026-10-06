@@ -1,0 +1,28 @@
+@ContinuousLinearMap.adjoint : {𝕜 : Type u_1} →
+  {E : Type u_2} →
+    {F : Type u_3} →
+      [inst : RCLike 𝕜] →
+        [inst_1 : NormedAddCommGroup E] →
+          [inst_2 : NormedAddCommGroup F] →
+            [inst_3 : InnerProductSpace 𝕜 E] →
+              [inst_4 : InnerProductSpace 𝕜 F] → [CompleteSpace E] → [CompleteSpace F] → (E →L[𝕜] F) ≃ₗᵢ⋆[𝕜] F →L[𝕜] E
+@ContinuousLinearMap.adjoint_inner_left : ∀ {𝕜 : Type u_1} {E : Type u_2} {F : Type u_3} [inst : RCLike 𝕜]
+  [inst_1 : NormedAddCommGroup E] [inst_2 : NormedAddCommGroup F] [inst_3 : InnerProductSpace 𝕜 E]
+  [inst_4 : InnerProductSpace 𝕜 F] [inst_5 : CompleteSpace E] [inst_6 : CompleteSpace F] (A : E →L[𝕜] F) (x : E)
+  (y : F), inner 𝕜 ((ContinuousLinearMap.adjoint A) y) x = inner 𝕜 y (A x)
+@ContinuousLinearMap.map_sub : ∀ {R : Type u_1} [inst : Ring R] {R₂ : Type u_2} [inst_1 : Ring R₂] {M : Type u_3}
+  [inst_2 : TopologicalSpace M] [inst_3 : AddCommGroup M] {M₂ : Type u_4} [inst_4 : TopologicalSpace M₂]
+  [inst_5 : AddCommGroup M₂] [inst_6 : Module R M] [inst_7 : Module R₂ M₂] {σ₁₂ : R →+* R₂} (f : M →SL[σ₁₂] M₂)
+  (x y : M), f (x - y) = f x - f y
+@BanditRL.OnlineConvex.SourceSubdifferential : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] → [InnerProductSpace ℝ E] → (E → EReal) → E → Set E
+@BanditRL.OnlineConvex.SourceProper : {E : Type u_1} → (E → EReal) → Prop
+BanditRL.OnlineConvex.abs_subgradient_zero : BanditRL.OnlineConvex.SourceSubdifferential (fun y => ↑|y|) 0 =
+  Set.Icc (-1) 1
+@BanditRL.OnlineConvex.affine_subdifferential : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] (a : E) (b : ℝ) (x : E),
+  BanditRL.OnlineConvex.SourceSubdifferential (fun y => ↑(inner ℝ a y + b)) x = {a}
+@Set.mem_image_of_mem : ∀ {α : Type u_1} {β : Type u_2} (f : α → β) {x : α} {a : Set α}, x ∈ a → f x ∈ f '' a
+EReal.coe_add : ∀ (x y : ℝ), ↑(x + y) = ↑x + ↑y
+@EReal.coe_le_coe_iff : ∀ {x y : ℝ}, ↑x ≤ ↑y ↔ x ≤ y
+EReal.coe_ne_bot : ∀ (x : ℝ), ↑x ≠ ⊥
