@@ -1,0 +1,1 @@
+Read-only attempted sum migration contract-manifest.json and manifest without date did not exist. No gate/production mutation. Actual rg listing corrected these paths before use; preserve conversation tool outputs.

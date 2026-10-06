@@ -1,0 +1,13 @@
+EReal.coe_add : ∀ (x y : ℝ), ↑(x + y) = ↑x + ↑y
+@EReal.coe_le_coe : ∀ {x y : ℝ}, x ≤ y → ↑x ≤ ↑y
+@EReal.coe_le_coe_iff : ∀ {x y : ℝ}, ↑x ≤ ↑y ↔ x ≤ y
+@abs_of_pos : ∀ {α : Type u_1} [inst : Lattice α] [inst_1 : AddGroup α] {a : α} [AddLeftMono α], 0 < a → |a| = a
+@abs_of_neg : ∀ {α : Type u_1} [inst : Lattice α] [inst_1 : AddGroup α] {a : α} [AddLeftMono α], a < 0 → |a| = -a
+@abs_of_nonneg : ∀ {α : Type u_1} [inst : Lattice α] [inst_1 : AddGroup α] {a : α} [AddLeftMono α], 0 ≤ a → |a| = a
+@le_abs_self : ∀ {α : Type u_1} [inst : Lattice α] [inst_1 : AddGroup α] (a : α), a ≤ |a|
+@neg_le_abs : ∀ {α : Type u_1} [inst : Lattice α] [inst_1 : AddGroup α] (a : α), -a ≤ |a|
+@mul_le_mul_of_nonneg_left : ∀ {α : Type u_1} [inst : Mul α] [inst_1 : Zero α] [inst_2 : Preorder α] {a b c : α}
+  [PosMulMono α], b ≤ c → 0 ≤ a → a * b ≤ a * c
+@mul_le_mul_of_nonpos_left : ∀ {R : Type u_1} [inst : Semiring R] [inst_1 : Preorder R] {a b c : R} [ExistsAddOfLE R]
+  [PosMulMono R] [AddRightMono R] [AddRightReflectLE R], b ≤ a → c ≤ 0 → c * a ≤ c * b
+@mul_eq_zero : ∀ {M₀ : Type u_1} [inst : MulZeroClass M₀] [NoZeroDivisors M₀] {a b : M₀}, a * b = 0 ↔ a = 0 ∨ b = 0

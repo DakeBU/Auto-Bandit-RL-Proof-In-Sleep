@@ -1,0 +1,1 @@
+Current native local search/retrievalrecord/four @types/full borrowedS/eleven pinned APIs/fourreadinessproofs666refs/seven selectedproducer-canary proofnodes/explicitvaluepairs; reuse-only. No externalcompatible rebuild or global reference-index rewrite. Frozen sourcePDF30/headers and historical old source contracts preserved; acceptance pending current full gates and FINAL.

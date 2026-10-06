@@ -1,0 +1,1 @@
+Bounded integration-node: ONE printed example, complete allx three-case terminal; existing proofs reused, not new mathematical growth. Source contract/signature/DAG and distinct semantic review before actual retained body revalidation. Book Goal remains ACTIVE.

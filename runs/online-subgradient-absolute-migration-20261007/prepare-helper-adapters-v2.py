@@ -1,0 +1,13 @@
+from common import *
+t=(RUN/'review-packets-v1.py').read_text(encoding='utf-8')
+t=t.replace("bind_review('source-contract-receipt-v1.json','source-contract-inputs-v1.json','prior-contract-binding-v1.json')", "assert load(RUN/'prior-contract-binding-v1.json')['status']=='passed'\n for row in load(RUN/'prior-contract-binding-v1.json')['rows']:assert sha(row['resolved'])==row['sha256']")
+write(RUN/'review-packets-v2.py',t)
+t=(RUN/'verify-history-bindings-v1.py').read_text(encoding='utf-8')
+t=t.replace("str(run/'historical-raw-supersession-v1.json')", "str(run/'historical-raw-supersession-v1.json'),str(run/'historical-raw-supersession-contract-v1.json'),str(run/'historical-raw-supersession-body-v1.json')",1)
+write(RUN/'verify-history-bindings-v2.py',t)
+t=(RUN/'record-acceptance-v1.py').read_text(encoding='utf-8')
+t=t.replace("event('accepted',dict(accepted_decision=(RUN/'accepted-decision-v1.json').as_posix(),retained_proofs=4,new_proofs=0,merged=False,live=False,**boundary))", "native('accepted-lifecycle-v1','lifecycle-event','--session',TASK,'--event','accepted','--payload-json',json.dumps(dict(run_id=RUN.name,accepted_decision=(RUN/'accepted-decision-v1.json').as_posix(),retained_proofs=4,new_proofs=0,merged=False,live=False,**boundary)))")
+write(RUN/'record-acceptance-v2.py',t)
+write(RUN/'unused-helper-adapters-v2.md','Unexecuted BODY branch of review-packets-v1 repeated a current-byte contract check after authorized native log appends. v2 uses exact cryptographically verified original raw prefixes, retains immutable old receipt and all source bytes. Unexecuted acceptance-v1 generic event call would duplicate chapter/Goal keyword arguments; v2 sends an explicit native payload once. Earlier helper versions remain, neither is presented as an executed mathematical/gate failure. Ignored initial common.py pycache is preserved; subsequent helpers execute with Python -B and runtime bytes are excluded from source input manifests/owned Git audit.\n')
+generated('adapter-helpers-before-use-v2.json',[RUN/'preserve-native-prefix-v1.py',RUN/'review-packets-v2.py',RUN/'verify-history-bindings-v2.py',RUN/'record-acceptance-v2.py'])
+print('Versioned helper adapters prepared; raw receipt bindings and all math targets retained.')

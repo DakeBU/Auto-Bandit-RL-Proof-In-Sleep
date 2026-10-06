@@ -1,0 +1,35 @@
+from common import *
+prior=Path('runs/online-subgradient-sum-migration-20261007')
+t=(prior/'verify-history-bindings-v2.py').read_text(encoding='utf-8')
+t=t.replace("str(run/'historical-raw-supersession-v2.json')", "'runs/online-subgradient-sum-migration-20261007/historical-raw-supersession-v2.json',str(run/'historical-raw-supersession-v1.json')")
+t=t.replace("receipts=[", "receipts=[Path('runs/online-subgradient-sum-migration-20261007/final-reader-receipt-v1.json'),")
+t=t.replace("load(run/'historical-raw-supersession-v2.json')","load(run/'historical-raw-supersession-v1.json')")
+t=t.replace("!='online-subgradient-sum'","!='online-subgradient-absolute'")
+t=t.replace("history-binding-audit-v2.json","history-binding-audit-v1.json").replace('only_online_subgradient_sum_subtree_changed','only_online_subgradient_absolute_subtree_changed').replace('selected T2.23sum subtree only','selected Ex2.24 absolute subtree only')
+write(RUN/'verify-history-bindings-v1.py',t)
+t=(prior/'browser-v2.py').read_text(encoding='utf-8').replace('online-subgradient-sum','online-subgradient-absolute').replace('-v2','-v1')
+write(RUN/'browser-v1.py',t)
+t=(prior/'commit-owned-v1.py').read_text(encoding='utf-8').replace('OnlineSubgradientSum','OnlineSubgradientAbsolute').replace('online-subgradient-sum','online-subgradient-absolute').replace('SUBGRADIENT-SUM','SUBGRADIENT-ABSOLUTE')
+write(RUN/'commit-owned-v1.py',t)
+t=(prior/'check-scoped-diff-v2.py').read_text(encoding='utf-8').replace("base='52c24a9971a5d7953a129227b61384061ea3493e'","base='"+BASE+"'")
+t=t.replace("elif ('/leaves/pre-integration-'", "elif ('/snapshots/' in p or '/leaves/pre-integration-'")
+write(RUN/'check-scoped-diff-v1.py',t)
+write(RUN/'verify-registry-v1.py','''from common import *
+site=Path('tmp/online-subgradient-absolute-migration-site-v1');r=load(site/'books/registry.json');m=load(site/'site-manifest.json');old=load('tmp/online-subgradient-sum-migration-site-v2/books/registry.json')
+assert r['lean_verified'] is True and m['lean_verified'] is True and m['source_dirty'] is False and r['source_commit']==m['source_commit']
+nodes={n['id']:n for n in r['nodes']};oldnodes={n['id']:n for n in old['nodes']}
+assert len(nodes)==len(r['nodes'])==len(oldnodes)==10811 and set(nodes)==set(oldnodes) and r['identity']==old['identity']
+assert all(nodes[i]['url']==n['url'] for i,n in oldnodes.items())
+f=fixed(True);checks=[]
+for n,h in f['headers'].items():
+ node=nodes['declaration:'+PRE+n];assert node['status']=='compiled' and node['statement_sha256']==h
+ assert 'online-learning' in node['books'] and 'teaching:online-subgradient-absolute' in node['chapters']
+ checks.append(dict(name=PRE+n,native_hash=h,url=node['url'],unique_canonical_node=True,new_canonical_mathproof=False))
+x=next(x for x in load('website/content/readings.json')['readings'] if x['slug']==ROUTE)
+assert len(x['notation'])==3 and x['teaching_route']==load(RUN/'reader-integration-v1.json')['original_four_routes_retained']
+html=(site/'modules/banditrlproof-onlinesubgradientabsolute/index.html').read_text(encoding='utf-8');assert all(c['name'] in html for c in checks)
+write(RUN/'registry-v1.json',dict(status='passed',source_commit=m['source_commit'],source_dirty=False,lean_verified=True,registry_path=(site/'books/registry.json').as_posix(),registry_sha256=sha(site/'books/registry.json'),identity=r['identity'],checks=checks,preserved_base_node_ids_and_urls=10811,new_registry_nodes=0,total_registry_nodes=10811,canonical_shared_nodes_not_perBookcopies=True,original_four_routes_and_three_notation_entries=True))
+print('All10811 oldIDsURLs preserved; four exact sourcequalified canonical links; no new nodes.')
+''')
+generated('gate-helpers-before-use-v1.json',[RUN/n for n in ['verify-history-bindings-v1.py','browser-v1.py','commit-owned-v1.py','check-scoped-diff-v1.py','verify-registry-v1.py']])
+print('History/base-diff/sharedregistry/ownedcommit/browser helpers prepared and bound before use.')
