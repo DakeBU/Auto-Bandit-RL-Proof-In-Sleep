@@ -1,0 +1,2 @@
+from common import *
+write(RUN/'committed-raw-audit-repair-v1.json',dict(status='sequencing-repair-before-retry',failure='committed-raw-audit-v1-01 ran after contributor/scoped commands generated still-uncommitted raw logs; git show correctly failed for missing committed path.',repair='Commit those exact new logs plus failure record before a new uniquely labelled raw audit. No source, Lean, frozen contract, canary or gate weakening.',failed_log='committed-raw-audit-v1-01.log',future_label='committed-raw-audit-v2-01',all_prior_files_preserved=True))
