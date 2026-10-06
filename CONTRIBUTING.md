@@ -16,9 +16,10 @@ current target branch and read:
 3. `docs/contributor-codex-contract.md`
 4. `docs/theorem-publication-protocol.md`
 5. `docs/proof-digestion-protocol.md`
-6. `.agents/skills/bandit-substantive-advance/SKILL.md`
-7. `.agents/skills/bandit-semantic-roundtrip/SKILL.md`
-8. the relevant domain skill and exact source/route files.
+6. `docs/evidence-routed-memory-protocol.md`
+7. `.agents/skills/bandit-substantive-advance/SKILL.md`
+8. `.agents/skills/bandit-semantic-roundtrip/SKILL.md`
+9. the relevant domain skill and exact source/route files.
 
 The reusable bootstrap for coding agents is
 `.agents/prompts/collaborator-contribution.md`. Repository-local instructions
@@ -70,11 +71,11 @@ fails closed.
 Lean compilation certifies a proposition, not that it is the theorem cited in a
 paper or book. For every source-facing theorem, follow
 `.agents/skills/bandit-semantic-roundtrip/SKILL.md` and
-`docs/proof-digestion-protocol.md`. Freeze the exact theorem interface before
+`docs/proof-digestion-protocol.md` and `docs/evidence-routed-memory-protocol.md`. Freeze the exact theorem interface before
 proof search; treat proof ingredients as edges rather than binders; reconstruct
 the source proof topology independently of Lean implementation topology; and
 run the purification gate after integration before calling the result fully
-digested for researchers.
+digested for researchers. New source-facing contribution manifests should use schema 3.0 so typed failure, salvage, evidence-gated parallelism, cross-route blind-spot review, and reader-backpressure/Exposition-Seal state are machine checked.
 
 The formalizer, source-blind decoder, and anti-anchored source reviewer must be
 distinct actors. The reader must expose the source anchor, natural-language
