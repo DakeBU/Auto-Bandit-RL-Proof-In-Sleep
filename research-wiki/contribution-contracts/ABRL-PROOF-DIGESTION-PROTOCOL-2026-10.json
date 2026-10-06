@@ -1,23 +1,31 @@
 {
-  "schema_version": "2.0",
+  "schema_version": "3.0",
   "id": "ABRL-PROOF-DIGESTION-PROTOCOL-2026-10",
   "route": "repository publication / proof digestion",
   "frontier_cell": "governance-proof-digestion",
   "source_facing": false,
   "source": {
     "kind": "internal-design",
-    "title": "BanditRLlib Statement-Seal, Source Proof Graph, and Purification protocol",
-    "version": "2026-10-05",
-    "anchor": "docs/proof-digestion-protocol.md",
+    "title": "BanditRLlib Statement-Seal, Proof-Digestion, and Evidence-Routed Memory protocol",
+    "version": "2026-10-06",
+    "anchor": "docs/proof-digestion-protocol.md; docs/evidence-routed-memory-protocol.md",
     "url": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep"
   },
-  "target": "Make source-facing theorem interfaces immutable before proof search; separate exhaustive source-proof topology from Lean implementation topology; represent alternative proofs as OR-routes; and require post-merge purification into a compressed Bandit/RL spine.",
+  "target": "Freeze source-facing interfaces before proof search; separate exhaustive source topology from Lean topology; salvage verified fragments from failed routes; preserve typed negative/process memory without confusing environment/API failures with mathematics; keep parallelism matched-evidence gated; and require post-merge purification plus Exposition Seal.",
   "affected_files": [
     ".agents/skills/bandit-substantive-advance/SKILL.md",
+    ".github/workflows/contributor-contract.yml",
+    ".github/workflows/documentation.yml",
     "AGENTS.md",
     "CONTRIBUTING.md",
+    "docs/contribution-contract.schema.json",
     "docs/contributor-codex-contract.md",
-    "docs/theorem-publication-protocol.md"
+    "docs/evidence-routed-memory-protocol.md",
+    "docs/proof-digestion-protocol.md",
+    "docs/theorem-publication-protocol.md",
+    "runs/process_memory.json",
+    "tools/check_contributor_contract.py",
+    "tools/check_process_memory.py"
   ],
   "declarations": [],
   "reuse_plan": {
@@ -26,7 +34,10 @@
     "searched_existing": [
       "BanditRLlib AGENTS.md, theorem publication protocol, semantic round trip, Lean Graph, Functor Hypergraph, contribution contract",
       "Samplinglib source-fidelity, shared-leaf, graph-memory and theorem publication protocols",
-      "Scott N. Armstrong Lean autoformalization workflow concepts: frozen public declarations, source dependency graph, binder/definition audit, OR-routes and post-proof cleanup"
+      "Scott N. Armstrong Lean autoformalization workflow concepts: frozen public declarations, source dependency graph, binder/definition audit, OR-routes and post-proof cleanup",
+      "ABRL runs/trials.jsonl and lifecycle_memory.jsonl failure/verified records",
+      "ABRL runs/harness-comparison/latest.json matched-experiment scheduler policy",
+      "arXiv:2609.40324 cross-round attempt/lemma/advisor architecture, adapted without permanent agent castes"
     ],
     "reused_declarations": [],
     "new_shared_declarations": [],
@@ -39,7 +50,7 @@
       "researcher-facing compressed Bandit/RL graph views"
     ],
     "no_duplicate_wrapper": true,
-    "decision_reason": "Adapt the source-first ideas into BanditRLlib's existing zero-sorry, semantic-roundtrip and three-graph publication architecture rather than replacing that architecture or weakening existing gates."
+    "decision_reason": "Adapt cross-round memory and comparison ideas into BanditRLlib's existing zero-sorry, semantic-roundtrip, lifecycle-memory, matched-harness-comparison, and proof-digestion architecture. Preserve the current evidence-gated scheduler rather than assuming multi-agent parallelism is superior."
   },
   "reader_contract": {
     "source_anchor_visible": false,
@@ -78,12 +89,13 @@
     "results_ledger": "no-change-with-reason: no compiled theorem milestone changes.",
     "roadmap": "no-change-with-reason: the lifecycle/protocol changes, not the mathematical frontier.",
     "website_surfaces": [
-      "Repository News records the new Statement-Seal and Proof-Digestion protocol."
+      "Repository News records Statement Seal, proof digestion, evidence-routed memory, typed failure/salvage, matched-evidence scheduling, and Exposition Seal."
     ]
   },
-  "truth_boundary": "This PR changes protocol and reader-compression requirements only. It does not retroactively certify old Source Proof Graph coverage, purify historical modules, prove any new Bandit/RL theorem, or claim that graph decomposition automatically measures scientific novelty.",
+  "truth_boundary": "This PR changes protocol, machine-checked contribution contracts, and curated process memory. It proves no new Bandit/RL theorem; does not retroactively mark historical proofs source-exhaustive or PURIFIED; does not convert API/environment failures into negative mathematics; and does not claim master-worker parallelism is superior without matched experiments.",
   "verification": {
     "focused_checks": [
+      "python3 tools/check_process_memory.py check",
       "python3 tools/check_contributor_contract.py --base <merge-base>",
       "git diff --check"
     ],
@@ -95,5 +107,39 @@
   "contributor": {
     "name": "OpenAI ChatGPT GPT-5.6 Sol",
     "role": "protocol integration contributor"
+  },
+  "learning_contract": {
+    "control_plane_math_authority": false,
+    "process_memory_checked": true,
+    "process_memory_ids": [
+      "ABRL-PM-MATCHED-HARNESS-EVIDENCE",
+      "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS",
+      "ABRL-NK-WINDOWS-PATH-LENGTH",
+      "ABRL-NK-EXP3-API-SHAPE"
+    ],
+    "failure_class": "NONE",
+    "salvage": {
+      "required": false,
+      "status": "not-applicable",
+      "reason": "This PR changes governance/checkers and does not contain a failed mathematical proof branch to salvage.",
+      "promoted_fragments": [],
+      "discarded_fragments": []
+    },
+    "parallelism": {
+      "decision": "serial",
+      "direction_fingerprints": [],
+      "expected_information_gain": "",
+      "shared_verified_context_digest": ""
+    },
+    "cross_route_blind_spot_audit": {
+      "required": false,
+      "status": "not-applicable",
+      "evidence": ""
+    },
+    "reader_backpressure": {
+      "purification_status": "not-applicable",
+      "exposition_seal_status": "not-applicable",
+      "reader_debt_delta": 0
+    }
   }
 }
