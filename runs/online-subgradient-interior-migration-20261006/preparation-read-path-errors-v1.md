@@ -1,0 +1,1 @@
+Read-only lookup of prior prepare-body-v1.py failed because actual helper is prepare-body-review-v1.py, discovered with rg --files. No helper executed, no production edits or mathematical failure. Source preparer v1 failure/raw evidence recorded separately, actual v2 succeeds. All frozen terminals remain exact.

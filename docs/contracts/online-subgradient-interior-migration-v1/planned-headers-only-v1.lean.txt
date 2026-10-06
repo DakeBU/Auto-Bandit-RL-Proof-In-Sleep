@@ -1,0 +1,21 @@
+import BanditRLProof.OnlineSubgradientInterior
+noncomputable section
+open Set
+open scoped Topology
+namespace BanditRL.OnlineConvex
+
+theorem affine_support_of_relative_domain_interior
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDimensional ℝ E]
+    (f : E → EReal) (hbot : ∀ y, f y ≠ ⊥) (hc : IsConvexExtended f)
+    (x : E) (hx : x ∈ intrinsicInterior ℝ (effectiveDomain f)) :
+    ∃ (a : E →L[ℝ] ℝ) (b : ℝ), ((a x + b : ℝ) : EReal) = f x ∧
+      ∀ y, ((a y + b : ℝ) : EReal) ≤ f y := by
+
+
+theorem subgradient_exists_of_relative_domain_interior
+    {F : Type*} [NormedAddCommGroup F] [InnerProductSpace ℝ F] [FiniteDimensional ℝ F]
+    (f : F → EReal) (hf : SourceProper f) (hc : IsConvexExtended f)
+    (x : F) (hx : x ∈ intrinsicInterior ℝ (effectiveDomain f)) :
+    (SourceSubdifferential f x).Nonempty := by
+
+end BanditRL.OnlineConvex

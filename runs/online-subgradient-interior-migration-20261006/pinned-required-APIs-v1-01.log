@@ -1,0 +1,39 @@
+complete_of_proper
+InnerProductSpace.toDual : (𝕜 : Type u_2) →
+  (E : Type u_3) →
+    [inst : RCLike 𝕜] →
+      [inst_1 : NormedAddCommGroup E] → [inst_2 : InnerProductSpace 𝕜 E] → [CompleteSpace E] → E ≃ₗᵢ⋆[𝕜] StrongDual 𝕜 E
+@InnerProductSpace.toDual_symm_apply : ∀ {𝕜 : Type u_2} {E : Type u_3} [inst : RCLike 𝕜] [inst_1 : NormedAddCommGroup E]
+  [inst_2 : InnerProductSpace 𝕜 E] [inst_3 : CompleteSpace E] {x : E} {y : StrongDual 𝕜 E},
+  inner 𝕜 ((InnerProductSpace.toDual 𝕜 E).symm y) x = y x
+@mem_intrinsicInterior : ∀ {𝕜 : Type u_2} {V : Type u_3} {P : Type u_4} [inst : Ring 𝕜] [inst_1 : AddCommGroup V]
+  [inst_2 : Module 𝕜 V] [inst_3 : TopologicalSpace P] [inst_4 : AddTorsor V P] {s : Set P} {x : P},
+  x ∈ intrinsicInterior 𝕜 s ↔ ∃ y ∈ interior (Subtype.val ⁻¹' s), ↑y = x
+@intrinsicInterior_subset : ∀ {𝕜 : Type u_2} {V : Type u_3} {P : Type u_4} [inst : Ring 𝕜] [inst_1 : AddCommGroup V]
+  [inst_2 : Module 𝕜 V] [inst_3 : TopologicalSpace P] [inst_4 : AddTorsor V P] {s : Set P}, intrinsicInterior 𝕜 s ⊆ s
+@Nonempty.intrinsicInterior : ∀ {V : Type u_2} [inst : NormedAddCommGroup V] [inst_1 : NormedSpace ℝ V]
+  [FiniteDimensional ℝ V] {s : Set V}, Convex ℝ s → s.Nonempty → (intrinsicInterior ℝ s).Nonempty
+AffineIsometryEquiv.vaddConst : (𝕜 : Type u_2) →
+  {V : Type u_3} →
+    {P : Type u_4} →
+      [inst : NormedField 𝕜] →
+        [inst_1 : SeminormedAddCommGroup V] →
+          [inst_2 : NormedSpace 𝕜 V] → [inst_3 : PseudoMetricSpace P] → [inst_4 : NormedAddTorsor V P] → P → V ≃ᵃⁱ[𝕜] P
+@LinearMap.exists_extend : ∀ {K : Type u_2} {V : Type u_3} {V' : Type u_4} [inst : DivisionRing K]
+  [inst_1 : AddCommGroup V] [inst_2 : AddCommGroup V'] [inst_3 : Module K V] [inst_4 : Module K V'] {p : Submodule K V}
+  (f : ↥p →ₗ[K] V'), ∃ g, g ∘ₗ p.subtype = f
+@LinearMap.toContinuousLinearMap : {𝕜 : Type u_2} →
+  [hnorm : NontriviallyNormedField 𝕜] →
+    {E : Type u_3} →
+      [inst : AddCommGroup E] →
+        [inst_1 : Module 𝕜 E] →
+          [inst_2 : TopologicalSpace E] →
+            [IsTopologicalAddGroup E] →
+              [ContinuousSMul 𝕜 E] →
+                {F' : Type u_4} →
+                  [inst_5 : AddCommGroup F'] →
+                    [inst_6 : Module 𝕜 F'] →
+                      [inst_7 : TopologicalSpace F'] →
+                        [inst_8 : IsTopologicalAddGroup F'] →
+                          [inst_9 : ContinuousSMul 𝕜 F'] →
+                            [CompleteSpace 𝕜] → [T2Space E] → [FiniteDimensional 𝕜 E] → (E →ₗ[𝕜] F') ≃ₗ[𝕜] E →L[𝕜] F'

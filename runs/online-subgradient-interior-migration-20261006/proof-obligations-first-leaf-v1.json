@@ -1,0 +1,71 @@
+{
+  "stage": "proving",
+  "required": [
+    {
+      "name": "subgradient_exists_of_domain_interior",
+      "statement_hash": "399c87900d53afdd4c25611e2858d8650e5adc77bcf30c3d8533bfcf30e61e79",
+      "state": "source-stabilized-retained-revalidation-pending",
+      "existing": true
+    },
+    {
+      "name": "affine_support_of_relative_domain_interior",
+      "statement_hash": "07f8d7c4f1577b12305bb2a6961ea6c35aafb1eecf9ba0ab8faa36da2c07b219",
+      "state": "source-stabilized-ready-for-actual-new-proof",
+      "existing": false
+    },
+    {
+      "name": "subgradient_exists_of_relative_domain_interior",
+      "statement_hash": "4f004cf914499728c06df7aedcdc3f431caa2788c7f7a15daac742d54dd2e142",
+      "state": "source-stabilized-ready-for-actual-new-proof",
+      "existing": false
+    }
+  ],
+  "required_unnumbered_source_branches": 2,
+  "source_numbered_anchors": 0,
+  "new_proofs_compiled": 0,
+  "retained_proofs": 1,
+  "DAG": {
+    "first_ready_leaf": "affine_support_of_relative_domain_interior",
+    "planned_value_edges": [
+      [
+        "affine_support_of_relative_domain_interior",
+        "affine_support_of_domain_interior"
+      ],
+      [
+        "subgradient_exists_of_relative_domain_interior",
+        "affine_support_of_relative_domain_interior"
+      ],
+      [
+        "subgradient_exists_of_relative_domain_interior",
+        "SourceSubdifferential"
+      ]
+    ],
+    "existing_value_edges": [
+      [
+        "subgradient_exists_of_domain_interior",
+        "affine_support_of_domain_interior"
+      ],
+      [
+        "subgradient_exists_of_domain_interior",
+        "SourceSubdifferential"
+      ]
+    ],
+    "method_donor_not_value_dependency": "convex_affine_minorant implementation",
+    "actual_compiled_new_nodes": 0,
+    "new_compiled_graph": "pending",
+    "single_lower_route": true
+  },
+  "chapter_total": null,
+  "source_package_accepted": false,
+  "chapter_complete": false,
+  "goal_complete": false,
+  "first_leaf_actual_compile": {
+    "file": "runs/online-subgradient-interior-migration-20261006/leaves/relative-affine-contact-v1.lean",
+    "exit_evidence": "runs\\online-subgradient-interior-migration-20261006\\relative-affine-contact-v1-01-exit.json",
+    "compiler_exit": 0,
+    "warning_or_error_log_empty": true,
+    "public_integration": false,
+    "terminal_contact_at_prescribed_x": true
+  },
+  "next_ready_leaf": "subgradient_exists_of_relative_domain_interior"
+}

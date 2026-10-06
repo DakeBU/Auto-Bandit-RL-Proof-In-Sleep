@@ -1,0 +1,22 @@
+@BanditRL.OnlineConvex.subgradient_exists_of_domain_interior : ∀ {F : Type u_1} [inst : NormedAddCommGroup F]
+  [inst_1 : InnerProductSpace ℝ F] [FiniteDimensional ℝ F] (f : F → EReal),
+  BanditRL.OnlineConvex.SourceProper f →
+    BanditRL.OnlineConvex.IsConvexExtended f →
+      ∀ x ∈ interior (BanditRL.OnlineConvex.effectiveDomain f),
+        (BanditRL.OnlineConvex.SourceSubdifferential f x).Nonempty
+@BanditRL.OnlineConvex.affine_support_of_domain_interior : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] [FiniteDimensional ℝ E] (f : E → EReal),
+  (∀ (y : E), f y ≠ ⊥) →
+    BanditRL.OnlineConvex.IsConvexExtended f →
+      ∀ x ∈ interior (BanditRL.OnlineConvex.effectiveDomain f), ∃ a b, ↑(a x + b) = f x ∧ ∀ (y : E), ↑(a y + b) ≤ f y
+@BanditRL.OnlineConvex.convex_affine_minorant : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] [FiniteDimensional ℝ E] (f : E → EReal),
+  (∀ (x : E), f x ≠ ⊥) →
+    BanditRL.OnlineConvex.IsConvexExtended f →
+      (BanditRL.OnlineConvex.effectiveDomain f).Nonempty → ∃ a b, ∀ (x : E), ↑(a x + b) ≤ f x
+InteriorSupportProbe.interval_center_support : (BanditRL.OnlineConvex.SourceSubdifferential
+    (BanditRL.OnlineConvex.extendedIndicator (Set.Icc 0 2)) 1).Nonempty
+@BanditRL.OnlineConvex.SourceSubdifferential : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] → [InnerProductSpace ℝ E] → (E → EReal) → E → Set E
+@BanditRL.OnlineConvex.SourceProper : {E : Type u_1} → (E → EReal) → Prop
+@BanditRL.OnlineConvex.effectiveDomain : {E : Type u_1} → (E → EReal) → Set E

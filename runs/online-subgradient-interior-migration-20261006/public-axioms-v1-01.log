@@ -1,0 +1,45 @@
+@BanditRL.OnlineConvex.subgradient_exists_of_domain_interior : ∀ {F : Type u_1} [inst : NormedAddCommGroup F]
+  [inst_1 : InnerProductSpace ℝ F] [FiniteDimensional ℝ F] (f : F → EReal),
+  BanditRL.OnlineConvex.SourceProper f →
+    BanditRL.OnlineConvex.IsConvexExtended f →
+      ∀ x ∈ interior (BanditRL.OnlineConvex.effectiveDomain f),
+        (BanditRL.OnlineConvex.SourceSubdifferential f x).Nonempty
+'BanditRL.OnlineConvex.subgradient_exists_of_domain_interior' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BanditRL.OnlineConvex.affine_support_of_relative_domain_interior : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] [FiniteDimensional ℝ E] (f : E → EReal),
+  (∀ (y : E), f y ≠ ⊥) →
+    BanditRL.OnlineConvex.IsConvexExtended f →
+      ∀ x ∈ intrinsicInterior ℝ (BanditRL.OnlineConvex.effectiveDomain f),
+        ∃ a b, ↑(a x + b) = f x ∧ ∀ (y : E), ↑(a y + b) ≤ f y
+'BanditRL.OnlineConvex.affine_support_of_relative_domain_interior' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BanditRL.OnlineConvex.subgradient_exists_of_relative_domain_interior : ∀ {F : Type u_1} [inst : NormedAddCommGroup F]
+  [inst_1 : InnerProductSpace ℝ F] [FiniteDimensional ℝ F] (f : F → EReal),
+  BanditRL.OnlineConvex.SourceProper f →
+    BanditRL.OnlineConvex.IsConvexExtended f →
+      ∀ x ∈ intrinsicInterior ℝ (BanditRL.OnlineConvex.effectiveDomain f),
+        (BanditRL.OnlineConvex.SourceSubdifferential f x).Nonempty
+'BanditRL.OnlineConvex.subgradient_exists_of_relative_domain_interior' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BanditRL.OnlineConvex.affine_support_of_domain_interior : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] [FiniteDimensional ℝ E] (f : E → EReal),
+  (∀ (y : E), f y ≠ ⊥) →
+    BanditRL.OnlineConvex.IsConvexExtended f →
+      ∀ x ∈ interior (BanditRL.OnlineConvex.effectiveDomain f), ∃ a b, ↑(a x + b) = f x ∧ ∀ (y : E), ↑(a y + b) ≤ f y
+'BanditRL.OnlineConvex.affine_support_of_domain_interior' depends on axioms: [propext, Classical.choice, Quot.sound]
+InteriorSupportProbe.interval_center_support : (BanditRL.OnlineConvex.SourceSubdifferential
+    (BanditRL.OnlineConvex.extendedIndicator (Set.Icc 0 2)) 1).Nonempty
+'InteriorSupportProbe.interval_center_support' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineRelativeSubgradient.ray_relative_contact : ∃
+  x ∈ intrinsicInterior ℝ (BanditRL.OnlineConvex.effectiveDomain Tests.OnlineConvexMinorant.loss),
+  ∃ a b, ↑(a x + b) = Tests.OnlineConvexMinorant.loss x ∧ ∀ (y : ℝ × ℝ), ↑(a y + b) ≤ Tests.OnlineConvexMinorant.loss y
+'Tests.OnlineRelativeSubgradient.ray_relative_contact' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineRelativeSubgradient.singleton_relative_support : (BanditRL.OnlineConvex.SourceSubdifferential
+    (BanditRL.OnlineConvex.extendedIndicator {1}) 1).Nonempty
+'Tests.OnlineRelativeSubgradient.singleton_relative_support' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineRelativeSubgradient.singleton_boundary : BanditRL.OnlineConvex.extendedIndicator {1} 1 = 0 ∧
+  BanditRL.OnlineConvex.extendedIndicator {1} 0 = ⊤ ∧
+    interior (BanditRL.OnlineConvex.effectiveDomain (BanditRL.OnlineConvex.extendedIndicator {1})) = ∅
+'Tests.OnlineRelativeSubgradient.singleton_boundary' depends on axioms: [propext, Classical.choice, Quot.sound]

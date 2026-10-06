@@ -3428,121 +3428,145 @@
         "title": "Online Learning: A Modern Introduction Using Convex Optimization",
         "authors": "Francesco Orabona",
         "edition": "arXiv:1912.13213v10,21June2026",
-        "sections": "Section2.2.1, unnumbered interior subdifferentiability assertion",
+        "sections": "Section2.2.1, required unnumbered ambient-interior assertion AND stronger relative-interior footnote1; two source branches, zero numbered anchors",
         "pages": "printed17/PDF29",
         "pdf_page": 29,
         "url": "https://arxiv.org/pdf/1912.13213v10"
       },
       "notation": [
         {
-          "term": "Ambient interior",
-          "meaning": "The point lies in the ordinary topological interior of the effective domain, not its relative interior."
+          "term": "Ambient and relative interior",
+          "meaning": "Relative interior is mathlib intrinsicInterior: the image of ordinary interior inside affineSpan(domain). It uses the original domain, without closure or a full-dimensionality assumption. Lower-dimensional domains may have empty ambient interior and nonempty relative interior."
         },
         {
-          "term": "Touching affine support",
-          "meaning": "A continuous linear functional a and real b satisfy a(x)+b=f(x) and a(y)+b<=f(y) for all y."
+          "term": "Prescribed-point affine contact",
+          "meaning": "The functional and intercept satisfy a(x)+b=f(x) AT THE SPECIFIED x and a(y)+b<=f(y) for EVERY ambient y. A pure global minorant or contact at a different point is insufficient. The new affine helper works in a finite-dimensional REAL NORMED space with nowhere-bottom, convex real-height epigraph and a specified relative-interior point. These premises imply properness: ri is contained in the domain, so f(x)<top, and noBottom makes f(x) finite. It is a necessary stronger library intermediate, not another printed theorem."
         },
         {
-          "term": "Supporting vector",
-          "meaning": "Riesz representation gives g with a(v)=inner(g,v), hence f(x)+inner(g,y-x)<=f(y) globally."
+          "term": "Proper global support",
+          "meaning": "Source proper f means nowhere-bottom plus a finite real witness. The shared generic SourceSubdifferential is wider than the printed proper-function specialization; this source theorem keeps properness, so domain membership is genuinely finite. The source-facing vector producers use finite-dimensional real INNER-PRODUCT spaces and retain SourceProper. Completeness for Riesz derives from finite dimensionality (pinned complete_of_proper), with no additional CompleteSpace binder. Zero/nonempty ambient carriers and dimension0 are permitted; no closedness/lsc/boundedness/differentiability premise, nonzero slope or uniqueness conclusion."
         }
       ],
       "algorithm": {
-        "title": "Construct a subgradient",
+        "title": "Construct global supports at ambient and relative interior points",
         "kind": "proof flow",
         "steps": [
           {
-            "title": "Support the epigraph",
-            "detail": "A nonzero functional supports the epigraph at (x,f(x))."
+            "title": "Restrict to the domain affine span",
+            "detail": "Relative interior is mathlib intrinsicInterior: the image of ordinary interior inside affineSpan(domain). It uses the original domain, without closure or a full-dimensionality assumption. Lower-dimensional domains may have empty ambient interior and nonempty relative interior. Keep the specified point as affine origin."
           },
           {
-            "title": "Exclude a vertical support",
-            "detail": "Ambient domain interior forces its vertical coefficient to be strictly negative, so normalization yields affine contact."
+            "title": "Preserve contact during extension",
+            "detail": "Keep the supplied x as affine origin p=x, restrict f to the direction space of affineSpan(domain), transport the given ri membership to domain interior at0, and invoke the accepted canonical ambient CONTACT theorem. Extend its linear functional to all E, obtain continuity from finite dimensionality, and correct the intercept to b-Gp. Recover contact at the SAME original x; outside the domain f(y)=top. Riesz and linearity then yield the global supporting vector. Existing convex_affine_minorant is only an implementation method donor; its public output drops contact and is not a theorem-value dependency."
           },
           {
-            "title": "Represent the linear functional",
-            "detail": "In a finite-dimensional real inner-product space the normalized functional has a representing vector."
+            "title": "Represent the functional by a vector",
+            "detail": "The source-facing vector producers use finite-dimensional real INNER-PRODUCT spaces and retain SourceProper. Completeness for Riesz derives from finite dimensionality (pinned complete_of_proper), with no additional CompleteSpace binder. Zero/nonempty ambient carriers and dimension0 are permitted; no closedness/lsc/boundedness/differentiability premise, nonzero slope or uniqueness conclusion. The functional and intercept satisfy a(x)+b=f(x) AT THE SPECIFIED x and a(y)+b<=f(y) for EVERY ambient y. A pure global minorant or contact at a different point is insufficient."
           }
         ]
       },
       "teaching_route": [
         "BanditRL.OnlineConvex.affine_support_of_domain_interior",
-        "BanditRL.OnlineConvex.subgradient_exists_of_domain_interior"
+        "BanditRL.OnlineConvex.subgradient_exists_of_domain_interior",
+        "BanditRL.OnlineConvex.affine_support_of_relative_domain_interior",
+        "BanditRL.OnlineConvex.subgradient_exists_of_relative_domain_interior"
       ],
       "source_theorems": [
         {
-          "label": "Section2.2.1 interior subdifferentiability",
+          "label": "Required ambient-interior subdifferentiability assertion",
           "pages": "printed17",
           "pdf_page": 29,
           "url": "https://arxiv.org/pdf/1912.13213v10",
           "math": "x\\in\\operatorname{int}(\\operatorname{dom}f)\\Longrightarrow\\partial f(x)\\ne\\varnothing",
-          "fallback": "Riesz representation gives g with a(v)=inner(g,v), hence f(x)+inner(g,y-x)<=f(y) globally.",
-          "plain": "Every proper convex function admits a global subgradient at every interior point of its effective domain.",
-          "relationship": "Source finite-dimensional Euclidean space is represented by a finite-dimensional real inner-product space. The shared affine-contact helper uses the weaker nowhere-bottom assumption; the source-facing producer retains properness.",
+          "fallback": "Global support tests every ambient y; no closedness or differentiability assumption.",
+          "plain": "A proper convex extended-real function has a global subgradient at each ambient-interior point of its effective domain.",
+          "relationship": "Source proper f means nowhere-bottom plus a finite real witness. The shared generic SourceSubdifferential is wider than the printed proper-function specialization; this source theorem keeps properness, so domain membership is genuinely finite. The source-facing vector producers use finite-dimensional real INNER-PRODUCT spaces and retain SourceProper. Completeness for Riesz derives from finite dimensionality (pinned complete_of_proper), with no additional CompleteSpace binder. Zero/nonempty ambient carriers and dimension0 are permitted; no closedness/lsc/boundedness/differentiability premise, nonzero slope or uniqueness conclusion.",
           "contract": {
-            "model": "Extended-real convexity means convexity of the epigraph with real heights.",
-            "assumptions": "Finite-dimensional real inner-product space; proper convex f; x in the ambient interior of its effective domain.",
-            "parameters": "For every admissible f and x, there exists g supporting f at x for all y in the whole space.",
-            "regret": "No regret or algorithm guarantee.",
-            "guarantee": "Nonempty global subdifferential at x."
+            "model": "Source proper f means nowhere-bottom plus a finite real witness. The shared generic SourceSubdifferential is wider than the printed proper-function specialization; this source theorem keeps properness, so domain membership is genuinely finite. Convexity is the shared real-height epigraph predicate.",
+            "assumptions": "Finite-dimensional real inner-product space; SourceProper f; convex f; specified x in ambient interior(domain).",
+            "parameters": "For every admissible f and specified x, existsg fixed before all ambient y.",
+            "regret": "Static existence only; no algorithm, measurable selection or regret guarantee.",
+            "guarantee": "Nonempty global SourceSubdifferential at the specified x."
           },
           "local_status": {
             "status": "compiled",
-            "label": "Public interior-existence candidate",
-            "boundary": "Focused module/root/canary compilation passed; separate full acceptance required. No Chapter2 completion."
+            "label": "Public ambient producer, freshly checked",
+            "boundary": "Distinct CONTRACT/BODY and current public checks; package/rootTests/fullharness/site/final/PR evidence separate. This package covers ambient and relative-interior subgradient existence only. General domain-boundary points, differentiability/singleton Theorem2.22, sum-rule Theorem2.23 and remaining Chapter2 main-text/necessary appendix/legacy source matching remain REQUIRED separately. Chapter1 migration/Chapter2 mandatory totalnull and incomplete/Chapters3–16unenumerated/persistent wholeGoalACTIVE; no main/live update or merge/deploy claim."
+          }
+        },
+        {
+          "label": "Required stronger relative-interior footnote1",
+          "pages": "printed17",
+          "pdf_page": 29,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "x\\in\\operatorname{ri}(\\operatorname{dom}f)\\Longrightarrow\\partial f(x)\\ne\\varnothing",
+          "fallback": "Every specified relative-interior point admits a vector supporting f at all ambient queries.",
+          "plain": "The footnote strengthens ambient interior to relative interior of the original effective domain.",
+          "relationship": "Relative interior is mathlib intrinsicInterior: the image of ordinary interior inside affineSpan(domain). It uses the original domain, without closure or a full-dimensionality assumption. Lower-dimensional domains may have empty ambient interior and nonempty relative interior. The new affine helper works in a finite-dimensional REAL NORMED space with nowhere-bottom, convex real-height epigraph and a specified relative-interior point. These premises imply properness: ri is contained in the domain, so f(x)<top, and noBottom makes f(x) finite. It is a necessary stronger library intermediate, not another printed theorem. The source-facing vector producers use finite-dimensional real INNER-PRODUCT spaces and retain SourceProper. Completeness for Riesz derives from finite dimensionality (pinned complete_of_proper), with no additional CompleteSpace binder. Zero/nonempty ambient carriers and dimension0 are permitted; no closedness/lsc/boundedness/differentiability premise, nonzero slope or uniqueness conclusion.",
+          "contract": {
+            "model": "Source proper f means nowhere-bottom plus a finite real witness. The shared generic SourceSubdifferential is wider than the printed proper-function specialization; this source theorem keeps properness, so domain membership is genuinely finite. Convex real-height epigraph and original effective domain.",
+            "assumptions": "Finite-dimensional real inner-product space; proper convex f; specified x in intrinsicInterior(domain).",
+            "parameters": "Existsg after the specified x, before every ambient y. No support/contact/minorant oracle is assumed.",
+            "regret": "Static existence only; no algorithm or measurable selection.",
+            "guarantee": "Nonempty global SourceSubdifferential at the SAME prescribed x."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "New public relative producer, freshly checked",
+            "boundary": "Two new actual mathematical bodies; separate integrated/semantic/reader/site/PR acceptance. This package covers ambient and relative-interior subgradient existence only. General domain-boundary points, differentiability/singleton Theorem2.22, sum-rule Theorem2.23 and remaining Chapter2 main-text/necessary appendix/legacy source matching remain REQUIRED separately. Chapter1 migration/Chapter2 mandatory totalnull and incomplete/Chapters3–16unenumerated/persistent wholeGoalACTIVE; no main/live update or merge/deploy claim."
           }
         }
       ],
       "proof_bridge": {
-        "title": "From epigraph geometry to a global vector inequality",
-        "summary": "The contact equality supplies the missing term that a generic affine minorant alone cannot provide.",
+        "title": "From relative interior to contact and a global vector",
+        "summary": "The mandatory footnote needs contact at the prescribed point, preserved through affine-span restriction and extension.",
         "steps": [
           {
-            "title": "Support at the actual function value",
-            "detail": "The epigraph point (x,f(x)) is not an interior epigraph point. Obtain a nonzero supporting functional L(y,t)=A(y)+ct.",
-            "math": "A(y)+ct\\le A(x)+cf(x)",
-            "fallback": "All finite epigraph heights participate; f(x) is finite by properness and domain membership."
+            "title": "Create a genuine interior point in the direction space",
+            "detail": "Relative interior is mathlib intrinsicInterior: the image of ordinary interior inside affineSpan(domain). It uses the original domain, without closure or a full-dimensionality assumption. Lower-dimensional domains may have empty ambient interior and nonempty relative interior. The supplied ri witness p=x gives0 in the interior of the restricted effective domain.",
+            "math": "F(v)=f(v+p),\\quad0\\in\\operatorname{int}(\\operatorname{dom}F)",
+            "fallback": "Convexity follows from an affine preimage; no finite-value/support oracle is supplied."
           },
           {
-            "title": "Normalize and retain contact",
-            "detail": "Upward closure gives c<=0. If c=0, A has a local maximum at x, so A=0, contradicting L nonzero. Thus c<0; put a=-A/c and b=f(x)+A(x)/c.",
-            "math": "a(x)+b=f(x),\\qquad a(y)+b\\le f(y)",
-            "fallback": "Infinite values of f(y) are handled separately; closedness of the epigraph is not assumed."
+            "title": "Extend the contact functional and correct its intercept",
+            "detail": "Keep the supplied x as affine origin p=x, restrict f to the direction space of affineSpan(domain), transport the given ri membership to domain interior at0, and invoke the accepted canonical ambient CONTACT theorem. Extend its linear functional to all E, obtain continuity from finite dimensionality, and correct the intercept to b-Gp. Recover contact at the SAME original x; outside the domain f(y)=top. Riesz and linearity then yield the global supporting vector. Existing convex_affine_minorant is only an implementation method donor; its public output drops contact and is not a theorem-value dependency.",
+            "math": "G(x)+(b-Gp)=f(x),\\qquad G(y)+(b-Gp)\\le f(y)",
+            "fallback": "The functional and intercept satisfy a(x)+b=f(x) AT THE SPECIFIED x and a(y)+b<=f(y) for EVERY ambient y. A pure global minorant or contact at a different point is insufficient. The new affine helper works in a finite-dimensional REAL NORMED space with nowhere-bottom, convex real-height epigraph and a specified relative-interior point. These premises imply properness: ri is contained in the domain, so f(x)<top, and noBottom makes f(x) finite. It is a necessary stronger library intermediate, not another printed theorem."
           },
           {
-            "title": "Use the Riesz vector",
-            "detail": "Choose g representing a. Linearity and the contact identity give the required global inequality.",
+            "title": "Produce a global subgradient by Riesz",
+            "detail": "The source-facing vector producers use finite-dimensional real INNER-PRODUCT spaces and retain SourceProper. Completeness for Riesz derives from finite dimensionality (pinned complete_of_proper), with no additional CompleteSpace binder. Zero/nonempty ambient carriers and dimension0 are permitted; no closedness/lsc/boundedness/differentiability premise, nonzero slope or uniqueness conclusion. Linearity and contact give the actual inequality, including top values outside the domain.",
             "math": "f(x)+\\langle g,y-x\\rangle=a(x)+b+a(y-x)=a(y)+b\\le f(y)",
-            "fallback": "The old affine-minorant theorem now reuses this same stronger contact helper."
+            "fallback": "Source proper f means nowhere-bottom plus a finite real witness. The shared generic SourceSubdifferential is wider than the printed proper-function specialization; this source theorem keeps properness, so domain membership is genuinely finite."
           }
         ],
-        "boundary": "No existence at arbitrary boundary points or in general infinite-dimensional spaces; differentiability and subgradient sum/max rules remain separate."
+        "boundary": "Two REQUIRED unnumbered source branches: ambient-interior assertion and stronger relative-interior footnote1, printed17/PDF29; zero numbered anchors. One retained ambient producer and two genuinely new canonical mathematical proofs; no new definitions. Current selected compiled graph has8proof nodes/1193direct references (3package producers,1shared contact dependency,4old/newcanaries), not a full registry graph; old2nodes/258readiness is separate. This package covers ambient and relative-interior subgradient existence only. General domain-boundary points, differentiability/singleton Theorem2.22, sum-rule Theorem2.23 and remaining Chapter2 main-text/necessary appendix/legacy source matching remain REQUIRED separately. Chapter1 migration/Chapter2 mandatory totalnull and incomplete/Chapters3–16unenumerated/persistent wholeGoalACTIVE; no main/live update or merge/deploy claim."
       },
       "worked_example": {
-        "title": "A genuine constrained domain",
-        "intro": "Use the zero/positive-infinity indicator of [0,2] on the real line at its center1.",
+        "title": "Nonclosed low-dimensional contact and empty ambient interior",
+        "intro": "Keep the old interval example and test cases where ambient interior cannot provide the new result.",
         "steps": [
           {
-            "title": "Establish proper convexity",
-            "detail": "The interval is nonempty and convex; its indicator is proper and convex.",
-            "math": "f=I_{[0,2]}",
-            "fallback": "Shared indicator lemmas provide the actual hypotheses."
+            "title": "Derive a relative-interior point for a nonclosed ray",
+            "detail": "Use the existing real-plane ray loss, convex effective domain and actual nonempty-domain witness. Mathlib produces ri membership, then the NEW helper produces contact at that returned point.",
+            "math": "f(1,0)=1,\\quad f(3,0)=3,\\quad f(0,1)=+\\infty",
+            "fallback": "The domain is a nonclosed positive ray in a line; no contact is assumed."
           },
           {
-            "title": "Check the interior point",
-            "detail": "The effective domain is [0,2] and1 lies in (0,2).",
-            "math": "1\\in\\operatorname{int}[0,2]",
-            "fallback": "The public canary proves this with the exact domain and interior APIs."
+            "title": "Use the relative vector producer on a singleton",
+            "detail": "Shared indicator lemmas prove actual properness, convexity and singleton domain; intrinsicInterior_singleton gives membership at1. Invoke the NEW vector producer, retaining all ambient queries.",
+            "math": "\\operatorname{ri}\\{1\\}=\\{1\\},\\qquad\\partial I_{\\{1\\}}(1)\\ne\\varnothing",
+            "fallback": "The real line supplies an actual inner product and finite-dimensional completeness."
           },
           {
-            "title": "Invoke the producer",
-            "detail": "The public theorem returns a vector supporting the indicator globally.",
-            "math": "\\exists g,\\ \\forall y,\\ f(1)+g(y-1)\\le f(y)",
-            "fallback": "The canary does not assume a support exists."
+            "title": "Check the decisive boundary",
+            "detail": "Prove the singleton indicator is0 at1 and top at0, and its ambient domain interior is empty. The old proper interval[0,2]center1 canary remains unchanged.",
+            "math": "\\operatorname{int}\\{1\\}=\\varnothing",
+            "fallback": "Ambient-interior existence alone cannot instantiate this singleton case."
           }
         ],
-        "takeaway": "Extended values outside the constraint set are included in the same global theorem.",
-        "boundary": "This application is an interior-point guarantee, not a boundary differentiability assertion."
+        "takeaway": "The prescribed-point contact producer and relative vector producer are genuinely invoked on derived hypotheses.",
+        "boundary": "The unchanged proper [0,2] indicator at1 checks ambient support. A nonconstant nonclosed plane-ray loss takes finite values1 and3 and top outside; the new canary derives an actual relative-interior point and invokes NEW contact at that point. A proper real singleton{1} indicator invokes NEW relative vector producer at1 with derived ri/convexity/properness; another proof certifies0at1/topoutside0 and EMPTY ambient domain interior.8named kernel checks and3native guards are separate from compilation. This package covers ambient and relative-interior subgradient existence only. General domain-boundary points, differentiability/singleton Theorem2.22, sum-rule Theorem2.23 and remaining Chapter2 main-text/necessary appendix/legacy source matching remain REQUIRED separately. Chapter1 migration/Chapter2 mandatory totalnull and incomplete/Chapters3–16unenumerated/persistent wholeGoalACTIVE; no main/live update or merge/deploy claim."
       }
     },
     {

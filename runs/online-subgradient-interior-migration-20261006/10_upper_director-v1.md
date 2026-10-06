@@ -1,0 +1,1 @@
+Required ambient-interior source branch AND stronger relativeinterior footnote;1retainedproducer+2newcanonicalproofs planned, noChapter2completion. First leaf actual relative affine CONTACT at specified point, not existingminorant consumer; onlythenRieszglobalSupport. No source weakening/closedness/finiteness-oracle/full-dimensional premise. Preserve accepted sharedtheory.

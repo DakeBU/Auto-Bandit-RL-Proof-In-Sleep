@@ -1,0 +1,8 @@
+BanditRL.OnlineConvex.affine_support_of_finite_neighborhood [theorem] BanditRLProof/OnlineConvexMinorant.lean:30
+  theorem affine_support_of_finite_neighborhood (f : E → EReal) (hf : IsConvexExtended f) (x : E) (hneigh : ∀ᶠ y in 𝓝 x, ∃ r : ℝ, f y = (r : EReal)) : ∃ (a : E →L[ℝ] ℝ) (b : ℝ), ((a x + b : ℝ) : EReal) = f x ∧ ∀ y, ((a y + b : ℝ) : EReal) ≤ f y
+BanditRL.OnlineConvex.affine_support_of_domain_interior [theorem] BanditRLProof/OnlineConvexMinorant.lean:129
+  theorem affine_support_of_domain_interior (f : E → EReal) (hbot : ∀ y, f y ≠ ⊥) (hf : IsConvexExtended f) (x : E) (hx : x ∈ interior (effectiveDomain f)) : ∃ (a : E →L[ℝ] ℝ) (b : ℝ), ((a x + b : ℝ) : EReal) = f x ∧ ∀ y, ((a y + b : ℝ) : EReal) ≤ f y
+LinearizationProbe.affine_support [theorem] Tests/OnlineLinearizationCanary.lean:30
+  theorem affine_support (z : ℝ) : (1 : ℝ) ∈ SourceSubdifferential affine z
+MaximumProbe.affine_support [theorem] Tests/OnlineSubgradientMaxCanary.lean:40
+  theorem affine_support (a x : ℝ) : SourceSubdifferential (fun y : ℝ => ((a * y : ℝ) : EReal)) x = {a}

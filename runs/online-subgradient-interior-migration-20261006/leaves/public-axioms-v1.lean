@@ -1,0 +1,20 @@
+import BanditRLProof
+import Tests.OnlineSubgradientInteriorCanary
+import Tests.OnlineRelativeSubgradientCanary
+
+#check @BanditRL.OnlineConvex.subgradient_exists_of_domain_interior
+#print axioms BanditRL.OnlineConvex.subgradient_exists_of_domain_interior
+#check @BanditRL.OnlineConvex.affine_support_of_relative_domain_interior
+#print axioms BanditRL.OnlineConvex.affine_support_of_relative_domain_interior
+#check @BanditRL.OnlineConvex.subgradient_exists_of_relative_domain_interior
+#print axioms BanditRL.OnlineConvex.subgradient_exists_of_relative_domain_interior
+#check @BanditRL.OnlineConvex.affine_support_of_domain_interior
+#print axioms BanditRL.OnlineConvex.affine_support_of_domain_interior
+#check @InteriorSupportProbe.interval_center_support
+#print axioms InteriorSupportProbe.interval_center_support
+#check @Tests.OnlineRelativeSubgradient.ray_relative_contact
+#print axioms Tests.OnlineRelativeSubgradient.ray_relative_contact
+#check @Tests.OnlineRelativeSubgradient.singleton_relative_support
+#print axioms Tests.OnlineRelativeSubgradient.singleton_relative_support
+#check @Tests.OnlineRelativeSubgradient.singleton_boundary
+#print axioms Tests.OnlineRelativeSubgradient.singleton_boundary
