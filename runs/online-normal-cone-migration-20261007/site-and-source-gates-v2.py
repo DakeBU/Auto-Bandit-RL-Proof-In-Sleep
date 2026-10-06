@@ -1,0 +1,18 @@
+from common import *
+fixed(True);passed('project-gates-v1-01');passed('full-harness-v1-01');passed('history-bindings-v1-01');passed('contributor-exact-v1-01')
+a=load(RUN/'scoped-diff-audit-v1.json');assert a['exit_code']!=0 and len(a['exceptions'])==0
+write(RUN/'scoped-validator-repair-v1.json',dict(status='diagnosed-not-yet-regated',failed_log='scoped-diff-v1-01.log',failed_raw_sha256=sha(RUN/'scoped-diff-v1-01.log'),failure='Absolute __file__ parent compared to Git relative paths; intended exact raw-log/snapshot/extraction exceptions never matched, so command whitespace triggered exit2.',repair='Version3 resolves helperparent relative to actual worktree cwd before unchanged explicit exception classification; all old source/scripts/raw logs unchanged.',mathematical_repairs=[],scope='Validator path resolution only; retain failed audit299checked/0exceptions and exact raw output; no normalization of historical evidence.'))
+event('repair',dict(reason='Scoped whitespace validator absolute-relative path mismatch; exact raw evidence preserved',mathematical_repairs=[],proof_rework=False,source_package_accepted=False),'v2')
+event('candidate',dict(reason='Version3 explicit raw exception path resolution, same frozen target/body/currentcombinedgates',source_package_accepted=False),'v2')
+subprocess.run([sys.executable,'-B','-X','utf8',str(RUN/'commit-owned-v1.py'),'Preserve validator failure and repair path resolution for normal-cone evidence'],check=True)
+gate('scoped-diff-v2-01',sys.executable,'-B','-X','utf8',RUN/'check-scoped-diff-v3.py','v2')
+gate('contributor-exact-v2-01',sys.executable,'-B','-X','utf8','tools/check_contributor_contract.py','--base',BASE)
+subprocess.run([sys.executable,'-B','-X','utf8',str(RUN/'commit-owned-v1.py'),'Record current normal-cone scoped source and evidence gates'],check=True)
+assert not subprocess.check_output(['git','status','--porcelain'],encoding='utf-8').strip()
+fixed(True)
+gate('site-build-v1-01',sys.executable,'-B','-X','utf8','website/scripts/build_site.py','--lean-verified','--output','tmp/online-normal-cone-migration-site-v1')
+gate('site-check-v1-01',sys.executable,'-B','-X','utf8','website/scripts/check_site.py','--output','tmp/online-normal-cone-migration-site-v1')
+gate('registry-v1-01',sys.executable,'-B','-X','utf8',RUN/'verify-registry-v1.py')
+gate('browser-v1-01',sys.executable,'-B','-X','utf8',RUN/'browser-v1.py')
+gate('formula-render-v1-01',sys.executable,'-B','-X','utf8',RUN/'render-source-formula-v1.py')
+print('Current clean leanverified site/check/sharedregistry/actualfirstviewport+formula capture pass. Distinct pixel/FINAL pending.')
