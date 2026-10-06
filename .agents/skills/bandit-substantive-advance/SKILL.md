@@ -77,10 +77,17 @@ learning_contract:
     required: false
     status: not-applicable | pending | accepted
     evidence:
+    canonical_route:
+    selection_reason:
   reader_backpressure:
     purification_status: pending | purified | not-applicable
     exposition_seal_status: pending | accepted | not-applicable
     reader_debt_delta: 0
+    exposition_evidence:
+    source_expansion_nodes: []
+    lean_expansion_nodes: []
+    assumptions_preserved: false
+    boundary_preserved: false
 progress_updates:
 truth_boundary:
 verification:
