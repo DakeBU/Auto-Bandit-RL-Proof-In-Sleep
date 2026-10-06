@@ -1,3 +1,31 @@
+/-
+Orabona v10 Example2.25 printed18/PDF30: ONE body example, THREE exact
+normal-cone equalities and ONE complete retained owned definition.
+Zero new mathematical or TEST declarations. The full feasible definition
+requires x in V and every feasible displacement inner product nonpositive;
+it has intrinsic real inner-product context, no finite-dimensional,
+nonempty or convexity premise. All THREE theorem signatures explicitly
+retain finite-dimensional real inner-product space; first TWO retain
+nonempty convex V. No general closed or bounded V, relative interior,
+positive dimension or extra completeness premise is introduced.
+Generic shared support accepts wider EReal inputs than printed proper
+functions. Nonempty V makes the zero/top constraint indicator proper.
+Empty V is excluded: generic support of all-top differs from empty normals.
+Actual support/properness derives query feasibility and outside emptiness.
+Actual ambient interior ball and a positive displacement along nonzero g
+force a contradiction; zero satisfies the full feasible inequalities.
+Actual normalized nonzero g, Cauchy equality and zero squared difference
+produce every closed-unit-ball boundary normal's nonnegative radial form;
+zero uses scalar0 and converse covers ALL real scalars at least0.
+Whole FOUR old canary proofs and TWO real2D basis definitions unchanged.
+The singleton canary proves full support/7, not empty interior itself.
+Two-dimensional canary includes outward2e0 and zero, excludes e1 and -e0.
+Borrowed support/indicator/proper/domain APIs are shared, not owned/new.
+ONE owned definition plus three retained proof refinements is reuse, not
+new mathematical growth or a separate coordinate isometry certificate.
+Next Theorem2.26 and all remaining Chapter1/2/appendix work required;
+Chapter2 and persistent Chapters1-16 Goal remain incomplete.
+-/
 import BanditRLProof.OnlineSubgradientBasic
 
 /-!

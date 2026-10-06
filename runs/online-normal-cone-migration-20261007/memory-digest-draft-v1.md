@@ -1,0 +1,1 @@
+Normal Example2.25 only draft/wholeGoalactive. Fullsource threeclaims/oneownedfeasibledefinition; retainemptydomainexclusion/ambientinterior/full unitball nonnegative ray/FDtheorem binders/real2D whole canary4proof2defs. Current actualsourcefocus/semantic/source/kernel/combined/site/PR gates required, no existinghistorical acceptance inherited.

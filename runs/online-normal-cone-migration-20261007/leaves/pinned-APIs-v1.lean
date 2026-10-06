@@ -1,0 +1,16 @@
+import BanditRLProof
+#check @BanditRL.OnlineConvex.sourceProper_indicator_iff
+#check @BanditRL.OnlineConvex.effectiveDomain_indicator
+#check @BanditRL.OnlineConvex.subgradient_point_finite
+#check @Metric.mem_nhds_iff
+#check @mem_interior_iff_mem_nhds
+#check @interior_subset
+#check @norm_smul_inv_norm
+#check @real_inner_le_norm
+#check @norm_sub_sq_real
+#check @real_inner_self_eq_norm_sq
+#check @real_inner_smul_right
+#check @real_inner_smul_left
+#check @norm_smul_of_nonneg
+#check @norm_eq_zero
+#check @EReal.coe_le_coe_iff

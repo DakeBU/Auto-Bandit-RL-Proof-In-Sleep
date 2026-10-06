@@ -1,0 +1,29 @@
+@BanditRL.OnlineConvex.sourceProper_indicator_iff : ∀ {E : Type u_1} [TopologicalSpace E] (V : Set E),
+  BanditRL.OnlineConvex.SourceProper (BanditRL.OnlineConvex.extendedIndicator V) ↔ V.Nonempty
+@BanditRL.OnlineConvex.effectiveDomain_indicator : ∀ {E : Type u_1} [inst : AddCommGroup E] [Module ℝ E] (V : Set E),
+  BanditRL.OnlineConvex.effectiveDomain (BanditRL.OnlineConvex.extendedIndicator V) = V
+@BanditRL.OnlineConvex.subgradient_point_finite : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] (f : E → EReal),
+  BanditRL.OnlineConvex.SourceProper f →
+    ∀ (x g : E), g ∈ BanditRL.OnlineConvex.SourceSubdifferential f x → x ∈ BanditRL.OnlineConvex.effectiveDomain f
+@Metric.mem_nhds_iff : ∀ {α : Type u_1} [inst : PseudoMetricSpace α] {x : α} {s : Set α},
+  s ∈ nhds x ↔ ∃ ε > 0, Metric.ball x ε ⊆ s
+@mem_interior_iff_mem_nhds : ∀ {X : Type u_1} [inst : TopologicalSpace X] {x : X} {s : Set X},
+  x ∈ interior s ↔ s ∈ nhds x
+@interior_subset : ∀ {X : Type u_1} [inst : TopologicalSpace X] {s : Set X}, interior s ⊆ s
+@norm_smul_inv_norm : ∀ {𝕜 : Type u_1} [inst : RCLike 𝕜] {E : Type u_2} [inst_1 : NormedAddCommGroup E]
+  [inst_2 : NormedSpace 𝕜 E] {x : E}, x ≠ 0 → ‖(↑‖x‖)⁻¹ • x‖ = 1
+@real_inner_le_norm : ∀ {F : Type u_1} [inst : SeminormedAddCommGroup F] [inst_1 : InnerProductSpace ℝ F] (x y : F),
+  inner ℝ x y ≤ ‖x‖ * ‖y‖
+@norm_sub_sq_real : ∀ {F : Type u_1} [inst : SeminormedAddCommGroup F] [inst_1 : InnerProductSpace ℝ F] (x y : F),
+  ‖x - y‖ ^ 2 = ‖x‖ ^ 2 - 2 * inner ℝ x y + ‖y‖ ^ 2
+@real_inner_self_eq_norm_sq : ∀ {F : Type u_1} [inst : SeminormedAddCommGroup F] [inst_1 : InnerProductSpace ℝ F]
+  (x : F), inner ℝ x x = ‖x‖ ^ 2
+@real_inner_smul_right : ∀ {F : Type u_1} [inst : SeminormedAddCommGroup F] [inst_1 : InnerProductSpace ℝ F] (x y : F)
+  (r : ℝ), inner ℝ x (r • y) = r * inner ℝ x y
+@real_inner_smul_left : ∀ {F : Type u_1} [inst : SeminormedAddCommGroup F] [inst_1 : InnerProductSpace ℝ F] (x y : F)
+  (r : ℝ), inner ℝ (r • x) y = r * inner ℝ x y
+@norm_smul_of_nonneg : ∀ {E : Type u_1} [inst : SeminormedAddCommGroup E] [inst_1 : NormedSpace ℝ E] {t : ℝ},
+  0 ≤ t → ∀ (x : E), ‖t • x‖ = t * ‖x‖
+@norm_eq_zero : ∀ {E : Type u_1} [inst : NormedAddGroup E] {a : E}, ‖a‖ = 0 ↔ a = 0
+@EReal.coe_le_coe_iff : ∀ {x y : ℝ}, ↑x ≤ ↑y ↔ x ≤ y

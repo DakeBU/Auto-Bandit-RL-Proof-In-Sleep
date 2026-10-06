@@ -1,0 +1,17 @@
+from common import *
+fixed(True);passed('project-gates-v1-01');passed('full-harness-v1-01');passed('history-bindings-v1-01')
+subprocess.run([sys.executable,'-B','-X','utf8',str(RUN/'commit-owned-v1.py'),'Qualify retained Orabona Example2.25 normal-cone producers and shared mapping'],check=True)
+gate('contributor-exact-v1-01',sys.executable,'-B','-X','utf8','tools/check_contributor_contract.py','--base',BASE)
+subprocess.run([sys.executable,'-B','-X','utf8',str(RUN/'run-command.py'),'contributor-main-diagnostic-v1-01',sys.executable,'-B','-X','utf8','tools/check_contributor_contract.py','--base','origin/main'],check=False)
+assert load(RUN/'contributor-main-diagnostic-v1-01-exit.json')['exit_code']!=0
+raw=(RUN/'contributor-main-diagnostic-v1-01.log').read_text(encoding='utf-8');assert 'contract' in raw.lower()
+gate('scoped-diff-v1-01',sys.executable,'-B','-X','utf8',RUN/'check-scoped-diff-v2.py','v1')
+subprocess.run([sys.executable,'-B','-X','utf8',str(RUN/'commit-owned-v1.py'),'Record exact-base and historical-evidence checks for normal-cone package'],check=True)
+assert not subprocess.check_output(['git','status','--porcelain'],encoding='utf-8').strip()
+fixed(True)
+gate('site-build-v1-01',sys.executable,'-B','-X','utf8','website/scripts/build_site.py','--lean-verified','--output','tmp/online-normal-cone-migration-site-v1')
+gate('site-check-v1-01',sys.executable,'-B','-X','utf8','website/scripts/check_site.py','--output','tmp/online-normal-cone-migration-site-v1')
+gate('registry-v1-01',sys.executable,'-B','-X','utf8',RUN/'verify-registry-v1.py')
+gate('browser-v1-01',sys.executable,'-B','-X','utf8',RUN/'browser-v1.py')
+gate('formula-render-v1-01',sys.executable,'-B','-X','utf8',RUN/'render-source-formula-v1.py')
+print('Current clean leanverified site/check/all10811 IDsURLs/actual firstviewport+tallformula capture passed; pixel review and distinctFINAL pending.')

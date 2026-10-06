@@ -1,0 +1,11 @@
+{
+  "status": "failed-before-write-or-execution",
+  "observed_tool_chunk": "35a438",
+  "actual_shell_exit": 1,
+  "error": "SyntaxError: EOL while scanning string literal (review-packets-v3.py, line28)",
+  "attempt": "Direct stdin preparer used literal newlines within generated single-quoted string; compile() rejected before helper file write",
+  "evidence_limit": "Original direct command stdout is in the session tool record; no separate raw wrapper log was emitted.",
+  "mathematical_change": false,
+  "source_contract_changed": false,
+  "repair": "Version4 injects Python repr of added prose, compiles generated Python before writing/binding; old attempt retained."
+}
