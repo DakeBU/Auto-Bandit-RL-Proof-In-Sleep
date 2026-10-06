@@ -1,0 +1,1 @@
+Only hinge draft/current totalGoalACTIVE. ONEExample2.27/3branches/13retainedproofs2fulldefs/5wholecanaryproofs. Sourcefinite-real loss alwaysproper; generic S widerimproper. FDonly2explicit statements, no znonzero, zerovector positive-margin constant1. No scalarboundaryz0/2D/newproof claim. Legacy2pending untilrealPR.

@@ -1,0 +1,1 @@
+Bounded complete three-branch Example2.27 equality for actual hinge, including endpoints/mixes/z0. Single lower route reuse_existing: audit current13actualproducerproofs/2defs, dependencyreadiness and sourcecontract before bodyre-elaboration. No wrapper/newdeclaration-count progress; allremainingChapter1/2maintext retained REQUIRED.

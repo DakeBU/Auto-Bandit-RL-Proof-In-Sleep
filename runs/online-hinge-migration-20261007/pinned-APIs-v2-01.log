@@ -1,0 +1,34 @@
+@BanditRL.OnlineConvex.theorem_2_26 : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E]
+  [FiniteDimensional ℝ E] {ι : Type u_2} [inst_3 : Fintype ι] [inst_4 : Nonempty ι] (f : ι → E → EReal),
+  (∀ (i : ι), BanditRL.OnlineConvex.SourceProper (f i)) →
+    (∀ (i : ι), BanditRL.OnlineConvex.IsConvexExtended (f i)) →
+      ∀ (x : E),
+        (∀ (i : ι), x ∈ BanditRL.OnlineConvex.effectiveDomain (f i)) →
+          (∀ (i : ι), ContinuousAt (f i) x) →
+            BanditRL.OnlineConvex.SourceSubdifferential (BanditRL.OnlineConvex.SourceFiniteMax f) x =
+              (convexHull ℝ) (BanditRL.OnlineConvex.SourceActiveSubgradientUnion f x)
+@convexHull_pair : ∀ {𝕜 : Type u_1} {E : Type u_2} [inst : Semiring 𝕜] [inst_1 : PartialOrder 𝕜]
+  [inst_2 : AddCommMonoid E] [inst_3 : Module 𝕜 E] [IsOrderedRing 𝕜] (x y : E), (convexHull 𝕜) {x, y} = segment 𝕜 x y
+@convexHull_singleton : ∀ {𝕜 : Type u_1} {E : Type u_2} [inst : Semiring 𝕜] [inst_1 : PartialOrder 𝕜]
+  [inst_2 : AddCommMonoid E] [inst_3 : Module 𝕜 E] (x : E), (convexHull 𝕜) {x} = {x}
+segment_eq_image : ∀ (𝕜 : Type u_1) {E : Type u_2} [inst : Ring 𝕜] [inst_1 : PartialOrder 𝕜] [AddRightMono 𝕜]
+  [inst_3 : AddCommGroup E] [inst_4 : Module 𝕜 E] (x y : E),
+  segment 𝕜 x y = (fun θ => (1 - θ) • x + θ • y) '' Set.Icc 0 1
+@inner_self_eq_zero : ∀ {𝕜 : Type u_1} {E : Type u_2} [inst : RCLike 𝕜] [inst_1 : NormedAddCommGroup E]
+  [inst_2 : InnerProductSpace 𝕜 E] {x : E}, inner 𝕜 x x = 0 ↔ x = 0
+@real_inner_self_nonneg : ∀ {F : Type u_1} [inst : SeminormedAddCommGroup F] [inst_1 : InnerProductSpace ℝ F] {x : F},
+  0 ≤ inner ℝ x x
+@Finset.sup'_le_iff : ∀ {α : Type u_1} {β : Type u_2} [inst : SemilatticeSup α] {s : Finset β} (H : s.Nonempty)
+  (f : β → α) {a : α}, s.sup' H f ≤ a ↔ ∀ b ∈ s, f b ≤ a
+@Finset.le_sup' : ∀ {α : Type u_1} {β : Type u_2} [inst : SemilatticeSup α] {s : Finset β} (f : β → α) {b : β}
+  (h : b ∈ s), f b ≤ s.sup' ⋯ f
+@EReal.coe_le_coe_iff : ∀ {x y : ℝ}, ↑x ≤ ↑y ↔ x ≤ y
+@EReal.coe_lt_coe_iff : ∀ {x y : ℝ}, ↑x < ↑y ↔ x < y
+@BanditRL.OnlineConvex.convexExtended_iff_toReal : ∀ {E : Type u_1} [inst : AddCommGroup E] [inst_1 : Module ℝ E]
+  (f : E → EReal),
+  (∀ (x : E), f x ≠ ⊥) →
+    (BanditRL.OnlineConvex.IsConvexExtended f ↔
+      ConvexOn ℝ (BanditRL.OnlineConvex.effectiveDomain f) fun x => (f x).toReal)
+continuous_coe_real_ereal : Continuous Real.toEReal
+EReal.coe_ne_bot : ∀ (x : ℝ), ↑x ≠ ⊥
+EReal.coe_lt_top : ∀ (x : ℝ), ↑x < ⊤

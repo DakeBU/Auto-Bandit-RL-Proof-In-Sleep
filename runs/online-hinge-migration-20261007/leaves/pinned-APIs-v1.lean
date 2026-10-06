@@ -1,0 +1,15 @@
+import BanditRLProof.OnlineHinge
+#check @BanditRL.OnlineConvex.theorem_2_26
+#check @convexHull_pair
+#check @convexHull_singleton
+#check @segment_eq_image
+#check @inner_self_eq_zero
+#check @real_inner_self_nonneg
+#check @Finset.sup'_le_iff
+#check @Finset.le_sup'
+#check @EReal.coe_le_coe_iff
+#check @EReal.coe_lt_coe_iff
+#check @convexExtended_iff_toReal
+#check @continuous_coe_real_ereal
+#check @EReal.coe_ne_bot
+#check @EReal.coe_lt_top

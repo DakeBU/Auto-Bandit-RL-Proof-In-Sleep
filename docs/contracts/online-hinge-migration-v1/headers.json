@@ -1,0 +1,77 @@
+{
+  "sourceHinge": {
+    "statement": "def sourceHinge (z x : E) : EReal",
+    "hash": "85cdb686da2b6ea6a83064d1044ecc35e3f0127275f0145f65302d69a4fc3706",
+    "kind": "def"
+  },
+  "affine_subdifferential": {
+    "statement": "theorem affine_subdifferential (a : E) (b : ℝ) (x : E) : SourceSubdifferential (fun y => ((inner ℝ a y + b : ℝ) : EReal)) x = {a}",
+    "hash": "07d052a35e6289f9b1707b89ec2d283c9f5a37886870d6326ef7f4d1cdebaba8",
+    "kind": "theorem"
+  },
+  "hingeFamily": {
+    "statement": "def hingeFamily (z : E) (i : Bool) (y : E) : EReal",
+    "hash": "02776ec0ee79072b5289789436d6db8cc21150da53635a7d8a351ad18457cc4f",
+    "kind": "def"
+  },
+  "affine_proper": {
+    "statement": "theorem affine_proper (a : E) (b : ℝ) : SourceProper (fun y => ((inner ℝ a y + b : ℝ) : EReal))",
+    "hash": "a8da19b0a5590326885319f93ce1b34c5aa177d8db6961f7ff348bbaaa6f65e4",
+    "kind": "theorem"
+  },
+  "affine_convex": {
+    "statement": "theorem affine_convex (a : E) (b : ℝ) : IsConvexExtended (fun y => ((inner ℝ a y + b : ℝ) : EReal))",
+    "hash": "2410128e7e7e3a1c29b9871462d5c871d5f2ab0320faa50626e665b74ad474a5",
+    "kind": "theorem"
+  },
+  "affine_continuous": {
+    "statement": "theorem affine_continuous (a : E) (b : ℝ) (x : E) : ContinuousAt (fun y => ((inner ℝ a y + b : ℝ) : EReal)) x",
+    "hash": "810cb730705863b9f5b22ed2e91974c39a364eb609b2c533670988be288a15fe",
+    "kind": "theorem"
+  },
+  "hinge_max_identity": {
+    "statement": "theorem hinge_max_identity (z : E) : SourceFiniteMax (hingeFamily z) = sourceHinge z",
+    "hash": "e730c756fa82aa43312837ef56fecdd6493169a2b428a949e8be3e7c19cdb0ba",
+    "kind": "theorem"
+  },
+  "hinge_subdifferential_hull": {
+    "statement": "theorem hinge_subdifferential_hull [FiniteDimensional ℝ E] (z x : E) : SourceSubdifferential (sourceHinge z) x = convexHull ℝ (SourceActiveSubgradientUnion (hingeFamily z) x)",
+    "hash": "ea01cf6b57cff3919307870afd50585ffa8a6a4162ec178de16602dc623ac576",
+    "kind": "theorem"
+  },
+  "hinge_family_support": {
+    "statement": "theorem hinge_family_support (z : E) (i : Bool) (x : E) : SourceSubdifferential (hingeFamily z i) x = {if i then -z else 0}",
+    "hash": "018cf2cc68058c604391ea0e44724c262b10d479857eb55c98c330ca97c5a28d",
+    "kind": "theorem"
+  },
+  "hinge_family_false": {
+    "statement": "theorem hinge_family_false (z x : E) : hingeFamily z false x = ((0 : ℝ) : EReal)",
+    "hash": "efd1e1b9cf4467bd08ed99e507116e7503c21497677a94260f4eda5d3fe32ce8",
+    "kind": "theorem"
+  },
+  "hinge_family_true": {
+    "statement": "theorem hinge_family_true (z x : E) : hingeFamily z true x = ((1 - inner ℝ z x : ℝ) : EReal)",
+    "hash": "1a388ac01d387d166602b9a2bfb1a6592184fc59d8324f382eb267e9bb3160d2",
+    "kind": "theorem"
+  },
+  "hinge_active_negative": {
+    "statement": "theorem hinge_active_negative (z x : E) (h : 1 - inner ℝ z x < 0) : SourceActiveSubgradientUnion (hingeFamily z) x = {(0 : E)}",
+    "hash": "7bf2a13b02e62bbe524a3a0bc4dd95bab0834f49995b27846e34db20cb479be7",
+    "kind": "theorem"
+  },
+  "hinge_active_positive": {
+    "statement": "theorem hinge_active_positive (z x : E) (h : 0 < 1 - inner ℝ z x) : SourceActiveSubgradientUnion (hingeFamily z) x = {-z}",
+    "hash": "656b4823800fd277fcb234e353b2afda1dec43babd8bd154f6fba95e13a8e1b2",
+    "kind": "theorem"
+  },
+  "hinge_active_zero": {
+    "statement": "theorem hinge_active_zero (z x : E) (h : 1 - inner ℝ z x = 0) : SourceActiveSubgradientUnion (hingeFamily z) x = {(0 : E), -z}",
+    "hash": "dbe30b395c143574d516af9b174fc41132301c6af1f91119da41aa8f152653da",
+    "kind": "theorem"
+  },
+  "example_2_27": {
+    "statement": "theorem example_2_27 [FiniteDimensional ℝ E] (z x : E) : SourceSubdifferential (sourceHinge z) x = if 1 - inner ℝ z x < 0 then {0} else if 1 - inner ℝ z x = 0 then {g | ∃ α ∈ Icc (0 : ℝ) 1, g = -(α • z)} else {-z}",
+    "hash": "b2875a1717769a43dc6bd41ccf79adcc089601e267bfbe571b97cc12885df5b5",
+    "kind": "theorem"
+  }
+}
