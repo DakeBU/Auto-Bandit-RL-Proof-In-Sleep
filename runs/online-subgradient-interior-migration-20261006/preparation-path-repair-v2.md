@@ -1,0 +1,1 @@
+Preparer v1 failed on guessed absent historical contract directory online-convex-minorant-migration-v1. rg --files identifies actual online-minorant-migration-v1. Raw failure and v1 partial generated packet/snapshots retained. v2 changes only directory selection and versions its outputs/snapshots; no production edits, terminal change or mathematical gate failure.

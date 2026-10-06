@@ -1,0 +1,25 @@
+import BanditRLProof
+import Tests.OnlineConvexMinorantCanary
+
+noncomputable section
+open Set BanditRL.OnlineConvex
+open scoped Topology
+namespace Tests.OnlineRelativeSubgradient
+
+theorem ray_relative_contact :
+    ∃ x ∈ intrinsicInterior ℝ (effectiveDomain Tests.OnlineConvexMinorant.loss),
+      ∃ (a : (ℝ × ℝ) →L[ℝ] ℝ) (b : ℝ),
+        ((a x + b : ℝ) : EReal) = Tests.OnlineConvexMinorant.loss x ∧
+        ∀ y, ((a y + b : ℝ) : EReal) ≤ Tests.OnlineConvexMinorant.loss y := by
+
+
+theorem singleton_relative_support :
+    (SourceSubdifferential (extendedIndicator ({1} : Set ℝ)) 1).Nonempty := by
+
+
+theorem singleton_boundary :
+    extendedIndicator ({1} : Set ℝ) 1 = 0 ∧
+    extendedIndicator ({1} : Set ℝ) 0 = ⊤ ∧
+    interior (effectiveDomain (extendedIndicator ({1} : Set ℝ))) = ∅ := by
+
+end Tests.OnlineRelativeSubgradient

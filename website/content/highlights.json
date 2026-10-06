@@ -2807,10 +2807,10 @@
       "plain": "A proper convex extended-real function has a global supporting vector at every point of the interior of its effective domain.",
       "math": "\\(x\\in\\operatorname{int}(\\operatorname{dom}f)\\Longrightarrow\\partial f(x)\\ne\\varnothing\\)",
       "intuition": "An epigraph support at an interior domain point cannot be vertical.",
-      "why": "Provides the actual existence producer needed by later subgradient rules.",
-      "position": "Orabona v10 Section2.2.1, printed17/PDF29, unnumbered interior assertion.",
-      "proof_idea": "Construct an affine support touching f at x, then represent its linear part by an inner product.",
-      "lean_notes": "Finite-dimensional real inner-product space; proper extended-real convex f and ambient interior. No closedness or boundedness premise.",
+      "why": "One canonical shared registry supplies both source branches; one retained producer and two new proofs tracked separately.",
+      "position": "Orabona v10 printed17/PDF29; ambient assertion and required relative-interior footnote1, zero numbered anchors.",
+      "proof_idea": "Accepted ambient-contact theorem followed by actual Riesz and linearity; global queries include top outside domain.",
+      "lean_notes": "Source proper f means nowhere-bottom plus a finite real witness. The shared generic SourceSubdifferential is wider than the printed proper-function specialization; this source theorem keeps properness, so domain membership is genuinely finite. The source-facing vector producers use finite-dimensional real INNER-PRODUCT spaces and retain SourceProper. Completeness for Riesz derives from finite dimensionality (pinned complete_of_proper), with no additional CompleteSpace binder. Zero/nonempty ambient carriers and dimension0 are permitted; no closedness/lsc/boundedness/differentiability premise, nonzero slope or uniqueness conclusion.",
       "dependencies": [
         "BanditRL.OnlineConvex.affine_support_of_domain_interior",
         "BanditRL.OnlineConvex.SourceSubdifferential"
@@ -2825,12 +2825,12 @@
       "plain": "A nowhere-bottom convex extended-real function has an affine global lower bound attaining its value at any specified interior domain point.",
       "math": "\\(a(x)+b=f(x),\\quad\\forall y,\\ a(y)+b\\le f(y)\\)",
       "intuition": "Retain the equality at the supported epigraph point when normalizing the separating functional.",
-      "why": "One canonical contact lemma serves both the existing minorant theorem and the new subgradient producer.",
-      "position": "Orabona v10 Section2.2.1, printed17/PDF29, unnumbered interior assertion.",
+      "why": "One canonical shared registry supplies both source branches; one retained producer and two new proofs tracked separately.",
+      "position": "Orabona v10 printed17/PDF29; ambient assertion and required relative-interior footnote1, zero numbered anchors.",
       "proof_idea": "An interior domain point excludes a vertical epigraph support; a negative height coefficient can be normalized.",
-      "lean_notes": "Finite-dimensional real normed space; nowhere-bottom and interior membership imply a finite point, so the combined premises supply properness.",
+      "lean_notes": "Accepted shared finiteD REAL NORMED ambient-contact dependency, unchanged; noBottom plus ambient domain interior implies a finite point.",
       "dependencies": [
-        "BanditRL.OnlineConvex.supporting_functional_at_closure"
+        "BanditRL.OnlineConvex.affine_support_of_finite_neighborhood"
       ]
     },
     {
@@ -5389,6 +5389,41 @@
       "dependencies": [
         "BanditRL.OnlineGradientDescent.guessing_squared_horizon_lower",
         "BanditRL.OnlineGradientDescent.meanPredict_zero_cumulativeLoss"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.affine_support_of_relative_domain_interior",
+      "title": "Affine contact at the prescribed relative-interior point",
+      "chapter": "online-subgradient-interior",
+      "featured": false,
+      "teaching_order": 2,
+      "plain": "The functional and intercept satisfy a(x)+b=f(x) AT THE SPECIFIED x and a(y)+b<=f(y) for EVERY ambient y. A pure global minorant or contact at a different point is insufficient.",
+      "math": "\\(x\\in\\operatorname{ri}(\\operatorname{dom}f)\\Rightarrow\\exists a,b,\\ a(x)+b=f(x),\\ \\forall y,\\ a(y)+b\\le f(y)\\)",
+      "intuition": "Make the prescribed point the affine origin; retain equality while extending the functional.",
+      "why": "The new affine helper works in a finite-dimensional REAL NORMED space with nowhere-bottom, convex real-height epigraph and a specified relative-interior point. These premises imply properness: ri is contained in the domain, so f(x)<top, and noBottom makes f(x) finite. It is a necessary stronger library intermediate, not another printed theorem.",
+      "position": "Necessary shared library intermediate for Orabona v10 printed17/PDF29 footnote1; not a separately printed theorem.",
+      "proof_idea": "Keep the supplied x as affine origin p=x, restrict f to the direction space of affineSpan(domain), transport the given ri membership to domain interior at0, and invoke the accepted canonical ambient CONTACT theorem. Extend its linear functional to all E, obtain continuity from finite dimensionality, and correct the intercept to b-Gp. Recover contact at the SAME original x; outside the domain f(y)=top. Riesz and linearity then yield the global supporting vector. Existing convex_affine_minorant is only an implementation method donor; its public output drops contact and is not a theorem-value dependency.",
+      "lean_notes": "The new affine helper works in a finite-dimensional REAL NORMED space with nowhere-bottom, convex real-height epigraph and a specified relative-interior point. These premises imply properness: ri is contained in the domain, so f(x)<top, and noBottom makes f(x) finite. It is a necessary stronger library intermediate, not another printed theorem. Relative interior is mathlib intrinsicInterior: the image of ordinary interior inside affineSpan(domain). It uses the original domain, without closure or a full-dimensionality assumption. Lower-dimensional domains may have empty ambient interior and nonempty relative interior.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.affine_support_of_domain_interior"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.subgradient_exists_of_relative_domain_interior",
+      "title": "Relative-interior points admit global subgradients",
+      "chapter": "online-subgradient-interior",
+      "featured": false,
+      "teaching_order": 3,
+      "plain": "Every proper convex function has a global supporting vector at every specified relative-interior point of its effective domain.",
+      "math": "\\(x\\in\\operatorname{ri}(\\operatorname{dom}f)\\Longrightarrow\\partial f(x)\\ne\\varnothing\\)",
+      "intuition": "Contact at the original point turns the extended affine lower bound into a subgradient inequality.",
+      "why": "Closes the REQUIRED stronger relative-interior source footnote, including lower-dimensional domains with empty ambient interior.",
+      "position": "Orabona v10 printed17/PDF29 footnote1, required unnumbered source branch.",
+      "proof_idea": "Invoke new prescribed-point relative affine contact; Riesz representation and linearity yield the SAME global SourceSubdifferential.",
+      "lean_notes": "Source proper f means nowhere-bottom plus a finite real witness. The shared generic SourceSubdifferential is wider than the printed proper-function specialization; this source theorem keeps properness, so domain membership is genuinely finite. Relative interior is mathlib intrinsicInterior: the image of ordinary interior inside affineSpan(domain). It uses the original domain, without closure or a full-dimensionality assumption. Lower-dimensional domains may have empty ambient interior and nonempty relative interior. The source-facing vector producers use finite-dimensional real INNER-PRODUCT spaces and retain SourceProper. Completeness for Riesz derives from finite dimensionality (pinned complete_of_proper), with no additional CompleteSpace binder. Zero/nonempty ambient carriers and dimension0 are permitted; no closedness/lsc/boundedness/differentiability premise, nonzero slope or uniqueness conclusion.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.affine_support_of_relative_domain_interior",
+        "BanditRL.OnlineConvex.SourceSubdifferential"
       ]
     }
   ]

@@ -1,0 +1,9 @@
+import BanditRLProof
+import Tests.OnlineSubgradientInteriorCanary
+#check @BanditRL.OnlineConvex.subgradient_exists_of_domain_interior
+#check @BanditRL.OnlineConvex.affine_support_of_domain_interior
+#check @BanditRL.OnlineConvex.convex_affine_minorant
+#check @InteriorSupportProbe.interval_center_support
+#check @BanditRL.OnlineConvex.SourceSubdifferential
+#check @BanditRL.OnlineConvex.SourceProper
+#check @BanditRL.OnlineConvex.effectiveDomain

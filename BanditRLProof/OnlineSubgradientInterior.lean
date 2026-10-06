@@ -22,3 +22,64 @@ theorem subgradient_exists_of_domain_interior
   rw [he]
   exact hminor y
 end BanditRL.OnlineConvex
+
+
+namespace BanditRL.OnlineConvex
+
+theorem affine_support_of_relative_domain_interior {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDimensional ℝ E] (f : E → EReal) (hbot : ∀ y, f y ≠ ⊥) (hc : IsConvexExtended f) (x : E) (hx : x ∈ intrinsicInterior ℝ (effectiveDomain f)) : ∃ (a : E →L[ℝ] ℝ) (b : ℝ), ((a x + b : ℝ) : EReal) = f x ∧ ∀ y, ((a y + b : ℝ) : EReal) ≤ f y := by
+  set_option backward.isDefEq.respectTransparency false in
+    classical
+    let S := affineSpan ℝ (effectiveDomain f)
+    obtain ⟨p, hp, hpx⟩ := mem_intrinsicInterior.mp hx
+    letI : Nonempty S := ⟨p⟩
+    let e : S.direction ≃ᵃⁱ[ℝ] S := AffineIsometryEquiv.vaddConst ℝ p
+    let T : S.direction →ᵃ[ℝ] E := S.subtype.comp e.toAffineEquiv.toAffineMap
+    have hT (v : S.direction) : T v = (v : E) + (p : E) := rfl
+    let F : S.direction → EReal := f ∘ T
+    have hF : IsConvexExtended F := by
+      exact hc.affine_preimage (T.prodMap (AffineMap.id ℝ ℝ))
+    have hFi : (0 : S.direction) ∈ interior (effectiveDomain F) := by
+      have hh : (0 : S.direction) ∈ e.toHomeomorph ⁻¹' interior ((↑) ⁻¹' effectiveDomain f : Set S) := by
+        simpa [e] using hp
+      rw [e.toHomeomorph.preimage_interior] at hh
+      exact hh
+    obtain ⟨a, b, htouch, hab⟩ := affine_support_of_domain_interior F (fun v => hbot (T v)) hF 0 hFi
+    obtain ⟨g, hg⟩ := a.toLinearMap.exists_extend
+    let G : E →L[ℝ] ℝ := g.toContinuousLinearMap
+    refine ⟨G, b - G p, ?_, ?_⟩
+    · have hT0 : T 0 = x := by simp [hT, hpx]
+      change ((a 0 + b : ℝ) : EReal) = f (T 0) at htouch
+      rw [map_zero, zero_add, hT0] at htouch
+      have he : G x + (b - G p) = b := by rw [hpx]; ring
+      rw [he]
+      exact htouch
+    · intro y
+      by_cases hy : f y = ⊤
+      · simp [hy]
+      · have hyd : y ∈ effectiveDomain f := lt_top_iff_ne_top.mpr hy
+        have hys : y ∈ S := subset_affineSpan ℝ _ hyd
+        let v : S.direction := ⟨y - p, S.vsub_mem_direction hys p.property⟩
+        have hTv : T v = y := by simp [hT, v]
+        have hgv : G (v : E) = a v := congrArg (fun l : S.direction →ₗ[ℝ] ℝ => l v) hg
+        have hh := hab v
+        change ((a v + b : ℝ) : EReal) ≤ f (T v) at hh
+        rw [hTv] at hh
+        have hev : G y + (b - G p) = a v + b := by
+          have hv : (v : E) = y - p := rfl
+          rw [hv, map_sub] at hgv
+          linarith
+        rw [hev]
+        exact hh
+
+theorem subgradient_exists_of_relative_domain_interior {F : Type*} [NormedAddCommGroup F] [InnerProductSpace ℝ F] [FiniteDimensional ℝ F] (f : F → EReal) (hf : SourceProper f) (hc : IsConvexExtended f) (x : F) (hx : x ∈ intrinsicInterior ℝ (effectiveDomain f)) : (SourceSubdifferential f x).Nonempty := by
+  obtain ⟨a, b, htouch, hminor⟩ := affine_support_of_relative_domain_interior f hf.1 hc x hx
+  refine ⟨(InnerProductSpace.toDual ℝ F).symm a, ?_⟩
+  intro y
+  rw [← htouch, InnerProductSpace.toDual_symm_apply, ← EReal.coe_add]
+  have he : a x + b + a (y - x) = a y + b := by
+    rw [map_sub]
+    ring
+  rw [he]
+  exact hminor y
+
+end BanditRL.OnlineConvex

@@ -1,0 +1,19 @@
+@intrinsicInterior_singleton : ∀ {𝕜 : Type u_1} {V : Type u_2} {P : Type u_3} [inst : Ring 𝕜] [inst_1 : AddCommGroup V]
+  [inst_2 : Module 𝕜 V] [inst_3 : TopologicalSpace P] [inst_4 : AddTorsor V P] (x : P), intrinsicInterior 𝕜 {x} = {x}
+@interior_singleton : ∀ {X : Type u_1} [inst : TopologicalSpace X] (x : X) [(𝓝[≠] x).NeBot], interior {x} = ∅
+@convex_effectiveDomain : ∀ {E : Type u_1} [inst : AddCommGroup E] [inst_1 : Module ℝ E] (f : E → EReal),
+  IsConvexExtended f → Convex ℝ (effectiveDomain f)
+@convex_indicator_iff : ∀ {E : Type u_1} [inst : AddCommGroup E] [inst_1 : Module ℝ E] (V : Set E),
+  IsConvexExtended (extendedIndicator V) ↔ Convex ℝ V
+@effectiveDomain_indicator : ∀ {E : Type u_1} [inst : AddCommGroup E] [Module ℝ E] (V : Set E),
+  effectiveDomain (extendedIndicator V) = V
+@sourceProper_indicator_iff : ∀ {E : Type u_1} [TopologicalSpace E] (V : Set E),
+  SourceProper (extendedIndicator V) ↔ V.Nonempty
+Tests.OnlineConvexMinorant.loss_noBot : ∀ (p : ℝ × ℝ), Tests.OnlineConvexMinorant.loss p ≠ ⊥
+Tests.OnlineConvexMinorant.loss_convex : IsConvexExtended Tests.OnlineConvexMinorant.loss
+Tests.OnlineConvexMinorant.loss_domain : effectiveDomain Tests.OnlineConvexMinorant.loss =
+  Tests.OnlineConvexBarycenter.ray
+Tests.OnlineConvexMinorant.nondegenerate_nonclosed : Tests.OnlineConvexMinorant.loss (1, 0) = 1 ∧
+  Tests.OnlineConvexMinorant.loss (3, 0) = 3 ∧
+    Tests.OnlineConvexMinorant.loss (0, 1) = ⊤ ∧ ¬IsClosed (effectiveDomain Tests.OnlineConvexMinorant.loss)
+Tests.OnlineConvexBarycenter.ray_convex : Convex ℝ Tests.OnlineConvexBarycenter.ray

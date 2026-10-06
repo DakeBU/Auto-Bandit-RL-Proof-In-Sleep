@@ -1,0 +1,24 @@
+import BanditRLProof.OnlineConvexMinorant
+import BanditRLProof.OnlineSubgradientBasic
+import Mathlib.Analysis.InnerProductSpace.Dual
+
+noncomputable section
+open Set
+open scoped Topology
+namespace BanditRL.OnlineConvex
+
+theorem subgradient_exists_of_domain_interior
+    {F : Type*} [NormedAddCommGroup F] [InnerProductSpace ℝ F] [FiniteDimensional ℝ F]
+    (f : F → EReal) (hf : SourceProper f) (hc : IsConvexExtended f)
+    (x : F) (hx : x ∈ interior (effectiveDomain f)) :
+    (SourceSubdifferential f x).Nonempty := by
+  obtain ⟨a, b, htouch, hminor⟩ := affine_support_of_domain_interior f hf.1 hc x hx
+  refine ⟨(InnerProductSpace.toDual ℝ F).symm a, ?_⟩
+  intro y
+  rw [← htouch, InnerProductSpace.toDual_symm_apply, ← EReal.coe_add]
+  have he : a x + b + a (y - x) = a y + b := by
+    rw [map_sub]
+    ring
+  rw [he]
+  exact hminor y
+end BanditRL.OnlineConvex
