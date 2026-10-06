@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="blueprint" style=""><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="Absolute-value subdifferential · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+  <meta property="og:url" content="https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/chapters/online-subgradient-absolute/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Absolute-value subdifferential · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+  <link rel="canonical" href="https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/chapters/online-subgradient-absolute/">
+  <meta name="theme-color" content="#176b70">
+  <title>Absolute-value subdifferential · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260919-taxonomy-techniques">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style type="text/css">.CtxtMenu_InfoClose {  top:.2em; right:.2em;}
+.CtxtMenu_InfoContent {  overflow:auto; text-align:left; font-size:80%;  padding:.4em .6em; border:1px inset; margin:1em 0px;  max-height:20em; max-width:30em; background-color:#EEEEEE;  white-space:normal;}
+.CtxtMenu_Info.CtxtMenu_MousePost {outline:none;}
+.CtxtMenu_Info {  position:fixed; left:50%; width:auto; text-align:center;  border:3px outset; padding:1em 2em; background-color:#DDDDDD;  color:black;  cursor:default; font-family:message-box; font-size:120%;  font-style:normal; text-indent:0; text-transform:none;  line-height:normal; letter-spacing:normal; word-spacing:normal;  word-wrap:normal; white-space:nowrap; float:none; z-index:201;  border-radius: 15px;                     /* Opera 10.5 and IE9 */  -webkit-border-radius:15px;               /* Safari and Chrome */  -moz-border-radius:15px;                  /* Firefox */  -khtml-border-radius:15px;                /* Konqueror */  box-shadow:0px 10px 20px #808080;         /* Opera 10.5 and IE9 */  -webkit-box-shadow:0px 10px 20px #808080; /* Safari 3 & Chrome */  -moz-box-shadow:0px 10px 20px #808080;    /* Forefox 3.5 */  -khtml-box-shadow:0px 10px 20px #808080;  /* Konqueror */  filter:progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color="gray", Positive="true"); /* IE */}
+</style><style type="text/css">.CtxtMenu_MenuClose {  position:absolute;  cursor:pointer;  display:inline-block;  border:2px solid #AAA;  border-radius:18px;  -webkit-border-radius: 18px;             /* Safari and Chrome */  -moz-border-radius: 18px;                /* Firefox */  -khtml-border-radius: 18px;              /* Konqueror */  font-family: "Courier New", Courier;  font-size:24px;  color:#F0F0F0}
+.CtxtMenu_MenuClose span {  display:block; background-color:#AAA; border:1.5px solid;  border-radius:18px;  -webkit-border-radius: 18px;             /* Safari and Chrome */  -moz-border-radius: 18px;                /* Firefox */  -khtml-border-radius: 18px;              /* Konqueror */  line-height:0;  padding:8px 0 6px     /* may need to be browser-specific */}
+.CtxtMenu_MenuClose:hover {  color:white!important;  border:2px solid #CCC!important}
+.CtxtMenu_MenuClose:hover span {  background-color:#CCC!important}
+.CtxtMenu_MenuClose:hover:focus {  outline:none}
+</style><style type="text/css">.CtxtMenu_Menu {  position:absolute;  background-color:white;  color:black;  width:auto; padding:5px 0px;  border:1px solid #CCCCCC; margin:0; cursor:default;  font: menu; text-align:left; text-indent:0; text-transform:none;  line-height:normal; letter-spacing:normal; word-spacing:normal;  word-wrap:normal; white-space:nowrap; float:none; z-index:201;  border-radius: 5px;                     /* Opera 10.5 and IE9 */  -webkit-border-radius: 5px;             /* Safari and Chrome */  -moz-border-radius: 5px;                /* Firefox */  -khtml-border-radius: 5px;              /* Konqueror */  box-shadow:0px 10px 20px #808080;         /* Opera 10.5 and IE9 */  -webkit-box-shadow:0px 10px 20px #808080; /* Safari 3 & Chrome */  -moz-box-shadow:0px 10px 20px #808080;    /* Forefox 3.5 */  -khtml-box-shadow:0px 10px 20px #808080;  /* Konqueror */}
+.CtxtMenu_MenuItem {  padding: 1px 2em;  background:transparent;}
+.CtxtMenu_MenuArrow {  position:absolute; right:.5em; padding-top:.25em; color:#666666;  font-family: null; font-size: .75em}
+.CtxtMenu_MenuActive .CtxtMenu_MenuArrow {color:white}
+.CtxtMenu_MenuArrow.CtxtMenu_RTL {left:.5em; right:auto}
+.CtxtMenu_MenuCheck {  position:absolute; left:.7em;  font-family: null}
+.CtxtMenu_MenuCheck.CtxtMenu_RTL { right:.7em; left:auto }
+.CtxtMenu_MenuRadioCheck {  position:absolute; left: .7em;}
+.CtxtMenu_MenuRadioCheck.CtxtMenu_RTL {  right: .7em; left:auto}
+.CtxtMenu_MenuInputBox {  padding-left: 1em; right:.5em; color:#666666;  font-family: null;}
+.CtxtMenu_MenuInputBox.CtxtMenu_RTL {  left: .1em;}
+.CtxtMenu_MenuComboBox {  left:.1em; padding-bottom:.5em;}
+.CtxtMenu_MenuSlider {  left: .1em;}
+.CtxtMenu_SliderValue {  position:absolute; right:.1em; padding-top:.25em; color:#333333;  font-size: .75em}
+.CtxtMenu_SliderBar {  outline: none; background: #d3d3d3}
+.CtxtMenu_MenuLabel {  padding: 1px 2em 3px 1.33em;  font-style:italic}
+.CtxtMenu_MenuRule {  border-top: 1px solid #DDDDDD;  margin: 4px 3px;}
+.CtxtMenu_MenuDisabled {  color:GrayText}
+.CtxtMenu_MenuActive {  background-color: #606872;  color: white;}
+.CtxtMenu_MenuDisabled:focus {  background-color: #E8E8E8}
+.CtxtMenu_MenuLabel:focus {  background-color: #E8E8E8}
+.CtxtMenu_ContextMenu:focus {  outline:none}
+.CtxtMenu_ContextMenu .CtxtMenu_MenuItem:focus {  outline:none}
+.CtxtMenu_SelectionMenu {  position:relative; float:left;  border-bottom: none; -webkit-box-shadow:none; -webkit-border-radius:0px; }
+.CtxtMenu_SelectionItem {  padding-right: 1em;}
+.CtxtMenu_Selection {  right: 40%; width:50%; }
+.CtxtMenu_SelectionBox {  padding: 0em; max-height:20em; max-width: none;  background-color:#FFFFFF;}
+.CtxtMenu_SelectionDivider {  clear: both; border-top: 2px solid #000000;}
+.CtxtMenu_Menu .CtxtMenu_MenuClose {  top:-10px; left:-10px}
+</style><style id="MJX-CHTML-styles">
+mjx-container[jax="CHTML"] {
+  line-height: 0;
+}
+
+mjx-container [space="1"] {
+  margin-left: .111em;
+}
+
+mjx-container [space="2"] {
+  margin-left: .167em;
+}
+
+mjx-container [space="3"] {
+  margin-left: .222em;
+}
+
+mjx-container [space="4"] {
+  margin-left: .278em;
+}
+
+mjx-container [space="5"] {
+  margin-left: .333em;
+}
+
+mjx-container [rspace="1"] {
+  margin-right: .111em;
+}
+
+mjx-container [rspace="2"] {
+  margin-right: .167em;
+}
+
+mjx-container [rspace="3"] {
+  margin-right: .222em;
+}
+
+mjx-container [rspace="4"] {
+  margin-right: .278em;
+}
+
+mjx-container [rspace="5"] {
+  margin-right: .333em;
+}
+
+mjx-container [size="s"] {
+  font-size: 70.7%;
+}
+
+mjx-container [size="ss"] {
+  font-size: 50%;
+}
+
+mjx-container [size="Tn"] {
+  font-size: 60%;
+}
+
+mjx-container [size="sm"] {
+  font-size: 85%;
+}
+
+mjx-container [size="lg"] {
+  font-size: 120%;
+}
+
+mjx-container [size="Lg"] {
+  font-size: 144%;
+}
+
+mjx-container [size="LG"] {
+  font-size: 173%;
+}
+
+mjx-container [size="hg"] {
+  font-size: 207%;
+}
+
+mjx-container [size="HG"] {
+  font-size: 249%;
+}
+
+mjx-container [width="full"] {
+  width: 100%;
+}
+
+mjx-box {
+  display: inline-block;
+}
+
+mjx-block {
+  display: block;
+}
+
+mjx-itable {
+  display: inline-table;
+}
+
+mjx-row {
+  display: table-row;
+}
+
+mjx-row > * {
+  display: table-cell;
+}
+
+mjx-mtext {
+  display: inline-block;
+  text-align: left;
+}
+
+mjx-mstyle {
+  display: inline-block;
+}
+
+mjx-merror {
+  display: inline-block;
+  color: red;
+  background-color: yellow;
+}
+
+mjx-mphantom {
+  visibility: hidden;
+}
+
+_::-webkit-full-page-media, _:future, :root mjx-container {
+  will-change: opacity;
+}
+
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0px;
+  left: 0px;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0px 0px 0px !important;
+  border: 0px !important;
+  display: block !important;
+  width: auto !important;
+  overflow: hidden !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+mjx-assistive-mml[display="block"] {
+  width: 100% !important;
+}
+
+mjx-math {
+  display: inline-block;
+  text-align: left;
+  line-height: 0;
+  text-indent: 0;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 100%;
+  font-size-adjust: none;
+  letter-spacing: normal;
+  border-collapse: collapse;
+  word-wrap: normal;
+  word-spacing: normal;
+  white-space: nowrap;
+  direction: ltr;
+  padding: 1px 0;
+}
+
+mjx-container[jax="CHTML"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="CHTML"][display="true"][width="full"] {
+  display: flex;
+}
+
+mjx-container[jax="CHTML"][display="true"] mjx-math {
+  padding: 0;
+}
+
+mjx-container[jax="CHTML"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="CHTML"][justify="right"] {
+  text-align: right;
+}
+
+mjx-mo {
+  display: inline-block;
+  text-align: left;
+}
+
+mjx-stretchy-h {
+  display: inline-table;
+  width: 100%;
+}
+
+mjx-stretchy-h > * {
+  display: table-cell;
+  width: 0;
+}
+
+mjx-stretchy-h > * > mjx-c {
+  display: inline-block;
+  transform: scalex(1.0000001);
+}
+
+mjx-stretchy-h > * > mjx-c::before {
+  display: inline-block;
+  width: initial;
+}
+
+mjx-stretchy-h > mjx-ext {
+  /* IE */ overflow: hidden;
+  /* others */ overflow: clip visible;
+  width: 100%;
+}
+
+mjx-stretchy-h > mjx-ext > mjx-c::before {
+  transform: scalex(500);
+}
+
+mjx-stretchy-h > mjx-ext > mjx-c {
+  width: 0;
+}
+
+mjx-stretchy-h > mjx-beg > mjx-c {
+  margin-right: -.1em;
+}
+
+mjx-stretchy-h > mjx-end > mjx-c {
+  margin-left: -.1em;
+}
+
+mjx-stretchy-v {
+  display: inline-block;
+}
+
+mjx-stretchy-v > * {
+  display: block;
+}
+
+mjx-stretchy-v > mjx-beg {
+  height: 0;
+}
+
+mjx-stretchy-v > mjx-end > mjx-c {
+  display: block;
+}
+
+mjx-stretchy-v > * > mjx-c {
+  transform: scaley(1.0000001);
+  transform-origin: left center;
+  overflow: hidden;
+}
+
+mjx-stretchy-v > mjx-ext {
+  display: block;
+  height: 100%;
+  box-sizing: border-box;
+  border: 0px solid transparent;
+  /* IE */ overflow: hidden;
+  /* others */ overflow: visible clip;
+}
+
+mjx-stretchy-v > mjx-ext > mjx-c::before {
+  width: initial;
+  box-sizing: border-box;
+}
+
+mjx-stretchy-v > mjx-ext > mjx-c {
+  transform: scaleY(500) translateY(.075em);
+  overflow: visible;
+}
+
+mjx-mark {
+  display: inline-block;
+  height: 0px;
+}
+
+mjx-c {
+  display: inline-block;
+}
+
+mjx-utext {
+  display: inline-block;
+  padding: .75em 0 .2em 0;
+}
+
+mjx-mn {
+  display: inline-block;
+  text-align: left;
+}
+
+mjx-mfrac {
+  display: inline-block;
+  text-align: left;
+}
+
+mjx-frac {
+  display: inline-block;
+  vertical-align: 0.17em;
+  padding: 0 .22em;
+}
+
+mjx-frac[type="d"] {
+  vertical-align: .04em;
+}
+
+mjx-frac[delims] {
+  padding: 0 .1em;
+}
+
+mjx-frac[atop] {
+  padding: 0 .12em;
+}
+
+mjx-frac[atop][delims] {
+  padding: 0;
+}
+
+mjx-dtable {
+  display: inline-table;
+  width: 100%;
+}
+
+mjx-dtable > * {
+  font-size: 2000%;
+}
+
+mjx-dbox {
+  display: block;
+  font-size: 5%;
+}
+
+mjx-num {
+  display: block;
+  text-align: center;
+}
+
+mjx-den {
+  display: block;
+  text-align: center;
+}
+
+mjx-mfrac[bevelled] > mjx-num {
+  display: inline-block;
+}
+
+mjx-mfrac[bevelled] > mjx-den {
+  display: inline-block;
+}
+
+mjx-den[align="right"], mjx-num[align="right"] {
+  text-align: right;
+}
+
+mjx-den[align="left"], mjx-num[align="left"] {
+  text-align: left;
+}
+
+mjx-nstrut {
+  display: inline-block;
+  height: .054em;
+  width: 0;
+  vertical-align: -.054em;
+}
+
+mjx-nstrut[type="d"] {
+  height: .217em;
+  vertical-align: -.217em;
+}
+
+mjx-dstrut {
+  display: inline-block;
+  height: .505em;
+  width: 0;
+}
+
+mjx-dstrut[type="d"] {
+  height: .726em;
+}
+
+mjx-line {
+  display: block;
+  box-sizing: border-box;
+  min-height: 1px;
+  height: .06em;
+  border-top: .06em solid;
+  margin: .06em -.1em;
+  overflow: hidden;
+}
+
+mjx-line[type="d"] {
+  margin: .18em -.1em;
+}
+
+mjx-mi {
+  display: inline-block;
+  text-align: left;
+}
+
+mjx-TeXAtom {
+  display: inline-block;
+  text-align: left;
+}
+
+mjx-mspace {
+  display: inline-block;
+  text-align: left;
+}
+
+mjx-mrow {
+  display: inline-block;
+  text-align: left;
+}
+
+mjx-mtable {
+  display: inline-block;
+  text-align: center;
+  vertical-align: .25em;
+  position: relative;
+  box-sizing: border-box;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+mjx-mstyle[size="s"] mjx-mtable {
+  vertical-align: .354em;
+}
+
+mjx-labels {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+mjx-table {
+  display: inline-block;
+  vertical-align: -.5ex;
+  box-sizing: border-box;
+}
+
+mjx-table > mjx-itable {
+  vertical-align: middle;
+  text-align: left;
+  box-sizing: border-box;
+}
+
+mjx-labels > mjx-itable {
+  position: absolute;
+  top: 0;
+}
+
+mjx-mtable[justify="left"] {
+  text-align: left;
+}
+
+mjx-mtable[justify="right"] {
+  text-align: right;
+}
+
+mjx-mtable[justify="left"][side="left"] {
+  padding-right: 0 ! important;
+}
+
+mjx-mtable[justify="left"][side="right"] {
+  padding-left: 0 ! important;
+}
+
+mjx-mtable[justify="right"][side="left"] {
+  padding-right: 0 ! important;
+}
+
+mjx-mtable[justify="right"][side="right"] {
+  padding-left: 0 ! important;
+}
+
+mjx-mtable[align] {
+  vertical-align: baseline;
+}
+
+mjx-mtable[align="top"] > mjx-table {
+  vertical-align: top;
+}
+
+mjx-mtable[align="bottom"] > mjx-table {
+  vertical-align: bottom;
+}
+
+mjx-mtable[side="right"] mjx-labels {
+  min-width: 100%;
+}
+
+mjx-mtr {
+  display: table-row;
+  text-align: left;
+}
+
+mjx-mtr[rowalign="top"] > mjx-mtd {
+  vertical-align: top;
+}
+
+mjx-mtr[rowalign="center"] > mjx-mtd {
+  vertical-align: middle;
+}
+
+mjx-mtr[rowalign="bottom"] > mjx-mtd {
+  vertical-align: bottom;
+}
+
+mjx-mtr[rowalign="baseline"] > mjx-mtd {
+  vertical-align: baseline;
+}
+
+mjx-mtr[rowalign="axis"] > mjx-mtd {
+  vertical-align: .25em;
+}
+
+mjx-mtd {
+  display: table-cell;
+  text-align: center;
+  padding: .215em .4em;
+}
+
+mjx-mtd:first-child {
+  padding-left: 0;
+}
+
+mjx-mtd:last-child {
+  padding-right: 0;
+}
+
+mjx-mtable > * > mjx-itable > *:first-child > mjx-mtd {
+  padding-top: 0;
+}
+
+mjx-mtable > * > mjx-itable > *:last-child > mjx-mtd {
+  padding-bottom: 0;
+}
+
+mjx-tstrut {
+  display: inline-block;
+  height: 1em;
+  vertical-align: -.25em;
+}
+
+mjx-labels[align="left"] > mjx-mtr > mjx-mtd {
+  text-align: left;
+}
+
+mjx-labels[align="right"] > mjx-mtr > mjx-mtd {
+  text-align: right;
+}
+
+mjx-mtd[extra] {
+  padding: 0;
+}
+
+mjx-mtd[rowalign="top"] {
+  vertical-align: top;
+}
+
+mjx-mtd[rowalign="center"] {
+  vertical-align: middle;
+}
+
+mjx-mtd[rowalign="bottom"] {
+  vertical-align: bottom;
+}
+
+mjx-mtd[rowalign="baseline"] {
+  vertical-align: baseline;
+}
+
+mjx-mtd[rowalign="axis"] {
+  vertical-align: .25em;
+}
+
+mjx-c::before {
+  display: block;
+  width: 0;
+}
+
+.MJX-TEX {
+  font-family: MJXZERO, MJXTEX;
+}
+
+.TEX-B {
+  font-family: MJXZERO, MJXTEX-B;
+}
+
+.TEX-I {
+  font-family: MJXZERO, MJXTEX-I;
+}
+
+.TEX-MI {
+  font-family: MJXZERO, MJXTEX-MI;
+}
+
+.TEX-BI {
+  font-family: MJXZERO, MJXTEX-BI;
+}
+
+.TEX-S1 {
+  font-family: MJXZERO, MJXTEX-S1;
+}
+
+.TEX-S2 {
+  font-family: MJXZERO, MJXTEX-S2;
+}
+
+.TEX-S3 {
+  font-family: MJXZERO, MJXTEX-S3;
+}
+
+.TEX-S4 {
+  font-family: MJXZERO, MJXTEX-S4;
+}
+
+.TEX-A {
+  font-family: MJXZERO, MJXTEX-A;
+}
+
+.TEX-C {
+  font-family: MJXZERO, MJXTEX-C;
+}
+
+.TEX-CB {
+  font-family: MJXZERO, MJXTEX-CB;
+}
+
+.TEX-FR {
+  font-family: MJXZERO, MJXTEX-FR;
+}
+
+.TEX-FRB {
+  font-family: MJXZERO, MJXTEX-FRB;
+}
+
+.TEX-SS {
+  font-family: MJXZERO, MJXTEX-SS;
+}
+
+.TEX-SSB {
+  font-family: MJXZERO, MJXTEX-SSB;
+}
+
+.TEX-SSI {
+  font-family: MJXZERO, MJXTEX-SSI;
+}
+
+.TEX-SC {
+  font-family: MJXZERO, MJXTEX-SC;
+}
+
+.TEX-T {
+  font-family: MJXZERO, MJXTEX-T;
+}
+
+.TEX-V {
+  font-family: MJXZERO, MJXTEX-V;
+}
+
+.TEX-VB {
+  font-family: MJXZERO, MJXTEX-VB;
+}
+
+mjx-stretchy-v mjx-c, mjx-stretchy-h mjx-c {
+  font-family: MJXZERO, MJXTEX-S1, MJXTEX-S4, MJXTEX, MJXTEX-A ! important;
+}
+
+@font-face /* 0 */ {
+  font-family: MJXZERO;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Zero.woff") format("woff");
+}
+
+@font-face /* 1 */ {
+  font-family: MJXTEX;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Main-Regular.woff") format("woff");
+}
+
+@font-face /* 2 */ {
+  font-family: MJXTEX-B;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Main-Bold.woff") format("woff");
+}
+
+@font-face /* 3 */ {
+  font-family: MJXTEX-I;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Math-Italic.woff") format("woff");
+}
+
+@font-face /* 4 */ {
+  font-family: MJXTEX-MI;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Main-Italic.woff") format("woff");
+}
+
+@font-face /* 5 */ {
+  font-family: MJXTEX-BI;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Math-BoldItalic.woff") format("woff");
+}
+
+@font-face /* 6 */ {
+  font-family: MJXTEX-S1;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Size1-Regular.woff") format("woff");
+}
+
+@font-face /* 7 */ {
+  font-family: MJXTEX-S2;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Size2-Regular.woff") format("woff");
+}
+
+@font-face /* 8 */ {
+  font-family: MJXTEX-S3;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Size3-Regular.woff") format("woff");
+}
+
+@font-face /* 9 */ {
+  font-family: MJXTEX-S4;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Size4-Regular.woff") format("woff");
+}
+
+@font-face /* 10 */ {
+  font-family: MJXTEX-A;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_AMS-Regular.woff") format("woff");
+}
+
+@font-face /* 11 */ {
+  font-family: MJXTEX-C;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Calligraphic-Regular.woff") format("woff");
+}
+
+@font-face /* 12 */ {
+  font-family: MJXTEX-CB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Calligraphic-Bold.woff") format("woff");
+}
+
+@font-face /* 13 */ {
+  font-family: MJXTEX-FR;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Fraktur-Regular.woff") format("woff");
+}
+
+@font-face /* 14 */ {
+  font-family: MJXTEX-FRB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Fraktur-Bold.woff") format("woff");
+}
+
+@font-face /* 15 */ {
+  font-family: MJXTEX-SS;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Regular.woff") format("woff");
+}
+
+@font-face /* 16 */ {
+  font-family: MJXTEX-SSB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Bold.woff") format("woff");
+}
+
+@font-face /* 17 */ {
+  font-family: MJXTEX-SSI;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Italic.woff") format("woff");
+}
+
+@font-face /* 18 */ {
+  font-family: MJXTEX-SC;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Script-Regular.woff") format("woff");
+}
+
+@font-face /* 19 */ {
+  font-family: MJXTEX-T;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Typewriter-Regular.woff") format("woff");
+}
+
+@font-face /* 20 */ {
+  font-family: MJXTEX-V;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Vector-Regular.woff") format("woff");
+}
+
+@font-face /* 21 */ {
+  font-family: MJXTEX-VB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Vector-Bold.woff") format("woff");
+}
+
+mjx-stretchy-v.mjx-c7B mjx-beg mjx-c::before {
+  content: "\23A7";
+  padding: 0.899em 0.889em 0.01em 0;
+}
+
+mjx-stretchy-v.mjx-c7B mjx-ext mjx-c::before {
+  content: "\23AA";
+  width: 0.889em;
+}
+
+mjx-stretchy-v.mjx-c7B mjx-end mjx-c::before {
+  content: "\23A9";
+  padding: 0.01em 0.889em 0.899em 0;
+}
+
+mjx-stretchy-v.mjx-c7B mjx-mid mjx-c::before {
+  content: "\23A8";
+  padding: 1.16em 0.889em 0.66em 0;
+}
+
+mjx-stretchy-v.mjx-c7B > mjx-mid {
+  margin-top: -0.91em;
+  margin-bottom: -0.91em;
+}
+
+mjx-stretchy-v.mjx-c7B > mjx-end {
+  margin-top: -0.909em;
+}
+
+mjx-stretchy-v.mjx-c7B > mjx-ext {
+  height: 50%;
+  border-top-width: 0.879em;
+  border-bottom-width: 0.879em;
+}
+
+mjx-c.mjx-c2212::before {
+  padding: 0.583em 0.778em 0.082em 0;
+  content: "\2212";
+}
+
+mjx-c.mjx-c31::before {
+  padding: 0.666em 0.5em 0 0;
+  content: "1";
+}
+
+mjx-c.mjx-c2C::before {
+  padding: 0.121em 0.278em 0.194em 0;
+  content: ",";
+}
+
+mjx-c.mjx-c32::before {
+  padding: 0.666em 0.5em 0 0;
+  content: "2";
+}
+
+mjx-c.mjx-c2208::before {
+  padding: 0.54em 0.667em 0.04em 0;
+  content: "\2208";
+}
+
+mjx-c.mjx-c1D715::before {
+  padding: 0.715em 0.566em 0.022em 0;
+  content: "\2202";
+}
+
+mjx-c.mjx-c7C::before {
+  padding: 0.75em 0.278em 0.249em 0;
+  content: "|";
+}
+
+mjx-c.mjx-c22C5::before {
+  padding: 0.31em 0.278em 0 0;
+  content: "\22C5";
+}
+
+mjx-c.mjx-c28::before {
+  padding: 0.75em 0.389em 0.25em 0;
+  content: "(";
+}
+
+mjx-c.mjx-c30::before {
+  padding: 0.666em 0.5em 0.022em 0;
+  content: "0";
+}
+
+mjx-c.mjx-c29::before {
+  padding: 0.75em 0.389em 0.25em 0;
+  content: ")";
+}
+
+mjx-c.mjx-c2209::before {
+  padding: 0.716em 0.667em 0.215em 0;
+  content: "\2209";
+}
+
+mjx-c.mjx-c3D::before {
+  padding: 0.583em 0.778em 0.082em 0;
+  content: "=";
+}
+
+mjx-c.mjx-c7B::before {
+  padding: 0.75em 0.5em 0.25em 0;
+  content: "{";
+}
+
+mjx-c.mjx-c7D::before {
+  padding: 0.75em 0.5em 0.25em 0;
+  content: "}";
+}
+
+mjx-c.mjx-cAC::before {
+  padding: 0.356em 0.667em 0 0;
+  content: "\AC";
+}
+
+mjx-c.mjx-c2203::before {
+  padding: 0.694em 0.556em 0 0;
+  content: "\2203";
+}
+
+mjx-c.mjx-c1D454.TEX-I::before {
+  padding: 0.442em 0.477em 0.205em 0;
+  content: "g";
+}
+
+mjx-c.mjx-cA0::before {
+  padding: 0 0.25em 0 0;
+  content: "\A0";
+}
+
+mjx-c.mjx-c1D465.TEX-I::before {
+  padding: 0.442em 0.572em 0.011em 0;
+  content: "x";
+}
+
+mjx-c.mjx-c3E::before {
+  padding: 0.54em 0.778em 0.04em 0;
+  content: ">";
+}
+
+mjx-c.mjx-c21D2::before {
+  padding: 0.525em 1em 0.024em 0;
+  content: "\21D2";
+}
+
+mjx-c.mjx-c3B::before {
+  padding: 0.43em 0.278em 0.194em 0;
+  content: ";";
+}
+
+mjx-c.mjx-c3C::before {
+  padding: 0.54em 0.778em 0.04em 0;
+  content: "<";
+}
+
+mjx-c.mjx-c27FA::before {
+  padding: 0.525em 1.858em 0.024em 0;
+  content: "\27FA";
+}
+
+mjx-c.mjx-c2264::before {
+  padding: 0.636em 0.778em 0.138em 0;
+  content: "\2264";
+}
+
+mjx-c.mjx-c2200::before {
+  padding: 0.694em 0.556em 0.022em 0;
+  content: "\2200";
+}
+
+mjx-c.mjx-c211D.TEX-A::before {
+  padding: 0.683em 0.722em 0 0;
+  content: "R";
+}
+
+mjx-c.mjx-c74::before {
+  padding: 0.615em 0.389em 0.01em 0;
+  content: "t";
+}
+
+mjx-c.mjx-c68::before {
+  padding: 0.694em 0.556em 0 0;
+  content: "h";
+}
+
+mjx-c.mjx-c65::before {
+  padding: 0.448em 0.444em 0.011em 0;
+  content: "e";
+}
+
+mjx-c.mjx-c20::before {
+  padding: 0 0.25em 0 0;
+  content: " ";
+}
+
+mjx-c.mjx-c73::before {
+  padding: 0.448em 0.394em 0.011em 0;
+  content: "s";
+}
+
+mjx-c.mjx-c6F::before {
+  padding: 0.448em 0.5em 0.01em 0;
+  content: "o";
+}
+
+mjx-c.mjx-c75::before {
+  padding: 0.442em 0.556em 0.011em 0;
+  content: "u";
+}
+
+mjx-c.mjx-c72::before {
+  padding: 0.442em 0.392em 0 0;
+  content: "r";
+}
+
+mjx-c.mjx-c63::before {
+  padding: 0.448em 0.444em 0.011em 0;
+  content: "c";
+}
+
+mjx-c.mjx-c2D::before {
+  padding: 0.252em 0.333em 0 0;
+  content: "-";
+}
+
+mjx-c.mjx-c61::before {
+  padding: 0.448em 0.5em 0.011em 0;
+  content: "a";
+}
+
+mjx-c.mjx-c5B::before {
+  padding: 0.75em 0.278em 0.25em 0;
+  content: "[";
+}
+
+mjx-c.mjx-c5D::before {
+  padding: 0.75em 0.278em 0.25em 0;
+  content: "]";
+}
+</style></head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle="" aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar="" aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle="" aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search="" type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results="" role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden=""></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group active" data-nav-group="books" data-nav-group-active="true" open=""><summary class="nav-group-title"><span>Books</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../books/index.html">Books overview</a><a href="../../books/bandit/index.html">Bandit Book</a><a href="../../books/reinforcement-learning/index.html">Reinforcement Learning Book</a><a href="../../books/online-learning/index.html">Online Learning Book</a><a href="../../books/conformal-prediction/index.html">Conformal Prediction Book</a><details class="nav-group active" data-nav-group="bandit-book" data-nav-group-active="true" open=""><summary class="nav-group-title"><span>Shared chapter contents</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><p class="nav-section-label">Teaching routes · 01–40</p><a href="../../learning/index.html">Reading paths</a><a class="book-nav-link" href="../foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../frontier/index.html"><span>10</span>Frontier</a><a class="book-nav-link" href="../online-ogd/index.html"><span>11</span>Projected OGD</a><a class="book-nav-link" href="../online-foundations/index.html"><span>12</span>Online foundations</a><a class="book-nav-link" href="../online-convex/index.html"><span>13</span>Extended convexity</a><a class="book-nav-link" href="../online-convex-closures/index.html"><span>14</span>Convex constructions</a><a class="book-nav-link" href="../online-first-order/index.html"><span>15</span>Supporting gradients</a><a class="book-nav-link" href="../online-optimality/index.html"><span>16</span>Convex optimality</a><a class="book-nav-link" href="../online-expectation/index.html"><span>17</span>Expectation foundations</a><a class="book-nav-link" href="../online-barycenter/index.html"><span>18</span>Convex barycenters</a><a class="book-nav-link" href="../online-minorant/index.html"><span>19</span>Affine minorants</a><a class="book-nav-link" href="../online-jensen/index.html"><span>20</span>Source Jensen</a><a class="book-nav-link" href="../online-ftl-failure/index.html"><span>21</span>FTL counterexample</a><a class="book-nav-link" href="../online-guessing-ogd/index.html"><span>22</span>Guessing-game OGD</a><a class="book-nav-link" href="../online-huber/index.html"><span>23</span>Huber OGD</a><a class="book-nav-link" href="../online-closed-proper/index.html"><span>24</span>Closed and proper</a><a class="book-nav-link" href="../online-subgradient-basic/index.html"><span>25</span>Subgradient foundations</a><a class="book-nav-link" href="../online-subgradient-interior/index.html"><span>26</span>Relative interior supports</a><a class="book-nav-link" href="../online-subgradient-differentiability/index.html"><span>27</span>Singleton and real germ</a><a class="book-nav-link" href="../online-subgradient-sum/index.html"><span>28</span>Sum rule</a><a class="book-nav-link" href="index.html" aria-current="page"><span>29</span>Absolute value</a><a class="book-nav-link" href="../online-normal-cone/index.html"><span>30</span>Normal cones</a><a class="book-nav-link" href="../online-subgradient-max/index.html"><span>31</span>Finite maximum</a><a class="book-nav-link" href="../online-hinge/index.html"><span>32</span>Hinge loss</a><a class="book-nav-link" href="../online-affine-subgradient/index.html"><span>33</span>Affine chain rule</a><a class="book-nav-link" href="../online-lipschitz/index.html"><span>34</span>Lipschitz bounds</a><a class="book-nav-link" href="../online-osd/index.html"><span>35</span>Projected OSD</a><a class="book-nav-link" href="../online-guessing-osd/index.html"><span>36</span>Absolute-loss guessing</a><a class="book-nav-link" href="../online-osd-policy/index.html"><span>37</span>History-dependent OSD</a><a class="book-nav-link" href="../online-linearization/index.html"><span>38</span>Convex-to-linear reduction</a><a class="book-nav-link" href="../online-optimal-step/index.html"><span>39</span>Scalar step-size optimization</a><a class="book-nav-link" href="../online-unit-scaling/index.html"><span>40</span>OSD unit scaling</a><p class="nav-section-label">Source chapters · Part IV</p><a href="../../textbook-spine/index.html">Source chapters 13–17</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a><a href="../../books/bandit/index.html#extended-chapters">Beyond the core textbook</a></div></details></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/setting-atlas/index.html">Bandit Taxonomy</a><a href="../../banditrlwiki/technique-map/index.html">Technique Map</a><a href="../../banditrlwiki/index.html">Bound &amp; Source Atlas</a><a href="../../banditrlwiki/frontier-problems/index.html">Frontier · open problems</a><a href="../../banditrlwiki/frontier/index.html">Lean formalization frontier</a><a href="../../functor-hypergraph/index.html">Functor Hypergraph</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../contributors/index.html">Contributors</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep">GitHub repository <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim="" aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Lean gate passed before this site build; local proof declarations are shown as compiled.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><nav class="book-breadcrumb" aria-label="Breadcrumb"><a href="../../books/index.html">Books</a><span aria-hidden="true"> / </span><a href="../../books/online-learning/index.html">Online Learning Book</a><span aria-hidden="true"> / </span><span aria-current="page">Absolute-value subdifferential</span></nav>
+<section class="hero" id="chapter">
+  <p class="eyebrow">Teaching chapter 29 of 40 · <span class="status compiled">Canonical route compiled</span></p>
+  <h1 class="page-title">Absolute-value subdifferential</h1>
+  <p class="lede">Characterize every global real support slope; retain the full closed zero interval.</p>
+  <p class="chapter-scope-note"><strong>How to read the status.</strong> It describes this page's canonical local Lean route, not completion of the cited textbook chapter or every extension listed below.</p>
+</section>
+
+
+<nav class="chapter-compass" data-chapter-compass="" aria-label="Chapter reading order">
+  <a href="#orientation"><span class="chapter-compass-step">01 · Orient</span><strong>What you need</strong><small>3 learning goals and the intended reader.</small></a>
+  <a href="#source-guide"><span class="chapter-compass-step">02 · Learn</span><strong>Characterize all global supports</strong><small>Section2.2.1, Example2.24, printed18/PDF30; ONE example and THREE exhaustive sign cases · printed18/PDF30. 1 source theorem restatement, with assumptions and original links. Includes a worked example.</small></a>
+  <a href="#teaching-notes"><span class="chapter-compass-step">03 · Verify</span><strong>Mathematics ↔ Lean</strong><small>Read intuition and proof structure, then open the exact compiled declaration.</small></a>
+</nav>
+
+<section id="orientation">
+  <h2>Orientation</h2>
+  <p><strong>Who should read this.</strong> Readers of Orabona Example2.24.</p>
+  <h3>Learning goals</h3>
+  <ul><li>Prove necessity and global sufficiency in every sign case.</li><li>Keep both zero-interval endpoints and fractional slopes.</li><li>Use the actual shared supporting inequality, without assuming a chosen subgradient.</li></ul>
+</section>
+
+
+<section id="source-guide" class="source-guide">
+  <p class="eyebrow">Textbook crosswalk</p>
+  <h2>Read the mathematics before the Lean interface</h2>
+  <p class="section-intro">This reading follows <em>Online Learning: A Modern Introduction Using Convex Optimization</em>. Teaching routes group mathematical dependencies across the shared library. Visible page labels use the cited source's numbered pages; source buttons use the PDF viewer's physical page index, including front matter. Companion papers cover algorithm-specific results.</p>
+  <div class="source-grid source-grid-1">
+<article class="source-card">
+  <span class="panel-kicker">Primary spine · arXiv:1912.13213v10,21June2026</span>
+  <h3>Online Learning: A Modern Introduction Using Convex Optimization</h3>
+  <p>Francesco Orabona</p>
+  <dl><div><dt>Location</dt><dd>Section2.2.1, Example2.24, printed18/PDF30; ONE example and THREE exhaustive sign cases</dd></div><div><dt>Pages</dt><dd>printed18/PDF30</dd></div></dl>
+  <a class="button compact" href="https://arxiv.org/pdf/1912.13213v10#page=30">Open at the cited pages <span aria-hidden="true">↗</span></a>
+</article></div>
+
+
+  <aside class="notation-primer" id="notation" aria-labelledby="notation-title">
+    <div><span class="panel-kicker">Reader checkpoint</span><h3 id="notation-title">Notation you will meet</h3></div>
+    <dl><div><dt><code>Global scalar support</code></dt><dd>A real slope g satisfies |x|+g(y-x)≤|y| for every real test y. This is a whole set characterization, not a selected slope. ONE printed Example2.24, THREE cases, four retained proof refinements and zero production definitions/new mathematical or TEST declarations. All four actual signatures specialize to scalar ℝ; no E/finite-dimensional/completeness binder or added convexity/differentiability/domain/support premise.</dd></div><div><dt><code>Closed interval at zero</code></dt><dd>Icc(-1,1) contains both endpoints and every fractional slope between them. At zero, tests y=1,-1 give -1≤g≤1. Conversely, any g in the FULL CLOSED interval globally supports: multiply the upper bound when y≥0 and the lower bound with reversed order when y&lt;0. Both endpoints and every interior slope remain; choosing only0 or asserting existence is weaker.</dd></div><div><dt><code>Finite EReal embedding</code></dt><dd>The scalar absolute value is always finite. Its EReal embedding preserves addition and order and reuses the shared Lean support definition. The shared global SourceSubdifferential predicate permits arbitrary EReal functions, wider than the printed proper-function definition. Here y↦|y| is finite and proper at EVERY real y, and its real EReal embedding preserves addition and order. The complete support definition is borrowed shared context, not a new owned declaration.</dd></div></dl>
+  </aside>
+  <div class="algorithm-panel" id="algorithm">
+    <div><span class="panel-kicker">proof flow · ordered flow</span><h3>Characterize all global supports</h3><p class="algorithm-intro">Read top to bottom: each step supplies the state or proof fact used by the next one.</p></div>
+    <ol class="algorithm-flow"><li><span class="algorithm-step-number" aria-hidden="true">01</span><div><strong>Test necessary inequalities</strong><p>At nonzero x, actual tests y=0 and y=2x give x(g-1)=0 for positive x or x(g+1)=0 for negative x. The strict sign guarantees x≠0 for cancellation. The inequalities y≤|y| and -y≤|y| prove sufficiency at EVERY real y. At zero, tests y=1,-1 give -1≤g≤1. Conversely, any g in the FULL CLOSED interval globally supports: multiply the upper bound when y≥0 and the lower bound with reversed order when y&lt;0. Both endpoints and every interior slope remain; choosing only0 or asserting existence is weaker.</p></div></li><li><span class="algorithm-step-number" aria-hidden="true">02</span><div><strong>Prove every proposed slope works</strong><p>Prove both directions with every global test y. At zero, tests y=1,-1 give -1≤g≤1. Conversely, any g in the FULL CLOSED interval globally supports: multiply the upper bound when y≥0 and the lower bound with reversed order when y&lt;0. Both endpoints and every interior slope remain; choosing only0 or asserting existence is weaker. At nonzero x, actual tests y=0 and y=2x give x(g-1)=0 for positive x or x(g+1)=0 for negative x. The strict sign guarantees x≠0 for cancellation. The inequalities y≤|y| and -y≤|y| prove sufficiency at EVERY real y.</p></div></li><li><span class="algorithm-step-number" aria-hidden="true">03</span><div><strong>Cover every real query</strong><p>The exact allx terminal dispatches the three proved equalities, deriving x&lt;0 in the final else. No support inequality is assumed as a consumer premise.</p></div></li></ol>
+
+  </div>
+
+  <aside class="worked-example" id="worked-example" aria-labelledby="worked-example-title">
+    <div class="worked-example-heading"><span class="panel-kicker">Worked example · follow one decision</span><h3 id="worked-example-title">Fractional and boundary slopes at the kink</h3><p>Whole three existing canary proofs were freshly checked: endpoints -1/1, fractional1/2 and exclusion2 at zero; impossibility of ANY singleton answer; full all-query source terminal instantiated at2,-2,0. Zero new TEST declarations.</p></div>
+    <ol class="worked-example-flow"><li class="worked-example-step"><span class="worked-example-number" aria-hidden="true">01</span><div class="worked-example-copy"><strong>Zero has many supports</strong><p>Slopes -1,1 and1/2 all support |y| at zero; slope2 does not. The support set cannot be a singleton.</p></div><div class="math-statement math-rendered" data-math-statement="" data-scroll-label="Worked example step 1"><strong>Worked example step 1.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback" aria-hidden="true">Zero is not replaced by the single slope0.</span><span class="math-tex" aria-hidden="false"><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" display="true" tabindex="0" ctxtmenu_counter="0" style="font-size: 113.2%; position: relative;"><mjx-math display="true" class="MJX-TEX" aria-hidden="true" style="margin-left: 0px; margin-right: 0px;"><mjx-mo class="mjx-n"><mjx-c class="mjx-c2212"></mjx-c></mjx-mo><mjx-mn class="mjx-n"><mjx-c class="mjx-c31"></mjx-c></mjx-mn><mjx-mo class="mjx-n"><mjx-c class="mjx-c2C"></mjx-c></mjx-mo><mjx-mn class="mjx-n" space="2"><mjx-c class="mjx-c31"></mjx-c></mjx-mn><mjx-mo class="mjx-n"><mjx-c class="mjx-c2C"></mjx-c></mjx-mo><mjx-mstyle space="2"><mjx-mfrac><mjx-frac><mjx-num><mjx-nstrut></mjx-nstrut><mjx-mn class="mjx-n" size="s"><mjx-c class="mjx-c31"></mjx-c></mjx-mn></mjx-num><mjx-dbox><mjx-dtable><mjx-line></mjx-line><mjx-row><mjx-den><mjx-dstrut></mjx-dstrut><mjx-mn class="mjx-n" size="s"><mjx-c class="mjx-c32"></mjx-c></mjx-mn></mjx-den></mjx-row></mjx-dtable></mjx-dbox></mjx-frac></mjx-mfrac></mjx-mstyle><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c2208"></mjx-c></mjx-mo><mjx-mi class="mjx-i" space="4"><mjx-c class="mjx-c1D715"></mjx-c></mjx-mi><mjx-texatom texclass="ORD"><mjx-mo class="mjx-n"><mjx-c class="mjx-c7C"></mjx-c></mjx-mo></mjx-texatom><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-c22C5"></mjx-c></mjx-mo><mjx-texatom space="3" texclass="ORD"><mjx-mo class="mjx-n"><mjx-c class="mjx-c7C"></mjx-c></mjx-mo></mjx-texatom><mjx-mo class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mn class="mjx-n"><mjx-c class="mjx-c30"></mjx-c></mjx-mn><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-mo class="mjx-n"><mjx-c class="mjx-c2C"></mjx-c></mjx-mo><mjx-mstyle><mjx-mspace style="width: 1em;"></mjx-mspace></mjx-mstyle><mjx-mn class="mjx-n" space="2"><mjx-c class="mjx-c32"></mjx-c></mjx-mn><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c2209"></mjx-c></mjx-mo><mjx-mi class="mjx-i" space="4"><mjx-c class="mjx-c1D715"></mjx-c></mjx-mi><mjx-texatom texclass="ORD"><mjx-mo class="mjx-n"><mjx-c class="mjx-c7C"></mjx-c></mjx-mo></mjx-texatom><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-c22C5"></mjx-c></mjx-mo><mjx-texatom space="3" texclass="ORD"><mjx-mo class="mjx-n"><mjx-c class="mjx-c7C"></mjx-c></mjx-mo></mjx-texatom><mjx-mo class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mn class="mjx-n"><mjx-c class="mjx-c30"></mjx-c></mjx-mn><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo></mjx-math><mjx-assistive-mml unselectable="on" display="block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mo>−</mo><mn>1</mn><mo>,</mo><mn>1</mn><mo>,</mo><mstyle displaystyle="false" scriptlevel="0"><mfrac><mn>1</mn><mn>2</mn></mfrac></mstyle><mo>∈</mo><mi>∂</mi><mrow data-mjx-texclass="ORD"><mo stretchy="false">|</mo></mrow><mo>⋅</mo><mrow data-mjx-texclass="ORD"><mo stretchy="false">|</mo></mrow><mo stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo><mo>,</mo><mstyle scriptlevel="0"><mspace width="1em"></mspace></mstyle><mn>2</mn><mo>∉</mo><mi>∂</mi><mrow data-mjx-texclass="ORD"><mo stretchy="false">|</mo></mrow><mo>⋅</mo><mrow data-mjx-texclass="ORD"><mo stretchy="false">|</mo></mrow><mo stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo></math></mjx-assistive-mml></mjx-container></span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div></li><li class="worked-example-step"><span class="worked-example-number" aria-hidden="true">02</span><div class="worked-example-copy"><strong>Nonzero queries</strong><p>Instantiate the complete original terminal at2,-2 and0 to exercise all source branches.</p></div><div class="math-statement math-rendered" data-math-statement="" data-scroll-label="Worked example step 2"><strong>Worked example step 2.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback" aria-hidden="true">Both nonzero sides and the zero branch are checked.</span><span class="math-tex" aria-hidden="false"><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" display="true" tabindex="0" ctxtmenu_counter="1" style="font-size: 113.2%; position: relative;"><mjx-math display="true" class="MJX-TEX" aria-hidden="true" style="margin-left: 0px; margin-right: 0px;"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D715"></mjx-c></mjx-mi><mjx-texatom texclass="ORD"><mjx-mo class="mjx-n"><mjx-c class="mjx-c7C"></mjx-c></mjx-mo></mjx-texatom><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-c22C5"></mjx-c></mjx-mo><mjx-texatom space="3" texclass="ORD"><mjx-mo class="mjx-n"><mjx-c class="mjx-c7C"></mjx-c></mjx-mo></mjx-texatom><mjx-mo class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mn class="mjx-n"><mjx-c class="mjx-c32"></mjx-c></mjx-mn><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c3D"></mjx-c></mjx-mo><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c7B"></mjx-c></mjx-mo><mjx-mn class="mjx-n"><mjx-c class="mjx-c31"></mjx-c></mjx-mn><mjx-mo class="mjx-n"><mjx-c class="mjx-c7D"></mjx-c></mjx-mo><mjx-mo class="mjx-n"><mjx-c class="mjx-c2C"></mjx-c></mjx-mo><mjx-mstyle><mjx-mspace style="width: 1em;"></mjx-mspace></mjx-mstyle><mjx-mi class="mjx-i" space="2"><mjx-c class="mjx-c1D715"></mjx-c></mjx-mi><mjx-texatom texclass="ORD"><mjx-mo class="mjx-n"><mjx-c class="mjx-c7C"></mjx-c></mjx-mo></mjx-texatom><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-c22C5"></mjx-c></mjx-mo><mjx-texatom space="3" texclass="ORD"><mjx-mo class="mjx-n"><mjx-c class="mjx-c7C"></mjx-c></mjx-mo></mjx-texatom><mjx-mo class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mo class="mjx-n"><mjx-c class="mjx-c2212"></mjx-c></mjx-mo><mjx-mn class="mjx-n"><mjx-c class="mjx-c32"></mjx-c></mjx-mn><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c3D"></mjx-c></mjx-mo><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c7B"></mjx-c></mjx-mo><mjx-mo class="mjx-n"><mjx-c class="mjx-c2212"></mjx-c></mjx-mo><mjx-mn class="mjx-n"><mjx-c class="mjx-c31"></mjx-c></mjx-mn><mjx-mo class="mjx-n"><mjx-c class="mjx-c7D"></mjx-c></mjx-mo></mjx-math><mjx-assistive-mml unselectable="on" display="block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mi>∂</mi><mrow data-mjx-texclass="ORD"><mo stretchy="false">|</mo></mrow><mo>⋅</mo><mrow data-mjx-texclass="ORD"><mo stretchy="false">|</mo></mrow><mo stretchy="false">(</mo><mn>2</mn><mo stretchy="false">)</mo><mo>=</mo><mo fence="false" stretchy="false">{</mo><mn>1</mn><mo fence="false" stretchy="false">}</mo><mo>,</mo><mstyle scriptlevel="0"><mspace width="1em"></mspace></mstyle><mi>∂</mi><mrow data-mjx-texclass="ORD"><mo stretchy="false">|</mo></mrow><mo>⋅</mo><mrow data-mjx-texclass="ORD"><mo stretchy="false">|</mo></mrow><mo stretchy="false">(</mo><mo>−</mo><mn>2</mn><mo stretchy="false">)</mo><mo>=</mo><mo fence="false" stretchy="false">{</mo><mo>−</mo><mn>1</mn><mo fence="false" stretchy="false">}</mo></math></mjx-assistive-mml></mjx-container></span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div></li><li class="worked-example-step"><span class="worked-example-number" aria-hidden="true">03</span><div class="worked-example-copy"><strong>Exclude an invalid slope and a singleton answer</strong><p>The same zero equality excludes slope2, and the two distinct admitted endpoints prove that no singleton can equal the zero subdifferential.</p></div><div class="math-statement math-rendered" data-math-statement="" data-scroll-label="Worked example step 3"><strong>Worked example step 3.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback" aria-hidden="true">Both directions of the zero characterization are exercised.</span><span class="math-tex" aria-hidden="false"><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" display="true" tabindex="0" ctxtmenu_counter="2" style="font-size: 113.2%; position: relative;"><mjx-math display="true" class="MJX-TEX" aria-hidden="true" style="margin-left: 0px; margin-right: 0px;"><mjx-mn class="mjx-n"><mjx-c class="mjx-c32"></mjx-c></mjx-mn><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c2209"></mjx-c></mjx-mo><mjx-mi class="mjx-i" space="4"><mjx-c class="mjx-c1D715"></mjx-c></mjx-mi><mjx-texatom texclass="ORD"><mjx-mo class="mjx-n"><mjx-c class="mjx-c7C"></mjx-c></mjx-mo></mjx-texatom><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-c22C5"></mjx-c></mjx-mo><mjx-texatom space="3" texclass="ORD"><mjx-mo class="mjx-n"><mjx-c class="mjx-c7C"></mjx-c></mjx-mo></mjx-texatom><mjx-mo class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mn class="mjx-n"><mjx-c class="mjx-c30"></mjx-c></mjx-mn><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-mo class="mjx-n"><mjx-c class="mjx-c2C"></mjx-c></mjx-mo><mjx-mstyle><mjx-mspace style="width: 1em;"></mjx-mspace></mjx-mstyle><mjx-mi class="mjx-n" space="2"><mjx-c class="mjx-cAC"></mjx-c></mjx-mi><mjx-mi class="mjx-n"><mjx-c class="mjx-c2203"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D454 TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c2C"></mjx-c></mjx-mo><mjx-mtext class="mjx-n" space="2"><mjx-c class="mjx-cA0"></mjx-c></mjx-mtext><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D715"></mjx-c></mjx-mi><mjx-texatom texclass="ORD"><mjx-mo class="mjx-n"><mjx-c class="mjx-c7C"></mjx-c></mjx-mo></mjx-texatom><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-c22C5"></mjx-c></mjx-mo><mjx-texatom space="3" texclass="ORD"><mjx-mo class="mjx-n"><mjx-c class="mjx-c7C"></mjx-c></mjx-mo></mjx-texatom><mjx-mo class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mn class="mjx-n"><mjx-c class="mjx-c30"></mjx-c></mjx-mn><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c3D"></mjx-c></mjx-mo><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c7B"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D454 TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c7D"></mjx-c></mjx-mo></mjx-math><mjx-assistive-mml unselectable="on" display="block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mn>2</mn><mo>∉</mo><mi>∂</mi><mrow data-mjx-texclass="ORD"><mo stretchy="false">|</mo></mrow><mo>⋅</mo><mrow data-mjx-texclass="ORD"><mo stretchy="false">|</mo></mrow><mo stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo><mo>,</mo><mstyle scriptlevel="0"><mspace width="1em"></mspace></mstyle><mi mathvariant="normal">¬</mi><mi mathvariant="normal">∃</mi><mi>g</mi><mo>,</mo><mtext>&nbsp;</mtext><mi>∂</mi><mrow data-mjx-texclass="ORD"><mo stretchy="false">|</mo></mrow><mo>⋅</mo><mrow data-mjx-texclass="ORD"><mo stretchy="false">|</mo></mrow><mo stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo><mo>=</mo><mo fence="false" stretchy="false">{</mo><mi>g</mi><mo fence="false" stretchy="false">}</mo></math></mjx-assistive-mml></mjx-container></span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div></li></ol>
+    <p class="worked-example-takeaway"><strong>Takeaway.</strong> The nonsmooth point has the full closed interval, while nonzero points have unique slopes.</p>
+    <p class="worked-example-boundary"><strong>Scope.</strong> Only scalar Example2.24. Example2.25 normal cones and all remaining Chapter1/2 main-text/source-contract/necessary appendix obligations stay REQUIRED. Chapter2 mandatorytotal is null/incomplete; Chapters3–16 unenumerated and whole Goal ACTIVE. No multidimensional norm, algorithm/probability/regret/selection guarantee, merge/deploy/main/live update.</p>
+  </aside>
+
+  <aside class="proof-bridge" id="proof-bridge" aria-labelledby="proof-bridge-title">
+    <div class="proof-bridge-heading"><span class="panel-kicker">Proof bridge · source to Lean</span><h3 id="proof-bridge-title" tabindex="-1">Necessity and global sufficiency</h3><p>Direct scalar proofs close both directions in all three sign cases.</p></div>
+    <ol class="proof-bridge-flow"><li class="proof-bridge-step"><span class="proof-bridge-number" aria-hidden="true">01</span><div class="proof-bridge-copy"><strong>Positive and negative uniqueness</strong><p>At nonzero x, actual tests y=0 and y=2x give x(g-1)=0 for positive x or x(g+1)=0 for negative x. The strict sign guarantees x≠0 for cancellation. The inequalities y≤|y| and -y≤|y| prove sufficiency at EVERY real y.</p></div><div class="math-statement math-rendered" data-math-statement="" data-scroll-label="Step 1 equation"><strong>Step 1 equation.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback" aria-hidden="true">Both uniqueness and global support are proved.</span><span class="math-tex" aria-hidden="false"><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" display="true" tabindex="0" ctxtmenu_counter="3" style="font-size: 113%; position: relative;"><mjx-math display="true" class="MJX-TEX" aria-hidden="true" style="margin-left: 0px; margin-right: 0px;"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D454 TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c2208"></mjx-c></mjx-mo><mjx-mi class="mjx-i" space="4"><mjx-c class="mjx-c1D715"></mjx-c></mjx-mi><mjx-texatom texclass="ORD"><mjx-mo class="mjx-n"><mjx-c class="mjx-c7C"></mjx-c></mjx-mo></mjx-texatom><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-c22C5"></mjx-c></mjx-mo><mjx-texatom space="3" texclass="ORD"><mjx-mo class="mjx-n"><mjx-c class="mjx-c7C"></mjx-c></mjx-mo></mjx-texatom><mjx-mo class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D465 TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-mo class="mjx-n"><mjx-c class="mjx-c2C"></mjx-c></mjx-mo><mjx-mtext class="mjx-n" space="2"><mjx-c class="mjx-cA0"></mjx-c></mjx-mtext><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D465 TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c3E"></mjx-c></mjx-mo><mjx-mn class="mjx-n" space="4"><mjx-c class="mjx-c30"></mjx-c></mjx-mn><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c21D2"></mjx-c></mjx-mo><mjx-mi class="mjx-i" space="4"><mjx-c class="mjx-c1D454 TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c3D"></mjx-c></mjx-mo><mjx-mn class="mjx-n" space="4"><mjx-c class="mjx-c31"></mjx-c></mjx-mn><mjx-mo class="mjx-n"><mjx-c class="mjx-c3B"></mjx-c></mjx-mo><mjx-mstyle><mjx-mspace style="width: 1em;"></mjx-mspace></mjx-mstyle><mjx-mi class="mjx-i" space="2"><mjx-c class="mjx-c1D465 TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c3C"></mjx-c></mjx-mo><mjx-mn class="mjx-n" space="4"><mjx-c class="mjx-c30"></mjx-c></mjx-mn><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c21D2"></mjx-c></mjx-mo><mjx-mi class="mjx-i" space="4"><mjx-c class="mjx-c1D454 TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c3D"></mjx-c></mjx-mo><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c2212"></mjx-c></mjx-mo><mjx-mn class="mjx-n"><mjx-c class="mjx-c31"></mjx-c></mjx-mn></mjx-math><mjx-assistive-mml unselectable="on" display="block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mi>g</mi><mo>∈</mo><mi>∂</mi><mrow data-mjx-texclass="ORD"><mo stretchy="false">|</mo></mrow><mo>⋅</mo><mrow data-mjx-texclass="ORD"><mo stretchy="false">|</mo></mrow><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>,</mo><mtext>&nbsp;</mtext><mi>x</mi><mo>&gt;</mo><mn>0</mn><mo stretchy="false">⇒</mo><mi>g</mi><mo>=</mo><mn>1</mn><mo>;</mo><mstyle scriptlevel="0"><mspace width="1em"></mspace></mstyle><mi>x</mi><mo>&lt;</mo><mn>0</mn><mo stretchy="false">⇒</mo><mi>g</mi><mo>=</mo><mo>−</mo><mn>1</mn></math></mjx-assistive-mml></mjx-container></span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div></li><li class="proof-bridge-step"><span class="proof-bridge-number" aria-hidden="true">02</span><div class="proof-bridge-copy"><strong>All zero slopes</strong><p>At zero, tests y=1,-1 give -1≤g≤1. Conversely, any g in the FULL CLOSED interval globally supports: multiply the upper bound when y≥0 and the lower bound with reversed order when y&lt;0. Both endpoints and every interior slope remain; choosing only0 or asserting existence is weaker.</p></div><div class="math-statement math-rendered" data-math-statement="" data-scroll-label="Step 2 equation"><strong>Step 2 equation.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback" aria-hidden="true">Includes both endpoints and fractional slopes.</span><span class="math-tex" aria-hidden="false"><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" display="true" tabindex="0" ctxtmenu_counter="4" style="font-size: 113%; position: relative;"><mjx-math display="true" class="MJX-TEX" aria-hidden="true" style="margin-left: 0px; margin-right: 0px;"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D454 TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c2208"></mjx-c></mjx-mo><mjx-mi class="mjx-i" space="4"><mjx-c class="mjx-c1D715"></mjx-c></mjx-mi><mjx-texatom texclass="ORD"><mjx-mo class="mjx-n"><mjx-c class="mjx-c7C"></mjx-c></mjx-mo></mjx-texatom><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-c22C5"></mjx-c></mjx-mo><mjx-texatom space="3" texclass="ORD"><mjx-mo class="mjx-n"><mjx-c class="mjx-c7C"></mjx-c></mjx-mo></mjx-texatom><mjx-mo class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mn class="mjx-n"><mjx-c class="mjx-c30"></mjx-c></mjx-mn><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c27FA"></mjx-c></mjx-mo><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c2212"></mjx-c></mjx-mo><mjx-mn class="mjx-n"><mjx-c class="mjx-c31"></mjx-c></mjx-mn><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c2264"></mjx-c></mjx-mo><mjx-mi class="mjx-i" space="4"><mjx-c class="mjx-c1D454 TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c2264"></mjx-c></mjx-mo><mjx-mn class="mjx-n" space="4"><mjx-c class="mjx-c31"></mjx-c></mjx-mn></mjx-math><mjx-assistive-mml unselectable="on" display="block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mi>g</mi><mo>∈</mo><mi>∂</mi><mrow data-mjx-texclass="ORD"><mo stretchy="false">|</mo></mrow><mo>⋅</mo><mrow data-mjx-texclass="ORD"><mo stretchy="false">|</mo></mrow><mo stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo><mo stretchy="false">⟺</mo><mo>−</mo><mn>1</mn><mo>≤</mo><mi>g</mi><mo>≤</mo><mn>1</mn></math></mjx-assistive-mml></mjx-container></span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div></li><li class="proof-bridge-step"><span class="proof-bridge-number" aria-hidden="true">03</span><div class="proof-bridge-copy"><strong>One all-query terminal</strong><p>Real trichotomy selects the sign leaf; no x≠0, bounded set, existence or assumed support premise is introduced.</p></div><div class="math-statement math-rendered" data-math-statement="" data-scroll-label="Step 3 equation"><strong>Step 3 equation.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback" aria-hidden="true">Every real query is covered.</span><span class="math-tex" aria-hidden="false"><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" display="true" tabindex="0" ctxtmenu_counter="5" style="font-size: 113%; position: relative;"><mjx-math display="true" class="MJX-TEX" aria-hidden="true" style="margin-left: 0px; margin-right: 0px;"><mjx-mi class="mjx-n"><mjx-c class="mjx-c2200"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D465 TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c2208"></mjx-c></mjx-mo><mjx-texatom space="4" texclass="ORD"><mjx-mi class="mjx-ds mjx-b"><mjx-c class="mjx-c211D TEX-A"></mjx-c></mjx-mi></mjx-texatom><mjx-mo class="mjx-n"><mjx-c class="mjx-c2C"></mjx-c></mjx-mo><mjx-mstyle><mjx-mspace style="width: 1em;"></mjx-mspace></mjx-mstyle><mjx-mi class="mjx-i" space="2"><mjx-c class="mjx-c1D715"></mjx-c></mjx-mi><mjx-texatom texclass="ORD"><mjx-mo class="mjx-n"><mjx-c class="mjx-c7C"></mjx-c></mjx-mo></mjx-texatom><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-c22C5"></mjx-c></mjx-mo><mjx-texatom space="3" texclass="ORD"><mjx-mo class="mjx-n"><mjx-c class="mjx-c7C"></mjx-c></mjx-mo></mjx-texatom><mjx-mo class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D465 TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c3D"></mjx-c></mjx-mo><mjx-mtext class="mjx-n" space="4"><mjx-c class="mjx-c74"></mjx-c><mjx-c class="mjx-c68"></mjx-c><mjx-c class="mjx-c65"></mjx-c><mjx-c class="mjx-c20"></mjx-c><mjx-c class="mjx-c73"></mjx-c><mjx-c class="mjx-c6F"></mjx-c><mjx-c class="mjx-c75"></mjx-c><mjx-c class="mjx-c72"></mjx-c><mjx-c class="mjx-c63"></mjx-c><mjx-c class="mjx-c65"></mjx-c><mjx-c class="mjx-c20"></mjx-c><mjx-c class="mjx-c74"></mjx-c><mjx-c class="mjx-c68"></mjx-c><mjx-c class="mjx-c72"></mjx-c><mjx-c class="mjx-c65"></mjx-c><mjx-c class="mjx-c65"></mjx-c><mjx-c class="mjx-c2D"></mjx-c><mjx-c class="mjx-c63"></mjx-c><mjx-c class="mjx-c61"></mjx-c><mjx-c class="mjx-c73"></mjx-c><mjx-c class="mjx-c65"></mjx-c><mjx-c class="mjx-c20"></mjx-c><mjx-c class="mjx-c73"></mjx-c><mjx-c class="mjx-c65"></mjx-c><mjx-c class="mjx-c74"></mjx-c></mjx-mtext></mjx-math><mjx-assistive-mml unselectable="on" display="block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mi mathvariant="normal">∀</mi><mi>x</mi><mo>∈</mo><mrow data-mjx-texclass="ORD"><mi mathvariant="double-struck">R</mi></mrow><mo>,</mo><mstyle scriptlevel="0"><mspace width="1em"></mspace></mstyle><mi>∂</mi><mrow data-mjx-texclass="ORD"><mo stretchy="false">|</mo></mrow><mo>⋅</mo><mrow data-mjx-texclass="ORD"><mo stretchy="false">|</mo></mrow><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mtext>the source three-case set</mtext></math></mjx-assistive-mml></mjx-container></span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div></li></ol>
+    <p class="proof-bridge-boundary"><strong>Reading boundary.</strong> The shared global SourceSubdifferential predicate permits arbitrary EReal functions, wider than the printed proper-function definition. Here y↦|y| is finite and proper at EVERY real y, and its real EReal embedding preserves addition and order. The complete support definition is borrowed shared context, not a new owned declaration. ONE printed Example2.24, THREE cases, four retained proof refinements and zero production definitions/new mathematical or TEST declarations. All four actual signatures specialize to scalar ℝ; no E/finite-dimensional/completeness binder or added convexity/differentiability/domain/support premise. Current exact retained bodies/whole canary compile; seven unique named kernel checks use standard foundations or none, four frozen-header guards pass. Selected compiled graph has seven proof nodes/zero definitions/1024 direct type/value occurrences, including actual source-to-branches and canary-to-source edges. Four-node/666 readiness is separate and retained exactly; neither is a full registry graph export. Only scalar Example2.24. Example2.25 normal cones and all remaining Chapter1/2 main-text/source-contract/necessary appendix obligations stay REQUIRED. Chapter2 mandatorytotal is null/incomplete; Chapters3–16 unenumerated and whole Goal ACTIVE. No multidimensional norm, algorithm/probability/regret/selection guarantee, merge/deploy/main/live update.</p>
+  </aside>
+
+<article class="source-theorem-card">
+  <div class="source-theorem-heading"><div><span class="panel-kicker">Source theorem · faithful restatement</span><h3>Example2.24</h3></div><a href="https://arxiv.org/pdf/1912.13213v10#page=30">Original at printed18 ↗</a></div>
+  <div class="source-route-status"><span class="status compiled">Exact retained source terminal and whole canary checked</span><span>Current exact retained bodies/whole canary compile; seven unique named kernel checks use standard foundations or none, four frozen-header guards pass. Selected compiled graph has seven proof nodes/zero definitions/1024 direct type/value occurrences, including actual source-to-branches and canary-to-source edges. Four-node/666 readiness is separate and retained exactly; neither is a full registry graph export. Distinct CONTRACT/BODY source reviews accepted; current combined rootTests/fullharness/site/FINAL/PR remain separate gates. Only scalar Example2.24. Example2.25 normal cones and all remaining Chapter1/2 main-text/source-contract/necessary appendix obligations stay REQUIRED. Chapter2 mandatorytotal is null/incomplete; Chapters3–16 unenumerated and whole Goal ACTIVE. No multidimensional norm, algorithm/probability/regret/selection guarantee, merge/deploy/main/live update.</span></div>
+  <p>Every global support slope is characterized exactly, at every real query.</p>
+  <dl class="source-theorem-contract" aria-label="Source theorem contract"><div><dt>Model</dt><dd>Scalar real absolute value and global support at every real test point. The shared global SourceSubdifferential predicate permits arbitrary EReal functions, wider than the printed proper-function definition. Here y↦|y| is finite and proper at EVERY real y, and its real EReal embedding preserves addition and order. The complete support definition is borrowed shared context, not a new owned declaration.</dd></div><div><dt>Assumptions</dt><dd>None for the allx terminal. Positive/negative leaves have only their strict sign hypothesis; zero leaf has no supplied slope/support premise.</dd></div><div><dt>Algorithm parameters</dt><dd>Every real query x and every real candidate slope g; the support definition quantifies every ambient real y.</dd></div><div><dt>Regret notion</dt><dd>No algorithm/probability/feedback/regret or measurable/computable selection guarantee.</dd></div><div><dt>Guarantee</dt><dd>Complete three-case set equality, including the full CLOSED [-1,1] at zero.</dd></div></dl>
+  <div class="math-statement math-rendered" data-math-statement="" data-scroll-label="Source mathematical statement"><strong>Source mathematical statement.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback" aria-hidden="true">The subdifferential is {1} at positive x, the closed interval [-1,1] at zero, and {-1} at negative x.</span><span class="math-tex" aria-hidden="false"><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" display="true" tabindex="0" ctxtmenu_counter="6" style="font-size: 113.1%; position: relative;"><mjx-math display="true" class="MJX-TEX" aria-hidden="true" style="margin-left: 0px; margin-right: 0px;"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D715"></mjx-c></mjx-mi><mjx-texatom texclass="ORD"><mjx-mo class="mjx-n"><mjx-c class="mjx-c7C"></mjx-c></mjx-mo></mjx-texatom><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-c22C5"></mjx-c></mjx-mo><mjx-texatom space="3" texclass="ORD"><mjx-mo class="mjx-n"><mjx-c class="mjx-c7C"></mjx-c></mjx-mo></mjx-texatom><mjx-mo class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D465 TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c3D"></mjx-c></mjx-mo><mjx-mrow space="4"><mjx-mo class="mjx-n"><mjx-stretchy-v class="mjx-c7B" style="height: 3.4em; vertical-align: -1.45em;"><mjx-beg><mjx-c></mjx-c></mjx-beg><mjx-ext><mjx-c></mjx-c></mjx-ext><mjx-mid><mjx-c></mjx-c></mjx-mid><mjx-ext><mjx-c></mjx-c></mjx-ext><mjx-end><mjx-c></mjx-c></mjx-end><mjx-mark></mjx-mark></mjx-stretchy-v></mjx-mo><mjx-mtable style="min-width: 6.184em;"><mjx-table><mjx-itable><mjx-mtr><mjx-mtd style="text-align: left; padding-right: 0.5em; padding-bottom: 0.1em;"><mjx-mo class="mjx-n"><mjx-c class="mjx-c7B"></mjx-c></mjx-mo><mjx-mn class="mjx-n"><mjx-c class="mjx-c31"></mjx-c></mjx-mn><mjx-mo class="mjx-n"><mjx-c class="mjx-c7D"></mjx-c></mjx-mo><mjx-tstrut></mjx-tstrut></mjx-mtd><mjx-mtd style="text-align: left; padding-left: 0.5em; padding-bottom: 0.1em;"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D465 TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c3E"></mjx-c></mjx-mo><mjx-mn class="mjx-n" space="4"><mjx-c class="mjx-c30"></mjx-c></mjx-mn><mjx-tstrut></mjx-tstrut></mjx-mtd></mjx-mtr><mjx-mtr><mjx-mtd style="text-align: left; padding-right: 0.5em; padding-top: 0.1em; padding-bottom: 0.1em;"><mjx-texatom texclass="ORD"><mjx-mo class="mjx-n"><mjx-c class="mjx-c5B"></mjx-c></mjx-mo><mjx-mo class="mjx-n"><mjx-c class="mjx-c2212"></mjx-c></mjx-mo><mjx-mn class="mjx-n"><mjx-c class="mjx-c31"></mjx-c></mjx-mn><mjx-mo class="mjx-n"><mjx-c class="mjx-c2C"></mjx-c></mjx-mo><mjx-mn class="mjx-n" space="2"><mjx-c class="mjx-c31"></mjx-c></mjx-mn><mjx-mo class="mjx-n"><mjx-c class="mjx-c5D"></mjx-c></mjx-mo></mjx-texatom><mjx-tstrut></mjx-tstrut></mjx-mtd><mjx-mtd style="text-align: left; padding-left: 0.5em; padding-top: 0.1em; padding-bottom: 0.1em;"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D465 TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c3D"></mjx-c></mjx-mo><mjx-mn class="mjx-n" space="4"><mjx-c class="mjx-c30"></mjx-c></mjx-mn><mjx-tstrut></mjx-tstrut></mjx-mtd></mjx-mtr><mjx-mtr><mjx-mtd style="text-align: left; padding-right: 0.5em; padding-top: 0.1em;"><mjx-mo class="mjx-n"><mjx-c class="mjx-c7B"></mjx-c></mjx-mo><mjx-mo class="mjx-n"><mjx-c class="mjx-c2212"></mjx-c></mjx-mo><mjx-mn class="mjx-n"><mjx-c class="mjx-c31"></mjx-c></mjx-mn><mjx-mo class="mjx-n"><mjx-c class="mjx-c7D"></mjx-c></mjx-mo><mjx-tstrut></mjx-tstrut></mjx-mtd><mjx-mtd style="text-align: left; padding-left: 0.5em; padding-top: 0.1em;"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D465 TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c3C"></mjx-c></mjx-mo><mjx-mn class="mjx-n" space="4"><mjx-c class="mjx-c30"></mjx-c></mjx-mn><mjx-tstrut></mjx-tstrut></mjx-mtd></mjx-mtr></mjx-itable></mjx-table></mjx-mtable><mjx-mo class="mjx-n" style="vertical-align: 0.25em;"></mjx-mo></mjx-mrow></mjx-math><mjx-assistive-mml unselectable="on" display="block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mi>∂</mi><mrow data-mjx-texclass="ORD"><mo stretchy="false">|</mo></mrow><mo>⋅</mo><mrow data-mjx-texclass="ORD"><mo stretchy="false">|</mo></mrow><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mrow data-mjx-texclass="INNER"><mo data-mjx-texclass="OPEN">{</mo><mtable columnalign="left left" columnspacing="1em" rowspacing=".2em"><mtr><mtd><mo fence="false" stretchy="false">{</mo><mn>1</mn><mo fence="false" stretchy="false">}</mo></mtd><mtd><mi>x</mi><mo>&gt;</mo><mn>0</mn></mtd></mtr><mtr><mtd><mrow data-mjx-texclass="ORD"><mo stretchy="false">[</mo><mo>−</mo><mn>1</mn><mo>,</mo><mn>1</mn><mo stretchy="false">]</mo></mrow></mtd><mtd><mi>x</mi><mo>=</mo><mn>0</mn></mtd></mtr><mtr><mtd><mo fence="false" stretchy="false">{</mo><mo>−</mo><mn>1</mn><mo fence="false" stretchy="false">}</mo></mtd><mtd><mi>x</mi><mo>&lt;</mo><mn>0</mn></mtd></mtr></mtable><mo data-mjx-texclass="CLOSE" fence="true" stretchy="true" symmetric="true"></mo></mrow></math></mjx-assistive-mml></mjx-container></span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+  <p class="source-note"><strong>BanditRLlib relationship.</strong> ONE printed Example2.24, THREE cases, four retained proof refinements and zero production definitions/new mathematical or TEST declarations. All four actual signatures specialize to scalar ℝ; no E/finite-dimensional/completeness binder or added convexity/differentiability/domain/support premise. The shared global SourceSubdifferential predicate permits arbitrary EReal functions, wider than the printed proper-function definition. Here y↦|y| is finite and proper at EVERY real y, and its real EReal embedding preserves addition and order. The complete support definition is borrowed shared context, not a new owned declaration. Whole three existing canary proofs were freshly checked: endpoints -1/1, fractional1/2 and exclusion2 at zero; impossibility of ANY singleton answer; full all-query source terminal instantiated at2,-2,0. Zero new TEST declarations.</p>
+  <p class="copyright-note">The mathematical content is restated in this site's notation; wording is ours. See printed18 in the linked source for the original statement and full assumptions.</p>
+</article>
+</section>
+
+<section id="teaching-notes">
+  <h2>Natural-language and Lean side by side</h2>
+  <p>The mathematical readings are explanatory summaries. The exact generated Lean statement and its source link remain authoritative for hypotheses, types, constants, and indexing.</p>
+
+
+<article class="theorem-panel" id="decl-a2646af4ec15-teaching" aria-labelledby="decl-a2646af4ec15-teaching-title decl-a2646af4ec15-teaching-name">
+  <div class="theorem-header">
+    <div class="declaration-heading"><span class="panel-kicker">Mathematics ↔ Lean</span><h3 id="decl-a2646af4ec15-teaching-title">Positive queries: slope1</h3><p class="declaration-name" id="decl-a2646af4ec15-teaching-name"><span>Lean declaration</span><code>Bandit<wbr>RL.<wbr>Online<wbr>Convex.<wbr>abs_<wbr>subgradient_<wbr>positive</code></p></div>
+    <span class="status compiled">Compiled</span>
+  </div>
+  <div class="theorem-body">
+    <p><strong>Plain-English statement.</strong> Positive queries: slope1</p>
+    <div class="math-statement math-rendered" data-math-statement="" data-scroll-label="Mathematical reading"><strong>Mathematical reading.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback" aria-hidden="true">Positive queries: slope1</span><span class="math-tex" aria-hidden="false"><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" tabindex="0" ctxtmenu_counter="7" style="font-size: 113.1%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D715"></mjx-c></mjx-mi><mjx-texatom texclass="ORD"><mjx-mo class="mjx-n"><mjx-c class="mjx-c7C"></mjx-c></mjx-mo></mjx-texatom><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-c22C5"></mjx-c></mjx-mo><mjx-texatom space="3" texclass="ORD"><mjx-mo class="mjx-n"><mjx-c class="mjx-c7C"></mjx-c></mjx-mo></mjx-texatom><mjx-mo class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D465 TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c3D"></mjx-c></mjx-mo><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c7B"></mjx-c></mjx-mo><mjx-mn class="mjx-n"><mjx-c class="mjx-c31"></mjx-c></mjx-mn><mjx-mo class="mjx-n"><mjx-c class="mjx-c7D"></mjx-c></mjx-mo><mjx-mo class="mjx-n"><mjx-c class="mjx-c2C"></mjx-c></mjx-mo><mjx-mtext class="mjx-n" space="2"><mjx-c class="mjx-cA0"></mjx-c></mjx-mtext><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D465 TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c3E"></mjx-c></mjx-mo><mjx-mn class="mjx-n" space="4"><mjx-c class="mjx-c30"></mjx-c></mjx-mn></mjx-math><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>∂</mi><mrow data-mjx-texclass="ORD"><mo stretchy="false">|</mo></mrow><mo>⋅</mo><mrow data-mjx-texclass="ORD"><mo stretchy="false">|</mo></mrow><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mo fence="false" stretchy="false">{</mo><mn>1</mn><mo fence="false" stretchy="false">}</mo><mo>,</mo><mtext>&nbsp;</mtext><mi>x</mi><mo>&gt;</mo><mn>0</mn></math></mjx-assistive-mml></mjx-container></span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+    <dl class="teaching-grid">
+      <div><dt>Intuition</dt><dd>Characterize every global supporting slope in both directions.</dd></div>
+      <div><dt>Why it is needed</dt><dd>ONE printed Example2.24, THREE cases, four retained proof refinements and zero production definitions/new mathematical or TEST declarations. All four actual signatures specialize to scalar ℝ; no E/finite-dimensional/completeness binder or added convexity/differentiability/domain/support premise.</dd></div>
+      <div><dt>Place in the proof</dt><dd>Orabona v10 Example2.24, printed18/PDF30; ONE body example, three sign cases, shared canonical declaration registry.</dd></div>
+    </dl>
+    <details class="technical-reading">
+      <summary>Proof and Lean reading notes</summary>
+      <dl class="technical-teaching-grid">
+        <div><dt>Proof idea</dt><dd>At nonzero x, actual tests y=0 and y=2x give x(g-1)=0 for positive x or x(g+1)=0 for negative x. The strict sign guarantees x≠0 for cancellation. The inequalities y≤|y| and -y≤|y| prove sufficiency at EVERY real y.</dd></div>
+        <div><dt>Lean reading notes</dt><dd>The shared global SourceSubdifferential predicate permits arbitrary EReal functions, wider than the printed proper-function definition. Here y↦|y| is finite and proper at EVERY real y, and its real EReal embedding preserves addition and order. The complete support definition is borrowed shared context, not a new owned declaration. ONE printed Example2.24, THREE cases, four retained proof refinements and zero production definitions/new mathematical or TEST declarations. All four actual signatures specialize to scalar ℝ; no E/finite-dimensional/completeness binder or added convexity/differentiability/domain/support premise. Only scalar Example2.24. Example2.25 normal cones and all remaining Chapter1/2 main-text/source-contract/necessary appendix obligations stay REQUIRED. Chapter2 mandatorytotal is null/incomplete; Chapters3–16 unenumerated and whole Goal ACTIVE. No multidimensional norm, algorithm/probability/regret/selection guarantee, merge/deploy/main/live update.</dd></div>
+        <div><dt>Teaching dependencies</dt><dd>No direct teaching dependency recorded.</dd></div>
+      </dl>
+    </details>
+    <details class="exact-lean">
+      <summary>Exact Lean statement</summary>
+      <div class="code-toolbar" role="group" aria-label="Lean statement display options"><button type="button" class="code-tool" data-code-wrap="" aria-pressed="false">Wrap long lines</button><button type="button" class="code-tool" data-code-copy="">Copy statement</button><span class="code-tool-status" data-code-status="" aria-live="polite" id="code-status-0"></span></div><pre class="lean-code" tabindex="0" role="region" aria-label="Exact Lean statement" data-code-enhanced="true"><code><span class="kw">theorem</span> abs_subgradient_positive (x : ℝ) (hx : <span class="num">0</span> &lt; x) : SourceSubdifferential (<span class="kw">fun</span> y : ℝ =&gt; ((|y| : ℝ) : EReal)) x = {(<span class="num">1</span> : ℝ)}</code></pre>
+    </details>
+    <div class="source-links">
+      <a href="../../modules/banditrlproof-onlinesubgradientabsolute/index.html#decl-a2646af4ec15">Open in the declaration catalog</a>
+      <a href="https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/2be7a19c75d9302e729c92d2139b05e809bdcbec/BanditRLProof/OnlineSubgradientAbsolute.lean#L65">Open source at line 65</a>
+    </div>
+  </div>
+</article>
+
+<article class="theorem-panel" id="decl-1edabadf1629-teaching" aria-labelledby="decl-1edabadf1629-teaching-title decl-1edabadf1629-teaching-name">
+  <div class="theorem-header">
+    <div class="declaration-heading"><span class="panel-kicker">Mathematics ↔ Lean</span><h3 id="decl-1edabadf1629-teaching-title">Zero: every slope in [-1,1]</h3><p class="declaration-name" id="decl-1edabadf1629-teaching-name"><span>Lean declaration</span><code>Bandit<wbr>RL.<wbr>Online<wbr>Convex.<wbr>abs_<wbr>subgradient_<wbr>zero</code></p></div>
+    <span class="status compiled">Compiled</span>
+  </div>
+  <div class="theorem-body">
+    <p><strong>Plain-English statement.</strong> Zero: every slope in [-1,1]</p>
+    <div class="math-statement math-rendered" data-math-statement="" data-scroll-label="Mathematical reading"><strong>Mathematical reading.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback" aria-hidden="true">Zero: every slope in [-1,1]</span><span class="math-tex" aria-hidden="false"><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" tabindex="0" ctxtmenu_counter="8" style="font-size: 113.1%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D715"></mjx-c></mjx-mi><mjx-texatom texclass="ORD"><mjx-mo class="mjx-n"><mjx-c class="mjx-c7C"></mjx-c></mjx-mo></mjx-texatom><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-c22C5"></mjx-c></mjx-mo><mjx-texatom space="3" texclass="ORD"><mjx-mo class="mjx-n"><mjx-c class="mjx-c7C"></mjx-c></mjx-mo></mjx-texatom><mjx-mo class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mn class="mjx-n"><mjx-c class="mjx-c30"></mjx-c></mjx-mn><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c3D"></mjx-c></mjx-mo><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c5B"></mjx-c></mjx-mo><mjx-mo class="mjx-n"><mjx-c class="mjx-c2212"></mjx-c></mjx-mo><mjx-mn class="mjx-n"><mjx-c class="mjx-c31"></mjx-c></mjx-mn><mjx-mo class="mjx-n"><mjx-c class="mjx-c2C"></mjx-c></mjx-mo><mjx-mn class="mjx-n" space="2"><mjx-c class="mjx-c31"></mjx-c></mjx-mn><mjx-mo class="mjx-n"><mjx-c class="mjx-c5D"></mjx-c></mjx-mo></mjx-math><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>∂</mi><mrow data-mjx-texclass="ORD"><mo stretchy="false">|</mo></mrow><mo>⋅</mo><mrow data-mjx-texclass="ORD"><mo stretchy="false">|</mo></mrow><mo stretchy="false">(</mo><mn>0</mn><mo stretchy="false">)</mo><mo>=</mo><mo stretchy="false">[</mo><mo>−</mo><mn>1</mn><mo>,</mo><mn>1</mn><mo stretchy="false">]</mo></math></mjx-assistive-mml></mjx-container></span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+    <dl class="teaching-grid">
+      <div><dt>Intuition</dt><dd>Characterize every global supporting slope in both directions.</dd></div>
+      <div><dt>Why it is needed</dt><dd>ONE printed Example2.24, THREE cases, four retained proof refinements and zero production definitions/new mathematical or TEST declarations. All four actual signatures specialize to scalar ℝ; no E/finite-dimensional/completeness binder or added convexity/differentiability/domain/support premise.</dd></div>
+      <div><dt>Place in the proof</dt><dd>Orabona v10 Example2.24, printed18/PDF30; ONE body example, three sign cases, shared canonical declaration registry.</dd></div>
+    </dl>
+    <details class="technical-reading">
+      <summary>Proof and Lean reading notes</summary>
+      <dl class="technical-teaching-grid">
+        <div><dt>Proof idea</dt><dd>At zero, tests y=1,-1 give -1≤g≤1. Conversely, any g in the FULL CLOSED interval globally supports: multiply the upper bound when y≥0 and the lower bound with reversed order when y&lt;0. Both endpoints and every interior slope remain; choosing only0 or asserting existence is weaker.</dd></div>
+        <div><dt>Lean reading notes</dt><dd>The shared global SourceSubdifferential predicate permits arbitrary EReal functions, wider than the printed proper-function definition. Here y↦|y| is finite and proper at EVERY real y, and its real EReal embedding preserves addition and order. The complete support definition is borrowed shared context, not a new owned declaration. ONE printed Example2.24, THREE cases, four retained proof refinements and zero production definitions/new mathematical or TEST declarations. All four actual signatures specialize to scalar ℝ; no E/finite-dimensional/completeness binder or added convexity/differentiability/domain/support premise. Only scalar Example2.24. Example2.25 normal cones and all remaining Chapter1/2 main-text/source-contract/necessary appendix obligations stay REQUIRED. Chapter2 mandatorytotal is null/incomplete; Chapters3–16 unenumerated and whole Goal ACTIVE. No multidimensional norm, algorithm/probability/regret/selection guarantee, merge/deploy/main/live update.</dd></div>
+        <div><dt>Teaching dependencies</dt><dd>No direct teaching dependency recorded.</dd></div>
+      </dl>
+    </details>
+    <details class="exact-lean">
+      <summary>Exact Lean statement</summary>
+      <div class="code-toolbar" role="group" aria-label="Lean statement display options"><button type="button" class="code-tool" data-code-wrap="" aria-pressed="false">Wrap long lines</button><button type="button" class="code-tool" data-code-copy="">Copy statement</button><span class="code-tool-status" data-code-status="" aria-live="polite" id="code-status-1"></span></div><pre class="lean-code" tabindex="0" role="region" aria-label="Exact Lean statement" data-code-enhanced="true"><code><span class="kw">theorem</span> abs_subgradient_zero : SourceSubdifferential (<span class="kw">fun</span> y : ℝ =&gt; ((|y| : ℝ) : EReal)) <span class="num">0</span> = Icc (-<span class="num">1</span> : ℝ) <span class="num">1</span></code></pre>
+    </details>
+    <div class="source-links">
+      <a href="../../modules/banditrlproof-onlinesubgradientabsolute/index.html#decl-1edabadf1629">Open in the declaration catalog</a>
+      <a href="https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/2be7a19c75d9302e729c92d2139b05e809bdcbec/BanditRLProof/OnlineSubgradientAbsolute.lean#L38">Open source at line 38</a>
+    </div>
+  </div>
+</article>
+
+<article class="theorem-panel" id="decl-39d72ad9de30-teaching" aria-labelledby="decl-39d72ad9de30-teaching-title decl-39d72ad9de30-teaching-name">
+  <div class="theorem-header">
+    <div class="declaration-heading"><span class="panel-kicker">Mathematics ↔ Lean</span><h3 id="decl-39d72ad9de30-teaching-title">Negative queries: slope-1</h3><p class="declaration-name" id="decl-39d72ad9de30-teaching-name"><span>Lean declaration</span><code>Bandit<wbr>RL.<wbr>Online<wbr>Convex.<wbr>abs_<wbr>subgradient_<wbr>negative</code></p></div>
+    <span class="status compiled">Compiled</span>
+  </div>
+  <div class="theorem-body">
+    <p><strong>Plain-English statement.</strong> Negative queries: slope-1</p>
+    <div class="math-statement math-rendered" data-math-statement="" data-scroll-label="Mathematical reading"><strong>Mathematical reading.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback" aria-hidden="true">Negative queries: slope-1</span><span class="math-tex" aria-hidden="false"><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" tabindex="0" ctxtmenu_counter="9" style="font-size: 113.1%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D715"></mjx-c></mjx-mi><mjx-texatom texclass="ORD"><mjx-mo class="mjx-n"><mjx-c class="mjx-c7C"></mjx-c></mjx-mo></mjx-texatom><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-c22C5"></mjx-c></mjx-mo><mjx-texatom space="3" texclass="ORD"><mjx-mo class="mjx-n"><mjx-c class="mjx-c7C"></mjx-c></mjx-mo></mjx-texatom><mjx-mo class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D465 TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c3D"></mjx-c></mjx-mo><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c7B"></mjx-c></mjx-mo><mjx-mo class="mjx-n"><mjx-c class="mjx-c2212"></mjx-c></mjx-mo><mjx-mn class="mjx-n"><mjx-c class="mjx-c31"></mjx-c></mjx-mn><mjx-mo class="mjx-n"><mjx-c class="mjx-c7D"></mjx-c></mjx-mo><mjx-mo class="mjx-n"><mjx-c class="mjx-c2C"></mjx-c></mjx-mo><mjx-mtext class="mjx-n" space="2"><mjx-c class="mjx-cA0"></mjx-c></mjx-mtext><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D465 TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c3C"></mjx-c></mjx-mo><mjx-mn class="mjx-n" space="4"><mjx-c class="mjx-c30"></mjx-c></mjx-mn></mjx-math><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>∂</mi><mrow data-mjx-texclass="ORD"><mo stretchy="false">|</mo></mrow><mo>⋅</mo><mrow data-mjx-texclass="ORD"><mo stretchy="false">|</mo></mrow><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mo fence="false" stretchy="false">{</mo><mo>−</mo><mn>1</mn><mo fence="false" stretchy="false">}</mo><mo>,</mo><mtext>&nbsp;</mtext><mi>x</mi><mo>&lt;</mo><mn>0</mn></math></mjx-assistive-mml></mjx-container></span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+    <dl class="teaching-grid">
+      <div><dt>Intuition</dt><dd>Characterize every global supporting slope in both directions.</dd></div>
+      <div><dt>Why it is needed</dt><dd>ONE printed Example2.24, THREE cases, four retained proof refinements and zero production definitions/new mathematical or TEST declarations. All four actual signatures specialize to scalar ℝ; no E/finite-dimensional/completeness binder or added convexity/differentiability/domain/support premise.</dd></div>
+      <div><dt>Place in the proof</dt><dd>Orabona v10 Example2.24, printed18/PDF30; ONE body example, three sign cases, shared canonical declaration registry.</dd></div>
+    </dl>
+    <details class="technical-reading">
+      <summary>Proof and Lean reading notes</summary>
+      <dl class="technical-teaching-grid">
+        <div><dt>Proof idea</dt><dd>At nonzero x, actual tests y=0 and y=2x give x(g-1)=0 for positive x or x(g+1)=0 for negative x. The strict sign guarantees x≠0 for cancellation. The inequalities y≤|y| and -y≤|y| prove sufficiency at EVERY real y.</dd></div>
+        <div><dt>Lean reading notes</dt><dd>The shared global SourceSubdifferential predicate permits arbitrary EReal functions, wider than the printed proper-function definition. Here y↦|y| is finite and proper at EVERY real y, and its real EReal embedding preserves addition and order. The complete support definition is borrowed shared context, not a new owned declaration. ONE printed Example2.24, THREE cases, four retained proof refinements and zero production definitions/new mathematical or TEST declarations. All four actual signatures specialize to scalar ℝ; no E/finite-dimensional/completeness binder or added convexity/differentiability/domain/support premise. Only scalar Example2.24. Example2.25 normal cones and all remaining Chapter1/2 main-text/source-contract/necessary appendix obligations stay REQUIRED. Chapter2 mandatorytotal is null/incomplete; Chapters3–16 unenumerated and whole Goal ACTIVE. No multidimensional norm, algorithm/probability/regret/selection guarantee, merge/deploy/main/live update.</dd></div>
+        <div><dt>Teaching dependencies</dt><dd>No direct teaching dependency recorded.</dd></div>
+      </dl>
+    </details>
+    <details class="exact-lean">
+      <summary>Exact Lean statement</summary>
+      <div class="code-toolbar" role="group" aria-label="Lean statement display options"><button type="button" class="code-tool" data-code-wrap="" aria-pressed="false">Wrap long lines</button><button type="button" class="code-tool" data-code-copy="">Copy statement</button><span class="code-tool-status" data-code-status="" aria-live="polite" id="code-status-2"></span></div><pre class="lean-code" tabindex="0" role="region" aria-label="Exact Lean statement" data-code-enhanced="true"><code><span class="kw">theorem</span> abs_subgradient_negative (x : ℝ) (hx : x &lt; <span class="num">0</span>) : SourceSubdifferential (<span class="kw">fun</span> y : ℝ =&gt; ((|y| : ℝ) : EReal)) x = {(-<span class="num">1</span> : ℝ)}</code></pre>
+    </details>
+    <div class="source-links">
+      <a href="../../modules/banditrlproof-onlinesubgradientabsolute/index.html#decl-39d72ad9de30">Open in the declaration catalog</a>
+      <a href="https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/2be7a19c75d9302e729c92d2139b05e809bdcbec/BanditRLProof/OnlineSubgradientAbsolute.lean#L92">Open source at line 92</a>
+    </div>
+  </div>
+</article>
+
+<article class="theorem-panel" id="decl-ba38daa941f0-teaching" aria-labelledby="decl-ba38daa941f0-teaching-title decl-ba38daa941f0-teaching-name">
+  <div class="theorem-header">
+    <div class="declaration-heading"><span class="panel-kicker">Mathematics ↔ Lean</span><h3 id="decl-ba38daa941f0-teaching-title">The exact source three-case equality</h3><p class="declaration-name" id="decl-ba38daa941f0-teaching-name"><span>Lean declaration</span><code>Bandit<wbr>RL.<wbr>Online<wbr>Convex.<wbr>example_<wbr>2_<wbr>24</code></p></div>
+    <span class="status compiled">Compiled</span>
+  </div>
+  <div class="theorem-body">
+    <p><strong>Plain-English statement.</strong> The exact source three-case equality</p>
+    <div class="math-statement math-rendered" data-math-statement="" data-scroll-label="Mathematical reading"><strong>Mathematical reading.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback" aria-hidden="true">The exact source three-case equality</span><span class="math-tex" aria-hidden="false"><mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" tabindex="0" ctxtmenu_counter="10" style="font-size: 113.1%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mi class="mjx-n"><mjx-c class="mjx-c2200"></mjx-c></mjx-mi><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D465 TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c2C"></mjx-c></mjx-mo><mjx-mtext class="mjx-n" space="2"><mjx-c class="mjx-cA0"></mjx-c></mjx-mtext><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D715"></mjx-c></mjx-mi><mjx-texatom texclass="ORD"><mjx-mo class="mjx-n"><mjx-c class="mjx-c7C"></mjx-c></mjx-mo></mjx-texatom><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-c22C5"></mjx-c></mjx-mo><mjx-texatom space="3" texclass="ORD"><mjx-mo class="mjx-n"><mjx-c class="mjx-c7C"></mjx-c></mjx-mo></mjx-texatom><mjx-mo class="mjx-n"><mjx-c class="mjx-c28"></mjx-c></mjx-mo><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D465 TEX-I"></mjx-c></mjx-mi><mjx-mo class="mjx-n"><mjx-c class="mjx-c29"></mjx-c></mjx-mo><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c3D"></mjx-c></mjx-mo><mjx-mtext class="mjx-n" space="4"><mjx-c class="mjx-c74"></mjx-c><mjx-c class="mjx-c68"></mjx-c><mjx-c class="mjx-c65"></mjx-c><mjx-c class="mjx-c20"></mjx-c><mjx-c class="mjx-c73"></mjx-c><mjx-c class="mjx-c6F"></mjx-c><mjx-c class="mjx-c75"></mjx-c><mjx-c class="mjx-c72"></mjx-c><mjx-c class="mjx-c63"></mjx-c><mjx-c class="mjx-c65"></mjx-c><mjx-c class="mjx-c20"></mjx-c><mjx-c class="mjx-c74"></mjx-c><mjx-c class="mjx-c68"></mjx-c><mjx-c class="mjx-c72"></mjx-c><mjx-c class="mjx-c65"></mjx-c><mjx-c class="mjx-c65"></mjx-c><mjx-c class="mjx-c2D"></mjx-c><mjx-c class="mjx-c63"></mjx-c><mjx-c class="mjx-c61"></mjx-c><mjx-c class="mjx-c73"></mjx-c><mjx-c class="mjx-c65"></mjx-c><mjx-c class="mjx-c20"></mjx-c><mjx-c class="mjx-c73"></mjx-c><mjx-c class="mjx-c65"></mjx-c><mjx-c class="mjx-c74"></mjx-c></mjx-mtext></mjx-math><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi mathvariant="normal">∀</mi><mi>x</mi><mo>,</mo><mtext>&nbsp;</mtext><mi>∂</mi><mrow data-mjx-texclass="ORD"><mo stretchy="false">|</mo></mrow><mo>⋅</mo><mrow data-mjx-texclass="ORD"><mo stretchy="false">|</mo></mrow><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mtext>the source three-case set</mtext></math></mjx-assistive-mml></mjx-container></span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+    <dl class="teaching-grid">
+      <div><dt>Intuition</dt><dd>Characterize every global supporting slope in both directions.</dd></div>
+      <div><dt>Why it is needed</dt><dd>ONE printed Example2.24, THREE cases, four retained proof refinements and zero production definitions/new mathematical or TEST declarations. All four actual signatures specialize to scalar ℝ; no E/finite-dimensional/completeness binder or added convexity/differentiability/domain/support premise.</dd></div>
+      <div><dt>Place in the proof</dt><dd>Orabona v10 Example2.24, printed18/PDF30; ONE body example, three sign cases, shared canonical declaration registry.</dd></div>
+    </dl>
+    <details class="technical-reading">
+      <summary>Proof and Lean reading notes</summary>
+      <dl class="technical-teaching-grid">
+        <div><dt>Proof idea</dt><dd>Dispatch all three exact sign equalities; zero has the full interval, final else derives negativity. At zero, tests y=1,-1 give -1≤g≤1. Conversely, any g in the FULL CLOSED interval globally supports: multiply the upper bound when y≥0 and the lower bound with reversed order when y&lt;0. Both endpoints and every interior slope remain; choosing only0 or asserting existence is weaker. At nonzero x, actual tests y=0 and y=2x give x(g-1)=0 for positive x or x(g+1)=0 for negative x. The strict sign guarantees x≠0 for cancellation. The inequalities y≤|y| and -y≤|y| prove sufficiency at EVERY real y.</dd></div>
+        <div><dt>Lean reading notes</dt><dd>The shared global SourceSubdifferential predicate permits arbitrary EReal functions, wider than the printed proper-function definition. Here y↦|y| is finite and proper at EVERY real y, and its real EReal embedding preserves addition and order. The complete support definition is borrowed shared context, not a new owned declaration. ONE printed Example2.24, THREE cases, four retained proof refinements and zero production definitions/new mathematical or TEST declarations. All four actual signatures specialize to scalar ℝ; no E/finite-dimensional/completeness binder or added convexity/differentiability/domain/support premise. Only scalar Example2.24. Example2.25 normal cones and all remaining Chapter1/2 main-text/source-contract/necessary appendix obligations stay REQUIRED. Chapter2 mandatorytotal is null/incomplete; Chapters3–16 unenumerated and whole Goal ACTIVE. No multidimensional norm, algorithm/probability/regret/selection guarantee, merge/deploy/main/live update.</dd></div>
+        <div><dt>Teaching dependencies</dt><dd><code>BanditRL.OnlineConvex.abs_subgradient_positive</code>, <code>BanditRL.OnlineConvex.abs_subgradient_zero</code>, <code>BanditRL.OnlineConvex.abs_subgradient_negative</code></dd></div>
+      </dl>
+    </details>
+    <details class="exact-lean">
+      <summary>Exact Lean statement</summary>
+      <div class="code-toolbar" role="group" aria-label="Lean statement display options"><button type="button" class="code-tool" data-code-wrap="" aria-pressed="false">Wrap long lines</button><button type="button" class="code-tool" data-code-copy="">Copy statement</button><span class="code-tool-status" data-code-status="" aria-live="polite" id="code-status-3"></span></div><pre class="lean-code is-scrollable" tabindex="0" role="region" aria-label="Exact Lean statement" data-code-enhanced="true"><code><span class="kw">theorem</span> example_2_24 (x : ℝ) : SourceSubdifferential (<span class="kw">fun</span> y : ℝ =&gt; ((|y| : ℝ) : EReal)) x = <span class="kw">if</span> <span class="num">0</span> &lt; x <span class="kw">then</span> {(<span class="num">1</span> : ℝ)} <span class="kw">else</span> <span class="kw">if</span> x = <span class="num">0</span> <span class="kw">then</span> Icc (-<span class="num">1</span> : ℝ) <span class="num">1</span> <span class="kw">else</span> {(-<span class="num">1</span> : ℝ)}</code></pre>
+    </details>
+    <div class="source-links">
+      <a href="../../modules/banditrlproof-onlinesubgradientabsolute/index.html#decl-ba38daa941f0">Open in the declaration catalog</a>
+      <a href="https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/2be7a19c75d9302e729c92d2139b05e809bdcbec/BanditRLProof/OnlineSubgradientAbsolute.lean#L119">Open source at line 119</a>
+    </div>
+  </div>
+</article>
+
+</section>
+
+
+<nav class="chapter-pager chapter-pager-primary" id="continue-reading" aria-label="Continue after the teaching route">
+  <div class="chapter-pager-heading"><span class="eyebrow">Continue reading</span><strong>Shared teaching routes</strong></div>
+  <div class="chapter-pager-links">
+    <a class="chapter-pager-link previous" href="../online-subgradient-sum/index.html"><span class="chapter-pager-direction"><span aria-hidden="true">←</span> Previous</span><strong>Subgradients of finite sums</strong></a>
+    <a class="chapter-pager-index" href="../../books/bandit/index.html#teaching-routes"><span>All chapters</span><strong>29 of 40</strong></a>
+    <a class="chapter-pager-link next" href="../online-normal-cone/index.html"><span class="chapter-pager-direction">Next <span aria-hidden="true">→</span></span><strong>Indicator supports and normal cones</strong></a>
+  </div>
+</nav>
+
+
+<section id="completion-contract">
+  <h2>Maintainer contract</h2>
+  <details class="maintainer-contract"><summary>Open the canonical completion definition and blockers</summary><div>
+    <p>ONE printed Example2.24, THREE cases, four retained proof refinements and zero production definitions/new mathematical or TEST declarations. All four actual signatures specialize to scalar ℝ; no E/finite-dimensional/completeness binder or added convexity/differentiability/domain/support premise. Current exact retained bodies/whole canary compile; seven unique named kernel checks use standard foundations or none, four frozen-header guards pass. Selected compiled graph has seven proof nodes/zero definitions/1024 direct type/value occurrences, including actual source-to-branches and canary-to-source edges. Four-node/666 readiness is separate and retained exactly; neither is a full registry graph export.</p>
+    <h3>Remaining blockers</h3>
+    <ul><li>Only scalar Example2.24. Example2.25 normal cones and all remaining Chapter1/2 main-text/source-contract/necessary appendix obligations stay REQUIRED. Chapter2 mandatorytotal is null/incomplete; Chapters3–16 unenumerated and whole Goal ACTIVE. No multidimensional norm, algorithm/probability/regret/selection guarantee, merge/deploy/main/live update.</li></ul>
+  </div></details>
+</section>
+
+
+<section id="milestones">
+  <h2>Chapter implementation status</h2>
+  <p class="section-intro">The compact summary keeps the reading route visible. Open it for source-linked declarations and exact remaining gaps.</p>
+  <details class="chapter-ledger-disclosure"><summary><span>Open 0 implementation records</span><span>0 compiled · 0 partial · 0 blocked · 0 planned</span></summary><div class="table-wrap chapter-milestone-table" tabindex="0" role="region" aria-label="Chapter implementation milestones"><span class="table-scroll-hint" data-table-scroll-hint="" hidden="" id="table-scroll-hint-15">Swipe horizontally or use the left and right arrow keys to reveal hidden columns <span aria-hidden="true">↔</span></span><table><thead><tr><th>Milestone</th><th>Status</th><th>Lean declaration</th><th>Remaining gap</th></tr></thead><tbody></tbody></table></div></details>
+</section>
+
+<section id="open-gaps">
+  <h2>Open boundaries</h2>
+  <ul><li>Only scalar Example2.24. Example2.25 normal cones and all remaining Chapter1/2 main-text/source-contract/necessary appendix obligations stay REQUIRED. Chapter2 mandatorytotal is null/incomplete; Chapters3–16 unenumerated and whole Goal ACTIVE. No multidimensional norm, algorithm/probability/regret/selection guarantee, merge/deploy/main/live update.</li></ul>
+</section>
+
+<section id="module-list">
+  <h2>All Lean modules in this chapter</h2>
+  <details class="inventory-disclosure"><summary>Open the complete module list (1 modules)</summary><div class="table-wrap" tabindex="0" role="region" aria-label="Lean modules in this chapter"><span class="table-scroll-hint" data-table-scroll-hint="" hidden="" id="table-scroll-hint-16">Swipe horizontally or use the left and right arrow keys to reveal hidden columns <span aria-hidden="true">↔</span></span><table><thead><tr><th>Module</th><th>Declarations</th><th>Project imports</th><th>Status</th></tr></thead><tbody><tr><td><a href="../../modules/banditrlproof-onlinesubgradientabsolute/index.html"><code>BanditRLProof.OnlineSubgradientAbsolute</code></a></td><td>4</td><td>1</td><td><span class="status compiled">Compiled</span></td></tr></tbody></table></div></details>
+</section>
+
+
+<nav class="chapter-pager chapter-pager-secondary" id="continue-reading-again" aria-label="Chapter navigation at end">
+  <div class="chapter-pager-heading"><span class="eyebrow">Next stop</span><strong>Shared teaching routes</strong></div>
+  <div class="chapter-pager-links">
+    <a class="chapter-pager-link previous" href="../online-subgradient-sum/index.html"><span class="chapter-pager-direction"><span aria-hidden="true">←</span> Previous</span><strong>Subgradients of finite sums</strong></a>
+    <a class="chapter-pager-index" href="../../books/bandit/index.html#teaching-routes"><span>All chapters</span><strong>29 of 40</strong></a>
+    <a class="chapter-pager-link next" href="../online-normal-cone/index.html"><span class="chapter-pager-direction">Next <span aria-hidden="true">→</span></span><strong>Indicator supports and normal cones</strong></a>
+  </div>
+</nav>
+</main>
+      <aside class="side-nav" data-page-toc="" aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle="" aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current="">Why the proof works</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link="" href="#chapter">Chapter</a><a data-toc-link="" href="#orientation">Orientation</a><a data-toc-link="" href="#source-guide">Sources</a><a data-toc-link="" href="#notation">Notation</a><a data-toc-link="" href="#algorithm">Proof flow</a><a data-toc-link="" href="#worked-example">Worked example</a><a data-toc-link="" href="#proof-bridge" aria-current="location">Why the proof works</a><a data-toc-link="" href="#teaching-notes">Lean teaching notes</a><a data-toc-link="" href="#completion-contract">Maintainer contract</a><a data-toc-link="" href="#milestones">Status</a><a data-toc-link="" href="#open-gaps">Open boundaries</a><a data-toc-link="" href="#module-list">Modules</a><a data-toc-link="" href="#continue-reading">Continue reading</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Auto-Bandit-RL-Proof-In-Sleep (ABRL)</strong>. Generated from current sources at 2026-10-06T19:43:42+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260919-taxonomy-techniques"></script>
+
+
+</body></html>
