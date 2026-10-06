@@ -127,7 +127,13 @@ Current evidence already justifies process lessons such as:
 Standing instructions are compact prompt memory. They are never proof
 dependencies.
 
-## 8. Reader backpressure and Exposition Seal
+## 8. Verified-route comparator
+
+After common-blind-spot review, if multiple routes remain verified, a comparator selects only the **default reader route**. It compares matched theorem statements, source fidelity, assumptions, reusable substrate, compression, and pedagogy. Alternative verified proofs remain explicit OR-routes; no verified route is erased merely because another is the default.
+
+The comparator cannot rescue an unverified route or use graph size as a scientific novelty score.
+
+## 9. Reader backpressure and Exposition Seal
 
 Track proof-production debt separately from theorem correctness:
 
@@ -143,7 +149,9 @@ reader prose must expand to the correct source and Lean nodes, preserve
 filtration/probability/feedback assumptions and the remaining boundary, and be
 reviewable without knowing the agent run.
 
-## 9. Contribution-contract version 3
+An accepted Exposition Seal stores evidence plus the source-node and Lean-node expansion of the compressed explanation, and explicitly confirms that assumptions and the remaining boundary were preserved.
+
+## 10. Contribution-contract version 3
 
 New substantive source-facing work should use contribution-contract schema 3.0.
 It adds a machine-readable `learning_contract` with:
