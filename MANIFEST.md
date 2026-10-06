@@ -15458,3 +15458,8 @@ Source Example2.14/direct comparison: runs/online-guessing-migration-20261006,9r
 ## ONLINE-AFFINE-SUBGRADIENT-MIGRATION-20261007
 
 Orabona v10 Theorem2.28 printed18/PDF30: one retained public full-image inclusion, seven unchanged scalar canary proofs/two TEST definitions; zero new mathematical/registry nodes. Current CONTRACT/BODY accepted and focused proof/kernel/fence evidence bound in runs/online-affine-subgradient-migration-20261007; combined project/site/FINAL/native acceptance and actual PR pending at this historical entry. Same shared Lean project/Book registry. Chapter2 and Chapters1-16 Goal incomplete; legacy1->0 after realPR is not chapter completion.
+
+
+## ONLINE-LIPSCHITZ-MIGRATION-20261007
+
+Orabona v10 Definition2.29/Theorem2.30 printed19/PDF31: one retained owned finite-value/all-pairs definition and one full interior iff proof,18unchanged canaryproofs/sixTESTdefs/twoabbreviations; zero new mathematical/registry nodes. Explicit NNReal including0 source convention separatelyreviewed, actual negativeL0Dobstruction retained. CurrentCONTRACT/convention/BODY and focused/kernel/fence evidence bound in runs/online-lipschitz-migration-20261007; combinedproject/site/FINAL/native/actualPR pending at this historical entry. Same sharedLean/Bookregistry. Chapter2totalnull/incomplete/legacyqueue0notchaptercompletion,totalGoalACTIVE.

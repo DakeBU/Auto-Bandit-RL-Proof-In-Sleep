@@ -1,0 +1,125 @@
+@BanditRL.OnlineConvex.SourceLipschitzOn.{u_1} : {E : Type u_1} →
+  [NormedAddCommGroup.{u_1} E] → (E → EReal) → Set.{u_1} E → NNReal → Prop
+@BanditRL.OnlineConvex.theorem_2_30.{u_1} : ∀ {E : Type u_1} [inst : NormedAddCommGroup.{u_1} E]
+  [inst_1 : InnerProductSpace.{0, u_1} Real E] [FiniteDimensional.{0, u_1} Real E] (f : E → EReal),
+  BanditRL.OnlineConvex.SourceProper.{u_1} f →
+    BanditRL.OnlineConvex.IsConvexExtended.{u_1} f →
+      ∀ (L : NNReal),
+        Iff
+          (BanditRL.OnlineConvex.SourceLipschitzOn.{u_1} f
+            (interior.{u_1} (BanditRL.OnlineConvex.effectiveDomain.{u_1} f)) L)
+          (∀ (x : E),
+            Membership.mem.{u_1, u_1} (interior.{u_1} (BanditRL.OnlineConvex.effectiveDomain.{u_1} f)) x →
+              ∀ (g : E),
+                Membership.mem.{u_1, u_1} (BanditRL.OnlineConvex.SourceSubdifferential.{u_1} f x) g →
+                  LE.le.{0} (norm.{u_1} g) ↑L)
+LipschitzProbe.abs_proper : BanditRL.OnlineConvex.SourceProper.{0} LipschitzProbe.absLoss
+LipschitzProbe.abs_domain : Eq.{1} (BanditRL.OnlineConvex.effectiveDomain.{0} LipschitzProbe.absLoss) Set.univ.{0}
+LipschitzProbe.abs_convex : BanditRL.OnlineConvex.IsConvexExtended.{0} LipschitzProbe.absLoss
+LipschitzProbe.abs_lipschitz : BanditRL.OnlineConvex.SourceLipschitzOn.{0} LipschitzProbe.absLoss
+  (interior.{0} (BanditRL.OnlineConvex.effectiveDomain.{0} LipschitzProbe.absLoss)) 1
+LipschitzProbe.abs_all_supports_and_nonzero : And
+  (∀ (x g : Real),
+    Membership.mem.{0, 0} (BanditRL.OnlineConvex.SourceSubdifferential.{0} LipschitzProbe.absLoss x) g →
+      LE.le.{0} (norm.{0} g) 1)
+  (And (Membership.mem.{0, 0} (BanditRL.OnlineConvex.SourceSubdifferential.{0} LipschitzProbe.absLoss 2) 1)
+    (Membership.mem.{0, 0} (BanditRL.OnlineConvex.SourceSubdifferential.{0} LipschitzProbe.absLoss (-2)) (-1)))
+LipschitzProbe.linear_proper : BanditRL.OnlineConvex.SourceProper.{0} LipschitzProbe.linearLoss
+LipschitzProbe.linear_convex : BanditRL.OnlineConvex.IsConvexExtended.{0} LipschitzProbe.linearLoss
+LipschitzProbe.linear_three_reverse : BanditRL.OnlineConvex.SourceLipschitzOn.{0} LipschitzProbe.linearLoss
+  (interior.{0} (BanditRL.OnlineConvex.effectiveDomain.{0} LipschitzProbe.linearLoss)) 3
+LipschitzProbe.zero_proper : BanditRL.OnlineConvex.SourceProper.{0} LipschitzProbe.zeroLoss
+LipschitzProbe.zero_convex : BanditRL.OnlineConvex.IsConvexExtended.{0} LipschitzProbe.zeroLoss
+LipschitzProbe.zero_constant : And
+  (BanditRL.OnlineConvex.SourceLipschitzOn.{0} LipschitzProbe.zeroLoss
+    (interior.{0} (BanditRL.OnlineConvex.effectiveDomain.{0} LipschitzProbe.zeroLoss)) 0)
+  (∀ (x : Real),
+    Membership.mem.{0, 0} (interior.{0} (BanditRL.OnlineConvex.effectiveDomain.{0} LipschitzProbe.zeroLoss)) x →
+      ∀ (g : Real),
+        Membership.mem.{0, 0} (BanditRL.OnlineConvex.SourceSubdifferential.{0} LipschitzProbe.zeroLoss x) g →
+          Eq.{1} g 0)
+LipschitzProbe.singleton_empty_interior_and_boundary : And
+  (Eq.{1}
+    (interior.{0}
+      (BanditRL.OnlineConvex.effectiveDomain.{0} (BanditRL.OnlineConvex.extendedIndicator.{0} (singleton.{0, 0} 0))))
+    EmptyCollection.emptyCollection.{0})
+  (And
+    (BanditRL.OnlineConvex.SourceLipschitzOn.{0} (BanditRL.OnlineConvex.extendedIndicator.{0} (singleton.{0, 0} 0))
+      (interior.{0}
+        (BanditRL.OnlineConvex.effectiveDomain.{0} (BanditRL.OnlineConvex.extendedIndicator.{0} (singleton.{0, 0} 0))))
+      0)
+    (And
+      (Membership.mem.{0, 0}
+        (BanditRL.OnlineConvex.SourceSubdifferential.{0}
+          (BanditRL.OnlineConvex.extendedIndicator.{0} (singleton.{0, 0} 0)) 0)
+        3)
+      (Not (LE.le.{0} (norm.{0} 3) 0))))
+LipschitzProbe.halfline_proper : BanditRL.OnlineConvex.SourceProper.{0} LipschitzProbe.halflineLoss
+LipschitzProbe.halfline_convex : BanditRL.OnlineConvex.IsConvexExtended.{0} LipschitzProbe.halflineLoss
+LipschitzProbe.halfline_lipschitz : BanditRL.OnlineConvex.SourceLipschitzOn.{0} LipschitzProbe.halflineLoss
+  (interior.{0} (BanditRL.OnlineConvex.effectiveDomain.{0} LipschitzProbe.halflineLoss)) 0
+LipschitzProbe.halfline_interior_not_whole_domain : And
+  (∀ (x : Real),
+    Membership.mem.{0, 0} (interior.{0} (BanditRL.OnlineConvex.effectiveDomain.{0} LipschitzProbe.halflineLoss)) x →
+      ∀ (g : Real),
+        Membership.mem.{0, 0} (BanditRL.OnlineConvex.SourceSubdifferential.{0} LipschitzProbe.halflineLoss x) g →
+          Eq.{1} g 0)
+  (And (Membership.mem.{0, 0} (BanditRL.OnlineConvex.SourceSubdifferential.{0} LipschitzProbe.halflineLoss 0) (-2))
+    (And (Not (LE.le.{0} (norm.{0} (-2)) 0))
+      (And
+        (∀ (x y : Real),
+          LE.le.{0}
+            (abs.{0}
+              (HSub.hSub.{0, 0, 0} (EReal.toReal (LipschitzProbe.halflineLoss x))
+                (EReal.toReal (LipschitzProbe.halflineLoss y))))
+            (HMul.hMul.{0, 0, 0} 0 (norm.{0} (HSub.hSub.{0, 0, 0} x y))))
+        (Not (BanditRL.OnlineConvex.SourceLipschitzOn.{0} LipschitzProbe.halflineLoss Set.univ.{0} 0)))))
+LipschitzProbe.zero_dimension : BanditRL.OnlineConvex.SourceLipschitzOn.{0} LipschitzProbe.nineLoss
+  (interior.{0} (BanditRL.OnlineConvex.effectiveDomain.{0} LipschitzProbe.nineLoss)) 0
+LipschitzSourceAudit.negative_constant_zero_dimension : And
+  (BanditRL.OnlineConvex.SourceProper.{0} LipschitzSourceAudit.zeroLoss)
+  (And (BanditRL.OnlineConvex.IsConvexExtended.{0} LipschitzSourceAudit.zeroLoss)
+    (And
+      (∀ (x y : LipschitzSourceAudit.Z),
+        LE.le.{0}
+          (abs.{0}
+            (HSub.hSub.{0, 0, 0} (EReal.toReal (LipschitzSourceAudit.zeroLoss x))
+              (EReal.toReal (LipschitzSourceAudit.zeroLoss y))))
+          (HMul.hMul.{0, 0, 0} (-1) (norm.{0} (HSub.hSub.{0, 0, 0} x y))))
+      (Not
+        (∀ (x g : LipschitzSourceAudit.Z),
+          Membership.mem.{0, 0} (BanditRL.OnlineConvex.SourceSubdifferential.{0} LipschitzSourceAudit.zeroLoss x) g →
+            LE.le.{0} (norm.{0} g) (-1)))))
+LipschitzProbe.absLoss : Real → EReal
+LipschitzProbe.linearLoss : Real → EReal
+LipschitzProbe.zeroLoss : Real → EReal
+LipschitzProbe.halflineLoss : Real → EReal
+LipschitzProbe.nineLoss : LipschitzProbe.Z → EReal
+LipschitzSourceAudit.zeroLoss : LipschitzSourceAudit.Z → EReal
+LipschitzProbe.Z : Type
+LipschitzSourceAudit.Z : Type
+def BanditRL.OnlineConvex.SourceLipschitzOn.{u_1} : {E : Type u_1} →
+  [NormedAddCommGroup.{u_1} E] → (E → EReal) → Set.{u_1} E → NNReal → Prop :=
+fun {E} [NormedAddCommGroup.{u_1} E] f V L =>
+  And (∀ (x : E), Membership.mem.{u_1, u_1} V x → ∃ a, Eq.{1} (f x) ↑a)
+    (∀ (x : E),
+      Membership.mem.{u_1, u_1} V x →
+        ∀ (y : E),
+          Membership.mem.{u_1, u_1} V y →
+            LE.le.{0} (abs.{0} (HSub.hSub.{0, 0, 0} (EReal.toReal (f x)) (EReal.toReal (f y))))
+              (HMul.hMul.{0, 0, 0} (↑L) (norm.{u_1} (HSub.hSub.{u_1, u_1, u_1} x y))))
+def BanditRL.OnlineConvex.SourceSubdifferential.{u_1} : {E : Type u_1} →
+  [inst : NormedAddCommGroup.{u_1} E] → [InnerProductSpace.{0, u_1} Real E] → (E → EReal) → E → Set.{u_1} E :=
+fun {E} [NormedAddCommGroup.{u_1} E] [InnerProductSpace.{0, u_1} Real E] f x =>
+  setOf.{u_1} fun g =>
+    ∀ (y : E), LE.le.{0} (HAdd.hAdd.{0, 0, 0} (f x) ↑(inner.{0, u_1} Real g (HSub.hSub.{u_1, u_1, u_1} y x))) (f y)
+def BanditRL.OnlineConvex.SourceProper.{u_1} : {E : Type u_1} → (E → EReal) → Prop :=
+fun {E} f => And (∀ (x : E), Ne.{1} (f x) Bot.bot.{0}) (∃ x r, Eq.{1} (f x) ↑r)
+def BanditRL.OnlineConvex.effectiveDomain.{u_1} : {E : Type u_1} → (E → EReal) → Set.{u_1} E :=
+fun {E} f => setOf.{u_1} fun x => LT.lt.{0} (f x) Top.top.{0}
+def BanditRL.OnlineConvex.realEpigraph.{u_1} : {E : Type u_1} → (E → EReal) → Set.{u_1} (Prod.{u_1, 0} E Real) :=
+fun {E} f => setOf.{u_1} fun p => LE.le.{0} (f p.1) ↑p.2
+def BanditRL.OnlineConvex.IsConvexExtended.{u_1} : {E : Type u_1} →
+  [inst : AddCommGroup.{u_1} E] → [Module.{0, u_1} Real E] → (E → EReal) → Prop :=
+fun {E} [AddCommGroup.{u_1} E] [Module.{0, u_1} Real E] f =>
+  Convex.{0, u_1} Real (BanditRL.OnlineConvex.realEpigraph.{u_1} f)

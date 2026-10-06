@@ -1,0 +1,17 @@
+from common_v2 import *
+site=Path('tmp/online-lipschitz-migration-site-v1');r=load(site/'books/registry.json');m=load(site/'site-manifest.json');old=load('tmp/online-affine-subgradient-migration-site-v1/books/registry.json')
+assert r['lean_verified'] is True and m['lean_verified'] is True and m['source_dirty'] is False and r['source_commit']==m['source_commit']
+nodes={n['id']:n for n in r['nodes']};oldnodes={n['id']:n for n in old['nodes']}
+assert len(nodes)==len(r['nodes'])==len(oldnodes)==10811 and set(nodes)==set(oldnodes) and r['identity']==old['identity']
+assert all(nodes[i]['url']==n['url'] for i,n in oldnodes.items())
+f=fixed(True);checks=[]
+for n,h in f['headers'].items():
+ node=nodes['declaration:'+PRE+n];assert node['status']=='compiled' and node['statement_sha256']==h
+ assert 'online-learning' in node['books'] and 'teaching:online-lipschitz' in node['chapters']
+ checks.append(dict(name=PRE+n,native_hash=h,url=node['url'],unique_canonical_node=True,new_canonical_mathproof=False,kind='retained-definition' if n=='SourceLipschitzOn' else 'retained-theorem'))
+x=next(x for x in load('website/content/readings.json')['readings'] if x['slug']==ROUTE)
+assert len(x['notation'])==3 and x['teaching_route']==load(RUN/'reader-integration-v1.json')['original_routes_retained']
+assert len([x for x in load('website/content/highlights.json')['highlights'] if x.get('chapter')==ROUTE])==2 and len(x['source_theorems'])==2
+html=(site/'modules/banditrlproof-onlinelipschitzsubgradient/index.html').read_text(encoding='utf-8');assert all(c['name'] in html for c in checks)
+write(RUN/'registry-v1.json',dict(status='passed',source_commit=m['source_commit'],source_dirty=False,lean_verified=True,registry_path=(site/'books/registry.json').as_posix(),registry_sha256=sha(site/'books/registry.json'),identity=r['identity'],checks=checks,preserved_base_node_ids_and_urls=10811,new_registry_nodes=0,total_registry_nodes=10811,canonical_shared_nodes_not_perBookcopies=True,highlight_links=2,curated_links=2,notation_entries=3,source_cards=2,canonical_public_nodes=2))
+print('All10811oldIDsURLs/TWOexactpubliccanonicalnodes/highlights/curatedlinks/sourcecards/THREEnotation preserved, no newnodes.')

@@ -1,0 +1,28 @@
+@Metric.mem_nhds_iff : ∀ {α : Type u_1} [inst : PseudoMetricSpace α] {x : α} {s : Set α},
+  s ∈ nhds x ↔ ∃ ε > 0, Metric.ball x ε ⊆ s
+@LipschitzOnWith.of_dist_le_mul : ∀ {α : Type u_1} {β : Type u_2} [inst : PseudoMetricSpace α]
+  [inst_1 : PseudoMetricSpace β] {K : NNReal} {s : Set α} {f : α → β},
+  (∀ x ∈ s, ∀ y ∈ s, dist (f x) (f y) ≤ ↑K * dist x y) → LipschitzOnWith K f s
+@BanditRL.OnlineConvex.SourceLipschitzOn : {E : Type u_1} → [NormedAddCommGroup E] → (E → EReal) → Set E → NNReal → Prop
+@BanditRL.OnlineConvex.subgradient_norm_le_lipschitz_ball : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (f : E → EReal) (x : E) (r : ℝ),
+  0 < r →
+    ∀ (K : NNReal),
+      (∀ y ∈ Metric.ball x r, ∃ a, f y = ↑a) →
+        LipschitzOnWith K (fun y => (f y).toReal) (Metric.ball x r) →
+          ∀ g ∈ BanditRL.OnlineConvex.SourceSubdifferential f x, ‖g‖ ≤ ↑K
+@BanditRL.OnlineConvex.subgradient_exists_of_domain_interior : ∀ {F : Type u_1} [inst : NormedAddCommGroup F]
+  [inst_1 : InnerProductSpace ℝ F] [FiniteDimensional ℝ F] (f : F → EReal),
+  BanditRL.OnlineConvex.SourceProper f →
+    BanditRL.OnlineConvex.IsConvexExtended f →
+      ∀ x ∈ interior (BanditRL.OnlineConvex.effectiveDomain f),
+        (BanditRL.OnlineConvex.SourceSubdifferential f x).Nonempty
+@EReal.coe_toReal : ∀ {x : EReal}, x ≠ ⊤ → x ≠ ⊥ → ↑x.toReal = x
+EReal.coe_add : ∀ (x y : ℝ), ↑(x + y) = ↑x + ↑y
+@EReal.coe_le_coe_iff : ∀ {x y : ℝ}, ↑x ≤ ↑y ↔ x ≤ y
+@abs_real_inner_le_norm : ∀ {F : Type u_1} [inst : SeminormedAddCommGroup F] [inst_1 : InnerProductSpace ℝ F] (x y : F),
+  |inner ℝ x y| ≤ ‖x‖ * ‖y‖
+@norm_sub_rev : ∀ {E : Type u_1} [inst : SeminormedAddGroup E] (a b : E), ‖a - b‖ = ‖b - a‖
+@abs_le : ∀ {G : Type u_1} [inst : AddCommGroup G] [inst_1 : LinearOrder G] [IsOrderedAddMonoid G] {a b : G},
+  |a| ≤ b ↔ -b ≤ a ∧ a ≤ b
+NNReal.coe_nonneg : ∀ (r : NNReal), 0 ≤ ↑r

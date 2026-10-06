@@ -1,0 +1,13 @@
+import Tests.OnlineLipschitzSubgradientCanary
+#check @Metric.mem_nhds_iff
+#check @LipschitzOnWith.of_dist_le_mul
+#check @BanditRL.OnlineConvex.SourceLipschitzOn
+#check @BanditRL.OnlineConvex.subgradient_norm_le_lipschitz_ball
+#check @BanditRL.OnlineConvex.subgradient_exists_of_domain_interior
+#check @EReal.coe_toReal
+#check @EReal.coe_add
+#check @EReal.coe_le_coe_iff
+#check @abs_real_inner_le_norm
+#check @norm_sub_rev
+#check @abs_le
+#check @NNReal.coe_nonneg

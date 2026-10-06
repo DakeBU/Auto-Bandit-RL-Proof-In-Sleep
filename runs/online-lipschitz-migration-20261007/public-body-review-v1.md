@@ -1,0 +1,380 @@
+# Definition 2.29 / Theorem 2.30 actual BODY review
+
+Verdict: **accepted-with-explicit-delta**, actual public definition/proof and unchanged whole-canary BODY scope only. No mathematical or blocking metadata repairs found. R1–R9 reader obligations remain pending; prepared integration helpers are not executed reader evidence.
+
+Actor `/root/source_reviewer`, distinct automated source reviewer, requested GPT-6 Astra / medium. Prior current CONTRACT and earlier staged history acknowledged. Not blind, human/external review or independently attested runtime model. This is a separate proof-term review rather than inheritance of contract/compiler acceptance.
+
+Pinned PDF freshly rehashed `cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17`; printed19/PDF31 text read and original page PNG actually viewed again. One printed definition and one theorem, one retained owned definition/one proof; no new math/TEST/registry declaration.
+
+## Actual producers
+
+The complete SourceLipschitzOn body conjoins point-dependent finite real witnesses on V with the uniform all-pairs real difference inequality. Its inferred binder is NormedAddCommGroup only. Values outside V, including bottom, are unconstrained; properness is not silently built into this definition. Five borrowed contexts retain their actual distinct minimal scopes: S norm/inner, P/D/Q arbitrary carrier, C additive group and real module.
+
+Forward: each ambient interior point gives a positive-radius ball contained in the interior. Both the finite witnesses and pair bound restrict to that actual ball. The invoked norm lemma genuinely splits g=0 (using NNReal nonnegativity); otherwise t=r/(2||g||)>0 and z=x+t g has distance r/2. Real finiteness converts support at z, inner identity gives t||g||², and Lipschitz controls the actual difference. Cancelling a positive t||g|| proves the bound, not an assumed norm conclusion.
+
+Reverse: interior membership plus SourceProper rules out both infinities before coe_toReal. The proof invokes subgradient_exists_of_domain_interior separately at x and y. That producer obtains prescribed contact and global affine minorant, then actual Riesz inverse realizes a global support; no support-existence assumption is added. Evaluating these supports crosswise, finite EReal conversion and the two negative-inner/Cauchy-Schwarz bounds give both signs, then abs_le. No empty-support shortcut, relative-interior substitution, closedness or differentiation premise appears.
+
+## Separate source convention judgment
+
+Printed Definition2.29/Theorem2.30 omit an explicit nonnegative condition. The proof calls zero-norm support trivially bounded, requiring L>=0. NNReal is accepted as the ordinary nonnegative Lipschitz convention, including zero, not literal all-real-L equivalence. In admitted dimension zero the actual constant-zero proper convex fixture has all distances zero and satisfies every pair inequality with L=-1, while its genuine zero support violates norm<=-1. This refutes the unrestricted reading for that admitted dimension, not a separately positive-dimensional source formulation. No positive dimension or nonempty interior restriction is introduced.
+
+Decision remains accepted-with-explicit-delta independently of BODY/package status.
+
+## Two targets / seven slots
+
+### BanditRL.OnlineConvex.SourceLipschitzOn
+
+Accepted-with-explicit-delta; exact native header `c75388dcbb1f81fe35d20be7a6df27acb23cb91b54f700a7c5a0c5a64e4b74e0`.
+
+- **objects_spaces**: Arbitrary E with NormedAddCommGroup only; f:E->EReal, V:Set E, L:NNReal. No inner product, Module or finite dimension in inferred definition binders.
+
+- **quantifiers**: For every x in V exists a real a with f x=coe a; independently every ordered pair x,y in V obeys one uniform bound. Witness depends on x.
+
+- **assumptions**: Finiteness on V is part of the property; no properness, convexity, nonempty V or global noBottom premise. Printed noBottom codomain and V subsetdom ensure the corresponding finite values.
+
+- **conclusion**: Conjunction of actual finite witnesses and abs(toReal(fx)-toReal(fy)) <= L*norm(x-y); not toReal inequality alone.
+
+- **constants_normalization**: One nonnegative L including zero, coefficient one, arbitrary norm in source represented by chosen normed group. NNReal is an explicit convention delta.
+
+- **information_probability**: Deterministic property, no selection, algorithm, probability or regret.
+
+- **boundaries**: Empty V vacuous. Bottom/top outside V unrestricted; inside V both excluded by real witness. Generalized normed group scope extends Euclidean source; no source assertion that generic f is globally proper.
+
+### BanditRL.OnlineConvex.theorem_2_30
+
+Accepted-with-explicit-delta; exact native header `28e6bbd66484942562d9b8053b3d3d473170b7c51478f9cdc4f31e97f91fe106`.
+
+- **objects_spaces**: Finite-dimensional real inner-product E with NormedAddCommGroup, f:E->EReal, proper and real-height-epigraph convex; U=ambient interior effectiveDomain.
+
+- **quantifiers**: For all f,hp,hc,L:NNReal, full iff; left every ordered interior pair plus finite witnesses; right every x in U and EVERY global support g, whose support test ranges over ALL ambient y.
+
+- **assumptions**: SourceProper globally excludes bottom and supplies a finite point; IsConvexExtended; finite dimension. No closedness, lsc, differentiability, boundedness, positive L/dimension, nonempty interior or supplied support existence.
+
+- **conclusion**: Exact equivalence of SourceLipschitzOn f U L and uniform norm bound on all global supports based in U. No relative-interior, entire-domain or boundary extension.
+
+- **constants_normalization**: Same coerced NNReal L on both sides, including zero, no factor loss. Literal unrestricted real L is not certified.
+
+- **information_probability**: Deterministic convex analysis. Existence for reverse is a derived interior theorem dependency, not an oracle hypothesis; no online policy or regret.
+
+- **boundaries**: Empty ambient interior gives both sides vacuous; dimension zero retained. Properness plus domain membership gives finite values before EReal conversion. Boundary supports may be unbounded. Coordinate-free real inner spaces include Euclidean L2; no separately certified coordinate adapter.
+
+## Whole canary scrutiny
+
+- **absolute**: accepted: actual finite |x| all-pairs bound supplies forward iff; full global support bound plus genuine +1 at2/-1 at-2 via exact support classification, nonzero and tight.
+
+- **affine_three**: accepted: actual affine properness/convexity and full singleton support classification{3} feed reverse iff. No selected-support-only norm premise.
+
+- **zero**: accepted: real constant0 finite-pair property with L0 and forward theorem forces every interior support0.
+
+- **singleton**: accepted: actual effective-domain/interior_singleton equality makes ambient interior empty, reverse iff vacuous there; independently constructed boundary support3 violates L0. No boundary extension.
+
+- **halfline**: accepted: actual finite indicator values on positive ray yield L0 and all interior supports0. Constructed boundary support-2, actual all-toReal-zero equality and finite-witness contradiction at-1 show why whole-universe toReal bound is insufficient.
+
+- **zero_dimension**: accepted: actual EuclideanSpace real(Fin0), constant9 proper/convex, unique vector0 gives reverse theorem L0. No positive-dimensional premise.
+
+- **negative_L_audit**: accepted as convention obstruction, not the NNReal theorem: constant0 proper/convex on Fin0, all distances0, actual zero global support refutes norm<=-1. Does not refute a separately positive-dimensional formulation.
+
+All 18 old proof bodies, six TEST definitions and two abbreviations were read, not a truncated selection; scenario grouping is not declaration count. Scalar cases and the genuine zero-dimensional case do not certify a 2D/matrix example. The adjacent |x1| nondifferentiability observation remains separate required work.
+
+## Actual evidence and raw preservation
+
+265 fixed BODY rows rehashed successfully; 202 original CONTRACT reviewed rows matched their original receipt membership and exact resolved files. Mutable native journals resolve to immutable CONTRACT-reviewed prefix snapshots. Original report/receipt were not refreshed. Public module raw SHA `30a944f4638710798a1a7ec90fb4c208816c7ee9c80549950777a35d2912a832` and whole canary SHA `cef3492490f045f99bc0d4e7482075e185744a67f98aa4a8336200a7ec32bf99` exactly match the before snapshots. Actual headers/full definition/shared contexts remain unchanged.
+
+Fresh public direct elaboration exited0 in9.828s. Whole-canary focused build exited0 in2.266s,3322jobs, including replay and the preserved unused interior_Ici simp warning; not a clean-recompile claim. Named kernel audit exited0 in15.516s: independently parsed28unique names, each exactly standard three (propext, Classical.choice, Quot.sound), no sorryAx. Two frozen-header safe guards passed separately; empty assumption arrays do not by themselves validate full source premises. Full actual header/type/source comparison does that separately.
+
+Selected compiled graph has28nodes,19proofs and9definition-kind nodes (one owned production definition, six TEST definitions and two abbreviations),1819direct type/value occurrences. All14required actual value pairs were checked in node dependencies; both readiness nodes exactly equal the original two-node graph,260occurrences/fourpairs. This is selected evidence, not a full registry export. Revalidation command exited0 in50.031s; the lower trial is compiled evidence, not reviewer or package acceptance.
+
+Required mathematical repairs: none. Required blocking metadata repairs: none. Combined root/Tests/full harness, reader integration/site, FINAL, immutable/native acceptance and actual PR remain pending. No Chapter2/whole Goal/main/live certification. Historical preparation failures remain preserved; no proof/target repair occurred in this BODY stage.
+
+## Pending reader obligations, unchanged from CONTRACT
+
+- R1: Identify ONE printed definition and ONE printed theorem, one retained owned definition and one proof, zero new math/TEST/registry nodes. Give the definition its own finite-value/all-pairs explanation rather than the theorem support-production proof now repeated in its highlight; do not call the definition a proof.
+
+- R2: Publish exact minimal binders: SourceLipschitzOn needs only NormedAddCommGroup; theorem adds real inner-product and finite dimension. Five borrowed S/P/D/Q/C are not owned; P/D/Q arbitrary carrier, S norm/inner, C AddCommGroup plus real Module. Historical scoped-context pending-compilation flag is preparation metadata, superseded evidentially by actual compiled prints, not an unresolved type guess.
+
+- R3: Explain standalone generic EReal definition can allow bottom outside V, while real witnesses exclude both infinities on V. Source noBottom codomain makes V subsetdom sufficient; theorem SourceProper excludes bottom globally. Never replace finite witnesses by a toReal bound.
+
+- R4: State NNReal source-convention delta beside both source statements, including L=0. Printed L>=0 is implicit, not literal text; disclose actual negative-L dimension-zero counterexample and retain zero dimension/empty interior. No unrestricted-real-L equivalence or claimed contradiction under a separately positive-dimension convention.
+
+- R5: Preserve full iff on AMBIENT interior only and EVERY global support/ALL ambient y. No relative-interior, whole-domain/boundary, selected-support, closedness, differentiability or supplied-support-existence strengthening.
+
+- R6: Explain actual intended route: local finite ball/normalized support perturbation forward; actual proper-convex interior existence at BOTH points, finite EReal conversion and two Cauchy-Schwarz signs reverse. Current two-node readiness/260 direct occurrences/four required actual value pairs is scoped readiness, not new full/canary export or current body acceptance.
+
+- R7: Describe exact old 18 canary proofs/six definitions/two abbreviations: nonzero absolute supports, slope3 reverse, zero constant, singleton empty interior/boundary3, halfline interior0/boundary-2 and infinity-toReal trap, zero-dimensional constant9, separate negative-L audit. Do not relabel six scenario groups as six total proofs or invent new/2D tests.
+
+- R8: Refresh staged gate wording only with applicable fresh evidence; inherited compiled/local acceptance prose is historical. Distinguish native header guards (empty assumption arrays limited) from full compiled types and semantic review; separate curated routes from actual dependency edges and registry. Preserve two highlights/two curated links/three notation/two source cards/two canonical nodes unless justified reader repair.
+
+- R9: Keep adjacent two-dimensional |x1| nondifferentiability observation, Lemma2.31/OSD/linearization and all remaining maintext/appendix/Chapter1 gaps mandatory. Legacy queue zero is not Chapter2 total or completion; Chapter2 remains null/incomplete and whole Goal active; no merge/live/native package acceptance at this stage.
+
+## Raw reviewed inventory
+
+All fixed inputs read as raw bytes; semantic scrutiny focuses on the actual current source, definitions, bodies, canaries, typed APIs, selected graph and gate evidence. Index/snapshot hashing is not blanket literature acceptance.
+
+| Path | Raw SHA-256 |
+|---|---|
+| `.agents/skills/bandit-semantic-roundtrip/SKILL.md` | `7ee7b72b8a84ab954966dc13900952c3439bd8d4e97877b622c1ca0a7aa85477` |
+| `BanditRLProof.lean` | `351d5238e97cf54ae4c5f65a7e82cabc40ac7eb6f18c9e64e89e27a6610cb9c6` |
+| `BanditRLProof/OnlineClosedProper.lean` | `c66f00c33b45fb8a0e11583eeadf506e176c16166ce2af02f41f0674507cebe7` |
+| `BanditRLProof/OnlineConvexExtended.lean` | `bd30bb95a46ccdc3f6d25f808c175af5fee71d075c2b46ffcf6508f15f1ed66a` |
+| `BanditRLProof/OnlineConvexMinorant.lean` | `8ca81ca0b79248a15df47556057175fd6b4712d33a082508c543bd7760a15742` |
+| `BanditRLProof/OnlineHinge.lean` | `d3c7ec649a5d231bd30d472ce70bfed20ecdf7069cba30cb630297f99ce16871` |
+| `BanditRLProof/OnlineLipschitzSubgradient.lean` | `30a944f4638710798a1a7ec90fb4c208816c7ee9c80549950777a35d2912a832` |
+| `BanditRLProof/OnlineNormalCone.lean` | `2aa6e543860fa6df2f4cc81cf1a8df857b23aecc7ec2c292c26faa97db5b3552` |
+| `BanditRLProof/OnlineSubgradientAbsolute.lean` | `bf3e8d97f67b78e7ad230b8efd321948f4d7ba1a0e9cde31e8d85c1e9019442b` |
+| `BanditRLProof/OnlineSubgradientBasic.lean` | `af3d3f56e4a64cd8adbe47368caf5382e63b428f01da29a121c28c8014f352a5` |
+| `BanditRLProof/OnlineSubgradientDifferentiability.lean` | `4f21c5d7fd0ef27a860390b698072d65527610d55e60c16568e82fa99215c1d3` |
+| `BanditRLProof/OnlineSubgradientInterior.lean` | `72cf2057e9dee7a1e8c4f92bb7878cffbb9b7603ff6afbac4f90ee5af11db9d2` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/.gitattributes` | `705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/00_context.md` | `fb8f012b44cb64e047ceccf862d753b37ef9cf81be48ac91025c43dbd13d7fb9` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/10_upper_director-v1.md` | `58cea0c12a61c376b40e9c6b482cf66835351c2240051a2da2433a8421d0d2d0` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/20_architect-v1.md` | `37634015db26c8e249249b19fe042c35509a5d4d50aff0885e631db3eaa98e95` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/30_lower_worker-v1.md` | `accce6db7b24606d82c57b5ab1a1142374ed4d788774990ddb039b771b39545f` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/actual-types-v1-01-exit.json` | `30c28eed352636e5e344aed934e9a3f96fd54000fb015d7b7c84d5d5a4a7655a` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/actual-types-v1-01.log` | `c1504892c8df4dc301116b70c3d370b1c8122a1e3842e462c6c1e65fb3f8c05d` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/authoritative-private-workflow-binding-v1.json` | `2b9c630b81b9b524476e56fa8727edbdfa31404c8e396c6a8788a515f69fbe7e` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/base-PR175-fresh-v1.json` | `b4e1310fa7b94e710940036466e76e0711f8ad5893b67c20300e72573f90f7bc` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/blind-generated-before-use-v1.json` | `a713591a17fc9e29bf105805b5fe38281fec577d15a90a8e4ac27f4620efaf9c` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/blind-packet-v1.md` | `71441ed39629be1c5d0af17b0b72e14844a44820d433f150155ef962026ab615` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/blind-receipt-v1.json` | `350e61727b095648b5c312e505c3692682dedb46a47908d040a69d7b567410fd` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/blind-reconstruction-v1.md` | `982e95311d4172819fa445068037f744bb4977ace6560beeea89ad1536f5b52c` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/body-helper-before-use-v1.json` | `7b606ff5227eebfe7c1b7caf1a8995670e62759de9cbbcd76dbf5958a6b72cdf` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/bootstrap-before-use-v1.json` | `c786aa53e66a65b9ba6977bf36381e0e6d9324fa18a5130c7be1d3d817a1a780` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/bootstrap-v1.py` | `86904adf2e8247d407aea4d8898f2c5e68ab6f603795214c4b81e933bdf557e3` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/browser-v1.py` | `4c310c824dd51c225b68829b4d43e282030f7e1044bb32f6c84edd7d47b0578f` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/canonical-fetch-v1-01-exit.json` | `57642fbe856177b3c887d1fb47028421da767af598b5521fa4a92bb95e52b37b` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/canonical-fetch-v1-01.log` | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/canonical-worktree-audit-v1.json` | `a87c73e4c9b2773e17426a028b1683fee4ddae5ae9b96e1d13703a2c27b4810e` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/check-scoped-diff-v1.py` | `93997de03fd9bb0fbeb721de8c0b6e0dc124eadc9405c766e7db45a2e875c2b0` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/commit-owned-v1.py` | `05e53192e7d959fe944e5b2b9c3be02a657dacfca43bb1967cb70a16c4d96aef` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/common_v2.py` | `6bbdaa269da27cd38b6b72a9dfcc32515343c1467e0f6f5a45513e6c0dc9a50d` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/compiled-dependencies-v1.json` | `42b93119efdd58ee76c824f95998aeb43a8d3c24ff0881b721d513e031311ac9` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/compiled-public-graph-v1-01-exit.json` | `5cf5eeb5fc5cfd889e0f178fa22944fc4522a3dc11e1bc819fe2b894d9decbd6` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/compiled-public-graph-v1-01.log` | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/compiled-public-graph-v1.json` | `29ee9ef062e6a5189afd1211e292c039ab49c35a7ec61c74306f02096df60394` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/compiled-ready-graph-v1-01-exit.json` | `11f07ba1af4a635ff1ee184c2d321c14daa897570fe28eb43e96900f3f3e0f9c` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/compiled-ready-graph-v1-01.log` | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/compiled-ready-graph-v1.json` | `72e0c29c8212d67a2153d73da484822cb71b43233f0cfd44341f8e955b61aeef` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/contract-binding-audit-v1.json` | `f8b7822dcd059f7d3b750b61acc61b7a578c132c1da993285c6080b0c756341c` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/contract-helper-before-use-v1.json` | `d82a74eaf1be8a61fbee92e2d055909256e3bfd8ade27b2bc38cc4361e0c2674` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/current-gate-adapters-before-use-v1.json` | `1a2b5a74e2bf9138767f4884dd5dbb563070cc7bff46d3b000cbfd2ac8b924aa` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/draft-fence-SourceLipschitzOn-v1-exit.json` | `076aa328a5968a9d5828e1b5d38f1293d083558927d30c3db6116894bc085b75` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/draft-fence-SourceLipschitzOn-v1.log` | `d51ed767df092b50903310c38e428b006fcb4ae0424a71e94655fda51d0eda4f` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/draft-fence-theorem_2_30-v1-exit.json` | `ee656dbfc75ebfb561d3bb43c3976d890c74ee7c13172281af76ed20d26062c1` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/draft-fence-theorem_2_30-v1.log` | `de834e68bb246257a145af0fed5e7b923dc8635f5dad9f08840646aa73de2d3e` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/draft-freeze-v1.json` | `64732f49740e063fc5d8f823dff4c59c6d3bef14607c87e12a74a619b099804f` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/draft-generated-before-use-v1.json` | `b4f4832e346969ce25ef0cf043ec029c054ad4ffdb36c4757969888f529f2253` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/draft-lifecycle-v1-exit.json` | `4d9c50079dd52314bf04a87a62957385f0e843f9de4180699cf7a11116c522c5` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/draft-lifecycle-v1.log` | `55ea1e5d7adfe2bcdbab8f19928698b66913e24e988a767af9594371605b4fbc` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/freeze-draft-v1-01-exit.json` | `1cb62d760014b02f8a6066d30978c74331088d29145c9074f77497201941af22` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/freeze-draft-v1-01.log` | `2d1d38ac581f78db9a9ce2c052c34f26db5d9edfbb0d5f7cacbd032608a2273b` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/frontier-refresh-help-v1-01-exit.json` | `fbd145c436837da364488a4d70713b2c9f1252ea108591c2a5c2e9ad94ac67f8` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/frontier-refresh-help-v1-01.log` | `bff73ff554907d7c5dd50b99f2491f5675e93afb29829e402ec383fb52fe3cdc` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/frontier-shadow-help-v1-01-exit.json` | `2ca13ccfb59c20018554047217273daa5079c41a7118267a50c55be4b9fcf210` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/frontier-shadow-help-v1-01.log` | `ad548f6e24b3214fbf5796c632caa24debbaa21c6622f7dab8abe268f521de7d` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/gate-adapter-helper-before-use-v1.json` | `b88601faf3bc34f3c8c0a7547de107bbfd2bb0477b0d24bd27ff612f9643f619` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/historical-raw-supersession-contract-v1.json` | `c2e1fe5dd9397acd939a06de5d9008368cbb27ec7d83f7d542cda6042ac9db15` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/historical-raw-supersession-v1.json` | `3d1ac1ed466bfdf8ff85bd0c8a46af08646574f0ff97c63bde68e617525ddc34` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/initialize-v1.py` | `7f19691ce595a7de408b105971681fa28e94c81bb24f0f435c56b107d38ad340` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/initialized-before-first-use-v1.json` | `35b7b861351fd19d775f876fd3cac05fd81e4805cbe4cff99bfd883b762ae1ff` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/inspect-reader-v1-01-exit.json` | `4d2f2f5cbfe8cbad2ce6c0f60af5c236a547568188c8121ddd22a1a2e64e37eb` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/inspect-reader-v1-01.log` | `b0fd4d8a544c1a7a16b406211399dbea37ca8b3147c9f9e72920c135f6a4c8f2` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/inspect-reader-v1.py` | `f82394826743a18acf2367518324138c3275f7614028d7a6f9e05e67c81e5e19` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/integrate-reader-v1.py` | `6a1e9e5193a8f9714c0a8d1fd8c21b74156cbdad7f3507d2abb5f9e367126249` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/leaves/actual-types-v1.lean` | `b8d810d165c221745c71a35560cc2b9e2b9fc6449abe029332fae45018651dfb` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/leaves/export-public-dependencies-v1.lean` | `d8ffbb82dd09af8caa2645d24e4484300bdb60e5b3e6dafa11c79972ebcb7513` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/leaves/export-ready-dependencies-v1.lean` | `497d4520f8f09b0882c8660507b2927222d1157a5a9a9b2b7b845b47f793ec6c` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/leaves/pinned-APIs-v1.lean` | `21a4a2b6a3bd33ec827952672d25ed7e0af2cac7a7636911e1009354e362d660` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/leaves/public-all-axioms-v1.lean` | `0ab075190ab13a5c9353bb0fc672b4824719bfb88d1e384be80749e99f47f32f` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/lifecycle-event-help-v1-01-exit.json` | `98e78dc015b5a7265eba1fe23ba0fad151ec89340da059d9349a3fe68a6d8ab8` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/lifecycle-event-help-v1-01.log` | `b1e8b438a9b725793b9888d206e98a971ace3df200ec90ed9cb63eab26b28507` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/list-lean-decls-help-v1-01-exit.json` | `77ce3ba7f0925ca07b8bd8448fa0c1751c4851a8edf15bfd79f23e1e51240da7` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/list-lean-decls-help-v1-01.log` | `258218f16a12b1a530d85ae83e6c2449237af8a0a1153bb35de40245d665b131` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/list-mathlib-help-v1-01-exit.json` | `f3ef0e0b4e6dbd22e7d324789dfad934038bd5c07367cf2ada1e4446954bd5bc` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/list-mathlib-help-v1-01.log` | `eedc3e9609fdc7a3bcf76443a33933477de80dcc4ec9906b64a691e29b207e9d` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/list-mathlib-v1-exit.json` | `29acfaf8a0a25b892b113f142beaecc91f54d7a38bd14d9981d79368fbe434db` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/list-mathlib-v1.log` | `884fab88619a3d1adcafe89eecddd2d98f4be5c6fa61262862134dde9e51d225` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/list-papers-help-v1-01-exit.json` | `9d520af87565e3391bb994bb8b864c5718f525234a11de0937ec6e10153ed7d6` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/list-papers-help-v1-01.log` | `57fdd9fadca031cddeec9da9c4ba947cccb3b1b155129de3a81b72b0c811a696` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/list-papers-v1-exit.json` | `8f35ffbbce2a7990f2d49500f2e440f7548f13677a4293262b53b12503e02deb` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/list-papers-v1.log` | `9acd333996a893a7b5ccad3e674ece26ef05c8b737e7816b33043b121583a619` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/list-weapons-help-v1-01-exit.json` | `6b9981994a71b1bc9e9d9f5c6504687a8eea4d282dd8f4d37579f767b4ae98b2` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/list-weapons-help-v1-01.log` | `529fdc45da8d53249b6cea7712803e68cc0251026c7a66d1a067ac6413c9617d` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/list-weapons-v1-exit.json` | `81a49dd433663f6dab997c3cd453eaecc7d20e9b08550a4aa3ca134f3f0f8cbc` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/list-weapons-v1.log` | `a6e4b78de1a30fcf5a0ee66b868eb3ac1bfa68d2250c713f61e690ae064f7ef6` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/local-declaration-search-v1-exit.json` | `599dc55c6250d15fb94428e51db00d1de9a76e3b4991634f8c801f386e199ff6` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/local-declaration-search-v1.log` | `9c9b50eb2f55ea6a8352e325d450f4f32adaf731f1acbdafa340e5e5e6b4b48f` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/local-declaration-search-v2-exit.json` | `b61f5f7e577933128d2151f0a4906b2d41aa92c273e6b285b97deb738f3b5b3f` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/local-declaration-search-v2.log` | `035f473e8ca2e47439799e46ba7bd1afc13ea90a62f01bd1c97cefdfc692dbe8` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/local-memory-search-v1-exit.json` | `ed0779b69d8d527235e7976b3b81ac20f7b9c6fd327c1ecdd01b488d817e0b10` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/local-memory-search-v1.log` | `11999fd2b01349cb48f47e2291dcbda3daeae233e4d63611c1bad6c59a86faae` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/memory-digest-draft-v1.md` | `1aca1d655827f610979259f5bd97805682eefc2273e8e1d0806f64897ddf6c1d` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/native-draft-fences/SourceLipschitzOn.json` | `d51ed767df092b50903310c38e428b006fcb4ae0424a71e94655fda51d0eda4f` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/native-draft-fences/theorem_2_30.json` | `de834e68bb246257a145af0fed5e7b923dc8635f5dad9f08840646aa73de2d3e` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/native-public-fences/SourceLipschitzOn.json` | `d0a8557a18680a2cb433906cbb976b64acfce2cc52b7803582da039d4730bd1c` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/native-public-fences/theorem_2_30.json` | `7b81eab6820f9d61fc9796ae89319134c14f29723ef9ea7ddbce50f3f4dda3c9` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/pinned-APIs-v1-01-exit.json` | `e91815a15cccf64f0ea126d68bfcb87ea50754c5e49db8cd2d0465b9597bea26` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/pinned-APIs-v1-01.log` | `f63424146dbf90e17e382b7945c42065b1dc232ade6952a2d59709ba196a19ec` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/prepare-contract-review-v1-01-exit.json` | `36a18741a4454ea65a964566f0e2ea6fe6066282086781ea83afc8de80223872` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/prepare-contract-review-v1-01.log` | `f1bd811267cb693275f203761ddc9d0a00cac9b3d9300bbfd32c572f9a8f4059` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/prepare-contract-v1-01-exit.json` | `ef791f90daa6ca683a93e079c7d76a0d5ada4c9ab3f84b1d9afeb6acefa625f1` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/prepare-contract-v1-01.log` | `9457d241b9392fd8306c6f6088b9ad674df22b10669d075a63fc40417d96091b` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/prepare-contract-v1.py` | `3f1a068583fd6af9ff170630b6e0dd271c54ff802f97b1e109140c215e904e3b` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/prepare-gate-adapters-v1-01-exit.json` | `d58e5739aa5c27070cffebe8aca0fb7b15f66c6bf823e05d418d27f71012ad5c` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/prepare-gate-adapters-v1-01.log` | `c9287ac9f5558f7e408a4da2dc5f388c3ef062f08e010a4550834e8ee6849642` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/prepare-gate-adapters-v1.py` | `4d7c86aac50924786a92c2c98b41ce85ffb3c7135006db5d3b2f9a00dd093cc0` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/prepare-readiness-v1-01-exit.json` | `591dea63f8fb0172e21ad015d65c0841c74e613097cc48a54a046d194c9e8d7c` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/prepare-readiness-v1-01.log` | `20cb62077849b98b0b1af76b70404656f20c6914f6660be0acd80cf556c75d8f` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/prepare-readiness-v1.py` | `d96d1972977367714a934b1a649e75084a649fe6030ff6bc8b5fb5b1db14ac7e` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/prepare-site-CLI-v1.py` | `1752c325383677bd5f07317f4faf6f04bc4d3cdc1032d6b8fc74fb0d28e10fe6` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/prepare-source-render-v2-01-exit.json` | `ad874c94a3d511ab074dd9aa9d0fb1249aabb866f3e546ad6f89488bbf07be1a` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/prepare-source-render-v2-01.log` | `43d4c1827052587989a4802f87974c33169ef749562a528bcd404694b41341b7` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/prepare-source-render-v2.py` | `8162c9378562301ce1017cd5c283f7aa3b5e22615525c323b96ab4fc47266592` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/preserve-contract-native-v1-01-exit.json` | `f7ae868aff768c10869bdfccb04ca47f0be485174bc00212f457eb64347ec355` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/preserve-contract-native-v1-01.log` | `2593ab45223abe18c8e98ebd794ca1be801a29e92159a78231439872a5100491` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/preserve-native-prefix-v1.py` | `f949ca2d8b461c51a23ed08858cbffd4222575a76cd534733969ab7daa9ae2f9` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/prior-contract-binding-v1.json` | `26eddeb4391527d105bb22cb2e76b4842de59f1f02ec6d468d8809555f3ef19b` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/prior-delivery-raw-binding-v1.json` | `6024b3502e288c636137f4f04ba76418df1ebcd6a8d8de5419af6e1c50d7ac78` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/proof-obligations-draft-v1.json` | `272911e8429ab244d41814dd8d6126eeda12aac57169bf4e7e6930c245144abb` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/proof-obligations-proving-v1.json` | `b0d322113c5038d777eeb690e7443231ec83f5b230873f88a4d9e45e881a55f1` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/proving-lifecycle-v1-exit.json` | `a85d528dd6fb43545c490a331eb273ff750d36a4aa2eb78e7ca2397a7294388b` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/proving-lifecycle-v1.log` | `17e10b66cfbba6c91778f88a7e0408eefde24f291506646757b30da0d6001083` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/public-actual-bindings-v1.json` | `9304a95987432c2c20f6c7f29a8321c481a4d014964b64422e7cf5f179ecf630` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/public-all-axioms-v1-01-exit.json` | `88e5e11a79a11585e89d23ccf2bb426493806dc6fff8a5b01556bf01d1474f2f` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/public-all-axioms-v1-01.log` | `6ee4fe94baf38cadc636243b7d6ebf522ffdd6ee0f721f666d208c5c97950bb3` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/public-body-packet-v1.md` | `994107d6635a661378121967533a4b41da8c57fbf02c3a3412e4215550f86a6d` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/public-body-v1-01-exit.json` | `c8243ad546fb65fc09247dc77b3229a7e8a2746ea583fcabb99f3fa0c7ecaa41` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/public-body-v1-01.log` | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/public-canary-focused-v1-01-exit.json` | `ff9571c851ff4eeac490ab4a5d994f04c8a5b6823befd5b2c374ccfa6e89c5ee` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/public-canary-focused-v1-01.log` | `807591ba30bb135f2c54cd0b485a3808d8bceef1185f582df5e24fcef84bacb7` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/public-fence-SourceLipschitzOn-v1-exit.json` | `f13e94ab2b7f065470239917e879e08a150b2c11d7c588cd7afe79a1b807ec88` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/public-fence-SourceLipschitzOn-v1.log` | `d0a8557a18680a2cb433906cbb976b64acfce2cc52b7803582da039d4730bd1c` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/public-fence-theorem_2_30-v1-exit.json` | `a775934ae99a71304ae6122f74884dfc16499a5b9aea13c8d94da33383bb71dd` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/public-fence-theorem_2_30-v1.log` | `7b81eab6820f9d61fc9796ae89319134c14f29723ef9ea7ddbce50f3f4dda3c9` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/public-named-declarations-v1.json` | `153a42e2c769ada0dbdaae959e735dd62571bad8e6006c1d38e3c3481d01dd79` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/public-safe-SourceLipschitzOn-v1-exit.json` | `1a3ff29eaf58e49846e6602e6f898ccc0cab6a77a9163bb4056e73c3cf672275` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/public-safe-SourceLipschitzOn-v1.log` | `d9a5bac13416ee3b75dd9a89a7c01846b42d5b1d99339027b93b5e4e7c69de6a` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/public-safe-theorem_2_30-v1-exit.json` | `9d9ce8d1ecc394d715cc5c1a967fab9dd1ea3f692248d1f04957fdeae9018f29` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/public-safe-theorem_2_30-v1.log` | `04c04253197ba0b4261beb9212286e1d0dc05a0e750068a0ec6a7ede8cfea607` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/reader-helper-before-use-v1.json` | `85bc094bc7f66c60a4faa309b7b40d1fd3779f33d51745b31161f14e78e320d8` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/reader-original-selected-v1.json` | `59a8121760b70dcfc4074ddc7c89ac4d8e4eee59c72cf883b5273b5539dd7568` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/readiness-helper-before-use-v1.json` | `dca5c1a3ed642f19fa318ff24b8f2cc83d14dfae91f827998a85512bb8fef95c` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/readiness-probes-before-use-v1.json` | `6dd111fb5c58aaf84f4c5e1dee0eda63842ce204753383f0e0f3fc397b287672` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/readonly-bootstrap-diagnostics-v1.json` | `aa5b0536695d9758a3c8904bba58fd47e1fddbfb8d8f8da2005b18d300f4a6d4` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/ready-dependencies-v1.json` | `54bf68c719f94b01c4f18e0c276b4bc9427966b1df6f807c62e5601902443077` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/reference-index-help-v1-01-exit.json` | `c276d2bc081b1d786d5de2f3c634ff882ce3aabb22f8f68ca6d763114534677d` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/reference-index-help-v1-01.log` | `6943acba1d20272cfd239404bfaaa8457d0205a56876004e7c3fed2df97fc3d8` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/reference-index-manifest-v1.md` | `3d5dbd2d7ae3282dd4811bb86b8ed852e575ccf772aa8609e1952830124fe337` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/reference-index-scope-v1.json` | `fcf22dad4f102f48e0fb0be2693f0127fa3438e9a5dac41da5602d6dba655356` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/reference-index-scoped-v1-01-exit.json` | `a43698a18281a4e6ff44530197fd571205c020e2865e749cfbd2dbc731d27aeb` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/reference-index-scoped-v1-01.log` | `746b14f4f0854cb118512f8f6a6e776ad950efc5dd1c620960e91a5b8824598e` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/render-source-card-v1.py` | `4f2dc5efdb3b98213d502e84b58a5619c8005fba5ff02e96380fad6c547eddf1` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/retained-body-trial-v1-exit.json` | `07fc570f9f5103d31ecab9f81880e855a9b8b36e17d510591b8cc2ec9eae101a` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/retained-body-trial-v1.log` | `c7dd35b8b8578836f4b4ea888a244d2f34648556434eced538f554cf0d7ea2ad` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/retained-focused-v1-01-exit.json` | `cb54d031223c9e97d1d65d280474edf0b34783975f8add1d43c80ec9acb9f241` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/retained-focused-v1-01.log` | `58fbfc43336b6dd93381f9d15fec27a5d22b79a7ccfb2783e1e27a77e14c68b2` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/retrieval-index-draft-v1.md` | `77109f77ac7600511afa453313a5c929e89f5a1d1630c36ded8d213acfa7fa12` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/retrieval-record-help-v1-01-exit.json` | `c7bc990994fa44f0ff64f8c60b3a7c99f1148b2f02932447b5b35e2d4214b645` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/retrieval-record-help-v1-01.log` | `73ac93f120215511ff0370d7ce100a9d0e83598ad882bcc5773cd1dc889b5321` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/retrieval-record-v1-exit.json` | `441d0ef0a722f8c18e08eddd1e6ceab124445d3eeff2302962c63b7451be2a48` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/retrieval-record-v1.json` | `45f6ca295ef51bb360d5cf0df27fae581db76716c1b081f5a66611f7f133ae3b` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/retrieval-record-v1.log` | `f029dee46833b7b93abe43ad6739aaf8f40dab5071618886a8392efe443ceedb` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/retrieval-snapshot-v1/bandit_paper_cards.json` | `3d303c669d80fb5d3d7e56005440b33f74977256f1df8ec27be841d85e66fa63` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/retrieval-snapshot-v1/bandit_scenario_cards.json` | `784ad6ce2cccf10228bef5b00d13f7704bdab5b19d3992d32541603234f889f3` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/retrieval-snapshot-v1/bandit_textbook_cards.json` | `f89b485ce5227ef343539ddd1fe6f25e356f1b6b9b2466bb1f6a8ac25a22caf1` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/retrieval-snapshot-v1/lml_bandit_cards.json` | `fa149c38753544dc8a45fc3f12e4b3116de2661798285d0eea6f5960c7bd1959` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/retrieval-snapshot-v1/local_leaf_cards.json` | `c2a4df2cf865a84c23b30a72cf75b6fb9299753ae774c1f394e532f610e7c2b5` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/retrieval-snapshot-v1/local_lean_declarations.json` | `14e7b92cbb3931a4af9fb73bc5eb8a6444e37617cbacfab51547542f96c7b956` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/retrieval-snapshot-v1/mathlib_bandit_cards.json` | `824faf3db7ceeea04f8dfc39a72f308d5bef6bafe67751f6c1ac66da13fa39ae` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/retrieval-snapshot-v1/proof_weapon_cards.json` | `38e86df4650cc13172a7f0848d348c0952f7c6111142653acc845be8aa7e7056` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/revalidate-bodies-v1-01-exit.json` | `816fc2eb0dc1436fa5f93dd0a1993933aaa741ca6a2770162cd15657abc45e07` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/revalidate-bodies-v1-01.log` | `374998d659549bb3ce7c5a691b766bf13204d8986d5d83e34ff5c41cedff1f75` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/revalidate-bodies-v1.py` | `66c4df7ea8061256e056a35b901bedc3cea671449798230ad0b6916edde37cca` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/review-packets-before-use-v1.json` | `22e6e340810d571eded023a298f7de879bad7d2c5cd931fca68bfad0771fb907` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/review-packets-v1.py` | `63c4c4b796c7a6a96f48f3b1a9866230e143b8f134a85fcc6f56155a4b5964f3` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/run-command.py` | `cb0e98401a104a6f0ad87f684a69a4e776e1de9de7d5b2a7848a394cad0a5db1` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/safe-verify-help-v1-01-exit.json` | `f475db756fd2786a8fd068af4fe852d337a761e8d28be03cb8e48743d12fbcfb` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/safe-verify-help-v1-01.log` | `1773541c625f225e5a9abc61985c3ad19e871cf31aa0cf89cc440b3d8398862c` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/scoped-definition-delta-v1.md` | `640602bcb44a307e4a93ea96f5dd147279bcccce589035602de25031c52a08e2` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/scoped-reference-index-v1.py` | `e8b2fe1a107ba7fc21c52b390c956d82af465293f37017104e5a141305878078` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/search-memory-help-v1-01-exit.json` | `4158ddcf6444537228c1dd9b1573250a7f300c51617eb5520922adf7c431685f` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/search-memory-help-v1-01.log` | `b2f23faf2d0ee17c305335680ebdb2b83ca61999d18021e355d22587d712b79c` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/snapshots/before-BanditRLProof--OnlineClosedProper.lean.txt` | `c66f00c33b45fb8a0e11583eeadf506e176c16166ce2af02f41f0674507cebe7` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/snapshots/before-BanditRLProof--OnlineConvexExtended.lean.txt` | `bd30bb95a46ccdc3f6d25f808c175af5fee71d075c2b46ffcf6508f15f1ed66a` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/snapshots/before-BanditRLProof--OnlineConvexMinorant.lean.txt` | `8ca81ca0b79248a15df47556057175fd6b4712d33a082508c543bd7760a15742` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/snapshots/before-BanditRLProof--OnlineHinge.lean.txt` | `d3c7ec649a5d231bd30d472ce70bfed20ecdf7069cba30cb630297f99ce16871` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/snapshots/before-BanditRLProof--OnlineLipschitzSubgradient.lean.txt` | `30a944f4638710798a1a7ec90fb4c208816c7ee9c80549950777a35d2912a832` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/snapshots/before-BanditRLProof--OnlineNormalCone.lean.txt` | `2aa6e543860fa6df2f4cc81cf1a8df857b23aecc7ec2c292c26faa97db5b3552` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/snapshots/before-BanditRLProof--OnlineSubgradientAbsolute.lean.txt` | `bf3e8d97f67b78e7ad230b8efd321948f4d7ba1a0e9cde31e8d85c1e9019442b` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/snapshots/before-BanditRLProof--OnlineSubgradientBasic.lean.txt` | `af3d3f56e4a64cd8adbe47368caf5382e63b428f01da29a121c28c8014f352a5` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/snapshots/before-BanditRLProof--OnlineSubgradientDifferentiability.lean.txt` | `4f21c5d7fd0ef27a860390b698072d65527610d55e60c16568e82fa99215c1d3` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/snapshots/before-BanditRLProof--OnlineSubgradientInterior.lean.txt` | `72cf2057e9dee7a1e8c4f92bb7878cffbb9b7603ff6afbac4f90ee5af11db9d2` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/snapshots/before-BanditRLProof.lean.txt` | `351d5238e97cf54ae4c5f65a7e82cabc40ac7eb6f18c9e64e89e27a6610cb9c6` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/snapshots/before-MANIFEST.md.txt` | `7207197a98fadc89aed1f68e47c365cc93dadcca1b696060ea69b5c1677360bf` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/snapshots/before-Tests--OnlineLipschitzSubgradientCanary.lean.txt` | `cef3492490f045f99bc0d4e7482075e185744a67f98aa4a8336200a7ec32bf99` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/snapshots/before-Tests.lean.txt` | `cd21ef4e7cea89c7d245eaf4dff14be8baa34f2d336e40d6f6bbb16011678340` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/snapshots/before-lake-manifest.json.txt` | `87c3e616f86244550ef39e7415186b11c1d4cf4bef20173196a619d9d4d48f48` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/snapshots/before-lakefile.lean.txt` | `0164f3b5b5bdcbb237ab15ae8b44da83e183f4b97d5f3832aa4a57f27dc69d45` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/snapshots/before-lean-toolchain.txt` | `b15a57f8ea4c890197465ce1156667ae13d9ed4ab8a9f263a920bf010d967d82` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/snapshots/before-runs--active_frontier.json.txt` | `567e5873aa2549a83f2820d758069213808da822a93087129877385a1addf7c3` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/snapshots/before-runs--lifecycle_sessions.jsonl.txt` | `3b0d1f0a444b36225daabc4a33d4e3c09c0b7d9c7e80aa093c53e3db622dec52` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/snapshots/before-runs--trials.jsonl.txt` | `14ba0f89a3a727e1c1538379e5a85852df5e637b66992926deb8a77156c56666` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/snapshots/before-website--content--chapters.json.txt` | `e08cbbeac742bd1864bdb20b9c8072ce65219bf1cb61e2b9199918c256bdebde` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/snapshots/before-website--content--highlights.json.txt` | `88d2a2d9d2e646b1aa60b3c63f73efe8a019d430a46934161c9f6b904e0e5596` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/snapshots/before-website--content--readings.json.txt` | `6854d40405142b5ab2bf3d940ee1d0e1c779d4471704b98d66f3710052cf61a7` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/snapshots/contract-reviewed-runs--lifecycle_sessions.jsonl.txt` | `9cb640070f06928ae72c8e6b0c791db38df529e0c1231bb8f9a78f4c85c5f91d` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/snapshots/contract-reviewed-runs--trials.jsonl.txt` | `14ba0f89a3a727e1c1538379e5a85852df5e637b66992926deb8a77156c56666` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/source-cache-read-v2.json` | `667f3d471105bc47ce56db67fa2d3ea17648444fce50fb6c6f76e78d18185dd1` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/source-contract-inputs-v1.json` | `3dd2e108797445e06570ac591769cf54ceda579595151069ecede9ca1348a770` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/source-contract-packet-v1.md` | `0d1aecd0312dc37c8332cc807af3c4d1367f3ce3d3bf282efc22ab76e52ec216` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/source-contract-receipt-v1.json` | `a93e99e1b6d7bda490c08b3eea3154b64bf8547d453d1cd992da50c51d41dc50` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/source-contract-review-v1.md` | `ac39bcec615d96a5d96148ffc0e7ab5052053543807cc32dcc8e9ea108a45028` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/source-convention-delta-v1.json` | `6926a2a50d215a09248b2c582f7e7a1f3a143d1d4a879efe57e648cace8aafdf` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/source-printed19-pdf31.txt` | `7709a706da7b5320555f5ef19e07fa798affde6a077363425b929c07af0b9a99` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/source-read-before-use-v2.json` | `65e565db3076b24d3905cad9b4346d13a7196c054cc6b49bc825865c75752ac5` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/source-read-v1-01-exit.json` | `be27ce625abff42534442a93560bbf2b525f0054100c4daa76c27e187e8dfc56` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/source-read-v1-01.log` | `47a7ed1296c3064e3ce21a355c46a772fa73148ca920dc387c1942f4c585f237` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/source-read-v1.py` | `00eaf32a9b00878ee7a783483cc0591c8e2989be82b5e78335d75e08e46239c1` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/source-read-v2-01-exit.json` | `6a43fd57382923031ea358b30640e4fa160c7fc1eb4faacf21821247a4f42c22` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/source-read-v2-01.log` | `6fcfdf1caddd9f16561849518a26303318e5a5e67e4d3ccfd0dfb90758515e7c` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/source-read-v2.py` | `4873c7034a6f2cbdbf12326d865f3ef76c537e3524eb1b1dea22c83b49d855c6` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/source-render-poppler-v2-01-exit.json` | `7cc8ce3b8d631b0bc9c4d5e81f4a1817ddf2989e955861d1b274f36423eee7c5` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/source-render-poppler-v2-01.log` | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/source-visual-read-v1.json` | `fdb7c95d6c020b385bb04801499806f14de13c80f595676fc6b8a13c2936b4c1` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/stabilized-leaf-selection-v1.json` | `85fcbe766f0d57753e9ae4705ab204cc4495616309aad2774f27ed8f4045583b` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/stabilized-lifecycle-v1-exit.json` | `e21d2929745c20028399189c6ce8c0a11df14db12689364c12044d603f8e87e3` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/stabilized-lifecycle-v1.log` | `5d7dda37c817b93ac9ebdd3536d5f348d6ee7f89f17414d927fa969cfe820ef2` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/statement-fence-help-v1-01-exit.json` | `27103c8b6fdcc26d5d7285396030026340ca0308e6d784b9218475d4e98ac41a` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/statement-fence-help-v1-01.log` | `4f4fca9dfaac7a7c3de8025d3d0f7c4ba58d1f4b33feb08d19e12229942dba75` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/trial-log-help-v1-01-exit.json` | `93bcd47371290fa6a1f608d37277a397cce31923b43716cc8eafcf7e6ee8cead` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/trial-log-help-v1-01.log` | `ea7bd7e4d64216b46f554a90e02a3d58b4fcbe72766c2f7b316b656b94d19b32` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-lipschitz-migration-20261007/verify-history-bindings-v1.py` | `2252ef4c2b7f39a305d75472c0d07d9fd216894957a7604630df13f1eef0d44e` |
+| `E:\ABRL\worktrees\research-online-book\tmp\online-lipschitz-source-pdf31-v1.png` | `2bbee9757947abda7e3d0173a6caef36bf3053ad5d4a9c737e213df0da9f2328` |
+| `E:\ABRL\worktrees\research-online-ogd\tmp\pdfs\orabona-v10.pdf` | `cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17` |
+| `MANIFEST.md` | `7207197a98fadc89aed1f68e47c365cc93dadcca1b696060ea69b5c1677360bf` |
+| `Tests.lean` | `cd21ef4e7cea89c7d245eaf4dff14be8baa34f2d336e40d6f6bbb16011678340` |
+| `Tests/OnlineLipschitzSubgradientCanary.lean` | `cef3492490f045f99bc0d4e7482075e185744a67f98aa4a8336200a7ec32bf99` |
+| `conversion-windows/ONLINE-LIPSCHITZ-MIGRATION-20261007.md` | `be209de76bba17566f89fca9cec7ee3f89b19cddba595f42ee5a7f89c6ae6453` |
+| `docs/contracts/online-book-v1/source-inventory.json` | `a2a504cf40d73f9c5e36f00fc1ef3b949ccaf5a558ab603c1c2a86007f30efa7` |
+| `docs/contracts/online-lipschitz-migration-v1/contract.md` | `be209de76bba17566f89fca9cec7ee3f89b19cddba595f42ee5a7f89c6ae6453` |
+| `docs/contracts/online-lipschitz-migration-v1/headers.json` | `dbbe93df51bb7c3063d2cb23155fa32df534d47fc98147885cc86da4391bd733` |
+| `docs/contracts/online-lipschitz-migration-v1/initial-dependency-DAG.json` | `14260edc19a24f821d5c835b93a58fc3f4604a5e7e573f9fcc11f7f8123f72a4` |
+| `docs/contracts/online-lipschitz-migration-v1/scoped-contexts.json` | `b348297ff30a42cf003a13ce913e63ea4189baa101157fd75d264a3f0f808b38` |
+| `docs/contracts/online-lipschitz-migration-v1/source-card.json` | `2161a920b0e9b616aa7317291baa8f84bd32ff2a0a6cc28f74c34f84b67987e1` |
+| `docs/contracts/online-lipschitz-v1/contract-manifest.json` | `978511d94acfd06bc8b53889acca15b5c95413cf45dd4e4f9c2d70d2706bcdef` |
+| `docs/contracts/online-lipschitz-v1/contract.md` | `8446ccc220770a2e72777d9d32808411937dec41d46f615baf2eaa89a0a5afc8` |
+| `docs/contributor-codex-contract.md` | `d7dfa3406def35de292b202f45ff8303b9a550310bd00979be838e5a2348a498` |
+| `docs/theorem-publication-protocol.md` | `b1e5ac73cfe0a90742567736b422787c90a51e6b6ff007cc1dc8d598948f687e` |
+| `lake-manifest.json` | `87c3e616f86244550ef39e7415186b11c1d4cf4bef20173196a619d9d4d48f48` |
+| `lakefile.lean` | `0164f3b5b5bdcbb237ab15ae8b44da83e183f4b97d5f3832aa4a57f27dc69d45` |
+| `lean-toolchain` | `b15a57f8ea4c890197465ce1156667ae13d9ed4ab8a9f263a920bf010d967d82` |
+| `proof-obligations/ONLINE-LIPSCHITZ-MIGRATION-20261007.md` | `be209de76bba17566f89fca9cec7ee3f89b19cddba595f42ee5a7f89c6ae6453` |
+| `research-wiki/mathlib-candidates/README.md` | `ea4ed80d4eed053d0eea0d315df86075a9445e6280e2a827e3841e5c05d7df37` |
+| `research-wiki/mathlib/theorem-cards.md` | `4656c1a8ccd4b2d8523cf5cf48bd1f966e7ba2c2237e2e578d6b8c2ecc6fbd97` |
+| `runs/active_frontier.json` | `567e5873aa2549a83f2820d758069213808da822a93087129877385a1addf7c3` |
+| `runs/lifecycle_sessions.jsonl` | `de08de7cc0ff834df0cccd9dd32f86e686abcdda821cb09599d9e78e34f58aec` |
+| `runs/trials.jsonl` | `f5d890e1ef4f759a125656ca384760592243597d08df52188d330a1d44e70666` |
+| `tasks/ONLINE-LIPSCHITZ-MIGRATION-20261007.md` | `be209de76bba17566f89fca9cec7ee3f89b19cddba595f42ee5a7f89c6ae6453` |
+| `website/content/chapters.json` | `e08cbbeac742bd1864bdb20b9c8072ce65219bf1cb61e2b9199918c256bdebde` |
+| `website/content/highlights.json` | `88d2a2d9d2e646b1aa60b3c63f73efe8a019d430a46934161c9f6b904e0e5596` |
+| `website/content/readings.json` | `6854d40405142b5ab2bf3d940ee1d0e1c779d4471704b98d66f3710052cf61a7` |
+| `runs/online-lipschitz-migration-20261007/public-body-inputs-v1.json` | `564384ba4ccf9fab9e2241eb1c12ff9a19bfd8a353786af40d3119258955ee82` |

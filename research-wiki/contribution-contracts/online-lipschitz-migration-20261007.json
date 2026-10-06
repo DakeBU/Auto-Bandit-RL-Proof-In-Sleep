@@ -1,0 +1,107 @@
+{
+  "schema_version": "2.0",
+  "id": "ONLINE-LIPSCHITZ-MIGRATION-20261007",
+  "route": "online-learning/chapter-2",
+  "frontier_cell": "online-lipschitz",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10,21 June2026; SHA256 cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchor": "Definition2.29/Theorem2.30 printed19/PDF31; explicit nonnegative Lipschitz convention",
+    "url": "https://arxiv.org/pdf/1912.13213v10"
+  },
+  "target": "ONE printed Definition2.29 and ONE Theorem2.30: ONE retained owned definition and ONE retained proof, ZERO new mathematical, TEST or registry nodes. Whole18oldcanaryproofs/sixTESTdefinitions/twoabbreviations unchanged. Definition2.29 is represented by genuine finite real-value witnesses at EVERY x in arbitrary V together with the actual all-pairs absolute difference bound for the chosen norm. Generic EReal input may have bottom or top outside V; no standalone global properness/convexity assertion. Under the source globally no-bottom codomain, V subsetdom guarantees exactly these finite values. Empty V is vacuous; a toReal-only bound at infinity is insufficient. This definition has no theorem proof or support-production conclusion. The full iff uses proper convex f and U=AMBIENT interior effectiveDomain. Properness excludes bottom globally, interior domain excludes top before real conversion. EVERY support g at EVERY interior x tests EVERY ambient y. No selected-gradient-only conclusion, relative-interior/whole-domain/boundary extension, closedness, differentiability, boundedness, positive L/dimension, nonempty interior or supplied support-existence premise.",
+  "affected_files": [
+    "BanditRLProof/OnlineLipschitzSubgradient.lean",
+    "website/content/readings.json",
+    "website/content/highlights.json",
+    "website/content/chapters.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineConvex.SourceLipschitzOn",
+    "BanditRL.OnlineConvex.theorem_2_30"
+  ],
+  "reuse_plan": {
+    "classification": "reuse",
+    "decision": "reuse_existing",
+    "searched_existing": [
+      "Fresh actual body/wholecanary,28unique standard kernel checks/two frozen-header guards. Selected28compiled nodes:19proofs/ninedefinition nodes (one production/sixTESTdefs/twoTESTabbreviations), 1819 direct type/value occurrences/14 required actual value pairs. Separate two-node readiness(oneproof/onedefinition),260direct occurrences/four actual value pairs. Curated links/selected/readiness graphs are not the full registry graph. Native header assumption arrays are empty; full compiled types and separate source reviews check actual hypotheses. Actual28types/sixcompileddefinitionbinders/12pinnedAPIs/native retrieval."
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineConvex.SourceLipschitzOn",
+      "BanditRL.OnlineConvex.theorem_2_30",
+      "BanditRL.OnlineConvex.subgradient_norm_le_lipschitz_ball",
+      "BanditRL.OnlineConvex.subgradient_exists_of_domain_interior",
+      "EReal.coe_toReal",
+      "abs_real_inner_le_norm"
+    ],
+    "new_shared_declarations": [],
+    "known_consumers": [
+      "LipschitzProbe.abs_all_supports_and_nonzero",
+      "LipschitzProbe.linear_three_reverse",
+      "LipschitzProbe.halfline_interior_not_whole_domain"
+    ],
+    "planned_consumers": [
+      "Source-matched interior norm bounds; no OSD boundary-support shortcut."
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Reuse actual finite-on-V/open-ball perturbation/interior support producer/two signs. No duplicate wrapper/perBooklibrary."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/lipschitz_blind",
+    "source_reviewer": "/root/source_reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "ONE printed Definition2.29 and ONE Theorem2.30: ONE retained owned definition and ONE retained proof, ZERO new mathematical, TEST or registry nodes. Whole18oldcanaryproofs/sixTESTdefinitions/twoabbreviations unchanged. SourceLipschitzOn needs only NormedAddCommGroup, with no real Module, inner product or finite dimension. The theorem adds real InnerProductSpace and FiniteDimensional; coordinate-free Euclidean L2 extension, no separate coordinate adapter. FIVE shared borrowed contexts: SourceProper/effectiveDomain/realEpigraph arbitrary carrier; SourceSubdifferential intrinsic norm/inner; IsConvexExtended AddCommGroup and real Module. None of the five is owned or newly defined. Actual compiled prints supersede the historical preparation pending-type flag evidentially. Definition2.29 is represented by genuine finite real-value witnesses at EVERY x in arbitrary V together with the actual all-pairs absolute difference bound for the chosen norm. Generic EReal input may have bottom or top outside V; no standalone global properness/convexity assertion. Under the source globally no-bottom codomain, V subsetdom guarantees exactly these finite values. Empty V is vacuous; a toReal-only bound at infinity is insufficient. This definition has no theorem proof or support-production conclusion. L:NNReal includes zero and makes the conventional nonnegative Lipschitz constant explicit; printed Definition2.29/Theorem2.30 do not explicitly write L>=0. Their zero-support proof case uses this convention. The actual proper convex constant0 on Euclidean Fin0 obeys every pair inequality at realL=-1 since distances0, but genuine support0 violates norm0<=-1. This refutes unrestricted realL for the admitted zero-dimensional extension, not a separately positive-dimensional source formulation. Zero dimension, zero L and empty interior remain allowed. Separate current source convention review accepted-with-explicit-delta. Current CONTRACT/convention/BODY accepted; FINAL pending. Required distinct automated actors requestedAstra medium, no human/external/runtime attestation."
+  },
+  "graph_contribution": {
+    "lean_graph": "reuse-only",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Source-qualified shared registry reuse; no separately certified setting functor/discovery.",
+    "focus_targets": [
+      "BanditRL.OnlineConvex.SourceLipschitzOn",
+      "BanditRL.OnlineConvex.theorem_2_30"
+    ],
+    "visual_review": "Preserve10811oldIDsURLs/twopubliccanonicalnodes/twohighlights/twocuratedlinks/threenotation/twosourcecards; actualpixels after currentcombinedLean gate.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: definition-specific meaning, exact full interior iff, nonnegative source convention and actual wholecanary boundaries.",
+    "banditrlwiki": "no-change-with-reason: no new Bandit setting.",
+    "results_ledger": "no-change-with-reason: scoped acceptance/delivery overlays after all gates; Chapter2mandatorytotalnull/incomplete/historicalinventory preserved.",
+    "roadmap": "no-change-with-reason: whole-book Goal remains active, Chapter2 incomplete and global SGB untouched.",
+    "website_surfaces": [
+      "website/content/readings.json",
+      "website/content/highlights.json",
+      "website/content/chapters.json"
+    ]
+  },
+  "truth_boundary": "ONE printed Definition2.29 and ONE Theorem2.30: ONE retained owned definition and ONE retained proof, ZERO new mathematical, TEST or registry nodes. Whole18oldcanaryproofs/sixTESTdefinitions/twoabbreviations unchanged. SourceLipschitzOn needs only NormedAddCommGroup, with no real Module, inner product or finite dimension. The theorem adds real InnerProductSpace and FiniteDimensional; coordinate-free Euclidean L2 extension, no separate coordinate adapter. FIVE shared borrowed contexts: SourceProper/effectiveDomain/realEpigraph arbitrary carrier; SourceSubdifferential intrinsic norm/inner; IsConvexExtended AddCommGroup and real Module. None of the five is owned or newly defined. Actual compiled prints supersede the historical preparation pending-type flag evidentially. Definition2.29 is represented by genuine finite real-value witnesses at EVERY x in arbitrary V together with the actual all-pairs absolute difference bound for the chosen norm. Generic EReal input may have bottom or top outside V; no standalone global properness/convexity assertion. Under the source globally no-bottom codomain, V subsetdom guarantees exactly these finite values. Empty V is vacuous; a toReal-only bound at infinity is insufficient. This definition has no theorem proof or support-production conclusion. L:NNReal includes zero and makes the conventional nonnegative Lipschitz constant explicit; printed Definition2.29/Theorem2.30 do not explicitly write L>=0. Their zero-support proof case uses this convention. The actual proper convex constant0 on Euclidean Fin0 obeys every pair inequality at realL=-1 since distances0, but genuine support0 violates norm0<=-1. This refutes unrestricted realL for the admitted zero-dimensional extension, not a separately positive-dimensional source formulation. Zero dimension, zero L and empty interior remain allowed. Separate current source convention review accepted-with-explicit-delta. The full iff uses proper convex f and U=AMBIENT interior effectiveDomain. Properness excludes bottom globally, interior domain excludes top before real conversion. EVERY support g at EVERY interior x tests EVERY ambient y. No selected-gradient-only conclusion, relative-interior/whole-domain/boundary extension, closedness, differentiability, boundedness, positive L/dimension, nonempty interior or supplied support-existence premise. Forward obtain an actual positive-radius ball in U and restrict genuine finite values/all-pairs bounds; shared norm-ball proof perturbs along the normalized given support. Reverse construct actual global supports at BOTH x and y from proper convexity and interior membership, certify finite EReal conversion, apply both global support inequalities and Cauchy-Schwarz/two signs to obtain the same-L absolute bound. No assumed norm conclusion or support-existence oracle. Exactly18unchanged canary proofs/sixTESTdefinitions/twoabbreviations: actual |.| proper/domain/convex/L1 yields ALLsupport bound and nonzero supports+1 at2 and -1 at-2; actual affine slope3 reverse; constant0/L0 and exactsupport0; singleton indicator empty interior but boundarysupport3; halfline indicator interiorbound0 versus boundary-2 and all-toReal0 trap that fails actual finite witnesses on univ; constant9 on EuclideanFin0/L0; separate properconvex constant0 realL=-1 obstruction. Six scenario groups are not six total proofs. No new/2D/matrix-coordinate test claimed. Fresh actual body/wholecanary,28unique standard kernel checks/two frozen-header guards. Selected28compiled nodes:19proofs/ninedefinition nodes (one production/sixTESTdefs/twoTESTabbreviations), 1819 direct type/value occurrences/14 required actual value pairs. Separate two-node readiness(oneproof/onedefinition),260direct occurrences/four actual value pairs. Curated links/selected/readiness graphs are not the full registry graph. Native header assumption arrays are empty; full compiled types and separate source reviews check actual hypotheses. Only bounded Definition2.29/Theorem2.30 source refinement. Legacy queue0 is NOT Chapter2 mandatory total or completion. Adjacent 2D |x1| nondifferentiability, Lemma2.31/OSD/linearization/Example2.32/unitanalysis and all other Chapter1/2 maintext, nine OTHER Chapter1 main-relative contract gaps and necessary appendices remain REQUIRED. Chapter2totalnull/incomplete,3-16unenumerated,totalGoalACTIVE. No algorithm/regret/probability/feedback/computable/measurable selection, merge/deploy/mainlive/worktree retirement.",
+  "verification": {
+    "focused_checks": [
+      "Fresh actual body/wholecanary,28unique standard kernel checks/two frozen-header guards. Selected28compiled nodes:19proofs/ninedefinition nodes (one production/sixTESTdefs/twoTESTabbreviations), 1819 direct type/value occurrences/14 required actual value pairs. Separate two-node readiness(oneproof/onedefinition),260direct occurrences/four actual value pairs. Curated links/selected/readiness graphs are not the full registry graph. Native header assumption arrays are empty; full compiled types and separate source reviews check actual hypotheses."
+    ],
+    "bandit_check": "Fresh postcomment sequentialrootTests/fullharness required.",
+    "site_build": "Clean localleanverified only after currentcombinedLean gates.",
+    "site_check": "All10811oldIDsURLs/twocanonicalnodes/highlights/curatedlinks/sourcecards/threenotation/otherBooks.",
+    "independent_review": "Distinct formalizer/restrictedneutraldecoder/staged anti-anchored source reviewer requestedAstra medium; explicit convention separatelyreviewed, no human/external/runtimeattestation.",
+    "owned_test_files": []
+  },
+  "contributor": {
+    "name": "Codex for Ji Cheng",
+    "role": "Formalizer/integrator with distinct required automated semantic actors; source attribution retained"
+  }
+}
