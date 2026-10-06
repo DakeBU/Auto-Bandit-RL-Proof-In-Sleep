@@ -18,10 +18,11 @@ Every collaborator and every Codex/ChatGPT/Claude agent acting for a collaborato
 3. `docs/contributor-codex-contract.md`
 4. `docs/theorem-publication-protocol.md`
 5. `docs/proof-digestion-protocol.md`
-6. `.agents/skills/bandit-substantive-advance/SKILL.md`
-7. `.agents/skills/bandit-semantic-roundtrip/SKILL.md`
-8. the relevant domain skill under `.agents/skills/`
-9. the exact route/source files being changed.
+6. `docs/evidence-routed-memory-protocol.md`
+7. `.agents/skills/bandit-substantive-advance/SKILL.md`
+8. `.agents/skills/bandit-semantic-roundtrip/SKILL.md`
+9. the relevant domain skill under `.agents/skills/`
+10. the exact route/source files being changed.
 
 Repository-local instructions override copied prompts from chat.
 
@@ -59,7 +60,7 @@ If a lower-level lemma has at least two real consumers, prefer one canonical sha
 
 ## Source and reader publication contract
 
-Every new or changed source-facing production declaration follows `docs/theorem-publication-protocol.md` and `docs/proof-digestion-protocol.md`. The exact source-facing signature is sealed before proof search; every binder is expanded/classified; proof ingredients remain dependency edges rather than new public hypotheses; source proof topology is reconstructed independently of implementation Lean; and a merged proof is not reader-facing complete until purification removes dead/duplicate/wrapper-only residue and exposes the compressed Bandit/RL spine.
+Every new or changed source-facing production declaration follows `docs/theorem-publication-protocol.md`, `docs/proof-digestion-protocol.md`, and `docs/evidence-routed-memory-protocol.md`. The exact source-facing signature is sealed before proof search; every binder is expanded/classified; proof ingredients remain dependency edges rather than new public hypotheses; source proof topology is reconstructed independently of implementation Lean; and a merged proof is not reader-facing complete until purification removes dead/duplicate/wrapper-only residue and exposes the compressed Bandit/RL spine. Failed routes are typed before they influence scheduling, verified fragments are salvaged before deletion, process memory is evidence-bound, scheduler defaults remain matched-experiment gated, and parallel proof directions require a common-blind-spot review.
 
 The reader-facing page must keep the following adjacent and in mathematical order:
 
