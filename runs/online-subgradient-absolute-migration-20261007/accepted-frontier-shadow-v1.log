@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "mode": "shadow-read-only",
+  "analyzed_at": "2026-10-06T19:50:55+00:00",
+  "trials_path": "E:\\ABRL\\worktrees\\research-online-book\\runs\\online-subgradient-absolute-migration-20261007\\accepted-scoped-trials-v1.jsonl",
+  "trial_rows": 2,
+  "status_counts": {
+    "accepted": 1,
+    "compiled": 1
+  },
+  "inferred_frontier": {
+    "selected_task": "ONLINE-SUBGRADIENT-ABSOLUTE-MIGRATION-20261007",
+    "selected_leaf": "ONLINE-SUBGRADIENT-ABSOLUTE-MIGRATION-20261007",
+    "source_status": "accepted",
+    "last_accepted_verifier": {
+      "trial_index": 1,
+      "time": "2026-10-06T19:50:54+00:00",
+      "task": "ONLINE-SUBGRADIENT-ABSOLUTE-MIGRATION-20261007",
+      "role": "reviewer",
+      "kind": "review",
+      "status": "accepted",
+      "lean": "",
+      "notes": "Same actualcompiled retained scalar support producer accepted after distinctFINAL/currentcombinedgates; four retained proof refinements/zero new math or TESTs. Example2.24 package only, not Chapter2/book/productivityexperiment.",
+      "run_id": "online-subgradient-absolute-migration-20261007"
+    }
+  },
+  "memory_digest": {
+    "path": "E:\\ABRL\\worktrees\\research-online-book\\runs\\online-subgradient-absolute-migration-20261007\\memory-digest-accepted-v1.md",
+    "task": ""
+  },
+  "recorded_frontier": {
+    "schema_version": 1,
+    "record_id": "frontier-9c931b282c90965c",
+    "updated_at": "2026-10-06T19:50:55+00:00",
+    "root_objective": "Persistent Orabona Chapters1-16 Goal; only Example2.24 accepted, chapter/book incomplete",
+    "current_leaf": {
+      "id": "ONLINE-SUBGRADIENT-ABSOLUTE-MIGRATION-20261007",
+      "kind": "lean",
+      "status": "accepted",
+      "statement": "theorem example_2_24 (x : ℝ) : SourceSubdifferential (fun y : ℝ => ((|y| : ℝ) : EReal)) x = if 0 < x then {(1 : ℝ)} else if x = 0 then Icc (-1 : ℝ) 1 else {(-1 : ℝ)}",
+      "statement_hash": "4b044c75e8628878dea1648d15454734fb5eed6107330fca567ada3502f2cf1b",
+      "declaration": "BanditRL.OnlineConvex.example_2_24",
+      "file": "BanditRLProof\\OnlineSubgradientAbsolute.lean",
+      "source_status": "source-reviewed",
+      "dependencies": [
+        {
+          "kind": "lean",
+          "name": "BanditRL.OnlineConvex.abs_subgradient_zero",
+          "status": "compiled"
+        },
+        {
+          "kind": "lean",
+          "name": "BanditRL.OnlineConvex.abs_subgradient_positive",
+          "status": "compiled"
+        },
+        {
+          "kind": "lean",
+          "name": "BanditRL.OnlineConvex.abs_subgradient_negative",
+          "status": "compiled"
+        },
+        {
+          "kind": "review",
+          "name": "source-reader",
+          "status": "accepted"
+        }
+      ]
+    },
+    "dag": {
+      "nodes": [
+        {
+          "id": "ONLINE-SUBGRADIENT-ABSOLUTE-MIGRATION-20261007",
+          "kind": "lean",
+          "status": "accepted",
+          "dependencies": [
+            {
+              "kind": "lean",
+              "name": "BanditRL.OnlineConvex.abs_subgradient_zero",
+              "status": "compiled"
+            },
+            {
+              "kind": "lean",
+              "name": "BanditRL.OnlineConvex.abs_subgradient_positive",
+              "status": "compiled"
+            },
+            {
+              "kind": "lean",
+              "name": "BanditRL.OnlineConvex.abs_subgradient_negative",
+              "status": "compiled"
+            },
+            {
+              "kind": "review",
+              "name": "source-reader",
+              "status": "accepted"
+            }
+          ],
+          "dispatch_count": 0
+        }
+      ]
+    },
+    "last_accepted_verifier": {
+      "trial_index": 1,
+      "time": "2026-10-06T19:50:54+00:00",
+      "task": "ONLINE-SUBGRADIENT-ABSOLUTE-MIGRATION-20261007",
+      "role": "reviewer",
+      "kind": "review",
+      "status": "accepted",
+      "lean": "",
+      "notes": "Same actualcompiled retained scalar support producer accepted after distinctFINAL/currentcombinedgates; four retained proof refinements/zero new math or TESTs. Example2.24 package only, not Chapter2/book/productivityexperiment.",
+      "run_id": "online-subgradient-absolute-migration-20261007"
+    },
+    "memory_policy": {
+      "recent_role_relevant_limit": 5,
+      "explicit_verified_lemma_ids": [],
+      "whole_history_default": false
+    },
+    "shadow_gate": {
+      "status": "pending",
+      "analyzed_trial_rows": 2,
+      "mismatches": [],
+      "replay_transitions": 0
+    },
+    "mutation_policy": {
+      "canonical_path_queue": true,
+      "cross_process_lock": true,
+      "same_file_serialized": true,
+      "disjoint_files_parallel": true
+    },
+    "autonomous_execution": {
+      "enabled": false,
+      "requires_deterministic_gates": true,
+      "requires_explicit_user_request": true
+    }
+  },
+  "mismatches": [],
+  "would_mutate": false
+}
