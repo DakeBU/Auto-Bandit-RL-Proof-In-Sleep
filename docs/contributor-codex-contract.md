@@ -1,6 +1,6 @@
 # BanditRLlib contributor and Codex contract
 
-This contract applies to humans and coding agents contributing mathematics, source mappings, theorem-facing website material, routes, or graph metadata.
+This contract applies to humans and coding agents contributing mathematics, source mappings, theorem-facing website material, routes, or graph metadata. Source-facing work also follows `docs/proof-digestion-protocol.md` and `docs/evidence-routed-memory-protocol.md`.
 
 ## 1. Search and reuse before declaring
 
@@ -54,9 +54,15 @@ The formalizer cannot self-certify the decoder or source-review stages. A theore
 
 Repairs are separate objects: source theorem, actual Lean theorem, semantic mismatch, proposed repaired theorem.
 
-## 4. Three graph views must be classified
+New source-facing substantive manifests should use schema 3.0. Its `learning_contract` records curated process-memory consultation, typed failure class, salvage status, evidence-gated serial/parallel admission, common-blind-spot review, and reader-backpressure / Exposition-Seal state. `REFUTED` and independently reviewed `SOURCE_INVALID` may retire mathematics; `API_BLOCKED`, `ENV_BLOCKED`, and `IMPLEMENTATION_FAILED` are routing evidence only.
 
-Every substantive contribution records `graph_contribution`.
+## 4. Four mathematical graph views, plus Overview navigation
+
+The current contribution schema still stores Lean/Overview/Functor integration fields, but source-facing Anchors additionally follow the four-view proof-digestion stack.
+
+### Source Proof Graph
+
+Answers **how the source proved the result**. It is reconstructed independently of implementation Lean, covers every substantive source region, retains `SOURCE_GAP` nodes, and uses OR-routes for alternative sufficient proofs.
 
 ### Lean Graph
 
@@ -64,11 +70,9 @@ Allowed classifications: `new-node`, `reuse-only`, `integration-node`, `no-chang
 
 Solid edges are reserved for compiler-backed structure/reviewed formal dependency relations. Source mappings, planned consumers, semantic links, and conceptual bridges are dashed overlays.
 
-### Overview / route-progress
+### Compressed Bandit/RL Spine
 
-Allowed classifications: `updated`, `no-change-with-reason`.
-
-Update affected books, setting/frontier placement, result/milestone status, and route progress. Never hand-edit a completion percentage or badge.
+Answers **which primitives recur after implementation bookkeeping is removed**. It is the reviewed output of purification and keeps a lossless drill-down to the source and Lean graphs.
 
 ### Functor Hypergraph
 
@@ -81,6 +85,10 @@ Allowed classifications:
 A candidate recurring mechanism needs stable `family:`, `transport:`, or `concept:` IDs, source domains, formula or proof skeleton, mechanism, hypothesis map, conclusion map, source IDs, candidate local Lean substrates, and a failure boundary.
 
 The creator may propose a conceptual mirror but should not be the only validator. A conceptual edge is never rendered as a solid Lean dependency.
+
+### Overview / route-progress (navigation)
+
+Allowed classifications: `updated`, `no-change-with-reason`. Overview places books, settings, frontiers and milestones around the four mathematical views; it is not another proof semantics. Never hand-edit a completion percentage or badge.
 
 ## 5. Route, progress, and website synchronization
 
@@ -121,6 +129,7 @@ Exploration workers should avoid editing unrelated global aggregators. The stabi
 Before merge, run:
 
 ```bash
+python3 tools/check_process_memory.py check
 python3 tools/check_contributor_contract.py --base BASE_COMMIT
 python3 tools/bandit.py check
 python3 website/scripts/build_site.py --lean-verified
@@ -140,6 +149,6 @@ The contract checker fails closed when changed production surfaces are not cover
 
 ## 9. PR disclosure
 
-The PR must state the exact mathematical/source delta, reuse decision, remaining truth boundary, semantic round-trip status, reader-page delta, route/progress delta, Lean Graph delta, Functor Hypergraph delta, and commands actually run.
+The PR must state the exact mathematical/source delta, reuse decision, remaining truth boundary, semantic round-trip status, typed failure/salvage state when relevant, process-memory IDs used, parallel-direction/common-blind-spot status, reader-page/Exposition-Seal delta, route/progress delta, Lean Graph delta, Functor Hypergraph delta, and commands actually run.
 
 Generated site output is never committed.

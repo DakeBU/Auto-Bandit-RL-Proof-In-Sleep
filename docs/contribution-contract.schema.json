@@ -6,7 +6,7 @@
   "additionalProperties": false,
   "required": ["schema_version","id","route","frontier_cell","source_facing","source","target","affected_files","declarations","reuse_plan","reader_contract","semantic_roundtrip","graph_contribution","progress_updates","truth_boundary","verification","contributor"],
   "properties": {
-    "schema_version": {"const": "2.0"},
+    "schema_version": {"enum":["2.0","3.0"]},
     "id": {"type":"string","pattern":"^[A-Z0-9][A-Z0-9._-]{2,127}$"},
     "route": {"type":"string","minLength":1},
     "frontier_cell": {"type":"string","minLength":1},
@@ -79,6 +79,20 @@
         "edge_semantics":{"const":"formal-solid; overlays-dashed"}
       }
     },
+    "learning_contract": {
+      "type":"object","additionalProperties":false,
+      "required":["control_plane_math_authority","process_memory_checked","process_memory_ids","failure_class","salvage","parallelism","cross_route_blind_spot_audit","reader_backpressure"],
+      "properties":{
+        "control_plane_math_authority":{"const":false},
+        "process_memory_checked":{"const":true},
+        "process_memory_ids":{"type":"array","items":{"type":"string","minLength":1},"uniqueItems":true},
+        "failure_class":{"enum":["REFUTED","SOURCE_INVALID","API_BLOCKED","ENV_BLOCKED","IMPLEMENTATION_FAILED","NONE"]},
+        "salvage":{"type":"object","additionalProperties":false,"required":["required","status","reason","promoted_fragments","discarded_fragments"],"properties":{"required":{"type":"boolean"},"status":{"enum":["pending","completed","not-applicable"]},"reason":{"type":"string"},"promoted_fragments":{"type":"array","items":{"type":"string"}},"discarded_fragments":{"type":"array","items":{"type":"string"}}}},
+        "parallelism":{"type":"object","additionalProperties":false,"required":["decision","direction_fingerprints","expected_information_gain","shared_verified_context_digest"],"properties":{"decision":{"enum":["serial","parallel"]},"direction_fingerprints":{"type":"array","items":{"type":"string","minLength":1},"uniqueItems":true},"expected_information_gain":{"type":"string"},"shared_verified_context_digest":{"type":"string"}}},
+        "cross_route_blind_spot_audit":{"type":"object","additionalProperties":false,"required":["required","status","evidence","canonical_route","selection_reason"],"properties":{"required":{"type":"boolean"},"status":{"enum":["pending","accepted","not-applicable"]},"evidence":{"type":"string"},"canonical_route":{"type":"string"},"selection_reason":{"type":"string"}}},
+        "reader_backpressure":{"type":"object","additionalProperties":false,"required":["purification_status","exposition_seal_status","reader_debt_delta","exposition_evidence","source_expansion_nodes","lean_expansion_nodes","assumptions_preserved","boundary_preserved"],"properties":{"purification_status":{"enum":["pending","purified","not-applicable"]},"exposition_seal_status":{"enum":["pending","accepted","not-applicable"]},"reader_debt_delta":{"type":"integer"},"exposition_evidence":{"type":"string"},"source_expansion_nodes":{"type":"array","items":{"type":"string","minLength":1},"uniqueItems":true},"lean_expansion_nodes":{"type":"array","items":{"type":"string","minLength":1},"uniqueItems":true},"assumptions_preserved":{"type":"boolean"},"boundary_preserved":{"type":"boolean"}}}
+      }
+    },
     "progress_updates": {
       "type":"object","additionalProperties":false,
       "required":["teaching_route","banditrlwiki","results_ledger","roadmap","website_surfaces"],
@@ -107,5 +121,6 @@
       "required":["name","role"],
       "properties":{"name":{"type":"string","minLength":1},"role":{"type":"string","minLength":1}}
     }
-  }
+  },
+  "allOf":[{"if":{"properties":{"schema_version":{"const":"3.0"}}},"then":{"required":["learning_contract"]}}]
 }

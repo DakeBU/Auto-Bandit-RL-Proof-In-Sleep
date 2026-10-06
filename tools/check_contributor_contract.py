@@ -18,6 +18,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 CONTRACT_DIR = ROOT / "research-wiki" / "contribution-contracts"
+PROCESS_MEMORY = ROOT / "runs" / "process_memory.json"
 
 PRODUCTION_PREFIXES = (
     "BanditRLProof/",
@@ -43,9 +44,14 @@ PRODUCTION_EXACT = {
     "docs/contribution-contract.schema.json",
     "docs/contributor-codex-contract.md",
     "docs/theorem-publication-protocol.md",
+    "docs/proof-digestion-protocol.md",
+    "docs/evidence-routed-memory-protocol.md",
     "docs/quantum-bandit-cross-library-protocol.md",
+    "runs/process_memory.json",
+    "tools/check_process_memory.py",
     "tools/check_contributor_contract.py",
     "tools/test_contributor_contract.py",
+    "tools/test_process_memory.py",
     "tools/test_bandit_taxonomy_techniques.py",
     ".github/CODEOWNERS",
     ".github/pull_request_template.md",
@@ -149,6 +155,19 @@ REUSE_DECISION = {
     "new_shared",
     "out_of_scope",
 }
+FAILURE_CLASSES = {
+    "REFUTED",
+    "SOURCE_INVALID",
+    "API_BLOCKED",
+    "ENV_BLOCKED",
+    "IMPLEMENTATION_FAILED",
+    "NONE",
+}
+SALVAGE_STATES = {"pending", "completed", "not-applicable"}
+PARALLEL_STATES = {"serial", "parallel"}
+CROSS_ROUTE_STATES = {"pending", "accepted", "not-applicable"}
+PURIFICATION_STATES = {"pending", "purified", "not-applicable"}
+EXPOSITION_STATES = {"pending", "accepted", "not-applicable"}
 
 
 def run_git(*args: str) -> str:
@@ -223,8 +242,9 @@ def validate_contract(path: Path) -> tuple[dict[str, Any] | None, list[str]]:
     if errors:
         return data, errors
 
-    if data.get("schema_version") != "2.0":
-        errors.append(f"{path.relative_to(ROOT)}: schema_version must be 2.0")
+    schema_version = data.get("schema_version")
+    if schema_version not in {"2.0", "3.0"}:
+        errors.append(f"{path.relative_to(ROOT)}: schema_version must be 2.0 or 3.0")
     for key in ("id", "route", "frontier_cell", "target", "truth_boundary"):
         if not nonempty_string(data.get(key)):
             errors.append(f"{path.relative_to(ROOT)}: {key} must be non-empty")
@@ -316,6 +336,157 @@ def validate_contract(path: Path) -> tuple[dict[str, Any] | None, list[str]]:
             errors.append(
                 f"{path.relative_to(ROOT)}: non-required semantic audit must use status not-required"
             )
+
+
+    if schema_version == "3.0":
+        learning = data.get("learning_contract")
+        required_learning = {
+            "control_plane_math_authority",
+            "process_memory_checked",
+            "process_memory_ids",
+            "failure_class",
+            "salvage",
+            "parallelism",
+            "cross_route_blind_spot_audit",
+            "reader_backpressure",
+        }
+        require_keys(learning, required_learning, f"{path}:learning_contract", errors)
+        if isinstance(learning, dict):
+            if learning.get("control_plane_math_authority") is not False:
+                errors.append(f"{path.relative_to(ROOT)}: control_plane_math_authority must be false")
+            if learning.get("process_memory_checked") is not True:
+                errors.append(f"{path.relative_to(ROOT)}: process_memory_checked must be true")
+
+            memory_ids = learning.get("process_memory_ids")
+            if not string_list(memory_ids):
+                errors.append(f"{path.relative_to(ROOT)}: process_memory_ids must be a string list")
+                memory_ids = []
+            known_memory_ids: set[str] = set()
+            try:
+                memory = json.loads(PROCESS_MEMORY.read_text(encoding="utf-8"))
+                known_memory_ids = {
+                    str(item.get("id", "")).strip()
+                    for item in memory.get("entries", [])
+                    if isinstance(item, dict) and str(item.get("id", "")).strip()
+                }
+            except Exception as exc:
+                errors.append(f"{path.relative_to(ROOT)}: cannot load process memory: {exc}")
+            unknown = sorted(set(memory_ids) - known_memory_ids)
+            if unknown:
+                errors.append(f"{path.relative_to(ROOT)}: unknown process-memory ids {unknown}")
+
+            failure_class = learning.get("failure_class")
+            if failure_class not in FAILURE_CLASSES:
+                errors.append(f"{path.relative_to(ROOT)}: invalid failure_class")
+
+            salvage = learning.get("salvage")
+            require_keys(
+                salvage,
+                {"required", "status", "reason", "promoted_fragments", "discarded_fragments"},
+                f"{path}:learning_contract.salvage",
+                errors,
+            )
+            if isinstance(salvage, dict):
+                if not isinstance(salvage.get("required"), bool):
+                    errors.append(f"{path.relative_to(ROOT)}: salvage.required must be boolean")
+                if salvage.get("status") not in SALVAGE_STATES:
+                    errors.append(f"{path.relative_to(ROOT)}: invalid salvage.status")
+                for key in ("promoted_fragments", "discarded_fragments"):
+                    if not string_list(salvage.get(key)):
+                        errors.append(f"{path.relative_to(ROOT)}: salvage.{key} must be a string list")
+                if failure_class != "NONE" and salvage.get("required") is not True:
+                    errors.append(f"{path.relative_to(ROOT)}: non-NONE failure requires salvage.required=true")
+                if salvage.get("status") == "not-applicable" and not nonempty_string(salvage.get("reason")):
+                    errors.append(f"{path.relative_to(ROOT)}: not-applicable salvage requires a reason")
+
+            parallel = learning.get("parallelism")
+            require_keys(
+                parallel,
+                {"decision", "direction_fingerprints", "expected_information_gain", "shared_verified_context_digest"},
+                f"{path}:learning_contract.parallelism",
+                errors,
+            )
+            if isinstance(parallel, dict):
+                decision = parallel.get("decision")
+                if decision not in PARALLEL_STATES:
+                    errors.append(f"{path.relative_to(ROOT)}: invalid parallelism.decision")
+                directions = parallel.get("direction_fingerprints")
+                if not string_list(directions):
+                    errors.append(f"{path.relative_to(ROOT)}: direction_fingerprints must be a string list")
+                    directions = []
+                if len(directions) != len(set(directions)):
+                    errors.append(f"{path.relative_to(ROOT)}: direction_fingerprints must be unique")
+                if decision == "parallel":
+                    if len(directions) < 2:
+                        errors.append(f"{path.relative_to(ROOT)}: parallel work needs at least two directions")
+                    if not nonempty_string(parallel.get("expected_information_gain")):
+                        errors.append(f"{path.relative_to(ROOT)}: parallel work needs expected_information_gain")
+                    if not nonempty_string(parallel.get("shared_verified_context_digest")):
+                        errors.append(f"{path.relative_to(ROOT)}: parallel work needs shared_verified_context_digest")
+
+            cross = learning.get("cross_route_blind_spot_audit")
+            require_keys(
+                cross,
+                {"required", "status", "evidence", "canonical_route", "selection_reason"},
+                f"{path}:learning_contract.cross_route_blind_spot_audit",
+                errors,
+            )
+            if isinstance(cross, dict):
+                if not isinstance(cross.get("required"), bool):
+                    errors.append(f"{path.relative_to(ROOT)}: cross-route required must be boolean")
+                if cross.get("status") not in CROSS_ROUTE_STATES:
+                    errors.append(f"{path.relative_to(ROOT)}: invalid cross-route status")
+                if isinstance(parallel, dict) and parallel.get("decision") == "parallel" and cross.get("required") is not True:
+                    errors.append(f"{path.relative_to(ROOT)}: parallel directions require common-blind-spot audit")
+                if cross.get("status") == "accepted":
+                    for field in ("evidence", "canonical_route", "selection_reason"):
+                        if not nonempty_string(cross.get(field)):
+                            errors.append(f"{path.relative_to(ROOT)}: accepted cross-route audit requires {field}")
+
+            reader_learning = learning.get("reader_backpressure")
+            require_keys(
+                reader_learning,
+                {
+                    "purification_status", "exposition_seal_status", "reader_debt_delta",
+                    "exposition_evidence", "source_expansion_nodes", "lean_expansion_nodes",
+                    "assumptions_preserved", "boundary_preserved",
+                },
+                f"{path}:learning_contract.reader_backpressure",
+                errors,
+            )
+            if isinstance(reader_learning, dict):
+                if reader_learning.get("purification_status") not in PURIFICATION_STATES:
+                    errors.append(f"{path.relative_to(ROOT)}: invalid purification_status")
+                if reader_learning.get("exposition_seal_status") not in EXPOSITION_STATES:
+                    errors.append(f"{path.relative_to(ROOT)}: invalid exposition_seal_status")
+                if not isinstance(reader_learning.get("reader_debt_delta"), int):
+                    errors.append(f"{path.relative_to(ROOT)}: reader_debt_delta must be integer")
+                for field in ("source_expansion_nodes", "lean_expansion_nodes"):
+                    if not string_list(reader_learning.get(field)):
+                        errors.append(f"{path.relative_to(ROOT)}: {field} must be a string list")
+                for field in ("assumptions_preserved", "boundary_preserved"):
+                    if not isinstance(reader_learning.get(field), bool):
+                        errors.append(f"{path.relative_to(ROOT)}: {field} must be boolean")
+                if not isinstance(reader_learning.get("exposition_evidence"), str):
+                    errors.append(f"{path.relative_to(ROOT)}: exposition_evidence must be a string")
+                if reader_learning.get("exposition_seal_status") == "accepted":
+                    if not nonempty_string(reader_learning.get("exposition_evidence")):
+                        errors.append(f"{path.relative_to(ROOT)}: accepted Exposition Seal requires evidence")
+                    if not reader_learning.get("source_expansion_nodes") or not reader_learning.get("lean_expansion_nodes"):
+                        errors.append(f"{path.relative_to(ROOT)}: accepted Exposition Seal requires source and Lean expansion nodes")
+                    if reader_learning.get("assumptions_preserved") is not True or reader_learning.get("boundary_preserved") is not True:
+                        errors.append(f"{path.relative_to(ROOT)}: accepted Exposition Seal must preserve assumptions and boundary")
+                if reader_learning.get("purification_status") == "purified" and reader_learning.get("exposition_seal_status") != "accepted":
+                    errors.append(f"{path.relative_to(ROOT)}: PURIFIED requires accepted Exposition Seal")
+                if data.get("source_facing") and reader_learning.get("purification_status") == "not-applicable":
+                    errors.append(f"{path.relative_to(ROOT)}: source-facing work may be pending or purified, not purification-not-applicable")
+
+            if failure_class in {"API_BLOCKED", "ENV_BLOCKED", "IMPLEMENTATION_FAILED"}:
+                # These are routing evidence only. They cannot justify a semantic source verdict.
+                if isinstance(semantic, dict) and semantic.get("verdict") == "accepted-with-explicit-delta":
+                    errors.append(
+                        f"{path.relative_to(ROOT)}: non-mathematical failure class cannot itself justify a source semantic delta"
+                    )
 
     graph = data.get("graph_contribution")
     require_keys(graph, GRAPH_REQUIRED, f"{path}:graph_contribution", errors)
