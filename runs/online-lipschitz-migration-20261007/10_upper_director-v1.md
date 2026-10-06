@@ -1,0 +1,1 @@
+One bounded source refinement: existing finite-on-V norm definition and full interior all-global-support iff at nonnegativeL. Separate explicit source convention judgment; do not absorb adjacent unnumbered example/OSD into this package or mark them excluded. Defaultone lower reuse_existing route.

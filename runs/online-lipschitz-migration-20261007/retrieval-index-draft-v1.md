@@ -1,0 +1,1 @@
+ORABONA-V10-D2.29-T2.30; MLIB-CONVEX-LINALG. Actual shared Lipschitz-ball normalized perturbation/interior support existence/finite EReal/CauchySchwarz. Retrieve exact pinned APIs/current actualtypes/valuegraph; no uncheckedexternalOptlib or new wrappers.

@@ -1,0 +1,1 @@
+DraftDefinition2.29/T2.30; NNReal includes0 convention separatelyreviewed, negativeL0Dcounterexample requiredvisible. Entireoriginalbody/definition/canary/headers fixed. Chapter2mandatorytotalnull/incomplete/legacy0notcompletion,3-16unenumerated/GoalACTIVE.
