@@ -1,0 +1,343 @@
+@BanditRL.OnlineSubgradientDescent.lemma_2_31 : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (V : BanditRL.OnlineSubgradientDescent.Domain)
+  (f : E → EReal),
+  BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V f →
+    ∀ (η : ℝ),
+      0 < η →
+        ∀ (x u : E),
+          u ∈ V.carrier →
+            ∀ g ∈ BanditRL.OnlineConvex.SourceSubdifferential f x,
+              η * ((f x).toReal - (f u).toReal) ≤ η * inner ℝ g (x - u) ∧
+                η * inner ℝ g (x - u) ≤
+                  ‖x - u‖ ^ 2 / 2 - ‖BanditRL.OnlineGradientDescent.project V (x - η • g) - u‖ ^ 2 / 2 +
+                    η ^ 2 / 2 * ‖g‖ ^ 2
+@BanditRL.OnlineSubgradientDescent.currentSubgradient_mem : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (V : BanditRL.OnlineSubgradientDescent.Domain)
+  (f : E → EReal),
+  BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V f →
+    ∀ x ∈ V.carrier,
+      BanditRL.OnlineSubgradientDescent.currentSubgradient f x ∈ BanditRL.OnlineConvex.SourceSubdifferential f x
+@BanditRL.OnlineSubgradientDescent.finite_loss : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (V : BanditRL.OnlineSubgradientDescent.Domain)
+  (f : E → EReal), BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V f → ∀ x ∈ V.carrier, f x = ↑(f x).toReal
+@BanditRL.OnlineSubgradientDescent.iterate_mem : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (V : BanditRL.OnlineSubgradientDescent.Domain)
+  (η : ℕ → ℝ) (loss : ℕ → E → EReal),
+  ∀ x₁ ∈ V.carrier, ∀ (t : ℕ), BanditRL.OnlineSubgradientDescent.iterate V η loss x₁ t ∈ V.carrier
+@BanditRL.OnlineSubgradientDescent.iterate_prefix : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (V : BanditRL.OnlineSubgradientDescent.Domain)
+  (η η' : ℕ → ℝ) (loss loss' : ℕ → E → EReal) (x₁ : E) (t : ℕ),
+  (∀ s < t, η s = η' s) →
+    (∀ s < t, loss s = loss' s) →
+      BanditRL.OnlineSubgradientDescent.iterate V η loss x₁ t =
+        BanditRL.OnlineSubgradientDescent.iterate V η' loss' x₁ t
+@BanditRL.OnlineSubgradientDescent.iterate_support : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (V : BanditRL.OnlineSubgradientDescent.Domain)
+  (η : ℕ → ℝ) (loss : ℕ → E → EReal),
+  ∀ x₁ ∈ V.carrier,
+    ∀ (t : ℕ),
+      BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t) →
+        BanditRL.OnlineSubgradientDescent.currentSubgradient (loss t)
+            (BanditRL.OnlineSubgradientDescent.iterate V η loss x₁ t) ∈
+          BanditRL.OnlineConvex.SourceSubdifferential (loss t) (BanditRL.OnlineSubgradientDescent.iterate V η loss x₁ t)
+@BanditRL.OnlineSubgradientDescent.iterate_finite_loss : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (V : BanditRL.OnlineSubgradientDescent.Domain)
+  (η : ℕ → ℝ) (loss : ℕ → E → EReal),
+  ∀ x₁ ∈ V.carrier,
+    ∀ (t : ℕ),
+      BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t) →
+        ∀ u ∈ V.carrier,
+          loss t (BanditRL.OnlineSubgradientDescent.iterate V η loss x₁ t) =
+              ↑(loss t (BanditRL.OnlineSubgradientDescent.iterate V η loss x₁ t)).toReal ∧
+            loss t u = ↑(loss t u).toReal
+@BanditRL.OnlineSubgradientDescent.one_step_chain : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (V : BanditRL.OnlineSubgradientDescent.Domain)
+  (η : ℕ → ℝ) (loss : ℕ → E → EReal),
+  ∀ x₁ ∈ V.carrier,
+    ∀ (t : ℕ),
+      0 < η t →
+        BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t) →
+          ∀ u ∈ V.carrier,
+            η t * ((loss t (BanditRL.OnlineSubgradientDescent.iterate V η loss x₁ t)).toReal - (loss t u).toReal) ≤
+                η t *
+                  inner ℝ
+                    (BanditRL.OnlineSubgradientDescent.currentSubgradient (loss t)
+                      (BanditRL.OnlineSubgradientDescent.iterate V η loss x₁ t))
+                    (BanditRL.OnlineSubgradientDescent.iterate V η loss x₁ t - u) ∧
+              η t *
+                  inner ℝ
+                    (BanditRL.OnlineSubgradientDescent.currentSubgradient (loss t)
+                      (BanditRL.OnlineSubgradientDescent.iterate V η loss x₁ t))
+                    (BanditRL.OnlineSubgradientDescent.iterate V η loss x₁ t - u) ≤
+                ‖BanditRL.OnlineSubgradientDescent.iterate V η loss x₁ t - u‖ ^ 2 / 2 -
+                    ‖BanditRL.OnlineSubgradientDescent.iterate V η loss x₁ (t + 1) - u‖ ^ 2 / 2 +
+                  η t ^ 2 / 2 *
+                    ‖BanditRL.OnlineSubgradientDescent.currentSubgradient (loss t)
+                          (BanditRL.OnlineSubgradientDescent.iterate V η loss x₁ t)‖ ^
+                      2
+@BanditRL.OnlineSubgradientDescent.one_step : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (V : BanditRL.OnlineSubgradientDescent.Domain)
+  (η : ℕ → ℝ) (loss : ℕ → E → EReal),
+  ∀ x₁ ∈ V.carrier,
+    ∀ (t : ℕ),
+      0 < η t →
+        BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t) →
+          ∀ u ∈ V.carrier,
+            (loss t (BanditRL.OnlineSubgradientDescent.iterate V η loss x₁ t)).toReal - (loss t u).toReal ≤
+              (‖BanditRL.OnlineSubgradientDescent.iterate V η loss x₁ t - u‖ ^ 2 -
+                    ‖BanditRL.OnlineSubgradientDescent.iterate V η loss x₁ (t + 1) - u‖ ^ 2) /
+                  (2 * η t) +
+                η t / 2 *
+                  ‖BanditRL.OnlineSubgradientDescent.currentSubgradient (loss t)
+                        (BanditRL.OnlineSubgradientDescent.iterate V η loss x₁ t)‖ ^
+                    2
+@BanditRL.OnlineSubgradientDescent.regret_fixed : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (V : BanditRL.OnlineSubgradientDescent.Domain)
+  (η : ℝ),
+  0 < η →
+    ∀ (loss : ℕ → E → EReal),
+      ∀ x₁ ∈ V.carrier,
+        ∀ (T : ℕ),
+          (∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) →
+            ∀ u ∈ V.carrier,
+              BanditRL.OnlineSubgradientDescent.regret V (fun x => η) loss x₁ u T ≤
+                ‖x₁ - u‖ ^ 2 / (2 * η) +
+                    η / 2 *
+                      ∑ t ∈ Finset.range T,
+                        ‖BanditRL.OnlineSubgradientDescent.currentSubgradient (loss t)
+                              (BanditRL.OnlineSubgradientDescent.iterate V (fun x => η) loss x₁ t)‖ ^
+                          2 -
+                  ‖BanditRL.OnlineSubgradientDescent.iterate V (fun x => η) loss x₁ T - u‖ ^ 2 / (2 * η)
+@BanditRL.OnlineSubgradientDescent.regret_fixed_coarse : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (V : BanditRL.OnlineSubgradientDescent.Domain)
+  (η : ℝ),
+  0 < η →
+    ∀ (loss : ℕ → E → EReal),
+      ∀ x₁ ∈ V.carrier,
+        ∀ (T : ℕ),
+          (∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) →
+            ∀ u ∈ V.carrier,
+              BanditRL.OnlineSubgradientDescent.regret V (fun x => η) loss x₁ u T ≤
+                ‖x₁ - u‖ ^ 2 / (2 * η) +
+                  η / 2 *
+                    ∑ t ∈ Finset.range T,
+                      ‖BanditRL.OnlineSubgradientDescent.currentSubgradient (loss t)
+                            (BanditRL.OnlineSubgradientDescent.iterate V (fun x => η) loss x₁ t)‖ ^
+                        2
+@BanditRL.OnlineSubgradientDescent.regret_variable_bound : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (V : BanditRL.OnlineSubgradientDescent.Domain)
+  (η : ℕ → ℝ) (loss : ℕ → E → EReal),
+  ∀ x₁ ∈ V.carrier,
+    ∀ (T : ℕ),
+      0 < T →
+        (∀ t < T, 0 < η t) →
+          (∀ (t : ℕ), t + 1 < T → η (t + 1) ≤ η t) →
+            (∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) →
+              ∀ (D : ℝ),
+                (∀ x ∈ V.carrier, ∀ y ∈ V.carrier, ‖x - y‖ ≤ D) →
+                  ∀ u ∈ V.carrier,
+                    BanditRL.OnlineSubgradientDescent.regret V η loss x₁ u T ≤
+                      D ^ 2 / (2 * η (T - 1)) +
+                          ∑ t ∈ Finset.range T,
+                            η t / 2 *
+                              ‖BanditRL.OnlineSubgradientDescent.currentSubgradient (loss t)
+                                    (BanditRL.OnlineSubgradientDescent.iterate V η loss x₁ t)‖ ^
+                                2 -
+                        ‖BanditRL.OnlineSubgradientDescent.iterate V η loss x₁ T - u‖ ^ 2 / (2 * η (T - 1))
+@BanditRL.OnlineSubgradientDescent.regret_variable : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (V : BanditRL.OnlineSubgradientDescent.Domain),
+  Bornology.IsBounded V.carrier →
+    ∀ (η : ℕ → ℝ) (loss : ℕ → E → EReal),
+      ∀ x₁ ∈ V.carrier,
+        ∀ (T : ℕ),
+          0 < T →
+            (∀ t < T, 0 < η t) →
+              (∀ (t : ℕ), t + 1 < T → η (t + 1) ≤ η t) →
+                (∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) →
+                  ∀ u ∈ V.carrier,
+                    BanditRL.OnlineSubgradientDescent.regret V η loss x₁ u T ≤
+                      Metric.diam V.carrier ^ 2 / (2 * η (T - 1)) +
+                          ∑ t ∈ Finset.range T,
+                            η t / 2 *
+                              ‖BanditRL.OnlineSubgradientDescent.currentSubgradient (loss t)
+                                    (BanditRL.OnlineSubgradientDescent.iterate V η loss x₁ t)‖ ^
+                                2 -
+                        ‖BanditRL.OnlineSubgradientDescent.iterate V η loss x₁ T - u‖ ^ 2 / (2 * η (T - 1))
+@BanditRL.OnlineSubgradientDescent.regret_tuned_distance : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (V : BanditRL.OnlineSubgradientDescent.Domain)
+  (loss : ℕ → E → EReal),
+  ∀ x₁ ∈ V.carrier,
+    ∀ (T : ℕ),
+      0 < T →
+        ∀ (D G : ℝ),
+          0 < D →
+            0 < G →
+              (∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) →
+                ∀ u ∈ V.carrier,
+                  ‖x₁ - u‖ ≤ D →
+                    (∀ t < T,
+                        ‖BanditRL.OnlineSubgradientDescent.currentSubgradient (loss t)
+                              (BanditRL.OnlineSubgradientDescent.iterate V (fun x => D / (G * √↑T)) loss x₁ t)‖ ≤
+                          G) →
+                      BanditRL.OnlineSubgradientDescent.regret V (fun x => D / (G * √↑T)) loss x₁ u T ≤ D * G * √↑T
+@BanditRL.OnlineSubgradientDescent.regret_tuned : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (V : BanditRL.OnlineSubgradientDescent.Domain)
+  (loss : ℕ → E → EReal),
+  ∀ x₁ ∈ V.carrier,
+    ∀ (T : ℕ),
+      0 < T →
+        ∀ (D G : ℝ),
+          0 < D →
+            0 < G →
+              (∀ x ∈ V.carrier, ∀ y ∈ V.carrier, ‖x - y‖ ≤ D) →
+                (∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) →
+                  (∀ t < T,
+                      ‖BanditRL.OnlineSubgradientDescent.currentSubgradient (loss t)
+                            (BanditRL.OnlineSubgradientDescent.iterate V (fun x => D / (G * √↑T)) loss x₁ t)‖ ≤
+                        G) →
+                    ∀ u ∈ V.carrier,
+                      BanditRL.OnlineSubgradientDescent.regret V (fun x => D / (G * √↑T)) loss x₁ u T ≤ D * G * √↑T
+@BanditRL.OnlineSubgradientDescent.SubdifferentiableOn : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] →
+    [inst_1 : InnerProductSpace ℝ E] → BanditRL.OnlineSubgradientDescent.Domain → (E → EReal) → Prop
+@BanditRL.OnlineSubgradientDescent.currentSubgradient : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] → [InnerProductSpace ℝ E] → (E → EReal) → E → E
+@BanditRL.OnlineSubgradientDescent.step : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] →
+    [inst_1 : InnerProductSpace ℝ E] →
+      [FiniteDimensional ℝ E] → BanditRL.OnlineSubgradientDescent.Domain → ℝ → (E → EReal) → E → E
+@BanditRL.OnlineSubgradientDescent.iterate : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] →
+    [inst_1 : InnerProductSpace ℝ E] →
+      [FiniteDimensional ℝ E] → BanditRL.OnlineSubgradientDescent.Domain → (ℕ → ℝ) → (ℕ → E → EReal) → E → ℕ → E
+@BanditRL.OnlineSubgradientDescent.regret : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] →
+    [inst_1 : InnerProductSpace ℝ E] →
+      [FiniteDimensional ℝ E] → BanditRL.OnlineSubgradientDescent.Domain → (ℕ → ℝ) → (ℕ → E → EReal) → E → E → ℕ → ℝ
+@BanditRL.OnlineSubgradientDescent.Domain : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] → [InnerProductSpace ℝ E] → Type u_1
+OSDOutsideProbe.linear_on : BanditRL.OnlineSubgradientDescent.SubdifferentiableOn OSDOutsideProbe.interval
+  OSDOutsideProbe.linearLoss
+OSDOutsideProbe.support_at_two : 3 ∈ BanditRL.OnlineConvex.SourceSubdifferential OSDOutsideProbe.linearLoss 2
+OSDOutsideProbe.project_neg_four : BanditRL.OnlineGradientDescent.project OSDOutsideProbe.interval (-4) = -1
+OSDOutsideProbe.arbitrary_current_and_actual_clipping : 2 ∉ OSDOutsideProbe.interval.carrier ∧
+  BanditRL.OnlineGradientDescent.project OSDOutsideProbe.interval (2 - 2 • 3) = -1 ∧
+    2 * ((OSDOutsideProbe.linearLoss 2).toReal - (OSDOutsideProbe.linearLoss 0).toReal) ≤ 2 * inner ℝ 3 (2 - 0) ∧
+      2 * inner ℝ 3 (2 - 0) ≤
+        ‖2 - 0‖ ^ 2 / 2 - ‖BanditRL.OnlineGradientDescent.project OSDOutsideProbe.interval (2 - 2 • 3) - 0‖ ^ 2 / 2 +
+          2 ^ 2 / 2 * ‖3‖ ^ 2
+OSDAlgorithmProbe.absolute_on : BanditRL.OnlineSubgradientDescent.SubdifferentiableOn OSDAlgorithmProbe.interval
+  OSDAlgorithmProbe.absoluteLoss
+OSDAlgorithmProbe.chosen_positive : BanditRL.OnlineSubgradientDescent.currentSubgradient OSDAlgorithmProbe.absoluteLoss
+    1 =
+  1
+OSDAlgorithmProbe.chosen_negative : BanditRL.OnlineSubgradientDescent.currentSubgradient OSDAlgorithmProbe.absoluteLoss
+    (-1) =
+  -1
+OSDAlgorithmProbe.chosen_norm : ∀ x ∈ OSDAlgorithmProbe.interval.carrier,
+  ‖BanditRL.OnlineSubgradientDescent.currentSubgradient OSDAlgorithmProbe.absoluteLoss x‖ ≤ 1
+OSDAlgorithmProbe.project_neg_two : BanditRL.OnlineGradientDescent.project OSDAlgorithmProbe.interval (-2) = -1
+OSDAlgorithmProbe.project_two : BanditRL.OnlineGradientDescent.project OSDAlgorithmProbe.interval 2 = 1
+OSDAlgorithmProbe.project_one : BanditRL.OnlineGradientDescent.project OSDAlgorithmProbe.interval 1 = 1
+OSDAlgorithmProbe.fixed_first : BanditRL.OnlineSubgradientDescent.iterate OSDAlgorithmProbe.interval (fun x => 3)
+    OSDAlgorithmProbe.losses 1 1 =
+  -1
+OSDAlgorithmProbe.fixed_second : BanditRL.OnlineSubgradientDescent.iterate OSDAlgorithmProbe.interval (fun x => 3)
+    OSDAlgorithmProbe.losses 1 2 =
+  1
+OSDAlgorithmProbe.fixed_clipped_two_round : BanditRL.OnlineSubgradientDescent.iterate OSDAlgorithmProbe.interval
+      (fun x => 3) OSDAlgorithmProbe.losses 1 0 =
+    1 ∧
+  BanditRL.OnlineSubgradientDescent.iterate OSDAlgorithmProbe.interval (fun x => 3) OSDAlgorithmProbe.losses 1 1 = -1 ∧
+    BanditRL.OnlineSubgradientDescent.iterate OSDAlgorithmProbe.interval (fun x => 3) OSDAlgorithmProbe.losses 1 2 = 1 ∧
+      BanditRL.OnlineSubgradientDescent.regret OSDAlgorithmProbe.interval (fun x => 3) OSDAlgorithmProbe.losses 1 0 2 =
+          2 ∧
+        1 - 3 • BanditRL.OnlineSubgradientDescent.currentSubgradient OSDAlgorithmProbe.absoluteLoss 1 = -2 ∧
+          -1 - 3 • BanditRL.OnlineSubgradientDescent.currentSubgradient OSDAlgorithmProbe.absoluteLoss (-1) = 2
+OSDAlgorithmProbe.fixed_bound_with_terminal : BanditRL.OnlineSubgradientDescent.regret OSDAlgorithmProbe.interval
+    (fun x => 3) OSDAlgorithmProbe.losses 1 0 2 ≤
+  ‖1 - 0‖ ^ 2 / (2 * 3) +
+      3 / 2 *
+        ∑ t ∈ Finset.range 2,
+          ‖BanditRL.OnlineSubgradientDescent.currentSubgradient (OSDAlgorithmProbe.losses t)
+                (BanditRL.OnlineSubgradientDescent.iterate OSDAlgorithmProbe.interval (fun x => 3)
+                  OSDAlgorithmProbe.losses 1 t)‖ ^
+            2 -
+    ‖BanditRL.OnlineSubgradientDescent.iterate OSDAlgorithmProbe.interval (fun x => 3) OSDAlgorithmProbe.losses 1 2 -
+            0‖ ^
+        2 /
+      (2 * 3)
+OSDAlgorithmProbe.fixed_terminal_positive : ‖BanditRL.OnlineSubgradientDescent.iterate OSDAlgorithmProbe.interval
+            (fun x => 3) OSDAlgorithmProbe.losses 1 2 -
+          0‖ ^
+      2 /
+    (2 * 3) =
+  1 / 6
+OSDAlgorithmProbe.variable_first : BanditRL.OnlineSubgradientDescent.iterate OSDAlgorithmProbe.interval
+    OSDAlgorithmProbe.variableEta OSDAlgorithmProbe.losses 1 1 =
+  -1
+OSDAlgorithmProbe.variable_second : BanditRL.OnlineSubgradientDescent.iterate OSDAlgorithmProbe.interval
+    OSDAlgorithmProbe.variableEta OSDAlgorithmProbe.losses 1 2 =
+  1
+OSDAlgorithmProbe.diameter_two : ∀ x ∈ OSDAlgorithmProbe.interval.carrier,
+  ∀ y ∈ OSDAlgorithmProbe.interval.carrier, ‖x - y‖ ≤ 2
+OSDAlgorithmProbe.variable_bound_with_terminal : BanditRL.OnlineSubgradientDescent.regret OSDAlgorithmProbe.interval
+    OSDAlgorithmProbe.variableEta OSDAlgorithmProbe.losses 1 0 2 ≤
+  2 ^ 2 / (2 * OSDAlgorithmProbe.variableEta (2 - 1)) +
+      ∑ t ∈ Finset.range 2,
+        OSDAlgorithmProbe.variableEta t / 2 *
+          ‖BanditRL.OnlineSubgradientDescent.currentSubgradient (OSDAlgorithmProbe.losses t)
+                (BanditRL.OnlineSubgradientDescent.iterate OSDAlgorithmProbe.interval OSDAlgorithmProbe.variableEta
+                  OSDAlgorithmProbe.losses 1 t)‖ ^
+            2 -
+    ‖BanditRL.OnlineSubgradientDescent.iterate OSDAlgorithmProbe.interval OSDAlgorithmProbe.variableEta
+              OSDAlgorithmProbe.losses 1 2 -
+            0‖ ^
+        2 /
+      (2 * OSDAlgorithmProbe.variableEta (2 - 1))
+OSDAlgorithmProbe.variable_nonconstant_and_terminal : OSDAlgorithmProbe.variableEta 0 = 3 ∧
+  OSDAlgorithmProbe.variableEta 1 = 2 ∧
+    BanditRL.OnlineSubgradientDescent.iterate OSDAlgorithmProbe.interval OSDAlgorithmProbe.variableEta
+          OSDAlgorithmProbe.losses 1 1 =
+        -1 ∧
+      BanditRL.OnlineSubgradientDescent.iterate OSDAlgorithmProbe.interval OSDAlgorithmProbe.variableEta
+            OSDAlgorithmProbe.losses 1 2 =
+          1 ∧
+        ‖BanditRL.OnlineSubgradientDescent.iterate OSDAlgorithmProbe.interval OSDAlgorithmProbe.variableEta
+                    OSDAlgorithmProbe.losses 1 2 -
+                  0‖ ^
+              2 /
+            (2 * OSDAlgorithmProbe.variableEta (2 - 1)) =
+          1 / 4
+OSDAlgorithmProbe.tuned_all_comparators : ∀ (T : ℕ),
+  0 < T →
+    ∀ u ∈ OSDAlgorithmProbe.interval.carrier,
+      BanditRL.OnlineSubgradientDescent.regret OSDAlgorithmProbe.interval (fun x => 2 / (1 * √↑T))
+          OSDAlgorithmProbe.losses 1 u T ≤
+        2 * 1 * √↑T
+OSDAlgorithmProbe.future_inputs_do_not_change_output : BanditRL.OnlineSubgradientDescent.iterate
+    OSDAlgorithmProbe.interval OSDAlgorithmProbe.futureEta OSDAlgorithmProbe.futureLoss 1 2 =
+  1
+OSDAlgorithmProbe.zero_horizon : BanditRL.OnlineSubgradientDescent.regret OSDAlgorithmProbe.interval (fun x => 3)
+      OSDAlgorithmProbe.losses 1 0 0 =
+    0 ∧
+  BanditRL.OnlineSubgradientDescent.regret OSDAlgorithmProbe.interval (fun x => 3) OSDAlgorithmProbe.losses 1 0 0 ≤
+    ‖1 - 0‖ ^ 2 / (2 * 3) +
+        3 / 2 *
+          ∑ t ∈ Finset.range 0,
+            ‖BanditRL.OnlineSubgradientDescent.currentSubgradient (OSDAlgorithmProbe.losses t)
+                  (BanditRL.OnlineSubgradientDescent.iterate OSDAlgorithmProbe.interval (fun x => 3)
+                    OSDAlgorithmProbe.losses 1 t)‖ ^
+              2 -
+      ‖BanditRL.OnlineSubgradientDescent.iterate OSDAlgorithmProbe.interval (fun x => 3) OSDAlgorithmProbe.losses 1 0 -
+              0‖ ^
+          2 /
+        (2 * 3)
+OSDOutsideProbe.interval : BanditRL.OnlineGradientDescent.Domain ℝ
+OSDOutsideProbe.linearLoss : ℝ → EReal
+OSDAlgorithmProbe.absoluteLoss : ℝ → EReal
+OSDAlgorithmProbe.losses : ℕ → ℝ → EReal
+OSDAlgorithmProbe.variableEta : ℕ → ℝ
+OSDAlgorithmProbe.futureEta : ℕ → ℝ
+OSDAlgorithmProbe.futureLoss : ℕ → ℝ → EReal
+OSDAlgorithmProbe.interval : BanditRL.OnlineGradientDescent.Domain ℝ

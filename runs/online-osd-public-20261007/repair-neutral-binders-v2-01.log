@@ -1,0 +1,52 @@
+neutral-propositions-v2-01 exit 0 seconds 10.891
+full-context-comparison-v2-01 exit 1 seconds 12.313
+Failure tail only; full raw output is retained in full-context-comparison-v2-01.log
+ : FiniteDimensional ℝ E] → Prop :=
+fun {E} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] =>
+  ∀ (V : Domain) (loss : ℕ → E → EReal),
+    ∀ x₁ ∈ V.carrier,
+      ∀ (T : ℕ),
+        0 < T →
+          ∀ (D G : ℝ),
+            0 < D →
+              0 < G →
+                (∀ t < T, SubdifferentiableOn V (loss t)) →
+                  ∀ u ∈ V.carrier,
+                    ‖x₁ - u‖ ≤ D →
+                      (∀ t < T, ‖currentSubgradient (loss t) (iterate V (fun x => D / (G * √↑T)) loss x₁ t)‖ ≤ G) →
+                        regret V (fun x => D / (G * √↑T)) loss x₁ u T ≤ D * G * √↑T
+def NeutralUpdate.P15.{u_1} : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] → [inst_1 : InnerProductSpace ℝ E] → [instFD : FiniteDimensional ℝ E] → Prop :=
+fun {E} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] =>
+  ∀ (V : Domain) (loss : ℕ → E → EReal),
+    ∀ x₁ ∈ V.carrier,
+      ∀ (T : ℕ),
+        0 < T →
+          ∀ (D G : ℝ),
+            0 < D →
+              0 < G →
+                (∀ x ∈ V.carrier, ∀ y ∈ V.carrier, ‖x - y‖ ≤ D) →
+                  (∀ t < T, SubdifferentiableOn V (loss t)) →
+                    (∀ t < T, ‖currentSubgradient (loss t) (iterate V (fun x => D / (G * √↑T)) loss x₁ t)‖ ≤ G) →
+                      ∀ u ∈ V.carrier, regret V (fun x => D / (G * √↑T)) loss x₁ u T ≤ D * G * √↑T
+FULL_CONTEXT_MATCH BanditRL.OnlineSubgradientDescent.lemma_2_31 = NeutralUpdate.P01
+FULL_CONTEXT_MATCH BanditRL.OnlineSubgradientDescent.currentSubgradient_mem = NeutralUpdate.P02
+FULL_CONTEXT_MATCH BanditRL.OnlineSubgradientDescent.finite_loss = NeutralUpdate.P03
+E:\ABRL\worktrees\research-online-book\runs\online-osd-public-20261007\leaves\full-context-comparison-v2.lean:179:0: error: FULL CONTEXT MISMATCH BanditRL.OnlineSubgradientDescent.iterate_mem: actual ∀ {E : Type u_1}
+  [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E]
+  (V : BanditRL.OnlineSubgradientDescent.Domain) (η : ℕ → ℝ) (loss : ℕ → E → EReal),
+  ∀ x₁ ∈ V.carrier,
+    ∀ (t : ℕ),
+      BanditRL.OnlineSubgradientDescent.iterate V η loss x₁ t ∈
+        V.carrier; neutral ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace ℝ E]
+  [instFD : FiniteDimensional ℝ E] (V : NeutralUpdate.Domain) (η : ℕ → ℝ) (loss : ℕ → E → EReal),
+  ∀ x₁ ∈ V.carrier, ∀ (t : ℕ), NeutralUpdate.iterate V η loss x₁ t ∈ V.carrier
+
+Traceback (most recent call last):
+  File "runs/online-osd-public-20261007/repair-neutral-binders-v2.py", line 30, in <module>
+    gate('full-context-comparison-v2-01','lake','env','lean',RUN/'leaves/full-context-comparison-v2.lean')
+  File "E:\ABRL\worktrees\research-online-book\runs\online-osd-public-20261007\common_v1.py", line 12, in gate
+    def gate(label,*args):subprocess.run([sys.executable,'-B','-X','utf8',str(RUN/'run-command.py'),label,*map(str,args)],check=True)
+  File "C:\Users\admin\AppData\Local\Programs\Python\Python38\lib\subprocess.py", line 516, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe', '-B', '-X', 'utf8', 'E:\\ABRL\\worktrees\\research-online-book\\runs\\online-osd-public-20261007\\run-command.py', 'full-context-comparison-v2-01', 'lake', 'env', 'lean', 'E:\\ABRL\\worktrees\\research-online-book\\runs\\online-osd-public-20261007\\leaves\\full-context-comparison-v2.lean']' returned non-zero exit status 1.

@@ -1,0 +1,7 @@
+theorem regret_fixed (V : Domain (E := E)) (η : ℝ) (hη : 0 < η)
+    (loss : ℕ → E → EReal) (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (T : ℕ)
+    (hloss : ∀ t < T, SubdifferentiableOn V (loss t)) (u : E) (hu : u ∈ V.carrier) :
+    regret V (fun _ => η) loss x₁ u T ≤ ‖x₁ - u‖ ^ 2 / (2 * η) +
+      η / 2 * (∑ t ∈ range T,
+        ‖currentSubgradient (loss t) (iterate V (fun _ => η) loss x₁ t)‖ ^ 2) -
+      ‖iterate V (fun _ => η) loss x₁ T - u‖ ^ 2 / (2 * η)

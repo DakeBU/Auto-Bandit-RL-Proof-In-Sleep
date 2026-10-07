@@ -1,0 +1,27 @@
+candidate-frontier-refresh-v1 exit 2 seconds 0.219
+Failure tail only; full raw output is retained in candidate-frontier-refresh-v1.log
+usage: bandit.py frontier-refresh [-h] --root-objective ROOT_OBJECTIVE --leaf
+                                  LEAF
+                                  [--kind {lean,harness,retrieval,review}]
+                                  --statement STATEMENT
+                                  [--declaration DECLARATION] [--file FILE]
+                                  --source-status SOURCE_STATUS
+                                  [--leaf-status {pending,ready,running,blocked,gate-pending,accepted}]
+                                  [--dependency DEPENDENCY]
+                                  [--verified-id VERIFIED_ID]
+                                  [--memory MEMORY]
+                                  [--shadow-status {pending,passed,failed}]
+                                  [--replay-transitions REPLAY_TRANSITIONS]
+                                  [--trials TRIALS] [--output OUTPUT]
+bandit.py frontier-refresh: error: argument --leaf-status: invalid choice: 'compiled' (choose from 'pending', 'ready', 'running', 'blocked', 'gate-pending', 'accepted')
+
+Traceback (most recent call last):
+  File "runs/online-osd-public-20261007/task-shadow-v1.py", line 7, in <module>
+    native('candidate-frontier-refresh-v1','frontier-refresh','--root-objective','Persistent Orabona Chapters1-16; existing canonical OSD current public reuse audit only','--leaf',TASK,'--kind','lean','--statement',lean_declaration_header(PUBLIC,'regret_tuned'),'--declaration',PRE+'regret_tuned','--file',PUBLIC,'--source-status','source-reviewed','--leaf-status','compiled','--dependency','lean:'+PRE+'regret_tuned_distance:compiled','--dependency','lean:'+PRE+'regret_fixed:compiled','--trials',RUN/'candidate-scoped-trials-v1.jsonl','--output',RUN/'candidate-frontier-v1.json','--shadow-status','pending')
+  File "E:\ABRL\worktrees\research-online-book\runs\online-osd-public-20261007\common_v1.py", line 13, in native
+    def native(label,command,*args):gate(label,sys.executable,'-B','-X','utf8','tools/bandit.py',command,*args)
+  File "E:\ABRL\worktrees\research-online-book\runs\online-osd-public-20261007\common_v1.py", line 12, in gate
+    def gate(label,*args):subprocess.run([sys.executable,'-B','-X','utf8',str(RUN/'run-command.py'),label,*map(str,args)],check=True)
+  File "C:\Users\admin\AppData\Local\Programs\Python\Python38\lib\subprocess.py", line 516, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe', '-B', '-X', 'utf8', 'E:\\ABRL\\worktrees\\research-online-book\\runs\\online-osd-public-20261007\\run-command.py', 'candidate-frontier-refresh-v1', 'C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe', '-B', '-X', 'utf8', 'tools/bandit.py', 'frontier-refresh', '--root-objective', 'Persistent Orabona Chapters1-16; existing canonical OSD current public reuse audit only', '--leaf', 'ONLINE-OSD-PUBLIC-20261007', '--kind', 'lean', '--statement', 'theorem regret_tuned (V : Domain (E := E)) (loss : ℕ → E → EReal) (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (T : ℕ) (hT : 0 < T) (D G : ℝ) (hD : 0 < D) (hG : 0 < G) (hdiam : ∀ x ∈ V.carrier, ∀ y ∈ V.carrier, ‖x - y‖ ≤ D) (hloss : ∀ t < T, SubdifferentiableOn V (loss t)) (hgrad : ∀ t < T, ‖currentSubgradient (loss t) (iterate V (fun _ => D / (G * Real.sqrt T)) loss x₁ t)‖ ≤ G) : ∀ u ∈ V.carrier, regret V (fun _ => D / (G * Real.sqrt T)) loss x₁ u T ≤ D * G * Real.sqrt T', '--declaration', 'BanditRL.OnlineSubgradientDescent.regret_tuned', '--file', 'BanditRLProof\\OnlineSubgradientDescent.lean', '--source-status', 'source-reviewed', '--leaf-status', 'compiled', '--dependency', 'lean:BanditRL.OnlineSubgradientDescent.regret_tuned_distance:compiled', '--dependency', 'lean:BanditRL.OnlineSubgradientDescent.regret_fixed:compiled', '--trials', 'E:\\ABRL\\worktrees\\research-online-book\\runs\\online-osd-public-20261007\\candidate-scoped-trials-v1.jsonl', '--output', 'E:\\ABRL\\worktrees\\research-online-book\\runs\\online-osd-public-20261007\\candidate-frontier-v1.json', '--shadow-status', 'pending']' returned non-zero exit status 2.

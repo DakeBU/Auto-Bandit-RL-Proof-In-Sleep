@@ -1,0 +1,43 @@
+16Online Subgradient Descent
+on the difference between our prediction and the opening price:
+ℓt(x) =
+(
+1
+2 (⟨zt,x⟩ −yt)2,for|⟨z t,x⟩ −yt| ≤δ,
+δ(|⟨zt,x⟩ −yt| −1
+2 δ),otherwise
+whereδis the threshold that decides what counts as an outlier, and it should be penalized
+with a linear error rather than a quadratic one. For this problem, we can use OGD with
+constant learning rateη∝1/
+√
+T. So, we just need to calculate the gradients:
+∇ℓt(x) =
+(
+(⟨zt,x⟩ −yt)zt,for|⟨z t,x⟩ −yt| ≤δ,
+δsign(⟨zt,x⟩ −yt)zt,otherwise.
+Assuming that all∥z t∥2 are bounded, we also have that the gradients are bounded, satis-
+fying the assumptions of Theorem 2.13. Hence, running OGD, on average, the performance
+of the algorithm will approach the performance of any fixed linear predictor.
+2.2 Online Subgradient Descent
+In the previous section, we introduced Projected Online Gradient Descent. However, the
+differentiability assumption for theℓ t is quite strong. What happens when the losses are
+convex but not differentiable? For example,ℓt(x) =|x−10|. Note that this situation is more
+common than one would think. For example, the hinge loss,ℓt(x) = max(1−yt⟨zt,x⟩,0),
+is not differentiable. It turns out that we can just use OGD, substitutingsubgradientsfor the
+gradients. For this, we need some more convex analysis.
+2.2.1 Convex Analysis Bits: Subgradients
+First, we need a couple of technical definitions.
+Definition 2.16A functionf:R d →[−∞,+∞]isclosediff{x:f(x)≤α}is closed
+for everyα∈R.
+Note that in any Euclidean space (and more generally in any Hausdorff space) a function
+is closed iff it is lower semicontinuous (Bauschke and Combettes, 2017, Lemma 1.24).
+Example 2.17The indicator function of a setV ⊂R d is closed iffVis closed.
+Definition 2.18If a functionfis nowhere−∞and finite somewhere, thenfis called
+proper.
+In this book, we are mainly interested in convex proper functions, which better conform
+to our intuition of what a convex function looks like.
+Example 2.19The indicator function of a setV ⊂R d is proper iffVis non-empty.
+Let’s now define formally what a subgradient is.
+Definition 2.20For a proper functionf:R d →(−∞,+∞], we define asubgradientof
+finx∈R d as a vectorg∈R d that satisfies
+f(y)≥f(x) +⟨g,y−x⟩,∀y∈R d .
