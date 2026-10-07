@@ -1,0 +1,20 @@
+{
+  "status": "Detected before any source review; first metadata input freeze invalid",
+  "defect": "Wrapper opened its RUN stdout log while child enumerated RUN inputs; child final print changed that one log after hashing",
+  "actual_mismatches": [
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-log-lower-20261008/prepare-source-review-v2.log",
+      "frozen": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "actual": "db3044b6eb40f5dea862cc3548b6e9b36a68bb327c295f04f1ee83a1fd70c8d9"
+    }
+  ],
+  "all_other_first_input_raw_rows_match": true,
+  "first_input_manifest_retained_unchanged": true,
+  "all16_math_statements_and_source_unchanged": true,
+  "repair": "Freeze new applicable input manifest only after prior wrapper completed; run this helper directly with stdout outside RUN, not inside a gate that creates RUN files while enumerating",
+  "applicable_contract_version": 1,
+  "applicable_inputs": "source-contract-inputs-v2.json",
+  "source_package_accepted": false,
+  "chapter_complete": false,
+  "goal_complete": false
+}

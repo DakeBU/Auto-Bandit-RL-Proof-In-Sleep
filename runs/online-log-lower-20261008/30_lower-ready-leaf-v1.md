@@ -1,0 +1,1 @@
+Root staged lower worker, one route: derive actual count ≤ length, positive denominator and numerator, and strict upper bound. Exactly frozen probability_mem header. Eight reviewed model definitions and one actual theorem body; no stubs for the remaining fifteen targets. This is reusable law foundation growth, not logarithmic source-claim or chapter closure.

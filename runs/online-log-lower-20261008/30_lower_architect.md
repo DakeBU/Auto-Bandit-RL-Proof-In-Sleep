@@ -1,0 +1,1 @@
+First leafprobability_mem: k=counttrue≤length=n; denominatorn+2>0; numerator≥1>0 and numerator≤n+1<n+2. div_pos/div_lt_one. No regretperformancepremise. Later finite-vector cons equivalence handles normalized branching; momentrecurrences derived from that exactlaw. Add auxiliarylemmas with terminalhash fixed, returnrepair if mismatch.

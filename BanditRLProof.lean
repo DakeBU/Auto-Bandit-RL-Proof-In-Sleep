@@ -742,3 +742,5 @@ import BanditRLProof.OnlineConvexUncountability
 import BanditRLProof.OnlineGuessingSubgradientPolicy
 
 import BanditRLProof.OnlineLearningFTLState
+
+import BanditRLProof.OnlineGuessingLogLower

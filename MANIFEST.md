@@ -15481,3 +15481,4 @@ Orabona v10 unnumberedexample afterT2.30/endSection2.2.1 immediatelybefore2.2.2 
 - `2026-10-07T13:42:14+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/ONLINE-FTL-STATE-20261007.md` - ONLINE-FTL-STATE-20261007
 - `2026-10-07T15:42:37+00:00` `bandit.py new-task` `task` `tasks/ONLINE-REGRET-DOMAINS-20261007.md` - Chapter1 W/V typed model and complete Regret API audit
 - `2026-10-07T15:53:29+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/ONLINE-REGRET-DOMAINS-20261007.md` - ONLINE-REGRET-DOMAINS-20261007
+- `2026-10-07T17:13:56+00:00` `bandit.py new-task` `task` `tasks/ONLINE-GUESSING-LOG-LOWER-20261008.md` - Required logarithmic guessing lower bound with actual binary law

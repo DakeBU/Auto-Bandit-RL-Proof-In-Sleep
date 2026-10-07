@@ -1,0 +1,22 @@
+{
+  "command": [
+    "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe",
+    "-B",
+    "-X",
+    "utf8",
+    "tools/bandit.py",
+    "statement-fence",
+    "--declaration",
+    "BanditRL.OnlineLearning.GuessingLower.pathRegret_integrable",
+    "--file",
+    "BanditRLProof\\OnlineGuessingLogLower.lean",
+    "--source-assumption",
+    "theorem pathRegret_integrable {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (A : Ω → List Bool → ℝ) (hA : ∀ h, Measurable (fun ω => A ω h)) (hbound : ∀ ω h, A ω h ∈ Icc (0 : ℝ) 1) (h : List Bool) : Integrable (fun ω => pathRegret (A ω) h) μ",
+    "--output",
+    "E:\\ABRL\\worktrees\\research-online-book\\runs\\online-log-lower-20261008\\full-header-fences-v1\\public-pathRegret_integrable.json"
+  ],
+  "cwd": "E:/ABRL/worktrees/research-online-book",
+  "exit_code": 0,
+  "seconds": 0.218,
+  "log_sha256": "e9bd6ce5d6560465f40555027638cee0ab82b1e17aa342684fb458fbc2bed019"
+}

@@ -1,0 +1,36 @@
+GuessingLogLowerProbe.unbalanced_probability [theorem] Tests/OnlineGuessingLogLowerCanary.lean:7
+  theorem unbalanced_probability : polyaNext [true,true,true] = (4 : ℝ)/5 ∧ polyaNext [true,true,true] ∈ Ioo (0 : ℝ) 1
+GuessingLogLowerProbe.correlated_two_step_masses [theorem] Tests/OnlineGuessingLogLowerCanary.lean:11
+  theorem correlated_two_step_masses : pathWeight [true,true] = (1 : ℝ)/3 ∧ pathWeight [false,false] = (1 : ℝ)/3 ∧ pathWeight [true,false] = (1 : ℝ)/6 ∧ pathWeight [false,true] = (1 : ℝ)/6
+GuessingLogLowerProbe.zero_and_two_normalization [theorem] Tests/OnlineGuessingLogLowerCanary.lean:16
+  theorem zero_and_two_normalization : (∑ v : List.Vector Bool 0, pathWeight v.toList) = 1 ∧ (∑ v : List.Vector Bool 2, pathWeight v.toList) = 1
+GuessingLogLowerProbe.correlated_moments [theorem] Tests/OnlineGuessingLogLowerCanary.lean:21
+  theorem correlated_moments : pathExpectation 2 (fun h => (h.count true : ℝ)) = 1 ∧ pathExpectation 2 (fun h => (h.count true : ℝ)^2) = (5 : ℝ)/3
+GuessingLogLowerProbe.averaged_variance [theorem] Tests/OnlineGuessingLogLowerCanary.lean:28
+  theorem averaged_variance : pathExpectation 2 (fun h => polyaNext h * (1-polyaNext h)) = (5 : ℝ)/24
+GuessingLogLowerProbe.same_past_different_current [theorem] Tests/OnlineGuessingLogLowerCanary.lean:32
+  theorem same_past_different_current : causalPredict polyaNext (binaryStream [true,false]) 1 = causalPredict polyaNext (binaryStream [false,false]) 1
+GuessingLogLowerProbe.actual_last_prediction [theorem] Tests/OnlineGuessingLogLowerCanary.lean:41
+  theorem actual_last_prediction : causalPredict polyaNext (binaryStream [true,true,false]) 2 = (1 : ℝ)/2
+GuessingLogLowerProbe.nondegenerate_actual_regret [theorem] Tests/OnlineGuessingLogLowerCanary.lean:46
+  theorem nondegenerate_actual_regret : pathRegret polyaNext [true,true] = (13 : ℝ)/36
+GuessingLogLowerProbe.actual_optimal_loss [theorem] Tests/OnlineGuessingLogLowerCanary.lean:52
+  theorem actual_optimal_loss : pathBestLoss [true,false] = (1 : ℝ)/2
+GuessingLogLowerProbe.one_step_harmonic_endpoint [theorem] Tests/OnlineGuessingLogLowerCanary.lean:56
+  theorem one_step_harmonic_endpoint : (1 : ℝ)/4 ≤ pathExpectation 1 (pathRegret polyaNext)
+GuessingLogLowerProbe.coinMeasure [def] Tests/OnlineGuessingLogLowerCanary.lean:62
+  noncomputable def coinMeasure : Measure Bool
+GuessingLogLowerProbe.coin_distribution [theorem] Tests/OnlineGuessingLogLowerCanary.lean:65
+  theorem coin_distribution : BanditRLProof.Exp3.FiniteActionDistribution (univ : Finset Bool) (fun _ => (1 : ℝ)/2)
+GuessingLogLowerProbe.seededPolicy [def] Tests/OnlineGuessingLogLowerCanary.lean:76
+  def seededPolicy (b : Bool) (_h : List Bool) : ℝ
+GuessingLogLowerProbe.seeded_policy_bounds [theorem] Tests/OnlineGuessingLogLowerCanary.lean:78
+  theorem seeded_policy_bounds : ∀ b h, seededPolicy b h ∈ Icc (0 : ℝ) 1
+GuessingLogLowerProbe.genuine_coin_policy [theorem] Tests/OnlineGuessingLogLowerCanary.lean:82
+  theorem genuine_coin_policy : seededPolicy true [] = 1 ∧ seededPolicy false [] = 0 ∧ coinMeasure {true} = (1 : ENNReal)/2 ∧ coinMeasure {false} = (1 : ENNReal)/2
+GuessingLogLowerProbe.seeded_fixed_sequence_endpoint [theorem] Tests/OnlineGuessingLogLowerCanary.lean:89
+  theorem seeded_fixed_sequence_endpoint : ∃ v : List.Vector Bool 2, (11 : ℝ)/36 ≤ ∫ b, pathRegret (seededPolicy b) v.toList ∂coinMeasure
+GuessingLogLowerProbe.seeded_log_endpoint [theorem] Tests/OnlineGuessingLogLowerCanary.lean:96
+  theorem seeded_log_endpoint : ∃ v : List.Vector Bool 2, Real.log 4 / 6 ≤ ∫ b, pathRegret (seededPolicy b) v.toList ∂coinMeasure
+GuessingLogLowerProbe.deterministic_fixed_sequence_endpoint [theorem] Tests/OnlineGuessingLogLowerCanary.lean:103
+  theorem deterministic_fixed_sequence_endpoint (T : ℕ) (hT : 0 < T) : ∃ v : List.Vector Bool T, Real.log ((T : ℝ)+2)/6 ≤ pathRegret polyaNext v.toList

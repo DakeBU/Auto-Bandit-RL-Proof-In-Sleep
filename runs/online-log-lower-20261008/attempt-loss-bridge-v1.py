@@ -1,0 +1,117 @@
+from common_v1 import *
+addition='''
+/-- Source cumulative learner squared loss on exactly the decoded path. -/
+noncomputable def pathLearnerLoss (A : List Bool → ℝ) (h : List Bool) : ℝ :=
+  ∑ t ∈ range h.length, (causalPredict A (binaryStream h) t - binaryValues h t)^2
+
+/-- Source best fixed squared loss, at the actual shared empirical-mean minimizer. -/
+noncomputable def pathBestLoss (h : List Bool) : ℝ :=
+  ∑ t ∈ range h.length, (empiricalMean (binaryValues h) h.length - binaryValues h t)^2
+
+theorem pathRegret_eq_losses (A : List Bool → ℝ) (h : List Bool) :
+    pathRegret A h = pathLearnerLoss A h - pathBestLoss h := rfl
+
+theorem pathLearnerLoss_cons (A : List Bool → ℝ) (b : Bool) (h : List Bool) :
+    pathLearnerLoss A (b :: h) = pathLearnerLoss A h + (A h - if b then 1 else 0)^2 := by
+  unfold pathLearnerLoss
+  rw [List.length_cons, Finset.sum_range_succ]
+  have hp : (∑ t ∈ range h.length,
+      (causalPredict A (binaryStream (b :: h)) t - binaryValues (b :: h) t)^2) =
+      ∑ t ∈ range h.length, (causalPredict A (binaryStream h) t - binaryValues h t)^2 := by
+    apply Finset.sum_congr rfl
+    intro t ht
+    have ht' := Finset.mem_range.mp ht
+    rw [binaryValues_cons_prefix b h t ht']
+    rw [causalPredict_prefix A (binaryStream (b :: h)) (binaryStream h) t
+      (fun i hi => binaryStream_cons_prefix b h i (hi.trans ht'))]
+  rw [hp, causalPredict_cons_last]
+  simp only [binaryValues, binaryStream_cons_last]
+
+theorem binaryValues_sum (h : List Bool) :
+    (∑ t ∈ range h.length, binaryValues h t) = (h.count true : ℝ) := by
+  induction h with
+  | nil => simp
+  | cons b h ih =>
+    rw [List.length_cons, Finset.sum_range_succ]
+    have hp : (∑ t ∈ range h.length, binaryValues (b :: h) t) =
+        ∑ t ∈ range h.length, binaryValues h t := by
+      apply Finset.sum_congr rfl
+      intro t ht
+      exact binaryValues_cons_prefix b h t (Finset.mem_range.mp ht)
+    rw [hp, ih]
+    cases b <;> simp [binaryValues, binaryStream_cons_last]
+
+theorem binaryValues_sq (h : List Bool) (t : ℕ) :
+    (binaryValues h t)^2 = binaryValues h t := by
+  unfold binaryValues
+  split_ifs <;> norm_num
+
+theorem pathBestLoss_count (h : List Bool) (hpos : 0 < h.length) :
+    pathBestLoss h = (h.count true : ℝ) - (h.count true : ℝ)^2 / (h.length : ℝ) := by
+  have hn : (h.length : ℝ) ≠ 0 := by exact_mod_cast Nat.ne_of_gt hpos
+  have hm : empiricalMean (binaryValues h) h.length = (h.count true : ℝ) / h.length := by
+    simp only [empiricalMean, binaryValues_sum]
+  have hz : (∑ t ∈ range h.length, ((0 : ℝ) - binaryValues h t)^2) = (h.count true : ℝ) := by
+    calc
+      _ = ∑ t ∈ range h.length, (binaryValues h t)^2 := by
+        apply Finset.sum_congr rfl
+        intro t _
+        ring
+      _ = ∑ t ∈ range h.length, binaryValues h t := by simp only [binaryValues_sq]
+      _ = _ := binaryValues_sum h
+  have hd := empiricalMean_decomposition (binaryValues h) h.length hpos 0
+  have hr : (h.length : ℝ) * (0 - (h.count true : ℝ) / h.length)^2 =
+      (h.count true : ℝ)^2 / h.length := by
+    field_simp <;> ring
+  rw [hz, hm, hr] at hd
+  change (h.count true : ℝ) = pathBestLoss h + (h.count true : ℝ)^2 / (h.length : ℝ) at hd
+  linarith
+
+theorem expected_pathBestLoss (T : ℕ) (hT : 0 < T) :
+    pathExpectation T pathBestLoss = ((T : ℝ) - 1) / 6 := by
+  have hn : (T : ℝ) ≠ 0 := by exact_mod_cast Nat.ne_of_gt hT
+  have eq := pathExpectation_congr T pathBestLoss
+    (fun h => (h.count true : ℝ) - (h.count true : ℝ)^2 / (T : ℝ))
+    (by
+      intro h hl
+      dsimp only
+      rw [pathBestLoss_count h (by omega), hl])
+  rw [eq]
+  simp only [pathExpectation_sub, pathExpectation_div, expected_heads, expected_heads_sq]
+  field_simp <;> ring
+
+theorem pathExpectation_mono (T : ℕ) (f g : List Bool → ℝ)
+    (hfg : ∀ h, h.length = T → f h ≤ g h) :
+    pathExpectation T f ≤ pathExpectation T g := by
+  apply Finset.sum_le_sum
+  intro v _
+  exact mul_le_mul_of_nonneg_left (hfg v.toList v.toList_length) (pathWeight_nonneg v.toList)
+
+theorem expected_pathLearnerLoss_succ (A : List Bool → ℝ) (T : ℕ) :
+    pathExpectation (T + 1) (pathLearnerLoss A) =
+      pathExpectation T (pathLearnerLoss A) + pathExpectation T
+        (fun h => (1 - polyaNext h) * (A h)^2 + polyaNext h * (A h - 1)^2) := by
+  rw [pathExpectation_succ]
+  have eq := pathExpectation_congr T
+    (fun h => (1 - polyaNext h) * pathLearnerLoss A (false :: h) +
+      polyaNext h * pathLearnerLoss A (true :: h))
+    (fun h => pathLearnerLoss A h +
+      ((1 - polyaNext h) * (A h)^2 + polyaNext h * (A h - 1)^2))
+    (by
+      intro h _
+      simp only [pathLearnerLoss_cons, Bool.false_eq_true, ↓reduceIte, sub_zero]
+      ring)
+  rw [eq, pathExpectation_add]
+
+theorem expected_pathLearnerLoss_step (A : List Bool → ℝ) (T : ℕ) :
+    pathExpectation T (pathLearnerLoss A) + ((T : ℝ) + 3) / (6 * ((T : ℝ) + 2)) ≤
+      pathExpectation (T + 1) (pathLearnerLoss A) := by
+  rw [expected_pathLearnerLoss_succ, ← expected_next_variance]
+  exact add_le_add_left (pathExpectation_mono T _ _
+    (fun h _ => conditional_square_lower h (A h))) _
+
+'''
+ending='end BanditRL.OnlineLearning.GuessingLower';source=PUBLIC.read_text(encoding='utf-8')
+write(RUN/'loss-bridge-addition-v1.lean.txt',addition)
+write(RUN/'leaves/loss-bridge-v1.lean',source[:source.rindex(ending)]+addition+'\n'+ending+'\n')
+gate('loss-bridge-attempt-v1','lake','env','lean',RUN/'leaves/loss-bridge-v1.lean')

@@ -1,0 +1,15 @@
+List.count_le_length.{u_1} {α : Type u_1} [BEq α] {a : α} {l : List α} : List.count a l ≤ l.length
+List.countP_le_length.{u_1} {α : Type u_1} {p : α → Bool} {l : List α} : List.countP p l ≤ l.length
+List.count_cons.{u_1} {α : Type u_1} [BEq α] {a b : α} {l : List α} :
+  List.count a (b :: l) = List.count a l + if (b == a) = true then 1 else 0
+List.Vector.cons.{u_1} {α : Type u_1} {n : ℕ} : α → List.Vector α n → List.Vector α n.succ
+List.Vector.cons_head_tail.{u_1} {α : Type u_1} {n : ℕ} (v : List.Vector α n.succ) : v.head ::ᵥ v.tail = v
+List.Vector.toList_cons.{u_1} {α : Type u_1} {n : ℕ} (a : α) (v : List.Vector α n) : (a ::ᵥ v).toList = a :: v.toList
+List.Vector.toList_length.{u_1} {α : Type u_1} {n : ℕ} (v : List.Vector α n) : v.toList.length = n
+Fintype.sum_equiv.{u_1, u_2, u_3} {ι : Type u_1} {κ : Type u_2} {M : Type u_3} [Fintype ι] [Fintype κ] [AddCommMonoid M]
+  (e : ι ≃ κ) (f : ι → M) (g : κ → M) (h : ∀ (x : ι), f x = g (e x)) : ∑ x, f x = ∑ x, g x
+Fintype.sum_prod_type.{u_3, u_4, u_5} {γ : Type u_3} {α₁ : Type u_4} {α₂ : Type u_5} [Fintype α₁] [Fintype α₂]
+  [AddCommMonoid γ] (f : α₁ × α₂ → γ) : ∑ x, f x = ∑ x, ∑ y, f (x, y)
+Equiv.sum_comp.{u_1, u_2, u_3} {ι : Type u_1} {κ : Type u_2} {M : Type u_3} [Fintype ι] [Fintype κ] [AddCommMonoid M]
+  (e : ι ≃ κ) (g : κ → M) : ∑ i, g (e i) = ∑ i, g i
+log_add_one_le_harmonic (n : ℕ) : Real.log ↑(n + 1) ≤ ↑(harmonic n)

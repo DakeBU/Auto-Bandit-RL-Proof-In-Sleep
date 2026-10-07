@@ -1,0 +1,115 @@
+
+theorem pathExpectation_congr (T : ℕ) (f g : List Bool → ℝ)
+    (hfg : ∀ h, h.length = T → f h = g h) :
+    pathExpectation T f = pathExpectation T g := by
+  apply Finset.sum_congr rfl
+  intro v _
+  rw [hfg v.toList v.toList_length]
+
+theorem pathExpectation_const (T : ℕ) (c : ℝ) :
+    pathExpectation T (fun _ => c) = c := by
+  simp only [pathExpectation, ← Finset.sum_mul, prefix_mass_one, one_mul]
+
+theorem pathExpectation_add (T : ℕ) (f g : List Bool → ℝ) :
+    pathExpectation T (fun h => f h + g h) = pathExpectation T f + pathExpectation T g := by
+  simp only [pathExpectation, mul_add, Finset.sum_add_distrib]
+
+theorem pathExpectation_sub (T : ℕ) (f g : List Bool → ℝ) :
+    pathExpectation T (fun h => f h - g h) = pathExpectation T f - pathExpectation T g := by
+  simp only [pathExpectation, mul_sub, Finset.sum_sub_distrib]
+
+theorem pathExpectation_const_mul (T : ℕ) (c : ℝ) (f : List Bool → ℝ) :
+    pathExpectation T (fun h => c * f h) = c * pathExpectation T f := by
+  simp only [pathExpectation, Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro v _
+  ring
+
+theorem pathExpectation_div (T : ℕ) (f : List Bool → ℝ) (c : ℝ) :
+    pathExpectation T (fun h => f h / c) = pathExpectation T f / c := by
+  simp only [pathExpectation, mul_div_assoc, Finset.sum_div]
+
+/-- Actual successor expectation under the recursively generated branch masses. -/
+theorem pathExpectation_succ (T : ℕ) (f : List Bool → ℝ) :
+    pathExpectation (T + 1) f = pathExpectation T
+      (fun h => (1 - polyaNext h) * f (false :: h) + polyaNext h * f (true :: h)) := by
+  rw [pathExpectation, sum_vectors_succ T (fun h => pathWeight h * f h)]
+  unfold pathExpectation
+  apply Finset.sum_congr rfl
+  intro v _
+  simp only [pathWeight, Bool.false_eq_true, ↓reduceIte]
+  ring
+
+theorem heads_succ (T : ℕ) :
+    pathExpectation (T + 1) (fun h => (h.count true : ℝ)) =
+      pathExpectation T (fun h => (h.count true : ℝ)) +
+        (pathExpectation T (fun h => (h.count true : ℝ)) + 1) / ((T : ℝ) + 2) := by
+  rw [pathExpectation_succ]
+  have eq := pathExpectation_congr T
+    (fun h => (1 - polyaNext h) * ((false :: h).count true : ℝ) +
+      polyaNext h * ((true :: h).count true : ℝ))
+    (fun h => (h.count true : ℝ) + ((h.count true : ℝ) + 1) / ((T : ℝ) + 2))
+    (by
+      intro h hl
+      simp [List.count_cons, polyaNext, hl]
+      ring)
+  rw [eq]
+  simp only [pathExpectation_add, pathExpectation_div, pathExpectation_const]
+
+theorem heads_sq_succ (T : ℕ) :
+    pathExpectation (T + 1) (fun h => (h.count true : ℝ)^2) =
+      pathExpectation T (fun h => (h.count true : ℝ)^2) +
+        (2 * pathExpectation T (fun h => (h.count true : ℝ)^2) +
+         3 * pathExpectation T (fun h => (h.count true : ℝ)) + 1) / ((T : ℝ) + 2) := by
+  rw [pathExpectation_succ]
+  have eq := pathExpectation_congr T
+    (fun h => (1 - polyaNext h) * ((false :: h).count true : ℝ)^2 +
+      polyaNext h * ((true :: h).count true : ℝ)^2)
+    (fun h => (h.count true : ℝ)^2 +
+      (2 * (h.count true : ℝ)^2 + 3 * (h.count true : ℝ) + 1) / ((T : ℝ) + 2))
+    (by
+      intro h hl
+      have hd : (T : ℝ) + 2 ≠ 0 := by positivity
+      simp [polyaNext, hl]
+      field_simp <;> ring)
+  rw [eq]
+  simp only [pathExpectation_add, pathExpectation_div, pathExpectation_const,
+    pathExpectation_const_mul]
+
+theorem expected_heads (T : ℕ) :
+    pathExpectation T (fun h => (h.count true : ℝ)) = (T : ℝ) / 2 := by
+  induction T with
+  | zero => simp [pathExpectation, pathWeight]
+  | succ T ih =>
+    rw [heads_succ, ih]
+    push_cast
+    have hd : (T : ℝ) + 2 ≠ 0 := by positivity
+    field_simp <;> ring
+
+theorem expected_heads_sq (T : ℕ) :
+    pathExpectation T (fun h => (h.count true : ℝ)^2) = (T : ℝ) * (2 * (T : ℝ) + 1) / 6 := by
+  induction T with
+  | zero => simp [pathExpectation, pathWeight]
+  | succ T ih =>
+    rw [heads_sq_succ, ih, expected_heads]
+    push_cast
+    have hd : (T : ℝ) + 2 ≠ 0 := by positivity
+    field_simp <;> ring
+
+theorem expected_next_variance (T : ℕ) :
+    pathExpectation T (fun h => polyaNext h * (1 - polyaNext h)) = ((T : ℝ) + 3) / (6 * ((T : ℝ) + 2)) := by
+  have hd : (T : ℝ) + 2 ≠ 0 := by positivity
+  have eq := pathExpectation_congr T
+    (fun h => polyaNext h * (1 - polyaNext h))
+    (fun h => ((T : ℝ) * (h.count true : ℝ) + ((T : ℝ) + 1) -
+      (h.count true : ℝ)^2) / ((T : ℝ) + 2)^2)
+    (by
+      intro h hl
+      dsimp only
+      simp only [polyaNext, hl]
+      field_simp
+      ring)
+  rw [eq]
+  simp only [pathExpectation_div, pathExpectation_sub, pathExpectation_add,
+    pathExpectation_const_mul, pathExpectation_const, expected_heads, expected_heads_sq]
+  field_simp <;> ring

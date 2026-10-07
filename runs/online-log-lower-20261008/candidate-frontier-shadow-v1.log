@@ -1,0 +1,125 @@
+{
+  "schema_version": 1,
+  "mode": "shadow-read-only",
+  "analyzed_at": "2026-10-07T19:00:20+00:00",
+  "trials_path": "E:\\ABRL\\worktrees\\research-online-book\\runs\\online-log-lower-20261008\\candidate-scoped-trials-v1.jsonl",
+  "trial_rows": 2,
+  "status_counts": {
+    "compiled": 2
+  },
+  "inferred_frontier": {
+    "selected_task": "ONLINE-GUESSING-LOG-LOWER-20261008",
+    "selected_leaf": "ONLINE-GUESSING-LOG-LOWER-20261008",
+    "source_status": "compiled",
+    "last_accepted_verifier": {
+      "trial_index": 1,
+      "time": "2026-10-07T18:31:10+00:00",
+      "task": "ONLINE-GUESSING-LOG-LOWER-20261008",
+      "role": "lower",
+      "kind": "build",
+      "status": "compiled",
+      "lean": "BanditRLProof\\OnlineGuessingLogLower.lean",
+      "notes": "All16 frozen targets closed by actual recursive law/moments/causal same-path loss/minimum and measurable bounded seed-integrability/fixed-sequence averaging producer. Actual76 kernel nodes,64 closed Prop identities,12 definition identities,64 native guards and30 VALUE pairs. Semantic BODY, integrated rootTests/harness/reader/FINAL and PR remain pending; no source/chapter/Goal acceptance.",
+      "run_id": "online-log-lower-20261008"
+    }
+  },
+  "memory_digest": {
+    "path": "E:\\ABRL\\worktrees\\research-online-book\\runs\\online-log-lower-20261008\\memory_digest-candidate-v1.md",
+    "task": ""
+  },
+  "recorded_frontier": {
+    "schema_version": 1,
+    "record_id": "frontier-f9a67fbc14b5bfea",
+    "updated_at": "2026-10-07T19:00:20+00:00",
+    "root_objective": "Persistent Orabona Chapters1–16; actual C1 logarithmic lower producer",
+    "current_leaf": {
+      "id": "ONLINE-GUESSING-LOG-LOWER-20261008",
+      "kind": "lean",
+      "status": "gate-pending",
+      "statement": "theorem randomized_log_lower {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (A : Ω → List Bool → ℝ) (hA : ∀ h, Measurable (fun ω => A ω h)) (hbound : ∀ ω h, A ω h ∈ Icc (0 : ℝ) 1) (T : ℕ) (hT : 0 < T) : ∃ v : List.Vector Bool T, Real.log ((T : ℝ) + 2) / 6 ≤ ∫ ω, pathRegret (A ω) v.toList ∂μ",
+      "statement_hash": "32bd5e443de1ec751e5c4c8d9c99134fc3319f1777ef7cc397966ae963221828",
+      "declaration": "BanditRL.OnlineLearning.GuessingLower.randomized_log_lower",
+      "file": "BanditRLProof\\OnlineGuessingLogLower.lean",
+      "source_status": "source-reviewed",
+      "dependencies": [
+        {
+          "kind": "review",
+          "name": "source-body",
+          "status": "accepted"
+        },
+        {
+          "kind": "lean",
+          "name": "BanditRL.OnlineLearning.GuessingLower.randomized_harmonic_lower",
+          "status": "compiled"
+        },
+        {
+          "kind": "lean",
+          "name": "log_add_one_le_harmonic",
+          "status": "compiled"
+        }
+      ]
+    },
+    "dag": {
+      "nodes": [
+        {
+          "id": "ONLINE-GUESSING-LOG-LOWER-20261008",
+          "kind": "lean",
+          "status": "gate-pending",
+          "dependencies": [
+            {
+              "kind": "review",
+              "name": "source-body",
+              "status": "accepted"
+            },
+            {
+              "kind": "lean",
+              "name": "BanditRL.OnlineLearning.GuessingLower.randomized_harmonic_lower",
+              "status": "compiled"
+            },
+            {
+              "kind": "lean",
+              "name": "log_add_one_le_harmonic",
+              "status": "compiled"
+            }
+          ],
+          "dispatch_count": 0
+        }
+      ]
+    },
+    "last_accepted_verifier": {
+      "trial_index": 1,
+      "time": "2026-10-07T18:31:10+00:00",
+      "task": "ONLINE-GUESSING-LOG-LOWER-20261008",
+      "role": "lower",
+      "kind": "build",
+      "status": "compiled",
+      "lean": "BanditRLProof\\OnlineGuessingLogLower.lean",
+      "notes": "All16 frozen targets closed by actual recursive law/moments/causal same-path loss/minimum and measurable bounded seed-integrability/fixed-sequence averaging producer. Actual76 kernel nodes,64 closed Prop identities,12 definition identities,64 native guards and30 VALUE pairs. Semantic BODY, integrated rootTests/harness/reader/FINAL and PR remain pending; no source/chapter/Goal acceptance.",
+      "run_id": "online-log-lower-20261008"
+    },
+    "memory_policy": {
+      "recent_role_relevant_limit": 5,
+      "explicit_verified_lemma_ids": [],
+      "whole_history_default": false
+    },
+    "shadow_gate": {
+      "status": "pending",
+      "analyzed_trial_rows": 2,
+      "mismatches": [],
+      "replay_transitions": 0
+    },
+    "mutation_policy": {
+      "canonical_path_queue": true,
+      "cross_process_lock": true,
+      "same_file_serialized": true,
+      "disjoint_files_parallel": true
+    },
+    "autonomous_execution": {
+      "enabled": false,
+      "requires_deterministic_gates": true,
+      "requires_explicit_user_request": true
+    }
+  },
+  "mismatches": [],
+  "would_mutate": false
+}

@@ -156,3 +156,5 @@ import Tests.OnlineLearningFTLSharpCanary
 import Tests.OnlineLearningFTLStateCanary
 
 import Tests.OnlineLearningRegretDomainsCanary
+
+import Tests.OnlineGuessingLogLowerCanary

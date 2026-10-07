@@ -1,0 +1,19 @@
+{
+  "failure": "prepare-source-review-v1.py assumed flat input_sha256/report_sha256 and repository-relative paths; actual neutral-decoder receipt uses nested input/report objects with sha256_raw_bytes and run-relative basenames",
+  "actual_command": [
+    "python",
+    "-B",
+    "-X",
+    "utf8",
+    "runs/online-log-lower-20261008/prepare-source-review-v1.py"
+  ],
+  "actual_exit_code": 1,
+  "actual_error": "KeyError: 'input_sha256'",
+  "evidence": "Actual functions.exec exec_command response; record is a failure description, not a verbatim full-stdout capture or a passed compiler receipt",
+  "repair": "Read actual nested raw-byte fields and resolve only explicit run-relative basenames; every input/report/row rehashed; preserve original receipt/report/preparation helper unchanged",
+  "source_and_all16_terminal_headers_unchanged": true,
+  "mathematical_proof_not_attempted": true,
+  "source_package_accepted": false,
+  "chapter_complete": false,
+  "goal_complete": false
+}

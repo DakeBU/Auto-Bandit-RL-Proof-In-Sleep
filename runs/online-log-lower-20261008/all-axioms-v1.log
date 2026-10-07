@@ -1,0 +1,330 @@
+BanditRL.OnlineLearning.GuessingLower.probability_mem (h : List Bool) :
+  BanditRL.OnlineLearning.GuessingLower.polyaNext h ∈ Set.Ioo 0 1
+'BanditRL.OnlineLearning.GuessingLower.probability_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.branch_mass (h : List Bool) :
+  BanditRL.OnlineLearning.GuessingLower.pathWeight (false :: h) +
+      BanditRL.OnlineLearning.GuessingLower.pathWeight (true :: h) =
+    BanditRL.OnlineLearning.GuessingLower.pathWeight h
+'BanditRL.OnlineLearning.GuessingLower.branch_mass' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.pathWeight_nonneg (h : List Bool) :
+  0 ≤ BanditRL.OnlineLearning.GuessingLower.pathWeight h
+'BanditRL.OnlineLearning.GuessingLower.pathWeight_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.sum_vectors_succ (T : ℕ) (f : List Bool → ℝ) :
+  ∑ v, f v.toList = ∑ v, (f (false :: v.toList) + f (true :: v.toList))
+'BanditRL.OnlineLearning.GuessingLower.sum_vectors_succ' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.prefix_mass_one (T : ℕ) :
+  ∑ v, BanditRL.OnlineLearning.GuessingLower.pathWeight v.toList = 1
+'BanditRL.OnlineLearning.GuessingLower.prefix_mass_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.prefix_distribution (T : ℕ) :
+  BanditRLProof.Exp3.FiniteActionDistribution Finset.univ fun v =>
+    BanditRL.OnlineLearning.GuessingLower.pathWeight v.toList
+'BanditRL.OnlineLearning.GuessingLower.prefix_distribution' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.prefixMeasure_probability (T : ℕ) [MeasurableSpace (List.Vector Bool T)]
+  [MeasurableSingletonClass (List.Vector Bool T)] :
+  MeasureTheory.IsProbabilityMeasure (BanditRL.OnlineLearning.GuessingLower.prefixMeasure T)
+'BanditRL.OnlineLearning.GuessingLower.prefixMeasure_probability' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.pathExpectation_integral (T : ℕ) [MeasurableSpace (List.Vector Bool T)]
+  [MeasurableSingletonClass (List.Vector Bool T)] (f : List Bool → ℝ) :
+  ∫ (v : List.Vector Bool T), f v.toList ∂BanditRL.OnlineLearning.GuessingLower.prefixMeasure T =
+    BanditRL.OnlineLearning.GuessingLower.pathExpectation T f
+'BanditRL.OnlineLearning.GuessingLower.pathExpectation_integral' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.pathExpectation_congr (T : ℕ) (f g : List Bool → ℝ)
+  (hfg : ∀ (h : List Bool), h.length = T → f h = g h) :
+  BanditRL.OnlineLearning.GuessingLower.pathExpectation T f = BanditRL.OnlineLearning.GuessingLower.pathExpectation T g
+'BanditRL.OnlineLearning.GuessingLower.pathExpectation_congr' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.pathExpectation_const (T : ℕ) (c : ℝ) :
+  (BanditRL.OnlineLearning.GuessingLower.pathExpectation T fun x => c) = c
+'BanditRL.OnlineLearning.GuessingLower.pathExpectation_const' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.pathExpectation_add (T : ℕ) (f g : List Bool → ℝ) :
+  (BanditRL.OnlineLearning.GuessingLower.pathExpectation T fun h => f h + g h) =
+    BanditRL.OnlineLearning.GuessingLower.pathExpectation T f +
+      BanditRL.OnlineLearning.GuessingLower.pathExpectation T g
+'BanditRL.OnlineLearning.GuessingLower.pathExpectation_add' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.pathExpectation_sub (T : ℕ) (f g : List Bool → ℝ) :
+  (BanditRL.OnlineLearning.GuessingLower.pathExpectation T fun h => f h - g h) =
+    BanditRL.OnlineLearning.GuessingLower.pathExpectation T f -
+      BanditRL.OnlineLearning.GuessingLower.pathExpectation T g
+'BanditRL.OnlineLearning.GuessingLower.pathExpectation_sub' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.pathExpectation_const_mul (T : ℕ) (c : ℝ) (f : List Bool → ℝ) :
+  (BanditRL.OnlineLearning.GuessingLower.pathExpectation T fun h => c * f h) =
+    c * BanditRL.OnlineLearning.GuessingLower.pathExpectation T f
+'BanditRL.OnlineLearning.GuessingLower.pathExpectation_const_mul' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.pathExpectation_div (T : ℕ) (f : List Bool → ℝ) (c : ℝ) :
+  (BanditRL.OnlineLearning.GuessingLower.pathExpectation T fun h => f h / c) =
+    BanditRL.OnlineLearning.GuessingLower.pathExpectation T f / c
+'BanditRL.OnlineLearning.GuessingLower.pathExpectation_div' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.pathExpectation_succ (T : ℕ) (f : List Bool → ℝ) :
+  BanditRL.OnlineLearning.GuessingLower.pathExpectation (T + 1) f =
+    BanditRL.OnlineLearning.GuessingLower.pathExpectation T fun h =>
+      (1 - BanditRL.OnlineLearning.GuessingLower.polyaNext h) * f (false :: h) +
+        BanditRL.OnlineLearning.GuessingLower.polyaNext h * f (true :: h)
+'BanditRL.OnlineLearning.GuessingLower.pathExpectation_succ' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.heads_succ (T : ℕ) :
+  (BanditRL.OnlineLearning.GuessingLower.pathExpectation (T + 1) fun h => ↑(List.count true h)) =
+    (BanditRL.OnlineLearning.GuessingLower.pathExpectation T fun h => ↑(List.count true h)) +
+      ((BanditRL.OnlineLearning.GuessingLower.pathExpectation T fun h => ↑(List.count true h)) + 1) / (↑T + 2)
+'BanditRL.OnlineLearning.GuessingLower.heads_succ' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.heads_sq_succ (T : ℕ) :
+  (BanditRL.OnlineLearning.GuessingLower.pathExpectation (T + 1) fun h => ↑(List.count true h) ^ 2) =
+    (BanditRL.OnlineLearning.GuessingLower.pathExpectation T fun h => ↑(List.count true h) ^ 2) +
+      (((2 * BanditRL.OnlineLearning.GuessingLower.pathExpectation T fun h => ↑(List.count true h) ^ 2) +
+            3 * BanditRL.OnlineLearning.GuessingLower.pathExpectation T fun h => ↑(List.count true h)) +
+          1) /
+        (↑T + 2)
+'BanditRL.OnlineLearning.GuessingLower.heads_sq_succ' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.expected_heads (T : ℕ) :
+  (BanditRL.OnlineLearning.GuessingLower.pathExpectation T fun h => ↑(List.count true h)) = ↑T / 2
+'BanditRL.OnlineLearning.GuessingLower.expected_heads' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.expected_heads_sq (T : ℕ) :
+  (BanditRL.OnlineLearning.GuessingLower.pathExpectation T fun h => ↑(List.count true h) ^ 2) = ↑T * (2 * ↑T + 1) / 6
+'BanditRL.OnlineLearning.GuessingLower.expected_heads_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.expected_next_variance (T : ℕ) :
+  (BanditRL.OnlineLearning.GuessingLower.pathExpectation T fun h =>
+      BanditRL.OnlineLearning.GuessingLower.polyaNext h * (1 - BanditRL.OnlineLearning.GuessingLower.polyaNext h)) =
+    (↑T + 3) / (6 * (↑T + 2))
+'BanditRL.OnlineLearning.GuessingLower.expected_next_variance' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.causalPredict_prefix (A : List Bool → ℝ) (y z : ℕ → Bool) (t : ℕ)
+  (hpast : ∀ i < t, y i = z i) :
+  BanditRL.OnlineLearning.GuessingLower.causalPredict A y t = BanditRL.OnlineLearning.GuessingLower.causalPredict A z t
+'BanditRL.OnlineLearning.GuessingLower.causalPredict_prefix' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.binary_mean_minimizer (h : List Bool) (hpos : 0 < h.length) :
+  BanditRL.OnlineLearning.empiricalMean (BanditRL.OnlineLearning.GuessingLower.binaryValues h) h.length ∈ Set.Icc 0 1 ∧
+    ∀ u ∈ Set.Icc 0 1,
+      ∑ t ∈ Finset.range h.length,
+          (BanditRL.OnlineLearning.empiricalMean (BanditRL.OnlineLearning.GuessingLower.binaryValues h) h.length -
+              BanditRL.OnlineLearning.GuessingLower.binaryValues h t) ^
+            2 ≤
+        ∑ t ∈ Finset.range h.length, (u - BanditRL.OnlineLearning.GuessingLower.binaryValues h t) ^ 2
+'BanditRL.OnlineLearning.GuessingLower.binary_mean_minimizer' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.conditional_square_lower (h : List Bool) (x : ℝ) :
+  BanditRL.OnlineLearning.GuessingLower.polyaNext h * (1 - BanditRL.OnlineLearning.GuessingLower.polyaNext h) ≤
+    (1 - BanditRL.OnlineLearning.GuessingLower.polyaNext h) * x ^ 2 +
+      BanditRL.OnlineLearning.GuessingLower.polyaNext h * (x - 1) ^ 2
+'BanditRL.OnlineLearning.GuessingLower.conditional_square_lower' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.binaryStream_cons_prefix (b : Bool) (h : List Bool) (t : ℕ) (ht : t < h.length) :
+  BanditRL.OnlineLearning.GuessingLower.binaryStream (b :: h) t = BanditRL.OnlineLearning.GuessingLower.binaryStream h t
+'BanditRL.OnlineLearning.GuessingLower.binaryStream_cons_prefix' depends on axioms: [propext]
+BanditRL.OnlineLearning.GuessingLower.binaryStream_cons_last (b : Bool) (h : List Bool) :
+  BanditRL.OnlineLearning.GuessingLower.binaryStream (b :: h) h.length = b
+'BanditRL.OnlineLearning.GuessingLower.binaryStream_cons_last' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.binaryValues_cons_prefix (b : Bool) (h : List Bool) (t : ℕ) (ht : t < h.length) :
+  BanditRL.OnlineLearning.GuessingLower.binaryValues (b :: h) t = BanditRL.OnlineLearning.GuessingLower.binaryValues h t
+'BanditRL.OnlineLearning.GuessingLower.binaryValues_cons_prefix' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.causalPredict_history (A : List Bool → ℝ) (h : List Bool) :
+  BanditRL.OnlineLearning.GuessingLower.causalPredict A (BanditRL.OnlineLearning.GuessingLower.binaryStream h)
+      h.length =
+    A h
+'BanditRL.OnlineLearning.GuessingLower.causalPredict_history' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.causalPredict_cons_last (A : List Bool → ℝ) (b : Bool) (h : List Bool) :
+  BanditRL.OnlineLearning.GuessingLower.causalPredict A (BanditRL.OnlineLearning.GuessingLower.binaryStream (b :: h))
+      h.length =
+    A h
+'BanditRL.OnlineLearning.GuessingLower.causalPredict_cons_last' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.pathRegret_eq_losses (A : List Bool → ℝ) (h : List Bool) :
+  BanditRL.OnlineLearning.GuessingLower.pathRegret A h =
+    BanditRL.OnlineLearning.GuessingLower.pathLearnerLoss A h - BanditRL.OnlineLearning.GuessingLower.pathBestLoss h
+'BanditRL.OnlineLearning.GuessingLower.pathRegret_eq_losses' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.pathLearnerLoss_cons (A : List Bool → ℝ) (b : Bool) (h : List Bool) :
+  BanditRL.OnlineLearning.GuessingLower.pathLearnerLoss A (b :: h) =
+    BanditRL.OnlineLearning.GuessingLower.pathLearnerLoss A h + (A h - if b = true then 1 else 0) ^ 2
+'BanditRL.OnlineLearning.GuessingLower.pathLearnerLoss_cons' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.binaryValues_sum (h : List Bool) :
+  ∑ t ∈ Finset.range h.length, BanditRL.OnlineLearning.GuessingLower.binaryValues h t = ↑(List.count true h)
+'BanditRL.OnlineLearning.GuessingLower.binaryValues_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.binaryValues_sq (h : List Bool) (t : ℕ) :
+  BanditRL.OnlineLearning.GuessingLower.binaryValues h t ^ 2 = BanditRL.OnlineLearning.GuessingLower.binaryValues h t
+'BanditRL.OnlineLearning.GuessingLower.binaryValues_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.pathBestLoss_count (h : List Bool) (hpos : 0 < h.length) :
+  BanditRL.OnlineLearning.GuessingLower.pathBestLoss h = ↑(List.count true h) - ↑(List.count true h) ^ 2 / ↑h.length
+'BanditRL.OnlineLearning.GuessingLower.pathBestLoss_count' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.expected_pathBestLoss (T : ℕ) (hT : 0 < T) :
+  BanditRL.OnlineLearning.GuessingLower.pathExpectation T BanditRL.OnlineLearning.GuessingLower.pathBestLoss =
+    (↑T - 1) / 6
+'BanditRL.OnlineLearning.GuessingLower.expected_pathBestLoss' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.pathExpectation_mono (T : ℕ) (f g : List Bool → ℝ)
+  (hfg : ∀ (h : List Bool), h.length = T → f h ≤ g h) :
+  BanditRL.OnlineLearning.GuessingLower.pathExpectation T f ≤ BanditRL.OnlineLearning.GuessingLower.pathExpectation T g
+'BanditRL.OnlineLearning.GuessingLower.pathExpectation_mono' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.expected_pathLearnerLoss_succ (A : List Bool → ℝ) (T : ℕ) :
+  BanditRL.OnlineLearning.GuessingLower.pathExpectation (T + 1)
+      (BanditRL.OnlineLearning.GuessingLower.pathLearnerLoss A) =
+    BanditRL.OnlineLearning.GuessingLower.pathExpectation T (BanditRL.OnlineLearning.GuessingLower.pathLearnerLoss A) +
+      BanditRL.OnlineLearning.GuessingLower.pathExpectation T fun h =>
+        (1 - BanditRL.OnlineLearning.GuessingLower.polyaNext h) * A h ^ 2 +
+          BanditRL.OnlineLearning.GuessingLower.polyaNext h * (A h - 1) ^ 2
+'BanditRL.OnlineLearning.GuessingLower.expected_pathLearnerLoss_succ' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.expected_pathLearnerLoss_step (A : List Bool → ℝ) (T : ℕ) :
+  BanditRL.OnlineLearning.GuessingLower.pathExpectation T (BanditRL.OnlineLearning.GuessingLower.pathLearnerLoss A) +
+      (↑T + 3) / (6 * (↑T + 2)) ≤
+    BanditRL.OnlineLearning.GuessingLower.pathExpectation (T + 1)
+      (BanditRL.OnlineLearning.GuessingLower.pathLearnerLoss A)
+'BanditRL.OnlineLearning.GuessingLower.expected_pathLearnerLoss_step' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.variance_sum (T : ℕ) :
+  ∑ t ∈ Finset.range T, (↑t + 3) / (6 * (↑t + 2)) = ↑T / 6 + (↑(harmonic (T + 1)) - 1) / 6
+'BanditRL.OnlineLearning.GuessingLower.variance_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.expected_pathLearnerLoss_lower (A : List Bool → ℝ) (T : ℕ) :
+  ∑ t ∈ Finset.range T, (↑t + 3) / (6 * (↑t + 2)) ≤
+    BanditRL.OnlineLearning.GuessingLower.pathExpectation T (BanditRL.OnlineLearning.GuessingLower.pathLearnerLoss A)
+'BanditRL.OnlineLearning.GuessingLower.expected_pathLearnerLoss_lower' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.expected_pathRegret_lower (A : List Bool → ℝ) (T : ℕ) (hT : 0 < T) :
+  ↑(harmonic (T + 1)) / 6 ≤
+    BanditRL.OnlineLearning.GuessingLower.pathExpectation T (BanditRL.OnlineLearning.GuessingLower.pathRegret A)
+'BanditRL.OnlineLearning.GuessingLower.expected_pathRegret_lower' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.pathWeight_pos (h : List Bool) :
+  0 < BanditRL.OnlineLearning.GuessingLower.pathWeight h
+'BanditRL.OnlineLearning.GuessingLower.pathWeight_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.square_loss_mem (x y : ℝ) (hx : x ∈ Set.Icc 0 1) (hy : y ∈ Set.Icc 0 1) :
+  (x - y) ^ 2 ∈ Set.Icc 0 1
+'BanditRL.OnlineLearning.GuessingLower.square_loss_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.square_loss_sum_mem (T : ℕ) (p y : ℕ → ℝ) (hp : ∀ t < T, p t ∈ Set.Icc 0 1)
+  (hy : ∀ t < T, y t ∈ Set.Icc 0 1) : ∑ t ∈ Finset.range T, (p t - y t) ^ 2 ∈ Set.Icc 0 ↑T
+'BanditRL.OnlineLearning.GuessingLower.square_loss_sum_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.pathRegret_abs_le (A : List Bool → ℝ) (h : List Bool)
+  (hbound : ∀ (k : List Bool), A k ∈ Set.Icc 0 1) : |BanditRL.OnlineLearning.GuessingLower.pathRegret A h| ≤ ↑h.length
+'BanditRL.OnlineLearning.GuessingLower.pathRegret_abs_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.pathRegret_measurable.{u_1} {Ω : Type u_1} [MeasurableSpace Ω]
+  (A : Ω → List Bool → ℝ) (hA : ∀ (h : List Bool), Measurable fun ω => A ω h) (h : List Bool) :
+  Measurable fun ω => BanditRL.OnlineLearning.GuessingLower.pathRegret (A ω) h
+'BanditRL.OnlineLearning.GuessingLower.pathRegret_measurable' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.pathRegret_integrable.{u_1} {Ω : Type u_1} [MeasurableSpace Ω]
+  (μ : MeasureTheory.Measure Ω) [MeasureTheory.IsProbabilityMeasure μ] (A : Ω → List Bool → ℝ)
+  (hA : ∀ (h : List Bool), Measurable fun ω => A ω h) (hbound : ∀ (ω : Ω) (h : List Bool), A ω h ∈ Set.Icc 0 1)
+  (h : List Bool) : MeasureTheory.Integrable (fun ω => BanditRL.OnlineLearning.GuessingLower.pathRegret (A ω) h) μ
+'BanditRL.OnlineLearning.GuessingLower.pathRegret_integrable' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.randomized_harmonic_lower.{u_1} {Ω : Type u_1} [MeasurableSpace Ω]
+  (μ : MeasureTheory.Measure Ω) [MeasureTheory.IsProbabilityMeasure μ] (A : Ω → List Bool → ℝ)
+  (hA : ∀ (h : List Bool), Measurable fun ω => A ω h) (hbound : ∀ (ω : Ω) (h : List Bool), A ω h ∈ Set.Icc 0 1) (T : ℕ)
+  (hT : 0 < T) :
+  ∃ v, ↑(harmonic (T + 1)) / 6 ≤ ∫ (ω : Ω), BanditRL.OnlineLearning.GuessingLower.pathRegret (A ω) v.toList ∂μ
+'BanditRL.OnlineLearning.GuessingLower.randomized_harmonic_lower' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.randomized_log_lower.{u_1} {Ω : Type u_1} [MeasurableSpace Ω]
+  (μ : MeasureTheory.Measure Ω) [MeasureTheory.IsProbabilityMeasure μ] (A : Ω → List Bool → ℝ)
+  (hA : ∀ (h : List Bool), Measurable fun ω => A ω h) (hbound : ∀ (ω : Ω) (h : List Bool), A ω h ∈ Set.Icc 0 1) (T : ℕ)
+  (hT : 0 < T) :
+  ∃ v, Real.log (↑T + 2) / 6 ≤ ∫ (ω : Ω), BanditRL.OnlineLearning.GuessingLower.pathRegret (A ω) v.toList ∂μ
+'BanditRL.OnlineLearning.GuessingLower.randomized_log_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingLogLowerProbe.unbalanced_probability :
+  BanditRL.OnlineLearning.GuessingLower.polyaNext [true, true, true] = 4 / 5 ∧
+    BanditRL.OnlineLearning.GuessingLower.polyaNext [true, true, true] ∈ Set.Ioo 0 1
+'GuessingLogLowerProbe.unbalanced_probability' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingLogLowerProbe.correlated_two_step_masses :
+  BanditRL.OnlineLearning.GuessingLower.pathWeight [true, true] = 1 / 3 ∧
+    BanditRL.OnlineLearning.GuessingLower.pathWeight [false, false] = 1 / 3 ∧
+      BanditRL.OnlineLearning.GuessingLower.pathWeight [true, false] = 1 / 6 ∧
+        BanditRL.OnlineLearning.GuessingLower.pathWeight [false, true] = 1 / 6
+'GuessingLogLowerProbe.correlated_two_step_masses' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingLogLowerProbe.zero_and_two_normalization :
+  ∑ v, BanditRL.OnlineLearning.GuessingLower.pathWeight v.toList = 1 ∧
+    ∑ v, BanditRL.OnlineLearning.GuessingLower.pathWeight v.toList = 1
+'GuessingLogLowerProbe.zero_and_two_normalization' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingLogLowerProbe.correlated_moments :
+  (BanditRL.OnlineLearning.GuessingLower.pathExpectation 2 fun h => ↑(List.count true h)) = 1 ∧
+    (BanditRL.OnlineLearning.GuessingLower.pathExpectation 2 fun h => ↑(List.count true h) ^ 2) = 5 / 3
+'GuessingLogLowerProbe.correlated_moments' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingLogLowerProbe.averaged_variance :
+  (BanditRL.OnlineLearning.GuessingLower.pathExpectation 2 fun h =>
+      BanditRL.OnlineLearning.GuessingLower.polyaNext h * (1 - BanditRL.OnlineLearning.GuessingLower.polyaNext h)) =
+    5 / 24
+'GuessingLogLowerProbe.averaged_variance' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingLogLowerProbe.same_past_different_current :
+  BanditRL.OnlineLearning.GuessingLower.causalPredict BanditRL.OnlineLearning.GuessingLower.polyaNext
+      (BanditRL.OnlineLearning.GuessingLower.binaryStream [true, false]) 1 =
+    BanditRL.OnlineLearning.GuessingLower.causalPredict BanditRL.OnlineLearning.GuessingLower.polyaNext
+      (BanditRL.OnlineLearning.GuessingLower.binaryStream [false, false]) 1
+'GuessingLogLowerProbe.same_past_different_current' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingLogLowerProbe.actual_last_prediction :
+  BanditRL.OnlineLearning.GuessingLower.causalPredict BanditRL.OnlineLearning.GuessingLower.polyaNext
+      (BanditRL.OnlineLearning.GuessingLower.binaryStream [true, true, false]) 2 =
+    1 / 2
+'GuessingLogLowerProbe.actual_last_prediction' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingLogLowerProbe.nondegenerate_actual_regret :
+  BanditRL.OnlineLearning.GuessingLower.pathRegret BanditRL.OnlineLearning.GuessingLower.polyaNext [true, true] =
+    13 / 36
+'GuessingLogLowerProbe.nondegenerate_actual_regret' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingLogLowerProbe.actual_optimal_loss : BanditRL.OnlineLearning.GuessingLower.pathBestLoss [true, false] = 1 / 2
+'GuessingLogLowerProbe.actual_optimal_loss' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingLogLowerProbe.one_step_harmonic_endpoint :
+  1 / 4 ≤
+    BanditRL.OnlineLearning.GuessingLower.pathExpectation 1
+      (BanditRL.OnlineLearning.GuessingLower.pathRegret BanditRL.OnlineLearning.GuessingLower.polyaNext)
+'GuessingLogLowerProbe.one_step_harmonic_endpoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingLogLowerProbe.coin_distribution : BanditRLProof.Exp3.FiniteActionDistribution Finset.univ fun x => 1 / 2
+'GuessingLogLowerProbe.coin_distribution' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingLogLowerProbe.seeded_policy_bounds (b : Bool) (h : List Bool) :
+  GuessingLogLowerProbe.seededPolicy b h ∈ Set.Icc 0 1
+'GuessingLogLowerProbe.seeded_policy_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingLogLowerProbe.genuine_coin_policy :
+  GuessingLogLowerProbe.seededPolicy true [] = 1 ∧
+    GuessingLogLowerProbe.seededPolicy false [] = 0 ∧
+      GuessingLogLowerProbe.coinMeasure {true} = 1 / 2 ∧ GuessingLogLowerProbe.coinMeasure {false} = 1 / 2
+'GuessingLogLowerProbe.genuine_coin_policy' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingLogLowerProbe.seeded_fixed_sequence_endpoint :
+  ∃ v,
+    11 / 36 ≤
+      ∫ (b : Bool),
+        BanditRL.OnlineLearning.GuessingLower.pathRegret (GuessingLogLowerProbe.seededPolicy b)
+          v.toList ∂GuessingLogLowerProbe.coinMeasure
+'GuessingLogLowerProbe.seeded_fixed_sequence_endpoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingLogLowerProbe.seeded_log_endpoint :
+  ∃ v,
+    Real.log 4 / 6 ≤
+      ∫ (b : Bool),
+        BanditRL.OnlineLearning.GuessingLower.pathRegret (GuessingLogLowerProbe.seededPolicy b)
+          v.toList ∂GuessingLogLowerProbe.coinMeasure
+'GuessingLogLowerProbe.seeded_log_endpoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingLogLowerProbe.deterministic_fixed_sequence_endpoint (T : ℕ) (hT : 0 < T) :
+  ∃ v,
+    Real.log (↑T + 2) / 6 ≤
+      BanditRL.OnlineLearning.GuessingLower.pathRegret BanditRL.OnlineLearning.GuessingLower.polyaNext v.toList
+'GuessingLogLowerProbe.deterministic_fixed_sequence_endpoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.polyaNext (h : List Bool) : ℝ
+'BanditRL.OnlineLearning.GuessingLower.polyaNext' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.pathWeight (h : List Bool) : ℝ
+'BanditRL.OnlineLearning.GuessingLower.pathWeight' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.binaryStream (h : List Bool) (t : ℕ) : Bool
+'BanditRL.OnlineLearning.GuessingLower.binaryStream' depends on axioms: [propext]
+BanditRL.OnlineLearning.GuessingLower.binaryValues (h : List Bool) (t : ℕ) : ℝ
+'BanditRL.OnlineLearning.GuessingLower.binaryValues' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.causalPredict (A : List Bool → ℝ) (y : ℕ → Bool) (t : ℕ) : ℝ
+'BanditRL.OnlineLearning.GuessingLower.causalPredict' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.pathRegret (A : List Bool → ℝ) (h : List Bool) : ℝ
+'BanditRL.OnlineLearning.GuessingLower.pathRegret' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.pathExpectation (T : ℕ) (f : List Bool → ℝ) : ℝ
+'BanditRL.OnlineLearning.GuessingLower.pathExpectation' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.prefixMeasure (T : ℕ) [MeasurableSpace (List.Vector Bool T)] :
+  MeasureTheory.Measure (List.Vector Bool T)
+'BanditRL.OnlineLearning.GuessingLower.prefixMeasure' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.pathLearnerLoss (A : List Bool → ℝ) (h : List Bool) : ℝ
+'BanditRL.OnlineLearning.GuessingLower.pathLearnerLoss' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.GuessingLower.pathBestLoss (h : List Bool) : ℝ
+'BanditRL.OnlineLearning.GuessingLower.pathBestLoss' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingLogLowerProbe.coinMeasure : MeasureTheory.Measure Bool
+'GuessingLogLowerProbe.coinMeasure' depends on axioms: [propext, Classical.choice, Quot.sound]
+GuessingLogLowerProbe.seededPolicy (b : Bool) (_h : List Bool) : ℝ
+'GuessingLogLowerProbe.seededPolicy' depends on axioms: [propext, Classical.choice, Quot.sound]

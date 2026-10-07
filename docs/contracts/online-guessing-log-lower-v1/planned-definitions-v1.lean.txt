@@ -1,0 +1,48 @@
+import BanditRLProof.OnlineLearningMean
+import BanditRLProof.OnlineLearningRegret
+import BanditRLProof.Exp3ConditionalMoments
+import Mathlib.Data.List.Count
+import Mathlib.Data.Fintype.Vector
+import Mathlib.NumberTheory.Harmonic.Bounds
+import Mathlib.MeasureTheory.Integral.Bochner.Basic
+import Mathlib.Tactic
+
+noncomputable section
+open MeasureTheory Finset Set
+namespace BanditRL.OnlineLearning.GuessingLower
+
+/-- History is newest-first: adding b records the next revealed bit after the prediction. -/
+noncomputable def polyaNext (h : List Bool) : ℝ :=
+  ((h.count true : ℝ) + 1) / ((h.length : ℝ) + 2)
+
+/-- Actual recursively generated path mass; it does not depend on a learner or seed. -/
+noncomputable def pathWeight (h : List Bool) : ℝ :=
+  match h with
+  | [] => 1
+  | b :: past => pathWeight past * (if b then polyaNext past else 1 - polyaNext past)
+
+/-- Convert newest-first finite history into chronological labels, padded by false after its end. -/
+def binaryStream (h : List Bool) (t : ℕ) : Bool :=
+  (h.reverse[t]?).getD false
+
+def binaryValues (h : List Bool) (t : ℕ) : ℝ :=
+  if binaryStream h t then 1 else 0
+
+/-- One policy of strict-past labels; no current label or future sequence is passed to A. -/
+noncomputable def causalPredict (A : List Bool → ℝ) (y : ℕ → Bool) (t : ℕ) : ℝ :=
+  A (List.ofFn (fun i : Fin t => y i)).reverse
+
+/-- Actual shared comparator regret against the feasible empirical-mean hindsight minimizer. -/
+noncomputable def pathRegret (A : List Bool → ℝ) (h : List Bool) : ℝ :=
+  comparatorRegret (fun t x => (x - binaryValues h t)^2)
+    (causalPredict A (binaryStream h)) (empiricalMean (binaryValues h) h.length) h.length
+
+noncomputable def pathExpectation (T : ℕ) (f : List Bool → ℝ) : ℝ :=
+  ∑ v : List.Vector Bool T, pathWeight v.toList * f v.toList
+
+/-- Same finite-action Dirac law as the shared Bandit library, instantiated at binary histories. -/
+noncomputable def prefixMeasure (T : ℕ) [MeasurableSpace (List.Vector Bool T)] :
+    Measure (List.Vector Bool T) :=
+  BanditRLProof.Exp3.finiteActionMeasure univ (fun v => pathWeight v.toList)
+
+end BanditRL.OnlineLearning.GuessingLower

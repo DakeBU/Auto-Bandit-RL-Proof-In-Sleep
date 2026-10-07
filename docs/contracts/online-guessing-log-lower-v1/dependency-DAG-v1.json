@@ -1,0 +1,136 @@
+{
+  "nodes": [
+    {
+      "name": "BanditRL.OnlineLearning.GuessingLower.probability_mem",
+      "depends_on": [
+        "List.count_le_length",
+        "real positive division"
+      ],
+      "status": "unproved"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.GuessingLower.branch_mass",
+      "depends_on": [
+        "actual pathWeight/polyaNext definitions"
+      ],
+      "status": "unproved"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.GuessingLower.pathWeight_nonneg",
+      "depends_on": [
+        "probability_mem"
+      ],
+      "status": "unproved"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.GuessingLower.prefix_mass_one",
+      "depends_on": [
+        "branch_mass",
+        "finite vector product decomposition"
+      ],
+      "status": "unproved"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.GuessingLower.prefix_distribution",
+      "depends_on": [
+        "pathWeight_nonneg",
+        "prefix_mass_one"
+      ],
+      "status": "unproved"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.GuessingLower.prefixMeasure_probability",
+      "depends_on": [
+        "prefix_distribution",
+        "shared finiteActionMeasure probability"
+      ],
+      "status": "unproved"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.GuessingLower.pathExpectation_integral",
+      "depends_on": [
+        "prefix_distribution",
+        "shared finiteActionMeasure integral"
+      ],
+      "status": "unproved"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.GuessingLower.expected_heads",
+      "depends_on": [
+        "prefix_mass_one",
+        "actual expectation successor recurrence"
+      ],
+      "status": "unproved"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.GuessingLower.expected_heads_sq",
+      "depends_on": [
+        "expected_heads",
+        "actual expectation successor recurrence"
+      ],
+      "status": "unproved"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.GuessingLower.expected_next_variance",
+      "depends_on": [
+        "expected_heads",
+        "expected_heads_sq",
+        "prefix_mass_one"
+      ],
+      "status": "unproved"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.GuessingLower.causalPredict_prefix",
+      "depends_on": [
+        "actual finite prefix construction"
+      ],
+      "status": "unproved"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.GuessingLower.binary_mean_minimizer",
+      "depends_on": [
+        "binaryValues0or1",
+        "shared empiricalMean_mem/minimizes"
+      ],
+      "status": "unproved"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.GuessingLower.conditional_square_lower",
+      "depends_on": [
+        "square decomposition"
+      ],
+      "status": "unproved"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.GuessingLower.expected_pathRegret_lower",
+      "depends_on": [
+        "expected_next_variance",
+        "causal cumulative-loss recurrence",
+        "binary_mean_minimizer",
+        "actual shared regret bridge",
+        "derived expected optimal loss"
+      ],
+      "status": "unproved"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.GuessingLower.randomized_harmonic_lower",
+      "depends_on": [
+        "expected_pathRegret_lower",
+        "derived integrability from boundedmeasurableoutputs",
+        "finite normalized-law badsequence existence"
+      ],
+      "status": "unproved"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.GuessingLower.randomized_log_lower",
+      "depends_on": [
+        "randomized_harmonic_lower",
+        "log_add_one_le_harmonic"
+      ],
+      "status": "unproved"
+    }
+  ],
+  "first_selected_leaf": "BanditRL.OnlineLearning.GuessingLower.probability_mem",
+  "mandatory_proof_leaf_total": null,
+  "no_missing_obligation_excluded": true
+}

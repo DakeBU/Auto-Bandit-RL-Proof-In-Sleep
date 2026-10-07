@@ -1,0 +1,18 @@
+{
+  "unbalanced_probability": "theorem unbalanced_probability : polyaNext [true,true,true] = (4 : ℝ)/5 ∧\n    polyaNext [true,true,true] ∈ Ioo (0 : ℝ) 1",
+  "correlated_two_step_masses": "theorem correlated_two_step_masses :\n    pathWeight [true,true] = (1 : ℝ)/3 ∧ pathWeight [false,false] = (1 : ℝ)/3 ∧\n    pathWeight [true,false] = (1 : ℝ)/6 ∧ pathWeight [false,true] = (1 : ℝ)/6",
+  "zero_and_two_normalization": "theorem zero_and_two_normalization :\n    (∑ v : List.Vector Bool 0, pathWeight v.toList) = 1 ∧\n    (∑ v : List.Vector Bool 2, pathWeight v.toList) = 1",
+  "correlated_moments": "theorem correlated_moments :\n    pathExpectation 2 (fun h => (h.count true : ℝ)) = 1 ∧\n    pathExpectation 2 (fun h => (h.count true : ℝ)^2) = (5 : ℝ)/3",
+  "averaged_variance": "theorem averaged_variance :\n    pathExpectation 2 (fun h => polyaNext h * (1-polyaNext h)) = (5 : ℝ)/24",
+  "same_past_different_current": "theorem same_past_different_current :\n    causalPredict polyaNext (binaryStream [true,false]) 1 =\n      causalPredict polyaNext (binaryStream [false,false]) 1",
+  "actual_last_prediction": "theorem actual_last_prediction :\n    causalPredict polyaNext (binaryStream [true,true,false]) 2 = (1 : ℝ)/2",
+  "nondegenerate_actual_regret": "theorem nondegenerate_actual_regret : pathRegret polyaNext [true,true] = (13 : ℝ)/36",
+  "actual_optimal_loss": "theorem actual_optimal_loss : pathBestLoss [true,false] = (1 : ℝ)/2",
+  "one_step_harmonic_endpoint": "theorem one_step_harmonic_endpoint :\n    (1 : ℝ)/4 ≤ pathExpectation 1 (pathRegret polyaNext)",
+  "coin_distribution": "theorem coin_distribution : BanditRLProof.Exp3.FiniteActionDistribution\n    (univ : Finset Bool) (fun _ => (1 : ℝ)/2)",
+  "seeded_policy_bounds": "theorem seeded_policy_bounds : ∀ b h, seededPolicy b h ∈ Icc (0 : ℝ) 1",
+  "genuine_coin_policy": "theorem genuine_coin_policy :\n    seededPolicy true [] = 1 ∧ seededPolicy false [] = 0 ∧\n    coinMeasure {true} = (1 : ENNReal)/2 ∧ coinMeasure {false} = (1 : ENNReal)/2",
+  "seeded_fixed_sequence_endpoint": "theorem seeded_fixed_sequence_endpoint :\n    ∃ v : List.Vector Bool 2, (11 : ℝ)/36 ≤ ∫ b, pathRegret (seededPolicy b) v.toList ∂coinMeasure",
+  "seeded_log_endpoint": "theorem seeded_log_endpoint :\n    ∃ v : List.Vector Bool 2, Real.log 4 / 6 ≤ ∫ b, pathRegret (seededPolicy b) v.toList ∂coinMeasure",
+  "deterministic_fixed_sequence_endpoint": "theorem deterministic_fixed_sequence_endpoint (T : ℕ) (hT : 0 < T) :\n    ∃ v : List.Vector Bool T, Real.log ((T : ℝ)+2)/6 ≤ pathRegret polyaNext v.toList"
+}

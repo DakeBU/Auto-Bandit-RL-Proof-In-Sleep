@@ -1,0 +1,53 @@
+theorem branch_mass (h : List Bool) :
+    pathWeight (false :: h) + pathWeight (true :: h) = pathWeight h := by
+  simp only [pathWeight, Bool.false_eq_true, ↓reduceIte]
+  ring
+
+theorem pathWeight_nonneg (h : List Bool) :
+    0 ≤ pathWeight h := by
+  induction h with
+  | nil => norm_num [pathWeight]
+  | cons b h ih =>
+    cases b
+    · exact mul_nonneg ih (sub_nonneg.mpr (probability_mem h).2.le)
+    · exact mul_nonneg ih (probability_mem h).1.le
+
+/-- Split all newest-first histories into the next bit and the prior history. -/
+private def vectorConsEquiv (T : ℕ) :
+    Bool × List.Vector Bool T ≃ List.Vector Bool (T + 1) where
+  toFun p := p.1 ::ᵥ p.2
+  invFun v := (v.head, v.tail)
+  left_inv p := by cases p; simp
+  right_inv v := List.Vector.cons_head_tail v
+
+theorem sum_vectors_succ (T : ℕ) (f : List Bool → ℝ) :
+    (∑ v : List.Vector Bool (T + 1), f v.toList) =
+      ∑ v : List.Vector Bool T, (f (false :: v.toList) + f (true :: v.toList)) := by
+  rw [← (vectorConsEquiv T).sum_comp (fun v => f v.toList)]
+  rw [Fintype.sum_prod_type]
+  simp [vectorConsEquiv, Finset.sum_add_distrib, add_comm]
+
+theorem prefix_mass_one (T : ℕ) :
+    (∑ v : List.Vector Bool T, pathWeight v.toList) = 1 := by
+  induction T with
+  | zero => simp [pathWeight]
+  | succ T ih =>
+    rw [sum_vectors_succ]
+    simpa only [branch_mass] using ih
+
+theorem prefix_distribution (T : ℕ) :
+    BanditRLProof.Exp3.FiniteActionDistribution (univ : Finset (List.Vector Bool T)) (fun v => pathWeight v.toList) := by
+  constructor
+  · intro v _
+    exact pathWeight_nonneg v.toList
+  · exact prefix_mass_one T
+
+theorem prefixMeasure_probability (T : ℕ) [MeasurableSpace (List.Vector Bool T)] [MeasurableSingletonClass (List.Vector Bool T)] :
+    IsProbabilityMeasure (prefixMeasure T) := by
+  exact BanditRLProof.Exp3.finiteActionMeasure_isProbabilityMeasure
+    univ (fun v => pathWeight v.toList) (prefix_distribution T)
+
+theorem pathExpectation_integral (T : ℕ) [MeasurableSpace (List.Vector Bool T)] [MeasurableSingletonClass (List.Vector Bool T)] (f : List Bool → ℝ) :
+    (∫ v, f v.toList ∂prefixMeasure T) = pathExpectation T f := by
+  exact BanditRLProof.Exp3.integral_finiteActionMeasure_eq_sum
+    univ (fun v => pathWeight v.toList) (prefix_distribution T) (fun v => f v.toList)

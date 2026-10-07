@@ -1,0 +1,15 @@
+import BanditRLProof.Exp3ConditionalMoments
+import Mathlib.Data.List.Count
+import Mathlib.Data.Fintype.Vector
+import Mathlib.NumberTheory.Harmonic.Bounds
+import Mathlib.MeasureTheory.Integral.Bochner.Basic
+#check BanditRLProof.Exp3.FiniteActionDistribution
+#check BanditRLProof.Exp3.finiteActionMeasure_isProbabilityMeasure
+#check BanditRLProof.Exp3.integral_finiteActionMeasure_eq_sum
+#check List.count_le_length
+#check List.Vector.toList_length
+#check Fintype.sum_equiv
+#check Fintype.sum_prod_type
+#check MeasureTheory.integral_finset_sum
+#check MeasureTheory.Integrable.of_bound
+#check log_add_one_le_harmonic

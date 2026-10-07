@@ -1,0 +1,1 @@
+SourceClaimREQUIRED. Freeze full expected-seed terminal first, not merely deterministic/conditionalconsumer. Finite actual binarylaw route; oldOGDlowernotreuse endpoint. First leafprobability_mem is ready from actualcount≤length. One lowerroute; no chapter advancement/Goalcompletion.
