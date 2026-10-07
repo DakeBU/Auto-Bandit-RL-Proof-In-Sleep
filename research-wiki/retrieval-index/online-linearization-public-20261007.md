@@ -1,0 +1,3 @@
+# Current causal linearization reuse index
+
+Existing full18 public proofs/9defs/3abbr and whole25canaryproofs/8defs/2abbr unchanged. Actual scoped APIs/full18closedtypeidentities/neutraldecoder/CONTRACT/65kernel/18guards/prespecifiedproofVALUE and nondegenerate actual same-run canary evidence in runs/online-linearization-public-20261007. ZERO new mathematics/nodes/source closures. Current BODY/combined/root/Tests/harness/registry/reader/FINAL/nativeaccepted/PR separatepending. WholeChapter1/2 required;nullChapter2;3-16unenumerated;GoalACTIVE. Draft extractor/helper filename failures preserved, no actual target change.

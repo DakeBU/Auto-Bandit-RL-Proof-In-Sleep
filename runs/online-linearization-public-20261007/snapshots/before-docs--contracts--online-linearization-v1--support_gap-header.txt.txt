@@ -1,0 +1,2 @@
+theorem support_gap (V : Domain (E := E)) (f : E → EReal) (hf : BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V f) (x g u : E) (hu : u ∈ V.carrier) (hg : g ∈ SourceSubdifferential f x) :
+    (f x).toReal - (f u).toReal ≤ inner ℝ g (x - u)

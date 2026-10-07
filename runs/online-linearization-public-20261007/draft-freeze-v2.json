@@ -1,0 +1,450 @@
+{
+  "stage": "draft",
+  "fixed_files": {
+    "BanditRLProof/OnlineLinearization.lean": "ec231ef4d85c3b27744378d1c3d9f071b6177fa1535d5db440a787800111339e",
+    "Tests/OnlineLinearizationCanary.lean": "0f62baa46017ec5fc3e8234248dbd2e03388eae62396689c8b7e44f93931f975",
+    "BanditRLProof.lean": "7cdb1969bad2f7b42cfd7a25f6d15747d0d49178dadc244b70ab1f9b8c92c5ad",
+    "Tests.lean": "2b3615efabe9c94eff5dade925783e7d0ebacd3139a7ab65a5d46ba2c695ef77",
+    "BanditRLProof/OnlineSubgradientPolicy.lean": "ac8fbfb3eee3c92ebb79b44f33beec33b500105bb7e54df5176c14e886c2c662",
+    "BanditRLProof/OnlineSubgradientDescent.lean": "6ba8586e1691babc2db3e0c0fcddb69b4236e16f9f192c464b4c04262e854f1c",
+    "BanditRLProof/OnlineSubgradientBasic.lean": "af3d3f56e4a64cd8adbe47368caf5382e63b428f01da29a121c28c8014f352a5",
+    "BanditRLProof/OnlineClosedProper.lean": "c66f00c33b45fb8a0e11583eeadf506e176c16166ce2af02f41f0674507cebe7",
+    "BanditRLProof/OnlineGradientDescent.lean": "9300cb2735da9f125e404f78b86509df47fe65a5f4d89abc469e071bdffdb871",
+    "BanditRLProof/OnlineLearningRegret.lean": "231eda88cb1c45bf3bc9209bfbdd696fbfbe8a64b00303113a23cbc4dff3ca5b",
+    "lean-toolchain": "b15a57f8ea4c890197465ce1156667ae13d9ed4ab8a9f263a920bf010d967d82",
+    "lakefile.lean": "0164f3b5b5bdcbb237ab15ae8b44da83e183f4b97d5f3832aa4a57f27dc69d45",
+    "lake-manifest.json": "87c3e616f86244550ef39e7415186b11c1d4cf4bef20173196a619d9d4d48f48",
+    "runs/active_frontier.json": "567e5873aa2549a83f2820d758069213808da822a93087129877385a1addf7c3",
+    "docs/contracts/online-book-v1/source-inventory.json": "a2a504cf40d73f9c5e36f00fc1ef3b949ccaf5a558ab603c1c2a86007f30efa7",
+    "research-wiki/contribution-contracts/ONLINE-LINEARIZATION-20261004.json": "c4543b5ef9754d9b4f0a6af099449ff0ffb26c88d99016dd27b497ae4956a6f1",
+    "runs/online-linearization-20261004/accepted-decision.json": "7a3402d64a5f488ff6ba2a7047413ae9cc5ea1c3b398bb9f541d5ae619a067e6",
+    "runs/online-linearization-20261004/pr-delivery.json": "7a7301c6d2783004cd6032e32f638e29d58983325e751be8524da15401eddf7d",
+    "runs/online-guessing-public-20261007/accepted-decision-v1.json": "2f53f40e8b95b256c87c8767d319328e7720ea0eddb951dae1491d7236fd7f01",
+    "runs/online-guessing-public-20261007/delivery-obligations-overlay-v1.json": "ee39ed758615cbd48af8e710d2fdb04e82836dd762e22f045546ca43f4a4afd0",
+    "website/content/readings.json": "b0519ca7e882e1fa36d2f5345a23ecc95b6d3126aef2cf66f67a8764dfd97098",
+    "website/content/highlights.json": "b904acf7bd4ed1bf7c8060d5ab61177cdf9514ff20a33954eb0b9ba05aadab37",
+    "website/content/chapters.json": "12a416e16b5841aed61dc07ccbccd8100797cbb58754ddbd4293cee7d3e80526",
+    "docs/contracts/online-linearization-v1/canonical_feedback-header.txt": "760d2ecabdffa7b48d70ef09c5802da0651b40c1feeb0e12c76cac6fa61aca75",
+    "docs/contracts/online-linearization-v1/canonical_feedback.json": "6487cfa6bfe4fb84b2d3b53a14ba54aa6b981ae90576b7a94681cfce4c781dc1",
+    "docs/contracts/online-linearization-v1/canonical_regret_comparison-header.txt": "3b7a863740f496ae0c710b95bda666eec365e96741b254291f80d49d3906eed2",
+    "docs/contracts/online-linearization-v1/canonical_regret_comparison.json": "628f33c771abbd045026609791541afdb11358cb0458cb190a4f62f97c1ad5de",
+    "docs/contracts/online-linearization-v1/context.lean.txt": "bdaedf3be81cea1b729845d4433e0e7926d9c63bfd561a41149e6c9dafceac4c",
+    "docs/contracts/online-linearization-v1/history_castSucc-header.txt": "c13d5cf0176c2be95a8842a813fbb9331aff955e6d3ea6b4757a786c7a53ed52",
+    "docs/contracts/online-linearization-v1/history_castSucc.json": "d65ff388fb0f9afafbd218aee4b22147fbfc70a30149bfe3e2ae43a2ec7984fb",
+    "docs/contracts/online-linearization-v1/history_prefix-header.txt": "bc6c7fa34a06393f2f5a724dee5d1c7dd23e2c2e7786fe0b1bd8032f14d32fc2",
+    "docs/contracts/online-linearization-v1/history_prefix.json": "214ada18324696df4b3084e9769cc19e217d2ad0f3f3114aa783aa0722f69518",
+    "docs/contracts/online-linearization-v1/history_selected-header.txt": "f6fdf438fb7944dbb1077c998c7b875219eb2cd851a5fa9535d63c49a94a0c23",
+    "docs/contracts/online-linearization-v1/history_selected.json": "5592ec451e486e58f641d3b7b8fc113b2935ba5f1f58c5d21800283ced331ced",
+    "docs/contracts/online-linearization-v1/history_succ-header.txt": "37fa8219737d266f604b10adea530102a218af786b6a24d43a7041e2a928b2b3",
+    "docs/contracts/online-linearization-v1/history_succ.json": "04e7c36998ae6b8a070ffbfbf0322e3c68dc553b5100e5903dadabdf547d82b0",
+    "docs/contracts/online-linearization-v1/history_zero-header.txt": "1cde80b88a5e7e1887591149b2e45b197ddf145609af62b5702b3eaa1a959889",
+    "docs/contracts/online-linearization-v1/history_zero.json": "0ef72c4d3dacb2c79d2ee5c05a9dd26bd1b7c3cd29f6458822137b5ac31ced80",
+    "docs/contracts/online-linearization-v1/linearLoss_gap-header.txt": "db742a269f68436661269b02d41ac09a494c1c9c6a245df630b010c59d2c7cd3",
+    "docs/contracts/online-linearization-v1/linearLoss_gap.json": "0cd19e1c4ddfb3c624b018fd00eaeea7642e119b681a02870f84e21c399e2407",
+    "docs/contracts/online-linearization-v1/oracle_feedback-header.txt": "581a546e30e4cc92339c337ebb20c74fbb2b9c5ab4dae55e81507ccb206c9946",
+    "docs/contracts/online-linearization-v1/oracle_feedback.json": "51e911bcfd7cc44a89409fb70ea7f49deb42accfbe2795768c0a17714c2522b5",
+    "docs/contracts/online-linearization-v1/output_linear_run-header.txt": "e9d416b8d36d46070f8e875c25e34beb303b28f627a6dff7ab9801edcfb9b1b7",
+    "docs/contracts/online-linearization-v1/output_linear_run.json": "3451005f4ca3fbfc284a86a6b220cbcd6d893f6c9c6c31984be67e126b6a64ca",
+    "docs/contracts/online-linearization-v1/output_mem-header.txt": "d77eb66fa66bbb34fdf81400b9209cce5a135754f971c121b39ee4c10bc68c80",
+    "docs/contracts/online-linearization-v1/output_mem.json": "aae4178189a996b8fd4d6bb99f66fac7afb0bf34d390783c2e022a4f13d5c084",
+    "docs/contracts/online-linearization-v1/output_prefix-header.txt": "4eac8a36c4ea69db0fb564df06d5dee8407ed3a517a6c6c054f67b552459a9a7",
+    "docs/contracts/online-linearization-v1/output_prefix.json": "e12eb1e4a703ca3539a1e33ec58fc156cc9b630c5ed24d07306c00f3bd2d933d",
+    "docs/contracts/online-linearization-v1/outputHistory_last-header.txt": "580388e8e7428c98eeb300992e5e35b6a6a20cc97dff039153954644970d6335",
+    "docs/contracts/online-linearization-v1/outputHistory_last.json": "42b6413b0671fc9ac1be9b86cc12b49f3df05f636281dcaacdf9f19036408cb5",
+    "docs/contracts/online-linearization-v1/outputHistory_played-header.txt": "df04ad85352fb33b9c431b2603a72d68380ceb2f9fd101075164c5ee503e9cb6",
+    "docs/contracts/online-linearization-v1/outputHistory_played.json": "7b9ff1a51be9c50c2cacfe6910cd8ab8255d0f2f96ac14d90d9cc31cc0810b1c",
+    "docs/contracts/online-linearization-v1/regret_comparison-header.txt": "1e9d4e83d217172dbc06f7a9c8077ff474757e429d34bcec878ac40431219714",
+    "docs/contracts/online-linearization-v1/regret_comparison.json": "2cc634775684d4f35932e2fd880d14a2f4190628c323c987ec5bd2175a29d744",
+    "docs/contracts/online-linearization-v1/regret_transfer-header.txt": "2d69556f6d54dcc219b0121f662285136e4e3050dbabcb6022351f46da71c009",
+    "docs/contracts/online-linearization-v1/regret_transfer.json": "11bfab33548d01b5bc7f63376d5d4ab69d7da1d352f2bce2feaaa27c9f661b02",
+    "docs/contracts/online-linearization-v1/support_gap-header.txt": "a38adcd0f43051fc5f1dadcbddcacd4e0c291571fa09bb505311af0280951089",
+    "docs/contracts/online-linearization-v1/support_gap.json": "3f33e87a2e83016b86be4546a7527457cdb6ec419cf58bb9c8735a3d675cadae",
+    "docs/contracts/online-linearization-v1/trajectory_finite_loss-header.txt": "f119e9cb531bb54beccaf76d238e18b75d1d3b22b05014fc0845e915cebdab0d",
+    "docs/contracts/online-linearization-v1/trajectory_finite_loss.json": "740eab398df26f85f0230688695d2d75f285a48a568fb6e762f644b7ee83cd77"
+  },
+  "before_snapshots": [
+    {
+      "original_path": "BanditRLProof/OnlineLinearization.lean",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-BanditRLProof--OnlineLinearization.lean.txt",
+      "sha256": "ec231ef4d85c3b27744378d1c3d9f071b6177fa1535d5db440a787800111339e"
+    },
+    {
+      "original_path": "Tests/OnlineLinearizationCanary.lean",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-Tests--OnlineLinearizationCanary.lean.txt",
+      "sha256": "0f62baa46017ec5fc3e8234248dbd2e03388eae62396689c8b7e44f93931f975"
+    },
+    {
+      "original_path": "BanditRLProof.lean",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-BanditRLProof.lean.txt",
+      "sha256": "7cdb1969bad2f7b42cfd7a25f6d15747d0d49178dadc244b70ab1f9b8c92c5ad"
+    },
+    {
+      "original_path": "Tests.lean",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-Tests.lean.txt",
+      "sha256": "2b3615efabe9c94eff5dade925783e7d0ebacd3139a7ab65a5d46ba2c695ef77"
+    },
+    {
+      "original_path": "BanditRLProof/OnlineSubgradientPolicy.lean",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-BanditRLProof--OnlineSubgradientPolicy.lean.txt",
+      "sha256": "ac8fbfb3eee3c92ebb79b44f33beec33b500105bb7e54df5176c14e886c2c662"
+    },
+    {
+      "original_path": "BanditRLProof/OnlineSubgradientDescent.lean",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-BanditRLProof--OnlineSubgradientDescent.lean.txt",
+      "sha256": "6ba8586e1691babc2db3e0c0fcddb69b4236e16f9f192c464b4c04262e854f1c"
+    },
+    {
+      "original_path": "BanditRLProof/OnlineSubgradientBasic.lean",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-BanditRLProof--OnlineSubgradientBasic.lean.txt",
+      "sha256": "af3d3f56e4a64cd8adbe47368caf5382e63b428f01da29a121c28c8014f352a5"
+    },
+    {
+      "original_path": "BanditRLProof/OnlineClosedProper.lean",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-BanditRLProof--OnlineClosedProper.lean.txt",
+      "sha256": "c66f00c33b45fb8a0e11583eeadf506e176c16166ce2af02f41f0674507cebe7"
+    },
+    {
+      "original_path": "BanditRLProof/OnlineGradientDescent.lean",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-BanditRLProof--OnlineGradientDescent.lean.txt",
+      "sha256": "9300cb2735da9f125e404f78b86509df47fe65a5f4d89abc469e071bdffdb871"
+    },
+    {
+      "original_path": "BanditRLProof/OnlineLearningRegret.lean",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-BanditRLProof--OnlineLearningRegret.lean.txt",
+      "sha256": "231eda88cb1c45bf3bc9209bfbdd696fbfbe8a64b00303113a23cbc4dff3ca5b"
+    },
+    {
+      "original_path": "lean-toolchain",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-lean-toolchain.txt",
+      "sha256": "b15a57f8ea4c890197465ce1156667ae13d9ed4ab8a9f263a920bf010d967d82"
+    },
+    {
+      "original_path": "lakefile.lean",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-lakefile.lean.txt",
+      "sha256": "0164f3b5b5bdcbb237ab15ae8b44da83e183f4b97d5f3832aa4a57f27dc69d45"
+    },
+    {
+      "original_path": "lake-manifest.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-lake-manifest.json.txt",
+      "sha256": "87c3e616f86244550ef39e7415186b11c1d4cf4bef20173196a619d9d4d48f48"
+    },
+    {
+      "original_path": "runs/active_frontier.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-runs--active_frontier.json.txt",
+      "sha256": "567e5873aa2549a83f2820d758069213808da822a93087129877385a1addf7c3"
+    },
+    {
+      "original_path": "docs/contracts/online-book-v1/source-inventory.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-docs--contracts--online-book-v1--source-inventory.json.txt",
+      "sha256": "a2a504cf40d73f9c5e36f00fc1ef3b949ccaf5a558ab603c1c2a86007f30efa7"
+    },
+    {
+      "original_path": "research-wiki/contribution-contracts/ONLINE-LINEARIZATION-20261004.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-research-wiki--contribution-contracts--ONLINE-LINEARIZATION-20261004.json.txt",
+      "sha256": "c4543b5ef9754d9b4f0a6af099449ff0ffb26c88d99016dd27b497ae4956a6f1"
+    },
+    {
+      "original_path": "runs/online-linearization-20261004/accepted-decision.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-runs--online-linearization-20261004--accepted-decision.json.txt",
+      "sha256": "7a3402d64a5f488ff6ba2a7047413ae9cc5ea1c3b398bb9f541d5ae619a067e6"
+    },
+    {
+      "original_path": "runs/online-linearization-20261004/pr-delivery.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-runs--online-linearization-20261004--pr-delivery.json.txt",
+      "sha256": "7a7301c6d2783004cd6032e32f638e29d58983325e751be8524da15401eddf7d"
+    },
+    {
+      "original_path": "runs/online-guessing-public-20261007/accepted-decision-v1.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-runs--online-guessing-public-20261007--accepted-decision-v1.json.txt",
+      "sha256": "2f53f40e8b95b256c87c8767d319328e7720ea0eddb951dae1491d7236fd7f01"
+    },
+    {
+      "original_path": "runs/online-guessing-public-20261007/delivery-obligations-overlay-v1.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-runs--online-guessing-public-20261007--delivery-obligations-overlay-v1.json.txt",
+      "sha256": "ee39ed758615cbd48af8e710d2fdb04e82836dd762e22f045546ca43f4a4afd0"
+    },
+    {
+      "original_path": "website/content/readings.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-website--content--readings.json.txt",
+      "sha256": "b0519ca7e882e1fa36d2f5345a23ecc95b6d3126aef2cf66f67a8764dfd97098"
+    },
+    {
+      "original_path": "website/content/highlights.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-website--content--highlights.json.txt",
+      "sha256": "b904acf7bd4ed1bf7c8060d5ab61177cdf9514ff20a33954eb0b9ba05aadab37"
+    },
+    {
+      "original_path": "website/content/chapters.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-website--content--chapters.json.txt",
+      "sha256": "12a416e16b5841aed61dc07ccbccd8100797cbb58754ddbd4293cee7d3e80526"
+    },
+    {
+      "original_path": "docs/contracts/online-linearization-v1/canonical_feedback-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-docs--contracts--online-linearization-v1--canonical_feedback-header.txt.txt",
+      "sha256": "760d2ecabdffa7b48d70ef09c5802da0651b40c1feeb0e12c76cac6fa61aca75"
+    },
+    {
+      "original_path": "docs/contracts/online-linearization-v1/canonical_feedback.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-docs--contracts--online-linearization-v1--canonical_feedback.json.txt",
+      "sha256": "6487cfa6bfe4fb84b2d3b53a14ba54aa6b981ae90576b7a94681cfce4c781dc1"
+    },
+    {
+      "original_path": "docs/contracts/online-linearization-v1/canonical_regret_comparison-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-docs--contracts--online-linearization-v1--canonical_regret_comparison-header.txt.txt",
+      "sha256": "3b7a863740f496ae0c710b95bda666eec365e96741b254291f80d49d3906eed2"
+    },
+    {
+      "original_path": "docs/contracts/online-linearization-v1/canonical_regret_comparison.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-docs--contracts--online-linearization-v1--canonical_regret_comparison.json.txt",
+      "sha256": "628f33c771abbd045026609791541afdb11358cb0458cb190a4f62f97c1ad5de"
+    },
+    {
+      "original_path": "docs/contracts/online-linearization-v1/context.lean.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-docs--contracts--online-linearization-v1--context.lean.txt.txt",
+      "sha256": "bdaedf3be81cea1b729845d4433e0e7926d9c63bfd561a41149e6c9dafceac4c"
+    },
+    {
+      "original_path": "docs/contracts/online-linearization-v1/history_castSucc-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-docs--contracts--online-linearization-v1--history_castSucc-header.txt.txt",
+      "sha256": "c13d5cf0176c2be95a8842a813fbb9331aff955e6d3ea6b4757a786c7a53ed52"
+    },
+    {
+      "original_path": "docs/contracts/online-linearization-v1/history_castSucc.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-docs--contracts--online-linearization-v1--history_castSucc.json.txt",
+      "sha256": "d65ff388fb0f9afafbd218aee4b22147fbfc70a30149bfe3e2ae43a2ec7984fb"
+    },
+    {
+      "original_path": "docs/contracts/online-linearization-v1/history_prefix-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-docs--contracts--online-linearization-v1--history_prefix-header.txt.txt",
+      "sha256": "bc6c7fa34a06393f2f5a724dee5d1c7dd23e2c2e7786fe0b1bd8032f14d32fc2"
+    },
+    {
+      "original_path": "docs/contracts/online-linearization-v1/history_prefix.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-docs--contracts--online-linearization-v1--history_prefix.json.txt",
+      "sha256": "214ada18324696df4b3084e9769cc19e217d2ad0f3f3114aa783aa0722f69518"
+    },
+    {
+      "original_path": "docs/contracts/online-linearization-v1/history_selected-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-docs--contracts--online-linearization-v1--history_selected-header.txt.txt",
+      "sha256": "f6fdf438fb7944dbb1077c998c7b875219eb2cd851a5fa9535d63c49a94a0c23"
+    },
+    {
+      "original_path": "docs/contracts/online-linearization-v1/history_selected.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-docs--contracts--online-linearization-v1--history_selected.json.txt",
+      "sha256": "5592ec451e486e58f641d3b7b8fc113b2935ba5f1f58c5d21800283ced331ced"
+    },
+    {
+      "original_path": "docs/contracts/online-linearization-v1/history_succ-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-docs--contracts--online-linearization-v1--history_succ-header.txt.txt",
+      "sha256": "37fa8219737d266f604b10adea530102a218af786b6a24d43a7041e2a928b2b3"
+    },
+    {
+      "original_path": "docs/contracts/online-linearization-v1/history_succ.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-docs--contracts--online-linearization-v1--history_succ.json.txt",
+      "sha256": "04e7c36998ae6b8a070ffbfbf0322e3c68dc553b5100e5903dadabdf547d82b0"
+    },
+    {
+      "original_path": "docs/contracts/online-linearization-v1/history_zero-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-docs--contracts--online-linearization-v1--history_zero-header.txt.txt",
+      "sha256": "1cde80b88a5e7e1887591149b2e45b197ddf145609af62b5702b3eaa1a959889"
+    },
+    {
+      "original_path": "docs/contracts/online-linearization-v1/history_zero.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-docs--contracts--online-linearization-v1--history_zero.json.txt",
+      "sha256": "0ef72c4d3dacb2c79d2ee5c05a9dd26bd1b7c3cd29f6458822137b5ac31ced80"
+    },
+    {
+      "original_path": "docs/contracts/online-linearization-v1/linearLoss_gap-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-docs--contracts--online-linearization-v1--linearLoss_gap-header.txt.txt",
+      "sha256": "db742a269f68436661269b02d41ac09a494c1c9c6a245df630b010c59d2c7cd3"
+    },
+    {
+      "original_path": "docs/contracts/online-linearization-v1/linearLoss_gap.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-docs--contracts--online-linearization-v1--linearLoss_gap.json.txt",
+      "sha256": "0cd19e1c4ddfb3c624b018fd00eaeea7642e119b681a02870f84e21c399e2407"
+    },
+    {
+      "original_path": "docs/contracts/online-linearization-v1/oracle_feedback-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-docs--contracts--online-linearization-v1--oracle_feedback-header.txt.txt",
+      "sha256": "581a546e30e4cc92339c337ebb20c74fbb2b9c5ab4dae55e81507ccb206c9946"
+    },
+    {
+      "original_path": "docs/contracts/online-linearization-v1/oracle_feedback.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-docs--contracts--online-linearization-v1--oracle_feedback.json.txt",
+      "sha256": "51e911bcfd7cc44a89409fb70ea7f49deb42accfbe2795768c0a17714c2522b5"
+    },
+    {
+      "original_path": "docs/contracts/online-linearization-v1/output_linear_run-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-docs--contracts--online-linearization-v1--output_linear_run-header.txt.txt",
+      "sha256": "e9d416b8d36d46070f8e875c25e34beb303b28f627a6dff7ab9801edcfb9b1b7"
+    },
+    {
+      "original_path": "docs/contracts/online-linearization-v1/output_linear_run.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-docs--contracts--online-linearization-v1--output_linear_run.json.txt",
+      "sha256": "3451005f4ca3fbfc284a86a6b220cbcd6d893f6c9c6c31984be67e126b6a64ca"
+    },
+    {
+      "original_path": "docs/contracts/online-linearization-v1/output_mem-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-docs--contracts--online-linearization-v1--output_mem-header.txt.txt",
+      "sha256": "d77eb66fa66bbb34fdf81400b9209cce5a135754f971c121b39ee4c10bc68c80"
+    },
+    {
+      "original_path": "docs/contracts/online-linearization-v1/output_mem.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-docs--contracts--online-linearization-v1--output_mem.json.txt",
+      "sha256": "aae4178189a996b8fd4d6bb99f66fac7afb0bf34d390783c2e022a4f13d5c084"
+    },
+    {
+      "original_path": "docs/contracts/online-linearization-v1/output_prefix-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-docs--contracts--online-linearization-v1--output_prefix-header.txt.txt",
+      "sha256": "4eac8a36c4ea69db0fb564df06d5dee8407ed3a517a6c6c054f67b552459a9a7"
+    },
+    {
+      "original_path": "docs/contracts/online-linearization-v1/output_prefix.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-docs--contracts--online-linearization-v1--output_prefix.json.txt",
+      "sha256": "e12eb1e4a703ca3539a1e33ec58fc156cc9b630c5ed24d07306c00f3bd2d933d"
+    },
+    {
+      "original_path": "docs/contracts/online-linearization-v1/outputHistory_last-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-docs--contracts--online-linearization-v1--outputHistory_last-header.txt.txt",
+      "sha256": "580388e8e7428c98eeb300992e5e35b6a6a20cc97dff039153954644970d6335"
+    },
+    {
+      "original_path": "docs/contracts/online-linearization-v1/outputHistory_last.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-docs--contracts--online-linearization-v1--outputHistory_last.json.txt",
+      "sha256": "42b6413b0671fc9ac1be9b86cc12b49f3df05f636281dcaacdf9f19036408cb5"
+    },
+    {
+      "original_path": "docs/contracts/online-linearization-v1/outputHistory_played-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-docs--contracts--online-linearization-v1--outputHistory_played-header.txt.txt",
+      "sha256": "df04ad85352fb33b9c431b2603a72d68380ceb2f9fd101075164c5ee503e9cb6"
+    },
+    {
+      "original_path": "docs/contracts/online-linearization-v1/outputHistory_played.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-docs--contracts--online-linearization-v1--outputHistory_played.json.txt",
+      "sha256": "7b9ff1a51be9c50c2cacfe6910cd8ab8255d0f2f96ac14d90d9cc31cc0810b1c"
+    },
+    {
+      "original_path": "docs/contracts/online-linearization-v1/regret_comparison-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-docs--contracts--online-linearization-v1--regret_comparison-header.txt.txt",
+      "sha256": "1e9d4e83d217172dbc06f7a9c8077ff474757e429d34bcec878ac40431219714"
+    },
+    {
+      "original_path": "docs/contracts/online-linearization-v1/regret_comparison.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-docs--contracts--online-linearization-v1--regret_comparison.json.txt",
+      "sha256": "2cc634775684d4f35932e2fd880d14a2f4190628c323c987ec5bd2175a29d744"
+    },
+    {
+      "original_path": "docs/contracts/online-linearization-v1/regret_transfer-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-docs--contracts--online-linearization-v1--regret_transfer-header.txt.txt",
+      "sha256": "2d69556f6d54dcc219b0121f662285136e4e3050dbabcb6022351f46da71c009"
+    },
+    {
+      "original_path": "docs/contracts/online-linearization-v1/regret_transfer.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-docs--contracts--online-linearization-v1--regret_transfer.json.txt",
+      "sha256": "11bfab33548d01b5bc7f63376d5d4ab69d7da1d352f2bce2feaaa27c9f661b02"
+    },
+    {
+      "original_path": "docs/contracts/online-linearization-v1/support_gap-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-docs--contracts--online-linearization-v1--support_gap-header.txt.txt",
+      "sha256": "a38adcd0f43051fc5f1dadcbddcacd4e0c291571fa09bb505311af0280951089"
+    },
+    {
+      "original_path": "docs/contracts/online-linearization-v1/support_gap.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-docs--contracts--online-linearization-v1--support_gap.json.txt",
+      "sha256": "3f33e87a2e83016b86be4546a7527457cdb6ec419cf58bb9c8735a3d675cadae"
+    },
+    {
+      "original_path": "docs/contracts/online-linearization-v1/trajectory_finite_loss-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-docs--contracts--online-linearization-v1--trajectory_finite_loss-header.txt.txt",
+      "sha256": "f119e9cb531bb54beccaf76d238e18b75d1d3b22b05014fc0845e915cebdab0d"
+    },
+    {
+      "original_path": "docs/contracts/online-linearization-v1/trajectory_finite_loss.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-docs--contracts--online-linearization-v1--trajectory_finite_loss.json.txt",
+      "sha256": "740eab398df26f85f0230688695d2d75f285a48a568fb6e762f644b7ee83cd77"
+    },
+    {
+      "original_path": "MANIFEST.md",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-MANIFEST.md.txt",
+      "sha256": "581120ccf8d5941b4228c7fed4b365e5df6cc9832864968246c741b9595b4807"
+    },
+    {
+      "original_path": "runs/lifecycle_sessions.jsonl",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-runs--lifecycle_sessions.jsonl.txt",
+      "sha256": "50adf8e6f53631b501dab215c17ec5aaedaf1d374ed6614690d3cce01ee595f8"
+    },
+    {
+      "original_path": "runs/lifecycle_memory.jsonl",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-runs--lifecycle_memory.jsonl.txt",
+      "sha256": "94be3ceb994768191ceb6a7545935c8d16c044511dfe8c4482e2fde493eaa5f8"
+    },
+    {
+      "original_path": "runs/trials.jsonl",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-linearization-public-20261007/snapshots/before-runs--trials.jsonl.txt",
+      "sha256": "4a1471f021e7403a32a06023174d34c6564a3816671c1d52aebee723a09c0b8b"
+    }
+  ],
+  "raw_headers": {
+    "outputHistory_last": "2bcf22a2377213fa8eb169c83abd6bd538f748cd0ad99548a722213d07c26818",
+    "history_zero": "04c86fc291300dfe043c749e1b0db0a60a21fee41aed4a2ed08cef828f7a5aee",
+    "history_succ": "643cce81bfc1ea53308feda529632a3dc4cf7260de91bf9591ffa05af4b13898",
+    "history_castSucc": "14c3b4e66f8b7780298c9bef4cd1e9c131a462f27873e556be8f58db22391324",
+    "history_selected": "5d038091aad3793e32919315561ee5ec58e445b31a33b35bcee14d327a29ad90",
+    "output_linear_run": "d79b511ee54f475785462cc704458f0ed9debf14bdff71dbaf91cfe629475c1a",
+    "outputHistory_played": "6a6ebb914ea6d929821573688420e696f32dfe7fe7987c1c82238c26dd0ee83b",
+    "output_mem": "df58fcef1dca81abe9644e4e031f3d8fd9d122398432fabd48e60c88302862c7",
+    "history_prefix": "caf65916fd6792f3989c93f8c49a7cf7e6e27a4d0cf6679461ee74742685baff",
+    "output_prefix": "34482f6a0b5c91f56dfb6154aad923a276582f8ef44aa8461ce27d983effa719",
+    "oracle_feedback": "312eeb66a5e8346f3369d62dcd5280f63cfc8a932d9e189ecafb3ce1d017159a",
+    "canonical_feedback": "1c749f4b42713bbd2f42ef6ccb15b53e287fca19eba98ded47ceac1028917a1f",
+    "trajectory_finite_loss": "e8f5a2f401f6d08d7cad730f714eeed9932c6723f56d4392dff52450a17eac26",
+    "support_gap": "a4dc525f56438ac6446ed8aff71037a403d71ecc98b8e73cb59f05dcb4663fb1",
+    "linearLoss_gap": "047db00c6a7a384763d3423acd398789d533541f4ee85295641e2dbfa8048edb",
+    "regret_comparison": "5e00f31e036fe619b01d436369d10e12a6e54669f4afe50402efb7d316d4e571",
+    "regret_transfer": "c1dfe6b275dc4202b4df43b55cff6883b7675b384e69241b619195cac0144e02",
+    "canonical_regret_comparison": "3ed5392186b8a7fc3d3d4f4bb2afe65761390ed671445694843eae8bb1f3ae2f"
+  },
+  "native_headers": {
+    "outputHistory_last": "44234d5f30da5832537c53b0c2c318541ca9b2a21e4a4c5c1d6e02727a6deae5",
+    "history_zero": "00b352726aab7605d116b93fcd1c4141b11e875dcfccbd01da52ffc39282813c",
+    "history_succ": "0e0fd99953bd2b1993074c63e203a90d83af7f52acd8f25226ce73d6f3ba693e",
+    "history_castSucc": "ffa77fb0aa4e963d75f96c7e4a7c5b9bfb6328511caa9157cfca34469eda8227",
+    "history_selected": "e98fa012d02f68089daebd7a9d2c867e848028863bae9c03b0c9aedde9f495ec",
+    "output_linear_run": "4eeb5e3f52d83ce8463f4d7783fe9788dddaddf32015aef09338e4f60a32acb9",
+    "outputHistory_played": "d10d59ee411a3ff03ef81261d8ad80070bd4f96bd0b9539e33709ab2b50159cd",
+    "output_mem": "e3a2333dc286c391660dd0ba057ed1d5f8d059aee6b9e8bac4e56be0a7ef6188",
+    "history_prefix": "efe4dfdac6dc65856357475221c53018d9cd24233b58a25bcacae3fe01ea666f",
+    "output_prefix": "cc49b7f08f5f8f12f20689b3713066c78b2289d595c5b24092c49863d2fdd5f4",
+    "oracle_feedback": "8ca64162079fadf098d19e77a477f1a7f818e92931b02077d8a37919bb2c5461",
+    "canonical_feedback": "d69ffc34ef38d0937d06b5ddc2ba3fb6f718390e6a29e6e3a7e1767ba8076005",
+    "trajectory_finite_loss": "e14b04eff8667792d3c04b246735bc6a52d2aebffcb9d7de9e1a3a1e54a41d43",
+    "support_gap": "c206ce0fcc89253e7d095de6359692793fcc779112878f2e6068eda18a19aa93",
+    "linearLoss_gap": "8070730298c7c6c93ee938ca0cafa40b305f0ab8b8c8c6731f818e961bf3d931",
+    "regret_comparison": "1baefd915e42e1234188456e458311f977d3f8f377096a9b5b5f0dbb458cf097",
+    "regret_transfer": "1e06e4ba222b50d2e606f40315e24ad2f93836ce382db04d78c2489325cdc4ea",
+    "canonical_regret_comparison": "687d3a8a042270fe0d3ab5144366af421ac2ec9274fa5f1f427ed181202df34d"
+  },
+  "counts": {
+    "public": {
+      "theorem": 18,
+      "def": 9,
+      "abbrev": 3
+    },
+    "canary": {
+      "theorem": 25,
+      "def": 8,
+      "abbrev": 2
+    }
+  },
+  "named_checks": 65,
+  "proof_bodies_preexist_current_draft": true,
+  "new_proofs": 0,
+  "new_definitions": 0,
+  "new_source_math_obligation_closures": 0,
+  "source_package_accepted": false,
+  "chapter_complete": false,
+  "goal_complete": false,
+  "contract_version": 2,
+  "actual_Lean_targets_unchanged": true,
+  "extractor_repair": "Body delimiter := by, not nested E := E; original v1 truncated draft metadata retained"
+}

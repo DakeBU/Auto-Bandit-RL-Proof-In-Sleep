@@ -1,0 +1,221 @@
+@BanditRL.OnlineLinearization.outputHistory_last : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (A : BanditRL.OnlineLinearization.LinearPolicy) (t : ℕ)
+  (h : Fin t → E), BanditRL.OnlineLinearization.outputHistory A h (Fin.last t) = A t h
+@BanditRL.OnlineLinearization.history_zero : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (A : BanditRL.OnlineLinearization.LinearPolicy)
+  (loss : ℕ → E → EReal) (p : BanditRL.OnlineLinearization.SupportPolicy),
+  BanditRL.OnlineLinearization.history A loss p 0 = Fin.elim0
+@BanditRL.OnlineLinearization.history_succ : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (A : BanditRL.OnlineLinearization.LinearPolicy)
+  (loss : ℕ → E → EReal) (p : BanditRL.OnlineLinearization.SupportPolicy) (t : ℕ),
+  BanditRL.OnlineLinearization.history A loss p (t + 1) =
+    Fin.snoc (BanditRL.OnlineLinearization.history A loss p t) (BanditRL.OnlineLinearization.selected A loss p t)
+@BanditRL.OnlineLinearization.history_castSucc : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (A : BanditRL.OnlineLinearization.LinearPolicy)
+  (loss : ℕ → E → EReal) (p : BanditRL.OnlineLinearization.SupportPolicy) (t : ℕ) (i : Fin t),
+  BanditRL.OnlineLinearization.history A loss p (t + 1) i.castSucc = BanditRL.OnlineLinearization.history A loss p t i
+@BanditRL.OnlineLinearization.history_selected : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (A : BanditRL.OnlineLinearization.LinearPolicy)
+  (loss : ℕ → E → EReal) (p : BanditRL.OnlineLinearization.SupportPolicy) (t : ℕ) (i : Fin t),
+  BanditRL.OnlineLinearization.history A loss p t i = BanditRL.OnlineLinearization.selected A loss p ↑i
+@BanditRL.OnlineLinearization.output_linear_run : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (A : BanditRL.OnlineLinearization.LinearPolicy)
+  (loss : ℕ → E → EReal) (p : BanditRL.OnlineLinearization.SupportPolicy) (t : ℕ),
+  BanditRL.OnlineLinearization.output A loss p t =
+    BanditRL.OnlineLinearization.linearRun A (BanditRL.OnlineLinearization.selected A loss p) t
+@BanditRL.OnlineLinearization.outputHistory_played : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (A : BanditRL.OnlineLinearization.LinearPolicy)
+  (loss : ℕ → E → EReal) (p : BanditRL.OnlineLinearization.SupportPolicy) (t : ℕ) (i : Fin (t + 1)),
+  BanditRL.OnlineLinearization.outputHistory A (BanditRL.OnlineLinearization.history A loss p t) i =
+    BanditRL.OnlineLinearization.output A loss p ↑i
+@BanditRL.OnlineLinearization.output_mem : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (V : BanditRL.OnlineLinearization.Domain)
+  (A : BanditRL.OnlineLinearization.LinearPolicy),
+  BanditRL.OnlineLinearization.Feasible V A →
+    ∀ (loss : ℕ → E → EReal) (p : BanditRL.OnlineLinearization.SupportPolicy) (t : ℕ),
+      BanditRL.OnlineLinearization.output A loss p t ∈ V.carrier
+@BanditRL.OnlineLinearization.history_prefix : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (A : BanditRL.OnlineLinearization.LinearPolicy)
+  (loss loss' : ℕ → E → EReal) (p : BanditRL.OnlineLinearization.SupportPolicy) (t : ℕ),
+  (∀ s < t, loss s = loss' s) →
+    BanditRL.OnlineLinearization.history A loss p t = BanditRL.OnlineLinearization.history A loss' p t
+@BanditRL.OnlineLinearization.output_prefix : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (A : BanditRL.OnlineLinearization.LinearPolicy)
+  (loss loss' : ℕ → E → EReal) (p : BanditRL.OnlineLinearization.SupportPolicy) (t : ℕ),
+  (∀ s < t, loss s = loss' s) →
+    BanditRL.OnlineLinearization.output A loss p t = BanditRL.OnlineLinearization.output A loss' p t
+@BanditRL.OnlineLinearization.oracle_feedback : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (V : BanditRL.OnlineLinearization.Domain)
+  (A : BanditRL.OnlineLinearization.LinearPolicy),
+  BanditRL.OnlineLinearization.Feasible V A →
+    ∀ (loss : ℕ → E → EReal) (p : BanditRL.OnlineLinearization.SupportPolicy),
+      BanditRL.OnlineSubgradientPolicy.OracleLaw V p →
+        ∀ (T : ℕ),
+          (∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) →
+            BanditRL.OnlineLinearization.LegalFeedback A loss p T
+@BanditRL.OnlineLinearization.canonical_feedback : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (V : BanditRL.OnlineLinearization.Domain)
+  (A : BanditRL.OnlineLinearization.LinearPolicy),
+  BanditRL.OnlineLinearization.Feasible V A →
+    ∀ (loss : ℕ → E → EReal) (T : ℕ),
+      (∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) →
+        BanditRL.OnlineLinearization.LegalFeedback A loss BanditRL.OnlineSubgradientPolicy.canonicalPolicy T
+@BanditRL.OnlineLinearization.trajectory_finite_loss : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (V : BanditRL.OnlineLinearization.Domain)
+  (A : BanditRL.OnlineLinearization.LinearPolicy),
+  BanditRL.OnlineLinearization.Feasible V A →
+    ∀ (loss : ℕ → E → EReal) (p : BanditRL.OnlineLinearization.SupportPolicy) (T : ℕ),
+      (∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) →
+        ∀ t < T,
+          loss t (BanditRL.OnlineLinearization.output A loss p t) =
+            ↑(loss t (BanditRL.OnlineLinearization.output A loss p t)).toReal
+@BanditRL.OnlineLinearization.support_gap : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (V : BanditRL.OnlineLinearization.Domain) (f : E → EReal),
+  BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V f →
+    ∀ (x g u : E),
+      u ∈ V.carrier →
+        g ∈ BanditRL.OnlineConvex.SourceSubdifferential f x → (f x).toReal - (f u).toReal ≤ inner ℝ g (x - u)
+@BanditRL.OnlineLinearization.linearLoss_gap : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (g x u : E),
+  BanditRL.OnlineLinearization.linearLoss g x - BanditRL.OnlineLinearization.linearLoss g u = inner ℝ g (x - u)
+@BanditRL.OnlineLinearization.regret_comparison : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (V : BanditRL.OnlineLinearization.Domain)
+  (A : BanditRL.OnlineLinearization.LinearPolicy) (loss : ℕ → E → EReal)
+  (p : BanditRL.OnlineLinearization.SupportPolicy) (T : ℕ),
+  (∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) →
+    BanditRL.OnlineLinearization.LegalFeedback A loss p T →
+      ∀ u ∈ V.carrier,
+        BanditRL.OnlineLinearization.regret A loss p u T ≤
+          BanditRL.OnlineLearning.comparatorRegret
+            (fun t => BanditRL.OnlineLinearization.linearLoss (BanditRL.OnlineLinearization.selected A loss p t))
+            (BanditRL.OnlineLinearization.linearRun A (BanditRL.OnlineLinearization.selected A loss p)) u T
+@BanditRL.OnlineLinearization.regret_transfer : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (V : BanditRL.OnlineLinearization.Domain)
+  (A : BanditRL.OnlineLinearization.LinearPolicy) (loss : ℕ → E → EReal)
+  (p : BanditRL.OnlineLinearization.SupportPolicy) (T : ℕ),
+  (∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) →
+    BanditRL.OnlineLinearization.LegalFeedback A loss p T →
+      ∀ (B : (ℕ → E) → E → ℕ → ℝ),
+        (∀ (g : ℕ → E),
+            ∀ u ∈ V.carrier,
+              BanditRL.OnlineLearning.comparatorRegret (fun t => BanditRL.OnlineLinearization.linearLoss (g t))
+                  (BanditRL.OnlineLinearization.linearRun A g) u T ≤
+                B g u T) →
+          ∀ u ∈ V.carrier,
+            BanditRL.OnlineLinearization.regret A loss p u T ≤ B (BanditRL.OnlineLinearization.selected A loss p) u T
+@BanditRL.OnlineLinearization.canonical_regret_comparison : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (V : BanditRL.OnlineLinearization.Domain)
+  (A : BanditRL.OnlineLinearization.LinearPolicy),
+  BanditRL.OnlineLinearization.Feasible V A →
+    ∀ (loss : ℕ → E → EReal) (T : ℕ),
+      (∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) →
+        ∀ u ∈ V.carrier,
+          BanditRL.OnlineLinearization.regret A loss BanditRL.OnlineSubgradientPolicy.canonicalPolicy u T ≤
+            BanditRL.OnlineLearning.comparatorRegret
+              (fun t =>
+                BanditRL.OnlineLinearization.linearLoss
+                  (BanditRL.OnlineLinearization.selected A loss BanditRL.OnlineSubgradientPolicy.canonicalPolicy t))
+              (BanditRL.OnlineLinearization.linearRun A
+                (BanditRL.OnlineLinearization.selected A loss BanditRL.OnlineSubgradientPolicy.canonicalPolicy))
+              u T
+@BanditRL.OnlineLinearization.Feasible : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] →
+    [inst_1 : InnerProductSpace ℝ E] →
+      BanditRL.OnlineLinearization.Domain → BanditRL.OnlineLinearization.LinearPolicy → Prop
+@BanditRL.OnlineLinearization.outputHistory : {E : Type u_1} →
+  BanditRL.OnlineLinearization.LinearPolicy → {t : ℕ} → (Fin t → E) → Fin (t + 1) → E
+@BanditRL.OnlineLinearization.history : {E : Type u_1} →
+  BanditRL.OnlineLinearization.LinearPolicy →
+    (ℕ → E → EReal) → BanditRL.OnlineLinearization.SupportPolicy → (t : ℕ) → Fin t → E
+@BanditRL.OnlineLinearization.output : {E : Type u_1} →
+  BanditRL.OnlineLinearization.LinearPolicy → (ℕ → E → EReal) → BanditRL.OnlineLinearization.SupportPolicy → ℕ → E
+@BanditRL.OnlineLinearization.selected : {E : Type u_1} →
+  BanditRL.OnlineLinearization.LinearPolicy → (ℕ → E → EReal) → BanditRL.OnlineLinearization.SupportPolicy → ℕ → E
+@BanditRL.OnlineLinearization.LegalFeedback : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] →
+    [InnerProductSpace ℝ E] →
+      BanditRL.OnlineLinearization.LinearPolicy →
+        (ℕ → E → EReal) → BanditRL.OnlineLinearization.SupportPolicy → ℕ → Prop
+@BanditRL.OnlineLinearization.linearRun : {E : Type u_1} → BanditRL.OnlineLinearization.LinearPolicy → (ℕ → E) → ℕ → E
+@BanditRL.OnlineLinearization.linearLoss : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] → [InnerProductSpace ℝ E] → E → E → ℝ
+@BanditRL.OnlineLinearization.regret : {E : Type u_1} →
+  BanditRL.OnlineLinearization.LinearPolicy → (ℕ → E → EReal) → BanditRL.OnlineLinearization.SupportPolicy → E → ℕ → ℝ
+@BanditRL.OnlineLinearization.Domain : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] → [InnerProductSpace ℝ E] → Type u_1
+@BanditRL.OnlineLinearization.LinearPolicy : {E : Type u_1} → Type u_1
+@BanditRL.OnlineLinearization.SupportPolicy : {E : Type u_1} → Type u_1
+LinearizationProbe.learner_feasible : BanditRL.OnlineLinearization.Feasible LinearizationProbe.V
+  LinearizationProbe.learner
+LinearizationProbe.quadratic_support : ∀ (z : ℝ),
+  z - 1 ∈ BanditRL.OnlineConvex.SourceSubdifferential LinearizationProbe.quadratic z
+LinearizationProbe.affine_support : ∀ (z : ℝ),
+  1 ∈ BanditRL.OnlineConvex.SourceSubdifferential LinearizationProbe.affine z
+LinearizationProbe.quadratic_on : BanditRL.OnlineSubgradientDescent.SubdifferentiableOn LinearizationProbe.V
+  LinearizationProbe.quadratic
+LinearizationProbe.affine_on : BanditRL.OnlineSubgradientDescent.SubdifferentiableOn LinearizationProbe.V
+  LinearizationProbe.affine
+LinearizationProbe.losses_on : ∀ (t : ℕ),
+  BanditRL.OnlineSubgradientDescent.SubdifferentiableOn LinearizationProbe.V (LinearizationProbe.losses t)
+LinearizationProbe.x_zero : LinearizationProbe.x 0 = 0
+LinearizationProbe.g_zero : LinearizationProbe.g 0 = -1
+LinearizationProbe.g_one : LinearizationProbe.g 1 = 1
+LinearizationProbe.x_one : LinearizationProbe.x 1 = 1
+LinearizationProbe.x_two : LinearizationProbe.x 2 = 0
+LinearizationProbe.feedback_two : BanditRL.OnlineLinearization.LegalFeedback LinearizationProbe.learner
+  LinearizationProbe.losses LinearizationProbe.policy 2
+LinearizationProbe.actual_same_linear_run : LinearizationProbe.x 1 =
+  BanditRL.OnlineLinearization.linearRun LinearizationProbe.learner LinearizationProbe.g 1
+LinearizationProbe.actual_convex_regret : BanditRL.OnlineLinearization.regret LinearizationProbe.learner
+    LinearizationProbe.losses LinearizationProbe.policy 1 2 =
+  1 / 2
+LinearizationProbe.actual_linear_regret : BanditRL.OnlineLearning.comparatorRegret
+    (fun t => BanditRL.OnlineLinearization.linearLoss (LinearizationProbe.g t))
+    (BanditRL.OnlineLinearization.linearRun LinearizationProbe.learner LinearizationProbe.g) 1 2 =
+  1
+LinearizationProbe.actual_public_comparison : BanditRL.OnlineLinearization.regret LinearizationProbe.learner
+    LinearizationProbe.losses LinearizationProbe.policy 1 2 ≤
+  BanditRL.OnlineLearning.comparatorRegret (fun t => BanditRL.OnlineLinearization.linearLoss (LinearizationProbe.g t))
+    (BanditRL.OnlineLinearization.linearRun LinearizationProbe.learner LinearizationProbe.g) 1 2
+LinearizationProbe.actual_strict_slack : BanditRL.OnlineLinearization.regret LinearizationProbe.learner
+    LinearizationProbe.losses LinearizationProbe.policy 1 2 <
+  BanditRL.OnlineLearning.comparatorRegret (fun t => BanditRL.OnlineLinearization.linearLoss (LinearizationProbe.g t))
+    (BanditRL.OnlineLinearization.linearRun LinearizationProbe.learner LinearizationProbe.g) 1 2
+LinearizationProbe.universal_two : ∀ (v : ℕ → ℝ) (u : ℝ),
+  BanditRL.OnlineLearning.comparatorRegret (fun t => BanditRL.OnlineLinearization.linearLoss (v t))
+      (BanditRL.OnlineLinearization.linearRun LinearizationProbe.learner v) u 2 =
+    LinearizationProbe.bound v u 2
+LinearizationProbe.actual_public_transfer : BanditRL.OnlineLinearization.regret LinearizationProbe.learner
+    LinearizationProbe.losses LinearizationProbe.policy 1 2 ≤
+  LinearizationProbe.bound LinearizationProbe.g 1 2
+LinearizationProbe.actual_bound_value : LinearizationProbe.bound LinearizationProbe.g 1 2 = 1
+LinearizationProbe.nonzero_energy : ∑ t ∈ Finset.range 2, LinearizationProbe.g t ^ 2 = 2
+LinearizationProbe.positive_terminal : ‖LinearizationProbe.x 2 - 1‖ ^ 2 = 1
+LinearizationProbe.canonical_producer_instance : BanditRL.OnlineLinearization.regret LinearizationProbe.learner
+    LinearizationProbe.losses BanditRL.OnlineSubgradientPolicy.canonicalPolicy 1 2 ≤
+  BanditRL.OnlineLearning.comparatorRegret
+    (fun t =>
+      BanditRL.OnlineLinearization.linearLoss
+        (BanditRL.OnlineLinearization.selected LinearizationProbe.learner LinearizationProbe.losses
+          BanditRL.OnlineSubgradientPolicy.canonicalPolicy t))
+    (BanditRL.OnlineLinearization.linearRun LinearizationProbe.learner
+      (BanditRL.OnlineLinearization.selected LinearizationProbe.learner LinearizationProbe.losses
+        BanditRL.OnlineSubgradientPolicy.canonicalPolicy))
+    1 2
+LinearizationProbe.current_and_future_do_not_change_output : BanditRL.OnlineLinearization.output
+    LinearizationProbe.learner LinearizationProbe.invalid_future LinearizationProbe.policy 1 =
+  1
+LinearizationProbe.zero_horizon_actual_comparison : BanditRL.OnlineLinearization.regret LinearizationProbe.learner
+    LinearizationProbe.losses LinearizationProbe.policy 1 0 ≤
+  BanditRL.OnlineLearning.comparatorRegret (fun t => BanditRL.OnlineLinearization.linearLoss (LinearizationProbe.g t))
+    (BanditRL.OnlineLinearization.linearRun LinearizationProbe.learner LinearizationProbe.g) 1 0
+LinearizationProbe.V : BanditRL.OnlineLinearization.Domain
+LinearizationProbe.learner : BanditRL.OnlineLinearization.LinearPolicy
+LinearizationProbe.quadratic : ℝ → EReal
+LinearizationProbe.affine : ℝ → EReal
+LinearizationProbe.losses : ℕ → ℝ → EReal
+LinearizationProbe.policy : BanditRL.OnlineLinearization.SupportPolicy
+LinearizationProbe.bound : (ℕ → ℝ) → ℝ → ℕ → ℝ
+LinearizationProbe.invalid_future : ℕ → ℝ → EReal
+LinearizationProbe.x : ℕ → ℝ
+LinearizationProbe.g : ℕ → ℝ

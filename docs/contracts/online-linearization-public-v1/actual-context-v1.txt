@@ -1,0 +1,51 @@
+import BanditRLProof.OnlineSubgradientPolicy
+import BanditRLProof.OnlineLearningRegret
+/-!
+# Causal convex-to-linear regret reduction
+Orabona arXiv:1912.13213v10 Section 2.3, printed 22 / PDF 34.
+An exogenous deterministic learner reads only finite past vector feedback.
+The observed current loss supplies an actual support after the current output;
+that vector is appended to the same recursion. Reconstructed output history
+agrees with every played point. The linear comparator regret uses that same
+learner and generated vector sequence. A universal OLO guarantee is an input
+to performance transport; this module does not assert such a guarantee for
+an arbitrary learner. Played legality suffices for the ambient comparison;
+feasible/canonical adapters implement OCO on the shared domain. Properness
+and global supports justify finite loss values before EReal.toReal. No bounded
+V, randomized law, independence, executable oracle or universal optimality
+claim. Time zero is source round one; T=0 is an algebraic extension. Causality
+holds with common fixed policies and equal strict-past whole losses; external
+policy selection is not given a probabilistic independence constraint.
+These structural identities are library refinements, not numbered source results.
+-/
+noncomputable section
+open Set Finset BanditRL.OnlineConvex
+namespace BanditRL.OnlineLinearization
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
+abbrev Domain := BanditRL.OnlineGradientDescent.Domain E
+abbrev LinearPolicy := (t : ℕ) → (Fin t → E) → E
+abbrev SupportPolicy := BanditRL.OnlineSubgradientPolicy.SupportPolicy (E := E)
+def Feasible (V : Domain (E := E)) (A : LinearPolicy (E := E)) : Prop :=
+  ∀ t h, A t h ∈ V.carrier
+/-- Reconstruct all outputs from a finite strict-past vector history. -/
+def outputHistory (A : LinearPolicy (E := E)) {t : ℕ} (h : Fin t → E) : Fin (t + 1) → E :=
+  fun i => A i.val (fun j => h ⟨j.val, by omega⟩)
+/-- The current support is appended only after the current output has been made. -/
+def history (A : LinearPolicy (E := E)) (loss : ℕ → E → EReal)
+    (p : SupportPolicy (E := E)) : (t : ℕ) → Fin t → E :=
+  Nat.rec (motive := fun t => Fin t → E) Fin.elim0
+    (fun t h => Fin.snoc h (p t (fun i => loss i.val) (outputHistory A h) (loss t)))
+def output (A : LinearPolicy (E := E)) (loss : ℕ → E → EReal)
+    (p : SupportPolicy (E := E)) (t : ℕ) : E := A t (history A loss p t)
+def selected (A : LinearPolicy (E := E)) (loss : ℕ → E → EReal)
+    (p : SupportPolicy (E := E)) (t : ℕ) : E :=
+  p t (fun i => loss i.val) (outputHistory A (history A loss p t)) (loss t)
+def LegalFeedback (A : LinearPolicy (E := E)) (loss : ℕ → E → EReal)
+    (p : SupportPolicy (E := E)) (T : ℕ) : Prop :=
+  ∀ t < T, selected A loss p t ∈ SourceSubdifferential (loss t) (output A loss p t)
+def linearRun (A : LinearPolicy (E := E)) (g : ℕ → E) (t : ℕ) : E :=
+  A t (fun i => g i.val)
+def linearLoss (g x : E) : ℝ := inner ℝ g x
+def regret (A : LinearPolicy (E := E)) (loss : ℕ → E → EReal)
+    (p : SupportPolicy (E := E)) (u : E) (T : ℕ) : ℝ :=
+  ∑ t ∈ range T, ((loss t (output A loss p t)).toReal - (loss t u).toReal)

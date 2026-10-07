@@ -1,0 +1,28 @@
+{
+  "command": [
+    "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe",
+    "-B",
+    "-X",
+    "utf8",
+    "tools/bandit.py",
+    "statement-fence",
+    "--declaration",
+    "BanditRL.OnlineLinearization.regret_transfer",
+    "--file",
+    "BanditRLProof\\OnlineLinearization.lean",
+    "--output",
+    "E:\\ABRL\\worktrees\\research-online-book\\runs\\online-linearization-public-20261007\\native-public-fences\\regret_transfer-full-v2.json",
+    "--source-assumption",
+    "(hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t))",
+    "--source-assumption",
+    "(hlegal : LegalFeedback A loss p T)",
+    "--source-assumption",
+    "(hB : ∀ g u, u ∈ V.carrier → BanditRL.OnlineLearning.comparatorRegret (fun t => linearLoss (g t)) (linearRun A g) u T ≤ B g u T)",
+    "--source-assumption",
+    "(hu : u ∈ V.carrier)"
+  ],
+  "cwd": "E:/ABRL/worktrees/research-online-book",
+  "exit_code": 0,
+  "seconds": 0.215,
+  "log_sha256": "46d2b3df877978b9bc6ba1cf491d629d69dcd97e8df118130b8f1479ab756bba"
+}

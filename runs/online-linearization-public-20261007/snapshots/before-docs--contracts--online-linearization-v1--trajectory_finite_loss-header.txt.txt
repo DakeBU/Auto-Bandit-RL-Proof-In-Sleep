@@ -1,0 +1,2 @@
+theorem trajectory_finite_loss (V : Domain (E := E)) (A : LinearPolicy (E := E)) (hA : Feasible V A) (loss : ℕ → E → EReal) (p : SupportPolicy (E := E)) (T : ℕ) (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) (t : ℕ) (ht : t < T) :
+    loss t (output A loss p t) = ((loss t (output A loss p t)).toReal : EReal)

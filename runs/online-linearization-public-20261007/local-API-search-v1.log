@@ -1,0 +1,42 @@
+BanditRLProof/OnlineSubgradientBasic.lean:6:SourceSubdifferential predicate accepts all EReal functions, a wider library
+BanditRLProof/OnlineSubgradientBasic.lean:38:def SourceSubdifferential (f : E → EReal) (x : E) : Set E :=
+BanditRLProof/OnlineSubgradientBasic.lean:42:    (x g : E) (hg : g ∈ SourceSubdifferential f x) :
+BanditRLProof/OnlineSubgradientBasic.lean:52:    (hsub : ∀ x ∈ V, (SourceSubdifferential (fun y => (f y : EReal)) x).Nonempty) :
+BanditRLProof/OnlineSubgradientBasic.lean:62:    simp only [inner_sub_right, inner_add_right, real_inner_smul_right]
+BanditRLProof/OnlineSubgradientPolicy.lean:42:    h (Fin.last t) ∈ V.carrier → p t past h f ∈ SourceSubdifferential f (h (Fin.last t))
+BanditRLProof/OnlineSubgradientPolicy.lean:48:  ∀ t < T, selected V η loss x₁ p t ∈ SourceSubdifferential (loss t) (output V η loss x₁ p t)
+BanditRLProof/OnlineSubgradientPolicy.lean:125:theorem trajectory_finite_loss (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal)
+BanditRLProof/OnlineSubgradientPolicy.lean:131:  exact ⟨BanditRL.OnlineSubgradientDescent.finite_loss V (loss t) hloss _
+BanditRLProof/OnlineSubgradientPolicy.lean:133:    BanditRL.OnlineSubgradientDescent.finite_loss V (loss t) hloss u hu⟩
+BanditRLProof/OnlineSubgradientPolicy.lean:138:    (hg : selected V η loss x₁ p t ∈ SourceSubdifferential (loss t) (output V η loss x₁ p t))
+BanditRLProof/OnlineSubgradientPolicy.lean:147:    BanditRL.OnlineSubgradientDescent.lemma_2_31 V (loss t) hloss (η t) hη
+BanditRLProof/OnlineSubgradientPolicy.lean:153:    (hg : selected V η loss x₁ p t ∈ SourceSubdifferential (loss t) (output V η loss x₁ p t))
+BanditRLProof/OnlineSubgradientDescent.lean:27:  SourceProper f ∧ ∀ x ∈ V.carrier, (SourceSubdifferential f x).Nonempty
+BanditRLProof/OnlineSubgradientDescent.lean:32:    exact if h : (SourceSubdifferential f x).Nonempty then Classical.choose h else 0
+BanditRLProof/OnlineSubgradientDescent.lean:40:theorem lemma_2_31 (V : Domain (E := E)) (f : E → EReal) (hf : SubdifferentiableOn V f)
+BanditRLProof/OnlineSubgradientDescent.lean:42:    (g : E) (hg : g ∈ SourceSubdifferential f x) :
+BanditRLProof/OnlineSubgradientDescent.lean:73:    currentSubgradient f x ∈ SourceSubdifferential f x := by
+BanditRLProof/OnlineSubgradientDescent.lean:80:theorem finite_loss (V : Domain (E := E)) (f : E → EReal)
+BanditRLProof/OnlineSubgradientDescent.lean:109:      SourceSubdifferential (loss t) (iterate V η loss x₁ t) := by
+BanditRLProof/OnlineSubgradientDescent.lean:112:theorem iterate_finite_loss (V : Domain (E := E)) (η : ℕ → ℝ)
+BanditRLProof/OnlineSubgradientDescent.lean:117:  exact ⟨finite_loss V (loss t) hloss _ (iterate_mem V η loss x₁ hx₁ t),
+BanditRLProof/OnlineSubgradientDescent.lean:118:    finite_loss V (loss t) hloss u hu⟩
+BanditRLProof/OnlineSubgradientDescent.lean:132:  simpa only [iterate, step] using lemma_2_31 V (loss t) hloss (η t) hη
+BanditRLProof/OnlineLinearization.lean:45:  ∀ t < T, selected A loss p t ∈ SourceSubdifferential (loss t) (output A loss p t)
+BanditRLProof/OnlineLinearization.lean:68:theorem history_selected (A : LinearPolicy (E := E)) (loss : ℕ → E → EReal) (p : SupportPolicy (E := E)) (t : ℕ) (i : Fin t) :
+BanditRLProof/OnlineLinearization.lean:78:theorem output_linear_run (A : LinearPolicy (E := E)) (loss : ℕ → E → EReal) (p : SupportPolicy (E := E)) (t : ℕ) :
+BanditRLProof/OnlineLinearization.lean:83:  exact history_selected A loss p t i
+BanditRLProof/OnlineLinearization.lean:90:  rw [history_selected, history_selected]
+BanditRLProof/OnlineLinearization.lean:123:theorem canonical_feedback (V : Domain (E := E)) (A : LinearPolicy (E := E)) (hA : Feasible V A) (loss : ℕ → E → EReal) (T : ℕ) (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) :
+BanditRLProof/OnlineLinearization.lean:128:theorem trajectory_finite_loss (V : Domain (E := E)) (A : LinearPolicy (E := E)) (hA : Feasible V A) (loss : ℕ → E → EReal) (p : SupportPolicy (E := E)) (T : ℕ) (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) (t : ℕ) (ht : t < T) :
+BanditRLProof/OnlineLinearization.lean:130:  exact BanditRL.OnlineSubgradientDescent.finite_loss V (loss t) (hloss t ht)
+BanditRLProof/OnlineLinearization.lean:133:theorem support_gap (V : Domain (E := E)) (f : E → EReal) (hf : BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V f) (x g u : E) (hu : u ∈ V.carrier) (hg : g ∈ SourceSubdifferential f x) :
+BanditRLProof/OnlineLinearization.lean:136:    (BanditRL.OnlineSubgradientDescent.lemma_2_31 V f hf 1 (by norm_num) x u hu g hg).1
+BanditRLProof/OnlineLinearization.lean:140:  exact (inner_sub_right g x u).symm
+BanditRLProof/OnlineLinearization.lean:142:theorem regret_comparison (V : Domain (E := E)) (A : LinearPolicy (E := E)) (loss : ℕ → E → EReal) (p : SupportPolicy (E := E)) (T : ℕ) (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) (hlegal : LegalFeedback A loss p T) (u : E) (hu : u ∈ V.carrier) :
+BanditRLProof/OnlineLinearization.lean:148:  rw [linearLoss_gap, ← output_linear_run A loss p t]
+BanditRLProof/OnlineLinearization.lean:152:theorem regret_transfer (V : Domain (E := E)) (A : LinearPolicy (E := E)) (loss : ℕ → E → EReal) (p : SupportPolicy (E := E)) (T : ℕ) (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) (hlegal : LegalFeedback A loss p T) (B : (ℕ → E) → E → ℕ → ℝ) (hB : ∀ g u, u ∈ V.carrier → BanditRL.OnlineLearning.comparatorRegret (fun t => linearLoss (g t)) (linearRun A g) u T ≤ B g u T) (u : E) (hu : u ∈ V.carrier) :
+BanditRLProof/OnlineLinearization.lean:154:  exact (regret_comparison V A loss p T hloss hlegal u hu).trans
+BanditRLProof/OnlineLinearization.lean:157:theorem canonical_regret_comparison (V : Domain (E := E)) (A : LinearPolicy (E := E)) (hA : Feasible V A) (loss : ℕ → E → EReal) (T : ℕ) (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) (u : E) (hu : u ∈ V.carrier) :
+BanditRLProof/OnlineLinearization.lean:159:  exact regret_comparison V A loss BanditRL.OnlineSubgradientPolicy.canonicalPolicy T
+BanditRLProof/OnlineLinearization.lean:160:    hloss (canonical_feedback V A hA loss T hloss) u hu
