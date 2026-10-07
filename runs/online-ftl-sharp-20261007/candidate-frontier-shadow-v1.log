@@ -1,0 +1,126 @@
+{
+  "schema_version": 1,
+  "mode": "shadow-read-only",
+  "analyzed_at": "2026-10-07T12:14:49+00:00",
+  "trials_path": "E:\\ABRL\\worktrees\\research-online-book\\runs\\online-ftl-sharp-20261007\\candidate-scoped-trials-v1.jsonl",
+  "trial_rows": 3,
+  "status_counts": {
+    "compiled": 2,
+    "failed": 1
+  },
+  "inferred_frontier": {
+    "selected_task": "ONLINE-FTL-SHARP-20261007",
+    "selected_leaf": "ONLINE-FTL-SHARP-20261007",
+    "source_status": "compiled",
+    "last_accepted_verifier": {
+      "trial_index": 2,
+      "time": "2026-10-07T12:06:29+00:00",
+      "task": "ONLINE-FTL-SHARP-20261007",
+      "role": "lower",
+      "kind": "build",
+      "status": "compiled",
+      "lean": "BanditRLProof\\OnlineLearningFTL.lean",
+      "notes": "Two frozen maintext source-bound proofs and six validation proofs/one testdef compiled, actual13rfl/15kernelaxioms/13fences/9VALUE calls. Old5proof1def unchanged. Bounded terminals local; BODY/combined/reader/FINAL/native/PR/chapter/Goal pending.",
+      "run_id": "online-ftl-sharp-20261007"
+    }
+  },
+  "memory_digest": {
+    "path": "E:\\ABRL\\worktrees\\research-online-book\\runs\\online-ftl-sharp-20261007\\memory-digest-candidate-v1.md",
+    "task": ""
+  },
+  "recorded_frontier": {
+    "schema_version": 1,
+    "record_id": "frontier-b48fb1457c081af9",
+    "updated_at": "2026-10-07T12:14:48+00:00",
+    "root_objective": "Persistent Orabona Chapters1–16; current FTL first-round and exact-tail proof package",
+    "current_leaf": {
+      "id": "ONLINE-FTL-SHARP-20261007",
+      "kind": "lean",
+      "status": "gate-pending",
+      "statement": "theorem meanPredict_regret_refined (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T) (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) : (∑ t ∈ Finset.range T, (meanPredict y t - y t)^2) - (∑ t ∈ Finset.range T, (empiricalMean y T - y t)^2) ≤ (1 : ℝ) / 4 + ∑ t ∈ Finset.range (T - 1), 4 / ((t : ℝ) + 2)",
+      "statement_hash": "fb0f95d7729dcf9c8f9a92f78a080642b6b05f1198083bacc764b4458efd4d27",
+      "declaration": "BanditRL.OnlineLearning.meanPredict_regret_refined",
+      "file": "BanditRLProof\\OnlineLearningFTL.lean",
+      "source_status": "source-reviewed",
+      "dependencies": [
+        {
+          "kind": "lean",
+          "name": "BanditRL.OnlineLearning.meanPredict_initial_stability",
+          "status": "compiled"
+        },
+        {
+          "kind": "lean",
+          "name": "BanditRL.OnlineLearning.meanPredict_stability",
+          "status": "compiled"
+        },
+        {
+          "kind": "review",
+          "name": "source-body",
+          "status": "accepted"
+        }
+      ]
+    },
+    "dag": {
+      "nodes": [
+        {
+          "id": "ONLINE-FTL-SHARP-20261007",
+          "kind": "lean",
+          "status": "gate-pending",
+          "dependencies": [
+            {
+              "kind": "lean",
+              "name": "BanditRL.OnlineLearning.meanPredict_initial_stability",
+              "status": "compiled"
+            },
+            {
+              "kind": "lean",
+              "name": "BanditRL.OnlineLearning.meanPredict_stability",
+              "status": "compiled"
+            },
+            {
+              "kind": "review",
+              "name": "source-body",
+              "status": "accepted"
+            }
+          ],
+          "dispatch_count": 0
+        }
+      ]
+    },
+    "last_accepted_verifier": {
+      "trial_index": 2,
+      "time": "2026-10-07T12:06:29+00:00",
+      "task": "ONLINE-FTL-SHARP-20261007",
+      "role": "lower",
+      "kind": "build",
+      "status": "compiled",
+      "lean": "BanditRLProof\\OnlineLearningFTL.lean",
+      "notes": "Two frozen maintext source-bound proofs and six validation proofs/one testdef compiled, actual13rfl/15kernelaxioms/13fences/9VALUE calls. Old5proof1def unchanged. Bounded terminals local; BODY/combined/reader/FINAL/native/PR/chapter/Goal pending.",
+      "run_id": "online-ftl-sharp-20261007"
+    },
+    "memory_policy": {
+      "recent_role_relevant_limit": 5,
+      "explicit_verified_lemma_ids": [],
+      "whole_history_default": false
+    },
+    "shadow_gate": {
+      "status": "pending",
+      "analyzed_trial_rows": 3,
+      "mismatches": [],
+      "replay_transitions": 0
+    },
+    "mutation_policy": {
+      "canonical_path_queue": true,
+      "cross_process_lock": true,
+      "same_file_serialized": true,
+      "disjoint_files_parallel": true
+    },
+    "autonomous_execution": {
+      "enabled": false,
+      "requires_deterministic_gates": true,
+      "requires_explicit_user_request": true
+    }
+  },
+  "mismatches": [],
+  "would_mutate": false
+}
