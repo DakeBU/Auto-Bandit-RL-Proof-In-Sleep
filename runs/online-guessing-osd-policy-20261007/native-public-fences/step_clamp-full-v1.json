@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineGuessingSubgradientPolicy.step_clamp",
+  "file": "BanditRLProof/OnlineGuessingSubgradientPolicy.lean",
+  "statement": "theorem step_clamp (η : ℕ → ℝ) (y : ℕ → ℝ) (x₁ : ℝ) (p : SupportPolicy (E := ℝ)) (t : ℕ) : output unitInterval η (fun s => loss (y s)) x₁ p (t + 1) = min (max (output unitInterval η (fun s => loss (y s)) x₁ p t - η t * selected unitInterval η (fun s => loss (y s)) x₁ p t) 0) 1",
+  "statement_hash": "dcf0565a3967217f48ec83835062d53467eb4798e274d77dd904b454788653d1",
+  "source_assumptions": [],
+  "created_at": "2026-10-07T06:17:11+00:00"
+}

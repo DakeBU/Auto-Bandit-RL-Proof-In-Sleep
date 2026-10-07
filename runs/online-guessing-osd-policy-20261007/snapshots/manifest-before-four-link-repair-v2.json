@@ -1,0 +1,123 @@
+{
+  "schema_version": "2.0",
+  "id": "ONLINE-GUESSING-OSD-POLICY-20261007",
+  "route": "online-learning/chapter-2",
+  "frontier_cell": "online-guessing-osd",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10,21 June2026; SHA256 cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchor": "Example2.32 printed20/PDF32; Algorithm2.2 and explicit transfer printed19-20/PDF31-32; equation2.1 printed15/PDF27; original game printed1-3/PDF13-15.",
+    "url": "https://arxiv.org/pdf/1912.13213v10"
+  },
+  "target": "New policy-family specialization: four public proofs, zero new public definitions; two algebraic helpers, one finite guarantee and one derived one-sided family corollary. One printed Example2.32, not four new book results.",
+  "affected_files": [
+    "BanditRLProof/OnlineGuessingSubgradientPolicy.lean",
+    "BanditRLProof.lean",
+    "website/content/readings.json",
+    "website/content/highlights.json",
+    "website/content/chapters.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineGuessingSubgradientPolicy.selected_bound",
+    "BanditRL.OnlineGuessingSubgradientPolicy.step_clamp",
+    "BanditRL.OnlineGuessingSubgradientPolicy.example_2_32",
+    "BanditRL.OnlineGuessingSubgradientPolicy.example_2_32_average_eventually"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Actual four complete closed public types, shared policy/global-support/projection APIs and kernel value bodies; no per-book library."
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineGuessingSubgradient.loss_subgradient_bound",
+      "BanditRL.OnlineGuessingSubgradient.loss_proper",
+      "BanditRL.OnlineGuessingSubgradient.loss_subdifferentiable",
+      "BanditRL.OnlineSubgradientPolicy.regret_tuned",
+      "BanditRL.OnlineSubgradientPolicy.output_prefix",
+      "BanditRL.OnlineGuessingOGD.project_unitInterval"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineGuessingSubgradientPolicy.selected_bound",
+      "BanditRL.OnlineGuessingSubgradientPolicy.step_clamp",
+      "BanditRL.OnlineGuessingSubgradientPolicy.example_2_32",
+      "BanditRL.OnlineGuessingSubgradientPolicy.example_2_32_average_eventually"
+    ],
+    "known_consumers": [
+      "GuessingPolicyProbe.history_changes_kink_choice",
+      "GuessingPolicyProbe.a_actual_fixed",
+      "GuessingPolicyProbe.a_tuned_all_comparators",
+      "GuessingPolicyProbe.a_horizon_family_average"
+    ],
+    "planned_consumers": [
+      "Remaining source Chapter2 packages after their own reviewed contracts and gates."
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "New absolute-loss specialization proves the missing arbitrary played-legal finite-history policy terminal using the accepted shared producers. No duplicate loss/domain/policy/projection definition or duplicate canonical wrapper."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/osd_blind",
+    "source_reviewer": "/root/source_reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "New policy-family specialization: four public proofs, zero new public definitions; two algebraic helpers, one finite guarantee and one derived one-sided family corollary. One printed Example2.32, not four new book results. A fixed exogenous deterministic policy p receives the whole finite past-loss/output history and current whole loss after the current output. The actual Nat.rec/Fin.snoc trajectory is projected from its actual selected support. No comparator is a policy input. Same-p/x1 prefix equality does not certify independence of externally chosen policy, initialization or rates, an executable finite-query oracle, or randomized-law/measurability guarantees. Played global-support membership on this same run is sufficient; no universal off-path OracleLaw, assumed norm/energy, one-step regret, stability or supplied regret bound. Feasible initialization and played labels/comparators in [0,1], prescribed T>=1 and eta=1/sqrt(T) remain explicit. D=G=1 derives the numerical constant one from the source O(sqrt(T)) assertion and equation2.1; it is not a verbatim numerical theorem. The average theorem fixes p,y,x1 and requires legal feedback for every positive-horizon run, each with its own eta_T=1/sqrt(T). It concludes only eventual signed-average upper control. It proves neither signed convergence to zero, absolute Big-O nor a common anytime trajectory. T=0 is outside finite tuning and only an irrelevant eventual exception. Canonical Example2.32 current publication migration, linearization/optimal-step/unit-analysis current migration, remaining Chapter1/2 maintext, nine OTHER Chapter1 origin/main contributor gaps and necessary appendices remain REQUIRED. Chapter2 mandatory total is incomplete; Chapters3-16 remain unenumerated. Whole Goal ACTIVE, no chapter/book completion or main/live update. Current CONTRACT/BODY accepted; FINAL pending. Distinct required automated actors, requested Astra/medium without runtime or external-human attestation."
+  },
+  "graph_contribution": {
+    "lean_graph": "new-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Same shared support-policy regret interface specialized to absolute guessing; no separately proved categorical transport.",
+    "focus_targets": [
+      "BanditRL.OnlineGuessingSubgradientPolicy.selected_bound",
+      "BanditRL.OnlineGuessingSubgradientPolicy.step_clamp",
+      "BanditRL.OnlineGuessingSubgradientPolicy.example_2_32",
+      "BanditRL.OnlineGuessingSubgradientPolicy.example_2_32_average_eventually"
+    ],
+    "visual_review": "Current shared registry and actual expanded reader pixels required; four new public nodes, old IDs/URLs preserved, actual selected51 nodes and26 direct proof-value pairs.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: retain historical canonical four links and add four new policy proof links",
+    "banditrlwiki": "no-change-with-reason: shared source-qualified Book graph; no duplicate per-book proof tree",
+    "results_ledger": "updated: own contract/obligation records; additive accepted overlay after FINAL, frozen book inventory unchanged",
+    "roadmap": "no-change-with-reason: Chapters1-16 Goal ACTIVE, remaining mandatory maintext/appendices preserved",
+    "website_surfaces": [
+      "website/content/readings.json",
+      "website/content/highlights.json",
+      "website/content/chapters.json"
+    ]
+  },
+  "truth_boundary": "New policy-family specialization: four public proofs, zero new public definitions; two algebraic helpers, one finite guarantee and one derived one-sided family corollary. One printed Example2.32, not four new book results. A fixed exogenous deterministic policy p receives the whole finite past-loss/output history and current whole loss after the current output. The actual Nat.rec/Fin.snoc trajectory is projected from its actual selected support. No comparator is a policy input. Same-p/x1 prefix equality does not certify independence of externally chosen policy, initialization or rates, an executable finite-query oracle, or randomized-law/measurability guarantees. Played global-support membership on this same run is sufficient; no universal off-path OracleLaw, assumed norm/energy, one-step regret, stability or supplied regret bound. Feasible initialization and played labels/comparators in [0,1], prescribed T>=1 and eta=1/sqrt(T) remain explicit. D=G=1 derives the numerical constant one from the source O(sqrt(T)) assertion and equation2.1; it is not a verbatim numerical theorem. The average theorem fixes p,y,x1 and requires legal feedback for every positive-horizon run, each with its own eta_T=1/sqrt(T). It concludes only eventual signed-average upper control. It proves neither signed convergence to zero, absolute Big-O nor a common anytime trajectory. T=0 is outside finite tuning and only an irrelevant eventual exception. Canonical Example2.32 current publication migration, linearization/optimal-step/unit-analysis current migration, remaining Chapter1/2 maintext, nine OTHER Chapter1 origin/main contributor gaps and necessary appendices remain REQUIRED. Chapter2 mandatory total is incomplete; Chapters3-16 remain unenumerated. Whole Goal ACTIVE, no chapter/book completion or main/live update. Actual focused 3325 jobs; 51 named kernel checks (47 canary declarations plus four public proofs), standard axioms only, four frozen public guards and 26 prespecified direct proof-value pairs. Combined root/Tests {'combined-root-v1-01': 9092, 'combined-Tests-v1-01': 9240}; full harness 466 tests/7 existing skips. Jobs include cached jobs. Reader/FINAL and PR delivery are separate.",
+  "verification": {
+    "focused_checks": [
+      "Actual focused 3325 jobs; 51 named kernel checks (47 canary declarations plus four public proofs), standard axioms only, four frozen public guards and 26 prespecified direct proof-value pairs. Combined root/Tests {'combined-root-v1-01': 9092, 'combined-Tests-v1-01': 9240}; full harness 466 tests/7 existing skips. Jobs include cached jobs. Reader/FINAL and PR delivery are separate."
+    ],
+    "bandit_check": "E:/ABRL/worktrees/research-online-book/runs/online-guessing-osd-policy-20261007/combined-gates-v1.json",
+    "site_build": "Current clean local Lean-verified site after actual combined Lean gates; pending.",
+    "site_check": "Preserve all10817 old IDsURLs and bind four frozen statement hashes; six cards/sixteen notes/eight curated links; pending actual pixels.",
+    "independent_review": "Distinct neutral decoder and source CONTRACT/BODY accepted; FINAL pending. No human/external/runtime attestation.",
+    "owned_test_files": [
+      "Tests/OnlineGuessingSubgradientPolicyCanary.lean"
+    ],
+    "owned_test_root_files": [
+      "Tests.lean"
+    ]
+  },
+  "contributor": {
+    "name": "Codex for Ji Cheng",
+    "role": "Formalizer/integrator with distinct required automated semantic actors; source attribution retained"
+  }
+}

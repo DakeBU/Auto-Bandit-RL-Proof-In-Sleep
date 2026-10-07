@@ -1,0 +1,62 @@
+2.1 Online Learning with Convex Differentiable Losses15
+have to consider the expression
+∥u−x 1∥2
+2
+2η + η
+2
+TX
+t=1
+∥gt∥2
+2
+and minimize with respect toη. It is easy to see that the optimalηis ∥u−x1∥2√PT
+t=1 ∥gt∥2
+2
+, that would
+give the regret bound
+∥u−x 1∥2
+vuut
+TX
+t=1
+∥gt∥2
+2 .
+However, we have a problem: in order to use this stepsize, we should know all the future gra-
+dients (that depend onηitself!), and the distance between the optimal solution and the initial
+point. This is clearly impossible: remember that the adversary can choose the sequence of
+functions. Hence, it can observe your choice of learning rates and decide the sequence so
+that your learning rate is no longer the correct one!
+Indeed, it turns out that this kind of rate is completely impossible because it is ruled out by
+a lower bound we will show in Chapter 5. Yet, we will see that it is indeed possible to achieve
+very similar rates usingadaptive(Section 4.2) andparameter-freealgorithms (Chapter 13).
+For the moment, we can observe that we might be happy to minimize a loose upper bound.
+In particular, assume that the norm of the gradients is bounded byL, that is∥g t∥2 ≤L.
+Also, assuming a bounded diameter, we can upper bound∥u−x 1∥2 byD. Hence, we have
+η⋆ = argmin
+η
+D2
+2η + ηL2T
+2 = D
+L
+√
+T
+,
+that gives a regret bound of
+DL
+√
+T .(2.1)
+So, indeed, the regret is sublinear in time. In Chapter 5, we will also prove that the this regret
+upper bound is optimal up to constant multiplicative factors.
+Example 2.14Consider the guessing game of the first chapter; we can easily solve it with
+OGD. Indeed, we just need to calculate the gradients, prove that they are bounded, and find
+a way to calculate the projection of a real number in[0,1]. So,ℓ ′
+t(x) = 2(x−y t), that is
+bounded forx, yt ∈[0,1]. The projection on[0,1]is justΠ [0,1](x) = min(max(x,0),1).
+With the optimal learning rate, the resulting regret would beO(
+√
+T), which is worse than
+the one we found in the first chapter. Hence, OGD with this choice of the learning rate is
+suboptimal for this problem. We will see how to make it optimal in Chapter 4.
+Example 2.15Let’s consider an example of the OCO setting. Consider the problem of
+predicting at daytthe opening price of a stock based on a linear combination of the opening
+prices of the pastddays, represented by a vectorz t ∈R d. So, our prediction at timetwill
+be⟨z t,xt⟩and the feasible set isV=R d. Once we make our prediction, we receive the
+true opening pricey t, and we pay theHuber loss, a convex loss function robust to outliers,

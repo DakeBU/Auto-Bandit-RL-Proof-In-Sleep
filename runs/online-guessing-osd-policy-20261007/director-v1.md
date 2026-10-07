@@ -1,0 +1,1 @@
+Source theorem-sized delta is missing arbitrary played-legal history-policy Example2.32 terminal, not fresh creation of old canonical12 proofs. Prioritize same-run finite regret, then its dependent one-sided horizon-family corollary. One lower route, no other chapter proof writes; chapter/whole Goal remains active. ROOT staged role, requested medium, runtime unverified.
