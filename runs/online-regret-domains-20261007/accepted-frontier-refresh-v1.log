@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "record_id": "frontier-77aadafaa19d304a",
+  "updated_at": "2026-10-07T16:54:53+00:00",
+  "root_objective": "Persistent Orabona Chapters1–16; typed W/V model subobligation accepted",
+  "current_leaf": {
+    "id": "ONLINE-REGRET-DOMAINS-20261007",
+    "kind": "lean",
+    "status": "accepted",
+    "statement": "theorem domain_gap_sum {X : Type*} (V W : Set X) (hVW : V ⊆ W) (loss : ℕ → ↥W → ℝ) (prediction : ℕ → ↥W) (u : ↥V) (T : ℕ) : comparatorRegret loss prediction (embed V W hVW u) T = ∑ t ∈ Finset.range T, (loss t (prediction t) - loss t (embed V W hVW u))",
+    "statement_hash": "050a5f1f69f3fd5ac7629a4c3f6f32cdafd356f3ca02446032778f8b1c903d06",
+    "declaration": "RegretDomainsProbe.domain_gap_sum",
+    "file": "Tests\\OnlineLearningRegretDomainsCanary.lean",
+    "source_status": "source-reviewed",
+    "dependencies": [
+      {
+        "kind": "lean",
+        "name": "BanditRL.OnlineLearning.comparatorRegret_eq_sum",
+        "status": "compiled"
+      },
+      {
+        "kind": "lean",
+        "name": "BanditRL.OnlineLearning.noRegret_of_vanishing_bound",
+        "status": "compiled"
+      },
+      {
+        "kind": "review",
+        "name": "source-reader",
+        "status": "accepted"
+      }
+    ]
+  },
+  "dag": {
+    "nodes": [
+      {
+        "id": "ONLINE-REGRET-DOMAINS-20261007",
+        "kind": "lean",
+        "status": "accepted",
+        "dependencies": [
+          {
+            "kind": "lean",
+            "name": "BanditRL.OnlineLearning.comparatorRegret_eq_sum",
+            "status": "compiled"
+          },
+          {
+            "kind": "lean",
+            "name": "BanditRL.OnlineLearning.noRegret_of_vanishing_bound",
+            "status": "compiled"
+          },
+          {
+            "kind": "review",
+            "name": "source-reader",
+            "status": "accepted"
+          }
+        ],
+        "dispatch_count": 0
+      }
+    ]
+  },
+  "last_accepted_verifier": {
+    "trial_index": 2,
+    "time": "2026-10-07T16:54:52+00:00",
+    "task": "ONLINE-REGRET-DOMAINS-20261007",
+    "role": "reviewer",
+    "kind": "review",
+    "status": "accepted",
+    "lean": "",
+    "notes": "ONLINE-REGRET-DOMAINS-20261007 One required typed W/V loss-domain/comparator model mapping audited with actual shared Regret API. Existing two public proofs/two definitions reused; zero new production mathematics/definitions/registry nodes. Eight validation proofs/eight fixture definitions are tests. Full C1 regret/minimum and no-regret reconciliation, logarithmic lower-bound/source claim and other mandatory module audits remain required. Inventory16 source items/mandatory proof totalnull. Six OTHER main-relative contributor gaps FAILUNWAIVED. Chapter2incomplete/null;3–16unenumerated/necessaryappendicesrequired/totalGoalACTIVE. ExactOPENunmergedPR189stack; no main/live/merge/deploy/retirement. Distinct required reused automated roles/history disclosed/requestedAstra-medium/no external human or runtime attestation. Actual20kernel10Props10definitionidentities10fullnativeguards3VALUEpairs/root9093Tests9245/harness472skip7. Source arbitrary-carrier/ordinarylimit versus eventualepsilon interpretation explicit. Supplied sameprediction, no causal producer/minimumexistence; concrete negativegame loss/output derivedbound0. Same10835registryIDsURLs/hashesequal,8currentpanels root-viewed. Retained untrackedcanary,index-orderN/A,manifestcase,verifierUI/raw-copy failures repaired without target weakening.",
+    "run_id": "online-regret-domains-20261007"
+  },
+  "memory_policy": {
+    "recent_role_relevant_limit": 5,
+    "explicit_verified_lemma_ids": [],
+    "whole_history_default": false
+  },
+  "shadow_gate": {
+    "status": "pending",
+    "analyzed_trial_rows": 3,
+    "mismatches": [],
+    "replay_transitions": 0
+  },
+  "mutation_policy": {
+    "canonical_path_queue": true,
+    "cross_process_lock": true,
+    "same_file_serialized": true,
+    "disjoint_files_parallel": true
+  },
+  "autonomous_execution": {
+    "enabled": false,
+    "requires_deterministic_gates": true,
+    "requires_explicit_user_request": true
+  }
+}

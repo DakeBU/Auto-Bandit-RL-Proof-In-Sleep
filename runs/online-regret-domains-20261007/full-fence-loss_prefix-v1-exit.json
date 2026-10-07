@@ -1,0 +1,22 @@
+{
+  "command": [
+    "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe",
+    "-B",
+    "-X",
+    "utf8",
+    "tools/bandit.py",
+    "statement-fence",
+    "--declaration",
+    "RegretDomainsProbe.loss_prefix",
+    "--file",
+    "Tests\\OnlineLearningRegretDomainsCanary.lean",
+    "--source-assumption",
+    "theorem loss_prefix {X : Type*} (W : Set X)\n    (loss other : ℕ → ↥W → ℝ) (prediction : ℕ → ↥W) (u : ↥W) (T : ℕ)\n    (h : ∀ t < T, ∀ x : ↥W, loss t x = other t x) :\n    comparatorRegret loss prediction u T = comparatorRegret other prediction u T",
+    "--output",
+    "E:\\ABRL\\worktrees\\research-online-book\\runs\\online-regret-domains-20261007\\full-header-fences-v1\\loss_prefix.json"
+  ],
+  "cwd": "E:/ABRL/worktrees/research-online-book",
+  "exit_code": 0,
+  "seconds": 0.21,
+  "log_sha256": "37c9e6488802719fbf6dfdd220b6cc3076b01cc9dcd3fa68bf487c62d8beeb6c"
+}

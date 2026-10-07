@@ -1,0 +1,10 @@
+{
+  "embed": "def embed {X : Type*} (V W : Set X) (hVW : V ⊆ W) : ↥V → ↥W :=\n  fun u => ⟨u.val, hVW u.property⟩",
+  "sourceV": "def sourceV : Set ℝ := Set.Icc 0 1",
+  "outputW": "def outputW : Set ℝ := Set.Icc 0 2",
+  "domainLoss": "def domainLoss : ℕ → ↥outputW → ℝ := fun _ x => -x.val",
+  "output": "def output : ℕ → ↥outputW := fun _ => ⟨2, by norm_num [outputW]⟩",
+  "referenceOne": "def referenceOne : ↥outputW := ⟨1, by norm_num [outputW]⟩",
+  "referenceZero": "def referenceZero : ↥outputW := ⟨0, by norm_num [outputW]⟩",
+  "liftedComparators": "def liftedComparators : Set ↥outputW := {x | x.val ∈ sourceV}"
+}

@@ -1,0 +1,125 @@
+{
+  "schema_version": 1,
+  "mode": "shadow-read-only",
+  "analyzed_at": "2026-10-07T16:27:59+00:00",
+  "trials_path": "E:\\ABRL\\worktrees\\research-online-book\\runs\\online-regret-domains-20261007\\candidate-scoped-trials-v1.jsonl",
+  "trial_rows": 2,
+  "status_counts": {
+    "compiled": 2
+  },
+  "inferred_frontier": {
+    "selected_task": "ONLINE-REGRET-DOMAINS-20261007",
+    "selected_leaf": "ONLINE-REGRET-DOMAINS-20261007",
+    "source_status": "compiled",
+    "last_accepted_verifier": {
+      "trial_index": 1,
+      "time": "2026-10-07T16:08:44+00:00",
+      "task": "ONLINE-REGRET-DOMAINS-20261007",
+      "role": "lower",
+      "kind": "build",
+      "status": "compiled",
+      "lean": "Tests\\OnlineLearningRegretDomainsCanary.lean",
+      "notes": "Actual8typedcanaries/8fixturedefs,20namedkernel/10exactProps/10definition identities/10fullguards/3prespecifiedVALUE pairs. W/V modelmapping only;0newproductionmath; BODY/combined/reader/native/PR/chapter/Goal pending.",
+      "run_id": "online-regret-domains-20261007"
+    }
+  },
+  "memory_digest": {
+    "path": "E:\\ABRL\\worktrees\\research-online-book\\runs\\online-regret-domains-20261007\\memory-digest-shadow-v1.md",
+    "task": ""
+  },
+  "recorded_frontier": {
+    "schema_version": 1,
+    "record_id": "frontier-23b8b94f52585959",
+    "updated_at": "2026-10-07T16:27:59+00:00",
+    "root_objective": "Persistent Orabona Chapters1–16; bounded typed W/V Regret model mapping",
+    "current_leaf": {
+      "id": "ONLINE-REGRET-DOMAINS-20261007",
+      "kind": "lean",
+      "status": "gate-pending",
+      "statement": "theorem domain_gap_sum {X : Type*} (V W : Set X) (hVW : V ⊆ W) (loss : ℕ → ↥W → ℝ) (prediction : ℕ → ↥W) (u : ↥V) (T : ℕ) : comparatorRegret loss prediction (embed V W hVW u) T = ∑ t ∈ Finset.range T, (loss t (prediction t) - loss t (embed V W hVW u))",
+      "statement_hash": "050a5f1f69f3fd5ac7629a4c3f6f32cdafd356f3ca02446032778f8b1c903d06",
+      "declaration": "RegretDomainsProbe.domain_gap_sum",
+      "file": "Tests\\OnlineLearningRegretDomainsCanary.lean",
+      "source_status": "source-reviewed",
+      "dependencies": [
+        {
+          "kind": "lean",
+          "name": "BanditRL.OnlineLearning.comparatorRegret_eq_sum",
+          "status": "compiled"
+        },
+        {
+          "kind": "lean",
+          "name": "BanditRL.OnlineLearning.noRegret_of_vanishing_bound",
+          "status": "compiled"
+        },
+        {
+          "kind": "review",
+          "name": "source-body",
+          "status": "accepted"
+        }
+      ]
+    },
+    "dag": {
+      "nodes": [
+        {
+          "id": "ONLINE-REGRET-DOMAINS-20261007",
+          "kind": "lean",
+          "status": "gate-pending",
+          "dependencies": [
+            {
+              "kind": "lean",
+              "name": "BanditRL.OnlineLearning.comparatorRegret_eq_sum",
+              "status": "compiled"
+            },
+            {
+              "kind": "lean",
+              "name": "BanditRL.OnlineLearning.noRegret_of_vanishing_bound",
+              "status": "compiled"
+            },
+            {
+              "kind": "review",
+              "name": "source-body",
+              "status": "accepted"
+            }
+          ],
+          "dispatch_count": 0
+        }
+      ]
+    },
+    "last_accepted_verifier": {
+      "trial_index": 1,
+      "time": "2026-10-07T16:08:44+00:00",
+      "task": "ONLINE-REGRET-DOMAINS-20261007",
+      "role": "lower",
+      "kind": "build",
+      "status": "compiled",
+      "lean": "Tests\\OnlineLearningRegretDomainsCanary.lean",
+      "notes": "Actual8typedcanaries/8fixturedefs,20namedkernel/10exactProps/10definition identities/10fullguards/3prespecifiedVALUE pairs. W/V modelmapping only;0newproductionmath; BODY/combined/reader/native/PR/chapter/Goal pending.",
+      "run_id": "online-regret-domains-20261007"
+    },
+    "memory_policy": {
+      "recent_role_relevant_limit": 5,
+      "explicit_verified_lemma_ids": [],
+      "whole_history_default": false
+    },
+    "shadow_gate": {
+      "status": "pending",
+      "analyzed_trial_rows": 2,
+      "mismatches": [],
+      "replay_transitions": 0
+    },
+    "mutation_policy": {
+      "canonical_path_queue": true,
+      "cross_process_lock": true,
+      "same_file_serialized": true,
+      "disjoint_files_parallel": true
+    },
+    "autonomous_execution": {
+      "enabled": false,
+      "requires_deterministic_gates": true,
+      "requires_explicit_user_request": true
+    }
+  },
+  "mismatches": [],
+  "would_mutate": false
+}

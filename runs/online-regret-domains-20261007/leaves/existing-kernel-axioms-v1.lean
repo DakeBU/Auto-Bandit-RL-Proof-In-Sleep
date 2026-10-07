@@ -1,0 +1,9 @@
+import BanditRLProof.OnlineLearningRegret
+#check BanditRL.OnlineLearning.comparatorRegret
+#print axioms BanditRL.OnlineLearning.comparatorRegret
+#check BanditRL.OnlineLearning.NoRegret
+#print axioms BanditRL.OnlineLearning.NoRegret
+#check BanditRL.OnlineLearning.comparatorRegret_eq_sum
+#print axioms BanditRL.OnlineLearning.comparatorRegret_eq_sum
+#check BanditRL.OnlineLearning.noRegret_of_vanishing_bound
+#print axioms BanditRL.OnlineLearning.noRegret_of_vanishing_bound

@@ -1,0 +1,41 @@
+import Tests.OnlineLearningRegretDomainsCanary
+#check BanditRL.OnlineLearning.comparatorRegret_eq_sum
+#print axioms BanditRL.OnlineLearning.comparatorRegret_eq_sum
+#check BanditRL.OnlineLearning.noRegret_of_vanishing_bound
+#print axioms BanditRL.OnlineLearning.noRegret_of_vanishing_bound
+#check RegretDomainsProbe.domain_gap_sum
+#print axioms RegretDomainsProbe.domain_gap_sum
+#check RegretDomainsProbe.restriction_commutes
+#print axioms RegretDomainsProbe.restriction_commutes
+#check RegretDomainsProbe.proper_inclusion
+#print axioms RegretDomainsProbe.proper_inclusion
+#check RegretDomainsProbe.loss_prefix
+#print axioms RegretDomainsProbe.loss_prefix
+#check RegretDomainsProbe.zero_horizon
+#print axioms RegretDomainsProbe.zero_horizon
+#check RegretDomainsProbe.outside_prediction_and_negative_regret
+#print axioms RegretDomainsProbe.outside_prediction_and_negative_regret
+#check RegretDomainsProbe.same_prediction_two_comparators
+#print axioms RegretDomainsProbe.same_prediction_two_comparators
+#check RegretDomainsProbe.negative_game_noRegret
+#print axioms RegretDomainsProbe.negative_game_noRegret
+#check BanditRL.OnlineLearning.comparatorRegret
+#print axioms BanditRL.OnlineLearning.comparatorRegret
+#check BanditRL.OnlineLearning.NoRegret
+#print axioms BanditRL.OnlineLearning.NoRegret
+#check RegretDomainsProbe.embed
+#print axioms RegretDomainsProbe.embed
+#check RegretDomainsProbe.sourceV
+#print axioms RegretDomainsProbe.sourceV
+#check RegretDomainsProbe.outputW
+#print axioms RegretDomainsProbe.outputW
+#check RegretDomainsProbe.domainLoss
+#print axioms RegretDomainsProbe.domainLoss
+#check RegretDomainsProbe.output
+#print axioms RegretDomainsProbe.output
+#check RegretDomainsProbe.referenceOne
+#print axioms RegretDomainsProbe.referenceOne
+#check RegretDomainsProbe.referenceZero
+#print axioms RegretDomainsProbe.referenceZero
+#check RegretDomainsProbe.liftedComparators
+#print axioms RegretDomainsProbe.liftedComparators

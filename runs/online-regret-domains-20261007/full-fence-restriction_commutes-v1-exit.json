@@ -1,0 +1,22 @@
+{
+  "command": [
+    "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe",
+    "-B",
+    "-X",
+    "utf8",
+    "tools/bandit.py",
+    "statement-fence",
+    "--declaration",
+    "RegretDomainsProbe.restriction_commutes",
+    "--file",
+    "Tests\\OnlineLearningRegretDomainsCanary.lean",
+    "--source-assumption",
+    "theorem restriction_commutes {X : Type*} (V W : Set X) (hVW : V ⊆ W)\n    (loss : ℕ → ↥W → ℝ) (prediction : ℕ → ↥V) (u : ↥V) (T : ℕ) :\n    comparatorRegret (fun t v => loss t (embed V W hVW v)) prediction u T =\n      comparatorRegret loss (fun t => embed V W hVW (prediction t)) (embed V W hVW u) T",
+    "--output",
+    "E:\\ABRL\\worktrees\\research-online-book\\runs\\online-regret-domains-20261007\\full-header-fences-v1\\restriction_commutes.json"
+  ],
+  "cwd": "E:/ABRL/worktrees/research-online-book",
+  "exit_code": 0,
+  "seconds": 0.217,
+  "log_sha256": "c47d6f0db02636eca8d78f5d962981b42e166fde9dc908841f2ba0872f477f84"
+}

@@ -1,0 +1,9 @@
+{
+  "restriction_commutes": "  rfl",
+  "proper_inclusion": "  refine ⟨?_, ?_, ?_⟩\n  · intro x hx\n    change 0 ≤ x ∧ x ≤ 2\n    change 0 ≤ x ∧ x ≤ 1 at hx\n    exact ⟨hx.1, le_trans hx.2 (by norm_num)⟩\n  · norm_num [outputW]\n  · norm_num [sourceV]",
+  "loss_prefix": "  unfold comparatorRegret\n  congr 1\n  · apply Finset.sum_congr rfl\n    intro t ht\n    exact h t (Finset.mem_range.mp ht) (prediction t)\n  · apply Finset.sum_congr rfl\n    intro t ht\n    exact h t (Finset.mem_range.mp ht) u",
+  "zero_horizon": "  simp [comparatorRegret]",
+  "outside_prediction_and_negative_regret": "  norm_num [output, outputW, sourceV, comparatorRegret, domainLoss,\n    referenceOne, Finset.sum_range_succ]",
+  "same_prediction_two_comparators": "  norm_num [referenceZero, referenceOne, sourceV, comparatorRegret, domainLoss,\n    output, Finset.sum_range_succ]",
+  "negative_game_noRegret": "  apply noRegret_of_vanishing_bound liftedComparators domainLoss output (fun _ _ => 0)\n  · intro u hu\n    exact Filter.Eventually.of_forall (fun T => by\n      change comparatorRegret domainLoss output u T / (T : ℝ) ≤ 0\n      apply div_nonpos_of_nonpos_of_nonneg ?_ (Nat.cast_nonneg T)\n      rw [comparatorRegret_eq_sum]\n      apply Finset.sum_nonpos\n      intro t ht\n      change 0 ≤ u.val ∧ u.val ≤ 1 at hu\n      change -(2 : ℝ) - (-u.val) ≤ 0\n      linarith [hu.2])\n  · intro u hu\n    exact tendsto_const_nhds"
+}

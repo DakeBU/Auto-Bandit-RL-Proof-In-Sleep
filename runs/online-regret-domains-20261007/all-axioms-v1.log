@@ -1,0 +1,76 @@
+BanditRL.OnlineLearning.comparatorRegret_eq_sum.{u_1} {X : Type u_1} (loss : ℕ → X → ℝ) (prediction : ℕ → X) (u : X)
+  (T : ℕ) :
+  BanditRL.OnlineLearning.comparatorRegret loss prediction u T =
+    ∑ t ∈ Finset.range T, (loss t (prediction t) - loss t u)
+'BanditRL.OnlineLearning.comparatorRegret_eq_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.noRegret_of_vanishing_bound.{u_1} {X : Type u_1} (V : Set X) (loss : ℕ → X → ℝ)
+  (prediction : ℕ → X) (bound : X → ℕ → ℝ)
+  (hb :
+    ∀ u ∈ V, ∀ᶠ (T : ℕ) in Filter.atTop, BanditRL.OnlineLearning.comparatorRegret loss prediction u T / ↑T ≤ bound u T)
+  (hl : ∀ u ∈ V, Filter.Tendsto (bound u) Filter.atTop (nhds 0)) : BanditRL.OnlineLearning.NoRegret V loss prediction
+'BanditRL.OnlineLearning.noRegret_of_vanishing_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+RegretDomainsProbe.domain_gap_sum.{u_1} {X : Type u_1} (V W : Set X) (hVW : V ⊆ W) (loss : ℕ → ↑W → ℝ)
+  (prediction : ℕ → ↑W) (u : ↑V) (T : ℕ) :
+  BanditRL.OnlineLearning.comparatorRegret loss prediction (RegretDomainsProbe.embed V W hVW u) T =
+    ∑ t ∈ Finset.range T, (loss t (prediction t) - loss t (RegretDomainsProbe.embed V W hVW u))
+'RegretDomainsProbe.domain_gap_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+RegretDomainsProbe.restriction_commutes.{u_1} {X : Type u_1} (V W : Set X) (hVW : V ⊆ W) (loss : ℕ → ↑W → ℝ)
+  (prediction : ℕ → ↑V) (u : ↑V) (T : ℕ) :
+  BanditRL.OnlineLearning.comparatorRegret (fun t v => loss t (RegretDomainsProbe.embed V W hVW v)) prediction u T =
+    BanditRL.OnlineLearning.comparatorRegret loss (fun t => RegretDomainsProbe.embed V W hVW (prediction t))
+      (RegretDomainsProbe.embed V W hVW u) T
+'RegretDomainsProbe.restriction_commutes' depends on axioms: [propext, Classical.choice, Quot.sound]
+RegretDomainsProbe.proper_inclusion :
+  RegretDomainsProbe.sourceV ⊆ RegretDomainsProbe.outputW ∧
+    2 ∈ RegretDomainsProbe.outputW ∧ 2 ∉ RegretDomainsProbe.sourceV
+'RegretDomainsProbe.proper_inclusion' depends on axioms: [propext, Classical.choice, Quot.sound]
+RegretDomainsProbe.loss_prefix.{u_1} {X : Type u_1} (W : Set X) (loss other : ℕ → ↑W → ℝ) (prediction : ℕ → ↑W) (u : ↑W)
+  (T : ℕ) (h : ∀ t < T, ∀ (x : ↑W), loss t x = other t x) :
+  BanditRL.OnlineLearning.comparatorRegret loss prediction u T =
+    BanditRL.OnlineLearning.comparatorRegret other prediction u T
+'RegretDomainsProbe.loss_prefix' depends on axioms: [propext, Classical.choice, Quot.sound]
+RegretDomainsProbe.zero_horizon.{u_1} {X : Type u_1} (W : Set X) (loss : ℕ → ↑W → ℝ) (prediction : ℕ → ↑W) (u : ↑W) :
+  BanditRL.OnlineLearning.comparatorRegret loss prediction u 0 = 0
+'RegretDomainsProbe.zero_horizon' depends on axioms: [propext, Classical.choice, Quot.sound]
+RegretDomainsProbe.outside_prediction_and_negative_regret :
+  ↑(RegretDomainsProbe.output 0) ∈ RegretDomainsProbe.outputW ∧
+    ↑(RegretDomainsProbe.output 0) ∉ RegretDomainsProbe.sourceV ∧
+      BanditRL.OnlineLearning.comparatorRegret RegretDomainsProbe.domainLoss RegretDomainsProbe.output
+          RegretDomainsProbe.referenceOne 2 =
+        -2
+'RegretDomainsProbe.outside_prediction_and_negative_regret' depends on axioms: [propext, Classical.choice, Quot.sound]
+RegretDomainsProbe.same_prediction_two_comparators :
+  ↑RegretDomainsProbe.referenceZero ∈ RegretDomainsProbe.sourceV ∧
+    ↑RegretDomainsProbe.referenceOne ∈ RegretDomainsProbe.sourceV ∧
+      BanditRL.OnlineLearning.comparatorRegret RegretDomainsProbe.domainLoss RegretDomainsProbe.output
+            RegretDomainsProbe.referenceZero 2 =
+          -4 ∧
+        BanditRL.OnlineLearning.comparatorRegret RegretDomainsProbe.domainLoss RegretDomainsProbe.output
+            RegretDomainsProbe.referenceOne 2 =
+          -2
+'RegretDomainsProbe.same_prediction_two_comparators' depends on axioms: [propext, Classical.choice, Quot.sound]
+RegretDomainsProbe.negative_game_noRegret :
+  BanditRL.OnlineLearning.NoRegret RegretDomainsProbe.liftedComparators RegretDomainsProbe.domainLoss
+    RegretDomainsProbe.output
+'RegretDomainsProbe.negative_game_noRegret' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.comparatorRegret.{u_1} {X : Type u_1} (loss : ℕ → X → ℝ) (prediction : ℕ → X) (u : X) (T : ℕ) :
+  ℝ
+'BanditRL.OnlineLearning.comparatorRegret' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.NoRegret.{u_1} {X : Type u_1} (V : Set X) (loss : ℕ → X → ℝ) (prediction : ℕ → X) : Prop
+'BanditRL.OnlineLearning.NoRegret' depends on axioms: [propext, Classical.choice, Quot.sound]
+RegretDomainsProbe.embed.{u_1} {X : Type u_1} (V W : Set X) (hVW : V ⊆ W) : ↑V → ↑W
+'RegretDomainsProbe.embed' does not depend on any axioms
+RegretDomainsProbe.sourceV : Set ℝ
+'RegretDomainsProbe.sourceV' depends on axioms: [propext, Classical.choice, Quot.sound]
+RegretDomainsProbe.outputW : Set ℝ
+'RegretDomainsProbe.outputW' depends on axioms: [propext, Classical.choice, Quot.sound]
+RegretDomainsProbe.domainLoss : ℕ → ↑RegretDomainsProbe.outputW → ℝ
+'RegretDomainsProbe.domainLoss' depends on axioms: [propext, Classical.choice, Quot.sound]
+RegretDomainsProbe.output : ℕ → ↑RegretDomainsProbe.outputW
+'RegretDomainsProbe.output' depends on axioms: [propext, Classical.choice, Quot.sound]
+RegretDomainsProbe.referenceOne : ↑RegretDomainsProbe.outputW
+'RegretDomainsProbe.referenceOne' depends on axioms: [propext, Classical.choice, Quot.sound]
+RegretDomainsProbe.referenceZero : ↑RegretDomainsProbe.outputW
+'RegretDomainsProbe.referenceZero' depends on axioms: [propext, Classical.choice, Quot.sound]
+RegretDomainsProbe.liftedComparators : Set ↑RegretDomainsProbe.outputW
+'RegretDomainsProbe.liftedComparators' depends on axioms: [propext, Classical.choice, Quot.sound]

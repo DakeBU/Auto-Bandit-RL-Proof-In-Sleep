@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "declaration": "RegretDomainsProbe.domain_gap_sum",
+  "file": "Tests/OnlineLearningRegretDomainsCanary.lean",
+  "statement": "theorem domain_gap_sum {X : Type*} (V W : Set X) (hVW : V ⊆ W) (loss : ℕ → ↥W → ℝ) (prediction : ℕ → ↥W) (u : ↥V) (T : ℕ) : comparatorRegret loss prediction (embed V W hVW u) T = ∑ t ∈ Finset.range T, (loss t (prediction t) - loss t (embed V W hVW u))",
+  "statement_hash": "050a5f1f69f3fd5ac7629a4c3f6f32cdafd356f3ca02446032778f8b1c903d06",
+  "source_assumptions": [
+    "theorem domain_gap_sum {X : Type*} (V W : Set X) (hVW : V ⊆ W)\n    (loss : ℕ → ↥W → ℝ) (prediction : ℕ → ↥W) (u : ↥V) (T : ℕ) :\n    comparatorRegret loss prediction (embed V W hVW u) T =\n      ∑ t ∈ Finset.range T, (loss t (prediction t) - loss t (embed V W hVW u))"
+  ],
+  "created_at": "2026-10-07T16:08:40+00:00"
+}

@@ -1,0 +1,22 @@
+{
+  "command": [
+    "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe",
+    "-B",
+    "-X",
+    "utf8",
+    "tools/bandit.py",
+    "statement-fence",
+    "--declaration",
+    "RegretDomainsProbe.domain_gap_sum",
+    "--file",
+    "Tests\\OnlineLearningRegretDomainsCanary.lean",
+    "--source-assumption",
+    "theorem domain_gap_sum {X : Type*} (V W : Set X) (hVW : V ⊆ W)\n    (loss : ℕ → ↥W → ℝ) (prediction : ℕ → ↥W) (u : ↥V) (T : ℕ) :\n    comparatorRegret loss prediction (embed V W hVW u) T =\n      ∑ t ∈ Finset.range T, (loss t (prediction t) - loss t (embed V W hVW u))",
+    "--output",
+    "E:\\ABRL\\worktrees\\research-online-book\\runs\\online-regret-domains-20261007\\full-header-fences-v1\\domain_gap_sum.json"
+  ],
+  "cwd": "E:/ABRL/worktrees/research-online-book",
+  "exit_code": 0,
+  "seconds": 0.228,
+  "log_sha256": "f05807a1eafef0fea61f66c095d564ee9850e59c5d259f0aa97b531fb087c625"
+}

@@ -1,0 +1,16 @@
+BanditRL.OnlineLearning.comparatorRegret.{u_1} {X : Type u_1} (loss : ℕ → X → ℝ) (prediction : ℕ → X) (u : X) (T : ℕ) :
+  ℝ
+'BanditRL.OnlineLearning.comparatorRegret' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.NoRegret.{u_1} {X : Type u_1} (V : Set X) (loss : ℕ → X → ℝ) (prediction : ℕ → X) : Prop
+'BanditRL.OnlineLearning.NoRegret' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.comparatorRegret_eq_sum.{u_1} {X : Type u_1} (loss : ℕ → X → ℝ) (prediction : ℕ → X) (u : X)
+  (T : ℕ) :
+  BanditRL.OnlineLearning.comparatorRegret loss prediction u T =
+    ∑ t ∈ Finset.range T, (loss t (prediction t) - loss t u)
+'BanditRL.OnlineLearning.comparatorRegret_eq_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.noRegret_of_vanishing_bound.{u_1} {X : Type u_1} (V : Set X) (loss : ℕ → X → ℝ)
+  (prediction : ℕ → X) (bound : X → ℕ → ℝ)
+  (hb :
+    ∀ u ∈ V, ∀ᶠ (T : ℕ) in Filter.atTop, BanditRL.OnlineLearning.comparatorRegret loss prediction u T / ↑T ≤ bound u T)
+  (hl : ∀ u ∈ V, Filter.Tendsto (bound u) Filter.atTop (nhds 0)) : BanditRL.OnlineLearning.NoRegret V loss prediction
+'BanditRL.OnlineLearning.noRegret_of_vanishing_bound' depends on axioms: [propext, Classical.choice, Quot.sound]

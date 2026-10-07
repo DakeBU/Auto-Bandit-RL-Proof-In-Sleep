@@ -154,3 +154,5 @@ import Tests.OnlineLearningFoundationsCanary
 import Tests.OnlineLearningFTLSharpCanary
 
 import Tests.OnlineLearningFTLStateCanary
+
+import Tests.OnlineLearningRegretDomainsCanary

@@ -1,0 +1,179 @@
+{
+  "status": "actual-current-panels-and-existing-catalog-captured",
+  "panels": [
+    {
+      "heading": "Comparator regret with separate action and comparison domains",
+      "mathContainers": 1,
+      "mathErrors": 0,
+      "selector": "article.source-theorem-card",
+      "index": 7,
+      "file": "typed-domain-source-card-v1.png",
+      "geometry": {
+        "width": 1057.21875,
+        "height": 1915.734375,
+        "left": 343.390625,
+        "right": 1400.609375,
+        "scrollWidth": 1057,
+        "clientWidth": 1057,
+        "viewportWidth": 1440
+      },
+      "actualViewport": {
+        "width": 1440,
+        "height": 2266
+      },
+      "safeBelowStickyNavigation": true
+    },
+    {
+      "heading": "The same signed regret as a sum of gaps",
+      "mathContainers": 1,
+      "mathErrors": 0,
+      "selector": "#decl-503de9c36a43-teaching",
+      "index": 0,
+      "file": "public-note-1-v1.png",
+      "geometry": {
+        "width": 1028.4375,
+        "height": 3173.765625,
+        "left": 357.78125,
+        "right": 1386.21875,
+        "scrollWidth": 1026,
+        "clientWidth": 1026,
+        "viewportWidth": 1440
+      },
+      "actualViewport": {
+        "width": 1440,
+        "height": 3524
+      },
+      "safeBelowStickyNavigation": true
+    },
+    {
+      "heading": "An eventual upper-bound adapter",
+      "mathContainers": 1,
+      "mathErrors": 0,
+      "selector": "#decl-25b65257c6a5-teaching",
+      "index": 0,
+      "file": "public-note-2-v1.png",
+      "geometry": {
+        "width": 1028.4375,
+        "height": 3185.09375,
+        "left": 357.78125,
+        "right": 1386.21875,
+        "scrollWidth": 1026,
+        "clientWidth": 1026,
+        "viewportWidth": 1440
+      },
+      "actualViewport": {
+        "width": 1440,
+        "height": 3536
+      },
+      "safeBelowStickyNavigation": true
+    }
+  ],
+  "modulePanels": [
+    {
+      "id": "decl-ff75aca034cd",
+      "file": "module-existing-declaration-1-v1.png",
+      "moduleURL": "http://127.0.0.1:58636/modules/banditrlproof-onlinelearningregret/index.html",
+      "geometry": {
+        "width": 1059.21875,
+        "height": 486.25,
+        "left": 342.390625,
+        "right": 1401.609375,
+        "scrollWidth": 1057,
+        "clientWidth": 1057,
+        "viewportWidth": 1440
+      },
+      "actualBuiltinWrapButtonClicked": true,
+      "wrappedCode": {
+        "scrollWidth": 1030,
+        "clientWidth": 1030,
+        "whiteSpace": "pre-wrap",
+        "text": "noncomputable def comparatorRegret {X : Type*} (loss : ℕ → X → ℝ) (prediction : ℕ → X) (u : X) (T : ℕ) : ℝ"
+      },
+      "fullExactTypeAlsoAuditedByHTMLAndKernel": true
+    },
+    {
+      "id": "decl-5be2d9f6ff26",
+      "file": "module-existing-declaration-2-v1.png",
+      "moduleURL": "http://127.0.0.1:58636/modules/banditrlproof-onlinelearningregret/index.html",
+      "geometry": {
+        "width": 1059.21875,
+        "height": 486.25,
+        "left": 342.390625,
+        "right": 1401.609375,
+        "scrollWidth": 1057,
+        "clientWidth": 1057,
+        "viewportWidth": 1440
+      },
+      "actualBuiltinWrapButtonClicked": true,
+      "wrappedCode": {
+        "scrollWidth": 1030,
+        "clientWidth": 1030,
+        "whiteSpace": "pre-wrap",
+        "text": "def NoRegret {X : Type*} (V : Set X) (loss : ℕ → X → ℝ) (prediction : ℕ → X) : Prop"
+      },
+      "fullExactTypeAlsoAuditedByHTMLAndKernel": true
+    },
+    {
+      "id": "decl-503de9c36a43",
+      "file": "module-existing-declaration-3-v1.png",
+      "moduleURL": "http://127.0.0.1:58636/modules/banditrlproof-onlinelearningregret/index.html",
+      "geometry": {
+        "width": 1059.21875,
+        "height": 506.828125,
+        "left": 342.390625,
+        "right": 1401.609375,
+        "scrollWidth": 1057,
+        "clientWidth": 1057,
+        "viewportWidth": 1440
+      },
+      "actualBuiltinWrapButtonClicked": true,
+      "wrappedCode": {
+        "scrollWidth": 1030,
+        "clientWidth": 1030,
+        "whiteSpace": "pre-wrap",
+        "text": "theorem comparatorRegret_eq_sum {X : Type*} (loss : ℕ → X → ℝ) (prediction : ℕ → X) (u : X) (T : ℕ) : comparatorRegret loss prediction u T = ∑ t ∈ Finset.range T, (loss t (prediction t) - loss t u)"
+      },
+      "fullExactTypeAlsoAuditedByHTMLAndKernel": true
+    },
+    {
+      "id": "decl-25b65257c6a5",
+      "file": "module-existing-declaration-4-v1.png",
+      "moduleURL": "http://127.0.0.1:58636/modules/banditrlproof-onlinelearningregret/index.html",
+      "geometry": {
+        "width": 1059.21875,
+        "height": 527.40625,
+        "left": 342.390625,
+        "right": 1401.609375,
+        "scrollWidth": 1057,
+        "clientWidth": 1057,
+        "viewportWidth": 1440
+      },
+      "actualBuiltinWrapButtonClicked": true,
+      "wrappedCode": {
+        "scrollWidth": 1030,
+        "clientWidth": 1030,
+        "whiteSpace": "pre-wrap",
+        "text": "theorem noRegret_of_vanishing_bound {X : Type*} (V : Set X) (loss : ℕ → X → ℝ) (prediction : ℕ → X) (bound : X → ℕ → ℝ) (hb : ∀ u ∈ V, ∀ᶠ T in atTop, comparatorRegret loss prediction u T / T ≤ bound u T) (hl : ∀ u ∈ V, Tendsto (bound u) atTop (nhds 0)) : NoRegret V loss prediction"
+      },
+      "fullExactTypeAlsoAuditedByHTMLAndKernel": true
+    }
+  ],
+  "images": [
+    "reader-first-viewport-v1.png",
+    "typed-domain-source-card-v1.png",
+    "public-note-1-v1.png",
+    "public-note-2-v1.png",
+    "module-existing-declaration-1-v1.png",
+    "module-existing-declaration-2-v1.png",
+    "module-existing-declaration-3-v1.png",
+    "module-existing-declaration-4-v1.png"
+  ],
+  "actualSourceGuideMathContainers": 11,
+  "newPublicNoteMathContainers": 2,
+  "sourceHorizontalScrollers": [],
+  "errors": [],
+  "failed": [],
+  "url": "http://127.0.0.1:58636/chapters/online-foundations/index.html",
+  "profilePreserved": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-regret-domains-playwright-v1-profile",
+  "generatedSiteFilesUnmodified": true
+}
