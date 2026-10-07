@@ -290,3 +290,18 @@ The pinned snapshot contains explicit Comparator configurations for
 That verifies those source challenges in their own semantics; it still does not
 turn them into bandit/RL results. The ABRL experiment/reduction gate remains
 mandatory.
+
+## Additional audited status
+
+The Gaussian-information, noiseless-regression, memory-precision and soft-channel
+clusters all have explicit Comparator-backed endpoints in the pinned OpenAI
+snapshot. This raises their value as proof sources, but **not** their semantic
+status inside ABRL: they remain technical substrates until an ABRL experiment or
+feedback-model reduction is proved.
+
+The October 5 turn-based stochastic mean-payoff-games result is recorded as a
+manuscript-only RL-adjacent benchmark in the current audit. It must remain
+separate from MDP/RL routes until player quantifiers, transition semantics,
+horizon/average-reward objective, and policy randomization are matched to the
+ABRL API.
+
