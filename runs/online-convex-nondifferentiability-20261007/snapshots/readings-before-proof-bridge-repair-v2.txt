@@ -4649,16 +4649,28 @@
         "summary": "Forward obtain an actual positive-radius ball in U and restrict genuine finite values/all-pairs bounds; shared norm-ball proof perturbs along the normalized given support. Reverse construct actual global supports at BOTH x and y from proper convexity and interior membership, certify finite EReal conversion, apply both global support inequalities and Cauchy-Schwarz/two signs to obtain the same-L absolute bound. No assumed norm conclusion or support-existence oracle. For the adjacent unnumbered example: Reuse convexity of the real norm through the actual first-coordinate linear map. If the plane function had an ambient derivative at x0=0, compose along the smooth horizontal curve t->x+t*e1: its value is |t|, contradicting the actual scalar-absolute-value nondifferentiability theorem at0. True closed-segment convex-combination coordinates give x0=0 for EVERY member, yielding the same exact source terminal.",
         "steps": [
           {
-            "title": "Forward: finite values and perturb every support",
-            "detail": "At an interior point properness excludes bottom and domain membership excludes top, yielding f(x)=coe(toReal f(x)). SourceLipschitzOn separately requires actual finite witnesses on its set. Choose a positive radius with ball(x,r) subsetU. The earlier norm-ball theorem uses z=x+t g with t=r/(2||g||) for g≠0; source support and Lipschitz give t||g||²≤L t||g||. The zero support case uses L≥0.",
-            "math": "\\begin{gathered}f(x)\\in\\mathbb R\\quad(x\\in U)\\\\\\|g\\|\\le L\\end{gathered}",
-            "fallback": "No arbitrary representative at an infinite value. The actual perturbation proof is reused, not an assumed stability consumer."
+            "title": "Finite values prevent an infinity projection shortcut",
+            "detail": "At an interior point properness excludes bottom and domain membership excludes top, yielding f(x)=coe(toReal f(x)). SourceLipschitzOn separately requires actual finite witnesses on its set.",
+            "math": "f(x)\\in\\mathbb R\\quad(x\\in U)",
+            "fallback": "No arbitrary representative at an infinite value."
           },
           {
-            "title": "Reverse: produce both supports and bound both differences",
-            "detail": "The existing proper-convex interior theorem constructs gx∈∂f(x) and gy∈∂f(y). No subgradient-existence hypothesis is added. Both support inequalities are ambient global. Finite EReal conversion gives ordinary real inequalities. Negative inner products are bounded by their absolute value, Cauchy-Schwarz and L times the actual displacement norm. The two signs give the absolute bound for every pair.",
-            "math": "\\begin{gathered}f(x)+\\langle g_x,y-x\\rangle\\le f(y),\\quad f(y)+\\langle g_y,x-y\\rangle\\le f(x)\\\\-L\\|x-y\\|\\le f(x)-f(y)\\le L\\|x-y\\|\\end{gathered}",
-            "fallback": "The producer supplies both supports from the source assumptions. Full converse with the same L, without a selected-gradient shortcut."
+            "title": "Perturb along every given support",
+            "detail": "Choose a positive radius with ball(x,r) subsetU. The earlier norm-ball theorem uses z=x+t g with t=r/(2||g||) for g≠0; source support and Lipschitz give t||g||²≤L t||g||. The zero support case uses L≥0.",
+            "math": "\\|g\\|\\le L",
+            "fallback": "The actual perturbation proof is reused, not an assumed stability consumer."
+          },
+          {
+            "title": "Derive actual source supports at x and y",
+            "detail": "The existing proper-convex interior theorem constructs gx∈∂f(x) and gy∈∂f(y). No subgradient-existence hypothesis is added. Both support inequalities are ambient global.",
+            "math": "f(x)+\\langle g_x,y-x\\rangle\\le f(y),\\quad f(y)+\\langle g_y,x-y\\rangle\\le f(x)",
+            "fallback": "The producer supplies both supports from the source assumptions."
+          },
+          {
+            "title": "Bound both real differences",
+            "detail": "Finite EReal conversion gives ordinary real inequalities. Negative inner products are bounded by their absolute value, Cauchy-Schwarz and L times the actual displacement norm. The two signs give the absolute bound for every pair.",
+            "math": "-L\\|x-y\\|\\le f(x)-f(y)\\le L\\|x-y\\|",
+            "fallback": "Full converse with the same L, without a selected-gradient shortcut."
           },
           {
             "title": "Pull global convexity through the first coordinate",
