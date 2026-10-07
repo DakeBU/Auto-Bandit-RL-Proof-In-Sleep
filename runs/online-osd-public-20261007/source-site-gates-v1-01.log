@@ -1,0 +1,20 @@
+81a497694ebcadad9875352868cbaae7545d13f7
+contributor-exact-v1-01 exit 1 seconds 0.125
+Failure tail only; full raw output is retained in contributor-exact-v1-01.log
+CONTRIBUTOR CONTRACT FAILED
+ - research-wiki\contribution-contracts\online-osd-public-20261007.json: progress_updates.teaching_route must start with updated: or no-change-with-reason:
+ - research-wiki\contribution-contracts\online-osd-public-20261007.json: progress_updates.results_ledger must start with updated: or no-change-with-reason:
+ - research-wiki\contribution-contracts\online-osd-public-20261007.json: progress_updates.roadmap must start with updated: or no-change-with-reason:
+contributor base: 2ee95f4c340266847ae577a8e018f5bbf55451b9
+changed paths: 414
+affected production paths: 3
+changed contribution contracts: 1
+
+Traceback (most recent call last):
+  File "runs/online-osd-public-20261007/source-site-gates-v1.py", line 5, in <module>
+    gate('contributor-exact-v1-01',sys.executable,'-B','-X','utf8','tools/check_contributor_contract.py','--base',BASE)
+  File "E:\ABRL\worktrees\research-online-book\runs\online-osd-public-20261007\common_v1.py", line 12, in gate
+    def gate(label,*args):subprocess.run([sys.executable,'-B','-X','utf8',str(RUN/'run-command.py'),label,*map(str,args)],check=True)
+  File "C:\Users\admin\AppData\Local\Programs\Python\Python38\lib\subprocess.py", line 516, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe', '-B', '-X', 'utf8', 'E:\\ABRL\\worktrees\\research-online-book\\runs\\online-osd-public-20261007\\run-command.py', 'contributor-exact-v1-01', 'C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe', '-B', '-X', 'utf8', 'tools/check_contributor_contract.py', '--base', '2ee95f4c340266847ae577a8e018f5bbf55451b9']' returned non-zero exit status 1.

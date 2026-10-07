@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineSubgradientDescent.one_step",
+  "file": "tmp/osd-causality-target-one_step.lean",
+  "statement": "theorem one_step (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (t : ℕ) (hη : 0 < η t) (hloss : SubdifferentiableOn V (loss t)) (u : E) (hu : u ∈ V.carrier) : (loss t (iterate V η loss x₁ t)).toReal - (loss t u).toReal ≤ (‖iterate V η loss x₁ t - u‖ ^ 2 - ‖iterate V η loss x₁ (t + 1) - u‖ ^ 2) / (2 * η t) + η t / 2 * ‖currentSubgradient (loss t) (iterate V η loss x₁ t)‖ ^ 2",
+  "statement_hash": "09632df117e949389c385f2d161f860a2acdfbbd35436540c09ee79f0f4b7cd2",
+  "source_assumptions": [],
+  "created_at": "2026-10-04T05:45:36+00:00"
+}

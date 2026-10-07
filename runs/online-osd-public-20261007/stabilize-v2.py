@@ -1,0 +1,17 @@
+"""Accept exact scoped type contract only after distinct repaired-context review."""
+from common_v2 import *
+fixed();passed('repair-neutral-comparison-v3-01');r=load(RUN/'source-contract-receipt-v2.json')
+assert r['actor']['task']=='/root/source_reviewer' and r['verdict'] in ['accepted','accepted-with-explicit-delta']
+assert sha(r['report'])==r['report_sha256']
+for k in ['M1','M3','M4']:assert r['repair_verdict'][k]['verdict']=='satisfied',k
+for k in ['required_mathematical_repairs','mathematical_repairs','required_metadata_repairs']:assert not r.get(k,[]),k
+reviewed={x['path']:x['sha256'] for x in r['reviewed_files']};rows=[]
+for x in load(RUN/'source-contract-inputs-v2.json')['rows']:
+ assert reviewed[x['path']]==x['sha256']==sha(x['path']),x['path'];rows.append(x)
+write(RUN/'contract-reviewed-bindings-v2.json',dict(status='passed',rows=rows,complete15_targets=True,separate_M1_M3_M4_satisfied=True,original_faulty_metadata_rejected_contract_and_failed_comparison_preserved=True))
+write(RUN/'stabilized-decision-v2.json',dict(stage='stabilized',mathematical_contract_version=1,effective_raw_metadata_version=2,neutral_context_version=2,compiled_comparison_version=3,effective_headers='headers-v2.json',source_review='source-contract-receipt-v2.json',source_review_sha256=sha(RUN/'source-contract-receipt-v2.json'),PUBLIC_frozen=True,CANARY_frozen=True,retained_proofs=15,new_proofs=0,bodies_preexist_current_draft=True,dependency_ready=True,source_package_accepted=False,chapter_complete=False,goal_complete=False))
+native('metadata-repair-trial-v2','trial-log','--task',TASK,'--role','middle','--kind','attempt','--status','failed','--run-id',RUN.name,'--attempt-id','OSD-METADATA-V1','--statement-hash',load(CONTRACT/'native-statement-fingerprints-v1.json')['lemma_2_31'],'--verifier-evidence',RUN/'neutral-comparison-repair-v3.json','--harness','hierarchical','--progress-class','diagnostic','--error-signature','Raw header truncation; renderer environment; missing neutral FD; independently named recursion comparison','--notes','Original failures and rejected source contract preserved. Public/canary bodies and all actual15 headers unchanged; metadata repairs independently reviewed M1/M3/M4. No new mathematical proof progress.')
+event('stabilized',dict(decision=(RUN/'stabilized-decision-v2.json').as_posix(),separate_M1_M3_M4_satisfied=True,existing_bodies_preexist_current_review=True,new_proofs=0),attempt='v2')
+event('proving',dict(route='Audit unchanged actual global support/finite-loss/projected recursion -> single step -> same-run telescoping/weighted potential -> fixed variable tuned guarantees',PUBLIC_frozen=True,CANARY_frozen=True,retained_proofs=15,new_proofs=0),attempt='v2')
+write(RUN/'30_worker-route-v2.md','Worker /root same-model staged formalizer/integrator, not independent reviewer. Complete15 actual headers/scoped types are frozen after distinct neutral2 reconstruction, source contract2 and separate M1/M3/M4 repairs. Existing PUBLIC/CANARY byte-identical, proofs predate this draft. Focused build then53 named/kernel audits15 guards/actual value-dependency audit. Zero new proofs/definitions. Canonical choice only, generic finite-history policy family and chapters separately REQUIRED.')
+print('Exact existing15 scoped targets stabilized after current distinct repaired-context review; current focused BODY/canary/kernel/value gates permitted, new proofs zero.')

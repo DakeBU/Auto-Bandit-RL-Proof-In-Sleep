@@ -1,0 +1,16 @@
+"""Stabilize exact preexisting public targets only after distinct current source review."""
+from common_v2 import *
+fixed();r=load(RUN/'source-contract-receipt-v1.json')
+assert r['actor']['task']=='/root/source_reviewer' and r['verdict'] in ['accepted','accepted-with-explicit-delta']
+assert r['repair_verdict']['M1']['verdict']=='satisfied' and sha(r['report'])==r['report_sha256']
+for key in ['required_mathematical_repairs','mathematical_repairs','required_metadata_repairs']:assert not r.get(key,[]),key
+reviewed={x['path']:x['sha256'] for x in r['reviewed_files']};rows=[]
+for x in load(RUN/'source-contract-inputs-v1.json')['rows']:
+ assert reviewed[x['path']]==x['sha256']==sha(x['path']),x['path'];rows.append(x)
+write(RUN/'contract-reviewed-bindings-v1.json',dict(status='passed',rows=rows,complete15_targets=True,separate_M1_satisfied=True,original_faulty_v1_metadata_preserved=True))
+write(RUN/'stabilized-decision-v1.json',dict(stage='stabilized',mathematical_contract_version=1,effective_raw_metadata_version=2,effective_headers='headers-v2.json',source_review='source-contract-receipt-v1.json',source_review_sha256=sha(RUN/'source-contract-receipt-v1.json'),PUBLIC_frozen=True,CANARY_frozen=True,retained_proofs=15,new_proofs=0,bodies_preexist_current_draft=True,dependency_ready=True,source_package_accepted=False,chapter_complete=False,goal_complete=False))
+native('metadata-repair-trial-v1','trial-log','--task',TASK,'--role','middle','--kind','attempt','--status','failed','--run-id',RUN.name,'--attempt-id','OSD-METADATA-V1','--statement-hash',load(CONTRACT/'native-statement-fingerprints-v1.json')['lemma_2_31'],'--verifier-evidence',RUN/'metadata-repairs-v2.json','--harness','hierarchical','--progress-class','diagnostic','--error-signature','Raw extractor stopped at E:=E; source renderer defaultPython missing pypdfium2','--notes','Pre-stabilization metadata defects only; exact PUBLIC/CANARY/native15 targets unchanged. Original faulty raw/header draft and actual environment failure retained; full v2 actual headers independently match native parser, separately reviewed M1. No mathematical proof progress.')
+event('stabilized',dict(decision=(RUN/'stabilized-decision-v1.json').as_posix(),separate_M1_satisfied=True,existing_bodies_preexist_current_review=True,new_proofs=0))
+event('proving',dict(route='Audit unchanged actual global support/finite-loss/projected recursion -> single step -> same-run telescoping/weighted potential -> fixed variable tuned guarantees',PUBLIC_frozen=True,CANARY_frozen=True,retained_proofs=15,new_proofs=0))
+write(RUN/'30_worker-route-v1.md','Worker /root same-model staged formalizer/integrator, not independent reviewer. Current source-reviewed complete15 headers and explicit raw-M1 metadata repair frozen. Existing actual PUBLIC/CANARY remain byte-identical; focused build then actual full named/kernel/header/value-dependency audit. No tactics/new proofs/wrappers. Canonical choice is one permitted source algorithm; generic legal finite-history policy family separately REQUIRED. Fixed/variable negative residual and same eta-dependent tuned trajectory preserved. No chapter/Goal or main/live claim.')
+print('Exact existing15 producer targets stabilized; current real focused BODY/canary/kernel/value gates now permitted, new proofs zero.')

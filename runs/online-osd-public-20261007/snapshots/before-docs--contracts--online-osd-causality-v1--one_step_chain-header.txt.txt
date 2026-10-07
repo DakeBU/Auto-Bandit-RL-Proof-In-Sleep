@@ -1,0 +1,12 @@
+theorem one_step_chain (V : Domain (E := E)) (η : ℕ → ℝ)
+    (loss : ℕ → E → EReal) (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (t : ℕ)
+    (hη : 0 < η t) (hloss : SubdifferentiableOn V (loss t))
+    (u : E) (hu : u ∈ V.carrier) :
+    η t * ((loss t (iterate V η loss x₁ t)).toReal - (loss t u).toReal) ≤
+      η t * inner ℝ (currentSubgradient (loss t) (iterate V η loss x₁ t))
+        (iterate V η loss x₁ t - u) ∧
+    η t * inner ℝ (currentSubgradient (loss t) (iterate V η loss x₁ t))
+        (iterate V η loss x₁ t - u) ≤
+      ‖iterate V η loss x₁ t - u‖ ^ 2 / 2 -
+      ‖iterate V η loss x₁ (t + 1) - u‖ ^ 2 / 2 +
+      (η t) ^ 2 / 2 * ‖currentSubgradient (loss t) (iterate V η loss x₁ t)‖ ^ 2
