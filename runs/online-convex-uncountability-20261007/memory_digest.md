@@ -1,0 +1,1 @@
+PR177 exact example accepted/delivered only; countability implication remained REQUIRED. New two-header cardinality target draft, same real2 definition/producers, no proof/claim of chapter closure. Retrieve actual namespaces before tactic work; single pullback/subset route.

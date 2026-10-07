@@ -1,0 +1,9 @@
+@Set.countable_singleton : ∀ {α : Type u_1} (a : α), {a}.Countable
+@Set.Countable.union : ∀ {α : Type u_1} {s t : Set α}, s.Countable → t.Countable → (s ∪ t).Countable
+@differentiableAt_id : ∀ {𝕜 : Type u_1} [inst : NontriviallyNormedField 𝕜] {E : Type u_2} [inst_1 : AddCommGroup E]
+  [inst_2 : Module 𝕜 E] [inst_3 : TopologicalSpace E] {x : E}, DifferentiableAt 𝕜 id x
+@DifferentiableAt.abs : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E] {f : E → ℝ} {x : E},
+  DifferentiableAt ℝ f x → f x ≠ 0 → DifferentiableAt ℝ (fun x => |f x|) x
+PiLp.single_apply : ∀ (p : ENNReal) (𝕜 : Type u_1) {ι : Type u_2} [inst : DecidableEq ι] [inst_1 : Zero 𝕜] (i : ι)
+  (a : 𝕜) (j : ι), (PiLp.single p i a).ofLp j = if j = i then a else 0
+@Set.Countable.mono : ∀ {α : Type u_1} {s₁ s₂ : Set α}, s₁ ⊆ s₂ → s₂.Countable → s₁.Countable

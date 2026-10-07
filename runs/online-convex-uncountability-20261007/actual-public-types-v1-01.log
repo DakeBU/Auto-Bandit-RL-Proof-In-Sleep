@@ -1,0 +1,14 @@
+BanditRL.OnlineConvex.coordinate_segment_not_countable : ¬(segment ℝ 0 (PiLp.single 2 1 1)).Countable
+BanditRL.OnlineConvex.convex_uncountable_nondifferentiability : ConvexOn ℝ Set.univ
+    BanditRL.OnlineConvex.coordinateAbsolute ∧
+  ¬{x | ¬DifferentiableAt ℝ BanditRL.OnlineConvex.coordinateAbsolute x}.Countable
+ConvexUncountabilityProbe.segment_nonsmooth_intersection_not_countable : ¬(segment ℝ 0 (PiLp.single 2 1 1) ∩
+      {x | ¬DifferentiableAt ℝ BanditRL.OnlineConvex.coordinateAbsolute x}).Countable
+ConvexUncountabilityProbe.endpoint_pair_countable_and_distinct : {0, PiLp.single 2 1 1}.Countable ∧
+  0 ≠ PiLp.single 2 1 1
+ConvexUncountabilityProbe.scalar_absolute_nonsmooth_locus_countable : {x |
+    ¬DifferentiableAt ℝ (fun t => |t|) x}.Countable
+ConvexUncountabilityProbe.countable_exception_set_misses_nonsmooth_point : ∀ (S : Set (EuclideanSpace ℝ (Fin 2))),
+  S.Countable → ∃ x ∉ S, ¬DifferentiableAt ℝ BanditRL.OnlineConvex.coordinateAbsolute x
+def BanditRL.OnlineConvex.coordinateAbsolute : EuclideanSpace ℝ (Fin 2) → ℝ :=
+fun x => |x.ofLp 0|

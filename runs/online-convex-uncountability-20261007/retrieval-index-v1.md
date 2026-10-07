@@ -1,0 +1,1 @@
+Source ORABONA-V10-CH2-UNNUMBERED-UNCOUNTABILITY; pinned real Cardinality and Set Countable; existing OnlineConvexNondifferentiability producers, no local nonsmooth-countability theorem found in first search. Reference cards/readiness probes pending actual execution; no external compatible library added.

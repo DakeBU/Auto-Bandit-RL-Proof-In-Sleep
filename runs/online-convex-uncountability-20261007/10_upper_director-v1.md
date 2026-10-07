@@ -1,0 +1,1 @@
+Close the REQUIRED cardinality implication of the same accepted real2 source example, via actual nondegenerate CLOSED segment, not a countability oracle or generic interface. Two new public theorem bodies, zero definitions. No next-chapter competing proof work.
