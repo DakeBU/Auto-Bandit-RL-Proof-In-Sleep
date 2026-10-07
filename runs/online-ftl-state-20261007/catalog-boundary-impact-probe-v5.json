@@ -1,0 +1,1019 @@
+{
+  "status": "Read-only in-memory proposed parser audit, no repository mutation or acceptance",
+  "old_registry_nodes": 10823,
+  "changes": [
+    {
+      "name": "BanditRLProof.ArmStreamPolicy.history",
+      "kind": "def",
+      "path": "BanditRLProof/Algorithms/ArmStreamPolicy.lean",
+      "old_statement": "noncomputable def history (initial : Fin K) (select : (n : ℕ) → History.FinitePairHistory (Fin K) ℝ n → Fin K) (stream : UCB.ArmRewardStream K) : (n : ℕ) → History.FinitePairHistory (Fin K) ℝ n | 0 => fun _ => (initial, stream 0 initial) | n + 1 => let h := history initial select stream n let a := select n h History.extendPairHistorySucc h (a, stream (ETC.realHistoryPullCount n h a) a) noncomputable def action (initial : Fin K) (select : (n : ℕ) → History.FinitePairHistory (Fin K) ℝ n → Fin K) (stream : UCB.ArmRewardStream K) : ActionTrace (Fin K)",
+      "new_statement": "noncomputable def history (initial : Fin K) (select : (n : ℕ) → History.FinitePairHistory (Fin K) ℝ n → Fin K) (stream : UCB.ArmRewardStream K) : (n : ℕ) → History.FinitePairHistory (Fin K) ℝ n | 0 => fun _ => (initial, stream 0 initial) | n + 1 => let h := history initial select stream n let a := select n h History.extendPairHistorySucc h (a, stream (ETC.realHistoryPullCount n h a) a)",
+      "old_sha256": "4f27844d6ab5f23f47418863015d470de04df5a5faec587721402ac1fbf283c5",
+      "new_sha256": "05cbfdf7357f90424dbaf9e18c420fcc82f165eeb8c3fd6a93d9f10492f8dbf7",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.Causal.nodeJoint",
+      "kind": "def",
+      "path": "BanditRLProof/Algorithms/CausalHeterogeneous.lean",
+      "old_statement": "noncomputable def nodeJoint : {n : ℕ} → {V : Fin n → Type*} → NodeTables V → PMF ((i : Fin n) → V i) | 0, _, _ => PMF.pure (fun i => Fin.elim0 i) | n+1, _, p => (nodeJoint p.prefix).bind fun h => (p (Fin.last n) h).bind fun x => PMF.pure (Fin.snoc h x) structure NodeCodec {n : ℕ} (V : Fin n → Type*) (W : Type*) where",
+      "new_statement": "noncomputable def nodeJoint : {n : ℕ} → {V : Fin n → Type*} → NodeTables V → PMF ((i : Fin n) → V i) | 0, _, _ => PMF.pure (fun i => Fin.elim0 i) | n+1, _, p => (nodeJoint p.prefix).bind fun h => (p (Fin.last n) h).bind fun x => PMF.pure (Fin.snoc h x)",
+      "old_sha256": "d84222401e8b6241fadf1fd81f479c58041f827a04da7f2503a11fbdfbb16379",
+      "new_sha256": "7bb1c9e74f848a9fa5c4f5ea3e03c54340786e65d2bf76ffe1fbdd8cb4ab477b",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.Causal.joint",
+      "kind": "def",
+      "path": "BanditRLProof/Algorithms/CausalOrderedLaw.lean",
+      "old_statement": "noncomputable def joint {V : Type*} : {n : ℕ} → Tables V n → PMF (Fin n → V) | 0, _ => PMF.pure Fin.elim0 | n+1, p => (joint p.prefix).bind fun h => (p (Fin.last n) h).bind fun x => PMF.pure (Fin.snoc h x) noncomputable def intervene {V : Type*} {n : ℕ} (p : Tables V n) (a : Fin n → Option V) : Tables V n",
+      "new_statement": "noncomputable def joint {V : Type*} : {n : ℕ} → Tables V n → PMF (Fin n → V) | 0, _ => PMF.pure Fin.elim0 | n+1, p => (joint p.prefix).bind fun h => (p (Fin.last n) h).bind fun x => PMF.pure (Fin.snoc h x)",
+      "old_sha256": "a32e91eba1b83781f647ed142fb6df61be79777453d4f6755781bf808c3c5097",
+      "new_sha256": "bae4491724a4d09402210fce008ad0eba5c66945a8bd3b284f6f565da485c136",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.Causal.ParallelParameters.allocationWeight",
+      "kind": "def",
+      "path": "BanditRLProof/Algorithms/CausalParallelDesign.lean",
+      "old_statement": "noncomputable def allocationWeight : Option (Fin N × Bool) → ℝ | none => 1-p.atomicTotal | some a => if a ∈ p.rareActions then p.rareWeight else 0 theorem allocationWeight_nonneg (a : Option (Fin N × Bool)) : 0 ≤ p.allocationWeight a",
+      "new_statement": "noncomputable def allocationWeight : Option (Fin N × Bool) → ℝ | none => 1-p.atomicTotal | some a => if a ∈ p.rareActions then p.rareWeight else 0",
+      "old_sha256": "8d1b2754323df86217f436d4a609b94b0aed69f078a7a45f2f9554a83472f84c",
+      "new_sha256": "28a91b459823f369c6e406ac7bcd2e378fc788cd474071f065cad0371321f8aa",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.CUCB.ChargeData.counters",
+      "kind": "def",
+      "path": "BanditRLProof/Algorithms/CUCBCharge.lean",
+      "old_statement": "noncomputable def counters (actions : ℕ → A) : ℕ → Fin m → ℕ | 0 => fun _ => 0 | n+1 => fun i => counters actions n i + if C.choose (counters actions n) (actions n) = some i then 1 else 0 theorem counters_zero (actions : ℕ → A) (i : Fin m) : C.counters actions 0 i=0",
+      "new_statement": "noncomputable def counters (actions : ℕ → A) : ℕ → Fin m → ℕ | 0 => fun _ => 0 | n+1 => fun i => counters actions n i + if C.choose (counters actions n) (actions n) = some i then 1 else 0",
+      "old_sha256": "4754fb613767342cb7a5f70c7720420fc0081e4c8096bab20fe8062233d7ffa7",
+      "new_sha256": "b9178f16b23f583887f73f7a5c0053025e0ae49a5cfc3cdf86e9a04f0b1f6c99",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.HOO.history",
+      "kind": "def",
+      "path": "BanditRLProof/Algorithms/HOOHistory.lean",
+      "old_statement": "noncomputable def history (ν ρ : ℝ) (Y : ℕ → ℝ) : ℕ → Observations | 0 => [] | n+1 => step ν ρ (history ν ρ Y n) (Y n) noncomputable def action (ν ρ : ℝ) (Y : ℕ → ℝ) (n : ℕ) : Node",
+      "new_statement": "noncomputable def history (ν ρ : ℝ) (Y : ℕ → ℝ) : ℕ → Observations | 0 => [] | n+1 => step ν ρ (history ν ρ Y n) (Y n)",
+      "old_sha256": "35dd2c4110122ef6cd2585534e06cacc0ec64fd8af48c62143d8ec054f76104d",
+      "new_sha256": "665df6e5f0d9939fc21558139d7892e334475aa6bd8aa6d5d944950877ca57ba",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.HOO.backward",
+      "kind": "def",
+      "path": "BanditRLProof/Algorithms/HOOTree.lean",
+      "old_statement": "noncomputable def backward (S : Finset Node) (U : Node → WithTop ℝ) : ℕ → Node → WithTop ℝ | 0, _ => ⊤ | k+1, v => if v ∈ S then min (U v) (max (backward S U k (child v false)) (backward S U k (child v true))) else ⊤ theorem backward_not_mem (S : Finset Node) (U : Node → WithTop ℝ) (k : ℕ) (v : Node) (hv : v ∉ S) : backward S U k v = ⊤",
+      "new_statement": "noncomputable def backward (S : Finset Node) (U : Node → WithTop ℝ) : ℕ → Node → WithTop ℝ | 0, _ => ⊤ | k+1, v => if v ∈ S then min (U v) (max (backward S U k (child v false)) (backward S U k (child v true))) else ⊤",
+      "old_sha256": "ca5d4bbc45ecdf9442a48152ff143cfb90ce9af57270e024cd5ffe64bdffe88a",
+      "new_sha256": "b598610c114f952ac6468a27170abd18583ef9af21ca5360e852d42ab73be2e1",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.HOO.walk",
+      "kind": "def",
+      "path": "BanditRLProof/Algorithms/HOOTree.lean",
+      "old_statement": "noncomputable def walk (S : Finset Node) (B : Node → WithTop ℝ) : ℕ → Node → Node | 0, v => v | k+1, v => if v ∈ S then walk S B k (child v (preferred B v)) else v theorem walk_not_mem (S : Finset Node) (B : Node → WithTop ℝ) (k : ℕ) (v : Node) (hk : depthBound S < v.length + k) : walk S B k v ∉ S",
+      "new_statement": "noncomputable def walk (S : Finset Node) (B : Node → WithTop ℝ) : ℕ → Node → Node | 0, v => v | k+1, v => if v ∈ S then walk S B k (child v (preferred B v)) else v",
+      "old_sha256": "47be3a464dcfa921bdd60359510bf988a06b05e17e52c9a6bfdcd2d40964fc96",
+      "new_sha256": "79cc344fc972c7a460fdfdccbed23c43c48a492a1a8c1c15cbbfd69d81087e4b",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.KLUCB.pairHistory",
+      "kind": "def",
+      "path": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
+      "old_statement": "def pairHistory {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) : (n : Nat) -> History.FiniteRewardHistory Rat n -> History.FinitePairHistory (Fin K) Rat n | 0, rewardHistory => fun i => (defaultAction, rewardHistory i) | n + 1, rewardHistory => let previousRewardHistory : History.FiniteRewardHistory Rat n := fun i => rewardHistory ⟨i.1, Finset.mem_Iic.mpr ((Finset.mem_Iic.mp i.2).trans (Nat.le_succ n))⟩ let previousHistory := pairHistory hK sigma2 delta margin defaultAction n previousRewardHistory let nextAction := historyNextArm hK sigma2 delta margin defaultAction n previousHistory History.extendPairHistorySucc previousHistory (nextAction, rewardHistory ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩) def historyState {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (n : Nat) (rewardHistory : History.FiniteRewardHistory Rat n) : UCB.SelectedPolicySuccessorFiniteHistoryState K",
+      "new_statement": "def pairHistory {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) : (n : Nat) -> History.FiniteRewardHistory Rat n -> History.FinitePairHistory (Fin K) Rat n | 0, rewardHistory => fun i => (defaultAction, rewardHistory i) | n + 1, rewardHistory => let previousRewardHistory : History.FiniteRewardHistory Rat n := fun i => rewardHistory ⟨i.1, Finset.mem_Iic.mpr ((Finset.mem_Iic.mp i.2).trans (Nat.le_succ n))⟩ let previousHistory := pairHistory hK sigma2 delta margin defaultAction n previousRewardHistory let nextAction := historyNextArm hK sigma2 delta margin defaultAction n previousHistory History.extendPairHistorySucc previousHistory (nextAction, rewardHistory ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩)",
+      "old_sha256": "7ae996fde8d23ad31cf1aaaaaf65086263ec9e5bbe0b9dd14f275a1764e1d8ad",
+      "new_sha256": "734bc92239681ca4cb92dbf6ed14bd17bf2d2b2374f123f3a3edbdcc2783b10d",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.MOSS.optimismDeficit",
+      "kind": "def",
+      "path": "BanditRLProof/Algorithms/MOSSOptimism.lean",
+      "old_statement": "def optimismDeficit (X : ℕ → Ω → ℝ) (δ : ℝ) : ℕ → Ω → ℝ | 0, _ => 0 | n+1, ω => max (optimismDeficit X δ n ω) (-centeredIndex X δ (n+1) ω) theorem optimismDeficit_nonneg (X : ℕ → Ω → ℝ) (δ : ℝ) (n : ℕ) (ω : Ω) : 0 ≤ optimismDeficit X δ n ω",
+      "new_statement": "def optimismDeficit (X : ℕ → Ω → ℝ) (δ : ℝ) : ℕ → Ω → ℝ | 0, _ => 0 | n+1, ω => max (optimismDeficit X δ n ω) (-centeredIndex X δ (n+1) ω)",
+      "old_sha256": "9cf4a9b88d95424543610424e9cdd24adb3f5ce63f6a4523f324ed88e2609613",
+      "new_sha256": "3b86254439937341e5dd1ab7effeeffad79f9990a3ec68444e1020d4bcadbc90",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.MOSS.streamCounts",
+      "kind": "def",
+      "path": "BanditRLProof/Algorithms/MOSSStream.lean",
+      "old_statement": "def streamCounts {Ω : Type*} {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (X : Fin k → ℕ → Ω → ℝ) (ω : Ω) : ℕ → Fin k → ℕ | 0 => fun _ => 0 | t+1 => fun a => let counts := streamCounts hk n mean X ω t counts a + if action hk n t (fun b => mean b + streamMean (X b) ω (counts b)) counts = a then 1 else 0 def streamTrace {Ω : Type*} {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (X : Fin k → ℕ → Ω → ℝ) (ω : Ω) : ActionTrace (Fin k)",
+      "new_statement": "def streamCounts {Ω : Type*} {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (X : Fin k → ℕ → Ω → ℝ) (ω : Ω) : ℕ → Fin k → ℕ | 0 => fun _ => 0 | t+1 => fun a => let counts := streamCounts hk n mean X ω t counts a + if action hk n t (fun b => mean b + streamMean (X b) ω (counts b)) counts = a then 1 else 0",
+      "old_sha256": "82c8061af86261152551c22e91359b1cd4fed6e01341a25f792edfe30ebc72b8",
+      "new_sha256": "86b293b6e9de6a6d0efaefd30064e48a1d2b8595b9dbb07b257375e3393e3557",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.MusicalChairs.trajectory",
+      "kind": "def",
+      "path": "BanditRLProof/Algorithms/MusicalChairsCoordination.lean",
+      "old_statement": "noncomputable def trajectory {n k : ℕ} (draws : ℕ → Fin n → Fin k) : ℕ → State n k | 0 => initial n k | t+1 => step (trajectory draws t) (draws t) theorem trajectory_distinct {n k : ℕ} (draws : ℕ → Fin n → Fin k) (t : ℕ) : DistinctFixed (trajectory draws t)",
+      "new_statement": "noncomputable def trajectory {n k : ℕ} (draws : ℕ → Fin n → Fin k) : ℕ → State n k | 0 => initial n k | t+1 => step (trajectory draws t) (draws t)",
+      "old_sha256": "440ff5077e8480d6fe031eeee382f6c097e25a5097dcb1c9c809d7230dcf4d48",
+      "new_sha256": "80d71c1bb5de0cf6ecfdccb841285ed0d0f4ab1c52348564fc1fb31dcacc46fb",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.MusicalChairs.stateLaw",
+      "kind": "def",
+      "path": "BanditRLProof/Algorithms/MusicalChairsCoordination.lean",
+      "old_statement": "noncomputable def stateLaw {n k : ℕ} (candidates : Fin n → Finset (Fin k)) (hne : ∀ i, (candidates i).Nonempty) : ℕ → PMF (State n k) | 0 => PMF.pure (initial n k) | t+1 => (stateLaw candidates hne t).bind (transition candidates hne) theorem transition_distinct {n k : ℕ} (candidates : Fin n → Finset (Fin k)) (hne : ∀ i, (candidates i).Nonempty) (s s' : State n k) (hs : DistinctFixed s) (h : s' ∈ (transition candidates hne s).support) : DistinctFixed s'",
+      "new_statement": "noncomputable def stateLaw {n k : ℕ} (candidates : Fin n → Finset (Fin k)) (hne : ∀ i, (candidates i).Nonempty) : ℕ → PMF (State n k) | 0 => PMF.pure (initial n k) | t+1 => (stateLaw candidates hne t).bind (transition candidates hne)",
+      "old_sha256": "fc304672686b41552fb081350fe76b27cc52687d0b9d391364116ede1be041dc",
+      "new_sha256": "f32ffe04d013f59f0c690b03d5b1beb7e43c9cc2b0f0665b20baa3ebd72fd4a4",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.StochasticGradientBandit.historyParameter",
+      "kind": "def",
+      "path": "BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean",
+      "old_statement": "noncomputable def historyParameter [Fintype Action] [DecidableEq Action] (initialTheta : Action -> Real) (eta : Real) : (n : Nat) -> History.FinitePairHistory Action Real n -> Action -> Real | 0, history, coordinate => initialTheta coordinate + eta * sourceIncrement (softmaxProbability initialTheta) (history ⟨0, Finset.mem_Iic.mpr le_rfl⟩).2 (history ⟨0, Finset.mem_Iic.mpr le_rfl⟩).1 coordinate | n + 1, history, coordinate => let previous := Exp3.previousPairHistory history historyParameter initialTheta eta n previous coordinate + eta * sourceIncrement (softmaxProbability (historyParameter initialTheta eta n previous)) (history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩).2 (history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩).1 coordinate @[simp] theorem historyParameter_zero [Fintype Action] [DecidableEq Action] (initialTheta : Action -> Real) (eta : Real) (history : History.FinitePairHistory Action Real 0) (coordinate : Action) : historyParameter initialTheta eta 0 history coordinate = initialTheta coordinate + eta * sourceIncrement (softmaxProbability initialTheta) (history ⟨0, Finset.mem_Iic.mpr le_rfl⟩).2 (history ⟨0, Finset.mem_Iic.mpr le_rfl⟩).1 coordinate",
+      "new_statement": "noncomputable def historyParameter [Fintype Action] [DecidableEq Action] (initialTheta : Action -> Real) (eta : Real) : (n : Nat) -> History.FinitePairHistory Action Real n -> Action -> Real | 0, history, coordinate => initialTheta coordinate + eta * sourceIncrement (softmaxProbability initialTheta) (history ⟨0, Finset.mem_Iic.mpr le_rfl⟩).2 (history ⟨0, Finset.mem_Iic.mpr le_rfl⟩).1 coordinate | n + 1, history, coordinate => let previous := Exp3.previousPairHistory history historyParameter initialTheta eta n previous coordinate + eta * sourceIncrement (softmaxProbability (historyParameter initialTheta eta n previous)) (history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩).2 (history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩).1 coordinate @[simp]",
+      "old_sha256": "6102561c6162ead1e9f7b00bb1abbfec46807a038be12bc345f78b8f36712f47",
+      "new_sha256": "d256968c293e4858b79a6cb3a1920be2a649ebc358cb852ec0b27a8b8033ed83",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.StochasticGradientBandit.twoArmParameterAt",
+      "kind": "def",
+      "path": "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmRate.lean",
+      "old_statement": "noncomputable def twoArmParameterAt (eta : Real) (trace : Nat -> Fin 2 × Real) : Nat -> Fin 2 -> Real | 0 => fun _ => 0 | n + 1 => historyParameter (fun _ : Fin 2 => 0) eta n (Preorder.frestrictLe n trace) /-- The two-arm softmax law generated from the source-time parameter adapter. -/ def twoArmProbabilityAt (eta : Real) (trace : Nat -> Fin 2 × Real) (time : Nat) : Fin 2 -> Real",
+      "new_statement": "noncomputable def twoArmParameterAt (eta : Real) (trace : Nat -> Fin 2 × Real) : Nat -> Fin 2 -> Real | 0 => fun _ => 0 | n + 1 => historyParameter (fun _ : Fin 2 => 0) eta n (Preorder.frestrictLe n trace)",
+      "old_sha256": "9a9739c736a783f207c36dc067d9b005aec12cfc6a14f26b95c35d01cad196f5",
+      "new_sha256": "4e00e7d1344055a59d7ed12b27dc32f580340d24a7f1a37e99a73f058b2249cc",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.Thompson.historyDensity",
+      "kind": "def",
+      "path": "BanditRLProof/Algorithms/ThompsonAlgorithmDensityProcess.lean",
+      "old_statement": "noncomputable def historyDensity {Action : Type u} {Reward : Type v} [MeasurableSpace Action] [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Action] (algorithm referenceAlgorithm : HistoryAlgorithm Action Reward) : (n : Nat) -> History.FinitePairHistory Action Reward n -> ENNReal | 0, history => algorithm.initialAction.rnDeriv referenceAlgorithm.initialAction (history ⟨0, Finset.mem_Iic.mpr le_rfl⟩).1 | n + 1, history => historyDensity algorithm referenceAlgorithm n (pairHistoryPrefix history) * (algorithm.policy n).rnDeriv (referenceAlgorithm.policy n) (pairHistoryPrefix history) (pairHistoryLast history).1 theorem measurable_historyDensity {Action : Type u} {Reward : Type v} [MeasurableSpace Action] [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Action] (algorithm referenceAlgorithm : HistoryAlgorithm Action Reward) (n : Nat) : Measurable (historyDensity algorithm referenceAlgorithm n)",
+      "new_statement": "noncomputable def historyDensity {Action : Type u} {Reward : Type v} [MeasurableSpace Action] [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Action] (algorithm referenceAlgorithm : HistoryAlgorithm Action Reward) : (n : Nat) -> History.FinitePairHistory Action Reward n -> ENNReal | 0, history => algorithm.initialAction.rnDeriv referenceAlgorithm.initialAction (history ⟨0, Finset.mem_Iic.mpr le_rfl⟩).1 | n + 1, history => historyDensity algorithm referenceAlgorithm n (pairHistoryPrefix history) * (algorithm.policy n).rnDeriv (referenceAlgorithm.policy n) (pairHistoryPrefix history) (pairHistoryLast history).1",
+      "old_sha256": "d3224b73bd9b00a2409a9f713bdefe090bdb724b4e1c6572a7d435353103d60f",
+      "new_sha256": "6ebbc22aca3fa74827435779a2af113b3fe2dc8031f89da49a5b8edbf1090a33",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.Thompson.HistoryActionScore.atTrace",
+      "kind": "def",
+      "path": "BanditRLProof/Algorithms/ThompsonBayesRegretDecomposition.lean",
+      "old_statement": "def atTrace {Action : Type u} {Reward : Type v} [MeasurableSpace Action] [MeasurableSpace Reward] (score : HistoryActionScore Action Reward) (action : ActionTrace Action) (reward : RewardTrace Reward) : Nat -> Real | 0 => score.initial (action 0) | n + 1 => score.successor n (History.finitePairHistoryOfTrace action reward n) (action (n + 1)) /-- Evaluate the same visible-history score at a comparison action. -/ def atBestTrace {Action : Type u} {Reward : Type v} [MeasurableSpace Action] [MeasurableSpace Reward] (score : HistoryActionScore Action Reward) (bestAction : Action) (action : ActionTrace Action) (reward : RewardTrace Reward) : Nat -> Real | 0 => score.initial bestAction | n + 1 => score.successor n (History.finitePairHistoryOfTrace action reward n) bestAction theorem measurable_atTrace {Omega : Type w} {Action : Type u} {Reward : Type v} [MeasurableSpace Omega] [MeasurableSpace Action] [MeasurableSpace Reward] (score : HistoryActionScore Action Reward) (action : Omega -> ActionTrace Action) (reward : Omega -> RewardTrace Reward) (haction : forall t, Measurable (fun omega => action omega t)) (hreward : forall t, Measurable (fun omega => reward omega t)) (t : Nat) : Measurable (fun omega => score.atTrace (action omega) (reward omega) t)",
+      "new_statement": "def atTrace {Action : Type u} {Reward : Type v} [MeasurableSpace Action] [MeasurableSpace Reward] (score : HistoryActionScore Action Reward) (action : ActionTrace Action) (reward : RewardTrace Reward) : Nat -> Real | 0 => score.initial (action 0) | n + 1 => score.successor n (History.finitePairHistoryOfTrace action reward n) (action (n + 1))",
+      "old_sha256": "ad97c3c7fd30ed46553f6d563f18e6c8c407035835c83cf42b270f12f47f1217",
+      "new_sha256": "ba79ca9e14b76363aa5d6ed8e05d4516a42c49cf1a82fc5a8315017c625d3eec",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.Thompson.HistoryActionScore.atBestTrace",
+      "kind": "def",
+      "path": "BanditRLProof/Algorithms/ThompsonBayesRegretDecomposition.lean",
+      "old_statement": "def atBestTrace {Action : Type u} {Reward : Type v} [MeasurableSpace Action] [MeasurableSpace Reward] (score : HistoryActionScore Action Reward) (bestAction : Action) (action : ActionTrace Action) (reward : RewardTrace Reward) : Nat -> Real | 0 => score.initial bestAction | n + 1 => score.successor n (History.finitePairHistoryOfTrace action reward n) bestAction theorem measurable_atTrace {Omega : Type w} {Action : Type u} {Reward : Type v} [MeasurableSpace Omega] [MeasurableSpace Action] [MeasurableSpace Reward] (score : HistoryActionScore Action Reward) (action : Omega -> ActionTrace Action) (reward : Omega -> RewardTrace Reward) (haction : forall t, Measurable (fun omega => action omega t)) (hreward : forall t, Measurable (fun omega => reward omega t)) (t : Nat) : Measurable (fun omega => score.atTrace (action omega) (reward omega) t)",
+      "new_statement": "def atBestTrace {Action : Type u} {Reward : Type v} [MeasurableSpace Action] [MeasurableSpace Reward] (score : HistoryActionScore Action Reward) (bestAction : Action) (action : ActionTrace Action) (reward : RewardTrace Reward) : Nat -> Real | 0 => score.initial bestAction | n + 1 => score.successor n (History.finitePairHistoryOfTrace action reward n) bestAction",
+      "old_sha256": "24b11b4fc4beee106725252b51efaa704518dd48786f9dc8c5c2467778ee31c4",
+      "new_sha256": "b3a33bd9737b55acf7f07d71b385219010c6263dbdb5bf75a8cce8261082d3c9",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.Thompson.canonicalMeasurableEnvironmentStepKernel",
+      "kind": "def",
+      "path": "BanditRLProof/Algorithms/ThompsonMeasurableTrajectory.lean",
+      "old_statement": "noncomputable def canonicalMeasurableEnvironmentStepKernel {Env : Type u} {Action : Type v} {Reward : Type w} [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSpace Reward] (algorithm : HistoryAlgorithm Action Reward) (environment : MeasurableHistoryEnvironment Env Action Reward) : (n : Nat) -> ProbabilityTheory.Kernel ((i : Finset.Iic n) -> Env × (Action × Reward)) (Env × (Action × Reward)) | 0 => retainEnvironmentKernel measurableTrajectoryPrefixEnvironment measurable_measurableTrajectoryPrefixEnvironment ((measurableEnvironmentInitialPairKernel algorithm environment).comap measurableTrajectoryPrefixEnvironment measurable_measurableTrajectoryPrefixEnvironment) | n + 1 => retainEnvironmentKernel measurableTrajectoryPrefixEnvironment (measurable_measurableTrajectoryPrefixEnvironment (n := n + 1)) ((measurableEnvironmentHistoryStepKernel algorithm environment n).comap (fun statePrefix : (i : Finset.Iic (n + 1)) -> Env × (Action × Reward) => (measurableTrajectoryPrefixEnvironment (n := n + 1) statePrefix, measurableTrajectoryPrefixHistory (n := n) statePrefix)) measurable_measurableTrajectoryPrefixEnvironmentHistory) instance instCanonicalMeasurableEnvironmentStepKernelIsMarkov {Env : Type u} {Action : Type v} {Reward : Type w} [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSpace Reward] (algorithm : HistoryAlgorithm Action Reward) (environment : MeasurableHistoryEnvironment Env Action Reward) (n : Nat) : ProbabilityTheory.IsMarkovKernel (canonicalMeasurableEnvironmentStepKernel algorithm environment n)",
+      "new_statement": "noncomputable def canonicalMeasurableEnvironmentStepKernel {Env : Type u} {Action : Type v} {Reward : Type w} [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSpace Reward] (algorithm : HistoryAlgorithm Action Reward) (environment : MeasurableHistoryEnvironment Env Action Reward) : (n : Nat) -> ProbabilityTheory.Kernel ((i : Finset.Iic n) -> Env × (Action × Reward)) (Env × (Action × Reward)) | 0 => retainEnvironmentKernel measurableTrajectoryPrefixEnvironment measurable_measurableTrajectoryPrefixEnvironment ((measurableEnvironmentInitialPairKernel algorithm environment).comap measurableTrajectoryPrefixEnvironment measurable_measurableTrajectoryPrefixEnvironment) | n + 1 => retainEnvironmentKernel measurableTrajectoryPrefixEnvironment (measurable_measurableTrajectoryPrefixEnvironment (n := n + 1)) ((measurableEnvironmentHistoryStepKernel algorithm environment n).comap (fun statePrefix : (i : Finset.Iic (n + 1)) -> Env × (Action × Reward) => (measurableTrajectoryPrefixEnvironment (n := n + 1) statePrefix, measurableTrajectoryPrefixHistory (n := n) statePrefix)) measurable_measurableTrajectoryPrefixEnvironmentHistory) instance instCanonicalMeasurableEnvironmentStepKernelIsMarkov {Env : Type u} {Action : Type v} {Reward : Type w} [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSpace Reward] (algorithm : HistoryAlgorithm Action Reward) (environment : MeasurableHistoryEnvironment Env Action Reward) (n : Nat) : ProbabilityTheory.IsMarkovKernel (canonicalMeasurableEnvironmentStepKernel algorithm environment n) := by cases n with | zero => unfold canonicalMeasurableEnvironmentStepKernel infer_instance | succ n => unfold canonicalMeasurableEnvironmentStepKernel infer_instance",
+      "old_sha256": "cc3528b9d289cb7f0afffea822aad3110f5c7c7751524356f2215cff06af68b8",
+      "new_sha256": "bc5857dd1c7f2ec2a9757e772b66d1c50d84fc7b359a7c4570fa93ee256cfc82",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.UCB.armStreamHistory",
+      "kind": "def",
+      "path": "BanditRLProof/Algorithms/UCBArmStreamProcess.lean",
+      "old_statement": "noncomputable def armStreamHistory {K : Nat} (hK : 0 < K) (c : Real) (stream : ArmRewardStream K) : (n : Nat) -> History.FinitePairHistory (Fin K) Real n | 0 => let arm := initializationArm hK 0 fun _ => (arm, stream 0 arm) | n + 1 => let history := armStreamHistory hK c stream n let arm := realHistoryNextArm hK c n history let count := ETC.realHistoryPullCount n history arm History.extendPairHistorySucc history (arm, stream count arm) /-- Action trace extracted from the recursive inclusive histories. -/ noncomputable def armStreamAction {K : Nat} (hK : 0 < K) (c : Real) : ArmRewardStream K -> ActionTrace (Fin K)",
+      "new_statement": "noncomputable def armStreamHistory {K : Nat} (hK : 0 < K) (c : Real) (stream : ArmRewardStream K) : (n : Nat) -> History.FinitePairHistory (Fin K) Real n | 0 => let arm := initializationArm hK 0 fun _ => (arm, stream 0 arm) | n + 1 => let history := armStreamHistory hK c stream n let arm := realHistoryNextArm hK c n history let count := ETC.realHistoryPullCount n history arm History.extendPairHistorySucc history (arm, stream count arm)",
+      "old_sha256": "a0f71563fa30c3c18aa1806eb7060292fb9458662a59c0b8911ae45be74ee0b9",
+      "new_sha256": "c1d1b4ad79ee54b7da8f3aaa17874e02f120b3e2efd751765e670da0260a654e",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.UCB.selectedPolicySuccessorPairHistory",
+      "kind": "def",
+      "path": "BanditRLProof/Algorithms/UCBConditionalRewardLawPolicy.lean",
+      "old_statement": "noncomputable def selectedPolicySuccessorPairHistory {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (T : Nat) (delta : Real) (defaultAction : Fin K) : (n : Nat) -> History.FiniteRewardHistory Rat n -> History.FinitePairHistory (Fin K) Rat n | 0, rewardHistory => fun i => (defaultAction, rewardHistory i) | n + 1, rewardHistory => let previousRewardHistory : History.FiniteRewardHistory Rat n := fun i => rewardHistory ⟨i.1, Finset.mem_Iic.mpr ((Finset.mem_Iic.mp i.2).trans (Nat.le_succ n))⟩ let previousHistory := selectedPolicySuccessorPairHistory hK sigma2 T delta defaultAction n previousRewardHistory let nextAction := selectedPolicySuccessorHistoryNextArm hK sigma2 T delta defaultAction n previousHistory History.extendPairHistorySucc previousHistory (nextAction, rewardHistory ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩) /-- Package the reconstructed history as the fixed policy state type. -/ noncomputable def selectedPolicySuccessorHistoryState {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (T : Nat) (delta : Real) (defaultAction : Fin K) (n : Nat) (rewardHistory : History.FiniteRewardHistory Rat n) : SelectedPolicySuccessorFiniteHistoryState K",
+      "new_statement": "noncomputable def selectedPolicySuccessorPairHistory {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (T : Nat) (delta : Real) (defaultAction : Fin K) : (n : Nat) -> History.FiniteRewardHistory Rat n -> History.FinitePairHistory (Fin K) Rat n | 0, rewardHistory => fun i => (defaultAction, rewardHistory i) | n + 1, rewardHistory => let previousRewardHistory : History.FiniteRewardHistory Rat n := fun i => rewardHistory ⟨i.1, Finset.mem_Iic.mpr ((Finset.mem_Iic.mp i.2).trans (Nat.le_succ n))⟩ let previousHistory := selectedPolicySuccessorPairHistory hK sigma2 T delta defaultAction n previousRewardHistory let nextAction := selectedPolicySuccessorHistoryNextArm hK sigma2 T delta defaultAction n previousHistory History.extendPairHistorySucc previousHistory (nextAction, rewardHistory ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩)",
+      "old_sha256": "34d4005ff6f9ae0445b3145d7aa81b838bcfd7c95d9d468adf93c691de908c79",
+      "new_sha256": "8d4083bf375575ae9ceee0a756e286ef8f6fd03b50d9ea90f6729b7c73401c51",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.UCB.selectedPolicySuccessorTelescopingPairHistory",
+      "kind": "def",
+      "path": "BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean",
+      "old_statement": "noncomputable def selectedPolicySuccessorTelescopingPairHistory {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) : (n : Nat) -> History.FiniteRewardHistory Rat n -> History.FinitePairHistory (Fin K) Rat n | 0, rewardHistory => fun i => (defaultAction, rewardHistory i) | n + 1, rewardHistory => let previousRewardHistory : History.FiniteRewardHistory Rat n := fun i => rewardHistory ⟨i.1, Finset.mem_Iic.mpr ((Finset.mem_Iic.mp i.2).trans (Nat.le_succ n))⟩ let previousHistory := selectedPolicySuccessorTelescopingPairHistory hK sigma2 delta defaultAction n previousRewardHistory let nextAction := selectedPolicySuccessorTelescopingHistoryNextArm hK sigma2 delta defaultAction n previousHistory History.extendPairHistorySucc previousHistory (nextAction, rewardHistory ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩) /-- Fixed state package reconstructed by the scheduled policy. -/ noncomputable def selectedPolicySuccessorTelescopingHistoryState {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) (n : Nat) (rewardHistory : History.FiniteRewardHistory Rat n) : SelectedPolicySuccessorFiniteHistoryState K",
+      "new_statement": "noncomputable def selectedPolicySuccessorTelescopingPairHistory {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) : (n : Nat) -> History.FiniteRewardHistory Rat n -> History.FinitePairHistory (Fin K) Rat n | 0, rewardHistory => fun i => (defaultAction, rewardHistory i) | n + 1, rewardHistory => let previousRewardHistory : History.FiniteRewardHistory Rat n := fun i => rewardHistory ⟨i.1, Finset.mem_Iic.mpr ((Finset.mem_Iic.mp i.2).trans (Nat.le_succ n))⟩ let previousHistory := selectedPolicySuccessorTelescopingPairHistory hK sigma2 delta defaultAction n previousRewardHistory let nextAction := selectedPolicySuccessorTelescopingHistoryNextArm hK sigma2 delta defaultAction n previousHistory History.extendPairHistorySucc previousHistory (nextAction, rewardHistory ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩)",
+      "old_sha256": "5fcec07a14953eabf7257ce14d3c7b03eb1887dfa27f803a82f4c79b361c5fc7",
+      "new_sha256": "4a0cbb2120f1d2e8ef33be0854e52b923dfc9497c77e46533e23279ce6203477",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.pullCount",
+      "kind": "def",
+      "path": "BanditRLProof/Core.lean",
+      "old_statement": "def pullCount [DecidableEq Action] (action : ActionTrace Action) (a : Action) : Nat → Nat | 0 => 0 | t + 1 => pullCount action a t + if action t = a then 1 else 0 @[simp] theorem pullCount_zero [DecidableEq Action] (action : ActionTrace Action) (a : Action) : pullCount action a 0 = 0",
+      "new_statement": "def pullCount [DecidableEq Action] (action : ActionTrace Action) (a : Action) : Nat → Nat | 0 => 0 | t + 1 => pullCount action a t + if action t = a then 1 else 0",
+      "old_sha256": "ca13d650f3172c531b1fb2fa86fbe21f94b5f18e5d4a737bf70ca5a96fbd1c2f",
+      "new_sha256": "79f50000ca9296884471151ed51cecb0ff63264e04e57872e788a6efb713fb76",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.sumRewards",
+      "kind": "def",
+      "path": "BanditRLProof/Core.lean",
+      "old_statement": "def sumRewards [DecidableEq Action] [OfNat Reward 0] [HAdd Reward Reward Reward] (action : ActionTrace Action) (reward : RewardTrace Reward) (a : Action) : Nat → Reward | 0 => 0 | t + 1 => sumRewards action reward a t + if action t = a then reward t else 0 @[simp] theorem sumRewards_zero [DecidableEq Action] [OfNat Reward 0] [HAdd Reward Reward Reward] (action : ActionTrace Action) (reward : RewardTrace Reward) (a : Action) : sumRewards action reward a 0 = 0",
+      "new_statement": "def sumRewards [DecidableEq Action] [OfNat Reward 0] [HAdd Reward Reward Reward] (action : ActionTrace Action) (reward : RewardTrace Reward) (a : Action) : Nat → Reward | 0 => 0 | t + 1 => sumRewards action reward a t + if action t = a then reward t else 0",
+      "old_sha256": "e85aef0edc3c675b6d7102e5f71d3c8442afb54ac590143241577ee1717c0ae3",
+      "new_sha256": "6131b6bc8e0d7c3ce8fd58b1a78d784763428be3f78f2d49332b13ea9e608023",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.componentFailure",
+      "kind": "def",
+      "path": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
+      "old_statement": "def componentFailure {Omega : Type*} (family : DelayedSAPOGoodEventFailureFamily Omega) : DelayedSAPOGoodEventComponent -> Set Omega | .bscConfidence => family.bscConfidence | .eapConfidence => family.eapConfidence | .pullCount => family.pullCount | .eliminatedDelay => family.eliminatedDelay | .lossDifference => family.lossDifference | .stochasticDelay => family.stochasticDelay /-- The bad event appearing in the union-bound proof of Corollary D.8. -/ def failureSet {Omega : Type*} (family : DelayedSAPOGoodEventFailureFamily Omega) : Set Omega",
+      "new_statement": "def componentFailure {Omega : Type*} (family : DelayedSAPOGoodEventFailureFamily Omega) : DelayedSAPOGoodEventComponent -> Set Omega | .bscConfidence => family.bscConfidence | .eapConfidence => family.eapConfidence | .pullCount => family.pullCount | .eliminatedDelay => family.eliminatedDelay | .lossDifference => family.lossDifference | .stochasticDelay => family.stochasticDelay",
+      "old_sha256": "a8df1d0fd8ba2c041b3668b547efc25c6e4c0d69601fdb4b6be155ec64d98baa",
+      "new_sha256": "b8a0d46b7ed2aae3e3c56fb2f2d94487f1961cb968b9cdb1ce8f6cb8f7a1998e",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.DelayedFeedback.DelayedSAPOGoodEventFailureFamily.sourceComponentFailureBudget",
+      "kind": "def",
+      "path": "BanditRLProof/DelayedFeedback/StochasticGoodEventAssembly.lean",
+      "old_statement": "noncomputable def sourceComponentFailureBudget (horizon : Nat) : DelayedSAPOGoodEventComponent -> Real | .bscConfidence => doubleLinearFailureBudget horizon | .eapConfidence => doubleLinearFailureBudget horizon | .pullCount => doubleLinearFailureBudget horizon | .eliminatedDelay => linearFailureBudget horizon | .lossDifference => linearFailureBudget horizon | .stochasticDelay => linearFailureBudget horizon /-- The six source-exact shares in Corollary D.8 sum to `9 / T`. -/ theorem sum_sourceComponentFailureBudget_eq_nine_div (horizon : Nat) : (Finset.univ : Finset DelayedSAPOGoodEventComponent).sum (sourceComponentFailureBudget horizon) = 9 / (horizon : Real)",
+      "new_statement": "noncomputable def sourceComponentFailureBudget (horizon : Nat) : DelayedSAPOGoodEventComponent -> Real | .bscConfidence => doubleLinearFailureBudget horizon | .eapConfidence => doubleLinearFailureBudget horizon | .pullCount => doubleLinearFailureBudget horizon | .eliminatedDelay => linearFailureBudget horizon | .lossDifference => linearFailureBudget horizon | .stochasticDelay => linearFailureBudget horizon",
+      "old_sha256": "159e7dc12a7c15bd1fd6c57e9c8cef5351e1a9891a7c735c5712544da90e0929",
+      "new_sha256": "cb716bcfbaa0aa8d634af2ffc275d1adc62d0ffae6b10a984df7ebdf6e838960",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.Exp3.sampledObservedComparatorEstimatorDeviationProcess",
+      "kind": "def",
+      "path": "BanditRLProof/Exp3ComparatorConfidence.lean",
+      "old_statement": "noncomputable def sampledObservedComparatorEstimatorDeviationProcess {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action] (arms : Finset Action) (eta gamma : Real) (loss : PredictableLossVector Env Action) (comparator : Action) : Nat -> Env × ((k : Nat) -> Action × Real) -> Real | 0, _sample => 0 | i + 1, sample => sampledTrajectoryObservedComparatorEstimatorDeviationAt arms eta gamma loss comparator i sample noncomputable def sampledComparatorEstimatorVarianceProxy {Action : Type v} (arms : Finset Action) (gamma : Real) : NNReal",
+      "new_statement": "noncomputable def sampledObservedComparatorEstimatorDeviationProcess {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action] (arms : Finset Action) (eta gamma : Real) (loss : PredictableLossVector Env Action) (comparator : Action) : Nat -> Env × ((k : Nat) -> Action × Real) -> Real | 0, _sample => 0 | i + 1, sample => sampledTrajectoryObservedComparatorEstimatorDeviationAt arms eta gamma loss comparator i sample",
+      "old_sha256": "090e64983f5bf34ce7741bd89caa124ff8641aa327c365a318ddc568294f1ad5",
+      "new_sha256": "c7bd90b123f6be7ba25f08b323d87dd33ef4c7f5320acb744a14124e1488439e",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.Exp3.sampledComparatorEstimatorDeviationProxy",
+      "kind": "def",
+      "path": "BanditRLProof/Exp3ComparatorConfidence.lean",
+      "old_statement": "noncomputable def sampledComparatorEstimatorDeviationProxy {Action : Type v} (arms : Finset Action) (gamma : Real) : Nat -> NNReal | 0 => 0 | _i + 1 => sampledComparatorEstimatorVarianceProxy arms gamma theorem sampledObservedComparatorEstimatorDeviationProcess_stronglyAdapted {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_nonneg : 0 <= gamma) (hgamma_le_one : gamma <= 1) (loss : PredictableLossVector Env Action) (comparator : Action) (hcomparator : comparator ∈ arms) : StronglyAdapted (sampledPredictableDeviationFiltration Env Action) (sampledObservedComparatorEstimatorDeviationProcess arms eta gamma loss comparator)",
+      "new_statement": "noncomputable def sampledComparatorEstimatorDeviationProxy {Action : Type v} (arms : Finset Action) (gamma : Real) : Nat -> NNReal | 0 => 0 | _i + 1 => sampledComparatorEstimatorVarianceProxy arms gamma",
+      "old_sha256": "0a450d693d9c1822acc94ac456bc91634ebc95e1aa5c4106decc6722bff28c67",
+      "new_sha256": "7481085f6ed44ac2dad304e88968a5e61355274ba4e2401ccef8aa16532f59d1",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.Exp3.sampledPredictableMixedSquaredDeviationProcess",
+      "kind": "def",
+      "path": "BanditRLProof/Exp3MixedSquareConfidence.lean",
+      "old_statement": "noncomputable def sampledPredictableMixedSquaredDeviationProcess {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action] (arms : Finset Action) (eta gamma : Real) (loss : PredictableLossVector Env Action) : Nat -> Env × ((k : Nat) -> Action × Real) -> Real | 0, _sample => 0 | i + 1, sample => sampledTrajectoryPredictableMixedSquaredDeviationAt arms eta gamma loss i sample noncomputable def sampledMixedSquaredVarianceProxy {Action : Type v} (arms : Finset Action) (gamma : Real) : NNReal",
+      "new_statement": "noncomputable def sampledPredictableMixedSquaredDeviationProcess {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action] (arms : Finset Action) (eta gamma : Real) (loss : PredictableLossVector Env Action) : Nat -> Env × ((k : Nat) -> Action × Real) -> Real | 0, _sample => 0 | i + 1, sample => sampledTrajectoryPredictableMixedSquaredDeviationAt arms eta gamma loss i sample",
+      "old_sha256": "319f7a3bfe477dd27227773033b6e213f9f349a8591881ebae285caf0c2aa155",
+      "new_sha256": "ce134b86ba28faf2723d16bd7ba6446255999eb49aad38b79459da382462e90f",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.Exp3.sampledMixedSquaredDeviationProxy",
+      "kind": "def",
+      "path": "BanditRLProof/Exp3MixedSquareConfidence.lean",
+      "old_statement": "noncomputable def sampledMixedSquaredDeviationProxy {Action : Type v} (arms : Finset Action) (gamma : Real) : Nat -> NNReal | 0 => 0 | _i + 1 => sampledMixedSquaredVarianceProxy arms gamma set_option maxHeartbeats 800000 in theorem sampledPredictableMixedSquaredDeviationProcess_stronglyAdapted {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_pos : 0 < gamma) (hgamma_le_one : gamma <= 1) (loss : PredictableLossVector Env Action) : StronglyAdapted (sampledPredictableDeviationFiltration Env Action) (sampledPredictableMixedSquaredDeviationProcess arms eta gamma loss)",
+      "new_statement": "noncomputable def sampledMixedSquaredDeviationProxy {Action : Type v} (arms : Finset Action) (gamma : Real) : Nat -> NNReal | 0 => 0 | _i + 1 => sampledMixedSquaredVarianceProxy arms gamma set_option maxHeartbeats 800000 in",
+      "old_sha256": "390ac70100413d04997c17bfd3366ad77342c6c2199e4bbfb569e96386a8cd8e",
+      "new_sha256": "9f151c55bd790f851b3f9b6ab126be73ae09c7d648d2be096f9f6299b440d2f1",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.Exp3.sampledPureObservedDeviationProcess",
+      "kind": "def",
+      "path": "BanditRLProof/Exp3PureConfidence.lean",
+      "old_statement": "noncomputable def sampledPureObservedDeviationProcess {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action] (arms : Finset Action) (eta gamma : Real) (loss : PredictableLossVector Env Action) : Nat -> Env × ((k : Nat) -> Action × Real) -> Real | 0, _sample => 0 | i + 1, sample => sampledTrajectoryPureObservedDeviationAt arms eta gamma loss i sample theorem sampledPureObservedDeviationProcess_stronglyAdapted {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_nonneg : 0 <= gamma) (hgamma_le_one : gamma <= 1) (loss : PredictableLossVector Env Action) : StronglyAdapted (sampledPredictableDeviationFiltration Env Action) (sampledPureObservedDeviationProcess arms eta gamma loss)",
+      "new_statement": "noncomputable def sampledPureObservedDeviationProcess {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action] (arms : Finset Action) (eta gamma : Real) (loss : PredictableLossVector Env Action) : Nat -> Env × ((k : Nat) -> Action × Real) -> Real | 0, _sample => 0 | i + 1, sample => sampledTrajectoryPureObservedDeviationAt arms eta gamma loss i sample",
+      "old_sha256": "65a40c23c01d53ab86c21f1eb04bf03e61e43c183e3de4d6192e8410ad62fd54",
+      "new_sha256": "bcad9b7a776dec420d9908b4ac73db10625ba2989e2a8156d7b28708f1537878",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.Exp3.sampledPurePredictableMinusObservedProcess",
+      "kind": "def",
+      "path": "BanditRLProof/Exp3PureConfidence.lean",
+      "old_statement": "noncomputable def sampledPurePredictableMinusObservedProcess {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action] (arms : Finset Action) (eta gamma : Real) (loss : PredictableLossVector Env Action) : Nat -> Env × ((k : Nat) -> Action × Real) -> Real | 0, _sample => 0 | i + 1, sample => sampledTrajectoryPurePredictableMinusObservedAt arms eta gamma loss i sample theorem sampledPurePredictableMinusObservedProcess_stronglyAdapted {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_nonneg : 0 <= gamma) (hgamma_le_one : gamma <= 1) (loss : PredictableLossVector Env Action) : StronglyAdapted (sampledPredictableDeviationFiltration Env Action) (sampledPurePredictableMinusObservedProcess arms eta gamma loss)",
+      "new_statement": "noncomputable def sampledPurePredictableMinusObservedProcess {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action] (arms : Finset Action) (eta gamma : Real) (loss : PredictableLossVector Env Action) : Nat -> Env × ((k : Nat) -> Action × Real) -> Real | 0, _sample => 0 | i + 1, sample => sampledTrajectoryPurePredictableMinusObservedAt arms eta gamma loss i sample",
+      "old_sha256": "d97cf05ab530ee9afe4e298d2d114127352c78bdbe00617552f11e22779e2fa8",
+      "new_sha256": "6c05459a6c0a7fc3678b1dcb9c8561116baff5c5f3a8169b572f84c59424a1af",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.Exp3.sampledPredictableRealizedDeviationProcess",
+      "kind": "def",
+      "path": "BanditRLProof/Exp3RealizedDeviationTail.lean",
+      "old_statement": "noncomputable def sampledPredictableRealizedDeviationProcess {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action] (arms : Finset Action) (eta gamma : Real) (loss : PredictableLossVector Env Action) : Nat -> Env × ((k : Nat) -> Action × Real) -> Real | 0, _sample => 0 | i + 1, sample => sampledTrajectoryRealizedDeviationAt arms eta gamma loss i sample noncomputable def sampledPredictableRealizedDeviationProxy : Nat -> NNReal | 0 => 0 | _i + 1 => Concentration.intervalVarianceProxy 0 1 theorem sampledPredictableRealizedDeviationProcess_stronglyAdapted {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_nonneg : 0 <= gamma) (hgamma_le_one : gamma <= 1) (loss : PredictableLossVector Env Action) : StronglyAdapted (sampledPredictableDeviationFiltration Env Action) (sampledPredictableRealizedDeviationProcess arms eta gamma loss)",
+      "new_statement": "noncomputable def sampledPredictableRealizedDeviationProcess {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action] (arms : Finset Action) (eta gamma : Real) (loss : PredictableLossVector Env Action) : Nat -> Env × ((k : Nat) -> Action × Real) -> Real | 0, _sample => 0 | i + 1, sample => sampledTrajectoryRealizedDeviationAt arms eta gamma loss i sample",
+      "old_sha256": "08000b3513e1ad405cd5c2c2b358c0202f012ec9638d7f572e58d7848439cdf6",
+      "new_sha256": "be96bd9fe05a61f1bbe67a34fe074eea126afde08a34623de703e3af18cb40d4",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.Exp3.sampledPredictableRealizedDeviationProxy",
+      "kind": "def",
+      "path": "BanditRLProof/Exp3RealizedDeviationTail.lean",
+      "old_statement": "noncomputable def sampledPredictableRealizedDeviationProxy : Nat -> NNReal | 0 => 0 | _i + 1 => Concentration.intervalVarianceProxy 0 1 theorem sampledPredictableRealizedDeviationProcess_stronglyAdapted {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_nonneg : 0 <= gamma) (hgamma_le_one : gamma <= 1) (loss : PredictableLossVector Env Action) : StronglyAdapted (sampledPredictableDeviationFiltration Env Action) (sampledPredictableRealizedDeviationProcess arms eta gamma loss)",
+      "new_statement": "noncomputable def sampledPredictableRealizedDeviationProxy : Nat -> NNReal | 0 => 0 | _i + 1 => Concentration.intervalVarianceProxy 0 1",
+      "old_sha256": "b2cd27b46aabfbfa8f7e6cfa0417cf8ccbd06e5b0e8bf5c9d23a29b694a9e85c",
+      "new_sha256": "3b7723047a898b0bee75e7db075e4e1610aa3036d1984a7b30436cf6aac1a566",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.Exp3.sampledPredictableRealizedVarianceProcess",
+      "kind": "def",
+      "path": "BanditRLProof/Exp3RealizedPredictableVariance.lean",
+      "old_statement": "noncomputable def sampledPredictableRealizedVarianceProcess {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action] (arms : Finset Action) (eta gamma : Real) (loss : PredictableLossVector Env Action) : Nat → Env × ((k : Nat) → Action × Real) → Real | 0, _sample => 0 | i + 1, sample => sampledTrajectoryPredictableRealizedVarianceAt arms eta gamma loss i sample theorem measurable_sampledTrajectoryPredictableRealizedVarianceAt_filtration {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_pos : 0 < gamma) (hgamma_le_one : gamma ≤ 1) (loss : PredictableLossVector Env Action) (t : Nat) : Measurable[sampledPredictableDeviationFiltration Env Action t] (sampledTrajectoryPredictableRealizedVarianceAt arms eta gamma loss t)",
+      "new_statement": "noncomputable def sampledPredictableRealizedVarianceProcess {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action] (arms : Finset Action) (eta gamma : Real) (loss : PredictableLossVector Env Action) : Nat → Env × ((k : Nat) → Action × Real) → Real | 0, _sample => 0 | i + 1, sample => sampledTrajectoryPredictableRealizedVarianceAt arms eta gamma loss i sample",
+      "old_sha256": "07561a083c522fc283c713c10fc8eec52095c31b2f8246897ef056cbcebe38a7",
+      "new_sha256": "6e48bb34f48a6773c9204a5a54daae4d18ee640cda90aaa0e0f875d25be70c7f",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.Exp3.sampledHistoryScore",
+      "kind": "def",
+      "path": "BanditRLProof/Exp3SampledHistoryScore.lean",
+      "old_statement": "noncomputable def sampledHistoryScore {Action : Type u} [DecidableEq Action] (arms : Finset Action) (eta gamma : Real) : (n : Nat) -> History.FinitePairHistory Action Real n -> Action -> Real | 0, history, action => importanceWeightedLoss (initialExploredDistribution arms eta gamma) (fun _ => (history ⟨0, Finset.mem_Iic.mpr le_rfl⟩).2) (history ⟨0, Finset.mem_Iic.mpr le_rfl⟩).1 action | n + 1, history, action => let previous := previousPairHistory history sampledHistoryScore arms eta gamma n previous action + importanceWeightedLoss (exploredHistoryDistribution arms eta gamma (sampledHistoryScore arms eta gamma n) previous) (fun _ => (history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩).2) (history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩).1 action @[simp] theorem sampledHistoryScore_zero {Action : Type u} [DecidableEq Action] (arms : Finset Action) (eta gamma : Real) (history : History.FinitePairHistory Action Real 0) (action : Action) : sampledHistoryScore arms eta gamma 0 history action = importanceWeightedLoss (initialExploredDistribution arms eta gamma) (fun _ => (history ⟨0, Finset.mem_Iic.mpr le_rfl⟩).2) (history ⟨0, Finset.mem_Iic.mpr le_rfl⟩).1 action",
+      "new_statement": "noncomputable def sampledHistoryScore {Action : Type u} [DecidableEq Action] (arms : Finset Action) (eta gamma : Real) : (n : Nat) -> History.FinitePairHistory Action Real n -> Action -> Real | 0, history, action => importanceWeightedLoss (initialExploredDistribution arms eta gamma) (fun _ => (history ⟨0, Finset.mem_Iic.mpr le_rfl⟩).2) (history ⟨0, Finset.mem_Iic.mpr le_rfl⟩).1 action | n + 1, history, action => let previous := previousPairHistory history sampledHistoryScore arms eta gamma n previous action + importanceWeightedLoss (exploredHistoryDistribution arms eta gamma (sampledHistoryScore arms eta gamma n) previous) (fun _ => (history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩).2) (history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩).1 action @[simp]",
+      "old_sha256": "0018376b6eea36d710cd1678490797571ef36f757e44a32fb420f507690f786c",
+      "new_sha256": "09355723c048dd85c96e9116a6a14169e3438cd1c3396eb818d55bd2b3c3712b",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.HOO.Covering.optimalPath",
+      "kind": "def",
+      "path": "BanditRLProof/HOOOptimalBranch.lean",
+      "old_statement": "noncomputable def Covering.optimalPath {X : Type*} (C : Covering X) (f : X → ℝ) : ℕ → Node | 0 => [] | n+1 => child (C.optimalPath f n) (C.optimalChild f (C.optimalPath f n)) @[simp] theorem Covering.optimalPath_length {X : Type*} (C : Covering X) (f : X → ℝ) (n : ℕ) : (C.optimalPath f n).length = n",
+      "new_statement": "noncomputable def Covering.optimalPath {X : Type*} (C : Covering X) (f : X → ℝ) : ℕ → Node | 0 => [] | n+1 => child (C.optimalPath f n) (C.optimalChild f (C.optimalPath f n))",
+      "old_sha256": "c0dd75b75fa53ff2a637dde588514bce76efd3e210e0a86ef0b7d4705e5d46c6",
+      "new_sha256": "e10e5e578d07627b4dceba16f11fc948ed6e436877af4b40e083d05c0c677e49",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.LowerBounds.sourceBlockList",
+      "kind": "def",
+      "path": "BanditRLProof/LowerBounds/ArithmeticBlockCoding.lean",
+      "old_statement": "def sourceBlockList {α : Type*} : (n : ℕ) → SourceBlock α n → List α | 0, _ => [] | n + 1, x => x.1 :: sourceBlockList n x.2 theorem sourceBlockList_length {α : Type*} (n : ℕ) (x : SourceBlock α n) : (sourceBlockList n x).length = n",
+      "new_statement": "def sourceBlockList {α : Type*} : (n : ℕ) → SourceBlock α n → List α | 0, _ => [] | n + 1, x => x.1 :: sourceBlockList n x.2",
+      "old_sha256": "947d6571135b516bf8e054f475ff6af6159282ea5ae444b4f8a6dd8ba1c259bc",
+      "new_sha256": "968289ed4bb56d13acfbdc935aaddd3abb42e3f7469607a60fb0eb4dc6b4c872",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.LowerBounds.arithmeticInterval",
+      "kind": "def",
+      "path": "BanditRLProof/LowerBounds/ArithmeticIntervals.lean",
+      "old_statement": "def arithmeticInterval {k : ℕ} (p : Fin k → ℝ) : List (Fin k) → ℝ × ℝ | [] => (0, 1) | a :: w => (arithmeticOffset p a + p a * (arithmeticInterval p w).1, arithmeticOffset p a + p a * (arithmeticInterval p w).2) theorem arithmeticInterval_width {k : ℕ} (p : Fin k → ℝ) (w : List (Fin k)) : (arithmeticInterval p w).2 - (arithmeticInterval p w).1 = (w.map p).prod",
+      "new_statement": "def arithmeticInterval {k : ℕ} (p : Fin k → ℝ) : List (Fin k) → ℝ × ℝ | [] => (0, 1) | a :: w => (arithmeticOffset p a + p a * (arithmeticInterval p w).1, arithmeticOffset p a + p a * (arithmeticInterval p w).2)",
+      "old_sha256": "3db5fd929665c55c86eb8fdcb6b9067f76024a926b41b0f54b39f6bb624bd250",
+      "new_sha256": "3fd900d8347143eefb812885c79892a6dfb9a7b7e769fff6bd59fd01fc25d805",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.LowerBounds.finiteHistoryPullCountENNReal",
+      "kind": "def",
+      "path": "BanditRLProof/LowerBounds/BanditHistoryKL.lean",
+      "old_statement": "noncomputable def finiteHistoryPullCountENNReal {K : Nat} {Reward : Type v} : (n : Nat) → History.FinitePairHistory (Fin K) Reward n → Fin K → ENNReal | 0, history, arm => if (history ⟨0, Finset.mem_Iic.mpr le_rfl⟩).1 = arm then 1 else 0 | n + 1, history, arm => finiteHistoryPullCountENNReal n (Thompson.pairHistoryPrefix history) arm + if (Thompson.pairHistoryLast history).1 = arm then 1 else 0 theorem measurable_finiteHistoryPullCountENNReal {K : Nat} {Reward : Type v} [MeasurableSpace Reward] (n : Nat) (arm : Fin K) : Measurable (fun history : History.FinitePairHistory (Fin K) Reward n => finiteHistoryPullCountENNReal n history arm)",
+      "new_statement": "noncomputable def finiteHistoryPullCountENNReal {K : Nat} {Reward : Type v} : (n : Nat) → History.FinitePairHistory (Fin K) Reward n → Fin K → ENNReal | 0, history, arm => if (history ⟨0, Finset.mem_Iic.mpr le_rfl⟩).1 = arm then 1 else 0 | n + 1, history, arm => finiteHistoryPullCountENNReal n (Thompson.pairHistoryPrefix history) arm + if (Thompson.pairHistoryLast history).1 = arm then 1 else 0",
+      "old_sha256": "81504a001539b522bb1f574ce0ae7b49d5896546af23bf560c85e51aeea13613",
+      "new_sha256": "f64b02ce85afba14c2dc2cdca0b34c51adb9d7ff9772f4a325fd5485ca55df81",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.LowerBounds.SourceBlock",
+      "kind": "def",
+      "path": "BanditRLProof/LowerBounds/BlockEntropy.lean",
+      "old_statement": "def SourceBlock (α : Type*) : ℕ → Type _ | 0 => PUnit | n + 1 => α × SourceBlock α n instance sourceBlockFintype {α : Type*} [Fintype α] (n : ℕ) : Fintype (SourceBlock α n)",
+      "new_statement": "def SourceBlock (α : Type*) : ℕ → Type _ | 0 => PUnit | n + 1 => α × SourceBlock α n instance sourceBlockFintype {α : Type*} [Fintype α] (n : ℕ) : Fintype (SourceBlock α n) := by induction n with | zero => exact inferInstanceAs (Fintype PUnit) | succ n ih => exact inferInstanceAs (Fintype (α × SourceBlock α n)) instance sourceBlockDecidableEq {α : Type*} [DecidableEq α] (n : ℕ) : DecidableEq (SourceBlock α n) := by induction n with | zero => exact inferInstanceAs (DecidableEq PUnit) | succ n ih => exact inferInstanceAs (DecidableEq (α × SourceBlock α n))",
+      "old_sha256": "a6aca8a0587f54702a3064f327ba2a956b84f9ad85f48250863aa840b20d5d71",
+      "new_sha256": "e5b2be8781b1c479d527a9fbdd5724357c668b3b3d2b73b9f57020bd9e6f90e1",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.LowerBounds.sourceBlockMass",
+      "kind": "def",
+      "path": "BanditRLProof/LowerBounds/BlockEntropy.lean",
+      "old_statement": "def sourceBlockMass {α : Type*} (p : α → ℝ) : (n : ℕ) → SourceBlock α n → ℝ | 0, _ => 1 | n + 1, x => p x.1 * sourceBlockMass p n x.2 theorem sourceBlockMass_nonneg {α : Type*} (p : α → ℝ) (hp : ∀ i, 0 ≤ p i) (n : ℕ) (x : SourceBlock α n) : 0 ≤ sourceBlockMass p n x",
+      "new_statement": "def sourceBlockMass {α : Type*} (p : α → ℝ) : (n : ℕ) → SourceBlock α n → ℝ | 0, _ => 1 | n + 1, x => p x.1 * sourceBlockMass p n x.2",
+      "old_sha256": "ef0d9eecbfd30a1b98f42c32bee9c2a92b9fda1116fb83a575acadc84702f3a1",
+      "new_sha256": "63716e53e584343c763538935fe4602b7ed6c381deb2f6554da5daff412ae4e9",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.LowerBounds.binaryAddressValue",
+      "kind": "def",
+      "path": "BanditRLProof/LowerBounds/DyadicAddresses.lean",
+      "old_statement": "def binaryAddressValue : List Bool → ℕ | [] => 0 | b :: w => (if b then 2 ^ w.length else 0) + binaryAddressValue w theorem binaryAddressValue_lt (w : List Bool) : binaryAddressValue w < 2 ^ w.length",
+      "new_statement": "def binaryAddressValue : List Bool → ℕ | [] => 0 | b :: w => (if b then 2 ^ w.length else 0) + binaryAddressValue w",
+      "old_sha256": "015a8ce4514334d5b6ef7716eb4ac1c3f7c33a01085cc90b45b18f62a4aa62c0",
+      "new_sha256": "32a2343529f16655d3720e8367e48caa0406d968a2ccbb7b49ae8e87c5d81d25",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.LowerBounds.adversarialTableHistoryKernel",
+      "kind": "def",
+      "path": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "old_statement": "noncomputable def adversarialTableHistoryKernel {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) : (n : Nat) -> Kernel (AdversarialRewardTable K) (History.FinitePairHistory (Fin K) Real n) | 0 => ((Kernel.const (AdversarialRewardTable K) algorithm.initialAction) ⊗ₖ adversarialTableInitialFeedback).map (pairHistoryZeroMeasurableEquiv (Fin K) Real) | n + 1 => ((adversarialTableHistoryKernel algorithm n) ⊗ₖ adversarialTableStepKernel algorithm n).map (pairHistorySuccMeasurableEquiv (Fin K) Real n) instance adversarialTableHistoryKernel_isMarkov {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (n : Nat) : IsMarkovKernel (adversarialTableHistoryKernel algorithm n)",
+      "new_statement": "noncomputable def adversarialTableHistoryKernel {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) : (n : Nat) -> Kernel (AdversarialRewardTable K) (History.FinitePairHistory (Fin K) Real n) | 0 => ((Kernel.const (AdversarialRewardTable K) algorithm.initialAction) ⊗ₖ adversarialTableInitialFeedback).map (pairHistoryZeroMeasurableEquiv (Fin K) Real) | n + 1 => ((adversarialTableHistoryKernel algorithm n) ⊗ₖ adversarialTableStepKernel algorithm n).map (pairHistorySuccMeasurableEquiv (Fin K) Real n) instance adversarialTableHistoryKernel_isMarkov {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (n : Nat) : IsMarkovKernel (adversarialTableHistoryKernel algorithm n) := by induction n with | zero => unfold adversarialTableHistoryKernel exact Kernel.IsMarkovKernel.map _ (pairHistoryZeroMeasurableEquiv (Fin K) Real).measurable | succ n ih => letI := ih unfold adversarialTableHistoryKernel exact Kernel.IsMarkovKernel.map _ (pairHistorySuccMeasurableEquiv (Fin K) Real n).measurable",
+      "old_sha256": "a1286a19b8374c0aad4ed01e3730dc8079a733e6f7ecc4ad8263881534c5dc48",
+      "new_sha256": "7bd199f4be07c9afabb786b137f2a39455b05a0987111247f6206c2e9ae2e730",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.LowerBounds.finiteMeanExpectedRegret",
+      "kind": "def",
+      "path": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "old_statement": "def finiteMeanExpectedRegret {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (environment : FiniteMeanBanditEnvironment K) : Nat → Real | 0 => 0 | n + 1 => canonicalGapExpectedPseudoRegretReal algorithm environment.armLaw environment.gap n /-- Expected pull count after exactly `n` pulls, including the empty horizon. -/ def finiteMeanExpectedPullCount {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (environment : FiniteMeanBanditEnvironment K) (arm : Fin K) : Nat → Real | 0 => 0 | n + 1 => (canonicalRealizedExpectedPullCountThrough algorithm environment.armLaw n arm).toReal theorem finiteMeanExpectedPullCount_nonneg {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (environment : FiniteMeanBanditEnvironment K) (arm : Fin K) (n : Nat) : 0 ≤ finiteMeanExpectedPullCount algorithm environment arm n",
+      "new_statement": "def finiteMeanExpectedRegret {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (environment : FiniteMeanBanditEnvironment K) : Nat → Real | 0 => 0 | n + 1 => canonicalGapExpectedPseudoRegretReal algorithm environment.armLaw environment.gap n",
+      "old_sha256": "de40c18d9bb98b1c1084444ada5ee66099c87bbf9d090be6efa5f61e703606ec",
+      "new_sha256": "4df9479533193e2a620f292bcd6969184ba5e7ff2d52b8bf44f2ef9cb03f009c",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.LowerBounds.finiteMeanExpectedPullCount",
+      "kind": "def",
+      "path": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "old_statement": "def finiteMeanExpectedPullCount {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (environment : FiniteMeanBanditEnvironment K) (arm : Fin K) : Nat → Real | 0 => 0 | n + 1 => (canonicalRealizedExpectedPullCountThrough algorithm environment.armLaw n arm).toReal theorem finiteMeanExpectedPullCount_nonneg {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (environment : FiniteMeanBanditEnvironment K) (arm : Fin K) (n : Nat) : 0 ≤ finiteMeanExpectedPullCount algorithm environment arm n",
+      "new_statement": "def finiteMeanExpectedPullCount {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (environment : FiniteMeanBanditEnvironment K) (arm : Fin K) : Nat → Real | 0 => 0 | n + 1 => (canonicalRealizedExpectedPullCountThrough algorithm environment.armLaw n arm).toReal",
+      "old_sha256": "a85d2607aa1cad533f2b7f63cd176bce9549849b995a940c6b1ff38ad3c253f0",
+      "new_sha256": "1be8abb2049eca4af1f08950550b125b2016479518e557ff9e160d4cc5542309",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.LowerBounds.siblingExpandedWord",
+      "kind": "def",
+      "path": "BanditRLProof/LowerBounds/PrefixCodeSiblings.lean",
+      "old_statement": "def siblingExpandedWord {α : Type*} (code : BinaryPrefixCode (Option α)) : α ⊕ Bool → List Bool | .inl a => code.encode (some a) | .inr b => code.encode none ++ [b] theorem siblingExpandedWord_prefixFree {α : Type*} (code : BinaryPrefixCode (Option α)) {a b : α ⊕ Bool} (h : siblingExpandedWord code a <+: siblingExpandedWord code b) : a = b",
+      "new_statement": "def siblingExpandedWord {α : Type*} (code : BinaryPrefixCode (Option α)) : α ⊕ Bool → List Bool | .inl a => code.encode (some a) | .inr b => code.encode none ++ [b]",
+      "old_sha256": "2308059b1bb55afeeb2e55b3b2df622d4f487bc5bee6e2b9aafb5ed0a46d1cf0",
+      "new_sha256": "1ac1ebc994c6a139b815f3230aa3ab9a74542a24e4789862a12d0068aa818af9",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.LowerBounds.siblingContractedWord",
+      "kind": "def",
+      "path": "BanditRLProof/LowerBounds/PrefixCodeSiblings.lean",
+      "old_statement": "def siblingContractedWord {α : Type*} (code : BinaryPrefixCode (α ⊕ Bool)) (w : List Bool) : Option α → List Bool | none => w | some a => code.encode (.inl a) theorem siblingContractedWord_prefixFree {α : Type*} (code : BinaryPrefixCode (α ⊕ Bool)) (w : List Bool) (hs : ∀ b, code.encode (.inr b) = w ++ [b]) {a b : Option α} (h : siblingContractedWord code w a <+: siblingContractedWord code w b) : a = b",
+      "new_statement": "def siblingContractedWord {α : Type*} (code : BinaryPrefixCode (α ⊕ Bool)) (w : List Bool) : Option α → List Bool | none => w | some a => code.encode (.inl a)",
+      "old_sha256": "c979268e9a121d641d67e22dc1ebeeebbdefbb7f5e9953ae4736adb8f00743fa",
+      "new_sha256": "974e7dfd67bc559dfa46412a518541c6ed5ce8c238d3c88a55ad887deedf34c7",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.OFUL.canonicalHistoryTrajectoryPredictableFeature",
+      "kind": "def",
+      "path": "BanditRLProof/OFULGeneratedTrajectoryPredictableConfidence.lean",
+      "old_statement": "noncomputable def canonicalHistoryTrajectoryPredictableFeature {K : Nat} {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (hK : 0 < K) (lambda : Real) (actionFeature : Fin K -> Feature -> Real) (R delta S : Real) : Nat -> (Nat -> Fin K × Real) -> Feature -> Real | 0, _trajectory => actionFeature ⟨0, hK⟩ | n + 1, trajectory => finiteHistoryScalarRidgeSelectedFeature hK lambda actionFeature R delta S n (Preorder.frestrictLe n trajectory) /-- Every coordinate of the predictable feature is strict-past measurable. -/ theorem canonicalHistoryTrajectoryPredictableFeature_stronglyMeasurable {K : Nat} {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (hK : 0 < K) (lambda : Real) (actionFeature : Fin K -> Feature -> Real) (R delta S : Real) (t : Nat) (j : Feature) : StronglyMeasurable[ canonicalHistoryTrajectoryBeforeFiltration (K := K) t] (fun trajectory => canonicalHistoryTrajectoryPredictableFeature hK lambda actionFeature R delta S t trajectory j)",
+      "new_statement": "noncomputable def canonicalHistoryTrajectoryPredictableFeature {K : Nat} {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (hK : 0 < K) (lambda : Real) (actionFeature : Fin K -> Feature -> Real) (R delta S : Real) : Nat -> (Nat -> Fin K × Real) -> Feature -> Real | 0, _trajectory => actionFeature ⟨0, hK⟩ | n + 1, trajectory => finiteHistoryScalarRidgeSelectedFeature hK lambda actionFeature R delta S n (Preorder.frestrictLe n trajectory)",
+      "old_sha256": "e85e75d274c0f74e5e6b563c0ff5ac07f47cfa59ea77c3db2db7aee4ccbd9f64",
+      "new_sha256": "d97a248c2dbf7d5c2320fc0770339ddb97ce7b6a7943805fbf0d01c9153f4edd",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.OFUL.scheduledCanonicalHistoryTrajectoryPredictableFeature",
+      "kind": "def",
+      "path": "BanditRLProof/OFULScheduledAllTimeConfidence.lean",
+      "old_statement": "noncomputable def scheduledCanonicalHistoryTrajectoryPredictableFeature {K : Nat} {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (hK : 0 < K) (lambda : Real) (actionFeature : Fin K -> Feature -> Real) (R : Real) (deltaAt : Nat -> Real) (S : Real) : Nat -> (Nat -> Fin K × Real) -> Feature -> Real | 0, _trajectory => actionFeature ⟨0, hK⟩ | n + 1, trajectory => finiteHistoryScheduledScalarRidgeSelectedFeature hK lambda actionFeature R deltaAt S n (Preorder.frestrictLe n trajectory) /-- Every scheduled predictable-feature coordinate is strict-past measurable. -/ theorem scheduledCanonicalHistoryTrajectoryPredictableFeature_stronglyMeasurable {K : Nat} {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (hK : 0 < K) (lambda : Real) (actionFeature : Fin K -> Feature -> Real) (R : Real) (deltaAt : Nat -> Real) (S : Real) (t : Nat) (j : Feature) : StronglyMeasurable[ canonicalHistoryTrajectoryBeforeFiltration (K := K) t] (fun trajectory => scheduledCanonicalHistoryTrajectoryPredictableFeature hK lambda actionFeature R deltaAt S t trajectory j)",
+      "new_statement": "noncomputable def scheduledCanonicalHistoryTrajectoryPredictableFeature {K : Nat} {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (hK : 0 < K) (lambda : Real) (actionFeature : Fin K -> Feature -> Real) (R : Real) (deltaAt : Nat -> Real) (S : Real) : Nat -> (Nat -> Fin K × Real) -> Feature -> Real | 0, _trajectory => actionFeature ⟨0, hK⟩ | n + 1, trajectory => finiteHistoryScheduledScalarRidgeSelectedFeature hK lambda actionFeature R deltaAt S n (Preorder.frestrictLe n trajectory)",
+      "old_sha256": "9ffeae70b0a011d66f74059d808a8d4b536b7b04fd290ccfd6d714ac0216c0ea",
+      "new_sha256": "789b90b44b002faed696e14817666a1cec8d84919f260928f04112889134ceb6",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.OFUL.deterministicHistoryCanonicalPredictableFeature",
+      "kind": "def",
+      "path": "BanditRLProof/OFULScheduledBlockStartForcedAllTimeConfidence.lean",
+      "old_statement": "noncomputable def deterministicHistoryCanonicalPredictableFeature {K : Nat} {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (hK : 0 < K) (actionFeature : Fin K -> Feature -> Real) (selector : (n : Nat) -> History.FinitePairHistory (Fin K) Real n -> Fin K) : Nat -> (Nat -> Fin K × Real) -> Feature -> Real | 0, _trajectory => actionFeature ⟨0, hK⟩ | n + 1, trajectory => actionFeature (selector n (Preorder.frestrictLe n trajectory)) /-- Every coordinate of the deterministic-selector feature is strict-past measurable. -/ theorem deterministicHistoryCanonicalPredictableFeature_stronglyMeasurable {K : Nat} {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (hK : 0 < K) (actionFeature : Fin K -> Feature -> Real) (selector : (n : Nat) -> History.FinitePairHistory (Fin K) Real n -> Fin K) (hselector : forall n, Measurable (selector n)) (t : Nat) (j : Feature) : StronglyMeasurable[ canonicalHistoryTrajectoryBeforeFiltration (K := K) t] (fun trajectory => deterministicHistoryCanonicalPredictableFeature hK actionFeature selector t trajectory j)",
+      "new_statement": "noncomputable def deterministicHistoryCanonicalPredictableFeature {K : Nat} {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (hK : 0 < K) (actionFeature : Fin K -> Feature -> Real) (selector : (n : Nat) -> History.FinitePairHistory (Fin K) Real n -> Fin K) : Nat -> (Nat -> Fin K × Real) -> Feature -> Real | 0, _trajectory => actionFeature ⟨0, hK⟩ | n + 1, trajectory => actionFeature (selector n (Preorder.frestrictLe n trajectory))",
+      "old_sha256": "4ce3f77a33e96e9772f47a88d4da6b862b49d3277ee4ec4361fdbb5e449cc3c4",
+      "new_sha256": "6f27d511d02e04028918dd9f3104d5729c99510cfaf49592137e0ac805c96066",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRL.OnlineLearning.prefixCoefficient",
+      "kind": "def",
+      "path": "BanditRLProof/OnlineFTLFailure.lean",
+      "old_statement": "def prefixCoefficient (z : ℕ → ℝ) : ℕ → ℝ | 0 => 0 | t+1 => prefixCoefficient z t + z t def linearFTLPredict (z : ℕ → ℝ) (x0 : ℝ) (t : ℕ) : ℝ",
+      "new_statement": "def prefixCoefficient (z : ℕ → ℝ) : ℕ → ℝ | 0 => 0 | t+1 => prefixCoefficient z t + z t",
+      "old_sha256": "c96fd4b1264149d30404b60ab2653ff6bf9a877e2c209d8b595f3885afb82c7b",
+      "new_sha256": "92791bee9958aab265daae077e9428d573ad774fd4ceb3b8c7abce211e5de932",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRL.OnlineGradientDescent.iterate",
+      "kind": "def",
+      "path": "BanditRLProof/OnlineGradientDescent.lean",
+      "old_statement": "def iterate (V : Domain E) (η : ℝ) (loss : ℕ → E → ℝ) (x₁ : E) : ℕ → E | 0 => x₁ | t + 1 => step V η (loss t) (iterate V η loss x₁ t) /-- Comparator regret of this exact generated trajectory over `T` rounds. -/ def regret (V : Domain E) (η : ℝ) (loss : ℕ → E → ℝ) (x₁ u : E) (T : ℕ) : ℝ",
+      "new_statement": "def iterate (V : Domain E) (η : ℝ) (loss : ℕ → E → ℝ) (x₁ : E) : ℕ → E | 0 => x₁ | t + 1 => step V η (loss t) (iterate V η loss x₁ t)",
+      "old_sha256": "04c18186945f38c76b64d55beb5007051754c3e2de738444a1f02cee56b8af31",
+      "new_sha256": "5feabbb0744e83539a02140613ed96272029dedba7fa4823c61fadd6a993101f",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRL.OnlineGradientDescent.iterateVariable",
+      "kind": "def",
+      "path": "BanditRLProof/OnlineGradientDescentVariable.lean",
+      "old_statement": "def iterateVariable (V : Domain E) (η : ℕ → ℝ) (loss : ℕ → E → ℝ) (x₁ : E) : ℕ → E | 0 => x₁ | t + 1 => step V (η t) (loss t) (iterateVariable V η loss x₁ t) /-- Regret uses exactly the variable-step trajectory, with no comparator input to the policy. -/ def regretVariable (V : Domain E) (η : ℕ → ℝ) (loss : ℕ → E → ℝ) (x₁ u : E) (T : ℕ) : ℝ",
+      "new_statement": "def iterateVariable (V : Domain E) (η : ℕ → ℝ) (loss : ℕ → E → ℝ) (x₁ : E) : ℕ → E | 0 => x₁ | t + 1 => step V (η t) (loss t) (iterateVariable V η loss x₁ t)",
+      "old_sha256": "35427264179c6dcb2aef2e2bfc9ca545d8a1f1d971c9740f74e12d91e4742595",
+      "new_sha256": "4284a90f4be3588225f350b3a7d64ae3a28065efa5c75e228f3e012afa7ac8df",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRL.OnlineLearning.ftlState",
+      "kind": "def",
+      "path": "BanditRLProof/OnlineLearningFTLState.lean",
+      "old_statement": "noncomputable def ftlState (initial : ℝ) (y : ℕ → ℝ) : ℕ → ℕ × ℝ | 0 => (0, initial) | t + 1 => ftlMeanStep (ftlState initial y t) (y t) theorem ftlPredict_prefix (initial : ℝ) (y z : ℕ → ℝ) (t : ℕ) (h : ∀ i < t, y i = z i) : ftlPredict initial y t = ftlPredict initial z t",
+      "new_statement": "noncomputable def ftlState (initial : ℝ) (y : ℕ → ℝ) : ℕ → ℕ × ℝ | 0 => (0, initial) | t + 1 => ftlMeanStep (ftlState initial y t) (y t)",
+      "old_sha256": "05fb064bcc47b4f7ae242295a0b42a0614874429f868f1f7c15d514f79bbdf41",
+      "new_sha256": "bd824e91f64af419facba5779619cbb059d2f15cfe2b34b1489ad06bcfd7c4b1",
+      "in_inherited_registry": false
+    },
+    {
+      "name": "BanditRL.OnlineSubgradientDescent.iterate",
+      "kind": "def",
+      "path": "BanditRLProof/OnlineSubgradientDescent.lean",
+      "old_statement": "def iterate (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) : ℕ → E | 0 => x₁ | t + 1 => step V (η t) (loss t) (iterate V η loss x₁ t) def regret (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ u : E) (T : ℕ) : ℝ",
+      "new_statement": "def iterate (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) : ℕ → E | 0 => x₁ | t + 1 => step V (η t) (loss t) (iterate V η loss x₁ t)",
+      "old_sha256": "f4ac4a0c4573628677e8cc5c40f18f9f392d59ef3a144ba681dbdacf80a464d1",
+      "new_sha256": "303831aa664f8bcd9e84fd861f7461f7bbc400c103be8e7bd7228c1f0b34b3fa",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.pseudoRegret",
+      "kind": "def",
+      "path": "BanditRLProof/Regret.lean",
+      "old_statement": "noncomputable def pseudoRegret (model : FiniteBanditModel K) (action : Nat → Fin K) : Nat → Rat | 0 => 0 | t + 1 => pseudoRegret model action t + model.gap (action t) @[simp] theorem pseudoRegret_zero (model : FiniteBanditModel K) (action : Nat → Fin K) : pseudoRegret model action 0 = 0",
+      "new_statement": "noncomputable def pseudoRegret (model : FiniteBanditModel K) (action : Nat → Fin K) : Nat → Rat | 0 => 0 | t + 1 => pseudoRegret model action t + model.gap (action t)",
+      "old_sha256": "2fd0a8bb30ab1e8bfc78ea28b32f2e845c36660bdacaaf3b0451a7174678536b",
+      "new_sha256": "59f3114707b7b8545f94bb4108127a37b994f76a1f43b70baa1456b2de7395fa",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.coordinatePrefixIncrement",
+      "kind": "def",
+      "path": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean",
+      "old_statement": "noncomputable def coordinatePrefixIncrement {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (coordinate : CountCoordinate mdp) : (round : Nat) -> EpisodeBatchPrefix mdp episodes round -> Real | 0, history => coordinate.rawCount (history ⟨0, Finset.mem_Iic.mpr le_rfl⟩) - coordinate.policyMean source.initialPolicy initialState episodes | n + 1, history => coordinate.rawCount (history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩) - source.coordinateKernelMean n coordinate (Preorder.frestrictLe₂ (π := fun _ : Nat => EpisodeBatch mdp episodes) (Nat.le_succ n) history) omit [Nonempty State] [Nonempty Action] in /-- Every finite-prefix increment is measurable. -/ theorem measurable_coordinatePrefixIncrement {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (coordinate : CountCoordinate mdp) (round : Nat) : Measurable (source.coordinatePrefixIncrement coordinate round)",
+      "new_statement": "noncomputable def coordinatePrefixIncrement {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (coordinate : CountCoordinate mdp) : (round : Nat) -> EpisodeBatchPrefix mdp episodes round -> Real | 0, history => coordinate.rawCount (history ⟨0, Finset.mem_Iic.mpr le_rfl⟩) - coordinate.policyMean source.initialPolicy initialState episodes | n + 1, history => coordinate.rawCount (history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩) - source.coordinateKernelMean n coordinate (Preorder.frestrictLe₂ (π := fun _ : Nat => EpisodeBatch mdp episodes) (Nat.le_succ n) history) omit [Nonempty State] [Nonempty Action] in",
+      "old_sha256": "f85b05fd2a6643bbd1391e6f262ec8d20df835d5fe8cebb5e11fee8f2e8fd791",
+      "new_sha256": "cc693cecc9907158f655bffc4a14917d7ce0719febc3ea43e223e92af8a60890",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.coordinateMeanAt",
+      "kind": "def",
+      "path": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean",
+      "old_statement": "noncomputable def coordinateMeanAt {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (coordinate : CountCoordinate mdp) : Nat -> EpisodeBatchTrajectory mdp episodes -> Real | 0, _trajectory => coordinate.policyMean source.initialPolicy initialState episodes | n + 1, trajectory => source.coordinateKernelMean n coordinate (Preorder.frestrictLe n trajectory) /-- Sum of predictable coordinate means over a finite prefix. -/ noncomputable def cumulativeCoordinateMean {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (coordinate : CountCoordinate mdp) (rounds : Nat) (trajectory : EpisodeBatchTrajectory mdp episodes) : Real",
+      "new_statement": "noncomputable def coordinateMeanAt {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (coordinate : CountCoordinate mdp) : Nat -> EpisodeBatchTrajectory mdp episodes -> Real | 0, _trajectory => coordinate.policyMean source.initialPolicy initialState episodes | n + 1, trajectory => source.coordinateKernelMean n coordinate (Preorder.frestrictLe n trajectory)",
+      "old_sha256": "6421ffb14f8888725fa399ac00df058eb1ea4c3a896d88d89a37615e6cbea47f",
+      "new_sha256": "f9b48b9d42fecc47398ebbc006ad7dfc22ba2de2387dab3da86b52591afebf64",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.successorReturnPrefixIncrement",
+      "kind": "def",
+      "path": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean",
+      "old_statement": "noncomputable def successorReturnPrefixIncrement {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) : (round : Nat) -> EpisodeBatchPrefix mdp episodes round -> Real | 0, _history => 0 | n + 1, history => EpisodeBatch.totalReturn (history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩) - source.successorReturnKernelMean n (Preorder.frestrictLe₂ (π := fun _ : Nat => EpisodeBatch mdp episodes) (Nat.le_succ n) history) theorem measurable_successorReturnPrefixIncrement {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (round : Nat) : Measurable (source.successorReturnPrefixIncrement round)",
+      "new_statement": "noncomputable def successorReturnPrefixIncrement {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) : (round : Nat) -> EpisodeBatchPrefix mdp episodes round -> Real | 0, _history => 0 | n + 1, history => EpisodeBatch.totalReturn (history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩) - source.successorReturnKernelMean n (Preorder.frestrictLe₂ (π := fun _ : Nat => EpisodeBatch mdp episodes) (Nat.le_succ n) history)",
+      "old_sha256": "75d7dbec46601f3e3ce4c83c87bc0a6c9e2df78bf05b5a7bbedd5a96dffbf283",
+      "new_sha256": "02e4580d2b9f3d079ad596c58ace5941c7ff1d7c961b171c3dfc6b46a751242d",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentBellmanInnovationPrefix",
+      "kind": "def",
+      "path": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean",
+      "old_statement": "noncomputable def recurrentBellmanInnovationPrefix (mdp : MDP State Action) (defaultState : State) (episodes : Nat) (delta : Real) : (round : Nat) -> EpisodeBatchPrefix mdp 1 round -> Real | 0, _history => 0 | n + 1, history => successorBellmanInnovationOfHistoryBatch mdp defaultState episodes delta n (Preorder.frestrictLe₂ (π := fun _ : Nat => EpisodeBatch mdp 1) (Nat.le_succ n) history, history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩) theorem measurable_recurrentBellmanInnovationPrefix (mdp : MDP State Action) (defaultState : State) (episodes : Nat) (delta : Real) (round : Nat) : Measurable (recurrentBellmanInnovationPrefix mdp defaultState episodes delta round)",
+      "new_statement": "noncomputable def recurrentBellmanInnovationPrefix (mdp : MDP State Action) (defaultState : State) (episodes : Nat) (delta : Real) : (round : Nat) -> EpisodeBatchPrefix mdp 1 round -> Real | 0, _history => 0 | n + 1, history => successorBellmanInnovationOfHistoryBatch mdp defaultState episodes delta n (Preorder.frestrictLe₂ (π := fun _ : Nat => EpisodeBatch mdp 1) (Nat.le_succ n) history, history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩)",
+      "old_sha256": "3ea619929b1214647db06b581b562fa9afc45a41225e6db2fc3591007c428583",
+      "new_sha256": "706e01b0d4b5601ae87fbe9b7d19679f8640ff8d23b6ca6e27858afdd678d366",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.FiniteHorizonRL.MDP.sampledCumulativeDeterministicGapInnovationFrom",
+      "kind": "def",
+      "path": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIBellmanInnovation.lean",
+      "old_statement": "noncomputable def sampledCumulativeDeterministicGapInnovationFrom (mdp : MDP State Action) (table : DeterministicMarkovPolicyTable mdp) (feature : Fin mdp.horizon -> State -> Real) : (remaining : Nat) -> remaining <= mdp.horizon -> State -> StepTrace Action State remaining -> Real | 0, _, _, _ => 0 | remaining + 1, hremaining, state, trace => let stage : Fin mdp.horizon := ⟨mdp.horizon - (remaining + 1), by omega⟩ mdp.transitionValue (feature stage) state (table stage state) - feature stage (trace 0).2 + sampledCumulativeDeterministicGapInnovationFrom mdp table feature remaining (by omega) (trace 0).2 (Fin.tail trace) omit [Nonempty State] [Nonempty Action] in theorem measurable_sampledCumulativeDeterministicGapInnovationFrom (mdp : MDP State Action) (table : DeterministicMarkovPolicyTable mdp) (feature : Fin mdp.horizon -> State -> Real) (remaining : Nat) (hremaining : remaining <= mdp.horizon) : Measurable (fun p : State × StepTrace Action State remaining => mdp.sampledCumulativeDeterministicGapInnovationFrom table feature remaining hremaining p.1 p.2)",
+      "new_statement": "noncomputable def sampledCumulativeDeterministicGapInnovationFrom (mdp : MDP State Action) (table : DeterministicMarkovPolicyTable mdp) (feature : Fin mdp.horizon -> State -> Real) : (remaining : Nat) -> remaining <= mdp.horizon -> State -> StepTrace Action State remaining -> Real | 0, _, _, _ => 0 | remaining + 1, hremaining, state, trace => let stage : Fin mdp.horizon := ⟨mdp.horizon - (remaining + 1), by omega⟩ mdp.transitionValue (feature stage) state (table stage state) - feature stage (trace 0).2 + sampledCumulativeDeterministicGapInnovationFrom mdp table feature remaining (by omega) (trace 0).2 (Fin.tail trace) omit [Nonempty State] [Nonempty Action] in",
+      "old_sha256": "9f65abbcd6759ae6e1d5e7703659ef92904f119f5cef8b2bd7e2587648b20389",
+      "new_sha256": "8b1b55dd86c0ea355d8f4ecacc991fa6e0485780938064662c4fbdf3cca2273a",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.FiniteHorizonRL.MDP.sampledCumulativeTransitionGapInnovationFrom",
+      "kind": "def",
+      "path": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIBellmanInnovation.lean",
+      "old_statement": "noncomputable def sampledCumulativeTransitionGapInnovationFrom (mdp : MDP State Action) (policy : MarkovPolicy mdp) (feature : Fin mdp.horizon -> State -> Real) : (remaining : Nat) -> remaining <= mdp.horizon -> State -> StepTrace Action State remaining -> Real | 0, _, _, _ => 0 | remaining + 1, hremaining, state, trace => let stage : Fin mdp.horizon := ⟨mdp.horizon - (remaining + 1), by omega⟩ mdp.transitionValue (feature stage) state (trace 0).1 - feature stage (trace 0).2 + sampledCumulativeTransitionGapInnovationFrom mdp policy feature remaining (by omega) (trace 0).2 (Fin.tail trace) omit [Nonempty State] [Nonempty Action] in theorem measurable_sampledCumulativeTransitionGapInnovationFrom (mdp : MDP State Action) (policy : MarkovPolicy mdp) (feature : Fin mdp.horizon -> State -> Real) (remaining : Nat) (hremaining : remaining <= mdp.horizon) : Measurable (fun p : State × StepTrace Action State remaining => mdp.sampledCumulativeTransitionGapInnovationFrom policy feature remaining hremaining p.1 p.2)",
+      "new_statement": "noncomputable def sampledCumulativeTransitionGapInnovationFrom (mdp : MDP State Action) (policy : MarkovPolicy mdp) (feature : Fin mdp.horizon -> State -> Real) : (remaining : Nat) -> remaining <= mdp.horizon -> State -> StepTrace Action State remaining -> Real | 0, _, _, _ => 0 | remaining + 1, hremaining, state, trace => let stage : Fin mdp.horizon := ⟨mdp.horizon - (remaining + 1), by omega⟩ mdp.transitionValue (feature stage) state (trace 0).1 - feature stage (trace 0).2 + sampledCumulativeTransitionGapInnovationFrom mdp policy feature remaining (by omega) (trace 0).2 (Fin.tail trace) omit [Nonempty State] [Nonempty Action] in",
+      "old_sha256": "31eab686c7af45a3fd6d2ba9a442f067834e6ad4a8bd80aef572460ffc79a463",
+      "new_sha256": "0af3d6e491aa9d274c2dd6b2d23583b2e3a7999fa999063eebf6a5e90afc7586",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.clippedValueRemaining",
+      "kind": "def",
+      "path": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIClippedPlanner.lean",
+      "old_statement": "noncomputable def clippedValueRemaining {mdp : MDP State Action} (previousQ : QTable mdp) (summary : TransitionCountSummary mdp) (defaultState : State) (bonusScale : Real) : (remaining : Nat) -> remaining <= mdp.horizon -> State -> Real | 0, _ => fun _state => 0 | remaining + 1, hremaining => let stage := mdp.decisionStageRemaining remaining hremaining let tail := clippedValueRemaining previousQ summary defaultState bonusScale remaining (by omega) let score : State -> Action -> Real := fun state action => let count := summary.aggregateVisitCount state action if count = 0 then (mdp.horizon : Real) else min (previousQ stage state action) (min (mdp.horizon : Real) (mdp.reward state action + (∫ nextState, tail nextState ∂ summary.aggregateEmpiricalTransitionKernel defaultState (state, action)) + bonusScale / Real.sqrt count)) fun state => score state (FiniteRealArgmax.choose (fun action => score state action)) /-- The action-value used at one remaining-horizon coordinate. -/ noncomputable def clippedQRemaining {mdp : MDP State Action} (previousQ : QTable mdp) (summary : TransitionCountSummary mdp) (defaultState : State) (bonusScale : Real) (remaining : Nat) (hremaining : remaining + 1 <= mdp.horizon) (state : State) (action : Action) : Real",
+      "new_statement": "noncomputable def clippedValueRemaining {mdp : MDP State Action} (previousQ : QTable mdp) (summary : TransitionCountSummary mdp) (defaultState : State) (bonusScale : Real) : (remaining : Nat) -> remaining <= mdp.horizon -> State -> Real | 0, _ => fun _state => 0 | remaining + 1, hremaining => let stage := mdp.decisionStageRemaining remaining hremaining let tail := clippedValueRemaining previousQ summary defaultState bonusScale remaining (by omega) let score : State -> Action -> Real := fun state action => let count := summary.aggregateVisitCount state action if count = 0 then (mdp.horizon : Real) else min (previousQ stage state action) (min (mdp.horizon : Real) (mdp.reward state action + (∫ nextState, tail nextState ∂ summary.aggregateEmpiricalTransitionKernel defaultState (state, action)) + bonusScale / Real.sqrt count)) fun state => score state (FiniteRealArgmax.choose (fun action => score state action))",
+      "old_sha256": "96d07c13504f85ca5b3f303d26aa29efa7bcdd872174575f916210fbc17c55ae",
+      "new_sha256": "89c7e510a7c1103779ae94c7aa4661bf76015f87482b376f4c6cbb299ac3a444",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentQTableOfSummaries",
+      "kind": "def",
+      "path": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIClippedPlanner.lean",
+      "old_statement": "noncomputable def recurrentQTableOfSummaries (mdp : MDP State Action) (defaultState : State) (bonusScale : Real) : (n : Nat) -> (Fin n -> TransitionCountSummary mdp) -> QTable mdp | 0, _summaries => initialQTable mdp | n + 1, summaries => let previous := recurrentQTableOfSummaries mdp defaultState bonusScale n (fun i => summaries i.castSucc) let cumulative := cumulativeSummaryOfSequence summaries clippedQTable mdp previous cumulative defaultState bonusScale /-- Policy table obtained after the same finite previous-Q fold. -/ noncomputable def recurrentPolicyTableOfSummaries (mdp : MDP State Action) (defaultState : State) (bonusScale : Real) (n : Nat) (summaries : Fin n -> TransitionCountSummary mdp) : DeterministicMarkovPolicyTable mdp",
+      "new_statement": "noncomputable def recurrentQTableOfSummaries (mdp : MDP State Action) (defaultState : State) (bonusScale : Real) : (n : Nat) -> (Fin n -> TransitionCountSummary mdp) -> QTable mdp | 0, _summaries => initialQTable mdp | n + 1, summaries => let previous := recurrentQTableOfSummaries mdp defaultState bonusScale n (fun i => summaries i.castSucc) let cumulative := cumulativeSummaryOfSequence summaries clippedQTable mdp previous cumulative defaultState bonusScale",
+      "old_sha256": "e9a402c3816eaed8dfd3feecd2dc20e3f17c8d45e0879f7691409ccbdc69f1a0",
+      "new_sha256": "27c363a60697f554e33a6e87929725c16f3ae791ad9382dea59e6a594148f27d",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.successorWeightedChargeFrom",
+      "kind": "def",
+      "path": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIRegretDecomposition.lean",
+      "old_statement": "noncomputable def successorWeightedChargeFrom (mdp : MDP State Action) (defaultState : State) (episodes : Nat) (delta : Real) (trajectory : EpisodeBatchTrajectory mdp 1) (n : Nat) : (remaining : Nat) -> remaining <= mdp.horizon -> State -> StepTrace Action State remaining -> Real | 0, _, _, _ => 0 | remaining + 1, hremaining, state, trace => let stage := mdp.decisionStageRemaining remaining hremaining normalizedBellmanChargeWeight mdp stage * successorLocalCharge mdp defaultState episodes delta trajectory n remaining hremaining state + successorWeightedChargeFrom mdp defaultState episodes delta trajectory n remaining (by omega) (trace 0).2 (Fin.tail trace) /-- Full successor-episode charge on the canonical state reconstruction. -/ noncomputable def successorCanonicalWeightedCharge (mdp : MDP State Action) (defaultState : State) (episodes : Nat) (delta : Real) (trajectory : EpisodeBatchTrajectory mdp 1) (n : Nat) : Real",
+      "new_statement": "noncomputable def successorWeightedChargeFrom (mdp : MDP State Action) (defaultState : State) (episodes : Nat) (delta : Real) (trajectory : EpisodeBatchTrajectory mdp 1) (n : Nat) : (remaining : Nat) -> remaining <= mdp.horizon -> State -> StepTrace Action State remaining -> Real | 0, _, _, _ => 0 | remaining + 1, hremaining, state, trace => let stage := mdp.decisionStageRemaining remaining hremaining normalizedBellmanChargeWeight mdp stage * successorLocalCharge mdp defaultState episodes delta trajectory n remaining hremaining state + successorWeightedChargeFrom mdp defaultState episodes delta trajectory n remaining (by omega) (trace 0).2 (Fin.tail trace)",
+      "old_sha256": "8be5a12c55212c987a59012908301122e332cf093de98d0ed00685cd837843b6",
+      "new_sha256": "8c40c30cc5b459aa0311d7152f407060580425ee2df7398513926ed1f38117db",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.FiniteHorizonRL.MDP.transitionResidualFrom",
+      "kind": "def",
+      "path": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVISameSourceConfidence.lean",
+      "old_statement": "def transitionResidualFrom (mdp : MDP State Action) (targetState : State) (targetAction : Action) (targetNextState : State) : (remaining : Nat) -> State -> StepTrace Action State remaining -> Real | 0, _currentState, _trace => 0 | remaining + 1, currentState, trace => mdp.transitionResidualHead targetState targetAction targetNextState currentState (trace 0) + mdp.transitionResidualFrom targetState targetAction targetNextState remaining (trace 0).2 (Fin.tail trace) /-- Sum of actual visits to one state-action coordinate over the remaining trace. -/ def transitionVisitFrom (mdp : MDP State Action) (targetState : State) (targetAction : Action) : (remaining : Nat) -> State -> StepTrace Action State remaining -> Real | 0, _currentState, _trace => 0 | remaining + 1, currentState, trace => mdp.transitionVisitHead targetState targetAction currentState (trace 0) + mdp.transitionVisitFrom targetState targetAction remaining (trace 0).2 (Fin.tail trace) omit [Nonempty State] [Nonempty Action] in theorem measurable_transitionResidualFrom (mdp : MDP State Action) (targetState : State) (targetAction : Action) (targetNextState : State) (remaining : Nat) : Measurable (fun p : State × StepTrace Action State remaining => mdp.transitionResidualFrom targetState targetAction targetNextState remaining p.1 p.2)",
+      "new_statement": "def transitionResidualFrom (mdp : MDP State Action) (targetState : State) (targetAction : Action) (targetNextState : State) : (remaining : Nat) -> State -> StepTrace Action State remaining -> Real | 0, _currentState, _trace => 0 | remaining + 1, currentState, trace => mdp.transitionResidualHead targetState targetAction targetNextState currentState (trace 0) + mdp.transitionResidualFrom targetState targetAction targetNextState remaining (trace 0).2 (Fin.tail trace)",
+      "old_sha256": "82ecfa986f8b186c6df1067781026944990a9ff18f0066b1ee46e5c3648e220e",
+      "new_sha256": "014cd0d9e9f87e36f9fb962235dc7922934953d54f50c9b263fe3fd1041e24df",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.FiniteHorizonRL.MDP.transitionVisitFrom",
+      "kind": "def",
+      "path": "BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVISameSourceConfidence.lean",
+      "old_statement": "def transitionVisitFrom (mdp : MDP State Action) (targetState : State) (targetAction : Action) : (remaining : Nat) -> State -> StepTrace Action State remaining -> Real | 0, _currentState, _trace => 0 | remaining + 1, currentState, trace => mdp.transitionVisitHead targetState targetAction currentState (trace 0) + mdp.transitionVisitFrom targetState targetAction remaining (trace 0).2 (Fin.tail trace) omit [Nonempty State] [Nonempty Action] in theorem measurable_transitionResidualFrom (mdp : MDP State Action) (targetState : State) (targetAction : Action) (targetNextState : State) (remaining : Nat) : Measurable (fun p : State × StepTrace Action State remaining => mdp.transitionResidualFrom targetState targetAction targetNextState remaining p.1 p.2)",
+      "new_statement": "def transitionVisitFrom (mdp : MDP State Action) (targetState : State) (targetAction : Action) : (remaining : Nat) -> State -> StepTrace Action State remaining -> Real | 0, _currentState, _trace => 0 | remaining + 1, currentState, trace => mdp.transitionVisitHead targetState targetAction currentState (trace 0) + mdp.transitionVisitFrom targetState targetAction remaining (trace 0).2 (Fin.tail trace) omit [Nonempty State] [Nonempty Action] in",
+      "old_sha256": "e26ec2f767a8035db129f835fd51837c437facda973d24f82f038966cff94891",
+      "new_sha256": "b30b1e94c9bcb20b7f4093337554f73c8c0dc83b74776d8de8865ea65129d560",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.roundBadEvent",
+      "kind": "def",
+      "path": "BanditRLProof/RL/FiniteHorizonAdaptiveEpisodeBatchLaw.lean",
+      "old_statement": "def roundBadEvent {mdp : MDP State Action} {episodes : Nat} (initialBad : Set (EpisodeBatch mdp episodes)) (successorBad : (n : Nat) -> Set (EpisodeBatchPrefix mdp episodes n × EpisodeBatch mdp episodes)) : Nat -> Set (EpisodeBatchTrajectory mdp episodes) | 0 => initialBadEvent initialBad | n + 1 => successorBadEvent n (successorBad n) /-- Union of the first `rounds` adapted bad events. -/ def finiteHorizonBadEvent {mdp : MDP State Action} {episodes : Nat} (rounds : Nat) (initialBad : Set (EpisodeBatch mdp episodes)) (successorBad : (n : Nat) -> Set (EpisodeBatchPrefix mdp episodes n × EpisodeBatch mdp episodes)) : Set (EpisodeBatchTrajectory mdp episodes)",
+      "new_statement": "def roundBadEvent {mdp : MDP State Action} {episodes : Nat} (initialBad : Set (EpisodeBatch mdp episodes)) (successorBad : (n : Nat) -> Set (EpisodeBatchPrefix mdp episodes n × EpisodeBatch mdp episodes)) : Nat -> Set (EpisodeBatchTrajectory mdp episodes) | 0 => initialBadEvent initialBad | n + 1 => successorBadEvent n (successorBad n)",
+      "old_sha256": "62e96d1034c0fda190bb0d7d6092dd6d004ea77a87ede1a6540c5ea70015b8ee",
+      "new_sha256": "88e34cfee033994d99618124eabb9fbba1edcc720b6205a9149180117fd94741",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.policyAt",
+      "kind": "def",
+      "path": "BanditRLProof/RL/FiniteHorizonAdaptiveEpisodeBatchLaw.lean",
+      "old_statement": "def policyAt {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (trajectory : EpisodeBatchTrajectory mdp episodes) : Nat -> MarkovPolicy mdp | 0 => source.initialPolicy | n + 1 => source.successorPolicy n (Preorder.frestrictLe n trajectory) omit [Nonempty State] [Nonempty Action] in /-- The initial count event receives the common local confidence share. -/ theorem initialSimultaneousCountBadEvent_le {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (rounds : Nat) (hrounds : 0 < rounds) (hepisodes : 0 < episodes) (delta : Real) (hdelta : 0 < delta) (hdelta_le_one : delta <= 1) : source.initialPolicy.iidEpisodeBatchMeasure initialState episodes (source.initialSimultaneousCountBadEvent rounds delta) <= ENNReal.ofReal (multiBatchLocalDelta rounds delta)",
+      "new_statement": "def policyAt {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (trajectory : EpisodeBatchTrajectory mdp episodes) : Nat -> MarkovPolicy mdp | 0 => source.initialPolicy | n + 1 => source.successorPolicy n (Preorder.frestrictLe n trajectory) omit [Nonempty State] [Nonempty Action] in",
+      "old_sha256": "9942266898efd070cfcdb6617abdd43a277384556c626d8590c954b463daca14",
+      "new_sha256": "40c96d987f51e7213292b57f8e906fd1d7d8196b1241d243df2acabcf097ce77",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.FiniteHorizonRL.AdaptiveStochasticEpisodeBatchSource.successorGlobalReturnPrefixIncrement",
+      "kind": "def",
+      "path": "BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardRealizedBehaviorRegret.lean",
+      "old_statement": "noncomputable def successorGlobalReturnPrefixIncrement {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes) : (round : Nat) → StochasticEpisodeBatchPrefix mdp episodes round → Real | 0, _history => 0 | n + 1, history => source.successorGlobalReturnDeviation n (Preorder.frestrictLe₂ (π := fun _ : Nat => StochasticEpisodeBatch mdp episodes) (Nat.le_succ n) history, history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩) theorem measurable_successorGlobalReturnPrefixIncrement {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes) [source.GlobalReturnMeasurability] (round : Nat) : Measurable (source.successorGlobalReturnPrefixIncrement round)",
+      "new_statement": "noncomputable def successorGlobalReturnPrefixIncrement {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes) : (round : Nat) → StochasticEpisodeBatchPrefix mdp episodes round → Real | 0, _history => 0 | n + 1, history => source.successorGlobalReturnDeviation n (Preorder.frestrictLe₂ (π := fun _ : Nat => StochasticEpisodeBatch mdp episodes) (Nat.le_succ n) history, history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩)",
+      "old_sha256": "271084122a48ff634d79c18b3c6d04f8b0457ebc583532e7acbf9da4cae6e9b5",
+      "new_sha256": "ab75d2b37d0a1564ef48971ccf762a273b4929f082f75e6bd06a0628deb9f52c",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.FiniteHorizonRL.AdaptiveStochasticEpisodeBatchSource.policyAt",
+      "kind": "def",
+      "path": "BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticConfidence.lean",
+      "old_statement": "def policyAt {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes) (trajectory : StochasticEpisodeBatchTrajectory mdp episodes) : Nat -> MarkovPolicy mdp | 0 => source.initialPolicy | n + 1 => source.successorPolicy n (Preorder.frestrictLe n trajectory) /-- Pull an initial stochastic-batch event back to the adaptive trajectory. -/ def initialBadEvent {mdp : MDP State Action} {episodes : Nat} (bad : Set (StochasticEpisodeBatch mdp episodes)) : Set (StochasticEpisodeBatchTrajectory mdp episodes)",
+      "new_statement": "def policyAt {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes) (trajectory : StochasticEpisodeBatchTrajectory mdp episodes) : Nat -> MarkovPolicy mdp | 0 => source.initialPolicy | n + 1 => source.successorPolicy n (Preorder.frestrictLe n trajectory)",
+      "old_sha256": "565780ab30282fe6a0d1355cc74693146a228e7e23fdcac6fff3bfacfb6e61fa",
+      "new_sha256": "5ae81df94234480959573682ff6d5a1ca90ebd4b7795a1f5765c1328e010ab82",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.FiniteHorizonRL.AdaptiveStochasticEpisodeBatchSource.roundBadEvent",
+      "kind": "def",
+      "path": "BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticConfidence.lean",
+      "old_statement": "def roundBadEvent {mdp : MDP State Action} {episodes : Nat} (initialBad : Set (StochasticEpisodeBatch mdp episodes)) (successorBad : (n : Nat) -> Set (StochasticEpisodeBatchPrefix mdp episodes n × StochasticEpisodeBatch mdp episodes)) : Nat -> Set (StochasticEpisodeBatchTrajectory mdp episodes) | 0 => initialBadEvent initialBad | n + 1 => successorBadEvent n (successorBad n) /-- Union of the first `rounds` adapted stochastic-batch events. -/ def finiteHorizonBadEvent {mdp : MDP State Action} {episodes : Nat} (rounds : Nat) (initialBad : Set (StochasticEpisodeBatch mdp episodes)) (successorBad : (n : Nat) -> Set (StochasticEpisodeBatchPrefix mdp episodes n × StochasticEpisodeBatch mdp episodes)) : Set (StochasticEpisodeBatchTrajectory mdp episodes)",
+      "new_statement": "def roundBadEvent {mdp : MDP State Action} {episodes : Nat} (initialBad : Set (StochasticEpisodeBatch mdp episodes)) (successorBad : (n : Nat) -> Set (StochasticEpisodeBatchPrefix mdp episodes n × StochasticEpisodeBatch mdp episodes)) : Nat -> Set (StochasticEpisodeBatchTrajectory mdp episodes) | 0 => initialBadEvent initialBad | n + 1 => successorBadEvent n (successorBad n)",
+      "old_sha256": "d969cc0b9f5722f1be576846d8f01123b553bc62fef016c97b568ee7322234e2",
+      "new_sha256": "0c3d5d6781038bcf07c19c2ff37ed09dff4023466d58f86f78da9c3f13a08e0f",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.FiniteHorizonRL.HeterogeneousAdaptiveStochasticEpisodeBatchSource.policyAt",
+      "kind": "def",
+      "path": "BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalModelConfidence.lean",
+      "old_statement": "def policyAt {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat -> Nat} (source : HeterogeneousAdaptiveStochasticEpisodeBatchSource mdp initialState episodes) (trajectory : HeterogeneousStochasticEpisodeBatchTrajectory mdp episodes) : Nat -> MarkovPolicy mdp | 0 => source.initialPolicy | n + 1 => source.successorPolicy n (Preorder.frestrictLe n trajectory) /-- Pull an initial heterogeneous-batch event back to the causal trajectory. -/ def initialBadEvent {mdp : MDP State Action} {episodes : Nat -> Nat} (bad : Set (StochasticEpisodeBatch mdp (episodes 0))) : Set (HeterogeneousStochasticEpisodeBatchTrajectory mdp episodes)",
+      "new_statement": "def policyAt {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat -> Nat} (source : HeterogeneousAdaptiveStochasticEpisodeBatchSource mdp initialState episodes) (trajectory : HeterogeneousStochasticEpisodeBatchTrajectory mdp episodes) : Nat -> MarkovPolicy mdp | 0 => source.initialPolicy | n + 1 => source.successorPolicy n (Preorder.frestrictLe n trajectory)",
+      "old_sha256": "370fa64737a2e1e037d1e2c8166e8b359a19475690e19bd313282a8d5c512e40",
+      "new_sha256": "ee38cb4f3a36abefeaa8e6dcca0adfdc5765e39330b177b67736380b11b0ec6d",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.FiniteHorizonRL.HeterogeneousAdaptiveStochasticEpisodeBatchSource.roundBadEvent",
+      "kind": "def",
+      "path": "BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalModelConfidence.lean",
+      "old_statement": "def roundBadEvent {mdp : MDP State Action} {episodes : Nat -> Nat} (initialBad : Set (StochasticEpisodeBatch mdp (episodes 0))) (successorBad : (n : Nat) -> Set (HeterogeneousStochasticEpisodeBatchPrefix mdp episodes n × StochasticEpisodeBatch mdp (episodes (n + 1)))) : Nat -> Set (HeterogeneousStochasticEpisodeBatchTrajectory mdp episodes) | 0 => initialBadEvent initialBad | n + 1 => successorBadEvent n (successorBad n) /-- Union of the first `rounds` heterogeneous adapted events. -/ def finiteHorizonBadEvent {mdp : MDP State Action} {episodes : Nat -> Nat} (rounds : Nat) (initialBad : Set (StochasticEpisodeBatch mdp (episodes 0))) (successorBad : (n : Nat) -> Set (HeterogeneousStochasticEpisodeBatchPrefix mdp episodes n × StochasticEpisodeBatch mdp (episodes (n + 1)))) : Set (HeterogeneousStochasticEpisodeBatchTrajectory mdp episodes)",
+      "new_statement": "def roundBadEvent {mdp : MDP State Action} {episodes : Nat -> Nat} (initialBad : Set (StochasticEpisodeBatch mdp (episodes 0))) (successorBad : (n : Nat) -> Set (HeterogeneousStochasticEpisodeBatchPrefix mdp episodes n × StochasticEpisodeBatch mdp (episodes (n + 1)))) : Nat -> Set (HeterogeneousStochasticEpisodeBatchTrajectory mdp episodes) | 0 => initialBadEvent initialBad | n + 1 => successorBadEvent n (successorBad n)",
+      "old_sha256": "266c98836bc59294773121792b1d1c9268fc919a380c07e866225f1e6826c0c0",
+      "new_sha256": "3d643dea39b61bab21acf65d2e77b96b19b1be372302e41c8789269f76e37467",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.FiniteHorizonRL.HeterogeneousAdaptiveStochasticEpisodeBatchSource.sampledReturnDeviationPrefixIncrement",
+      "kind": "def",
+      "path": "BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalReturnConcentration.lean",
+      "old_statement": "noncomputable def sampledReturnDeviationPrefixIncrement {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat -> Nat} (source : HeterogeneousAdaptiveStochasticEpisodeBatchSource mdp initialState episodes) : (round : Nat) -> HeterogeneousStochasticEpisodeBatchPrefix mdp episodes round -> Real | 0, history => mdp.sampledCumulativeReturnDeviationSum source.initialPolicy (episodes 0) (history ⟨0, Finset.mem_Iic.mpr le_rfl⟩) | n + 1, history => source.successorSampledReturnDeviation n (Preorder.frestrictLe₂ (π := fun k : Nat => StochasticEpisodeBatch mdp (episodes k)) (Nat.le_succ n) history, history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩) omit [DecidableEq State] [DecidableEq Action] [MeasurableSingletonClass State] [MeasurableSingletonClass Action] [Nonempty State] [Nonempty Action] in theorem measurable_sampledReturnDeviationPrefixIncrement {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat -> Nat} (source : HeterogeneousAdaptiveStochasticEpisodeBatchSource mdp initialState episodes) (round : Nat) : Measurable (source.sampledReturnDeviationPrefixIncrement round)",
+      "new_statement": "noncomputable def sampledReturnDeviationPrefixIncrement {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat -> Nat} (source : HeterogeneousAdaptiveStochasticEpisodeBatchSource mdp initialState episodes) : (round : Nat) -> HeterogeneousStochasticEpisodeBatchPrefix mdp episodes round -> Real | 0, history => mdp.sampledCumulativeReturnDeviationSum source.initialPolicy (episodes 0) (history ⟨0, Finset.mem_Iic.mpr le_rfl⟩) | n + 1, history => source.successorSampledReturnDeviation n (Preorder.frestrictLe₂ (π := fun k : Nat => StochasticEpisodeBatch mdp (episodes k)) (Nat.le_succ n) history, history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩) omit [DecidableEq State] [DecidableEq Action] [MeasurableSingletonClass State] [MeasurableSingletonClass Action] [Nonempty State] [Nonempty Action] in",
+      "old_sha256": "19dbe9cca0b147a852d53a38bdf03b7376230ee9faa09ca7e4e2a3f50a82f6db",
+      "new_sha256": "4ce852e4e5f072342843baa0402fea4cebec8e4d60c380cfbbcea2b2e57fef45",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.FiniteHorizonRL.HeterogeneousAdaptiveStochasticEpisodeBatchSource.successorGlobalReturnPrefixIncrement",
+      "kind": "def",
+      "path": "BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalReturnConcentration.lean",
+      "old_statement": "noncomputable def successorGlobalReturnPrefixIncrement {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat -> Nat} (source : HeterogeneousAdaptiveStochasticEpisodeBatchSource mdp initialState episodes) : (round : Nat) -> HeterogeneousStochasticEpisodeBatchPrefix mdp episodes round -> Real | 0, _history => 0 | n + 1, history => source.successorGlobalReturnDeviation n (Preorder.frestrictLe₂ (π := fun k : Nat => StochasticEpisodeBatch mdp (episodes k)) (Nat.le_succ n) history, history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩) omit [DecidableEq State] [DecidableEq Action] [MeasurableSingletonClass State] [MeasurableSingletonClass Action] [Nonempty State] [Nonempty Action] in theorem measurable_successorGlobalReturnPrefixIncrement {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat -> Nat} (source : HeterogeneousAdaptiveStochasticEpisodeBatchSource mdp initialState episodes) [source.GlobalReturnMeasurability] (round : Nat) : Measurable (source.successorGlobalReturnPrefixIncrement round)",
+      "new_statement": "noncomputable def successorGlobalReturnPrefixIncrement {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat -> Nat} (source : HeterogeneousAdaptiveStochasticEpisodeBatchSource mdp initialState episodes) : (round : Nat) -> HeterogeneousStochasticEpisodeBatchPrefix mdp episodes round -> Real | 0, _history => 0 | n + 1, history => source.successorGlobalReturnDeviation n (Preorder.frestrictLe₂ (π := fun k : Nat => StochasticEpisodeBatch mdp (episodes k)) (Nat.le_succ n) history, history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩) omit [DecidableEq State] [DecidableEq Action] [MeasurableSingletonClass State] [MeasurableSingletonClass Action] [Nonempty State] [Nonempty Action] in",
+      "old_sha256": "0db007a9eef28e60532ed09bdc6cbf602607260782de685da9f7d51852d69f36",
+      "new_sha256": "a26f7477a4df283365d61cad71d2afe24909b89deed9837a20210bdc58f3ab61",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.FiniteHorizonRL.AdaptiveStochasticEpisodeBatchSource.sampledReturnDeviationPrefixIncrement",
+      "kind": "def",
+      "path": "BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardTotalReturnConcentration.lean",
+      "old_statement": "noncomputable def sampledReturnDeviationPrefixIncrement {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes) : (round : Nat) → StochasticEpisodeBatchPrefix mdp episodes round → Real | 0, history => mdp.sampledCumulativeReturnDeviationSum source.initialPolicy episodes (history ⟨0, Finset.mem_Iic.mpr le_rfl⟩) | n + 1, history => source.successorSampledReturnDeviation n (Preorder.frestrictLe₂ (π := fun _ : Nat => StochasticEpisodeBatch mdp episodes) (Nat.le_succ n) history, history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩) theorem measurable_sampledReturnDeviationPrefixIncrement {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes) (round : Nat) : Measurable (source.sampledReturnDeviationPrefixIncrement round)",
+      "new_statement": "noncomputable def sampledReturnDeviationPrefixIncrement {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes) : (round : Nat) → StochasticEpisodeBatchPrefix mdp episodes round → Real | 0, history => mdp.sampledCumulativeReturnDeviationSum source.initialPolicy episodes (history ⟨0, Finset.mem_Iic.mpr le_rfl⟩) | n + 1, history => source.successorSampledReturnDeviation n (Preorder.frestrictLe₂ (π := fun _ : Nat => StochasticEpisodeBatch mdp episodes) (Nat.le_succ n) history, history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩)",
+      "old_sha256": "53bc253c1ba06b44570da103751be06cd58b4a9dab48a612ce92428ceb8c313a",
+      "new_sha256": "56d9d08429922c3f17c933bbab64fe61be79f893d008c28f513f1714e960b4cb",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan.upperValueRemaining",
+      "kind": "def",
+      "path": "BanditRLProof/RL/FiniteHorizonEstimatedModelCertificate.lean",
+      "old_statement": "noncomputable def upperValueRemaining {mdp : MDP State Action} (plan : EstimatedModelPlan mdp) : (remaining : Nat) -> remaining <= mdp.horizon -> State -> Real | 0, _ => fun _ => 0 | remaining + 1, hremaining => plan.optimisticBellman (mdp.decisionStageRemaining remaining hremaining) (plan.upperValueRemaining remaining (by omega)) omit [MeasurableSingletonClass State] in /-- Transport the dependent upper-value recursion across equal remaining horizons. -/ theorem upperValueRemaining_eq_of_eq {mdp : MDP State Action} (plan : EstimatedModelPlan mdp) {left right : Nat} (hleft : left <= mdp.horizon) (hright : right <= mdp.horizon) (h : left = right) : plan.upperValueRemaining left hleft = plan.upperValueRemaining right hright",
+      "new_statement": "noncomputable def upperValueRemaining {mdp : MDP State Action} (plan : EstimatedModelPlan mdp) : (remaining : Nat) -> remaining <= mdp.horizon -> State -> Real | 0, _ => fun _ => 0 | remaining + 1, hremaining => plan.optimisticBellman (mdp.decisionStageRemaining remaining hremaining) (plan.upperValueRemaining remaining (by omega)) omit [MeasurableSingletonClass State] in",
+      "old_sha256": "4a6295b7e4c190f88328639d03974af0e45e526081680ce112d46f1116577c37",
+      "new_sha256": "64705a781c61f7eac238620fae0f382b521db8a2d23b981eeaa501e2a3b1714d",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.FiniteHorizonRL.exploratoryPathStateLowerNat",
+      "kind": "def",
+      "path": "BanditRLProof/RL/FiniteHorizonExploratoryPathSupportReachability.lean",
+      "old_statement": "noncomputable def exploratoryPathStateLowerNat {mdp : MDP State Action} {initialState : Measure State} (support : ExploratoryPathSupport mdp initialState) (explorationRate : NNReal) : (stage : Nat) -> stage < mdp.horizon -> State -> Real | 0, _hstage, state => support.initialFloor state | stage + 1, hstage, state => exploratoryPathStateLowerNat support explorationRate stage (by omega) (support.predecessorState ⟨stage + 1, hstage⟩ state) * exploratoryActionProbabilityFloor Action explorationRate * support.transitionFloor ⟨stage + 1, hstage⟩ state /-- The selected-path lower envelope indexed by valid chronological stages. -/ noncomputable def exploratoryPathStateLower {mdp : MDP State Action} {initialState : Measure State} (support : ExploratoryPathSupport mdp initialState) (explorationRate : NNReal) (stage : Fin mdp.horizon) (state : State) : Real",
+      "new_statement": "noncomputable def exploratoryPathStateLowerNat {mdp : MDP State Action} {initialState : Measure State} (support : ExploratoryPathSupport mdp initialState) (explorationRate : NNReal) : (stage : Nat) -> stage < mdp.horizon -> State -> Real | 0, _hstage, state => support.initialFloor state | stage + 1, hstage, state => exploratoryPathStateLowerNat support explorationRate stage (by omega) (support.predecessorState ⟨stage + 1, hstage⟩ state) * exploratoryActionProbabilityFloor Action explorationRate * support.transitionFloor ⟨stage + 1, hstage⟩ state",
+      "old_sha256": "6a9060896a68847bf56e60ec6ffe5815b16432eb1cd84fd837ad4bc27780a049",
+      "new_sha256": "baf12c6e14a06bed680e518f74e1036f973244cfb256e7d64e85d4cc40e61f88",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.FiniteHorizonRL.MarkovPolicy.stateOccupancy",
+      "kind": "def",
+      "path": "BanditRLProof/RL/FiniteHorizonOccupancyRegret.lean",
+      "old_statement": "noncomputable def stateOccupancy {mdp : MDP State Action} (policy : MarkovPolicy mdp) (initialState : Measure State) : (stage : Nat) -> stage <= mdp.horizon -> Measure State | 0, _ => initialState | stage + 1, hstage => policy.inducedStateKernel ⟨stage, by omega⟩ ∘ₘ policy.stateOccupancy initialState stage (by omega) /-- Every chronological state occupancy is a probability measure. -/ instance instStateOccupancyIsProbabilityMeasure {mdp : MDP State Action} (policy : MarkovPolicy mdp) (initialState : Measure State) [IsProbabilityMeasure initialState] (stage : Nat) (hstage : stage <= mdp.horizon) : IsProbabilityMeasure (policy.stateOccupancy initialState stage hstage)",
+      "new_statement": "noncomputable def stateOccupancy {mdp : MDP State Action} (policy : MarkovPolicy mdp) (initialState : Measure State) : (stage : Nat) -> stage <= mdp.horizon -> Measure State | 0, _ => initialState | stage + 1, hstage => policy.inducedStateKernel ⟨stage, by omega⟩ ∘ₘ policy.stateOccupancy initialState stage (by omega)",
+      "old_sha256": "64a26ae1d1e1e81eb3f37c6fa943f3b23e4eadef3b8180a6ae60bd62963f0a63",
+      "new_sha256": "22e7d44c60a43a21d51ee2c9c09ad602f79242473fbb152457db2dbaaf60f3ae",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.FiniteHorizonRL.MarkovPolicy.occupancyGapRemaining",
+      "kind": "def",
+      "path": "BanditRLProof/RL/FiniteHorizonOccupancyRegret.lean",
+      "old_statement": "noncomputable def occupancyGapRemaining {mdp : MDP State Action} (policy : MarkovPolicy mdp) : (remaining : Nat) -> remaining <= mdp.horizon -> Measure State -> Real | 0, _, _ => 0 | remaining + 1, hremaining, mu => let stage : Fin mdp.horizon := ⟨mdp.horizon - (remaining + 1), by omega⟩ (∫ state, mdp.optimalValueRemaining (remaining + 1) hremaining state - policy.bellman stage (mdp.optimalValueRemaining remaining (by omega)) state ∂mu) + policy.occupancyGapRemaining remaining (by omega) (policy.inducedStateKernel stage ∘ₘ mu) omit [MeasurableSingletonClass State] in /-- The successor recursion is an integral of the chronological policy Bellman gap plus the remaining occupancy gaps under the next-state law. -/ theorem occupancyGapRemaining_succ {mdp : MDP State Action} (policy : MarkovPolicy mdp) (remaining : Nat) (hremaining : remaining + 1 <= mdp.horizon) (mu : Measure State) : policy.occupancyGapRemaining (remaining + 1) hremaining mu = (∫ state, policy.policyBellmanGap ⟨mdp.horizon - (remaining + 1), by omega⟩ state ∂mu) + policy.occupancyGapRemaining remaining (by omega) (policy.inducedStateKernel ⟨mdp.horizon - (remaining + 1), by omega⟩ ∘ₘ mu)",
+      "new_statement": "noncomputable def occupancyGapRemaining {mdp : MDP State Action} (policy : MarkovPolicy mdp) : (remaining : Nat) -> remaining <= mdp.horizon -> Measure State -> Real | 0, _, _ => 0 | remaining + 1, hremaining, mu => let stage : Fin mdp.horizon := ⟨mdp.horizon - (remaining + 1), by omega⟩ (∫ state, mdp.optimalValueRemaining (remaining + 1) hremaining state - policy.bellman stage (mdp.optimalValueRemaining remaining (by omega)) state ∂mu) + policy.occupancyGapRemaining remaining (by omega) (policy.inducedStateKernel stage ∘ₘ mu) omit [MeasurableSingletonClass State] in",
+      "old_sha256": "a297bb5cde920111729c0932c2c6b6b1b7dd09cd02436ff5fccad2538f8a1998",
+      "new_sha256": "b694f65416548fb2be7be1245e900adaa1e4a4d4ae604a57cbbced4cdf48e9ed",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.FiniteHorizonRL.MDP.optimalValueRemaining",
+      "kind": "def",
+      "path": "BanditRLProof/RL/FiniteHorizonOptimality.lean",
+      "old_statement": "noncomputable def optimalValueRemaining (mdp : MDP State Action) : (remaining : Nat) -> remaining <= mdp.horizon -> State -> Real | 0, _ => fun _ => 0 | remaining + 1, hremaining => mdp.optimalBellman (mdp.optimalValueRemaining remaining (by omega)) /-- Every backward optimal-value surface is measurable. -/ theorem measurable_optimalValueRemaining (mdp : MDP State Action) (remaining : Nat) (hremaining : remaining <= mdp.horizon) : Measurable (mdp.optimalValueRemaining remaining hremaining)",
+      "new_statement": "noncomputable def optimalValueRemaining (mdp : MDP State Action) : (remaining : Nat) -> remaining <= mdp.horizon -> State -> Real | 0, _ => fun _ => 0 | remaining + 1, hremaining => mdp.optimalBellman (mdp.optimalValueRemaining remaining (by omega))",
+      "old_sha256": "54be24d05b6cca660187f11ccd52ab141235329cc28a62fe75513b08ae3e24cf",
+      "new_sha256": "e051a6f0bcdf05dfe25e0a0eb44bc95fcdfe3257757b81bdc62f145ae72db00e",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.FiniteHorizonRL.MarkovPolicy.occupancySumRemaining",
+      "kind": "def",
+      "path": "BanditRLProof/RL/FiniteHorizonOptimisticCertificate.lean",
+      "old_statement": "noncomputable def occupancySumRemaining {mdp : MDP State Action} (policy : MarkovPolicy mdp) (cost : (remaining : Nat) -> remaining + 1 <= mdp.horizon -> State -> Real) : (remaining : Nat) -> remaining <= mdp.horizon -> Measure State -> Real | 0, _, _ => 0 | remaining + 1, hremaining, mu => let stage : Fin mdp.horizon := ⟨mdp.horizon - (remaining + 1), by omega⟩ (∫ state, cost remaining hremaining state ∂mu) + policy.occupancySumRemaining cost remaining (by omega) (policy.inducedStateKernel stage ∘ₘ mu) omit [MeasurableSingletonClass State] [Nonempty Action] in /-- Successor equation for a generic recursive occupancy sum. -/ theorem occupancySumRemaining_succ {mdp : MDP State Action} (policy : MarkovPolicy mdp) (cost : (remaining : Nat) -> remaining + 1 <= mdp.horizon -> State -> Real) (remaining : Nat) (hremaining : remaining + 1 <= mdp.horizon) (mu : Measure State) : policy.occupancySumRemaining cost (remaining + 1) hremaining mu = (∫ state, cost remaining hremaining state ∂mu) + policy.occupancySumRemaining cost remaining (by omega) (policy.inducedStateKernel ⟨mdp.horizon - (remaining + 1), by omega⟩ ∘ₘ mu)",
+      "new_statement": "noncomputable def occupancySumRemaining {mdp : MDP State Action} (policy : MarkovPolicy mdp) (cost : (remaining : Nat) -> remaining + 1 <= mdp.horizon -> State -> Real) : (remaining : Nat) -> remaining <= mdp.horizon -> Measure State -> Real | 0, _, _ => 0 | remaining + 1, hremaining, mu => let stage : Fin mdp.horizon := ⟨mdp.horizon - (remaining + 1), by omega⟩ (∫ state, cost remaining hremaining state ∂mu) + policy.occupancySumRemaining cost remaining (by omega) (policy.inducedStateKernel stage ∘ₘ mu) omit [MeasurableSingletonClass State] [Nonempty Action] in",
+      "old_sha256": "72c4a5569a35fff934d77ec3f1ba92675526af0eb80b884d77ac080c9b6cd125",
+      "new_sha256": "9880105b2440119c57dd13646a73f45c0fb1e2801c5743a104796b94ba1be898",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.FiniteHorizonRL.MarkovPolicy.valueRemaining",
+      "kind": "def",
+      "path": "BanditRLProof/RL/FiniteHorizonPolicy.lean",
+      "old_statement": "noncomputable def valueRemaining {mdp : MDP State Action} (policy : MarkovPolicy mdp) : (remaining : Nat) -> remaining <= mdp.horizon -> State -> Real | 0, _ => fun _ => 0 | remaining + 1, hremaining => policy.bellman ⟨mdp.horizon - (remaining + 1), by omega⟩ (policy.valueRemaining remaining (by omega)) /-- The backward policy value is measurable for every valid remaining horizon. -/ theorem measurable_valueRemaining {mdp : MDP State Action} (policy : MarkovPolicy mdp) (remaining : Nat) (hremaining : remaining <= mdp.horizon) : Measurable (policy.valueRemaining remaining hremaining)",
+      "new_statement": "noncomputable def valueRemaining {mdp : MDP State Action} (policy : MarkovPolicy mdp) : (remaining : Nat) -> remaining <= mdp.horizon -> State -> Real | 0, _ => fun _ => 0 | remaining + 1, hremaining => policy.bellman ⟨mdp.horizon - (remaining + 1), by omega⟩ (policy.valueRemaining remaining (by omega))",
+      "old_sha256": "afe3bd638a5c93af45aace0f3f15efb72c88a0fd986a5b31556cfc535b50450e",
+      "new_sha256": "9332c2af27841b7dc861d49204d86cc379d105f26e6dc0518b3335923163a049",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.FiniteHorizonRL.StepTrace.stateAt",
+      "kind": "def",
+      "path": "BanditRLProof/RL/FiniteHorizonStageTransitionJointFactorization.lean",
+      "old_statement": "def stateAt : {n : Nat} -> State -> StepTrace Action State n -> Fin n -> State | 0, _initial, _trace, coordinate => Fin.elim0 coordinate | _n + 1, initial, trace, coordinate => Fin.cases initial (fun previous => (trace previous.castSucc).2) coordinate @[simp] theorem stateAt_zero (initial : State) (head : Action × State) (tail : StepTrace Action State n) : stateAt initial (Fin.cons head tail) (0 : Fin (n + 1)) = initial",
+      "new_statement": "def stateAt : {n : Nat} -> State -> StepTrace Action State n -> Fin n -> State | 0, _initial, _trace, coordinate => Fin.elim0 coordinate | _n + 1, initial, trace, coordinate => Fin.cases initial (fun previous => (trace previous.castSucc).2) coordinate @[simp]",
+      "old_sha256": "9135b0682cea2f38411d814b04cdee38a724cd8ef2d5a4653c7566e826d9a692",
+      "new_sha256": "bb1812397c9ede20dd4bb3688f50bcd6de672e5d6b3e3fe244c6b4832aa50197",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.FiniteHorizonRL.MDP.MeanCompatibleRewardKernel.stochasticValueRemaining",
+      "kind": "def",
+      "path": "BanditRLProof/RL/FiniteHorizonStochasticRewardBellman.lean",
+      "old_statement": "noncomputable def stochasticValueRemaining (source : MeanCompatibleRewardKernel mdp) (policy : MarkovPolicy mdp) : (remaining : Nat) -> remaining <= mdp.horizon -> State -> Real | 0, _ => fun _ => 0 | remaining + 1, hremaining => source.stochasticBellman policy ⟨mdp.horizon - (remaining + 1), by omega⟩ (source.stochasticValueRemaining policy remaining (by omega)) /-- Stochastic backward policy evaluation equals mean-reward evaluation. -/ theorem stochasticValueRemaining_eq_valueRemaining (source : MeanCompatibleRewardKernel mdp) (policy : MarkovPolicy mdp) (remaining : Nat) (hremaining : remaining <= mdp.horizon) : source.stochasticValueRemaining policy remaining hremaining = policy.valueRemaining remaining hremaining",
+      "new_statement": "noncomputable def stochasticValueRemaining (source : MeanCompatibleRewardKernel mdp) (policy : MarkovPolicy mdp) : (remaining : Nat) -> remaining <= mdp.horizon -> State -> Real | 0, _ => fun _ => 0 | remaining + 1, hremaining => source.stochasticBellman policy ⟨mdp.horizon - (remaining + 1), by omega⟩ (source.stochasticValueRemaining policy remaining (by omega))",
+      "old_sha256": "4325ced1838e71acf5b4765a9284e4a4ff5d5a6a022e9a92950bdc6a2ed82b8b",
+      "new_sha256": "6554b0f4e96cfafe5aa5c61b07c2996bba1bf77cda6c0a5c29f3a2e7530f3420",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.FiniteHorizonRL.MDP.sampledCumulativeMeanBellmanInnovationFrom",
+      "kind": "def",
+      "path": "BanditRLProof/RL/FiniteHorizonStochasticRewardBellmanInnovationConcentration.lean",
+      "old_statement": "noncomputable def sampledCumulativeMeanBellmanInnovationFrom (mdp : MDP State Action) (policy : MarkovPolicy mdp) : (remaining : Nat) → remaining ≤ mdp.horizon → State → RewardStepTrace Action State remaining → Real | 0, _, _, _ => 0 | remaining + 1, hremaining, state, trace => (mdp.reward state (trace 0).1 + policy.valueRemaining remaining (by omega) (trace 0).2.2 - policy.valueRemaining (remaining + 1) hremaining state) + sampledCumulativeMeanBellmanInnovationFrom mdp policy remaining (by omega) (trace 0).2.2 (Fin.tail trace) /-- The recursive mean Bellman innovation is jointly measurable in start state and trace. -/ theorem measurable_sampledCumulativeMeanBellmanInnovationFrom (mdp : MDP State Action) (policy : MarkovPolicy mdp) (remaining : Nat) (hremaining : remaining ≤ mdp.horizon) : Measurable (fun p : State × RewardStepTrace Action State remaining => mdp.sampledCumulativeMeanBellmanInnovationFrom policy remaining hremaining p.1 p.2)",
+      "new_statement": "noncomputable def sampledCumulativeMeanBellmanInnovationFrom (mdp : MDP State Action) (policy : MarkovPolicy mdp) : (remaining : Nat) → remaining ≤ mdp.horizon → State → RewardStepTrace Action State remaining → Real | 0, _, _, _ => 0 | remaining + 1, hremaining, state, trace => (mdp.reward state (trace 0).1 + policy.valueRemaining remaining (by omega) (trace 0).2.2 - policy.valueRemaining (remaining + 1) hremaining state) + sampledCumulativeMeanBellmanInnovationFrom mdp policy remaining (by omega) (trace 0).2.2 (Fin.tail trace)",
+      "old_sha256": "1e348e9722c75d67f2f67d45611acc0ff48053d1bd256ef8a51c888b1f01751a",
+      "new_sha256": "3655eefd75f34fb5672a7bb949045db89fecc2d7afc23b2dc180ea61a33b898a",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.FiniteHorizonRL.MDP.sampledCumulativeRewardDeviationFrom",
+      "kind": "def",
+      "path": "BanditRLProof/RL/FiniteHorizonStochasticRewardCumulativeConcentration.lean",
+      "old_statement": "def sampledCumulativeRewardDeviationFrom (mdp : MDP State Action) : (remaining : Nat) -> State -> RewardStepTrace Action State remaining -> Real | 0, _, _ => 0 | remaining + 1, state, trace => (trace 0).2.1 - mdp.reward state (trace 0).1 + sampledCumulativeRewardDeviationFrom mdp remaining (trace 0).2.2 (Fin.tail trace) theorem measurable_sampledCumulativeRewardDeviationFrom (mdp : MDP State Action) (remaining : Nat) : Measurable (fun p : State × RewardStepTrace Action State remaining => mdp.sampledCumulativeRewardDeviationFrom remaining p.1 p.2)",
+      "new_statement": "def sampledCumulativeRewardDeviationFrom (mdp : MDP State Action) : (remaining : Nat) -> State -> RewardStepTrace Action State remaining -> Real | 0, _, _ => 0 | remaining + 1, state, trace => (trace 0).2.1 - mdp.reward state (trace 0).1 + sampledCumulativeRewardDeviationFrom mdp remaining (trace 0).2.2 (Fin.tail trace)",
+      "old_sha256": "b8f4fafcdb6c5e109a0d1e837a18ea4e599b64c5252906e01de47db88fcb24cc",
+      "new_sha256": "16af42421b52db5bb3c94d039fbb260484b575beb8e0574d7fc38aab470cf25a",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.FiniteHorizonRL.MDP.MeanCompatibleRewardKernel.stochasticTrajectoryKernelRemaining",
+      "kind": "def",
+      "path": "BanditRLProof/RL/FiniteHorizonStochasticRewardTrajectory.lean",
+      "old_statement": "noncomputable def stochasticTrajectoryKernelRemaining (source : MeanCompatibleRewardKernel mdp) (policy : MarkovPolicy mdp) : (remaining : Nat) -> remaining <= mdp.horizon -> ProbabilityTheory.Kernel State (RewardStepTrace Action State remaining) | 0, _ => ProbabilityTheory.Kernel.deterministic (fun _ => fun i => Fin.elim0 i) measurable_const | remaining + 1, hremaining => let stage : Fin mdp.horizon := ⟨mdp.horizon - (remaining + 1), by omega⟩ let tailKernel : ProbabilityTheory.Kernel (Prod State (Prod Action (Prod Real State))) (RewardStepTrace Action State remaining)",
+      "new_statement": "noncomputable def stochasticTrajectoryKernelRemaining (source : MeanCompatibleRewardKernel mdp) (policy : MarkovPolicy mdp) : (remaining : Nat) -> remaining <= mdp.horizon -> ProbabilityTheory.Kernel State (RewardStepTrace Action State remaining) | 0, _ => ProbabilityTheory.Kernel.deterministic (fun _ => fun i => Fin.elim0 i) measurable_const | remaining + 1, hremaining => let stage : Fin mdp.horizon := ⟨mdp.horizon - (remaining + 1), by omega⟩ let tailKernel : ProbabilityTheory.Kernel (Prod State (Prod Action (Prod Real State))) (RewardStepTrace Action State remaining) := (source.stochasticTrajectoryKernelRemaining policy remaining (by omega)).comap (fun p : Prod State (Prod Action (Prod Real State)) => p.2.2.2) (show Measurable (fun p : Prod State (Prod Action (Prod Real State)) => p.2.2.2) from measurable_snd.snd.snd) ((source.actionRewardStateKernel policy stage).compProd tailKernel).map (fun p => @Fin.cons remaining (fun _ => Prod Action (Prod Real State)) p.1 p.2) instance instStochasticTrajectoryKernelRemainingIsMarkovKernel (source : MeanCompatibleRewardKernel mdp) (policy : MarkovPolicy mdp) (remaining : Nat) (hremaining : remaining <= mdp.horizon) : ProbabilityTheory.IsMarkovKernel (source.stochasticTrajectoryKernelRemaining policy remaining hremaining) := by induction remaining with | zero => unfold stochasticTrajectoryKernelRemaining infer_instance | succ remaining ih => rw [stochasticTrajectoryKernelRemaining] apply ProbabilityTheory.Kernel.IsMarkovKernel.map exact RewardStepTrace.measurable_cons remaining",
+      "old_sha256": "d465bebf5b84449cba386c48a6e39d4324ff2ba4288d8b88b6e2d09f5ecbe5c0",
+      "new_sha256": "dcd25ee09f0cdd243def3ae24678f6b5113e8eff04bb2ac5f4ab2bff29e968c9",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.FiniteHorizonRL.MDP.sampledCumulativeRewardFrom",
+      "kind": "def",
+      "path": "BanditRLProof/RL/FiniteHorizonStochasticRewardTrajectory.lean",
+      "old_statement": "def sampledCumulativeRewardFrom : (remaining : Nat) -> RewardStepTrace Action State remaining -> Real | 0, _ => 0 | remaining + 1, trace => (trace 0).2.1 + sampledCumulativeRewardFrom remaining (Fin.tail trace) omit [Fintype State] [Fintype Action] in /-- The sampled finite cumulative reward is measurable. -/ theorem measurable_sampledCumulativeRewardFrom (remaining : Nat) : Measurable (sampledCumulativeRewardFrom (Action := Action) (State := State) remaining)",
+      "new_statement": "def sampledCumulativeRewardFrom : (remaining : Nat) -> RewardStepTrace Action State remaining -> Real | 0, _ => 0 | remaining + 1, trace => (trace 0).2.1 + sampledCumulativeRewardFrom remaining (Fin.tail trace) omit [Fintype State] [Fintype Action] in",
+      "old_sha256": "6193086b6a8676ec26da807e081352abf049c6a7d97a63ddbee139a574588700",
+      "new_sha256": "269fe17264d491047e098be2172779afb12164979ad59e3484f121001da68c18",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.FiniteHorizonRL.MarkovPolicy.trajectoryKernelRemaining",
+      "kind": "def",
+      "path": "BanditRLProof/RL/FiniteHorizonTrajectory.lean",
+      "old_statement": "noncomputable def trajectoryKernelRemaining {mdp : MDP State Action} (policy : MarkovPolicy mdp) : (remaining : Nat) -> remaining <= mdp.horizon -> ProbabilityTheory.Kernel State (StepTrace Action State remaining) | 0, _ => ProbabilityTheory.Kernel.deterministic (fun _ => fun i => Fin.elim0 i) measurable_const | remaining + 1, hremaining => let stage : Fin mdp.horizon := ⟨mdp.horizon - (remaining + 1), by omega⟩ let tailKernel : ProbabilityTheory.Kernel (Prod State (Prod Action State)) (StepTrace Action State remaining)",
+      "new_statement": "noncomputable def trajectoryKernelRemaining {mdp : MDP State Action} (policy : MarkovPolicy mdp) : (remaining : Nat) -> remaining <= mdp.horizon -> ProbabilityTheory.Kernel State (StepTrace Action State remaining) | 0, _ => ProbabilityTheory.Kernel.deterministic (fun _ => fun i => Fin.elim0 i) measurable_const | remaining + 1, hremaining => let stage : Fin mdp.horizon := ⟨mdp.horizon - (remaining + 1), by omega⟩ let tailKernel : ProbabilityTheory.Kernel (Prod State (Prod Action State)) (StepTrace Action State remaining) := (policy.trajectoryKernelRemaining remaining (by omega)).comap (fun p : Prod State (Prod Action State) => p.2.2) (show Measurable (fun p : Prod State (Prod Action State) => p.2.2) from measurable_snd.snd) ((policy.actionStateKernel stage).compProd tailKernel).map (fun p => @Fin.cons remaining (fun _ => Prod Action State) p.1 p.2) instance instTrajectoryKernelRemainingIsMarkovKernel {mdp : MDP State Action} (policy : MarkovPolicy mdp) (remaining : Nat) (hremaining : remaining <= mdp.horizon) : ProbabilityTheory.IsMarkovKernel (policy.trajectoryKernelRemaining remaining hremaining) := by induction remaining with | zero => unfold trajectoryKernelRemaining infer_instance | succ remaining ih => rw [trajectoryKernelRemaining] apply ProbabilityTheory.Kernel.IsMarkovKernel.map exact StepTrace.measurable_cons remaining",
+      "old_sha256": "c86b9d1e4d3a6e4665a1eaedf3fe4e29c9d14546f22a0467c7d4e4f0b3c1455b",
+      "new_sha256": "6f70d327e6e559438adde0a11a44cc27aee1e100d9dc967949579eb4b0f1f7a1",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.FiniteHorizonRL.MDP.cumulativeRewardFrom",
+      "kind": "def",
+      "path": "BanditRLProof/RL/FiniteHorizonTrajectory.lean",
+      "old_statement": "def cumulativeRewardFrom (mdp : MDP State Action) : (remaining : Nat) -> State -> StepTrace Action State remaining -> Real | 0, _, _ => 0 | remaining + 1, state, trace => mdp.reward state (trace 0).1 + mdp.cumulativeRewardFrom remaining (trace 0).2 (Fin.tail trace) /-- The finite cumulative reward is measurable jointly in its initial state and trace. -/ theorem measurable_cumulativeRewardFrom (mdp : MDP State Action) (remaining : Nat) : Measurable (fun p : Prod State (StepTrace Action State remaining) => mdp.cumulativeRewardFrom remaining p.1 p.2)",
+      "new_statement": "def cumulativeRewardFrom (mdp : MDP State Action) : (remaining : Nat) -> State -> StepTrace Action State remaining -> Real | 0, _, _ => 0 | remaining + 1, state, trace => mdp.reward state (trace 0).1 + mdp.cumulativeRewardFrom remaining (trace 0).2 (Fin.tail trace)",
+      "old_sha256": "d92d5014ada828ee9c160fcab06208391f24dee78590450f79e507578d1e11c0",
+      "new_sha256": "2e52eb46d558695f9f43ef40fa31e101ab8a2e77c76c550210ee76b2b51633f5",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.Tsallis.sampledHalfTsallisProbabilityAtTime",
+      "kind": "def",
+      "path": "BanditRLProof/TsallisFTRLEstimatedEnvironmentRegret.lean",
+      "old_statement": "noncomputable def sampledHalfTsallisProbabilityAtTime {Env : Type u} {Action : Type v} [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Real) : Nat -> Env × ((k : Nat) -> Action × Real) -> Action -> Real | 0, _sample => initialHalfTsallisDistribution arms harms eta | n + 1, sample => sampledHalfTsallisHistoryDistribution arms harms eta n (Preorder.frestrictLe n sample.2) /-- The observed-scalar importance-weighted loss vector at an actual time. -/ noncomputable def sampledHalfTsallisObservedEstimatedLossAt {Env : Type u} {Action : Type v} [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Real) (t : Nat) (sample : Env × ((k : Nat) -> Action × Real)) : Action -> Real",
+      "new_statement": "noncomputable def sampledHalfTsallisProbabilityAtTime {Env : Type u} {Action : Type v} [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Real) : Nat -> Env × ((k : Nat) -> Action × Real) -> Action -> Real | 0, _sample => initialHalfTsallisDistribution arms harms eta | n + 1, sample => sampledHalfTsallisHistoryDistribution arms harms eta n (Preorder.frestrictLe n sample.2)",
+      "old_sha256": "44fd4aa80dfac989bfc1eb7c11a7b9ab307140a89b3502b57f6a08d2e8d9026b",
+      "new_sha256": "f0c4d1227b7b642a0c19c9c29340064b3c514bb3bb0e6c08439c2dd54f930a5a",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.Tsallis.sampledHalfTsallisHistoryScore",
+      "kind": "def",
+      "path": "BanditRLProof/TsallisFTRLRecursiveTrajectory.lean",
+      "old_statement": "noncomputable def sampledHalfTsallisHistoryScore {Action : Type u} [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Real) : (n : Nat) -> History.FinitePairHistory Action Real n -> Action -> Real | 0, history, action => Exp3.importanceWeightedLoss (initialHalfTsallisDistribution arms harms eta) (fun _ => (history ⟨0, Finset.mem_Iic.mpr le_rfl⟩).2) (history ⟨0, Finset.mem_Iic.mpr le_rfl⟩).1 action | n + 1, history, action => let previous := Exp3.previousPairHistory history sampledHalfTsallisHistoryScore arms harms eta n previous action + Exp3.importanceWeightedLoss (halfTsallisMinimizer arms harms eta (sampledHalfTsallisHistoryScore arms harms eta n previous)) (fun _ => (history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩).2) (history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩).1 action @[simp] theorem sampledHalfTsallisHistoryScore_zero {Action : Type u} [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Real) (history : History.FinitePairHistory Action Real 0) (action : Action) : sampledHalfTsallisHistoryScore arms harms eta 0 history action = Exp3.importanceWeightedLoss (initialHalfTsallisDistribution arms harms eta) (fun _ => (history ⟨0, Finset.mem_Iic.mpr le_rfl⟩).2) (history ⟨0, Finset.mem_Iic.mpr le_rfl⟩).1 action",
+      "new_statement": "noncomputable def sampledHalfTsallisHistoryScore {Action : Type u} [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Real) : (n : Nat) -> History.FinitePairHistory Action Real n -> Action -> Real | 0, history, action => Exp3.importanceWeightedLoss (initialHalfTsallisDistribution arms harms eta) (fun _ => (history ⟨0, Finset.mem_Iic.mpr le_rfl⟩).2) (history ⟨0, Finset.mem_Iic.mpr le_rfl⟩).1 action | n + 1, history, action => let previous := Exp3.previousPairHistory history sampledHalfTsallisHistoryScore arms harms eta n previous action + Exp3.importanceWeightedLoss (halfTsallisMinimizer arms harms eta (sampledHalfTsallisHistoryScore arms harms eta n previous)) (fun _ => (history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩).2) (history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩).1 action @[simp]",
+      "old_sha256": "ee907baa65ebc85ed80cf135ee10ba2016aecd8305da917f7ea2bf7a3ea95453",
+      "new_sha256": "863c2d6aecbeca6d264f73a3052d9d19f062a31c0b0559dcf391509fc7c62a62",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.Tsallis.sampledOracleRestartHalfTsallisProbabilityAtTime",
+      "kind": "def",
+      "path": "BanditRLProof/TsallisOracleRestartGeneratedTrajectory.lean",
+      "old_statement": "noncomputable def sampledOracleRestartHalfTsallisProbabilityAtTime {Env : Type v} {Action : Type u} [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -> Real) (schedule : OracleRestartSchedule) : Nat -> Env × ((k : Nat) -> Action × Real) -> Action -> Real | 0, _sample => initialHalfTsallisDistribution arms harms (eta 0) | n + 1, sample => sampledOracleRestartHalfTsallisHistoryDistribution arms harms eta schedule n (Preorder.frestrictLe n sample.2) @[simp] theorem sampledOracleRestartHalfTsallisProbabilityAtTime_neverRestart {Env : Type v} {Action : Type u} [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -> Real) (t : Nat) (sample : Env × ((k : Nat) -> Action × Real)) : sampledOracleRestartHalfTsallisProbabilityAtTime arms harms eta oracleNeverRestartSchedule t sample = sampledScheduledHalfTsallisProbabilityAtTime arms harms eta t sample",
+      "new_statement": "noncomputable def sampledOracleRestartHalfTsallisProbabilityAtTime {Env : Type v} {Action : Type u} [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -> Real) (schedule : OracleRestartSchedule) : Nat -> Env × ((k : Nat) -> Action × Real) -> Action -> Real | 0, _sample => initialHalfTsallisDistribution arms harms (eta 0) | n + 1, sample => sampledOracleRestartHalfTsallisHistoryDistribution arms harms eta schedule n (Preorder.frestrictLe n sample.2) @[simp]",
+      "old_sha256": "9691dca2253a54d94650f8b030e46a141b635f90476f225dc1100f1f1f9adaa7",
+      "new_sha256": "7d6221c721f5ef32e6172304ea619e19b33ef9ceb9154763c7a9d88f47f69bd2",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.Tsallis.oracleChangePointRestartStart",
+      "kind": "def",
+      "path": "BanditRLProof/TsallisOracleRestartGlobalMeanSwitchCount.lean",
+      "old_statement": "def oracleChangePointRestartStart (change : Nat -> Prop) [DecidablePred change] : Nat -> Nat | 0 => 0 | n + 1 => if change n then n + 1 else oracleChangePointRestartStart change n /-- A valid restart schedule generated by an arbitrary decidable boundary predicate. -/ def oracleChangePointRestartSchedule (change : Nat -> Prop) [DecidablePred change] : OracleRestartSchedule where",
+      "new_statement": "def oracleChangePointRestartStart (change : Nat -> Prop) [DecidablePred change] : Nat -> Nat | 0 => 0 | n + 1 => if change n then n + 1 else oracleChangePointRestartStart change n",
+      "old_sha256": "14f6ccaabef10d25893b9d4fe4769fac2595a1212348ec0185e647fcee6dfc21",
+      "new_sha256": "fcae096601e47b53f5025dd2eb00b068d6e66cb1fcd9ed38dd475125eb4d12c5",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.Tsallis.sampledScheduledHalfTsallisAllRatePotentialStabilityBoundAtTime",
+      "kind": "def",
+      "path": "BanditRLProof/TsallisScheduledAllRateExpectedStability.lean",
+      "old_statement": "noncomputable def sampledScheduledHalfTsallisAllRatePotentialStabilityBoundAtTime {Env : Type u} {Action : Type v} [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -> Real) (sample : Env × ((k : Nat) -> Action × Real)) : Nat -> Real | 0 => sampledScheduledHalfTsallisInitialAllRatePotentialStabilityBound arms harms eta sample.1 | n + 1 => sampledScheduledHalfTsallisSuccessorAllRatePotentialStabilityBoundAt arms harms eta n (sampledScheduledHalfTsallisHistoryAt n sample) /-- A successor term and its piecewise all-rate budget are integrable, and the expected term is bounded by that budget. -/ theorem integral_sampledScheduledHalfTsallisSuccessorPotentialStabilityAtTime_le_allRateBound {Env : Type u} {Action : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (prior : Measure Env) [IsFiniteMeasure prior] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -> Real) (loss : Exp3.PredictableLossVector Env Action) (n : Nat) (heta : 0 < eta (n + 1)) : let selector := canonicalHalfTsallisScheduleGeneratedSelectorMeasurability arms harms eta loss let mu := prior ⊗ₘ sampledScheduledHalfTsallisTrajectoryKernel arms harms eta selector.finiteHistory loss.environment Integrable (fun sample => sampledScheduledHalfTsallisPotentialStabilityAtTime arms harms eta sample (n + 1)) mu ∧ Integrable (fun sample => sampledScheduledHalfTsallisSuccessorAllRatePotentialStabilityBoundAt arms harms eta n (sampledScheduledHalfTsallisHistoryAt n sample)) mu ∧ integral mu (fun sample => sampledScheduledHalfTsallisPotentialStabilityAtTime arms harms eta sample (n + 1)) <= integral mu (fun sample => sampledScheduledHalfTsallisSuccessorAllRatePotentialStabilityBoundAt arms harms eta n (sampledScheduledHalfTsallisHistoryAt n sample))",
+      "new_statement": "noncomputable def sampledScheduledHalfTsallisAllRatePotentialStabilityBoundAtTime {Env : Type u} {Action : Type v} [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -> Real) (sample : Env × ((k : Nat) -> Action × Real)) : Nat -> Real | 0 => sampledScheduledHalfTsallisInitialAllRatePotentialStabilityBound arms harms eta sample.1 | n + 1 => sampledScheduledHalfTsallisSuccessorAllRatePotentialStabilityBoundAt arms harms eta n (sampledScheduledHalfTsallisHistoryAt n sample)",
+      "old_sha256": "91e28757b9627146ff4992d1c1ac4469f87d8567f0bed9261ddb5fcf08a9c6c2",
+      "new_sha256": "d76c2e909277bd20a14b1ae39a1532fade5886924522cf842ed62d84acac7fab",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.Tsallis.sampledScheduledHalfTsallisHistoryScore",
+      "kind": "def",
+      "path": "BanditRLProof/TsallisScheduledRecursiveTrajectory.lean",
+      "old_statement": "noncomputable def sampledScheduledHalfTsallisHistoryScore {Action : Type u} [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -> Real) : (n : Nat) -> History.FinitePairHistory Action Real n -> Action -> Real | 0, history, action => Exp3.importanceWeightedLoss (initialHalfTsallisDistribution arms harms (eta 0)) (fun _ => (history ⟨0, Finset.mem_Iic.mpr le_rfl⟩).2) (history ⟨0, Finset.mem_Iic.mpr le_rfl⟩).1 action | n + 1, history, action => let previous := Exp3.previousPairHistory history sampledScheduledHalfTsallisHistoryScore arms harms eta n previous action + Exp3.importanceWeightedLoss (halfTsallisMinimizer arms harms (eta (n + 1)) (sampledScheduledHalfTsallisHistoryScore arms harms eta n previous)) (fun _ => (history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩).2) (history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩).1 action @[simp] theorem sampledScheduledHalfTsallisHistoryScore_zero {Action : Type u} [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -> Real) (history : History.FinitePairHistory Action Real 0) (action : Action) : sampledScheduledHalfTsallisHistoryScore arms harms eta 0 history action = Exp3.importanceWeightedLoss (initialHalfTsallisDistribution arms harms (eta 0)) (fun _ => (history ⟨0, Finset.mem_Iic.mpr le_rfl⟩).2) (history ⟨0, Finset.mem_Iic.mpr le_rfl⟩).1 action",
+      "new_statement": "noncomputable def sampledScheduledHalfTsallisHistoryScore {Action : Type u} [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -> Real) : (n : Nat) -> History.FinitePairHistory Action Real n -> Action -> Real | 0, history, action => Exp3.importanceWeightedLoss (initialHalfTsallisDistribution arms harms (eta 0)) (fun _ => (history ⟨0, Finset.mem_Iic.mpr le_rfl⟩).2) (history ⟨0, Finset.mem_Iic.mpr le_rfl⟩).1 action | n + 1, history, action => let previous := Exp3.previousPairHistory history sampledScheduledHalfTsallisHistoryScore arms harms eta n previous action + Exp3.importanceWeightedLoss (halfTsallisMinimizer arms harms (eta (n + 1)) (sampledScheduledHalfTsallisHistoryScore arms harms eta n previous)) (fun _ => (history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩).2) (history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩).1 action @[simp]",
+      "old_sha256": "ff8f838982048f5a9aa982741c58952f0ae83d1bbf7721ed07b39a229ddbdd59",
+      "new_sha256": "436e5983f2e2e7be757b2acf3cf02374f3b2ff404068392963521236e4099265",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.Tsallis.sampledScheduledHalfTsallisRefinedCoefficient",
+      "kind": "def",
+      "path": "BanditRLProof/TsallisScheduledRefinedStabilityPenalty.lean",
+      "old_statement": "noncomputable def sampledScheduledHalfTsallisRefinedCoefficient (eta : Nat -> Real) : Nat -> Real | 0 => 2 * eta 0 + 2 / eta 0 | t + 1 => 2 * eta (t + 1) + 2 * (1 / eta (t + 1) - 1 / eta t) /-- Generated predictable environment regret is bounded by the deterministic quadratic-rate budget plus one refined square-root mass per actual time. -/ theorem integral_sampledScheduledHalfTsallisPredictableEnvironmentRegret_pointMass_le_refinedStabilityPenalty {Env : Type u} {Action : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (prior : Measure Env) [IsProbabilityMeasure prior] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -> Real) (loss : Exp3.PredictableLossVector Env Action) {best : Action} (hbest : best ∈ arms) (horizon : Nat) (heta : forall t, t <= horizon -> 0 < eta t) (heta_le : forall t, t <= horizon -> eta t <= 1 / 2) (hetaMono : forall t, t < horizon -> eta (t + 1) <= eta t) : let selector := canonicalHalfTsallisScheduleGeneratedSelectorMeasurability arms harms eta loss let mu := prior ⊗ₘ sampledScheduledHalfTsallisTrajectoryKernel arms harms eta selector.finiteHistory loss.environment integral mu (sampledScheduledHalfTsallisPredictableEnvironmentRegret arms harms eta loss (pointMass best) horizon) <= (Finset.range (horizon + 1)).sum (fun t => 2 * (eta t) ^ 2) + (Finset.range (horizon + 1)).sum (fun t => sampledScheduledHalfTsallisRefinedCoefficient eta t * sampledScheduledHalfTsallisExpectedSuboptimalSqrtMassAt mu arms harms eta best t)",
+      "new_statement": "noncomputable def sampledScheduledHalfTsallisRefinedCoefficient (eta : Nat -> Real) : Nat -> Real | 0 => 2 * eta 0 + 2 / eta 0 | t + 1 => 2 * eta (t + 1) + 2 * (1 / eta (t + 1) - 1 / eta t)",
+      "old_sha256": "3582de89e02e48a91f759fc8c8ad0ac452634e9322d5a21e68d858636966e13b",
+      "new_sha256": "48c20e11f1ac15512d7684270a23cc39a45b80061316bd4393329748e35a532d",
+      "in_inherited_registry": true
+    },
+    {
+      "name": "BanditRLProof.Tsallis.sampledScheduledHalfTsallisProbabilityAtTime",
+      "kind": "def",
+      "path": "BanditRLProof/TsallisScheduledScoreAlignment.lean",
+      "old_statement": "noncomputable def sampledScheduledHalfTsallisProbabilityAtTime {Env : Type u} {Action : Type v} [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -> Real) : Nat -> Env × ((k : Nat) -> Action × Real) -> Action -> Real | 0, _sample => initialHalfTsallisDistribution arms harms (eta 0) | n + 1, sample => sampledScheduledHalfTsallisHistoryDistribution arms harms eta n (Preorder.frestrictLe n sample.2) /-- The actual observed-scalar IW loss vector under the scheduled policy. -/ noncomputable def sampledScheduledHalfTsallisObservedEstimatedLossAt {Env : Type u} {Action : Type v} [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -> Real) (t : Nat) (sample : Env × ((k : Nat) -> Action × Real)) : Action -> Real",
+      "new_statement": "noncomputable def sampledScheduledHalfTsallisProbabilityAtTime {Env : Type u} {Action : Type v} [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -> Real) : Nat -> Env × ((k : Nat) -> Action × Real) -> Action -> Real | 0, _sample => initialHalfTsallisDistribution arms harms (eta 0) | n + 1, sample => sampledScheduledHalfTsallisHistoryDistribution arms harms eta n (Preorder.frestrictLe n sample.2)",
+      "old_sha256": "c54a26e75804e68406e29f6cd03e6dccfba26dd8537b1925a9a328726d7a51cf",
+      "new_sha256": "4ce14610f46f670e34b8cd7063eb83c8e871c6da6cd64cd723796922fa3c3198",
+      "in_inherited_registry": true
+    }
+  ],
+  "changed_old": 100,
+  "changed_proofs": 0,
+  "public_Lean_files_unchanged": true
+}

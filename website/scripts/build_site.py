@@ -416,7 +416,65 @@ def markdown_prose_summary(text: str, limit: int = 620) -> str:
     return heading_fallback[:limit].rstrip()
 
 
-def scan_module(path: Path) -> dict[str, Any]:
+def load_declaration_boundaries() -> list[dict[str, Any]]:
+    """Load optional reviewed source ranges; never replace source with supplied text."""
+    path = CONTENT_DIR / "declaration-boundaries.json"
+    if not path.exists():
+        return []
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if payload.get("schema_version") != 1 or not isinstance(payload.get("entries"), list):
+        raise ValueError("Invalid declaration-boundaries schema")
+    entries = payload["entries"]
+    seen: set[str] = set()
+    for entry in entries:
+        if not isinstance(entry, dict):
+            raise ValueError("Invalid declaration boundary entry")
+        name = entry.get("full_name")
+        file = entry.get("file")
+        start, end = entry.get("start_line"), entry.get("end_line")
+        if (not isinstance(name, str) or not name or name in seen
+                or not isinstance(file, str) or Path(file).is_absolute()
+                or "\\" in file or ".." in file.split("/")
+                or not file.endswith(".lean")
+                or type(start) is not int or type(end) is not int
+                or start < 1 or end < start
+                or not isinstance(entry.get("reason"), str) or not entry["reason"].strip()):
+            raise ValueError("Invalid or duplicate declaration boundary")
+        for key in ("file_sha256", "block_LF_sha256"):
+            if not isinstance(entry.get(key), str) or not re.fullmatch(r"[0-9a-f]{64}", entry[key]):
+                raise ValueError("Invalid declaration boundary hash")
+        seen.add(name)
+    return entries
+
+
+def apply_declaration_boundaries(
+    path: Path, lines: list[str], visible_lines: list[str],
+    declarations: list[dict[str, Any]], boundaries: list[dict[str, Any]],
+) -> None:
+    """Fail closed on stale or incomplete ranges, preserving all unlisted statements."""
+    for entry in boundaries:
+        if entry["file"] != rel_source(path):
+            continue
+        matches = [(i, d) for i, d in enumerate(declarations)
+                   if d["full_name"] == entry["full_name"]]
+        if len(matches) != 1:
+            raise ValueError("Unresolved declaration boundary: " + entry["full_name"])
+        index, declaration = matches[0]
+        start, end = entry["start_line"], entry["end_line"]
+        next_line = declarations[index + 1]["line"] if index + 1 < len(declarations) else len(lines) + 1
+        if (declaration["private"] or declaration["kind"] != "def"
+                or declaration["line"] != start or end >= next_line or end > len(lines)
+                or hashlib.sha256(path.read_bytes()).hexdigest() != entry["file_sha256"]):
+            raise ValueError("Stale or invalid declaration boundary: " + entry["full_name"])
+        block = "\n".join(lines[start - 1:end])
+        if hashlib.sha256(block.encode("utf-8")).hexdigest() != entry["block_LF_sha256"]:
+            raise ValueError("Stale declaration boundary block: " + entry["full_name"])
+        if any(line.strip() for line in visible_lines[end:next_line - 1]):
+            raise ValueError("Declaration boundary skips source code: " + entry["full_name"])
+        declaration["statement"] = compact_statement(lines[start - 1:end], 0)
+
+
+def scan_module(path: Path, boundaries: list[dict[str, Any]] | None = None) -> dict[str, Any]:
     text = path.read_text(encoding="utf-8")
     lines = text.splitlines()
     imports = [
@@ -511,6 +569,11 @@ def scan_module(path: Path) -> dict[str, Any]:
         body = "\n".join(visible_lines[start:stop])
         declaration["placeholder"] = bool(PLACEHOLDER_RE.search(body))
 
+    apply_declaration_boundaries(
+        path, lines, visible_lines, declarations,
+        load_declaration_boundaries() if boundaries is None else boundaries,
+    )
+
     docstring = module_docstring(text)
     return {
         "name": module_name(path),
@@ -529,7 +592,13 @@ def scan_lean_tree() -> list[dict[str, Any]]:
     aggregator = ROOT / "BanditRLProof.lean"
     if aggregator.exists():
         paths.insert(0, aggregator)
-    return [scan_module(path) for path in paths]
+    boundaries = load_declaration_boundaries()
+    modules = [scan_module(path, boundaries) for path in paths]
+    resolved = {(d["file"], d["full_name"]) for m in modules for d in m["declarations"]}
+    for entry in boundaries:
+        if (entry["file"], entry["full_name"]) not in resolved:
+            raise ValueError("Unresolved declaration boundary: " + entry["full_name"])
+    return modules
 
 
 def assign_chapters(modules: list[dict[str, Any]], chapters: list[dict[str, Any]]) -> None:
