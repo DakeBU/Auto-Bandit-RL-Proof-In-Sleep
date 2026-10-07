@@ -1,0 +1,65 @@
+# Chapter 2 remaining source obligations, v1 audit
+
+Source v10 printed pp. 8-23, PDF pp. 20-35. The fixed and decreasing-step OGD packages are accepted locally; the remaining convex-analysis, subgradient, example and linearization statements below are still under contract review. No remaining statement is silently represented by the real-valued OGD specialization. All numbered required entries are in source-inventory.json. Formal results with exercise proofs remain required.
+
+## Decreasing-step terminal reviewed intent
+
+Algorithm 2.1: same nonempty closed convex V, initial x0 in V, actual recursion x(t+1)=project V (x(t)-eta(t)*gradient(loss(t),x(t))). Positive finite schedule; eta(t+1)<=eta(t) for t+1<T. T>=1. For each comparator u in V:
+
+sum(t<T)(loss(t,x(t))-loss(t,u)) <= D^2/(2*eta(T-1)) + sum(t<T)(eta(t)/2*norm(gradient(loss(t),x(t)))^2) - norm(x(T)-u)^2/(2*eta(T-1)).
+
+Source defines D as diameter. A bound D with all pairwise distances <=D is sufficient, but must be labelled as the upper-bound interface; the exact finite diameter corollary must instantiate it. Empty horizon is a separate zero-sum lemma, never fake eta(-1). Feasibility and prefix causality must be proved for the actual variable-step recurrence. DAG: inherited projection/first-order/one-step interfaces -> recurrence feasibility -> weighted telescoping identity -> monotone reciprocal coefficient estimate -> terminal. Do not assume one-step regret as an input to the public algorithm theorem.
+
+## Convex analysis obligations
+
+2.4: extended-real epigraph convexity equivalence on convex effective domain, excluding minus infinity. 2.5-2.6: affine functions and norms; all four printed closure operations required. 2.7: supporting gradient inequality for all y, including outside effective domain; inherited real-valued first_order is only a specialization. 2.8: constrained minimizer iff variational gradient condition, plus interior zero-gradient consequence. 2.9: measurable extended-real Jensen with integrable vector input; integrability/expectation conventions require careful audit, not a hidden stronger finite-loss assumption.
+
+2.16/18/20/29 definitions: closed/lower-semicontinuous, proper, subdifferential, Lipschitz on domain. Indicator closedness/properness examples 2.17/19 included. Interior subgradient existence and absence outside domain included. 2.21: everywhere subdifferentiability on convex V implies convex restriction. 2.22: differentiability iff singleton subdifferential at a finite point; boundary and extended-real differentiability semantics must be reviewed explicitly. 2.23: sum inclusion AND equality under closed convex qualification (domain last function intersects all other interior domains). 2.24/25: abs subdifferential, indicator normal cone, interior zero cone and sphere normal rays. 2.26: finite maximum subdifferential equals convex hull of active subdifferentials, continuity at common finite point; index family nonempty must be explicit. 2.27 hinge example included. 2.28: affine pullback inclusion with adjoint. 2.30: Lipschitz iff bounded subgradient norm on interior domain; domain degeneracies retained.
+
+## Algorithms and examples
+
+2.10: actual FTL alternating linear-loss failure, regret >=T-3/2. 2.14: squared guessing gradient, interval projection formula, OGD guarantee. 2.15: Huber linear prediction, gradient formula, bounded-feature regret. 2.31 and Algorithm 2.2: actual subgradient feedback recursion, both one-step inequalities, inherited fixed/decreasing cumulative residual branches and tuning. The chosen subgradient depends only on current loss and current iterate; existence is not arbitrary full-sequence algorithm access. 2.32: absolute-loss guessing bound. Section 2.3: causal linearization and regret comparison. Unit-scaling example is an algebraic identity, not a separate regret theorem.
+
+Progress: Chapter1 and the Theorem2.13 variable-step package passed local gates. Next: finish precise contracts for the remaining Chapter2 obligations after resolving the above domain semantics. No purported frozen Lean targets for unaudited extended-real results. No exclusions based on proof difficulty.
+
+Extended-real convexity update: Definition2.2/2.3, Theorem2.4 and domain/indicator consequences passed the scoped local gates in runs/online-convex-20260914. Affine/norm examples and all four closure operations remain required. The unrestricted EReal-add interpretation has a mixed-infinity counterexample recorded in next-source-audit.md; resolve that source convention explicitly rather than silently assuming noBot. Chapter2 remains partial.
+
+Examples2.5/2.6 update: exact affine/norm epigraph endpoints and their finite embedding iff passed all scoped local gates in runs/online-convex-examples-20260914. The four general closure operations remain required; next-closure-audit.md records primary-source support for explicitly distinguishing convex upper addition from ordinary mathlib EReal addition. This does not complete Chapter2.
+
+Closure update: affine precomposition, arbitrary indexed supremum and monotone real convex composition passed all scoped gates in runs/online-convex-closures-20260914. The nonnegative linear-combination bullet remains required and awaits explicit upper-addition proof. No Chapter2 completion.
+
+Fourth closure update: nonnegative combinations passed all local gates with explicit convex-analysis upperAdd and zero-weight semantics. Evidence runs/online-convex-sums-20260914 includes a compiled ordinary-addition counterexample. All four closure bullets are locally closed under this recorded interpretation; Theorems2.7-2.9 and all later required Chapter2 obligations remain incomplete.
+
+Theorem2.7 update: full extended-real supporting-gradient endpoint passed all scoped local gates in runs/online-first-order-20260914, including an actual neighborhood-agreement proof and outside-domain canary. Theorem2.8, Theorem2.9 and later Chapter2 obligations remain required. No Chapter2 completion.
+
+Theorem2.8 and its interior-zero consequence passed all scoped local gates in runs/online-optimality-20260914. Source neighborhood convexity is explicitly restricted to V, a documented strengthening with a public source-premise canary. No closed/bounded V assumed. Theorem2.9 Jensen and later required results remain incomplete.
+
+Jensen update: full Theorem2.9 and geometric dependencies frozen in online-jensen-v2; all four targets remain unproved. Seven signed-expectation prerequisites passed local gates in runs/online-jensen-20260914/expectation-acceptance-decision.md. This is reusable foundation growth, not Jensen or Chapter2 completion. No loss-integrability, continuity or closed-domain premise added.
+
+Subsequent Jensen frontier update: exact arbitrary-convex barycenter accepted-local in PR126; exact global affine minorant accepted-local in runs/online-minorant-20260914. Negative-part/source endpoint and finite/infinite-probability canaries compile only in retained scratch. Public Jensen integration and full acceptance remain required; the earlier all-four-unproved entry is historical. No Chapter2 completion.
+
+Theorem2.9 full source update: accepted-local in runs/online-jensen-source-20260914 after exact finite-negative-part and source endpoint proofs, finite/infinite-probability/nonclosed public canaries and all combined gates. online-jensen-v3 imports actual shared dependencies with unchanged parent headers. Example2.10 is frozen and scratch-compiled but not public accepted. Later Chapter2 obligations remain required.
+
+Example2.10 accepted-local in runs/online-ftl-failure-20260914: actual recursive causal FTL, historical minimization and exact T-1-x0/2 regret bound, all scoped gates passed. Example2.14 has six frozen scratch-compiled targets and canaries, public acceptance pending. Example2.15 and later required subgradient results remain incomplete.
+
+Example2.14 accepted-local in runs/online-guessing-ogd-20260914: exact interval projection, squared-loss regularity/gradient, tuned 2sqrtT upper guarantee and a separately derived same-algorithm square-horizon lower witness supporting the comparative remark. Nine public targets passed combined gates. Huber seam and scalar representation are retained scratch foundations only; Example2.15, subgradient results and Chapter2 remain incomplete.
+
+Example2.15 accepted-local in runs/online-huber-20261003: exact scalar/vector Huber chain, actual full-space OGD, negative fixed-step residual and comparator-independent horizon upper average regret, all current-main combined gates passed. Closedness/properness next-source results are scratch candidates only; later subgradient/linearization statements and Chapter2 remain incomplete.
+
+
+### Current-main contributor-contract migration (2026-10-03)
+The older unmerged Chapters1–2 stack predates current distinct-actor semantic and contribution-manifest requirements. The exact Huber PR base gate now passes, but an origin/main audit identifies26older production paths requiring separately scoped source-blind/source review and manifests before main integration. Preserve their prior local compiler evidence and original contracts; do not relabel those historical reviews as independent or cover their bytes with the Huber verdict. Evidence: runs/online-huber-20261003/contributor-main-stack-audit.log. This is a mandatory integration obligation, not an exclusion of source mathematics or a blocked whole-book Goal.
+
+Definitions2.16/2.18, Examples2.17/2.19 and closedness/lower-semicontinuity equivalence accepted-local: runs/online-closed-proper-20261003/acceptance-decision.md. Definition2.20, proper-point finiteness and Theorem2.21 have frozen compiled scratch candidates only; interior subgradient existence, singleton equivalence, full sum rule and later obligations remain required.
+
+Definition2.20, proper subdifferential-domain inclusion and Theorem2.21 accepted-local: runs/online-subgradient-basic-20261003/acceptance-decision.md. The previously unnumbered domain/interior assertions now have explicit required inventory rows. Interior existence has an actual compiled contact-support/Riesz scratch producer, not public acceptance; next integration must refactor old minorant theorem to reuse the stronger helper. Remaining singleton/sum/max/algorithm/linearization obligations stay open.
+
+Interior subdifferentiability accepted-local in runs/online-subgradient-interior-20261003/acceptance-decision.md: actual epigraph contact support and Riesz producer, old affine-minorant terminal preserved through shared reuse. Theorem2.22, full sum/max rules, OSD and linearization remain required. The gradient-uniqueness prerequisite for2.22 has a separately frozen scratch proof only; it is not2.22 completion.
+
+Theorem2.22 exact iff and gradient identity accepted-local: runs/online-subgradient-differentiability-20261003/acceptance-decision.md. Actual local support convergence and Frechet derivative are constructed; no added proper/interior/closedness terminal premises. Full rooted/canary/semantic/axiom/graph/site/contribution/receipt gates pass. Theorem2.23 full equality and later source obligations, Chapter2 and the whole-book Goal remain required. Older26-production-path contributor/independent-review migration before main integration remains unresolved.
+
+Theorem2.23 both exact endpoints accepted-local: runs/online-subgradient-sum-20261003/acceptance-decision.md. Reverse constructs genuine finite-family supports through mixed-qualified binary separation and derives query finiteness. Source closedness, all-query and singleton empty-interior boundaries retained; all package gates/43-file committed bindings pass. Examples2.24–2.27, maximum/affine/Lipschitz rules, OSD/linearization and older26-path main migration remain required. Chapter2 and whole-book Goal remain incomplete.
+
+Example2.24 exact all-query absolute-value support equality accepted-local: runs/online-subgradient-absolute-20261003/acceptance-decision.md. Full three branches, zero endpoints/fraction/outside/nonsingleton canaries and all technical/semantic/fixed committed gates pass. Source-link defect repaired/reviewed with final03 evidence; old failures retained. Later normal-cone/max/affine/Lipschitz/OSD/linearization and older26path migration remain required; Chapter2/book incomplete.
+
+All three Example2.25 claims accepted-local: runs/online-normal-cone-20261003/acceptance-decision.md. Full indicator-cone/interiorzero/unitballray equalities, actual2D/nonzero/outside/thin-set canaries, complete technical/semantic/fixed committed gates pass. Singleton emptyinterior is separately compiled mathlib context, not retroactively publiccanary. Later max/hinge/affine/Lipschitz/OSD/linearization and older26path migration remain required; Chapter2/book incomplete.

@@ -1,0 +1,5 @@
+# Chapter 1 stochastic foundation v1
+
+Printed pp1-2 equations1.1/1.2. For a square-integrable real target on a probability space, expected squared loss at fixed u is variance plus squared mean error. For a random prediction independent of the current target, the same excess is its expected squared error to the mean. Independence must come from the prediction's strict-past information and IID data for the source game; it is not automatically true for arbitrary random predictions. The second identity exposes that necessary condition. Square integrability is automatic for measurable [0,1]-valued source variables; bounded-variable instantiation and sequential independence bridge remain separate obligations, not assumed complete here.
+
+DAG: mathlib variance_eq_sub + variance_const_sub -> fixed prediction identity; variance_fun_sub + IndepFun.covariance_eq_zero -> independent random prediction identity. Exact terminal equalities frozen before proof. These are foundational growth toward the source expected regret nonnegativity, not a replacement for the full sequential source model.

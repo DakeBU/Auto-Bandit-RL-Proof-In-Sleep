@@ -1,0 +1,1 @@
+/root same-model staged director: choose single ready Chapter1 FTL route, actual causal predictor/proved feasible argmins, sharpen two explicitly stated maintext bounds; retain old5proofs1definition. No optional agents or later-chapter competitive writes. WholeGoalACTIVE, no chapter acceptance.
