@@ -1,0 +1,17 @@
+from common_integrated_v1 import *
+fixed_integrated()
+old=(RUN/'contributor-exact-base-v1.log').read_text(encoding='utf8')
+assert 'changed paths: 0' in old and 'Contributor contract: N/A' in old
+write(RUN/'contributor-nonvacuity-repair-v2.json',dict(prior_command='contributor-exact-base-v1',prior_exit_code=0,prior_scope='N/A: git base..HEAD saw zero committed paths before source commit',prior_not_acceptance=True,repair='Run actual diff-aware gate after scoped source commit and assert five actual production paths plus one new contribution manifest. Keep original log/record unchanged; integrated-gates-v2 supersedes the overbroad v1 contributor evidence claim.',source_and_terminal_unchanged=True,actual_source_commit=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()))
+native('contributor-repair-event-v2','lifecycle-event','--session',TASK,'--event','repair','--payload-json',json.dumps(dict(reason='Precommit contributor check was vacuous N/A despite exit0',evidence=(RUN/'contributor-nonvacuity-repair-v2.json').as_posix(),source_or_terminal_unchanged=True)))
+gate('contributor-committed-exact-base-v2',sys.executable,'-B','-X','utf8','tools/check_contributor_contract.py','--base',BASE)
+log=(RUN/'contributor-committed-exact-base-v2.log').read_text(encoding='utf8')
+assert 'affected production paths: 5' in log and 'changed contribution contracts: 1' in log and 'N/A' not in log
+cmd=[sys.executable,'-B','-X','utf8','tools/check_contributor_contract.py','--base','origin/main'];out=RUN/'main-relative-diagnostic-v2.log';start=time.time()
+with out.open('wb') as f:r=subprocess.run(cmd,stdout=f,stderr=subprocess.STDOUT)
+write(RUN/'main-relative-diagnostic-v2-exit.json',dict(command=cmd,cwd=ROOT.as_posix(),exit_code=r.returncode,seconds=round(time.time()-start,3),log_sha256=sha(out),scope='Actual committed full-stack main-relative diagnostic; failure is not waived and does not close a chapter.',chapter_complete=False,goal_complete=False))
+text=out.read_text(encoding='utf8');missing=[f'BanditRLProof/OnlineLearning{n}.lean' for n in ['Foundations','History','IID','Information','Stochastic']]
+assert r.returncode==1 and all(p in text for p in missing) and 'BanditRLProof/OnlineLearningAsymptotic.lean' not in text,text
+write(RUN/'integrated-gates-v2.json',dict(status='Actual combined root/Tests/fullharness/ownshadow and NONVACUOUS committed exact-base contributor/diff gates passed',applicable_Lean=load(RUN/'integrated-gates-v1.json'),v1_contributor_claim_superseded='Precommit N/A is retained but is not acceptance; v2 actual five production paths/one manifest controls contributor claim.',committed_production_paths=5,committed_manifests=1,committed_source=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),public_sha256=sha(PUBLIC),canary_sha256=sha(CANARY),existing_Asymptotic_actual_manifest_covered=True,remaining_main_relative_modules=missing,main_relative_diagnostic_exit=1,main_relative_gaps_unwaived=True,clean_site_FINAL_native_PR_pending=True,chapter_complete=False,goal_complete=False))
+native('contributor-recandidate-event-v2','lifecycle-event','--session',TASK,'--event','candidate','--payload-json',json.dumps(dict(reason='Nonvacuous committed exact-base contributor check passed; five other main-relative production gaps remain required',integrated=(RUN/'integrated-gates-v2.json').as_posix(),source_package_accepted=False)))
+print(log);print(text[-1300:]);fixed_integrated()
