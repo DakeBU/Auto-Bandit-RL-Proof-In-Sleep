@@ -1,0 +1,10 @@
+from common_v1 import *
+fixed(True);assert load(RUN/'combined-gates-v1.json')['status']=='actual-root-Tests-full-harness-passed'
+rows=[json.loads(s) for s in Path('runs/trials.jsonl').read_text(encoding='utf-8').splitlines() if s.strip()]
+write(RUN/'candidate-scoped-trials-v1.jsonl','\n'.join(json.dumps(t) for t in rows if t.get('task')==TASK))
+write(RUN/'memory-digest-candidate-v1.md',TASK+' Existing canonical12 proofs/one loss definition and whole27canaryproofs6defs1abbr; current47named kernel/twelveguards/25proofVALUEpairs and sourceCONTRACT/BODY/combined pass. ZERO new math/registry nodes/source closures. Generic historyfamily already accepted/delivered PR182, not missing. Current reader/site/FINAL/native/PR pending; remaining linearization/optimalstep/unitanalysis/Chapter1/2/nineOTHERChapter1contracts/appendices required,3-16 unenumerated, wholeGoalACTIVE. SGB/pins/oldproofs/otherBooks preserved.')
+sys.path.insert(0,str(ROOT));from tools.abrl_lifecycle import lean_declaration_header
+native('candidate-frontier-refresh-v1','frontier-refresh','--root-objective','Persistent Orabona Chapters1-16; current canonical Example2.32 source/public reuse','--leaf',TASK,'--kind','lean','--statement',lean_declaration_header(PUBLIC,'example_2_32'),'--declaration',PRE+'example_2_32','--file',PUBLIC,'--source-status','source-reviewed','--leaf-status','gate-pending','--dependency','lean:BanditRL.OnlineSubgradientDescent.regret_tuned:compiled','--dependency','lean:'+PRE+'current_subgradient_bound:compiled','--trials',RUN/'candidate-scoped-trials-v1.jsonl','--output',RUN/'candidate-frontier-v1.json','--shadow-status','pending')
+native('candidate-frontier-shadow-v1','frontier-shadow','--trials',RUN/'candidate-scoped-trials-v1.jsonl','--memory-digest',RUN/'memory-digest-candidate-v1.md','--frontier',RUN/'candidate-frontier-v1.json')
+j=json.loads((RUN/'candidate-frontier-shadow-v1.log').read_text(encoding='utf-8'));assert j['mismatches']==[] and j['would_mutate'] is False
+fixed(True);print('Actual OWN shadow passed; global active SGB frontier unchanged.')

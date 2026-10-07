@@ -1,0 +1,47 @@
+"""Fresh source/exact-parent audit; freeze twelve preexisting canonical public statements."""
+from common_v1 import *
+import datetime
+assert subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()==BASE
+assert subprocess.check_output(['git','branch','--show-current'],text=True).strip()=='codex/research-online-guessing-osd-policy'
+dirty=subprocess.check_output(['git','status','--porcelain'],text=True).splitlines();assert all(s.startswith('?? runs/online-guessing-public-20261007/') for s in dirty),dirty
+gate('fresh-fetch-v1-01','git','-c','credential.helper=','-c','credential.helper=!gh auth git-credential','fetch','origin')
+canonical='E:/ABRL/research';assert not subprocess.check_output(['git','-C',canonical,'status','--porcelain'],text=True).strip()
+main=subprocess.check_output(['git','-C',canonical,'rev-parse','HEAD'],text=True).strip();assert main==subprocess.check_output(['git','rev-parse','origin/main'],text=True).strip()
+parent_raw=subprocess.check_output(['gh','api','repos/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/pulls/182']);write(RUN/'base-PR182-fresh-v1.json',parent_raw);parent=json.loads(parent_raw)
+assert parent['head']['sha']==BASE and parent['state']=='open' and parent['draft'] and not parent['merged']
+old_raw=subprocess.check_output(['gh','api','repos/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/pulls/148']);write(RUN/'historical-PR148-fresh-v1.json',old_raw)
+branch='codex/research-online-guessing-osd-migration';assert not subprocess.check_output(['git','branch','--list',branch],text=True).strip()
+subprocess.run(['git','switch','-c',branch,BASE],check=True)
+write(RUN/'canonical-worktree-audit-v1.json',dict(UTC=datetime.datetime.now(datetime.timezone.utc).isoformat(),canonical=canonical,canonical_main=main,origin_main=main,canonical_clean=True,worktree=ROOT.as_posix(),branch=branch,stacked_PR=182,stacked_head=BASE,parent_state='OPEN-DRAFT-unmerged',prior_actual_DIRECT=dict(head=BASE,clean=True,local_remote_REST_equal=True,raw_files=430,source='Actual immediately preceding terminal tool audit; no-file-write mode.'),shared_git=subprocess.check_output(['git','rev-parse','--path-format=absolute','--git-common-dir'],text=True).strip(),worktrees=subprocess.check_output(['git','worktree','list','--porcelain'],text=True),existing_similar_branch='codex/research-online-guessing-migration is distinct OPEN PR164 OGD/mean comparison; retained and not overwritten',main_live_unchanged=True,other_worktrees_untouched=True))
+frozen=[PUBLIC.as_posix(),CANARY.as_posix(),'BanditRLProof.lean','Tests.lean','BanditRLProof/OnlineGuessingSubgradientPolicy.lean','Tests/OnlineGuessingSubgradientPolicyCanary.lean','BanditRLProof/OnlineSubgradientDescent.lean','BanditRLProof/OnlineSubgradientPolicy.lean','BanditRLProof/OnlineSubgradientAbsolute.lean','BanditRLProof/OnlineSubgradientBasic.lean','BanditRLProof/OnlineGradientDescent.lean','BanditRLProof/OnlineGuessingOGD.lean','lean-toolchain','lakefile.lean','lake-manifest.json','runs/active_frontier.json','docs/contracts/online-book-v1/source-inventory.json','research-wiki/contribution-contracts/ONLINE-GUESSING-OSD-20261004.json','research-wiki/contribution-contracts/online-guessing-osd-policy-20261007.json','runs/online-guessing-osd-20261004/accepted-decision.json','runs/online-guessing-osd-20261004/delivery.json','runs/online-guessing-osd-policy-20261007/accepted-decision-v1.json','runs/online-guessing-osd-policy-20261007/delivery-obligations-overlay-v1.json','website/content/readings.json','website/content/highlights.json','website/content/chapters.json']
+frozen.extend(p.as_posix() for p in sorted(Path('docs/contracts/online-guessing-osd-v1').glob('*')) if p.is_file())
+snap=[]
+for p in frozen+['MANIFEST.md','runs/lifecycle_sessions.jsonl','runs/lifecycle_memory.jsonl','runs/trials.jsonl']:
+ dest=RUN/'snapshots'/('before-'+p.replace('/','--')+'.txt');write(dest,Path(p).read_bytes());snap.append(dict(original_path=p,snapshot=dest.as_posix(),sha256=sha(dest)))
+sys.path.insert(0,str(ROOT));from tools.abrl_lifecycle import lean_declaration_header
+t=PUBLIC.read_text(encoding='utf-8');headers={m.group(1):m.group(0).strip() for m in re.finditer(r'(?m)^theorem (\w+)\b[\s\S]*?(?= :=)',t)};assert len(headers)==12
+rawhash={n:hashlib.sha256(h.encode()).hexdigest() for n,h in headers.items()};nativehash={n:hashlib.sha256(lean_declaration_header(PUBLIC,n).encode()).hexdigest() for n in headers}
+write(CONTRACT/'headers-v1.json',headers);write(CONTRACT/'raw-statement-fingerprints-v1.json',rawhash);write(CONTRACT/'native-statement-fingerprints-v1.json',nativehash)
+for row in load('docs/contracts/online-guessing-osd-v1/contract-manifest.json')['targets']:assert nativehash[row['name']]==row['native_statement_hash'],row
+write(CONTRACT/'actual-context-v1.txt',Path('docs/contracts/online-guessing-osd-v1/context.txt').read_bytes())
+counts={}
+for label,p in [('public',PUBLIC),('canary',CANARY)]:
+ s=p.read_text(encoding='utf-8')
+ counts[label]={k:len(re.findall(r'(?m)^'+k+r'\s+',s)) for k in ['theorem','def','abbrev']}
+assert counts=={'public':{'theorem':12,'def':1,'abbrev':0},'canary':{'theorem':27,'def':6,'abbrev':1}},counts
+write(RUN/'draft-freeze-v1.json',dict(stage='draft',fixed_files={p:sha(p) for p in frozen},before_snapshots=snap,raw_headers=rawhash,native_headers=nativehash,counts=counts,named_checks=47,proof_bodies_preexist_current_draft=True,new_proofs=0,new_definitions=0,new_source_math_obligation_closures=0,source_package_accepted=False,chapter_complete=False,goal_complete=False))
+pdf=Path('../research-online-ogd/tmp/pdfs/orabona-v10.pdf');assert sha(pdf)=='cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17'
+from pypdf import PdfReader
+reader=PdfReader(pdf)
+for page in [13,14,15,27,28,31,32]:write(RUN/f'source-pdf{page}-v1.txt',reader.pages[page-1].extract_text())
+write(CONTRACT/'source-card-v1.json',dict(title='Online Learning: A Modern Introduction Using Convex Optimization',version='arXiv1912.13213v10,2026-06-21',PDF_url='https://arxiv.org/pdf/1912.13213v10',cached_PDF=pdf.as_posix(),SHA256=sha(pdf),anchors=['Example2.32 printed20/PDF32','Original game printed1-3/PDF13-15','Equation2.1 printed15/PDF27','Definitions2.18/2.20 printed16/PDF28','Algorithm2.2 and explicit subgradient transfer printed19-20/PDF31-32'],scope='Historical canonical12 proof/one loss definition, current source/public reuse migration only; missing generic finite-history specialization already separately delivered by PR182.',historical_PR148_state=json.loads(old_raw)['state'],new_mathematics=False))
+write(RUN/'paper-boundary-v1.json',dict(title='ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory',authoritative_local_path='E:/ABRL/papers/long/main/harness.tex',SHA256=sha('E:/ABRL/papers/long/main/harness.tex'),private_manuscript_copied=False,single_runtime_does_not_enforce_all_role_source_file_conventions=True))
+write(RUN/'00_context.md',f'''# Canonical Example2.32 current source/public migration
+Whole Chapters1-16 Goal ACTIVE/unbudgeted, freshly get_goal verified; requested GPT-6 Astra/medium, runtime not independently attested. Exact OPEN draft PR182 {BASE}, immediately preceding actual DIRECT all430 own raw Git files/localremoteREST/clean PASS. Fresh main/origin {main} clean; sharedstores/packages/websitejunction and all other worktrees retained. New branch {branch}; similarly named PR164 branch is a different accepted historical OGD/mean comparison and is retained.
+Historical PR148 accepted canonical12 proofs/one loss definition and whole27canaryproofs/6defs/one abbreviation stay byte-frozen. Current task is source/public reuse evidence, ZERO new proofs/definitions/source-math closures. The missing arbitrary played-legal history-policy performance specialization is already separately accepted/delivered PR182 fourproofs; do not reopen it or count it twice. Original old comments/inventory candidate snapshots remain historical, not new mathematical obstructions.
+Source/contract/context/API retrieval -> distinct neutral decoder/anti-anchored CONTRACT -> stabilized existing-body reuse route -> all public/canary/frozen hashes/axioms/actual proofVALUE graph -> combined root/Tests/full harness/task shadow/exact-base contributor/shared registry/site/pixels -> distinct FINAL -> native acceptance -> bounded draftPR. Single lower route, no optional agents or human/external audit claim. All current reader edits limited to canonical12 notes/four old cards within this existing shared route; new PR182 cards/notes/proofs remain preserved. Oldcontracts/otherBooks/IDsURLs/pins/SGB/publicroot/Tests stay frozen.
+Linearization/optimal-step/unit-analysis current migration, remaining Chapter1/2 maintext, nine OTHERChapter1 main-relative contracts and necessary appendices REQUIRED. Chapter2 total null/incomplete;3-16 unenumerated. No merge/deploy/main/live/retirement/chapter/Goal completion.
+''')
+native('new-task-v1-01','new-task',TASK,'--kind','theorem','--title','Canonical Example2.32 current source/public reuse audit','--target-lean',PRE+'example_2_32')
+native('draft-event-v1-01','lifecycle-event','--session',TASK,'--event','draft','--payload-json',json.dumps(dict(run_id=RUN.name,contract_version=1,new_proofs=0,new_definitions=0,exact_stacked_base=BASE,chapter_complete=False,goal_complete=False)))
+fixed();print('Actual draft twelve unchanged canonical targets/source/base frozen; current semantic review/gates pending, zero new math.')

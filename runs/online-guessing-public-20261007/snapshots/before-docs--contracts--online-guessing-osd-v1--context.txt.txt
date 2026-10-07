@@ -1,0 +1,10 @@
+import BanditRLProof.OnlineSubgradientDescent
+import BanditRLProof.OnlineSubgradientAbsolute
+import BanditRLProof.OnlineGuessingOGD
+
+noncomputable section
+open Set Finset Filter BanditRL.OnlineConvex
+open BanditRL.OnlineSubgradientDescent
+namespace BanditRL.OnlineGuessingSubgradient
+
+def loss (y x : ℝ) : EReal := ((|x - y| : ℝ) : EReal)
