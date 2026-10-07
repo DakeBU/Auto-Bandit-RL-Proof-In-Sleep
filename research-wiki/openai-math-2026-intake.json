@@ -55,7 +55,12 @@
       "upstream_sha": "c7f7510180d65e41f89381b748205e60cb423039",
       "priority": "B",
       "class": "adapter-backed",
-      "local_role": "mutual-information and entropy-production substrate"
+      "local_role": "mutual-information and entropy-production substrate",
+      "upstream_verification": {
+        "status": "comparator-backed",
+        "config": "ComparatorChallenges/SoftChannel204.json",
+        "declaration": "OAI.SoftChannel204.fullMain"
+      }
     },
     {
       "id": "oai-gaussian-information",
@@ -63,7 +68,17 @@
       "main_blob_sha": "db0d0c10afd1a12862e952604f0d8b56a1fedc7a",
       "priority": "B",
       "class": "benchmark-only",
-      "local_role": "candidate information lower-bound machinery"
+      "local_role": "candidate information lower-bound machinery",
+      "upstream_verification": {
+        "status": "comparator-backed",
+        "config": "ComparatorChallenges/GaussianInformation.json",
+        "declarations": [
+          "OAI.RepeatedLocalization.repeated_localization",
+          "OAI.AllScaleInverseVolume.inverse_volume_without_support",
+          "OAI.KernelPotential.kernel_coercivity",
+          "OAI.KernelPotential.actual_row_drift"
+        ]
+      }
     },
     {
       "id": "oai-gaussian-regression",
@@ -71,7 +86,12 @@
       "main_blob_sha": "90b6a09aaf5824576a1c6a93841873cc9aa4d6a1",
       "priority": "B",
       "class": "benchmark-only",
-      "local_role": "candidate linear/Gaussian experiment and memory lower-bound substrate"
+      "local_role": "candidate linear/Gaussian experiment and memory lower-bound substrate",
+      "upstream_verification": {
+        "status": "comparator-backed",
+        "config": "ComparatorChallenges/NoiselessRegression.json",
+        "declaration": "OAI.NoiselessRegression.main"
+      }
     },
     {
       "id": "oai-memory-precision",
@@ -79,7 +99,23 @@
       "main_blob_sha": "37a55271d3acd46185eedc7ddef076013e2c520c",
       "priority": "B",
       "class": "benchmark-only",
-      "local_role": "resource-constrained learner/transcript lower-bound substrate"
+      "local_role": "resource-constrained learner/transcript lower-bound substrate",
+      "upstream_verification": {
+        "status": "comparator-backed",
+        "config": "ComparatorChallenges/MemoryPrecision.json",
+        "declaration": "OAI.MemoryPrecision.main"
+      }
+    },
+    {
+      "id": "oai-stochastic-mean-payoff-games",
+      "path": "preprints/Turn-Based-Stochastic-Mean-Payoff-Games-in-Deterministic-Quasipolynomial-Time-October-5-2026",
+      "priority": "C",
+      "class": "benchmark-only",
+      "local_role": "RL-adjacent stochastic-game route, not an MDP theorem",
+      "upstream_verification": {
+        "status": "manuscript-only-in-current-audit"
+      },
+      "next_action": "audit state/action/transition/policy/player quantifiers and only then decide whether any dynamic-programming or policy lemma is reusable"
     }
   ],
   "out_of_scope_keyword_matches": [
@@ -90,5 +126,15 @@
     "A static experiment lower bound requires an explicit proved reduction before becoming a bandit/RL lower bound.",
     "Quantum semantics are owned by QuantumComputinglib/ASPBE at the cross-library boundary.",
     "No solid graph edge without local compiled evidence."
+  ],
+  "execution_order": [
+    "oai-matroid-prophet",
+    "oai-matroid-secretary",
+    "oai-boolean-noise",
+    "oai-soft-channel",
+    "oai-gaussian-information",
+    "oai-gaussian-regression",
+    "oai-memory-precision",
+    "oai-stochastic-mean-payoff-games"
   ]
 }
