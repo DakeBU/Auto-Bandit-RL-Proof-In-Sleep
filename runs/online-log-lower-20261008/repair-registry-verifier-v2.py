@@ -1,0 +1,15 @@
+from common_integrated_v1 import *
+fixed_integrated()
+assert load(RUN/'registry-check-v1-exit.json')['exit_code']==1
+s=(RUN/'verify-registry-v1.py').read_text(encoding='utf8')
+s=s.replace("assert added=={'declaration:'+n for n in production},sorted(added)\nassert len(added)==58 and len(nodes)==10893", "private_id='declaration:'+PRE+'vectorConsEquiv'\nassert added=={'declaration:'+n for n in production}|{private_id},sorted(added)\nassert nodes[private_id]['identity_basis']=='source-private-name'\nassert len(added)==59 and len(nodes)==10894")
+s=s.replace('new_registry_nodes=58,total_registry_nodes=10893,new_proofs=48,new_definitions=10','new_registry_nodes=59,total_registry_nodes=10894,new_public_nodes=58,new_private_source_nodes=1,private_source_identity_basis=nodes[private_id][\'identity_basis\'],new_proofs=48,new_definitions=10')
+s=s.replace("write(RUN/'registry-v1.json'","write(RUN/'registry-v2.json'")
+s=s.replace('58newactual shared nodes','58newactual public nodes plus1explicit private source node')
+write(RUN/'verify-registry-v2.py',s)
+write(RUN/'registry-verifier-repair-v2.json',dict(failed_gate='registry-check-v1',log_sha256=sha(RUN/'registry-check-v1.log'),reason='Expected58public nodes omitted the existing scanner separate source-private-name entry for the actual private vectorConsEquiv. Actual shared registry adds59source nodes:48public proofs+10public definitions+1private source node. All10835baseline hashes preserved.',repair='Verifier expected set explicitly includes one private source identity; no public API/math/scanner/source/header/site modifications.',actual_public_nodes=58,actual_private_source_nodes=1,actual_total_nodes=10894,site_build='site-build-v2',site_check='site-check-v2',chapter_complete=False,goal_complete=False))
+gate('registry-check-v2',sys.executable,'-B','-X','utf8',RUN/'verify-registry-v2.py')
+capture=(RUN/'capture-reader-v1.py').read_text(encoding='utf8').replace("RUN/'registry-v1.json'","RUN/'registry-v2.json'")
+write(RUN/'capture-reader-v2.py',capture)
+gate('current-reader-capture-v2',sys.executable,'-B','-X','utf8',RUN/'capture-reader-v2.py')
+fixed_integrated()
