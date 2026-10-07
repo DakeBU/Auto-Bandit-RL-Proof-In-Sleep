@@ -1,0 +1,1 @@
+Required unnumbered2D observation found; draftexactrealEuclidean2/globalconvex/ambientFrechet failure onALLclosedsegmentinclendpoints. Strongerleaf ALLverticalaxis explicitlyqualified. Definition/target-types-only not proof. Sourceblind/source review/gatespending, GoalACTIVE.

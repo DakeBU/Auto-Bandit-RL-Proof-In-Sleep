@@ -1,0 +1,20 @@
+BanditRL.OnlineConvex.coordinateAbsolute : EuclideanSpace ℝ (Fin 2) → ℝ
+BanditRL.OnlineConvex.coordinate_absolute_convex : ConvexOn ℝ Set.univ BanditRL.OnlineConvex.coordinateAbsolute
+BanditRL.OnlineConvex.coordinate_absolute_not_differentiable : ∀ (x : EuclideanSpace ℝ (Fin 2)),
+  x.ofLp 0 = 0 → ¬DifferentiableAt ℝ BanditRL.OnlineConvex.coordinateAbsolute x
+BanditRL.OnlineConvex.convex_nondifferentiable_segment : ConvexOn ℝ Set.univ BanditRL.OnlineConvex.coordinateAbsolute ∧
+  ∀ x ∈ segment ℝ 0 (PiLp.single 2 1 1), ¬DifferentiableAt ℝ BanditRL.OnlineConvex.coordinateAbsolute x
+ConvexNondiffProbe.closed_endpoints : ¬DifferentiableAt ℝ BanditRL.OnlineConvex.coordinateAbsolute 0 ∧
+  ¬DifferentiableAt ℝ BanditRL.OnlineConvex.coordinateAbsolute (PiLp.single 2 1 1)
+ConvexNondiffProbe.nonzero_midpoint : have p := PiLp.single 2 1 (1 / 2);
+p ∈ segment ℝ 0 (PiLp.single 2 1 1) ∧ p ≠ 0 ∧ ¬DifferentiableAt ℝ BanditRL.OnlineConvex.coordinateAbsolute p
+ConvexNondiffProbe.axis_outside_segment : have p := PiLp.single 2 1 2;
+p ∉ segment ℝ 0 (PiLp.single 2 1 1) ∧ ¬DifferentiableAt ℝ BanditRL.OnlineConvex.coordinateAbsolute p
+ConvexNondiffProbe.offaxis_positive_and_negative : DifferentiableAt ℝ BanditRL.OnlineConvex.coordinateAbsolute
+    (PiLp.single 2 0 1 + PiLp.single 2 1 2) ∧
+  DifferentiableAt ℝ BanditRL.OnlineConvex.coordinateAbsolute (PiLp.single 2 0 (-1) + PiLp.single 2 1 2)
+ConvexNondiffProbe.constant_vertical_restriction : (∀ (t : ℝ),
+    BanditRL.OnlineConvex.coordinateAbsolute (PiLp.single 2 1 t) = 0) ∧
+  Differentiable ℝ fun t => BanditRL.OnlineConvex.coordinateAbsolute (PiLp.single 2 1 t)
+def BanditRL.OnlineConvex.coordinateAbsolute : EuclideanSpace ℝ (Fin 2) → ℝ :=
+fun x => |x.ofLp 0|

@@ -1,0 +1,10 @@
+import Tests.OnlineConvexNondifferentiabilityCanary
+#print axioms BanditRL.OnlineConvex.coordinateAbsolute
+#print axioms BanditRL.OnlineConvex.coordinate_absolute_convex
+#print axioms BanditRL.OnlineConvex.coordinate_absolute_not_differentiable
+#print axioms BanditRL.OnlineConvex.convex_nondifferentiable_segment
+#print axioms ConvexNondiffProbe.closed_endpoints
+#print axioms ConvexNondiffProbe.nonzero_midpoint
+#print axioms ConvexNondiffProbe.axis_outside_segment
+#print axioms ConvexNondiffProbe.offaxis_positive_and_negative
+#print axioms ConvexNondiffProbe.constant_vertical_restriction

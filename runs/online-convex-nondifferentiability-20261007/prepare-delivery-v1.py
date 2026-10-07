@@ -1,0 +1,25 @@
+"""Record only an actual app-attached draft PR; whole book Goal stays active."""
+from common_v4 import *
+pr=load(RUN/'created-PR-v1.json');a=load(RUN/'accepted-decision-v1.json');reg=load(RUN/'registry-v1.json')
+assert pr['state']=='open' and pr['draft'] and not pr['merged']
+assert pr['head']['ref']=='codex/research-online-convex-nondifferentiability' and pr['base']['ref']=='codex/research-online-lipschitz-migration'
+assert load(RUN/'base-PR176-creation-fresh-v1.json')['head']['sha']==BASE
+assert a['source_package_accepted'] and not a['chapter_complete'] and not a['goal_complete']
+assert load(RUN/'native-acceptance-overlay-v1.json')['status']=='passed' and not load(RUN/'app-attach-v1.json').get('isError',False)
+for label in ['create-pr-v1-01','push-creation-v1-01','contributor-final-v1-01','scoped-diff-final-v1-01','committed-raw-audit-v1-01']:passed(label)
+paths=['accepted-decision-v1.json','accepted-binding-audit-v1.json','accepted-reader-discharge-v1.json','final-reader-receipt-v1.json','native-acceptance-overlay-v1.json','integrated-gates-overlay-v1.json','registry-v1.json','committed-raw-audit-v1.json','created-PR-v1.json','pr-payload-v1.json','pr-payload-before-API-v1.json','app-attach-v1.json','formula-visual-review-v1.json','formula-render-v1.json']
+counts={k:a[k] for k in ['source_formal_results','source_definitions','retained_public_proofs','retained_definitions','new_public_proofs','new_definitions','new_test_proofs','new_registry_nodes']}
+write(RUN/'delivery-obligations-overlay-v1.json',dict(status='scoped-accepted-draft-PR-delivered',PR=pr['html_url'],number=pr['number'],creation_head=pr['head']['sha'],source_site_commit=reg['source_commit'],branch=pr['head']['ref'],exact_base_PR=176,exact_base_head=BASE,creation_state='OPEN-DRAFT-unmerged',app_attached=True,rows=[dict(path=(RUN/p).as_posix(),sha256=sha(RUN/p)) for p in paths],formal_uncountability_required_separate=True,legacy_queue=0,legacy_zero_not_chapter_completion=True,Chapter1_complete=False,chapter2_mandatory_total=None,chapter2_complete=False,goal_complete=False,merged=False,live=False,main_updated=False,worktree='E:/ABRL/worktrees/research-online-book',worktree_disposition='Retained for next required countability/source contract after DIRECT clean/localremoteREST/allcurrentrunraw audit.',final_head_boundary='Final metadata head checked DIRECT without recursive self-head artifact.',**counts))
+write(RUN/'delivery-v1.md',f'''# Bounded unnumbered real2 example delivered
+
+OPEN draft PR{pr['number']}: {pr['html_url']}, appattached/unmerged. Branch {pr['head']['ref']}; exact PR176 base{BASE}; creationhead{pr['head']['sha']}; applicable clean local site source{reg['source_commit']}. Final metadata head checked DIRECT afterwards. Canonicalmain/live unchanged.
+
+ONE actual everywhere-real EuclideanFin2 function definition/THREE new public proofs/FIVE new nondegenerate two-dimensional canary proofs. Source printed19/PDF31 unnumberedexample afterT2.30/end2.2.1 immediatelybefore2.2.2. Global convexity and every CLOSED-segment point AMBIENT nondifferentiability, both endpoints included. All-axis producer is a disclosed stronger leaf; vertical restriction is constant and differentiable, a different predicate. No EReal/scalar-only/within-segment/oracle substitute.
+
+Actual CONTRACTv1 source locator M1 rejection/v2 metadata-only separate acceptance, actual body derivative-API/native trial-schema/harness tracked-source/manifest/test-surface and site bridge/primer-schema failures retained. Same frozen definition/header bytes, no source/math/test/schema weakening. Existing reader schema respected by five bridge steps and three primer entries, all explanations/formulas/source cards kept. Earlier four-entry candidate counts remain historical.
+
+Actual distinct CONTRACTv2/BODY/FINAL/native acceptance, focused2389jobs/9namedtypes9standardkernel4guards/selected9nodes1194refs9requiredactualpairs; combined root{a['root_Tests_jobs']['root-v2-01']}/Tests{a['root_Tests_jobs']['Tests-v2-01']} and current-reader fullharness{a['full_tests']} tests/{a['existing_skips']} existing skips pass. Exactbase contributor/scoped/history97818rawbindings40receipts/taskshadow/currentcleanleanverifiedlocalsite/sharedregistry/actualFOURPNGpixelchecks pass. All10811oldIDsURLs/fournewshareddeclarations,total10815nodes, three sourcecards/highlights/curatedlinks/notation entries. NineOTHERChapter1 main-relative contributor gaps remain required and unwaived.
+
+Formal uncountability consequence remains separately REQUIRED, not encoded by these headers or closed by this example package. Lemma2.31/OSD/linearization/Example2.32/unitanalysis/remainingChapter1/2maintext/nineChapter1gaps/necessaryappendices REQUIRED; Chapter2totalnull/incomplete, legacyqueue0notcompletion,3-16unenumerated,totalGoalACTIVE. No merge/deploy/mainlive/retirement. Checkout retained for continuing this Goal after DIRECT final audit.
+''')
+fixed(True,True);print('Actual bounded nondifferentiability draftPR',pr['number'],'delivered; GoalACTIVE/finalDIRECTpending.')

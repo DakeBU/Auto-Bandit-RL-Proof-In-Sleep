@@ -1,0 +1,6 @@
+ConvexOn ℝ Set.univ coordinateAbsolute : Prop
+∀ (x : EuclideanSpace ℝ (Fin 2)), x.ofLp 0 = 0 → ¬DifferentiableAt ℝ coordinateAbsolute x : Prop
+ConvexOn ℝ Set.univ coordinateAbsolute ∧
+  ∀ x ∈ segment ℝ 0 (PiLp.single 2 1 1), ¬DifferentiableAt ℝ coordinateAbsolute x : Prop
+def BanditRL.OnlineConvex.coordinateAbsolute : EuclideanSpace ℝ (Fin 2) → ℝ :=
+fun x => |x.ofLp 0|

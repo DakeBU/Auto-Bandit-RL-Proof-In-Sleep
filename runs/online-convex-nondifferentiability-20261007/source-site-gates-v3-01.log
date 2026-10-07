@@ -1,0 +1,26 @@
+3eae08ee81979280fa30eccfe67aea75f5ff3d72
+contributor-exact-v2-01 exit 0 seconds 0.125
+contributor-main-diagnostic-v1-01 exit 1 seconds 0.25
+Failure tail only; full raw output is retained in contributor-main-diagnostic-v1-01.log
+CONTRIBUTOR CONTRACT FAILED
+ - production paths missing from all changed contribution manifests: BanditRLProof/OnlineLearningAsymptotic.lean, BanditRLProof/OnlineLearningFTL.lean, BanditRLProof/OnlineLearningFoundations.lean, BanditRLProof/OnlineLearningHistory.lean, BanditRLProof/OnlineLearningIID.lean, BanditRLProof/OnlineLearningInformation.lean, BanditRLProof/OnlineLearningMean.lean, BanditRLProof/OnlineLearningRegret.lean, BanditRLProof/OnlineLearningStochastic.lean
+contributor base: origin/main
+changed paths: 13431
+affected production paths: 54
+changed contribution contracts: 42
+
+d322422e303163c078dcc9fcb08e24b21a1363a4
+scoped-diff-v1-01 exit 0 seconds 0.344
+3a73d16839e82151a5b442f3fbdc472b6996ce80
+site-build-v1-01 exit 1 seconds 0.187
+Failure tail only; full raw output is retained in site-build-v1-01.log
+reading online-lipschitz has an incomplete proof bridge
+
+Traceback (most recent call last):
+  File "runs/online-convex-nondifferentiability-20261007/source-site-gates-v3.py", line 20, in <module>
+    gate('site-build-v1-01',sys.executable,'-B','-X','utf8','website/scripts/build_site.py','--lean-verified','--output',site)
+  File "E:\ABRL\worktrees\research-online-book\runs\online-convex-nondifferentiability-20261007\common_v2.py", line 17, in gate
+    subprocess.run([sys.executable,'-B','-X','utf8',str(RUN/'run-command.py'),label,*map(str,args)],check=True)
+  File "C:\Users\admin\AppData\Local\Programs\Python\Python38\lib\subprocess.py", line 516, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe', '-B', '-X', 'utf8', 'E:\\ABRL\\worktrees\\research-online-book\\runs\\online-convex-nondifferentiability-20261007\\run-command.py', 'site-build-v1-01', 'C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe', '-B', '-X', 'utf8', 'website/scripts/build_site.py', '--lean-verified', '--output', 'tmp\\online-convex-nondifferentiability-site-v1']' returned non-zero exit status 1.

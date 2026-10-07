@@ -1,0 +1,23 @@
+"""Prepare concrete bounded draft after real FINAL/native acceptance."""
+from common_v4 import *
+a=load(RUN/'accepted-decision-v1.json');assert a['source_package_accepted'] and not a['chapter_complete'] and not a['goal_complete']
+assert load(RUN/'native-acceptance-overlay-v1.json')['status']=='passed'
+body=f'''Orabona v10's unnumbered example after Theorem2.30 now has an actual two-dimensional proof: the real function f(x)=|x1| is globally convex and fails to have an ambient Frechet derivative at every point of the closed segment from (0,0) to (0,1), including both endpoints. Convexity comes from the norm through the first-coordinate linear map; a hypothetical ambient derivative restricts along a smooth horizontal curve to a derivative of abs at zero, a contradiction. Actual segment coordinates connect these producers to the source terminal.
+
+This OPEN draft stacks on #176 at exact {BASE}. ONE new real EuclideanSpace Fin2 function definition and THREE public proofs close ONE unnumbered example, not three printed results. Source x1 is Lean index0; the second coordinate is index1. The all-axis leaf is an explicit stronger reusable result, with arbitrary second coordinate. The vertical restriction is constant and differentiable, a different predicate; no within-segment derivative, scalar-only substitute, EReal conversion or supplied conclusion premise is used.
+
+FIVE actual nondegenerate two-dimensional canaries check both endpoints, the nonzero midpoint, a nondifferentiable axis point proved outside the segment, differentiable positive/negative off-axis points, and the constant differentiable vertical restriction. Nine actual named types/nine standard kernel-only audits/four frozen native guards pass. The selected nine-node graph (eight proofs/one definition) has1194 direct type/value references and nine required actual producer pairs; it is distinct from curated links/full registry.
+
+Distinct automated semantic actors (requested GPT6Astra/medium, no human/external/runtime attestation) separately reviewed CONTRACTv2, actual BODY and FINAL. CONTRACTv1's source locator before2.3 was genuinely rejected; metadata-onlyv2 corrects it to endSection2.2.1 immediatelybefore2.2.2, printed19/PDF31. All mathematical definition/header bytes stay fixed. Actual API/native-schema failures and full-harnessv1's untracked-source fence failure remain; the latter was repaired by staging only the owned Lean files and rerunning unchanged root/Tests/fullharnessv2. No test or source weakening.
+
+Actual postintegration root {a['root_Tests_jobs']['root-v2-01']} jobs/Tests {a['root_Tests_jobs']['Tests-v2-01']} jobs (cached included), full harness {a['full_tests']} tests/{a['existing_skips']} existing skips, exactbase contributor/scoped/history/taskshadow gates pass. Current clean local leanverified site, shared registry and actual viewport/three expanded MathJax-card pixel checks pass. All10811 previous IDs/URLs persist; four new declaration nodes give10815 shared nodes, with the new module in its separate module view. Three source cards/highlights/curated links and four notation entries; otherBook subtrees unchanged. The separate origin/main contributor diagnostic still fails for nine OTHER required Chapter1 contract gaps, unwaived.
+
+Evidence: docs/contracts/online-convex-nondifferentiability-v1 (preserved rejection) and -v2 (effective); runs/online-convex-nondifferentiability-20261007/accepted-decision-v1.json, accepted-binding-audit-v1.json, integrated-gates-overlay-v1.json, final-reader-review-v1.md, registry-v1.json, and all three source-card PNGs. Frozen PDF SHA256 cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17.
+
+Only this exact example is compiled-local/PR-ready. Formal uncountability of the nondifferentiability locus remains separately REQUIRED; these three headers do not encode it or complete the preceding misconception paragraph. Lemma2.31/OSD/linearization/Example2.32/unitanalysis/remainingChapter1/2maintext/nineChapter1gaps/necessaryappendices REQUIRED. Chapter2mandatorytotal null/incomplete, legacyqueue0 not completion;3-16unenumerated, totalGoalACTIVE. No merge/deploy/mainlive update/worktree retirement.
+'''
+assert chr(92)+'n' not in body
+write(RUN/'pr-body-v1.md',body)
+write(RUN/'pr-payload-v1.json',dict(title='Prove Orabona convex plane example on every closed-segment point',head='codex/research-online-convex-nondifferentiability',base='codex/research-online-lipschitz-migration',draft=True,body=body))
+write(RUN/'pr-payload-before-API-v1.json',dict(path=(RUN/'pr-payload-v1.json').as_posix(),sha256=sha(RUN/'pr-payload-v1.json'),before_first_API_use=True))
+print('Concrete scoped accepted draft payload prepared; fresh exact parent/remote/duplicate checks still required.')

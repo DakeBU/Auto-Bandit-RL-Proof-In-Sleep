@@ -1,0 +1,1 @@
+Required exact 2D convex+ALLclosedsegment ambient nondifferentiability source terminal. One lower proof route via actual linear coordinate and differentiable horizontal restriction. Old migrations legacy0 is not chaptercomplete; add unnumbered inventory overlay. No OSD competing proof work until this package gate.

@@ -1,0 +1,19 @@
+import Mathlib.Analysis.InnerProductSpace.PiL2
+import Mathlib.Analysis.Calculus.Deriv.Abs
+import Mathlib.Analysis.Normed.Module.Convex
+
+#check @PiLp.proj
+#check @PiLp.projₗ
+#check @PiLp.continuousLinearEquiv
+#check @convexOn_univ_norm
+#check @ConvexOn.comp_linearMap
+#check @not_differentiableAt_abs_zero
+#check @DifferentiableAt.comp
+#check @DifferentiableAt.abs
+#check @ContinuousLinearMap.differentiableAt
+#check @ContinuousLinearEquiv.differentiableAt
+#check @PiLp.single_eq_same
+#check @PiLp.single_eq_of_ne
+#check @Set.segment
+#check @Set.left_mem_segment
+#check @Set.right_mem_segment

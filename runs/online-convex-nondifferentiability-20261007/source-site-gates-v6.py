@@ -1,0 +1,15 @@
+"""Actual visual repair verification, reusing unchanged applicable mathematical gates."""
+from common_v4 import *
+fixed(True,True);passed('source-site-gates-v5-01');passed('full-harness-v3-01');passed('repair-visual-badge-v2-01')
+subprocess.run([sys.executable,'-B','-X','utf8',str(RUN/'commit-owned-v1.py'),'Repair source-card clipping found by actual pixel inspection'],check=True)
+gate('contributor-exact-v5-01',sys.executable,'-B','-X','utf8','tools/check_contributor_contract.py','--base',BASE)
+gate('scoped-diff-v4-01',sys.executable,'-B','-X','utf8',RUN/'check-scoped-diff-v1.py','v4')
+subprocess.run([sys.executable,'-B','-X','utf8',str(RUN/'commit-owned-v1.py'),'Bind content-label visual repair source and scope checks'],check=True)
+assert not subprocess.check_output(['git','status','--porcelain'],text=True).strip()
+site=Path('tmp/online-convex-nondifferentiability-site-v1')
+gate('site-build-v4-01',sys.executable,'-B','-X','utf8','website/scripts/build_site.py','--lean-verified','--output',site)
+gate('site-check-v3-01',sys.executable,'-B','-X','utf8','website/scripts/check_site.py','--output',site)
+gate('registry-v3-01',sys.executable,'-B','-X','utf8',RUN/'verify-registry-v3.py')
+gate('browser-v2-01',sys.executable,'-B','-X','utf8',RUN/'browser-v2.py')
+gate('formula-render-v2-01',sys.executable,'-B','-X','utf8',RUN/'render-source-card-v2.py')
+fixed(True,True);print('Actual label-only repaired site/registry/geometry render pass; actual four latest pixels/FINAL/native/PR remain separate.')

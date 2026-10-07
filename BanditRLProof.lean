@@ -737,3 +737,4 @@ import BanditRLProof.OnlineOptimalStep
 import BanditRLProof.OnlineUnitScaling
 import BanditRLProof.OnlineGradientDescentSource
 import BanditRLProof.OnlineConstraintFiniteLoss
+import BanditRLProof.OnlineConvexNondifferentiability

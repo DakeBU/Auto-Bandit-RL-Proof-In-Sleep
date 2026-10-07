@@ -1,0 +1,15 @@
+"""Verify equivalent presentation-only boundary repair with actual viewport checks."""
+from common_v4 import *
+fixed(True,True);passed('source-site-gates-v7-01');passed('full-harness-v3-01');passed('repair-visible-boundary-v3-01')
+subprocess.run([sys.executable,'-B','-X','utf8',str(RUN/'commit-owned-v1.py'),'Repair actual viewport overflow in source status explanation'],check=True)
+gate('contributor-exact-v6-01',sys.executable,'-B','-X','utf8','tools/check_contributor_contract.py','--base',BASE)
+gate('scoped-diff-v5-01',sys.executable,'-B','-X','utf8',RUN/'check-scoped-diff-v2.py','v5')
+subprocess.run([sys.executable,'-B','-X','utf8',str(RUN/'commit-owned-v1.py'),'Bind equivalent boundary presentation and actual scope checks'],check=True)
+assert not subprocess.check_output(['git','status','--porcelain'],text=True).strip()
+site=Path('tmp/online-convex-nondifferentiability-site-v1')
+gate('site-build-v5-01',sys.executable,'-B','-X','utf8','website/scripts/build_site.py','--lean-verified','--output',site)
+gate('site-check-v4-01',sys.executable,'-B','-X','utf8','website/scripts/check_site.py','--output',site)
+gate('registry-v4-01',sys.executable,'-B','-X','utf8',RUN/'verify-registry-v4.py')
+gate('browser-v3-01',sys.executable,'-B','-X','utf8',RUN/'browser-v3.py')
+gate('formula-render-v3-01',sys.executable,'-B','-X','utf8',RUN/'render-source-card-v4.py')
+fixed(True,True);print('Actual viewport-bound repaired rendering passes; root pixels/FINAL/native/PR pending.')

@@ -1,0 +1,52 @@
+named-public-search-v1 exit 0 seconds 5.922
+named-terminal-search-v1 exit 0 seconds 5.875
+root-v1-01 exit 0 seconds 25.875
+Tests-v1-01 exit 0 seconds 219.454
+candidate-lifecycle-combined-v1 exit 0 seconds 0.219
+candidate-frontier-refresh-v1 exit 0 seconds 0.265
+candidate-frontier-shadow-v1 exit 0 seconds 0.219
+full-harness-v1-01 exit 1 seconds 115.844
+Failure tail only; full raw output is retained in full-harness-v1-01.log
+d_archive(
+  File "E:\ABRL\worktrees\research-online-book\tools\build_anonymous_iclr_supplement.py", line 3457, in build_archive
+    payload = build_payload(proof_graph, proof_report_path, allow_missing_graph)
+  File "E:\ABRL\worktrees\research-online-book\tools\build_anonymous_iclr_supplement.py", line 3329, in build_payload
+    for rel in source_tree_files(tracked):
+  File "E:\ABRL\worktrees\research-online-book\tools\build_anonymous_iclr_supplement.py", line 1010, in source_tree_files
+    raise ValueError("untracked Lean source under allowlisted tree: " + rel)
+ValueError: untracked Lean source under allowlisted tree: BanditRLProof/OnlineConvexNondifferentiability.lean
+
+----------------------------------------------------------------------
+Ran 440 tests in 102.887s
+
+FAILED (errors=1, skipped=7)
+wrote E:/Temp/tmp0g2dw48t/hierarchical/00_context.md
+wrote E:/Temp/tmp0g2dw48t/hierarchical/dialogue.md
+wrote E:/Temp/tmp0g2dw48t/hierarchical/todo.md
+wrote E:/Temp/tmp0g2dw48t/hierarchical/10_upper_director.md
+wrote E:/Temp/tmp0g2dw48t/hierarchical/20_middle_formalizer.md
+wrote E:/Temp/tmp0g2dw48t/hierarchical/31_lower_1.md
+wrote E:/Temp/tmp0g2dw48t/hierarchical/32_lower_2.md
+wrote E:/Temp/tmp0g2dw48t/hierarchical/40_reviewer.md
+wrote E:/Temp/tmp0g2dw48t/hierarchical/90_handoff.md
+wrote E:/Temp/tmp0g2dw48t/master-worker/00_context.md
+wrote E:/Temp/tmp0g2dw48t/master-worker/harness.json
+wrote E:/Temp/tmp0g2dw48t/master-worker/dialogue.md
+wrote E:/Temp/tmp0g2dw48t/master-worker/todo.md
+wrote E:/Temp/tmp0g2dw48t/master-worker/10_master_plan.md
+wrote E:/Temp/tmp0g2dw48t/master-worker/30_worker_1.md
+wrote E:/Temp/tmp0g2dw48t/master-worker/30_worker_2.md
+wrote E:/Temp/tmp0g2dw48t/master-worker/40_master_synthesis.md
+wrote E:/Temp/tmp0g2dw48t/master-worker/50_reviewer.md
+wrote E:/Temp/tmp0g2dw48t/master-worker/90_handoff.md
+target-drift execution template ABRL-TARGET-DRIFT-V1 (E:/ABRL/worktrees/research-online-book/evaluation/target-drift-v1/execution-template.json) valid but not ready: 26 unresolved placeholders across machine, human, and provenance fields remain UNSET
+{"build_input_manifest_sha256": "a9d24bcd36f6fc836f66750fbded030192c38d9978009125ddcc331b8aa0387c", "context": "E:\\Temp\\tmpjr21gbdn\\checker-context", "source_files": 586, "status": "prepared_unbuilt", "workspace_base_commit": "d43bfeee56fb0c1c35cf5af9fc1a7fdc3e0c37b9"}
+
+Traceback (most recent call last):
+  File "runs/online-convex-nondifferentiability-20261007/project-gates-v1.py", line 26, in <module>
+    fixed(True,True);gate('full-harness-v1-01',sys.executable,'-B','-X','utf8','tools/bandit.py','check')
+  File "E:\ABRL\worktrees\research-online-book\runs\online-convex-nondifferentiability-20261007\common_v2.py", line 17, in gate
+    subprocess.run([sys.executable,'-B','-X','utf8',str(RUN/'run-command.py'),label,*map(str,args)],check=True)
+  File "C:\Users\admin\AppData\Local\Programs\Python\Python38\lib\subprocess.py", line 516, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe', '-B', '-X', 'utf8', 'E:\\ABRL\\worktrees\\research-online-book\\runs\\online-convex-nondifferentiability-20261007\\run-command.py', 'full-harness-v1-01', 'C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe', '-B', '-X', 'utf8', 'tools/bandit.py', 'check']' returned non-zero exit status 1.

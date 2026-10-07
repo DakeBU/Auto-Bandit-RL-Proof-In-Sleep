@@ -145,3 +145,4 @@ import Tests.OnlineConstraintFiniteLossCanary
 import Tests.OnlineRelativeSubgradientCanary
 
 import Tests.OnlineDifferentiabilityBoundaryCanary
+import Tests.OnlineConvexNondifferentiabilityCanary

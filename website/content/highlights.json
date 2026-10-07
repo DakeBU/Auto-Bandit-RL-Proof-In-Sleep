@@ -5425,6 +5425,24 @@
         "BanditRL.OnlineConvex.affine_support_of_relative_domain_interior",
         "BanditRL.OnlineConvex.SourceSubdifferential"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.convex_nondifferentiable_segment",
+      "title": "Convex, but ambient nondifferentiable along the whole segment",
+      "chapter": "online-lipschitz",
+      "featured": false,
+      "teaching_order": 2,
+      "plain": "Global convexity and failure of the AMBIENT Frechet derivative at EVERY point of the CLOSED segment (0,0)-(0,1), including both endpoints. The stronger leaf covers ALL first-coordinate-zero points with arbitrary second coordinate. The restriction to the vertical line is constant zero and differentiable: a different predicate. No within-segment derivative, scalar-only/single-point substitute, supplied convexity or failure assumption.",
+      "math": "\\(f(x)=|x_1|,\\quad\\forall s\\in[0,1],\\ \\neg Df(0,s)\\)",
+      "intuition": "A vertical constant restriction can still have a horizontal kink in the ambient plane.",
+      "why": "ONE required unnumbered source example, ONE new everywhere-real Euclidean2 function definition and THREE new proofs; exact global convexity plus ALL closed-segment ambient nondifferentiability terminal. Two producer leaves establish it; the all-axis leaf is an explicit strengthening, not three printed results. Actual EuclideanSpace real Fin2 with L2 topology. Printed x1 is Lean index0; printed second coordinate is index1. PiLp.single2 index1 value1 is (0,1). The function is actual real |x0| on all of R2, no EReal/toReal shortcut.",
+      "position": "Orabona v10 unnumbered example afterT2.30/endSection2.2.1 immediatelybefore2.2.2 printed19/PDF31",
+      "proof_idea": "Reuse convexity of the real norm through the actual first-coordinate linear map. If the plane function had an ambient derivative at x0=0, compose along the smooth horizontal curve t->x+t*e1: its value is |t|, contradicting the actual scalar-absolute-value nondifferentiability theorem at0. True closed-segment convex-combination coordinates give x0=0 for EVERY member, yielding the same exact source terminal.",
+      "lean_notes": "Actual EuclideanSpace real Fin2 with L2 topology. Printed x1 is Lean index0; printed second coordinate is index1. PiLp.single2 index1 value1 is (0,1). The function is actual real |x0| on all of R2, no EReal/toReal shortcut. Global convexity and failure of the AMBIENT Frechet derivative at EVERY point of the CLOSED segment (0,0)-(0,1), including both endpoints. The stronger leaf covers ALL first-coordinate-zero points with arbitrary second coordinate. The restriction to the vertical line is constant zero and differentiable: a different predicate. No within-segment derivative, scalar-only/single-point substitute, supplied convexity or failure assumption. FIVE actual new 2D canary proofs, zero TEST definitions or abbreviations: both closed endpoints; genuinely nonzero midpoint (0,1/2) with actual segment membership and failure; axis point (0,2) proved outside the segment with ambient failure; off-axis points (+1,2) and (-1,2) actually ambient differentiable; ALL vertical restrictions identicallyzero and differentiable. No supplied conclusion or zero-dimensional test. Actual new3publicproofs/1definition/5canaryproofs,9compiled named types/9standard kernel checks/4frozen native guards. Selected9actual nodes (8proofs/1definition),1194 direct type/value occurrences/9 required value pairs. Type/API readiness was not proof compilation; curated links/selected graph/fullregistry are separate. Native empty-assumption arrays/header guard do not enforce complete source semantics; actual compiled types and distinct source reviews separately check them. Original CONTRACTv1 rejected source locator before2.3; metadata-onlyv2 separately accepted correct endSection2.2.1 immediatelybefore2.2.2 printed19/PDF31. All frozen definition/headers unchanged. Actual constant-derivative bodyAPI failure and native trial-kind schema failure retained/repaired on same route; CLI/API-discovery failures preserved. Only the exact unnumbered example is compiled; the formal uncountability consequence from the preceding misconception sentence remains separately REQUIRED/planned and is not encoded by these three headers. No whole-paragraph or general almost-everywhere theorem closure. Lemma2.31/OSD/linearization/Example2.32/unitanalysis/remainingChapter1/2maintext/nineOTHERChapter1contractgaps/necessaryappendices REQUIRED; Chapter2totalnull/incomplete,legacyqueue0notcompletion,3-16unenumerated,totalGoalACTIVE. No merge/mainlive/deploy/retirement.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.coordinate_absolute_convex",
+        "BanditRL.OnlineConvex.coordinate_absolute_not_differentiable"
+      ]
     }
   ]
 }

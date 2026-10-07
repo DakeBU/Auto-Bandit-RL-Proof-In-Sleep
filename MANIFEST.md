@@ -15463,3 +15463,8 @@ Orabona v10 Theorem2.28 printed18/PDF30: one retained public full-image inclusio
 ## ONLINE-LIPSCHITZ-MIGRATION-20261007
 
 Orabona v10 Definition2.29/Theorem2.30 printed19/PDF31: one retained owned finite-value/all-pairs definition and one full interior iff proof,18unchanged canaryproofs/sixTESTdefs/twoabbreviations; zero new mathematical/registry nodes. Explicit NNReal including0 source convention separatelyreviewed, actual negativeL0Dobstruction retained. CurrentCONTRACT/convention/BODY and focused/kernel/fence evidence bound in runs/online-lipschitz-migration-20261007; combinedproject/site/FINAL/native/actualPR pending at this historical entry. Same sharedLean/Bookregistry. Chapter2totalnull/incomplete/legacyqueue0notchaptercompletion,totalGoalACTIVE.
+
+
+## ONLINE-CONVEX-NONDIFFERENTIABILITY-20261007
+
+Orabona v10 unnumberedexample afterT2.30/endSection2.2.1 immediatelybefore2.2.2 printed19/PDF31. NewactualrealEuclidean2 globalconvex+ALLclosedsegment ambientnondifferentiability terminal:3publicproofs/1definition/5nondegeneratecanaryproofs/9standardkernel4guards/9actualnodes1194refs9requiredpairs. CONTRACTv1sourceM1rejection/v2metadata-onlyrepair/BODYaccepted; originalfailures/fingerprints preserved. Combinedproject/site/FINAL/native/actualPRpending atthishistoricalcandidateentry. FormaluncountabilityconsequenceseparatelyREQUIREDplanned, Chapter2null/incomplete/GoalACTIVE, no merge/mainlive.

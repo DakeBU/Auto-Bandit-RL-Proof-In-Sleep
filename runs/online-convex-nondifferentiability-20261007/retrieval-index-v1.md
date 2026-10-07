@@ -1,0 +1,1 @@
+ORABONA-V10-CH2-UNNUMBERED-2D-NONDIFFERENTIABILITY; actual pinned Mathlib normconvexity/PiLp maps/scalarabs nonderivative/composition/segment. Project search and compiled API checks pending. No newgeneric duplicate or externaluncheckeddependency.
