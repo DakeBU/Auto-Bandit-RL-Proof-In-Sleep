@@ -1,0 +1,15 @@
+from common_v1 import *
+fixed(True);a=load(RUN/'accepted-decision-v1.json');assert a['source_package_accepted'] and load(RUN/'native-acceptance-overlay-v1.json')['status']=='passed'
+i=a['applicable_integrated_gates'];b=a['BODY']
+text=f'''Revalidate Orabona v10 Lemma 1.2 (printed4/PDF16) while retaining the original public proof. Add seven named canaries that produce changing feasible prefix minimizers, strict -2<0, empty/one-round boundaries, and separate failures without prefix optimality or feasibility. Update only the corresponding source card, public note and route boundaries; preserve all formulas and existing Book links.
+
+The lemma supplies hindsight current-prefix minimizers, not a causal learner. Its arbitrary-X/ambient-loss and T0 extensions are explicit. The infeasible-leader witness tests the ambient extension only. This package adds zero public/source mathematical closures or production registry nodes; the seven new proofs are validation tests.
+
+Validation: focused {b['focused_jobs']} jobs,8 named type/kernel/axiom checks,8 unchanged full guards,4 prespecified direct VALUE pairs/{b['direct_references']} actual references; combined {i['root_Tests_jobs']}, {i['full_tests']} tests/{i['existing_skips']} skips. Same10821 registry IDs/URLs and original statement hash, clean local Lean-verified site and {len(i['actual_viewed_images'])} actually viewed images. Distinct required automated decoder/CONTRACT/BODY/FINAL, allR1-R8 discharged; reused prior actors, no human/external/runtime attestation. Original neutral-layout, Bool-membership proof, frontier-enum and untracked-source gate failures retained with actual repairs. Gates are distinct; one runtime does not enforce all source/role/file conventions.
+
+Stacks on OPEN unmerged draftPR186 exact {BASE}, branch {BASE_BRANCH}. Evidence: {RUN.relative_to(ROOT).as_posix()}; contract {CONTRACT.as_posix()}. Historical PR117 mathematics is not recounted. Eight OTHER Chapter1 contributor migrations and wholeChapter1 reconciliation remain mandatory; Chapter2 total null/incomplete,3-16unenumerated/necessaryappendices required/wholeGoal ACTIVE. No merge/deploy/main/live/retirement or chapter completion.
+'''
+write(RUN/'pr-body-v1.md',text)
+write(RUN/'pr-payload-v1.json',dict(title='Revalidate Be-the-Leader with named strict and premise canaries',head=BRANCH,base=BASE_BRANCH,draft=True,body=text))
+write(RUN/'pr-payload-before-API-v1.json',dict(path=(RUN/'pr-payload-v1.json').as_posix(),sha256=sha(RUN/'pr-payload-v1.json'),actual_FINAL_accepted=True,new_public_math=0,new_named_validation_proofs=7,chapter_complete=False,goal_complete=False))
+print('Concrete accepted bounded draft body/payload frozen; actual push/API remain.')
