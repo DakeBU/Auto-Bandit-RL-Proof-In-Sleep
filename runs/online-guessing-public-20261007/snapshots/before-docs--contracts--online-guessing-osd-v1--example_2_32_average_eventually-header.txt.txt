@@ -1,0 +1,7 @@
+theorem example_2_32_average_eventually (y : ℕ → ℝ) (x₁ : ℝ)
+    (hx₁ : x₁ ∈ Icc (0 : ℝ) 1) (hy : ∀ t, y t ∈ Icc (0 : ℝ) 1)
+    (u : ℝ) (hu : u ∈ Icc (0 : ℝ) 1) (ε : ℝ) (hε : 0 < ε) :
+    ∀ᶠ T : ℕ in atTop,
+      (∑ t ∈ range T,
+        (|iterate BanditRL.OnlineGradientDescent.unitInterval (fun _ => 1 / Real.sqrt T)
+          (fun s => loss (y s)) x₁ t - y t| - |u - y t|)) / T < ε

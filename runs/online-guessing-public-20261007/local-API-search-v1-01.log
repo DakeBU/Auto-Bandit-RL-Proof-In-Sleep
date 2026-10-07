@@ -1,0 +1,80 @@
+BanditRLProof\OnlineSubgradientAbsolute.lean:17:Borrowed SourceSubdifferential is shared context, not a new owned definition.
+BanditRLProof\OnlineSubgradientAbsolute.lean:39:    SourceSubdifferential (fun y : ℝ => ((|y| : ℝ) : EReal)) 0 = Icc (-1 : ℝ) 1 := by
+BanditRLProof\OnlineSubgradientAbsolute.lean:66:    SourceSubdifferential (fun y : ℝ => ((|y| : ℝ) : EReal)) x = {(1 : ℝ)} := by
+BanditRLProof\OnlineSubgradientAbsolute.lean:68:  change g ∈ SourceSubdifferential (fun y : ℝ => ((|y| : ℝ) : EReal)) x ↔ g = (1 : ℝ)
+BanditRLProof\OnlineSubgradientAbsolute.lean:93:    SourceSubdifferential (fun y : ℝ => ((|y| : ℝ) : EReal)) x = {(-1 : ℝ)} := by
+BanditRLProof\OnlineSubgradientAbsolute.lean:95:  change g ∈ SourceSubdifferential (fun y : ℝ => ((|y| : ℝ) : EReal)) x ↔ g = (-1 : ℝ)
+BanditRLProof\OnlineSubgradientAbsolute.lean:120:    SourceSubdifferential (fun y : ℝ => ((|y| : ℝ) : EReal)) x =
+BanditRLProof\OnlineGuessingSubgradientPolicy.lean:7:open BanditRL.OnlineGuessingSubgradient (loss loss_subgradient_bound loss_on_unitInterval)
+BanditRLProof\OnlineGuessingSubgradientPolicy.lean:29:  exact loss_subgradient_bound (y t) _ _ (hlegal t ht)
+BanditRLProof\OnlineGuessingSubgradientPolicy.lean:38:theorem example_2_32 (y : ℕ → ℝ) (x₁ : ℝ) (p : SupportPolicy (E := ℝ))
+BanditRLProof\OnlineGuessingSubgradientPolicy.lean:57:  have hb := BanditRL.OnlineSubgradientPolicy.regret_tuned unitInterval
+BanditRLProof\OnlineGuessingSubgradientPolicy.lean:66:theorem example_2_32_average_eventually (y : ℕ → ℝ) (x₁ : ℝ)
+BanditRLProof\OnlineGuessingSubgradientPolicy.lean:82:  have hb := example_2_32 y x₁ p hx₁ T hT (fun t ht => hy t) (hlegal T hT) u hu
+BanditRLProof\OnlineSubgradientDescent.lean:27:  SourceProper f ∧ ∀ x ∈ V.carrier, (SourceSubdifferential f x).Nonempty
+BanditRLProof\OnlineSubgradientDescent.lean:29:def currentSubgradient (f : E → EReal) (x : E) : E :=
+BanditRLProof\OnlineSubgradientDescent.lean:32:    exact if h : (SourceSubdifferential f x).Nonempty then Classical.choose h else 0
+BanditRLProof\OnlineSubgradientDescent.lean:34:  BanditRL.OnlineGradientDescent.project V (x - η • currentSubgradient f x)
+BanditRLProof\OnlineSubgradientDescent.lean:42:    (g : E) (hg : g ∈ SourceSubdifferential f x) :
+BanditRLProof\OnlineSubgradientDescent.lean:71:theorem currentSubgradient_mem (V : Domain (E := E)) (f : E → EReal)
+BanditRLProof\OnlineSubgradientDescent.lean:73:    currentSubgradient f x ∈ SourceSubdifferential f x := by
+BanditRLProof\OnlineSubgradientDescent.lean:76:  unfold currentSubgradient
+BanditRLProof\OnlineSubgradientDescent.lean:83:  have hg := currentSubgradient_mem V f hf x hx
+BanditRLProof\OnlineSubgradientDescent.lean:84:  have hd := subgradient_point_finite f hf.1 x (currentSubgradient f x) hg
+BanditRLProof\OnlineSubgradientDescent.lean:94:theorem iterate_prefix (V : Domain (E := E)) (η η' : ℕ → ℝ)
+BanditRLProof\OnlineSubgradientDescent.lean:108:    currentSubgradient (loss t) (iterate V η loss x₁ t) ∈
+BanditRLProof\OnlineSubgradientDescent.lean:109:      SourceSubdifferential (loss t) (iterate V η loss x₁ t) := by
+BanditRLProof\OnlineSubgradientDescent.lean:110:  exact currentSubgradient_mem V (loss t) hloss _ (iterate_mem V η loss x₁ hx₁ t)
+BanditRLProof\OnlineSubgradientDescent.lean:125:      η t * inner ℝ (currentSubgradient (loss t) (iterate V η loss x₁ t))
+BanditRLProof\OnlineSubgradientDescent.lean:127:    η t * inner ℝ (currentSubgradient (loss t) (iterate V η loss x₁ t))
+BanditRLProof\OnlineSubgradientDescent.lean:131:      (η t) ^ 2 / 2 * ‖currentSubgradient (loss t) (iterate V η loss x₁ t)‖ ^ 2 := by
+BanditRLProof\OnlineSubgradientDescent.lean:134:    (currentSubgradient (loss t) (iterate V η loss x₁ t))
+BanditRLProof\OnlineSubgradientDescent.lean:144:      η t / 2 * ‖currentSubgradient (loss t) (iterate V η loss x₁ t)‖ ^ 2 := by
+BanditRLProof\OnlineSubgradientDescent.lean:151:        (η t) ^ 2 / 2 * ‖currentSubgradient (loss t) (iterate V η loss x₁ t)‖ ^ 2 :=
+BanditRLProof\OnlineSubgradientDescent.lean:155:        η t / 2 * ‖currentSubgradient (loss t) (iterate V η loss x₁ t)‖ ^ 2) := by
+BanditRLProof\OnlineSubgradientDescent.lean:164:        ‖currentSubgradient (loss t) (iterate V (fun _ => η) loss x₁ t)‖ ^ 2) -
+BanditRLProof\OnlineSubgradientDescent.lean:169:        ‖currentSubgradient (loss t) (iterate V (fun _ => η) loss x₁ t)‖ ^ 2) := by
+BanditRLProof\OnlineSubgradientDescent.lean:183:          ‖currentSubgradient (loss t) (iterate V (fun _ => η) loss x₁ t)‖ ^ 2) -
+BanditRLProof\OnlineSubgradientDescent.lean:191:        ‖currentSubgradient (loss t) (iterate V (fun _ => η) loss x₁ t)‖ ^ 2) := by
+BanditRLProof\OnlineSubgradientDescent.lean:203:      (∑ t ∈ range T, η t / 2 * ‖currentSubgradient (loss t) (iterate V η loss x₁ t)‖ ^ 2) -
+BanditRLProof\OnlineSubgradientDescent.lean:222:      (∑ t ∈ range T, η t / 2 * ‖currentSubgradient (loss t) (iterate V η loss x₁ t)‖ ^ 2) -
+BanditRLProof\OnlineSubgradientDescent.lean:229:theorem regret_tuned_distance (V : Domain (E := E)) (loss : ℕ → E → EReal)
+BanditRLProof\OnlineSubgradientDescent.lean:234:    (hgrad : ∀ t < T, ‖currentSubgradient (loss t)
+BanditRLProof\OnlineSubgradientDescent.lean:243:      ‖currentSubgradient (loss t)
+BanditRLProof\OnlineSubgradientDescent.lean:263:theorem regret_tuned (V : Domain (E := E)) (loss : ℕ → E → EReal)
+BanditRLProof\OnlineSubgradientDescent.lean:268:    (hgrad : ∀ t < T, ‖currentSubgradient (loss t)
+BanditRLProof\OnlineSubgradientDescent.lean:273:  exact regret_tuned_distance V loss x₁ hx₁ T hT D G hD hG hloss u hu
+BanditRLProof\OnlineSubgradientBasic.lean:6:SourceSubdifferential predicate accepts all EReal functions, a wider library
+BanditRLProof\OnlineSubgradientBasic.lean:38:def SourceSubdifferential (f : E → EReal) (x : E) : Set E :=
+BanditRLProof\OnlineSubgradientBasic.lean:42:    (x g : E) (hg : g ∈ SourceSubdifferential f x) :
+BanditRLProof\OnlineSubgradientBasic.lean:52:    (hsub : ∀ x ∈ V, (SourceSubdifferential (fun y => (f y : EReal)) x).Nonempty) :
+BanditRLProof\OnlineGuessingSubgradient.lean:28:    SourceSubdifferential (loss y) x =
+BanditRLProof\OnlineGuessingSubgradient.lean:29:      SourceSubdifferential (fun z : ℝ => ((|z| : ℝ) : EReal)) (x - y) := by
+BanditRLProof\OnlineGuessingSubgradient.lean:40:theorem loss_subgradient_positive (y x : ℝ) (hxy : y < x) :
+BanditRLProof\OnlineGuessingSubgradient.lean:41:    SourceSubdifferential (loss y) x = {(1 : ℝ)} := by
+BanditRLProof\OnlineGuessingSubgradient.lean:45:theorem loss_subgradient_zero (y : ℝ) :
+BanditRLProof\OnlineGuessingSubgradient.lean:46:    SourceSubdifferential (loss y) y = Icc (-1 : ℝ) 1 := by
+BanditRLProof\OnlineGuessingSubgradient.lean:50:theorem loss_subgradient_negative (y x : ℝ) (hxy : x < y) :
+BanditRLProof\OnlineGuessingSubgradient.lean:51:    SourceSubdifferential (loss y) x = {(-1 : ℝ)} := by
+BanditRLProof\OnlineGuessingSubgradient.lean:55:theorem example_2_32_subdifferential (y x : ℝ) :
+BanditRLProof\OnlineGuessingSubgradient.lean:56:    SourceSubdifferential (loss y) x =
+BanditRLProof\OnlineGuessingSubgradient.lean:59:  · exact loss_subgradient_positive y x hxy
+BanditRLProof\OnlineGuessingSubgradient.lean:61:    exact loss_subgradient_zero y
+BanditRLProof\OnlineGuessingSubgradient.lean:62:  · exact loss_subgradient_negative y x (lt_of_le_of_ne (le_of_not_gt hxy) he)
+BanditRLProof\OnlineGuessingSubgradient.lean:69:  · rw [loss_subgradient_positive y x hp]
+BanditRLProof\OnlineGuessingSubgradient.lean:73:      rw [loss_subgradient_zero]
+BanditRLProof\OnlineGuessingSubgradient.lean:75:    · rw [loss_subgradient_negative y x (lt_of_le_of_ne (le_of_not_gt hp) he)]
+BanditRLProof\OnlineGuessingSubgradient.lean:78:theorem loss_subgradient_bound (y x g : ℝ)
+BanditRLProof\OnlineGuessingSubgradient.lean:79:    (hg : g ∈ SourceSubdifferential (loss y) x) : ‖g‖ ≤ 1 := by
+BanditRLProof\OnlineGuessingSubgradient.lean:81:  · rw [loss_subgradient_positive y x hp] at hg
+BanditRLProof\OnlineGuessingSubgradient.lean:86:      rw [loss_subgradient_zero] at hg
+BanditRLProof\OnlineGuessingSubgradient.lean:89:    · rw [loss_subgradient_negative y x (lt_of_le_of_ne (le_of_not_gt hp) he)] at hg
+BanditRLProof\OnlineGuessingSubgradient.lean:94:    (hx : x ∈ Icc (0 : ℝ) 1) : ‖currentSubgradient (loss y) x‖ ≤ 1 := by
+BanditRLProof\OnlineGuessingSubgradient.lean:95:  exact loss_subgradient_bound y x (currentSubgradient (loss y) x)
+BanditRLProof\OnlineGuessingSubgradient.lean:96:    (currentSubgradient_mem BanditRL.OnlineGradientDescent.unitInterval (loss y)
+BanditRLProof\OnlineGuessingSubgradient.lean:102:      min (max (x - η * currentSubgradient (loss y) x) 0) 1 := by
+BanditRLProof\OnlineGuessingSubgradient.lean:109:  exact iterate_prefix BanditRL.OnlineGradientDescent.unitInterval η η'
+BanditRLProof\OnlineGuessingSubgradient.lean:113:theorem example_2_32 (y : ℕ → ℝ) (x₁ : ℝ) (hx₁ : x₁ ∈ Icc (0 : ℝ) 1)
+BanditRLProof\OnlineGuessingSubgradient.lean:126:  have hb := regret_tuned BanditRL.OnlineGradientDescent.unitInterval
+BanditRLProof\OnlineGuessingSubgradient.lean:133:theorem example_2_32_average_eventually (y : ℕ → ℝ) (x₁ : ℝ)
+BanditRLProof\OnlineGuessingSubgradient.lean:146:  have hb := example_2_32 y x₁ hx₁ T hT (fun t ht => hy t) u hu

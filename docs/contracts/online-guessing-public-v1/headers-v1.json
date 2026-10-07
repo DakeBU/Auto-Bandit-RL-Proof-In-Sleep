@@ -1,0 +1,14 @@
+{
+  "loss_subdifferential_translate": "theorem loss_subdifferential_translate (y x : ℝ) :\n    SourceSubdifferential (loss y) x =\n      SourceSubdifferential (fun z : ℝ => ((|z| : ℝ) : EReal)) (x - y)",
+  "loss_subgradient_positive": "theorem loss_subgradient_positive (y x : ℝ) (hxy : y < x) :\n    SourceSubdifferential (loss y) x = {(1 : ℝ)}",
+  "loss_subgradient_zero": "theorem loss_subgradient_zero (y : ℝ) :\n    SourceSubdifferential (loss y) y = Icc (-1 : ℝ) 1",
+  "loss_subgradient_negative": "theorem loss_subgradient_negative (y x : ℝ) (hxy : x < y) :\n    SourceSubdifferential (loss y) x = {(-1 : ℝ)}",
+  "example_2_32_subdifferential": "theorem example_2_32_subdifferential (y x : ℝ) :\n    SourceSubdifferential (loss y) x =\n      if y < x then {(1 : ℝ)} else if x = y then Icc (-1 : ℝ) 1 else {(-1 : ℝ)}",
+  "loss_on_unitInterval": "theorem loss_on_unitInterval (y : ℝ) :\n    SubdifferentiableOn BanditRL.OnlineGradientDescent.unitInterval (loss y)",
+  "loss_subgradient_bound": "theorem loss_subgradient_bound (y x g : ℝ)\n    (hg : g ∈ SourceSubdifferential (loss y) x) : ‖g‖ ≤ 1",
+  "current_subgradient_bound": "theorem current_subgradient_bound (y x : ℝ)\n    (hx : x ∈ Icc (0 : ℝ) 1) : ‖currentSubgradient (loss y) x‖ ≤ 1",
+  "loss_step_clamp": "theorem loss_step_clamp (η y x : ℝ) :\n    step BanditRL.OnlineGradientDescent.unitInterval η (loss y) x =\n      min (max (x - η * currentSubgradient (loss y) x) 0) 1",
+  "guessing_prefix": "theorem guessing_prefix (η η' : ℕ → ℝ) (y y' : ℕ → ℝ) (x₁ : ℝ) (t : ℕ)\n    (hη : ∀ s < t, η s = η' s) (hy : ∀ s < t, y s = y' s) :\n    iterate BanditRL.OnlineGradientDescent.unitInterval η (fun s => loss (y s)) x₁ t =\n      iterate BanditRL.OnlineGradientDescent.unitInterval η' (fun s => loss (y' s)) x₁ t",
+  "example_2_32": "theorem example_2_32 (y : ℕ → ℝ) (x₁ : ℝ) (hx₁ : x₁ ∈ Icc (0 : ℝ) 1)\n    (T : ℕ) (hT : 0 < T) (hy : ∀ t < T, y t ∈ Icc (0 : ℝ) 1) :\n    ∀ u ∈ Icc (0 : ℝ) 1,\n      (∑ t ∈ range T,\n        (|iterate BanditRL.OnlineGradientDescent.unitInterval (fun _ => 1 / Real.sqrt T)\n          (fun s => loss (y s)) x₁ t - y t| - |u - y t|)) ≤ Real.sqrt T",
+  "example_2_32_average_eventually": "theorem example_2_32_average_eventually (y : ℕ → ℝ) (x₁ : ℝ)\n    (hx₁ : x₁ ∈ Icc (0 : ℝ) 1) (hy : ∀ t, y t ∈ Icc (0 : ℝ) 1)\n    (u : ℝ) (hu : u ∈ Icc (0 : ℝ) 1) (ε : ℝ) (hε : 0 < ε) :\n    ∀ᶠ T : ℕ in atTop,\n      (∑ t ∈ range T,\n        (|iterate BanditRL.OnlineGradientDescent.unitInterval (fun _ => 1 / Real.sqrt T)\n          (fun s => loss (y s)) x₁ t - y t| - |u - y t|)) / T < ε"
+}

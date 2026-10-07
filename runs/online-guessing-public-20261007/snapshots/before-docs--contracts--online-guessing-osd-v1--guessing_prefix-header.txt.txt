@@ -1,0 +1,4 @@
+theorem guessing_prefix (η η' : ℕ → ℝ) (y y' : ℕ → ℝ) (x₁ : ℝ) (t : ℕ)
+    (hη : ∀ s < t, η s = η' s) (hy : ∀ s < t, y s = y' s) :
+    iterate BanditRL.OnlineGradientDescent.unitInterval η (fun s => loss (y s)) x₁ t =
+      iterate BanditRL.OnlineGradientDescent.unitInterval η' (fun s => loss (y' s)) x₁ t

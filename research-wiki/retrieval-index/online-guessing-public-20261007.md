@@ -1,0 +1,3 @@
+# Current canonical Example2.32 reuse index
+
+Exact unchanged12 public targets and shared existing projection/OSD/absolute producer. Actual source card/types/neutral reconstruction/API lookup/closed types/47kernel checks/12guards/25prespecifieddirectVALUEpairs in runs/online-guessing-public-20261007. Existing proof bodies predate current stabilization; ZERO new mathematical proofs or source closures. Current BODY, combined/root/Tests/fullharness, sharedregistry/reader/FINAL/native acceptance and PR delivery separate pending. PR182 generic finite-history terminal already delivered, not missing. Whole Chapter1/2 remaining and necessaryappendices required,3-16 unenumerated, totalGoalACTIVE.
