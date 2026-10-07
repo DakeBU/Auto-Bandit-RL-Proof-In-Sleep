@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "record_id": "frontier-98c54246faaf3a8d",
+  "updated_at": "2026-10-07T07:01:08+00:00",
+  "root_objective": "Persistent Orabona Chapters1-16; bounded new guessing policy terminal accepted, remaining maintext REQUIRED",
+  "current_leaf": {
+    "id": "ONLINE-GUESSING-OSD-POLICY-20261007",
+    "kind": "lean",
+    "status": "accepted",
+    "statement": "theorem example_2_32 (y : ℕ → ℝ) (x₁ : ℝ) (p : SupportPolicy (E := ℝ)) (hx₁ : x₁ ∈ Icc (0 : ℝ) 1) (T : ℕ) (hT : 0 < T) (hy : ∀ t < T, y t ∈ Icc (0 : ℝ) 1) (hlegal : LegalFeedback unitInterval (fun _ => 1 / Real.sqrt T) (fun s => loss (y s)) x₁ p T) : ∀ u ∈ Icc (0 : ℝ) 1, (∑ t ∈ range T, (|output unitInterval (fun _ => 1 / Real.sqrt T) (fun s => loss (y s)) x₁ p t - y t| - |u - y t|)) ≤ Real.sqrt T",
+    "statement_hash": "5117f5dd79224571892f6a641cbd081afcc731d13e313a1f72afe9e542fa98e6",
+    "declaration": "BanditRL.OnlineGuessingSubgradientPolicy.example_2_32",
+    "file": "BanditRLProof\\OnlineGuessingSubgradientPolicy.lean",
+    "source_status": "source-reviewed",
+    "dependencies": [
+      {
+        "kind": "lean",
+        "name": "BanditRL.OnlineSubgradientPolicy.regret_tuned",
+        "status": "compiled"
+      },
+      {
+        "kind": "lean",
+        "name": "BanditRL.OnlineGuessingSubgradientPolicy.selected_bound",
+        "status": "compiled"
+      },
+      {
+        "kind": "review",
+        "name": "source-reader",
+        "status": "accepted"
+      }
+    ]
+  },
+  "dag": {
+    "nodes": [
+      {
+        "id": "ONLINE-GUESSING-OSD-POLICY-20261007",
+        "kind": "lean",
+        "status": "accepted",
+        "dependencies": [
+          {
+            "kind": "lean",
+            "name": "BanditRL.OnlineSubgradientPolicy.regret_tuned",
+            "status": "compiled"
+          },
+          {
+            "kind": "lean",
+            "name": "BanditRL.OnlineGuessingSubgradientPolicy.selected_bound",
+            "status": "compiled"
+          },
+          {
+            "kind": "review",
+            "name": "source-reader",
+            "status": "accepted"
+          }
+        ],
+        "dispatch_count": 0
+      }
+    ]
+  },
+  "last_accepted_verifier": {
+    "trial_index": 1,
+    "time": "2026-10-07T07:01:08+00:00",
+    "task": "ONLINE-GUESSING-OSD-POLICY-20261007",
+    "role": "reviewer",
+    "kind": "review",
+    "status": "accepted",
+    "lean": "",
+    "notes": "Only frozen missing absolute-loss played-legal history-policy terminal accepted:4newpublicproofs0defs, one printed Example2.32 with explicit refinements, actual combined/site and distinct FINAL R1-R8 pass. Chapter/book obligations remain REQUIRED; no merge/live.",
+    "run_id": "online-guessing-osd-policy-20261007"
+  },
+  "memory_policy": {
+    "recent_role_relevant_limit": 5,
+    "explicit_verified_lemma_ids": [],
+    "whole_history_default": false
+  },
+  "shadow_gate": {
+    "status": "pending",
+    "analyzed_trial_rows": 2,
+    "mismatches": [],
+    "replay_transitions": 0
+  },
+  "mutation_policy": {
+    "canonical_path_queue": true,
+    "cross_process_lock": true,
+    "same_file_serialized": true,
+    "disjoint_files_parallel": true
+  },
+  "autonomous_execution": {
+    "enabled": false,
+    "requires_deterministic_gates": true,
+    "requires_explicit_user_request": true
+  }
+}
