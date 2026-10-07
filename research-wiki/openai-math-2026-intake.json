@@ -6,7 +6,8 @@
     "commit": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
     "release_date": "2026-10-06",
     "license": "Apache-2.0",
-    "floating_main_allowed": false
+    "floating_main_allowed": false,
+    "verification_status_required": true
   },
   "scope_finding": {
     "direct_bandit_cluster_found": false,
@@ -20,7 +21,12 @@
       "main_blob_sha": "cfd8c1eb2df52f9085b7dbeb8d3f3f49726e66e1",
       "priority": "A",
       "class": "adjacent-route",
-      "local_role": "online selection / prophet inequality route"
+      "local_role": "online selection / prophet inequality route",
+      "upstream_verification": {
+        "status": "comparator-backed",
+        "config": "ComparatorChallenges/MatroidProphet.json",
+        "declaration": "OAI.MatroidProphet.one_sample"
+      }
     },
     {
       "id": "oai-matroid-secretary",
@@ -28,7 +34,12 @@
       "main_blob_sha": "f85acb149edc224d4afe976527fc0fbd3f307e86",
       "priority": "A",
       "class": "adjacent-route",
-      "local_role": "secretary and randomized online selection route"
+      "local_role": "secretary and randomized online selection route",
+      "upstream_verification": {
+        "status": "comparator-backed",
+        "config": "ComparatorChallenges/MatroidSecretary.json",
+        "declaration": "OAI.MatroidProphet.Assigned.one_sample"
+      }
     },
     {
       "id": "oai-boolean-noise",
