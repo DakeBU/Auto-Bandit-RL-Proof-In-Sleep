@@ -1,0 +1,20 @@
+"""Concrete bounded reviewable PR after actual FINAL and native acceptance."""
+from common_v2 import *
+a=load(RUN/'accepted-decision-v1.json');assert a['source_package_accepted'] and not a['chapter_complete'] and not a['goal_complete']
+assert load(RUN/'native-acceptance-overlay-v1.json')['status']=='passed'
+body=f'''The unnumbered convex counterexample after Theorem 2.30 in Orabona v10 now has its explicit cardinality consequence: the same real-plane function f(x)=|x1| is globally convex and its actual ambient Frechet nondifferentiability locus is uncountable. The proof embeds [0,1] injectively into the closed source segment using t -> (0,t); countable preimage/subset results and the real interval countability characterization contradict countability. The existing all-segment nondifferentiability producer then closes the same-function terminal.
+
+This draft stacks on OPEN, unmerged #177 at exact {BASE}. Two new public proofs, zero definitions, close one required unnumbered maintext implication. Four genuine canaries distinguish the uncountable nonsmooth segment from its countable endpoint pair and from scalar absolute value, and instantiate the final theorem against every countable exception set. No new numbered source theorem, exact continuum cardinality, measure-zero/a.e result or algorithm claim is asserted.
+
+Validation: focused 2394 jobs; six named declarations and six standard-kernel-only axiom audits; two frozen native header guards with separate unchanged raw fingerprints. The actual selected six-proof graph has624 direct type/value references and ten required value pairs. Combined root9091/Tests9238 jobs, including cached jobs, and current-reader full harness466 tests with7 existing skips pass. Exact #177-base contributor/scoped preservation gates, task shadow, clean local Lean-verified site build/check, shared registry and five actually reviewed viewport/card images pass. The shared registry preserves all10815 previous IDs/URLs and adds two canonical declaration nodes (10817 total), using the same Lean project and Book graph.
+
+Distinct required automated semantic actors separately reviewed the complete repaired neutral context, source CONTRACT, actual BODY and FINAL; requested GPT-6 Astra/medium, with no human/external/runtime attestation. Actual context-import, packet-version adapter, canary subset-type, raw/native guard, source-card schema and auxiliary raw-HTML name failures are retained with separate repairs and unchanged target headers. One unintended unchanged failed rebuild after a failed precheck is explicitly recorded. Bounded new-leaf packets reference prior accepted dependency evidence without claiming a recursive re-review of all history. The origin/main contributor diagnostic still fails for nine OTHER required Chapter1 contract gaps, unwaived.
+
+Evidence: docs/contracts/online-convex-uncountability-v1 and runs/online-convex-uncountability-20261007/accepted-decision-v1.json, accepted-binding-audit-v1.json, final-reader-review-v4.md, integrated-gates-overlay-v1.json, registry-v2.json and pixel-review-v1.json. Frozen PDF SHA256 cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17; printed19/PDF31, endSection2.2.1 immediately before2.2.2.
+
+Only this cardinality consequence is accepted locally and PR-ready. Lemma2.31, causal OSD, linearization, Example2.32, unit analysis, remaining Chapter1/2 maintext, nine Chapter1 gaps and necessary appendices remain required. Chapter2 mandatory total remains unknown/incomplete; Chapters3-16 remain unenumerated. The whole Chapters1-16 Goal stays active. No merge, deployment, main/live update or worktree retirement.
+'''
+write(RUN/'pr-body-v1.md',body)
+write(RUN/'pr-payload-v1.json',dict(title='Prove uncountability of Orabona convex nonsmooth example',head='codex/research-online-convex-uncountability',base='codex/research-online-convex-nondifferentiability',draft=True,body=body))
+write(RUN/'pr-payload-before-API-v1.json',dict(path=(RUN/'pr-payload-v1.json').as_posix(),sha256=sha(RUN/'pr-payload-v1.json'),before_first_API_use=True))
+print('Concrete bounded draft payload prepared; fresh parent/push/duplicate checks remain.')
