@@ -1,0 +1,17 @@
+"""Rerun current reader harness/site after an actual metadata-only schema repair."""
+from common_v2 import *
+fixed(True,True);passed('project-gates-v1-01');passed('repair-reader-contract-v2-01')
+gate('full-harness-v2-01',sys.executable,'-B','-X','utf8','tools/bandit.py','check')
+subprocess.run([sys.executable,'-B','-X','utf8',str(RUN/'commit-owned-v1.py'),'Repair source-card contract schema preserving all mathematical content'],check=True)
+gate('contributor-exact-v2-01',sys.executable,'-B','-X','utf8','tools/check_contributor_contract.py','--base',BASE)
+gate('scoped-diff-v2-01',sys.executable,'-B','-X','utf8',RUN/'check-scoped-diff-v1.py','v2')
+gate('source-scope-v2-01',sys.executable,'-B','-X','utf8',RUN/'audit-scope-v2.py')
+subprocess.run([sys.executable,'-B','-X','utf8',str(RUN/'commit-owned-v1.py'),'Bind current reader harness and exact-base scope verification'],check=True)
+assert not subprocess.check_output(['git','status','--porcelain'],text=True).strip()
+site=Path('tmp/online-convex-uncountability-site-v1')
+gate('site-build-v2-01',sys.executable,'-B','-X','utf8','website/scripts/build_site.py','--lean-verified','--output',site)
+gate('site-check-v2-01',sys.executable,'-B','-X','utf8','website/scripts/check_site.py','--output',site)
+gate('registry-v1-01',sys.executable,'-B','-X','utf8',RUN/'verify-registry-v1.py')
+gate('browser-v1-01',sys.executable,'-B','-X','utf8',RUN/'browser-v1.py')
+gate('formula-render-v1-01',sys.executable,'-B','-X','utf8',RUN/'render-source-card-v1.py')
+fixed(True,True);print('Actual current reader fullharness/clean sharedsite/registry/rendered cards passed; actual pixels/FINAL/native/PR pending.')
