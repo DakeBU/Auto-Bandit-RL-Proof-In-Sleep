@@ -1,0 +1,13 @@
+{
+  "gap_identity": "theorem gap_identity (A B η : ℝ) (hA : 0 ≤ A) (hB : 0 ≤ B) (hη : 0 < η) :\n    upperBound A B η - Real.sqrt A * Real.sqrt B =\n      (Real.sqrt A - η * Real.sqrt B) ^ 2 / (2 * η)",
+  "lower_bound": "theorem lower_bound (A B η : ℝ) (hA : 0 ≤ A) (hB : 0 ≤ B) (hη : 0 < η) :\n    Real.sqrt A * Real.sqrt B ≤ upperBound A B η",
+  "optimal_positive": "theorem optimal_positive (A B : ℝ) (hA : 0 < A) (hB : 0 < B) :\n    0 < optimalStep A B",
+  "optimal_value": "theorem optimal_value (A B : ℝ) (hA : 0 < A) (hB : 0 < B) :\n    upperBound A B (optimalStep A B) = Real.sqrt A * Real.sqrt B",
+  "optimal_unique": "theorem optimal_unique (A B η : ℝ) (hA : 0 < A) (hB : 0 < B) (hη : 0 < η) :\n    upperBound A B η = upperBound A B (optimalStep A B) ↔ η = optimalStep A B",
+  "source_argmin": "theorem source_argmin (A B : ℝ) (hA : 0 < A) (hB : 0 < B) :\n    0 < optimalStep A B ∧\n    upperBound A B (optimalStep A B) = Real.sqrt (A * B) ∧\n    ∀ η : ℝ, 0 < η → upperBound A B (optimalStep A B) ≤ upperBound A B η",
+  "distance_energy_argmin": "theorem distance_energy_argmin (R B : ℝ) (hR : 0 < R) (hB : 0 < B) :\n    optimalStep (R ^ 2) B = R / Real.sqrt B ∧\n    upperBound (R ^ 2) B (R / Real.sqrt B) = R * Real.sqrt B ∧\n    ∀ η : ℝ, 0 < η → upperBound (R ^ 2) B (R / Real.sqrt B) ≤ upperBound (R ^ 2) B η",
+  "diameter_argmin": "theorem diameter_argmin (D G : ℝ) (T : ℕ) (hD : 0 < D) (hG : 0 < G) (hT : 0 < T) :\n    optimalStep (D ^ 2) (G ^ 2 * (T : ℝ)) = D / (G * Real.sqrt (T : ℝ)) ∧\n    upperBound (D ^ 2) (G ^ 2 * (T : ℝ)) (D / (G * Real.sqrt (T : ℝ))) =\n      D * G * Real.sqrt (T : ℝ) ∧\n    ∀ η : ℝ, 0 < η →\n      upperBound (D ^ 2) (G ^ 2 * (T : ℝ)) (D / (G * Real.sqrt (T : ℝ))) ≤\n      upperBound (D ^ 2) (G ^ 2 * (T : ℝ)) η",
+  "zero_distance_decreases": "theorem zero_distance_decreases (B η : ℝ) (hB : 0 < B) (hη : 0 < η) :\n    0 < η / 2 ∧ upperBound 0 B (η / 2) < upperBound 0 B η",
+  "zero_energy_decreases": "theorem zero_energy_decreases (A η : ℝ) (hA : 0 < A) (hη : 0 < η) :\n    0 < 2 * η ∧ upperBound A 0 (2 * η) < upperBound A 0 η",
+  "zero_coefficients": "theorem zero_coefficients (η : ℝ) : upperBound 0 0 η = 0"
+}

@@ -1,0 +1,50 @@
+{
+  "kind": "semantic overlay; actual proof VALUE graph separately required",
+  "edges": [
+    {
+      "parents": "Real.sq_sqrt,positive denominator,field algebra",
+      "child": "BanditRL.OnlineOptimalStep.gap_identity"
+    },
+    {
+      "parents": "gap_identity,nonnegative square quotient",
+      "child": "BanditRL.OnlineOptimalStep.lower_bound"
+    },
+    {
+      "parents": "positive roots/division",
+      "child": "BanditRL.OnlineOptimalStep.optimal_positive"
+    },
+    {
+      "parents": "gap_identity,optimal_positive,zero square",
+      "child": "BanditRL.OnlineOptimalStep.optimal_value"
+    },
+    {
+      "parents": "gap_identity,optimal_value,nonzero denominator and root",
+      "child": "BanditRL.OnlineOptimalStep.optimal_unique"
+    },
+    {
+      "parents": "optimal_positive,optimal_value,lower_bound,Real.sqrt_mul",
+      "child": "BanditRL.OnlineOptimalStep.source_argmin"
+    },
+    {
+      "parents": "source_argmin,optimal_value,Real.sqrt_sq",
+      "child": "BanditRL.OnlineOptimalStep.distance_energy_argmin"
+    },
+    {
+      "parents": "distance_energy_argmin,positive natural cast,Real.sqrt_mul",
+      "child": "BanditRL.OnlineOptimalStep.diameter_argmin"
+    },
+    {
+      "parents": "positive coefficient and step,field comparison",
+      "child": "BanditRL.OnlineOptimalStep.zero_distance_decreases"
+    },
+    {
+      "parents": "positive coefficient and step,positive division comparison",
+      "child": "BanditRL.OnlineOptimalStep.zero_energy_decreases"
+    },
+    {
+      "parents": "total zero arithmetic",
+      "child": "BanditRL.OnlineOptimalStep.zero_coefficients"
+    }
+  ],
+  "not_import_implication": true
+}

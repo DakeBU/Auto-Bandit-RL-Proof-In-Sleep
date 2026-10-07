@@ -1,0 +1,10 @@
+from common_v1 import *
+fixed(True);assert load(RUN/'combined-gates-v1.json')['status']=='actual-root-Tests-full-harness-passed'
+rows=[json.loads(s) for s in Path('runs/trials.jsonl').read_text(encoding='utf-8').splitlines() if s.strip()]
+write(RUN/'candidate-scoped-trials-v1.jsonl','\n'.join(json.dumps(t) for t in rows if t.get('task')==TASK))
+write(RUN/'memory-digest-candidate-v1.md',TASK+' Existing11proofs2defs/whole23canaryproofs4defs1abbr;41kernel11fullguards27VALUE/2826refs/sourceCONTRACT/BODY/combined PASS. Fixed positive scalar argmin/allpositive eta same frozen coefficients/degenerate boundaries; actual same-loss OGD energy dependency only. ZERO new math/nodes/sourceclosures. Current reader/site/FINAL/native/PR pending. Unit-analysis/Chapter1/2/nineOTHERChapter1/appendices REQUIRED,nullChapter2/3-16unenumerated,wholeGoalACTIVE. SGB/pins/oldproofs/otherBooks preserved.')
+sys.path.insert(0,str(ROOT));from tools.abrl_lifecycle import lean_declaration_header
+native('candidate-frontier-refresh-v1','frontier-refresh','--root-objective','Persistent Orabona Chapters1-16; current fixed-coefficient scalar reuse','--leaf',TASK,'--kind','lean','--statement',lean_declaration_header(PUBLIC,'source_argmin'),'--declaration',PRE+'source_argmin','--file',PUBLIC,'--source-status','source-reviewed','--leaf-status','gate-pending','--dependency','lean:'+PRE+'optimal_value:compiled','--dependency','lean:'+PRE+'lower_bound:compiled','--trials',RUN/'candidate-scoped-trials-v1.jsonl','--output',RUN/'candidate-frontier-v1.json','--shadow-status','pending')
+native('candidate-frontier-shadow-v1','frontier-shadow','--trials',RUN/'candidate-scoped-trials-v1.jsonl','--memory-digest',RUN/'memory-digest-candidate-v1.md','--frontier',RUN/'candidate-frontier-v1.json')
+j=json.loads((RUN/'candidate-frontier-shadow-v1.log').read_text(encoding='utf-8'));assert j['mismatches']==[] and j['would_mutate'] is False
+fixed(True);print('Actual OWN candidate shadow PASS; unrelated global SGB pointer unchanged.')

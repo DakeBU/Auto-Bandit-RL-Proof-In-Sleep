@@ -1,0 +1,22 @@
+import Mathlib.Data.Real.Sqrt
+import Mathlib.Tactic
+
+/-!
+# Frozen-coefficient stepsize minimization
+
+Orabona arXiv:1912.13213v10, printed page15/PDF27, unnumbered main-text
+scalar minimization and the D/(G sqrt T) tuning calculation. Coefficients are
+held fixed. Realized gradient energy depends on the stepsize itself, so these
+scalar minima do not construct a learner using future information or optimize
+regret across rerun trajectories. Actual OGD/OSD guarantees are separate.
+
+Strict positivity is required for the attained positive-coefficient argmin;
+one-zero cases have no minimizer among positive stepsizes, with explicit
+strictly improving alternatives. Both-zero is the constant-zero algebraic
+extension. Equality and gap identities are library refinements.
+-/
+
+namespace BanditRL.OnlineOptimalStep
+
+noncomputable def upperBound (A B η : ℝ) : ℝ := A / (2 * η) + η * B / 2
+noncomputable def optimalStep (A B : ℝ) : ℝ := Real.sqrt A / Real.sqrt B

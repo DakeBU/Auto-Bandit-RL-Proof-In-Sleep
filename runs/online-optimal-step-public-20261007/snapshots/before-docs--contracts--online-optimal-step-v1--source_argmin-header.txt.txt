@@ -1,0 +1,4 @@
+theorem source_argmin (A B : ℝ) (hA : 0 < A) (hB : 0 < B) :
+    0 < optimalStep A B ∧
+    upperBound A B (optimalStep A B) = Real.sqrt (A * B) ∧
+    ∀ η : ℝ, 0 < η → upperBound A B (optimalStep A B) ≤ upperBound A B η

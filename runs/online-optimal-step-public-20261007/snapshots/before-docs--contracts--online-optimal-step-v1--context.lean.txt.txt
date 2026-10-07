@@ -1,0 +1,9 @@
+import Mathlib.Data.Real.Sqrt
+import Mathlib.Tactic
+
+namespace BanditRL.OnlineOptimalStep
+
+noncomputable def upperBound (A B η : ℝ) : ℝ := A / (2 * η) + η * B / 2
+noncomputable def optimalStep (A B : ℝ) : ℝ := Real.sqrt A / Real.sqrt B
+
+end BanditRL.OnlineOptimalStep

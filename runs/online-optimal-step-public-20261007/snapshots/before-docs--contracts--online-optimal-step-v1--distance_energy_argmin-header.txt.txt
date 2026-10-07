@@ -1,0 +1,4 @@
+theorem distance_energy_argmin (R B : ℝ) (hR : 0 < R) (hB : 0 < B) :
+    optimalStep (R ^ 2) B = R / Real.sqrt B ∧
+    upperBound (R ^ 2) B (R / Real.sqrt B) = R * Real.sqrt B ∧
+    ∀ η : ℝ, 0 < η → upperBound (R ^ 2) B (R / Real.sqrt B) ≤ upperBound (R ^ 2) B η
