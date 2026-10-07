@@ -278,3 +278,15 @@ silently count toward a bandit/RL route completion badge.
 Do not track OpenAI `main` implicitly. A newer upstream commit requires a diff
 against this pin, semantic-change classification, and re-audit of every admitted
 adapter or source statement whose dependency closure changed.
+
+## Upstream verification-status gate
+
+OpenAI Math mixes manuscript-only, Lean-present, and comparator-backed results.
+Before reuse, inspect `lean/formalization.yaml` and the relevant Comparator
+config rather than inferring status from a directory name.
+
+The pinned snapshot contains explicit Comparator configurations for
+`OAI.MatroidProphet.one_sample` and the assigned Matroid Secretary endpoints.
+That verifies those source challenges in their own semantics; it still does not
+turn them into bandit/RL results. The ABRL experiment/reduction gate remains
+mandatory.
