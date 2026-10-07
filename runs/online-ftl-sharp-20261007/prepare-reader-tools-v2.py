@@ -1,0 +1,9 @@
+from common_v1 import *
+fixed(proving=True,integrated=True)
+script=(RUN/'capture-reader-v1.cjs').read_text(encoding='utf-8').replace('-v1','-v2')
+old="const file=`module-new-declaration-0${i}-v2.png`,geometry=await capture(panel,file);modulePanels.push({id,file,geometry,fullExactTypeAlsoAuditedByHTMLAndKernel:true});"
+new="const wrap=panel.locator('[data-code-wrap]');if(await wrap.count()!==1||await wrap.getAttribute('aria-pressed')!=='false')throw Error('Wrap control initial state');await wrap.click();if(await wrap.getAttribute('aria-pressed')!=='true')throw Error('Actual wrap control failed');const code=await panel.locator('pre.lean-code').evaluate(el=>({scrollWidth:el.scrollWidth,clientWidth:el.clientWidth,whiteSpace:getComputedStyle(el).whiteSpace,text:el.textContent}));if(code.scrollWidth>code.clientWidth+1)throw Error('Wrapped full type still horizontally clipped');const file=`module-new-declaration-0${i}-v2.png`,geometry=await capture(panel,file);modulePanels.push({id,file,geometry,actualBuiltinWrapButtonClicked:true,wrappedCode:code,fullExactTypeAlsoAuditedByHTMLAndKernel:true});"
+assert old in script;script=script.replace(old,new);write(RUN/'capture-reader-v2.cjs',script)
+py=(RUN/'capture-reader-v1.py').read_text(encoding='utf-8').replace('-v1','-v2');write(RUN/'capture-reader-v2.py',py)
+registry=(RUN/'verify-registry-v1.py').read_text(encoding='utf-8').replace("tmp/online-ftl-sharp-site-v1","tmp/online-ftl-sharp-site-v2").replace("RUN/'registry-v1.json'","RUN/'registry-v2.json'");write(RUN/'verify-registry-v2.py',registry)
+write(RUN/'reader-tools-v2.json',dict(actual_v1_failure_and14images_retained=True,actual_UI_wrap_button_for_both_new_public_types=True,no_generated_or_CSS_edits=True,reader_math_headers_proofbodies_unchanged=True,current_site_pixel_FINAL_pending=True))

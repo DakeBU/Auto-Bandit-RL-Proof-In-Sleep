@@ -1784,9 +1784,9 @@
           "contract": {
             "model": "Deterministic scalar squared-loss guessing. The predictor uses exactly the targets already observed: first prediction 1/2, then their empirical mean. Empty-prefix mean0 is bookkeeping and differs from the first prediction.",
             "assumptions": "Only the first target belongs to [0,1]. Future targets are unrestricted.",
-            "parameters": "Only source round1 is involved: x1=1/2 maps to meanPredict y0; the one-observation hindsight leader x1*=y1 maps to empiricalMean y1=y0. This statement has no horizon or tail parameter.",
+            "parameters": "Source rounds1..T are Lean indices0..T-1. The tail range(T-1) has real denominators t+2>0 and is empty at T=1.",
             "regret": "Actual initial stability loss difference.",
-            "guarantee": "The one-observation hindsight mean is the first target, so its squared loss is zero. Only y0 in [0,1] is needed to bound the initial squared error by 1/4. Targets 0 and 1 attain 1/4, target 1/2 yields 0, and target 2 gives 9/4 outside the theorem domain. This first-round estimate makes no assertion about feasibility of later means when future targets are unrestricted."
+            "guarantee": "After observing the first target, its hindsight mean is that target, so the second squared loss is zero. The interval bounds imply y1(1-y1)>=0, which bounds the initial squared error by1/4. The final empirical mean is proved feasible and globally minimizing, so its loss is the source best-fixed minimum over [0,1]. Prefix leaders are produced for Be-the-Leader; hindsight leaders are auxiliary, while predictions use the strict past. The initial loss difference equals1/4 at targets0 and1, and0 at1/2. Target2 gives9/4 and lies outside the theorem domain. For targets0,1 the actual two-round regret is3/4 while the displayed bound is9/4. Changing the current unseen target leaves the prefix prediction unchanged."
           },
           "local_status": {
             "status": "compiled",
