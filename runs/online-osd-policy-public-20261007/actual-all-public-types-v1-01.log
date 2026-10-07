@@ -1,0 +1,434 @@
+@BanditRL.OnlineSubgradientPolicy.history_zero : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (V : BanditRL.OnlineSubgradientPolicy.Domain)
+  (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : BanditRL.OnlineSubgradientPolicy.SupportPolicy),
+  BanditRL.OnlineSubgradientPolicy.history V η loss x₁ p 0 = fun x => x₁
+@BanditRL.OnlineSubgradientPolicy.history_succ : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (V : BanditRL.OnlineSubgradientPolicy.Domain)
+  (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : BanditRL.OnlineSubgradientPolicy.SupportPolicy) (t : ℕ),
+  BanditRL.OnlineSubgradientPolicy.history V η loss x₁ p (t + 1) =
+    Fin.snoc (BanditRL.OnlineSubgradientPolicy.history V η loss x₁ p t)
+      (BanditRL.OnlineGradientDescent.project V
+        (BanditRL.OnlineSubgradientPolicy.output V η loss x₁ p t -
+          η t • BanditRL.OnlineSubgradientPolicy.selected V η loss x₁ p t))
+@BanditRL.OnlineSubgradientPolicy.output_zero : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (V : BanditRL.OnlineSubgradientPolicy.Domain)
+  (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : BanditRL.OnlineSubgradientPolicy.SupportPolicy),
+  BanditRL.OnlineSubgradientPolicy.output V η loss x₁ p 0 = x₁
+@BanditRL.OnlineSubgradientPolicy.output_succ : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (V : BanditRL.OnlineSubgradientPolicy.Domain)
+  (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : BanditRL.OnlineSubgradientPolicy.SupportPolicy) (t : ℕ),
+  BanditRL.OnlineSubgradientPolicy.output V η loss x₁ p (t + 1) =
+    BanditRL.OnlineGradientDescent.project V
+      (BanditRL.OnlineSubgradientPolicy.output V η loss x₁ p t -
+        η t • BanditRL.OnlineSubgradientPolicy.selected V η loss x₁ p t)
+@BanditRL.OnlineSubgradientPolicy.history_mem : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (V : BanditRL.OnlineSubgradientPolicy.Domain)
+  (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : BanditRL.OnlineSubgradientPolicy.SupportPolicy),
+  x₁ ∈ V.carrier → ∀ (t : ℕ) (i : Fin (t + 1)), BanditRL.OnlineSubgradientPolicy.history V η loss x₁ p t i ∈ V.carrier
+@BanditRL.OnlineSubgradientPolicy.output_mem : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (V : BanditRL.OnlineSubgradientPolicy.Domain)
+  (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : BanditRL.OnlineSubgradientPolicy.SupportPolicy),
+  x₁ ∈ V.carrier → ∀ (t : ℕ), BanditRL.OnlineSubgradientPolicy.output V η loss x₁ p t ∈ V.carrier
+@BanditRL.OnlineSubgradientPolicy.history_prefix : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (V : BanditRL.OnlineSubgradientPolicy.Domain)
+  (η η' : ℕ → ℝ) (loss loss' : ℕ → E → EReal) (x₁ : E) (p : BanditRL.OnlineSubgradientPolicy.SupportPolicy) (t : ℕ),
+  (∀ s < t, η s = η' s) →
+    (∀ s < t, loss s = loss' s) →
+      BanditRL.OnlineSubgradientPolicy.history V η loss x₁ p t =
+        BanditRL.OnlineSubgradientPolicy.history V η' loss' x₁ p t
+@BanditRL.OnlineSubgradientPolicy.output_prefix : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (V : BanditRL.OnlineSubgradientPolicy.Domain)
+  (η η' : ℕ → ℝ) (loss loss' : ℕ → E → EReal) (x₁ : E) (p : BanditRL.OnlineSubgradientPolicy.SupportPolicy) (t : ℕ),
+  (∀ s < t, η s = η' s) →
+    (∀ s < t, loss s = loss' s) →
+      BanditRL.OnlineSubgradientPolicy.output V η loss x₁ p t =
+        BanditRL.OnlineSubgradientPolicy.output V η' loss' x₁ p t
+@BanditRL.OnlineSubgradientPolicy.oracle_feedback : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (V : BanditRL.OnlineSubgradientPolicy.Domain)
+  (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : BanditRL.OnlineSubgradientPolicy.SupportPolicy),
+  x₁ ∈ V.carrier →
+    ∀ (T : ℕ),
+      BanditRL.OnlineSubgradientPolicy.OracleLaw V p →
+        (∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) →
+          BanditRL.OnlineSubgradientPolicy.LegalFeedback V η loss x₁ p T
+@BanditRL.OnlineSubgradientPolicy.trajectory_finite_loss : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (V : BanditRL.OnlineSubgradientPolicy.Domain)
+  (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : BanditRL.OnlineSubgradientPolicy.SupportPolicy),
+  x₁ ∈ V.carrier →
+    ∀ (t : ℕ),
+      BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t) →
+        ∀ u ∈ V.carrier,
+          loss t (BanditRL.OnlineSubgradientPolicy.output V η loss x₁ p t) =
+              ↑(loss t (BanditRL.OnlineSubgradientPolicy.output V η loss x₁ p t)).toReal ∧
+            loss t u = ↑(loss t u).toReal
+@BanditRL.OnlineSubgradientPolicy.one_step_chain : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (V : BanditRL.OnlineSubgradientPolicy.Domain)
+  (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : BanditRL.OnlineSubgradientPolicy.SupportPolicy) (t : ℕ),
+  0 < η t →
+    BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t) →
+      BanditRL.OnlineSubgradientPolicy.selected V η loss x₁ p t ∈
+          BanditRL.OnlineConvex.SourceSubdifferential (loss t)
+            (BanditRL.OnlineSubgradientPolicy.output V η loss x₁ p t) →
+        ∀ u ∈ V.carrier,
+          η t * ((loss t (BanditRL.OnlineSubgradientPolicy.output V η loss x₁ p t)).toReal - (loss t u).toReal) ≤
+              η t *
+                inner ℝ (BanditRL.OnlineSubgradientPolicy.selected V η loss x₁ p t)
+                  (BanditRL.OnlineSubgradientPolicy.output V η loss x₁ p t - u) ∧
+            η t *
+                inner ℝ (BanditRL.OnlineSubgradientPolicy.selected V η loss x₁ p t)
+                  (BanditRL.OnlineSubgradientPolicy.output V η loss x₁ p t - u) ≤
+              ‖BanditRL.OnlineSubgradientPolicy.output V η loss x₁ p t - u‖ ^ 2 / 2 -
+                  ‖BanditRL.OnlineSubgradientPolicy.output V η loss x₁ p (t + 1) - u‖ ^ 2 / 2 +
+                η t ^ 2 / 2 * ‖BanditRL.OnlineSubgradientPolicy.selected V η loss x₁ p t‖ ^ 2
+@BanditRL.OnlineSubgradientPolicy.one_step : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (V : BanditRL.OnlineSubgradientPolicy.Domain)
+  (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : BanditRL.OnlineSubgradientPolicy.SupportPolicy) (t : ℕ),
+  0 < η t →
+    BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t) →
+      BanditRL.OnlineSubgradientPolicy.selected V η loss x₁ p t ∈
+          BanditRL.OnlineConvex.SourceSubdifferential (loss t)
+            (BanditRL.OnlineSubgradientPolicy.output V η loss x₁ p t) →
+        ∀ u ∈ V.carrier,
+          (loss t (BanditRL.OnlineSubgradientPolicy.output V η loss x₁ p t)).toReal - (loss t u).toReal ≤
+            (‖BanditRL.OnlineSubgradientPolicy.output V η loss x₁ p t - u‖ ^ 2 -
+                  ‖BanditRL.OnlineSubgradientPolicy.output V η loss x₁ p (t + 1) - u‖ ^ 2) /
+                (2 * η t) +
+              η t / 2 * ‖BanditRL.OnlineSubgradientPolicy.selected V η loss x₁ p t‖ ^ 2
+@BanditRL.OnlineSubgradientPolicy.regret_fixed : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (V : BanditRL.OnlineSubgradientPolicy.Domain)
+  (η : ℝ),
+  0 < η →
+    ∀ (loss : ℕ → E → EReal) (x₁ : E) (p : BanditRL.OnlineSubgradientPolicy.SupportPolicy),
+      x₁ ∈ V.carrier →
+        ∀ (T : ℕ),
+          (∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) →
+            BanditRL.OnlineSubgradientPolicy.LegalFeedback V (fun x => η) loss x₁ p T →
+              ∀ u ∈ V.carrier,
+                BanditRL.OnlineSubgradientPolicy.regret V (fun x => η) loss x₁ p u T ≤
+                  ‖x₁ - u‖ ^ 2 / (2 * η) +
+                      η / 2 *
+                        ∑ t ∈ Finset.range T,
+                          ‖BanditRL.OnlineSubgradientPolicy.selected V (fun x => η) loss x₁ p t‖ ^ 2 -
+                    ‖BanditRL.OnlineSubgradientPolicy.output V (fun x => η) loss x₁ p T - u‖ ^ 2 / (2 * η)
+@BanditRL.OnlineSubgradientPolicy.regret_fixed_coarse : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (V : BanditRL.OnlineSubgradientPolicy.Domain)
+  (η : ℝ),
+  0 < η →
+    ∀ (loss : ℕ → E → EReal) (x₁ : E) (p : BanditRL.OnlineSubgradientPolicy.SupportPolicy),
+      x₁ ∈ V.carrier →
+        ∀ (T : ℕ),
+          (∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) →
+            BanditRL.OnlineSubgradientPolicy.LegalFeedback V (fun x => η) loss x₁ p T →
+              ∀ u ∈ V.carrier,
+                BanditRL.OnlineSubgradientPolicy.regret V (fun x => η) loss x₁ p u T ≤
+                  ‖x₁ - u‖ ^ 2 / (2 * η) +
+                    η / 2 *
+                      ∑ t ∈ Finset.range T, ‖BanditRL.OnlineSubgradientPolicy.selected V (fun x => η) loss x₁ p t‖ ^ 2
+@BanditRL.OnlineSubgradientPolicy.regret_variable_bound : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (V : BanditRL.OnlineSubgradientPolicy.Domain)
+  (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : BanditRL.OnlineSubgradientPolicy.SupportPolicy),
+  x₁ ∈ V.carrier →
+    ∀ (T : ℕ),
+      0 < T →
+        (∀ t < T, 0 < η t) →
+          (∀ (t : ℕ), t + 1 < T → η (t + 1) ≤ η t) →
+            (∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) →
+              BanditRL.OnlineSubgradientPolicy.LegalFeedback V η loss x₁ p T →
+                ∀ (D : ℝ),
+                  (∀ x ∈ V.carrier, ∀ y ∈ V.carrier, ‖x - y‖ ≤ D) →
+                    ∀ u ∈ V.carrier,
+                      BanditRL.OnlineSubgradientPolicy.regret V η loss x₁ p u T ≤
+                        D ^ 2 / (2 * η (T - 1)) +
+                            ∑ t ∈ Finset.range T,
+                              η t / 2 * ‖BanditRL.OnlineSubgradientPolicy.selected V η loss x₁ p t‖ ^ 2 -
+                          ‖BanditRL.OnlineSubgradientPolicy.output V η loss x₁ p T - u‖ ^ 2 / (2 * η (T - 1))
+@BanditRL.OnlineSubgradientPolicy.regret_variable : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (V : BanditRL.OnlineSubgradientPolicy.Domain)
+  (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : BanditRL.OnlineSubgradientPolicy.SupportPolicy),
+  x₁ ∈ V.carrier →
+    ∀ (T : ℕ),
+      0 < T →
+        (∀ t < T, 0 < η t) →
+          (∀ (t : ℕ), t + 1 < T → η (t + 1) ≤ η t) →
+            (∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) →
+              BanditRL.OnlineSubgradientPolicy.LegalFeedback V η loss x₁ p T →
+                Bornology.IsBounded V.carrier →
+                  ∀ u ∈ V.carrier,
+                    BanditRL.OnlineSubgradientPolicy.regret V η loss x₁ p u T ≤
+                      Metric.diam V.carrier ^ 2 / (2 * η (T - 1)) +
+                          ∑ t ∈ Finset.range T,
+                            η t / 2 * ‖BanditRL.OnlineSubgradientPolicy.selected V η loss x₁ p t‖ ^ 2 -
+                        ‖BanditRL.OnlineSubgradientPolicy.output V η loss x₁ p T - u‖ ^ 2 / (2 * η (T - 1))
+@BanditRL.OnlineSubgradientPolicy.regret_tuned_distance : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (V : BanditRL.OnlineSubgradientPolicy.Domain)
+  (loss : ℕ → E → EReal) (x₁ : E) (p : BanditRL.OnlineSubgradientPolicy.SupportPolicy),
+  x₁ ∈ V.carrier →
+    ∀ (T : ℕ),
+      0 < T →
+        ∀ (D G : ℝ),
+          0 < D →
+            0 < G →
+              (∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) →
+                BanditRL.OnlineSubgradientPolicy.LegalFeedback V (fun x => D / (G * √↑T)) loss x₁ p T →
+                  ∀ u ∈ V.carrier,
+                    ‖x₁ - u‖ ≤ D →
+                      (∀ t < T,
+                          ‖BanditRL.OnlineSubgradientPolicy.selected V (fun x => D / (G * √↑T)) loss x₁ p t‖ ≤ G) →
+                        BanditRL.OnlineSubgradientPolicy.regret V (fun x => D / (G * √↑T)) loss x₁ p u T ≤ D * G * √↑T
+@BanditRL.OnlineSubgradientPolicy.regret_tuned : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (V : BanditRL.OnlineSubgradientPolicy.Domain)
+  (loss : ℕ → E → EReal) (x₁ : E) (p : BanditRL.OnlineSubgradientPolicy.SupportPolicy),
+  x₁ ∈ V.carrier →
+    ∀ (T : ℕ),
+      0 < T →
+        ∀ (D G : ℝ),
+          0 < D →
+            0 < G →
+              (∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) →
+                BanditRL.OnlineSubgradientPolicy.LegalFeedback V (fun x => D / (G * √↑T)) loss x₁ p T →
+                  (∀ x ∈ V.carrier, ∀ y ∈ V.carrier, ‖x - y‖ ≤ D) →
+                    (∀ t < T, ‖BanditRL.OnlineSubgradientPolicy.selected V (fun x => D / (G * √↑T)) loss x₁ p t‖ ≤ G) →
+                      ∀ u ∈ V.carrier,
+                        BanditRL.OnlineSubgradientPolicy.regret V (fun x => D / (G * √↑T)) loss x₁ p u T ≤ D * G * √↑T
+@BanditRL.OnlineSubgradientPolicy.canonicalPolicy_legal : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (V : BanditRL.OnlineSubgradientPolicy.Domain),
+  BanditRL.OnlineSubgradientPolicy.OracleLaw V BanditRL.OnlineSubgradientPolicy.canonicalPolicy
+@BanditRL.OnlineSubgradientPolicy.canonical_output : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (V : BanditRL.OnlineSubgradientPolicy.Domain)
+  (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (t : ℕ),
+  BanditRL.OnlineSubgradientPolicy.output V η loss x₁ BanditRL.OnlineSubgradientPolicy.canonicalPolicy t =
+    BanditRL.OnlineSubgradientDescent.iterate V η loss x₁ t
+@BanditRL.OnlineSubgradientPolicy.canonical_selected : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (V : BanditRL.OnlineSubgradientPolicy.Domain)
+  (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (t : ℕ),
+  BanditRL.OnlineSubgradientPolicy.selected V η loss x₁ BanditRL.OnlineSubgradientPolicy.canonicalPolicy t =
+    BanditRL.OnlineSubgradientDescent.currentSubgradient (loss t)
+      (BanditRL.OnlineSubgradientDescent.iterate V η loss x₁ t)
+@BanditRL.OnlineSubgradientPolicy.history : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] →
+    [inst_1 : InnerProductSpace ℝ E] →
+      [FiniteDimensional ℝ E] →
+        BanditRL.OnlineSubgradientPolicy.Domain →
+          (ℕ → ℝ) → (ℕ → E → EReal) → E → BanditRL.OnlineSubgradientPolicy.SupportPolicy → (t : ℕ) → Fin (t + 1) → E
+@BanditRL.OnlineSubgradientPolicy.output : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] →
+    [inst_1 : InnerProductSpace ℝ E] →
+      [FiniteDimensional ℝ E] →
+        BanditRL.OnlineSubgradientPolicy.Domain →
+          (ℕ → ℝ) → (ℕ → E → EReal) → E → BanditRL.OnlineSubgradientPolicy.SupportPolicy → ℕ → E
+@BanditRL.OnlineSubgradientPolicy.selected : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] →
+    [inst_1 : InnerProductSpace ℝ E] →
+      [FiniteDimensional ℝ E] →
+        BanditRL.OnlineSubgradientPolicy.Domain →
+          (ℕ → ℝ) → (ℕ → E → EReal) → E → BanditRL.OnlineSubgradientPolicy.SupportPolicy → ℕ → E
+@BanditRL.OnlineSubgradientPolicy.OracleLaw : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] →
+    [inst_1 : InnerProductSpace ℝ E] →
+      BanditRL.OnlineSubgradientPolicy.Domain → BanditRL.OnlineSubgradientPolicy.SupportPolicy → Prop
+@BanditRL.OnlineSubgradientPolicy.canonicalPolicy : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] → [InnerProductSpace ℝ E] → BanditRL.OnlineSubgradientPolicy.SupportPolicy
+@BanditRL.OnlineSubgradientPolicy.LegalFeedback : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] →
+    [inst_1 : InnerProductSpace ℝ E] →
+      [FiniteDimensional ℝ E] →
+        BanditRL.OnlineSubgradientPolicy.Domain →
+          (ℕ → ℝ) → (ℕ → E → EReal) → E → BanditRL.OnlineSubgradientPolicy.SupportPolicy → ℕ → Prop
+@BanditRL.OnlineSubgradientPolicy.regret : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] →
+    [inst_1 : InnerProductSpace ℝ E] →
+      [FiniteDimensional ℝ E] →
+        BanditRL.OnlineSubgradientPolicy.Domain →
+          (ℕ → ℝ) → (ℕ → E → EReal) → E → BanditRL.OnlineSubgradientPolicy.SupportPolicy → E → ℕ → ℝ
+@BanditRL.OnlineSubgradientPolicy.Domain : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] → [InnerProductSpace ℝ E] → Type u_1
+@BanditRL.OnlineSubgradientPolicy.SupportPolicy : {E : Type u_1} → Type u_1
+OSDPolicyProbe.flat_on : ∀ (c : ℝ),
+  BanditRL.OnlineSubgradientDescent.SubdifferentiableOn OSDPolicyProbe.V (OSDPolicyProbe.flat c)
+OSDPolicyProbe.policy_oracle : BanditRL.OnlineSubgradientPolicy.OracleLaw OSDPolicyProbe.V OSDPolicyProbe.policy
+OSDPolicyProbe.lossA_on : ∀ (t : ℕ),
+  BanditRL.OnlineSubgradientDescent.SubdifferentiableOn OSDPolicyProbe.V (OSDPolicyProbe.lossA t)
+OSDPolicyProbe.lossB_on : ∀ (t : ℕ),
+  BanditRL.OnlineSubgradientDescent.SubdifferentiableOn OSDPolicyProbe.V (OSDPolicyProbe.lossB t)
+OSDPolicyProbe.pref_A : ∀ (t : ℕ), 0 < t → (OSDPolicyProbe.preferred t fun i => OSDPolicyProbe.lossA ↑i) = 1
+OSDPolicyProbe.pref_B : ∀ (t : ℕ), 0 < t → (OSDPolicyProbe.preferred t fun i => OSDPolicyProbe.lossB ↑i) = -1
+OSDPolicyProbe.selected_eq_preferred : ∀ (η : ℕ → ℝ) (f : ℕ → ℝ → EReal) (t : ℕ),
+  (OSDPolicyProbe.preferred t fun i => f ↑i) ∈
+      BanditRL.OnlineConvex.SourceSubdifferential (f t)
+        (BanditRL.OnlineSubgradientPolicy.output OSDPolicyProbe.V η f (1 / 2) OSDPolicyProbe.policy t) →
+    BanditRL.OnlineSubgradientPolicy.selected OSDPolicyProbe.V η f (1 / 2) OSDPolicyProbe.policy t =
+      OSDPolicyProbe.preferred t fun i => f ↑i
+OSDPolicyProbe.selected_singleton : ∀ (η : ℕ → ℝ) (f : ℕ → ℝ → EReal) (t : ℕ),
+  BanditRL.OnlineSubgradientDescent.SubdifferentiableOn OSDPolicyProbe.V (f t) →
+    ∀ (g : ℝ),
+      BanditRL.OnlineConvex.SourceSubdifferential (f t)
+            (BanditRL.OnlineSubgradientPolicy.output OSDPolicyProbe.V η f (1 / 2) OSDPolicyProbe.policy t) =
+          {g} →
+        BanditRL.OnlineSubgradientPolicy.selected OSDPolicyProbe.V η f (1 / 2) OSDPolicyProbe.policy t = g
+OSDPolicyProbe.a_tie : ∀ (t : ℕ), 0 < t → OSDPolicyProbe.a t = 1 / 2 → OSDPolicyProbe.ga t = 1
+OSDPolicyProbe.b_tie : ∀ (t : ℕ), 0 < t → OSDPolicyProbe.b t = 1 / 2 → OSDPolicyProbe.gb t = -1
+OSDPolicyProbe.a_below : ∀ (t : ℕ), 0 < t → OSDPolicyProbe.a t < 1 / 2 → OSDPolicyProbe.ga t = -1
+OSDPolicyProbe.b_above : ∀ (t : ℕ), 0 < t → 1 / 2 < OSDPolicyProbe.b t → OSDPolicyProbe.gb t = 1
+OSDPolicyProbe.a_zero : OSDPolicyProbe.a 0 = 1 / 2
+OSDPolicyProbe.b_zero : OSDPolicyProbe.b 0 = 1 / 2
+OSDPolicyProbe.ga_zero : OSDPolicyProbe.ga 0 = 0
+OSDPolicyProbe.gb_zero : OSDPolicyProbe.gb 0 = 0
+OSDPolicyProbe.a_one : OSDPolicyProbe.a 1 = 1 / 2
+OSDPolicyProbe.b_one : OSDPolicyProbe.b 1 = 1 / 2
+OSDPolicyProbe.ga_one : OSDPolicyProbe.ga 1 = 1
+OSDPolicyProbe.gb_one : OSDPolicyProbe.gb 1 = -1
+OSDPolicyProbe.a_two : OSDPolicyProbe.a 2 = 0
+OSDPolicyProbe.b_two : OSDPolicyProbe.b 2 = 1
+OSDPolicyProbe.ga_two : OSDPolicyProbe.ga 2 = -1
+OSDPolicyProbe.gb_two : OSDPolicyProbe.gb 2 = 1
+OSDPolicyProbe.a_three : OSDPolicyProbe.a 3 = 1 / 2
+OSDPolicyProbe.b_three : OSDPolicyProbe.b 3 = 1 / 2
+OSDPolicyProbe.ga_three : OSDPolicyProbe.ga 3 = 1
+OSDPolicyProbe.gb_three : OSDPolicyProbe.gb 3 = -1
+OSDPolicyProbe.a_four : OSDPolicyProbe.a 4 = 0
+OSDPolicyProbe.b_four : OSDPolicyProbe.b 4 = 1
+OSDPolicyProbe.history_changes_actual_support : OSDPolicyProbe.a 1 = OSDPolicyProbe.b 1 ∧
+  OSDPolicyProbe.lossA 1 = OSDPolicyProbe.lossB 1 ∧
+    OSDPolicyProbe.ga 1 = 1 ∧ OSDPolicyProbe.gb 1 = -1 ∧ OSDPolicyProbe.ga 1 ≠ OSDPolicyProbe.gb 1
+OSDPolicyProbe.legalA : ∀ (T : ℕ),
+  BanditRL.OnlineSubgradientPolicy.LegalFeedback OSDPolicyProbe.V OSDPolicyProbe.eta OSDPolicyProbe.lossA (1 / 2)
+    OSDPolicyProbe.policy T
+OSDPolicyProbe.legalB : ∀ (T : ℕ),
+  BanditRL.OnlineSubgradientPolicy.LegalFeedback OSDPolicyProbe.V OSDPolicyProbe.eta OSDPolicyProbe.lossB (1 / 2)
+    OSDPolicyProbe.policy T
+OSDPolicyProbe.a_real_regret : BanditRL.OnlineSubgradientPolicy.regret OSDPolicyProbe.V OSDPolicyProbe.eta
+    OSDPolicyProbe.lossA (1 / 2) OSDPolicyProbe.policy (1 / 2) 4 =
+  1 / 2
+OSDPolicyProbe.b_real_regret : BanditRL.OnlineSubgradientPolicy.regret OSDPolicyProbe.V OSDPolicyProbe.eta
+    OSDPolicyProbe.lossB (1 / 2) OSDPolicyProbe.policy (1 / 2) 4 =
+  1 / 2
+OSDPolicyProbe.a_energy : ∑ t ∈ Finset.range 4, ‖OSDPolicyProbe.ga t‖ ^ 2 = 3
+OSDPolicyProbe.b_energy : ∑ t ∈ Finset.range 4, ‖OSDPolicyProbe.gb t‖ ^ 2 = 3
+OSDPolicyProbe.a_positive_terminal : ‖OSDPolicyProbe.a 4 - 1 / 2‖ ^ 2 / (2 * (1 / 2)) = 1 / 4
+OSDPolicyProbe.b_positive_terminal : ‖OSDPolicyProbe.b 4 - 1 / 2‖ ^ 2 / (2 * (1 / 2)) = 1 / 4
+OSDPolicyProbe.a_exact_fixed_bound : BanditRL.OnlineSubgradientPolicy.regret OSDPolicyProbe.V OSDPolicyProbe.eta
+    OSDPolicyProbe.lossA (1 / 2) OSDPolicyProbe.policy (1 / 2) 4 ≤
+  ‖1 / 2 - 1 / 2‖ ^ 2 / (2 * (1 / 2)) + 1 / 2 / 2 * ∑ t ∈ Finset.range 4, ‖OSDPolicyProbe.ga t‖ ^ 2 -
+    ‖OSDPolicyProbe.a 4 - 1 / 2‖ ^ 2 / (2 * (1 / 2))
+OSDPolicyProbe.a_fixed_rhs_equality : ‖1 / 2 - 1 / 2‖ ^ 2 / (2 * (1 / 2)) +
+      1 / 2 / 2 * ∑ t ∈ Finset.range 4, ‖OSDPolicyProbe.ga t‖ ^ 2 -
+    ‖OSDPolicyProbe.a 4 - 1 / 2‖ ^ 2 / (2 * (1 / 2)) =
+  1 / 2
+OSDPolicyProbe.offPath_history_eq : ∀ (η : ℕ → ℝ) (f : ℕ → ℝ → EReal) (t : ℕ),
+  BanditRL.OnlineSubgradientPolicy.history OSDPolicyProbe.V η f (1 / 2) OSDPolicyProbe.offPathPolicy t =
+    BanditRL.OnlineSubgradientPolicy.history OSDPolicyProbe.V η f (1 / 2) OSDPolicyProbe.policy t
+OSDPolicyProbe.offPath_output_eq : ∀ (η : ℕ → ℝ) (f : ℕ → ℝ → EReal) (t : ℕ),
+  BanditRL.OnlineSubgradientPolicy.output OSDPolicyProbe.V η f (1 / 2) OSDPolicyProbe.offPathPolicy t =
+    BanditRL.OnlineSubgradientPolicy.output OSDPolicyProbe.V η f (1 / 2) OSDPolicyProbe.policy t
+OSDPolicyProbe.offPath_selected_eq : ∀ (η : ℕ → ℝ) (f : ℕ → ℝ → EReal) (t : ℕ),
+  BanditRL.OnlineSubgradientPolicy.selected OSDPolicyProbe.V η f (1 / 2) OSDPolicyProbe.offPathPolicy t =
+    BanditRL.OnlineSubgradientPolicy.selected OSDPolicyProbe.V η f (1 / 2) OSDPolicyProbe.policy t
+OSDPolicyProbe.offPath_legalA : ∀ (η : ℕ → ℝ) (T : ℕ),
+  BanditRL.OnlineSubgradientPolicy.LegalFeedback OSDPolicyProbe.V η OSDPolicyProbe.lossA (1 / 2)
+    OSDPolicyProbe.offPathPolicy T
+OSDPolicyProbe.offPath_not_oracle : ¬BanditRL.OnlineSubgradientPolicy.OracleLaw OSDPolicyProbe.V
+    OSDPolicyProbe.offPathPolicy
+OSDPolicyProbe.offPath_actual_fixed : BanditRL.OnlineSubgradientPolicy.regret OSDPolicyProbe.V OSDPolicyProbe.eta
+    OSDPolicyProbe.lossA (1 / 2) OSDPolicyProbe.offPathPolicy (1 / 2) 4 ≤
+  ‖1 / 2 - 1 / 2‖ ^ 2 / (2 * (1 / 2)) +
+      1 / 2 / 2 *
+        ∑ t ∈ Finset.range 4,
+          ‖BanditRL.OnlineSubgradientPolicy.selected OSDPolicyProbe.V OSDPolicyProbe.eta OSDPolicyProbe.lossA (1 / 2)
+                OSDPolicyProbe.offPathPolicy t‖ ^
+            2 -
+    ‖BanditRL.OnlineSubgradientPolicy.output OSDPolicyProbe.V OSDPolicyProbe.eta OSDPolicyProbe.lossA (1 / 2)
+              OSDPolicyProbe.offPathPolicy 4 -
+            1 / 2‖ ^
+        2 /
+      (2 * (1 / 2))
+OSDPolicyProbe.norm_bound_A : ∀ (η : ℕ → ℝ) (t : ℕ),
+  ‖BanditRL.OnlineSubgradientPolicy.selected OSDPolicyProbe.V η OSDPolicyProbe.lossA (1 / 2) OSDPolicyProbe.policy t‖ ≤
+    1
+OSDPolicyProbe.unit_diameter : ∀ x ∈ OSDPolicyProbe.V.carrier, ∀ y ∈ OSDPolicyProbe.V.carrier, ‖x - y‖ ≤ 1
+OSDPolicyProbe.offPath_tuned_all_comparators : ∀ u ∈ OSDPolicyProbe.V.carrier,
+  BanditRL.OnlineSubgradientPolicy.regret OSDPolicyProbe.V OSDPolicyProbe.eta OSDPolicyProbe.lossA (1 / 2)
+      OSDPolicyProbe.offPathPolicy u 4 ≤
+    2
+OSDPolicyProbe.ah_zero : OSDPolicyProbe.ah 0 = 1 / 2
+OSDPolicyProbe.gh_zero : OSDPolicyProbe.gh 0 = 0
+OSDPolicyProbe.ah_one : OSDPolicyProbe.ah 1 = 1 / 2
+OSDPolicyProbe.gh_one : OSDPolicyProbe.gh 1 = 1
+OSDPolicyProbe.ah_two : OSDPolicyProbe.ah 2 = 1 / 4
+OSDPolicyProbe.gh_two : OSDPolicyProbe.gh 2 = -1
+OSDPolicyProbe.ah_three : OSDPolicyProbe.ah 3 = 5 / 12
+OSDPolicyProbe.gh_three : OSDPolicyProbe.gh 3 = -1
+OSDPolicyProbe.ah_four : OSDPolicyProbe.ah 4 = 13 / 24
+OSDPolicyProbe.harmonic_energy : ∑ t ∈ Finset.range 4, OSDPolicyProbe.harmonic t / 2 * ‖OSDPolicyProbe.gh t‖ ^ 2 =
+  13 / 48
+OSDPolicyProbe.harmonic_last_eta_and_positive_terminal : OSDPolicyProbe.harmonic (4 - 1) = 1 / 8 ∧
+  ‖OSDPolicyProbe.ah 4 - 1 / 2‖ ^ 2 / (2 * OSDPolicyProbe.harmonic (4 - 1)) = 1 / 144
+OSDPolicyProbe.harmonic_real_regret : BanditRL.OnlineSubgradientPolicy.regret OSDPolicyProbe.V OSDPolicyProbe.harmonic
+    OSDPolicyProbe.lossA (1 / 2) OSDPolicyProbe.policy (1 / 2) 4 =
+  1 / 3
+OSDPolicyProbe.harmonic_actual_variable : BanditRL.OnlineSubgradientPolicy.regret OSDPolicyProbe.V
+    OSDPolicyProbe.harmonic OSDPolicyProbe.lossA (1 / 2) OSDPolicyProbe.policy (1 / 2) 4 ≤
+  1 ^ 2 / (2 * OSDPolicyProbe.harmonic (4 - 1)) +
+      ∑ t ∈ Finset.range 4, OSDPolicyProbe.harmonic t / 2 * ‖OSDPolicyProbe.gh t‖ ^ 2 -
+    ‖OSDPolicyProbe.ah 4 - 1 / 2‖ ^ 2 / (2 * OSDPolicyProbe.harmonic (4 - 1))
+OSDPolicyProbe.invalid_future_causal : BanditRL.OnlineSubgradientPolicy.output OSDPolicyProbe.V OSDPolicyProbe.futureEta
+    OSDPolicyProbe.futureLoss (1 / 2) OSDPolicyProbe.policy 4 =
+  OSDPolicyProbe.a 4
+OSDPolicyProbe.invalid_future_current_loss : OSDPolicyProbe.futureLoss 4 0 = ⊥ ∧ OSDPolicyProbe.futureEta 4 = -99
+OSDPolicyProbe.zero_horizon : BanditRL.OnlineSubgradientPolicy.regret OSDPolicyProbe.V OSDPolicyProbe.futureEta
+    OSDPolicyProbe.futureLoss (1 / 2) OSDPolicyProbe.offPathPolicy (1 / 2) 0 =
+  0
+OSDPolicyProbe.canonical_invalid_future_bridge : ∀ (t : ℕ),
+  BanditRL.OnlineSubgradientPolicy.output OSDPolicyProbe.V OSDPolicyProbe.futureEta OSDPolicyProbe.futureLoss (1 / 2)
+      BanditRL.OnlineSubgradientPolicy.canonicalPolicy t =
+    BanditRL.OnlineSubgradientDescent.iterate OSDPolicyProbe.V OSDPolicyProbe.futureEta OSDPolicyProbe.futureLoss
+      (1 / 2) t
+OSDPolicyProbe.empty_support_at_zero : BanditRL.OnlineConvex.SourceSubdifferential OSDPolicyProbe.emptySupportLoss 0 = ∅
+OSDPolicyProbe.empty_support_current_fallback : BanditRL.OnlineSubgradientDescent.currentSubgradient
+    OSDPolicyProbe.emptySupportLoss 0 =
+  0
+OSDPolicyProbe.empty_support_actual_selected : BanditRL.OnlineSubgradientPolicy.selected OSDPolicyProbe.V
+    OSDPolicyProbe.eta (fun x => OSDPolicyProbe.emptySupportLoss) 0 BanditRL.OnlineSubgradientPolicy.canonicalPolicy 0 =
+  0
+OSDPolicyProbe.empty_support_actual_output : BanditRL.OnlineSubgradientPolicy.output OSDPolicyProbe.V OSDPolicyProbe.eta
+    (fun x => OSDPolicyProbe.emptySupportLoss) 0 BanditRL.OnlineSubgradientPolicy.canonicalPolicy 1 =
+  0
+OSDPolicyProbe.empty_support_not_legal : ¬BanditRL.OnlineSubgradientPolicy.LegalFeedback OSDPolicyProbe.V
+    OSDPolicyProbe.eta (fun x => OSDPolicyProbe.emptySupportLoss) 0 BanditRL.OnlineSubgradientPolicy.canonicalPolicy 1
+OSDPolicyProbe.zero_horizon_actual_fixed : BanditRL.OnlineSubgradientPolicy.regret OSDPolicyProbe.V OSDPolicyProbe.eta
+    OSDPolicyProbe.futureLoss (1 / 2) OSDPolicyProbe.offPathPolicy (1 / 3) 0 ≤
+  ‖1 / 2 - 1 / 3‖ ^ 2 / (2 * (1 / 2)) +
+      1 / 2 / 2 *
+        ∑ t ∈ Finset.range 0,
+          ‖BanditRL.OnlineSubgradientPolicy.selected OSDPolicyProbe.V OSDPolicyProbe.eta OSDPolicyProbe.futureLoss
+                (1 / 2) OSDPolicyProbe.offPathPolicy t‖ ^
+            2 -
+    ‖BanditRL.OnlineSubgradientPolicy.output OSDPolicyProbe.V OSDPolicyProbe.eta OSDPolicyProbe.futureLoss (1 / 2)
+              OSDPolicyProbe.offPathPolicy 0 -
+            1 / 3‖ ^
+        2 /
+      (2 * (1 / 2))
+OSDPolicyProbe.zero_horizon_positive_cancelling_endpoints : ‖1 / 2 - 1 / 3‖ ^ 2 / (2 * (1 / 2)) = 1 / 36 ∧
+  ‖BanditRL.OnlineSubgradientPolicy.output OSDPolicyProbe.V OSDPolicyProbe.eta OSDPolicyProbe.futureLoss (1 / 2)
+              OSDPolicyProbe.offPathPolicy 0 -
+            1 / 3‖ ^
+        2 /
+      (2 * (1 / 2)) =
+    1 / 36
+OSDPolicyProbe.flat : ℝ → ℝ → EReal
+OSDPolicyProbe.preferred : (t : ℕ) → (Fin t → ℝ → EReal) → ℝ
+OSDPolicyProbe.policy : BanditRL.OnlineSubgradientPolicy.SupportPolicy
+OSDPolicyProbe.lossA : ℕ → ℝ → EReal
+OSDPolicyProbe.lossB : ℕ → ℝ → EReal
+OSDPolicyProbe.eta : ℕ → ℝ
+OSDPolicyProbe.offPathPolicy : BanditRL.OnlineSubgradientPolicy.SupportPolicy
+OSDPolicyProbe.harmonic : ℕ → ℝ
+OSDPolicyProbe.futureLoss : ℕ → ℝ → EReal
+OSDPolicyProbe.futureEta : ℕ → ℝ
+OSDPolicyProbe.emptySupportLoss : ℝ → EReal
+OSDPolicyProbe.V : BanditRL.OnlineGradientDescent.Domain ℝ
+OSDPolicyProbe.a : ℕ → ℝ
+OSDPolicyProbe.b : ℕ → ℝ
+OSDPolicyProbe.ga : ℕ → ℝ
+OSDPolicyProbe.gb : ℕ → ℝ
+OSDPolicyProbe.ah : ℕ → ℝ
+OSDPolicyProbe.gh : ℕ → ℝ

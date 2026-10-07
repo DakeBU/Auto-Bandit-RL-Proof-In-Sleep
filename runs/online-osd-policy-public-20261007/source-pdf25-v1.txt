@@ -1,0 +1,67 @@
+2.1 Online Learning with Convex Differentiable Losses13
+Therefore,
+∥y−x∥ 2
+2 =∥y−Π V(x) + ΠV(x)−x∥ 2
+2
+=∥y−Π V(x)∥2
+2 + 2⟨y−Π V(x),Π V(x)−x⟩+∥Π V(x)−x∥ 2
+2
+≥ ∥y−ΠV(x)∥2
+2 .
+The next lemma upper bounds the regret in a single iteration of Algorithm 2.1.
+Lemma 2.12LetV ⊆R d be a non-empty closed convex set,ℓt be convex and differentiable
+on an open set containingV, andη t >0. Setg t =∇ℓ t(xt)andx t+1 = ΠV(xt −η tgt).
+Then,∀u∈ V, the following inequality holds
+ηt(ℓt(xt)−ℓ t(u))≤η t⟨gt,xt −u⟩ ≤1
+2∥xt −u∥ 2
+2 − 1
+2∥xt+1 −u∥ 2
+2 + η2
+t
+2 ∥gt∥2
+2 .
+ProofFrom Proposition 2.11 and Theorem 2.7, we have that
+∥xt+1 −u∥ 2
+2 − ∥xt −u∥ 2
+2 ≤ ∥xt −η tgt −u∥ 2
+2 − ∥xt −u∥ 2
+2
+=−2η t⟨gt,xt −u⟩+η 2
+t ∥gt∥2
+2
+≤ −2ηt(ℓt(xt)−ℓ t(u)) +η 2
+t ∥gt∥2
+2 .
+Reordering, we have the stated bound.
+We can prove the following regret guarantee for Algorithm 2.1.
+Theorem 2.13LetV ⊆R d be a non-empty closed convex set with diameterD, that is,
+D:= sup x,y∈V ∥x−y∥ 2. Letℓ 1, . . . , ℓT be an arbitrary sequence of convex and differ-
+entiable functions on an open set containingV. Pick anyx 1 ∈ Vand assume0< ηt+1 ≤
+ηt, t= 1, . . . , T−1. Then,∀u∈ V, Algorithm 2.1 satisfies the following regret bound
+TX
+t=1
+(ℓt(xt)−ℓ t(u))≤ D2
+2ηT
++
+TX
+t=1
+ηt
+2 ∥gt∥2
+2 − 1
+2ηT
+∥xT+1 −u∥ 2
+2 .
+Moreover, ifηt is constant, i.e.,η t =η∀t= 1, . . . , T, for allu∈ V, we have
+TX
+t=1
+(ℓt(xt)−ℓ t(u))≤ ∥u−x 1∥2
+2
+2η + η
+2
+TX
+t=1
+∥gt∥2
+2 − 1
+2η ∥xT+1 −u∥ 2
+2 .
+ProofDividing the inequality in Lemma 2.12 byη t and summing overt= 1, . . . , T, we

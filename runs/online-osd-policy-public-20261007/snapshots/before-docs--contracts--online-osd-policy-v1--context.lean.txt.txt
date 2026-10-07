@@ -1,0 +1,32 @@
+import BanditRLProof.OnlineSubgradientDescent
+noncomputable section
+open Set Finset BanditRL.OnlineConvex
+namespace BanditRL.OnlineSubgradientPolicy
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
+abbrev Domain := BanditRL.OnlineGradientDescent.Domain E
+abbrev SupportPolicy := (t : ℕ) → (Fin t → E → EReal) → (Fin (t + 1) → E) → (E → EReal) → E
+/-- Only finite past losses/outputs and the currently observed loss are inputs. -/
+def history (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) : (t : ℕ) → Fin (t + 1) → E :=
+  Nat.rec (motive := fun t => Fin (t + 1) → E) (fun _ => x₁)
+    (fun t h => Fin.snoc h
+      (BanditRL.OnlineGradientDescent.project V
+        (h (Fin.last t) - η t • p t (fun i => loss i.val) h (loss t))))
+def output (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) : E :=
+  history V η loss x₁ p t (Fin.last t)
+def selected (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) : E :=
+  p t (fun i => loss i.val) (history V η loss x₁ p t) (loss t)
+def OracleLaw (V : Domain (E := E)) (p : SupportPolicy (E := E)) : Prop :=
+  ∀ t past h f, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V f →
+    h (Fin.last t) ∈ V.carrier → p t past h f ∈ SourceSubdifferential f (h (Fin.last t))
+def canonicalPolicy : SupportPolicy (E := E) := fun t _ h f =>
+  BanditRL.OnlineSubgradientDescent.currentSubgradient f (h (Fin.last t))
+/-- Legality is imposed only at the actual played points, not at off-path histories. -/
+def LegalFeedback (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (T : ℕ) : Prop :=
+  ∀ t < T, selected V η loss x₁ p t ∈ SourceSubdifferential (loss t) (output V η loss x₁ p t)
+def regret (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (u : E) (T : ℕ) : ℝ :=
+  ∑ t ∈ range T, ((loss t (output V η loss x₁ p t)).toReal - (loss t u).toReal)

@@ -1,0 +1,44 @@
+2.2 Online Subgradient Descent19
+We also have a handy result that upper bounds the norm of subgradients of convexLips-
+chitzfunctions.
+Definition 2.29Letf:R d →(−∞,+∞]. We say thatfisL-Lipschitzover a set
+V ⊆domfwith respect to a norm∥ · ∥if|f(x)−f(y)| ≤L∥x−y∥,∀x,y∈ V.
+Theorem 2.30Letf:R d →(−∞,+∞]be convex and proper. Then,fisL-Lipschitz in
+int domfwith respect to the L 2 norm iff for allx∈int domfandg∈∂f(x)we have
+∥g∥2 ≤L.
+ProofFirst, we assumefto beL-Lipschitz, then|f(x)−f(y)| ≤L∥x−y∥ 2,∀x,y∈
+int domf. Letg∈∂f(x). If∥g∥ 2 = 0, then the theorem is true. So, we can safely assume
+it to be different from 0. Forϵ >0small enoughy=x+ϵ g
+∥g∥2
+∈int domf, then
+Lϵ=L∥x−y∥ 2 ≥ |f(y)−f(x)| ≥f(y)−f(x)≥ ⟨g,y−x⟩=ϵ∥g∥ 2,
+that implies that∥g∥ 2 ≤L.
+For the other implication, the subgradient definition and Cauchy–Schwarz inequality give
+f(x)−f(y)≤ ∥g∥ 2∥x−y∥ 2 ≤L∥x−y∥ 2,
+for anyx,y∈int domf. Takingg∈∂f(y), we also get
+f(y)−f(x)≤L∥x−y∥ 2 .
+Finally, let’s dispel the common misconception that a convex function must be differen-
+tiable on its domain except possibly at countably many points. For example, consider the
+convex functionf:R 2 →Rdefined asf(x) =|x 1|that is not differentiable on the line
+segment betweenv= (0,0)andw= (0,1).
+2.2.2 Analysis with Subgradients
+As I promised you, with the proper mathematical tools, analyzing online algorithms becomes
+easy. Indeed, switching from gradient to subgradient comes for free! In fact, our analysis of
+OGD with differentiable losses holds as is when using subgradients instead of gradients. The
+reason is that the only property of the gradients that we used in the proof of Theorem 2.13
+was that
+ℓt(xt)−ℓ t(u)≤ ⟨gt,xt −u⟩,
+whereg t =∇ℓ t(xt). However, the exact same property holds wheng t ∈∂ℓ t(xt). Hence,
+the regret bounds we proved hold as well, just replacing differentiability with subdifferen-
+tiability and gradients with subgradients. In particular, we have the following lemma.
+Lemma 2.31LetV ⊆R d be a non-empty closed convex set,ℓ t :R d →(−∞,+∞]a
+function subdifferentiable onV, andη t >0. Setg t ∈∂ℓ t(xt)andx t+1 = ΠV(xt −η tgt).
+Then,∀u∈ V, we have
+ηt(ℓt(xt)−ℓ t(u))≤η t⟨gt,xt −u⟩ ≤1
+2∥xt −u∥ 2
+2 − 1
+2∥xt+1 −u∥ 2
+2 + η2
+t
+2 ∥gt∥2
+2 .
