@@ -1,0 +1,106 @@
+E:\ABRL\worktrees\research-online-book\runs\online-log-lower-20261008\leaves\moments-v1.lean:84:37: error: Application type mismatch: The argument
+  fun v => f v.toList
+has type
+  List.Vector Bool T → ℝ
+but is expected to have type
+  List.Vector Bool (T + 1) → ℝ
+in the application
+  Equiv.sum_comp (vectorConsEquiv T) fun v => f v.toList
+E:\ABRL\worktrees\research-online-book\runs\online-log-lower-20261008\leaves\moments-v1.lean:83:82: error: unsolved goals
+T : ℕ
+f : List Bool → ℝ
+⊢ ∑ v, f v.toList = ∑ v, (f (false :: v.toList) + f (true :: v.toList))
+E:\ABRL\worktrees\research-online-book\runs\online-log-lower-20261008\leaves\moments-v1.lean:148:23: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ∑ v, ?f v.toList
+in the target expression
+  ∑ v, pathWeight v.toList * f v.toList =
+    pathExpectation T fun h => (1 - polyaNext h) * f (false :: h) + polyaNext h * f (true :: h)
+
+T : ℕ
+f : List Bool → ℝ
+⊢ ∑ v, pathWeight v.toList * f v.toList =
+    pathExpectation T fun h => (1 - polyaNext h) * f (false :: h) + polyaNext h * f (true :: h)
+E:\ABRL\worktrees\research-online-book\runs\online-log-lower-20261008\leaves\moments-v1.lean:166:12: warning: This simp argument is unused:
+  List.count_cons
+
+Hint: Omit it from the simp argument list.
+  simp [L̵i̵s̵t̵.̵c̵o̵u̵n̵t̵_̵c̵o̵n̵s̵,̵ ̵polyaNext, hl]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+E:\ABRL\worktrees\research-online-book\runs\online-log-lower-20261008\leaves\moments-v1.lean:185:54: error(lean.unknownIdentifier): Unknown constant `Bool.true_eq_true`
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+E:\ABRL\worktrees\research-online-book\runs\online-log-lower-20261008\leaves\moments-v1.lean:182:5: error: unsolved goals
+T : ℕ
+h : List Bool
+hl : h.length = T
+hd : ↑T + 2 ≠ 0
+⊢ ↑T * ↑(List.count true h) * ↑(if (false == true) = true then 1 else 0) * 2 + ↑T * ↑(List.count true h) ^ 2 +
+                        ↑T * ↑(if (false == true) = true then 1 else 0) ^ 2 +
+                      ↑(List.count true h) * ↑(if (false == true) = true then 1 else 0) * 2 -
+                    ↑(List.count true h) * ↑(if (false == true) = true then 1 else 0) ^ 2 +
+                  ↑(List.count true h) * ↑(if (true == true) = true then 1 else 0) * 2 +
+                ↑(List.count true h) * ↑(if (true == true) = true then 1 else 0) ^ 2 +
+              ↑(List.count true h) ^ 2 * 2 -
+            ↑(List.count true h) ^ 2 * ↑(if (false == true) = true then 1 else 0) * 2 +
+          ↑(List.count true h) ^ 2 * ↑(if (true == true) = true then 1 else 0) * 2 +
+        ↑(if (false == true) = true then 1 else 0) ^ 2 +
+      ↑(if (true == true) = true then 1 else 0) ^ 2 =
+    1 + ↑T * ↑(List.count true h) ^ 2 + ↑(List.count true h) * 3 + ↑(List.count true h) ^ 2 * 4
+E:\ABRL\worktrees\research-online-book\runs\online-log-lower-20261008\leaves\moments-v1.lean:185:34: warning: This simp argument is unused:
+  Bool.false_eq_true
+
+Hint: Omit it from the simp argument list.
+  simp only [List.count_cons, B̵o̵o̵l̵.̵f̵a̵l̵s̵e̵_̵e̵q̵_̵t̵r̵u̵e̵,̵ ̵Bool.true_eq_true, ↓reduceIte, Nat.cast_add, Nat.cast_one,
+  ̲  ̲ ̲ ̲ ̲ ̲ ̲ ̲Nat.cast_zero, add_zero, polyaNext, hl]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+E:\ABRL\worktrees\research-online-book\runs\online-log-lower-20261008\leaves\moments-v1.lean:185:73: warning: This simp argument is unused:
+  ↓reduceIte
+
+Hint: Omit it from the simp argument list.
+  simp only [List.count_cons, Bool.false_eq_true, Bool.true_eq_true, ↓̵r̵e̵d̵u̵c̵e̵I̵t̵e̵,̵Nat.cast_add, Nat.cast_one,
+  ̲  ̲ ̲ ̲ ̲ ̲ ̲ ̲Nat.cast_zero, add_zero, polyaNext, hl]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+E:\ABRL\worktrees\research-online-book\runs\online-log-lower-20261008\leaves\moments-v1.lean:186:22: warning: This simp argument is unused:
+  Nat.cast_one
+
+Hint: Omit it from the simp argument list.
+  simp only [List.count_cons, Bool.false_eq_true, Bool.true_eq_true, ↓reduceIte, Nat.cast_add,
+  ̲  ̲ ̲ ̲ ̲ ̲ ̲ ̲N̵a̵t̵.̵c̵a̵s̵t̵_̵o̵n̵e̵,̵ ̵Nat.cast_zero, add_zero, polyaNext, hl]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+E:\ABRL\worktrees\research-online-book\runs\online-log-lower-20261008\leaves\moments-v1.lean:186:36: warning: This simp argument is unused:
+  Nat.cast_zero
+
+Hint: Omit it from the simp argument list.
+  simp only [List.count_cons, Bool.false_eq_true, Bool.true_eq_true, ↓reduceIte, Nat.cast_add,
+  ̲  ̲ ̲ ̲ ̲ ̲ ̲ ̲Nat.cast_one, N̵a̵t̵.̵c̵a̵s̵t̵_̵z̵e̵r̵o̵,̵ ̵add_zero, polyaNext, hl]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+E:\ABRL\worktrees\research-online-book\runs\online-log-lower-20261008\leaves\moments-v1.lean:186:51: warning: This simp argument is unused:
+  add_zero
+
+Hint: Omit it from the simp argument list.
+  simp only [List.count_cons, Bool.false_eq_true, Bool.true_eq_true, ↓reduceIte, Nat.cast_add,
+  ̲  ̲ ̲ ̲ ̲ ̲ ̲ ̲Nat.cast_one, Nat.cast_zero, a̵d̵d̵_̵z̵e̵r̵o̵,̵ ̵polyaNext, hl]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+E:\ABRL\worktrees\research-online-book\runs\online-log-lower-20261008\leaves\moments-v1.lean:202:4: error: No goals to be solved
+E:\ABRL\worktrees\research-online-book\runs\online-log-lower-20261008\leaves\moments-v1.lean:225:10: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  h.length
+in the target expression
+  (fun h => (↑(List.count true h) + 1) / (↑h.length + 2) * (1 - (↑(List.count true h) + 1) / (↑h.length + 2))) h =
+    (fun h => (↑T * ↑(List.count true h) + (↑T + 1) - ↑(List.count true h) ^ 2) / (↑T + 2) ^ 2) h
+
+T : ℕ
+hd : ↑T + 2 ≠ 0
+h : List Bool
+hl : h.length = T
+⊢ (fun h => (↑(List.count true h) + 1) / (↑h.length + 2) * (1 - (↑(List.count true h) + 1) / (↑h.length + 2))) h =
+    (fun h => (↑T * ↑(List.count true h) + (↑T + 1) - ↑(List.count true h) ^ 2) / (↑T + 2) ^ 2) h

@@ -1,0 +1,18 @@
+{
+  "probability_mem": "theorem probability_mem (h : List Bool) :\n    polyaNext h ∈ Ioo (0 : ℝ) 1",
+  "branch_mass": "theorem branch_mass (h : List Bool) :\n    pathWeight (false :: h) + pathWeight (true :: h) = pathWeight h",
+  "pathWeight_nonneg": "theorem pathWeight_nonneg (h : List Bool) :\n    0 ≤ pathWeight h",
+  "prefix_mass_one": "theorem prefix_mass_one (T : ℕ) :\n    (∑ v : List.Vector Bool T, pathWeight v.toList) = 1",
+  "prefix_distribution": "theorem prefix_distribution (T : ℕ) :\n    BanditRLProof.Exp3.FiniteActionDistribution (univ : Finset (List.Vector Bool T)) (fun v => pathWeight v.toList)",
+  "prefixMeasure_probability": "theorem prefixMeasure_probability (T : ℕ) [MeasurableSpace (List.Vector Bool T)] [MeasurableSingletonClass (List.Vector Bool T)] :\n    IsProbabilityMeasure (prefixMeasure T)",
+  "pathExpectation_integral": "theorem pathExpectation_integral (T : ℕ) [MeasurableSpace (List.Vector Bool T)] [MeasurableSingletonClass (List.Vector Bool T)] (f : List Bool → ℝ) :\n    (∫ v, f v.toList ∂prefixMeasure T) = pathExpectation T f",
+  "expected_heads": "theorem expected_heads (T : ℕ) :\n    pathExpectation T (fun h => (h.count true : ℝ)) = (T : ℝ) / 2",
+  "expected_heads_sq": "theorem expected_heads_sq (T : ℕ) :\n    pathExpectation T (fun h => (h.count true : ℝ)^2) = (T : ℝ) * (2 * (T : ℝ) + 1) / 6",
+  "expected_next_variance": "theorem expected_next_variance (T : ℕ) :\n    pathExpectation T (fun h => polyaNext h * (1 - polyaNext h)) = ((T : ℝ) + 3) / (6 * ((T : ℝ) + 2))",
+  "causalPredict_prefix": "theorem causalPredict_prefix (A : List Bool → ℝ) (y z : ℕ → Bool) (t : ℕ) (hpast : ∀ i < t, y i = z i) :\n    causalPredict A y t = causalPredict A z t",
+  "binary_mean_minimizer": "theorem binary_mean_minimizer (h : List Bool) (hpos : 0 < h.length) :\n    empiricalMean (binaryValues h) h.length ∈ Icc (0 : ℝ) 1 ∧ ∀ u ∈ Icc (0 : ℝ) 1, (∑ t ∈ range h.length, (empiricalMean (binaryValues h) h.length - binaryValues h t)^2) ≤ ∑ t ∈ range h.length, (u - binaryValues h t)^2",
+  "conditional_square_lower": "theorem conditional_square_lower (h : List Bool) (x : ℝ) :\n    polyaNext h * (1 - polyaNext h) ≤ (1 - polyaNext h) * x^2 + polyaNext h * (x - 1)^2",
+  "expected_pathRegret_lower": "theorem expected_pathRegret_lower (A : List Bool → ℝ) (T : ℕ) (hT : 0 < T) :\n    (harmonic (T + 1) : ℝ) / 6 ≤ pathExpectation T (pathRegret A)",
+  "randomized_harmonic_lower": "theorem randomized_harmonic_lower {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (A : Ω → List Bool → ℝ) (hA : ∀ h, Measurable (fun ω => A ω h)) (hbound : ∀ ω h, A ω h ∈ Icc (0 : ℝ) 1) (T : ℕ) (hT : 0 < T) :\n    ∃ v : List.Vector Bool T, (harmonic (T + 1) : ℝ) / 6 ≤ ∫ ω, pathRegret (A ω) v.toList ∂μ",
+  "randomized_log_lower": "theorem randomized_log_lower {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (A : Ω → List Bool → ℝ) (hA : ∀ h, Measurable (fun ω => A ω h)) (hbound : ∀ ω h, A ω h ∈ Icc (0 : ℝ) 1) (T : ℕ) (hT : 0 < T) :\n    ∃ v : List.Vector Bool T, Real.log ((T : ℝ) + 2) / 6 ≤ ∫ ω, pathRegret (A ω) v.toList ∂μ"
+}

@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineLearning.GuessingLower.expected_pathLearnerLoss_succ",
+  "file": "BanditRLProof/OnlineGuessingLogLower.lean",
+  "statement": "theorem expected_pathLearnerLoss_succ (A : List Bool → ℝ) (T : ℕ) : pathExpectation (T + 1) (pathLearnerLoss A) = pathExpectation T (pathLearnerLoss A) + pathExpectation T (fun h => (1 - polyaNext h) * (A h)^2 + polyaNext h * (A h - 1)^2)",
+  "statement_hash": "bb07254ea3d45a8197a5c426abe19452dcc75fbb4f615d85c656bb07d2e59ccc",
+  "source_assumptions": [
+    "theorem expected_pathLearnerLoss_succ (A : List Bool → ℝ) (T : ℕ) : pathExpectation (T + 1) (pathLearnerLoss A) = pathExpectation T (pathLearnerLoss A) + pathExpectation T (fun h => (1 - polyaNext h) * (A h)^2 + polyaNext h * (A h - 1)^2)"
+  ],
+  "created_at": "2026-10-07T18:30:40+00:00"
+}

@@ -1,0 +1,22 @@
+BanditRLProof.Exp3.FiniteActionDistribution.{u} {Action : Type u} (arms : Finset Action) (prob : Action → ℝ) : Prop
+BanditRLProof.Exp3.finiteActionMeasure_isProbabilityMeasure.{u} {Action : Type u} [MeasurableSpace Action]
+  [MeasurableSingletonClass Action] (arms : Finset Action) (prob : Action → ℝ)
+  (hdist : BanditRLProof.Exp3.FiniteActionDistribution arms prob) :
+  MeasureTheory.IsProbabilityMeasure (BanditRLProof.Exp3.finiteActionMeasure arms prob)
+BanditRLProof.Exp3.integral_finiteActionMeasure_eq_sum.{u} {Action : Type u} [MeasurableSpace Action]
+  [MeasurableSingletonClass Action] (arms : Finset Action) (prob : Action → ℝ)
+  (hdist : BanditRLProof.Exp3.FiniteActionDistribution arms prob) (f : Action → ℝ) :
+  MeasureTheory.integral (BanditRLProof.Exp3.finiteActionMeasure arms prob) f = ∑ action ∈ arms, prob action * f action
+List.count_le_length.{u_1} {α : Type u_1} [BEq α] {a : α} {l : List α} : List.count a l ≤ l.length
+List.Vector.toList_length.{u_1} {α : Type u_1} {n : ℕ} (v : List.Vector α n) : v.toList.length = n
+Fintype.sum_equiv.{u_1, u_2, u_3} {ι : Type u_1} {κ : Type u_2} {M : Type u_3} [Fintype ι] [Fintype κ] [AddCommMonoid M]
+  (e : ι ≃ κ) (f : ι → M) (g : κ → M) (h : ∀ (x : ι), f x = g (e x)) : ∑ x, f x = ∑ x, g x
+Fintype.sum_prod_type.{u_3, u_4, u_5} {γ : Type u_3} {α₁ : Type u_4} {α₂ : Type u_5} [Fintype α₁] [Fintype α₂]
+  [AddCommMonoid γ] (f : α₁ × α₂ → γ) : ∑ x, f x = ∑ x, ∑ y, f (x, y)
+MeasureTheory.integral_finset_sum.{u_1, u_5, u_6} {α : Type u_1} {G : Type u_5} [NormedAddCommGroup G] [NormedSpace ℝ G]
+  {m : MeasurableSpace α} {μ : MeasureTheory.Measure α} {ι : Type u_6} (s : Finset ι) {f : ι → α → G}
+  (hf : ∀ i ∈ s, MeasureTheory.Integrable (f i) μ) : ∫ (a : α), ∑ i ∈ s, f i a ∂μ = ∑ i ∈ s, ∫ (a : α), f i a ∂μ
+MeasureTheory.Integrable.of_bound.{u_1, u_5} {α : Type u_1} {E : Type u_5} {mα : MeasurableSpace α}
+  [NormedAddCommGroup E] {μ : MeasureTheory.Measure α} [MeasureTheory.IsFiniteMeasure μ] {f : α → E}
+  (hf : MeasureTheory.AEStronglyMeasurable f μ) (C : ℝ) (hfC : ∀ᵐ (x : α) ∂μ, ‖f x‖ ≤ C) : MeasureTheory.Integrable f μ
+log_add_one_le_harmonic (n : ℕ) : Real.log ↑(n + 1) ≤ ↑(harmonic n)

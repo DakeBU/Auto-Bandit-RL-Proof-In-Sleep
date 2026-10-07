@@ -1,0 +1,22 @@
+{
+  "command": [
+    "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe",
+    "-B",
+    "-X",
+    "utf8",
+    "tools/bandit.py",
+    "statement-fence",
+    "--declaration",
+    "BanditRL.OnlineLearning.GuessingLower.expected_pathLearnerLoss_succ",
+    "--file",
+    "BanditRLProof\\OnlineGuessingLogLower.lean",
+    "--source-assumption",
+    "theorem expected_pathLearnerLoss_succ (A : List Bool → ℝ) (T : ℕ) : pathExpectation (T + 1) (pathLearnerLoss A) = pathExpectation T (pathLearnerLoss A) + pathExpectation T (fun h => (1 - polyaNext h) * (A h)^2 + polyaNext h * (A h - 1)^2)",
+    "--output",
+    "E:\\ABRL\\worktrees\\research-online-book\\runs\\online-log-lower-20261008\\full-header-fences-v1\\public-expected_pathLearnerLoss_succ.json"
+  ],
+  "cwd": "E:/ABRL/worktrees/research-online-book",
+  "exit_code": 0,
+  "seconds": 0.211,
+  "log_sha256": "9f26d92153000e372476d018e5e2ff41a9da393cca428a2e841a9398690f31cd"
+}

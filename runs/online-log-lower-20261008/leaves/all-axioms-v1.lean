@@ -1,0 +1,153 @@
+import Tests.OnlineGuessingLogLowerCanary
+#check BanditRL.OnlineLearning.GuessingLower.probability_mem
+#print axioms BanditRL.OnlineLearning.GuessingLower.probability_mem
+#check BanditRL.OnlineLearning.GuessingLower.branch_mass
+#print axioms BanditRL.OnlineLearning.GuessingLower.branch_mass
+#check BanditRL.OnlineLearning.GuessingLower.pathWeight_nonneg
+#print axioms BanditRL.OnlineLearning.GuessingLower.pathWeight_nonneg
+#check BanditRL.OnlineLearning.GuessingLower.sum_vectors_succ
+#print axioms BanditRL.OnlineLearning.GuessingLower.sum_vectors_succ
+#check BanditRL.OnlineLearning.GuessingLower.prefix_mass_one
+#print axioms BanditRL.OnlineLearning.GuessingLower.prefix_mass_one
+#check BanditRL.OnlineLearning.GuessingLower.prefix_distribution
+#print axioms BanditRL.OnlineLearning.GuessingLower.prefix_distribution
+#check BanditRL.OnlineLearning.GuessingLower.prefixMeasure_probability
+#print axioms BanditRL.OnlineLearning.GuessingLower.prefixMeasure_probability
+#check BanditRL.OnlineLearning.GuessingLower.pathExpectation_integral
+#print axioms BanditRL.OnlineLearning.GuessingLower.pathExpectation_integral
+#check BanditRL.OnlineLearning.GuessingLower.pathExpectation_congr
+#print axioms BanditRL.OnlineLearning.GuessingLower.pathExpectation_congr
+#check BanditRL.OnlineLearning.GuessingLower.pathExpectation_const
+#print axioms BanditRL.OnlineLearning.GuessingLower.pathExpectation_const
+#check BanditRL.OnlineLearning.GuessingLower.pathExpectation_add
+#print axioms BanditRL.OnlineLearning.GuessingLower.pathExpectation_add
+#check BanditRL.OnlineLearning.GuessingLower.pathExpectation_sub
+#print axioms BanditRL.OnlineLearning.GuessingLower.pathExpectation_sub
+#check BanditRL.OnlineLearning.GuessingLower.pathExpectation_const_mul
+#print axioms BanditRL.OnlineLearning.GuessingLower.pathExpectation_const_mul
+#check BanditRL.OnlineLearning.GuessingLower.pathExpectation_div
+#print axioms BanditRL.OnlineLearning.GuessingLower.pathExpectation_div
+#check BanditRL.OnlineLearning.GuessingLower.pathExpectation_succ
+#print axioms BanditRL.OnlineLearning.GuessingLower.pathExpectation_succ
+#check BanditRL.OnlineLearning.GuessingLower.heads_succ
+#print axioms BanditRL.OnlineLearning.GuessingLower.heads_succ
+#check BanditRL.OnlineLearning.GuessingLower.heads_sq_succ
+#print axioms BanditRL.OnlineLearning.GuessingLower.heads_sq_succ
+#check BanditRL.OnlineLearning.GuessingLower.expected_heads
+#print axioms BanditRL.OnlineLearning.GuessingLower.expected_heads
+#check BanditRL.OnlineLearning.GuessingLower.expected_heads_sq
+#print axioms BanditRL.OnlineLearning.GuessingLower.expected_heads_sq
+#check BanditRL.OnlineLearning.GuessingLower.expected_next_variance
+#print axioms BanditRL.OnlineLearning.GuessingLower.expected_next_variance
+#check BanditRL.OnlineLearning.GuessingLower.causalPredict_prefix
+#print axioms BanditRL.OnlineLearning.GuessingLower.causalPredict_prefix
+#check BanditRL.OnlineLearning.GuessingLower.binary_mean_minimizer
+#print axioms BanditRL.OnlineLearning.GuessingLower.binary_mean_minimizer
+#check BanditRL.OnlineLearning.GuessingLower.conditional_square_lower
+#print axioms BanditRL.OnlineLearning.GuessingLower.conditional_square_lower
+#check BanditRL.OnlineLearning.GuessingLower.binaryStream_cons_prefix
+#print axioms BanditRL.OnlineLearning.GuessingLower.binaryStream_cons_prefix
+#check BanditRL.OnlineLearning.GuessingLower.binaryStream_cons_last
+#print axioms BanditRL.OnlineLearning.GuessingLower.binaryStream_cons_last
+#check BanditRL.OnlineLearning.GuessingLower.binaryValues_cons_prefix
+#print axioms BanditRL.OnlineLearning.GuessingLower.binaryValues_cons_prefix
+#check BanditRL.OnlineLearning.GuessingLower.causalPredict_history
+#print axioms BanditRL.OnlineLearning.GuessingLower.causalPredict_history
+#check BanditRL.OnlineLearning.GuessingLower.causalPredict_cons_last
+#print axioms BanditRL.OnlineLearning.GuessingLower.causalPredict_cons_last
+#check BanditRL.OnlineLearning.GuessingLower.pathRegret_eq_losses
+#print axioms BanditRL.OnlineLearning.GuessingLower.pathRegret_eq_losses
+#check BanditRL.OnlineLearning.GuessingLower.pathLearnerLoss_cons
+#print axioms BanditRL.OnlineLearning.GuessingLower.pathLearnerLoss_cons
+#check BanditRL.OnlineLearning.GuessingLower.binaryValues_sum
+#print axioms BanditRL.OnlineLearning.GuessingLower.binaryValues_sum
+#check BanditRL.OnlineLearning.GuessingLower.binaryValues_sq
+#print axioms BanditRL.OnlineLearning.GuessingLower.binaryValues_sq
+#check BanditRL.OnlineLearning.GuessingLower.pathBestLoss_count
+#print axioms BanditRL.OnlineLearning.GuessingLower.pathBestLoss_count
+#check BanditRL.OnlineLearning.GuessingLower.expected_pathBestLoss
+#print axioms BanditRL.OnlineLearning.GuessingLower.expected_pathBestLoss
+#check BanditRL.OnlineLearning.GuessingLower.pathExpectation_mono
+#print axioms BanditRL.OnlineLearning.GuessingLower.pathExpectation_mono
+#check BanditRL.OnlineLearning.GuessingLower.expected_pathLearnerLoss_succ
+#print axioms BanditRL.OnlineLearning.GuessingLower.expected_pathLearnerLoss_succ
+#check BanditRL.OnlineLearning.GuessingLower.expected_pathLearnerLoss_step
+#print axioms BanditRL.OnlineLearning.GuessingLower.expected_pathLearnerLoss_step
+#check BanditRL.OnlineLearning.GuessingLower.variance_sum
+#print axioms BanditRL.OnlineLearning.GuessingLower.variance_sum
+#check BanditRL.OnlineLearning.GuessingLower.expected_pathLearnerLoss_lower
+#print axioms BanditRL.OnlineLearning.GuessingLower.expected_pathLearnerLoss_lower
+#check BanditRL.OnlineLearning.GuessingLower.expected_pathRegret_lower
+#print axioms BanditRL.OnlineLearning.GuessingLower.expected_pathRegret_lower
+#check BanditRL.OnlineLearning.GuessingLower.pathWeight_pos
+#print axioms BanditRL.OnlineLearning.GuessingLower.pathWeight_pos
+#check BanditRL.OnlineLearning.GuessingLower.square_loss_mem
+#print axioms BanditRL.OnlineLearning.GuessingLower.square_loss_mem
+#check BanditRL.OnlineLearning.GuessingLower.square_loss_sum_mem
+#print axioms BanditRL.OnlineLearning.GuessingLower.square_loss_sum_mem
+#check BanditRL.OnlineLearning.GuessingLower.pathRegret_abs_le
+#print axioms BanditRL.OnlineLearning.GuessingLower.pathRegret_abs_le
+#check BanditRL.OnlineLearning.GuessingLower.pathRegret_measurable
+#print axioms BanditRL.OnlineLearning.GuessingLower.pathRegret_measurable
+#check BanditRL.OnlineLearning.GuessingLower.pathRegret_integrable
+#print axioms BanditRL.OnlineLearning.GuessingLower.pathRegret_integrable
+#check BanditRL.OnlineLearning.GuessingLower.randomized_harmonic_lower
+#print axioms BanditRL.OnlineLearning.GuessingLower.randomized_harmonic_lower
+#check BanditRL.OnlineLearning.GuessingLower.randomized_log_lower
+#print axioms BanditRL.OnlineLearning.GuessingLower.randomized_log_lower
+#check GuessingLogLowerProbe.unbalanced_probability
+#print axioms GuessingLogLowerProbe.unbalanced_probability
+#check GuessingLogLowerProbe.correlated_two_step_masses
+#print axioms GuessingLogLowerProbe.correlated_two_step_masses
+#check GuessingLogLowerProbe.zero_and_two_normalization
+#print axioms GuessingLogLowerProbe.zero_and_two_normalization
+#check GuessingLogLowerProbe.correlated_moments
+#print axioms GuessingLogLowerProbe.correlated_moments
+#check GuessingLogLowerProbe.averaged_variance
+#print axioms GuessingLogLowerProbe.averaged_variance
+#check GuessingLogLowerProbe.same_past_different_current
+#print axioms GuessingLogLowerProbe.same_past_different_current
+#check GuessingLogLowerProbe.actual_last_prediction
+#print axioms GuessingLogLowerProbe.actual_last_prediction
+#check GuessingLogLowerProbe.nondegenerate_actual_regret
+#print axioms GuessingLogLowerProbe.nondegenerate_actual_regret
+#check GuessingLogLowerProbe.actual_optimal_loss
+#print axioms GuessingLogLowerProbe.actual_optimal_loss
+#check GuessingLogLowerProbe.one_step_harmonic_endpoint
+#print axioms GuessingLogLowerProbe.one_step_harmonic_endpoint
+#check GuessingLogLowerProbe.coin_distribution
+#print axioms GuessingLogLowerProbe.coin_distribution
+#check GuessingLogLowerProbe.seeded_policy_bounds
+#print axioms GuessingLogLowerProbe.seeded_policy_bounds
+#check GuessingLogLowerProbe.genuine_coin_policy
+#print axioms GuessingLogLowerProbe.genuine_coin_policy
+#check GuessingLogLowerProbe.seeded_fixed_sequence_endpoint
+#print axioms GuessingLogLowerProbe.seeded_fixed_sequence_endpoint
+#check GuessingLogLowerProbe.seeded_log_endpoint
+#print axioms GuessingLogLowerProbe.seeded_log_endpoint
+#check GuessingLogLowerProbe.deterministic_fixed_sequence_endpoint
+#print axioms GuessingLogLowerProbe.deterministic_fixed_sequence_endpoint
+#check BanditRL.OnlineLearning.GuessingLower.polyaNext
+#print axioms BanditRL.OnlineLearning.GuessingLower.polyaNext
+#check BanditRL.OnlineLearning.GuessingLower.pathWeight
+#print axioms BanditRL.OnlineLearning.GuessingLower.pathWeight
+#check BanditRL.OnlineLearning.GuessingLower.binaryStream
+#print axioms BanditRL.OnlineLearning.GuessingLower.binaryStream
+#check BanditRL.OnlineLearning.GuessingLower.binaryValues
+#print axioms BanditRL.OnlineLearning.GuessingLower.binaryValues
+#check BanditRL.OnlineLearning.GuessingLower.causalPredict
+#print axioms BanditRL.OnlineLearning.GuessingLower.causalPredict
+#check BanditRL.OnlineLearning.GuessingLower.pathRegret
+#print axioms BanditRL.OnlineLearning.GuessingLower.pathRegret
+#check BanditRL.OnlineLearning.GuessingLower.pathExpectation
+#print axioms BanditRL.OnlineLearning.GuessingLower.pathExpectation
+#check BanditRL.OnlineLearning.GuessingLower.prefixMeasure
+#print axioms BanditRL.OnlineLearning.GuessingLower.prefixMeasure
+#check BanditRL.OnlineLearning.GuessingLower.pathLearnerLoss
+#print axioms BanditRL.OnlineLearning.GuessingLower.pathLearnerLoss
+#check BanditRL.OnlineLearning.GuessingLower.pathBestLoss
+#print axioms BanditRL.OnlineLearning.GuessingLower.pathBestLoss
+#check GuessingLogLowerProbe.coinMeasure
+#print axioms GuessingLogLowerProbe.coinMeasure
+#check GuessingLogLowerProbe.seededPolicy
+#print axioms GuessingLogLowerProbe.seededPolicy

@@ -1,0 +1,22 @@
+{
+  "command": [
+    "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe",
+    "-B",
+    "-X",
+    "utf8",
+    "tools/bandit.py",
+    "statement-fence",
+    "--declaration",
+    "BanditRL.OnlineLearning.GuessingLower.pathExpectation_succ",
+    "--file",
+    "BanditRLProof\\OnlineGuessingLogLower.lean",
+    "--source-assumption",
+    "theorem pathExpectation_succ (T : ℕ) (f : List Bool → ℝ) : pathExpectation (T + 1) f = pathExpectation T (fun h => (1 - polyaNext h) * f (false :: h) + polyaNext h * f (true :: h))",
+    "--output",
+    "E:\\ABRL\\worktrees\\research-online-book\\runs\\online-log-lower-20261008\\full-header-fences-v1\\public-pathExpectation_succ.json"
+  ],
+  "cwd": "E:/ABRL/worktrees/research-online-book",
+  "exit_code": 0,
+  "seconds": 0.218,
+  "log_sha256": "34f817f0bcb20926be84971033bdb7fc50f3979a3d0549c0b938e2aefd4010df"
+}

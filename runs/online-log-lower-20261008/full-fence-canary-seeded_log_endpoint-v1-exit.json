@@ -1,0 +1,22 @@
+{
+  "command": [
+    "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe",
+    "-B",
+    "-X",
+    "utf8",
+    "tools/bandit.py",
+    "statement-fence",
+    "--declaration",
+    "GuessingLogLowerProbe.seeded_log_endpoint",
+    "--file",
+    "Tests\\OnlineGuessingLogLowerCanary.lean",
+    "--source-assumption",
+    "theorem seeded_log_endpoint : ∃ v : List.Vector Bool 2, Real.log 4 / 6 ≤ ∫ b, pathRegret (seededPolicy b) v.toList ∂coinMeasure",
+    "--output",
+    "E:\\ABRL\\worktrees\\research-online-book\\runs\\online-log-lower-20261008\\full-header-fences-v1\\canary-seeded_log_endpoint.json"
+  ],
+  "cwd": "E:/ABRL/worktrees/research-online-book",
+  "exit_code": 0,
+  "seconds": 0.207,
+  "log_sha256": "8c15ce1ef0ef0ea51fbbc3fba537644ba8929448e22d6d0602d6fdb27c75de41"
+}

@@ -1,0 +1,16 @@
+from common_v1 import *
+fixed()
+prior=load(RUN/'source-contract-inputs-v1.json')
+bad=[dict(path=x['path'],frozen=x['sha256'],actual=sha(x['path'])) for x in prior['rows'] if sha(x['path'])!=x['sha256']]
+assert len(bad)==1 and Path(bad[0]['path']).resolve()==(RUN/'prepare-source-review-v2.log').resolve()
+assert bad[0]['frozen']==hashlib.sha256(b'').hexdigest()
+for n,h in load(CONTRACT/'planned-public-headers-v1.json').items():assert hashlib.sha256(h.encode('utf-8')).hexdigest()==load(CONTRACT/'planned-statement-fingerprints-v1.json')[n]
+write(RUN/'preparation-freeze-repair-v3.json',dict(status='Detected before any source review; first metadata input freeze invalid',defect='Wrapper opened its RUN stdout log while child enumerated RUN inputs; child final print changed that one log after hashing',actual_mismatches=bad,all_other_first_input_raw_rows_match=True,first_input_manifest_retained_unchanged=True,all16_math_statements_and_source_unchanged=True,repair='Freeze new applicable input manifest only after prior wrapper completed; run this helper directly with stdout outside RUN, not inside a gate that creates RUN files while enumerating',applicable_contract_version=1,applicable_inputs='source-contract-inputs-v2.json',source_package_accepted=False,chapter_complete=False,goal_complete=False))
+native('preparation-freeze-repair-event-v3','lifecycle-event','--session',TASK,'--event','repair','--payload-json',json.dumps(dict(scope='Pre-review raw binding to live wrapper log; no mathematical statement change',record=(RUN/'preparation-freeze-repair-v3.json').as_posix(),source_contract_version=1,chapter_complete=False,goal_complete=False)))
+packet=(RUN/'source-contract-review-packet-v1.md').read_text(encoding='utf-8')
+write(RUN/'source-contract-review-packet-v2.md',packet+'\n\nApplicable CONTRACT input manifest is source-contract-inputs-v2.json. Prior input-v1 was NEVER source-reviewed/accepted: one wrapper-log raw binding was captured while empty then changed after final stdout. preparation-freeze-repair-v3.json records exact mismatch; all other146 original raw bindings and16math headers/source exact. Original v1 helpers/manifest/raw fields retained unchanged as failed metadata evidence. New freeze made directly after logs complete; no parentRUN log opened while gathering files. Receipt must bind EVERY applicablev2row, not claim originalv1 stale log sha valid. Neutral receipt nested-field adaptationv2 also retained. No theorem body/proof was attempted during these preparation repairs.\n')
+paths=[x['path'] for x in prior['rows']]+[p.as_posix() for p in sorted(RUN.rglob('*')) if p.is_file()]+[p.as_posix() for p in sorted(CONTRACT.rglob('*')) if p.is_file()]
+paths=list(dict.fromkeys(paths))
+write(RUN/'source-contract-inputs-v2.json',dict(stage='CONTRACT',rows=[dict(path=p,sha256=sha(p)) for p in paths],fixed_input_count=len(paths),applicable_contract_version=1,planned_headers=16,planned_definitions=8,invalid_pre_review_input_v1_retained=True,theorem_bodies_absent=True,source_package_accepted=False,chapter_complete=False,goal_complete=False))
+for row in load(RUN/'source-contract-inputs-v2.json')['rows']:assert sha(row['path'])==row['sha256'],row['path']
+fixed();print('Actual all',len(paths),'applicable CONTRACT v2 raw rows independently rehashed after freeze; no open RUN wrapper log')

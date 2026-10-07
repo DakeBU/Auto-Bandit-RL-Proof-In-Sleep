@@ -1,0 +1,322 @@
+[
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.probability_mem",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem probability_mem (h : List Bool) : polyaNext h ∈ Ioo (0 : ℝ) 1"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.branch_mass",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem branch_mass (h : List Bool) : pathWeight (false :: h) + pathWeight (true :: h) = pathWeight h"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.pathWeight_nonneg",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem pathWeight_nonneg (h : List Bool) : 0 ≤ pathWeight h"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.sum_vectors_succ",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem sum_vectors_succ (T : ℕ) (f : List Bool → ℝ) : (∑ v : List.Vector Bool (T + 1), f v.toList) = ∑ v : List.Vector Bool T, (f (false :: v.toList) + f (true :: v.toList))"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.prefix_mass_one",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem prefix_mass_one (T : ℕ) : (∑ v : List.Vector Bool T, pathWeight v.toList) = 1"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.prefix_distribution",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem prefix_distribution (T : ℕ) : BanditRLProof.Exp3.FiniteActionDistribution (univ : Finset (List.Vector Bool T)) (fun v => pathWeight v.toList)"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.prefixMeasure_probability",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem prefixMeasure_probability (T : ℕ) [MeasurableSpace (List.Vector Bool T)] [MeasurableSingletonClass (List.Vector Bool T)] : IsProbabilityMeasure (prefixMeasure T)"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.pathExpectation_integral",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem pathExpectation_integral (T : ℕ) [MeasurableSpace (List.Vector Bool T)] [MeasurableSingletonClass (List.Vector Bool T)] (f : List Bool → ℝ) : (∫ v, f v.toList ∂prefixMeasure T) = pathExpectation T f"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.pathExpectation_congr",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem pathExpectation_congr (T : ℕ) (f g : List Bool → ℝ) (hfg : ∀ h, h.length = T → f h = g h) : pathExpectation T f = pathExpectation T g"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.pathExpectation_const",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem pathExpectation_const (T : ℕ) (c : ℝ) : pathExpectation T (fun _ => c) = c"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.pathExpectation_add",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem pathExpectation_add (T : ℕ) (f g : List Bool → ℝ) : pathExpectation T (fun h => f h + g h) = pathExpectation T f + pathExpectation T g"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.pathExpectation_sub",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem pathExpectation_sub (T : ℕ) (f g : List Bool → ℝ) : pathExpectation T (fun h => f h - g h) = pathExpectation T f - pathExpectation T g"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.pathExpectation_const_mul",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem pathExpectation_const_mul (T : ℕ) (c : ℝ) (f : List Bool → ℝ) : pathExpectation T (fun h => c * f h) = c * pathExpectation T f"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.pathExpectation_div",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem pathExpectation_div (T : ℕ) (f : List Bool → ℝ) (c : ℝ) : pathExpectation T (fun h => f h / c) = pathExpectation T f / c"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.pathExpectation_succ",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem pathExpectation_succ (T : ℕ) (f : List Bool → ℝ) : pathExpectation (T + 1) f = pathExpectation T (fun h => (1 - polyaNext h) * f (false :: h) + polyaNext h * f (true :: h))"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.heads_succ",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem heads_succ (T : ℕ) : pathExpectation (T + 1) (fun h => (h.count true : ℝ)) = pathExpectation T (fun h => (h.count true : ℝ)) + (pathExpectation T (fun h => (h.count true : ℝ)) + 1) / ((T : ℝ) + 2)"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.heads_sq_succ",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem heads_sq_succ (T : ℕ) : pathExpectation (T + 1) (fun h => (h.count true : ℝ)^2) = pathExpectation T (fun h => (h.count true : ℝ)^2) + (2 * pathExpectation T (fun h => (h.count true : ℝ)^2) + 3 * pathExpectation T (fun h => (h.count true : ℝ)) + 1) / ((T : ℝ) + 2)"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.expected_heads",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem expected_heads (T : ℕ) : pathExpectation T (fun h => (h.count true : ℝ)) = (T : ℝ) / 2"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.expected_heads_sq",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem expected_heads_sq (T : ℕ) : pathExpectation T (fun h => (h.count true : ℝ)^2) = (T : ℝ) * (2 * (T : ℝ) + 1) / 6"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.expected_next_variance",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem expected_next_variance (T : ℕ) : pathExpectation T (fun h => polyaNext h * (1 - polyaNext h)) = ((T : ℝ) + 3) / (6 * ((T : ℝ) + 2))"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.causalPredict_prefix",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem causalPredict_prefix (A : List Bool → ℝ) (y z : ℕ → Bool) (t : ℕ) (hpast : ∀ i < t, y i = z i) : causalPredict A y t = causalPredict A z t"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.binary_mean_minimizer",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem binary_mean_minimizer (h : List Bool) (hpos : 0 < h.length) : empiricalMean (binaryValues h) h.length ∈ Icc (0 : ℝ) 1 ∧ ∀ u ∈ Icc (0 : ℝ) 1, (∑ t ∈ range h.length, (empiricalMean (binaryValues h) h.length - binaryValues h t)^2) ≤ ∑ t ∈ range h.length, (u - binaryValues h t)^2"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.conditional_square_lower",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem conditional_square_lower (h : List Bool) (x : ℝ) : polyaNext h * (1 - polyaNext h) ≤ (1 - polyaNext h) * x^2 + polyaNext h * (x - 1)^2"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.binaryStream_cons_prefix",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem binaryStream_cons_prefix (b : Bool) (h : List Bool) (t : ℕ) (ht : t < h.length) : binaryStream (b :: h) t = binaryStream h t"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.binaryStream_cons_last",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem binaryStream_cons_last (b : Bool) (h : List Bool) : binaryStream (b :: h) h.length = b"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.binaryValues_cons_prefix",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem binaryValues_cons_prefix (b : Bool) (h : List Bool) (t : ℕ) (ht : t < h.length) : binaryValues (b :: h) t = binaryValues h t"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.causalPredict_history",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem causalPredict_history (A : List Bool → ℝ) (h : List Bool) : causalPredict A (binaryStream h) h.length = A h"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.causalPredict_cons_last",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem causalPredict_cons_last (A : List Bool → ℝ) (b : Bool) (h : List Bool) : causalPredict A (binaryStream (b :: h)) h.length = A h"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.pathRegret_eq_losses",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem pathRegret_eq_losses (A : List Bool → ℝ) (h : List Bool) : pathRegret A h = pathLearnerLoss A h - pathBestLoss h"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.pathLearnerLoss_cons",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem pathLearnerLoss_cons (A : List Bool → ℝ) (b : Bool) (h : List Bool) : pathLearnerLoss A (b :: h) = pathLearnerLoss A h + (A h - if b then 1 else 0)^2"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.binaryValues_sum",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem binaryValues_sum (h : List Bool) : (∑ t ∈ range h.length, binaryValues h t) = (h.count true : ℝ)"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.binaryValues_sq",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem binaryValues_sq (h : List Bool) (t : ℕ) : (binaryValues h t)^2 = binaryValues h t"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.pathBestLoss_count",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem pathBestLoss_count (h : List Bool) (hpos : 0 < h.length) : pathBestLoss h = (h.count true : ℝ) - (h.count true : ℝ)^2 / (h.length : ℝ)"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.expected_pathBestLoss",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem expected_pathBestLoss (T : ℕ) (hT : 0 < T) : pathExpectation T pathBestLoss = ((T : ℝ) - 1) / 6"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.pathExpectation_mono",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem pathExpectation_mono (T : ℕ) (f g : List Bool → ℝ) (hfg : ∀ h, h.length = T → f h ≤ g h) : pathExpectation T f ≤ pathExpectation T g"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.expected_pathLearnerLoss_succ",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem expected_pathLearnerLoss_succ (A : List Bool → ℝ) (T : ℕ) : pathExpectation (T + 1) (pathLearnerLoss A) = pathExpectation T (pathLearnerLoss A) + pathExpectation T (fun h => (1 - polyaNext h) * (A h)^2 + polyaNext h * (A h - 1)^2)"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.expected_pathLearnerLoss_step",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem expected_pathLearnerLoss_step (A : List Bool → ℝ) (T : ℕ) : pathExpectation T (pathLearnerLoss A) + ((T : ℝ) + 3) / (6 * ((T : ℝ) + 2)) ≤ pathExpectation (T + 1) (pathLearnerLoss A)"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.variance_sum",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem variance_sum (T : ℕ) : (∑ t ∈ range T, ((t : ℝ) + 3) / (6 * ((t : ℝ) + 2))) = (T : ℝ) / 6 + ((harmonic (T + 1) : ℝ) - 1) / 6"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.expected_pathLearnerLoss_lower",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem expected_pathLearnerLoss_lower (A : List Bool → ℝ) (T : ℕ) : (∑ t ∈ range T, ((t : ℝ) + 3) / (6 * ((t : ℝ) + 2))) ≤ pathExpectation T (pathLearnerLoss A)"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.expected_pathRegret_lower",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem expected_pathRegret_lower (A : List Bool → ℝ) (T : ℕ) (hT : 0 < T) : (harmonic (T + 1) : ℝ) / 6 ≤ pathExpectation T (pathRegret A)"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.pathWeight_pos",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem pathWeight_pos (h : List Bool) : 0 < pathWeight h"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.square_loss_mem",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem square_loss_mem (x y : ℝ) (hx : x ∈ Icc (0 : ℝ) 1) (hy : y ∈ Icc (0 : ℝ) 1) : (x - y)^2 ∈ Icc (0 : ℝ) 1"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.square_loss_sum_mem",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem square_loss_sum_mem (T : ℕ) (p y : ℕ → ℝ) (hp : ∀ t < T, p t ∈ Icc (0 : ℝ) 1) (hy : ∀ t < T, y t ∈ Icc (0 : ℝ) 1) : (∑ t ∈ range T, (p t - y t)^2) ∈ Icc (0 : ℝ) T"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.pathRegret_abs_le",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem pathRegret_abs_le (A : List Bool → ℝ) (h : List Bool) (hbound : ∀ k, A k ∈ Icc (0 : ℝ) 1) : |pathRegret A h| ≤ (h.length : ℝ)"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.pathRegret_measurable",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem pathRegret_measurable {Ω : Type*} [MeasurableSpace Ω] (A : Ω → List Bool → ℝ) (hA : ∀ h, Measurable (fun ω => A ω h)) (h : List Bool) : Measurable (fun ω => pathRegret (A ω) h)"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.pathRegret_integrable",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem pathRegret_integrable {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (A : Ω → List Bool → ℝ) (hA : ∀ h, Measurable (fun ω => A ω h)) (hbound : ∀ ω h, A ω h ∈ Icc (0 : ℝ) 1) (h : List Bool) : Integrable (fun ω => pathRegret (A ω) h) μ"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.randomized_harmonic_lower",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem randomized_harmonic_lower {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (A : Ω → List Bool → ℝ) (hA : ∀ h, Measurable (fun ω => A ω h)) (hbound : ∀ ω h, A ω h ∈ Icc (0 : ℝ) 1) (T : ℕ) (hT : 0 < T) : ∃ v : List.Vector Bool T, (harmonic (T + 1) : ℝ) / 6 ≤ ∫ ω, pathRegret (A ω) v.toList ∂μ"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.GuessingLower.randomized_log_lower",
+    "path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "header": "theorem randomized_log_lower {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (A : Ω → List Bool → ℝ) (hA : ∀ h, Measurable (fun ω => A ω h)) (hbound : ∀ ω h, A ω h ∈ Icc (0 : ℝ) 1) (T : ℕ) (hT : 0 < T) : ∃ v : List.Vector Bool T, Real.log ((T : ℝ) + 2) / 6 ≤ ∫ ω, pathRegret (A ω) v.toList ∂μ"
+  },
+  {
+    "name": "GuessingLogLowerProbe.unbalanced_probability",
+    "path": "Tests/OnlineGuessingLogLowerCanary.lean",
+    "header": "theorem unbalanced_probability : polyaNext [true,true,true] = (4 : ℝ)/5 ∧ polyaNext [true,true,true] ∈ Ioo (0 : ℝ) 1"
+  },
+  {
+    "name": "GuessingLogLowerProbe.correlated_two_step_masses",
+    "path": "Tests/OnlineGuessingLogLowerCanary.lean",
+    "header": "theorem correlated_two_step_masses : pathWeight [true,true] = (1 : ℝ)/3 ∧ pathWeight [false,false] = (1 : ℝ)/3 ∧ pathWeight [true,false] = (1 : ℝ)/6 ∧ pathWeight [false,true] = (1 : ℝ)/6"
+  },
+  {
+    "name": "GuessingLogLowerProbe.zero_and_two_normalization",
+    "path": "Tests/OnlineGuessingLogLowerCanary.lean",
+    "header": "theorem zero_and_two_normalization : (∑ v : List.Vector Bool 0, pathWeight v.toList) = 1 ∧ (∑ v : List.Vector Bool 2, pathWeight v.toList) = 1"
+  },
+  {
+    "name": "GuessingLogLowerProbe.correlated_moments",
+    "path": "Tests/OnlineGuessingLogLowerCanary.lean",
+    "header": "theorem correlated_moments : pathExpectation 2 (fun h => (h.count true : ℝ)) = 1 ∧ pathExpectation 2 (fun h => (h.count true : ℝ)^2) = (5 : ℝ)/3"
+  },
+  {
+    "name": "GuessingLogLowerProbe.averaged_variance",
+    "path": "Tests/OnlineGuessingLogLowerCanary.lean",
+    "header": "theorem averaged_variance : pathExpectation 2 (fun h => polyaNext h * (1-polyaNext h)) = (5 : ℝ)/24"
+  },
+  {
+    "name": "GuessingLogLowerProbe.same_past_different_current",
+    "path": "Tests/OnlineGuessingLogLowerCanary.lean",
+    "header": "theorem same_past_different_current : causalPredict polyaNext (binaryStream [true,false]) 1 = causalPredict polyaNext (binaryStream [false,false]) 1"
+  },
+  {
+    "name": "GuessingLogLowerProbe.actual_last_prediction",
+    "path": "Tests/OnlineGuessingLogLowerCanary.lean",
+    "header": "theorem actual_last_prediction : causalPredict polyaNext (binaryStream [true,true,false]) 2 = (1 : ℝ)/2"
+  },
+  {
+    "name": "GuessingLogLowerProbe.nondegenerate_actual_regret",
+    "path": "Tests/OnlineGuessingLogLowerCanary.lean",
+    "header": "theorem nondegenerate_actual_regret : pathRegret polyaNext [true,true] = (13 : ℝ)/36"
+  },
+  {
+    "name": "GuessingLogLowerProbe.actual_optimal_loss",
+    "path": "Tests/OnlineGuessingLogLowerCanary.lean",
+    "header": "theorem actual_optimal_loss : pathBestLoss [true,false] = (1 : ℝ)/2"
+  },
+  {
+    "name": "GuessingLogLowerProbe.one_step_harmonic_endpoint",
+    "path": "Tests/OnlineGuessingLogLowerCanary.lean",
+    "header": "theorem one_step_harmonic_endpoint : (1 : ℝ)/4 ≤ pathExpectation 1 (pathRegret polyaNext)"
+  },
+  {
+    "name": "GuessingLogLowerProbe.coin_distribution",
+    "path": "Tests/OnlineGuessingLogLowerCanary.lean",
+    "header": "theorem coin_distribution : BanditRLProof.Exp3.FiniteActionDistribution (univ : Finset Bool) (fun _ => (1 : ℝ)/2)"
+  },
+  {
+    "name": "GuessingLogLowerProbe.seeded_policy_bounds",
+    "path": "Tests/OnlineGuessingLogLowerCanary.lean",
+    "header": "theorem seeded_policy_bounds : ∀ b h, seededPolicy b h ∈ Icc (0 : ℝ) 1"
+  },
+  {
+    "name": "GuessingLogLowerProbe.genuine_coin_policy",
+    "path": "Tests/OnlineGuessingLogLowerCanary.lean",
+    "header": "theorem genuine_coin_policy : seededPolicy true [] = 1 ∧ seededPolicy false [] = 0 ∧ coinMeasure {true} = (1 : ENNReal)/2 ∧ coinMeasure {false} = (1 : ENNReal)/2"
+  },
+  {
+    "name": "GuessingLogLowerProbe.seeded_fixed_sequence_endpoint",
+    "path": "Tests/OnlineGuessingLogLowerCanary.lean",
+    "header": "theorem seeded_fixed_sequence_endpoint : ∃ v : List.Vector Bool 2, (11 : ℝ)/36 ≤ ∫ b, pathRegret (seededPolicy b) v.toList ∂coinMeasure"
+  },
+  {
+    "name": "GuessingLogLowerProbe.seeded_log_endpoint",
+    "path": "Tests/OnlineGuessingLogLowerCanary.lean",
+    "header": "theorem seeded_log_endpoint : ∃ v : List.Vector Bool 2, Real.log 4 / 6 ≤ ∫ b, pathRegret (seededPolicy b) v.toList ∂coinMeasure"
+  },
+  {
+    "name": "GuessingLogLowerProbe.deterministic_fixed_sequence_endpoint",
+    "path": "Tests/OnlineGuessingLogLowerCanary.lean",
+    "header": "theorem deterministic_fixed_sequence_endpoint (T : ℕ) (hT : 0 < T) : ∃ v : List.Vector Bool T, Real.log ((T : ℝ)+2)/6 ≤ pathRegret polyaNext v.toList"
+  }
+]

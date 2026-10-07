@@ -1,0 +1,50 @@
+E:\ABRL\worktrees\research-online-book\runs\online-log-lower-20261008\leaves\loss-bridge-v1.lean:166:12: warning: This simp argument is unused:
+  List.count_cons
+
+Hint: Omit it from the simp argument list.
+  simp [L̵i̵s̵t̵.̵c̵o̵u̵n̵t̵_̵c̵o̵n̵s̵,̵ ̵polyaNext, hl]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+E:\ABRL\worktrees\research-online-book\runs\online-log-lower-20261008\leaves\loss-bridge-v1.lean:186:17: warning: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+E:\ABRL\worktrees\research-online-book\runs\online-log-lower-20261008\leaves\loss-bridge-v1.lean:199:19: warning: 'ring' tactic does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+E:\ABRL\worktrees\research-online-book\runs\online-log-lower-20261008\leaves\loss-bridge-v1.lean:199:19: warning: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+E:\ABRL\worktrees\research-online-book\runs\online-log-lower-20261008\leaves\loss-bridge-v1.lean:209:15: warning: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+E:\ABRL\worktrees\research-online-book\runs\online-log-lower-20261008\leaves\loss-bridge-v1.lean:227:13: warning: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+E:\ABRL\worktrees\research-online-book\runs\online-log-lower-20261008\leaves\loss-bridge-v1.lean:258:41: warning: This simp argument is unused:
+  List.getElem?_append_right
+
+Hint: Omit it from the simp argument list.
+  simp [binaryStream, List.reverse_cons,̵ ̵L̵i̵s̵t̵.̵g̵e̵t̵E̵l̵e̵m̵?̵_̵a̵p̵p̵e̵n̵d̵_̵r̵i̵g̵h̵t̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+E:\ABRL\worktrees\research-online-book\runs\online-log-lower-20261008\leaves\loss-bridge-v1.lean:346:2: error: 'change' tactic failed, pattern
+  ↑(List.count true h) = pathBestLoss h + ↑(List.count true h) ^ 2 / ↑h.length
+is not definitionally equal to target
+  ↑(List.count true h) =
+    ∑ t ∈ Finset.range h.length, (↑(List.count true h) / ↑h.length - binaryValues h t) ^ 2 +
+      ↑(List.count true h) ^ 2 / ↑h.length
+E:\ABRL\worktrees\research-online-book\runs\online-log-lower-20261008\leaves\loss-bridge-v1.lean:360:13: warning: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+E:\ABRL\worktrees\research-online-book\runs\online-log-lower-20261008\leaves\loss-bridge-v1.lean:389:2: error: Type mismatch
+  add_le_add_left
+    (pathExpectation_mono T (fun h => polyaNext h * (1 - polyaNext h))
+      (fun h => (1 - polyaNext h) * A h ^ 2 + polyaNext h * (A h - 1) ^ 2) fun h x => conditional_square_lower h (A h))
+    ?m.51
+has type
+  (pathExpectation T fun h => polyaNext h * (1 - polyaNext h)) + ?m.51 ≤
+    (pathExpectation T fun h => (1 - polyaNext h) * A h ^ 2 + polyaNext h * (A h - 1) ^ 2) + ?m.51
+but is expected to have type
+  (pathExpectation T (pathLearnerLoss A) + pathExpectation T fun h => polyaNext h * (1 - polyaNext h)) ≤
+    pathExpectation T (pathLearnerLoss A) +
+      pathExpectation T fun h => (1 - polyaNext h) * A h ^ 2 + polyaNext h * (A h - 1) ^ 2

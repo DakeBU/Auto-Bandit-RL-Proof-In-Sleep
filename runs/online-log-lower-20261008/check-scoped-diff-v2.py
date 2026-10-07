@@ -1,0 +1,28 @@
+from common_integrated_v1 import *
+paths=subprocess.check_output(['git','diff','--name-only',BASE+'...HEAD'],text=True).splitlines();exceptions=[];checked=[]
+for p in paths:
+ reason=None
+ if p.startswith(RUN.relative_to(ROOT).as_posix()+'/'):
+  if p.endswith('/full-blind-decoder-v1.md'):
+   assert sha(p)==load(RUN/'full-blind-decoder-receipt-v1.json')['report']['sha256_raw_bytes']
+   reason='Exact independent decoder report raw bytes already receipt-bound; one trailing blank at EOF retained, no rewrite of independent review'
+  elif p.endswith('.log'):reason='exact raw command output'
+  elif '/snapshots/' in p:reason='exact reviewed raw source/prefix or native generated snapshot'
+  elif '/leaves/' in p:reason='exact retained compiled and failed proof-attempt inputs; immutable receipt-bound evidence, not production source'
+  elif re.search(r'/source-pdf\d+-v1\.txt$',p):reason='exact PDF extraction'
+  elif re.search(r'/formula-render-v\d+-dom\.html$',p):reason='exact browser DOM bytes'
+ if reason:exceptions.append(dict(path=p,reason=reason))
+ else:checked.append(p)
+command=['git','-c','core.whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol','diff','--check',BASE+'...HEAD','--']
+batches=[];batch=[]
+for path in checked:
+ if batch and len(subprocess.list2cmdline(command+batch+[path]))>16000:batches.append(batch);batch=[]
+ batch.append(path)
+if batch:batches.append(batch)
+assert [p for b in batches for p in b]==checked
+results=[subprocess.run(command+b,stdout=subprocess.PIPE,stderr=subprocess.STDOUT) for b in batches]
+code=max((r.returncode for r in results),default=0)
+write(RUN/('scoped-diff-'+sys.argv[1]+'.json'),dict(exit_code=code,base=BASE,checked_paths=checked,exceptions=exceptions,batch_count=len(batches),every_path_checked_once=True,production_JSON_scripts_docs_checked=True,CRLF_lineendings_accepted=True))
+print('Actual diff checked',len(checked),'paths; immutable exact evidence exceptions',len(exceptions))
+if code:print(b''.join(r.stdout for r in results).decode('utf8',errors='replace'))
+sys.exit(code)

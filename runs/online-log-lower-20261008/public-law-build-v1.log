@@ -1,0 +1,18 @@
+✖ [3399/3399] Building BanditRLProof.OnlineGuessingLogLower (8.1s)
+trace: .> LEAN_PATH=E:\ABRL\research\.lake\packages\Cli\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\batteries\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\Qq\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\aesop\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\proofwidgets\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\importGraph\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\LeanSearchClient\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\plausible\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\mathlib\.lake\build\lib\lean;E:\ABRL\worktrees\research-online-book\.lake\build\lib\lean c:\Users\admin\.elan\toolchains\leanprover--lean4---v4.29.1\bin\lean.exe E:\ABRL\worktrees\research-online-book\BanditRLProof\OnlineGuessingLogLower.lean -o E:\ABRL\worktrees\research-online-book\.lake\build\lib\lean\BanditRLProof\OnlineGuessingLogLower.olean -i E:\ABRL\worktrees\research-online-book\.lake\build\lib\lean\BanditRLProof\OnlineGuessingLogLower.ilean -c E:\ABRL\worktrees\research-online-book\.lake\build\ir\BanditRLProof\OnlineGuessingLogLower.c --setup E:\ABRL\worktrees\research-online-book\.lake\build\ir\BanditRLProof\OnlineGuessingLogLower.setup.json --json
+error: BanditRLProof/OnlineGuessingLogLower.lean:84:37: Application type mismatch: The argument
+  fun v => f v.toList
+has type
+  List.Vector Bool T → ℝ
+but is expected to have type
+  List.Vector Bool (T + 1) → ℝ
+in the application
+  Equiv.sum_comp (vectorConsEquiv T) fun v => f v.toList
+error: BanditRLProof/OnlineGuessingLogLower.lean:83:82: unsolved goals
+T : ℕ
+f : List Bool → ℝ
+⊢ ∑ v, f v.toList = ∑ v, (f (false :: v.toList) + f (true :: v.toList))
+error: Lean exited with code 1
+Some required targets logged failures:
+- BanditRLProof.OnlineGuessingLogLower
+error: build failed
