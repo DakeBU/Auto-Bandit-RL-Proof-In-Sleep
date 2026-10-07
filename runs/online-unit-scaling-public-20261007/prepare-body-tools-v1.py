@@ -1,0 +1,21 @@
+from common_v1 import *
+fixed()
+old=Path('runs/online-optimal-step-public-20261007')
+s=(old/'stabilize-v1.py').read_text(encoding='utf-8')
+for a,b in [('all11_full','all22_full'),('scalar-body','whole-space-unit-scaling-body'),('Existing11full public bodies/2defs and whole23canary proofs/4defs/1abbr','Existing22full public bodies/3defs/1abbr and whole30canary proofs/3defs/3abbr'),('focused41names/11fullguards','focused62names/22fullguards'),('OnlineOptimalStep','OnlineUnitScaling')]:s=s.replace(a,b)
+write(RUN/'stabilize-v1.py',s)
+s=(old/'prepare-body-evidence-v1.py').read_text(encoding='utf-8')
+s=s.replace("pd=names(PUBLIC,PRE,'def');","pd=names(PUBLIC,PRE,'def')+names(PUBLIC,PRE,'abbrev');")
+for a,b in [('==[11,2,23,4,1]','==[22,4,30,3,3]'),('==41','==62'),('named_checks=41','named_checks=62'),('Tests.OnlineOptimalStepCanary','Tests.OnlineUnitScalingCanary'),('online-optimal-step-20261004','online-unit-scaling-20261004'),('online-optimal-step-v1','online-unit-scaling-v1'),("assert len(pairs)==11","assert len(pairs)==21"),('==34','==52'),('==7','==10'),('native_guards=11','native_guards=22'),('selected_nodes=41','selected_nodes=62'),('proof_nodes=34','proof_nodes=52'),('definition_nodes_including_abbreviation=7','definition_nodes_including_abbreviation=10'),('public_proofs=11,public_definitions=2,canary_proofs=23,canary_definitions=4,canary_abbreviations=1,named_kernel_checks=41','public_proofs=22,public_definitions=4,canary_proofs=30,canary_definitions=3,canary_abbreviations=3,named_kernel_checks=62'),('OPTIMAL-STEP-PUBLIC-REUSE-V1','UNIT-SCALING-PUBLIC-REUSE-V1'),("['source_argmin']","['regret_fixed_scaled']"),("PRE+'source_argmin'","PRE+'regret_fixed_scaled'"),('existing11','existing22')]:s=s.replace(a,b)
+start=s.index('extra=');end=s.index('for pair in extra:',start)
+extras=[('dimensions_eta','unit_exponents'),('dimensions_regret','regret_unit_exponents'),('real_scaled_gradient','gradient_scaled'),('positive_eta','scaled_eta_positive'),('correct_path','output_scaling'),('wrong_path','wrong_step_output'),('transformed_selected','selected_scaling'),('transformed_legal','legal_feedback_scaling'),('correct_regret','regret_scaling'),('scaled_energy','energy_scaling'),('scaled_distance','distance_square_scaling'),('actual_sharp_bound','regret_fixed_scaled'),('coarse_bound_invariant','upper_bound_scaling'),('identity_scale','output_scaling'),('zero_horizon_actual_sharp','regret_fixed_scaled')]
+testpairs=[('loss_on','support'),('legal','support'),('legal','selected_one'),('selected_one','real_linear_gradient'),('physical_path_difference','correct_path'),('physical_path_difference','wrong_path'),('sharp_rhs','positive_old_energy'),('sharp_rhs','positive_terminal')]
+s=s[:start]+'extra=[(TEST+a,PRE+b) for a,b in '+repr(extras)+']\nextra.extend((TEST+a,TEST+b) for a,b in '+repr(testpairs)+')\n'+s[end:]
+s=s.replace('assert len(pairs)==27','assert len(pairs)==44')
+s=s.replace('11 historical producer checks and16 scalar/zero-boundary/nondegenerate actual same-loss projected OGD eta-energy canary calls','21 historical producer checks and23 actual dimensional/chainrule/recursivepath/legal/sharp/boundary canary calls')
+s=s.replace('Actual focused/41named kernel/11native guards/27prespecified VALUE/fullcanary checks passed','Actual focused/62named kernel/22native guards/44prespecified VALUE/fullcanary checks passed')
+s=s.replace('Existing11public proofs/2defs/whole23canaryproofs4defs1abbr unchanged. Actual41kernel/11guards/27directVALUE pairs','Existing22public proofs/3defs1abbr/whole30canaryproofs3defs3abbr unchanged. Actual62kernel/22guards/44directVALUE pairs')
+s=s.replace('Existing11 scalar proof bodies/2 definitions and whole canary; compiled TEST environment selected41 actual nodes/direct type-value references','Existing22 unit-scaling proof bodies/3 definitions/1 abbreviation and whole canary; compiled TEST environment selected62 actual nodes/direct type-value references')
+write(RUN/'prepare-body-evidence-v1.py',s)
+write(RUN/'body-tools-boundary-v1.json',dict(prespecified_VALUE_pairs=44,existing_public_proofs=22,existing_public_defs=3,existing_public_abbrev=1,canary_proofs=30,canary_defs=3,canary_abbrev=3,named62=True,new_math=0,CONTRACT_review_pending=True,BODY_gate_not_yet_executed=True))
+print('Bounded existing-body tools prepared; CONTRACT acceptance required before actual proving.')

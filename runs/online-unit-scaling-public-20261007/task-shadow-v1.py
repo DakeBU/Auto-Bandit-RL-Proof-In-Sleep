@@ -1,0 +1,11 @@
+from common_v1 import *
+fixed(True);assert load(RUN/'combined-gates-v1.json')['status']=='actual-root-Tests-full-harness-passed'
+rows=[json.loads(s) for s in Path('runs/trials.jsonl').read_text(encoding='utf-8').splitlines() if s.strip()]
+write(RUN/'candidate-scoped-trials-v1.jsonl','\n'.join(json.dumps(t) for t in rows if t.get('task')==TASK))
+b=load(RUN/'body-bindings-v1.json')
+write(RUN/'memory-digest-candidate-v1.md',TASK+' Existing22proofs3defs1abbr/whole30canaryproofs3defs3abbr;62kernel22fullguards44VALUE/'+str(b['direct_references'])+'refs/sourceCONTRACT/BODY/combined PASS. Uniform positive coordinate/fullspace/SAMEpolicy actual recursive transport; proper/subdifferentiable/on-pathlegal sharpfinite-regret retainsnegativeendpoint, unrestrictedEReal.toRealidentityalgebra only. Actualc1000gradient1correctvswrongphysicalstepcanary/zeroidentityhorizon boundaries. ZEROnewmath/nodes/sourceclosures. Currentreader/site/FINAL/native/PRpending;Chapter1/2/nineOTHERmainrelativegaps/appendicesREQUIRED,nullChapter2/3-16unenumerated,totalGoalACTIVE. Originalv1universeprobe failure/v2pass retained. SGB/pins/oldproofs/otherBooks preserved.')
+sys.path.insert(0,str(ROOT));from tools.abrl_lifecycle import lean_declaration_header
+native('candidate-frontier-refresh-v1','frontier-refresh','--root-objective','Persistent Orabona Chapters1-16; current uniform coordinate unit-scaling reuse','--leaf',TASK,'--kind','lean','--statement',lean_declaration_header(PUBLIC,'regret_fixed_scaled'),'--declaration',PRE+'regret_fixed_scaled','--file',PUBLIC,'--source-status','source-reviewed','--leaf-status','gate-pending','--dependency','lean:'+PRE+'regret_scaling:compiled','--dependency','lean:BanditRL.OnlineSubgradientPolicy.regret_fixed:compiled','--trials',RUN/'candidate-scoped-trials-v1.jsonl','--output',RUN/'candidate-frontier-v1.json','--shadow-status','pending')
+native('candidate-frontier-shadow-v1','frontier-shadow','--trials',RUN/'candidate-scoped-trials-v1.jsonl','--memory-digest',RUN/'memory-digest-candidate-v1.md','--frontier',RUN/'candidate-frontier-v1.json')
+j=json.loads((RUN/'candidate-frontier-shadow-v1.log').read_text(encoding='utf-8'));assert j['mismatches']==[] and j['would_mutate'] is False
+fixed(True);print('Actual OWN candidate shadowPASS; unrelated SGB unchanged.')

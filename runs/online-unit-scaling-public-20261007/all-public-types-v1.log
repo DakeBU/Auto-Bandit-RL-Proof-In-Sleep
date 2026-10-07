@@ -1,0 +1,272 @@
+@BanditRL.OnlineUnitScaling.unit_exponents : ∀ {D : Type u_1} [inst : AddCommGroup D] (X L H : D),
+  H + (L - X) = X → H = X + X - L
+@BanditRL.OnlineUnitScaling.regret_unit_exponents : ∀ {D : Type u_1} [inst : AddCommGroup D] (X L : D),
+  X + X - (X + X - L) = L ∧ X + X - L + (L - X) + (L - X) = L
+@BanditRL.OnlineUnitScaling.inverse_loss : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (c : ℝ),
+  0 < c → ∀ (f : E → EReal), BanditRL.OnlineUnitScaling.scaledLoss c⁻¹ (BanditRL.OnlineUnitScaling.scaledLoss c f) = f
+@BanditRL.OnlineUnitScaling.proper_scaled_loss : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (c : ℝ),
+  0 < c →
+    ∀ (f : E → EReal),
+      BanditRL.OnlineConvex.SourceProper f →
+        BanditRL.OnlineConvex.SourceProper (BanditRL.OnlineUnitScaling.scaledLoss c f)
+@BanditRL.OnlineUnitScaling.subgradient_scaled : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (c : ℝ),
+  0 < c →
+    ∀ (f : E → EReal),
+      BanditRL.OnlineConvex.SourceProper f →
+        ∀ (y g : E),
+          g ∈ BanditRL.OnlineConvex.SourceSubdifferential f (c • y) →
+            c • g ∈ BanditRL.OnlineConvex.SourceSubdifferential (BanditRL.OnlineUnitScaling.scaledLoss c f) y
+@BanditRL.OnlineUnitScaling.subdifferentiable_scaled : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (c : ℝ),
+  0 < c →
+    ∀ (f : E → EReal),
+      BanditRL.OnlineSubgradientDescent.SubdifferentiableOn BanditRL.OnlineUnitScaling.V f →
+        BanditRL.OnlineSubgradientDescent.SubdifferentiableOn BanditRL.OnlineUnitScaling.V
+          (BanditRL.OnlineUnitScaling.scaledLoss c f)
+@BanditRL.OnlineUnitScaling.hasGradientAt_scaled : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (c : ℝ) (f : E → ℝ) (y g : E),
+  HasGradientAt f g (c • y) → HasGradientAt (fun z => f (c • z)) (c • g) y
+@BanditRL.OnlineUnitScaling.gradient_scaled : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (c : ℝ) (f : E → ℝ) (y : E),
+  DifferentiableAt ℝ f (c • y) → gradient (fun z => f (c • z)) y = c • gradient f (c • y)
+@BanditRL.OnlineUnitScaling.step_scaling : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (c : ℝ),
+  0 < c → ∀ (η : ℝ) (x g : E), c⁻¹ • (x - η • g) = c⁻¹ • x - (η / c ^ 2) • c • g
+@BanditRL.OnlineUnitScaling.wrong_step_scaling : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (c : ℝ),
+  0 < c → ∀ (η : ℝ) (x g : E), c • (c⁻¹ • x - η • c • g) = x - (c ^ 2 * η) • g
+BanditRL.OnlineUnitScaling.scaled_eta_positive : ∀ (c : ℝ),
+  0 < c → ∀ (η : ℕ → ℝ) (t : ℕ), 0 < η t → 0 < BanditRL.OnlineUnitScaling.scaledEta c η t
+@BanditRL.OnlineUnitScaling.history_scaling : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (c : ℝ),
+  0 < c →
+    ∀ (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : BanditRL.OnlineSubgradientPolicy.SupportPolicy) (t : ℕ),
+      BanditRL.OnlineSubgradientPolicy.history BanditRL.OnlineUnitScaling.V (BanditRL.OnlineUnitScaling.scaledEta c η)
+          (fun s => BanditRL.OnlineUnitScaling.scaledLoss c (loss s)) (c⁻¹ • x₁)
+          (BanditRL.OnlineUnitScaling.scaledPolicy c p) t =
+        fun i => c⁻¹ • BanditRL.OnlineSubgradientPolicy.history BanditRL.OnlineUnitScaling.V η loss x₁ p t i
+@BanditRL.OnlineUnitScaling.output_scaling : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (c : ℝ),
+  0 < c →
+    ∀ (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : BanditRL.OnlineSubgradientPolicy.SupportPolicy) (t : ℕ),
+      BanditRL.OnlineSubgradientPolicy.output BanditRL.OnlineUnitScaling.V (BanditRL.OnlineUnitScaling.scaledEta c η)
+          (fun s => BanditRL.OnlineUnitScaling.scaledLoss c (loss s)) (c⁻¹ • x₁)
+          (BanditRL.OnlineUnitScaling.scaledPolicy c p) t =
+        c⁻¹ • BanditRL.OnlineSubgradientPolicy.output BanditRL.OnlineUnitScaling.V η loss x₁ p t
+@BanditRL.OnlineUnitScaling.selected_scaling : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (c : ℝ),
+  0 < c →
+    ∀ (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : BanditRL.OnlineSubgradientPolicy.SupportPolicy) (t : ℕ),
+      BanditRL.OnlineSubgradientPolicy.selected BanditRL.OnlineUnitScaling.V (BanditRL.OnlineUnitScaling.scaledEta c η)
+          (fun s => BanditRL.OnlineUnitScaling.scaledLoss c (loss s)) (c⁻¹ • x₁)
+          (BanditRL.OnlineUnitScaling.scaledPolicy c p) t =
+        c • BanditRL.OnlineSubgradientPolicy.selected BanditRL.OnlineUnitScaling.V η loss x₁ p t
+@BanditRL.OnlineUnitScaling.legal_feedback_scaling : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (c : ℝ),
+  0 < c →
+    ∀ (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : BanditRL.OnlineSubgradientPolicy.SupportPolicy) (T : ℕ),
+      (∀ t < T, BanditRL.OnlineConvex.SourceProper (loss t)) →
+        BanditRL.OnlineSubgradientPolicy.LegalFeedback BanditRL.OnlineUnitScaling.V η loss x₁ p T →
+          BanditRL.OnlineSubgradientPolicy.LegalFeedback BanditRL.OnlineUnitScaling.V
+            (BanditRL.OnlineUnitScaling.scaledEta c η) (fun s => BanditRL.OnlineUnitScaling.scaledLoss c (loss s))
+            (c⁻¹ • x₁) (BanditRL.OnlineUnitScaling.scaledPolicy c p) T
+@BanditRL.OnlineUnitScaling.loss_value_scaling : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (c : ℝ),
+  0 < c →
+    ∀ (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : BanditRL.OnlineSubgradientPolicy.SupportPolicy) (t : ℕ),
+      BanditRL.OnlineUnitScaling.scaledLoss c (loss t)
+          (BanditRL.OnlineSubgradientPolicy.output BanditRL.OnlineUnitScaling.V
+            (BanditRL.OnlineUnitScaling.scaledEta c η) (fun s => BanditRL.OnlineUnitScaling.scaledLoss c (loss s))
+            (c⁻¹ • x₁) (BanditRL.OnlineUnitScaling.scaledPolicy c p) t) =
+        loss t (BanditRL.OnlineSubgradientPolicy.output BanditRL.OnlineUnitScaling.V η loss x₁ p t)
+@BanditRL.OnlineUnitScaling.regret_scaling : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (c : ℝ),
+  0 < c →
+    ∀ (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : BanditRL.OnlineSubgradientPolicy.SupportPolicy) (u : E) (T : ℕ),
+      BanditRL.OnlineSubgradientPolicy.regret BanditRL.OnlineUnitScaling.V (BanditRL.OnlineUnitScaling.scaledEta c η)
+          (fun s => BanditRL.OnlineUnitScaling.scaledLoss c (loss s)) (c⁻¹ • x₁)
+          (BanditRL.OnlineUnitScaling.scaledPolicy c p) (c⁻¹ • u) T =
+        BanditRL.OnlineSubgradientPolicy.regret BanditRL.OnlineUnitScaling.V η loss x₁ p u T
+@BanditRL.OnlineUnitScaling.wrong_step_output : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (c : ℝ),
+  0 < c →
+    ∀ (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : BanditRL.OnlineSubgradientPolicy.SupportPolicy) (t : ℕ),
+      c •
+          BanditRL.OnlineSubgradientPolicy.output BanditRL.OnlineUnitScaling.V η
+            (fun s => BanditRL.OnlineUnitScaling.scaledLoss c (loss s)) (c⁻¹ • x₁)
+            (BanditRL.OnlineUnitScaling.scaledPolicy c p) t =
+        BanditRL.OnlineSubgradientPolicy.output BanditRL.OnlineUnitScaling.V (fun s => c ^ 2 * η s) loss x₁ p t
+@BanditRL.OnlineUnitScaling.distance_square_scaling : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (c : ℝ),
+  0 < c → ∀ (x u : E), ‖c⁻¹ • x - c⁻¹ • u‖ ^ 2 = ‖x - u‖ ^ 2 / c ^ 2
+@BanditRL.OnlineUnitScaling.energy_scaling : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (c : ℝ),
+  0 < c →
+    ∀ (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : BanditRL.OnlineSubgradientPolicy.SupportPolicy) (T : ℕ),
+      ∑ t ∈ Finset.range T,
+          ‖BanditRL.OnlineSubgradientPolicy.selected BanditRL.OnlineUnitScaling.V
+                (BanditRL.OnlineUnitScaling.scaledEta c η) (fun s => BanditRL.OnlineUnitScaling.scaledLoss c (loss s))
+                (c⁻¹ • x₁) (BanditRL.OnlineUnitScaling.scaledPolicy c p) t‖ ^
+            2 =
+        c ^ 2 *
+          ∑ t ∈ Finset.range T,
+            ‖BanditRL.OnlineSubgradientPolicy.selected BanditRL.OnlineUnitScaling.V η loss x₁ p t‖ ^ 2
+BanditRL.OnlineUnitScaling.upper_bound_scaling : ∀ (c : ℝ),
+  0 < c →
+    ∀ (A B η : ℝ),
+      0 < η →
+        BanditRL.OnlineOptimalStep.upperBound (A / c ^ 2) (c ^ 2 * B) (η / c ^ 2) =
+          BanditRL.OnlineOptimalStep.upperBound A B η
+@BanditRL.OnlineUnitScaling.regret_fixed_scaled : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (c : ℝ),
+  0 < c →
+    ∀ (η : ℝ),
+      0 < η →
+        ∀ (loss : ℕ → E → EReal) (x₁ : E) (p : BanditRL.OnlineSubgradientPolicy.SupportPolicy) (T : ℕ),
+          (∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn BanditRL.OnlineUnitScaling.V (loss t)) →
+            BanditRL.OnlineSubgradientPolicy.LegalFeedback BanditRL.OnlineUnitScaling.V (fun x => η) loss x₁ p T →
+              ∀ (u : E),
+                BanditRL.OnlineSubgradientPolicy.regret BanditRL.OnlineUnitScaling.V
+                    (BanditRL.OnlineUnitScaling.scaledEta c fun x => η)
+                    (fun s => BanditRL.OnlineUnitScaling.scaledLoss c (loss s)) (c⁻¹ • x₁)
+                    (BanditRL.OnlineUnitScaling.scaledPolicy c p) (c⁻¹ • u) T ≤
+                  ‖x₁ - u‖ ^ 2 / (2 * η) +
+                      η / 2 *
+                        ∑ t ∈ Finset.range T,
+                          ‖BanditRL.OnlineSubgradientPolicy.selected BanditRL.OnlineUnitScaling.V (fun x => η) loss x₁ p
+                                t‖ ^
+                            2 -
+                    ‖BanditRL.OnlineSubgradientPolicy.output BanditRL.OnlineUnitScaling.V (fun x => η) loss x₁ p T -
+                            u‖ ^
+                        2 /
+                      (2 * η)
+@BanditRL.OnlineUnitScaling.scaledLoss : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] → [InnerProductSpace ℝ E] → ℝ → (E → EReal) → E → EReal
+BanditRL.OnlineUnitScaling.scaledEta : ℝ → (ℕ → ℝ) → ℕ → ℝ
+@BanditRL.OnlineUnitScaling.scaledPolicy : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] →
+    [InnerProductSpace ℝ E] →
+      ℝ → BanditRL.OnlineSubgradientPolicy.SupportPolicy → BanditRL.OnlineSubgradientPolicy.SupportPolicy
+@BanditRL.OnlineUnitScaling.V : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] → [inst_1 : InnerProductSpace ℝ E] → BanditRL.OnlineSubgradientPolicy.Domain
+UnitScalingProbe.dimensions_eta : (2, -1) = (1, 0) + (1, 0) - (0, 1)
+UnitScalingProbe.dimensions_regret : (1, 0) + (1, 0) - ((1, 0) + (1, 0) - (0, 1)) = (0, 1) ∧
+  (1, 0) + (1, 0) - (0, 1) + ((0, 1) - (1, 0)) + ((0, 1) - (1, 0)) = (0, 1)
+UnitScalingProbe.real_linear_gradient : ∀ (x : ℝ), gradient (fun z => (UnitScalingProbe.loss 0 z).toReal) x = 1
+UnitScalingProbe.real_scaled_gradient : ∀ (x : ℝ), gradient (fun z => 1000 * z) x = 1000
+UnitScalingProbe.support : ∀ (t : ℕ) (x : ℝ),
+  BanditRL.OnlineConvex.SourceSubdifferential (UnitScalingProbe.loss t) x = {1}
+UnitScalingProbe.loss_on : ∀ (t : ℕ),
+  BanditRL.OnlineSubgradientDescent.SubdifferentiableOn BanditRL.OnlineUnitScaling.V (UnitScalingProbe.loss t)
+UnitScalingProbe.selected_one : ∀ (η : ℕ → ℝ) (t : ℕ),
+  BanditRL.OnlineSubgradientPolicy.selected BanditRL.OnlineUnitScaling.V η UnitScalingProbe.loss 0
+      UnitScalingProbe.policy t =
+    1
+UnitScalingProbe.legal : ∀ (η : ℕ → ℝ) (T : ℕ),
+  BanditRL.OnlineSubgradientPolicy.LegalFeedback BanditRL.OnlineUnitScaling.V η UnitScalingProbe.loss 0
+    UnitScalingProbe.policy T
+UnitScalingProbe.correct_eta : BanditRL.OnlineUnitScaling.scaledEta 1000 UnitScalingProbe.eta 0 = 1 / 1000000
+UnitScalingProbe.positive_eta : 0 < BanditRL.OnlineUnitScaling.scaledEta 1000 UnitScalingProbe.eta 0
+UnitScalingProbe.old_one : ∀ (η : ℕ → ℝ),
+  BanditRL.OnlineSubgradientPolicy.output BanditRL.OnlineUnitScaling.V η UnitScalingProbe.loss 0 UnitScalingProbe.policy
+      1 =
+    -η 0
+UnitScalingProbe.correct_path : UnitScalingProbe.good 1 = -1 / 1000
+UnitScalingProbe.wrong_path : UnitScalingProbe.bad 1 = -1000
+UnitScalingProbe.physical_path_difference : 1000 * UnitScalingProbe.good 1 = -1 ∧
+  1000 * UnitScalingProbe.bad 1 = -1000000 ∧ UnitScalingProbe.good 1 ≠ UnitScalingProbe.bad 1
+UnitScalingProbe.transformed_selected : BanditRL.OnlineSubgradientPolicy.selected BanditRL.OnlineUnitScaling.V
+    (BanditRL.OnlineUnitScaling.scaledEta 1000 UnitScalingProbe.eta)
+    (fun s => BanditRL.OnlineUnitScaling.scaledLoss 1000 (UnitScalingProbe.loss s)) (1000⁻¹ • 0)
+    (BanditRL.OnlineUnitScaling.scaledPolicy 1000 UnitScalingProbe.policy) 0 =
+  1000
+UnitScalingProbe.transformed_legal : BanditRL.OnlineSubgradientPolicy.LegalFeedback BanditRL.OnlineUnitScaling.V
+  (BanditRL.OnlineUnitScaling.scaledEta 1000 UnitScalingProbe.eta)
+  (fun s => BanditRL.OnlineUnitScaling.scaledLoss 1000 (UnitScalingProbe.loss s)) (1000⁻¹ • 0)
+  (BanditRL.OnlineUnitScaling.scaledPolicy 1000 UnitScalingProbe.policy) 1
+UnitScalingProbe.old_regret : BanditRL.OnlineSubgradientPolicy.regret BanditRL.OnlineUnitScaling.V UnitScalingProbe.eta
+    UnitScalingProbe.loss 0 UnitScalingProbe.policy (-2) 1 =
+  2
+UnitScalingProbe.correct_regret : BanditRL.OnlineSubgradientPolicy.regret BanditRL.OnlineUnitScaling.V
+    (BanditRL.OnlineUnitScaling.scaledEta 1000 UnitScalingProbe.eta)
+    (fun s => BanditRL.OnlineUnitScaling.scaledLoss 1000 (UnitScalingProbe.loss s)) (1000⁻¹ • 0)
+    (BanditRL.OnlineUnitScaling.scaledPolicy 1000 UnitScalingProbe.policy) (1000⁻¹ • -2) 1 =
+  2
+UnitScalingProbe.positive_old_energy : ∑ t ∈ Finset.range 1,
+    ‖BanditRL.OnlineSubgradientPolicy.selected BanditRL.OnlineUnitScaling.V UnitScalingProbe.eta UnitScalingProbe.loss 0
+          UnitScalingProbe.policy t‖ ^
+      2 =
+  1
+UnitScalingProbe.positive_terminal : ‖UnitScalingProbe.old 1 - -2‖ ^ 2 = 1
+UnitScalingProbe.scaled_energy : ∑ t ∈ Finset.range 1,
+    ‖BanditRL.OnlineSubgradientPolicy.selected BanditRL.OnlineUnitScaling.V
+          (BanditRL.OnlineUnitScaling.scaledEta 1000 UnitScalingProbe.eta)
+          (fun s => BanditRL.OnlineUnitScaling.scaledLoss 1000 (UnitScalingProbe.loss s)) (1000⁻¹ • 0)
+          (BanditRL.OnlineUnitScaling.scaledPolicy 1000 UnitScalingProbe.policy) t‖ ^
+      2 =
+  1000000
+UnitScalingProbe.scaled_distance : ‖1000⁻¹ • 0 - 1000⁻¹ • -2‖ ^ 2 = 4 / 1000000
+UnitScalingProbe.actual_sharp_bound : BanditRL.OnlineSubgradientPolicy.regret BanditRL.OnlineUnitScaling.V
+    (BanditRL.OnlineUnitScaling.scaledEta 1000 fun x => 1)
+    (fun s => BanditRL.OnlineUnitScaling.scaledLoss 1000 (UnitScalingProbe.loss s)) (1000⁻¹ • 0)
+    (BanditRL.OnlineUnitScaling.scaledPolicy 1000 UnitScalingProbe.policy) (1000⁻¹ • -2) 1 ≤
+  ‖0 - -2‖ ^ 2 / (2 * 1) +
+      1 / 2 *
+        ∑ t ∈ Finset.range 1,
+          ‖BanditRL.OnlineSubgradientPolicy.selected BanditRL.OnlineUnitScaling.V (fun x => 1) UnitScalingProbe.loss 0
+                UnitScalingProbe.policy t‖ ^
+            2 -
+    ‖BanditRL.OnlineSubgradientPolicy.output BanditRL.OnlineUnitScaling.V (fun x => 1) UnitScalingProbe.loss 0
+              UnitScalingProbe.policy 1 -
+            -2‖ ^
+        2 /
+      (2 * 1)
+UnitScalingProbe.sharp_rhs : ‖0 - -2‖ ^ 2 / (2 * 1) +
+      1 / 2 *
+        ∑ t ∈ Finset.range 1,
+          ‖BanditRL.OnlineSubgradientPolicy.selected BanditRL.OnlineUnitScaling.V UnitScalingProbe.eta
+                UnitScalingProbe.loss 0 UnitScalingProbe.policy t‖ ^
+            2 -
+    ‖UnitScalingProbe.old 1 - -2‖ ^ 2 / (2 * 1) =
+  2
+UnitScalingProbe.coarse_bound_invariant : BanditRL.OnlineOptimalStep.upperBound (4 / 1000 ^ 2) (1000 ^ 2 * 1)
+    (1 / 1000 ^ 2) =
+  BanditRL.OnlineOptimalStep.upperBound 4 1 1
+UnitScalingProbe.inverse_inadmissible_zero : BanditRL.OnlineUnitScaling.scaledLoss 0⁻¹
+    (BanditRL.OnlineUnitScaling.scaledLoss 0 (UnitScalingProbe.loss 0)) 1 ≠
+  UnitScalingProbe.loss 0 1
+UnitScalingProbe.identity_scale : BanditRL.OnlineSubgradientPolicy.output BanditRL.OnlineUnitScaling.V
+    (BanditRL.OnlineUnitScaling.scaledEta 1 UnitScalingProbe.eta)
+    (fun s => BanditRL.OnlineUnitScaling.scaledLoss 1 (UnitScalingProbe.loss s)) (1⁻¹ • 0)
+    (BanditRL.OnlineUnitScaling.scaledPolicy 1 UnitScalingProbe.policy) 1 =
+  UnitScalingProbe.old 1
+UnitScalingProbe.source_horizon_boundary : 0 < 1 / √1 ∧ 1 / √0 = 0 ∧ ¬0 < 0
+UnitScalingProbe.empty_regret : BanditRL.OnlineSubgradientPolicy.regret BanditRL.OnlineUnitScaling.V
+    (BanditRL.OnlineUnitScaling.scaledEta 1000 UnitScalingProbe.eta)
+    (fun s => BanditRL.OnlineUnitScaling.scaledLoss 1000 (UnitScalingProbe.loss s)) (1000⁻¹ • 0)
+    (BanditRL.OnlineUnitScaling.scaledPolicy 1000 UnitScalingProbe.policy) (1000⁻¹ • -2) 0 =
+  0
+UnitScalingProbe.zero_horizon_actual_sharp : BanditRL.OnlineSubgradientPolicy.regret BanditRL.OnlineUnitScaling.V
+    (BanditRL.OnlineUnitScaling.scaledEta 1000 fun x => 1)
+    (fun s => BanditRL.OnlineUnitScaling.scaledLoss 1000 (UnitScalingProbe.loss s)) (1000⁻¹ • 0)
+    (BanditRL.OnlineUnitScaling.scaledPolicy 1000 UnitScalingProbe.policy) (1000⁻¹ • -2) 0 ≤
+  ‖0 - -2‖ ^ 2 / (2 * 1) +
+      1 / 2 *
+        ∑ t ∈ Finset.range 0,
+          ‖BanditRL.OnlineSubgradientPolicy.selected BanditRL.OnlineUnitScaling.V (fun x => 1) UnitScalingProbe.loss 0
+                UnitScalingProbe.policy t‖ ^
+            2 -
+    ‖BanditRL.OnlineSubgradientPolicy.output BanditRL.OnlineUnitScaling.V (fun x => 1) UnitScalingProbe.loss 0
+              UnitScalingProbe.policy 0 -
+            -2‖ ^
+        2 /
+      (2 * 1)
+UnitScalingProbe.loss : ℕ → ℝ → EReal
+UnitScalingProbe.policy : BanditRL.OnlineSubgradientPolicy.SupportPolicy
+UnitScalingProbe.eta : ℕ → ℝ
+UnitScalingProbe.old : ℕ → ℝ
+UnitScalingProbe.good : ℕ → ℝ
+UnitScalingProbe.bad : ℕ → ℝ

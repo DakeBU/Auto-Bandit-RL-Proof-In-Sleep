@@ -1,0 +1,1 @@
+theorem history_scaling (c : ℝ) (hc : 0 < c) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) : history V (scaledEta c η) (fun s => scaledLoss c (loss s)) (c⁻¹ • x₁) (scaledPolicy c p) t = fun i => c⁻¹ • history V η loss x₁ p t i

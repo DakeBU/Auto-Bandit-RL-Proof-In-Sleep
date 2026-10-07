@@ -1,0 +1,515 @@
+{
+  "stage": "draft",
+  "fixed_files": {
+    "BanditRLProof/OnlineUnitScaling.lean": "273a09644b71086b8104c39eee063d13f6113fbcc9d0e1021f90cc1b116b7e9c",
+    "Tests/OnlineUnitScalingCanary.lean": "44ba4513662a70337521508079e3349ae3305d21e99c3829fd8944701bacf6f6",
+    "BanditRLProof.lean": "7cdb1969bad2f7b42cfd7a25f6d15747d0d49178dadc244b70ab1f9b8c92c5ad",
+    "Tests.lean": "2b3615efabe9c94eff5dade925783e7d0ebacd3139a7ab65a5d46ba2c695ef77",
+    "BanditRLProof/OnlineGradientDescent.lean": "9300cb2735da9f125e404f78b86509df47fe65a5f4d89abc469e071bdffdb871",
+    "BanditRLProof/OnlineSubgradientDescent.lean": "6ba8586e1691babc2db3e0c0fcddb69b4236e16f9f192c464b4c04262e854f1c",
+    "BanditRLProof/OnlineSubgradientPolicy.lean": "ac8fbfb3eee3c92ebb79b44f33beec33b500105bb7e54df5176c14e886c2c662",
+    "BanditRLProof/OnlineAffineSubgradient.lean": "fb45e9a58a84770594d4e88a5df04f18a73203406e82f4a48edffd6d4419ff80",
+    "BanditRLProof/OnlineHuber.lean": "6aa70d9db582884dae95c325445d0d96e963e918bf85a26db2ce67a5159cd1ce",
+    "BanditRLProof/OnlineOptimalStep.lean": "621accb68aa788e4ae225fbe0c94ca86c0b26db6fb7ea23210b1aeffed69afa1",
+    "BanditRLProof/OnlineClosedProper.lean": "c66f00c33b45fb8a0e11583eeadf506e176c16166ce2af02f41f0674507cebe7",
+    "BanditRLProof/OnlineSubgradientBasic.lean": "af3d3f56e4a64cd8adbe47368caf5382e63b428f01da29a121c28c8014f352a5",
+    "lean-toolchain": "b15a57f8ea4c890197465ce1156667ae13d9ed4ab8a9f263a920bf010d967d82",
+    "lakefile.lean": "0164f3b5b5bdcbb237ab15ae8b44da83e183f4b97d5f3832aa4a57f27dc69d45",
+    "lake-manifest.json": "87c3e616f86244550ef39e7415186b11c1d4cf4bef20173196a619d9d4d48f48",
+    "runs/active_frontier.json": "567e5873aa2549a83f2820d758069213808da822a93087129877385a1addf7c3",
+    "docs/contracts/online-book-v1/source-inventory.json": "a2a504cf40d73f9c5e36f00fc1ef3b949ccaf5a558ab603c1c2a86007f30efa7",
+    "research-wiki/contribution-contracts/ONLINE-UNIT-SCALING-20261004.json": "a5078f1fbdd02abe0525bba9513d0d46beb954a13d516364c400275a535da85c",
+    "runs/online-unit-scaling-20261004/accepted-decision.json": "f1a48e40fd45195649dd333839446f1a259c1953a6dd49467387873e93cce860",
+    "runs/online-unit-scaling-20261004/pr-delivery.json": "b50708d34f679e3584c34e14bf6bf6fb6396b4eb042863f20ed28fd3395e692c",
+    "runs/online-optimal-step-public-20261007/accepted-decision-v1.json": "7a7c7303997dcac3f9bde6e441f8d444bed2858e6867e26ca03815a88bbdc518",
+    "runs/online-optimal-step-public-20261007/delivery-obligations-overlay-v1.json": "11f650a9c23bda1fb79e1252908f99a35519f0e0a6cfdd356e258716f1441686",
+    "website/content/readings.json": "e7ae46e997afa3920a055541b1a847777ed04aa4fcc68ac2869f331a503ad39c",
+    "website/content/highlights.json": "4106b16be5e1608af867fdf6bf261ea7534743806c30d47c0f4d212c03c5df39",
+    "website/content/chapters.json": "b51de839ca7e80c63afc3c24174530456c02e0b481031968c249061f5cddcac9",
+    "docs/contracts/online-unit-scaling-v1/context.lean.txt": "47aa298a466cd68e18e8fcb6ac91f31893d56c52ca33650d4b48e2597f682d6f",
+    "docs/contracts/online-unit-scaling-v1/distance_square_scaling-header.txt": "c04822582f98297e83777cd705ea186720637d26b1be96b03b9219ca7939548c",
+    "docs/contracts/online-unit-scaling-v1/distance_square_scaling.json": "bf24aafb7edcc6bf0188f16b7df25764ea518db7f281b1f7a530661443225160",
+    "docs/contracts/online-unit-scaling-v1/energy_scaling-header.txt": "6547c311f5dac8531e47c4068dc2acf8063bcef75e951faeb84894b273601390",
+    "docs/contracts/online-unit-scaling-v1/energy_scaling.json": "3b02326fbc16d2365a15f9631132c49b84bc33a54446929120772e11bbfa0b20",
+    "docs/contracts/online-unit-scaling-v1/gradient_scaled-header.txt": "4d4a2f1cdb35caad421bae929b92e0d122edaf5220bb61e77c6db88a5b4503b3",
+    "docs/contracts/online-unit-scaling-v1/gradient_scaled.json": "fb10af190441da7b0c1bab0497e9759429e8fa4a918ab5abbe6f291afe3acb7d",
+    "docs/contracts/online-unit-scaling-v1/hasGradientAt_scaled-header.txt": "ed81ff707f30a7f802fd5c3ed4da9d2ccaf95438c9163889a5beeb5f9d9da181",
+    "docs/contracts/online-unit-scaling-v1/hasGradientAt_scaled.json": "d0af619db7e1d156cc31c5188a6e38593e7319ca8827c80e8fc58a4b0488e260",
+    "docs/contracts/online-unit-scaling-v1/history_scaling-header.txt": "4c9ccabbe2bc8e7c679ef491c6a1ec2d53a779776b719970f35f35909ba9825d",
+    "docs/contracts/online-unit-scaling-v1/history_scaling.json": "abb4d860869ccff1bafea7443c060172b9ad44aa24c8eeabe33948ed946e9252",
+    "docs/contracts/online-unit-scaling-v1/inverse_loss-header.txt": "8d2dd2a430aaf88183a8e18753e35943936a066efb8a806c07484a86a4055700",
+    "docs/contracts/online-unit-scaling-v1/inverse_loss.json": "c674e174d019341fbf3c20bf5c9dc5545133ebc0ec9f7954af50324392425910",
+    "docs/contracts/online-unit-scaling-v1/legal_feedback_scaling-header.txt": "f75c67671aa62664610ae223cc4bdab88119c75f80cf01f5b586f4dad7744a8f",
+    "docs/contracts/online-unit-scaling-v1/legal_feedback_scaling.json": "49b629d1658b828ecaf994c5d2ff568d255495ed6ecf1d6f3e076b7101f1a82e",
+    "docs/contracts/online-unit-scaling-v1/loss_value_scaling-header.txt": "4d44b4175f45bc060c73b9f22b385c324ab3c52e50be3fe09fd7ff821112ae92",
+    "docs/contracts/online-unit-scaling-v1/loss_value_scaling.json": "fbfc061b23caf1f2982a2463873475caf4bbde067955f37a5c40eb9bd1a63cab",
+    "docs/contracts/online-unit-scaling-v1/output_scaling-header.txt": "be52c1e204530474ed70c0d07b62a4c326e783c861bc182ebb73a74cfe27c5ab",
+    "docs/contracts/online-unit-scaling-v1/output_scaling.json": "9e8e6127024682e7ed457709316f76b105dfdd31a2e008d4e74c1c05203d35d5",
+    "docs/contracts/online-unit-scaling-v1/proper_scaled_loss-header.txt": "be1dc28c1faa5f5955d4e347af996ffc164021dc74eddece00ab8f8535916cfc",
+    "docs/contracts/online-unit-scaling-v1/proper_scaled_loss.json": "9e47caeabe2ed867d0f5cc503f345722b305b6f1c3c23ea86bbef267070550d0",
+    "docs/contracts/online-unit-scaling-v1/regret_fixed_scaled-header.txt": "ba3eea49c0bbee66f39489d0cbc98a5971f63508f5785be5008e21c90c9f4d0d",
+    "docs/contracts/online-unit-scaling-v1/regret_fixed_scaled.json": "e767d598ef80d7a24870c3fe7cd93b688ef6f734a1665960a47f93a411b3f5bd",
+    "docs/contracts/online-unit-scaling-v1/regret_scaling-header.txt": "01c580d3a69615559ed5dd5d7b4e9258ff292743c9a7d602c0c876bf1bf2fe60",
+    "docs/contracts/online-unit-scaling-v1/regret_scaling.json": "f55007812fe734f6791ef078c18ce5124b6be4ca9f5bd729c36c02754257190a",
+    "docs/contracts/online-unit-scaling-v1/regret_unit_exponents-header.txt": "ce574baae0cbf375310de1683aa14e988d507e38f12091c83df196474276474d",
+    "docs/contracts/online-unit-scaling-v1/regret_unit_exponents.json": "bd5bea1cb79d077d835dc9e343a0f7d4547dd43efb5d0b8d19821ebd9fce64ce",
+    "docs/contracts/online-unit-scaling-v1/scaled_eta_positive-header.txt": "2971048145af2947ee7c982a29c6dd5418e2e69f297cb9e45a193f42cbe0a8fa",
+    "docs/contracts/online-unit-scaling-v1/scaled_eta_positive.json": "23e914fed72b7df5d95e3bb9c6197a1471a55fd04cbf0e61fd843f1c72ee9cbe",
+    "docs/contracts/online-unit-scaling-v1/selected_scaling-header.txt": "ea27c16695d465a27188c5ab537a57d36cf2f2e0b9d36eb4894e90fc3c0ee3c0",
+    "docs/contracts/online-unit-scaling-v1/selected_scaling.json": "7a4861a9bfb70c954885cc95d40172861aafebd3999243bf9990feab8adbe857",
+    "docs/contracts/online-unit-scaling-v1/step_scaling-header.txt": "57bbbc370eca313cede1a45a18fc935d39607b8a4b9948591aae2ac307037f8b",
+    "docs/contracts/online-unit-scaling-v1/step_scaling.json": "03ab738e9fedaae29f7d28e4e21e69fb5976b2cc0230d20c42b2a006ada0ad58",
+    "docs/contracts/online-unit-scaling-v1/subdifferentiable_scaled-header.txt": "fb5ee90edc190bba7370e1da4f087d95641a6f0fbbc43d63f2f3c660a86cdd06",
+    "docs/contracts/online-unit-scaling-v1/subdifferentiable_scaled.json": "5108fa3ee9af4c8f17e84202a101a8566e659ca169e537b52f6e3d7a689ddeba",
+    "docs/contracts/online-unit-scaling-v1/subgradient_scaled-header.txt": "509e33485af3891f6d82d7a4d2e170c6d700e6557bf858d714f2bd9dbb0668fd",
+    "docs/contracts/online-unit-scaling-v1/subgradient_scaled.json": "25aacb15f53d035c0879a732749e6134fe92a46af07a8688a3ddbe13e318427c",
+    "docs/contracts/online-unit-scaling-v1/unit_exponents-header.txt": "78b949f2db4a1130781c062dee03858febb00571beb4503b0feb71ffb55dd50d",
+    "docs/contracts/online-unit-scaling-v1/unit_exponents.json": "b3840d2722e7db3fbd3226dcf96caddd378eb2601b9b58da4ec5c155d7819491",
+    "docs/contracts/online-unit-scaling-v1/upper_bound_scaling-header.txt": "57fda846c513aa20f0ef87f8e044654e3b5646f0bf3abc31e7a7f50e956166fd",
+    "docs/contracts/online-unit-scaling-v1/upper_bound_scaling.json": "fcec0b433cc54298bd3573934376cf5fff20ae79d5c439bf0e1b7b3d0b54394b",
+    "docs/contracts/online-unit-scaling-v1/wrong_step_output-header.txt": "65d252604aec31807cd78f98b8abf7abf12905e9731fd674151b9eea18d6b1f2",
+    "docs/contracts/online-unit-scaling-v1/wrong_step_output.json": "34f48e9414d60d3674ac5eb207ff2f169a11ee01236c30b403d59b95f963ff98",
+    "docs/contracts/online-unit-scaling-v1/wrong_step_scaling-header.txt": "ff015336715e7552a31ce207dcffda4150b2fcfba6c0f631cfde042d4594a18a",
+    "docs/contracts/online-unit-scaling-v1/wrong_step_scaling.json": "976237bf049015f6e6d6000171e7cc2e97490dcd0b6058d1b5741662c3873f96"
+  },
+  "before_snapshots": [
+    {
+      "original_path": "BanditRLProof/OnlineUnitScaling.lean",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-BanditRLProof--OnlineUnitScaling.lean.txt",
+      "sha256": "273a09644b71086b8104c39eee063d13f6113fbcc9d0e1021f90cc1b116b7e9c"
+    },
+    {
+      "original_path": "Tests/OnlineUnitScalingCanary.lean",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-Tests--OnlineUnitScalingCanary.lean.txt",
+      "sha256": "44ba4513662a70337521508079e3349ae3305d21e99c3829fd8944701bacf6f6"
+    },
+    {
+      "original_path": "BanditRLProof.lean",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-BanditRLProof.lean.txt",
+      "sha256": "7cdb1969bad2f7b42cfd7a25f6d15747d0d49178dadc244b70ab1f9b8c92c5ad"
+    },
+    {
+      "original_path": "Tests.lean",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-Tests.lean.txt",
+      "sha256": "2b3615efabe9c94eff5dade925783e7d0ebacd3139a7ab65a5d46ba2c695ef77"
+    },
+    {
+      "original_path": "BanditRLProof/OnlineGradientDescent.lean",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-BanditRLProof--OnlineGradientDescent.lean.txt",
+      "sha256": "9300cb2735da9f125e404f78b86509df47fe65a5f4d89abc469e071bdffdb871"
+    },
+    {
+      "original_path": "BanditRLProof/OnlineSubgradientDescent.lean",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-BanditRLProof--OnlineSubgradientDescent.lean.txt",
+      "sha256": "6ba8586e1691babc2db3e0c0fcddb69b4236e16f9f192c464b4c04262e854f1c"
+    },
+    {
+      "original_path": "BanditRLProof/OnlineSubgradientPolicy.lean",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-BanditRLProof--OnlineSubgradientPolicy.lean.txt",
+      "sha256": "ac8fbfb3eee3c92ebb79b44f33beec33b500105bb7e54df5176c14e886c2c662"
+    },
+    {
+      "original_path": "BanditRLProof/OnlineAffineSubgradient.lean",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-BanditRLProof--OnlineAffineSubgradient.lean.txt",
+      "sha256": "fb45e9a58a84770594d4e88a5df04f18a73203406e82f4a48edffd6d4419ff80"
+    },
+    {
+      "original_path": "BanditRLProof/OnlineHuber.lean",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-BanditRLProof--OnlineHuber.lean.txt",
+      "sha256": "6aa70d9db582884dae95c325445d0d96e963e918bf85a26db2ce67a5159cd1ce"
+    },
+    {
+      "original_path": "BanditRLProof/OnlineOptimalStep.lean",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-BanditRLProof--OnlineOptimalStep.lean.txt",
+      "sha256": "621accb68aa788e4ae225fbe0c94ca86c0b26db6fb7ea23210b1aeffed69afa1"
+    },
+    {
+      "original_path": "BanditRLProof/OnlineClosedProper.lean",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-BanditRLProof--OnlineClosedProper.lean.txt",
+      "sha256": "c66f00c33b45fb8a0e11583eeadf506e176c16166ce2af02f41f0674507cebe7"
+    },
+    {
+      "original_path": "BanditRLProof/OnlineSubgradientBasic.lean",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-BanditRLProof--OnlineSubgradientBasic.lean.txt",
+      "sha256": "af3d3f56e4a64cd8adbe47368caf5382e63b428f01da29a121c28c8014f352a5"
+    },
+    {
+      "original_path": "lean-toolchain",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-lean-toolchain.txt",
+      "sha256": "b15a57f8ea4c890197465ce1156667ae13d9ed4ab8a9f263a920bf010d967d82"
+    },
+    {
+      "original_path": "lakefile.lean",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-lakefile.lean.txt",
+      "sha256": "0164f3b5b5bdcbb237ab15ae8b44da83e183f4b97d5f3832aa4a57f27dc69d45"
+    },
+    {
+      "original_path": "lake-manifest.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-lake-manifest.json.txt",
+      "sha256": "87c3e616f86244550ef39e7415186b11c1d4cf4bef20173196a619d9d4d48f48"
+    },
+    {
+      "original_path": "runs/active_frontier.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-runs--active_frontier.json.txt",
+      "sha256": "567e5873aa2549a83f2820d758069213808da822a93087129877385a1addf7c3"
+    },
+    {
+      "original_path": "docs/contracts/online-book-v1/source-inventory.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-docs--contracts--online-book-v1--source-inventory.json.txt",
+      "sha256": "a2a504cf40d73f9c5e36f00fc1ef3b949ccaf5a558ab603c1c2a86007f30efa7"
+    },
+    {
+      "original_path": "research-wiki/contribution-contracts/ONLINE-UNIT-SCALING-20261004.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-research-wiki--contribution-contracts--ONLINE-UNIT-SCALING-20261004.json.txt",
+      "sha256": "a5078f1fbdd02abe0525bba9513d0d46beb954a13d516364c400275a535da85c"
+    },
+    {
+      "original_path": "runs/online-unit-scaling-20261004/accepted-decision.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-runs--online-unit-scaling-20261004--accepted-decision.json.txt",
+      "sha256": "f1a48e40fd45195649dd333839446f1a259c1953a6dd49467387873e93cce860"
+    },
+    {
+      "original_path": "runs/online-unit-scaling-20261004/pr-delivery.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-runs--online-unit-scaling-20261004--pr-delivery.json.txt",
+      "sha256": "b50708d34f679e3584c34e14bf6bf6fb6396b4eb042863f20ed28fd3395e692c"
+    },
+    {
+      "original_path": "runs/online-optimal-step-public-20261007/accepted-decision-v1.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-runs--online-optimal-step-public-20261007--accepted-decision-v1.json.txt",
+      "sha256": "7a7c7303997dcac3f9bde6e441f8d444bed2858e6867e26ca03815a88bbdc518"
+    },
+    {
+      "original_path": "runs/online-optimal-step-public-20261007/delivery-obligations-overlay-v1.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-runs--online-optimal-step-public-20261007--delivery-obligations-overlay-v1.json.txt",
+      "sha256": "11f650a9c23bda1fb79e1252908f99a35519f0e0a6cfdd356e258716f1441686"
+    },
+    {
+      "original_path": "website/content/readings.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-website--content--readings.json.txt",
+      "sha256": "e7ae46e997afa3920a055541b1a847777ed04aa4fcc68ac2869f331a503ad39c"
+    },
+    {
+      "original_path": "website/content/highlights.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-website--content--highlights.json.txt",
+      "sha256": "4106b16be5e1608af867fdf6bf261ea7534743806c30d47c0f4d212c03c5df39"
+    },
+    {
+      "original_path": "website/content/chapters.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-website--content--chapters.json.txt",
+      "sha256": "b51de839ca7e80c63afc3c24174530456c02e0b481031968c249061f5cddcac9"
+    },
+    {
+      "original_path": "docs/contracts/online-unit-scaling-v1/context.lean.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-docs--contracts--online-unit-scaling-v1--context.lean.txt.txt",
+      "sha256": "47aa298a466cd68e18e8fcb6ac91f31893d56c52ca33650d4b48e2597f682d6f"
+    },
+    {
+      "original_path": "docs/contracts/online-unit-scaling-v1/distance_square_scaling-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-docs--contracts--online-unit-scaling-v1--distance_square_scaling-header.txt.txt",
+      "sha256": "c04822582f98297e83777cd705ea186720637d26b1be96b03b9219ca7939548c"
+    },
+    {
+      "original_path": "docs/contracts/online-unit-scaling-v1/distance_square_scaling.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-docs--contracts--online-unit-scaling-v1--distance_square_scaling.json.txt",
+      "sha256": "bf24aafb7edcc6bf0188f16b7df25764ea518db7f281b1f7a530661443225160"
+    },
+    {
+      "original_path": "docs/contracts/online-unit-scaling-v1/energy_scaling-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-docs--contracts--online-unit-scaling-v1--energy_scaling-header.txt.txt",
+      "sha256": "6547c311f5dac8531e47c4068dc2acf8063bcef75e951faeb84894b273601390"
+    },
+    {
+      "original_path": "docs/contracts/online-unit-scaling-v1/energy_scaling.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-docs--contracts--online-unit-scaling-v1--energy_scaling.json.txt",
+      "sha256": "3b02326fbc16d2365a15f9631132c49b84bc33a54446929120772e11bbfa0b20"
+    },
+    {
+      "original_path": "docs/contracts/online-unit-scaling-v1/gradient_scaled-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-docs--contracts--online-unit-scaling-v1--gradient_scaled-header.txt.txt",
+      "sha256": "4d4a2f1cdb35caad421bae929b92e0d122edaf5220bb61e77c6db88a5b4503b3"
+    },
+    {
+      "original_path": "docs/contracts/online-unit-scaling-v1/gradient_scaled.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-docs--contracts--online-unit-scaling-v1--gradient_scaled.json.txt",
+      "sha256": "fb10af190441da7b0c1bab0497e9759429e8fa4a918ab5abbe6f291afe3acb7d"
+    },
+    {
+      "original_path": "docs/contracts/online-unit-scaling-v1/hasGradientAt_scaled-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-docs--contracts--online-unit-scaling-v1--hasGradientAt_scaled-header.txt.txt",
+      "sha256": "ed81ff707f30a7f802fd5c3ed4da9d2ccaf95438c9163889a5beeb5f9d9da181"
+    },
+    {
+      "original_path": "docs/contracts/online-unit-scaling-v1/hasGradientAt_scaled.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-docs--contracts--online-unit-scaling-v1--hasGradientAt_scaled.json.txt",
+      "sha256": "d0af619db7e1d156cc31c5188a6e38593e7319ca8827c80e8fc58a4b0488e260"
+    },
+    {
+      "original_path": "docs/contracts/online-unit-scaling-v1/history_scaling-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-docs--contracts--online-unit-scaling-v1--history_scaling-header.txt.txt",
+      "sha256": "4c9ccabbe2bc8e7c679ef491c6a1ec2d53a779776b719970f35f35909ba9825d"
+    },
+    {
+      "original_path": "docs/contracts/online-unit-scaling-v1/history_scaling.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-docs--contracts--online-unit-scaling-v1--history_scaling.json.txt",
+      "sha256": "abb4d860869ccff1bafea7443c060172b9ad44aa24c8eeabe33948ed946e9252"
+    },
+    {
+      "original_path": "docs/contracts/online-unit-scaling-v1/inverse_loss-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-docs--contracts--online-unit-scaling-v1--inverse_loss-header.txt.txt",
+      "sha256": "8d2dd2a430aaf88183a8e18753e35943936a066efb8a806c07484a86a4055700"
+    },
+    {
+      "original_path": "docs/contracts/online-unit-scaling-v1/inverse_loss.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-docs--contracts--online-unit-scaling-v1--inverse_loss.json.txt",
+      "sha256": "c674e174d019341fbf3c20bf5c9dc5545133ebc0ec9f7954af50324392425910"
+    },
+    {
+      "original_path": "docs/contracts/online-unit-scaling-v1/legal_feedback_scaling-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-docs--contracts--online-unit-scaling-v1--legal_feedback_scaling-header.txt.txt",
+      "sha256": "f75c67671aa62664610ae223cc4bdab88119c75f80cf01f5b586f4dad7744a8f"
+    },
+    {
+      "original_path": "docs/contracts/online-unit-scaling-v1/legal_feedback_scaling.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-docs--contracts--online-unit-scaling-v1--legal_feedback_scaling.json.txt",
+      "sha256": "49b629d1658b828ecaf994c5d2ff568d255495ed6ecf1d6f3e076b7101f1a82e"
+    },
+    {
+      "original_path": "docs/contracts/online-unit-scaling-v1/loss_value_scaling-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-docs--contracts--online-unit-scaling-v1--loss_value_scaling-header.txt.txt",
+      "sha256": "4d44b4175f45bc060c73b9f22b385c324ab3c52e50be3fe09fd7ff821112ae92"
+    },
+    {
+      "original_path": "docs/contracts/online-unit-scaling-v1/loss_value_scaling.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-docs--contracts--online-unit-scaling-v1--loss_value_scaling.json.txt",
+      "sha256": "fbfc061b23caf1f2982a2463873475caf4bbde067955f37a5c40eb9bd1a63cab"
+    },
+    {
+      "original_path": "docs/contracts/online-unit-scaling-v1/output_scaling-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-docs--contracts--online-unit-scaling-v1--output_scaling-header.txt.txt",
+      "sha256": "be52c1e204530474ed70c0d07b62a4c326e783c861bc182ebb73a74cfe27c5ab"
+    },
+    {
+      "original_path": "docs/contracts/online-unit-scaling-v1/output_scaling.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-docs--contracts--online-unit-scaling-v1--output_scaling.json.txt",
+      "sha256": "9e8e6127024682e7ed457709316f76b105dfdd31a2e008d4e74c1c05203d35d5"
+    },
+    {
+      "original_path": "docs/contracts/online-unit-scaling-v1/proper_scaled_loss-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-docs--contracts--online-unit-scaling-v1--proper_scaled_loss-header.txt.txt",
+      "sha256": "be1dc28c1faa5f5955d4e347af996ffc164021dc74eddece00ab8f8535916cfc"
+    },
+    {
+      "original_path": "docs/contracts/online-unit-scaling-v1/proper_scaled_loss.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-docs--contracts--online-unit-scaling-v1--proper_scaled_loss.json.txt",
+      "sha256": "9e47caeabe2ed867d0f5cc503f345722b305b6f1c3c23ea86bbef267070550d0"
+    },
+    {
+      "original_path": "docs/contracts/online-unit-scaling-v1/regret_fixed_scaled-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-docs--contracts--online-unit-scaling-v1--regret_fixed_scaled-header.txt.txt",
+      "sha256": "ba3eea49c0bbee66f39489d0cbc98a5971f63508f5785be5008e21c90c9f4d0d"
+    },
+    {
+      "original_path": "docs/contracts/online-unit-scaling-v1/regret_fixed_scaled.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-docs--contracts--online-unit-scaling-v1--regret_fixed_scaled.json.txt",
+      "sha256": "e767d598ef80d7a24870c3fe7cd93b688ef6f734a1665960a47f93a411b3f5bd"
+    },
+    {
+      "original_path": "docs/contracts/online-unit-scaling-v1/regret_scaling-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-docs--contracts--online-unit-scaling-v1--regret_scaling-header.txt.txt",
+      "sha256": "01c580d3a69615559ed5dd5d7b4e9258ff292743c9a7d602c0c876bf1bf2fe60"
+    },
+    {
+      "original_path": "docs/contracts/online-unit-scaling-v1/regret_scaling.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-docs--contracts--online-unit-scaling-v1--regret_scaling.json.txt",
+      "sha256": "f55007812fe734f6791ef078c18ce5124b6be4ca9f5bd729c36c02754257190a"
+    },
+    {
+      "original_path": "docs/contracts/online-unit-scaling-v1/regret_unit_exponents-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-docs--contracts--online-unit-scaling-v1--regret_unit_exponents-header.txt.txt",
+      "sha256": "ce574baae0cbf375310de1683aa14e988d507e38f12091c83df196474276474d"
+    },
+    {
+      "original_path": "docs/contracts/online-unit-scaling-v1/regret_unit_exponents.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-docs--contracts--online-unit-scaling-v1--regret_unit_exponents.json.txt",
+      "sha256": "bd5bea1cb79d077d835dc9e343a0f7d4547dd43efb5d0b8d19821ebd9fce64ce"
+    },
+    {
+      "original_path": "docs/contracts/online-unit-scaling-v1/scaled_eta_positive-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-docs--contracts--online-unit-scaling-v1--scaled_eta_positive-header.txt.txt",
+      "sha256": "2971048145af2947ee7c982a29c6dd5418e2e69f297cb9e45a193f42cbe0a8fa"
+    },
+    {
+      "original_path": "docs/contracts/online-unit-scaling-v1/scaled_eta_positive.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-docs--contracts--online-unit-scaling-v1--scaled_eta_positive.json.txt",
+      "sha256": "23e914fed72b7df5d95e3bb9c6197a1471a55fd04cbf0e61fd843f1c72ee9cbe"
+    },
+    {
+      "original_path": "docs/contracts/online-unit-scaling-v1/selected_scaling-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-docs--contracts--online-unit-scaling-v1--selected_scaling-header.txt.txt",
+      "sha256": "ea27c16695d465a27188c5ab537a57d36cf2f2e0b9d36eb4894e90fc3c0ee3c0"
+    },
+    {
+      "original_path": "docs/contracts/online-unit-scaling-v1/selected_scaling.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-docs--contracts--online-unit-scaling-v1--selected_scaling.json.txt",
+      "sha256": "7a4861a9bfb70c954885cc95d40172861aafebd3999243bf9990feab8adbe857"
+    },
+    {
+      "original_path": "docs/contracts/online-unit-scaling-v1/step_scaling-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-docs--contracts--online-unit-scaling-v1--step_scaling-header.txt.txt",
+      "sha256": "57bbbc370eca313cede1a45a18fc935d39607b8a4b9948591aae2ac307037f8b"
+    },
+    {
+      "original_path": "docs/contracts/online-unit-scaling-v1/step_scaling.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-docs--contracts--online-unit-scaling-v1--step_scaling.json.txt",
+      "sha256": "03ab738e9fedaae29f7d28e4e21e69fb5976b2cc0230d20c42b2a006ada0ad58"
+    },
+    {
+      "original_path": "docs/contracts/online-unit-scaling-v1/subdifferentiable_scaled-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-docs--contracts--online-unit-scaling-v1--subdifferentiable_scaled-header.txt.txt",
+      "sha256": "fb5ee90edc190bba7370e1da4f087d95641a6f0fbbc43d63f2f3c660a86cdd06"
+    },
+    {
+      "original_path": "docs/contracts/online-unit-scaling-v1/subdifferentiable_scaled.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-docs--contracts--online-unit-scaling-v1--subdifferentiable_scaled.json.txt",
+      "sha256": "5108fa3ee9af4c8f17e84202a101a8566e659ca169e537b52f6e3d7a689ddeba"
+    },
+    {
+      "original_path": "docs/contracts/online-unit-scaling-v1/subgradient_scaled-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-docs--contracts--online-unit-scaling-v1--subgradient_scaled-header.txt.txt",
+      "sha256": "509e33485af3891f6d82d7a4d2e170c6d700e6557bf858d714f2bd9dbb0668fd"
+    },
+    {
+      "original_path": "docs/contracts/online-unit-scaling-v1/subgradient_scaled.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-docs--contracts--online-unit-scaling-v1--subgradient_scaled.json.txt",
+      "sha256": "25aacb15f53d035c0879a732749e6134fe92a46af07a8688a3ddbe13e318427c"
+    },
+    {
+      "original_path": "docs/contracts/online-unit-scaling-v1/unit_exponents-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-docs--contracts--online-unit-scaling-v1--unit_exponents-header.txt.txt",
+      "sha256": "78b949f2db4a1130781c062dee03858febb00571beb4503b0feb71ffb55dd50d"
+    },
+    {
+      "original_path": "docs/contracts/online-unit-scaling-v1/unit_exponents.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-docs--contracts--online-unit-scaling-v1--unit_exponents.json.txt",
+      "sha256": "b3840d2722e7db3fbd3226dcf96caddd378eb2601b9b58da4ec5c155d7819491"
+    },
+    {
+      "original_path": "docs/contracts/online-unit-scaling-v1/upper_bound_scaling-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-docs--contracts--online-unit-scaling-v1--upper_bound_scaling-header.txt.txt",
+      "sha256": "57fda846c513aa20f0ef87f8e044654e3b5646f0bf3abc31e7a7f50e956166fd"
+    },
+    {
+      "original_path": "docs/contracts/online-unit-scaling-v1/upper_bound_scaling.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-docs--contracts--online-unit-scaling-v1--upper_bound_scaling.json.txt",
+      "sha256": "fcec0b433cc54298bd3573934376cf5fff20ae79d5c439bf0e1b7b3d0b54394b"
+    },
+    {
+      "original_path": "docs/contracts/online-unit-scaling-v1/wrong_step_output-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-docs--contracts--online-unit-scaling-v1--wrong_step_output-header.txt.txt",
+      "sha256": "65d252604aec31807cd78f98b8abf7abf12905e9731fd674151b9eea18d6b1f2"
+    },
+    {
+      "original_path": "docs/contracts/online-unit-scaling-v1/wrong_step_output.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-docs--contracts--online-unit-scaling-v1--wrong_step_output.json.txt",
+      "sha256": "34f48e9414d60d3674ac5eb207ff2f169a11ee01236c30b403d59b95f963ff98"
+    },
+    {
+      "original_path": "docs/contracts/online-unit-scaling-v1/wrong_step_scaling-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-docs--contracts--online-unit-scaling-v1--wrong_step_scaling-header.txt.txt",
+      "sha256": "ff015336715e7552a31ce207dcffda4150b2fcfba6c0f631cfde042d4594a18a"
+    },
+    {
+      "original_path": "docs/contracts/online-unit-scaling-v1/wrong_step_scaling.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-docs--contracts--online-unit-scaling-v1--wrong_step_scaling.json.txt",
+      "sha256": "976237bf049015f6e6d6000171e7cc2e97490dcd0b6058d1b5741662c3873f96"
+    },
+    {
+      "original_path": "MANIFEST.md",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-MANIFEST.md.txt",
+      "sha256": "5ceb30a2819d779fd5765d444304c4bec287d68fe8c8460792e12589c145b867"
+    },
+    {
+      "original_path": "runs/lifecycle_sessions.jsonl",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-runs--lifecycle_sessions.jsonl.txt",
+      "sha256": "a9683016b94a3756ee6a3b07d4e95f6ebfee169e2e6f57bde5f6daca569083f9"
+    },
+    {
+      "original_path": "runs/lifecycle_memory.jsonl",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-runs--lifecycle_memory.jsonl.txt",
+      "sha256": "94be3ceb994768191ceb6a7545935c8d16c044511dfe8c4482e2fde493eaa5f8"
+    },
+    {
+      "original_path": "runs/trials.jsonl",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-unit-scaling-public-20261007/snapshots/before-runs--trials.jsonl.txt",
+      "sha256": "227f432bb2ebf9ec1249a31aa0397907467fe3dab6bbad0709cdec3c42d851f5"
+    }
+  ],
+  "raw_headers": {
+    "unit_exponents": "ad6373bcc4675aba4c00acc0f43104b263dd595a97398f138dfab27b53d27328",
+    "regret_unit_exponents": "c8f4e8b8af0552a9d6ee9237a80b9ed12824bc705a01f75948fbaf880b9063b6",
+    "inverse_loss": "54242ed6ea101b18edf2b883feb08f2c71106e3a0fca03965760e23889cbb7f2",
+    "proper_scaled_loss": "d74b112d59d2865438a6a9e06b7d192f8393d3c97157e186bf321f8c2bfb0824",
+    "subgradient_scaled": "334deb5da9f560a35626856d9002ae12e8fa4c8535dc372744d32602d1441cbd",
+    "subdifferentiable_scaled": "6ef4c8f66d5240e2515162b63ec97dbba7a467ca5eefe24049ac946a9b7cc1ae",
+    "hasGradientAt_scaled": "4769fcba83f8eeb46ba216f61059b3d9611523c4acd1008296851778a7a355ea",
+    "gradient_scaled": "561e6ddcd5929224b330f11d36e401632e90d4a7670ce684a40fce1e7eab231a",
+    "step_scaling": "e3dd989731ec751a7ac0c3b139c4491042fc53a4ba3eb344bea7d5a30d19f701",
+    "wrong_step_scaling": "ce9025108a11283e3e25065e71f61cadaf297a9b6a08bbe6aa19048b81c1dc68",
+    "scaled_eta_positive": "a5fd5ee6d468ce0bd055ba19aac62a21e768cecb75af164dc95b56f5d3618c0e",
+    "history_scaling": "ee0096b437aa549b781bab5d80589df5fe556c0dc8995cebb6a5bf8c23ea3c3b",
+    "output_scaling": "87c0d8f2dbc47515ba78f6b6a5d50fe901d8aabf507a31b65c49131479a94e71",
+    "selected_scaling": "7bb7024859c2bec4fc68006eaf65cffe3ef0e46ef0f95c7067e4967196f60ef0",
+    "legal_feedback_scaling": "446a51d6ec5b59bfd92740fc8a22c5f32d33fed1511b07321012f3c2db2eb895",
+    "loss_value_scaling": "347da566015fa0fdb2c4d575d3db650ffa1c44c933d42583bbf733605bf67b0a",
+    "regret_scaling": "c015b1e003cb7fec48688cd1054eeb995b5396c6d179a4517968729e8a76d8e6",
+    "wrong_step_output": "7ca6ecfbf0de3df725bbd9df55302ea2c48744a7ac22bbe744410ab432268598",
+    "distance_square_scaling": "db0dddbdc647fd3983ba8236373ec8bd5bea09cab5abffb78ad9c8d614c29a47",
+    "energy_scaling": "33ce2bd4a08ed401ac053584b3a1d0eca0f9ad423f6aac65b329a246dcb3a23a",
+    "upper_bound_scaling": "1c7df208d99d4e8bdd2bf1c9a4060243e0d8854f579b34d30382b1d86c64e0c0",
+    "regret_fixed_scaled": "10e633dd95530f800986b5193edfb56676eec0d711ad023cec86ac4b78093c84"
+  },
+  "native_headers": {
+    "unit_exponents": "ebd39e10bfa45cd813522503bfb123a0c399bcce96b06c23261d573d1032f7ed",
+    "regret_unit_exponents": "a2949be95480c94a8130326f2293d7f73c6e281a6ad4508a1d45a94c7ae16d70",
+    "inverse_loss": "261a4d7098d07b9faf6c78f4dc0dba4d0e8e25cc241c5ae58ef7a5a76f698bdd",
+    "proper_scaled_loss": "fef13ad47631d35b40a396962d9bed059c66a1ddbd723b2b63aa8058fce12cf5",
+    "subgradient_scaled": "d5f3d25c148103b097aecfe68ff3c293d63135762056fb056be923d98620c060",
+    "subdifferentiable_scaled": "7d4fdcb0150464d5e262a8572bd61eabfb92e0f58497442495641138794b0189",
+    "hasGradientAt_scaled": "693b7b03ce2efdb9d495a9063b58cf025237c8171bf06a78eb770e9c8f6810f2",
+    "gradient_scaled": "413db8a5eecf6a6b4aadbe61926fa551ebed240a9d4f3010f584462420fb7ab1",
+    "step_scaling": "22623815fe6747895bfc31e54632ad183add9368085546bd5095f0d2b3314723",
+    "wrong_step_scaling": "8beaddd8f6a9896578a39df38e95eeef58536d5d7bcad54a8fb7f95778459c3f",
+    "scaled_eta_positive": "d9015c0ae8fe1a21936a48d06fd43d218f34c98d15cf5b40d27c634bcae3f76a",
+    "history_scaling": "b9e0b6f2377bf4fa89f785cd803984c07d3681523f0b9a58f414fafc984c1d00",
+    "output_scaling": "b20d3555b3334e6a02a79509c635e46b44ef2bd30e21fa608aba72e1bf149d2e",
+    "selected_scaling": "bd3afbe3be581cedb69dfebb44337b19b2cc30674dfe8a1b60fab59ac4b395b8",
+    "legal_feedback_scaling": "8b165e4db484e4c08b8a6bcc572adc69e76469ecbb004914740f15f3288dc049",
+    "loss_value_scaling": "b71633725c3b8d9125f8ad6004c7aa63729eaf65da9fddbbeb250bd1db9eaf9f",
+    "regret_scaling": "3bbbdc5e16b52f6b49d65965993b02f9109b2d53fb3a881d4337fc7d04c310ff",
+    "wrong_step_output": "72c808560de132931acb487689e75dfcc44cd625755a7004b4b5073271b4b9f4",
+    "distance_square_scaling": "f5e3982906943fb4c3b5461a87cb6ebb5ad820502f9a0e2094c7f90d4594b220",
+    "energy_scaling": "189caf79021b3630d984011b2648cfff6185f3d51627990dd4929b521fa24756",
+    "upper_bound_scaling": "26858ef4cff3497ef5c9b130d3c6f8484b5ae4a960101e19be109b8c9e8caeb4",
+    "regret_fixed_scaled": "e183a80660e5d151f317ed0ade141335007e700f1464090d6c089bbdc2d61e81"
+  },
+  "counts": {
+    "public": {
+      "theorem": 22,
+      "def": 3,
+      "abbrev": 1
+    },
+    "canary": {
+      "theorem": 30,
+      "def": 3,
+      "abbrev": 3
+    }
+  },
+  "named_checks": 62,
+  "proof_bodies_preexist_current_draft": true,
+  "new_proofs": 0,
+  "new_definitions": 0,
+  "new_source_math_obligation_closures": 0,
+  "source_package_accepted": false,
+  "chapter_complete": false,
+  "goal_complete": false
+}

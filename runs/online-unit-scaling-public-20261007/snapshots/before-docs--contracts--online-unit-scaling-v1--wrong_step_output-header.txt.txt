@@ -1,0 +1,1 @@
+theorem wrong_step_output (c : ℝ) (hc : 0 < c) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) : c • output V η (fun s => scaledLoss c (loss s)) (c⁻¹ • x₁) (scaledPolicy c p) t = output V (fun s => c ^ 2 * η s) loss x₁ p t
