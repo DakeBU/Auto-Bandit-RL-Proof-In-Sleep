@@ -4812,7 +4812,7 @@
             "model": "Finite-dimensional real Euclidean space and actual nonempty closed convex V.",
             "assumptions": "f proper and subdifferentiable on V; eta>0; u in V; supplied actual g in partial f(x), with x not required feasible.",
             "parameters": "Arbitrary ambient current x and any actual global g at x; only comparator u must belong to V. Same supplied g enters the actual nearest projection. No chosen algorithm trajectory is an input to the standalone lemma.",
-            "regret": "Finite real single-step loss gap f(x)-f(u), justified by properness and actual global supports. This standalone lemma assumes no online regret sum or algorithm trajectory.",
+            "regret": "Finite real losses are produced from properness/supports; regret sums this same trajectory.",
             "guarantee": "Both eta-scaled inequalities and the negative projected terminal distance."
           },
           "local_status": {
@@ -4898,7 +4898,7 @@
           "relationship": "Source printed15 uses L, renamed G. This is horizon-specific and never optimizes using future gradients. Closed-V Lipschitzness alone is not assumed to bound boundary supports.",
           "contract": {
             "model": "Finite-dimensional real Euclidean space and actual nonempty closed convex V.",
-            "assumptions": "T>=1,D>0,G>0; prescribed feasible x1 in V; every played loss proper and subdifferentiable on V; all feasible pair distances<=D; actual chosen supports on this very eta-dependent trajectory have norms<=G.",
+            "assumptions": "T>=1,D>0,G>0; all feasible pair distances<=D; actual chosen supports on this very eta-dependent trajectory have norms<=G.",
             "parameters": "Same actual support choice and recursively projected trajectory, every feasible comparator; Lean0 = source1.",
             "regret": "Finite real losses are produced from properness/supports; regret sums this same trajectory.",
             "guarantee": "Uniform feasible-comparator bound with eta=D/(G sqrt T)."
@@ -4920,7 +4920,7 @@
           "relationship": "This coarse corollary does not replace the full residual terminal.",
           "contract": {
             "model": "Finite-dimensional real Euclidean space and actual nonempty closed convex V.",
-            "assumptions": "eta>0; feasible prescribed x1 and comparator u; each played loss proper and subdifferentiable on V. T0 is admitted and no bounded-domain premise is added.",
+            "assumptions": "Same fixed source hypotheses; no boundedness added.",
             "parameters": "Same actual support choice and recursively projected trajectory, every feasible comparator; Lean0 = source1.",
             "regret": "Finite real losses are produced from properness/supports; regret sums this same trajectory.",
             "guarantee": "The displayed printed21 formula as a separate corollary."
