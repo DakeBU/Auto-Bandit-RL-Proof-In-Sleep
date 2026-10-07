@@ -15471,3 +15471,4 @@ Orabona v10 unnumberedexample afterT2.30/endSection2.2.1 immediatelybefore2.2.2 
 - `2026-10-07T05:59:47+00:00` `bandit.py new-task` `task` `tasks/ONLINE-GUESSING-OSD-POLICY-20261007.md` - Example2.32 arbitrary played-legal finite-history OSD policy guarantee
 - `2026-10-07T07:11:25+00:00` `bandit.py new-task` `task` `tasks/ONLINE-GUESSING-PUBLIC-20261007.md` - Canonical Example2.32 current source/public reuse audit
 - `2026-10-07T08:04:39+00:00` `bandit.py new-task` `task` `tasks/ONLINE-LINEARIZATION-PUBLIC-20261007.md` - Causal convex-to-linear reduction current source/public reuse audit
+- `2026-10-07T09:02:21+00:00` `bandit.py new-task` `task` `tasks/ONLINE-OPTIMAL-STEP-PUBLIC-20261007.md` - Frozen-coefficient step-size minimization current source/public audit

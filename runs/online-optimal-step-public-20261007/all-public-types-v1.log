@@ -1,0 +1,102 @@
+BanditRL.OnlineOptimalStep.gap_identity : ∀ (A B η : ℝ),
+  0 ≤ A → 0 ≤ B → 0 < η → BanditRL.OnlineOptimalStep.upperBound A B η - √A * √B = (√A - η * √B) ^ 2 / (2 * η)
+BanditRL.OnlineOptimalStep.lower_bound : ∀ (A B η : ℝ),
+  0 ≤ A → 0 ≤ B → 0 < η → √A * √B ≤ BanditRL.OnlineOptimalStep.upperBound A B η
+BanditRL.OnlineOptimalStep.optimal_positive : ∀ (A B : ℝ),
+  0 < A → 0 < B → 0 < BanditRL.OnlineOptimalStep.optimalStep A B
+BanditRL.OnlineOptimalStep.optimal_value : ∀ (A B : ℝ),
+  0 < A → 0 < B → BanditRL.OnlineOptimalStep.upperBound A B (BanditRL.OnlineOptimalStep.optimalStep A B) = √A * √B
+BanditRL.OnlineOptimalStep.optimal_unique : ∀ (A B η : ℝ),
+  0 < A →
+    0 < B →
+      0 < η →
+        (BanditRL.OnlineOptimalStep.upperBound A B η =
+            BanditRL.OnlineOptimalStep.upperBound A B (BanditRL.OnlineOptimalStep.optimalStep A B) ↔
+          η = BanditRL.OnlineOptimalStep.optimalStep A B)
+BanditRL.OnlineOptimalStep.source_argmin : ∀ (A B : ℝ),
+  0 < A →
+    0 < B →
+      0 < BanditRL.OnlineOptimalStep.optimalStep A B ∧
+        BanditRL.OnlineOptimalStep.upperBound A B (BanditRL.OnlineOptimalStep.optimalStep A B) = √(A * B) ∧
+          ∀ (η : ℝ),
+            0 < η →
+              BanditRL.OnlineOptimalStep.upperBound A B (BanditRL.OnlineOptimalStep.optimalStep A B) ≤
+                BanditRL.OnlineOptimalStep.upperBound A B η
+BanditRL.OnlineOptimalStep.distance_energy_argmin : ∀ (R B : ℝ),
+  0 < R →
+    0 < B →
+      BanditRL.OnlineOptimalStep.optimalStep (R ^ 2) B = R / √B ∧
+        BanditRL.OnlineOptimalStep.upperBound (R ^ 2) B (R / √B) = R * √B ∧
+          ∀ (η : ℝ),
+            0 < η →
+              BanditRL.OnlineOptimalStep.upperBound (R ^ 2) B (R / √B) ≤
+                BanditRL.OnlineOptimalStep.upperBound (R ^ 2) B η
+BanditRL.OnlineOptimalStep.diameter_argmin : ∀ (D G : ℝ) (T : ℕ),
+  0 < D →
+    0 < G →
+      0 < T →
+        BanditRL.OnlineOptimalStep.optimalStep (D ^ 2) (G ^ 2 * ↑T) = D / (G * √↑T) ∧
+          BanditRL.OnlineOptimalStep.upperBound (D ^ 2) (G ^ 2 * ↑T) (D / (G * √↑T)) = D * G * √↑T ∧
+            ∀ (η : ℝ),
+              0 < η →
+                BanditRL.OnlineOptimalStep.upperBound (D ^ 2) (G ^ 2 * ↑T) (D / (G * √↑T)) ≤
+                  BanditRL.OnlineOptimalStep.upperBound (D ^ 2) (G ^ 2 * ↑T) η
+BanditRL.OnlineOptimalStep.zero_distance_decreases : ∀ (B η : ℝ),
+  0 < B →
+    0 < η → 0 < η / 2 ∧ BanditRL.OnlineOptimalStep.upperBound 0 B (η / 2) < BanditRL.OnlineOptimalStep.upperBound 0 B η
+BanditRL.OnlineOptimalStep.zero_energy_decreases : ∀ (A η : ℝ),
+  0 < A →
+    0 < η → 0 < 2 * η ∧ BanditRL.OnlineOptimalStep.upperBound A 0 (2 * η) < BanditRL.OnlineOptimalStep.upperBound A 0 η
+BanditRL.OnlineOptimalStep.zero_coefficients : ∀ (η : ℝ), BanditRL.OnlineOptimalStep.upperBound 0 0 η = 0
+BanditRL.OnlineOptimalStep.upperBound : ℝ → ℝ → ℝ → ℝ
+BanditRL.OnlineOptimalStep.optimalStep : ℝ → ℝ → ℝ
+OptimalStepProbe.positive_optimizer : 0 < BanditRL.OnlineOptimalStep.optimalStep 9 4
+OptimalStepProbe.chosen : BanditRL.OnlineOptimalStep.optimalStep 9 4 = 3 / 2
+OptimalStepProbe.attained : BanditRL.OnlineOptimalStep.upperBound 9 4 (3 / 2) = 6
+OptimalStepProbe.public_argmin : 0 < BanditRL.OnlineOptimalStep.optimalStep 9 4 ∧
+  BanditRL.OnlineOptimalStep.upperBound 9 4 (BanditRL.OnlineOptimalStep.optimalStep 9 4) = √(9 * 4) ∧
+    ∀ (η : ℝ),
+      0 < η →
+        BanditRL.OnlineOptimalStep.upperBound 9 4 (BanditRL.OnlineOptimalStep.optimalStep 9 4) ≤
+          BanditRL.OnlineOptimalStep.upperBound 9 4 η
+OptimalStepProbe.universal : ∀ (η : ℝ), 0 < η → 6 ≤ BanditRL.OnlineOptimalStep.upperBound 9 4 η
+OptimalStepProbe.unique : ∀ (η : ℝ), 0 < η → (BanditRL.OnlineOptimalStep.upperBound 9 4 η = 6 ↔ η = 3 / 2)
+OptimalStepProbe.wrong_eta_strict : BanditRL.OnlineOptimalStep.upperBound 9 4 1 = 13 / 2 ∧
+  6 < BanditRL.OnlineOptimalStep.upperBound 9 4 1
+OptimalStepProbe.tuned : BanditRL.OnlineOptimalStep.optimalStep 9 16 = 3 / 4 ∧
+  BanditRL.OnlineOptimalStep.upperBound 9 16 (3 / 4) = 12 ∧
+    ∀ (η : ℝ), 0 < η → BanditRL.OnlineOptimalStep.upperBound 9 16 (3 / 4) ≤ BanditRL.OnlineOptimalStep.upperBound 9 16 η
+OptimalStepProbe.horizon_one : BanditRL.OnlineOptimalStep.optimalStep 9 4 = 3 / 2 ∧
+  BanditRL.OnlineOptimalStep.upperBound 9 4 (3 / 2) = 6 ∧
+    ∀ (η : ℝ), 0 < η → BanditRL.OnlineOptimalStep.upperBound 9 4 (3 / 2) ≤ BanditRL.OnlineOptimalStep.upperBound 9 4 η
+OptimalStepProbe.zero_distance_no_min : ∀ (η : ℝ),
+  0 < η → ∃ θ, 0 < θ ∧ BanditRL.OnlineOptimalStep.upperBound 0 4 θ < BanditRL.OnlineOptimalStep.upperBound 0 4 η
+OptimalStepProbe.zero_energy_no_min : ∀ (η : ℝ),
+  0 < η → ∃ θ, 0 < θ ∧ BanditRL.OnlineOptimalStep.upperBound 9 0 θ < BanditRL.OnlineOptimalStep.upperBound 9 0 η
+OptimalStepProbe.all_zero : ∀ (η : ℝ), BanditRL.OnlineOptimalStep.upperBound 0 0 η = 0
+OptimalStepProbe.zero_distance_optimizer_inadmissible : BanditRL.OnlineOptimalStep.optimalStep 0 4 = 0 ∧
+  ¬0 < BanditRL.OnlineOptimalStep.optimalStep 0 4
+OptimalStepProbe.division_zero_inadmissible : BanditRL.OnlineOptimalStep.upperBound 9 0 0 = 0 ∧
+  ∀ (η : ℝ), 0 < η → 0 < BanditRL.OnlineOptimalStep.upperBound 9 0 η
+OptimalStepProbe.zero_horizon_boundary : ¬0 < 0 ∧
+  3 / (2 * √0) = 0 ∧
+    ∀ (η : ℝ),
+      0 < η →
+        ∃ θ,
+          0 < θ ∧
+            BanditRL.OnlineOptimalStep.upperBound 9 (2 ^ 2 * ↑0) θ <
+              BanditRL.OnlineOptimalStep.upperBound 9 (2 ^ 2 * ↑0) η
+OptimalStepProbe.actual_gradient : ∀ (x : ℝ), gradient OptimalStepProbe.loss x = x - 1
+OptimalStepProbe.actual_projection : ∀ (z : ℝ), BanditRL.OnlineGradientDescent.project OptimalStepProbe.V z = z
+OptimalStepProbe.first_output : ∀ (η : ℝ), OptimalStepProbe.X η 0 = 0
+OptimalStepProbe.after_one : ∀ (η : ℝ), OptimalStepProbe.X η 1 = η
+OptimalStepProbe.first_feedback : ∀ (η : ℝ), OptimalStepProbe.feedback η 0 = -1
+OptimalStepProbe.second_feedback : ∀ (η : ℝ), OptimalStepProbe.feedback η 1 = η - 1
+OptimalStepProbe.energy_formula : ∀ (η : ℝ), OptimalStepProbe.energy η = 1 + (η - 1) ^ 2
+OptimalStepProbe.same_loss_different_energy : OptimalStepProbe.energy 1 = 1 ∧
+  OptimalStepProbe.energy 2 = 2 ∧ OptimalStepProbe.energy 1 ≠ OptimalStepProbe.energy 2
+OptimalStepProbe.loss : ℝ → ℝ
+OptimalStepProbe.X : ℝ → ℕ → ℝ
+OptimalStepProbe.feedback : ℝ → ℕ → ℝ
+OptimalStepProbe.energy : ℝ → ℝ
+OptimalStepProbe.V : BanditRL.OnlineGradientDescent.Domain ℝ

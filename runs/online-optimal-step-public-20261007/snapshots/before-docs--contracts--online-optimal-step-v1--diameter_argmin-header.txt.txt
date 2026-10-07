@@ -1,0 +1,7 @@
+theorem diameter_argmin (D G : ℝ) (T : ℕ) (hD : 0 < D) (hG : 0 < G) (hT : 0 < T) :
+    optimalStep (D ^ 2) (G ^ 2 * (T : ℝ)) = D / (G * Real.sqrt (T : ℝ)) ∧
+    upperBound (D ^ 2) (G ^ 2 * (T : ℝ)) (D / (G * Real.sqrt (T : ℝ))) =
+      D * G * Real.sqrt (T : ℝ) ∧
+    ∀ η : ℝ, 0 < η →
+      upperBound (D ^ 2) (G ^ 2 * (T : ℝ)) (D / (G * Real.sqrt (T : ℝ))) ≤
+      upperBound (D ^ 2) (G ^ 2 * (T : ℝ)) η

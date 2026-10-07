@@ -1,0 +1,69 @@
+Tests\OnlineOptimalStepCanary.lean:12:theorem positive_optimizer : 0 < optimalStep 9 4 :=
+Tests\OnlineOptimalStepCanary.lean:15:theorem chosen : optimalStep 9 4 = 3 / 2 := by
+Tests\OnlineOptimalStepCanary.lean:16:  norm_num [optimalStep]
+Tests\OnlineOptimalStepCanary.lean:18:theorem attained : upperBound 9 4 (3 / 2) = 6 := by
+Tests\OnlineOptimalStepCanary.lean:19:  norm_num [upperBound]
+Tests\OnlineOptimalStepCanary.lean:22:    0 < optimalStep 9 4 ∧ upperBound 9 4 (optimalStep 9 4) = Real.sqrt (9 * 4) ∧
+Tests\OnlineOptimalStepCanary.lean:23:    ∀ η : ℝ, 0 < η → upperBound 9 4 (optimalStep 9 4) ≤ upperBound 9 4 η :=
+Tests\OnlineOptimalStepCanary.lean:26:theorem universal (η : ℝ) (hη : 0 < η) : 6 ≤ upperBound 9 4 η := by
+Tests\OnlineOptimalStepCanary.lean:31:theorem unique (η : ℝ) (hη : 0 < η) : upperBound 9 4 η = 6 ↔ η = 3 / 2 := by
+Tests\OnlineOptimalStepCanary.lean:34:theorem wrong_eta_strict : upperBound 9 4 1 = 13 / 2 ∧ 6 < upperBound 9 4 1 := by
+Tests\OnlineOptimalStepCanary.lean:35:  norm_num [upperBound]
+Tests\OnlineOptimalStepCanary.lean:38:    optimalStep 9 16 = 3 / 4 ∧ upperBound 9 16 (3 / 4) = 12 ∧
+Tests\OnlineOptimalStepCanary.lean:39:    ∀ η : ℝ, 0 < η → upperBound 9 16 (3 / 4) ≤ upperBound 9 16 η := by
+Tests\OnlineOptimalStepCanary.lean:45:    optimalStep 9 4 = 3 / 2 ∧ upperBound 9 4 (3 / 2) = 6 ∧
+Tests\OnlineOptimalStepCanary.lean:46:    ∀ η : ℝ, 0 < η → upperBound 9 4 (3 / 2) ≤ upperBound 9 4 η := by
+Tests\OnlineOptimalStepCanary.lean:52:    ∃ θ : ℝ, 0 < θ ∧ upperBound 0 4 θ < upperBound 0 4 η :=
+Tests\OnlineOptimalStepCanary.lean:56:    ∃ θ : ℝ, 0 < θ ∧ upperBound 9 0 θ < upperBound 9 0 η :=
+Tests\OnlineOptimalStepCanary.lean:59:theorem all_zero (η : ℝ) : upperBound 0 0 η = 0 := zero_coefficients η
+Tests\OnlineOptimalStepCanary.lean:62:    optimalStep 0 4 = 0 ∧ ¬ 0 < optimalStep 0 4 := by
+Tests\OnlineOptimalStepCanary.lean:63:  norm_num [optimalStep]
+Tests\OnlineOptimalStepCanary.lean:66:    upperBound 9 0 0 = 0 ∧ ∀ η : ℝ, 0 < η → 0 < upperBound 9 0 η := by
+Tests\OnlineOptimalStepCanary.lean:68:  · norm_num [upperBound]
+Tests\OnlineOptimalStepCanary.lean:70:    dsimp [upperBound]
+Tests\OnlineOptimalStepCanary.lean:77:      upperBound 9 ((2 : ℝ) ^ 2 * (0 : ℕ)) θ <
+Tests\OnlineOptimalStepCanary.lean:78:        upperBound 9 ((2 : ℝ) ^ 2 * (0 : ℕ)) η := by
+.lake/packages/mathlib/Mathlib/Data/Real/Sqrt.lean:78:theorem sqrt_mul (x y : ℝ≥0) : sqrt (x * y) = sqrt x * sqrt y := by
+.lake/packages/mathlib/Mathlib/Data/Real/Sqrt.lean:94:@[simp] theorem sqrt_pos : 0 < sqrt x ↔ 0 < x := by simp [pos_iff_ne_zero]
+.lake/packages/mathlib/Mathlib/Data/Real/Sqrt.lean:150:theorem sqrt_mul_self (h : 0 ≤ x) : √(x * x) = x :=
+.lake/packages/mathlib/Mathlib/Data/Real/Sqrt.lean:175:theorem sq_sqrt (h : 0 ≤ x) : √x ^ 2 = x := by rw [sq, mul_self_sqrt h]
+.lake/packages/mathlib/Mathlib/Data/Real/Sqrt.lean:178:theorem sqrt_sq (h : 0 ≤ x) : √(x ^ 2) = x := by rw [sq, sqrt_mul_self h]
+.lake/packages/mathlib/Mathlib/Data/Real/Sqrt.lean:183:theorem sqrt_mul_self_eq_abs (x : ℝ) : √(x * x) = |x| := by
+.lake/packages/mathlib/Mathlib/Data/Real/Sqrt.lean:186:theorem sqrt_sq_eq_abs (x : ℝ) : √(x ^ 2) = |x| := by rw [sq, sqrt_mul_self_eq_abs]
+.lake/packages/mathlib/Mathlib/Data/Real/Sqrt.lean:273:theorem sq_sqrt' : √x ^ 2 = max x 0 := by
+.lake/packages/mathlib/Mathlib/Data/Real/Sqrt.lean:283:theorem sqrt_pos : 0 < √x ↔ 0 < x :=
+.lake/packages/mathlib/Mathlib/Data/Real/Sqrt.lean:349:theorem sqrt_mul {x : ℝ} (hx : 0 ≤ x) (y : ℝ) : √(x * y) = √x * √y := by
+.lake/packages/mathlib/Mathlib/Data/Real/Sqrt.lean:353:theorem sqrt_mul' (x) {y : ℝ} (hy : 0 ≤ y) : √(x * y) = √x * √y := by
+BanditRLProof\OnlineOptimalStep.lean:21:noncomputable def upperBound (A B η : ℝ) : ℝ := A / (2 * η) + η * B / 2
+BanditRLProof\OnlineOptimalStep.lean:22:noncomputable def optimalStep (A B : ℝ) : ℝ := Real.sqrt A / Real.sqrt B
+BanditRLProof\OnlineOptimalStep.lean:24:theorem gap_identity (A B η : ℝ) (hA : 0 ≤ A) (hB : 0 ≤ B) (hη : 0 < η) :
+BanditRLProof\OnlineOptimalStep.lean:25:    upperBound A B η - Real.sqrt A * Real.sqrt B =
+BanditRLProof\OnlineOptimalStep.lean:29:  dsimp [upperBound]
+BanditRLProof\OnlineOptimalStep.lean:34:    Real.sqrt A * Real.sqrt B ≤ upperBound A B η := by
+BanditRLProof\OnlineOptimalStep.lean:40:    0 < optimalStep A B := by
+BanditRLProof\OnlineOptimalStep.lean:44:    upperBound A B (optimalStep A B) = Real.sqrt A * Real.sqrt B := by
+BanditRLProof\OnlineOptimalStep.lean:47:  have hgap := gap_identity A B (optimalStep A B) hA.le hB.le hη
+BanditRLProof\OnlineOptimalStep.lean:48:  have hz : Real.sqrt A - optimalStep A B * Real.sqrt B = 0 := by
+BanditRLProof\OnlineOptimalStep.lean:49:    simp [optimalStep, div_mul_cancel₀ _ hBroot]
+BanditRLProof\OnlineOptimalStep.lean:54:    upperBound A B η = upperBound A B (optimalStep A B) ↔ η = optimalStep A B := by
+BanditRLProof\OnlineOptimalStep.lean:64:    unfold optimalStep
+BanditRLProof\OnlineOptimalStep.lean:70:theorem source_argmin (A B : ℝ) (hA : 0 < A) (hB : 0 < B) :
+BanditRLProof\OnlineOptimalStep.lean:71:    0 < optimalStep A B ∧
+BanditRLProof\OnlineOptimalStep.lean:72:    upperBound A B (optimalStep A B) = Real.sqrt (A * B) ∧
+BanditRLProof\OnlineOptimalStep.lean:73:    ∀ η : ℝ, 0 < η → upperBound A B (optimalStep A B) ≤ upperBound A B η := by
+BanditRLProof\OnlineOptimalStep.lean:81:    optimalStep (R ^ 2) B = R / Real.sqrt B ∧
+BanditRLProof\OnlineOptimalStep.lean:82:    upperBound (R ^ 2) B (R / Real.sqrt B) = R * Real.sqrt B ∧
+BanditRLProof\OnlineOptimalStep.lean:83:    ∀ η : ℝ, 0 < η → upperBound (R ^ 2) B (R / Real.sqrt B) ≤ upperBound (R ^ 2) B η := by
+BanditRLProof\OnlineOptimalStep.lean:86:  have hopt : optimalStep (R ^ 2) B = R / Real.sqrt B := by
+BanditRLProof\OnlineOptimalStep.lean:87:    dsimp [optimalStep]
+BanditRLProof\OnlineOptimalStep.lean:93:theorem diameter_argmin (D G : ℝ) (T : ℕ) (hD : 0 < D) (hG : 0 < G) (hT : 0 < T) :
+BanditRLProof\OnlineOptimalStep.lean:94:    optimalStep (D ^ 2) (G ^ 2 * (T : ℝ)) = D / (G * Real.sqrt (T : ℝ)) ∧
+BanditRLProof\OnlineOptimalStep.lean:95:    upperBound (D ^ 2) (G ^ 2 * (T : ℝ)) (D / (G * Real.sqrt (T : ℝ))) =
+BanditRLProof\OnlineOptimalStep.lean:98:      upperBound (D ^ 2) (G ^ 2 * (T : ℝ)) (D / (G * Real.sqrt (T : ℝ))) ≤
+BanditRLProof\OnlineOptimalStep.lean:99:      upperBound (D ^ 2) (G ^ 2 * (T : ℝ)) η := by
+BanditRLProof\OnlineOptimalStep.lean:107:    0 < η / 2 ∧ upperBound 0 B (η / 2) < upperBound 0 B η := by
+BanditRLProof\OnlineOptimalStep.lean:110:  · dsimp [upperBound]
+BanditRLProof\OnlineOptimalStep.lean:115:    0 < 2 * η ∧ upperBound A 0 (2 * η) < upperBound A 0 η := by
+BanditRLProof\OnlineOptimalStep.lean:118:  · dsimp [upperBound]
+BanditRLProof\OnlineOptimalStep.lean:123:theorem zero_coefficients (η : ℝ) : upperBound 0 0 η = 0 := by
+BanditRLProof\OnlineOptimalStep.lean:124:  simp [upperBound]
