@@ -1,0 +1,22 @@
+{
+  "coordinateAbsolute": {
+    "statement": "def coordinateAbsolute (x : EuclideanSpace ℝ (Fin 2)) : ℝ",
+    "sha256": "c8802ccddf8610159a438293c9689649ba96a0b7e7c2fea4b61a3dcf1aff6a04",
+    "kind": "def"
+  },
+  "coordinate_absolute_convex": {
+    "statement": "theorem coordinate_absolute_convex :\n    ConvexOn ℝ Set.univ coordinateAbsolute",
+    "sha256": "a277f9804e4c716f020a182d8f7c237030313c630cb257f11f1d66c710e5849f",
+    "kind": "theorem"
+  },
+  "coordinate_absolute_not_differentiable": {
+    "statement": "theorem coordinate_absolute_not_differentiable (x : EuclideanSpace ℝ (Fin 2))\n    (hx : x 0 = 0) : ¬ DifferentiableAt ℝ coordinateAbsolute x",
+    "sha256": "53d604ff05aac824084dd5944b8f6675d8ef233ce9980abbf55c98ec8b023f40",
+    "kind": "theorem"
+  },
+  "convex_nondifferentiable_segment": {
+    "statement": "theorem convex_nondifferentiable_segment :\n    ConvexOn ℝ Set.univ coordinateAbsolute ∧\n    ∀ x ∈ segment ℝ (0 : EuclideanSpace ℝ (Fin 2)) (PiLp.single 2 1 1),\n      ¬ DifferentiableAt ℝ coordinateAbsolute x",
+    "sha256": "30f03b667f47303d7fe3168b5b19994f3b2c73d2ce7496396693c62f0c497221",
+    "kind": "theorem"
+  }
+}

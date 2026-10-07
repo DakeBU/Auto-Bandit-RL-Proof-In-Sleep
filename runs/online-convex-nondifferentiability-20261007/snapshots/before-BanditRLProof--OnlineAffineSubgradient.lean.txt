@@ -1,0 +1,43 @@
+/-
+Orabona v10 Theorem2.28 printed18/PDF30.
+ONE main-text Theorem2.28 and ONE retained public proof, ZERO owned definitions/new mathematical/TEST/registry nodes. Whole SEVEN old scalar canary proofs/TWO TEST definitions unchanged.
+Actual public E and F each retain NormedAddCommGroup and InnerProductSpace real, and BOTH explicit FiniteDimensional premises. They supply completeness for Mathlib adjoint; no extra CompleteSpace or positive dimension. TWO production borrowed contexts are SourceProper (arbitrary carrier) and SourceSubdifferential (intrinsic norm/inner, no finite dimension). THREE supplementary CANARY borrowed contexts are effectiveDomain/realEpigraph (arbitrary carriers) and IsConvexExtended (AddCommGroup/Module real). All FIVE are shared borrowed definitions, none newly owned.
+Coordinate-free finite-dimensional real inner-product spaces include source Euclidean instances; continuous linear A models a matrix and the actual adjoint is transpose under orthonormal coordinates. No separately proved coordinate-isometry, matrix adapter or certified setting functor.
+SourceProper f explicitly retains the source no-bottom and finite-witness premise even though the transport body does not use hp algebraically. Generic all-ambient support accepts improper EReal inputs beyond the printed proper-function convention. The actual composite need not be proper. If f(Ax+b)=top, proper f has empty source supports by its finite witness, so the image inclusion is vacuous. An identically-top composite can have all vectors as literal generic supports; no finite-query/composite-proper guard is silently added.
+Every proper f, arbitrary A,b,x, every source support g and EVERY ambient target test y. No convexity, differentiability, continuity, closedness, Lipschitz, rank, nonzero map/shift or support-nonemptiness premise; full image inclusion ONLY, no converse/equality.
+Unpack each actual image witness g. Its global inequality is tested at Ay+b for EVERY y. Cancel b and rewrite (Ay+b)-(Ax+b)=A(y-x) with actual map_sub; actual adjoint_inner_left turns inner(g,A(y-x)) into inner(A*g,y-x). This same EReal inequality is exactly the target full global-support predicate. No supplied pullback formula or selected-support shortcut.
+Exactly SEVEN unchanged scalar canary proofs and TWO TEST definitions doubleMap/negAbsLoss. The actual doubling map has adjoint2g; proper |.| at sourcequery0 supplies g1/2, transported by A2,b1,x-1/2 to target1. Proper -|.| has empty support at0 by testing +1 and -1 and a genuinely nonconvex epigraph midpoint. With rankzero A0,b0,x3, the actual theorem gives empty source adjoint image included STRICTLY in full constant0 composite support{0}; all set equalities and inequality are proved. No new canary, actual2D/matrix-coordinate or all-top-composite canary claimed.
+Only bounded Theorem2.28 source refinement. Legacy1->0 AFTER actual reviewedPR only; zero is NOT chapter completion or total mandatory count. All remaining Chapter1/2 maintext, Lipschitz/OSD/linearization, nine OTHER Chapter1 main-relative contributor-contract gaps and necessary appendices remain REQUIRED; Chapter2mandatorytotalnull/incomplete, Chapters3-16unenumerated, wholeGoalACTIVE. No algorithm/regret/probability/feedback/computable/measurable selection, merge/deploy/mainlive/worktree retirement.
+-/
+import BanditRLProof.OnlineSubgradientBasic
+import Mathlib.Analysis.InnerProductSpace.Adjoint
+/-!
+# Affine transport of global subgradients
+Orabona arXiv:1912.13213v10, Theorem 2.28, printed 18 / PDF 30.
+For an arbitrary proper extended-real function, transport a global support
+through the actual affine map and its adjoint. Only inclusion is claimed;
+convexity and properness of the composite are not additional assumptions.
+The shared all-point support definition is used literally even if the
+composite is identically top; that case has an empty source image.
+-/
+noncomputable section
+open Set
+namespace BanditRL.OnlineConvex
+variable {E F : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+  [NormedAddCommGroup F] [InnerProductSpace ℝ F]
+
+theorem theorem_2_28 [FiniteDimensional ℝ E] [FiniteDimensional ℝ F]
+    (f : F → EReal) (hp : SourceProper f) (A : E →L[ℝ] F) (b : F) (x : E) :
+    A.adjoint '' (SourceSubdifferential f (A x + b)) ⊆
+      SourceSubdifferential (fun y => f (A y + b)) x := by
+  intro q hq
+  rcases hq with ⟨g, hg, rfl⟩
+  intro y
+  have hi := hg (A y + b)
+  have hm : (A y + b) - (A x + b) = A (y - x) := by
+    rw [A.map_sub]
+    abel
+  rw [hm, ← ContinuousLinearMap.adjoint_inner_left A (y - x) g] at hi
+  exact hi
+
+end BanditRL.OnlineConvex

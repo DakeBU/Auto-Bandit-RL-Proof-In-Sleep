@@ -1,0 +1,11 @@
+import Tests.OnlineConvexNondifferentiabilityCanary
+#check @BanditRL.OnlineConvex.coordinateAbsolute
+#check @BanditRL.OnlineConvex.coordinate_absolute_convex
+#check @BanditRL.OnlineConvex.coordinate_absolute_not_differentiable
+#check @BanditRL.OnlineConvex.convex_nondifferentiable_segment
+#check @ConvexNondiffProbe.closed_endpoints
+#check @ConvexNondiffProbe.nonzero_midpoint
+#check @ConvexNondiffProbe.axis_outside_segment
+#check @ConvexNondiffProbe.offaxis_positive_and_negative
+#check @ConvexNondiffProbe.constant_vertical_restriction
+#print BanditRL.OnlineConvex.coordinateAbsolute

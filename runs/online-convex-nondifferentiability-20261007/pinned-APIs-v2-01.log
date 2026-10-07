@@ -1,0 +1,50 @@
+PiLp.proj : (p : ENNReal) →
+  {𝕜 : Type u_1} →
+    {ι : Type u_2} →
+      (β : ι → Type u_3) →
+        [inst : Semiring 𝕜] →
+          [inst_1 : (i : ι) → SeminormedAddCommGroup (β i)] →
+            [inst_2 : (i : ι) → Module 𝕜 (β i)] → (i : ι) → PiLp p β →L[𝕜] β i
+PiLp.projₗ : (p : ENNReal) →
+  {𝕜 : Type u_1} →
+    {ι : Type u_2} →
+      (β : ι → Type u_3) →
+        [inst : Semiring 𝕜] →
+          [inst_1 : (i : ι) → SeminormedAddCommGroup (β i)] →
+            [inst_2 : (i : ι) → Module 𝕜 (β i)] → (i : ι) → PiLp p β →ₗ[𝕜] β i
+PiLp.continuousLinearEquiv : (p : ENNReal) →
+  (𝕜 : Type u_1) →
+    {ι : Type u_2} →
+      (β : ι → Type u_3) →
+        [inst : Semiring 𝕜] →
+          [inst_1 : (i : ι) → SeminormedAddCommGroup (β i)] →
+            [inst_2 : (i : ι) → Module 𝕜 (β i)] → PiLp p β ≃L[𝕜] (i : ι) → β i
+@convexOn_univ_norm : ∀ {E : Type u_1} [inst : SeminormedAddCommGroup E] [inst_1 : NormedSpace ℝ E],
+  ConvexOn ℝ Set.univ norm
+@ConvexOn.comp_linearMap : ∀ {𝕜 : Type u_1} {E : Type u_2} {F : Type u_3} {β : Type u_4} [inst : Semiring 𝕜]
+  [inst_1 : PartialOrder 𝕜] [inst_2 : AddCommMonoid E] [inst_3 : AddCommMonoid F] [inst_4 : AddCommMonoid β]
+  [inst_5 : PartialOrder β] [inst_6 : Module 𝕜 E] [inst_7 : Module 𝕜 F] [inst_8 : SMul 𝕜 β] {f : F → β} {s : Set F},
+  ConvexOn 𝕜 s f → ∀ (g : E →ₗ[𝕜] F), ConvexOn 𝕜 (⇑g ⁻¹' s) (f ∘ ⇑g)
+not_differentiableAt_abs_zero : ¬DifferentiableAt ℝ abs 0
+@DifferentiableAt.comp : ∀ {𝕜 : Type u_1} [inst : NontriviallyNormedField 𝕜] {E : Type u_2}
+  [inst_1 : NormedAddCommGroup E] [inst_2 : NormedSpace 𝕜 E] {F : Type u_3} [inst_3 : NormedAddCommGroup F]
+  [inst_4 : NormedSpace 𝕜 F] {G : Type u_4} [inst_5 : NormedAddCommGroup G] [inst_6 : NormedSpace 𝕜 G] {f : E → F}
+  (x : E) {g : F → G}, DifferentiableAt 𝕜 g (f x) → DifferentiableAt 𝕜 f x → DifferentiableAt 𝕜 (g ∘ f) x
+@DifferentiableAt.abs : ∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E] {f : E → ℝ} {x : E},
+  DifferentiableAt ℝ f x → f x ≠ 0 → DifferentiableAt ℝ (fun x => |f x|) x
+@ContinuousLinearMap.differentiableAt : ∀ {𝕜 : Type u_1} [inst : NontriviallyNormedField 𝕜] {E : Type u_2}
+  [inst_1 : AddCommGroup E] [inst_2 : Module 𝕜 E] [inst_3 : TopologicalSpace E] {F : Type u_3} [inst_4 : AddCommGroup F]
+  [inst_5 : Module 𝕜 F] [inst_6 : TopologicalSpace F] (f : E →L[𝕜] F) {x : E}, DifferentiableAt 𝕜 (⇑f) x
+@ContinuousLinearEquiv.differentiableAt : ∀ {𝕜 : Type u_1} [inst : NontriviallyNormedField 𝕜] {E : Type u_2}
+  [inst_1 : NormedAddCommGroup E] [inst_2 : NormedSpace 𝕜 E] {F : Type u_3} [inst_3 : NormedAddCommGroup F]
+  [inst_4 : NormedSpace 𝕜 F] {x : E} (iso : E ≃L[𝕜] F), DifferentiableAt 𝕜 (⇑iso) x
+PiLp.single_eq_same : ∀ (p : ENNReal) {ι : Type u_1} {β : ι → Type u_2} [inst : DecidableEq ι]
+  [inst_1 : (i : ι) → Zero (β i)] (i : ι) (a : β i), (PiLp.single p i a).ofLp i = a
+PiLp.single_eq_of_ne : ∀ (p : ENNReal) {ι : Type u_1} {β : ι → Type u_2} [inst : DecidableEq ι]
+  [inst_1 : (i : ι) → Zero (β i)] {i i' : ι}, i' ≠ i → ∀ (a : β i), (PiLp.single p i a).ofLp i' = 0
+segment : (𝕜 : Type u_1) →
+  {E : Type u_2} → [Semiring 𝕜] → [PartialOrder 𝕜] → [AddCommMonoid E] → [SMul 𝕜 E] → E → E → Set E
+left_mem_segment : ∀ (𝕜 : Type u_1) {E : Type u_2} [inst : Semiring 𝕜] [inst_1 : PartialOrder 𝕜]
+  [inst_2 : AddCommMonoid E] [ZeroLEOneClass 𝕜] [inst_4 : MulActionWithZero 𝕜 E] (x y : E), x ∈ segment 𝕜 x y
+right_mem_segment : ∀ (𝕜 : Type u_1) {E : Type u_2} [inst : Semiring 𝕜] [inst_1 : PartialOrder 𝕜]
+  [inst_2 : AddCommMonoid E] [ZeroLEOneClass 𝕜] [inst_4 : MulActionWithZero 𝕜 E] (x y : E), y ∈ segment 𝕜 x y

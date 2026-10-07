@@ -1,0 +1,25 @@
+help-list-lean-decls-v1 exit 0 seconds 0.203
+help-search-memory-v1 exit 0 seconds 0.218
+help-reference-index-v1 exit 0 seconds 0.203
+help-list-mathlib-v1 exit 0 seconds 0.219
+help-list-papers-v1 exit 0 seconds 0.203
+help-list-weapons-v1 exit 0 seconds 0.203
+help-statement-fence-v1 exit 0 seconds 0.203
+help-safe-verify-v1 exit 0 seconds 0.219
+help-lifecycle-start-v1 exit 2 seconds 0.203
+Failure tail only; full raw output is retained in help-lifecycle-start-v1.log
+usage: bandit.py [-h]
+                 {init,new-task,conversion-window,agent-brief,trial-log,trial-summary,harness-compare,agent-note,reference-index,list-literature,list-papers,list-mathlib,list-scenarios,list-weapons,list-lean-decls,search-memory,list-routes,route-plan,screen-plan,render-roadmap-assets,blueprint-refresh,memory-refresh,frontier-shadow,frontier-replay,frontier-refresh,memory-record,memory-packet,retrieval-record,statement-fence,safe-verify,frontier-dispatch,lifecycle-event,export-proof,run-cycle,sleep-run,unfinished,review-prompt,extended-pro-prompt,review-status,review-response-template,extended-pro-response-template,review-handoff,extended-pro-handoff,review-record-response,extended-pro-record-response,check,next-task}
+                 ...
+bandit.py: error: argument cmd: invalid choice: 'lifecycle-start' (choose from 'init', 'new-task', 'conversion-window', 'agent-brief', 'trial-log', 'trial-summary', 'harness-compare', 'agent-note', 'reference-index', 'list-literature', 'list-papers', 'list-mathlib', 'list-scenarios', 'list-weapons', 'list-lean-decls', 'search-memory', 'list-routes', 'route-plan', 'screen-plan', 'render-roadmap-assets', 'blueprint-refresh', 'memory-refresh', 'frontier-shadow', 'frontier-replay', 'frontier-refresh', 'memory-record', 'memory-packet', 'retrieval-record', 'statement-fence', 'safe-verify', 'frontier-dispatch', 'lifecycle-event', 'export-proof', 'run-cycle', 'sleep-run', 'unfinished', 'review-prompt', 'extended-pro-prompt', 'review-status', 'review-response-template', 'extended-pro-response-template', 'review-handoff', 'extended-pro-handoff', 'review-record-response', 'extended-pro-record-response', 'check', 'next-task')
+
+Traceback (most recent call last):
+  File "runs/online-convex-nondifferentiability-20261007/prepare-readiness-v1.py", line 5, in <module>
+    for c in commands:native('help-'+c+'-v1',c,'--help')
+  File "E:\ABRL\worktrees\research-online-book\runs\online-convex-nondifferentiability-20261007\common_v2.py", line 18, in native
+    def native(label,command,*args):gate(label,sys.executable,'-B','-X','utf8','tools/bandit.py',command,*args)
+  File "E:\ABRL\worktrees\research-online-book\runs\online-convex-nondifferentiability-20261007\common_v2.py", line 17, in gate
+    subprocess.run([sys.executable,'-B','-X','utf8',str(RUN/'run-command.py'),label,*map(str,args)],check=True)
+  File "C:\Users\admin\AppData\Local\Programs\Python\Python38\lib\subprocess.py", line 516, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe', '-B', '-X', 'utf8', 'E:\\ABRL\\worktrees\\research-online-book\\runs\\online-convex-nondifferentiability-20261007\\run-command.py', 'help-lifecycle-start-v1', 'C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe', '-B', '-X', 'utf8', 'tools/bandit.py', 'lifecycle-start', '--help']' returned non-zero exit status 2.

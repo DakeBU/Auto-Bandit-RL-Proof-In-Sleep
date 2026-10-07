@@ -1,0 +1,1 @@
+Pull realnorm convexity through actual PiLp firstcoordinate linear map. If ambient f differentiable at p with p0=0, comp along smooth t->p+t e1 gives scalarabs differentiableat0, contradiction. Segment true membership forces firstcoordinate0. Nonzero (0,1/2) + offaxis ±1 and constant verticalrestriction verify semantic boundary; not subgradient-oracle consumer.
