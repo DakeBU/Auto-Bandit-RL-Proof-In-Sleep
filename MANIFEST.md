@@ -15474,3 +15474,5 @@ Orabona v10 unnumberedexample afterT2.30/endSection2.2.1 immediatelybefore2.2.2 
 - `2026-10-07T09:02:21+00:00` `bandit.py new-task` `task` `tasks/ONLINE-OPTIMAL-STEP-PUBLIC-20261007.md` - Frozen-coefficient step-size minimization current source/public audit
 - `2026-10-07T09:40:48+00:00` `bandit.py new-task` `task` `tasks/ONLINE-UNIT-SCALING-PUBLIC-20261007.md` - Uniform coordinate unit-scaling current source/public audit
 - `2026-10-07T10:27:59+00:00` `bandit.py new-task` `task` `tasks/ONLINE-FOUNDATIONS-PUBLIC-20261007.md` - Chapter1 Be-the-Leader current source and named canary audit
+- `2026-10-07T11:29:21+00:00` `bandit.py new-task` `task` `tasks/ONLINE-FTL-SHARP-20261007.md` - Chapter1 FTL sharp first-round and cumulative source bounds
+- `2026-10-07T11:34:29+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/ONLINE-FTL-SHARP-20261007.md` - ONLINE-FTL-SHARP-20261007

@@ -1,0 +1,16 @@
+import Tests.OnlineLearningFTLSharpCanary
+#check @BanditRL.OnlineLearning.meanPredict_prefix
+#check @BanditRL.OnlineLearning.meanPredict_mem
+#check @BanditRL.OnlineLearning.empiricalMean_update
+#check @BanditRL.OnlineLearning.meanPredict_stability
+#check @BanditRL.OnlineLearning.theorem_1_3
+#check @BanditRL.OnlineLearning.meanPredict_initial_stability
+#check @BanditRL.OnlineLearning.meanPredict_regret_refined
+#check @FTLSharpProbe.endpoint_values
+#check @FTLSharpProbe.interior_value
+#check @FTLSharpProbe.outside_interval
+#check @FTLSharpProbe.one_round_refined
+#check @FTLSharpProbe.two_round_refined
+#check @FTLSharpProbe.future_independence
+#check @BanditRL.OnlineLearning.meanPredict
+#check @FTLSharpProbe.probeTargets

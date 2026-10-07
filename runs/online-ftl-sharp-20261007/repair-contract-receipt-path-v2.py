@@ -1,0 +1,10 @@
+from common_v1 import *
+fixed();assert not (RUN/'source-contract-inputs-v1.json').exists()
+write(RUN/'source-contract-preparation-failure-v1.json',dict(actual_tool='exec_command',actual_command='python -B -X utf8 runs/online-ftl-sharp-20261007/prepare-source-contract-review-v1.py',actual_cwd=ROOT.as_posix(),actual_exit_code=1,error_type='FileNotFoundError',error_path='blind-packet-v1.md',evidence='Actual tool transcript: receipt input path was relative to RUN but v1 preparation resolved it from repository cwd. No source/statement/proof change; CONTRACT packet not written.',original_executed_helper_sha256=sha(RUN/'prepare-source-contract-review-v1.py'),original_decoder_receipt_sha256=sha(RUN/'blind-decoder-receipt-v1.json'),failed_stage='Metadata binding before source review',mathematical_contract_version=1))
+text=(RUN/'prepare-source-contract-review-v1.py').read_text(encoding='utf-8')
+text=text.replace("sha(r['input']['path'])","sha(RUN/r['input']['path'])").replace("sha(r['report']['path'])","sha(RUN/r['report']['path'])")
+text=text.replace('retain blueprint path correction/any failure/actual repair','retain blueprint path correction, receipt RUN-relative path correction/any failure/actual repair')
+write(RUN/'prepare-source-contract-review-v2.py',text)
+write(RUN/'source-contract-receipt-path-repair-v2.json',dict(status='RUN-relative receipt paths resolved against exact RUN; raw receipt/input/report and every statement unchanged',source_receipt_paths='Paths are declared relative to the current run directory',original_helper_retained=True,new_helper_sha256=sha(RUN/'prepare-source-contract-review-v2.py'),mathematical_contract_version=1,no_target_weakening=True))
+gate('source-contract-preparation-v2',sys.executable,'-B','-X','utf8',RUN/'prepare-source-contract-review-v2.py')
+fixed()

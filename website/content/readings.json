@@ -1716,16 +1716,16 @@
           "plain": "The actual history-mean predictor achieves the source logarithmic regret bound.",
           "relationship": "Source interface: BanditRL.OnlineLearning.theorem_1_3",
           "contract": {
-            "model": "Chapter 1 squared-loss guessing and foundational online-learning interfaces.",
-            "assumptions": "Observations in [0,1], initial prediction 1/2, positive horizon; best-fixed comparator is the proved empirical-mean minimizer.",
-            "parameters": "Horizon T, targets and comparator; probability model only for the IID interface.",
-            "regret": "Deterministic comparator regret or explicitly labelled IID expected excess.",
-            "guarantee": "The actual history-mean predictor achieves the source logarithmic regret bound."
+            "model": "Deterministic scalar squared-loss guessing. The predictor uses exactly the targets already observed: first prediction 1/2, then their empirical mean. Empty-prefix mean0 is bookkeeping and differs from the first prediction.",
+            "assumptions": "Positive horizon T; every target in its finite prefix belongs to [0,1]. There is no probability or global future-boundedness premise.",
+            "parameters": "Source rounds1..T are Lean indices0..T-1. The tail range(T-1) has real denominators t+2>0 and is empty at T=1.",
+            "regret": "Cumulative squared loss minus the same final empirical-mean minimizer loss.",
+            "guarantee": "The existing4+4logT theorem is retained. The proof now separately exposes its initial1/4 estimate and exact later harmonic tail."
           },
           "local_status": {
             "status": "compiled",
-            "label": "Lean proof compiled",
-            "boundary": "Chapter verification and PR acceptance are tracked separately; no claim for all 16 chapters."
+            "label": "Existing FTL chain, two proof bounds exposed",
+            "boundary": "Compiled local proof package; chapter acceptance and main integration remain separate. The arbitrary-initial FTL family and a minimax lower bound are not established by these two bounds."
           }
         },
         {
@@ -1770,6 +1770,50 @@
             "status": "compiled",
             "label": "Lean proof compiled",
             "boundary": "Chapter verification and PR acceptance are tracked separately; no claim for all 16 chapters."
+          }
+        },
+        {
+          "label": "Theorem 1.3 proof: initial1/4 stability",
+          "pages": "printed p.5 (unnumbered proof bound)",
+          "pdf_page": 17,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "(x_1-y_1)^2-(x_1^*-y_1)^2\\le\\tfrac14",
+          "fallback": "After observing the first target, its hindsight mean is that target, so the second squared loss is zero. The interval bounds imply y1(1-y1)>=0, which bounds the initial squared error by1/4.",
+          "plain": "After observing the first target, its hindsight mean is that target, so the second squared loss is zero. The interval bounds imply y1(1-y1)>=0, which bounds the initial squared error by1/4.",
+          "relationship": "Source interface: BanditRL.OnlineLearning.meanPredict_initial_stability",
+          "contract": {
+            "model": "Deterministic scalar squared-loss guessing. The predictor uses exactly the targets already observed: first prediction 1/2, then their empirical mean. Empty-prefix mean0 is bookkeeping and differs from the first prediction.",
+            "assumptions": "Only the first target belongs to [0,1]. Future targets are unrestricted.",
+            "parameters": "Only source round1 is involved: x1=1/2 maps to meanPredict y0; the one-observation hindsight leader x1*=y1 maps to empiricalMean y1=y0. This statement has no horizon or tail parameter.",
+            "regret": "Actual initial stability loss difference.",
+            "guarantee": "The one-observation hindsight mean is the first target, so its squared loss is zero. Only y0 in [0,1] is needed to bound the initial squared error by 1/4. Targets 0 and 1 attain 1/4, target 1/2 yields 0, and target 2 gives 9/4 outside the theorem domain. This first-round estimate makes no assertion about feasibility of later means when future targets are unrestricted."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "New source-bound proof compiled locally",
+            "boundary": "Compiled local proof package; chapter acceptance and main integration remain separate. The arbitrary-initial FTL family and a minimax lower bound are not established by these two bounds."
+          }
+        },
+        {
+          "label": "Theorem 1.3 proof: exact finite-horizon tail",
+          "pages": "printed p.5 (unnumbered proof bound)",
+          "pdf_page": 17,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "R_T\\le\\tfrac14+4\\sum_{t=2}^{T}\\frac1t",
+          "fallback": "Be-the-Leader compares the produced prefix minimizers with the final mean. Subtract these losses from the actual prediction losses, split off the first round, and add its1/4 estimate to the existing4/t bounds for later rounds.",
+          "plain": "Be-the-Leader compares the produced prefix minimizers with the final mean. Subtract these losses from the actual prediction losses, split off the first round, and add its1/4 estimate to the existing4/t bounds for later rounds.",
+          "relationship": "Source interface: BanditRL.OnlineLearning.meanPredict_regret_refined",
+          "contract": {
+            "model": "Deterministic scalar squared-loss guessing. The predictor uses exactly the targets already observed: first prediction 1/2, then their empirical mean. Empty-prefix mean0 is bookkeeping and differs from the first prediction.",
+            "assumptions": "Positive horizon T; every target in its finite prefix belongs to [0,1]. There is no probability or global future-boundedness premise.",
+            "parameters": "Source rounds1..T are Lean indices0..T-1. The tail range(T-1) has real denominators t+2>0 and is empty at T=1.",
+            "regret": "Actual predictor loss minus the produced best-fixed mean loss.",
+            "guarantee": "Be-the-Leader compares the produced prefix minimizers with the final mean. Subtract these losses from the actual prediction losses, split off the first round, and add its1/4 estimate to the existing4/t bounds for later rounds. The final empirical mean is proved feasible and globally minimizing, so its loss is the source best-fixed minimum over [0,1]. Prefix leaders are produced for Be-the-Leader; hindsight leaders are auxiliary, while predictions use the strict past. The initial loss difference equals1/4 at targets0 and1, and0 at1/2. Target2 gives9/4 and lies outside the theorem domain. For targets0,1 the actual two-round regret is3/4 while the displayed bound is9/4. Changing the current unseen target leaves the prefix prediction unchanged."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "New source-bound proof compiled locally",
+            "boundary": "Compiled local proof package; chapter acceptance and main integration remain separate. The arbitrary-initial FTL family and a minimax lower bound are not established by these two bounds."
           }
         }
       ],

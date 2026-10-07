@@ -1,0 +1,35 @@
+{
+  "status": "Initial planned DAG; actual VALUE required",
+  "terminal": "BanditRL.OnlineLearning.meanPredict_regret_refined",
+  "edges": [
+    [
+      "meanPredict,empiricalMean,interval positivity",
+      "BanditRL.OnlineLearning.meanPredict_initial_stability"
+    ],
+    [
+      "BanditRL.OnlineLearning.empiricalMean_update,empiricalMean_mem",
+      "BanditRL.OnlineLearning.meanPredict_stability"
+    ],
+    [
+      "BanditRL.OnlineLearning.empiricalMean_mem,empiricalMean_minimizes",
+      "BanditRL.OnlineLearning.lemma_1_2"
+    ],
+    [
+      "BanditRL.OnlineLearning.lemma_1_2",
+      "BanditRL.OnlineLearning.meanPredict_regret_refined"
+    ],
+    [
+      "BanditRL.OnlineLearning.meanPredict_initial_stability",
+      "BanditRL.OnlineLearning.meanPredict_regret_refined"
+    ],
+    [
+      "BanditRL.OnlineLearning.meanPredict_stability",
+      "BanditRL.OnlineLearning.meanPredict_regret_refined"
+    ],
+    [
+      "Finset.sum_range_succ'",
+      "BanditRL.OnlineLearning.meanPredict_regret_refined"
+    ]
+  ],
+  "source_min_conversion": "Feasibility+global minimizing empiricalMean, not exogenous regret certificate"
+}

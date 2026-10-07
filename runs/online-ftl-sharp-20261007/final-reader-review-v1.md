@@ -1,0 +1,819 @@
+# FTL sharp FINAL source/reader review
+
+Overall verdict: **rejected**, limited to a prepared delivery metadata mismatch M3. Mathematical/source and current reader verdict: **accepted-with-explicit-delta**. All original R1–R8 reader requirements are satisfied; no mathematical or current blocking-reader repair is needed. This does not authorize package/native acceptance or publication before the versioned metadata repair.
+
+Actor /root/source_reviewer, requested GPT-6 Astra / medium; settings are not runtime-attested. Prior CONTRACT/rejected-CONTRACT repair/BODY and earlier source-review history is disclosed. This is a distinct automated role, not blind, external or human review.
+
+Independently rehashed all557 current fixed rows before/after, all243 repaired CONTRACT and384 BODY rows, and original229 rejected CONTRACT entries resolved through exact snapshots. Old receipts remain untouched. The owning old five proofs/one definition prefix and new two frozen headers/bodies remain exact; whole six tests/one test definition remain exact. The old closing namespace moves after the appended proofs: no false complete-old-file-prefix claim. Initial guesses of additional acceptance-helper path errors were tested and withdrawn: direct384 hashes and the exact original229 map both pass. Those guesses are not required repairs.
+
+M3: prepare-delivery-v1.py includes unqualified registry-v1.json in delivery evidence although the applicable registry is registry-v2.json, source df04e2e54101b6bab31d29d40c9443b489cb9122. The old registry instead belongs to df8ae27fa7f022bcffff13c1d0317e721e8f7148. Preserve the original helper and receipts; version the future helper to bind applicable registry-v2 and identify old registry evidence as historical if retained. This is a future delivery binding repair, not invalidation of the actual site-v2 or mathematics.
+
+Pinned v10 PDF freshly rehashed cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17; PDF17/printed5 image directly viewed. The two bounds are unnumbered proof statements, not two newly numbered source theorems. Actual producer uses feasible/global prefix means in Be-the-Leader, then quarter initial estimate plus shifted later stability. Initial bound needs only y0; refined requires T>0 and each played target. No future boundedness, IID, arbitrary initialization, minimax or assumed desired guarantee is introduced.
+
+Actual root9092 and Tests9242 build logs include caches; full reader harness reports466 tests and7 existing skips. Fifteen named standard kernel checks,13 exact rfl identities/full guards and selected15nodes/2401references/nine prescribed VALUE pairs remain distinct evidence. Applicable site-v2 build/check pass:949 pages,844 modules,10823 declarations. I independently compared all10821 old registry IDs/URLs/native hashes and the exact2newproofnodes. Current clean source commit is df04e2e54101b6bab31d29d40c9443b489cb9122, not latest metadata/main/live. Exact PR187 contributor covers4paths; origin/main fails on eight OTHER mandatory modules including Foundations, unwaived. Own task shadow is nonmutating with no mismatches; it is not universal workflow enforcement.
+
+Actual pixel views in this FINAL: source-pdf17-v1.png; current source-card05/06-v2, public-note02/03-v2 and module-new-declaration01/02-v2. All six current panels show readable complete formulas or wrapped exact types. The catalog wrapping is actual UI capture; no mobile/fullpage/all14-independent-pixel claim. Full generated chapter and module HTML were separately read. Original14 v1 images and rejected first-round future-feasibility prose remain preserved. Current repair explicitly confines first bound to one observation; refined note still states complete positive-horizon assumptions. Contributor schema-prefix/EOF/fence-role/path/self-log/ledger failures remain historical failures with repairs, not proof changes. A read-only JSON selector probe in this review initially used id rather than slug and failed; corrected read succeeded without writing inputs.
+
+## Targets: seven slots and actual producer
+
+### N01 BanditRL.OnlineLearning.meanPredict_prefix
+
+Verdict: accepted-with-explicit-delta.
+
+- objects: Two arbitrary real streams y,z and actual meanPredict.
+- quantifiers: All y,z and natural t.
+- assumptions: Equality at every i<t; no interval premise.
+- conclusion: Equal prediction at t.
+- constants_indices: Initial1/2; source round t+1; strict indices0..t-1.
+- information_order: Excludes current/future observation. Deterministic prefix causality.
+- source_delta_boundary: Library structural consequence of source strategy; total real streams generalize interval game; no stochastic or execution claim.
+
+Actual unchanged body: Unfolds actual predictor; t=0 is fixed half, otherwise finite sum congruence uses exactly i<t. No current target enters.
+
+### N02 BanditRL.OnlineLearning.meanPredict_mem
+
+Verdict: accepted-with-explicit-delta.
+
+- objects: Real stream, actual prediction, closed interval[0,1].
+- quantifiers: All y,t with bounded strict past.
+- assumptions: Every i<t lies in interval.
+- conclusion: Prediction belongs to interval.
+- constants_indices: At0 predictor1/2, not emptymean0; endpoints included.
+- information_order: Current outcome need not be bounded for prediction feasibility.
+- source_delta_boundary: Structural source prerequisite; no global/future bound.
+
+Actual unchanged body: At zero proves half feasible; positive case invokes empiricalMean_mem from strict-past interval values.
+
+### N03 BanditRL.OnlineLearning.empiricalMean_update
+
+Verdict: accepted-with-explicit-delta.
+
+- objects: Real stream and actual empirical means.
+- quantifiers: All y and positive t.
+- assumptions: t>0 only.
+- conclusion: mean(t+1)=mean(t)+(y_t-mean(t))/(t+1).
+- constants_indices: Real denominator t+1; includes exactly current y_t.
+- information_order: Update after reveal, sufficient statistic rather than assumed loss stability.
+- source_delta_boundary: Algebraic helper valid for unbounded real data; t0 excluded even though separate identity could exist.
+
+Actual unchanged body: Actual finite-sum recurrence, positive t supplies both nonzero denominators; field arithmetic proves the update without interval assumptions.
+
+### N04 BanditRL.OnlineLearning.meanPredict_stability
+
+Verdict: accepted-with-explicit-delta.
+
+- objects: Actual predictor versus next hindsight mean at same y_t.
+- quantifiers: All y and t including0.
+- assumptions: All i<=t in[0,1].
+- conclusion: Squared-loss difference<=4/(t+1).
+- constants_indices: Source later4/source-round, Lean t+1; initialcoarse4.
+- information_order: Prediction strict past, comparison mean includes current target.
+- source_delta_boundary: Retained coarser initial bound is not the source sharp1/4; newN06 supplies that separately.
+
+Actual unchanged body: Zero case is separately bounded; positive case uses actual mean update, interval membership and squared differences. No stability bound assumed.
+
+### N05 BanditRL.OnlineLearning.theorem_1_3
+
+Verdict: accepted-with-explicit-delta.
+
+- objects: Same actual prediction stream and final empiricalMean.
+- quantifiers: All y,T>0.
+- assumptions: Every played t<T in[0,1].
+- conclusion: Difference of sums<=4+4 lnT.
+- constants_indices: Both sumsrangeT; fixedmeanindexT; natural log realT.
+- information_order: Causal predictions, final hindsight comparator only in analysis.
+- source_delta_boundary: Source min represented by actual feasible/global minimizing mean, established by Mean APIs; not arbitrary comparator/assumed certificate. No minimax/IID claim.
+
+Actual unchanged body: Actual Be-the-Leader and empiricalMean_minimizes yield stability sum; actual harmonic inequality yields the logarithmic bound. Feasible final mean identifies source interval optimum.
+
+### N06 BanditRL.OnlineLearning.meanPredict_initial_stability
+
+Verdict: accepted-with-explicit-delta.
+
+- objects: Initial prediction and one-observation mean.
+- quantifiers: All total y.
+- assumptions: Only y0 in[0,1].
+- conclusion: Initial squared-loss difference<=1/4.
+- constants_indices: meanPredict0=1/2; empiricalMean1=y0; source first-round0.5 squared.
+- information_order: No future restriction or hindsight prediction substituted.
+- source_delta_boundary: Exact unnumbered source bound printed5/PDF17; endpoints sharp, future unrestricted. New body pending.
+
+Actual unchanged body: Unfolds initial half and one-element mean. Interval endpoints imply y0*(1-y0)>=0 and the quarter upper bound by polynomial arithmetic; no future hypothesis.
+
+### N07 BanditRL.OnlineLearning.meanPredict_regret_refined
+
+Verdict: accepted-with-explicit-delta.
+
+- objects: Same actual prediction and final feasible empiricalMean.
+- quantifiers: All y and positiveT.
+- assumptions: Every t<T in[0,1],T>0.
+- conclusion: Actual cumulative regret<=1/4+sum range(T-1)4/(real t+2).
+- constants_indices: Exactly source1/4+4 sum source2..T1/t; T1emptytail; all denominators>=2.
+- information_order: Same stream/run; no assumed stability/regret/argmin input; Mean APIs supply source-min interpretation.
+- source_delta_boundary: Exact unnumbered source bound; positiveT excludes T0; not universal equality or optimal later constant. New body pending.
+
+Actual unchanged body: Positive horizon cases n+1; produces every prefix mean membership and minimization, applies lemma_1_2 on Icc, subtracts real loss sums, splits with sum_range_succ' into first term and shifted tail, then calls new quarter and old later stability. No consumer oracle. Natural T-1 becomes n; real tail denominators t+2.
+
+### N08 FTLSharpProbe.endpoint_values
+
+Verdict: accepted-with-explicit-delta.
+
+- objects: Constant0 andconstant1 streams.
+- quantifiers: Closed four-conjunct test.
+- assumptions: None.
+- conclusion: Both initial differences=1/4 andboth<=1/4.
+- constants_indices: Initial round0/mean1; exactquarter.
+- information_order: Fixed prediction1/2 independent of target.
+- source_delta_boundary: Planned validation of two endpoints, not new source theorem or all-horizon tightness.
+
+Actual unchanged body: Computes both endpoint equalities and invokes public initial theorem twice; genuine sharpness.
+
+### N09 FTLSharpProbe.interior_value
+
+Verdict: accepted-with-explicit-delta.
+
+- objects: Constant midpoint1/2 stream.
+- quantifiers: Closed two-conjunct test.
+- assumptions: None.
+- conclusion: Initial difference0 andstrictly<1/4.
+- constants_indices: Exact0,1/2,1/4.
+- information_order: No uncertainty; initialpredictionequalsfirstmean.
+- source_delta_boundary: Planned non-tight interior instance, not generic interior equality.
+
+Actual unchanged body: Computes midpoint zero and strict improvement over quarter; actual total predictor/mean.
+
+### N10 FTLSharpProbe.outside_interval
+
+Verdict: accepted-with-explicit-delta.
+
+- objects: Constant2 ambient real stream.
+- quantifiers: Closed two-conjunct test.
+- assumptions: None; selected target violatesinterval.
+- conclusion: Initialdifference9/4 and>1/4.
+- constants_indices: (1/2-2)^2=9/4.
+- information_order: Fixed initial prediction remains1/2.
+- source_delta_boundary: Planned support-necessity counterexample outside source game; does not contradictN06.
+
+Actual unchanged body: Computes inadmissible target2 giving9/4>1/4. It does not invoke the source theorem or claim target2 is admissible.
+
+### N11 FTLSharpProbe.one_round_refined
+
+Verdict: accepted-with-explicit-delta.
+
+- objects: Constantzero stream,horizon1.
+- quantifiers: Closed equality andbound.
+- assumptions: None.
+- conclusion: Actualregret1/4 andrefinedinequality.
+- constants_indices: range(1-1)empty; comparatorone-pointmean0.
+- information_order: Actualpredictor1/2,notemptymean.
+- source_delta_boundary: Planned genuine newterminal instantiation; noT0 extension.
+
+Actual unchanged body: Computes actual T1 regret quarter and invokes new public refined theorem at T1 with empty tail.
+
+### N12 FTLSharpProbe.two_round_refined
+
+Verdict: accepted-with-explicit-delta.
+
+- objects: probeTargets0=0 andpositiveindices1,horizon2.
+- quantifiers: Closed three-conjunct test.
+- assumptions: None.
+- conclusion: Actualregret3/4;<=refinedrhs;rhs9/4.
+- constants_indices: Predictions1/2,0; comparator1/2; losses5/4 minus1/2. Tail4/2.
+- information_order: Secondprediction usesonlyfirsttarget; same actualrun.
+- source_delta_boundary: Planned nonzero/slack validation; no claim refinedcumulativebound sharp.
+
+Actual unchanged body: Computes actual changing sequence0,1 regret3/4 and RHS9/4; invokes public refined theorem with proved interval membership.
+
+### N13 FTLSharpProbe.future_independence
+
+Verdict: accepted-with-explicit-delta.
+
+- objects: Constantzero andprobeTargets,time1.
+- quantifiers: Closed conjunction.
+- assumptions: None.
+- conclusion: Predictions equal whilecurrenttargets differ.
+- constants_indices: Bothpastindex0=0; probeTargets1=1.
+- information_order: Strict-prefix producer instance; differing currenttarget cannot alterpre-currentprediction.
+- source_delta_boundary: Planned causality validation, not equality at allfuturetimes or predictionaccuracy.
+
+Actual unchanged body: Invokes actual prefix theorem with equality of sole prior target; current targets provably differ. Validates causal prediction, not hindsight leader causality.
+
+## Exact original reader requirements
+
+### R1 — satisfied
+
+Attribute existing5proofs/1def to exact Theorem1.3/prefix sources; new2 bounds unnumbered proof printed5/PDF17; six new tests/one testdef are VALIDATION, not six source results. Old theorem_1_3 remains unchanged.
+
+Evidence: Current cards5/6 identify printed5/PDF17 unnumbered proof bounds, old Theorem1.3 remains4+4logT; six named tests are validation. Source PDF17 directly viewed and exact source headers preserved.
+
+### R2 — satisfied
+
+First bound ONLY y0 in[0,1]; refined T>0 and EVERY t<T in[0,1]; no hidden convexity/probability/global bounded future assumptions or T0 refined theorem claim.
+
+Evidence: Current card5 and note2 explicitly require only first target in[0,1], with no later-mean feasibility claim; card6/note3 require positive T and every t<T bounded. Both full catalog types directly viewed.
+
+### R3 — satisfied
+
+Actual causal strict-past predictor, initial1/2 DIFFERENT from empty mean0; current-prefix hindsight leaders only auxiliary; feasible prefix minimizers PRODUCED from actual mean APIs, not exogenous algorithm/stability/regret certificate.
+
+Evidence: Current model and notes distinguish first prediction1/2 from empty mean0 and current-prefix hindsight from causal strict-past prediction. Actual public proof produces empiricalMean_mem/minimizes before Be-the-Leader.
+
+### R4 — satisfied
+
+Exact source1/Lean0 indexing and loss comparison; refined tail range(T-1), realdenominators t+2>0, T1 emptytail and initial sharp equality; existing later bound4/(t+1) preserved.
+
+Evidence: Current card6/formula and full catalog type preserve range(T-1), real t+2 denominators and T1 empty tail; first card and endpoint tests preserve quarter equality.
+
+### R5 — satisfied
+
+Source min over[0,1] represented by produced feasible/global minimizing final empiricalMean; SAME actual predictor and SAME horizon final comparator; no universal arbitrary-algorithm producer, minimax/IID/no-regret claim newly attributed to these two bounds.
+
+Evidence: Current cumulative guarantee identifies produced feasible global final mean with min over[0,1], same predictor/horizon; no arbitrary learner, IID/minimax/general-initialization claim is accepted.
+
+### R6 — satisfied
+
+Actual endpointquarter/midpointzero/outside9/4 and two-targetactualregret3/4 versusrefinedrhs9/4 plus future-target perturbation with prefix output unchanged. Outside interval counterexample only validates necessity of support, not source admissible; named tests reuse real public proofs, nonvacuous.
+
+Evidence: Current guarantee/note describes actual endpointquarter/midzero/outside9/4, two-targetregret3/4 versus9/4 and current-target perturbation. Whole six canary bodies unchanged and public calls confirmed.
+
+### R7 — satisfied
+
+Preserve all Be-the-Leader/other cards/public notes and existing decoded formulas/curatedIDs/moduleglobs/otherBooks; bounded FTL card/notes+2 new source cards/notes and route boundary only. Actual current full HTML and source/formula pixels separate; proof-term dependencies verified separately from teaching links. Display readable formula proof, assumptions and folded exact Lean.
+
+Evidence: Current JSON, generated chapter/module HTML and six directly viewed v2 panels preserve exact formulas and readable types. Scope audit preserves other Books/cards/math/curatedlinks; independent registry comparison preserves10821 IDs/URLs/hashes plus2nodes. Teaching links remain separate from nine actual VALUE pairs.
+
+### R8 — satisfied
+
+Separate CONTRACT/BODY/type/kernel/fullfenceVALUE/rootTests/fullharness/site/FINAL/native/PR; retain blueprint path correction, receipt RUN-relative path correction/any failure/actual repair; original native headers unchanged. Exact stacked PR187 base not main. Chapter1 source reconciliation and main-relative gaps inclFoundations unwaived unless actual gate resolves; Chapter2null/incomplete,3-16unenumerated/requiredappendices/GoalACTIVE; no merge/deploy/live/chapter/Goal completion or external/runtime attestation.
+
+Evidence: Current stage/status boundaries, retained failures and eight OTHER main-relative gaps are explicit. Root9092/Tests9242/full466skip7, scopes and applicable local site separately passed. Chapter1 required subobligations/Chapter2null/future3-16/appendices/GoalACTIVE remain. Future delivery helper metadata repair is separately blocking package recommendation, not a reader or mathematical defect.
+
+## Limits
+
+Six validation proofs do not count as six source results. Sixteen required Chapter1 source items are an enumeration, not proof-total (still null). Arbitrary initialization, recursive mean/count implementation, W/V loss-domain mapping and logarithmic-unavoidability source/lower-bound audit remain open. Chapter2 remains incomplete/null; Chapters3–16 unenumerated and necessary appendices required; whole Goal ACTIVE. PR187 is stacked/open/unmerged; new native acceptance, new PR/push/attachment/DIRECT and main/live remain future. No such action is certified here.
+
+## Raw bindings
+
+| Path | SHA-256 |
+|---|---|
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/.gitattributes` | `705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/00_context.md` | `fb0bdb6d9f151148b5d7b9ba464af834400e1db19e4e533f187020c540cb096d` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/10_upper_director-v1.md` | `fa010e5720705758c3669dc874dc6ab1de539f034644c96d6dabf123e5fb321e` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/20_architect-v1.md` | `c4a9d449de1f5b575c6b79ed97871abdb70bcd313081cef2db162444d25e2b9d` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/base-PR187-fresh-v1.json` | `acd660165980d14dd9896f93fbda74bc3350eea822c59efc061f027c2599b4e2` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/blind-binding-audit-v1.json` | `016af6b12c63151a3899505c5d7e026ef07bfc67d6c4d90b96a8233dea71a06c` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/blind-decoder-receipt-v1.json` | `783fee0e66457b61b01cdbb71500eb2813667730248724888484c23fd6ead9a7` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/blind-decoder-v1.md` | `dc95ac8978ace5bc20659fda3280ae7bbaa5688ce8c751da02f163cd2eae2fa2` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/blind-packet-v1.md` | `64b504cf8a390f08da6b537009048a68ada5b0f4d2bac8420a201fcc6bfaf26b` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/blueprint-own-task-v1-exit.json` | `2b927d9dbbd212db07ff44959552940909c4c44dd173d7d3af589c29c487ff79` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/blueprint-own-task-v1.log` | `a643857d7d47cab31adf6770a9e9b692bbc6d42fc48091af6d477674c0eb8c55` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/canonical-worktree-audit-v1.json` | `bd614db8b96d1af82aefc20fa2e6d1313862ba22f6f7ab28836348ec4cc88ac6` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/chapter-ledger-version-v2.json` | `9d5f58e5f4b67b8039c3d92ec120902c39051505de9f6799455939df06766661` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/common_v1.py` | `713ad2dec42fbbd00f34c79f5c6faa5e99b09772f6ab72cb2a6a2297f657060e` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/draft-event-v1-exit.json` | `86b3dd49e81715e8d32308a233c1ba4f9ee9ab98c07ff7ff782bec5b3ff3de2c` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/draft-event-v1.log` | `1fd6acbd25e32a76afe75ebf9906778c0a500dd7761720d3d75fdd8d5235010e` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/draft-freeze-v1.json` | `1587daddb80401c826f3a348076040bc61eaafbac68060eaba2696f080da6dbe` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/existing-public-type-identities-v1-exit.json` | `53f1fbfbb80f81831ef982d4795a6bf958f397945b590f9d07e021567b9a2abf` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/existing-public-type-identities-v1.log` | `f168cb96d0453aba7860f5e6c0522731cda176ba752f2db13fa5c0b1bfd27249` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/fresh-fetch-v1-exit.json` | `f06f0291048173e491afc1f7531a8a123d860ffe4453b072f976baa609dabf47` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/fresh-fetch-v1.log` | `629538181a023831757fd00e792d7ef740ca5f38172c01a13e81e44deb412ae9` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/help-blueprint-refresh-v1-exit.json` | `5dcfd323917a8a6e226f99fbcff2ec32da8dd88fd7ab6177f3715141d89cdb9e` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/help-blueprint-refresh-v1.log` | `9ed3b46491b1470d6a0bebb1277e25f5cd8e06ea10039b1397e66397aa63e65c` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/help-frontier-refresh-v1-exit.json` | `2878268d3bddf19219bcbdaf74fb9d6296cc46c4bbfd5ec081d6c663651950be` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/help-frontier-refresh-v1.log` | `bff73ff554907d7c5dd50b99f2491f5675e93afb29829e402ec383fb52fe3cdc` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/help-frontier-shadow-v1-exit.json` | `74da8f3eb10ace738bb5780c306d2df4d1c7ac74b89507a4c55428ea28c65715` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/help-frontier-shadow-v1.log` | `ad548f6e24b3214fbf5796c632caa24debbaa21c6622f7dab8abe268f521de7d` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/help-lifecycle-event-v1-exit.json` | `3cbcacb6d3ce7c1128ac2ba5ea8c6159498d3639b47f95d38ee2d8dd443b2855` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/help-lifecycle-event-v1.log` | `b1e8b438a9b725793b9888d206e98a971ace3df200ec90ed9cb63eab26b28507` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/help-list-lean-decls-v1-exit.json` | `2be6702023304fbf1c241f406c06bfe8baf2e8780c7859cc843e775890164752` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/help-list-lean-decls-v1.log` | `258218f16a12b1a530d85ae83e6c2449237af8a0a1153bb35de40245d665b131` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/help-list-mathlib-v1-exit.json` | `fc4565ed34b585e7aa37460df779a13dc3c41b1af34eb797035695f0960ad8ba` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/help-list-mathlib-v1.log` | `eedc3e9609fdc7a3bcf76443a33933477de80dcc4ec9906b64a691e29b207e9d` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/help-list-papers-v1-exit.json` | `9bc5e4baacb510fa271315e206a0b1ced15e6cfb53342d2b154e30fc778cbdc0` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/help-list-papers-v1.log` | `57fdd9fadca031cddeec9da9c4ba947cccb3b1b155129de3a81b72b0c811a696` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/help-list-weapons-v1-exit.json` | `83791cc7a16a31323f8b21f892343f9d17e70bf5c57093701d01bc544be39ea6` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/help-list-weapons-v1.log` | `529fdc45da8d53249b6cea7712803e68cc0251026c7a66d1a067ac6413c9617d` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/help-memory-record-v1-exit.json` | `a8ac9cbb2126c8c2618951280b8c90cd73a9fa8716611971a78333c5137e3fcb` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/help-memory-record-v1.log` | `89e8a7b2bb8d4fd593f0705289ca3c4c63015e48d0e8c9cbe5b71cf2c7cc44f4` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/help-new-task-v1-exit.json` | `4b4fa3596b295c5c7f4c36a6d87c1ce0126e5d0c034e99f7a8a3b9a2b69c4346` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/help-new-task-v1.log` | `25eb9342c3094bee57187630bd149d2c522fc9f7ac7e65bebe5c198eba60ed99` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/help-reference-index-v1-exit.json` | `d61d22bbe0f88e1a8e95424ab07ee739c7182456654b224134f33f09bd6ddef4` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/help-reference-index-v1.log` | `6943acba1d20272cfd239404bfaaa8457d0205a56876004e7c3fed2df97fc3d8` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/help-retrieval-record-v1-exit.json` | `98e4005dfddd3a27fe73ad49f3be118b919d7d7df895ab286c26555e24fdfa20` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/help-retrieval-record-v1.log` | `73ac93f120215511ff0370d7ce100a9d0e83598ad882bcc5773cd1dc889b5321` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/help-root-v1-exit.json` | `3cdc0fe461d4db99d7aeb8146cc2bec4d0c7b407c2f6581769ab1d941cafa3d4` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/help-root-v1.log` | `daacf23e36eec4898dce3b3de02a07b71fb0f80f08e33e8dfe00722e7572970c` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/help-safe-verify-v1-exit.json` | `3d798faa6f053ed2ad38a2df176451552f595ec4d52984ac8810fa52125310ef` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/help-safe-verify-v1.log` | `1773541c625f225e5a9abc61985c3ad19e871cf31aa0cf89cc440b3d8398862c` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/help-search-memory-v1-exit.json` | `33c975c8041b24fdc7d2dfed7e9546aba8cb357abcc9555c8b1a8c08bc5d38f8` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/help-search-memory-v1.log` | `b2f23faf2d0ee17c305335680ebdb2b83ca61999d18021e355d22587d712b79c` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/help-statement-fence-v1-exit.json` | `1c2eb1b8d3273ad75abc75206521adb1dd04ff296b28e36c0f76d7ed51def5ff` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/help-statement-fence-v1.log` | `4f4fca9dfaac7a7c3de8025d3d0f7c4ba58d1f4b33feb08d19e12229942dba75` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/help-trial-log-v1-exit.json` | `c7ce18fe023e2d492982e29da685fd6a393dd4061d8fdb4c04b789e8aaf9704d` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/help-trial-log-v1.log` | `ea7bd7e4d64216b46f554a90e02a3d58b4fcbe72766c2f7b316b656b94d19b32` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/initialize-v1.py` | `be310b05b99028c198cff7aeb4fe9af63d15f0349e829162911923917f57846a` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/leaves/existing-public-type-identities-v1.lean` | `511adfc9a88ae89e8ad1e13fac3bdc60db8f666a93840d93de5c37e184752927` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/leaves/neutral-closed-props-v1.lean` | `6b32529120e3e99c55045c5c9775e6bd6172ea2dbc019ef8c5731c0796c14a2a` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/memory_digest.md` | `819d3b1ccbf8e90a197d88776c5bb5cea1d5e24de1664f3d47f77a85962c84e3` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/neutral-closed-props-v1-exit.json` | `5414b90889ad2bc22396356d1a2267d3ebd0c868b91ea2b0db8ec7a29051f842` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/neutral-closed-props-v1.log` | `f085733e36cade3e296cafa9261930731b2784c1abf2b7649a7d3248262acaf1` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/neutral-map-v1.json` | `880a114c099ce4601be032f259be4532395fcca40db451f8348c815010f1547f` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/neutral-type-bindings-v1.json` | `44b788203e0bfb970d026fd4c46464713eec650724eb1bcb2d5c849a26b512b8` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/new-task-v1-exit.json` | `a3f9d0e305a20ae5cd33f1c69ec893ad10b3948e894e753f016996303fca7666` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/new-task-v1.log` | `c475ab266bc56b2fd2cff01c77b58b09fb239d9a98fc41e3e1338f8fd4c15947` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/owned-blueprint-path-correction-v2.json` | `fba9c756261a47001b0aa60f3ecc8be2b3f3cf4c0aaa2f708e39ecd6cda4d183` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/owned-commit-paths-v1.json` | `f0d226792baef2d3dbfd18b3c44f828b91dbf8dd14ffdf794a927db02319f632` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/paper-boundary-v1.json` | `4b85e7690280863c2a4b3eaab46118453ac1aec397ef8563c47f7567bd57b4f5` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/prepare-chapter-ledger-v2.py` | `5f4aa1d51bd23a95d28547eff5a88de45c6812397d57a3fe91f7ce5239d4d555` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/prepare-contract-v1.py` | `9bdcb759e0c57d523cc3e040f7d61175e8d00ea47839673cabec60a79be094b8` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/prepare-source-contract-review-v1.py` | `1c7b1c1b2af3ea0efe1ced32dfe58b8b8e570d7d810ac27e01f068100a2f9d9a` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/prepare-source-contract-review-v2.py` | `2e0d89305e1cfeff083da704e825c9564b8c98f3ab09797ec141a12dbbc70b38` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/proof-obligations-draft-v1.json` | `43907c4ea54f572e789853a5722701f41ec9809ac14ea00e668b3510faec005f` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/render-source-child-v1.py` | `6d52161daad3f843069007576e8e0edb25408080b83c35c6fdf200967b61449b` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/repair-contract-receipt-path-v2.py` | `32471f2e4f041a415627e3f9af84f3eaf226400f5275ea9b92f81e47d2a78cfb` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/repair-owned-blueprint-path-v2.py` | `d8fcd88195f2b13ef8bbae86e02a536594defc71596c9c0eb5045f5c4394bcea` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/retrieval-actual-existing-API-v1-exit.json` | `be3cbe12d9bf428b6e9bfb37ea1fe4dca60bdf865ed6c0fe78576d38f021ced3` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/retrieval-actual-existing-API-v1.log` | `35ab87889ae18beafb1e31b1b1fe56599a8cd9904990d08d131ce9dd1bc5ea7c` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/retrieval-actual-sum-API-v1-exit.json` | `f2881258c0c4db3fba710ad3c47145bc7552e86bf12cc0f462b4ba0aef49bbe4` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/retrieval-actual-sum-API-v1.log` | `534fdc914e82b9579cc9d65e421f5122ae8005e1f71c5309fef5766b5d258735` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/retrieval-decision-v1.json` | `600c3e4123263a340b70260b11aee16613fb049adf3c7fe8bda39714589b320f` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/retrieval-list-mathlib-v1-exit.json` | `90a37fa3d6896b66e97238252521e075b42c83edf1830b2ca4cb12b0e3077287` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/retrieval-list-mathlib-v1.log` | `884fab88619a3d1adcafe89eecddd2d98f4be5c6fa61262862134dde9e51d225` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/retrieval-list-papers-v1-exit.json` | `9d860ddada2fed665e398d2b9ef187253c3ce4dc38af9b71dc9bd3ef07003eb1` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/retrieval-list-papers-v1.log` | `9acd333996a893a7b5ccad3e674ece26ef05c8b737e7816b33043b121583a619` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/retrieval-list-weapons-v1-exit.json` | `7fca58e30e0c7949e4f9173671ea615d757ff62e37998ae253653fe022b0fcdf` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/retrieval-list-weapons-v1.log` | `a6e4b78de1a30fcf5a0ee66b868eb3ac1bfa68d2250c713f61e690ae064f7ef6` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/retrieval-memory-meanPredict-v1-exit.json` | `1647d5c6873e826d2795077f79d5f83eca05f693b9e838c88aa463e02ce5b062` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/retrieval-memory-meanPredict-v1.log` | `35a78037890e88ed96a53b65e3f00d4b7b427edee8f60f48f5c2c7098a0096e8` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/retrieval-named-empiricalMean-v1-exit.json` | `b768fc2aa34615cee8f4b394b725d81668b88db8e603ff60ecb6e622da45474e` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/retrieval-named-empiricalMean-v1.log` | `e41d887b5516870d21e3bcedca1c4362d96aec9d485b03ce1d72b54720155b01` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/retrieval-named-meanPredict-v1-exit.json` | `5b3361949b74d219ccd0343e2fded2d2d8b7078526ad8de7bf8611c9db90bd63` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/retrieval-named-meanPredict-v1.log` | `d20e7d19c058e1624266147b329e24c252d649276b15407f075279d744d39a63` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/BanditRLProof--OnlineLearningAsymptotic.lean.raw` | `4d704d07b9616ca48a1ee56d47af7f5f8ca9e3797d2a9b47d373038a25d79d59` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/BanditRLProof--OnlineLearningFoundations.lean.raw` | `e23ebdca2f7ce21a16173c93390fd24d16ba36e403c9d084233f7480e75408b8` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/BanditRLProof--OnlineLearningFTL.lean.raw` | `8aee4c971fffbc79f2426fb308f50ec02b664b42a90fe1f85620a313df4c7a06` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/BanditRLProof--OnlineLearningHistory.lean.raw` | `3412177ab7dd0ac0e350d8fde7f91e61640d55743d1f17d15c62a65dd4492fc7` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/BanditRLProof--OnlineLearningIID.lean.raw` | `92af24e6a2c2b1054503492b2bad97cd17ccea2217439f6d2f8a7bedb0de3d5e` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/BanditRLProof--OnlineLearningInformation.lean.raw` | `72bef017a43c293d0d3c449707e4a0e058f4655c2483b54c3120d7b41c98135a` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/BanditRLProof--OnlineLearningMean.lean.raw` | `d65b3e5d5d2e33a0fd94722f1d7d9a09819c963c693e28bf854fae00f5280aa1` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/BanditRLProof--OnlineLearningRegret.lean.raw` | `231eda88cb1c45bf3bc9209bfbdd696fbfbe8a64b00303113a23cbc4dff3ca5b` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/BanditRLProof--OnlineLearningStochastic.lean.raw` | `0242481022883958afef677654fadd3f6e37b381f3fe463e3605f3eb0542f2bd` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/BanditRLProof.lean.raw` | `7cdb1969bad2f7b42cfd7a25f6d15747d0d49178dadc244b70ab1f9b8c92c5ad` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--asymptotic-context.json.raw` | `9451439b34caff169c02a8d7fc342aaeff19c49ebdd5af675e253a6fb5949512` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--asymptotic-contract.md.raw` | `d00992a19ea7631938e3930d47a86dc5dd1e2399d609362caf88e116bd42d04d` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--chapter-2-remaining.md.raw` | `079c709ea26586a8284aee236986a52c654c8a8805b22434442bee54152fbd4b` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--comparatorRegret_eq_sum.json.raw` | `3793629d88e754041c0f6ddd58f533f4ebce317dd40f91c2bd0429fcc6294c45` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--coverage.json.raw` | `fd7580c2d0ec040352317d3c53dc583a6b9b75a68b4026ebf3b38f7010a98f1e` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--empiricalMean_decomposition.json.raw` | `44b64de46ae002b1e8d510bf58488a6bcbb564aadae83df5aaab831360d9e883` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--empiricalMean_mem.json.raw` | `37ec1dd63937e5336b9a1a545ec9d36b796456cc67d6713ad6148af3ce62dda9` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--empiricalMean_minimizes.json.raw` | `95c3a3c93584a64a234731e6818f43241b01c91ea18278eda486511637052e87` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--empiricalMean_unique.json.raw` | `b586cd1a6e547d89d341c0e2c11a72518dbe1c1b91ebb03665ffaa408aa9a279` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--empiricalMean_update.json.raw` | `97e959f081525ce6b0081338a53cf951ca0f654063329c5097cc6a533b21cdf1` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--expected_square_decomposition.json.raw` | `2e69167dbb15e54ea97c34fcf4b5dbe392133fd7b813573fb6e3387ff3840d20` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--ftl-context.json.raw` | `b596b844f54c6aec951323df046c59ab03dad9e76308b160a864a7ef2c12948b` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--ftl-contract.md.raw` | `4df627e2b62d3cead508894a60736282dbad9f04779c56978a4b31be0e4d2521` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--history-context.json.raw` | `0bc3e178e5e0965d59f187ab122ca6bc5e1a49ac938557a1d8ed7c39bd1be11e` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--history-contract.md.raw` | `d8870a3fe87f0d23499c6a7fcef79ac9cd3566d6ad1e93098db3d51542a9f0b1` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--history_policy_independent.json.raw` | `7e88d48945deb14edae6274d8b726fb0ec15dff82720caab5c7ae8130e55c084` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--history_policy_loss_ge_variance.json.raw` | `7fa43dd4a990d45bf5dd9269cfba90ae16ebb7374fa3293adda7273ecd749e69` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--iid-context.json.raw` | `8edee8b9596b8aba601951d7e1d39672be0501ea7e7c8e57b07d60f8eea878c3` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--iid-contract.md.raw` | `03c05cd22f1962b420da6a2045a20b1164d1172aa5d6d2e326889d62100f41a5` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--iid_meanPredict_excess.json.raw` | `72e9b6a209a40762c1ac88be7d8c6e1b034abe3b8ba5b9f7b48ab60f73c4852f` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--iid_meanPredict_excess_nonneg.json.raw` | `bfd87dc31f1fd0ed1d912b34394e15b3c8075bcd6204b2a0997623d2d630a74a` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--independent_prediction_square.json.raw` | `e673875ac5de1d0d642cc57d327440b5dfb87d5f8307ff2b2d2166b38b43b41a` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--information-context.json.raw` | `2898fb057fda9c27127a9e5922517d175aab15ad87eeff5765d71f1aa46c3d65` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--information-contract.md.raw` | `e6e2df1792cdd3b1ca045566d973887c902fa6259cea4e7229154d70c96f0948` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--lemma-1-2-context.json.raw` | `91262535548af6ddfdb701db9138eb5c8994583ca945dee31cf0906c438716a7` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--lemma-1-2-contract.md.raw` | `0df23105858bac8b0cedea1d4f39db15fe59129fbe02c4eb7b5d7161694df8a6` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--lemma_1_2-v2.json.raw` | `062427c8eac86479236e58ee7da4e7a1c3d0f52dd9144b1ab633ee53afa68124` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--lemma_1_2.json.raw` | `30c70423015a3c4e69c296e7268dfcd47abde87c11ed980c9789564dc62011a4` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--mean-context.json.raw` | `494742dae1c9b3f6328c7c4a59950815720602d9b333ffa74d65b9cdcf779fb7` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--mean-contract.md.raw` | `904932aabaa78d30dbff9c5e1aa0986f7373a3f604f10bea02ad75f1abe02664` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--mean-uniqueness-contract.md.raw` | `27ba00975d6fd51ad8ff5bbcdde1ad40c3a4bf88bace157e4c0923c1beedc9ac` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--meanPredict_independent.json.raw` | `4fa0dedcb0189e381a85105cf1f53fdab876620ad553550b733489611dcf1cc6` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--meanPredict_measurable.json.raw` | `1d69eaeefdee20e0e4017c43e4acaaba8660277e8cb4ea878145dd1341b3677b` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--meanPredict_mem.json.raw` | `7e78522267d41d68467efaad27c29a3f997f3e767327ef55b87db9a6252c0396` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--meanPredict_memLp.json.raw` | `4a4f5b74269f4307f8e04677372bc551d2c972209cda4ef4869766c304dcdde6` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--meanPredict_noRegret.json.raw` | `55dc3379102c70ba20377541e512ad7063d0ffedb7ed39dd80744fe42c7da9b5` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--meanPredict_prefix.json.raw` | `4fe4ccf9b2b32d5fce4d9d35af207574eadf23617702a6629e3d90d06c6ecd01` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--meanPredict_stability.json.raw` | `203cb2143dcf23c540ef6b6f4cde4292b385fc17d6db2865ac2f1f15ab1d7375` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--noRegret_of_vanishing_bound.json.raw` | `d2e1c0bf0f3fa793780a0d9054173bdce201e8924add4e9f7cf0bb0bc71f5cb0` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--normalized_excess.json.raw` | `fd21f266932988ae7639771a551c3a6b7c77ae989d46c50340f03a2ae76cb88f` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--regret-context-v2.json.raw` | `cf8e35fdf1154c73daac93761d4bab6ee05972fafaa21b1760c59756fbc75ae8` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--regret-context.json.raw` | `206b6b1e27a1d66af69a66f600c89846a80c0e5bc25fd9a12a42d50b07c2dd17` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--regret-contract.md.raw` | `626a6d93313cfedc2d96e09c4cb9b3fa2ead94d0fd1d55466e0b26296367565c` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--source-inventory.json.raw` | `a2a504cf40d73f9c5e36f00fc1ef3b949ccaf5a558ab603c1c2a86007f30efa7` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--source_mean_optimal.json.raw` | `3c15549318546c50f0cd8297db1f052cd7bdfcfadffed47f0db68acc9dec1ff4` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--stochastic-context.json.raw` | `48312c553cc50edf59c6e5767d403d87988d80cc08640c921bfd6fa48c5fc972` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--stochastic-contract.md.raw` | `62a3c455c686786dbc12e6bb84558526b8a767e4c50fa09834f8d449dd33d290` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/docs--contracts--online-book-v1--theorem_1_3.json.raw` | `7b8b0643b6bf75300ba5a55cf8a7d9b833f380155fa9c9f8e39306649c815058` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/lake-manifest.json.raw` | `87c3e616f86244550ef39e7415186b11c1d4cf4bef20173196a619d9d4d48f48` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/lakefile.lean.raw` | `0164f3b5b5bdcbb237ab15ae8b44da83e183f4b97d5f3832aa4a57f27dc69d45` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/lean-toolchain.raw` | `b15a57f8ea4c890197465ce1156667ae13d9ed4ab8a9f263a920bf010d967d82` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/MANIFEST.md.raw` | `fcf078e2da910f173435d3b908007bb28e4c30fe27cdd51289b00ff57eb56c16` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/native-scaffold-conversion-windows--ONLINE-FTL-SHARP-20261007.md` | `4fa58f8ef5d2da50f4cf0df20fed192c7b4f6d476257fdc6fb1caf0c3df73e7f` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/native-scaffold-proof-obligations--ONLINE-FTL-SHARP-20261007.md` | `7330ffc18b4f24e4b486a670b11bc1d393a2e0f86c28595b2c9e47432c2177c1` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/native-scaffold-tasks--ONLINE-FTL-SHARP-20261007.md` | `689fbf827999e99009aac96f1982a35d0c7747cdac7194c4d25587b42f656e64` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/owned-paths-before-blueprint-correction-v1.raw` | `ff3808a881ba41fec1cf2916dced5f64f2d15b4161f1872274b96ce58a6c2f62` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/runs--active_frontier.json.raw` | `567e5873aa2549a83f2820d758069213808da822a93087129877385a1addf7c3` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/runs--lifecycle_memory.jsonl.raw` | `94be3ceb994768191ceb6a7545935c8d16c044511dfe8c4482e2fde493eaa5f8` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/runs--lifecycle_sessions.jsonl.raw` | `68f51418514e2bae75550fd6a6fa1cac6217f08855069ffdcdc095ce87be1d53` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/runs--online-foundations-public-20261007--accepted-decision-v1.json.raw` | `aaf64738c8814546ab131e7c0a83ce3c8b4832572b16841f6440ad0a74a1809e` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/runs--online-foundations-public-20261007--delivery-obligations-overlay-v1.json.raw` | `fa97452a89b23ef6de9b53e73b8ded091892650f21b706ec2074326faa3b6eaa` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/runs--trials.jsonl.raw` | `30b5c5be7b6048d039708afa37e53f2f8e198a50960a04d3899f975051d39171` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/Tests--OnlineLearningChapterOneCanary.lean.raw` | `9700f465791ab34e765c6aaf5c8891bcd33a9c5c141d61aa3d0b6a648648368b` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/Tests--OnlineLearningFoundationsCanary.lean.raw` | `a8f625750c9b0f395b8c49cc2a03eb681ba5d7ada7f5373c6052334c09397ecc` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/Tests.lean.raw` | `948edfada8088af64f779a1a53616f4eab2bc797c8843838d044dd4346bf9d51` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/website--content--chapters.json.raw` | `745357bd74bf5d5f0b2937e40cf0daef21c0d04bcc439e8cc559cc08670f7974` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/website--content--highlights.json.raw` | `d4996d6a0df721faffdbf88884e00f6ad76d95980e7893beeb790b939f681c6e` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/website--content--readings.json.raw` | `c7a7bebeb988a2dd54221b982eb33bb346e207fd7b1ff9f9bb0cf1e3c5321dc2` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/source-contract-packet-v1.md` | `d2bd0dc2fdd0fd42e37907530dee9d25789e14d5f832a6a49d5bd64e2a531988` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/source-contract-preparation-failure-v1.json` | `d00063b5f355b4436858aa4c66f49d7b9ed14be3999ed6d5d86b0e2571e9c1eb` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/source-contract-preparation-v2.log` | `f86e01f2522669d0113a1abc4317bbfd4059acdc33fa477fcadf51279361ae50` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/source-contract-receipt-path-repair-v2.json` | `daa2ed81b4dc16422cfaa7e7fbc802cb81122b516bb694b91971f80d863215ad` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/source-pdf13-v1.txt` | `b16d82b563558afaaa14776c6015a78be9e0daa3d888a9a0593c057a54d2288b` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/source-pdf14-v1.txt` | `3f9d01aee6e81504b7ca2ef0d9657bc1ee30f36eb54a957b8018c4d0c3e2ac66` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/source-pdf15-v1.txt` | `037b6d907a868c339b881162333f6e56352cbebf285902eb6ed628ff4f8bd947` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/source-pdf16-v1.png` | `1cdaa7b80dc113b8083930eb1dcf245688aa921bfe112021d070610f8cab3eb8` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/source-pdf16-v1.txt` | `b8fe01f6c31bf15cfb67ea948a832f97e2c77f9e1f569a36fd9fa72e831796ee` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/source-pdf17-v1.png` | `8515e968b52d0d84928817aa489e890b5fa9a02207aa95dd3da28c9252eacff2` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/source-pdf17-v1.txt` | `164b4ca2261475aeadaf633ce67afbf8a221f612b8f4db801c36ea75081263e8` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/source-pdf18-v1.png` | `45588776738cd2b9f18f3dd6cbbb05535cd203a9c36351edcd2a310262874664` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/source-pdf18-v1.txt` | `bec2bd23e52551c2f353a7dec52c99582185e812f99a24f55983f209007eb484` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/source-pdf19-v1.txt` | `929515f2d15529e05cc52b7050cf4343872d9b31b1761a5c33a0f59bfc2e0cb1` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/source-pixel-review-v1.json` | `9fb949101ec2f55415b4cc9606bd4c92d8b288b857f2ee90715a01a28331544f` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/source-render-v1-exit.json` | `ebade438226607c7bbb5a68d4082e0790c6a6ee5faae29451826b5964a0aa613` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/source-render-v1.log` | `74db2d21bd3bb8520976e4eb8f7aed203f4cbcb02ff9cefa01b3b6095273a0d2` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/whole-program-obligations-draft-v2.json` | `84ca590d2e0af672aa17f3ea9ea92e34947c344e03d5a49d44062145f1996c7b` |
+| `docs/contracts/online-ftl-sharp-v1/chapter-one-source-ledger-draft-v2.json` | `5b1620629a65d59e36ad0ea7409abcf707d3d73cf3dc329cf81da24ae1a429c9` |
+| `docs/contracts/online-ftl-sharp-v1/contract-manifest-v1.json` | `2441c7589c9e69329ef227a0e6014da1e98a4ac0a76b9c884462bb42e8f49d9f` |
+| `docs/contracts/online-ftl-sharp-v1/contract-v1.md` | `da132b158c0442647644ffec13426cb649379fd1e60909ef765c738d0424bbef` |
+| `docs/contracts/online-ftl-sharp-v1/conversion-window-v1.md` | `b3a519a378dc04459bfba0d5f141069970afb7b4919be5dac2d3e3c59d0f8d93` |
+| `docs/contracts/online-ftl-sharp-v1/dependency-DAG-v1.json` | `5fc36305a7df165287b82c92ac962040acd7b187d8d9454be16d46722c99f4da` |
+| `docs/contracts/online-ftl-sharp-v1/existing-context-and-proof-v1.txt` | `a726a69fba60cf6e6ce35fbbc638ce69a6f6e435661bb8d2afebafac4b758c5d` |
+| `docs/contracts/online-ftl-sharp-v1/existing-native-headers-v1.json` | `70d12b7b66600224819d056290905569f31a523cd5db545d536b291a3083559c` |
+| `docs/contracts/online-ftl-sharp-v1/existing-proof-headers-v1.json` | `e489532bfbb988bcba4ba20cfd2dfc43bdd6c6a789af301a486c5be9f9a8bbc9` |
+| `docs/contracts/online-ftl-sharp-v1/new-public-fingerprints-v1.json` | `cadf956450fb3c37ac47798ca40b3738b47bbe50d6953ddc6a55ddb2ae351c1a` |
+| `docs/contracts/online-ftl-sharp-v1/new-public-headers-v1.json` | `cf1de4b82c5c93812697c7facb7906bd84faf2a70cfa8dc7137c215375252063` |
+| `docs/contracts/online-ftl-sharp-v1/planned-canary-fingerprints-v1.json` | `957b07d323bdea288a036a3caecb59037ae54d46adbcecd3a70883e8874dbe44` |
+| `docs/contracts/online-ftl-sharp-v1/planned-canary-headers-v1.json` | `12bac85ab73ff28d18cf19c123d3f73eac1afbd7e80c75b3f878764f81c2ace4` |
+| `docs/contracts/online-ftl-sharp-v1/proof-value-obligations-v1.json` | `466d89faf389e1ee77cc932f5862f44d8d956f832787a719698b5a2cb0872377` |
+| `docs/contracts/online-ftl-sharp-v1/semantic-signature-v1.json` | `bb8315bede2f10987c15792ac0b41806166d7622bc8c9861d3965f84ad541ed1` |
+| `docs/contracts/online-ftl-sharp-v1/source-card-v1.json` | `13aa98fc662300477aec9ae315e2fa28b4b8d6ef0080bd3130e49338f24e1598` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/CONTRACT-v2-reviewed-BanditRLProof--OnlineLearningFTL.lean.raw` | `8aee4c971fffbc79f2426fb308f50ec02b664b42a90fe1f85620a313df4c7a06` |
+| `BanditRLProof/OnlineLearningMean.lean` | `d65b3e5d5d2e33a0fd94722f1d7d9a09819c963c693e28bf854fae00f5280aa1` |
+| `BanditRLProof/OnlineLearningFoundations.lean` | `e23ebdca2f7ce21a16173c93390fd24d16ba36e403c9d084233f7480e75408b8` |
+| `Tests/OnlineLearningChapterOneCanary.lean` | `9700f465791ab34e765c6aaf5c8891bcd33a9c5c141d61aa3d0b6a648648368b` |
+| `Tests/OnlineLearningFoundationsCanary.lean` | `a8f625750c9b0f395b8c49cc2a03eb681ba5d7ada7f5373c6052334c09397ecc` |
+| `BanditRLProof.lean` | `7cdb1969bad2f7b42cfd7a25f6d15747d0d49178dadc244b70ab1f9b8c92c5ad` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/CONTRACT-v2-reviewed-Tests.lean.raw` | `948edfada8088af64f779a1a53616f4eab2bc797c8843838d044dd4346bf9d51` |
+| `lean-toolchain` | `b15a57f8ea4c890197465ce1156667ae13d9ed4ab8a9f263a920bf010d967d82` |
+| `lakefile.lean` | `0164f3b5b5bdcbb237ab15ae8b44da83e183f4b97d5f3832aa4a57f27dc69d45` |
+| `lake-manifest.json` | `87c3e616f86244550ef39e7415186b11c1d4cf4bef20173196a619d9d4d48f48` |
+| `runs/active_frontier.json` | `567e5873aa2549a83f2820d758069213808da822a93087129877385a1addf7c3` |
+| `../research-online-ogd/tmp/pdfs/orabona-v10.pdf` | `cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/CONTRACT-v2-reviewed-tasks--ONLINE-FTL-SHARP-20261007.md.raw` | `13ff6d1feeff30c8399dd15721feb220116e5204c9611612bac2aa3d91d1f42e` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/CONTRACT-v2-reviewed-conversion-windows--ONLINE-FTL-SHARP-20261007.md.raw` | `13ff6d1feeff30c8399dd15721feb220116e5204c9611612bac2aa3d91d1f42e` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/CONTRACT-v2-reviewed-proof-obligations--ONLINE-FTL-SHARP-20261007.md.raw` | `13ff6d1feeff30c8399dd15721feb220116e5204c9611612bac2aa3d91d1f42e` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/CONTRACT-v2-reviewed-research-wiki--retrieval-index--ONLINE-FTL-SHARP-20261007.md.raw` | `da132b158c0442647644ffec13426cb649379fd1e60909ef765c738d0424bbef` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/CONTRACT-v2-reviewed-proof-blueprints--ONLINE-FTL-SHARP-20261007.md.raw` | `73421a5cdea59ff8ba5642d039c930e6197f879d27e8718f8df1f8501c49d5d5` |
+| `research-wiki/mathlib/theorem-cards.md` | `4656c1a8ccd4b2d8523cf5cf48bd1f966e7ba2c2237e2e578d6b8c2ecc6fbd97` |
+| `research-wiki/mathlib-candidates/README.md` | `ea4ed80d4eed053d0eea0d315df86075a9445e6280e2a827e3841e5c05d7df37` |
+| `.agents/skills/bandit-semantic-roundtrip/SKILL.md` | `7ee7b72b8a84ab954966dc13900952c3439bd8d4e97877b622c1ca0a7aa85477` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/repair-review-index-v2.py` | `32a5d82c89fa074f12f8b270ddde95c3714b0f081e7aa9b57d78b7af6d1167cc` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/review-index-self-log-repair-v2.json` | `cbda4649c2888455b7512159152d22f6b676b0dcf33adcf8aed7a46a6dafd024` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/source-contract-inputs-v1.json` | `a6d7651aa10b5316c5ada5ba0102ccf7524876a14e55042e9ef4a78965ad6724` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/source-contract-packet-v2.md` | `14eeb54d67113582bde4426024b74c9a0bfd664c4a057c6e3a3c736a9fe4b358` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/source-contract-preparation-v2-exit.json` | `19ef45f45254d07d1d6ad1e240f78f21f705c4efab8402a86b4bd0bcbdee7c20` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/contract-rejected-trial-v1-exit.json` | `0a20f8858600cb2a0dcfdd1ba64033d9c404b55a3230247760e3bd19a9869f79` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/contract-rejected-trial-v1.log` | `00ca377904d7ff6e2adfc2cf60409ff2d1d3393cf455215612a853ba78e8f10c` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/contract-repair-discharge-draft-v3.json` | `08e55b6329ec505684e62d0322a4824e02c9e5ae07af5606261e6e32c4cb70ee` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/contract-repair-event-v1-exit.json` | `a77be97804b147b6cb68615fc69403dad9b4ff42f4059e52d839a84aebec4ff1` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/contract-repair-event-v1.log` | `78da769d1338629576d83fad7bb5981b005593ec38edc1bbaf55214333cc29e6` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/CONTRACT-reviewed-snapshot-resolution-v3.json` | `fb42c390a2365e768be1a0184dbdbfa9a146c314f9bd55264cb1568ec8440dc9` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/repair-contract-ledger-v3.py` | `f2963ee507c1ea731f205230bfb834cd9627096cce84bf99eb83bad2eeec0e5a` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/source-contract-inputs-v2.json` | `d0c3d0a9a99a049ee8a66ffcca0a994d83d79656cc8dca34005e3b0c92febdc5` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/source-contract-receipt-v1.json` | `8249b9ec9e8a76c16a47aa6e32192d1381a448d898de1ee6e51bf2895bb6bf86` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/source-contract-repair-packet-v3.md` | `371bbb91dae3a43341708f21a0d095a81925fdf40c53e9792ea3f770f141b2d8` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/source-contract-review-v1.md` | `24dc5b2aa29b406828fd5609509ba2da8d3e3ab51a76c44789a7758742b4f0a2` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/whole-program-obligations-draft-v3.json` | `4e6166082b59954fe3e17e500285c2ad4d0faade28dda6e9b7c5afa41250302e` |
+| `docs/contracts/online-ftl-sharp-v1/chapter-one-source-ledger-draft-v3.json` | `8dfed400b73c0f8d6f38ec5f8ac0e1c73e8e8992e3983da7c75866de3ed58f35` |
+| `docs/contracts/online-ftl-sharp-v1/repair-metadata-v3.md` | `1e4948c5eb3efdeb50377c79f865449f59d8794c714aba5f8b745f5e2d046e78` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/30_lower-canaries-v1.md` | `a16a7d9060c642e0f9bd98aa6c59cad3d8f84aec4d0c93e74e11074a62adac6a` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/30_lower-initial-v1.md` | `e109401374d9884c20b175bc7f818cec0b0e58b4d6a6d0ae1352dd35c934d4f0` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/30_lower-refined-v1.md` | `27e4919d8b52addebe5d06bc128dc683fa6fcf3b924bd13179da63f6bce8b134` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/all-axioms-v1-exit.json` | `71621329edbb355bc660da08d69492bf622f1299777f9f49325a67acc581e0d8` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/all-axioms-v1.log` | `37d5ca21d9ca3c6b1cadb1705366e7660e6d300711178c135753787988dae440` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/all-exact-types-v1-exit.json` | `936d7f92e371d5b348baeee8ad1b42cad1958c70e785da8001b9ac2b6bc43ee6` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/all-exact-types-v1.log` | `cc1875f8b01abef50e618c4e40546119c686b6c062ed5f21b1cbe69d637525c9` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/all-public-types-v1-exit.json` | `e0a942ca72756735732b68934e1f6d5956b2bc1536db6e6c461851d4a33d60e4` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/all-public-types-v1.log` | `a1168b5f64d4c51bd8f02ee16ef9561587fb923d0b739094d0d179b43079880b` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/body-bindings-v1.json` | `8d0751f1a33c3c5e372b5fc545f2652f448dbddff1a859182b984aabf16a0cb5` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/body-review-packet-v1.md` | `bdb4247417b232dab3bc46bf84810eab9857322f67904facd32b26f4c5d15a5d` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/BODY-reviewed-snapshot-resolution-v1.json` | `ae6b62cc9561d1cb171e3eb6f570c913a8ddd57efee7290ab5a09a9452f268ea` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/canaries-focused-compiled-v1.json` | `432d4816e3a412e116e14a7da884c5e7c085d01c16e416068ca181a74f9ebc3a` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/canary-fence-endpoint_values-v1-exit.json` | `20cf7eaf0a651786da5dc8a06e41e1dc48c6034be6957401fd90bc4adc9ea610` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/canary-fence-endpoint_values-v1.log` | `fd0778ec3c33b87e15c502477efe0490b032f09bd20459c451da637ba9a71f12` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/canary-fence-future_independence-v1-exit.json` | `8b42ba2ea20a528d67267a036fe7ec21c4c74e9ec36faf74133d3d15496ea754` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/canary-fence-future_independence-v1.log` | `500d8d3379fe118895096de5726a76413841120994bc3b6fdd3109010effb800` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/canary-fence-interior_value-v1-exit.json` | `c6a1f9d89825919d106112e8d776d9b19e180b182b216426d38299b22404e69c` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/canary-fence-interior_value-v1.log` | `ad3b39d0f81090a98d618eb9f4d7dc2eaad3263a960b6f1de01acb2ef28a4970` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/canary-fence-one_round_refined-v1-exit.json` | `d47a7984e3f06b19c56368ac9d0d1497dadc353feb6a3dbd27b9e13c6dfdef24` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/canary-fence-one_round_refined-v1.log` | `9ff5707d1bad1c688b9fec5776326e9e6c49cc4df930134d955c0735a878887f` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/canary-fence-outside_interval-v1-exit.json` | `2772814ef4d808361985a3d82f7a780270fd457b72cd6f353c4f0fa33318917d` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/canary-fence-outside_interval-v1.log` | `84277ec72bcee4ad3e3dd8976821046ae6e859d2fc67eaf0e5217ebe9ae938a8` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/canary-fence-two_round_refined-v1-exit.json` | `3a62fec97ab25f611717a379967aabae76a1d8d1e800e1452b235122b07a0292` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/canary-fence-two_round_refined-v1.log` | `c8d55164cf8eb49d3f080afb1e7efe878a15a5294c3dc8deb419911e175784da` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/canary-safe-endpoint_values-v1-exit.json` | `5c320b22e23d8252a396ca97f82bd3a5749c829c1178207169289ec85b3da23a` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/canary-safe-endpoint_values-v1.log` | `ce403c72deccee65ec80f605f05561071dcd58397476b52c446e911bb7b32618` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/canary-safe-future_independence-v1-exit.json` | `b983fd65f625003d9f13e04dfdaf1b5993e606a68cf3cfdf66b7ccbbd14c3745` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/canary-safe-future_independence-v1.log` | `8e0e6bc9b2a166521121c5b2fa05a415fad3620ce7abf62b808990c4e0ff6c36` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/canary-safe-interior_value-v1-exit.json` | `4a76cc8d38cfb0fb7b7fee68b1348e354feeeedb977566ae532f20068aa644b9` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/canary-safe-interior_value-v1.log` | `5797ac19c8a51693e689e23fa5f1301e006396509bbeca17baf65e14164064f7` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/canary-safe-one_round_refined-v1-exit.json` | `e839df1eb69fba65f55fa5e5a93b3416ad68ab882b8aa9a21fa937fa09d0fe94` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/canary-safe-one_round_refined-v1.log` | `536f9165816c58c4a879c595ed9eb19d8c2eadf6af2a6f9ad7459165d4defaca` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/canary-safe-outside_interval-v1-exit.json` | `ecd53f2cd9ab43906d4c7d831937146b511a7fa0cbf12aa41adb5be04e49e2ca` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/canary-safe-outside_interval-v1.log` | `590ee2aaa8faa143b40179eb1fca05df9accd45d66446c94fe7ec9c7ec67d9fb` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/canary-safe-two_round_refined-v1-exit.json` | `6149a01da799beea6cff68b611a40d3a59b0081366c0504ae1a4797e7d4319cc` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/canary-safe-two_round_refined-v1.log` | `891129ba1decb84602de96c101c242ca6e403725bc5c0581a62c6c6f846ae413` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/candidate-event-v1-exit.json` | `76ea6b0e8e5af9f9bb37a0e422f89417a73c73fb123d87b909d2cb843b6f5bc5` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/candidate-event-v1.log` | `86e6e4f911952e0fc8ea134913b9e9f0bae9db06ff1a679d84f1da86b9f61f53` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/check-bodies-v1.py` | `6b67817e55cd55836f648718d28c32bb10e97d38b99072d72fd737792c234c1f` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/compiled-value-graph-v1-exit.json` | `f41c568107dd75b08dbabc35c226de7039e791864559327ba7061384793f4c3a` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/compiled-value-graph-v1.json` | `8c6455ff1982f679016a2115631f3f04f52763c62a988429fc3c45601381b04f` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/compiled-value-graph-v1.log` | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/compiled-worker-trial-v1-exit.json` | `1e84152cd8e3a1a09f34fc2edbacd99dd7289a7aee14f004e8007a5eb98f8cf3` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/compiled-worker-trial-v1.log` | `fd35645595f6c624d61d311bc789366e51481bd95b38ba3ea49fb2a3e2334534` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/focused-canaries-v1-exit.json` | `f8a5386b3b7144056ba3e95eae9082b65e8f3df6789804dd9f947b542737b66b` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/focused-canaries-v1.log` | `1a82579c66f1438700ea1286615821bf41ebabeb45fb76775609d02cf5677ac1` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/focused-initial-v1-exit.json` | `d535a14cca659c16fdb9e6eba255f78af0b6bca0227c128b678666c8f587f197` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/focused-initial-v1.log` | `db4d3e766bac42a0d69bb31a6dbd18adfa799ccbf444b095faeac74cb7aaf27a` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/focused-refined-v1-exit.json` | `52fd9bf5dd9702a4519760a04dc16e6147879ae0443800cd7f48a2f75613737c` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/focused-refined-v1.log` | `db4d3e766bac42a0d69bb31a6dbd18adfa799ccbf444b095faeac74cb7aaf27a` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/full-fence-bindings-v1.json` | `808255697e8fb5ddfb8c06383fcaa5bd261c6581b329f5b3adeeda8ef652f075` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/initial-fence-repair-v2.json` | `5763809ac3862f2007c6798a7c7cbfb0ed14192aaff3de012ea11e425d1f5639` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/initial-full-safe-verify-v2-exit.json` | `c21a621c3cc4b6dc3a75551a56c9e9b863dfec2175f441e6899182156bf9e3df` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/initial-full-safe-verify-v2.log` | `bafca98395765350e7712505d3a590209ee47ccfce23c2bda89e56fcdb4856e9` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/initial-full-statement-fence-v1-exit.json` | `2a043317a665e423233df0c3936128780a0b7c6b9bf64b2ce22da19e5089b669` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/initial-full-statement-fence-v1.log` | `0e1553d7131b7502adc928f439373a0b5ff8358fb832b64733e2f1f363c28047` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/initial-full-statement-fence-v2-exit.json` | `97bd95c53757a6bfb1c90529533a717cb5019bc36689c510f7a57e5932bad8ac` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/initial-full-statement-fence-v2.log` | `4d827dd0345dc79486d8384d5a02167609bab9f93e2621522bbb8c793e78cb3b` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/initial-leaf-compiled-v2.json` | `6707e73113405ceab84f686bb31cfbcaa153d034d1473f81719d73cea3b4cdc5` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/initial-trial-repair-v3.json` | `dc8a7d732054abce3a7215f74b0c370709ad880f7bcf0fd04817b469823ae8ae` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/initial-type-axiom-canary-v1-exit.json` | `23885439ef9188796d01f7dcb576be6e80e3a1ee9a97cb64bcc528476d0555ab` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/initial-type-axiom-canary-v1.log` | `886e6051976902b6705c3d94f525eff5e1aae7bacf5b4897cccea04e2777bcd8` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/initial-worker-compiled-trial-v2-exit.json` | `88d73a60dfd322ce8bebc25236be16149f8c7ddab8861990bba41cfa155dbb6f` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/initial-worker-compiled-trial-v2.log` | `1bf4360182030254f323b395c8540020136af10f24e11cd351bfa22ce5f04abf` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/initial-worker-compiled-trial-v3-exit.json` | `52bb40547b2ee9444eb41839f8126a02ff002d8d32b8fd0d1e11c1ed85fd1177` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/initial-worker-compiled-trial-v3.log` | `065f62c9c4562cb4c8f36e8d7f5789e2f28580893be260f08d31dda31ce6be32` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/leaves/all-axioms-v1.lean` | `02e32e5791b9d29c2e9ef7ec4bce86f91cfe41e744084cd2f50391a95496945c` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/leaves/all-exact-types-v1.lean` | `c3e63dfd4f810e864a419bc49ecd190e55c6267c48285da42a4e020617d00623` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/leaves/all-public-types-v1.lean` | `c4341588b7df3bd3e9e8c641682ffa503dcbe6c85771d09f913900555ba4e68f` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/leaves/export-actual-dependencies-v1.lean` | `9d65e13579e8511330b655350ed301c5bbb75adb229e65cbaef78a36ab9f16be` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/leaves/initial-type-axiom-canary-v1.lean` | `6fd616b280b178635a09614c5394918f737903ecd17b5a9a3bdc02206280fbf6` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/native-canary-fences/endpoint_values-v1.json` | `fd0778ec3c33b87e15c502477efe0490b032f09bd20459c451da637ba9a71f12` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/native-canary-fences/future_independence-v1.json` | `500d8d3379fe118895096de5726a76413841120994bc3b6fdd3109010effb800` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/native-canary-fences/interior_value-v1.json` | `ad3b39d0f81090a98d618eb9f4d7dc2eaad3263a960b6f1de01acb2ef28a4970` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/native-canary-fences/one_round_refined-v1.json` | `9ff5707d1bad1c688b9fec5776326e9e6c49cc4df930134d955c0735a878887f` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/native-canary-fences/outside_interval-v1.json` | `84277ec72bcee4ad3e3dd8976821046ae6e859d2fc67eaf0e5217ebe9ae938a8` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/native-canary-fences/two_round_refined-v1.json` | `c8d55164cf8eb49d3f080afb1e7efe878a15a5294c3dc8deb419911e175784da` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/native-initial-full-fence-v2.json` | `4d827dd0345dc79486d8384d5a02167609bab9f93e2621522bbb8c793e78cb3b` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/native-public-fences/empiricalMean_update-v1.json` | `196f4c587f24d412044df81d7336e9f9a96854129352af2cebfedce1833c61ff` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/native-public-fences/meanPredict_initial_stability-v1.json` | `04f168d2cf2e2f29b8921fc9f9e2c1e1f59acc46a57c06bc40fe5aa6f26dcc4b` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/native-public-fences/meanPredict_mem-v1.json` | `a2559a3b938542c20a5d83f9670b8ca40263cc523b81981b5e0f0f6b8404345a` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/native-public-fences/meanPredict_prefix-v1.json` | `5e777d538d8ad536c9d88a5186856582fba098be7906387f7c68ec727d249ebc` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/native-public-fences/meanPredict_regret_refined-v1.json` | `228740a98cf287762110ae3c1d29d1df609536d2c433d04301c08041336c16d3` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/native-public-fences/meanPredict_stability-v1.json` | `be66a29ec9876827cf893b5e382e1dc1b7c8764110c460614b27e85b47aecbe7` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/native-public-fences/theorem_1_3-v1.json` | `45937f5a4a607fe800e58bff8cfd272ba4a893d0154ea5173c8474e98d811125` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/prepare-body-review-v1.py` | `dd3fe8ab5823975947a6b3a55a15256a6921e0d962010bb0846bd256f6e7add3` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/prove-canaries-v1.py` | `563f5b7042ba6b5cbedd1d8ab0e38a3d324a4480f82b54e6dabdd8a127ec9e14` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/prove-initial-v1.py` | `3141ce1ac83c5a7cabfe068ae2c43f3d83074c243ee4c3388cd962737b1fe534` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/prove-refined-v1.py` | `c1f2663c57971882ba22c45609ccabb644620db73033a3bf4f5fe7cef09208b5` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/proving-event-v1-exit.json` | `59f3ba1b946e9a5c174030e87c3077e2f5a9f5e35574a001261ec70f76634771` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/proving-event-v1.log` | `93dc71147c4fd6974c106464a23c722167f1809d1c4dfdec58f944468c3e77ef` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/public-fence-empiricalMean_update-v1-exit.json` | `b0fa2ba16b0664499cf2b474ddf8f55ca63ec849c37a5cf6d4815ea19b28e574` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/public-fence-empiricalMean_update-v1.log` | `196f4c587f24d412044df81d7336e9f9a96854129352af2cebfedce1833c61ff` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/public-fence-meanPredict_initial_stability-v1-exit.json` | `42d2220d063ed46a3907a6bb4a9ce59bc81265a4c2149db1ccd10d438fb35f7f` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/public-fence-meanPredict_initial_stability-v1.log` | `04f168d2cf2e2f29b8921fc9f9e2c1e1f59acc46a57c06bc40fe5aa6f26dcc4b` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/public-fence-meanPredict_mem-v1-exit.json` | `fd6e2aa27c7cb0b8bd1a243c338268644020e0b06a50d9c7fc29c11863884e4c` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/public-fence-meanPredict_mem-v1.log` | `a2559a3b938542c20a5d83f9670b8ca40263cc523b81981b5e0f0f6b8404345a` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/public-fence-meanPredict_prefix-v1-exit.json` | `3f42c6a2c817264c5d843c086bb5e45677c099553e5a01fb21925dce625af75d` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/public-fence-meanPredict_prefix-v1.log` | `5e777d538d8ad536c9d88a5186856582fba098be7906387f7c68ec727d249ebc` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/public-fence-meanPredict_regret_refined-v1-exit.json` | `1acc8dcca3d6f1c96f667422ac680cee1a019541819fa9857a4ebc99a06b9945` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/public-fence-meanPredict_regret_refined-v1.log` | `228740a98cf287762110ae3c1d29d1df609536d2c433d04301c08041336c16d3` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/public-fence-meanPredict_stability-v1-exit.json` | `d697b21bf76e5b10881e4bb83e2213e19f5ec44f82f6fb3a4df4835df44bfcaf` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/public-fence-meanPredict_stability-v1.log` | `be66a29ec9876827cf893b5e382e1dc1b7c8764110c460614b27e85b47aecbe7` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/public-fence-theorem_1_3-v1-exit.json` | `ca8c7f15557b67dbf3770b167250c7b6b972d424da6e058e2f12c4ae2e5f4c35` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/public-fence-theorem_1_3-v1.log` | `45937f5a4a607fe800e58bff8cfd272ba4a893d0154ea5173c8474e98d811125` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/public-named-declarations-v1.json` | `35131366b8baa4d70a19e5073326ee737c9fc7fa6d5cff2aa7d58042a5dc93a0` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/public-safe-empiricalMean_update-v1-exit.json` | `cf3ec4cd648e74eaef6fa7375cc91eb8ec8da3ac2e7d0c7debe515bb40051b44` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/public-safe-empiricalMean_update-v1.log` | `2cf694a1733953aeb82756514826d1f0c9ed3e82b150feadf4086b35b0a718fe` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/public-safe-meanPredict_initial_stability-v1-exit.json` | `dfa5586c83839f3fdd7552abf95acd91b64892fd45f012edfaedbafa27ac181e` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/public-safe-meanPredict_initial_stability-v1.log` | `bafca98395765350e7712505d3a590209ee47ccfce23c2bda89e56fcdb4856e9` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/public-safe-meanPredict_mem-v1-exit.json` | `7d97586d458079da16ac36b9235c4a62e50bc9dae9e8377b25a9c72f23046106` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/public-safe-meanPredict_mem-v1.log` | `c6f75604cc0d95d682bca3d5dd7d999e40d7271e1c16bb042d1e90279fac9c15` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/public-safe-meanPredict_prefix-v1-exit.json` | `f7c6d91c95c31a691710035b094b0afbf29d7705bf4af7c356c46c80bcd5d199` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/public-safe-meanPredict_prefix-v1.log` | `a13f34870292099f5a35c576c81308d843e0f9721963a74e0d172f0573604d94` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/public-safe-meanPredict_regret_refined-v1-exit.json` | `c75f8df06caf49fb62fc30fcc4f5a9d3d44f84d611058bdf58aedc3a89efe8a0` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/public-safe-meanPredict_regret_refined-v1.log` | `a2eb9ab753af2b061e09a7d6b858473621220f41b145304eb00f1e54933d196b` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/public-safe-meanPredict_stability-v1-exit.json` | `e8f74b9ef374ff5bebddb1bebc431cb1636cffc1e4bafd6599a40a5e780e0abf` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/public-safe-meanPredict_stability-v1.log` | `e8ef61dae3cb961d29f1a91bedafded8767603222a22bbc01e2dcfcd9046b091` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/public-safe-theorem_1_3-v1-exit.json` | `46130dda1d36acbfeeba8b2c7edfa8308bf9a9d8c037c216198025c5633d92ab` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/public-safe-theorem_1_3-v1.log` | `162a7585c4c32608605eb923f659d4b3824e2fe5ffe314f04585ff5e2292d4a8` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/refined-focused-compiled-v1.json` | `11186c494b46862b7be4a175c8b2e5f58b610ef349fe4fd677e4fe6794ccb42a` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/repair-initial-fence-v2.py` | `c867dcee8401cf6fd45e97b74f99136660aeca96b668afc89a339c2930b85732` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/repair-initial-trial-v3.py` | `6d076ce2c84c3b4795fdeebe744f9f853488e057b459d207902db55c9ba2a356` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/BODY-reviewed-conversion-windows--ONLINE-FTL-SHARP-20261007.md.raw` | `13ff6d1feeff30c8399dd15721feb220116e5204c9611612bac2aa3d91d1f42e` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/BODY-reviewed-proof-blueprints--ONLINE-FTL-SHARP-20261007.md.raw` | `73421a5cdea59ff8ba5642d039c930e6197f879d27e8718f8df1f8501c49d5d5` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/BODY-reviewed-proof-obligations--ONLINE-FTL-SHARP-20261007.md.raw` | `13ff6d1feeff30c8399dd15721feb220116e5204c9611612bac2aa3d91d1f42e` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/BODY-reviewed-research-wiki--retrieval-index--ONLINE-FTL-SHARP-20261007.md.raw` | `da132b158c0442647644ffec13426cb649379fd1e60909ef765c738d0424bbef` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/BODY-reviewed-tasks--ONLINE-FTL-SHARP-20261007.md.raw` | `13ff6d1feeff30c8399dd15721feb220116e5204c9611612bac2aa3d91d1f42e` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/BODY-reviewed-Tests.lean.raw` | `948edfada8088af64f779a1a53616f4eab2bc797c8843838d044dd4346bf9d51` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/initial-compiled-before-refined.raw` | `c3d352aeac79a96761ebad37d6224b6109028e89379042b10fe773affc2aff31` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/source-contract-inputs-v3.json` | `b07031ec0f9f6173f141046e2f20b1f798aff766c0558504e3d4ad40cb32b764` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/source-contract-repair-receipt-v1.json` | `5afa454785c5e3c0c529f674bdca6adab5884f192dd7677a71ff47fbfa88f206` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/source-contract-repair-review-v1.md` | `7caf3393e890b8b6b9286fd1bc908207088222f542c7a3616dd1c969b29b9368` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/stabilized-event-v1-exit.json` | `2273df2dc637dfbc64ec2ca75855353f18a51f75f7d183838d99be77af3f4036` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/stabilized-event-v1.log` | `f227a886ce55163c44b373a8c5356c509743bf9b4c210acb403a0626e649f22e` |
+| `docs/contracts/online-ftl-sharp-v1/initial-full-guard-v1.json` | `333f7cd082209a13c9d00f00f0b8bcd0f3a7f9ef3251c483412815797d08e0a6` |
+| `docs/contracts/online-ftl-sharp-v1/native-initial-header-v1.txt` | `5dd62d332f0438be94bbdeb9ab2c454b6f9b74de50c95ca441a07589db1cb3d9` |
+| `docs/contracts/online-ftl-sharp-v1/stabilized-contract-v1.json` | `c2805cda2c5ebd10aae7bcf3702fde7425e1eb3150a12ea0d211fa3f22ce8a65` |
+| `BanditRLProof/OnlineLearningFTL.lean` | `8c3574c657f08e0c5291f0689105f9459e92187502f092f4d36d848e52ab4219` |
+| `Tests/OnlineLearningFTLSharpCanary.lean` | `b3f56ed77c2578b60a3f8fb509aaac85f4419b38aa7d0cdabbf9f311fd0559d7` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/algorithm-v1.png` | `8f723b3864f1caefc3761f2ad5acc20a380f7f3965f38cddac899732d99390c1` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/algorithm-v2.png` | `8f723b3864f1caefc3761f2ad5acc20a380f7f3965f38cddac899732d99390c1` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/audit-committed-raw-v1.py` | `fa0b8ffd7067ab5851c019fee20429162e2237a2d8e7a874d8450d59b20309fb` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/audit-scope-v1.py` | `43313dddd79e3fe688c9194b3e3f27b2d9097a8ed098a6cadaacaad642f3b2c0` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/body-review-inputs-v1.json` | `b04cfcad15c3725b33249d75123805e5ce7447fc62a220bff54493d56c612aa0` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/candidate-frontier-refresh-v1-exit.json` | `9f3e04a2a8cbe4724caf10fcc2832cfe0ad0e325afc92d6ba40e8945b182bfea` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/candidate-frontier-refresh-v1.log` | `f8f95f89c63222324825f927fda53cf115e574685ebf94a8fa3c4fa5fe4b8ed3` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/candidate-frontier-shadow-v1-exit.json` | `a4a20cd3d6d4cbb714152951d2463a40b5cd9c3f75b266538583431fc6822476` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/candidate-frontier-shadow-v1.log` | `70a20d10a6ce12700f7d4eb6b6b7dcb913228e69e1a03359fc806a1564fd2fb6` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/candidate-frontier-v1.json` | `f8f95f89c63222324825f927fda53cf115e574685ebf94a8fa3c4fa5fe4b8ed3` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/candidate-reader-repaired-event-v3-exit.json` | `ee5b650a3a846db27866b62aacb2da8d0a0fa8ae2980920dc47ac9d52fa7d825` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/candidate-reader-repaired-event-v3.log` | `e1ba12473c095072ce0741669d1b4463d8390b476c3156ef0a3d856059b672d5` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/candidate-repaired-event-v2-exit.json` | `b780398856c534911e12855abd2b0bfc075042c5d6d2fd5c3aba3e464e143a14` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/candidate-repaired-event-v2.log` | `d0cf34bd130f8260836758991ffd6ca5a6443939e99b24611ef8d017b1fc1d6a` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/candidate-scoped-trials-v1.jsonl` | `c67b63570ba4cc23e52fff876daa82714cd6f1c26ff105b08a8579128611ecb6` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/capture-reader-v1.cjs` | `144a3845bfc5b9c54b23f613116b7a467a1631b8a040eeff95e1129a3c711cab` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/capture-reader-v1.py` | `cd49b81c8bc4efc3055f3187bbacf4e2bc6185119539becf4483dc7f98ac8004` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/capture-reader-v2.cjs` | `a473a65ddbe040eb9924f6b9e16b72bbd04b554521f59a04ff5af70b82e1cc39` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/capture-reader-v2.py` | `fe29b7b0ddf31d6ab51cf7b430be2770cbf138e7a00c122a5271d64e2128427a` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/check-scoped-diff-v1.py` | `ac80ccc2b3a9ab382713b8df89c2822b53bfd885a267b392f03e435f52f54f8e` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/combined-gates-metadata-v2.json` | `db4bdf4a03dbc23e4fc0871b963ecdca4ed08aed43d4c8a6dcb6169c1827f680` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/combined-gates-reader-v3.json` | `df3a72a2111adccca9b7ce5624d9d17b57012acfc21751e08a66f0ed5158e70d` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/combined-gates-v1.json` | `b1d4c4849623acdfcf8a55f643ef6d4baebe2ccdf7a26535c13d4e66f2e8d244` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/combined-root-v1-exit.json` | `80d881decd3e88ad2c423470834d8d361895ed6ad05d4431b4cfdd59a7f36772` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/combined-root-v1.log` | `dbdf5d37ee500d8c7db75f8b6deb5fea8f8cd312e8e39ae681e1d5990d42187c` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/combined-Tests-v1-exit.json` | `f6576b8fae5de81906616c13a845564f9306381d7aa866e1909eac80ad6a1ab9` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/combined-Tests-v1.log` | `b7358a21794e2742993af84fe6c2b111825477179911d6be8426200be82ea614` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/commit-owned-v1.py` | `0dddaf763d7832cc042b4919ae656d29d92cc87bc93eaa69ef6dea57998d2b77` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/complete-publication-v1.py` | `4898ab0968e4406b6305b5fbddc7a8101a36f95043133ea63d3c4f3f1d84d3f8` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/continue-reader-v2.py` | `bfe9a1c51b544edec85b706ebc71b9ed99d9c26a5f16630b24c548e50ac94a7d` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/continue-source-site-v2.py` | `1b7310c5f2b0993f32868ec8934e00663a709c66e95575e6352f78ecb7af49e6` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/continue-source-site-v3.py` | `b869b6b4516373362ffdb9864bdbe2c63d15ae77209b44e49e9b53ed51d102ba` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/contributor-exact-v1-exit.json` | `cf962c68256d6da917f4dd222a240f78da00b13854a3029d7f5de60df7188e76` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/contributor-exact-v1.log` | `d4f787d8d4c155b3c431f4808a5b3ec5a7bbfffd8baaafb5d25f810abc866302` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/contributor-exact-v2-exit.json` | `4c070ee3789df317b5554a6f06e3702e424df6f12d074d80907ba8fb993d3626` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/contributor-exact-v2.log` | `99819a2de8c7c79988566b9099d50b6766547972e2f31b6d0b8d606784fc7242` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/contributor-failed-diagnostic-trial-v1-exit.json` | `17ccf37c2848ce0fe49d05056fe4ccb1baf5618f40b2a7a61943eddfa3d56e7a` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/contributor-failed-diagnostic-trial-v1.log` | `bdd4f5425899f39390b904244eb90fafa07e69d02e3e0545197df59bc7a01a1b` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/contributor-metadata-repair-v2.json` | `3830fb0dcf7c4e8f28f4704b75dec3ffc8ba5dfa090dcec404a83b4c4610168c` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/contributor-reader-v3-exit.json` | `849586d826cc2653ea43d2348833fa97084d93e50f3f0f13dbfcb40643477a21` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/contributor-reader-v3.log` | `bcbd8a350bcced601ca08b529587e871f48e1296aec83dc335157d16f1d75501` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/create-pr-v1.py` | `7e198add2702ae471b0400567b76c30b16d797fe8583abe456c4d695040dff25` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/document-whitespace-repair-v3.json` | `5f85edb581ee8c266a6ba1a9277001b528f0890656cf4c4486fa0c270552cd0a` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/final-reader-packet-v1.md` | `3b121051dffa30244127ad1d6bff7b7b2201f317a735b01c7f6345d73629156c` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/final-tools-binding-update-v2.json` | `8198f50dedb93eeae6694a02608b1ec9554951e35c4667268fdd2321ec5698bf` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/formula-render-v1-browser.json` | `6af5fcb1930045382dafa4414c527d17ba0a3c2de5c644f52ab0c561c354d1e0` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/formula-render-v1-dom.html` | `7c9b274046e57be1ce668bbc7ea0d2540cc0a49e89ab65b714d6dd72d3e0b3d3` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/formula-render-v1-exit.json` | `4ded983155adee413de1b618066c9658ae8d21e9ea4d0f48c3ef645cf62dd4b0` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/formula-render-v1-node.log` | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/formula-render-v1-server.log` | `537358907aa26d28236bf81c9e4e4420f875937875b99b08cbffe22435d47573` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/formula-render-v1.json` | `1f4b81bb5b3ea4b0255bbe16421d2a4cca2121be6f3d80fc7747a7203238414a` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/formula-render-v1.log` | `d06dc7a9f3708648293f033b489ca0d3a291dcf7a457f2463b8f780ece05d56c` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/formula-render-v2-browser.json` | `b59fca13d3805ecb01aadbd318d64aa261dbff8379715cdab0f2d5fc3d2bab6b` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/formula-render-v2-dom.html` | `3cc6423ef15a2d393c470318a2928042e6c6e8ba1064bf99a48dfd729b4a35fc` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/formula-render-v2-exit.json` | `73e4f1a4411c3ee031f2c9963293bed188aa3b5392cc54ff7f024a20cd4d4dce` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/formula-render-v2-node.log` | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/formula-render-v2-server.log` | `537358907aa26d28236bf81c9e4e4420f875937875b99b08cbffe22435d47573` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/formula-render-v2.json` | `55c0715cc22cf549b4fd13b0d0bc4ef1bb59adfb8f0e368852652aff0b25bb78` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/formula-render-v2.log` | `d06dc7a9f3708648293f033b489ca0d3a291dcf7a457f2463b8f780ece05d56c` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/full-harness-metadata-v2-exit.json` | `7d377d52a0fc1b32f241162cdda68cc32eef5ad1fb9797db5daf31d25c8a7410` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/full-harness-metadata-v2.log` | `b6966faaf85c38ec93c14a5b811ca74022363ce5debde86398f54af5d85c0a2c` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/full-harness-reader-v3-exit.json` | `f729cf666eac6de6b4dfcc140161bb9846a7020e0e6e5fc3bb8b409a92bd561c` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/full-harness-reader-v3.log` | `c1f78b3259a2dfc99bb997c989eeb915cf079f30ad9a296810e0b2870eb5d789` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/full-harness-v1-exit.json` | `3ecd5d23866fdb79dea52250cbaab1c7242795e62b1a4ae04305cb5ad1ee1a8e` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/full-harness-v1.log` | `8b0d44f236bc1dc702649bf664af6f07ee78131dcc27d4d34d2738ef4d6957c7` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/help-contributor-v1-exit.json` | `35d43c7bbe2d5df3cad79cef162eae18d703afe0a19947fedeec9f6b85fdde7d` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/help-contributor-v1.log` | `16f3356ce372e996cafe1692459a55836be2ea0649dc5f66d545296d5b1d7622` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/help-site-build-v1-exit.json` | `69f58277b761befd74a9e6b8bf55cccb64ed2a71b8dea1ff41ff2cc20fdfbc6c` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/help-site-build-v1.log` | `53ff0425f725c9e473c6a0a4b60e24189416ff73bf591c4f5f6528c2b9f375fc` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/help-site-check-v1-exit.json` | `e74738fe0215cfc2b408a91cd5811a3c85a11c3d19258fa3e446c8e8c101dd12` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/help-site-check-v1.log` | `54ca1a124d1bbf5f4583883ff1ba0052b8a52ee1fadfb2287db84b02b12ac01b` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/integrate-reader-v1.py` | `b97cb0c11d3d82681d8b9965bf9ff40136f2296e647988c11689a9bc7be1f6ef` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/integrated-gates-overlay-v1.json` | `e841ab78994976ade810444842d571a9a733005a9856f03a24f94c835a4d014d` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/main-relative-diagnostic-v1-exit.json` | `aeb4de53e8f085a7f2ec3586111a1e9a040267488740adb9a131758e9020b1a8` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/main-relative-diagnostic-v1.json` | `874f7b60f5462ab1f7b442d390e59dcc927671350ea5c5c317cf8b963d999b3a` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/main-relative-diagnostic-v1.log` | `07b843308d41b94b8b00da6b0d4932502a133a8539c6d0fc975d7a3bcddbaf0d` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/memory-digest-candidate-v1.md` | `584c2c19f78f35fcb34555e75254d333dee473c7bd8a0d7936f7ac57ea07c6a4` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/module-new-declaration-01-v1.png` | `23f25f0724fd5a19d3cac9f71a71348a919f32c16830eab1193b2bcb9d860be2` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/module-new-declaration-01-v2.png` | `c3875b13ec1a5565784e8be29d2389c9288bce811e44cba072a04a25cce45204` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/module-new-declaration-02-v1.png` | `6f15f7e50c87cffccc37d0eecbaf62c2c3a9401270b1de4557d3080bbad5a37e` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/module-new-declaration-02-v2.png` | `afc541ca676fa27d0771696cf0a9a13f83266796aeba29664f155dbf453229ab` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/pixel-review-failed-v1.json` | `fb53810269cca2d641bb826d967ff63de24c8cdf3fd90a643e7f4b51c995948c` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/pixel-review-v1.json` | `5ecbf9e15d167b7187e7f906b0b2a66a66fde376771a0b890c5a846decc257e5` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/prepare-delivery-v1.py` | `0945c40c900b0e86691cb196d3df399cdf195c450403bec9b85ec92f6d1c88fa` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/prepare-final-review-v1.py` | `b9475a5ac69f909a2b5db05d3d59a93010f6752e48dca76bd7c6c2997b4f83c6` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/prepare-final-review-v2.py` | `71c5b3f0a2d5f21f6676215548784634447391ffa08a26eab0629df36df20ea4` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/prepare-final-tools-v2.py` | `481fca68f4f69ed1404c0baed1d6d1dc5c3cc780063d0c89e56d463c3e29bbef` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/prepare-integration-tools-v1.py` | `2aa52c28e8ace7bc143f637558a72735af85a0ac6cc8b9fd92783e705df74044` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/prepare-publication-tools-v1.py` | `276442f72d8a7d0ad1025b445d42e95ed299d781f3e47fbba77a90c2b453ed98` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/prepare-publication-v1.py` | `75a33f33f5eba0b34410e2202aee59997dcbdb8612028aea8e4e154a1d7f8a5a` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/prepare-reader-tools-v2.py` | `e2f8b3558129dd57a43b38c12935608819ffeee23d4623e0ec542785b9957225` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/project-gates-v1.py` | `510c24be22d093c1ca9be1fdd8be84474c3328b8c714aaa5f7a001029b0c0e10` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/public-body-receipt-v1.json` | `cafda430bfb5ad30c88adfea4c32baf8a766044867b2d787492e2cc1fb94b8a6` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/public-body-review-v1.md` | `ce6b93fc0192ce7d21adb18d765ea31a17158e341dc441514c1ac8ed3008a302` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/public-note-01-v1.png` | `fbe7ab8a7d6c381e30e6f3bf18e9b01907139a86cc09972cb33e1120f52e4efe` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/public-note-01-v2.png` | `7039faa794eb733f08396aac1222b6634e40ebf4c558d7d14550b7f54b1cfdc6` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/public-note-02-v1.png` | `a710471e4e4d7e1033c310bfddedce11ba062ac9a93b865f35a2ba78c86fdaa8` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/public-note-02-v2.png` | `4c72d7ac42b8f210d38a40a8ea1b20d7d23dcb3131f144cacd7a8ac19c59dc80` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/public-note-03-v1.png` | `cd95ba00736de34ad3bcf77d822a9ed0f1976cb28b8b5c826ab66dbfa8354d21` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/public-note-03-v2.png` | `2fbe0305f96ade07fea8cc170f5e4b332775250f8eec1cf10a947f3d7cef2f1d` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/publication-tools-before-FINAL-v1.json` | `0cf2949b225d98254c11d8bb48bcbf67a9f5c9926e241ea8884c6d9cf13f5d80` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/reader-first-viewport-v1.png` | `b1c8c5226af1ab3164fe8d11de82bac38586ded873965371c4fb05c2b06c0018` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/reader-first-viewport-v2.png` | `b1c8c5226af1ab3164fe8d11de82bac38586ded873965371c4fb05c2b06c0018` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/reader-integration-v1.json` | `42b715f3eb10d1b2244f37cf1cb3016b7c5df11244afb09d8fbe06e59f61eaf5` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/reader-scope-repair-event-v2-exit.json` | `c41bad038f21e74849388c96bc5ad8ae1bf41cacf7b19de1fce4a7edc0318e44` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/reader-scope-repair-event-v2.log` | `58cfd1da06f8114f474ff22c8cb4d3e1a159f3dd71c33b34b557015004118eb7` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/reader-scope-repair-v2.json` | `b9bb584c90079f7f999c2d71e8345657509744ffd3c93d8860151dff3c12fa86` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/reader-tools-v2.json` | `2d7a658da6abe413496b6a94010f9641b4116b94e532822d0308f370c3dfa22e` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/record-acceptance-v1.py` | `a1a5cca29136de205915e7555924b082e281149e177f44cf497ee2687ee6d950` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/registry-base-snapshot-v1.json` | `e1d610ccdd0f697d395036157a1a94ef04284d94f88ab38e62db8280f5dd3fb4` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/registry-v1-exit.json` | `01b904a360804061dd5de787963111543da4b8c122240ef9b0891787a2359f49` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/registry-v1.json` | `c0965308cb7bd12142f10b57d6d6f3cdfa12e03af17868bbcb9356f7bfbf9473` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/registry-v1.log` | `4ee00f6d19a96a9b13d66626ca4d96b922c3acc374f8ba2458f16a92eb7818e7` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/registry-v2-exit.json` | `f2bbe27a9bac931a4cb4c4b0274f44ed704435fdc25a15882c06b10dc0af96cb` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/registry-v2.json` | `7e0f012bc2477006d11adcf8d2cde8c107f386cc6475d43746f3143555b58c5b` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/registry-v2.log` | `4ee00f6d19a96a9b13d66626ca4d96b922c3acc374f8ba2458f16a92eb7818e7` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/repair-contributor-metadata-v2.py` | `750695ef92b828dabf5d7e38b4e20bdb738f620c8e03a8bc156bc974f8641326` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/repair-document-whitespace-v3.py` | `e726a09a9e334d3f06370a004668d8090ae16640c7eceb4e5fcc0c133025bf74` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/repair-reader-scope-v2.py` | `9f89cf7a3df2ebdfe7ca05248ebe289cbb225e45b4de869f691fe223d7444bea` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/scoped-diff-audit-reader-v3.json` | `d99ffa46381982c977938832d6c1e63d6578e135014b6ab0d7a4002393a82e32` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/scoped-diff-audit-v2.json` | `0042d4fb39dc961109d05de4e287fdf77b509f32a00e8cc3039ebfa7f9de7e8d` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/scoped-diff-audit-v3.json` | `0d234867c076612e9e7b85ce446b700929852df30ed217909c33746bf866d432` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/scoped-diff-reader-v3-exit.json` | `b90486301b06108644c3f7f80047d6f07b6d85ec914f56eff782d40505f3eba2` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/scoped-diff-reader-v3.log` | `b02a2f60a317b1beefaab6cbb0c1a4955d5239d2c52760856a85588d1e55a2da` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/scoped-diff-v2-exit.json` | `0de9e4f0e89f2cdf0ee5b50ecc6e61f31ef656ce4a3d120cd97d1ca250243181` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/scoped-diff-v2.log` | `801f2e6c0e354007841af16cf94a4613a6438d81ed0cd07579a30481b6532eed` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/scoped-diff-v3-exit.json` | `6a70ec4c66c85af8c5684a80c6184d246600ed7f4bd335425c30cabe78ce51c1` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/scoped-diff-v3.log` | `fed404235eb30bcb1918e2f6bc6098b1e8b36e61d7b2d6fefc527512fdde349a` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/site-build-v1-exit.json` | `4866525ddb94d1548a10a44628b8a13dcfcf21fef7464b34b6bc65b7855431bf` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/site-build-v1.log` | `d4c8c6df1d6665dd9a7c8adb4dd2d0334514455c34223983bf4fe30a8ef2da4f` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/site-build-v2-exit.json` | `f6a5b1d7f9d4647bf65ebb7ef4b10e197aa778323206796ba00ae07cfeed2684` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/site-build-v2.log` | `6b036e1cef7b02f07ea79c7d3a41aed014c115f05ed8473cf29855674abc4e14` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/site-check-v1-exit.json` | `385a26ac477f6ee8f5cafd2777ce5102e93d31e18f374e27ca286fc12dab6b49` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/site-check-v1.log` | `d5448f5393c1058e8620f55a24aa2aa104a07aad0d4da7fc8324d318dfd5ce1d` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/site-check-v2-exit.json` | `8651f3a18eefa8e0c836c4fadd8b0a38b864510aa6a76fe23d3ff316ec78130a` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/site-check-v2.log` | `d5448f5393c1058e8620f55a24aa2aa104a07aad0d4da7fc8324d318dfd5ce1d` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/site-tools-before-first-use-v1.json` | `0670b4253586ab9f44dbca15f15a43585c5783f8a8813253361e70ebdd3fb696` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/before-EOF-repair-conversion-windows--ONLINE-FTL-SHARP-20261007.md.raw` | `13ff6d1feeff30c8399dd15721feb220116e5204c9611612bac2aa3d91d1f42e` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/before-EOF-repair-proof-obligations--ONLINE-FTL-SHARP-20261007.md.raw` | `13ff6d1feeff30c8399dd15721feb220116e5204c9611612bac2aa3d91d1f42e` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/before-EOF-repair-tasks--ONLINE-FTL-SHARP-20261007.md.raw` | `13ff6d1feeff30c8399dd15721feb220116e5204c9611612bac2aa3d91d1f42e` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/contributor-before-prefix-repair-v1.raw` | `afbda6fe4f28fd26727f37bd147bafd30e0c60b92a9c5d1d0b6a5dbd4e574926` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/reader-before-v2-website--content--highlights.json.raw` | `fa76bf11e9a609afafe3939868c3f2f66f465a91120d49b1cbb82977bc6bc9b2` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/reader-before-v2-website--content--readings.json.raw` | `6bc32e757ded6e4e543c231f2eef51fa592227ff197213cb04393ee54e497799` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/snapshots/Tests-root-after-one-import-v1.raw` | `27dd2cd3a6123f77eafe7cb1d213db94e0b7c56728cc14a44f2de7d7d0d74a9f` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/source-card-01-v1.png` | `09d3eede08e197369fdcf321b7def8669dd8f51a332fc36ffd534feeaa62dfa6` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/source-card-01-v2.png` | `09d3eede08e197369fdcf321b7def8669dd8f51a332fc36ffd534feeaa62dfa6` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/source-card-02-v1.png` | `f5ccfd05694afce833033dc62184c86b002538f5af2e92f26d3dcc271a379ac7` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/source-card-02-v2.png` | `f5ccfd05694afce833033dc62184c86b002538f5af2e92f26d3dcc271a379ac7` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/source-card-03-v1.png` | `6515e57728082e8c526ce1ac2b651a006ebe2a4a3d4f58c748f1dce3a473a14e` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/source-card-03-v2.png` | `6515e57728082e8c526ce1ac2b651a006ebe2a4a3d4f58c748f1dce3a473a14e` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/source-card-04-v1.png` | `e42bcda140bf7419f14d139a15aefdbc39bcddb8503c319c79b0e7ba246341cb` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/source-card-04-v2.png` | `e42bcda140bf7419f14d139a15aefdbc39bcddb8503c319c79b0e7ba246341cb` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/source-card-05-v1.png` | `998b36706af9466e8c1bc24856ecf527bb1dfd75c711f0f37353ab13723d4539` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/source-card-05-v2.png` | `eb153766ab9d023aa84305416cee11d66f2b13a2c60bfe3ba51d978f311aae94` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/source-card-06-v1.png` | `d2f5a5793825862fe3bb02f8998515efeab2e01fa679dfd5056beeb60743470f` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/source-card-06-v2.png` | `560f5cd8ac0de715056b72d08d126e1742023ebbe793ee7c2e2408a285535a5a` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/source-scope-audit-reader-v3.json` | `75fed77be140113ee7255c002bf0a6af9d9d3c238cae963fffb2d1a7b33ce4a3` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/source-scope-audit-v3.json` | `d1ab54f309d8723d35ec9fba4252d408ed18f37ff92ac3e5cef8cf94590134d7` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/source-scope-reader-v3-exit.json` | `7cf1b28adaa794975ac2352443dd5a827b3eba5b10999e48be725a9433a5679b` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/source-scope-reader-v3.log` | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/source-scope-v3-exit.json` | `bf45261511cba34220f94e85efa1c49c40e8e811620e7b4e1f7f270bb6a816ce` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/source-scope-v3.log` | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/source-site-gates-v1.py` | `969db51d060606a10dacba4966693f5b1247b1616ca4e86da06fdff71bb9bc4d` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/task-shadow-v1.py` | `4470155578e885ea30238f2c83de78e99d1f46e3b9f564cbebf6c9c38fae951e` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/verify-registry-v1.py` | `12f9a6c12e5ef9e4a5f04b554a0b7714994157f373df0223d3704ceba0c439c0` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/verify-registry-v2.py` | `d69395821f1fc7c0f1c89820489c192dcfde7234cedfc30ee7f05f867d88c38d` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/worked-example-v1.png` | `5dc1cbc7f9e87375b8fc9784dbb7d31ae5714cb9d7e0608ede78229b34d2e197` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/worked-example-v2.png` | `5dc1cbc7f9e87375b8fc9784dbb7d31ae5714cb9d7e0608ede78229b34d2e197` |
+| `Tests.lean` | `27dd2cd3a6123f77eafe7cb1d213db94e0b7c56728cc14a44f2de7d7d0d74a9f` |
+| `website/content/readings.json` | `c7c08e7e14ebe546467394874de0de222c3097ab5dd6d9cec883ccc8c8b7bb07` |
+| `website/content/highlights.json` | `00da906e499118724ef3bedf59e1376b7522cc537688358cc47b7143fcb6ee0e` |
+| `website/content/chapters.json` | `9d334c8fe46d0527e9b0a1f1a8ee2672d0259cae36a0798e9f95e8f000ad764e` |
+| `research-wiki/contribution-contracts/online-ftl-sharp-20261007.json` | `fe878de92442109694faa5619ea8bf29e14b1caf8e29d5d82151779f4cf85b11` |
+| `E:/ABRL/worktrees/research-online-book/runs/online-ftl-sharp-20261007/final-reader-inputs-v1.json` | `ce851201f216a0fa336fb2616fab97c1626e030e1d540afed9e9a8e46c8d9f04` |
+| `E:/ABRL/worktrees/research-online-book/tmp/online-ftl-sharp-site-v2/chapters/online-foundations/index.html` | `a69f33e1f712e6a8948ecf0fbeb48af2158132d43976f93db642f031c95ea424` |
+| `E:/ABRL/worktrees/research-online-book/tmp/online-ftl-sharp-site-v2/modules/banditrlproof-onlinelearningftl/index.html` | `1745bead84fea015538c98b841f1e22fe4d6794327806942aee63bf560e031b6` |
+| `E:/ABRL/worktrees/research-online-book/tmp/online-ftl-sharp-site-v2/books/registry.json` | `960eafc716c17c1dcfb25ac7c2d0730dc2ed5d3be0d227fd2a2c1e604e1d409b` |

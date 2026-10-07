@@ -1,0 +1,55 @@
+.lake/packages/mathlib/Mathlib/NumberTheory/Harmonic/Bounds.lean:33:theorem harmonic_le_one_add_log (n : ℕ) :
+.lake/packages/mathlib/Mathlib/NumberTheory/Harmonic/Bounds.lean:73:  refine (harmonic_le_one_add_log _).trans ?_
+BanditRLProof/OnlineLearningFoundations.lean:8:theorem lemma_1_2 {X : Type*} (V : Set X) (loss : ℕ → X → ℝ)
+BanditRLProof/OnlineLearningMean.lean:8:noncomputable def empiricalMean (y : ℕ → ℝ) (n : ℕ) : ℝ :=
+BanditRLProof/OnlineLearningMean.lean:12:theorem empiricalMean_decomposition (y : ℕ → ℝ) (n : ℕ) (hn : 0 < n) (u : ℝ) :
+BanditRLProof/OnlineLearningMean.lean:14:      (∑ t ∈ Finset.range n, (empiricalMean y n - y t)^2) +
+BanditRLProof/OnlineLearningMean.lean:15:        n * (u - empiricalMean y n)^2 := by
+BanditRLProof/OnlineLearningMean.lean:17:  have hm : (n : ℝ) * empiricalMean y n = ∑ t ∈ Finset.range n, y t := by
+BanditRLProof/OnlineLearningMean.lean:18:    unfold empiricalMean
+BanditRLProof/OnlineLearningMean.lean:24:  rw [expand u, expand (empiricalMean y n), ← hm]
+BanditRLProof/OnlineLearningMean.lean:28:theorem empiricalMean_minimizes (y : ℕ → ℝ) (n : ℕ) (hn : 0 < n) (u : ℝ) :
+BanditRLProof/OnlineLearningMean.lean:29:    (∑ t ∈ Finset.range n, (empiricalMean y n - y t)^2) ≤
+BanditRLProof/OnlineLearningMean.lean:31:  rw [empiricalMean_decomposition y n hn u]
+BanditRLProof/OnlineLearningMean.lean:32:  have h : 0 ≤ (n : ℝ) * (u - empiricalMean y n)^2 := mul_nonneg (Nat.cast_nonneg _) (sq_nonneg _)
+BanditRLProof/OnlineLearningMean.lean:36:theorem empiricalMean_mem (y : ℕ → ℝ) (n : ℕ) (hn : 0 < n)
+BanditRLProof/OnlineLearningMean.lean:38:    empiricalMean y n ∈ Set.Icc (0 : ℝ) 1 := by
+BanditRLProof/OnlineLearningMean.lean:48:theorem empiricalMean_unique (y : ℕ → ℝ) (n : ℕ) (hn : 0 < n) (u : ℝ)
+BanditRLProof/OnlineLearningMean.lean:50:      ∑ t ∈ Finset.range n, (empiricalMean y n-y t)^2) :
+BanditRLProof/OnlineLearningMean.lean:51:    u = empiricalMean y n := by
+BanditRLProof/OnlineLearningMean.lean:52:  have hd := empiricalMean_decomposition y n hn u
+BanditRLProof/OnlineLearningMean.lean:54:  have hp : (n : ℝ) * (u - empiricalMean y n)^2 ≤ 0 := by linarith
+BanditRLProof/OnlineLearningMean.lean:55:  have hz : (u - empiricalMean y n)^2 = 0 := by
+BanditRLProof/OnlineLearningMean.lean:57:    have hs : 0 < (u - empiricalMean y n)^2 := lt_of_le_of_ne (sq_nonneg _) (Ne.symm hne)
+BanditRLProof/OnlineLearningFTL.lean:8:noncomputable def meanPredict (y : ℕ → ℝ) (t : ℕ) : ℝ :=
+BanditRLProof/OnlineLearningFTL.lean:9:  if t = 0 then 1/2 else empiricalMean y t
+BanditRLProof/OnlineLearningFTL.lean:12:theorem meanPredict_prefix (y z : ℕ → ℝ) (t : ℕ) (h : ∀ i < t, y i = z i) :
+BanditRLProof/OnlineLearningFTL.lean:13:    meanPredict y t = meanPredict z t := by
+BanditRLProof/OnlineLearningFTL.lean:14:  unfold meanPredict empiricalMean
+BanditRLProof/OnlineLearningFTL.lean:21:theorem meanPredict_mem (y : ℕ → ℝ) (t : ℕ)
+BanditRLProof/OnlineLearningFTL.lean:23:    meanPredict y t ∈ Set.Icc (0 : ℝ) 1 := by
+BanditRLProof/OnlineLearningFTL.lean:24:  unfold meanPredict
+BanditRLProof/OnlineLearningFTL.lean:27:  · exact empiricalMean_mem y t (Nat.pos_of_ne_zero h) hy
+BanditRLProof/OnlineLearningFTL.lean:30:theorem empiricalMean_update (y : ℕ → ℝ) (t : ℕ) (ht : 0 < t) :
+BanditRLProof/OnlineLearningFTL.lean:31:    empiricalMean y (t+1) = empiricalMean y t +
+BanditRLProof/OnlineLearningFTL.lean:32:      (y t - empiricalMean y t) / (t+1) := by
+BanditRLProof/OnlineLearningFTL.lean:35:  unfold empiricalMean
+BanditRLProof/OnlineLearningFTL.lean:42:theorem meanPredict_stability (y : ℕ → ℝ) (t : ℕ)
+BanditRLProof/OnlineLearningFTL.lean:44:    (meanPredict y t - y t)^2 - (empiricalMean y (t+1) - y t)^2 ≤
+BanditRLProof/OnlineLearningFTL.lean:49:    norm_num [meanPredict, empiricalMean, Finset.sum_range_succ]
+BanditRLProof/OnlineLearningFTL.lean:52:    have ha := empiricalMean_mem y t htpos (fun i hi => hy i (Nat.le_of_lt hi))
+BanditRLProof/OnlineLearningFTL.lean:56:    have hs : (empiricalMean y t - y t)^2 ≤ 1 := by
+BanditRLProof/OnlineLearningFTL.lean:57:      have hlo : -1 ≤ empiricalMean y t - y t := by linarith [ha.1, hb.2]
+BanditRLProof/OnlineLearningFTL.lean:58:      have hhi : empiricalMean y t - y t ≤ 1 := by linarith [ha.2, hb.1]
+BanditRLProof/OnlineLearningFTL.lean:59:      nlinarith [mul_nonneg (sub_nonneg.mpr hhi) (by linarith : 0 ≤ 1 + (empiricalMean y t - y t))]
+BanditRLProof/OnlineLearningFTL.lean:60:    rw [meanPredict, if_neg ht, empiricalMean_update y t htpos]
+BanditRLProof/OnlineLearningFTL.lean:61:    have hid : (empiricalMean y t - y t)^2 -
+BanditRLProof/OnlineLearningFTL.lean:62:        (empiricalMean y t + (y t - empiricalMean y t) / (t+1) - y t)^2 =
+BanditRLProof/OnlineLearningFTL.lean:63:        (2 / (t+1) - 1 / (t+1)^2) * (empiricalMean y t - y t)^2 := by
+BanditRLProof/OnlineLearningFTL.lean:83:    (∑ t ∈ Finset.range T, (meanPredict y t - y t)^2) -
+BanditRLProof/OnlineLearningFTL.lean:84:      (∑ t ∈ Finset.range T, (empiricalMean y T - y t)^2) ≤
+BanditRLProof/OnlineLearningFTL.lean:86:  have hleader := lemma_1_2 Set.univ (fun t x => (x - y t)^2)
+BanditRLProof/OnlineLearningFTL.lean:87:    (empiricalMean y) T (by simp)
+BanditRLProof/OnlineLearningFTL.lean:88:    (fun n hn hnT u hu => empiricalMean_minimizes y n hn u)
+BanditRLProof/OnlineLearningFTL.lean:90:    (fun t ht => meanPredict_stability y t (fun i hi => hy i
+BanditRLProof/OnlineLearningFTL.lean:95:  have hh := harmonic_le_one_add_log T

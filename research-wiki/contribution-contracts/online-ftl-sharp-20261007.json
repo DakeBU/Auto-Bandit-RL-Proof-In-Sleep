@@ -1,0 +1,124 @@
+{
+  "schema_version": "2.0",
+  "id": "ONLINE-FTL-SHARP-20261007",
+  "route": "online-learning/chapter-1",
+  "frontier_cell": "online-foundations",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10, 21 June 2026; SHA256 cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchor": "Theorem1.3 printed4/PDF16; two unnumbered proof bounds printed5/PDF17; source harmonic step printed6/PDF18",
+    "url": "https://arxiv.org/pdf/1912.13213v10"
+  },
+  "target": "Two new unnumbered source bounds in the proof of Theorem 1.3 (printed p.5 / PDF p.17); the existing logarithmic theorem and five prior proofs are retained. Six named tests validate boundaries and causality; they are not six additional book results.",
+  "affected_files": [
+    "BanditRLProof/OnlineLearningFTL.lean",
+    "website/content/readings.json",
+    "website/content/highlights.json",
+    "website/content/chapters.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineLearning.meanPredict_prefix",
+    "BanditRL.OnlineLearning.meanPredict_mem",
+    "BanditRL.OnlineLearning.empiricalMean_update",
+    "BanditRL.OnlineLearning.meanPredict_stability",
+    "BanditRL.OnlineLearning.theorem_1_3",
+    "BanditRL.OnlineLearning.meanPredict_initial_stability",
+    "BanditRL.OnlineLearning.meanPredict_regret_refined"
+  ],
+  "reuse_plan": {
+    "classification": "missing",
+    "decision": "new_shared",
+    "searched_existing": [
+      "Actual pinned FTL/mean/Be-the-Leader declarations, Mathlib Finset.sum_range_succ and harmonic APIs, exact types and compiled VALUE references."
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineLearning.meanPredict_prefix",
+      "BanditRL.OnlineLearning.meanPredict_mem",
+      "BanditRL.OnlineLearning.empiricalMean_update",
+      "BanditRL.OnlineLearning.meanPredict_stability",
+      "BanditRL.OnlineLearning.theorem_1_3",
+      "BanditRL.OnlineLearning.meanPredict",
+      "BanditRL.OnlineLearning.lemma_1_2",
+      "BanditRL.OnlineLearning.empiricalMean_mem",
+      "BanditRL.OnlineLearning.empiricalMean_minimizes"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineLearning.meanPredict_initial_stability",
+      "BanditRL.OnlineLearning.meanPredict_regret_refined"
+    ],
+    "known_consumers": [
+      "BanditRL.OnlineLearning.meanPredict_regret_refined",
+      "FTLSharpProbe.endpoint_values",
+      "FTLSharpProbe.one_round_refined",
+      "FTLSharpProbe.two_round_refined"
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Missing genuine maintext proof estimates extend the existing shared causal FTL module; no duplicate library or generic wrapper."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/osd_blind",
+    "source_reviewer": "/root/source_reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Source scalar1-based game maps to0-based Lean; best-fixed minimum represented by produced feasible mean. Existing auxiliary consumer generalized; two new endpoints produce hypotheses from true predictor/targets. CONTRACT/BODY accepted; FINALpending; actor history disclosed/no human/external/runtime attestation."
+  },
+  "graph_contribution": {
+    "lean_graph": "new-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Two refinements inside the same scalar guessing game, no cross-setting functor.",
+    "focus_targets": [
+      "BanditRL.OnlineLearning.meanPredict_initial_stability",
+      "BanditRL.OnlineLearning.meanPredict_regret_refined"
+    ],
+    "visual_review": "Actual15 compiled selected nodes,13proofs2defs/9prespecified VALUE; preserve10821 registry IDsURLs plus exactly2new production proofnodes; current HTML/pixels pending.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: Preserve four existing route links; update bounded FTL note/card and add two precise proof-source cards/notes.",
+    "banditrlwiki": "no-change-with-reason: no new Bandit setting.",
+    "results_ledger": "updated: Accepted16-item source enumeration with open required subobligations/proof totalnull; old inventory immutable.",
+    "roadmap": "no-change-with-reason: Chapter1/2 incomplete,3–16unenumerated/appendicesrequired/GoalACTIVE; globalSGB immutable.",
+    "website_surfaces": [
+      "website/content/readings.json",
+      "website/content/highlights.json",
+      "website/content/chapters.json"
+    ],
+    "inherited_source_caption": "Two new source bounds; six validation proofs are not additional source results."
+  },
+  "truth_boundary": "Two new unnumbered source bounds in the proof of Theorem 1.3 (printed p.5 / PDF p.17); the existing logarithmic theorem and five prior proofs are retained. Six named tests validate boundaries and causality; they are not six additional book results. Deterministic scalar squared-loss guessing. The predictor uses exactly the targets already observed: first prediction 1/2, then their empirical mean. Empty-prefix mean0 is bookkeeping and differs from the first prediction. Only the first target belongs to [0,1]. Future targets are unrestricted. Positive horizon T; every target in its finite prefix belongs to [0,1]. There is no probability or global future-boundedness premise. Source rounds1..T are Lean indices0..T-1. The tail range(T-1) has real denominators t+2>0 and is empty at T=1. The final empirical mean is proved feasible and globally minimizing, so its loss is the source best-fixed minimum over [0,1]. Prefix leaders are produced for Be-the-Leader; hindsight leaders are auxiliary, while predictions use the strict past. The initial loss difference equals1/4 at targets0 and1, and0 at1/2. Target2 gives9/4 and lies outside the theorem domain. For targets0,1 the actual two-round regret is3/4 while the displayed bound is9/4. Changing the current unseen target leaves the prefix prediction unchanged. Chapter 1 remains open: general initial predictions, a recursive mean/count implementation, W/V action-domain mapping, and the logarithmic lower-bound/source-claim audit are required. Its16 reviewed source items are not a known proof-leaf total. Chapter2 is incomplete; Chapters3–16 remain unenumerated, with necessary appendices required. The whole Goal is active. Current focused builds,15 named kernel/axiom checks,13 exact proposition identities/full fences and9 prespecified VALUE dependencies passed (2401 selected direct references). Distinct decoder/CONTRACT/BODY reviews passed with stated deltas; combined/reader/FINAL/publication gates remain separate. Reused automated actors disclose prior history; no independent human/external/runtime-model attestation. Exact stacked OPEN unmerged PR187 base 0fc48df995bc9c65046e78722a4f436033fe5554; no merge/deploy/main/live/retirement. Main-relative Chapter1 gaps remain unwaived until actual check.",
+  "verification": {
+    "focused_checks": [
+      "Current focused builds,15 named kernel/axiom checks,13 exact proposition identities/full fences and9 prespecified VALUE dependencies passed (2401 selected direct references). Distinct decoder/CONTRACT/BODY reviews passed with stated deltas; combined/reader/FINAL/publication gates remain separate. Reused automated actors disclose prior history; no independent human/external/runtime-model attestation."
+    ],
+    "bandit_check": "Current combined root/Tests/fullharness required.",
+    "site_build": "Clean current applicable Leanverified site required after combined gate.",
+    "site_check": "Same10821 IDsURLs+2proofnodes and hashes; existing cards/notes/formulas/links preserved; current source/full reader pixels required.",
+    "independent_review": "Required distinct reused neutraldecoder/CONTRACT/BODY accepted; FINALpending; no human/external/runtime attestation.",
+    "owned_test_files": [
+      "Tests/OnlineLearningFTLSharpCanary.lean"
+    ],
+    "owned_test_root_files": [
+      "Tests.lean"
+    ],
+    "contributor_scope": "Actual changed production surfaces: owning FTL and threeJSONs. Test file/root separately owned and fully gated. Main-relative eight other Chapter1 gaps remain unwaived."
+  },
+  "contributor": {
+    "name": "Codex for Ji Cheng",
+    "role": "Formalization/integration with distinct required automated semantic actors; source attribution retained"
+  }
+}

@@ -1,0 +1,73 @@
+BanditRL.OnlineLearning.meanPredict_prefix : ∀ (y z : ℕ → ℝ) (t : ℕ),
+  (∀ i < t, y i = z i) → BanditRL.OnlineLearning.meanPredict y t = BanditRL.OnlineLearning.meanPredict z t
+BanditRL.OnlineLearning.meanPredict_mem : ∀ (y : ℕ → ℝ) (t : ℕ),
+  (∀ i < t, y i ∈ Set.Icc 0 1) → BanditRL.OnlineLearning.meanPredict y t ∈ Set.Icc 0 1
+BanditRL.OnlineLearning.empiricalMean_update : ∀ (y : ℕ → ℝ) (t : ℕ),
+  0 < t →
+    BanditRL.OnlineLearning.empiricalMean y (t + 1) =
+      BanditRL.OnlineLearning.empiricalMean y t + (y t - BanditRL.OnlineLearning.empiricalMean y t) / (↑t + 1)
+BanditRL.OnlineLearning.meanPredict_stability : ∀ (y : ℕ → ℝ) (t : ℕ),
+  (∀ i ≤ t, y i ∈ Set.Icc 0 1) →
+    (BanditRL.OnlineLearning.meanPredict y t - y t) ^ 2 - (BanditRL.OnlineLearning.empiricalMean y (t + 1) - y t) ^ 2 ≤
+      4 / (↑t + 1)
+BanditRL.OnlineLearning.theorem_1_3 : ∀ (y : ℕ → ℝ) (T : ℕ),
+  0 < T →
+    (∀ t < T, y t ∈ Set.Icc 0 1) →
+      ∑ t ∈ Finset.range T, (BanditRL.OnlineLearning.meanPredict y t - y t) ^ 2 -
+          ∑ t ∈ Finset.range T, (BanditRL.OnlineLearning.empiricalMean y T - y t) ^ 2 ≤
+        4 + 4 * Real.log ↑T
+BanditRL.OnlineLearning.meanPredict_initial_stability : ∀ (y : ℕ → ℝ),
+  y 0 ∈ Set.Icc 0 1 →
+    (BanditRL.OnlineLearning.meanPredict y 0 - y 0) ^ 2 - (BanditRL.OnlineLearning.empiricalMean y 1 - y 0) ^ 2 ≤ 1 / 4
+BanditRL.OnlineLearning.meanPredict_regret_refined : ∀ (y : ℕ → ℝ) (T : ℕ),
+  0 < T →
+    (∀ t < T, y t ∈ Set.Icc 0 1) →
+      ∑ t ∈ Finset.range T, (BanditRL.OnlineLearning.meanPredict y t - y t) ^ 2 -
+          ∑ t ∈ Finset.range T, (BanditRL.OnlineLearning.empiricalMean y T - y t) ^ 2 ≤
+        1 / 4 + ∑ t ∈ Finset.range (T - 1), 4 / (↑t + 2)
+FTLSharpProbe.endpoint_values : (BanditRL.OnlineLearning.meanPredict (fun x => 0) 0 - 0) ^ 2 -
+      (BanditRL.OnlineLearning.empiricalMean (fun x => 0) 1 - 0) ^ 2 =
+    1 / 4 ∧
+  (BanditRL.OnlineLearning.meanPredict (fun x => 1) 0 - 1) ^ 2 -
+        (BanditRL.OnlineLearning.empiricalMean (fun x => 1) 1 - 1) ^ 2 =
+      1 / 4 ∧
+    (BanditRL.OnlineLearning.meanPredict (fun x => 0) 0 - 0) ^ 2 -
+          (BanditRL.OnlineLearning.empiricalMean (fun x => 0) 1 - 0) ^ 2 ≤
+        1 / 4 ∧
+      (BanditRL.OnlineLearning.meanPredict (fun x => 1) 0 - 1) ^ 2 -
+          (BanditRL.OnlineLearning.empiricalMean (fun x => 1) 1 - 1) ^ 2 ≤
+        1 / 4
+FTLSharpProbe.interior_value : (BanditRL.OnlineLearning.meanPredict (fun x => 1 / 2) 0 - 1 / 2) ^ 2 -
+      (BanditRL.OnlineLearning.empiricalMean (fun x => 1 / 2) 1 - 1 / 2) ^ 2 =
+    0 ∧
+  (BanditRL.OnlineLearning.meanPredict (fun x => 1 / 2) 0 - 1 / 2) ^ 2 -
+      (BanditRL.OnlineLearning.empiricalMean (fun x => 1 / 2) 1 - 1 / 2) ^ 2 <
+    1 / 4
+FTLSharpProbe.outside_interval : (BanditRL.OnlineLearning.meanPredict (fun x => 2) 0 - 2) ^ 2 -
+      (BanditRL.OnlineLearning.empiricalMean (fun x => 2) 1 - 2) ^ 2 =
+    9 / 4 ∧
+  (BanditRL.OnlineLearning.meanPredict (fun x => 2) 0 - 2) ^ 2 -
+      (BanditRL.OnlineLearning.empiricalMean (fun x => 2) 1 - 2) ^ 2 >
+    1 / 4
+FTLSharpProbe.one_round_refined : ∑ t ∈ Finset.range 1, (BanditRL.OnlineLearning.meanPredict (fun x => 0) t - 0) ^ 2 -
+      ∑ t ∈ Finset.range 1, (BanditRL.OnlineLearning.empiricalMean (fun x => 0) 1 - 0) ^ 2 =
+    1 / 4 ∧
+  ∑ t ∈ Finset.range 1, (BanditRL.OnlineLearning.meanPredict (fun x => 0) t - 0) ^ 2 -
+      ∑ t ∈ Finset.range 1, (BanditRL.OnlineLearning.empiricalMean (fun x => 0) 1 - 0) ^ 2 ≤
+    1 / 4 + ∑ t ∈ Finset.range (1 - 1), 4 / (↑t + 2)
+FTLSharpProbe.two_round_refined : ∑ t ∈ Finset.range 2,
+        (BanditRL.OnlineLearning.meanPredict FTLSharpProbe.probeTargets t - FTLSharpProbe.probeTargets t) ^ 2 -
+      ∑ t ∈ Finset.range 2,
+        (BanditRL.OnlineLearning.empiricalMean FTLSharpProbe.probeTargets 2 - FTLSharpProbe.probeTargets t) ^ 2 =
+    3 / 4 ∧
+  ∑ t ∈ Finset.range 2,
+          (BanditRL.OnlineLearning.meanPredict FTLSharpProbe.probeTargets t - FTLSharpProbe.probeTargets t) ^ 2 -
+        ∑ t ∈ Finset.range 2,
+          (BanditRL.OnlineLearning.empiricalMean FTLSharpProbe.probeTargets 2 - FTLSharpProbe.probeTargets t) ^ 2 ≤
+      1 / 4 + ∑ t ∈ Finset.range (2 - 1), 4 / (↑t + 2) ∧
+    1 / 4 + ∑ t ∈ Finset.range (2 - 1), 4 / (↑t + 2) = 9 / 4
+FTLSharpProbe.future_independence : BanditRL.OnlineLearning.meanPredict (fun x => 0) 1 =
+    BanditRL.OnlineLearning.meanPredict FTLSharpProbe.probeTargets 1 ∧
+  0 ≠ FTLSharpProbe.probeTargets 1
+BanditRL.OnlineLearning.meanPredict : (ℕ → ℝ) → ℕ → ℝ
+FTLSharpProbe.probeTargets : ℕ → ℝ

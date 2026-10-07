@@ -1978,10 +1978,10 @@
       "plain": "The actual history-mean predictor achieves the source logarithmic regret bound.",
       "math": "\\(R_T\\le4+4\\log T\\)",
       "intuition": "The actual history-mean predictor achieves the source logarithmic regret bound.",
-      "why": "This interface connects source Chapter 1 to its exact public Lean proof.",
+      "why": "This guarantee concerns the actual causal past-mean predictor. It preserves the source logarithmic upper bound; lower bounds and broader initialization are separate obligations.",
       "position": "Orabona v10 Chapter 1, printed page 4.",
-      "proof_idea": "Use the source-aligned dependency chain and the separately proved algorithm/information interfaces.",
-      "lean_notes": "Observations in [0,1], initial prediction 1/2, positive horizon; best-fixed comparator is the proved empirical-mean minimizer.",
+      "proof_idea": "Produce prefix empirical-mean minimizers, apply Be-the-Leader, derive stability from the actual mean update, and sum. The retained theorem bounds the harmonic sum by1+logT; two separate proof statements now retain the first-round quarter.",
+      "lean_notes": "Positive horizon T; every target in its finite prefix belongs to [0,1]. There is no probability or global future-boundedness premise. Deterministic scalar squared-loss guessing. The predictor uses exactly the targets already observed: first prediction 1/2, then their empirical mean. Empty-prefix mean0 is bookkeeping and differs from the first prediction. The final empirical mean is proved feasible and globally minimizing, so its loss is the source best-fixed minimum over [0,1]. Prefix leaders are produced for Be-the-Leader; hindsight leaders are auxiliary, while predictions use the strict past. Source rounds1..T are Lean indices0..T-1. The tail range(T-1) has real denominators t+2>0 and is empty at T=1. Compiled local proof package; chapter acceptance and main integration remain separate. The arbitrary-initial FTL family and a minimax lower bound are not established by these two bounds.",
       "dependencies": [
         "BanditRL.OnlineLearning.lemma_1_2",
         "BanditRL.OnlineLearning.empiricalMean_minimizes",
@@ -5531,6 +5531,45 @@
       "lean_notes": "New policy-family specialization: four public proofs, zero new public definitions; two algebraic helpers, one finite guarantee and one derived one-sided family corollary. One printed Example2.32, not four new book results. Actual focused 3325 jobs; 51 named kernel checks (47 canary declarations plus four public proofs), standard axioms only, four frozen public guards and 26 prespecified direct proof-value pairs. Combined root/Tests {'combined-root-v1-01': 9092, 'combined-Tests-v1-01': 9240}; full harness 466 tests/7 existing skips. Jobs include cached jobs. Reader/FINAL and PR delivery are separate. New policy-family specialization: four public proofs, zero new public definitions; two algebraic helpers, one finite guarantee and one derived one-sided family corollary. One printed Example2.32, not four new book results. A fixed exogenous deterministic policy p receives the whole finite past-loss/output history and current whole loss after the current output. The actual Nat.rec/Fin.snoc trajectory is projected from its actual selected support. No comparator is a policy input. Same-p/x1 prefix equality does not certify independence of externally chosen policy, initialization or rates, an executable finite-query oracle, or randomized-law/measurability guarantees. Played global-support membership on this same run is sufficient; no universal off-path OracleLaw, assumed norm/energy, one-step regret, stability or supplied regret bound. Feasible initialization and played labels/comparators in [0,1], prescribed T>=1 and eta=1/sqrt(T) remain explicit. D=G=1 derives the numerical constant one from the source O(sqrt(T)) assertion and equation2.1; it is not a verbatim numerical theorem. The average theorem fixes p,y,x1 and requires legal feedback for every positive-horizon run, each with its own eta_T=1/sqrt(T). It concludes only eventual signed-average upper control. It proves neither signed convergence to zero, absolute Big-O nor a common anytime trajectory. T=0 is outside finite tuning and only an irrelevant eventual exception. Canonical Example2.32 current publication migration, linearization/optimal-step/unit-analysis current migration, remaining Chapter1/2 maintext, nine OTHER Chapter1 origin/main contributor gaps and necessary appendices remain REQUIRED. Chapter2 mandatory total is incomplete; Chapters3-16 remain unenumerated. Whole Goal ACTIVE, no chapter/book completion or main/live update. External mathlib proof-value dependencies Real.tendsto_sqrt_atTop and tendsto_inv_atTop_zero are verified in the actual compiled graph; the site project registry does not create project-declaration links for them.",
       "dependencies": [
         "BanditRL.OnlineGuessingSubgradientPolicy.example_2_32"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.meanPredict_initial_stability",
+      "title": "Theorem 1.3 proof: initial1/4 stability",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 5,
+      "plain": "After observing the first target, its hindsight mean is that target, so the second squared loss is zero. The interval bounds imply y1(1-y1)>=0, which bounds the initial squared error by1/4.",
+      "math": "\\((x_1-y_1)^2-(x_1^*-y_1)^2\\le\\tfrac14\\)",
+      "intuition": "After observing the first target, its hindsight mean is that target, so the second squared loss is zero. The interval bounds imply y1(1-y1)>=0, which bounds the initial squared error by1/4.",
+      "why": "Expose the exact unnumbered estimate used in the source proof, with its original assumptions.",
+      "position": "Orabona v10 Chapter1, Theorem1.3 proof, printed p.5 / PDF p.17.",
+      "proof_idea": "After observing the first target, its hindsight mean is that target, so the second squared loss is zero. The interval bounds imply y1(1-y1)>=0, which bounds the initial squared error by1/4.",
+      "lean_notes": "Only y0 in [0,1] is assumed; all future targets are unrestricted. The actual first prediction is 1/2, while empiricalMean y0=0 is an empty-prefix convention. The one-observation hindsight mean equals y0 and has zero squared loss. Endpoint targets 0 and 1 attain 1/4; the midpoint attains 0. Target 2 gives 9/4 outside the theorem domain. This statement has no T or harmonic tail and claims no feasibility of later means under unrestricted future targets. Chapter acceptance and general initialization remain separate.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.meanPredict",
+        "BanditRL.OnlineLearning.empiricalMean"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.meanPredict_regret_refined",
+      "title": "Theorem 1.3 proof: exact finite-horizon tail",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 6,
+      "plain": "Be-the-Leader compares the produced prefix minimizers with the final mean. Subtract these losses from the actual prediction losses, split off the first round, and add its1/4 estimate to the existing4/t bounds for later rounds.",
+      "math": "\\(R_T\\le\\tfrac14+4\\sum_{t=2}^{T}\\frac1t\\)",
+      "intuition": "Be-the-Leader compares the produced prefix minimizers with the final mean. Subtract these losses from the actual prediction losses, split off the first round, and add its1/4 estimate to the existing4/t bounds for later rounds.",
+      "why": "Expose the exact unnumbered estimate used in the source proof, with its original assumptions.",
+      "position": "Orabona v10 Chapter1, Theorem1.3 proof, printed p.5 / PDF p.17.",
+      "proof_idea": "Be-the-Leader compares the produced prefix minimizers with the final mean. Subtract these losses from the actual prediction losses, split off the first round, and add its1/4 estimate to the existing4/t bounds for later rounds.",
+      "lean_notes": "T is positive and every target at an index t<T belongs to [0,1]; no condition is imposed on later targets. Predictions use the strict past and start at 1/2. Proved empirical-mean feasibility and global minimization produce the Be-the-Leader premises and identify the final best-fixed comparator. The exact Lean tail range(T-1) has positive real denominators t+2 and is empty at T=1. Targets 0,1 give actual regret 3/4 and a bound of 9/4; the one-round endpoint attains 1/4. These bounds do not close general initialization, a minimax lower bound, or Chapter1.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.meanPredict_initial_stability",
+        "BanditRL.OnlineLearning.meanPredict_stability",
+        "BanditRL.OnlineLearning.lemma_1_2",
+        "BanditRL.OnlineLearning.empiricalMean_mem",
+        "BanditRL.OnlineLearning.empiricalMean_minimizes"
       ]
     }
   ]

@@ -1,0 +1,11 @@
+from common_v1 import *
+fixed(proving=True)
+failed=load(RUN/'initial-full-statement-fence-v1-exit.json');assert failed['exit_code']==2
+write(RUN/'initial-fence-repair-v2.json',dict(failed_gate_sha256=sha(RUN/'initial-full-statement-fence-v1-exit.json'),failed_log_sha256=sha(RUN/'initial-full-statement-fence-v1.log'),cause='CLI captures a fence with --output; --contract is not supported',repair='Use actually documented statement-fence --output, compare exact frozen full header, then safe-verify',mathematical_statement_and_body_unchanged=True,focused_build_and_exact_type_axiom_canaries_already_passed=True))
+native('initial-full-statement-fence-v2','statement-fence','--file',PUBLIC,'--declaration',PRE+'meanPredict_initial_stability','--source-assumption','(hy : y 0 ∈ Set.Icc (0 : ℝ) 1)','--output',RUN/'native-initial-full-fence-v2.json')
+actual=load(RUN/'native-initial-full-fence-v2.json')
+assert actual['statement_hash']==load(CONTRACT/'initial-full-guard-v1.json')['statement_hash']
+native('initial-full-safe-verify-v2','safe-verify','--fence',RUN/'native-initial-full-fence-v2.json','--lean-file',PUBLIC)
+native('initial-worker-compiled-trial-v2','trial-log','--task',TASK,'--role','lean-worker','--kind','lean','--status','compiled','--run-id',RUN.name,'--attempt-id','FTL-SHARP-INITIAL-V2','--statement-hash',actual['statement_hash'],'--new-declaration',PRE+'meanPredict_initial_stability','--changed-file',PUBLIC,'--verifier-evidence',RUN/'initial-type-axiom-canary-v1-exit.json','--harness','hierarchical','--progress-class','compiled-leaf','--notes','Actual focused build and exactN06rfl/#check/axioms/endpoint/midpoint/outside witnesses passed. Failed fence invocation retained; documented capture/hash/safe-verify repaired without mathematical edits. Refined/BODY/combined/site/FINAL/PR/chapter/Goal pending.')
+write(RUN/'initial-leaf-compiled-v2.json',dict(status='compiled-local source-bound prerequisite',public_name=PRE+'meanPredict_initial_stability',source_anchor='Theorem1.3 proof printed5/PDF17',full_native_header_sha256=actual['statement_hash'],actual_guards_types_axioms_endpoint_canaries_passed=True,initial_source_bound_closed_locally=True,refined_source_terminal_pending=True,BODY_review_pending=True,chapter_complete=False,goal_complete=False))
+fixed(proving=True)

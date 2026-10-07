@@ -1,0 +1,1 @@
+FTL source initial1/4 and refined1/4+4 later harmonic sum; exact causal source/proved feasibleargmins, existingcoarse/log endpoints retained. Two true maintext targets pending. Chapter1ledger/Chapter2incomplete/3-16unenumerated/wholeGoalACTIVE. No accepted claims.
