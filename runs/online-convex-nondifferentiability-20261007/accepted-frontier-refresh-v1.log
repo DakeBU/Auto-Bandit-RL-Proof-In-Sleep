@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "record_id": "frontier-02619f2355928790",
+  "updated_at": "2026-10-07T00:43:07+00:00",
+  "root_objective": "Persistent Orabona Chapters1-16 Goal; exact2D unnumberedexample accepted only, cardinality/chapter/book REQUIRED",
+  "current_leaf": {
+    "id": "ONLINE-CONVEX-NONDIFFERENTIABILITY-20261007",
+    "kind": "lean",
+    "status": "accepted",
+    "statement": "theorem convex_nondifferentiable_segment : ConvexOn ℝ Set.univ coordinateAbsolute ∧ ∀ x ∈ segment ℝ (0 : EuclideanSpace ℝ (Fin 2)) (PiLp.single 2 1 1), ¬ DifferentiableAt ℝ coordinateAbsolute x",
+    "statement_hash": "4e034a3e6385b3ecc4cafa3dcf72f2ee850203d7a3921ec879b5d0c50c7c2deb",
+    "declaration": "BanditRL.OnlineConvex.convex_nondifferentiable_segment",
+    "file": "BanditRLProof\\OnlineConvexNondifferentiability.lean",
+    "source_status": "source-reviewed",
+    "dependencies": [
+      {
+        "kind": "lean",
+        "name": "BanditRL.OnlineConvex.coordinate_absolute_convex",
+        "status": "compiled"
+      },
+      {
+        "kind": "lean",
+        "name": "BanditRL.OnlineConvex.coordinate_absolute_not_differentiable",
+        "status": "compiled"
+      },
+      {
+        "kind": "review",
+        "name": "source-reader",
+        "status": "accepted"
+      }
+    ]
+  },
+  "dag": {
+    "nodes": [
+      {
+        "id": "ONLINE-CONVEX-NONDIFFERENTIABILITY-20261007",
+        "kind": "lean",
+        "status": "accepted",
+        "dependencies": [
+          {
+            "kind": "lean",
+            "name": "BanditRL.OnlineConvex.coordinate_absolute_convex",
+            "status": "compiled"
+          },
+          {
+            "kind": "lean",
+            "name": "BanditRL.OnlineConvex.coordinate_absolute_not_differentiable",
+            "status": "compiled"
+          },
+          {
+            "kind": "review",
+            "name": "source-reader",
+            "status": "accepted"
+          }
+        ],
+        "dispatch_count": 0
+      }
+    ]
+  },
+  "last_accepted_verifier": {
+    "trial_index": 2,
+    "time": "2026-10-07T00:43:07+00:00",
+    "task": "ONLINE-CONVEX-NONDIFFERENTIABILITY-20261007",
+    "role": "reviewer",
+    "kind": "review",
+    "status": "accepted",
+    "lean": "",
+    "notes": "Actual globalconvex/ambient closedsegment producer terminal accepted after real combined gates and distinct FINAL. Three new public proofs/one definition/five actual2D canaries; cardinality separate REQUIRED. No chapter/book/productivity claim.",
+    "run_id": "online-convex-nondifferentiability-20261007"
+  },
+  "memory_policy": {
+    "recent_role_relevant_limit": 5,
+    "explicit_verified_lemma_ids": [],
+    "whole_history_default": false
+  },
+  "shadow_gate": {
+    "status": "pending",
+    "analyzed_trial_rows": 3,
+    "mismatches": [],
+    "replay_transitions": 0
+  },
+  "mutation_policy": {
+    "canonical_path_queue": true,
+    "cross_process_lock": true,
+    "same_file_serialized": true,
+    "disjoint_files_parallel": true
+  },
+  "autonomous_execution": {
+    "enabled": false,
+    "requires_deterministic_gates": true,
+    "requires_explicit_user_request": true
+  }
+}
