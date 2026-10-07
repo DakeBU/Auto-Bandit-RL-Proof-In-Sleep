@@ -1,0 +1,109 @@
+{
+  "schema_version": "2.0",
+  "id": "ONLINE-REGRET-DOMAINS-20261007",
+  "route": "online-learning/chapter-1",
+  "frontier_cell": "online-foundations",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10,2026-06-21; SHA cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchor": "Printed p2/PDF14: comparator difference-of-sums, fixed-comparator no-regret, Remark1.1, footnote1 allowing prediction W superset V",
+    "url": "https://arxiv.org/pdf/1912.13213v10"
+  },
+  "target": "Required W/V loss-domain/comparator modelling audit, complete current existing Regret2proof2defs. Zero new production math/definitions/nodes; eight named typed validation proofs/eight fixturedefs. Chapter 1 remains open. This package audits the required W/V domain mapping using the existing shared Regret API; it adds zero production mathematical results or definitions. Full regret/minimum and no-regret source reconciliation, the logarithmic lower-bound/source claim and other required module audits remain open. There are16 source items but the mandatory proof total is unknown(null). Chapter2 is incomplete; Chapters3–16 are unenumerated and necessary appendices remain required. The total Goal is active. Exact stacked OPEN unmerged PR189 base3e473465298ea1ea10b7771608497d34e558fbeb; no main/live/merge/deploy/retirement claim.",
+  "affected_files": [
+    "BanditRLProof/OnlineLearningRegret.lean",
+    "website/content/readings.json",
+    "website/content/highlights.json",
+    "website/content/chapters.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineLearning.comparatorRegret",
+    "BanditRL.OnlineLearning.NoRegret",
+    "BanditRL.OnlineLearning.comparatorRegret_eq_sum",
+    "BanditRL.OnlineLearning.noRegret_of_vanishing_bound"
+  ],
+  "reuse_plan": {
+    "classification": "reuse",
+    "decision": "reuse_existing",
+    "searched_existing": [
+      "Actual current native declaration searches, complete Regret source and actual Mathlib sum/order APIs; recorded in RUN retrieval logs."
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineLearning.comparatorRegret",
+      "BanditRL.OnlineLearning.NoRegret",
+      "BanditRL.OnlineLearning.comparatorRegret_eq_sum",
+      "BanditRL.OnlineLearning.noRegret_of_vanishing_bound"
+    ],
+    "new_shared_declarations": [],
+    "known_consumers": [
+      "RegretDomainsProbe.domain_gap_sum",
+      "RegretDomainsProbe.negative_game_noRegret"
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Use shared typed carrier SubtypeW; no duplicate perBook definitions or generic guarantee."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/osd_blind",
+    "source_reviewer": "/root/source_reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Losses are defined on W, predictions belong to W, and fixed comparators belong to V⊆W. Lean uses X=Subtype W and comparator set {w:Subtype W | w.val∈V}; inclusion embeds a subtype-V comparator without changing its value. The source uses finite-dimensional Euclidean vectors; the shared algebraic API explicitly generalizes the carrier. Footnote1 states a modelling possibility, not a generic algorithm or performance theorem. NoRegret means, for each fixed feasible comparator u and every positive epsilon, normalized regret is eventually at most epsilon. The threshold may depend on u and epsilon. This is an explicit interpretation of the source displayed ordinary-limit inequality: it agrees when the ordinary limit exists, but proves no ordinary limit existence, convergence tozero, absolute bound, nonnegative regret or uniform comparator threshold. CONTRACT/BODY actual accepted, FINAL pending; reused automated actors/history disclosed, no human/external/runtime attestation."
+  },
+  "graph_contribution": {
+    "lean_graph": "reuse-only",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Shared carrier instantiation/domain restriction within same comparator model; no cross-setting certified transport.",
+    "focus_targets": [
+      "BanditRL.OnlineLearning.comparatorRegret_eq_sum",
+      "BanditRL.OnlineLearning.noRegret_of_vanishing_bound"
+    ],
+    "visual_review": "Actual selected20 compiler nodes10proof10defs and3required VALUE pairs; complete shared registry/currentreader pixels pending.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: append one source-qualified typed-domain card and two public proof notes; preserve seven old cards/all old math/four curated IDs.",
+    "banditrlwiki": "no-change-with-reason: no new Bandit setting.",
+    "results_ledger": "no-change-with-reason: zero new production theorem/mathematical result; own required-domain mapping obligation recorded separately.",
+    "roadmap": "no-change-with-reason: globalSGB and chapter sequence unchanged; total GoalACTIVE/Chapter1open.",
+    "website_surfaces": [
+      "website/content/readings.json",
+      "website/content/highlights.json",
+      "website/content/chapters.json"
+    ]
+  },
+  "truth_boundary": "Chapter 1 remains open. This package audits the required W/V domain mapping using the existing shared Regret API; it adds zero production mathematical results or definitions. Full regret/minimum and no-regret source reconciliation, the logarithmic lower-bound/source claim and other required module audits remain open. There are16 source items but the mandatory proof total is unknown(null). Chapter2 is incomplete; Chapters3–16 are unenumerated and necessary appendices remain required. The total Goal is active. Exact stacked OPEN unmerged PR189 base3e473465298ea1ea10b7771608497d34e558fbeb; no main/live/merge/deploy/retirement claim. Losses are defined on W, predictions belong to W, and fixed comparators belong to V⊆W. Lean uses X=Subtype W and comparator set {w:Subtype W | w.val∈V}; inclusion embeds a subtype-V comparator without changing its value. The source uses finite-dimensional Euclidean vectors; the shared algebraic API explicitly generalizes the carrier. Footnote1 states a modelling possibility, not a generic algorithm or performance theorem. NoRegret means, for each fixed feasible comparator u and every positive epsilon, normalized regret is eventually at most epsilon. The threshold may depend on u and epsilon. This is an explicit interpretation of the source displayed ordinary-limit inequality: it agrees when the ordinary limit exists, but proves no ordinary limit existence, convergence tozero, absolute bound, nonnegative regret or uniform comparator threshold.",
+  "verification": {
+    "focused_checks": [
+      "Actual20named standard-only kernel checks,10exactProp and10definition identities,10native proof guards and3prespecified VALUEpairs; existing public mathematical bytes exact."
+    ],
+    "bandit_check": "Current combined root/Tests/fullharness required.",
+    "site_build": "Current clean Leanverified site required after combined gate.",
+    "site_check": "Same10835shared IDsURLs/source-statementhashes expected;0newproductionnodes; currentsource qualifiedcard/currentpixels required.",
+    "independent_review": "Distinct mandatory reuseddecoder/CONTRACT/BODYaccepted; FINALpending.",
+    "owned_test_files": [
+      "Tests/OnlineLearningRegretDomainsCanary.lean"
+    ],
+    "owned_test_root_files": [
+      "Tests.lean"
+    ]
+  },
+  "contributor": {
+    "name": "Codex for Ji Cheng",
+    "role": "Shared-library typed model integration; distinct required automated semantic roles and source attribution"
+  }
+}

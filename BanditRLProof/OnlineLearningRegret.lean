@@ -3,6 +3,30 @@ import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Mathlib.Data.Real.Basic
 import Mathlib.Topology.Instances.Real.Lemmas
 
+/-!
+# Comparator regret and eventual upper no-regret
+
+Source: Orabona, arXiv:1912.13213v10 (21 June 2026), Chapter 1,
+printed page 2 / PDF page 14, comparator-regret definition, Remark 1.1,
+and footnote 1. Source round `t + 1` is Lean index `t`.
+
+For outputs in `W` and comparators in `V ⊆ W`, instantiate the shared
+carrier `X` with `↥W`, provide losses on `↥W`, and restrict comparators
+to `{w : ↥W | w.val ∈ V}`. A loss defined only on `V` cannot be evaluated
+at outputs outside `V`. The footnote supplies no generic performance bound.
+
+`comparatorRegret` compares a supplied prediction sequence with one fixed
+comparator and keeps the loss sequence explicit (Remark 1.1). It neither
+constructs a causal learner nor asserts that a best comparator exists.
+
+`NoRegret` means that, for each fixed feasible comparator and every positive
+epsilon, normalized regret is eventually at most epsilon. This upper
+condition does not assert existence of an ordinary limit, convergence to
+zero, or nonnegative regret. It agrees with the source's displayed limit
+inequality when that limit exists. `noRegret_of_vanishing_bound` is a
+bound-to-property adapter, whose regret premise must come from a producer.
+-/
+
 open Filter
 
 namespace BanditRL.OnlineLearning

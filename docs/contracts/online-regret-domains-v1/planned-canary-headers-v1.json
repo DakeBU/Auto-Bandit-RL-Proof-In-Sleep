@@ -1,0 +1,10 @@
+{
+  "domain_gap_sum": "theorem domain_gap_sum {X : Type*} (V W : Set X) (hVW : V ⊆ W)\n    (loss : ℕ → ↥W → ℝ) (prediction : ℕ → ↥W) (u : ↥V) (T : ℕ) :\n    comparatorRegret loss prediction (embed V W hVW u) T =\n      ∑ t ∈ Finset.range T, (loss t (prediction t) - loss t (embed V W hVW u))",
+  "restriction_commutes": "theorem restriction_commutes {X : Type*} (V W : Set X) (hVW : V ⊆ W)\n    (loss : ℕ → ↥W → ℝ) (prediction : ℕ → ↥V) (u : ↥V) (T : ℕ) :\n    comparatorRegret (fun t v => loss t (embed V W hVW v)) prediction u T =\n      comparatorRegret loss (fun t => embed V W hVW (prediction t)) (embed V W hVW u) T",
+  "proper_inclusion": "theorem proper_inclusion :\n    sourceV ⊆ outputW ∧ (2 : ℝ) ∈ outputW ∧ (2 : ℝ) ∉ sourceV",
+  "loss_prefix": "theorem loss_prefix {X : Type*} (W : Set X)\n    (loss other : ℕ → ↥W → ℝ) (prediction : ℕ → ↥W) (u : ↥W) (T : ℕ)\n    (h : ∀ t < T, ∀ x : ↥W, loss t x = other t x) :\n    comparatorRegret loss prediction u T = comparatorRegret other prediction u T",
+  "zero_horizon": "theorem zero_horizon {X : Type*} (W : Set X)\n    (loss : ℕ → ↥W → ℝ) (prediction : ℕ → ↥W) (u : ↥W) :\n    comparatorRegret loss prediction u 0 = 0",
+  "outside_prediction_and_negative_regret": "theorem outside_prediction_and_negative_regret :\n    (output 0).val ∈ outputW ∧ (output 0).val ∉ sourceV ∧\n      comparatorRegret domainLoss output referenceOne 2 = -2",
+  "same_prediction_two_comparators": "theorem same_prediction_two_comparators :\n    referenceZero.val ∈ sourceV ∧ referenceOne.val ∈ sourceV ∧\n      comparatorRegret domainLoss output referenceZero 2 = -4 ∧\n      comparatorRegret domainLoss output referenceOne 2 = -2",
+  "negative_game_noRegret": "theorem negative_game_noRegret :\n    NoRegret liftedComparators domainLoss output"
+}

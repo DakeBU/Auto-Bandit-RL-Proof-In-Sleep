@@ -1,0 +1,22 @@
+{
+  "command": [
+    "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe",
+    "-B",
+    "-X",
+    "utf8",
+    "tools/bandit.py",
+    "statement-fence",
+    "--declaration",
+    "BanditRL.OnlineLearning.noRegret_of_vanishing_bound",
+    "--file",
+    "BanditRLProof\\OnlineLearningRegret.lean",
+    "--source-assumption",
+    "theorem noRegret_of_vanishing_bound {X : Type*} (V : Set X) (loss : ℕ → X → ℝ) (prediction : ℕ → X) (bound : X → ℕ → ℝ) (hb : ∀ u ∈ V, ∀ᶠ T in atTop, comparatorRegret loss prediction u T / T ≤ bound u T) (hl : ∀ u ∈ V, Tendsto (bound u) atTop (nhds 0)) : NoRegret V loss prediction",
+    "--output",
+    "E:\\ABRL\\worktrees\\research-online-book\\runs\\online-regret-domains-20261007\\full-header-fences-v1\\noRegret_of_vanishing_bound.json"
+  ],
+  "cwd": "E:/ABRL/worktrees/research-online-book",
+  "exit_code": 0,
+  "seconds": 0.223,
+  "log_sha256": "db166dcce75e02437597b2f927b4c0dc44f66016e04857a6414b2b512f2451a2"
+}

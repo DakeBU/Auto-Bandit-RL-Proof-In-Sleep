@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "declaration": "RegretDomainsProbe.restriction_commutes",
+  "file": "Tests/OnlineLearningRegretDomainsCanary.lean",
+  "statement": "theorem restriction_commutes {X : Type*} (V W : Set X) (hVW : V ⊆ W) (loss : ℕ → ↥W → ℝ) (prediction : ℕ → ↥V) (u : ↥V) (T : ℕ) : comparatorRegret (fun t v => loss t (embed V W hVW v)) prediction u T = comparatorRegret loss (fun t => embed V W hVW (prediction t)) (embed V W hVW u) T",
+  "statement_hash": "feed8342ef51b1c39bcf09e0a78fa2339be1c689e1d0e25058ad06a724844b98",
+  "source_assumptions": [
+    "theorem restriction_commutes {X : Type*} (V W : Set X) (hVW : V ⊆ W)\n    (loss : ℕ → ↥W → ℝ) (prediction : ℕ → ↥V) (u : ↥V) (T : ℕ) :\n    comparatorRegret (fun t v => loss t (embed V W hVW v)) prediction u T =\n      comparatorRegret loss (fun t => embed V W hVW (prediction t)) (embed V W hVW u) T"
+  ],
+  "created_at": "2026-10-07T16:08:41+00:00"
+}

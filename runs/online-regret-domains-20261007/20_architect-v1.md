@@ -1,0 +1,1 @@
+/root staged architect: typed W loss and V embeddings; reuse actual shared API, scalar outside-domain/negative-regret canaries, exact finite sums and derived nonpositive normalized regret. First ready leaf typed domain_gap_sum; one lower route.

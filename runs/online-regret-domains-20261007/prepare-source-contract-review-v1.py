@@ -1,0 +1,36 @@
+from common_v1 import *
+fixed()
+# Preserve and explicitly correct the preparation helper's inaccurate prose.
+p=Path('proof-blueprints')/(TASK+'.md');before=p.read_bytes()
+write(RUN/'snapshots/scoped-blueprint-v2-before-prose-correction.raw',before)
+p.write_bytes(before.replace(b'complete global\nMANIFEST (12MB), including unrelated historic blueprints',b'global route-roadmap and shared reference-card contexts\n(12MB), rather than just the scoped dependency packet'))
+write(RUN/'blueprint-prose-correction-v3.json',dict(original_inaccurate_prose='v2 labelled native embedded global context MANIFEST; actual cmd_blueprint_refresh embeds lean-route-roadmap.json and shared retrieval/reference contexts',actual_implementation='tools/bandit.py:28166',full_original_native_output_preserved=True,scope_targets_unchanged=True,current_scoped_sha256=sha(p)))
+r=load(RUN/'blind-decoder-receipt-v1.json')
+assert r['actor']['task']=='/root/osd_blind'
+assert set(r['proposition_ids'])=={'N%02d'%n for n in range(1,11)} and r['semantic_slots_per_proposition']==7
+for key in ['input','report']:
+ q=Path(r[key]['path']);q=q if q.exists() else RUN/q
+ assert sha(q)==r[key]['sha256_raw_bytes'],q
+write(RUN/'blind-binding-audit-v1.json',dict(status='passed',receipt_sha256=sha(RUN/'blind-decoder-receipt-v1.json'),exact_neutral_type_gate='neutral-closed-props-v1',exact_existing_identity_gate='existing-public-type-identities-v2',prior_actor_history_disclosed=r['prior_history_disclosure'],no_source_acceptance_from_decoder=True))
+for folder in ['tasks','conversion-windows','proof-obligations','research-wiki/retrieval-index','proof-blueprints']:
+ q=Path(folder)/(TASK+'.md');write(RUN/'snapshots'/('CONTRACT-review-'+q.as_posix().replace('/','--')+'.raw'),q.read_bytes())
+write(RUN/'source-contract-packet-v1.md','''# Anti-anchored CONTRACT: typed action/comparator domains
+
+Mandatory distinct reused /root/source_reviewer. Requested GPT-6 Astra/medium, no escalation/runtime attestation; disclose prior role/history. Inspect source PDF14/printed2 and actual source image, complete current Regret2defs2proofs, frozen exact headers, full raw snapshot, eight planned typed tests/eight fixturedefs, 10 closed neutral propositions, blind reconstruction, semantic signature/DAG and allowed documentation insertion. Rehash EVERY source-contract-inputs-v1 fixed row. No new test theorem bodies yet. Existing2 production theorem bodies are already present and unchanged; 0newproductionmath/definitions/nodes.
+
+Review for mismatch, not confirmation. General source loss domain V versus Footnote1 optional W superset V requires actual loss onW; typed X=SubtypeW, comparator subset inducedV and inclusion embedding; no evaluation of V-only loss outsideV. Source footnote is possibility, not an algorithm theorem/general performance claim. Same supplied prediction fixed before all comparators, loss-prefix statement compares SAME prediction; generic API cannot certify prediction causality or future-independence. All-carrier algebraic generalization from finite Euclidean domain explicit. T0 exactempty sum/totalRealdivision and eventual atTop upper condition; no nonnegative regret assumption. Existing NoRegret eventual epsilon upper is source-limit interpretation, agrees if ordinarylimitexists, does not prove limitexists/zero convergence. Existing vanishing-bound proof is adapter requiring actual producer estimate, not FTL/OGD existence. Generic best-fixed-minimum existence notclaimed/entireC1-REGRET notclosed.
+
+Concrete validation ONLY: V=[0,1],W=[0,2],constant output2, loss=-x typedonW, reference0/1 bothV. Properinclusion/outside-output and negative finite regret -4/-2 atT2. Test exact gap-sum uses sharedactualproof; restriction via embeddedloss exact; finiteprefix losses dependence and zerohorizon; illustrative allhorizon NoRegret DERIVES nonpositivegap fromu<=1/output2 thenactual sharedadapter bound0. No assumeddesired regretcertificate. This is not source squared-guessing performance or generalW theorem. Eight named tests/eight fixturedefinitions not source items/productiongraphnodes.
+
+Only current public production change allowed later: exact planned module-doc insertion before openFilter; old2proof2def bytes/types/nativehashes unchanged. Reader sourcecard/ownmodulepublicnotes/routeboundary may change only after BODY; preserve sevenoldcards/alloldnote_math/otherBooks/fourcuratedIDs/moduleglobs/scanner/config/sourceinventory/pins/root/publicothermodules/globalSGB. One Tests import/newtypedtests after BODY. This actual reviewed docpublication allows honest affected_files manifest, no falselyunchangedproductionfile coverage. Main diagnostic decides existingRegret gap; seven current gaps unwaived. Source module line numbers may shift but same registry10835 IDsURLs/source-statementhashes expected; no newnodes. Existing FTLState source-range pin preserved.
+
+Actual preparation failure retained: initial polymorphic rfl audit had unconstrained independent universe metavariables; v2 explicitly same arbitraryuniverseu compiles, no frozen type change. Native blueprint-refresh actualpass generated large globalroadmap/reference context; original rawoutput preserved, concise scoped navigation and explicitv3prosecorrection; no template/tool/runtimeenforcement claim. Tool events are separate from file/role conventions. Review document-scoped bindings immutable via snapshots. No independent human/external/modelruntime attestation.
+
+Only C1-REGRET-DIFFERENT-ACTION-COMPARATOR-SETS semantic/model mapping targeted. C1-REGRET full minimum/source reconciliation, C1-NOREGRET complete chapter closure, logunavoidable lower and otherrequiredmoduleobligations remain open. Sourceinventory16items/mandatoryproofnull. Prior2FTL subobligations OPENdraftPR189 exact3e473465298ea1ea10b7771608497d34e558fbeb, notmain. Chapter2null/incomplete,3–16unenumerated/necessaryappendicesrequired, totalGoalACTIVE. No rootTests/fullharness/site/pixels/nativeaccepted/newPR/currentchapteracceptance premature.
+
+Directly view source-pdf14-v1.png before verdict. Write ONLY source-contract-review-v1.md and source-contract-receipt-v1.json in this RUN. Receipt actor.task=/root/source_reviewer, verdict accepted|rejected|accepted-with-explicit-delta, report/report_sha256, reviewed_files EVERYfixedrow+report, fixed_input_count, required_repairs/required_mathematical_repairs/required_metadata_repairs arrays; required_reader_corrections array with stable IDs R1,R2,... and exact requirement text for BODY/FINAL. Compare seven slots for every target, actualsourceinterpretation/ambient-generalization/validation delta. Return actual hashes. CONTRACT acceptance is not proof/chapter/Goal acceptance.
+''')
+paths=[q.as_posix() for q in sorted(CONTRACT.rglob('*')) if q.is_file()]+[q.as_posix() for q in sorted(RUN.rglob('*')) if q.is_file()]+[PDF.as_posix()]
+paths=list(dict.fromkeys(paths))
+write(RUN/'source-contract-inputs-v1.json',dict(stage='CONTRACT',rows=[dict(path=q,sha256=sha(q)) for q in paths],fixed_input_count=len(paths),current_production_bodies_unchanged=True,new_test_bodies_not_written=True,new_production_math=0,planned_validation_proofs=8,required_domain_mapping=1,chapter_complete=False,goal_complete=False))
+fixed();print('Actual CONTRACT fixed rows',len(paths),'distinct review pending.')
