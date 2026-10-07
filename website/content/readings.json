@@ -1815,6 +1815,28 @@
             "label": "New source-bound proof compiled locally",
             "boundary": "Compiled local proof package; chapter acceptance and main integration remain separate. The arbitrary-initial FTL family and a minimax lower bound are not established by these two bounds."
           }
+        },
+        {
+          "label": "FTL family and actual mean/count state",
+          "pages": "printed pp.3,6; structural source obligations, not a numbered theorem",
+          "pdf_page": 15,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\begin{aligned}\\bar y_0&=0,\\quad\\bar y_t=\\frac1t\\sum_{i=0}^{t-1}y_i\\quad(t>0),\\\\p_c(t)&=\\begin{cases}c&t=0\\\\\\bar y_t&t>0\\end{cases},\\\\F((n,m),z)&=\\left(n+1,m+\\frac{z-m}{n+1}\\right),\\\\S_c(0)&=(0,c),\\\\S_c(t+1)&=F(S_c(t),y_t),\\\\S_c(t)&=(t,p_c(t)).\\end{aligned}",
+          "plain": "The all-time mean successor identity has positive real denominator t+1. At t=0 the empty empirical mean is0 but the actual prediction is c. The first recursive update cancels c and gives (1,y0). For t>0 induction and the proved mean successor identity give the complete state identity. Existing decomposition, minimization and uniqueness prove the positive-prefix mean is the actual hindsight squared-loss leader; interval feasibility makes it an admissible comparator. The prediction uses the previous prefix, rather than an argmin or state oracle.",
+          "fallback": "The all-time mean successor identity has positive real denominator t+1. At t=0 the empty empirical mean is0 but the actual prediction is c. The first recursive update cancels c and gives (1,y0). For t>0 induction and the proved mean successor identity give the complete state identity. Existing decomposition, minimization and uniqueness prove the positive-prefix mean is the actual hindsight squared-loss leader; interval feasibility makes it an admissible comparator. The prediction uses the previous prefix, rather than an argmin or state oracle.",
+          "relationship": "Source interface: BanditRL.OnlineLearning.ftlState_eq_predict; general initialization printed3/PDF15 and running summary printed6/PDF18.",
+          "contract": {
+            "model": "Deterministic scalar squared-loss guessing. Fix initial c before observations. Lean time t counts observed labels y0,...,y(t-1); predict before observing yt, then update the local state with yt.",
+            "assumptions": "The algebraic identities hold for all real initial values and labels. Source feasibility requires c in [0,1] and only the strict-past labels yi in [0,1] for i<t; the current and future labels are unrestricted.",
+            "parameters": "The state is a mathematical noncomputable exact-real pair (count,value). The count grows; there is no fixed-bit memory, executable implementation or runtime certificate. Strict-prefix equality compares the same fixed c and gives no causality guarantee if an external caller chooses c from future data.",
+            "regret": "The exact half specialization connects this same recursive trajectory to existing source regret bounds. Arbitrary c has no new quarter or rate theorem here.",
+            "guarantee": "The all-time mean successor identity has positive real denominator t+1. At t=0 the empty empirical mean is0 but the actual prediction is c. The first recursive update cancels c and gives (1,y0). For t>0 induction and the proved mean successor identity give the complete state identity. Existing decomposition, minimization and uniqueness prove the positive-prefix mean is the actual hindsight squared-loss leader; interval feasibility makes it an admissible comparator. The prediction uses the previous prefix, rather than an argmin or state oracle. Six public canaries check distinct initial states and their identical first update; varying means1/2 and2/3; unchanged prediction before a changed current target and changed next state; feasible initial1 and outside-initial2 at time0; the half-state two-round regret3/4 with the prior bound; and feasible initial1,target0 giving first loss1>1/4. Chapter 1 remains open: W/V action-domain mapping and the logarithmic lower-bound/source-claim audit are required, together with actual contributor reconciliation. Its16 reviewed source items are not a known proof-leaf total (null). Chapter2 remains incomplete; Chapters3–16 remain unenumerated, with necessary appendices required. The whole Goal is active."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Two producer obligations closed locally; chapter open",
+            "boundary": "Compiled local BODY-approved package. Combined project, reader FINAL, native acceptance and PR delivery are separate pending gates. No new regret rate for arbitrary c. The first-round quarter and the prior refined/logarithmic theorem remain specific to c=1/2. The state is a mathematical noncomputable exact-real pair (count,value). The count grows; there is no fixed-bit memory, executable implementation or runtime certificate. Strict-prefix equality compares the same fixed c and gives no causality guarantee if an external caller chooses c from future data."
+          }
         }
       ],
       "worked_example": {

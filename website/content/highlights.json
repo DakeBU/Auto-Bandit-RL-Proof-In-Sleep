@@ -1958,7 +1958,7 @@
       "full_name": "BanditRL.OnlineLearning.lemma_1_2",
       "title": "Lemma 1.2: Be-the-Leader",
       "chapter": "online-foundations",
-      "featured": false,
+      "featured": true,
       "teaching_order": 1,
       "plain": "Prefix minimizers beat the final fixed leader in cumulative loss.",
       "math": "\\(\\sum_{t=1}^T\\ell_t(x_t^*)\\le\\sum_{t=1}^T\\ell_t(x_T^*)\\)",
@@ -1973,7 +1973,7 @@
       "full_name": "BanditRL.OnlineLearning.theorem_1_3",
       "title": "Theorem 1.3: guessing with the past mean",
       "chapter": "online-foundations",
-      "featured": false,
+      "featured": true,
       "teaching_order": 2,
       "plain": "The actual history-mean predictor achieves the source logarithmic regret bound.",
       "math": "\\(R_T\\le4+4\\log T\\)",
@@ -1992,7 +1992,7 @@
       "full_name": "BanditRL.OnlineLearning.meanPredict_noRegret",
       "title": "Upper-sublinear comparator regret",
       "chapter": "online-foundations",
-      "featured": false,
+      "featured": true,
       "teaching_order": 3,
       "plain": "Every fixed comparator has vanishing normalized upper regret.",
       "math": "\\(\\limsup_{T\\to\\infty}R_T(u)/T\\le0\\)",
@@ -2009,7 +2009,7 @@
       "full_name": "BanditRL.OnlineLearning.iid_meanPredict_excess",
       "title": "Equation (1.1): the IID benchmark",
       "chapter": "online-foundations",
-      "featured": false,
+      "featured": true,
       "teaching_order": 4,
       "plain": "The expected excess is a sum of nonnegative squared estimation errors.",
       "math": "\\(\\mathbb E\\sum_{t=1}^T(x_t-Y_t)^2-T\\sigma^2=\\sum_{t=1}^T\\mathbb E(x_t-\\mathbb EY_1)^2\\)",
@@ -5570,6 +5570,171 @@
         "BanditRL.OnlineLearning.lemma_1_2",
         "BanditRL.OnlineLearning.empiricalMean_mem",
         "BanditRL.OnlineLearning.empiricalMean_minimizes"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.empiricalMean_succ",
+      "title": "Empirical mean: every successor",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 7,
+      "plain": "At zero the identity is y0=0+y0. At positive t, split the finite sum at t and clear the positive denominators t and t+1; elementary algebra proves the update.",
+      "math": "\\(\\bar y_{t+1}=\\bar y_t+\\frac{y_t-\\bar y_t}{t+1}\\)",
+      "intuition": "At zero the identity is y0=0+y0. At positive t, split the finite sum at t and clear the positive denominators t and t+1; elementary algebra proves the update.",
+      "why": "A producer or structural property for the two source obligations; no supplied future-state, minimizer, stability or regret certificate.",
+      "position": "Orabona v10: arbitrary initial prediction printed3/PDF15; running-summary discussion printed6/PDF18. Half-only source guarantee printed4–5/PDF16–17.",
+      "proof_idea": "At zero the identity is y0=0+y0. At positive t, split the finite sum at t and clear the positive denominators t and t+1; elementary algebra proves the update.",
+      "lean_notes": "Deterministic scalar squared-loss guessing. Fix initial c before observations. Lean time t counts observed labels y0,...,y(t-1); predict before observing yt, then update the local state with yt. The algebraic identities hold for all real initial values and labels. Source feasibility requires c in [0,1] and only the strict-past labels yi in [0,1] for i<t; the current and future labels are unrestricted. The state is a mathematical noncomputable exact-real pair (count,value). The count grows; there is no fixed-bit memory, executable implementation or runtime certificate. Strict-prefix equality compares the same fixed c and gives no causality guarantee if an external caller chooses c from future data. Six public canaries check distinct initial states and their identical first update; varying means1/2 and2/3; unchanged prediction before a changed current target and changed next state; feasible initial1 and outside-initial2 at time0; the half-state two-round regret3/4 with the prior bound; and feasible initial1,target0 giving first loss1>1/4. Compiled local BODY-approved package. Combined project, reader FINAL, native acceptance and PR delivery are separate pending gates. No new regret rate for arbitrary c. The first-round quarter and the prior refined/logarithmic theorem remain specific to c=1/2. Chapter 1 remains open: W/V action-domain mapping and the logarithmic lower-bound/source-claim audit are required, together with actual contributor reconciliation. Its16 reviewed source items are not a known proof-leaf total (null). Chapter2 remains incomplete; Chapters3–16 remain unenumerated, with necessary appendices required. The whole Goal is active.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.empiricalMean"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.ftlPredict_prefix",
+      "title": "General initial prediction: strict past",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 8,
+      "plain": "With the same fixed initial c, time0 returns c; at positive time equality of all previous labels makes the finite sums and their means equal.",
+      "math": "\\((\\forall i<t,\\ y_i=z_i)\\Rightarrow p_c^y(t)=p_c^z(t)\\)",
+      "intuition": "With the same fixed initial c, time0 returns c; at positive time equality of all previous labels makes the finite sums and their means equal.",
+      "why": "A producer or structural property for the two source obligations; no supplied future-state, minimizer, stability or regret certificate.",
+      "position": "Orabona v10: arbitrary initial prediction printed3/PDF15; running-summary discussion printed6/PDF18. Half-only source guarantee printed4–5/PDF16–17.",
+      "proof_idea": "With the same fixed initial c, time0 returns c; at positive time equality of all previous labels makes the finite sums and their means equal.",
+      "lean_notes": "Deterministic scalar squared-loss guessing. Fix initial c before observations. Lean time t counts observed labels y0,...,y(t-1); predict before observing yt, then update the local state with yt. The algebraic identities hold for all real initial values and labels. Source feasibility requires c in [0,1] and only the strict-past labels yi in [0,1] for i<t; the current and future labels are unrestricted. The state is a mathematical noncomputable exact-real pair (count,value). The count grows; there is no fixed-bit memory, executable implementation or runtime certificate. Strict-prefix equality compares the same fixed c and gives no causality guarantee if an external caller chooses c from future data. Six public canaries check distinct initial states and their identical first update; varying means1/2 and2/3; unchanged prediction before a changed current target and changed next state; feasible initial1 and outside-initial2 at time0; the half-state two-round regret3/4 with the prior bound; and feasible initial1,target0 giving first loss1>1/4. Compiled local BODY-approved package. Combined project, reader FINAL, native acceptance and PR delivery are separate pending gates. No new regret rate for arbitrary c. The first-round quarter and the prior refined/logarithmic theorem remain specific to c=1/2. Chapter 1 remains open: W/V action-domain mapping and the logarithmic lower-bound/source-claim audit are required, together with actual contributor reconciliation. Its16 reviewed source items are not a known proof-leaf total (null). Chapter2 remains incomplete; Chapters3–16 remain unenumerated, with necessary appendices required. The whole Goal is active.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.ftlPredict",
+        "BanditRL.OnlineLearning.empiricalMean"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.ftlPredict_mem",
+      "title": "General initial prediction: feasibility",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 9,
+      "plain": "At zero use the assumed feasible initial value; at positive time apply the existing finite-prefix empirical-mean feasibility producer.",
+      "math": "\\(c\\in[0,1],\\ (\\forall i<t,\\ y_i\\in[0,1])\\Rightarrow p_c(t)\\in[0,1]\\)",
+      "intuition": "At zero use the assumed feasible initial value; at positive time apply the existing finite-prefix empirical-mean feasibility producer.",
+      "why": "A producer or structural property for the two source obligations; no supplied future-state, minimizer, stability or regret certificate.",
+      "position": "Orabona v10: arbitrary initial prediction printed3/PDF15; running-summary discussion printed6/PDF18. Half-only source guarantee printed4–5/PDF16–17.",
+      "proof_idea": "At zero use the assumed feasible initial value; at positive time apply the existing finite-prefix empirical-mean feasibility producer.",
+      "lean_notes": "Deterministic scalar squared-loss guessing. Fix initial c before observations. Lean time t counts observed labels y0,...,y(t-1); predict before observing yt, then update the local state with yt. The algebraic identities hold for all real initial values and labels. Source feasibility requires c in [0,1] and only the strict-past labels yi in [0,1] for i<t; the current and future labels are unrestricted. The state is a mathematical noncomputable exact-real pair (count,value). The count grows; there is no fixed-bit memory, executable implementation or runtime certificate. Strict-prefix equality compares the same fixed c and gives no causality guarantee if an external caller chooses c from future data. Six public canaries check distinct initial states and their identical first update; varying means1/2 and2/3; unchanged prediction before a changed current target and changed next state; feasible initial1 and outside-initial2 at time0; the half-state two-round regret3/4 with the prior bound; and feasible initial1,target0 giving first loss1>1/4. Compiled local BODY-approved package. Combined project, reader FINAL, native acceptance and PR delivery are separate pending gates. No new regret rate for arbitrary c. The first-round quarter and the prior refined/logarithmic theorem remain specific to c=1/2. Chapter 1 remains open: W/V action-domain mapping and the logarithmic lower-bound/source-claim audit are required, together with actual contributor reconciliation. Its16 reviewed source items are not a known proof-leaf total (null). Chapter2 remains incomplete; Chapters3–16 remain unenumerated, with necessary appendices required. The whole Goal is active.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.ftlPredict",
+        "BanditRL.OnlineLearning.empiricalMean_mem"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.ftlPredict_half",
+      "title": "Exact half-initial predictor",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 10,
+      "plain": "The two piecewise definitions agree at every time, including zero. This is the exact special case used by Theorem1.3; it does not extend the quarter bound to arbitrary c.",
+      "math": "\\(p_{1/2}(t)=\\operatorname{meanPredict}(y,t)\\)",
+      "intuition": "The two piecewise definitions agree at every time, including zero. This is the exact special case used by Theorem1.3; it does not extend the quarter bound to arbitrary c.",
+      "why": "A producer or structural property for the two source obligations; no supplied future-state, minimizer, stability or regret certificate.",
+      "position": "Orabona v10: arbitrary initial prediction printed3/PDF15; running-summary discussion printed6/PDF18. Half-only source guarantee printed4–5/PDF16–17.",
+      "proof_idea": "The two piecewise definitions agree at every time, including zero. This is the exact special case used by Theorem1.3; it does not extend the quarter bound to arbitrary c.",
+      "lean_notes": "Deterministic scalar squared-loss guessing. Fix initial c before observations. Lean time t counts observed labels y0,...,y(t-1); predict before observing yt, then update the local state with yt. The algebraic identities hold for all real initial values and labels. Source feasibility requires c in [0,1] and only the strict-past labels yi in [0,1] for i<t; the current and future labels are unrestricted. The state is a mathematical noncomputable exact-real pair (count,value). The count grows; there is no fixed-bit memory, executable implementation or runtime certificate. Strict-prefix equality compares the same fixed c and gives no causality guarantee if an external caller chooses c from future data. Six public canaries check distinct initial states and their identical first update; varying means1/2 and2/3; unchanged prediction before a changed current target and changed next state; feasible initial1 and outside-initial2 at time0; the half-state two-round regret3/4 with the prior bound; and feasible initial1,target0 giving first loss1>1/4. Compiled local BODY-approved package. Combined project, reader FINAL, native acceptance and PR delivery are separate pending gates. No new regret rate for arbitrary c. The first-round quarter and the prior refined/logarithmic theorem remain specific to c=1/2. Chapter 1 remains open: W/V action-domain mapping and the logarithmic lower-bound/source-claim audit are required, together with actual contributor reconciliation. Its16 reviewed source items are not a known proof-leaf total (null). Chapter2 remains incomplete; Chapters3–16 remain unenumerated, with necessary appendices required. The whole Goal is active.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.ftlPredict",
+        "BanditRL.OnlineLearning.meanPredict"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.ftlState_first",
+      "title": "First update cancels the initial value",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 11,
+      "plain": "Insert (0,c) into the local update: its real denominator is1 and c+(y0-c)=y0. No boundedness premise is needed for this algebraic identity.",
+      "math": "\\(S_c(1)=(1,y_0)\\)",
+      "intuition": "Insert (0,c) into the local update: its real denominator is1 and c+(y0-c)=y0. No boundedness premise is needed for this algebraic identity.",
+      "why": "A producer or structural property for the two source obligations; no supplied future-state, minimizer, stability or regret certificate.",
+      "position": "Orabona v10: arbitrary initial prediction printed3/PDF15; running-summary discussion printed6/PDF18. Half-only source guarantee printed4–5/PDF16–17.",
+      "proof_idea": "Insert (0,c) into the local update: its real denominator is1 and c+(y0-c)=y0. No boundedness premise is needed for this algebraic identity.",
+      "lean_notes": "Deterministic scalar squared-loss guessing. Fix initial c before observations. Lean time t counts observed labels y0,...,y(t-1); predict before observing yt, then update the local state with yt. The algebraic identities hold for all real initial values and labels. Source feasibility requires c in [0,1] and only the strict-past labels yi in [0,1] for i<t; the current and future labels are unrestricted. The state is a mathematical noncomputable exact-real pair (count,value). The count grows; there is no fixed-bit memory, executable implementation or runtime certificate. Strict-prefix equality compares the same fixed c and gives no causality guarantee if an external caller chooses c from future data. Six public canaries check distinct initial states and their identical first update; varying means1/2 and2/3; unchanged prediction before a changed current target and changed next state; feasible initial1 and outside-initial2 at time0; the half-state two-round regret3/4 with the prior bound; and feasible initial1,target0 giving first loss1>1/4. Compiled local BODY-approved package. Combined project, reader FINAL, native acceptance and PR delivery are separate pending gates. No new regret rate for arbitrary c. The first-round quarter and the prior refined/logarithmic theorem remain specific to c=1/2. Chapter 1 remains open: W/V action-domain mapping and the logarithmic lower-bound/source-claim audit are required, together with actual contributor reconciliation. Its16 reviewed source items are not a known proof-leaf total (null). Chapter2 remains incomplete; Chapters3–16 remain unenumerated, with necessary appendices required. The whole Goal is active.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.ftlState",
+        "BanditRL.OnlineLearning.ftlMeanStep"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.ftlState_eq_predict",
+      "title": "Recursive state equals the past-mean predictor",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 12,
+      "plain": "The all-time mean successor identity has positive real denominator t+1. At t=0 the empty empirical mean is0 but the actual prediction is c. The first recursive update cancels c and gives (1,y0). For t>0 induction and the proved mean successor identity give the complete state identity. Existing decomposition, minimization and uniqueness prove the positive-prefix mean is the actual hindsight squared-loss leader; interval feasibility makes it an admissible comparator. The prediction uses the previous prefix, rather than an argmin or state oracle.",
+      "math": "\\(S_c(t)=(t,p_c(t))\\)",
+      "intuition": "The all-time mean successor identity has positive real denominator t+1. At t=0 the empty empirical mean is0 but the actual prediction is c. The first recursive update cancels c and gives (1,y0). For t>0 induction and the proved mean successor identity give the complete state identity. Existing decomposition, minimization and uniqueness prove the positive-prefix mean is the actual hindsight squared-loss leader; interval feasibility makes it an admissible comparator. The prediction uses the previous prefix, rather than an argmin or state oracle.",
+      "why": "A producer or structural property for the two source obligations; no supplied future-state, minimizer, stability or regret certificate.",
+      "position": "Orabona v10: arbitrary initial prediction printed3/PDF15; running-summary discussion printed6/PDF18. Half-only source guarantee printed4–5/PDF16–17.",
+      "proof_idea": "The all-time mean successor identity has positive real denominator t+1. At t=0 the empty empirical mean is0 but the actual prediction is c. The first recursive update cancels c and gives (1,y0). For t>0 induction and the proved mean successor identity give the complete state identity. Existing decomposition, minimization and uniqueness prove the positive-prefix mean is the actual hindsight squared-loss leader; interval feasibility makes it an admissible comparator. The prediction uses the previous prefix, rather than an argmin or state oracle.",
+      "lean_notes": "Deterministic scalar squared-loss guessing. Fix initial c before observations. Lean time t counts observed labels y0,...,y(t-1); predict before observing yt, then update the local state with yt. The algebraic identities hold for all real initial values and labels. Source feasibility requires c in [0,1] and only the strict-past labels yi in [0,1] for i<t; the current and future labels are unrestricted. The state is a mathematical noncomputable exact-real pair (count,value). The count grows; there is no fixed-bit memory, executable implementation or runtime certificate. Strict-prefix equality compares the same fixed c and gives no causality guarantee if an external caller chooses c from future data. Six public canaries check distinct initial states and their identical first update; varying means1/2 and2/3; unchanged prediction before a changed current target and changed next state; feasible initial1 and outside-initial2 at time0; the half-state two-round regret3/4 with the prior bound; and feasible initial1,target0 giving first loss1>1/4. Compiled local BODY-approved package. Combined project, reader FINAL, native acceptance and PR delivery are separate pending gates. No new regret rate for arbitrary c. The first-round quarter and the prior refined/logarithmic theorem remain specific to c=1/2. Chapter 1 remains open: W/V action-domain mapping and the logarithmic lower-bound/source-claim audit are required, together with actual contributor reconciliation. Its16 reviewed source items are not a known proof-leaf total (null). Chapter2 remains incomplete; Chapters3–16 remain unenumerated, with necessary appendices required. The whole Goal is active.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.ftlState",
+        "BanditRL.OnlineLearning.ftlMeanStep",
+        "BanditRL.OnlineLearning.ftlPredict",
+        "BanditRL.OnlineLearning.ftlState_first",
+        "BanditRL.OnlineLearning.empiricalMean_succ"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.ftlState_prefix",
+      "title": "The whole state uses the strict prefix",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 13,
+      "plain": "Rewrite both actual recursive states using the proved state identity, then apply strict-prefix predictor equality. Both the count and value agree before the current target is observed.",
+      "math": "\\((\\forall i<t,\\ y_i=z_i)\\Rightarrow S_c^y(t)=S_c^z(t)\\)",
+      "intuition": "Rewrite both actual recursive states using the proved state identity, then apply strict-prefix predictor equality. Both the count and value agree before the current target is observed.",
+      "why": "A producer or structural property for the two source obligations; no supplied future-state, minimizer, stability or regret certificate.",
+      "position": "Orabona v10: arbitrary initial prediction printed3/PDF15; running-summary discussion printed6/PDF18. Half-only source guarantee printed4–5/PDF16–17.",
+      "proof_idea": "Rewrite both actual recursive states using the proved state identity, then apply strict-prefix predictor equality. Both the count and value agree before the current target is observed.",
+      "lean_notes": "Deterministic scalar squared-loss guessing. Fix initial c before observations. Lean time t counts observed labels y0,...,y(t-1); predict before observing yt, then update the local state with yt. The algebraic identities hold for all real initial values and labels. Source feasibility requires c in [0,1] and only the strict-past labels yi in [0,1] for i<t; the current and future labels are unrestricted. The state is a mathematical noncomputable exact-real pair (count,value). The count grows; there is no fixed-bit memory, executable implementation or runtime certificate. Strict-prefix equality compares the same fixed c and gives no causality guarantee if an external caller chooses c from future data. Six public canaries check distinct initial states and their identical first update; varying means1/2 and2/3; unchanged prediction before a changed current target and changed next state; feasible initial1 and outside-initial2 at time0; the half-state two-round regret3/4 with the prior bound; and feasible initial1,target0 giving first loss1>1/4. Compiled local BODY-approved package. Combined project, reader FINAL, native acceptance and PR delivery are separate pending gates. No new regret rate for arbitrary c. The first-round quarter and the prior refined/logarithmic theorem remain specific to c=1/2. Chapter 1 remains open: W/V action-domain mapping and the logarithmic lower-bound/source-claim audit are required, together with actual contributor reconciliation. Its16 reviewed source items are not a known proof-leaf total (null). Chapter2 remains incomplete; Chapters3–16 remain unenumerated, with necessary appendices required. The whole Goal is active.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.ftlState_eq_predict",
+        "BanditRL.OnlineLearning.ftlPredict_prefix"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.ftlState_mem",
+      "title": "The actual state predicts inside the interval",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 14,
+      "plain": "Rewrite the actual state by the proved identity and use predictor feasibility. Initial2 at time0 is an ambient outside-domain counterexample, rather than a source-feasible test.",
+      "math": "\\(c\\in[0,1],\\ (\\forall i<t,\\ y_i\\in[0,1])\\Rightarrow S_c(t)_2\\in[0,1]\\)",
+      "intuition": "Rewrite the actual state by the proved identity and use predictor feasibility. Initial2 at time0 is an ambient outside-domain counterexample, rather than a source-feasible test.",
+      "why": "A producer or structural property for the two source obligations; no supplied future-state, minimizer, stability or regret certificate.",
+      "position": "Orabona v10: arbitrary initial prediction printed3/PDF15; running-summary discussion printed6/PDF18. Half-only source guarantee printed4–5/PDF16–17.",
+      "proof_idea": "Rewrite the actual state by the proved identity and use predictor feasibility. Initial2 at time0 is an ambient outside-domain counterexample, rather than a source-feasible test.",
+      "lean_notes": "Deterministic scalar squared-loss guessing. Fix initial c before observations. Lean time t counts observed labels y0,...,y(t-1); predict before observing yt, then update the local state with yt. The algebraic identities hold for all real initial values and labels. Source feasibility requires c in [0,1] and only the strict-past labels yi in [0,1] for i<t; the current and future labels are unrestricted. The state is a mathematical noncomputable exact-real pair (count,value). The count grows; there is no fixed-bit memory, executable implementation or runtime certificate. Strict-prefix equality compares the same fixed c and gives no causality guarantee if an external caller chooses c from future data. Six public canaries check distinct initial states and their identical first update; varying means1/2 and2/3; unchanged prediction before a changed current target and changed next state; feasible initial1 and outside-initial2 at time0; the half-state two-round regret3/4 with the prior bound; and feasible initial1,target0 giving first loss1>1/4. Compiled local BODY-approved package. Combined project, reader FINAL, native acceptance and PR delivery are separate pending gates. No new regret rate for arbitrary c. The first-round quarter and the prior refined/logarithmic theorem remain specific to c=1/2. Chapter 1 remains open: W/V action-domain mapping and the logarithmic lower-bound/source-claim audit are required, together with actual contributor reconciliation. Its16 reviewed source items are not a known proof-leaf total (null). Chapter2 remains incomplete; Chapters3–16 remain unenumerated, with necessary appendices required. The whole Goal is active.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.ftlState_eq_predict",
+        "BanditRL.OnlineLearning.ftlPredict_mem"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.ftlState_half",
+      "title": "The half-state is the existing regret trajectory",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 15,
+      "plain": "Compose the recursive-state identity and exact half-predictor identity. This identifies the same trajectory at every time; the canary calls the prior refined regret theorem after this rewrite.",
+      "math": "\\(S_{1/2}(t)=(t,\\operatorname{meanPredict}(y,t))\\)",
+      "intuition": "Compose the recursive-state identity and exact half-predictor identity. This identifies the same trajectory at every time; the canary calls the prior refined regret theorem after this rewrite.",
+      "why": "A producer or structural property for the two source obligations; no supplied future-state, minimizer, stability or regret certificate.",
+      "position": "Orabona v10: arbitrary initial prediction printed3/PDF15; running-summary discussion printed6/PDF18. Half-only source guarantee printed4–5/PDF16–17.",
+      "proof_idea": "Compose the recursive-state identity and exact half-predictor identity. This identifies the same trajectory at every time; the canary calls the prior refined regret theorem after this rewrite.",
+      "lean_notes": "Deterministic scalar squared-loss guessing. Fix initial c before observations. Lean time t counts observed labels y0,...,y(t-1); predict before observing yt, then update the local state with yt. The algebraic identities hold for all real initial values and labels. Source feasibility requires c in [0,1] and only the strict-past labels yi in [0,1] for i<t; the current and future labels are unrestricted. The state is a mathematical noncomputable exact-real pair (count,value). The count grows; there is no fixed-bit memory, executable implementation or runtime certificate. Strict-prefix equality compares the same fixed c and gives no causality guarantee if an external caller chooses c from future data. Six public canaries check distinct initial states and their identical first update; varying means1/2 and2/3; unchanged prediction before a changed current target and changed next state; feasible initial1 and outside-initial2 at time0; the half-state two-round regret3/4 with the prior bound; and feasible initial1,target0 giving first loss1>1/4. Compiled local BODY-approved package. Combined project, reader FINAL, native acceptance and PR delivery are separate pending gates. No new regret rate for arbitrary c. The first-round quarter and the prior refined/logarithmic theorem remain specific to c=1/2. Chapter 1 remains open: W/V action-domain mapping and the logarithmic lower-bound/source-claim audit are required, together with actual contributor reconciliation. Its16 reviewed source items are not a known proof-leaf total (null). Chapter2 remains incomplete; Chapters3–16 remain unenumerated, with necessary appendices required. The whole Goal is active.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.ftlState_eq_predict",
+        "BanditRL.OnlineLearning.ftlPredict_half",
+        "BanditRL.OnlineLearning.meanPredict"
       ]
     }
   ]

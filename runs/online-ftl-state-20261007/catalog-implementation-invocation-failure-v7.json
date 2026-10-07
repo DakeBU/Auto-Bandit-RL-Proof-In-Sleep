@@ -1,0 +1,15 @@
+{
+  "command": [
+    "python",
+    "-B",
+    "-X",
+    "utf8",
+    "runs/online-ftl-state-20261007/implement-catalog-repair-v7.py"
+  ],
+  "exit_code": 1,
+  "observed_stderr": "ModuleNotFoundError: No module named 'website'",
+  "evidence_origin": "Actual exec_command output; no separate subprocess log existed.",
+  "cause": "Direct script sys.path starts at run directory; repository package root absent.",
+  "mutation_before_failure": "none",
+  "repair": "Versioned helper inserts ROOT in sys.path; source/math untouched."
+}

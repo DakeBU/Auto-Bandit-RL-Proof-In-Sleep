@@ -152,3 +152,5 @@ import Tests.OnlineGuessingSubgradientPolicyCanary
 import Tests.OnlineLearningFoundationsCanary
 
 import Tests.OnlineLearningFTLSharpCanary
+
+import Tests.OnlineLearningFTLStateCanary

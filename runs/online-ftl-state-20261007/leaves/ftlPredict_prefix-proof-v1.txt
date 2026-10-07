@@ -1,0 +1,8 @@
+theorem ftlPredict_prefix (initial : ℝ) (y z : ℕ → ℝ) (t : ℕ)
+    (h : ∀ i < t, y i = z i) :
+    ftlPredict initial y t = ftlPredict initial z t := by
+  unfold ftlPredict empiricalMean
+  congr 2
+  apply Finset.sum_congr rfl
+  intro i hi
+  exact h i (Finset.mem_range.mp hi)

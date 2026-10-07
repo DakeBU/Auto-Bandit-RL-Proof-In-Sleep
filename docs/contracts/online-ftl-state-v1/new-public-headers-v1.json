@@ -1,0 +1,11 @@
+{
+  "empiricalMean_succ": "theorem empiricalMean_succ (y : ℕ → ℝ) (t : ℕ) :\n    empiricalMean y (t + 1) = empiricalMean y t +\n      (y t - empiricalMean y t) / ((t : ℝ) + 1)",
+  "ftlPredict_prefix": "theorem ftlPredict_prefix (initial : ℝ) (y z : ℕ → ℝ) (t : ℕ)\n    (h : ∀ i < t, y i = z i) :\n    ftlPredict initial y t = ftlPredict initial z t",
+  "ftlPredict_mem": "theorem ftlPredict_mem (initial : ℝ) (y : ℕ → ℝ) (t : ℕ)\n    (hi : initial ∈ Set.Icc (0 : ℝ) 1)\n    (hy : ∀ i < t, y i ∈ Set.Icc (0 : ℝ) 1) :\n    ftlPredict initial y t ∈ Set.Icc (0 : ℝ) 1",
+  "ftlPredict_half": "theorem ftlPredict_half (y : ℕ → ℝ) (t : ℕ) :\n    ftlPredict ((1 : ℝ) / 2) y t = meanPredict y t",
+  "ftlState_first": "theorem ftlState_first (initial : ℝ) (y : ℕ → ℝ) :\n    ftlState initial y 1 = (1, y 0)",
+  "ftlState_eq_predict": "theorem ftlState_eq_predict (initial : ℝ) (y : ℕ → ℝ) (t : ℕ) :\n    ftlState initial y t = (t, ftlPredict initial y t)",
+  "ftlState_prefix": "theorem ftlState_prefix (initial : ℝ) (y z : ℕ → ℝ) (t : ℕ)\n    (h : ∀ i < t, y i = z i) :\n    ftlState initial y t = ftlState initial z t",
+  "ftlState_mem": "theorem ftlState_mem (initial : ℝ) (y : ℕ → ℝ) (t : ℕ)\n    (hi : initial ∈ Set.Icc (0 : ℝ) 1)\n    (hy : ∀ i < t, y i ∈ Set.Icc (0 : ℝ) 1) :\n    (ftlState initial y t).2 ∈ Set.Icc (0 : ℝ) 1",
+  "ftlState_half": "theorem ftlState_half (y : ℕ → ℝ) (t : ℕ) :\n    ftlState ((1 : ℝ) / 2) y t = (t, meanPredict y t)"
+}

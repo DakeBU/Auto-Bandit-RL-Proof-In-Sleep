@@ -1,0 +1,10 @@
+from common_v1 import *
+fixed(proving=True,integrated=True)
+assert (RUN/'memory-digest-candidate-v1.md').exists() and (RUN/'candidate-scoped-trials-v1.jsonl').exists()
+s=(RUN/'task-shadow-v1.py').read_text(encoding='utf-8')
+s=s.replace("write(RUN/'candidate-scoped-trials-v1.jsonl','\\n'.join(json.dumps(x) for x in own))","assert load(RUN/'body-bindings-v1.json')['new_public_proofs']==9")
+s=s.replace('memory-digest-candidate-v1.md','memory-digest-candidate-v2.md')
+write(RUN/'task-shadow-v2.py',s)
+write(RUN/'shadow-digest-version-repair-v2.json',dict(actual_failed_command=['python','-B','-X','utf8','runs/online-ftl-state-20261007/task-shadow-v1.py'],exit_code=1,error='AssertionError existing frozen memory-digest-candidate-v1.md in common.write; candidate-scoped-trials-v1.jsonl already created and preserved',repair='Versioned digest-v2 and helper-v2, reuse untouched trial snapshot; no mathematical edits or evidence overwrite',additional_read_only_retrieval_errors='Guessed tools/lean_declarations.py and tools/proof_graph.py absent; corrected to actual website/scripts/build_site.py. No edits/gates from absent reads.'))
+native('shadow-digest-repair-event-v2','lifecycle-event','--session',TASK,'--event','repair','--payload-json',json.dumps(dict(scope='Evidence helper filename collision, not math',repair=(RUN/'shadow-digest-version-repair-v2.json').as_posix(),source_targets_unchanged=True)))
+native('shadow-digest-candidate-event-v2','lifecycle-event','--session',TASK,'--event','candidate','--payload-json',json.dumps(dict(scope='Same compiled9proofs3definitions after evidence helper version repair',source_targets_unchanged=True)))

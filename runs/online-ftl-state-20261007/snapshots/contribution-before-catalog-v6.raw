@@ -1,0 +1,147 @@
+{
+  "schema_version": "2.0",
+  "id": "ONLINE-FTL-STATE-20261007",
+  "route": "online-learning/chapter-1",
+  "frontier_cell": "online-foundations",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10, 21 June 2026; SHA256 cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchor": "General initial prediction printed3/PDF15; actual running mean/count summary printed6/PDF18; half-only Theorem1.3 printed4–5/PDF16–17",
+    "url": "https://arxiv.org/pdf/1912.13213v10"
+  },
+  "target": "Nine new public proofs and three definitions close two source subobligations: arbitrary feasible initialization (printed p.3 / PDF p.15) and a recursive mean/count summary (printed p.6 / PDF p.18). They are not nine additional numbered book results. Four existing Mean proofs and every prior FTL proof are retained; six validation proofs are not book results.",
+  "affected_files": [
+    "BanditRLProof/OnlineLearningMean.lean",
+    "BanditRLProof/OnlineLearningFTLState.lean",
+    "BanditRLProof.lean",
+    "website/content/readings.json",
+    "website/content/highlights.json",
+    "website/content/chapters.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineLearning.empiricalMean_decomposition",
+    "BanditRL.OnlineLearning.empiricalMean_minimizes",
+    "BanditRL.OnlineLearning.empiricalMean_mem",
+    "BanditRL.OnlineLearning.empiricalMean_unique",
+    "BanditRL.OnlineLearning.empiricalMean_succ",
+    "BanditRL.OnlineLearning.ftlPredict_prefix",
+    "BanditRL.OnlineLearning.ftlPredict_mem",
+    "BanditRL.OnlineLearning.ftlPredict_half",
+    "BanditRL.OnlineLearning.ftlState_first",
+    "BanditRL.OnlineLearning.ftlState_eq_predict",
+    "BanditRL.OnlineLearning.ftlState_prefix",
+    "BanditRL.OnlineLearning.ftlState_mem",
+    "BanditRL.OnlineLearning.ftlState_half"
+  ],
+  "reuse_plan": {
+    "classification": "missing",
+    "decision": "new_shared",
+    "searched_existing": [
+      "Pinned Mean/FTL exact declarations and bodies, finite-sum successor APIs; actual neutral definition identities and19 proposition identities."
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineLearning.empiricalMean_decomposition",
+      "BanditRL.OnlineLearning.empiricalMean_minimizes",
+      "BanditRL.OnlineLearning.empiricalMean_mem",
+      "BanditRL.OnlineLearning.empiricalMean_unique",
+      "BanditRL.OnlineLearning.empiricalMean",
+      "BanditRL.OnlineLearning.meanPredict",
+      "BanditRL.OnlineLearning.meanPredict_regret_refined"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineLearning.empiricalMean_succ",
+      "BanditRL.OnlineLearning.ftlPredict_prefix",
+      "BanditRL.OnlineLearning.ftlPredict_mem",
+      "BanditRL.OnlineLearning.ftlPredict_half",
+      "BanditRL.OnlineLearning.ftlState_first",
+      "BanditRL.OnlineLearning.ftlState_eq_predict",
+      "BanditRL.OnlineLearning.ftlState_prefix",
+      "BanditRL.OnlineLearning.ftlState_mem",
+      "BanditRL.OnlineLearning.ftlState_half",
+      "BanditRL.OnlineLearning.ftlPredict",
+      "BanditRL.OnlineLearning.ftlMeanStep",
+      "BanditRL.OnlineLearning.ftlState"
+    ],
+    "known_consumers": [
+      "BanditRL.OnlineLearning.ftlState_eq_predict",
+      "BanditRL.OnlineLearning.ftlState_mem",
+      "BanditRL.OnlineLearning.ftlState_half",
+      "FTLStateProbe.half_state_regret"
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Extend the shared Mean module by its zero-inclusive successor identity; implement a true local recursive state in the shared project. No separate Book library or duplicate regret theorem."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/osd_blind",
+    "source_reviewer": "/root/source_reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Actual CONTRACT/BODY accepted; FINAL remains pending. Exact-real noncomputable count/value model, not fixed-bit or runtime certification. All-real identities versus source-feasible strict-past premises; same fixed initial parameter. Nine proofs close two source subobligations. Prior history disclosed; no human/external/runtime attestation."
+  },
+  "graph_contribution": {
+    "lean_graph": "new-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "One scalar guessing model; initial family and state implementation, no cross-setting functor.",
+    "focus_targets": [
+      "BanditRL.OnlineLearning.empiricalMean_succ",
+      "BanditRL.OnlineLearning.ftlPredict_prefix",
+      "BanditRL.OnlineLearning.ftlPredict_mem",
+      "BanditRL.OnlineLearning.ftlPredict_half",
+      "BanditRL.OnlineLearning.ftlState_first",
+      "BanditRL.OnlineLearning.ftlState_eq_predict",
+      "BanditRL.OnlineLearning.ftlState_prefix",
+      "BanditRL.OnlineLearning.ftlState_mem",
+      "BanditRL.OnlineLearning.ftlState_half"
+    ],
+    "visual_review": "Actual24 selected compiled nodes19proofs5defs,1979direct references,16prespecified VALUE pairs; applicable current shared registry/HTML/pixels pending.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: Preserve all6 old sourcecards/oldnote mathematics/text and4 curated IDs; mark those4 existing actual-route notes featured, as required when total notes exceed6. Append one full state sourcecard/9notes.",
+    "banditrlwiki": "no-change-with-reason: no new Bandit setting.",
+    "results_ledger": "updated: Local closure of two existing required subobligations;16sourceitems/proof-totalnull/remainingWVandloweraudit.",
+    "roadmap": "no-change-with-reason: GlobalSGB and chapter sequence unchanged; GoalACTIVE/Chapter1open/Chapter2incomplete/3–16unenumerated.",
+    "website_surfaces": [
+      "website/content/readings.json",
+      "website/content/highlights.json",
+      "website/content/chapters.json"
+    ],
+    "inherited_source_caption": "Nine new public proofs and three definitions close two source subobligations: arbitrary feasible initialization (printed p.3 / PDF p.15) and a recursive mean/count summary (printed p.6 / PDF p.18). They are not nine additional numbered book results. Four existing Mean proofs and every prior FTL proof are retained; six validation proofs are not book results."
+  },
+  "truth_boundary": "Nine new public proofs and three definitions close two source subobligations: arbitrary feasible initialization (printed p.3 / PDF p.15) and a recursive mean/count summary (printed p.6 / PDF p.18). They are not nine additional numbered book results. Four existing Mean proofs and every prior FTL proof are retained; six validation proofs are not book results. Deterministic scalar squared-loss guessing. Fix initial c before observations. Lean time t counts observed labels y0,...,y(t-1); predict before observing yt, then update the local state with yt. The algebraic identities hold for all real initial values and labels. Source feasibility requires c in [0,1] and only the strict-past labels yi in [0,1] for i<t; the current and future labels are unrestricted. The state is a mathematical noncomputable exact-real pair (count,value). The count grows; there is no fixed-bit memory, executable implementation or runtime certificate. Strict-prefix equality compares the same fixed c and gives no causality guarantee if an external caller chooses c from future data. Six public canaries check distinct initial states and their identical first update; varying means1/2 and2/3; unchanged prediction before a changed current target and changed next state; feasible initial1 and outside-initial2 at time0; the half-state two-round regret3/4 with the prior bound; and feasible initial1,target0 giving first loss1>1/4. Compiled local BODY-approved package. Combined project, reader FINAL, native acceptance and PR delivery are separate pending gates. No new regret rate for arbitrary c. The first-round quarter and the prior refined/logarithmic theorem remain specific to c=1/2. Chapter 1 remains open: W/V action-domain mapping and the logarithmic lower-bound/source-claim audit are required, together with actual contributor reconciliation. Its16 reviewed source items are not a known proof-leaf total (null). Chapter2 remains incomplete; Chapters3–16 remain unenumerated, with necessary appendices required. The whole Goal is active. Exact stacked OPEN unmerged PR188 base e2323f4ca649a30e420bde1a33dbf1d4997c4c9b. No merge/deploy/main/live/retirement.",
+  "verification": {
+    "focused_checks": [
+      "Actual24kernel/axiom checks,19exact proposition identities,19full native theorem fences and16prespecified VALUE pairs/1979refs passed. Complete recursive raw definitions and actual compiled function identity; no unsupported native := recursive-definition fence."
+    ],
+    "bandit_check": "Current combined root/Tests/fullharness required.",
+    "site_build": "Current clean Leanverified build required after actual combined gate.",
+    "site_check": "Same10823old IDsURLs/nativehashes+12new production nodes expected; seven sourcecards, nine newnotes, four existing curated route IDs retained with explicit featured metadata. Actual site-v1 metadata failure retained; current repaired site/registry/pixels pending.",
+    "independent_review": "Required distinct reused neutraldecoder/CONTRACT/BODY accepted; FINALpending; no human/external/runtime attestation.",
+    "owned_test_files": [
+      "Tests/OnlineLearningFTLStateCanary.lean"
+    ],
+    "owned_test_root_files": [
+      "Tests.lean"
+    ],
+    "contributor_scope": "Owning Mean/newFTLState, one publicroot import and3readerJSONs; Tests root/file separately owned. Main gaps unwaived until actual diagnostic."
+  },
+  "contributor": {
+    "name": "Codex for Ji Cheng",
+    "role": "Formalization/integration with distinct required automated semantic actors; source attribution retained"
+  }
+}

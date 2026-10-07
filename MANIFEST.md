@@ -15476,3 +15476,6 @@ Orabona v10 unnumberedexample afterT2.30/endSection2.2.1 immediatelybefore2.2.2 
 - `2026-10-07T10:27:59+00:00` `bandit.py new-task` `task` `tasks/ONLINE-FOUNDATIONS-PUBLIC-20261007.md` - Chapter1 Be-the-Leader current source and named canary audit
 - `2026-10-07T11:29:21+00:00` `bandit.py new-task` `task` `tasks/ONLINE-FTL-SHARP-20261007.md` - Chapter1 FTL sharp first-round and cumulative source bounds
 - `2026-10-07T11:34:29+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/ONLINE-FTL-SHARP-20261007.md` - ONLINE-FTL-SHARP-20261007
+- `2026-10-07T13:00:58+00:00` `bandit.py new-task` `task` `tasks/ONLINE-FTL-STATE-20261007.md` - Chapter1 general-initial FTL causal mean/count producer
+- `2026-10-07T13:06:02+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/ONLINE-FTL-STATE-20261007.md` - ONLINE-FTL-STATE-20261007
+- `2026-10-07T13:42:14+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/ONLINE-FTL-STATE-20261007.md` - ONLINE-FTL-STATE-20261007

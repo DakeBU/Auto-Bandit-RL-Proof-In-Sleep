@@ -1,0 +1,12 @@
+theorem ftlState_eq_predict (initial : ℝ) (y : ℕ → ℝ) (t : ℕ) :
+    ftlState initial y t = (t, ftlPredict initial y t) := by
+  induction t with
+  | zero => simp [ftlState, ftlPredict]
+  | succ t ih =>
+    by_cases ht : t = 0
+    · subst t
+      simpa [ftlPredict, empiricalMean] using ftlState_first initial y
+    · rw [ftlState, ih]
+      apply Prod.ext
+      · rfl
+      · simpa [ftlMeanStep, ftlPredict, ht] using (empiricalMean_succ y t).symm

@@ -1,0 +1,25 @@
+import Tests.OnlineLearningFTLStateCanary
+#print axioms BanditRL.OnlineLearning.empiricalMean_decomposition
+#print axioms BanditRL.OnlineLearning.empiricalMean_minimizes
+#print axioms BanditRL.OnlineLearning.empiricalMean_mem
+#print axioms BanditRL.OnlineLearning.empiricalMean_unique
+#print axioms BanditRL.OnlineLearning.empiricalMean_succ
+#print axioms BanditRL.OnlineLearning.ftlPredict_prefix
+#print axioms BanditRL.OnlineLearning.ftlPredict_mem
+#print axioms BanditRL.OnlineLearning.ftlPredict_half
+#print axioms BanditRL.OnlineLearning.ftlState_first
+#print axioms BanditRL.OnlineLearning.ftlState_eq_predict
+#print axioms BanditRL.OnlineLearning.ftlState_prefix
+#print axioms BanditRL.OnlineLearning.ftlState_mem
+#print axioms BanditRL.OnlineLearning.ftlState_half
+#print axioms FTLStateProbe.initial_and_first
+#print axioms FTLStateProbe.varying_updates
+#print axioms FTLStateProbe.current_target_after_prediction
+#print axioms FTLStateProbe.feasibility_and_outside
+#print axioms FTLStateProbe.half_state_regret
+#print axioms FTLStateProbe.general_initial_not_quarter
+#print axioms BanditRL.OnlineLearning.empiricalMean
+#print axioms BanditRL.OnlineLearning.ftlPredict
+#print axioms BanditRL.OnlineLearning.ftlMeanStep
+#print axioms BanditRL.OnlineLearning.ftlState
+#print axioms FTLStateProbe.probeTargets

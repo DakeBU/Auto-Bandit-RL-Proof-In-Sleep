@@ -1,0 +1,8 @@
+{
+  "initial_and_first": "theorem initial_and_first :\n    ftlState 0 (fun _ => 1) 0 = (0, 0) ∧\n    ftlState 1 (fun _ => 1) 0 = (0, 1) ∧\n    ftlState 0 (fun _ => 1) 1 = (1, 1) ∧\n    ftlState 1 (fun _ => 1) 1 = (1, 1)",
+  "varying_updates": "theorem varying_updates :\n    ftlState ((3 : ℝ) / 4) probeTargets 2 = (2, (1 : ℝ) / 2) ∧\n    ftlState ((3 : ℝ) / 4) probeTargets 3 = (3, (2 : ℝ) / 3)",
+  "current_target_after_prediction": "theorem current_target_after_prediction :\n    ftlState 0 (fun _ => 0) 1 = ftlState 0 probeTargets 1 ∧\n    (0 : ℝ) ≠ probeTargets 1 ∧\n    ftlState 0 (fun _ => 0) 2 ≠ ftlState 0 probeTargets 2",
+  "feasibility_and_outside": "theorem feasibility_and_outside :\n    (ftlState 1 probeTargets 2).2 ∈ Set.Icc (0 : ℝ) 1 ∧\n    (ftlState 2 probeTargets 0).2 ∉ Set.Icc (0 : ℝ) 1 ∧\n    (ftlState 2 probeTargets 1).2 = 0",
+  "half_state_regret": "theorem half_state_regret :\n    ((∑ t ∈ Finset.range 2, ((ftlState ((1 : ℝ) / 2) probeTargets t).2 - probeTargets t)^2) -\n      (∑ t ∈ Finset.range 2, (empiricalMean probeTargets 2 - probeTargets t)^2)) = (3 : ℝ) / 4 ∧\n    ((∑ t ∈ Finset.range 2, ((ftlState ((1 : ℝ) / 2) probeTargets t).2 - probeTargets t)^2) -\n      (∑ t ∈ Finset.range 2, (empiricalMean probeTargets 2 - probeTargets t)^2)) ≤\n        (1 : ℝ) / 4 + ∑ t ∈ Finset.range (2 - 1), 4 / ((t : ℝ) + 2)",
+  "general_initial_not_quarter": "theorem general_initial_not_quarter :\n    (ftlState 1 (fun _ => 0) 0).2 ∈ Set.Icc (0 : ℝ) 1 ∧\n    ((ftlState 1 (fun _ => 0) 0).2 - 0)^2 = 1 ∧\n    ((ftlState 1 (fun _ => 0) 0).2 - 0)^2 > (1 : ℝ) / 4"
+}

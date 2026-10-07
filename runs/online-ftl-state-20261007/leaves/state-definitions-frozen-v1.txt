@@ -1,0 +1,13 @@
+import BanditRLProof.OnlineLearningFTL
+
+namespace BanditRL.OnlineLearning
+
+noncomputable def ftlPredict (initial : ℝ) (y : ℕ → ℝ) (t : ℕ) : ℝ :=
+  if t = 0 then initial else empiricalMean y t
+
+noncomputable def ftlMeanStep (state : ℕ × ℝ) (target : ℝ) : ℕ × ℝ :=
+  (state.1 + 1, state.2 + (target - state.2) / ((state.1 : ℝ) + 1))
+
+noncomputable def ftlState (initial : ℝ) (y : ℕ → ℝ) : ℕ → ℕ × ℝ
+  | 0 => (0, initial)
+  | t + 1 => ftlMeanStep (ftlState initial y t) (y t)

@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "old_scanner_sha256": "f6cface76e1393fef186ab63ae521c14af11878a0b892b8acfbef390ae380a4f",
+  "current_scanner_sha256": "4fe18b8b9a543ff5256a278f49d160424b30ba2185c946f3d6081ad5460ccaff",
+  "config_sha256": "6806d5fc69f3ebd42814f502f27afc1295369a80d3c0fbb6f7c59f6c57fdbbe9",
+  "modules_compared": 845,
+  "source_declarations_compared": 10835,
+  "changes": [
+    {
+      "name": "BanditRL.OnlineLearning.ftlState",
+      "before": "noncomputable def ftlState (initial : ℝ) (y : ℕ → ℝ) : ℕ → ℕ × ℝ | 0 => (0, initial) | t + 1 => ftlMeanStep (ftlState initial y t) (y t) theorem ftlPredict_prefix (initial : ℝ) (y z : ℕ → ℝ) (t : ℕ) (h : ∀ i < t, y i = z i) : ftlPredict initial y t = ftlPredict initial z t",
+      "after": "noncomputable def ftlState (initial : ℝ) (y : ℕ → ℝ) : ℕ → ℕ × ℝ | 0 => (0, initial) | t + 1 => ftlMeanStep (ftlState initial y t) (y t)"
+    }
+  ],
+  "unchanged_theorems": true,
+  "only_one_new_definition_presentation": true,
+  "complete_source_pinned": true,
+  "no_native_recursive_fence_claim": true
+}

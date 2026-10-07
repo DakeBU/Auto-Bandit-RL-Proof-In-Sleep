@@ -1,0 +1,6 @@
+theorem ftlState_mem (initial : ℝ) (y : ℕ → ℝ) (t : ℕ)
+    (hi : initial ∈ Set.Icc (0 : ℝ) 1)
+    (hy : ∀ i < t, y i ∈ Set.Icc (0 : ℝ) 1) :
+    (ftlState initial y t).2 ∈ Set.Icc (0 : ℝ) 1 := by
+  rw [ftlState_eq_predict]
+  exact ftlPredict_mem initial y t hi hy

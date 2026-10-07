@@ -1,0 +1,1 @@
+FTL state draft: generalc and local(count,mean) recursion, exact forallstateidentity/strictpast/feasibility/half reuse. Firstupdate separate/alltime empiricalMean recurrence. Generalc endpoint1 gives firsterror1>quarter. No futureoracle/certifiedcost/wholechapter/Goal acceptance.

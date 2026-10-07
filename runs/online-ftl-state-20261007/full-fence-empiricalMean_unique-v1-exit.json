@@ -1,0 +1,22 @@
+{
+  "command": [
+    "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe",
+    "-B",
+    "-X",
+    "utf8",
+    "tools/bandit.py",
+    "statement-fence",
+    "--declaration",
+    "BanditRL.OnlineLearning.empiricalMean_unique",
+    "--file",
+    "BanditRLProof\\OnlineLearningMean.lean",
+    "--source-assumption",
+    "theorem empiricalMean_unique (y : ℕ → ℝ) (n : ℕ) (hn : 0 < n) (u : ℝ)\n    (hu : (∑ t ∈ Finset.range n, (u-y t)^2) ≤\n      ∑ t ∈ Finset.range n, (empiricalMean y n-y t)^2) :\n    u = empiricalMean y n",
+    "--output",
+    "E:\\ABRL\\worktrees\\research-online-book\\runs\\online-ftl-state-20261007\\full-header-fences-v1\\empiricalMean_unique.json"
+  ],
+  "cwd": "E:/ABRL/worktrees/research-online-book",
+  "exit_code": 0,
+  "seconds": 0.218,
+  "log_sha256": "30e8bddb623698df452c7c15f7b1f8eada6982bba101caa0ff4563a8b14ef09e"
+}

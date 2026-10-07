@@ -1,0 +1,26 @@
+{
+  "status": "Actual3 new complete definitions verified; canonicalMean/predictor/step neutral rfl identities and recursive state function equality by extensional induction compiled; actual3 names/types/kernel checked",
+  "full_definition_rows": [
+    {
+      "name": "BanditRL.OnlineLearning.ftlPredict",
+      "source_raw_text": "noncomputable def ftlPredict (initial : ℝ) (y : ℕ → ℝ) (t : ℕ) : ℝ :=\n  if t = 0 then initial else empiricalMean y t",
+      "sha256": "5beff51c1c74e0f73e89ddcd4c5727c1e900815658c4e449de9a6e65b3773ee9"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.ftlMeanStep",
+      "source_raw_text": "noncomputable def ftlMeanStep (state : ℕ × ℝ) (target : ℝ) : ℕ × ℝ :=\n  (state.1 + 1, state.2 + (target - state.2) / ((state.1 : ℝ) + 1))",
+      "sha256": "ce90277a88a3fddf8393afcca72afab84af876181f37c04fc4a66a889f4d0ccc"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.ftlState",
+      "source_raw_text": "noncomputable def ftlState (initial : ℝ) (y : ℕ → ℝ) : ℕ → ℕ × ℝ\n  | 0 => (0, initial)\n  | t + 1 => ftlMeanStep (ftlState initial y t) (y t)",
+      "sha256": "9dc75f3fdc3d677c1ed29e87a5aa6e4d46fd76a762891b3e5e0eeb8d58a2246c"
+    }
+  ],
+  "actual_module_definition_prefix_sha256": "370be926b5f5562ee12c503f10d7d0acded00398f087901a6b8026f8dc6106aa",
+  "recursive_identity_method": "Actual whole-function equality via funext and Nat induction, not rfl",
+  "recursive_native_fence_claim": false,
+  "native_api_boundary": "Equation-style recursion unsupported by native header extractor; full raw bytes plus compiled functional identities/types/kernel are separate evidence",
+  "original_failed_recursive_rfl_retained": true,
+  "source_package_accepted": false
+}

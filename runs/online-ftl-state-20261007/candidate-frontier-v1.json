@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "record_id": "frontier-dca8365897df25e6",
+  "updated_at": "2026-10-07T13:57:42+00:00",
+  "root_objective": "Persistent Orabona Chapters1–16; current general-initial causal FTL state",
+  "current_leaf": {
+    "id": "ONLINE-FTL-STATE-20261007",
+    "kind": "lean",
+    "status": "gate-pending",
+    "statement": "theorem ftlState_eq_predict (initial : ℝ) (y : ℕ → ℝ) (t : ℕ) : ftlState initial y t = (t, ftlPredict initial y t)",
+    "statement_hash": "31d9a9d7df19f4dab2dbc615bf2bd407cccde96fd352beda09150b6a07eb40b3",
+    "declaration": "BanditRL.OnlineLearning.ftlState_eq_predict",
+    "file": "BanditRLProof\\OnlineLearningFTLState.lean",
+    "source_status": "source-reviewed",
+    "dependencies": [
+      {
+        "kind": "lean",
+        "name": "BanditRL.OnlineLearning.empiricalMean_succ",
+        "status": "compiled"
+      },
+      {
+        "kind": "lean",
+        "name": "BanditRL.OnlineLearning.ftlState_first",
+        "status": "compiled"
+      },
+      {
+        "kind": "review",
+        "name": "source-body",
+        "status": "accepted"
+      }
+    ]
+  },
+  "dag": {
+    "nodes": [
+      {
+        "id": "ONLINE-FTL-STATE-20261007",
+        "kind": "lean",
+        "status": "gate-pending",
+        "dependencies": [
+          {
+            "kind": "lean",
+            "name": "BanditRL.OnlineLearning.empiricalMean_succ",
+            "status": "compiled"
+          },
+          {
+            "kind": "lean",
+            "name": "BanditRL.OnlineLearning.ftlState_first",
+            "status": "compiled"
+          },
+          {
+            "kind": "review",
+            "name": "source-body",
+            "status": "accepted"
+          }
+        ],
+        "dispatch_count": 0
+      }
+    ]
+  },
+  "last_accepted_verifier": {
+    "trial_index": 10,
+    "time": "2026-10-07T13:39:40+00:00",
+    "task": "ONLINE-FTL-STATE-20261007",
+    "role": "lower",
+    "kind": "build",
+    "status": "compiled",
+    "lean": "BanditRLProof\\OnlineLearningFTLState.lean",
+    "notes": "Actual central producer terminal closed from genuine local recursion/alltime mean recurrence;9newpublicproof3defs,6validationproof1def,24namedkernel/19exactprops/19fullguards/16prespecifiedVALUE calls. Sourcepackage/BODY/rootTests/fullharness/readerFINAL/native/PR/chapter/Goal pending.",
+    "run_id": "online-ftl-state-20261007"
+  },
+  "memory_policy": {
+    "recent_role_relevant_limit": 5,
+    "explicit_verified_lemma_ids": [],
+    "whole_history_default": false
+  },
+  "shadow_gate": {
+    "status": "pending",
+    "analyzed_trial_rows": 11,
+    "mismatches": [],
+    "replay_transitions": 0
+  },
+  "mutation_policy": {
+    "canonical_path_queue": true,
+    "cross_process_lock": true,
+    "same_file_serialized": true,
+    "disjoint_files_parallel": true
+  },
+  "autonomous_execution": {
+    "enabled": false,
+    "requires_deterministic_gates": true,
+    "requires_explicit_user_request": true
+  }
+}

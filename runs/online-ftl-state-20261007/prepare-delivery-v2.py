@@ -1,0 +1,18 @@
+from common_v1 import *
+fixed(proving=True,integrated=True);pr=load(RUN/'created-PR-v1.json');a=load(RUN/'accepted-decision-v1.json')
+assert pr['state']=='open' and pr['draft'] and not pr['merged'] and pr['head']['ref']==BRANCH and pr['base']['ref']==BASE_BRANCH
+assert load(RUN/'base-PR188-creation-fresh-v1.json')['head']['sha']==BASE and load(RUN/'app-attach-v1.json')['isError'] is False
+assert a['source_package_accepted'] and a['new_public_math']==9 and not a['goal_complete'] and load(RUN/'native-acceptance-overlay-v1.json')['status']=='passed'
+for label in ['create-pr-v1','push-creation-v1','contributor-final-v1','scoped-diff-final-v1','source-scope-final-v1','committed-raw-audit-v1','full-harness-final-v1']:assert load(RUN/(label+'-exit.json'))['exit_code']==0,label
+paths=['accepted-decision-v1.json','accepted-binding-audit-v1.json','accepted-reader-discharge-v1.json','final-reader-receipt-v1.json','native-acceptance-overlay-v1.json','integrated-gates-overlay-v1.json','registry-v2.json','committed-raw-audit-v1.json','created-PR-v1.json','pr-payload-v1.json','app-attach-v1.json','pixel-review-v2.json','full-harness-final-v1-exit.json']
+assert sha(RUN/'registry-v2.json')==a['applicable_integrated_gates']['registry_record_sha256']
+write(RUN/'delivery-obligations-overlay-v1.json',dict(status='Two-FTL-producer-obligations-accepted-draft-delivered',PR=pr['html_url'],number=pr['number'],branch=BRANCH,creation_head=pr['head']['sha'],exact_base_PR=188,exact_base_head=BASE,state='OPEN-DRAFT-unmerged',app_attached=True,rows=[dict(path=(RUN/p).as_posix(),sha256=sha(RUN/p)) for p in paths],applicable_site_commit=a['applicable_integrated_gates']['site_source_commit'],existing_Mean_proofs=4,new_named_validation_proofs=6,new_public_math=9,new_public_definitions=3,new_source_subobligation_closures=2,new_production_registry_nodes=12,source_package_accepted=True,chapter_complete=False,goal_complete=False,merged=False,main_updated=False,live=False,remaining_required=a['remaining_required'],worktree=ROOT.as_posix(),worktree_disposition='Active total-Goal checkout retained; source/runtime/site/profile caches and sharedGit/.lake links preserved.',final_head_checked_DIRECT_without_recursive_self_head_file=True))
+write(RUN/'delivery-v1.md',f'''# General-initial FTL and actual mean/count producer delivered
+
+OPEN draft PR{pr['number']}: {pr['html_url']}, app-attached/unmerged. Branch {BRANCH}, exact PR188 base {BASE}; creationhead {pr['head']['sha']}; applicable local site source {a['applicable_integrated_gates']['site_source_commit']}. Final later metadata head checked DIRECT. Canonical main/live unchanged.
+
+{a['scope']} Actual24kernel/axioms,19exact proposition identities/19fulltheoremguards,16prespecified VALUE1979references. Combined actual {a['applicable_integrated_gates']['root_Tests_jobs']},{a['applicable_integrated_gates']['full_tests']} tests/{a['applicable_integrated_gates']['existing_skips']} existing skips. Same10823 IDsURLs/nativehashes plus12newnodes/shared10835; all actual current source/reader/module images individually viewed. Distinct required reused automated decoder/CONTRACT/BODY/FINAL accepted; originalR1–R8 discharged. Same fixed initial before observations, strictpast, firststepcancelsinitial, source feasible family/allreal algebraic identities, genuine recurrence no state/argmin/regret certificate, exacthalfspecialization onlyquarter/rates, count/value exactreal noncomputable/no fixed-bit/runtime certificate. All failures and versioned repairs retained without target weakening. No human/external/runtime attestation.
+
+{a['remaining_required']} No merge/deploy/retirement; continue the next required total-Goal obligation.
+''')
+fixed(proving=True,integrated=True)
