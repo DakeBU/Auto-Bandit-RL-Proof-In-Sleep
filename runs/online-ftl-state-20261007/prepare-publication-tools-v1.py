@@ -1,0 +1,9 @@
+from common_v1 import *
+fixed(proving=True,integrated=True)
+s=Path('runs/online-ftl-sharp-20261007/create-pr-v1.py').read_text(encoding='utf-8').replace('base-PR187-creation-fresh-v1','base-PR188-creation-fresh-v1').replace("repo+'/pulls/187'","repo+'/pulls/188'")
+write(RUN/'create-pr-v1.py',s)
+s=Path('runs/online-foundations-public-20261007/audit-committed-raw-v1.py').read_text(encoding='utf-8').replace('codex/research-online-foundations-migration',BRANCH).replace('fixed(True)','fixed(proving=True,integrated=True)')
+write(RUN/'audit-committed-raw-v1.py',s)
+s=Path('runs/online-ftl-sharp-20261007/complete-publication-v2.py').read_text(encoding='utf-8').replace('prepare-publication-v2.py','prepare-publication-v1.py').replace('online-ftl-sharp-raw-audit','online-ftl-state-raw-audit').replace('Accept FTL two source proof bounds after distinct FINAL','Accept general-initial FTL and true state producer after distinct FINAL').replace('Bind final FTL contributor and source-preservation gates','Bind final FTL-state contributor and source-preservation gates').replace('Preserve raw FTL evidence before authorized draft publication','Preserve raw FTL-state evidence before authorized draft publication')
+write(RUN/'complete-publication-v1.py',s)
+write(RUN/'publication-tools-before-FINAL-v1.json',dict(rows=[dict(path=(RUN/n).as_posix(),sha256=sha(RUN/n)) for n in ['record-acceptance-v1.py','prepare-publication-v1.py','create-pr-v1.py','complete-publication-v1.py','prepare-delivery-v1.py','audit-committed-raw-v1.py']],scope='Bounded user-authorized acceptance/draft-publication sequence prepared for FINAL inspection before execution. Explicit current registry-v1 delivery binding. No native acceptance/push/API yet.',new_public_math=9,new_public_definitions=3,source_subobligations=2,new_named_validation_proofs=6,chapter_complete=False,goal_complete=False))
