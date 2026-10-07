@@ -1,0 +1,32 @@
+@BanditRL.OnlineLearning.lemma_1_2 : ∀ {X : Type u_1} (V : Set X) (loss : ℕ → X → ℝ) (leader : ℕ → X) (T : ℕ),
+  (∀ (n : ℕ), 0 < n → n ≤ T → leader n ∈ V) →
+    (∀ (n : ℕ), 0 < n → n ≤ T → ∀ u ∈ V, ∑ t ∈ Finset.range n, loss t (leader n) ≤ ∑ t ∈ Finset.range n, loss t u) →
+      ∑ t ∈ Finset.range T, loss t (leader (t + 1)) ≤ ∑ t ∈ Finset.range T, loss t (leader T)
+FoundationsProbe.prefix_minimizers : ∀ (n : ℕ),
+  0 < n →
+    n ≤ 2 →
+      ∀ u ∈ Set.univ,
+        ∑ t ∈ Finset.range n, ChapterOneCase0.demoLoss t (ChapterOneCase0.demoLeader n) ≤
+          ∑ t ∈ Finset.range n, ChapterOneCase0.demoLoss t u
+FoundationsProbe.instantiated_compare : ∑ t ∈ Finset.range 2,
+    ChapterOneCase0.demoLoss t (ChapterOneCase0.demoLeader (t + 1)) ≤
+  ∑ t ∈ Finset.range 2, ChapterOneCase0.demoLoss t (ChapterOneCase0.demoLeader 2)
+FoundationsProbe.strict_values : ∑ t ∈ Finset.range 2, ChapterOneCase0.demoLoss t (ChapterOneCase0.demoLeader (t + 1)) =
+    -2 ∧
+  ∑ t ∈ Finset.range 2, ChapterOneCase0.demoLoss t (ChapterOneCase0.demoLeader 2) = 0 ∧
+    ∑ t ∈ Finset.range 2, ChapterOneCase0.demoLoss t (ChapterOneCase0.demoLeader (t + 1)) <
+      ∑ t ∈ Finset.range 2, ChapterOneCase0.demoLoss t (ChapterOneCase0.demoLeader 2)
+@FoundationsProbe.zero_horizon : ∀ {X : Type u_1} (V : Set X) (loss : ℕ → X → ℝ) (leader : ℕ → X),
+  ∑ t ∈ Finset.range 0, loss t (leader (t + 1)) ≤ ∑ t ∈ Finset.range 0, loss t (leader 0)
+@FoundationsProbe.one_horizon : ∀ {X : Type u_1} (loss : ℕ → X → ℝ) (leader : ℕ → X),
+  ∑ t ∈ Finset.range 1, loss t (leader (t + 1)) = ∑ t ∈ Finset.range 1, loss t (leader 1)
+FoundationsProbe.without_optimality : have leader := fun n => decide (n = 2);
+(∀ (n : ℕ), 0 < n → n ≤ 2 → leader n ∈ Set.univ) ∧
+  ∑ t ∈ Finset.range 1, ChapterOneCase0.demoLoss t true < ∑ t ∈ Finset.range 1, ChapterOneCase0.demoLoss t (leader 1) ∧
+    ∑ t ∈ Finset.range 2, ChapterOneCase0.demoLoss t (leader (t + 1)) >
+      ∑ t ∈ Finset.range 2, ChapterOneCase0.demoLoss t (leader 2)
+FoundationsProbe.without_feasibility : have loss := fun t b => if b = true then if t = 0 then -10 else 5 else 0;
+have leader := fun n => decide (n = 2);
+have V := {false};
+(∀ (n : ℕ), 0 < n → n ≤ 2 → ∀ u ∈ V, ∑ t ∈ Finset.range n, loss t (leader n) ≤ ∑ t ∈ Finset.range n, loss t u) ∧
+  leader 2 ∉ V ∧ ∑ t ∈ Finset.range 2, loss t (leader (t + 1)) > ∑ t ∈ Finset.range 2, loss t (leader 2)

@@ -1,0 +1,33 @@
+const fs=require('fs'),path=require('path');
+const {chromium}=require('C:/Users/admin/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+(async()=>{
+ const [url,run,profile]=process.argv.slice(2),errors=[],failed=[];
+ const context=await chromium.launchPersistentContext(profile,{executablePath:'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',headless:true,viewport:{width:1440,height:1800},args:['--disable-gpu','--disable-sync','--disable-background-networking','--no-first-run']});
+ try{
+  const page=await context.newPage();page.on('pageerror',e=>errors.push(String(e)));page.on('requestfailed',r=>failed.push({url:r.url(),failure:r.failure()}));
+  await page.goto(url,{waitUntil:'networkidle',timeout:45000});await page.waitForFunction(()=>document.querySelectorAll('#source-guide mjx-container').length===7,null,{timeout:45000});
+  const images=['reader-first-viewport-v1.png'];await page.screenshot({path:path.join(run,images[0])});
+  const specs=[...Array.from({length:4},(_,i)=>['article.source-theorem-card',i,`source-card-0${i+1}-v1.png`,1,4]),['#algorithm',0,'algorithm-v1.png',0,1],['#worked-example',0,'worked-example-v1.png',3,1],['#decl-09d4056793c0-teaching',0,'public-note-v1.png',1,1]],panels=[];
+  for(const [selector,index,file,expected,total] of specs){
+   if(await page.locator(selector).count()!==total)throw Error('Unexpected panel count '+selector);const panel=page.locator(selector).nth(index);
+   const detail=panel.locator("xpath=ancestor::details[contains(@class,'source-theorem-disclosure')][1]");
+   if(await detail.count()&&!await detail.evaluate(el=>el.open)){await detail.locator('summary').click();if(!await detail.evaluate(el=>el.open))throw Error('Disclosure not open');}
+   if(selector==='#decl-09d4056793c0-teaching'){const tech=panel.locator('details.technical-reading');if(!await tech.evaluate(el=>el.open))await tech.locator('summary').click();if(await panel.locator('details.exact-lean').evaluate(el=>el.open))throw Error('Exact Lean must remain initially folded');}
+   const height=await panel.evaluate(el=>Math.ceil(el.getBoundingClientRect().height));const viewportHeight=Math.max(1800,height+350);await page.setViewportSize({width:1440,height:viewportHeight});await page.evaluate(el=>window.scrollTo(0,window.scrollY+el.getBoundingClientRect().top-180),await panel.elementHandle());await page.waitForTimeout(100);
+   const box=await panel.boundingBox();if(!box||box.y<140||box.y+box.height>viewportHeight-30)throw Error('Panel header/bottom clipped '+selector);
+   const geometry=await panel.evaluate(el=>({width:el.getBoundingClientRect().width,height:el.getBoundingClientRect().height,left:el.getBoundingClientRect().left,right:el.getBoundingClientRect().right,scrollWidth:el.scrollWidth,clientWidth:el.clientWidth,viewportWidth:window.innerWidth}));if(geometry.left<0||geometry.right>geometry.viewportWidth+1||geometry.scrollWidth>geometry.clientWidth+1)throw Error('Panel horizontal overflow '+selector);
+   await panel.screenshot({path:path.join(run,file),timeout:45000});images.push(file);
+   const info=await panel.evaluate(el=>({heading:el.querySelector('h3,h4').textContent,mathContainers:el.querySelectorAll('mjx-container').length,mathErrors:el.querySelectorAll('mjx-merror').length,renderedMath:Array.from(el.querySelectorAll('mjx-container')).map(x=>x.outerHTML)}));if(info.mathContainers!==expected||info.mathErrors!==0)throw Error('Wrong formula count/errors '+selector);panels.push({...info,selector,index,file,geometry,actualViewport:await page.viewportSize(),safeBelowStickyNavigation:true});
+  }
+  const scrollers=await page.evaluate(()=>Array.from(document.querySelectorAll('#source-guide *')).map((x,index)=>({x,index})).filter(({x})=>x.clientWidth>0&&x.querySelector('mjx-container')&&x.scrollWidth>x.clientWidth+1&&['auto','scroll'].includes(getComputedStyle(x).overflowX)).map(({x,index})=>({index,clientWidth:x.clientWidth,scrollWidth:x.scrollWidth,formula:Array.from(x.querySelectorAll('mjx-container')).map(y=>y.outerHTML)})));
+  const scrollViews=[];
+  for(let k=0;k<scrollers.length;k++){
+   const row=scrollers[k],node=page.locator('#source-guide *').nth(row.index);await page.setViewportSize({width:1440,height:1800});await page.evaluate(el=>window.scrollTo(0,window.scrollY+el.getBoundingClientRect().top-220),await node.elementHandle());
+   const left=`wide-formula-${k+1}-left-v1.png`,right=`wide-formula-${k+1}-right-v1.png`;await node.evaluate(el=>{el.scrollLeft=0;});await node.screenshot({path:path.join(run,left)});const before=await node.evaluate(el=>el.scrollLeft);const after=await node.evaluate(el=>{el.scrollLeft=el.scrollWidth-el.clientWidth;return el.scrollLeft;});if(before!==0||after<=0)throw Error('Actual builtin scrolling failed');await node.screenshot({path:path.join(run,right)});images.push(left,right);scrollViews.push({...row,before,after,leftFile:left,rightFile:right,actualScrollOnly:true});
+  }
+  fs.writeFileSync(path.join(run,'formula-render-v1-dom.html'),await page.content(),'utf8');
+  const moduleURL=new URL('../../modules/banditrlproof-onlinelearningfoundations/index.html',url).href;await page.goto(moduleURL,{waitUntil:'networkidle',timeout:45000});await page.setViewportSize({width:1440,height:1800});if(await page.locator('#decl-09d4056793c0').count()!==1)throw Error('Public catalog declaration missing');await page.screenshot({path:path.join(run,'module-catalog-v1.png')});images.push('module-catalog-v1.png');
+  if(errors.length||failed.length)throw Error(JSON.stringify({errors,failed}));
+  fs.writeFileSync(path.join(run,'formula-render-v1-browser.json'),JSON.stringify({status:'actual-panels-and-catalog-captured',panels,scrollViews,images,actualRouteMathContainers:7,publicNoteMathContainers:1,dataMathFields:7,errors,failed,url,moduleURL,profilePreserved:profile,generatedSiteFilesUnmodified:true},null,2)+'\n','utf8');
+ }finally{await context.close();}
+})().catch(e=>{console.error(e);process.exitCode=1;});

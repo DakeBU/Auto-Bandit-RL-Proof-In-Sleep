@@ -1,0 +1,5 @@
+# General history policy and normalization v1
+
+Source p1: an online predictor cannot beat the variance baseline under independent current targets. Policy receives only the finite strict-past tuple, a dependent function on range t. Measurability is explicit, bounded interval-valued policies derive square integrability. Independence of current target is derived from independent observation tuples via disjoint index sets and measurable policy composition. The initial policy receives the empty tuple. No arbitrary future-sequence function is used.
+
+The per-round bound holds for general history policies, not merely meanPredict. Independent private randomization could be modeled by enlarging the past information with an independent seed, but no randomized policy is asserted by this deterministic-history interface. Source squared guessing strategy is deterministic. Eq1.2 normalization is exact for T>0; no fabricated division at zero. Cumulative benchmark for the actual mean strategy is already proved separately.

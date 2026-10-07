@@ -1,0 +1,3 @@
+# Chapter 1 actual no-regret corollary v1
+
+Source pp2 and6: the source running-average strategy has sublinear regret. For every infinite [0,1]-valued sequence, fixed same meanPredict algorithm, each comparator in [0,1] has eventual normalized regret upper bound <=epsilon. No nonnegative regret assumption or existence of a signed regret limit. Theorem1.3 supplies the actual algorithm bound; empiricalMean_minimizes converts best-fixed regret to arbitrary comparator. Mathlib log/T and 1/T convergence imply the bound vanishes. Positive horizons only are used eventually. This instantiates the previously conditional noRegret adapter.

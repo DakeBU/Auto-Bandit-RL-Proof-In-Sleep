@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "record_id": "frontier-758ba88734aabbdb",
+  "updated_at": "2026-10-07T11:21:54+00:00",
+  "root_objective": "Persistent Orabona Chapters1-16; current Be-the-Leader reuse accepted",
+  "current_leaf": {
+    "id": "ONLINE-FOUNDATIONS-PUBLIC-20261007",
+    "kind": "lean",
+    "status": "accepted",
+    "statement": "theorem lemma_1_2 {X : Type*} (V : Set X) (loss : ℕ → X → ℝ) (leader : ℕ → X) (T : ℕ) (hmem : ∀ n, 0 < n → n ≤ T → leader n ∈ V) (hmin : ∀ n, 0 < n → n ≤ T → ∀ u ∈ V, (∑ t ∈ Finset.range n, loss t (leader n)) ≤ ∑ t ∈ Finset.range n, loss t u) : (∑ t ∈ Finset.range T, loss t (leader (t + 1))) ≤ ∑ t ∈ Finset.range T, loss t (leader T)",
+    "statement_hash": "e87a9e3d0823f50c666d2f290d9a82acea7259a846b0d4698f6bcd339fa6cc0d",
+    "declaration": "BanditRL.OnlineLearning.lemma_1_2",
+    "file": "BanditRLProof\\OnlineLearningFoundations.lean",
+    "source_status": "source-reviewed",
+    "dependencies": [
+      {
+        "kind": "lean",
+        "name": "Finset.sum_range_succ",
+        "status": "compiled"
+      },
+      {
+        "kind": "review",
+        "name": "source-reader",
+        "status": "accepted"
+      }
+    ]
+  },
+  "dag": {
+    "nodes": [
+      {
+        "id": "ONLINE-FOUNDATIONS-PUBLIC-20261007",
+        "kind": "lean",
+        "status": "accepted",
+        "dependencies": [
+          {
+            "kind": "lean",
+            "name": "Finset.sum_range_succ",
+            "status": "compiled"
+          },
+          {
+            "kind": "review",
+            "name": "source-reader",
+            "status": "accepted"
+          }
+        ],
+        "dispatch_count": 0
+      }
+    ]
+  },
+  "last_accepted_verifier": {
+    "trial_index": 2,
+    "time": "2026-10-07T11:21:54+00:00",
+    "task": "ONLINE-FOUNDATIONS-PUBLIC-20261007",
+    "role": "reviewer",
+    "kind": "review",
+    "status": "accepted",
+    "lean": "",
+    "notes": "ONLINE-FOUNDATIONS-PUBLIC-20261007 Existing one public Be-the-Leader lemma revalidated; seven new named VALIDATION proofs, zero new public/source mathematics/definitions/production registry nodes. Eight OTHERChapter1 current semantic migrations and wholeChapter1 source reconciliation REQUIRED; all NINE origin/main contributor gaps INCLUDING retained Foundations remain FAILUNWAIVED. This bounded source/test/reader revalidation does not complete main-relative Foundations integration. Chapter1 mandatory total unknown; Chapter2null/incomplete;3-16unenumerated; necessaryappendices required; wholeGoal ACTIVE. No merge/main/live/retirement. AllR1-R8 discharged. Source Euclidean restricted-domain -> arbitraryX ambientloss extension, supplied BOTH feasible positiveprefix argmins, currentprefix hindsight notcausalFTL; T0/T1 boundaries; actual changingBool strict-2<0, feasiblewrongoptimal3>1, ambientinfeasibleprefixoptimal5>-5. Eightkernel/8fences4VALUE/686refs; retained neutral layout/canarymembership/CLIenum/untrackedsource fullgate failures and actual repairs. Distinct required automated actors requested Astra/medium, priorhistory disclosed/nohumanexternalruntimeattestation.",
+    "run_id": "online-foundations-public-20261007"
+  },
+  "memory_policy": {
+    "recent_role_relevant_limit": 5,
+    "explicit_verified_lemma_ids": [],
+    "whole_history_default": false
+  },
+  "shadow_gate": {
+    "status": "pending",
+    "analyzed_trial_rows": 3,
+    "mismatches": [],
+    "replay_transitions": 0
+  },
+  "mutation_policy": {
+    "canonical_path_queue": true,
+    "cross_process_lock": true,
+    "same_file_serialized": true,
+    "disjoint_files_parallel": true
+  },
+  "autonomous_execution": {
+    "enabled": false,
+    "requires_deterministic_gates": true,
+    "requires_explicit_user_request": true
+  }
+}
