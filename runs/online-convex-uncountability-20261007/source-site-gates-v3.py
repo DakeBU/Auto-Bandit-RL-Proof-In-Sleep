@@ -1,0 +1,16 @@
+"""Verify auxiliary registry display repair with all unchanged applicable Lean gates."""
+from common_v2 import *
+fixed(True,True);passed('project-gates-v1-01');passed('full-harness-v2-01');passed('repair-registry-display-v2-01')
+subprocess.run([sys.executable,'-B','-X','utf8',str(RUN/'commit-owned-v1.py'),'Verify actual rendered Lean names and canonical links'],check=True)
+gate('contributor-exact-v3-01',sys.executable,'-B','-X','utf8','tools/check_contributor_contract.py','--base',BASE)
+gate('scoped-diff-v3-01',sys.executable,'-B','-X','utf8',RUN/'check-scoped-diff-v1.py','v3')
+gate('source-scope-v3-01',sys.executable,'-B','-X','utf8',RUN/'audit-scope-v3.py')
+subprocess.run([sys.executable,'-B','-X','utf8',str(RUN/'commit-owned-v1.py'),'Bind exact-base registry repair and preserved source scope'],check=True)
+assert not subprocess.check_output(['git','status','--porcelain'],text=True).strip()
+site=Path('tmp/online-convex-uncountability-site-v1')
+gate('site-build-v3-01',sys.executable,'-B','-X','utf8','website/scripts/build_site.py','--lean-verified','--output',site)
+gate('site-check-v3-01',sys.executable,'-B','-X','utf8','website/scripts/check_site.py','--output',site)
+gate('registry-v2-01',sys.executable,'-B','-X','utf8',RUN/'verify-registry-v2.py')
+gate('browser-v1-01',sys.executable,'-B','-X','utf8',RUN/'browser-v1.py')
+gate('formula-render-v1-01',sys.executable,'-B','-X','utf8',RUN/'render-source-card-v2.py')
+fixed(True,True);print('Actual clean site/shared registry/four-card viewport renderer gates pass; actual pixels/FINAL/native/PR pending.')

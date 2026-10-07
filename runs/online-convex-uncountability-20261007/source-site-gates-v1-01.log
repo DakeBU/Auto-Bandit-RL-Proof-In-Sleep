@@ -1,0 +1,26 @@
+f33c9211309bc219d5610ee7056ea558438be22a
+contributor-exact-v1-01 exit 0 seconds 0.14
+scoped-diff-v1-01 exit 0 seconds 0.188
+source-scope-v1-01 exit 0 seconds 0.141
+main-relative-diagnostic-v1-01 exit 1 seconds 0.344
+Failure tail only; full raw output is retained in main-relative-diagnostic-v1-01.log
+CONTRIBUTOR CONTRACT FAILED
+ - production paths missing from all changed contribution manifests: BanditRLProof/OnlineLearningAsymptotic.lean, BanditRLProof/OnlineLearningFTL.lean, BanditRLProof/OnlineLearningFoundations.lean, BanditRLProof/OnlineLearningHistory.lean, BanditRLProof/OnlineLearningIID.lean, BanditRLProof/OnlineLearningInformation.lean, BanditRLProof/OnlineLearningMean.lean, BanditRLProof/OnlineLearningRegret.lean, BanditRLProof/OnlineLearningStochastic.lean
+contributor base: origin/main
+changed paths: 13919
+affected production paths: 55
+changed contribution contracts: 43
+
+bf426ed112b2edae748700fb2ac59c5e4d1b7a5e
+site-build-v1-01 exit 1 seconds 0.188
+Failure tail only; full raw output is retained in site-build-v1-01.log
+reading online-lipschitz theorem Unnumbered convex counterexample: cardinality consequence lacks the complete source contract
+
+Traceback (most recent call last):
+  File "runs/online-convex-uncountability-20261007/source-site-gates-v1.py", line 14, in <module>
+    gate('site-build-v1-01',sys.executable,'-B','-X','utf8','website/scripts/build_site.py','--lean-verified','--output',site)
+  File "E:\ABRL\worktrees\research-online-book\runs\online-convex-uncountability-20261007\common_v1.py", line 16, in gate
+    subprocess.run([sys.executable,'-B','-X','utf8',str(RUN/'run-command.py'),label,*map(str,args)],check=True)
+  File "C:\Users\admin\AppData\Local\Programs\Python\Python38\lib\subprocess.py", line 516, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe', '-B', '-X', 'utf8', 'E:\\ABRL\\worktrees\\research-online-book\\runs\\online-convex-uncountability-20261007\\run-command.py', 'site-build-v1-01', 'C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe', '-B', '-X', 'utf8', 'website/scripts/build_site.py', '--lean-verified', '--output', 'tmp\\online-convex-uncountability-site-v1']' returned non-zero exit status 1.

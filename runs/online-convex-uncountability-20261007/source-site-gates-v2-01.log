@@ -1,0 +1,23 @@
+full-harness-v2-01 exit 0 seconds 195.812
+75f57a7bfdddf403caa4c2825f2bc049018e43a7
+contributor-exact-v2-01 exit 0 seconds 0.125
+scoped-diff-v2-01 exit 0 seconds 0.188
+source-scope-v2-01 exit 0 seconds 0.14
+f85a3640eee93c0dc7aff73fd2c00dd8ed2f94f4
+site-build-v2-01 exit 0 seconds 11.203
+site-check-v2-01 exit 0 seconds 39.297
+registry-v1-01 exit 1 seconds 0.14
+Failure tail only; full raw output is retained in registry-v1-01.log
+Traceback (most recent call last):
+  File "E:\ABRL\worktrees\research-online-book\runs\online-convex-uncountability-20261007\verify-registry-v1.py", line 19, in <module>
+    route=(site/'chapters/online-lipschitz/index.html').read_text(encoding='utf-8');assert PRE+'convex_uncountable_nondifferentiability' in route
+AssertionError
+
+Traceback (most recent call last):
+  File "runs/online-convex-uncountability-20261007/source-site-gates-v2.py", line 14, in <module>
+    gate('registry-v1-01',sys.executable,'-B','-X','utf8',RUN/'verify-registry-v1.py')
+  File "E:\ABRL\worktrees\research-online-book\runs\online-convex-uncountability-20261007\common_v1.py", line 16, in gate
+    subprocess.run([sys.executable,'-B','-X','utf8',str(RUN/'run-command.py'),label,*map(str,args)],check=True)
+  File "C:\Users\admin\AppData\Local\Programs\Python\Python38\lib\subprocess.py", line 516, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe', '-B', '-X', 'utf8', 'E:\\ABRL\\worktrees\\research-online-book\\runs\\online-convex-uncountability-20261007\\run-command.py', 'registry-v1-01', 'C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe', '-B', '-X', 'utf8', 'E:\\ABRL\\worktrees\\research-online-book\\runs\\online-convex-uncountability-20261007\\verify-registry-v1.py']' returned non-zero exit status 1.

@@ -1,0 +1,8 @@
+BanditRL.OnlineConvex.coordinateAbsolute [def] BanditRLProof/OnlineConvexNondifferentiability.lean:20
+  def coordinateAbsolute (x : EuclideanSpace ℝ (Fin 2)) : ℝ
+BanditRL.OnlineConvex.coordinate_absolute_convex [theorem] BanditRLProof/OnlineConvexNondifferentiability.lean:22
+  theorem coordinate_absolute_convex : ConvexOn ℝ Set.univ coordinateAbsolute
+BanditRL.OnlineConvex.coordinate_absolute_not_differentiable [theorem] BanditRLProof/OnlineConvexNondifferentiability.lean:28
+  theorem coordinate_absolute_not_differentiable (x : EuclideanSpace ℝ (Fin 2)) (hx : x 0 = 0) : ¬ DifferentiableAt ℝ coordinateAbsolute x
+BanditRL.OnlineConvex.convex_nondifferentiable_segment [theorem] BanditRLProof/OnlineConvexNondifferentiability.lean:40
+  theorem convex_nondifferentiable_segment : ConvexOn ℝ Set.univ coordinateAbsolute ∧ ∀ x ∈ segment ℝ (0 : EuclideanSpace ℝ (Fin 2)) (PiLp.single 2 1 1), ¬ DifferentiableAt ℝ coordinateAbsolute x

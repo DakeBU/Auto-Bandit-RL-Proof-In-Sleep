@@ -5443,6 +5443,25 @@
         "BanditRL.OnlineConvex.coordinate_absolute_convex",
         "BanditRL.OnlineConvex.coordinate_absolute_not_differentiable"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.convex_uncountable_nondifferentiability",
+      "title": "A convex function with uncountably many nonsmooth points",
+      "chapter": "online-lipschitz",
+      "featured": false,
+      "teaching_order": 3,
+      "plain": "Global convexity of f(x)=abs(x1) and NOT Countable of its actual ambient nondifferentiability locus. The source segment itself is NOT Countable; finite endpoints or scalar absolute value alone cannot supply this conclusion.",
+      "math": "\\(f(x)=|x_1|,\\quad\\neg\\operatorname{Countable}(N_f)\\)",
+      "intuition": "An entire nondegenerate interval of ambient kinks cannot be covered by a countable set of exceptions.",
+      "why": "ONE required unnumbered cardinality consequence, TWO new public proofs, ZERO definitions; the same source real2 function has uncountably many ambient nondifferentiability points. Same everywhere-real EuclideanSpace real Fin2 coordinateAbsolute; Lean index0 is source x1, index1 the second coordinate. Source segment is closed and nondegenerate, including both endpoints. Countable means at most countable. DifferentiableAt is ambient real Frechet differentiation.",
+      "position": "Orabona v10 unnumbered paragraph afterT2.30/end2.2.1 before2.2.2 printed19/PDF31",
+      "proof_idea": "The map phi(t)=(0,t) is genuinely injective by its second coordinate. Every t in Icc0 1 maps into the source segment using convex weights(1-t,t). Hypothetical countability of the segment gives countability of its injective preimage, hence of Icc0 1, contradicting Cardinal.Real.Icc_countable_iff since1 is not <=0. The already proved ALL-segment ambient derivative failure makes that uncountable segment a subset of the same-function nonsmooth locus; countable subset monotonicity closes the fixed terminal together with the existing global convexity proof.",
+      "lean_notes": "Same everywhere-real EuclideanSpace real Fin2 coordinateAbsolute; Lean index0 is source x1, index1 the second coordinate. Source segment is closed and nondegenerate, including both endpoints. Countable means at most countable. DifferentiableAt is ambient real Frechet differentiation. Global convexity of f(x)=abs(x1) and NOT Countable of its actual ambient nondifferentiability locus. The source segment itself is NOT Countable; finite endpoints or scalar absolute value alone cannot supply this conclusion. FOUR actual canary proofs: uncountable intersection of the source segment with the real2 nonsmooth locus; countable endpoint pair with distinct endpoints; countable scalar absolute-value nonsmooth locus; every proposed countable exception set misses an actual ambient nonsmooth point, using the new final public terminal. Focused 2394 jobs passed, including cached jobs. Six named statements and six standard kernel audits, two frozen native guards; raw headers and native normalized hashes separately unchanged. Selected six actual proof nodes and 624 direct type or value occurrences, with ten required actual value pairs. Selected proof graph, curated source links and shared full declaration registry are distinct. Native header guards do not enforce complete source fidelity; distinct source reviews separately check it. Actual neutral standalone import failure and separate M1 repair review preserved. Actual packet-version adapter failure, canary subset-type failure and raw versus native fingerprint guard failure preserved; an unintended unchanged focused rebuild after the failed auxiliary precheck is explicitly recorded. Same source, function and mathematical target headers; same lower proof route. Effective neutral context2, source contract review3 and BODY review4 accepted; shared project, site, FINAL, native acceptance and PR remain separate gates. The cardinality implication is this separate bounded package. No exact continuum cardinality, measure-zero or general a.e. differentiability theorem. Lemma2.31, causal OSD transfer, linearization, Example2.32, unit analysis and all remaining Chapter1/2 maintext and necessary appendices remain REQUIRED. Nine other Chapter1 main-relative contributor gaps remain unwaived. Chapter2 mandatory total is incomplete, not zero; chapters3–16 unenumerated, total Goal ACTIVE. No merge, main or live update, deployment or retirement.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.coordinate_segment_not_countable",
+        "BanditRL.OnlineConvex.coordinate_absolute_convex",
+        "BanditRL.OnlineConvex.convex_nondifferentiable_segment"
+      ]
     }
   ]
 }

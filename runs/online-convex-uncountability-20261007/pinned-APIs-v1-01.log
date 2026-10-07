@@ -1,0 +1,14 @@
+@Cardinal.Real.Icc_countable_iff : ∀ {x y : ℝ}, (Set.Icc x y).Countable ↔ y ≤ x
+Cardinal.not_countable_real : ¬Set.univ.Countable
+@Set.Countable.preimage : ∀ {α : Type u_1} {β : Type u_2} {s : Set β},
+  s.Countable → ∀ {f : α → β}, Function.Injective f → (f ⁻¹' s).Countable
+@Set.Countable.mono : ∀ {α : Type u_1} {s₁ s₂ : Set α}, s₁ ⊆ s₂ → s₂.Countable → s₁.Countable
+PiLp.single_eq_same : ∀ (p : ENNReal) {ι : Type u_1} {β : ι → Type u_2} [inst : DecidableEq ι]
+  [inst_1 : (i : ι) → Zero (β i)] (i : ι) (a : β i), (PiLp.single p i a).ofLp i = a
+PiLp.single_eq_of_ne : ∀ (p : ENNReal) {ι : Type u_1} {β : ι → Type u_2} [inst : DecidableEq ι]
+  [inst_1 : (i : ι) → Zero (β i)] {i i' : ι}, i' ≠ i → ∀ (a : β i), (PiLp.single p i a).ofLp i' = 0
+segment : (𝕜 : Type u_1) →
+  {E : Type u_2} → [Semiring 𝕜] → [PartialOrder 𝕜] → [AddCommMonoid E] → [SMul 𝕜 E] → E → E → Set E
+BanditRL.OnlineConvex.convex_nondifferentiable_segment : ConvexOn ℝ Set.univ BanditRL.OnlineConvex.coordinateAbsolute ∧
+  ∀ x ∈ segment ℝ 0 (PiLp.single 2 1 1), ¬DifferentiableAt ℝ BanditRL.OnlineConvex.coordinateAbsolute x
+BanditRL.OnlineConvex.coordinate_absolute_convex : ConvexOn ℝ Set.univ BanditRL.OnlineConvex.coordinateAbsolute

@@ -1,0 +1,8 @@
+import Tests.OnlineConvexUncountabilityCanary
+#check @BanditRL.OnlineConvex.coordinate_segment_not_countable
+#check @BanditRL.OnlineConvex.convex_uncountable_nondifferentiability
+#check @ConvexUncountabilityProbe.segment_nonsmooth_intersection_not_countable
+#check @ConvexUncountabilityProbe.endpoint_pair_countable_and_distinct
+#check @ConvexUncountabilityProbe.scalar_absolute_nonsmooth_locus_countable
+#check @ConvexUncountabilityProbe.countable_exception_set_misses_nonsmooth_point
+#print BanditRL.OnlineConvex.coordinateAbsolute
