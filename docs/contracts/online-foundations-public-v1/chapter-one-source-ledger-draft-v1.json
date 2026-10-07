@@ -1,0 +1,236 @@
+{
+  "source_url": "https://arxiv.org/pdf/1912.13213v10",
+  "source_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+  "reviewed_source_text_pages": [
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19
+  ],
+  "enumeration_status": "Candidate maintext inventory after actual full Chapter1 reading; chapter-wide source reviewer reconciliation pending. Numbered Remark1.1/Lemma1.2/Theorem1.3 found; unnumbered statements separately listed.",
+  "maintext_items": [
+    {
+      "source_id": "C1-GAME",
+      "printed_page": 1,
+      "pdf_page": 13,
+      "kind": "definition/information",
+      "required_maintext": true,
+      "target_intent": "Outputs and targets in[0,1], predict before reveal; squared loss. Deterministic/adversarial game and IID motivation separated.",
+      "lean_names": [
+        "BanditRL.OnlineLearning.meanPredict_prefix",
+        "BanditRL.OnlineLearning.history_policy_independent"
+      ],
+      "current_status": "Existing APIs located; exact contract/current source review and chapter gates REQUIRED",
+      "evidence_permission": "No source acceptance inferred from API presence or historic coverage"
+    },
+    {
+      "source_id": "C1-IID-MEAN",
+      "printed_page": 1,
+      "pdf_page": 13,
+      "kind": "unnumbered formal result",
+      "required_maintext": true,
+      "target_intent": "Mean minimizes expected squared loss, optimum variance; probability/L2/interval support conditions must be explicit.",
+      "lean_names": [
+        "BanditRL.OnlineLearning.expected_square_decomposition",
+        "BanditRL.OnlineLearning.source_mean_optimal"
+      ],
+      "current_status": "Existing APIs located; exact contract/current source review and chapter gates REQUIRED",
+      "evidence_permission": "No source acceptance inferred from API presence or historic coverage"
+    },
+    {
+      "source_id": "C1-IID-LOWER",
+      "printed_page": 1,
+      "pdf_page": 13,
+      "kind": "unnumbered main performance bound",
+      "required_maintext": true,
+      "target_intent": "Every causal measurable bounded prediction has cumulative expected loss at least T*variance under IID targets; current-target independence must be derived.",
+      "lean_names": [
+        "BanditRL.OnlineLearning.history_policy_loss_ge_variance",
+        "BanditRL.OnlineLearning.independent_prediction_square",
+        "BanditRL.OnlineLearning.iid_meanPredict_excess_nonneg"
+      ],
+      "current_status": "Existing APIs located; exact contract/current source review and chapter gates REQUIRED",
+      "evidence_permission": "No source acceptance inferred from API presence or historic coverage"
+    },
+    {
+      "source_id": "C1-EQ1.1-1.2",
+      "printed_page": 1,
+      "pdf_page": 13,
+      "kind": "equations/normalization",
+      "required_maintext": true,
+      "target_intent": "Expected total excess over T*variance and average excess over variance; T>0 normalization; sublinear/vanishing equivalence needs precise asymptotic meaning.",
+      "lean_names": [
+        "BanditRL.OnlineLearning.normalized_excess",
+        "BanditRL.OnlineLearning.iid_meanPredict_excess"
+      ],
+      "current_status": "Existing APIs located; exact contract/current source review and chapter gates REQUIRED",
+      "evidence_permission": "No source acceptance inferred from API presence or historic coverage"
+    },
+    {
+      "source_id": "C1-REGRET",
+      "printed_page": 2,
+      "pdf_page": 14,
+      "kind": "definition",
+      "required_maintext": true,
+      "target_intent": "Best-fixed-in-hindsight regret and comparator-parameterized difference of sums; all feasible comparators.",
+      "lean_names": [
+        "BanditRL.OnlineLearning.comparatorRegret",
+        "BanditRL.OnlineLearning.comparatorRegret_eq_sum"
+      ],
+      "current_status": "Existing APIs located; exact contract/current source review and chapter gates REQUIRED",
+      "evidence_permission": "No source acceptance inferred from API presence or historic coverage"
+    },
+    {
+      "source_id": "C1-NOREGRET",
+      "printed_page": 2,
+      "pdf_page": 14,
+      "kind": "definition/asymptotic",
+      "required_maintext": true,
+      "target_intent": "For every fixed feasible comparator normalized regret at most sublinear; source limit wording vs epsilon eventual upper-bound interface must be reviewed.",
+      "lean_names": [
+        "BanditRL.OnlineLearning.NoRegret",
+        "BanditRL.OnlineLearning.noRegret_of_vanishing_bound"
+      ],
+      "current_status": "Existing APIs located; exact contract/current source review and chapter gates REQUIRED",
+      "evidence_permission": "No source acceptance inferred from API presence or historic coverage"
+    },
+    {
+      "source_id": "Remark1.1",
+      "printed_page": 2,
+      "pdf_page": 14,
+      "kind": "remark/semantic",
+      "required_maintext": true,
+      "target_intent": "Loss-sequence dependence suppressed in source notation; actual losses remain parameters.",
+      "lean_names": [
+        "BanditRL.OnlineLearning.comparatorRegret"
+      ],
+      "current_status": "Existing APIs located; exact contract/current source review and chapter gates REQUIRED",
+      "evidence_permission": "No source acceptance inferred from API presence or historic coverage"
+    },
+    {
+      "source_id": "C1-MEAN-PREFIX",
+      "printed_page": 3,
+      "pdf_page": 15,
+      "kind": "unnumbered formal result",
+      "required_maintext": true,
+      "target_intent": "Positive-prefix square-loss hindsight minimizer is empirical mean and lies in[0,1]; minimizer existence/uniqueness and finite-prefix identity.",
+      "lean_names": [
+        "BanditRL.OnlineLearning.empiricalMean_decomposition",
+        "BanditRL.OnlineLearning.empiricalMean_minimizes",
+        "BanditRL.OnlineLearning.empiricalMean_mem",
+        "BanditRL.OnlineLearning.empiricalMean_unique"
+      ],
+      "current_status": "Existing APIs located; exact contract/current source review and chapter gates REQUIRED",
+      "evidence_permission": "No source acceptance inferred from API presence or historic coverage"
+    },
+    {
+      "source_id": "C1-FTL",
+      "printed_page": 3,
+      "pdf_page": 15,
+      "kind": "algorithm definition",
+      "required_maintext": true,
+      "target_intent": "Source output x1=.5, later average strict-past targets; separate auxiliary current-prefix leaders; deterministic prefix causality.",
+      "lean_names": [
+        "BanditRL.OnlineLearning.meanPredict",
+        "BanditRL.OnlineLearning.meanPredict_prefix",
+        "BanditRL.OnlineLearning.meanPredict_mem"
+      ],
+      "current_status": "Existing APIs located; exact contract/current source review and chapter gates REQUIRED",
+      "evidence_permission": "No source acceptance inferred from API presence or historic coverage"
+    },
+    {
+      "source_id": "Lemma1.2",
+      "printed_page": 4,
+      "pdf_page": 16,
+      "kind": "lemma",
+      "required_maintext": true,
+      "target_intent": "Assume each positive-prefix feasible argmin; current-prefix leaders cumulative loss <= final leader loss; arbitrary loss.",
+      "lean_names": [
+        "BanditRL.OnlineLearning.lemma_1_2"
+      ],
+      "current_status": "Current bounded Lemma1.2 CONTRACT pending",
+      "evidence_permission": "No source acceptance inferred from API presence or historic coverage"
+    },
+    {
+      "source_id": "Theorem1.3",
+      "printed_page": 4,
+      "pdf_page": 16,
+      "kind": "theorem/algorithm guarantee",
+      "required_maintext": true,
+      "target_intent": "Actual strict-past FTL for arbitrary targets[0,1], x1=.5, positive horizon; regret to true hindsight mean <=4+4lnT.",
+      "lean_names": [
+        "BanditRL.OnlineLearning.theorem_1_3"
+      ],
+      "current_status": "Existing APIs located; exact contract/current source review and chapter gates REQUIRED",
+      "evidence_permission": "No source acceptance inferred from API presence or historic coverage"
+    },
+    {
+      "source_id": "C1-STABILITY",
+      "printed_page": 5,
+      "pdf_page": 17,
+      "kind": "necessary main proof bound",
+      "required_maintext": true,
+      "target_intent": "Initial loss difference <=.25; positive later prefix leader movement yields difference <=4/t. Existing uniform bound may be coarser at initial round; preserve exact-source dependency coverage boundary.",
+      "lean_names": [
+        "BanditRL.OnlineLearning.empiricalMean_update",
+        "BanditRL.OnlineLearning.meanPredict_stability"
+      ],
+      "current_status": "Existing APIs located; exact contract/current source review and chapter gates REQUIRED",
+      "evidence_permission": "No source acceptance inferred from API presence or historic coverage"
+    },
+    {
+      "source_id": "C1-HARMONIC",
+      "printed_page": 6,
+      "pdf_page": 18,
+      "kind": "unnumbered main bound",
+      "required_maintext": true,
+      "target_intent": "Sum_{t=1}^T1/t <=1+lnT at positive horizon. Exact local Mathlib theorem reuse and actual VALUE call within Theorem1.3 to be audited.",
+      "lean_names": [
+        "BanditRL.OnlineLearning.theorem_1_3"
+      ],
+      "current_status": "Existing APIs located; exact contract/current source review and chapter gates REQUIRED",
+      "evidence_permission": "No source acceptance inferred from API presence or historic coverage"
+    },
+    {
+      "source_id": "C1-SUCCESS",
+      "printed_page": 6,
+      "pdf_page": 18,
+      "kind": "asymptotic main consequence",
+      "required_maintext": true,
+      "target_intent": "Actual FTL regret is logarithmic/sublinear, normalized comparator regret upper-vanishes; not minimax lower bound.",
+      "lean_names": [
+        "BanditRL.OnlineLearning.meanPredict_noRegret"
+      ],
+      "current_status": "Existing APIs located; exact contract/current source review and chapter gates REQUIRED",
+      "evidence_permission": "No source acceptance inferred from API presence or historic coverage"
+    }
+  ],
+  "mandatory_total": null,
+  "chapter_complete": false,
+  "current_package_only": "Lemma1.2 current reuse and seven named validation tests",
+  "history_bits": {
+    "pages": "printed6-7/PDF18-19",
+    "state": "Historical discussion separately displayed, outside default maintext proof scope"
+  },
+  "independent_exercises": [
+    {
+      "id": "Problem1.1",
+      "pdf_page": 19,
+      "state": "planned/optional",
+      "scope": "Vector guessing logarithmic regret, dimension independent"
+    },
+    {
+      "id": "Problem1.2",
+      "pdf_page": 19,
+      "state": "planned/optional",
+      "scope": "Absolute-loss hindsight median"
+    }
+  ],
+  "existing_mathlib_dependency": "harmonic_le_one_add_log (actual local name from OnlineLearningFTL body; exact type/current VALUE audit future)",
+  "old_inventory_immutable": true,
+  "old_coverage_not_current_acceptance": true,
+  "new_source_math_closures": 0
+}

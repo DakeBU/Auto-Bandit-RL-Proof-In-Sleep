@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "FoundationsProbe.without_feasibility",
+  "file": "Tests/OnlineLearningFoundationsCanary.lean",
+  "statement": "theorem without_feasibility : let loss : ℕ → Bool → ℝ := fun t b => if b then if t = 0 then -10 else 5 else 0 let leader : ℕ → Bool := fun n => n = 2 let V : Set Bool := {false} (∀ n, 0 < n → n ≤ 2 → ∀ u ∈ V, (∑ t ∈ Finset.range n, loss t (leader n)) ≤ ∑ t ∈ Finset.range n, loss t u) ∧ leader 2 ∉ V ∧ (∑ t ∈ Finset.range 2, loss t (leader (t + 1))) > ∑ t ∈ Finset.range 2, loss t (leader 2)",
+  "statement_hash": "28a3a5fab2e77d072ef6998b77832cb01da250a60ee76fd2bd28755658ce4ec0",
+  "source_assumptions": [],
+  "created_at": "2026-10-07T10:41:45+00:00"
+}

@@ -1,0 +1,9 @@
+import Tests.OnlineLearningFoundationsCanary
+#check @BanditRL.OnlineLearning.lemma_1_2
+#check @FoundationsProbe.prefix_minimizers
+#check @FoundationsProbe.instantiated_compare
+#check @FoundationsProbe.strict_values
+#check @FoundationsProbe.zero_horizon
+#check @FoundationsProbe.one_horizon
+#check @FoundationsProbe.without_optimality
+#check @FoundationsProbe.without_feasibility

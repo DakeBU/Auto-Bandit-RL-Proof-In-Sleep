@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "FoundationsProbe.without_optimality",
+  "file": "Tests/OnlineLearningFoundationsCanary.lean",
+  "statement": "theorem without_optimality : let leader : ℕ → Bool := fun n => n = 2 (∀ n, 0 < n → n ≤ 2 → leader n ∈ (Set.univ : Set Bool)) ∧ (∑ t ∈ Finset.range 1, demoLoss t true) < (∑ t ∈ Finset.range 1, demoLoss t (leader 1)) ∧ (∑ t ∈ Finset.range 2, demoLoss t (leader (t + 1))) > ∑ t ∈ Finset.range 2, demoLoss t (leader 2)",
+  "statement_hash": "ad8c8cb8cf590c3a9e47ea366e2e1e381d5211d146654a8d838bce84dbe74d47",
+  "source_assumptions": [],
+  "created_at": "2026-10-07T10:41:44+00:00"
+}

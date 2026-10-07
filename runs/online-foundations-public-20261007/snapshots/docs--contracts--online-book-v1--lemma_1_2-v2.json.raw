@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "declaration": "lemma_1_2",
+  "file": "BanditRLProof/OnlineLearningFoundations.lean",
+  "statement": "theorem lemma_1_2 {X : Type*} (V : Set X) (loss : ℕ → X → ℝ) (leader : ℕ → X) (T : ℕ) (hmem : ∀ n, 0 < n → n ≤ T → leader n ∈ V) (hmin : ∀ n, 0 < n → n ≤ T → ∀ u ∈ V, (∑ t ∈ Finset.range n, loss t (leader n)) ≤ ∑ t ∈ Finset.range n, loss t u) : (∑ t ∈ Finset.range T, loss t (leader (t + 1))) ≤ ∑ t ∈ Finset.range T, loss t (leader T)",
+  "statement_hash": "e87a9e3d0823f50c666d2f290d9a82acea7259a846b0d4698f6bcd339fa6cc0d",
+  "source_assumptions": [
+    "(hmin :"
+  ],
+  "created_at": "2026-09-14T03:29:24+00:00"
+}

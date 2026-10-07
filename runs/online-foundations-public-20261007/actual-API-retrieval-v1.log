@@ -1,0 +1,23 @@
+Tests/OnlineLearningChapterOneCanary.lean:8:def demoLoss (t : ℕ) (b : Bool) : ℝ := if b then if t = 0 then -2 else 3 else 0
+Tests/OnlineLearningChapterOneCanary.lean:9:def demoLeader (n : ℕ) : Bool := n = 1
+Tests/OnlineLearningChapterOneCanary.lean:11:example : (∑ t ∈ Finset.range 2, demoLoss t (demoLeader (t + 1))) ≤
+Tests/OnlineLearningChapterOneCanary.lean:12:    ∑ t ∈ Finset.range 2, demoLoss t (demoLeader 2) := by
+Tests/OnlineLearningChapterOneCanary.lean:13:  apply lemma_1_2 Set.univ demoLoss demoLeader 2
+Tests/OnlineLearningChapterOneCanary.lean:16:    interval_cases n <;> cases u <;> norm_num [demoLoss, demoLeader, Finset.sum_range_succ]
+Tests/OnlineLearningChapterOneCanary.lean:18:example : (∑ t ∈ Finset.range 2, demoLoss t (demoLeader (t + 1))) = -2 ∧
+Tests/OnlineLearningChapterOneCanary.lean:19:    (∑ t ∈ Finset.range 2, demoLoss t (demoLeader 2)) = 0 := by
+Tests/OnlineLearningChapterOneCanary.lean:20:  norm_num [demoLoss, demoLeader, Finset.sum_range_succ]
+Tests/OnlineLearningChapterOneCanary.lean:22:#print axioms BanditRL.OnlineLearning.lemma_1_2
+Tests/OnlineLearningChapterOneCanary.lean:30:  norm_num [empiricalMean, Finset.sum_range_succ]
+Tests/OnlineLearningChapterOneCanary.lean:36:  norm_num [empiricalMean, Finset.sum_range_succ] at h ⊢
+Tests/OnlineLearningChapterOneCanary.lean:56:  norm_num [meanPredict, empiricalMean, samples, Finset.sum_range_succ]
+Tests/OnlineLearningChapterOneCanary.lean:60:  norm_num [meanPredict, empiricalMean, samples, Finset.sum_range_succ]
+Tests/OnlineLearningChapterOneCanary.lean:65:  apply theorem_1_3 samples 2 (by omega)
+Tests/OnlineLearningChapterOneCanary.lean:72:#print axioms BanditRL.OnlineLearning.theorem_1_3
+Tests/OnlineLearningChapterOneCanary.lean:119:  norm_num [empiricalMean, Finset.sum_range_succ] at h
+BanditRLProof\OnlineLearningFoundations.lean:8:theorem lemma_1_2 {X : Type*} (V : Set X) (loss : ℕ → X → ℝ)
+BanditRLProof\OnlineLearningFoundations.lean:18:    rw [Finset.sum_range_succ, Finset.sum_range_succ]
+BanditRLProof/OnlineLearningFTL.lean:36:  rw [Finset.sum_range_succ]
+BanditRLProof/OnlineLearningFTL.lean:49:    norm_num [meanPredict, empiricalMean, Finset.sum_range_succ]
+BanditRLProof/OnlineLearningFTL.lean:81:theorem theorem_1_3 (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T)
+BanditRLProof/OnlineLearningFTL.lean:86:  have hleader := lemma_1_2 Set.univ (fun t x => (x - y t)^2)
