@@ -1,0 +1,10 @@
+from common_v2 import *
+fixed(True);assert load(RUN/'combined-gates-v3.json')['status']=='actual-root-Tests-full-harness-passed'
+rows=[json.loads(s) for s in Path('runs/trials.jsonl').read_text(encoding='utf-8').splitlines() if s.strip()]
+write(RUN/'candidate-scoped-trials-v2.jsonl','\n'.join(json.dumps(t) for t in rows if t.get('task')==TASK))
+write(RUN/'memory-digest-candidate-v2.md',TASK+' Existing18proofs9defs3abbr/whole25canaryproofs8defs2abbr;65kernel18guards28VALUE/2925refs/sourceCONTRACT/BODY/combined PASS. Same actual A/selected run/universal hB INPUT; ZERO new math/nodes. Original draft extraction/auxiliaryfilename/nativeMANIFESTrecord failures preserved; mistaken R9 escaping finding separately withdrawn, R1-R8 remain. Current reader/site/FINAL/native/PR pending. Remaining optimal-step/unit-analysis/Chapter1/2/nineOTHERChapter1contracts/appendices REQUIRED,nullChapter2/3-16unenumerated, wholeGoalACTIVE. SGB/pins/oldproofs/otherBooks preserved.')
+sys.path.insert(0,str(ROOT));from tools.abrl_lifecycle import lean_declaration_header
+native('candidate-frontier-refresh-v2','frontier-refresh','--root-objective','Persistent Orabona Chapters1-16; current same-run causal linearization reuse','--leaf',TASK,'--kind','lean','--statement',lean_declaration_header(PUBLIC,'canonical_regret_comparison'),'--declaration',PRE+'canonical_regret_comparison','--file',PUBLIC,'--source-status','source-reviewed','--leaf-status','gate-pending','--dependency','lean:'+PRE+'regret_comparison:compiled','--dependency','lean:'+PRE+'canonical_feedback:compiled','--trials',RUN/'candidate-scoped-trials-v2.jsonl','--output',RUN/'candidate-frontier-v2.json','--shadow-status','pending')
+native('candidate-frontier-shadow-v2','frontier-shadow','--trials',RUN/'candidate-scoped-trials-v2.jsonl','--memory-digest',RUN/'memory-digest-candidate-v2.md','--frontier',RUN/'candidate-frontier-v2.json')
+j=json.loads((RUN/'candidate-frontier-shadow-v2.log').read_text(encoding='utf-8'));assert j['mismatches']==[] and j['would_mutate'] is False
+fixed(True);print('Actual OWN candidate shadow PASS; unrelated global active SGB pointer unchanged.')

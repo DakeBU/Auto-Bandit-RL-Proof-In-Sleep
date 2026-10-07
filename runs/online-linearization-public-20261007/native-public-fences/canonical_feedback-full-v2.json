@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineLinearization.canonical_feedback",
+  "file": "BanditRLProof/OnlineLinearization.lean",
+  "statement": "theorem canonical_feedback (V : Domain (E := E)) (A : LinearPolicy (E := E)) (hA : Feasible V A) (loss : ℕ → E → EReal) (T : ℕ) (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) : LegalFeedback A loss BanditRL.OnlineSubgradientPolicy.canonicalPolicy T",
+  "statement_hash": "d69ffc34ef38d0937d06b5ddc2ba3fb6f718390e6a29e6e3a7e1767ba8076005",
+  "source_assumptions": [
+    "(hA : Feasible V A)",
+    "(hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t))"
+  ],
+  "created_at": "2026-10-07T08:21:44+00:00"
+}

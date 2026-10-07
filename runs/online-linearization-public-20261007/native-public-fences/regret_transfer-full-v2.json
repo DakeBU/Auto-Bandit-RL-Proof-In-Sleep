@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineLinearization.regret_transfer",
+  "file": "BanditRLProof/OnlineLinearization.lean",
+  "statement": "theorem regret_transfer (V : Domain (E := E)) (A : LinearPolicy (E := E)) (loss : ℕ → E → EReal) (p : SupportPolicy (E := E)) (T : ℕ) (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) (hlegal : LegalFeedback A loss p T) (B : (ℕ → E) → E → ℕ → ℝ) (hB : ∀ g u, u ∈ V.carrier → BanditRL.OnlineLearning.comparatorRegret (fun t => linearLoss (g t)) (linearRun A g) u T ≤ B g u T) (u : E) (hu : u ∈ V.carrier) : regret A loss p u T ≤ B (selected A loss p) u T",
+  "statement_hash": "1e06e4ba222b50d2e606f40315e24ad2f93836ce382db04d78c2489325cdc4ea",
+  "source_assumptions": [
+    "(hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t))",
+    "(hlegal : LegalFeedback A loss p T)",
+    "(hB : ∀ g u, u ∈ V.carrier → BanditRL.OnlineLearning.comparatorRegret (fun t => linearLoss (g t)) (linearRun A g) u T ≤ B g u T)",
+    "(hu : u ∈ V.carrier)"
+  ],
+  "created_at": "2026-10-07T08:21:47+00:00"
+}

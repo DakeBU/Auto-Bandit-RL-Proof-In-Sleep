@@ -1,0 +1,2 @@
+theorem history_succ (A : LinearPolicy (E := E)) (loss : ℕ → E → EReal) (p : SupportPolicy (E := E)) (t : ℕ) :
+    history A loss p (t + 1) = Fin.snoc (history A loss p t) (selected A loss p t)

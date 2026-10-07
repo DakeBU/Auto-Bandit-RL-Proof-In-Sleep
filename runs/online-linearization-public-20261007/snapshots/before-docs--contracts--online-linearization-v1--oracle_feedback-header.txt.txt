@@ -1,0 +1,2 @@
+theorem oracle_feedback (V : Domain (E := E)) (A : LinearPolicy (E := E)) (hA : Feasible V A) (loss : ℕ → E → EReal) (p : SupportPolicy (E := E)) (hp : BanditRL.OnlineSubgradientPolicy.OracleLaw V p) (T : ℕ) (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) :
+    LegalFeedback A loss p T
