@@ -1,0 +1,72 @@
+.lake/packages/mathlib/Mathlib/Analysis/Calculus/FDeriv/Comp.lean:81:theorem HasFDerivAt.comp_hasFDerivWithinAt {g : F → G} {g' : F →L[𝕜] G}
+.lake/packages/mathlib/Mathlib/Analysis/Calculus/FDeriv/Comp.lean:105:theorem HasFDerivAt.comp {g : F → G} {g' : F →L[𝕜] G} (hg : HasFDerivAt g g' (f x))
+BanditRLProof\OnlineUnitScaling.lean:37:theorem proper_scaled_loss (c : ℝ) (hc : 0 < c) (f : E → EReal) (hf : SourceProper f) :
+BanditRLProof\OnlineUnitScaling.lean:38:    SourceProper (scaledLoss c f) := by
+BanditRLProof\OnlineUnitScaling.lean:46:theorem subgradient_scaled (c : ℝ) (hc : 0 < c) (f : E → EReal) (hf : SourceProper f) (y g : E) (hg : g ∈ SourceSubdifferential f (c • y)) :
+BanditRLProof\OnlineUnitScaling.lean:47:    c • g ∈ SourceSubdifferential (scaledLoss c f) y := by
+BanditRLProof\OnlineUnitScaling.lean:55:  have hs := theorem_2_28 f hf A 0 y
+BanditRLProof\OnlineUnitScaling.lean:56:    (show c • g ∈ A.adjoint '' SourceSubdifferential f (A y + 0) from
+BanditRLProof\OnlineUnitScaling.lean:62:theorem subdifferentiable_scaled (c : ℝ) (hc : 0 < c) (f : E → EReal) (hf : BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V f) :
+BanditRLProof\OnlineUnitScaling.lean:63:    BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (scaledLoss c f) := by
+BanditRLProof\OnlineUnitScaling.lean:69:theorem hasGradientAt_scaled (c : ℝ) (f : E → ℝ) (y g : E) (hf : HasGradientAt f g (c • y)) :
+BanditRLProof\OnlineUnitScaling.lean:87:  exact (hasGradientAt_scaled c f y (gradient f (c • y))
+BanditRLProof\OnlineUnitScaling.lean:107:theorem history_scaling (c : ℝ) (hc : 0 < c) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) :
+BanditRLProof\OnlineUnitScaling.lean:114:      smul_inv_smul₀ hc.ne', V, BanditRL.OnlineHuber.project_fullSpace, scaledEta]
+BanditRLProof\OnlineUnitScaling.lean:126:    (history_scaling c hc η loss x₁ p t)
+BanditRLProof\OnlineUnitScaling.lean:130:  simp only [selected, scaledPolicy, history_scaling c hc,
+BanditRLProof\OnlineUnitScaling.lean:133:theorem legal_feedback_scaling (c : ℝ) (hc : 0 < c) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (T : ℕ) (hproper : ∀ t < T, SourceProper (loss t)) (hlegal : LegalFeedback V η loss x₁ p T) :
+BanditRLProof\OnlineUnitScaling.lean:180:theorem regret_fixed_scaled (c : ℝ) (hc : 0 < c) (η : ℝ) (hη : 0 < η) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (T : ℕ) (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) (hlegal : LegalFeedback V (fun _ => η) loss x₁ p T) (u : E) :
+BanditRLProof/OnlineHuber.lean:202:def fullSpace : Domain E :=
+BanditRLProof/OnlineHuber.lean:208:theorem project_fullSpace (x : E) : project (fullSpace : Domain E) x = x := by
+BanditRLProof/OnlineHuber.lean:224:  rw [project_fullSpace]
+BanditRLProof/OnlineGradientDescent.lean:35:def project (V : Domain E) (z : E) : E :=
+BanditRLProof/OnlineSubgradientPolicy.lean:28:def history (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal)
+BanditRLProof/OnlineSubgradientPolicy.lean:41:  ∀ t past h f, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V f →
+BanditRLProof/OnlineSubgradientPolicy.lean:42:    h (Fin.last t) ∈ V.carrier → p t past h f ∈ SourceSubdifferential f (h (Fin.last t))
+BanditRLProof/OnlineSubgradientPolicy.lean:48:  ∀ t < T, selected V η loss x₁ p t ∈ SourceSubdifferential (loss t) (output V η loss x₁ p t)
+BanditRLProof/OnlineSubgradientPolicy.lean:119:    (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) :
+BanditRLProof/OnlineSubgradientPolicy.lean:127:    (hloss : BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t))
+BanditRLProof/OnlineSubgradientPolicy.lean:137:    (hloss : BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t))
+BanditRLProof/OnlineSubgradientPolicy.lean:138:    (hg : selected V η loss x₁ p t ∈ SourceSubdifferential (loss t) (output V η loss x₁ p t))
+BanditRLProof/OnlineSubgradientPolicy.lean:152:    (hloss : BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t))
+BanditRLProof/OnlineSubgradientPolicy.lean:153:    (hg : selected V η loss x₁ p t ∈ SourceSubdifferential (loss t) (output V η loss x₁ p t))
+BanditRLProof/OnlineSubgradientPolicy.lean:174:    (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t))
+BanditRLProof/OnlineSubgradientPolicy.lean:201:    (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t))
+BanditRLProof/OnlineSubgradientPolicy.lean:212:    (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t))
+BanditRLProof/OnlineSubgradientPolicy.lean:233:    (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t))
+BanditRLProof/OnlineSubgradientPolicy.lean:246:    (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t))
+BanditRLProof/OnlineSubgradientPolicy.lean:279:    (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t))
+BanditRLProof/OnlineSubgradientDescent.lean:26:def SubdifferentiableOn (V : Domain (E := E)) (f : E → EReal) : Prop :=
+BanditRLProof/OnlineSubgradientDescent.lean:27:  SourceProper f ∧ ∀ x ∈ V.carrier, (SourceSubdifferential f x).Nonempty
+BanditRLProof/OnlineSubgradientDescent.lean:32:    exact if h : (SourceSubdifferential f x).Nonempty then Classical.choose h else 0
+BanditRLProof/OnlineSubgradientDescent.lean:40:theorem lemma_2_31 (V : Domain (E := E)) (f : E → EReal) (hf : SubdifferentiableOn V f)
+BanditRLProof/OnlineSubgradientDescent.lean:42:    (g : E) (hg : g ∈ SourceSubdifferential f x) :
+BanditRLProof/OnlineSubgradientDescent.lean:72:    (hf : SubdifferentiableOn V f) (x : E) (hx : x ∈ V.carrier) :
+BanditRLProof/OnlineSubgradientDescent.lean:73:    currentSubgradient f x ∈ SourceSubdifferential f x := by
+BanditRLProof/OnlineSubgradientDescent.lean:81:    (hf : SubdifferentiableOn V f) (x : E) (hx : x ∈ V.carrier) :
+BanditRLProof/OnlineSubgradientDescent.lean:107:    (hloss : SubdifferentiableOn V (loss t)) :
+BanditRLProof/OnlineSubgradientDescent.lean:109:      SourceSubdifferential (loss t) (iterate V η loss x₁ t) := by
+BanditRLProof/OnlineSubgradientDescent.lean:114:    (hloss : SubdifferentiableOn V (loss t)) (u : E) (hu : u ∈ V.carrier) :
+BanditRLProof/OnlineSubgradientDescent.lean:122:    (hη : 0 < η t) (hloss : SubdifferentiableOn V (loss t))
+BanditRLProof/OnlineSubgradientDescent.lean:139:    (hη : 0 < η t) (hloss : SubdifferentiableOn V (loss t))
+BanditRLProof/OnlineSubgradientDescent.lean:161:    (hloss : ∀ t < T, SubdifferentiableOn V (loss t)) (u : E) (hu : u ∈ V.carrier) :
+BanditRLProof/OnlineSubgradientDescent.lean:188:    (hloss : ∀ t < T, SubdifferentiableOn V (loss t)) (u : E) (hu : u ∈ V.carrier) :
+BanditRLProof/OnlineSubgradientDescent.lean:199:    (hloss : ∀ t < T, SubdifferentiableOn V (loss t)) (D : ℝ)
+BanditRLProof/OnlineSubgradientDescent.lean:220:    (hloss : ∀ t < T, SubdifferentiableOn V (loss t)) (u : E) (hu : u ∈ V.carrier) :
+BanditRLProof/OnlineSubgradientDescent.lean:232:    (hloss : ∀ t < T, SubdifferentiableOn V (loss t)) (u : E) (hu : u ∈ V.carrier)
+BanditRLProof/OnlineSubgradientDescent.lean:267:    (hloss : ∀ t < T, SubdifferentiableOn V (loss t))
+BanditRLProof/OnlineAffineSubgradient.lean:4:Actual public E and F each retain NormedAddCommGroup and InnerProductSpace real, and BOTH explicit FiniteDimensional premises. They supply completeness for Mathlib adjoint; no extra CompleteSpace or positive dimension. TWO production borrowed contexts are SourceProper (arbitrary carrier) and SourceSubdifferential (intrinsic norm/inner, no finite dimension). THREE supplementary CANARY borrowed contexts are effectiveDomain/realEpigraph (arbitrary carriers) and IsConvexExtended (AddCommGroup/Module real). All FIVE are shared borrowed definitions, none newly owned.
+BanditRLProof/OnlineAffineSubgradient.lean:6:SourceProper f explicitly retains the source no-bottom and finite-witness premise even though the transport body does not use hp algebraically. Generic all-ambient support accepts improper EReal inputs beyond the printed proper-function convention. The actual composite need not be proper. If f(Ax+b)=top, proper f has empty source supports by its finite witness, so the image inclusion is vacuous. An identically-top composite can have all vectors as literal generic supports; no finite-query/composite-proper guard is silently added.
+BanditRLProof/OnlineAffineSubgradient.lean:29:theorem theorem_2_28 [FiniteDimensional ℝ E] [FiniteDimensional ℝ F]
+BanditRLProof/OnlineAffineSubgradient.lean:30:    (f : F → EReal) (hp : SourceProper f) (A : E →L[ℝ] F) (b : F) (x : E) :
+BanditRLProof/OnlineAffineSubgradient.lean:31:    A.adjoint '' (SourceSubdifferential f (A x + b)) ⊆
+BanditRLProof/OnlineAffineSubgradient.lean:32:      SourceSubdifferential (fun y => f (A y + b)) x := by
+BanditRLProof/OnlineSubgradientBasic.lean:6:SourceSubdifferential predicate accepts all EReal functions, a wider library
+BanditRLProof/OnlineSubgradientBasic.lean:9:EffectiveDomain excludes top but includes bottom generically; SourceProper
+BanditRLProof/OnlineSubgradientBasic.lean:38:def SourceSubdifferential (f : E → EReal) (x : E) : Set E :=
+BanditRLProof/OnlineSubgradientBasic.lean:41:theorem subgradient_point_finite (f : E → EReal) (hf : SourceProper f)
+BanditRLProof/OnlineSubgradientBasic.lean:42:    (x g : E) (hg : g ∈ SourceSubdifferential f x) :
+BanditRLProof/OnlineSubgradientBasic.lean:52:    (hsub : ∀ x ∈ V, (SourceSubdifferential (fun y => (f y : EReal)) x).Nonempty) :
+BanditRLProof/OnlineClosedProper.lean:10:SourceProper itself has no topology binder; the ACTUAL proper-indicator iff
+BanditRLProof/OnlineClosedProper.lean:32:def SourceProper (f : E → EReal) : Prop :=
+BanditRLProof/OnlineClosedProper.lean:80:    SourceProper (extendedIndicator V) ↔ V.Nonempty := by

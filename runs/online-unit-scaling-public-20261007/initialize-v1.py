@@ -1,0 +1,47 @@
+from common_v1 import *
+import datetime
+assert subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()==BASE
+assert subprocess.check_output(['git','branch','--show-current'],text=True).strip()=='codex/research-online-optimal-step-migration'
+assert all(s.startswith('?? '+RUN.relative_to(ROOT).as_posix()+'/') for s in subprocess.check_output(['git','status','--porcelain','--untracked-files=all'],text=True).splitlines())
+gate('fresh-fetch-v1','git','-c','credential.helper=','-c','credential.helper=!gh auth git-credential','fetch','origin')
+canonical='E:/ABRL/research';assert not subprocess.check_output(['git','-C',canonical,'status','--porcelain'],text=True).strip()
+main=subprocess.check_output(['git','-C',canonical,'rev-parse','HEAD'],text=True).strip();assert main==subprocess.check_output(['git','rev-parse','origin/main'],text=True).strip()
+raw=subprocess.check_output(['gh','api','repos/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/pulls/185']);write(RUN/'base-PR185-fresh-v1.json',raw);parent=json.loads(raw)
+assert parent['head']['sha']==BASE and parent['state']=='open' and parent['draft'] and not parent['merged']
+old_raw=subprocess.check_output(['gh','api','repos/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/pulls/153']);write(RUN/'historical-PR153-fresh-v1.json',old_raw)
+assert not subprocess.check_output(['git','branch','--list',BRANCH],text=True).strip()
+subprocess.run(['git','switch','-c',BRANCH,BASE],check=True)
+write(RUN/'canonical-worktree-audit-v1.json',dict(UTC=datetime.datetime.now(datetime.timezone.utc).isoformat(),canonical=canonical,canonical_main=main,origin_main=main,canonical_clean=True,worktree=ROOT.as_posix(),branch=BRANCH,stacked_PR=185,stacked_head=BASE,parent_state='OPEN-DRAFT-unmerged',previous_DIRECT=dict(head=BASE,clean=True,local_remote_REST_equal=True,raw_files=341,source='Immediately preceding actual terminal DIRECT audit; no file write.'),shared_git=subprocess.check_output(['git','rev-parse','--path-format=absolute','--git-common-dir'],text=True).strip(),worktrees=subprocess.check_output(['git','worktree','list','--porcelain'],text=True),old_branch_retained='codex/research-online-unit-scaling historical PR153; not overwritten',main_live_unchanged=True,other_worktrees_untouched=True))
+frozen=[PUBLIC.as_posix(),CANARY.as_posix(),'BanditRLProof.lean','Tests.lean','BanditRLProof/OnlineGradientDescent.lean','BanditRLProof/OnlineSubgradientDescent.lean','BanditRLProof/OnlineSubgradientPolicy.lean','BanditRLProof/OnlineAffineSubgradient.lean','BanditRLProof/OnlineHuber.lean','BanditRLProof/OnlineOptimalStep.lean','BanditRLProof/OnlineClosedProper.lean','BanditRLProof/OnlineSubgradientBasic.lean','lean-toolchain','lakefile.lean','lake-manifest.json','runs/active_frontier.json','docs/contracts/online-book-v1/source-inventory.json','research-wiki/contribution-contracts/ONLINE-UNIT-SCALING-20261004.json','runs/online-unit-scaling-20261004/accepted-decision.json','runs/online-unit-scaling-20261004/pr-delivery.json','runs/online-optimal-step-public-20261007/accepted-decision-v1.json','runs/online-optimal-step-public-20261007/delivery-obligations-overlay-v1.json','website/content/readings.json','website/content/highlights.json','website/content/chapters.json']
+frozen.extend(p.as_posix() for p in sorted(Path('docs/contracts/online-unit-scaling-v1').glob('*')) if p.is_file())
+snap=[]
+for p in frozen+['MANIFEST.md','runs/lifecycle_sessions.jsonl','runs/lifecycle_memory.jsonl','runs/trials.jsonl']:
+ dest=RUN/'snapshots'/('before-'+p.replace('/','--')+'.txt');write(dest,Path(p).read_bytes());snap.append(dict(original_path=p,snapshot=dest.as_posix(),sha256=sha(dest)))
+sys.path.insert(0,str(ROOT));from tools.abrl_lifecycle import lean_declaration_header
+t=PUBLIC.read_text(encoding='utf-8');headers={m.group(1):m.group(0).strip() for m in re.finditer(r'(?m)^theorem (\w+)\b[\s\S]*?(?= := by\b)',t)};assert len(headers)==22
+rawhash={n:hashlib.sha256(h.encode()).hexdigest() for n,h in headers.items()};nativehash={n:hashlib.sha256(lean_declaration_header(PUBLIC,n).encode()).hexdigest() for n in headers}
+write(CONTRACT/'headers-v1.json',headers);write(CONTRACT/'raw-statement-fingerprints-v1.json',rawhash);write(CONTRACT/'native-statement-fingerprints-v1.json',nativehash)
+for n in headers:assert nativehash[n]==load(Path('docs/contracts/online-unit-scaling-v1')/(n+'.json'))['statement_hash'],n
+write(CONTRACT/'actual-context-v1.txt',t[:t.index('theorem unit_exponents')])
+counts={}
+for label,p in [('public',PUBLIC),('canary',CANARY)]:
+ s=p.read_text(encoding='utf-8');counts[label]={k:len(re.findall(r'(?m)^(?:noncomputable )?'+k+r'\s+',s)) for k in ['theorem','def','abbrev']}
+assert counts=={'public':{'theorem':22,'def':3,'abbrev':1},'canary':{'theorem':30,'def':3,'abbrev':3}},counts
+write(RUN/'draft-freeze-v1.json',dict(stage='draft',fixed_files={p:sha(p) for p in frozen},before_snapshots=snap,raw_headers=rawhash,native_headers=nativehash,counts=counts,named_checks=62,proof_bodies_preexist_current_draft=True,new_proofs=0,new_definitions=0,new_source_math_obligation_closures=0,source_package_accepted=False,chapter_complete=False,goal_complete=False))
+pdf=Path('../research-online-ogd/tmp/pdfs/orabona-v10.pdf');assert sha(pdf)=='cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17'
+from pypdf import PdfReader
+reader=PdfReader(pdf)
+for page in [32,33,34,35]:write(RUN/f'source-pdf{page}-v1.txt',reader.pages[page-1].extract_text())
+write(CONTRACT/'source-card-v1.json',dict(title='Online Learning: A Modern Introduction Using Convex Optimization',version='arXiv1912.13213v10,2026-06-21',PDF_url='https://arxiv.org/pdf/1912.13213v10',cached_PDF=pdf.as_posix(),SHA256=sha(pdf),anchors=['Unnumbered dimensional analysis and coordinate rescaling printed21-22/PDF33-34','Meters/kilometers c=1000; transformed loss f(cy), gradient c*g, correct eta/c^2 and wrong physical c^2 factor','Regret dimensional cancellation; horizon-specific eta proportional1/sqrtT caveat'],scope='Existing22 proofs/3 defs/1 abbreviation; current source/public reuse. Unnumbered discussion with explicitly stated deterministic whole-space support-policy and degenerate refinements, not22 printed results.',historical_PR153_state=json.loads(old_raw)['state'],new_mathematics=False))
+write(RUN/'paper-boundary-v1.json',dict(title='ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory',authoritative_local_path='E:/ABRL/papers/long/main/harness.tex',SHA256=sha('E:/ABRL/papers/long/main/harness.tex'),private_manuscript_copied=False,single_runtime_does_not_enforce_all_role_source_file_conventions=True))
+write(RUN/'00_context.md',f'''# Existing unit-scaling current audit
+Total Chapters1-16 Goal ACTIVE/unbudgeted; requested GPT-6 Astra/medium, runtime not independently attested. Exact delivered OPEN draft PR185 {BASE}; preceding actual DIRECT341 raw files/localremoteREST/clean PASS. Fresh canonical main/origin {main} clean. Shared Git/.lake/packages/website junction and all other worktrees retained. New branch {BRANCH}; historical PR153 branch retained.
+Existing22 public proofs/3 defs/1 abbreviation and whole30 canary proofs/3 defs/3 abbreviations frozen. ZERO new mathematics/definitions/source-terminal closures/registry nodes. Uniform positive coordinate scale on finite-dimensional real whole space; transform current and past losses, initial point, comparator, played history and actual policy coherently. Totalized toReal algebraic regret identity is separated from finite-loss sharp regret theorem with proper/subdifferentiable losses and on-path legal supports. No arbitrary-domain projection rescaling, future-informed algorithm, numerical performance catastrophe or anytime/minimax guarantee claimed. Sharp negative terminal residual remains.
+Source/exact types/retrieval -> required distinct neutral decoder/anti-anchored CONTRACT -> stabilized one lower existing-body route -> focused/62 named/22 full guards/actual VALUE/full canary -> combined root/Tests/full harness/own shadow/exact base/shared registry/clean local site/pixels -> distinct FINAL -> actual native accepted -> bounded draft PR. No optional agents. Old contracts/runs/root/Tests/pins/otherBooks/globalSGB immutable. CONTRACT/BODY reader hashes bind exact before-snapshots; FINAL separately binds current reader bytes. Inspect decoded math strings before any escaping claim.
+Remaining Chapter1/2 maintext, nine OTHER Chapter1 origin/main contributor gaps and necessary appendices REQUIRED. Chapter2 total null/incomplete; Chapters3-16 unenumerated. No chapter/Goal/merge/deploy/main/live/retirement completion.
+''')
+for command in [None,'new-task','lifecycle-event','trial-log','statement-fence','safe-verify','frontier-refresh','frontier-shadow','memory-record','retrieval-record']:
+ args=[] if command is None else [command];native('help-'+(command or 'root')+'-v1',*args,'--help')
+native('new-task-v1','new-task',TASK,'--kind','theorem','--title','Uniform coordinate unit-scaling current source/public audit','--target-lean',PRE+'regret_fixed_scaled')
+native('draft-event-v1','lifecycle-event','--session',TASK,'--event','draft','--payload-json',json.dumps(dict(run_id=RUN.name,contract_version=1,new_proofs=0,new_definitions=0,exact_stacked_base=BASE,chapter_complete=False,goal_complete=False)))
+fixed();print('Fresh exact parent/source and22 full existing targets frozen; actual draft, current source CONTRACT pending.')

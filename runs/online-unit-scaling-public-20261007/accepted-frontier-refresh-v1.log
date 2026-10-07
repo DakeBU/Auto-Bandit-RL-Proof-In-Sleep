@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "record_id": "frontier-8f63b69ff8baae97",
+  "updated_at": "2026-10-07T10:20:35+00:00",
+  "root_objective": "Persistent Orabona Chapters1-16; current uniform coordinate unit-scaling reuse accepted",
+  "current_leaf": {
+    "id": "ONLINE-UNIT-SCALING-PUBLIC-20261007",
+    "kind": "lean",
+    "status": "accepted",
+    "statement": "theorem regret_fixed_scaled (c : ℝ) (hc : 0 < c) (η : ℝ) (hη : 0 < η) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (T : ℕ) (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) (hlegal : LegalFeedback V (fun _ => η) loss x₁ p T) (u : E) : regret V (scaledEta c (fun _ => η)) (fun s => scaledLoss c (loss s)) (c⁻¹ • x₁) (scaledPolicy c p) (c⁻¹ • u) T ≤ ‖x₁ - u‖ ^ 2 / (2 * η) + η / 2 * (∑ t ∈ range T, ‖selected V (fun _ => η) loss x₁ p t‖ ^ 2) - ‖output V (fun _ => η) loss x₁ p T - u‖ ^ 2 / (2 * η)",
+    "statement_hash": "e183a80660e5d151f317ed0ade141335007e700f1464090d6c089bbdc2d61e81",
+    "declaration": "BanditRL.OnlineUnitScaling.regret_fixed_scaled",
+    "file": "BanditRLProof\\OnlineUnitScaling.lean",
+    "source_status": "source-reviewed",
+    "dependencies": [
+      {
+        "kind": "lean",
+        "name": "BanditRL.OnlineUnitScaling.regret_scaling",
+        "status": "compiled"
+      },
+      {
+        "kind": "lean",
+        "name": "BanditRL.OnlineSubgradientPolicy.regret_fixed",
+        "status": "compiled"
+      },
+      {
+        "kind": "review",
+        "name": "source-reader",
+        "status": "accepted"
+      }
+    ]
+  },
+  "dag": {
+    "nodes": [
+      {
+        "id": "ONLINE-UNIT-SCALING-PUBLIC-20261007",
+        "kind": "lean",
+        "status": "accepted",
+        "dependencies": [
+          {
+            "kind": "lean",
+            "name": "BanditRL.OnlineUnitScaling.regret_scaling",
+            "status": "compiled"
+          },
+          {
+            "kind": "lean",
+            "name": "BanditRL.OnlineSubgradientPolicy.regret_fixed",
+            "status": "compiled"
+          },
+          {
+            "kind": "review",
+            "name": "source-reader",
+            "status": "accepted"
+          }
+        ],
+        "dispatch_count": 0
+      }
+    ]
+  },
+  "last_accepted_verifier": {
+    "trial_index": 1,
+    "time": "2026-10-07T10:20:35+00:00",
+    "task": "ONLINE-UNIT-SCALING-PUBLIC-20261007",
+    "role": "reviewer",
+    "kind": "review",
+    "status": "accepted",
+    "lean": "",
+    "notes": "ONLINE-UNIT-SCALING-PUBLIC-20261007 Existing unit-scaling revalidation: unnumbered dimensional analysis and coordinate rescaling printed21-22/PDF33-34,22public proofs/3definitions/1abbreviation and whole30canary proofs/3definitions/3abbreviations. ZEROnew mathematical proofs,definitions,registry nodes or source closures. Remaining Chapter1/2 maintext,nineOTHERChapter1 origin/main contributor gaps and necessaryappendices REQUIRED;Chapter2 mandatory total null/incomplete;Chapters3-16unenumerated;wholeGoalACTIVEunbudgeted. AlloriginalR1-R8satisfied. Whole-space uniform positive coordinate, SAMEfinitehistorypolicy actualrecursion; totalizedregretalgebra vs proper/subdifferentiable/on-pathlegal sharpfinite-regret/negativeendpoint; chainrulearbitraryc separate; genuinec1000step/path difference notuniversalcatastrophe; fixedT0 vspositiveknownhorizontuning; retainedv1universeprobefailure/v2pass. Requested Astra/medium distinct required automated actors, no human/external/runtime attestation. No merge/main/live/retirement.",
+    "run_id": "online-unit-scaling-public-20261007"
+  },
+  "memory_policy": {
+    "recent_role_relevant_limit": 5,
+    "explicit_verified_lemma_ids": [],
+    "whole_history_default": false
+  },
+  "shadow_gate": {
+    "status": "pending",
+    "analyzed_trial_rows": 2,
+    "mismatches": [],
+    "replay_transitions": 0
+  },
+  "mutation_policy": {
+    "canonical_path_queue": true,
+    "cross_process_lock": true,
+    "same_file_serialized": true,
+    "disjoint_files_parallel": true
+  },
+  "autonomous_execution": {
+    "enabled": false,
+    "requires_deterministic_gates": true,
+    "requires_explicit_user_request": true
+  }
+}

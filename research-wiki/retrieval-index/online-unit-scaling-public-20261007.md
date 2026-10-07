@@ -1,0 +1,3 @@
+# Current unit-scaling reuse index
+
+Existing22public proofs/3defs/1abbr and whole30canaryproofs/3defs/3abbr unchanged. Actual scopedAPI/22closedProp/fulltypeidentities-v2/requiredneutraldecoder/CONTRACT/62kernel/22fullguards/44prespecifiedVALUE/nondegenerateactualrecursivewhole-spacegradient-supportpolicy/scaledregret/sharpboundary evidence in runs/online-unit-scaling-public-20261007. First universe-alignment typeprobe failed; v1 bytes/logs retained, v2 passed with original source/proof/header unchanged. ZERO newmath/nodes/sourceclosures. CurrentBODY/combinedroot/Tests/harness/registry/reader/FINAL/nativeaccepted/PR remain pending; Chapter1/2/appendices/nineOTHERmainrelativegaps required/nullChapter2/3-16unenumerated/GoalACTIVE.

@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineUnitScaling.regret_fixed_scaled",
+  "file": "runs/online-unit-scaling-20261004/leaves/target-v1.lean.txt",
+  "statement": "theorem regret_fixed_scaled (c : ℝ) (hc : 0 < c) (η : ℝ) (hη : 0 < η) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (T : ℕ) (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) (hlegal : LegalFeedback V (fun _ => η) loss x₁ p T) (u : E) : regret V (scaledEta c (fun _ => η)) (fun s => scaledLoss c (loss s)) (c⁻¹ • x₁) (scaledPolicy c p) (c⁻¹ • u) T ≤ ‖x₁ - u‖ ^ 2 / (2 * η) + η / 2 * (∑ t ∈ range T, ‖selected V (fun _ => η) loss x₁ p t‖ ^ 2) - ‖output V (fun _ => η) loss x₁ p T - u‖ ^ 2 / (2 * η)",
+  "statement_hash": "e183a80660e5d151f317ed0ade141335007e700f1464090d6c089bbdc2d61e81",
+  "source_assumptions": [
+    "(hc : 0 < c)",
+    "(hη : 0 < η)",
+    "(hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t))",
+    "(hlegal : LegalFeedback V (fun _ => η) loss x₁ p T)"
+  ],
+  "created_at": "2026-10-04T13:41:00+00:00"
+}
