@@ -1,0 +1,32 @@
+BanditRL.OnlineGradientDescent.meanPredict_zero_cumulativeLoss [theorem] BanditRLProof/OnlineGuessingComparison.lean:23
+  theorem meanPredict_zero_cumulativeLoss (T : ℕ) (hT : 0 < T) : (∑ t ∈ range T, (BanditRL.OnlineLearning.meanPredict (fun _ : ℕ => (0 : ℝ)) t)^2) = 1/4
+BanditRL.OnlineGradientDescent.guessing_vs_mean_lower [theorem] BanditRLProof/OnlineGuessingComparison.lean:37
+  theorem guessing_vs_mean_lower (n : ℕ) (hn : 0 < n) : (n : ℝ)/4 - 1/4 ≤ regret unitInterval (1/(2*Real.sqrt (((2*n)^2 : ℕ) : ℝ))) (fun _ x => (x-0)^2) 1 0 ((2*n)^2) - (∑ t ∈ range ((2*n)^2), (BanditRL.OnlineLearning.meanPredict (fun _ : ℕ => (0 : ℝ)) t)^2)
+BanditRL.OnlineGradientDescent.guessing_vs_mean_unbounded [theorem] BanditRLProof/OnlineGuessingComparison.lean:46
+  theorem guessing_vs_mean_unbounded (C : ℝ) (N : ℕ) : ∃ n : ℕ, N < n ∧ C < regret unitInterval (1/(2*Real.sqrt (((2*n)^2 : ℕ) : ℝ))) (fun _ x => (x-0)^2) 1 0 ((2*n)^2) - (∑ t ∈ range ((2*n)^2), (BanditRL.OnlineLearning.meanPredict (fun _ : ℕ => (0 : ℝ)) t)^2)
+BanditRL.OnlineLearning.meanPredict_noRegret [theorem] BanditRLProof/OnlineLearningAsymptotic.lean:9
+  theorem meanPredict_noRegret (y : ℕ → ℝ) (hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1) : NoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - y t)^2) (meanPredict y)
+BanditRL.OnlineLearning.meanPredict [def] BanditRLProof/OnlineLearningFTL.lean:8
+  noncomputable def meanPredict (y : ℕ → ℝ) (t : ℕ) : ℝ
+BanditRL.OnlineLearning.meanPredict_prefix [theorem] BanditRLProof/OnlineLearningFTL.lean:12
+  theorem meanPredict_prefix (y z : ℕ → ℝ) (t : ℕ) (h : ∀ i < t, y i = z i) : meanPredict y t = meanPredict z t
+BanditRL.OnlineLearning.meanPredict_mem [theorem] BanditRLProof/OnlineLearningFTL.lean:21
+  theorem meanPredict_mem (y : ℕ → ℝ) (t : ℕ) (hy : ∀ i < t, y i ∈ Set.Icc (0 : ℝ) 1) : meanPredict y t ∈ Set.Icc (0 : ℝ) 1
+BanditRL.OnlineLearning.meanPredict_stability [theorem] BanditRLProof/OnlineLearningFTL.lean:42
+  theorem meanPredict_stability (y : ℕ → ℝ) (t : ℕ) (hy : ∀ i ≤ t, y i ∈ Set.Icc (0 : ℝ) 1) : (meanPredict y t - y t)^2 - (empiricalMean y (t+1) - y t)^2 ≤ 4 / (t+1)
+BanditRL.OnlineLearning.theorem_1_3 [theorem] BanditRLProof/OnlineLearningFTL.lean:81
+  theorem theorem_1_3 (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T) (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) : (∑ t ∈ Finset.range T, (meanPredict y t - y t)^2) - (∑ t ∈ Finset.range T, (empiricalMean y T - y t)^2) ≤ 4 + 4 * Real.log T
+BanditRL.OnlineLearning.meanPredict_initial_stability [theorem] BanditRLProof/OnlineLearningFTL.lean:99
+  theorem meanPredict_initial_stability (y : ℕ → ℝ) (hy : y 0 ∈ Set.Icc (0 : ℝ) 1) : (meanPredict y 0 - y 0)^2 - (empiricalMean y 1 - y 0)^2 ≤ (1 : ℝ) / 4
+BanditRL.OnlineLearning.meanPredict_regret_refined [theorem] BanditRLProof/OnlineLearningFTL.lean:106
+  theorem meanPredict_regret_refined (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T) (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) : (∑ t ∈ Finset.range T, (meanPredict y t - y t)^2) - (∑ t ∈ Finset.range T, (empiricalMean y T - y t)^2) ≤ (1 : ℝ) / 4 + ∑ t ∈ Finset.range (T - 1), 4 / ((t : ℝ) + 2)
+BanditRL.OnlineLearning.meanPredict_measurable [theorem] BanditRLProof/OnlineLearningIID.lean:9
+  theorem meanPredict_measurable {Ω : Type*} [MeasurableSpace Ω] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (t : ℕ) : Measurable (fun ω => meanPredict (fun i => Y i ω) t)
+BanditRL.OnlineLearning.meanPredict_memLp [theorem] BanditRLProof/OnlineLearningIID.lean:16
+  theorem meanPredict_memLp {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hb : ∀ t ω, Y t ω ∈ Set.Icc (0 : ℝ) 1) (t : ℕ) : MemLp (fun ω => meanPredict (fun i => Y i ω) t) 2 μ
+BanditRL.OnlineLearning.iid_meanPredict_excess [theorem] BanditRLProof/OnlineLearningIID.lean:25
+  theorem iid_meanPredict_excess {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t ω, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) : (∫ ω, ∑ t ∈ Finset.range T, (meanPredict (fun i => Y i ω) t - Y t ω)^2 ∂μ) - T * variance (Y 0) μ = ∑ t ∈ Finset.range T, ∫ ω, (meanPredict (fun i => Y i ω) t - ∫ ω, Y 0 ω ∂μ)^2 ∂μ
+BanditRL.OnlineLearning.iid_meanPredict_excess_nonneg [theorem] BanditRLProof/OnlineLearningIID.lean:52
+  theorem iid_meanPredict_excess_nonneg {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t ω, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) : 0 ≤ (∫ ω, ∑ t ∈ Finset.range T, (meanPredict (fun i => Y i ω) t - Y t ω)^2 ∂μ) - T * variance (Y 0) μ
+BanditRL.OnlineLearning.meanPredict_independent [theorem] BanditRLProof/OnlineLearningInformation.lean:9
+  theorem meanPredict_independent {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ) (t : ℕ) : IndepFun (fun ω => meanPredict (fun i => Y i ω) t) (Y t) μ

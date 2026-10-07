@@ -1,0 +1,1 @@
+/root staged director: one Chapter1 FTL producer route, current source requires general initialization and no-full-history mean/count state; freeze producer identity rather than assumed certificate. No competing chapters. Two existing subobligations, not nine bookresults; Chapter/Goal not complete.

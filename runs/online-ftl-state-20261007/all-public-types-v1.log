@@ -1,0 +1,69 @@
+BanditRL.OnlineLearning.empiricalMean_decomposition : ∀ (y : ℕ → ℝ) (n : ℕ),
+  0 < n →
+    ∀ (u : ℝ),
+      ∑ t ∈ Finset.range n, (u - y t) ^ 2 =
+        ∑ t ∈ Finset.range n, (BanditRL.OnlineLearning.empiricalMean y n - y t) ^ 2 +
+          ↑n * (u - BanditRL.OnlineLearning.empiricalMean y n) ^ 2
+BanditRL.OnlineLearning.empiricalMean_minimizes : ∀ (y : ℕ → ℝ) (n : ℕ),
+  0 < n →
+    ∀ (u : ℝ),
+      ∑ t ∈ Finset.range n, (BanditRL.OnlineLearning.empiricalMean y n - y t) ^ 2 ≤ ∑ t ∈ Finset.range n, (u - y t) ^ 2
+BanditRL.OnlineLearning.empiricalMean_mem : ∀ (y : ℕ → ℝ) (n : ℕ),
+  0 < n → (∀ t < n, y t ∈ Set.Icc 0 1) → BanditRL.OnlineLearning.empiricalMean y n ∈ Set.Icc 0 1
+BanditRL.OnlineLearning.empiricalMean_unique : ∀ (y : ℕ → ℝ) (n : ℕ),
+  0 < n →
+    ∀ (u : ℝ),
+      ∑ t ∈ Finset.range n, (u - y t) ^ 2 ≤
+          ∑ t ∈ Finset.range n, (BanditRL.OnlineLearning.empiricalMean y n - y t) ^ 2 →
+        u = BanditRL.OnlineLearning.empiricalMean y n
+BanditRL.OnlineLearning.empiricalMean_succ : ∀ (y : ℕ → ℝ) (t : ℕ),
+  BanditRL.OnlineLearning.empiricalMean y (t + 1) =
+    BanditRL.OnlineLearning.empiricalMean y t + (y t - BanditRL.OnlineLearning.empiricalMean y t) / (↑t + 1)
+BanditRL.OnlineLearning.ftlPredict_prefix : ∀ (initial : ℝ) (y z : ℕ → ℝ) (t : ℕ),
+  (∀ i < t, y i = z i) → BanditRL.OnlineLearning.ftlPredict initial y t = BanditRL.OnlineLearning.ftlPredict initial z t
+BanditRL.OnlineLearning.ftlPredict_mem : ∀ (initial : ℝ) (y : ℕ → ℝ) (t : ℕ),
+  initial ∈ Set.Icc 0 1 → (∀ i < t, y i ∈ Set.Icc 0 1) → BanditRL.OnlineLearning.ftlPredict initial y t ∈ Set.Icc 0 1
+BanditRL.OnlineLearning.ftlPredict_half : ∀ (y : ℕ → ℝ) (t : ℕ),
+  BanditRL.OnlineLearning.ftlPredict (1 / 2) y t = BanditRL.OnlineLearning.meanPredict y t
+BanditRL.OnlineLearning.ftlState_first : ∀ (initial : ℝ) (y : ℕ → ℝ),
+  BanditRL.OnlineLearning.ftlState initial y 1 = (1, y 0)
+BanditRL.OnlineLearning.ftlState_eq_predict : ∀ (initial : ℝ) (y : ℕ → ℝ) (t : ℕ),
+  BanditRL.OnlineLearning.ftlState initial y t = (t, BanditRL.OnlineLearning.ftlPredict initial y t)
+BanditRL.OnlineLearning.ftlState_prefix : ∀ (initial : ℝ) (y z : ℕ → ℝ) (t : ℕ),
+  (∀ i < t, y i = z i) → BanditRL.OnlineLearning.ftlState initial y t = BanditRL.OnlineLearning.ftlState initial z t
+BanditRL.OnlineLearning.ftlState_mem : ∀ (initial : ℝ) (y : ℕ → ℝ) (t : ℕ),
+  initial ∈ Set.Icc 0 1 → (∀ i < t, y i ∈ Set.Icc 0 1) → (BanditRL.OnlineLearning.ftlState initial y t).2 ∈ Set.Icc 0 1
+BanditRL.OnlineLearning.ftlState_half : ∀ (y : ℕ → ℝ) (t : ℕ),
+  BanditRL.OnlineLearning.ftlState (1 / 2) y t = (t, BanditRL.OnlineLearning.meanPredict y t)
+FTLStateProbe.initial_and_first : BanditRL.OnlineLearning.ftlState 0 (fun x => 1) 0 = (0, 0) ∧
+  BanditRL.OnlineLearning.ftlState 1 (fun x => 1) 0 = (0, 1) ∧
+    BanditRL.OnlineLearning.ftlState 0 (fun x => 1) 1 = (1, 1) ∧
+      BanditRL.OnlineLearning.ftlState 1 (fun x => 1) 1 = (1, 1)
+FTLStateProbe.varying_updates : BanditRL.OnlineLearning.ftlState (3 / 4) FTLStateProbe.probeTargets 2 = (2, 1 / 2) ∧
+  BanditRL.OnlineLearning.ftlState (3 / 4) FTLStateProbe.probeTargets 3 = (3, 2 / 3)
+FTLStateProbe.current_target_after_prediction : BanditRL.OnlineLearning.ftlState 0 (fun x => 0) 1 =
+    BanditRL.OnlineLearning.ftlState 0 FTLStateProbe.probeTargets 1 ∧
+  0 ≠ FTLStateProbe.probeTargets 1 ∧
+    BanditRL.OnlineLearning.ftlState 0 (fun x => 0) 2 ≠ BanditRL.OnlineLearning.ftlState 0 FTLStateProbe.probeTargets 2
+FTLStateProbe.feasibility_and_outside : (BanditRL.OnlineLearning.ftlState 1 FTLStateProbe.probeTargets 2).2 ∈
+    Set.Icc 0 1 ∧
+  (BanditRL.OnlineLearning.ftlState 2 FTLStateProbe.probeTargets 0).2 ∉ Set.Icc 0 1 ∧
+    (BanditRL.OnlineLearning.ftlState 2 FTLStateProbe.probeTargets 1).2 = 0
+FTLStateProbe.half_state_regret : ∑ t ∈ Finset.range 2,
+        ((BanditRL.OnlineLearning.ftlState (1 / 2) FTLStateProbe.probeTargets t).2 - FTLStateProbe.probeTargets t) ^ 2 -
+      ∑ t ∈ Finset.range 2,
+        (BanditRL.OnlineLearning.empiricalMean FTLStateProbe.probeTargets 2 - FTLStateProbe.probeTargets t) ^ 2 =
+    3 / 4 ∧
+  ∑ t ∈ Finset.range 2,
+        ((BanditRL.OnlineLearning.ftlState (1 / 2) FTLStateProbe.probeTargets t).2 - FTLStateProbe.probeTargets t) ^ 2 -
+      ∑ t ∈ Finset.range 2,
+        (BanditRL.OnlineLearning.empiricalMean FTLStateProbe.probeTargets 2 - FTLStateProbe.probeTargets t) ^ 2 ≤
+    1 / 4 + ∑ t ∈ Finset.range (2 - 1), 4 / (↑t + 2)
+FTLStateProbe.general_initial_not_quarter : (BanditRL.OnlineLearning.ftlState 1 (fun x => 0) 0).2 ∈ Set.Icc 0 1 ∧
+  ((BanditRL.OnlineLearning.ftlState 1 (fun x => 0) 0).2 - 0) ^ 2 = 1 ∧
+    ((BanditRL.OnlineLearning.ftlState 1 (fun x => 0) 0).2 - 0) ^ 2 > 1 / 4
+BanditRL.OnlineLearning.empiricalMean : (ℕ → ℝ) → ℕ → ℝ
+BanditRL.OnlineLearning.ftlPredict : ℝ → (ℕ → ℝ) → ℕ → ℝ
+BanditRL.OnlineLearning.ftlMeanStep : ℕ × ℝ → ℝ → ℕ × ℝ
+BanditRL.OnlineLearning.ftlState : ℝ → (ℕ → ℝ) → ℕ → ℕ × ℝ
+FTLStateProbe.probeTargets : ℕ → ℝ

@@ -1,0 +1,3 @@
+theorem ftlState_half (y : ℕ → ℝ) (t : ℕ) :
+    ftlState ((1 : ℝ) / 2) y t = (t, meanPredict y t) := by
+  rw [ftlState_eq_predict, ftlPredict_half]

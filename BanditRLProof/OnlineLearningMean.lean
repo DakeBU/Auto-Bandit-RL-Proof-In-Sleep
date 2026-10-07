@@ -58,4 +58,19 @@ theorem empiricalMean_unique (y : ℕ → ℝ) (n : ℕ) (hn : 0 < n) (u : ℝ)
     exact (not_lt_of_ge hp) (mul_pos hnR hs)
   nlinarith
 
+/-- Exact running-average recurrence, including the empty-prefix transition. -/
+theorem empiricalMean_succ (y : ℕ → ℝ) (t : ℕ) :
+    empiricalMean y (t + 1) = empiricalMean y t +
+      (y t - empiricalMean y t) / ((t : ℝ) + 1) := by
+  by_cases ht : t = 0
+  · subst t
+    simp [empiricalMean]
+  · have ht0 : (t : ℝ) ≠ 0 := by exact_mod_cast ht
+    have ht1 : (t : ℝ) + 1 ≠ 0 := by positivity
+    unfold empiricalMean
+    rw [Finset.sum_range_succ]
+    push_cast
+    field_simp
+    ring
+
 end BanditRL.OnlineLearning

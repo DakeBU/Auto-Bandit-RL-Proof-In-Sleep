@@ -1,0 +1,15 @@
+{
+  "empiricalMean_decomposition": "theorem empiricalMean_decomposition (y : ℕ → ℝ) (n : ℕ) (hn : 0 < n) (u : ℝ) : (∑ t ∈ Finset.range n, (u - y t)^2) = (∑ t ∈ Finset.range n, (empiricalMean y n - y t)^2) + n * (u - empiricalMean y n)^2",
+  "empiricalMean_minimizes": "theorem empiricalMean_minimizes (y : ℕ → ℝ) (n : ℕ) (hn : 0 < n) (u : ℝ) : (∑ t ∈ Finset.range n, (empiricalMean y n - y t)^2) ≤ ∑ t ∈ Finset.range n, (u - y t)^2",
+  "empiricalMean_mem": "theorem empiricalMean_mem (y : ℕ → ℝ) (n : ℕ) (hn : 0 < n) (hy : ∀ t < n, y t ∈ Set.Icc (0 : ℝ) 1) : empiricalMean y n ∈ Set.Icc (0 : ℝ) 1",
+  "empiricalMean_unique": "theorem empiricalMean_unique (y : ℕ → ℝ) (n : ℕ) (hn : 0 < n) (u : ℝ) (hu : (∑ t ∈ Finset.range n, (u-y t)^2) ≤ ∑ t ∈ Finset.range n, (empiricalMean y n-y t)^2) : u = empiricalMean y n",
+  "empiricalMean_succ": "theorem empiricalMean_succ (y : ℕ → ℝ) (t : ℕ) : empiricalMean y (t + 1) = empiricalMean y t + (y t - empiricalMean y t) / ((t : ℝ) + 1)",
+  "ftlPredict_prefix": "theorem ftlPredict_prefix (initial : ℝ) (y z : ℕ → ℝ) (t : ℕ) (h : ∀ i < t, y i = z i) : ftlPredict initial y t = ftlPredict initial z t",
+  "ftlPredict_mem": "theorem ftlPredict_mem (initial : ℝ) (y : ℕ → ℝ) (t : ℕ) (hi : initial ∈ Set.Icc (0 : ℝ) 1) (hy : ∀ i < t, y i ∈ Set.Icc (0 : ℝ) 1) : ftlPredict initial y t ∈ Set.Icc (0 : ℝ) 1",
+  "ftlPredict_half": "theorem ftlPredict_half (y : ℕ → ℝ) (t : ℕ) : ftlPredict ((1 : ℝ) / 2) y t = meanPredict y t",
+  "ftlState_first": "theorem ftlState_first (initial : ℝ) (y : ℕ → ℝ) : ftlState initial y 1 = (1, y 0)",
+  "ftlState_eq_predict": "theorem ftlState_eq_predict (initial : ℝ) (y : ℕ → ℝ) (t : ℕ) : ftlState initial y t = (t, ftlPredict initial y t)",
+  "ftlState_prefix": "theorem ftlState_prefix (initial : ℝ) (y z : ℕ → ℝ) (t : ℕ) (h : ∀ i < t, y i = z i) : ftlState initial y t = ftlState initial z t",
+  "ftlState_mem": "theorem ftlState_mem (initial : ℝ) (y : ℕ → ℝ) (t : ℕ) (hi : initial ∈ Set.Icc (0 : ℝ) 1) (hy : ∀ i < t, y i ∈ Set.Icc (0 : ℝ) 1) : (ftlState initial y t).2 ∈ Set.Icc (0 : ℝ) 1",
+  "ftlState_half": "theorem ftlState_half (y : ℕ → ℝ) (t : ℕ) : ftlState ((1 : ℝ) / 2) y t = (t, meanPredict y t)"
+}

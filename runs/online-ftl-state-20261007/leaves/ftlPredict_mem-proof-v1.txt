@@ -1,0 +1,8 @@
+theorem ftlPredict_mem (initial : ℝ) (y : ℕ → ℝ) (t : ℕ)
+    (hi : initial ∈ Set.Icc (0 : ℝ) 1)
+    (hy : ∀ i < t, y i ∈ Set.Icc (0 : ℝ) 1) :
+    ftlPredict initial y t ∈ Set.Icc (0 : ℝ) 1 := by
+  unfold ftlPredict
+  split_ifs with h
+  · exact hi
+  · exact empiricalMean_mem y t (Nat.pos_of_ne_zero h) hy

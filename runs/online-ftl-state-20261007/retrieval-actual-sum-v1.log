@@ -1,0 +1,11 @@
+523:theorem prod_range_succ_comm (f : ℕ → M) (n : ℕ) :
+528:theorem prod_range_succ (f : ℕ → M) (n : ℕ) :
+530:  simp only [mul_comm, prod_range_succ_comm]
+533:theorem prod_range_succ' (f : ℕ → M) :
+535:  | 0 => prod_range_succ _ _
+536:  | n + 1 => by rw [prod_range_succ _ n, mul_right_comm, ← prod_range_succ' _ n, prod_range_succ]
+545:  | succ m hm => simp [← add_assoc, prod_range_succ, hm, hu]
+552:  | succ m hm => rw [Nat.add_succ, prod_range_succ, prod_range_succ, hm, mul_assoc]
+625:    rw [Finset.prod_range_succ, step _ (Nat.lt_succ_self _), hk]
+658:    rw [prod_range_succ', prod_range_succ _ (Nat.succ n)]
+911:  simp [Finset.prod_range_succ', mul_comm]

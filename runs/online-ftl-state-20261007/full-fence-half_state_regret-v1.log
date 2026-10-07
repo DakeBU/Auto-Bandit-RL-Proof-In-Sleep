@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "declaration": "FTLStateProbe.half_state_regret",
+  "file": "Tests/OnlineLearningFTLStateCanary.lean",
+  "statement": "theorem half_state_regret : ((∑ t ∈ Finset.range 2, ((ftlState ((1 : ℝ) / 2) probeTargets t).2 - probeTargets t)^2) - (∑ t ∈ Finset.range 2, (empiricalMean probeTargets 2 - probeTargets t)^2)) = (3 : ℝ) / 4 ∧ ((∑ t ∈ Finset.range 2, ((ftlState ((1 : ℝ) / 2) probeTargets t).2 - probeTargets t)^2) - (∑ t ∈ Finset.range 2, (empiricalMean probeTargets 2 - probeTargets t)^2)) ≤ (1 : ℝ) / 4 + ∑ t ∈ Finset.range (2 - 1), 4 / ((t : ℝ) + 2)",
+  "statement_hash": "fb8b734a1b76350f2a3950b8a2aa49581b326cf567419eb1868dfd1aa0ddfbdf",
+  "source_assumptions": [
+    "theorem half_state_regret :\n    ((∑ t ∈ Finset.range 2, ((ftlState ((1 : ℝ) / 2) probeTargets t).2 - probeTargets t)^2) -\n      (∑ t ∈ Finset.range 2, (empiricalMean probeTargets 2 - probeTargets t)^2)) = (3 : ℝ) / 4 ∧\n    ((∑ t ∈ Finset.range 2, ((ftlState ((1 : ℝ) / 2) probeTargets t).2 - probeTargets t)^2) -\n      (∑ t ∈ Finset.range 2, (empiricalMean probeTargets 2 - probeTargets t)^2)) ≤\n        (1 : ℝ) / 4 + ∑ t ∈ Finset.range (2 - 1), 4 / ((t : ℝ) + 2)"
+  ],
+  "created_at": "2026-10-07T13:39:39+00:00"
+}

@@ -1,0 +1,5 @@
+theorem ftlState_prefix (initial : ℝ) (y z : ℕ → ℝ) (t : ℕ)
+    (h : ∀ i < t, y i = z i) :
+    ftlState initial y t = ftlState initial z t := by
+  rw [ftlState_eq_predict initial y t, ftlState_eq_predict initial z t,
+    ftlPredict_prefix initial y z t h]

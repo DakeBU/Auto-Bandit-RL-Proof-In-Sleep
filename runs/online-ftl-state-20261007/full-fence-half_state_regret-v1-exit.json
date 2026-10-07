@@ -1,0 +1,22 @@
+{
+  "command": [
+    "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe",
+    "-B",
+    "-X",
+    "utf8",
+    "tools/bandit.py",
+    "statement-fence",
+    "--declaration",
+    "FTLStateProbe.half_state_regret",
+    "--file",
+    "Tests\\OnlineLearningFTLStateCanary.lean",
+    "--source-assumption",
+    "theorem half_state_regret :\n    ((∑ t ∈ Finset.range 2, ((ftlState ((1 : ℝ) / 2) probeTargets t).2 - probeTargets t)^2) -\n      (∑ t ∈ Finset.range 2, (empiricalMean probeTargets 2 - probeTargets t)^2)) = (3 : ℝ) / 4 ∧\n    ((∑ t ∈ Finset.range 2, ((ftlState ((1 : ℝ) / 2) probeTargets t).2 - probeTargets t)^2) -\n      (∑ t ∈ Finset.range 2, (empiricalMean probeTargets 2 - probeTargets t)^2)) ≤\n        (1 : ℝ) / 4 + ∑ t ∈ Finset.range (2 - 1), 4 / ((t : ℝ) + 2)",
+    "--output",
+    "E:\\ABRL\\worktrees\\research-online-book\\runs\\online-ftl-state-20261007\\full-header-fences-v1\\half_state_regret.json"
+  ],
+  "cwd": "E:/ABRL/worktrees/research-online-book",
+  "exit_code": 0,
+  "seconds": 0.215,
+  "log_sha256": "7fdb02eb49a0f328c84ab1ede21351ec8c5200d58689a7136cbffa14b2cce22a"
+}

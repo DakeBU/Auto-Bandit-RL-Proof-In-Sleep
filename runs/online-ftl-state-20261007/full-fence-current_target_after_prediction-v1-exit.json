@@ -1,0 +1,22 @@
+{
+  "command": [
+    "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe",
+    "-B",
+    "-X",
+    "utf8",
+    "tools/bandit.py",
+    "statement-fence",
+    "--declaration",
+    "FTLStateProbe.current_target_after_prediction",
+    "--file",
+    "Tests\\OnlineLearningFTLStateCanary.lean",
+    "--source-assumption",
+    "theorem current_target_after_prediction :\n    ftlState 0 (fun _ => 0) 1 = ftlState 0 probeTargets 1 ∧\n    (0 : ℝ) ≠ probeTargets 1 ∧\n    ftlState 0 (fun _ => 0) 2 ≠ ftlState 0 probeTargets 2",
+    "--output",
+    "E:\\ABRL\\worktrees\\research-online-book\\runs\\online-ftl-state-20261007\\full-header-fences-v1\\current_target_after_prediction.json"
+  ],
+  "cwd": "E:/ABRL/worktrees/research-online-book",
+  "exit_code": 0,
+  "seconds": 0.223,
+  "log_sha256": "6ead238cfce3e4b42bf7b8f74e938f284cb77bf5f203d3a83f364ec8a8257c6b"
+}
