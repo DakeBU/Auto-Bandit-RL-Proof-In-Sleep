@@ -1,0 +1,19 @@
+history-bindings-v2-01 exit 0 seconds 58.484
+a83f1ffcea3aa2ff318e65cb4afd323a348aead9
+contributor-exact-v1-01 exit 1 seconds 0.125
+Failure tail only; full raw output is retained in contributor-exact-v1-01.log
+CONTRIBUTOR CONTRACT FAILED
+ - contribution manifests list affected files that are not changed protected/production surfaces: Tests.lean, Tests/OnlineConvexNondifferentiabilityCanary.lean
+contributor base: 57f96796d3bbbb42486a547cecce7d6b3da6e4ef
+changed paths: 337
+affected production paths: 5
+changed contribution contracts: 1
+
+Traceback (most recent call last):
+  File "runs/online-convex-nondifferentiability-20261007/source-site-gates-v2.py", line 7, in <module>
+    gate('contributor-exact-v1-01',sys.executable,'-B','-X','utf8','tools/check_contributor_contract.py','--base',BASE)
+  File "E:\ABRL\worktrees\research-online-book\runs\online-convex-nondifferentiability-20261007\common_v2.py", line 17, in gate
+    subprocess.run([sys.executable,'-B','-X','utf8',str(RUN/'run-command.py'),label,*map(str,args)],check=True)
+  File "C:\Users\admin\AppData\Local\Programs\Python\Python38\lib\subprocess.py", line 516, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe', '-B', '-X', 'utf8', 'E:\\ABRL\\worktrees\\research-online-book\\runs\\online-convex-nondifferentiability-20261007\\run-command.py', 'contributor-exact-v1-01', 'C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe', '-B', '-X', 'utf8', 'tools/check_contributor_contract.py', '--base', '57f96796d3bbbb42486a547cecce7d6b3da6e4ef']' returned non-zero exit status 1.
