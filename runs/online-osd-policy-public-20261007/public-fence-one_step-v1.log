@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineSubgradientPolicy.one_step",
+  "file": "BanditRLProof/OnlineSubgradientPolicy.lean",
+  "statement": "theorem one_step (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) (hη : 0 < η t) (hloss : BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) (hg : selected V η loss x₁ p t ∈ SourceSubdifferential (loss t) (output V η loss x₁ p t)) (u : E) (hu : u ∈ V.carrier) : (loss t (output V η loss x₁ p t)).toReal - (loss t u).toReal ≤ (‖output V η loss x₁ p t - u‖ ^ 2 - ‖output V η loss x₁ p (t + 1) - u‖ ^ 2) / (2 * η t) + η t / 2 * ‖selected V η loss x₁ p t‖ ^ 2",
+  "statement_hash": "d8bd64efa5c962e011255edd07e6118e3c6637beb0f303434f3227c98b9f21fd",
+  "source_assumptions": [],
+  "created_at": "2026-10-07T05:13:57+00:00"
+}

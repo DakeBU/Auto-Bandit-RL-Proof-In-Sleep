@@ -1,0 +1,491 @@
+{
+  "generated": "2026-10-07T04:58:08+00:00",
+  "cards": [
+    {
+      "id": "SCN-STOCHASTIC-FINITE",
+      "name": "finite stochastic bandits",
+      "core_algorithms": [
+        "ETC",
+        "UCB",
+        "MOSS",
+        "KL-UCB",
+        "Thompson sampling"
+      ],
+      "leaf_families": [
+        "pull-count algebra",
+        "gap decomposition",
+        "sub-Gaussian tails",
+        "Bernoulli KL"
+      ],
+      "mathlib_needs": [
+        "MLIB-FINSET-SUMS",
+        "MLIB-ORDER-ALGEBRA",
+        "MLIB-PROBABILITY-INDEPENDENCE"
+      ],
+      "source_cards": [
+        "TXT-BUBECK-CESABIANCHI-2012",
+        "TXT-LATTIMORE-SZEPESVARI-2020",
+        "PPR-AUER-CBF-2002-UCB1",
+        "PPR-GARIVIER-CAPPE-2011-KLUCB",
+        "PPR-AGRAWAL-GOYAL-2011-TS"
+      ],
+      "status": "seeded"
+    },
+    {
+      "id": "SCN-BAYESIAN-POSTERIOR",
+      "name": "Bayesian and posterior-sampling bandits",
+      "core_algorithms": [
+        "Thompson sampling",
+        "Bayes-UCB",
+        "posterior sampling with priors"
+      ],
+      "leaf_families": [
+        "posterior kernels",
+        "Bayesian regret",
+        "probability matching",
+        "prior/posterior update contracts"
+      ],
+      "mathlib_needs": [
+        "MLIB-PROBABILITY-KERNEL",
+        "MLIB-CONDITIONAL-EXPECTATION",
+        "MLIB-MEASURE-INTEGRAL"
+      ],
+      "source_cards": [
+        "TXT-SLIVKINS-2019-2024",
+        "PPR-AGRAWAL-GOYAL-2011-TS"
+      ],
+      "status": "planned"
+    },
+    {
+      "id": "SCN-ADVERSARIAL-FINITE",
+      "name": "adversarial finite-arm bandits",
+      "core_algorithms": [
+        "EXP3",
+        "EXP3-IX",
+        "FTRL/OMD variants"
+      ],
+      "leaf_families": [
+        "importance-weighted estimators",
+        "exponential weights",
+        "potential inequalities"
+      ],
+      "mathlib_needs": [
+        "MLIB-FINSET-SUMS",
+        "MLIB-EXP-LOG-INEQUALITIES",
+        "MLIB-ORDER-ALGEBRA"
+      ],
+      "source_cards": [
+        "TXT-BUBECK-CESABIANCHI-2012",
+        "TXT-LATTIMORE-SZEPESVARI-2020",
+        "PPR-AUER-CFS-2002-EXP3"
+      ],
+      "status": "planned"
+    },
+    {
+      "id": "SCN-BOBW-ADAPTIVE",
+      "name": "best-of-both-worlds and adaptive adversarial bandits",
+      "core_algorithms": [
+        "Tsallis-INF",
+        "LC-Tsallis-INF",
+        "adaptive-learning-rate FTRL",
+        "self-bounding FTRL"
+      ],
+      "leaf_families": [
+        "Tsallis entropy regularization",
+        "self-bounding regret conversion",
+        "stability/penalty split",
+        "adaptive learning-rate schedule"
+      ],
+      "mathlib_needs": [
+        "MLIB-FINSET-SUMS",
+        "MLIB-REAL-RPOW-TSALLIS",
+        "MLIB-CONVEX-LINALG",
+        "MLIB-EXP-LOG-INEQUALITIES"
+      ],
+      "source_cards": [
+        "PPR-ZIMMERT-SELDIN-2018-TSALLIS-INF",
+        "PPR-MASOUDIAN-SELDIN-2021-TSALLIS-INF",
+        "PPR-KATO-ITO-2024-LC-TSALLIS-INF",
+        "PPR-KUROKI-RUMI-TSUCHIYA-VITALE-CESABIANCHI-2023-BOBW-LCB",
+        "PPR-ADAPTIVE-LR-FTRL-2024"
+      ],
+      "status": "planned"
+    },
+    {
+      "id": "SCN-CONTEXTUAL",
+      "name": "contextual bandits",
+      "core_algorithms": [
+        "EXP4",
+        "LinUCB",
+        "Thompson contextual variants"
+      ],
+      "leaf_families": [
+        "policy classes",
+        "expert advice",
+        "context measurability",
+        "regret against policies"
+      ],
+      "mathlib_needs": [
+        "MLIB-MEASURE-INTEGRAL",
+        "MLIB-PROBABILITY-KERNEL",
+        "MLIB-FINSET-SUMS"
+      ],
+      "source_cards": [
+        "TXT-LATTIMORE-SZEPESVARI-2020",
+        "PPR-LI-CHU-LANGFORD-SCHAPIRE-2010-LINUCB",
+        "PPR-FAT-2018-MERITOCRATIC-FAIRNESS"
+      ],
+      "status": "planned"
+    },
+    {
+      "id": "SCN-LINEAR-GLM",
+      "name": "linear and generalized-linear bandits",
+      "core_algorithms": [
+        "LinUCB",
+        "OFUL",
+        "linear Thompson sampling",
+        "GLM-UCB"
+      ],
+      "leaf_families": [
+        "least squares",
+        "self-normalized martingales",
+        "ellipsoid confidence",
+        "determinant algebra"
+      ],
+      "mathlib_needs": [
+        "MLIB-CONVEX-LINALG",
+        "MLIB-MARTINGALE-STOCHASTIC",
+        "MLIB-REAL-LOG-SQRT"
+      ],
+      "source_cards": [
+        "TXT-LATTIMORE-SZEPESVARI-2020",
+        "PPR-ABBASI-YADKORI-2011-SELF-NORMALIZED",
+        "PPR-LI-CHU-LANGFORD-SCHAPIRE-2010-LINUCB"
+      ],
+      "status": "planned"
+    },
+    {
+      "id": "SCN-LIPSCHITZ-METRIC",
+      "name": "Lipschitz, continuum, and metric bandits",
+      "core_algorithms": [
+        "zooming",
+        "hierarchical optimistic optimization",
+        "nearest-neighbor UCB"
+      ],
+      "leaf_families": [
+        "metric balls",
+        "covering numbers",
+        "Lipschitz reward contracts",
+        "near-optimality dimension"
+      ],
+      "mathlib_needs": [
+        "MLIB-METRIC-TOPOLOGY",
+        "MLIB-FINSET-SUMS",
+        "MLIB-ASYMPTOTICS"
+      ],
+      "source_cards": [
+        "TXT-SLIVKINS-2019-2024"
+      ],
+      "status": "planned"
+    },
+    {
+      "id": "SCN-PURE-EXPLORATION",
+      "name": "pure exploration and best-arm identification",
+      "core_algorithms": [
+        "successive elimination",
+        "LUCB",
+        "Track-and-Stop"
+      ],
+      "leaf_families": [
+        "stopping rules",
+        "fixed-confidence events",
+        "sample complexity",
+        "change-of-measure"
+      ],
+      "mathlib_needs": [
+        "MLIB-CONDITIONAL-EXPECTATION",
+        "MLIB-MEASURE-INTEGRAL",
+        "MLIB-ASYMPTOTICS"
+      ],
+      "source_cards": [
+        "TXT-LATTIMORE-SZEPESVARI-2020",
+        "TXT-SLIVKINS-2019-2024"
+      ],
+      "status": "planned"
+    },
+    {
+      "id": "SCN-COMBINATORIAL",
+      "name": "combinatorial and semi-bandit feedback",
+      "core_algorithms": [
+        "Combinatorial UCB",
+        "semi-bandit Thompson",
+        "matroid/knapsack variants"
+      ],
+      "leaf_families": [
+        "set-valued actions",
+        "component rewards",
+        "oracle contracts",
+        "semi-bandit decomposition"
+      ],
+      "mathlib_needs": [
+        "MLIB-FINSET-SUMS",
+        "MLIB-CONVEX-LINALG",
+        "MLIB-ORDER-ALGEBRA"
+      ],
+      "source_cards": [
+        "TXT-LATTIMORE-SZEPESVARI-2020"
+      ],
+      "status": "planned"
+    },
+    {
+      "id": "SCN-RESOURCE-CONSTRAINED",
+      "name": "resource-constrained bandits and bandits with knapsacks",
+      "core_algorithms": [
+        "BwK",
+        "primal-dual UCB",
+        "budgeted Thompson sampling"
+      ],
+      "leaf_families": [
+        "resource-consumption traces",
+        "budget stopping times",
+        "primal-dual comparison",
+        "constraint regret"
+      ],
+      "mathlib_needs": [
+        "MLIB-FINSET-SUMS",
+        "MLIB-ORDER-ALGEBRA",
+        "MLIB-MEASURE-INTEGRAL"
+      ],
+      "source_cards": [
+        "TXT-SLIVKINS-2019-2024",
+        "PPR-BADANIDIYURU-KLEINBERG-SLIVKINS-2013-BWK"
+      ],
+      "status": "planned"
+    },
+    {
+      "id": "SCN-DUELING-PREFERENCE",
+      "name": "dueling, preference, and ranking bandits",
+      "core_algorithms": [
+        "RUCB variants",
+        "Borda/Condorcet algorithms",
+        "preference-based elimination"
+      ],
+      "leaf_families": [
+        "pairwise preference matrices",
+        "winner notions",
+        "comparison regret",
+        "partial-monitoring bridge"
+      ],
+      "mathlib_needs": [
+        "MLIB-FINSET-SUMS",
+        "MLIB-ORDER-ALGEBRA",
+        "MLIB-PROBABILITY-INDEPENDENCE"
+      ],
+      "source_cards": [
+        "PPR-IJCAI-2018-DUELING-SURVEY"
+      ],
+      "status": "planned"
+    },
+    {
+      "id": "SCN-NONSTATIONARY",
+      "name": "nonstationary, rotting, and drifting bandits",
+      "core_algorithms": [
+        "sliding-window UCB",
+        "discounted UCB",
+        "change-point UCB"
+      ],
+      "leaf_families": [
+        "dynamic regret",
+        "variation budgets",
+        "windowed concentration",
+        "change detection"
+      ],
+      "mathlib_needs": [
+        "MLIB-FINSET-SUMS",
+        "MLIB-PROBABILITY-INDEPENDENCE",
+        "MLIB-ASYMPTOTICS"
+      ],
+      "source_cards": [
+        "TXT-SLIVKINS-2019-2024"
+      ],
+      "status": "planned"
+    },
+    {
+      "id": "SCN-HEAVY-TAILED-ROBUST",
+      "name": "heavy-tailed, corrupted, and robust bandits",
+      "core_algorithms": [
+        "median-of-means UCB",
+        "trimmed-mean UCB",
+        "corruption-robust contextual bandits"
+      ],
+      "leaf_families": [
+        "robust mean estimator",
+        "moment assumptions",
+        "truncation event",
+        "corruption budget"
+      ],
+      "mathlib_needs": [
+        "MLIB-MEASURE-INTEGRAL",
+        "MLIB-ORDER-ALGEBRA",
+        "MLIB-ASYMPTOTICS"
+      ],
+      "source_cards": [
+        "TXT-LATTIMORE-SZEPESVARI-2020"
+      ],
+      "status": "watchlist"
+    },
+    {
+      "id": "SCN-DELAYED-BATCHED",
+      "name": "delayed-feedback, batched, and asynchronous bandits",
+      "core_algorithms": [
+        "delayed EXP3",
+        "batched UCB",
+        "asynchronous Thompson sampling"
+      ],
+      "leaf_families": [
+        "delay queues",
+        "pending feedback",
+        "batch regret",
+        "asynchronous filtration"
+      ],
+      "mathlib_needs": [
+        "MLIB-FINSET-SUMS",
+        "MLIB-MARTINGALE-STOCHASTIC",
+        "MLIB-CONDITIONAL-EXPECTATION"
+      ],
+      "source_cards": [
+        "TXT-BUBECK-CESABIANCHI-2012"
+      ],
+      "status": "planned"
+    },
+    {
+      "id": "SCN-DELAYED-BOBW",
+      "name": "delayed best-of-both-worlds bandits",
+      "core_algorithms": [
+        "Delayed SAPO with a post-detection adversarial algorithm"
+      ],
+      "leaf_families": [
+        "source-time feedback queues",
+        "unknown-at-action-time delays",
+        "same-algorithm regime coupling",
+        "stochastic/adversarial expected regret"
+      ],
+      "mathlib_needs": [
+        "MLIB-FINSET-SUMS",
+        "MLIB-MARTINGALE-STOCHASTIC",
+        "MLIB-CONDITIONAL-EXPECTATION"
+      ],
+      "source_cards": [
+        "PPR-SCHLISSELBERG-LANCEWICKI-AUER-MANSOUR-2025-DELAYED-BOBW",
+        "PPR-ZIMMERT-SELDIN-2018-TSALLIS-INF"
+      ],
+      "status": "source-frozen-feasibility"
+    },
+    {
+      "id": "SCN-CONSTRAINTS",
+      "name": "safe, conservative, fair, private, and constrained bandits",
+      "core_algorithms": [
+        "conservative UCB",
+        "safe-UCB",
+        "fair contextual bandits",
+        "private UCB"
+      ],
+      "leaf_families": [
+        "baseline regret",
+        "constraint budgets",
+        "privacy noise",
+        "fairness invariants"
+      ],
+      "mathlib_needs": [
+        "MLIB-MEASURE-INTEGRAL",
+        "MLIB-ORDER-ALGEBRA",
+        "MLIB-PROBABILITY-INDEPENDENCE"
+      ],
+      "source_cards": [
+        "PPR-AAAI-2020-SAFE-LINEAR-STOCHASTIC",
+        "PPR-AAAI-2016-DP-MAB",
+        "PPR-FAT-2018-MERITOCRATIC-FAIRNESS"
+      ],
+      "status": "planned"
+    },
+    {
+      "id": "SCN-FEDERATED-DISTRIBUTED",
+      "name": "federated and distributed bandits",
+      "core_algorithms": [
+        "Fed-UCB",
+        "personalized federated bandits",
+        "Byzantine-robust UCB"
+      ],
+      "leaf_families": [
+        "client aggregation",
+        "heterogeneity",
+        "communication rounds",
+        "robust mean estimates"
+      ],
+      "mathlib_needs": [
+        "MLIB-FINSET-SUMS",
+        "MLIB-MEASURE-INTEGRAL",
+        "MLIB-PROBABILITY-INDEPENDENCE"
+      ],
+      "source_cards": [
+        "PPR-AAAI-2021-FEDERATED-MAB",
+        "PPR-FEDERATED-NEURAL-BANDITS-2022"
+      ],
+      "status": "planned"
+    },
+    {
+      "id": "SCN-RL-MDP",
+      "name": "finite-horizon RL and MDP regret",
+      "core_algorithms": [
+        "UCB-VI",
+        "posterior sampling RL",
+        "optimism under uncertainty",
+        "Bellman backups"
+      ],
+      "leaf_families": [
+        "finite kernels",
+        "policies",
+        "Bellman recursion",
+        "occupancy measures",
+        "episode regret"
+      ],
+      "mathlib_needs": [
+        "MLIB-PROBABILITY-KERNEL",
+        "MLIB-CONDITIONAL-EXPECTATION",
+        "MLIB-MEASURE-INTEGRAL"
+      ],
+      "source_cards": [
+        "TXT-SLIVKINS-2019-2024",
+        "PPR-AZAR-OSBAND-MUNOS-2017-UCBVI"
+      ],
+      "status": "planned"
+    },
+    {
+      "id": "SCN-LLM-REC-SYS",
+      "name": "LLM, recommender, and neural bandits",
+      "core_algorithms": [
+        "neural contextual bandits",
+        "bandit prompt optimization",
+        "LLM-assisted priors"
+      ],
+      "leaf_families": [
+        "offline-to-online priors",
+        "context embeddings",
+        "model-selection regret",
+        "adaptive response generation"
+      ],
+      "mathlib_needs": [
+        "MLIB-MEASURE-INTEGRAL",
+        "MLIB-PROBABILITY-KERNEL",
+        "MLIB-CONVEX-LINALG"
+      ],
+      "source_cards": [
+        "PPR-LI-CHU-LANGFORD-SCHAPIRE-2010-LINUCB",
+        "PPR-FEDERATED-NEURAL-BANDITS-2022",
+        "PPR-EMNLP-2024-LLM-PRIOR-BANDITS",
+        "PPR-BOUNEFFOUF-FERAUD-2025-MAB-LLM"
+      ],
+      "status": "watchlist"
+    }
+  ]
+}

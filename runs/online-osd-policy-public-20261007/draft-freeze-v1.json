@@ -1,0 +1,529 @@
+{
+  "stage": "draft",
+  "fixed_files": {
+    "BanditRLProof/OnlineSubgradientPolicy.lean": "ac8fbfb3eee3c92ebb79b44f33beec33b500105bb7e54df5176c14e886c2c662",
+    "Tests/OnlineSubgradientPolicyCanary.lean": "f830ff51718c5d8504fd02fd98c7372a48ca4f8928410fb7660645a4e3ecff6b",
+    "BanditRLProof/OnlineSubgradientDescent.lean": "6ba8586e1691babc2db3e0c0fcddb69b4236e16f9f192c464b4c04262e854f1c",
+    "Tests/OnlineSubgradientDescentCanary.lean": "22c8fe799185f346792f8094aa0bd93964d998118ff359128b1830c6043287bf",
+    "BanditRLProof/OnlineGuessingSubgradient.lean": "95d206190d443939115037f9bf6d0eeb1e3229f3ae52eb4150927fbe69e89348",
+    "BanditRLProof/OnlineGradientDescent.lean": "9300cb2735da9f125e404f78b86509df47fe65a5f4d89abc469e071bdffdb871",
+    "BanditRLProof/OnlineGradientDescentVariable.lean": "9fd385b55d76ff0fe5e1988d553007fb46f59f6864e5534ec867a7c820ecbea0",
+    "BanditRLProof/OnlineLipschitzSubgradient.lean": "c6891c7b868208d707f05652c17ea5948e1bea272f69a7c1da9303c48769e085",
+    "BanditRLProof/OnlineClosedProper.lean": "c66f00c33b45fb8a0e11583eeadf506e176c16166ce2af02f41f0674507cebe7",
+    "BanditRLProof/OnlineSubgradientBasic.lean": "af3d3f56e4a64cd8adbe47368caf5382e63b428f01da29a121c28c8014f352a5",
+    "BanditRLProof.lean": "a55f74874b8b04e0d3a5202f6b3922fa67a64ba058f477da902fdfa9d4ea4381",
+    "Tests.lean": "fd64bfd5c35383d69d25a47d6f91894dd6435b57e9b3c1eb56eb364d65615cea",
+    "lean-toolchain": "b15a57f8ea4c890197465ce1156667ae13d9ed4ab8a9f263a920bf010d967d82",
+    "lakefile.lean": "0164f3b5b5bdcbb237ab15ae8b44da83e183f4b97d5f3832aa4a57f27dc69d45",
+    "lake-manifest.json": "87c3e616f86244550ef39e7415186b11c1d4cf4bef20173196a619d9d4d48f48",
+    "runs/active_frontier.json": "567e5873aa2549a83f2820d758069213808da822a93087129877385a1addf7c3",
+    "docs/contracts/online-book-v1/source-inventory.json": "a2a504cf40d73f9c5e36f00fc1ef3b949ccaf5a558ab603c1c2a86007f30efa7",
+    "research-wiki/contribution-contracts/ONLINE-OSD-POLICY-20261004.json": "f3002707f00a8557706513962f45c76a8b8555780c35d3b824379eb3144992d3",
+    "website/content/readings.json": "d393dea167d79ba641c6f7aa0051e9e45eba179713b3073ee8cf666a6d022e4f",
+    "website/content/highlights.json": "d05c3efcf6c4278b169c7b7673b107c114250827b9c6d42dad0f5b48bd5c1042",
+    "website/content/chapters.json": "f7c621a4bb35b26e652c2ebec022ca6b857051f1c3652ab8e71f24c411afb64c",
+    "docs/contracts/online-osd-policy-v1/canonicalPolicy_legal-header.txt": "26d18639d611207579e0ab562a6033e1e2dd0c8ef2bdab6fc9aaed8634ec70f2",
+    "docs/contracts/online-osd-policy-v1/canonicalPolicy_legal.json": "e99d2bb591ec42b6624a0a2e12bcf5dafa7cf5b151a28393ca57c9d9682efb0f",
+    "docs/contracts/online-osd-policy-v1/canonical_output-header.txt": "fc6fdc7275144b35ec71e288e3ae7514d6384a6f7212e1f63c8032b9b6941543",
+    "docs/contracts/online-osd-policy-v1/canonical_output.json": "408b28026d1c63eb7c3eac3414c37571e2e2424d02609d785a30c460d84d6285",
+    "docs/contracts/online-osd-policy-v1/canonical_selected-header.txt": "472b4e1ea27e71766fe921e97ff9752c0118fc63da611e59f3b12ab952b34fab",
+    "docs/contracts/online-osd-policy-v1/canonical_selected.json": "e4dab383fe7725cb7c2adffd433256364336ec3d7cf4461ec913ba8cda51442d",
+    "docs/contracts/online-osd-policy-v1/context.lean.txt": "ee72b114bb52c78457ab2ebe40f50b92d4fa57fd2cb31f61bff817857b5d6955",
+    "docs/contracts/online-osd-policy-v1/history_mem-header.txt": "9468a05fdb0220c548b125edce2cdb6f0f34b800af9e5dafde513a543232e161",
+    "docs/contracts/online-osd-policy-v1/history_mem.json": "3921cc2f4e6c037c2b02a5fd1276bf0d85f930dd54d3da7230b81c6de7414bf4",
+    "docs/contracts/online-osd-policy-v1/history_prefix-header.txt": "1ca72256d383ab8d1e37713d389469a4fbfc8fee39048d5db8be4043b60da7fb",
+    "docs/contracts/online-osd-policy-v1/history_prefix.json": "235c485ed22f716fadfea56725d28847b6aadfd5dacd00930b51a90c7e7efa8f",
+    "docs/contracts/online-osd-policy-v1/history_succ-header.txt": "5eae2449132cfdef3384d03567d9042a1759a2e40f30b7be6f4bfb2eacb6979e",
+    "docs/contracts/online-osd-policy-v1/history_succ.json": "b134690216d09fbd8be0e73bdd959d2f6d28ae7337e5ab5f595d426625dcebe7",
+    "docs/contracts/online-osd-policy-v1/history_zero-header.txt": "d63910bf80ed414eb9332b01948f47b43a1f5552df1fd728b204c6d866947a67",
+    "docs/contracts/online-osd-policy-v1/history_zero.json": "d13e02d9949e036236fa7f08a97bf03e568cd2c711453030c8b3bf30cedb98fa",
+    "docs/contracts/online-osd-policy-v1/one_step-header.txt": "fcfaf7d9ec3a58e78927639b14d14f800212d6af8d5da7772a37232b9d9e0f9a",
+    "docs/contracts/online-osd-policy-v1/one_step.json": "65798cb678f7192285a1a3cadc9fb1f973b88011c44439eaed88f02191169591",
+    "docs/contracts/online-osd-policy-v1/one_step_chain-header.txt": "1796e67373a24b89353a64956396bb1060d0b2ab1f00c8482d5400d803fde41a",
+    "docs/contracts/online-osd-policy-v1/one_step_chain.json": "e1a0c8b53ab431e061e799f691a5d265c4a950fd4d532a1925fe821ee35da72f",
+    "docs/contracts/online-osd-policy-v1/oracle_feedback-header.txt": "a1df9e198e87f0e700cadd42bd025d15c4ce40ea19a9007953090fe063b8ca7b",
+    "docs/contracts/online-osd-policy-v1/oracle_feedback.json": "17caf1dfcf88dca7820a4e700361c27c9e6d5e14ef0b791ce070d3eb004ab3db",
+    "docs/contracts/online-osd-policy-v1/output_mem-header.txt": "1bcd9773a20c778839c473ce4c377531b555051cba7ed1a4c4066fc4763a657a",
+    "docs/contracts/online-osd-policy-v1/output_mem.json": "7ce02843f330bf09fe36dce90b635151dbc3dee82a79e98d45b24996e69d2bed",
+    "docs/contracts/online-osd-policy-v1/output_prefix-header.txt": "1ed169261ba2cab28c36752102861146be49c277b27689d90cb1ac15c6579f20",
+    "docs/contracts/online-osd-policy-v1/output_prefix.json": "4da01f6c5786e2bdd963de645e404ba901758db3abaa30fa325beec268728d4f",
+    "docs/contracts/online-osd-policy-v1/output_succ-header.txt": "f22f6c538f980ac448a20f42db832c3f2a0f0c15fa65b669054dddcff7749863",
+    "docs/contracts/online-osd-policy-v1/output_succ.json": "a4623134cd3cc77cf21d3b8c33ddc19eabfd90c0c503cb958092629388efee15",
+    "docs/contracts/online-osd-policy-v1/output_zero-header.txt": "dad71d11b63884ce10acc85a4ea13e6f654af9a6836f0295ad57261270f04863",
+    "docs/contracts/online-osd-policy-v1/output_zero.json": "85065091fab587b1d5fc6b9600bbdab0e26c96a7d9bf476b4ec874012272b2c9",
+    "docs/contracts/online-osd-policy-v1/regret_fixed-header.txt": "1e489df9b030fd45da35e6039ab47034df6f4c6a0feed66fd0cefc5e81970594",
+    "docs/contracts/online-osd-policy-v1/regret_fixed.json": "301c7bbd2f942c138d33c87691fcdcbca1321f511471df58e572d06f730181a7",
+    "docs/contracts/online-osd-policy-v1/regret_fixed_coarse-header.txt": "f4271fae5c084793fb36d24f24cba5964d43318a05c21ffc99c4ed3a84c9eb83",
+    "docs/contracts/online-osd-policy-v1/regret_fixed_coarse.json": "c2d2e352c56c0c891c9c32009f1f0f42f6101d2ad5a2d120676a5793875319e6",
+    "docs/contracts/online-osd-policy-v1/regret_tuned-header.txt": "7a469e76a8cbbdc07919c6dceeabb50c87a70f6ba52212c8ffeffab630884192",
+    "docs/contracts/online-osd-policy-v1/regret_tuned.json": "3412f9eff9663a85186db07f6228613b1694995030361fc97810f9c96d9c6dfc",
+    "docs/contracts/online-osd-policy-v1/regret_tuned_distance-header.txt": "df0b87a329d3e27e5d16f0de063142d22afd39b79b7d1ecb297b9a6113dd201a",
+    "docs/contracts/online-osd-policy-v1/regret_tuned_distance.json": "9a597bd2a4282d696ce346a6e7ca142689c9c76a6c012feae6d453c9a8eafc21",
+    "docs/contracts/online-osd-policy-v1/regret_variable-header.txt": "e72d28e3ea73f00d64c7ea88decf56de951383cf66da77d83553d64d420dc7d2",
+    "docs/contracts/online-osd-policy-v1/regret_variable.json": "39091cb2a39306fef3aa9221440d67958518a837e9c1516f4815fa8aa77676d9",
+    "docs/contracts/online-osd-policy-v1/regret_variable_bound-header.txt": "e67b0da485e6cf69e0a788146bc692af708c3cfff170f022a33058bcfa7d7361",
+    "docs/contracts/online-osd-policy-v1/regret_variable_bound.json": "275396a5b0edad4254045b08e5dbb1afeb158382b9d1a7881853e16877941278",
+    "docs/contracts/online-osd-policy-v1/trajectory_finite_loss-header.txt": "70712b8a584a197c6b433802afcd64a05f64325479e166b68f064deddf82481e",
+    "docs/contracts/online-osd-policy-v1/trajectory_finite_loss.json": "7c0b92f5925ce4e03c6ad8c0bc1787d2c408011ce7c00b2954aff3e732d74d08",
+    "docs/contracts/online-osd-public-v1/actual-context-v1.txt": "b162f92f05924622d248b0673321078b35330dc3980f7b53c1adc4ba64087a5c",
+    "docs/contracts/online-osd-public-v1/contract-manifest-overlay-v2.json": "c4f29defc1ce9f008c63100c315585fc32fa130b16c91cc1bd05f223cfa6ba12",
+    "docs/contracts/online-osd-public-v1/contract-manifest-v1.json": "430e6e4f58ad1eaf2493473007fe4eb228b6ade3693b8c897cf1ed9a12ec33f4",
+    "docs/contracts/online-osd-public-v1/contract.md": "101d83e3651c925970d068c0334e456f85fd416d64ac3f22550e9e8a1c738aeb",
+    "docs/contracts/online-osd-public-v1/dependency-DAG-v1.json": "4bc2c6e9c25a483485c330cfda405767b1f902a8d1dadbcca78c9d594cbcc84b",
+    "docs/contracts/online-osd-public-v1/headers-v2.json": "e5bd0a37c6692943efab8df6eb30cb2226cb338e230d56c606b80ff15c9aa87b",
+    "docs/contracts/online-osd-public-v1/headers.json": "a7857fbab393344eed02527108494d191f4163af680bbf01e5902957ed1b210a",
+    "docs/contracts/online-osd-public-v1/native-statement-fingerprints-v1.json": "62a3787f9325733fa480a46ad59a400268278d141f76318078c27da30889ed3f",
+    "docs/contracts/online-osd-public-v1/raw-statement-fingerprints-v1.json": "9cd322b2d0e6ffbf36c8f967d85261e949021262c9222b53cee5fbdf2aa6ba42",
+    "docs/contracts/online-osd-public-v1/raw-statement-fingerprints-v2.json": "730ebb161299c67b62ee6feb36b7edb73af3da31a5dbeb69c06eafff2e5f1ccd",
+    "docs/contracts/online-osd-public-v1/source-card.json": "45dd2f4b97ce51897b108c70726820096bd9c866be896abd052c8efb69577407",
+    "runs/online-osd-policy-20261004/accepted-decision.json": "ba35b4914304bee4df55b7a351e12a4a7c094055407b1a5557e811e2d81b099c",
+    "runs/online-osd-policy-20261004/delivery.json": "1fac3d2e832fb7439886b10f66e0f79655576a9ecd88ff618367f19b0e1536f2",
+    "runs/online-osd-policy-20261004/accepted-binding-audit.json": "2ca61e618afdc3d7c707bfbace956e1bb77834ac7afb7530219bb7b4ed0d0a37",
+    "runs/online-osd-policy-20261004/source-contract-review-v3.md": "b55a0e29505749a020f05e7139d2740e6125d980fb9eef32f40fb1792bdc3152",
+    "runs/online-osd-policy-20261004/source-contract-receipt-v3.json": "801ab621798c4a3e5fd83935c1d65cf27e7bacbb06af2a2c94e9f4ddaf326bae",
+    "runs/online-osd-policy-20261004/public-body-review-v2.md": "6d23f25b2ed2a6cd66de3a43eadc53b87a9792ad64081b575d89bafacdba3d77",
+    "runs/online-osd-policy-20261004/public-body-receipt-v2.json": "6feee8619eed8fa0a45fbe7972b7b22b3f0beea2d1838c4794275b194c20648a",
+    "runs/online-osd-policy-20261004/final-reader-review-v2.md": "f22cb4a3885e593451199ab26a791b1f251909cb089284522040d1c75b6b730f",
+    "runs/online-osd-policy-20261004/final-reader-receipt-v2.json": "655345d7414e7491100d3e6adbf83adb225a052d71fbf14f386e49a4eb75731d",
+    "runs/online-osd-public-20261007/accepted-decision-v1.json": "4c34d69952e6af33acde39ea8832ad4cb6b8fb1dd1a4bc2dcf0a9d3d53081655",
+    "runs/online-osd-public-20261007/delivery-obligations-overlay-v1.json": "4238f0b1ee3881ac684204b0674b1f33c6cc5107ff2377eeabc8ff24c948e9f6",
+    "runs/online-osd-public-20261007/native-metadata-repair-receipt-v1.json": "2e2cf66fda26f6b138da1da0c5b2c1fa41a2e748519ec792e0c1e930d0216f86",
+    "runs/online-osd-public-20261007/native-metadata-repair-review-v1.md": "298ca1ce377e887d6f7d2ce4605dfc3f5d750508503e3c14c4f7df5583032be9"
+  },
+  "before_snapshots": [
+    {
+      "original_path": "BanditRLProof/OnlineSubgradientPolicy.lean",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-BanditRLProof--OnlineSubgradientPolicy.lean.txt",
+      "sha256": "ac8fbfb3eee3c92ebb79b44f33beec33b500105bb7e54df5176c14e886c2c662"
+    },
+    {
+      "original_path": "Tests/OnlineSubgradientPolicyCanary.lean",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-Tests--OnlineSubgradientPolicyCanary.lean.txt",
+      "sha256": "f830ff51718c5d8504fd02fd98c7372a48ca4f8928410fb7660645a4e3ecff6b"
+    },
+    {
+      "original_path": "BanditRLProof/OnlineSubgradientDescent.lean",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-BanditRLProof--OnlineSubgradientDescent.lean.txt",
+      "sha256": "6ba8586e1691babc2db3e0c0fcddb69b4236e16f9f192c464b4c04262e854f1c"
+    },
+    {
+      "original_path": "Tests/OnlineSubgradientDescentCanary.lean",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-Tests--OnlineSubgradientDescentCanary.lean.txt",
+      "sha256": "22c8fe799185f346792f8094aa0bd93964d998118ff359128b1830c6043287bf"
+    },
+    {
+      "original_path": "BanditRLProof/OnlineGuessingSubgradient.lean",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-BanditRLProof--OnlineGuessingSubgradient.lean.txt",
+      "sha256": "95d206190d443939115037f9bf6d0eeb1e3229f3ae52eb4150927fbe69e89348"
+    },
+    {
+      "original_path": "BanditRLProof/OnlineGradientDescent.lean",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-BanditRLProof--OnlineGradientDescent.lean.txt",
+      "sha256": "9300cb2735da9f125e404f78b86509df47fe65a5f4d89abc469e071bdffdb871"
+    },
+    {
+      "original_path": "BanditRLProof/OnlineGradientDescentVariable.lean",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-BanditRLProof--OnlineGradientDescentVariable.lean.txt",
+      "sha256": "9fd385b55d76ff0fe5e1988d553007fb46f59f6864e5534ec867a7c820ecbea0"
+    },
+    {
+      "original_path": "BanditRLProof/OnlineLipschitzSubgradient.lean",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-BanditRLProof--OnlineLipschitzSubgradient.lean.txt",
+      "sha256": "c6891c7b868208d707f05652c17ea5948e1bea272f69a7c1da9303c48769e085"
+    },
+    {
+      "original_path": "BanditRLProof/OnlineClosedProper.lean",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-BanditRLProof--OnlineClosedProper.lean.txt",
+      "sha256": "c66f00c33b45fb8a0e11583eeadf506e176c16166ce2af02f41f0674507cebe7"
+    },
+    {
+      "original_path": "BanditRLProof/OnlineSubgradientBasic.lean",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-BanditRLProof--OnlineSubgradientBasic.lean.txt",
+      "sha256": "af3d3f56e4a64cd8adbe47368caf5382e63b428f01da29a121c28c8014f352a5"
+    },
+    {
+      "original_path": "BanditRLProof.lean",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-BanditRLProof.lean.txt",
+      "sha256": "a55f74874b8b04e0d3a5202f6b3922fa67a64ba058f477da902fdfa9d4ea4381"
+    },
+    {
+      "original_path": "Tests.lean",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-Tests.lean.txt",
+      "sha256": "fd64bfd5c35383d69d25a47d6f91894dd6435b57e9b3c1eb56eb364d65615cea"
+    },
+    {
+      "original_path": "lean-toolchain",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-lean-toolchain.txt",
+      "sha256": "b15a57f8ea4c890197465ce1156667ae13d9ed4ab8a9f263a920bf010d967d82"
+    },
+    {
+      "original_path": "lakefile.lean",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-lakefile.lean.txt",
+      "sha256": "0164f3b5b5bdcbb237ab15ae8b44da83e183f4b97d5f3832aa4a57f27dc69d45"
+    },
+    {
+      "original_path": "lake-manifest.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-lake-manifest.json.txt",
+      "sha256": "87c3e616f86244550ef39e7415186b11c1d4cf4bef20173196a619d9d4d48f48"
+    },
+    {
+      "original_path": "runs/active_frontier.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-runs--active_frontier.json.txt",
+      "sha256": "567e5873aa2549a83f2820d758069213808da822a93087129877385a1addf7c3"
+    },
+    {
+      "original_path": "docs/contracts/online-book-v1/source-inventory.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-book-v1--source-inventory.json.txt",
+      "sha256": "a2a504cf40d73f9c5e36f00fc1ef3b949ccaf5a558ab603c1c2a86007f30efa7"
+    },
+    {
+      "original_path": "research-wiki/contribution-contracts/ONLINE-OSD-POLICY-20261004.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-research-wiki--contribution-contracts--ONLINE-OSD-POLICY-20261004.json.txt",
+      "sha256": "f3002707f00a8557706513962f45c76a8b8555780c35d3b824379eb3144992d3"
+    },
+    {
+      "original_path": "website/content/readings.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-website--content--readings.json.txt",
+      "sha256": "d393dea167d79ba641c6f7aa0051e9e45eba179713b3073ee8cf666a6d022e4f"
+    },
+    {
+      "original_path": "website/content/highlights.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-website--content--highlights.json.txt",
+      "sha256": "d05c3efcf6c4278b169c7b7673b107c114250827b9c6d42dad0f5b48bd5c1042"
+    },
+    {
+      "original_path": "website/content/chapters.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-website--content--chapters.json.txt",
+      "sha256": "f7c621a4bb35b26e652c2ebec022ca6b857051f1c3652ab8e71f24c411afb64c"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-policy-v1/canonicalPolicy_legal-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-policy-v1--canonicalPolicy_legal-header.txt.txt",
+      "sha256": "26d18639d611207579e0ab562a6033e1e2dd0c8ef2bdab6fc9aaed8634ec70f2"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-policy-v1/canonicalPolicy_legal.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-policy-v1--canonicalPolicy_legal.json.txt",
+      "sha256": "e99d2bb591ec42b6624a0a2e12bcf5dafa7cf5b151a28393ca57c9d9682efb0f"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-policy-v1/canonical_output-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-policy-v1--canonical_output-header.txt.txt",
+      "sha256": "fc6fdc7275144b35ec71e288e3ae7514d6384a6f7212e1f63c8032b9b6941543"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-policy-v1/canonical_output.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-policy-v1--canonical_output.json.txt",
+      "sha256": "408b28026d1c63eb7c3eac3414c37571e2e2424d02609d785a30c460d84d6285"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-policy-v1/canonical_selected-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-policy-v1--canonical_selected-header.txt.txt",
+      "sha256": "472b4e1ea27e71766fe921e97ff9752c0118fc63da611e59f3b12ab952b34fab"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-policy-v1/canonical_selected.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-policy-v1--canonical_selected.json.txt",
+      "sha256": "e4dab383fe7725cb7c2adffd433256364336ec3d7cf4461ec913ba8cda51442d"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-policy-v1/context.lean.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-policy-v1--context.lean.txt.txt",
+      "sha256": "ee72b114bb52c78457ab2ebe40f50b92d4fa57fd2cb31f61bff817857b5d6955"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-policy-v1/history_mem-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-policy-v1--history_mem-header.txt.txt",
+      "sha256": "9468a05fdb0220c548b125edce2cdb6f0f34b800af9e5dafde513a543232e161"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-policy-v1/history_mem.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-policy-v1--history_mem.json.txt",
+      "sha256": "3921cc2f4e6c037c2b02a5fd1276bf0d85f930dd54d3da7230b81c6de7414bf4"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-policy-v1/history_prefix-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-policy-v1--history_prefix-header.txt.txt",
+      "sha256": "1ca72256d383ab8d1e37713d389469a4fbfc8fee39048d5db8be4043b60da7fb"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-policy-v1/history_prefix.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-policy-v1--history_prefix.json.txt",
+      "sha256": "235c485ed22f716fadfea56725d28847b6aadfd5dacd00930b51a90c7e7efa8f"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-policy-v1/history_succ-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-policy-v1--history_succ-header.txt.txt",
+      "sha256": "5eae2449132cfdef3384d03567d9042a1759a2e40f30b7be6f4bfb2eacb6979e"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-policy-v1/history_succ.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-policy-v1--history_succ.json.txt",
+      "sha256": "b134690216d09fbd8be0e73bdd959d2f6d28ae7337e5ab5f595d426625dcebe7"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-policy-v1/history_zero-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-policy-v1--history_zero-header.txt.txt",
+      "sha256": "d63910bf80ed414eb9332b01948f47b43a1f5552df1fd728b204c6d866947a67"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-policy-v1/history_zero.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-policy-v1--history_zero.json.txt",
+      "sha256": "d13e02d9949e036236fa7f08a97bf03e568cd2c711453030c8b3bf30cedb98fa"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-policy-v1/one_step-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-policy-v1--one_step-header.txt.txt",
+      "sha256": "fcfaf7d9ec3a58e78927639b14d14f800212d6af8d5da7772a37232b9d9e0f9a"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-policy-v1/one_step.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-policy-v1--one_step.json.txt",
+      "sha256": "65798cb678f7192285a1a3cadc9fb1f973b88011c44439eaed88f02191169591"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-policy-v1/one_step_chain-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-policy-v1--one_step_chain-header.txt.txt",
+      "sha256": "1796e67373a24b89353a64956396bb1060d0b2ab1f00c8482d5400d803fde41a"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-policy-v1/one_step_chain.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-policy-v1--one_step_chain.json.txt",
+      "sha256": "e1a0c8b53ab431e061e799f691a5d265c4a950fd4d532a1925fe821ee35da72f"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-policy-v1/oracle_feedback-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-policy-v1--oracle_feedback-header.txt.txt",
+      "sha256": "a1df9e198e87f0e700cadd42bd025d15c4ce40ea19a9007953090fe063b8ca7b"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-policy-v1/oracle_feedback.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-policy-v1--oracle_feedback.json.txt",
+      "sha256": "17caf1dfcf88dca7820a4e700361c27c9e6d5e14ef0b791ce070d3eb004ab3db"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-policy-v1/output_mem-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-policy-v1--output_mem-header.txt.txt",
+      "sha256": "1bcd9773a20c778839c473ce4c377531b555051cba7ed1a4c4066fc4763a657a"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-policy-v1/output_mem.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-policy-v1--output_mem.json.txt",
+      "sha256": "7ce02843f330bf09fe36dce90b635151dbc3dee82a79e98d45b24996e69d2bed"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-policy-v1/output_prefix-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-policy-v1--output_prefix-header.txt.txt",
+      "sha256": "1ed169261ba2cab28c36752102861146be49c277b27689d90cb1ac15c6579f20"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-policy-v1/output_prefix.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-policy-v1--output_prefix.json.txt",
+      "sha256": "4da01f6c5786e2bdd963de645e404ba901758db3abaa30fa325beec268728d4f"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-policy-v1/output_succ-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-policy-v1--output_succ-header.txt.txt",
+      "sha256": "f22f6c538f980ac448a20f42db832c3f2a0f0c15fa65b669054dddcff7749863"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-policy-v1/output_succ.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-policy-v1--output_succ.json.txt",
+      "sha256": "a4623134cd3cc77cf21d3b8c33ddc19eabfd90c0c503cb958092629388efee15"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-policy-v1/output_zero-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-policy-v1--output_zero-header.txt.txt",
+      "sha256": "dad71d11b63884ce10acc85a4ea13e6f654af9a6836f0295ad57261270f04863"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-policy-v1/output_zero.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-policy-v1--output_zero.json.txt",
+      "sha256": "85065091fab587b1d5fc6b9600bbdab0e26c96a7d9bf476b4ec874012272b2c9"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-policy-v1/regret_fixed-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-policy-v1--regret_fixed-header.txt.txt",
+      "sha256": "1e489df9b030fd45da35e6039ab47034df6f4c6a0feed66fd0cefc5e81970594"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-policy-v1/regret_fixed.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-policy-v1--regret_fixed.json.txt",
+      "sha256": "301c7bbd2f942c138d33c87691fcdcbca1321f511471df58e572d06f730181a7"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-policy-v1/regret_fixed_coarse-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-policy-v1--regret_fixed_coarse-header.txt.txt",
+      "sha256": "f4271fae5c084793fb36d24f24cba5964d43318a05c21ffc99c4ed3a84c9eb83"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-policy-v1/regret_fixed_coarse.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-policy-v1--regret_fixed_coarse.json.txt",
+      "sha256": "c2d2e352c56c0c891c9c32009f1f0f42f6101d2ad5a2d120676a5793875319e6"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-policy-v1/regret_tuned-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-policy-v1--regret_tuned-header.txt.txt",
+      "sha256": "7a469e76a8cbbdc07919c6dceeabb50c87a70f6ba52212c8ffeffab630884192"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-policy-v1/regret_tuned.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-policy-v1--regret_tuned.json.txt",
+      "sha256": "3412f9eff9663a85186db07f6228613b1694995030361fc97810f9c96d9c6dfc"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-policy-v1/regret_tuned_distance-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-policy-v1--regret_tuned_distance-header.txt.txt",
+      "sha256": "df0b87a329d3e27e5d16f0de063142d22afd39b79b7d1ecb297b9a6113dd201a"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-policy-v1/regret_tuned_distance.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-policy-v1--regret_tuned_distance.json.txt",
+      "sha256": "9a597bd2a4282d696ce346a6e7ca142689c9c76a6c012feae6d453c9a8eafc21"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-policy-v1/regret_variable-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-policy-v1--regret_variable-header.txt.txt",
+      "sha256": "e72d28e3ea73f00d64c7ea88decf56de951383cf66da77d83553d64d420dc7d2"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-policy-v1/regret_variable.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-policy-v1--regret_variable.json.txt",
+      "sha256": "39091cb2a39306fef3aa9221440d67958518a837e9c1516f4815fa8aa77676d9"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-policy-v1/regret_variable_bound-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-policy-v1--regret_variable_bound-header.txt.txt",
+      "sha256": "e67b0da485e6cf69e0a788146bc692af708c3cfff170f022a33058bcfa7d7361"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-policy-v1/regret_variable_bound.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-policy-v1--regret_variable_bound.json.txt",
+      "sha256": "275396a5b0edad4254045b08e5dbb1afeb158382b9d1a7881853e16877941278"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-policy-v1/trajectory_finite_loss-header.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-policy-v1--trajectory_finite_loss-header.txt.txt",
+      "sha256": "70712b8a584a197c6b433802afcd64a05f64325479e166b68f064deddf82481e"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-policy-v1/trajectory_finite_loss.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-policy-v1--trajectory_finite_loss.json.txt",
+      "sha256": "7c0b92f5925ce4e03c6ad8c0bc1787d2c408011ce7c00b2954aff3e732d74d08"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-public-v1/actual-context-v1.txt",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-public-v1--actual-context-v1.txt.txt",
+      "sha256": "b162f92f05924622d248b0673321078b35330dc3980f7b53c1adc4ba64087a5c"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-public-v1/contract-manifest-overlay-v2.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-public-v1--contract-manifest-overlay-v2.json.txt",
+      "sha256": "c4f29defc1ce9f008c63100c315585fc32fa130b16c91cc1bd05f223cfa6ba12"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-public-v1/contract-manifest-v1.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-public-v1--contract-manifest-v1.json.txt",
+      "sha256": "430e6e4f58ad1eaf2493473007fe4eb228b6ade3693b8c897cf1ed9a12ec33f4"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-public-v1/contract.md",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-public-v1--contract.md.txt",
+      "sha256": "101d83e3651c925970d068c0334e456f85fd416d64ac3f22550e9e8a1c738aeb"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-public-v1/dependency-DAG-v1.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-public-v1--dependency-DAG-v1.json.txt",
+      "sha256": "4bc2c6e9c25a483485c330cfda405767b1f902a8d1dadbcca78c9d594cbcc84b"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-public-v1/headers-v2.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-public-v1--headers-v2.json.txt",
+      "sha256": "e5bd0a37c6692943efab8df6eb30cb2226cb338e230d56c606b80ff15c9aa87b"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-public-v1/headers.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-public-v1--headers.json.txt",
+      "sha256": "a7857fbab393344eed02527108494d191f4163af680bbf01e5902957ed1b210a"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-public-v1/native-statement-fingerprints-v1.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-public-v1--native-statement-fingerprints-v1.json.txt",
+      "sha256": "62a3787f9325733fa480a46ad59a400268278d141f76318078c27da30889ed3f"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-public-v1/raw-statement-fingerprints-v1.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-public-v1--raw-statement-fingerprints-v1.json.txt",
+      "sha256": "9cd322b2d0e6ffbf36c8f967d85261e949021262c9222b53cee5fbdf2aa6ba42"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-public-v1/raw-statement-fingerprints-v2.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-public-v1--raw-statement-fingerprints-v2.json.txt",
+      "sha256": "730ebb161299c67b62ee6feb36b7edb73af3da31a5dbeb69c06eafff2e5f1ccd"
+    },
+    {
+      "original_path": "docs/contracts/online-osd-public-v1/source-card.json",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-osd-policy-public-20261007/snapshots/before-docs--contracts--online-osd-public-v1--source-card.json.txt",
+      "sha256": "45dd2f4b97ce51897b108c70726820096bd9c866be896abd052c8efb69577407"
+    }
+  ],
+  "raw_headers": {
+    "history_zero": "4750337d812022353315f763e9de2e9dedaffa0fc1900a2e28d79ee797b862a4",
+    "history_succ": "849db1f8db334fdc7b63a0f83655a2224652169726e3a20496de4d97925e928a",
+    "output_zero": "a3e967e6ca1e3cee8f076ebe0f540e878c32ffed7ea028c6e784dc1c96c0a539",
+    "output_succ": "fd5a197418a67290f9cbd6bef2a29d6aadf143c1e0e38000838ba72a1c3260f8",
+    "history_mem": "7eb9f17514c7fa74ae7be045c4dbbb1b61e13849a50e94956c3ddd10b6893315",
+    "output_mem": "444c8c8e6425f8879a1a5e7c7616a9cee9e9423ffb6755157adc868f135a5c82",
+    "history_prefix": "3e5acc01a59384f5fb5b2efb4cc00a46916698f83f6f2961328132bdcbcfe5b4",
+    "output_prefix": "305ea1d9bfb89417658ead9925696c4bbe689756f9c7cc270bc705359a0f2944",
+    "oracle_feedback": "1c852c73d98ddbb47b4a1cc2dbfa680f22d94f32b7b86ffdcda2ed4c1fa02c29",
+    "trajectory_finite_loss": "0ef10292a3960b1adbbae827349e5765c928b6e60f45ea5f7549557631d40eef",
+    "one_step_chain": "beac07c5c2259e1b0b10366b12e326d3e0d8d057ba15b6826936b8deed2e8d50",
+    "one_step": "8c43415242a19e0b80cffadcaa6346166fbee90a3107aa27325b322aec74538c",
+    "regret_fixed": "c1c525682d523a8fac081f26190442e0f3da23e6c1c4e3b464ecbd9917f0f3ec",
+    "regret_fixed_coarse": "a42d77a564599219bb69ebc1af77b028be0b89aed8393c154d96f317a15e3931",
+    "regret_variable_bound": "2293ee103f9703abac2fa2a2d05227fcc855b4597c7b1887ede4884dec16d1ce",
+    "regret_variable": "b6076151c94473c1aa5a441da1362e0d9abe50092eb5b8a5f009e4f479456679",
+    "regret_tuned_distance": "e8fe5c2c0c69ef24fcb69044ea33cc2de9ffac54a51d5405efa3ab241c078356",
+    "regret_tuned": "94a1480e4ca9962e2f76b517c8a84dc969c5318f7efec15693b9afc9bbfa7449",
+    "canonicalPolicy_legal": "1fa235ec12f5dfdfee9b018726afd63e18fbb87484f892737e9356fd575d145d",
+    "canonical_output": "9181f8efd55e391045ab9cefc3d890409d3c8a3c4f10788abdc193410d9cec10",
+    "canonical_selected": "0583884122a3d1307f7d7cfab66b9828892700ccc14902b2721e1b4b55665767"
+  },
+  "native_headers": {
+    "history_zero": "fac4822763f3cd09fa2b54e0cc8440b112e4d197e8b7050ad951ac8609c91e0f",
+    "history_succ": "d1c07adb1b7dac0a730844e6a60f1714976d2c4893784043cb963968c5aa745a",
+    "output_zero": "134a47b210eb786428574e8f83938fdd56702a1bc8713c52a256e4f4c7c3bd99",
+    "output_succ": "11e954c0e4438ec969a78fd4ead1bfaf502debd68b86fb6409e484d0de3b1954",
+    "history_mem": "3a0dc30d8fc1e8633e1e37324ae42fddc88afafb68364eca53eb23edbfe0dc80",
+    "output_mem": "b932bc2e0255adfc1041f5b877da946355be57fbb566ca07de12eea4bfdb801d",
+    "history_prefix": "25117f8644a14675c2811a6ce34629ad22f25e3ae541fd8d2f39cb4e46203491",
+    "output_prefix": "b7b6613d22c87ce6bff0a39a1acbfcad6cdfa3856bea38bc8592e6f8ded3f640",
+    "oracle_feedback": "f9ec04f4ccf403b1787b79996d71f7bc2a2973ff54dde2576f606667f588eb73",
+    "trajectory_finite_loss": "836819b12d46ad24eb5dbb706e939a819b5346b256ab046289d70da1f26e963c",
+    "one_step_chain": "689043480831def4289c1888ac69ec6c22e56114f30181f8c4ca83d403ee5836",
+    "one_step": "d8bd64efa5c962e011255edd07e6118e3c6637beb0f303434f3227c98b9f21fd",
+    "regret_fixed": "17aa0af510352714290d221f1b0fdd2deecb5161479cbfe4a6c1c601c80dfc20",
+    "regret_fixed_coarse": "d89a5668ec39fb4b0175b67aafc48cee072799216efbf0f069d1b003a69c5e99",
+    "regret_variable_bound": "ffc6ff500dfbf64c821e611505b211e68fd16dd5f21c1c809c8dabbe754149f1",
+    "regret_variable": "78ac378e3bc8a99df36304e6ca20b40b717aab86e838cf73ecf71c53ebdce65c",
+    "regret_tuned_distance": "4f091124158dba9375bdf56d0f4b9a4f53b54d64ff3455d9ae568dbd91f44157",
+    "regret_tuned": "b4a42ca7ae5b9ec84949a598555031f5cb8180b18792ac56c7d9ef54cd982586",
+    "canonicalPolicy_legal": "3fceb25d7530578dcb68a2ebc2063016f9b2a6716436dc545adc653ef320ef0d",
+    "canonical_output": "d3c5429cbbb0959997817e3bf4df49ec9c6eeb8f7f6cc4a0e34f7d668539c60d",
+    "canonical_selected": "03831a16d2597c92f52849a122d8d5fced07977356d9f05abd32fc2959fed828"
+  },
+  "proof_bodies_preexist_current_draft": true,
+  "source_package_accepted": false,
+  "chapter_complete": false,
+  "goal_complete": false,
+  "retained_public_proofs": 21,
+  "retained_public_definitions": 7,
+  "retained_public_abbreviations": 2,
+  "retained_canary_proofs": 74,
+  "retained_canary_definitions": 11,
+  "retained_canary_abbreviations": 7,
+  "new_public_proofs": 0,
+  "new_definitions": 0,
+  "new_canary_proofs": 0
+}

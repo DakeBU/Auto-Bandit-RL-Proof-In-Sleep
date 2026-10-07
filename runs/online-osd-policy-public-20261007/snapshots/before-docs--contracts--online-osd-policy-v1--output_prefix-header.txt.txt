@@ -1,0 +1,4 @@
+theorem output_prefix (V : Domain (E := E)) (η η' : ℕ → ℝ)
+    (loss loss' : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ)
+    (hη : ∀ s < t, η s = η' s) (hloss : ∀ s < t, loss s = loss' s) :
+    output V η loss x₁ p t = output V η' loss' x₁ p t

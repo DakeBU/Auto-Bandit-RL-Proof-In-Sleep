@@ -1,0 +1,74 @@
+{
+  "kind": "initial semantic overlay; actual proof VALUE export pending",
+  "edges": [
+    {
+      "parents": "actual shared project_spec/Nat.rec",
+      "child": "BanditRL.OnlineSubgradientPolicy.history_mem"
+    },
+    {
+      "parents": "history_mem",
+      "child": "BanditRL.OnlineSubgradientPolicy.output_mem"
+    },
+    {
+      "parents": "actual Fin.snoc recurrence/equal finite past inputs",
+      "child": "BanditRL.OnlineSubgradientPolicy.history_prefix"
+    },
+    {
+      "parents": "history_prefix",
+      "child": "BanditRL.OnlineSubgradientPolicy.output_prefix"
+    },
+    {
+      "parents": "optional off-path law/output_mem",
+      "child": "BanditRL.OnlineSubgradientPolicy.oracle_feedback"
+    },
+    {
+      "parents": "properness/support finiteness/output_mem",
+      "child": "BanditRL.OnlineSubgradientPolicy.trajectory_finite_loss"
+    },
+    {
+      "parents": "actual played support/full canonical lemma_2_31/output_succ",
+      "child": "BanditRL.OnlineSubgradientPolicy.one_step_chain"
+    },
+    {
+      "parents": "one_step_chain/positive division",
+      "child": "BanditRL.OnlineSubgradientPolicy.one_step"
+    },
+    {
+      "parents": "same actual recursive path/one_step_chain/telescope",
+      "child": "BanditRL.OnlineSubgradientPolicy.regret_fixed"
+    },
+    {
+      "parents": "regret_fixed/nonnegative residual",
+      "child": "BanditRL.OnlineSubgradientPolicy.regret_fixed_coarse"
+    },
+    {
+      "parents": "one_step/weighted_potential_sum/output_mem/true pairwise bound",
+      "child": "BanditRL.OnlineSubgradientPolicy.regret_variable_bound"
+    },
+    {
+      "parents": "regret_variable_bound/bounded Metric.diam",
+      "child": "BanditRL.OnlineSubgradientPolicy.regret_variable"
+    },
+    {
+      "parents": "regret_fixed/actual same tuned path norm bound/positive sqrt algebra",
+      "child": "BanditRL.OnlineSubgradientPolicy.regret_tuned_distance"
+    },
+    {
+      "parents": "regret_tuned_distance/pairwise bound",
+      "child": "BanditRL.OnlineSubgradientPolicy.regret_tuned"
+    },
+    {
+      "parents": "current canonical selector/spec",
+      "child": "BanditRL.OnlineSubgradientPolicy.canonicalPolicy_legal"
+    },
+    {
+      "parents": "actual induction/canonical selector",
+      "child": "BanditRL.OnlineSubgradientPolicy.canonical_output"
+    },
+    {
+      "parents": "canonical_output/actual selected definition",
+      "child": "BanditRL.OnlineSubgradientPolicy.canonical_selected"
+    }
+  ],
+  "not_import_implication": true
+}

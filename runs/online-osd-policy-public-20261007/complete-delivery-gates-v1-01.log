@@ -1,0 +1,18 @@
+c42594758941d8f40cbbb55d443bf2da8603c309
+contributor-final-v1-01 exit 0 seconds 0.125
+scoped-diff-final-v1-01 exit 0 seconds 0.219
+2a9be0dca51ef582832e71c248f591d16e85766e
+committed-raw-audit-v1-01 exit 1 seconds 0.485
+Traceback (most recent call last):
+  File "E:\ABRL\worktrees\research-online-book\runs\online-osd-policy-public-20261007\audit-committed-raw-v1.py", line 12, in <module>
+    assert rel in objects,('File not in audited Git tree',rel);raw=subprocess.check_output(['git','cat-file','blob',objects[rel]]);h=hashlib.sha256(raw).hexdigest();assert h==sha(p),rel
+AssertionError: runs/online-osd-policy-public-20261007/accepted-frontier-refresh-v1-exit.json
+
+Traceback (most recent call last):
+  File "runs/online-osd-policy-public-20261007/complete-delivery-gates-v1.py", line 9, in <module>
+    gate('committed-raw-audit-v1-01',sys.executable,'-B','-X','utf8',RUN/'audit-committed-raw-v1.py')
+  File "E:\ABRL\worktrees\research-online-book\runs\online-osd-policy-public-20261007\common_v1.py", line 15, in gate
+    def gate(label,*args):subprocess.run([sys.executable,'-B','-X','utf8',str(RUN/'run-command.py'),label,*map(str,args)],check=True)
+  File "C:\Users\admin\AppData\Local\Programs\Python\Python38\lib\subprocess.py", line 516, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe', '-B', '-X', 'utf8', 'E:\\ABRL\\worktrees\\research-online-book\\runs\\online-osd-policy-public-20261007\\run-command.py', 'committed-raw-audit-v1-01', 'C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe', '-B', '-X', 'utf8', 'E:\\ABRL\\worktrees\\research-online-book\\runs\\online-osd-policy-public-20261007\\audit-committed-raw-v1.py']' returned non-zero exit status 1.

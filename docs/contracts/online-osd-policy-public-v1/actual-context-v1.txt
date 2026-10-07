@@ -1,0 +1,51 @@
+import BanditRLProof.OnlineSubgradientDescent
+
+/-!
+# Projected subgradient descent with arbitrary legal history-dependent supports
+Orabona arXiv:1912.13213v10, Algorithm 2.2 / Lemma 2.31 and the explicit
+Theorem 2.13 / equation (2.1) transfer (printed 19-21 and 13-15).
+A support policy sees finite past losses/outputs and the current whole loss.
+The actual history appends the shared nearest projection of the actual update.
+Performance requires legal supports only at played points; the stronger off-path
+oracle law is an optional sufficient adapter. Fixed and decreasing step bounds
+keep the negative terminal squared-distance term. The fixed branch allows T=0
+and unbounded domains. Tuning is for the same horizon-prescribed run with
+D,G,T>0, not an anytime or future-support-energy optimizer.
+Source round 1 is Lean time 0; output at T is source x_(T+1).
+The prefix theorem compares a common exogenous policy/initialization and equal
+strict-past loss functions/step schedules. It does not constrain how external
+parameters were selected. This is deterministic pathwise full information,
+with mathematical noncomputable choices, not a randomized adaptive-law API.
+Canonical bridges recover the previously defined current-loss chooser exactly.
+-/
+noncomputable section
+open Set Finset BanditRL.OnlineConvex
+namespace BanditRL.OnlineSubgradientPolicy
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
+abbrev Domain := BanditRL.OnlineGradientDescent.Domain E
+abbrev SupportPolicy := (t : ℕ) → (Fin t → E → EReal) → (Fin (t + 1) → E) → (E → EReal) → E
+/-- Only finite past losses/outputs and the currently observed loss are inputs. -/
+def history (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) : (t : ℕ) → Fin (t + 1) → E :=
+  Nat.rec (motive := fun t => Fin (t + 1) → E) (fun _ => x₁)
+    (fun t h => Fin.snoc h
+      (BanditRL.OnlineGradientDescent.project V
+        (h (Fin.last t) - η t • p t (fun i => loss i.val) h (loss t))))
+def output (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) : E :=
+  history V η loss x₁ p t (Fin.last t)
+def selected (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) : E :=
+  p t (fun i => loss i.val) (history V η loss x₁ p t) (loss t)
+def OracleLaw (V : Domain (E := E)) (p : SupportPolicy (E := E)) : Prop :=
+  ∀ t past h f, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V f →
+    h (Fin.last t) ∈ V.carrier → p t past h f ∈ SourceSubdifferential f (h (Fin.last t))
+def canonicalPolicy : SupportPolicy (E := E) := fun t _ h f =>
+  BanditRL.OnlineSubgradientDescent.currentSubgradient f (h (Fin.last t))
+/-- Legality is imposed only at the actual played points, not at off-path histories. -/
+def LegalFeedback (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (T : ℕ) : Prop :=
+  ∀ t < T, selected V η loss x₁ p t ∈ SourceSubdifferential (loss t) (output V η loss x₁ p t)
+def regret (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (u : E) (T : ℕ) : ℝ :=
+  ∑ t ∈ range T, ((loss t (output V η loss x₁ p t)).toReal - (loss t u).toReal)

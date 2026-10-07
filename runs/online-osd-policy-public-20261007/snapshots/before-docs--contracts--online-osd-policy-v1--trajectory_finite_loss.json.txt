@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineSubgradientPolicy.trajectory_finite_loss",
+  "file": "tmp/online-osd-policy-target-v1.lean",
+  "statement": "theorem trajectory_finite_loss (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (hx₁ : x₁ ∈ V.carrier) (t : ℕ) (hloss : BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) (u : E) (hu : u ∈ V.carrier) : loss t (output V η loss x₁ p t) = ((loss t (output V η loss x₁ p t)).toReal : EReal) ∧ loss t u = ((loss t u).toReal : EReal)",
+  "statement_hash": "836819b12d46ad24eb5dbb706e939a819b5346b256ab046289d70da1f26e963c",
+  "source_assumptions": [
+    "(hx₁ : x₁ ∈ V.carrier)",
+    "(hloss : BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t))",
+    "(hu : u ∈ V.carrier)"
+  ],
+  "created_at": "2026-10-04T08:27:58+00:00"
+}
