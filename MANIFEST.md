@@ -15468,3 +15468,4 @@ Orabona v10 Definition2.29/Theorem2.30 printed19/PDF31: one retained owned finit
 ## ONLINE-CONVEX-NONDIFFERENTIABILITY-20261007
 
 Orabona v10 unnumberedexample afterT2.30/endSection2.2.1 immediatelybefore2.2.2 printed19/PDF31. NewactualrealEuclidean2 globalconvex+ALLclosedsegment ambientnondifferentiability terminal:3publicproofs/1definition/5nondegeneratecanaryproofs/9standardkernel4guards/9actualnodes1194refs9requiredpairs. CONTRACTv1sourceM1rejection/v2metadata-onlyrepair/BODYaccepted; originalfailures/fingerprints preserved. Combinedproject/site/FINAL/native/actualPRpending atthishistoricalcandidateentry. FormaluncountabilityconsequenceseparatelyREQUIREDplanned, Chapter2null/incomplete/GoalACTIVE, no merge/mainlive.
+- `2026-10-07T05:59:47+00:00` `bandit.py new-task` `task` `tasks/ONLINE-GUESSING-OSD-POLICY-20261007.md` - Example2.32 arbitrary played-legal finite-history OSD policy guarantee

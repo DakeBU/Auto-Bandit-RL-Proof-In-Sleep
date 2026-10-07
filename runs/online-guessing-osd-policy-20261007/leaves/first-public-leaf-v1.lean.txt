@@ -1,0 +1,18 @@
+import BanditRLProof.OnlineGuessingSubgradient
+import BanditRLProof.OnlineSubgradientPolicy
+
+noncomputable section
+open Set Finset Filter BanditRL.OnlineConvex
+open BanditRL.OnlineSubgradientPolicy
+open BanditRL.OnlineGuessingSubgradient (loss loss_subgradient_bound loss_on_unitInterval)
+open BanditRL.OnlineGradientDescent (unitInterval)
+namespace BanditRL.OnlineGuessingSubgradientPolicy
+
+theorem selected_bound (η : ℕ → ℝ) (y : ℕ → ℝ) (x₁ : ℝ)
+    (p : SupportPolicy (E := ℝ)) (T : ℕ)
+    (hlegal : LegalFeedback unitInterval η (fun s => loss (y s)) x₁ p T)
+    (t : ℕ) (ht : t < T) :
+    ‖selected unitInterval η (fun s => loss (y s)) x₁ p t‖ ≤ 1 := by
+  exact loss_subgradient_bound (y t) _ _ (hlegal t ht)
+
+end BanditRL.OnlineGuessingSubgradientPolicy

@@ -1,0 +1,10 @@
+from common_v1 import *
+fixed()
+assert load(RUN/'first-public-leaf-focused-v1-01-exit.json')['exit_code']==0
+failure=json.loads((RUN/'first-public-leaf-safe-v1-01.log').read_text(encoding='utf-8'))
+assert failure['expected_statement_hash']==failure['actual_statement_hash'] and failure['findings'][0]['kind']=='source_assumption_removed'
+write(RUN/'first-leaf-guard-repair-v2.json',dict(original_failure='first-public-leaf-safe-v1-01.log',actual_reason='CLI source-assumption guards test literal substrings. Initial prose annotation was never a literal substring in Lean, so it failed despite identical statement hash. Do not infer semantic removal.',repair='New fence version binds actual hlegal and ht binder substrings. Mathematical source/contract/type/proof body unchanged; source semantic review remains separate.',source_contract_changed=False,public_header_changed=False,body_changed=False,source_package_accepted=False))
+native('first-public-leaf-fence-v2-01','statement-fence','--declaration','BanditRL.OnlineGuessingSubgradientPolicy.selected_bound','--file',PUBLIC,'--source-assumption','hlegal : LegalFeedback','--source-assumption','ht : t < T','--output',str(RUN/'native-public-fences/selected_bound-v2.json'))
+native('first-public-leaf-safe-v2-01','safe-verify','--fence',str(RUN/'native-public-fences/selected_bound-v2.json'),'--lean-file',PUBLIC)
+write(Path('proof-obligations')/(TASK+'-proving-v1.json'),dict(task=TASK,stage='proving',frozen_contract=CONTRACT.as_posix(),first_leaf='selected_bound',first_leaf_status='compiled-focused-public-with-native-fence-and-safe-check',first_leaf_receipt=RUN.joinpath('first-public-leaf-focused-v1-01-exit.json').as_posix(),literal_safe_guard_receipt=RUN.joinpath('first-public-leaf-safe-v2-01-exit.json').as_posix(),terminal='example_2_32',terminal_status='pending',remaining_new_targets=['step_clamp','example_2_32','example_2_32_average_eventually'],source_body_and_public_canary='pending',package_acceptance=False,chapter_complete=False,goal_complete=False))
+fixed();print('First PUBLIC norm leaf actually compiled/fenced/safechecked; metadata guard failure preserved; terminal still pending.')

@@ -1,0 +1,88 @@
+BanditRL.OnlineGuessingSubgradient.loss : Real → Real → EReal
+BanditRL.OnlineGuessingSubgradient.loss_subgradient_bound : ∀ (y x g : Real),
+  Membership.mem.{0, 0} (BanditRL.OnlineConvex.SourceSubdifferential.{0} (BanditRL.OnlineGuessingSubgradient.loss y) x)
+      g →
+    LE.le.{0} (norm.{0} g) 1
+BanditRL.OnlineGuessingSubgradient.loss_on_unitInterval : ∀ (y : Real),
+  BanditRL.OnlineSubgradientDescent.SubdifferentiableOn.{0} BanditRL.OnlineGradientDescent.unitInterval
+    (BanditRL.OnlineGuessingSubgradient.loss y)
+@BanditRL.OnlineSubgradientPolicy.output_succ.{u_1} : ∀ {E : Type u_1} [inst : NormedAddCommGroup.{u_1} E]
+  [inst_1 : InnerProductSpace.{0, u_1} Real E] [inst_2 : FiniteDimensional.{0, u_1} Real E]
+  (V : BanditRL.OnlineSubgradientPolicy.Domain.{u_1}) (η : Nat → Real) (loss : Nat → E → EReal) (x₁ : E)
+  (p : BanditRL.OnlineSubgradientPolicy.SupportPolicy.{u_1}) (t : Nat),
+  Eq.{u_1 + 1} (BanditRL.OnlineSubgradientPolicy.output.{u_1} V η loss x₁ p (HAdd.hAdd.{0, 0, 0} t 1))
+    (BanditRL.OnlineGradientDescent.project.{u_1} V
+      (HSub.hSub.{u_1, u_1, u_1} (BanditRL.OnlineSubgradientPolicy.output.{u_1} V η loss x₁ p t)
+        (HSMul.hSMul.{0, u_1, u_1} (η t) (BanditRL.OnlineSubgradientPolicy.selected.{u_1} V η loss x₁ p t))))
+@BanditRL.OnlineSubgradientPolicy.regret_tuned.{u_1} : ∀ {E : Type u_1} [inst : NormedAddCommGroup.{u_1} E]
+  [inst_1 : InnerProductSpace.{0, u_1} Real E] [inst_2 : FiniteDimensional.{0, u_1} Real E]
+  (V : BanditRL.OnlineSubgradientPolicy.Domain.{u_1}) (loss : Nat → E → EReal) (x₁ : E)
+  (p : BanditRL.OnlineSubgradientPolicy.SupportPolicy.{u_1}),
+  Membership.mem.{u_1, u_1} (BanditRL.OnlineGradientDescent.Domain.carrier.{u_1} V) x₁ →
+    ∀ (T : Nat),
+      LT.lt.{0} 0 T →
+        ∀ (D G : Real),
+          LT.lt.{0} 0 D →
+            LT.lt.{0} 0 G →
+              (∀ (t : Nat), LT.lt.{0} t T → BanditRL.OnlineSubgradientDescent.SubdifferentiableOn.{u_1} V (loss t)) →
+                BanditRL.OnlineSubgradientPolicy.LegalFeedback.{u_1} V
+                    (fun x => HDiv.hDiv.{0, 0, 0} D (HMul.hMul.{0, 0, 0} G (Real.sqrt ↑T))) loss x₁ p T →
+                  (∀ (x : E),
+                      Membership.mem.{u_1, u_1} (BanditRL.OnlineGradientDescent.Domain.carrier.{u_1} V) x →
+                        ∀ (y : E),
+                          Membership.mem.{u_1, u_1} (BanditRL.OnlineGradientDescent.Domain.carrier.{u_1} V) y →
+                            LE.le.{0} (norm.{u_1} (HSub.hSub.{u_1, u_1, u_1} x y)) D) →
+                    (∀ (t : Nat),
+                        LT.lt.{0} t T →
+                          LE.le.{0}
+                            (norm.{u_1}
+                              (BanditRL.OnlineSubgradientPolicy.selected.{u_1} V
+                                (fun x => HDiv.hDiv.{0, 0, 0} D (HMul.hMul.{0, 0, 0} G (Real.sqrt ↑T))) loss x₁ p t))
+                            G) →
+                      ∀ (u : E),
+                        Membership.mem.{u_1, u_1} (BanditRL.OnlineGradientDescent.Domain.carrier.{u_1} V) u →
+                          LE.le.{0}
+                            (BanditRL.OnlineSubgradientPolicy.regret.{u_1} V
+                              (fun x => HDiv.hDiv.{0, 0, 0} D (HMul.hMul.{0, 0, 0} G (Real.sqrt ↑T))) loss x₁ p u T)
+                            (HMul.hMul.{0, 0, 0} (HMul.hMul.{0, 0, 0} D G) (Real.sqrt ↑T))
+@BanditRL.OnlineSubgradientPolicy.regret_fixed.{u_1} : ∀ {E : Type u_1} [inst : NormedAddCommGroup.{u_1} E]
+  [inst_1 : InnerProductSpace.{0, u_1} Real E] [inst_2 : FiniteDimensional.{0, u_1} Real E]
+  (V : BanditRL.OnlineSubgradientPolicy.Domain.{u_1}) (η : Real),
+  LT.lt.{0} 0 η →
+    ∀ (loss : Nat → E → EReal) (x₁ : E) (p : BanditRL.OnlineSubgradientPolicy.SupportPolicy.{u_1}),
+      Membership.mem.{u_1, u_1} (BanditRL.OnlineGradientDescent.Domain.carrier.{u_1} V) x₁ →
+        ∀ (T : Nat),
+          (∀ (t : Nat), LT.lt.{0} t T → BanditRL.OnlineSubgradientDescent.SubdifferentiableOn.{u_1} V (loss t)) →
+            BanditRL.OnlineSubgradientPolicy.LegalFeedback.{u_1} V (fun x => η) loss x₁ p T →
+              ∀ (u : E),
+                Membership.mem.{u_1, u_1} (BanditRL.OnlineGradientDescent.Domain.carrier.{u_1} V) u →
+                  LE.le.{0} (BanditRL.OnlineSubgradientPolicy.regret.{u_1} V (fun x => η) loss x₁ p u T)
+                    (HSub.hSub.{0, 0, 0}
+                      (HAdd.hAdd.{0, 0, 0}
+                        (HDiv.hDiv.{0, 0, 0} (HPow.hPow.{0, 0, 0} (norm.{u_1} (HSub.hSub.{u_1, u_1, u_1} x₁ u)) 2)
+                          (HMul.hMul.{0, 0, 0} 2 η))
+                        (HMul.hMul.{0, 0, 0} (HDiv.hDiv.{0, 0, 0} η 2)
+                          (∑ t ∈ Finset.range T,
+                            HPow.hPow.{0, 0, 0}
+                              (norm.{u_1} (BanditRL.OnlineSubgradientPolicy.selected.{u_1} V (fun x => η) loss x₁ p t))
+                              2)))
+                      (HDiv.hDiv.{0, 0, 0}
+                        (HPow.hPow.{0, 0, 0}
+                          (norm.{u_1}
+                            (HSub.hSub.{u_1, u_1, u_1}
+                              (BanditRL.OnlineSubgradientPolicy.output.{u_1} V (fun x => η) loss x₁ p T) u))
+                          2)
+                        (HMul.hMul.{0, 0, 0} 2 η)))
+@BanditRL.OnlineSubgradientPolicy.canonical_output.{u_1} : ∀ {E : Type u_1} [inst : NormedAddCommGroup.{u_1} E]
+  [inst_1 : InnerProductSpace.{0, u_1} Real E] [inst_2 : FiniteDimensional.{0, u_1} Real E]
+  (V : BanditRL.OnlineSubgradientPolicy.Domain.{u_1}) (η : Nat → Real) (loss : Nat → E → EReal) (x₁ : E) (t : Nat),
+  Eq.{u_1 + 1}
+    (BanditRL.OnlineSubgradientPolicy.output.{u_1} V η loss x₁ BanditRL.OnlineSubgradientPolicy.canonicalPolicy.{u_1} t)
+    (BanditRL.OnlineSubgradientDescent.iterate.{u_1} V η loss x₁ t)
+BanditRL.OnlineGradientDescent.project_unitInterval : ∀ (z : Real),
+  Eq.{1} (BanditRL.OnlineGradientDescent.project.{0} BanditRL.OnlineGradientDescent.unitInterval z)
+    (min.{0} (max.{0} z 0) 1)
+Real.tendsto_sqrt_atTop : Filter.Tendsto.{0, 0} (fun x => Real.sqrt x) Filter.atTop.{0} Filter.atTop.{0}
+@tendsto_inv_atTop_zero.{u_1} : ∀ {𝕜 : Type u_1} [inst : Semifield.{u_1} 𝕜] [inst_1 : LinearOrder.{u_1} 𝕜]
+  [IsStrictOrderedRing.{u_1} 𝕜] [inst_3 : TopologicalSpace.{u_1} 𝕜] [OrderTopology.{u_1} 𝕜],
+  Filter.Tendsto.{u_1, u_1} (fun r => Inv.inv.{u_1} r) Filter.atTop.{u_1} (nhds.{u_1} 0)

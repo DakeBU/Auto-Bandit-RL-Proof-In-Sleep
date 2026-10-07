@@ -1,0 +1,1 @@
+ROOT staged worker, requested Astra/medium. Leaf selected_bound is dependency-ready: hlegal supplies actual chosen global support membership at t<T; reuse proved absolute-loss global norm producer. No initial feasibility/label bound/positive eta added. Frozen exact header maintained; focused compilation proves ONLY this first leaf, not other targets/source package/chapter.

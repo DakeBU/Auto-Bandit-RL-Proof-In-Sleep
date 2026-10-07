@@ -1,0 +1,36 @@
+BanditRLProof\OnlineSubgradientPolicy.lean:26:abbrev SupportPolicy := (t : ℕ) → (Fin t → E → EReal) → (Fin (t + 1) → E) → (E → EReal) → E
+BanditRLProof\OnlineSubgradientPolicy.lean:29:    (x₁ : E) (p : SupportPolicy (E := E)) : (t : ℕ) → Fin (t + 1) → E :=
+BanditRLProof\OnlineSubgradientPolicy.lean:35:    (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) : E :=
+BanditRLProof\OnlineSubgradientPolicy.lean:38:    (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) : E :=
+BanditRLProof\OnlineSubgradientPolicy.lean:40:def OracleLaw (V : Domain (E := E)) (p : SupportPolicy (E := E)) : Prop :=
+BanditRLProof\OnlineSubgradientPolicy.lean:43:def canonicalPolicy : SupportPolicy (E := E) := fun t _ h f =>
+BanditRLProof\OnlineSubgradientPolicy.lean:47:    (x₁ : E) (p : SupportPolicy (E := E)) (T : ℕ) : Prop :=
+BanditRLProof\OnlineSubgradientPolicy.lean:50:    (x₁ : E) (p : SupportPolicy (E := E)) (u : E) (T : ℕ) : ℝ :=
+BanditRLProof\OnlineSubgradientPolicy.lean:53:    (x₁ : E) (p : SupportPolicy (E := E)) :
+BanditRLProof\OnlineSubgradientPolicy.lean:58:    (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) :
+BanditRLProof\OnlineSubgradientPolicy.lean:66:    (x₁ : E) (p : SupportPolicy (E := E)) :
+BanditRLProof\OnlineSubgradientPolicy.lean:71:    (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) :
+BanditRLProof\OnlineSubgradientPolicy.lean:78:    (x₁ : E) (p : SupportPolicy (E := E)) (hx₁ : x₁ ∈ V.carrier) (t : ℕ) (i : Fin (t + 1)) :
+BanditRLProof\OnlineSubgradientPolicy.lean:89:    (x₁ : E) (p : SupportPolicy (E := E)) (hx₁ : x₁ ∈ V.carrier) (t : ℕ) :
+BanditRLProof\OnlineSubgradientPolicy.lean:94:    (loss loss' : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ)
+BanditRLProof\OnlineSubgradientPolicy.lean:109:    (loss loss' : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ)
+BanditRLProof\OnlineSubgradientPolicy.lean:117:    (x₁ : E) (p : SupportPolicy (E := E)) (hx₁ : x₁ ∈ V.carrier) (T : ℕ)
+BanditRLProof\OnlineSubgradientPolicy.lean:126:    (x₁ : E) (p : SupportPolicy (E := E)) (hx₁ : x₁ ∈ V.carrier) (t : ℕ)
+BanditRLProof\OnlineSubgradientPolicy.lean:136:    (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) (hη : 0 < η t)
+BanditRLProof\OnlineSubgradientPolicy.lean:151:    (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) (hη : 0 < η t)
+BanditRLProof\OnlineSubgradientPolicy.lean:172:    (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E))
+BanditRLProof\OnlineSubgradientPolicy.lean:199:    (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E))
+BanditRLProof\OnlineSubgradientPolicy.lean:210:    (x₁ : E) (p : SupportPolicy (E := E)) (hx₁ : x₁ ∈ V.carrier) (T : ℕ) (hT : 0 < T)
+BanditRLProof\OnlineSubgradientPolicy.lean:231:    (x₁ : E) (p : SupportPolicy (E := E)) (hx₁ : x₁ ∈ V.carrier) (T : ℕ) (hT : 0 < T)
+BanditRLProof\OnlineSubgradientPolicy.lean:243:theorem regret_tuned_distance (V : Domain (E := E)) (loss : ℕ → E → EReal)
+BanditRLProof\OnlineSubgradientPolicy.lean:244:    (x₁ : E) (p : SupportPolicy (E := E)) (hx₁ : x₁ ∈ V.carrier)
+BanditRLProof\OnlineSubgradientPolicy.lean:276:theorem regret_tuned (V : Domain (E := E)) (loss : ℕ → E → EReal)
+BanditRLProof\OnlineSubgradientPolicy.lean:277:    (x₁ : E) (p : SupportPolicy (E := E)) (hx₁ : x₁ ∈ V.carrier)
+BanditRLProof\OnlineSubgradientPolicy.lean:286:  exact regret_tuned_distance V loss x₁ p hx₁ T hT D G hD hG hloss hlegal u hu
+BanditRLProof\OnlineGuessingSubgradient.lean:55:theorem example_2_32_subdifferential (y x : ℝ) :
+BanditRLProof\OnlineGuessingSubgradient.lean:78:theorem loss_subgradient_bound (y x g : ℝ)
+BanditRLProof\OnlineGuessingSubgradient.lean:95:  exact loss_subgradient_bound y x (currentSubgradient (loss y) x)
+BanditRLProof\OnlineGuessingSubgradient.lean:113:theorem example_2_32 (y : ℕ → ℝ) (x₁ : ℝ) (hx₁ : x₁ ∈ Icc (0 : ℝ) 1)
+BanditRLProof\OnlineGuessingSubgradient.lean:126:  have hb := regret_tuned BanditRL.OnlineGradientDescent.unitInterval
+BanditRLProof\OnlineGuessingSubgradient.lean:133:theorem example_2_32_average_eventually (y : ℕ → ℝ) (x₁ : ℝ)
+BanditRLProof\OnlineGuessingSubgradient.lean:146:  have hb := example_2_32 y x₁ hx₁ T hT (fun t ht => hy t) u hu

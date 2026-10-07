@@ -915,12 +915,12 @@
       "title": "Absolute-loss guessing by projected subgradient descent",
       "short_title": "Absolute-loss guessing",
       "status": "compiled",
-      "summary": "Full shifted absolute-loss support sets, actual causal clipping recurrence, and the same horizon-tuned run with regret at most sqrt(T).",
+      "summary": "Full shifted support sets, historical canonical choice, and the new actual played-legal finite-history policy family with same-run all-comparator sqrt(T) regret.",
       "audience": "Readers of Orabona Example2.32 and the original [0,1] guessing game.",
-      "completion_definition": "Source Example2.32 support classification and one permitted canonical projected OSD implementation with its sqrt(T) guarantee; the additional eventual result is only one-sided horizon-family control.",
+      "completion_definition": "New policy-family specialization: four public proofs, zero new public definitions; two algebraic helpers, one finite guarantee and one derived one-sided family corollary. One printed Example2.32, not four new book results. Historical canonical12 proofs are retained; new four proofs close the missing policy-family terminal. This is a bounded source package, not Chapter2 completion.",
       "completion_blockers": [
-        "Whole Chapter2 additionally requires generic legal/history-adaptive support-family coverage, remaining source mapping and older-stack migration.",
-        "Package reader/raw-binding/stacked PR evidence is recorded separately; local compilation is not merged/live acceptance."
+        "Canonical Example2.32 current publication migration, linearization/optimal-step/unit-analysis current migration, remaining Chapter1/2 maintext, nine OTHER Chapter1 origin/main contributor gaps and necessary appendices remain REQUIRED. Chapter2 mandatory total is incomplete; Chapters3-16 remain unenumerated. Whole Goal ACTIVE, no chapter/book completion or main/live update.",
+        "Current policy-package FINAL/native acceptance and stacked PR delivery are separate from compilation; no merge or live publication."
       ],
       "learning_goals": [
         "Keep the complete support interval at a tie.",
@@ -928,12 +928,13 @@
         "Use one fixed known-horizon run for every feasible comparator."
       ],
       "module_globs": [
-        "BanditRLProof/OnlineGuessingSubgradient.lean"
+        "BanditRLProof/OnlineGuessingSubgradient.lean",
+        "BanditRLProof/OnlineGuessingSubgradientPolicy.lean"
       ],
       "open_gaps": [
-        "Noncomputable choice is one permitted rule; it is not an executable oracle or all adaptive choices.",
-        "Optimal eta requires T>=1; the average corollary compares separately tuned horizons, not a single anytime run.",
-        "Chapter2 unnumbered mapping and older-stack migration remain required."
+        "Canonical Example2.32 current publication migration, linearization/optimal-step/unit-analysis current migration, remaining Chapter1/2 maintext, nine OTHER Chapter1 origin/main contributor gaps and necessary appendices remain REQUIRED. Chapter2 mandatory total is incomplete; Chapters3-16 remain unenumerated. Whole Goal ACTIVE, no chapter/book completion or main/live update.",
+        "A fixed exogenous deterministic policy p receives the whole finite past-loss/output history and current whole loss after the current output. The actual Nat.rec/Fin.snoc trajectory is projected from its actual selected support. No comparator is a policy input. Same-p/x1 prefix equality does not certify independence of externally chosen policy, initialization or rates, an executable finite-query oracle, or randomized-law/measurability guarantees.",
+        "The average theorem fixes p,y,x1 and requires legal feedback for every positive-horizon run, each with its own eta_T=1/sqrt(T). It concludes only eventual signed-average upper control. It proves neither signed convergence to zero, absolute Big-O nor a common anytime trajectory. T=0 is outside finite tuning and only an irrelevant eventual exception."
       ]
     },
     {

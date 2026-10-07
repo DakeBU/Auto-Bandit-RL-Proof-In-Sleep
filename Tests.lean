@@ -147,3 +147,4 @@ import Tests.OnlineRelativeSubgradientCanary
 import Tests.OnlineDifferentiabilityBoundaryCanary
 import Tests.OnlineConvexNondifferentiabilityCanary
 import Tests.OnlineConvexUncountabilityCanary
+import Tests.OnlineGuessingSubgradientPolicyCanary

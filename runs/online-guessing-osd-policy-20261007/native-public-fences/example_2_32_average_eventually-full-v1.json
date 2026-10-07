@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineGuessingSubgradientPolicy.example_2_32_average_eventually",
+  "file": "BanditRLProof/OnlineGuessingSubgradientPolicy.lean",
+  "statement": "theorem example_2_32_average_eventually (y : ℕ → ℝ) (x₁ : ℝ) (p : SupportPolicy (E := ℝ)) (hx₁ : x₁ ∈ Icc (0 : ℝ) 1) (hy : ∀ t, y t ∈ Icc (0 : ℝ) 1) (hlegal : ∀ T : ℕ, 0 < T → LegalFeedback unitInterval (fun _ => 1 / Real.sqrt T) (fun s => loss (y s)) x₁ p T) (u : ℝ) (hu : u ∈ Icc (0 : ℝ) 1) (ε : ℝ) (hε : 0 < ε) : ∀ᶠ T : ℕ in atTop, (∑ t ∈ range T, (|output unitInterval (fun _ => 1 / Real.sqrt T) (fun s => loss (y s)) x₁ p t - y t| - |u - y t|)) / T < ε",
+  "statement_hash": "9be512e0c7e40758f66775a2a645c52db4940c6639991c78e0c955fef9a38d77",
+  "source_assumptions": [],
+  "created_at": "2026-10-07T06:17:12+00:00"
+}

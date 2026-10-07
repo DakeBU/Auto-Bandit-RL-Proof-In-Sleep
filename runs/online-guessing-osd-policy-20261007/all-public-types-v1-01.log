@@ -1,0 +1,156 @@
+BanditRL.OnlineGuessingSubgradientPolicy.selected_bound : ∀ (η y : ℕ → ℝ) (x₁ : ℝ)
+  (p : BanditRL.OnlineSubgradientPolicy.SupportPolicy) (T : ℕ),
+  BanditRL.OnlineSubgradientPolicy.LegalFeedback BanditRL.OnlineGradientDescent.unitInterval η
+      (fun s => BanditRL.OnlineGuessingSubgradient.loss (y s)) x₁ p T →
+    ∀ t < T,
+      ‖BanditRL.OnlineSubgradientPolicy.selected BanditRL.OnlineGradientDescent.unitInterval η
+            (fun s => BanditRL.OnlineGuessingSubgradient.loss (y s)) x₁ p t‖ ≤
+        1
+BanditRL.OnlineGuessingSubgradientPolicy.step_clamp : ∀ (η y : ℕ → ℝ) (x₁ : ℝ)
+  (p : BanditRL.OnlineSubgradientPolicy.SupportPolicy) (t : ℕ),
+  BanditRL.OnlineSubgradientPolicy.output BanditRL.OnlineGradientDescent.unitInterval η
+      (fun s => BanditRL.OnlineGuessingSubgradient.loss (y s)) x₁ p (t + 1) =
+    min
+      (max
+        (BanditRL.OnlineSubgradientPolicy.output BanditRL.OnlineGradientDescent.unitInterval η
+            (fun s => BanditRL.OnlineGuessingSubgradient.loss (y s)) x₁ p t -
+          η t *
+            BanditRL.OnlineSubgradientPolicy.selected BanditRL.OnlineGradientDescent.unitInterval η
+              (fun s => BanditRL.OnlineGuessingSubgradient.loss (y s)) x₁ p t)
+        0)
+      1
+BanditRL.OnlineGuessingSubgradientPolicy.example_2_32 : ∀ (y : ℕ → ℝ) (x₁ : ℝ)
+  (p : BanditRL.OnlineSubgradientPolicy.SupportPolicy),
+  x₁ ∈ Set.Icc 0 1 →
+    ∀ (T : ℕ),
+      0 < T →
+        (∀ t < T, y t ∈ Set.Icc 0 1) →
+          BanditRL.OnlineSubgradientPolicy.LegalFeedback BanditRL.OnlineGradientDescent.unitInterval (fun x => 1 / √↑T)
+              (fun s => BanditRL.OnlineGuessingSubgradient.loss (y s)) x₁ p T →
+            ∀ u ∈ Set.Icc 0 1,
+              ∑ t ∈ Finset.range T,
+                  (|BanditRL.OnlineSubgradientPolicy.output BanditRL.OnlineGradientDescent.unitInterval
+                          (fun x => 1 / √↑T) (fun s => BanditRL.OnlineGuessingSubgradient.loss (y s)) x₁ p t -
+                        y t| -
+                    |u - y t|) ≤
+                √↑T
+BanditRL.OnlineGuessingSubgradientPolicy.example_2_32_average_eventually : ∀ (y : ℕ → ℝ) (x₁ : ℝ)
+  (p : BanditRL.OnlineSubgradientPolicy.SupportPolicy),
+  x₁ ∈ Set.Icc 0 1 →
+    (∀ (t : ℕ), y t ∈ Set.Icc 0 1) →
+      (∀ (T : ℕ),
+          0 < T →
+            BanditRL.OnlineSubgradientPolicy.LegalFeedback BanditRL.OnlineGradientDescent.unitInterval
+              (fun x => 1 / √↑T) (fun s => BanditRL.OnlineGuessingSubgradient.loss (y s)) x₁ p T) →
+        ∀ u ∈ Set.Icc 0 1,
+          ∀ (ε : ℝ),
+            0 < ε →
+              ∀ᶠ (T : ℕ) in Filter.atTop,
+                (∑ t ∈ Finset.range T,
+                      (|BanditRL.OnlineSubgradientPolicy.output BanditRL.OnlineGradientDescent.unitInterval
+                              (fun x => 1 / √↑T) (fun s => BanditRL.OnlineGuessingSubgradient.loss (y s)) x₁ p t -
+                            y t| -
+                        |u - y t|)) /
+                    ↑T <
+                  ε
+GuessingPolicyProbe.policy_on_absolute : ∀ (t : ℕ) (past : Fin t → ℝ → EReal) (h : Fin (t + 1) → ℝ),
+  ∀ y ∈ Set.Icc 0 1,
+    GuessingPolicyProbe.policy t past h (BanditRL.OnlineGuessingSubgradient.loss y) ∈
+      BanditRL.OnlineConvex.SourceSubdifferential (BanditRL.OnlineGuessingSubgradient.loss y) (h (Fin.last t))
+GuessingPolicyProbe.policy_legal : ∀ (η y : ℕ → ℝ) (x₁ : ℝ) (T : ℕ),
+  (∀ t < T, y t ∈ Set.Icc 0 1) →
+    BanditRL.OnlineSubgradientPolicy.LegalFeedback GuessingPolicyProbe.V η
+      (fun s => BanditRL.OnlineGuessingSubgradient.loss (y s)) x₁ GuessingPolicyProbe.policy T
+GuessingPolicyProbe.selected_rule : ∀ (η y : ℕ → ℝ) (x₁ : ℝ) (t : ℕ),
+  BanditRL.OnlineSubgradientPolicy.selected GuessingPolicyProbe.V η
+      (fun s => BanditRL.OnlineGuessingSubgradient.loss (y s)) x₁ GuessingPolicyProbe.policy t =
+    if
+        |y t| <
+          BanditRL.OnlineSubgradientPolicy.output GuessingPolicyProbe.V η
+            (fun s => BanditRL.OnlineGuessingSubgradient.loss (y s)) x₁ GuessingPolicyProbe.policy t then
+      1
+    else
+      if
+          BanditRL.OnlineSubgradientPolicy.output GuessingPolicyProbe.V η
+              (fun s => BanditRL.OnlineGuessingSubgradient.loss (y s)) x₁ GuessingPolicyProbe.policy t <
+            |y t| then
+        -1
+      else if ht : 0 < t then if |y 0| = 0 then 1 else -1 else 1
+GuessingPolicyProbe.labelsA_feasible : ∀ (t : ℕ), GuessingPolicyProbe.labelsA t ∈ Set.Icc 0 1
+GuessingPolicyProbe.labelsB_feasible : ∀ (t : ℕ), GuessingPolicyProbe.labelsB t ∈ Set.Icc 0 1
+GuessingPolicyProbe.a_zero : GuessingPolicyProbe.a 0 = 1 / 2
+GuessingPolicyProbe.b_zero : GuessingPolicyProbe.b 0 = 1 / 2
+GuessingPolicyProbe.ga_zero : GuessingPolicyProbe.ga 0 = 1
+GuessingPolicyProbe.gb_zero : GuessingPolicyProbe.gb 0 = -1
+GuessingPolicyProbe.a_one : GuessingPolicyProbe.a 1 = 0
+GuessingPolicyProbe.b_one : GuessingPolicyProbe.b 1 = 1
+GuessingPolicyProbe.ga_one : GuessingPolicyProbe.ga 1 = -1
+GuessingPolicyProbe.gb_one : GuessingPolicyProbe.gb 1 = 1
+GuessingPolicyProbe.a_two : GuessingPolicyProbe.a 2 = 1 / 2
+GuessingPolicyProbe.b_two : GuessingPolicyProbe.b 2 = 1 / 2
+GuessingPolicyProbe.ga_two : GuessingPolicyProbe.ga 2 = 1
+GuessingPolicyProbe.gb_two : GuessingPolicyProbe.gb 2 = -1
+GuessingPolicyProbe.a_three : GuessingPolicyProbe.a 3 = 0
+GuessingPolicyProbe.b_three : GuessingPolicyProbe.b 3 = 1
+GuessingPolicyProbe.ga_three : GuessingPolicyProbe.ga 3 = -1
+GuessingPolicyProbe.gb_three : GuessingPolicyProbe.gb 3 = 1
+GuessingPolicyProbe.a_four : GuessingPolicyProbe.a 4 = 1 / 2
+GuessingPolicyProbe.b_four : GuessingPolicyProbe.b 4 = 1 / 2
+GuessingPolicyProbe.history_changes_kink_choice : GuessingPolicyProbe.a 2 = GuessingPolicyProbe.b 2 ∧
+  BanditRL.OnlineGuessingSubgradient.loss (GuessingPolicyProbe.labelsA 2) =
+      BanditRL.OnlineGuessingSubgradient.loss (GuessingPolicyProbe.labelsB 2) ∧
+    GuessingPolicyProbe.ga 2 = 1 ∧ GuessingPolicyProbe.gb 2 = -1 ∧ GuessingPolicyProbe.a 3 ≠ GuessingPolicyProbe.b 3
+GuessingPolicyProbe.a_real_regret : BanditRL.OnlineSubgradientPolicy.regret GuessingPolicyProbe.V
+    GuessingPolicyProbe.eta (fun s => BanditRL.OnlineGuessingSubgradient.loss (GuessingPolicyProbe.labelsA s)) (1 / 2)
+    GuessingPolicyProbe.policy (1 / 4) 4 =
+  1 / 2
+GuessingPolicyProbe.b_real_regret : BanditRL.OnlineSubgradientPolicy.regret GuessingPolicyProbe.V
+    GuessingPolicyProbe.eta (fun s => BanditRL.OnlineGuessingSubgradient.loss (GuessingPolicyProbe.labelsB s)) (1 / 2)
+    GuessingPolicyProbe.policy (1 / 4) 4 =
+  0
+GuessingPolicyProbe.a_energy : ∑ t ∈ Finset.range 4, ‖GuessingPolicyProbe.ga t‖ ^ 2 = 4
+GuessingPolicyProbe.positive_terminal : ‖GuessingPolicyProbe.a 4 - 1 / 4‖ ^ 2 = 1 / 16
+GuessingPolicyProbe.a_actual_fixed : BanditRL.OnlineSubgradientPolicy.regret GuessingPolicyProbe.V
+    GuessingPolicyProbe.eta (fun s => BanditRL.OnlineGuessingSubgradient.loss (GuessingPolicyProbe.labelsA s)) (1 / 2)
+    GuessingPolicyProbe.policy (1 / 4) 4 ≤
+  ‖1 / 2 - 1 / 4‖ ^ 2 / (2 * (1 / 2)) + 1 / 2 / 2 * ∑ t ∈ Finset.range 4, ‖GuessingPolicyProbe.ga t‖ ^ 2 -
+    ‖GuessingPolicyProbe.a 4 - 1 / 4‖ ^ 2 / (2 * (1 / 2))
+GuessingPolicyProbe.fixed_rhs_is_one : ‖1 / 2 - 1 / 4‖ ^ 2 / (2 * (1 / 2)) +
+      1 / 2 / 2 * ∑ t ∈ Finset.range 4, ‖GuessingPolicyProbe.ga t‖ ^ 2 -
+    ‖GuessingPolicyProbe.a 4 - 1 / 4‖ ^ 2 / (2 * (1 / 2)) =
+  1
+GuessingPolicyProbe.a_selected_bound : ∀ t < 4, ‖GuessingPolicyProbe.ga t‖ ≤ 1
+GuessingPolicyProbe.a_tuned_all_comparators : ∀ u ∈ Set.Icc 0 1,
+  ∑ t ∈ Finset.range 4,
+      (|GuessingPolicyProbe.a t - GuessingPolicyProbe.labelsA t| - |u - GuessingPolicyProbe.labelsA t|) ≤
+    2
+GuessingPolicyProbe.not_global_oracle : ¬BanditRL.OnlineSubgradientPolicy.OracleLaw GuessingPolicyProbe.V
+    GuessingPolicyProbe.policy
+GuessingPolicyProbe.invalid_future_causal : BanditRL.OnlineSubgradientPolicy.output GuessingPolicyProbe.V
+    GuessingPolicyProbe.futureEta
+    (fun s => BanditRL.OnlineGuessingSubgradient.loss (GuessingPolicyProbe.futureLabels s)) (1 / 2)
+    GuessingPolicyProbe.policy 4 =
+  GuessingPolicyProbe.a 4
+GuessingPolicyProbe.zero_rate_infeasible_initial : BanditRL.OnlineSubgradientPolicy.output GuessingPolicyProbe.V
+    (fun x => 0) (fun x => BanditRL.OnlineGuessingSubgradient.loss 0) 2 GuessingPolicyProbe.policy 1 =
+  1
+GuessingPolicyProbe.a_horizon_family_average : ∀ᶠ (T : ℕ) in Filter.atTop,
+  (∑ t ∈ Finset.range T,
+        (|BanditRL.OnlineSubgradientPolicy.output GuessingPolicyProbe.V (fun x => 1 / √↑T)
+                (fun s => BanditRL.OnlineGuessingSubgradient.loss (GuessingPolicyProbe.labelsA s)) (1 / 2)
+                GuessingPolicyProbe.policy t -
+              GuessingPolicyProbe.labelsA t| -
+          |1 / 4 - GuessingPolicyProbe.labelsA t|)) /
+      ↑T <
+    1 / 10
+GuessingPolicyProbe.policy : BanditRL.OnlineSubgradientPolicy.SupportPolicy
+GuessingPolicyProbe.labelsA : ℕ → ℝ
+GuessingPolicyProbe.labelsB : ℕ → ℝ
+GuessingPolicyProbe.eta : ℕ → ℝ
+GuessingPolicyProbe.futureLabels : ℕ → ℝ
+GuessingPolicyProbe.futureEta : ℕ → ℝ
+GuessingPolicyProbe.V : BanditRL.OnlineGradientDescent.Domain ℝ
+GuessingPolicyProbe.a : ℕ → ℝ
+GuessingPolicyProbe.b : ℕ → ℝ
+GuessingPolicyProbe.ga : ℕ → ℝ
+GuessingPolicyProbe.gb : ℕ → ℝ
