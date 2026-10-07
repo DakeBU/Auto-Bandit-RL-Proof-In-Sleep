@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "record_id": "frontier-86d9c8a26ffb33d1",
+  "updated_at": "2026-10-07T09:32:32+00:00",
+  "root_objective": "Persistent Orabona Chapters1-16; current scalar minimization reuse accepted",
+  "current_leaf": {
+    "id": "ONLINE-OPTIMAL-STEP-PUBLIC-20261007",
+    "kind": "lean",
+    "status": "accepted",
+    "statement": "theorem source_argmin (A B : ℝ) (hA : 0 < A) (hB : 0 < B) : 0 < optimalStep A B ∧ upperBound A B (optimalStep A B) = Real.sqrt (A * B) ∧ ∀ η : ℝ, 0 < η → upperBound A B (optimalStep A B) ≤ upperBound A B η",
+    "statement_hash": "a4befb932b34288b9b58bbd081e2a18927cbce7f659b4c81945e993ec6430d06",
+    "declaration": "BanditRL.OnlineOptimalStep.source_argmin",
+    "file": "BanditRLProof\\OnlineOptimalStep.lean",
+    "source_status": "source-reviewed",
+    "dependencies": [
+      {
+        "kind": "lean",
+        "name": "BanditRL.OnlineOptimalStep.optimal_value",
+        "status": "compiled"
+      },
+      {
+        "kind": "lean",
+        "name": "BanditRL.OnlineOptimalStep.lower_bound",
+        "status": "compiled"
+      },
+      {
+        "kind": "review",
+        "name": "source-reader",
+        "status": "accepted"
+      }
+    ]
+  },
+  "dag": {
+    "nodes": [
+      {
+        "id": "ONLINE-OPTIMAL-STEP-PUBLIC-20261007",
+        "kind": "lean",
+        "status": "accepted",
+        "dependencies": [
+          {
+            "kind": "lean",
+            "name": "BanditRL.OnlineOptimalStep.optimal_value",
+            "status": "compiled"
+          },
+          {
+            "kind": "lean",
+            "name": "BanditRL.OnlineOptimalStep.lower_bound",
+            "status": "compiled"
+          },
+          {
+            "kind": "review",
+            "name": "source-reader",
+            "status": "accepted"
+          }
+        ],
+        "dispatch_count": 0
+      }
+    ]
+  },
+  "last_accepted_verifier": {
+    "trial_index": 1,
+    "time": "2026-10-07T09:32:31+00:00",
+    "task": "ONLINE-OPTIMAL-STEP-PUBLIC-20261007",
+    "role": "reviewer",
+    "kind": "review",
+    "status": "accepted",
+    "lean": "",
+    "notes": "ONLINE-OPTIMAL-STEP-PUBLIC-20261007 Existing frozen-coefficient scalar minimization revalidation: TWO unnumbered printed15/PDF27 calculations,11public proofs/2definitions and whole23canary proofs/4definitions/1abbreviation. ZERO new mathematics, definitions, registry nodes or source-mathematical closures. Unit-analysis current migration, remaining Chapter1/2 maintext, nine OTHER Chapter1 origin/main contributor gaps and necessary appendices REQUIRED; Chapter2 mandatory total null/incomplete; Chapters3-16 unenumerated; whole Goal ACTIVE unbudgeted. AlloriginalR1-R8satisfied. Fixed scalar coefficients/allpositive competing eta/positive-and-zero boundaries; actual same-loss eta-dependent energy finite witness only. Requested Astra/medium distinct required automated actors, no human/external/runtime attestation. No merge/main/live/retirement.",
+    "run_id": "online-optimal-step-public-20261007"
+  },
+  "memory_policy": {
+    "recent_role_relevant_limit": 5,
+    "explicit_verified_lemma_ids": [],
+    "whole_history_default": false
+  },
+  "shadow_gate": {
+    "status": "pending",
+    "analyzed_trial_rows": 2,
+    "mismatches": [],
+    "replay_transitions": 0
+  },
+  "mutation_policy": {
+    "canonical_path_queue": true,
+    "cross_process_lock": true,
+    "same_file_serialized": true,
+    "disjoint_files_parallel": true
+  },
+  "autonomous_execution": {
+    "enabled": false,
+    "requires_deterministic_gates": true,
+    "requires_explicit_user_request": true
+  }
+}
