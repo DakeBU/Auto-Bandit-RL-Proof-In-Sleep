@@ -1,0 +1,35 @@
+import BanditRLProof.OnlineLearningAsymptotic
+import Mathlib.Tactic
+
+open Filter
+namespace BanditRL.OnlineLearning
+
+/-- Literal ordinary-real-limit reading, kept separate from the shared upper condition. -/
+def LimitNoRegret {X : Type*} (V : Set X) (loss : ℕ → X → ℝ)
+    (prediction : ℕ → X) : Prop :=
+  ∀ u ∈ V, ∃ a : ℝ, a ≤ 0 ∧
+    Tendsto (fun T : ℕ => comparatorRegret loss prediction u T / T) atTop (nhds a)
+
+theorem noRegret_limit_nonpos {X : Type*} (V : Set X)
+    (loss : ℕ → X → ℝ) (prediction : ℕ → X)
+    (hNR : NoRegret V loss prediction) (u : X) (hu : u ∈ V) (a : ℝ)
+    (hl : Tendsto (fun T : ℕ => comparatorRegret loss prediction u T / T) atTop (nhds a)) :
+    a ≤ 0 := by
+  by_contra h
+  have hpos : 0 < a := lt_of_not_ge h
+  have hbound : a ≤ a / 2 :=
+    le_of_tendsto hl (hNR u hu (a / 2) (by linarith))
+  linarith
+
+namespace NoRegretCounterexample
+
+/-- A nonnegative horizon potential with alternating normalized values. -/
+noncomputable def potential (T : ℕ) : ℝ :=
+  if T % 2 = 0 then (T : ℝ) else 0
+
+/-- Actual exogenous real affine losses; no horizon-dependent learner. -/
+noncomputable def loss (t : ℕ) (x : ℝ) : ℝ :=
+  (potential (t + 1) - potential t) * x
+
+end NoRegretCounterexample
+end BanditRL.OnlineLearning

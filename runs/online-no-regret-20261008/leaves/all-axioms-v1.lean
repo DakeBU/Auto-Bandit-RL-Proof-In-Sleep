@@ -1,0 +1,69 @@
+import Tests.OnlineNoRegretSemanticsCanary
+#check BanditRL.OnlineLearning.noRegret_limit_nonpos
+#print axioms BanditRL.OnlineLearning.noRegret_limit_nonpos
+#check BanditRL.OnlineLearning.limitNoRegret_implies_noRegret
+#print axioms BanditRL.OnlineLearning.limitNoRegret_implies_noRegret
+#check BanditRL.OnlineLearning.limitNoRegret_iff_noRegret_of_converges
+#print axioms BanditRL.OnlineLearning.limitNoRegret_iff_noRegret_of_converges
+#check BanditRL.OnlineLearning.NoRegretCounterexample.regret_eq
+#print axioms BanditRL.OnlineLearning.NoRegretCounterexample.regret_eq
+#check BanditRL.OnlineLearning.NoRegretCounterexample.noRegret
+#print axioms BanditRL.OnlineLearning.NoRegretCounterexample.noRegret
+#check BanditRL.OnlineLearning.NoRegretCounterexample.normalized_even
+#print axioms BanditRL.OnlineLearning.NoRegretCounterexample.normalized_even
+#check BanditRL.OnlineLearning.NoRegretCounterexample.normalized_odd
+#print axioms BanditRL.OnlineLearning.NoRegretCounterexample.normalized_odd
+#check BanditRL.OnlineLearning.NoRegretCounterexample.no_limit
+#print axioms BanditRL.OnlineLearning.NoRegretCounterexample.no_limit
+#check BanditRL.OnlineLearning.NoRegretCounterexample.strict_separation
+#print axioms BanditRL.OnlineLearning.NoRegretCounterexample.strict_separation
+#check NoRegretSemanticsProbe.linear_regret
+#print axioms NoRegretSemanticsProbe.linear_regret
+#check NoRegretSemanticsProbe.linear_normalized
+#print axioms NoRegretSemanticsProbe.linear_normalized
+#check NoRegretSemanticsProbe.linear_converges
+#print axioms NoRegretSemanticsProbe.linear_converges
+#check NoRegretSemanticsProbe.linear_literal
+#print axioms NoRegretSemanticsProbe.linear_literal
+#check NoRegretSemanticsProbe.linear_upper
+#print axioms NoRegretSemanticsProbe.linear_upper
+#check NoRegretSemanticsProbe.negative_limit_allowed
+#print axioms NoRegretSemanticsProbe.negative_limit_allowed
+#check NoRegretSemanticsProbe.iff_on_linear
+#print axioms NoRegretSemanticsProbe.iff_on_linear
+#check NoRegretSemanticsProbe.actual_mean_upper
+#print axioms NoRegretSemanticsProbe.actual_mean_upper
+#check NoRegretSemanticsProbe.actual_mean_negative_T2
+#print axioms NoRegretSemanticsProbe.actual_mean_negative_T2
+#check NoRegretSemanticsProbe.obstruction_feasible
+#print axioms NoRegretSemanticsProbe.obstruction_feasible
+#check NoRegretSemanticsProbe.actual_signed_losses
+#print axioms NoRegretSemanticsProbe.actual_signed_losses
+#check NoRegretSemanticsProbe.zero_horizon
+#print axioms NoRegretSemanticsProbe.zero_horizon
+#check NoRegretSemanticsProbe.even_T2
+#print axioms NoRegretSemanticsProbe.even_T2
+#check NoRegretSemanticsProbe.odd_T3
+#print axioms NoRegretSemanticsProbe.odd_T3
+#check NoRegretSemanticsProbe.same_process_strict
+#print axioms NoRegretSemanticsProbe.same_process_strict
+#check BanditRL.OnlineLearning.meanPredict_noRegret
+#print axioms BanditRL.OnlineLearning.meanPredict_noRegret
+#check BanditRL.OnlineLearning.noRegret_of_vanishing_bound
+#print axioms BanditRL.OnlineLearning.noRegret_of_vanishing_bound
+#check BanditRL.OnlineLearning.comparatorRegret_eq_sum
+#print axioms BanditRL.OnlineLearning.comparatorRegret_eq_sum
+#check BanditRL.OnlineLearning.LimitNoRegret
+#print axioms BanditRL.OnlineLearning.LimitNoRegret
+#check BanditRL.OnlineLearning.NoRegretCounterexample.potential
+#print axioms BanditRL.OnlineLearning.NoRegretCounterexample.potential
+#check BanditRL.OnlineLearning.NoRegretCounterexample.loss
+#print axioms BanditRL.OnlineLearning.NoRegretCounterexample.loss
+#check BanditRL.OnlineLearning.comparatorRegret
+#print axioms BanditRL.OnlineLearning.comparatorRegret
+#check BanditRL.OnlineLearning.NoRegret
+#print axioms BanditRL.OnlineLearning.NoRegret
+#check BanditRL.OnlineLearning.meanPredict
+#print axioms BanditRL.OnlineLearning.meanPredict
+#check NoRegretSemanticsProbe.linearLoss
+#print axioms NoRegretSemanticsProbe.linearLoss

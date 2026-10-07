@@ -15482,3 +15482,12 @@ Orabona v10 unnumberedexample afterT2.30/endSection2.2.1 immediatelybefore2.2.2 
 - `2026-10-07T15:42:37+00:00` `bandit.py new-task` `task` `tasks/ONLINE-REGRET-DOMAINS-20261007.md` - Chapter1 W/V typed model and complete Regret API audit
 - `2026-10-07T15:53:29+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/ONLINE-REGRET-DOMAINS-20261007.md` - ONLINE-REGRET-DOMAINS-20261007
 - `2026-10-07T17:13:56+00:00` `bandit.py new-task` `task` `tasks/ONLINE-GUESSING-LOG-LOWER-20261008.md` - Required logarithmic guessing lower bound with actual binary law
+- `2026-10-07T20:00:24+00:00` `bandit.py new-task` `task` `tasks/ONLINE-NO-REGRET-20261008.md` - Reconcile comparator-wise upper no-regret with actual ordinary limits
+- `2026-10-07T20:01:04+00:00` `bandit.py reference-index` `retrieval-index` `runs/online-no-regret-20261008/native-reference-index/lml_bandit_cards.json` - refreshed lml_bandit_cards.json
+- `2026-10-07T20:01:04+00:00` `bandit.py reference-index` `retrieval-index` `runs/online-no-regret-20261008/native-reference-index/mathlib_bandit_cards.json` - refreshed mathlib_bandit_cards.json
+- `2026-10-07T20:01:04+00:00` `bandit.py reference-index` `retrieval-index` `runs/online-no-regret-20261008/native-reference-index/bandit_textbook_cards.json` - refreshed bandit_textbook_cards.json
+- `2026-10-07T20:01:04+00:00` `bandit.py reference-index` `retrieval-index` `runs/online-no-regret-20261008/native-reference-index/bandit_paper_cards.json` - refreshed bandit_paper_cards.json
+- `2026-10-07T20:01:04+00:00` `bandit.py reference-index` `retrieval-index` `runs/online-no-regret-20261008/native-reference-index/bandit_scenario_cards.json` - refreshed bandit_scenario_cards.json
+- `2026-10-07T20:01:04+00:00` `bandit.py reference-index` `retrieval-index` `runs/online-no-regret-20261008/native-reference-index/proof_weapon_cards.json` - refreshed proof_weapon_cards.json
+- `2026-10-07T20:01:04+00:00` `bandit.py reference-index` `retrieval-index` `runs/online-no-regret-20261008/native-reference-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
+- `2026-10-07T20:01:04+00:00` `bandit.py reference-index` `retrieval-index` `runs/online-no-regret-20261008/native-reference-index/local_lean_declarations.json` - refreshed local_lean_declarations.json

@@ -1,0 +1,22 @@
+{
+  "command": [
+    "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe",
+    "-B",
+    "-X",
+    "utf8",
+    "tools/bandit.py",
+    "statement-fence",
+    "--declaration",
+    "BanditRL.OnlineLearning.limitNoRegret_iff_noRegret_of_converges",
+    "--file",
+    "BanditRLProof\\OnlineNoRegretSemantics.lean",
+    "--source-assumption",
+    "theorem limitNoRegret_iff_noRegret_of_converges {X : Type*} (V : Set X) (loss : ℕ → X → ℝ) (prediction : ℕ → X) (hc : ∀ u ∈ V, ∃ a : ℝ, Tendsto (fun T : ℕ => comparatorRegret loss prediction u T / T) atTop (nhds a)) : LimitNoRegret V loss prediction ↔ NoRegret V loss prediction",
+    "--output",
+    "E:\\ABRL\\worktrees\\research-online-book\\runs\\online-no-regret-20261008\\full-header-fences-v1\\public-limitNoRegret_iff_noRegret_of_converges.json"
+  ],
+  "cwd": "E:/ABRL/worktrees/research-online-book",
+  "exit_code": 0,
+  "seconds": 0.206,
+  "log_sha256": "501053bbb9febda8e29006ecf0e5ebd616beafa764e6bb7ea6eddf6b70f6270f"
+}

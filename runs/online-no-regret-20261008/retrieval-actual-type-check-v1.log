@@ -1,0 +1,20 @@
+le_of_tendsto.{u, v} {α : Type u} {β : Type v} [TopologicalSpace α] [Preorder α] [ClosedIicTopology α] {f : β → α}
+  {a b : α} {x : Filter β} [x.NeBot] (lim : Tendsto f x (nhds a)) (h : ∀ᶠ (c : β) in x, f c ≤ b) : a ≤ b
+tendsto_order.{u, v} {α : Type u} {β : Type v} [ts : TopologicalSpace α] [Preorder α] [OrderTopology α] {f : β → α}
+  {a : α} {x : Filter β} :
+  Tendsto f x (nhds a) ↔ (∀ a' < a, ∀ᶠ (b : β) in x, a' < f b) ∧ ∀ a' > a, ∀ᶠ (b : β) in x, f b < a'
+Filter.tendsto_atTop_mono.{u_3, u_4} {α : Type u_3} {β : Type u_4} [Preorder β] {l : Filter α} {f g : α → β}
+  (h : ∀ (n : α), f n ≤ g n) : Tendsto f l atTop → Tendsto g l atTop
+tendsto_nhds_unique.{u_1, u_2} {X : Type u_1} {Y : Type u_2} [TopologicalSpace X] [T2Space X] {f : Y → X} {l : Filter Y}
+  {a b : X} [l.NeBot] (ha : Tendsto f l (nhds a)) (hb : Tendsto f l (nhds b)) : a = b
+E:\ABRL\worktrees\research-online-book\runs\online-no-regret-20261008\retrieval-api-check-v1.lean:8:7: error(lean.unknownIdentifier): Unknown constant `Filter.Tendsto.unique`
+Finset.sum_range_succ.{u_4} {M : Type u_4} [AddCommMonoid M] (f : ℕ → M) (n : ℕ) :
+  ∑ x ∈ Finset.range (n + 1), f x = ∑ x ∈ Finset.range n, f x + f n
+Nat.mul_mod (a b n : ℕ) : a * b % n = a % n * (b % n) % n
+BanditRL.OnlineLearning.NoRegret.{u_1} {X : Type u_1} (V : Set X) (loss : ℕ → X → ℝ) (prediction : ℕ → X) : Prop
+BanditRL.OnlineLearning.noRegret_of_vanishing_bound.{u_1} {X : Type u_1} (V : Set X) (loss : ℕ → X → ℝ)
+  (prediction : ℕ → X) (bound : X → ℕ → ℝ)
+  (hb : ∀ u ∈ V, ∀ᶠ (T : ℕ) in atTop, BanditRL.OnlineLearning.comparatorRegret loss prediction u T / ↑T ≤ bound u T)
+  (hl : ∀ u ∈ V, Tendsto (bound u) atTop (nhds 0)) : BanditRL.OnlineLearning.NoRegret V loss prediction
+BanditRL.OnlineLearning.meanPredict_noRegret (y : ℕ → ℝ) (hy : ∀ (t : ℕ), y t ∈ Set.Icc 0 1) :
+  BanditRL.OnlineLearning.NoRegret (Set.Icc 0 1) (fun t x => (x - y t) ^ 2) (BanditRL.OnlineLearning.meanPredict y)

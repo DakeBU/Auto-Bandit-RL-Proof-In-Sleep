@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "public_file": "BanditRLProof/OnlineNoRegretSemantics.lean",
+  "context_sha256": "79cbcb5de14d2562ae58d354855e1939d35a8b9843ed82090c5de321009f6c8f",
+  "targets": [
+    {
+      "id": "B001",
+      "name": "BanditRL.OnlineLearning.noRegret_limit_nonpos",
+      "header": "theorem noRegret_limit_nonpos {X : Type*} (V : Set X)\n    (loss : ℕ → X → ℝ) (prediction : ℕ → X)\n    (hNR : NoRegret V loss prediction) (u : X) (hu : u ∈ V) (a : ℝ)\n    (hl : Tendsto (fun T : ℕ => comparatorRegret loss prediction u T / T) atTop (nhds a)) :\n    a ≤ 0",
+      "header_sha256": "3f259b6dd0a9b799550dbbd466e10cd03e10a4f7648a41ca93fcffd76eb8e409",
+      "dependencies": []
+    },
+    {
+      "id": "B002",
+      "name": "BanditRL.OnlineLearning.limitNoRegret_implies_noRegret",
+      "header": "theorem limitNoRegret_implies_noRegret {X : Type*} (V : Set X)\n    (loss : ℕ → X → ℝ) (prediction : ℕ → X)\n    (hL : LimitNoRegret V loss prediction) :\n    NoRegret V loss prediction",
+      "header_sha256": "fe26214c7334741c5867346708c5e6fa02e93be4a7801b5efefadfb6f0f478c7",
+      "dependencies": []
+    },
+    {
+      "id": "B003",
+      "name": "BanditRL.OnlineLearning.limitNoRegret_iff_noRegret_of_converges",
+      "header": "theorem limitNoRegret_iff_noRegret_of_converges {X : Type*} (V : Set X)\n    (loss : ℕ → X → ℝ) (prediction : ℕ → X)\n    (hc : ∀ u ∈ V, ∃ a : ℝ,\n      Tendsto (fun T : ℕ => comparatorRegret loss prediction u T / T) atTop (nhds a)) :\n    LimitNoRegret V loss prediction ↔ NoRegret V loss prediction",
+      "header_sha256": "158c424af20158d8bd135837cf7887825b07bd43a90a7ea157fb25d0a09fc87f",
+      "dependencies": [
+        "noRegret_limit_nonpos",
+        "limitNoRegret_implies_noRegret"
+      ]
+    },
+    {
+      "id": "B004",
+      "name": "BanditRL.OnlineLearning.NoRegretCounterexample.regret_eq",
+      "header": "theorem regret_eq (T : ℕ) (u : ℝ) :\n    comparatorRegret loss (fun _ => 0) u T = -potential T * u",
+      "header_sha256": "0d97588bb1d0b48f5af5d2eb48a840dea161b5e1eb3df442e13bd0eee7eab47e",
+      "dependencies": []
+    },
+    {
+      "id": "B005",
+      "name": "BanditRL.OnlineLearning.NoRegretCounterexample.noRegret",
+      "header": "theorem noRegret :\n    NoRegret (Set.Icc (0 : ℝ) 1) loss (fun _ => 0)",
+      "header_sha256": "8da5062e76bbd5d2e710ab06c4e534503f52c57fdc000a68db1a1a09a5f0a44a",
+      "dependencies": [
+        "regret_eq"
+      ]
+    },
+    {
+      "id": "B006",
+      "name": "BanditRL.OnlineLearning.NoRegretCounterexample.normalized_even",
+      "header": "theorem normalized_even (n : ℕ) :\n    comparatorRegret loss (fun _ => 0) 1 (2 * (n + 1)) /\n      ((2 * (n + 1) : ℕ) : ℝ) = -1",
+      "header_sha256": "9c15534edae59f2c51a631cb08b39cb6312ae7ed4aa1b61b45e738dcdfd21550",
+      "dependencies": [
+        "regret_eq"
+      ]
+    },
+    {
+      "id": "B007",
+      "name": "BanditRL.OnlineLearning.NoRegretCounterexample.normalized_odd",
+      "header": "theorem normalized_odd (n : ℕ) :\n    comparatorRegret loss (fun _ => 0) 1 (2 * n + 1) /\n      ((2 * n + 1 : ℕ) : ℝ) = 0",
+      "header_sha256": "c4dc846f41f18921c869ee6949e436544848a38c8ebc23d4ccdbedd23060b42d",
+      "dependencies": [
+        "regret_eq"
+      ]
+    },
+    {
+      "id": "B008",
+      "name": "BanditRL.OnlineLearning.NoRegretCounterexample.no_limit",
+      "header": "theorem no_limit :\n    ¬ ∃ a : ℝ, Tendsto\n      (fun T : ℕ => comparatorRegret loss (fun _ => 0) 1 T / T) atTop (nhds a)",
+      "header_sha256": "5301986cc1851829958a6d4f7b470045b99f07c0f039a6b67f7d1779e8bbca39",
+      "dependencies": [
+        "normalized_even",
+        "normalized_odd"
+      ]
+    },
+    {
+      "id": "B009",
+      "name": "BanditRL.OnlineLearning.NoRegretCounterexample.strict_separation",
+      "header": "theorem strict_separation :\n    NoRegret (Set.Icc (0 : ℝ) 1) loss (fun _ => 0) ∧\n      ¬ LimitNoRegret (Set.Icc (0 : ℝ) 1) loss (fun _ => 0)",
+      "header_sha256": "2239481c5d6d1bdd6b03eaa662ab6d0aaf6f42fca1f0a323523b746a9f4dd668",
+      "dependencies": [
+        "noRegret",
+        "no_limit"
+      ]
+    }
+  ],
+  "existing_reuse": [
+    "BanditRL.OnlineLearning.meanPredict_noRegret",
+    "BanditRL.OnlineLearning.noRegret_of_vanishing_bound",
+    "BanditRL.OnlineLearning.comparatorRegret_eq_sum"
+  ],
+  "terminal_edit_forbidden_after_stabilization": true
+}

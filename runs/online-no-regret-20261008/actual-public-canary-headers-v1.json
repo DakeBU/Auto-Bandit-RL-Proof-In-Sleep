@@ -1,0 +1,170 @@
+[
+  {
+    "name": "BanditRL.OnlineLearning.noRegret_limit_nonpos",
+    "path": "BanditRLProof/OnlineNoRegretSemantics.lean",
+    "header": "theorem noRegret_limit_nonpos {X : Type*} (V : Set X) (loss : ℕ → X → ℝ) (prediction : ℕ → X) (hNR : NoRegret V loss prediction) (u : X) (hu : u ∈ V) (a : ℝ) (hl : Tendsto (fun T : ℕ => comparatorRegret loss prediction u T / T) atTop (nhds a)) : a ≤ 0",
+    "raw_header": "theorem noRegret_limit_nonpos {X : Type*} (V : Set X)\n    (loss : ℕ → X → ℝ) (prediction : ℕ → X)\n    (hNR : NoRegret V loss prediction) (u : X) (hu : u ∈ V) (a : ℝ)\n    (hl : Tendsto (fun T : ℕ => comparatorRegret loss prediction u T / T) atTop (nhds a)) :\n    a ≤ 0",
+    "raw_header_sha256": "3f259b6dd0a9b799550dbbd466e10cd03e10a4f7648a41ca93fcffd76eb8e409"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.limitNoRegret_implies_noRegret",
+    "path": "BanditRLProof/OnlineNoRegretSemantics.lean",
+    "header": "theorem limitNoRegret_implies_noRegret {X : Type*} (V : Set X) (loss : ℕ → X → ℝ) (prediction : ℕ → X) (hL : LimitNoRegret V loss prediction) : NoRegret V loss prediction",
+    "raw_header": "theorem limitNoRegret_implies_noRegret {X : Type*} (V : Set X)\n    (loss : ℕ → X → ℝ) (prediction : ℕ → X)\n    (hL : LimitNoRegret V loss prediction) :\n    NoRegret V loss prediction",
+    "raw_header_sha256": "fe26214c7334741c5867346708c5e6fa02e93be4a7801b5efefadfb6f0f478c7"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.limitNoRegret_iff_noRegret_of_converges",
+    "path": "BanditRLProof/OnlineNoRegretSemantics.lean",
+    "header": "theorem limitNoRegret_iff_noRegret_of_converges {X : Type*} (V : Set X) (loss : ℕ → X → ℝ) (prediction : ℕ → X) (hc : ∀ u ∈ V, ∃ a : ℝ, Tendsto (fun T : ℕ => comparatorRegret loss prediction u T / T) atTop (nhds a)) : LimitNoRegret V loss prediction ↔ NoRegret V loss prediction",
+    "raw_header": "theorem limitNoRegret_iff_noRegret_of_converges {X : Type*} (V : Set X)\n    (loss : ℕ → X → ℝ) (prediction : ℕ → X)\n    (hc : ∀ u ∈ V, ∃ a : ℝ,\n      Tendsto (fun T : ℕ => comparatorRegret loss prediction u T / T) atTop (nhds a)) :\n    LimitNoRegret V loss prediction ↔ NoRegret V loss prediction",
+    "raw_header_sha256": "158c424af20158d8bd135837cf7887825b07bd43a90a7ea157fb25d0a09fc87f"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.NoRegretCounterexample.regret_eq",
+    "path": "BanditRLProof/OnlineNoRegretSemantics.lean",
+    "header": "theorem regret_eq (T : ℕ) (u : ℝ) : comparatorRegret loss (fun _ => 0) u T = -potential T * u",
+    "raw_header": "theorem regret_eq (T : ℕ) (u : ℝ) :\n    comparatorRegret loss (fun _ => 0) u T = -potential T * u",
+    "raw_header_sha256": "0d97588bb1d0b48f5af5d2eb48a840dea161b5e1eb3df442e13bd0eee7eab47e"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.NoRegretCounterexample.noRegret",
+    "path": "BanditRLProof/OnlineNoRegretSemantics.lean",
+    "header": "theorem noRegret : NoRegret (Set.Icc (0 : ℝ) 1) loss (fun _ => 0)",
+    "raw_header": "theorem noRegret :\n    NoRegret (Set.Icc (0 : ℝ) 1) loss (fun _ => 0)",
+    "raw_header_sha256": "8da5062e76bbd5d2e710ab06c4e534503f52c57fdc000a68db1a1a09a5f0a44a"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.NoRegretCounterexample.normalized_even",
+    "path": "BanditRLProof/OnlineNoRegretSemantics.lean",
+    "header": "theorem normalized_even (n : ℕ) : comparatorRegret loss (fun _ => 0) 1 (2 * (n + 1)) / ((2 * (n + 1) : ℕ) : ℝ) = -1",
+    "raw_header": "theorem normalized_even (n : ℕ) :\n    comparatorRegret loss (fun _ => 0) 1 (2 * (n + 1)) /\n      ((2 * (n + 1) : ℕ) : ℝ) = -1",
+    "raw_header_sha256": "9c15534edae59f2c51a631cb08b39cb6312ae7ed4aa1b61b45e738dcdfd21550"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.NoRegretCounterexample.normalized_odd",
+    "path": "BanditRLProof/OnlineNoRegretSemantics.lean",
+    "header": "theorem normalized_odd (n : ℕ) : comparatorRegret loss (fun _ => 0) 1 (2 * n + 1) / ((2 * n + 1 : ℕ) : ℝ) = 0",
+    "raw_header": "theorem normalized_odd (n : ℕ) :\n    comparatorRegret loss (fun _ => 0) 1 (2 * n + 1) /\n      ((2 * n + 1 : ℕ) : ℝ) = 0",
+    "raw_header_sha256": "c4dc846f41f18921c869ee6949e436544848a38c8ebc23d4ccdbedd23060b42d"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.NoRegretCounterexample.no_limit",
+    "path": "BanditRLProof/OnlineNoRegretSemantics.lean",
+    "header": "theorem no_limit : ¬ ∃ a : ℝ, Tendsto (fun T : ℕ => comparatorRegret loss (fun _ => 0) 1 T / T) atTop (nhds a)",
+    "raw_header": "theorem no_limit :\n    ¬ ∃ a : ℝ, Tendsto\n      (fun T : ℕ => comparatorRegret loss (fun _ => 0) 1 T / T) atTop (nhds a)",
+    "raw_header_sha256": "5301986cc1851829958a6d4f7b470045b99f07c0f039a6b67f7d1779e8bbca39"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.NoRegretCounterexample.strict_separation",
+    "path": "BanditRLProof/OnlineNoRegretSemantics.lean",
+    "header": "theorem strict_separation : NoRegret (Set.Icc (0 : ℝ) 1) loss (fun _ => 0) ∧ ¬ LimitNoRegret (Set.Icc (0 : ℝ) 1) loss (fun _ => 0)",
+    "raw_header": "theorem strict_separation :\n    NoRegret (Set.Icc (0 : ℝ) 1) loss (fun _ => 0) ∧\n      ¬ LimitNoRegret (Set.Icc (0 : ℝ) 1) loss (fun _ => 0)",
+    "raw_header_sha256": "2239481c5d6d1bdd6b03eaa662ab6d0aaf6f42fca1f0a323523b746a9f4dd668"
+  },
+  {
+    "name": "NoRegretSemanticsProbe.linear_regret",
+    "path": "Tests/OnlineNoRegretSemanticsCanary.lean",
+    "header": "theorem linear_regret (u : ℝ) (T : ℕ) : comparatorRegret linearLoss (fun _ => 0) u T = -(T : ℝ) * u",
+    "raw_header": "theorem linear_regret (u : ℝ) (T : ℕ) :\n    comparatorRegret linearLoss (fun _ => 0) u T = -(T : ℝ) * u",
+    "raw_header_sha256": "c16668f00c5dab910eb29e181a40a131f79dcb848024cff4200b86be9880ac90"
+  },
+  {
+    "name": "NoRegretSemanticsProbe.linear_normalized",
+    "path": "Tests/OnlineNoRegretSemanticsCanary.lean",
+    "header": "theorem linear_normalized (u : ℝ) (T : ℕ) (hT : 0 < T) : comparatorRegret linearLoss (fun _ => 0) u T / T = -u",
+    "raw_header": "theorem linear_normalized (u : ℝ) (T : ℕ) (hT : 0 < T) :\n    comparatorRegret linearLoss (fun _ => 0) u T / T = -u",
+    "raw_header_sha256": "39ceb58216c675495178c9f39a2213ad829c8530f7190ad7f529e11b3254b16c"
+  },
+  {
+    "name": "NoRegretSemanticsProbe.linear_converges",
+    "path": "Tests/OnlineNoRegretSemanticsCanary.lean",
+    "header": "theorem linear_converges (u : ℝ) : Tendsto (fun T : ℕ => comparatorRegret linearLoss (fun _ => 0) u T / T) atTop (nhds (-u))",
+    "raw_header": "theorem linear_converges (u : ℝ) :\n    Tendsto (fun T : ℕ => comparatorRegret linearLoss (fun _ => 0) u T / T)\n      atTop (nhds (-u))",
+    "raw_header_sha256": "ba3271d71e8d4a51fd6a26a92dbb4c5055a746756bd8a5d2eca7ed200ebae0a5"
+  },
+  {
+    "name": "NoRegretSemanticsProbe.linear_literal",
+    "path": "Tests/OnlineNoRegretSemanticsCanary.lean",
+    "header": "theorem linear_literal : LimitNoRegret (Set.Icc (0 : ℝ) 1) linearLoss (fun _ => 0)",
+    "raw_header": "theorem linear_literal :\n    LimitNoRegret (Set.Icc (0 : ℝ) 1) linearLoss (fun _ => 0)",
+    "raw_header_sha256": "9ccbfa234632111760a3b4cae2a3204f8743da2c614d7c9d418f32c98c2eff42"
+  },
+  {
+    "name": "NoRegretSemanticsProbe.linear_upper",
+    "path": "Tests/OnlineNoRegretSemanticsCanary.lean",
+    "header": "theorem linear_upper : NoRegret (Set.Icc (0 : ℝ) 1) linearLoss (fun _ => 0)",
+    "raw_header": "theorem linear_upper :\n    NoRegret (Set.Icc (0 : ℝ) 1) linearLoss (fun _ => 0)",
+    "raw_header_sha256": "ee0b846380414b12b9dc3e6dc5d79df071f3d9d93c89aaa54c30503be4b38e41"
+  },
+  {
+    "name": "NoRegretSemanticsProbe.negative_limit_allowed",
+    "path": "Tests/OnlineNoRegretSemanticsCanary.lean",
+    "header": "theorem negative_limit_allowed : Tendsto (fun T : ℕ => comparatorRegret linearLoss (fun _ => 0) 1 T / T) atTop (nhds (-1)) ∧ NoRegret (Set.Icc (0 : ℝ) 1) linearLoss (fun _ => 0) ∧ (-1 : ℝ) ≤ 0",
+    "raw_header": "theorem negative_limit_allowed :\n    Tendsto (fun T : ℕ => comparatorRegret linearLoss (fun _ => 0) 1 T / T)\n      atTop (nhds (-1)) ∧\n    NoRegret (Set.Icc (0 : ℝ) 1) linearLoss (fun _ => 0) ∧ (-1 : ℝ) ≤ 0",
+    "raw_header_sha256": "ebf4fc9cd15dc770964484e06b22b5155d6fd583740fdf99aa027de13aabba0d"
+  },
+  {
+    "name": "NoRegretSemanticsProbe.iff_on_linear",
+    "path": "Tests/OnlineNoRegretSemanticsCanary.lean",
+    "header": "theorem iff_on_linear : LimitNoRegret (Set.Icc (0 : ℝ) 1) linearLoss (fun _ => 0) ↔ NoRegret (Set.Icc (0 : ℝ) 1) linearLoss (fun _ => 0)",
+    "raw_header": "theorem iff_on_linear :\n    LimitNoRegret (Set.Icc (0 : ℝ) 1) linearLoss (fun _ => 0) ↔\n      NoRegret (Set.Icc (0 : ℝ) 1) linearLoss (fun _ => 0)",
+    "raw_header_sha256": "6aa5996f1c85d1428cb25b353d0f7d3d445c813372bee03383da8a20765b7e26"
+  },
+  {
+    "name": "NoRegretSemanticsProbe.actual_mean_upper",
+    "path": "Tests/OnlineNoRegretSemanticsCanary.lean",
+    "header": "theorem actual_mean_upper : NoRegret (Set.Icc (0 : ℝ) 1) (fun (_ : ℕ) x => x ^ 2) (meanPredict (fun _ => 0))",
+    "raw_header": "theorem actual_mean_upper :\n    NoRegret (Set.Icc (0 : ℝ) 1) (fun (_ : ℕ) x => x ^ 2)\n      (meanPredict (fun _ => 0))",
+    "raw_header_sha256": "9382fcac4ac5a17f18eb1082592bc29e50f3e8218935ebffe64dc6371a668f67"
+  },
+  {
+    "name": "NoRegretSemanticsProbe.actual_mean_negative_T2",
+    "path": "Tests/OnlineNoRegretSemanticsCanary.lean",
+    "header": "theorem actual_mean_negative_T2 : comparatorRegret (fun (_ : ℕ) x => x ^ 2) (meanPredict (fun _ => 0)) 1 2 / 2 = (-7 : ℝ) / 8",
+    "raw_header": "theorem actual_mean_negative_T2 :\n    comparatorRegret (fun (_ : ℕ) x => x ^ 2) (meanPredict (fun _ => 0)) 1 2 / 2 =\n      (-7 : ℝ) / 8",
+    "raw_header_sha256": "6bef5ff5470376b494c0f0ba3d0be6c9f9e309ae0e2814270940ea90ebae168c"
+  },
+  {
+    "name": "NoRegretSemanticsProbe.obstruction_feasible",
+    "path": "Tests/OnlineNoRegretSemanticsCanary.lean",
+    "header": "theorem obstruction_feasible : (0 : ℝ) ∈ Set.Icc 0 1 ∧ (1 : ℝ) ∈ Set.Icc 0 1 ∧ ∀ t : ℕ, (fun (_ : ℕ) => (0 : ℝ)) t ∈ Set.Icc 0 1",
+    "raw_header": "theorem obstruction_feasible :\n    (0 : ℝ) ∈ Set.Icc 0 1 ∧ (1 : ℝ) ∈ Set.Icc 0 1 ∧\n      ∀ t : ℕ, (fun (_ : ℕ) => (0 : ℝ)) t ∈ Set.Icc 0 1",
+    "raw_header_sha256": "4182d334aeccaebe048725b2f7148f02efc82a4d28af86974a4f2d3903ac4eb9"
+  },
+  {
+    "name": "NoRegretSemanticsProbe.actual_signed_losses",
+    "path": "Tests/OnlineNoRegretSemanticsCanary.lean",
+    "header": "theorem actual_signed_losses : NoRegretCounterexample.loss 0 1 = 0 ∧ NoRegretCounterexample.loss 1 1 = 2 ∧ NoRegretCounterexample.loss 2 1 = -2 ∧ NoRegretCounterexample.loss 3 1 = 4",
+    "raw_header": "theorem actual_signed_losses :\n    NoRegretCounterexample.loss 0 1 = 0 ∧\n    NoRegretCounterexample.loss 1 1 = 2 ∧\n    NoRegretCounterexample.loss 2 1 = -2 ∧\n    NoRegretCounterexample.loss 3 1 = 4",
+    "raw_header_sha256": "2520b84d714c360518e72f21151b15e41978b961495c156f7a50302a703b511c"
+  },
+  {
+    "name": "NoRegretSemanticsProbe.zero_horizon",
+    "path": "Tests/OnlineNoRegretSemanticsCanary.lean",
+    "header": "theorem zero_horizon : comparatorRegret NoRegretCounterexample.loss (fun _ => 0) 1 0 = 0",
+    "raw_header": "theorem zero_horizon :\n    comparatorRegret NoRegretCounterexample.loss (fun _ => 0) 1 0 = 0",
+    "raw_header_sha256": "255ff99c9c33aa10ca695b580eeaebb5129aa5c1eda9f054b3e33f5f320e287f"
+  },
+  {
+    "name": "NoRegretSemanticsProbe.even_T2",
+    "path": "Tests/OnlineNoRegretSemanticsCanary.lean",
+    "header": "theorem even_T2 : comparatorRegret NoRegretCounterexample.loss (fun _ => 0) 1 2 / 2 = -1",
+    "raw_header": "theorem even_T2 :\n    comparatorRegret NoRegretCounterexample.loss (fun _ => 0) 1 2 / 2 = -1",
+    "raw_header_sha256": "c4d020bf4b8f2afd90dfe7d27c3f1ac212f990d17f00086072d59652e087a208"
+  },
+  {
+    "name": "NoRegretSemanticsProbe.odd_T3",
+    "path": "Tests/OnlineNoRegretSemanticsCanary.lean",
+    "header": "theorem odd_T3 : comparatorRegret NoRegretCounterexample.loss (fun _ => 0) 1 3 / 3 = 0",
+    "raw_header": "theorem odd_T3 :\n    comparatorRegret NoRegretCounterexample.loss (fun _ => 0) 1 3 / 3 = 0",
+    "raw_header_sha256": "def3675959fe1d6a5be824104b637b4c835c05ea20f39c497a21104981642789"
+  },
+  {
+    "name": "NoRegretSemanticsProbe.same_process_strict",
+    "path": "Tests/OnlineNoRegretSemanticsCanary.lean",
+    "header": "theorem same_process_strict : NoRegret (Set.Icc (0 : ℝ) 1) NoRegretCounterexample.loss (fun _ => 0) ∧ ¬ LimitNoRegret (Set.Icc (0 : ℝ) 1) NoRegretCounterexample.loss (fun _ => 0)",
+    "raw_header": "theorem same_process_strict :\n    NoRegret (Set.Icc (0 : ℝ) 1) NoRegretCounterexample.loss (fun _ => 0) ∧\n      ¬ LimitNoRegret (Set.Icc (0 : ℝ) 1) NoRegretCounterexample.loss (fun _ => 0)",
+    "raw_header_sha256": "743042cbef95088fb8f89d68396aee732269c47daeae88ead0b7f50a57950b60"
+  }
+]
