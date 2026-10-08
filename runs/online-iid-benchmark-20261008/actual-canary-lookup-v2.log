@@ -1,0 +1,66 @@
+Tests.OnlineGuessingIIDBenchmark.coinLaw [def] Tests/OnlineGuessingIIDBenchmarkCanary.lean:11
+  def coinLaw : Measure ℝ
+Tests.OnlineGuessingIIDBenchmark.iidLaw [def] Tests/OnlineGuessingIIDBenchmarkCanary.lean:18
+  def iidLaw : Measure (ℕ → ℝ)
+Tests.OnlineGuessingIIDBenchmark.observation [def] Tests/OnlineGuessingIIDBenchmarkCanary.lean:24
+  def observation (t : ℕ) (ω : ℕ → ℝ) : ℝ
+Tests.OnlineGuessingIIDBenchmark.coinLaw_support [theorem] Tests/OnlineGuessingIIDBenchmarkCanary.lean:26
+  theorem coinLaw_support : ∀ᵐ x ∂coinLaw, x ∈ Set.Icc (0 : ℝ) 1
+Tests.OnlineGuessingIIDBenchmark.coinLaw_integral [theorem] Tests/OnlineGuessingIIDBenchmarkCanary.lean:30
+  theorem coinLaw_integral (f : ℝ → ℝ) : (∫ x, f x ∂coinLaw) = (f 0 + f 1) / 2
+Tests.OnlineGuessingIIDBenchmark.observation_measurable [theorem] Tests/OnlineGuessingIIDBenchmarkCanary.lean:41
+  theorem observation_measurable (t : ℕ) : Measurable (observation t)
+Tests.OnlineGuessingIIDBenchmark.observation_has_coinLaw [theorem] Tests/OnlineGuessingIIDBenchmarkCanary.lean:43
+  theorem observation_has_coinLaw (t : ℕ) : IdentDistrib (observation t) (fun x : ℝ => x) iidLaw coinLaw
+Tests.OnlineGuessingIIDBenchmark.observation_sameLaw [theorem] Tests/OnlineGuessingIIDBenchmarkCanary.lean:48
+  theorem observation_sameLaw (t : ℕ) : IdentDistrib (observation t) (observation 0) iidLaw iidLaw
+Tests.OnlineGuessingIIDBenchmark.observation_support [theorem] Tests/OnlineGuessingIIDBenchmarkCanary.lean:52
+  theorem observation_support (t : ℕ) : ∀ᵐ ω ∂iidLaw, observation t ω ∈ Set.Icc (0 : ℝ) 1
+Tests.OnlineGuessingIIDBenchmark.observation_independent [theorem] Tests/OnlineGuessingIIDBenchmarkCanary.lean:56
+  theorem observation_independent : iIndepFun observation iidLaw
+Tests.OnlineGuessingIIDBenchmark.observation_mean [theorem] Tests/OnlineGuessingIIDBenchmarkCanary.lean:60
+  theorem observation_mean (t : ℕ) : (∫ ω, observation t ω ∂iidLaw) = 1 / 2
+Tests.OnlineGuessingIIDBenchmark.observation_variance [theorem] Tests/OnlineGuessingIIDBenchmarkCanary.lean:64
+  theorem observation_variance (t : ℕ) : variance (observation t) iidLaw = 1 / 4
+Tests.OnlineGuessingIIDBenchmark.support_is_not_pointwise [theorem] Tests/OnlineGuessingIIDBenchmarkCanary.lean:70
+  theorem support_is_not_pointwise : ¬ (∀ t ω, observation t ω ∈ Set.Icc (0 : ℝ) 1)
+Tests.OnlineGuessingIIDBenchmark.empty_minimum [theorem] Tests/OnlineGuessingIIDBenchmarkCanary.lean:76
+  theorem empty_minimum : expectedFixedMinimum iidLaw observation 0 = 0
+Tests.OnlineGuessingIIDBenchmark.two_round_fixed_minimum [theorem] Tests/OnlineGuessingIIDBenchmarkCanary.lean:81
+  theorem two_round_fixed_minimum : expectedFixedMinimum iidLaw observation 2 = 1 / 2
+Tests.OnlineGuessingIIDBenchmark.actual_mean_attainment [theorem] Tests/OnlineGuessingIIDBenchmarkCanary.lean:86
+  theorem actual_mean_attainment : IsLeast ((fun u : ℝ => ∫ ω, ∑ t ∈ Finset.range 2, (u - observation t ω)^2 ∂iidLaw) '' Set.Icc (0 : ℝ) 1) (1 / 2)
+Tests.OnlineGuessingIIDBenchmark.actual_meanPredict_nonnegative [theorem] Tests/OnlineGuessingIIDBenchmarkCanary.lean:94
+  theorem actual_meanPredict_nonnegative (T : ℕ) : 0 ≤ expectedFixedRegret iidLaw observation (fun t ω => meanPredict ω t) T
+Tests.OnlineGuessingIIDBenchmark.meanPredict_two_round_excess [theorem] Tests/OnlineGuessingIIDBenchmarkCanary.lean:99
+  theorem meanPredict_two_round_excess : expectedFixedRegret iidLaw observation (fun t ω => meanPredict ω t) 2 = 1 / 4
+Tests.OnlineGuessingIIDBenchmark.constant_known_mean_zero [theorem] Tests/OnlineGuessingIIDBenchmarkCanary.lean:111
+  theorem constant_known_mean_zero (T : ℕ) : expectedFixedRegret iidLaw observation (fun _ _ => (1 / 2 : ℝ)) T = 0
+Tests.OnlineGuessingIIDBenchmark.lastPolicy [def] Tests/OnlineGuessingIIDBenchmarkCanary.lean:119
+  def lastPolicy (t : ℕ) (z : (↑(Finset.range t) : Type) → ℝ) : ℝ
+Tests.OnlineGuessingIIDBenchmark.lastPolicy_measurable [theorem] Tests/OnlineGuessingIIDBenchmarkCanary.lean:123
+  theorem lastPolicy_measurable (t : ℕ) : Measurable (lastPolicy t)
+Tests.OnlineGuessingIIDBenchmark.lastPolicy_legal [theorem] Tests/OnlineGuessingIIDBenchmarkCanary.lean:127
+  theorem lastPolicy_legal (t : ℕ) (z : (↑(Finset.range t) : Type) → ℝ) (hz : ∀ i, z i ∈ Set.Icc (0 : ℝ) 1) : lastPolicy t z ∈ Set.Icc (0 : ℝ) 1
+Tests.OnlineGuessingIIDBenchmark.lastPolicy_not_globally_bounded [theorem] Tests/OnlineGuessingIIDBenchmarkCanary.lean:135
+  theorem lastPolicy_not_globally_bounded : ¬ (∀ t z, lastPolicy t z ∈ Set.Icc (0 : ℝ) 1)
+Tests.OnlineGuessingIIDBenchmark.actual_history_independent [theorem] Tests/OnlineGuessingIIDBenchmarkCanary.lean:141
+  theorem actual_history_independent (t : ℕ) : IndepFun (fun ω => lastPolicy t (fun i => observation i ω)) (observation t) iidLaw
+Tests.OnlineGuessingIIDBenchmark.actual_history_nonnegative [theorem] Tests/OnlineGuessingIIDBenchmarkCanary.lean:146
+  theorem actual_history_nonnegative (T : ℕ) : 0 ≤ expectedFixedRegret iidLaw observation (fun t ω => lastPolicy t (fun i => observation i ω)) T
+Tests.OnlineGuessingIIDBenchmark.actual_history_normalization [theorem] Tests/OnlineGuessingIIDBenchmarkCanary.lean:151
+  theorem actual_history_normalization : (∫ ω, ∑ t ∈ Finset.range 2, (lastPolicy t (fun i => observation i ω) - observation t ω)^2 ∂iidLaw) / 2 - 1 / 4 = expectedFixedRegret iidLaw observation (fun t ω => lastPolicy t (fun i => observation i ω)) 2 / 2
+Tests.OnlineGuessingIIDBenchmark.repeated_target_fixed_minimum [theorem] Tests/OnlineGuessingIIDBenchmarkCanary.lean:161
+  theorem repeated_target_fixed_minimum (T : ℕ) : expectedFixedMinimum iidLaw (fun _ => observation 0) T = (T : ℝ) / 4
+Tests.OnlineGuessingIIDBenchmark.infeasible_fixed_comparator_two [theorem] Tests/OnlineGuessingIIDBenchmarkCanary.lean:169
+  theorem infeasible_fixed_comparator_two : (∫ ω, ∑ t ∈ Finset.range 2, ((2 : ℝ) - observation t ω)^2 ∂iidLaw) = 5
+Tests.OnlineGuessingIIDBenchmark.independent_difference_square [theorem] Tests/OnlineGuessingIIDBenchmarkCanary.lean:175
+  theorem independent_difference_square : (∫ ω, (observation 0 ω - observation 1 ω)^2 ∂iidLaw) = 1 / 2
+Tests.OnlineGuessingIIDBenchmark.hindsightMinimum [def] Tests/OnlineGuessingIIDBenchmarkCanary.lean:189
+  def hindsightMinimum (ω : ℕ → ℝ) (T : ℕ) : ℝ
+Tests.OnlineGuessingIIDBenchmark.hindsight_minimum_two [theorem] Tests/OnlineGuessingIIDBenchmarkCanary.lean:192
+  theorem hindsight_minimum_two : (∫ ω, hindsightMinimum ω 2 ∂iidLaw) = 1 / 4
+Tests.OnlineGuessingIIDBenchmark.min_and_expectation_do_not_commute [theorem] Tests/OnlineGuessingIIDBenchmarkCanary.lean:206
+  theorem min_and_expectation_do_not_commute : (∫ ω, hindsightMinimum ω 2 ∂iidLaw) < expectedFixedMinimum iidLaw observation 2
+Tests.OnlineGuessingIIDBenchmark.current_target_cheating_negative [theorem] Tests/OnlineGuessingIIDBenchmarkCanary.lean:212
+  theorem current_target_cheating_negative : expectedFixedRegret iidLaw observation observation 2 = -1 / 2

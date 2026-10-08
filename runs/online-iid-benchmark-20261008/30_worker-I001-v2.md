@@ -1,0 +1,1 @@
+Actual first frozen I001 body compiles. Derives L2 from a.s. interval support, each square Integrable, then integrates finite sum and actual same-law scalar square decomposition. Eight-terminal frontier8→7 only; no assumed minimizer/current-target independence/regret bound, no source-package/chapter/Goal acceptance. Build/fence/trial evidence separate.

@@ -1,0 +1,66 @@
+import BanditRLProof.OnlineLearningHistory
+import Mathlib.Order.ConditionallyCompleteLattice.Basic
+
+open MeasureTheory ProbabilityTheory
+
+namespace BanditRL.OnlineLearning
+
+noncomputable def expectedFixedMinimum {Ω : Type*} [MeasurableSpace Ω]
+    (μ : Measure Ω) (Y : ℕ → Ω → ℝ) (T : ℕ) : ℝ :=
+  sInf ((fun u : ℝ => ∫ ω, ∑ t ∈ Finset.range T, (u - Y t ω)^2 ∂μ) ''
+    Set.Icc (0 : ℝ) 1)
+
+noncomputable def expectedFixedRegret {Ω : Type*} [MeasurableSpace Ω]
+    (μ : Measure Ω) (Y prediction : ℕ → Ω → ℝ) (T : ℕ) : ℝ :=
+  (∫ ω, ∑ t ∈ Finset.range T, (prediction t ω - Y t ω)^2 ∂μ) -
+    expectedFixedMinimum μ Y T
+
+/-- Same-law expected fixed loss; a.s. support produces L2 before finite integration. -/
+theorem expected_fixed_prefix_decomposition {Ω : Type*} [MeasurableSpace Ω]
+    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)
+    (hY : ∀ t, Measurable (Y t))
+    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)
+    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) (u : ℝ) :
+    (∫ ω, ∑ t ∈ Finset.range T, (u - Y t ω)^2 ∂μ) =
+      (T : ℝ) * variance (Y 0) μ +
+        (T : ℝ) * (u - ∫ ω, Y 0 ω ∂μ)^2 := by
+  have hL (t : ℕ) : MemLp (Y t) 2 μ :=
+    memLp_of_bounded (hb t) (hY t).aestronglyMeasurable 2
+  rw [integral_finset_sum (Finset.range T)
+    (f := fun t ω => (u - Y t ω)^2)
+    (fun t _ => ((memLp_const u).sub (hL t)).integrable_sq)]
+  have heq (t : ℕ) :
+      (∫ ω, (u - Y t ω)^2 ∂μ) =
+        variance (Y 0) μ + (u - ∫ ω, Y 0 ω ∂μ)^2 := by
+    simpa only [(hlaw t).integral_eq, (hlaw t).variance_eq] using
+      expected_square_decomposition μ (Y t) (hL t) u
+  simp_rw [heq]
+  simp [Finset.sum_add_distrib]
+
+/-- Produced expected-fixed minimum; zero horizon has no uniqueness claim. -/
+theorem expected_fixed_prefix_minimum {Ω : Type*} [MeasurableSpace Ω]
+    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)
+    (hY : ∀ t, Measurable (Y t))
+    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)
+    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) :
+    (∫ ω, Y 0 ω ∂μ) ∈ Set.Icc (0 : ℝ) 1 ∧
+      IsLeast ((fun u : ℝ => ∫ ω, ∑ t ∈ Finset.range T, (u - Y t ω)^2 ∂μ) ''
+        Set.Icc (0 : ℝ) 1) ((T : ℝ) * variance (Y 0) μ) := by
+  have hI : Integrable (Y 0) μ :=
+    (memLp_of_bounded (hb 0) (hY 0).aestronglyMeasurable 2).integrable (by norm_num)
+  have hm0 : 0 ≤ ∫ ω, Y 0 ω ∂μ :=
+    integral_nonneg_of_ae ((hb 0).mono (fun _ h => h.1))
+  have hm1 : (∫ ω, Y 0 ω ∂μ) ≤ 1 := by
+    have h := integral_mono_ae hI (integrable_const (1 : ℝ))
+      ((hb 0).mono (fun _ h => h.2))
+    simpa using h
+  have hm : (∫ ω, Y 0 ω ∂μ) ∈ Set.Icc (0 : ℝ) 1 := ⟨hm0, hm1⟩
+  refine ⟨hm, ⟨?_, ?_⟩⟩
+  · refine ⟨∫ ω, Y 0 ω ∂μ, hm, ?_⟩
+    rw [expected_fixed_prefix_decomposition μ Y hY hlaw hb T]
+    simp
+  · rintro z ⟨u, _, rfl⟩
+    rw [expected_fixed_prefix_decomposition μ Y hY hlaw hb T]
+    exact le_add_of_nonneg_right (mul_nonneg (Nat.cast_nonneg T) (sq_nonneg _))
+
+end BanditRL.OnlineLearning

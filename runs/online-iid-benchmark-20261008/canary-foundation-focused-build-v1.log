@@ -1,0 +1,105 @@
+⚠ [3327/3431] Replayed BanditRLProof.OnlineLearningFTL
+warning: BanditRLProof/OnlineLearningFTL.lean:81:41: unused variable `hT`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [3371/3431] Replayed BanditRLProof.OnlineLearningHistory
+warning: BanditRLProof/OnlineLearningHistory.lean:42:6: 'ring' tactic does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: BanditRLProof/OnlineLearningHistory.lean:42:6: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+⚠ [3372/3431] Replayed BanditRLProof.OnlineGuessingIIDBenchmark
+warning: BanditRLProof/OnlineGuessingIIDBenchmark.lean:38:8: This simp argument is unused:
+  Finset.sum_add_distrib
+
+Hint: Omit it from the simp argument list.
+  simp ̵[̵F̵i̵n̵s̵e̵t̵.̵s̵u̵m̵_̵a̵d̵d̵_̵d̵i̵s̵t̵r̵i̵b̵]̵
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: BanditRLProof/OnlineGuessingIIDBenchmark.lean:185:5: unused variable `hind`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: BanditRLProof/OnlineGuessingIIDBenchmark.lean:187:5: unused variable `hp`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: BanditRLProof/OnlineGuessingIIDBenchmark.lean:188:5: unused variable `hpb`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+✖ [3431/3431] Building Tests.OnlineGuessingIIDBenchmarkCanary (8.2s)
+trace: .> LEAN_PATH=E:\ABRL\research\.lake\packages\Cli\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\batteries\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\Qq\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\aesop\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\proofwidgets\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\importGraph\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\LeanSearchClient\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\plausible\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\mathlib\.lake\build\lib\lean;E:\ABRL\worktrees\research-online-book\.lake\build\lib\lean c:\Users\admin\.elan\toolchains\leanprover--lean4---v4.29.1\bin\lean.exe E:\ABRL\worktrees\research-online-book\Tests\OnlineGuessingIIDBenchmarkCanary.lean -o E:\ABRL\worktrees\research-online-book\.lake\build\lib\lean\Tests\OnlineGuessingIIDBenchmarkCanary.olean -i E:\ABRL\worktrees\research-online-book\.lake\build\lib\lean\Tests\OnlineGuessingIIDBenchmarkCanary.ilean -c E:\ABRL\worktrees\research-online-book\.lake\build\ir\Tests\OnlineGuessingIIDBenchmarkCanary.c --setup E:\ABRL\worktrees\research-online-book\.lake\build\ir\Tests\OnlineGuessingIIDBenchmarkCanary.setup.json --json
+error: Tests/OnlineGuessingIIDBenchmarkCanary.lean:11:14: expected token
+error: Tests/OnlineGuessingIIDBenchmarkCanary.lean:13:63: unsolved goals
+case measure_univ
+⊢ (sorry ()) Set.univ = 1
+warning: Tests/OnlineGuessingIIDBenchmarkCanary.lean:15:12: declaration uses `sorry`
+warning: Tests/OnlineGuessingIIDBenchmarkCanary.lean:25:8: declaration uses `sorry`
+warning: Tests/OnlineGuessingIIDBenchmarkCanary.lean:27:2: 'constructor <;> apply Measure.ae_smul_measure <;> simp' tactic does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: Tests/OnlineGuessingIIDBenchmarkCanary.lean:27:2: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+error: Tests/OnlineGuessingIIDBenchmarkCanary.lean:31:38: expected token
+error: Tests/OnlineGuessingIIDBenchmarkCanary.lean:31:35: failed to synthesize instance of type class
+  LE Type
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+error: Tests/OnlineGuessingIIDBenchmarkCanary.lean:31:37: failed to synthesize instance of type class
+  OfNat Type 0
+numerals are polymorphic in Lean, but the numeral `0` cannot be used in a context where the expected type is
+  Type
+due to the absence of the instance above
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+error: Tests/OnlineGuessingIIDBenchmarkCanary.lean:30:45: unsolved goals
+case h0
+f : ℝ → ℝ
+⊢ Integrable f sorry
+
+f : ℝ → ℝ
+h0 : Integrable f sorry
+⊢ ∫ (x : ℝ), f x ∂coinLaw = (f 0 + f 1) / 2
+error: Tests/OnlineGuessingIIDBenchmarkCanary.lean:65:4: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  Var[id; ?m.33]
+in the target expression
+  Var[fun x => x; coinLaw] = 1 / 4
+
+t : ℕ
+⊢ Var[fun x => x; coinLaw] = 1 / 4
+error: Tests/OnlineGuessingIIDBenchmarkCanary.lean:90:2: Type mismatch: After simplification, term
+  h
+ has type
+  IsLeast ((fun u => ∫ (ω : ℕ → ℝ), ∑ t ∈ Finset.range 2, (u - observation t ω) ^ 2 ∂iidLaw) '' Set.Icc 0 1) (2 * 4⁻¹)
+but is expected to have type
+  IsLeast ((fun u => ∫ (ω : ℕ → ℝ), ∑ t ∈ Finset.range 2, (u - observation t ω) ^ 2 ∂iidLaw) '' Set.Icc 0 1) 2⁻¹
+error: Tests/OnlineGuessingIIDBenchmarkCanary.lean:102:15: don't know how to synthesize implicit argument `μ`
+  @variance_eq_integral (ℕ → ℝ) MeasurableSpace.pi (observation 0) ?m.94
+    (Measurable.aemeasurable (observation_measurable 0))
+context:
+he :
+  expectedFixedRegret iidLaw observation (fun t ω => meanPredict (fun i => observation i ω) t) 2 =
+    ∑ t ∈ Finset.range 2,
+      ∫ (ω : ℕ → ℝ), (meanPredict (fun i => observation i ω) t - ∫ (ω : ℕ → ℝ), observation 0 ω ∂iidLaw) ^ 2 ∂iidLaw
+⊢ Measure (ℕ → ℝ)
+error: Tests/OnlineGuessingIIDBenchmarkCanary.lean:102:36: don't know how to synthesize implicit argument `μ`
+  @Measurable.aemeasurable (ℕ → ℝ) ℝ MeasurableSpace.pi Real.measurableSpace (observation 0) ?m.94
+    (observation_measurable 0)
+context:
+he :
+  expectedFixedRegret iidLaw observation (fun t ω => meanPredict (fun i => observation i ω) t) 2 =
+    ∑ t ∈ Finset.range 2,
+      ∫ (ω : ℕ → ℝ), (meanPredict (fun i => observation i ω) t - ∫ (ω : ℕ → ℝ), observation 0 ω ∂iidLaw) ^ 2 ∂iidLaw
+⊢ Measure (ℕ → ℝ)
+error: Tests/OnlineGuessingIIDBenchmarkCanary.lean:102:9: failed to infer `have` declaration type
+error: Tests/OnlineGuessingIIDBenchmarkCanary.lean:105:2: Type mismatch: After simplification, term
+  he
+ has type
+  expectedFixedRegret iidLaw observation (fun t ω => if t = 0 then 2⁻¹ else (∑ x ∈ Finset.range t, ω x) / ↑t) 2 =
+    (2⁻¹ - ∫ (ω : ℕ → ℝ), ω 0 ∂iidLaw) ^ 2 + ∫ (ω : ℕ → ℝ), (ω 0 - ∫ (ω : ℕ → ℝ), ω 0 ∂iidLaw) ^ 2 ∂iidLaw
+but is expected to have type
+  expectedFixedRegret iidLaw observation (fun t ω => if t = 0 then 2⁻¹ else (∑ t ∈ Finset.range t, ω t) / ↑t) 2 = 4⁻¹
+error: Lean exited with code 1
+Some required targets logged failures:
+- Tests.OnlineGuessingIIDBenchmarkCanary
+error: build failed

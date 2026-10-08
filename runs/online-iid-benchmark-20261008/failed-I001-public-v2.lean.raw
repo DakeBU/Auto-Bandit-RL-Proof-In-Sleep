@@ -1,0 +1,39 @@
+import BanditRLProof.OnlineLearningHistory
+import Mathlib.Order.ConditionallyCompleteLattice.Basic
+
+open MeasureTheory ProbabilityTheory
+
+namespace BanditRL.OnlineLearning
+
+noncomputable def expectedFixedMinimum {Ω : Type*} [MeasurableSpace Ω]
+    (μ : Measure Ω) (Y : ℕ → Ω → ℝ) (T : ℕ) : ℝ :=
+  sInf ((fun u : ℝ => ∫ ω, ∑ t ∈ Finset.range T, (u - Y t ω)^2 ∂μ) ''
+    Set.Icc (0 : ℝ) 1)
+
+noncomputable def expectedFixedRegret {Ω : Type*} [MeasurableSpace Ω]
+    (μ : Measure Ω) (Y prediction : ℕ → Ω → ℝ) (T : ℕ) : ℝ :=
+  (∫ ω, ∑ t ∈ Finset.range T, (prediction t ω - Y t ω)^2 ∂μ) -
+    expectedFixedMinimum μ Y T
+
+/-- Same-law expected fixed loss; a.s. support produces L2 before finite integration. -/
+theorem expected_fixed_prefix_decomposition {Ω : Type*} [MeasurableSpace Ω]
+    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)
+    (hY : ∀ t, Measurable (Y t))
+    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)
+    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) (u : ℝ) :
+    (∫ ω, ∑ t ∈ Finset.range T, (u - Y t ω)^2 ∂μ) =
+      (T : ℝ) * variance (Y 0) μ +
+        (T : ℝ) * (u - ∫ ω, Y 0 ω ∂μ)^2 := by
+  have hL (t : ℕ) : MemLp (Y t) 2 μ :=
+    memLp_of_bounded (hb t) (hY t).aestronglyMeasurable 2
+  rw [integral_finset_sum (Finset.range T)
+    (fun t _ => ((memLp_const u).sub (hL t)).integrable_sq)]
+  have heq (t : ℕ) :
+      (∫ ω, (u - Y t ω)^2 ∂μ) =
+        variance (Y 0) μ + (u - ∫ ω, Y 0 ω ∂μ)^2 := by
+    simpa only [(hlaw t).integral_eq, (hlaw t).variance_eq] using
+      expected_square_decomposition μ (Y t) (hL t) u
+  simp_rw [heq]
+  simp [Finset.sum_add_distrib]
+
+end BanditRL.OnlineLearning

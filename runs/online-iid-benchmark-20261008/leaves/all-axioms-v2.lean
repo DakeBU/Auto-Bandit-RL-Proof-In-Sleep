@@ -1,0 +1,107 @@
+import Tests.OnlineGuessingIIDBenchmarkCanary
+#check BanditRL.OnlineLearning.expected_fixed_prefix_decomposition
+#print axioms BanditRL.OnlineLearning.expected_fixed_prefix_decomposition
+#check BanditRL.OnlineLearning.expected_fixed_prefix_minimum
+#print axioms BanditRL.OnlineLearning.expected_fixed_prefix_minimum
+#check BanditRL.OnlineLearning.expectedFixedMinimum_eq_variance
+#print axioms BanditRL.OnlineLearning.expectedFixedMinimum_eq_variance
+#check BanditRL.OnlineLearning.iid_cumulative_prediction_decomposition
+#print axioms BanditRL.OnlineLearning.iid_cumulative_prediction_decomposition
+#check BanditRL.OnlineLearning.history_policy_expectedFixed_excess
+#print axioms BanditRL.OnlineLearning.history_policy_expectedFixed_excess
+#check BanditRL.OnlineLearning.meanPredict_expectedFixed_excess
+#print axioms BanditRL.OnlineLearning.meanPredict_expectedFixed_excess
+#check BanditRL.OnlineLearning.constant_mean_expectedFixed_excess_zero
+#print axioms BanditRL.OnlineLearning.constant_mean_expectedFixed_excess_zero
+#check BanditRL.OnlineLearning.history_policy_normalized_expectedFixed_excess
+#print axioms BanditRL.OnlineLearning.history_policy_normalized_expectedFixed_excess
+#check Tests.OnlineGuessingIIDBenchmark.coinLaw_support
+#print axioms Tests.OnlineGuessingIIDBenchmark.coinLaw_support
+#check Tests.OnlineGuessingIIDBenchmark.coinLaw_integral
+#print axioms Tests.OnlineGuessingIIDBenchmark.coinLaw_integral
+#check Tests.OnlineGuessingIIDBenchmark.observation_measurable
+#print axioms Tests.OnlineGuessingIIDBenchmark.observation_measurable
+#check Tests.OnlineGuessingIIDBenchmark.observation_has_coinLaw
+#print axioms Tests.OnlineGuessingIIDBenchmark.observation_has_coinLaw
+#check Tests.OnlineGuessingIIDBenchmark.observation_sameLaw
+#print axioms Tests.OnlineGuessingIIDBenchmark.observation_sameLaw
+#check Tests.OnlineGuessingIIDBenchmark.observation_support
+#print axioms Tests.OnlineGuessingIIDBenchmark.observation_support
+#check Tests.OnlineGuessingIIDBenchmark.observation_independent
+#print axioms Tests.OnlineGuessingIIDBenchmark.observation_independent
+#check Tests.OnlineGuessingIIDBenchmark.observation_mean
+#print axioms Tests.OnlineGuessingIIDBenchmark.observation_mean
+#check Tests.OnlineGuessingIIDBenchmark.observation_variance
+#print axioms Tests.OnlineGuessingIIDBenchmark.observation_variance
+#check Tests.OnlineGuessingIIDBenchmark.support_is_not_pointwise
+#print axioms Tests.OnlineGuessingIIDBenchmark.support_is_not_pointwise
+#check Tests.OnlineGuessingIIDBenchmark.empty_minimum
+#print axioms Tests.OnlineGuessingIIDBenchmark.empty_minimum
+#check Tests.OnlineGuessingIIDBenchmark.two_round_fixed_minimum
+#print axioms Tests.OnlineGuessingIIDBenchmark.two_round_fixed_minimum
+#check Tests.OnlineGuessingIIDBenchmark.actual_mean_attainment
+#print axioms Tests.OnlineGuessingIIDBenchmark.actual_mean_attainment
+#check Tests.OnlineGuessingIIDBenchmark.actual_meanPredict_nonnegative
+#print axioms Tests.OnlineGuessingIIDBenchmark.actual_meanPredict_nonnegative
+#check Tests.OnlineGuessingIIDBenchmark.meanPredict_two_round_excess
+#print axioms Tests.OnlineGuessingIIDBenchmark.meanPredict_two_round_excess
+#check Tests.OnlineGuessingIIDBenchmark.constant_known_mean_zero
+#print axioms Tests.OnlineGuessingIIDBenchmark.constant_known_mean_zero
+#check Tests.OnlineGuessingIIDBenchmark.lastPolicy_measurable
+#print axioms Tests.OnlineGuessingIIDBenchmark.lastPolicy_measurable
+#check Tests.OnlineGuessingIIDBenchmark.lastPolicy_legal
+#print axioms Tests.OnlineGuessingIIDBenchmark.lastPolicy_legal
+#check Tests.OnlineGuessingIIDBenchmark.lastPolicy_not_globally_bounded
+#print axioms Tests.OnlineGuessingIIDBenchmark.lastPolicy_not_globally_bounded
+#check Tests.OnlineGuessingIIDBenchmark.actual_history_independent
+#print axioms Tests.OnlineGuessingIIDBenchmark.actual_history_independent
+#check Tests.OnlineGuessingIIDBenchmark.actual_history_nonnegative
+#print axioms Tests.OnlineGuessingIIDBenchmark.actual_history_nonnegative
+#check Tests.OnlineGuessingIIDBenchmark.actual_history_normalization
+#print axioms Tests.OnlineGuessingIIDBenchmark.actual_history_normalization
+#check Tests.OnlineGuessingIIDBenchmark.repeated_target_fixed_minimum
+#print axioms Tests.OnlineGuessingIIDBenchmark.repeated_target_fixed_minimum
+#check Tests.OnlineGuessingIIDBenchmark.infeasible_fixed_comparator_two
+#print axioms Tests.OnlineGuessingIIDBenchmark.infeasible_fixed_comparator_two
+#check Tests.OnlineGuessingIIDBenchmark.independent_difference_square
+#print axioms Tests.OnlineGuessingIIDBenchmark.independent_difference_square
+#check Tests.OnlineGuessingIIDBenchmark.hindsight_minimum_two
+#print axioms Tests.OnlineGuessingIIDBenchmark.hindsight_minimum_two
+#check Tests.OnlineGuessingIIDBenchmark.min_and_expectation_do_not_commute
+#print axioms Tests.OnlineGuessingIIDBenchmark.min_and_expectation_do_not_commute
+#check Tests.OnlineGuessingIIDBenchmark.current_target_cheating_negative
+#print axioms Tests.OnlineGuessingIIDBenchmark.current_target_cheating_negative
+#check BanditRL.OnlineLearning.expected_square_decomposition
+#print axioms BanditRL.OnlineLearning.expected_square_decomposition
+#check BanditRL.OnlineLearning.independent_prediction_square
+#print axioms BanditRL.OnlineLearning.independent_prediction_square
+#check BanditRL.OnlineLearning.history_policy_independent
+#print axioms BanditRL.OnlineLearning.history_policy_independent
+#check BanditRL.OnlineLearning.meanPredict_independent
+#print axioms BanditRL.OnlineLearning.meanPredict_independent
+#check BanditRL.OnlineLearning.meanPredict_measurable
+#print axioms BanditRL.OnlineLearning.meanPredict_measurable
+#check BanditRL.OnlineLearning.meanPredict_mem
+#print axioms BanditRL.OnlineLearning.meanPredict_mem
+#check BanditRL.OnlineLearning.expectedFixedMinimum
+#print axioms BanditRL.OnlineLearning.expectedFixedMinimum
+#check BanditRL.OnlineLearning.expectedFixedRegret
+#print axioms BanditRL.OnlineLearning.expectedFixedRegret
+#check BanditRL.OnlineLearning.empiricalMean
+#print axioms BanditRL.OnlineLearning.empiricalMean
+#check BanditRL.OnlineLearning.meanPredict
+#print axioms BanditRL.OnlineLearning.meanPredict
+#check Tests.OnlineGuessingIIDBenchmark.coinLaw
+#print axioms Tests.OnlineGuessingIIDBenchmark.coinLaw
+#check Tests.OnlineGuessingIIDBenchmark.iidLaw
+#print axioms Tests.OnlineGuessingIIDBenchmark.iidLaw
+#check Tests.OnlineGuessingIIDBenchmark.observation
+#print axioms Tests.OnlineGuessingIIDBenchmark.observation
+#check Tests.OnlineGuessingIIDBenchmark.lastPolicy
+#print axioms Tests.OnlineGuessingIIDBenchmark.lastPolicy
+#check Tests.OnlineGuessingIIDBenchmark.hindsightMinimum
+#print axioms Tests.OnlineGuessingIIDBenchmark.hindsightMinimum
+#check Tests.OnlineGuessingIIDBenchmark.coinLaw_probability
+#print axioms Tests.OnlineGuessingIIDBenchmark.coinLaw_probability
+#check Tests.OnlineGuessingIIDBenchmark.iidLaw_probability
+#print axioms Tests.OnlineGuessingIIDBenchmark.iidLaw_probability

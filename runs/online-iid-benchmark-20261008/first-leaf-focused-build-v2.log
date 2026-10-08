@@ -1,0 +1,34 @@
+⚠ [3327/3372] Replayed BanditRLProof.OnlineLearningFTL
+warning: BanditRLProof/OnlineLearningFTL.lean:81:41: unused variable `hT`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [3371/3372] Replayed BanditRLProof.OnlineLearningHistory
+warning: BanditRLProof/OnlineLearningHistory.lean:42:6: 'ring' tactic does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: BanditRLProof/OnlineLearningHistory.lean:42:6: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+✖ [3372/3372] Building BanditRLProof.OnlineGuessingIIDBenchmark (7.9s)
+trace: .> LEAN_PATH=E:\ABRL\research\.lake\packages\Cli\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\batteries\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\Qq\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\aesop\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\proofwidgets\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\importGraph\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\LeanSearchClient\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\plausible\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\mathlib\.lake\build\lib\lean;E:\ABRL\worktrees\research-online-book\.lake\build\lib\lean c:\Users\admin\.elan\toolchains\leanprover--lean4---v4.29.1\bin\lean.exe E:\ABRL\worktrees\research-online-book\BanditRLProof\OnlineGuessingIIDBenchmark.lean -o E:\ABRL\worktrees\research-online-book\.lake\build\lib\lean\BanditRLProof\OnlineGuessingIIDBenchmark.olean -i E:\ABRL\worktrees\research-online-book\.lake\build\lib\lean\BanditRLProof\OnlineGuessingIIDBenchmark.ilean -c E:\ABRL\worktrees\research-online-book\.lake\build\ir\BanditRLProof\OnlineGuessingIIDBenchmark.c --setup E:\ABRL\worktrees\research-online-book\.lake\build\ir\BanditRLProof\OnlineGuessingIIDBenchmark.setup.json --json
+error: BanditRLProof/OnlineGuessingIIDBenchmark.lean:29:6: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ∫ (a : Ω), ∑ i ∈ Finset.range T, ((fun x => u) - Y i) a ^ 2 ∂μ
+in the target expression
+  ∫ (ω : Ω), ∑ t ∈ Finset.range T, (u - Y t ω) ^ 2 ∂μ = ↑T * Var[Y 0; μ] + ↑T * (u - ∫ (ω : Ω), Y 0 ω ∂μ) ^ 2
+
+Ω : Type u_1
+inst✝¹ : MeasurableSpace Ω
+μ : Measure Ω
+inst✝ : IsProbabilityMeasure μ
+Y : ℕ → Ω → ℝ
+hY : ∀ (t : ℕ), Measurable (Y t)
+hlaw : ∀ (t : ℕ), IdentDistrib (Y t) (Y 0) μ μ
+hb : ∀ (t : ℕ), ∀ᵐ (ω : Ω) ∂μ, Y t ω ∈ Set.Icc 0 1
+T : ℕ
+u : ℝ
+hL : ∀ (t : ℕ), MemLp (Y t) 2 μ
+⊢ ∫ (ω : Ω), ∑ t ∈ Finset.range T, (u - Y t ω) ^ 2 ∂μ = ↑T * Var[Y 0; μ] + ↑T * (u - ∫ (ω : Ω), Y 0 ω ∂μ) ^ 2
+error: Lean exited with code 1
+Some required targets logged failures:
+- BanditRLProof.OnlineGuessingIIDBenchmark
+error: build failed

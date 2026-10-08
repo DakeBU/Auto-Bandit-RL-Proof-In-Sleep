@@ -15501,3 +15501,13 @@ Orabona v10 unnumberedexample afterT2.30/endSection2.2.1 immediatelybefore2.2.2 
 - `2026-10-08T03:53:33+00:00` `bandit.py reference-index` `retrieval-index` `runs/online-square-minimum-20261008/native-reference-index/proof_weapon_cards.json` - refreshed proof_weapon_cards.json
 - `2026-10-08T03:53:33+00:00` `bandit.py reference-index` `retrieval-index` `runs/online-square-minimum-20261008/native-reference-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
 - `2026-10-08T03:53:33+00:00` `bandit.py reference-index` `retrieval-index` `runs/online-square-minimum-20261008/native-reference-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
+- `2026-10-08T04:58:41+00:00` `bandit.py new-task` `task` `tasks/ONLINE-IID-BENCHMARK-20261008.md` - Produce expected fixed square-loss minimum and causal IID cumulative variance benchmark
+- `2026-10-08T04:58:46+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/ONLINE-IID-BENCHMARK-20261008.md` - ONLINE-IID-BENCHMARK-20261008
+- `2026-10-08T05:02:18+00:00` `bandit.py reference-index` `retrieval-index` `runs/online-iid-benchmark-20261008/native-reference-index/lml_bandit_cards.json` - refreshed lml_bandit_cards.json
+- `2026-10-08T05:02:18+00:00` `bandit.py reference-index` `retrieval-index` `runs/online-iid-benchmark-20261008/native-reference-index/mathlib_bandit_cards.json` - refreshed mathlib_bandit_cards.json
+- `2026-10-08T05:02:18+00:00` `bandit.py reference-index` `retrieval-index` `runs/online-iid-benchmark-20261008/native-reference-index/bandit_textbook_cards.json` - refreshed bandit_textbook_cards.json
+- `2026-10-08T05:02:18+00:00` `bandit.py reference-index` `retrieval-index` `runs/online-iid-benchmark-20261008/native-reference-index/bandit_paper_cards.json` - refreshed bandit_paper_cards.json
+- `2026-10-08T05:02:18+00:00` `bandit.py reference-index` `retrieval-index` `runs/online-iid-benchmark-20261008/native-reference-index/bandit_scenario_cards.json` - refreshed bandit_scenario_cards.json
+- `2026-10-08T05:02:18+00:00` `bandit.py reference-index` `retrieval-index` `runs/online-iid-benchmark-20261008/native-reference-index/proof_weapon_cards.json` - refreshed proof_weapon_cards.json
+- `2026-10-08T05:02:18+00:00` `bandit.py reference-index` `retrieval-index` `runs/online-iid-benchmark-20261008/native-reference-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
+- `2026-10-08T05:02:18+00:00` `bandit.py reference-index` `retrieval-index` `runs/online-iid-benchmark-20261008/native-reference-index/local_lean_declarations.json` - refreshed local_lean_declarations.json

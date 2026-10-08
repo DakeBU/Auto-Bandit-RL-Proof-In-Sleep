@@ -1,0 +1,2 @@
+BanditRL.OnlineLearning.independent_prediction_square [theorem] BanditRLProof/OnlineLearningStochastic.lean:23
+  theorem independent_prediction_square {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (P Y : Ω → ℝ) (hP : MemLp P 2 μ) (hY : MemLp Y 2 μ) (h : IndepFun P Y μ) : (∫ ω, (P ω - Y ω)^2 ∂μ) = (∫ ω, (P ω - ∫ ω, Y ω ∂μ)^2 ∂μ) + variance Y μ
