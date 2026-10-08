@@ -1,0 +1,24 @@
+theorem meanPredict_limitNoRegret_iff_mean_converges (y : ℕ → ℝ)
+    (hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1) :
+    LimitNoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - y t)^2) (meanPredict y) ↔
+      ∃ m ∈ Set.Icc (0 : ℝ) 1, Tendsto (empiricalMean y) atTop (nhds m)
+
+theorem dyadicObservation_unit :
+    ∀ t, dyadicObservation t ∈ Set.Icc (0 : ℝ) 1
+
+theorem dyadic_empiricalMean_subsequences :
+    Tendsto (fun n : ℕ => empiricalMean dyadicObservation (4^(n + 1) - 1))
+      atTop (nhds ((2 : ℝ) / 3)) ∧
+    Tendsto (fun n : ℕ => empiricalMean dyadicObservation (2 * 4^n - 1))
+      atTop (nhds ((1 : ℝ) / 3))
+
+theorem dyadic_meanPredict_obstruction :
+    NoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - dyadicObservation t)^2)
+      (meanPredict dyadicObservation) ∧
+    Tendsto (fun T : ℕ => squaredBestRegret dyadicObservation
+      (meanPredict dyadicObservation) T / (T : ℝ)) atTop (nhds (0 : ℝ)) ∧
+    (¬ ∃ a : ℝ, Tendsto (fun T : ℕ =>
+      comparatorRegret (fun t x => (x - dyadicObservation t)^2)
+        (meanPredict dyadicObservation) 0 T / (T : ℝ)) atTop (nhds a)) ∧
+    ¬ LimitNoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - dyadicObservation t)^2)
+      (meanPredict dyadicObservation)

@@ -1,0 +1,62 @@
+import Mathlib
+
+open Filter
+namespace BanditRL.OnlineLearning
+
+noncomputable def empiricalMean (y : ℕ → ℝ) (n : ℕ) : ℝ :=
+  (∑ t ∈ Finset.range n, y t) / n
+
+noncomputable def meanPredict (y : ℕ → ℝ) (t : ℕ) : ℝ :=
+  if t = 0 then 1/2 else empiricalMean y t
+
+noncomputable def comparatorRegret {X : Type*} (loss : ℕ → X → ℝ)
+    (prediction : ℕ → X) (u : X) (T : ℕ) : ℝ :=
+  (∑ t ∈ Finset.range T, loss t (prediction t)) - ∑ t ∈ Finset.range T, loss t u
+
+def NoRegret {X : Type*} (V : Set X) (loss : ℕ → X → ℝ) (prediction : ℕ → X) : Prop :=
+  ∀ u ∈ V, ∀ ε : ℝ, 0 < ε → ∀ᶠ T in atTop,
+    comparatorRegret loss prediction u T / T ≤ ε
+
+noncomputable def squaredBestRegret (y prediction : ℕ → ℝ) (T : ℕ) : ℝ :=
+  (∑ t ∈ Finset.range T, (prediction t - y t)^2) -
+    sInf ((fun u : ℝ => ∑ t ∈ Finset.range T, (u - y t)^2) ''
+      Set.Icc (0 : ℝ) 1)
+
+def LimitNoRegret {X : Type*} (V : Set X) (loss : ℕ → X → ℝ)
+    (prediction : ℕ → X) : Prop :=
+  ∀ u ∈ V, ∃ a : ℝ, a ≤ 0 ∧
+    Tendsto (fun T : ℕ => comparatorRegret loss prediction u T / T) atTop (nhds a)
+
+noncomputable def dyadicObservation : ℕ → ℝ
+  | 0 => 0
+  | n + 1 => 1 - dyadicObservation (n / 2)
+termination_by n => n
+decreasing_by omega
+
+theorem meanPredict_limitNoRegret_iff_mean_converges (y : ℕ → ℝ)
+    (hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1) :
+    LimitNoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - y t)^2) (meanPredict y) ↔
+      ∃ m ∈ Set.Icc (0 : ℝ) 1, Tendsto (empiricalMean y) atTop (nhds m)
+
+theorem dyadicObservation_unit :
+    ∀ t, dyadicObservation t ∈ Set.Icc (0 : ℝ) 1
+
+theorem dyadic_empiricalMean_subsequences :
+    Tendsto (fun n : ℕ => empiricalMean dyadicObservation (4^(n + 1) - 1))
+      atTop (nhds ((2 : ℝ) / 3)) ∧
+    Tendsto (fun n : ℕ => empiricalMean dyadicObservation (2 * 4^n - 1))
+      atTop (nhds ((1 : ℝ) / 3))
+
+theorem dyadic_meanPredict_obstruction :
+    NoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - dyadicObservation t)^2)
+      (meanPredict dyadicObservation) ∧
+    Tendsto (fun T : ℕ => squaredBestRegret dyadicObservation
+      (meanPredict dyadicObservation) T / (T : ℝ)) atTop (nhds (0 : ℝ)) ∧
+    (¬ ∃ a : ℝ, Tendsto (fun T : ℕ =>
+      comparatorRegret (fun t x => (x - dyadicObservation t)^2)
+        (meanPredict dyadicObservation) 0 T / (T : ℝ)) atTop (nhds a)) ∧
+    ¬ LimitNoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - dyadicObservation t)^2)
+      (meanPredict dyadicObservation)
+
+
+end BanditRL.OnlineLearning

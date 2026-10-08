@@ -1,0 +1,31 @@
+(∀ (t : ℕ), dyadicObservation t ∈ Set.Icc 0 1) ∧
+  dyadicObservation 0 = 0 ∧ dyadicObservation 1 = 1 ∧ dyadicObservation 2 = 1 ∧ dyadicObservation 3 = 0 : Prop
+meanPredict dyadicObservation 0 = 1 / 2 ∧
+  meanPredict dyadicObservation 1 = 0 ∧
+    meanPredict dyadicObservation 2 = 1 / 2 ∧ meanPredict dyadicObservation 3 = 2 / 3 : Prop
+squaredBestRegret dyadicObservation (meanPredict dyadicObservation) 0 = 0 ∧
+  squaredBestRegret dyadicObservation (meanPredict dyadicObservation) 1 = 1 / 4 ∧
+    squaredBestRegret dyadicObservation (meanPredict dyadicObservation) 2 = 3 / 4 ∧
+      squaredBestRegret dyadicObservation (meanPredict dyadicObservation) 3 = 5 / 6 ∧
+        comparatorRegret (fun t x => (x - dyadicObservation t) ^ 2) (meanPredict dyadicObservation) 0 3 / 3 =
+          -1 / 6 : Prop
+LimitNoRegret (Set.Icc 0 1) (fun t x => (x - dyadicObservation t) ^ 2) (meanPredict dyadicObservation) ↔
+  ∃ m ∈ Set.Icc 0 1, Tendsto (empiricalMean dyadicObservation) atTop (nhds m) : Prop
+¬∃ m ∈ Set.Icc 0 1, Tendsto (empiricalMean dyadicObservation) atTop (nhds m) : Prop
+Tendsto (fun n => empiricalMean dyadicObservation (4 ^ (n + 1) - 1)) atTop (nhds (2 / 3)) ∧
+  Tendsto (fun n => empiricalMean dyadicObservation (2 * 4 ^ n - 1)) atTop (nhds (1 / 3)) : Prop
+NoRegret (Set.Icc 0 1) (fun t x => (x - dyadicObservation t) ^ 2) (meanPredict dyadicObservation) ∧
+  Tendsto (fun T => squaredBestRegret dyadicObservation (meanPredict dyadicObservation) T / ↑T) atTop (nhds 0) ∧
+    (¬∃ a,
+          Tendsto
+            (fun T =>
+              comparatorRegret (fun t x => (x - dyadicObservation t) ^ 2) (meanPredict dyadicObservation) 0 T / ↑T)
+            atTop (nhds a)) ∧
+      ¬LimitNoRegret (Set.Icc 0 1) (fun t x => (x - dyadicObservation t) ^ 2) (meanPredict dyadicObservation) : Prop
+NoRegret (Set.Icc 0 1) (fun t x => (x - dyadicObservation t) ^ 2) (meanPredict dyadicObservation) : Prop
+Tendsto (fun T => squaredBestRegret dyadicObservation (meanPredict dyadicObservation) T / ↑T) atTop (nhds 0) : Prop
+¬∃ a,
+    Tendsto
+      (fun T => comparatorRegret (fun t x => (x - dyadicObservation t) ^ 2) (meanPredict dyadicObservation) 0 T / ↑T)
+      atTop (nhds a) : Prop
+¬LimitNoRegret (Set.Icc 0 1) (fun t x => (x - dyadicObservation t) ^ 2) (meanPredict dyadicObservation) : Prop

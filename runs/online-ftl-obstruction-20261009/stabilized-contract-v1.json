@@ -1,0 +1,86 @@
+{
+  "version": 1,
+  "targets": [
+    {
+      "id": "D1",
+      "name": "BanditRL.OnlineLearning.meanPredict_limitNoRegret_iff_mean_converges",
+      "header": "theorem meanPredict_limitNoRegret_iff_mean_converges (y : ℕ → ℝ)\n    (hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1) :\n    LimitNoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - y t)^2) (meanPredict y) ↔\n      ∃ m ∈ Set.Icc (0 : ℝ) 1, Tendsto (empiricalMean y) atTop (nhds m)",
+      "statement_hash": "f5f7c19e4558ed9c406cc50676605a5ae1559a67869ee9642a7b2f84c4532e88",
+      "phase": "draft",
+      "compiled": false
+    },
+    {
+      "id": "D2",
+      "name": "BanditRL.OnlineLearning.dyadicObservation_unit",
+      "header": "theorem dyadicObservation_unit :\n    ∀ t, dyadicObservation t ∈ Set.Icc (0 : ℝ) 1",
+      "statement_hash": "6df5ff8b09810d455703e9dbf326b43da78a3aea36c243ce8aabaad68cf12c64",
+      "phase": "draft",
+      "compiled": false
+    },
+    {
+      "id": "D3",
+      "name": "BanditRL.OnlineLearning.dyadic_empiricalMean_subsequences",
+      "header": "theorem dyadic_empiricalMean_subsequences :\n    Tendsto (fun n : ℕ => empiricalMean dyadicObservation (4^(n + 1) - 1))\n      atTop (nhds ((2 : ℝ) / 3)) ∧\n    Tendsto (fun n : ℕ => empiricalMean dyadicObservation (2 * 4^n - 1))\n      atTop (nhds ((1 : ℝ) / 3))",
+      "statement_hash": "397d0f921ca26f72d3d93f21dde7ae294939bf6b625c39ea29e3756744e4c3de",
+      "phase": "draft",
+      "compiled": false
+    },
+    {
+      "id": "D4",
+      "name": "BanditRL.OnlineLearning.dyadic_meanPredict_obstruction",
+      "header": "theorem dyadic_meanPredict_obstruction :\n    NoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - dyadicObservation t)^2)\n      (meanPredict dyadicObservation) ∧\n    Tendsto (fun T : ℕ => squaredBestRegret dyadicObservation\n      (meanPredict dyadicObservation) T / (T : ℝ)) atTop (nhds (0 : ℝ)) ∧\n    (¬ ∃ a : ℝ, Tendsto (fun T : ℕ =>\n      comparatorRegret (fun t x => (x - dyadicObservation t)^2)\n        (meanPredict dyadicObservation) 0 T / (T : ℝ)) atTop (nhds a)) ∧\n    ¬ LimitNoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - dyadicObservation t)^2)\n      (meanPredict dyadicObservation)",
+      "statement_hash": "ff24eefc87da8732c13c81c288f44b5cf03c14836121d98c177ac3dc464df288",
+      "phase": "draft",
+      "compiled": false
+    }
+  ],
+  "receipt_sha256": "71110429efd4567ee459cc0fb203696d2cc39e5d46473002c812049d9ff6f1e2",
+  "report_sha256": "e4022d5cf2e022ca0077e987a69883a478a199dcfdea9ade4fe8f2ab38c8f1f5",
+  "headers_sha256": "9d984d6504ed82a7d39fd06a61a5864904832af5f341d51c367278f7d8e6a760",
+  "context_sha256": "933d861ae55ce93ade811bdc816aa9dfda713730dcafdb09491d258196096cf7",
+  "source_intent_sha256": "b772ab6f72e32069ddf338f3c6a891a47a5a73c6ee808b0cb5a3c7dc04ccedab",
+  "snapshots": [
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/tasks/ONLINE-FTL-OBSTRUCTION-20261009.md",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-ftl-obstruction-20261009/snapshots/reviewed-tasks-v1.raw",
+      "sha256": "f19c8ccb924a648318a4a3428bf1099f8d4cb9d4b525020d70ea6fae6d140a8f"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/proof-obligations/ONLINE-FTL-OBSTRUCTION-20261009.md",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-ftl-obstruction-20261009/snapshots/reviewed-proof-obligations-v1.raw",
+      "sha256": "c9bfb1524f9c6e5df0dff982e52d3291420853de764d9701398ca3e87478db2e"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/conversion-windows/ONLINE-FTL-OBSTRUCTION-20261009.md",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-ftl-obstruction-20261009/snapshots/reviewed-conversion-windows-v1.raw",
+      "sha256": "33d9450dcb93d401c5804c40b456c2bddcfc72198132779f7fa805321296eb40"
+    }
+  ],
+  "scope": {
+    "immutable_headers": "9d984d6504ed82a7d39fd06a61a5864904832af5f341d51c367278f7d8e6a760",
+    "immutable_context": "933d861ae55ce93ade811bdc816aa9dfda713730dcafdb09491d258196096cf7",
+    "proving_scope": [
+      "BanditRLProof/OnlineFTLOscillation.lean",
+      "Tests/OnlineFTLOscillationCanary.lean"
+    ],
+    "body_only_with_frozen_headers": true,
+    "canary_contract_review_before_proof": true,
+    "own_task_append_only": [
+      "tasks/ONLINE-FTL-OBSTRUCTION-20261009.md",
+      "proof-obligations/ONLINE-FTL-OBSTRUCTION-20261009.md",
+      "conversion-windows/ONLINE-FTL-OBSTRUCTION-20261009.md"
+    ],
+    "own_run_new_evidence": true,
+    "own_contract_new_versions_reviewed": true,
+    "own_native_journals_only": true,
+    "global_frontier_memory_indexes_immutable": true,
+    "root_reader_registry_contribution_require_separate_BODY_review": true,
+    "terminal_edit_requires_new_contract_review": true,
+    "source_chapter_whole_goal_complete": false
+  },
+  "contract_accepted": true,
+  "body_accepted": false,
+  "new_bodies_compiled": 0,
+  "chapter_complete": false,
+  "goal_complete": false
+}

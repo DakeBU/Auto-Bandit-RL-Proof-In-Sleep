@@ -1,0 +1,42 @@
+import BanditRLProof.OnlineFTLLimitSemantics
+import Mathlib.Analysis.SpecificLimits.Basic
+
+open Filter
+namespace BanditRL.OnlineLearning
+
+/-- Explicit binary dyadic-block observations, independent of the learner and horizon. -/
+noncomputable def dyadicObservation : ℕ → ℝ
+  | 0 => 0
+  | n + 1 => 1 - dyadicObservation (n / 2)
+termination_by n => n
+decreasing_by omega
+
+
+/-- Derived literal-limit criterion for the actual bounded squared-loss FTL. -/
+theorem meanPredict_limitNoRegret_iff_mean_converges (y : ℕ → ℝ)
+    (hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1) :
+    LimitNoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - y t)^2) (meanPredict y) ↔
+      ∃ m ∈ Set.Icc (0 : ℝ) 1, Tendsto (empiricalMean y) atTop (nhds m) := by
+  constructor
+  · intro hL
+    rcases hL 0 (by norm_num) with ⟨a0, ha0, h0⟩
+    rcases hL 1 (by norm_num) with ⟨a1, ha1, h1⟩
+    have hs0 := (meanPredict_fixedRegret_limit_iff y hy 0 a0).mp h0
+    have hs1 := (meanPredict_fixedRegret_limit_iff y hy 1 a1).mp h1
+    let m : ℝ := (-a0 - (-a1) + 1) / 2
+    have hh := ((hs0.sub hs1).add
+      (tendsto_const_nhds : Tendsto (fun _ : ℕ => (1 : ℝ)) atTop (nhds 1))).div_const (2 : ℝ)
+    have hm : Tendsto (empiricalMean y) atTop (nhds m) := by
+      convert hh using 1
+      funext T
+      ring
+    have hb : ∀ᶠ T : ℕ in atTop, empiricalMean y T ∈ Set.Icc (0 : ℝ) 1 := by
+      filter_upwards [eventually_gt_atTop (0 : ℕ)] with T hT
+      exact empiricalMean_mem y T hT (fun t _ => hy t)
+    have hlo : 0 ≤ m := ge_of_tendsto hm (hb.mono (fun _ h => h.1))
+    have hup : m ≤ 1 := le_of_tendsto hm (hb.mono (fun _ h => h.2))
+    exact ⟨m, ⟨hlo, hup⟩, hm⟩
+  · rintro ⟨m, hmUnit, hm⟩
+    exact (meanPredict_limitNoRegret_of_mean_converges y hy m hm).2
+
+end BanditRL.OnlineLearning

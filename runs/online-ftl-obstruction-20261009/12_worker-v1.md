@@ -1,0 +1,1 @@
+DRAFT only: inspect actual existing APIs and elaborate signatures/definition. First ready leaf D1 only after separate blind/source contract review. Freeze public and canary targets before theorem bodies. No target weakening, toolchain upgrade or new dependency.

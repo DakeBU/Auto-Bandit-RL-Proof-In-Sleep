@@ -1,0 +1,102 @@
+import Mathlib
+
+open Filter
+namespace BanditRL.OnlineLearning
+
+noncomputable def empiricalMean (y : ℕ → ℝ) (n : ℕ) : ℝ :=
+  (∑ t ∈ Finset.range n, y t) / n
+
+noncomputable def meanPredict (y : ℕ → ℝ) (t : ℕ) : ℝ :=
+  if t = 0 then 1/2 else empiricalMean y t
+
+noncomputable def comparatorRegret {X : Type*} (loss : ℕ → X → ℝ)
+    (prediction : ℕ → X) (u : X) (T : ℕ) : ℝ :=
+  (∑ t ∈ Finset.range T, loss t (prediction t)) - ∑ t ∈ Finset.range T, loss t u
+
+def NoRegret {X : Type*} (V : Set X) (loss : ℕ → X → ℝ) (prediction : ℕ → X) : Prop :=
+  ∀ u ∈ V, ∀ ε : ℝ, 0 < ε → ∀ᶠ T in atTop,
+    comparatorRegret loss prediction u T / T ≤ ε
+
+noncomputable def squaredBestRegret (y prediction : ℕ → ℝ) (T : ℕ) : ℝ :=
+  (∑ t ∈ Finset.range T, (prediction t - y t)^2) -
+    sInf ((fun u : ℝ => ∑ t ∈ Finset.range T, (u - y t)^2) ''
+      Set.Icc (0 : ℝ) 1)
+
+def LimitNoRegret {X : Type*} (V : Set X) (loss : ℕ → X → ℝ)
+    (prediction : ℕ → X) : Prop :=
+  ∀ u ∈ V, ∃ a : ℝ, a ≤ 0 ∧
+    Tendsto (fun T : ℕ => comparatorRegret loss prediction u T / T) atTop (nhds a)
+
+noncomputable def dyadicObservation : ℕ → ℝ
+  | 0 => 0
+  | n + 1 => 1 - dyadicObservation (n / 2)
+termination_by n => n
+decreasing_by omega
+
+end BanditRL.OnlineLearning
+
+open Filter BanditRL.OnlineLearning
+namespace Tests.OnlineFTLOscillation
+
+theorem dyadic_unit_and_prefix :
+    (∀ t, dyadicObservation t ∈ Set.Icc (0 : ℝ) 1) ∧
+    dyadicObservation 0 = 0 ∧ dyadicObservation 1 = 1 ∧
+    dyadicObservation 2 = 1 ∧ dyadicObservation 3 = 0
+
+theorem actual_causal_predictions :
+    meanPredict dyadicObservation 0 = (1 : ℝ)/2 ∧
+    meanPredict dyadicObservation 1 = 0 ∧
+    meanPredict dyadicObservation 2 = (1 : ℝ)/2 ∧
+    meanPredict dyadicObservation 3 = (2 : ℝ)/3
+
+theorem actual_signed_regrets :
+    squaredBestRegret dyadicObservation (meanPredict dyadicObservation) 0 = 0 ∧
+    squaredBestRegret dyadicObservation (meanPredict dyadicObservation) 1 = (1 : ℝ)/4 ∧
+    squaredBestRegret dyadicObservation (meanPredict dyadicObservation) 2 = (3 : ℝ)/4 ∧
+    squaredBestRegret dyadicObservation (meanPredict dyadicObservation) 3 = (5 : ℝ)/6 ∧
+    comparatorRegret (fun t x => (x - dyadicObservation t)^2)
+      (meanPredict dyadicObservation) 0 3 / (3 : ℝ) = -(1 : ℝ)/6
+
+theorem all_comparator_iff_instantiated :
+    LimitNoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - dyadicObservation t)^2)
+      (meanPredict dyadicObservation) ↔
+    ∃ m ∈ Set.Icc (0 : ℝ) 1, Tendsto (empiricalMean dyadicObservation) atTop (nhds m)
+
+theorem no_feasible_mean_limit :
+    ¬ ∃ m ∈ Set.Icc (0 : ℝ) 1, Tendsto (empiricalMean dyadicObservation) atTop (nhds m)
+
+theorem two_actual_mean_subsequences :
+    Tendsto (fun n : ℕ => empiricalMean dyadicObservation (4^(n + 1) - 1))
+      atTop (nhds ((2 : ℝ)/3)) ∧
+    Tendsto (fun n : ℕ => empiricalMean dyadicObservation (2 * 4^n - 1))
+      atTop (nhds ((1 : ℝ)/3))
+
+theorem obstruction_instantiated :
+    NoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - dyadicObservation t)^2)
+      (meanPredict dyadicObservation) ∧
+    Tendsto (fun T : ℕ => squaredBestRegret dyadicObservation
+      (meanPredict dyadicObservation) T / (T : ℝ)) atTop (nhds (0 : ℝ)) ∧
+    (¬ ∃ a : ℝ, Tendsto (fun T : ℕ =>
+      comparatorRegret (fun t x => (x - dyadicObservation t)^2)
+        (meanPredict dyadicObservation) 0 T / (T : ℝ)) atTop (nhds a)) ∧
+    ¬ LimitNoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - dyadicObservation t)^2)
+      (meanPredict dyadicObservation)
+
+theorem upper_noRegret_on_actual_stream :
+    NoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - dyadicObservation t)^2)
+      (meanPredict dyadicObservation)
+
+theorem actual_best_average_zero :
+    Tendsto (fun T : ℕ => squaredBestRegret dyadicObservation
+      (meanPredict dyadicObservation) T / (T : ℝ)) atTop (nhds (0 : ℝ))
+
+theorem fixed_zero_has_no_ordinary_limit :
+    ¬ ∃ a : ℝ, Tendsto (fun T : ℕ =>
+      comparatorRegret (fun t x => (x - dyadicObservation t)^2)
+        (meanPredict dyadicObservation) 0 T / (T : ℝ)) atTop (nhds a)
+
+theorem literal_limit_noRegret_fails :
+    ¬ LimitNoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - dyadicObservation t)^2)
+      (meanPredict dyadicObservation)
+
+end Tests.OnlineFTLOscillation

@@ -1,0 +1,14 @@
+import BanditRLProof.OnlineFTLLimitSemantics
+import Mathlib.Analysis.SpecificLimits.Basic
+
+open Filter
+namespace BanditRL.OnlineLearning
+
+/-- Explicit binary dyadic-block observations, independent of the learner and horizon. -/
+noncomputable def dyadicObservation : ℕ → ℝ
+  | 0 => 0
+  | n + 1 => 1 - dyadicObservation (n / 2)
+termination_by n => n
+decreasing_by omega
+
+end BanditRL.OnlineLearning

@@ -1,0 +1,1 @@
+Close the two REQUIRED actual-FTL ordinary-limit semantic gaps, not another arbitrary algorithm model. Freeze four derived terminals, keep source ordinary lim display separate from proposed correction. Prior F1-F5 actual producers are ready. Whole sixteen-source Chapter1 ledger stays open until reconciliation/chapter gates; no coverage percentage from unknown totals.

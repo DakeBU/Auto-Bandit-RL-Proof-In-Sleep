@@ -1,0 +1,15 @@
+from common_body_v2 import *
+integrated_fixed()
+source=(ROOT/'runs/online-ftl-limit-20261009/common_accepted_v2.py').read_text(encoding='utf8')
+source=source.replace('from common_body_v1 import *','from common_body_v2 import *')
+source=source.replace('final-reader-receipt-v2.json','final-reader-receipt-v1.json')
+source=source.replace('final-reader-review-v2.md','final-reader-review-v1.md')
+source=source.replace('FINAL-review-inputs-v2.json','FINAL-review-inputs-v1.json')
+source=source.replace('len(expected)==12','len(expected)==10')
+# The copied guard must require all ten actual current original-pixel inspections.
+source=source.replace('len(actual)==len(expected)==12','len(actual)==len(expected)==10')
+write(RUN/'common_accepted_v1.py',source)
+source=(ROOT/'runs/online-ftl-limit-20261009/native-accepted-scoped-v1.py').read_text(encoding='utf8')
+source=source.replace('six compiled attempts','six actual attempts including retained D4 failure')
+write(RUN/'native-accepted-scoped-v1.py',source)
+print('Owned acceptance guards/scoped native runner prepared; no acceptance execution.',flush=True)

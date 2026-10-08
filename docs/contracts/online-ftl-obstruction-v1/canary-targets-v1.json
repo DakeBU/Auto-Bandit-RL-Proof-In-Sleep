@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "targets": [
+    {
+      "id": "C1",
+      "name": "Tests.OnlineFTLOscillation.dyadic_unit_and_prefix",
+      "header": "theorem dyadic_unit_and_prefix :\n    (∀ t, dyadicObservation t ∈ Set.Icc (0 : ℝ) 1) ∧\n    dyadicObservation 0 = 0 ∧ dyadicObservation 1 = 1 ∧\n    dyadicObservation 2 = 1 ∧ dyadicObservation 3 = 0",
+      "statement_hash": "38d9b9f626d4c943b081eb6ba8899bea24ff6b667311572e319a70ec3a05b013"
+    },
+    {
+      "id": "C2",
+      "name": "Tests.OnlineFTLOscillation.actual_causal_predictions",
+      "header": "theorem actual_causal_predictions :\n    meanPredict dyadicObservation 0 = (1 : ℝ)/2 ∧\n    meanPredict dyadicObservation 1 = 0 ∧\n    meanPredict dyadicObservation 2 = (1 : ℝ)/2 ∧\n    meanPredict dyadicObservation 3 = (2 : ℝ)/3",
+      "statement_hash": "41d71b2f2c03642fc4ffa38e336569c42f2d9227f809a212faefb3af031f13f7"
+    },
+    {
+      "id": "C3",
+      "name": "Tests.OnlineFTLOscillation.actual_signed_regrets",
+      "header": "theorem actual_signed_regrets :\n    squaredBestRegret dyadicObservation (meanPredict dyadicObservation) 0 = 0 ∧\n    squaredBestRegret dyadicObservation (meanPredict dyadicObservation) 1 = (1 : ℝ)/4 ∧\n    squaredBestRegret dyadicObservation (meanPredict dyadicObservation) 2 = (3 : ℝ)/4 ∧\n    squaredBestRegret dyadicObservation (meanPredict dyadicObservation) 3 = (5 : ℝ)/6 ∧\n    comparatorRegret (fun t x => (x - dyadicObservation t)^2)\n      (meanPredict dyadicObservation) 0 3 / (3 : ℝ) = -(1 : ℝ)/6",
+      "statement_hash": "48bb1d3dcd52286c57e03f5fe337087573418cb846de5497f30d3ba152de6a88"
+    },
+    {
+      "id": "C4",
+      "name": "Tests.OnlineFTLOscillation.all_comparator_iff_instantiated",
+      "header": "theorem all_comparator_iff_instantiated :\n    LimitNoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - dyadicObservation t)^2)\n      (meanPredict dyadicObservation) ↔\n    ∃ m ∈ Set.Icc (0 : ℝ) 1, Tendsto (empiricalMean dyadicObservation) atTop (nhds m)",
+      "statement_hash": "f3d59c509d84c8ed5e9c3da237dbfca680500880ca66724c8c5bd043c3f4fa7c"
+    },
+    {
+      "id": "C5",
+      "name": "Tests.OnlineFTLOscillation.no_feasible_mean_limit",
+      "header": "theorem no_feasible_mean_limit :\n    ¬ ∃ m ∈ Set.Icc (0 : ℝ) 1, Tendsto (empiricalMean dyadicObservation) atTop (nhds m)",
+      "statement_hash": "58799a904d78d332cfc2aec6e1bb71f7418a7f11825fd2dd5bbf4270abf76038"
+    },
+    {
+      "id": "C6",
+      "name": "Tests.OnlineFTLOscillation.two_actual_mean_subsequences",
+      "header": "theorem two_actual_mean_subsequences :\n    Tendsto (fun n : ℕ => empiricalMean dyadicObservation (4^(n + 1) - 1))\n      atTop (nhds ((2 : ℝ)/3)) ∧\n    Tendsto (fun n : ℕ => empiricalMean dyadicObservation (2 * 4^n - 1))\n      atTop (nhds ((1 : ℝ)/3))",
+      "statement_hash": "16de20467bea657fa51c64b6c4cb47594619f42ca9ee5fb78ede358b1c74e2e5"
+    },
+    {
+      "id": "C7",
+      "name": "Tests.OnlineFTLOscillation.obstruction_instantiated",
+      "header": "theorem obstruction_instantiated :\n    NoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - dyadicObservation t)^2)\n      (meanPredict dyadicObservation) ∧\n    Tendsto (fun T : ℕ => squaredBestRegret dyadicObservation\n      (meanPredict dyadicObservation) T / (T : ℝ)) atTop (nhds (0 : ℝ)) ∧\n    (¬ ∃ a : ℝ, Tendsto (fun T : ℕ =>\n      comparatorRegret (fun t x => (x - dyadicObservation t)^2)\n        (meanPredict dyadicObservation) 0 T / (T : ℝ)) atTop (nhds a)) ∧\n    ¬ LimitNoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - dyadicObservation t)^2)\n      (meanPredict dyadicObservation)",
+      "statement_hash": "48eca6a859b42beed5054eccb3a810ba6696b0684d8962f88a182a5ecb3bcc72"
+    },
+    {
+      "id": "C8",
+      "name": "Tests.OnlineFTLOscillation.upper_noRegret_on_actual_stream",
+      "header": "theorem upper_noRegret_on_actual_stream :\n    NoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - dyadicObservation t)^2)\n      (meanPredict dyadicObservation)",
+      "statement_hash": "9017cd1cb328c420625d73580132057b9084f39393b2ca687447cf7c76c52dfb"
+    },
+    {
+      "id": "C9",
+      "name": "Tests.OnlineFTLOscillation.actual_best_average_zero",
+      "header": "theorem actual_best_average_zero :\n    Tendsto (fun T : ℕ => squaredBestRegret dyadicObservation\n      (meanPredict dyadicObservation) T / (T : ℝ)) atTop (nhds (0 : ℝ))",
+      "statement_hash": "d6b6458a244af8bc322012abcf225704b1e9a7b7bdf7ba641f84c00c36effd47"
+    },
+    {
+      "id": "C10",
+      "name": "Tests.OnlineFTLOscillation.fixed_zero_has_no_ordinary_limit",
+      "header": "theorem fixed_zero_has_no_ordinary_limit :\n    ¬ ∃ a : ℝ, Tendsto (fun T : ℕ =>\n      comparatorRegret (fun t x => (x - dyadicObservation t)^2)\n        (meanPredict dyadicObservation) 0 T / (T : ℝ)) atTop (nhds a)",
+      "statement_hash": "845bc91645c353ae65b4c5280ea40609ce761c26f3406327737cbc9b7c394b52"
+    },
+    {
+      "id": "C11",
+      "name": "Tests.OnlineFTLOscillation.literal_limit_noRegret_fails",
+      "header": "theorem literal_limit_noRegret_fails :\n    ¬ LimitNoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - dyadicObservation t)^2)\n      (meanPredict dyadicObservation)",
+      "statement_hash": "06dbdc8b66e34cc533b4fe8c0a8fb077ec49f8a95874a6b3392c0df77cb83a70"
+    }
+  ],
+  "context_sha256": "09d87156b0ebfb911d63da88aecc7aefe254a3740d029d33cdd40b6b01dd5202",
+  "body_compiled": false,
+  "chapter_complete": false,
+  "goal_complete": false
+}
