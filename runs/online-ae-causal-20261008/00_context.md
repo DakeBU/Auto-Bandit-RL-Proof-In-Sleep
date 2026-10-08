@@ -1,0 +1,9 @@
+# AE causal information leaf
+
+Task: ONLINE-AE-CAUSAL-20261008. Whole Orabona Chapters1–16 Goal remains active, unbudgeted. Requested GPT-6 Astra / medium; this file is not runtime attestation. Canonical project E:/ABRL/research; owned worktree E:/ABRL/worktrees/research-online-book. Branch codex/research-online-ae-causal starts at OPEN draft unmerged PR197 exact4ca57025a2cdc4f4ba0d5cc2423b55786b0a7afe. Main6847 is clean and unchanged. Worktree/shared Git/.lake retained.
+
+Five historical core source audits were accepted in PR197; zero new production proofs. That does not close any entire chapter. Original sixteen Chapter1 source objects and null total remain preserved. Current leaf addresses the explicit AE strict-past factorization/predictability gap of the IID lower producer. Completed-information augmentation and universal stochastic-kernel representation remain separate required obligations, as do all other Chapter1/2 and unenumerated Chapters3–16 / necessary appendix obligations.
+
+Default one lower route, staged director/architect/worker performed by root. Distinct existing osd_blind and source_reviewer actors are used only as required by repository semantic round trip, with reused prior history disclosed. No optional parallel mathematical agents, human/external review or absolute blindness claim. Draft targets are exact headers in the contract text, not compiled proofs. API probes distinguish actual Lean exit from the wrapper printing failure; no API probe counts as a mathematical terminal.
+
+Source source-qualified Orabona arXiv1912.13213v10,2026-06-21, SHA cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17. Printed1/PDF13 IID guessing game, inability to beat variance and Eqs1.1/1.2; printed3/PDF15 strict-past information. These three targets are derived formalization infrastructure/producer specializations, not three numbered printed theorems.

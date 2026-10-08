@@ -1,0 +1,122 @@
+import BanditRLProof.OnlineGuessingAECausal
+import Tests.OnlineGuessingIIDSuccessCanary
+
+noncomputable section
+open MeasureTheory ProbabilityTheory BanditRL.OnlineLearning
+open Tests.OnlineGuessingRandomizedIID Tests.OnlineGuessingIIDSuccess
+
+namespace Tests.OnlineGuessingAECausal
+
+/-- Uses the unrevealed target only on a nonempty null event; intentionally not pointwise causal. -/
+def badPrediction (t : ℕ) (ω : ℝ × (ℕ → ℝ)) : ℝ :=
+  if target t ω = 2 then 2 else persistentPrediction t ω
+
+theorem bad_eq_causal_ae (t : ℕ) :
+    badPrediction t =ᶠ[ae seededLaw] persistentPrediction t := by
+  filter_upwards [target_support t] with ω hω
+  have hn : target t ω ≠ 2 := by
+    intro he
+    rw [he] at hω
+    norm_num at hω
+  simp only [badPrediction, if_neg hn]
+
+theorem causal_version_measurable (t : ℕ) :
+    Measurable[privateSeedPastInformation seed target t] (persistentPrediction t) := by
+  change Measurable[MeasurableSpace.comap
+    (fun ω : ℝ × (ℕ → ℝ) => (seed ω,
+      fun i : (↑(Finset.range t) : Type) => target i ω)) inferInstance] _
+  exact (seedBit_measurable.comp measurable_fst).comp (comap_measurable _)
+
+theorem bad_ae_predictable (t : ℕ) :
+    AEStronglyMeasurable[privateSeedPastInformation seed target t] (badPrediction t) seededLaw := by
+  have ha : AEStronglyMeasurable[privateSeedPastInformation seed target t]
+      (persistentPrediction t) seededLaw := (causal_version_measurable t).aestronglyMeasurable
+  exact ha.congr (bad_eq_causal_ae t).symm
+
+theorem bad_ae_unit (t : ℕ) :
+    ∀ᵐ ω ∂seededLaw, badPrediction t ω ∈ Set.Icc (0 : ℝ) 1 := by
+  filter_upwards [bad_eq_causal_ae t] with ω hω
+  rw [hω]
+  exact seedBit_feasible (seed ω)
+
+theorem bad_is_not_pointwise_predictable :
+    ¬ Measurable[privateSeedPastInformation seed target 0] (badPrediction 0) := by
+  intro hm
+  change Measurable[MeasurableSpace.comap
+    (fun ω : ℝ × (ℕ → ℝ) => (seed ω,
+      fun i : (↑(Finset.range 0) : Type) => target i ω)) inferInstance] _ at hm
+  have hsame :
+      (seed (0, fun _ => (2 : ℝ)),
+        fun i : (↑(Finset.range 0) : Type) => target i (0, fun _ => (2 : ℝ))) =
+      (seed (0, fun _ => (0 : ℝ)),
+        fun i : (↑(Finset.range 0) : Type) => target i (0, fun _ => (0 : ℝ))) := by
+    apply Prod.ext rfl
+    funext i
+    have hi := Finset.mem_range.mp i.property
+    omega
+  have he := hm.factorsThrough hsame
+  norm_num [badPrediction, persistentPrediction, persistentPolicy, seedBit, seed, target] at he
+
+theorem bad_is_not_everywhere_unit :
+    ¬ (∀ t ω, badPrediction t ω ∈ Set.Icc (0 : ℝ) 1) := by
+  intro h
+  have he := h 0 (0, fun _ => (2 : ℝ))
+  norm_num [badPrediction, target] at he
+
+theorem actual_all_time_bounded_policy :
+    ∃ policy : (t : ℕ) → (ℝ × ((↑(Finset.range t) : Type) → ℝ)) → ℝ,
+      (∀ t, Measurable (policy t)) ∧
+      (∀ t q, policy t q ∈ Set.Icc (0 : ℝ) 1) ∧
+      ∀ᵐ ω ∂seededLaw, ∀ t, badPrediction t ω = policy t (seed ω, fun i => target i ω) :=
+  ae_predictable_exists_bounded_history_policy seededLaw target seed
+    (privateSeedPastInformation seed target) (fun _ => le_rfl)
+    badPrediction bad_ae_predictable bad_ae_unit
+
+theorem actual_current_independence (t : ℕ) :
+    IndepFun (badPrediction t) (target t) seededLaw :=
+  ae_predictable_private_seed_independent seededLaw target target_measurable target_independent
+    seed seed_measurable seed_independent_whole_process t
+    (privateSeedPastInformation seed target t) le_rfl (badPrediction t) (bad_ae_predictable t)
+
+theorem actual_original_excess_identity (T : ℕ) :
+    expectedFixedRegret seededLaw target badPrediction T =
+      (∑ t ∈ Finset.range T,
+        ∫ ω, (badPrediction t ω - ∫ ω, target 0 ω ∂seededLaw)^2 ∂seededLaw) ∧
+      0 ≤ expectedFixedRegret seededLaw target badPrediction T :=
+  ae_predictable_private_seed_expectedFixed_excess seededLaw target target_measurable
+    target_sameLaw target_support target_independent seed seed_measurable
+    seed_independent_whole_process (privateSeedPastInformation seed target) (fun _ => le_rfl)
+    badPrediction bad_ae_predictable bad_ae_unit T
+
+theorem actual_mean_square (t : ℕ) :
+    (∫ ω, (badPrediction t ω - ∫ ω, target 0 ω ∂seededLaw)^2 ∂seededLaw) = 1 / 4 := by
+  have he : (fun ω => (badPrediction t ω - ∫ ω, target 0 ω ∂seededLaw)^2) =ᶠ[ae seededLaw]
+      (fun _ => (1 : ℝ) / 4) := by
+    filter_upwards [bad_eq_causal_ae t] with ω hω
+    rw [hω, target_mean]
+    unfold persistentPrediction persistentPolicy seedBit
+    split_ifs <;> norm_num
+  rw [integral_congr_ae he]
+  simp
+
+theorem actual_nonzero_excess (T : ℕ) :
+    expectedFixedRegret seededLaw target badPrediction T = (T : ℝ) / 4 := by
+  rw [(actual_original_excess_identity T).1]
+  simp_rw [actual_mean_square]
+  simp
+  ring
+
+theorem actual_two_round_excess :
+    expectedFixedRegret seededLaw target badPrediction 2 = 1 / 2 := by
+  rw [actual_nonzero_excess]
+  norm_num
+
+theorem actual_empty_excess :
+    expectedFixedRegret seededLaw target badPrediction 0 = 0 := by
+  rw [actual_nonzero_excess]
+  norm_num
+
+theorem actual_positive_target_variance : variance (target 0) seededLaw = 1 / 4 :=
+  target_variance 0
+
+end Tests.OnlineGuessingAECausal

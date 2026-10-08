@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "record_id": "frontier-59bb4be6a5c6022d",
+  "updated_at": "2026-10-08T13:32:08+00:00",
+  "root_objective": "Persistent Orabona Chapters1-16; three derived AE causal producers, whole program required",
+  "current_leaf": {
+    "id": "ONLINE-AE-CAUSAL-20261008",
+    "kind": "review",
+    "status": "gate-pending",
+    "statement": "Three frozen AE causal public proofs compiled, actual original-process expected fixed excess and AE-only positive-variance canary; acceptance still awaits combined/reader/FINAL/native gates.",
+    "statement_hash": "fd11e9ff65814887596ac088ac1b88fa1ada31673766dd674b560663efca2e5c",
+    "declaration": "",
+    "file": "E:\\ABRL\\worktrees\\research-online-book\\runs\\online-ae-causal-20261008\\public-body-review-v1.md",
+    "source_status": "source-reviewed",
+    "dependencies": [
+      {
+        "kind": "review",
+        "name": "source-body",
+        "status": "accepted"
+      },
+      {
+        "kind": "lean",
+        "name": "BanditRL.OnlineLearning.ae_predictable_private_seed_expectedFixed_excess",
+        "status": "compiled"
+      }
+    ]
+  },
+  "dag": {
+    "nodes": [
+      {
+        "id": "ONLINE-AE-CAUSAL-20261008",
+        "kind": "review",
+        "status": "gate-pending",
+        "dependencies": [
+          {
+            "kind": "review",
+            "name": "source-body",
+            "status": "accepted"
+          },
+          {
+            "kind": "lean",
+            "name": "BanditRL.OnlineLearning.ae_predictable_private_seed_expectedFixed_excess",
+            "status": "compiled"
+          }
+        ],
+        "dispatch_count": 0
+      }
+    ]
+  },
+  "last_accepted_verifier": {
+    "trial_index": 5,
+    "time": "2026-10-08T13:19:07+00:00",
+    "task": "ONLINE-AE-CAUSAL-20261008",
+    "role": "lower",
+    "kind": "build",
+    "status": "compiled",
+    "lean": "Tests/OnlineGuessingAECausalCanary.lean",
+    "notes": "Fourteen actual named AE-only test proofs, one test definition; original process not pointwise predictable or everywhere unit yet AE equal to a seed-only causal predictor. Positive variance and original-process two-round excess1/2. BODY/combined/readers/FINAL/native pending.",
+    "run_id": "online-ae-causal-20261008"
+  },
+  "memory_policy": {
+    "recent_role_relevant_limit": 5,
+    "explicit_verified_lemma_ids": [],
+    "whole_history_default": false
+  },
+  "shadow_gate": {
+    "status": "pending",
+    "analyzed_trial_rows": 6,
+    "mismatches": [],
+    "replay_transitions": 0
+  },
+  "mutation_policy": {
+    "canonical_path_queue": true,
+    "cross_process_lock": true,
+    "same_file_serialized": true,
+    "disjoint_files_parallel": true
+  },
+  "autonomous_execution": {
+    "enabled": false,
+    "requires_deterministic_gates": true,
+    "requires_explicit_user_request": true
+  }
+}

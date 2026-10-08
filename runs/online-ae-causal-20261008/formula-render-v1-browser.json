@@ -1,0 +1,164 @@
+{
+  "status": "actual-three-new-proof-notes-and-catalogue-headers-captured",
+  "panels": [
+    {
+      "selector": "article.source-theorem-card",
+      "index": 15,
+      "file": "ae-causal-source-card-v4.png",
+      "geometry": {
+        "left": 343.390625,
+        "right": 1416.578125,
+        "height": 2422.921875,
+        "scrollWidth": 1073,
+        "clientWidth": 1073,
+        "viewportWidth": 1440
+      },
+      "mathContainers": 1,
+      "mathErrors": 0,
+      "actualViewport": {
+        "width": 1440,
+        "height": 2773
+      },
+      "belowStickyNavigation": true
+    },
+    {
+      "selector": "#decl-0ff5f1969cc7-teaching",
+      "index": 0,
+      "file": "public-note-1-v4.png",
+      "geometry": {
+        "left": 357.78125,
+        "right": 1386.21875,
+        "height": 3009.1875,
+        "scrollWidth": 1026,
+        "clientWidth": 1026,
+        "viewportWidth": 1440
+      },
+      "mathContainers": 1,
+      "mathErrors": 0,
+      "actualViewport": {
+        "width": 1440,
+        "height": 3360
+      },
+      "belowStickyNavigation": true
+    },
+    {
+      "selector": "#decl-b78cf4176bef-teaching",
+      "index": 0,
+      "file": "public-note-2-v4.png",
+      "geometry": {
+        "left": 357.78125,
+        "right": 1386.21875,
+        "height": 2847.78125,
+        "scrollWidth": 1026,
+        "clientWidth": 1026,
+        "viewportWidth": 1440
+      },
+      "mathContainers": 1,
+      "mathErrors": 0,
+      "actualViewport": {
+        "width": 1440,
+        "height": 3198
+      },
+      "belowStickyNavigation": true
+    },
+    {
+      "selector": "#decl-c3db1ff90ad8-teaching",
+      "index": 0,
+      "file": "public-note-3-v4.png",
+      "geometry": {
+        "left": 357.78125,
+        "right": 1386.21875,
+        "height": 2888,
+        "scrollWidth": 1026,
+        "clientWidth": 1026,
+        "viewportWidth": 1440
+      },
+      "mathContainers": 1,
+      "mathErrors": 0,
+      "actualViewport": {
+        "width": 1440,
+        "height": 3238
+      },
+      "belowStickyNavigation": true
+    }
+  ],
+  "modulePanels": [
+    {
+      "id": "decl-0ff5f1969cc7",
+      "file": "module-declaration-1-v4.png",
+      "moduleURL": "http://127.0.0.1:55574/modules/banditrlproof-onlineguessingaecausal/index.html",
+      "geometry": {
+        "left": 342.390625,
+        "right": 1401.609375,
+        "height": 568.5625,
+        "scrollWidth": 1057,
+        "clientWidth": 1057,
+        "viewportWidth": 1440
+      },
+      "wrappedCode": {
+        "scrollWidth": 1030,
+        "clientWidth": 1030,
+        "text": "theorem ae_predictable_exists_bounded_history_policy {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : Measure Ω) (Y : ℕ → Ω → ℝ) (S : Ω → Seed) (F : ℕ → MeasurableSpace Ω) (hF : ∀ t, F t ≤ privateSeedPastInformation S Y t) (prediction : ℕ → Ω → ℝ) (hP : ∀ t, AEStronglyMeasurable[F t] (prediction t) μ) (hpb : ∀ t, ∀ᵐ ω ∂μ, prediction t ω ∈ Set.Icc (0 : ℝ) 1) : ∃ policy : (t : ℕ) → (Seed × ((↑(Finset.range t) : Type) → ℝ)) → ℝ, (∀ t, Measurable (policy t)) ∧ (∀ t q, policy t q ∈ Set.Icc (0 : ℝ) 1) ∧ ∀ᵐ ω ∂μ, ∀ t, prediction t ω = policy t (S ω, fun i => Y i ω)",
+        "whiteSpace": "pre-wrap"
+      },
+      "actualBuiltinWrapButtonClicked": true
+    },
+    {
+      "id": "decl-b78cf4176bef",
+      "file": "module-declaration-2-v4.png",
+      "moduleURL": "http://127.0.0.1:55574/modules/banditrlproof-onlineguessingaecausal/index.html",
+      "geometry": {
+        "left": 342.390625,
+        "right": 1401.609375,
+        "height": 547.984375,
+        "scrollWidth": 1057,
+        "clientWidth": 1057,
+        "viewportWidth": 1440
+      },
+      "wrappedCode": {
+        "scrollWidth": 1030,
+        "clientWidth": 1030,
+        "text": "theorem ae_predictable_private_seed_independent {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ) (S : Ω → Seed) (hS : Measurable S) (hseed : IndepFun S (fun ω t => Y t ω) μ) (t : ℕ) (F : MeasurableSpace Ω) (hF : F ≤ privateSeedPastInformation S Y t) (P : Ω → ℝ) (hP : AEStronglyMeasurable[F] P μ) : IndepFun P (Y t) μ",
+        "whiteSpace": "pre-wrap"
+      },
+      "actualBuiltinWrapButtonClicked": true
+    },
+    {
+      "id": "decl-c3db1ff90ad8",
+      "file": "module-declaration-3-v4.png",
+      "moduleURL": "http://127.0.0.1:55574/modules/banditrlproof-onlineguessingaecausal/index.html",
+      "geometry": {
+        "left": 342.390625,
+        "right": 1401.609375,
+        "height": 589.140625,
+        "scrollWidth": 1057,
+        "clientWidth": 1057,
+        "viewportWidth": 1440
+      },
+      "wrappedCode": {
+        "scrollWidth": 1030,
+        "clientWidth": 1030,
+        "text": "theorem ae_predictable_private_seed_expectedFixed_excess {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (hind : iIndepFun Y μ) (S : Ω → Seed) (hS : Measurable S) (hseed : IndepFun S (fun ω t => Y t ω) μ) (F : ℕ → MeasurableSpace Ω) (hF : ∀ t, F t ≤ privateSeedPastInformation S Y t) (prediction : ℕ → Ω → ℝ) (hP : ∀ t, AEStronglyMeasurable[F t] (prediction t) μ) (hpb : ∀ t, ∀ᵐ ω ∂μ, prediction t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) : expectedFixedRegret μ Y prediction T = (∑ t ∈ Finset.range T, ∫ ω, (prediction t ω - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) ∧ 0 ≤ expectedFixedRegret μ Y prediction T",
+        "whiteSpace": "pre-wrap"
+      },
+      "actualBuiltinWrapButtonClicked": true
+    }
+  ],
+  "images": [
+    "reader-first-viewport-v4.png",
+    "ae-causal-source-card-v4.png",
+    "public-note-1-v4.png",
+    "public-note-2-v4.png",
+    "public-note-3-v4.png",
+    "module-declaration-1-v4.png",
+    "module-declaration-2-v4.png",
+    "module-declaration-3-v4.png"
+  ],
+  "actualSourceGuideMathContainers": 19,
+  "sourceHorizontalScrollers": [],
+  "errors": [],
+  "failed": [],
+  "url": "http://127.0.0.1:55574/chapters/online-foundations/index.html",
+  "profilePreserved": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-ae-causal-playwright-v4-profile",
+  "generatedSiteFilesUnmodified": true
+}

@@ -1,0 +1,42 @@
+{
+  "nodes": [
+    {
+      "id": "L1",
+      "prerequisites": [
+        "AEStronglyMeasurable.measurable_mk",
+        "Measurable.exists_eq_measurable_comp",
+        "continuous_projIcc",
+        "Set.projIcc_of_mem",
+        "ae_all_iff"
+      ],
+      "ready": true,
+      "terminal": "AE all-time bounded history representation"
+    },
+    {
+      "id": "L2",
+      "prerequisites": [
+        "AEStronglyMeasurable.measurable_mk",
+        "predictable_private_seed_independent",
+        "IndepFun.congr"
+      ],
+      "ready": true,
+      "terminal": "actual current-target independence"
+    },
+    {
+      "id": "L3",
+      "prerequisites": [
+        "L2",
+        "AEStronglyMeasurable.mono",
+        "memLp_of_bounded",
+        "expectedFixedMinimum_eq_variance",
+        "iid_cumulative_prediction_decomposition"
+      ],
+      "ready": false,
+      "terminal": "same original prediction expected fixed-comparator excess identity and nonnegativity"
+    }
+  ],
+  "route": "single lower route",
+  "types_frozen_after_source_contract_review": true,
+  "original_source_objects": 16,
+  "unknown_proof_total": null
+}

@@ -1,0 +1,67 @@
+import BanditRLProof.OnlineGuessingRandomizedIID
+import Mathlib.MeasureTheory.Function.FactorsThrough
+import Mathlib.Topology.UnitInterval
+
+open MeasureTheory ProbabilityTheory
+
+universe u v
+namespace BanditRL.OnlineLearning
+
+
+/-! Derived AE strict-past information infrastructure for Orabona v10 printed1/PDF13 and printed3/PDF15. A classical measurable version, not off-null identity or an executable learner constructor. Full completed-information and universal stochastic-kernel coverage remain separate required obligations. -/
+
+theorem ae_predictable_exists_bounded_history_policy {Ω : Type u} {Seed : Type v}
+    [MeasurableSpace Ω] [MeasurableSpace Seed]
+    (μ : Measure Ω) (Y : ℕ → Ω → ℝ) (S : Ω → Seed)
+    (F : ℕ → MeasurableSpace Ω)
+    (hF : ∀ t, F t ≤ privateSeedPastInformation S Y t)
+    (prediction : ℕ → Ω → ℝ)
+    (hP : ∀ t, AEStronglyMeasurable[F t] (prediction t) μ)
+    (hpb : ∀ t, ∀ᵐ ω ∂μ, prediction t ω ∈ Set.Icc (0 : ℝ) 1) :
+    ∃ policy : (t : ℕ) → (Seed × ((↑(Finset.range t) : Type) → ℝ)) → ℝ,
+      (∀ t, Measurable (policy t)) ∧
+      (∀ t q, policy t q ∈ Set.Icc (0 : ℝ) 1) ∧
+      ∀ᵐ ω ∂μ, ∀ t, prediction t ω = policy t (S ω, fun i => Y i ω) := by
+  classical
+  have hfactor (t : ℕ) :
+      ∃ f : (Seed × ((↑(Finset.range t) : Type) → ℝ)) → ℝ,
+        Measurable f ∧ (hP t).mk (prediction t) =
+          fun ω => f (S ω, fun i => Y i ω) := by
+    have hm : Measurable[privateSeedPastInformation S Y t] ((hP t).mk (prediction t)) :=
+      Measurable.of_comap_le ((hP t).measurable_mk.comap_le.trans (hF t))
+    change Measurable[MeasurableSpace.comap
+      (fun ω => (S ω, fun i : (↑(Finset.range t) : Type) => Y i ω)) inferInstance] _ at hm
+    obtain ⟨f, hf, he⟩ := hm.exists_eq_measurable_comp
+    exact ⟨f, hf, by simpa only [Function.comp_def] using he⟩
+  choose f hf he using hfactor
+  let policy : (t : ℕ) → (Seed × ((↑(Finset.range t) : Type) → ℝ)) → ℝ :=
+    fun t q => (Set.projIcc (0 : ℝ) 1 zero_le_one (f t q) : ℝ)
+  refine ⟨policy, ?_, ?_, ?_⟩
+  · intro t
+    exact ((continuous_projIcc (a := (0 : ℝ)) (b := 1) (h := zero_le_one)).measurable.comp
+      (hf t)).subtype_coe
+  · intro t q
+    exact (Set.projIcc (0 : ℝ) 1 zero_le_one (f t q)).property
+  · apply ae_all_iff.2
+    intro t
+    filter_upwards [(hP t).ae_eq_mk, hpb t] with ω hω hbω
+    have hq : f t (S ω, fun i => Y i ω) = prediction t ω :=
+      (congrFun (he t) ω).symm.trans hω.symm
+    change prediction t ω = (Set.projIcc (0 : ℝ) 1 zero_le_one
+      (f t (S ω, fun i => Y i ω)) : ℝ)
+    rw [hq, Set.projIcc_of_mem zero_le_one hbω]
+
+theorem ae_predictable_private_seed_independent {Ω : Type u} {Seed : Type v}
+    [MeasurableSpace Ω] [MeasurableSpace Seed]
+    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)
+    (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ)
+    (S : Ω → Seed) (hS : Measurable S)
+    (hseed : IndepFun S (fun ω t => Y t ω) μ)
+    (t : ℕ) (F : MeasurableSpace Ω) (hF : F ≤ privateSeedPastInformation S Y t)
+    (P : Ω → ℝ) (hP : AEStronglyMeasurable[F] P μ) :
+    IndepFun P (Y t) μ := by
+  have hi := predictable_private_seed_independent μ Y hY hind S hS hseed t F hF
+    (hP.mk P) hP.measurable_mk
+  exact hi.congr hP.ae_eq_mk.symm (Filter.EventuallyEq.refl _ _)
+
+end BanditRL.OnlineLearning

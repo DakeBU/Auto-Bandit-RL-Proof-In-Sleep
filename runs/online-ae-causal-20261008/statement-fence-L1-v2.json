@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineLearning.ae_predictable_exists_bounded_history_policy",
+  "file": "BanditRLProof/OnlineGuessingAECausal.lean",
+  "statement": "theorem ae_predictable_exists_bounded_history_policy {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : Measure Ω) (Y : ℕ → Ω → ℝ) (S : Ω → Seed) (F : ℕ → MeasurableSpace Ω) (hF : ∀ t, F t ≤ privateSeedPastInformation S Y t) (prediction : ℕ → Ω → ℝ) (hP : ∀ t, AEStronglyMeasurable[F t] (prediction t) μ) (hpb : ∀ t, ∀ᵐ ω ∂μ, prediction t ω ∈ Set.Icc (0 : ℝ) 1) : ∃ policy : (t : ℕ) → (Seed × ((↑(Finset.range t) : Type) → ℝ)) → ℝ, (∀ t, Measurable (policy t)) ∧ (∀ t q, policy t q ∈ Set.Icc (0 : ℝ) 1) ∧ ∀ᵐ ω ∂μ, ∀ t, prediction t ω = policy t (S ω, fun i => Y i ω)",
+  "statement_hash": "e833ef6d42d7c88fb328349e8fbe76bd4838c790f040aa1b89d6329c45fb6f91",
+  "source_assumptions": [
+    "(hF : ∀ t, F t ≤ privateSeedPastInformation S Y t)",
+    "(hP : ∀ t, AEStronglyMeasurable[F t] (prediction t) μ)",
+    "(hpb : ∀ t, ∀ᵐ ω ∂μ, prediction t ω ∈ Set.Icc (0 : ℝ) 1) :"
+  ],
+  "created_at": "2026-10-08T13:16:46+00:00"
+}
