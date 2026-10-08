@@ -1,0 +1,21 @@
+ProbabilityTheory.iIndepFun.comp.{u_1, u_2, u_10, u_11} {Ω : Type u_1} {ι : Type u_2} {_mΩ : MeasurableSpace Ω}
+  {μ : Measure Ω} {β : ι → Type u_10} {γ : ι → Type u_11} {mβ : (i : ι) → MeasurableSpace (β i)}
+  {mγ : (i : ι) → MeasurableSpace (γ i)} {f : (i : ι) → Ω → β i} (h : iIndepFun f μ) (g : (i : ι) → β i → γ i)
+  (hg : ∀ (i : ι), Measurable (g i)) : iIndepFun (fun i => g i ∘ f i) μ
+ProbabilityTheory.IdentDistrib.comp.{u_1, u_2, u_3, u_4} {α : Type u_1} {β : Type u_2} {γ : Type u_3} {δ : Type u_4}
+  [MeasurableSpace α] [MeasurableSpace β] [MeasurableSpace γ] [MeasurableSpace δ] {μ : Measure α} {ν : Measure β}
+  {f : α → γ} {g : β → γ} {u : γ → δ} (h : IdentDistrib f g μ ν) (hu : Measurable u) : IdentDistrib (u ∘ f) (u ∘ g) μ ν
+ProbabilityTheory.IndepFun.comp.{u_1, u_6, u_7, u_8, u_9} {Ω : Type u_1} {β : Type u_6} {β' : Type u_7} {γ : Type u_8}
+  {γ' : Type u_9} {_mΩ : MeasurableSpace Ω} {μ : Measure Ω} {f : Ω → β} {g : Ω → β'} {_mβ : MeasurableSpace β}
+  {_mβ' : MeasurableSpace β'} {_mγ : MeasurableSpace γ} {_mγ' : MeasurableSpace γ'} {φ : β → γ} {ψ : β' → γ'}
+  (hfg : f ⟂ᵢ[μ] g) (hφ : Measurable φ) (hψ : Measurable ψ) : (φ ∘ f) ⟂ᵢ[μ] ψ ∘ g
+Measurable.max.{u_1, u_4} {α : Type u_1} {δ : Type u_4} [TopologicalSpace α] {mα : MeasurableSpace α}
+  [OpensMeasurableSpace α] {mδ : MeasurableSpace δ} [LinearOrder α] [SecondCountableTopology α] [OrderClosedTopology α]
+  {f g : δ → α} (hf : Measurable f) (hg : Measurable g) : Measurable fun a => max (f a) (g a)
+Measurable.min.{u_1, u_4} {α : Type u_1} {δ : Type u_4} [TopologicalSpace α] {mα : MeasurableSpace α}
+  [OpensMeasurableSpace α] {mδ : MeasurableSpace δ} [LinearOrder α] [SecondCountableTopology α] [OrderClosedTopology α]
+  {f g : δ → α} (hf : Measurable f) (hg : Measurable g) : Measurable fun a => min (f a) (g a)
+MeasureTheory.integral_congr_ae.{u_1, u_5} {α : Type u_1} {G : Type u_5} [NormedAddCommGroup G] [NormedSpace ℝ G]
+  {m : MeasurableSpace α} {μ : Measure α} {f g : α → G} (h : f =ᶠ[ae μ] g) : ∫ (a : α), f a ∂μ = ∫ (a : α), g a ∂μ
+ProbabilityTheory.variance_congr.{u_1} {Ω : Type u_1} {mΩ : MeasurableSpace Ω} {X Y : Ω → ℝ} {μ : Measure Ω}
+  (h : X =ᶠ[ae μ] Y) : Var[X; μ] = Var[Y; μ]

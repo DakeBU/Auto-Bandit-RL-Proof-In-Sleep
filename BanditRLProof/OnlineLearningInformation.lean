@@ -3,6 +3,10 @@ import BanditRLProof.OnlineLearningStochastic
 
 open MeasureTheory ProbabilityTheory
 
+/-!
+Derived information proof for the actual initial-half, strict-past sample-mean learner in Orabona v10, printed pp.3-4 / PDF pp.15-16, applied to the IID motivation on p.1 / PDF p.13. Joint independence and target measurability derive current-target independence. No same-law, boundedness or supplied current-independence premise is required. The population mean and horizon are not learner inputs.
+-/
+
 namespace BanditRL.OnlineLearning
 
 /-- The source strategy's strict-past sufficient statistic is independent of the current target. -/

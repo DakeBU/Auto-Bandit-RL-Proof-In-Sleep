@@ -1,6 +1,10 @@
 import Mathlib.Data.Real.Basic
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
 
+/-!
+Orabona v10, Lemma 1.2, printed p.4 / PDF p.16. Prefix minimizers and their feasibility are explicitly supplied, as in the source assumption. This arbitrary ambient-type formulation generalizes the source Euclidean set without geometry. Its current-prefix leaders are hindsight objects; a causal learner is proved separately. T=0 is an empty-sum extension. This source revalidation changes no theorem header or proof body.
+-/
+
 namespace BanditRL.OnlineLearning
 
 /-- Orabona v10 Lemma 1.2. `leader n` is a hindsight minimizer of the first `n`

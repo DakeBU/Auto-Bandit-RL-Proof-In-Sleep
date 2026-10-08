@@ -1,0 +1,41 @@
+from common_v1 import *
+sys.path.insert(0, str(ROOT))
+from tools.abrl_lifecycle import lean_declaration_header, statement_hash
+
+RECEIPT_SHA='b537220c23f410a7ce64e489e5a2ed13d6ffb43dedc5f9726c510edbc7cbf75c'
+REPORT_SHA='3dc11aa992d304dcbb952e05d864bfa93b7dba9e794542791d6e5722764e41c1'
+MUTABLE={r['path']:r for r in load(RUN/'stabilized-contract-v2.json')['mutable_receipt_bound_snapshots']}
+PLAN={r['path']:r for r in load(CONTRACT/'exact-comment-plan-v1.json')['rows']}
+
+def baseline(p):
+    r=MUTABLE[Path(p).as_posix()]
+    q=Path(r['snapshot'])
+    assert sha(q)==r['snapshot_sha256']==r['original_sha256']
+    return q.read_bytes()
+
+def proofbytes_fixed():
+    assert Path.cwd()==ROOT
+    assert subprocess.check_output(['git','branch','--show-current'],encoding='utf8').strip()==BRANCH
+    assert sha(PDF)==PDF_SHA
+    assert sha(RUN/'source-contract-receipt-v1.json')==RECEIPT_SHA
+    assert sha(RUN/'source-contract-review-v1.md')==REPORT_SHA
+    for p,h in load(RUN/'draft-baseline-v1.json')['fixed_files'].items():
+        if p not in PLAN: assert sha(p)==h,p
+    for p,r in PLAN.items():
+        raw=Path(p).read_bytes();comment=r['comment_utf8'].encode('utf8')
+        assert sha(p)==r['result_sha256']
+        assert raw.count(comment)==1 and raw.replace(comment,b'',1)==baseline(p)
+    for r in load(CONTRACT/'targets-v2.json')['targets']:
+        header=lean_declaration_header(Path(r['path']),r['name'])
+        assert header==r['header'] and statement_hash(header)==r['statement_hash'],r['name']
+    assert load(RUN/'source-contract-receipt-v1.json')['reader_requirements']==load(CONTRACT/'reader-requirements-v1.json')
+
+def contract_bindings_fixed():
+    proofbytes_fixed()
+    for r in load(RUN/'source-contract-review-inputs-v1.json')['rows']:
+        p=Path(r['path']);relative=p.resolve().relative_to(ROOT).as_posix() if p.resolve().is_relative_to(ROOT) else None
+        if relative in MUTABLE:
+            assert hashlib.sha256(baseline(relative)).hexdigest()==r['sha256']
+            if relative not in PLAN: assert p.read_bytes()==baseline(relative),relative
+        else: assert sha(p)==r['sha256'],p
+

@@ -1,0 +1,24 @@
+{
+  "raw_logs_available": false,
+  "commands": [
+    {
+      "command": "Get-Content runs/online-c1-core-audit-20261008/reader-requirements-v1.json",
+      "failure": "Wrong folder; actual file is in docs/contracts/online-c1-core-audit-v1."
+    },
+    {
+      "command": "python tools/bandit.py lifecycle --help; python tools/bandit.py frontier --help",
+      "exit": 2,
+      "failure": "Nonexistent subcommands; actual lifecycle-event/statement-fence/frontier-shadow --help subsequently read successfully."
+    },
+    {
+      "command": "rg BanditRLProof/OnlineGuessing*.lean; Get-Content .agents/skills/bandit-formalization/SKILL.md; Get-Content .agents/skills/bandit-contributor-contract/SKILL.md",
+      "failure": "Windows glob/path assumptions invalid; rg --files found actual bandit-lean-formalization skill and contributor docs, then actually read."
+    },
+    {
+      "command": "python stdin import common_v1",
+      "exit": 1,
+      "failure": "RUN not in sys.path; corrected explicit ownedRUN path before executing helper."
+    }
+  ],
+  "effect": "Read-only/helper import failures, no target/code edit or acceptance claim. Tool outputs retained in conversation; this record does not fabricate raw shell logs."
+}

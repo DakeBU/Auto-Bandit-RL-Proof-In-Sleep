@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-08T09:35:27+00:00",
+  "generated": "2026-10-08T11:35:39+00:00",
   "declarations": [
     {
       "kind": "def",
@@ -54002,6 +54002,38 @@
       "statement": "theorem history_policy_normalized_expectedFixed_excess {\u03a9 : Type*} [MeasurableSpace \u03a9] (\u03bc : Measure \u03a9) [IsProbabilityMeasure \u03bc] (Y : \u2115 \u2192 \u03a9 \u2192 \u211d) (hY : \u2200 t, Measurable (Y t)) (hlaw : \u2200 t, IdentDistrib (Y t) (Y 0) \u03bc \u03bc) (hb : \u2200 t, \u2200\u1d50 \u03c9 \u2202\u03bc, Y t \u03c9 \u2208 Set.Icc (0 : \u211d) 1) (hind : iIndepFun Y \u03bc) (policy : (t : \u2115) \u2192 ((\u2191(Finset.range t) : Type) \u2192 \u211d) \u2192 \u211d) (hp : \u2200 t, Measurable (policy t)) (hpb : \u2200 t z, (\u2200 i, z i \u2208 Set.Icc (0 : \u211d) 1) \u2192 policy t z \u2208 Set.Icc (0 : \u211d) 1) (T : \u2115) (hT : 0 < T) : (\u222b \u03c9, \u2211 t \u2208 Finset.range T, (policy t (fun i => Y i \u03c9) - Y t \u03c9)^2 \u2202\u03bc) / (T : \u211d) - variance (Y 0) \u03bc = expectedFixedRegret \u03bc Y (fun t \u03c9 => policy t (fun i => Y i \u03c9)) T / (T : \u211d)"
     },
     {
+      "kind": "theorem",
+      "name": "centered_total_sublinear_iff_average",
+      "full_name": "BanditRL.OnlineLearning.centered_total_sublinear_iff_average",
+      "file": "BanditRLProof/OnlineGuessingIIDSuccess.lean",
+      "line": 9,
+      "statement": "theorem centered_total_sublinear_iff_average (total : \u2115 \u2192 \u211d) (c : \u211d) : (fun T => total T - (T : \u211d) * c) =o[atTop] (fun T : \u2115 => (T : \u211d)) \u2194 Tendsto (fun T => total T / (T : \u211d) - c) atTop (nhds (0 : \u211d))"
+    },
+    {
+      "kind": "theorem",
+      "name": "randomized_history_policy_success_iff",
+      "full_name": "BanditRL.OnlineLearning.randomized_history_policy_success_iff",
+      "file": "BanditRLProof/OnlineGuessingIIDSuccess.lean",
+      "line": 25,
+      "statement": "theorem randomized_history_policy_success_iff {\u03a9 : Type u} {Seed : Type v} [MeasurableSpace \u03a9] [MeasurableSpace Seed] (\u03bc : Measure \u03a9) [IsProbabilityMeasure \u03bc] (Y : \u2115 \u2192 \u03a9 \u2192 \u211d) (hY : \u2200 t, Measurable (Y t)) (hlaw : \u2200 t, IdentDistrib (Y t) (Y 0) \u03bc \u03bc) (hb : \u2200 t, \u2200\u1d50 \u03c9 \u2202\u03bc, Y t \u03c9 \u2208 Set.Icc (0 : \u211d) 1) (hind : iIndepFun Y \u03bc) (S : \u03a9 \u2192 Seed) (hS : Measurable S) (hseed : IndepFun S (fun \u03c9 t => Y t \u03c9) \u03bc) (policy : (t : \u2115) \u2192 (Seed \u00d7 ((\u2191(Finset.range t) : Type) \u2192 \u211d)) \u2192 \u211d) (hp : \u2200 t, Measurable (policy t)) (hpb : \u2200 t s z, (\u2200 i, z i \u2208 Set.Icc (0 : \u211d) 1) \u2192 policy t (s, z) \u2208 Set.Icc (0 : \u211d) 1) : let prediction := fun t \u03c9 => policy t (S \u03c9, fun i => Y i \u03c9) (\u2200 T, 0 \u2264 expectedFixedRegret \u03bc Y prediction T) \u2227 ((fun T => expectedFixedRegret \u03bc Y prediction T) =o[atTop] (fun T : \u2115 => (T : \u211d)) \u2194 Tendsto (fun T => (\u222b \u03c9, \u2211 t \u2208 Finset.range T, (prediction t \u03c9 - Y t \u03c9)^2 \u2202\u03bc) / (T : \u211d) - variance (Y 0) \u03bc) atTop (nhds (0 : \u211d))) \u2227 (Tendsto (fun T => (\u222b \u03c9, \u2211 t \u2208 Finset.range T, (prediction t \u03c9 - Y t \u03c9)^2 \u2202\u03bc) / (T : \u211d) - variance (Y 0) \u03bc) atTop (nhds (0 : \u211d)) \u2194 Tendsto (fun T => (\u2211 t \u2208 Finset.range T, \u222b \u03c9, (prediction t \u03c9 - \u222b \u03c9, Y 0 \u03c9 \u2202\u03bc)^2 \u2202\u03bc) / (T : \u211d)) atTop (nhds (0 : \u211d)))"
+    },
+    {
+      "kind": "theorem",
+      "name": "meanPredict_expectedFixed_upper",
+      "full_name": "BanditRL.OnlineLearning.meanPredict_expectedFixed_upper",
+      "file": "BanditRLProof/OnlineGuessingIIDSuccess.lean",
+      "line": 64,
+      "statement": "theorem meanPredict_expectedFixed_upper {\u03a9 : Type u} [MeasurableSpace \u03a9] (\u03bc : Measure \u03a9) [IsProbabilityMeasure \u03bc] (Y : \u2115 \u2192 \u03a9 \u2192 \u211d) (hY : \u2200 t, Measurable (Y t)) (hlaw : \u2200 t, IdentDistrib (Y t) (Y 0) \u03bc \u03bc) (hb : \u2200 t, \u2200\u1d50 \u03c9 \u2202\u03bc, Y t \u03c9 \u2208 Set.Icc (0 : \u211d) 1) (T : \u2115) (hT : 0 < T) : expectedFixedRegret \u03bc Y (fun t \u03c9 => meanPredict (fun i => Y i \u03c9) t) T \u2264 4 + 4 * Real.log T"
+    },
+    {
+      "kind": "theorem",
+      "name": "meanPredict_iid_success",
+      "full_name": "BanditRL.OnlineLearning.meanPredict_iid_success",
+      "file": "BanditRLProof/OnlineGuessingIIDSuccess.lean",
+      "line": 110,
+      "statement": "theorem meanPredict_iid_success {\u03a9 : Type u} [MeasurableSpace \u03a9] (\u03bc : Measure \u03a9) [IsProbabilityMeasure \u03bc] (Y : \u2115 \u2192 \u03a9 \u2192 \u211d) (hY : \u2200 t, Measurable (Y t)) (hlaw : \u2200 t, IdentDistrib (Y t) (Y 0) \u03bc \u03bc) (hb : \u2200 t, \u2200\u1d50 \u03c9 \u2202\u03bc, Y t \u03c9 \u2208 Set.Icc (0 : \u211d) 1) (hind : iIndepFun Y \u03bc) : Tendsto (fun T => expectedFixedRegret \u03bc Y (fun t \u03c9 => meanPredict (fun i => Y i \u03c9) t) T / (T : \u211d)) atTop (nhds (0 : \u211d)) \u2227 (fun T => expectedFixedRegret \u03bc Y (fun t \u03c9 => meanPredict (fun i => Y i \u03c9) t) T) =o[atTop] (fun T : \u2115 => (T : \u211d))"
+    },
+    {
       "kind": "def",
       "name": "polyaNext",
       "full_name": "BanditRL.OnlineLearning.GuessingLower.polyaNext",
@@ -55070,7 +55102,7 @@
       "name": "lemma_1_2",
       "full_name": "BanditRL.OnlineLearning.lemma_1_2",
       "file": "BanditRLProof/OnlineLearningFoundations.lean",
-      "line": 8,
+      "line": 12,
       "statement": "theorem lemma_1_2 {X : Type*} (V : Set X) (loss : \u2115 \u2192 X \u2192 \u211d) (leader : \u2115 \u2192 X) (T : \u2115) (hmem : \u2200 n, 0 < n \u2192 n \u2264 T \u2192 leader n \u2208 V) (hmin : \u2200 n, 0 < n \u2192 n \u2264 T \u2192 \u2200 u \u2208 V, (\u2211 t \u2208 Finset.range n, loss t (leader n)) \u2264 \u2211 t \u2208 Finset.range n, loss t u) : (\u2211 t \u2208 Finset.range T, loss t (leader (t + 1))) \u2264 \u2211 t \u2208 Finset.range T, loss t (leader T)"
     },
     {
@@ -55230,7 +55262,7 @@
       "name": "history_policy_independent",
       "full_name": "BanditRL.OnlineLearning.history_policy_independent",
       "file": "BanditRLProof/OnlineLearningHistory.lean",
-      "line": 8,
+      "line": 12,
       "statement": "theorem history_policy_independent {\u03a9 : Type*} [MeasurableSpace \u03a9] (\u03bc : Measure \u03a9) [IsProbabilityMeasure \u03bc] (Y : \u2115 \u2192 \u03a9 \u2192 \u211d) (hY : \u2200 t, Measurable (Y t)) (hind : iIndepFun Y \u03bc) (t : \u2115) (policy : ((\u2191(Finset.range t) : Type) \u2192 \u211d) \u2192 \u211d) (hp : Measurable policy) : IndepFun (fun \u03c9 => policy (fun i => Y i \u03c9)) (Y t) \u03bc"
     },
     {
@@ -55238,7 +55270,7 @@
       "name": "history_policy_loss_ge_variance",
       "full_name": "BanditRL.OnlineLearning.history_policy_loss_ge_variance",
       "file": "BanditRLProof/OnlineLearningHistory.lean",
-      "line": 19,
+      "line": 23,
       "statement": "theorem history_policy_loss_ge_variance {\u03a9 : Type*} [MeasurableSpace \u03a9] (\u03bc : Measure \u03a9) [IsProbabilityMeasure \u03bc] (Y : \u2115 \u2192 \u03a9 \u2192 \u211d) (hY : \u2200 t, Measurable (Y t)) (hind : iIndepFun Y \u03bc) (hb : \u2200 t \u03c9, Y t \u03c9 \u2208 Set.Icc (0 : \u211d) 1) (t : \u2115) (policy : ((\u2191(Finset.range t) : Type) \u2192 \u211d) \u2192 \u211d) (hp : Measurable policy) (hpb : \u2200 z, policy z \u2208 Set.Icc (0 : \u211d) 1) : variance (Y t) \u03bc \u2264 \u222b \u03c9, (policy (fun i => Y i \u03c9) - Y t \u03c9)^2 \u2202\u03bc"
     },
     {
@@ -55246,7 +55278,7 @@
       "name": "normalized_excess",
       "full_name": "BanditRL.OnlineLearning.normalized_excess",
       "file": "BanditRLProof/OnlineLearningHistory.lean",
-      "line": 38,
+      "line": 42,
       "statement": "theorem normalized_excess (total variance : \u211d) (T : \u2115) (hT : 0 < T) : total / T - variance = (total - T * variance) / T"
     },
     {
@@ -55254,7 +55286,7 @@
       "name": "meanPredict_measurable",
       "full_name": "BanditRL.OnlineLearning.meanPredict_measurable",
       "file": "BanditRLProof/OnlineLearningIID.lean",
-      "line": 9,
+      "line": 13,
       "statement": "theorem meanPredict_measurable {\u03a9 : Type*} [MeasurableSpace \u03a9] (Y : \u2115 \u2192 \u03a9 \u2192 \u211d) (hY : \u2200 t, Measurable (Y t)) (t : \u2115) : Measurable (fun \u03c9 => meanPredict (fun i => Y i \u03c9) t)"
     },
     {
@@ -55262,7 +55294,7 @@
       "name": "meanPredict_memLp",
       "full_name": "BanditRL.OnlineLearning.meanPredict_memLp",
       "file": "BanditRLProof/OnlineLearningIID.lean",
-      "line": 16,
+      "line": 20,
       "statement": "theorem meanPredict_memLp {\u03a9 : Type*} [MeasurableSpace \u03a9] (\u03bc : Measure \u03a9) [IsProbabilityMeasure \u03bc] (Y : \u2115 \u2192 \u03a9 \u2192 \u211d) (hY : \u2200 t, Measurable (Y t)) (hb : \u2200 t \u03c9, Y t \u03c9 \u2208 Set.Icc (0 : \u211d) 1) (t : \u2115) : MemLp (fun \u03c9 => meanPredict (fun i => Y i \u03c9) t) 2 \u03bc"
     },
     {
@@ -55270,7 +55302,7 @@
       "name": "iid_meanPredict_excess",
       "full_name": "BanditRL.OnlineLearning.iid_meanPredict_excess",
       "file": "BanditRLProof/OnlineLearningIID.lean",
-      "line": 25,
+      "line": 29,
       "statement": "theorem iid_meanPredict_excess {\u03a9 : Type*} [MeasurableSpace \u03a9] (\u03bc : Measure \u03a9) [IsProbabilityMeasure \u03bc] (Y : \u2115 \u2192 \u03a9 \u2192 \u211d) (hY : \u2200 t, Measurable (Y t)) (hind : iIndepFun Y \u03bc) (hlaw : \u2200 t, IdentDistrib (Y t) (Y 0) \u03bc \u03bc) (hb : \u2200 t \u03c9, Y t \u03c9 \u2208 Set.Icc (0 : \u211d) 1) (T : \u2115) : (\u222b \u03c9, \u2211 t \u2208 Finset.range T, (meanPredict (fun i => Y i \u03c9) t - Y t \u03c9)^2 \u2202\u03bc) - T * variance (Y 0) \u03bc = \u2211 t \u2208 Finset.range T, \u222b \u03c9, (meanPredict (fun i => Y i \u03c9) t - \u222b \u03c9, Y 0 \u03c9 \u2202\u03bc)^2 \u2202\u03bc"
     },
     {
@@ -55278,7 +55310,7 @@
       "name": "iid_meanPredict_excess_nonneg",
       "full_name": "BanditRL.OnlineLearning.iid_meanPredict_excess_nonneg",
       "file": "BanditRLProof/OnlineLearningIID.lean",
-      "line": 52,
+      "line": 56,
       "statement": "theorem iid_meanPredict_excess_nonneg {\u03a9 : Type*} [MeasurableSpace \u03a9] (\u03bc : Measure \u03a9) [IsProbabilityMeasure \u03bc] (Y : \u2115 \u2192 \u03a9 \u2192 \u211d) (hY : \u2200 t, Measurable (Y t)) (hind : iIndepFun Y \u03bc) (hlaw : \u2200 t, IdentDistrib (Y t) (Y 0) \u03bc \u03bc) (hb : \u2200 t \u03c9, Y t \u03c9 \u2208 Set.Icc (0 : \u211d) 1) (T : \u2115) : 0 \u2264 (\u222b \u03c9, \u2211 t \u2208 Finset.range T, (meanPredict (fun i => Y i \u03c9) t - Y t \u03c9)^2 \u2202\u03bc) - T * variance (Y 0) \u03bc"
     },
     {
@@ -55286,7 +55318,7 @@
       "name": "source_mean_optimal",
       "full_name": "BanditRL.OnlineLearning.source_mean_optimal",
       "file": "BanditRLProof/OnlineLearningIID.lean",
-      "line": 63,
+      "line": 67,
       "statement": "theorem source_mean_optimal {\u03a9 : Type*} [MeasurableSpace \u03a9] (\u03bc : Measure \u03a9) [IsProbabilityMeasure \u03bc] (Y : \u03a9 \u2192 \u211d) (hY : Measurable Y) (hb : \u2200 \u03c9, Y \u03c9 \u2208 Set.Icc (0 : \u211d) 1) : (\u222b \u03c9, Y \u03c9 \u2202\u03bc) \u2208 Set.Icc (0 : \u211d) 1 \u2227 (\u222b \u03c9, ((\u222b \u03c9, Y \u03c9 \u2202\u03bc) - Y \u03c9)^2 \u2202\u03bc) = variance Y \u03bc \u2227 \u2200 u : \u211d, variance Y \u03bc \u2264 \u222b \u03c9, (u - Y \u03c9)^2 \u2202\u03bc"
     },
     {
@@ -55294,7 +55326,7 @@
       "name": "meanPredict_independent",
       "full_name": "BanditRL.OnlineLearning.meanPredict_independent",
       "file": "BanditRLProof/OnlineLearningInformation.lean",
-      "line": 9,
+      "line": 13,
       "statement": "theorem meanPredict_independent {\u03a9 : Type*} [MeasurableSpace \u03a9] (\u03bc : Measure \u03a9) [IsProbabilityMeasure \u03bc] (Y : \u2115 \u2192 \u03a9 \u2192 \u211d) (hY : \u2200 t, Measurable (Y t)) (hind : iIndepFun Y \u03bc) (t : \u2115) : IndepFun (fun \u03c9 => meanPredict (fun i => Y i \u03c9) t) (Y t) \u03bc"
     },
     {
@@ -55382,7 +55414,7 @@
       "name": "expected_square_decomposition",
       "full_name": "BanditRL.OnlineLearning.expected_square_decomposition",
       "file": "BanditRLProof/OnlineLearningStochastic.lean",
-      "line": 9,
+      "line": 13,
       "statement": "theorem expected_square_decomposition {\u03a9 : Type*} [MeasurableSpace \u03a9] (\u03bc : Measure \u03a9) [IsProbabilityMeasure \u03bc] (Y : \u03a9 \u2192 \u211d) (hY : MemLp Y 2 \u03bc) (u : \u211d) : (\u222b \u03c9, (u - Y \u03c9)^2 \u2202\u03bc) = variance Y \u03bc + (u - \u222b \u03c9, Y \u03c9 \u2202\u03bc)^2"
     },
     {
@@ -55390,7 +55422,7 @@
       "name": "independent_prediction_square",
       "full_name": "BanditRL.OnlineLearning.independent_prediction_square",
       "file": "BanditRLProof/OnlineLearningStochastic.lean",
-      "line": 23,
+      "line": 27,
       "statement": "theorem independent_prediction_square {\u03a9 : Type*} [MeasurableSpace \u03a9] (\u03bc : Measure \u03a9) [IsProbabilityMeasure \u03bc] (P Y : \u03a9 \u2192 \u211d) (hP : MemLp P 2 \u03bc) (hY : MemLp Y 2 \u03bc) (h : IndepFun P Y \u03bc) : (\u222b \u03c9, (P \u03c9 - Y \u03c9)^2 \u2202\u03bc) = (\u222b \u03c9, (P \u03c9 - \u222b \u03c9, Y \u03c9 \u2202\u03bc)^2 \u2202\u03bc) + variance Y \u03bc"
     },
     {

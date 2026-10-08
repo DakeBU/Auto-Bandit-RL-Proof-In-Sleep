@@ -1,0 +1,16 @@
+{
+  "actual_first_full_gate_exit": 1,
+  "actual_tests": 472,
+  "actual_failures": 1,
+  "actual_skips": 7,
+  "failed_test": "test_build_anonymous_iclr_supplement.AnonymousSupplementTests.test_archive_is_reproducible",
+  "failure": "Two generated test ZIP raw bytes differ. Both source/Tests Lean builds passed.",
+  "probable_cause": "Own official reference-index refresh ran concurrently during the full harness; the archive builder explicitly reads local_lean_declarations.json. Its current source snapshot changed by12 own locator shifts and4 restored old PR196 entries.",
+  "causal_limit": "Temporary failing archives were cleaned by unittest teardown; this record does not claim a retained per-entry ZIP diff or conclusive attribution.",
+  "remedy": "No archive builder/test/anonymous snapshot edits. Record all actual raw payload input bindings, run the exact reproducibility assertion and complete harness with source inputs stable; compare bindings afterwards.",
+  "source_statement_or_proof_or_fixture_change": false,
+  "production_gate_waiver": false,
+  "anonymous_material_modified": false,
+  "chapter_complete": false,
+  "goal_complete": false
+}

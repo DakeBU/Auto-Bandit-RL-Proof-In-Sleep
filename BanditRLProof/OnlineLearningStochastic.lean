@@ -3,6 +3,10 @@ import Mathlib.Tactic
 
 open MeasureTheory ProbabilityTheory
 
+/-!
+Derived squared-loss identities for the Orabona v10 Chapter 1 motivation, printed p.1 / PDF p.13; these are not additional numbered source theorems. Probability and L2 hypotheses are explicit. The random-prediction identity consumes current-target independence; deriving causal independence requires separate information/history producers. These generic identities do not represent all stochastic strategies or prove a learning rate.
+-/
+
 namespace BanditRL.OnlineLearning
 
 /-- Chapter 1 squared-loss motivation: the mean minimizes expected squared loss. -/

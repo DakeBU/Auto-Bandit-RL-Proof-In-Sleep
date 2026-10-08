@@ -2,6 +2,10 @@ import BanditRLProof.OnlineLearningIID
 
 open MeasureTheory ProbabilityTheory
 
+/-!
+Derived strict finite-history policy APIs and positive-horizon normalization for Orabona v10 Chapter 1, printed p.1 / PDF p.13. Independence is produced for the actual composed deterministic history policy. The loss lower bound uses legacy pointwise target support and a global bound on every history tuple, stronger than AE support and feasibility only on legal histories. It compares with current-round variance without an identical-law premise. These APIs do not represent every random kernel or completed-information strategy; the scalar normalized identity is not itself an asymptotic result.
+-/
+
 namespace BanditRL.OnlineLearning
 
 /-- A policy consumes only the finite strict-past tuple; no full-sequence algorithm argument. -/
