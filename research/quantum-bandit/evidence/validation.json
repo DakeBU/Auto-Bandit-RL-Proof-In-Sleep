@@ -3,6 +3,7 @@
   "date": "2026-10-09",
   "milestone": "P0 analytic/circuit/reset-process and cross-library accounting prototype",
   "publication_status": "draft",
+  "post_catalog_quantum_mathematical_source_fingerprint_matches_reviewed_gate": true,
   "complete_A_or_B": false,
   "final_integration_record": true,
   "branch": "research/qb261009",
@@ -13,6 +14,14 @@
     "note": "Later metadata/catalog/evidence commits do not change these mathematical source inputs. See source-artifacts.json and the independently bound quantum-lean-gate.json."
   },
   "checks": [
+    {
+      "cwd": "C:/qb261009/bandit",
+      "command": "python tools/check_contributor_contract.py --base 6847b678a73db68dee5101d6f05c2453c1405afc",
+      "status": "rejected source-facing admission; draft retained",
+      "exit_code": 1,
+      "scope": "40 changed paths, 4 production paths, 1 truthful draft contribution contract; rejects incomplete lean_folded reader contract, non-accepted semantic status and non-accepted verdict",
+      "log": "C:/qb261009/evidence/bandit-contributor-contract-final.log"
+    },
     {
       "cwd": "C:/qb261009/quantum",
       "command": "python website/scripts/run_lean_gate.py",
