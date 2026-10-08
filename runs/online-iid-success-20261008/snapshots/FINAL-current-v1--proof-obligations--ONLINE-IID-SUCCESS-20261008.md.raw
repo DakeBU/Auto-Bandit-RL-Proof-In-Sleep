@@ -1,59 +1,36 @@
-# IID guessing stochastic success and actual sample-mean learner convergence
+# Proof Obligations: IID guessing stochastic success and actual sample-mean learner convergence
 
 Task id: `ONLINE-IID-SUCCESS-20261008`
-Kind: `lean`
-Status: `planned`
-Harness: `hierarchical`
 
-## Goal
+Source card:
+Scenario card:
 
-State the bandit/RL theorem, definition, or literature-port target.
+| Node | Target | Dependencies | Local APIs/imports | Retrieval cards | Intended proof route | Regularity contracts | Mathlib status | Owner | Lean declaration | Gate | Status |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `ONLINE-IID-SUCCESS-20261008-ROOT` | root theorem or definition | conversion window | TBD | TBD | TBD | TBD | project-local | upper | TBD | `lake build && lake build Tests` | planned |
 
-## Source
+## Failure Classification
 
-- Paper or repository:
-- Theorem/lemma/section:
-- Existing Lean declaration:
-- Textbook/source card:
-- Scenario card:
+Use exactly one:
 
-## Lean Target
+- source translation gap;
+- local Lean lemma gap;
+- theorem-card dependency;
+- external cited result;
+- semantic interface gap;
+- missing regularity contract;
+- likely false statement or counterexample;
+- invalid route;
+- stale dynamic leaf;
+- connected blocker.
 
-```lean
--- target declaration names here
-```
+## Reviewer Notes
 
-Target file: `BanditRL.OnlineLearning.meanPredict_iid_success`
-
-## Proof Obligations
-
-- [ ] Natural-language statement is mapped to Lean symbols.
-- [ ] Required model assumptions are explicit.
-- [ ] Probability, measurability, concentration, and stopping-time contracts are recorded.
-- [ ] Reusable theorem cards are identified before proof search.
-- [ ] Each active leaf has local APIs, intended proof route, and regularity contracts.
-- [ ] General leaves are classified as `mathlib-candidate`, `project-local`, or `theorem-card-only`.
-- [ ] `lake build && lake build Tests` passes.
-
-## Mathlib-Ready Leaf Contract
-
-| Leaf | Local APIs/imports | Intended proof route | Regularity contracts | Mathlib status |
-| --- | --- | --- | --- | --- |
-| root | TBD | TBD | TBD | project-local |
-
-## Retrieval Cards
-
-- LML cards:
-- Mathlib cards:
-- Textbook cards:
-- Scenario cards:
-
-## Trial Logging
-
-```bash
-python3 tools/bandit.py trial-log --task ONLINE-IID-SUCCESS-20261008 --role lower --kind attempt --status running --notes "..."
-python3 tools/bandit.py trial-summary
-```
+- Keep failed attempts in `proof-attempts/ONLINE-IID-SUCCESS-20261008/`.
+- Do not promote simulator checks, prose sketches, or theorem cards to certified memory.
+- If an LML theorem is used, cite the upstream declaration and record whether it is imported, ported, or only a theorem card.
+- Do not frequently change proof strategy; record the mathematical reason before pivoting.
+- Mark general leaf lemmas as Mathlib candidates when they should become reusable upstream infrastructure.
 
 
 ## Operative bounded draft: S001–S004
@@ -95,8 +72,3 @@ Four are adapters/derivedapplication results, not fourprintedsource theorems. Fu
 ## Current bounded candidate verification
 
 Actual combined Lean root, Tests and full harness passed. Four frozen mathematical terminals compiled; distinct BODY semantics accepted with explicit delta. Current reader FINAL, site/registry/pixel gates, native package acceptance and draft PR delivery are pending. Chapter 1/2 and whole-book Goal remain open; the required universal-model and five older module audits are not waived.
-
-
-## Bounded IID success package accepted; draft delivery pending
-
-ONLINE-IID-SUCCESS-20261008 Four frozen C1 terminals only: generic centered-total success iff, actual private-seed strict-history IID policy criterion, actual unknown-law meanPredict expected-fixed 4log upper without independence and ordinary normalized zero/little-o under IID. Only this bounded explicit private-tape model is covered by the policy result. Universal stochastic-kernel, completed-information and AE-factorization source coverage remains required. Five old main-relative module audits remain required; the remote push contributor check still fails on those contracts. Original sixteen Chapter1 source objects and unknown(null) proof-leaf total are retained. Chapter1/2 remain open, Chapters3–16 are unenumerated, necessary appendices are required and the total Goal is ACTIVE. This work is stacked on OPEN draft unmerged PR195 exact372c9a6c138c50d7a5e08e91351238f231565219. Canonical main6847 is unchanged; no merge, deployment or live update. No high-probability, almost-sure, minimax or full strategy-class guarantee is asserted. Actual 45 named kernel checks/14 direct VALUE pairs/14 nondegenerate canary proofs; actual root9099/Tests9257/fullharness472skip7/stacked contributor5paths1contract. Clean applicable local site1cffe4be,10931 old nodes preserved+4 new,ten original current panels ROOT and distinct FINAL inspected. Distinct staged automated reviews; no human/external/absolute blind/runtime attestation. Frozen bounded progress4->0 only. Raw failures/eleven byte-bound log or historical snapshot diff exceptions retained, zero executable/production/Test/reader/contract exception. Native acceptance/draft delivery separately recorded, whole Goal remains active.
