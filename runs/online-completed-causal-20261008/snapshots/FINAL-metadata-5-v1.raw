@@ -1,36 +1,59 @@
-# Proof Obligations: Ambient completed-information real versions and original IID excess
+# Ambient completed-information real versions and original IID excess
 
 Task id: `ONLINE-COMPLETED-CAUSAL-20261008`
+Kind: `completed-causal-producer`
+Status: `planned`
+Harness: `hierarchical`
 
-Source card:
-Scenario card:
+## Goal
 
-| Node | Target | Dependencies | Local APIs/imports | Retrieval cards | Intended proof route | Regularity contracts | Mathlib status | Owner | Lean declaration | Gate | Status |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `ONLINE-COMPLETED-CAUSAL-20261008-ROOT` | root theorem or definition | conversion window | TBD | TBD | TBD | TBD | project-local | upper | TBD | `lake build && lake build Tests` | planned |
+State the bandit/RL theorem, definition, or literature-port target.
 
-## Failure Classification
+## Source
 
-Use exactly one:
+- Paper or repository:
+- Theorem/lemma/section:
+- Existing Lean declaration:
+- Textbook/source card:
+- Scenario card:
 
-- source translation gap;
-- local Lean lemma gap;
-- theorem-card dependency;
-- external cited result;
-- semantic interface gap;
-- missing regularity contract;
-- likely false statement or counterexample;
-- invalid route;
-- stale dynamic leaf;
-- connected blocker.
+## Lean Target
 
-## Reviewer Notes
+```lean
+-- target declaration names here
+```
 
-- Keep failed attempts in `proof-attempts/ONLINE-COMPLETED-CAUSAL-20261008/`.
-- Do not promote simulator checks, prose sketches, or theorem cards to certified memory.
-- If an LML theorem is used, cite the upstream declaration and record whether it is imported, ported, or only a theorem card.
-- Do not frequently change proof strategy; record the mathematical reason before pivoting.
-- Mark general leaf lemmas as Mathlib candidates when they should become reusable upstream infrastructure.
+Target file: `BanditRLProof/OnlineGuessingCompletedCausal.lean`
+
+## Proof Obligations
+
+- [ ] Natural-language statement is mapped to Lean symbols.
+- [ ] Required model assumptions are explicit.
+- [ ] Probability, measurability, concentration, and stopping-time contracts are recorded.
+- [ ] Reusable theorem cards are identified before proof search.
+- [ ] Each active leaf has local APIs, intended proof route, and regularity contracts.
+- [ ] General leaves are classified as `mathlib-candidate`, `project-local`, or `theorem-card-only`.
+- [ ] `lake build && lake build Tests` passes.
+
+## Mathlib-Ready Leaf Contract
+
+| Leaf | Local APIs/imports | Intended proof route | Regularity contracts | Mathlib status |
+| --- | --- | --- | --- | --- |
+| root | TBD | TBD | TBD | project-local |
+
+## Retrieval Cards
+
+- LML cards:
+- Mathlib cards:
+- Textbook cards:
+- Scenario cards:
+
+## Trial Logging
+
+```bash
+python3 tools/bandit.py trial-log --task ONLINE-COMPLETED-CAUSAL-20261008 --role lower --kind attempt --status running --notes "..."
+python3 tools/bandit.py trial-summary
+```
 
 
 ## Draft4 derived completion targets
@@ -52,10 +75,3 @@ Canary: reuse the positive-variance, random-private-seed IID model whose badPred
 Only four derived completion obligations may close after actual gates. This package can close the precisely defined ambient-null-augmentation-to-real-version gap, not every other notion of completed information or a general causal stochastic-kernel realization. The kernel realization remains REQUIRED. Original16 Chapter1 source objects and null unknown proof total, all other Chapter1/2 targets, unenumerated Chapters3-16 and required appendices remain required. Whole Goal ACTIVE; PR198 remains OPEN draft and unmerged. Main/live unchanged. Pinned Lean/mathlib, old theorem bodies, old Book IDs/URLs and source snapshots remain intact.
 
 Exact targets/DAG in docs/contracts/online-completed-causal-v1. L1 dependency-ready; L2/L3/L4 await L1. Type syntax checked; no theorem body or terminal compiled. Contract source/semantic review REQUIRED.
-
-
-## Four derived completed-information obligations accepted; draft delivery pending
-
-Task: `ONLINE-COMPLETED-CAUSAL-20261008`
-
-Four derived ambient-completion proofs only: actual real measurable-version producer, one same-process all-time bounded history family, original current-target independence and exact original IID expected-fixed excess for every natural horizon. Original16 Chapter1 source objects/null unknown proof total, general causal stochastic-kernel realization, other source-required information/completion constructions, remaining Chapter1/2, unenumerated Chapters3-16 and necessary appendices remain REQUIRED; whole Goal ACTIVE, main/live unchanged. Four focused public proofs and11actual canary proofs;56 standard axiom records;52selected compiled nodes2614coalesced TYPE_VALUE edges18required directVALUEpairs. Actual root9101/Tests9262/fullharness passed (exact test/skip counts in raw log), both contributor bases and own shadow passed. Applicable clean local site preserves10938COMPLETE old nodes plus4actual declarations;10original current images separately viewed by formalizer/source reviewer. CONTRACT175/BODY285/FINAL current receipt, exactR1-R7; proof/type-printer/receipt-schema failures retained. Distinct reused staged automated actors, no absolute blind/human/external/runtime attestation. Native/post-native/draft delivery separately recorded.
