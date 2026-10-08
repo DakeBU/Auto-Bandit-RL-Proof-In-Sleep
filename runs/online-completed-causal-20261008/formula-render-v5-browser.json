@@ -1,0 +1,206 @@
+{
+  "status": "actual-four-new-proof-notes-and-catalogue-headers-captured",
+  "panels": [
+    {
+      "selector": "article.source-theorem-card",
+      "index": 16,
+      "file": "completed-causal-source-card-v5.png",
+      "geometry": {
+        "left": 343.390625,
+        "right": 1400.609375,
+        "height": 3122.875,
+        "scrollWidth": 1057,
+        "clientWidth": 1057,
+        "viewportWidth": 1440
+      },
+      "mathContainers": 1,
+      "mathErrors": 0,
+      "actualViewport": {
+        "width": 1440,
+        "height": 3473
+      },
+      "belowStickyNavigation": true
+    },
+    {
+      "selector": "#decl-d5186625d5ce-teaching",
+      "index": 0,
+      "file": "public-note-1-v5.png",
+      "geometry": {
+        "left": 357.78125,
+        "right": 1386.21875,
+        "height": 2979.25,
+        "scrollWidth": 1026,
+        "clientWidth": 1026,
+        "viewportWidth": 1440
+      },
+      "mathContainers": 1,
+      "mathErrors": 0,
+      "actualViewport": {
+        "width": 1440,
+        "height": 3330
+      },
+      "belowStickyNavigation": true
+    },
+    {
+      "selector": "#decl-a403a021783d-teaching",
+      "index": 0,
+      "file": "public-note-2-v5.png",
+      "geometry": {
+        "left": 357.78125,
+        "right": 1386.21875,
+        "height": 2768.078125,
+        "scrollWidth": 1026,
+        "clientWidth": 1026,
+        "viewportWidth": 1440
+      },
+      "mathContainers": 1,
+      "mathErrors": 0,
+      "actualViewport": {
+        "width": 1440,
+        "height": 3119
+      },
+      "belowStickyNavigation": true
+    },
+    {
+      "selector": "#decl-c8fe5f1c00d7-teaching",
+      "index": 0,
+      "file": "public-note-3-v5.png",
+      "geometry": {
+        "left": 357.78125,
+        "right": 1386.21875,
+        "height": 2770.96875,
+        "scrollWidth": 1026,
+        "clientWidth": 1026,
+        "viewportWidth": 1440
+      },
+      "mathContainers": 1,
+      "mathErrors": 0,
+      "actualViewport": {
+        "width": 1440,
+        "height": 3121
+      },
+      "belowStickyNavigation": true
+    },
+    {
+      "selector": "#decl-92c91b483437-teaching",
+      "index": 0,
+      "file": "public-note-4-v5.png",
+      "geometry": {
+        "left": 357.78125,
+        "right": 1386.21875,
+        "height": 2835.90625,
+        "scrollWidth": 1026,
+        "clientWidth": 1026,
+        "viewportWidth": 1440
+      },
+      "mathContainers": 1,
+      "mathErrors": 0,
+      "actualViewport": {
+        "width": 1440,
+        "height": 3186
+      },
+      "belowStickyNavigation": true
+    }
+  ],
+  "modulePanels": [
+    {
+      "id": "decl-d5186625d5ce",
+      "file": "module-declaration-1-v5.png",
+      "moduleURL": "http://127.0.0.1:58213/modules/banditrlproof-onlineguessingcompletedcausal/index.html",
+      "geometry": {
+        "left": 342.390625,
+        "right": 1401.609375,
+        "height": 506.828125,
+        "scrollWidth": 1057,
+        "clientWidth": 1057,
+        "viewportWidth": 1440
+      },
+      "wrappedCode": {
+        "scrollWidth": 1030,
+        "clientWidth": 1030,
+        "text": "theorem completed_measurable_real_exists_version {Ω : Type u} [MeasurableSpace Ω] (μ : Measure Ω) (F : MeasurableSpace Ω) (P : Ω → ℝ) (hP : @Measurable _ _ (eventuallyMeasurableSpace F (ae μ)) _ P) : ∃ version : Ω → ℝ, Measurable[F] version ∧ P =ᶠ[ae μ] version",
+        "whiteSpace": "pre-wrap"
+      },
+      "actualBuiltinWrapButtonClicked": true
+    },
+    {
+      "id": "decl-a403a021783d",
+      "file": "module-declaration-2-v5.png",
+      "moduleURL": "http://127.0.0.1:58213/modules/banditrlproof-onlineguessingcompletedcausal/index.html",
+      "geometry": {
+        "left": 342.390625,
+        "right": 1401.609375,
+        "height": 568.5625,
+        "scrollWidth": 1057,
+        "clientWidth": 1057,
+        "viewportWidth": 1440
+      },
+      "wrappedCode": {
+        "scrollWidth": 1030,
+        "clientWidth": 1030,
+        "text": "theorem completed_predictable_exists_bounded_history_policy {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : Measure Ω) (Y : ℕ → Ω → ℝ) (S : Ω → Seed) (F : ℕ → MeasurableSpace Ω) (hF : ∀ t, F t ≤ privateSeedPastInformation S Y t) (prediction : ℕ → Ω → ℝ) (hP : ∀ t, @Measurable _ _ (eventuallyMeasurableSpace (F t) (ae μ)) _ (prediction t)) (hpb : ∀ t, ∀ᵐ ω ∂μ, prediction t ω ∈ Set.Icc (0 : ℝ) 1) : ∃ policy : (t : ℕ) → (Seed × ((↑(Finset.range t) : Type) → ℝ)) → ℝ, (∀ t, Measurable (policy t)) ∧ (∀ t q, policy t q ∈ Set.Icc (0 : ℝ) 1) ∧ ∀ᵐ ω ∂μ, ∀ t, prediction t ω = policy t (S ω, fun i => Y i ω)",
+        "whiteSpace": "pre-wrap"
+      },
+      "actualBuiltinWrapButtonClicked": true
+    },
+    {
+      "id": "decl-c8fe5f1c00d7",
+      "file": "module-declaration-3-v5.png",
+      "moduleURL": "http://127.0.0.1:58213/modules/banditrlproof-onlineguessingcompletedcausal/index.html",
+      "geometry": {
+        "left": 342.390625,
+        "right": 1401.609375,
+        "height": 547.984375,
+        "scrollWidth": 1057,
+        "clientWidth": 1057,
+        "viewportWidth": 1440
+      },
+      "wrappedCode": {
+        "scrollWidth": 1030,
+        "clientWidth": 1030,
+        "text": "theorem completed_predictable_private_seed_independent {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ) (S : Ω → Seed) (hS : Measurable S) (hseed : IndepFun S (fun ω t => Y t ω) μ) (t : ℕ) (F : MeasurableSpace Ω) (hF : F ≤ privateSeedPastInformation S Y t) (P : Ω → ℝ) (hP : @Measurable _ _ (eventuallyMeasurableSpace F (ae μ)) _ P) : IndepFun P (Y t) μ",
+        "whiteSpace": "pre-wrap"
+      },
+      "actualBuiltinWrapButtonClicked": true
+    },
+    {
+      "id": "decl-92c91b483437",
+      "file": "module-declaration-4-v5.png",
+      "moduleURL": "http://127.0.0.1:58213/modules/banditrlproof-onlineguessingcompletedcausal/index.html",
+      "geometry": {
+        "left": 342.390625,
+        "right": 1401.609375,
+        "height": 609.71875,
+        "scrollWidth": 1057,
+        "clientWidth": 1057,
+        "viewportWidth": 1440
+      },
+      "wrappedCode": {
+        "scrollWidth": 1030,
+        "clientWidth": 1030,
+        "text": "theorem completed_predictable_private_seed_expectedFixed_excess {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (hind : iIndepFun Y μ) (S : Ω → Seed) (hS : Measurable S) (hseed : IndepFun S (fun ω t => Y t ω) μ) (F : ℕ → MeasurableSpace Ω) (hF : ∀ t, F t ≤ privateSeedPastInformation S Y t) (prediction : ℕ → Ω → ℝ) (hP : ∀ t, @Measurable _ _ (eventuallyMeasurableSpace (F t) (ae μ)) _ (prediction t)) (hpb : ∀ t, ∀ᵐ ω ∂μ, prediction t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) : expectedFixedRegret μ Y prediction T = (∑ t ∈ Finset.range T, ∫ ω, (prediction t ω - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) ∧ 0 ≤ expectedFixedRegret μ Y prediction T",
+        "whiteSpace": "pre-wrap"
+      },
+      "actualBuiltinWrapButtonClicked": true
+    }
+  ],
+  "images": [
+    "reader-first-viewport-v5.png",
+    "completed-causal-source-card-v5.png",
+    "public-note-1-v5.png",
+    "public-note-2-v5.png",
+    "public-note-3-v5.png",
+    "public-note-4-v5.png",
+    "module-declaration-1-v5.png",
+    "module-declaration-2-v5.png",
+    "module-declaration-3-v5.png",
+    "module-declaration-4-v5.png"
+  ],
+  "actualSourceGuideMathContainers": 20,
+  "sourceHorizontalScrollers": [],
+  "errors": [],
+  "failed": [],
+  "url": "http://127.0.0.1:58213/chapters/online-foundations/index.html",
+  "profilePreserved": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-completed-causal-playwright-v5-profile",
+  "generatedSiteFilesUnmodified": true
+}

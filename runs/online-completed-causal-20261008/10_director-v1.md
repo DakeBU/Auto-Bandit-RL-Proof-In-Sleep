@@ -1,0 +1,1 @@
+Four exact derived targets, no future-loss algorithm existence. Pin ambient augmentation interpretation; corerealversion L1 dependency-ready, terminal L2-L4 blocked only on L1. Single lower route; same model staged director/architect/worker with mandatory distinct decoder/source reviewer, no independent external review claim. Original source16/null/fullGoal preserved.

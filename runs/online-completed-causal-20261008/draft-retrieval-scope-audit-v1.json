@@ -1,0 +1,81 @@
+{
+  "rows": [
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/research-wiki/retrieval-index/bandit_paper_cards.json",
+      "old_sha256": "ce5e6659858c48c8361309d456fcc069ba53cbc2eee3f7a15901f4764781eec3",
+      "current_sha256": "fbc1adc6f817e79cb91455cc41d5a387754af735c180c8538fdf0ed3d187cafe",
+      "only_generated_timestamp_and_exact_prior3_added": true,
+      "actual_added": []
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/research-wiki/retrieval-index/bandit_scenario_cards.json",
+      "old_sha256": "dd0005a546e5e035fb0688751336f7b71eaf0d4cf19944b1c61d933b9aeb5e54",
+      "current_sha256": "496e9af48fbb2c81304d4946f7dd2f1489e5c659fdf590dceb23c1094dfe1dc4",
+      "only_generated_timestamp_and_exact_prior3_added": true,
+      "actual_added": []
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/research-wiki/retrieval-index/bandit_textbook_cards.json",
+      "old_sha256": "b023e5dca57add64cdfceb0d1ad4304335a05b21c6f4e0d247609cb60e3b55a1",
+      "current_sha256": "8c113080cff95ef398f0e31ea6b0b28f23c9ab595e25ef1b0af4f2d2a5608ef5",
+      "only_generated_timestamp_and_exact_prior3_added": true,
+      "actual_added": []
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/research-wiki/retrieval-index/proof_weapon_cards.json",
+      "old_sha256": "cad5f925a360ec9269b2163caf9d9705ebbcd49d2536a2b4e65e920700aaf7d3",
+      "current_sha256": "bf592b8f0610356af4f5908bd13230921f27c3eda544c065d84dd7f0b6b4faf6",
+      "only_generated_timestamp_and_exact_prior3_added": true,
+      "actual_added": []
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/research-wiki/retrieval-index/local_leaf_cards.json",
+      "old_sha256": "cd2957d68570dcc1f64bce9bddb025faf63c85c75a842e536b233e74173f2eb9",
+      "current_sha256": "0fabd69f487e63891a16f330d98360c063c7ee7624abfa2927366af7933b1f34",
+      "only_generated_timestamp_and_exact_prior3_added": true,
+      "actual_added": []
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/research-wiki/retrieval-index/local_lean_declarations.json",
+      "old_sha256": "4752a56b5a95245cb414ddb81fc722cd1cb519a000a19ebdbc0b597feaeb3605",
+      "current_sha256": "2766bf6655f3d8918186bbc6f9bf16f33f8e73cbb5d54559aecb31eccaaa940d",
+      "only_generated_timestamp_and_exact_prior3_added": true,
+      "actual_added": [
+        {
+          "kind": "theorem",
+          "name": "ae_predictable_exists_bounded_history_policy",
+          "full_name": "BanditRL.OnlineLearning.ae_predictable_exists_bounded_history_policy",
+          "file": "BanditRLProof/OnlineGuessingAECausal.lean",
+          "line": 13,
+          "statement": "theorem ae_predictable_exists_bounded_history_policy {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : Measure Ω) (Y : ℕ → Ω → ℝ) (S : Ω → Seed) (F : ℕ → MeasurableSpace Ω) (hF : ∀ t, F t ≤ privateSeedPastInformation S Y t) (prediction : ℕ → Ω → ℝ) (hP : ∀ t, AEStronglyMeasurable[F t] (prediction t) μ) (hpb : ∀ t, ∀ᵐ ω ∂μ, prediction t ω ∈ Set.Icc (0 : ℝ) 1) : ∃ policy : (t : ℕ) → (Seed × ((↑(Finset.range t) : Type) → ℝ)) → ℝ, (∀ t, Measurable (policy t)) ∧ (∀ t q, policy t q ∈ Set.Icc (0 : ℝ) 1) ∧ ∀ᵐ ω ∂μ, ∀ t, prediction t ω = policy t (S ω, fun i => Y i ω)"
+        },
+        {
+          "kind": "theorem",
+          "name": "ae_predictable_private_seed_independent",
+          "full_name": "BanditRL.OnlineLearning.ae_predictable_private_seed_independent",
+          "file": "BanditRLProof/OnlineGuessingAECausal.lean",
+          "line": 54,
+          "statement": "theorem ae_predictable_private_seed_independent {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ) (S : Ω → Seed) (hS : Measurable S) (hseed : IndepFun S (fun ω t => Y t ω) μ) (t : ℕ) (F : MeasurableSpace Ω) (hF : F ≤ privateSeedPastInformation S Y t) (P : Ω → ℝ) (hP : AEStronglyMeasurable[F] P μ) : IndepFun P (Y t) μ"
+        },
+        {
+          "kind": "theorem",
+          "name": "ae_predictable_private_seed_expectedFixed_excess",
+          "full_name": "BanditRL.OnlineLearning.ae_predictable_private_seed_expectedFixed_excess",
+          "file": "BanditRLProof/OnlineGuessingAECausal.lean",
+          "line": 69,
+          "statement": "theorem ae_predictable_private_seed_expectedFixed_excess {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (hind : iIndepFun Y μ) (S : Ω → Seed) (hS : Measurable S) (hseed : IndepFun S (fun ω t => Y t ω) μ) (F : ℕ → MeasurableSpace Ω) (hF : ∀ t, F t ≤ privateSeedPastInformation S Y t) (prediction : ℕ → Ω → ℝ) (hP : ∀ t, AEStronglyMeasurable[F t] (prediction t) μ) (hpb : ∀ t, ∀ᵐ ω ∂μ, prediction t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) : expectedFixedRegret μ Y prediction T = (∑ t ∈ Finset.range T, ∫ ω, (prediction t ω - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) ∧ 0 ≤ expectedFixedRegret μ Y prediction T"
+        }
+      ]
+    }
+  ],
+  "all_old_records_unchanged": true,
+  "exact_prior_actual_proved_names": [
+    "BanditRL.OnlineLearning.ae_predictable_exists_bounded_history_policy",
+    "BanditRL.OnlineLearning.ae_predictable_private_seed_expectedFixed_excess",
+    "BanditRL.OnlineLearning.ae_predictable_private_seed_independent"
+  ],
+  "new_current_draft_targets_registered_as_proved": false,
+  "source_scanner_not_compilation": true,
+  "chapter_complete": false,
+  "goal_complete": false
+}

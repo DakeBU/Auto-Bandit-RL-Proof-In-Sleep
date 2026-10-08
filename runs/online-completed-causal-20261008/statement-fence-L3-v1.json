@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineLearning.completed_predictable_private_seed_independent",
+  "file": "BanditRLProof/OnlineGuessingCompletedCausal.lean",
+  "statement": "theorem completed_predictable_private_seed_independent {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ) (S : Ω → Seed) (hS : Measurable S) (hseed : IndepFun S (fun ω t => Y t ω) μ) (t : ℕ) (F : MeasurableSpace Ω) (hF : F ≤ privateSeedPastInformation S Y t) (P : Ω → ℝ) (hP : @Measurable _ _ (eventuallyMeasurableSpace F (ae μ)) _ P) : IndepFun P (Y t) μ",
+  "statement_hash": "a7f2430c83efaf370b428370b651aaa07923e2819aa190ee60c534ef51f45bfd",
+  "source_assumptions": [
+    "(μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)",
+    "(hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ)",
+    "(S : Ω → Seed) (hS : Measurable S)",
+    "(hseed : IndepFun S (fun ω t => Y t ω) μ)",
+    "(t : ℕ) (F : MeasurableSpace Ω) (hF : F ≤ privateSeedPastInformation S Y t)",
+    "(hP : @Measurable _ _ (eventuallyMeasurableSpace F (ae μ)) _ P) :"
+  ],
+  "created_at": "2026-10-08T14:46:32+00:00"
+}

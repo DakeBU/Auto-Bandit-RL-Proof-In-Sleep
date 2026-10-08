@@ -1,0 +1,56 @@
+What is Online Learning?3
+problems in machine learning and optimization as similar games. More generally, with the
+regret framework, we can analyze situations in which the data are not independent draws
+from a fixed distribution, yet we would like to guarantee that the algorithm is “learning”
+something. For example, online learning can be used to analyze
+•Predicting clicks on banners on web pages;
+•Routing on a network;
+•Convergence to equilibrium of repeated games.
+As we will see, it canalsobe used to analyze stochastic optimization algorithms, e.g.,
+Stochastic Gradient Descent.
+Let’s now go back to our number-guessing game, and let’s try a strategy to win it. Of
+course, this is one of the simplest examples of online learning, without a real application. Yet,
+going through it, we will uncover most of the key ingredients in online learning algorithms
+and their analysis.
+A Winning Strategy.Can we win the number guessing game? We can, not only in the
+form we described it, but also assuming that the adversary picks his numberafterobserv-
+ing our choice. Moreover, we do not assume anything about how the adversary is deciding
+the numbers. In fact, the numbers can be chosenadversarially, that is, explicitly trying to
+make us lose the game. This is why we will call the mechanism generating the numbers the
+adversary.
+Now, the fact that the numbers are adversarially chosen means that we can immediately
+rule out any strategy based on any statistical modeling of the data. In fact, it cannot work
+because the moment we estimate something and act on our estimate, the adversary can im-
+mediately change the way the data is generated, ruining us. So, we have to think about
+something else. Yet, surprisingly enough, many times online learning algorithms will look
+like classic ones from statistical estimation, even if they work for different reasons.
+Now, let’s try to design a strategy to make the regret provably sublinear in time,regardless
+of how the adversary chooses the numbers. The first thing we do is to take a look at the
+best strategy in hindsight, that is, the argmin of the second term of the regret. It should be
+immediate to see that
+x⋆
+T := argmin
+x∈[0,1]
+TX
+t=1
+(x−y t)2 = 1
+T
+TX
+t=1
+yt .
+Now, given that we do not know the future, for sure, we cannot usex ⋆
+T as our guess in each
+round. However, we do know the past, so a reasonable strategy in each round could be to
+output the best number over the past. Why would such a strategy work? For sure, the reason
+why it could work is not that we expect the future to be like the past, because it is not true!
+Instead, we want to leverage the fact that the optimal guess over time cannot change too
+much between rounds, so we can try to “track” it over time.
+Hence, on each roundt≥2, our strategy is to guessx t =x ⋆
+t−1 = 1
+t−1
+Pt−1
+i=1 yi, and
+in the first round we guess any number between 0 and 1. Such a strategy is usually called
+Follow-the-Leader (FTL), because you are following what would have been the optimal
+thing to do on the past rounds (i.e., the leader).
+Let’s now try to show that this strategy will allow us to win the game. Given that this is

@@ -1,0 +1,32 @@
+{
+  "command": [
+    "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe",
+    "-B",
+    "-X",
+    "utf8",
+    "tools/bandit.py",
+    "statement-fence",
+    "--declaration",
+    "BanditRL.OnlineLearning.completed_predictable_private_seed_independent",
+    "--file",
+    "BanditRLProof/OnlineGuessingCompletedCausal.lean",
+    "--source-assumption",
+    "(μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)",
+    "--source-assumption",
+    "(hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ)",
+    "--source-assumption",
+    "(S : Ω → Seed) (hS : Measurable S)",
+    "--source-assumption",
+    "(hseed : IndepFun S (fun ω t => Y t ω) μ)",
+    "--source-assumption",
+    "(t : ℕ) (F : MeasurableSpace Ω) (hF : F ≤ privateSeedPastInformation S Y t)",
+    "--source-assumption",
+    "(hP : @Measurable _ _ (eventuallyMeasurableSpace F (ae μ)) _ P) :",
+    "--output",
+    "E:\\ABRL\\worktrees\\research-online-book\\runs\\online-completed-causal-20261008\\statement-fence-L3-v1.json"
+  ],
+  "cwd": "E:/ABRL/worktrees/research-online-book",
+  "actual_exit": 0,
+  "seconds": 0.21899999992456287,
+  "log_sha256": "d9406ff8f6736c5f8dfca3229a773ea9c95c4e89e849eb2547b5a15f4c720608"
+}

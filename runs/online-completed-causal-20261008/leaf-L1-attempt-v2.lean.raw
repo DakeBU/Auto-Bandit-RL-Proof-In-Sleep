@@ -1,0 +1,53 @@
+import BanditRLProof.OnlineGuessingAECausal
+import Mathlib.MeasureTheory.MeasurableSpace.EventuallyMeasurable
+import Mathlib.MeasureTheory.Constructions.Polish.Basic
+
+open MeasureTheory ProbabilityTheory Filter
+
+universe u v
+namespace BanditRL.OnlineLearning
+
+
+/-! Derived ambient-null-augmentation real versions and causal IID adapters for Orabona v10 printed1/PDF13 and printed3/PDF15. This field is eventuallyMeasurableSpace F (ae ambient_mu), not an asserted completion of mu.trim F. Full causal kernels remain required. -/
+
+theorem completed_measurable_real_exists_version {Ω : Type u} [MeasurableSpace Ω]
+    (μ : Measure Ω) (F : MeasurableSpace Ω) (P : Ω → ℝ)
+    (hP : @Measurable _ _ (eventuallyMeasurableSpace F (ae μ)) _ P) :
+    ∃ version : Ω → ℝ, Measurable[F] version ∧ P =ᶠ[ae μ] version := by
+  classical
+  rename_i mΩ
+  letI : MeasurableSpace Ω := mΩ
+  let code : ℝ → ℕ → Bool := MeasurableSpace.mapNatBool ℝ
+  have hcode : Measurable code := MeasurableSpace.measurable_mapNatBool ℝ
+  have hemb : MeasurableEmbedding code :=
+    hcode.measurableEmbedding (MeasurableSpace.injective_mapNatBool ℝ)
+  have hcoordinate (n : ℕ) :
+      ∃ A : Set Ω, MeasurableSet[F] A ∧
+        {ω | code (P ω) n = true} =ᶠ[ae μ] A := by
+    have hm : @Measurable Ω Bool (eventuallyMeasurableSpace F (ae μ)) _
+        (fun ω => code (P ω) n) :=
+      (measurable_pi_apply n).comp (hcode.comp hP)
+    exact hm (measurableSet_singleton true)
+  choose A hA heq using hcoordinate
+  let representative : Ω → ℕ → Bool := fun ω n => decide (ω ∈ A n)
+  have hrepresentative : Measurable[F] representative := by
+    letI : MeasurableSpace Ω := F
+    apply measurable_pi_iff.2
+    intro n
+    apply measurable_to_bool
+    simpa only [representative, Set.preimage, Set.mem_singleton_iff,
+      Bool.decide_iff, Set.setOf_mem_eq] using hA n
+  refine ⟨fun ω => hemb.invFun (representative ω),
+    hemb.measurable_invFun.comp hrepresentative, ?_⟩
+  filter_upwards [ae_all_iff.2 heq] with ω hω
+  have hre : representative ω = code (P ω) := by
+    funext n
+    have hn := hω n
+    change (code (P ω) n = true) = (ω ∈ A n) at hn
+    dsimp [representative]
+    rw [← hn]
+    cases h : code (P ω) n <;> simp [h]
+  rw [hre]
+  exact (hemb.leftInverse_invFun (P ω)).symm
+
+end BanditRL.OnlineLearning

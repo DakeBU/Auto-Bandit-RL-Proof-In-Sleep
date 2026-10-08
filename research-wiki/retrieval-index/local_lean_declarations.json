@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-08T12:40:03+00:00",
+  "generated": "2026-10-08T14:25:17+00:00",
   "declarations": [
     {
       "kind": "def",
@@ -53896,6 +53896,30 @@
       "file": "BanditRLProof/OnlineGradientDescentVariable.lean",
       "line": 124,
       "statement": "theorem theorem_2_13_variable (V : Domain E) (hV : Bornology.IsBounded V.carrier) (\u03b7 : \u2115 \u2192 \u211d) (loss : \u2115 \u2192 E \u2192 \u211d) (x\u2081 : E) (hx\u2081 : x\u2081 \u2208 V.carrier) (T : \u2115) (hT : 0 < T) (h\u03b7 : \u2200 t < T, 0 < \u03b7 t) (hmono : \u2200 t, t + 1 < T \u2192 \u03b7 (t + 1) \u2264 \u03b7 t) (hloss : \u2200 t < T, RegularLoss V (loss t)) (u : E) (hu : u \u2208 V.carrier) : regretVariable V \u03b7 loss x\u2081 u T \u2264 (Metric.diam V.carrier) ^ 2 / (2 * \u03b7 (T - 1)) + (\u2211 t \u2208 range T, \u03b7 t / 2 * \u2016gradient (loss t) (iterateVariable V \u03b7 loss x\u2081 t)\u2016 ^ 2) - \u2016iterateVariable V \u03b7 loss x\u2081 T - u\u2016 ^ 2 / (2 * \u03b7 (T - 1))"
+    },
+    {
+      "kind": "theorem",
+      "name": "ae_predictable_exists_bounded_history_policy",
+      "full_name": "BanditRL.OnlineLearning.ae_predictable_exists_bounded_history_policy",
+      "file": "BanditRLProof/OnlineGuessingAECausal.lean",
+      "line": 13,
+      "statement": "theorem ae_predictable_exists_bounded_history_policy {\u03a9 : Type u} {Seed : Type v} [MeasurableSpace \u03a9] [MeasurableSpace Seed] (\u03bc : Measure \u03a9) (Y : \u2115 \u2192 \u03a9 \u2192 \u211d) (S : \u03a9 \u2192 Seed) (F : \u2115 \u2192 MeasurableSpace \u03a9) (hF : \u2200 t, F t \u2264 privateSeedPastInformation S Y t) (prediction : \u2115 \u2192 \u03a9 \u2192 \u211d) (hP : \u2200 t, AEStronglyMeasurable[F t] (prediction t) \u03bc) (hpb : \u2200 t, \u2200\u1d50 \u03c9 \u2202\u03bc, prediction t \u03c9 \u2208 Set.Icc (0 : \u211d) 1) : \u2203 policy : (t : \u2115) \u2192 (Seed \u00d7 ((\u2191(Finset.range t) : Type) \u2192 \u211d)) \u2192 \u211d, (\u2200 t, Measurable (policy t)) \u2227 (\u2200 t q, policy t q \u2208 Set.Icc (0 : \u211d) 1) \u2227 \u2200\u1d50 \u03c9 \u2202\u03bc, \u2200 t, prediction t \u03c9 = policy t (S \u03c9, fun i => Y i \u03c9)"
+    },
+    {
+      "kind": "theorem",
+      "name": "ae_predictable_private_seed_independent",
+      "full_name": "BanditRL.OnlineLearning.ae_predictable_private_seed_independent",
+      "file": "BanditRLProof/OnlineGuessingAECausal.lean",
+      "line": 54,
+      "statement": "theorem ae_predictable_private_seed_independent {\u03a9 : Type u} {Seed : Type v} [MeasurableSpace \u03a9] [MeasurableSpace Seed] (\u03bc : Measure \u03a9) [IsProbabilityMeasure \u03bc] (Y : \u2115 \u2192 \u03a9 \u2192 \u211d) (hY : \u2200 t, Measurable (Y t)) (hind : iIndepFun Y \u03bc) (S : \u03a9 \u2192 Seed) (hS : Measurable S) (hseed : IndepFun S (fun \u03c9 t => Y t \u03c9) \u03bc) (t : \u2115) (F : MeasurableSpace \u03a9) (hF : F \u2264 privateSeedPastInformation S Y t) (P : \u03a9 \u2192 \u211d) (hP : AEStronglyMeasurable[F] P \u03bc) : IndepFun P (Y t) \u03bc"
+    },
+    {
+      "kind": "theorem",
+      "name": "ae_predictable_private_seed_expectedFixed_excess",
+      "full_name": "BanditRL.OnlineLearning.ae_predictable_private_seed_expectedFixed_excess",
+      "file": "BanditRLProof/OnlineGuessingAECausal.lean",
+      "line": 69,
+      "statement": "theorem ae_predictable_private_seed_expectedFixed_excess {\u03a9 : Type u} {Seed : Type v} [MeasurableSpace \u03a9] [MeasurableSpace Seed] (\u03bc : Measure \u03a9) [IsProbabilityMeasure \u03bc] (Y : \u2115 \u2192 \u03a9 \u2192 \u211d) (hY : \u2200 t, Measurable (Y t)) (hlaw : \u2200 t, IdentDistrib (Y t) (Y 0) \u03bc \u03bc) (hb : \u2200 t, \u2200\u1d50 \u03c9 \u2202\u03bc, Y t \u03c9 \u2208 Set.Icc (0 : \u211d) 1) (hind : iIndepFun Y \u03bc) (S : \u03a9 \u2192 Seed) (hS : Measurable S) (hseed : IndepFun S (fun \u03c9 t => Y t \u03c9) \u03bc) (F : \u2115 \u2192 MeasurableSpace \u03a9) (hF : \u2200 t, F t \u2264 privateSeedPastInformation S Y t) (prediction : \u2115 \u2192 \u03a9 \u2192 \u211d) (hP : \u2200 t, AEStronglyMeasurable[F t] (prediction t) \u03bc) (hpb : \u2200 t, \u2200\u1d50 \u03c9 \u2202\u03bc, prediction t \u03c9 \u2208 Set.Icc (0 : \u211d) 1) (T : \u2115) : expectedFixedRegret \u03bc Y prediction T = (\u2211 t \u2208 Finset.range T, \u222b \u03c9, (prediction t \u03c9 - \u222b \u03c9, Y 0 \u03c9 \u2202\u03bc)^2 \u2202\u03bc) \u2227 0 \u2264 expectedFixedRegret \u03bc Y prediction T"
     },
     {
       "kind": "theorem",
