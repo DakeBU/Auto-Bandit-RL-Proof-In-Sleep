@@ -1,0 +1,65 @@
+theorem kernel_sampler_family_exists
+    (κ : (t : ℕ) → Kernel (KernelDecisionHistory t) I) [∀ t, IsMarkovKernel (κ t)] :
+    ∃ f : KernelDecisionSampler,
+      (∀ t, Measurable (Function.uncurry (f t))) ∧
+      ∀ t h, (volume : Measure I).map (f t h) = κ t h
+
+theorem kernel_sampler_causal_process
+    (f : KernelDecisionSampler) (hf : ∀ t, Measurable (Function.uncurry (f t))) :
+    (∀ t, Measurable (kernelCausalPolicy f t)) ∧
+    (∀ t (u : ℕ → I) (y : ℕ → ℝ) (i : Fin t),
+      kernelGeneratedActions f t (fun j => u j) (fun j => y j) i =
+        kernelGeneratedPrediction f (i : ℕ) (u, y)) ∧
+    ∀ t (ω ω' : (ℕ → I) × (ℕ → ℝ)),
+      (∀ i, i ≤ t → ω.1 i = ω'.1 i) →
+      (∀ i, i < t → ω.2 i = ω'.2 i) →
+      kernelGeneratedPrediction f t ω = kernelGeneratedPrediction f t ω'
+
+theorem kernel_sampler_joint_law
+    (κ : (t : ℕ) → Kernel (KernelDecisionHistory t) I) [∀ t, IsMarkovKernel (κ t)]
+    (f : KernelDecisionSampler) (hf : ∀ t, Measurable (Function.uncurry (f t)))
+    (hκ : ∀ t h, (volume : Measure I).map (f t h) = κ t h)
+    (ν : ProbabilityMeasure (ℕ → ℝ)) (t : ℕ) :
+    (kernelGameLaw ν).map (fun ω =>
+      (kernelGeneratedHistory f t ω, kernelGeneratedPrediction f t ω)) =
+      (kernelGameLaw ν).map (kernelGeneratedHistory f t) ⊗ₘ κ t
+
+theorem kernel_sampler_conditional_law
+    (κ : (t : ℕ) → Kernel (KernelDecisionHistory t) I) [∀ t, IsMarkovKernel (κ t)]
+    (f : KernelDecisionSampler) (hf : ∀ t, Measurable (Function.uncurry (f t)))
+    (hκ : ∀ t h, (volume : Measure I).map (f t h) = κ t h)
+    (ν : ProbabilityMeasure (ℕ → ℝ)) (t : ℕ) :
+    condDistrib (kernelGeneratedPrediction f t) (kernelGeneratedHistory f t) (kernelGameLaw ν)
+      =ᵐ[(kernelGameLaw ν).map (kernelGeneratedHistory f t)] κ t
+
+theorem causal_kernel_realization_and_expectedFixed_excess
+    (κ : (t : ℕ) → Kernel (KernelDecisionHistory t) I) [∀ t, IsMarkovKernel (κ t)] :
+    ∃ f : KernelDecisionSampler,
+      (∀ t, Measurable (Function.uncurry (f t))) ∧
+      (∀ t h, (volume : Measure I).map (f t h) = κ t h) ∧
+      (∀ t, Measurable (kernelCausalPolicy f t)) ∧
+      (∀ t (u : ℕ → I) (y : ℕ → ℝ) (i : Fin t),
+        kernelGeneratedActions f t (fun j => u j) (fun j => y j) i =
+          kernelGeneratedPrediction f (i : ℕ) (u, y)) ∧
+      (∀ t (ω ω' : (ℕ → I) × (ℕ → ℝ)),
+        (∀ i, i ≤ t → ω.1 i = ω'.1 i) →
+        (∀ i, i < t → ω.2 i = ω'.2 i) →
+        kernelGeneratedPrediction f t ω = kernelGeneratedPrediction f t ω') ∧
+      ∀ ν : ProbabilityMeasure (ℕ → ℝ),
+        (∀ t, (kernelGameLaw ν).map (fun ω =>
+          (kernelGeneratedHistory f t ω, kernelGeneratedPrediction f t ω)) =
+          (kernelGameLaw ν).map (kernelGeneratedHistory f t) ⊗ₘ κ t) ∧
+        (∀ t, condDistrib (kernelGeneratedPrediction f t) (kernelGeneratedHistory f t)
+          (kernelGameLaw ν) =ᵐ[(kernelGameLaw ν).map (kernelGeneratedHistory f t)] κ t) ∧
+        (iIndepFun (fun t (y : ℕ → ℝ) => y t) (ν : Measure (ℕ → ℝ)) →
+          (∀ t, IdentDistrib (fun y : ℕ → ℝ => y t) (fun y : ℕ → ℝ => y 0)
+            (ν : Measure (ℕ → ℝ)) (ν : Measure (ℕ → ℝ))) →
+          (∀ t, ∀ᵐ y ∂(ν : Measure (ℕ → ℝ)), y t ∈ Set.Icc (0 : ℝ) 1) →
+          ∀ T : ℕ,
+            expectedFixedRegret (kernelGameLaw ν) (fun t ω => ω.2 t)
+              (fun t ω => (kernelGeneratedPrediction f t ω : ℝ)) T =
+              (∑ t ∈ Finset.range T, ∫ ω,
+                ((kernelGeneratedPrediction f t ω : ℝ) -
+                  ∫ ω, ω.2 0 ∂(kernelGameLaw ν))^2 ∂(kernelGameLaw ν)) ∧
+            0 ≤ expectedFixedRegret (kernelGameLaw ν) (fun t ω => ω.2 t)
+              (fun t ω => (kernelGeneratedPrediction f t ω : ℝ)) T)

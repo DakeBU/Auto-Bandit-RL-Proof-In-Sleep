@@ -1,0 +1,83 @@
+{
+  "rows": [
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/research-wiki/retrieval-index/bandit_paper_cards.json",
+      "before_sha256": "fbc1adc6f817e79cb91455cc41d5a387754af735c180c8538fdf0ed3d187cafe",
+      "current_sha256": "00b5eada020a33aa70bb035e622ea12eeee791c77cf68d4010d8b6a4118fe2cc",
+      "only_generated_timestamp_and_exact_prior4_additions": true,
+      "actual_added": []
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/research-wiki/retrieval-index/bandit_scenario_cards.json",
+      "before_sha256": "496e9af48fbb2c81304d4946f7dd2f1489e5c659fdf590dceb23c1094dfe1dc4",
+      "current_sha256": "71c33f80ec8d506f001dc551496137bce4387dcd78fd3387d902c8baf142a5ce",
+      "only_generated_timestamp_and_exact_prior4_additions": true,
+      "actual_added": []
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/research-wiki/retrieval-index/bandit_textbook_cards.json",
+      "before_sha256": "8c113080cff95ef398f0e31ea6b0b28f23c9ab595e25ef1b0af4f2d2a5608ef5",
+      "current_sha256": "df6d9aba46df45d0dd4408c0de593c4a4381803ebb8b55791c0e4caf32053b7f",
+      "only_generated_timestamp_and_exact_prior4_additions": true,
+      "actual_added": []
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/research-wiki/retrieval-index/proof_weapon_cards.json",
+      "before_sha256": "bf592b8f0610356af4f5908bd13230921f27c3eda544c065d84dd7f0b6b4faf6",
+      "current_sha256": "7a1204b3fb275df8d08c1005538ab4509798cec6367e3846b093d6257f241abf",
+      "only_generated_timestamp_and_exact_prior4_additions": true,
+      "actual_added": []
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/research-wiki/retrieval-index/local_leaf_cards.json",
+      "before_sha256": "0fabd69f487e63891a16f330d98360c063c7ee7624abfa2927366af7933b1f34",
+      "current_sha256": "acaa32c1b768a68553405b21782dcac166dabff7dff81269b1f19dbc379e9763",
+      "only_generated_timestamp_and_exact_prior4_additions": true,
+      "actual_added": []
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/research-wiki/retrieval-index/local_lean_declarations.json",
+      "before_sha256": "2766bf6655f3d8918186bbc6f9bf16f33f8e73cbb5d54559aecb31eccaaa940d",
+      "current_sha256": "c61e4aa467aecf0f3d2f14db67a777c8cd4cac1fd75b14a3f96533347db3e460",
+      "only_generated_timestamp_and_exact_prior4_additions": true,
+      "actual_added": [
+        {
+          "kind": "theorem",
+          "name": "completed_measurable_real_exists_version",
+          "full_name": "BanditRL.OnlineLearning.completed_measurable_real_exists_version",
+          "file": "BanditRLProof/OnlineGuessingCompletedCausal.lean",
+          "line": 13,
+          "statement": "theorem completed_measurable_real_exists_version {Ω : Type u} [MeasurableSpace Ω] (μ : Measure Ω) (F : MeasurableSpace Ω) (P : Ω → ℝ) (hP : @Measurable _ _ (eventuallyMeasurableSpace F (ae μ)) _ P) : ∃ version : Ω → ℝ, Measurable[F] version ∧ P =ᶠ[ae μ] version"
+        },
+        {
+          "kind": "theorem",
+          "name": "completed_predictable_exists_bounded_history_policy",
+          "full_name": "BanditRL.OnlineLearning.completed_predictable_exists_bounded_history_policy",
+          "file": "BanditRLProof/OnlineGuessingCompletedCausal.lean",
+          "line": 53,
+          "statement": "theorem completed_predictable_exists_bounded_history_policy {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : Measure Ω) (Y : ℕ → Ω → ℝ) (S : Ω → Seed) (F : ℕ → MeasurableSpace Ω) (hF : ∀ t, F t ≤ privateSeedPastInformation S Y t) (prediction : ℕ → Ω → ℝ) (hP : ∀ t, @Measurable _ _ (eventuallyMeasurableSpace (F t) (ae μ)) _ (prediction t)) (hpb : ∀ t, ∀ᵐ ω ∂μ, prediction t ω ∈ Set.Icc (0 : ℝ) 1) : ∃ policy : (t : ℕ) → (Seed × ((↑(Finset.range t) : Type) → ℝ)) → ℝ, (∀ t, Measurable (policy t)) ∧ (∀ t q, policy t q ∈ Set.Icc (0 : ℝ) 1) ∧ ∀ᵐ ω ∂μ, ∀ t, prediction t ω = policy t (S ω, fun i => Y i ω)"
+        },
+        {
+          "kind": "theorem",
+          "name": "completed_predictable_private_seed_independent",
+          "full_name": "BanditRL.OnlineLearning.completed_predictable_private_seed_independent",
+          "file": "BanditRLProof/OnlineGuessingCompletedCausal.lean",
+          "line": 73,
+          "statement": "theorem completed_predictable_private_seed_independent {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ) (S : Ω → Seed) (hS : Measurable S) (hseed : IndepFun S (fun ω t => Y t ω) μ) (t : ℕ) (F : MeasurableSpace Ω) (hF : F ≤ privateSeedPastInformation S Y t) (P : Ω → ℝ) (hP : @Measurable _ _ (eventuallyMeasurableSpace F (ae μ)) _ P) : IndepFun P (Y t) μ"
+        },
+        {
+          "kind": "theorem",
+          "name": "completed_predictable_private_seed_expectedFixed_excess",
+          "full_name": "BanditRL.OnlineLearning.completed_predictable_private_seed_expectedFixed_excess",
+          "file": "BanditRLProof/OnlineGuessingCompletedCausal.lean",
+          "line": 89,
+          "statement": "theorem completed_predictable_private_seed_expectedFixed_excess {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (hind : iIndepFun Y μ) (S : Ω → Seed) (hS : Measurable S) (hseed : IndepFun S (fun ω t => Y t ω) μ) (F : ℕ → MeasurableSpace Ω) (hF : ∀ t, F t ≤ privateSeedPastInformation S Y t) (prediction : ℕ → Ω → ℝ) (hP : ∀ t, @Measurable _ _ (eventuallyMeasurableSpace (F t) (ae μ)) _ (prediction t)) (hpb : ∀ t, ∀ᵐ ω ∂μ, prediction t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) : expectedFixedRegret μ Y prediction T = (∑ t ∈ Finset.range T, ∫ ω, (prediction t ω - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) ∧ 0 ≤ expectedFixedRegret μ Y prediction T"
+        }
+      ]
+    }
+  ],
+  "exact_prior_completed4_scanner_entries_added": true,
+  "current_new_kernel_public_entries": 0,
+  "scanner_not_compile_evidence": true,
+  "old_entries_order_preserved": true
+}

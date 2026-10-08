@@ -1,0 +1,113 @@
+ProbabilityTheory.Kernel.exists_measurable_map_eq_unitInterval.{u_1, u_2} {X : Type u_1} {Y : Type u_2}
+  {mX : MeasurableSpace.{u_1} X} [Nonempty.{u_2 + 1} Y] {mY : MeasurableSpace.{u_2} Y} [StandardBorelSpace.{u_2} Y]
+  (κ : Kernel.{u_1, u_2} X Y) [IsMarkovKernel.{u_1, u_2} κ] :
+  ∃ f,
+    And (Measurable.{u_1, u_2} (Function.uncurry.{u_1, 0, u_2 + 1} f))
+      (∀ (a : X), Eq.{u_2 + 1} (Measure.map.{0, u_2} (f a) volume.{0}) (κ a))
+MeasureTheory.Measure.infinitePi.{u_1, u_2} {ι : Type u_1} {X : ι → Type u_2}
+  {mX : (i : ι) → MeasurableSpace.{u_2} (X i)} (μ : (i : ι) → Measure.{u_2} (X i)) :
+  Measure.{max u_1 u_2} ((i : ι) → X i)
+MeasureTheory.Measure.infinitePi_map_eval.{u_1, u_2} {ι : Type u_1} {X : ι → Type u_2}
+  {mX : (i : ι) → MeasurableSpace.{u_2} (X i)} (μ : (i : ι) → Measure.{u_2} (X i))
+  [hμ : ∀ (i : ι), IsProbabilityMeasure.{u_2} (μ i)] (i : ι) :
+  Eq.{u_2 + 1} (Measure.map.{max u_1 u_2, u_2} (fun x => x i) (Measure.infinitePi.{u_1, u_2} μ)) (μ i)
+ProbabilityTheory.iIndepFun_infinitePi.{u_1, u_3, u_4} {ι : Type u_1} {𝓧 : ι → Type u_3}
+  {m𝓧 : (i : ι) → MeasurableSpace.{u_3} (𝓧 i)} {Ω : ι → Type u_4} {mΩ : (i : ι) → MeasurableSpace.{u_4} (Ω i)}
+  {P : (i : ι) → Measure.{u_4} (Ω i)} [∀ (i : ι), IsProbabilityMeasure.{u_4} (P i)] {X : (i : ι) → Ω i → 𝓧 i}
+  (mX : ∀ (i : ι), Measurable.{u_4, u_3} (X i)) :
+  iIndepFun.{max u_4 u_1, u_1, u_3} (fun i ω => X i (ω i)) (Measure.infinitePi.{u_1, u_4} P)
+ProbabilityTheory.iIndepFun.indepFun_finset.{u_1, u_2, u_10} {Ω : Type u_1} {ι : Type u_2}
+  {_mΩ : MeasurableSpace.{u_1} Ω} {μ : Measure.{u_1} Ω} {β : ι → Type u_10} {m : (i : ι) → MeasurableSpace.{u_10} (β i)}
+  {f : (i : ι) → Ω → β i} (S T : Finset.{u_2} ι) (hST : Disjoint.{u_2} S T) (hf_Indep : iIndepFun.{u_1, u_2, u_10} f μ)
+  (hf_meas : ∀ (i : ι), Measurable.{u_1, u_10} (f i)) : (fun a i => f (↑i) a) ⟂ᵢ[μ] fun a i => f (↑i) a
+ProbabilityTheory.indepFun_prod.{u_10, u_11, u_12, u_13} {Ω : Type u_10} {Ω' : Type u_11}
+  {mΩ : MeasurableSpace.{u_10} Ω} {mΩ' : MeasurableSpace.{u_11} Ω'} {μ : Measure.{u_10} Ω} {ν : Measure.{u_11} Ω'}
+  [IsProbabilityMeasure.{u_10} μ] [IsProbabilityMeasure.{u_11} ν] {𝓧 : Type u_12} {𝓨 : Type u_13}
+  [MeasurableSpace.{u_12} 𝓧] [MeasurableSpace.{u_13} 𝓨] {X : Ω → 𝓧} {Y : Ω' → 𝓨} (mX : Measurable.{u_10, u_12} X)
+  (mY : Measurable.{u_11, u_13} Y) : (fun ω => X ω.1) ⟂ᵢ[Measure.prod.{u_10, u_11} μ ν] fun ω => Y ω.2
+ProbabilityTheory.indepFun_iff_map_prod_eq_prod_map_map.{u_1, u_6, u_7} {Ω : Type u_1} {β : Type u_6} {β' : Type u_7}
+  {_mΩ : MeasurableSpace.{u_1} Ω} {μ : Measure.{u_1} Ω} {f : Ω → β} {g : Ω → β'} {mβ : MeasurableSpace.{u_6} β}
+  {mβ' : MeasurableSpace.{u_7} β'} [IsFiniteMeasure.{u_1} μ] (hf : AEMeasurable.{u_1, u_6} f μ)
+  (hg : AEMeasurable.{u_1, u_7} g μ) :
+  Iff (f ⟂ᵢ[μ] g)
+    (Eq.{max (u_6 + 1) (u_7 + 1)} (Measure.map.{u_1, max u_7 u_6} (fun ω => Prod.mk.{u_6, u_7} (f ω) (g ω)) μ)
+      (Measure.prod.{u_6, u_7} (Measure.map.{u_1, u_6} f μ) (Measure.map.{u_1, u_7} g μ)))
+MeasureTheory.Measure.map_fst_prod.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace.{u_1} α]
+  [MeasurableSpace.{u_2} β] {μ : Measure.{u_1} α} {ν : Measure.{u_2} β} [SFinite.{u_2} ν] :
+  Eq.{u_1 + 1} (Measure.map.{max u_2 u_1, u_1} Prod.fst.{u_1, u_2} (Measure.prod.{u_1, u_2} μ ν))
+    (HSMul.hSMul.{0, u_1, u_1} (ν Set.univ.{u_2}) μ)
+MeasureTheory.Measure.map_snd_prod.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace.{u_1} α]
+  [MeasurableSpace.{u_2} β] {μ : Measure.{u_1} α} {ν : Measure.{u_2} β} [SFinite.{u_2} ν] :
+  Eq.{u_2 + 1} (Measure.map.{max u_2 u_1, u_2} Prod.snd.{u_1, u_2} (Measure.prod.{u_1, u_2} μ ν))
+    (HSMul.hSMul.{0, u_2, u_2} (μ Set.univ.{u_1}) ν)
+MeasureTheory.Measure.map_map.{u_1, u_2, u_3} {α : Type u_1} {β : Type u_2} {γ : Type u_3}
+  {mα : MeasurableSpace.{u_1} α} {mβ : MeasurableSpace.{u_2} β} {mγ : MeasurableSpace.{u_3} γ} {μ : Measure.{u_1} α}
+  {g : β → γ} {f : α → β} (hg : Measurable.{u_2, u_3} g) (hf : Measurable.{u_1, u_2} f) :
+  Eq.{u_3 + 1} (Measure.map.{u_2, u_3} g (Measure.map.{u_1, u_2} f μ))
+    (Measure.map.{u_1, u_3} (Function.comp.{u_1 + 1, u_2 + 1, u_3 + 1} g f) μ)
+MeasureTheory.Measure.map_apply.{u_1, u_2} {α : Type u_1} {β : Type u_2} {mα : MeasurableSpace.{u_1} α}
+  {mβ : MeasurableSpace.{u_2} β} {μ : Measure.{u_1} α} {f : α → β} (hf : Measurable.{u_1, u_2} f) {s : Set.{u_2} β}
+  (hs : MeasurableSet.{u_2} s) : Eq.{1} ((Measure.map.{u_1, u_2} f μ) s) (μ (Set.preimage.{u_1, u_2} f s))
+MeasureTheory.Measure.prod_apply.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace.{u_1} α]
+  [MeasurableSpace.{u_2} β] {μ : Measure.{u_1} α} {ν : Measure.{u_2} β} [SFinite.{u_2} ν]
+  {s : Set.{max u_2 u_1} (Prod.{u_1, u_2} α β)} (hs : MeasurableSet.{max u_1 u_2} s) :
+  Eq.{1} ((Measure.prod.{u_1, u_2} μ ν) s) (∫⁻ (x : α), ν (Set.preimage.{u_2, max u_2 u_1} (Prod.mk.{u_1, u_2} x) s) ∂μ)
+MeasureTheory.Measure.compProd_apply.{u_1, u_2} {α : Type u_1} {β : Type u_2} {mα : MeasurableSpace.{u_1} α}
+  {mβ : MeasurableSpace.{u_2} β} {μ : Measure.{u_1} α} {κ : Kernel.{u_1, u_2} α β} [SFinite.{u_1} μ]
+  [IsSFiniteKernel.{u_1, u_2} κ] {s : Set.{max u_2 u_1} (Prod.{u_1, u_2} α β)} (hs : MeasurableSet.{max u_1 u_2} s) :
+  Eq.{1} ((Measure.compProd.{u_1, u_2} μ κ) s)
+    (∫⁻ (a : α), (κ a) (Set.preimage.{u_2, max u_2 u_1} (Prod.mk.{u_1, u_2} a) s) ∂μ)
+ProbabilityTheory.condDistrib_ae_eq_of_measure_eq_compProd.{u_1, u_2, u_3} {α : Type u_1} {β : Type u_2} {Ω : Type u_3}
+  [MeasurableSpace.{u_3} Ω] [StandardBorelSpace.{u_3} Ω] [Nonempty.{u_3 + 1} Ω] {mα : MeasurableSpace.{u_1} α}
+  {μ : Measure.{u_1} α} [IsFiniteMeasure.{u_1} μ] {Y : α → Ω} {mβ : MeasurableSpace.{u_2} β} (X : α → β)
+  (hY : AEMeasurable.{u_1, u_3} Y μ) {κ : Kernel.{u_2, u_3} β Ω} [IsFiniteKernel.{u_2, u_3} κ]
+  (hκ :
+    Eq.{max (u_2 + 1) (u_3 + 1)} (Measure.map.{u_1, max u_3 u_2} (fun x => Prod.mk.{u_2, u_3} (X x) (Y x)) μ)
+      (Measure.compProd.{u_2, u_3} (Measure.map.{u_1, u_2} X μ) κ)) :
+  Filter.EventuallyEq.{u_2, u_3} (ae.{u_2, u_2} (Measure.map.{u_1, u_2} X μ)) ⇑(condDistrib.{u_1, u_2, u_3} Y X μ) ⇑κ
+Measurable.of_uncurry_left.{u_1, u_2, u_3} {α : Type u_1} {β : Type u_2} {γ : Type u_3} {m : MeasurableSpace.{u_1} α}
+  {mβ : MeasurableSpace.{u_2} β} {mγ : MeasurableSpace.{u_3} γ} {f : α → β → γ}
+  (hf : Measurable.{max u_2 u_1, u_3} (Function.uncurry.{u_1, u_2, u_3 + 1} f)) {x : α} : Measurable.{u_2, u_3} (f x)
+measurable_pi_iff.{u_1, u_4, u_6} {α : Type u_1} {δ : Type u_4} {X : δ → Type u_6} [MeasurableSpace.{u_1} α]
+  [(a : δ) → MeasurableSpace.{u_6} (X a)] {g : α → (a : δ) → X a} :
+  Iff (Measurable.{u_1, max u_4 u_6} g) (∀ (a : δ), Measurable.{u_1, u_6} fun x => g x a)
+Fin.snoc.{u_1} {n : Nat} {α : Fin (HAdd.hAdd.{0, 0, 0} n 1) → Sort u_1} (p : (i : Fin n) → α (Fin.castSucc i))
+  (x : α (Fin.last n)) (i : Fin (HAdd.hAdd.{0, 0, 0} n 1)) : α i
+Fin.snoc_last.{u_1} {n : Nat} {α : Fin (HAdd.hAdd.{0, 0, 0} n 1) → Sort u_1} (x : α (Fin.last n))
+  (p : (i : Fin n) → α (Fin.castSucc i)) : Eq.{u_1} (Fin.snoc.{u_1} p x (Fin.last n)) x
+Fin.snoc_castSucc.{u_1} {n : Nat} {α : Fin (HAdd.hAdd.{0, 0, 0} n 1) → Sort u_1} (x : α (Fin.last n))
+  (p : (i : Fin n) → α (Fin.castSucc i)) (i : Fin n) : Eq.{u_1} (Fin.snoc.{u_1} p x (Fin.castSucc i)) (p i)
+Fin.cases.{u_1} {n : Nat} {motive : Fin (HAdd.hAdd.{0, 0, 0} n 1) → Sort u_1} (zero : motive 0)
+  (succ : (i : Fin n) → motive (Fin.succ i)) (i : Fin (HAdd.hAdd.{0, 0, 0} n 1)) : motive i
+Fin.lastCases.{u_1} {n : Nat} {motive : Fin (HAdd.hAdd.{0, 0, 0} n 1) → Sort u_1} (last : motive (Fin.last n))
+  (cast : (i : Fin n) → motive (Fin.castSucc i)) (i : Fin (HAdd.hAdd.{0, 0, 0} n 1)) : motive i
+Finset.mem_range {n m : Nat} : Iff (Membership.mem.{0, 0} (Finset.range n) m) (LT.lt.{0} m n)
+BanditRL.OnlineLearning.independent_private_seed_pair.{u, v, w, z} {Ω : Type u} {Seed : Type v} {Χ : Type w}
+  {Ζ : Type z} [MeasurableSpace.{u} Ω] [MeasurableSpace.{v} Seed] [MeasurableSpace.{w} Χ] [MeasurableSpace.{z} Ζ]
+  (μ : Measure.{u} Ω) [IsProbabilityMeasure.{u} μ] (S : Ω → Seed) (X : Ω → Χ) (Y : Ω → Ζ) (hS : Measurable.{u, v} S)
+  (hX : Measurable.{u, w} X) (hY : Measurable.{u, z} Y) (hseed : S ⟂ᵢ[μ] fun ω => Prod.mk.{w, z} (X ω) (Y ω))
+  (hXY : X ⟂ᵢ[μ] Y) : (fun ω => Prod.mk.{v, w} (S ω) (X ω)) ⟂ᵢ[μ] Y
+BanditRL.OnlineLearning.randomized_history_policy_expectedFixed_excess.{u, v} {Ω : Type u} {Seed : Type v}
+  [MeasurableSpace.{u} Ω] [MeasurableSpace.{v} Seed] (μ : Measure.{u} Ω) [IsProbabilityMeasure.{u} μ]
+  (Y : Nat → Ω → Real) (hY : ∀ (t : Nat), Measurable.{u, 0} (Y t))
+  (hlaw : ∀ (t : Nat), IdentDistrib.{u, u, 0} (Y t) (Y 0) μ μ)
+  (hb : ∀ (t : Nat), ∀ᵐ (ω : Ω) ∂μ, Membership.mem.{0, 0} (Set.Icc.{0} 0 1) (Y t ω)) (hind : iIndepFun.{u, 0, 0} Y μ)
+  (S : Ω → Seed) (hS : Measurable.{u, v} S) (hseed : S ⟂ᵢ[μ] fun ω t => Y t ω)
+  (policy : (t : Nat) → Prod.{v, 0} Seed (↥(Finset.range t) → Real) → Real)
+  (hp : ∀ (t : Nat), Measurable.{v, 0} (policy t))
+  (hpb :
+    ∀ (t : Nat) (s : Seed) (z : ↥(Finset.range t) → Real),
+      (∀ (i : ↥(Finset.range t)), Membership.mem.{0, 0} (Set.Icc.{0} 0 1) (z i)) →
+        Membership.mem.{0, 0} (Set.Icc.{0} 0 1) (policy t (Prod.mk.{v, 0} s z)))
+  (T : Nat) :
+  And
+    (Eq.{1}
+      (BanditRL.OnlineLearning.expectedFixedRegret.{u} μ Y
+        (fun t ω => policy t (Prod.mk.{v, 0} (S ω) fun i => Y (↑i) ω)) T)
+      (∑ t ∈ Finset.range T,
+        ∫ (ω : Ω),
+          HPow.hPow.{0, 0, 0}
+            (HSub.hSub.{0, 0, 0} (policy t (Prod.mk.{v, 0} (S ω) fun i => Y (↑i) ω)) (∫ (ω : Ω), Y 0 ω ∂μ)) 2 ∂μ))
+    (LE.le.{0} 0
+      (BanditRL.OnlineLearning.expectedFixedRegret.{u} μ Y
+        (fun t ω => policy t (Prod.mk.{v, 0} (S ω) fun i => Y (↑i) ω)) T))

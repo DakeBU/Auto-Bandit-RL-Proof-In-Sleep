@@ -758,3 +758,5 @@ import BanditRLProof.OnlineGuessingIIDSuccess
 import BanditRLProof.OnlineGuessingAECausal
 
 import BanditRLProof.OnlineGuessingCompletedCausal
+
+import BanditRLProof.OnlineGuessingKernelCausal

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-08T14:25:17+00:00",
+  "generated": "2026-10-08T15:56:12+00:00",
   "declarations": [
     {
       "kind": "def",
@@ -53944,6 +53944,38 @@
       "file": "BanditRLProof/OnlineGuessingComparison.lean",
       "line": 46,
       "statement": "theorem guessing_vs_mean_unbounded (C : \u211d) (N : \u2115) : \u2203 n : \u2115, N < n \u2227 C < regret unitInterval (1/(2*Real.sqrt (((2*n)^2 : \u2115) : \u211d))) (fun _ x => (x-0)^2) 1 0 ((2*n)^2) - (\u2211 t \u2208 range ((2*n)^2), (BanditRL.OnlineLearning.meanPredict (fun _ : \u2115 => (0 : \u211d)) t)^2)"
+    },
+    {
+      "kind": "theorem",
+      "name": "completed_measurable_real_exists_version",
+      "full_name": "BanditRL.OnlineLearning.completed_measurable_real_exists_version",
+      "file": "BanditRLProof/OnlineGuessingCompletedCausal.lean",
+      "line": 13,
+      "statement": "theorem completed_measurable_real_exists_version {\u03a9 : Type u} [MeasurableSpace \u03a9] (\u03bc : Measure \u03a9) (F : MeasurableSpace \u03a9) (P : \u03a9 \u2192 \u211d) (hP : @Measurable _ _ (eventuallyMeasurableSpace F (ae \u03bc)) _ P) : \u2203 version : \u03a9 \u2192 \u211d, Measurable[F] version \u2227 P =\u1da0[ae \u03bc] version"
+    },
+    {
+      "kind": "theorem",
+      "name": "completed_predictable_exists_bounded_history_policy",
+      "full_name": "BanditRL.OnlineLearning.completed_predictable_exists_bounded_history_policy",
+      "file": "BanditRLProof/OnlineGuessingCompletedCausal.lean",
+      "line": 53,
+      "statement": "theorem completed_predictable_exists_bounded_history_policy {\u03a9 : Type u} {Seed : Type v} [MeasurableSpace \u03a9] [MeasurableSpace Seed] (\u03bc : Measure \u03a9) (Y : \u2115 \u2192 \u03a9 \u2192 \u211d) (S : \u03a9 \u2192 Seed) (F : \u2115 \u2192 MeasurableSpace \u03a9) (hF : \u2200 t, F t \u2264 privateSeedPastInformation S Y t) (prediction : \u2115 \u2192 \u03a9 \u2192 \u211d) (hP : \u2200 t, @Measurable _ _ (eventuallyMeasurableSpace (F t) (ae \u03bc)) _ (prediction t)) (hpb : \u2200 t, \u2200\u1d50 \u03c9 \u2202\u03bc, prediction t \u03c9 \u2208 Set.Icc (0 : \u211d) 1) : \u2203 policy : (t : \u2115) \u2192 (Seed \u00d7 ((\u2191(Finset.range t) : Type) \u2192 \u211d)) \u2192 \u211d, (\u2200 t, Measurable (policy t)) \u2227 (\u2200 t q, policy t q \u2208 Set.Icc (0 : \u211d) 1) \u2227 \u2200\u1d50 \u03c9 \u2202\u03bc, \u2200 t, prediction t \u03c9 = policy t (S \u03c9, fun i => Y i \u03c9)"
+    },
+    {
+      "kind": "theorem",
+      "name": "completed_predictable_private_seed_independent",
+      "full_name": "BanditRL.OnlineLearning.completed_predictable_private_seed_independent",
+      "file": "BanditRLProof/OnlineGuessingCompletedCausal.lean",
+      "line": 73,
+      "statement": "theorem completed_predictable_private_seed_independent {\u03a9 : Type u} {Seed : Type v} [MeasurableSpace \u03a9] [MeasurableSpace Seed] (\u03bc : Measure \u03a9) [IsProbabilityMeasure \u03bc] (Y : \u2115 \u2192 \u03a9 \u2192 \u211d) (hY : \u2200 t, Measurable (Y t)) (hind : iIndepFun Y \u03bc) (S : \u03a9 \u2192 Seed) (hS : Measurable S) (hseed : IndepFun S (fun \u03c9 t => Y t \u03c9) \u03bc) (t : \u2115) (F : MeasurableSpace \u03a9) (hF : F \u2264 privateSeedPastInformation S Y t) (P : \u03a9 \u2192 \u211d) (hP : @Measurable _ _ (eventuallyMeasurableSpace F (ae \u03bc)) _ P) : IndepFun P (Y t) \u03bc"
+    },
+    {
+      "kind": "theorem",
+      "name": "completed_predictable_private_seed_expectedFixed_excess",
+      "full_name": "BanditRL.OnlineLearning.completed_predictable_private_seed_expectedFixed_excess",
+      "file": "BanditRLProof/OnlineGuessingCompletedCausal.lean",
+      "line": 89,
+      "statement": "theorem completed_predictable_private_seed_expectedFixed_excess {\u03a9 : Type u} {Seed : Type v} [MeasurableSpace \u03a9] [MeasurableSpace Seed] (\u03bc : Measure \u03a9) [IsProbabilityMeasure \u03bc] (Y : \u2115 \u2192 \u03a9 \u2192 \u211d) (hY : \u2200 t, Measurable (Y t)) (hlaw : \u2200 t, IdentDistrib (Y t) (Y 0) \u03bc \u03bc) (hb : \u2200 t, \u2200\u1d50 \u03c9 \u2202\u03bc, Y t \u03c9 \u2208 Set.Icc (0 : \u211d) 1) (hind : iIndepFun Y \u03bc) (S : \u03a9 \u2192 Seed) (hS : Measurable S) (hseed : IndepFun S (fun \u03c9 t => Y t \u03c9) \u03bc) (F : \u2115 \u2192 MeasurableSpace \u03a9) (hF : \u2200 t, F t \u2264 privateSeedPastInformation S Y t) (prediction : \u2115 \u2192 \u03a9 \u2192 \u211d) (hP : \u2200 t, @Measurable _ _ (eventuallyMeasurableSpace (F t) (ae \u03bc)) _ (prediction t)) (hpb : \u2200 t, \u2200\u1d50 \u03c9 \u2202\u03bc, prediction t \u03c9 \u2208 Set.Icc (0 : \u211d) 1) (T : \u2115) : expectedFixedRegret \u03bc Y prediction T = (\u2211 t \u2208 Finset.range T, \u222b \u03c9, (prediction t \u03c9 - \u222b \u03c9, Y 0 \u03c9 \u2202\u03bc)^2 \u2202\u03bc) \u2227 0 \u2264 expectedFixedRegret \u03bc Y prediction T"
     },
     {
       "kind": "def",

@@ -1,0 +1,26 @@
+{
+  "command": [
+    "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe",
+    "-B",
+    "-X",
+    "utf8",
+    "tools/bandit.py",
+    "statement-fence",
+    "--declaration",
+    "BanditRL.OnlineLearning.kernel_sampler_joint_law",
+    "--file",
+    "BanditRLProof/OnlineGuessingKernelCausal.lean",
+    "--source-assumption",
+    "(κ : (t : ℕ) → Kernel (KernelDecisionHistory t) I) [∀ t, IsMarkovKernel (κ t)]",
+    "--source-assumption",
+    "(f : KernelDecisionSampler) (hf : ∀ t, Measurable (Function.uncurry (f t)))",
+    "--source-assumption",
+    "(hκ : ∀ t h, (volume : Measure I).map (f t h) = κ t h)",
+    "--output",
+    "E:\\ABRL\\worktrees\\research-online-book\\runs\\online-kernel-causal-20261008\\statement-fence-K3-v1.json"
+  ],
+  "cwd": "E:/ABRL/worktrees/research-online-book",
+  "actual_exit": 0,
+  "seconds": 0.2190000000409782,
+  "log_sha256": "48a30e017e7e4ad5703cbe1645e0409d9c14296c86a3d7068474a65d4ef67a2c"
+}

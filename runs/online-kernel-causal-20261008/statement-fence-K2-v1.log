@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineLearning.kernel_sampler_causal_process",
+  "file": "BanditRLProof/OnlineGuessingKernelCausal.lean",
+  "statement": "theorem kernel_sampler_causal_process (f : KernelDecisionSampler) (hf : ∀ t, Measurable (Function.uncurry (f t))) : (∀ t, Measurable (kernelCausalPolicy f t)) ∧ (∀ t (u : ℕ → I) (y : ℕ → ℝ) (i : Fin t), kernelGeneratedActions f t (fun j => u j) (fun j => y j) i = kernelGeneratedPrediction f (i : ℕ) (u, y)) ∧ ∀ t (ω ω' : (ℕ → I) × (ℕ → ℝ)), (∀ i, i ≤ t → ω.1 i = ω'.1 i) → (∀ i, i < t → ω.2 i = ω'.2 i) → kernelGeneratedPrediction f t ω = kernelGeneratedPrediction f t ω'",
+  "statement_hash": "53418547fd45271f47e79e699404339bcbe652ad8f9bdfa3427c202f28d11a7f",
+  "source_assumptions": [
+    "(f : KernelDecisionSampler) (hf : ∀ t, Measurable (Function.uncurry (f t))) :"
+  ],
+  "created_at": "2026-10-08T16:37:02+00:00"
+}

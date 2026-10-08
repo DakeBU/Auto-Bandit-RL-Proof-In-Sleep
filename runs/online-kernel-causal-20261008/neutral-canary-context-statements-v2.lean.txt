@@ -1,0 +1,200 @@
+import Mathlib.Probability.Kernel.Representation
+import Mathlib.Probability.Kernel.CondDistrib
+import Mathlib.Probability.Independence.InfinitePi
+import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
+import Mathlib.Data.Fin.Tuple.Basic
+
+open MeasureTheory ProbabilityTheory unitInterval
+
+namespace Neutral
+
+/-- Actions already generated and observations strictly before the current round. -/
+abbrev H (t : ℕ) := (Fin t → I) × (Fin t → ℝ)
+
+/-- One sampler at every natural time, fixed without an observation law or horizon. -/
+abbrev F := (t : ℕ) → H t → I → I
+
+/-- Real causal recursion: append the sampled action to the previously generated actions. -/
+def A (f : F) :
+    (t : ℕ) → (Fin t → I) → (Fin t → ℝ) → (Fin t → I)
+  | 0, _, _ => Fin.elim0
+  | t + 1, u, y =>
+      let past := A f t (fun i => u i.castSucc) (fun i => y i.castSucc)
+      Fin.snoc past (f t (past, fun i => y i.castSucc) (u (Fin.last t)))
+
+/-- Before-reveal policy; input observations have exactly the strict-past length. -/
+def B (f : F) (t : ℕ)
+    (q : (ℕ → I) × (Fin t → ℝ)) : I :=
+  f t (A f t (fun i => q.1 i) q.2, q.2) (q.1 t)
+
+/-- Joint generated action history and strict-past observations on the common sample space. -/
+def C (f : F) (t : ℕ)
+    (ω : (ℕ → I) × (ℕ → ℝ)) : H t :=
+  (A f t (fun i => ω.1 i) (fun i => ω.2 i), fun i => ω.2 i)
+
+/-- A single infinite pStar process, rather than a separate algorithm for each horizon. -/
+def P (f : F) (t : ℕ)
+    (ω : (ℕ → I) × (ℕ → ℝ)) : I :=
+  B f t (ω.1, fun i => ω.2 i)
+
+/-- Independent fresh uniform draws form the private infinite tape. -/
+noncomputable abbrev R : Measure (ℕ → I) :=
+  Measure.infinitePi (fun _ : ℕ => (volume : Measure I))
+
+/-- Observation law may have arbitrary temporal dependence for the kernel realization. -/
+noncomputable abbrev M (ν : ProbabilityMeasure (ℕ → ℝ)) : Measure ((ℕ → I) × (ℕ → ℝ)) :=
+  R.prod (ν : Measure (ℕ → ℝ))
+
+
+
+noncomputable def b {Ω : Type*} [MeasurableSpace Ω]
+    (μ : Measure Ω) (Y : ℕ → Ω → ℝ) (T : ℕ) : ℝ :=
+  sInf ((fun u : ℝ => ∫ ω, ∑ t ∈ Finset.range T, (u - Y t ω)^2 ∂μ) ''
+    Set.Icc (0 : ℝ) 1)
+
+noncomputable def r {Ω : Type*} [MeasurableSpace Ω]
+    (μ : Measure Ω) (Y pStar : ℕ → Ω → ℝ) (T : ℕ) : ℝ :=
+  (∫ ω, ∑ t ∈ Finset.range T, (pStar t ω - Y t ω)^2 ∂μ) -
+    b μ Y T
+
+theorem q1
+    (κ : (t : ℕ) → Kernel (H t) I) [∀ t, IsMarkovKernel (κ t)] :
+    ∃ f : F,
+      (∀ t, Measurable (Function.uncurry (f t))) ∧
+      ∀ t h, (volume : Measure I).map (f t h) = κ t h
+
+theorem q2
+    (f : F) (hf : ∀ t, Measurable (Function.uncurry (f t))) :
+    (∀ t, Measurable (B f t)) ∧
+    (∀ t (u : ℕ → I) (y : ℕ → ℝ) (i : Fin t),
+      A f t (fun j => u j) (fun j => y j) i =
+        P f (i : ℕ) (u, y)) ∧
+    ∀ t (ω ω' : (ℕ → I) × (ℕ → ℝ)),
+      (∀ i, i ≤ t → ω.1 i = ω'.1 i) →
+      (∀ i, i < t → ω.2 i = ω'.2 i) →
+      P f t ω = P f t ω'
+
+theorem q3
+    (κ : (t : ℕ) → Kernel (H t) I) [∀ t, IsMarkovKernel (κ t)]
+    (f : F) (hf : ∀ t, Measurable (Function.uncurry (f t)))
+    (hκ : ∀ t h, (volume : Measure I).map (f t h) = κ t h)
+    (ν : ProbabilityMeasure (ℕ → ℝ)) (t : ℕ) :
+    (M ν).map (fun ω =>
+      (C f t ω, P f t ω)) =
+      (M ν).map (C f t) ⊗ₘ κ t
+
+theorem q4
+    (κ : (t : ℕ) → Kernel (H t) I) [∀ t, IsMarkovKernel (κ t)]
+    (f : F) (hf : ∀ t, Measurable (Function.uncurry (f t)))
+    (hκ : ∀ t h, (volume : Measure I).map (f t h) = κ t h)
+    (ν : ProbabilityMeasure (ℕ → ℝ)) (t : ℕ) :
+    condDistrib (P f t) (C f t) (M ν)
+      =ᵐ[(M ν).map (C f t)] κ t
+
+theorem q5
+    (κ : (t : ℕ) → Kernel (H t) I) [∀ t, IsMarkovKernel (κ t)] :
+    ∃ f : F,
+      (∀ t, Measurable (Function.uncurry (f t))) ∧
+      (∀ t h, (volume : Measure I).map (f t h) = κ t h) ∧
+      (∀ t, Measurable (B f t)) ∧
+      (∀ t (u : ℕ → I) (y : ℕ → ℝ) (i : Fin t),
+        A f t (fun j => u j) (fun j => y j) i =
+          P f (i : ℕ) (u, y)) ∧
+      (∀ t (ω ω' : (ℕ → I) × (ℕ → ℝ)),
+        (∀ i, i ≤ t → ω.1 i = ω'.1 i) →
+        (∀ i, i < t → ω.2 i = ω'.2 i) →
+        P f t ω = P f t ω') ∧
+      ∀ ν : ProbabilityMeasure (ℕ → ℝ),
+        (∀ t, (M ν).map (fun ω =>
+          (C f t ω, P f t ω)) =
+          (M ν).map (C f t) ⊗ₘ κ t) ∧
+        (∀ t, condDistrib (P f t) (C f t)
+          (M ν) =ᵐ[(M ν).map (C f t)] κ t) ∧
+        (iIndepFun (fun t (y : ℕ → ℝ) => y t) (ν : Measure (ℕ → ℝ)) →
+          (∀ t, IdentDistrib (fun y : ℕ → ℝ => y t) (fun y : ℕ → ℝ => y 0)
+            (ν : Measure (ℕ → ℝ)) (ν : Measure (ℕ → ℝ))) →
+          (∀ t, ∀ᵐ y ∂(ν : Measure (ℕ → ℝ)), y t ∈ Set.Icc (0 : ℝ) 1) →
+          ∀ T : ℕ,
+            r (M ν) (fun t ω => ω.2 t)
+              (fun t ω => (P f t ω : ℝ)) T =
+              (∑ t ∈ Finset.range T, ∫ ω,
+                ((P f t ω : ℝ) -
+                  ∫ ω, ω.2 0 ∂(M ν))^2 ∂(M ν)) ∧
+            0 ≤ r (M ν) (fun t ω => ω.2 t)
+              (fun t ω => (P f t ω : ℝ)) T)
+
+
+open scoped ENNReal
+
+def cLaw : Measure ℝ :=
+  (1 / 2 : ℝ≥0∞) • Measure.dirac 0 + (1 / 2 : ℝ≥0∞) • Measure.dirac 1
+instance cLaw_probability : IsProbabilityMeasure cLaw
+def iLaw : Measure (ℕ → ℝ) := Measure.infinitePi (fun _ : ℕ => cLaw)
+instance iLaw_probability : IsProbabilityMeasure iLaw
+
+
+def lLaw : Measure I :=
+  (3 / 4 : ℝ≥0∞) • Measure.dirac 0 + (1 / 4 : ℝ≥0∞) • Measure.dirac 1
+
+def hLaw : Measure I :=
+  (1 / 4 : ℝ≥0∞) • Measure.dirac 0 + (3 / 4 : ℝ≥0∞) • Measure.dirac 1
+
+instance lLaw_probability : IsProbabilityMeasure lLaw
+
+instance hLaw_probability : IsProbabilityMeasure hLaw
+
+/-- Last generated action and last observation both change the next decision law. -/
+def sSet : (t : ℕ) → Set (H t)
+  | 0 => ∅
+  | t + 1 => {h | 1 < (h.1 (Fin.last t) : ℝ) + h.2 (Fin.last t)}
+
+theorem sSet_measurable (t : ℕ) : MeasurableSet (sSet t)
+
+def k (t : ℕ) : Kernel (H t) I :=
+  Kernel.piecewise (sSet_measurable t)
+    (Kernel.const (H t) hLaw)
+    (Kernel.const (H t) lLaw)
+
+instance decisionKernel_markov (t : ℕ) : IsMarkovKernel (k t) := by
+  unfold k
+  infer_instance
+
+def h1 (a : I) (y : ℝ) : H 1 := (fun _ => a, fun _ => y)
+
+def fStar : F :=
+  Classical.choose (q5 k)
+
+def nStar : ProbabilityMeasure (ℕ → ℝ) := ⟨iLaw, inferInstance⟩
+
+abbrev mStar : Measure ((ℕ → I) × (ℕ → ℝ)) := M nStar
+
+def pStar (t : ℕ) (ω : (ℕ → I) × (ℕ → ℝ)) : I :=
+  P fStar t ω
+
+def yStar (t : ℕ) (ω : (ℕ → I) × (ℕ → ℝ)) : ℝ := ω.2 t
+
+
+theorem c2 : ∃ f : F, (∀ t, Measurable (Function.uncurry (f t))) ∧ ∀ t h, (volume : Measure I).map (f t h) = k t h
+
+theorem c3 : (∀ t, Measurable (B fStar t)) ∧ (∀ t (u : ℕ → I) (y : ℕ → ℝ) (i : Fin t), A fStar t (fun j => u j) (fun j => y j) i = P fStar (i : ℕ) (u, y)) ∧ ∀ t (ω ω' : (ℕ → I) × (ℕ → ℝ)), (∀ i, i ≤ t → ω.1 i = ω'.1 i) → (∀ i, i < t → ω.2 i = ω'.2 i) → P fStar t ω = P fStar t ω'
+
+theorem c4 (ν : ProbabilityMeasure (ℕ → ℝ)) (t : ℕ) : (M ν).map (fun ω => (C fStar t ω, P fStar t ω)) = (M ν).map (C fStar t) ⊗ₘ k t
+
+theorem c5 (ν : ProbabilityMeasure (ℕ → ℝ)) (t : ℕ) : condDistrib (P fStar t) (C fStar t) (M ν) =ᵐ[(M ν).map (C fStar t)] k t
+
+theorem c6 (T : ℕ) : r mStar yStar (fun t ω => (pStar t ω : ℝ)) T = (∑ t ∈ Finset.range T, ∫ ω, ((pStar t ω : ℝ) - ∫ ω, yStar 0 ω ∂mStar)^2 ∂mStar) ∧ 0 ≤ r mStar yStar (fun t ω => (pStar t ω : ℝ)) T
+
+theorem c7 : k 1 (h1 0 1) {1} = (1 / 4 : ℝ≥0∞) ∧ k 1 (h1 1 1) {1} = (3 / 4 : ℝ≥0∞) ∧ k 1 (h1 1 0) {1} = (1 / 4 : ℝ≥0∞)
+
+theorem c8 (t : ℕ) (h : H t) : (k t h {1} = (1 / 4 : ℝ≥0∞) ∨ k t h {1} = (3 / 4 : ℝ≥0∞)) ∧ 0 < k t h {0} ∧ 0 < k t h {1}
+
+theorem c9 (t : ℕ) : ∀ᵐ ω ∂mStar, pStar t ω = 0 ∨ pStar t ω = 1
+
+theorem c10 (t : ℕ) : variance (yStar t) mStar = 1 / 4
+
+theorem c11 (T : ℕ) : r mStar yStar (fun t ω => (pStar t ω : ℝ)) T = (T : ℝ) / 4
+
+theorem c12 : r mStar yStar (fun t ω => (pStar t ω : ℝ)) 0 = 0
+
+theorem c13 : r mStar yStar (fun t ω => (pStar t ω : ℝ)) 2 = 1 / 2 ∧ 0 < r mStar yStar (fun t ω => (pStar t ω : ℝ)) 2
+end Neutral

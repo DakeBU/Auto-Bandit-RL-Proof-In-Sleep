@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineLearning.kernel_sampler_family_exists",
+  "file": "BanditRLProof/OnlineGuessingKernelCausal.lean",
+  "statement": "theorem kernel_sampler_family_exists (κ : (t : ℕ) → Kernel (KernelDecisionHistory t) I) [∀ t, IsMarkovKernel (κ t)] : ∃ f : KernelDecisionSampler, (∀ t, Measurable (Function.uncurry (f t))) ∧ ∀ t h, (volume : Measure I).map (f t h) = κ t h",
+  "statement_hash": "9d18ad2d4f68f0d7a5f96b8d226b8a0395470ff634735939831b09df91715c07",
+  "source_assumptions": [
+    "(κ : (t : ℕ) → Kernel (KernelDecisionHistory t) I) [∀ t, IsMarkovKernel (κ t)] :"
+  ],
+  "created_at": "2026-10-08T16:37:01+00:00"
+}

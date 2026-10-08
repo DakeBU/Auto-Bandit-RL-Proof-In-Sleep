@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineLearning.kernel_sampler_joint_law",
+  "file": "BanditRLProof/OnlineGuessingKernelCausal.lean",
+  "statement": "theorem kernel_sampler_joint_law (κ : (t : ℕ) → Kernel (KernelDecisionHistory t) I) [∀ t, IsMarkovKernel (κ t)] (f : KernelDecisionSampler) (hf : ∀ t, Measurable (Function.uncurry (f t))) (hκ : ∀ t h, (volume : Measure I).map (f t h) = κ t h) (ν : ProbabilityMeasure (ℕ → ℝ)) (t : ℕ) : (kernelGameLaw ν).map (fun ω => (kernelGeneratedHistory f t ω, kernelGeneratedPrediction f t ω)) = (kernelGameLaw ν).map (kernelGeneratedHistory f t) ⊗ₘ κ t",
+  "statement_hash": "bef7e1c4a65f053dd9b72482adb5202747c54da455f85c980cf44f2b05c9f725",
+  "source_assumptions": [
+    "(κ : (t : ℕ) → Kernel (KernelDecisionHistory t) I) [∀ t, IsMarkovKernel (κ t)]",
+    "(f : KernelDecisionSampler) (hf : ∀ t, Measurable (Function.uncurry (f t)))",
+    "(hκ : ∀ t h, (volume : Measure I).map (f t h) = κ t h)"
+  ],
+  "created_at": "2026-10-08T16:37:02+00:00"
+}
