@@ -1,0 +1,19 @@
+# FTL obstruction post-native review
+
+Verdict: accepted-with-explicit-delta. This is a distinct staged automated metadata/delivery-boundary review by the reused source reviewer, requested Astra/medium; no runtime, human, external or absolute-blind attestation. No native, Git, site or publication command was executed by this reviewer.
+
+All545 indexed current RAW rows match independently before/after. FINAL493 resolves exactly through five changed live bindings: one own contribution manifest, three own task documents and the own accepted lifecycle suffix. Its report/receipt, exact R1–R7, public/canary/roots/readers/pins/site/pixels and remaining fixed evidence stay bound; no new compilation or pixel inspection is claimed.
+
+The manifest differs in exactly the six permitted fields, verified by restoring each old field and comparing the complete JSON. The three documents retain their full original RAW prefixes and have the identical exact own-task appendix (SHA40506a22610ae717fa61c4223682d6b1cf66285690391b42c4e4bd41e3dcc8cd). The lifecycle suffix parses to exactly one accepted event for ONLINE-FTL-OBSTRUCTION-20261009, with4→0 and chapter/goal/merged/live false. This is an actual suffix ownership audit, not a prefix-only assumption.
+
+The original six trial records remain byte-identical, including failed D4v1 and five compiled attempts. The new accepted-scoped file preserves that complete prefix and adds exactly one reviewer record listing the four public terminals,4→0. Six native command exit receipts and their log hashes match: reviewer trial, lifecycle, own frontier refresh, read-only shadow, own memory output and own retrieval output all exit0. Shadow reports5compiled/1failed/1accepted, no mismatches and would_mutate false. Global trial/frontier/memory/retrieval and SGB remain frozen by the FINAL bindings.
+
+The accepted ledger changes only current_bounded_FTL_obstruction_overlay. All original16 source objects, null required-proof-leaf total and historical fields remain exact. The new overlay closes four derived endpoints only, with zero whole source items closed and full Chapter1 reconciliation required. The registry repair remains10964 complete old records +5 PUBLIC +8 source-private =10977; private identities are not public instantiable terminals. Original count failure and D4 inference failure remain intact.
+
+After-metadata contributor gates are nonempty: stack373 changed paths/5 production/1 contract; main27153 paths/69 production/66 contracts. Both exit0 and explicitly cover OnlineFTLOscillation. These are contribution checks, not merger/main/live evidence. Applicable earlier root9104/Tests9268/full472skip7 and ten actual FINAL pixel views are reused by exact bindings, not rerun.
+
+Fresh recorded PR201 response is OPEN draft/unmerged at224927197e78e1330c4c93e84f9c69388d3027a7, branch codex/research-online-c1-source-reconcile. Prospective title/body remain the FINAL-reviewed bytes, correctly separate ordinary limits from upper NoRegret and four derived results from printed theorems. Draft creation has not yet occurred.
+
+Future permission: only the reviewed own acceptance/evidence commits, non-force own-branch push, one draft against that exact base and immediate official app attachment, followed by remote verification. The helpers guard immutable inputs and ownership; their dynamic .log/.raw exception discovery does not independently authorize new exceptions. Only the three existing SHA-bound RAW compiler/harness logs are currently reviewed; new exceptions need separate review. No production/Test/reader/contract or active executable exception is authorized. No duplicate native acceptance, force/merge/deploy/retirement, CI certification, chapter or Goal completion.
+
+No blocking repairs remain within this exact scope. Original16/null, full Chapter1 reconciliation, other C1/C2, unenumerated C3–16 and required appendices remain open; whole Goal ACTIVE.

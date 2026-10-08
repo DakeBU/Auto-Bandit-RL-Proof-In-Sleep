@@ -3,7 +3,7 @@ import functools, http.server, threading
 
 integrated_fixed()
 site = ROOT / 'tmp/online-ftl-obstruction-site-v1'
-reg = load(RUN / 'registry-v1.json')
+reg = load(RUN / 'registry-v2.json')
 files = [site / 'chapters/online-foundations/index.html'] + [
     site / p for p in reg['module_HTML_sha256']]
 before = {p.as_posix(): sha(p) for p in files}
