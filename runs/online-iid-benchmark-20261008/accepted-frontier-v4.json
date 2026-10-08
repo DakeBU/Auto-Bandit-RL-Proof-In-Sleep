@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "record_id": "frontier-eb1a456cdbee2188",
+  "updated_at": "2026-10-08T06:40:37+00:00",
+  "root_objective": "Persistent Orabona Chapters1–16; bounded deterministic IID expected-fixed core only",
+  "current_leaf": {
+    "id": "ONLINE-IID-BENCHMARK-20261008",
+    "kind": "lean",
+    "status": "accepted",
+    "statement": "theorem history_policy_expectedFixed_excess {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (hind : iIndepFun Y μ) (policy : (t : ℕ) → ((↑(Finset.range t) : Type) → ℝ) → ℝ) (hp : ∀ t, Measurable (policy t)) (hpb : ∀ t z, (∀ i, z i ∈ Set.Icc (0 : ℝ) 1) → policy t z ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) : expectedFixedRegret μ Y (fun t ω => policy t (fun i => Y i ω)) T = (∑ t ∈ Finset.range T, ∫ ω, (policy t (fun i => Y i ω) - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) ∧ 0 ≤ expectedFixedRegret μ Y (fun t ω => policy t (fun i => Y i ω)) T",
+    "statement_hash": "5b71f150546c5b37bbe8d76d067293792afd958f267dc5494c8f4abff97343b1",
+    "declaration": "BanditRL.OnlineLearning.history_policy_expectedFixed_excess",
+    "file": "BanditRLProof\\OnlineGuessingIIDBenchmark.lean",
+    "source_status": "source-reviewed",
+    "dependencies": [
+      {
+        "kind": "lean",
+        "name": "BanditRL.OnlineLearning.expectedFixedMinimum_eq_variance",
+        "status": "compiled"
+      },
+      {
+        "kind": "review",
+        "name": "source-reader",
+        "status": "accepted"
+      }
+    ]
+  },
+  "dag": {
+    "nodes": [
+      {
+        "id": "ONLINE-IID-BENCHMARK-20261008",
+        "kind": "lean",
+        "status": "accepted",
+        "dependencies": [
+          {
+            "kind": "lean",
+            "name": "BanditRL.OnlineLearning.expectedFixedMinimum_eq_variance",
+            "status": "compiled"
+          },
+          {
+            "kind": "review",
+            "name": "source-reader",
+            "status": "accepted"
+          }
+        ],
+        "dispatch_count": 0
+      }
+    ]
+  },
+  "last_accepted_verifier": {
+    "trial_index": 20,
+    "time": "2026-10-08T06:40:36+00:00",
+    "task": "ONLINE-IID-BENCHMARK-20261008",
+    "role": "reviewer",
+    "kind": "review",
+    "status": "accepted",
+    "lean": "",
+    "notes": "ONLINE-IID-BENCHMARK-20261008 Expected FIXED-loss minimum and deterministic finite-history causal IID core only: probability/measurable/a.s.unit targets, same-law expected square decomposition, actual feasible population mean and IsLeast before real csInf, joint-IID actual strict-history policy and first1/2 meanPredict excess identity/nonnegativity, known-law mean oracle zero excess, positiveT finite normalization. Eight derived producer/representation/adapters and two definitions, not eight source theorems or new rate mathematics. V2 policy feasibility only on legal histories; T0 empty extension without uniqueness. Randomized/external-seed/general-filtration cannot-beat source coverage and asymptotic-success equivalence REQUIRED; original16C1source items/proof-totalnull/fullC1open and five old main-relative Foundations/History/IID/Information/Stochastic audits unwaived. Chapter2incomplete, Chapters3–16unenumerated/necessaryappendices required, totalGoalACTIVE. No min/expectation exchange, unknown-law oracle implementation or high-probability claim. OPENdraft/unmerged PR193 exactbf9f896cdfebb2b836dacb01f3d4b209466c2100 stack; no main/live/merge/deploy/retirement. Actual53kernel/36nativeguards/26VALUEpairs,28namedcanaries5fixtures2probability proofs, 8neutral->draft+8draft->actual arbitrary-universe Prop identities/28canaryProps/9wholedefinition identities; root9097/Tests9253/harness472skip7/actualcommitted5productionpaths1contract. Clean a15115609562ea163c9b95a3bd111cac2df74edc local v9Leanverifiedsite/10913oldsharedIDsURLsHashes+10newnodes/14currentimages independently viewed; distinct staged decoder/source reviewer CONTRACT186/BODY583/FINAL876 accepted with exactR1–R9. RequestedAstra-medium/nohuman/external/runtimeattestation. Frozen8terminal contract progresses8->0 ONLY. Rejected FINALv2/F1/F2 reader inversion and missing t>0 retained; exact reader-only repair/fresh v9/F1F2 distinct review satisfied. Rejected FINALv3 stale prospective pointer M1 retained; operative publicationv4/title-bodyv4 distinct metadata repair review required. Original failures/rawbyte12whitespaceexceptions retained, fullunexcluded diffexit2/scoped pass, two frozenhelperEOFfindings separately reviewed.",
+    "run_id": "online-iid-benchmark-20261008"
+  },
+  "memory_policy": {
+    "recent_role_relevant_limit": 5,
+    "explicit_verified_lemma_ids": [],
+    "whole_history_default": false
+  },
+  "shadow_gate": {
+    "status": "pending",
+    "analyzed_trial_rows": 21,
+    "mismatches": [],
+    "replay_transitions": 0
+  },
+  "mutation_policy": {
+    "canonical_path_queue": true,
+    "cross_process_lock": true,
+    "same_file_serialized": true,
+    "disjoint_files_parallel": true
+  },
+  "autonomous_execution": {
+    "enabled": false,
+    "requires_deterministic_gates": true,
+    "requires_explicit_user_request": true
+  }
+}
