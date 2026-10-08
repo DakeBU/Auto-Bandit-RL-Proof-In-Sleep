@@ -11,7 +11,7 @@ text. For each project declaration it records direct constants used by the decla
 direct constants used only by its value/proof term. If a constant occurs in both, the type edge is
 canonical and carries `also_in_value = true`.
 
-The exported graph contains declarations owned by the eight explicitly selected milestone modules plus the direct
+The exported graph contains declarations owned by the nine explicitly selected milestone modules plus the direct
 external-library boundary they reference. It deliberately does not unfold declarations or expand
 the transitive Mathlib graph.
 -/
@@ -29,7 +29,7 @@ private def stringLt (a b : String) : Bool :=
   a < b
 
 private def isProjectModule (moduleName : Name) : Bool :=
-  #[`QuantumBanditAdapter, `BanditRLProof.QuantumConfidence, `BanditRLProof.QuantumQueryAccounting, `QuantumBlockEncoding.BornStability, `QuantumBlockEncoding.CircuitRewardBias, `QuantumBlockEncoding.QuantumQueryWord, `QuantumBlockEncoding.QueryCircuitCost, `QuantumBlockEncoding.BasisHellinger].contains moduleName
+  #[`QuantumBanditAdapter, `BanditRLProof.QuantumConfidence, `BanditRLProof.QuantumQueryAccounting, `QuantumBlockEncoding.BornStability, `QuantumBlockEncoding.CircuitRewardBias, `QuantumBlockEncoding.QuantumQueryWord, `QuantumBlockEncoding.QueryCircuitCost, `QuantumBlockEncoding.BasisHellinger, `QuantumBlockEncoding.ResetBlockProcess].contains moduleName
 
 private def moduleOf? (env : Environment) (declName : Name) : Option Name := do
   let idx ← env.getModuleIdxFor? declName
@@ -242,7 +242,7 @@ unsafe def main (args : List String) : IO UInt32 := do
     | IO.eprintln usage; return 2
   Lean.initSearchPath (← Lean.findSysroot)
   Lean.enableInitializersExecution
-  let env ← Lean.importModules #[{ module := `QuantumBanditAdapter }, { module := `QuantumBlockEncoding.BasisHellinger }] {} (loadExts := true)
+  let env ← Lean.importModules #[{ module := `QuantumBanditAdapter }, { module := `QuantumBlockEncoding.BasisHellinger }, { module := `QuantumBlockEncoding.ResetBlockProcess }] {} (loadExts := true)
   let graph ← BanditRLProof.ProofGraph.exportJson env
   let rendered := if compact then graph.compress else graph.pretty
   IO.FS.writeFile output (rendered ++ "\n")

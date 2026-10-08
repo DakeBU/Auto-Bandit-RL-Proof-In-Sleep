@@ -1,0 +1,153 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-09",
+  "milestone": "P0 analytic/circuit/reset-process and cross-library accounting prototype",
+  "publication_status": "draft",
+  "complete_A_or_B": false,
+  "final_integration_record": true,
+  "branch": "research/qb261009",
+  "mathematical_snapshots": {
+    "bandit": "3193a2a27453c86a95c229764347cd4ece9199b2",
+    "quantum": "71c700d71f99fefc5d9adca6cf3891c2b879ae55",
+    "quantum_proof_inputs_sha256": "290b8fce3e225f47c75416e6e15a1b060f15a60303175a62757f8d9372563698",
+    "note": "Later metadata/catalog/evidence commits do not change these mathematical source inputs. See source-artifacts.json and the independently bound quantum-lean-gate.json."
+  },
+  "checks": [
+    {
+      "cwd": "C:/qb261009/quantum",
+      "command": "python website/scripts/run_lean_gate.py",
+      "status": "passed",
+      "exit_code": 0,
+      "scope": "lake build, lake build Tests, every one of 212 explicit source/test modules in batches of 40; stable pre/post fingerprint",
+      "log": "C:/qb261009/evidence/quantum-lean-gate-final.log",
+      "report": "quantum-lean-gate.json",
+      "report_provenance": "Curated report is from the subsequent identical-source native-script Lean gate, independently identity checked; the two invocations are distinct."
+    },
+    {
+      "cwd": "C:/qb261009/bandit/research/quantum-bandit",
+      "command": "lake build Canary",
+      "status": "passed",
+      "exit_code": 0,
+      "scope": "real imports, aligned bias/CI transport, actual primitive expansion and both-direction query charge",
+      "log": "C:/qb261009/evidence/adapter-current-source-final.log"
+    },
+    {
+      "cwd": "C:/qb261009/bandit/research/quantum-bandit",
+      "command": "lake exe dependency_export evidence/proof-term-graph.json",
+      "status": "passed",
+      "exit_code": 0,
+      "scope": "9 project modules; 284 project and 847 external nodes; 9494 direct declaration edges, 32 separate import edges",
+      "log": "C:/qb261009/evidence/proof-graph-current-source-final.log"
+    },
+    {
+      "cwd": "C:/qb261009/bandit",
+      "command": "python tools/bandit.py check",
+      "status": "passed",
+      "exit_code": 0,
+      "scope": "roots/Tests/exporter/placeholder scan and 451 tool tests, OK with 7 platform skips; Python 3.14.4, process-local TEMP/TMP=C:/qb261009/tmp",
+      "log": "C:/qb261009/evidence/bandit-check-short-temp-final.log"
+    },
+    {
+      "cwd": "C:/qb261009/bandit",
+      "command": "python website/scripts/build_site.py --lean-verified",
+      "status": "passed",
+      "exit_code": 0,
+      "scope": "local only; mathematical roots/Tests already passed; compilation flag does not confer source/publication admission",
+      "log": "C:/qb261009/evidence/bandit-site-build-final.log"
+    },
+    {
+      "cwd": "C:/qb261009/bandit",
+      "command": "python website/scripts/check_site.py",
+      "status": "passed",
+      "exit_code": 0,
+      "log": "C:/qb261009/evidence/bandit-site-check-final.log"
+    },
+    {
+      "cwd": "C:/qb261009/quantum",
+      "command": "python -m unittest tools.test_blueprint_catalog",
+      "status": "passed",
+      "exit_code": 0,
+      "scope": "8 tests after assigning all six new source modules to the existing Semantics catalog"
+    },
+    {
+      "cwd": "C:/qb261009/quantum",
+      "command": "scripts/build-blueprint.ps1 -PythonCommand <pinned read-only original venv>",
+      "status": "passed",
+      "exit_code": 0,
+      "log": "C:/qb261009/evidence/quantum-blueprint-final.log"
+    },
+    {
+      "cwd": "C:/qb261009/quantum",
+      "command": "python tools/qbe.py harness-check",
+      "status": "passed final focused rerun after the contention failure",
+      "exit_code": 0,
+      "scope": "99 tests, OK with 1 platform skip; prior bounded atomic-replace access-denial failure remains in history",
+      "log": "C:/qb261009/evidence/quantum-harness-post-contention.log"
+    },
+    {
+      "cwd": "C:/qb261009/quantum",
+      "command": "scripts/build-website.ps1 -PythonCommand <pinned read-only original venv>",
+      "status": "rejected by strict publication gate; no bypass",
+      "exit_code": 1,
+      "scope": "23 site-contract tests and source/catalog checks passed; six changed production modules have no admitted publication records. Earlier pre-proof signature coverage debt remains. No accepted records were fabricated.",
+      "log": "C:/qb261009/evidence/quantum-website-final.log"
+    },
+    {
+      "cwd": "C:/qb261009/quantum",
+      "command": "scripts/build-all.ps1 -PythonCommand <pinned read-only original venv>",
+      "status": "failed integration; mathematical gate passed separately",
+      "exit_code": 1,
+      "scope": "first pinned invocation passed 47 initial tests, 99 harness tests (1 skipped), trust/registry checks, 37 tests, full Lean gate and executable replays; failed unassigned module catalog. Mapping repaired and 8 catalog tests passed. Next full invocation failed one concurrent atomic-write test with Windows access denial after bounded retry.",
+      "logs": [
+        "C:/qb261009/evidence/quantum-build-all-pinned-env.log",
+        "C:/qb261009/evidence/quantum-build-all-catalog-final.log"
+      ]
+    }
+  ],
+  "historical_nonfinal_failures": [
+    {
+      "log": "C:/qb261009/evidence/bandit-full-01.log",
+      "status": "failed",
+      "reason": "missing .olean error during overlapping duplicate builds; exact cause not independently established; subsequent stable root/Tests builds passed"
+    },
+    {
+      "log": "C:/qb261009/evidence/bandit-check-final.log",
+      "status": "author-interrupted tool phase",
+      "exit_code": -1,
+      "reason": "roots/Tests/exporter/placeholder phase passed; author stopped tool child while diagnosing prolonged silent output; verbose successor showed slow registry/content checks rather than proving a deadlock"
+    },
+    {
+      "log": "C:/qb261009/evidence/bandit-tools-diagnostic.log",
+      "status": "native runtime crash",
+      "exit_code": -1073741819,
+      "reason": "Python 3.12 diagnostic process using periodic faulthandler dumps crashed during completion-ledger checks; cause unresolved"
+    },
+    {
+      "log": "C:/qb261009/evidence/bandit-check-python314.log",
+      "status": "failed",
+      "exit_code": 1,
+      "reason": "451 tests, 7 skipped, one checker-context Windows path-length error; retry uses process-local TEMP/TMP=C:/qb261009/tmp, without weakening the guard"
+    },
+    {
+      "log": "C:/qb261009/evidence/quantum-build-all-current.log",
+      "status": "failed missing runtime dependencies",
+      "reason": "bundled standalone Python had no Qiskit/OpenQASM; later invocation used existing pinned venv read-only"
+    }
+  ],
+  "trust": {
+    "new_root_print_axioms": ["propext", "Classical.choice", "Quot.sound"],
+    "sorryAx_in_focused_actual_graph": false,
+    "quantum_proof_trust_gate": "passed: 0 approved sorry, 0 unapproved holes, 0 source-level axioms",
+    "bandit_placeholder_scan": "passed in the completed mathematical phase before full tool checks",
+    "independent_reviews": ["blind-decoder.md", "blind-decoder-2.md", "blind-decoder-3.md", "source-review.md", "source-review-bindings.json"]
+  },
+  "open_leaves": [
+    "actual costed low-depth estimator and all-history conditional confidence",
+    "general allowed POVM and physical loading/discard/synthesis",
+    "horizon interruption, random stopping and full A regret policy/upper bound",
+    "B feasible fidelity selector, actual integer gate/shot/query cost and termination",
+    "hard gap-to-oracle bridge, adaptive information/testing and A/B lower bounds",
+    "pre-proof exact-signature coverage debt for earlier concrete gate-cost adapter; publication not admitted"
+  ],
+  "ownership": "Original work files/branches preserved; only independent research worktrees changed. No main merge, collaborator message or remote deployment."
+}

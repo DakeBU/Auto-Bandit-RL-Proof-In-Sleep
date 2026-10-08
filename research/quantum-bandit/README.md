@@ -34,8 +34,12 @@ Every forward **and inverse** oracle use consumes one unit of T and charges that
 gap. Shots are blocks. Physical primitive gates, known-gate synthesis, physical depth,
 state loading, classical processing and wall-clock cost remain separate. No reflection
 about an unknown state, controlled unknown oracle, or unknown mean angle is free.
-The present code proves single-block circuit semantics and deterministic accounting;
-the actual reset/measurement stochastic history producer remains open.
+The present code proves single-block circuit semantics and deterministic accounting.
+It also constructs a normalized reset/history producer in the separately named
+**FC-WO-reset-basis-v1** refinement: computational-basis measurement, an exact-real
+fresh state, deterministic classical-history policy, and a fixed finite number of
+blocks. General POVMs, physical state loading/discard, stopping and horizon clipping
+remain open.
 
 B fixes each implemented circuit and matching inverse at a fidelity. Its target mean
 bias is systematic. Noise that changes between oracle invocations requires a separate
@@ -76,6 +80,15 @@ Hellinger convention, reverse triangle plus the Euclidean norm identity proves
 H²≤‖x−y‖²≤q²η²≤Dqη². This is a genuine single-block information ingredient;
 it is not an adaptive lower bound, and it does not yet treat arbitrary POVMs.
 
+The reset process converts these actual squared-coordinate probabilities to a PMF,
+then uses `PMF.bind` to append one classical outcome per block. Each block evaluates
+the selected arm's actual word on the same fresh state. History support has exactly
+n outcomes. Summing the words selected at each history prefix gives the actual query
+cost, bounded by nD; a total budget T follows when nD≤T. This does not implement
+interruption inside a block or a random stopping time. Its X-gate canary runs two
+forward calls and one inverse per block: two reset blocks produce [1,1] with six
+queries. Carrying the output state across blocks would instead alternate outcomes.
+
 On a supplied good confidence event, interval elimination retains tied optima and
 removes an arm once its gap exceeds four times the common radius. Fixed circuit bias
 b and statistical radius s compose as b+s. A fixed-enumeration exact-real argmax
@@ -95,6 +108,7 @@ algorithm histories must be established by the eventual producer.
 | forward/inverse query telescoping | `QuantumBlockEncoding.QuantumQueryWord.eval_distance_le`, `queryCount_eq`, `probability_difference_le` | chronological instruction semantics/unitary products/star norm | compiled |
 | actual gate count and evaluator link | `QuantumBlockEncoding.QueryCircuitCost.expanded_length`, `expanded_semantics` | primitive list expansion and existing dagger/append semantics | compiled prototype; seal chronology gap |
 | genuine basis information bound | `QuantumBlockEncoding.BasisHellinger.bounded_word_hellingerSq_le` | actual basis normalization, reverse triangle, query telescoping | compiled; basis-only |
+| reset measurement/history and query budget | `QuantumBlockEncoding.ResetBlockProcess.basisPMF`, `historyLaw`, `historyLaw_queryCost_le`, `historyLaw_queryCost_le_budget` | actual normalized basis probabilities, PMF.bind, history-prefix word counts | compiled; fixed-n basis refinement |
 | confidence/elimination/recommendation | `BanditRLProof.QuantumConfidence.optimal_survives`, `large_gap_removed`, `recommend_fixed_fidelity_failure_bound` | existing finite argmax/union bounds; supplied estimation tails | compiled conditional transport |
 | real regret/pull-count compatibility | `BanditRLProof.QuantumQueryAccounting.chargedRegret_eq_realMeanRegret`, `chargedRegret_eq_gap_pullCount` | actual query-list expansion and existing RealMeanRegretPullCount | compiled deterministic accounting |
 | actual cross-library chain | `BanditRLProof.QuantumBanditAdapter.aligned_circuit_confidence_transport`, `circuit_certified_recommendation_failure_bound`, `chargedBlock_queries` | imported compatible quantum theorems plus Bandit confidence/accounting | compiled conditional transport |
@@ -106,6 +120,7 @@ Focused commands run on the real sources:
 lake build QuantumBlockEncoding.BornStability QuantumBlockEncoding.CircuitRewardBias ABEISTests.QuantumBanditBornCanary
 lake build QuantumBlockEncoding.QuantumQueryWord ABEISTests.QuantumQueryWordCanary
 lake build QuantumBlockEncoding.BasisHellinger ABEISTests.BasisHellingerCanary
+lake build QuantumBlockEncoding.ResetBlockProcess ABEISTests.ResetBlockProcessCanary
 # C:/qb261009/bandit
 lake build BanditRLProof.QuantumQueryAccounting Tests.QuantumConfidenceCanary
 # this directory
@@ -119,6 +134,25 @@ consumes an existing alignment proof to derive bias plus statistical radius.
 Reported root axioms are `propext`, `Classical.choice`, `Quot.sound`; no `sorryAx`
 or new source axiom is admitted. Aggregate gates and exact failures are recorded in
 `evidence/validation.json`, with raw logs retained in `C:/qb261009/evidence`.
+
+Both complete Lean root/Tests gates and the joint canary pass. The quantum gate also
+checks every one of 212 explicit modules with a stable source fingerprint. Bandit's
+formal check passes all 451 tool tests with seven platform skips, using Python 3.14
+and a process-local short temporary directory; its local site build/check pass.
+Quantum's Blueprint, 4586-declaration search and 11 search/anchor tests pass. Its
+final harness rerun passes 99 tests with one skip after an earlier transient bounded
+Windows atomic-replace failure. The complete native script is not reported green.
+The quantum website entrypoint rejects all six changed production modules for lacking
+admitted publication records. This is retained as the intended draft boundary;
+compilation and independent limited semantic matches are not substituted for admission.
+
+The Windows integration work includes a missing process-memory check in the native
+build script and a runtime-lock repair: an unbounded lock now polls nonblocking
+Windows acquisition instead of relying on its limited retry count. Permanent locking
+errors still propagate, and the runtime tests exercise contention and lock cleanup.
+These changes are confined to the isolated quantum worktree. The original checkout's
+Python environment is reused read-only for its pinned Qiskit/OpenQASM dependencies;
+no packages were installed into that environment.
 
 `evidence/proof-term-graph.json` is extracted from compiled declaration type/value
 constants. It distinguishes type edges from proof-only value edges and records the
@@ -149,6 +183,8 @@ openai/math have different toolchains/licenses/placeholders as recorded. **All r
 candidate nodes**: none is assumed as a local theorem. Existing HOO reward-process MGF
 proofs cannot be applied to arbitrary quantum estimation outputs.
 
+The detailed status ledger, intended policy interfaces and explicit infeasible-fidelity
+counterexample are in [research-boundaries.md](research-boundaries.md).
 The next ordered leaves are:
 
 1. Freeze exact signatures before proof search for a projector-based estimator with
@@ -189,3 +225,6 @@ resolution remains an external preprint result, not a newly ported proof. The jo
 actual dependency slice is updated; candidate algorithm and source edges stay dashed.
 No bound/source atlas or compressed spine is promoted. This is a recorded
 `no-change-with-reason`, not a claim that the open research roots were discharged.
+The six new quantum source modules are assigned to the existing Semantics catalog
+so source coverage and Blueprint generation remain complete. This catalog membership
+does not change their draft publication status or introduce a new accepted bound.
