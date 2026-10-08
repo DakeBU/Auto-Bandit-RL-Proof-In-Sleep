@@ -1,0 +1,96 @@
+∀ (κ : (t : Nat) → Kernel.{0, 0} (KernelDecisionHistory t) ↑unitInterval) [∀ (t : Nat), IsMarkovKernel.{0, 0} (κ t)],
+  Exists.{1} fun f =>
+    And (∀ (t : Nat), Measurable.{0, 0} (Function.uncurry.{0, 0, 1} (f t)))
+      (∀ (t : Nat) (h : KernelDecisionHistory t), Eq.{1} (Measure.map.{0, 0} (f t h) volume.{0}) ((κ t) h)) : Prop
+∀ (f : KernelDecisionSampler),
+  (∀ (t : Nat), Measurable.{0, 0} (Function.uncurry.{0, 0, 1} (f t))) →
+    And (∀ (t : Nat), Measurable.{0, 0} (kernelCausalPolicy f t))
+      (And
+        (∀ (t : Nat) (u : Nat → ↑unitInterval) (y : Nat → Real) (i : Fin t),
+          Eq.{1} (kernelGeneratedActions f t (fun j => u ↑j) (fun j => y ↑j) i)
+            (kernelGeneratedPrediction f (↑i) (Prod.mk.{0, 0} u y)))
+        (∀ (t : Nat) (ω ω' : Prod.{0, 0} (Nat → ↑unitInterval) (Nat → Real)),
+          (∀ (i : Nat), LE.le.{0} i t → Eq.{1} (ω.1 i) (ω'.1 i)) →
+            (∀ (i : Nat), LT.lt.{0} i t → Eq.{1} (ω.2 i) (ω'.2 i)) →
+              Eq.{1} (kernelGeneratedPrediction f t ω) (kernelGeneratedPrediction f t ω'))) : Prop
+E:\ABRL\worktrees\research-online-book\runs\online-kernel-causal-20261008\draft-typecheck-v2.lean:58:39: warning: unused variable `hf`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (κ : (t : Nat) → Kernel.{0, 0} (KernelDecisionHistory t) ↑unitInterval) [∀ (t : Nat), IsMarkovKernel.{0, 0} (κ t)]
+  (f : KernelDecisionSampler),
+  (∀ (t : Nat), Measurable.{0, 0} (Function.uncurry.{0, 0, 1} (f t))) →
+    (∀ (t : Nat) (h : KernelDecisionHistory t), Eq.{1} (Measure.map.{0, 0} (f t h) volume.{0}) ((κ t) h)) →
+      ∀ (ν : ProbabilityMeasure.{0} (Nat → Real)) (t : Nat),
+        Eq.{1}
+          (Measure.map.{0, 0} (fun ω => Prod.mk.{0, 0} (kernelGeneratedHistory f t ω) (kernelGeneratedPrediction f t ω))
+            (kernelGameLaw ν))
+          (Measure.compProd.{0, 0} (Measure.map.{0, 0} (kernelGeneratedHistory f t) (kernelGameLaw ν)) (κ t)) : Prop
+E:\ABRL\worktrees\research-online-book\runs\online-kernel-causal-20261008\draft-typecheck-v2.lean:69:33: warning: unused variable `hf`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\runs\online-kernel-causal-20261008\draft-typecheck-v2.lean:70:5: warning: unused variable `hκ`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (κ : (t : Nat) → Kernel.{0, 0} (KernelDecisionHistory t) ↑unitInterval) [∀ (t : Nat), IsMarkovKernel.{0, 0} (κ t)]
+  (f : KernelDecisionSampler),
+  (∀ (t : Nat), Measurable.{0, 0} (Function.uncurry.{0, 0, 1} (f t))) →
+    (∀ (t : Nat) (h : KernelDecisionHistory t), Eq.{1} (Measure.map.{0, 0} (f t h) volume.{0}) ((κ t) h)) →
+      ∀ (ν : ProbabilityMeasure.{0} (Nat → Real)) (t : Nat),
+        Filter.EventuallyEq.{0, 0} (ae.{0, 0} (Measure.map.{0, 0} (kernelGeneratedHistory f t) (kernelGameLaw ν)))
+          ⇑(condDistrib.{0, 0, 0} (kernelGeneratedPrediction f t) (kernelGeneratedHistory f t) (kernelGameLaw ν))
+          ⇑(κ t) : Prop
+E:\ABRL\worktrees\research-online-book\runs\online-kernel-causal-20261008\draft-typecheck-v2.lean:77:33: warning: unused variable `hf`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\runs\online-kernel-causal-20261008\draft-typecheck-v2.lean:78:5: warning: unused variable `hκ`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (κ : (t : Nat) → Kernel.{0, 0} (KernelDecisionHistory t) ↑unitInterval) [∀ (t : Nat), IsMarkovKernel.{0, 0} (κ t)],
+  Exists.{1} fun f =>
+    And (∀ (t : Nat), Measurable.{0, 0} (Function.uncurry.{0, 0, 1} (f t)))
+      (And (∀ (t : Nat) (h : KernelDecisionHistory t), Eq.{1} (Measure.map.{0, 0} (f t h) volume.{0}) ((κ t) h))
+        (And (∀ (t : Nat), Measurable.{0, 0} (kernelCausalPolicy f t))
+          (And
+            (∀ (t : Nat) (u : Nat → ↑unitInterval) (y : Nat → Real) (i : Fin t),
+              Eq.{1} (kernelGeneratedActions f t (fun j => u ↑j) (fun j => y ↑j) i)
+                (kernelGeneratedPrediction f (↑i) (Prod.mk.{0, 0} u y)))
+            (And
+              (∀ (t : Nat) (ω ω' : Prod.{0, 0} (Nat → ↑unitInterval) (Nat → Real)),
+                (∀ (i : Nat), LE.le.{0} i t → Eq.{1} (ω.1 i) (ω'.1 i)) →
+                  (∀ (i : Nat), LT.lt.{0} i t → Eq.{1} (ω.2 i) (ω'.2 i)) →
+                    Eq.{1} (kernelGeneratedPrediction f t ω) (kernelGeneratedPrediction f t ω'))
+              (∀ (ν : ProbabilityMeasure.{0} (Nat → Real)),
+                And
+                  (∀ (t : Nat),
+                    Eq.{1}
+                      (Measure.map.{0, 0}
+                        (fun ω => Prod.mk.{0, 0} (kernelGeneratedHistory f t ω) (kernelGeneratedPrediction f t ω))
+                        (kernelGameLaw ν))
+                      (Measure.compProd.{0, 0} (Measure.map.{0, 0} (kernelGeneratedHistory f t) (kernelGameLaw ν))
+                        (κ t)))
+                  (And
+                    (∀ (t : Nat),
+                      Filter.EventuallyEq.{0, 0}
+                        (ae.{0, 0} (Measure.map.{0, 0} (kernelGeneratedHistory f t) (kernelGameLaw ν)))
+                        ⇑(condDistrib.{0, 0, 0} (kernelGeneratedPrediction f t) (kernelGeneratedHistory f t)
+                            (kernelGameLaw ν))
+                        ⇑(κ t))
+                    (iIndepFun.{0, 0, 0} (fun t y => y t) ↑ν →
+                      (∀ (t : Nat), IdentDistrib.{0, 0, 0} (fun y => y t) (fun y => y 0) ↑ν ↑ν) →
+                        (∀ (t : Nat),
+                            Filter.Eventually.{0} (fun y => Membership.mem.{0, 0} (Set.Icc.{0} 0 1) (y t))
+                              (ae.{0, 0} ↑ν)) →
+                          ∀ (T : Nat),
+                            And
+                              (Eq.{1}
+                                (expectedFixedRegret.{0} (kernelGameLaw ν) (fun t ω => ω.2 t)
+                                  (fun t ω => ↑(kernelGeneratedPrediction f t ω)) T)
+                                (Finset.sum.{0, 0} (Finset.range T) fun t =>
+                                  integral.{0, 0} (kernelGameLaw ν) fun ω =>
+                                    HPow.hPow.{0, 0, 0}
+                                      (HSub.hSub.{0, 0, 0} (↑(kernelGeneratedPrediction f t ω))
+                                        (integral.{0, 0} (kernelGameLaw ν) fun ω => ω.2 0))
+                                      2))
+                              (LE.le.{0} 0
+                                (expectedFixedRegret.{0} (kernelGameLaw ν) (fun t ω => ω.2 t)
+                                  (fun t ω => ↑(kernelGeneratedPrediction f t ω)) T))))))))) : Prop

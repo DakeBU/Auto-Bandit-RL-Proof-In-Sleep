@@ -1,0 +1,219 @@
+import BanditRLProof.OnlineGuessingKernelCausal
+import Tests.OnlineGuessingIIDBenchmarkCanary
+
+noncomputable section
+open MeasureTheory ProbabilityTheory BanditRL.OnlineLearning unitInterval
+open Tests.OnlineGuessingIIDBenchmark
+open scoped ENNReal
+
+namespace Tests.OnlineGuessingKernelCausal
+
+def lowLaw : Measure I :=
+  (3 / 4 : ℝ≥0∞) • Measure.dirac 0 + (1 / 4 : ℝ≥0∞) • Measure.dirac 1
+
+def highLaw : Measure I :=
+  (1 / 4 : ℝ≥0∞) • Measure.dirac 0 + (3 / 4 : ℝ≥0∞) • Measure.dirac 1
+
+instance lowLaw_probability : IsProbabilityMeasure lowLaw := by
+  constructor
+  simp only [lowLaw, Measure.add_apply, Measure.smul_apply, measure_univ, smul_eq_mul, mul_one]
+  rw [← ENNReal.add_div]
+  norm_num
+
+instance highLaw_probability : IsProbabilityMeasure highLaw := by
+  constructor
+  simp only [highLaw, Measure.add_apply, Measure.smul_apply, measure_univ, smul_eq_mul, mul_one]
+  rw [← ENNReal.add_div]
+  norm_num
+
+/-- Last generated action and last observation both change the next decision law. -/
+def switchSet : (t : ℕ) → Set (KernelDecisionHistory t)
+  | 0 => ∅
+  | t + 1 => {h | 1 < (h.1 (Fin.last t) : ℝ) + h.2 (Fin.last t)}
+
+theorem switchSet_measurable (t : ℕ) : MeasurableSet (switchSet t) := by
+  cases t with
+  | zero => exact MeasurableSet.empty
+  | succ t =>
+      exact measurableSet_lt measurable_const (by fun_prop)
+
+def decisionKernel (t : ℕ) : Kernel (KernelDecisionHistory t) I := by
+  classical
+  exact Kernel.piecewise (switchSet_measurable t)
+    (Kernel.const (KernelDecisionHistory t) highLaw)
+    (Kernel.const (KernelDecisionHistory t) lowLaw)
+
+instance decisionKernel_markov (t : ℕ) : IsMarkovKernel (decisionKernel t) := by
+  unfold decisionKernel
+  infer_instance
+
+def oneHistory (a : I) (y : ℝ) : KernelDecisionHistory 1 := (fun _ => a, fun _ => y)
+
+def selectedSampler : KernelDecisionSampler :=
+  Classical.choose (causal_kernel_realization_and_expectedFixed_excess decisionKernel)
+
+def observationLaw : ProbabilityMeasure (ℕ → ℝ) := ⟨iidLaw, inferInstance⟩
+
+abbrev gameLaw : Measure ((ℕ → I) × (ℕ → ℝ)) := kernelGameLaw observationLaw
+
+def prediction (t : ℕ) (ω : (ℕ → I) × (ℕ → ℝ)) : I :=
+  kernelGeneratedPrediction selectedSampler t ω
+
+def target (t : ℕ) (ω : (ℕ → I) × (ℕ → ℝ)) : ℝ := ω.2 t
+
+private theorem selected_joint_measurable (t : ℕ) :
+    Measurable (Function.uncurry (selectedSampler t)) :=
+  (Classical.choose_spec (causal_kernel_realization_and_expectedFixed_excess decisionKernel)).1 t
+
+private theorem selected_represents (t : ℕ) (h : KernelDecisionHistory t) :
+    (volume : Measure I).map (selectedSampler t h) = decisionKernel t h :=
+  (Classical.choose_spec (causal_kernel_realization_and_expectedFixed_excess decisionKernel)).2.1 t h
+
+theorem public_family_realizes : ∃ f : KernelDecisionSampler,
+    (∀ t, Measurable (Function.uncurry (f t))) ∧
+    ∀ t h, (volume : Measure I).map (f t h) = decisionKernel t h :=
+  kernel_sampler_family_exists decisionKernel
+
+theorem public_causal_process :
+    (∀ t, Measurable (kernelCausalPolicy selectedSampler t)) ∧
+    (∀ t (u : ℕ → I) (y : ℕ → ℝ) (i : Fin t),
+      kernelGeneratedActions selectedSampler t (fun j => u j) (fun j => y j) i =
+        kernelGeneratedPrediction selectedSampler (i : ℕ) (u, y)) ∧
+    ∀ t (ω ω' : (ℕ → I) × (ℕ → ℝ)),
+      (∀ i, i ≤ t → ω.1 i = ω'.1 i) →
+      (∀ i, i < t → ω.2 i = ω'.2 i) →
+      kernelGeneratedPrediction selectedSampler t ω =
+        kernelGeneratedPrediction selectedSampler t ω' :=
+  kernel_sampler_causal_process selectedSampler selected_joint_measurable
+
+theorem public_joint_law (ν : ProbabilityMeasure (ℕ → ℝ)) (t : ℕ) :
+    (kernelGameLaw ν).map (fun ω =>
+      (kernelGeneratedHistory selectedSampler t ω, kernelGeneratedPrediction selectedSampler t ω)) =
+      (kernelGameLaw ν).map (kernelGeneratedHistory selectedSampler t) ⊗ₘ decisionKernel t :=
+  kernel_sampler_joint_law decisionKernel selectedSampler selected_joint_measurable selected_represents ν t
+
+theorem public_conditional_law (ν : ProbabilityMeasure (ℕ → ℝ)) (t : ℕ) :
+    condDistrib (kernelGeneratedPrediction selectedSampler t)
+      (kernelGeneratedHistory selectedSampler t) (kernelGameLaw ν)
+      =ᵐ[(kernelGameLaw ν).map (kernelGeneratedHistory selectedSampler t)] decisionKernel t :=
+  kernel_sampler_conditional_law decisionKernel selectedSampler selected_joint_measurable selected_represents ν t
+
+theorem actual_process_excess (T : ℕ) :
+    expectedFixedRegret gameLaw target (fun t ω => (prediction t ω : ℝ)) T =
+      (∑ t ∈ Finset.range T, ∫ ω,
+        ((prediction t ω : ℝ) - ∫ ω, target 0 ω ∂gameLaw)^2 ∂gameLaw) ∧
+    0 ≤ expectedFixedRegret gameLaw target (fun t ω => (prediction t ω : ℝ)) T := by
+  exact (Classical.choose_spec
+    (causal_kernel_realization_and_expectedFixed_excess decisionKernel)).2.2.2.2.2 observationLaw
+      |>.2.2 observation_independent observation_sameLaw observation_support T
+
+theorem history_feedback_distribution :
+    decisionKernel 1 (oneHistory 0 1) {1} = (1 / 4 : ℝ≥0∞) ∧
+    decisionKernel 1 (oneHistory 1 1) {1} = (3 / 4 : ℝ≥0∞) ∧
+    decisionKernel 1 (oneHistory 1 0) {1} = (1 / 4 : ℝ≥0∞) := by
+  norm_num [decisionKernel, Kernel.piecewise_apply, switchSet, oneHistory, lowLaw, highLaw]
+
+theorem every_history_stochastic (t : ℕ) (h : KernelDecisionHistory t) :
+    (decisionKernel t h {1} = (1 / 4 : ℝ≥0∞) ∨
+      decisionKernel t h {1} = (3 / 4 : ℝ≥0∞)) ∧
+    0 < decisionKernel t h {0} ∧ 0 < decisionKernel t h {1} := by
+  simp only [decisionKernel, Kernel.piecewise_apply]
+  split_ifs <;> norm_num [lowLaw, highLaw]
+
+private theorem lowLaw_binary : ∀ᵐ x ∂lowLaw, x = 0 ∨ x = 1 := by
+  rw [lowLaw, ae_add_measure_iff]
+  constructor <;> apply Measure.ae_smul_measure <;> simp
+
+private theorem highLaw_binary : ∀ᵐ x ∂highLaw, x = 0 ∨ x = 1 := by
+  rw [highLaw, ae_add_measure_iff]
+  constructor <;> apply Measure.ae_smul_measure <;> simp
+
+private theorem decisionKernel_binary (t : ℕ) (h : KernelDecisionHistory t) :
+    ∀ᵐ x ∂decisionKernel t h, x = 0 ∨ x = 1 := by
+  simp only [decisionKernel, Kernel.piecewise_apply]
+  split_ifs
+  · exact highLaw_binary
+  · exact lowLaw_binary
+
+private theorem prediction_measurable (t : ℕ) : Measurable (prediction t) := by
+  have hr : Measurable (fun ω : (ℕ → I) × (ℕ → ℝ) =>
+      (ω.1, fun i : Fin t => ω.2 i)) := by
+    fun_prop
+  exact (public_causal_process.1 t).comp hr
+
+private theorem history_measurable (t : ℕ) :
+    Measurable (kernelGeneratedHistory selectedSampler t) := by
+  have ha : Measurable (fun ω : (ℕ → I) × (ℕ → ℝ) =>
+      kernelGeneratedActions selectedSampler t (fun i => ω.1 i) (fun i => ω.2 i)) := by
+    apply measurable_pi_iff.mpr
+    intro i
+    convert prediction_measurable (i : ℕ) using 1
+    funext ω
+    exact public_causal_process.2.1 t ω.1 ω.2 i
+  have hy : Measurable (fun ω : (ℕ → I) × (ℕ → ℝ) =>
+      fun i : Fin t => ω.2 i) := by
+    fun_prop
+  exact ha.prodMk hy
+
+/-- Binary support follows from the realized joint law, rather than a prediction premise. -/
+theorem actual_prediction_binary (t : ℕ) : ∀ᵐ ω ∂gameLaw,
+    prediction t ω = 0 ∨ prediction t ω = 1 := by
+  have hp : MeasurableSet {q : KernelDecisionHistory t × I | q.2 = 0 ∨ q.2 = 1} := by
+    measurability
+  have h : ∀ᵐ q ∂((gameLaw.map (kernelGeneratedHistory selectedSampler t)) ⊗ₘ decisionKernel t),
+      q.2 = 0 ∨ q.2 = 1 :=
+    Measure.ae_compProd_of_ae_ae hp (Filter.Eventually.of_forall (decisionKernel_binary t))
+  rw [← public_joint_law observationLaw t] at h
+  exact ae_of_ae_map
+    ((history_measurable t).prodMk (prediction_measurable t)).aemeasurable h
+
+private theorem target_has_coinLaw (t : ℕ) :
+    IdentDistrib (target t) (fun x : ℝ => x) gameLaw coinLaw := by
+  have h : IdentDistrib (target t) (observation t) gameLaw iidLaw := by
+    have ht : Measurable (target t) :=
+      (measurable_pi_apply t).comp measurable_snd
+    refine ⟨ht.aemeasurable, (observation_measurable t).aemeasurable, ?_⟩
+    change gameLaw.map (observation t ∘ Prod.snd) = iidLaw.map (observation t)
+    rw [← Measure.map_map (observation_measurable t) measurable_snd]
+    simp [gameLaw, kernelGameLaw, observationLaw]
+  exact h.trans (observation_has_coinLaw t)
+
+theorem target_positive_variance (t : ℕ) : variance (target t) gameLaw = 1 / 4 := by
+  rw [(target_has_coinLaw t).variance_eq,
+    variance_eq_integral (X := fun x : ℝ => x) (μ := coinLaw) measurable_id.aemeasurable,
+    coinLaw_integral, coinLaw_integral]
+  norm_num
+
+private theorem target_mean : (∫ ω, target 0 ω ∂gameLaw) = 1 / 2 := by
+  rw [(target_has_coinLaw 0).integral_eq, coinLaw_integral]
+  norm_num
+
+/-- The same selected sampler and infinite prediction process are used at every T. -/
+theorem every_horizon_excess (T : ℕ) :
+    expectedFixedRegret gameLaw target (fun t ω => (prediction t ω : ℝ)) T = (T : ℝ) / 4 := by
+  rw [(actual_process_excess T).1]
+  have hcenter (t : ℕ) : (∫ ω,
+      ((prediction t ω : ℝ) - ∫ ω, target 0 ω ∂gameLaw)^2 ∂gameLaw) = (1 / 4 : ℝ) := by
+    rw [target_mean]
+    have he : (fun ω => ((prediction t ω : ℝ) - 1 / 2)^2) =ᵐ[gameLaw]
+        (fun _ => (1 / 4 : ℝ)) := by
+      filter_upwards [actual_prediction_binary t] with ω hω
+      rcases hω with hω | hω <;> rw [hω] <;> norm_num
+    rw [integral_congr_ae he]
+    simp
+  simp_rw [hcenter]
+  simp
+  ring
+
+theorem zero_horizon_excess :
+    expectedFixedRegret gameLaw target (fun t ω => (prediction t ω : ℝ)) 0 = 0 := by
+  rw [every_horizon_excess]
+  norm_num
+
+theorem positive_two_round_excess :
+    expectedFixedRegret gameLaw target (fun t ω => (prediction t ω : ℝ)) 2 = 1 / 2 ∧
+    0 < expectedFixedRegret gameLaw target (fun t ω => (prediction t ω : ℝ)) 2 := by
+  rw [every_horizon_excess]
+  norm_num
+
+end Tests.OnlineGuessingKernelCausal

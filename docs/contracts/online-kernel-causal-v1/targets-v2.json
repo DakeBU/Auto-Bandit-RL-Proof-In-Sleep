@@ -1,0 +1,53 @@
+{
+  "version": 2,
+  "targets": [
+    {
+      "id": "K1",
+      "name": "BanditRL.OnlineLearning.kernel_sampler_family_exists",
+      "header": "theorem kernel_sampler_family_exists\n    (κ : (t : ℕ) → Kernel (KernelDecisionHistory t) I) [∀ t, IsMarkovKernel (κ t)] :\n    ∃ f : KernelDecisionSampler,\n      (∀ t, Measurable (Function.uncurry (f t))) ∧\n      ∀ t h, (volume : Measure I).map (f t h) = κ t h",
+      "statement_hash": "9d18ad2d4f68f0d7a5f96b8d226b8a0395470ff634735939831b09df91715c07",
+      "phase": "draft",
+      "compiled": false
+    },
+    {
+      "id": "K2",
+      "name": "BanditRL.OnlineLearning.kernel_sampler_causal_process",
+      "header": "theorem kernel_sampler_causal_process\n    (f : KernelDecisionSampler) (hf : ∀ t, Measurable (Function.uncurry (f t))) :\n    (∀ t, Measurable (kernelCausalPolicy f t)) ∧\n    (∀ t (u : ℕ → I) (y : ℕ → ℝ) (i : Fin t),\n      kernelGeneratedActions f t (fun j => u j) (fun j => y j) i =\n        kernelGeneratedPrediction f (i : ℕ) (u, y)) ∧\n    ∀ t (ω ω' : (ℕ → I) × (ℕ → ℝ)),\n      (∀ i, i ≤ t → ω.1 i = ω'.1 i) →\n      (∀ i, i < t → ω.2 i = ω'.2 i) →\n      kernelGeneratedPrediction f t ω = kernelGeneratedPrediction f t ω'",
+      "statement_hash": "53418547fd45271f47e79e699404339bcbe652ad8f9bdfa3427c202f28d11a7f",
+      "phase": "draft",
+      "compiled": false
+    },
+    {
+      "id": "K3",
+      "name": "BanditRL.OnlineLearning.kernel_sampler_joint_law",
+      "header": "theorem kernel_sampler_joint_law\n    (κ : (t : ℕ) → Kernel (KernelDecisionHistory t) I) [∀ t, IsMarkovKernel (κ t)]\n    (f : KernelDecisionSampler) (hf : ∀ t, Measurable (Function.uncurry (f t)))\n    (hκ : ∀ t h, (volume : Measure I).map (f t h) = κ t h)\n    (ν : ProbabilityMeasure (ℕ → ℝ)) (t : ℕ) :\n    (kernelGameLaw ν).map (fun ω =>\n      (kernelGeneratedHistory f t ω, kernelGeneratedPrediction f t ω)) =\n      (kernelGameLaw ν).map (kernelGeneratedHistory f t) ⊗ₘ κ t",
+      "statement_hash": "bef7e1c4a65f053dd9b72482adb5202747c54da455f85c980cf44f2b05c9f725",
+      "phase": "draft",
+      "compiled": false
+    },
+    {
+      "id": "K4",
+      "name": "BanditRL.OnlineLearning.kernel_sampler_conditional_law",
+      "header": "theorem kernel_sampler_conditional_law\n    (κ : (t : ℕ) → Kernel (KernelDecisionHistory t) I) [∀ t, IsMarkovKernel (κ t)]\n    (f : KernelDecisionSampler) (hf : ∀ t, Measurable (Function.uncurry (f t)))\n    (hκ : ∀ t h, (volume : Measure I).map (f t h) = κ t h)\n    (ν : ProbabilityMeasure (ℕ → ℝ)) (t : ℕ) :\n    condDistrib (kernelGeneratedPrediction f t) (kernelGeneratedHistory f t) (kernelGameLaw ν)\n      =ᵐ[(kernelGameLaw ν).map (kernelGeneratedHistory f t)] κ t",
+      "statement_hash": "098ae1ceebcaceecf137157e06a2237a8197b5c909b0b26e75b90a77cf34bbb5",
+      "phase": "draft",
+      "compiled": false
+    },
+    {
+      "id": "K5",
+      "name": "BanditRL.OnlineLearning.causal_kernel_realization_and_expectedFixed_excess",
+      "header": "theorem causal_kernel_realization_and_expectedFixed_excess\n    (κ : (t : ℕ) → Kernel (KernelDecisionHistory t) I) [∀ t, IsMarkovKernel (κ t)] :\n    ∃ f : KernelDecisionSampler,\n      (∀ t, Measurable (Function.uncurry (f t))) ∧\n      (∀ t h, (volume : Measure I).map (f t h) = κ t h) ∧\n      (∀ t, Measurable (kernelCausalPolicy f t)) ∧\n      (∀ t (u : ℕ → I) (y : ℕ → ℝ) (i : Fin t),\n        kernelGeneratedActions f t (fun j => u j) (fun j => y j) i =\n          kernelGeneratedPrediction f (i : ℕ) (u, y)) ∧\n      (∀ t (ω ω' : (ℕ → I) × (ℕ → ℝ)),\n        (∀ i, i ≤ t → ω.1 i = ω'.1 i) →\n        (∀ i, i < t → ω.2 i = ω'.2 i) →\n        kernelGeneratedPrediction f t ω = kernelGeneratedPrediction f t ω') ∧\n      ∀ ν : ProbabilityMeasure (ℕ → ℝ),\n        (∀ t, (kernelGameLaw ν).map (fun ω =>\n          (kernelGeneratedHistory f t ω, kernelGeneratedPrediction f t ω)) =\n          (kernelGameLaw ν).map (kernelGeneratedHistory f t) ⊗ₘ κ t) ∧\n        (∀ t, condDistrib (kernelGeneratedPrediction f t) (kernelGeneratedHistory f t)\n          (kernelGameLaw ν) =ᵐ[(kernelGameLaw ν).map (kernelGeneratedHistory f t)] κ t) ∧\n        (iIndepFun (fun t (y : ℕ → ℝ) => y t) (ν : Measure (ℕ → ℝ)) →\n          (∀ t, IdentDistrib (fun y : ℕ → ℝ => y t) (fun y : ℕ → ℝ => y 0)\n            (ν : Measure (ℕ → ℝ)) (ν : Measure (ℕ → ℝ))) →\n          (∀ t, ∀ᵐ y ∂(ν : Measure (ℕ → ℝ)), y t ∈ Set.Icc (0 : ℝ) 1) →\n          ∀ T : ℕ,\n            expectedFixedRegret (kernelGameLaw ν) (fun t ω => ω.2 t)\n              (fun t ω => (kernelGeneratedPrediction f t ω : ℝ)) T =\n              (∑ t ∈ Finset.range T, ∫ ω,\n                ((kernelGeneratedPrediction f t ω : ℝ) -\n                  ∫ ω, ω.2 0 ∂(kernelGameLaw ν))^2 ∂(kernelGameLaw ν)) ∧\n            0 ≤ expectedFixedRegret (kernelGameLaw ν) (fun t ω => ω.2 t)\n              (fun t ω => (kernelGeneratedPrediction f t ω : ℝ)) T)",
+      "statement_hash": "376138ab1ad5ebbd2c83a48200d8f893c386e23e1d0f8d358b05bac922a9e02d",
+      "phase": "draft",
+      "compiled": false
+    }
+  ],
+  "source_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+  "exact_context_sha256": "01e9ee3c3a21cdca15a12d88e89be4b8f64ea76b093cf2b0dd325e8676745a0d",
+  "new_body_count": 0,
+  "source_theorem_count_claim": 0,
+  "chapter_complete": false,
+  "goal_complete": false,
+  "headers_file": "docs/contracts/online-kernel-causal-v1/targets-v1.lean.txt",
+  "original_statement_hashes_unchanged": true
+}

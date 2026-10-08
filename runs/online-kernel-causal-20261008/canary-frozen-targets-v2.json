@@ -1,0 +1,87 @@
+{
+  "proposal_sha256": "f17d69ce146fd3ecf50485521aed40db400e8e042fcfb4ddd0bedfb024da7d44",
+  "targets": [
+    {
+      "name": "Tests.OnlineGuessingKernelCausal.switchSet_measurable",
+      "header": "theorem switchSet_measurable (t : ℕ) : MeasurableSet (switchSet t)",
+      "statement_hash": "d31778e821b2d55a9fe08ed3651398c2e0433c61a6c2a5060bba02b986058e5a"
+    },
+    {
+      "name": "Tests.OnlineGuessingKernelCausal.public_family_realizes",
+      "header": "theorem public_family_realizes : ∃ f : KernelDecisionSampler, (∀ t, Measurable (Function.uncurry (f t))) ∧ ∀ t h, (volume : Measure I).map (f t h) = decisionKernel t h",
+      "statement_hash": "1d2e5ca40f9416c50f40ec7955572a7eef0a32318e4ecfe455986f1867c7d6a4"
+    },
+    {
+      "name": "Tests.OnlineGuessingKernelCausal.public_causal_process",
+      "header": "theorem public_causal_process : (∀ t, Measurable (kernelCausalPolicy selectedSampler t)) ∧ (∀ t (u : ℕ → I) (y : ℕ → ℝ) (i : Fin t), kernelGeneratedActions selectedSampler t (fun j => u j) (fun j => y j) i = kernelGeneratedPrediction selectedSampler (i : ℕ) (u, y)) ∧ ∀ t (ω ω' : (ℕ → I) × (ℕ → ℝ)), (∀ i, i ≤ t → ω.1 i = ω'.1 i) → (∀ i, i < t → ω.2 i = ω'.2 i) → kernelGeneratedPrediction selectedSampler t ω = kernelGeneratedPrediction selectedSampler t ω'",
+      "statement_hash": "0b3c49a7873e61a9ec6d818605005975bce22712c4e89639ab4254c47b103f81"
+    },
+    {
+      "name": "Tests.OnlineGuessingKernelCausal.public_joint_law",
+      "header": "theorem public_joint_law (ν : ProbabilityMeasure (ℕ → ℝ)) (t : ℕ) : (kernelGameLaw ν).map (fun ω => (kernelGeneratedHistory selectedSampler t ω, kernelGeneratedPrediction selectedSampler t ω)) = (kernelGameLaw ν).map (kernelGeneratedHistory selectedSampler t) ⊗ₘ decisionKernel t",
+      "statement_hash": "b583ab0dee6156da29ce63e5593316e3d33d1db577afb4df86e1870ff0c8b5fc"
+    },
+    {
+      "name": "Tests.OnlineGuessingKernelCausal.public_conditional_law",
+      "header": "theorem public_conditional_law (ν : ProbabilityMeasure (ℕ → ℝ)) (t : ℕ) : condDistrib (kernelGeneratedPrediction selectedSampler t) (kernelGeneratedHistory selectedSampler t) (kernelGameLaw ν) =ᵐ[(kernelGameLaw ν).map (kernelGeneratedHistory selectedSampler t)] decisionKernel t",
+      "statement_hash": "1349ee43591fd5fe716b3442d2b985e1b9ee8b71636ede2779c883482398fdba"
+    },
+    {
+      "name": "Tests.OnlineGuessingKernelCausal.actual_process_excess",
+      "header": "theorem actual_process_excess (T : ℕ) : expectedFixedRegret gameLaw target (fun t ω => (prediction t ω : ℝ)) T = (∑ t ∈ Finset.range T, ∫ ω, ((prediction t ω : ℝ) - ∫ ω, target 0 ω ∂gameLaw)^2 ∂gameLaw) ∧ 0 ≤ expectedFixedRegret gameLaw target (fun t ω => (prediction t ω : ℝ)) T",
+      "statement_hash": "fcd53f9caf775ba98a6d40cb56a2acc48afda22c08b420904a6436236a157679"
+    },
+    {
+      "name": "Tests.OnlineGuessingKernelCausal.history_feedback_distribution",
+      "header": "theorem history_feedback_distribution : decisionKernel 1 (oneHistory 0 1) {1} = (1 / 4 : ℝ≥0∞) ∧ decisionKernel 1 (oneHistory 1 1) {1} = (3 / 4 : ℝ≥0∞) ∧ decisionKernel 1 (oneHistory 1 0) {1} = (1 / 4 : ℝ≥0∞)",
+      "statement_hash": "fa8339ff7379db3f016e9a79cbaf157273e23bd9ac8d26512b5ff81479046c7b"
+    },
+    {
+      "name": "Tests.OnlineGuessingKernelCausal.every_history_stochastic",
+      "header": "theorem every_history_stochastic (t : ℕ) (h : KernelDecisionHistory t) : (decisionKernel t h {1} = (1 / 4 : ℝ≥0∞) ∨ decisionKernel t h {1} = (3 / 4 : ℝ≥0∞)) ∧ 0 < decisionKernel t h {0} ∧ 0 < decisionKernel t h {1}",
+      "statement_hash": "7aa6968234d7200244be4cfc3077fd32270d25a78aa53c5363a0c9fd8802d19d"
+    },
+    {
+      "name": "Tests.OnlineGuessingKernelCausal.actual_prediction_binary",
+      "header": "theorem actual_prediction_binary (t : ℕ) : ∀ᵐ ω ∂gameLaw, prediction t ω = 0 ∨ prediction t ω = 1",
+      "statement_hash": "3af79edadc8f3af74249ab77ead58185a9bfd426204eff94022a7552dcf767b5"
+    },
+    {
+      "name": "Tests.OnlineGuessingKernelCausal.target_positive_variance",
+      "header": "theorem target_positive_variance (t : ℕ) : variance (target t) gameLaw = 1 / 4",
+      "statement_hash": "c557133832518a25cbc79b15900e621d56deab55daa9d1d93611f7fce10fe33e"
+    },
+    {
+      "name": "Tests.OnlineGuessingKernelCausal.every_horizon_excess",
+      "header": "theorem every_horizon_excess (T : ℕ) : expectedFixedRegret gameLaw target (fun t ω => (prediction t ω : ℝ)) T = (T : ℝ) / 4",
+      "statement_hash": "f816878614f4d7619bf28a3632fa67571cffbd1cc1fe66dcb64626bf40f201c0"
+    },
+    {
+      "name": "Tests.OnlineGuessingKernelCausal.zero_horizon_excess",
+      "header": "theorem zero_horizon_excess : expectedFixedRegret gameLaw target (fun t ω => (prediction t ω : ℝ)) 0 = 0",
+      "statement_hash": "a6da28a1fffbd12318f9d63ac825f636fdcd01a73ce0bec939807bf386d136f4"
+    },
+    {
+      "name": "Tests.OnlineGuessingKernelCausal.positive_two_round_excess",
+      "header": "theorem positive_two_round_excess : expectedFixedRegret gameLaw target (fun t ω => (prediction t ω : ℝ)) 2 = 1 / 2 ∧ 0 < expectedFixedRegret gameLaw target (fun t ω => (prediction t ω : ℝ)) 2",
+      "statement_hash": "d54fb17f5e591b93dffbd2fdfaf763c45bfbc523f07e4ff5befd5c49148f3ffa"
+    }
+  ],
+  "selected_process": "selectedSampler chooses K5 once before law/horizon",
+  "exact_values": {
+    "low_one": "1/4",
+    "high_one": "3/4",
+    "observation_variance": "1/4",
+    "every_horizon_excess": "T/4",
+    "zero_excess": "0",
+    "two_round_excess": "1/2"
+  },
+  "switch": "1 < last generated action + last observation; empty start uses low law",
+  "iid_observation_law": "existing infinite Bernoulli(1/2) real stream, AE support only",
+  "canary_headers_frozen_before_first_actual_test_build": true,
+  "existing_five_production_targets_unchanged": true,
+  "source_body_and_canary_review_pending": true,
+  "package_accepted": false,
+  "chapter_complete": false,
+  "goal_complete": false
+}

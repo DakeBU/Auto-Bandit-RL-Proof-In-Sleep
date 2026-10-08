@@ -1,0 +1,5 @@
+Task: `ONLINE-KERNEL-CAUSAL-20261008`
+
+Five frozen kernel-realization bodies compiled, thirteen public stochastic/history-feedback canary proofs compiled. Actual one family, empty-start finite recursion, same-process prefix/nonanticipation, derived fresh-draw joint law, conditional AE law and all-natural-horizon expected-fixed excess. Whole five public proposition VALUE witnesses, named standard-only axioms, selected direct TYPE/VALUE graph and five native fences/safe-verify passed. K2/K3/K5 first failures and three canary failures retained; all repairs normalization/API/decidability only, frozen headers unchanged. Candidate only: zero accepted of five until source BODY/full combined/root/Tests/harness/site/FINAL/native/delivery. Given behavioral kernels, exogenous independent observation stream; no every-arbitrary-protocol reduction or action-dependent adversary. Original16/null, other C1/C2/C3-16/appendix obligations and active whole Goal preserved.
+
+Distinct actual BODY350 accepted-with-explicit-delta. Exact R1-R7 and combined/site/FINAL/native/delivery gates remain separately required. No global SGB frontier or lifecycle memory mutation.

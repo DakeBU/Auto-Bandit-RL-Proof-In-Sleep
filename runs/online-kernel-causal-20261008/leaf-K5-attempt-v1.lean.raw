@@ -1,0 +1,334 @@
+import BanditRLProof.OnlineGuessingRandomizedIID
+import Mathlib.Probability.Kernel.Representation
+import Mathlib.Probability.Kernel.CondDistrib
+import Mathlib.Probability.Independence.InfinitePi
+import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
+import Mathlib.Data.Fin.Tuple.Basic
+
+open MeasureTheory ProbabilityTheory unitInterval
+
+namespace BanditRL.OnlineLearning
+
+/-- Actions already generated and observations strictly before the current round. -/
+abbrev KernelDecisionHistory (t : ℕ) := (Fin t → I) × (Fin t → ℝ)
+
+/-- One sampler at every natural time, fixed without an observation law or horizon. -/
+abbrev KernelDecisionSampler := (t : ℕ) → KernelDecisionHistory t → I → I
+
+/-- Real causal recursion: append the sampled action to the previously generated actions. -/
+def kernelGeneratedActions (f : KernelDecisionSampler) :
+    (t : ℕ) → (Fin t → I) → (Fin t → ℝ) → (Fin t → I)
+  | 0, _, _ => Fin.elim0
+  | t + 1, u, y =>
+      let past := kernelGeneratedActions f t (fun i => u i.castSucc) (fun i => y i.castSucc)
+      Fin.snoc past (f t (past, fun i => y i.castSucc) (u (Fin.last t)))
+
+/-- Before-reveal policy; input observations have exactly the strict-past length. -/
+def kernelCausalPolicy (f : KernelDecisionSampler) (t : ℕ)
+    (q : (ℕ → I) × (Fin t → ℝ)) : I :=
+  f t (kernelGeneratedActions f t (fun i => q.1 i) q.2, q.2) (q.1 t)
+
+/-- Joint generated action history and strict-past observations on the common sample space. -/
+def kernelGeneratedHistory (f : KernelDecisionSampler) (t : ℕ)
+    (ω : (ℕ → I) × (ℕ → ℝ)) : KernelDecisionHistory t :=
+  (kernelGeneratedActions f t (fun i => ω.1 i) (fun i => ω.2 i), fun i => ω.2 i)
+
+/-- A single infinite prediction process, rather than a separate algorithm for each horizon. -/
+def kernelGeneratedPrediction (f : KernelDecisionSampler) (t : ℕ)
+    (ω : (ℕ → I) × (ℕ → ℝ)) : I :=
+  kernelCausalPolicy f t (ω.1, fun i => ω.2 i)
+
+/-- Independent fresh uniform draws form the private infinite tape. -/
+noncomputable abbrev kernelUniformTapeLaw : Measure (ℕ → I) :=
+  Measure.infinitePi (fun _ : ℕ => (volume : Measure I))
+
+/-- Observation law may have arbitrary temporal dependence for the kernel realization. -/
+noncomputable abbrev kernelGameLaw (ν : ProbabilityMeasure (ℕ → ℝ)) : Measure ((ℕ → I) × (ℕ → ℝ)) :=
+  kernelUniformTapeLaw.prod (ν : Measure (ℕ → ℝ))
+
+
+theorem kernel_sampler_family_exists
+    (κ : (t : ℕ) → Kernel (KernelDecisionHistory t) I) [∀ t, IsMarkovKernel (κ t)] :
+    ∃ f : KernelDecisionSampler,
+      (∀ t, Measurable (Function.uncurry (f t))) ∧
+      ∀ t h, (volume : Measure I).map (f t h) = κ t h := by
+  have h : ∀ t, ∃ f : KernelDecisionHistory t → I → I,
+      Measurable (Function.uncurry f) ∧ ∀ a, (volume : Measure I).map (f a) = κ t a :=
+    fun t => Kernel.exists_measurable_map_eq_unitInterval (κ t)
+  choose f hf hmap using h
+  exact ⟨f, hf, hmap⟩
+
+private theorem kernelGeneratedActions_measurable
+    (f : KernelDecisionSampler) (hf : ∀ t, Measurable (Function.uncurry (f t))) :
+    ∀ t, Measurable (fun q : (Fin t → I) × (Fin t → ℝ) =>
+      kernelGeneratedActions f t q.1 q.2) := by
+  intro t
+  induction t with
+  | zero =>
+      apply measurable_pi_iff.mpr
+      intro i
+      exact Fin.elim0 i
+  | succ t ih =>
+      have hr : Measurable (fun q : (Fin (t + 1) → I) × (Fin (t + 1) → ℝ) =>
+          ((fun i : Fin t => q.1 i.castSucc), fun i : Fin t => q.2 i.castSucc)) := by
+        fun_prop
+      have hp : Measurable (fun q : (Fin (t + 1) → I) × (Fin (t + 1) → ℝ) =>
+          kernelGeneratedActions f t (fun i => q.1 i.castSucc) (fun i => q.2 i.castSucc)) :=
+        ih.comp hr
+      have hy : Measurable (fun q : (Fin (t + 1) → I) × (Fin (t + 1) → ℝ) =>
+          fun i : Fin t => q.2 i.castSucc) := by
+        fun_prop
+      have hl : Measurable (fun q : (Fin (t + 1) → I) × (Fin (t + 1) → ℝ) =>
+          f t (kernelGeneratedActions f t (fun i => q.1 i.castSucc)
+            (fun i => q.2 i.castSucc), fun i => q.2 i.castSucc) (q.1 (Fin.last t))) :=
+        (hf t).comp ((hp.prodMk hy).prodMk ((measurable_pi_apply (Fin.last t)).comp measurable_fst))
+      apply measurable_pi_iff.mpr
+      intro i
+      refine Fin.lastCases ?_ (fun j => ?_) i
+      · simpa only [kernelGeneratedActions, Fin.snoc_last] using hl
+      · simpa only [kernelGeneratedActions, Fin.snoc_castSucc] using
+          (measurable_pi_apply j).comp hp
+
+theorem kernel_sampler_causal_process
+    (f : KernelDecisionSampler) (hf : ∀ t, Measurable (Function.uncurry (f t))) :
+    (∀ t, Measurable (kernelCausalPolicy f t)) ∧
+    (∀ t (u : ℕ → I) (y : ℕ → ℝ) (i : Fin t),
+      kernelGeneratedActions f t (fun j => u j) (fun j => y j) i =
+        kernelGeneratedPrediction f (i : ℕ) (u, y)) ∧
+    ∀ t (ω ω' : (ℕ → I) × (ℕ → ℝ)),
+      (∀ i, i ≤ t → ω.1 i = ω'.1 i) →
+      (∀ i, i < t → ω.2 i = ω'.2 i) →
+      kernelGeneratedPrediction f t ω = kernelGeneratedPrediction f t ω' := by
+  have hm (t : ℕ) : Measurable (kernelCausalPolicy f t) := by
+    have hr : Measurable (fun q : (ℕ → I) × (Fin t → ℝ) =>
+        ((fun i : Fin t => q.1 i), q.2)) := by
+      fun_prop
+    have hp : Measurable (fun q : (ℕ → I) × (Fin t → ℝ) =>
+        kernelGeneratedActions f t (fun i => q.1 i) q.2) :=
+      (kernelGeneratedActions_measurable f hf t).comp hr
+    exact (hf t).comp ((hp.prodMk measurable_snd).prodMk
+      ((measurable_pi_apply t).comp measurable_fst))
+  have hc : ∀ t (u : ℕ → I) (y : ℕ → ℝ) (i : Fin t),
+      kernelGeneratedActions f t (fun j => u j) (fun j => y j) i =
+        kernelGeneratedPrediction f (i : ℕ) (u, y) := by
+    intro t
+    induction t with
+    | zero =>
+        intro u y i
+        exact Fin.elim0 i
+    | succ t ih =>
+        intro u y i
+        refine Fin.lastCases ?_ (fun j => ?_) i
+        · simp only [kernelGeneratedActions, Fin.snoc_last]
+          rfl
+        · simpa only [kernelGeneratedActions, Fin.snoc_castSucc] using ih u y j
+  refine ⟨hm, hc, ?_⟩
+  intro t ω ω' hu hy
+  have hup : (fun i : Fin t => ω.1 i) = (fun i : Fin t => ω'.1 i) :=
+    funext fun i => hu i (Nat.le_of_lt i.isLt)
+  have hyp : (fun i : Fin t => ω.2 i) = (fun i : Fin t => ω'.2 i) :=
+    funext fun i => hy i i.isLt
+  simp only [kernelGeneratedPrediction, kernelCausalPolicy]
+  rw [hup, hyp, hu t le_rfl]
+
+private theorem kernelGameLaw_map_tape {β : Type*} [MeasurableSpace β]
+    (ν : ProbabilityMeasure (ℕ → ℝ)) (g : (ℕ → I) → β) (hg : Measurable g) :
+    (kernelGameLaw ν).map (fun ω => g ω.1) = kernelUniformTapeLaw.map g := by
+  change (kernelGameLaw ν).map (g ∘ Prod.fst) = kernelUniformTapeLaw.map g
+  rw [← Measure.map_map hg measurable_fst]
+  simp
+
+private theorem kernelSampler_product_law {H : Type*} [MeasurableSpace H]
+    (m : Measure H) [SFinite m] (κ : Kernel H I) [IsMarkovKernel κ]
+    (f : H → I → I) (hf : Measurable (Function.uncurry f))
+    (hκ : ∀ h, (volume : Measure I).map (f h) = κ h) :
+    (m.prod (volume : Measure I)).map (fun q => (q.1, f q.1 q.2)) = m ⊗ₘ κ := by
+  have hm : Measurable (fun q : H × I => (q.1, f q.1 q.2)) :=
+    measurable_fst.prodMk hf
+  ext s hs
+  rw [Measure.map_apply hm hs, Measure.prod_apply (hm hs), Measure.compProd_apply hs]
+  congr 1
+  funext h
+  rw [← hκ h, Measure.map_apply hf.of_uncurry_left (measurable_prodMk_left hs)]
+  rfl
+
+theorem kernel_sampler_joint_law
+    (κ : (t : ℕ) → Kernel (KernelDecisionHistory t) I) [∀ t, IsMarkovKernel (κ t)]
+    (f : KernelDecisionSampler) (hf : ∀ t, Measurable (Function.uncurry (f t)))
+    (hκ : ∀ t h, (volume : Measure I).map (f t h) = κ t h)
+    (ν : ProbabilityMeasure (ℕ → ℝ)) (t : ℕ) :
+    (kernelGameLaw ν).map (fun ω =>
+      (kernelGeneratedHistory f t ω, kernelGeneratedPrediction f t ω)) =
+      (kernelGameLaw ν).map (kernelGeneratedHistory f t) ⊗ₘ κ t := by
+  let past : (ℕ → I) → (Fin t → I) := fun u i => u i
+  have hpast : Measurable past := by
+    fun_prop
+  have htape : iIndepFun (fun n (u : ℕ → I) => u n) kernelUniformTapeLaw :=
+    iIndepFun_infinitePi (P := fun _ : ℕ => (volume : Measure I))
+      (X := fun _ => fun z : I => z) (fun _ => measurable_id)
+  have hpi : IndepFun past (fun u : ℕ → I => u t) kernelUniformTapeLaw := by
+    have hi := iIndepFun.indepFun_finset (Finset.range t) {t} (by simp) htape
+      (fun n => measurable_pi_apply n)
+    have hr : Measurable (fun z : (↑(Finset.range t) : Type) → I =>
+        fun i : Fin t => z ⟨i, Finset.mem_range.mpr i.isLt⟩) := by
+      fun_prop
+    simpa only [Function.comp_def, past] using hi.comp hr
+      (measurable_pi_apply (⟨t, by simp⟩ : (↑({t} : Finset ℕ) : Type)))
+  have hpi_game : IndepFun (fun ω : (ℕ → I) × (ℕ → ℝ) => past ω.1)
+      (fun ω => ω.1 t) (kernelGameLaw ν) := by
+    apply (indepFun_iff_map_prod_eq_prod_map_map
+      (hpast.comp measurable_fst).aemeasurable
+      ((measurable_pi_apply t).comp measurable_fst).aemeasurable).2
+    simp only [Function.comp_def]
+    rw [kernelGameLaw_map_tape ν (fun u => (past u, u t))
+          (hpast.prodMk (measurable_pi_apply t)),
+        kernelGameLaw_map_tape ν past hpast,
+        kernelGameLaw_map_tape ν (fun u => u t) (measurable_pi_apply t)]
+    exact (indepFun_iff_map_prod_eq_prod_map_map hpast.aemeasurable
+      (measurable_pi_apply t).aemeasurable).1 hpi
+  have hwhole : IndepFun (fun ω : (ℕ → I) × (ℕ → ℝ) => ω.2)
+      (fun ω => (past ω.1, ω.1 t)) (kernelGameLaw ν) :=
+    (indepFun_prod (μ := kernelUniformTapeLaw) (ν := (ν : Measure (ℕ → ℝ)))
+      (hpast.prodMk (measurable_pi_apply t)) measurable_id).symm
+  have hblock : IndepFun (fun ω : (ℕ → I) × (ℕ → ℝ) => (ω.2, past ω.1))
+      (fun ω => ω.1 t) (kernelGameLaw ν) :=
+    independent_private_seed_pair (kernelGameLaw ν) (fun ω => ω.2)
+      (fun ω => past ω.1) (fun ω => ω.1 t) measurable_snd
+      (hpast.comp measurable_fst) ((measurable_pi_apply t).comp measurable_fst) hwhole hpi_game
+  let b : (ℕ → ℝ) × (Fin t → I) → KernelDecisionHistory t := fun q =>
+    (kernelGeneratedActions f t q.2 (fun i => q.1 i), fun i => q.1 i)
+  have hr : Measurable (fun q : (ℕ → ℝ) × (Fin t → I) =>
+      (q.2, fun i : Fin t => q.1 i)) := by
+    fun_prop
+  have hy : Measurable (fun q : (ℕ → ℝ) × (Fin t → I) =>
+      fun i : Fin t => q.1 i) := by
+    fun_prop
+  have hb : Measurable b := ((kernelGeneratedActions_measurable f hf t).comp hr).prodMk hy
+  have hH : Measurable (kernelGeneratedHistory f t) := by
+    change Measurable (b ∘ (fun ω : (ℕ → I) × (ℕ → ℝ) => (ω.2, past ω.1)))
+    exact hb.comp (measurable_snd.prodMk (hpast.comp measurable_fst))
+  have hd : Measurable (fun ω : (ℕ → I) × (ℕ → ℝ) => ω.1 t) :=
+    (measurable_pi_apply t).comp measurable_fst
+  have hHd : IndepFun (kernelGeneratedHistory f t) (fun ω => ω.1 t) (kernelGameLaw ν) := by
+    simpa only [Function.comp_def, b, past, kernelGeneratedHistory] using hblock.comp hb measurable_id
+  have hdraw : (kernelGameLaw ν).map (fun ω => ω.1 t) = (volume : Measure I) :=
+    (kernelGameLaw_map_tape ν (fun u => u t) (measurable_pi_apply t)).trans
+      (Measure.infinitePi_map_eval (fun _ : ℕ => (volume : Measure I)) t)
+  have hjoint : (kernelGameLaw ν).map (fun ω => (kernelGeneratedHistory f t ω, ω.1 t)) =
+      ((kernelGameLaw ν).map (kernelGeneratedHistory f t)).prod (volume : Measure I) := by
+    rw [← hdraw]
+    exact (indepFun_iff_map_prod_eq_prod_map_map hH.aemeasurable hd.aemeasurable).1 hHd
+  let transform : KernelDecisionHistory t × I → KernelDecisionHistory t × I :=
+    fun q => (q.1, f t q.1 q.2)
+  have htransform : Measurable transform := measurable_fst.prodMk (hf t)
+  calc
+    (kernelGameLaw ν).map (fun ω =>
+        (kernelGeneratedHistory f t ω, kernelGeneratedPrediction f t ω)) =
+        ((kernelGameLaw ν).map (fun ω => (kernelGeneratedHistory f t ω, ω.1 t))).map transform := by
+          rw [Measure.map_map htransform (hH.prodMk hd)]
+          rfl
+    _ = (((kernelGameLaw ν).map (kernelGeneratedHistory f t)).prod (volume : Measure I)).map transform := by
+          rw [hjoint]
+    _ = (kernelGameLaw ν).map (kernelGeneratedHistory f t) ⊗ₘ κ t :=
+          kernelSampler_product_law _ (κ t) (f t) (hf t) (hκ t)
+
+theorem kernel_sampler_conditional_law
+    (κ : (t : ℕ) → Kernel (KernelDecisionHistory t) I) [∀ t, IsMarkovKernel (κ t)]
+    (f : KernelDecisionSampler) (hf : ∀ t, Measurable (Function.uncurry (f t)))
+    (hκ : ∀ t h, (volume : Measure I).map (f t h) = κ t h)
+    (ν : ProbabilityMeasure (ℕ → ℝ)) (t : ℕ) :
+    condDistrib (kernelGeneratedPrediction f t) (kernelGeneratedHistory f t) (kernelGameLaw ν)
+      =ᵐ[(kernelGameLaw ν).map (kernelGeneratedHistory f t)] κ t := by
+  have hp : Measurable (kernelGeneratedPrediction f t) := by
+    have hr : Measurable (fun ω : (ℕ → I) × (ℕ → ℝ) =>
+        (ω.1, fun i : Fin t => ω.2 i)) := by
+      fun_prop
+    exact (kernel_sampler_causal_process f hf).1 t |>.comp hr
+  exact condDistrib_ae_eq_of_measure_eq_compProd (kernelGeneratedHistory f t)
+    hp.aemeasurable (kernel_sampler_joint_law κ f hf hκ ν t)
+
+private theorem kernelGameLaw_map_observation {β : Type*} [MeasurableSpace β]
+    (ν : ProbabilityMeasure (ℕ → ℝ)) (g : (ℕ → ℝ) → β) (hg : Measurable g) :
+    (kernelGameLaw ν).map (fun ω => g ω.2) = (ν : Measure (ℕ → ℝ)).map g := by
+  change (kernelGameLaw ν).map (g ∘ Prod.snd) = _
+  rw [← Measure.map_map hg measurable_snd]
+  simp
+
+theorem causal_kernel_realization_and_expectedFixed_excess
+    (κ : (t : ℕ) → Kernel (KernelDecisionHistory t) I) [∀ t, IsMarkovKernel (κ t)] :
+    ∃ f : KernelDecisionSampler,
+      (∀ t, Measurable (Function.uncurry (f t))) ∧
+      (∀ t h, (volume : Measure I).map (f t h) = κ t h) ∧
+      (∀ t, Measurable (kernelCausalPolicy f t)) ∧
+      (∀ t (u : ℕ → I) (y : ℕ → ℝ) (i : Fin t),
+        kernelGeneratedActions f t (fun j => u j) (fun j => y j) i =
+          kernelGeneratedPrediction f (i : ℕ) (u, y)) ∧
+      (∀ t (ω ω' : (ℕ → I) × (ℕ → ℝ)),
+        (∀ i, i ≤ t → ω.1 i = ω'.1 i) →
+        (∀ i, i < t → ω.2 i = ω'.2 i) →
+        kernelGeneratedPrediction f t ω = kernelGeneratedPrediction f t ω') ∧
+      ∀ ν : ProbabilityMeasure (ℕ → ℝ),
+        (∀ t, (kernelGameLaw ν).map (fun ω =>
+          (kernelGeneratedHistory f t ω, kernelGeneratedPrediction f t ω)) =
+          (kernelGameLaw ν).map (kernelGeneratedHistory f t) ⊗ₘ κ t) ∧
+        (∀ t, condDistrib (kernelGeneratedPrediction f t) (kernelGeneratedHistory f t)
+          (kernelGameLaw ν) =ᵐ[(kernelGameLaw ν).map (kernelGeneratedHistory f t)] κ t) ∧
+        (iIndepFun (fun t (y : ℕ → ℝ) => y t) (ν : Measure (ℕ → ℝ)) →
+          (∀ t, IdentDistrib (fun y : ℕ → ℝ => y t) (fun y : ℕ → ℝ => y 0)
+            (ν : Measure (ℕ → ℝ)) (ν : Measure (ℕ → ℝ))) →
+          (∀ t, ∀ᵐ y ∂(ν : Measure (ℕ → ℝ)), y t ∈ Set.Icc (0 : ℝ) 1) →
+          ∀ T : ℕ,
+            expectedFixedRegret (kernelGameLaw ν) (fun t ω => ω.2 t)
+              (fun t ω => (kernelGeneratedPrediction f t ω : ℝ)) T =
+              (∑ t ∈ Finset.range T, ∫ ω,
+                ((kernelGeneratedPrediction f t ω : ℝ) -
+                  ∫ ω, ω.2 0 ∂(kernelGameLaw ν))^2 ∂(kernelGameLaw ν)) ∧
+            0 ≤ expectedFixedRegret (kernelGameLaw ν) (fun t ω => ω.2 t)
+              (fun t ω => (kernelGeneratedPrediction f t ω : ℝ)) T) := by
+  obtain ⟨f, hf, hκ⟩ := kernel_sampler_family_exists κ
+  obtain ⟨hpolicy, hprefix, hcausal⟩ := kernel_sampler_causal_process f hf
+  refine ⟨f, hf, hκ, hpolicy, hprefix, hcausal, ?_⟩
+  intro ν
+  refine ⟨kernel_sampler_joint_law κ f hf hκ ν,
+    kernel_sampler_conditional_law κ f hf hκ ν, ?_⟩
+  intro hind hlaw hb T
+  have hY (t : ℕ) : Measurable (fun ω : (ℕ → I) × (ℕ → ℝ) => ω.2 t) :=
+    (measurable_pi_apply t).comp measurable_snd
+  have hc (n : ℕ) : (kernelGameLaw ν).map (fun ω => ω.2 n) =
+      (ν : Measure (ℕ → ℝ)).map (fun y => y n) :=
+    kernelGameLaw_map_observation ν (fun y => y n) (measurable_pi_apply n)
+  have hInd : iIndepFun (fun t (ω : (ℕ → I) × (ℕ → ℝ)) => ω.2 t)
+      (kernelGameLaw ν) := by
+    apply (iIndepFun_iff_map_fun_eq_infinitePi_map hY).2
+    change (kernelGameLaw ν).map Prod.snd = _
+    rw [Measure.map_snd_prod, measure_univ, one_smul]
+    simp_rw [hc]
+    simpa only [Measure.map_id] using
+      (iIndepFun_iff_map_fun_eq_infinitePi_map (fun n => measurable_pi_apply n)).1 hind
+  have hLaw (t : ℕ) : IdentDistrib (fun ω : (ℕ → I) × (ℕ → ℝ) => ω.2 t)
+      (fun ω => ω.2 0) (kernelGameLaw ν) (kernelGameLaw ν) := by
+    refine ⟨(hY t).aemeasurable, (hY 0).aemeasurable, ?_⟩
+    rw [hc t, hc 0]
+    exact (hlaw t).map_eq
+  have hBound (t : ℕ) : ∀ᵐ ω ∂(kernelGameLaw ν), ω.2 t ∈ Set.Icc (0 : ℝ) 1 := by
+    exact measurePreserving_snd.quasiMeasurePreserving.ae (hb t)
+  let policy : (t : ℕ) → ((ℕ → I) × ((↑(Finset.range t) : Type) → ℝ)) → ℝ :=
+    fun t q => (kernelCausalPolicy f t
+      (q.1, fun i : Fin t => q.2 ⟨i, Finset.mem_range.mpr i.isLt⟩) : ℝ)
+  have hp (t : ℕ) : Measurable (policy t) := by
+    have hr : Measurable (fun q : (ℕ → I) × ((↑(Finset.range t) : Type) → ℝ) =>
+        (q.1, fun i : Fin t => q.2 ⟨i, Finset.mem_range.mpr i.isLt⟩)) := by
+      fun_prop
+    exact measurable_subtype_coe.comp ((hpolicy t).comp hr)
+  have hpb (t : ℕ) (u : ℕ → I) (z : (↑(Finset.range t) : Type) → ℝ)
+      (_ : ∀ i, z i ∈ Set.Icc (0 : ℝ) 1) : policy t (u, z) ∈ Set.Icc (0 : ℝ) 1 :=
+    (kernelCausalPolicy f t
+      (u, fun i : Fin t => z ⟨i, Finset.mem_range.mpr i.isLt⟩)).property
+  have hseed : IndepFun (Prod.fst : ((ℕ → I) × (ℕ → ℝ)) → (ℕ → I))
+      (Prod.snd : ((ℕ → I) × (ℕ → ℝ)) → (ℕ → ℝ)) (kernelGameLaw ν) :=
+    indepFun_prod measurable_id measurable_id
+  exact randomized_history_policy_expectedFixed_excess (kernelGameLaw ν)
+    (fun t ω => ω.2 t) hY hLaw hBound hInd Prod.fst measurable_fst hseed
+    policy hp hpb T
+
+end BanditRL.OnlineLearning

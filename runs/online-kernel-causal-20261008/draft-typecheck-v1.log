@@ -1,0 +1,75 @@
+E:\ABRL\worktrees\research-online-book\runs\online-kernel-causal-20261008\draft-typecheck-v1.lean:42:7: error(lean.dependsOnNoncomputable): failed to compile definition, consider marking it as 'noncomputable' because it depends on 'Measure.infinitePi', which is 'noncomputable'
+E:\ABRL\worktrees\research-online-book\runs\online-kernel-causal-20261008\draft-typecheck-v1.lean:46:7: error(lean.dependsOnNoncomputable): failed to compile definition, consider marking it as 'noncomputable' because it depends on 'Measure.prod', which is 'noncomputable'
+∀ (κ : (t : ℕ) → Kernel (KernelDecisionHistory t) ↑I) [∀ (t : ℕ), IsMarkovKernel (κ t)],
+  ∃ f,
+    (∀ (t : ℕ), Measurable (Function.uncurry (f t))) ∧
+      ∀ (t : ℕ) (h : KernelDecisionHistory t), Measure.map (f t h) ℙ = (κ t) h : Prop
+∀ (f : KernelDecisionSampler),
+  (∀ (t : ℕ), Measurable (Function.uncurry (f t))) →
+    (∀ (t : ℕ), Measurable (kernelCausalPolicy f t)) ∧
+      (∀ (t : ℕ) (u : ℕ → ↑I) (y : ℕ → ℝ) (i : Fin t),
+          kernelGeneratedActions f t (fun j => u ↑j) (fun j => y ↑j) i = kernelGeneratedPrediction f ↑i (u, y)) ∧
+        ∀ (t : ℕ) (ω ω' : (ℕ → ↑I) × (ℕ → ℝ)),
+          (∀ i ≤ t, ω.1 i = ω'.1 i) →
+            (∀ i < t, ω.2 i = ω'.2 i) → kernelGeneratedPrediction f t ω = kernelGeneratedPrediction f t ω' : Prop
+E:\ABRL\worktrees\research-online-book\runs\online-kernel-causal-20261008\draft-typecheck-v1.lean:55:39: warning: unused variable `hf`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (κ : (t : ℕ) → Kernel (KernelDecisionHistory t) ↑I) [∀ (t : ℕ), IsMarkovKernel (κ t)] (f : KernelDecisionSampler),
+  (∀ (t : ℕ), Measurable (Function.uncurry (f t))) →
+    (∀ (t : ℕ) (h : KernelDecisionHistory t), Measure.map (f t h) ℙ = (κ t) h) →
+      ∀ (ν : ProbabilityMeasure (ℕ → ℝ)) (t : ℕ),
+        Measure.map (fun ω => (kernelGeneratedHistory f t ω, kernelGeneratedPrediction f t ω)) (kernelGameLaw ν) =
+          Measure.map (kernelGeneratedHistory f t) (kernelGameLaw ν) ⊗ₘ κ t : Prop
+E:\ABRL\worktrees\research-online-book\runs\online-kernel-causal-20261008\draft-typecheck-v1.lean:66:33: warning: unused variable `hf`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\runs\online-kernel-causal-20261008\draft-typecheck-v1.lean:67:5: warning: unused variable `hκ`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (κ : (t : ℕ) → Kernel (KernelDecisionHistory t) ↑I) [∀ (t : ℕ), IsMarkovKernel (κ t)] (f : KernelDecisionSampler),
+  (∀ (t : ℕ), Measurable (Function.uncurry (f t))) →
+    (∀ (t : ℕ) (h : KernelDecisionHistory t), Measure.map (f t h) ℙ = (κ t) h) →
+      ∀ (ν : ProbabilityMeasure (ℕ → ℝ)) (t : ℕ),
+        ⇑(condDistrib (kernelGeneratedPrediction f t) (kernelGeneratedHistory f t)
+              (kernelGameLaw ν)) =ᶠ[ae (Measure.map (kernelGeneratedHistory f t) (kernelGameLaw ν))]
+          ⇑(κ t) : Prop
+E:\ABRL\worktrees\research-online-book\runs\online-kernel-causal-20261008\draft-typecheck-v1.lean:74:33: warning: unused variable `hf`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\runs\online-kernel-causal-20261008\draft-typecheck-v1.lean:75:5: warning: unused variable `hκ`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (κ : (t : ℕ) → Kernel (KernelDecisionHistory t) ↑I) [∀ (t : ℕ), IsMarkovKernel (κ t)],
+  ∃ f,
+    (∀ (t : ℕ), Measurable (Function.uncurry (f t))) ∧
+      (∀ (t : ℕ) (h : KernelDecisionHistory t), Measure.map (f t h) ℙ = (κ t) h) ∧
+        (∀ (t : ℕ), Measurable (kernelCausalPolicy f t)) ∧
+          (∀ (t : ℕ) (u : ℕ → ↑I) (y : ℕ → ℝ) (i : Fin t),
+              kernelGeneratedActions f t (fun j => u ↑j) (fun j => y ↑j) i = kernelGeneratedPrediction f ↑i (u, y)) ∧
+            (∀ (t : ℕ) (ω ω' : (ℕ → ↑I) × (ℕ → ℝ)),
+                (∀ i ≤ t, ω.1 i = ω'.1 i) →
+                  (∀ i < t, ω.2 i = ω'.2 i) → kernelGeneratedPrediction f t ω = kernelGeneratedPrediction f t ω') ∧
+              ∀ (ν : ProbabilityMeasure (ℕ → ℝ)),
+                (∀ (t : ℕ),
+                    Measure.map (fun ω => (kernelGeneratedHistory f t ω, kernelGeneratedPrediction f t ω))
+                        (kernelGameLaw ν) =
+                      Measure.map (kernelGeneratedHistory f t) (kernelGameLaw ν) ⊗ₘ κ t) ∧
+                  (∀ (t : ℕ),
+                      ⇑(condDistrib (kernelGeneratedPrediction f t) (kernelGeneratedHistory f t)
+                            (kernelGameLaw ν)) =ᶠ[ae (Measure.map (kernelGeneratedHistory f t) (kernelGameLaw ν))]
+                        ⇑(κ t)) ∧
+                    (iIndepFun (fun t y => y t) ↑ν →
+                      (∀ (t : ℕ), IdentDistrib (fun y => y t) (fun y => y 0) ↑ν ↑ν) →
+                        (∀ (t : ℕ), ∀ᵐ (y : ℕ → ℝ) ∂↑ν, y t ∈ Set.Icc 0 1) →
+                          ∀ (T : ℕ),
+                            expectedFixedRegret (kernelGameLaw ν) (fun t ω => ω.2 t)
+                                  (fun t ω => ↑(kernelGeneratedPrediction f t ω)) T =
+                                ∑ t ∈ Finset.range T,
+                                  ∫ (ω : (ℕ → ↑I) × (ℕ → ℝ)),
+                                    (↑(kernelGeneratedPrediction f t ω) -
+                                        ∫ (ω : (ℕ → ↑I) × (ℕ → ℝ)), ω.2 0 ∂kernelGameLaw ν) ^
+                                      2 ∂kernelGameLaw ν ∧
+                              0 ≤
+                                expectedFixedRegret (kernelGameLaw ν) (fun t ω => ω.2 t)
+                                  (fun t ω => ↑(kernelGeneratedPrediction f t ω)) T) : Prop

@@ -1,0 +1,83 @@
+⚠ [3327/3458] Replayed BanditRLProof.OnlineLearningFTL
+warning: BanditRLProof/OnlineLearningFTL.lean:81:41: unused variable `hT`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [3371/3458] Replayed BanditRLProof.OnlineLearningHistory
+warning: BanditRLProof/OnlineLearningHistory.lean:46:6: 'ring' tactic does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: BanditRLProof/OnlineLearningHistory.lean:46:6: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+⚠ [3372/3458] Replayed BanditRLProof.OnlineGuessingIIDBenchmark
+warning: BanditRLProof/OnlineGuessingIIDBenchmark.lean:38:8: This simp argument is unused:
+  Finset.sum_add_distrib
+
+Hint: Omit it from the simp argument list.
+  simp ̵[̵F̵i̵n̵s̵e̵t̵.̵s̵u̵m̵_̵a̵d̵d̵_̵d̵i̵s̵t̵r̵i̵b̵]̵
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: BanditRLProof/OnlineGuessingIIDBenchmark.lean:185:5: unused variable `hind`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: BanditRLProof/OnlineGuessingIIDBenchmark.lean:187:5: unused variable `hp`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: BanditRLProof/OnlineGuessingIIDBenchmark.lean:188:5: unused variable `hpb`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [3373/3458] Replayed BanditRLProof.OnlineGuessingRandomizedIID
+warning: BanditRLProof/OnlineGuessingRandomizedIID.lean:8:0: Definition `BanditRL.OnlineLearning.privateSeedPastInformation` of class type must be marked with `@[reducible]` or `@[implicit_reducible]`
+⚠ [3457/3458] Replayed Tests.OnlineGuessingIIDBenchmarkCanary
+warning: Tests/OnlineGuessingIIDBenchmarkCanary.lean:199:4: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+✖ [3458/3458] Building Tests.OnlineGuessingKernelCausalCanary (11s)
+trace: .> LEAN_PATH=E:\ABRL\research\.lake\packages\Cli\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\batteries\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\Qq\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\aesop\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\proofwidgets\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\importGraph\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\LeanSearchClient\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\plausible\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\mathlib\.lake\build\lib\lean;E:\ABRL\worktrees\research-online-book\.lake\build\lib\lean c:\Users\admin\.elan\toolchains\leanprover--lean4---v4.29.1\bin\lean.exe E:\ABRL\worktrees\research-online-book\Tests\OnlineGuessingKernelCausalCanary.lean -o E:\ABRL\worktrees\research-online-book\.lake\build\lib\lean\Tests\OnlineGuessingKernelCausalCanary.olean -i E:\ABRL\worktrees\research-online-book\.lake\build\lib\lean\Tests\OnlineGuessingKernelCausalCanary.ilean -c E:\ABRL\worktrees\research-online-book\.lake\build\ir\Tests\OnlineGuessingKernelCausalCanary.c --setup E:\ABRL\worktrees\research-online-book\.lake\build\ir\Tests\OnlineGuessingKernelCausalCanary.setup.json --json
+error: Tests/OnlineGuessingKernelCausalCanary.lean:17:61: unsolved goals
+case measure_univ
+⊢ 3 / 4 + 4⁻¹ = 1
+error: Tests/OnlineGuessingKernelCausalCanary.lean:21:63: unsolved goals
+case measure_univ
+⊢ 4⁻¹ + 3 / 4 = 1
+error: Tests/OnlineGuessingKernelCausalCanary.lean:37:2: failed to synthesize instance of type class
+  DecidablePred fun x => x ∈ switchSet t
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+warning: Tests/OnlineGuessingKernelCausalCanary.lean:41:9: declaration uses `sorry`
+error: Tests/OnlineGuessingKernelCausalCanary.lean:108:62: unsolved goals
+⊢ ((sorry ()) (fun x => 0, fun x => 1)) {1} = 4⁻¹ ∧
+    ((sorry ()) (fun x => 1, fun x => 1)) {1} = 3 / 4 ∧ ((sorry ()) (fun x => 1, fun x => 0)) {1} = 4⁻¹
+warning: Tests/OnlineGuessingKernelCausalCanary.lean:109:12: declaration uses `sorry`
+error: Tests/OnlineGuessingKernelCausalCanary.lean:116:2: Tactic `split_ifs` failed: no if-then-else conditions to split
+
+t : ℕ
+h : KernelDecisionHistory t
+⊢ ((sorry h) {1} = 1 / 4 ∨ (sorry h) {1} = 3 / 4) ∧ 0 < (sorry h) {0} ∧ 0 < (sorry h) {1}
+warning: Tests/OnlineGuessingKernelCausalCanary.lean:115:13: declaration uses `sorry`
+warning: Tests/OnlineGuessingKernelCausalCanary.lean:115:29: This simp argument is unused:
+  Kernel.piecewise_apply
+
+Hint: Omit it from the simp argument list.
+  simp only [decisionKernel,̵ ̵K̵e̵r̵n̵e̵l̵.̵p̵i̵e̵c̵e̵w̵i̵s̵e̵_̵a̵p̵p̵l̵y̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+error: Tests/OnlineGuessingKernelCausalCanary.lean:129:2: Tactic `split_ifs` failed: no if-then-else conditions to split
+
+t : ℕ
+h : KernelDecisionHistory t
+⊢ ∀ᵐ (x : ↑I) ∂sorry h, x = 0 ∨ x = 1
+warning: Tests/OnlineGuessingKernelCausalCanary.lean:128:13: declaration uses `sorry`
+warning: Tests/OnlineGuessingKernelCausalCanary.lean:128:29: This simp argument is unused:
+  Kernel.piecewise_apply
+
+Hint: Omit it from the simp argument list.
+  simp only [decisionKernel,̵ ̵K̵e̵r̵n̵e̵l̵.̵p̵i̵e̵c̵e̵w̵i̵s̵e̵_̵a̵p̵p̵l̵y̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+error: Tests/OnlineGuessingKernelCausalCanary.lean:162:8: Unknown constant `MeasureTheory.Measure.ae_of_ae_map`
+error: Tests/OnlineGuessingKernelCausalCanary.lean:168:13: invalid 'by' tactic, expected type has not been provided
+error: Lean exited with code 1
+Some required targets logged failures:
+- Tests.OnlineGuessingKernelCausalCanary
+error: build failed

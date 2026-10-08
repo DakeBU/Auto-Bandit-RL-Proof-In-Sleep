@@ -1,0 +1,303 @@
+NeutralKernelCausal.wholePublicValue1 : Q1
+'NeutralKernelCausal.wholePublicValue1' depends on axioms: [propext, Classical.choice, Quot.sound]
+E:\ABRL\worktrees\research-online-book\runs\online-kernel-causal-20261008\whole-public-types-axioms-v1.lean:13:48: warning: unused variable `hf`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+NeutralKernelCausal.wholePublicValue2 : Q2
+'NeutralKernelCausal.wholePublicValue2' depends on axioms: [propext, Classical.choice, Quot.sound]
+E:\ABRL\worktrees\research-online-book\runs\online-kernel-causal-20261008\whole-public-types-axioms-v1.lean:28:33: warning: unused variable `hf`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\runs\online-kernel-causal-20261008\whole-public-types-axioms-v1.lean:29:5: warning: unused variable `hκ`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+NeutralKernelCausal.wholePublicValue3 : Q3
+'NeutralKernelCausal.wholePublicValue3' depends on axioms: [propext, Classical.choice, Quot.sound]
+E:\ABRL\worktrees\research-online-book\runs\online-kernel-causal-20261008\whole-public-types-axioms-v1.lean:40:33: warning: unused variable `hf`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\runs\online-kernel-causal-20261008\whole-public-types-axioms-v1.lean:41:5: warning: unused variable `hκ`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+NeutralKernelCausal.wholePublicValue4 : Q4
+'NeutralKernelCausal.wholePublicValue4' depends on axioms: [propext, Classical.choice, Quot.sound]
+NeutralKernelCausal.wholePublicValue5 : Q5
+'NeutralKernelCausal.wholePublicValue5' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.kernel_sampler_family_exists (κ : (t : ℕ) → Kernel (KernelDecisionHistory t) ↑I)
+  [∀ (t : ℕ), IsMarkovKernel (κ t)] :
+  ∃ f,
+    (∀ (t : ℕ), Measurable (Function.uncurry (f t))) ∧
+      ∀ (t : ℕ) (h : KernelDecisionHistory t), Measure.map (f t h) ℙ = (κ t) h
+'BanditRL.OnlineLearning.kernel_sampler_family_exists' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.kernel_sampler_causal_process (f : KernelDecisionSampler)
+  (hf : ∀ (t : ℕ), Measurable (Function.uncurry (f t))) :
+  (∀ (t : ℕ), Measurable (kernelCausalPolicy f t)) ∧
+    (∀ (t : ℕ) (u : ℕ → ↑I) (y : ℕ → ℝ) (i : Fin t),
+        kernelGeneratedActions f t (fun j => u ↑j) (fun j => y ↑j) i = kernelGeneratedPrediction f ↑i (u, y)) ∧
+      ∀ (t : ℕ) (ω ω' : (ℕ → ↑I) × (ℕ → ℝ)),
+        (∀ i ≤ t, ω.1 i = ω'.1 i) →
+          (∀ i < t, ω.2 i = ω'.2 i) → kernelGeneratedPrediction f t ω = kernelGeneratedPrediction f t ω'
+'BanditRL.OnlineLearning.kernel_sampler_causal_process' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.kernel_sampler_joint_law (κ : (t : ℕ) → Kernel (KernelDecisionHistory t) ↑I)
+  [∀ (t : ℕ), IsMarkovKernel (κ t)] (f : KernelDecisionSampler) (hf : ∀ (t : ℕ), Measurable (Function.uncurry (f t)))
+  (hκ : ∀ (t : ℕ) (h : KernelDecisionHistory t), Measure.map (f t h) ℙ = (κ t) h) (ν : ProbabilityMeasure (ℕ → ℝ))
+  (t : ℕ) :
+  Measure.map (fun ω => (kernelGeneratedHistory f t ω, kernelGeneratedPrediction f t ω)) (kernelGameLaw ν) =
+    Measure.map (kernelGeneratedHistory f t) (kernelGameLaw ν) ⊗ₘ κ t
+'BanditRL.OnlineLearning.kernel_sampler_joint_law' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.kernel_sampler_conditional_law (κ : (t : ℕ) → Kernel (KernelDecisionHistory t) ↑I)
+  [∀ (t : ℕ), IsMarkovKernel (κ t)] (f : KernelDecisionSampler) (hf : ∀ (t : ℕ), Measurable (Function.uncurry (f t)))
+  (hκ : ∀ (t : ℕ) (h : KernelDecisionHistory t), Measure.map (f t h) ℙ = (κ t) h) (ν : ProbabilityMeasure (ℕ → ℝ))
+  (t : ℕ) :
+  ⇑(condDistrib (kernelGeneratedPrediction f t) (kernelGeneratedHistory f t)
+        (kernelGameLaw ν)) =ᶠ[ae (Measure.map (kernelGeneratedHistory f t) (kernelGameLaw ν))]
+    ⇑(κ t)
+'BanditRL.OnlineLearning.kernel_sampler_conditional_law' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.causal_kernel_realization_and_expectedFixed_excess
+  (κ : (t : ℕ) → Kernel (KernelDecisionHistory t) ↑I) [∀ (t : ℕ), IsMarkovKernel (κ t)] :
+  ∃ f,
+    (∀ (t : ℕ), Measurable (Function.uncurry (f t))) ∧
+      (∀ (t : ℕ) (h : KernelDecisionHistory t), Measure.map (f t h) ℙ = (κ t) h) ∧
+        (∀ (t : ℕ), Measurable (kernelCausalPolicy f t)) ∧
+          (∀ (t : ℕ) (u : ℕ → ↑I) (y : ℕ → ℝ) (i : Fin t),
+              kernelGeneratedActions f t (fun j => u ↑j) (fun j => y ↑j) i = kernelGeneratedPrediction f ↑i (u, y)) ∧
+            (∀ (t : ℕ) (ω ω' : (ℕ → ↑I) × (ℕ → ℝ)),
+                (∀ i ≤ t, ω.1 i = ω'.1 i) →
+                  (∀ i < t, ω.2 i = ω'.2 i) → kernelGeneratedPrediction f t ω = kernelGeneratedPrediction f t ω') ∧
+              ∀ (ν : ProbabilityMeasure (ℕ → ℝ)),
+                (∀ (t : ℕ),
+                    Measure.map (fun ω => (kernelGeneratedHistory f t ω, kernelGeneratedPrediction f t ω))
+                        (kernelGameLaw ν) =
+                      Measure.map (kernelGeneratedHistory f t) (kernelGameLaw ν) ⊗ₘ κ t) ∧
+                  (∀ (t : ℕ),
+                      ⇑(condDistrib (kernelGeneratedPrediction f t) (kernelGeneratedHistory f t)
+                            (kernelGameLaw ν)) =ᶠ[ae (Measure.map (kernelGeneratedHistory f t) (kernelGameLaw ν))]
+                        ⇑(κ t)) ∧
+                    (iIndepFun (fun t y => y t) ↑ν →
+                      (∀ (t : ℕ), IdentDistrib (fun y => y t) (fun y => y 0) ↑ν ↑ν) →
+                        (∀ (t : ℕ), ∀ᵐ (y : ℕ → ℝ) ∂↑ν, y t ∈ Set.Icc 0 1) →
+                          ∀ (T : ℕ),
+                            expectedFixedRegret (kernelGameLaw ν) (fun t ω => ω.2 t)
+                                  (fun t ω => ↑(kernelGeneratedPrediction f t ω)) T =
+                                ∑ t ∈ Finset.range T,
+                                  ∫ (ω : (ℕ → ↑I) × (ℕ → ℝ)),
+                                    (↑(kernelGeneratedPrediction f t ω) -
+                                        ∫ (ω : (ℕ → ↑I) × (ℕ → ℝ)), ω.2 0 ∂kernelGameLaw ν) ^
+                                      2 ∂kernelGameLaw ν ∧
+                              0 ≤
+                                expectedFixedRegret (kernelGameLaw ν) (fun t ω => ω.2 t)
+                                  (fun t ω => ↑(kernelGeneratedPrediction f t ω)) T)
+'BanditRL.OnlineLearning.causal_kernel_realization_and_expectedFixed_excess' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Tests.OnlineGuessingKernelCausal.switchSet_measurable (t : ℕ) :
+  MeasurableSet (Tests.OnlineGuessingKernelCausal.switchSet t)
+'Tests.OnlineGuessingKernelCausal.switchSet_measurable' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingKernelCausal.public_family_realizes :
+  ∃ f,
+    (∀ (t : ℕ), Measurable (Function.uncurry (f t))) ∧
+      ∀ (t : ℕ) (h : KernelDecisionHistory t),
+        Measure.map (f t h) ℙ = (Tests.OnlineGuessingKernelCausal.decisionKernel t) h
+'Tests.OnlineGuessingKernelCausal.public_family_realizes' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingKernelCausal.public_causal_process :
+  (∀ (t : ℕ), Measurable (kernelCausalPolicy Tests.OnlineGuessingKernelCausal.selectedSampler t)) ∧
+    (∀ (t : ℕ) (u : ℕ → ↑I) (y : ℕ → ℝ) (i : Fin t),
+        kernelGeneratedActions Tests.OnlineGuessingKernelCausal.selectedSampler t (fun j => u ↑j) (fun j => y ↑j) i =
+          kernelGeneratedPrediction Tests.OnlineGuessingKernelCausal.selectedSampler ↑i (u, y)) ∧
+      ∀ (t : ℕ) (ω ω' : (ℕ → ↑I) × (ℕ → ℝ)),
+        (∀ i ≤ t, ω.1 i = ω'.1 i) →
+          (∀ i < t, ω.2 i = ω'.2 i) →
+            kernelGeneratedPrediction Tests.OnlineGuessingKernelCausal.selectedSampler t ω =
+              kernelGeneratedPrediction Tests.OnlineGuessingKernelCausal.selectedSampler t ω'
+'Tests.OnlineGuessingKernelCausal.public_causal_process' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingKernelCausal.public_joint_law (ν : ProbabilityMeasure (ℕ → ℝ)) (t : ℕ) :
+  Measure.map
+      (fun ω =>
+        (kernelGeneratedHistory Tests.OnlineGuessingKernelCausal.selectedSampler t ω,
+          kernelGeneratedPrediction Tests.OnlineGuessingKernelCausal.selectedSampler t ω))
+      (kernelGameLaw ν) =
+    Measure.map (kernelGeneratedHistory Tests.OnlineGuessingKernelCausal.selectedSampler t) (kernelGameLaw ν) ⊗ₘ
+      Tests.OnlineGuessingKernelCausal.decisionKernel t
+'Tests.OnlineGuessingKernelCausal.public_joint_law' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingKernelCausal.public_conditional_law (ν : ProbabilityMeasure (ℕ → ℝ)) (t : ℕ) :
+  ⇑(condDistrib (kernelGeneratedPrediction Tests.OnlineGuessingKernelCausal.selectedSampler t)
+        (kernelGeneratedHistory Tests.OnlineGuessingKernelCausal.selectedSampler t)
+        (kernelGameLaw
+          ν)) =ᶠ[ae
+      (Measure.map (kernelGeneratedHistory Tests.OnlineGuessingKernelCausal.selectedSampler t) (kernelGameLaw ν))]
+    ⇑(Tests.OnlineGuessingKernelCausal.decisionKernel t)
+'Tests.OnlineGuessingKernelCausal.public_conditional_law' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingKernelCausal.actual_process_excess (T : ℕ) :
+  expectedFixedRegret Tests.OnlineGuessingKernelCausal.gameLaw Tests.OnlineGuessingKernelCausal.target
+        (fun t ω => ↑(Tests.OnlineGuessingKernelCausal.prediction t ω)) T =
+      ∑ t ∈ Finset.range T,
+        ∫ (ω : (ℕ → ↑I) × (ℕ → ℝ)),
+          (↑(Tests.OnlineGuessingKernelCausal.prediction t ω) -
+              ∫ (ω : (ℕ → ↑I) × (ℕ → ℝ)),
+                Tests.OnlineGuessingKernelCausal.target 0 ω ∂Tests.OnlineGuessingKernelCausal.gameLaw) ^
+            2 ∂Tests.OnlineGuessingKernelCausal.gameLaw ∧
+    0 ≤
+      expectedFixedRegret Tests.OnlineGuessingKernelCausal.gameLaw Tests.OnlineGuessingKernelCausal.target
+        (fun t ω => ↑(Tests.OnlineGuessingKernelCausal.prediction t ω)) T
+'Tests.OnlineGuessingKernelCausal.actual_process_excess' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingKernelCausal.history_feedback_distribution :
+  ((Tests.OnlineGuessingKernelCausal.decisionKernel 1) (Tests.OnlineGuessingKernelCausal.oneHistory 0 1)) {1} = 1 / 4 ∧
+    ((Tests.OnlineGuessingKernelCausal.decisionKernel 1) (Tests.OnlineGuessingKernelCausal.oneHistory 1 1)) {1} =
+        3 / 4 ∧
+      ((Tests.OnlineGuessingKernelCausal.decisionKernel 1) (Tests.OnlineGuessingKernelCausal.oneHistory 1 0)) {1} =
+        1 / 4
+'Tests.OnlineGuessingKernelCausal.history_feedback_distribution' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Tests.OnlineGuessingKernelCausal.every_history_stochastic (t : ℕ) (h : KernelDecisionHistory t) :
+  (((Tests.OnlineGuessingKernelCausal.decisionKernel t) h) {1} = 1 / 4 ∨
+      ((Tests.OnlineGuessingKernelCausal.decisionKernel t) h) {1} = 3 / 4) ∧
+    0 < ((Tests.OnlineGuessingKernelCausal.decisionKernel t) h) {0} ∧
+      0 < ((Tests.OnlineGuessingKernelCausal.decisionKernel t) h) {1}
+'Tests.OnlineGuessingKernelCausal.every_history_stochastic' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingKernelCausal.actual_prediction_binary (t : ℕ) :
+  ∀ᵐ (ω : (ℕ → ↑I) × (ℕ → ℝ)) ∂Tests.OnlineGuessingKernelCausal.gameLaw,
+    Tests.OnlineGuessingKernelCausal.prediction t ω = 0 ∨ Tests.OnlineGuessingKernelCausal.prediction t ω = 1
+'Tests.OnlineGuessingKernelCausal.actual_prediction_binary' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingKernelCausal.target_positive_variance (t : ℕ) :
+  Var[Tests.OnlineGuessingKernelCausal.target t; Tests.OnlineGuessingKernelCausal.gameLaw] = 1 / 4
+'Tests.OnlineGuessingKernelCausal.target_positive_variance' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingKernelCausal.every_horizon_excess (T : ℕ) :
+  expectedFixedRegret Tests.OnlineGuessingKernelCausal.gameLaw Tests.OnlineGuessingKernelCausal.target
+      (fun t ω => ↑(Tests.OnlineGuessingKernelCausal.prediction t ω)) T =
+    ↑T / 4
+'Tests.OnlineGuessingKernelCausal.every_horizon_excess' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingKernelCausal.zero_horizon_excess :
+  expectedFixedRegret Tests.OnlineGuessingKernelCausal.gameLaw Tests.OnlineGuessingKernelCausal.target
+      (fun t ω => ↑(Tests.OnlineGuessingKernelCausal.prediction t ω)) 0 =
+    0
+'Tests.OnlineGuessingKernelCausal.zero_horizon_excess' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingKernelCausal.positive_two_round_excess :
+  expectedFixedRegret Tests.OnlineGuessingKernelCausal.gameLaw Tests.OnlineGuessingKernelCausal.target
+        (fun t ω => ↑(Tests.OnlineGuessingKernelCausal.prediction t ω)) 2 =
+      1 / 2 ∧
+    0 <
+      expectedFixedRegret Tests.OnlineGuessingKernelCausal.gameLaw Tests.OnlineGuessingKernelCausal.target
+        (fun t ω => ↑(Tests.OnlineGuessingKernelCausal.prediction t ω)) 2
+'Tests.OnlineGuessingKernelCausal.positive_two_round_excess' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.KernelDecisionHistory (t : ℕ) : Type
+'BanditRL.OnlineLearning.KernelDecisionHistory' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.KernelDecisionSampler : Type
+'BanditRL.OnlineLearning.KernelDecisionSampler' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.kernelGeneratedActions (f : KernelDecisionSampler) (t : ℕ) :
+  (Fin t → ↑I) → (Fin t → ℝ) → Fin t → ↑I
+'BanditRL.OnlineLearning.kernelGeneratedActions' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.kernelCausalPolicy (f : KernelDecisionSampler) (t : ℕ) (q : (ℕ → ↑I) × (Fin t → ℝ)) : ↑I
+'BanditRL.OnlineLearning.kernelCausalPolicy' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.kernelGeneratedHistory (f : KernelDecisionSampler) (t : ℕ) (ω : (ℕ → ↑I) × (ℕ → ℝ)) :
+  KernelDecisionHistory t
+'BanditRL.OnlineLearning.kernelGeneratedHistory' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.kernelGeneratedPrediction (f : KernelDecisionSampler) (t : ℕ) (ω : (ℕ → ↑I) × (ℕ → ℝ)) : ↑I
+'BanditRL.OnlineLearning.kernelGeneratedPrediction' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.kernelUniformTapeLaw : Measure (ℕ → ↑I)
+'BanditRL.OnlineLearning.kernelUniformTapeLaw' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.kernelGameLaw (ν : ProbabilityMeasure (ℕ → ℝ)) : Measure ((ℕ → ↑I) × (ℕ → ℝ))
+'BanditRL.OnlineLearning.kernelGameLaw' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingKernelCausal.lowLaw : Measure ↑I
+'Tests.OnlineGuessingKernelCausal.lowLaw' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingKernelCausal.highLaw : Measure ↑I
+'Tests.OnlineGuessingKernelCausal.highLaw' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingKernelCausal.lowLaw_probability : IsProbabilityMeasure Tests.OnlineGuessingKernelCausal.lowLaw
+'Tests.OnlineGuessingKernelCausal.lowLaw_probability' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingKernelCausal.highLaw_probability : IsProbabilityMeasure Tests.OnlineGuessingKernelCausal.highLaw
+'Tests.OnlineGuessingKernelCausal.highLaw_probability' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingKernelCausal.switchSet (t : ℕ) : Set (KernelDecisionHistory t)
+'Tests.OnlineGuessingKernelCausal.switchSet' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingKernelCausal.decisionKernel (t : ℕ) : Kernel (KernelDecisionHistory t) ↑I
+'Tests.OnlineGuessingKernelCausal.decisionKernel' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingKernelCausal.decisionKernel_markov (t : ℕ) :
+  IsMarkovKernel (Tests.OnlineGuessingKernelCausal.decisionKernel t)
+'Tests.OnlineGuessingKernelCausal.decisionKernel_markov' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingKernelCausal.oneHistory (a : ↑I) (y : ℝ) : KernelDecisionHistory 1
+'Tests.OnlineGuessingKernelCausal.oneHistory' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingKernelCausal.selectedSampler : KernelDecisionSampler
+'Tests.OnlineGuessingKernelCausal.selectedSampler' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingKernelCausal.observationLaw : ProbabilityMeasure (ℕ → ℝ)
+'Tests.OnlineGuessingKernelCausal.observationLaw' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingKernelCausal.prediction (t : ℕ) (ω : (ℕ → ↑I) × (ℕ → ℝ)) : ↑I
+'Tests.OnlineGuessingKernelCausal.prediction' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingKernelCausal.target (t : ℕ) (ω : (ℕ → ↑I) × (ℕ → ℝ)) : ℝ
+'Tests.OnlineGuessingKernelCausal.target' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingKernelCausal.gameLaw : Measure ((ℕ → ↑I) × (ℕ → ℝ))
+'Tests.OnlineGuessingKernelCausal.gameLaw' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.independent_private_seed_pair.{u, v, w, z} {Ω : Type u} {Seed : Type v} {Χ : Type w}
+  {Ζ : Type z} [MeasurableSpace Ω] [MeasurableSpace Seed] [MeasurableSpace Χ] [MeasurableSpace Ζ] (μ : Measure Ω)
+  [IsProbabilityMeasure μ] (S : Ω → Seed) (X : Ω → Χ) (Y : Ω → Ζ) (hS : Measurable S) (hX : Measurable X)
+  (hY : Measurable Y) (hseed : S ⟂ᵢ[μ] fun ω => (X ω, Y ω)) (hXY : X ⟂ᵢ[μ] Y) : (fun ω => (S ω, X ω)) ⟂ᵢ[μ] Y
+'BanditRL.OnlineLearning.independent_private_seed_pair' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.randomized_history_policy_expectedFixed_excess.{u, v} {Ω : Type u} {Seed : Type v}
+  [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)
+  (hY : ∀ (t : ℕ), Measurable (Y t)) (hlaw : ∀ (t : ℕ), IdentDistrib (Y t) (Y 0) μ μ)
+  (hb : ∀ (t : ℕ), ∀ᵐ (ω : Ω) ∂μ, Y t ω ∈ Set.Icc 0 1) (hind : iIndepFun Y μ) (S : Ω → Seed) (hS : Measurable S)
+  (hseed : S ⟂ᵢ[μ] fun ω t => Y t ω) (policy : (t : ℕ) → Seed × (↥(Finset.range t) → ℝ) → ℝ)
+  (hp : ∀ (t : ℕ), Measurable (policy t))
+  (hpb :
+    ∀ (t : ℕ) (s : Seed) (z : ↥(Finset.range t) → ℝ),
+      (∀ (i : ↥(Finset.range t)), z i ∈ Set.Icc 0 1) → policy t (s, z) ∈ Set.Icc 0 1)
+  (T : ℕ) :
+  expectedFixedRegret μ Y (fun t ω => policy t (S ω, fun i => Y (↑i) ω)) T =
+      ∑ t ∈ Finset.range T, ∫ (ω : Ω), (policy t (S ω, fun i => Y (↑i) ω) - ∫ (ω : Ω), Y 0 ω ∂μ) ^ 2 ∂μ ∧
+    0 ≤ expectedFixedRegret μ Y (fun t ω => policy t (S ω, fun i => Y (↑i) ω)) T
+'BanditRL.OnlineLearning.randomized_history_policy_expectedFixed_excess' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BanditRL.OnlineLearning.expectedFixedMinimum.{u_1} {Ω : Type u_1} [MeasurableSpace Ω] (μ : Measure Ω) (Y : ℕ → Ω → ℝ)
+  (T : ℕ) : ℝ
+'BanditRL.OnlineLearning.expectedFixedMinimum' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.expectedFixedRegret.{u_1} {Ω : Type u_1} [MeasurableSpace Ω] (μ : Measure Ω)
+  (Y prediction : ℕ → Ω → ℝ) (T : ℕ) : ℝ
+'BanditRL.OnlineLearning.expectedFixedRegret' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.expectedFixedMinimum_eq_variance.{u_1} {Ω : Type u_1} [MeasurableSpace Ω] (μ : Measure Ω)
+  [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ (t : ℕ), Measurable (Y t))
+  (hlaw : ∀ (t : ℕ), IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ (t : ℕ), ∀ᵐ (ω : Ω) ∂μ, Y t ω ∈ Set.Icc 0 1) (T : ℕ) :
+  expectedFixedMinimum μ Y T = ↑T * Var[Y 0; μ]
+'BanditRL.OnlineLearning.expectedFixedMinimum_eq_variance' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.iid_cumulative_prediction_decomposition.{u_1} {Ω : Type u_1} [MeasurableSpace Ω] (μ : Measure Ω)
+  [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ (t : ℕ), Measurable (Y t))
+  (hlaw : ∀ (t : ℕ), IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ (t : ℕ), ∀ᵐ (ω : Ω) ∂μ, Y t ω ∈ Set.Icc 0 1)
+  (prediction : ℕ → Ω → ℝ) (hP : ∀ (t : ℕ), MemLp (prediction t) 2 μ) (hInd : ∀ (t : ℕ), prediction t ⟂ᵢ[μ] Y t)
+  (T : ℕ) :
+  ∫ (ω : Ω), ∑ t ∈ Finset.range T, (prediction t ω - Y t ω) ^ 2 ∂μ - ↑T * Var[Y 0; μ] =
+    ∑ t ∈ Finset.range T, ∫ (ω : Ω), (prediction t ω - ∫ (ω : Ω), Y 0 ω ∂μ) ^ 2 ∂μ
+'BanditRL.OnlineLearning.iid_cumulative_prediction_decomposition' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ProbabilityTheory.Kernel.exists_measurable_map_eq_unitInterval.{u_1, u_2} {X : Type u_1} {Y : Type u_2}
+  {mX : MeasurableSpace X} [Nonempty Y] {mY : MeasurableSpace Y} [StandardBorelSpace Y] (κ : Kernel X Y)
+  [IsMarkovKernel κ] : ∃ f, Measurable (Function.uncurry f) ∧ ∀ (a : X), Measure.map (f a) ℙ = κ a
+'ProbabilityTheory.Kernel.exists_measurable_map_eq_unitInterval' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ProbabilityTheory.condDistrib_ae_eq_of_measure_eq_compProd.{u_1, u_2, u_3} {α : Type u_1} {β : Type u_2} {Ω : Type u_3}
+  [MeasurableSpace Ω] [StandardBorelSpace Ω] [Nonempty Ω] {mα : MeasurableSpace α} {μ : Measure α} [IsFiniteMeasure μ]
+  {Y : α → Ω} {mβ : MeasurableSpace β} (X : α → β) (hY : AEMeasurable Y μ) {κ : Kernel β Ω} [IsFiniteKernel κ]
+  (hκ : Measure.map (fun x => (X x, Y x)) μ = Measure.map X μ ⊗ₘ κ) : ⇑(condDistrib Y X μ) =ᶠ[ae (Measure.map X μ)] ⇑κ
+'ProbabilityTheory.condDistrib_ae_eq_of_measure_eq_compProd' depends on axioms: [propext, Classical.choice, Quot.sound]
+ProbabilityTheory.iIndepFun_infinitePi.{u_1, u_3, u_4} {ι : Type u_1} {𝓧 : ι → Type u_3}
+  {m𝓧 : (i : ι) → MeasurableSpace (𝓧 i)} {Ω : ι → Type u_4} {mΩ : (i : ι) → MeasurableSpace (Ω i)}
+  {P : (i : ι) → Measure (Ω i)} [∀ (i : ι), IsProbabilityMeasure (P i)] {X : (i : ι) → Ω i → 𝓧 i}
+  (mX : ∀ (i : ι), Measurable (X i)) : iIndepFun (fun i ω => X i (ω i)) (Measure.infinitePi P)
+'ProbabilityTheory.iIndepFun_infinitePi' depends on axioms: [propext, Classical.choice, Quot.sound]
+ProbabilityTheory.indepFun_prod.{u_10, u_11, u_12, u_13} {Ω : Type u_10} {Ω' : Type u_11} {mΩ : MeasurableSpace Ω}
+  {mΩ' : MeasurableSpace Ω'} {μ : Measure Ω} {ν : Measure Ω'} [IsProbabilityMeasure μ] [IsProbabilityMeasure ν]
+  {𝓧 : Type u_12} {𝓨 : Type u_13} [MeasurableSpace 𝓧] [MeasurableSpace 𝓨] {X : Ω → 𝓧} {Y : Ω' → 𝓨} (mX : Measurable X)
+  (mY : Measurable Y) : (fun ω => X ω.1) ⟂ᵢ[μ.prod ν] fun ω => Y ω.2
+'ProbabilityTheory.indepFun_prod' depends on axioms: [propext, Classical.choice, Quot.sound]
+ProbabilityTheory.iIndepFun.indepFun_finset.{u_1, u_2, u_10} {Ω : Type u_1} {ι : Type u_2} {_mΩ : MeasurableSpace Ω}
+  {μ : Measure Ω} {β : ι → Type u_10} {m : (i : ι) → MeasurableSpace (β i)} {f : (i : ι) → Ω → β i} (S T : Finset ι)
+  (hST : Disjoint S T) (hf_Indep : iIndepFun f μ) (hf_meas : ∀ (i : ι), Measurable (f i)) :
+  (fun a i => f (↑i) a) ⟂ᵢ[μ] fun a i => f (↑i) a
+'ProbabilityTheory.iIndepFun.indepFun_finset' depends on axioms: [propext, Classical.choice, Quot.sound]
+MeasureTheory.Measure.infinitePi_map_eval.{u_1, u_2} {ι : Type u_1} {X : ι → Type u_2}
+  {mX : (i : ι) → MeasurableSpace (X i)} (μ : (i : ι) → Measure (X i)) [hμ : ∀ (i : ι), IsProbabilityMeasure (μ i)]
+  (i : ι) : Measure.map (fun x => x i) (Measure.infinitePi μ) = μ i
+'MeasureTheory.Measure.infinitePi_map_eval' depends on axioms: [propext, Classical.choice, Quot.sound]
+MeasureTheory.Measure.compProd_apply.{u_1, u_2} {α : Type u_1} {β : Type u_2} {mα : MeasurableSpace α}
+  {mβ : MeasurableSpace β} {μ : Measure α} {κ : Kernel α β} [SFinite μ] [IsSFiniteKernel κ] {s : Set (α × β)}
+  (hs : MeasurableSet s) : (μ ⊗ₘ κ) s = ∫⁻ (a : α), (κ a) (Prod.mk a ⁻¹' s) ∂μ
+'MeasureTheory.Measure.compProd_apply' depends on axioms: [propext, Classical.choice, Quot.sound]

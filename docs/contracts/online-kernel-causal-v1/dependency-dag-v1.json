@@ -1,0 +1,51 @@
+{
+  "nodes": [
+    {
+      "id": "K1",
+      "requires": [
+        "Kernel.exists_measurable_map_eq_unitInterval"
+      ],
+      "ready": true
+    },
+    {
+      "id": "K2",
+      "requires": [
+        "finite dependent recursion and finite-coordinate measurability"
+      ],
+      "ready": true
+    },
+    {
+      "id": "K3",
+      "requires": [
+        "K2",
+        "iIndepFun_infinitePi",
+        "iIndepFun.indepFun_finset",
+        "indepFun_prod",
+        "independent_private_seed_pair",
+        "Measure.compProd_apply"
+      ],
+      "ready": false
+    },
+    {
+      "id": "K4",
+      "requires": [
+        "K3",
+        "condDistrib_ae_eq_of_measure_eq_compProd"
+      ],
+      "ready": false
+    },
+    {
+      "id": "K5",
+      "requires": [
+        "K1",
+        "K2",
+        "K3",
+        "K4",
+        "randomized_history_policy_expectedFixed_excess"
+      ],
+      "ready": false
+    }
+  ],
+  "lower_route": "one finite causal recursion; derive fresh-draw joint law; instantiate same-policy IID producer",
+  "terminal": "K5 law-independent selected family and same infinite process for all laws/rounds/horizons"
+}

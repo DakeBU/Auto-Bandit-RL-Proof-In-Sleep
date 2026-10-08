@@ -1,0 +1,124 @@
+{
+  "contract_version": 2,
+  "source_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+  "receipt_sha256": "d2c5790f1dc3306138d6cb7ce9fde9e70b1d67371c9d6c3d908dab05b351c08a",
+  "report_sha256": "8e58c029209c849a5aa98d1ed13bda4ed15e7a47aefac719ba7e844a655116bf",
+  "targets_sha256": "b701b270ccbb5b5b931881ee5d4445052e28561049c2980084a4026657f975a9",
+  "headers_sha256": "ceb42c583e7659ca9c66fa59f24e44dc676cb995e5c6a1e938ce0c570a2a70f7",
+  "context_sha256": "01e9ee3c3a21cdca15a12d88e89be4b8f64ea76b093cf2b0dd325e8676745a0d",
+  "source_intent_sha256": "0044e3e2c545787dee0fdcc7428d9cd59d981587d720b26263e580bb7f2ea23a",
+  "targets": [
+    {
+      "id": "K1",
+      "name": "BanditRL.OnlineLearning.kernel_sampler_family_exists",
+      "header": "theorem kernel_sampler_family_exists\n    (κ : (t : ℕ) → Kernel (KernelDecisionHistory t) I) [∀ t, IsMarkovKernel (κ t)] :\n    ∃ f : KernelDecisionSampler,\n      (∀ t, Measurable (Function.uncurry (f t))) ∧\n      ∀ t h, (volume : Measure I).map (f t h) = κ t h",
+      "statement_hash": "9d18ad2d4f68f0d7a5f96b8d226b8a0395470ff634735939831b09df91715c07",
+      "phase": "draft",
+      "compiled": false
+    },
+    {
+      "id": "K2",
+      "name": "BanditRL.OnlineLearning.kernel_sampler_causal_process",
+      "header": "theorem kernel_sampler_causal_process\n    (f : KernelDecisionSampler) (hf : ∀ t, Measurable (Function.uncurry (f t))) :\n    (∀ t, Measurable (kernelCausalPolicy f t)) ∧\n    (∀ t (u : ℕ → I) (y : ℕ → ℝ) (i : Fin t),\n      kernelGeneratedActions f t (fun j => u j) (fun j => y j) i =\n        kernelGeneratedPrediction f (i : ℕ) (u, y)) ∧\n    ∀ t (ω ω' : (ℕ → I) × (ℕ → ℝ)),\n      (∀ i, i ≤ t → ω.1 i = ω'.1 i) →\n      (∀ i, i < t → ω.2 i = ω'.2 i) →\n      kernelGeneratedPrediction f t ω = kernelGeneratedPrediction f t ω'",
+      "statement_hash": "53418547fd45271f47e79e699404339bcbe652ad8f9bdfa3427c202f28d11a7f",
+      "phase": "draft",
+      "compiled": false
+    },
+    {
+      "id": "K3",
+      "name": "BanditRL.OnlineLearning.kernel_sampler_joint_law",
+      "header": "theorem kernel_sampler_joint_law\n    (κ : (t : ℕ) → Kernel (KernelDecisionHistory t) I) [∀ t, IsMarkovKernel (κ t)]\n    (f : KernelDecisionSampler) (hf : ∀ t, Measurable (Function.uncurry (f t)))\n    (hκ : ∀ t h, (volume : Measure I).map (f t h) = κ t h)\n    (ν : ProbabilityMeasure (ℕ → ℝ)) (t : ℕ) :\n    (kernelGameLaw ν).map (fun ω =>\n      (kernelGeneratedHistory f t ω, kernelGeneratedPrediction f t ω)) =\n      (kernelGameLaw ν).map (kernelGeneratedHistory f t) ⊗ₘ κ t",
+      "statement_hash": "bef7e1c4a65f053dd9b72482adb5202747c54da455f85c980cf44f2b05c9f725",
+      "phase": "draft",
+      "compiled": false
+    },
+    {
+      "id": "K4",
+      "name": "BanditRL.OnlineLearning.kernel_sampler_conditional_law",
+      "header": "theorem kernel_sampler_conditional_law\n    (κ : (t : ℕ) → Kernel (KernelDecisionHistory t) I) [∀ t, IsMarkovKernel (κ t)]\n    (f : KernelDecisionSampler) (hf : ∀ t, Measurable (Function.uncurry (f t)))\n    (hκ : ∀ t h, (volume : Measure I).map (f t h) = κ t h)\n    (ν : ProbabilityMeasure (ℕ → ℝ)) (t : ℕ) :\n    condDistrib (kernelGeneratedPrediction f t) (kernelGeneratedHistory f t) (kernelGameLaw ν)\n      =ᵐ[(kernelGameLaw ν).map (kernelGeneratedHistory f t)] κ t",
+      "statement_hash": "098ae1ceebcaceecf137157e06a2237a8197b5c909b0b26e75b90a77cf34bbb5",
+      "phase": "draft",
+      "compiled": false
+    },
+    {
+      "id": "K5",
+      "name": "BanditRL.OnlineLearning.causal_kernel_realization_and_expectedFixed_excess",
+      "header": "theorem causal_kernel_realization_and_expectedFixed_excess\n    (κ : (t : ℕ) → Kernel (KernelDecisionHistory t) I) [∀ t, IsMarkovKernel (κ t)] :\n    ∃ f : KernelDecisionSampler,\n      (∀ t, Measurable (Function.uncurry (f t))) ∧\n      (∀ t h, (volume : Measure I).map (f t h) = κ t h) ∧\n      (∀ t, Measurable (kernelCausalPolicy f t)) ∧\n      (∀ t (u : ℕ → I) (y : ℕ → ℝ) (i : Fin t),\n        kernelGeneratedActions f t (fun j => u j) (fun j => y j) i =\n          kernelGeneratedPrediction f (i : ℕ) (u, y)) ∧\n      (∀ t (ω ω' : (ℕ → I) × (ℕ → ℝ)),\n        (∀ i, i ≤ t → ω.1 i = ω'.1 i) →\n        (∀ i, i < t → ω.2 i = ω'.2 i) →\n        kernelGeneratedPrediction f t ω = kernelGeneratedPrediction f t ω') ∧\n      ∀ ν : ProbabilityMeasure (ℕ → ℝ),\n        (∀ t, (kernelGameLaw ν).map (fun ω =>\n          (kernelGeneratedHistory f t ω, kernelGeneratedPrediction f t ω)) =\n          (kernelGameLaw ν).map (kernelGeneratedHistory f t) ⊗ₘ κ t) ∧\n        (∀ t, condDistrib (kernelGeneratedPrediction f t) (kernelGeneratedHistory f t)\n          (kernelGameLaw ν) =ᵐ[(kernelGameLaw ν).map (kernelGeneratedHistory f t)] κ t) ∧\n        (iIndepFun (fun t (y : ℕ → ℝ) => y t) (ν : Measure (ℕ → ℝ)) →\n          (∀ t, IdentDistrib (fun y : ℕ → ℝ => y t) (fun y : ℕ → ℝ => y 0)\n            (ν : Measure (ℕ → ℝ)) (ν : Measure (ℕ → ℝ))) →\n          (∀ t, ∀ᵐ y ∂(ν : Measure (ℕ → ℝ)), y t ∈ Set.Icc (0 : ℝ) 1) →\n          ∀ T : ℕ,\n            expectedFixedRegret (kernelGameLaw ν) (fun t ω => ω.2 t)\n              (fun t ω => (kernelGeneratedPrediction f t ω : ℝ)) T =\n              (∑ t ∈ Finset.range T, ∫ ω,\n                ((kernelGeneratedPrediction f t ω : ℝ) -\n                  ∫ ω, ω.2 0 ∂(kernelGameLaw ν))^2 ∂(kernelGameLaw ν)) ∧\n            0 ≤ expectedFixedRegret (kernelGameLaw ν) (fun t ω => ω.2 t)\n              (fun t ω => (kernelGeneratedPrediction f t ω : ℝ)) T)",
+      "statement_hash": "376138ab1ad5ebbd2c83a48200d8f893c386e23e1d0f8d358b05bac922a9e02d",
+      "phase": "draft",
+      "compiled": false
+    }
+  ],
+  "approved_scope": {
+    "contract_version": 2,
+    "immutable_context": "E:/ABRL/worktrees/research-online-book/docs/contracts/online-kernel-causal-v1/context-v2.lean.txt",
+    "immutable_context_sha256": "01e9ee3c3a21cdca15a12d88e89be4b8f64ea76b093cf2b0dd325e8676745a0d",
+    "immutable_headers_sha256": "ceb42c583e7659ca9c66fa59f24e44dc676cb995e5c6a1e938ce0c570a2a70f7",
+    "task_metadata_append_only": [
+      "tasks/ONLINE-KERNEL-CAUSAL-20261008.md",
+      "proof-obligations/ONLINE-KERNEL-CAUSAL-20261008.md",
+      "conversion-windows/ONLINE-KERNEL-CAUSAL-20261008.md",
+      "proof-blueprints/ONLINE-KERNEL-CAUSAL-20261008.md"
+    ],
+    "own_journals_append_only": [
+      "runs/trials.jsonl",
+      "runs/lifecycle_sessions.jsonl"
+    ],
+    "own_run_and_contract_new_version_evidence": true,
+    "proving_scope": [
+      "BanditRLProof/OnlineGuessingKernelCausal.lean",
+      "Tests/OnlineGuessingKernelCausalCanary.lean"
+    ],
+    "root_reader_contribution_manifest_changes_require_separate_body_future_review": true,
+    "global_frontier_and_lifecycle_memory_immutable": true,
+    "current_new_body_count": 0,
+    "terminal_hash_edit_requires_new_contract_review": true
+  },
+  "mutable_reviewed_snapshots": [
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/conversion-windows/ONLINE-KERNEL-CAUSAL-20261008.md",
+      "original_sha256": "db5efc0e62c8122aa985fdb76c88d6923b34d7c894a54173b1d6e942de3db6a5",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-kernel-causal-20261008/snapshots/contract-mutable-0.raw"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/proof-blueprints/ONLINE-KERNEL-CAUSAL-20261008.md",
+      "original_sha256": "a4cc67dab8265591da484cdc9ab6de3b3baff91f4ebd7d043b6fa6739790f47f",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-kernel-causal-20261008/snapshots/contract-mutable-1.raw"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/proof-obligations/ONLINE-KERNEL-CAUSAL-20261008.md",
+      "original_sha256": "3c325c60cb21cdbe422b429af46c16e8614496f6a477e4fb6b556fc5ddc7c4e1",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-kernel-causal-20261008/snapshots/contract-mutable-2.raw"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/lifecycle_sessions.jsonl",
+      "original_sha256": "d413caee5c6b7867f4eee9c26ed471309d7978eb29eafc67a7615758d3648292",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-kernel-causal-20261008/snapshots/contract-mutable-3.raw"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/trials.jsonl",
+      "original_sha256": "d6fd847db2ad00c60837ad22eb5f7f0e902064e1aa6c70ad7f081ca915c4a11c",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-kernel-causal-20261008/snapshots/contract-mutable-4.raw"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/tasks/ONLINE-KERNEL-CAUSAL-20261008.md",
+      "original_sha256": "b85fed66b8e54e76e24cbf3e20464ae9a8870645a1e7571e6d952acd1425767a",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-kernel-causal-20261008/snapshots/contract-mutable-5.raw"
+    }
+  ],
+  "contract_only_accepted": true,
+  "body_accepted": false,
+  "compiled_new_bodies": 0,
+  "scanner_historical_diff_reviewer_independently_reproduced": false,
+  "required_reader_corrections": {
+    "R1": "Pinned v10 printed1/PDF13 and printed3/PDF15; five derived targets, no five printed-theorem claim; original16/null retained.",
+    "R2": "One given infinite Markov-kernel family on generated action/strict-real-observation histories; one selected sampler before every law/horizon; global unit output subtype.",
+    "R3": "Actual empty-start finite action recursion, prefix consistency with same infinite process and tape<=t/observations<t nonanticipation; no future loss sequence as algorithm input.",
+    "R4": "Fresh uniform coordinate independence and product-law compatibility are proved from infinite product and actual strict history, not given stability/independence/desired kernel laws.",
+    "R5": "Joint and conditional kernel law for every probability observation-stream law; conditional equality AE on actual history marginal and no off-support uniqueness.",
+    "R6": "Same-process all-horizon IID expected-fixed identity/nonnegativity includingT0; coordinate independence/same-law/AE target unit assumptions; mean analysis-only, no rate/pathwise/minE interchange.",
+    "R7": "Nondegenerate history-dependent kernel with actual earlier-action feedback/randomness/positive target variance; instantiate all five public endpoints, actual types/axioms/roots/Tests/fullharness/shadow/currentpixels; remaining arbitrary-protocol/source/chapter/appendix gaps and whole active Goal unchanged."
+  },
+  "chapter_complete": false,
+  "goal_complete": false
+}

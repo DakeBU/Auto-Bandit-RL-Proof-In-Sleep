@@ -1,0 +1,1 @@
+DRAFT only: algorithm context and five exact proposed headers written outside production. Prior API probe is actual Lean0 declaration/type retrieval only. No theorem body or mathematical terminal compiled. Source-blind decoding and anti-anchored contract review required before stabilization/proving. Frozen target cannot be weakened during proof repair.
