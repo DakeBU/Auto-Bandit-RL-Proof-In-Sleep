@@ -1,0 +1,89 @@
+Asymptotics.isLittleO_iff_tendsto'.{u_1, u_15} {α : Type u_1} {𝕜 : Type u_15} [NormedDivisionRing 𝕜] {l : Filter α}
+  {f g : α → 𝕜} (hgf : ∀ᶠ (x : α) in l, g x = 0 → f x = 0) : f =o[l] g ↔ Tendsto (fun x => f x / g x) l (nhds 0)
+Asymptotics.IsLittleO.tendsto_div_nhds_zero.{u_1, u_15} {α : Type u_1} {𝕜 : Type u_15} [NormedDivisionRing 𝕜]
+  {l : Filter α} {f g : α → 𝕜} (h : f =o[l] g) : Tendsto (fun x => f x / g x) l (nhds 0)
+Filter.tendsto_congr'.{u_1, u_2} {α : Type u_1} {β : Type u_2} {f₁ f₂ : α → β} {l₁ : Filter α} {l₂ : Filter β}
+  (hl : f₁ =ᶠ[l₁] f₂) : Tendsto f₁ l₁ l₂ ↔ Tendsto f₂ l₁ l₂
+Filter.Tendsto.congr'.{u_1, u_2} {α : Type u_1} {β : Type u_2} {f₁ f₂ : α → β} {l₁ : Filter α} {l₂ : Filter β}
+  (hl : f₁ =ᶠ[l₁] f₂) (h : Tendsto f₁ l₁ l₂) : Tendsto f₂ l₁ l₂
+squeeze_zero'.{u_3} {α : Type u_3} {f g : α → ℝ} {t₀ : Filter α} (hf : ∀ᶠ (t : α) in t₀, 0 ≤ f t)
+  (hft : ∀ᶠ (t : α) in t₀, f t ≤ g t) (g0 : Tendsto g t₀ (nhds 0)) : Tendsto f t₀ (nhds 0)
+MeasureTheory.integrable_finset_sum.{u_1, u_8, u_9} {α : Type u_1} {m : MeasurableSpace α} {μ : Measure α}
+  {ε' : Type u_8} [TopologicalSpace ε'] [ESeminormedAddCommMonoid ε'] [ContinuousAdd ε'] {ι : Type u_9} (s : Finset ι)
+  {f : ι → α → ε'} (hf : ∀ i ∈ s, Integrable (f i) μ) : Integrable (fun a => ∑ i ∈ s, f i a) μ
+MeasureTheory.integral_mono_ae.{u_1, u_2} {α : Type u_1} {E : Type u_2} [NormedAddCommGroup E] [NormedSpace ℝ E]
+  {m : MeasurableSpace α} {μ : Measure α} [PartialOrder E] [IsOrderedAddMonoid E] [IsOrderedModule ℝ E]
+  [ClosedIciTopology E] {f g : α → E} (hf : Integrable f μ) (hg : Integrable g μ) (h : f ≤ᶠ[ae μ] g) :
+  ∫ (x : α), f x ∂μ ≤ ∫ (x : α), g x ∂μ
+MeasureTheory.integral_sub.{u_1, u_5} {α : Type u_1} {G : Type u_5} [NormedAddCommGroup G] [NormedSpace ℝ G]
+  {m : MeasurableSpace α} {μ : Measure α} {f g : α → G} (hf : Integrable f μ) (hg : Integrable g μ) :
+  ∫ (a : α), f a - g a ∂μ = ∫ (a : α), f a ∂μ - ∫ (a : α), g a ∂μ
+BanditRL.OnlineLearning.normalized_excess (total variance : ℝ) (T : ℕ) (hT : 0 < T) :
+  total / ↑T - variance = (total - ↑T * variance) / ↑T
+BanditRL.OnlineLearning.expected_fixed_prefix_decomposition.{u_1} {Ω : Type u_1} [MeasurableSpace Ω] (μ : Measure Ω)
+  [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ (t : ℕ), Measurable (Y t))
+  (hlaw : ∀ (t : ℕ), IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ (t : ℕ), ∀ᵐ (ω : Ω) ∂μ, Y t ω ∈ Set.Icc 0 1) (T : ℕ)
+  (u : ℝ) : ∫ (ω : Ω), ∑ t ∈ Finset.range T, (u - Y t ω) ^ 2 ∂μ = ↑T * Var[Y 0; μ] + ↑T * (u - ∫ (ω : Ω), Y 0 ω ∂μ) ^ 2
+BanditRL.OnlineLearning.expectedFixedMinimum_eq_variance.{u_1} {Ω : Type u_1} [MeasurableSpace Ω] (μ : Measure Ω)
+  [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ (t : ℕ), Measurable (Y t))
+  (hlaw : ∀ (t : ℕ), IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ (t : ℕ), ∀ᵐ (ω : Ω) ∂μ, Y t ω ∈ Set.Icc 0 1) (T : ℕ) :
+  BanditRL.OnlineLearning.expectedFixedMinimum μ Y T = ↑T * Var[Y 0; μ]
+BanditRL.OnlineLearning.meanPredict_expectedFixed_excess.{u_1} {Ω : Type u_1} [MeasurableSpace Ω] (μ : Measure Ω)
+  [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ (t : ℕ), Measurable (Y t))
+  (hlaw : ∀ (t : ℕ), IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ (t : ℕ), ∀ᵐ (ω : Ω) ∂μ, Y t ω ∈ Set.Icc 0 1)
+  (hind : iIndepFun Y μ) (T : ℕ) :
+  BanditRL.OnlineLearning.expectedFixedRegret μ Y (fun t ω => BanditRL.OnlineLearning.meanPredict (fun i => Y i ω) t)
+        T =
+      ∑ t ∈ Finset.range T,
+        ∫ (ω : Ω), (BanditRL.OnlineLearning.meanPredict (fun i => Y i ω) t - ∫ (ω : Ω), Y 0 ω ∂μ) ^ 2 ∂μ ∧
+    0 ≤
+      BanditRL.OnlineLearning.expectedFixedRegret μ Y
+        (fun t ω => BanditRL.OnlineLearning.meanPredict (fun i => Y i ω) t) T
+BanditRL.OnlineLearning.randomized_history_policy_expectedFixed_excess.{u, v} {Ω : Type u} {Seed : Type v}
+  [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)
+  (hY : ∀ (t : ℕ), Measurable (Y t)) (hlaw : ∀ (t : ℕ), IdentDistrib (Y t) (Y 0) μ μ)
+  (hb : ∀ (t : ℕ), ∀ᵐ (ω : Ω) ∂μ, Y t ω ∈ Set.Icc 0 1) (hind : iIndepFun Y μ) (S : Ω → Seed) (hS : Measurable S)
+  (hseed : S ⟂ᵢ[μ] fun ω t => Y t ω) (policy : (t : ℕ) → Seed × (↥(Finset.range t) → ℝ) → ℝ)
+  (hp : ∀ (t : ℕ), Measurable (policy t))
+  (hpb :
+    ∀ (t : ℕ) (s : Seed) (z : ↥(Finset.range t) → ℝ),
+      (∀ (i : ↥(Finset.range t)), z i ∈ Set.Icc 0 1) → policy t (s, z) ∈ Set.Icc 0 1)
+  (T : ℕ) :
+  BanditRL.OnlineLearning.expectedFixedRegret μ Y (fun t ω => policy t (S ω, fun i => Y (↑i) ω)) T =
+      ∑ t ∈ Finset.range T, ∫ (ω : Ω), (policy t (S ω, fun i => Y (↑i) ω) - ∫ (ω : Ω), Y 0 ω ∂μ) ^ 2 ∂μ ∧
+    0 ≤ BanditRL.OnlineLearning.expectedFixedRegret μ Y (fun t ω => policy t (S ω, fun i => Y (↑i) ω)) T
+BanditRL.OnlineLearning.theorem_1_3 (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T) (hy : ∀ t < T, y t ∈ Set.Icc 0 1) :
+  ∑ t ∈ Finset.range T, (BanditRL.OnlineLearning.meanPredict y t - y t) ^ 2 -
+      ∑ t ∈ Finset.range T, (BanditRL.OnlineLearning.empiricalMean y T - y t) ^ 2 ≤
+    4 + 4 * Real.log ↑T
+BanditRL.OnlineLearning.empiricalMean_minimizes (y : ℕ → ℝ) (n : ℕ) (hn : 0 < n) (u : ℝ) :
+  ∑ t ∈ Finset.range n, (BanditRL.OnlineLearning.empiricalMean y n - y t) ^ 2 ≤ ∑ t ∈ Finset.range n, (u - y t) ^ 2
+BanditRL.OnlineLearning.meanPredict_measurable.{u_1} {Ω : Type u_1} [MeasurableSpace Ω] (Y : ℕ → Ω → ℝ)
+  (hY : ∀ (t : ℕ), Measurable (Y t)) (t : ℕ) :
+  Measurable fun ω => BanditRL.OnlineLearning.meanPredict (fun i => Y i ω) t
+BanditRL.OnlineLearning.meanPredict_mem (y : ℕ → ℝ) (t : ℕ) (hy : ∀ i < t, y i ∈ Set.Icc 0 1) :
+  BanditRL.OnlineLearning.meanPredict y t ∈ Set.Icc 0 1
+Real.tendsto_pow_log_div_mul_add_atTop (a b : ℝ) (n : ℕ) (ha : a ≠ 0) :
+  Tendsto (fun x => Real.log x ^ n / (a * x + b)) atTop (nhds 0)
+tendsto_natCast_atTop_atTop.{u_2} {R : Type u_2} [Semiring R] [PartialOrder R] [IsOrderedRing R] [Archimedean R] :
+  Tendsto Nat.cast atTop atTop
+'Asymptotics.isLittleO_iff_tendsto'' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Asymptotics.IsLittleO.tendsto_div_nhds_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Filter.tendsto_congr'' depends on axioms: [propext, Quot.sound]
+'Filter.Tendsto.congr'' depends on axioms: [propext, Quot.sound]
+'MeasureTheory.integrable_finset_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MeasureTheory.integral_mono_ae' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MeasureTheory.integral_sub' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BanditRL.OnlineLearning.normalized_excess' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BanditRL.OnlineLearning.expected_fixed_prefix_decomposition' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BanditRL.OnlineLearning.expectedFixedMinimum_eq_variance' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BanditRL.OnlineLearning.meanPredict_expectedFixed_excess' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BanditRL.OnlineLearning.randomized_history_policy_expectedFixed_excess' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'BanditRL.OnlineLearning.theorem_1_3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BanditRL.OnlineLearning.empiricalMean_minimizes' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BanditRL.OnlineLearning.meanPredict_measurable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BanditRL.OnlineLearning.meanPredict_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Real.tendsto_pow_log_div_mul_add_atTop' depends on axioms: [propext, Classical.choice, Quot.sound]
+'tendsto_natCast_atTop_atTop' depends on axioms: [propext, Classical.choice, Quot.sound]

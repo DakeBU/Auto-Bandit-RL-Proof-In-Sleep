@@ -1,0 +1,70 @@
+⚠ [3327/3374] Replayed BanditRLProof.OnlineLearningFTL
+warning: BanditRLProof/OnlineLearningFTL.lean:81:41: unused variable `hT`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [3371/3374] Replayed BanditRLProof.OnlineLearningHistory
+warning: BanditRLProof/OnlineLearningHistory.lean:42:6: 'ring' tactic does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: BanditRLProof/OnlineLearningHistory.lean:42:6: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+⚠ [3372/3374] Replayed BanditRLProof.OnlineGuessingIIDBenchmark
+warning: BanditRLProof/OnlineGuessingIIDBenchmark.lean:38:8: This simp argument is unused:
+  Finset.sum_add_distrib
+
+Hint: Omit it from the simp argument list.
+  simp ̵[̵F̵i̵n̵s̵e̵t̵.̵s̵u̵m̵_̵a̵d̵d̵_̵d̵i̵s̵t̵r̵i̵b̵]̵
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: BanditRLProof/OnlineGuessingIIDBenchmark.lean:185:5: unused variable `hind`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: BanditRLProof/OnlineGuessingIIDBenchmark.lean:187:5: unused variable `hp`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: BanditRLProof/OnlineGuessingIIDBenchmark.lean:188:5: unused variable `hpb`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [3373/3374] Replayed BanditRLProof.OnlineGuessingRandomizedIID
+warning: BanditRLProof/OnlineGuessingRandomizedIID.lean:8:0: Definition `BanditRL.OnlineLearning.privateSeedPastInformation` of class type must be marked with `@[reducible]` or `@[implicit_reducible]`
+✖ [3374/3374] Building BanditRLProof.OnlineGuessingIIDSuccess (10s)
+trace: .> LEAN_PATH=E:\ABRL\research\.lake\packages\Cli\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\batteries\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\Qq\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\aesop\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\proofwidgets\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\importGraph\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\LeanSearchClient\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\plausible\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\mathlib\.lake\build\lib\lean;E:\ABRL\worktrees\research-online-book\.lake\build\lib\lean c:\Users\admin\.elan\toolchains\leanprover--lean4---v4.29.1\bin\lean.exe E:\ABRL\worktrees\research-online-book\BanditRLProof\OnlineGuessingIIDSuccess.lean -o E:\ABRL\worktrees\research-online-book\.lake\build\lib\lean\BanditRLProof\OnlineGuessingIIDSuccess.olean -i E:\ABRL\worktrees\research-online-book\.lake\build\lib\lean\BanditRLProof\OnlineGuessingIIDSuccess.ilean -c E:\ABRL\worktrees\research-online-book\.lake\build\ir\BanditRLProof\OnlineGuessingIIDSuccess.c --setup E:\ABRL\worktrees\research-online-book\.lake\build\ir\BanditRLProof\OnlineGuessingIIDSuccess.setup.json --json
+error: BanditRLProof/OnlineGuessingIIDSuccess.lean:98:6: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ∫ (a : Ω), ∑ t ∈ Finset.range T, (prediction t a - Y t a) ^ 2 - ∑ t ∈ Finset.range T, (m - Y t a) ^ 2 ∂μ
+in the target expression
+  ∫ (x : Ω),
+      ((fun ω => ∑ t ∈ Finset.range T, (prediction t ω - Y t ω) ^ 2) - fun ω => ∑ t ∈ Finset.range T, (m - Y t ω) ^ 2)
+        x ∂μ ≤
+    ∫ (x : Ω), 4 + 4 * Real.log ↑T ∂μ
+
+Ω : Type u
+inst✝¹ : MeasurableSpace Ω
+μ : Measure Ω
+inst✝ : IsProbabilityMeasure μ
+Y : ℕ → Ω → ℝ
+hY : ∀ (t : ℕ), Measurable (Y t)
+hlaw : ∀ (t : ℕ), IdentDistrib (Y t) (Y 0) μ μ
+hb : ∀ (t : ℕ), ∀ᵐ (ω : Ω) ∂μ, Y t ω ∈ Set.Icc 0 1
+T : ℕ
+hT : 0 < T
+prediction : ℕ → Ω → ℝ := fun t ω => meanPredict (fun i => Y i ω) t
+m : ℝ := ∫ (ω : Ω), Y 0 ω ∂μ
+hall : ∀ᵐ (ω : Ω) ∂μ, ∀ (t : ℕ), Y t ω ∈ Set.Icc 0 1
+hL : ∀ (t : ℕ), MemLp (Y t) 2 μ
+hP : ∀ (t : ℕ), MemLp (prediction t) 2 μ
+hPI : Integrable (fun ω => ∑ t ∈ Finset.range T, (prediction t ω - Y t ω) ^ 2) μ
+hCI : Integrable (fun ω => ∑ t ∈ Finset.range T, (m - Y t ω) ^ 2) μ
+hpath :
+  ∀ᵐ (ω : Ω) ∂μ,
+    ∑ t ∈ Finset.range T, (prediction t ω - Y t ω) ^ 2 - ∑ t ∈ Finset.range T, (m - Y t ω) ^ 2 ≤ 4 + 4 * Real.log ↑T
+hi :
+  ∫ (x : Ω),
+      ((fun ω => ∑ t ∈ Finset.range T, (prediction t ω - Y t ω) ^ 2) - fun ω => ∑ t ∈ Finset.range T, (m - Y t ω) ^ 2)
+        x ∂μ ≤
+    ∫ (x : Ω), 4 + 4 * Real.log ↑T ∂μ
+⊢ expectedFixedRegret μ Y (fun t ω => meanPredict (fun i => Y i ω) t) T ≤ 4 + 4 * Real.log ↑T
+error: Lean exited with code 1
+Some required targets logged failures:
+- BanditRLProof.OnlineGuessingIIDSuccess
+error: build failed

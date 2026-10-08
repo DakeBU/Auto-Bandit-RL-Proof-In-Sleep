@@ -1,0 +1,2 @@
+Actual no-independence4log upper producer with derived a.s.support integrability, empirical minimum-to-population comparator pathwise comparison, and literal expected-fixed benchmark. Two proof-only API/representation repairs retained; terminal unchanged.
+Actual body focused build/kernel, headerfence/safe scans separately pass. Exact terminal unchanged; BODY/source acceptance and combined gates still pending. Goal active.

@@ -1,0 +1,43 @@
+⚠ [3327/3374] Replayed BanditRLProof.OnlineLearningFTL
+warning: BanditRLProof/OnlineLearningFTL.lean:81:41: unused variable `hT`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [3371/3374] Replayed BanditRLProof.OnlineLearningHistory
+warning: BanditRLProof/OnlineLearningHistory.lean:42:6: 'ring' tactic does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: BanditRLProof/OnlineLearningHistory.lean:42:6: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+⚠ [3372/3374] Replayed BanditRLProof.OnlineGuessingIIDBenchmark
+warning: BanditRLProof/OnlineGuessingIIDBenchmark.lean:38:8: This simp argument is unused:
+  Finset.sum_add_distrib
+
+Hint: Omit it from the simp argument list.
+  simp ̵[̵F̵i̵n̵s̵e̵t̵.̵s̵u̵m̵_̵a̵d̵d̵_̵d̵i̵s̵t̵r̵i̵b̵]̵
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: BanditRLProof/OnlineGuessingIIDBenchmark.lean:185:5: unused variable `hind`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: BanditRLProof/OnlineGuessingIIDBenchmark.lean:187:5: unused variable `hp`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: BanditRLProof/OnlineGuessingIIDBenchmark.lean:188:5: unused variable `hpb`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [3373/3374] Replayed BanditRLProof.OnlineGuessingRandomizedIID
+warning: BanditRLProof/OnlineGuessingRandomizedIID.lean:8:0: Definition `BanditRL.OnlineLearning.privateSeedPastInformation` of class type must be marked with `@[reducible]` or `@[implicit_reducible]`
+✖ [3374/3374] Building BanditRLProof.OnlineGuessingIIDSuccess (10s)
+trace: .> LEAN_PATH=E:\ABRL\research\.lake\packages\Cli\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\batteries\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\Qq\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\aesop\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\proofwidgets\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\importGraph\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\LeanSearchClient\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\plausible\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\mathlib\.lake\build\lib\lean;E:\ABRL\worktrees\research-online-book\.lake\build\lib\lean c:\Users\admin\.elan\toolchains\leanprover--lean4---v4.29.1\bin\lean.exe E:\ABRL\worktrees\research-online-book\BanditRLProof\OnlineGuessingIIDSuccess.lean -o E:\ABRL\worktrees\research-online-book\.lake\build\lib\lean\BanditRLProof\OnlineGuessingIIDSuccess.olean -i E:\ABRL\worktrees\research-online-book\.lake\build\lib\lean\BanditRLProof\OnlineGuessingIIDSuccess.ilean -c E:\ABRL\worktrees\research-online-book\.lake\build\ir\BanditRLProof\OnlineGuessingIIDSuccess.c --setup E:\ABRL\worktrees\research-online-book\.lake\build\ir\BanditRLProof\OnlineGuessingIIDSuccess.setup.json --json
+error: BanditRLProof/OnlineGuessingIIDSuccess.lean:102:29: Unknown identifier `sq_zero`
+error: BanditRLProof/OnlineGuessingIIDSuccess.lean:102:4: Type mismatch: After simplification, term
+  expected_fixed_prefix_decomposition μ Y hY hlaw hb T m
+ has type
+  ∫ (ω : Ω), ∑ x ∈ Finset.range T, (∫ (ω : Ω), Y 0 ω ∂μ - Y x ω) ^ 2 ∂μ = ↑T * Var[Y 0; μ] + ↑T * 0 ^ 2
+but is expected to have type
+  ∫ (ω : Ω), ∑ x ∈ Finset.range T, (∫ (ω : Ω), Y 0 ω ∂μ - Y x ω) ^ 2 ∂μ = ↑T * Var[Y 0; μ]
+error: Lean exited with code 1
+Some required targets logged failures:
+- BanditRLProof.OnlineGuessingIIDSuccess
+error: build failed

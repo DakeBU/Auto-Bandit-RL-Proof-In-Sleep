@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineLearning.meanPredict_iid_success",
+  "file": "BanditRLProof/OnlineGuessingIIDSuccess.lean",
+  "statement": "theorem meanPredict_iid_success {Ω : Type u} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (hind : iIndepFun Y μ) : Tendsto (fun T => expectedFixedRegret μ Y (fun t ω => meanPredict (fun i => Y i ω) t) T / (T : ℝ)) atTop (nhds (0 : ℝ)) ∧ (fun T => expectedFixedRegret μ Y (fun t ω => meanPredict (fun i => Y i ω) t) T) =o[atTop] (fun T : ℕ => (T : ℝ))",
+  "statement_hash": "5ecb5bab6e32438a9b116822bfcfc397a27118432bdb8b2374e16251782aab13",
+  "source_assumptions": [],
+  "created_at": "2026-10-08T09:55:14+00:00"
+}

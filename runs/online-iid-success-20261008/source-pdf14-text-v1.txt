@@ -1,0 +1,62 @@
+2What is Online Learning?
+algorithm, let’s now rewrite (1.1) in an equivalent way:
+E
+" TX
+t=1
+(xt −Y t)2
+#
+−min
+x∈[0,1]
+E
+" TX
+t=1
+(x−Y t)2
+#
+.
+Now, the last step: let’s remove the assumption on how the data is generated, consider any
+arbitrary sequence ofy t, and let’s keep using the same measure of success. If the algorithm
+is deterministic, we can remove the expectation because there is no stochasticity anymore.
+So, we get that we will win the game if
+RegretT :=
+TX
+t=1
+(xt −y t)2 −min
+x∈[0,1]
+TX
+t=1
+(x−y t)2
+grows sublinearly withT. The quantity above is called theregret, because it measures
+how much the algorithm regrets not having played on every round the best single choice in
+hindsight. We will denote it byRegret T .
+Our reasoning should provide sufficient justification for this metric; however, through-
+out this book, we will see that it also makes sense from both a convex optimization and a
+machine learning perspective.
+Note that in the stochastic case, the optimal strategy is given by a single best prediction, so
+it was natural to compare against it. Instead, with arbitrary sequences, it is not clear anymore
+that this is a good competitor. For example, we might consider a sequence of competitors
+instead of a single one. Indeed, it can be done, but the single competitor is still interesting in
+a variety of settings and simpler to explain. So, for most of this book, we will use a single
+competitor, while we will consider a sequence of competitors in Chapter 14.
+Let’s now generalize the online guessing game, considering that the algorithm outputs a
+vectorx t in thevalid set 1 V ⊆R d (also calledfeasible set), and it pays alossℓ t :V →
+Rthat measures how good the prediction of the algorithm was in each round. Also, let’s
+consider acomparator(also calledcompetitor), that is, an arbitrary predictoruinV ⊆R d
+and let’s parameterize the regret with respect to it:Regret T (u). We can now define online
+learning: designing and analyzing algorithms to minimize the regret over a sequence of loss
+functions with respect to an arbitrary competitoru∈ V ⊆R d:
+RegretT (u) :=
+TX
+t=1
+ℓt(xt)−
+TX
+t=1
+ℓt(u).
+It is worth stressing that an online algorithm does not knowuor the value of the corre-
+sponding regret in order to guarantee an upper bound on the regret. We will say that the
+algorithm isno-regretwhen, for every fixedu∈ V, its regret is at most sublinear, that is,
+limT→∞ RegretT (u)/T≤0.
+Remark 1.1Strictly speaking, the regret is also a function of the lossesℓ 1, . . . , ℓT . How-
+ever, we will suppress this dependence for simplicity of notation.
+This framework is quite powerful, and it allows us to reformulate a bunch of different
+1 In some cases, we can make the game easier for the algorithm by letting it choose the prediction from a set
+W ⊃ V.

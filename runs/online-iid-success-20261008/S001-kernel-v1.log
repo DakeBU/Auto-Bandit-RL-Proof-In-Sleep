@@ -1,0 +1,6 @@
+BanditRL.OnlineLearning.centered_total_sublinear_iff_average (total : ℕ → ℝ) (c : ℝ) :
+  ((fun T => total T - ↑T * c) =o[Filter.atTop] fun T => ↑T) ↔
+    Filter.Tendsto (fun T => total T / ↑T - c) Filter.atTop (nhds 0)
+'BanditRL.OnlineLearning.centered_total_sublinear_iff_average' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

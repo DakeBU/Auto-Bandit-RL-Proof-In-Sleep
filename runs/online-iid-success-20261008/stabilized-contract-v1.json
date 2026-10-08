@@ -1,0 +1,57 @@
+{
+  "state": "stabilized",
+  "version": 1,
+  "source_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+  "targets_sha256": "14872a83f6390970fb4167b51c1953a42e01eba8679e97ccb936683743887023",
+  "context_sha256": "32e720150733eb1cf373752da2239b33403abaeca01476b8b3fb906ac6063b08",
+  "review_receipt_sha256": "53edeb2876e1972bd5d9ad0e4fadf913f22f18285a84be8c88399d80dd067753",
+  "reader_requirements": {
+    "R1": "Display source equations (1.1) and (1.2) and Theorem 1.3 with source round 1 = Lean time 0; label S001 as a generic adapter and S003/S004 as derived applications, not new numbered source results.",
+    "R2": "Keep minimization over the expected loss of one fixed comparator outside expectation; explain the feasible population mean and do not substitute expected hindsight minimum.",
+    "R3": "State one infinite probability process with measurable same-law a.s. [0,1] targets; S002/S004 require joint IID, whereas S003 does not; derive integrability rather than strengthen to pointwise support.",
+    "R4": "For S002 state seed independence from the whole target stream, joint measurability, every-seed feasibility only on legal strict-past histories, and the actual composed prediction; equivalences do not make every policy successful.",
+    "R5": "Show the actual unknown-law meanPredict with initial 1/2 and strict-past empirical mean; population mean is a proof comparator, not algorithm input, and horizons do not select different learners.",
+    "R6": "Distinguish ordinary expected normalized zero convergence and magnitude little-o from adversarial eventual-upper-epsilon NoRegret; state eventual T>0 and the possible generic T0 discrepancy.",
+    "R7": "Present complete exact headers and definitions, a displayed proof explanation and actual compiled dependencies only when available; preserve existing registry IDs/URLs/hashes and verify current formulas/pixels after applicable combined gates.",
+    "R8": "Keep full randomization/kernel/completed-information/AE-factorization coverage, five old module audits, original sixteen source objects with null proof total, full C1/C2, Chapters3–16 and necessary appendices required; no chapter/Goal/main/live completion."
+  },
+  "terminal_headers": [
+    {
+      "id": "S001",
+      "name": "BanditRL.OnlineLearning.centered_total_sublinear_iff_average",
+      "binders": "(total : ℕ → ℝ) (c : ℝ)",
+      "conclusion": "(fun T => total T - (T : ℝ) * c) =o[atTop] (fun T : ℕ => (T : ℝ)) ↔\n      Tendsto (fun T => total T / (T : ℝ) - c) atTop (nhds (0 : ℝ))",
+      "header": "theorem centered_total_sublinear_iff_average (total : ℕ → ℝ) (c : ℝ) :\n    (fun T => total T - (T : ℝ) * c) =o[atTop] (fun T : ℕ => (T : ℝ)) ↔\n      Tendsto (fun T => total T / (T : ℝ) - c) atTop (nhds (0 : ℝ))",
+      "source_anchor": "printed1/PDF13 equations1.1-1.2 success equivalence"
+    },
+    {
+      "id": "S002",
+      "name": "BanditRL.OnlineLearning.randomized_history_policy_success_iff",
+      "binders": "{Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1)\n    (hind : iIndepFun Y μ)\n    (S : Ω → Seed) (hS : Measurable S)\n    (hseed : IndepFun S (fun ω t => Y t ω) μ)\n    (policy : (t : ℕ) → (Seed × ((↑(Finset.range t) : Type) → ℝ)) → ℝ)\n    (hp : ∀ t, Measurable (policy t))\n    (hpb : ∀ t s z, (∀ i, z i ∈ Set.Icc (0 : ℝ) 1) →\n      policy t (s, z) ∈ Set.Icc (0 : ℝ) 1)",
+      "conclusion": "let prediction := fun t ω => policy t (S ω, fun i => Y i ω)\n    (∀ T, 0 ≤ expectedFixedRegret μ Y prediction T) ∧\n      ((fun T => expectedFixedRegret μ Y prediction T) =o[atTop]\n          (fun T : ℕ => (T : ℝ)) ↔\n        Tendsto (fun T => (∫ ω, ∑ t ∈ Finset.range T, (prediction t ω - Y t ω)^2 ∂μ) / (T : ℝ) - variance (Y 0) μ) atTop (nhds (0 : ℝ))) ∧\n      (Tendsto (fun T => (∫ ω, ∑ t ∈ Finset.range T, (prediction t ω - Y t ω)^2 ∂μ) / (T : ℝ) - variance (Y 0) μ) atTop (nhds (0 : ℝ)) ↔\n        Tendsto (fun T => (∑ t ∈ Finset.range T,\n          ∫ ω, (prediction t ω - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) / (T : ℝ)) atTop (nhds (0 : ℝ)))",
+      "header": "theorem randomized_history_policy_success_iff {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1)\n    (hind : iIndepFun Y μ)\n    (S : Ω → Seed) (hS : Measurable S)\n    (hseed : IndepFun S (fun ω t => Y t ω) μ)\n    (policy : (t : ℕ) → (Seed × ((↑(Finset.range t) : Type) → ℝ)) → ℝ)\n    (hp : ∀ t, Measurable (policy t))\n    (hpb : ∀ t s z, (∀ i, z i ∈ Set.Icc (0 : ℝ) 1) →\n      policy t (s, z) ∈ Set.Icc (0 : ℝ) 1) :\n    let prediction := fun t ω => policy t (S ω, fun i => Y i ω)\n    (∀ T, 0 ≤ expectedFixedRegret μ Y prediction T) ∧\n      ((fun T => expectedFixedRegret μ Y prediction T) =o[atTop]\n          (fun T : ℕ => (T : ℝ)) ↔\n        Tendsto (fun T => (∫ ω, ∑ t ∈ Finset.range T, (prediction t ω - Y t ω)^2 ∂μ) / (T : ℝ) - variance (Y 0) μ) atTop (nhds (0 : ℝ))) ∧\n      (Tendsto (fun T => (∫ ω, ∑ t ∈ Finset.range T, (prediction t ω - Y t ω)^2 ∂μ) / (T : ℝ) - variance (Y 0) μ) atTop (nhds (0 : ℝ)) ↔\n        Tendsto (fun T => (∑ t ∈ Finset.range T,\n          ∫ ω, (prediction t ω - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) / (T : ℝ)) atTop (nhds (0 : ℝ)))",
+      "source_anchor": "printed1/PDF13 equations1.1-1.2 success equivalence"
+    },
+    {
+      "id": "S003",
+      "name": "BanditRL.OnlineLearning.meanPredict_expectedFixed_upper",
+      "binders": "{Ω : Type u} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) (hT : 0 < T)",
+      "conclusion": "expectedFixedRegret μ Y (fun t ω => meanPredict (fun i => Y i ω) t) T ≤ 4 + 4 * Real.log T",
+      "header": "theorem meanPredict_expectedFixed_upper {Ω : Type u} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) (hT : 0 < T) :\n    expectedFixedRegret μ Y (fun t ω => meanPredict (fun i => Y i ω) t) T ≤ 4 + 4 * Real.log T",
+      "source_anchor": "derived stochastic application of printed4/PDF16 Theorem1.3; not a separately numbered source result"
+    },
+    {
+      "id": "S004",
+      "name": "BanditRL.OnlineLearning.meanPredict_iid_success",
+      "binders": "{Ω : Type u} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (hind : iIndepFun Y μ)",
+      "conclusion": "Tendsto (fun T => expectedFixedRegret μ Y (fun t ω => meanPredict (fun i => Y i ω) t) T / (T : ℝ)) atTop (nhds (0 : ℝ)) ∧\n      (fun T => expectedFixedRegret μ Y (fun t ω => meanPredict (fun i => Y i ω) t) T) =o[atTop]\n        (fun T : ℕ => (T : ℝ))",
+      "header": "theorem meanPredict_iid_success {Ω : Type u} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (hind : iIndepFun Y μ) :\n    Tendsto (fun T => expectedFixedRegret μ Y (fun t ω => meanPredict (fun i => Y i ω) t) T / (T : ℝ)) atTop (nhds (0 : ℝ)) ∧\n      (fun T => expectedFixedRegret μ Y (fun t ω => meanPredict (fun i => Y i ω) t) T) =o[atTop]\n        (fun T : ℕ => (T : ℝ))",
+      "source_anchor": "derived stochastic application of printed4/PDF16 Theorem1.3; not a separately numbered source result"
+    }
+  ],
+  "first_ready_leaf": "S001",
+  "theorem_bodies_compiled": false,
+  "package_accepted": false,
+  "chapter_complete": false,
+  "goal_complete": false
+}

@@ -1,0 +1,58 @@
+{
+  "task_id": "ONLINE-IID-SUCCESS-20261008",
+  "stage": "draft",
+  "targets": [
+    {
+      "id": "S001",
+      "name": "BanditRL.OnlineLearning.centered_total_sublinear_iff_average",
+      "status": "unproved",
+      "terminal": "(fun T => total T - (T : ℝ) * c) =o[atTop] (fun T : ℕ => (T : ℝ)) ↔\n      Tendsto (fun T => total T / (T : ℝ) - c) atTop (nhds (0 : ℝ))"
+    },
+    {
+      "id": "S002",
+      "name": "BanditRL.OnlineLearning.randomized_history_policy_success_iff",
+      "status": "unproved",
+      "terminal": "let prediction := fun t ω => policy t (S ω, fun i => Y i ω)\n    (∀ T, 0 ≤ expectedFixedRegret μ Y prediction T) ∧\n      ((fun T => expectedFixedRegret μ Y prediction T) =o[atTop]\n          (fun T : ℕ => (T : ℝ)) ↔\n        Tendsto (fun T => (∫ ω, ∑ t ∈ Finset.range T, (prediction t ω - Y t ω)^2 ∂μ) / (T : ℝ) - variance (Y 0) μ) atTop (nhds (0 : ℝ))) ∧\n      (Tendsto (fun T => (∫ ω, ∑ t ∈ Finset.range T, (prediction t ω - Y t ω)^2 ∂μ) / (T : ℝ) - variance (Y 0) μ) atTop (nhds (0 : ℝ)) ↔\n        Tendsto (fun T => (∑ t ∈ Finset.range T,\n          ∫ ω, (prediction t ω - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) / (T : ℝ)) atTop (nhds (0 : ℝ)))"
+    },
+    {
+      "id": "S003",
+      "name": "BanditRL.OnlineLearning.meanPredict_expectedFixed_upper",
+      "status": "unproved",
+      "terminal": "expectedFixedRegret μ Y (fun t ω => meanPredict (fun i => Y i ω) t) T ≤ 4 + 4 * Real.log T"
+    },
+    {
+      "id": "S004",
+      "name": "BanditRL.OnlineLearning.meanPredict_iid_success",
+      "status": "unproved",
+      "terminal": "Tendsto (fun T => expectedFixedRegret μ Y (fun t ω => meanPredict (fun i => Y i ω) t) T / (T : ℝ)) atTop (nhds (0 : ℝ)) ∧\n      (fun T => expectedFixedRegret μ Y (fun t ω => meanPredict (fun i => Y i ω) t) T) =o[atTop]\n        (fun T : ℕ => (T : ℝ))"
+    }
+  ],
+  "required": [
+    "contract-roundtrip",
+    "focused-build",
+    "four-public-instantiations",
+    "nondegenerate-public-canary",
+    "fixed-header-hash",
+    "body-semantic-review",
+    "axiom-audit",
+    "combined-root",
+    "combined-Tests",
+    "full-harness",
+    "own-shadow-globalSGB-unchanged",
+    "contributor-PR-base",
+    "reader/site/registry/visual",
+    "candidate-review",
+    "native-acceptance",
+    "scoped-commit-push-draftPR"
+  ],
+  "whole_goal_required_unclosed": [
+    "five-old-module-audits",
+    "full-randomization-information-source-coverage",
+    "whole-C1gate",
+    "C2remaining",
+    "C3-C16enumeration-andproofs",
+    "required-appendices"
+  ],
+  "chapter_complete": false,
+  "goal_complete": false
+}

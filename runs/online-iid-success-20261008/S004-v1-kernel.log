@@ -1,0 +1,15 @@
+BanditRL.OnlineLearning.meanPredict_iid_success.{u} {Ω : Type u} [MeasurableSpace Ω] (μ : MeasureTheory.Measure Ω)
+  [MeasureTheory.IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ (t : ℕ), Measurable (Y t))
+  (hlaw : ∀ (t : ℕ), ProbabilityTheory.IdentDistrib (Y t) (Y 0) μ μ)
+  (hb : ∀ (t : ℕ), ∀ᵐ (ω : Ω) ∂μ, Y t ω ∈ Set.Icc 0 1) (hind : ProbabilityTheory.iIndepFun Y μ) :
+  Filter.Tendsto
+      (fun T =>
+        BanditRL.OnlineLearning.expectedFixedRegret μ Y
+            (fun t ω => BanditRL.OnlineLearning.meanPredict (fun i => Y i ω) t) T /
+          ↑T)
+      Filter.atTop (nhds 0) ∧
+    (fun T =>
+        BanditRL.OnlineLearning.expectedFixedRegret μ Y
+          (fun t ω => BanditRL.OnlineLearning.meanPredict (fun i => Y i ω) t) T) =o[Filter.atTop]
+      fun T => ↑T
+'BanditRL.OnlineLearning.meanPredict_iid_success' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -1,0 +1,27 @@
+BanditRL.OnlineLearning.randomized_history_policy_success_iff.{u, v} {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω]
+  [MeasurableSpace Seed] (μ : MeasureTheory.Measure Ω) [MeasureTheory.IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)
+  (hY : ∀ (t : ℕ), Measurable (Y t)) (hlaw : ∀ (t : ℕ), ProbabilityTheory.IdentDistrib (Y t) (Y 0) μ μ)
+  (hb : ∀ (t : ℕ), ∀ᵐ (ω : Ω) ∂μ, Y t ω ∈ Set.Icc 0 1) (hind : ProbabilityTheory.iIndepFun Y μ) (S : Ω → Seed)
+  (hS : Measurable S) (hseed : ProbabilityTheory.IndepFun S (fun ω t => Y t ω) μ)
+  (policy : (t : ℕ) → Seed × (↥(Finset.range t) → ℝ) → ℝ) (hp : ∀ (t : ℕ), Measurable (policy t))
+  (hpb :
+    ∀ (t : ℕ) (s : Seed) (z : ↥(Finset.range t) → ℝ),
+      (∀ (i : ↥(Finset.range t)), z i ∈ Set.Icc 0 1) → policy t (s, z) ∈ Set.Icc 0 1) :
+  have prediction := fun t ω => policy t (S ω, fun i => Y (↑i) ω);
+  (∀ (T : ℕ), 0 ≤ BanditRL.OnlineLearning.expectedFixedRegret μ Y prediction T) ∧
+    (((fun T => BanditRL.OnlineLearning.expectedFixedRegret μ Y prediction T) =o[Filter.atTop] fun T => ↑T) ↔
+        Filter.Tendsto
+          (fun T =>
+            (∫ (ω : Ω), ∑ t ∈ Finset.range T, (prediction t ω - Y t ω) ^ 2 ∂μ) / ↑T -
+              ProbabilityTheory.variance (Y 0) μ)
+          Filter.atTop (nhds 0)) ∧
+      (Filter.Tendsto
+          (fun T =>
+            (∫ (ω : Ω), ∑ t ∈ Finset.range T, (prediction t ω - Y t ω) ^ 2 ∂μ) / ↑T -
+              ProbabilityTheory.variance (Y 0) μ)
+          Filter.atTop (nhds 0) ↔
+        Filter.Tendsto (fun T => (∑ t ∈ Finset.range T, ∫ (ω : Ω), (prediction t ω - ∫ (ω : Ω), Y 0 ω ∂μ) ^ 2 ∂μ) / ↑T)
+          Filter.atTop (nhds 0))
+'BanditRL.OnlineLearning.randomized_history_policy_success_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

@@ -15530,3 +15530,13 @@ Orabona v10 unnumberedexample afterT2.30/endSection2.2.1 immediatelybefore2.2.2 
 - `2026-10-08T08:17:07+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/proof_weapon_cards.json` - refreshed proof_weapon_cards.json
 - `2026-10-08T08:17:07+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
 - `2026-10-08T08:17:07+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
+- `2026-10-08T09:35:21+00:00` `bandit.py new-task` `task` `tasks/ONLINE-IID-SUCCESS-20261008.md` - IID guessing stochastic success and actual sample-mean learner convergence
+- `2026-10-08T09:35:26+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/ONLINE-IID-SUCCESS-20261008.md` - ONLINE-IID-SUCCESS-20261008
+- `2026-10-08T09:35:31+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/lml_bandit_cards.json` - refreshed lml_bandit_cards.json
+- `2026-10-08T09:35:31+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/mathlib_bandit_cards.json` - refreshed mathlib_bandit_cards.json
+- `2026-10-08T09:35:31+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_textbook_cards.json` - refreshed bandit_textbook_cards.json
+- `2026-10-08T09:35:31+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_paper_cards.json` - refreshed bandit_paper_cards.json
+- `2026-10-08T09:35:31+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/bandit_scenario_cards.json` - refreshed bandit_scenario_cards.json
+- `2026-10-08T09:35:31+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/proof_weapon_cards.json` - refreshed proof_weapon_cards.json
+- `2026-10-08T09:35:31+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
+- `2026-10-08T09:35:31+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json

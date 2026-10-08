@@ -1,0 +1,1 @@
+Four finite terminals must connect source C1EQ1.1-1.2 to actual stochastic algorithm success. Contract first; no proof bodies before independent semantic review. Single lower route. Full chapter remains open, every required source/audit/kernel coverage gap retained.
