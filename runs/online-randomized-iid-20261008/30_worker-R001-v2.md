@@ -1,0 +1,1 @@
+Actual R001 exact body focused build and kernel audit pass: seed/(X,Y) block-law factorization plus X/Y product law, measurable associative regrouping and injectivity, produced (S,X)/Y independence. This moves causal dependency frontier7→6 only. No supplied target/pairwise assumption shortcut. Remaining source producer terminals and all package/chapter/Goal gates unaccepted.

@@ -1,0 +1,22 @@
+{
+  "command": [
+    "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe",
+    "-B",
+    "-X",
+    "utf8",
+    "tools/bandit.py",
+    "statement-fence",
+    "--declaration",
+    "BanditRL.OnlineLearning.randomized_history_policy_independent",
+    "--file",
+    "BanditRLProof/OnlineGuessingRandomizedIID.lean",
+    "--source-assumption",
+    "theorem randomized_history_policy_independent {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ) (S : Ω → Seed) (hS : Measurable S) (hseed : IndepFun S (fun ω t => Y t ω) μ) (policy : (t : ℕ) → (Seed × ((↑(Finset.range t) : Type) → ℝ)) → ℝ) (hp : ∀ t, Measurable (policy t)) (t : ℕ) : IndepFun (fun ω => policy t (S ω, fun i => Y i ω)) (Y t) μ",
+    "--output",
+    "E:\\ABRL\\worktrees\\research-online-book\\runs\\online-randomized-iid-20261008\\full-header-fences-v2\\public-randomized_history_policy_independent.json"
+  ],
+  "cwd": "E:/ABRL/worktrees/research-online-book",
+  "exit_code": 0,
+  "seconds": 0.211,
+  "log_sha256": "b7d80afbf580a0dd98eb2a9a86a0e243327020bd25f356ba9af9785696804971"
+}

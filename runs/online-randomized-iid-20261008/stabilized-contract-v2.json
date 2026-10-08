@@ -1,0 +1,115 @@
+{
+  "state": "stabilized",
+  "version": 2,
+  "source_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+  "targets_sha256": "45e52f1e0f63354bb7b61f9efc7b3526a3cb18e35abc6cef3d756f141e2e5f01",
+  "context_sha256": "102d8fe89cfb6f0b57ac259426571bca425b50433da66d46dbf32e9796f715f0",
+  "source_statement_fingerprint_sha256": "57fdf7937973793dce11695ee4cc98291b1d23bb6e5002967f30f55df2ec6154",
+  "source_review_receipt_sha256": "28b51bfa0f8aee4eb4c7cfbda55718240ec8384875d20a3cb0896da1aa4304ac",
+  "original_reader_requirements": [
+    {
+      "id": "R1",
+      "requirement": "Seed is independent of the WHOLE process, and target family jointly IID; pairwise seed-target independence cannot replace this. Current independence must be derived."
+    },
+    {
+      "id": "R2",
+      "requirement": "Generated information is comap of seed+STRICT PAST; monotonicity is proved. General pre-reveal subfields are subordinate to this information; no arbitrary future-correlated side information or general kernel representation claim."
+    },
+    {
+      "id": "R3",
+      "requirement": "Concrete jointly measurable seed+history policy instantiates general predictable endpoint. At t0 history is empty but seed is allowed; prediction cannot see current/future targets."
+    },
+    {
+      "id": "R4",
+      "requirement": "Retain probability, measurable targets, same laws, a.s.unit support; derive ambient measurability and L2. Legal cube-only policy feasibility for every seed, no global off-cube strengthening."
+    },
+    {
+      "id": "R5",
+      "requirement": "Literal minimum is minimum of expected FIXED losses outside expectation. Same-prefix expected excess identity and nonnegativity, no hindsight minimum or pathwise nonnegativity."
+    },
+    {
+      "id": "R6",
+      "requirement": "Actual nondegenerate independent private seed/IID targets and XOR-style boundary canaries; T0 empty extension, source1..T=Lean0..T−1. Finite result only; source asymptotic successfulness remains REQUIRED."
+    },
+    {
+      "id": "R7",
+      "requirement": "Seven derived producer/interface proofs and one definition, not seven printed results or new rates. Shared root/Tests/fullharness/kernel/canary/fences/site/native/semantic review gates separate; original16/null/C1C2open/3–16unenumerated/appendices/oldfiveaudits/GoalACTIVE; OPENdraftPR194 exact b08 stack is not main/live."
+    }
+  ],
+  "terminal_headers": [
+    {
+      "id": "R001",
+      "name": "BanditRL.OnlineLearning.independent_private_seed_pair",
+      "header": "theorem independent_private_seed_pair\n    {Ω : Type u} {Seed : Type v} {Χ : Type w} {Ζ : Type z}\n    [MeasurableSpace Ω] [MeasurableSpace Seed] [MeasurableSpace Χ] [MeasurableSpace Ζ]\n    (μ : Measure Ω) [IsProbabilityMeasure μ]\n    (S : Ω → Seed) (X : Ω → Χ) (Y : Ω → Ζ)\n    (hS : Measurable S) (hX : Measurable X) (hY : Measurable Y)\n    (hseed : IndepFun S (fun ω => (X ω, Y ω)) μ) (hXY : IndepFun X Y μ) :\n    IndepFun (fun ω => (S ω, X ω)) Y μ",
+      "header_sha256": "f9ec680b30f764f1acf14c77ab765283cdd291d9621c299638444a45ecc4e6fb",
+      "dependencies": [],
+      "source_class": "Joint-seed regrouping lemma; pairwise independence does not suffice."
+    },
+    {
+      "id": "R002",
+      "name": "BanditRL.OnlineLearning.private_seed_past_independent",
+      "header": "theorem private_seed_past_independent {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ)\n    (S : Ω → Seed) (hS : Measurable S)\n    (hseed : IndepFun S (fun ω t => Y t ω) μ) (t : ℕ) :\n    IndepFun (fun ω => (S ω, fun i : (↑(Finset.range t) : Type) => Y i ω)) (Y t) μ",
+      "header_sha256": "e7af8a315fcb7cc1ac7876da6b41122d34f3a293e6eadfcfa8616b5f2c55b923",
+      "dependencies": [
+        "independent_private_seed_pair",
+        "history_policy_independent"
+      ],
+      "source_class": "Derive joint seed+strict-past current independence from natural whole-process seed independence and target IID."
+    },
+    {
+      "id": "R003",
+      "name": "BanditRL.OnlineLearning.privateSeedPastInformation_monotone",
+      "header": "theorem privateSeedPastInformation_monotone\n    {Ω : Type u} {Seed : Type v} [MeasurableSpace Seed]\n    (S : Ω → Seed) (Y : ℕ → Ω → ℝ) :\n    Monotone (privateSeedPastInformation S Y)",
+      "header_sha256": "5a876dd04c8ad83bcba823e316800ff15e35a41375987aa922787fc942b2ab54",
+      "dependencies": [],
+      "source_class": "Actual generated pre-reveal information grows with the history; no stochastic hypotheses needed."
+    },
+    {
+      "id": "R004",
+      "name": "BanditRL.OnlineLearning.predictable_private_seed_independent",
+      "header": "theorem predictable_private_seed_independent {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ)\n    (S : Ω → Seed) (hS : Measurable S)\n    (hseed : IndepFun S (fun ω t => Y t ω) μ)\n    (t : ℕ) (F : MeasurableSpace Ω) (hF : F ≤ privateSeedPastInformation S Y t)\n    (P : Ω → ℝ) (hP : Measurable[F] P) :\n    IndepFun P (Y t) μ",
+      "header_sha256": "55b67294f53f45be0b469749242be5d659d2b3c3331a0db373bb5278160357aa",
+      "dependencies": [
+        "private_seed_past_independent"
+      ],
+      "source_class": "Any measurable prediction in subordinate information inherits independence; current independence is not supplied."
+    },
+    {
+      "id": "R005",
+      "name": "BanditRL.OnlineLearning.randomized_history_policy_independent",
+      "header": "theorem randomized_history_policy_independent {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ)\n    (S : Ω → Seed) (hS : Measurable S)\n    (hseed : IndepFun S (fun ω t => Y t ω) μ)\n    (policy : (t : ℕ) → (Seed × ((↑(Finset.range t) : Type) → ℝ)) → ℝ)\n    (hp : ∀ t, Measurable (policy t)) (t : ℕ) :\n    IndepFun (fun ω => policy t (S ω, fun i => Y i ω)) (Y t) μ",
+      "header_sha256": "8a7b8c1b065362f4b559237e4baeb05f09347e8d3fd37d61ca81c48b07994b5a",
+      "dependencies": [
+        "private_seed_past_independent"
+      ],
+      "source_class": "Actual jointly measurable policy of seed and finite strict past; empty initial history may use seed."
+    },
+    {
+      "id": "R006",
+      "name": "BanditRL.OnlineLearning.predictable_private_seed_expectedFixed_excess",
+      "header": "theorem predictable_private_seed_expectedFixed_excess {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1)\n    (hind : iIndepFun Y μ)\n    (S : Ω → Seed) (hS : Measurable S)\n    (hseed : IndepFun S (fun ω t => Y t ω) μ)\n    (F : ℕ → MeasurableSpace Ω)\n    (hF : ∀ t, F t ≤ privateSeedPastInformation S Y t)\n    (prediction : ℕ → Ω → ℝ) (hP : ∀ t, Measurable[F t] (prediction t))\n    (hpb : ∀ t, ∀ᵐ ω ∂μ, prediction t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) :\n    expectedFixedRegret μ Y prediction T =\n      (∑ t ∈ Finset.range T,\n        ∫ ω, (prediction t ω - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) ∧\n      0 ≤ expectedFixedRegret μ Y prediction T",
+      "header_sha256": "877c1becd9403cd9bb1ad962983e72516455a79588955161f4c3b04efc763976",
+      "dependencies": [
+        "predictable_private_seed_independent",
+        "expectedFixedMinimum_eq_variance",
+        "iid_cumulative_prediction_decomposition"
+      ],
+      "source_class": "General predictable-information actual causal lower producer; derive ambient measurability and L2 from information/support."
+    },
+    {
+      "id": "R007",
+      "name": "BanditRL.OnlineLearning.randomized_history_policy_expectedFixed_excess",
+      "header": "theorem randomized_history_policy_expectedFixed_excess {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1)\n    (hind : iIndepFun Y μ)\n    (S : Ω → Seed) (hS : Measurable S)\n    (hseed : IndepFun S (fun ω t => Y t ω) μ)\n    (policy : (t : ℕ) → (Seed × ((↑(Finset.range t) : Type) → ℝ)) → ℝ)\n    (hp : ∀ t, Measurable (policy t))\n    (hpb : ∀ t s z, (∀ i, z i ∈ Set.Icc (0 : ℝ) 1) →\n      policy t (s, z) ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) :\n    expectedFixedRegret μ Y (fun t ω => policy t (S ω, fun i => Y i ω)) T =\n      (∑ t ∈ Finset.range T,\n        ∫ ω, (policy t (S ω, fun i => Y i ω) - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) ∧\n      0 ≤ expectedFixedRegret μ Y (fun t ω => policy t (S ω, fun i => Y i ω)) T",
+      "header_sha256": "d319a3d64500d4dd72e869e7c258a95bb3932eaef8af93b309103f30b4cf3275",
+      "dependencies": [
+        "predictable_private_seed_expectedFixed_excess"
+      ],
+      "source_class": "Concrete seed+finite-history producer instantiates the general information endpoint; feasible only on legal histories."
+    }
+  ],
+  "first_ready_leaf": "R001",
+  "theorem_bodies_compiled": false,
+  "package_accepted": false,
+  "chapter_complete": false,
+  "goal_complete": false
+}

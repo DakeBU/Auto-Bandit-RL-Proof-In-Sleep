@@ -1,0 +1,50 @@
+E:\ABRL\worktrees\research-online-book\runs\online-randomized-iid-20261008\draft-types-and-API-v1.lean:9:45: error: unexpected token 'Σ'; expected '_' or identifier
+E:\ABRL\worktrees\research-online-book\runs\online-randomized-iid-20261008\draft-types-and-API-v1.lean:19:18: error: unexpected token 'Σ'; expected '_' or identifier
+E:\ABRL\worktrees\research-online-book\runs\online-randomized-iid-20261008\draft-types-and-API-v1.lean:27:35: error: unexpected token 'Σ'; expected '_' or identifier
+E:\ABRL\worktrees\research-online-book\runs\online-randomized-iid-20261008\draft-types-and-API-v1.lean:35:18: error: unexpected token 'Σ'; expected '_' or identifier
+E:\ABRL\worktrees\research-online-book\runs\online-randomized-iid-20261008\draft-types-and-API-v1.lean:39:35: error: unexpected token 'Σ'; expected '_' or identifier
+E:\ABRL\worktrees\research-online-book\runs\online-randomized-iid-20261008\draft-types-and-API-v1.lean:48:35: error: unexpected token 'Σ'; expected '_' or identifier
+E:\ABRL\worktrees\research-online-book\runs\online-randomized-iid-20261008\draft-types-and-API-v1.lean:57:35: error: unexpected token 'Σ'; expected '_' or identifier
+E:\ABRL\worktrees\research-online-book\runs\online-randomized-iid-20261008\draft-types-and-API-v1.lean:74:35: error: unexpected token 'Σ'; expected '_' or identifier
+ProbabilityTheory.indepFun_iff_map_prod_eq_prod_map_map.{u_1, u_6, u_7} {Ω : Type u_1} {β : Type u_6} {β' : Type u_7}
+  {_mΩ : MeasurableSpace Ω} {μ : Measure Ω} {f : Ω → β} {g : Ω → β'} {mβ : MeasurableSpace β} {mβ' : MeasurableSpace β'}
+  [IsFiniteMeasure μ] (hf : AEMeasurable f μ) (hg : AEMeasurable g μ) :
+  f ⟂ᵢ[μ] g ↔ Measure.map (fun ω => (f ω, g ω)) μ = (Measure.map f μ).prod (Measure.map g μ)
+MeasureTheory.Measure.prodAssoc_prod.{u_1, u_2, u_3} {α : Type u_1} {β : Type u_2} {γ : Type u_3} [MeasurableSpace α]
+  [MeasurableSpace β] [MeasurableSpace γ] {μ : Measure α} {ν : Measure β} {τ : Measure γ} [SFinite ν] [SFinite μ]
+  [SFinite τ] : Measure.map (⇑MeasurableEquiv.prodAssoc) ((μ.prod ν).prod τ) = μ.prod (ν.prod τ)
+MeasureTheory.Measure.map_map.{u_1, u_2, u_3} {α : Type u_1} {β : Type u_2} {γ : Type u_3} {mα : MeasurableSpace α}
+  {mβ : MeasurableSpace β} {mγ : MeasurableSpace γ} {μ : Measure α} {g : β → γ} {f : α → β} (hg : Measurable g)
+  (hf : Measurable f) : Measure.map g (Measure.map f μ) = Measure.map (g ∘ f) μ
+E:\ABRL\worktrees\research-online-book\runs\online-randomized-iid-20261008\draft-types-and-API-v1.lean:95:7: error(lean.unknownIdentifier): Unknown constant `MeasureTheory.Measure.map_measurableEquiv_injective`
+Measurable.comap_le.{u_1, u_2} {α : Type u_1} {β : Type u_2} {m₁ : MeasurableSpace α} {m₂ : MeasurableSpace β}
+  {f : α → β} : Measurable f → MeasurableSpace.comap f m₂ ≤ m₁
+Measurable.of_comap_le.{u_1, u_2} {α : Type u_1} {β : Type u_2} {m₁ : MeasurableSpace α} {m₂ : MeasurableSpace β}
+  {f : α → β} : MeasurableSpace.comap f m₂ ≤ m₁ → Measurable f
+MeasurableSpace.comap_mono.{u_1, u_2} {α : Type u_1} {β : Type u_2} {m₁ m₂ : MeasurableSpace α} {g : β → α}
+  (h : m₁ ≤ m₂) : MeasurableSpace.comap g m₁ ≤ MeasurableSpace.comap g m₂
+MeasurableSpace.comap_comp.{u_1, u_2, u_3} {α : Type u_1} {β : Type u_2} {γ : Type u_3} {m : MeasurableSpace α}
+  {f : β → α} {g : γ → β} : MeasurableSpace.comap g (MeasurableSpace.comap f m) = MeasurableSpace.comap (f ∘ g) m
+ProbabilityTheory.indep_of_indep_of_le_left.{u_1} {Ω : Type u_1} {m₁ m₂ m₃ _mΩ : MeasurableSpace Ω} {μ : Measure Ω}
+  (h_indep : Indep m₁ m₂ μ) (h31 : m₃ ≤ m₁) : Indep m₃ m₂ μ
+ProbabilityTheory.IndepFun_iff_Indep.{u_1, u_3, u_4} {Ω : Type u_1} {β : Type u_3} {γ : Type u_4}
+  {x✝ : MeasurableSpace Ω} [mβ : MeasurableSpace β] [mγ : MeasurableSpace γ] (f : Ω → β) (g : Ω → γ) (μ : Measure Ω) :
+  f ⟂ᵢ[μ] g ↔ Indep (MeasurableSpace.comap f mβ) (MeasurableSpace.comap g mγ) μ
+ProbabilityTheory.iIndepFun.indepFun_finset.{u_1, u_2, u_10} {Ω : Type u_1} {ι : Type u_2} {_mΩ : MeasurableSpace Ω}
+  {μ : Measure Ω} {β : ι → Type u_10} {m : (i : ι) → MeasurableSpace (β i)} {f : (i : ι) → Ω → β i} (S T : Finset ι)
+  (hST : Disjoint S T) (hf_Indep : iIndepFun f μ) (hf_meas : ∀ (i : ι), Measurable (f i)) :
+  (fun a i => f (↑i) a) ⟂ᵢ[μ] fun a i => f (↑i) a
+BanditRL.OnlineLearning.history_policy_independent.{u_1} {Ω : Type u_1} [MeasurableSpace Ω] (μ : Measure Ω)
+  [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ (t : ℕ), Measurable (Y t)) (hind : iIndepFun Y μ) (t : ℕ)
+  (policy : (↥(Finset.range t) → ℝ) → ℝ) (hp : Measurable policy) : (fun ω => policy fun i => Y (↑i) ω) ⟂ᵢ[μ] Y t
+BanditRL.OnlineLearning.expectedFixedMinimum_eq_variance.{u_1} {Ω : Type u_1} [MeasurableSpace Ω] (μ : Measure Ω)
+  [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ (t : ℕ), Measurable (Y t))
+  (hlaw : ∀ (t : ℕ), IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ (t : ℕ), ∀ᵐ (ω : Ω) ∂μ, Y t ω ∈ Set.Icc 0 1) (T : ℕ) :
+  expectedFixedMinimum μ Y T = ↑T * Var[Y 0; μ]
+BanditRL.OnlineLearning.iid_cumulative_prediction_decomposition.{u_1} {Ω : Type u_1} [MeasurableSpace Ω] (μ : Measure Ω)
+  [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ (t : ℕ), Measurable (Y t))
+  (hlaw : ∀ (t : ℕ), IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ (t : ℕ), ∀ᵐ (ω : Ω) ∂μ, Y t ω ∈ Set.Icc 0 1)
+  (prediction : ℕ → Ω → ℝ) (hP : ∀ (t : ℕ), MemLp (prediction t) 2 μ) (hInd : ∀ (t : ℕ), prediction t ⟂ᵢ[μ] Y t)
+  (T : ℕ) :
+  ∫ (ω : Ω), ∑ t ∈ Finset.range T, (prediction t ω - Y t ω) ^ 2 ∂μ - ↑T * Var[Y 0; μ] =
+    ∑ t ∈ Finset.range T, ∫ (ω : Ω), (prediction t ω - ∫ (ω : Ω), Y 0 ω ∂μ) ^ 2 ∂μ

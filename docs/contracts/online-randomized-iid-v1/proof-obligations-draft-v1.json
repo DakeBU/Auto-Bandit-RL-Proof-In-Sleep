@@ -1,0 +1,83 @@
+{
+  "version": 1,
+  "status": "draft",
+  "obligations": [
+    {
+      "id": "R001",
+      "name": "BanditRL.OnlineLearning.independent_private_seed_pair",
+      "dependencies": [],
+      "header_sha256": "fc3573bf5ae8e53cfe23c21b36f478b0d0f20c251d6aa228ab9e68b5df28841b",
+      "status": "unproved",
+      "required": true
+    },
+    {
+      "id": "R002",
+      "name": "BanditRL.OnlineLearning.private_seed_past_independent",
+      "dependencies": [
+        "independent_private_seed_pair",
+        "history_policy_independent"
+      ],
+      "header_sha256": "0a05b9ab9a5611dadf4ec69ce5ee3e80f76d3699ef3a92bb631f8763a8435f7f",
+      "status": "unproved",
+      "required": true
+    },
+    {
+      "id": "R003",
+      "name": "BanditRL.OnlineLearning.privateSeedPastInformation_monotone",
+      "dependencies": [],
+      "header_sha256": "f72628da2ddb22f842071cde6c22405a4c5f3d10750d8cefdafabdc911977405",
+      "status": "unproved",
+      "required": true
+    },
+    {
+      "id": "R004",
+      "name": "BanditRL.OnlineLearning.predictable_private_seed_independent",
+      "dependencies": [
+        "private_seed_past_independent"
+      ],
+      "header_sha256": "4d0ea06430b6dd4327c0d1f3eaec03a680fdf7efc287886162952b6878e11555",
+      "status": "unproved",
+      "required": true
+    },
+    {
+      "id": "R005",
+      "name": "BanditRL.OnlineLearning.randomized_history_policy_independent",
+      "dependencies": [
+        "private_seed_past_independent"
+      ],
+      "header_sha256": "f13716d6161ab6cac2a35c2205792f5d70f979d186b1da05ec49eac2511e57fb",
+      "status": "unproved",
+      "required": true
+    },
+    {
+      "id": "R006",
+      "name": "BanditRL.OnlineLearning.predictable_private_seed_expectedFixed_excess",
+      "dependencies": [
+        "predictable_private_seed_independent",
+        "expectedFixedMinimum_eq_variance",
+        "iid_cumulative_prediction_decomposition"
+      ],
+      "header_sha256": "f9ce74a87020b8c54f8378a1b51d1f231d574fde7fd3c0df20de41f80fbec8c1",
+      "status": "unproved",
+      "required": true
+    },
+    {
+      "id": "R007",
+      "name": "BanditRL.OnlineLearning.randomized_history_policy_expectedFixed_excess",
+      "dependencies": [
+        "predictable_private_seed_expectedFixed_excess"
+      ],
+      "header_sha256": "fb3e41f08e65d8169d4f7cb52347b0544f712614c85ce7613865a49507859c5d",
+      "status": "unproved",
+      "required": true
+    }
+  ],
+  "required_followup": [
+    "source asymptotic-success equivalence",
+    "five old module source audits",
+    "C1/C2 full gates",
+    "Chapters3–16/appendix enumeration and closure"
+  ],
+  "chapter_complete": false,
+  "goal_complete": false
+}

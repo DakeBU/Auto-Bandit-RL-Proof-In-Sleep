@@ -1,0 +1,7 @@
+BanditRL.OnlineLearning.independent_private_seed_pair.{u, v, w, z} {Ω : Type u} {Seed : Type v} {Χ : Type w}
+  {Ζ : Type z} [MeasurableSpace Ω] [MeasurableSpace Seed] [MeasurableSpace Χ] [MeasurableSpace Ζ]
+  (μ : MeasureTheory.Measure Ω) [MeasureTheory.IsProbabilityMeasure μ] (S : Ω → Seed) (X : Ω → Χ) (Y : Ω → Ζ)
+  (hS : Measurable S) (hX : Measurable X) (hY : Measurable Y)
+  (hseed : ProbabilityTheory.IndepFun S (fun ω => (X ω, Y ω)) μ) (hXY : ProbabilityTheory.IndepFun X Y μ) :
+  ProbabilityTheory.IndepFun (fun ω => (S ω, X ω)) Y μ
+'BanditRL.OnlineLearning.independent_private_seed_pair' depends on axioms: [propext, Classical.choice, Quot.sound]
