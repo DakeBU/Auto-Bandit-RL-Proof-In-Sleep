@@ -1,0 +1,76 @@
+{
+  "contract_version": 1,
+  "terminals": [
+    {
+      "id": "M001",
+      "name": "BanditRL.OnlineLearning.guessing_prefix_minimum",
+      "header": "theorem guessing_prefix_minimum (y : ℕ → ℝ) (T : ℕ)\n    (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) :\n    empiricalMean y T ∈ Set.Icc (0 : ℝ) 1 ∧\n      ∀ u ∈ Set.Icc (0 : ℝ) 1,\n        (∑ t ∈ Finset.range T, (empiricalMean y T - y t)^2) ≤\n          ∑ t ∈ Finset.range T, (u - y t)^2",
+      "header_sha256": "27efce151ba1a343d0b8c8240a8b464424faded938790e29f3146673b9bca3ce",
+      "dependencies": [],
+      "source_class": "derived literal-minimum producer/representation"
+    },
+    {
+      "id": "M002",
+      "name": "BanditRL.OnlineLearning.squaredLoss_minimum_eq",
+      "header": "theorem squaredLoss_minimum_eq (y : ℕ → ℝ) (T : ℕ)\n    (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) :\n    sInf ((fun u : ℝ => ∑ t ∈ Finset.range T, (u - y t)^2) ''\n      Set.Icc (0 : ℝ) 1) =\n        ∑ t ∈ Finset.range T, (empiricalMean y T - y t)^2",
+      "header_sha256": "6d76c3f2ebec9cd57489a152eccfb77aea022c74d62c1bd8b8c9d9e1e556392e",
+      "dependencies": [
+        "guessing_prefix_minimum"
+      ],
+      "source_class": "derived literal-minimum producer/representation"
+    },
+    {
+      "id": "M003",
+      "name": "BanditRL.OnlineLearning.squaredBestRegret_eq_comparatorRegret",
+      "header": "theorem squaredBestRegret_eq_comparatorRegret (y prediction : ℕ → ℝ) (T : ℕ)\n    (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) :\n    squaredBestRegret y prediction T =\n      comparatorRegret (fun t x => (x - y t)^2) prediction (empiricalMean y T) T",
+      "header_sha256": "d0e99135a063cbf915aa7cd75ab1d22b96618f68e802cb06364e469f86cb65e0",
+      "dependencies": [
+        "squaredLoss_minimum_eq"
+      ],
+      "source_class": "derived literal-minimum producer/representation"
+    },
+    {
+      "id": "M004",
+      "name": "BanditRL.OnlineLearning.comparatorRegret_le_squaredBestRegret",
+      "header": "theorem comparatorRegret_le_squaredBestRegret (y prediction : ℕ → ℝ) (T : ℕ)\n    (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1)\n    (u : ℝ) (hu : u ∈ Set.Icc (0 : ℝ) 1) :\n    comparatorRegret (fun t x => (x - y t)^2) prediction u T ≤\n      squaredBestRegret y prediction T",
+      "header_sha256": "5c4ffc0347c55376ef5adf2156385c3771ea99ecdcbc0a913fcebc6c03bb9043",
+      "dependencies": [
+        "guessing_prefix_minimum",
+        "squaredBestRegret_eq_comparatorRegret"
+      ],
+      "source_class": "derived literal-minimum producer/representation"
+    },
+    {
+      "id": "M005",
+      "name": "BanditRL.OnlineLearning.meanPredict_bestRegret_bound",
+      "header": "theorem meanPredict_bestRegret_bound (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T)\n    (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) :\n    squaredBestRegret y (meanPredict y) T ≤ 4 + 4 * Real.log T",
+      "header_sha256": "c730d1b57dd25626494f6c52ca4735dc4549fc0920d4646c79d884649eb85bc1",
+      "dependencies": [
+        "squaredBestRegret_eq_comparatorRegret",
+        "theorem_1_3"
+      ],
+      "source_class": "literal-minimum adapter of existing actual FTL guarantee"
+    },
+    {
+      "id": "M006",
+      "name": "BanditRL.OnlineLearning.meanPredict_bestRegret_refined",
+      "header": "theorem meanPredict_bestRegret_refined (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T)\n    (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) :\n    squaredBestRegret y (meanPredict y) T ≤\n      (1 : ℝ) / 4 + ∑ t ∈ Finset.range (T - 1), 4 / ((t : ℝ) + 2)",
+      "header_sha256": "7c153de88704702bb18ed2c1f8fa418ab4c05b2347dddc42859ba2ca988b4708",
+      "dependencies": [
+        "squaredBestRegret_eq_comparatorRegret",
+        "meanPredict_regret_refined"
+      ],
+      "source_class": "literal-minimum adapter of existing actual FTL guarantee"
+    }
+  ],
+  "obligation_count_scope": "Only six fixed new terminal statements",
+  "initial_obligations": 6,
+  "current_unproved": 6,
+  "first_import_ready_leaf": "M001",
+  "source_stabilization_pending": true,
+  "finite_producer_required": true,
+  "no_assumed_single_step_regret_or_minimizer_certificate": true,
+  "remaining_book_obligations": "REQUIRED next printed1-2/PDF13-14",
+  "chapter_complete": false,
+  "goal_complete": false
+}

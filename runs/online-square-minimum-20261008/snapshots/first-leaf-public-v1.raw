@@ -1,0 +1,25 @@
+import BanditRLProof.OnlineLearningFTL
+import BanditRLProof.OnlineLearningRegret
+import Mathlib.Order.ConditionallyCompleteLattice.Basic
+
+namespace BanditRL.OnlineLearning
+noncomputable def squaredBestRegret (y prediction : ℕ → ℝ) (T : ℕ) : ℝ :=
+  (∑ t ∈ Finset.range T, (prediction t - y t)^2) -
+    sInf ((fun u : ℝ => ∑ t ∈ Finset.range T, (u - y t)^2) ''
+      Set.Icc (0 : ℝ) 1)
+
+/-- Produced feasible minimum; T0 is the empty-prefix convention, not uniqueness. -/
+theorem guessing_prefix_minimum (y : ℕ → ℝ) (T : ℕ)
+    (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) :
+    empiricalMean y T ∈ Set.Icc (0 : ℝ) 1 ∧
+      ∀ u ∈ Set.Icc (0 : ℝ) 1,
+        (∑ t ∈ Finset.range T, (empiricalMean y T - y t)^2) ≤
+          ∑ t ∈ Finset.range T, (u - y t)^2 := by
+  by_cases hT : T = 0
+  · subst T
+    simp [empiricalMean]
+  · have hp : 0 < T := Nat.pos_of_ne_zero hT
+    exact ⟨empiricalMean_mem y T hp hy,
+      fun u _ => empiricalMean_minimizes y T hp u⟩
+
+end BanditRL.OnlineLearning

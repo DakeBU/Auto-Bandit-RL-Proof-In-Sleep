@@ -1,0 +1,22 @@
+{
+  "command": [
+    "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe",
+    "-B",
+    "-X",
+    "utf8",
+    "tools/bandit.py",
+    "statement-fence",
+    "--declaration",
+    "BanditRL.OnlineLearning.guessing_prefix_minimum",
+    "--file",
+    "BanditRLProof/OnlineSquareMinimum.lean",
+    "--source-assumption",
+    "theorem guessing_prefix_minimum (y : ℕ → ℝ) (T : ℕ) (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) : empiricalMean y T ∈ Set.Icc (0 : ℝ) 1 ∧ ∀ u ∈ Set.Icc (0 : ℝ) 1, (∑ t ∈ Finset.range T, (empiricalMean y T - y t)^2) ≤ ∑ t ∈ Finset.range T, (u - y t)^2",
+    "--output",
+    "E:\\ABRL\\worktrees\\research-online-book\\runs\\online-square-minimum-20261008\\full-header-fences-v1\\public-guessing_prefix_minimum.json"
+  ],
+  "cwd": "E:/ABRL/worktrees/research-online-book",
+  "exit_code": 0,
+  "seconds": 0.224,
+  "log_sha256": "ed042d03b6c320188316d7c9e1a8a6242dcf32e9fe9b49ee94e4e5a24fc4b7e6"
+}

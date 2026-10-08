@@ -1,0 +1,44 @@
+Tests.OnlineSquareMinimum.alternating [def] Tests/OnlineSquareMinimumCanary.lean:9
+  noncomputable def alternating (t : ℕ) : ℝ
+Tests.OnlineSquareMinimum.quarters [def] Tests/OnlineSquareMinimumCanary.lean:12
+  noncomputable def quarters (t : ℕ) : ℝ
+Tests.OnlineSquareMinimum.alternating_mem [theorem] Tests/OnlineSquareMinimumCanary.lean:14
+  theorem alternating_mem (t : ℕ) : alternating t ∈ Set.Icc (0 : ℝ) 1
+Tests.OnlineSquareMinimum.quarters_mem [theorem] Tests/OnlineSquareMinimumCanary.lean:18
+  theorem quarters_mem (t : ℕ) : quarters t ∈ Set.Icc (0 : ℝ) 1
+Tests.OnlineSquareMinimum.empty_minimum [theorem] Tests/OnlineSquareMinimumCanary.lean:23
+  theorem empty_minimum : sInf ((fun u : ℝ => ∑ t ∈ Finset.range 0, (u - alternating t)^2) '' Set.Icc (0 : ℝ) 1) = 0
+Tests.OnlineSquareMinimum.empty_regret [theorem] Tests/OnlineSquareMinimumCanary.lean:29
+  theorem empty_regret : squaredBestRegret alternating (meanPredict alternating) 0 = 0
+Tests.OnlineSquareMinimum.alternating_mean [theorem] Tests/OnlineSquareMinimumCanary.lean:33
+  theorem alternating_mean : empiricalMean alternating 2 = 1 / 2
+Tests.OnlineSquareMinimum.alternating_minimum [theorem] Tests/OnlineSquareMinimumCanary.lean:37
+  theorem alternating_minimum : sInf ((fun u : ℝ => ∑ t ∈ Finset.range 2, (u - alternating t)^2) '' Set.Icc (0 : ℝ) 1) = 1 / 2
+Tests.OnlineSquareMinimum.alternating_unique [theorem] Tests/OnlineSquareMinimumCanary.lean:44
+  theorem alternating_unique (u : ℝ) (hu : (∑ t ∈ Finset.range 2, (u - alternating t)^2) ≤ ∑ t ∈ Finset.range 2, (empiricalMean alternating 2 - alternating t)^2) : u = 1 / 2
+Tests.OnlineSquareMinimum.actual_prediction_values [theorem] Tests/OnlineSquareMinimumCanary.lean:50
+  theorem actual_prediction_values : meanPredict alternating 0 = 1 / 2 ∧ meanPredict alternating 1 = 0 ∧ meanPredict alternating 2 = 1 / 2
+Tests.OnlineSquareMinimum.actual_regret_one [theorem] Tests/OnlineSquareMinimumCanary.lean:55
+  theorem actual_regret_one : squaredBestRegret alternating (meanPredict alternating) 1 = 1 / 4
+Tests.OnlineSquareMinimum.actual_regret_two [theorem] Tests/OnlineSquareMinimumCanary.lean:61
+  theorem actual_regret_two : squaredBestRegret alternating (meanPredict alternating) 2 = 3 / 4
+Tests.OnlineSquareMinimum.signed_alternating [theorem] Tests/OnlineSquareMinimumCanary.lean:69
+  theorem signed_alternating : squaredBestRegret alternating alternating 2 = -1 / 2
+Tests.OnlineSquareMinimum.comparator_zero_order [theorem] Tests/OnlineSquareMinimumCanary.lean:74
+  theorem comparator_zero_order : comparatorRegret (fun t x => (x - alternating t)^2) (meanPredict alternating) 0 2 ≤ squaredBestRegret alternating (meanPredict alternating) 2
+Tests.OnlineSquareMinimum.comparator_one_order [theorem] Tests/OnlineSquareMinimumCanary.lean:80
+  theorem comparator_one_order : comparatorRegret (fun t x => (x - alternating t)^2) (meanPredict alternating) 1 2 ≤ squaredBestRegret alternating (meanPredict alternating) 2
+Tests.OnlineSquareMinimum.quarters_mean [theorem] Tests/OnlineSquareMinimumCanary.lean:86
+  theorem quarters_mean : empiricalMean quarters 2 = 1 / 2
+Tests.OnlineSquareMinimum.quarters_minimum [theorem] Tests/OnlineSquareMinimumCanary.lean:89
+  theorem quarters_minimum : sInf ((fun u : ℝ => ∑ t ∈ Finset.range 2, (u - quarters t)^2) '' Set.Icc (0 : ℝ) 1) = 1 / 8
+Tests.OnlineSquareMinimum.actual_bound [theorem] Tests/OnlineSquareMinimumCanary.lean:95
+  theorem actual_bound : squaredBestRegret alternating (meanPredict alternating) 2 ≤ 4 + 4 * Real.log 2
+Tests.OnlineSquareMinimum.actual_refined [theorem] Tests/OnlineSquareMinimumCanary.lean:99
+  theorem actual_refined : squaredBestRegret alternating (meanPredict alternating) 2 ≤ 9 / 4
+Tests.OnlineSquareMinimum.actual_refined_one [theorem] Tests/OnlineSquareMinimumCanary.lean:105
+  theorem actual_refined_one : squaredBestRegret alternating (meanPredict alternating) 1 ≤ 1 / 4
+Tests.OnlineSquareMinimum.actual_causality [theorem] Tests/OnlineSquareMinimumCanary.lean:112
+  theorem actual_causality (y z : ℕ → ℝ) (t : ℕ) (h : ∀ i < t, y i = z i) : meanPredict y t = meanPredict z t
+Tests.OnlineSquareMinimum.actual_identity [theorem] Tests/OnlineSquareMinimumCanary.lean:116
+  theorem actual_identity : squaredBestRegret alternating (meanPredict alternating) 2 = comparatorRegret (fun t x => (x - alternating t)^2) (meanPredict alternating) (1 / 2) 2

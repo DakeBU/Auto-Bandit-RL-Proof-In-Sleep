@@ -1,0 +1,17 @@
+{
+  "source_commit": "00186126e1c75b5f5222e0355f8c1c34beaaf4c0",
+  "source_commit_succeeded": true,
+  "failed_helper_sha256": "4f4938b1cb06572b952454d9a42ce5751020355fa6dba8f7cd67771b9cabf121",
+  "observed_actual_exit_code": 1,
+  "failed_stage": "Post-commit clean-tree assertion",
+  "cause": "The scope helper produced owned-paths and its outer gate produced an exit receipt after the path collection; these two new owned metadata files were not staged.",
+  "exact_two_original_tail_paths": [
+    "owned-paths-before-source-commit-v2.json",
+    "scope-before-source-commit-v2-exit.json"
+  ],
+  "repair": "Commit only remaining task-owned operational evidence and actual nonvacuous contributor receipt; no source/public/canary/reader edits.",
+  "mathematical_gate_rerun_needed": false,
+  "package_accepted": false,
+  "chapter_complete": false,
+  "goal_complete": false
+}

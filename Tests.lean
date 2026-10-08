@@ -160,3 +160,5 @@ import Tests.OnlineLearningRegretDomainsCanary
 import Tests.OnlineGuessingLogLowerCanary
 
 import Tests.OnlineNoRegretSemanticsCanary
+
+import Tests.OnlineSquareMinimumCanary
