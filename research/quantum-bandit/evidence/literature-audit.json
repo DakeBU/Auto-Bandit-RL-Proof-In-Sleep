@@ -1,0 +1,78 @@
+{
+  "access_date": "2026-10-09",
+  "timezone": "Asia/Shanghai",
+  "audit_scope": "primary-source literature and mathematical model; no local Lean proof audit",
+  "source_versions": [
+    "2608.14319v1",
+    "2608.24434v1",
+    "2012.03348v2",
+    "2301.08544v4",
+    "2406.03033v2"
+  ],
+  "official_posters": [
+    {
+      "id": 154155,
+      "openreview": "FpwVLxul2m",
+      "evidence": "official HTML abstract; full PDF unavailable"
+    },
+    {
+      "id": 148383,
+      "openreview": "yHmvALnDHe",
+      "evidence": "official HTML abstract; full PDF unavailable"
+    }
+  ],
+  "decisions": [
+    {
+      "claim": "q_D(r,delta)=softO(1/r+1/(D*r^2))",
+      "status": "existing-source corollary",
+      "dependency": "2608.24434v1 Theorem 1",
+      "max_query_cap": "MN deterministic",
+      "depth": "all U and Udagger calls per shot <=D"
+    },
+    {
+      "claim": "gap-dependent reset weak-oracle regret",
+      "status": "plausible deduction; full horizon/adaptive-coverage proof required"
+    },
+    {
+      "claim": "gap-free reset weak-oracle minimax optimality",
+      "status": "upper bound plausible; reset-model lower bound open"
+    },
+    {
+      "claim": "O(K) horizon-independent weak-oracle regret",
+      "status": "rejected",
+      "counterevidence": "2608.14319v1 Theorem 8"
+    },
+    {
+      "claim": "fixed systematic bias multi-fidelity abstraction",
+      "status": "prior classical work",
+      "dependency": "2406.03033v2"
+    },
+    {
+      "claim": "circuit-certified fixed bias quantum epsilon-BAI",
+      "status": "potential composition contribution; certificate and complexity proof open"
+    }
+  ],
+  "required_model": [
+    "D positive integer",
+    "classically chosen arm",
+    "every U and Udagger query charged to horizon/regret",
+    "reset all quantum registers per block",
+    "retain classical history",
+    "fixed purified unitary with matching inverse",
+    "available projector/reflections or mean-to-flag encoding",
+    "conditional confidence guarantee for each adaptive invocation"
+  ],
+  "counterexamples": [
+    "identical available biased oracles with opposite true best arms: epsilon<2B and delta<1/2 impossible",
+    "mismatched inverse or fresh channel noise not covered by stationary approximate-unitary certificate",
+    "single-depth high-frequency shots alias the angle; Fisher information alone insufficient",
+    "two fixed unitary hypotheses may admit perfect finite-query discrimination; generic log(1/delta) lower bound needs interval/continuum premise"
+  ],
+  "open_leaves": [
+    "NeurIPS 2026 full formal models",
+    "reset regret horizon accounting and confidence proof",
+    "adaptive reset-block minimax lower bound",
+    "circuit stability certificate with inverse compatibility and costs",
+    "epsilon-BAI termination/complexity and quantum multi-fidelity lower bound"
+  ]
+}

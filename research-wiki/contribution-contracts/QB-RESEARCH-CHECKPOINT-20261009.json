@@ -1,0 +1,117 @@
+{
+  "schema_version": "2.0",
+  "id": "QB-RESEARCH-CHECKPOINT-20261009",
+  "route": "quantum-bandits/FC-WO-reset-v1",
+  "frontier_cell": "finite-coherent-query-regret-and-circuit-certified-BAI",
+  "source_facing": true,
+  "source": {
+    "kind": "user-research-specification",
+    "title": "Quantum Bandit A+B exact access/cost contract and prototype analytic leaves",
+    "version": "2026-10-09; StatementSeal, DecisionSeal, QueryWordSeal, BasisHellingerSeal and AccountingBridgeSeal in research/quantum-bandit/evidence",
+    "anchor": "P0 normalized effect/Born stability; aligned Ry circuit bias; deterministic confidence/query accounting; single-block basis Hellinger",
+    "url": "chatgpt-conversation://6ac66cbe-1a28-83ec-a4f1-8b3c9afbe281"
+  },
+  "target": "Executable prototype cross-library transport, with unproved estimator/algorithm/lower-bound roots and publication draft gap visible",
+  "affected_files": [
+    "BanditRLProof.lean",
+    "BanditRLProof/QuantumConfidence.lean",
+    "BanditRLProof/QuantumQueryAccounting.lean",
+    "docs/quantum-bandit-cross-library-protocol.md"
+  ],
+  "declarations": [
+    "BanditRLProof.QuantumConfidence.recommend_fixed_fidelity_failure_bound",
+    "BanditRLProof.QuantumQueryAccounting.chargedRegret_eq_gap_pullCount",
+    "BanditRLProof.QuantumBanditAdapter.aligned_circuit_confidence_transport"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "new_shared",
+    "searched_existing": [
+      "RealMeanRegretPullCount",
+      "ConcentrationConfidenceSchedule",
+      "HOO reward-process confidence",
+      "ProbabilityUnionBound",
+      "FiniteRealArgmax",
+      "Mathlib MatrixOrder and CStar matrix norm",
+      "Quantum PrimitiveSemantics, PrimitiveCircuitPerturbation, RealAmplitudePreparation",
+      "external source/toolchain/license audit in evidence/inventory-external.md"
+    ],
+    "reused_declarations": [
+      "BanditRLProof.realMeanRegret_eq_sum_gap_mul_pullCount",
+      "BanditRLProof.FiniteRealArgmax.score_le_choose",
+      "BanditRLProof.ProbabilityUnionBound.measure_iUnion_fintype_le_sum",
+      "QuantumBlockEncoding.PrimitiveCircuitPerturbation.aligned_eval_distance_le"
+    ],
+    "new_shared_declarations": [
+      "QuantumConfidence.bias_statistical_composition",
+      "QuantumConfidence.optimal_survives",
+      "QuantumQueryAccounting.chargedRegret_eq_realMeanRegret"
+    ],
+    "known_consumers": [
+      "actual aligned_circuit_confidence_transport",
+      "actual chargedBlock query accounting"
+    ],
+    "planned_consumers": [
+      "A horizon-safe elimination",
+      "B fidelity cost certificate"
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Reuse real semantic producers and count/confidence skeletons; derive circuit bias rather than assume it. New analytic, gate-realization and accounting leaves close actual cross-library edges. Do not reuse HOO reward MGF as estimator-noise law."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": false,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "source-reviewed",
+    "formalizer": "/root",
+    "blind_decoder": "/root/blind_decoder",
+    "source_reviewer": "/root/external_inventory",
+    "verdict": "limited semantic roundtrip matched; publication DRAFT, not admitted",
+    "remaining_semantic_delta": "No adaptive conditional-tail producer/reset-history law/algorithm bound. Concrete primitive expansion added beyond original pre-proof abstract seal; exact signature coverage debt is preserved. Do not fabricate accepted publication status."
+  },
+  "graph_contribution": {
+    "lean_graph": "integration-node",
+    "overview_graph": "no-change-with-reason",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Actual value/type dependency slice exported from compiled environment; full quantum algorithm edges remain open. No certified functor or new accepted complexity theorem. Canonical overlays remain unchanged until publication admission.",
+    "focus_targets": [
+      "research/quantum-bandit/evidence/proof-term-graph.json"
+    ],
+    "visual_review": "No public visual surface changed; local mathematical dependency JSON is the new drill-down artifact. Site gates are recorded independently.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "no-change-with-reason: publication draft analytic checkpoint; no accepted source theorem lesson integrated into public curriculum.",
+    "banditrlwiki": "no-change-with-reason: no accepted quantum regret/BAI complexity bound; prior-work novelty matrix is in the checkpoint.",
+    "results_ledger": "updated: executable checkpoint README and validation.json classify compiled conditional speculative boundaries.",
+    "roadmap": "updated: exact estimator/reset/upper/lower/circuit-cost leaves are ordered in checkpoint README.",
+    "website_surfaces": [
+      "quantum-bandits taxonomy; unchanged with reason",
+      "existing horizon-independent regret Frontier; unchanged external preprint resolution",
+      "local actual proof-term graph slice; added"
+    ]
+  },
+  "truth_boundary": "Focused kernels/canaries verified prototype transport. Main A/B roots and strict publication admission remain open. The metadata gate is expected to reject source-facing admission until reader and publication seal coverage are satisfied; no bypass or green status is intended.",
+  "verification": {
+    "focused_checks": [
+      "lake build Canary in joint project",
+      "lake build BanditRLProof.QuantumQueryAccounting Tests.QuantumConfidenceCanary",
+      "actual query-word and basis-Hellinger focused gates"
+    ],
+    "bandit_check": "See checkpoint evidence/validation.json and C:/qb261009/evidence/bandit-check-final.log for actual final exit",
+    "site_build": "Local only; see validation.json; no deployment",
+    "site_check": "See validation.json; kept separate from proof admission",
+    "independent_review": "evidence/blind-decoder.md; blind-decoder-2.md; source-review.md and source-review-bindings.json"
+  },
+  "contributor": {
+    "name": "Codex /root",
+    "role": "prototype formalizer; independent roles named separately"
+  }
+}

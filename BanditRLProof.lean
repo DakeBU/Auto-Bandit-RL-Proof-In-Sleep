@@ -701,3 +701,5 @@ import BanditRLProof.Algorithms.HeavyTailRegretCap
 import BanditRLProof.Algorithms.MusicalChairsCoordinationTime
 import BanditRLProof.Algorithms.MusicalChairsCoordinationRegret
 import BanditRLProof.Algorithms.MusicalChairsRealized
+import BanditRLProof.QuantumConfidence
+import BanditRLProof.QuantumQueryAccounting

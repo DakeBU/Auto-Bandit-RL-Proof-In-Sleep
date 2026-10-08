@@ -150,3 +150,12 @@ contributor contract passes **and** the manifest records:
 This protocol is intentionally conservative: quantum speedup claims are
 especially sensitive to oracle strength, so the access model is part of the
 mathematical theorem rather than an implementation detail.
+
+## Current isolated research checkpoint
+
+The executable Quantum Bandit A+B prototype, frozen FC-WO-reset-v1 access/cost
+contract, latest-source audit, actual cross-library adapter, kernel checks,
+independent semantic reviews and exact open leaves are recorded in
+[`research/quantum-bandit/README.md`](../research/quantum-bandit/README.md).
+Its publication status is draft. A compiled transport leaf does not certify a
+quantum estimator, regret upper/lower bound, or cost-optimal BAI algorithm.
