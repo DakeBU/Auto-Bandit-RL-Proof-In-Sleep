@@ -1,0 +1,225 @@
+{
+  "status": "actual-current-IID-success-four-proofs-and-source-panels-captured",
+  "panels": [
+    {
+      "heading": "Stochastic success and the actual sample-mean learner",
+      "mathContainers": 1,
+      "mathErrors": 0,
+      "selector": "article.source-theorem-card",
+      "index": 13,
+      "file": "iid-success-source-card-v1.png",
+      "geometry": {
+        "width": 1057.21875,
+        "height": 2093.78125,
+        "left": 343.390625,
+        "right": 1400.609375,
+        "scrollWidth": 1057,
+        "clientWidth": 1057,
+        "viewportWidth": 1440
+      },
+      "actualViewport": {
+        "width": 1440,
+        "height": 2444
+      },
+      "safeBelowStickyNavigation": true
+    },
+    {
+      "heading": "A centered total is sublinear exactly when its average excess vanishes",
+      "mathContainers": 1,
+      "mathErrors": 0,
+      "selector": "#decl-23f08ad2d33a-teaching",
+      "index": 0,
+      "file": "public-note-1-v1.png",
+      "geometry": {
+        "width": 1028.4375,
+        "height": 974.046875,
+        "left": 357.78125,
+        "right": 1386.21875,
+        "scrollWidth": 1026,
+        "clientWidth": 1026,
+        "viewportWidth": 1440
+      },
+      "actualViewport": {
+        "width": 1440,
+        "height": 1800
+      },
+      "safeBelowStickyNavigation": true
+    },
+    {
+      "heading": "A private-seed policy succeeds exactly when its average mean-square error vanishes",
+      "mathContainers": 1,
+      "mathErrors": 0,
+      "selector": "#decl-168346898ed5-teaching",
+      "index": 0,
+      "file": "public-note-2-v1.png",
+      "geometry": {
+        "width": 1028.4375,
+        "height": 1628.640625,
+        "left": 357.78125,
+        "right": 1386.21875,
+        "scrollWidth": 1026,
+        "clientWidth": 1026,
+        "viewportWidth": 1440
+      },
+      "actualViewport": {
+        "width": 1440,
+        "height": 1979
+      },
+      "safeBelowStickyNavigation": true
+    },
+    {
+      "heading": "Integrate the sample-mean regret bound without an independence assumption",
+      "mathContainers": 1,
+      "mathErrors": 0,
+      "selector": "#decl-eb01b2834f02-teaching",
+      "index": 0,
+      "file": "public-note-3-v1.png",
+      "geometry": {
+        "width": 1028.4375,
+        "height": 1686.59375,
+        "left": 357.78125,
+        "right": 1386.21875,
+        "scrollWidth": 1026,
+        "clientWidth": 1026,
+        "viewportWidth": 1440
+      },
+      "actualViewport": {
+        "width": 1440,
+        "height": 2037
+      },
+      "safeBelowStickyNavigation": true
+    },
+    {
+      "heading": "The real unknown-law sample-mean learner is stochastically successful",
+      "mathContainers": 1,
+      "mathErrors": 0,
+      "selector": "#decl-59d7492353db-teaching",
+      "index": 0,
+      "file": "public-note-4-v1.png",
+      "geometry": {
+        "width": 1028.4375,
+        "height": 1554.640625,
+        "left": 357.78125,
+        "right": 1386.21875,
+        "scrollWidth": 1026,
+        "clientWidth": 1026,
+        "viewportWidth": 1440
+      },
+      "actualViewport": {
+        "width": 1440,
+        "height": 1905
+      },
+      "safeBelowStickyNavigation": true
+    }
+  ],
+  "modulePanels": [
+    {
+      "id": "decl-23f08ad2d33a",
+      "file": "module-new-declaration-1-v1.png",
+      "moduleURL": "http://127.0.0.1:65500/modules/banditrlproof-onlineguessingiidsuccess/index.html",
+      "geometry": {
+        "width": 1059.21875,
+        "height": 506.828125,
+        "left": 342.390625,
+        "right": 1401.609375,
+        "scrollWidth": 1057,
+        "clientWidth": 1057,
+        "viewportWidth": 1440
+      },
+      "actualBuiltinWrapButtonClicked": true,
+      "wrappedCode": {
+        "scrollWidth": 1030,
+        "clientWidth": 1030,
+        "whiteSpace": "pre-wrap",
+        "text": "theorem centered_total_sublinear_iff_average (total : ℕ → ℝ) (c : ℝ) : (fun T => total T - (T : ℝ) * c) =o[atTop] (fun T : ℕ => (T : ℝ)) ↔ Tendsto (fun T => total T / (T : ℝ) - c) atTop (nhds (0 : ℝ))"
+      },
+      "fullExactTypeAlsoAuditedByHTMLAndKernel": true
+    },
+    {
+      "id": "decl-168346898ed5",
+      "file": "module-new-declaration-2-v1.png",
+      "moduleURL": "http://127.0.0.1:65500/modules/banditrlproof-onlineguessingiidsuccess/index.html",
+      "geometry": {
+        "width": 1059.21875,
+        "height": 650.875,
+        "left": 342.390625,
+        "right": 1401.609375,
+        "scrollWidth": 1057,
+        "clientWidth": 1057,
+        "viewportWidth": 1440
+      },
+      "actualBuiltinWrapButtonClicked": true,
+      "wrappedCode": {
+        "scrollWidth": 1030,
+        "clientWidth": 1030,
+        "whiteSpace": "pre-wrap",
+        "text": "theorem randomized_history_policy_success_iff {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (hind : iIndepFun Y μ) (S : Ω → Seed) (hS : Measurable S) (hseed : IndepFun S (fun ω t => Y t ω) μ) (policy : (t : ℕ) → (Seed × ((↑(Finset.range t) : Type) → ℝ)) → ℝ) (hp : ∀ t, Measurable (policy t)) (hpb : ∀ t s z, (∀ i, z i ∈ Set.Icc (0 : ℝ) 1) → policy t (s, z) ∈ Set.Icc (0 : ℝ) 1) : let prediction := fun t ω => policy t (S ω, fun i => Y i ω) (∀ T, 0 ≤ expectedFixedRegret μ Y prediction T) ∧ ((fun T => expectedFixedRegret μ Y prediction T) =o[atTop] (fun T : ℕ => (T : ℝ)) ↔ Tendsto (fun T => (∫ ω, ∑ t ∈ Finset.range T, (prediction t ω - Y t ω)^2 ∂μ) / (T : ℝ) - variance (Y 0) μ) atTop (nhds (0 : ℝ))) ∧ (Tendsto (fun T => (∫ ω, ∑ t ∈ Finset.range T, (prediction t ω - Y t ω)^2 ∂μ) / (T : ℝ) - variance (Y 0) μ) atTop (nhds (0 : ℝ)) ↔ Tendsto (fun T => (∑ t ∈ Finset.range T, ∫ ω, (prediction t ω - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) / (T : ℝ)) atTop (nhds (0 : ℝ)))"
+      },
+      "fullExactTypeAlsoAuditedByHTMLAndKernel": true
+    },
+    {
+      "id": "decl-eb01b2834f02",
+      "file": "module-new-declaration-3-v1.png",
+      "moduleURL": "http://127.0.0.1:65500/modules/banditrlproof-onlineguessingiidsuccess/index.html",
+      "geometry": {
+        "width": 1059.21875,
+        "height": 527.40625,
+        "left": 342.390625,
+        "right": 1401.609375,
+        "scrollWidth": 1057,
+        "clientWidth": 1057,
+        "viewportWidth": 1440
+      },
+      "actualBuiltinWrapButtonClicked": true,
+      "wrappedCode": {
+        "scrollWidth": 1030,
+        "clientWidth": 1030,
+        "whiteSpace": "pre-wrap",
+        "text": "theorem meanPredict_expectedFixed_upper {Ω : Type u} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) (hT : 0 < T) : expectedFixedRegret μ Y (fun t ω => meanPredict (fun i => Y i ω) t) T ≤ 4 + 4 * Real.log T"
+      },
+      "fullExactTypeAlsoAuditedByHTMLAndKernel": true
+    },
+    {
+      "id": "decl-59d7492353db",
+      "file": "module-new-declaration-4-v1.png",
+      "moduleURL": "http://127.0.0.1:65500/modules/banditrlproof-onlineguessingiidsuccess/index.html",
+      "geometry": {
+        "width": 1059.21875,
+        "height": 574.375,
+        "left": 342.390625,
+        "right": 1401.609375,
+        "scrollWidth": 1057,
+        "clientWidth": 1057,
+        "viewportWidth": 1440
+      },
+      "actualBuiltinWrapButtonClicked": true,
+      "wrappedCode": {
+        "scrollWidth": 1030,
+        "clientWidth": 1030,
+        "whiteSpace": "pre-wrap",
+        "text": "theorem meanPredict_iid_success {Ω : Type u} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (hind : iIndepFun Y μ) : Tendsto (fun T => expectedFixedRegret μ Y (fun t ω => meanPredict (fun i => Y i ω) t) T / (T : ℝ)) atTop (nhds (0 : ℝ)) ∧ (fun T => expectedFixedRegret μ Y (fun t ω => meanPredict (fun i => Y i ω) t) T) =o[atTop] (fun T : ℕ => (T : ℝ))"
+      },
+      "fullExactTypeAlsoAuditedByHTMLAndKernel": true
+    }
+  ],
+  "images": [
+    "reader-first-viewport-v1.png",
+    "iid-success-source-card-v1.png",
+    "public-note-1-v1.png",
+    "public-note-2-v1.png",
+    "public-note-3-v1.png",
+    "public-note-4-v1.png",
+    "module-new-declaration-1-v1.png",
+    "module-new-declaration-2-v1.png",
+    "module-new-declaration-3-v1.png",
+    "module-new-declaration-4-v1.png"
+  ],
+  "actualSourceGuideMathContainers": 17,
+  "newPublicNoteMathContainers": 4,
+  "sourceHorizontalScrollers": [],
+  "errors": [],
+  "failed": [],
+  "url": "http://127.0.0.1:65500/chapters/online-foundations/index.html",
+  "profilePreserved": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-iid-success-playwright-v1-profile",
+  "generatedSiteFilesUnmodified": true
+}

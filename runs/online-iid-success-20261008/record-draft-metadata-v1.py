@@ -1,0 +1,30 @@
+from common_v1 import *
+fixed()
+paths = [Path(d)/(TASK+'.md') for d in ['tasks','proof-obligations','proof-blueprints','conversion-windows']]
+detail = '''
+
+## Operative bounded draft: S001–S004
+
+Exact source and terminal types: docs/contracts/online-iid-success-v1/{source-card-v1.json,targets-v1.json,public-context-v1.lean}. Four complete proposition types elaborated exit0; they are unproved. Neutral fullProp/Def identity audit v4 passed after explicit universe/concatenation-script repairs, headers unchanged. Original scaffold placeholder finite-action/subGaussian/TBD text above is template history, not this continuous squared-loss model or an extra mathematical hypothesis.
+
+Pinned Orabona v10 SHAcef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17; printed1–2/PDF13–14 success Eq1.1/1.2 and printed4/PDF16 Theorem1.3, fresh extraction/render/ROOT pixel reading. Expected FIXED comparator min outsideE. Zeroindex round0initialhalf, strictpastmean thereafter; single infinite stream/policy, actualunknown-lawlearner. A.s.unit support only, deriveL2/integrability.
+
+| Leaf | Exact target | Dependencies/route | Status |
+| --- | --- | --- | --- |
+| S001 | centeredtotal little-o iff average-minus-c tends0 | normalized_excess; Mathlib little-oiffquotient; eventualT>0, genericA0/c unrestricted | draft-ready, notproved |
+| S002 | actualprivate-seedpolicy nonneg + success/MSE-Cesaro iff | S001; actual seededstrictpast excess identity; expectedfixed minimum | draft-notready, contractreviewpending |
+| S003 | actualmeanPredict expected-fixed upper4+4logT, T>0 | pathwiseTheorem1.3; empiricalMean_minimizes; integrateusingderivedL2; noindependence premise | draft-ready, notproved |
+| S004 | actualIIDmeanPredict ordinarynormalizedzero andlittle-o | S003; causalIIDnonnegative lower; vanishinglogbound; little-oiffquotient | draft-notready, contractreviewpending |
+
+All imported selected APIs checked in typed-api-search-v2.log, not guessed declarations; prior Filter namespace query failure retained. Existing NoRegret means comparatorwise eventualupperε and is distinct from ordinarystochasticsuccess. Mathlib cards MLIB-ASYMPTOTICS/MLIB-MEASURE-INTEGRAL/MLIB-REAL-LOG-SQRT; no newLML/import/toolchain. S001 genericadapter has S002/S004 realconsumers, mathlib-candidate, no duplicatedfoundations. FormalizerROOT staged director/architect/worker, distinct required reuseddecoder/source_reviewer; no absoluteblind/human/external/runtimeattestation.
+
+Only ownpublicfile exact four frozenheaders/proofbodies and owncanary after CONTRACTreview. Oldproduction/readers/registry/targets/pins/globalSGB immutable until recorded bounded integration stage. Every headerchange versioned/rereviewed. No actual proof or source acceptance yet. Failedattemptlogs retained. Candidate requires actual kernel/publicVALUE/canary/frozenheader checks; acceptance separately BODY+root+Tests+fullharness+shadow+contributor+reader/registry/site/pixel+FINAL+native receipts+scopedcommitpushdraftPR.
+
+Original16C1objects unchanged/proof-leaftotalnull; bounded explicitprivate-seedfullsourcecoverage/kernel/completedfield/AEfactorization audit REQUIRED; fiveoldermodulemain-relativeaudits REQUIRED (actualremoteCI failure recorded); wholeC1/C2open,3–16unenumerated/necessaryappendicesrequired/totalGoalactive. PR195OPENdraft/unmerged exact372c stackedbase; canonicalmainclean6847. No merge/deploy/retirement.
+'''
+for p in paths:
+    write(RUN/'snapshots'/('native-template--'+p.as_posix().replace('/','--')+'.raw'),p.read_bytes())
+    p.write_bytes(p.read_bytes()+detail.encode('utf8'))
+write(RUN/'draft-metadata-bindings-v1.json',dict(paths={p.as_posix():sha(p) for p in paths},
+    phase='draft',proof_bodies_written=False,template_history_preserved=True))
+fixed()

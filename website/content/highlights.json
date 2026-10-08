@@ -6374,6 +6374,80 @@
         "BanditRL.OnlineLearning.predictable_private_seed_expectedFixed_excess",
         "BanditRL.OnlineLearning.privateSeedPastInformation"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.centered_total_sublinear_iff_average",
+      "title": "A centered total is sublinear exactly when its average excess vanishes",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 85,
+      "plain": "Use the Mathlib little-o quotient criterion and the existing normalization identity eventually for positive horizons.",
+      "math": "A_T-Tc=o(T)\\iff A_T/T-c\\longrightarrow0.",
+      "intuition": "Normalize the actual fixed-comparator expected excess.",
+      "why": "Connect the source success definition to a real learner, with all information and integration hypotheses explicit.",
+      "position": "One of four adapters/derived application proofs extending the preceding source cards; full Chapter1 remains open.",
+      "proof_idea": "Use the Mathlib little-o quotient criterion and the existing normalization identity eventually for positive horizons.",
+      "lean_notes": "Generic signed real total and c: no sign, monotonicity, convergence assumption, A_0=0 or c=0. AtT0 the average-minus-c and divided residual may differ. This adapter proves an equivalence, not a learner guarantee. Remaining required program obligations are stated in the source card above.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.normalized_excess"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.randomized_history_policy_success_iff",
+      "title": "A private-seed policy succeeds exactly when its average mean-square error vanishes",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 86,
+      "plain": "The actual causal policy produces nonnegative excess and its finite sum-of-squares identity. Normalize that identity and apply the centered-total adapter.",
+      "math": "\\mathcal E_T=o(T)\\iff A_T/T-v\\longrightarrow0\\iff T^{-1}\\sum_{t<T}\\mathbb E[(P_t-m)^2]\\longrightarrow0.",
+      "intuition": "Normalize the actual fixed-comparator expected excess.",
+      "why": "Connect the source success definition to a real learner, with all information and integration hypotheses explicit.",
+      "position": "One of four adapters/derived application proofs extending the preceding source cards; full Chapter1 remains open.",
+      "proof_idea": "The actual causal policy produces nonnegative excess and its finite sum-of-squares identity. Normalize that identity and apply the centered-total adapter.",
+      "lean_notes": "Fix one infinite process Y on a probability space. Every Y_t is measurable, has the law of Y_0, and belongs to [0,1] almost surely. Joint IID is required for the policy criterion and learner success, but not for the mean-predictor upper bound. All necessary square integrability is derived from a.s. support. For the policy criterion, S is a measurable private tape independent of the WHOLE target process. Each pi_t is jointly measurable and feasible for EVERY seed on legal strict-past unit histories. The actual prediction is P_t=pi_t(S,Y_<t). One process and one policy are fixed before all horizons. The criterion characterizes success; it does not assert every policy converges. A_T=E[sum_{t<T}(P_t-Y_t)^2], m=E[Y_0], v=Var(Y_0), B_T=min_{u in[0,1]} E[sum_{t<T}(u-Y_t)^2]=T v. The population mean is a feasible minimizer. The comparator is fixed before expectation; B_T is not E[min_u sum loss]. E_T=A_T-B_T. This does not assert arbitrary policies are successful. The actual persistent private-bit canary has excessT/4 and is not successful. Remaining required program obligations are stated in the source card above.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.centered_total_sublinear_iff_average",
+        "BanditRL.OnlineLearning.randomized_history_policy_expectedFixed_excess"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.meanPredict_expectedFixed_upper",
+      "title": "Integrate the sample-mean regret bound without an independence assumption",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 87,
+      "plain": "The pathwise empirical minimum is at most fixed population-mean loss. Compare before integration, derive square integrability, then use expected fixed loss at the mean=Tv.",
+      "math": "\\mathcal E_T(x)\\le4+4\\ln T\\quad(T\\ge1).",
+      "intuition": "Normalize the actual fixed-comparator expected excess.",
+      "why": "Connect the source success definition to a real learner, with all information and integration hypotheses explicit.",
+      "position": "One of four adapters/derived application proofs extending the preceding source cards; full Chapter1 remains open.",
+      "proof_idea": "The pathwise empirical minimum is at most fixed population-mean loss. Compare before integration, derive square integrability, then use expected fixed loss at the mean=Tv.",
+      "lean_notes": "Fix one infinite process Y on a probability space. Every Y_t is measurable, has the law of Y_0, and belongs to [0,1] almost surely. Joint IID is required for the policy criterion and learner success, but not for the mean-predictor upper bound. All necessary square integrability is derived from a.s. support. NO joint independence is assumed here. A_T=E[sum_{t<T}(P_t-Y_t)^2], m=E[Y_0], v=Var(Y_0), B_T=min_{u in[0,1]} E[sum_{t<T}(u-Y_t)^2]=T v. The population mean is a feasible minimizer. The comparator is fixed before expectation; B_T is not E[min_u sum loss]. E_T=A_T-B_T. Source rounds1..T correspond to Lean0..T-1. The actual learner predicts1/2 initially and then the empirical mean of exactly the strictly earlier observations. It receives no population mean, law or horizon. Normalized expressions are defined atT0, but their arithmetic equality is used only eventually forT>0. Ordinary expected zero convergence and magnitude little-o are distinct from adversarial eventual-upper-epsilon NoRegret. This is a derived Theorem1.3 application; no nonnegative conclusion follows without IID. The repeated-target canary has two-round excess−1/4. Remaining required program obligations are stated in the source card above.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.theorem_1_3",
+        "BanditRL.OnlineLearning.empiricalMean_minimizes",
+        "BanditRL.OnlineLearning.expected_fixed_prefix_decomposition",
+        "BanditRL.OnlineLearning.expectedFixedMinimum_eq_variance"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.meanPredict_iid_success",
+      "title": "The real unknown-law sample-mean learner is stochastically successful",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 88,
+      "plain": "Combine the actual IID causal nonnegative lower bound with the integrated upper. The logarithmic ratio vanishes; a squeeze gives the ordinary zero limit, and the same generic adapter gives little-o.",
+      "math": "0\\le\\mathcal E_T(x)/T\\le(4+4\\ln T)/T\\longrightarrow0,\\qquad\\mathcal E_T(x)=o(T).",
+      "intuition": "Normalize the actual fixed-comparator expected excess.",
+      "why": "Connect the source success definition to a real learner, with all information and integration hypotheses explicit.",
+      "position": "One of four adapters/derived application proofs extending the preceding source cards; full Chapter1 remains open.",
+      "proof_idea": "Combine the actual IID causal nonnegative lower bound with the integrated upper. The logarithmic ratio vanishes; a squeeze gives the ordinary zero limit, and the same generic adapter gives little-o.",
+      "lean_notes": "Fix one infinite process Y on a probability space. Every Y_t is measurable, has the law of Y_0, and belongs to [0,1] almost surely. Joint IID is required for the policy criterion and learner success, but not for the mean-predictor upper bound. All necessary square integrability is derived from a.s. support. Joint IID is required for this lower-bound sandwich. Source rounds1..T correspond to Lean0..T-1. The actual learner predicts1/2 initially and then the empirical mean of exactly the strictly earlier observations. It receives no population mean, law or horizon. Normalized expressions are defined atT0, but their arithmetic equality is used only eventually forT>0. Ordinary expected zero convergence and magnitude little-o are distinct from adversarial eventual-upper-epsilon NoRegret. No convergence hypothesis is supplied. The fair infinite IID canary has positive variance1/4 and actual two-round excess1/4 while its same unknown-law learner tends to the benchmark. Remaining required program obligations are stated in the source card above.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.meanPredict_expectedFixed_excess",
+        "BanditRL.OnlineLearning.meanPredict_expectedFixed_upper",
+        "BanditRL.OnlineLearning.centered_total_sublinear_iff_average"
+      ]
     }
   ]
 }

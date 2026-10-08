@@ -1,0 +1,112 @@
+{
+  "card": {
+    "label": "Stochastic success and the actual sample-mean learner",
+    "pages": "printed1–2,4 / PDF13–14,16",
+    "pdf_page": 13,
+    "url": "https://arxiv.org/pdf/1912.13213v10",
+    "math": "\\begin{aligned}A_T&=\\mathbb E[\\sum_{t<T}(P_t-Y_t)^2],\\quad v=\\operatorname{Var}(Y_0),\\\\\\mathcal E_T&=A_T-\\min_{u\\in[0,1]}\\mathbb E[\\sum_{t<T}(u-Y_t)^2]=A_T-Tv,\\\\\\mathcal E_T=o(T)&\\iff A_T/T-v\\longrightarrow0\\iff\\frac1T\\sum_{t<T}\\mathbb E[(P_t-\\mathbb E Y_0)^2]\\longrightarrow0,\\\\x_0&=\\tfrac12,\\quad x_t=\\frac1t\\sum_{i<t}Y_i\\ (t>0),\\\\R_T(x,y)&=\\sum_{t<T}(x_t-y_t)^2-\\min_{u\\in[0,1]}\\sum_{t<T}(u-y_t)^2\\\\&\\le4+4\\ln T\\quad(T\\ge1,\\ y_i\\in[0,1]),\\\\0\\le\\mathcal E_T(x)&\\le4+4\\ln T\\ (T\\ge1,\\ \\text{IID}),\\quad\\mathcal E_T(x)/T\\longrightarrow0.\\end{aligned}",
+    "plain": "For positive T, (A_T-Tv)/T=A_T/T-v. The standard little-o quotient criterion therefore gives sublinear centered excess iff the average excess tends to zero. The existing causal private-seed producer gives E_T=sum E[(P_t-m)^2]>=0, so this is also equivalent to vanishing Cesaro mean squared deviation. For the actual mean learner, source Theorem1.3 bounds loss minus the empirical hindsight minimum pathwise. That empirical minimum is at most the loss of the fixed population comparator m. Integrate this inequality using derived L2, and use expected fixed loss at m=Tv to obtain E_T<=4+4lnT even without independence. With joint IID the causal lower bound also gives E_T>=0. Sandwich E_T/T between0 and(4+4lnT)/T, whose limit is zero. Apply the same normalization adapter to obtain little-o.",
+    "fallback": "For positive T, (A_T-Tv)/T=A_T/T-v. The standard little-o quotient criterion therefore gives sublinear centered excess iff the average excess tends to zero. The existing causal private-seed producer gives E_T=sum E[(P_t-m)^2]>=0, so this is also equivalent to vanishing Cesaro mean squared deviation. For the actual mean learner, source Theorem1.3 bounds loss minus the empirical hindsight minimum pathwise. That empirical minimum is at most the loss of the fixed population comparator m. Integrate this inequality using derived L2, and use expected fixed loss at m=Tv to obtain E_T<=4+4lnT even without independence. With joint IID the causal lower bound also gives E_T>=0. Sandwich E_T/T between0 and(4+4lnT)/T, whose limit is zero. Apply the same normalization adapter to obtain little-o.",
+    "relationship": "Equations(1.1)/(1.2) motivate success. S001 is a generic arithmetic adapter; S003/S004 are derived stochastic applications of Theorem1.3, not newly numbered source results. The displayed R_T(x,y) is the original pathwise Theorem1.3; the displayed expected excess upper and success are its derived applications.",
+    "contract": {
+      "model": "Fix one infinite process Y on a probability space. Every Y_t is measurable, has the law of Y_0, and belongs to [0,1] almost surely. Joint IID is required for the policy criterion and learner success, but not for the mean-predictor upper bound. All necessary square integrability is derived from a.s. support.",
+      "assumptions": "Fix one infinite process Y on a probability space. Every Y_t is measurable, has the law of Y_0, and belongs to [0,1] almost surely. Joint IID is required for the policy criterion and learner success, but not for the mean-predictor upper bound. All necessary square integrability is derived from a.s. support. For the policy criterion, S is a measurable private tape independent of the WHOLE target process. Each pi_t is jointly measurable and feasible for EVERY seed on legal strict-past unit histories. The actual prediction is P_t=pi_t(S,Y_<t). One process and one policy are fixed before all horizons. The criterion characterizes success; it does not assert every policy converges.",
+      "parameters": "Source rounds1..T correspond to Lean0..T-1. The actual learner predicts1/2 initially and then the empirical mean of exactly the strictly earlier observations. It receives no population mean, law or horizon. Normalized expressions are defined atT0, but their arithmetic equality is used only eventually forT>0. Ordinary expected zero convergence and magnitude little-o are distinct from adversarial eventual-upper-epsilon NoRegret.",
+      "regret": "A_T=E[sum_{t<T}(P_t-Y_t)^2], m=E[Y_0], v=Var(Y_0), B_T=min_{u in[0,1]} E[sum_{t<T}(u-Y_t)^2]=T v. The population mean is a feasible minimizer. The comparator is fixed before expectation; B_T is not E[min_u sum loss]. E_T=A_T-B_T.",
+      "guarantee": "For positive T, (A_T-Tv)/T=A_T/T-v. The standard little-o quotient criterion therefore gives sublinear centered excess iff the average excess tends to zero. The existing causal private-seed producer gives E_T=sum E[(P_t-m)^2]>=0, so this is also equivalent to vanishing Cesaro mean squared deviation. For the actual mean learner, source Theorem1.3 bounds loss minus the empirical hindsight minimum pathwise. That empirical minimum is at most the loss of the fixed population comparator m. Integrate this inequality using derived L2, and use expected fixed loss at m=Tv to obtain E_T<=4+4lnT even without independence. With joint IID the causal lower bound also gives E_T>=0. Sandwich E_T/T between0 and(4+4lnT)/T, whose limit is zero. Apply the same normalization adapter to obtain little-o. Only this bounded explicit private-tape model is covered by the policy result. Universal stochastic-kernel, completed-information and AE-factorization source coverage remains required. Five old main-relative module audits remain required; the remote push contributor check still fails on those contracts. Original sixteen Chapter1 source objects and unknown(null) proof-leaf total are retained. Chapter1/2 remain open, Chapters3–16 are unenumerated, necessary appendices are required and the total Goal is ACTIVE. This work is stacked on OPEN draft unmerged PR195 exact372c9a6c138c50d7a5e08e91351238f231565219. Canonical main6847 is unchanged; no merge, deployment or live update. No high-probability, almost-sure, minimax or full strategy-class guarantee is asserted."
+    },
+    "local_status": {
+      "status": "compiled",
+      "label": "Four fixed proof terminals compiled locally",
+      "boundary": "Focused bodies and nondegenerate canaries compiled; distinct CONTRACT passed. BODY/combined/reader/FINAL/native/delivery gates remain separate. Only this bounded explicit private-tape model is covered by the policy result. Universal stochastic-kernel, completed-information and AE-factorization source coverage remains required. Five old main-relative module audits remain required; the remote push contributor check still fails on those contracts. Original sixteen Chapter1 source objects and unknown(null) proof-leaf total are retained. Chapter1/2 remain open, Chapters3–16 are unenumerated, necessary appendices are required and the total Goal is ACTIVE. This work is stacked on OPEN draft unmerged PR195 exact372c9a6c138c50d7a5e08e91351238f231565219. Canonical main6847 is unchanged; no merge, deployment or live update. No high-probability, almost-sure, minimax or full strategy-class guarantee is asserted."
+    }
+  },
+  "notes": [
+    {
+      "full_name": "BanditRL.OnlineLearning.centered_total_sublinear_iff_average",
+      "title": "A centered total is sublinear exactly when its average excess vanishes",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 85,
+      "plain": "Use the Mathlib little-o quotient criterion and the existing normalization identity eventually for positive horizons.",
+      "math": "A_T-Tc=o(T)\\iff A_T/T-c\\longrightarrow0.",
+      "intuition": "Normalize the actual fixed-comparator expected excess.",
+      "why": "Connect the source success definition to a real learner, with all information and integration hypotheses explicit.",
+      "position": "One of four adapters/derived application proofs extending the preceding source cards; full Chapter1 remains open.",
+      "proof_idea": "Use the Mathlib little-o quotient criterion and the existing normalization identity eventually for positive horizons.",
+      "lean_notes": "Generic signed real total and c: no sign, monotonicity, convergence assumption, A_0=0 or c=0. AtT0 the average-minus-c and divided residual may differ. This adapter proves an equivalence, not a learner guarantee. Remaining required program obligations are stated in the source card above.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.normalized_excess"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.randomized_history_policy_success_iff",
+      "title": "A private-seed policy succeeds exactly when its average mean-square error vanishes",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 86,
+      "plain": "The actual causal policy produces nonnegative excess and its finite sum-of-squares identity. Normalize that identity and apply the centered-total adapter.",
+      "math": "\\mathcal E_T=o(T)\\iff A_T/T-v\\longrightarrow0\\iff T^{-1}\\sum_{t<T}\\mathbb E[(P_t-m)^2]\\longrightarrow0.",
+      "intuition": "Normalize the actual fixed-comparator expected excess.",
+      "why": "Connect the source success definition to a real learner, with all information and integration hypotheses explicit.",
+      "position": "One of four adapters/derived application proofs extending the preceding source cards; full Chapter1 remains open.",
+      "proof_idea": "The actual causal policy produces nonnegative excess and its finite sum-of-squares identity. Normalize that identity and apply the centered-total adapter.",
+      "lean_notes": "Fix one infinite process Y on a probability space. Every Y_t is measurable, has the law of Y_0, and belongs to [0,1] almost surely. Joint IID is required for the policy criterion and learner success, but not for the mean-predictor upper bound. All necessary square integrability is derived from a.s. support. For the policy criterion, S is a measurable private tape independent of the WHOLE target process. Each pi_t is jointly measurable and feasible for EVERY seed on legal strict-past unit histories. The actual prediction is P_t=pi_t(S,Y_<t). One process and one policy are fixed before all horizons. The criterion characterizes success; it does not assert every policy converges. A_T=E[sum_{t<T}(P_t-Y_t)^2], m=E[Y_0], v=Var(Y_0), B_T=min_{u in[0,1]} E[sum_{t<T}(u-Y_t)^2]=T v. The population mean is a feasible minimizer. The comparator is fixed before expectation; B_T is not E[min_u sum loss]. E_T=A_T-B_T. This does not assert arbitrary policies are successful. The actual persistent private-bit canary has excessT/4 and is not successful. Remaining required program obligations are stated in the source card above.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.centered_total_sublinear_iff_average",
+        "BanditRL.OnlineLearning.randomized_history_policy_expectedFixed_excess"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.meanPredict_expectedFixed_upper",
+      "title": "Integrate the sample-mean regret bound without an independence assumption",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 87,
+      "plain": "The pathwise empirical minimum is at most fixed population-mean loss. Compare before integration, derive square integrability, then use expected fixed loss at the mean=Tv.",
+      "math": "\\mathcal E_T(x)\\le4+4\\ln T\\quad(T\\ge1).",
+      "intuition": "Normalize the actual fixed-comparator expected excess.",
+      "why": "Connect the source success definition to a real learner, with all information and integration hypotheses explicit.",
+      "position": "One of four adapters/derived application proofs extending the preceding source cards; full Chapter1 remains open.",
+      "proof_idea": "The pathwise empirical minimum is at most fixed population-mean loss. Compare before integration, derive square integrability, then use expected fixed loss at the mean=Tv.",
+      "lean_notes": "Fix one infinite process Y on a probability space. Every Y_t is measurable, has the law of Y_0, and belongs to [0,1] almost surely. Joint IID is required for the policy criterion and learner success, but not for the mean-predictor upper bound. All necessary square integrability is derived from a.s. support. NO joint independence is assumed here. A_T=E[sum_{t<T}(P_t-Y_t)^2], m=E[Y_0], v=Var(Y_0), B_T=min_{u in[0,1]} E[sum_{t<T}(u-Y_t)^2]=T v. The population mean is a feasible minimizer. The comparator is fixed before expectation; B_T is not E[min_u sum loss]. E_T=A_T-B_T. Source rounds1..T correspond to Lean0..T-1. The actual learner predicts1/2 initially and then the empirical mean of exactly the strictly earlier observations. It receives no population mean, law or horizon. Normalized expressions are defined atT0, but their arithmetic equality is used only eventually forT>0. Ordinary expected zero convergence and magnitude little-o are distinct from adversarial eventual-upper-epsilon NoRegret. This is a derived Theorem1.3 application; no nonnegative conclusion follows without IID. The repeated-target canary has two-round excess−1/4. Remaining required program obligations are stated in the source card above.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.theorem_1_3",
+        "BanditRL.OnlineLearning.empiricalMean_minimizes",
+        "BanditRL.OnlineLearning.expected_fixed_prefix_decomposition",
+        "BanditRL.OnlineLearning.expectedFixedMinimum_eq_variance"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.meanPredict_iid_success",
+      "title": "The real unknown-law sample-mean learner is stochastically successful",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 88,
+      "plain": "Combine the actual IID causal nonnegative lower bound with the integrated upper. The logarithmic ratio vanishes; a squeeze gives the ordinary zero limit, and the same generic adapter gives little-o.",
+      "math": "0\\le\\mathcal E_T(x)/T\\le(4+4\\ln T)/T\\longrightarrow0,\\qquad\\mathcal E_T(x)=o(T).",
+      "intuition": "Normalize the actual fixed-comparator expected excess.",
+      "why": "Connect the source success definition to a real learner, with all information and integration hypotheses explicit.",
+      "position": "One of four adapters/derived application proofs extending the preceding source cards; full Chapter1 remains open.",
+      "proof_idea": "Combine the actual IID causal nonnegative lower bound with the integrated upper. The logarithmic ratio vanishes; a squeeze gives the ordinary zero limit, and the same generic adapter gives little-o.",
+      "lean_notes": "Fix one infinite process Y on a probability space. Every Y_t is measurable, has the law of Y_0, and belongs to [0,1] almost surely. Joint IID is required for the policy criterion and learner success, but not for the mean-predictor upper bound. All necessary square integrability is derived from a.s. support. Joint IID is required for this lower-bound sandwich. Source rounds1..T correspond to Lean0..T-1. The actual learner predicts1/2 initially and then the empirical mean of exactly the strictly earlier observations. It receives no population mean, law or horizon. Normalized expressions are defined atT0, but their arithmetic equality is used only eventually forT>0. Ordinary expected zero convergence and magnitude little-o are distinct from adversarial eventual-upper-epsilon NoRegret. No convergence hypothesis is supplied. The fair infinite IID canary has positive variance1/4 and actual two-round excess1/4 while its same unknown-law learner tends to the benchmark. Remaining required program obligations are stated in the source card above.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.meanPredict_expectedFixed_excess",
+        "BanditRL.OnlineLearning.meanPredict_expectedFixed_upper",
+        "BanditRL.OnlineLearning.centered_total_sublinear_iff_average"
+      ]
+    }
+  ],
+  "boundary": "Only this bounded explicit private-tape model is covered by the policy result. Universal stochastic-kernel, completed-information and AE-factorization source coverage remains required. Five old main-relative module audits remain required; the remote push contributor check still fails on those contracts. Original sixteen Chapter1 source objects and unknown(null) proof-leaf total are retained. Chapter1/2 remain open, Chapters3–16 are unenumerated, necessary appendices are required and the total Goal is ACTIVE. This work is stacked on OPEN draft unmerged PR195 exact372c9a6c138c50d7a5e08e91351238f231565219. Canonical main6847 is unchanged; no merge, deployment or live update. No high-probability, almost-sure, minimax or full strategy-class guarantee is asserted.",
+  "no_current_production_reader_edit": true,
+  "reader_requirements": {
+    "R1": "Display source equations (1.1) and (1.2) and Theorem 1.3 with source round 1 = Lean time 0; label S001 as a generic adapter and S003/S004 as derived applications, not new numbered source results.",
+    "R2": "Keep minimization over the expected loss of one fixed comparator outside expectation; explain the feasible population mean and do not substitute expected hindsight minimum.",
+    "R3": "State one infinite probability process with measurable same-law a.s. [0,1] targets; S002/S004 require joint IID, whereas S003 does not; derive integrability rather than strengthen to pointwise support.",
+    "R4": "For S002 state seed independence from the whole target stream, joint measurability, every-seed feasibility only on legal strict-past histories, and the actual composed prediction; equivalences do not make every policy successful.",
+    "R5": "Show the actual unknown-law meanPredict with initial 1/2 and strict-past empirical mean; population mean is a proof comparator, not algorithm input, and horizons do not select different learners.",
+    "R6": "Distinguish ordinary expected normalized zero convergence and magnitude little-o from adversarial eventual-upper-epsilon NoRegret; state eventual T>0 and the possible generic T0 discrepancy.",
+    "R7": "Present complete exact headers and definitions, a displayed proof explanation and actual compiled dependencies only when available; preserve existing registry IDs/URLs/hashes and verify current formulas/pixels after applicable combined gates.",
+    "R8": "Keep full randomization/kernel/completed-information/AE-factorization coverage, five old module audits, original sixteen source objects with null proof total, full C1/C2, Chapters3–16 and necessary appendices required; no chapter/Goal/main/live completion."
+  }
+}

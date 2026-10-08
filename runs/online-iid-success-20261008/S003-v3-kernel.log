@@ -1,0 +1,8 @@
+BanditRL.OnlineLearning.meanPredict_expectedFixed_upper.{u} {Ω : Type u} [MeasurableSpace Ω]
+  (μ : MeasureTheory.Measure Ω) [MeasureTheory.IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)
+  (hY : ∀ (t : ℕ), Measurable (Y t)) (hlaw : ∀ (t : ℕ), ProbabilityTheory.IdentDistrib (Y t) (Y 0) μ μ)
+  (hb : ∀ (t : ℕ), ∀ᵐ (ω : Ω) ∂μ, Y t ω ∈ Set.Icc 0 1) (T : ℕ) (hT : 0 < T) :
+  BanditRL.OnlineLearning.expectedFixedRegret μ Y (fun t ω => BanditRL.OnlineLearning.meanPredict (fun i => Y i ω) t)
+      T ≤
+    4 + 4 * Real.log ↑T
+'BanditRL.OnlineLearning.meanPredict_expectedFixed_upper' depends on axioms: [propext, Classical.choice, Quot.sound]

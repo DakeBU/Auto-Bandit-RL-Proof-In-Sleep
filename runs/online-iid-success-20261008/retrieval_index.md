@@ -1,0 +1,1 @@
+Existing normalized_excess, expectedFixedMinimum_eq_variance, meanPredict_expectedFixed_excess, randomized_history_policy_expectedFixed_excess, theorem_1_3, empiricalMean_minimizes, meanPredict_measurable/mem. Mathlib MLIB-ASYMPTOTICS, MLIB-MEASURE-INTEGRAL, MLIB-REAL-LOG-SQRT. No LML/new library/toolchain change. Typed declaration search and contract audit pending.

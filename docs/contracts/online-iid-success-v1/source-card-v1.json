@@ -1,0 +1,106 @@
+{
+  "id": "ONLINE-IID-SUCCESS-20261008",
+  "source": {
+    "PDF": "..\\research-online-ogd\\tmp\\pdfs\\orabona-v10.pdf",
+    "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "version": "arXiv1912.13213v10 2026-06-21",
+    "printed_pages": [
+      1,
+      2,
+      4
+    ],
+    "pdf_pages": [
+      13,
+      14,
+      16
+    ],
+    "equations": [
+      "1.1",
+      "1.2"
+    ],
+    "reused_source_result": "Theorem1.3",
+    "actual_source_text_sha256": {
+      "13": "b16d82b563558afaaa14776c6015a78be9e0daa3d888a9a0593c057a54d2288b",
+      "14": "3554ee4ddd7ad26d67fec72b46bbfc229ec302667046c549efab83e11ae62a14",
+      "16": "b8fe01f6c31bf15cfb67ea948a832f97e2c77f9e1f569a36fd9fa72e831796ee"
+    },
+    "ROOT_actual_pixel_viewed": [
+      13,
+      14,
+      16
+    ],
+    "source_modified": false
+  },
+  "source_scope": "printed1–2 success Eq1.1/1.2; derived application of Theorem1.3 printed4",
+  "exact_lean_targets": [
+    {
+      "id": "S001",
+      "name": "BanditRL.OnlineLearning.centered_total_sublinear_iff_average",
+      "binders": "(total : ℕ → ℝ) (c : ℝ)",
+      "conclusion": "(fun T => total T - (T : ℝ) * c) =o[atTop] (fun T : ℕ => (T : ℝ)) ↔\n      Tendsto (fun T => total T / (T : ℝ) - c) atTop (nhds (0 : ℝ))",
+      "header": "theorem centered_total_sublinear_iff_average (total : ℕ → ℝ) (c : ℝ) :\n    (fun T => total T - (T : ℝ) * c) =o[atTop] (fun T : ℕ => (T : ℝ)) ↔\n      Tendsto (fun T => total T / (T : ℝ) - c) atTop (nhds (0 : ℝ))",
+      "source_anchor": "printed1/PDF13 equations1.1-1.2 success equivalence"
+    },
+    {
+      "id": "S002",
+      "name": "BanditRL.OnlineLearning.randomized_history_policy_success_iff",
+      "binders": "{Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1)\n    (hind : iIndepFun Y μ)\n    (S : Ω → Seed) (hS : Measurable S)\n    (hseed : IndepFun S (fun ω t => Y t ω) μ)\n    (policy : (t : ℕ) → (Seed × ((↑(Finset.range t) : Type) → ℝ)) → ℝ)\n    (hp : ∀ t, Measurable (policy t))\n    (hpb : ∀ t s z, (∀ i, z i ∈ Set.Icc (0 : ℝ) 1) →\n      policy t (s, z) ∈ Set.Icc (0 : ℝ) 1)",
+      "conclusion": "let prediction := fun t ω => policy t (S ω, fun i => Y i ω)\n    (∀ T, 0 ≤ expectedFixedRegret μ Y prediction T) ∧\n      ((fun T => expectedFixedRegret μ Y prediction T) =o[atTop]\n          (fun T : ℕ => (T : ℝ)) ↔\n        Tendsto (fun T => (∫ ω, ∑ t ∈ Finset.range T, (prediction t ω - Y t ω)^2 ∂μ) / (T : ℝ) - variance (Y 0) μ) atTop (nhds (0 : ℝ))) ∧\n      (Tendsto (fun T => (∫ ω, ∑ t ∈ Finset.range T, (prediction t ω - Y t ω)^2 ∂μ) / (T : ℝ) - variance (Y 0) μ) atTop (nhds (0 : ℝ)) ↔\n        Tendsto (fun T => (∑ t ∈ Finset.range T,\n          ∫ ω, (prediction t ω - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) / (T : ℝ)) atTop (nhds (0 : ℝ)))",
+      "header": "theorem randomized_history_policy_success_iff {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1)\n    (hind : iIndepFun Y μ)\n    (S : Ω → Seed) (hS : Measurable S)\n    (hseed : IndepFun S (fun ω t => Y t ω) μ)\n    (policy : (t : ℕ) → (Seed × ((↑(Finset.range t) : Type) → ℝ)) → ℝ)\n    (hp : ∀ t, Measurable (policy t))\n    (hpb : ∀ t s z, (∀ i, z i ∈ Set.Icc (0 : ℝ) 1) →\n      policy t (s, z) ∈ Set.Icc (0 : ℝ) 1) :\n    let prediction := fun t ω => policy t (S ω, fun i => Y i ω)\n    (∀ T, 0 ≤ expectedFixedRegret μ Y prediction T) ∧\n      ((fun T => expectedFixedRegret μ Y prediction T) =o[atTop]\n          (fun T : ℕ => (T : ℝ)) ↔\n        Tendsto (fun T => (∫ ω, ∑ t ∈ Finset.range T, (prediction t ω - Y t ω)^2 ∂μ) / (T : ℝ) - variance (Y 0) μ) atTop (nhds (0 : ℝ))) ∧\n      (Tendsto (fun T => (∫ ω, ∑ t ∈ Finset.range T, (prediction t ω - Y t ω)^2 ∂μ) / (T : ℝ) - variance (Y 0) μ) atTop (nhds (0 : ℝ)) ↔\n        Tendsto (fun T => (∑ t ∈ Finset.range T,\n          ∫ ω, (prediction t ω - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) / (T : ℝ)) atTop (nhds (0 : ℝ)))",
+      "source_anchor": "printed1/PDF13 equations1.1-1.2 success equivalence"
+    },
+    {
+      "id": "S003",
+      "name": "BanditRL.OnlineLearning.meanPredict_expectedFixed_upper",
+      "binders": "{Ω : Type u} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) (hT : 0 < T)",
+      "conclusion": "expectedFixedRegret μ Y (fun t ω => meanPredict (fun i => Y i ω) t) T ≤ 4 + 4 * Real.log T",
+      "header": "theorem meanPredict_expectedFixed_upper {Ω : Type u} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) (hT : 0 < T) :\n    expectedFixedRegret μ Y (fun t ω => meanPredict (fun i => Y i ω) t) T ≤ 4 + 4 * Real.log T",
+      "source_anchor": "derived stochastic application of printed4/PDF16 Theorem1.3; not a separately numbered source result"
+    },
+    {
+      "id": "S004",
+      "name": "BanditRL.OnlineLearning.meanPredict_iid_success",
+      "binders": "{Ω : Type u} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (hind : iIndepFun Y μ)",
+      "conclusion": "Tendsto (fun T => expectedFixedRegret μ Y (fun t ω => meanPredict (fun i => Y i ω) t) T / (T : ℝ)) atTop (nhds (0 : ℝ)) ∧\n      (fun T => expectedFixedRegret μ Y (fun t ω => meanPredict (fun i => Y i ω) t) T) =o[atTop]\n        (fun T : ℕ => (T : ℝ))",
+      "header": "theorem meanPredict_iid_success {Ω : Type u} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (hind : iIndepFun Y μ) :\n    Tendsto (fun T => expectedFixedRegret μ Y (fun t ω => meanPredict (fun i => Y i ω) t) T / (T : ℝ)) atTop (nhds (0 : ℝ)) ∧\n      (fun T => expectedFixedRegret μ Y (fun t ω => meanPredict (fun i => Y i ω) t) T) =o[atTop]\n        (fun T : ℕ => (T : ℝ))",
+      "source_anchor": "derived stochastic application of printed4/PDF16 Theorem1.3; not a separately numbered source result"
+    }
+  ],
+  "original_math": "Expected cumulative square loss minus variance*T nonnegative in causal IID model; success means o(T), equivalently average excess tends0. Theorem1.3 actual x1=1/2,xt=mean strictly earlier targets gives signed pathwise min-regret≤4+4lnT.",
+  "original_index": "t1..T becomes t0..T-1; source x1 is Lean meanPredict0; single infinite stream and learner",
+  "delta_ledger": [
+    {
+      "kind": "generalization",
+      "target": "S001",
+      "delta": "arbitrary signed total/c, no convergence assumptions, eventual positive horizon arithmetic"
+    },
+    {
+      "kind": "source-implicit",
+      "target": "S002-S004",
+      "delta": "probability, ambientmeasurability/samelaw and a.s.unit support deriveL2; actual one infinite process"
+    },
+    {
+      "kind": "unresolved",
+      "target": "S002",
+      "delta": "bounded explicit private-seed jointmeasurable history-policy model; no everykernel/completed-field/AEfactorization representation proved"
+    },
+    {
+      "kind": "generalization",
+      "target": "S003",
+      "delta": "dependent same-law stream allowed, actual4log upper derivedbyintegrating source pathwise result; not a source-numbered result"
+    },
+    {
+      "kind": "same",
+      "target": "S004",
+      "delta": "actual strictpastmeanPredict unknown-law learner; IIDnonneg and4logupper produceordinarysuccess; no merelysuppliedconvergence"
+    }
+  ],
+  "library_reuse": "adapt_existing, no copied probability/asymptotic foundations; no compatible LML import required",
+  "generic_shared_consumers": [
+    "S002success-equivalence",
+    "S004actualmeanPredictlittle-o"
+  ],
+  "stages": "draft types only; distinct actor contractreview pending",
+  "no_source_statement_repair": true,
+  "publication_boundary": "C1/C2open,3–16unenumerated,fiveold-moduleauditsrequired,Goalactive"
+}
