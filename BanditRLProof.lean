@@ -746,3 +746,5 @@ import BanditRLProof.OnlineLearningFTLState
 import BanditRLProof.OnlineGuessingLogLower
 
 import BanditRLProof.OnlineNoRegretSemantics
+
+import BanditRLProof.OnlineSquareMinimum

@@ -1,0 +1,1 @@
+Actual first frozen leaf compiled. Positive T uses shared mean feasibility/global minimum; T0 simplifies exact empty sum/default mean. Six-target frontier 6->5, no source/package/chapter/Goal acceptance. Actual build/fence/trial evidence is separately retained.

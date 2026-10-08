@@ -1,0 +1,13 @@
+{
+  "failed_script": "E:/ABRL/worktrees/research-online-book/runs/online-square-minimum-20261008/prepare-source-review-v1.py",
+  "failed_script_sha256": "b52b9270dfc6caaa8f367664389665d86cabf01d1985b5852570d31a314435ab",
+  "observed_actual_exit_code": 1,
+  "observed_exception": "TypeError: expected str, bytes or os.PathLike object, not dict",
+  "cause": "The original helper treated receipt.report as a path; the actual immutable decoder receipt uses a path/hash object.",
+  "failure_stage": "First receipt assertion, before reader requirements or source-review outputs were written.",
+  "preserved_receipt_sha256": "2f7b4baf062f5a94be357ea02a36ee6214d50e7eaa4fcda400a1ae4942a5d076",
+  "repair": "Read actual report.path and report.sha256_raw_bytes; rehash every reviewed/input row without changing the decoder outputs.",
+  "target_or_context_changed": false,
+  "source_acceptance": false,
+  "theorem_bodies_proved": false
+}

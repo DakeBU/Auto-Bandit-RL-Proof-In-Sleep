@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineLearning.squaredLoss_minimum_eq",
+  "file": "BanditRLProof/OnlineSquareMinimum.lean",
+  "statement": "theorem squaredLoss_minimum_eq (y : ℕ → ℝ) (T : ℕ) (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) : sInf ((fun u : ℝ => ∑ t ∈ Finset.range T, (u - y t)^2) '' Set.Icc (0 : ℝ) 1) = ∑ t ∈ Finset.range T, (empiricalMean y T - y t)^2",
+  "statement_hash": "03a1a42885cc8d743340fe199b327b40518d2b365a0f1663d58db3758046a395",
+  "source_assumptions": [],
+  "created_at": "2026-10-08T04:19:14+00:00"
+}

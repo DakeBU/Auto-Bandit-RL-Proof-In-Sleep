@@ -1,0 +1,22 @@
+{
+  "command": [
+    "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe",
+    "-B",
+    "-X",
+    "utf8",
+    "tools/bandit.py",
+    "statement-fence",
+    "--declaration",
+    "BanditRL.OnlineLearning.squaredBestRegret_eq_comparatorRegret",
+    "--file",
+    "BanditRLProof/OnlineSquareMinimum.lean",
+    "--source-assumption",
+    "theorem squaredBestRegret_eq_comparatorRegret (y prediction : ℕ → ℝ) (T : ℕ) (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) : squaredBestRegret y prediction T = comparatorRegret (fun t x => (x - y t)^2) prediction (empiricalMean y T) T",
+    "--output",
+    "E:\\ABRL\\worktrees\\research-online-book\\runs\\online-square-minimum-20261008\\full-header-fences-v1\\public-squaredBestRegret_eq_comparatorRegret.json"
+  ],
+  "cwd": "E:/ABRL/worktrees/research-online-book",
+  "exit_code": 0,
+  "seconds": 0.207,
+  "log_sha256": "541c6a85e4d54639eade011f1b6ebf073c33370a811fee8c38cc38decb1fec27"
+}

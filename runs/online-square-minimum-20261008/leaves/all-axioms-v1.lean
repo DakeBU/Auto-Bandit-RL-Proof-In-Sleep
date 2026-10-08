@@ -1,0 +1,77 @@
+import Tests.OnlineSquareMinimumCanary
+#check BanditRL.OnlineLearning.guessing_prefix_minimum
+#print axioms BanditRL.OnlineLearning.guessing_prefix_minimum
+#check BanditRL.OnlineLearning.squaredLoss_minimum_eq
+#print axioms BanditRL.OnlineLearning.squaredLoss_minimum_eq
+#check BanditRL.OnlineLearning.squaredBestRegret_eq_comparatorRegret
+#print axioms BanditRL.OnlineLearning.squaredBestRegret_eq_comparatorRegret
+#check BanditRL.OnlineLearning.comparatorRegret_le_squaredBestRegret
+#print axioms BanditRL.OnlineLearning.comparatorRegret_le_squaredBestRegret
+#check BanditRL.OnlineLearning.meanPredict_bestRegret_bound
+#print axioms BanditRL.OnlineLearning.meanPredict_bestRegret_bound
+#check BanditRL.OnlineLearning.meanPredict_bestRegret_refined
+#print axioms BanditRL.OnlineLearning.meanPredict_bestRegret_refined
+#check Tests.OnlineSquareMinimum.alternating_mem
+#print axioms Tests.OnlineSquareMinimum.alternating_mem
+#check Tests.OnlineSquareMinimum.quarters_mem
+#print axioms Tests.OnlineSquareMinimum.quarters_mem
+#check Tests.OnlineSquareMinimum.empty_minimum
+#print axioms Tests.OnlineSquareMinimum.empty_minimum
+#check Tests.OnlineSquareMinimum.empty_regret
+#print axioms Tests.OnlineSquareMinimum.empty_regret
+#check Tests.OnlineSquareMinimum.alternating_mean
+#print axioms Tests.OnlineSquareMinimum.alternating_mean
+#check Tests.OnlineSquareMinimum.alternating_minimum
+#print axioms Tests.OnlineSquareMinimum.alternating_minimum
+#check Tests.OnlineSquareMinimum.alternating_unique
+#print axioms Tests.OnlineSquareMinimum.alternating_unique
+#check Tests.OnlineSquareMinimum.actual_prediction_values
+#print axioms Tests.OnlineSquareMinimum.actual_prediction_values
+#check Tests.OnlineSquareMinimum.actual_regret_one
+#print axioms Tests.OnlineSquareMinimum.actual_regret_one
+#check Tests.OnlineSquareMinimum.actual_regret_two
+#print axioms Tests.OnlineSquareMinimum.actual_regret_two
+#check Tests.OnlineSquareMinimum.signed_alternating
+#print axioms Tests.OnlineSquareMinimum.signed_alternating
+#check Tests.OnlineSquareMinimum.comparator_zero_order
+#print axioms Tests.OnlineSquareMinimum.comparator_zero_order
+#check Tests.OnlineSquareMinimum.comparator_one_order
+#print axioms Tests.OnlineSquareMinimum.comparator_one_order
+#check Tests.OnlineSquareMinimum.quarters_mean
+#print axioms Tests.OnlineSquareMinimum.quarters_mean
+#check Tests.OnlineSquareMinimum.quarters_minimum
+#print axioms Tests.OnlineSquareMinimum.quarters_minimum
+#check Tests.OnlineSquareMinimum.actual_bound
+#print axioms Tests.OnlineSquareMinimum.actual_bound
+#check Tests.OnlineSquareMinimum.actual_refined
+#print axioms Tests.OnlineSquareMinimum.actual_refined
+#check Tests.OnlineSquareMinimum.actual_refined_one
+#print axioms Tests.OnlineSquareMinimum.actual_refined_one
+#check Tests.OnlineSquareMinimum.actual_causality
+#print axioms Tests.OnlineSquareMinimum.actual_causality
+#check Tests.OnlineSquareMinimum.actual_identity
+#print axioms Tests.OnlineSquareMinimum.actual_identity
+#check BanditRL.OnlineLearning.empiricalMean_mem
+#print axioms BanditRL.OnlineLearning.empiricalMean_mem
+#check BanditRL.OnlineLearning.empiricalMean_minimizes
+#print axioms BanditRL.OnlineLearning.empiricalMean_minimizes
+#check BanditRL.OnlineLearning.empiricalMean_unique
+#print axioms BanditRL.OnlineLearning.empiricalMean_unique
+#check BanditRL.OnlineLearning.theorem_1_3
+#print axioms BanditRL.OnlineLearning.theorem_1_3
+#check BanditRL.OnlineLearning.meanPredict_regret_refined
+#print axioms BanditRL.OnlineLearning.meanPredict_regret_refined
+#check BanditRL.OnlineLearning.meanPredict_prefix
+#print axioms BanditRL.OnlineLearning.meanPredict_prefix
+#check BanditRL.OnlineLearning.squaredBestRegret
+#print axioms BanditRL.OnlineLearning.squaredBestRegret
+#check BanditRL.OnlineLearning.empiricalMean
+#print axioms BanditRL.OnlineLearning.empiricalMean
+#check BanditRL.OnlineLearning.meanPredict
+#print axioms BanditRL.OnlineLearning.meanPredict
+#check BanditRL.OnlineLearning.comparatorRegret
+#print axioms BanditRL.OnlineLearning.comparatorRegret
+#check Tests.OnlineSquareMinimum.alternating
+#print axioms Tests.OnlineSquareMinimum.alternating
+#check Tests.OnlineSquareMinimum.quarters
+#print axioms Tests.OnlineSquareMinimum.quarters

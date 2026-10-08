@@ -1,0 +1,1 @@
+Draft only: six proposed square minimum/representation/causal performance targets. No body proof, no compiled target, no source acceptance or chapter/Goal closure yet. IID expected minimum/causal benchmark and old five module audits remain required.

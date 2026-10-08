@@ -1,0 +1,1 @@
+Draft sourcep2-5/PDF14-17. Existing empiricalMean_mem/minimizes, theorem_1_3, meanPredict_regret_refined, comparatorRegret and lemma_1_2; Mathlib IsLeast.csInf_eq/csInf_le/le_csInf. Actual native retrieval and compiled scratch checks pending; never treat declaration presence as source acceptance.

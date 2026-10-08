@@ -1,0 +1,159 @@
+BanditRL.OnlineLearning.guessing_prefix_minimum (y : ℕ → ℝ) (T : ℕ) (hy : ∀ t < T, y t ∈ Set.Icc 0 1) :
+  BanditRL.OnlineLearning.empiricalMean y T ∈ Set.Icc 0 1 ∧
+    ∀ u ∈ Set.Icc 0 1,
+      ∑ t ∈ Finset.range T, (BanditRL.OnlineLearning.empiricalMean y T - y t) ^ 2 ≤ ∑ t ∈ Finset.range T, (u - y t) ^ 2
+'BanditRL.OnlineLearning.guessing_prefix_minimum' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.squaredLoss_minimum_eq (y : ℕ → ℝ) (T : ℕ) (hy : ∀ t < T, y t ∈ Set.Icc 0 1) :
+  sInf ((fun u => ∑ t ∈ Finset.range T, (u - y t) ^ 2) '' Set.Icc 0 1) =
+    ∑ t ∈ Finset.range T, (BanditRL.OnlineLearning.empiricalMean y T - y t) ^ 2
+'BanditRL.OnlineLearning.squaredLoss_minimum_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.squaredBestRegret_eq_comparatorRegret (y prediction : ℕ → ℝ) (T : ℕ)
+  (hy : ∀ t < T, y t ∈ Set.Icc 0 1) :
+  BanditRL.OnlineLearning.squaredBestRegret y prediction T =
+    BanditRL.OnlineLearning.comparatorRegret (fun t x => (x - y t) ^ 2) prediction
+      (BanditRL.OnlineLearning.empiricalMean y T) T
+'BanditRL.OnlineLearning.squaredBestRegret_eq_comparatorRegret' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BanditRL.OnlineLearning.comparatorRegret_le_squaredBestRegret (y prediction : ℕ → ℝ) (T : ℕ)
+  (hy : ∀ t < T, y t ∈ Set.Icc 0 1) (u : ℝ) (hu : u ∈ Set.Icc 0 1) :
+  BanditRL.OnlineLearning.comparatorRegret (fun t x => (x - y t) ^ 2) prediction u T ≤
+    BanditRL.OnlineLearning.squaredBestRegret y prediction T
+'BanditRL.OnlineLearning.comparatorRegret_le_squaredBestRegret' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BanditRL.OnlineLearning.meanPredict_bestRegret_bound (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T)
+  (hy : ∀ t < T, y t ∈ Set.Icc 0 1) :
+  BanditRL.OnlineLearning.squaredBestRegret y (BanditRL.OnlineLearning.meanPredict y) T ≤ 4 + 4 * Real.log ↑T
+'BanditRL.OnlineLearning.meanPredict_bestRegret_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.meanPredict_bestRegret_refined (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T)
+  (hy : ∀ t < T, y t ∈ Set.Icc 0 1) :
+  BanditRL.OnlineLearning.squaredBestRegret y (BanditRL.OnlineLearning.meanPredict y) T ≤
+    1 / 4 + ∑ t ∈ Finset.range (T - 1), 4 / (↑t + 2)
+'BanditRL.OnlineLearning.meanPredict_bestRegret_refined' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineSquareMinimum.alternating_mem (t : ℕ) : Tests.OnlineSquareMinimum.alternating t ∈ Set.Icc 0 1
+'Tests.OnlineSquareMinimum.alternating_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineSquareMinimum.quarters_mem (t : ℕ) : Tests.OnlineSquareMinimum.quarters t ∈ Set.Icc 0 1
+'Tests.OnlineSquareMinimum.quarters_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineSquareMinimum.empty_minimum :
+  sInf ((fun u => ∑ t ∈ Finset.range 0, (u - Tests.OnlineSquareMinimum.alternating t) ^ 2) '' Set.Icc 0 1) = 0
+'Tests.OnlineSquareMinimum.empty_minimum' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineSquareMinimum.empty_regret :
+  BanditRL.OnlineLearning.squaredBestRegret Tests.OnlineSquareMinimum.alternating
+      (BanditRL.OnlineLearning.meanPredict Tests.OnlineSquareMinimum.alternating) 0 =
+    0
+'Tests.OnlineSquareMinimum.empty_regret' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineSquareMinimum.alternating_mean :
+  BanditRL.OnlineLearning.empiricalMean Tests.OnlineSquareMinimum.alternating 2 = 1 / 2
+'Tests.OnlineSquareMinimum.alternating_mean' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineSquareMinimum.alternating_minimum :
+  sInf ((fun u => ∑ t ∈ Finset.range 2, (u - Tests.OnlineSquareMinimum.alternating t) ^ 2) '' Set.Icc 0 1) = 1 / 2
+'Tests.OnlineSquareMinimum.alternating_minimum' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineSquareMinimum.alternating_unique (u : ℝ)
+  (hu :
+    ∑ t ∈ Finset.range 2, (u - Tests.OnlineSquareMinimum.alternating t) ^ 2 ≤
+      ∑ t ∈ Finset.range 2,
+        (BanditRL.OnlineLearning.empiricalMean Tests.OnlineSquareMinimum.alternating 2 -
+            Tests.OnlineSquareMinimum.alternating t) ^
+          2) :
+  u = 1 / 2
+'Tests.OnlineSquareMinimum.alternating_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineSquareMinimum.actual_prediction_values :
+  BanditRL.OnlineLearning.meanPredict Tests.OnlineSquareMinimum.alternating 0 = 1 / 2 ∧
+    BanditRL.OnlineLearning.meanPredict Tests.OnlineSquareMinimum.alternating 1 = 0 ∧
+      BanditRL.OnlineLearning.meanPredict Tests.OnlineSquareMinimum.alternating 2 = 1 / 2
+'Tests.OnlineSquareMinimum.actual_prediction_values' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineSquareMinimum.actual_regret_one :
+  BanditRL.OnlineLearning.squaredBestRegret Tests.OnlineSquareMinimum.alternating
+      (BanditRL.OnlineLearning.meanPredict Tests.OnlineSquareMinimum.alternating) 1 =
+    1 / 4
+'Tests.OnlineSquareMinimum.actual_regret_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineSquareMinimum.actual_regret_two :
+  BanditRL.OnlineLearning.squaredBestRegret Tests.OnlineSquareMinimum.alternating
+      (BanditRL.OnlineLearning.meanPredict Tests.OnlineSquareMinimum.alternating) 2 =
+    3 / 4
+'Tests.OnlineSquareMinimum.actual_regret_two' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineSquareMinimum.signed_alternating :
+  BanditRL.OnlineLearning.squaredBestRegret Tests.OnlineSquareMinimum.alternating Tests.OnlineSquareMinimum.alternating
+      2 =
+    -1 / 2
+'Tests.OnlineSquareMinimum.signed_alternating' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineSquareMinimum.comparator_zero_order :
+  BanditRL.OnlineLearning.comparatorRegret (fun t x => (x - Tests.OnlineSquareMinimum.alternating t) ^ 2)
+      (BanditRL.OnlineLearning.meanPredict Tests.OnlineSquareMinimum.alternating) 0 2 ≤
+    BanditRL.OnlineLearning.squaredBestRegret Tests.OnlineSquareMinimum.alternating
+      (BanditRL.OnlineLearning.meanPredict Tests.OnlineSquareMinimum.alternating) 2
+'Tests.OnlineSquareMinimum.comparator_zero_order' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineSquareMinimum.comparator_one_order :
+  BanditRL.OnlineLearning.comparatorRegret (fun t x => (x - Tests.OnlineSquareMinimum.alternating t) ^ 2)
+      (BanditRL.OnlineLearning.meanPredict Tests.OnlineSquareMinimum.alternating) 1 2 ≤
+    BanditRL.OnlineLearning.squaredBestRegret Tests.OnlineSquareMinimum.alternating
+      (BanditRL.OnlineLearning.meanPredict Tests.OnlineSquareMinimum.alternating) 2
+'Tests.OnlineSquareMinimum.comparator_one_order' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineSquareMinimum.quarters_mean :
+  BanditRL.OnlineLearning.empiricalMean Tests.OnlineSquareMinimum.quarters 2 = 1 / 2
+'Tests.OnlineSquareMinimum.quarters_mean' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineSquareMinimum.quarters_minimum :
+  sInf ((fun u => ∑ t ∈ Finset.range 2, (u - Tests.OnlineSquareMinimum.quarters t) ^ 2) '' Set.Icc 0 1) = 1 / 8
+'Tests.OnlineSquareMinimum.quarters_minimum' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineSquareMinimum.actual_bound :
+  BanditRL.OnlineLearning.squaredBestRegret Tests.OnlineSquareMinimum.alternating
+      (BanditRL.OnlineLearning.meanPredict Tests.OnlineSquareMinimum.alternating) 2 ≤
+    4 + 4 * Real.log 2
+'Tests.OnlineSquareMinimum.actual_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineSquareMinimum.actual_refined :
+  BanditRL.OnlineLearning.squaredBestRegret Tests.OnlineSquareMinimum.alternating
+      (BanditRL.OnlineLearning.meanPredict Tests.OnlineSquareMinimum.alternating) 2 ≤
+    9 / 4
+'Tests.OnlineSquareMinimum.actual_refined' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineSquareMinimum.actual_refined_one :
+  BanditRL.OnlineLearning.squaredBestRegret Tests.OnlineSquareMinimum.alternating
+      (BanditRL.OnlineLearning.meanPredict Tests.OnlineSquareMinimum.alternating) 1 ≤
+    1 / 4
+'Tests.OnlineSquareMinimum.actual_refined_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineSquareMinimum.actual_causality (y z : ℕ → ℝ) (t : ℕ) (h : ∀ i < t, y i = z i) :
+  BanditRL.OnlineLearning.meanPredict y t = BanditRL.OnlineLearning.meanPredict z t
+'Tests.OnlineSquareMinimum.actual_causality' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineSquareMinimum.actual_identity :
+  BanditRL.OnlineLearning.squaredBestRegret Tests.OnlineSquareMinimum.alternating
+      (BanditRL.OnlineLearning.meanPredict Tests.OnlineSquareMinimum.alternating) 2 =
+    BanditRL.OnlineLearning.comparatorRegret (fun t x => (x - Tests.OnlineSquareMinimum.alternating t) ^ 2)
+      (BanditRL.OnlineLearning.meanPredict Tests.OnlineSquareMinimum.alternating) (1 / 2) 2
+'Tests.OnlineSquareMinimum.actual_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.empiricalMean_mem (y : ℕ → ℝ) (n : ℕ) (hn : 0 < n) (hy : ∀ t < n, y t ∈ Set.Icc 0 1) :
+  BanditRL.OnlineLearning.empiricalMean y n ∈ Set.Icc 0 1
+'BanditRL.OnlineLearning.empiricalMean_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.empiricalMean_minimizes (y : ℕ → ℝ) (n : ℕ) (hn : 0 < n) (u : ℝ) :
+  ∑ t ∈ Finset.range n, (BanditRL.OnlineLearning.empiricalMean y n - y t) ^ 2 ≤ ∑ t ∈ Finset.range n, (u - y t) ^ 2
+'BanditRL.OnlineLearning.empiricalMean_minimizes' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.empiricalMean_unique (y : ℕ → ℝ) (n : ℕ) (hn : 0 < n) (u : ℝ)
+  (hu :
+    ∑ t ∈ Finset.range n, (u - y t) ^ 2 ≤ ∑ t ∈ Finset.range n, (BanditRL.OnlineLearning.empiricalMean y n - y t) ^ 2) :
+  u = BanditRL.OnlineLearning.empiricalMean y n
+'BanditRL.OnlineLearning.empiricalMean_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.theorem_1_3 (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T) (hy : ∀ t < T, y t ∈ Set.Icc 0 1) :
+  ∑ t ∈ Finset.range T, (BanditRL.OnlineLearning.meanPredict y t - y t) ^ 2 -
+      ∑ t ∈ Finset.range T, (BanditRL.OnlineLearning.empiricalMean y T - y t) ^ 2 ≤
+    4 + 4 * Real.log ↑T
+'BanditRL.OnlineLearning.theorem_1_3' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.meanPredict_regret_refined (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T) (hy : ∀ t < T, y t ∈ Set.Icc 0 1) :
+  ∑ t ∈ Finset.range T, (BanditRL.OnlineLearning.meanPredict y t - y t) ^ 2 -
+      ∑ t ∈ Finset.range T, (BanditRL.OnlineLearning.empiricalMean y T - y t) ^ 2 ≤
+    1 / 4 + ∑ t ∈ Finset.range (T - 1), 4 / (↑t + 2)
+'BanditRL.OnlineLearning.meanPredict_regret_refined' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.meanPredict_prefix (y z : ℕ → ℝ) (t : ℕ) (h : ∀ i < t, y i = z i) :
+  BanditRL.OnlineLearning.meanPredict y t = BanditRL.OnlineLearning.meanPredict z t
+'BanditRL.OnlineLearning.meanPredict_prefix' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.squaredBestRegret (y prediction : ℕ → ℝ) (T : ℕ) : ℝ
+'BanditRL.OnlineLearning.squaredBestRegret' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.empiricalMean (y : ℕ → ℝ) (n : ℕ) : ℝ
+'BanditRL.OnlineLearning.empiricalMean' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.meanPredict (y : ℕ → ℝ) (t : ℕ) : ℝ
+'BanditRL.OnlineLearning.meanPredict' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.comparatorRegret.{u_1} {X : Type u_1} (loss : ℕ → X → ℝ) (prediction : ℕ → X) (u : X) (T : ℕ) :
+  ℝ
+'BanditRL.OnlineLearning.comparatorRegret' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineSquareMinimum.alternating (t : ℕ) : ℝ
+'Tests.OnlineSquareMinimum.alternating' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineSquareMinimum.quarters (t : ℕ) : ℝ
+'Tests.OnlineSquareMinimum.quarters' depends on axioms: [propext, Classical.choice, Quot.sound]

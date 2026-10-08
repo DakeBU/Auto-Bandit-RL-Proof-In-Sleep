@@ -1,0 +1,184 @@
+[
+  {
+    "name": "BanditRL.OnlineLearning.guessing_prefix_minimum",
+    "path": "BanditRLProof/OnlineSquareMinimum.lean",
+    "header": "theorem guessing_prefix_minimum (y : ℕ → ℝ) (T : ℕ) (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) : empiricalMean y T ∈ Set.Icc (0 : ℝ) 1 ∧ ∀ u ∈ Set.Icc (0 : ℝ) 1, (∑ t ∈ Finset.range T, (empiricalMean y T - y t)^2) ≤ ∑ t ∈ Finset.range T, (u - y t)^2",
+    "raw_header": "theorem guessing_prefix_minimum (y : ℕ → ℝ) (T : ℕ)\n    (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) :\n    empiricalMean y T ∈ Set.Icc (0 : ℝ) 1 ∧\n      ∀ u ∈ Set.Icc (0 : ℝ) 1,\n        (∑ t ∈ Finset.range T, (empiricalMean y T - y t)^2) ≤\n          ∑ t ∈ Finset.range T, (u - y t)^2",
+    "raw_header_sha256": "27efce151ba1a343d0b8c8240a8b464424faded938790e29f3146673b9bca3ce"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.squaredLoss_minimum_eq",
+    "path": "BanditRLProof/OnlineSquareMinimum.lean",
+    "header": "theorem squaredLoss_minimum_eq (y : ℕ → ℝ) (T : ℕ) (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) : sInf ((fun u : ℝ => ∑ t ∈ Finset.range T, (u - y t)^2) '' Set.Icc (0 : ℝ) 1) = ∑ t ∈ Finset.range T, (empiricalMean y T - y t)^2",
+    "raw_header": "theorem squaredLoss_minimum_eq (y : ℕ → ℝ) (T : ℕ)\n    (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) :\n    sInf ((fun u : ℝ => ∑ t ∈ Finset.range T, (u - y t)^2) ''\n      Set.Icc (0 : ℝ) 1) =\n        ∑ t ∈ Finset.range T, (empiricalMean y T - y t)^2",
+    "raw_header_sha256": "6d76c3f2ebec9cd57489a152eccfb77aea022c74d62c1bd8b8c9d9e1e556392e"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.squaredBestRegret_eq_comparatorRegret",
+    "path": "BanditRLProof/OnlineSquareMinimum.lean",
+    "header": "theorem squaredBestRegret_eq_comparatorRegret (y prediction : ℕ → ℝ) (T : ℕ) (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) : squaredBestRegret y prediction T = comparatorRegret (fun t x => (x - y t)^2) prediction (empiricalMean y T) T",
+    "raw_header": "theorem squaredBestRegret_eq_comparatorRegret (y prediction : ℕ → ℝ) (T : ℕ)\n    (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) :\n    squaredBestRegret y prediction T =\n      comparatorRegret (fun t x => (x - y t)^2) prediction (empiricalMean y T) T",
+    "raw_header_sha256": "d0e99135a063cbf915aa7cd75ab1d22b96618f68e802cb06364e469f86cb65e0"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.comparatorRegret_le_squaredBestRegret",
+    "path": "BanditRLProof/OnlineSquareMinimum.lean",
+    "header": "theorem comparatorRegret_le_squaredBestRegret (y prediction : ℕ → ℝ) (T : ℕ) (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) (u : ℝ) (hu : u ∈ Set.Icc (0 : ℝ) 1) : comparatorRegret (fun t x => (x - y t)^2) prediction u T ≤ squaredBestRegret y prediction T",
+    "raw_header": "theorem comparatorRegret_le_squaredBestRegret (y prediction : ℕ → ℝ) (T : ℕ)\n    (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1)\n    (u : ℝ) (hu : u ∈ Set.Icc (0 : ℝ) 1) :\n    comparatorRegret (fun t x => (x - y t)^2) prediction u T ≤\n      squaredBestRegret y prediction T",
+    "raw_header_sha256": "5c4ffc0347c55376ef5adf2156385c3771ea99ecdcbc0a913fcebc6c03bb9043"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.meanPredict_bestRegret_bound",
+    "path": "BanditRLProof/OnlineSquareMinimum.lean",
+    "header": "theorem meanPredict_bestRegret_bound (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T) (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) : squaredBestRegret y (meanPredict y) T ≤ 4 + 4 * Real.log T",
+    "raw_header": "theorem meanPredict_bestRegret_bound (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T)\n    (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) :\n    squaredBestRegret y (meanPredict y) T ≤ 4 + 4 * Real.log T",
+    "raw_header_sha256": "c730d1b57dd25626494f6c52ca4735dc4549fc0920d4646c79d884649eb85bc1"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.meanPredict_bestRegret_refined",
+    "path": "BanditRLProof/OnlineSquareMinimum.lean",
+    "header": "theorem meanPredict_bestRegret_refined (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T) (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) : squaredBestRegret y (meanPredict y) T ≤ (1 : ℝ) / 4 + ∑ t ∈ Finset.range (T - 1), 4 / ((t : ℝ) + 2)",
+    "raw_header": "theorem meanPredict_bestRegret_refined (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T)\n    (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) :\n    squaredBestRegret y (meanPredict y) T ≤\n      (1 : ℝ) / 4 + ∑ t ∈ Finset.range (T - 1), 4 / ((t : ℝ) + 2)",
+    "raw_header_sha256": "7c153de88704702bb18ed2c1f8fa418ab4c05b2347dddc42859ba2ca988b4708"
+  },
+  {
+    "name": "Tests.OnlineSquareMinimum.alternating_mem",
+    "path": "Tests/OnlineSquareMinimumCanary.lean",
+    "header": "theorem alternating_mem (t : ℕ) : alternating t ∈ Set.Icc (0 : ℝ) 1",
+    "raw_header": "theorem alternating_mem (t : ℕ) : alternating t ∈ Set.Icc (0 : ℝ) 1",
+    "raw_header_sha256": "41fd6fa4223b6806ddeab34fd8363c8e04167c340ff6b6fa16a3aeb7fa663eba"
+  },
+  {
+    "name": "Tests.OnlineSquareMinimum.quarters_mem",
+    "path": "Tests/OnlineSquareMinimumCanary.lean",
+    "header": "theorem quarters_mem (t : ℕ) : quarters t ∈ Set.Icc (0 : ℝ) 1",
+    "raw_header": "theorem quarters_mem (t : ℕ) : quarters t ∈ Set.Icc (0 : ℝ) 1",
+    "raw_header_sha256": "98725c5b851558a2434172bd4bcb04644f4fd08937123f4e9d9114304146cf1a"
+  },
+  {
+    "name": "Tests.OnlineSquareMinimum.empty_minimum",
+    "path": "Tests/OnlineSquareMinimumCanary.lean",
+    "header": "theorem empty_minimum : sInf ((fun u : ℝ => ∑ t ∈ Finset.range 0, (u - alternating t)^2) '' Set.Icc (0 : ℝ) 1) = 0",
+    "raw_header": "theorem empty_minimum :\n    sInf ((fun u : ℝ => ∑ t ∈ Finset.range 0, (u - alternating t)^2) ''\n      Set.Icc (0 : ℝ) 1) = 0",
+    "raw_header_sha256": "82bf1d9e8b4ca434e59a51d2c1602efa5650b2f6f5dbfac555c3cd77605568d5"
+  },
+  {
+    "name": "Tests.OnlineSquareMinimum.empty_regret",
+    "path": "Tests/OnlineSquareMinimumCanary.lean",
+    "header": "theorem empty_regret : squaredBestRegret alternating (meanPredict alternating) 0 = 0",
+    "raw_header": "theorem empty_regret : squaredBestRegret alternating (meanPredict alternating) 0 = 0",
+    "raw_header_sha256": "a57f941e8b4249f0ec2cb7486d5ff59b505b40fa37e24fab3cdb8e1a47db4228"
+  },
+  {
+    "name": "Tests.OnlineSquareMinimum.alternating_mean",
+    "path": "Tests/OnlineSquareMinimumCanary.lean",
+    "header": "theorem alternating_mean : empiricalMean alternating 2 = 1 / 2",
+    "raw_header": "theorem alternating_mean : empiricalMean alternating 2 = 1 / 2",
+    "raw_header_sha256": "41639f2b97fea1b2678d3f76deea449ff7af430148311a639942e55d15919106"
+  },
+  {
+    "name": "Tests.OnlineSquareMinimum.alternating_minimum",
+    "path": "Tests/OnlineSquareMinimumCanary.lean",
+    "header": "theorem alternating_minimum : sInf ((fun u : ℝ => ∑ t ∈ Finset.range 2, (u - alternating t)^2) '' Set.Icc (0 : ℝ) 1) = 1 / 2",
+    "raw_header": "theorem alternating_minimum :\n    sInf ((fun u : ℝ => ∑ t ∈ Finset.range 2, (u - alternating t)^2) ''\n      Set.Icc (0 : ℝ) 1) = 1 / 2",
+    "raw_header_sha256": "b0bcacfbdd407bbaf2a04b2305bf3f54d31d9b453509b97350a71df06f149f67"
+  },
+  {
+    "name": "Tests.OnlineSquareMinimum.alternating_unique",
+    "path": "Tests/OnlineSquareMinimumCanary.lean",
+    "header": "theorem alternating_unique (u : ℝ) (hu : (∑ t ∈ Finset.range 2, (u - alternating t)^2) ≤ ∑ t ∈ Finset.range 2, (empiricalMean alternating 2 - alternating t)^2) : u = 1 / 2",
+    "raw_header": "theorem alternating_unique (u : ℝ)\n    (hu : (∑ t ∈ Finset.range 2, (u - alternating t)^2) ≤\n      ∑ t ∈ Finset.range 2, (empiricalMean alternating 2 - alternating t)^2) :\n    u = 1 / 2",
+    "raw_header_sha256": "aed3a1cc0e75be7cac7f382446ad878996e7339b7d2fdf862ff9ddb7ef421803"
+  },
+  {
+    "name": "Tests.OnlineSquareMinimum.actual_prediction_values",
+    "path": "Tests/OnlineSquareMinimumCanary.lean",
+    "header": "theorem actual_prediction_values : meanPredict alternating 0 = 1 / 2 ∧ meanPredict alternating 1 = 0 ∧ meanPredict alternating 2 = 1 / 2",
+    "raw_header": "theorem actual_prediction_values :\n    meanPredict alternating 0 = 1 / 2 ∧ meanPredict alternating 1 = 0 ∧\n      meanPredict alternating 2 = 1 / 2",
+    "raw_header_sha256": "986724206e4c5796cf2a01c4acedc8336c61e4a4388875fe6b261898b785162f"
+  },
+  {
+    "name": "Tests.OnlineSquareMinimum.actual_regret_one",
+    "path": "Tests/OnlineSquareMinimumCanary.lean",
+    "header": "theorem actual_regret_one : squaredBestRegret alternating (meanPredict alternating) 1 = 1 / 4",
+    "raw_header": "theorem actual_regret_one :\n    squaredBestRegret alternating (meanPredict alternating) 1 = 1 / 4",
+    "raw_header_sha256": "0d25160130738dcc6c715a13cb6a47b73426872c43d25302a259a83b2d74f3d4"
+  },
+  {
+    "name": "Tests.OnlineSquareMinimum.actual_regret_two",
+    "path": "Tests/OnlineSquareMinimumCanary.lean",
+    "header": "theorem actual_regret_two : squaredBestRegret alternating (meanPredict alternating) 2 = 3 / 4",
+    "raw_header": "theorem actual_regret_two :\n    squaredBestRegret alternating (meanPredict alternating) 2 = 3 / 4",
+    "raw_header_sha256": "56c7dadbe00dc088463620cd7a005b2f49bb83241d61e6ccadb7b5ce652f0cf9"
+  },
+  {
+    "name": "Tests.OnlineSquareMinimum.signed_alternating",
+    "path": "Tests/OnlineSquareMinimumCanary.lean",
+    "header": "theorem signed_alternating : squaredBestRegret alternating alternating 2 = -1 / 2",
+    "raw_header": "theorem signed_alternating : squaredBestRegret alternating alternating 2 = -1 / 2",
+    "raw_header_sha256": "c795fc1b78b8f14924384dc162f5233bcae18e72312736735b0dcea1af3ece16"
+  },
+  {
+    "name": "Tests.OnlineSquareMinimum.comparator_zero_order",
+    "path": "Tests/OnlineSquareMinimumCanary.lean",
+    "header": "theorem comparator_zero_order : comparatorRegret (fun t x => (x - alternating t)^2) (meanPredict alternating) 0 2 ≤ squaredBestRegret alternating (meanPredict alternating) 2",
+    "raw_header": "theorem comparator_zero_order :\n    comparatorRegret (fun t x => (x - alternating t)^2) (meanPredict alternating) 0 2 ≤\n      squaredBestRegret alternating (meanPredict alternating) 2",
+    "raw_header_sha256": "d553e61f9eba4836f0ef26591f26d3bcc080b74261bb2d2d383efbac3a091be9"
+  },
+  {
+    "name": "Tests.OnlineSquareMinimum.comparator_one_order",
+    "path": "Tests/OnlineSquareMinimumCanary.lean",
+    "header": "theorem comparator_one_order : comparatorRegret (fun t x => (x - alternating t)^2) (meanPredict alternating) 1 2 ≤ squaredBestRegret alternating (meanPredict alternating) 2",
+    "raw_header": "theorem comparator_one_order :\n    comparatorRegret (fun t x => (x - alternating t)^2) (meanPredict alternating) 1 2 ≤\n      squaredBestRegret alternating (meanPredict alternating) 2",
+    "raw_header_sha256": "603319e8a543fc44bec29f9d01b5d8218f9cadeba99d08cdf497f7646f06da2d"
+  },
+  {
+    "name": "Tests.OnlineSquareMinimum.quarters_mean",
+    "path": "Tests/OnlineSquareMinimumCanary.lean",
+    "header": "theorem quarters_mean : empiricalMean quarters 2 = 1 / 2",
+    "raw_header": "theorem quarters_mean : empiricalMean quarters 2 = 1 / 2",
+    "raw_header_sha256": "026384a571521d313253e6077bb56e2132aac4a8a1c0924c9a7a59f635168515"
+  },
+  {
+    "name": "Tests.OnlineSquareMinimum.quarters_minimum",
+    "path": "Tests/OnlineSquareMinimumCanary.lean",
+    "header": "theorem quarters_minimum : sInf ((fun u : ℝ => ∑ t ∈ Finset.range 2, (u - quarters t)^2) '' Set.Icc (0 : ℝ) 1) = 1 / 8",
+    "raw_header": "theorem quarters_minimum :\n    sInf ((fun u : ℝ => ∑ t ∈ Finset.range 2, (u - quarters t)^2) ''\n      Set.Icc (0 : ℝ) 1) = 1 / 8",
+    "raw_header_sha256": "08f39ebb935fe29a29b72f575b7039b34759ac8a622568f8e4376033f7e6d4e0"
+  },
+  {
+    "name": "Tests.OnlineSquareMinimum.actual_bound",
+    "path": "Tests/OnlineSquareMinimumCanary.lean",
+    "header": "theorem actual_bound : squaredBestRegret alternating (meanPredict alternating) 2 ≤ 4 + 4 * Real.log 2",
+    "raw_header": "theorem actual_bound :\n    squaredBestRegret alternating (meanPredict alternating) 2 ≤ 4 + 4 * Real.log 2",
+    "raw_header_sha256": "fa4f1fe14fd12e135820a9e0f60f741df30886ac39ade3db03ce8fe113a201cb"
+  },
+  {
+    "name": "Tests.OnlineSquareMinimum.actual_refined",
+    "path": "Tests/OnlineSquareMinimumCanary.lean",
+    "header": "theorem actual_refined : squaredBestRegret alternating (meanPredict alternating) 2 ≤ 9 / 4",
+    "raw_header": "theorem actual_refined :\n    squaredBestRegret alternating (meanPredict alternating) 2 ≤ 9 / 4",
+    "raw_header_sha256": "399e7baeaeaee5b900055dc41ca957a1bc506dfb2e0c3fce6ecbfa2c103a6797"
+  },
+  {
+    "name": "Tests.OnlineSquareMinimum.actual_refined_one",
+    "path": "Tests/OnlineSquareMinimumCanary.lean",
+    "header": "theorem actual_refined_one : squaredBestRegret alternating (meanPredict alternating) 1 ≤ 1 / 4",
+    "raw_header": "theorem actual_refined_one :\n    squaredBestRegret alternating (meanPredict alternating) 1 ≤ 1 / 4",
+    "raw_header_sha256": "02333ae7829af64c5208992f21c15d405e8c5d85520defe6f4860639ff5a9ae4"
+  },
+  {
+    "name": "Tests.OnlineSquareMinimum.actual_causality",
+    "path": "Tests/OnlineSquareMinimumCanary.lean",
+    "header": "theorem actual_causality (y z : ℕ → ℝ) (t : ℕ) (h : ∀ i < t, y i = z i) : meanPredict y t = meanPredict z t",
+    "raw_header": "theorem actual_causality (y z : ℕ → ℝ) (t : ℕ) (h : ∀ i < t, y i = z i) :\n    meanPredict y t = meanPredict z t",
+    "raw_header_sha256": "4adefd744ce92d99d988a0ad04b908c304a8f31fe48f6f7e0495ac72aa8ef53c"
+  },
+  {
+    "name": "Tests.OnlineSquareMinimum.actual_identity",
+    "path": "Tests/OnlineSquareMinimumCanary.lean",
+    "header": "theorem actual_identity : squaredBestRegret alternating (meanPredict alternating) 2 = comparatorRegret (fun t x => (x - alternating t)^2) (meanPredict alternating) (1 / 2) 2",
+    "raw_header": "theorem actual_identity :\n    squaredBestRegret alternating (meanPredict alternating) 2 =\n      comparatorRegret (fun t x => (x - alternating t)^2) (meanPredict alternating) (1 / 2) 2",
+    "raw_header_sha256": "06fb1acc390e26440e7cab7698f99dedf79a7d730a99afca5fc04732d12c1436"
+  }
+]

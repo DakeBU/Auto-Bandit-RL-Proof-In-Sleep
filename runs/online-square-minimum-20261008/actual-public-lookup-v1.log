@@ -1,0 +1,6 @@
+BanditRL.OnlineLearning.squaredBestRegret [def] BanditRLProof/OnlineSquareMinimum.lean:6
+  noncomputable def squaredBestRegret (y prediction : ℕ → ℝ) (T : ℕ) : ℝ
+BanditRL.OnlineLearning.squaredLoss_minimum_eq [theorem] BanditRLProof/OnlineSquareMinimum.lean:26
+  theorem squaredLoss_minimum_eq (y : ℕ → ℝ) (T : ℕ) (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) : sInf ((fun u : ℝ => ∑ t ∈ Finset.range T, (u - y t)^2) '' Set.Icc (0 : ℝ) 1) = ∑ t ∈ Finset.range T, (empiricalMean y T - y t)^2
+BanditRL.OnlineLearning.squaredBestRegret_eq_comparatorRegret [theorem] BanditRLProof/OnlineSquareMinimum.lean:42
+  theorem squaredBestRegret_eq_comparatorRegret (y prediction : ℕ → ℝ) (T : ℕ) (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) : squaredBestRegret y prediction T = comparatorRegret (fun t x => (x - y t)^2) prediction (empiricalMean y T) T

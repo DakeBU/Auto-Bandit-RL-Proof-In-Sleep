@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineLearning.squaredBestRegret_eq_comparatorRegret",
+  "file": "BanditRLProof/OnlineSquareMinimum.lean",
+  "statement": "theorem squaredBestRegret_eq_comparatorRegret (y prediction : ℕ → ℝ) (T : ℕ) (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) : squaredBestRegret y prediction T = comparatorRegret (fun t x => (x - y t)^2) prediction (empiricalMean y T) T",
+  "statement_hash": "060150e9c35e4c06bc6b27772449fbeb186c57a55139ac90429d1e5ae3cb07f2",
+  "source_assumptions": [
+    "theorem squaredBestRegret_eq_comparatorRegret (y prediction : ℕ → ℝ) (T : ℕ) (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) : squaredBestRegret y prediction T = comparatorRegret (fun t x => (x - y t)^2) prediction (empiricalMean y T) T"
+  ],
+  "created_at": "2026-10-08T04:23:23+00:00"
+}
