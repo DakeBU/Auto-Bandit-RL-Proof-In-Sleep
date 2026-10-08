@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineLearning.meanPredict_limitNoRegret_of_mean_converges",
+  "file": "BanditRLProof/OnlineFTLLimitSemantics.lean",
+  "statement": "theorem meanPredict_limitNoRegret_of_mean_converges (y : ℕ → ℝ) (hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1) (m : ℝ) (hm : Tendsto (empiricalMean y) atTop (nhds m)) : (∀ u : ℝ, Tendsto (fun T : ℕ => comparatorRegret (fun t x => (x - y t)^2) (meanPredict y) u T / (T : ℝ)) atTop (nhds (-(u - m)^2))) ∧ LimitNoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - y t)^2) (meanPredict y)",
+  "statement_hash": "56b3b3feb14d54850212b0f6a6ff4b92941fb42a236c6e93152def4d5a66ed8d",
+  "source_assumptions": [
+    "(y : ℕ → ℝ)"
+  ],
+  "created_at": "2026-10-08T17:50:07+00:00"
+}

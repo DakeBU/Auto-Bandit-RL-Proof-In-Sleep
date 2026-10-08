@@ -1,0 +1,103 @@
+import BanditRLProof.OnlineSquareMinimum
+import BanditRLProof.OnlineNoRegretSemantics
+
+open Filter
+
+namespace BanditRL.OnlineLearning
+
+
+/-- Derived same-FTL loss-gap lower bound; arbitrary real observations, including empty horizon. -/
+theorem meanPredict_bestLoss_nonneg (y : ℕ → ℝ) (T : ℕ) :
+    0 ≤ comparatorRegret (fun t x => (x - y t)^2)
+      (meanPredict y) (empiricalMean y T) T := by
+  unfold comparatorRegret
+  induction T with
+  | zero => simp
+  | succ n ih =>
+    have hmin := empiricalMean_minimizes y (n + 1) (by omega) (meanPredict y n)
+    have hleader : (∑ t ∈ Finset.range n, (meanPredict y n - y t)^2) =
+        ∑ t ∈ Finset.range n, (empiricalMean y n - y t)^2 := by
+      by_cases hn : n = 0
+      · subst n; simp
+      · rw [meanPredict, if_neg hn]
+    simp only [Finset.sum_range_succ] at hmin ⊢
+    rw [hleader] at hmin
+    linarith
+
+
+theorem meanPredict_comparator_decomposition (y : ℕ → ℝ) (u : ℝ) (T : ℕ) :
+    comparatorRegret (fun t x => (x - y t)^2) (meanPredict y) u T =
+      comparatorRegret (fun t x => (x - y t)^2)
+        (meanPredict y) (empiricalMean y T) T -
+      (T : ℝ) * (u - empiricalMean y T)^2 := by
+  by_cases hT : T = 0
+  · subst T
+    simp [comparatorRegret]
+  · unfold comparatorRegret
+    rw [empiricalMean_decomposition y T (Nat.pos_of_ne_zero hT) u]
+    ring
+
+
+theorem meanPredict_bestRegret_average_tendsto_zero (y : ℕ → ℝ)
+    (hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1) :
+    Tendsto (fun T : ℕ => squaredBestRegret y (meanPredict y) T / (T : ℝ))
+      atTop (nhds (0 : ℝ)) := by
+  have hlo : ∀ᶠ T : ℕ in atTop,
+      0 ≤ squaredBestRegret y (meanPredict y) T / (T : ℝ) := by
+    apply Eventually.of_forall
+    intro T
+    rw [squaredBestRegret_eq_comparatorRegret y (meanPredict y) T (fun t _ => hy t)]
+    exact div_nonneg (meanPredict_bestLoss_nonneg y T) (Nat.cast_nonneg T)
+  have hup : ∀ᶠ T : ℕ in atTop,
+      squaredBestRegret y (meanPredict y) T / (T : ℝ) ≤
+        (4 + 4 * Real.log (T : ℝ)) / (T : ℝ) := by
+    filter_upwards [eventually_gt_atTop (0 : ℕ)] with T hT
+    exact div_le_div_of_nonneg_right
+      (meanPredict_bestRegret_bound y T hT (fun t _ => hy t)) (Nat.cast_nonneg T)
+  have h0 : Tendsto (fun x : ℝ => 1 / x) atTop (nhds 0) := by
+    simpa using Real.tendsto_pow_log_div_mul_add_atTop 1 0 0 one_ne_zero
+  have h1 : Tendsto (fun x : ℝ => Real.log x / x) atTop (nhds 0) := by
+    simpa using Real.tendsto_pow_log_div_mul_add_atTop 1 0 1 one_ne_zero
+  have hc : Tendsto (fun n : ℕ => (n : ℝ)) atTop atTop := tendsto_natCast_atTop_atTop
+  have hbound : Tendsto (fun T : ℕ => (4 + 4 * Real.log (T : ℝ)) / (T : ℝ))
+      atTop (nhds 0) := by
+    have hh := ((h0.comp hc).const_mul 4).add ((h1.comp hc).const_mul 4)
+    simp only [mul_zero, add_zero] at hh
+    convert hh using 1
+    ext T
+    dsimp [Function.comp_def]
+    ring
+  exact squeeze_zero' hlo hup hbound
+
+
+theorem meanPredict_fixedRegret_limit_iff (y : ℕ → ℝ)
+    (hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1) (u a : ℝ) :
+    Tendsto (fun T : ℕ =>
+      comparatorRegret (fun t x => (x - y t)^2) (meanPredict y) u T / (T : ℝ))
+      atTop (nhds a) ↔
+    Tendsto (fun T : ℕ => (u - empiricalMean y T)^2) atTop (nhds (-a)) := by
+  have hb := meanPredict_bestRegret_average_tendsto_zero y hy
+  have heq : ∀ᶠ T : ℕ in atTop,
+      comparatorRegret (fun t x => (x - y t)^2) (meanPredict y) u T / (T : ℝ) =
+        squaredBestRegret y (meanPredict y) T / (T : ℝ) -
+          (u - empiricalMean y T)^2 := by
+    filter_upwards [eventually_gt_atTop (0 : ℕ)] with T hT
+    rw [meanPredict_comparator_decomposition,
+      squaredBestRegret_eq_comparatorRegret y (meanPredict y) T (fun t _ => hy t)]
+    have hT0 : (T : ℝ) ≠ 0 := by exact_mod_cast Nat.ne_of_gt hT
+    field_simp
+  constructor
+  · intro ha
+    have hh := hb.sub ha
+    simp only [zero_sub] at hh
+    apply hh.congr'
+    filter_upwards [heq] with T hT
+    linarith
+  · intro hd
+    have hh := hb.sub hd
+    simp only [zero_sub, neg_neg] at hh
+    apply hh.congr'
+    filter_upwards [heq] with T hT
+    exact hT.symm
+
+end BanditRL.OnlineLearning

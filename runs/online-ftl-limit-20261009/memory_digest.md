@@ -1,0 +1,1 @@
+DRAFT five derived actualFTL limit obligations open. Source/display ordinarylimit≠upperNoRegret; literalLimitNoRegret existing. Existing arbitrary-affine counterexample doesnotsettle bounded actualFTL. Search actuallocal mean/minimum/bounds, pinnedmathlibsqueeze/limit APIs; no proof terminal closed.

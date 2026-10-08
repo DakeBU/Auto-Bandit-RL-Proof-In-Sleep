@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "targets": [
+    {
+      "id": "C1",
+      "name": "Tests.OnlineFTLLimitSemantics.alternating_unit",
+      "header": "theorem alternating_unit :\n    (∀ t, alternatingObservation t ∈ Set.Icc (0 : ℝ) 1) ∧\n    alternatingObservation 0 = 0 ∧ alternatingObservation 1 = 1",
+      "statement_hash": "0cf8eef33d3d7de2e5626d33b217a66e3a089572683322f82fc059a0191dde27"
+    },
+    {
+      "id": "C2",
+      "name": "Tests.OnlineFTLLimitSemantics.alternating_prefix_sum",
+      "header": "theorem alternating_prefix_sum (T : ℕ) :\n    (∑ t ∈ Finset.range T, alternatingObservation t) = ((T / 2 : ℕ) : ℝ)",
+      "statement_hash": "bbdb09e030cce0f0469f10955436fb42a1b89fe05e685a8d33691e992c7acc7a"
+    },
+    {
+      "id": "C3",
+      "name": "Tests.OnlineFTLLimitSemantics.alternating_mean_tendsto",
+      "header": "theorem alternating_mean_tendsto :\n    Tendsto (empiricalMean alternatingObservation) atTop (nhds ((1 : ℝ) / 2))",
+      "statement_hash": "698eca8744e6183165563d4a11ab39dee776d20c8f9e9dafef7ef6af5bea8ba2"
+    },
+    {
+      "id": "C4",
+      "name": "Tests.OnlineFTLLimitSemantics.alternating_initial_predictions",
+      "header": "theorem alternating_initial_predictions :\n    meanPredict alternatingObservation 0 = (1 : ℝ) / 2 ∧\n    meanPredict alternatingObservation 1 = 0 ∧\n    meanPredict alternatingObservation 2 = (1 : ℝ) / 2 ∧\n    meanPredict alternatingObservation 3 = (1 : ℝ) / 3",
+      "statement_hash": "b6447e2d1e71111941964478aee1e58b42a831cc61fcb1e6e28b8bdbdf032063"
+    },
+    {
+      "id": "C5",
+      "name": "Tests.OnlineFTLLimitSemantics.alternating_best_regret_zero_one_two",
+      "header": "theorem alternating_best_regret_zero_one_two :\n    squaredBestRegret alternatingObservation (meanPredict alternatingObservation) 0 = 0 ∧\n    squaredBestRegret alternatingObservation (meanPredict alternatingObservation) 1 = (1 : ℝ) / 4 ∧\n    squaredBestRegret alternatingObservation (meanPredict alternatingObservation) 2 = (3 : ℝ) / 4",
+      "statement_hash": "e0cb7600d2755a4c303ad447984d86c3586143d9ff912a1b20ffb84f0a5d06a7"
+    },
+    {
+      "id": "C6",
+      "name": "Tests.OnlineFTLLimitSemantics.alternating_actual_gap_nonneg",
+      "header": "theorem alternating_actual_gap_nonneg (T : ℕ) :\n    0 ≤ comparatorRegret (fun t x => (x - alternatingObservation t)^2)\n      (meanPredict alternatingObservation) (empiricalMean alternatingObservation T) T",
+      "statement_hash": "060ca216bf8ba8e84b142babdf432be735d9c97a3c41d8802f4829f4aa34288b"
+    },
+    {
+      "id": "C7",
+      "name": "Tests.OnlineFTLLimitSemantics.alternating_fixed_decomposition",
+      "header": "theorem alternating_fixed_decomposition (u : ℝ) (T : ℕ) :\n    comparatorRegret (fun t x => (x - alternatingObservation t)^2)\n      (meanPredict alternatingObservation) u T =\n    comparatorRegret (fun t x => (x - alternatingObservation t)^2)\n      (meanPredict alternatingObservation) (empiricalMean alternatingObservation T) T -\n      (T : ℝ) * (u - empiricalMean alternatingObservation T)^2",
+      "statement_hash": "ff187c235944c3e3f0f8a87f5d1a7bdac73d5f32d3e6bd442308717124af495a"
+    },
+    {
+      "id": "C8",
+      "name": "Tests.OnlineFTLLimitSemantics.alternating_best_average_zero",
+      "header": "theorem alternating_best_average_zero :\n    Tendsto (fun T : ℕ =>\n      squaredBestRegret alternatingObservation (meanPredict alternatingObservation) T / (T : ℝ))\n      atTop (nhds (0 : ℝ))",
+      "statement_hash": "d5652251d1b50db370777a1d528ff560ae72ec164849ee6668aa4ebf9a9743c8"
+    },
+    {
+      "id": "C9",
+      "name": "Tests.OnlineFTLLimitSemantics.alternating_fixed_limit_criterion",
+      "header": "theorem alternating_fixed_limit_criterion (u a : ℝ) :\n    Tendsto (fun T : ℕ => comparatorRegret\n      (fun t x => (x - alternatingObservation t)^2)\n      (meanPredict alternatingObservation) u T / (T : ℝ)) atTop (nhds a) ↔\n    Tendsto (fun T : ℕ => (u - empiricalMean alternatingObservation T)^2)\n      atTop (nhds (-a))",
+      "statement_hash": "dbfcffbbbb71a4036779d2faf6e3d19cc154965c4d1f2220c189777d72abc1a4"
+    },
+    {
+      "id": "C10",
+      "name": "Tests.OnlineFTLLimitSemantics.alternating_fixed_zero_negative_limit",
+      "header": "theorem alternating_fixed_zero_negative_limit :\n    Tendsto (fun T : ℕ => comparatorRegret\n      (fun t x => (x - alternatingObservation t)^2)\n      (meanPredict alternatingObservation) 0 T / (T : ℝ))\n      atTop (nhds (-(1 : ℝ) / 4))",
+      "statement_hash": "72f8849e9ca5f3a1b7348c5f2907fc1ad0ee663230c376be73a07233b07ce112"
+    },
+    {
+      "id": "C11",
+      "name": "Tests.OnlineFTLLimitSemantics.alternating_fixed_half_zero_limit",
+      "header": "theorem alternating_fixed_half_zero_limit :\n    Tendsto (fun T : ℕ => comparatorRegret\n      (fun t x => (x - alternatingObservation t)^2)\n      (meanPredict alternatingObservation) ((1 : ℝ) / 2) T / (T : ℝ))\n      atTop (nhds (0 : ℝ))",
+      "statement_hash": "7c99207d428a09ef7aa94bc4c81ae9b8b4de3b50fb8ee94a091bad18fea898db"
+    },
+    {
+      "id": "C12",
+      "name": "Tests.OnlineFTLLimitSemantics.alternating_literal_limit_noRegret",
+      "header": "theorem alternating_literal_limit_noRegret :\n    LimitNoRegret (Set.Icc (0 : ℝ) 1)\n      (fun t x => (x - alternatingObservation t)^2) (meanPredict alternatingObservation)",
+      "statement_hash": "b44687b275075799e191e257a2bdd65bb2ac1b49b5c1d7908e6fd0c65fffbbdb"
+    }
+  ],
+  "context_sha256": "01deb016faf8dc26b7314dc6d0557db99da944768b5994b4c90ba2cf3e2faaeb",
+  "body_compiled": false,
+  "chapter_complete": false,
+  "goal_complete": false
+}

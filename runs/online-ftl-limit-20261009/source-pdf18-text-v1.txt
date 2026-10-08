@@ -1,0 +1,54 @@
+6What is Online Learning?
+area in Figure 1.1. As you can see from the picture, it can be upper bounded by 1 plus the
+integral of 1
+t−1 from2toT+ 1. So, we have
+TX
+t=1
+1
+t ≤1 +
+Z T+1
+2
+1
+t−1 dt= 1 + lnT .
+Putting everything together gives the stated bound.
+Let’s write in words the steps of the proof: Lemma 1.2 allows us to upper bound the regret
+against the single best guess with the regret against the competitor sequencex ⋆
+1, . . . , x⋆
+T . In
+turn, given that we produce in each round the predictionx ⋆
+t−1 and|x ⋆
+t −x ⋆
+t−1|goes to zero
+like1/t, the total regret is sublinear in time.
+There are a few things to stress about this strategy. The strategy does not have parameters
+to tune (e.g., learning rates, regularizers). Note that tuning parameters on validation data,
+as we typically do in machine learning, does not make sense in online learning: we have
+only one stream of data, and we cannot run our algorithm over it multiple times to select
+the best parameter! Also, this strategy does not need to maintain a complete record of the
+past, but only a “summary” of it, through the running average. This gives a computationally
+efficient algorithm. When we design online learning algorithms, we will strive to achieve all
+these characteristics. The final point to stress is that the algorithm does not use gradients:
+gradients are useful, and we will use them a lot, but they do not constitute the entire world
+of online learning.
+Before going on, I want to remind the reader that, as seen above, this is different from the
+classic setting in statistical machine learning. So, for example, “overfitting” has no meaning
+here. The same holds for “generalization gap” and similar ideas linked to a training/testing
+scenario.
+In the next chapters, we will introduce several algorithms for online learning, and one of
+them will be a strict generalization of the strategy we used in the example above.
+1.1 History Bits
+The concept of “regret” seems to have been proposed in Savage (1951), an exposition and
+review of the book by Wald (1950) on a foundation of statistical decision problems based on
+zero-sum two-person games. Savage (1951) introduces the idea of considering the difference
+between the utility of the best action in a given state and the utility obtained by any action
+under the same state. The proposed optimal strategy was the one minimizing such regret
+over the worst possible state. Savage (1951) called this concept “loss” and did not like the
+word “regret” because “that term seems to me charged with emotion and liable to lead to
+such misinterpretation as that the loss necessarily becomes known” (Savage, 1954, page
+163). The name “regret” instead seems to have been suggested in Milnor (1951).
+However, Savage’s definition is a modification of the one proposed by Wald (1950), who
+instead proposed to maximize the utility directly, under the assumption that the utility of
+the best action for any state is 0. While minimizing the regret or minimizing the negative
+utility under the assumption of Wald (1950) are mathematically equivalent, Savage (1954,
+pages 169–170) explains that Wald considered the regret formulation different from what he
+proposed, while Savage attributed to his idea “little or no originality”.

@@ -1,0 +1,59 @@
+theorem alternating_unit :
+    (∀ t, alternatingObservation t ∈ Set.Icc (0 : ℝ) 1) ∧
+    alternatingObservation 0 = 0 ∧ alternatingObservation 1 = 1
+
+theorem alternating_prefix_sum (T : ℕ) :
+    (∑ t ∈ Finset.range T, alternatingObservation t) = ((T / 2 : ℕ) : ℝ)
+
+theorem alternating_mean_tendsto :
+    Tendsto (empiricalMean alternatingObservation) atTop (nhds ((1 : ℝ) / 2))
+
+theorem alternating_initial_predictions :
+    meanPredict alternatingObservation 0 = (1 : ℝ) / 2 ∧
+    meanPredict alternatingObservation 1 = 0 ∧
+    meanPredict alternatingObservation 2 = (1 : ℝ) / 2 ∧
+    meanPredict alternatingObservation 3 = (1 : ℝ) / 3
+
+theorem alternating_best_regret_zero_one_two :
+    squaredBestRegret alternatingObservation (meanPredict alternatingObservation) 0 = 0 ∧
+    squaredBestRegret alternatingObservation (meanPredict alternatingObservation) 1 = (1 : ℝ) / 4 ∧
+    squaredBestRegret alternatingObservation (meanPredict alternatingObservation) 2 = (3 : ℝ) / 4
+
+theorem alternating_actual_gap_nonneg (T : ℕ) :
+    0 ≤ comparatorRegret (fun t x => (x - alternatingObservation t)^2)
+      (meanPredict alternatingObservation) (empiricalMean alternatingObservation T) T
+
+theorem alternating_fixed_decomposition (u : ℝ) (T : ℕ) :
+    comparatorRegret (fun t x => (x - alternatingObservation t)^2)
+      (meanPredict alternatingObservation) u T =
+    comparatorRegret (fun t x => (x - alternatingObservation t)^2)
+      (meanPredict alternatingObservation) (empiricalMean alternatingObservation T) T -
+      (T : ℝ) * (u - empiricalMean alternatingObservation T)^2
+
+theorem alternating_best_average_zero :
+    Tendsto (fun T : ℕ =>
+      squaredBestRegret alternatingObservation (meanPredict alternatingObservation) T / (T : ℝ))
+      atTop (nhds (0 : ℝ))
+
+theorem alternating_fixed_limit_criterion (u a : ℝ) :
+    Tendsto (fun T : ℕ => comparatorRegret
+      (fun t x => (x - alternatingObservation t)^2)
+      (meanPredict alternatingObservation) u T / (T : ℝ)) atTop (nhds a) ↔
+    Tendsto (fun T : ℕ => (u - empiricalMean alternatingObservation T)^2)
+      atTop (nhds (-a))
+
+theorem alternating_fixed_zero_negative_limit :
+    Tendsto (fun T : ℕ => comparatorRegret
+      (fun t x => (x - alternatingObservation t)^2)
+      (meanPredict alternatingObservation) 0 T / (T : ℝ))
+      atTop (nhds (-(1 : ℝ) / 4))
+
+theorem alternating_fixed_half_zero_limit :
+    Tendsto (fun T : ℕ => comparatorRegret
+      (fun t x => (x - alternatingObservation t)^2)
+      (meanPredict alternatingObservation) ((1 : ℝ) / 2) T / (T : ℝ))
+      atTop (nhds (0 : ℝ))
+
+theorem alternating_literal_limit_noRegret :
+    LimitNoRegret (Set.Icc (0 : ℝ) 1)
+      (fun t x => (x - alternatingObservation t)^2) (meanPredict alternatingObservation)

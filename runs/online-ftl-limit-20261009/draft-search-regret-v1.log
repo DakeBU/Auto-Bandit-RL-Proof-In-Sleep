@@ -1,0 +1,10 @@
+BanditRL.OnlineLearning.squaredBestRegret [def] BanditRLProof/OnlineSquareMinimum.lean:6
+  noncomputable def squaredBestRegret (y prediction : ℕ → ℝ) (T : ℕ) : ℝ
+BanditRL.OnlineLearning.squaredBestRegret_eq_comparatorRegret [theorem] BanditRLProof/OnlineSquareMinimum.lean:42
+  theorem squaredBestRegret_eq_comparatorRegret (y prediction : ℕ → ℝ) (T : ℕ) (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) : squaredBestRegret y prediction T = comparatorRegret (fun t x => (x - y t)^2) prediction (empiricalMean y T) T
+BanditRL.OnlineLearning.comparatorRegret_le_squaredBestRegret [theorem] BanditRLProof/OnlineSquareMinimum.lean:50
+  theorem comparatorRegret_le_squaredBestRegret (y prediction : ℕ → ℝ) (T : ℕ) (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) (u : ℝ) (hu : u ∈ Set.Icc (0 : ℝ) 1) : comparatorRegret (fun t x => (x - y t)^2) prediction u T ≤ squaredBestRegret y prediction T
+BanditRL.OnlineLearning.meanPredict_bestRegret_bound [theorem] BanditRLProof/OnlineSquareMinimum.lean:60
+  theorem meanPredict_bestRegret_bound (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T) (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) : squaredBestRegret y (meanPredict y) T ≤ 4 + 4 * Real.log T
+BanditRL.OnlineLearning.meanPredict_bestRegret_refined [theorem] BanditRLProof/OnlineSquareMinimum.lean:67
+  theorem meanPredict_bestRegret_refined (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T) (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) : squaredBestRegret y (meanPredict y) T ≤ (1 : ℝ) / 4 + ∑ t ∈ Finset.range (T - 1), 4 / ((t : ℝ) + 2)

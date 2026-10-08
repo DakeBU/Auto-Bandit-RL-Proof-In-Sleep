@@ -1,0 +1,27 @@
+BanditRL.OnlineLearning.empiricalMean_minimizes (y : ℕ → ℝ) (n : ℕ) (hn : 0 < n) (u : ℝ) :
+  ∑ t ∈ Finset.range n, (BanditRL.OnlineLearning.empiricalMean y n - y t) ^ 2 ≤ ∑ t ∈ Finset.range n, (u - y t) ^ 2
+BanditRL.OnlineLearning.empiricalMean_decomposition (y : ℕ → ℝ) (n : ℕ) (hn : 0 < n) (u : ℝ) :
+  ∑ t ∈ Finset.range n, (u - y t) ^ 2 =
+    ∑ t ∈ Finset.range n, (BanditRL.OnlineLearning.empiricalMean y n - y t) ^ 2 +
+      ↑n * (u - BanditRL.OnlineLearning.empiricalMean y n) ^ 2
+BanditRL.OnlineLearning.squaredLoss_minimum_eq (y : ℕ → ℝ) (T : ℕ) (hy : ∀ t < T, y t ∈ Set.Icc 0 1) :
+  sInf ((fun u => ∑ t ∈ Finset.range T, (u - y t) ^ 2) '' Set.Icc 0 1) =
+    ∑ t ∈ Finset.range T, (BanditRL.OnlineLearning.empiricalMean y T - y t) ^ 2
+BanditRL.OnlineLearning.meanPredict_bestRegret_bound (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T)
+  (hy : ∀ t < T, y t ∈ Set.Icc 0 1) :
+  BanditRL.OnlineLearning.squaredBestRegret y (BanditRL.OnlineLearning.meanPredict y) T ≤ 4 + 4 * Real.log ↑T
+squeeze_zero'.{u_3} {α : Type u_3} {f g : α → ℝ} {t₀ : Filter α} (hf : ∀ᶠ (t : α) in t₀, 0 ≤ f t)
+  (hft : ∀ᶠ (t : α) in t₀, f t ≤ g t) (g0 : Tendsto g t₀ (nhds 0)) : Tendsto f t₀ (nhds 0)
+Filter.Tendsto.congr'.{u_1, u_2} {α : Type u_1} {β : Type u_2} {f₁ f₂ : α → β} {l₁ : Filter α} {l₂ : Filter β}
+  (hl : f₁ =ᶠ[l₁] f₂) (h : Tendsto f₁ l₁ l₂) : Tendsto f₂ l₁ l₂
+Filter.Tendsto.sub.{u_1, u_2} {G : Type u_1} {α : Type u_2} [TopologicalSpace G] [Sub G] [ContinuousSub G] {f g : α → G}
+  {l : Filter α} {a b : G} (hf : Tendsto f l (nhds a)) (hg : Tendsto g l (nhds b)) :
+  Tendsto (fun x => f x - g x) l (nhds (a - b))
+Filter.Tendsto.pow.{u_2, u_3} {α : Type u_2} {M : Type u_3} [TopologicalSpace M] [Monoid M] [ContinuousMul M]
+  {l : Filter α} {f : α → M} {x : M} (hf : Tendsto f l (nhds x)) (n : ℕ) : Tendsto (fun x => f x ^ n) l (nhds (x ^ n))
+Real.tendsto_pow_log_div_mul_add_atTop (a b : ℝ) (n : ℕ) (ha : a ≠ 0) :
+  Tendsto (fun x => Real.log x ^ n / (a * x + b)) atTop (nhds 0)
+tendsto_natCast_atTop_atTop.{u_2} {R : Type u_2} [Semiring R] [PartialOrder R] [IsOrderedRing R] [Archimedean R] :
+  Tendsto Nat.cast atTop atTop
+Finset.sum_range_succ.{u_4} {M : Type u_4} [AddCommMonoid M] (f : ℕ → M) (n : ℕ) :
+  ∑ x ∈ Finset.range (n + 1), f x = ∑ x ∈ Finset.range n, f x + f n

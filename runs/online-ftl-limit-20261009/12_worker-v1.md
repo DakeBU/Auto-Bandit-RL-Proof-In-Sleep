@@ -1,0 +1,1 @@
+DRAFT exactpropositions elaborated via#check only. No new theorembody/public compiled proof. Dependency-readyF1 first after required independent source-contract audit; finiteleaf boundaries frozen. General-purpose lemma retrieval performed before proof.

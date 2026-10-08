@@ -1,0 +1,8 @@
+BanditRL.OnlineLearning.LimitNoRegret [def] BanditRLProof/OnlineNoRegretSemantics.lean:8
+  def LimitNoRegret {X : Type*} (V : Set X) (loss : ℕ → X → ℝ) (prediction : ℕ → X) : Prop
+BanditRL.OnlineLearning.limitNoRegret_implies_noRegret [theorem] BanditRLProof/OnlineNoRegretSemantics.lean:24
+  theorem limitNoRegret_implies_noRegret {X : Type*} (V : Set X) (loss : ℕ → X → ℝ) (prediction : ℕ → X) (hL : LimitNoRegret V loss prediction) : NoRegret V loss prediction
+BanditRL.OnlineLearning.limitNoRegret_iff_noRegret_of_converges [theorem] BanditRLProof/OnlineNoRegretSemantics.lean:33
+  theorem limitNoRegret_iff_noRegret_of_converges {X : Type*} (V : Set X) (loss : ℕ → X → ℝ) (prediction : ℕ → X) (hc : ∀ u ∈ V, ∃ a : ℝ, Tendsto (fun T : ℕ => comparatorRegret loss prediction u T / T) atTop (nhds a)) : LimitNoRegret V loss prediction ↔ NoRegret V loss prediction
+BanditRL.OnlineLearning.NoRegretCounterexample.strict_separation [theorem] BanditRLProof/OnlineNoRegretSemantics.lean:117
+  theorem strict_separation : NoRegret (Set.Icc (0 : ℝ) 1) loss (fun _ => 0) ∧ ¬ LimitNoRegret (Set.Icc (0 : ℝ) 1) loss (fun _ => 0)

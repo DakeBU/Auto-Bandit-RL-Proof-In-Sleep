@@ -1,0 +1,166 @@
+ActualFTLValues.wholePublicValue1 : Q1
+'ActualFTLValues.wholePublicValue1' depends on axioms: [propext, Classical.choice, Quot.sound]
+ActualFTLValues.wholePublicValue2 : Q2
+'ActualFTLValues.wholePublicValue2' depends on axioms: [propext, Classical.choice, Quot.sound]
+E:\ABRL\worktrees\research-online-book\runs\online-ftl-limit-20261009\whole-public-values-axioms-v1.lean:24:5: warning: unused variable `hy`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+ActualFTLValues.wholePublicValue3 : Q3
+'ActualFTLValues.wholePublicValue3' depends on axioms: [propext, Classical.choice, Quot.sound]
+E:\ABRL\worktrees\research-online-book\runs\online-ftl-limit-20261009\whole-public-values-axioms-v1.lean:33:5: warning: unused variable `hy`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+ActualFTLValues.wholePublicValue4 : Q4
+'ActualFTLValues.wholePublicValue4' depends on axioms: [propext, Classical.choice, Quot.sound]
+E:\ABRL\worktrees\research-online-book\runs\online-ftl-limit-20261009\whole-public-values-axioms-v1.lean:44:5: warning: unused variable `hy`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\runs\online-ftl-limit-20261009\whole-public-values-axioms-v1.lean:45:5: warning: unused variable `hm`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+ActualFTLValues.wholePublicValue5 : Q5
+'ActualFTLValues.wholePublicValue5' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.meanPredict_bestLoss_nonneg (y : ℕ → ℝ) (T : ℕ) :
+  0 ≤ comparatorRegret (fun t x => (x - y t) ^ 2) (meanPredict y) (empiricalMean y T) T
+'BanditRL.OnlineLearning.meanPredict_bestLoss_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.meanPredict_comparator_decomposition (y : ℕ → ℝ) (u : ℝ) (T : ℕ) :
+  comparatorRegret (fun t x => (x - y t) ^ 2) (meanPredict y) u T =
+    comparatorRegret (fun t x => (x - y t) ^ 2) (meanPredict y) (empiricalMean y T) T - ↑T * (u - empiricalMean y T) ^ 2
+'BanditRL.OnlineLearning.meanPredict_comparator_decomposition' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BanditRL.OnlineLearning.meanPredict_bestRegret_average_tendsto_zero (y : ℕ → ℝ) (hy : ∀ (t : ℕ), y t ∈ Set.Icc 0 1) :
+  Tendsto (fun T => squaredBestRegret y (meanPredict y) T / ↑T) atTop (nhds 0)
+'BanditRL.OnlineLearning.meanPredict_bestRegret_average_tendsto_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BanditRL.OnlineLearning.meanPredict_fixedRegret_limit_iff (y : ℕ → ℝ) (hy : ∀ (t : ℕ), y t ∈ Set.Icc 0 1) (u a : ℝ) :
+  Tendsto (fun T => comparatorRegret (fun t x => (x - y t) ^ 2) (meanPredict y) u T / ↑T) atTop (nhds a) ↔
+    Tendsto (fun T => (u - empiricalMean y T) ^ 2) atTop (nhds (-a))
+'BanditRL.OnlineLearning.meanPredict_fixedRegret_limit_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.meanPredict_limitNoRegret_of_mean_converges (y : ℕ → ℝ) (hy : ∀ (t : ℕ), y t ∈ Set.Icc 0 1)
+  (m : ℝ) (hm : Tendsto (empiricalMean y) atTop (nhds m)) :
+  (∀ (u : ℝ),
+      Tendsto (fun T => comparatorRegret (fun t x => (x - y t) ^ 2) (meanPredict y) u T / ↑T) atTop
+        (nhds (-(u - m) ^ 2))) ∧
+    LimitNoRegret (Set.Icc 0 1) (fun t x => (x - y t) ^ 2) (meanPredict y)
+'BanditRL.OnlineLearning.meanPredict_limitNoRegret_of_mean_converges' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Tests.OnlineFTLLimitSemantics.alternating_unit :
+  (∀ (t : ℕ), Tests.OnlineFTLLimitSemantics.alternatingObservation t ∈ Set.Icc 0 1) ∧
+    Tests.OnlineFTLLimitSemantics.alternatingObservation 0 = 0 ∧
+      Tests.OnlineFTLLimitSemantics.alternatingObservation 1 = 1
+'Tests.OnlineFTLLimitSemantics.alternating_unit' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineFTLLimitSemantics.alternating_prefix_sum (T : ℕ) :
+  ∑ t ∈ Finset.range T, Tests.OnlineFTLLimitSemantics.alternatingObservation t = ↑(T / 2)
+'Tests.OnlineFTLLimitSemantics.alternating_prefix_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineFTLLimitSemantics.alternating_mean_tendsto :
+  Tendsto (empiricalMean Tests.OnlineFTLLimitSemantics.alternatingObservation) atTop (nhds (1 / 2))
+'Tests.OnlineFTLLimitSemantics.alternating_mean_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineFTLLimitSemantics.alternating_initial_predictions :
+  meanPredict Tests.OnlineFTLLimitSemantics.alternatingObservation 0 = 1 / 2 ∧
+    meanPredict Tests.OnlineFTLLimitSemantics.alternatingObservation 1 = 0 ∧
+      meanPredict Tests.OnlineFTLLimitSemantics.alternatingObservation 2 = 1 / 2 ∧
+        meanPredict Tests.OnlineFTLLimitSemantics.alternatingObservation 3 = 1 / 3
+'Tests.OnlineFTLLimitSemantics.alternating_initial_predictions' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Tests.OnlineFTLLimitSemantics.alternating_best_regret_zero_one_two :
+  squaredBestRegret Tests.OnlineFTLLimitSemantics.alternatingObservation
+        (meanPredict Tests.OnlineFTLLimitSemantics.alternatingObservation) 0 =
+      0 ∧
+    squaredBestRegret Tests.OnlineFTLLimitSemantics.alternatingObservation
+          (meanPredict Tests.OnlineFTLLimitSemantics.alternatingObservation) 1 =
+        1 / 4 ∧
+      squaredBestRegret Tests.OnlineFTLLimitSemantics.alternatingObservation
+          (meanPredict Tests.OnlineFTLLimitSemantics.alternatingObservation) 2 =
+        3 / 4
+'Tests.OnlineFTLLimitSemantics.alternating_best_regret_zero_one_two' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Tests.OnlineFTLLimitSemantics.alternating_actual_gap_nonneg (T : ℕ) :
+  0 ≤
+    comparatorRegret (fun t x => (x - Tests.OnlineFTLLimitSemantics.alternatingObservation t) ^ 2)
+      (meanPredict Tests.OnlineFTLLimitSemantics.alternatingObservation)
+      (empiricalMean Tests.OnlineFTLLimitSemantics.alternatingObservation T) T
+'Tests.OnlineFTLLimitSemantics.alternating_actual_gap_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineFTLLimitSemantics.alternating_fixed_decomposition (u : ℝ) (T : ℕ) :
+  comparatorRegret (fun t x => (x - Tests.OnlineFTLLimitSemantics.alternatingObservation t) ^ 2)
+      (meanPredict Tests.OnlineFTLLimitSemantics.alternatingObservation) u T =
+    comparatorRegret (fun t x => (x - Tests.OnlineFTLLimitSemantics.alternatingObservation t) ^ 2)
+        (meanPredict Tests.OnlineFTLLimitSemantics.alternatingObservation)
+        (empiricalMean Tests.OnlineFTLLimitSemantics.alternatingObservation T) T -
+      ↑T * (u - empiricalMean Tests.OnlineFTLLimitSemantics.alternatingObservation T) ^ 2
+'Tests.OnlineFTLLimitSemantics.alternating_fixed_decomposition' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Tests.OnlineFTLLimitSemantics.alternating_best_average_zero :
+  Tendsto
+    (fun T =>
+      squaredBestRegret Tests.OnlineFTLLimitSemantics.alternatingObservation
+          (meanPredict Tests.OnlineFTLLimitSemantics.alternatingObservation) T /
+        ↑T)
+    atTop (nhds 0)
+'Tests.OnlineFTLLimitSemantics.alternating_best_average_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineFTLLimitSemantics.alternating_fixed_limit_criterion (u a : ℝ) :
+  Tendsto
+      (fun T =>
+        comparatorRegret (fun t x => (x - Tests.OnlineFTLLimitSemantics.alternatingObservation t) ^ 2)
+            (meanPredict Tests.OnlineFTLLimitSemantics.alternatingObservation) u T /
+          ↑T)
+      atTop (nhds a) ↔
+    Tendsto (fun T => (u - empiricalMean Tests.OnlineFTLLimitSemantics.alternatingObservation T) ^ 2) atTop (nhds (-a))
+'Tests.OnlineFTLLimitSemantics.alternating_fixed_limit_criterion' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Tests.OnlineFTLLimitSemantics.alternating_fixed_zero_negative_limit :
+  Tendsto
+    (fun T =>
+      comparatorRegret (fun t x => (x - Tests.OnlineFTLLimitSemantics.alternatingObservation t) ^ 2)
+          (meanPredict Tests.OnlineFTLLimitSemantics.alternatingObservation) 0 T /
+        ↑T)
+    atTop (nhds (-1 / 4))
+'Tests.OnlineFTLLimitSemantics.alternating_fixed_zero_negative_limit' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Tests.OnlineFTLLimitSemantics.alternating_fixed_half_zero_limit :
+  Tendsto
+    (fun T =>
+      comparatorRegret (fun t x => (x - Tests.OnlineFTLLimitSemantics.alternatingObservation t) ^ 2)
+          (meanPredict Tests.OnlineFTLLimitSemantics.alternatingObservation) (1 / 2) T /
+        ↑T)
+    atTop (nhds 0)
+'Tests.OnlineFTLLimitSemantics.alternating_fixed_half_zero_limit' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Tests.OnlineFTLLimitSemantics.alternating_literal_limit_noRegret :
+  LimitNoRegret (Set.Icc 0 1) (fun t x => (x - Tests.OnlineFTLLimitSemantics.alternatingObservation t) ^ 2)
+    (meanPredict Tests.OnlineFTLLimitSemantics.alternatingObservation)
+'Tests.OnlineFTLLimitSemantics.alternating_literal_limit_noRegret' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BanditRL.OnlineLearning.empiricalMean (y : ℕ → ℝ) (n : ℕ) : ℝ
+'BanditRL.OnlineLearning.empiricalMean' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.meanPredict (y : ℕ → ℝ) (t : ℕ) : ℝ
+'BanditRL.OnlineLearning.meanPredict' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.empiricalMean_minimizes (y : ℕ → ℝ) (n : ℕ) (hn : 0 < n) (u : ℝ) :
+  ∑ t ∈ Finset.range n, (empiricalMean y n - y t) ^ 2 ≤ ∑ t ∈ Finset.range n, (u - y t) ^ 2
+'BanditRL.OnlineLearning.empiricalMean_minimizes' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.empiricalMean_decomposition (y : ℕ → ℝ) (n : ℕ) (hn : 0 < n) (u : ℝ) :
+  ∑ t ∈ Finset.range n, (u - y t) ^ 2 =
+    ∑ t ∈ Finset.range n, (empiricalMean y n - y t) ^ 2 + ↑n * (u - empiricalMean y n) ^ 2
+'BanditRL.OnlineLearning.empiricalMean_decomposition' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.squaredLoss_minimum_eq (y : ℕ → ℝ) (T : ℕ) (hy : ∀ t < T, y t ∈ Set.Icc 0 1) :
+  sInf ((fun u => ∑ t ∈ Finset.range T, (u - y t) ^ 2) '' Set.Icc 0 1) =
+    ∑ t ∈ Finset.range T, (empiricalMean y T - y t) ^ 2
+'BanditRL.OnlineLearning.squaredLoss_minimum_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.squaredBestRegret_eq_comparatorRegret (y prediction : ℕ → ℝ) (T : ℕ)
+  (hy : ∀ t < T, y t ∈ Set.Icc 0 1) :
+  squaredBestRegret y prediction T = comparatorRegret (fun t x => (x - y t) ^ 2) prediction (empiricalMean y T) T
+'BanditRL.OnlineLearning.squaredBestRegret_eq_comparatorRegret' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BanditRL.OnlineLearning.meanPredict_bestRegret_bound (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T)
+  (hy : ∀ t < T, y t ∈ Set.Icc 0 1) : squaredBestRegret y (meanPredict y) T ≤ 4 + 4 * Real.log ↑T
+'BanditRL.OnlineLearning.meanPredict_bestRegret_bound' depends on axioms: [propext, Classical.choice, Quot.sound]

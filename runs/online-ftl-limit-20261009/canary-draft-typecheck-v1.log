@@ -1,0 +1,36 @@
+(∀ (t : ℕ), alternatingObservation t ∈ Set.Icc 0 1) ∧ alternatingObservation 0 = 0 ∧ alternatingObservation 1 = 1 : Prop
+∀ (T : ℕ), ∑ t ∈ Finset.range T, alternatingObservation t = ↑(T / 2) : Prop
+Tendsto (empiricalMean alternatingObservation) atTop (nhds (1 / 2)) : Prop
+meanPredict alternatingObservation 0 = 1 / 2 ∧
+  meanPredict alternatingObservation 1 = 0 ∧
+    meanPredict alternatingObservation 2 = 1 / 2 ∧ meanPredict alternatingObservation 3 = 1 / 3 : Prop
+squaredBestRegret alternatingObservation (meanPredict alternatingObservation) 0 = 0 ∧
+  squaredBestRegret alternatingObservation (meanPredict alternatingObservation) 1 = 1 / 4 ∧
+    squaredBestRegret alternatingObservation (meanPredict alternatingObservation) 2 = 3 / 4 : Prop
+∀ (T : ℕ),
+  0 ≤
+    comparatorRegret (fun t x => (x - alternatingObservation t) ^ 2) (meanPredict alternatingObservation)
+      (empiricalMean alternatingObservation T) T : Prop
+∀ (u : ℝ) (T : ℕ),
+  comparatorRegret (fun t x => (x - alternatingObservation t) ^ 2) (meanPredict alternatingObservation) u T =
+    comparatorRegret (fun t x => (x - alternatingObservation t) ^ 2) (meanPredict alternatingObservation)
+        (empiricalMean alternatingObservation T) T -
+      ↑T * (u - empiricalMean alternatingObservation T) ^ 2 : Prop
+Tendsto (fun T => squaredBestRegret alternatingObservation (meanPredict alternatingObservation) T / ↑T) atTop
+  (nhds 0) : Prop
+∀ (u a : ℝ),
+  Tendsto
+      (fun T =>
+        comparatorRegret (fun t x => (x - alternatingObservation t) ^ 2) (meanPredict alternatingObservation) u T / ↑T)
+      atTop (nhds a) ↔
+    Tendsto (fun T => (u - empiricalMean alternatingObservation T) ^ 2) atTop (nhds (-a)) : Prop
+Tendsto
+  (fun T =>
+    comparatorRegret (fun t x => (x - alternatingObservation t) ^ 2) (meanPredict alternatingObservation) 0 T / ↑T)
+  atTop (nhds (-1 / 4)) : Prop
+Tendsto
+  (fun T =>
+    comparatorRegret (fun t x => (x - alternatingObservation t) ^ 2) (meanPredict alternatingObservation) (1 / 2) T /
+      ↑T)
+  atTop (nhds 0) : Prop
+LimitNoRegret (Set.Icc 0 1) (fun t x => (x - alternatingObservation t) ^ 2) (meanPredict alternatingObservation) : Prop
