@@ -1,0 +1,248 @@
+{
+  "status": "actual-five-new-proof-notes-and-catalogue-headers-captured",
+  "panels": [
+    {
+      "selector": "article.source-theorem-card",
+      "index": 17,
+      "file": "kernel-causal-source-card-v1.png",
+      "geometry": {
+        "left": 343.390625,
+        "right": 1400.609375,
+        "height": 2579.328125,
+        "scrollWidth": 1057,
+        "clientWidth": 1057,
+        "viewportWidth": 1440
+      },
+      "mathContainers": 1,
+      "mathErrors": 0,
+      "actualViewport": {
+        "width": 1440,
+        "height": 2930
+      },
+      "belowStickyNavigation": true
+    },
+    {
+      "selector": "#decl-7a558d242c4c-teaching",
+      "index": 0,
+      "file": "public-note-1-v1.png",
+      "geometry": {
+        "left": 357.78125,
+        "right": 1386.21875,
+        "height": 2109.5,
+        "scrollWidth": 1026,
+        "clientWidth": 1026,
+        "viewportWidth": 1440
+      },
+      "mathContainers": 1,
+      "mathErrors": 0,
+      "actualViewport": {
+        "width": 1440,
+        "height": 2460
+      },
+      "belowStickyNavigation": true
+    },
+    {
+      "selector": "#decl-ce7d99abfe39-teaching",
+      "index": 0,
+      "file": "public-note-2-v1.png",
+      "geometry": {
+        "left": 357.78125,
+        "right": 1386.21875,
+        "height": 2188.4375,
+        "scrollWidth": 1026,
+        "clientWidth": 1026,
+        "viewportWidth": 1440
+      },
+      "mathContainers": 1,
+      "mathErrors": 0,
+      "actualViewport": {
+        "width": 1440,
+        "height": 2539
+      },
+      "belowStickyNavigation": true
+    },
+    {
+      "selector": "#decl-d361bc99ab3a-teaching",
+      "index": 0,
+      "file": "public-note-3-v1.png",
+      "geometry": {
+        "left": 357.78125,
+        "right": 1386.21875,
+        "height": 2188.015625,
+        "scrollWidth": 1026,
+        "clientWidth": 1026,
+        "viewportWidth": 1440
+      },
+      "mathContainers": 1,
+      "mathErrors": 0,
+      "actualViewport": {
+        "width": 1440,
+        "height": 2539
+      },
+      "belowStickyNavigation": true
+    },
+    {
+      "selector": "#decl-2e3c9f18cf74-teaching",
+      "index": 0,
+      "file": "public-note-4-v1.png",
+      "geometry": {
+        "left": 357.78125,
+        "right": 1386.21875,
+        "height": 2108.84375,
+        "scrollWidth": 1026,
+        "clientWidth": 1026,
+        "viewportWidth": 1440
+      },
+      "mathContainers": 1,
+      "mathErrors": 0,
+      "actualViewport": {
+        "width": 1440,
+        "height": 2459
+      },
+      "belowStickyNavigation": true
+    },
+    {
+      "selector": "#decl-89bca8ada4dd-teaching",
+      "index": 0,
+      "file": "public-note-5-v1.png",
+      "geometry": {
+        "left": 357.78125,
+        "right": 1386.21875,
+        "height": 2227.546875,
+        "scrollWidth": 1026,
+        "clientWidth": 1026,
+        "viewportWidth": 1440
+      },
+      "mathContainers": 1,
+      "mathErrors": 0,
+      "actualViewport": {
+        "width": 1440,
+        "height": 2578
+      },
+      "belowStickyNavigation": true
+    }
+  ],
+  "modulePanels": [
+    {
+      "id": "decl-7a558d242c4c",
+      "file": "module-declaration-1-v1.png",
+      "moduleURL": "http://127.0.0.1:59840/modules/banditrlproof-onlineguessingkernelcausal/index.html",
+      "geometry": {
+        "left": 342.390625,
+        "right": 1401.609375,
+        "height": 506.828125,
+        "scrollWidth": 1057,
+        "clientWidth": 1057,
+        "viewportWidth": 1440
+      },
+      "wrappedCode": {
+        "scrollWidth": 1030,
+        "clientWidth": 1030,
+        "text": "theorem kernel_sampler_family_exists (κ : (t : ℕ) → Kernel (KernelDecisionHistory t) I) [∀ t, IsMarkovKernel (κ t)] : ∃ f : KernelDecisionSampler, (∀ t, Measurable (Function.uncurry (f t))) ∧ ∀ t h, (volume : Measure I).map (f t h) = κ t h",
+        "whiteSpace": "pre-wrap"
+      },
+      "actualBuiltinWrapButtonClicked": true
+    },
+    {
+      "id": "decl-ce7d99abfe39",
+      "file": "module-declaration-2-v1.png",
+      "moduleURL": "http://127.0.0.1:59840/modules/banditrlproof-onlineguessingkernelcausal/index.html",
+      "geometry": {
+        "left": 342.390625,
+        "right": 1401.609375,
+        "height": 547.984375,
+        "scrollWidth": 1057,
+        "clientWidth": 1057,
+        "viewportWidth": 1440
+      },
+      "wrappedCode": {
+        "scrollWidth": 1030,
+        "clientWidth": 1030,
+        "text": "theorem kernel_sampler_causal_process (f : KernelDecisionSampler) (hf : ∀ t, Measurable (Function.uncurry (f t))) : (∀ t, Measurable (kernelCausalPolicy f t)) ∧ (∀ t (u : ℕ → I) (y : ℕ → ℝ) (i : Fin t), kernelGeneratedActions f t (fun j => u j) (fun j => y j) i = kernelGeneratedPrediction f (i : ℕ) (u, y)) ∧ ∀ t (ω ω' : (ℕ → I) × (ℕ → ℝ)), (∀ i, i ≤ t → ω.1 i = ω'.1 i) → (∀ i, i < t → ω.2 i = ω'.2 i) → kernelGeneratedPrediction f t ω = kernelGeneratedPrediction f t ω'",
+        "whiteSpace": "pre-wrap"
+      },
+      "actualBuiltinWrapButtonClicked": true
+    },
+    {
+      "id": "decl-d361bc99ab3a",
+      "file": "module-declaration-3-v1.png",
+      "moduleURL": "http://127.0.0.1:59840/modules/banditrlproof-onlineguessingkernelcausal/index.html",
+      "geometry": {
+        "left": 342.390625,
+        "right": 1401.609375,
+        "height": 547.984375,
+        "scrollWidth": 1057,
+        "clientWidth": 1057,
+        "viewportWidth": 1440
+      },
+      "wrappedCode": {
+        "scrollWidth": 1030,
+        "clientWidth": 1030,
+        "text": "theorem kernel_sampler_joint_law (κ : (t : ℕ) → Kernel (KernelDecisionHistory t) I) [∀ t, IsMarkovKernel (κ t)] (f : KernelDecisionSampler) (hf : ∀ t, Measurable (Function.uncurry (f t))) (hκ : ∀ t h, (volume : Measure I).map (f t h) = κ t h) (ν : ProbabilityMeasure (ℕ → ℝ)) (t : ℕ) : (kernelGameLaw ν).map (fun ω => (kernelGeneratedHistory f t ω, kernelGeneratedPrediction f t ω)) = (kernelGameLaw ν).map (kernelGeneratedHistory f t) ⊗ₘ κ t",
+        "whiteSpace": "pre-wrap"
+      },
+      "actualBuiltinWrapButtonClicked": true
+    },
+    {
+      "id": "decl-2e3c9f18cf74",
+      "file": "module-declaration-4-v1.png",
+      "moduleURL": "http://127.0.0.1:59840/modules/banditrlproof-onlineguessingkernelcausal/index.html",
+      "geometry": {
+        "left": 342.390625,
+        "right": 1401.609375,
+        "height": 547.984375,
+        "scrollWidth": 1057,
+        "clientWidth": 1057,
+        "viewportWidth": 1440
+      },
+      "wrappedCode": {
+        "scrollWidth": 1030,
+        "clientWidth": 1030,
+        "text": "theorem kernel_sampler_conditional_law (κ : (t : ℕ) → Kernel (KernelDecisionHistory t) I) [∀ t, IsMarkovKernel (κ t)] (f : KernelDecisionSampler) (hf : ∀ t, Measurable (Function.uncurry (f t))) (hκ : ∀ t h, (volume : Measure I).map (f t h) = κ t h) (ν : ProbabilityMeasure (ℕ → ℝ)) (t : ℕ) : condDistrib (kernelGeneratedPrediction f t) (kernelGeneratedHistory f t) (kernelGameLaw ν) =ᵐ[(kernelGameLaw ν).map (kernelGeneratedHistory f t)] κ t",
+        "whiteSpace": "pre-wrap"
+      },
+      "actualBuiltinWrapButtonClicked": true
+    },
+    {
+      "id": "decl-89bca8ada4dd",
+      "file": "module-declaration-5-v1.png",
+      "moduleURL": "http://127.0.0.1:59840/modules/banditrlproof-onlineguessingkernelcausal/index.html",
+      "geometry": {
+        "left": 342.390625,
+        "right": 1401.609375,
+        "height": 733.1875,
+        "scrollWidth": 1057,
+        "clientWidth": 1057,
+        "viewportWidth": 1440
+      },
+      "wrappedCode": {
+        "scrollWidth": 1030,
+        "clientWidth": 1030,
+        "text": "theorem causal_kernel_realization_and_expectedFixed_excess (κ : (t : ℕ) → Kernel (KernelDecisionHistory t) I) [∀ t, IsMarkovKernel (κ t)] : ∃ f : KernelDecisionSampler, (∀ t, Measurable (Function.uncurry (f t))) ∧ (∀ t h, (volume : Measure I).map (f t h) = κ t h) ∧ (∀ t, Measurable (kernelCausalPolicy f t)) ∧ (∀ t (u : ℕ → I) (y : ℕ → ℝ) (i : Fin t), kernelGeneratedActions f t (fun j => u j) (fun j => y j) i = kernelGeneratedPrediction f (i : ℕ) (u, y)) ∧ (∀ t (ω ω' : (ℕ → I) × (ℕ → ℝ)), (∀ i, i ≤ t → ω.1 i = ω'.1 i) → (∀ i, i < t → ω.2 i = ω'.2 i) → kernelGeneratedPrediction f t ω = kernelGeneratedPrediction f t ω') ∧ ∀ ν : ProbabilityMeasure (ℕ → ℝ), (∀ t, (kernelGameLaw ν).map (fun ω => (kernelGeneratedHistory f t ω, kernelGeneratedPrediction f t ω)) = (kernelGameLaw ν).map (kernelGeneratedHistory f t) ⊗ₘ κ t) ∧ (∀ t, condDistrib (kernelGeneratedPrediction f t) (kernelGeneratedHistory f t) (kernelGameLaw ν) =ᵐ[(kernelGameLaw ν).map (kernelGeneratedHistory f t)] κ t) ∧ (iIndepFun (fun t (y : ℕ → ℝ) => y t) (ν : Measure (ℕ → ℝ)) → (∀ t, IdentDistrib (fun y : ℕ → ℝ => y t) (fun y : ℕ → ℝ => y 0) (ν : Measure (ℕ → ℝ)) (ν : Measure (ℕ → ℝ))) → (∀ t, ∀ᵐ y ∂(ν : Measure (ℕ → ℝ)), y t ∈ Set.Icc (0 : ℝ) 1) → ∀ T : ℕ, expectedFixedRegret (kernelGameLaw ν) (fun t ω => ω.2 t) (fun t ω => (kernelGeneratedPrediction f t ω : ℝ)) T = (∑ t ∈ Finset.range T, ∫ ω, ((kernelGeneratedPrediction f t ω : ℝ) - ∫ ω, ω.2 0 ∂(kernelGameLaw ν))^2 ∂(kernelGameLaw ν)) ∧ 0 ≤ expectedFixedRegret (kernelGameLaw ν) (fun t ω => ω.2 t) (fun t ω => (kernelGeneratedPrediction f t ω : ℝ)) T)",
+        "whiteSpace": "pre-wrap"
+      },
+      "actualBuiltinWrapButtonClicked": true
+    }
+  ],
+  "images": [
+    "reader-first-viewport-v1.png",
+    "kernel-causal-source-card-v1.png",
+    "public-note-1-v1.png",
+    "public-note-2-v1.png",
+    "public-note-3-v1.png",
+    "public-note-4-v1.png",
+    "public-note-5-v1.png",
+    "module-declaration-1-v1.png",
+    "module-declaration-2-v1.png",
+    "module-declaration-3-v1.png",
+    "module-declaration-4-v1.png",
+    "module-declaration-5-v1.png"
+  ],
+  "actualSourceGuideMathContainers": 21,
+  "sourceHorizontalScrollers": [],
+  "errors": [],
+  "failed": [],
+  "url": "http://127.0.0.1:59840/chapters/online-foundations/index.html",
+  "profilePreserved": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-kernel-causal-playwright-v1-profile",
+  "generatedSiteFilesUnmodified": true
+}
