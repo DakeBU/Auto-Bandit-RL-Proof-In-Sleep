@@ -1,0 +1,14 @@
+import BanditRLProof.OnlineSquareMinimum
+import BanditRLProof.OnlineNoRegretSemantics
+open Filter
+#check BanditRL.OnlineLearning.empiricalMean_minimizes
+#check BanditRL.OnlineLearning.empiricalMean_decomposition
+#check BanditRL.OnlineLearning.squaredLoss_minimum_eq
+#check BanditRL.OnlineLearning.meanPredict_bestRegret_bound
+#check squeeze_zero'
+#check Filter.Tendsto.congr'
+#check Filter.Tendsto.sub
+#check Filter.Tendsto.pow
+#check Real.tendsto_pow_log_div_mul_add_atTop
+#check tendsto_natCast_atTop_atTop
+#check Finset.sum_range_succ

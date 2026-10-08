@@ -1,0 +1,50 @@
+{
+  "nodes": [
+    {
+      "id": "F1",
+      "requires": [
+        "empiricalMean_minimizes",
+        "meanPredict"
+      ],
+      "ready": true
+    },
+    {
+      "id": "F2",
+      "requires": [
+        "empiricalMean_decomposition"
+      ],
+      "ready": true
+    },
+    {
+      "id": "F3",
+      "requires": [
+        "F1",
+        "squaredLoss_minimum_eq",
+        "meanPredict_bestRegret_bound",
+        "Real log/T vanishing"
+      ],
+      "ready": false
+    },
+    {
+      "id": "F4",
+      "requires": [
+        "F2",
+        "F3",
+        "squaredBestRegret_eq_comparatorRegret",
+        "limit subtraction"
+      ],
+      "ready": false
+    },
+    {
+      "id": "F5",
+      "requires": [
+        "F4",
+        "continuity of square",
+        "LimitNoRegret"
+      ],
+      "ready": false
+    }
+  ],
+  "terminal": "F4 exact same-process criterion; F5 conditional literal source-limit producer",
+  "single_lower_route": true
+}

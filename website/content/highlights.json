@@ -6820,6 +6820,95 @@
         "BanditRL.OnlineLearning.kernel_sampler_conditional_law",
         "BanditRL.OnlineLearning.randomized_history_policy_expectedFixed_excess"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.meanPredict_bestLoss_nonneg",
+      "title": "A lower bound for the actual FTL loss gap",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 140,
+      "plain": "Let Phi_T be the squared loss of the horizon empirical mean. The actual old leader minimizes the prefix of lengthT. Therefore Phi_(T+1) is at most Phi_T plus the actual next loss. Induct from the empty prefix to obtain Phi_T <= the actual FTL cumulative loss, without a supplied regret premise.",
+      "math": "\\Phi_T=\\sum_{t<T}(\\bar y_T-y_t)^2\\le\\sum_{t<T}(p_t-y_t)^2,\\quad R_T(\\bar y_T)\\ge0.",
+      "intuition": "The horizon mean separates signed fixed regret from the actual best-comparator gap.",
+      "why": "Identify precisely which ordinary-limit conclusion follows for the same causal FTL strategy.",
+      "position": "Orabona arXiv:1912.13213v10,2026-06-21 SHA cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17, printed2/PDF14 signed regret and ordinary-limit display; printed4/PDF16 Theorem1.3 actual FTL4log upper; printed6/PDF18 sublinear best-regret conclusion. The five Lean endpoints below are derived semantic hinges; the printed text and the existing upper-epsilon NoRegret remain separate. Source roundt+1 is Leant.",
+      "proof_idea": "Let Phi_T be the squared loss of the horizon empirical mean. The actual old leader minimizes the prefix of lengthT. Therefore Phi_(T+1) is at most Phi_T plus the actual next loss. Induct from the empty prefix to obtain Phi_T <= the actual FTL cumulative loss, without a supplied regret premise.",
+      "lean_notes": "Five derived actual FTL limit hinges, not five printed results. F1/F2 allow arbitrary real observations for algebra; unit-game feasibility is not claimed for those unbounded streams. F3/F4/F5 require one all-time unit observation stream and the same initial-half strict-past meanPredict. F4 is a limit equivalence, not unconditional existence. F5 explicitly requires empiricalMean convergence; its limit m is analysis-only, never an algorithm input. Fixed-comparator limits may be strictly negative. The existing abstract unbounded-affine counterexample does not settle bounded actual FTL; a concrete bounded oscillating-mean obstruction and all-comparator converse remain separately required source reconciliation. Five bodies and twelve nondegenerate binary canaries compiled locally; semantic and complete acceptance evidence lives in runs/online-ftl-limit-20261009 and is recorded separately. Original sixteen Chapter1 source objects/null unknown proof total, other C1/C2, unenumerated C3-16 and necessary appendices remain required. Whole Goal ACTIVE; no chapter closure. Stacked on OPEN draft unmerged PR200 exact71c73d727e0a19ed68751994c3b1319aa9c3d756. Main/live unchanged; no merge/deployment. No probabilistic/rate/high-probability or arbitrary-algorithm nonnegative-regret claim. Finite-prefix induction and real ordered-ring arithmetic; existing meanPredict has exact strict-past semantics.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.empiricalMean_minimizes"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.meanPredict_comparator_decomposition",
+      "title": "Exact signed fixed-comparator decomposition",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 141,
+      "plain": "Use the proved empirical-mean decomposition for positiveT, and empty sums forT0. Subtract that comparator loss from the same actual cumulative FTL loss. The minus T times squared-distance term is retained exactly.",
+      "math": "R_T(u)=R_T(\\bar y_T)-T(u-\\bar y_T)^2\\quad(T\\ge0).",
+      "intuition": "The horizon mean separates signed fixed regret from the actual best-comparator gap.",
+      "why": "Identify precisely which ordinary-limit conclusion follows for the same causal FTL strategy.",
+      "position": "Orabona arXiv:1912.13213v10,2026-06-21 SHA cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17, printed2/PDF14 signed regret and ordinary-limit display; printed4/PDF16 Theorem1.3 actual FTL4log upper; printed6/PDF18 sublinear best-regret conclusion. The five Lean endpoints below are derived semantic hinges; the printed text and the existing upper-epsilon NoRegret remain separate. Source roundt+1 is Leant.",
+      "proof_idea": "Use the proved empirical-mean decomposition for positiveT, and empty sums forT0. Subtract that comparator loss from the same actual cumulative FTL loss. The minus T times squared-distance term is retained exactly.",
+      "lean_notes": "Five derived actual FTL limit hinges, not five printed results. F1/F2 allow arbitrary real observations for algebra; unit-game feasibility is not claimed for those unbounded streams. F3/F4/F5 require one all-time unit observation stream and the same initial-half strict-past meanPredict. F4 is a limit equivalence, not unconditional existence. F5 explicitly requires empiricalMean convergence; its limit m is analysis-only, never an algorithm input. Fixed-comparator limits may be strictly negative. The existing abstract unbounded-affine counterexample does not settle bounded actual FTL; a concrete bounded oscillating-mean obstruction and all-comparator converse remain separately required source reconciliation. Five bodies and twelve nondegenerate binary canaries compiled locally; semantic and complete acceptance evidence lives in runs/online-ftl-limit-20261009 and is recorded separately. Original sixteen Chapter1 source objects/null unknown proof total, other C1/C2, unenumerated C3-16 and necessary appendices remain required. Whole Goal ACTIVE; no chapter closure. Stacked on OPEN draft unmerged PR200 exact71c73d727e0a19ed68751994c3b1319aa9c3d756. Main/live unchanged; no merge/deployment. No probabilistic/rate/high-probability or arbitrary-algorithm nonnegative-regret claim. Finite sums and ring arithmetic; no new minimizer premise.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.empiricalMean_decomposition"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.meanPredict_bestRegret_average_tendsto_zero",
+      "title": "The actual best-comparator average tends to zero",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 142,
+      "plain": "Identify the feasible interval minimum with the produced empirical mean. The actual FTL gap is nonnegative by the first endpoint and at most4+4logT by the source theorem. Divide by positiveT and squeeze between zero and a bound tending to zero.",
+      "math": "0\\le R_T^{\\mathrm{best}}\\le4+4\\log T\\quad(T\\ge1),\\qquad R_T^{\\mathrm{best}}/T\\longrightarrow0.",
+      "intuition": "The horizon mean separates signed fixed regret from the actual best-comparator gap.",
+      "why": "Identify precisely which ordinary-limit conclusion follows for the same causal FTL strategy.",
+      "position": "Orabona arXiv:1912.13213v10,2026-06-21 SHA cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17, printed2/PDF14 signed regret and ordinary-limit display; printed4/PDF16 Theorem1.3 actual FTL4log upper; printed6/PDF18 sublinear best-regret conclusion. The five Lean endpoints below are derived semantic hinges; the printed text and the existing upper-epsilon NoRegret remain separate. Source roundt+1 is Leant.",
+      "proof_idea": "Identify the feasible interval minimum with the produced empirical mean. The actual FTL gap is nonnegative by the first endpoint and at most4+4logT by the source theorem. Divide by positiveT and squeeze between zero and a bound tending to zero.",
+      "lean_notes": "Five derived actual FTL limit hinges, not five printed results. F1/F2 allow arbitrary real observations for algebra; unit-game feasibility is not claimed for those unbounded streams. F3/F4/F5 require one all-time unit observation stream and the same initial-half strict-past meanPredict. F4 is a limit equivalence, not unconditional existence. F5 explicitly requires empiricalMean convergence; its limit m is analysis-only, never an algorithm input. Fixed-comparator limits may be strictly negative. The existing abstract unbounded-affine counterexample does not settle bounded actual FTL; a concrete bounded oscillating-mean obstruction and all-comparator converse remain separately required source reconciliation. Five bodies and twelve nondegenerate binary canaries compiled locally; semantic and complete acceptance evidence lives in runs/online-ftl-limit-20261009 and is recorded separately. Original sixteen Chapter1 source objects/null unknown proof total, other C1/C2, unenumerated C3-16 and necessary appendices remain required. Whole Goal ACTIVE; no chapter closure. Stacked on OPEN draft unmerged PR200 exact71c73d727e0a19ed68751994c3b1319aa9c3d756. Main/live unchanged; no merge/deployment. No probabilistic/rate/high-probability or arbitrary-algorithm nonnegative-regret claim. Mathlib squeeze_zero′, Real.tendsto_pow_log_div_mul_add_atTop and natural-cast limit.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.meanPredict_bestLoss_nonneg",
+        "BanditRL.OnlineLearning.squaredBestRegret_eq_comparatorRegret",
+        "BanditRL.OnlineLearning.meanPredict_bestRegret_bound"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.meanPredict_fixedRegret_limit_iff",
+      "title": "The fixed-comparator ordinary-limit criterion",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 143,
+      "plain": "For positiveT, divide the exact comparator identity byT: normalized fixed regret equals normalized best regret minus squared distance from the empirical mean. The best term tends to zero. Subtract limits in both directions to obtain the ordinary-limit equivalence.",
+      "math": "\\frac{R_T(u)}{T}\\longrightarrow a\\quad\\Longleftrightarrow\\quad(u-\\bar y_T)^2\\longrightarrow-a.",
+      "intuition": "The horizon mean separates signed fixed regret from the actual best-comparator gap.",
+      "why": "Identify precisely which ordinary-limit conclusion follows for the same causal FTL strategy.",
+      "position": "Orabona arXiv:1912.13213v10,2026-06-21 SHA cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17, printed2/PDF14 signed regret and ordinary-limit display; printed4/PDF16 Theorem1.3 actual FTL4log upper; printed6/PDF18 sublinear best-regret conclusion. The five Lean endpoints below are derived semantic hinges; the printed text and the existing upper-epsilon NoRegret remain separate. Source roundt+1 is Leant.",
+      "proof_idea": "For positiveT, divide the exact comparator identity byT: normalized fixed regret equals normalized best regret minus squared distance from the empirical mean. The best term tends to zero. Subtract limits in both directions to obtain the ordinary-limit equivalence.",
+      "lean_notes": "Five derived actual FTL limit hinges, not five printed results. F1/F2 allow arbitrary real observations for algebra; unit-game feasibility is not claimed for those unbounded streams. F3/F4/F5 require one all-time unit observation stream and the same initial-half strict-past meanPredict. F4 is a limit equivalence, not unconditional existence. F5 explicitly requires empiricalMean convergence; its limit m is analysis-only, never an algorithm input. Fixed-comparator limits may be strictly negative. The existing abstract unbounded-affine counterexample does not settle bounded actual FTL; a concrete bounded oscillating-mean obstruction and all-comparator converse remain separately required source reconciliation. Five bodies and twelve nondegenerate binary canaries compiled locally; semantic and complete acceptance evidence lives in runs/online-ftl-limit-20261009 and is recorded separately. Original sixteen Chapter1 source objects/null unknown proof total, other C1/C2, unenumerated C3-16 and necessary appendices remain required. Whole Goal ACTIVE; no chapter closure. Stacked on OPEN draft unmerged PR200 exact71c73d727e0a19ed68751994c3b1319aa9c3d756. Main/live unchanged; no merge/deployment. No probabilistic/rate/high-probability or arbitrary-algorithm nonnegative-regret claim. Mathlib Filter.Tendsto.sub and congr′; cancellation used only eventuallyT>0.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.meanPredict_comparator_decomposition",
+        "BanditRL.OnlineLearning.meanPredict_bestRegret_average_tendsto_zero",
+        "BanditRL.OnlineLearning.squaredBestRegret_eq_comparatorRegret"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.meanPredict_limitNoRegret_of_mean_converges",
+      "title": "Literal no-regret under empirical-mean convergence",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 144,
+      "plain": "Assume the empirical mean converges to m explicitly. Continuity gives squared-distance convergence to (u-m)^2 for every fixed realu. The exact equivalence gives fixed regret limit -(u-m)^2. This is nonpositive, so restricting comparators to[0,1] supplies the literal ordinary-limit predicate.",
+      "math": "\\bar y_T\\longrightarrow m\\quad\\Longrightarrow\\quad\\forall u\\in\\mathbb R:\\ \\frac{R_T(u)}{T}\\longrightarrow-(u-m)^2\\le0.",
+      "intuition": "The horizon mean separates signed fixed regret from the actual best-comparator gap.",
+      "why": "Identify precisely which ordinary-limit conclusion follows for the same causal FTL strategy.",
+      "position": "Orabona arXiv:1912.13213v10,2026-06-21 SHA cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17, printed2/PDF14 signed regret and ordinary-limit display; printed4/PDF16 Theorem1.3 actual FTL4log upper; printed6/PDF18 sublinear best-regret conclusion. The five Lean endpoints below are derived semantic hinges; the printed text and the existing upper-epsilon NoRegret remain separate. Source roundt+1 is Leant.",
+      "proof_idea": "Assume the empirical mean converges to m explicitly. Continuity gives squared-distance convergence to (u-m)^2 for every fixed realu. The exact equivalence gives fixed regret limit -(u-m)^2. This is nonpositive, so restricting comparators to[0,1] supplies the literal ordinary-limit predicate.",
+      "lean_notes": "Five derived actual FTL limit hinges, not five printed results. F1/F2 allow arbitrary real observations for algebra; unit-game feasibility is not claimed for those unbounded streams. F3/F4/F5 require one all-time unit observation stream and the same initial-half strict-past meanPredict. F4 is a limit equivalence, not unconditional existence. F5 explicitly requires empiricalMean convergence; its limit m is analysis-only, never an algorithm input. Fixed-comparator limits may be strictly negative. The existing abstract unbounded-affine counterexample does not settle bounded actual FTL; a concrete bounded oscillating-mean obstruction and all-comparator converse remain separately required source reconciliation. Five bodies and twelve nondegenerate binary canaries compiled locally; semantic and complete acceptance evidence lives in runs/online-ftl-limit-20261009 and is recorded separately. Original sixteen Chapter1 source objects/null unknown proof total, other C1/C2, unenumerated C3-16 and necessary appendices remain required. Whole Goal ACTIVE; no chapter closure. Stacked on OPEN draft unmerged PR200 exact71c73d727e0a19ed68751994c3b1319aa9c3d756. Main/live unchanged; no merge/deployment. No probabilistic/rate/high-probability or arbitrary-algorithm nonnegative-regret claim. Mathlib continuity of subtraction/square; LimitNoRegret retains the finite real limit witness.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.meanPredict_fixedRegret_limit_iff"
+      ]
     }
   ]
 }

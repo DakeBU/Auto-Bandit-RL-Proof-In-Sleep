@@ -1,0 +1,60 @@
+from common_v1 import *
+import re
+import pypdfium2 as pdfium
+
+fixed()
+pdf = pdfium.PdfDocument(str(PDF))
+for page in [14,16,18]:
+    output=RUN/('source-pdf%d-v1.png'%page)
+    assert not output.exists()
+    pdf[page-1].render(scale=1.6).to_pil().save(str(output))
+definitions=[]
+for rel,names in [
+    ('BanditRLProof/OnlineLearningMean.lean',['empiricalMean']),
+    ('BanditRLProof/OnlineLearningFTL.lean',['meanPredict']),
+    ('BanditRLProof/OnlineLearningRegret.lean',['comparatorRegret']),
+    ('BanditRLProof/OnlineSquareMinimum.lean',['squaredBestRegret']),
+    ('BanditRLProof/OnlineNoRegretSemantics.lean',['LimitNoRegret'])]:
+    source=(ROOT/rel).read_text(encoding='utf8')
+    for name in names:
+        match=re.search(r'(?m)^(?:noncomputable )?def '+name+r'\b',source)
+        assert match,name
+        after=source[match.start():]
+        end=re.search(r'\n\s*\n',after)
+        assert end,name
+        definitions.append(after[:end.start()].strip())
+neutral='import Mathlib\n\nopen Filter\n\nnamespace BanditRL.OnlineLearning\n\n'
+neutral+='\n\n'.join(definitions)+'\n\n'
+neutral+=(CONTRACT/'targets-v1.lean.txt').read_text(encoding='utf8')
+neutral+='\nend BanditRL.OnlineLearning\n'
+write(RUN/'neutral-context-and-statements-v1.lean.txt',neutral)
+write(RUN/'blind-packet-v1.md','Read ONLY neutral-context-and-statements-v1.lean.txt. Reconstruct each proposition in plain mathematical language and LaTeX, all quantifiers/domains/assumptions/indices/finite and limit boundaries. '
+    'Do not read any source, other repository file or prior verdict. This is a source-blind packet, but the actor is reused and may retain prior stage history; no absolute blindness claim. '
+    'Return report and receipt in this RUN only. No Lean proof work, no source lookup, no edits to inputs. Hash BOTH inputs before/after, report RAW SHA256. Do not infer compilation or source equivalence from syntax. '
+    'Outputs blind-reconstruction-v1.md and blind-receipt-v1.json; receipt actor/requested_model GPT-6 Astra/requested_reasoning_effort medium/runtime_attested false/reused_staged_history true, inputs_unchanged, input_checks, report_sha256.')
+write(RUN/'blind-inputs-v1.json',dict(rows=rows([RUN/'neutral-context-and-statements-v1.lean.txt',RUN/'blind-packet-v1.md'])))
+write(CONTRACT/'reader-requirements-v1.json',dict(
+    R1='Pinned source ordinary-limit display and source4log upper stated separately; five derived hinges, not five printed theorems.',
+    R2='Actual same meanPredict initialized1/2 with strict past; F1/F2 arbitraryreal streams/algebra do not assert unit-game feasibility there.',
+    R3='F1 actual nonnegative loss gap produced from prefix minimum; no lower-bound oracle. F3 actual interval-minimum best/T tends0 via source upper +F1.',
+    R4='F2 exact signed comparator identity with minusT*square and emptyT0; F4 everyreal comparator/limit target, iff square-distance converges to negative target.',
+    R5='F5 extra empiricalMean convergence explicit, all-real fixed limits negative square; no unconditional finite ordinary limit for arbitrary bounded streams or mean known to algorithm.',
+    R6='Nondegenerate periodic binary publiccanary derives empiricalMean convergence and positive bestregret/strictnegative comparatorlimit; all5 endpoints, frozenheaders/axioms/rootTests/harness/site/shadow separately verified.',
+    R7='Abstract unbounded-affine counterexample doesnotsettle bounded actualFTL; actualbounded oscillation/exactall-comparator converse remain source-reconciliation obligations. Original16/null/wholeGoalACTIVE, no chapter/main/live closure.'))
+write(RUN/'contract-mutable-scope-v1.json',dict(version=1,
+    immutable_headers=sha(CONTRACT/'targets-v1.lean.txt'),immutable_context=sha(CONTRACT/'context-v1.lean.txt'),
+    proving_scope=[PUBLIC.relative_to(ROOT).as_posix(),CANARY.relative_to(ROOT).as_posix()],
+    body_only_with_frozen_headers=True,canary_contract_review_before_proof=True,
+    own_task_append_only=['tasks/'+TASK+'.md','conversion-windows/'+TASK+'.md','proof-obligations/'+TASK+'.md'],
+    own_run_new_evidence=True,own_contract_new_versions_reviewed=True,
+    own_native_journals_only=True,global_frontier_lifecycle_memory_immutable=True,
+    root_reader_registry_contribution_changes_require_separate_body_integration_review=True,
+    terminal_edit_requires_new_contract_review=True,source_chapter_whole_goal_complete=False))
+write(RUN/'source-contract-review-packet-v1.md','ANTI-ANCHORED contract review only. Do not confirm the formalizer. Read pinned source PDF14/16/18 text AND view original PNG14/16/18 pixels; compare actual scoped context and exact5 headers to source and blind reconstruction. '
+    'Check seven slots for each F1-F5: objects, quantifiers, assumptions, metric, normalization, information/probability, boundary. F1-5 are DERIVED hinge theorems; separately assess mathematical plausibility and literature relationship. '
+    'F5 convergence premise must be explicit delta, F4 iff gives no unconditional ordinary limit; do not call the abstract affine counterexample a bounded FTL counterexample. '
+    'Check all RAW input bindings before/after. Read mutable scope and readerrequirements; allowedfuture proofs only new files/body/privatehelpers/own task appended stage evidence, no root/site integration without separate review. '
+    'Root/context source oldmodules/pins/globalfrontier immutable. No production body compiled yet. Previousstage actor reuse disclosed; distinct from formalizer/blind actor, no human/external/absoluteblind claim. '
+    'Outputs source-contract-review-v1.md and source-contract-receipt-v1.json here only. Receipt verdict accepted|rejected|accepted-with-explicit-delta, inputs_unchanged/fixed_input_count/raw_input_checks with path,before_sha256,after_sha256,unchanged, report_sha256, required_blocking_repairs, '
+    'required_reader_corrections EXACT reader-requirements-v1.json, permitted_future_proof_scope EXACT contract-mutable-scope-v1.json, per_target_seven_slot_audits and pixelreview list. Do not compile proof or mutate input. Future body gates not inferablypassed.')
+print('Neutral packet prepared and three original source pages freshly rendered.',flush=True)

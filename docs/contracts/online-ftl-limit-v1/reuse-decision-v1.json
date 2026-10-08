@@ -1,0 +1,39 @@
+{
+  "decision": "adapt_existing",
+  "new_production_file": "BanditRLProof/OnlineFTLLimitSemantics.lean",
+  "local_reused": [
+    "empiricalMean_minimizes",
+    "empiricalMean_decomposition",
+    "squaredLoss_minimum_eq",
+    "squaredBestRegret_eq_comparatorRegret",
+    "meanPredict_bestRegret_bound",
+    "LimitNoRegret"
+  ],
+  "actual_decl_search_logs": [
+    "draft-search-mean-v1.log",
+    "draft-search-regret-v1.log",
+    "draft-search-limit-v1.log"
+  ],
+  "absence_query": "draft-local-absence-v1.log exit1 means no exactnewnamehits; notproofsuccess",
+  "mathlib_API_log": "api-probe-v1.log",
+  "mathlib_cards": "draft-mathlib-cards-v1.log",
+  "new_general_mathlib_lemma": false,
+  "new_external_dependency": false,
+  "external_library_scope": "No Optlib/LML fact or dependency used; pinned compatible mathlib owns algebra/limits.",
+  "real_consumers": {
+    "F1": [
+      "F3 best-regret squeeze",
+      "same-FTL source signedregret audit"
+    ],
+    "F2": [
+      "F4 exactordinarylimit criterion",
+      "finitefixedcomparator reader formula"
+    ]
+  },
+  "imports": [
+    "BanditRLProof.OnlineSquareMinimum",
+    "BanditRLProof.OnlineNoRegretSemantics"
+  ],
+  "no_duplicate_wrapper": true,
+  "proof_route": "Recorded single prefixminimum induction, exactdecomposition, actual4logupper squeeze and limit arithmetic."
+}

@@ -1,0 +1,40 @@
+import BanditRLProof.OnlineSquareMinimum
+import BanditRLProof.OnlineNoRegretSemantics
+
+open Filter
+
+namespace BanditRL.OnlineLearning
+
+
+/-- Derived same-FTL loss-gap lower bound; arbitrary real observations, including empty horizon. -/
+theorem meanPredict_bestLoss_nonneg (y : ℕ → ℝ) (T : ℕ) :
+    0 ≤ comparatorRegret (fun t x => (x - y t)^2)
+      (meanPredict y) (empiricalMean y T) T := by
+  unfold comparatorRegret
+  induction T with
+  | zero => simp
+  | succ n ih =>
+    have hmin := empiricalMean_minimizes y (n + 1) (by omega) (meanPredict y n)
+    have hleader : (∑ t ∈ Finset.range n, (meanPredict y n - y t)^2) =
+        ∑ t ∈ Finset.range n, (empiricalMean y n - y t)^2 := by
+      by_cases hn : n = 0
+      · subst n; simp
+      · rw [meanPredict, if_neg hn]
+    simp only [Finset.sum_range_succ] at hmin ⊢
+    rw [hleader] at hmin
+    linarith
+
+
+theorem meanPredict_comparator_decomposition (y : ℕ → ℝ) (u : ℝ) (T : ℕ) :
+    comparatorRegret (fun t x => (x - y t)^2) (meanPredict y) u T =
+      comparatorRegret (fun t x => (x - y t)^2)
+        (meanPredict y) (empiricalMean y T) T -
+      (T : ℝ) * (u - empiricalMean y T)^2 := by
+  by_cases hT : T = 0
+  · subst T
+    simp [comparatorRegret]
+  · unfold comparatorRegret
+    rw [empiricalMean_decomposition y T (Nat.pos_of_ne_zero hT) u]
+    ring
+
+end BanditRL.OnlineLearning

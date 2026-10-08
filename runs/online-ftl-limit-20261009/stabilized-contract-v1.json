@@ -1,0 +1,95 @@
+{
+  "version": 1,
+  "targets": [
+    {
+      "id": "F1",
+      "name": "BanditRL.OnlineLearning.meanPredict_bestLoss_nonneg",
+      "header": "theorem meanPredict_bestLoss_nonneg (y : ℕ → ℝ) (T : ℕ) :\n    0 ≤ comparatorRegret (fun t x => (x - y t)^2)\n      (meanPredict y) (empiricalMean y T) T",
+      "statement_hash": "1f39d2dcdf7e6643cc69a3aae76a423642eff8947d29071c750241da223474cf",
+      "phase": "draft",
+      "compiled": false
+    },
+    {
+      "id": "F2",
+      "name": "BanditRL.OnlineLearning.meanPredict_comparator_decomposition",
+      "header": "theorem meanPredict_comparator_decomposition (y : ℕ → ℝ) (u : ℝ) (T : ℕ) :\n    comparatorRegret (fun t x => (x - y t)^2) (meanPredict y) u T =\n      comparatorRegret (fun t x => (x - y t)^2)\n        (meanPredict y) (empiricalMean y T) T -\n      (T : ℝ) * (u - empiricalMean y T)^2",
+      "statement_hash": "53b787b2b0a558701890251688011a477b8d8df77f4c8125fc430703212de81e",
+      "phase": "draft",
+      "compiled": false
+    },
+    {
+      "id": "F3",
+      "name": "BanditRL.OnlineLearning.meanPredict_bestRegret_average_tendsto_zero",
+      "header": "theorem meanPredict_bestRegret_average_tendsto_zero (y : ℕ → ℝ)\n    (hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1) :\n    Tendsto (fun T : ℕ => squaredBestRegret y (meanPredict y) T / (T : ℝ))\n      atTop (nhds (0 : ℝ))",
+      "statement_hash": "80dc80f444a9a8e7c3314da200b0cc6f59f63dcc902ec05a2dbd56f775d64029",
+      "phase": "draft",
+      "compiled": false
+    },
+    {
+      "id": "F4",
+      "name": "BanditRL.OnlineLearning.meanPredict_fixedRegret_limit_iff",
+      "header": "theorem meanPredict_fixedRegret_limit_iff (y : ℕ → ℝ)\n    (hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1) (u a : ℝ) :\n    Tendsto (fun T : ℕ =>\n      comparatorRegret (fun t x => (x - y t)^2) (meanPredict y) u T / (T : ℝ))\n      atTop (nhds a) ↔\n    Tendsto (fun T : ℕ => (u - empiricalMean y T)^2) atTop (nhds (-a))",
+      "statement_hash": "b9fa340a1fc3e48a6a614a15cd6bdc1ea67ff514a46a203d8ba272a150c456f2",
+      "phase": "draft",
+      "compiled": false
+    },
+    {
+      "id": "F5",
+      "name": "BanditRL.OnlineLearning.meanPredict_limitNoRegret_of_mean_converges",
+      "header": "theorem meanPredict_limitNoRegret_of_mean_converges (y : ℕ → ℝ)\n    (hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1) (m : ℝ)\n    (hm : Tendsto (empiricalMean y) atTop (nhds m)) :\n    (∀ u : ℝ, Tendsto (fun T : ℕ =>\n      comparatorRegret (fun t x => (x - y t)^2) (meanPredict y) u T / (T : ℝ))\n      atTop (nhds (-(u - m)^2))) ∧\n    LimitNoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - y t)^2) (meanPredict y)",
+      "statement_hash": "56b3b3feb14d54850212b0f6a6ff4b92941fb42a236c6e93152def4d5a66ed8d",
+      "phase": "draft",
+      "compiled": false
+    }
+  ],
+  "receipt_sha256": "1f59a0fb2f121d64c6221d49a3619f24ab993738d2da0b17e4b0663c90378ffc",
+  "report_sha256": "12dc1253195df151feec8cbead261e711028253606745952c74c5d7130bc64c6",
+  "headers_sha256": "52cbf912a7387ed181d9fe391df19659cddd76185948386452273947f4c26de3",
+  "context_sha256": "af5f1c856ed20867a3afdccc4f6773e5e787e7a20d2f303f49aecbf046dfbc5f",
+  "source_intent_sha256": "dac46da09610344908baf5fa19fffa4540eb8abe857405c2672a44efd5b71c33",
+  "scope": {
+    "version": 1,
+    "immutable_headers": "52cbf912a7387ed181d9fe391df19659cddd76185948386452273947f4c26de3",
+    "immutable_context": "af5f1c856ed20867a3afdccc4f6773e5e787e7a20d2f303f49aecbf046dfbc5f",
+    "proving_scope": [
+      "BanditRLProof/OnlineFTLLimitSemantics.lean",
+      "Tests/OnlineFTLLimitSemanticsCanary.lean"
+    ],
+    "body_only_with_frozen_headers": true,
+    "canary_contract_review_before_proof": true,
+    "own_task_append_only": [
+      "tasks/ONLINE-FTL-LIMIT-20261009.md",
+      "conversion-windows/ONLINE-FTL-LIMIT-20261009.md",
+      "proof-obligations/ONLINE-FTL-LIMIT-20261009.md"
+    ],
+    "own_run_new_evidence": true,
+    "own_contract_new_versions_reviewed": true,
+    "own_native_journals_only": true,
+    "global_frontier_lifecycle_memory_immutable": true,
+    "root_reader_registry_contribution_changes_require_separate_body_integration_review": true,
+    "terminal_edit_requires_new_contract_review": true,
+    "source_chapter_whole_goal_complete": false
+  },
+  "snapshots": [
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/tasks/ONLINE-FTL-LIMIT-20261009.md",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-ftl-limit-20261009/snapshots/reviewed-tasks.raw",
+      "sha256": "07dcce8bbaa656f8ecca8b097eb97a05ee69ea05f03b70c5e876a977421090ac"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/conversion-windows/ONLINE-FTL-LIMIT-20261009.md",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-ftl-limit-20261009/snapshots/reviewed-conversion-windows.raw",
+      "sha256": "441f3c698d53e50e384af46ec6522b530d3e8b5f8a0758603040cce05b0aab5c"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/proof-obligations/ONLINE-FTL-LIMIT-20261009.md",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-ftl-limit-20261009/snapshots/reviewed-proof-obligations.raw",
+      "sha256": "0986cc03d1e892fdfc6dea25342051e5a33e976b3d941f80f9368657291b913f"
+    }
+  ],
+  "contract_accepted": true,
+  "body_accepted": false,
+  "new_bodies_compiled": 0,
+  "chapter_complete": false,
+  "goal_complete": false
+}

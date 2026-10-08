@@ -1,0 +1,32 @@
+∀ (y : ℕ → ℝ) (T : ℕ), 0 ≤ comparatorRegret (fun t x => (x - y t) ^ 2) (meanPredict y) (empiricalMean y T) T : Prop
+∀ (y : ℕ → ℝ) (u : ℝ) (T : ℕ),
+  comparatorRegret (fun t x => (x - y t) ^ 2) (meanPredict y) u T =
+    comparatorRegret (fun t x => (x - y t) ^ 2) (meanPredict y) (empiricalMean y T) T -
+      ↑T * (u - empiricalMean y T) ^ 2 : Prop
+∀ (y : ℕ → ℝ),
+  (∀ (t : ℕ), y t ∈ Set.Icc 0 1) → Tendsto (fun T => squaredBestRegret y (meanPredict y) T / ↑T) atTop (nhds 0) : Prop
+E:\ABRL\worktrees\research-online-book\runs\online-ftl-limit-20261009\draft-typecheck-v1.lean:19:5: warning: unused variable `hy`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (y : ℕ → ℝ),
+  (∀ (t : ℕ), y t ∈ Set.Icc 0 1) →
+    ∀ (u a : ℝ),
+      Tendsto (fun T => comparatorRegret (fun t x => (x - y t) ^ 2) (meanPredict y) u T / ↑T) atTop (nhds a) ↔
+        Tendsto (fun T => (u - empiricalMean y T) ^ 2) atTop (nhds (-a)) : Prop
+E:\ABRL\worktrees\research-online-book\runs\online-ftl-limit-20261009\draft-typecheck-v1.lean:24:5: warning: unused variable `hy`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (y : ℕ → ℝ),
+  (∀ (t : ℕ), y t ∈ Set.Icc 0 1) →
+    ∀ (m : ℝ),
+      Tendsto (empiricalMean y) atTop (nhds m) →
+        (∀ (u : ℝ),
+            Tendsto (fun T => comparatorRegret (fun t x => (x - y t) ^ 2) (meanPredict y) u T / ↑T) atTop
+              (nhds (-(u - m) ^ 2))) ∧
+          LimitNoRegret (Set.Icc 0 1) (fun t x => (x - y t) ^ 2) (meanPredict y) : Prop
+E:\ABRL\worktrees\research-online-book\runs\online-ftl-limit-20261009\draft-typecheck-v1.lean:31:5: warning: unused variable `hy`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\runs\online-ftl-limit-20261009\draft-typecheck-v1.lean:32:5: warning: unused variable `hm`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`

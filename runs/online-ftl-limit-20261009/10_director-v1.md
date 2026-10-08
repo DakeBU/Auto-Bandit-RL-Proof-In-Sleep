@@ -1,0 +1,1 @@
+Bounded theorem-edge delta within Chapter1 source no-regret reconciliation. Same actualFTL lower bound + comparator identity -> best/T0 -> exact fixed ordinary-limit criterion. F5 explicit sufficient-condition source adapter. No chapter/wholeGoal closure, no next chapter writing.
