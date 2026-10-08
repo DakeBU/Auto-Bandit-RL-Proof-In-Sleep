@@ -247,4 +247,3 @@ unsafe def main (args : List String) : IO UInt32 := do
   let rendered := if compact then graph.compress else graph.pretty
   IO.FS.writeFile output (rendered ++ "\n")
   return 0
-
