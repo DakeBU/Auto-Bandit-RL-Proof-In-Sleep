@@ -1,0 +1,136 @@
+{
+  "state": "stabilized",
+  "version": 1,
+  "source_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+  "targets_sha256": "029c82adff53b7ac75d0c10d4ae537598a35925909f0f90f3f08187f7eb9ead8",
+  "context_sha256": "79cbcb5de14d2562ae58d354855e1939d35a8b9843ed82090c5de321009f6c8f",
+  "source_fingerprint_sha256": "9bff44475b8393ab60e3c4ed2c4aa8d17ed86b658d548d312375f2a35b3dc643",
+  "source_review_receipt_sha256": "7e5db39a272777ceacc403d4b921405777f7fa4cbc3ca8f4835c80c54fe5c9ad",
+  "separate_source_repair_receipt_sha256": "ba362a9451bddc66c83233093d3d2eb600d0df768e3af00056e96d6337d380a2",
+  "original_reader_requirements": [
+    {
+      "id": "R1",
+      "requirement": "Preserve the printed ordinary lim inequality and label existing NoRegret as eventual upper-epsilon control; do not claim unconditional equivalence or silently replace the source display.",
+      "status": "future-required"
+    },
+    {
+      "id": "R2",
+      "requirement": "State the actual per-feasible-comparator finite real convergence premise of the iff, allow nonpositive limits strictly below zero and comparator-dependent limit values, and make no meanPredict ordinary-limit claim.",
+      "status": "future-required"
+    },
+    {
+      "id": "R3",
+      "requirement": "Keep signed comparator regret divided by the same horizon, source rounds 1..T versus Lean 0..T-1, totalized T=0 harmless to atTop, and positive even/odd subsequences distinct from a zero-denominator artifact.",
+      "status": "future-required"
+    },
+    {
+      "id": "R4",
+      "requirement": "Display quantifiers per fixed u and positive epsilon with thresholds allowed to depend on u and epsilon; do not claim uniform comparator control, absolute-value convergence, a rate, or nonnegative regret.",
+      "status": "future-required"
+    },
+    {
+      "id": "R5",
+      "requirement": "Describe generic arbitrary-carrier/supplied-sequence bridges as library generalizations, not a causal algorithm or minimizer producer; distinguish the actual strict-past mean predictor and feasible constant-zero counterexample.",
+      "status": "future-required"
+    },
+    {
+      "id": "R6",
+      "requirement": "State the counterexample uses one fixed loss stream ell_t(x)=(F(t+1)-F(t))*x on [0,1], F(T)=T for even T and 0 for odd T, signed affine coefficients unbounded over time, and comparator 1; it is not a squared-loss, uniformly bounded-loss, or meanPredict nonconvergence result.",
+      "status": "future-required"
+    },
+    {
+      "id": "R7",
+      "requirement": "Attribute nine prospective bridge/separation results as derived source-reconciliation lemmas rather than nine printed theorems; retain the three reused declarations and distinguish closed proposition equality compilation from actual target proof compilation.",
+      "status": "future-required"
+    },
+    {
+      "id": "R8",
+      "requirement": "Keep source-package/body/combined/kernel/reader/site/native/PR gates separate and preserve required remaining Chapter1, incomplete Chapter2, Chapters3-16 and appendix obligations, unknown proof totals and active whole-book Goal; no main/merge/live completion.",
+      "status": "future-required"
+    }
+  ],
+  "terminal_headers": [
+    {
+      "id": "B001",
+      "name": "BanditRL.OnlineLearning.noRegret_limit_nonpos",
+      "header": "theorem noRegret_limit_nonpos {X : Type*} (V : Set X)\n    (loss : ℕ → X → ℝ) (prediction : ℕ → X)\n    (hNR : NoRegret V loss prediction) (u : X) (hu : u ∈ V) (a : ℝ)\n    (hl : Tendsto (fun T : ℕ => comparatorRegret loss prediction u T / T) atTop (nhds a)) :\n    a ≤ 0",
+      "header_sha256": "3f259b6dd0a9b799550dbbd466e10cd03e10a4f7648a41ca93fcffd76eb8e409",
+      "dependencies": []
+    },
+    {
+      "id": "B002",
+      "name": "BanditRL.OnlineLearning.limitNoRegret_implies_noRegret",
+      "header": "theorem limitNoRegret_implies_noRegret {X : Type*} (V : Set X)\n    (loss : ℕ → X → ℝ) (prediction : ℕ → X)\n    (hL : LimitNoRegret V loss prediction) :\n    NoRegret V loss prediction",
+      "header_sha256": "fe26214c7334741c5867346708c5e6fa02e93be4a7801b5efefadfb6f0f478c7",
+      "dependencies": []
+    },
+    {
+      "id": "B003",
+      "name": "BanditRL.OnlineLearning.limitNoRegret_iff_noRegret_of_converges",
+      "header": "theorem limitNoRegret_iff_noRegret_of_converges {X : Type*} (V : Set X)\n    (loss : ℕ → X → ℝ) (prediction : ℕ → X)\n    (hc : ∀ u ∈ V, ∃ a : ℝ,\n      Tendsto (fun T : ℕ => comparatorRegret loss prediction u T / T) atTop (nhds a)) :\n    LimitNoRegret V loss prediction ↔ NoRegret V loss prediction",
+      "header_sha256": "158c424af20158d8bd135837cf7887825b07bd43a90a7ea157fb25d0a09fc87f",
+      "dependencies": [
+        "noRegret_limit_nonpos",
+        "limitNoRegret_implies_noRegret"
+      ]
+    },
+    {
+      "id": "B004",
+      "name": "BanditRL.OnlineLearning.NoRegretCounterexample.regret_eq",
+      "header": "theorem regret_eq (T : ℕ) (u : ℝ) :\n    comparatorRegret loss (fun _ => 0) u T = -potential T * u",
+      "header_sha256": "0d97588bb1d0b48f5af5d2eb48a840dea161b5e1eb3df442e13bd0eee7eab47e",
+      "dependencies": []
+    },
+    {
+      "id": "B005",
+      "name": "BanditRL.OnlineLearning.NoRegretCounterexample.noRegret",
+      "header": "theorem noRegret :\n    NoRegret (Set.Icc (0 : ℝ) 1) loss (fun _ => 0)",
+      "header_sha256": "8da5062e76bbd5d2e710ab06c4e534503f52c57fdc000a68db1a1a09a5f0a44a",
+      "dependencies": [
+        "regret_eq"
+      ]
+    },
+    {
+      "id": "B006",
+      "name": "BanditRL.OnlineLearning.NoRegretCounterexample.normalized_even",
+      "header": "theorem normalized_even (n : ℕ) :\n    comparatorRegret loss (fun _ => 0) 1 (2 * (n + 1)) /\n      ((2 * (n + 1) : ℕ) : ℝ) = -1",
+      "header_sha256": "9c15534edae59f2c51a631cb08b39cb6312ae7ed4aa1b61b45e738dcdfd21550",
+      "dependencies": [
+        "regret_eq"
+      ]
+    },
+    {
+      "id": "B007",
+      "name": "BanditRL.OnlineLearning.NoRegretCounterexample.normalized_odd",
+      "header": "theorem normalized_odd (n : ℕ) :\n    comparatorRegret loss (fun _ => 0) 1 (2 * n + 1) /\n      ((2 * n + 1 : ℕ) : ℝ) = 0",
+      "header_sha256": "c4dc846f41f18921c869ee6949e436544848a38c8ebc23d4ccdbedd23060b42d",
+      "dependencies": [
+        "regret_eq"
+      ]
+    },
+    {
+      "id": "B008",
+      "name": "BanditRL.OnlineLearning.NoRegretCounterexample.no_limit",
+      "header": "theorem no_limit :\n    ¬ ∃ a : ℝ, Tendsto\n      (fun T : ℕ => comparatorRegret loss (fun _ => 0) 1 T / T) atTop (nhds a)",
+      "header_sha256": "5301986cc1851829958a6d4f7b470045b99f07c0f039a6b67f7d1779e8bbca39",
+      "dependencies": [
+        "normalized_even",
+        "normalized_odd"
+      ]
+    },
+    {
+      "id": "B009",
+      "name": "BanditRL.OnlineLearning.NoRegretCounterexample.strict_separation",
+      "header": "theorem strict_separation :\n    NoRegret (Set.Icc (0 : ℝ) 1) loss (fun _ => 0) ∧\n      ¬ LimitNoRegret (Set.Icc (0 : ℝ) 1) loss (fun _ => 0)",
+      "header_sha256": "2239481c5d6d1bdd6b03eaa662ab6d0aaf6f42fca1f0a323523b746a9f4dd668",
+      "dependencies": [
+        "noRegret",
+        "no_limit"
+      ]
+    }
+  ],
+  "proofs_accepted": false,
+  "source_package_accepted": false,
+  "chapter_complete": false,
+  "goal_complete": false
+}

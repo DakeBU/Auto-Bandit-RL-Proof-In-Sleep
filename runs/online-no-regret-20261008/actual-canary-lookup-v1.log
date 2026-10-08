@@ -1,0 +1,32 @@
+NoRegretSemanticsProbe.linearLoss [def] Tests/OnlineNoRegretSemanticsCanary.lean:8
+  noncomputable def linearLoss (_ : ℕ) (u : ℝ) : ℝ
+NoRegretSemanticsProbe.linear_regret [theorem] Tests/OnlineNoRegretSemanticsCanary.lean:10
+  theorem linear_regret (u : ℝ) (T : ℕ) : comparatorRegret linearLoss (fun _ => 0) u T = -(T : ℝ) * u
+NoRegretSemanticsProbe.linear_normalized [theorem] Tests/OnlineNoRegretSemanticsCanary.lean:14
+  theorem linear_normalized (u : ℝ) (T : ℕ) (hT : 0 < T) : comparatorRegret linearLoss (fun _ => 0) u T / T = -u
+NoRegretSemanticsProbe.linear_converges [theorem] Tests/OnlineNoRegretSemanticsCanary.lean:20
+  theorem linear_converges (u : ℝ) : Tendsto (fun T : ℕ => comparatorRegret linearLoss (fun _ => 0) u T / T) atTop (nhds (-u))
+NoRegretSemanticsProbe.linear_literal [theorem] Tests/OnlineNoRegretSemanticsCanary.lean:27
+  theorem linear_literal : LimitNoRegret (Set.Icc (0 : ℝ) 1) linearLoss (fun _ => 0)
+NoRegretSemanticsProbe.linear_upper [theorem] Tests/OnlineNoRegretSemanticsCanary.lean:32
+  theorem linear_upper : NoRegret (Set.Icc (0 : ℝ) 1) linearLoss (fun _ => 0)
+NoRegretSemanticsProbe.negative_limit_allowed [theorem] Tests/OnlineNoRegretSemanticsCanary.lean:36
+  theorem negative_limit_allowed : Tendsto (fun T : ℕ => comparatorRegret linearLoss (fun _ => 0) 1 T / T) atTop (nhds (-1)) ∧ NoRegret (Set.Icc (0 : ℝ) 1) linearLoss (fun _ => 0) ∧ (-1 : ℝ) ≤ 0
+NoRegretSemanticsProbe.iff_on_linear [theorem] Tests/OnlineNoRegretSemanticsCanary.lean:43
+  theorem iff_on_linear : LimitNoRegret (Set.Icc (0 : ℝ) 1) linearLoss (fun _ => 0) ↔ NoRegret (Set.Icc (0 : ℝ) 1) linearLoss (fun _ => 0)
+NoRegretSemanticsProbe.actual_mean_upper [theorem] Tests/OnlineNoRegretSemanticsCanary.lean:48
+  theorem actual_mean_upper : NoRegret (Set.Icc (0 : ℝ) 1) (fun (_ : ℕ) x => x ^ 2) (meanPredict (fun _ => 0))
+NoRegretSemanticsProbe.actual_mean_negative_T2 [theorem] Tests/OnlineNoRegretSemanticsCanary.lean:53
+  theorem actual_mean_negative_T2 : comparatorRegret (fun (_ : ℕ) x => x ^ 2) (meanPredict (fun _ => 0)) 1 2 / 2 = (-7 : ℝ) / 8
+NoRegretSemanticsProbe.obstruction_feasible [theorem] Tests/OnlineNoRegretSemanticsCanary.lean:58
+  theorem obstruction_feasible : (0 : ℝ) ∈ Set.Icc 0 1 ∧ (1 : ℝ) ∈ Set.Icc 0 1 ∧ ∀ t : ℕ, (fun (_ : ℕ) => (0 : ℝ)) t ∈ Set.Icc 0 1
+NoRegretSemanticsProbe.actual_signed_losses [theorem] Tests/OnlineNoRegretSemanticsCanary.lean:63
+  theorem actual_signed_losses : NoRegretCounterexample.loss 0 1 = 0 ∧ NoRegretCounterexample.loss 1 1 = 2 ∧ NoRegretCounterexample.loss 2 1 = -2 ∧ NoRegretCounterexample.loss 3 1 = 4
+NoRegretSemanticsProbe.zero_horizon [theorem] Tests/OnlineNoRegretSemanticsCanary.lean:70
+  theorem zero_horizon : comparatorRegret NoRegretCounterexample.loss (fun _ => 0) 1 0 = 0
+NoRegretSemanticsProbe.even_T2 [theorem] Tests/OnlineNoRegretSemanticsCanary.lean:75
+  theorem even_T2 : comparatorRegret NoRegretCounterexample.loss (fun _ => 0) 1 2 / 2 = -1
+NoRegretSemanticsProbe.odd_T3 [theorem] Tests/OnlineNoRegretSemanticsCanary.lean:79
+  theorem odd_T3 : comparatorRegret NoRegretCounterexample.loss (fun _ => 0) 1 3 / 3 = 0
+NoRegretSemanticsProbe.same_process_strict [theorem] Tests/OnlineNoRegretSemanticsCanary.lean:83
+  theorem same_process_strict : NoRegret (Set.Icc (0 : ℝ) 1) NoRegretCounterexample.loss (fun _ => 0) ∧ ¬ LimitNoRegret (Set.Icc (0 : ℝ) 1) NoRegretCounterexample.loss (fun _ => 0)

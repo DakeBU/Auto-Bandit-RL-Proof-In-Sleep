@@ -1,0 +1,12 @@
+import BanditRLProof.OnlineLearningAsymptotic
+import Mathlib.Tactic
+open Filter
+#check le_of_tendsto
+#check tendsto_order
+#check Filter.tendsto_atTop_mono
+#check tendsto_nhds_unique
+#check Finset.sum_range_succ
+#check Nat.mul_mod
+#check BanditRL.OnlineLearning.NoRegret
+#check BanditRL.OnlineLearning.noRegret_of_vanishing_bound
+#check BanditRL.OnlineLearning.meanPredict_noRegret

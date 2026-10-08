@@ -1,0 +1,11 @@
+from common_integrated_v1 import *
+fixed_integrated()
+s=Path('runs/online-log-lower-20261008/capture-reader-v2.cjs').read_text(encoding='utf8')
+s=s.replace("['pathWeight','causalPredict','randomized_harmonic_lower','randomized_log_lower']","['LimitNoRegret','NoRegretCounterexample.loss','limitNoRegret_iff_noRegret_of_converges','NoRegretCounterexample.strict_separation']")
+s=s.replace("['prefix_mass_one','expected_next_variance','causalPredict_prefix','binary_mean_minimizer','expected_pathRegret_lower','randomized_harmonic_lower','randomized_log_lower']","['noRegret_limit_nonpos','limitNoRegret_implies_noRegret','limitNoRegret_iff_noRegret_of_converges','NoRegretCounterexample.regret_eq','NoRegretCounterexample.no_limit','NoRegretCounterexample.strict_separation']")
+s=s.replace('BanditRL.OnlineLearning.GuessingLower.','BanditRL.OnlineLearning.')
+s=s.replace("['article.source-theorem-card',8,'log-lower-source-card-v2.png',1,9]","['article.source-theorem-card',9,'no-regret-source-card-v1.png',1,10]")
+s=s.replace(".length===12",".length===13").replace('actualSourceGuideMathContainers:12','actualSourceGuideMathContainers:13').replace('newPublicNoteMathContainers:7','newPublicNoteMathContainers:6')
+s=s.replace('v2','v1').replace('actual-current-lower-panels-and-catalog-captured','actual-current-no-regret-panels-and-catalog-captured')
+write(RUN/'capture-reader-v1.cjs',s)
+print('Prepared current no-regret browser capture; no generated site edits.')

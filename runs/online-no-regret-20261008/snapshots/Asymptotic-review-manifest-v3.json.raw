@@ -1,0 +1,139 @@
+{
+  "schema_version": "2.0",
+  "id": "ONLINE-NO-REGRET-20261008",
+  "route": "online-learning/chapter-1",
+  "frontier_cell": "online-foundations",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10,2026-06-21; SHA cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchor": "Printed p2/PDF14: upper at-most-sublinear phrase and displayed ordinary lim inequality",
+    "url": "https://arxiv.org/pdf/1912.13213v10"
+  },
+  "target": "Orabona v10 printed p.2/PDF p.14 says at most sublinear and displays the ordinary inequality lim R_T(u)/T<=0 for every u. Preserve this ordinary lim display and label shared NoRegret as eventual upper-epsilon control. LimitNoRegret is the literal finite-real-limit reading. Equivalence holds only when every feasible comparator has an actual finite ordinary real limit; no unconditional equivalence or silent source replacement. Nine bridge/separation lemmas are derived reconciliation support, not nine printed theorems. Only C1-NOREGRET reconciliation is supported by this package. BODY reviewed with explicit delta; combined root/Tests/harness, shared registry/site/pixels, FINAL, native acceptance and PR remain separate gates. Chapter1 stays open:16 source items, mandatory proof total unknown(null), full regret/best-minimum and five other main-relative module audits required. Chapter2 incomplete; Chapters3–16 unenumerated; necessary appendices required. Total Goal ACTIVE. Exact stacked OPENdraft unmerged PR191 base1737391d9867a420a9e4b9529d4d90e1bf79c93c; no main/live/merge/deploy/retirement claim.",
+  "affected_files": [
+    "BanditRLProof/OnlineNoRegretSemantics.lean",
+    "BanditRLProof/OnlineLearningAsymptotic.lean",
+    "BanditRLProof.lean",
+    "website/content/readings.json",
+    "website/content/highlights.json",
+    "website/content/chapters.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineLearning.noRegret_limit_nonpos",
+    "BanditRL.OnlineLearning.limitNoRegret_implies_noRegret",
+    "BanditRL.OnlineLearning.limitNoRegret_iff_noRegret_of_converges",
+    "BanditRL.OnlineLearning.NoRegretCounterexample.regret_eq",
+    "BanditRL.OnlineLearning.NoRegretCounterexample.noRegret",
+    "BanditRL.OnlineLearning.NoRegretCounterexample.normalized_even",
+    "BanditRL.OnlineLearning.NoRegretCounterexample.normalized_odd",
+    "BanditRL.OnlineLearning.NoRegretCounterexample.no_limit",
+    "BanditRL.OnlineLearning.NoRegretCounterexample.strict_separation",
+    "BanditRL.OnlineLearning.LimitNoRegret",
+    "BanditRL.OnlineLearning.NoRegretCounterexample.potential",
+    "BanditRL.OnlineLearning.NoRegretCounterexample.loss",
+    "BanditRL.OnlineLearning.meanPredict_noRegret"
+  ],
+  "reuse_plan": {
+    "classification": "missing",
+    "decision": "new_shared",
+    "searched_existing": [
+      "Actual native NoRegret/comparatorRegret and Mathlib order/topology/finite sums retrieval in RUN; existing upper API preserved."
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineLearning.meanPredict_noRegret",
+      "BanditRL.OnlineLearning.noRegret_of_vanishing_bound",
+      "BanditRL.OnlineLearning.comparatorRegret_eq_sum",
+      "BanditRL.OnlineLearning.NoRegret",
+      "BanditRL.OnlineLearning.comparatorRegret",
+      "BanditRL.OnlineLearning.meanPredict",
+      "le_of_tendsto",
+      "tendsto_order",
+      "tendsto_nhds_unique"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineLearning.noRegret_limit_nonpos",
+      "BanditRL.OnlineLearning.limitNoRegret_implies_noRegret",
+      "BanditRL.OnlineLearning.limitNoRegret_iff_noRegret_of_converges",
+      "BanditRL.OnlineLearning.NoRegretCounterexample.regret_eq",
+      "BanditRL.OnlineLearning.NoRegretCounterexample.noRegret",
+      "BanditRL.OnlineLearning.NoRegretCounterexample.normalized_even",
+      "BanditRL.OnlineLearning.NoRegretCounterexample.normalized_odd",
+      "BanditRL.OnlineLearning.NoRegretCounterexample.no_limit",
+      "BanditRL.OnlineLearning.NoRegretCounterexample.strict_separation",
+      "BanditRL.OnlineLearning.LimitNoRegret",
+      "BanditRL.OnlineLearning.NoRegretCounterexample.potential",
+      "BanditRL.OnlineLearning.NoRegretCounterexample.loss"
+    ],
+    "known_consumers": [
+      "BanditRL.OnlineLearning.limitNoRegret_iff_noRegret_of_converges",
+      "NoRegretSemanticsProbe.negative_limit_allowed",
+      "NoRegretSemanticsProbe.same_process_strict"
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Missing exact reconciliation bridges/separation added once to shared library; existing regret/upper/mean definitions and actual mean upper producer reused/revalidated. No perBook duplicate project."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/osd_blind",
+    "source_reviewer": "/root/source_reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Orabona v10 printed p.2/PDF p.14 says at most sublinear and displays the ordinary inequality lim R_T(u)/T<=0 for every u. Preserve this ordinary lim display and label shared NoRegret as eventual upper-epsilon control. LimitNoRegret is the literal finite-real-limit reading. Equivalence holds only when every feasible comparator has an actual finite ordinary real limit; no unconditional equivalence or silent source replacement. Nine bridge/separation lemmas are derived reconciliation support, not nine printed theorems. For each fixed u in V and every epsilon>0, a threshold N(u,epsilon) may depend on both u and epsilon; R_T(u)/T<=epsilon for all T>=N. Separately, LimitNoRegret requires for every u in V a finite real a_u<=0 and convergence to a_u. Limits may depend on u and may be strictly negative. No uniform comparator control, absolute-value convergence, rate, nonnegative regret or zero-limit claim. One fixed infinite loss stream ell_t(x)=(F(t+1)-F(t))*x, with F(T)=T for even T and0 for odd T. Signed affine coefficients are unbounded over time. Comparator1 is feasible; it is not a squared-loss, uniformly bounded-loss, or meanPredict nonconvergence example. First four Lean-indexed losses at comparator1 are0,+2,-2,+4. CONTRACT/separate proposed repair/BODY accepted; FINAL pending. Reused distinct automated actors/history disclosed; decoder only reconstructs, no human/external/runtime attestation."
+  },
+  "graph_contribution": {
+    "lean_graph": "new-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Same supplied comparator-regret model and explicit semantic-property bridges, not a certified cross-setting transport.",
+    "focus_targets": [
+      "BanditRL.OnlineLearning.limitNoRegret_iff_noRegret_of_converges",
+      "BanditRL.OnlineLearning.NoRegretCounterexample.strict_separation"
+    ],
+    "visual_review": "Actual34 compiled nodes/27proofs/7definitions and19 specified VALUE pairs; shared registry and current reader pixel gates pending.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: append one exact ordinary/upper/separation source card and six notes plus module glob; nine old cards/all old notes/four curatedIDs preserved.",
+    "banditrlwiki": "no-change-with-reason: no new Bandit setting.",
+    "results_ledger": "updated: nine fixed reconciliation terminals locally closed; only C1-NOREGRET can close after final acceptance, chapter proof total remains null.",
+    "roadmap": "no-change-with-reason: chapter order and active total Goal unchanged; globalSGB preserved.",
+    "website_surfaces": [
+      "website/content/readings.json",
+      "website/content/highlights.json",
+      "website/content/chapters.json"
+    ]
+  },
+  "truth_boundary": "Orabona v10 printed p.2/PDF p.14 says at most sublinear and displays the ordinary inequality lim R_T(u)/T<=0 for every u. Preserve this ordinary lim display and label shared NoRegret as eventual upper-epsilon control. LimitNoRegret is the literal finite-real-limit reading. Equivalence holds only when every feasible comparator has an actual finite ordinary real limit; no unconditional equivalence or silent source replacement. Nine bridge/separation lemmas are derived reconciliation support, not nine printed theorems. For each fixed u in V and every epsilon>0, a threshold N(u,epsilon) may depend on both u and epsilon; R_T(u)/T<=epsilon for all T>=N. Separately, LimitNoRegret requires for every u in V a finite real a_u<=0 and convergence to a_u. Limits may depend on u and may be strictly negative. No uniform comparator control, absolute-value convergence, rate, nonnegative regret or zero-limit claim. Generic arbitrary-carrier bridges consume the same supplied real loss/prediction trace, not a generic causal algorithm or minimizer producer. Existing meanPredict_noRegret is the actual strict-past mean predictor upper producer derived from Theorem1.3; no meanPredict ordinary-limit claim. The strict obstruction instead uses V=[0,1] and the feasible constant-zero learner, fixed independently of losses and comparator, hence structurally causal. One fixed infinite loss stream ell_t(x)=(F(t+1)-F(t))*x, with F(T)=T for even T and0 for odd T. Signed affine coefficients are unbounded over time. Comparator1 is feasible; it is not a squared-loss, uniformly bounded-loss, or meanPredict nonconvergence example. First four Lean-indexed losses at comparator1 are0,+2,-2,+4. Signed comparator regret R_T(u)=sum_{t<T}(ell_t(x_t)-ell_t(u)) uses the same horizon in numerator and denominator. Source rounds1..T are Lean0..T-1. Real division is total at T=0, but both subsequences T=2(n+1) and T=2n+1 are positive and cofinal; the obstruction is not a zero-denominator artifact. Only C1-NOREGRET reconciliation is supported by this package. BODY reviewed with explicit delta; combined root/Tests/harness, shared registry/site/pixels, FINAL, native acceptance and PR remain separate gates. Chapter1 stays open:16 source items, mandatory proof total unknown(null), full regret/best-minimum and five other main-relative module audits required. Chapter2 incomplete; Chapters3–16 unenumerated; necessary appendices required. Total Goal ACTIVE. Exact stacked OPENdraft unmerged PR191 base1737391d9867a420a9e4b9529d4d90e1bf79c93c; no main/live/merge/deploy/retirement claim.",
+  "verification": {
+    "focused_checks": [
+      "Actual nine public bodies and15canaries compile;34standard-axiom kernel checks,12neutral/15actualcanary Prop identities,7wholedefinition identities,24native guards/19actual VALUE pairs."
+    ],
+    "bandit_check": "Combined root/Tests/full harness required.",
+    "site_build": "Applicable clean Leanverified site after new combined gate required.",
+    "site_check": "All10894prior shared nodes IDs/URLs/statementhashes must stay exact;12new production nodes expected, source and pixel checks required.",
+    "independent_review": "Distinct mandatory decoder reconstructs; CONTRACT/separate source repair/BODY accepted with explicit delta; FINAL pending.",
+    "owned_test_files": [
+      "Tests/OnlineNoRegretSemanticsCanary.lean"
+    ],
+    "owned_test_root_files": [
+      "Tests.lean"
+    ]
+  },
+  "contributor": {
+    "name": "Codex for Ji Cheng",
+    "role": "Formalizer/shared-library integration; distinct required automated source-blind decoder and anti-anchored source reviewer"
+  }
+}

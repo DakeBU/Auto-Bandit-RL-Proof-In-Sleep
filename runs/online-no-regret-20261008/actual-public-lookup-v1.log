@@ -1,0 +1,22 @@
+BanditRL.OnlineLearning.NoRegret [def] BanditRLProof/OnlineLearningRegret.lean:40
+  def NoRegret {X : Type*} (V : Set X) (loss : ℕ → X → ℝ) (prediction : ℕ → X) : Prop
+BanditRL.OnlineLearning.noRegret_of_vanishing_bound [theorem] BanditRLProof/OnlineLearningRegret.lean:52
+  theorem noRegret_of_vanishing_bound {X : Type*} (V : Set X) (loss : ℕ → X → ℝ) (prediction : ℕ → X) (bound : X → ℕ → ℝ) (hb : ∀ u ∈ V, ∀ᶠ T in atTop, comparatorRegret loss prediction u T / T ≤ bound u T) (hl : ∀ u ∈ V, Tendsto (bound u) atTop (nhds 0)) : NoRegret V loss prediction
+BanditRL.OnlineLearning.noRegret_limit_nonpos [theorem] BanditRLProof/OnlineNoRegretSemantics.lean:13
+  theorem noRegret_limit_nonpos {X : Type*} (V : Set X) (loss : ℕ → X → ℝ) (prediction : ℕ → X) (hNR : NoRegret V loss prediction) (u : X) (hu : u ∈ V) (a : ℝ) (hl : Tendsto (fun T : ℕ => comparatorRegret loss prediction u T / T) atTop (nhds a)) : a ≤ 0
+BanditRL.OnlineLearning.NoRegretCounterexample.potential [def] BanditRLProof/OnlineNoRegretSemantics.lean:47
+  noncomputable def potential (T : ℕ) : ℝ
+BanditRL.OnlineLearning.NoRegretCounterexample.loss [def] BanditRLProof/OnlineNoRegretSemantics.lean:51
+  noncomputable def loss (t : ℕ) (x : ℝ) : ℝ
+BanditRL.OnlineLearning.NoRegretCounterexample.regret_eq [theorem] BanditRLProof/OnlineNoRegretSemantics.lean:54
+  theorem regret_eq (T : ℕ) (u : ℝ) : comparatorRegret loss (fun _ => 0) u T = -potential T * u
+BanditRL.OnlineLearning.NoRegretCounterexample.noRegret [theorem] BanditRLProof/OnlineNoRegretSemantics.lean:70
+  theorem noRegret : NoRegret (Set.Icc (0 : ℝ) 1) loss (fun _ => 0)
+BanditRL.OnlineLearning.NoRegretCounterexample.normalized_even [theorem] BanditRLProof/OnlineNoRegretSemantics.lean:85
+  theorem normalized_even (n : ℕ) : comparatorRegret loss (fun _ => 0) 1 (2 * (n + 1)) / ((2 * (n + 1) : ℕ) : ℝ) = -1
+BanditRL.OnlineLearning.NoRegretCounterexample.normalized_odd [theorem] BanditRLProof/OnlineNoRegretSemantics.lean:94
+  theorem normalized_odd (n : ℕ) : comparatorRegret loss (fun _ => 0) 1 (2 * n + 1) / ((2 * n + 1 : ℕ) : ℝ) = 0
+BanditRL.OnlineLearning.NoRegretCounterexample.no_limit [theorem] BanditRLProof/OnlineNoRegretSemantics.lean:101
+  theorem no_limit : ¬ ∃ a : ℝ, Tendsto (fun T : ℕ => comparatorRegret loss (fun _ => 0) 1 T / T) atTop (nhds a)
+BanditRL.OnlineLearning.NoRegretCounterexample.strict_separation [theorem] BanditRLProof/OnlineNoRegretSemantics.lean:117
+  theorem strict_separation : NoRegret (Set.Icc (0 : ℝ) 1) loss (fun _ => 0) ∧ ¬ LimitNoRegret (Set.Icc (0 : ℝ) 1) loss (fun _ => 0)

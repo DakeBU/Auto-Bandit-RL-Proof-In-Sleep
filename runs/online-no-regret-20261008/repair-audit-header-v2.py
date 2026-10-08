@@ -1,0 +1,11 @@
+from common_reviewed_v1 import *
+reviewed_fixed()
+write(RUN/'audit-header-repair-v2.json',dict(failed_driver='audit-bodies-v1.py',observed_exit_code=1,reason='Actual lean_declaration_header normalizes whitespace, while frozen header_sha256 binds multiline raw bytes. Comparing these different representations fails correctly before any kernel gate.',repair='Check frozen raw theorem text and raw SHA independently, and require native extracted header equal to whitespace normalization. Preserve both representations and exact original source/types.',source_or_terminal_changed=False,public_sha256=sha(PUBLIC),canary_sha256=sha(CANARY)))
+s=(RUN/'audit-bodies-v1.py').read_text(encoding='utf8')
+s=s.replace(" assert h==row['header'] and hashlib.sha256(h.encode()).hexdigest()==row['header_sha256'],row['name']", " assert row['header']+' := by' in PUBLIC.read_text(encoding='utf8'),row['name']\n assert hashlib.sha256(row['header'].encode()).hexdigest()==row['header_sha256'],row['name']\n assert h==' '.join(row['header'].split()),row['name']")
+s=s.replace("actual.append(dict(name=row['name'],path=PUBLIC.as_posix(),header=h))", "actual.append(dict(name=row['name'],path=PUBLIC.as_posix(),header=h,raw_header=row['header'],raw_header_sha256=row['header_sha256']))")
+s=s.replace(" actual.append(dict(name=TEST+n,path=CANARY.as_posix(),header=lean_declaration_header(CANARY,n)))", " text=CANARY.read_text(encoding='utf8');start=text.index('theorem '+n);raw=text[start:text.index(':=',start)].strip()\n h=lean_declaration_header(CANARY,n);assert h==' '.join(raw.split())\n actual.append(dict(name=TEST+n,path=CANARY.as_posix(),header=h,raw_header=raw,raw_header_sha256=hashlib.sha256(raw.encode()).hexdigest()))")
+s=s.replace("h=row['header'];short=row['name'].rsplit('.',1)[1]", "h=row['raw_header'];short=row['name'].rsplit('.',1)[1]")
+write(RUN/'audit-bodies-v2.py',s)
+gate('body-audit-driver-v2',sys.executable,'-B','-X','utf8',RUN/'audit-bodies-v2.py')
+reviewed_fixed()

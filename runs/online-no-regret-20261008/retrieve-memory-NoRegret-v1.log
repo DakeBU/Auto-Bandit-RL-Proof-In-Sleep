@@ -1,0 +1,6 @@
+lean: BanditRL.OnlineLearning.meanPredict_noRegret [theorem] BanditRLProof/OnlineLearningAsymptotic.lean:9
+  theorem meanPredict_noRegret (y : ℕ → ℝ) (hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1) : NoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - y t)^2) (meanPredict y)
+lean: BanditRL.OnlineLearning.NoRegret [def] BanditRLProof/OnlineLearningRegret.lean:40
+  def NoRegret {X : Type*} (V : Set X) (loss : ℕ → X → ℝ) (prediction : ℕ → X) : Prop
+lean: BanditRL.OnlineLearning.noRegret_of_vanishing_bound [theorem] BanditRLProof/OnlineLearningRegret.lean:52
+  theorem noRegret_of_vanishing_bound {X : Type*} (V : Set X) (loss : ℕ → X → ℝ) (prediction : ℕ → X) (bound : X → ℕ → ℝ) (hb : ∀ u ∈ V, ∀ᶠ T in atTop, comparatorRegret loss prediction u T / T ≤ bound u T) (hl : ∀ u ∈ V, Tendsto (bound u) atTop (nhds 0)) : NoRegret V loss prediction

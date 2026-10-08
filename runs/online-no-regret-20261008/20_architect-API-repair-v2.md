@@ -1,0 +1,1 @@
+Actual pinned API check rejects Filter.Tendsto.unique but prints compatible tendsto_nhds_unique. Preserve old draft and failure; initial-DAG-v2 replaces only this dependency name. No theorem signature, source, conclusion or proof route changed.

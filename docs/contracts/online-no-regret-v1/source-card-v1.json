@@ -1,0 +1,27 @@
+{
+  "source_url": "https://arxiv.org/pdf/1912.13213v10",
+  "source_version": "v10, 21 June 2026",
+  "source_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+  "printed_page": 2,
+  "pdf_page": 14,
+  "source_id": "C1-NOREGRET",
+  "source_display": "For every fixed feasible comparator u, lim_{T→∞} Regret_T(u)/T ≤ 0.",
+  "source_phrase": "Comparator regret is at most sublinear.",
+  "actual_existing_property": "For every fixed feasible u and epsilon>0, normalized signed comparator regret is eventually at most epsilon.",
+  "literal_reading": "For each u, an ordinary real limit exists and is nonpositive; its value may depend on u.",
+  "mismatch": "Ordinary limit existence is stronger than eventual upper epsilon control. The existing NoRegret definition visibly adopts the latter; it does not imply convergence or a zero limit.",
+  "proposed_reconciliation": "Keep the pinned source and existing definition unchanged. Add LimitNoRegret, prove equivalence under actual per-comparator convergence, and certify a strict separation in the general source real-loss setting. Publish this as an explicit interpretation/delta, not an unqualified literal equivalence.",
+  "counterexample": {
+    "V": "[0,1]",
+    "prediction": "x_t=0, fixed and strict-past causal",
+    "potential": "F(T)=T for even T, 0 for odd T",
+    "loss": "ell_t(x)=(F(t+1)-F(t))*x",
+    "regret": "R_T(u)=-F(T)u",
+    "no_regret": "All feasible u≥0 give R_T(u)/T≤0 for all T",
+    "nonconvergence": "u=1: positive even horizons have -1, odd horizons have 0",
+    "boundary": "Signed unbounded-over-time affine losses are allowed in the cited general paragraph. Not a squared-loss or time-uniform bounded-loss counterexample; no statement that meanPredict itself lacks a limit."
+  },
+  "status": "draft-source-correction; separate independent repair review required",
+  "chapter_complete": false,
+  "goal_complete": false
+}
