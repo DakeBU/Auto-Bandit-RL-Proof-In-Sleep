@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineLearning.ae_predictable_private_seed_independent",
+  "file": "BanditRLProof/OnlineGuessingAECausal.lean",
+  "statement": "theorem ae_predictable_private_seed_independent {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ) (S : Ω → Seed) (hS : Measurable S) (hseed : IndepFun S (fun ω t => Y t ω) μ) (t : ℕ) (F : MeasurableSpace Ω) (hF : F ≤ privateSeedPastInformation S Y t) (P : Ω → ℝ) (hP : AEStronglyMeasurable[F] P μ) : IndepFun P (Y t) μ",
+  "statement_hash": "67ea6421e66a39194e5076e3b9f71d824285d488cf117f503e0be2b958e8a37e",
+  "source_assumptions": [
+    "(μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)",
+    "(hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ)",
+    "(S : Ω → Seed) (hS : Measurable S)",
+    "(hseed : IndepFun S (fun ω t => Y t ω) μ)",
+    "(t : ℕ) (F : MeasurableSpace Ω) (hF : F ≤ privateSeedPastInformation S Y t)",
+    "(P : Ω → ℝ) (hP : AEStronglyMeasurable[F] P μ) :"
+  ],
+  "created_at": "2026-10-08T13:16:46+00:00"
+}

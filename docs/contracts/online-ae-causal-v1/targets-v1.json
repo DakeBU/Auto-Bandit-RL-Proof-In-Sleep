@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "targets": [
+    {
+      "id": "L1",
+      "name": "BanditRL.OnlineLearning.ae_predictable_exists_bounded_history_policy",
+      "owning_file": "BanditRLProof/OnlineGuessingAECausal.lean",
+      "header": "theorem ae_predictable_exists_bounded_history_policy {Ω : Type u} {Seed : Type v}\n    [MeasurableSpace Ω] [MeasurableSpace Seed]\n    (μ : Measure Ω) (Y : ℕ → Ω → ℝ) (S : Ω → Seed)\n    (F : ℕ → MeasurableSpace Ω)\n    (hF : ∀ t, F t ≤ privateSeedPastInformation S Y t)\n    (prediction : ℕ → Ω → ℝ)\n    (hP : ∀ t, AEStronglyMeasurable[F t] (prediction t) μ)\n    (hpb : ∀ t, ∀ᵐ ω ∂μ, prediction t ω ∈ Set.Icc (0 : ℝ) 1) :\n    ∃ policy : (t : ℕ) → (Seed × ((↑(Finset.range t) : Type) → ℝ)) → ℝ,\n      (∀ t, Measurable (policy t)) ∧\n      (∀ t q, policy t q ∈ Set.Icc (0 : ℝ) 1) ∧\n      ∀ᵐ ω ∂μ, ∀ t, prediction t ω = policy t (S ω, fun i => Y i ω)",
+      "statement_hash": "e833ef6d42d7c88fb328349e8fbe76bd4838c790f040aa1b89d6329c45fb6f91",
+      "raw_header_sha256": "16fd6701fea34b566c18de217f978e9a33cb350f53173c62b59d4cd6150c2135",
+      "phase": "draft",
+      "compiled": false
+    },
+    {
+      "id": "L2",
+      "name": "BanditRL.OnlineLearning.ae_predictable_private_seed_independent",
+      "owning_file": "BanditRLProof/OnlineGuessingAECausal.lean",
+      "header": "theorem ae_predictable_private_seed_independent {Ω : Type u} {Seed : Type v}\n    [MeasurableSpace Ω] [MeasurableSpace Seed]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ)\n    (S : Ω → Seed) (hS : Measurable S)\n    (hseed : IndepFun S (fun ω t => Y t ω) μ)\n    (t : ℕ) (F : MeasurableSpace Ω) (hF : F ≤ privateSeedPastInformation S Y t)\n    (P : Ω → ℝ) (hP : AEStronglyMeasurable[F] P μ) :\n    IndepFun P (Y t) μ",
+      "statement_hash": "67ea6421e66a39194e5076e3b9f71d824285d488cf117f503e0be2b958e8a37e",
+      "raw_header_sha256": "59ae1654a75e0061599dbfd2b9993ea0efcf8327ddfa8f4502b862127f2f8bb7",
+      "phase": "draft",
+      "compiled": false
+    },
+    {
+      "id": "L3",
+      "name": "BanditRL.OnlineLearning.ae_predictable_private_seed_expectedFixed_excess",
+      "owning_file": "BanditRLProof/OnlineGuessingAECausal.lean",
+      "header": "theorem ae_predictable_private_seed_expectedFixed_excess {Ω : Type u} {Seed : Type v}\n    [MeasurableSpace Ω] [MeasurableSpace Seed]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1)\n    (hind : iIndepFun Y μ)\n    (S : Ω → Seed) (hS : Measurable S)\n    (hseed : IndepFun S (fun ω t => Y t ω) μ)\n    (F : ℕ → MeasurableSpace Ω)\n    (hF : ∀ t, F t ≤ privateSeedPastInformation S Y t)\n    (prediction : ℕ → Ω → ℝ)\n    (hP : ∀ t, AEStronglyMeasurable[F t] (prediction t) μ)\n    (hpb : ∀ t, ∀ᵐ ω ∂μ, prediction t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) :\n    expectedFixedRegret μ Y prediction T =\n      (∑ t ∈ Finset.range T,\n        ∫ ω, (prediction t ω - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) ∧\n      0 ≤ expectedFixedRegret μ Y prediction T",
+      "statement_hash": "ba4a2317c32fef15e0dc2b76c82237a5590ba451f229942454897981fdaf5351",
+      "raw_header_sha256": "9db5d08728989697cb3cd1cf2e07f96bc64e491305717802eb405f17998d379d",
+      "phase": "draft",
+      "compiled": false
+    }
+  ],
+  "mathematical_terminals_compiled": 0
+}

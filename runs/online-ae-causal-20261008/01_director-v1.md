@@ -1,0 +1,7 @@
+# Director draft
+
+Bounded terminal: AE strictly pre-reveal prediction representation, derived independence and exact expected fixed-comparator excess of the SAME prediction process. Three goals in targets-v1.lean.txt; no target may be weakened in proof repair. L1 is ready from pinned mathlib; L2 is ready from prior shared causal independence plus AE representative; L3 depends on L2, actual L2-integrability producer, fixed-comparator minimum and IID decomposition.
+
+One route. Root is staged director/architect/worker, not independent source reviewer. Mandatory distinct existing semantic actors only. Blind draft reconstruction then source CONTRACT review precede stabilization and production proof bodies. Candidate later requires focused compile/actual whole public types and VALUE canaries, root/Tests/full harness, axioms, unchanged frozen headers, distinct BODY/FINAL review, shared registry/reader/site integration. Native command gates and prompt/file conventions are separate.
+
+No changes to historical packages, fixed OGD contract, canonical main, anonymous snapshots, manuscript title, shared Git/.lake, pins or global SGB frontier. Edit scope new OnlineGuessingAECausal production module, new test module, exact shared root/Test imports, own task/contract/run/manifest/retrieval records and strictly scoped reader additions. Original sixteen/null boundary preserved. Accepted current core audits remain historical, not rewritten.

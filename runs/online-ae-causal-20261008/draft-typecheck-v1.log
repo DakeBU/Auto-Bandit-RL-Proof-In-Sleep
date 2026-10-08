@@ -1,0 +1,91 @@
+∀ {Ω : Type u} {Seed : Type v} [inst : MeasurableSpace Ω] [inst_1 : MeasurableSpace Seed] (μ : Measure Ω)
+  (Y : ℕ → Ω → ℝ) (S : Ω → Seed) (F : ℕ → MeasurableSpace Ω),
+  (∀ (t : ℕ), F t ≤ privateSeedPastInformation S Y t) →
+    ∀ (prediction : ℕ → Ω → ℝ),
+      (∀ (t : ℕ), AEStronglyMeasurable (prediction t) μ) →
+        (∀ (t : ℕ), ∀ᵐ (ω : Ω) ∂μ, prediction t ω ∈ Set.Icc 0 1) →
+          ∃ policy,
+            (∀ (t : ℕ), Measurable (policy t)) ∧
+              (∀ (t : ℕ) (q : Seed × (↥(Finset.range t) → ℝ)), policy t q ∈ Set.Icc 0 1) ∧
+                ∀ᵐ (ω : Ω) ∂μ, ∀ (t : ℕ), prediction t ω = policy t (S ω, fun i => Y (↑i) ω) : Prop
+E:\ABRL\worktrees\research-online-book\runs\online-ae-causal-20261008\draft-typecheck-v1.lean:14:5: warning: unused variable `hF`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\runs\online-ae-causal-20261008\draft-typecheck-v1.lean:16:5: warning: unused variable `hP`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\runs\online-ae-causal-20261008\draft-typecheck-v1.lean:17:5: warning: unused variable `hpb`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ {Ω : Type u} {Seed : Type v} [inst : MeasurableSpace Ω] [inst_1 : MeasurableSpace Seed] (μ : Measure Ω)
+  [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ),
+  (∀ (t : ℕ), Measurable (Y t)) →
+    iIndepFun Y μ →
+      ∀ (S : Ω → Seed),
+        Measurable S →
+          (S ⟂ᵢ[μ] fun ω t => Y t ω) →
+            ∀ (t : ℕ),
+              ∀ F ≤ privateSeedPastInformation S Y t, ∀ (P : Ω → ℝ), AEStronglyMeasurable P μ → P ⟂ᵢ[μ] Y t : Prop
+E:\ABRL\worktrees\research-online-book\runs\online-ae-causal-20261008\draft-typecheck-v1.lean:26:5: warning: unused variable `hY`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\runs\online-ae-causal-20261008\draft-typecheck-v1.lean:26:34: warning: unused variable `hind`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\runs\online-ae-causal-20261008\draft-typecheck-v1.lean:27:20: warning: unused variable `hS`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\runs\online-ae-causal-20261008\draft-typecheck-v1.lean:28:5: warning: unused variable `hseed`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\runs\online-ae-causal-20261008\draft-typecheck-v1.lean:29:37: warning: unused variable `hF`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\runs\online-ae-causal-20261008\draft-typecheck-v1.lean:30:17: warning: unused variable `hP`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ {Ω : Type u} {Seed : Type v} [inst : MeasurableSpace Ω] [inst_1 : MeasurableSpace Seed] (μ : Measure Ω)
+  [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ),
+  (∀ (t : ℕ), Measurable (Y t)) →
+    (∀ (t : ℕ), IdentDistrib (Y t) (Y 0) μ μ) →
+      (∀ (t : ℕ), ∀ᵐ (ω : Ω) ∂μ, Y t ω ∈ Set.Icc 0 1) →
+        iIndepFun Y μ →
+          ∀ (S : Ω → Seed),
+            Measurable S →
+              (S ⟂ᵢ[μ] fun ω t => Y t ω) →
+                ∀ (F : ℕ → MeasurableSpace Ω),
+                  (∀ (t : ℕ), F t ≤ privateSeedPastInformation S Y t) →
+                    ∀ (prediction : ℕ → Ω → ℝ),
+                      (∀ (t : ℕ), AEStronglyMeasurable (prediction t) μ) →
+                        (∀ (t : ℕ), ∀ᵐ (ω : Ω) ∂μ, prediction t ω ∈ Set.Icc 0 1) →
+                          ∀ (T : ℕ),
+                            expectedFixedRegret μ Y prediction T =
+                                ∑ t ∈ Finset.range T, ∫ (ω : Ω), (prediction t ω - ∫ (ω : Ω), Y 0 ω ∂μ) ^ 2 ∂μ ∧
+                              0 ≤ expectedFixedRegret μ Y prediction T : Prop
+E:\ABRL\worktrees\research-online-book\runs\online-ae-causal-20261008\draft-typecheck-v1.lean:36:5: warning: unused variable `hY`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\runs\online-ae-causal-20261008\draft-typecheck-v1.lean:37:5: warning: unused variable `hlaw`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\runs\online-ae-causal-20261008\draft-typecheck-v1.lean:38:5: warning: unused variable `hb`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\runs\online-ae-causal-20261008\draft-typecheck-v1.lean:39:5: warning: unused variable `hind`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\runs\online-ae-causal-20261008\draft-typecheck-v1.lean:40:20: warning: unused variable `hS`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\runs\online-ae-causal-20261008\draft-typecheck-v1.lean:41:5: warning: unused variable `hseed`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\runs\online-ae-causal-20261008\draft-typecheck-v1.lean:43:5: warning: unused variable `hF`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\runs\online-ae-causal-20261008\draft-typecheck-v1.lean:45:5: warning: unused variable `hP`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\runs\online-ae-causal-20261008\draft-typecheck-v1.lean:46:5: warning: unused variable `hpb`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`

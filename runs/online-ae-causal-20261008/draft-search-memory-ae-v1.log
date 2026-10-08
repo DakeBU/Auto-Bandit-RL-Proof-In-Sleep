@@ -1,0 +1,11 @@
+mathlib: MLIB-MEASURE-INTEGRAL: Mathlib.MeasureTheory.MeasurableSpace.Basic; Mathlib.MeasureTheory.Integral.Bochner.Basic; Mathlib.MeasureTheory.Integral.Lebesgue.Markov
+local: LOCAL-LEAF-RL-FINITE-HORIZON-STOCHASTIC-REWARD-TRAJECTORY-INITIAL-LAW-SAMPLED-RETURN-VALUE-DEVIATION-SUBGAUSSIAN-TAIL: BanditRLProof.RL.FiniteHorizonStochasticRewardInitialLawTotalReturnConcentration
+local: LOCAL-LEAF-RL-FINITE-HORIZON-STOCHASTIC-REWARD-TRAJECTORY-VALUE-IDENTITY: BanditRLProof.RL.FiniteHorizonStochasticRewardTrajectory
+lean: BanditRLProof.StochasticGradientBandit.integral_exp_mul_le_sourceEqEight_of_ae_abs_le_one [theorem] BanditRLProof/Algorithms/StochasticGradientBanditExponentialAudit.lean:193
+  theorem integral_exp_mul_le_sourceEqEight_of_ae_abs_le_one {Omega : Type*} [MeasurableSpace Omega] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsProbabilityMeasure mu] (q : Real) (reward : Omega -> Real) (hrewardMeasurable : MeasureTheory.AEStronglyMeasurable reward mu) (hreward : ∀ᵐ omega ∂mu, |reward omega| <= 1) : (∫ omega, Real.exp (q * reward omega) ∂mu) <= 1 + q * (∫ omega, reward omega ∂mu) + q ^ 2 / 2 * sourceC (|q| / 2)
+lean: BanditRLProof.StochasticGradientBandit.twoArmFixedIIDReward_aestronglyMeasurable [theorem] BanditRLProof/Algorithms/StochasticGradientBanditTwoArmFixedIID.lean:85
+  theorem twoArmFixedIIDReward_aestronglyMeasurable (armLaw : Fin 2 -> Measure Real) (arm : Fin 2) : AEStronglyMeasurable (fun reward : Real => reward) (armLaw arm)
+lean: BanditRLProof.Concentration.evariance_chebyshev_tail [theorem] BanditRLProof/ConcentrationVariance.lean:42
+  theorem evariance_chebyshev_tail {Omega : Type u} [MeasurableSpace Omega] (mu : Measure Omega) {X : Omega -> Real} (hX : AEStronglyMeasurable X mu) {eps : NNReal} (heps : Ne eps 0) : mu {omega | (eps : Real) <= |X omega - integral mu X|} <= ProbabilityTheory.evariance X mu / (eps : ENNReal) ^ 2
+lean: BanditRLProof.FiniteHorizonRL.integrable_of_fintype_aestronglyMeasurable [theorem] BanditRLProof/RL/FiniteHorizonStochasticRewardTrajectory.lean:55
+  theorem integrable_of_fintype_aestronglyMeasurable {Omega : Type*} [Fintype Omega] [MeasurableSpace Omega] (mu : Measure Omega) [IsFiniteMeasure mu] (f : Omega -> Real) (hf : AEStronglyMeasurable f mu) : Integrable f mu

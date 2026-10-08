@@ -1,0 +1,106 @@
+{
+  "source_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+  "receipt_sha256": "867a15110f9584827546d2a62292fd3e19a3f58eb63312cacc0481810c50892a",
+  "report_sha256": "c8b36dd0ca64158291939ec6c34076369a0cf044a902622acfcc3ea61a6f1b64",
+  "targets_sha256": "82a7063357561ca60960ddb8985d757d5ef6ec4fcfadc7c775aa2a0f46b21315",
+  "headers_sha256": "1a6060062312bfbf5ff8daae259601c5863081e470202823c117137d2d402b4a",
+  "source_intent_sha256": "757384746739cf9cfcbea3fea461ea89c1faa6b1b1629f3720ef3d06659f2770",
+  "targets": [
+    {
+      "id": "L1",
+      "name": "BanditRL.OnlineLearning.ae_predictable_exists_bounded_history_policy",
+      "owning_file": "BanditRLProof/OnlineGuessingAECausal.lean",
+      "header": "theorem ae_predictable_exists_bounded_history_policy {Ω : Type u} {Seed : Type v}\n    [MeasurableSpace Ω] [MeasurableSpace Seed]\n    (μ : Measure Ω) (Y : ℕ → Ω → ℝ) (S : Ω → Seed)\n    (F : ℕ → MeasurableSpace Ω)\n    (hF : ∀ t, F t ≤ privateSeedPastInformation S Y t)\n    (prediction : ℕ → Ω → ℝ)\n    (hP : ∀ t, AEStronglyMeasurable[F t] (prediction t) μ)\n    (hpb : ∀ t, ∀ᵐ ω ∂μ, prediction t ω ∈ Set.Icc (0 : ℝ) 1) :\n    ∃ policy : (t : ℕ) → (Seed × ((↑(Finset.range t) : Type) → ℝ)) → ℝ,\n      (∀ t, Measurable (policy t)) ∧\n      (∀ t q, policy t q ∈ Set.Icc (0 : ℝ) 1) ∧\n      ∀ᵐ ω ∂μ, ∀ t, prediction t ω = policy t (S ω, fun i => Y i ω)",
+      "statement_hash": "e833ef6d42d7c88fb328349e8fbe76bd4838c790f040aa1b89d6329c45fb6f91",
+      "raw_header_sha256": "16fd6701fea34b566c18de217f978e9a33cb350f53173c62b59d4cd6150c2135",
+      "phase": "draft",
+      "compiled": false
+    },
+    {
+      "id": "L2",
+      "name": "BanditRL.OnlineLearning.ae_predictable_private_seed_independent",
+      "owning_file": "BanditRLProof/OnlineGuessingAECausal.lean",
+      "header": "theorem ae_predictable_private_seed_independent {Ω : Type u} {Seed : Type v}\n    [MeasurableSpace Ω] [MeasurableSpace Seed]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ)\n    (S : Ω → Seed) (hS : Measurable S)\n    (hseed : IndepFun S (fun ω t => Y t ω) μ)\n    (t : ℕ) (F : MeasurableSpace Ω) (hF : F ≤ privateSeedPastInformation S Y t)\n    (P : Ω → ℝ) (hP : AEStronglyMeasurable[F] P μ) :\n    IndepFun P (Y t) μ",
+      "statement_hash": "67ea6421e66a39194e5076e3b9f71d824285d488cf117f503e0be2b958e8a37e",
+      "raw_header_sha256": "59ae1654a75e0061599dbfd2b9993ea0efcf8327ddfa8f4502b862127f2f8bb7",
+      "phase": "draft",
+      "compiled": false
+    },
+    {
+      "id": "L3",
+      "name": "BanditRL.OnlineLearning.ae_predictable_private_seed_expectedFixed_excess",
+      "owning_file": "BanditRLProof/OnlineGuessingAECausal.lean",
+      "header": "theorem ae_predictable_private_seed_expectedFixed_excess {Ω : Type u} {Seed : Type v}\n    [MeasurableSpace Ω] [MeasurableSpace Seed]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1)\n    (hind : iIndepFun Y μ)\n    (S : Ω → Seed) (hS : Measurable S)\n    (hseed : IndepFun S (fun ω t => Y t ω) μ)\n    (F : ℕ → MeasurableSpace Ω)\n    (hF : ∀ t, F t ≤ privateSeedPastInformation S Y t)\n    (prediction : ℕ → Ω → ℝ)\n    (hP : ∀ t, AEStronglyMeasurable[F t] (prediction t) μ)\n    (hpb : ∀ t, ∀ᵐ ω ∂μ, prediction t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) :\n    expectedFixedRegret μ Y prediction T =\n      (∑ t ∈ Finset.range T,\n        ∫ ω, (prediction t ω - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) ∧\n      0 ≤ expectedFixedRegret μ Y prediction T",
+      "statement_hash": "ba4a2317c32fef15e0dc2b76c82237a5590ba451f229942454897981fdaf5351",
+      "raw_header_sha256": "9db5d08728989697cb3cd1cf2e07f96bc64e491305717802eb405f17998d379d",
+      "phase": "draft",
+      "compiled": false
+    }
+  ],
+  "approved_scope": {
+    "public_file": "BanditRLProof/OnlineGuessingAECausal.lean",
+    "exact_header_source": "targets-v1.json",
+    "allowed": "Only frozen three theorem bodies and scoped necessary helpers; first L1 ready, L2 ready, L3 after L2 focused success. Existing parents unchanged; roots/site integration only after BODY review.",
+    "disallowed": [
+      "weaken or change stabilized headers",
+      "modify old parent bodies",
+      "pin/toolchain upgrades",
+      "replace active SGB frontier",
+      "claim AE assumption covers all completions/kernels",
+      "mark chapter/whole Goal complete"
+    ],
+    "next_gates": [
+      "focused actual proof builds",
+      "public whole-type/VALUE canaries",
+      "nondegenerate AE-only producer",
+      "distinct BODY review",
+      "root/Tests/full harness/axioms",
+      "statement fences",
+      "shared registry/readers/site/pixels",
+      "distinct FINAL review",
+      "native acceptance",
+      "scoped PR delivery"
+    ]
+  },
+  "mutable_reviewed_snapshots": [
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/conversion-windows/ONLINE-AE-CAUSAL-20261008.md",
+      "original_sha256": "2db652696ed4429621773c8fb98f42d3d1a77fba1007552f1f2acf17985a54bf",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-ae-causal-20261008/snapshots/contract-mutable-0.raw"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/MANIFEST.md",
+      "original_sha256": "81ca8894de229b600ad7c06b7324067f57b100de43c181a8efe0c9ecdeeaa733",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-ae-causal-20261008/snapshots/contract-mutable-1.raw"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/proof-blueprints/ONLINE-AE-CAUSAL-20261008.md",
+      "original_sha256": "2f641354cd198b032eb8178239d9c9c0f3ece24a5bacb257b347f47e30cf59f3",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-ae-causal-20261008/snapshots/contract-mutable-2.raw"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/proof-obligations/ONLINE-AE-CAUSAL-20261008.md",
+      "original_sha256": "6ca9f8401a9a5023e2164b02b1c610b8da7d3f12e063b11a0b77eb48c6679dee",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-ae-causal-20261008/snapshots/contract-mutable-3.raw"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/lifecycle_sessions.jsonl",
+      "original_sha256": "dc63b5be2e139f1ff5846e12c2d2723f68f68b3a01e51faa7aaa03769311815b",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-ae-causal-20261008/snapshots/contract-mutable-4.raw"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/trials.jsonl",
+      "original_sha256": "8cf08b86f7784c8a98bd27a966f65f27d1d17668543c0cfdd4bc989ebc751641",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-ae-causal-20261008/snapshots/contract-mutable-5.raw"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/tasks/ONLINE-AE-CAUSAL-20261008.md",
+      "original_sha256": "a28d833e18f47c7ac1e7ee5a583c57ef8d3bf85f0abe87ca0ca0a1a6b9ed28e9",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-ae-causal-20261008/snapshots/contract-mutable-6.raw"
+    }
+  ],
+  "approved_contract_only": true,
+  "proof_bodies_compiled": 0,
+  "chapter_complete": false,
+  "goal_complete": false
+}
