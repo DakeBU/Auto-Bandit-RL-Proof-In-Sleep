@@ -68,3 +68,10 @@ Assumption delta: probability/IID/unit support/private causal randomness are sou
 Required red boundary: universal stochastic-kernel realization, general completed-information augmentation/factorization coverage, all other Chapter1 obligations, Chapter2 remaining obligations, Chapters3–16 enumeration/required proofs and necessary appendices remain REQUIRED. Original16 source objects and null unknown proof total must be preserved. Three local targets cannot stand for Chapter1 or whole-program completion. No source correction, main merge, deployment, live claim or worktree retirement is proposed.
 
 Exact targets: docs/contracts/online-ae-causal-v1/targets-v1.json. DAG: dependency-DAG-v1.json. L1/L2 dependency-ready, L3 awaits L2. Draft type syntax checked; zero theorem bodies/terminals compiled. Contract semantic round trip and review pending.
+
+
+## Three derived AE causal obligations accepted; draft delivery pending
+
+Task: `ONLINE-AE-CAUSAL-20261008`
+
+Three derived AE causal proofs only: one bounded all-time history version, actual original current-target independence, exact original IID expected-fixed excess and nonnegativity for every natural horizon. Original16 Chapter1 source objects/null proof total, ambient completed-information bridge, general causal stochastic-kernel realization, remaining Chapter1/2, unenumerated Chapters3-16 and necessary appendices remain REQUIRED; whole Goal ACTIVE, main/live unchanged. Actual focused proofs/14 canary proofs and one definition;42 standard axiom records;39 selected compiled nodes2136 coalesced TYPE_VALUE edges12 required direct VALUE pairs. Root9100/Tests9260/fullharness472skip7 pass, both contributor bases and own shadow pass. Applicable clean local site preserves10935old IDs/URLs/hash/status plus3actual declarations;8same original current pixels personally inspected by root and distinct staged reviewer. CONTRACT118/BODY236/repaired FINAL475; rejected FINAL444 F1 and exact PR AE-unit-premise repair preserved. Reused automated history disclosed; no absolute blind/human/external/runtime attestation. Native/post-native/draft delivery separately recorded.

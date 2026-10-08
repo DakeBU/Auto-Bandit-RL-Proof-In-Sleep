@@ -1,0 +1,35 @@
+eventuallyMeasurableSpace.{u_1} {α : Type u_1} (m : MeasurableSpace α) (l : Filter α) [CountableInterFilter l] :
+  MeasurableSpace α
+EventuallyMeasurable.{u_1, u_2} {α : Type u_1} (m : MeasurableSpace α) (l : Filter α) [CountableInterFilter l]
+  {β : Type u_2} [MeasurableSpace β] (f : α → β) : Prop
+MeasurableSpace.measurable_mapNatBool.{u_1} (α : Type u_1) [MeasurableSpace α] [CountablyGenerated α] :
+  Measurable (mapNatBool α)
+MeasurableSpace.injective_mapNatBool.{u_1} (α : Type u_1) [MeasurableSpace α] [CountablyGenerated α]
+  [SeparatesPoints α] : Function.Injective (mapNatBool α)
+Measurable.measurableEmbedding.{u_3, u_4} {γ : Type u_3} {α : Type u_4} [MeasurableSpace α] {f : γ → α}
+  [CountablySeparated α] [MeasurableSpace γ] [StandardBorelSpace γ] (f_meas : Measurable f)
+  (f_inj : Function.Injective f) : MeasurableEmbedding f
+MeasurableEmbedding.measurable_invFun.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] [MeasurableSpace β]
+  {f : α → β} [Nonempty α] (hf : MeasurableEmbedding f) : Measurable hf.invFun
+MeasurableEmbedding.leftInverse_invFun.{u_1, u_2} {α : Type u_1} {β : Type u_2} [MeasurableSpace α] [MeasurableSpace β]
+  {f : α → β} [Nonempty α] (hf : MeasurableEmbedding f) : Function.LeftInverse hf.invFun f
+measurable_to_bool.{u_1} {α : Type u_1} {mα : MeasurableSpace α} {f : α → Bool} (h : MeasurableSet (f ⁻¹' {true})) :
+  Measurable f
+measurable_pi_iff.{u_1, u_4, u_6} {α : Type u_1} {δ : Type u_4} {X : δ → Type u_6} [MeasurableSpace α]
+  [(a : δ) → MeasurableSpace (X a)] {g : α → (a : δ) → X a} : Measurable g ↔ ∀ (a : δ), Measurable fun x => g x a
+eventually_countable_forall.{u_1, u_2} {ι : Sort u_1} {α : Type u_2} {l : Filter α} [CountableInterFilter l]
+  [Countable ι] {p : α → ι → Prop} : (∀ᶠ (x : α) in l, ∀ (i : ι), p x i) ↔ ∀ (i : ι), ∀ᶠ (x : α) in l, p x i
+MeasureTheory.ae_all_iff.{u_1, u_3, u_4} {α : Type u_1} {F : Type u_3} [FunLike F (Set α) ENNReal]
+  [OuterMeasureClass F α] {μ : F} {ι : Sort u_4} [Countable ι] {p : α → ι → Prop} :
+  (∀ᵐ (a : α) ∂μ, ∀ (i : ι), p a i) ↔ ∀ (i : ι), ∀ᵐ (a : α) ∂μ, p a i
+Measurable.aestronglyMeasurable.{u_1, u_2} {α : Type u_1} {β : Type u_2} [TopologicalSpace β] {m m₀ : MeasurableSpace α}
+  {μ : Measure α} {f : α → β} [MeasurableSpace β] [TopologicalSpace.PseudoMetrizableSpace β] [SecondCountableTopology β]
+  [OpensMeasurableSpace β] (hf : Measurable f) : AEStronglyMeasurable f μ
+MeasureTheory.AEStronglyMeasurable.congr.{u_1, u_2} {α : Type u_1} {β : Type u_2} [TopologicalSpace β]
+  {m m₀ : MeasurableSpace α} {μ : Measure α} {f g : α → β} (hf : AEStronglyMeasurable f μ) (h : f =ᶠ[ae μ] g) :
+  AEStronglyMeasurable g μ
+Measurable.eventuallyMeasurable_of_eventuallyEq.{u_1, u_2} {α : Type u_1} {m : MeasurableSpace α} {l : Filter α}
+  [CountableInterFilter l] {β : Type u_2} [MeasurableSpace β] {f g : α → β} (hf : Measurable f) (hgf : g =ᶠ[l] f) :
+  EventuallyMeasurable m l g
+fun {Ω} [MeasurableSpace Ω] μ F P =>
+  Measurable P : {Ω : Type} → [inst : MeasurableSpace Ω] → Measure Ω → MeasurableSpace Ω → (Ω → ℝ) → Prop
