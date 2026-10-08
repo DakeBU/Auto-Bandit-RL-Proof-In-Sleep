@@ -1,0 +1,89 @@
+4What is Online Learning?
+a simple example, we will prove its regret guarantee using first principles, while in the next
+chapters we will introduce and use very general proof methods. First, we will need a small
+lemma.
+Lemma 1.2(Be-the-Leader Lemma)LetV ⊆R d andℓ t :V →Rbe an arbitrary
+sequence of loss functions. Assume the existence ofx ⋆
+t ∈argmin x∈V
+Pt
+i=1 ℓi(x), a mini-
+mizer inVof the cumulative loss over the firsttrounds. Then, we have
+TX
+t=1
+ℓt(x⋆
+t )≤
+TX
+t=1
+ℓt(x⋆
+T ).
+ProofWe prove it by induction onT. The base case is
+ℓ1(x⋆
+1)≤ℓ 1(x⋆
+1),
+which is trivially true. Now, forT≥2, we assume that PT−1
+t=1 ℓt(x⋆
+t )≤ PT−1
+t=1 ℓt(x⋆
+T−1 )
+is true, and we must prove the stated inequality, that is,
+TX
+t=1
+ℓt(x⋆
+t )≤
+TX
+t=1
+ℓt(x⋆
+T ).
+This inequality is equivalent to
+T−1X
+t=1
+ℓt(x⋆
+t )≤
+T−1X
+t=1
+ℓt(x⋆
+T ),(1.3)
+where we removed the last element of the sums because they are the same. Now observe that
+T−1X
+t=1
+ℓt(x⋆
+t )≤
+T−1X
+t=1
+ℓt(x⋆
+T−1 ),
+by induction hypothesis, and
+T−1X
+t=1
+ℓt(x⋆
+T−1 )≤
+T−1X
+t=1
+ℓt(x⋆
+T )
+becausex ⋆
+T−1 is a minimizer of the l.h.s. inVandx ⋆
+T ∈ V. Chaining these two inequalities,
+we have that (1.3) is true, and so the lemma is proven.
+Basically, the above lemma quantifies the idea that knowing the future and being adaptive
+to it is typically better than not being adaptive to it.
+With this lemma, we can now prove that the regret will grow sublinearly; in particular, it
+will be at mostlogarithmicin time. Note that we will not prove that our strategy is minimax
+optimal, even if it is possible to show that the logarithmic dependence on time is unavoidable
+for this problem.
+Theorem 1.3Lety 1, . . . , yT ∈[0,1]be an arbitrary sequence of real numbers. Let the
+algorithm’s output bex t =x ⋆
+t−1 := 1
+t−1
+Pt−1
+i=1 yi fort≥2andx 1 =x ⋆
+0 := 0.5. Then, we
+have
+RegretT =
+TX
+t=1
+(xt −y t)2 −min
+x∈[0,1]
+TX
+t=1
+(x−y t)2 ≤4 + 4 lnT .

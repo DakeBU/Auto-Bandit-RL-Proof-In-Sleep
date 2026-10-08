@@ -1,0 +1,1 @@
+Lower initial status: existing proof bodies read, no edit, no fresh compile claimed. Five old source audits are required because remote push contributor failed them. Draft neutral signatures/API/source retrieval next; stable terminal types remain exact throughout canary and comment-only work.

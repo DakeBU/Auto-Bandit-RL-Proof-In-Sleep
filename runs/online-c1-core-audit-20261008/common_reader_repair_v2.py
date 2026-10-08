@@ -1,0 +1,61 @@
+from common_proving_v1 import *
+from collections import Counter
+BODY_SHA='b575507aad3bd654f1b25808aac0b863cde7561267880bac663cce07065dbcf3'
+BODY_REPORT_SHA='066258a265069a34b64e64f03ed251cbdd8906faa9e353f7a41d0619114d99bb'
+ROUTE='online-foundations'
+MANIFEST=Path('research-wiki/contribution-contracts/online-c1-core-audit-20261008.json')
+READERS=[Path('website/content')/(n+'.json') for n in ['readings','highlights','chapters']]
+
+def body_fixed(integrated=False):
+    proofbytes_fixed()
+    assert sha(RUN/'public-body-receipt-v1.json')==BODY_SHA
+    assert sha(RUN/'public-body-review-v1.md')==BODY_REPORT_SHA
+    r=load(RUN/'public-body-receipt-v1.json')
+    assert r['verdict']=='accepted-with-explicit-delta' and r['inputs_unchanged'] and r['BODY_accepted']
+    assert not r['required_blocking_repairs'] and r['fixed_input_count']==185
+    assert r['allowed_future_integration_scope']==load(RUN/'body-future-integration-scope-v1.json')
+    assert r['reader_requirements']==load(CONTRACT/'reader-requirements-v1.json')
+    bindings=load(RUN/'body-bindings-v1.json')
+    assert sha(CANARY)==bindings['canary_sha256']
+    assert bindings['public_files_sha256']=={p.as_posix():sha(p) for p in MODULES}
+    allowed={p.resolve() for p in READERS+[Path('Tests.lean')]}
+    for x in load(RUN/'body-review-inputs-v1.json')['rows']:
+        p=Path(x['path'])
+        if sha(p)==x['sha256']: continue
+        assert integrated and p.resolve() in allowed,p
+        rel=p.resolve().relative_to(ROOT).as_posix()
+        assert hashlib.sha256(baseline(rel)).hexdigest()==x['sha256']
+    return r
+
+def fixed_integrated():
+    body_fixed(True)
+    assert Path('Tests.lean').read_bytes()==baseline('Tests.lean')+b'\nimport Tests.OnlineLearningCoreAuditCanary\n'
+    proposal=load(RUN/'reader-proposal-v3.json')
+    bound=load(RUN/'reader-repair-integration-bindings-v2.json')
+    assert sha(RUN/'reader-proposal-v3.json')==bound['reader_proposal_sha256']
+    for label in ['readings','highlights','chapters']:
+        path='website/content/'+label+'.json'
+        old=json.loads(baseline(path).decode('utf8'));new=load(path)
+        assert set(old)==set(new)
+        assert {k:v for k,v in old.items() if k!=label}=={k:v for k,v in new.items() if k!=label}
+        if label=='highlights':
+            replacements={n['full_name']:n for n in proposal['replacements']}
+            expected=[replacements.get(n['full_name'],n) for n in old[label]]+proposal['notes']
+            assert new[label]==expected and len(replacements)==2 and len(proposal['notes'])==10
+            counts=Counter(n['full_name'] for n in new[label])
+            assert counts==Counter(n['full_name'] for n in old[label])+Counter(n['full_name'] for n in proposal['notes'])
+            assert all(counts[r['name']]==1 for r in load(CONTRACT/'targets-v2.json')['targets'])
+        else:
+            assert len(old[label])==len(new[label])
+            for a,b in zip(old[label],new[label]):
+                if a['slug']!=ROUTE: assert a==b
+                elif label=='readings':
+                    assert {k:v for k,v in a.items() if k!='source_theorems'}=={k:v for k,v in b.items() if k!='source_theorems'}
+                    assert b['source_theorems']==a['source_theorems']+[proposal['card']]
+                else:
+                    allowed={'completion_blockers','open_gaps'}
+                    assert {k:v for k,v in a.items() if k not in allowed}=={k:v for k,v in b.items() if k not in allowed}
+                    for k in allowed: assert b[k]==a[k]+[proposal['boundary']]
+    assert load(MANIFEST)['id']==TASK
+    assert load(MANIFEST)['affected_files']==[p.as_posix() for p in MODULES+READERS]
+    return True

@@ -3,6 +3,10 @@ import Mathlib.Probability.IdentDistrib
 
 open MeasureTheory ProbabilityTheory
 
+/-!
+Legacy derived APIs for Orabona v10 Chapter 1, printed pp.1,3-4 / PDF pp.13,15-16. The support hypotheses here are pointwise for every sample point, stronger than almost-sure unit support. Later shared expected-fixed producers expose AE support separately. The mean learner is the actual strict-past initial-half algorithm; the feasible population mean is an analysis comparator. The exact finite excess identity/nonnegativity is not an asymptotic success theorem or full randomized strategy-class guarantee.
+-/
+
 namespace BanditRL.OnlineLearning
 
 /-- Measurability of the actual source predictor. -/
