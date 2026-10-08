@@ -1,0 +1,63 @@
+{
+  "command": [
+    "git",
+    "-c",
+    "core.whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol",
+    "diff",
+    "--check",
+    "bf9f896cdfebb2b836dacb01f3d4b209466c2100",
+    "--",
+    ".",
+    ":(exclude)runs/online-iid-benchmark-20261008/blind-reconstruction-v1.md",
+    ":(exclude)runs/online-iid-benchmark-20261008/combined-root-v2.log",
+    ":(exclude)runs/online-iid-benchmark-20261008/combined-Tests-v2.log",
+    ":(exclude)runs/online-iid-benchmark-20261008/full-harness-v2.log",
+    ":(exclude)runs/online-iid-benchmark-20261008/common_v1.py",
+    ":(exclude)runs/online-iid-benchmark-20261008/common_reviewed_v2.py",
+    ":(exclude)runs/online-iid-benchmark-20261008/pre-source-full-diff-v3.log"
+  ],
+  "actual_exit_code": 0,
+  "exact_raw_byte_exceptions": [
+    {
+      "path": "runs/online-iid-benchmark-20261008/blind-reconstruction-v1.md",
+      "sha256": "c0acb07f9801fca48fd398eced2c66864cb46b501cb06235b18db3e9b7d952bf",
+      "reason": "Exact independent historical v1 decoder output: blank EOF, immutable CONTRACT/BODY hashes."
+    },
+    {
+      "path": "runs/online-iid-benchmark-20261008/combined-root-v2.log",
+      "sha256": "849758bfb20ad0af5a6f8db0850be627eaad8f3daaff50e70d8d576a1a8ff453",
+      "reason": "Exact actual Lean verifier stdout contains quoted whitespace; preserve evidence."
+    },
+    {
+      "path": "runs/online-iid-benchmark-20261008/combined-Tests-v2.log",
+      "sha256": "439dcf3799877291c93427b22c192a9ce466d25957ec13b0e3cd3bc0a4f751b0",
+      "reason": "Exact actual Lean verifier stdout contains quoted whitespace; preserve evidence."
+    },
+    {
+      "path": "runs/online-iid-benchmark-20261008/full-harness-v2.log",
+      "sha256": "232dffe9e0081a6be80add86878cf825d35e3e3c972b548e4b2f99334478a607",
+      "reason": "Exact actual harness/Lean stdout contains quoted whitespace; preserve evidence."
+    },
+    {
+      "path": "runs/online-iid-benchmark-20261008/common_v1.py",
+      "sha256": "c4aad9a5e18a6a2554d32ba6fe26ca3eba1303f623aa043d805050bbeaa070f0",
+      "reason": "Exact reviewed protocol helper; ONLY frozen EOF blank-line finding, no executable content defect or edit. Literal CONTRACT/BODY raw binding retained."
+    },
+    {
+      "path": "runs/online-iid-benchmark-20261008/common_reviewed_v2.py",
+      "sha256": "c24fdfeb620234c01b3cb10406b40686b209444c1b40072ffa253300b697a11d",
+      "reason": "Exact reviewed protocol header/hash helper; ONLY frozen EOF blank-line finding, no executable content defect or edit. Literal BODY raw binding retained."
+    },
+    {
+      "path": "runs/online-iid-benchmark-20261008/pre-source-full-diff-v3.log",
+      "sha256": "f60e45613cb7dbbc3f8c22b489d1ea36779f53992e33f9215d3126d4149ce119",
+      "reason": "Exact failed full-whitespace-check stdout quotes original whitespace; preserve failure."
+    }
+  ],
+  "all_public_Tests_readers_contracts_and_nonexempt_helpers_checked": true,
+  "two_frozen_protocol_helpers_exception_only_at_EOF": true,
+  "full_unexcluded_diff_exit": 2,
+  "package_accepted": false,
+  "chapter_complete": false,
+  "goal_complete": false
+}

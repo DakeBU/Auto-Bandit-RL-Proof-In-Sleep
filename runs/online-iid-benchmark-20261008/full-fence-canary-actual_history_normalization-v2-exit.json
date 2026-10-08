@@ -1,0 +1,22 @@
+{
+  "command": [
+    "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe",
+    "-B",
+    "-X",
+    "utf8",
+    "tools/bandit.py",
+    "statement-fence",
+    "--declaration",
+    "Tests.OnlineGuessingIIDBenchmark.actual_history_normalization",
+    "--file",
+    "Tests/OnlineGuessingIIDBenchmarkCanary.lean",
+    "--source-assumption",
+    "theorem actual_history_normalization : (∫ ω, ∑ t ∈ Finset.range 2, (lastPolicy t (fun i => observation i ω) - observation t ω)^2 ∂iidLaw) / 2 - 1 / 4 = expectedFixedRegret iidLaw observation (fun t ω => lastPolicy t (fun i => observation i ω)) 2 / 2",
+    "--output",
+    "E:\\ABRL\\worktrees\\research-online-book\\runs\\online-iid-benchmark-20261008\\full-header-fences-v2\\canary-actual_history_normalization.json"
+  ],
+  "cwd": "E:/ABRL/worktrees/research-online-book",
+  "exit_code": 0,
+  "seconds": 0.21,
+  "log_sha256": "f4257b3e1f046098c415d73eabd25f4be108c28770af3ddd0f91c2b4c337256c"
+}

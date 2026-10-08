@@ -1,0 +1,1 @@
+Candidates: expected_square_decomposition, independent_prediction_square, history_policy_independent, meanPredict_independent/measurable/mem, source_mean_optimal, iid_meanPredict_excess, normalized_excess; note last old IID/mean producers require pointwise support, whereas this new contract will retain a.s. support. Actual native/canonical retrieval and draft compilation pending.

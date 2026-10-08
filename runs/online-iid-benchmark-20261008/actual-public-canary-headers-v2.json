@@ -1,0 +1,254 @@
+[
+  {
+    "name": "BanditRL.OnlineLearning.expected_fixed_prefix_decomposition",
+    "path": "BanditRLProof/OnlineGuessingIIDBenchmark.lean",
+    "header": "theorem expected_fixed_prefix_decomposition {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) (u : ℝ) : (∫ ω, ∑ t ∈ Finset.range T, (u - Y t ω)^2 ∂μ) = (T : ℝ) * variance (Y 0) μ + (T : ℝ) * (u - ∫ ω, Y 0 ω ∂μ)^2",
+    "raw_header": "theorem expected_fixed_prefix_decomposition {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) (u : ℝ) :\n    (∫ ω, ∑ t ∈ Finset.range T, (u - Y t ω)^2 ∂μ) =\n      (T : ℝ) * variance (Y 0) μ +\n        (T : ℝ) * (u - ∫ ω, Y 0 ω ∂μ)^2",
+    "raw_header_sha256": "f679b2010d544ad15ff9daf274f33401be2404b58bfeafba5d12482e322a6e9b"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.expected_fixed_prefix_minimum",
+    "path": "BanditRLProof/OnlineGuessingIIDBenchmark.lean",
+    "header": "theorem expected_fixed_prefix_minimum {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) : (∫ ω, Y 0 ω ∂μ) ∈ Set.Icc (0 : ℝ) 1 ∧ IsLeast ((fun u : ℝ => ∫ ω, ∑ t ∈ Finset.range T, (u - Y t ω)^2 ∂μ) '' Set.Icc (0 : ℝ) 1) ((T : ℝ) * variance (Y 0) μ)",
+    "raw_header": "theorem expected_fixed_prefix_minimum {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) :\n    (∫ ω, Y 0 ω ∂μ) ∈ Set.Icc (0 : ℝ) 1 ∧\n      IsLeast ((fun u : ℝ => ∫ ω, ∑ t ∈ Finset.range T, (u - Y t ω)^2 ∂μ) ''\n        Set.Icc (0 : ℝ) 1) ((T : ℝ) * variance (Y 0) μ)",
+    "raw_header_sha256": "f28c10b0be9d9e9f1217c36845d24c9fc9702547a350125c3701b22108bcd399"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.expectedFixedMinimum_eq_variance",
+    "path": "BanditRLProof/OnlineGuessingIIDBenchmark.lean",
+    "header": "theorem expectedFixedMinimum_eq_variance {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) : expectedFixedMinimum μ Y T = (T : ℝ) * variance (Y 0) μ",
+    "raw_header": "theorem expectedFixedMinimum_eq_variance {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) :\n    expectedFixedMinimum μ Y T = (T : ℝ) * variance (Y 0) μ",
+    "raw_header_sha256": "e0cd18c8e4a8b49f47d43629b0fdbfde2cc7844cff99b8bab5ef8ec39fa0931d"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.iid_cumulative_prediction_decomposition",
+    "path": "BanditRLProof/OnlineGuessingIIDBenchmark.lean",
+    "header": "theorem iid_cumulative_prediction_decomposition {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (prediction : ℕ → Ω → ℝ) (hP : ∀ t, MemLp (prediction t) 2 μ) (hInd : ∀ t, IndepFun (prediction t) (Y t) μ) (T : ℕ) : (∫ ω, ∑ t ∈ Finset.range T, (prediction t ω - Y t ω)^2 ∂μ) - (T : ℝ) * variance (Y 0) μ = ∑ t ∈ Finset.range T, ∫ ω, (prediction t ω - ∫ ω, Y 0 ω ∂μ)^2 ∂μ",
+    "raw_header": "theorem iid_cumulative_prediction_decomposition {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1)\n    (prediction : ℕ → Ω → ℝ)\n    (hP : ∀ t, MemLp (prediction t) 2 μ)\n    (hInd : ∀ t, IndepFun (prediction t) (Y t) μ) (T : ℕ) :\n    (∫ ω, ∑ t ∈ Finset.range T, (prediction t ω - Y t ω)^2 ∂μ) -\n      (T : ℝ) * variance (Y 0) μ =\n        ∑ t ∈ Finset.range T,\n          ∫ ω, (prediction t ω - ∫ ω, Y 0 ω ∂μ)^2 ∂μ",
+    "raw_header_sha256": "9ae0591dd2194fa4bd49e1e75debab9da390d8a08498f6ae51a9c9b9e757683c"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.history_policy_expectedFixed_excess",
+    "path": "BanditRLProof/OnlineGuessingIIDBenchmark.lean",
+    "header": "theorem history_policy_expectedFixed_excess {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (hind : iIndepFun Y μ) (policy : (t : ℕ) → ((↑(Finset.range t) : Type) → ℝ) → ℝ) (hp : ∀ t, Measurable (policy t)) (hpb : ∀ t z, (∀ i, z i ∈ Set.Icc (0 : ℝ) 1) → policy t z ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) : expectedFixedRegret μ Y (fun t ω => policy t (fun i => Y i ω)) T = (∑ t ∈ Finset.range T, ∫ ω, (policy t (fun i => Y i ω) - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) ∧ 0 ≤ expectedFixedRegret μ Y (fun t ω => policy t (fun i => Y i ω)) T",
+    "raw_header": "theorem history_policy_expectedFixed_excess {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1)\n    (hind : iIndepFun Y μ)\n    (policy : (t : ℕ) → ((↑(Finset.range t) : Type) → ℝ) → ℝ)\n    (hp : ∀ t, Measurable (policy t))\n    (hpb : ∀ t z, (∀ i, z i ∈ Set.Icc (0 : ℝ) 1) →\n      policy t z ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) :\n    expectedFixedRegret μ Y (fun t ω => policy t (fun i => Y i ω)) T =\n      (∑ t ∈ Finset.range T,\n        ∫ ω, (policy t (fun i => Y i ω) - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) ∧\n      0 ≤ expectedFixedRegret μ Y (fun t ω => policy t (fun i => Y i ω)) T",
+    "raw_header_sha256": "408d90557c38bf7a56dfbedf8dd4a29ba1b6f82709ee0ebc3c3c170c2e45d003"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.meanPredict_expectedFixed_excess",
+    "path": "BanditRLProof/OnlineGuessingIIDBenchmark.lean",
+    "header": "theorem meanPredict_expectedFixed_excess {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (hind : iIndepFun Y μ) (T : ℕ) : expectedFixedRegret μ Y (fun t ω => meanPredict (fun i => Y i ω) t) T = (∑ t ∈ Finset.range T, ∫ ω, (meanPredict (fun i => Y i ω) t - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) ∧ 0 ≤ expectedFixedRegret μ Y (fun t ω => meanPredict (fun i => Y i ω) t) T",
+    "raw_header": "theorem meanPredict_expectedFixed_excess {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1)\n    (hind : iIndepFun Y μ) (T : ℕ) :\n    expectedFixedRegret μ Y (fun t ω => meanPredict (fun i => Y i ω) t) T =\n      (∑ t ∈ Finset.range T,\n        ∫ ω, (meanPredict (fun i => Y i ω) t - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) ∧\n      0 ≤ expectedFixedRegret μ Y (fun t ω => meanPredict (fun i => Y i ω) t) T",
+    "raw_header_sha256": "f3db89612c65d05ab2699f45ff83d332f648db02fa2d2e717366c1f832298a28"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.constant_mean_expectedFixed_excess_zero",
+    "path": "BanditRLProof/OnlineGuessingIIDBenchmark.lean",
+    "header": "theorem constant_mean_expectedFixed_excess_zero {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) : (∫ ω, Y 0 ω ∂μ) ∈ Set.Icc (0 : ℝ) 1 ∧ expectedFixedRegret μ Y (fun _ _ => ∫ ω, Y 0 ω ∂μ) T = 0",
+    "raw_header": "theorem constant_mean_expectedFixed_excess_zero {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) :\n    (∫ ω, Y 0 ω ∂μ) ∈ Set.Icc (0 : ℝ) 1 ∧\n      expectedFixedRegret μ Y (fun _ _ => ∫ ω, Y 0 ω ∂μ) T = 0",
+    "raw_header_sha256": "142dc336d159094c8948b1645d6dee29994634567d70a9535cec4248f930b726"
+  },
+  {
+    "name": "BanditRL.OnlineLearning.history_policy_normalized_expectedFixed_excess",
+    "path": "BanditRLProof/OnlineGuessingIIDBenchmark.lean",
+    "header": "theorem history_policy_normalized_expectedFixed_excess {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (hind : iIndepFun Y μ) (policy : (t : ℕ) → ((↑(Finset.range t) : Type) → ℝ) → ℝ) (hp : ∀ t, Measurable (policy t)) (hpb : ∀ t z, (∀ i, z i ∈ Set.Icc (0 : ℝ) 1) → policy t z ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) (hT : 0 < T) : (∫ ω, ∑ t ∈ Finset.range T, (policy t (fun i => Y i ω) - Y t ω)^2 ∂μ) / (T : ℝ) - variance (Y 0) μ = expectedFixedRegret μ Y (fun t ω => policy t (fun i => Y i ω)) T / (T : ℝ)",
+    "raw_header": "theorem history_policy_normalized_expectedFixed_excess {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1)\n    (hind : iIndepFun Y μ)\n    (policy : (t : ℕ) → ((↑(Finset.range t) : Type) → ℝ) → ℝ)\n    (hp : ∀ t, Measurable (policy t))\n    (hpb : ∀ t z, (∀ i, z i ∈ Set.Icc (0 : ℝ) 1) →\n      policy t z ∈ Set.Icc (0 : ℝ) 1)\n    (T : ℕ) (hT : 0 < T) :\n    (∫ ω, ∑ t ∈ Finset.range T, (policy t (fun i => Y i ω) - Y t ω)^2 ∂μ) /\n        (T : ℝ) - variance (Y 0) μ =\n      expectedFixedRegret μ Y (fun t ω => policy t (fun i => Y i ω)) T / (T : ℝ)",
+    "raw_header_sha256": "fb575d2e0e5eb5d71368e3a790ec5426e42effd2cb1cd6efb66d971582679bbd"
+  },
+  {
+    "name": "Tests.OnlineGuessingIIDBenchmark.coinLaw_support",
+    "path": "Tests/OnlineGuessingIIDBenchmarkCanary.lean",
+    "header": "theorem coinLaw_support : ∀ᵐ x ∂coinLaw, x ∈ Set.Icc (0 : ℝ) 1",
+    "raw_header": "theorem coinLaw_support : ∀ᵐ x ∂coinLaw, x ∈ Set.Icc (0 : ℝ) 1",
+    "raw_header_sha256": "46d7024ca497ca9633ac246f7c1ba9a0690894c9f435ffeb1c22bc23953b6427"
+  },
+  {
+    "name": "Tests.OnlineGuessingIIDBenchmark.coinLaw_integral",
+    "path": "Tests/OnlineGuessingIIDBenchmarkCanary.lean",
+    "header": "theorem coinLaw_integral (f : ℝ → ℝ) : (∫ x, f x ∂coinLaw) = (f 0 + f 1) / 2",
+    "raw_header": "theorem coinLaw_integral (f : ℝ → ℝ) :\n    (∫ x, f x ∂coinLaw) = (f 0 + f 1) / 2",
+    "raw_header_sha256": "b0203d777893caa90fdd4bea67bf797a28a564a365167c2c83fe781d1f2429e9"
+  },
+  {
+    "name": "Tests.OnlineGuessingIIDBenchmark.observation_measurable",
+    "path": "Tests/OnlineGuessingIIDBenchmarkCanary.lean",
+    "header": "theorem observation_measurable (t : ℕ) : Measurable (observation t)",
+    "raw_header": "theorem observation_measurable (t : ℕ) : Measurable (observation t)",
+    "raw_header_sha256": "6aaa2b7ff7b80c729190259f41fe29e9482e474f433ee0c51f05ed14eab0662b"
+  },
+  {
+    "name": "Tests.OnlineGuessingIIDBenchmark.observation_has_coinLaw",
+    "path": "Tests/OnlineGuessingIIDBenchmarkCanary.lean",
+    "header": "theorem observation_has_coinLaw (t : ℕ) : IdentDistrib (observation t) (fun x : ℝ => x) iidLaw coinLaw",
+    "raw_header": "theorem observation_has_coinLaw (t : ℕ) :\n    IdentDistrib (observation t) (fun x : ℝ => x) iidLaw coinLaw",
+    "raw_header_sha256": "25a50daf797000c109f01a65a708353bce703609d2c736d31d81b0238c10d87b"
+  },
+  {
+    "name": "Tests.OnlineGuessingIIDBenchmark.observation_sameLaw",
+    "path": "Tests/OnlineGuessingIIDBenchmarkCanary.lean",
+    "header": "theorem observation_sameLaw (t : ℕ) : IdentDistrib (observation t) (observation 0) iidLaw iidLaw",
+    "raw_header": "theorem observation_sameLaw (t : ℕ) :\n    IdentDistrib (observation t) (observation 0) iidLaw iidLaw",
+    "raw_header_sha256": "0d5f32b8d300d4917199865d67dc5fa1e84911a06097345ca25fa04582a7dff0"
+  },
+  {
+    "name": "Tests.OnlineGuessingIIDBenchmark.observation_support",
+    "path": "Tests/OnlineGuessingIIDBenchmarkCanary.lean",
+    "header": "theorem observation_support (t : ℕ) : ∀ᵐ ω ∂iidLaw, observation t ω ∈ Set.Icc (0 : ℝ) 1",
+    "raw_header": "theorem observation_support (t : ℕ) :\n    ∀ᵐ ω ∂iidLaw, observation t ω ∈ Set.Icc (0 : ℝ) 1",
+    "raw_header_sha256": "c3c807e1d0ce4a77b74676b5f6fc47627b3df300c57f0f760bc975a9a6212a9a"
+  },
+  {
+    "name": "Tests.OnlineGuessingIIDBenchmark.observation_independent",
+    "path": "Tests/OnlineGuessingIIDBenchmarkCanary.lean",
+    "header": "theorem observation_independent : iIndepFun observation iidLaw",
+    "raw_header": "theorem observation_independent : iIndepFun observation iidLaw",
+    "raw_header_sha256": "ae3cc2b29a5eedf9325e49a7b691a1c8d30a6086811418d77bc514e8c98e2857"
+  },
+  {
+    "name": "Tests.OnlineGuessingIIDBenchmark.observation_mean",
+    "path": "Tests/OnlineGuessingIIDBenchmarkCanary.lean",
+    "header": "theorem observation_mean (t : ℕ) : (∫ ω, observation t ω ∂iidLaw) = 1 / 2",
+    "raw_header": "theorem observation_mean (t : ℕ) : (∫ ω, observation t ω ∂iidLaw) = 1 / 2",
+    "raw_header_sha256": "fd87ef123c52ab68955cca12a9a200b53097dee8abda1c5571d12f4af769f4d1"
+  },
+  {
+    "name": "Tests.OnlineGuessingIIDBenchmark.observation_variance",
+    "path": "Tests/OnlineGuessingIIDBenchmarkCanary.lean",
+    "header": "theorem observation_variance (t : ℕ) : variance (observation t) iidLaw = 1 / 4",
+    "raw_header": "theorem observation_variance (t : ℕ) : variance (observation t) iidLaw = 1 / 4",
+    "raw_header_sha256": "151a2bebae7631c815c09e5d88a6ec9d7d681ef2912edc37b6600e78ce60f84e"
+  },
+  {
+    "name": "Tests.OnlineGuessingIIDBenchmark.support_is_not_pointwise",
+    "path": "Tests/OnlineGuessingIIDBenchmarkCanary.lean",
+    "header": "theorem support_is_not_pointwise : ¬ (∀ t ω, observation t ω ∈ Set.Icc (0 : ℝ) 1)",
+    "raw_header": "theorem support_is_not_pointwise :\n    ¬ (∀ t ω, observation t ω ∈ Set.Icc (0 : ℝ) 1)",
+    "raw_header_sha256": "1ec0ca5b43e8fc6973e79e8ff56aa809012b026383a580b7dd13c3e97ee5b1a5"
+  },
+  {
+    "name": "Tests.OnlineGuessingIIDBenchmark.empty_minimum",
+    "path": "Tests/OnlineGuessingIIDBenchmarkCanary.lean",
+    "header": "theorem empty_minimum : expectedFixedMinimum iidLaw observation 0 = 0",
+    "raw_header": "theorem empty_minimum : expectedFixedMinimum iidLaw observation 0 = 0",
+    "raw_header_sha256": "ad1cc689f1b9e07affa37f5e482e8ecf993416f4ac07411cf358ff8f900d552c"
+  },
+  {
+    "name": "Tests.OnlineGuessingIIDBenchmark.two_round_fixed_minimum",
+    "path": "Tests/OnlineGuessingIIDBenchmarkCanary.lean",
+    "header": "theorem two_round_fixed_minimum : expectedFixedMinimum iidLaw observation 2 = 1 / 2",
+    "raw_header": "theorem two_round_fixed_minimum : expectedFixedMinimum iidLaw observation 2 = 1 / 2",
+    "raw_header_sha256": "1e010e7bd0fecb11429cb51cabb64583a77db0cb53cc13530eb2d5b016a9cbd2"
+  },
+  {
+    "name": "Tests.OnlineGuessingIIDBenchmark.actual_mean_attainment",
+    "path": "Tests/OnlineGuessingIIDBenchmarkCanary.lean",
+    "header": "theorem actual_mean_attainment : IsLeast ((fun u : ℝ => ∫ ω, ∑ t ∈ Finset.range 2, (u - observation t ω)^2 ∂iidLaw) '' Set.Icc (0 : ℝ) 1) (1 / 2)",
+    "raw_header": "theorem actual_mean_attainment :\n    IsLeast ((fun u : ℝ => ∫ ω, ∑ t ∈ Finset.range 2, (u - observation t ω)^2 ∂iidLaw) ''\n      Set.Icc (0 : ℝ) 1) (1 / 2)",
+    "raw_header_sha256": "b28cc734934b74be83ab3b8497bd8cfb0a7a61387a7be7169ecd99aa39137a4c"
+  },
+  {
+    "name": "Tests.OnlineGuessingIIDBenchmark.actual_meanPredict_nonnegative",
+    "path": "Tests/OnlineGuessingIIDBenchmarkCanary.lean",
+    "header": "theorem actual_meanPredict_nonnegative (T : ℕ) : 0 ≤ expectedFixedRegret iidLaw observation (fun t ω => meanPredict ω t) T",
+    "raw_header": "theorem actual_meanPredict_nonnegative (T : ℕ) :\n    0 ≤ expectedFixedRegret iidLaw observation (fun t ω => meanPredict ω t) T",
+    "raw_header_sha256": "b31847374413b877212c32ae0dc215232a18875890c7115457f2736d24d549d6"
+  },
+  {
+    "name": "Tests.OnlineGuessingIIDBenchmark.meanPredict_two_round_excess",
+    "path": "Tests/OnlineGuessingIIDBenchmarkCanary.lean",
+    "header": "theorem meanPredict_two_round_excess : expectedFixedRegret iidLaw observation (fun t ω => meanPredict ω t) 2 = 1 / 4",
+    "raw_header": "theorem meanPredict_two_round_excess :\n    expectedFixedRegret iidLaw observation (fun t ω => meanPredict ω t) 2 = 1 / 4",
+    "raw_header_sha256": "a0812f625c1df94d5c79ccb54cacf834f3a89bd9aad9684b6457d388df5b1c2a"
+  },
+  {
+    "name": "Tests.OnlineGuessingIIDBenchmark.constant_known_mean_zero",
+    "path": "Tests/OnlineGuessingIIDBenchmarkCanary.lean",
+    "header": "theorem constant_known_mean_zero (T : ℕ) : expectedFixedRegret iidLaw observation (fun _ _ => (1 / 2 : ℝ)) T = 0",
+    "raw_header": "theorem constant_known_mean_zero (T : ℕ) :\n    expectedFixedRegret iidLaw observation (fun _ _ => (1 / 2 : ℝ)) T = 0",
+    "raw_header_sha256": "3be99604c127b974d1206b2c2dfdc6df86323b360fae1cc5d64d58538272517d"
+  },
+  {
+    "name": "Tests.OnlineGuessingIIDBenchmark.lastPolicy_measurable",
+    "path": "Tests/OnlineGuessingIIDBenchmarkCanary.lean",
+    "header": "theorem lastPolicy_measurable (t : ℕ) : Measurable (lastPolicy t)",
+    "raw_header": "theorem lastPolicy_measurable (t : ℕ) : Measurable (lastPolicy t)",
+    "raw_header_sha256": "07a38da22497d7d91013a88c592688a26ad2cdfd429fce07fed01d9cf4cf4ceb"
+  },
+  {
+    "name": "Tests.OnlineGuessingIIDBenchmark.lastPolicy_legal",
+    "path": "Tests/OnlineGuessingIIDBenchmarkCanary.lean",
+    "header": "theorem lastPolicy_legal (t : ℕ) (z : (↑(Finset.range t) : Type) → ℝ) (hz : ∀ i, z i ∈ Set.Icc (0 : ℝ) 1) : lastPolicy t z ∈ Set.Icc (0 : ℝ) 1",
+    "raw_header": "theorem lastPolicy_legal (t : ℕ) (z : (↑(Finset.range t) : Type) → ℝ)\n    (hz : ∀ i, z i ∈ Set.Icc (0 : ℝ) 1) : lastPolicy t z ∈ Set.Icc (0 : ℝ) 1",
+    "raw_header_sha256": "f675da39259f370935e6a3e22c125399adc01506067fdb5a0a5eb519e12625ac"
+  },
+  {
+    "name": "Tests.OnlineGuessingIIDBenchmark.lastPolicy_not_globally_bounded",
+    "path": "Tests/OnlineGuessingIIDBenchmarkCanary.lean",
+    "header": "theorem lastPolicy_not_globally_bounded : ¬ (∀ t z, lastPolicy t z ∈ Set.Icc (0 : ℝ) 1)",
+    "raw_header": "theorem lastPolicy_not_globally_bounded :\n    ¬ (∀ t z, lastPolicy t z ∈ Set.Icc (0 : ℝ) 1)",
+    "raw_header_sha256": "a04687c77ed303ca6253b3a0498b0e434311871dcd131a06bd820eb71560ba26"
+  },
+  {
+    "name": "Tests.OnlineGuessingIIDBenchmark.actual_history_independent",
+    "path": "Tests/OnlineGuessingIIDBenchmarkCanary.lean",
+    "header": "theorem actual_history_independent (t : ℕ) : IndepFun (fun ω => lastPolicy t (fun i => observation i ω)) (observation t) iidLaw",
+    "raw_header": "theorem actual_history_independent (t : ℕ) :\n    IndepFun (fun ω => lastPolicy t (fun i => observation i ω)) (observation t) iidLaw",
+    "raw_header_sha256": "01eb49dbfda26109934639c88cf62155f763344c40f070397c2cd91f809cd42b"
+  },
+  {
+    "name": "Tests.OnlineGuessingIIDBenchmark.actual_history_nonnegative",
+    "path": "Tests/OnlineGuessingIIDBenchmarkCanary.lean",
+    "header": "theorem actual_history_nonnegative (T : ℕ) : 0 ≤ expectedFixedRegret iidLaw observation (fun t ω => lastPolicy t (fun i => observation i ω)) T",
+    "raw_header": "theorem actual_history_nonnegative (T : ℕ) :\n    0 ≤ expectedFixedRegret iidLaw observation (fun t ω => lastPolicy t (fun i => observation i ω)) T",
+    "raw_header_sha256": "d2b8ce6ddc39d6e855eb3983e76833b0ffe206cebe0aec7476ab8083840d6fe8"
+  },
+  {
+    "name": "Tests.OnlineGuessingIIDBenchmark.actual_history_normalization",
+    "path": "Tests/OnlineGuessingIIDBenchmarkCanary.lean",
+    "header": "theorem actual_history_normalization : (∫ ω, ∑ t ∈ Finset.range 2, (lastPolicy t (fun i => observation i ω) - observation t ω)^2 ∂iidLaw) / 2 - 1 / 4 = expectedFixedRegret iidLaw observation (fun t ω => lastPolicy t (fun i => observation i ω)) 2 / 2",
+    "raw_header": "theorem actual_history_normalization :\n    (∫ ω, ∑ t ∈ Finset.range 2,\n      (lastPolicy t (fun i => observation i ω) - observation t ω)^2 ∂iidLaw) / 2 - 1 / 4 =\n        expectedFixedRegret iidLaw observation (fun t ω => lastPolicy t (fun i => observation i ω)) 2 / 2",
+    "raw_header_sha256": "553fc62cc925a184cbf833f8653def0991d1f1df98333c5df8ce7eb932e254ce"
+  },
+  {
+    "name": "Tests.OnlineGuessingIIDBenchmark.repeated_target_fixed_minimum",
+    "path": "Tests/OnlineGuessingIIDBenchmarkCanary.lean",
+    "header": "theorem repeated_target_fixed_minimum (T : ℕ) : expectedFixedMinimum iidLaw (fun _ => observation 0) T = (T : ℝ) / 4",
+    "raw_header": "theorem repeated_target_fixed_minimum (T : ℕ) :\n    expectedFixedMinimum iidLaw (fun _ => observation 0) T = (T : ℝ) / 4",
+    "raw_header_sha256": "dd65d4435423b1e82f6b9eaf1ead81fa5e67f277df273cc98a500e43a4352a0b"
+  },
+  {
+    "name": "Tests.OnlineGuessingIIDBenchmark.infeasible_fixed_comparator_two",
+    "path": "Tests/OnlineGuessingIIDBenchmarkCanary.lean",
+    "header": "theorem infeasible_fixed_comparator_two : (∫ ω, ∑ t ∈ Finset.range 2, ((2 : ℝ) - observation t ω)^2 ∂iidLaw) = 5",
+    "raw_header": "theorem infeasible_fixed_comparator_two :\n    (∫ ω, ∑ t ∈ Finset.range 2, ((2 : ℝ) - observation t ω)^2 ∂iidLaw) = 5",
+    "raw_header_sha256": "d8371770ba0e6da4332439d9cf5a11e49bf3fb8d5b77ff81f7c2af65bb048861"
+  },
+  {
+    "name": "Tests.OnlineGuessingIIDBenchmark.independent_difference_square",
+    "path": "Tests/OnlineGuessingIIDBenchmarkCanary.lean",
+    "header": "theorem independent_difference_square : (∫ ω, (observation 0 ω - observation 1 ω)^2 ∂iidLaw) = 1 / 2",
+    "raw_header": "theorem independent_difference_square :\n    (∫ ω, (observation 0 ω - observation 1 ω)^2 ∂iidLaw) = 1 / 2",
+    "raw_header_sha256": "927da350e8e0eb1e0fb3bfca66cb153561d5f155aa0d9d4719f0c53a60abbca9"
+  },
+  {
+    "name": "Tests.OnlineGuessingIIDBenchmark.hindsight_minimum_two",
+    "path": "Tests/OnlineGuessingIIDBenchmarkCanary.lean",
+    "header": "theorem hindsight_minimum_two : (∫ ω, hindsightMinimum ω 2 ∂iidLaw) = 1 / 4",
+    "raw_header": "theorem hindsight_minimum_two : (∫ ω, hindsightMinimum ω 2 ∂iidLaw) = 1 / 4",
+    "raw_header_sha256": "a28d5c4215e3fa763342876859d93aa7f7c1715820b478de0d75d07e60fdf836"
+  },
+  {
+    "name": "Tests.OnlineGuessingIIDBenchmark.min_and_expectation_do_not_commute",
+    "path": "Tests/OnlineGuessingIIDBenchmarkCanary.lean",
+    "header": "theorem min_and_expectation_do_not_commute : (∫ ω, hindsightMinimum ω 2 ∂iidLaw) < expectedFixedMinimum iidLaw observation 2",
+    "raw_header": "theorem min_and_expectation_do_not_commute :\n    (∫ ω, hindsightMinimum ω 2 ∂iidLaw) < expectedFixedMinimum iidLaw observation 2",
+    "raw_header_sha256": "cd0d3c0e40173509941ea50766d19ca0600639eb23fbbb7a10204f0b4a7e907d"
+  },
+  {
+    "name": "Tests.OnlineGuessingIIDBenchmark.current_target_cheating_negative",
+    "path": "Tests/OnlineGuessingIIDBenchmarkCanary.lean",
+    "header": "theorem current_target_cheating_negative : expectedFixedRegret iidLaw observation observation 2 = -1 / 2",
+    "raw_header": "theorem current_target_cheating_negative :\n    expectedFixedRegret iidLaw observation observation 2 = -1 / 2",
+    "raw_header_sha256": "3e36fade0572e26148c48b6d1ec3fe431478635edb4c9a263cecb1b0824f68f9"
+  }
+]

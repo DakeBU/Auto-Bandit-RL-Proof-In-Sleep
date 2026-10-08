@@ -1,0 +1,22 @@
+{
+  "command": [
+    "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe",
+    "-B",
+    "-X",
+    "utf8",
+    "tools/bandit.py",
+    "statement-fence",
+    "--declaration",
+    "BanditRL.OnlineLearning.meanPredict_expectedFixed_excess",
+    "--file",
+    "BanditRLProof/OnlineGuessingIIDBenchmark.lean",
+    "--source-assumption",
+    "theorem meanPredict_expectedFixed_excess {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (hind : iIndepFun Y μ) (T : ℕ) : expectedFixedRegret μ Y (fun t ω => meanPredict (fun i => Y i ω) t) T = (∑ t ∈ Finset.range T, ∫ ω, (meanPredict (fun i => Y i ω) t - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) ∧ 0 ≤ expectedFixedRegret μ Y (fun t ω => meanPredict (fun i => Y i ω) t) T",
+    "--output",
+    "E:\\ABRL\\worktrees\\research-online-book\\runs\\online-iid-benchmark-20261008\\full-header-fences-v2\\public-meanPredict_expectedFixed_excess.json"
+  ],
+  "cwd": "E:/ABRL/worktrees/research-online-book",
+  "exit_code": 0,
+  "seconds": 0.223,
+  "log_sha256": "0ae0ba993040cc87566700a994c7fb81b5558c46d98c0f4aa447c3b6334ccf46"
+}

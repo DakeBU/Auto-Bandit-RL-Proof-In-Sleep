@@ -1,0 +1,287 @@
+BanditRL.OnlineLearning.expected_fixed_prefix_decomposition.{u_1} {Ω : Type u_1} [MeasurableSpace Ω]
+  (μ : MeasureTheory.Measure Ω) [MeasureTheory.IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)
+  (hY : ∀ (t : ℕ), Measurable (Y t)) (hlaw : ∀ (t : ℕ), ProbabilityTheory.IdentDistrib (Y t) (Y 0) μ μ)
+  (hb : ∀ (t : ℕ), ∀ᵐ (ω : Ω) ∂μ, Y t ω ∈ Set.Icc 0 1) (T : ℕ) (u : ℝ) :
+  ∫ (ω : Ω), ∑ t ∈ Finset.range T, (u - Y t ω) ^ 2 ∂μ =
+    ↑T * ProbabilityTheory.variance (Y 0) μ + ↑T * (u - ∫ (ω : Ω), Y 0 ω ∂μ) ^ 2
+'BanditRL.OnlineLearning.expected_fixed_prefix_decomposition' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.expected_fixed_prefix_minimum.{u_1} {Ω : Type u_1} [MeasurableSpace Ω]
+  (μ : MeasureTheory.Measure Ω) [MeasureTheory.IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)
+  (hY : ∀ (t : ℕ), Measurable (Y t)) (hlaw : ∀ (t : ℕ), ProbabilityTheory.IdentDistrib (Y t) (Y 0) μ μ)
+  (hb : ∀ (t : ℕ), ∀ᵐ (ω : Ω) ∂μ, Y t ω ∈ Set.Icc 0 1) (T : ℕ) :
+  ∫ (ω : Ω), Y 0 ω ∂μ ∈ Set.Icc 0 1 ∧
+    IsLeast ((fun u => ∫ (ω : Ω), ∑ t ∈ Finset.range T, (u - Y t ω) ^ 2 ∂μ) '' Set.Icc 0 1)
+      (↑T * ProbabilityTheory.variance (Y 0) μ)
+'BanditRL.OnlineLearning.expected_fixed_prefix_minimum' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.expectedFixedMinimum_eq_variance.{u_1} {Ω : Type u_1} [MeasurableSpace Ω]
+  (μ : MeasureTheory.Measure Ω) [MeasureTheory.IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)
+  (hY : ∀ (t : ℕ), Measurable (Y t)) (hlaw : ∀ (t : ℕ), ProbabilityTheory.IdentDistrib (Y t) (Y 0) μ μ)
+  (hb : ∀ (t : ℕ), ∀ᵐ (ω : Ω) ∂μ, Y t ω ∈ Set.Icc 0 1) (T : ℕ) :
+  BanditRL.OnlineLearning.expectedFixedMinimum μ Y T = ↑T * ProbabilityTheory.variance (Y 0) μ
+'BanditRL.OnlineLearning.expectedFixedMinimum_eq_variance' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.iid_cumulative_prediction_decomposition.{u_1} {Ω : Type u_1} [MeasurableSpace Ω]
+  (μ : MeasureTheory.Measure Ω) [MeasureTheory.IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)
+  (hY : ∀ (t : ℕ), Measurable (Y t)) (hlaw : ∀ (t : ℕ), ProbabilityTheory.IdentDistrib (Y t) (Y 0) μ μ)
+  (hb : ∀ (t : ℕ), ∀ᵐ (ω : Ω) ∂μ, Y t ω ∈ Set.Icc 0 1) (prediction : ℕ → Ω → ℝ)
+  (hP : ∀ (t : ℕ), MeasureTheory.MemLp (prediction t) 2 μ)
+  (hInd : ∀ (t : ℕ), ProbabilityTheory.IndepFun (prediction t) (Y t) μ) (T : ℕ) :
+  ∫ (ω : Ω), ∑ t ∈ Finset.range T, (prediction t ω - Y t ω) ^ 2 ∂μ - ↑T * ProbabilityTheory.variance (Y 0) μ =
+    ∑ t ∈ Finset.range T, ∫ (ω : Ω), (prediction t ω - ∫ (ω : Ω), Y 0 ω ∂μ) ^ 2 ∂μ
+'BanditRL.OnlineLearning.iid_cumulative_prediction_decomposition' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BanditRL.OnlineLearning.history_policy_expectedFixed_excess.{u_1} {Ω : Type u_1} [MeasurableSpace Ω]
+  (μ : MeasureTheory.Measure Ω) [MeasureTheory.IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)
+  (hY : ∀ (t : ℕ), Measurable (Y t)) (hlaw : ∀ (t : ℕ), ProbabilityTheory.IdentDistrib (Y t) (Y 0) μ μ)
+  (hb : ∀ (t : ℕ), ∀ᵐ (ω : Ω) ∂μ, Y t ω ∈ Set.Icc 0 1) (hind : ProbabilityTheory.iIndepFun Y μ)
+  (policy : (t : ℕ) → (↥(Finset.range t) → ℝ) → ℝ) (hp : ∀ (t : ℕ), Measurable (policy t))
+  (hpb :
+    ∀ (t : ℕ) (z : ↥(Finset.range t) → ℝ), (∀ (i : ↥(Finset.range t)), z i ∈ Set.Icc 0 1) → policy t z ∈ Set.Icc 0 1)
+  (T : ℕ) :
+  BanditRL.OnlineLearning.expectedFixedRegret μ Y (fun t ω => policy t fun i => Y (↑i) ω) T =
+      ∑ t ∈ Finset.range T, ∫ (ω : Ω), ((policy t fun i => Y (↑i) ω) - ∫ (ω : Ω), Y 0 ω ∂μ) ^ 2 ∂μ ∧
+    0 ≤ BanditRL.OnlineLearning.expectedFixedRegret μ Y (fun t ω => policy t fun i => Y (↑i) ω) T
+'BanditRL.OnlineLearning.history_policy_expectedFixed_excess' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.meanPredict_expectedFixed_excess.{u_1} {Ω : Type u_1} [MeasurableSpace Ω]
+  (μ : MeasureTheory.Measure Ω) [MeasureTheory.IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)
+  (hY : ∀ (t : ℕ), Measurable (Y t)) (hlaw : ∀ (t : ℕ), ProbabilityTheory.IdentDistrib (Y t) (Y 0) μ μ)
+  (hb : ∀ (t : ℕ), ∀ᵐ (ω : Ω) ∂μ, Y t ω ∈ Set.Icc 0 1) (hind : ProbabilityTheory.iIndepFun Y μ) (T : ℕ) :
+  BanditRL.OnlineLearning.expectedFixedRegret μ Y (fun t ω => BanditRL.OnlineLearning.meanPredict (fun i => Y i ω) t)
+        T =
+      ∑ t ∈ Finset.range T,
+        ∫ (ω : Ω), (BanditRL.OnlineLearning.meanPredict (fun i => Y i ω) t - ∫ (ω : Ω), Y 0 ω ∂μ) ^ 2 ∂μ ∧
+    0 ≤
+      BanditRL.OnlineLearning.expectedFixedRegret μ Y
+        (fun t ω => BanditRL.OnlineLearning.meanPredict (fun i => Y i ω) t) T
+'BanditRL.OnlineLearning.meanPredict_expectedFixed_excess' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.constant_mean_expectedFixed_excess_zero.{u_1} {Ω : Type u_1} [MeasurableSpace Ω]
+  (μ : MeasureTheory.Measure Ω) [MeasureTheory.IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)
+  (hY : ∀ (t : ℕ), Measurable (Y t)) (hlaw : ∀ (t : ℕ), ProbabilityTheory.IdentDistrib (Y t) (Y 0) μ μ)
+  (hb : ∀ (t : ℕ), ∀ᵐ (ω : Ω) ∂μ, Y t ω ∈ Set.Icc 0 1) (T : ℕ) :
+  ∫ (ω : Ω), Y 0 ω ∂μ ∈ Set.Icc 0 1 ∧
+    BanditRL.OnlineLearning.expectedFixedRegret μ Y (fun x x_1 => ∫ (ω : Ω), Y 0 ω ∂μ) T = 0
+'BanditRL.OnlineLearning.constant_mean_expectedFixed_excess_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BanditRL.OnlineLearning.history_policy_normalized_expectedFixed_excess.{u_1} {Ω : Type u_1} [MeasurableSpace Ω]
+  (μ : MeasureTheory.Measure Ω) [MeasureTheory.IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)
+  (hY : ∀ (t : ℕ), Measurable (Y t)) (hlaw : ∀ (t : ℕ), ProbabilityTheory.IdentDistrib (Y t) (Y 0) μ μ)
+  (hb : ∀ (t : ℕ), ∀ᵐ (ω : Ω) ∂μ, Y t ω ∈ Set.Icc 0 1) (hind : ProbabilityTheory.iIndepFun Y μ)
+  (policy : (t : ℕ) → (↥(Finset.range t) → ℝ) → ℝ) (hp : ∀ (t : ℕ), Measurable (policy t))
+  (hpb :
+    ∀ (t : ℕ) (z : ↥(Finset.range t) → ℝ), (∀ (i : ↥(Finset.range t)), z i ∈ Set.Icc 0 1) → policy t z ∈ Set.Icc 0 1)
+  (T : ℕ) (hT : 0 < T) :
+  (∫ (ω : Ω), ∑ t ∈ Finset.range T, ((policy t fun i => Y (↑i) ω) - Y t ω) ^ 2 ∂μ) / ↑T -
+      ProbabilityTheory.variance (Y 0) μ =
+    BanditRL.OnlineLearning.expectedFixedRegret μ Y (fun t ω => policy t fun i => Y (↑i) ω) T / ↑T
+'BanditRL.OnlineLearning.history_policy_normalized_expectedFixed_excess' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Tests.OnlineGuessingIIDBenchmark.coinLaw_support : ∀ᵐ (x : ℝ) ∂Tests.OnlineGuessingIIDBenchmark.coinLaw, x ∈ Set.Icc 0 1
+'Tests.OnlineGuessingIIDBenchmark.coinLaw_support' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingIIDBenchmark.coinLaw_integral (f : ℝ → ℝ) :
+  ∫ (x : ℝ), f x ∂Tests.OnlineGuessingIIDBenchmark.coinLaw = (f 0 + f 1) / 2
+'Tests.OnlineGuessingIIDBenchmark.coinLaw_integral' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingIIDBenchmark.observation_measurable (t : ℕ) :
+  Measurable (Tests.OnlineGuessingIIDBenchmark.observation t)
+'Tests.OnlineGuessingIIDBenchmark.observation_measurable' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingIIDBenchmark.observation_has_coinLaw (t : ℕ) :
+  ProbabilityTheory.IdentDistrib (Tests.OnlineGuessingIIDBenchmark.observation t) (fun x => x)
+    Tests.OnlineGuessingIIDBenchmark.iidLaw Tests.OnlineGuessingIIDBenchmark.coinLaw
+'Tests.OnlineGuessingIIDBenchmark.observation_has_coinLaw' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingIIDBenchmark.observation_sameLaw (t : ℕ) :
+  ProbabilityTheory.IdentDistrib (Tests.OnlineGuessingIIDBenchmark.observation t)
+    (Tests.OnlineGuessingIIDBenchmark.observation 0) Tests.OnlineGuessingIIDBenchmark.iidLaw
+    Tests.OnlineGuessingIIDBenchmark.iidLaw
+'Tests.OnlineGuessingIIDBenchmark.observation_sameLaw' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingIIDBenchmark.observation_support (t : ℕ) :
+  ∀ᵐ (ω : ℕ → ℝ) ∂Tests.OnlineGuessingIIDBenchmark.iidLaw,
+    Tests.OnlineGuessingIIDBenchmark.observation t ω ∈ Set.Icc 0 1
+'Tests.OnlineGuessingIIDBenchmark.observation_support' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingIIDBenchmark.observation_independent :
+  ProbabilityTheory.iIndepFun Tests.OnlineGuessingIIDBenchmark.observation Tests.OnlineGuessingIIDBenchmark.iidLaw
+'Tests.OnlineGuessingIIDBenchmark.observation_independent' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingIIDBenchmark.observation_mean (t : ℕ) :
+  ∫ (ω : ℕ → ℝ), Tests.OnlineGuessingIIDBenchmark.observation t ω ∂Tests.OnlineGuessingIIDBenchmark.iidLaw = 1 / 2
+'Tests.OnlineGuessingIIDBenchmark.observation_mean' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingIIDBenchmark.observation_variance (t : ℕ) :
+  ProbabilityTheory.variance (Tests.OnlineGuessingIIDBenchmark.observation t) Tests.OnlineGuessingIIDBenchmark.iidLaw =
+    1 / 4
+'Tests.OnlineGuessingIIDBenchmark.observation_variance' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingIIDBenchmark.support_is_not_pointwise :
+  ¬∀ (t : ℕ) (ω : ℕ → ℝ), Tests.OnlineGuessingIIDBenchmark.observation t ω ∈ Set.Icc 0 1
+'Tests.OnlineGuessingIIDBenchmark.support_is_not_pointwise' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingIIDBenchmark.empty_minimum :
+  BanditRL.OnlineLearning.expectedFixedMinimum Tests.OnlineGuessingIIDBenchmark.iidLaw
+      Tests.OnlineGuessingIIDBenchmark.observation 0 =
+    0
+'Tests.OnlineGuessingIIDBenchmark.empty_minimum' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingIIDBenchmark.two_round_fixed_minimum :
+  BanditRL.OnlineLearning.expectedFixedMinimum Tests.OnlineGuessingIIDBenchmark.iidLaw
+      Tests.OnlineGuessingIIDBenchmark.observation 2 =
+    1 / 2
+'Tests.OnlineGuessingIIDBenchmark.two_round_fixed_minimum' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingIIDBenchmark.actual_mean_attainment :
+  IsLeast
+    ((fun u =>
+        ∫ (ω : ℕ → ℝ),
+          ∑ t ∈ Finset.range 2,
+            (u - Tests.OnlineGuessingIIDBenchmark.observation t ω) ^ 2 ∂Tests.OnlineGuessingIIDBenchmark.iidLaw) ''
+      Set.Icc 0 1)
+    (1 / 2)
+'Tests.OnlineGuessingIIDBenchmark.actual_mean_attainment' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingIIDBenchmark.actual_meanPredict_nonnegative (T : ℕ) :
+  0 ≤
+    BanditRL.OnlineLearning.expectedFixedRegret Tests.OnlineGuessingIIDBenchmark.iidLaw
+      Tests.OnlineGuessingIIDBenchmark.observation (fun t ω => BanditRL.OnlineLearning.meanPredict ω t) T
+'Tests.OnlineGuessingIIDBenchmark.actual_meanPredict_nonnegative' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Tests.OnlineGuessingIIDBenchmark.meanPredict_two_round_excess :
+  BanditRL.OnlineLearning.expectedFixedRegret Tests.OnlineGuessingIIDBenchmark.iidLaw
+      Tests.OnlineGuessingIIDBenchmark.observation (fun t ω => BanditRL.OnlineLearning.meanPredict ω t) 2 =
+    1 / 4
+'Tests.OnlineGuessingIIDBenchmark.meanPredict_two_round_excess' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Tests.OnlineGuessingIIDBenchmark.constant_known_mean_zero (T : ℕ) :
+  BanditRL.OnlineLearning.expectedFixedRegret Tests.OnlineGuessingIIDBenchmark.iidLaw
+      Tests.OnlineGuessingIIDBenchmark.observation (fun x x_1 => 1 / 2) T =
+    0
+'Tests.OnlineGuessingIIDBenchmark.constant_known_mean_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingIIDBenchmark.lastPolicy_measurable (t : ℕ) :
+  Measurable (Tests.OnlineGuessingIIDBenchmark.lastPolicy t)
+'Tests.OnlineGuessingIIDBenchmark.lastPolicy_measurable' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingIIDBenchmark.lastPolicy_legal (t : ℕ) (z : ↥(Finset.range t) → ℝ)
+  (hz : ∀ (i : ↥(Finset.range t)), z i ∈ Set.Icc 0 1) : Tests.OnlineGuessingIIDBenchmark.lastPolicy t z ∈ Set.Icc 0 1
+'Tests.OnlineGuessingIIDBenchmark.lastPolicy_legal' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingIIDBenchmark.lastPolicy_not_globally_bounded :
+  ¬∀ (t : ℕ) (z : ↥(Finset.range t) → ℝ), Tests.OnlineGuessingIIDBenchmark.lastPolicy t z ∈ Set.Icc 0 1
+'Tests.OnlineGuessingIIDBenchmark.lastPolicy_not_globally_bounded' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Tests.OnlineGuessingIIDBenchmark.actual_history_independent (t : ℕ) :
+  ProbabilityTheory.IndepFun
+    (fun ω =>
+      Tests.OnlineGuessingIIDBenchmark.lastPolicy t fun i => Tests.OnlineGuessingIIDBenchmark.observation (↑i) ω)
+    (Tests.OnlineGuessingIIDBenchmark.observation t) Tests.OnlineGuessingIIDBenchmark.iidLaw
+'Tests.OnlineGuessingIIDBenchmark.actual_history_independent' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingIIDBenchmark.actual_history_nonnegative (T : ℕ) :
+  0 ≤
+    BanditRL.OnlineLearning.expectedFixedRegret Tests.OnlineGuessingIIDBenchmark.iidLaw
+      Tests.OnlineGuessingIIDBenchmark.observation
+      (fun t ω =>
+        Tests.OnlineGuessingIIDBenchmark.lastPolicy t fun i => Tests.OnlineGuessingIIDBenchmark.observation (↑i) ω)
+      T
+'Tests.OnlineGuessingIIDBenchmark.actual_history_nonnegative' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingIIDBenchmark.actual_history_normalization :
+  (∫ (ω : ℕ → ℝ),
+          ∑ t ∈ Finset.range 2,
+            ((Tests.OnlineGuessingIIDBenchmark.lastPolicy t fun i =>
+                  Tests.OnlineGuessingIIDBenchmark.observation (↑i) ω) -
+                Tests.OnlineGuessingIIDBenchmark.observation t ω) ^
+              2 ∂Tests.OnlineGuessingIIDBenchmark.iidLaw) /
+        2 -
+      1 / 4 =
+    BanditRL.OnlineLearning.expectedFixedRegret Tests.OnlineGuessingIIDBenchmark.iidLaw
+        Tests.OnlineGuessingIIDBenchmark.observation
+        (fun t ω =>
+          Tests.OnlineGuessingIIDBenchmark.lastPolicy t fun i => Tests.OnlineGuessingIIDBenchmark.observation (↑i) ω)
+        2 /
+      2
+'Tests.OnlineGuessingIIDBenchmark.actual_history_normalization' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Tests.OnlineGuessingIIDBenchmark.repeated_target_fixed_minimum (T : ℕ) :
+  BanditRL.OnlineLearning.expectedFixedMinimum Tests.OnlineGuessingIIDBenchmark.iidLaw
+      (fun x => Tests.OnlineGuessingIIDBenchmark.observation 0) T =
+    ↑T / 4
+'Tests.OnlineGuessingIIDBenchmark.repeated_target_fixed_minimum' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Tests.OnlineGuessingIIDBenchmark.infeasible_fixed_comparator_two :
+  ∫ (ω : ℕ → ℝ),
+      ∑ t ∈ Finset.range 2,
+        (2 - Tests.OnlineGuessingIIDBenchmark.observation t ω) ^ 2 ∂Tests.OnlineGuessingIIDBenchmark.iidLaw =
+    5
+'Tests.OnlineGuessingIIDBenchmark.infeasible_fixed_comparator_two' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Tests.OnlineGuessingIIDBenchmark.independent_difference_square :
+  ∫ (ω : ℕ → ℝ),
+      (Tests.OnlineGuessingIIDBenchmark.observation 0 ω - Tests.OnlineGuessingIIDBenchmark.observation 1 ω) ^
+        2 ∂Tests.OnlineGuessingIIDBenchmark.iidLaw =
+    1 / 2
+'Tests.OnlineGuessingIIDBenchmark.independent_difference_square' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Tests.OnlineGuessingIIDBenchmark.hindsight_minimum_two :
+  ∫ (ω : ℕ → ℝ), Tests.OnlineGuessingIIDBenchmark.hindsightMinimum ω 2 ∂Tests.OnlineGuessingIIDBenchmark.iidLaw = 1 / 4
+'Tests.OnlineGuessingIIDBenchmark.hindsight_minimum_two' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingIIDBenchmark.min_and_expectation_do_not_commute :
+  ∫ (ω : ℕ → ℝ), Tests.OnlineGuessingIIDBenchmark.hindsightMinimum ω 2 ∂Tests.OnlineGuessingIIDBenchmark.iidLaw <
+    BanditRL.OnlineLearning.expectedFixedMinimum Tests.OnlineGuessingIIDBenchmark.iidLaw
+      Tests.OnlineGuessingIIDBenchmark.observation 2
+'Tests.OnlineGuessingIIDBenchmark.min_and_expectation_do_not_commute' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Tests.OnlineGuessingIIDBenchmark.current_target_cheating_negative :
+  BanditRL.OnlineLearning.expectedFixedRegret Tests.OnlineGuessingIIDBenchmark.iidLaw
+      Tests.OnlineGuessingIIDBenchmark.observation Tests.OnlineGuessingIIDBenchmark.observation 2 =
+    -1 / 2
+'Tests.OnlineGuessingIIDBenchmark.current_target_cheating_negative' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BanditRL.OnlineLearning.expected_square_decomposition.{u_1} {Ω : Type u_1} [MeasurableSpace Ω]
+  (μ : MeasureTheory.Measure Ω) [MeasureTheory.IsProbabilityMeasure μ] (Y : Ω → ℝ) (hY : MeasureTheory.MemLp Y 2 μ)
+  (u : ℝ) : ∫ (ω : Ω), (u - Y ω) ^ 2 ∂μ = ProbabilityTheory.variance Y μ + (u - ∫ (ω : Ω), Y ω ∂μ) ^ 2
+'BanditRL.OnlineLearning.expected_square_decomposition' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.independent_prediction_square.{u_1} {Ω : Type u_1} [MeasurableSpace Ω]
+  (μ : MeasureTheory.Measure Ω) [MeasureTheory.IsProbabilityMeasure μ] (P Y : Ω → ℝ) (hP : MeasureTheory.MemLp P 2 μ)
+  (hY : MeasureTheory.MemLp Y 2 μ) (h : ProbabilityTheory.IndepFun P Y μ) :
+  ∫ (ω : Ω), (P ω - Y ω) ^ 2 ∂μ = ∫ (ω : Ω), (P ω - ∫ (ω : Ω), Y ω ∂μ) ^ 2 ∂μ + ProbabilityTheory.variance Y μ
+'BanditRL.OnlineLearning.independent_prediction_square' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.history_policy_independent.{u_1} {Ω : Type u_1} [MeasurableSpace Ω]
+  (μ : MeasureTheory.Measure Ω) [MeasureTheory.IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)
+  (hY : ∀ (t : ℕ), Measurable (Y t)) (hind : ProbabilityTheory.iIndepFun Y μ) (t : ℕ)
+  (policy : (↥(Finset.range t) → ℝ) → ℝ) (hp : Measurable policy) :
+  ProbabilityTheory.IndepFun (fun ω => policy fun i => Y (↑i) ω) (Y t) μ
+'BanditRL.OnlineLearning.history_policy_independent' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.meanPredict_independent.{u_1} {Ω : Type u_1} [MeasurableSpace Ω] (μ : MeasureTheory.Measure Ω)
+  [MeasureTheory.IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ (t : ℕ), Measurable (Y t))
+  (hind : ProbabilityTheory.iIndepFun Y μ) (t : ℕ) :
+  ProbabilityTheory.IndepFun (fun ω => BanditRL.OnlineLearning.meanPredict (fun i => Y i ω) t) (Y t) μ
+'BanditRL.OnlineLearning.meanPredict_independent' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.meanPredict_measurable.{u_1} {Ω : Type u_1} [MeasurableSpace Ω] (Y : ℕ → Ω → ℝ)
+  (hY : ∀ (t : ℕ), Measurable (Y t)) (t : ℕ) :
+  Measurable fun ω => BanditRL.OnlineLearning.meanPredict (fun i => Y i ω) t
+'BanditRL.OnlineLearning.meanPredict_measurable' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.meanPredict_mem (y : ℕ → ℝ) (t : ℕ) (hy : ∀ i < t, y i ∈ Set.Icc 0 1) :
+  BanditRL.OnlineLearning.meanPredict y t ∈ Set.Icc 0 1
+'BanditRL.OnlineLearning.meanPredict_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.expectedFixedMinimum.{u_1} {Ω : Type u_1} [MeasurableSpace Ω] (μ : MeasureTheory.Measure Ω)
+  (Y : ℕ → Ω → ℝ) (T : ℕ) : ℝ
+'BanditRL.OnlineLearning.expectedFixedMinimum' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.expectedFixedRegret.{u_1} {Ω : Type u_1} [MeasurableSpace Ω] (μ : MeasureTheory.Measure Ω)
+  (Y prediction : ℕ → Ω → ℝ) (T : ℕ) : ℝ
+'BanditRL.OnlineLearning.expectedFixedRegret' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.empiricalMean (y : ℕ → ℝ) (n : ℕ) : ℝ
+'BanditRL.OnlineLearning.empiricalMean' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.meanPredict (y : ℕ → ℝ) (t : ℕ) : ℝ
+'BanditRL.OnlineLearning.meanPredict' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingIIDBenchmark.coinLaw : MeasureTheory.Measure ℝ
+'Tests.OnlineGuessingIIDBenchmark.coinLaw' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingIIDBenchmark.iidLaw : MeasureTheory.Measure (ℕ → ℝ)
+'Tests.OnlineGuessingIIDBenchmark.iidLaw' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingIIDBenchmark.observation (t : ℕ) (ω : ℕ → ℝ) : ℝ
+'Tests.OnlineGuessingIIDBenchmark.observation' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingIIDBenchmark.lastPolicy (t : ℕ) (z : ↥(Finset.range t) → ℝ) : ℝ
+'Tests.OnlineGuessingIIDBenchmark.lastPolicy' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingIIDBenchmark.hindsightMinimum (ω : ℕ → ℝ) (T : ℕ) : ℝ
+'Tests.OnlineGuessingIIDBenchmark.hindsightMinimum' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingIIDBenchmark.coinLaw_probability :
+  MeasureTheory.IsProbabilityMeasure Tests.OnlineGuessingIIDBenchmark.coinLaw
+'Tests.OnlineGuessingIIDBenchmark.coinLaw_probability' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineGuessingIIDBenchmark.iidLaw_probability :
+  MeasureTheory.IsProbabilityMeasure Tests.OnlineGuessingIIDBenchmark.iidLaw
+'Tests.OnlineGuessingIIDBenchmark.iidLaw_probability' depends on axioms: [propext, Classical.choice, Quot.sound]

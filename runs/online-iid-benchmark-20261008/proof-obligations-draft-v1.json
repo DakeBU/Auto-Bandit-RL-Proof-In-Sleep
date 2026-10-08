@@ -1,0 +1,93 @@
+{
+  "version": 1,
+  "rows": [
+    {
+      "id": "I001",
+      "declaration": "BanditRL.OnlineLearning.expected_fixed_prefix_decomposition",
+      "status": "draft",
+      "dependencies": [],
+      "frozen_header_sha256": "f679b2010d544ad15ff9daf274f33401be2404b58bfeafba5d12482e322a6e9b"
+    },
+    {
+      "id": "I002",
+      "declaration": "BanditRL.OnlineLearning.expected_fixed_prefix_minimum",
+      "status": "draft",
+      "dependencies": [
+        "expected_fixed_prefix_decomposition"
+      ],
+      "frozen_header_sha256": "f28c10b0be9d9e9f1217c36845d24c9fc9702547a350125c3701b22108bcd399"
+    },
+    {
+      "id": "I003",
+      "declaration": "BanditRL.OnlineLearning.expectedFixedMinimum_eq_variance",
+      "status": "draft",
+      "dependencies": [
+        "expected_fixed_prefix_minimum"
+      ],
+      "frozen_header_sha256": "e0cd18c8e4a8b49f47d43629b0fdbfde2cc7844cff99b8bab5ef8ec39fa0931d"
+    },
+    {
+      "id": "I004",
+      "declaration": "BanditRL.OnlineLearning.iid_cumulative_prediction_decomposition",
+      "status": "draft",
+      "dependencies": [
+        "independent_prediction_square"
+      ],
+      "frozen_header_sha256": "9ae0591dd2194fa4bd49e1e75debab9da390d8a08498f6ae51a9c9b9e757683c"
+    },
+    {
+      "id": "I005",
+      "declaration": "BanditRL.OnlineLearning.history_policy_expectedFixed_excess",
+      "status": "draft",
+      "dependencies": [
+        "expectedFixedMinimum_eq_variance",
+        "iid_cumulative_prediction_decomposition",
+        "history_policy_independent"
+      ],
+      "frozen_header_sha256": "c4a2e59d57a1b8386ccfe4b860c4a36d26d9695d6d135883121fb3bb02314384"
+    },
+    {
+      "id": "I006",
+      "declaration": "BanditRL.OnlineLearning.meanPredict_expectedFixed_excess",
+      "status": "draft",
+      "dependencies": [
+        "expectedFixedMinimum_eq_variance",
+        "iid_cumulative_prediction_decomposition",
+        "meanPredict_independent",
+        "meanPredict_measurable",
+        "meanPredict_mem"
+      ],
+      "frozen_header_sha256": "f3db89612c65d05ab2699f45ff83d332f648db02fa2d2e717366c1f832298a28"
+    },
+    {
+      "id": "I007",
+      "declaration": "BanditRL.OnlineLearning.constant_mean_expectedFixed_excess_zero",
+      "status": "draft",
+      "dependencies": [
+        "expected_fixed_prefix_minimum",
+        "expectedFixedMinimum_eq_variance",
+        "expected_fixed_prefix_decomposition"
+      ],
+      "frozen_header_sha256": "142dc336d159094c8948b1645d6dee29994634567d70a9535cec4248f930b726"
+    },
+    {
+      "id": "I008",
+      "declaration": "BanditRL.OnlineLearning.history_policy_normalized_expectedFixed_excess",
+      "status": "draft",
+      "dependencies": [
+        "expectedFixedMinimum_eq_variance",
+        "normalized_excess"
+      ],
+      "frozen_header_sha256": "756e831d2cc81ddee7129c9b541018ef839ca4e736ff4922c178d82bc79d48e4"
+    }
+  ],
+  "remaining_required": [
+    "randomized/source-wide causal coverage audit",
+    "source asymptotic successfulness equivalence",
+    "five main-relative module audits",
+    "full C1/C2",
+    "3–16/necessaryappendices"
+  ],
+  "chapter_complete": false,
+  "goal_complete": false
+}

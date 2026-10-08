@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineLearning.expected_fixed_prefix_minimum",
+  "file": "BanditRLProof/OnlineGuessingIIDBenchmark.lean",
+  "statement": "theorem expected_fixed_prefix_minimum {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) : (∫ ω, Y 0 ω ∂μ) ∈ Set.Icc (0 : ℝ) 1 ∧ IsLeast ((fun u : ℝ => ∫ ω, ∑ t ∈ Finset.range T, (u - Y t ω)^2 ∂μ) '' Set.Icc (0 : ℝ) 1) ((T : ℝ) * variance (Y 0) μ)",
+  "statement_hash": "759cb8b62c15804a6c911547593d0175dd7df1d118f0b6dd0d2df9c4890233a0",
+  "source_assumptions": [],
+  "created_at": "2026-10-08T05:31:24+00:00"
+}

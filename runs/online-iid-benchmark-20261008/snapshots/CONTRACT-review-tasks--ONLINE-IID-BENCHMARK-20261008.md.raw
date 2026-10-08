@@ -1,0 +1,78 @@
+# Produce expected fixed square-loss minimum and causal IID cumulative variance benchmark
+
+Task id: `ONLINE-IID-BENCHMARK-20261008`
+Kind: `lean`
+Status: `planned`
+Harness: `hierarchical`
+
+## Goal
+
+State the bandit/RL theorem, definition, or literature-port target.
+
+## Source
+
+- Paper or repository:
+- Theorem/lemma/section:
+- Existing Lean declaration:
+- Textbook/source card:
+- Scenario card:
+
+## Lean Target
+
+```lean
+-- target declaration names here
+```
+
+Target file: `BanditRL.OnlineLearning.history_policy_expectedFixed_excess`
+
+## Proof Obligations
+
+- [ ] Natural-language statement is mapped to Lean symbols.
+- [ ] Required model assumptions are explicit.
+- [ ] Probability, measurability, concentration, and stopping-time contracts are recorded.
+- [ ] Reusable theorem cards are identified before proof search.
+- [ ] Each active leaf has local APIs, intended proof route, and regularity contracts.
+- [ ] General leaves are classified as `mathlib-candidate`, `project-local`, or `theorem-card-only`.
+- [ ] `lake build && lake build Tests` passes.
+
+## Mathlib-Ready Leaf Contract
+
+| Leaf | Local APIs/imports | Intended proof route | Regularity contracts | Mathlib status |
+| --- | --- | --- | --- | --- |
+| root | TBD | TBD | TBD | project-local |
+
+## Retrieval Cards
+
+- LML cards:
+- Mathlib cards:
+- Textbook cards:
+- Scenario cards:
+
+## Trial Logging
+
+```bash
+python3 tools/bandit.py trial-log --task ONLINE-IID-BENCHMARK-20261008 --role lower --kind attempt --status running --notes "..."
+python3 tools/bandit.py trial-summary
+```
+
+
+## Draft exact IID benchmark contract v1
+
+# Version1 draft: expected fixed-loss minimum and causal IID cumulative benchmark
+
+Pinned Orabona arXiv1912.13213v10/2026-06-21, PDF SHAcef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17. Printed1/PDF13 IID mean/variance oracle, cannot-beat benchmark, nonnegative cumulative (1.1), positive-horizon average (1.2); printed2/PDF14 rewriting as minimum of EXPECTED FIXED cumulative loss. ROOT actually read original caches and viewed both full pages, rehashed pinned PDF and freshly extracted those original PDF pages. PNG caches are exact provenance copies, not fresh rerenders.
+
+Eight exact prospective theorem headers plus two complete definitions in targets-v1/public-context-v1. General probability space, measurable real observations with almost-sure[0,1] support, all observations identically distributed toY0. Identical law suffices for fixed comparator decomposition/minimum, without independence. Derive all needed L2/integrability; source[0,1] law does not justify strengthening a.s. bounds to every sample point. Produce distribution mean feasibility and actual IsLeast of the generally infinite comparator-loss image with valueT*variance, before using csInf_eq. No supplied minimizer or totalized-inf escape. T0 empty-prefix extension has minimum0 and no uniqueness. Fixed comparator quantifier remains OUTSIDE integral, same stream and horizon throughout; this is NOT expectation of a hindsight minimum.
+
+For causal performance add actual joint independence of target variables. I004 alone is an explicit intermediate consumer assuming current-target independence and L2 predictions; TWO downstream producers must derive them. I005 policies accept only the finite strict-past tuple, are measurable and bounded for all tuples, initial tuple empty; current-target independence is derived from actual history_policy_independent. I006 uses actual shared meanPredict (initial1/2, later strict-past empirical mean), actual meanPredict_independent/measurable/mem and derives L2 from a.s. observation bounds. No receiving entire future realization as algorithm input, no arbitrary P performance claim, no assumed one-step regret certificate. Arbitrary supplied P in standalone definitions/I004 is representation/consumer only and does not guarantee causal/integrable/nonnegative behavior.
+
+Constant distribution mean is a benchmark knowing the distribution; no claim an unknown-distribution algorithm computes it. Its zero excess gives genuine attainability alongside the actual causal lower producer. Source rounds1..T=Lean0..T−1. Finite positive-horizon average identity uses the same expectedFixedRegret andT*variance; T>0 is essential. Asymptotic successfulness/sublinear-to-vanishing equivalence remains REQUIRED separately. The deterministic strict-history policy representation does not by itself cover arbitrary randomized strategies or abstract filtration policies; independent external randomization/source-wide coverage audit remains REQUIRED, not excluded. No high-probability/pathwise regret nonnegativity/min-expectation swap/rate claims.
+
+Only bounded minimum plus deterministic strict-history and actual-mean IID cumulative benchmark may advance. Eight derived producers/representation/integration statements are not eight printed theorems; I004 cannot complete the target alone. Original16C1items/proof-totalnull preserved, full C1/C2 incomplete,3–16unenumerated/necessaryappendicesrequired/totalGoalACTIVE. Five old main-relative module audits remain unwaived until separately reviewed relevant bodies and complete chapter gates. Distinct reused staged decoder/source reviewer required before proving; no human/external/runtime-model or complete single-runtime enforcement claim. Root/Tests/fullharness/actualkernel/canary/statement/DAG/reader/site/FINAL/native/PR evidence separately required. Exact OPENdraft/unmergedPR193 stack, no main/live/merge/deploy/retirement.
+
+Frozen eight prospective headers: c572cf59df2bc9c609e09cb04707f785d22851b0f90f67d89593a07af92079d6; source/draft-type/body acceptance pending.
+
+
+## Version2 draft source-hypothesis audit
+
+Only I005/I008 policy-output premise now applies to LEGAL unit-interval histories; derive real observed history support a.s. before L2. Original v1 bytes/reconstruction and universe-check failure preserved. Eight conclusions, six other raw headers, definitions/source unchanged. No source acceptance/body yet; v2 needs its own reconstruction/reviewer. Target SHA 61e24727f67fa84fa359bfbbd4d3955e08b36ca48c25e611bacfebaf5d0b68cb

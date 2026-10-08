@@ -1,0 +1,22 @@
+{
+  "command": [
+    "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe",
+    "-B",
+    "-X",
+    "utf8",
+    "tools/bandit.py",
+    "statement-fence",
+    "--declaration",
+    "BanditRL.OnlineLearning.expectedFixedMinimum_eq_variance",
+    "--file",
+    "BanditRLProof/OnlineGuessingIIDBenchmark.lean",
+    "--source-assumption",
+    "theorem expectedFixedMinimum_eq_variance {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) : expectedFixedMinimum μ Y T = (T : ℝ) * variance (Y 0) μ",
+    "--output",
+    "E:\\ABRL\\worktrees\\research-online-book\\runs\\online-iid-benchmark-20261008\\full-header-fences-v2\\public-expectedFixedMinimum_eq_variance.json"
+  ],
+  "cwd": "E:/ABRL/worktrees/research-online-book",
+  "exit_code": 0,
+  "seconds": 0.22,
+  "log_sha256": "95cd2560800d6e54444c200fa99ea89f973eda838dbbf89b7fdd8dfa95cba36f"
+}

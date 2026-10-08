@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineLearning.constant_mean_expectedFixed_excess_zero",
+  "file": "BanditRLProof/OnlineGuessingIIDBenchmark.lean",
+  "statement": "theorem constant_mean_expectedFixed_excess_zero {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) : (∫ ω, Y 0 ω ∂μ) ∈ Set.Icc (0 : ℝ) 1 ∧ expectedFixedRegret μ Y (fun _ _ => ∫ ω, Y 0 ω ∂μ) T = 0",
+  "statement_hash": "987320017eb2b53146c544e9d8031f61270e6f293aabf0aaf7d5c19ca4ce9086",
+  "source_assumptions": [],
+  "created_at": "2026-10-08T05:33:17+00:00"
+}

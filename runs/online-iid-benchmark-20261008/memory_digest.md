@@ -1,0 +1,1 @@
+Draft only; next true expected-fixed minimum and causal IID cumulative variance. Eight prospective terminals/two definitions; no theorem body or source acceptance. No exchange with hindsight minimum, no deterministic-policy-to-all-randomized claim, no chapter/Goal closure.

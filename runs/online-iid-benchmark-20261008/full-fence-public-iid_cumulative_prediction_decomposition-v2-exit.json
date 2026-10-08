@@ -1,0 +1,22 @@
+{
+  "command": [
+    "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe",
+    "-B",
+    "-X",
+    "utf8",
+    "tools/bandit.py",
+    "statement-fence",
+    "--declaration",
+    "BanditRL.OnlineLearning.iid_cumulative_prediction_decomposition",
+    "--file",
+    "BanditRLProof/OnlineGuessingIIDBenchmark.lean",
+    "--source-assumption",
+    "theorem iid_cumulative_prediction_decomposition {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (prediction : ℕ → Ω → ℝ) (hP : ∀ t, MemLp (prediction t) 2 μ) (hInd : ∀ t, IndepFun (prediction t) (Y t) μ) (T : ℕ) : (∫ ω, ∑ t ∈ Finset.range T, (prediction t ω - Y t ω)^2 ∂μ) - (T : ℝ) * variance (Y 0) μ = ∑ t ∈ Finset.range T, ∫ ω, (prediction t ω - ∫ ω, Y 0 ω ∂μ)^2 ∂μ",
+    "--output",
+    "E:\\ABRL\\worktrees\\research-online-book\\runs\\online-iid-benchmark-20261008\\full-header-fences-v2\\public-iid_cumulative_prediction_decomposition.json"
+  ],
+  "cwd": "E:/ABRL/worktrees/research-online-book",
+  "exit_code": 0,
+  "seconds": 0.216,
+  "log_sha256": "f1c5c0d7588936ec868098393fb03adadb998fd170d2bc0f1e4573bc0a06e5c2"
+}

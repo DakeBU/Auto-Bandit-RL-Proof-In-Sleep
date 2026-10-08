@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineLearning.iid_cumulative_prediction_decomposition",
+  "file": "BanditRLProof/OnlineGuessingIIDBenchmark.lean",
+  "statement": "theorem iid_cumulative_prediction_decomposition {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (prediction : ℕ → Ω → ℝ) (hP : ∀ t, MemLp (prediction t) 2 μ) (hInd : ∀ t, IndepFun (prediction t) (Y t) μ) (T : ℕ) : (∫ ω, ∑ t ∈ Finset.range T, (prediction t ω - Y t ω)^2 ∂μ) - (T : ℝ) * variance (Y 0) μ = ∑ t ∈ Finset.range T, ∫ ω, (prediction t ω - ∫ ω, Y 0 ω ∂μ)^2 ∂μ",
+  "statement_hash": "33f059c7821e3fffd97ec9ee8ff7c8ba056ca3457c2a3becbfa40384b7e4f2a4",
+  "source_assumptions": [],
+  "created_at": "2026-10-08T05:32:43+00:00"
+}

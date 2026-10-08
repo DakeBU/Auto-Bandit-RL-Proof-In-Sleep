@@ -1,0 +1,1 @@
+Actual exact frozen I002 body compiles; actual a.s. population-mean feasibility and nonempty attained real loss image precede infimum identity. Source fixed comparator stays outside expectation; no hindsight interchange, no uniqueness atT0. Body/build/fence/trial separate, no package/chapter/Goal acceptance.
