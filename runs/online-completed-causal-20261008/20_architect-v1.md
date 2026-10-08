@@ -1,0 +1,1 @@
+Frozen after source contract review: exact four headers; allow only new public module and owned canary until favorable BODY. Actual mathlib countable coding/inverse API verified. Core witness must be obtained from augmented measurability, not supplied. AE original unit assumption belongs only to policy/excess terminals; L3 independence no boundedness. No proof body yet.

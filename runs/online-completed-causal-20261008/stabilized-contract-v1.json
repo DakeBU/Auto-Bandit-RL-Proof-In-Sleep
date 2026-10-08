@@ -1,0 +1,108 @@
+{
+  "source_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+  "receipt_sha256": "e414488bde13d4a117bfdbc68e0ffb2a78cb4c002b96154e278ccb148a006fac",
+  "report_sha256": "8a1268ceedfa0c8d0880c71e5d70d7a0814a4ff44f2048ffd5d9906b6d3516d6",
+  "targets_sha256": "28306eb03ab836a75bdc2cacbf99471859a6422ef2aea55cd35c361dd4e9e2bc",
+  "headers_sha256": "ac2d9187c1670814df9e2c6e5e23b0e070c209ffd2d45a7b8016b77b7429fe58",
+  "source_intent_sha256": "2bae74f9ca48f3df341b6d47e26b296779e6edd71f9219ff37ff0ae52474813d",
+  "targets": [
+    {
+      "id": "L1",
+      "name": "BanditRL.OnlineLearning.completed_measurable_real_exists_version",
+      "owning_file": "BanditRLProof/OnlineGuessingCompletedCausal.lean",
+      "header": "theorem completed_measurable_real_exists_version {Ω : Type u} [MeasurableSpace Ω]\n    (μ : Measure Ω) (F : MeasurableSpace Ω) (P : Ω → ℝ)\n    (hP : @Measurable _ _ (eventuallyMeasurableSpace F (ae μ)) _ P) :\n    ∃ version : Ω → ℝ, Measurable[F] version ∧ P =ᶠ[ae μ] version",
+      "statement_hash": "e96006c9a0a3030b0f60524e0d50e28d81f7c2409cac5a3bafce5547cca6c81a",
+      "raw_header_sha256": "f80eaf3c37cb10a5cf0ea9a79b8e85f081167575ca7edcf904d1b763a7a4a50e",
+      "phase": "draft",
+      "compiled": false
+    },
+    {
+      "id": "L2",
+      "name": "BanditRL.OnlineLearning.completed_predictable_exists_bounded_history_policy",
+      "owning_file": "BanditRLProof/OnlineGuessingCompletedCausal.lean",
+      "header": "theorem completed_predictable_exists_bounded_history_policy {Ω : Type u} {Seed : Type v}\n    [MeasurableSpace Ω] [MeasurableSpace Seed]\n    (μ : Measure Ω) (Y : ℕ → Ω → ℝ) (S : Ω → Seed)\n    (F : ℕ → MeasurableSpace Ω)\n    (hF : ∀ t, F t ≤ privateSeedPastInformation S Y t)\n    (prediction : ℕ → Ω → ℝ)\n    (hP : ∀ t, @Measurable _ _ (eventuallyMeasurableSpace (F t) (ae μ)) _ (prediction t))\n    (hpb : ∀ t, ∀ᵐ ω ∂μ, prediction t ω ∈ Set.Icc (0 : ℝ) 1) :\n    ∃ policy : (t : ℕ) → (Seed × ((↑(Finset.range t) : Type) → ℝ)) → ℝ,\n      (∀ t, Measurable (policy t)) ∧\n      (∀ t q, policy t q ∈ Set.Icc (0 : ℝ) 1) ∧\n      ∀ᵐ ω ∂μ, ∀ t, prediction t ω = policy t (S ω, fun i => Y i ω)",
+      "statement_hash": "4f231254a34734ab05b9881c8457b7099d89890aef03650d895bf54de363c59f",
+      "raw_header_sha256": "fbbd948abfbb9e2509d275e1a7e506e1e381e2c0011734855116e81809c59cc0",
+      "phase": "draft",
+      "compiled": false
+    },
+    {
+      "id": "L3",
+      "name": "BanditRL.OnlineLearning.completed_predictable_private_seed_independent",
+      "owning_file": "BanditRLProof/OnlineGuessingCompletedCausal.lean",
+      "header": "theorem completed_predictable_private_seed_independent {Ω : Type u} {Seed : Type v}\n    [MeasurableSpace Ω] [MeasurableSpace Seed]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ)\n    (S : Ω → Seed) (hS : Measurable S)\n    (hseed : IndepFun S (fun ω t => Y t ω) μ)\n    (t : ℕ) (F : MeasurableSpace Ω) (hF : F ≤ privateSeedPastInformation S Y t)\n    (P : Ω → ℝ)\n    (hP : @Measurable _ _ (eventuallyMeasurableSpace F (ae μ)) _ P) :\n    IndepFun P (Y t) μ",
+      "statement_hash": "a7f2430c83efaf370b428370b651aaa07923e2819aa190ee60c534ef51f45bfd",
+      "raw_header_sha256": "e1fcc1bd54bed887310d67b455fc0eb082382a13735840af37c8c1e36719c6d9",
+      "phase": "draft",
+      "compiled": false
+    },
+    {
+      "id": "L4",
+      "name": "BanditRL.OnlineLearning.completed_predictable_private_seed_expectedFixed_excess",
+      "owning_file": "BanditRLProof/OnlineGuessingCompletedCausal.lean",
+      "header": "theorem completed_predictable_private_seed_expectedFixed_excess {Ω : Type u} {Seed : Type v}\n    [MeasurableSpace Ω] [MeasurableSpace Seed]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1)\n    (hind : iIndepFun Y μ)\n    (S : Ω → Seed) (hS : Measurable S)\n    (hseed : IndepFun S (fun ω t => Y t ω) μ)\n    (F : ℕ → MeasurableSpace Ω)\n    (hF : ∀ t, F t ≤ privateSeedPastInformation S Y t)\n    (prediction : ℕ → Ω → ℝ)\n    (hP : ∀ t, @Measurable _ _ (eventuallyMeasurableSpace (F t) (ae μ)) _ (prediction t))\n    (hpb : ∀ t, ∀ᵐ ω ∂μ, prediction t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) :\n    expectedFixedRegret μ Y prediction T =\n      (∑ t ∈ Finset.range T,\n        ∫ ω, (prediction t ω - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) ∧\n      0 ≤ expectedFixedRegret μ Y prediction T",
+      "statement_hash": "622f106e02e67b96148091282549b263d6c57c20e1ca313279fb15f5eb8d9753",
+      "raw_header_sha256": "0fe65750dc9229b3c0f09a84c3f76d1be64217a879bd3d77667a61c65a3168b5",
+      "phase": "draft",
+      "compiled": false
+    }
+  ],
+  "approved_scope": {
+    "phase": "After favorable CONTRACT only: bounded proving",
+    "allowed_production_files": [
+      "BanditRLProof/OnlineGuessingCompletedCausal.lean"
+    ],
+    "allowed_test_files": [
+      "Tests/OnlineGuessingCompletedCausalCanary.lean"
+    ],
+    "exact_headers": "E:/ABRL/worktrees/research-online-book/docs/contracts/online-completed-causal-v1/targets-v1.json",
+    "own_stage_metadata_only": "Versioned own RUN/CONTRACT director/architect/worker, exact task suffixes and own native task/session entries; global SGB/readers/root/pins/old module bytes immutable until favorable BODY",
+    "no_root_reader_or_registry_integration_before_BODY": true,
+    "terminal": "Core actual augmented-field real version producer plus all three original process causal adapters",
+    "header_mutation_requires_new_contract_version_and_review": true,
+    "separate_BODY_FINAL_native_delivery_required": true,
+    "chapter_complete": false,
+    "goal_complete": false
+  },
+  "mutable_reviewed_snapshots": [
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/MANIFEST.md",
+      "original_sha256": "64c11e5be1e0f82031e8e0bbf72fdc006ac59448fb493f840425a7dbcf45bb3c",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-completed-causal-20261008/snapshots/contract-mutable-0.raw"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/conversion-windows/ONLINE-COMPLETED-CAUSAL-20261008.md",
+      "original_sha256": "c777ae4925e76c436a536ff7da1404c24292c67504b4232f4e6a384a58ec5f71",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-completed-causal-20261008/snapshots/contract-mutable-1.raw"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/proof-blueprints/ONLINE-COMPLETED-CAUSAL-20261008.md",
+      "original_sha256": "aaeea16858bde8e01794ef3a3eb3809d43efb44dff4fb17451804e84313f0e14",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-completed-causal-20261008/snapshots/contract-mutable-2.raw"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/proof-obligations/ONLINE-COMPLETED-CAUSAL-20261008.md",
+      "original_sha256": "cb8ad163214adc4c4a4d0d8975d5d8e19a552a0c481f22e24bf750655bbe4051",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-completed-causal-20261008/snapshots/contract-mutable-3.raw"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/lifecycle_sessions.jsonl",
+      "original_sha256": "a7e60b07fb534a7b453d3b83c7f8f534099465b8bb6dafab2e688850676cccd2",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-completed-causal-20261008/snapshots/contract-mutable-4.raw"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/trials.jsonl",
+      "original_sha256": "b0f8cc0e210aa812a1403c9cc2862d5d8aeda619a51716be551586288f0dffc8",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-completed-causal-20261008/snapshots/contract-mutable-5.raw"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/tasks/ONLINE-COMPLETED-CAUSAL-20261008.md",
+      "original_sha256": "616a319740960f80b865af7c13e44453e26de1eb6a972331f7df19fea79b109a",
+      "snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-completed-causal-20261008/snapshots/contract-mutable-6.raw"
+    }
+  ],
+  "approved_contract_only": true,
+  "proof_bodies_compiled": 0,
+  "chapter_complete": false,
+  "goal_complete": false
+}

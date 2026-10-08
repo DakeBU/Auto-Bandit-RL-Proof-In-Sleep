@@ -1,0 +1,218 @@
+∀ {Ω : Type u} [inst : MeasurableSpace Ω] (μ : @Measure Ω inst) (F : MeasurableSpace Ω) (P : Ω → Real),
+  @Measurable Ω Real (@eventuallyMeasurableSpace Ω F (@ae Ω (@Measure Ω inst) (@Measure.instFunLike Ω inst) ⋯ μ) ⋯)
+      Real.measurableSpace P →
+    @Exists (Ω → Real) fun version =>
+      And (@Measurable Ω Real F Real.measurableSpace version)
+        (@EventuallyEq Ω Real (@ae Ω (@Measure Ω inst) (@Measure.instFunLike Ω inst) ⋯ μ) P version) : Prop
+E:\ABRL\worktrees\research-online-book\runs\online-completed-causal-20261008\draft-explicit-typecheck-v3.lean:15:5: warning: unused variable `hP`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ {Ω : Type u} {Seed : Type v} [inst : MeasurableSpace Ω] [inst_1 : MeasurableSpace Seed] (μ : @Measure Ω inst)
+  (Y : Nat → Ω → Real) (S : Ω → Seed) (F : Nat → MeasurableSpace Ω),
+  (∀ (t : Nat),
+      @LE.le (MeasurableSpace Ω) (@MeasurableSpace.instLE Ω) (F t) (@privateSeedPastInformation Ω Seed inst_1 S Y t)) →
+    ∀ (prediction : Nat → Ω → Real),
+      (∀ (t : Nat),
+          @Measurable Ω Real
+            (@eventuallyMeasurableSpace Ω (F t) (@ae Ω (@Measure Ω inst) (@Measure.instFunLike Ω inst) ⋯ μ) ⋯)
+            Real.measurableSpace (prediction t)) →
+        (∀ (t : Nat),
+            @Filter.Eventually Ω
+              (fun ω =>
+                @Membership.mem Real (Set Real) (@Set.instMembership Real)
+                  (@Set.Icc Real Real.instPreorder (@OfNat.ofNat Real (nat_lit 0) (@Zero.toOfNat0 Real Real.instZero))
+                    (@OfNat.ofNat Real (nat_lit 1) (@One.toOfNat1 Real Real.instOne)))
+                  (prediction t ω))
+              (@ae Ω (@Measure Ω inst) (@Measure.instFunLike Ω inst) ⋯ μ)) →
+          @Exists
+            ((t : Nat) →
+              Prod Seed
+                  ((@Subtype Nat fun x =>
+                      @Membership.mem Nat (Finset Nat)
+                        (@SetLike.instMembership (Finset Nat) Nat (@Finset.instSetLike Nat)) (Finset.range t) x) →
+                    Real) →
+                Real)
+            fun policy =>
+            And
+              (∀ (t : Nat),
+                @Measurable
+                  (Prod Seed
+                    ((@Subtype Nat fun x =>
+                        @Membership.mem Nat (Finset Nat)
+                          (@SetLike.instMembership (Finset Nat) Nat (@Finset.instSetLike Nat)) (Finset.range t) x) →
+                      Real))
+                  Real
+                  (@Prod.instMeasurableSpace Seed
+                    ((@Subtype Nat fun x =>
+                        @Membership.mem Nat (Finset Nat)
+                          (@SetLike.instMembership (Finset Nat) Nat (@Finset.instSetLike Nat)) (Finset.range t) x) →
+                      Real)
+                    inst_1
+                    (@MeasurableSpace.pi
+                      (@Subtype Nat fun x =>
+                        @Membership.mem Nat (Finset Nat)
+                          (@SetLike.instMembership (Finset Nat) Nat (@Finset.instSetLike Nat)) (Finset.range t) x)
+                      (fun a => Real) fun a => Real.measurableSpace))
+                  Real.measurableSpace (policy t))
+              (And
+                (∀ (t : Nat)
+                  (q :
+                    Prod Seed
+                      ((@Subtype Nat fun x =>
+                          @Membership.mem Nat (Finset Nat)
+                            (@SetLike.instMembership (Finset Nat) Nat (@Finset.instSetLike Nat)) (Finset.range t) x) →
+                        Real)),
+                  @Membership.mem Real (Set Real) (@Set.instMembership Real)
+                    (@Set.Icc Real Real.instPreorder (@OfNat.ofNat Real (nat_lit 0) (@Zero.toOfNat0 Real Real.instZero))
+                      (@OfNat.ofNat Real (nat_lit 1) (@One.toOfNat1 Real Real.instOne)))
+                    (policy t q))
+                (@Filter.Eventually Ω
+                  (fun ω =>
+                    ∀ (t : Nat),
+                      @Eq Real (prediction t ω)
+                        (policy t
+                          (@Prod.mk Seed
+                            ((@Subtype Nat fun x =>
+                                @Membership.mem Nat (Finset Nat)
+                                  (@SetLike.instMembership (Finset Nat) Nat (@Finset.instSetLike Nat)) (Finset.range t)
+                                  x) →
+                              Real)
+                            (S ω) fun i =>
+                            Y
+                              (@Subtype.val Nat
+                                (fun x =>
+                                  @Membership.mem Nat (Finset Nat)
+                                    (@SetLike.instMembership (Finset Nat) Nat (@Finset.instSetLike Nat))
+                                    (Finset.range t) x)
+                                i)
+                              ω)))
+                  (@ae Ω (@Measure Ω inst) (@Measure.instFunLike Ω inst) ⋯ μ))) : Prop
+E:\ABRL\worktrees\research-online-book\runs\online-completed-causal-20261008\draft-explicit-typecheck-v3.lean:22:5: warning: unused variable `hF`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\runs\online-completed-causal-20261008\draft-explicit-typecheck-v3.lean:24:5: warning: unused variable `hP`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\runs\online-completed-causal-20261008\draft-explicit-typecheck-v3.lean:25:5: warning: unused variable `hpb`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ {Ω : Type u} {Seed : Type v} [inst : MeasurableSpace Ω] [inst_1 : MeasurableSpace Seed] (μ : @Measure Ω inst)
+  [@IsProbabilityMeasure Ω inst μ] (Y : Nat → Ω → Real),
+  (∀ (t : Nat), @Measurable Ω Real inst Real.measurableSpace (Y t)) →
+    @iIndepFun Ω Nat inst (fun x => Real) (fun x => Real.measurableSpace) Y μ →
+      ∀ (S : Ω → Seed),
+        @Measurable Ω Seed inst inst_1 S →
+          @IndepFun Ω Seed (Nat → Real) inst inst_1
+              (@MeasurableSpace.pi Nat (fun t => Real) fun a => Real.measurableSpace) S (fun ω t => Y t ω) μ →
+            ∀ (t : Nat) (F : MeasurableSpace Ω),
+              @LE.le (MeasurableSpace Ω) (@MeasurableSpace.instLE Ω) F
+                  (@privateSeedPastInformation Ω Seed inst_1 S Y t) →
+                ∀ (P : Ω → Real),
+                  @Measurable Ω Real
+                      (@eventuallyMeasurableSpace Ω F (@ae Ω (@Measure Ω inst) (@Measure.instFunLike Ω inst) ⋯ μ) ⋯)
+                      Real.measurableSpace P →
+                    @IndepFun Ω Real Real inst Real.measurableSpace Real.measurableSpace P (Y t) μ : Prop
+E:\ABRL\worktrees\research-online-book\runs\online-completed-causal-20261008\draft-explicit-typecheck-v3.lean:34:5: warning: unused variable `hY`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\runs\online-completed-causal-20261008\draft-explicit-typecheck-v3.lean:34:34: warning: unused variable `hind`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\runs\online-completed-causal-20261008\draft-explicit-typecheck-v3.lean:35:20: warning: unused variable `hS`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\runs\online-completed-causal-20261008\draft-explicit-typecheck-v3.lean:36:5: warning: unused variable `hseed`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\runs\online-completed-causal-20261008\draft-explicit-typecheck-v3.lean:37:37: warning: unused variable `hF`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\runs\online-completed-causal-20261008\draft-explicit-typecheck-v3.lean:39:5: warning: unused variable `hP`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ {Ω : Type u} {Seed : Type v} [inst : MeasurableSpace Ω] [inst_1 : MeasurableSpace Seed] (μ : @Measure Ω inst)
+  [@IsProbabilityMeasure Ω inst μ] (Y : Nat → Ω → Real),
+  (∀ (t : Nat), @Measurable Ω Real inst Real.measurableSpace (Y t)) →
+    (∀ (t : Nat),
+        @IdentDistrib Ω Ω Real inst inst Real.measurableSpace (Y t)
+          (Y (@OfNat.ofNat Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))) μ μ) →
+      (∀ (t : Nat),
+          @Filter.Eventually Ω
+            (fun ω =>
+              @Membership.mem Real (Set Real) (@Set.instMembership Real)
+                (@Set.Icc Real Real.instPreorder (@OfNat.ofNat Real (nat_lit 0) (@Zero.toOfNat0 Real Real.instZero))
+                  (@OfNat.ofNat Real (nat_lit 1) (@One.toOfNat1 Real Real.instOne)))
+                (Y t ω))
+            (@ae Ω (@Measure Ω inst) (@Measure.instFunLike Ω inst) ⋯ μ)) →
+        @iIndepFun Ω Nat inst (fun x => Real) (fun x => Real.measurableSpace) Y μ →
+          ∀ (S : Ω → Seed),
+            @Measurable Ω Seed inst inst_1 S →
+              @IndepFun Ω Seed (Nat → Real) inst inst_1
+                  (@MeasurableSpace.pi Nat (fun t => Real) fun a => Real.measurableSpace) S (fun ω t => Y t ω) μ →
+                ∀ (F : Nat → MeasurableSpace Ω),
+                  (∀ (t : Nat),
+                      @LE.le (MeasurableSpace Ω) (@MeasurableSpace.instLE Ω) (F t)
+                        (@privateSeedPastInformation Ω Seed inst_1 S Y t)) →
+                    ∀ (prediction : Nat → Ω → Real),
+                      (∀ (t : Nat),
+                          @Measurable Ω Real
+                            (@eventuallyMeasurableSpace Ω (F t)
+                              (@ae Ω (@Measure Ω inst) (@Measure.instFunLike Ω inst) ⋯ μ) ⋯)
+                            Real.measurableSpace (prediction t)) →
+                        (∀ (t : Nat),
+                            @Filter.Eventually Ω
+                              (fun ω =>
+                                @Membership.mem Real (Set Real) (@Set.instMembership Real)
+                                  (@Set.Icc Real Real.instPreorder
+                                    (@OfNat.ofNat Real (nat_lit 0) (@Zero.toOfNat0 Real Real.instZero))
+                                    (@OfNat.ofNat Real (nat_lit 1) (@One.toOfNat1 Real Real.instOne)))
+                                  (prediction t ω))
+                              (@ae Ω (@Measure Ω inst) (@Measure.instFunLike Ω inst) ⋯ μ)) →
+                          ∀ (T : Nat),
+                            And
+                              (@Eq Real (@expectedFixedRegret Ω inst μ Y prediction T)
+                                (@Finset.sum Nat Real Real.instAddCommMonoid (Finset.range T) fun t =>
+                                  @integral Ω Real Real.normedAddCommGroup
+                                    (@InnerProductSpace.toNormedSpace Real Real Real.instRCLike
+                                      (@NormedAddCommGroup.toSeminormedAddCommGroup Real Real.normedAddCommGroup)
+                                      (@RCLike.toInnerProductSpaceReal Real Real.instRCLike))
+                                    inst μ fun ω =>
+                                    @HPow.hPow Real Nat Real (@instHPow Real Nat (@Monoid.toPow Real Real.instMonoid))
+                                      (@HSub.hSub Real Real Real (@instHSub Real Real.instSub) (prediction t ω)
+                                        (@integral Ω Real Real.normedAddCommGroup
+                                          (@InnerProductSpace.toNormedSpace Real Real Real.instRCLike
+                                            (@NormedAddCommGroup.toSeminormedAddCommGroup Real Real.normedAddCommGroup)
+                                            (@RCLike.toInnerProductSpaceReal Real Real.instRCLike))
+                                          inst μ fun ω =>
+                                          Y (@OfNat.ofNat Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) ω))
+                                      (@OfNat.ofNat Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                              (@LE.le Real Real.instLE
+                                (@OfNat.ofNat Real (nat_lit 0) (@Zero.toOfNat0 Real Real.instZero))
+                                (@expectedFixedRegret Ω inst μ Y prediction T)) : Prop
+E:\ABRL\worktrees\research-online-book\runs\online-completed-causal-20261008\draft-explicit-typecheck-v3.lean:45:5: warning: unused variable `hY`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\runs\online-completed-causal-20261008\draft-explicit-typecheck-v3.lean:46:5: warning: unused variable `hlaw`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\runs\online-completed-causal-20261008\draft-explicit-typecheck-v3.lean:47:5: warning: unused variable `hb`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\runs\online-completed-causal-20261008\draft-explicit-typecheck-v3.lean:48:5: warning: unused variable `hind`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\runs\online-completed-causal-20261008\draft-explicit-typecheck-v3.lean:49:20: warning: unused variable `hS`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\runs\online-completed-causal-20261008\draft-explicit-typecheck-v3.lean:50:5: warning: unused variable `hseed`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\runs\online-completed-causal-20261008\draft-explicit-typecheck-v3.lean:52:5: warning: unused variable `hF`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\runs\online-completed-causal-20261008\draft-explicit-typecheck-v3.lean:54:5: warning: unused variable `hP`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\runs\online-completed-causal-20261008\draft-explicit-typecheck-v3.lean:55:5: warning: unused variable `hpb`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`

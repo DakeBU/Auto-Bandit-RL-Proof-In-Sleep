@@ -172,3 +172,5 @@ import Tests.OnlineGuessingIIDSuccessCanary
 import Tests.OnlineLearningCoreAuditCanary
 
 import Tests.OnlineGuessingAECausalCanary
+
+import Tests.OnlineGuessingCompletedCausalCanary

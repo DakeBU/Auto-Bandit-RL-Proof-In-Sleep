@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineLearning.completed_predictable_private_seed_expectedFixed_excess",
+  "file": "BanditRLProof/OnlineGuessingCompletedCausal.lean",
+  "statement": "theorem completed_predictable_private_seed_expectedFixed_excess {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (hind : iIndepFun Y μ) (S : Ω → Seed) (hS : Measurable S) (hseed : IndepFun S (fun ω t => Y t ω) μ) (F : ℕ → MeasurableSpace Ω) (hF : ∀ t, F t ≤ privateSeedPastInformation S Y t) (prediction : ℕ → Ω → ℝ) (hP : ∀ t, @Measurable _ _ (eventuallyMeasurableSpace (F t) (ae μ)) _ (prediction t)) (hpb : ∀ t, ∀ᵐ ω ∂μ, prediction t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) : expectedFixedRegret μ Y prediction T = (∑ t ∈ Finset.range T, ∫ ω, (prediction t ω - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) ∧ 0 ≤ expectedFixedRegret μ Y prediction T",
+  "statement_hash": "622f106e02e67b96148091282549b263d6c57c20e1ca313279fb15f5eb8d9753",
+  "source_assumptions": [
+    "(μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)",
+    "(hY : ∀ t, Measurable (Y t))",
+    "(hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)",
+    "(hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1)",
+    "(hind : iIndepFun Y μ)",
+    "(S : Ω → Seed) (hS : Measurable S)",
+    "(hseed : IndepFun S (fun ω t => Y t ω) μ)",
+    "(hF : ∀ t, F t ≤ privateSeedPastInformation S Y t)",
+    "(hP : ∀ t, @Measurable _ _ (eventuallyMeasurableSpace (F t) (ae μ)) _ (prediction t))",
+    "(hpb : ∀ t, ∀ᵐ ω ∂μ, prediction t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) :"
+  ],
+  "created_at": "2026-10-08T14:46:32+00:00"
+}
