@@ -1,0 +1,76 @@
+Tests.OnlineGuessingRandomizedIID.seededLaw [def] Tests/OnlineGuessingRandomizedIIDCanary.lean:12
+  def seededLaw : Measure (ℝ × (ℕ → ℝ))
+Tests.OnlineGuessingRandomizedIID.seed [def] Tests/OnlineGuessingRandomizedIIDCanary.lean:18
+  def seed (ω : ℝ × (ℕ → ℝ)) : ℝ
+Tests.OnlineGuessingRandomizedIID.target [def] Tests/OnlineGuessingRandomizedIIDCanary.lean:19
+  def target (t : ℕ) (ω : ℝ × (ℕ → ℝ)) : ℝ
+Tests.OnlineGuessingRandomizedIID.seed_measurable [theorem] Tests/OnlineGuessingRandomizedIIDCanary.lean:21
+  theorem seed_measurable : Measurable seed
+Tests.OnlineGuessingRandomizedIID.target_measurable [theorem] Tests/OnlineGuessingRandomizedIIDCanary.lean:22
+  theorem target_measurable (t : ℕ) : Measurable (target t)
+Tests.OnlineGuessingRandomizedIID.seed_has_coinLaw [theorem] Tests/OnlineGuessingRandomizedIIDCanary.lean:25
+  theorem seed_has_coinLaw : IdentDistrib seed (fun x : ℝ => x) seededLaw coinLaw
+Tests.OnlineGuessingRandomizedIID.target_has_coinLaw [theorem] Tests/OnlineGuessingRandomizedIIDCanary.lean:30
+  theorem target_has_coinLaw (t : ℕ) : IdentDistrib (target t) (fun x : ℝ => x) seededLaw coinLaw
+Tests.OnlineGuessingRandomizedIID.target_sameLaw [theorem] Tests/OnlineGuessingRandomizedIIDCanary.lean:39
+  theorem target_sameLaw (t : ℕ) : IdentDistrib (target t) (target 0) seededLaw seededLaw
+Tests.OnlineGuessingRandomizedIID.target_support [theorem] Tests/OnlineGuessingRandomizedIIDCanary.lean:42
+  theorem target_support (t : ℕ) : ∀ᵐ ω ∂seededLaw, target t ω ∈ Set.Icc (0 : ℝ) 1
+Tests.OnlineGuessingRandomizedIID.target_independent [theorem] Tests/OnlineGuessingRandomizedIIDCanary.lean:45
+  theorem target_independent : iIndepFun target seededLaw
+Tests.OnlineGuessingRandomizedIID.seed_independent_whole_process [theorem] Tests/OnlineGuessingRandomizedIIDCanary.lean:53
+  theorem seed_independent_whole_process : IndepFun seed (fun ω t => target t ω) seededLaw
+Tests.OnlineGuessingRandomizedIID.target_mean [theorem] Tests/OnlineGuessingRandomizedIIDCanary.lean:57
+  theorem target_mean (t : ℕ) : (∫ ω, target t ω ∂seededLaw) = 1 / 2
+Tests.OnlineGuessingRandomizedIID.target_variance [theorem] Tests/OnlineGuessingRandomizedIIDCanary.lean:61
+  theorem target_variance (t : ℕ) : variance (target t) seededLaw = 1 / 4
+Tests.OnlineGuessingRandomizedIID.seedBit [def] Tests/OnlineGuessingRandomizedIIDCanary.lean:68
+  def seedBit (s : ℝ) : ℝ
+Tests.OnlineGuessingRandomizedIID.seedBit_measurable [theorem] Tests/OnlineGuessingRandomizedIIDCanary.lean:70
+  theorem seedBit_measurable : Measurable seedBit
+Tests.OnlineGuessingRandomizedIID.seedBit_feasible [theorem] Tests/OnlineGuessingRandomizedIIDCanary.lean:74
+  theorem seedBit_feasible (s : ℝ) : seedBit s ∈ Set.Icc (0 : ℝ) 1
+Tests.OnlineGuessingRandomizedIID.seededPolicy [def] Tests/OnlineGuessingRandomizedIIDCanary.lean:78
+  def seededPolicy (t : ℕ) (q : ℝ × ((↑(Finset.range t) : Type) → ℝ)) : ℝ
+Tests.OnlineGuessingRandomizedIID.seededPolicy_measurable [theorem] Tests/OnlineGuessingRandomizedIIDCanary.lean:81
+  theorem seededPolicy_measurable (t : ℕ) : Measurable (seededPolicy t)
+Tests.OnlineGuessingRandomizedIID.seededPolicy_legal [theorem] Tests/OnlineGuessingRandomizedIIDCanary.lean:87
+  theorem seededPolicy_legal (t : ℕ) (s : ℝ) (z : (↑(Finset.range t) : Type) → ℝ) (hz : ∀ i, z i ∈ Set.Icc (0 : ℝ) 1) : seededPolicy t (s, z) ∈ Set.Icc (0 : ℝ) 1
+Tests.OnlineGuessingRandomizedIID.policy_not_off_cube_bounded [theorem] Tests/OnlineGuessingRandomizedIIDCanary.lean:94
+  theorem policy_not_off_cube_bounded : ¬ (∀ t s z, seededPolicy t (s, z) ∈ Set.Icc (0 : ℝ) 1)
+Tests.OnlineGuessingRandomizedIID.actual_information_monotone [theorem] Tests/OnlineGuessingRandomizedIIDCanary.lean:100
+  theorem actual_information_monotone : Monotone (privateSeedPastInformation seed target)
+Tests.OnlineGuessingRandomizedIID.actual_seed_history_independent [theorem] Tests/OnlineGuessingRandomizedIIDCanary.lean:103
+  theorem actual_seed_history_independent (t : ℕ) : IndepFun (fun ω => (seed ω, fun i : (↑(Finset.range t) : Type) => target i ω)) (target t) seededLaw
+Tests.OnlineGuessingRandomizedIID.actual_policy_current_independent [theorem] Tests/OnlineGuessingRandomizedIIDCanary.lean:109
+  theorem actual_policy_current_independent (t : ℕ) : IndepFun (fun ω => seededPolicy t (seed ω, fun i => target i ω)) (target t) seededLaw
+Tests.OnlineGuessingRandomizedIID.actual_randomized_excess_nonnegative [theorem] Tests/OnlineGuessingRandomizedIIDCanary.lean:114
+  theorem actual_randomized_excess_nonnegative (T : ℕ) : 0 ≤ expectedFixedRegret seededLaw target (fun t ω => seededPolicy t (seed ω, fun i => target i ω)) T
+Tests.OnlineGuessingRandomizedIID.actual_general_information_excess_nonnegative [theorem] Tests/OnlineGuessingRandomizedIIDCanary.lean:121
+  theorem actual_general_information_excess_nonnegative (T : ℕ) : 0 ≤ expectedFixedRegret seededLaw target (fun t ω => seededPolicy t (seed ω, fun i => target i ω)) T
+Tests.OnlineGuessingRandomizedIID.actual_empty_excess [theorem] Tests/OnlineGuessingRandomizedIIDCanary.lean:139
+  theorem actual_empty_excess : expectedFixedRegret seededLaw target (fun t ω => seededPolicy t (seed ω, fun i => target i ω)) 0 = 0
+Tests.OnlineGuessingRandomizedIID.actual_two_round_excess [theorem] Tests/OnlineGuessingRandomizedIIDCanary.lean:147
+  theorem actual_two_round_excess : expectedFixedRegret seededLaw target (fun t ω => seededPolicy t (seed ω, fun i => target i ω)) 2 = 1 / 2
+Tests.OnlineGuessingRandomizedIID.current_target_not_private_information [theorem] Tests/OnlineGuessingRandomizedIIDCanary.lean:172
+  theorem current_target_not_private_information : ¬ Measurable[privateSeedPastInformation seed target 0] (target 0)
+Tests.OnlineGuessingRandomizedIID.fourLaw [def] Tests/OnlineGuessingRandomizedIIDCanary.lean:191
+  def fourLaw : Measure (Fin 4)
+Tests.OnlineGuessingRandomizedIID.xorX [def] Tests/OnlineGuessingRandomizedIIDCanary.lean:202
+  def xorX (q : Fin 4) : ℝ
+Tests.OnlineGuessingRandomizedIID.xorY [def] Tests/OnlineGuessingRandomizedIIDCanary.lean:203
+  def xorY (q : Fin 4) : ℝ
+Tests.OnlineGuessingRandomizedIID.xorTape [def] Tests/OnlineGuessingRandomizedIIDCanary.lean:204
+  def xorTape (q : Fin 4) : ℝ
+Tests.OnlineGuessingRandomizedIID.xor_targets_independent [theorem] Tests/OnlineGuessingRandomizedIIDCanary.lean:206
+  theorem xor_targets_independent : IndepFun xorX xorY fourLaw
+Tests.OnlineGuessingRandomizedIID.xor_tape_individually_independent_X [theorem] Tests/OnlineGuessingRandomizedIIDCanary.lean:215
+  theorem xor_tape_individually_independent_X : IndepFun xorTape xorX fourLaw
+Tests.OnlineGuessingRandomizedIID.xor_tape_individually_independent_Y [theorem] Tests/OnlineGuessingRandomizedIIDCanary.lean:224
+  theorem xor_tape_individually_independent_Y : IndepFun xorTape xorY fourLaw
+Tests.OnlineGuessingRandomizedIID.xor_seed_past_not_independent_current [theorem] Tests/OnlineGuessingRandomizedIIDCanary.lean:233
+  theorem xor_seed_past_not_independent_current : ¬ IndepFun (fun q => (xorTape q, xorX q)) xorY fourLaw
+Tests.OnlineGuessingRandomizedIID.xor_seed_not_independent_whole_pair [theorem] Tests/OnlineGuessingRandomizedIIDCanary.lean:244
+  theorem xor_seed_not_independent_whole_pair : ¬ IndepFun xorTape (fun q => (xorX q, xorY q)) fourLaw
+Tests.OnlineGuessingRandomizedIID.pairwise_seed_independence_is_insufficient [theorem] Tests/OnlineGuessingRandomizedIIDCanary.lean:251
+  theorem pairwise_seed_independence_is_insufficient : IndepFun xorX xorY fourLaw ∧ IndepFun xorTape xorX fourLaw ∧ IndepFun xorTape xorY fourLaw ∧ ¬ IndepFun (fun q => (xorTape q, xorX q)) xorY fourLaw

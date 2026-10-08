@@ -1,0 +1,87 @@
+⚠ [3326/3393] Replayed BanditRLProof.OnlineLearningFTL
+warning: BanditRLProof/OnlineLearningFTL.lean:81:41: unused variable `hT`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [3370/3393] Replayed BanditRLProof.OnlineLearningHistory
+warning: BanditRLProof/OnlineLearningHistory.lean:42:6: 'ring' tactic does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: BanditRLProof/OnlineLearningHistory.lean:42:6: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+⚠ [3371/3393] Replayed BanditRLProof.OnlineGuessingIIDBenchmark
+warning: BanditRLProof/OnlineGuessingIIDBenchmark.lean:38:8: This simp argument is unused:
+  Finset.sum_add_distrib
+
+Hint: Omit it from the simp argument list.
+  simp ̵[̵F̵i̵n̵s̵e̵t̵.̵s̵u̵m̵_̵a̵d̵d̵_̵d̵i̵s̵t̵r̵i̵b̵]̵
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: BanditRLProof/OnlineGuessingIIDBenchmark.lean:185:5: unused variable `hind`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: BanditRLProof/OnlineGuessingIIDBenchmark.lean:187:5: unused variable `hp`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: BanditRLProof/OnlineGuessingIIDBenchmark.lean:188:5: unused variable `hpb`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [3372/3393] Replayed BanditRLProof.OnlineGuessingRandomizedIID
+warning: BanditRLProof/OnlineGuessingRandomizedIID.lean:8:0: Definition `BanditRL.OnlineLearning.privateSeedPastInformation` of class type must be marked with `@[reducible]` or `@[implicit_reducible]`
+⚠ [3432/3433] Replayed Tests.OnlineGuessingIIDBenchmarkCanary
+warning: Tests/OnlineGuessingIIDBenchmarkCanary.lean:199:4: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+✖ [3433/3433] Building Tests.OnlineGuessingRandomizedIIDCanary (8.3s)
+trace: .> LEAN_PATH=E:\ABRL\research\.lake\packages\Cli\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\batteries\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\Qq\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\aesop\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\proofwidgets\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\importGraph\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\LeanSearchClient\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\plausible\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\mathlib\.lake\build\lib\lean;E:\ABRL\worktrees\research-online-book\.lake\build\lib\lean c:\Users\admin\.elan\toolchains\leanprover--lean4---v4.29.1\bin\lean.exe E:\ABRL\worktrees\research-online-book\Tests\OnlineGuessingRandomizedIIDCanary.lean -o E:\ABRL\worktrees\research-online-book\.lake\build\lib\lean\Tests\OnlineGuessingRandomizedIIDCanary.olean -i E:\ABRL\worktrees\research-online-book\.lake\build\lib\lean\Tests\OnlineGuessingRandomizedIIDCanary.ilean -c E:\ABRL\worktrees\research-online-book\.lake\build\ir\Tests\OnlineGuessingRandomizedIIDCanary.c --setup E:\ABRL\worktrees\research-online-book\.lake\build\ir\Tests\OnlineGuessingRandomizedIIDCanary.setup.json --json
+error: Tests/OnlineGuessingRandomizedIIDCanary.lean:25:83: unsolved goals
+⊢ Measure.map seed (coinLaw.prod iidLaw) = coinLaw
+warning: Tests/OnlineGuessingRandomizedIIDCanary.lean:27:19: This simp argument is unused:
+  seed
+
+Hint: Omit it from the simp argument list.
+  simp [seededLaw,̵ ̵s̵e̵e̵d̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+error: Tests/OnlineGuessingRandomizedIIDCanary.lean:71:2: `fun_prop` was unable to prove `Measurable fun s => if s ≤ 1 / 2 then 0 else 1`
+
+Issues:
+  No theorems found for `ite` in order to prove `Measurable fun s => if s ≤ 1 / 2 then 0 else 1`
+error: Tests/OnlineGuessingRandomizedIIDCanary.lean:150:8: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ∫ (x : ℝ × (ℕ → ℝ)), ((fun x => (seedBit x - 1 / 2) ^ 2) ∘ seed) x ∂seededLaw
+in the target expression
+  ∫ (ω : ℝ × (ℕ → ℝ)), (seedBit (seed ω) - 1 / 2) ^ 2 ∂seededLaw = 1 / 4
+
+⊢ ∫ (ω : ℝ × (ℕ → ℝ)), (seedBit (seed ω) - 1 / 2) ^ 2 ∂seededLaw = 1 / 4
+error: Tests/OnlineGuessingRandomizedIIDCanary.lean:150:35: `fun_prop` was unable to prove `Measurable fun x => (seedBit x - 1 / 2) ^ 2`
+
+Issues:
+  No theorems found for `Tests.OnlineGuessingRandomizedIID.seedBit` in order to prove `Measurable fun x => seedBit x`
+  No theorems found for `Tests.OnlineGuessingRandomizedIID.seedBit` in order to prove `Measurable fun s => seedBit s`
+error: Tests/OnlineGuessingRandomizedIIDCanary.lean:161:2: Type mismatch
+  he
+has type
+  expectedFixedRegret seededLaw target
+      (fun t ω => if t = 0 then seedBit (seed ω) else if t = 0 then 2⁻¹ else target (t - 1) ω) 2 =
+    ∫ (ω : ℝ × (ℕ → ℝ)), (seedBit (seed ω) - 2⁻¹) ^ 2 ∂seededLaw +
+      ∫ (ω : ℝ × (ℕ → ℝ)), (target 0 ω - 2⁻¹) ^ 2 ∂seededLaw
+but is expected to have type
+  expectedFixedRegret seededLaw target (fun t ω => seededPolicy t (seed ω, fun i => target (↑i) ω)) 2 = 1 / 2
+warning: Tests/OnlineGuessingRandomizedIIDCanary.lean:160:70: This simp argument is unused:
+  hfirst
+
+Hint: Omit it from the simp argument list.
+  simp [Finset.sum_range_succ, seededPolicy, lastPolicy, target_mean, hf̵i̵r̵st̵,̵ ̵h̵s̵econd] at he
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Tests/OnlineGuessingRandomizedIIDCanary.lean:160:78: This simp argument is unused:
+  hsecond
+
+Hint: Omit it from the simp argument list.
+  simp [Finset.sum_range_succ, seededPolicy, lastPolicy, target_mean, hfirst,̵ ̵h̵s̵e̵c̵o̵n̵d̵] at he
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+error: Lean exited with code 1
+Some required targets logged failures:
+- Tests.OnlineGuessingRandomizedIIDCanary
+error: build failed

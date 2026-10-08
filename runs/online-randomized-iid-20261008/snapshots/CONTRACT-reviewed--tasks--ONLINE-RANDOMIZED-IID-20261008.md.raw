@@ -1,0 +1,34 @@
+# Private seed and predictable strict-past IID guessing variance benchmark
+
+Task id: `ONLINE-RANDOMIZED-IID-20261008`
+Kind: `lean`
+Status: `draft`
+Harness: `hierarchical`
+
+## Goal
+
+Produce current-target independence and cumulative expected-fixed excess for independent private tape and measurable strict-past predictions. Frozen exact prospective headers in `docs/contracts/online-randomized-iid-v1/targets-v2.json`; source contract review pending, no body accepted. Total Chapters1–16 Goal ACTIVE.
+
+## Source
+
+Orabona arXiv1912.13213v10/2026-06-21, printed1–2/PDF13–14, SHAcef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17. Source card `docs/contracts/online-randomized-iid-v1/source-card-v2.json`; scenario private tape independent WHOLE IID stream, subordinate pre-reveal information.
+
+## Lean Target
+
+Target file: `BanditRLProof/OnlineGuessingRandomizedIID.lean`
+
+- `BanditRL.OnlineLearning.independent_private_seed_pair` (R001): Joint-seed regrouping lemma; pairwise independence does not suffice.
+- `BanditRL.OnlineLearning.private_seed_past_independent` (R002): Derive joint seed+strict-past current independence from natural whole-process seed independence and target IID.
+- `BanditRL.OnlineLearning.privateSeedPastInformation_monotone` (R003): Actual generated pre-reveal information grows with the history; no stochastic hypotheses needed.
+- `BanditRL.OnlineLearning.predictable_private_seed_independent` (R004): Any measurable prediction in subordinate information inherits independence; current independence is not supplied.
+- `BanditRL.OnlineLearning.randomized_history_policy_independent` (R005): Actual jointly measurable policy of seed and finite strict past; empty initial history may use seed.
+- `BanditRL.OnlineLearning.predictable_private_seed_expectedFixed_excess` (R006): General predictable-information actual causal lower producer; derive ambient measurability and L2 from information/support.
+- `BanditRL.OnlineLearning.randomized_history_policy_expectedFixed_excess` (R007): Concrete seed+finite-history producer instantiates the general information endpoint; feasible only on legal histories.
+
+## Boundaries
+
+Probability/measurable/a.s.unit targets, same laws/joint IID, whole-process seed independence. Legal history cube only; general predictions a.s.feasible. Minimum of expected FIXED loss outside integration; no E[min], future inputs, supplied current independence, full kernel representation or asymptotic claim. t0 extension; source1..T=Lean0..T−1. Original16/null, C1C2open, remaining asymptotic/oldfive/3–16/appendices required. OPENdraftPR194 exactb08 stack, not main/live.
+
+## Mathlib-Ready Leaf Contract
+
+Cards MLIB-PROBABILITY-INDEPENDENCE/MLIB-MEASURE-INTEGRAL/MLIB-PROBABILITY-VARIANCE. R001 mathlib-candidate (not upstream); R002–R007 project-local. Exact typed API evidence in runs/online-randomized-iid-20261008/draft-types-and-API-v2.log; staged ROOT director/architect and single lower route. Distinct mandatory semantic roundtrip before proving. Focused build/public canary/axiom/fences/root/Tests/fullharness/site and semantic reviewer all separate before acceptance.

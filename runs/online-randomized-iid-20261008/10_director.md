@@ -1,0 +1,1 @@
+Freeze seven producer/interface terminals and one generated-information definition. First finite leaf is the independent-seed triple regrouping lemma; then actual seeded strict-history independence, monotone information, predictable independence and two cumulative excess producers. Remaining asymptotic and old module source audits REQUIRED. No conclusion from declarations alone.

@@ -1,0 +1,128 @@
+{
+  "schema_version": 1,
+  "mode": "shadow-read-only",
+  "analyzed_at": "2026-10-08T08:49:12+00:00",
+  "trials_path": "E:\\ABRL\\worktrees\\research-online-book\\runs\\online-randomized-iid-20261008\\accepted-scoped-trials-v3.jsonl",
+  "trial_rows": 19,
+  "status_counts": {
+    "accepted": 1,
+    "compiled": 8,
+    "failed": 3,
+    "running": 7
+  },
+  "inferred_frontier": {
+    "selected_task": "ONLINE-RANDOMIZED-IID-20261008",
+    "selected_leaf": "ONLINE-RANDOMIZED-IID-20261008",
+    "source_status": "accepted",
+    "last_accepted_verifier": {
+      "trial_index": 18,
+      "time": "2026-10-08T08:49:12+00:00",
+      "task": "ONLINE-RANDOMIZED-IID-20261008",
+      "role": "reviewer",
+      "kind": "review",
+      "status": "accepted",
+      "lean": "",
+      "notes": "ONLINE-RANDOMIZED-IID-20261008 Independent private tape and subordinate strict-past information finite IID producer only: whole-process tape independence, jointly IID measurable a.s.unit targets, same-law expected fixed benchmark, derived current independence and L2, real jointly measurable policy feasible for every seed only on legal histories. Seven derived proofs and one information definition; same-prefix excess identity and nonnegativity, not a new rate or seven printed results. Universal-kernel/completed-information/AE-factorization full-source coverage audit and source asymptotic-success equivalence REQUIRED; original16 C1 source items/proof-totalnull/five old main-relative source-module audits unwaived/C1C2open/3-16unenumerated/necessaryappendicesrequired/GoalACTIVE. OPENdraft/unmerged PR194 exact b08 stack; no main/live/merge/deploy/retirement. Actual55kernel/42theorem13definition/26VALUEpairs/36nativeguards, 29namedcanaries9fixtures2probabilityproofs2anonymousclassvalues; arbitrary-universe exact public/canary/whole-definition types. Root9098/Tests9255/fullharness472skip7/currentcommittedcontributor5productionpaths1contract. Clean f8c25ea9e5e43841410c0449cb226650cdb057cb v3localLeanverifiedsite;10923oldregistryIDsURLsHashes+8newnodes;13currentoriginalimages viewed by ROOT and distinct FINAL reviewer. Decoder reconstruction recorded; distinct CONTRACT1143/BODY1582/FINAL1822 source reviews accepted-with-explicit-delta with exactR1-R7; no human/external/absolute-blind/model-runtime attestation. Only frozen seven terminals progress7->0. Raw failed attempts/tracking-only/parser/weak historical guessed-hash OR-prefix guard/reader corrections retained. Fullunexcluded whitespaceexit2/scopedpass/exactfiveSHA-boundRAWstdoutexceptions/noexecutablehelper exemption. Actual native acceptance and PR delivery remain separate, performed below with versioned evidence.",
+      "run_id": "online-randomized-iid-20261008"
+    }
+  },
+  "memory_digest": {
+    "path": "E:\\ABRL\\worktrees\\research-online-book\\runs\\online-randomized-iid-20261008\\memory-digest-accepted-v3.md",
+    "task": ""
+  },
+  "recorded_frontier": {
+    "schema_version": 1,
+    "record_id": "frontier-fa125f6b65116305",
+    "updated_at": "2026-10-08T08:49:12+00:00",
+    "root_objective": "Persistent Orabona Chapters1-16; bounded independent-private-tape finite IID producer only",
+    "current_leaf": {
+      "id": "ONLINE-RANDOMIZED-IID-20261008",
+      "kind": "lean",
+      "status": "accepted",
+      "statement": "theorem randomized_history_policy_expectedFixed_excess {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (hind : iIndepFun Y μ) (S : Ω → Seed) (hS : Measurable S) (hseed : IndepFun S (fun ω t => Y t ω) μ) (policy : (t : ℕ) → (Seed × ((↑(Finset.range t) : Type) → ℝ)) → ℝ) (hp : ∀ t, Measurable (policy t)) (hpb : ∀ t s z, (∀ i, z i ∈ Set.Icc (0 : ℝ) 1) → policy t (s, z) ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) : expectedFixedRegret μ Y (fun t ω => policy t (S ω, fun i => Y i ω)) T = (∑ t ∈ Finset.range T, ∫ ω, (policy t (S ω, fun i => Y i ω) - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) ∧ 0 ≤ expectedFixedRegret μ Y (fun t ω => policy t (S ω, fun i => Y i ω)) T",
+      "statement_hash": "65b2dbf8795c2d28058ba3d293ec741c60479aa1908ddeb22939bc3e3d4793b5",
+      "declaration": "BanditRL.OnlineLearning.randomized_history_policy_expectedFixed_excess",
+      "file": "BanditRLProof\\OnlineGuessingRandomizedIID.lean",
+      "source_status": "source-reviewed",
+      "dependencies": [
+        {
+          "kind": "lean",
+          "name": "BanditRL.OnlineLearning.private_seed_past_independent",
+          "status": "compiled"
+        },
+        {
+          "kind": "lean",
+          "name": "BanditRL.OnlineLearning.predictable_private_seed_expectedFixed_excess",
+          "status": "compiled"
+        },
+        {
+          "kind": "review",
+          "name": "source-reader",
+          "status": "accepted"
+        }
+      ]
+    },
+    "dag": {
+      "nodes": [
+        {
+          "id": "ONLINE-RANDOMIZED-IID-20261008",
+          "kind": "lean",
+          "status": "accepted",
+          "dependencies": [
+            {
+              "kind": "lean",
+              "name": "BanditRL.OnlineLearning.private_seed_past_independent",
+              "status": "compiled"
+            },
+            {
+              "kind": "lean",
+              "name": "BanditRL.OnlineLearning.predictable_private_seed_expectedFixed_excess",
+              "status": "compiled"
+            },
+            {
+              "kind": "review",
+              "name": "source-reader",
+              "status": "accepted"
+            }
+          ],
+          "dispatch_count": 0
+        }
+      ]
+    },
+    "last_accepted_verifier": {
+      "trial_index": 18,
+      "time": "2026-10-08T08:49:12+00:00",
+      "task": "ONLINE-RANDOMIZED-IID-20261008",
+      "role": "reviewer",
+      "kind": "review",
+      "status": "accepted",
+      "lean": "",
+      "notes": "ONLINE-RANDOMIZED-IID-20261008 Independent private tape and subordinate strict-past information finite IID producer only: whole-process tape independence, jointly IID measurable a.s.unit targets, same-law expected fixed benchmark, derived current independence and L2, real jointly measurable policy feasible for every seed only on legal histories. Seven derived proofs and one information definition; same-prefix excess identity and nonnegativity, not a new rate or seven printed results. Universal-kernel/completed-information/AE-factorization full-source coverage audit and source asymptotic-success equivalence REQUIRED; original16 C1 source items/proof-totalnull/five old main-relative source-module audits unwaived/C1C2open/3-16unenumerated/necessaryappendicesrequired/GoalACTIVE. OPENdraft/unmerged PR194 exact b08 stack; no main/live/merge/deploy/retirement. Actual55kernel/42theorem13definition/26VALUEpairs/36nativeguards, 29namedcanaries9fixtures2probabilityproofs2anonymousclassvalues; arbitrary-universe exact public/canary/whole-definition types. Root9098/Tests9255/fullharness472skip7/currentcommittedcontributor5productionpaths1contract. Clean f8c25ea9e5e43841410c0449cb226650cdb057cb v3localLeanverifiedsite;10923oldregistryIDsURLsHashes+8newnodes;13currentoriginalimages viewed by ROOT and distinct FINAL reviewer. Decoder reconstruction recorded; distinct CONTRACT1143/BODY1582/FINAL1822 source reviews accepted-with-explicit-delta with exactR1-R7; no human/external/absolute-blind/model-runtime attestation. Only frozen seven terminals progress7->0. Raw failed attempts/tracking-only/parser/weak historical guessed-hash OR-prefix guard/reader corrections retained. Fullunexcluded whitespaceexit2/scopedpass/exactfiveSHA-boundRAWstdoutexceptions/noexecutablehelper exemption. Actual native acceptance and PR delivery remain separate, performed below with versioned evidence.",
+      "run_id": "online-randomized-iid-20261008"
+    },
+    "memory_policy": {
+      "recent_role_relevant_limit": 5,
+      "explicit_verified_lemma_ids": [],
+      "whole_history_default": false
+    },
+    "shadow_gate": {
+      "status": "pending",
+      "analyzed_trial_rows": 19,
+      "mismatches": [],
+      "replay_transitions": 0
+    },
+    "mutation_policy": {
+      "canonical_path_queue": true,
+      "cross_process_lock": true,
+      "same_file_serialized": true,
+      "disjoint_files_parallel": true
+    },
+    "autonomous_execution": {
+      "enabled": false,
+      "requires_deterministic_gates": true,
+      "requires_explicit_user_request": true
+    }
+  },
+  "mismatches": [],
+  "would_mutate": false
+}

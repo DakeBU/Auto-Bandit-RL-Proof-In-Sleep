@@ -1,0 +1,22 @@
+{
+  "command": [
+    "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\python.exe",
+    "-B",
+    "-X",
+    "utf8",
+    "tools/bandit.py",
+    "statement-fence",
+    "--declaration",
+    "BanditRL.OnlineLearning.independent_private_seed_pair",
+    "--file",
+    "BanditRLProof/OnlineGuessingRandomizedIID.lean",
+    "--source-assumption",
+    "theorem independent_private_seed_pair {Ω : Type u} {Seed : Type v} {Χ : Type w} {Ζ : Type z} [MeasurableSpace Ω] [MeasurableSpace Seed] [MeasurableSpace Χ] [MeasurableSpace Ζ] (μ : Measure Ω) [IsProbabilityMeasure μ] (S : Ω → Seed) (X : Ω → Χ) (Y : Ω → Ζ) (hS : Measurable S) (hX : Measurable X) (hY : Measurable Y) (hseed : IndepFun S (fun ω => (X ω, Y ω)) μ) (hXY : IndepFun X Y μ) : IndepFun (fun ω => (S ω, X ω)) Y μ",
+    "--output",
+    "E:\\ABRL\\worktrees\\research-online-book\\runs\\online-randomized-iid-20261008\\full-header-fences-v2\\public-independent_private_seed_pair.json"
+  ],
+  "cwd": "E:/ABRL/worktrees/research-online-book",
+  "exit_code": 0,
+  "seconds": 0.211,
+  "log_sha256": "44644fca68c11cc775d383998b24a1b05215388f493d870015e7ec2c1b5c49ba"
+}
