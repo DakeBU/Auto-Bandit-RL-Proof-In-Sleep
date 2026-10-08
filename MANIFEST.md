@@ -15589,3 +15589,4 @@ Orabona v10 unnumberedexample afterT2.30/endSection2.2.1 immediatelybefore2.2.2 
 - `2026-10-08T15:56:17+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_leaf_cards.json` - refreshed local_leaf_cards.json
 - `2026-10-08T15:56:17+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
 - `2026-10-08T17:35:26+00:00` `bandit.py new-task` `task` `tasks/ONLINE-FTL-LIMIT-20261009.md` - Actual FTL best regret and fixed-comparator ordinary-limit criterion
+- `2026-10-08T18:45:32+00:00` `bandit.py new-task` `task` `tasks/ONLINE-FTL-OBSTRUCTION-20261009.md` - Actual bounded FTL ordinary-limit reconciliation

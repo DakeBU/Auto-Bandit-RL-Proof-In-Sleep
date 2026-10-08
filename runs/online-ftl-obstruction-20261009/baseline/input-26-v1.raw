@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "id": "HARNESS-LIFECYCLE-PROOF-FRONTIER-HARDENING",
+  "status": "accepted",
+  "module": "tools/abrl_lifecycle.py",
+  "cli": "tools/bandit.py",
+  "commands": [
+    "frontier-shadow",
+    "frontier-replay",
+    "frontier-refresh",
+    "frontier-dispatch",
+    "memory-record",
+    "memory-packet",
+    "retrieval-record",
+    "statement-fence",
+    "safe-verify",
+    "lifecycle-event"
+  ],
+  "memory_types": [
+    "verified_lemma",
+    "partial_route",
+    "failed_path",
+    "source_fact",
+    "decision",
+    "checkpoint"
+  ],
+  "contracts": {
+    "shadow_before_mutation": true,
+    "memory_recent_limit": 5,
+    "whole_history_default": false,
+    "blocked_dependency_redispatch": false,
+    "immutable_declaration_header": true,
+    "source_assumptions_preserved": true,
+    "forbid_sorry_admit_axiom_postulate": true,
+    "same_file_serialized": true,
+    "disjoint_files_parallel": true,
+    "cross_process_lock": true,
+    "transient_only_retry": true,
+    "automatic_compaction": false,
+    "autonomous_execution": false
+  },
+  "tests": "tools/test_abrl_lifecycle.py",
+  "documentation": "docs/lifecycle_and_proof_frontier_hardening.md",
+  "failure_policy": "Do not dispatch blocked or stale leaves, mutate target statements, erase source assumptions, retry mathematical or Lean failures as transport errors, or enable detached autonomous execution without deterministic gates and explicit user direction."
+}

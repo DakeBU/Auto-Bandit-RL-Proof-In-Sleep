@@ -1,0 +1,24 @@
+E:\ABRL\worktrees\research-online-book\runs\online-ftl-obstruction-20261009\api-signature-probe-v1.lean:16:5: warning: unused variable `hy`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+BanditRL.OnlineLearning.meanPredict_fixedRegret_limit_iff (y : ℕ → ℝ) (hy : ∀ (t : ℕ), y t ∈ Set.Icc 0 1) (u a : ℝ) :
+  Tendsto (fun T => comparatorRegret (fun t x => (x - y t) ^ 2) (meanPredict y) u T / ↑T) atTop (nhds a) ↔
+    Tendsto (fun T => (u - empiricalMean y T) ^ 2) atTop (nhds (-a))
+BanditRL.OnlineLearning.meanPredict_limitNoRegret_of_mean_converges (y : ℕ → ℝ) (hy : ∀ (t : ℕ), y t ∈ Set.Icc 0 1)
+  (m : ℝ) (hm : Tendsto (empiricalMean y) atTop (nhds m)) :
+  (∀ (u : ℝ),
+      Tendsto (fun T => comparatorRegret (fun t x => (x - y t) ^ 2) (meanPredict y) u T / ↑T) atTop
+        (nhds (-(u - m) ^ 2))) ∧
+    LimitNoRegret (Set.Icc 0 1) (fun t x => (x - y t) ^ 2) (meanPredict y)
+BanditRL.OnlineLearning.empiricalMean_mem (y : ℕ → ℝ) (n : ℕ) (hn : 0 < n) (hy : ∀ t < n, y t ∈ Set.Icc 0 1) :
+  empiricalMean y n ∈ Set.Icc 0 1
+tendsto_pow_atTop_atTop_of_one_lt.{u_1} {α : Type u_1} [Semiring α] [LinearOrder α] [IsStrictOrderedRing α]
+  [ExistsAddOfLE α] [Archimedean α] {r : α} (h : 1 < r) : Tendsto (fun n => r ^ n) atTop atTop
+Finset.sum_range_succ.{u_4} {M : Type u_4} [AddCommMonoid M] (f : ℕ → M) (n : ℕ) :
+  ∑ x ∈ Finset.range (n + 1), f x = ∑ x ∈ Finset.range n, f x + f n
+le_of_tendsto.{u, v} {α : Type u} {β : Type v} [TopologicalSpace α] [Preorder α] [ClosedIicTopology α] {f : β → α}
+  {a b : α} {x : Filter β} [x.NeBot] (lim : Tendsto f x (nhds a)) (h : ∀ᶠ (c : β) in x, f c ≤ b) : a ≤ b
+ge_of_tendsto.{u, v} {α : Type u} {β : Type v} [TopologicalSpace α] [Preorder α] [ClosedIciTopology α] {f : β → α}
+  {a b : α} {x : Filter β} [x.NeBot] (lim : Tendsto f x (nhds a)) (h : ∀ᶠ (c : β) in x, b ≤ f c) : b ≤ a
+Nat.one_le_pow (n m : ℕ) (h : 0 < m) : 1 ≤ m ^ n
+Filter.tendsto_add_atTop_nat (k : ℕ) : Tendsto (fun a => a + k) atTop atTop

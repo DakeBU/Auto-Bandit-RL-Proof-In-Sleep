@@ -6909,6 +6909,80 @@
       "dependencies": [
         "BanditRL.OnlineLearning.meanPredict_fixedRegret_limit_iff"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.meanPredict_limitNoRegret_iff_mean_converges",
+      "title": "Literal FTL no-regret iff the empirical mean converges",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 150,
+      "plain": "Use the actual ordinary limits at feasible comparators0 and1. The signed-regret criterion yields convergence of the two squared distances. Their difference reconstructs convergence of the same empirical mean; actual feasible prefixes give a feasible limit. The reverse direction uses the prior conditional FTL producer.",
+      "math": "\\bigl(\\forall u\\in[0,1],\\ \\exists a\\le0:\\ R_T(u)/T\\to a\\bigr)\\ \\Longleftrightarrow\\ \\exists m\\in[0,1]:\\bar y_T\\to m.",
+      "intuition": "Sublinear upper regret does not by itself produce an ordinary fixed-comparator limit.",
+      "why": "Reconcile the literal source definition with its actual bounded FTL guarantee.",
+      "position": "Orabona arXiv:1912.13213v10,2026-06-21 SHA cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17, printed2/PDF14 ordinary-limit no-regret display; printed4/PDF16 Theorem1.3 initial-half causal FTL and logarithmic upper bound; printed6/PDF18 sublinear guarantee. The four endpoints are derived reconciliation results. Source roundt+1 is Lean index t.",
+      "proof_idea": "Use the actual ordinary limits at feasible comparators0 and1. The signed-regret criterion yields convergence of the two squared distances. Their difference reconstructs convergence of the same empirical mean; actual feasible prefixes give a feasible limit. The reverse direction uses the prior conditional FTL producer.",
+      "lean_notes": "Four derived reconciliation results for the actual initial-half strict-past squared-loss FTL, not four printed source results. D1 is an exact iff for one all-time unit stream: literal comparator-wise finite nonpositive ordinary limits are equivalent to one feasible empirical-mean limit. Necessity adds no mean-convergence premise. D2 produces unit support from the explicit fixed binary dyadic recursion. D3 derives exact prefix counts and two diverging subsequences with distinct mean limits2/3 and1/3. D4 uses the SAME stream and learner: upper-epsilon NoRegret and true interval-best regret/T tends0 coexist with NO finite ordinary limit at fixed comparator0 and failure of literal LimitNoRegret. Signed regret can be negative; no contradiction to the source logarithmic upper bound. No future/horizon-selected observation or mean oracle, stochastic/minimax/all-algorithm impossibility claim. Pinned source ordinary-lim display, existing upper NoRegret and separately proposed source correction remain separate. Four bodies and eleven nondegenerate public canaries compiled locally; separate evidence in runs/online-ftl-obstruction-20261009. Only these four derived obligations may close after all gates. Original sixteen Chapter1 source objects/null unknown proof total, full Chapter1 reconciliation, other C1/C2, unenumerated C3-16 and necessary appendices remain REQUIRED. Whole Goal ACTIVE. Stacked on OPEN draft unmerged PR201 exact224927197e78e1330c4c93e84f9c69388d3027a7. Main/live unchanged; no merge/deployment.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.meanPredict_fixedRegret_limit_iff",
+        "BanditRL.OnlineLearning.meanPredict_limitNoRegret_of_mean_converges",
+        "BanditRL.OnlineLearning.empiricalMean_mem"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.dyadicObservation_unit",
+      "title": "One explicit feasible dyadic observation stream",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 151,
+      "plain": "The explicit recursion is d0=0 and d(n+1)=1-d(floor(n/2)). Strong induction on the strictly smaller parent produces binary values and hence unit support at every index.",
+      "math": "d_0=0,\\qquad d_{n+1}=1-d_{\\lfloor n/2\\rfloor},\\qquad d_t\\in[0,1].",
+      "intuition": "Sublinear upper regret does not by itself produce an ordinary fixed-comparator limit.",
+      "why": "Reconcile the literal source definition with its actual bounded FTL guarantee.",
+      "position": "Orabona arXiv:1912.13213v10,2026-06-21 SHA cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17, printed2/PDF14 ordinary-limit no-regret display; printed4/PDF16 Theorem1.3 initial-half causal FTL and logarithmic upper bound; printed6/PDF18 sublinear guarantee. The four endpoints are derived reconciliation results. Source roundt+1 is Lean index t.",
+      "proof_idea": "The explicit recursion is d0=0 and d(n+1)=1-d(floor(n/2)). Strong induction on the strictly smaller parent produces binary values and hence unit support at every index.",
+      "lean_notes": "Four derived reconciliation results for the actual initial-half strict-past squared-loss FTL, not four printed source results. D1 is an exact iff for one all-time unit stream: literal comparator-wise finite nonpositive ordinary limits are equivalent to one feasible empirical-mean limit. Necessity adds no mean-convergence premise. D2 produces unit support from the explicit fixed binary dyadic recursion. D3 derives exact prefix counts and two diverging subsequences with distinct mean limits2/3 and1/3. D4 uses the SAME stream and learner: upper-epsilon NoRegret and true interval-best regret/T tends0 coexist with NO finite ordinary limit at fixed comparator0 and failure of literal LimitNoRegret. Signed regret can be negative; no contradiction to the source logarithmic upper bound. No future/horizon-selected observation or mean oracle, stochastic/minimax/all-algorithm impossibility claim. Pinned source ordinary-lim display, existing upper NoRegret and separately proposed source correction remain separate. Four bodies and eleven nondegenerate public canaries compiled locally; separate evidence in runs/online-ftl-obstruction-20261009. Only these four derived obligations may close after all gates. Original sixteen Chapter1 source objects/null unknown proof total, full Chapter1 reconciliation, other C1/C2, unenumerated C3-16 and necessary appendices remain REQUIRED. Whole Goal ACTIVE. Stacked on OPEN draft unmerged PR201 exact224927197e78e1330c4c93e84f9c69388d3027a7. Main/live unchanged; no merge/deployment.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.dyadicObservation"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.dyadic_empiricalMean_subsequences",
+      "title": "Two distinct empirical-mean subsequence limits",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 152,
+      "plain": "Pair the two children of every binary-tree parent to derive S(2n+1)=2n-2S(n). Induction yields S(4^n-1)=2(4^n-1)/3 and the corresponding low-prefix count. Thus the high means are exactly2/3 and low means equal 1/3 - 1/(3*(2*4^n-1)). Both actual natural horizons diverge; inverse horizons tend0.",
+      "math": "\\bar d_{4^{n+1}-1}\\to\\frac23,\\qquad\\bar d_{2\\cdot4^n-1}\\to\\frac13.",
+      "intuition": "Sublinear upper regret does not by itself produce an ordinary fixed-comparator limit.",
+      "why": "Reconcile the literal source definition with its actual bounded FTL guarantee.",
+      "position": "Orabona arXiv:1912.13213v10,2026-06-21 SHA cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17, printed2/PDF14 ordinary-limit no-regret display; printed4/PDF16 Theorem1.3 initial-half causal FTL and logarithmic upper bound; printed6/PDF18 sublinear guarantee. The four endpoints are derived reconciliation results. Source roundt+1 is Lean index t.",
+      "proof_idea": "Pair the two children of every binary-tree parent to derive S(2n+1)=2n-2S(n). Induction yields S(4^n-1)=2(4^n-1)/3 and the corresponding low-prefix count. Thus the high means are exactly2/3 and low means equal 1/3 - 1/(3*(2*4^n-1)). Both actual natural horizons diverge; inverse horizons tend0.",
+      "lean_notes": "Four derived reconciliation results for the actual initial-half strict-past squared-loss FTL, not four printed source results. D1 is an exact iff for one all-time unit stream: literal comparator-wise finite nonpositive ordinary limits are equivalent to one feasible empirical-mean limit. Necessity adds no mean-convergence premise. D2 produces unit support from the explicit fixed binary dyadic recursion. D3 derives exact prefix counts and two diverging subsequences with distinct mean limits2/3 and1/3. D4 uses the SAME stream and learner: upper-epsilon NoRegret and true interval-best regret/T tends0 coexist with NO finite ordinary limit at fixed comparator0 and failure of literal LimitNoRegret. Signed regret can be negative; no contradiction to the source logarithmic upper bound. No future/horizon-selected observation or mean oracle, stochastic/minimax/all-algorithm impossibility claim. Pinned source ordinary-lim display, existing upper NoRegret and separately proposed source correction remain separate. Four bodies and eleven nondegenerate public canaries compiled locally; separate evidence in runs/online-ftl-obstruction-20261009. Only these four derived obligations may close after all gates. Original sixteen Chapter1 source objects/null unknown proof total, full Chapter1 reconciliation, other C1/C2, unenumerated C3-16 and necessary appendices remain REQUIRED. Whole Goal ACTIVE. Stacked on OPEN draft unmerged PR201 exact224927197e78e1330c4c93e84f9c69388d3027a7. Main/live unchanged; no merge/deployment.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.dyadicObservation"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.dyadic_meanPredict_obstruction",
+      "title": "Bounded actual FTL separates upper and ordinary no-regret",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 153,
+      "plain": "Apply the existing actual-FTL upper guarantee and best-average-zero result to the support produced by D2. If fixed-zero regret/T had an ordinary finite limit, the squared empirical means would share one limit. Composing with both diverging D3 subsequences forces that limit to be both4/9 and1/9, a contradiction. The failure at feasible comparator0 rules out the literal all-comparator predicate.",
+      "math": "\\mathrm{UpperNoRegret}(p,d),\\quad R_T^{\\mathrm{best}}/T\\to0,\\quad\\nexists a\\in\\mathbb R:R_T(0)/T\\to a,\\quad\\neg\\mathrm{LimitNoRegret}(p,d).",
+      "intuition": "Sublinear upper regret does not by itself produce an ordinary fixed-comparator limit.",
+      "why": "Reconcile the literal source definition with its actual bounded FTL guarantee.",
+      "position": "Orabona arXiv:1912.13213v10,2026-06-21 SHA cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17, printed2/PDF14 ordinary-limit no-regret display; printed4/PDF16 Theorem1.3 initial-half causal FTL and logarithmic upper bound; printed6/PDF18 sublinear guarantee. The four endpoints are derived reconciliation results. Source roundt+1 is Lean index t.",
+      "proof_idea": "Apply the existing actual-FTL upper guarantee and best-average-zero result to the support produced by D2. If fixed-zero regret/T had an ordinary finite limit, the squared empirical means would share one limit. Composing with both diverging D3 subsequences forces that limit to be both4/9 and1/9, a contradiction. The failure at feasible comparator0 rules out the literal all-comparator predicate.",
+      "lean_notes": "Four derived reconciliation results for the actual initial-half strict-past squared-loss FTL, not four printed source results. D1 is an exact iff for one all-time unit stream: literal comparator-wise finite nonpositive ordinary limits are equivalent to one feasible empirical-mean limit. Necessity adds no mean-convergence premise. D2 produces unit support from the explicit fixed binary dyadic recursion. D3 derives exact prefix counts and two diverging subsequences with distinct mean limits2/3 and1/3. D4 uses the SAME stream and learner: upper-epsilon NoRegret and true interval-best regret/T tends0 coexist with NO finite ordinary limit at fixed comparator0 and failure of literal LimitNoRegret. Signed regret can be negative; no contradiction to the source logarithmic upper bound. No future/horizon-selected observation or mean oracle, stochastic/minimax/all-algorithm impossibility claim. Pinned source ordinary-lim display, existing upper NoRegret and separately proposed source correction remain separate. Four bodies and eleven nondegenerate public canaries compiled locally; separate evidence in runs/online-ftl-obstruction-20261009. Only these four derived obligations may close after all gates. Original sixteen Chapter1 source objects/null unknown proof total, full Chapter1 reconciliation, other C1/C2, unenumerated C3-16 and necessary appendices remain REQUIRED. Whole Goal ACTIVE. Stacked on OPEN draft unmerged PR201 exact224927197e78e1330c4c93e84f9c69388d3027a7. Main/live unchanged; no merge/deployment.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.dyadicObservation_unit",
+        "BanditRL.OnlineLearning.dyadic_empiricalMean_subsequences",
+        "BanditRL.OnlineLearning.meanPredict_noRegret",
+        "BanditRL.OnlineLearning.meanPredict_bestRegret_average_tendsto_zero",
+        "BanditRL.OnlineLearning.meanPredict_fixedRegret_limit_iff"
+      ]
     }
   ]
 }

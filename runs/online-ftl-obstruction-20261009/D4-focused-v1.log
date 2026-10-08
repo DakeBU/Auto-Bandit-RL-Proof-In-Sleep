@@ -1,0 +1,77 @@
+⚠ [3327/3333] Replayed BanditRLProof.OnlineLearningFTL
+warning: BanditRLProof/OnlineLearningFTL.lean:81:41: unused variable `hT`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+✖ [3333/3333] Building BanditRLProof.OnlineFTLOscillation (11s)
+trace: .> LEAN_PATH=E:\ABRL\research\.lake\packages\Cli\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\batteries\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\Qq\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\aesop\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\proofwidgets\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\importGraph\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\LeanSearchClient\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\plausible\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\mathlib\.lake\build\lib\lean;E:\ABRL\worktrees\research-online-book\.lake\build\lib\lean c:\Users\admin\.elan\toolchains\leanprover--lean4---v4.29.1\bin\lean.exe E:\ABRL\worktrees\research-online-book\BanditRLProof\OnlineFTLOscillation.lean -o E:\ABRL\worktrees\research-online-book\.lake\build\lib\lean\BanditRLProof\OnlineFTLOscillation.olean -i E:\ABRL\worktrees\research-online-book\.lake\build\lib\lean\BanditRLProof\OnlineFTLOscillation.ilean -c E:\ABRL\worktrees\research-online-book\.lake\build\ir\BanditRLProof\OnlineFTLOscillation.c --setup E:\ABRL\worktrees\research-online-book\.lake\build\ir\BanditRLProof\OnlineFTLOscillation.setup.json --json
+error: BanditRLProof/OnlineFTLOscillation.lean:201:15: don't know how to synthesize implicit argument `x`
+  @Tendsto.pow ℕ ℝ PseudoMetricSpace.toUniformSpace.toTopologicalSpace Real.instMonoid
+    instIsTopologicalRingReal.toContinuousMul atTop
+    (fun x => ?m.204 - empiricalMean dyadicObservation (4 ^ (x + 1) - 1)) (?m.204 - 2 / 3)
+    (Tendsto.sub tendsto_const_nhds dyadic_empiricalMean_subsequences.left) 2
+context:
+hy : ∀ (t : ℕ), dyadicObservation t ∈ Set.Icc 0 1
+a : ℝ
+ha :
+  Tendsto
+    (fun T => comparatorRegret (fun t x => (x - dyadicObservation t) ^ 2) (meanPredict dyadicObservation) 0 T / ↑T)
+    atTop (nhds a)
+hs : Tendsto (fun T => (0 - empiricalMean dyadicObservation T) ^ 2) atTop (nhds (-a))
+⊢ ℝ
+error: BanditRLProof/OnlineFTLOscillation.lean:201:15: don't know how to synthesize implicit argument `f`
+  @Tendsto.pow ℕ ℝ PseudoMetricSpace.toUniformSpace.toTopologicalSpace Real.instMonoid
+    instIsTopologicalRingReal.toContinuousMul atTop
+    (fun x => ?m.204 - empiricalMean dyadicObservation (4 ^ (x + 1) - 1)) (?m.204 - 2 / 3)
+    (Tendsto.sub tendsto_const_nhds dyadic_empiricalMean_subsequences.left) 2
+context:
+hy : ∀ (t : ℕ), dyadicObservation t ∈ Set.Icc 0 1
+a : ℝ
+ha :
+  Tendsto
+    (fun T => comparatorRegret (fun t x => (x - dyadicObservation t) ^ 2) (meanPredict dyadicObservation) 0 T / ↑T)
+    atTop (nhds a)
+hs : Tendsto (fun T => (0 - empiricalMean dyadicObservation T) ^ 2) atTop (nhds (-a))
+⊢ ℕ → ℝ
+error: BanditRLProof/OnlineFTLOscillation.lean:201:16: don't know how to synthesize implicit argument `a`
+  @Tendsto.sub ℝ ℕ PseudoMetricSpace.toUniformSpace.toTopologicalSpace Real.instSub
+    IsTopologicalAddGroup.to_continuousSub (fun x => ?m.204)
+    (fun n => empiricalMean dyadicObservation (4 ^ (n + 1) - 1)) atTop ?m.204 (2 / 3) tendsto_const_nhds
+    dyadic_empiricalMean_subsequences.left
+context:
+hy : ∀ (t : ℕ), dyadicObservation t ∈ Set.Icc 0 1
+a : ℝ
+ha :
+  Tendsto
+    (fun T => comparatorRegret (fun t x => (x - dyadicObservation t) ^ 2) (meanPredict dyadicObservation) 0 T / ↑T)
+    atTop (nhds a)
+hs : Tendsto (fun T => (0 - empiricalMean dyadicObservation T) ^ 2) atTop (nhds (-a))
+⊢ ℝ
+error: BanditRLProof/OnlineFTLOscillation.lean:201:16: don't know how to synthesize implicit argument `f`
+  @Tendsto.sub ℝ ℕ PseudoMetricSpace.toUniformSpace.toTopologicalSpace Real.instSub
+    IsTopologicalAddGroup.to_continuousSub (fun x => ?m.204)
+    (fun n => empiricalMean dyadicObservation (4 ^ (n + 1) - 1)) atTop ?m.204 (2 / 3) tendsto_const_nhds
+    dyadic_empiricalMean_subsequences.left
+context:
+hy : ∀ (t : ℕ), dyadicObservation t ∈ Set.Icc 0 1
+a : ℝ
+ha :
+  Tendsto
+    (fun T => comparatorRegret (fun t x => (x - dyadicObservation t) ^ 2) (meanPredict dyadicObservation) 0 T / ↑T)
+    atTop (nhds a)
+hs : Tendsto (fun T => (0 - empiricalMean dyadicObservation T) ^ 2) atTop (nhds (-a))
+⊢ ℕ → ℝ
+error: BanditRLProof/OnlineFTLOscillation.lean:201:35: don't know how to synthesize placeholder
+context:
+hy : ∀ (t : ℕ), dyadicObservation t ∈ Set.Icc 0 1
+a : ℝ
+ha :
+  Tendsto
+    (fun T => comparatorRegret (fun t x => (x - dyadicObservation t) ^ 2) (meanPredict dyadicObservation) 0 T / ↑T)
+    atTop (nhds a)
+hs : Tendsto (fun T => (0 - empiricalMean dyadicObservation T) ^ 2) atTop (nhds (-a))
+⊢ ℝ
+error: BanditRLProof/OnlineFTLOscillation.lean:201:9: failed to infer `have` declaration type
+error: Lean exited with code 1
+Some required targets logged failures:
+- BanditRLProof.OnlineFTLOscillation
+error: build failed
