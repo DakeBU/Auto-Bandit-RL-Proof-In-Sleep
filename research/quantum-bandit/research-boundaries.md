@@ -13,6 +13,7 @@ claiming to implement either full project.
 | A depth-dependent estimation cost | external theorem; not locally ported | instantiate projector reflections, literal word counts, fresh shots and integer caps |
 | A gap-dependent and gap-free regret upper bounds | speculative | concrete policy, all-history coverage, horizon truncation and expectation calculation |
 | A matching minimax lower bound | speculative | hard oracle family, adaptive transcript information and testing reduction |
+| Adaptive reset transcript information, basis-only fixed-n refinement | compiled local increment | actual finite trace PMF and injective list/historyLaw bridge; H² bounded by D times the average of both environments' expected arm-weighted query costs; stopping, arbitrary measurements, testing and K-arm reduction remain open |
 | B cost envelope and adaptive epsilon-BAI complexity | speculative | feasible fidelity selector, real cost certificate and stopping/termination |
 | Horizon-independent uniform O(K) weak-oracle regret | refuted by pinned external lower bound | the requested soft-O expression must retain horizon logarithms |
 | Uniform fine-accuracy BAI with irreducible identical biased oracles | refuted mathematical example below; not a local Lean lower bound | finer identifiable fidelity or a different stated target |
@@ -48,6 +49,21 @@ The compiled Hellinger bound is for one basis-measurement block. Converting actu
 and supplying hard Bernoulli-unitary environments are distinct next leaves. A fixed
 pair of unitary points can be perfectly distinguishable, so a two-point calculation
 alone does not imply the horizon-logarithmic lower bound in the pinned prior work.
+
+Local continuation update: `AdaptiveTranscript.lean` in this private adapter project
+now closes fixed-n adaptive information accumulation. Its actual kernel masses are
+derived from the existing evaluated words; no per-block information assumption is
+added. Its finite PMF pushes forward injectively to the existing `historyLaw`, and
+uniform weighted cost is proved equal to existing `historyQueryCost * eta^2`.
+With a natural all-trace budget T, H² <= D*T*eta². This is not a literal
+infinite-List tsum theorem and does not construct horizon clipping or stopping.
+The first paragraph above describes the prior milestone, now superseded only
+for this explicitly named fixed-n basis refinement.
+
+The arm-local bound retains BOTH environments' expected weighted query costs.
+It cannot directly replace those by baseline-environment counts to obtain the
+K-arm minimax rate. A one-sided/stopped comparison or another verified hard-family
+reduction is a new exact open leaf. No sqrt(KT/D) theorem follows automatically.
 
 ## B: an implementable finite selector must precede the envelope
 

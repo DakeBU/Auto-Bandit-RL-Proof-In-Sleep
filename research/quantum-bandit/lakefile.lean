@@ -7,6 +7,11 @@ require aspbe from "../../../quantum"
 @[default_target]
 lean_lib QuantumBanditAdapter
 lean_lib Canary
+lean_lib AdaptiveTranscript
+lean_lib AdaptiveTranscriptCanary
 lean_exe dependency_export where
   root := `DependencyExport
+  supportInterpreter := true
+lean_exe adaptive_dependency_export where
+  root := `AdaptiveDependencyExport
   supportInterpreter := true

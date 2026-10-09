@@ -4,6 +4,41 @@ Date: 2026-10-09. Status: **kernel-checked prototype increment, publication draf
 Neither project A nor project B is proved complete. No regret advantage, optimality,
 mixed-fidelity optimality, finite-bit implementation, or global novelty is claimed.
 
+## Private continuation: adaptive information milestone
+
+This continuation is local-only. Prior remote research refs were withdrawn; only
+independent generic-library candidates were clean-ported to neutral public branches.
+No upload of this section, research targets, private history or the new theorem is
+authorized by the public-contribution policy. The default private-branch push remote
+is deliberately invalid. Do not push all branches or mirror this repository.
+
+`AdaptiveTranscript.lean` proves the exact finite-kernel Hellinger chain identity,
+actual normalized adaptive densities, expected arm-weighted query-cost recurrence,
+and H² <= D/2*(E_E C_eta + E_F C_eta). It constructs a true finite transcript PMF,
+proves its map equals the existing reset `historyLaw`, proves that list map injective,
+and identifies individual list probabilities. A uniform natural pathwise budget T
+then gives H² <= D*T*eta² using the existing query-count definition. Both forward
+and inverse calls count. No conditional information/normalization hypothesis was
+substituted for those producers.
+
+`AdaptiveTranscriptCanary.lean` verifies an outcome-dependent two-arm Pauli-X
+policy: three first-arm queries, reset, then one inverse query of the second arm;
+the outcome list is [1,1] and its literal cost is four. The root theorems print only
+standard Mathlib axioms. `AdaptiveDependencyExport.lean` exports their actual
+compiled direct dependencies with imports kept separate.
+
+New sources compile with the two existing private library dependencies. The local
+source/seal/lesson/blind/topology/review/verification artifacts are in
+`C:/qb261009/bandit/.private/attempts/2026-10-09/` and remain ignored by Git. The
+final local audit receipt records current hashes and statuses, including any explicit
+semantic delta. This is an intermediate proof, not a full lower-bound result.
+
+Both-environment expected costs cannot be replaced by one-environment counts without
+proof. Stopping, randomization, general measurements, hard oracles, testing and
+K-arm reduction are still open. A/B upper estimator and finite-horizon policy,
+fidelity selection, bias identifiability and mixed-fidelity cost roots also remain
+open. No public Frontiers, atlas, milestones or source-facing admission are promoted.
+
 ## Frozen inputs and safe ownership
 
 | Repository | Frozen upstream source | Toolchain | Ownership |
