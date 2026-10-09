@@ -1,0 +1,85 @@
+{
+  "stage": "stabilized",
+  "targets": [
+    {
+      "declaration": "BanditRL.OnlineBregmanCanary.nonquadratic_nonsmooth",
+      "exact_proposed_header": "theorem nonquadratic_nonsmooth :\n    StrictConvexOn ℝ univ (fun z : ℝ => z ^ 4 / 4 + z ^ 2 / 2) ∧\n      IsMinOn (fun z : ℝ => |z| + divergence (fun z : ℝ => z ^ 4 / 4 + z ^ 2 / 2) z (1 / 2)) univ 0 ∧\n      ¬ DifferentiableAt ℝ (abs : ℝ → ℝ) 0 ∧\n      divergence (fun z : ℝ => z ^ 4 / 4 + z ^ 2 / 2) (1 / 2) 0 = 9 / 64 ∧\n      divergence (fun z : ℝ => z ^ 4 / 4 + z ^ 2 / 2) 0 (1 / 2) = 11 / 64 ∧\n      (∀ u : ℝ, -|u| ≤ divergence (fun z : ℝ => z ^ 4 / 4 + z ^ 2 / 2) u (1 / 2) -\n        divergence (fun z : ℝ => z ^ 4 / 4 + z ^ 2 / 2) u 0 - divergence (fun z : ℝ => z ^ 4 / 4 + z ^ 2 / 2) 0 (1 / 2)) ∧\n      (-1 / 2 : ℝ) ≤ -5 / 16",
+      "statement_hash": "1c4186fb6fe983ca265e9e31053d13eab172cb208e7782c10ff8ea3a2cc734a2",
+      "file": "Tests/OnlineBregmanProximalCanary.lean",
+      "header_raw_sha256": "4ffebe71fc0415d244c75a63402d4df4b7cec4c375167007a5f812e7c0605ce0"
+    },
+    {
+      "declaration": "BanditRL.OnlineBregmanCanary.boundary_outside_initial",
+      "exact_proposed_header": "theorem boundary_outside_initial :\n    StrictConvexOn ℝ univ (fun z : ℝ => z ^ 2 / 2) ∧\n      (-1 : ℝ) ∉ Icc 0 1 ∧\n      IsMinOn (fun z : ℝ => |z| + divergence (fun z : ℝ => z ^ 2 / 2) z (-1)) (Icc 0 1) 0 ∧\n      divergence (fun z : ℝ => z ^ 2 / 2) 0 (-1) = 1 / 2 ∧\n      (∀ u ∈ Icc (0 : ℝ) 1, -|u| ≤ divergence (fun z : ℝ => z ^ 2 / 2) u (-1) -\n        divergence (fun z : ℝ => z ^ 2 / 2) u 0 - divergence (fun z : ℝ => z ^ 2 / 2) 0 (-1)) ∧\n      (-1 / 2 : ℝ) ≤ 1 / 2",
+      "statement_hash": "115e518a74f8ed25d563a5c21b460f8683623aec9bd4143b65b39bb95b2fcc84",
+      "file": "Tests/OnlineBregmanProximalCanary.lean",
+      "header_raw_sha256": "782e06e87cdfa1f5a365a5527544a07eac1a19d91015e1ab2a4ffca8ba4d4199"
+    }
+  ],
+  "context_sha256": "33af264b1a20c23cdb4da5eab411a6b5326ddb9d823f925247945d1c7b2ae5f4",
+  "draft_sha256": "49174ef0efaaa5c2a5762b4745aa0c236c4211a7d3998aba058913830df17157",
+  "review_sha256": "7d4088545f5fedec3569914dab852d138c97b040764d15fe0810ce210059788c",
+  "production_sha256": "8708aa5e15ff334ce8070cc976634ebaf8dc63314d3da95b502640f68350288f",
+  "allowed_scope": {
+    "file": "Tests/OnlineBregmanProximalCanary.lean",
+    "targets": [
+      {
+        "declaration": "BanditRL.OnlineBregmanCanary.nonquadratic_nonsmooth",
+        "exact_proposed_header": "theorem nonquadratic_nonsmooth :\n    StrictConvexOn ℝ univ (fun z : ℝ => z ^ 4 / 4 + z ^ 2 / 2) ∧\n      IsMinOn (fun z : ℝ => |z| + divergence (fun z : ℝ => z ^ 4 / 4 + z ^ 2 / 2) z (1 / 2)) univ 0 ∧\n      ¬ DifferentiableAt ℝ (abs : ℝ → ℝ) 0 ∧\n      divergence (fun z : ℝ => z ^ 4 / 4 + z ^ 2 / 2) (1 / 2) 0 = 9 / 64 ∧\n      divergence (fun z : ℝ => z ^ 4 / 4 + z ^ 2 / 2) 0 (1 / 2) = 11 / 64 ∧\n      (∀ u : ℝ, -|u| ≤ divergence (fun z : ℝ => z ^ 4 / 4 + z ^ 2 / 2) u (1 / 2) -\n        divergence (fun z : ℝ => z ^ 4 / 4 + z ^ 2 / 2) u 0 - divergence (fun z : ℝ => z ^ 4 / 4 + z ^ 2 / 2) 0 (1 / 2)) ∧\n      (-1 / 2 : ℝ) ≤ -5 / 16",
+        "statement_hash": "4ffebe71fc0415d244c75a63402d4df4b7cec4c375167007a5f812e7c0605ce0",
+        "file": "Tests/OnlineBregmanProximalCanary.lean"
+      },
+      {
+        "declaration": "BanditRL.OnlineBregmanCanary.boundary_outside_initial",
+        "exact_proposed_header": "theorem boundary_outside_initial :\n    StrictConvexOn ℝ univ (fun z : ℝ => z ^ 2 / 2) ∧\n      (-1 : ℝ) ∉ Icc 0 1 ∧\n      IsMinOn (fun z : ℝ => |z| + divergence (fun z : ℝ => z ^ 2 / 2) z (-1)) (Icc 0 1) 0 ∧\n      divergence (fun z : ℝ => z ^ 2 / 2) 0 (-1) = 1 / 2 ∧\n      (∀ u ∈ Icc (0 : ℝ) 1, -|u| ≤ divergence (fun z : ℝ => z ^ 2 / 2) u (-1) -\n        divergence (fun z : ℝ => z ^ 2 / 2) u 0 - divergence (fun z : ℝ => z ^ 2 / 2) 0 (-1)) ∧\n      (-1 / 2 : ℝ) ≤ 1 / 2",
+        "statement_hash": "782e06e87cdfa1f5a365a5527544a07eac1a19d91015e1ab2a4ffca8ba4d4199",
+        "file": "Tests/OnlineBregmanProximalCanary.lean"
+      }
+    ],
+    "fingerprints": [
+      {
+        "declaration": "BanditRL.OnlineBregmanCanary.nonquadratic_nonsmooth",
+        "verdict": "accepted",
+        "header_raw_sha256": "4ffebe71fc0415d244c75a63402d4df4b7cec4c375167007a5f812e7c0605ce0",
+        "native_normalized_statement_hash": "1c4186fb6fe983ca265e9e31053d13eab172cb208e7782c10ff8ea3a2cc734a2",
+        "seven_slots": {
+          "objects": "quartic+quadratic psi, abs,univ,x1/2,p0",
+          "quantifiers": "7 closed conjuncts; all real comparators",
+          "assumptions": "No outer hypotheses: actual minimum and strict convexity must be proved",
+          "conclusion": "Strictness/minimum/nonsmoothness/asymmetry/universal bound/numeric tail",
+          "normalization": "eta1; D(1/2,0)=9/64,D(0,1/2)=11/64;u1/2 gives -1/2<=-5/16",
+          "information": "Static concrete example, no algorithm or general attainment",
+          "boundary": "Actual universal and numeric-tail VALUE must use public one-step; no independent NormNum final inequality"
+        }
+      },
+      {
+        "declaration": "BanditRL.OnlineBregmanCanary.boundary_outside_initial",
+        "verdict": "accepted",
+        "header_raw_sha256": "782e06e87cdfa1f5a365a5527544a07eac1a19d91015e1ab2a4ffca8ba4d4199",
+        "native_normalized_statement_hash": "115e518a74f8ed25d563a5c21b460f8683623aec9bd4143b65b39bb95b2fcc84",
+        "seven_slots": {
+          "objects": "quadratic psi,abs,Icc0 1,x-1,p0",
+          "quantifiers": "6 closed conjuncts; all closed-interval comparators",
+          "assumptions": "No outer hypotheses: actual minimum and strict convexity must be proved",
+          "conclusion": "Strictness/outsidecenter/constrainedminimum/movement/universal bound/numeric tail",
+          "normalization": "eta1;D(0,-1)=1/2;u1/2 gives -1/2<=1/2",
+          "information": "Static concrete example, no algorithm or general attainment",
+          "boundary": "Actual universal and numeric-tail VALUE must use public one-step; no independent NormNum final inequality"
+        }
+      }
+    ],
+    "context_sha256": "33af264b1a20c23cdb4da5eab411a6b5326ddb9d823f925247945d1c7b2ae5f4",
+    "imports": [
+      "BanditRLProof.OnlineBregmanProximal",
+      "Mathlib.Analysis.Calculus.Deriv.Abs",
+      "Mathlib.Analysis.Convex.Mul"
+    ],
+    "helpers": "Explicit local polynomial/minimum/arithmetic only; inventory",
+    "numeric_VALUE_requirement": "Prove actual displayed minima and strict convexity locally. Universal comparisons invoke exact public proximal_one_step. Each final numeric conjunction branch retains that compiled production theorem in its VALUE expression via equality transport from the universal bound, rather than independently proving the true numeric inequality.",
+    "root_reader_old_file_changes": false
+  },
+  "fingerprint_convention": "Exact raw header SHA retained separately; statement_hash is the native normalized hash as independently approved. No header/context/semantics revision.",
+  "source_container_closed": false,
+  "chapter_complete": false,
+  "whole_Goal_status": "ACTIVE"
+}

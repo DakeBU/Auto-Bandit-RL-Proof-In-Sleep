@@ -1,0 +1,41 @@
+import Mathlib.Analysis.Calculus.FDeriv.Basic
+import Mathlib.Analysis.Convex.Function
+import Mathlib.Analysis.Calculus.Gradient.Basic
+
+noncomputable section
+open Set
+namespace BanditRL.OnlineBregman
+section Normed
+variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+
+def divergence (ψ : E → ℝ) (x y : E) : ℝ :=
+  ψ x - ψ y - fderiv ℝ ψ y (x - y)
+
+theorem divergence_self (ψ : E → ℝ) (x : E) :
+    divergence ψ x x = 0
+
+theorem three_point_identity (ψ : E → ℝ) (x y z : E) :
+    divergence ψ z x + divergence ψ x y - divergence ψ z y =
+      (fderiv ℝ ψ y - fderiv ℝ ψ x) (z - x)
+
+theorem divergence_nonneg (X : Set E) (ψ : E → ℝ) (hψ : ConvexOn ℝ X ψ)
+    (x y : E) (hx : x ∈ X) (hy : y ∈ X) (hd : DifferentiableAt ℝ ψ y) :
+    0 ≤ divergence ψ x y
+
+theorem proximal_one_step (V : Set E) (f ψ : E → ℝ) (η : ℝ) (hη : 0 < η)
+    (x p : E) (hp : p ∈ V) (hf : ConvexOn ℝ V f)
+    (hdx : DifferentiableAt ℝ ψ x) (hdp : DifferentiableAt ℝ ψ p)
+    (hmin : IsMinOn (fun z => f z + η⁻¹ * divergence ψ z x) V p) :
+    ∀ u ∈ V, η * (f p - f u) ≤
+      divergence ψ u x - divergence ψ u p - divergence ψ p x
+
+end Normed
+section Inner
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]
+
+theorem divergence_eq_gradient (ψ : E → ℝ) (x y : E)
+    (hd : DifferentiableAt ℝ ψ y) :
+    divergence ψ x y = ψ x - ψ y - inner ℝ (gradient ψ y) (x - y)
+
+end Inner
+end BanditRL.OnlineBregman

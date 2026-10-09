@@ -1,0 +1,190 @@
+{
+  "stage": "draft",
+  "targets": [
+    {
+      "declaration": "BanditRL.OnlineBregman.divergence_self",
+      "exact_proposed_header": "theorem divergence_self (ψ : E → ℝ) (x : E) :\n    divergence ψ x x = 0",
+      "statement_hash": "cb97e323943684554be58aa2ee0bbf1bd56fbe03ee1278046af070121717f704",
+      "file": "BanditRLProof/OnlineBregmanProximal.lean",
+      "context": "real normed vector space"
+    },
+    {
+      "declaration": "BanditRL.OnlineBregman.three_point_identity",
+      "exact_proposed_header": "theorem three_point_identity (ψ : E → ℝ) (x y z : E) :\n    divergence ψ z x + divergence ψ x y - divergence ψ z y =\n      (fderiv ℝ ψ y - fderiv ℝ ψ x) (z - x)",
+      "statement_hash": "d05bbd5f616054d298969056c002a54b64f2a6c4ae0d5dc65068b70c2765d422",
+      "file": "BanditRLProof/OnlineBregmanProximal.lean",
+      "context": "real normed vector space"
+    },
+    {
+      "declaration": "BanditRL.OnlineBregman.divergence_nonneg",
+      "exact_proposed_header": "theorem divergence_nonneg (X : Set E) (ψ : E → ℝ) (hψ : ConvexOn ℝ X ψ)\n    (x y : E) (hx : x ∈ X) (hy : y ∈ X) (hd : DifferentiableAt ℝ ψ y) :\n    0 ≤ divergence ψ x y",
+      "statement_hash": "d130de4f7491f134125635a6fcd44838d923c7e8a65adf2f819838860cce0e67",
+      "file": "BanditRLProof/OnlineBregmanProximal.lean",
+      "context": "real normed vector space"
+    },
+    {
+      "declaration": "BanditRL.OnlineBregman.proximal_one_step",
+      "exact_proposed_header": "theorem proximal_one_step (V : Set E) (f ψ : E → ℝ) (η : ℝ) (hη : 0 < η)\n    (x p : E) (hp : p ∈ V) (hf : ConvexOn ℝ V f)\n    (hdx : DifferentiableAt ℝ ψ x) (hdp : DifferentiableAt ℝ ψ p)\n    (hmin : IsMinOn (fun z => f z + η⁻¹ * divergence ψ z x) V p) :\n    ∀ u ∈ V, η * (f p - f u) ≤\n      divergence ψ u x - divergence ψ u p - divergence ψ p x",
+      "statement_hash": "b34d4ee5d1fe4c00a6082ea81a2f2dddced22e7ffd710f30c21aa54a7ea546ff",
+      "file": "BanditRLProof/OnlineBregmanProximal.lean",
+      "context": "real normed vector space"
+    },
+    {
+      "declaration": "BanditRL.OnlineBregman.divergence_eq_gradient",
+      "exact_proposed_header": "theorem divergence_eq_gradient (ψ : E → ℝ) (x y : E)\n    (hd : DifferentiableAt ℝ ψ y) :\n    divergence ψ x y = ψ x - ψ y - inner ℝ (gradient ψ y) (x - y)",
+      "statement_hash": "a7ccda7d19036fef3af76e3b62095cf816cd81c04f7ad10e5db64f4785bf8ea1",
+      "file": "BanditRLProof/OnlineBregmanProximal.lean",
+      "context": "complete real inner-product space"
+    }
+  ],
+  "definition": {
+    "declaration": "BanditRL.OnlineBregman.divergence",
+    "exact_definition": "def divergence (ψ : E → ℝ) (x y : E) : ℝ :=\n  ψ x - ψ y - fderiv ℝ ψ y (x - y)",
+    "definition_term_sha256": "cfb82f372effe3af8dbf78c1032a0376a288361659c165312a270511053fb491"
+  },
+  "neutral_context_sha256": "c390f4091b637906578cc8539e418aac1e3b4ab71f1394075623b5025b897130",
+  "semantic_slots": {
+    "objects": "One canonical divergence from actual fderiv of total real ψ, not a separately chosen gradient field. Core arbitrary real normed E; gradient bridge complete real inner-product E. V/X subsets.",
+    "quantifiers": "Every ψ and indicated points; self/three-point all points; nonnegative every x,y in same convex X with ψ ambient differentiable at y. Proximal: η>0, previous x and actual feasible minimum p, ψ differentiable at BOTH x,p, every u in same V.",
+    "assumptions": "Proximal f ConvexOn V includes convex V; actual minimum f+ηinverse*B over V; no derivative of f, no ψ convexity/strictness needed in this derived comparison. Source ψ convexity supplies separate nonnegative result. Source strictness/closedness/interior/finite-part/attainment remain future source-container obligations.",
+    "conclusion": "Exact source-oriented three-point identity; nonnegative divergence; gradient conversion; weighted real one-step η(fp-fu)<=B(u,x)-B(u,p)-B(p,x). Both negative endpoint/movement terms retained, same actual p/minimizer.",
+    "normalization": "B(a;b)=ψa-ψb-Dψ(b)[a-b]; first argument target, second base. Lemma6.7 orientation unchanged. η positive removes zero/negative reciprocal issues. No horizon/sum/diameter.",
+    "information": "Deterministic one-shot supplied minimizer, not causal algorithm existence. Current-loss prescient recursion and same-run source bounds remain REQUIRED/OPEN.",
+    "boundary": "fderiv is total and defaults to0 when ψ not differentiable. Self/threepoint are explicit algebraic generalizations even there; no nonnegative/strict/source-divergence claim follows there. Proximal BOTH bases differentiable prevents default derivative from masquerading as a source update. Source X/intX restrictions and total-extension locality still must be checked for full source instantiation."
+  },
+  "source_to_Lean_delta": [
+    {
+      "kind": "generalization",
+      "detail": "Normed-space continuous-dual evaluation generalizes finite Euclidean dot product; explicit complete-Hilbert gradient bridge recovers source notation."
+    },
+    {
+      "kind": "generalization",
+      "detail": "Algebraic self/threepoint valid for any total real ψ; strict convexity/interior not asserted by those helpers. Nonnegative uses convexity plus an actual ambient derivative, permitting boundary base when a specified ambient extension is differentiable."
+    },
+    {
+      "kind": "same",
+      "detail": "Source proximal proof residual signs, η>0, same actual selected minimizing p and every feasible u preserved."
+    },
+    {
+      "kind": "unresolved",
+      "detail": "Source EReal loss finite onV/subdifferentiable→real convexity and objective minimum bridge, ψ domain/interior/local extension, attained causal current-loss recursion/interior invariants and fixed/variable telescopes are mandatory later obligations. No complete Algorithm15.8/Theorem15.30 claim."
+    },
+    {
+      "kind": "source-implicit",
+      "detail": "Both previous and selected source base points lie in intX and ψ differentiable there; real helper makes both derivatives explicit. Initial x may be outsideV; no x∈V premise."
+    }
+  ],
+  "dag": [
+    {
+      "id": "divergence",
+      "status": "draft-definition",
+      "dependencies": [
+        "mathlib-fderiv-continuous-linear-map"
+      ]
+    },
+    {
+      "id": "divergence_self",
+      "status": "draft",
+      "dependencies": [
+        "divergence"
+      ]
+    },
+    {
+      "id": "three_point_identity",
+      "status": "draft",
+      "dependencies": [
+        "divergence",
+        "continuous-linear-map-subtraction"
+      ]
+    },
+    {
+      "id": "divergence_nonneg",
+      "status": "draft",
+      "dependencies": [
+        "divergence",
+        "mathlib-convex-scalar-segment-first-order"
+      ]
+    },
+    {
+      "id": "divergence_eq_gradient",
+      "status": "draft",
+      "dependencies": [
+        "divergence",
+        "mathlib-HasGradientAt.fderiv_apply"
+      ]
+    },
+    {
+      "id": "proximal_one_step",
+      "status": "draft",
+      "dependencies": [
+        "accepted-real-minimizer-comparison",
+        "divergence",
+        "three_point_identity",
+        "mathlib-Frechet-calculus"
+      ]
+    },
+    {
+      "id": "source-finitePart-subgradient-convexity-minimizer-bridge",
+      "status": "required-open",
+      "dependencies": [
+        "proximal_one_step"
+      ]
+    },
+    {
+      "id": "attained-current-loss-causal-recursion-interior-validity",
+      "status": "required-open",
+      "dependencies": []
+    },
+    {
+      "id": "same-run-sharp-fixed-telescope",
+      "status": "required-open",
+      "dependencies": [
+        "proximal_one_step",
+        "divergence_nonneg",
+        "source-finitePart-subgradient-convexity-minimizer-bridge",
+        "attained-current-loss-causal-recursion-interior-validity"
+      ]
+    },
+    {
+      "id": "same-run-variable-telescope",
+      "status": "required-open",
+      "dependencies": [
+        "proximal_one_step",
+        "divergence_nonneg",
+        "source-finitePart-subgradient-convexity-minimizer-bridge",
+        "attained-current-loss-causal-recursion-interior-validity"
+      ]
+    },
+    {
+      "id": "general-source-prescient-container",
+      "status": "required-open",
+      "dependencies": [
+        "same-run-sharp-fixed-telescope",
+        "same-run-variable-telescope"
+      ]
+    }
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "new_shared",
+    "accepted_parent": "BanditRL.OnlineProximal.convex_minimizer_comparison at PR208 exact 71f2219fa1648094eba8aa17b50e443258f436cb",
+    "mathlib": [
+      "HasFDerivAt.comp/sub/sub_const/const_smul",
+      "ContinuousLinearMap.hasFDerivAt",
+      "ConvexOn.comp_affineMap/le_slope_of_hasDerivAt",
+      "HasGradientAt.fderiv_apply"
+    ],
+    "no_external_dependency_or_toolchain_change": true
+  },
+  "planned_canaries": [
+    "Strictly convex nonquadratic ψ(z)=z^4/4+z^2/2, actual nonsmooth abs minimum atp0 with previousx1/2; unequal nonzero divergences9/64 and11/64, universal one-step and nonzero numeric bound -1/2<=-5/16 using actual compiled one-step final branch.",
+    "Closed convex V=[0,1], ψ(z)=z^2/2, f=abs, previousx=-1 outsideV, actualp0; actual constrained minimum and one-step with nonzero movement1/2, every feasible u. Exact public Test contracts require separate blind/review before bodies."
+  ],
+  "lower_boundary": "After source/contract review stabilize all five theorem headers and canonical definition bytes, then only dependency-ready finite production bodies in the new file. No old roots/Tests/reader/global frontier or source mutations before separate exact plans.",
+  "proof_obligations": 5,
+  "definition_not_a_proof_obligation": true,
+  "chapter_proof_total": null,
+  "source_container_closed": false,
+  "chapter_complete": false,
+  "whole_Goal_status": "ACTIVE"
+}

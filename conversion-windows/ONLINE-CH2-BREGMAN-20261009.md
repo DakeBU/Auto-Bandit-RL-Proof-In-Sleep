@@ -1,0 +1,3 @@
+# Bregman conversion v1
+
+Chapter2 post-Theorem2.13 -> Section15.5.1 one-step proof -> necessary Definition6.4/Lemma6.7 machinery only. Normed dual core and separate complete-Hilbert gradient bridge; total fderiv defaults explicitly disclosed; positivity only under its frozen hypotheses. Actual supplied proximal minimum is not an existence/recursive-algorithm theorem. Both negative residuals and both base differentiability hypotheses preserved. All source-to-Lean deltas and required-open source bridges in stabilized-v1.json. Only new production file bodies/imports allowed; old roots/Tests/readers/global frontier unchanged.

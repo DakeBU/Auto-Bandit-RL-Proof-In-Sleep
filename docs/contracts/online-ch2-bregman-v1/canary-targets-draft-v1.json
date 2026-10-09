@@ -1,0 +1,28 @@
+{
+  "stage": "draft",
+  "targets": [
+    {
+      "declaration": "BanditRL.OnlineBregmanCanary.nonquadratic_nonsmooth",
+      "exact_proposed_header": "theorem nonquadratic_nonsmooth :\n    StrictConvexOn ℝ univ (fun z : ℝ => z ^ 4 / 4 + z ^ 2 / 2) ∧\n      IsMinOn (fun z : ℝ => |z| + divergence (fun z : ℝ => z ^ 4 / 4 + z ^ 2 / 2) z (1 / 2)) univ 0 ∧\n      ¬ DifferentiableAt ℝ (abs : ℝ → ℝ) 0 ∧\n      divergence (fun z : ℝ => z ^ 4 / 4 + z ^ 2 / 2) (1 / 2) 0 = 9 / 64 ∧\n      divergence (fun z : ℝ => z ^ 4 / 4 + z ^ 2 / 2) 0 (1 / 2) = 11 / 64 ∧\n      (∀ u : ℝ, -|u| ≤ divergence (fun z : ℝ => z ^ 4 / 4 + z ^ 2 / 2) u (1 / 2) -\n        divergence (fun z : ℝ => z ^ 4 / 4 + z ^ 2 / 2) u 0 - divergence (fun z : ℝ => z ^ 4 / 4 + z ^ 2 / 2) 0 (1 / 2)) ∧\n      (-1 / 2 : ℝ) ≤ -5 / 16",
+      "statement_hash": "4ffebe71fc0415d244c75a63402d4df4b7cec4c375167007a5f812e7c0605ce0",
+      "file": "Tests/OnlineBregmanProximalCanary.lean"
+    },
+    {
+      "declaration": "BanditRL.OnlineBregmanCanary.boundary_outside_initial",
+      "exact_proposed_header": "theorem boundary_outside_initial :\n    StrictConvexOn ℝ univ (fun z : ℝ => z ^ 2 / 2) ∧\n      (-1 : ℝ) ∉ Icc 0 1 ∧\n      IsMinOn (fun z : ℝ => |z| + divergence (fun z : ℝ => z ^ 2 / 2) z (-1)) (Icc 0 1) 0 ∧\n      divergence (fun z : ℝ => z ^ 2 / 2) 0 (-1) = 1 / 2 ∧\n      (∀ u ∈ Icc (0 : ℝ) 1, -|u| ≤ divergence (fun z : ℝ => z ^ 2 / 2) u (-1) -\n        divergence (fun z : ℝ => z ^ 2 / 2) u 0 - divergence (fun z : ℝ => z ^ 2 / 2) 0 (-1)) ∧\n      (-1 / 2 : ℝ) ≤ 1 / 2",
+      "statement_hash": "782e06e87cdfa1f5a365a5527544a07eac1a19d91015e1ab2a4ffca8ba4d4199",
+      "file": "Tests/OnlineBregmanProximalCanary.lean"
+    }
+  ],
+  "neutral_sha256": "33af264b1a20c23cdb4da5eab411a6b5326ddb9d823f925247945d1c7b2ae5f4",
+  "planned_consumers": [
+    "BanditRL.OnlineBregman.proximal_one_step",
+    "BanditRL.OnlineBregman.divergence_nonneg",
+    "BanditRL.OnlineBregman.divergence_eq_gradient"
+  ],
+  "body_requirement": "Prove actual displayed minima and strict convexity locally. Universal comparisons invoke exact public proximal_one_step. Each final numeric conjunction branch retains that compiled production theorem in its VALUE expression via equality transport from the universal bound, rather than independently proving the true numeric inequality.",
+  "boundary": "Explicit illustrative real instances, not additional printed source results, algorithm/existence or full source closure.",
+  "source_container_closed": false,
+  "chapter_complete": false,
+  "whole_Goal_status": "ACTIVE"
+}
