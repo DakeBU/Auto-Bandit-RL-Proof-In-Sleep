@@ -1,0 +1,70 @@
+2.2 Online Subgradient Descent21
+with units. Finally, while probabilities are unitless, the probability density function has the
+units of inverse of the random variable it represents, because it represents the probability per
+unit of the variable it is defined over.
+The importance of this check cannot be overstated. When we see an equation where the
+units do not match, either it is plainly wrong, or there is a constant with units hidden some-
+where. Moreover, the dimensional analysis will immediately tell us the dependence of a
+quantity on the others. Let’s do a practical example considering OSD.
+Consider the OSD update in Algorithm 2.2, whereV=R d:x t+1 =x t −ηg t. For
+this equation to be coherent, the termηg t must have the same units asx t. Let’s see if this
+gives us some constraints on the units of the learning rateη. The units ofg t, from the
+definition of subgradient, are the units of the loss divided by the units of the variable we are
+subdifferentiating with respect to. So, we have
+[gt] = [ℓ]
+[x] .
+Now, from the consistency of the update rule, we must have[x t] = [ηg t] = [η][g t]. Hence,
+we can derive the units of the learning rate:
+[η] = [x]
+[gt] = [x]
+[ℓ]/[x] = [x]2
+[ℓ] .
+This shows thatthe learning rate is not a unitless quantity. So, even without deriving the
+regret guarantee, from the unit analysis, we immediately know that the learning rate must
+depend on the problem characteristics in a certain way.
+Finally, let’s perform a sanity check on the regret bound for OSD with a constant learning
+rate (that is, the one in Theorem 2.13):
+TX
+t=1
+(ℓt(xt)−ℓ t(u))≤ ∥u−x 1∥2
+2
+2η + η
+2
+TX
+t=1
+∥gt∥2
+2 .
+The left-hand side is a sum of losses, so its unit is[ℓ]. Let’s check the two terms on the
+right-hand side, to verify that they also have the unit of[ℓ]. For the first term, we have
+ ∥u−x 1∥2
+2
+η
+
+= [x]2
+[η] = [x]2
+[x]2/[ℓ] = [ℓ].
+For the second term, we have
+"
+η
+TX
+t=1
+∥gt∥2
+2
+#
+= [η][g t]2 = [x]2
+[ℓ]
+[ℓ]2
+[x]2 = [ℓ].
+Let me stress that having a formula with wrong units is not only a theoretical issue, but
+a very practical one. Indeed, constants with hidden units in any algorithm can be prob-
+lematic. Let’s show it with an example. For example, suppose our variablex t represents a
+location in meters, and we use a learning rate schedule such asη= 1/
+√
+T. Now, suppose
+we change our unit of measurement forx t from meters to kilometers. Our new variable is
+x′
+t =x t/1000. Since this is merely a change of units, the underlying learning problem is
+identical, and we should expect the algorithm’s behavior to be invariant. However, the gradi-
+ent with respect to the new variable isg ′
+t =∇ x′ℓt(1000x′
+t) = 1000∇ xℓt(xt) = 1000g t.

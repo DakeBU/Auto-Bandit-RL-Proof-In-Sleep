@@ -1,0 +1,90 @@
+{
+  "stage": "DRAFT finite dependency-ready new leaf, three proposed public terminals for two main-text example families",
+  "source_card": "ORABONA-V10-CH2-NONSMOOTH-INTRO-P16",
+  "source_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+  "source_anchor": "Section2.2 opening paragraph printed16/PDF28: |x-10| and max(1-y_t inner(z_t,x),0)",
+  "exact_source_text": "For example, ℓt(x)=|x−10|. ... For example, the hinge loss, ℓt(x)=max(1−yt⟨zt,x⟩,0), is not differentiable.",
+  "source_fingerprint": {
+    "pdf_page": 28,
+    "printed_page": 16,
+    "text_path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/source-pdf28-text-v1.txt",
+    "text_sha256": "67732c7b15e4769f7c8810f2c615376767ef6fcbdace3b3f4ee485c418bce2d3",
+    "image_path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/source-pdf28-v1.png",
+    "image_sha256": "3135052315b81f2b652962ec8e6c8a862acb7c9294359365d52b5cd6c740776c"
+  },
+  "mathematical_progress_boundary": "Actual ambient convexity and differentiability/nondifferentiability criteria close the introductory examples, reusing accepted full subdifferential and singleton-gradient producers. Not just a numerical sample or support-formula consumer; zero-labelled/zero-feature constant cases exposed.",
+  "targets": [
+    {
+      "declaration": "BanditRL.OnlineConvex.shifted_absolute_convex_differentiable_iff",
+      "owning_module": "BanditRLProof/OnlineNonsmoothExamples.lean",
+      "exact_proposed_header": "theorem shifted_absolute_convex_differentiable_iff (c : ℝ) :\n    ConvexOn ℝ Set.univ (fun x : ℝ => |x - c|) ∧\n      ∀ x : ℝ, DifferentiableAt ℝ (fun w : ℝ => |w - c|) x ↔ x ≠ c",
+      "statement_hash": "8b8744ba4ca017a395835fa05ec28007b7b0179122b30d1a5fc64df8b6d3a1d2",
+      "phase": "draft before distinct blind/source review"
+    },
+    {
+      "declaration": "BanditRL.OnlineConvex.hinge_convex_differentiable_iff",
+      "owning_module": "BanditRLProof/OnlineNonsmoothExamples.lean",
+      "exact_proposed_header": "theorem hinge_convex_differentiable_iff {E : Type*} [NormedAddCommGroup E]\n    [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (a : E) :\n    ConvexOn ℝ Set.univ (fun x : E => max (1 - inner ℝ a x) 0) ∧\n      ∀ x : E, DifferentiableAt ℝ (fun w : E => max (1 - inner ℝ a w) 0) x ↔\n        inner ℝ a x ≠ 1",
+      "statement_hash": "96123d78398d7211f2ee34b63e1330bd04986f943e2cffd99fe8301c263f8f45",
+      "phase": "draft before distinct blind/source review"
+    },
+    {
+      "declaration": "BanditRL.OnlineConvex.labelled_hinge_convex_differentiable_iff",
+      "owning_module": "BanditRLProof/OnlineNonsmoothExamples.lean",
+      "exact_proposed_header": "theorem labelled_hinge_convex_differentiable_iff {E : Type*} [NormedAddCommGroup E]\n    [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (y : ℝ) (z : E) :\n    ConvexOn ℝ Set.univ (fun x : E => max (1 - y * inner ℝ z x) 0) ∧\n      (∀ x : E, DifferentiableAt ℝ (fun w : E => max (1 - y * inner ℝ z w) 0) x ↔\n        y * inner ℝ z x ≠ 1) ∧\n      (Differentiable ℝ (fun w : E => max (1 - y * inner ℝ z w) 0) ↔ y • z = 0)",
+      "statement_hash": "76b1e6c1dcae81e86d72a8354ef260108edbcdae41dc8b3dd6c55a91e943a57f",
+      "phase": "draft before distinct blind/source review"
+    }
+  ],
+  "proposed_source_repair": {
+    "pinned_source_unchanged": true,
+    "original_ambiguity": "Unqualified hinge is not differentiable could be read as every point or every label/feature, both false. Labels/features are unconstrained in the displayed paragraph.",
+    "explicit_proposal": "At each point, the hinge is differentiable iff its affine margin is not exactly zero. It is globally differentiable iff y•z=0; otherwise a genuine boundary kink exists. This is an explicit qualification, not author-endorsed erratum.",
+    "simple_counterexample": "y=0 or z=0 gives constant max(1,0)=1, differentiable everywhere.",
+    "required_review": "distinct anti-anchored source review and separate repair verdict; no silent replacement of pinned wording"
+  },
+  "seven_slots": {
+    "objects": "scalar shifted absolute loss; labelled real finite-dimensional inner-product hinge, including EuclideanSpace real(Fin d) for every d, including0",
+    "quantifiers": "all shifts c, labels y, features z and query x; all ambient points for global Differentiable criterion",
+    "assumptions": "only stated real normed inner-product finite-dimensional ambient structure; no nonzero label/feature, label±1, bounded norm/domain, probability or derivative-oracle premise",
+    "conclusion": "global convexity and exact ambient Fréchet DifferentiableAt iff; labelled terminal also exact global Differentiable iff effective normal y•z vanishes",
+    "constants": "absolute thresholdc includes printed10; hinge margin1 and zero floor0 unchanged; pointwise and global differentiability distinguished",
+    "information": "static deterministic loss functions, no learner/policy/feedback assertion or supplied support conclusion",
+    "boundary": "genuine kink only on margin equality; zero effective normal is constant1 and smooth; no source claim that every point of a nonconstant hinge is nonsmooth, no chapter/Goal completion"
+  },
+  "reuse_plan": {
+    "decision": "adapt_existing",
+    "existing": [
+      "BanditRL.OnlineConvex.example_2_27",
+      "BanditRL.OnlineConvex.affine_convex",
+      "BanditRL.OnlineConvex.convexExtended_coe_iff",
+      "BanditRL.OnlineConvex.theorem_2_22_gradient",
+      "not_differentiableAt_abs_zero",
+      "DifferentiableAt.abs",
+      "ConvexOn.sup",
+      "convexOn_univ_norm",
+      "ConvexOn.comp_affineMap",
+      "convexOn_const"
+    ],
+    "intended_route": "Absolute translation and smoothness off0; max of two affine functions convex. Genuine hinge kink: two distinct actual supports from accepted full hinge formula contradict differentiable singleton support. Off boundary use local equality with one affine branch. Label normal a=y•z. Global necessity constructs x=(inner a a)^(-1)•a when a≠0, giving inner a x=1.",
+    "status": "project-local source examples; any reusable generic leaf mathlib-candidate, no dependency/toolchain change",
+    "retrieval_cards": [
+      "MLIB-CONVEX-LINALG",
+      "MLIB-ORDER-ALGEBRA"
+    ],
+    "proof_weapon": "none; existing concrete convex/subgradient/calculus APIs, no inspiration certified as proof"
+  },
+  "permitted_edits": [
+    "OWN RUN/contract/task/obligation/conversion files",
+    "NEW BanditRLProof/OnlineNonsmoothExamples.lean",
+    "NEW Tests/OnlineNonsmoothExamplesCanary.lean",
+    "later public roots append imports and bounded reader/registry contribution after candidate validation"
+  ],
+  "forbidden": "No old production/Test/header changes, source mutation, root reordering, pin upgrades, global active SGB/frontier/trials/memory rewrite, generated _site, Chapter3+ competitive proof writing",
+  "review_pending": [
+    "blind decode of exact proposed terminal types",
+    "anti-anchored source and explicit-repair contract review"
+  ],
+  "chapter_complete": false,
+  "whole_Goal_status": "ACTIVE"
+}

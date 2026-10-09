@@ -1,0 +1,702 @@
+{
+  "actor": {
+    "task": "/root/source_reviewer",
+    "requested_model": "GPT-6 Astra",
+    "requested_reasoning_effort": "medium",
+    "reused_staged_history": true,
+    "runtime_attested": false
+  },
+  "verdict": "accepted-with-explicit-delta",
+  "source_inventory_verdict": {
+    "verdict": "accepted-with-explicit-delta",
+    "scope": "versioned SOURCE enumeration only",
+    "operative_path": "docs\\contracts\\online-ch2-chapter-audit-v1\\complete-source-reconciliation-draft-v3.json",
+    "sha256": "94bed5963bbdcc745e64547fa98b5101a6a58e843c127e38d8577dfe2af58466",
+    "containers": 65,
+    "proof_leaf_total": null,
+    "prior_join_mismatch_rows_preserved": 437
+  },
+  "statement_verdict": "accepted-with-explicit-delta",
+  "target_verdicts": [
+    {
+      "declaration": "BanditRL.OnlineConvex.shifted_absolute_convex_differentiable_iff",
+      "statement_hash": "8b8744ba4ca017a395835fa05ec28007b7b0179122b30d1a5fc64df8b6d3a1d2",
+      "exact_header": "theorem shifted_absolute_convex_differentiable_iff (c : ℝ) :\n    ConvexOn ℝ Set.univ (fun x : ℝ => |x - c|) ∧\n      ∀ x : ℝ, DifferentiableAt ℝ (fun w : ℝ => |w - c|) x ↔ x ≠ c",
+      "verdict": "accepted-with-explicit-delta",
+      "seven_slots": {
+        "objects": "Real shifted absolute value on all real points",
+        "quantifiers": "forall c, conjunction of global convexity and forall x local iff",
+        "assumptions": "Only displayed real structures; no nonzero normal, positive dimension, restricted labels, boundedness or supplied derivative/support oracle.",
+        "conclusion": "ConvexOn univ abs(w-c); DifferentiableAt at x iff x != c",
+        "constants_and_normalization": "Printed center10 generalized to all c in first target; fixed hinge threshold1/floor0 retained; no time or normalization.",
+        "information_structure": "Static deterministic ambient Frechet calculus, not directional/within-set derivatives or online performance.",
+        "source_relation": "Derived precise source qualification/strengthening, not three printed theorems. Constant effective normal zero is smooth; nonzero normal has a margin1 kink."
+      }
+    },
+    {
+      "declaration": "BanditRL.OnlineConvex.hinge_convex_differentiable_iff",
+      "statement_hash": "96123d78398d7211f2ee34b63e1330bd04986f943e2cffd99fe8301c263f8f45",
+      "exact_header": "theorem hinge_convex_differentiable_iff {E : Type*} [NormedAddCommGroup E]\n    [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (a : E) :\n    ConvexOn ℝ Set.univ (fun x : E => max (1 - inner ℝ a x) 0) ∧\n      ∀ x : E, DifferentiableAt ℝ (fun w : E => max (1 - inner ℝ a w) 0) x ↔\n        inner ℝ a x ≠ 1",
+      "verdict": "accepted-with-explicit-delta",
+      "seven_slots": {
+        "objects": "Real-valued hinge on arbitrary finite-dimensional real inner-product E",
+        "quantifiers": "forall E and a, global convexity and forall x local iff",
+        "assumptions": "Only displayed real structures; no nonzero normal, positive dimension, restricted labels, boundedness or supplied derivative/support oracle.",
+        "conclusion": "ConvexOn univ max(1-inner a w,0); DifferentiableAt at x iff inner a x !=1",
+        "constants_and_normalization": "Printed center10 generalized to all c in first target; fixed hinge threshold1/floor0 retained; no time or normalization.",
+        "information_structure": "Static deterministic ambient Frechet calculus, not directional/within-set derivatives or online performance.",
+        "source_relation": "Derived precise source qualification/strengthening, not three printed theorems. Constant effective normal zero is smooth; nonzero normal has a margin1 kink."
+      }
+    },
+    {
+      "declaration": "BanditRL.OnlineConvex.labelled_hinge_convex_differentiable_iff",
+      "statement_hash": "76b1e6c1dcae81e86d72a8354ef260108edbcdae41dc8b3dd6c55a91e943a57f",
+      "exact_header": "theorem labelled_hinge_convex_differentiable_iff {E : Type*} [NormedAddCommGroup E]\n    [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (y : ℝ) (z : E) :\n    ConvexOn ℝ Set.univ (fun x : E => max (1 - y * inner ℝ z x) 0) ∧\n      (∀ x : E, DifferentiableAt ℝ (fun w : E => max (1 - y * inner ℝ z w) 0) x ↔\n        y * inner ℝ z x ≠ 1) ∧\n      (Differentiable ℝ (fun w : E => max (1 - y * inner ℝ z w) 0) ↔ y • z = 0)",
+      "verdict": "accepted-with-explicit-delta",
+      "seven_slots": {
+        "objects": "Real-labelled hinge on arbitrary finite-dimensional real inner-product E",
+        "quantifiers": "forall E,y,z; global convexity, forall x local iff, and separate global iff",
+        "assumptions": "Only displayed real structures; no nonzero normal, positive dimension, restricted labels, boundedness or supplied derivative/support oracle.",
+        "conclusion": "ConvexOn univ max(1-y*inner z w,0); local iff y*inner z x !=1; Differentiable iff y smul z=0",
+        "constants_and_normalization": "Printed center10 generalized to all c in first target; fixed hinge threshold1/floor0 retained; no time or normalization.",
+        "information_structure": "Static deterministic ambient Frechet calculus, not directional/within-set derivatives or online performance.",
+        "source_relation": "Derived precise source qualification/strengthening, not three printed theorems. Constant effective normal zero is smooth; nonzero normal has a margin1 kink."
+      }
+    }
+  ],
+  "source_repair_verdict": {
+    "verdict": "accepted-with-explicit-delta",
+    "qualification": {
+      "pinned_source_unchanged": true,
+      "original_ambiguity": "Unqualified hinge is not differentiable could be read as every point or every label/feature, both false. Labels/features are unconstrained in the displayed paragraph.",
+      "explicit_proposal": "At each point, the hinge is differentiable iff its affine margin is not exactly zero. It is globally differentiable iff y•z=0; otherwise a genuine boundary kink exists. This is an explicit qualification, not author-endorsed erratum.",
+      "simple_counterexample": "y=0 or z=0 gives constant max(1,0)=1, differentiable everywhere.",
+      "required_review": "distinct anti-anchored source review and separate repair verdict; no silent replacement of pinned wording"
+    },
+    "ordinary_language_boundary": "not differentiable may mean not globally differentiable; zero effective normal remains genuine omitted degenerate case, not proof that source asserts nowhere differentiability"
+  },
+  "repair_verdicts": {
+    "E1": {
+      "verdict": "satisfied",
+      "evidence": "Strict-past FTL is now explicit; scalar linear/square implementations are examples, not an arbitrary-loss argmin-existence theorem."
+    },
+    "E2": {
+      "verdict": "satisfied-at-contract-stage",
+      "evidence": "Three exact new nonsmooth terminals cover the two introductory families, with proof work still required."
+    },
+    "E3": {
+      "verdict": "satisfied",
+      "evidence": "Ordinary and relative interior explicitly required and current relative-support producer bound."
+    },
+    "E4": {
+      "verdict": "satisfied",
+      "evidence": "Same real2 coordinateAbsolute segment and not-countable locus explicitly joined; not re-proved here."
+    },
+    "E5": {
+      "verdict": "satisfied-with-explicit-delta",
+      "evidence": "Lookahead is REQUIRED forward model audit to15.5.1, not ordinary OGD energy sign change; remains open."
+    },
+    "E6": {
+      "verdict": "satisfied",
+      "evidence": "Eight forward-required entries include lookahead; historical Chapter7 FTRL navigation is separately nonmandatory for C2 while Chapter7 remains whole-book required."
+    },
+    "E7": {
+      "verdict": "satisfied-for-inventory-only",
+      "evidence": "65 overlapping containers,146 distinct attached declarations; current534-index hashes agree. Not coverage or proof-leaf count."
+    },
+    "E8": {
+      "verdict": "satisfied-with-explicit-delta",
+      "evidence": "Upper-average/ordinary-limit, proper/generic support, EReal arithmetic, Huber/Lipschitz nonnegative parameters and max-nonempty conventions remain explicit."
+    }
+  },
+  "fixed_input_count": 18,
+  "input_manifest": {
+    "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/nonsmooth-source-contract-review-input-v1.json",
+    "sha256": "430dfd5e9fc6c6ce0cb23341ed97bd2ab4b8b4494f5b40481484d3f16ba36ac0"
+  },
+  "raw_input_checks": [
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineConvexClosures.lean",
+      "expected_sha256": "fa8e5b239dc63c7f115f429528726cdab70a0ae066d637d26bada81893c28485",
+      "before_sha256": "fa8e5b239dc63c7f115f429528726cdab70a0ae066d637d26bada81893c28485",
+      "after_sha256": "fa8e5b239dc63c7f115f429528726cdab70a0ae066d637d26bada81893c28485",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineConvexExamples.lean",
+      "expected_sha256": "ab619b6338bba1500f5a142fb3aefaad9a313d336b9f5c1b545fc4e3e5d0f9ba",
+      "before_sha256": "ab619b6338bba1500f5a142fb3aefaad9a313d336b9f5c1b545fc4e3e5d0f9ba",
+      "after_sha256": "ab619b6338bba1500f5a142fb3aefaad9a313d336b9f5c1b545fc4e3e5d0f9ba",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineHinge.lean",
+      "expected_sha256": "d3c7ec649a5d231bd30d472ce70bfed20ecdf7069cba30cb630297f99ce16871",
+      "before_sha256": "d3c7ec649a5d231bd30d472ce70bfed20ecdf7069cba30cb630297f99ce16871",
+      "after_sha256": "d3c7ec649a5d231bd30d472ce70bfed20ecdf7069cba30cb630297f99ce16871",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineSubgradientDifferentiability.lean",
+      "expected_sha256": "4f21c5d7fd0ef27a860390b698072d65527610d55e60c16568e82fa99215c1d3",
+      "before_sha256": "4f21c5d7fd0ef27a860390b698072d65527610d55e60c16568e82fa99215c1d3",
+      "after_sha256": "4f21c5d7fd0ef27a860390b698072d65527610d55e60c16568e82fa99215c1d3",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/conversion-windows/ONLINE-CH2-CHAPTER-AUDIT-20261009.md",
+      "expected_sha256": "0534e719fcb741de0094f74839e75a7dc5e55fd7b436453e4fb572f502eca7f8",
+      "before_sha256": "0534e719fcb741de0094f74839e75a7dc5e55fd7b436453e4fb572f502eca7f8",
+      "after_sha256": "0534e719fcb741de0094f74839e75a7dc5e55fd7b436453e4fb572f502eca7f8",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/docs/contracts/online-ch2-chapter-audit-v1/complete-source-reconciliation-draft-v3.json",
+      "expected_sha256": "94bed5963bbdcc745e64547fa98b5101a6a58e843c127e38d8577dfe2af58466",
+      "before_sha256": "94bed5963bbdcc745e64547fa98b5101a6a58e843c127e38d8577dfe2af58466",
+      "after_sha256": "94bed5963bbdcc745e64547fa98b5101a6a58e843c127e38d8577dfe2af58466",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/docs/contracts/online-ch2-chapter-audit-v1/nonsmooth-targets-draft-v1.json",
+      "expected_sha256": "1b84c3ec66b28203406b0b4c0bf3129abc073f4c9add0f68ab415226b4acad5e",
+      "before_sha256": "1b84c3ec66b28203406b0b4c0bf3129abc073f4c9add0f68ab415226b4acad5e",
+      "after_sha256": "1b84c3ec66b28203406b0b4c0bf3129abc073f4c9add0f68ab415226b4acad5e",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/proof-obligations/ONLINE-CH2-CHAPTER-AUDIT-20261009.md",
+      "expected_sha256": "9489597e351a7081d02e28515ffff5b54352a11d438a95314c0861745dd13e71",
+      "before_sha256": "9489597e351a7081d02e28515ffff5b54352a11d438a95314c0861745dd13e71",
+      "after_sha256": "9489597e351a7081d02e28515ffff5b54352a11d438a95314c0861745dd13e71",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/current-online-declaration-retrieval-v1.json",
+      "expected_sha256": "df2cbd42f82098f15142f90915ceb30a0b0d11e0ee70dac447dee56cc4a69fdf",
+      "before_sha256": "df2cbd42f82098f15142f90915ceb30a0b0d11e0ee70dac447dee56cc4a69fdf",
+      "after_sha256": "df2cbd42f82098f15142f90915ceb30a0b0d11e0ee70dac447dee56cc4a69fdf",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/nonsmooth-blind-packet-v1.md",
+      "expected_sha256": "a9eeb3b240662257c271e7be329a10535811d94d967450ec8589a077629a54ea",
+      "before_sha256": "a9eeb3b240662257c271e7be329a10535811d94d967450ec8589a077629a54ea",
+      "after_sha256": "a9eeb3b240662257c271e7be329a10535811d94d967450ec8589a077629a54ea",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/nonsmooth-blind-receipt-v1.json",
+      "expected_sha256": "1592c5291fdca30ca23e9cc03ff72ef1a4367259baf3ff13c25047918913d15d",
+      "before_sha256": "1592c5291fdca30ca23e9cc03ff72ef1a4367259baf3ff13c25047918913d15d",
+      "after_sha256": "1592c5291fdca30ca23e9cc03ff72ef1a4367259baf3ff13c25047918913d15d",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/nonsmooth-blind-reconstruction-v1.md",
+      "expected_sha256": "5418e47e6af83c8df0dc1a00d38d0db5878ccde72ed9674e630f6b58d91e1374",
+      "before_sha256": "5418e47e6af83c8df0dc1a00d38d0db5878ccde72ed9674e630f6b58d91e1374",
+      "after_sha256": "5418e47e6af83c8df0dc1a00d38d0db5878ccde72ed9674e630f6b58d91e1374",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/nonsmooth-type-api-probe-v1.json",
+      "expected_sha256": "c40fc7cc02ded00a7d6ce7059d58aa42872a66326a4cf8b27f26c3207d97de98",
+      "before_sha256": "c40fc7cc02ded00a7d6ce7059d58aa42872a66326a4cf8b27f26c3207d97de98",
+      "after_sha256": "c40fc7cc02ded00a7d6ce7059d58aa42872a66326a4cf8b27f26c3207d97de98",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/nonsmooth-type-api-probe-v1.lean",
+      "expected_sha256": "890fbd74d0b2b15936c1b0d0507cb54b6d411af8a3a12dcb1a4924f18f6e7f80",
+      "before_sha256": "890fbd74d0b2b15936c1b0d0507cb54b6d411af8a3a12dcb1a4924f18f6e7f80",
+      "after_sha256": "890fbd74d0b2b15936c1b0d0507cb54b6d411af8a3a12dcb1a4924f18f6e7f80",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/prior-receipt-current-file-join-v1.json",
+      "expected_sha256": "a8ee6004f0394b67aa13b599c4e751fbd27be511a2d394a772e6812c8d12c68b",
+      "before_sha256": "a8ee6004f0394b67aa13b599c4e751fbd27be511a2d394a772e6812c8d12c68b",
+      "after_sha256": "a8ee6004f0394b67aa13b599c4e751fbd27be511a2d394a772e6812c8d12c68b",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/source-enumeration-review-v1.json",
+      "expected_sha256": "bdceb1fcc59ad42dd51ef9386a3fe36b60c01f5bf70b32199c45f995e93700d8",
+      "before_sha256": "bdceb1fcc59ad42dd51ef9386a3fe36b60c01f5bf70b32199c45f995e93700d8",
+      "after_sha256": "bdceb1fcc59ad42dd51ef9386a3fe36b60c01f5bf70b32199c45f995e93700d8",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/source-enumeration-review-v1.md",
+      "expected_sha256": "383bc3dedcdfb661fbc388815ec8827672185e2b8a048ef8f6999ad55047e053",
+      "before_sha256": "383bc3dedcdfb661fbc388815ec8827672185e2b8a048ef8f6999ad55047e053",
+      "after_sha256": "383bc3dedcdfb661fbc388815ec8827672185e2b8a048ef8f6999ad55047e053",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/tasks/ONLINE-CH2-CHAPTER-AUDIT-20261009.md",
+      "expected_sha256": "7e86c884e7090df307fe1ece2b26898a336b7be21f55bdcba00ab9676bd109b9",
+      "before_sha256": "7e86c884e7090df307fe1ece2b26898a336b7be21f55bdcba00ab9676bd109b9",
+      "after_sha256": "7e86c884e7090df307fe1ece2b26898a336b7be21f55bdcba00ab9676bd109b9",
+      "unchanged": true
+    }
+  ],
+  "inputs_unchanged": true,
+  "reviewed_files": [
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineConvexClosures.lean",
+      "sha256": "fa8e5b239dc63c7f115f429528726cdab70a0ae066d637d26bada81893c28485",
+      "read_scope": "indexed bounded source/contract/provenance input"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineConvexExamples.lean",
+      "sha256": "ab619b6338bba1500f5a142fb3aefaad9a313d336b9f5c1b545fc4e3e5d0f9ba",
+      "read_scope": "indexed bounded source/contract/provenance input"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineHinge.lean",
+      "sha256": "d3c7ec649a5d231bd30d472ce70bfed20ecdf7069cba30cb630297f99ce16871",
+      "read_scope": "indexed bounded source/contract/provenance input"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineSubgradientDifferentiability.lean",
+      "sha256": "4f21c5d7fd0ef27a860390b698072d65527610d55e60c16568e82fa99215c1d3",
+      "read_scope": "indexed bounded source/contract/provenance input"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/conversion-windows/ONLINE-CH2-CHAPTER-AUDIT-20261009.md",
+      "sha256": "0534e719fcb741de0094f74839e75a7dc5e55fd7b436453e4fb572f502eca7f8",
+      "read_scope": "indexed bounded source/contract/provenance input"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/docs/contracts/online-ch2-chapter-audit-v1/complete-source-reconciliation-draft-v3.json",
+      "sha256": "94bed5963bbdcc745e64547fa98b5101a6a58e843c127e38d8577dfe2af58466",
+      "read_scope": "indexed bounded source/contract/provenance input"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/docs/contracts/online-ch2-chapter-audit-v1/nonsmooth-targets-draft-v1.json",
+      "sha256": "1b84c3ec66b28203406b0b4c0bf3129abc073f4c9add0f68ab415226b4acad5e",
+      "read_scope": "indexed bounded source/contract/provenance input"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/proof-obligations/ONLINE-CH2-CHAPTER-AUDIT-20261009.md",
+      "sha256": "9489597e351a7081d02e28515ffff5b54352a11d438a95314c0861745dd13e71",
+      "read_scope": "indexed bounded source/contract/provenance input"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/current-online-declaration-retrieval-v1.json",
+      "sha256": "df2cbd42f82098f15142f90915ceb30a0b0d11e0ee70dac447dee56cc4a69fdf",
+      "read_scope": "indexed bounded source/contract/provenance input"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/nonsmooth-blind-packet-v1.md",
+      "sha256": "a9eeb3b240662257c271e7be329a10535811d94d967450ec8589a077629a54ea",
+      "read_scope": "indexed bounded source/contract/provenance input"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/nonsmooth-blind-receipt-v1.json",
+      "sha256": "1592c5291fdca30ca23e9cc03ff72ef1a4367259baf3ff13c25047918913d15d",
+      "read_scope": "indexed bounded source/contract/provenance input"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/nonsmooth-blind-reconstruction-v1.md",
+      "sha256": "5418e47e6af83c8df0dc1a00d38d0db5878ccde72ed9674e630f6b58d91e1374",
+      "read_scope": "indexed bounded source/contract/provenance input"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/nonsmooth-type-api-probe-v1.json",
+      "sha256": "c40fc7cc02ded00a7d6ce7059d58aa42872a66326a4cf8b27f26c3207d97de98",
+      "read_scope": "indexed bounded source/contract/provenance input"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/nonsmooth-type-api-probe-v1.lean",
+      "sha256": "890fbd74d0b2b15936c1b0d0507cb54b6d411af8a3a12dcb1a4924f18f6e7f80",
+      "read_scope": "indexed bounded source/contract/provenance input"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/prior-receipt-current-file-join-v1.json",
+      "sha256": "a8ee6004f0394b67aa13b599c4e751fbd27be511a2d394a772e6812c8d12c68b",
+      "read_scope": "indexed bounded source/contract/provenance input"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/source-enumeration-review-v1.json",
+      "sha256": "bdceb1fcc59ad42dd51ef9386a3fe36b60c01f5bf70b32199c45f995e93700d8",
+      "read_scope": "indexed bounded source/contract/provenance input"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/source-enumeration-review-v1.md",
+      "sha256": "383bc3dedcdfb661fbc388815ec8827672185e2b8a048ef8f6999ad55047e053",
+      "read_scope": "indexed bounded source/contract/provenance input"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/tasks/ONLINE-CH2-CHAPTER-AUDIT-20261009.md",
+      "sha256": "7e86c884e7090df307fe1ece2b26898a336b7be21f55bdcba00ab9676bd109b9",
+      "read_scope": "indexed bounded source/contract/provenance input"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/nonsmooth-source-contract-review-input-v1.json",
+      "sha256": "430dfd5e9fc6c6ce0cb23341ed97bd2ab4b8b4494f5b40481484d3f16ba36ac0",
+      "read_scope": "input manifest"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineAffineSubgradient.lean",
+      "sha256": "fb45e9a58a84770594d4e88a5df04f18a73203406e82f4a48edffd6d4419ff80",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineClosedProper.lean",
+      "sha256": "c66f00c33b45fb8a0e11583eeadf506e176c16166ce2af02f41f0674507cebe7",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineConstraintFiniteLoss.lean",
+      "sha256": "aeb108d1df6c436b4d703599b06519055c16a444624be19fdb1779f7cd0ab73e",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineConvexBarycenter.lean",
+      "sha256": "beb198b8be313c36a73eb1e20acdc8b8845d40d18d70f169c129a35c338f36c0",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineConvexExtended.lean",
+      "sha256": "bd30bb95a46ccdc3f6d25f808c175af5fee71d075c2b46ffcf6508f15f1ed66a",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineConvexFirstOrder.lean",
+      "sha256": "f2fcaccf9273a9b2a37e820da9885fbebc7f0e2693e84d073c1e32949073eb6c",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineConvexMinorant.lean",
+      "sha256": "8ca81ca0b79248a15df47556057175fd6b4712d33a082508c543bd7760a15742",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineConvexNondifferentiability.lean",
+      "sha256": "2e468c85fc4970731df00adaa461b1402eea82095d9a14c2478258a5ed59dc7a",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineConvexOptimality.lean",
+      "sha256": "69739ea8ffc0d3f4775ab979de2a95266ca6e0b6fb0e7af375658660910e3e86",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineConvexSums.lean",
+      "sha256": "0abd620cb419fec2899146a3f201401aaa410d01409a33c81836b54dcfd932ca",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineConvexUncountability.lean",
+      "sha256": "1d10781553427ebe26f24660f08a3b5969242faf866aca0bef995598b1fcde10",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineExpectation.lean",
+      "sha256": "9642870c76c5001b002671e447bd6f29bc1e3d0c132f784783ce90d5944f8c31",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineFTLFailure.lean",
+      "sha256": "bd7691120cefb664a645d64d9dd09b77b579e857fe333e363f6f2313db7c9b47",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineFTLInitializationRegret.lean",
+      "sha256": "bff3a313509aa19051a6f3f2cb912aec33ff61f5de8f88d9edd16e7964e3b614",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineFTLLimitSemantics.lean",
+      "sha256": "8413f4409dfa5f7506f33cd6cfc6fb0c03f598f877dcbd2b4f0774356d377bf9",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineFTLOscillation.lean",
+      "sha256": "87665aface86fbca5265f4da0f6dfecf7348c82064c7648528fcd6267d0de9c6",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGradientDescent.lean",
+      "sha256": "9300cb2735da9f125e404f78b86509df47fe65a5f4d89abc469e071bdffdb871",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGradientDescentSource.lean",
+      "sha256": "627df452453bbdfa2ecf4ddac8b5b85bfd750c74f1db5b81a26e6e20ca2eeec7",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGradientDescentVariable.lean",
+      "sha256": "9fd385b55d76ff0fe5e1988d553007fb46f59f6864e5534ec867a7c820ecbea0",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGuessingAECausal.lean",
+      "sha256": "623634fa5df3c91dee704be00218b5eac7d513a1f8a0b483ccf730832cd5f814",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGuessingComparison.lean",
+      "sha256": "0fc28f4459d2cffb5afcf795898dd152508ddb06acb356cb08d1dd72e09f7f14",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGuessingCompletedCausal.lean",
+      "sha256": "ef88487377f0dd6e9d6877810348c40277b25b0a76cb3943edae18d1c95fbf93",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGuessingIIDBenchmark.lean",
+      "sha256": "3581c9b284a86301ad2696db5e48af4473d7ef96e3f6f111730a11ca00aba7b7",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGuessingIIDSuccess.lean",
+      "sha256": "eca206ce6e2eaccab97b1c9a0912cd639304f049e190bfbc94fe2f5a7bb3821b",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGuessingKernelCausal.lean",
+      "sha256": "e4e207c116caf5e92ba5cb22d65289207bba0f19c0277999eee5caa5fb1708d0",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGuessingLogLower.lean",
+      "sha256": "5f4b6bd8e3300d8b94862aa95f1d46e68ccea11e3b6261bebbf9d60aa6c9a5b1",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGuessingLower.lean",
+      "sha256": "a09390e250f7e55e8e9d282995faedaf186ecf67d8c1aa177e6f8d08ee5428e7",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGuessingOGD.lean",
+      "sha256": "12792af1571fde0fe37796686b044f0df0990ca3d808a89431804605d0ee8d00",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGuessingRandomizedIID.lean",
+      "sha256": "5b00b2f3dcd8afd08fd1a29eb0a0f6376dc1bcc5c784feeb1d6efd4040f0e0d3",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGuessingSubgradient.lean",
+      "sha256": "95d206190d443939115037f9bf6d0eeb1e3229f3ae52eb4150927fbe69e89348",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGuessingSubgradientPolicy.lean",
+      "sha256": "ed32d846509d0dc34eb05ce6fad5d3af8aa6dbf92a8c8a78cc8859b0e42e6b0e",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineHuber.lean",
+      "sha256": "6aa70d9db582884dae95c325445d0d96e963e918bf85a26db2ce67a5159cd1ce",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineJensen.lean",
+      "sha256": "cca057991a262fa6bb2a9259bd59aa3468e6a970cc7cc53a508f7a647b327eda",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineLearningAsymptotic.lean",
+      "sha256": "60580602f27c35cb4782d78bd590e73e780023f62e5ae71a06c5a44d09d7ab72",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineLearningFoundations.lean",
+      "sha256": "731c8d706f97ba568a5ff644b7800bb1e69db2022cabde755f7d1c0cbd512fd7",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineLearningFTL.lean",
+      "sha256": "8c3574c657f08e0c5291f0689105f9459e92187502f092f4d36d848e52ab4219",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineLearningFTLState.lean",
+      "sha256": "fa33c10252eb5cd51b3ea4cdffb10fa95c37416f3098ceb76d9d58f465ff1765",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineLearningHistory.lean",
+      "sha256": "215adc2883592c1f701c9fc698e1b1438c77e1166197461048de34ceed881eb9",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineLearningIID.lean",
+      "sha256": "e9482bcd7a06c53d9de557d09faef5aff799b050072a101960497777b5ee4a92",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineLearningInformation.lean",
+      "sha256": "3c3178006dab97ad6094c78ababc126184f3583cdbcf3b63910dc3aafdce8154",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineLearningMean.lean",
+      "sha256": "811dcf3741e3d6dee19b2c4a9f43f4b266808b89843a1719e00f239a4687258b",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineLearningRegret.lean",
+      "sha256": "0bac6b6e454c5d7bd2244fc115bc8df8cbd9b5505302aa81d03baaeeeec204dc",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineLearningStochastic.lean",
+      "sha256": "ec80b91e309ba03c9b30610bfa512af9b6f6d11e97e12f6d33e90a12959d4dcd",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineLinearization.lean",
+      "sha256": "ec231ef4d85c3b27744378d1c3d9f071b6177fa1535d5db440a787800111339e",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineLipschitzSubgradient.lean",
+      "sha256": "c6891c7b868208d707f05652c17ea5948e1bea272f69a7c1da9303c48769e085",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineNoRegretSemantics.lean",
+      "sha256": "db7482a02bf4643ba3d4b15b29dd5a59418ea111763afeed45c51879b996e5a7",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineNormalCone.lean",
+      "sha256": "2aa6e543860fa6df2f4cc81cf1a8df857b23aecc7ec2c292c26faa97db5b3552",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineOptimalStep.lean",
+      "sha256": "621accb68aa788e4ae225fbe0c94ca86c0b26db6fb7ea23210b1aeffed69afa1",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineSquareMinimum.lean",
+      "sha256": "7bbfb2538dcdaed8c208571c248723d89ed8980e5e899339aa4c3b48a55c3210",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineSubgradientAbsolute.lean",
+      "sha256": "bf3e8d97f67b78e7ad230b8efd321948f4d7ba1a0e9cde31e8d85c1e9019442b",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineSubgradientBasic.lean",
+      "sha256": "af3d3f56e4a64cd8adbe47368caf5382e63b428f01da29a121c28c8014f352a5",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineSubgradientDescent.lean",
+      "sha256": "6ba8586e1691babc2db3e0c0fcddb69b4236e16f9f192c464b4c04262e854f1c",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineSubgradientInterior.lean",
+      "sha256": "72cf2057e9dee7a1e8c4f92bb7878cffbb9b7603ff6afbac4f90ee5af11db9d2",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineSubgradientMax.lean",
+      "sha256": "9efd6831768ce1cdf494ec051aeb14c9a35b87669fb203cdef031cafd94de9c2",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineSubgradientPolicy.lean",
+      "sha256": "ac8fbfb3eee3c92ebb79b44f33beec33b500105bb7e54df5176c14e886c2c662",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineSubgradientSum.lean",
+      "sha256": "580655a26e335d9db13c6ebb8f3c0d9ecf36ee07edc9d4c33c7d98194eae2b3c",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineUnitScaling.lean",
+      "sha256": "273a09644b71086b8104c39eee063d13f6113fbcc9d0e1021f90cc1b116b7e9c",
+      "read_scope": "current module raw-hash verification; not fresh whole-body acceptance"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/source-pdf28-text-v1.txt",
+      "sha256": "67732c7b15e4769f7c8810f2c615376767ef6fcbdace3b3f4ee485c418bce2d3",
+      "read_scope": "source original text"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/source-pdf28-v1.png",
+      "sha256": "3135052315b81f2b652962ec8e6c8a862acb7c9294359365d52b5cd6c740776c",
+      "read_scope": "same-byte original source; original-detail pixel reading reused from earlier enumeration pass"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-ogd/tmp/pdfs/orabona-v10.pdf",
+      "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+      "read_scope": "pinned full PDF raw-hash check"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/nonsmooth-blind-input-v1.json",
+      "sha256": "d3662ab38a50affcf40e84b5081a4f6a9965a9fe8ee4a871ab61e5bcd5b38a4c",
+      "read_scope": "neutral input binding"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/source-contract-repair-review-v1.md",
+      "sha256": "15778967012075d7773e1341c76b34213b21cce4b7d9322737356b6eb1c10bc7",
+      "read_scope": "this report"
+    }
+  ],
+  "report": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/source-contract-repair-review-v1.md",
+  "report_sha256": "15778967012075d7773e1341c76b34213b21cce4b7d9322737356b6eb1c10bc7",
+  "required_blocking_repairs": [],
+  "required_mathematical_repairs": [],
+  "required_metadata_repairs": [],
+  "future_metadata_condition": "Own stabilization must select operative inventory-v3 explicitly; old task v2 references are historical, not an alternative operative selection.",
+  "approved_future_exact_scope": {
+    "production_path": "BanditRLProof/OnlineNonsmoothExamples.lean",
+    "exact_targets": [
+      {
+        "declaration": "BanditRL.OnlineConvex.shifted_absolute_convex_differentiable_iff",
+        "statement_hash": "8b8744ba4ca017a395835fa05ec28007b7b0179122b30d1a5fc64df8b6d3a1d2",
+        "exact_header": "theorem shifted_absolute_convex_differentiable_iff (c : ℝ) :\n    ConvexOn ℝ Set.univ (fun x : ℝ => |x - c|) ∧\n      ∀ x : ℝ, DifferentiableAt ℝ (fun w : ℝ => |w - c|) x ↔ x ≠ c"
+      },
+      {
+        "declaration": "BanditRL.OnlineConvex.hinge_convex_differentiable_iff",
+        "statement_hash": "96123d78398d7211f2ee34b63e1330bd04986f943e2cffd99fe8301c263f8f45",
+        "exact_header": "theorem hinge_convex_differentiable_iff {E : Type*} [NormedAddCommGroup E]\n    [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (a : E) :\n    ConvexOn ℝ Set.univ (fun x : E => max (1 - inner ℝ a x) 0) ∧\n      ∀ x : E, DifferentiableAt ℝ (fun w : E => max (1 - inner ℝ a w) 0) x ↔\n        inner ℝ a x ≠ 1"
+      },
+      {
+        "declaration": "BanditRL.OnlineConvex.labelled_hinge_convex_differentiable_iff",
+        "statement_hash": "76b1e6c1dcae81e86d72a8354ef260108edbcdae41dc8b3dd6c55a91e943a57f",
+        "exact_header": "theorem labelled_hinge_convex_differentiable_iff {E : Type*} [NormedAddCommGroup E]\n    [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (y : ℝ) (z : E) :\n    ConvexOn ℝ Set.univ (fun x : E => max (1 - y * inner ℝ z x) 0) ∧\n      (∀ x : E, DifferentiableAt ℝ (fun w : E => max (1 - y * inner ℝ z w) 0) x ↔\n        y * inner ℝ z x ≠ 1) ∧\n      (Differentiable ℝ (fun w : E => max (1 - y * inner ℝ z w) 0) ↔ y • z = 0)"
+      }
+    ],
+    "private_helpers": "necessary scoped helpers only; no new mathematical target weakening",
+    "canary_path": "Tests/OnlineNonsmoothExamplesCanary.lean",
+    "canary_gate": "freeze exact proposed canary headers and separate semantic review before BODY acceptance",
+    "own_metadata": "OWN RUN/contract/task/obligation/conversion; explicitly select inventory-v3 and preserve raw historical baseline",
+    "public_roots": "later append imports only after reviewed candidate/BODY readiness; no reordering",
+    "forbidden": "No old production/Test/header changes, source mutation, root reordering, pin upgrades, global active SGB/frontier/trials/memory rewrite, generated _site, Chapter3+ competitive proof writing"
+  },
+  "remaining_required": [
+    "actual three public proof producers",
+    "separate canary contract and BODY",
+    "current reused declarations reviewed only within appropriate historical scope",
+    "all required forward chapter claims remain open",
+    "combined root Tests full harness contributors shadow registry reader pixels FINAL native post-native delivery",
+    "Chapter2 and whole book completion gates"
+  ],
+  "chapter_complete": false,
+  "goal_complete": false,
+  "whole_Goal_status": "ACTIVE",
+  "source_pixel_review": {
+    "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/source-pdf28-v1.png",
+    "sha256": "3135052315b81f2b652962ec8e6c8a862acb7c9294359365d52b5cd6c740776c",
+    "mode": "reuse prior personal original-detail view after exact current SHA confirmation",
+    "fresh_view_this_pass": false
+  }
+}

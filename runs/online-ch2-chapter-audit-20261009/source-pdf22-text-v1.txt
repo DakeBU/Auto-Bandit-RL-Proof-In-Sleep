@@ -1,0 +1,36 @@
+10Online Subgradient Descent
+domf
+Epigraph
+x
+f(x)
+domf
+Epigraph
+x
+f(x)
+Figure 2.2Convex (left) and nonconvex (right) functions.
+In this way, the only way for the algorithm and for the competitor to suffer finite loss is to
+predict inside the setV. Also, extended-real-valued functions will make the use ofFenchel
+conjugatesmore direct, see Section 6.4.1.
+Convex functionswill be an essential ingredient in online learning.
+Definition 2.3Letf:R d →[−∞,+∞].fisconvexif the epigraph of the function,
+{(x, y)∈R d+1 :y≥f(x)}, is convex.
+We can see a visualization of this definition in Figure 2.2. Note that the definition implies
+that the domain of a convex function is convex. TheιV(x)is convex iffVis convex, so each
+convex set is associated with a convex function. Also, observe that iff:R d →(−∞,+∞]
+is convex,f+ι V :R d →(−∞,+∞], whereVis convex, is also convex.
+The definition above gives rise to the following characterization for convex functions that
+do not assume the value−∞.
+Theorem 2.4(Rockafellar, 1970, Theorem 4.1)Letf:R d →(−∞,+∞]be such that
+domfis a convex set. Thenfis convex iff, for any0< λ <1, we have
+f(λx+ (1−λ)y)≤λf(x) + (1−λ)f(y),∀x,y∈domf .
+Example 2.5Affine functions,f(x) =⟨z,x⟩+b, are convex.
+Example 2.6Norms are always convex; the proof is left as an exercise.
+How to recognize a convex function? In the most general case, you have to rely on its def-
+inition. However, most of the time, we will recognize them as being obtained by operations
+that preserve convexity. For example:
+•Iffandgare convex, then their linear combination with non-negative weights is also
+convex.
+•The composition with an affine transformation preserves the convexity.
+•Iff:R d →Randg:R→Rare convex functions andgis non-decreasing, then
+h(x) =g(f(x))is convex.
+•The pointwise supremum of convex functions is convex.

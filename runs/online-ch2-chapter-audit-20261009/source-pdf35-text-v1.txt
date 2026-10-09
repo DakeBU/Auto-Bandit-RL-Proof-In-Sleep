@@ -1,0 +1,52 @@
+2.5 Exercises23
+Projected OGD with time-varying learning rate and the name “Online Convex Optimiza-
+tion” were introduced by Zinkevich (2003), but the OCO framework was introduced earlier
+by Gordon (1999a,b), which also introduced the idea of reducing OCO to OLO.
+Before the OCO framework, the online learning community focused on specific losses
+and mostly linear predictors, see Cesa-Bianchi and Lugosi (2006). Moreover, the concept
+of subgradients is also a recent addition to the online learning literature, and the earliest
+papers using subgradients of loss functions seem to be Zhang (2004); Shalev-Shwartz and
+Singer (2006b). However, subgradients were implicitly used in previous analyses too, see
+for example Cesa-Bianchi (1999, Theorem 4).
+It is impossible not to notice that the literature on OCO is heavily biased toward the use of
+bounded domains. Yet, there are very few practical applications of OCO where the domain
+is bounded. Moreover, as shown in Theorem 2.13, it is possible to have a sublinear regret
+even in unbounded domains. I speculate that the insistence on using bounded domains is
+due to two main reasons: (i) the less general definition of regret (derived from the setting of
+learning with experts (Section 6.8)) as
+TX
+t=1
+ℓt(xt)−min
+u∈V
+TX
+t=1
+ℓt(u)
+that requires the existence of a minimizer of the sum of the losses, and (ii) the fact that OSD
+with time-varying learning rates has a vacuous regret upper bound on unbounded domains.
+However, we now know that both issues can easily be fixed: (i) by defining the regret with
+respect to arbitrary competitors, and (ii) by using different algorithms, for example Follow-
+the-Regularized-Leader (FTRL) which we will see in Chapter 7. Indeed, even in offline
+optimization, the existence of a minimizer is not required to guarantee that the suboptimality
+gap goes to zero, as we will see in Example 3.2. So, it is probably time for the community
+to stop using the crutch of bounded domains just to avoid technical difficulties.
+2.5 Exercises
+Problem 2.1Prove that PT
+t=1
+1√
+t ≤2
+√
+T−1.
+Problem 2.2Using the inequality in the previous exercise, prove that the learning rate
+ηt = D
+L
+√
+t gives rise to a regret only a constant multiplicative factor worse than the one in
+(2.1).
+Problem 2.3Calculate the subdifferential set of theϵ-insensitive loss:f(x) = max(|x−
+y| −ϵ,0). It is a loss used in regression problems where we do not want to penalize predic-
+tionsxwithin±ϵof the correct valuey.
+Problem 2.4Using the definition of subgradient, find the subdifferential set off(x) =
+∥x∥2,x∈R d.
+Problem 2.5Consider Projected Online Subgradient Descent for the Example 2.10 on the
+failure of Follow-the-Leader: can we use it on that problem? Would it guarantee sublinear
+regret? How would the behaviour of the algorithm differ from FTL?

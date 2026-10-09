@@ -1,0 +1,17 @@
+# Nonsmooth reader repair v2
+
+Verdict: accepted, only for the narrow reader repair and exact materialized future scope. All 24 current fixed RAW bindings match before and after. No input was modified.
+
+R-ABS-INTUITION is satisfied. The sole proposal AST change says: “For every real center c, the translated absolute value has a genuine kink at c and is differentiable on both open sides.” This removes the false zero-normal language and accurately describes the shifted absolute. All remaining prose, mathematics, source qualification, notes and boundaries are identical. Scope v2 changes only the proposal hash. The rejected v1 report/receipt and proposal remain immutable.
+
+I reconstructed all three complete expected JSON ASTs from their live baselines plus v2 proposal: chapters adds exactly one module glob, one learning goal and the additive completion suffix on the selected route; readings appends exactly its one source card; highlights preserves all 421 old records and appends exactly its three notes. The reconstructed ASTs equal the materialized files. No other parsed fields, formulas, IDs, links or statuses change. All five materialized RAW hashes, including the two roots, are bound in the receipt.
+
+Both current roots equal the original RAW snapshots plus their separately approved import suffixes. Their hashes are the approved after hashes. The old54 review's two LIVE root paths therefore intentionally changed after that stage; no false whole-file equality is claimed. The root-integration record and current index supersede preparation-time statements that canonical files were unmodified. The three live canonical reader JSONs still have their unchanged before hashes.
+
+The three production bodies and five canary bodies are reused at unchanged complete hashes from the prior actual staged review. No fresh proof/kernel acceptance or source-pixel viewing is claimed. Norm/translation convexity, off-zero abs differentiability and the translation contradiction at zero remain sufficiently explained adjacent to the shifted-absolute note. No additional reader blocker is imposed. Actual rendered pixels are a future gate.
+
+The approved v2 scope is copied verbatim in the receipt. Permission is limited to the five exact materialized results (roots already applied), with the three reader changes starting from their bound before bytes. Own contribution/retrieval evidence must stay within that scope. No other mathematics, old records, other books, global SGB, source statements or shared stores may change. This narrow review does not itself authorize Git/native/publication actions or accept a package/chapter/Goal.
+
+Combined root/Tests builds currently running are not certified here. Full harness, contributor/scope/shadow, registry/link validation, clean site, DOM/actual pixels, FINAL/native/post-native/delivery remain separate. Three derived public criteria serve two source families; five canaries are validation. Chapter2 and the whole Goal remain incomplete/ACTIVE, proof-total null, and all required branches, forward references and appendices remain required.
+
+Reused distinct automated reviewer /root/source_reviewer; requested GPT-6 Astra / medium, prior staged history disclosed. No absolute blindness, human/external review or runtime model attestation. A read-only comparison initially guessed an absent chapter `id` key; it failed before any output creation. The completed comparison reconstructs the exact indexed AST and checks complete equality; no input or scope was altered to bypass a finding.
