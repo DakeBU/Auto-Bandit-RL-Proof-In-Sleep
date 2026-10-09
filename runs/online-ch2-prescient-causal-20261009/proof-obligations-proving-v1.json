@@ -1,0 +1,88 @@
+{
+  "stage": "proving",
+  "production": [
+    {
+      "declaration": "BanditRL.OnlineBregman.divergence_extension_eq",
+      "statement_hash": "989325c00a78f2f6c2b2e186c6cbdfa9132100d252807194d03644d67a96f02a",
+      "status": "focused-compiled/public-VALUE/standard-axioms/fence-backed; BODY-pending"
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.advance_some_spec",
+      "statement_hash": "6c5282eda3994fc5b335f501e3792a16175154574ee3a3edee72e96402c7bd42",
+      "status": "focused-compiled/public-VALUE/standard-axioms/fence-backed; BODY-pending"
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.advance_none_iff",
+      "statement_hash": "765edcdc571a725c4ba75bada3ed1e969fb8f427067255f842a96d58e623fbf1",
+      "status": "focused-compiled/public-VALUE/standard-axioms/fence-backed; BODY-pending"
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.iterate_prefix",
+      "statement_hash": "7d22593e344ce1ad3809ab9edc8cd653e74813e5edc855b42a85a185d475e931",
+      "status": "focused-compiled/public-VALUE/standard-axioms/fence-backed; BODY-pending"
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.iterate_succ_some_spec",
+      "statement_hash": "6b8dcca367376affe2ee91bb44ec9fc3810d5f4af2d08402b0a582a9bd3ffb78",
+      "status": "focused-compiled/public-VALUE/standard-axioms/fence-backed; BODY-pending"
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.iterate_no_recovery",
+      "statement_hash": "69e7a057bf2bca85cc0b62417dfebb48a0af3d451ea39cfc61c500e477e4ec7d",
+      "status": "focused-compiled/public-VALUE/standard-axioms/fence-backed; BODY-pending"
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.iterate_complete_of_step_attained",
+      "statement_hash": "46e97b3a873699bef9cc89328b2658f956ebf58688a97a21c990df8e10843db5",
+      "status": "focused-compiled/public-VALUE/standard-axioms/fence-backed; BODY-pending"
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.iterate_one_step",
+      "statement_hash": "d58f337a831832c0b05ab8d552f67f0f452b9c2aa4461afa04746ca9f70c2717",
+      "status": "focused-compiled/public-VALUE/standard-axioms/fence-backed; BODY-pending"
+    }
+  ],
+  "exact_definitions": [
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.advance",
+      "exact_definition": "def advance (V : Set E) (ψ : E → ℝ) (η : ℝ) (f : E → EReal) (x : E) : Option E := by\n  classical\n  exact if h : ∃ p, p ∈ V ∧\n      IsMinOn (fun z => f z + ((η⁻¹ * divergence ψ z x : ℝ) : EReal)) V p\n    then some (Classical.choose h) else none",
+      "exact_definition_UTF8_sha256": "77e7c82a0b4f2fef253b605c7c201e79267438f80c8edb00d84d03a79c98dcf7"
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.iterate",
+      "exact_definition": "def iterate (V : Set E) (ψ : E → ℝ) (η : ℕ → ℝ)\n    (loss : ℕ → E → EReal) (x0 : E) : ℕ → Option E\n  | 0 => some x0\n  | t + 1 => (iterate V ψ η loss x0 t).bind (advance V ψ (η t) (loss t))",
+      "exact_definition_UTF8_sha256": "c5f4a473a26961efb119e68482c517c3856332bfe21ff10932821ce1967cc6a2"
+    }
+  ],
+  "canaries": [
+    {
+      "declaration": "BanditRL.OnlinePrescientBregmanCanary.two_distinct_current_losses",
+      "status": "draft/exact-contract-review-pending"
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregmanCanary.boundary_outside_center_run",
+      "status": "draft/exact-contract-review-pending"
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregmanCanary.closed_strict_regularizer_missing_minimum",
+      "status": "draft/exact-contract-review-pending"
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregmanCanary.interior_extension_boundary_difference",
+      "status": "draft/exact-contract-review-pending"
+    }
+  ],
+  "required_open": [
+    "source-domain/interior hypothesis transport into actual produced run",
+    "same-run sharp fixed-step cumulative terminal including source main-text exercise",
+    "same-run variable-step cumulative terminal",
+    "all eight Chapter2 forwarded source containers",
+    "combined root/Tests/harness",
+    "reader/shared-registry/site/semantic-FINAL/native/delivery"
+  ],
+  "package_accepted": false,
+  "source_container_closed": false,
+  "chapter_proof_total": null,
+  "chapter_complete": false,
+  "whole_Goal_status": "ACTIVE"
+}

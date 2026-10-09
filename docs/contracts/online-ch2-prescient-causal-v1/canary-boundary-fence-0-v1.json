@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlinePrescientBregmanCanary.closed_strict_regularizer_missing_minimum",
+  "file": "Tests/OnlinePrescientBregmanCanary.lean",
+  "statement": "theorem closed_strict_regularizer_missing_minimum : let V : Set ℝ := Iic 0 let f : ℝ → EReal := fun z => (z : EReal) let ψ : ℝ → ℝ := Real.exp V.Nonempty ∧ IsClosed V ∧ Convex ℝ V ∧ (0 : ℝ) ∈ V ∧ SourceProper f ∧ (∀ z : ℝ, (SourceSubdifferential f z).Nonempty) ∧ SourceClosed (fun z => ((ψ z : ℝ) : EReal)) ∧ StrictConvexOn ℝ univ ψ ∧ (∀ z : ℝ, DifferentiableAt ℝ ψ z) ∧ (0 : ℝ) ∈ interior (univ : Set ℝ) ∧ (∀ z : ℝ, f z + ((divergence ψ z 0 : ℝ) : EReal) = ((Real.exp z - 1 : ℝ) : EReal)) ∧ (¬ ∃ p, p ∈ V ∧ IsMinOn (fun z => f z + ((divergence ψ z 0 : ℝ) : EReal)) V p) ∧ advance V ψ 1 f 0 = none ∧ (∀ k : ℕ, iterate V ψ (fun _ => 1) (fun _ => f) 0 (k + 1) = none)",
+  "statement_hash": "3da2c54f309f25fcb22564997fe86bac371dd7565c1031c5ffec09b08b55126b",
+  "source_assumptions": [],
+  "created_at": "2026-10-09T12:43:42+00:00"
+}

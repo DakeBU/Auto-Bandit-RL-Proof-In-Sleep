@@ -1,0 +1,13 @@
+import BanditRLProof.OnlineBregmanExtended
+import Mathlib.Analysis.Calculus.FDeriv.Congr
+import Mathlib.Data.Option.Basic
+#check Filter.EventuallyEq.fderiv_eq
+#check Filter.EventuallyEq.differentiableAt_iff
+#check mem_interior_iff_mem_nhds
+#check DifferentiableWithinAt.differentiableAt
+#check Option.bind_eq_some_iff
+#check Option.bind_eq_none_iff
+#check StrictConvexOn.eq_of_isMinOn
+#check BanditRL.OnlineBregman.divergence
+#check BanditRL.OnlineBregman.proximal_one_step_extended
+#check BanditRL.OnlineBregman.proximal_finitePart_minimizer_iff

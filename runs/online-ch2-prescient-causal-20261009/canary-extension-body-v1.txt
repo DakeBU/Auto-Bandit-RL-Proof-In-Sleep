@@ -1,0 +1,34 @@
+ := by
+  dsimp only
+  let X : Set ℝ := Ici 0
+  let ψ : ℝ → ℝ := fun z => z ^ 2 + z
+  let φ : ℝ → ℝ := fun z => z ^ 2 + |z|
+  have he : EqOn ψ φ X := by
+    intro z hz
+    change 0 ≤ z at hz
+    simp only [ψ, φ, abs_of_nonneg hz]
+  have hi : (1 : ℝ) ∈ interior X := by norm_num [X, interior_Ici]
+  have ht : (2 : ℝ) ∈ X := by norm_num [X]
+  have hd (z : ℝ) : HasDerivAt ψ (2 * z + 1) z := by
+    convert ((hasDerivAt_id z).pow 2).add (hasDerivAt_id z) using 1 <;>
+      dsimp [ψ, id] <;> ring
+  have hD (a b : ℝ) : divergence ψ a b = (a - b) ^ 2 := by
+    rw [divergence, fderiv_eq_deriv_mul, (hd b).deriv]
+    dsimp [ψ]
+    ring
+  have hn : ¬ DifferentiableAt ℝ φ 0 := by
+    intro h
+    apply not_differentiableAt_abs_zero
+    have hh := h.sub (((hasDerivAt_id (0 : ℝ)).pow 2).differentiableAt)
+    convert hh using 1
+    ext z
+    simp [φ]
+  have hb : divergence φ 2 0 = 6 := by
+    rw [divergence, fderiv_zero_of_not_differentiableAt hn]
+    norm_num [φ]
+  refine ⟨he, by norm_num [ψ, φ], hi, ht,
+    divergence_extension_eq X ψ φ he 2 1 ht hi, ?_, ?_, hb, hn⟩
+  · rw [hD]
+    norm_num
+  · rw [hD]
+    norm_num

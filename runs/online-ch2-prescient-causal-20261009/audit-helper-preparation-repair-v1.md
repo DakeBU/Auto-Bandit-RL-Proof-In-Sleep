@@ -1,0 +1,1 @@
+First generator tool chunk2726e7 exited1 before creating audit helper: Python3.8 Path.write_text has no newline keyword. Second generator uses exact UTF8 write_bytes. No source/statement/native effect; focused leaf v2 was already compiled. Original v1 helper remains unexecuted history.

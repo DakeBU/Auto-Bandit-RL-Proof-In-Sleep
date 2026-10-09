@@ -1,0 +1,52 @@
+{
+  "stage": "draft",
+  "targets": [
+    {
+      "declaration": "BanditRL.OnlinePrescientBregmanCanary.two_distinct_current_losses",
+      "exact_proposed_header": "theorem two_distinct_current_losses :\n    let V : Set ℝ := Icc (-1) 1\n    let ψ : ℝ → ℝ := fun z => z ^ 4 / 4 + z ^ 2 / 2\n    let f0 : ℝ → EReal := fun z => if z ∈ V then ((|z| : ℝ) : EReal) else ⊤\n    let f1 : ℝ → EReal := fun z => if z ∈ V then ((-5 * z / 8 : ℝ) : EReal) else ⊤\n    let loss : ℕ → ℝ → EReal := fun t => if t = 0 then f0 else f1\n    SourceProper f0 ∧ SourceProper f1 ∧\n      (∀ z ∈ V, (SourceSubdifferential f0 z).Nonempty) ∧\n      (∀ z ∈ V, (SourceSubdifferential f1 z).Nonempty) ∧\n      StrictConvexOn ℝ univ ψ ∧\n      ¬ DifferentiableAt ℝ (abs : ℝ → ℝ) 0 ∧\n      f0 2 = ⊤ ∧ f1 2 = ⊤ ∧\n      iterate V ψ (fun _ => 1) loss (1 / 2) 0 = some (1 / 2) ∧\n      iterate V ψ (fun _ => 1) loss (1 / 2) 1 = some 0 ∧\n      iterate V ψ (fun _ => 1) loss (1 / 2) 2 = some (1 / 2) ∧\n      (∀ (η' : ℕ → ℝ) (loss' : ℕ → ℝ → EReal),\n        η' 0 = 1 → η' 1 = 1 → loss' 0 = f0 → loss' 1 = f1 →\n        iterate V ψ η' loss' (1 / 2) 2 = some (1 / 2)) ∧\n      divergence ψ 0 (1 / 2) = 11 / 64 ∧\n      divergence ψ (1 / 2) 0 = 9 / 64 ∧\n      (∀ u ∈ V, ((f0 0).toReal - (f0 u).toReal) +\n        ((f1 (1 / 2)).toReal - (f1 u).toReal) ≤\n        divergence ψ u (1 / 2) - divergence ψ u (1 / 2) -\n          divergence ψ 0 (1 / 2) - divergence ψ (1 / 2) 0) ∧\n      (-1 / 2 : ℝ) ≤ -5 / 16",
+      "statement_hash": "f6ad13f4af679faec84aefc6346f2a4c1357ff3cc137ccb793782c6a5e4d9191",
+      "header_raw_sha256": "173b76076098d3a8a2175ddc1713fc4fcecadb9aac6508cfbbe3590967500d92",
+      "statement_hash_convention": "native normalized, raw UTF8 header SHA separately bound",
+      "file": "Tests/OnlinePrescientBregmanCanary.lean",
+      "context": "scalar real, all instances fixed; local let definitions included in the complete header"
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregmanCanary.boundary_outside_center_run",
+      "exact_proposed_header": "theorem boundary_outside_center_run :\n    let V : Set ℝ := Icc 0 1\n    let f : ℝ → EReal := fun z => if z ∈ V then (z : EReal) else ⊤\n    let ψ : ℝ → ℝ := fun z => z ^ 2 / 2\n    SourceProper f ∧\n      (∀ z ∈ V, (SourceSubdifferential f z).Nonempty) ∧\n      StrictConvexOn ℝ univ ψ ∧ f (-1) = ⊤ ∧ (-1 : ℝ) ∉ V ∧\n      iterate V ψ (fun _ => 1) (fun _ => f) (-1) 1 = some 0 ∧\n      divergence ψ 0 (-1) = 1 / 2 ∧\n      (∀ u ∈ V, -u ≤ divergence ψ u (-1) - divergence ψ u 0 - divergence ψ 0 (-1)) ∧\n      (-1 / 2 : ℝ) ≤ 1 / 2",
+      "statement_hash": "eeceb38004480d9dd5001ce7d6000e63f12df4053304a30ab0f19c65545096cb",
+      "header_raw_sha256": "d0dfc7500ddd6f1bae8630e832b1e095d1a6f92e2607776a924d03ae8d113c59",
+      "statement_hash_convention": "native normalized, raw UTF8 header SHA separately bound",
+      "file": "Tests/OnlinePrescientBregmanCanary.lean",
+      "context": "scalar real, all instances fixed; local let definitions included in the complete header"
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregmanCanary.closed_strict_regularizer_missing_minimum",
+      "exact_proposed_header": "theorem closed_strict_regularizer_missing_minimum :\n    let V : Set ℝ := Iic 0\n    let f : ℝ → EReal := fun z => (z : EReal)\n    let ψ : ℝ → ℝ := Real.exp\n    V.Nonempty ∧ IsClosed V ∧ Convex ℝ V ∧ (0 : ℝ) ∈ V ∧\n      SourceProper f ∧\n      (∀ z : ℝ, (SourceSubdifferential f z).Nonempty) ∧\n      SourceClosed (fun z => ((ψ z : ℝ) : EReal)) ∧\n      StrictConvexOn ℝ univ ψ ∧\n      (∀ z : ℝ, DifferentiableAt ℝ ψ z) ∧\n      (0 : ℝ) ∈ interior (univ : Set ℝ) ∧\n      (∀ z : ℝ, f z + ((divergence ψ z 0 : ℝ) : EReal) = ((Real.exp z - 1 : ℝ) : EReal)) ∧\n      (¬ ∃ p, p ∈ V ∧ IsMinOn (fun z => f z + ((divergence ψ z 0 : ℝ) : EReal)) V p) ∧\n      advance V ψ 1 f 0 = none ∧\n      (∀ k : ℕ, iterate V ψ (fun _ => 1) (fun _ => f) 0 (k + 1) = none)",
+      "statement_hash": "3da2c54f309f25fcb22564997fe86bac371dd7565c1031c5ffec09b08b55126b",
+      "header_raw_sha256": "95c624944b64cd81b2c71d4f878de3402f7cc8172cc7192472de39f6432aa6ee",
+      "statement_hash_convention": "native normalized, raw UTF8 header SHA separately bound",
+      "file": "Tests/OnlinePrescientBregmanCanary.lean",
+      "context": "scalar real, all instances fixed; local let definitions included in the complete header"
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregmanCanary.interior_extension_boundary_difference",
+      "exact_proposed_header": "theorem interior_extension_boundary_difference :\n    let X : Set ℝ := Ici 0\n    let ψ : ℝ → ℝ := fun z => z ^ 2 + z\n    let φ : ℝ → ℝ := fun z => z ^ 2 + |z|\n    EqOn ψ φ X ∧ ψ (-1) ≠ φ (-1) ∧ (1 : ℝ) ∈ interior X ∧ (2 : ℝ) ∈ X ∧\n      divergence ψ 2 1 = divergence φ 2 1 ∧ divergence ψ 2 1 = 1 ∧\n      divergence ψ 2 0 = 4 ∧ divergence φ 2 0 = 6 ∧ ¬ DifferentiableAt ℝ φ 0",
+      "statement_hash": "5e1981ce7d3fb7b9408c2854bee2ac7dd543c2076edb0f89fd5ee8aade391a27",
+      "header_raw_sha256": "5ae6c60b04b6bd86276aec0b910950f060754ea43aff96e5bbffc7c3a8069691",
+      "statement_hash_convention": "native normalized, raw UTF8 header SHA separately bound",
+      "file": "Tests/OnlinePrescientBregmanCanary.lean",
+      "context": "scalar real, all instances fixed; local let definitions included in the complete header"
+    }
+  ],
+  "neutral_sha256": "6bcc5c1403f05c2c7d8238b64af0dbe4b6c92a446aca7c174fc68d8dffa9a82e",
+  "blind_md_sha256": "3868c6cb6d9eafdbacb4a1463dd96102d4417db16c92c933d0d9d51c37df8a8c",
+  "blind_json_sha256": "f848128044a08a353be65959f7aa57febeb6554521069747d8d35521716691ca",
+  "test_body_absent": true,
+  "neutral_context_supplement_sha256": "299d90b838ca5379c4fe498f8ea18713c5f91589f33d027560bab1e378324787",
+  "blind_context_resolution_md_sha256": "0fde32c076362fec63c2f03ebadc697df3ab9c7490847c4f0ea55ff84bf090dc",
+  "blind_context_resolution_json_sha256": "0677c2779a6736f3c2e4a1bc9a9ad918be70b1cadf599e832ba7907502f0cb25",
+  "proof_plan": "Only local have/let helpers, no new named production or Test definitions. Compute actual Choice-selected states by genuine attained minima plus uniqueness; use current public specifications/conditional completion/successor extraction/prefix and same-produced-transition one-step. Both final numeric run bounds retain that actual one-step proof through equality transport. Exponential example proves source regularizer closedness/strictness/global differentiability, proper supported affine loss, actual no feasible min and absorbing none. Extension example invokes new locality for interior equality and proves unequal boundary total-fderiv values; no source boundary derivative validity or selector invariance inferred.",
+  "source_container_closed": false,
+  "chapter_complete": false,
+  "whole_Goal_status": "ACTIVE"
+}

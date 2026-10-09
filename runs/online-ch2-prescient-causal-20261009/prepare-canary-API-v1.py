@@ -1,0 +1,21 @@
+from common import *
+fixed()
+write(RUN / 'canary-API-v1.lean', '''import BanditRLProof.OnlinePrescientBregman
+import Tests.OnlineBregmanExtendedCanary
+import Mathlib.Analysis.Convex.SpecificFunctions.Basic
+#check Real.strictConvexOn_exp
+#check Real.hasDerivAt_exp
+#check Real.exp_lt_exp
+#check Real.continuous_exp
+#check isClosed_le
+#check interior_Ici
+#check DifferentiableAt.sub
+#check fderiv_zero_of_not_differentiableAt
+#check not_differentiableAt_abs_zero
+#check HasDerivAt.fderiv
+#check BanditRL.OnlineBregmanExtendedCanary.restricted_absolute_nonquadratic
+#check BanditRL.OnlineBregmanExtendedCanary.restricted_linear_outside_center
+''')
+_, out = capture('canary-API-v1', 'lake', 'env', 'lean', RUN / 'canary-API-v1.lean', required=False)
+print(out, flush=True)
+fixed()

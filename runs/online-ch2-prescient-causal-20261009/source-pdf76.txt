@@ -1,0 +1,56 @@
+64Online Mirror Descent
+We will call the functionψassociated toB ψ thedistance generating function.
+From the definition, we see that the Bregman divergence is always non-negative for
+x,y∈intX, from the convexity ofψ. However, something stronger holds. By the strict
+convexity ofψ, for a fixed pointy∈intXwe have thatψ(x)≥ψ(y) +⟨∇ψ(y),x−
+y⟩,∀x∈ X, with equality only fory=x. Hence, the strict convexity allows us to use
+the Bregman divergence as a similarity measure betweenxandy. Moreover, this similarity
+measurechangeswith the reference pointy. This also implies that, as you can see from the
+definition, the Bregman divergence is not symmetric.
+Let me give you some more intuition on the concept of the Bregman divergence. Consider
+the case thatψis twice differentiable in an open ballBaroundyandx∈ B. So, by Taylor’s
+theorem, there exists0≤α≤1such that
+Bψ(x;y) =ψ(x)−ψ(y)− ∇ψ(y) ⊤(x−y) = 1
+2(x−y) ⊤∇2ψ(z)(x−y),
+wherez=αx+ (1−α)y. Hence, we are using asquared local normthat depends on the
+Hessian ofψ.Different areas of the space will have a different value of the Hessian, and so
+the Bregman will behave differently. We will use this exact idea in the local norm analyses
+of OMD (Section 6.5) and Follow-the-Regularized-Leader (FTRL) (Section 7.4).
+We can also lower bound the Bregman divergence if the functionψis strongly convex. In
+particular, ifψisλ-strongly convex with respect to a norm∥ · ∥inintX, then we have
+Bψ(x;y)≥ λ
+2 ∥x−y∥ 2,∀x,y∈intX.(6.4)
+Example 6.5Ifψ(x) = 1
+2 ∥x∥2
+2, thenB ψ(x;y) = 1
+2 ∥x∥2
+2 − 1
+2 ∥y∥2
+2 − ⟨y,x−y⟩=
+1
+2 ∥x−y∥ 2
+2.
+Example 6.6LetX=R d
+≥0 andψ(x) = Pd
+i=1 xi lnx i, the negative Shannon entropy.
+Then, for allx∈ Xandy∈intXwe have
+Bψ(x;y) =
+dX
+i=1
+(xi lnx i −yi lny i −(ln(yi)+1)(x i −yi)) =
+dX
+i=1
+
+xi ln xi
+yi
+−x i +y i
+
+,
+where we define0 ln 0 := 0. This is called thegeneralized Kullback–Leibler divergence,
+where “generalized” is becausexandydo not have to be discrete probability distributions.
+We also have the following immediate lemma that links the Bregman divergences between
+3 points.
+Lemma 6.7(Chen and Teboulle, 1993)LetB ψ be the Bregman divergence with respect to
+ψ:X →R. Then, for any three pointsx,y∈intXandz∈ X, the following identity
+holds
+Bψ(z;x) +B ψ(x;y)−B ψ(z;y) =⟨∇ψ(y)− ∇ψ(x),z−x⟩.
