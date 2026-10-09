@@ -1,0 +1,21 @@
+{
+  "actual_failed_receipt_sha256": "903c80294b4bcc7ffb0811b27b985277444fde71b80cd4e8b7c2042dc4e234c8",
+  "actual_finding": {
+    "ok": false,
+    "declaration": "BanditRL.OnlinePrescientLinear.advance_sharp_bound",
+    "expected_statement_hash": "36377be10bfd8918e648f9f96f17afc70966d41a608a1ab156c4024346676aaa",
+    "actual_statement_hash": "36377be10bfd8918e648f9f96f17afc70966d41a608a1ab156c4024346676aaa",
+    "source_assumptions_preserved": false,
+    "findings": [
+      {
+        "kind": "source_assumption_removed",
+        "assumption": "Affine-loss complete-Hilbert prescient foundation only; eta>0, comparator in actual nonempty closed convex V; full source container open"
+      }
+    ]
+  },
+  "classification": "native literal-substring usage mismatch; not mathematical/source assumption removal",
+  "implementation": "tools/abrl_lifecycle.py safe_verify: normalized source_assumption must occur in declaration HEADER",
+  "old_fence_retained": true,
+  "semantic_contract_unchanged": true,
+  "repair": "New fenceversion2 guards the actual header eta positivity/comparator feasibility/Domain tokens. Complete scoped class context remains independently frozen and reviewed, outside this header-only guard."
+}

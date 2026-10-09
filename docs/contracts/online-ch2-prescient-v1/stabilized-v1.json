@@ -1,0 +1,55 @@
+{
+  "stage": "stabilized",
+  "source_contract_review_sha256": "ccc4b3e84f5c1bedf78aa5255d0ea4a68b7815f7009c94b79c42b589718893c7",
+  "source_card_sha256": "ae7f5988e3d31a54800d92c6ef445070d29b3068e733e52a41cb1893e09399db",
+  "draft_contract_sha256": "f7ca8235d23c7ecc182cf4b1155dc13cc3742783288f97c5d19681814f7fa4bb",
+  "context_sha256": "1366550e330945a25ca6791b51107775992bdd9f77c8a0861d117ac059f7136c",
+  "targets": [
+    {
+      "declaration": "BanditRL.OnlinePrescientLinear.advance_sharp_bound",
+      "exact_proposed_header": "theorem advance_sharp_bound (V : Domain E) (η : ℝ) (hη : 0 < η) (g x u : E)\n    (hu : u ∈ V.carrier) :\n    inner ℝ g (advance V η g x - u) ≤\n      (‖x - u‖ ^ 2 - ‖advance V η g x - u‖ ^ 2 - ‖advance V η g x - x‖ ^ 2) /\n        (2 * η)",
+      "statement_hash": "36377be10bfd8918e648f9f96f17afc70966d41a608a1ab156c4024346676aaa"
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientLinear.advance_proximal_minimizer",
+      "exact_proposed_header": "theorem advance_proximal_minimizer (V : Domain E) (η : ℝ) (hη : 0 < η) (g x : E)\n    (b : ℝ) :\n    advance V η g x ∈ V.carrier ∧ ∀ u ∈ V.carrier,\n      inner ℝ g (advance V η g x) + b + ‖advance V η g x - x‖ ^ 2 / (2 * η) ≤\n        inner ℝ g u + b + ‖u - x‖ ^ 2 / (2 * η)",
+      "statement_hash": "ab99d45f76d7c8d6c7af9a7638e99b5e33392b454bafb49afa451de10541c7b9"
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientLinear.prediction_mem",
+      "exact_proposed_header": "theorem prediction_mem (V : Domain E) (η : ℝ) (g : ℕ → E) (x0 : E) (t : ℕ) :\n    prediction V η g x0 t ∈ V.carrier",
+      "statement_hash": "bca7de6a119a9cdb42127b8f2c0655e19230445f7b4dde78c97418a193df36d4"
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientLinear.prediction_prefix",
+      "exact_proposed_header": "theorem prediction_prefix (V : Domain E) (η : ℝ) (g g' : ℕ → E) (x0 : E) (t : ℕ)\n    (h : ∀ s ≤ t, g s = g' s) :\n    prediction V η g x0 t = prediction V η g' x0 t",
+      "statement_hash": "bb835a72bde360e2f8738aea2715d7e538e867b51a44ad67c8f68eb5ae0c2361"
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientLinear.regret_eq_loss_difference",
+      "exact_proposed_header": "theorem regret_eq_loss_difference (V : Domain E) (η : ℝ) (g : ℕ → E) (b : ℕ → ℝ)\n    (x0 u : E) (T : ℕ) :\n    regret V η g x0 u T =\n      ∑ t ∈ range T, ((inner ℝ (g t) (prediction V η g x0 t) + b t) -\n        (inner ℝ (g t) u + b t))",
+      "statement_hash": "2aabd2bb612ba41613aa434a0eb5ce5520261b070cdeea74a384e071e5eb7935"
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientLinear.regret_sharp_bound",
+      "exact_proposed_header": "theorem regret_sharp_bound (V : Domain E) (η : ℝ) (hη : 0 < η) (g : ℕ → E)\n    (x0 u : E) (T : ℕ) (hu : u ∈ V.carrier) :\n    regret V η g x0 u T ≤ ‖x0 - u‖ ^ 2 / (2 * η) -\n      ‖iterate V η g x0 T - u‖ ^ 2 / (2 * η) -\n      (∑ t ∈ range T, ‖prediction V η g x0 t - iterate V η g x0 t‖ ^ 2) / (2 * η)",
+      "statement_hash": "651fe73798126fc35d1bd1183fa4fb5b7d5be16863e628b8feb7be9868ab3c41"
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientLinear.regret_source_bound",
+      "exact_proposed_header": "theorem regret_source_bound (V : Domain E) (η : ℝ) (hη : 0 < η) (g : ℕ → E)\n    (x0 u : E) (T : ℕ) (hu : u ∈ V.carrier) :\n    regret V η g x0 u T ≤ ‖x0 - u‖ ^ 2 / (2 * η) -\n      (∑ t ∈ range T, ‖prediction V η g x0 t - iterate V η g x0 t‖ ^ 2) / (2 * η)",
+      "statement_hash": "8b0a134d4522c356f391887d5b6c7c1cceee54f72015f3311f92badc5eb9a451"
+    }
+  ],
+  "definitions": "Four exact context definitions advance/iterate/prediction/regret fixed in neutral-types-v1.txt",
+  "initial_lower_leaf": {
+    "declaration": "BanditRL.OnlinePrescientLinear.advance_sharp_bound",
+    "exact_proposed_header": "theorem advance_sharp_bound (V : Domain E) (η : ℝ) (hη : 0 < η) (g x u : E)\n    (hu : u ∈ V.carrier) :\n    inner ℝ g (advance V η g x - u) ≤\n      (‖x - u‖ ^ 2 - ‖advance V η g x - u‖ ^ 2 - ‖advance V η g x - x‖ ^ 2) /\n        (2 * η)",
+    "statement_hash": "36377be10bfd8918e648f9f96f17afc70966d41a608a1ab156c4024346676aaa"
+  },
+  "allowed_production_file": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlinePrescientLinear.lean",
+  "edit_boundary": "Initially first theorem body plus exact4 definitions only; subsequent lowering requires compiled frozen first terminal. No roots/Tests/readers/old baseline edits.",
+  "source_container_closed": false,
+  "chapter_complete": false,
+  "whole_Goal_status": "ACTIVE"
+}

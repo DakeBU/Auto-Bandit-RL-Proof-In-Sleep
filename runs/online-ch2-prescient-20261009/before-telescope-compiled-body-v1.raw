@@ -1,0 +1,118 @@
+import BanditRLProof.OnlineGradientDescent
+
+/-!
+# Euclidean affine-loss prescient foundation
+
+Orabona v10, Chapter 2's prescient observation (printed 14), read with
+Algorithm 15.8 and Theorem 15.30 (printed 265–266). This is the affine-loss,
+quadratic Euclidean specialization, extended to complete real Hilbert spaces.
+The current vector is received before prediction; Lean prediction `t` is state
+`t + 1`. The ambient initial center may lie outside the feasible set.
+The general convex/Bregman and variable-step source statements remain open.
+-/
+
+noncomputable section
+open Set Finset
+open scoped InnerProductSpace
+namespace BanditRL.OnlinePrescientLinear
+open BanditRL.OnlineGradientDescent
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]
+
+def advance (V : Domain E) (η : ℝ) (g x : E) : E :=
+  project V (x - η • g)
+
+def iterate (V : Domain E) (η : ℝ) (g : ℕ → E) (x0 : E) : ℕ → E
+  | 0 => x0
+  | t + 1 => advance V η (g t) (iterate V η g x0 t)
+
+def prediction (V : Domain E) (η : ℝ) (g : ℕ → E) (x0 : E) (t : ℕ) : E :=
+  iterate V η g x0 (t + 1)
+
+def regret (V : Domain E) (η : ℝ) (g : ℕ → E) (x0 u : E) (T : ℕ) : ℝ :=
+  ∑ t ∈ range T, inner ℝ (g t) (prediction V η g x0 t - u)
+
+/-- The actual projection supplies a negative movement-square term. -/
+theorem advance_sharp_bound (V : Domain E) (η : ℝ) (hη : 0 < η) (g x u : E)
+    (hu : u ∈ V.carrier) :
+    inner ℝ g (advance V η g x - u) ≤
+      (‖x - u‖ ^ 2 - ‖advance V η g x - u‖ ^ 2 - ‖advance V η g x - x‖ ^ 2) /
+        (2 * η) := by
+  let p := advance V η g x
+  have hp : p ∈ V.carrier := (project_spec V (x - η • g)).1
+  have hv := (norm_eq_iInf_iff_real_inner_le_zero V.convex hp).mp
+    (project_spec V (x - η • g)).2 u hu
+  have hvar : -inner ℝ (x - p) (p - u) + η * inner ℝ g (p - u) ≤ 0 := by
+    change inner ℝ (x - η • g - p) (u - p) ≤ 0 at hv
+    rw [show x - η • g - p = (x - p) - η • g by abel,
+      show u - p = -(p - u) by abel] at hv
+    simp only [inner_sub_left, inner_neg_right, inner_smul_left] at hv
+    norm_num at hv
+    rw [inner_sub_left]
+    nlinarith only [hv]
+  have he : ‖x - u‖ ^ 2 = ‖x - p‖ ^ 2 +
+      2 * inner ℝ (x - p) (p - u) + ‖p - u‖ ^ 2 := by
+    rw [show x - u = (x - p) - (u - p) by abel, norm_sub_sq_real,
+      show u - p = -(p - u) by abel, inner_neg_right, norm_neg]
+    ring
+  change inner ℝ g (p - u) ≤
+    (‖x - u‖ ^ 2 - ‖p - u‖ ^ 2 - ‖p - x‖ ^ 2) / (2 * η)
+  apply (le_div_iff₀ (by positivity : 0 < 2 * η)).mpr
+  rw [norm_sub_rev p x]
+  nlinarith only [hvar, he]
+
+/-- The selected projection really minimizes the known-current proximal objective. -/
+theorem advance_proximal_minimizer (V : Domain E) (η : ℝ) (hη : 0 < η) (g x : E)
+    (b : ℝ) :
+    advance V η g x ∈ V.carrier ∧ ∀ u ∈ V.carrier,
+      inner ℝ g (advance V η g x) + b + ‖advance V η g x - x‖ ^ 2 / (2 * η) ≤
+        inner ℝ g u + b + ‖u - x‖ ^ 2 / (2 * η) := by
+  refine ⟨(project_spec V (x - η • g)).1, ?_⟩
+  intro u hu
+  have hs := advance_sharp_bound V η hη g x u hu
+  have hb : inner ℝ g (advance V η g x - u) +
+      ‖advance V η g x - x‖ ^ 2 / (2 * η) ≤ ‖u - x‖ ^ 2 / (2 * η) := by
+    calc
+      _ ≤ (‖x - u‖ ^ 2 - ‖advance V η g x - u‖ ^ 2 -
+          ‖advance V η g x - x‖ ^ 2) / (2 * η) +
+          ‖advance V η g x - x‖ ^ 2 / (2 * η) := by linarith only [hs]
+      _ = ‖u - x‖ ^ 2 / (2 * η) - ‖advance V η g x - u‖ ^ 2 / (2 * η) := by
+        rw [norm_sub_rev x u]
+        ring
+      _ ≤ ‖u - x‖ ^ 2 / (2 * η) :=
+        sub_le_self _ (div_nonneg (sq_nonneg _) (by positivity))
+  rw [inner_sub_right] at hb
+  linarith only [hb]
+
+/-- Every played prediction is feasible, including when the initial center is outside. -/
+theorem prediction_mem (V : Domain E) (η : ℝ) (g : ℕ → E) (x0 : E) (t : ℕ) :
+    prediction V η g x0 t ∈ V.carrier := by
+  exact (project_spec V (iterate V η g x0 t - η • g t)).1
+
+/-- Prediction uses the current vector and earlier vectors; future vectors are irrelevant. -/
+theorem prediction_prefix (V : Domain E) (η : ℝ) (g g' : ℕ → E) (x0 : E) (t : ℕ)
+    (h : ∀ s ≤ t, g s = g' s) :
+    prediction V η g x0 t = prediction V η g' x0 t := by
+  have hi : ∀ n, (∀ s < n, g s = g' s) →
+      iterate V η g x0 n = iterate V η g' x0 n := by
+    intro n
+    induction n with
+    | zero => intro hn; rfl
+    | succ n ih =>
+      intro hn
+      rw [iterate, iterate, hn n (Nat.lt_succ_self n),
+        ih (fun s hs => hn s (Nat.lt_succ_of_lt hs))]
+  exact hi (t + 1) (fun s hs => h s (Nat.le_of_lt_succ hs))
+
+/-- Arbitrary affine offsets cancel on the same generated played predictions. -/
+theorem regret_eq_loss_difference (V : Domain E) (η : ℝ) (g : ℕ → E) (b : ℕ → ℝ)
+    (x0 u : E) (T : ℕ) :
+    regret V η g x0 u T =
+      ∑ t ∈ range T, ((inner ℝ (g t) (prediction V η g x0 t) + b t) -
+        (inner ℝ (g t) u + b t)) := by
+  unfold regret
+  apply Finset.sum_congr rfl
+  intro t ht
+  rw [inner_sub_right]
+  ring
+
+end BanditRL.OnlinePrescientLinear

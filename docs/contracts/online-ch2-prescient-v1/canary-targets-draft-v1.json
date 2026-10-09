@@ -1,0 +1,49 @@
+{
+  "stage": "draft type-only before distinct source/CONTRACT review",
+  "targets": [
+    {
+      "declaration": "Tests.OnlinePrescientLinear.active_projection_values",
+      "exact_proposed_header": "theorem active_projection_values :\n    prediction interval (1 / 2) signals 1 0 = -1 ∧\n    prediction interval (1 / 2) signals 1 1 = -(1 / 2) ∧\n    regret interval (1 / 2) signals 1 0 2 = -(11 / 2) ∧\n    (∑ t ∈ range 2,\n      ‖prediction interval (1 / 2) signals 1 t - iterate interval (1 / 2) signals 1 t‖ ^ 2) =\n        17 / 4 ∧\n    ‖iterate interval (1 / 2) signals 1 2 - 0‖ ^ 2 = 1 / 4 ∧\n    ‖(1 : ℝ) - 0‖ ^ 2 / (2 * (1 / 2)) -\n      ‖iterate interval (1 / 2) signals 1 2 - 0‖ ^ 2 / (2 * (1 / 2)) -\n      (∑ t ∈ range 2,\n        ‖prediction interval (1 / 2) signals 1 t - iterate interval (1 / 2) signals 1 t‖ ^ 2) /\n          (2 * (1 / 2)) = -(7 / 2)",
+      "statement_hash": "68a39e21fa14a19ac08f14ce7e4c77733ebbf78a5d63ba9e0e5d37c4507f4b5b"
+    },
+    {
+      "declaration": "Tests.OnlinePrescientLinear.constrained_gradient_sign_counterexample",
+      "exact_proposed_header": "theorem constrained_gradient_sign_counterexample :\n    (∀ (t : ℕ) (x : ℝ),\n      gradient (fun w : ℝ => inner ℝ (signals t) w) x = signals t) ∧\n    (‖(1 : ℝ) - 0‖ ^ 2 / (2 * (1 / 2)) -\n      ‖iterate interval (1 / 2) signals 1 2 - 0‖ ^ 2 / (2 * (1 / 2)) -\n      (1 / 2) / 2 * (∑ t ∈ range 2, ‖signals t‖ ^ 2)) = -(17 / 2) ∧\n    ¬ (regret interval (1 / 2) signals 1 0 2 ≤\n      ‖(1 : ℝ) - 0‖ ^ 2 / (2 * (1 / 2)) -\n        ‖iterate interval (1 / 2) signals 1 2 - 0‖ ^ 2 / (2 * (1 / 2)) -\n        (1 / 2) / 2 * (∑ t ∈ range 2, ‖signals t‖ ^ 2))",
+      "statement_hash": "7b77edc94b2ce301b34f279b58fa4e614331e234fa61dedbc46ee3cbeeca6dec"
+    },
+    {
+      "declaration": "Tests.OnlinePrescientLinear.unbounded_exact_identity",
+      "exact_proposed_header": "theorem unbounded_exact_identity :\n    prediction whole (1 / 2) signals 1 0 = -2 ∧\n    prediction whole (1 / 2) signals 1 1 = -(3 / 2) ∧\n    regret whole (1 / 2) signals 1 0 2 = -(21 / 2) ∧\n    regret whole (1 / 2) signals 1 0 2 =\n      ‖(1 : ℝ) - 0‖ ^ 2 / (2 * (1 / 2)) -\n        ‖iterate whole (1 / 2) signals 1 2 - 0‖ ^ 2 / (2 * (1 / 2)) -\n        (1 / 2) / 2 * (∑ t ∈ range 2, ‖signals t‖ ^ 2)",
+      "statement_hash": "716992ac73d9886aa734dbcee8210a06fba3e8dbb3551d2064708fde85985082"
+    },
+    {
+      "declaration": "Tests.OnlinePrescientLinear.current_and_future_information",
+      "exact_proposed_header": "theorem current_and_future_information :\n    prediction interval (1 / 2) signals 1 0 ≠\n      prediction interval (1 / 2) (fun _ => 0) 1 0 ∧\n    ∀ h : ℕ → ℝ, h 0 = 6 → prediction interval (1 / 2) h 1 0 = -1",
+      "statement_hash": "348f220a8816cdab5967cc0d5b962fc00e6132394101b882e6673854a8c22b51"
+    },
+    {
+      "declaration": "Tests.OnlinePrescientLinear.outside_initial_center_and_empty_horizon",
+      "exact_proposed_header": "theorem outside_initial_center_and_empty_horizon :\n    (3 : ℝ) ∉ interval.carrier ∧\n    prediction interval 1 (fun _ => 0) 3 0 = 1 ∧\n    ‖prediction interval 1 (fun _ => 0) 3 0 - iterate interval 1 (fun _ => 0) 3 0‖ ^ 2 = 4 ∧\n    regret interval 1 (fun _ => 0) 3 0 0 = 0 ∧\n    ∀ u ∈ interval.carrier,\n      regret interval 1 (fun _ => 0) 3 u 0 ≤ ‖(3 : ℝ) - u‖ ^ 2 / (2 * 1) -\n        ‖iterate interval 1 (fun _ => 0) 3 0 - u‖ ^ 2 / (2 * 1) -\n        (∑ t ∈ range 0,\n          ‖prediction interval 1 (fun _ => 0) 3 t - iterate interval 1 (fun _ => 0) 3 t‖ ^ 2) /\n            (2 * 1)",
+      "statement_hash": "c59ff33bd164586be9ca2edad8f22fd0ecc3dc31c24df3e867e4f466d1d6fb7f"
+    }
+  ],
+  "full_context_path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-prescient-20261009/neutral-canary-types-v1.txt",
+  "full_context_sha256": "848183b6b787840991a00a029d3688f5d18394cab848436ed3d36b33e40aaef0",
+  "imported_four_definitions_path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-prescient-20261009/neutral-types-v1.txt",
+  "imported_four_definitions_sha256": "1366550e330945a25ca6791b51107775992bdd9f77c8a0861d117ac059f7136c",
+  "source_card_sha256": "ae7f5988e3d31a54800d92c6ef445070d29b3068e733e52a41cb1893e09399db",
+  "production_contract_sha256": "f25952545535557d703732359b852b3a03fb21659dc46f7c4a4d070d243a53f3",
+  "distinct_blind_receipt_sha256": "1cf2084a048c2b6bf2087b58e70e58c3d4d36d3de3d0b092a39cf83cb0c9ade2",
+  "objects": "Five derived public Tests probes, not five printed results. Scalar actual Domain[-1,1] and unbounded Domain=R; fixed source-affine losses with vector6 at round0 and-1 thereafter; actual gradient identity from existing gradient_linear. Four production definitions reused exactly.",
+  "quantifiers": "Closed concrete two-round numerical tests plus all-round/all-point actual affine-gradient identity, forall arbitrary future h with fixed current h0, and forall feasible comparator at horizon0. No supplied projection/regret certificates.",
+  "assumptions": "Eta1/2 or1 positive. Comparator0 feasible. Initialcenter1 for two-round tests, explicitcenter3 outsideV for initialization/empty-horizon test. Unbounded wholeR is nonempty closed convex. Actual rangeT includes played prediction state(t+1), not priorstate.",
+  "conclusion": "Active projection values/strict movement bound; formal counterexample to naive constrained negative ordinary-gradient-square substitution; unconstrained exact identity; current dependence with future exclusion; outsideinitial feasible projection plus T0 sharp API.",
+  "normalization": "Constrained states1,-1,-1/2; regret-11/2; movement17/4; terminal1/4; correctsharpRHS-7/2; falsegradientRHS-17/2. Unconstrained states1,-2,-3/2; regret/energy identity-21/2. Emptyhorizon has no paid first prediction or movement despite independentfirstprediction being1.",
+  "information": "Prediction0 receives currentg0; changing currentvector changes it, all later vectors arbitrary. Core forall-time inclusive prefix separately frozen. This is not ordinary strict-past online algorithm.",
+  "boundary": "Derived operational probes for reviewed affine/Euclidean foundation. General full prescient source container/convex/Bregman/variable eta remains required/open. Naive gradient sign counterexample is NOT an author-endorsed correction or claim that the qualitative source remark is false. Initialcenter outsideV matches X=E source requirement. No package/chapter/wholeGoal completion.",
+  "owning_test_file": "E:/ABRL/worktrees/research-online-book/Tests/OnlinePrescientLinearCanary.lean",
+  "allowed_future_scope": "After separate review/version freeze only this new test file with exact interval/whole/signals definitions and5frozen headers/necessary explicit local projection arithmetic helpers. Roots/readers/other Tests/globalstate remain forbidden pending exact publication plans.",
+  "proof_status": "No canary theorem body written/compiled. Production remaining6 proofs under lower work, not BODY/package accepted.",
+  "chapter_complete": false,
+  "whole_Goal_status": "ACTIVE"
+}

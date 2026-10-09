@@ -1,0 +1,11 @@
+# Read-only next-source readiness, not another proving package
+
+Current affine Euclidean foundation is still undergoing combined/site/FINAL/delivery gates. No new production target or Chapter15 work is opened here.
+
+Re-read exact PDF277/278: Algorithm15.8 first receives current extended-real loss, then selects a minimizer of loss+Bregman/eta, then pays loss. Theorem15.30 assumes generated points in intX, losses subdifferentiable onV and positive decreasing eta. Its variable bound uses max over state indices0..T-1 and eta_T, not a diameter or maximum includingstateT. Its constant-step statement retains negative Bregman movement and is maintext required even though its proof is left as an exercise.
+
+Next contract must separately enumerate actual Bregman definition/three-point identity/nonnegativity; current-loss minimizer-to-one-step loss comparison; actual prescient recurrence/inclusiveprefix and all-step feasible/interior validity; exact weighted telescope with lastplayedeta and maxindex; fixedstep branch and source boundary. The present affine module proves none of those general branches by itself. Do not equate the current projection-gradient formula to a nonlinear proximal minimizer.
+
+Attainability audit needed before claiming an unconditional general producer: closed strictly convexpsi on an unbounded set is not automatically coercive after adding an arbitrary affine loss. For psi(x)=exp(x), eta1, center0 and loss2x, the proximal objective algebraically becomes exp(x)+x-1 and appears unbounded below asx tendsminusinfinity. This is a diagnostic candidate only, NOT a compiled obstruction, authorerratum, source-theorem refutation or accepted repair. The source theorem conditions on actual generated interior points; a valid-run theorem and an unconditional always-defined algorithm are different contracts. Re-read exact Theorem2.8/sumrule assumptions and compatible mathlib extrema APIs before choosing the next bounded leaf. A conditional minimizer specification cannot be relabelled as unconditional existence, and no supplied one-step regret oracle may close the target.
+
+All full general source obligations stay REQUIRED/OPEN. WholeGoalACTIVE; Chapter2 incomplete; no alternative source version, model escalation, new perBook project or competing chapter writing.

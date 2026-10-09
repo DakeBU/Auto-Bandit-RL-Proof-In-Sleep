@@ -1,0 +1,34 @@
+{
+  "targets": [
+    {
+      "declaration": "Tests.OnlinePrescientLinear.active_projection_values",
+      "exact_proposed_header": "theorem active_projection_values :\n    prediction interval (1 / 2) signals 1 0 = -1 ∧\n    prediction interval (1 / 2) signals 1 1 = -(1 / 2) ∧\n    regret interval (1 / 2) signals 1 0 2 = -(11 / 2) ∧\n    (∑ t ∈ range 2,\n      ‖prediction interval (1 / 2) signals 1 t - iterate interval (1 / 2) signals 1 t‖ ^ 2) =\n        17 / 4 ∧\n    ‖iterate interval (1 / 2) signals 1 2 - 0‖ ^ 2 = 1 / 4 ∧\n    ‖(1 : ℝ) - 0‖ ^ 2 / (2 * (1 / 2)) -\n      ‖iterate interval (1 / 2) signals 1 2 - 0‖ ^ 2 / (2 * (1 / 2)) -\n      (∑ t ∈ range 2,\n        ‖prediction interval (1 / 2) signals 1 t - iterate interval (1 / 2) signals 1 t‖ ^ 2) /\n          (2 * (1 / 2)) = -(7 / 2)",
+      "statement_hash": "68a39e21fa14a19ac08f14ce7e4c77733ebbf78a5d63ba9e0e5d37c4507f4b5b"
+    },
+    {
+      "declaration": "Tests.OnlinePrescientLinear.constrained_gradient_sign_counterexample",
+      "exact_proposed_header": "theorem constrained_gradient_sign_counterexample :\n    (∀ (t : ℕ) (x : ℝ),\n      gradient (fun w : ℝ => inner ℝ (signals t) w) x = signals t) ∧\n    (‖(1 : ℝ) - 0‖ ^ 2 / (2 * (1 / 2)) -\n      ‖iterate interval (1 / 2) signals 1 2 - 0‖ ^ 2 / (2 * (1 / 2)) -\n      (1 / 2) / 2 * (∑ t ∈ range 2, ‖signals t‖ ^ 2)) = -(17 / 2) ∧\n    ¬ (regret interval (1 / 2) signals 1 0 2 ≤\n      ‖(1 : ℝ) - 0‖ ^ 2 / (2 * (1 / 2)) -\n        ‖iterate interval (1 / 2) signals 1 2 - 0‖ ^ 2 / (2 * (1 / 2)) -\n        (1 / 2) / 2 * (∑ t ∈ range 2, ‖signals t‖ ^ 2))",
+      "statement_hash": "7b77edc94b2ce301b34f279b58fa4e614331e234fa61dedbc46ee3cbeeca6dec"
+    },
+    {
+      "declaration": "Tests.OnlinePrescientLinear.unbounded_exact_identity",
+      "exact_proposed_header": "theorem unbounded_exact_identity :\n    prediction whole (1 / 2) signals 1 0 = -2 ∧\n    prediction whole (1 / 2) signals 1 1 = -(3 / 2) ∧\n    regret whole (1 / 2) signals 1 0 2 = -(21 / 2) ∧\n    regret whole (1 / 2) signals 1 0 2 =\n      ‖(1 : ℝ) - 0‖ ^ 2 / (2 * (1 / 2)) -\n        ‖iterate whole (1 / 2) signals 1 2 - 0‖ ^ 2 / (2 * (1 / 2)) -\n        (1 / 2) / 2 * (∑ t ∈ range 2, ‖signals t‖ ^ 2)",
+      "statement_hash": "716992ac73d9886aa734dbcee8210a06fba3e8dbb3551d2064708fde85985082"
+    },
+    {
+      "declaration": "Tests.OnlinePrescientLinear.current_and_future_information",
+      "exact_proposed_header": "theorem current_and_future_information :\n    prediction interval (1 / 2) signals 1 0 ≠\n      prediction interval (1 / 2) (fun _ => 0) 1 0 ∧\n    ∀ h : ℕ → ℝ, h 0 = 6 → prediction interval (1 / 2) h 1 0 = -1",
+      "statement_hash": "348f220a8816cdab5967cc0d5b962fc00e6132394101b882e6673854a8c22b51"
+    },
+    {
+      "declaration": "Tests.OnlinePrescientLinear.outside_initial_center_and_empty_horizon",
+      "exact_proposed_header": "theorem outside_initial_center_and_empty_horizon :\n    (3 : ℝ) ∉ interval.carrier ∧\n    prediction interval 1 (fun _ => 0) 3 0 = 1 ∧\n    ‖prediction interval 1 (fun _ => 0) 3 0 - iterate interval 1 (fun _ => 0) 3 0‖ ^ 2 = 4 ∧\n    regret interval 1 (fun _ => 0) 3 0 0 = 0 ∧\n    ∀ u ∈ interval.carrier,\n      regret interval 1 (fun _ => 0) 3 u 0 ≤ ‖(3 : ℝ) - u‖ ^ 2 / (2 * 1) -\n        ‖iterate interval 1 (fun _ => 0) 3 0 - u‖ ^ 2 / (2 * 1) -\n        (∑ t ∈ range 0,\n          ‖prediction interval 1 (fun _ => 0) 3 t - iterate interval 1 (fun _ => 0) 3 t‖ ^ 2) /\n            (2 * 1)",
+      "statement_hash": "c59ff33bd164586be9ca2edad8f22fd0ecc3dc31c24df3e867e4f466d1d6fb7f"
+    }
+  ],
+  "context_path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-prescient-20261009/neutral-canary-types-v1.txt",
+  "context_sha256": "848183b6b787840991a00a029d3688f5d18394cab848436ed3d36b33e40aaef0",
+  "imported_definitions_path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-prescient-20261009/neutral-types-v1.txt",
+  "imported_definitions_sha256": "1366550e330945a25ca6791b51107775992bdd9f77c8a0861d117ac059f7136c",
+  "stage": "type-only draft; no actual theorem bodies/compilation/source verdict"
+}

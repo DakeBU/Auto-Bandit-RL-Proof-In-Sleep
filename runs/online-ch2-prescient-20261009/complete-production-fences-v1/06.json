@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlinePrescientLinear.regret_sharp_bound",
+  "file": "BanditRLProof/OnlinePrescientLinear.lean",
+  "statement": "theorem regret_sharp_bound (V : Domain E) (η : ℝ) (hη : 0 < η) (g : ℕ → E) (x0 u : E) (T : ℕ) (hu : u ∈ V.carrier) : regret V η g x0 u T ≤ ‖x0 - u‖ ^ 2 / (2 * η) - ‖iterate V η g x0 T - u‖ ^ 2 / (2 * η) - (∑ t ∈ range T, ‖prediction V η g x0 t - iterate V η g x0 t‖ ^ 2) / (2 * η)",
+  "statement_hash": "651fe73798126fc35d1bd1183fa4fb5b7d5be16863e628b8feb7be9868ab3c41",
+  "source_assumptions": [],
+  "created_at": "2026-10-09T07:18:37+00:00"
+}
