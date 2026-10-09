@@ -2,6 +2,8 @@
 
 Launch: **2026-10-09**. Status: **research started; complete algorithms and research-root theorems open**.
 
+Reader interface: [Frontier topics](https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/banditrlwiki/frontier-topics/quantum-bandit/).
+
 Public progress and leaf coordination: [tracking issue #206](https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/issues/206).
 
 This is an owner-authorized public research launch linking BanditRLlib and
@@ -117,7 +119,7 @@ No global absence-of-prior-work claim follows.
 4. **QB-STOPPED-INFORMATION-HARD-ORACLES-AND-TESTING:** hard unitary family,
    one-environment/stopped comparison and K-arm testing-to-regret reduction.
 
-The [Chinese explanation, computer setup and copyable collaborator goal](https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/ad9a15f02fc9915ecf98869af9a61f4c3b3c6d2c/research/quantum-bandit/COLLABORATOR-HANDOFF.md)
+The [English collaborator setup and copyable continuation goal](https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/ce9308902fd5d84da574b9518db06f6a6cfb29ec/research/quantum-bandit/COLLABORATOR-HANDOFF.md)
 allows continuation from current proofs rather than restarting the library audit.
 Work on personal branches, claim one bounded leaf, retain typed failures and exact
 compiled/conditional/speculative/refuted boundaries, and submit draft PRs under both
