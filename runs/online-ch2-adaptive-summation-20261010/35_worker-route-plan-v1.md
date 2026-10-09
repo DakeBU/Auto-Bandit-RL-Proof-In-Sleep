@@ -1,0 +1,7 @@
+# First lower route, before BODY
+
+Owner /root, requested GPT-6 Astra / medium; no runtime model attestation. Source CONTRACT review is pending; no production BODY is authored by this plan.
+
+For the frozen v2 terminal define the local cumulative endpoint s(n)=a0+sum(i<n,a(i)). From nonnegative prefix increments derive s(n)>=0 for n<=T and s(t+1)-s(t)=a(t)>=0 for t<T. Restrict the supplied half-line continuity to each closed interval [s(t),s(t+1)] and obtain interval integrability through the actual pinned ContinuousOn.intervalIntegrable_of_Icc API. Compare the constant f(s(t+1)) with f(x) on that interval using AntitoneOn and ordered endpoints. Apply integral_mono_on, evaluate the constant integral as a(t)*f(s(t+1)), sum the inequalities and use sum_integral_adjacent_intervals. This route includes repeated endpoints and T=0; no division, strict positivity or extra regularity is introduced.
+
+The source nonnegativity of f remains in the public type even if this particular proof does not need it. No singular inverse-square-root substitution, adaptive algorithm, gradient-energy sum or regret theorem is proved here. Imports/context/header remain exactly v2. Only after favorable distinct source CONTRACT review may the one new production module implement this route. Attempt files and actual compiler output must be retained; success is a fixed terminal closure rather than a declaration count. Candidate status requires canary/fence/axiom/BODY review and integration gates separately.

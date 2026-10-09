@@ -1,0 +1,19 @@
+from publication_guard_v1 import *
+
+publication_fixed(after_native=True)
+post = load(RUN/'post-native-review-v1.json')
+assert post['post_native_verdict'] in ['accepted','accepted-with-explicit-delta'] and not post['required_repairs']
+assert sha(post['report'])==post['report_sha256'] and sha(post['input_manifest'])==post['input_manifest_sha256']
+for row in load(post['input_manifest'])['rows']:
+    assert sha(row['path'])==row['sha256'],row['path']
+write(RUN/'delivery-plan-v2.json',dict(candidate_head='6c935087e7820fe6c54c4534fcd02dcfa91c72ee',helper=(RUN/'deliver-reviewed-package-v3.py').as_posix(),helper_sha256=sha(RUN/'deliver-reviewed-package-v3.py'),PR_plan_sha256=sha(RUN/'PR-plan-v1.json'),commit_message='Accept reviewed adaptive summation prerequisite and verification evidence',parent_exact_head=BASE,nonforce_push=True,draft_PR=True,official_attachment_required=True,actual_delivery_review_required=True,merge=False,deploy=False,chapter_complete=False,whole_Goal='active'))
+write(RUN/'delivery-plan-packet-v2.md','''# Review scoped commit, push and draft PR plan
+
+User already approved scoped commits/nonforcepush/draft PR. This is a distinct internal evidence review, not a new permission request. Read the complete delivery helper, plan and exact PR body, postnative decision/report/index, FINAL and source/gate bindings. Independently check publication_fixed(after_native=True), native_transition_check, postnative frozen inputs and all current packet inputs. No source/native/reader mutation is proposed. The helper stages ONLY the existing exact package stage list; all dirty paths must be in this packet or the two review outputs. All staged changed BASE blobs must equal RAW worktree bytes; ordinary full BASE whitespace and both NONEMPTY contributor gates are mandatory. Fetch/read canonical status and exact OPEN draft parentPR215 head=BASE. No existing head PR may precede the create command; unknown/partial outcome requires inspection, never blind duplicate creation. Ordinary commit and nonforce push only. Command receipts are create-only ignored tmp during commit/push, preserving genuinely clean Git. Exact remote head and OPEN unmerged draft PR body/base/head/title are checked. D1 repair preserves every body character: the only allowed transport delta is omission of exactly the final single LF from the frozen UTF8 body; no rstrip, CRLF, trailing spaces/tabs or multi-newline normalization. Prior repair decision and all398 prior inputs are unchanged; no delivery has run. Actual source site remains clean candidate6c935087, not fresh at later evidence commit. No CI/merge/deploy/live/retirement/chapter/Goal-complete claim.
+
+Only write delivery-plan-review-v2.md/json with verdict, delivery_plan_verdict accepted or repair, required_repairs, report/report_sha256, input_manifest/input_manifest_sha256, approved_helper_sha256 and approved_plan_sha256. Do not execute mutation helpers or modify indexed inputs. Recheck RAW before/after. Keep distinct automated actor/history limitations. Approval covers exact reviewed helper only; root must call official attach_artifact immediately after real PR creation and preserve actual delivery evidence for a subsequent distinct actual-delivery review. No next package edits before clean exact delivery is verified.
+''')
+paths = {p for d in [RUN,CONTRACT] for p in d.rglob('*') if p.is_file() and '__pycache__' not in p.parts}
+paths.update(Path(r['path']) for r in load(RUN/'post-native-inputs-v1.json')['rows'])
+write(RUN/'delivery-plan-inputs-v2.json',dict(rows=rows(paths),post_native_review_sha256=sha(RUN/'post-native-review-v1.json'),candidate_head='6c935087e7820fe6c54c4534fcd02dcfa91c72ee',chapter_complete=False,whole_Goal='active'))
+print('Exact prospective delivery plan prepared; distinct review pending.',flush=True)

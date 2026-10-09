@@ -1,0 +1,7 @@
+# Browser wrapper runtime path repair
+
+Actual run-browser-v4 prelaunch failed CreateProcess FileNotFoundError; no subprocess launched and no command exit exists. Preserve wrapper/source and browser-prelaunch-failure-v1.json with launched=false/exit=null. Official load_workspace_dependencies bundle26.1007.11041 gives node/bin/node.exe, verified present; Playwright/Edge exist. No profile, image, DOM or browser command receipt was created. Clean source/site/check/sharedregistry already actualpass at6c935087; these do not certify pixels.
+
+Read run-browser-v5.py exactdiff againstv4: ONLY corrected Node executable path, preflight is_file, new unused browser-render-command-v2 receipt label. CJS capture code byte-identical to prior approved helper. No production/Test/reader/site/generated/native mutation. Same actual four originalPNG/noerror/math/boundary/builtinwrap/RAW-before-after capture checks. Personal root+reviewer image inspection remains later.
+
+Produce ONLY browser-runtime-repair-review-v5.md/json with verdict/required_repairs,report/report_sha256,input_manifest/input_manifest_sha256,approved_helper_hashes for wrapperv5 and unchangedCJS. Verify all inputRAW before/after plus current candidate_guard_v4.fixed and actual_gates_fixed. Do not execute browser helper. If accepted allow exact v5 wrapper capture only. No FINAL/native acceptance/push/merge/deploy/chapter/Goal closure; reused automated staged actor limits disclosed.

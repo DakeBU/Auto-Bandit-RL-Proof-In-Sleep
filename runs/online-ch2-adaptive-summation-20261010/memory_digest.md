@@ -1,0 +1,5 @@
+# Draft memory
+
+First bounded prerequisite for the Chapter2 required adaptive-rate forward claim: Orabona v10 Lemma4.13, printed40/PDF52, a nonnegative finite-increment sum bounded by the integral of a continuous nonincreasing nonnegative function on [0,infinity). This is reusable foundation growth toward the actual causal OSD guarantees (4.3),(4.4),Theorem4.14; it is not an algorithm, regret consumer or completed adaptive-rate guarantee. Chapter4 is not promoted to the main chapter; its full inventory remains unenumerated/null. The current Chapter2 forward edge stays required/open until its complete exact mathematical terminal and source reconciliation pass. All eight Chapter2 forward containers and six future mathematical claims remain required/open; Chapter2 partial/null; whole Chapters1-16 Goal ACTIVE.
+
+Prior delivered generic FTL/provenance package PR215 exact 8f31042350bd8eeb1c9108257c58e2b3aafaebfb remains immutable; root/Tests/full harness/site/FINAL/native/postnative/delivery are bound in its RUN. They do not compile this new theorem. Current first leaf BODY unwritten. No source or chapter acceptance yet.

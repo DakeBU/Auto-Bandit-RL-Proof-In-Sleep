@@ -1,0 +1,7 @@
+# ONLINE-CH2-ADAPTIVE-SUMMATION-20261010
+
+First bounded prerequisite for the Chapter2 required adaptive-rate forward claim: Orabona v10 Lemma4.13, printed40/PDF52, a nonnegative finite-increment sum bounded by the integral of a continuous nonincreasing nonnegative function on [0,infinity). This is reusable foundation growth toward the actual causal OSD guarantees (4.3),(4.4),Theorem4.14; it is not an algorithm, regret consumer or completed adaptive-rate guarantee. Chapter4 is not promoted to the main chapter; its full inventory remains unenumerated/null. The current Chapter2 forward edge stays required/open until its complete exact mathematical terminal and source reconciliation pass. All eight Chapter2 forward containers and six future mathematical claims remain required/open; Chapter2 partial/null; whole Chapters1-16 Goal ACTIVE.
+
+Stacked on OPEN draft unmerged PR215 exact 8f31042350bd8eeb1c9108257c58e2b3aafaebfb. Canonical research/main and origin/main freshly inspected; same retained worktree reused, shared Git/.lake/website links preserved. No prior source/Test/contract/reader/progress/global SGB or anonymous/private source edit.
+
+Requested GPT-6 Astra / medium throughout, not runtime attestation. Reuse distinct decoder/source-reviewer roles required by AGENTS; one lower proof route, no parallel chapter proof writing. Paper title: ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory. Particular CLI gates plus recorded role conventions are separate, not one runtime-enforced workflow.

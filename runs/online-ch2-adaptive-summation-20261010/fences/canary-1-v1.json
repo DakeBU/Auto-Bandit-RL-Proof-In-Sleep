@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "Tests.OnlineAdaptiveSummationCanary.nonconstant_zero_increment_canary",
+  "file": "Tests/OnlineAdaptiveSummationCanary.lean",
+  "statement": "theorem nonconstant_zero_increment_canary : (∑ t ∈ range 3, (fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) t * (fun x : ℝ => max (1 - x) 0) (0 + ∑ i ∈ range (t + 1), (fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) i)) ≤ (∫ x in (0 : ℝ)..(0 + ∑ i ∈ range 3, (fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) i), (fun x : ℝ => max (1 - x) 0) x) ∧ (∑ t ∈ range 3, (fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) t * (fun x : ℝ => max (1 - x) 0) (0 + ∑ i ∈ range (t + 1), (fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) i)) = 1 / 4 ∧ (∫ x in (0 : ℝ)..(0 + ∑ i ∈ range 3, (fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) i), (fun x : ℝ => max (1 - x) 0) x) = 1 / 2 ∧ (∑ t ∈ range 3, (fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) t * (fun x : ℝ => max (1 - x) 0) (0 + ∑ i ∈ range (t + 1), (fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) i)) < (∫ x in (0 : ℝ)..(0 + ∑ i ∈ range 3, (fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) i), (fun x : ℝ => max (1 - x) 0) x) ∧ (fun x : ℝ => max (1 - x) 0) 0 ≠ (fun x : ℝ => max (1 - x) 0) 1 ∧ (fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) 0 = 1 / 2 ∧ (fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) 1 = 0 ∧ (fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) 2 = 1 / 2",
+  "statement_hash": "645a467973a0759a539b6cd0daf5a7a469e660f9601e2058669c3f26fa31301c",
+  "source_assumptions": [],
+  "created_at": "2026-10-09T22:27:56+00:00"
+}

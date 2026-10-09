@@ -1,0 +1,3 @@
+# ORABONA-V10-L4.13
+
+Pinned arXiv:1912.13213v10 (2026-06-21), printed40/PDF52. Continuous nonincreasing nonnegative f on the nonnegative half-line; nonnegative initial offset and finite increments. Each increment weights f at the cumulative right endpoint; their sum is bounded by the integral from the initial offset to the final cumulative endpoint. Source proof compares each constant endpoint integral on one increment interval and telescopes. This is a deterministic integration lemma, not a regret guarantee. Exact source PDF SHA and original page pixels/text bindings are in source-fingerprint-v1.json.
