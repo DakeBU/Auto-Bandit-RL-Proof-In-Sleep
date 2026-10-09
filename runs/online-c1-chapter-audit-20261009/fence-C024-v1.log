@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "Tests.OnlineLearningChapterAudit.same_actual_ftl_limit_obstruction",
+  "file": "Tests/OnlineLearningChapterAuditCanary.lean",
+  "statement": "theorem same_actual_ftl_limit_obstruction : NoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - dyadicObservation t)^2) (meanPredict dyadicObservation) ∧ Tendsto (fun T : ℕ => squaredBestRegret dyadicObservation (meanPredict dyadicObservation) T / (T : ℝ)) atTop (nhds (0 : ℝ)) ∧ (¬ ∃ a : ℝ, Tendsto (fun T : ℕ => comparatorRegret (fun t x => (x - dyadicObservation t)^2) (meanPredict dyadicObservation) 0 T / (T : ℝ)) atTop (nhds a)) ∧ ¬ LimitNoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - dyadicObservation t)^2) (meanPredict dyadicObservation)",
+  "statement_hash": "e5f0e2e7aeacb82ac6dfd9671bbba8c1b7b641aa5582d1aa27fe2fce4398027b",
+  "source_assumptions": [],
+  "created_at": "2026-10-09T03:56:17+00:00"
+}

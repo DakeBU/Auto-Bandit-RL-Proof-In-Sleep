@@ -1,0 +1,301 @@
+Ambient notation: open Filter BanditRL.OnlineLearning. Exact supporting definitions only, no proof/source identity/verdict.
+
+Actual scoped name BanditRL.OnlineLearning.comparatorRegret
+noncomputable def comparatorRegret {X : Type*} (loss : ℕ → X → ℝ)
+    (prediction : ℕ → X) (u : X) (T : ℕ) : ℝ :=
+  (∑ t ∈ Finset.range T, loss t (prediction t)) - ∑ t ∈ Finset.range T, loss t u
+
+Actual scoped name BanditRL.OnlineLearning.NoRegret
+def NoRegret {X : Type*} (V : Set X) (loss : ℕ → X → ℝ) (prediction : ℕ → X) : Prop :=
+  ∀ u ∈ V, ∀ ε : ℝ, 0 < ε → ∀ᶠ T in atTop,
+    comparatorRegret loss prediction u T / T ≤ ε
+
+Actual scoped name BanditRL.OnlineLearning.empiricalMean
+noncomputable def empiricalMean (y : ℕ → ℝ) (n : ℕ) : ℝ :=
+  (∑ t ∈ Finset.range n, y t) / n
+
+Actual scoped name BanditRL.OnlineLearning.meanPredict
+noncomputable def meanPredict (y : ℕ → ℝ) (t : ℕ) : ℝ :=
+  if t = 0 then 1/2 else empiricalMean y t
+
+Actual scoped name BanditRL.OnlineLearning.ftlPredict
+noncomputable def ftlPredict (initial : ℝ) (y : ℕ → ℝ) (t : ℕ) : ℝ :=
+  if t = 0 then initial else empiricalMean y t
+
+Actual scoped name BanditRL.OnlineLearning.squaredBestRegret
+noncomputable def squaredBestRegret (y prediction : ℕ → ℝ) (T : ℕ) : ℝ :=
+  (∑ t ∈ Finset.range T, (prediction t - y t)^2) -
+    sInf ((fun u : ℝ => ∑ t ∈ Finset.range T, (u - y t)^2) ''
+      Set.Icc (0 : ℝ) 1)
+
+
+Ambient: open Filter Asymptotics MeasureTheory ProbabilityTheory BanditRL.OnlineLearning unitInterval; open scoped ENNReal. Namespace annotations below identify actual imported definitions. Only necessary mathematical definition bodies and a supporting existential type are supplied, never theorem proof bodies.
+
+abbrev unitInterval : Set ℝ := Set.Icc 0 1
+scoped[unitInterval] notation "I" => unitInterval
+
+
+Actual scoped definition ChapterOneCase0.demoLoss
+namespace ChapterOneCase0
+def demoLoss (t : ℕ) (b : Bool) : ℝ := if b then if t = 0 then -2 else 3 else 0
+end ChapterOneCase0
+
+Actual scoped definition ChapterOneCase0.demoLeader
+namespace ChapterOneCase0
+def demoLeader (n : ℕ) : Bool := n = 1
+end ChapterOneCase0
+
+Actual scoped definition RegretDomainsProbe.sourceV
+namespace RegretDomainsProbe
+def sourceV : Set ℝ := Set.Icc 0 1
+end RegretDomainsProbe
+
+Actual scoped definition RegretDomainsProbe.outputW
+namespace RegretDomainsProbe
+def outputW : Set ℝ := Set.Icc 0 2
+end RegretDomainsProbe
+
+Actual scoped definition RegretDomainsProbe.domainLoss
+namespace RegretDomainsProbe
+def domainLoss : ℕ → ↥outputW → ℝ := fun _ x => -x.val
+end RegretDomainsProbe
+
+Actual scoped definition RegretDomainsProbe.output
+namespace RegretDomainsProbe
+def output : ℕ → ↥outputW := fun _ => ⟨2, by norm_num [outputW]⟩
+end RegretDomainsProbe
+
+Actual scoped definition RegretDomainsProbe.referenceOne
+namespace RegretDomainsProbe
+def referenceOne : ↥outputW := ⟨1, by norm_num [outputW]⟩
+end RegretDomainsProbe
+
+Actual scoped definition Tests.OnlineGuessingIIDBenchmark.coinLaw
+namespace Tests.OnlineGuessingIIDBenchmark
+def coinLaw : Measure ℝ :=
+  (1 / 2 : ℝ≥0∞) • Measure.dirac 0 + (1 / 2 : ℝ≥0∞) • Measure.dirac 1
+end Tests.OnlineGuessingIIDBenchmark
+
+Actual scoped definition Tests.OnlineGuessingIIDBenchmark.iidLaw
+namespace Tests.OnlineGuessingIIDBenchmark
+def iidLaw : Measure (ℕ → ℝ) := Measure.infinitePi (fun _ : ℕ => coinLaw)
+end Tests.OnlineGuessingIIDBenchmark
+
+Actual scoped definition Tests.OnlineGuessingIIDBenchmark.observation
+namespace Tests.OnlineGuessingIIDBenchmark
+def observation (t : ℕ) (ω : ℕ → ℝ) : ℝ := ω t
+end Tests.OnlineGuessingIIDBenchmark
+
+Actual scoped definition Tests.OnlineGuessingIIDBenchmark.hindsightMinimum
+namespace Tests.OnlineGuessingIIDBenchmark
+def hindsightMinimum (ω : ℕ → ℝ) (T : ℕ) : ℝ :=
+  sInf ((fun u : ℝ => ∑ t ∈ Finset.range T, (u - ω t)^2) '' Set.Icc (0 : ℝ) 1)
+end Tests.OnlineGuessingIIDBenchmark
+
+Actual scoped definition Tests.OnlineGuessingKernelCausal.lowLaw
+namespace Tests.OnlineGuessingKernelCausal
+def lowLaw : Measure I :=
+  (3 / 4 : ℝ≥0∞) • Measure.dirac 0 + (1 / 4 : ℝ≥0∞) • Measure.dirac 1
+end Tests.OnlineGuessingKernelCausal
+
+Actual scoped definition Tests.OnlineGuessingKernelCausal.highLaw
+namespace Tests.OnlineGuessingKernelCausal
+def highLaw : Measure I :=
+  (1 / 4 : ℝ≥0∞) • Measure.dirac 0 + (3 / 4 : ℝ≥0∞) • Measure.dirac 1
+end Tests.OnlineGuessingKernelCausal
+
+Actual scoped definition Tests.OnlineGuessingKernelCausal.switchSet
+namespace Tests.OnlineGuessingKernelCausal
+def switchSet : (t : ℕ) → Set (KernelDecisionHistory t)
+  | 0 => ∅
+  | t + 1 => {h | 1 < (h.1 (Fin.last t) : ℝ) + h.2 (Fin.last t)}
+end Tests.OnlineGuessingKernelCausal
+
+Actual scoped definition Tests.OnlineGuessingKernelCausal.decisionKernel
+namespace Tests.OnlineGuessingKernelCausal
+def decisionKernel (t : ℕ) : Kernel (KernelDecisionHistory t) I := by
+  classical
+  exact Kernel.piecewise (switchSet_measurable t)
+    (Kernel.const (KernelDecisionHistory t) highLaw)
+    (Kernel.const (KernelDecisionHistory t) lowLaw)
+end Tests.OnlineGuessingKernelCausal
+
+Actual scoped definition Tests.OnlineGuessingKernelCausal.oneHistory
+namespace Tests.OnlineGuessingKernelCausal
+def oneHistory (a : I) (y : ℝ) : KernelDecisionHistory 1 := (fun _ => a, fun _ => y)
+end Tests.OnlineGuessingKernelCausal
+
+Actual scoped definition Tests.OnlineGuessingKernelCausal.selectedSampler
+namespace Tests.OnlineGuessingKernelCausal
+def selectedSampler : KernelDecisionSampler :=
+  Classical.choose (causal_kernel_realization_and_expectedFixed_excess decisionKernel)
+end Tests.OnlineGuessingKernelCausal
+
+Actual scoped definition Tests.OnlineGuessingKernelCausal.observationLaw
+namespace Tests.OnlineGuessingKernelCausal
+def observationLaw : ProbabilityMeasure (ℕ → ℝ) := ⟨iidLaw, inferInstance⟩
+end Tests.OnlineGuessingKernelCausal
+
+Actual scoped definition Tests.OnlineGuessingKernelCausal.gameLaw
+namespace Tests.OnlineGuessingKernelCausal
+abbrev gameLaw : Measure ((ℕ → I) × (ℕ → ℝ)) := kernelGameLaw observationLaw
+end Tests.OnlineGuessingKernelCausal
+
+Actual scoped definition Tests.OnlineGuessingKernelCausal.prediction
+namespace Tests.OnlineGuessingKernelCausal
+def prediction (t : ℕ) (ω : (ℕ → I) × (ℕ → ℝ)) : I :=
+  kernelGeneratedPrediction selectedSampler t ω
+end Tests.OnlineGuessingKernelCausal
+
+Actual scoped definition Tests.OnlineGuessingKernelCausal.target
+namespace Tests.OnlineGuessingKernelCausal
+def target (t : ℕ) (ω : (ℕ → I) × (ℕ → ℝ)) : ℝ := ω.2 t
+end Tests.OnlineGuessingKernelCausal
+
+Actual scoped definition GuessingLogLowerProbe.coinMeasure
+namespace GuessingLogLowerProbe
+noncomputable def coinMeasure : Measure Bool :=
+  BanditRLProof.Exp3.finiteActionMeasure univ (fun _ => (1 : ℝ)/2)
+end GuessingLogLowerProbe
+
+Actual scoped definition GuessingLogLowerProbe.seededPolicy
+namespace GuessingLogLowerProbe
+def seededPolicy (b : Bool) (_h : List Bool) : ℝ := if b then 1 else 0
+end GuessingLogLowerProbe
+
+Actual scoped definition BanditRL.OnlineLearning.KernelDecisionHistory
+namespace BanditRL.OnlineLearning
+abbrev KernelDecisionHistory (t : ℕ) := (Fin t → I) × (Fin t → ℝ)
+end BanditRL.OnlineLearning
+
+Actual scoped definition BanditRL.OnlineLearning.KernelDecisionSampler
+namespace BanditRL.OnlineLearning
+abbrev KernelDecisionSampler := (t : ℕ) → KernelDecisionHistory t → I → I
+end BanditRL.OnlineLearning
+
+Actual scoped definition BanditRL.OnlineLearning.kernelGeneratedActions
+namespace BanditRL.OnlineLearning
+def kernelGeneratedActions (f : KernelDecisionSampler) :
+    (t : ℕ) → (Fin t → I) → (Fin t → ℝ) → (Fin t → I)
+  | 0, _, _ => Fin.elim0
+  | t + 1, u, y =>
+      let past := kernelGeneratedActions f t (fun i => u i.castSucc) (fun i => y i.castSucc)
+      Fin.snoc past (f t (past, fun i => y i.castSucc) (u (Fin.last t)))
+end BanditRL.OnlineLearning
+
+Actual scoped definition BanditRL.OnlineLearning.kernelCausalPolicy
+namespace BanditRL.OnlineLearning
+def kernelCausalPolicy (f : KernelDecisionSampler) (t : ℕ)
+    (q : (ℕ → I) × (Fin t → ℝ)) : I :=
+  f t (kernelGeneratedActions f t (fun i => q.1 i) q.2, q.2) (q.1 t)
+end BanditRL.OnlineLearning
+
+Actual scoped definition BanditRL.OnlineLearning.kernelGeneratedHistory
+namespace BanditRL.OnlineLearning
+def kernelGeneratedHistory (f : KernelDecisionSampler) (t : ℕ)
+    (ω : (ℕ → I) × (ℕ → ℝ)) : KernelDecisionHistory t :=
+  (kernelGeneratedActions f t (fun i => ω.1 i) (fun i => ω.2 i), fun i => ω.2 i)
+end BanditRL.OnlineLearning
+
+Actual scoped definition BanditRL.OnlineLearning.kernelGeneratedPrediction
+namespace BanditRL.OnlineLearning
+def kernelGeneratedPrediction (f : KernelDecisionSampler) (t : ℕ)
+    (ω : (ℕ → I) × (ℕ → ℝ)) : I :=
+  kernelCausalPolicy f t (ω.1, fun i => ω.2 i)
+end BanditRL.OnlineLearning
+
+Actual scoped definition BanditRL.OnlineLearning.kernelUniformTapeLaw
+namespace BanditRL.OnlineLearning
+noncomputable abbrev kernelUniformTapeLaw : Measure (ℕ → I) :=
+  Measure.infinitePi (fun _ : ℕ => (volume : Measure I))
+end BanditRL.OnlineLearning
+
+Actual scoped definition BanditRL.OnlineLearning.kernelGameLaw
+namespace BanditRL.OnlineLearning
+noncomputable abbrev kernelGameLaw (ν : ProbabilityMeasure (ℕ → ℝ)) : Measure ((ℕ → I) × (ℕ → ℝ)) :=
+  kernelUniformTapeLaw.prod (ν : Measure (ℕ → ℝ))
+end BanditRL.OnlineLearning
+
+Actual scoped definition BanditRL.OnlineLearning.ftlMeanStep
+namespace BanditRL.OnlineLearning
+noncomputable def ftlMeanStep (state : ℕ × ℝ) (target : ℝ) : ℕ × ℝ :=
+  (state.1 + 1, state.2 + (target - state.2) / ((state.1 : ℝ) + 1))
+end BanditRL.OnlineLearning
+
+Actual scoped definition BanditRL.OnlineLearning.ftlState
+namespace BanditRL.OnlineLearning
+noncomputable def ftlState (initial : ℝ) (y : ℕ → ℝ) : ℕ → ℕ × ℝ
+  | 0 => (0, initial)
+  | t + 1 => ftlMeanStep (ftlState initial y t) (y t)
+end BanditRL.OnlineLearning
+
+Actual scoped definition BanditRL.OnlineLearning.dyadicObservation
+namespace BanditRL.OnlineLearning
+noncomputable def dyadicObservation : ℕ → ℝ
+  | 0 => 0
+  | n + 1 => 1 - dyadicObservation (n / 2)
+termination_by n => n
+decreasing_by omega
+end BanditRL.OnlineLearning
+
+Actual scoped definition BanditRL.OnlineLearning.LimitNoRegret
+namespace BanditRL.OnlineLearning
+def LimitNoRegret {X : Type*} (V : Set X) (loss : ℕ → X → ℝ)
+    (prediction : ℕ → X) : Prop :=
+  ∀ u ∈ V, ∃ a : ℝ, a ≤ 0 ∧
+    Tendsto (fun T : ℕ => comparatorRegret loss prediction u T / T) atTop (nhds a)
+end BanditRL.OnlineLearning
+
+Actual scoped definition BanditRL.OnlineLearning.expectedFixedMinimum
+namespace BanditRL.OnlineLearning
+noncomputable def expectedFixedMinimum {Ω : Type*} [MeasurableSpace Ω]
+    (μ : Measure Ω) (Y : ℕ → Ω → ℝ) (T : ℕ) : ℝ :=
+  sInf ((fun u : ℝ => ∫ ω, ∑ t ∈ Finset.range T, (u - Y t ω)^2 ∂μ) ''
+    Set.Icc (0 : ℝ) 1)
+end BanditRL.OnlineLearning
+
+Actual scoped definition BanditRL.OnlineLearning.expectedFixedRegret
+namespace BanditRL.OnlineLearning
+noncomputable def expectedFixedRegret {Ω : Type*} [MeasurableSpace Ω]
+    (μ : Measure Ω) (Y prediction : ℕ → Ω → ℝ) (T : ℕ) : ℝ :=
+  (∫ ω, ∑ t ∈ Finset.range T, (prediction t ω - Y t ω)^2 ∂μ) -
+    expectedFixedMinimum μ Y T
+end BanditRL.OnlineLearning
+
+Actual scoped definition BanditRL.OnlineLearning.GuessingLower.binaryStream
+namespace BanditRL.OnlineLearning.GuessingLower
+def binaryStream (h : List Bool) (t : ℕ) : Bool :=
+  (h.reverse[t]?).getD false
+end BanditRL.OnlineLearning.GuessingLower
+
+Actual scoped definition BanditRL.OnlineLearning.GuessingLower.binaryValues
+namespace BanditRL.OnlineLearning.GuessingLower
+def binaryValues (h : List Bool) (t : ℕ) : ℝ :=
+  if binaryStream h t then 1 else 0
+end BanditRL.OnlineLearning.GuessingLower
+
+Actual scoped definition BanditRL.OnlineLearning.GuessingLower.causalPredict
+namespace BanditRL.OnlineLearning.GuessingLower
+noncomputable def causalPredict (A : List Bool → ℝ) (y : ℕ → Bool) (t : ℕ) : ℝ :=
+  A (List.ofFn (fun i : Fin t => y i)).reverse
+end BanditRL.OnlineLearning.GuessingLower
+
+Actual scoped definition BanditRL.OnlineLearning.GuessingLower.pathRegret
+namespace BanditRL.OnlineLearning.GuessingLower
+noncomputable def pathRegret (A : List Bool → ℝ) (h : List Bool) : ℝ :=
+  comparatorRegret (fun t x => (x - binaryValues h t)^2)
+    (causalPredict A (binaryStream h)) (empiricalMean (binaryValues h) h.length) h.length
+end BanditRL.OnlineLearning.GuessingLower
+
+Actual scoped definition BanditRLProof.Exp3.finiteActionMeasure
+namespace BanditRLProof.Exp3
+noncomputable def finiteActionMeasure {Action : Type u} [MeasurableSpace Action]
+    (arms : Finset Action) (prob : Action -> Real) : Measure Action :=
+  arms.sum (fun action =>
+    ENNReal.ofReal (prob action) • Measure.dirac action)
+end BanditRLProof.Exp3
+
+Exact rational sequence: def harmonic : ℕ → ℚ := fun n => ∑ i ∈ Finset.range n, (↑(i + 1))⁻¹
+
+Supporting existential HEADER ONLY in BanditRL.OnlineLearning; selectedSampler uses its chosen f. The imported concrete decisionKernel has an IsMarkovKernel instance at every time and switchSet_measurable supplies its measurable predicate. No proof is supplied.
+theorem causal_kernel_realization_and_expectedFixed_excess (κ : (t : ℕ) → Kernel (KernelDecisionHistory t) I) [∀ t, IsMarkovKernel (κ t)] : ∃ f : KernelDecisionSampler, (∀ t, Measurable (Function.uncurry (f t))) ∧ (∀ t h, (volume : Measure I).map (f t h) = κ t h) ∧ (∀ t, Measurable (kernelCausalPolicy f t)) ∧ (∀ t (u : ℕ → I) (y : ℕ → ℝ) (i : Fin t), kernelGeneratedActions f t (fun j => u j) (fun j => y j) i = kernelGeneratedPrediction f (i : ℕ) (u, y)) ∧ (∀ t (ω ω' : (ℕ → I) × (ℕ → ℝ)), (∀ i, i ≤ t → ω.1 i = ω'.1 i) → (∀ i, i < t → ω.2 i = ω'.2 i) → kernelGeneratedPrediction f t ω = kernelGeneratedPrediction f t ω') ∧ ∀ ν : ProbabilityMeasure (ℕ → ℝ), (∀ t, (kernelGameLaw ν).map (fun ω => (kernelGeneratedHistory f t ω, kernelGeneratedPrediction f t ω)) = (kernelGameLaw ν).map (kernelGeneratedHistory f t) ⊗ₘ κ t) ∧ (∀ t, condDistrib (kernelGeneratedPrediction f t) (kernelGeneratedHistory f t) (kernelGameLaw ν) =ᵐ[(kernelGameLaw ν).map (kernelGeneratedHistory f t)] κ t) ∧ (iIndepFun (fun t (y : ℕ → ℝ) => y t) (ν : Measure (ℕ → ℝ)) → (∀ t, IdentDistrib (fun y : ℕ → ℝ => y t) (fun y : ℕ → ℝ => y 0) (ν : Measure (ℕ → ℝ)) (ν : Measure (ℕ → ℝ))) → (∀ t, ∀ᵐ y ∂(ν : Measure (ℕ → ℝ)), y t ∈ Set.Icc (0 : ℝ) 1) → ∀ T : ℕ, expectedFixedRegret (kernelGameLaw ν) (fun t ω => ω.2 t) (fun t ω => (kernelGeneratedPrediction f t ω : ℝ)) T = (∑ t ∈ Finset.range T, ∫ ω, ((kernelGeneratedPrediction f t ω : ℝ) - ∫ ω, ω.2 0 ∂(kernelGameLaw ν))^2 ∂(kernelGameLaw ν)) ∧ 0 ≤ expectedFixedRegret (kernelGameLaw ν) (fun t ω => ω.2 t) (fun t ω => (kernelGeneratedPrediction f t ω : ℝ)) T)

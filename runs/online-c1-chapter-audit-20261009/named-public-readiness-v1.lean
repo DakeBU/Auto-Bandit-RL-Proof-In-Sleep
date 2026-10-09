@@ -1,0 +1,102 @@
+import BanditRLProof
+
+#check BanditRL.OnlineLearning.GuessingLower.randomized_log_lower
+#print axioms BanditRL.OnlineLearning.GuessingLower.randomized_log_lower
+#check BanditRL.OnlineLearning.ae_predictable_private_seed_expectedFixed_excess
+#print axioms BanditRL.OnlineLearning.ae_predictable_private_seed_expectedFixed_excess
+#check BanditRL.OnlineLearning.causal_kernel_realization_and_expectedFixed_excess
+#print axioms BanditRL.OnlineLearning.causal_kernel_realization_and_expectedFixed_excess
+#check BanditRL.OnlineLearning.centered_total_sublinear_iff_average
+#print axioms BanditRL.OnlineLearning.centered_total_sublinear_iff_average
+#check BanditRL.OnlineLearning.comparatorRegret_eq_sum
+#print axioms BanditRL.OnlineLearning.comparatorRegret_eq_sum
+#check BanditRL.OnlineLearning.comparatorRegret_le_squaredBestRegret
+#print axioms BanditRL.OnlineLearning.comparatorRegret_le_squaredBestRegret
+#check BanditRL.OnlineLearning.completed_predictable_private_seed_expectedFixed_excess
+#print axioms BanditRL.OnlineLearning.completed_predictable_private_seed_expectedFixed_excess
+#check BanditRL.OnlineLearning.completed_predictable_private_seed_independent
+#print axioms BanditRL.OnlineLearning.completed_predictable_private_seed_independent
+#check BanditRL.OnlineLearning.constant_mean_expectedFixed_excess_zero
+#print axioms BanditRL.OnlineLearning.constant_mean_expectedFixed_excess_zero
+#check BanditRL.OnlineLearning.dyadic_meanPredict_obstruction
+#print axioms BanditRL.OnlineLearning.dyadic_meanPredict_obstruction
+#check BanditRL.OnlineLearning.empiricalMean_decomposition
+#print axioms BanditRL.OnlineLearning.empiricalMean_decomposition
+#check BanditRL.OnlineLearning.empiricalMean_mem
+#print axioms BanditRL.OnlineLearning.empiricalMean_mem
+#check BanditRL.OnlineLearning.empiricalMean_minimizes
+#print axioms BanditRL.OnlineLearning.empiricalMean_minimizes
+#check BanditRL.OnlineLearning.empiricalMean_unique
+#print axioms BanditRL.OnlineLearning.empiricalMean_unique
+#check BanditRL.OnlineLearning.empiricalMean_update
+#print axioms BanditRL.OnlineLearning.empiricalMean_update
+#check BanditRL.OnlineLearning.expectedFixedMinimum_eq_variance
+#print axioms BanditRL.OnlineLearning.expectedFixedMinimum_eq_variance
+#check BanditRL.OnlineLearning.expected_fixed_prefix_decomposition
+#print axioms BanditRL.OnlineLearning.expected_fixed_prefix_decomposition
+#check BanditRL.OnlineLearning.expected_fixed_prefix_minimum
+#print axioms BanditRL.OnlineLearning.expected_fixed_prefix_minimum
+#check BanditRL.OnlineLearning.ftlPredict_half
+#print axioms BanditRL.OnlineLearning.ftlPredict_half
+#check BanditRL.OnlineLearning.ftlPredict_mem
+#print axioms BanditRL.OnlineLearning.ftlPredict_mem
+#check BanditRL.OnlineLearning.ftlPredict_prefix
+#print axioms BanditRL.OnlineLearning.ftlPredict_prefix
+#check BanditRL.OnlineLearning.ftlState_eq_predict
+#print axioms BanditRL.OnlineLearning.ftlState_eq_predict
+#check BanditRL.OnlineLearning.ftlState_first
+#print axioms BanditRL.OnlineLearning.ftlState_first
+#check BanditRL.OnlineLearning.ftlState_half
+#print axioms BanditRL.OnlineLearning.ftlState_half
+#check BanditRL.OnlineLearning.ftlState_mem
+#print axioms BanditRL.OnlineLearning.ftlState_mem
+#check BanditRL.OnlineLearning.ftlState_prefix
+#print axioms BanditRL.OnlineLearning.ftlState_prefix
+#check BanditRL.OnlineLearning.guessing_prefix_minimum
+#print axioms BanditRL.OnlineLearning.guessing_prefix_minimum
+#check BanditRL.OnlineLearning.history_policy_normalized_expectedFixed_excess
+#print axioms BanditRL.OnlineLearning.history_policy_normalized_expectedFixed_excess
+#check BanditRL.OnlineLearning.lemma_1_2
+#print axioms BanditRL.OnlineLearning.lemma_1_2
+#check BanditRL.OnlineLearning.limitNoRegret_iff_noRegret_of_converges
+#print axioms BanditRL.OnlineLearning.limitNoRegret_iff_noRegret_of_converges
+#check BanditRL.OnlineLearning.limitNoRegret_implies_noRegret
+#print axioms BanditRL.OnlineLearning.limitNoRegret_implies_noRegret
+#check BanditRL.OnlineLearning.meanPredict_bestRegret_average_tendsto_zero
+#print axioms BanditRL.OnlineLearning.meanPredict_bestRegret_average_tendsto_zero
+#check BanditRL.OnlineLearning.meanPredict_bestRegret_bound
+#print axioms BanditRL.OnlineLearning.meanPredict_bestRegret_bound
+#check BanditRL.OnlineLearning.meanPredict_bestRegret_refined
+#print axioms BanditRL.OnlineLearning.meanPredict_bestRegret_refined
+#check BanditRL.OnlineLearning.meanPredict_iid_success
+#print axioms BanditRL.OnlineLearning.meanPredict_iid_success
+#check BanditRL.OnlineLearning.meanPredict_initial_stability
+#print axioms BanditRL.OnlineLearning.meanPredict_initial_stability
+#check BanditRL.OnlineLearning.meanPredict_limitNoRegret_iff_mean_converges
+#print axioms BanditRL.OnlineLearning.meanPredict_limitNoRegret_iff_mean_converges
+#check BanditRL.OnlineLearning.meanPredict_mem
+#print axioms BanditRL.OnlineLearning.meanPredict_mem
+#check BanditRL.OnlineLearning.meanPredict_noRegret
+#print axioms BanditRL.OnlineLearning.meanPredict_noRegret
+#check BanditRL.OnlineLearning.meanPredict_prefix
+#print axioms BanditRL.OnlineLearning.meanPredict_prefix
+#check BanditRL.OnlineLearning.meanPredict_regret_refined
+#print axioms BanditRL.OnlineLearning.meanPredict_regret_refined
+#check BanditRL.OnlineLearning.meanPredict_stability
+#print axioms BanditRL.OnlineLearning.meanPredict_stability
+#check BanditRL.OnlineLearning.normalized_excess
+#print axioms BanditRL.OnlineLearning.normalized_excess
+#check BanditRL.OnlineLearning.randomized_history_policy_expectedFixed_excess
+#print axioms BanditRL.OnlineLearning.randomized_history_policy_expectedFixed_excess
+#check BanditRL.OnlineLearning.randomized_history_policy_independent
+#print axioms BanditRL.OnlineLearning.randomized_history_policy_independent
+#check BanditRL.OnlineLearning.randomized_history_policy_success_iff
+#print axioms BanditRL.OnlineLearning.randomized_history_policy_success_iff
+#check BanditRL.OnlineLearning.squaredBestRegret_eq_comparatorRegret
+#print axioms BanditRL.OnlineLearning.squaredBestRegret_eq_comparatorRegret
+#check BanditRL.OnlineLearning.squaredLoss_minimum_eq
+#print axioms BanditRL.OnlineLearning.squaredLoss_minimum_eq
+#check BanditRL.OnlineLearning.theorem_1_3
+#print axioms BanditRL.OnlineLearning.theorem_1_3
+#check harmonic_le_one_add_log
+#print axioms harmonic_le_one_add_log

@@ -1,0 +1,26 @@
+Finset.sum_range_succ'.{u_4} {M : Type u_4} [AddCommMonoid M] (f : ℕ → M) (n : ℕ) :
+  ∑ k ∈ Finset.range (n + 1), f k = ∑ k ∈ Finset.range n, f (k + 1) + f 0
+BanditRL.OnlineLearning.ftlPredict_prefix (initial : ℝ) (y z : ℕ → ℝ) (t : ℕ) (h : ∀ i < t, y i = z i) :
+  ftlPredict initial y t = ftlPredict initial z t
+BanditRL.OnlineLearning.ftlState_eq_predict (initial : ℝ) (y : ℕ → ℝ) (t : ℕ) :
+  ftlState initial y t = (t, ftlPredict initial y t)
+BanditRL.OnlineLearning.meanPredict_bestRegret_refined (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T)
+  (hy : ∀ t < T, y t ∈ Set.Icc 0 1) :
+  squaredBestRegret y (meanPredict y) T ≤ 1 / 4 + ∑ t ∈ Finset.range (T - 1), 4 / (↑t + 2)
+BanditRL.OnlineLearning.meanPredict_bestRegret_bound (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T)
+  (hy : ∀ t < T, y t ∈ Set.Icc 0 1) : squaredBestRegret y (meanPredict y) T ≤ 4 + 4 * Real.log ↑T
+BanditRL.OnlineLearning.comparatorRegret_le_squaredBestRegret (y prediction : ℕ → ℝ) (T : ℕ)
+  (hy : ∀ t < T, y t ∈ Set.Icc 0 1) (u : ℝ) (hu : u ∈ Set.Icc 0 1) :
+  comparatorRegret (fun t x => (x - y t) ^ 2) prediction u T ≤ squaredBestRegret y prediction T
+BanditRL.OnlineLearning.noRegret_of_vanishing_bound.{u_1} {X : Type u_1} (V : Set X) (loss : ℕ → X → ℝ)
+  (prediction : ℕ → X) (bound : X → ℕ → ℝ)
+  (hb : ∀ u ∈ V, ∀ᶠ (T : ℕ) in atTop, comparatorRegret loss prediction u T / ↑T ≤ bound u T)
+  (hl : ∀ u ∈ V, Tendsto (bound u) atTop (nhds 0)) : NoRegret V loss prediction
+BanditRL.OnlineLearning.meanPredict_bestRegret_average_tendsto_zero (y : ℕ → ℝ) (hy : ∀ (t : ℕ), y t ∈ Set.Icc 0 1) :
+  Tendsto (fun T => squaredBestRegret y (meanPredict y) T / ↑T) atTop (nhds 0)
+tendsto_const_div_atTop_nhds_zero_nat.{u_4} {𝕜 : Type u_4} [DivisionSemiring 𝕜] [CharZero 𝕜] [TopologicalSpace 𝕜]
+  [ContinuousSMul ℚ≥0 𝕜] [ContinuousMul 𝕜] (C : 𝕜) : Tendsto (fun n => C / ↑n) atTop (nhds 0)
+Real.tendsto_pow_log_div_mul_add_atTop (a b : ℝ) (n : ℕ) (ha : a ≠ 0) :
+  Tendsto (fun x => Real.log x ^ n / (a * x + b)) atTop (nhds 0)
+tendsto_natCast_atTop_atTop.{u_2} {R : Type u_2} [Semiring R] [PartialOrder R] [IsOrderedRing R] [Archimedean R] :
+  Tendsto Nat.cast atTop atTop

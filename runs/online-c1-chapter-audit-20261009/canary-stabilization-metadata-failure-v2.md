@@ -1,0 +1,1 @@
+v2 resumed with guessed exact_targets and also failed before mutation. Actual receipt keys were then inspected: exact_headers is the27-row field. v3 uses that actual schema key. Two adapter KeyErrors retained, no native/Test/statement change occurred in either failure.

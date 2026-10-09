@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineLearning.guessing_prefix_minimum",
+  "file": "BanditRLProof/OnlineSquareMinimum.lean",
+  "statement": "theorem guessing_prefix_minimum (y : ℕ → ℝ) (T : ℕ) (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) : empiricalMean y T ∈ Set.Icc (0 : ℝ) 1 ∧ ∀ u ∈ Set.Icc (0 : ℝ) 1, (∑ t ∈ Finset.range T, (empiricalMean y T - y t)^2) ≤ ∑ t ∈ Finset.range T, (u - y t)^2",
+  "statement_hash": "f3d29917e7133f5e923766fa2e4cfb3e644ec4215b1386267e49c857b0d424cb",
+  "source_assumptions": [],
+  "created_at": "2026-10-09T02:35:37+00:00"
+}

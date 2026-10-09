@@ -1,0 +1,29 @@
+Ambient notation: open Filter BanditRL.OnlineLearning. Exact supporting definitions only, no proof/source identity/verdict.
+
+Actual scoped name BanditRL.OnlineLearning.comparatorRegret
+noncomputable def comparatorRegret {X : Type*} (loss : ℕ → X → ℝ)
+    (prediction : ℕ → X) (u : X) (T : ℕ) : ℝ :=
+  (∑ t ∈ Finset.range T, loss t (prediction t)) - ∑ t ∈ Finset.range T, loss t u
+
+Actual scoped name BanditRL.OnlineLearning.NoRegret
+def NoRegret {X : Type*} (V : Set X) (loss : ℕ → X → ℝ) (prediction : ℕ → X) : Prop :=
+  ∀ u ∈ V, ∀ ε : ℝ, 0 < ε → ∀ᶠ T in atTop,
+    comparatorRegret loss prediction u T / T ≤ ε
+
+Actual scoped name BanditRL.OnlineLearning.empiricalMean
+noncomputable def empiricalMean (y : ℕ → ℝ) (n : ℕ) : ℝ :=
+  (∑ t ∈ Finset.range n, y t) / n
+
+Actual scoped name BanditRL.OnlineLearning.meanPredict
+noncomputable def meanPredict (y : ℕ → ℝ) (t : ℕ) : ℝ :=
+  if t = 0 then 1/2 else empiricalMean y t
+
+Actual scoped name BanditRL.OnlineLearning.ftlPredict
+noncomputable def ftlPredict (initial : ℝ) (y : ℕ → ℝ) (t : ℕ) : ℝ :=
+  if t = 0 then initial else empiricalMean y t
+
+Actual scoped name BanditRL.OnlineLearning.squaredBestRegret
+noncomputable def squaredBestRegret (y prediction : ℕ → ℝ) (T : ℕ) : ℝ :=
+  (∑ t ∈ Finset.range T, (prediction t - y t)^2) -
+    sInf ((fun u : ℝ => ∑ t ∈ Finset.range T, (u - y t)^2) ''
+      Set.Icc (0 : ℝ) 1)

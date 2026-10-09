@@ -1,0 +1,53 @@
+import BanditRLProof.OnlineLearningFTLState
+import BanditRLProof.OnlineFTLLimitSemantics
+
+open Filter
+
+namespace BanditRL.OnlineLearning
+
+/-- Derived same-run identity: only the scored initial loss differs from half initialization. -/
+theorem ftlPredict_bestRegret_initial_correction (initial : ℝ) (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T) :
+    squaredBestRegret y (ftlPredict initial y) T =
+      squaredBestRegret y (meanPredict y) T +
+        ((initial - y 0)^2 - ((1 : ℝ) / 2 - y 0)^2) := by
+  cases T with
+  | zero => omega
+  | succ n =>
+    have htail :
+        (∑ t ∈ Finset.range n, (ftlPredict initial y (t + 1) - y (t + 1))^2) =
+          ∑ t ∈ Finset.range n, (meanPredict y (t + 1) - y (t + 1))^2 := by
+      apply Finset.sum_congr rfl
+      intro t ht
+      simp [ftlPredict, meanPredict]
+    have hsum :
+        (∑ t ∈ Finset.range (n + 1), (ftlPredict initial y t - y t)^2) =
+          (∑ t ∈ Finset.range (n + 1), (meanPredict y t - y t)^2) +
+            ((initial - y 0)^2 - ((1 : ℝ) / 2 - y 0)^2) := by
+      simp only [Finset.sum_range_succ']
+      rw [htail]
+      simp [ftlPredict, meanPredict]
+    unfold squaredBestRegret
+    rw [hsum]
+    ring
+
+/-- Derived general-initialization guarantee; the half-initial quarter is not universal. -/
+theorem ftlPredict_bestRegret_refined (initial : ℝ) (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T)
+    (hi : initial ∈ Set.Icc (0 : ℝ) 1)
+    (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) :
+    squaredBestRegret y (ftlPredict initial y) T ≤
+      (1 : ℝ) + ∑ t ∈ Finset.range (T - 1), 4 / ((t : ℝ) + 2) := by
+  have hz := hy 0 hT
+  have haa : initial ^ 2 ≤ initial := by
+    nlinarith [mul_nonneg hi.1 (sub_nonneg.mpr hi.2)]
+  have hfirst : (1 : ℝ) / 4 +
+      ((initial - y 0)^2 - ((1 : ℝ) / 2 - y 0)^2) ≤ 1 := by
+    by_cases hsmall : y 0 ≤ (1 : ℝ) / 2
+    · nlinarith [mul_nonneg (sub_nonneg.mpr hi.2)
+        (show 0 ≤ 1 - 2 * y 0 by linarith), hz.1]
+    · nlinarith [mul_nonneg hi.1
+        (show 0 ≤ 2 * y 0 - 1 by linarith), hz.2]
+  rw [ftlPredict_bestRegret_initial_correction initial y T hT]
+  have hhalf := meanPredict_bestRegret_refined y T hT hy
+  linarith
+
+end BanditRL.OnlineLearning

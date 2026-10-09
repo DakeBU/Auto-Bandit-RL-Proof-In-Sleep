@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineLearning.dyadic_meanPredict_obstruction",
+  "file": "BanditRLProof/OnlineFTLOscillation.lean",
+  "statement": "theorem dyadic_meanPredict_obstruction : NoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - dyadicObservation t)^2) (meanPredict dyadicObservation) ∧ Tendsto (fun T : ℕ => squaredBestRegret dyadicObservation (meanPredict dyadicObservation) T / (T : ℝ)) atTop (nhds (0 : ℝ)) ∧ (¬ ∃ a : ℝ, Tendsto (fun T : ℕ => comparatorRegret (fun t x => (x - dyadicObservation t)^2) (meanPredict dyadicObservation) 0 T / (T : ℝ)) atTop (nhds a)) ∧ ¬ LimitNoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - dyadicObservation t)^2) (meanPredict dyadicObservation)",
+  "statement_hash": "ff24eefc87da8732c13c81c288f44b5cf03c14836121d98c177ac3dc464df288",
+  "source_assumptions": [],
+  "created_at": "2026-10-09T02:35:29+00:00"
+}

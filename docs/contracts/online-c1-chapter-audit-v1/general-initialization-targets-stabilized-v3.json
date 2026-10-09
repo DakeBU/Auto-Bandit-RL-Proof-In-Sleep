@@ -1,0 +1,66 @@
+{
+  "version": 3,
+  "phase": "stabilized exact v3; proving G001 first",
+  "new_targets": [
+    {
+      "id": "G001",
+      "name": "BanditRL.OnlineLearning.ftlPredict_bestRegret_initial_correction",
+      "header": "theorem ftlPredict_bestRegret_initial_correction (initial : ℝ) (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T) :\n    squaredBestRegret y (ftlPredict initial y) T =\n      squaredBestRegret y (meanPredict y) T +\n        ((initial - y 0)^2 - ((1 : ℝ) / 2 - y 0)^2)",
+      "statement_hash": "215d0187299363a61224017a1c56a9331d521fcdd778da43d855d6426dc426ca",
+      "binders": "(initial : ℝ) (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T)",
+      "conclusion": "squaredBestRegret y (ftlPredict initial y) T =\n      squaredBestRegret y (meanPredict y) T +\n        ((initial - y 0)^2 - ((1 : ℝ) / 2 - y 0)^2)",
+      "phase": "stabilized; actual body pending",
+      "owning_public_path": "BanditRLProof/OnlineFTLInitializationRegret.lean",
+      "production_body_exists": false
+    },
+    {
+      "id": "G002",
+      "name": "BanditRL.OnlineLearning.ftlPredict_bestRegret_refined",
+      "header": "theorem ftlPredict_bestRegret_refined (initial : ℝ) (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T)\n    (hi : initial ∈ Set.Icc (0 : ℝ) 1)\n    (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) :\n    squaredBestRegret y (ftlPredict initial y) T ≤\n      (1 : ℝ) + ∑ t ∈ Finset.range (T - 1), 4 / ((t : ℝ) + 2)",
+      "statement_hash": "2dd706bffd4ef9fd2133aee0653f8cf3252b5f5249e8538866049aaaf8783d27",
+      "binders": "(initial : ℝ) (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T)\n    (hi : initial ∈ Set.Icc (0 : ℝ) 1)\n    (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1)",
+      "conclusion": "squaredBestRegret y (ftlPredict initial y) T ≤\n      (1 : ℝ) + ∑ t ∈ Finset.range (T - 1), 4 / ((t : ℝ) + 2)",
+      "phase": "stabilized; actual body pending",
+      "owning_public_path": "BanditRLProof/OnlineFTLInitializationRegret.lean",
+      "production_body_exists": false,
+      "previous_draft_hash": "4d202575cdfc36d0e92b159de3feeb57d5a8a2b891c734779b930bf0f102a4a2",
+      "change_reason": "Explicit source-review-required exact finite1+tail terminal; prior loose5+log draft retained, never stabilized/proved."
+    },
+    {
+      "id": "G003",
+      "name": "BanditRL.OnlineLearning.ftlPredict_upperNoRegret",
+      "header": "theorem ftlPredict_upperNoRegret (initial : ℝ) (y : ℕ → ℝ)\n    (hi : initial ∈ Set.Icc (0 : ℝ) 1)\n    (hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1) :\n    NoRegret (Set.Icc (0 : ℝ) 1)\n      (fun t x => (x - y t)^2) (ftlPredict initial y)",
+      "statement_hash": "81eea12628cc1949b8f232b898517eaf1a1066fc89da10dd46d6a267bf47ee0b",
+      "binders": "(initial : ℝ) (y : ℕ → ℝ)\n    (hi : initial ∈ Set.Icc (0 : ℝ) 1)\n    (hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1)",
+      "conclusion": "NoRegret (Set.Icc (0 : ℝ) 1)\n      (fun t x => (x - y t)^2) (ftlPredict initial y)",
+      "phase": "stabilized; actual body pending",
+      "owning_public_path": "BanditRLProof/OnlineFTLInitializationRegret.lean",
+      "production_body_exists": false
+    },
+    {
+      "id": "G004",
+      "name": "BanditRL.OnlineLearning.ftlPredict_bestRegret_average_tendsto_zero",
+      "header": "theorem ftlPredict_bestRegret_average_tendsto_zero (initial : ℝ) (y : ℕ → ℝ)\n    (hi : initial ∈ Set.Icc (0 : ℝ) 1)\n    (hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1) :\n    Tendsto (fun T : ℕ =>\n      squaredBestRegret y (ftlPredict initial y) T / (T : ℝ))\n        atTop (nhds (0 : ℝ))",
+      "statement_hash": "25f6376f56a529764c6ad0fb63a8e4e75533e3aeb553a1a2978e9c2039dc1060",
+      "binders": "(initial : ℝ) (y : ℕ → ℝ)\n    (hi : initial ∈ Set.Icc (0 : ℝ) 1)\n    (hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1)",
+      "conclusion": "Tendsto (fun T : ℕ =>\n      squaredBestRegret y (ftlPredict initial y) T / (T : ℝ))\n        atTop (nhds (0 : ℝ))",
+      "phase": "stabilized; actual body pending",
+      "owning_public_path": "BanditRLProof/OnlineFTLInitializationRegret.lean",
+      "production_body_exists": false
+    }
+  ],
+  "owning_public_path": "BanditRLProof/OnlineFTLInitializationRegret.lean",
+  "old_fifty_statement_hashes_unchanged": true,
+  "source_review_required_finite_and_upper_terminal_preserved": true,
+  "new_source_object_count": 1,
+  "new_production_proof_targets": 4,
+  "required_fullchapter_source_audit_objects": 17,
+  "unknown_proof_total": null,
+  "chapter_complete": false,
+  "goal_complete": false,
+  "source_review": {
+    "receipt": "E:/ABRL/worktrees/research-online-book/runs/online-c1-chapter-audit-20261009/source-contract-receipt-v3.json",
+    "sha256": "264ef5d139323bdd0fa32048d3ea1299a2a6ed65610edb70f6c07b6848626da8",
+    "verdict": "accepted-with-explicit-delta"
+  }
+}

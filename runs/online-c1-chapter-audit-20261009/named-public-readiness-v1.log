@@ -1,0 +1,380 @@
+BanditRL.OnlineLearning.GuessingLower.randomized_log_lower.{u_1} {Ω : Type u_1} [MeasurableSpace Ω]
+  (μ : MeasureTheory.Measure Ω) [MeasureTheory.IsProbabilityMeasure μ] (A : Ω → List Bool → ℝ)
+  (hA : ∀ (h : List Bool), Measurable fun ω => A ω h) (hbound : ∀ (ω : Ω) (h : List Bool), A ω h ∈ Set.Icc 0 1) (T : ℕ)
+  (hT : 0 < T) :
+  ∃ v, Real.log (↑T + 2) / 6 ≤ ∫ (ω : Ω), BanditRL.OnlineLearning.GuessingLower.pathRegret (A ω) v.toList ∂μ
+'BanditRL.OnlineLearning.GuessingLower.randomized_log_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.ae_predictable_private_seed_expectedFixed_excess.{u, v} {Ω : Type u} {Seed : Type v}
+  [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : MeasureTheory.Measure Ω) [MeasureTheory.IsProbabilityMeasure μ]
+  (Y : ℕ → Ω → ℝ) (hY : ∀ (t : ℕ), Measurable (Y t)) (hlaw : ∀ (t : ℕ), ProbabilityTheory.IdentDistrib (Y t) (Y 0) μ μ)
+  (hb : ∀ (t : ℕ), ∀ᵐ (ω : Ω) ∂μ, Y t ω ∈ Set.Icc 0 1) (hind : ProbabilityTheory.iIndepFun Y μ) (S : Ω → Seed)
+  (hS : Measurable S) (hseed : ProbabilityTheory.IndepFun S (fun ω t => Y t ω) μ) (F : ℕ → MeasurableSpace Ω)
+  (hF : ∀ (t : ℕ), F t ≤ BanditRL.OnlineLearning.privateSeedPastInformation S Y t) (prediction : ℕ → Ω → ℝ)
+  (hP : ∀ (t : ℕ), MeasureTheory.AEStronglyMeasurable (prediction t) μ)
+  (hpb : ∀ (t : ℕ), ∀ᵐ (ω : Ω) ∂μ, prediction t ω ∈ Set.Icc 0 1) (T : ℕ) :
+  BanditRL.OnlineLearning.expectedFixedRegret μ Y prediction T =
+      ∑ t ∈ Finset.range T, ∫ (ω : Ω), (prediction t ω - ∫ (ω : Ω), Y 0 ω ∂μ) ^ 2 ∂μ ∧
+    0 ≤ BanditRL.OnlineLearning.expectedFixedRegret μ Y prediction T
+'BanditRL.OnlineLearning.ae_predictable_private_seed_expectedFixed_excess' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BanditRL.OnlineLearning.causal_kernel_realization_and_expectedFixed_excess
+  (κ : (t : ℕ) → ProbabilityTheory.Kernel (BanditRL.OnlineLearning.KernelDecisionHistory t) ↑unitInterval)
+  [∀ (t : ℕ), ProbabilityTheory.IsMarkovKernel (κ t)] :
+  ∃ f,
+    (∀ (t : ℕ), Measurable (Function.uncurry (f t))) ∧
+      (∀ (t : ℕ) (h : BanditRL.OnlineLearning.KernelDecisionHistory t),
+          MeasureTheory.Measure.map (f t h) MeasureTheory.volume = (κ t) h) ∧
+        (∀ (t : ℕ), Measurable (BanditRL.OnlineLearning.kernelCausalPolicy f t)) ∧
+          (∀ (t : ℕ) (u : ℕ → ↑unitInterval) (y : ℕ → ℝ) (i : Fin t),
+              BanditRL.OnlineLearning.kernelGeneratedActions f t (fun j => u ↑j) (fun j => y ↑j) i =
+                BanditRL.OnlineLearning.kernelGeneratedPrediction f ↑i (u, y)) ∧
+            (∀ (t : ℕ) (ω ω' : (ℕ → ↑unitInterval) × (ℕ → ℝ)),
+                (∀ i ≤ t, ω.1 i = ω'.1 i) →
+                  (∀ i < t, ω.2 i = ω'.2 i) →
+                    BanditRL.OnlineLearning.kernelGeneratedPrediction f t ω =
+                      BanditRL.OnlineLearning.kernelGeneratedPrediction f t ω') ∧
+              ∀ (ν : MeasureTheory.ProbabilityMeasure (ℕ → ℝ)),
+                (∀ (t : ℕ),
+                    MeasureTheory.Measure.map
+                        (fun ω =>
+                          (BanditRL.OnlineLearning.kernelGeneratedHistory f t ω,
+                            BanditRL.OnlineLearning.kernelGeneratedPrediction f t ω))
+                        (BanditRL.OnlineLearning.kernelGameLaw ν) =
+                      (MeasureTheory.Measure.map (BanditRL.OnlineLearning.kernelGeneratedHistory f t)
+                            (BanditRL.OnlineLearning.kernelGameLaw ν)).compProd
+                        (κ t)) ∧
+                  (∀ (t : ℕ),
+                      ⇑(ProbabilityTheory.condDistrib (BanditRL.OnlineLearning.kernelGeneratedPrediction f t)
+                            (BanditRL.OnlineLearning.kernelGeneratedHistory f t)
+                            (BanditRL.OnlineLearning.kernelGameLaw
+                              ν)) =ᵐ[MeasureTheory.Measure.map (BanditRL.OnlineLearning.kernelGeneratedHistory f t)
+                          (BanditRL.OnlineLearning.kernelGameLaw ν)]
+                        ⇑(κ t)) ∧
+                    (ProbabilityTheory.iIndepFun (fun t y => y t) ↑ν →
+                      (∀ (t : ℕ), ProbabilityTheory.IdentDistrib (fun y => y t) (fun y => y 0) ↑ν ↑ν) →
+                        (∀ (t : ℕ), ∀ᵐ (y : ℕ → ℝ) ∂↑ν, y t ∈ Set.Icc 0 1) →
+                          ∀ (T : ℕ),
+                            BanditRL.OnlineLearning.expectedFixedRegret (BanditRL.OnlineLearning.kernelGameLaw ν)
+                                  (fun t ω => ω.2 t)
+                                  (fun t ω => ↑(BanditRL.OnlineLearning.kernelGeneratedPrediction f t ω)) T =
+                                ∑ t ∈ Finset.range T,
+                                  ∫ (ω : (ℕ → ↑unitInterval) × (ℕ → ℝ)),
+                                    (↑(BanditRL.OnlineLearning.kernelGeneratedPrediction f t ω) -
+                                        ∫ (ω : (ℕ → ↑unitInterval) × (ℕ → ℝ)),
+                                          ω.2 0 ∂BanditRL.OnlineLearning.kernelGameLaw ν) ^
+                                      2 ∂BanditRL.OnlineLearning.kernelGameLaw ν ∧
+                              0 ≤
+                                BanditRL.OnlineLearning.expectedFixedRegret (BanditRL.OnlineLearning.kernelGameLaw ν)
+                                  (fun t ω => ω.2 t)
+                                  (fun t ω => ↑(BanditRL.OnlineLearning.kernelGeneratedPrediction f t ω)) T)
+'BanditRL.OnlineLearning.causal_kernel_realization_and_expectedFixed_excess' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BanditRL.OnlineLearning.centered_total_sublinear_iff_average (total : ℕ → ℝ) (c : ℝ) :
+  ((fun T => total T - ↑T * c) =o[Filter.atTop] fun T => ↑T) ↔
+    Filter.Tendsto (fun T => total T / ↑T - c) Filter.atTop (nhds 0)
+'BanditRL.OnlineLearning.centered_total_sublinear_iff_average' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BanditRL.OnlineLearning.comparatorRegret_eq_sum.{u_1} {X : Type u_1} (loss : ℕ → X → ℝ) (prediction : ℕ → X) (u : X)
+  (T : ℕ) :
+  BanditRL.OnlineLearning.comparatorRegret loss prediction u T =
+    ∑ t ∈ Finset.range T, (loss t (prediction t) - loss t u)
+'BanditRL.OnlineLearning.comparatorRegret_eq_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.comparatorRegret_le_squaredBestRegret (y prediction : ℕ → ℝ) (T : ℕ)
+  (hy : ∀ t < T, y t ∈ Set.Icc 0 1) (u : ℝ) (hu : u ∈ Set.Icc 0 1) :
+  BanditRL.OnlineLearning.comparatorRegret (fun t x => (x - y t) ^ 2) prediction u T ≤
+    BanditRL.OnlineLearning.squaredBestRegret y prediction T
+'BanditRL.OnlineLearning.comparatorRegret_le_squaredBestRegret' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BanditRL.OnlineLearning.completed_predictable_private_seed_expectedFixed_excess.{u, v} {Ω : Type u} {Seed : Type v}
+  [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : MeasureTheory.Measure Ω) [MeasureTheory.IsProbabilityMeasure μ]
+  (Y : ℕ → Ω → ℝ) (hY : ∀ (t : ℕ), Measurable (Y t)) (hlaw : ∀ (t : ℕ), ProbabilityTheory.IdentDistrib (Y t) (Y 0) μ μ)
+  (hb : ∀ (t : ℕ), ∀ᵐ (ω : Ω) ∂μ, Y t ω ∈ Set.Icc 0 1) (hind : ProbabilityTheory.iIndepFun Y μ) (S : Ω → Seed)
+  (hS : Measurable S) (hseed : ProbabilityTheory.IndepFun S (fun ω t => Y t ω) μ) (F : ℕ → MeasurableSpace Ω)
+  (hF : ∀ (t : ℕ), F t ≤ BanditRL.OnlineLearning.privateSeedPastInformation S Y t) (prediction : ℕ → Ω → ℝ)
+  (hP : ∀ (t : ℕ), Measurable (prediction t)) (hpb : ∀ (t : ℕ), ∀ᵐ (ω : Ω) ∂μ, prediction t ω ∈ Set.Icc 0 1) (T : ℕ) :
+  BanditRL.OnlineLearning.expectedFixedRegret μ Y prediction T =
+      ∑ t ∈ Finset.range T, ∫ (ω : Ω), (prediction t ω - ∫ (ω : Ω), Y 0 ω ∂μ) ^ 2 ∂μ ∧
+    0 ≤ BanditRL.OnlineLearning.expectedFixedRegret μ Y prediction T
+'BanditRL.OnlineLearning.completed_predictable_private_seed_expectedFixed_excess' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BanditRL.OnlineLearning.completed_predictable_private_seed_independent.{u, v} {Ω : Type u} {Seed : Type v}
+  [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : MeasureTheory.Measure Ω) [MeasureTheory.IsProbabilityMeasure μ]
+  (Y : ℕ → Ω → ℝ) (hY : ∀ (t : ℕ), Measurable (Y t)) (hind : ProbabilityTheory.iIndepFun Y μ) (S : Ω → Seed)
+  (hS : Measurable S) (hseed : ProbabilityTheory.IndepFun S (fun ω t => Y t ω) μ) (t : ℕ) (F : MeasurableSpace Ω)
+  (hF : F ≤ BanditRL.OnlineLearning.privateSeedPastInformation S Y t) (P : Ω → ℝ) (hP : Measurable P) :
+  ProbabilityTheory.IndepFun P (Y t) μ
+'BanditRL.OnlineLearning.completed_predictable_private_seed_independent' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BanditRL.OnlineLearning.constant_mean_expectedFixed_excess_zero.{u_1} {Ω : Type u_1} [MeasurableSpace Ω]
+  (μ : MeasureTheory.Measure Ω) [MeasureTheory.IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)
+  (hY : ∀ (t : ℕ), Measurable (Y t)) (hlaw : ∀ (t : ℕ), ProbabilityTheory.IdentDistrib (Y t) (Y 0) μ μ)
+  (hb : ∀ (t : ℕ), ∀ᵐ (ω : Ω) ∂μ, Y t ω ∈ Set.Icc 0 1) (T : ℕ) :
+  ∫ (ω : Ω), Y 0 ω ∂μ ∈ Set.Icc 0 1 ∧
+    BanditRL.OnlineLearning.expectedFixedRegret μ Y (fun x x_1 => ∫ (ω : Ω), Y 0 ω ∂μ) T = 0
+'BanditRL.OnlineLearning.constant_mean_expectedFixed_excess_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BanditRL.OnlineLearning.dyadic_meanPredict_obstruction :
+  BanditRL.OnlineLearning.NoRegret (Set.Icc 0 1) (fun t x => (x - BanditRL.OnlineLearning.dyadicObservation t) ^ 2)
+      (BanditRL.OnlineLearning.meanPredict BanditRL.OnlineLearning.dyadicObservation) ∧
+    Filter.Tendsto
+        (fun T =>
+          BanditRL.OnlineLearning.squaredBestRegret BanditRL.OnlineLearning.dyadicObservation
+              (BanditRL.OnlineLearning.meanPredict BanditRL.OnlineLearning.dyadicObservation) T /
+            ↑T)
+        Filter.atTop (nhds 0) ∧
+      (¬∃ a,
+            Filter.Tendsto
+              (fun T =>
+                BanditRL.OnlineLearning.comparatorRegret
+                    (fun t x => (x - BanditRL.OnlineLearning.dyadicObservation t) ^ 2)
+                    (BanditRL.OnlineLearning.meanPredict BanditRL.OnlineLearning.dyadicObservation) 0 T /
+                  ↑T)
+              Filter.atTop (nhds a)) ∧
+        ¬BanditRL.OnlineLearning.LimitNoRegret (Set.Icc 0 1)
+            (fun t x => (x - BanditRL.OnlineLearning.dyadicObservation t) ^ 2)
+            (BanditRL.OnlineLearning.meanPredict BanditRL.OnlineLearning.dyadicObservation)
+'BanditRL.OnlineLearning.dyadic_meanPredict_obstruction' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.empiricalMean_decomposition (y : ℕ → ℝ) (n : ℕ) (hn : 0 < n) (u : ℝ) :
+  ∑ t ∈ Finset.range n, (u - y t) ^ 2 =
+    ∑ t ∈ Finset.range n, (BanditRL.OnlineLearning.empiricalMean y n - y t) ^ 2 +
+      ↑n * (u - BanditRL.OnlineLearning.empiricalMean y n) ^ 2
+'BanditRL.OnlineLearning.empiricalMean_decomposition' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.empiricalMean_mem (y : ℕ → ℝ) (n : ℕ) (hn : 0 < n) (hy : ∀ t < n, y t ∈ Set.Icc 0 1) :
+  BanditRL.OnlineLearning.empiricalMean y n ∈ Set.Icc 0 1
+'BanditRL.OnlineLearning.empiricalMean_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.empiricalMean_minimizes (y : ℕ → ℝ) (n : ℕ) (hn : 0 < n) (u : ℝ) :
+  ∑ t ∈ Finset.range n, (BanditRL.OnlineLearning.empiricalMean y n - y t) ^ 2 ≤ ∑ t ∈ Finset.range n, (u - y t) ^ 2
+'BanditRL.OnlineLearning.empiricalMean_minimizes' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.empiricalMean_unique (y : ℕ → ℝ) (n : ℕ) (hn : 0 < n) (u : ℝ)
+  (hu :
+    ∑ t ∈ Finset.range n, (u - y t) ^ 2 ≤ ∑ t ∈ Finset.range n, (BanditRL.OnlineLearning.empiricalMean y n - y t) ^ 2) :
+  u = BanditRL.OnlineLearning.empiricalMean y n
+'BanditRL.OnlineLearning.empiricalMean_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.empiricalMean_update (y : ℕ → ℝ) (t : ℕ) (ht : 0 < t) :
+  BanditRL.OnlineLearning.empiricalMean y (t + 1) =
+    BanditRL.OnlineLearning.empiricalMean y t + (y t - BanditRL.OnlineLearning.empiricalMean y t) / (↑t + 1)
+'BanditRL.OnlineLearning.empiricalMean_update' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.expectedFixedMinimum_eq_variance.{u_1} {Ω : Type u_1} [MeasurableSpace Ω]
+  (μ : MeasureTheory.Measure Ω) [MeasureTheory.IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)
+  (hY : ∀ (t : ℕ), Measurable (Y t)) (hlaw : ∀ (t : ℕ), ProbabilityTheory.IdentDistrib (Y t) (Y 0) μ μ)
+  (hb : ∀ (t : ℕ), ∀ᵐ (ω : Ω) ∂μ, Y t ω ∈ Set.Icc 0 1) (T : ℕ) :
+  BanditRL.OnlineLearning.expectedFixedMinimum μ Y T = ↑T * ProbabilityTheory.variance (Y 0) μ
+'BanditRL.OnlineLearning.expectedFixedMinimum_eq_variance' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.expected_fixed_prefix_decomposition.{u_1} {Ω : Type u_1} [MeasurableSpace Ω]
+  (μ : MeasureTheory.Measure Ω) [MeasureTheory.IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)
+  (hY : ∀ (t : ℕ), Measurable (Y t)) (hlaw : ∀ (t : ℕ), ProbabilityTheory.IdentDistrib (Y t) (Y 0) μ μ)
+  (hb : ∀ (t : ℕ), ∀ᵐ (ω : Ω) ∂μ, Y t ω ∈ Set.Icc 0 1) (T : ℕ) (u : ℝ) :
+  ∫ (ω : Ω), ∑ t ∈ Finset.range T, (u - Y t ω) ^ 2 ∂μ =
+    ↑T * ProbabilityTheory.variance (Y 0) μ + ↑T * (u - ∫ (ω : Ω), Y 0 ω ∂μ) ^ 2
+'BanditRL.OnlineLearning.expected_fixed_prefix_decomposition' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.expected_fixed_prefix_minimum.{u_1} {Ω : Type u_1} [MeasurableSpace Ω]
+  (μ : MeasureTheory.Measure Ω) [MeasureTheory.IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)
+  (hY : ∀ (t : ℕ), Measurable (Y t)) (hlaw : ∀ (t : ℕ), ProbabilityTheory.IdentDistrib (Y t) (Y 0) μ μ)
+  (hb : ∀ (t : ℕ), ∀ᵐ (ω : Ω) ∂μ, Y t ω ∈ Set.Icc 0 1) (T : ℕ) :
+  ∫ (ω : Ω), Y 0 ω ∂μ ∈ Set.Icc 0 1 ∧
+    IsLeast ((fun u => ∫ (ω : Ω), ∑ t ∈ Finset.range T, (u - Y t ω) ^ 2 ∂μ) '' Set.Icc 0 1)
+      (↑T * ProbabilityTheory.variance (Y 0) μ)
+'BanditRL.OnlineLearning.expected_fixed_prefix_minimum' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.ftlPredict_half (y : ℕ → ℝ) (t : ℕ) :
+  BanditRL.OnlineLearning.ftlPredict (1 / 2) y t = BanditRL.OnlineLearning.meanPredict y t
+'BanditRL.OnlineLearning.ftlPredict_half' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.ftlPredict_mem (initial : ℝ) (y : ℕ → ℝ) (t : ℕ) (hi : initial ∈ Set.Icc 0 1)
+  (hy : ∀ i < t, y i ∈ Set.Icc 0 1) : BanditRL.OnlineLearning.ftlPredict initial y t ∈ Set.Icc 0 1
+'BanditRL.OnlineLearning.ftlPredict_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.ftlPredict_prefix (initial : ℝ) (y z : ℕ → ℝ) (t : ℕ) (h : ∀ i < t, y i = z i) :
+  BanditRL.OnlineLearning.ftlPredict initial y t = BanditRL.OnlineLearning.ftlPredict initial z t
+'BanditRL.OnlineLearning.ftlPredict_prefix' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.ftlState_eq_predict (initial : ℝ) (y : ℕ → ℝ) (t : ℕ) :
+  BanditRL.OnlineLearning.ftlState initial y t = (t, BanditRL.OnlineLearning.ftlPredict initial y t)
+'BanditRL.OnlineLearning.ftlState_eq_predict' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.ftlState_first (initial : ℝ) (y : ℕ → ℝ) :
+  BanditRL.OnlineLearning.ftlState initial y 1 = (1, y 0)
+'BanditRL.OnlineLearning.ftlState_first' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.ftlState_half (y : ℕ → ℝ) (t : ℕ) :
+  BanditRL.OnlineLearning.ftlState (1 / 2) y t = (t, BanditRL.OnlineLearning.meanPredict y t)
+'BanditRL.OnlineLearning.ftlState_half' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.ftlState_mem (initial : ℝ) (y : ℕ → ℝ) (t : ℕ) (hi : initial ∈ Set.Icc 0 1)
+  (hy : ∀ i < t, y i ∈ Set.Icc 0 1) : (BanditRL.OnlineLearning.ftlState initial y t).2 ∈ Set.Icc 0 1
+'BanditRL.OnlineLearning.ftlState_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.ftlState_prefix (initial : ℝ) (y z : ℕ → ℝ) (t : ℕ) (h : ∀ i < t, y i = z i) :
+  BanditRL.OnlineLearning.ftlState initial y t = BanditRL.OnlineLearning.ftlState initial z t
+'BanditRL.OnlineLearning.ftlState_prefix' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.guessing_prefix_minimum (y : ℕ → ℝ) (T : ℕ) (hy : ∀ t < T, y t ∈ Set.Icc 0 1) :
+  BanditRL.OnlineLearning.empiricalMean y T ∈ Set.Icc 0 1 ∧
+    ∀ u ∈ Set.Icc 0 1,
+      ∑ t ∈ Finset.range T, (BanditRL.OnlineLearning.empiricalMean y T - y t) ^ 2 ≤ ∑ t ∈ Finset.range T, (u - y t) ^ 2
+'BanditRL.OnlineLearning.guessing_prefix_minimum' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.history_policy_normalized_expectedFixed_excess.{u_1} {Ω : Type u_1} [MeasurableSpace Ω]
+  (μ : MeasureTheory.Measure Ω) [MeasureTheory.IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)
+  (hY : ∀ (t : ℕ), Measurable (Y t)) (hlaw : ∀ (t : ℕ), ProbabilityTheory.IdentDistrib (Y t) (Y 0) μ μ)
+  (hb : ∀ (t : ℕ), ∀ᵐ (ω : Ω) ∂μ, Y t ω ∈ Set.Icc 0 1) (hind : ProbabilityTheory.iIndepFun Y μ)
+  (policy : (t : ℕ) → (↥(Finset.range t) → ℝ) → ℝ) (hp : ∀ (t : ℕ), Measurable (policy t))
+  (hpb :
+    ∀ (t : ℕ) (z : ↥(Finset.range t) → ℝ), (∀ (i : ↥(Finset.range t)), z i ∈ Set.Icc 0 1) → policy t z ∈ Set.Icc 0 1)
+  (T : ℕ) (hT : 0 < T) :
+  (∫ (ω : Ω), ∑ t ∈ Finset.range T, ((policy t fun i => Y (↑i) ω) - Y t ω) ^ 2 ∂μ) / ↑T -
+      ProbabilityTheory.variance (Y 0) μ =
+    BanditRL.OnlineLearning.expectedFixedRegret μ Y (fun t ω => policy t fun i => Y (↑i) ω) T / ↑T
+'BanditRL.OnlineLearning.history_policy_normalized_expectedFixed_excess' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BanditRL.OnlineLearning.lemma_1_2.{u_1} {X : Type u_1} (V : Set X) (loss : ℕ → X → ℝ) (leader : ℕ → X) (T : ℕ)
+  (hmem : ∀ (n : ℕ), 0 < n → n ≤ T → leader n ∈ V)
+  (hmin :
+    ∀ (n : ℕ), 0 < n → n ≤ T → ∀ u ∈ V, ∑ t ∈ Finset.range n, loss t (leader n) ≤ ∑ t ∈ Finset.range n, loss t u) :
+  ∑ t ∈ Finset.range T, loss t (leader (t + 1)) ≤ ∑ t ∈ Finset.range T, loss t (leader T)
+'BanditRL.OnlineLearning.lemma_1_2' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.limitNoRegret_iff_noRegret_of_converges.{u_1} {X : Type u_1} (V : Set X) (loss : ℕ → X → ℝ)
+  (prediction : ℕ → X)
+  (hc :
+    ∀ u ∈ V,
+      ∃ a,
+        Filter.Tendsto (fun T => BanditRL.OnlineLearning.comparatorRegret loss prediction u T / ↑T) Filter.atTop
+          (nhds a)) :
+  BanditRL.OnlineLearning.LimitNoRegret V loss prediction ↔ BanditRL.OnlineLearning.NoRegret V loss prediction
+'BanditRL.OnlineLearning.limitNoRegret_iff_noRegret_of_converges' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BanditRL.OnlineLearning.limitNoRegret_implies_noRegret.{u_1} {X : Type u_1} (V : Set X) (loss : ℕ → X → ℝ)
+  (prediction : ℕ → X) (hL : BanditRL.OnlineLearning.LimitNoRegret V loss prediction) :
+  BanditRL.OnlineLearning.NoRegret V loss prediction
+'BanditRL.OnlineLearning.limitNoRegret_implies_noRegret' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.meanPredict_bestRegret_average_tendsto_zero (y : ℕ → ℝ) (hy : ∀ (t : ℕ), y t ∈ Set.Icc 0 1) :
+  Filter.Tendsto (fun T => BanditRL.OnlineLearning.squaredBestRegret y (BanditRL.OnlineLearning.meanPredict y) T / ↑T)
+    Filter.atTop (nhds 0)
+'BanditRL.OnlineLearning.meanPredict_bestRegret_average_tendsto_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BanditRL.OnlineLearning.meanPredict_bestRegret_bound (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T)
+  (hy : ∀ t < T, y t ∈ Set.Icc 0 1) :
+  BanditRL.OnlineLearning.squaredBestRegret y (BanditRL.OnlineLearning.meanPredict y) T ≤ 4 + 4 * Real.log ↑T
+'BanditRL.OnlineLearning.meanPredict_bestRegret_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.meanPredict_bestRegret_refined (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T)
+  (hy : ∀ t < T, y t ∈ Set.Icc 0 1) :
+  BanditRL.OnlineLearning.squaredBestRegret y (BanditRL.OnlineLearning.meanPredict y) T ≤
+    1 / 4 + ∑ t ∈ Finset.range (T - 1), 4 / (↑t + 2)
+'BanditRL.OnlineLearning.meanPredict_bestRegret_refined' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.meanPredict_iid_success.{u} {Ω : Type u} [MeasurableSpace Ω] (μ : MeasureTheory.Measure Ω)
+  [MeasureTheory.IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ (t : ℕ), Measurable (Y t))
+  (hlaw : ∀ (t : ℕ), ProbabilityTheory.IdentDistrib (Y t) (Y 0) μ μ)
+  (hb : ∀ (t : ℕ), ∀ᵐ (ω : Ω) ∂μ, Y t ω ∈ Set.Icc 0 1) (hind : ProbabilityTheory.iIndepFun Y μ) :
+  Filter.Tendsto
+      (fun T =>
+        BanditRL.OnlineLearning.expectedFixedRegret μ Y
+            (fun t ω => BanditRL.OnlineLearning.meanPredict (fun i => Y i ω) t) T /
+          ↑T)
+      Filter.atTop (nhds 0) ∧
+    (fun T =>
+        BanditRL.OnlineLearning.expectedFixedRegret μ Y
+          (fun t ω => BanditRL.OnlineLearning.meanPredict (fun i => Y i ω) t) T) =o[Filter.atTop]
+      fun T => ↑T
+'BanditRL.OnlineLearning.meanPredict_iid_success' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.meanPredict_initial_stability (y : ℕ → ℝ) (hy : y 0 ∈ Set.Icc 0 1) :
+  (BanditRL.OnlineLearning.meanPredict y 0 - y 0) ^ 2 - (BanditRL.OnlineLearning.empiricalMean y 1 - y 0) ^ 2 ≤ 1 / 4
+'BanditRL.OnlineLearning.meanPredict_initial_stability' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.meanPredict_limitNoRegret_iff_mean_converges (y : ℕ → ℝ) (hy : ∀ (t : ℕ), y t ∈ Set.Icc 0 1) :
+  BanditRL.OnlineLearning.LimitNoRegret (Set.Icc 0 1) (fun t x => (x - y t) ^ 2)
+      (BanditRL.OnlineLearning.meanPredict y) ↔
+    ∃ m ∈ Set.Icc 0 1, Filter.Tendsto (BanditRL.OnlineLearning.empiricalMean y) Filter.atTop (nhds m)
+'BanditRL.OnlineLearning.meanPredict_limitNoRegret_iff_mean_converges' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BanditRL.OnlineLearning.meanPredict_mem (y : ℕ → ℝ) (t : ℕ) (hy : ∀ i < t, y i ∈ Set.Icc 0 1) :
+  BanditRL.OnlineLearning.meanPredict y t ∈ Set.Icc 0 1
+'BanditRL.OnlineLearning.meanPredict_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.meanPredict_noRegret (y : ℕ → ℝ) (hy : ∀ (t : ℕ), y t ∈ Set.Icc 0 1) :
+  BanditRL.OnlineLearning.NoRegret (Set.Icc 0 1) (fun t x => (x - y t) ^ 2) (BanditRL.OnlineLearning.meanPredict y)
+'BanditRL.OnlineLearning.meanPredict_noRegret' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.meanPredict_prefix (y z : ℕ → ℝ) (t : ℕ) (h : ∀ i < t, y i = z i) :
+  BanditRL.OnlineLearning.meanPredict y t = BanditRL.OnlineLearning.meanPredict z t
+'BanditRL.OnlineLearning.meanPredict_prefix' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.meanPredict_regret_refined (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T) (hy : ∀ t < T, y t ∈ Set.Icc 0 1) :
+  ∑ t ∈ Finset.range T, (BanditRL.OnlineLearning.meanPredict y t - y t) ^ 2 -
+      ∑ t ∈ Finset.range T, (BanditRL.OnlineLearning.empiricalMean y T - y t) ^ 2 ≤
+    1 / 4 + ∑ t ∈ Finset.range (T - 1), 4 / (↑t + 2)
+'BanditRL.OnlineLearning.meanPredict_regret_refined' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.meanPredict_stability (y : ℕ → ℝ) (t : ℕ) (hy : ∀ i ≤ t, y i ∈ Set.Icc 0 1) :
+  (BanditRL.OnlineLearning.meanPredict y t - y t) ^ 2 - (BanditRL.OnlineLearning.empiricalMean y (t + 1) - y t) ^ 2 ≤
+    4 / (↑t + 1)
+'BanditRL.OnlineLearning.meanPredict_stability' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.normalized_excess (total variance : ℝ) (T : ℕ) (hT : 0 < T) :
+  total / ↑T - variance = (total - ↑T * variance) / ↑T
+'BanditRL.OnlineLearning.normalized_excess' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.randomized_history_policy_expectedFixed_excess.{u, v} {Ω : Type u} {Seed : Type v}
+  [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : MeasureTheory.Measure Ω) [MeasureTheory.IsProbabilityMeasure μ]
+  (Y : ℕ → Ω → ℝ) (hY : ∀ (t : ℕ), Measurable (Y t)) (hlaw : ∀ (t : ℕ), ProbabilityTheory.IdentDistrib (Y t) (Y 0) μ μ)
+  (hb : ∀ (t : ℕ), ∀ᵐ (ω : Ω) ∂μ, Y t ω ∈ Set.Icc 0 1) (hind : ProbabilityTheory.iIndepFun Y μ) (S : Ω → Seed)
+  (hS : Measurable S) (hseed : ProbabilityTheory.IndepFun S (fun ω t => Y t ω) μ)
+  (policy : (t : ℕ) → Seed × (↥(Finset.range t) → ℝ) → ℝ) (hp : ∀ (t : ℕ), Measurable (policy t))
+  (hpb :
+    ∀ (t : ℕ) (s : Seed) (z : ↥(Finset.range t) → ℝ),
+      (∀ (i : ↥(Finset.range t)), z i ∈ Set.Icc 0 1) → policy t (s, z) ∈ Set.Icc 0 1)
+  (T : ℕ) :
+  BanditRL.OnlineLearning.expectedFixedRegret μ Y (fun t ω => policy t (S ω, fun i => Y (↑i) ω)) T =
+      ∑ t ∈ Finset.range T, ∫ (ω : Ω), (policy t (S ω, fun i => Y (↑i) ω) - ∫ (ω : Ω), Y 0 ω ∂μ) ^ 2 ∂μ ∧
+    0 ≤ BanditRL.OnlineLearning.expectedFixedRegret μ Y (fun t ω => policy t (S ω, fun i => Y (↑i) ω)) T
+'BanditRL.OnlineLearning.randomized_history_policy_expectedFixed_excess' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BanditRL.OnlineLearning.randomized_history_policy_independent.{u, v} {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω]
+  [MeasurableSpace Seed] (μ : MeasureTheory.Measure Ω) [MeasureTheory.IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)
+  (hY : ∀ (t : ℕ), Measurable (Y t)) (hind : ProbabilityTheory.iIndepFun Y μ) (S : Ω → Seed) (hS : Measurable S)
+  (hseed : ProbabilityTheory.IndepFun S (fun ω t => Y t ω) μ) (policy : (t : ℕ) → Seed × (↥(Finset.range t) → ℝ) → ℝ)
+  (hp : ∀ (t : ℕ), Measurable (policy t)) (t : ℕ) :
+  ProbabilityTheory.IndepFun (fun ω => policy t (S ω, fun i => Y (↑i) ω)) (Y t) μ
+'BanditRL.OnlineLearning.randomized_history_policy_independent' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BanditRL.OnlineLearning.randomized_history_policy_success_iff.{u, v} {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω]
+  [MeasurableSpace Seed] (μ : MeasureTheory.Measure Ω) [MeasureTheory.IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)
+  (hY : ∀ (t : ℕ), Measurable (Y t)) (hlaw : ∀ (t : ℕ), ProbabilityTheory.IdentDistrib (Y t) (Y 0) μ μ)
+  (hb : ∀ (t : ℕ), ∀ᵐ (ω : Ω) ∂μ, Y t ω ∈ Set.Icc 0 1) (hind : ProbabilityTheory.iIndepFun Y μ) (S : Ω → Seed)
+  (hS : Measurable S) (hseed : ProbabilityTheory.IndepFun S (fun ω t => Y t ω) μ)
+  (policy : (t : ℕ) → Seed × (↥(Finset.range t) → ℝ) → ℝ) (hp : ∀ (t : ℕ), Measurable (policy t))
+  (hpb :
+    ∀ (t : ℕ) (s : Seed) (z : ↥(Finset.range t) → ℝ),
+      (∀ (i : ↥(Finset.range t)), z i ∈ Set.Icc 0 1) → policy t (s, z) ∈ Set.Icc 0 1) :
+  have prediction := fun t ω => policy t (S ω, fun i => Y (↑i) ω);
+  (∀ (T : ℕ), 0 ≤ BanditRL.OnlineLearning.expectedFixedRegret μ Y prediction T) ∧
+    (((fun T => BanditRL.OnlineLearning.expectedFixedRegret μ Y prediction T) =o[Filter.atTop] fun T => ↑T) ↔
+        Filter.Tendsto
+          (fun T =>
+            (∫ (ω : Ω), ∑ t ∈ Finset.range T, (prediction t ω - Y t ω) ^ 2 ∂μ) / ↑T -
+              ProbabilityTheory.variance (Y 0) μ)
+          Filter.atTop (nhds 0)) ∧
+      (Filter.Tendsto
+          (fun T =>
+            (∫ (ω : Ω), ∑ t ∈ Finset.range T, (prediction t ω - Y t ω) ^ 2 ∂μ) / ↑T -
+              ProbabilityTheory.variance (Y 0) μ)
+          Filter.atTop (nhds 0) ↔
+        Filter.Tendsto (fun T => (∑ t ∈ Finset.range T, ∫ (ω : Ω), (prediction t ω - ∫ (ω : Ω), Y 0 ω ∂μ) ^ 2 ∂μ) / ↑T)
+          Filter.atTop (nhds 0))
+'BanditRL.OnlineLearning.randomized_history_policy_success_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BanditRL.OnlineLearning.squaredBestRegret_eq_comparatorRegret (y prediction : ℕ → ℝ) (T : ℕ)
+  (hy : ∀ t < T, y t ∈ Set.Icc 0 1) :
+  BanditRL.OnlineLearning.squaredBestRegret y prediction T =
+    BanditRL.OnlineLearning.comparatorRegret (fun t x => (x - y t) ^ 2) prediction
+      (BanditRL.OnlineLearning.empiricalMean y T) T
+'BanditRL.OnlineLearning.squaredBestRegret_eq_comparatorRegret' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BanditRL.OnlineLearning.squaredLoss_minimum_eq (y : ℕ → ℝ) (T : ℕ) (hy : ∀ t < T, y t ∈ Set.Icc 0 1) :
+  sInf ((fun u => ∑ t ∈ Finset.range T, (u - y t) ^ 2) '' Set.Icc 0 1) =
+    ∑ t ∈ Finset.range T, (BanditRL.OnlineLearning.empiricalMean y T - y t) ^ 2
+'BanditRL.OnlineLearning.squaredLoss_minimum_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+BanditRL.OnlineLearning.theorem_1_3 (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T) (hy : ∀ t < T, y t ∈ Set.Icc 0 1) :
+  ∑ t ∈ Finset.range T, (BanditRL.OnlineLearning.meanPredict y t - y t) ^ 2 -
+      ∑ t ∈ Finset.range T, (BanditRL.OnlineLearning.empiricalMean y T - y t) ^ 2 ≤
+    4 + 4 * Real.log ↑T
+'BanditRL.OnlineLearning.theorem_1_3' depends on axioms: [propext, Classical.choice, Quot.sound]
+harmonic_le_one_add_log (n : ℕ) : ↑(harmonic n) ≤ 1 + Real.log ↑n
+'harmonic_le_one_add_log' depends on axioms: [propext, Classical.choice, Quot.sound]

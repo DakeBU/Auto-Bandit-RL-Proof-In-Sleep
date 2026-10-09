@@ -1,0 +1,374 @@
+BanditRL.OnlineLearning.prefixCoefficient [def] BanditRLProof/OnlineFTLFailure.lean:27
+  def prefixCoefficient (z : ℕ → ℝ) : ℕ → ℝ | 0 => 0 | t+1 => prefixCoefficient z t + z t
+BanditRL.OnlineLearning.linearFTLPredict [def] BanditRLProof/OnlineFTLFailure.lean:31
+  def linearFTLPredict (z : ℕ → ℝ) (x0 : ℝ) (t : ℕ) : ℝ
+BanditRL.OnlineLearning.failureCoefficient [def] BanditRLProof/OnlineFTLFailure.lean:34
+  def failureCoefficient (t : ℕ) : ℝ
+BanditRL.OnlineLearning.prefixCoefficient_eq_sum [theorem] BanditRLProof/OnlineFTLFailure.lean:37
+  theorem prefixCoefficient_eq_sum (z : ℕ → ℝ) (t : ℕ) : prefixCoefficient z t = ∑ i ∈ range t, z i
+BanditRL.OnlineLearning.linearFTLPredict_prefix [theorem] BanditRLProof/OnlineFTLFailure.lean:43
+  theorem linearFTLPredict_prefix (z w : ℕ → ℝ) (x0 : ℝ) (t : ℕ) (h : ∀ i < t, z i = w i) : linearFTLPredict z x0 t = linearFTLPredict w x0 t
+BanditRL.OnlineLearning.linearFTLPredict_mem [theorem] BanditRLProof/OnlineFTLFailure.lean:52
+  theorem linearFTLPredict_mem (z : ℕ → ℝ) (x0 : ℝ) (hx0 : x0 ∈ Icc (-1 : ℝ) 1) (t : ℕ) : linearFTLPredict z x0 t ∈ Icc (-1 : ℝ) 1
+BanditRL.OnlineLearning.linearFTLPredict_minimizes [theorem] BanditRLProof/OnlineFTLFailure.lean:57
+  theorem linearFTLPredict_minimizes (z : ℕ → ℝ) (x0 : ℝ) (t : ℕ) (u : ℝ) (hu : u ∈ Icc (-1 : ℝ) 1) : (∑ i ∈ range t, z i * linearFTLPredict z x0 t) ≤ ∑ i ∈ range t, z i * u
+BanditRL.OnlineLearning.failure_prefixCoefficient [theorem] BanditRLProof/OnlineFTLFailure.lean:69
+  theorem failure_prefixCoefficient (t : ℕ) (ht : 0 < t) : prefixCoefficient failureCoefficient t = if t % 2 = 1 then -(1/2) else (1/2)
+BanditRL.OnlineLearning.failure_prediction [theorem] BanditRLProof/OnlineFTLFailure.lean:83
+  theorem failure_prediction (x0 : ℝ) (t : ℕ) (ht : 0 < t) : linearFTLPredict failureCoefficient x0 t = if t % 2 = 1 then 1 else -1
+BanditRL.OnlineLearning.example_2_10 [theorem] BanditRLProof/OnlineFTLFailure.lean:89
+  theorem example_2_10 (x0 : ℝ) (hx0 : x0 ∈ Icc (-1 : ℝ) 1) (T : ℕ) (hT : 0 < T) : (∑ t ∈ range T, failureCoefficient t * linearFTLPredict failureCoefficient x0 t) - (∑ t ∈ range T, failureCoefficient t * (0 : ℝ)) = (T : ℝ) - 1 - x0 / 2 ∧ (T : ℝ) - 3/2 ≤ (∑ t ∈ range T, failureCoefficient t * linearFTLPredict failureCoefficient x0 t) - (∑ t ∈ range T, failureCoefficient t * (0 : ℝ))
+BanditRL.OnlineLearning.meanPredict_bestLoss_nonneg [theorem] BanditRLProof/OnlineFTLLimitSemantics.lean:10
+  theorem meanPredict_bestLoss_nonneg (y : ℕ → ℝ) (T : ℕ) : 0 ≤ comparatorRegret (fun t x => (x - y t)^2) (meanPredict y) (empiricalMean y T) T
+BanditRL.OnlineLearning.meanPredict_comparator_decomposition [theorem] BanditRLProof/OnlineFTLLimitSemantics.lean:28
+  theorem meanPredict_comparator_decomposition (y : ℕ → ℝ) (u : ℝ) (T : ℕ) : comparatorRegret (fun t x => (x - y t)^2) (meanPredict y) u T = comparatorRegret (fun t x => (x - y t)^2) (meanPredict y) (empiricalMean y T) T - (T : ℝ) * (u - empiricalMean y T)^2
+BanditRL.OnlineLearning.meanPredict_bestRegret_average_tendsto_zero [theorem] BanditRLProof/OnlineFTLLimitSemantics.lean:41
+  theorem meanPredict_bestRegret_average_tendsto_zero (y : ℕ → ℝ) (hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1) : Tendsto (fun T : ℕ => squaredBestRegret y (meanPredict y) T / (T : ℝ)) atTop (nhds (0 : ℝ))
+BanditRL.OnlineLearning.meanPredict_fixedRegret_limit_iff [theorem] BanditRLProof/OnlineFTLLimitSemantics.lean:73
+  theorem meanPredict_fixedRegret_limit_iff (y : ℕ → ℝ) (hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1) (u a : ℝ) : Tendsto (fun T : ℕ => comparatorRegret (fun t x => (x - y t)^2) (meanPredict y) u T / (T : ℝ)) atTop (nhds a) ↔ Tendsto (fun T : ℕ => (u - empiricalMean y T)^2) atTop (nhds (-a))
+BanditRL.OnlineLearning.meanPredict_limitNoRegret_of_mean_converges [theorem] BanditRLProof/OnlineFTLLimitSemantics.lean:104
+  theorem meanPredict_limitNoRegret_of_mean_converges (y : ℕ → ℝ) (hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1) (m : ℝ) (hm : Tendsto (empiricalMean y) atTop (nhds m)) : (∀ u : ℝ, Tendsto (fun T : ℕ => comparatorRegret (fun t x => (x - y t)^2) (meanPredict y) u T / (T : ℝ)) atTop (nhds (-(u - m)^2))) ∧ LimitNoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - y t)^2) (meanPredict y)
+BanditRL.OnlineLearning.dyadicObservation [def] BanditRLProof/OnlineFTLOscillation.lean:8
+  noncomputable def dyadicObservation : ℕ → ℝ | 0 => 0 | n + 1 => 1 - dyadicObservation (n / 2) termination_by n => n decreasing_by omega
+BanditRL.OnlineLearning.meanPredict_limitNoRegret_iff_mean_converges [theorem] BanditRLProof/OnlineFTLOscillation.lean:16
+  theorem meanPredict_limitNoRegret_iff_mean_converges (y : ℕ → ℝ) (hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1) : LimitNoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - y t)^2) (meanPredict y) ↔ ∃ m ∈ Set.Icc (0 : ℝ) 1, Tendsto (empiricalMean y) atTop (nhds m)
+BanditRL.OnlineLearning.dyadicObservation_unit [theorem] BanditRLProof/OnlineFTLOscillation.lean:57
+  theorem dyadicObservation_unit : ∀ t, dyadicObservation t ∈ Set.Icc (0 : ℝ) 1
+BanditRL.OnlineLearning.dyadic_empiricalMean_subsequences [theorem] BanditRLProof/OnlineFTLOscillation.lean:161
+  theorem dyadic_empiricalMean_subsequences : Tendsto (fun n : ℕ => empiricalMean dyadicObservation (4^(n + 1) - 1)) atTop (nhds ((2 : ℝ) / 3)) ∧ Tendsto (fun n : ℕ => empiricalMean dyadicObservation (2 * 4^n - 1)) atTop (nhds ((1 : ℝ) / 3))
+BanditRL.OnlineLearning.dyadic_meanPredict_obstruction [theorem] BanditRLProof/OnlineFTLOscillation.lean:185
+  theorem dyadic_meanPredict_obstruction : NoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - dyadicObservation t)^2) (meanPredict dyadicObservation) ∧ Tendsto (fun T : ℕ => squaredBestRegret dyadicObservation (meanPredict dyadicObservation) T / (T : ℝ)) atTop (nhds (0 : ℝ)) ∧ (¬ ∃ a : ℝ, Tendsto (fun T : ℕ => comparatorRegret (fun t x => (x - dyadicObservation t)^2) (meanPredict dyadicObservation) 0 T / (T : ℝ)) atTop (nhds a)) ∧ ¬ LimitNoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - dyadicObservation t)^2) (meanPredict dyadicObservation)
+BanditRL.OnlineLearning.ae_predictable_exists_bounded_history_policy [theorem] BanditRLProof/OnlineGuessingAECausal.lean:13
+  theorem ae_predictable_exists_bounded_history_policy {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : Measure Ω) (Y : ℕ → Ω → ℝ) (S : Ω → Seed) (F : ℕ → MeasurableSpace Ω) (hF : ∀ t, F t ≤ privateSeedPastInformation S Y t) (prediction : ℕ → Ω → ℝ) (hP : ∀ t, AEStronglyMeasurable[F t] (prediction t) μ) (hpb : ∀ t, ∀ᵐ ω ∂μ, prediction t ω ∈ Set.Icc (0 : ℝ) 1) : ∃ policy : (t : ℕ) → (Seed × ((↑(Finset.range t) : Type) → ℝ)) → ℝ, (∀ t, Measurable (policy t)) ∧ (∀ t q, policy t q ∈ Set.Icc (0 : ℝ) 1) ∧ ∀ᵐ ω ∂μ, ∀ t, prediction t ω = policy t (S ω, fun i => Y i ω)
+BanditRL.OnlineLearning.ae_predictable_private_seed_independent [theorem] BanditRLProof/OnlineGuessingAECausal.lean:54
+  theorem ae_predictable_private_seed_independent {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ) (S : Ω → Seed) (hS : Measurable S) (hseed : IndepFun S (fun ω t => Y t ω) μ) (t : ℕ) (F : MeasurableSpace Ω) (hF : F ≤ privateSeedPastInformation S Y t) (P : Ω → ℝ) (hP : AEStronglyMeasurable[F] P μ) : IndepFun P (Y t) μ
+BanditRL.OnlineLearning.ae_predictable_private_seed_expectedFixed_excess [theorem] BanditRLProof/OnlineGuessingAECausal.lean:69
+  theorem ae_predictable_private_seed_expectedFixed_excess {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (hind : iIndepFun Y μ) (S : Ω → Seed) (hS : Measurable S) (hseed : IndepFun S (fun ω t => Y t ω) μ) (F : ℕ → MeasurableSpace Ω) (hF : ∀ t, F t ≤ privateSeedPastInformation S Y t) (prediction : ℕ → Ω → ℝ) (hP : ∀ t, AEStronglyMeasurable[F t] (prediction t) μ) (hpb : ∀ t, ∀ᵐ ω ∂μ, prediction t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) : expectedFixedRegret μ Y prediction T = (∑ t ∈ Finset.range T, ∫ ω, (prediction t ω - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) ∧ 0 ≤ expectedFixedRegret μ Y prediction T
+BanditRL.OnlineGradientDescent.meanPredict_zero_cumulativeLoss [theorem] BanditRLProof/OnlineGuessingComparison.lean:23
+  theorem meanPredict_zero_cumulativeLoss (T : ℕ) (hT : 0 < T) : (∑ t ∈ range T, (BanditRL.OnlineLearning.meanPredict (fun _ : ℕ => (0 : ℝ)) t)^2) = 1/4
+BanditRL.OnlineGradientDescent.guessing_vs_mean_lower [theorem] BanditRLProof/OnlineGuessingComparison.lean:37
+  theorem guessing_vs_mean_lower (n : ℕ) (hn : 0 < n) : (n : ℝ)/4 - 1/4 ≤ regret unitInterval (1/(2*Real.sqrt (((2*n)^2 : ℕ) : ℝ))) (fun _ x => (x-0)^2) 1 0 ((2*n)^2) - (∑ t ∈ range ((2*n)^2), (BanditRL.OnlineLearning.meanPredict (fun _ : ℕ => (0 : ℝ)) t)^2)
+BanditRL.OnlineGradientDescent.guessing_vs_mean_unbounded [theorem] BanditRLProof/OnlineGuessingComparison.lean:46
+  theorem guessing_vs_mean_unbounded (C : ℝ) (N : ℕ) : ∃ n : ℕ, N < n ∧ C < regret unitInterval (1/(2*Real.sqrt (((2*n)^2 : ℕ) : ℝ))) (fun _ x => (x-0)^2) 1 0 ((2*n)^2) - (∑ t ∈ range ((2*n)^2), (BanditRL.OnlineLearning.meanPredict (fun _ : ℕ => (0 : ℝ)) t)^2)
+BanditRL.OnlineLearning.completed_measurable_real_exists_version [theorem] BanditRLProof/OnlineGuessingCompletedCausal.lean:13
+  theorem completed_measurable_real_exists_version {Ω : Type u} [MeasurableSpace Ω] (μ : Measure Ω) (F : MeasurableSpace Ω) (P : Ω → ℝ) (hP : @Measurable _ _ (eventuallyMeasurableSpace F (ae μ)) _ P) : ∃ version : Ω → ℝ, Measurable[F] version ∧ P =ᶠ[ae μ] version
+BanditRL.OnlineLearning.completed_predictable_exists_bounded_history_policy [theorem] BanditRLProof/OnlineGuessingCompletedCausal.lean:53
+  theorem completed_predictable_exists_bounded_history_policy {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : Measure Ω) (Y : ℕ → Ω → ℝ) (S : Ω → Seed) (F : ℕ → MeasurableSpace Ω) (hF : ∀ t, F t ≤ privateSeedPastInformation S Y t) (prediction : ℕ → Ω → ℝ) (hP : ∀ t, @Measurable _ _ (eventuallyMeasurableSpace (F t) (ae μ)) _ (prediction t)) (hpb : ∀ t, ∀ᵐ ω ∂μ, prediction t ω ∈ Set.Icc (0 : ℝ) 1) : ∃ policy : (t : ℕ) → (Seed × ((↑(Finset.range t) : Type) → ℝ)) → ℝ, (∀ t, Measurable (policy t)) ∧ (∀ t q, policy t q ∈ Set.Icc (0 : ℝ) 1) ∧ ∀ᵐ ω ∂μ, ∀ t, prediction t ω = policy t (S ω, fun i => Y i ω)
+BanditRL.OnlineLearning.completed_predictable_private_seed_independent [theorem] BanditRLProof/OnlineGuessingCompletedCausal.lean:73
+  theorem completed_predictable_private_seed_independent {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ) (S : Ω → Seed) (hS : Measurable S) (hseed : IndepFun S (fun ω t => Y t ω) μ) (t : ℕ) (F : MeasurableSpace Ω) (hF : F ≤ privateSeedPastInformation S Y t) (P : Ω → ℝ) (hP : @Measurable _ _ (eventuallyMeasurableSpace F (ae μ)) _ P) : IndepFun P (Y t) μ
+BanditRL.OnlineLearning.completed_predictable_private_seed_expectedFixed_excess [theorem] BanditRLProof/OnlineGuessingCompletedCausal.lean:89
+  theorem completed_predictable_private_seed_expectedFixed_excess {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (hind : iIndepFun Y μ) (S : Ω → Seed) (hS : Measurable S) (hseed : IndepFun S (fun ω t => Y t ω) μ) (F : ℕ → MeasurableSpace Ω) (hF : ∀ t, F t ≤ privateSeedPastInformation S Y t) (prediction : ℕ → Ω → ℝ) (hP : ∀ t, @Measurable _ _ (eventuallyMeasurableSpace (F t) (ae μ)) _ (prediction t)) (hpb : ∀ t, ∀ᵐ ω ∂μ, prediction t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) : expectedFixedRegret μ Y prediction T = (∑ t ∈ Finset.range T, ∫ ω, (prediction t ω - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) ∧ 0 ≤ expectedFixedRegret μ Y prediction T
+BanditRL.OnlineLearning.expectedFixedMinimum [def] BanditRLProof/OnlineGuessingIIDBenchmark.lean:8
+  noncomputable def expectedFixedMinimum {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) (Y : ℕ → Ω → ℝ) (T : ℕ) : ℝ
+BanditRL.OnlineLearning.expectedFixedRegret [def] BanditRLProof/OnlineGuessingIIDBenchmark.lean:13
+  noncomputable def expectedFixedRegret {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) (Y prediction : ℕ → Ω → ℝ) (T : ℕ) : ℝ
+BanditRL.OnlineLearning.expected_fixed_prefix_decomposition [theorem] BanditRLProof/OnlineGuessingIIDBenchmark.lean:19
+  theorem expected_fixed_prefix_decomposition {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) (u : ℝ) : (∫ ω, ∑ t ∈ Finset.range T, (u - Y t ω)^2 ∂μ) = (T : ℝ) * variance (Y 0) μ + (T : ℝ) * (u - ∫ ω, Y 0 ω ∂μ)^2
+BanditRL.OnlineLearning.expected_fixed_prefix_minimum [theorem] BanditRLProof/OnlineGuessingIIDBenchmark.lean:41
+  theorem expected_fixed_prefix_minimum {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) : (∫ ω, Y 0 ω ∂μ) ∈ Set.Icc (0 : ℝ) 1 ∧ IsLeast ((fun u : ℝ => ∫ ω, ∑ t ∈ Finset.range T, (u - Y t ω)^2 ∂μ) '' Set.Icc (0 : ℝ) 1) ((T : ℝ) * variance (Y 0) μ)
+BanditRL.OnlineLearning.expectedFixedMinimum_eq_variance [theorem] BanditRLProof/OnlineGuessingIIDBenchmark.lean:69
+  theorem expectedFixedMinimum_eq_variance {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) : expectedFixedMinimum μ Y T = (T : ℝ) * variance (Y 0) μ
+BanditRL.OnlineLearning.iid_cumulative_prediction_decomposition [theorem] BanditRLProof/OnlineGuessingIIDBenchmark.lean:79
+  theorem iid_cumulative_prediction_decomposition {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (prediction : ℕ → Ω → ℝ) (hP : ∀ t, MemLp (prediction t) 2 μ) (hInd : ∀ t, IndepFun (prediction t) (Y t) μ) (T : ℕ) : (∫ ω, ∑ t ∈ Finset.range T, (prediction t ω - Y t ω)^2 ∂μ) - (T : ℝ) * variance (Y 0) μ = ∑ t ∈ Finset.range T, ∫ ω, (prediction t ω - ∫ ω, Y 0 ω ∂μ)^2 ∂μ
+BanditRL.OnlineLearning.history_policy_expectedFixed_excess [theorem] BanditRLProof/OnlineGuessingIIDBenchmark.lean:105
+  theorem history_policy_expectedFixed_excess {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (hind : iIndepFun Y μ) (policy : (t : ℕ) → ((↑(Finset.range t) : Type) → ℝ) → ℝ) (hp : ∀ t, Measurable (policy t)) (hpb : ∀ t z, (∀ i, z i ∈ Set.Icc (0 : ℝ) 1) → policy t z ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) : expectedFixedRegret μ Y (fun t ω => policy t (fun i => Y i ω)) T = (∑ t ∈ Finset.range T, ∫ ω, (policy t (fun i => Y i ω) - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) ∧ 0 ≤ expectedFixedRegret μ Y (fun t ω => policy t (fun i => Y i ω)) T
+BanditRL.OnlineLearning.meanPredict_expectedFixed_excess [theorem] BanditRLProof/OnlineGuessingIIDBenchmark.lean:137
+  theorem meanPredict_expectedFixed_excess {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (hind : iIndepFun Y μ) (T : ℕ) : expectedFixedRegret μ Y (fun t ω => meanPredict (fun i => Y i ω) t) T = (∑ t ∈ Finset.range T, ∫ ω, (meanPredict (fun i => Y i ω) t - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) ∧ 0 ≤ expectedFixedRegret μ Y (fun t ω => meanPredict (fun i => Y i ω) t) T
+BanditRL.OnlineLearning.constant_mean_expectedFixed_excess_zero [theorem] BanditRLProof/OnlineGuessingIIDBenchmark.lean:166
+  theorem constant_mean_expectedFixed_excess_zero {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) : (∫ ω, Y 0 ω ∂μ) ∈ Set.Icc (0 : ℝ) 1 ∧ expectedFixedRegret μ Y (fun _ _ => ∫ ω, Y 0 ω ∂μ) T = 0
+BanditRL.OnlineLearning.history_policy_normalized_expectedFixed_excess [theorem] BanditRLProof/OnlineGuessingIIDBenchmark.lean:180
+  theorem history_policy_normalized_expectedFixed_excess {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (hind : iIndepFun Y μ) (policy : (t : ℕ) → ((↑(Finset.range t) : Type) → ℝ) → ℝ) (hp : ∀ t, Measurable (policy t)) (hpb : ∀ t z, (∀ i, z i ∈ Set.Icc (0 : ℝ) 1) → policy t z ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) (hT : 0 < T) : (∫ ω, ∑ t ∈ Finset.range T, (policy t (fun i => Y i ω) - Y t ω)^2 ∂μ) / (T : ℝ) - variance (Y 0) μ = expectedFixedRegret μ Y (fun t ω => policy t (fun i => Y i ω)) T / (T : ℝ)
+BanditRL.OnlineLearning.centered_total_sublinear_iff_average [theorem] BanditRLProof/OnlineGuessingIIDSuccess.lean:9
+  theorem centered_total_sublinear_iff_average (total : ℕ → ℝ) (c : ℝ) : (fun T => total T - (T : ℝ) * c) =o[atTop] (fun T : ℕ => (T : ℝ)) ↔ Tendsto (fun T => total T / (T : ℝ) - c) atTop (nhds (0 : ℝ))
+BanditRL.OnlineLearning.randomized_history_policy_success_iff [theorem] BanditRLProof/OnlineGuessingIIDSuccess.lean:25
+  theorem randomized_history_policy_success_iff {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (hind : iIndepFun Y μ) (S : Ω → Seed) (hS : Measurable S) (hseed : IndepFun S (fun ω t => Y t ω) μ) (policy : (t : ℕ) → (Seed × ((↑(Finset.range t) : Type) → ℝ)) → ℝ) (hp : ∀ t, Measurable (policy t)) (hpb : ∀ t s z, (∀ i, z i ∈ Set.Icc (0 : ℝ) 1) → policy t (s, z) ∈ Set.Icc (0 : ℝ) 1) : let prediction := fun t ω => policy t (S ω, fun i => Y i ω) (∀ T, 0 ≤ expectedFixedRegret μ Y prediction T) ∧ ((fun T => expectedFixedRegret μ Y prediction T) =o[atTop] (fun T : ℕ => (T : ℝ)) ↔ Tendsto (fun T => (∫ ω, ∑ t ∈ Finset.range T, (prediction t ω - Y t ω)^2 ∂μ) / (T : ℝ) - variance (Y 0) μ) atTop (nhds (0 : ℝ))) ∧ (Tendsto (fun T => (∫ ω, ∑ t ∈ Finset.range T, (prediction t ω - Y t ω)^2 ∂μ) / (T : ℝ) - variance (Y 0) μ) atTop (nhds (0 : ℝ)) ↔ Tendsto (fun T => (∑ t ∈ Finset.range T, ∫ ω, (prediction t ω - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) / (T : ℝ)) atTop (nhds (0 : ℝ)))
+BanditRL.OnlineLearning.meanPredict_expectedFixed_upper [theorem] BanditRLProof/OnlineGuessingIIDSuccess.lean:64
+  theorem meanPredict_expectedFixed_upper {Ω : Type u} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) (hT : 0 < T) : expectedFixedRegret μ Y (fun t ω => meanPredict (fun i => Y i ω) t) T ≤ 4 + 4 * Real.log T
+BanditRL.OnlineLearning.meanPredict_iid_success [theorem] BanditRLProof/OnlineGuessingIIDSuccess.lean:110
+  theorem meanPredict_iid_success {Ω : Type u} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (hind : iIndepFun Y μ) : Tendsto (fun T => expectedFixedRegret μ Y (fun t ω => meanPredict (fun i => Y i ω) t) T / (T : ℝ)) atTop (nhds (0 : ℝ)) ∧ (fun T => expectedFixedRegret μ Y (fun t ω => meanPredict (fun i => Y i ω) t) T) =o[atTop] (fun T : ℕ => (T : ℝ))
+BanditRL.OnlineLearning.KernelDecisionHistory [abbrev] BanditRLProof/OnlineGuessingKernelCausal.lean:13
+  abbrev KernelDecisionHistory (t : ℕ)
+BanditRL.OnlineLearning.KernelDecisionSampler [abbrev] BanditRLProof/OnlineGuessingKernelCausal.lean:16
+  abbrev KernelDecisionSampler
+BanditRL.OnlineLearning.kernelGeneratedActions [def] BanditRLProof/OnlineGuessingKernelCausal.lean:19
+  def kernelGeneratedActions (f : KernelDecisionSampler) : (t : ℕ) → (Fin t → I) → (Fin t → ℝ) → (Fin t → I) | 0, _, _ => Fin.elim0 | t + 1, u, y => let past := kernelGeneratedActions f t (fun i => u i.castSucc) (fun i => y i.castSucc) Fin.snoc past (f t (past, fun i => y i.castSucc) (u (Fin.last t)))
+BanditRL.OnlineLearning.kernelCausalPolicy [def] BanditRLProof/OnlineGuessingKernelCausal.lean:27
+  def kernelCausalPolicy (f : KernelDecisionSampler) (t : ℕ) (q : (ℕ → I) × (Fin t → ℝ)) : I
+BanditRL.OnlineLearning.kernelGeneratedHistory [def] BanditRLProof/OnlineGuessingKernelCausal.lean:32
+  def kernelGeneratedHistory (f : KernelDecisionSampler) (t : ℕ) (ω : (ℕ → I) × (ℕ → ℝ)) : KernelDecisionHistory t
+BanditRL.OnlineLearning.kernelGeneratedPrediction [def] BanditRLProof/OnlineGuessingKernelCausal.lean:37
+  def kernelGeneratedPrediction (f : KernelDecisionSampler) (t : ℕ) (ω : (ℕ → I) × (ℕ → ℝ)) : I
+BanditRL.OnlineLearning.kernelUniformTapeLaw [abbrev] BanditRLProof/OnlineGuessingKernelCausal.lean:42
+  noncomputable abbrev kernelUniformTapeLaw : Measure (ℕ → I)
+BanditRL.OnlineLearning.kernelGameLaw [abbrev] BanditRLProof/OnlineGuessingKernelCausal.lean:46
+  noncomputable abbrev kernelGameLaw (ν : ProbabilityMeasure (ℕ → ℝ)) : Measure ((ℕ → I) × (ℕ → ℝ))
+BanditRL.OnlineLearning.kernel_sampler_family_exists [theorem] BanditRLProof/OnlineGuessingKernelCausal.lean:50
+  theorem kernel_sampler_family_exists (κ : (t : ℕ) → Kernel (KernelDecisionHistory t) I) [∀ t, IsMarkovKernel (κ t)] : ∃ f : KernelDecisionSampler, (∀ t, Measurable (Function.uncurry (f t))) ∧ ∀ t h, (volume : Measure I).map (f t h) = κ t h
+BanditRL.OnlineLearning.kernel_sampler_causal_process [theorem] BanditRLProof/OnlineGuessingKernelCausal.lean:92
+  theorem kernel_sampler_causal_process (f : KernelDecisionSampler) (hf : ∀ t, Measurable (Function.uncurry (f t))) : (∀ t, Measurable (kernelCausalPolicy f t)) ∧ (∀ t (u : ℕ → I) (y : ℕ → ℝ) (i : Fin t), kernelGeneratedActions f t (fun j => u j) (fun j => y j) i = kernelGeneratedPrediction f (i : ℕ) (u, y)) ∧ ∀ t (ω ω' : (ℕ → I) × (ℕ → ℝ)), (∀ i, i ≤ t → ω.1 i = ω'.1 i) → (∀ i, i < t → ω.2 i = ω'.2 i) → kernelGeneratedPrediction f t ω = kernelGeneratedPrediction f t ω'
+BanditRL.OnlineLearning.kernel_sampler_joint_law [theorem] BanditRLProof/OnlineGuessingKernelCausal.lean:155
+  theorem kernel_sampler_joint_law (κ : (t : ℕ) → Kernel (KernelDecisionHistory t) I) [∀ t, IsMarkovKernel (κ t)] (f : KernelDecisionSampler) (hf : ∀ t, Measurable (Function.uncurry (f t))) (hκ : ∀ t h, (volume : Measure I).map (f t h) = κ t h) (ν : ProbabilityMeasure (ℕ → ℝ)) (t : ℕ) : (kernelGameLaw ν).map (fun ω => (kernelGeneratedHistory f t ω, kernelGeneratedPrediction f t ω)) = (kernelGameLaw ν).map (kernelGeneratedHistory f t) ⊗ₘ κ t
+BanditRL.OnlineLearning.kernel_sampler_conditional_law [theorem] BanditRLProof/OnlineGuessingKernelCausal.lean:235
+  theorem kernel_sampler_conditional_law (κ : (t : ℕ) → Kernel (KernelDecisionHistory t) I) [∀ t, IsMarkovKernel (κ t)] (f : KernelDecisionSampler) (hf : ∀ t, Measurable (Function.uncurry (f t))) (hκ : ∀ t h, (volume : Measure I).map (f t h) = κ t h) (ν : ProbabilityMeasure (ℕ → ℝ)) (t : ℕ) : condDistrib (kernelGeneratedPrediction f t) (kernelGeneratedHistory f t) (kernelGameLaw ν) =ᵐ[(kernelGameLaw ν).map (kernelGeneratedHistory f t)] κ t
+BanditRL.OnlineLearning.causal_kernel_realization_and_expectedFixed_excess [theorem] BanditRLProof/OnlineGuessingKernelCausal.lean:257
+  theorem causal_kernel_realization_and_expectedFixed_excess (κ : (t : ℕ) → Kernel (KernelDecisionHistory t) I) [∀ t, IsMarkovKernel (κ t)] : ∃ f : KernelDecisionSampler, (∀ t, Measurable (Function.uncurry (f t))) ∧ (∀ t h, (volume : Measure I).map (f t h) = κ t h) ∧ (∀ t, Measurable (kernelCausalPolicy f t)) ∧ (∀ t (u : ℕ → I) (y : ℕ → ℝ) (i : Fin t), kernelGeneratedActions f t (fun j => u j) (fun j => y j) i = kernelGeneratedPrediction f (i : ℕ) (u, y)) ∧ (∀ t (ω ω' : (ℕ → I) × (ℕ → ℝ)), (∀ i, i ≤ t → ω.1 i = ω'.1 i) → (∀ i, i < t → ω.2 i = ω'.2 i) → kernelGeneratedPrediction f t ω = kernelGeneratedPrediction f t ω') ∧ ∀ ν : ProbabilityMeasure (ℕ → ℝ), (∀ t, (kernelGameLaw ν).map (fun ω => (kernelGeneratedHistory f t ω, kernelGeneratedPrediction f t ω)) = (kernelGameLaw ν).map (kernelGeneratedHistory f t) ⊗ₘ κ t) ∧ (∀ t, condDistrib (kernelGeneratedPrediction f t) (kernelGeneratedHistory f t) (kernelGameLaw ν) =ᵐ[(kernelGameLaw ν).map (kernelGeneratedHistory f t)] κ t) ∧ (iIndepFun (fun t (y : ℕ → ℝ) => y t) (ν : Measure (ℕ → ℝ)) → (∀ t, IdentDistrib (fun y : ℕ → ℝ => y t) (fun y : ℕ → ℝ => y 0) (ν : Measure (ℕ → ℝ)) (ν : Measure (ℕ → ℝ))) → (∀ t, ∀ᵐ y ∂(ν : Measure (ℕ → ℝ)), y t ∈ Set.Icc (0 : ℝ) 1) → ∀ T : ℕ, expectedFixedRegret (kernelGameLaw ν) (fun t ω => ω.2 t) (fun t ω => (kernelGeneratedPrediction f t ω : ℝ)) T = (∑ t ∈ Finset.range T, ∫ ω, ((kernelGeneratedPrediction f t ω : ℝ) - ∫ ω, ω.2 0 ∂(kernelGameLaw ν))^2 ∂(kernelGameLaw ν)) ∧ 0 ≤ expectedFixedRegret (kernelGameLaw ν) (fun t ω => ω.2 t) (fun t ω => (kernelGeneratedPrediction f t ω : ℝ)) T)
+BanditRL.OnlineLearning.GuessingLower.polyaNext [def] BanditRLProof/OnlineGuessingLogLower.lean:25
+  noncomputable def polyaNext (h : List Bool) : ℝ
+BanditRL.OnlineLearning.GuessingLower.pathWeight [def] BanditRLProof/OnlineGuessingLogLower.lean:29
+  noncomputable def pathWeight (h : List Bool) : ℝ
+BanditRL.OnlineLearning.GuessingLower.binaryStream [def] BanditRLProof/OnlineGuessingLogLower.lean:35
+  def binaryStream (h : List Bool) (t : ℕ) : Bool
+BanditRL.OnlineLearning.GuessingLower.binaryValues [def] BanditRLProof/OnlineGuessingLogLower.lean:38
+  def binaryValues (h : List Bool) (t : ℕ) : ℝ
+BanditRL.OnlineLearning.GuessingLower.causalPredict [def] BanditRLProof/OnlineGuessingLogLower.lean:42
+  noncomputable def causalPredict (A : List Bool → ℝ) (y : ℕ → Bool) (t : ℕ) : ℝ
+BanditRL.OnlineLearning.GuessingLower.pathRegret [def] BanditRLProof/OnlineGuessingLogLower.lean:46
+  noncomputable def pathRegret (A : List Bool → ℝ) (h : List Bool) : ℝ
+BanditRL.OnlineLearning.GuessingLower.pathExpectation [def] BanditRLProof/OnlineGuessingLogLower.lean:50
+  noncomputable def pathExpectation (T : ℕ) (f : List Bool → ℝ) : ℝ
+BanditRL.OnlineLearning.GuessingLower.prefixMeasure [def] BanditRLProof/OnlineGuessingLogLower.lean:54
+  noncomputable def prefixMeasure (T : ℕ) [MeasurableSpace (List.Vector Bool T)] : Measure (List.Vector Bool T)
+BanditRL.OnlineLearning.GuessingLower.probability_mem [theorem] BanditRLProof/OnlineGuessingLogLower.lean:58
+  theorem probability_mem (h : List Bool) : polyaNext h ∈ Ioo (0 : ℝ) 1
+BanditRL.OnlineLearning.GuessingLower.branch_mass [theorem] BanditRLProof/OnlineGuessingLogLower.lean:69
+  theorem branch_mass (h : List Bool) : pathWeight (false :: h) + pathWeight (true :: h) = pathWeight h
+BanditRL.OnlineLearning.GuessingLower.pathWeight_nonneg [theorem] BanditRLProof/OnlineGuessingLogLower.lean:74
+  theorem pathWeight_nonneg (h : List Bool) : 0 ≤ pathWeight h
+BanditRL.OnlineLearning.GuessingLower.sum_vectors_succ [theorem] BanditRLProof/OnlineGuessingLogLower.lean:91
+  theorem sum_vectors_succ (T : ℕ) (f : List Bool → ℝ) : (∑ v : List.Vector Bool (T + 1), f v.toList) = ∑ v : List.Vector Bool T, (f (false :: v.toList) + f (true :: v.toList))
+BanditRL.OnlineLearning.GuessingLower.prefix_mass_one [theorem] BanditRLProof/OnlineGuessingLogLower.lean:98
+  theorem prefix_mass_one (T : ℕ) : (∑ v : List.Vector Bool T, pathWeight v.toList) = 1
+BanditRL.OnlineLearning.GuessingLower.prefix_distribution [theorem] BanditRLProof/OnlineGuessingLogLower.lean:106
+  theorem prefix_distribution (T : ℕ) : BanditRLProof.Exp3.FiniteActionDistribution (univ : Finset (List.Vector Bool T)) (fun v => pathWeight v.toList)
+BanditRL.OnlineLearning.GuessingLower.prefixMeasure_probability [theorem] BanditRLProof/OnlineGuessingLogLower.lean:113
+  theorem prefixMeasure_probability (T : ℕ) [MeasurableSpace (List.Vector Bool T)] [MeasurableSingletonClass (List.Vector Bool T)] : IsProbabilityMeasure (prefixMeasure T)
+BanditRL.OnlineLearning.GuessingLower.pathExpectation_integral [theorem] BanditRLProof/OnlineGuessingLogLower.lean:118
+  theorem pathExpectation_integral (T : ℕ) [MeasurableSpace (List.Vector Bool T)] [MeasurableSingletonClass (List.Vector Bool T)] (f : List Bool → ℝ) : (∫ v, f v.toList ∂prefixMeasure T) = pathExpectation T f
+BanditRL.OnlineLearning.GuessingLower.pathExpectation_congr [theorem] BanditRLProof/OnlineGuessingLogLower.lean:124
+  theorem pathExpectation_congr (T : ℕ) (f g : List Bool → ℝ) (hfg : ∀ h, h.length = T → f h = g h) : pathExpectation T f = pathExpectation T g
+BanditRL.OnlineLearning.GuessingLower.pathExpectation_const [theorem] BanditRLProof/OnlineGuessingLogLower.lean:131
+  theorem pathExpectation_const (T : ℕ) (c : ℝ) : pathExpectation T (fun _ => c) = c
+BanditRL.OnlineLearning.GuessingLower.pathExpectation_add [theorem] BanditRLProof/OnlineGuessingLogLower.lean:135
+  theorem pathExpectation_add (T : ℕ) (f g : List Bool → ℝ) : pathExpectation T (fun h => f h + g h) = pathExpectation T f + pathExpectation T g
+BanditRL.OnlineLearning.GuessingLower.pathExpectation_sub [theorem] BanditRLProof/OnlineGuessingLogLower.lean:139
+  theorem pathExpectation_sub (T : ℕ) (f g : List Bool → ℝ) : pathExpectation T (fun h => f h - g h) = pathExpectation T f - pathExpectation T g
+BanditRL.OnlineLearning.GuessingLower.pathExpectation_const_mul [theorem] BanditRLProof/OnlineGuessingLogLower.lean:143
+  theorem pathExpectation_const_mul (T : ℕ) (c : ℝ) (f : List Bool → ℝ) : pathExpectation T (fun h => c * f h) = c * pathExpectation T f
+BanditRL.OnlineLearning.GuessingLower.pathExpectation_div [theorem] BanditRLProof/OnlineGuessingLogLower.lean:150
+  theorem pathExpectation_div (T : ℕ) (f : List Bool → ℝ) (c : ℝ) : pathExpectation T (fun h => f h / c) = pathExpectation T f / c
+BanditRL.OnlineLearning.GuessingLower.pathExpectation_succ [theorem] BanditRLProof/OnlineGuessingLogLower.lean:155
+  theorem pathExpectation_succ (T : ℕ) (f : List Bool → ℝ) : pathExpectation (T + 1) f = pathExpectation T (fun h => (1 - polyaNext h) * f (false :: h) + polyaNext h * f (true :: h))
+BanditRL.OnlineLearning.GuessingLower.heads_succ [theorem] BanditRLProof/OnlineGuessingLogLower.lean:165
+  theorem heads_succ (T : ℕ) : pathExpectation (T + 1) (fun h => (h.count true : ℝ)) = pathExpectation T (fun h => (h.count true : ℝ)) + (pathExpectation T (fun h => (h.count true : ℝ)) + 1) / ((T : ℝ) + 2)
+BanditRL.OnlineLearning.GuessingLower.heads_sq_succ [theorem] BanditRLProof/OnlineGuessingLogLower.lean:181
+  theorem heads_sq_succ (T : ℕ) : pathExpectation (T + 1) (fun h => (h.count true : ℝ)^2) = pathExpectation T (fun h => (h.count true : ℝ)^2) + (2 * pathExpectation T (fun h => (h.count true : ℝ)^2) + 3 * pathExpectation T (fun h => (h.count true : ℝ)) + 1) / ((T : ℝ) + 2)
+BanditRL.OnlineLearning.GuessingLower.expected_heads [theorem] BanditRLProof/OnlineGuessingLogLower.lean:201
+  theorem expected_heads (T : ℕ) : pathExpectation T (fun h => (h.count true : ℝ)) = (T : ℝ) / 2
+BanditRL.OnlineLearning.GuessingLower.expected_heads_sq [theorem] BanditRLProof/OnlineGuessingLogLower.lean:211
+  theorem expected_heads_sq (T : ℕ) : pathExpectation T (fun h => (h.count true : ℝ)^2) = (T : ℝ) * (2 * (T : ℝ) + 1) / 6
+BanditRL.OnlineLearning.GuessingLower.expected_next_variance [theorem] BanditRLProof/OnlineGuessingLogLower.lean:222
+  theorem expected_next_variance (T : ℕ) : pathExpectation T (fun h => polyaNext h * (1 - polyaNext h)) = ((T : ℝ) + 3) / (6 * ((T : ℝ) + 2))
+BanditRL.OnlineLearning.GuessingLower.causalPredict_prefix [theorem] BanditRLProof/OnlineGuessingLogLower.lean:241
+  theorem causalPredict_prefix (A : List Bool → ℝ) (y z : ℕ → Bool) (t : ℕ) (hpast : ∀ i < t, y i = z i) : causalPredict A y t = causalPredict A z t
+BanditRL.OnlineLearning.GuessingLower.binary_mean_minimizer [theorem] BanditRLProof/OnlineGuessingLogLower.lean:249
+  theorem binary_mean_minimizer (h : List Bool) (hpos : 0 < h.length) : empiricalMean (binaryValues h) h.length ∈ Icc (0 : ℝ) 1 ∧ ∀ u ∈ Icc (0 : ℝ) 1, (∑ t ∈ range h.length, (empiricalMean (binaryValues h) h.length - binaryValues h t)^2) ≤ ∑ t ∈ range h.length, (u - binaryValues h t)^2
+BanditRL.OnlineLearning.GuessingLower.conditional_square_lower [theorem] BanditRLProof/OnlineGuessingLogLower.lean:258
+  theorem conditional_square_lower (h : List Bool) (x : ℝ) : polyaNext h * (1 - polyaNext h) ≤ (1 - polyaNext h) * x^2 + polyaNext h * (x - 1)^2
+BanditRL.OnlineLearning.GuessingLower.binaryStream_cons_prefix [theorem] BanditRLProof/OnlineGuessingLogLower.lean:262
+  theorem binaryStream_cons_prefix (b : Bool) (h : List Bool) (t : ℕ) (ht : t < h.length) : binaryStream (b :: h) t = binaryStream h t
+BanditRL.OnlineLearning.GuessingLower.binaryStream_cons_last [theorem] BanditRLProof/OnlineGuessingLogLower.lean:268
+  theorem binaryStream_cons_last (b : Bool) (h : List Bool) : binaryStream (b :: h) h.length = b
+BanditRL.OnlineLearning.GuessingLower.binaryValues_cons_prefix [theorem] BanditRLProof/OnlineGuessingLogLower.lean:272
+  theorem binaryValues_cons_prefix (b : Bool) (h : List Bool) (t : ℕ) (ht : t < h.length) : binaryValues (b :: h) t = binaryValues h t
+BanditRL.OnlineLearning.GuessingLower.causalPredict_history [theorem] BanditRLProof/OnlineGuessingLogLower.lean:276
+  theorem causalPredict_history (A : List Bool → ℝ) (h : List Bool) : causalPredict A (binaryStream h) h.length = A h
+BanditRL.OnlineLearning.GuessingLower.causalPredict_cons_last [theorem] BanditRLProof/OnlineGuessingLogLower.lean:286
+  theorem causalPredict_cons_last (A : List Bool → ℝ) (b : Bool) (h : List Bool) : causalPredict A (binaryStream (b :: h)) h.length = A h
+BanditRL.OnlineLearning.GuessingLower.pathLearnerLoss [def] BanditRLProof/OnlineGuessingLogLower.lean:295
+  noncomputable def pathLearnerLoss (A : List Bool → ℝ) (h : List Bool) : ℝ
+BanditRL.OnlineLearning.GuessingLower.pathBestLoss [def] BanditRLProof/OnlineGuessingLogLower.lean:299
+  noncomputable def pathBestLoss (h : List Bool) : ℝ
+BanditRL.OnlineLearning.GuessingLower.pathRegret_eq_losses [theorem] BanditRLProof/OnlineGuessingLogLower.lean:302
+  theorem pathRegret_eq_losses (A : List Bool → ℝ) (h : List Bool) : pathRegret A h = pathLearnerLoss A h - pathBestLoss h
+BanditRL.OnlineLearning.GuessingLower.pathLearnerLoss_cons [theorem] BanditRLProof/OnlineGuessingLogLower.lean:305
+  theorem pathLearnerLoss_cons (A : List Bool → ℝ) (b : Bool) (h : List Bool) : pathLearnerLoss A (b :: h) = pathLearnerLoss A h + (A h - if b then 1 else 0)^2
+BanditRL.OnlineLearning.GuessingLower.binaryValues_sum [theorem] BanditRLProof/OnlineGuessingLogLower.lean:321
+  theorem binaryValues_sum (h : List Bool) : (∑ t ∈ range h.length, binaryValues h t) = (h.count true : ℝ)
+BanditRL.OnlineLearning.GuessingLower.binaryValues_sq [theorem] BanditRLProof/OnlineGuessingLogLower.lean:335
+  theorem binaryValues_sq (h : List Bool) (t : ℕ) : (binaryValues h t)^2 = binaryValues h t
+BanditRL.OnlineLearning.GuessingLower.pathBestLoss_count [theorem] BanditRLProof/OnlineGuessingLogLower.lean:340
+  theorem pathBestLoss_count (h : List Bool) (hpos : 0 < h.length) : pathBestLoss h = (h.count true : ℝ) - (h.count true : ℝ)^2 / (h.length : ℝ)
+BanditRL.OnlineLearning.GuessingLower.expected_pathBestLoss [theorem] BanditRLProof/OnlineGuessingLogLower.lean:365
+  theorem expected_pathBestLoss (T : ℕ) (hT : 0 < T) : pathExpectation T pathBestLoss = ((T : ℝ) - 1) / 6
+BanditRL.OnlineLearning.GuessingLower.pathExpectation_mono [theorem] BanditRLProof/OnlineGuessingLogLower.lean:379
+  theorem pathExpectation_mono (T : ℕ) (f g : List Bool → ℝ) (hfg : ∀ h, h.length = T → f h ≤ g h) : pathExpectation T f ≤ pathExpectation T g
+BanditRL.OnlineLearning.GuessingLower.expected_pathLearnerLoss_succ [theorem] BanditRLProof/OnlineGuessingLogLower.lean:386
+  theorem expected_pathLearnerLoss_succ (A : List Bool → ℝ) (T : ℕ) : pathExpectation (T + 1) (pathLearnerLoss A) = pathExpectation T (pathLearnerLoss A) + pathExpectation T (fun h => (1 - polyaNext h) * (A h)^2 + polyaNext h * (A h - 1)^2)
+BanditRL.OnlineLearning.GuessingLower.expected_pathLearnerLoss_step [theorem] BanditRLProof/OnlineGuessingLogLower.lean:402
+  theorem expected_pathLearnerLoss_step (A : List Bool → ℝ) (T : ℕ) : pathExpectation T (pathLearnerLoss A) + ((T : ℝ) + 3) / (6 * ((T : ℝ) + 2)) ≤ pathExpectation (T + 1) (pathLearnerLoss A)
+BanditRL.OnlineLearning.GuessingLower.variance_sum [theorem] BanditRLProof/OnlineGuessingLogLower.lean:411
+  theorem variance_sum (T : ℕ) : (∑ t ∈ range T, ((t : ℝ) + 3) / (6 * ((t : ℝ) + 2))) = (T : ℝ) / 6 + ((harmonic (T + 1) : ℝ) - 1) / 6
+BanditRL.OnlineLearning.GuessingLower.expected_pathLearnerLoss_lower [theorem] BanditRLProof/OnlineGuessingLogLower.lean:423
+  theorem expected_pathLearnerLoss_lower (A : List Bool → ℝ) (T : ℕ) : (∑ t ∈ range T, ((t : ℝ) + 3) / (6 * ((t : ℝ) + 2))) ≤ pathExpectation T (pathLearnerLoss A)
+BanditRL.OnlineLearning.GuessingLower.expected_pathRegret_lower [theorem] BanditRLProof/OnlineGuessingLogLower.lean:432
+  theorem expected_pathRegret_lower (A : List Bool → ℝ) (T : ℕ) (hT : 0 < T) : (harmonic (T + 1) : ℝ) / 6 ≤ pathExpectation T (pathRegret A)
+BanditRL.OnlineLearning.GuessingLower.pathWeight_pos [theorem] BanditRLProof/OnlineGuessingLogLower.lean:444
+  theorem pathWeight_pos (h : List Bool) : 0 < pathWeight h
+BanditRL.OnlineLearning.GuessingLower.square_loss_mem [theorem] BanditRLProof/OnlineGuessingLogLower.lean:452
+  theorem square_loss_mem (x y : ℝ) (hx : x ∈ Icc (0 : ℝ) 1) (hy : y ∈ Icc (0 : ℝ) 1) : (x - y)^2 ∈ Icc (0 : ℝ) 1
+BanditRL.OnlineLearning.GuessingLower.square_loss_sum_mem [theorem] BanditRLProof/OnlineGuessingLogLower.lean:459
+  theorem square_loss_sum_mem (T : ℕ) (p y : ℕ → ℝ) (hp : ∀ t < T, p t ∈ Icc (0 : ℝ) 1) (hy : ∀ t < T, y t ∈ Icc (0 : ℝ) 1) : (∑ t ∈ range T, (p t - y t)^2) ∈ Icc (0 : ℝ) T
+BanditRL.OnlineLearning.GuessingLower.pathRegret_abs_le [theorem] BanditRLProof/OnlineGuessingLogLower.lean:470
+  theorem pathRegret_abs_le (A : List Bool → ℝ) (h : List Bool) (hbound : ∀ k, A k ∈ Icc (0 : ℝ) 1) : |pathRegret A h| ≤ (h.length : ℝ)
+BanditRL.OnlineLearning.GuessingLower.pathRegret_measurable [theorem] BanditRLProof/OnlineGuessingLogLower.lean:491
+  theorem pathRegret_measurable {Ω : Type*} [MeasurableSpace Ω] (A : Ω → List Bool → ℝ) (hA : ∀ h, Measurable (fun ω => A ω h)) (h : List Bool) : Measurable (fun ω => pathRegret (A ω) h)
+BanditRL.OnlineLearning.GuessingLower.pathRegret_integrable [theorem] BanditRLProof/OnlineGuessingLogLower.lean:501
+  theorem pathRegret_integrable {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (A : Ω → List Bool → ℝ) (hA : ∀ h, Measurable (fun ω => A ω h)) (hbound : ∀ ω h, A ω h ∈ Icc (0 : ℝ) 1) (h : List Bool) : Integrable (fun ω => pathRegret (A ω) h) μ
+BanditRL.OnlineLearning.GuessingLower.randomized_harmonic_lower [theorem] BanditRLProof/OnlineGuessingLogLower.lean:509
+  theorem randomized_harmonic_lower {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (A : Ω → List Bool → ℝ) (hA : ∀ h, Measurable (fun ω => A ω h)) (hbound : ∀ ω h, A ω h ∈ Icc (0 : ℝ) 1) (T : ℕ) (hT : 0 < T) : ∃ v : List.Vector Bool T, (harmonic (T + 1) : ℝ) / 6 ≤ ∫ ω, pathRegret (A ω) v.toList ∂μ
+BanditRL.OnlineLearning.GuessingLower.randomized_log_lower [theorem] BanditRLProof/OnlineGuessingLogLower.lean:542
+  theorem randomized_log_lower {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (A : Ω → List Bool → ℝ) (hA : ∀ h, Measurable (fun ω => A ω h)) (hbound : ∀ ω h, A ω h ∈ Icc (0 : ℝ) 1) (T : ℕ) (hT : 0 < T) : ∃ v : List.Vector Bool T, Real.log ((T : ℝ) + 2) / 6 ≤ ∫ ω, pathRegret (A ω) v.toList ∂μ
+BanditRL.OnlineLearning.privateSeedPastInformation [def] BanditRLProof/OnlineGuessingRandomizedIID.lean:9
+  def privateSeedPastInformation {Ω : Type u} {Seed : Type v} [MeasurableSpace Seed] (S : Ω → Seed) (Y : ℕ → Ω → ℝ) (t : ℕ) : MeasurableSpace Ω
+BanditRL.OnlineLearning.independent_private_seed_pair [theorem] BanditRLProof/OnlineGuessingRandomizedIID.lean:15
+  theorem independent_private_seed_pair {Ω : Type u} {Seed : Type v} {Χ : Type w} {Ζ : Type z} [MeasurableSpace Ω] [MeasurableSpace Seed] [MeasurableSpace Χ] [MeasurableSpace Ζ] (μ : Measure Ω) [IsProbabilityMeasure μ] (S : Ω → Seed) (X : Ω → Χ) (Y : Ω → Ζ) (hS : Measurable S) (hX : Measurable X) (hY : Measurable Y) (hseed : IndepFun S (fun ω => (X ω, Y ω)) μ) (hXY : IndepFun X Y μ) : IndepFun (fun ω => (S ω, X ω)) Y μ
+BanditRL.OnlineLearning.private_seed_past_independent [theorem] BanditRLProof/OnlineGuessingRandomizedIID.lean:38
+  theorem private_seed_past_independent {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ) (S : Ω → Seed) (hS : Measurable S) (hseed : IndepFun S (fun ω t => Y t ω) μ) (t : ℕ) : IndepFun (fun ω => (S ω, fun i : (↑(Finset.range t) : Type) => Y i ω)) (Y t) μ
+BanditRL.OnlineLearning.privateSeedPastInformation_monotone [theorem] BanditRLProof/OnlineGuessingRandomizedIID.lean:60
+  theorem privateSeedPastInformation_monotone {Ω : Type u} {Seed : Type v} [MeasurableSpace Seed] (S : Ω → Seed) (Y : ℕ → Ω → ℝ) : Monotone (privateSeedPastInformation S Y)
+BanditRL.OnlineLearning.predictable_private_seed_independent [theorem] BanditRLProof/OnlineGuessingRandomizedIID.lean:78
+  theorem predictable_private_seed_independent {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ) (S : Ω → Seed) (hS : Measurable S) (hseed : IndepFun S (fun ω t => Y t ω) μ) (t : ℕ) (F : MeasurableSpace Ω) (hF : F ≤ privateSeedPastInformation S Y t) (P : Ω → ℝ) (hP : Measurable[F] P) : IndepFun P (Y t) μ
+BanditRL.OnlineLearning.randomized_history_policy_independent [theorem] BanditRLProof/OnlineGuessingRandomizedIID.lean:95
+  theorem randomized_history_policy_independent {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ) (S : Ω → Seed) (hS : Measurable S) (hseed : IndepFun S (fun ω t => Y t ω) μ) (policy : (t : ℕ) → (Seed × ((↑(Finset.range t) : Type) → ℝ)) → ℝ) (hp : ∀ t, Measurable (policy t)) (t : ℕ) : IndepFun (fun ω => policy t (S ω, fun i => Y i ω)) (Y t) μ
+BanditRL.OnlineLearning.predictable_private_seed_expectedFixed_excess [theorem] BanditRLProof/OnlineGuessingRandomizedIID.lean:108
+  theorem predictable_private_seed_expectedFixed_excess {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (hind : iIndepFun Y μ) (S : Ω → Seed) (hS : Measurable S) (hseed : IndepFun S (fun ω t => Y t ω) μ) (F : ℕ → MeasurableSpace Ω) (hF : ∀ t, F t ≤ privateSeedPastInformation S Y t) (prediction : ℕ → Ω → ℝ) (hP : ∀ t, Measurable[F t] (prediction t)) (hpb : ∀ t, ∀ᵐ ω ∂μ, prediction t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) : expectedFixedRegret μ Y prediction T = (∑ t ∈ Finset.range T, ∫ ω, (prediction t ω - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) ∧ 0 ≤ expectedFixedRegret μ Y prediction T
+BanditRL.OnlineLearning.randomized_history_policy_expectedFixed_excess [theorem] BanditRLProof/OnlineGuessingRandomizedIID.lean:143
+  theorem randomized_history_policy_expectedFixed_excess {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (hind : iIndepFun Y μ) (S : Ω → Seed) (hS : Measurable S) (hseed : IndepFun S (fun ω t => Y t ω) μ) (policy : (t : ℕ) → (Seed × ((↑(Finset.range t) : Type) → ℝ)) → ℝ) (hp : ∀ t, Measurable (policy t)) (hpb : ∀ t s z, (∀ i, z i ∈ Set.Icc (0 : ℝ) 1) → policy t (s, z) ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) : expectedFixedRegret μ Y (fun t ω => policy t (S ω, fun i => Y i ω)) T = (∑ t ∈ Finset.range T, ∫ ω, (policy t (S ω, fun i => Y i ω) - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) ∧ 0 ≤ expectedFixedRegret μ Y (fun t ω => policy t (S ω, fun i => Y i ω)) T
+BanditRL.OnlineLearning.meanPredict_noRegret [theorem] BanditRLProof/OnlineLearningAsymptotic.lean:9
+  theorem meanPredict_noRegret (y : ℕ → ℝ) (hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1) : NoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - y t)^2) (meanPredict y)
+BanditRL.OnlineLearning.lemma_1_2 [theorem] BanditRLProof/OnlineLearningFoundations.lean:12
+  theorem lemma_1_2 {X : Type*} (V : Set X) (loss : ℕ → X → ℝ) (leader : ℕ → X) (T : ℕ) (hmem : ∀ n, 0 < n → n ≤ T → leader n ∈ V) (hmin : ∀ n, 0 < n → n ≤ T → ∀ u ∈ V, (∑ t ∈ Finset.range n, loss t (leader n)) ≤ ∑ t ∈ Finset.range n, loss t u) : (∑ t ∈ Finset.range T, loss t (leader (t + 1))) ≤ ∑ t ∈ Finset.range T, loss t (leader T)
+BanditRL.OnlineLearning.meanPredict [def] BanditRLProof/OnlineLearningFTL.lean:8
+  noncomputable def meanPredict (y : ℕ → ℝ) (t : ℕ) : ℝ
+BanditRL.OnlineLearning.meanPredict_prefix [theorem] BanditRLProof/OnlineLearningFTL.lean:12
+  theorem meanPredict_prefix (y z : ℕ → ℝ) (t : ℕ) (h : ∀ i < t, y i = z i) : meanPredict y t = meanPredict z t
+BanditRL.OnlineLearning.meanPredict_mem [theorem] BanditRLProof/OnlineLearningFTL.lean:21
+  theorem meanPredict_mem (y : ℕ → ℝ) (t : ℕ) (hy : ∀ i < t, y i ∈ Set.Icc (0 : ℝ) 1) : meanPredict y t ∈ Set.Icc (0 : ℝ) 1
+BanditRL.OnlineLearning.empiricalMean_update [theorem] BanditRLProof/OnlineLearningFTL.lean:30
+  theorem empiricalMean_update (y : ℕ → ℝ) (t : ℕ) (ht : 0 < t) : empiricalMean y (t+1) = empiricalMean y t + (y t - empiricalMean y t) / (t+1)
+BanditRL.OnlineLearning.meanPredict_stability [theorem] BanditRLProof/OnlineLearningFTL.lean:42
+  theorem meanPredict_stability (y : ℕ → ℝ) (t : ℕ) (hy : ∀ i ≤ t, y i ∈ Set.Icc (0 : ℝ) 1) : (meanPredict y t - y t)^2 - (empiricalMean y (t+1) - y t)^2 ≤ 4 / (t+1)
+BanditRL.OnlineLearning.theorem_1_3 [theorem] BanditRLProof/OnlineLearningFTL.lean:81
+  theorem theorem_1_3 (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T) (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) : (∑ t ∈ Finset.range T, (meanPredict y t - y t)^2) - (∑ t ∈ Finset.range T, (empiricalMean y T - y t)^2) ≤ 4 + 4 * Real.log T
+BanditRL.OnlineLearning.meanPredict_initial_stability [theorem] BanditRLProof/OnlineLearningFTL.lean:99
+  theorem meanPredict_initial_stability (y : ℕ → ℝ) (hy : y 0 ∈ Set.Icc (0 : ℝ) 1) : (meanPredict y 0 - y 0)^2 - (empiricalMean y 1 - y 0)^2 ≤ (1 : ℝ) / 4
+BanditRL.OnlineLearning.meanPredict_regret_refined [theorem] BanditRLProof/OnlineLearningFTL.lean:106
+  theorem meanPredict_regret_refined (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T) (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) : (∑ t ∈ Finset.range T, (meanPredict y t - y t)^2) - (∑ t ∈ Finset.range T, (empiricalMean y T - y t)^2) ≤ (1 : ℝ) / 4 + ∑ t ∈ Finset.range (T - 1), 4 / ((t : ℝ) + 2)
+BanditRL.OnlineLearning.ftlPredict [def] BanditRLProof/OnlineLearningFTLState.lean:5
+  noncomputable def ftlPredict (initial : ℝ) (y : ℕ → ℝ) (t : ℕ) : ℝ
+BanditRL.OnlineLearning.ftlMeanStep [def] BanditRLProof/OnlineLearningFTLState.lean:8
+  noncomputable def ftlMeanStep (state : ℕ × ℝ) (target : ℝ) : ℕ × ℝ
+BanditRL.OnlineLearning.ftlState [def] BanditRLProof/OnlineLearningFTLState.lean:11
+  noncomputable def ftlState (initial : ℝ) (y : ℕ → ℝ) : ℕ → ℕ × ℝ | 0 => (0, initial) | t + 1 => ftlMeanStep (ftlState initial y t) (y t)
+BanditRL.OnlineLearning.ftlPredict_prefix [theorem] BanditRLProof/OnlineLearningFTLState.lean:15
+  theorem ftlPredict_prefix (initial : ℝ) (y z : ℕ → ℝ) (t : ℕ) (h : ∀ i < t, y i = z i) : ftlPredict initial y t = ftlPredict initial z t
+BanditRL.OnlineLearning.ftlPredict_mem [theorem] BanditRLProof/OnlineLearningFTLState.lean:24
+  theorem ftlPredict_mem (initial : ℝ) (y : ℕ → ℝ) (t : ℕ) (hi : initial ∈ Set.Icc (0 : ℝ) 1) (hy : ∀ i < t, y i ∈ Set.Icc (0 : ℝ) 1) : ftlPredict initial y t ∈ Set.Icc (0 : ℝ) 1
+BanditRL.OnlineLearning.ftlPredict_half [theorem] BanditRLProof/OnlineLearningFTLState.lean:33
+  theorem ftlPredict_half (y : ℕ → ℝ) (t : ℕ) : ftlPredict ((1 : ℝ) / 2) y t = meanPredict y t
+BanditRL.OnlineLearning.ftlState_first [theorem] BanditRLProof/OnlineLearningFTLState.lean:37
+  theorem ftlState_first (initial : ℝ) (y : ℕ → ℝ) : ftlState initial y 1 = (1, y 0)
+BanditRL.OnlineLearning.ftlState_eq_predict [theorem] BanditRLProof/OnlineLearningFTLState.lean:41
+  theorem ftlState_eq_predict (initial : ℝ) (y : ℕ → ℝ) (t : ℕ) : ftlState initial y t = (t, ftlPredict initial y t)
+BanditRL.OnlineLearning.ftlState_prefix [theorem] BanditRLProof/OnlineLearningFTLState.lean:54
+  theorem ftlState_prefix (initial : ℝ) (y z : ℕ → ℝ) (t : ℕ) (h : ∀ i < t, y i = z i) : ftlState initial y t = ftlState initial z t
+BanditRL.OnlineLearning.ftlState_mem [theorem] BanditRLProof/OnlineLearningFTLState.lean:60
+  theorem ftlState_mem (initial : ℝ) (y : ℕ → ℝ) (t : ℕ) (hi : initial ∈ Set.Icc (0 : ℝ) 1) (hy : ∀ i < t, y i ∈ Set.Icc (0 : ℝ) 1) : (ftlState initial y t).2 ∈ Set.Icc (0 : ℝ) 1
+BanditRL.OnlineLearning.ftlState_half [theorem] BanditRLProof/OnlineLearningFTLState.lean:67
+  theorem ftlState_half (y : ℕ → ℝ) (t : ℕ) : ftlState ((1 : ℝ) / 2) y t = (t, meanPredict y t)
+BanditRL.OnlineLearning.history_policy_independent [theorem] BanditRLProof/OnlineLearningHistory.lean:12
+  theorem history_policy_independent {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ) (t : ℕ) (policy : ((↑(Finset.range t) : Type) → ℝ) → ℝ) (hp : Measurable policy) : IndepFun (fun ω => policy (fun i => Y i ω)) (Y t) μ
+BanditRL.OnlineLearning.history_policy_loss_ge_variance [theorem] BanditRLProof/OnlineLearningHistory.lean:23
+  theorem history_policy_loss_ge_variance {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ) (hb : ∀ t ω, Y t ω ∈ Set.Icc (0 : ℝ) 1) (t : ℕ) (policy : ((↑(Finset.range t) : Type) → ℝ) → ℝ) (hp : Measurable policy) (hpb : ∀ z, policy z ∈ Set.Icc (0 : ℝ) 1) : variance (Y t) μ ≤ ∫ ω, (policy (fun i => Y i ω) - Y t ω)^2 ∂μ
+BanditRL.OnlineLearning.normalized_excess [theorem] BanditRLProof/OnlineLearningHistory.lean:42
+  theorem normalized_excess (total variance : ℝ) (T : ℕ) (hT : 0 < T) : total / T - variance = (total - T * variance) / T
+BanditRL.OnlineLearning.meanPredict_measurable [theorem] BanditRLProof/OnlineLearningIID.lean:13
+  theorem meanPredict_measurable {Ω : Type*} [MeasurableSpace Ω] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (t : ℕ) : Measurable (fun ω => meanPredict (fun i => Y i ω) t)
+BanditRL.OnlineLearning.meanPredict_memLp [theorem] BanditRLProof/OnlineLearningIID.lean:20
+  theorem meanPredict_memLp {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hb : ∀ t ω, Y t ω ∈ Set.Icc (0 : ℝ) 1) (t : ℕ) : MemLp (fun ω => meanPredict (fun i => Y i ω) t) 2 μ
+BanditRL.OnlineLearning.iid_meanPredict_excess [theorem] BanditRLProof/OnlineLearningIID.lean:29
+  theorem iid_meanPredict_excess {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t ω, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) : (∫ ω, ∑ t ∈ Finset.range T, (meanPredict (fun i => Y i ω) t - Y t ω)^2 ∂μ) - T * variance (Y 0) μ = ∑ t ∈ Finset.range T, ∫ ω, (meanPredict (fun i => Y i ω) t - ∫ ω, Y 0 ω ∂μ)^2 ∂μ
+BanditRL.OnlineLearning.iid_meanPredict_excess_nonneg [theorem] BanditRLProof/OnlineLearningIID.lean:56
+  theorem iid_meanPredict_excess_nonneg {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t ω, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) : 0 ≤ (∫ ω, ∑ t ∈ Finset.range T, (meanPredict (fun i => Y i ω) t - Y t ω)^2 ∂μ) - T * variance (Y 0) μ
+BanditRL.OnlineLearning.source_mean_optimal [theorem] BanditRLProof/OnlineLearningIID.lean:67
+  theorem source_mean_optimal {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : Ω → ℝ) (hY : Measurable Y) (hb : ∀ ω, Y ω ∈ Set.Icc (0 : ℝ) 1) : (∫ ω, Y ω ∂μ) ∈ Set.Icc (0 : ℝ) 1 ∧ (∫ ω, ((∫ ω, Y ω ∂μ) - Y ω)^2 ∂μ) = variance Y μ ∧ ∀ u : ℝ, variance Y μ ≤ ∫ ω, (u - Y ω)^2 ∂μ
+BanditRL.OnlineLearning.meanPredict_independent [theorem] BanditRLProof/OnlineLearningInformation.lean:13
+  theorem meanPredict_independent {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ) (t : ℕ) : IndepFun (fun ω => meanPredict (fun i => Y i ω) t) (Y t) μ
+BanditRL.OnlineLearning.empiricalMean [def] BanditRLProof/OnlineLearningMean.lean:8
+  noncomputable def empiricalMean (y : ℕ → ℝ) (n : ℕ) : ℝ
+BanditRL.OnlineLearning.empiricalMean_decomposition [theorem] BanditRLProof/OnlineLearningMean.lean:12
+  theorem empiricalMean_decomposition (y : ℕ → ℝ) (n : ℕ) (hn : 0 < n) (u : ℝ) : (∑ t ∈ Finset.range n, (u - y t)^2) = (∑ t ∈ Finset.range n, (empiricalMean y n - y t)^2) + n * (u - empiricalMean y n)^2
+BanditRL.OnlineLearning.empiricalMean_minimizes [theorem] BanditRLProof/OnlineLearningMean.lean:28
+  theorem empiricalMean_minimizes (y : ℕ → ℝ) (n : ℕ) (hn : 0 < n) (u : ℝ) : (∑ t ∈ Finset.range n, (empiricalMean y n - y t)^2) ≤ ∑ t ∈ Finset.range n, (u - y t)^2
+BanditRL.OnlineLearning.empiricalMean_mem [theorem] BanditRLProof/OnlineLearningMean.lean:36
+  theorem empiricalMean_mem (y : ℕ → ℝ) (n : ℕ) (hn : 0 < n) (hy : ∀ t < n, y t ∈ Set.Icc (0 : ℝ) 1) : empiricalMean y n ∈ Set.Icc (0 : ℝ) 1
+BanditRL.OnlineLearning.empiricalMean_unique [theorem] BanditRLProof/OnlineLearningMean.lean:48
+  theorem empiricalMean_unique (y : ℕ → ℝ) (n : ℕ) (hn : 0 < n) (u : ℝ) (hu : (∑ t ∈ Finset.range n, (u-y t)^2) ≤ ∑ t ∈ Finset.range n, (empiricalMean y n-y t)^2) : u = empiricalMean y n
+BanditRL.OnlineLearning.empiricalMean_succ [theorem] BanditRLProof/OnlineLearningMean.lean:62
+  theorem empiricalMean_succ (y : ℕ → ℝ) (t : ℕ) : empiricalMean y (t + 1) = empiricalMean y t + (y t - empiricalMean y t) / ((t : ℝ) + 1)
+BanditRL.OnlineLearning.comparatorRegret [def] BanditRLProof/OnlineLearningRegret.lean:35
+  noncomputable def comparatorRegret {X : Type*} (loss : ℕ → X → ℝ) (prediction : ℕ → X) (u : X) (T : ℕ) : ℝ
+BanditRL.OnlineLearning.NoRegret [def] BanditRLProof/OnlineLearningRegret.lean:40
+  def NoRegret {X : Type*} (V : Set X) (loss : ℕ → X → ℝ) (prediction : ℕ → X) : Prop
+BanditRL.OnlineLearning.comparatorRegret_eq_sum [theorem] BanditRLProof/OnlineLearningRegret.lean:45
+  theorem comparatorRegret_eq_sum {X : Type*} (loss : ℕ → X → ℝ) (prediction : ℕ → X) (u : X) (T : ℕ) : comparatorRegret loss prediction u T = ∑ t ∈ Finset.range T, (loss t (prediction t) - loss t u)
+BanditRL.OnlineLearning.noRegret_of_vanishing_bound [theorem] BanditRLProof/OnlineLearningRegret.lean:52
+  theorem noRegret_of_vanishing_bound {X : Type*} (V : Set X) (loss : ℕ → X → ℝ) (prediction : ℕ → X) (bound : X → ℕ → ℝ) (hb : ∀ u ∈ V, ∀ᶠ T in atTop, comparatorRegret loss prediction u T / T ≤ bound u T) (hl : ∀ u ∈ V, Tendsto (bound u) atTop (nhds 0)) : NoRegret V loss prediction
+BanditRL.OnlineLearning.expected_square_decomposition [theorem] BanditRLProof/OnlineLearningStochastic.lean:13
+  theorem expected_square_decomposition {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : Ω → ℝ) (hY : MemLp Y 2 μ) (u : ℝ) : (∫ ω, (u - Y ω)^2 ∂μ) = variance Y μ + (u - ∫ ω, Y ω ∂μ)^2
+BanditRL.OnlineLearning.independent_prediction_square [theorem] BanditRLProof/OnlineLearningStochastic.lean:27
+  theorem independent_prediction_square {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (P Y : Ω → ℝ) (hP : MemLp P 2 μ) (hY : MemLp Y 2 μ) (h : IndepFun P Y μ) : (∫ ω, (P ω - Y ω)^2 ∂μ) = (∫ ω, (P ω - ∫ ω, Y ω ∂μ)^2 ∂μ) + variance Y μ
+BanditRL.OnlineLinearization.regret_comparison [theorem] BanditRLProof/OnlineLinearization.lean:142
+  theorem regret_comparison (V : Domain (E := E)) (A : LinearPolicy (E := E)) (loss : ℕ → E → EReal) (p : SupportPolicy (E := E)) (T : ℕ) (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) (hlegal : LegalFeedback A loss p T) (u : E) (hu : u ∈ V.carrier) : regret A loss p u T ≤ BanditRL.OnlineLearning.comparatorRegret (fun t => linearLoss (selected A loss p t)) (linearRun A (selected A loss p)) u T
+BanditRL.OnlineLinearization.regret_transfer [theorem] BanditRLProof/OnlineLinearization.lean:152
+  theorem regret_transfer (V : Domain (E := E)) (A : LinearPolicy (E := E)) (loss : ℕ → E → EReal) (p : SupportPolicy (E := E)) (T : ℕ) (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) (hlegal : LegalFeedback A loss p T) (B : (ℕ → E) → E → ℕ → ℝ) (hB : ∀ g u, u ∈ V.carrier → BanditRL.OnlineLearning.comparatorRegret (fun t => linearLoss (g t)) (linearRun A g) u T ≤ B g u T) (u : E) (hu : u ∈ V.carrier) : regret A loss p u T ≤ B (selected A loss p) u T
+BanditRL.OnlineLinearization.canonical_regret_comparison [theorem] BanditRLProof/OnlineLinearization.lean:157
+  theorem canonical_regret_comparison (V : Domain (E := E)) (A : LinearPolicy (E := E)) (hA : Feasible V A) (loss : ℕ → E → EReal) (T : ℕ) (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) (u : E) (hu : u ∈ V.carrier) : regret A loss BanditRL.OnlineSubgradientPolicy.canonicalPolicy u T ≤ BanditRL.OnlineLearning.comparatorRegret (fun t => linearLoss (selected A loss BanditRL.OnlineSubgradientPolicy.canonicalPolicy t)) (linearRun A (selected A loss BanditRL.OnlineSubgradientPolicy.canonicalPolicy)) u T
+BanditRL.OnlineLearning.LimitNoRegret [def] BanditRLProof/OnlineNoRegretSemantics.lean:8
+  def LimitNoRegret {X : Type*} (V : Set X) (loss : ℕ → X → ℝ) (prediction : ℕ → X) : Prop
+BanditRL.OnlineLearning.noRegret_limit_nonpos [theorem] BanditRLProof/OnlineNoRegretSemantics.lean:13
+  theorem noRegret_limit_nonpos {X : Type*} (V : Set X) (loss : ℕ → X → ℝ) (prediction : ℕ → X) (hNR : NoRegret V loss prediction) (u : X) (hu : u ∈ V) (a : ℝ) (hl : Tendsto (fun T : ℕ => comparatorRegret loss prediction u T / T) atTop (nhds a)) : a ≤ 0
+BanditRL.OnlineLearning.limitNoRegret_implies_noRegret [theorem] BanditRLProof/OnlineNoRegretSemantics.lean:24
+  theorem limitNoRegret_implies_noRegret {X : Type*} (V : Set X) (loss : ℕ → X → ℝ) (prediction : ℕ → X) (hL : LimitNoRegret V loss prediction) : NoRegret V loss prediction
+BanditRL.OnlineLearning.limitNoRegret_iff_noRegret_of_converges [theorem] BanditRLProof/OnlineNoRegretSemantics.lean:33
+  theorem limitNoRegret_iff_noRegret_of_converges {X : Type*} (V : Set X) (loss : ℕ → X → ℝ) (prediction : ℕ → X) (hc : ∀ u ∈ V, ∃ a : ℝ, Tendsto (fun T : ℕ => comparatorRegret loss prediction u T / T) atTop (nhds a)) : LimitNoRegret V loss prediction ↔ NoRegret V loss prediction
+BanditRL.OnlineLearning.NoRegretCounterexample.potential [def] BanditRLProof/OnlineNoRegretSemantics.lean:47
+  noncomputable def potential (T : ℕ) : ℝ
+BanditRL.OnlineLearning.NoRegretCounterexample.loss [def] BanditRLProof/OnlineNoRegretSemantics.lean:51
+  noncomputable def loss (t : ℕ) (x : ℝ) : ℝ
+BanditRL.OnlineLearning.NoRegretCounterexample.regret_eq [theorem] BanditRLProof/OnlineNoRegretSemantics.lean:54
+  theorem regret_eq (T : ℕ) (u : ℝ) : comparatorRegret loss (fun _ => 0) u T = -potential T * u
+BanditRL.OnlineLearning.NoRegretCounterexample.noRegret [theorem] BanditRLProof/OnlineNoRegretSemantics.lean:70
+  theorem noRegret : NoRegret (Set.Icc (0 : ℝ) 1) loss (fun _ => 0)
+BanditRL.OnlineLearning.NoRegretCounterexample.normalized_even [theorem] BanditRLProof/OnlineNoRegretSemantics.lean:85
+  theorem normalized_even (n : ℕ) : comparatorRegret loss (fun _ => 0) 1 (2 * (n + 1)) / ((2 * (n + 1) : ℕ) : ℝ) = -1
+BanditRL.OnlineLearning.NoRegretCounterexample.normalized_odd [theorem] BanditRLProof/OnlineNoRegretSemantics.lean:94
+  theorem normalized_odd (n : ℕ) : comparatorRegret loss (fun _ => 0) 1 (2 * n + 1) / ((2 * n + 1 : ℕ) : ℝ) = 0
+BanditRL.OnlineLearning.NoRegretCounterexample.no_limit [theorem] BanditRLProof/OnlineNoRegretSemantics.lean:101
+  theorem no_limit : ¬ ∃ a : ℝ, Tendsto (fun T : ℕ => comparatorRegret loss (fun _ => 0) 1 T / T) atTop (nhds a)
+BanditRL.OnlineLearning.NoRegretCounterexample.strict_separation [theorem] BanditRLProof/OnlineNoRegretSemantics.lean:117
+  theorem strict_separation : NoRegret (Set.Icc (0 : ℝ) 1) loss (fun _ => 0) ∧ ¬ LimitNoRegret (Set.Icc (0 : ℝ) 1) loss (fun _ => 0)
+BanditRL.OnlineLearning.squaredBestRegret [def] BanditRLProof/OnlineSquareMinimum.lean:6
+  noncomputable def squaredBestRegret (y prediction : ℕ → ℝ) (T : ℕ) : ℝ
+BanditRL.OnlineLearning.guessing_prefix_minimum [theorem] BanditRLProof/OnlineSquareMinimum.lean:12
+  theorem guessing_prefix_minimum (y : ℕ → ℝ) (T : ℕ) (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) : empiricalMean y T ∈ Set.Icc (0 : ℝ) 1 ∧ ∀ u ∈ Set.Icc (0 : ℝ) 1, (∑ t ∈ Finset.range T, (empiricalMean y T - y t)^2) ≤ ∑ t ∈ Finset.range T, (u - y t)^2
+BanditRL.OnlineLearning.squaredLoss_minimum_eq [theorem] BanditRLProof/OnlineSquareMinimum.lean:26
+  theorem squaredLoss_minimum_eq (y : ℕ → ℝ) (T : ℕ) (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) : sInf ((fun u : ℝ => ∑ t ∈ Finset.range T, (u - y t)^2) '' Set.Icc (0 : ℝ) 1) = ∑ t ∈ Finset.range T, (empiricalMean y T - y t)^2
+BanditRL.OnlineLearning.squaredBestRegret_eq_comparatorRegret [theorem] BanditRLProof/OnlineSquareMinimum.lean:42
+  theorem squaredBestRegret_eq_comparatorRegret (y prediction : ℕ → ℝ) (T : ℕ) (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) : squaredBestRegret y prediction T = comparatorRegret (fun t x => (x - y t)^2) prediction (empiricalMean y T) T
+BanditRL.OnlineLearning.comparatorRegret_le_squaredBestRegret [theorem] BanditRLProof/OnlineSquareMinimum.lean:50
+  theorem comparatorRegret_le_squaredBestRegret (y prediction : ℕ → ℝ) (T : ℕ) (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) (u : ℝ) (hu : u ∈ Set.Icc (0 : ℝ) 1) : comparatorRegret (fun t x => (x - y t)^2) prediction u T ≤ squaredBestRegret y prediction T
+BanditRL.OnlineLearning.meanPredict_bestRegret_bound [theorem] BanditRLProof/OnlineSquareMinimum.lean:60
+  theorem meanPredict_bestRegret_bound (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T) (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) : squaredBestRegret y (meanPredict y) T ≤ 4 + 4 * Real.log T
+BanditRL.OnlineLearning.meanPredict_bestRegret_refined [theorem] BanditRLProof/OnlineSquareMinimum.lean:67
+  theorem meanPredict_bestRegret_refined (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T) (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) : squaredBestRegret y (meanPredict y) T ≤ (1 : ℝ) / 4 + ∑ t ∈ Finset.range (T - 1), 4 / ((t : ℝ) + 2)
