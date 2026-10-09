@@ -2,6 +2,8 @@
 
 Launch: **2026-10-09**. Status: **research started; complete algorithms and research-root theorems open**.
 
+Public progress and leaf coordination: [tracking issue #206](https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/issues/206).
+
 This is an owner-authorized public research launch linking BanditRLlib and
 QuantumComputinglib. It is not an announcement of a new proved quantum advantage,
 a globally novel problem, an optimal algorithm, or a main-library accepted theorem.
@@ -57,6 +59,10 @@ Historical private-only labels and machine paths are retained as historical fact
 the owner explicitly ended confidentiality for this release. No retrospective
 Statement Seal repair or new independent-review verdict is invented.
 
+A separate [portable source-binding supplement](https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/ad9a15f02fc9915ecf98869af9a61f4c3b3c6d2c/research/quantum-bandit/evidence/adaptive/portable-source-bindings.json)
+records the historical CRLF versus Git-blob LF hash difference for BornStability;
+normalized source bytes agree. Historical review hashes/verdicts are unchanged.
+
 | Evidence state | What is available |
 |---|---|
 | Compiled research increment | Born probability stability, aligned circuit bias, chronological forward/inverse query semantics, actual primitive expansion/cost, cross-library adapter and canaries |
@@ -111,7 +117,7 @@ No global absence-of-prior-work claim follows.
 4. **QB-STOPPED-INFORMATION-HARD-ORACLES-AND-TESTING:** hard unitary family,
    one-environment/stopped comparison and K-arm testing-to-regret reduction.
 
-The [Chinese explanation, computer setup and copyable collaborator goal](https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/64eb285ebecbdc4bf236318776aabc6160fb1851/research/quantum-bandit/COLLABORATOR-HANDOFF.md)
+The [Chinese explanation, computer setup and copyable collaborator goal](https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/ad9a15f02fc9915ecf98869af9a61f4c3b3c6d2c/research/quantum-bandit/COLLABORATOR-HANDOFF.md)
 allows continuation from current proofs rather than restarting the library audit.
 Work on personal branches, claim one bounded leaf, retain typed failures and exact
 compiled/conditional/speculative/refuted boundaries, and submit draft PRs under both
