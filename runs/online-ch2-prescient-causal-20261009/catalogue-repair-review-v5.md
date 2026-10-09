@@ -1,0 +1,15 @@
+# Catalogue repair v5: count correction
+
+Verdict: accepted-with-explicit-delta for exact prospective materialization. M1 is satisfied. No additional repairs identified. This is not repaired pixel, FINAL, package, chapter or whole-Goal acceptance.
+
+The reused staged automated /root/source_reviewer role retains its prior review history, at requested GPT-6 Astra / medium without runtime attestation. It is not external human review or absolute blindness. My v4 report rejected the internally inconsistent mutation count while accepting the technical source-range repair; that report and receipt remain byte-identical.
+
+I independently hashed all 471 current indexed RAW files before and after and rechecked all 445 historical v4 indexed rows unchanged. publication_guard_v2.fixed() passed before and after, covering the 2955 baseline with exactly the five already approved transitions and frozen source/proof/Test/definition/header bindings. No canonical file was modified.
+
+Recursive plan equality verifies precisely one v4-to-v5 scalar change: allowed_old_mutations changes from5 to6. The six complete rows are identical, and rows1-5 remain exactly plan-v3. The count-repair record's original and revised plan SHA bindings agree with actual bytes. All first five canonical files already match their approved after snapshots; declaration-boundaries.json still matches the sixth row's before snapshot.
+
+The proposed boundary configuration preserves every old field and the complete existing FTL entry, appending only the source-qualified iterate range33-36. I freshly rechecked its production RAW pin and the LF full-block hash against the complete frozen definition. Both equations and all parameters are present, and the next theorem is excluded. This reuses my v4 actual original screenshot inspection and independent read-only complete scan (863 modules,11015 declarations; only iterate.statement changed), not a new scan or new pixel claim. Existing six boundary-test evidence remains applicable; no generator or Lean code changes are proposed.
+
+Authorize only the exact sixth-row after bytes to be materialized now; the other five final rows are retained, not permission to mutate them further. This explicit scope expansion from five to six paths is a reviewed source-presentation configuration change. No mathematical target, public proof, canary, reader formula, source contract, native record or global SGB change is licensed. Keep v4 rejection and all failed catalogue/render evidence immutable.
+
+After materialization, fresh combined harness/site/check/shared registry and browser/personal review of all22 originals are required, followed by distinct FINAL. No successful future rendering or compilation is claimed by this receipt. Source X/interior and valid generated-run transport, sharp fixed/variable same-run cumulative endpoints and all eight Chapter2 forwards remain REQUIRED/OPEN; Chapter2 is partial and whole Goal ACTIVE. No merge/deploy/native acceptance or chapter completion follows.
