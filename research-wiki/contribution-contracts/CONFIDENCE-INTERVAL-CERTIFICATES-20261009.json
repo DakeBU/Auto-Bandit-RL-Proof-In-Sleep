@@ -14,14 +14,7 @@
   "target": "Reusable deterministic composition and interval comparison; no stochastic or algorithmic guarantee",
   "affected_files": [
     "BanditRLProof.lean",
-    "BanditRLProof/ConfidenceIntervals.lean",
-    "Tests.lean",
-    "Tests/ConfidenceIntervalsCanary.lean",
-    "docs/confidence-intervals/lesson.md",
-    "docs/confidence-intervals/source-contract.md",
-    "docs/confidence-intervals/formal-packet.md",
-    "docs/confidence-intervals/DependencyExport.lean",
-    "docs/confidence-intervals/proof-term-graph.json"
+    "BanditRLProof/ConfidenceIntervals.lean"
   ],
   "declarations": [
     "BanditRLProof.ConfidenceIntervals.bias_statistical_composition",
@@ -99,7 +92,8 @@
     "focused_checks": [
       "lake build BanditRLProof.ConfidenceIntervals Tests.ConfidenceIntervalsCanary",
       "lake env lean --run docs/confidence-intervals/DependencyExport.lean --compact docs/confidence-intervals/proof-term-graph.json",
-      "#print axioms: propext, Classical.choice, Quot.sound only"
+      "#print axioms: propext, Classical.choice, Quot.sound only",
+      "Contributor checker affected_files lists its two protected production surfaces; Tests and generic bounded docs are separate supporting artifacts recorded by the source/reader/review fields."
     ],
     "bandit_check": "passed python tools/bandit.py check; full library, Tests, proof exporter/placeholder guard and 451 tool tests (7 skipped)",
     "site_build": "passed python website/scripts/build_site.py --lean-verified; local only",
