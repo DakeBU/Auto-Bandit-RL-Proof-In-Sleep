@@ -1,0 +1,168 @@
+{
+  "schema_version": "2.0",
+  "id": "ONLINE-CH2-UNBOUNDED-OSD-20261010",
+  "route": "online-learning/chapter-2",
+  "frontier_cell": "online-ogd",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10 (2026-06-21), SHA cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchor": "Chapter2 required unbounded decreasing-step OSD failure dependency, printed14/PDF26; Theorem5.4 printed52-53/PDF64-65, including phi range and left-limit/numerical supplement.",
+    "url": "https://arxiv.org/pdf/1912.13213v10"
+  },
+  "target": "Prove Theorem5.4 for the actual canonical causal OSD recursion, source switching losses, precise threshold and phi range/left limit. This is the required Chapter2 forward dependency on the failure of THIS unprojected OSD algorithm with polynomially decreasing steps, not a lower bound against all learners. The fixed learner receives only the current loss and point when selecting a subgradient; eta_t=t^(-alpha) is a function of the current index and alpha. The adversarial witness may depend on the chosen horizon T. Four source witness definitions and eleven proof terminals close one source theorem plus its mandatory phi range/limit and proof dependencies; their count is not a printed-result or chapter denominator. All eight Chapter2 forward containers remain required/open pending dedicated source reconciliation and chapter gates; Chapter2 is partial with null complete proof denominator, Chapters3-16 remain unenumerated/null, and the Chapters1-16 Goal stays ACTIVE. Positive dimension is source-implicit and mathematically necessary: the zero space cannot have positive regret at comparator0. No bounded feasible domain, assumed desired regret, prescribed trajectory, minimax, oracle-distance-energy, PAC, adaptive or parameter-free endpoint is added. Stacked on OPEN draft unmerged PR213 exact 2f039d55ad2f9a9f9b97027287709804689cf46d. No merge, deployment, main/live, CI or retirement claim.",
+  "affected_files": [
+    "BanditRLProof/OnlineUnboundedOSD.lean",
+    "BanditRLProof.lean",
+    "website/content/chapters.json",
+    "website/content/readings.json",
+    "website/content/highlights.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineUnboundedOSD.powerSteps",
+    "BanditRL.OnlineUnboundedOSD.phi",
+    "BanditRL.OnlineUnboundedOSD.switchSlope",
+    "BanditRL.OnlineUnboundedOSD.switchLoss",
+    "BanditRL.OnlineUnboundedOSD.currentSubgradient_affine",
+    "BanditRL.OnlineUnboundedOSD.step_affine_fullSpace",
+    "BanditRL.OnlineUnboundedOSD.iterate_affine_prefix",
+    "BanditRL.OnlineUnboundedOSD.powerSteps_pos",
+    "BanditRL.OnlineUnboundedOSD.switching_loss_regular",
+    "BanditRL.OnlineUnboundedOSD.switching_scalar_regret_identity",
+    "BanditRL.OnlineUnboundedOSD.phi_range",
+    "BanditRL.OnlineUnboundedOSD.phi_limit",
+    "BanditRL.OnlineUnboundedOSD.switching_scalar_lower_bound",
+    "BanditRL.OnlineUnboundedOSD.switching_vector_lower_bound",
+    "BanditRL.OnlineUnboundedOSD.theorem_5_4"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "new_shared",
+    "searched_existing": [
+      "Actual indexed/source project and pinned Mathlib searches for canonical subgradient selector/fullSpace projection/iterate causality, affine subdifferential, sum triangles, monotone sum-integral bounds, power integral and derivative/concavity/log/slope/unit vector facts; RUN source/API receipts. No external dependency/toolchain upgrade."
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineConvex.affine_subdifferential",
+      "BanditRL.OnlineHuber.fullSpace",
+      "BanditRL.OnlineHuber.project_fullSpace",
+      "BanditRL.OnlineSubgradientDescent.currentSubgradient",
+      "BanditRL.OnlineSubgradientDescent.step",
+      "BanditRL.OnlineSubgradientDescent.iterate",
+      "BanditRL.OnlineSubgradientDescent.regret",
+      "BanditRL.OnlineSubgradientDescent.iterate_prefix",
+      "Finset.sum_Ico_Ico_comm'",
+      "AntitoneOn.sum_le_integral_Ico",
+      "MonotoneOn.integral_le_sum_Ico",
+      "integral_rpow",
+      "rpow_one_add_lt_one_add_mul_self",
+      "concaveOn_of_hasDerivWithinAt2_nonpos",
+      "ConcaveOn.slope_le_of_hasDerivAt",
+      "HasDerivAt.tendsto_slope",
+      "Real.log_two_lt_d9",
+      "exists_norm_eq"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineUnboundedOSD.powerSteps",
+      "BanditRL.OnlineUnboundedOSD.phi",
+      "BanditRL.OnlineUnboundedOSD.switchSlope",
+      "BanditRL.OnlineUnboundedOSD.switchLoss",
+      "BanditRL.OnlineUnboundedOSD.currentSubgradient_affine",
+      "BanditRL.OnlineUnboundedOSD.step_affine_fullSpace",
+      "BanditRL.OnlineUnboundedOSD.iterate_affine_prefix",
+      "BanditRL.OnlineUnboundedOSD.powerSteps_pos",
+      "BanditRL.OnlineUnboundedOSD.switching_loss_regular",
+      "BanditRL.OnlineUnboundedOSD.switching_scalar_regret_identity",
+      "BanditRL.OnlineUnboundedOSD.phi_range",
+      "BanditRL.OnlineUnboundedOSD.phi_limit",
+      "BanditRL.OnlineUnboundedOSD.switching_scalar_lower_bound",
+      "BanditRL.OnlineUnboundedOSD.switching_vector_lower_bound",
+      "BanditRL.OnlineUnboundedOSD.theorem_5_4"
+    ],
+    "known_consumers": [
+      "BanditRL.OnlineUnboundedOSDCanary.scalar_actual_two_rounds",
+      "BanditRL.OnlineUnboundedOSDCanary.finiteDim_source_lower_bound",
+      "BanditRL.OnlineUnboundedOSD.switching_scalar_regret_identity",
+      "BanditRL.OnlineUnboundedOSD.switching_scalar_lower_bound",
+      "BanditRL.OnlineUnboundedOSD.switching_vector_lower_bound",
+      "BanditRL.OnlineUnboundedOSD.theorem_5_4"
+    ],
+    "planned_consumers": [
+      "Dedicated Chapter2 required forward-container reconciliation; later Chapter5 source-qualified reuse without Chapter5 chapter acceptance."
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "One actual affine selector/step/prefix chain feeds scalar identity and vector embedding; phi range feeds horizon proofs and canary; source lower bound consumes genuine finite-sum/integral proof, not assumed regret/trajectory. Four witness definitions have multiple real proof/canary consumers. Same Lean/Lake registry, no separate Book project or duplicate algorithm."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/osd_blind",
+    "source_reviewer": "/root/source_reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Distinct staged source-withheld11type/4definition and2complete7/9canary reconstruction, anti-anchored source CONTRACT and production/canary BODY review accepted. Source positive dimension explicitly Nontrivial E; zero space would falsify positive regret. Generic helper scopes, all-alpha/all-T identities and total phi(1)=1 vs left limit separated. Source T2/T64 witnesses differ. Canary prefreeze PiLp.single exponent repaired in v2 context without changing headers; all actual proof/audit failures retained. Reused actor history disclosed, no human/external/absolute-blind/runtime attestation. FINAL/native/delivery pending. This is the required Chapter2 forward dependency on the failure of THIS unprojected OSD algorithm with polynomially decreasing steps, not a lower bound against all learners. The fixed learner receives only the current loss and point when selecting a subgradient; eta_t=t^(-alpha) is a function of the current index and alpha. The adversarial witness may depend on the chosen horizon T. Four source witness definitions and eleven proof terminals close one source theorem plus its mandatory phi range/limit and proof dependencies; their count is not a printed-result or chapter denominator. All eight Chapter2 forward containers remain required/open pending dedicated source reconciliation and chapter gates; Chapter2 is partial with null complete proof denominator, Chapters3-16 remain unenumerated/null, and the Chapters1-16 Goal stays ACTIVE. Positive dimension is source-implicit and mathematically necessary: the zero space cannot have positive regret at comparator0. No bounded feasible domain, assumed desired regret, prescribed trajectory, minimax, oracle-distance-energy, PAC, adaptive or parameter-free endpoint is added. Stacked on OPEN draft unmerged PR213 exact 2f039d55ad2f9a9f9b97027287709804689cf46d. No merge, deployment, main/live, CI or retirement claim."
+  },
+  "graph_contribution": {
+    "lean_graph": "integration-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Same Euclidean algorithm and source scalar-to-unit-direction embedding; no new cross-setting mechanism or certified functor.",
+    "focus_targets": [
+      "BanditRL.OnlineUnboundedOSD.powerSteps",
+      "BanditRL.OnlineUnboundedOSD.phi",
+      "BanditRL.OnlineUnboundedOSD.switchSlope",
+      "BanditRL.OnlineUnboundedOSD.switchLoss",
+      "BanditRL.OnlineUnboundedOSD.currentSubgradient_affine",
+      "BanditRL.OnlineUnboundedOSD.step_affine_fullSpace",
+      "BanditRL.OnlineUnboundedOSD.iterate_affine_prefix",
+      "BanditRL.OnlineUnboundedOSD.powerSteps_pos",
+      "BanditRL.OnlineUnboundedOSD.switching_loss_regular",
+      "BanditRL.OnlineUnboundedOSD.switching_scalar_regret_identity",
+      "BanditRL.OnlineUnboundedOSD.phi_range",
+      "BanditRL.OnlineUnboundedOSD.phi_limit",
+      "BanditRL.OnlineUnboundedOSD.switching_scalar_lower_bound",
+      "BanditRL.OnlineUnboundedOSD.switching_vector_lower_bound",
+      "BanditRL.OnlineUnboundedOSD.theorem_5_4"
+    ],
+    "visual_review": "17public/selected nodes,0additional selected auxiliaries,3240coalesced direct TYPE_VALUE presences,24requiredVALUEpairs and4separately selected canary numeric/existential branches retaining their new source parents. Complete11026oldregistryobjects+15canonicalproduction expected11041; registry/site/pixels pending. Not occurrences, full transitive graph, source result count or chapter denominator.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: only online-ogd append module/goal/completion suffix, one exact source-qualified card and15canonical declaration notes. Preserve all old fields/links and other Books.",
+    "banditrlwiki": "no-change-with-reason: deterministic Euclidean lower bound does not change Bandit policies/settings.",
+    "results_ledger": "no-change-with-reason: no dedicated source-container/chapter closure; bounded task milestone only.",
+    "roadmap": "no-change-with-reason: all8Chapter2forwards required/open pending reconciliation, Chapter2partial/null, later chapters unenumerated/null, persistent Goal ACTIVE and globalSGB untouched.",
+    "website_surfaces": [
+      "website/content/chapters.json",
+      "website/content/readings.json",
+      "website/content/highlights.json"
+    ]
+  },
+  "truth_boundary": "This is the required Chapter2 forward dependency on the failure of THIS unprojected OSD algorithm with polynomially decreasing steps, not a lower bound against all learners. The fixed learner receives only the current loss and point when selecting a subgradient; eta_t=t^(-alpha) is a function of the current index and alpha. The adversarial witness may depend on the chosen horizon T. Four source witness definitions and eleven proof terminals close one source theorem plus its mandatory phi range/limit and proof dependencies; their count is not a printed-result or chapter denominator. All eight Chapter2 forward containers remain required/open pending dedicated source reconciliation and chapter gates; Chapter2 is partial with null complete proof denominator, Chapters3-16 remain unenumerated/null, and the Chapters1-16 Goal stays ACTIVE. Positive dimension is source-implicit and mathematically necessary: the zero space cannot have positive regret at comparator0. No bounded feasible domain, assumed desired regret, prescribed trajectory, minimax, oracle-distance-energy, PAC, adaptive or parameter-free endpoint is added. Stacked on OPEN draft unmerged PR213 exact 2f039d55ad2f9a9f9b97027287709804689cf46d. No merge, deployment, main/live, CI or retirement claim.",
+  "verification": {
+    "focused_checks": "11frozenproductionbodies and2FULL7/9conjunctcanaries actually compiled;17public#check/#printaxioms standard-only,13nativefences/safe-verifies,24VALUEpairs/4individuallyselectednumeric/existentialdependencies. Headers/4definitions/importprefix unchanged. Actual failures/snapshots preserved.",
+    "bandit_check": "Actual combined root/Tests and complete tools/bandit.py check passed, compiler/unittest/exporter/check markers inspected; exact counts and RAW source/command hashes in combined-root-Tests-inspected-v1.json/full-harness-inspected-v1.json. FINAL/site/native/delivery pending.",
+    "site_build": "Pending applicable combined Lean gate then isolated clean local lean-verified site; generated website/_site not edited.",
+    "site_check": "Pending complete registry, reader/browser/original-pixel/FINAL review.",
+    "independent_review": "Distinct production/canary BODY c31b22468bf768af35415d11cc086edb6324cb35240636eee531b2a30f7eee9d and exact prospective publication plan 2b05ed3c5580adbf8f01c11a21ff64c4f7a37e1b0f453dd6bacdf22af669b7bc accepted; not FINAL/package/chapter acceptance.",
+    "owned_test_files": [
+      "Tests/OnlineUnboundedOSDCanary.lean"
+    ],
+    "owned_test_root_files": [
+      "Tests.lean"
+    ]
+  },
+  "contributor": {
+    "name": "Codex for Ji Cheng",
+    "role": "Formalizer with distinct staged automated decoder/source reviewer"
+  }
+}

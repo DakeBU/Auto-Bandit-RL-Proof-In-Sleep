@@ -1,0 +1,27 @@
+import BanditRLProof.OnlineSubgradientDescent
+import BanditRLProof.OnlineHinge
+import BanditRLProof.OnlineHuber
+import Mathlib.Analysis.SumIntegralComparisons
+import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+import Mathlib.Analysis.Complex.ExponentialBounds
+import Mathlib.Analysis.Calculus.Deriv.Slope
+import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
+import Mathlib.Analysis.Convex.SpecificFunctions.Basic
+set_option pp.universes true
+#check BanditRL.OnlineSubgradientDescent.currentSubgradient
+#check BanditRL.OnlineSubgradientDescent.step
+#check BanditRL.OnlineSubgradientDescent.iterate
+#check BanditRL.OnlineSubgradientDescent.regret
+#check BanditRL.OnlineConvex.affine_subdifferential
+#check BanditRL.OnlineHuber.fullSpace
+#check BanditRL.OnlineHuber.project_fullSpace
+#check Real.log_two_lt_d9
+#check strictConcaveOn_log_Ioi
+#check strictConcaveOn_of_deriv2_neg
+#check HasDerivAt.tendsto_slope_zero_right
+#check Real.hasStrictDerivAt_const_rpow
+#check integral_rpow
+#check MonotoneOn.integral_le_sum
+#check AntitoneOn.sum_le_integral
+#check Finset.sum_range_succ
+#check LipschitzWith

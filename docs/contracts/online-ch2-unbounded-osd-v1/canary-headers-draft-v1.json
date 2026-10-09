@@ -1,0 +1,16 @@
+{
+  "prefix": "import BanditRLProof.OnlineUnboundedOSD\nnoncomputable section\nopen Set Finset Filter Topology\nopen scoped InnerProductSpace\nset_option autoImplicit false\nnamespace BanditRL.OnlineUnboundedOSDCanary\nopen BanditRL.OnlineUnboundedOSD\nabbrev scalarRun (T t : ℕ) : ℝ :=\n  BanditRL.OnlineSubgradientDescent.iterate BanditRL.OnlineHuber.fullSpace (powerSteps (1/2))\n    (fun s z => (switchLoss T (1 : ℝ) s z : EReal)) 0 t\nabbrev scalarRegret (T : ℕ) : ℝ :=\n  BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (powerSteps (1/2))\n    (fun s z => (switchLoss T (1 : ℝ) s z : EReal)) 0 0 T\nabbrev direction : EuclideanSpace ℝ (Fin 2) := PiLp.single 0 1\nabbrev vectorRun (T t : ℕ) : EuclideanSpace ℝ (Fin 2) :=\n  BanditRL.OnlineSubgradientDescent.iterate BanditRL.OnlineHuber.fullSpace (powerSteps (1/2))\n    (fun s z => (switchLoss T direction s z : EReal)) 0 t\nabbrev vectorRegret (T : ℕ) : ℝ :=\n  BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (powerSteps (1/2))\n    (fun s z => (switchLoss T direction s z : EReal)) 0 0 T\n",
+  "targets": [
+    {
+      "name": "BanditRL.OnlineUnboundedOSDCanary.scalar_actual_two_rounds",
+      "header": "theorem scalar_actual_two_rounds :\n    powerSteps (1/2) 0 = 1 ∧\n    0 < powerSteps (1/2) 1 ∧\n    powerSteps (1/2) 1 < powerSteps (1/2) 0 ∧\n    scalarRun 2 0 = 0 ∧ scalarRun 2 1 = 1 ∧\n    scalarRun 2 2 = 1 - (2 : ℝ) ^ (-(1/2 : ℝ)) ∧\n    scalarRegret 2 = 1",
+      "raw_header_sha256": "f6da76b7dacf6f11753bd436c96be9485b1901f99f29ac8027b7c0ff990ff2d5"
+    },
+    {
+      "name": "BanditRL.OnlineUnboundedOSDCanary.finiteDim_source_lower_bound",
+      "header": "theorem finiteDim_source_lower_bound :\n    ‖direction‖ = 1 ∧ vectorRun 64 1 = direction ∧\n    (∀ t < 64, ConvexOn ℝ univ (switchLoss 64 direction t) ∧\n      LipschitzWith 1 (switchLoss 64 direction t)) ∧\n    (1/15 : ℝ) ≤ phi (1/2) ∧\n    2 / ((1 - (1/2 : ℝ)) * phi (1/2)) ≤ (64 : ℝ) ∧\n    (1/2 : ℝ) * phi (1/2) * (64 : ℝ) ^ (2 - (1/2 : ℝ)) ≤ vectorRegret 64 ∧\n    (256/15 : ℝ) ≤ vectorRegret 64 ∧ (17 : ℝ) < vectorRegret 64 ∧\n    (∃ loss : ℕ → EuclideanSpace ℝ (Fin 2) → ℝ,\n      (∀ t < 64, ConvexOn ℝ univ (loss t) ∧ LipschitzWith 1 (loss t)) ∧\n      (1/2 : ℝ) * phi (1/2) * (64 : ℝ) ^ (2 - (1/2 : ℝ)) ≤\n        BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace\n          (powerSteps (1/2)) (fun t z => (loss t z : EReal)) 0 0 64)",
+      "raw_header_sha256": "bd996f75f3d2f9a6a034ad000ef085aee77da55a178d91bfdf09347848a074ee"
+    }
+  ],
+  "scope": "Exact closed propositions only, no proof yet. Scalar T2 is below threshold; E2D T64 proves threshold and nonzero actual same-run lower bound."
+}

@@ -1,0 +1,183 @@
+{
+  "task": "ONLINE-CH2-UNBOUNDED-OSD-20261010",
+  "status": "stabilized",
+  "source_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+  "source_card": [
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/docs/contracts/online-ch2-unbounded-osd-v1/source-card-draft-v1.json",
+      "sha256": "076ae1021d0f10e02c5a4bd0abe1cec5ee7496c4a0150605b3a0660a5e39d97c"
+    }
+  ],
+  "targets": [
+    {
+      "name": "BanditRL.OnlineUnboundedOSD.currentSubgradient_affine",
+      "context": "namespace BanditRL.OnlineUnboundedOSD\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\n",
+      "header": "theorem currentSubgradient_affine (a x : E) (b : ℝ) :\n    BanditRL.OnlineSubgradientDescent.currentSubgradient\n      (fun z => ((inner ℝ a z + b : ℝ) : EReal)) x = a",
+      "raw_header_sha256": "161ceb1896154c01613c578a32eab73b4579d13348089cb7499b7e8f6ef2546f",
+      "parents": [
+        "BanditRL.OnlineConvex.affine_subdifferential",
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient"
+      ]
+    },
+    {
+      "name": "BanditRL.OnlineUnboundedOSD.step_affine_fullSpace",
+      "context": "namespace BanditRL.OnlineUnboundedOSD\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\nvariable [FiniteDimensional ℝ E]\n",
+      "header": "theorem step_affine_fullSpace (η : ℝ) (a x : E) (b : ℝ) :\n    BanditRL.OnlineSubgradientDescent.step BanditRL.OnlineHuber.fullSpace η\n      (fun z => ((inner ℝ a z + b : ℝ) : EReal)) x = x - η • a",
+      "raw_header_sha256": "29661bb573c96c7e485c7f836e362b96994d456166288d3ecdf56d1afb458d4d",
+      "parents": [
+        "currentSubgradient_affine",
+        "BanditRL.OnlineHuber.project_fullSpace"
+      ]
+    },
+    {
+      "name": "BanditRL.OnlineUnboundedOSD.iterate_affine_prefix",
+      "context": "namespace BanditRL.OnlineUnboundedOSD\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\nvariable [FiniteDimensional ℝ E]\n",
+      "header": "theorem iterate_affine_prefix (η : ℕ → ℝ) (a : ℕ → E) (b : ℕ → ℝ)\n    (x0 : E) (t : ℕ) :\n    BanditRL.OnlineSubgradientDescent.iterate BanditRL.OnlineHuber.fullSpace η\n      (fun s z => ((inner ℝ (a s) z + b s : ℝ) : EReal)) x0 t =\n      x0 - ∑ s ∈ range t, η s • a s",
+      "raw_header_sha256": "103c808a442f55c5fbf378b07d5dca3f101da0a1c4a83d21c93d453db49238d7",
+      "parents": [
+        "step_affine_fullSpace",
+        "Finset.sum_range_succ"
+      ]
+    },
+    {
+      "name": "BanditRL.OnlineUnboundedOSD.powerSteps_pos",
+      "context": "namespace BanditRL.OnlineUnboundedOSD\n",
+      "header": "theorem powerSteps_pos (α : ℝ) (t : ℕ) :\n    0 < powerSteps α t",
+      "raw_header_sha256": "6f323c342e2314f04145e02f57681d6c2ba8f77a635d7161587859e228a18375",
+      "parents": [
+        "Real.rpow_pos_of_pos"
+      ]
+    },
+    {
+      "name": "BanditRL.OnlineUnboundedOSD.switching_loss_regular",
+      "context": "namespace BanditRL.OnlineUnboundedOSD\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\nvariable [FiniteDimensional ℝ E]\n",
+      "header": "theorem switching_loss_regular (T : ℕ) (v : E) (hv : ‖v‖ = 1) (t : ℕ) :\n    ConvexOn ℝ univ (switchLoss T v t) ∧ LipschitzWith 1 (switchLoss T v t)",
+      "raw_header_sha256": "208a2886eef10e2a450e04b903a72e22d8051c82f8d37635d720c299a2ed1c88",
+      "parents": [
+        "affine convexity",
+        "inner Lipschitz estimate",
+        "switchSlope"
+      ]
+    },
+    {
+      "name": "BanditRL.OnlineUnboundedOSD.switching_scalar_regret_identity",
+      "context": "namespace BanditRL.OnlineUnboundedOSD\n",
+      "header": "theorem switching_scalar_regret_identity (α : ℝ) (T : ℕ) :\n    BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (powerSteps α)\n      (fun t z => (switchLoss T (1 : ℝ) t z : EReal)) 0 0 T =\n      -((((T + 1) / 2 : ℕ) : ℝ) - ((T / 2 : ℕ) : ℝ)) *\n        (∑ i ∈ range ((T + 1) / 2), powerSteps α i) +\n      (∑ i ∈ range T, ((i + 1 : ℕ) : ℝ) ^ (1 - α)) -\n      (T : ℝ) * (∑ i ∈ Ico ((T + 1) / 2) T, powerSteps α i)",
+      "raw_header_sha256": "cf767deaafe5bd9f551c7d73e6c8255e32209b782b27bf7137fdb4d4a6b3ba09",
+      "parents": [
+        "iterate_affine_prefix",
+        "finite sum reversal",
+        "Nat ceil/floor split",
+        "Real.rpow_add"
+      ]
+    },
+    {
+      "name": "BanditRL.OnlineUnboundedOSD.phi_range",
+      "context": "namespace BanditRL.OnlineUnboundedOSD\n",
+      "header": "theorem phi_range (α : ℝ) (hα0 : 0 < α) (hα1 : α < 1) :\n    0 < phi α ∧ phi α < 1 - Real.log 2",
+      "raw_header_sha256": "503c89579621bfca15a8a8c901d815792d8978735d4f286b3479c15fb80738c9",
+      "parents": [
+        "strictConcaveOn_log_Ioi",
+        "strictConcaveOn_of_deriv2_neg",
+        "Real.hasStrictDerivAt_const_rpow"
+      ]
+    },
+    {
+      "name": "BanditRL.OnlineUnboundedOSD.phi_limit",
+      "context": "namespace BanditRL.OnlineUnboundedOSD\n",
+      "header": "theorem phi_limit :\n    Tendsto phi (𝓝[<] (1 : ℝ)) (𝓝 (1 - Real.log 2)) ∧\n      (3 / 10 : ℝ) ≤ 1 - Real.log 2",
+      "raw_header_sha256": "313b03512a14de95ade1c22828e7e248cbffd81e3d83f7c939f5197f17a5e6f8",
+      "parents": [
+        "HasDerivAt.tendsto_slope_zero_right",
+        "Real.log_two_lt_d9"
+      ]
+    },
+    {
+      "name": "BanditRL.OnlineUnboundedOSD.switching_scalar_lower_bound",
+      "context": "namespace BanditRL.OnlineUnboundedOSD\n",
+      "header": "theorem switching_scalar_lower_bound (α : ℝ) (hα0 : 0 < α) (hα1 : α < 1)\n    (T : ℕ) (hT : 2 / ((1 - α) * phi α) ≤ (T : ℝ)) :\n    (1 / 2 : ℝ) * phi α * (T : ℝ) ^ (2 - α) ≤\n      BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (powerSteps α)\n      (fun t z => (switchLoss T (1 : ℝ) t z : EReal)) 0 0 T",
+      "raw_header_sha256": "b6167356c15da8e8068d8cee24544f4a4545086d784516da7492ac1bcba919c7",
+      "parents": [
+        "switching_scalar_regret_identity",
+        "phi_range",
+        "MonotoneOn.integral_le_sum",
+        "AntitoneOn.sum_le_integral",
+        "integral_rpow",
+        "threshold arithmetic"
+      ]
+    },
+    {
+      "name": "BanditRL.OnlineUnboundedOSD.switching_vector_lower_bound",
+      "context": "namespace BanditRL.OnlineUnboundedOSD\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\nvariable [FiniteDimensional ℝ E]\n",
+      "header": "theorem switching_vector_lower_bound (α : ℝ) (hα0 : 0 < α) (hα1 : α < 1)\n    (T : ℕ) (hT : 2 / ((1 - α) * phi α) ≤ (T : ℝ)) (v : E) (hv : ‖v‖ = 1) :\n    (1 / 2 : ℝ) * phi α * (T : ℝ) ^ (2 - α) ≤\n      BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (powerSteps α)\n        (fun t z => (switchLoss T v t z : EReal)) 0 0 T",
+      "raw_header_sha256": "66d9b01d6cff11551ab94b3a4f77bc6a2c9a5e63952e6ff97cf44d9f8c094c2b",
+      "parents": [
+        "switching_scalar_lower_bound",
+        "iterate_affine_prefix",
+        "unit-vector inner identity"
+      ]
+    },
+    {
+      "name": "BanditRL.OnlineUnboundedOSD.theorem_5_4",
+      "context": "namespace BanditRL.OnlineUnboundedOSD\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\nvariable [FiniteDimensional ℝ E]\n",
+      "header": "theorem theorem_5_4 [Nontrivial E] (α : ℝ) (hα0 : 0 < α) (hα1 : α < 1)\n    (T : ℕ) (hT : 2 / ((1 - α) * phi α) ≤ (T : ℝ)) :\n    ∃ loss : ℕ → E → ℝ,\n      (∀ t < T, ConvexOn ℝ univ (loss t) ∧ LipschitzWith 1 (loss t)) ∧\n      (1 / 2 : ℝ) * phi α * (T : ℝ) ^ (2 - α) ≤\n        BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (powerSteps α)\n          (fun t z => (loss t z : EReal)) 0 0 T",
+      "raw_header_sha256": "46a6e6181276fa21e57c101f2c83a4d62d7cc6b066e87423e465e38066e5a7eb",
+      "parents": [
+        "switching_vector_lower_bound",
+        "switching_loss_regular",
+        "existence of unit vector in nontrivial real normed space"
+      ]
+    }
+  ],
+  "definitions": [
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/docs/contracts/online-ch2-unbounded-osd-v1/definitions-draft-v1.lean",
+      "sha256": "6eb0e733aabd5345e4eb88f7b3e923447483a0bf2bf8595db9b53227a02e05cc"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/docs/contracts/online-ch2-unbounded-osd-v1/definitions-frozen-v1.json",
+      "sha256": "f9b97fa7bcfa76d0ba9d7541bf1419e9968f761f79ce491b381aef690a4a4115"
+    }
+  ],
+  "source_review": [
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-unbounded-osd-20261010/contract-source-review-v1.json",
+      "sha256": "5e236b777c3d14065461c2ef72d631c12355b070d8e52c3187552d09e26bb010"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-unbounded-osd-20261010/contract-source-review-v1.md",
+      "sha256": "4e616f8a5908b706c3d4bbffb9593a5d729ca1ba0327a31c115151a5f463f28a"
+    }
+  ],
+  "neutral_review": [
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-unbounded-osd-20261010/blind-reconstruction-v1.json",
+      "sha256": "ce5400f4518c47831c9c2bcddf8f7dd1485e6ae36775e433cbfc54879c6c772d"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-unbounded-osd-20261010/blind-reconstruction-v1.md",
+      "sha256": "d254578404d4a503dfb7e92c3129a3d7192862d482573e4f0f45a600cc9d84d9"
+    }
+  ],
+  "conversion_window": [
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/conversion-windows/ONLINE-CH2-UNBOUNDED-OSD-20261010.md",
+      "sha256": "f9bfd23443d678fdc1e7ca61c9dfa98be19632b1b6e79174bd456c0572c4bf5c"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-unbounded-osd-20261010/native-conversion-template-RAW-v1.json",
+      "sha256": "7ce206a27427e393c2914b4130f8de928ed964b7cc92baa320800d95759a4003"
+    }
+  ],
+  "DAG": [
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/docs/contracts/online-ch2-unbounded-osd-v1/dependency-DAG-draft-v1.json",
+      "sha256": "c02eda4e16c8507a558eecd5b96b96cd7b10bc0ac3a8a85101ea8c93ef02518f"
+    }
+  ],
+  "allowed_proof_scope": "New production module only, finite dependency-ready leaves; own task evidence. Roots/Tests/readers/global registry unchanged. Test canary types/bodies require later exact review/freeze.",
+  "source_terminal": "One Theorem5.4 plus explicitphi range/limit; 11 Lean leaves not source/chapter denominator",
+  "chapter_complete": false,
+  "chapter_total": null,
+  "whole_Goal": "ACTIVE"
+}

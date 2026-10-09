@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineUnboundedOSD.switching_scalar_regret_identity",
+  "file": "BanditRLProof/OnlineUnboundedOSD.lean",
+  "statement": "theorem switching_scalar_regret_identity (α : ℝ) (T : ℕ) : BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (powerSteps α) (fun t z => (switchLoss T (1 : ℝ) t z : EReal)) 0 0 T = -((((T + 1) / 2 : ℕ) : ℝ) - ((T / 2 : ℕ) : ℝ)) * (∑ i ∈ range ((T + 1) / 2), powerSteps α i) + (∑ i ∈ range T, ((i + 1 : ℕ) : ℝ) ^ (1 - α)) - (T : ℝ) * (∑ i ∈ Ico ((T + 1) / 2) T, powerSteps α i)",
+  "statement_hash": "e98aef35ebf6c58d6df307a608b7d63296d2460226c32d7b48ba37d9e69fc5ba",
+  "source_assumptions": [],
+  "created_at": "2026-10-09T18:08:53+00:00"
+}

@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineUnboundedOSD.switching_vector_lower_bound",
+  "file": "BanditRLProof/OnlineUnboundedOSD.lean",
+  "statement": "theorem switching_vector_lower_bound (α : ℝ) (hα0 : 0 < α) (hα1 : α < 1) (T : ℕ) (hT : 2 / ((1 - α) * phi α) ≤ (T : ℝ)) (v : E) (hv : ‖v‖ = 1) : (1 / 2 : ℝ) * phi α * (T : ℝ) ^ (2 - α) ≤ BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (powerSteps α) (fun t z => (switchLoss T v t z : EReal)) 0 0 T",
+  "statement_hash": "c8a70a16179b67ee1fc35af2fa01180de5ec9fa041246042b481946ec0935c21",
+  "source_assumptions": [],
+  "created_at": "2026-10-09T17:46:03+00:00",
+  "scoped_context": "namespace BanditRL.OnlineUnboundedOSD\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\nvariable [FiniteDimensional ℝ E]\n",
+  "raw_header_sha256": "66d9b01d6cff11551ab94b3a4f77bc6a2c9a5e63952e6ff97cf44d9f8c094c2b",
+  "header_origin": "Exact independently reviewed pre-body draft; native source extraction follows each real declaration"
+}

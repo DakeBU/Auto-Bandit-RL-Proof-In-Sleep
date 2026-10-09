@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineUnboundedOSDCanary.finiteDim_source_lower_bound",
+  "file": "Tests/OnlineUnboundedOSDCanary.lean",
+  "statement": "theorem finiteDim_source_lower_bound : ‖direction‖ = 1 ∧ vectorRun 64 1 = direction ∧ (∀ t < 64, ConvexOn ℝ univ (switchLoss 64 direction t) ∧ LipschitzWith 1 (switchLoss 64 direction t)) ∧ (1/15 : ℝ) ≤ phi (1/2) ∧ 2 / ((1 - (1/2 : ℝ)) * phi (1/2)) ≤ (64 : ℝ) ∧ (1/2 : ℝ) * phi (1/2) * (64 : ℝ) ^ (2 - (1/2 : ℝ)) ≤ vectorRegret 64 ∧ (256/15 : ℝ) ≤ vectorRegret 64 ∧ (17 : ℝ) < vectorRegret 64 ∧ (∃ loss : ℕ → EuclideanSpace ℝ (Fin 2) → ℝ, (∀ t < 64, ConvexOn ℝ univ (loss t) ∧ LipschitzWith 1 (loss t)) ∧ (1/2 : ℝ) * phi (1/2) * (64 : ℝ) ^ (2 - (1/2 : ℝ)) ≤ BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (powerSteps (1/2)) (fun t z => (loss t z : EReal)) 0 0 64)",
+  "statement_hash": "1e2f304534f2092b37097795421ebde184254d76c571fda4c922e047adf5e673",
+  "source_assumptions": [],
+  "created_at": "2026-10-09T18:26:06+00:00",
+  "scoped_context_and_definitions": "import BanditRLProof.OnlineUnboundedOSD\nnoncomputable section\nopen Set Finset Filter Topology\nopen scoped InnerProductSpace\nset_option autoImplicit false\nnamespace BanditRL.OnlineUnboundedOSDCanary\nopen BanditRL.OnlineUnboundedOSD\nabbrev scalarRun (T t : ℕ) : ℝ :=\n  BanditRL.OnlineSubgradientDescent.iterate BanditRL.OnlineHuber.fullSpace (powerSteps (1/2))\n    (fun s z => (switchLoss T (1 : ℝ) s z : EReal)) 0 t\nabbrev scalarRegret (T : ℕ) : ℝ :=\n  BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (powerSteps (1/2))\n    (fun s z => (switchLoss T (1 : ℝ) s z : EReal)) 0 0 T\nabbrev direction : EuclideanSpace ℝ (Fin 2) := PiLp.single 2 0 1\nabbrev vectorRun (T t : ℕ) : EuclideanSpace ℝ (Fin 2) :=\n  BanditRL.OnlineSubgradientDescent.iterate BanditRL.OnlineHuber.fullSpace (powerSteps (1/2))\n    (fun s z => (switchLoss T direction s z : EReal)) 0 t\nabbrev vectorRegret (T : ℕ) : ℝ :=\n  BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (powerSteps (1/2))\n    (fun s z => (switchLoss T direction s z : EReal)) 0 0 T\n",
+  "raw_header_sha256": "bd996f75f3d2f9a6a034ad000ef085aee77da55a178d91bfdf09347848a074ee"
+}

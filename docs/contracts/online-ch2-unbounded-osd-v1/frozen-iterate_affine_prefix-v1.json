@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineUnboundedOSD.iterate_affine_prefix",
+  "file": "BanditRLProof/OnlineUnboundedOSD.lean",
+  "statement": "theorem iterate_affine_prefix (η : ℕ → ℝ) (a : ℕ → E) (b : ℕ → ℝ) (x0 : E) (t : ℕ) : BanditRL.OnlineSubgradientDescent.iterate BanditRL.OnlineHuber.fullSpace η (fun s z => ((inner ℝ (a s) z + b s : ℝ) : EReal)) x0 t = x0 - ∑ s ∈ range t, η s • a s",
+  "statement_hash": "f483733d75dae3e389ec525f099372fe7fd53fa020041cbcef87fc06b1f6f55a",
+  "source_assumptions": [],
+  "created_at": "2026-10-09T17:46:03+00:00",
+  "scoped_context": "namespace BanditRL.OnlineUnboundedOSD\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\nvariable [FiniteDimensional ℝ E]\n",
+  "raw_header_sha256": "103c808a442f55c5fbf378b07d5dca3f101da0a1c4a83d21c93d453db49238d7",
+  "header_origin": "Exact independently reviewed pre-body draft; native source extraction follows each real declaration"
+}

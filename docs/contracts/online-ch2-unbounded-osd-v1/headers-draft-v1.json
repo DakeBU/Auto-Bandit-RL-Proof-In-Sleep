@@ -1,0 +1,126 @@
+{
+  "prefix": "import BanditRLProof.OnlineSubgradientDescent\nimport BanditRLProof.OnlineHinge\nimport BanditRLProof.OnlineHuber\nimport Mathlib.Analysis.SumIntegralComparisons\nimport Mathlib.Analysis.SpecialFunctions.Integrals.Basic\nimport Mathlib.Analysis.Complex.ExponentialBounds\nimport Mathlib.Analysis.Calculus.Deriv.Slope\nimport Mathlib.Analysis.SpecialFunctions.Pow.Deriv\nimport Mathlib.Analysis.Convex.SpecificFunctions.Basic\nnoncomputable section\nopen Set Finset Filter Topology\nopen scoped InnerProductSpace\nset_option autoImplicit false\n",
+  "definitions": "namespace BanditRL.OnlineUnboundedOSD\ndef powerSteps (α : ℝ) (t : ℕ) : ℝ := ((t + 1 : ℕ) : ℝ) ^ (-α)\ndef phi (α : ℝ) : ℝ := 1 / (2 - α) + ((1 / 2 : ℝ) ^ (1 - α) - 1) / (1 - α)\ndef switchSlope (T t : ℕ) : ℝ := if t < (T + 1) / 2 then -1 else 1\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\ndef switchLoss (T : ℕ) (v : E) (t : ℕ) (z : E) : ℝ := switchSlope T t * inner ℝ v z\nend BanditRL.OnlineUnboundedOSD\n",
+  "targets": [
+    {
+      "name": "BanditRL.OnlineUnboundedOSD.currentSubgradient_affine",
+      "context": "namespace BanditRL.OnlineUnboundedOSD\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\n",
+      "header": "theorem currentSubgradient_affine (a x : E) (b : ℝ) :\n    BanditRL.OnlineSubgradientDescent.currentSubgradient\n      (fun z => ((inner ℝ a z + b : ℝ) : EReal)) x = a",
+      "raw_header_sha256": "161ceb1896154c01613c578a32eab73b4579d13348089cb7499b7e8f6ef2546f",
+      "parents": [
+        "BanditRL.OnlineConvex.affine_subdifferential",
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient"
+      ]
+    },
+    {
+      "name": "BanditRL.OnlineUnboundedOSD.step_affine_fullSpace",
+      "context": "namespace BanditRL.OnlineUnboundedOSD\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\nvariable [FiniteDimensional ℝ E]\n",
+      "header": "theorem step_affine_fullSpace (η : ℝ) (a x : E) (b : ℝ) :\n    BanditRL.OnlineSubgradientDescent.step BanditRL.OnlineHuber.fullSpace η\n      (fun z => ((inner ℝ a z + b : ℝ) : EReal)) x = x - η • a",
+      "raw_header_sha256": "29661bb573c96c7e485c7f836e362b96994d456166288d3ecdf56d1afb458d4d",
+      "parents": [
+        "currentSubgradient_affine",
+        "BanditRL.OnlineHuber.project_fullSpace"
+      ]
+    },
+    {
+      "name": "BanditRL.OnlineUnboundedOSD.iterate_affine_prefix",
+      "context": "namespace BanditRL.OnlineUnboundedOSD\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\nvariable [FiniteDimensional ℝ E]\n",
+      "header": "theorem iterate_affine_prefix (η : ℕ → ℝ) (a : ℕ → E) (b : ℕ → ℝ)\n    (x0 : E) (t : ℕ) :\n    BanditRL.OnlineSubgradientDescent.iterate BanditRL.OnlineHuber.fullSpace η\n      (fun s z => ((inner ℝ (a s) z + b s : ℝ) : EReal)) x0 t =\n      x0 - ∑ s ∈ range t, η s • a s",
+      "raw_header_sha256": "103c808a442f55c5fbf378b07d5dca3f101da0a1c4a83d21c93d453db49238d7",
+      "parents": [
+        "step_affine_fullSpace",
+        "Finset.sum_range_succ"
+      ]
+    },
+    {
+      "name": "BanditRL.OnlineUnboundedOSD.powerSteps_pos",
+      "context": "namespace BanditRL.OnlineUnboundedOSD\n",
+      "header": "theorem powerSteps_pos (α : ℝ) (t : ℕ) :\n    0 < powerSteps α t",
+      "raw_header_sha256": "6f323c342e2314f04145e02f57681d6c2ba8f77a635d7161587859e228a18375",
+      "parents": [
+        "Real.rpow_pos_of_pos"
+      ]
+    },
+    {
+      "name": "BanditRL.OnlineUnboundedOSD.switching_loss_regular",
+      "context": "namespace BanditRL.OnlineUnboundedOSD\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\nvariable [FiniteDimensional ℝ E]\n",
+      "header": "theorem switching_loss_regular (T : ℕ) (v : E) (hv : ‖v‖ = 1) (t : ℕ) :\n    ConvexOn ℝ univ (switchLoss T v t) ∧ LipschitzWith 1 (switchLoss T v t)",
+      "raw_header_sha256": "208a2886eef10e2a450e04b903a72e22d8051c82f8d37635d720c299a2ed1c88",
+      "parents": [
+        "affine convexity",
+        "inner Lipschitz estimate",
+        "switchSlope"
+      ]
+    },
+    {
+      "name": "BanditRL.OnlineUnboundedOSD.switching_scalar_regret_identity",
+      "context": "namespace BanditRL.OnlineUnboundedOSD\n",
+      "header": "theorem switching_scalar_regret_identity (α : ℝ) (T : ℕ) :\n    BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (powerSteps α)\n      (fun t z => (switchLoss T (1 : ℝ) t z : EReal)) 0 0 T =\n      -((((T + 1) / 2 : ℕ) : ℝ) - ((T / 2 : ℕ) : ℝ)) *\n        (∑ i ∈ range ((T + 1) / 2), powerSteps α i) +\n      (∑ i ∈ range T, ((i + 1 : ℕ) : ℝ) ^ (1 - α)) -\n      (T : ℝ) * (∑ i ∈ Ico ((T + 1) / 2) T, powerSteps α i)",
+      "raw_header_sha256": "cf767deaafe5bd9f551c7d73e6c8255e32209b782b27bf7137fdb4d4a6b3ba09",
+      "parents": [
+        "iterate_affine_prefix",
+        "finite sum reversal",
+        "Nat ceil/floor split",
+        "Real.rpow_add"
+      ]
+    },
+    {
+      "name": "BanditRL.OnlineUnboundedOSD.phi_range",
+      "context": "namespace BanditRL.OnlineUnboundedOSD\n",
+      "header": "theorem phi_range (α : ℝ) (hα0 : 0 < α) (hα1 : α < 1) :\n    0 < phi α ∧ phi α < 1 - Real.log 2",
+      "raw_header_sha256": "503c89579621bfca15a8a8c901d815792d8978735d4f286b3479c15fb80738c9",
+      "parents": [
+        "strictConcaveOn_log_Ioi",
+        "strictConcaveOn_of_deriv2_neg",
+        "Real.hasStrictDerivAt_const_rpow"
+      ]
+    },
+    {
+      "name": "BanditRL.OnlineUnboundedOSD.phi_limit",
+      "context": "namespace BanditRL.OnlineUnboundedOSD\n",
+      "header": "theorem phi_limit :\n    Tendsto phi (𝓝[<] (1 : ℝ)) (𝓝 (1 - Real.log 2)) ∧\n      (3 / 10 : ℝ) ≤ 1 - Real.log 2",
+      "raw_header_sha256": "313b03512a14de95ade1c22828e7e248cbffd81e3d83f7c939f5197f17a5e6f8",
+      "parents": [
+        "HasDerivAt.tendsto_slope_zero_right",
+        "Real.log_two_lt_d9"
+      ]
+    },
+    {
+      "name": "BanditRL.OnlineUnboundedOSD.switching_scalar_lower_bound",
+      "context": "namespace BanditRL.OnlineUnboundedOSD\n",
+      "header": "theorem switching_scalar_lower_bound (α : ℝ) (hα0 : 0 < α) (hα1 : α < 1)\n    (T : ℕ) (hT : 2 / ((1 - α) * phi α) ≤ (T : ℝ)) :\n    (1 / 2 : ℝ) * phi α * (T : ℝ) ^ (2 - α) ≤\n      BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (powerSteps α)\n      (fun t z => (switchLoss T (1 : ℝ) t z : EReal)) 0 0 T",
+      "raw_header_sha256": "b6167356c15da8e8068d8cee24544f4a4545086d784516da7492ac1bcba919c7",
+      "parents": [
+        "switching_scalar_regret_identity",
+        "phi_range",
+        "MonotoneOn.integral_le_sum",
+        "AntitoneOn.sum_le_integral",
+        "integral_rpow",
+        "threshold arithmetic"
+      ]
+    },
+    {
+      "name": "BanditRL.OnlineUnboundedOSD.switching_vector_lower_bound",
+      "context": "namespace BanditRL.OnlineUnboundedOSD\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\nvariable [FiniteDimensional ℝ E]\n",
+      "header": "theorem switching_vector_lower_bound (α : ℝ) (hα0 : 0 < α) (hα1 : α < 1)\n    (T : ℕ) (hT : 2 / ((1 - α) * phi α) ≤ (T : ℝ)) (v : E) (hv : ‖v‖ = 1) :\n    (1 / 2 : ℝ) * phi α * (T : ℝ) ^ (2 - α) ≤\n      BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (powerSteps α)\n        (fun t z => (switchLoss T v t z : EReal)) 0 0 T",
+      "raw_header_sha256": "66d9b01d6cff11551ab94b3a4f77bc6a2c9a5e63952e6ff97cf44d9f8c094c2b",
+      "parents": [
+        "switching_scalar_lower_bound",
+        "iterate_affine_prefix",
+        "unit-vector inner identity"
+      ]
+    },
+    {
+      "name": "BanditRL.OnlineUnboundedOSD.theorem_5_4",
+      "context": "namespace BanditRL.OnlineUnboundedOSD\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\nvariable [FiniteDimensional ℝ E]\n",
+      "header": "theorem theorem_5_4 [Nontrivial E] (α : ℝ) (hα0 : 0 < α) (hα1 : α < 1)\n    (T : ℕ) (hT : 2 / ((1 - α) * phi α) ≤ (T : ℝ)) :\n    ∃ loss : ℕ → E → ℝ,\n      (∀ t < T, ConvexOn ℝ univ (loss t) ∧ LipschitzWith 1 (loss t)) ∧\n      (1 / 2 : ℝ) * phi α * (T : ℝ) ^ (2 - α) ≤\n        BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (powerSteps α)\n          (fun t z => (loss t z : EReal)) 0 0 T",
+      "raw_header_sha256": "46a6e6181276fa21e57c101f2c83a4d62d7cc6b066e87423e465e38066e5a7eb",
+      "parents": [
+        "switching_vector_lower_bound",
+        "switching_loss_regular",
+        "existence of unit vector in nontrivial real normed space"
+      ]
+    }
+  ],
+  "status": "DRAFT ONLY; no source acceptance or proof"
+}
