@@ -1,0 +1,39 @@
+Neutral scalar Lean4 context only. EReal has top/bottom and a total toReal mapping both infinities to zero. SourceProper f means no bottom anywhere plus one ambient finite real witness. SourceSubdifferential f z is the set of all real g with f z + (inner ℝ g (y-z) : EReal) ≤ f y for EVERY real y, including outside the indicated interval. divergence ψ a b = ψ a - ψ b - fderiv ℝ ψ b (a-b); the second point is the base and default fderiv is zero without differentiability. IsMinOn compares all feasible objective values but does not supply membership. All definitions inside the types are explicit local lets, not new library definitions. These are proposed complete Test types only; no Test proof/body/compilation exists. StrictConvexOn, ConvexOn and DifferentiableAt have their ordinary real mathlib meanings. Icc denotes a closed interval, univ all real numbers.
+
+open Set BanditRL.OnlineConvex BanditRL.OnlineBregman
+namespace BanditRL.OnlineBregmanExtendedCanary
+
+theorem restricted_absolute_nonquadratic :
+    let V : Set ℝ := Icc (-1) 1
+    let f : ℝ → EReal := fun z => if z ∈ V then ((|z| : ℝ) : EReal) else ⊤
+    let ψ : ℝ → ℝ := fun z => z ^ 4 / 4 + z ^ 2 / 2
+    SourceProper f ∧
+      (∀ z ∈ V, (SourceSubdifferential f z).Nonempty) ∧
+      f 2 = ⊤ ∧
+      ConvexOn ℝ V (fun z => (f z).toReal) ∧
+      ¬ ConvexOn ℝ (univ : Set ℝ) (fun z => (f z).toReal) ∧
+      StrictConvexOn ℝ univ ψ ∧
+      IsMinOn (fun z => f z + ((divergence ψ z (1 / 2) : ℝ) : EReal)) V 0 ∧
+      ¬ DifferentiableAt ℝ (abs : ℝ → ℝ) 0 ∧
+      divergence ψ (1 / 2) 0 = 9 / 64 ∧
+      divergence ψ 0 (1 / 2) = 11 / 64 ∧
+      (∀ u ∈ V, -|u| ≤ divergence ψ u (1 / 2) - divergence ψ u 0 - divergence ψ 0 (1 / 2)) ∧
+      (-1 / 2 : ℝ) ≤ -5 / 16
+
+theorem restricted_linear_outside_center :
+    let V : Set ℝ := Icc 0 1
+    let f : ℝ → EReal := fun z => if z ∈ V then (z : EReal) else ⊤
+    let ψ : ℝ → ℝ := fun z => z ^ 2 / 2
+    SourceProper f ∧
+      (∀ z ∈ V, (SourceSubdifferential f z).Nonempty) ∧
+      f (-1) = ⊤ ∧
+      (-1 : ℝ) ∉ V ∧
+      ConvexOn ℝ V (fun z => (f z).toReal) ∧
+      ¬ ConvexOn ℝ (univ : Set ℝ) (fun z => (f z).toReal) ∧
+      StrictConvexOn ℝ univ ψ ∧
+      IsMinOn (fun z => f z + ((divergence ψ z (-1) : ℝ) : EReal)) V 0 ∧
+      divergence ψ 0 (-1) = 1 / 2 ∧
+      (∀ u ∈ V, -u ≤ divergence ψ u (-1) - divergence ψ u 0 - divergence ψ 0 (-1)) ∧
+      (-1 / 2 : ℝ) ≤ 1 / 2
+
+end BanditRL.OnlineBregmanExtendedCanary

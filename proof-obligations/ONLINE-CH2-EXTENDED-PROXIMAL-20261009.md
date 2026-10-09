@@ -1,0 +1,6 @@
+# ONLINE-CH2-EXTENDED-PROXIMAL-20261009
+
+- BanditRL.OnlineBregman.finitePart_convex_of_subdifferentiable: proving; frozen 1979b05636988de284ff4e64ef41e346853c384fd767a037c179473378fe15bd
+- BanditRL.OnlineBregman.proximal_finitePart_minimizer_iff: proving; frozen 693bb2cc9699e6c3cc102be3e118e267d7ef4e590dc6e0d42350358d87ded1e0
+- BanditRL.OnlineBregman.proximal_one_step_extended: proving; frozen 864afb66803553db20e3f5c672129aaec005a15f95a3cdb3f8f9c5e62526513b
+Three local obligations, chapterdenominatornull. SourceX/interior/localextension, attainedcurrentcausalrecursion/interiority andsharpfixed-variable terminals/all8forwards REQUIREDOPEN; wholeGoalACTIVE.

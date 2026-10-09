@@ -1,0 +1,72 @@
+{
+  "targets": [
+    {
+      "declaration": "BanditRL.OnlineBregman.finitePart_convex_of_subdifferentiable",
+      "exact_proposed_header": "theorem finitePart_convex_of_subdifferentiable (f : E → EReal) (V : Set E)\n    (hV : Convex ℝ V) (hp : BanditRL.OnlineConvex.SourceProper f)\n    (hs : ∀ x ∈ V, (BanditRL.OnlineConvex.SourceSubdifferential f x).Nonempty) :\n    ConvexOn ℝ V (fun x => (f x).toReal)",
+      "statement_hash": "1979b05636988de284ff4e64ef41e346853c384fd767a037c179473378fe15bd",
+      "file": "BanditRLProof/OnlineBregmanExtended.lean",
+      "context": "real inner-product space"
+    },
+    {
+      "declaration": "BanditRL.OnlineBregman.proximal_finitePart_minimizer_iff",
+      "exact_proposed_header": "theorem proximal_finitePart_minimizer_iff (f : E → EReal) (V : Set E)\n    (ψ : E → ℝ) (η : ℝ) (x p : E) (hp : p ∈ V)\n    (hfin : ∀ z ∈ V, f z ≠ ⊤ ∧ f z ≠ ⊥) :\n    IsMinOn (fun z => f z + ((η⁻¹ * divergence ψ z x : ℝ) : EReal)) V p ↔\n      IsMinOn (fun z => (f z).toReal + η⁻¹ * divergence ψ z x) V p",
+      "statement_hash": "693bb2cc9699e6c3cc102be3e118e267d7ef4e590dc6e0d42350358d87ded1e0",
+      "file": "BanditRLProof/OnlineBregmanExtended.lean",
+      "context": "complete real inner-product space"
+    },
+    {
+      "declaration": "BanditRL.OnlineBregman.proximal_one_step_extended",
+      "exact_proposed_header": "theorem proximal_one_step_extended (f : E → EReal) (V : Set E)\n    (hV : Convex ℝ V) (hf : BanditRL.OnlineConvex.SourceProper f)\n    (hs : ∀ z ∈ V, (BanditRL.OnlineConvex.SourceSubdifferential f z).Nonempty)\n    (ψ : E → ℝ) (η : ℝ) (hη : 0 < η) (x p : E) (hp : p ∈ V)\n    (hdx : DifferentiableAt ℝ ψ x) (hdp : DifferentiableAt ℝ ψ p)\n    (hmin : IsMinOn (fun z => f z + ((η⁻¹ * divergence ψ z x : ℝ) : EReal)) V p) :\n    ∀ u ∈ V, η * ((f p).toReal - (f u).toReal) ≤\n      divergence ψ u x - divergence ψ u p - divergence ψ p x",
+      "statement_hash": "864afb66803553db20e3f5c672129aaec005a15f95a3cdb3f8f9c5e62526513b",
+      "file": "BanditRLProof/OnlineBregmanExtended.lean",
+      "context": "complete real inner-product space"
+    }
+  ],
+  "legacy_targets": [
+    {
+      "declaration": "BanditRL.OnlineBregman.divergence"
+    },
+    {
+      "declaration": "BanditRL.OnlineBregman.divergence_self",
+      "exact_proposed_header": "theorem divergence_self (ψ : E → ℝ) (x : E) :\n    divergence ψ x x = 0",
+      "statement_hash": "cb97e323943684554be58aa2ee0bbf1bd56fbe03ee1278046af070121717f704",
+      "file": "BanditRLProof/OnlineBregmanProximal.lean",
+      "context": "real normed vector space"
+    },
+    {
+      "declaration": "BanditRL.OnlineBregman.three_point_identity",
+      "exact_proposed_header": "theorem three_point_identity (ψ : E → ℝ) (x y z : E) :\n    divergence ψ z x + divergence ψ x y - divergence ψ z y =\n      (fderiv ℝ ψ y - fderiv ℝ ψ x) (z - x)",
+      "statement_hash": "d05bbd5f616054d298969056c002a54b64f2a6c4ae0d5dc65068b70c2765d422",
+      "file": "BanditRLProof/OnlineBregmanProximal.lean",
+      "context": "real normed vector space"
+    },
+    {
+      "declaration": "BanditRL.OnlineBregman.divergence_nonneg",
+      "exact_proposed_header": "theorem divergence_nonneg (X : Set E) (ψ : E → ℝ) (hψ : ConvexOn ℝ X ψ)\n    (x y : E) (hx : x ∈ X) (hy : y ∈ X) (hd : DifferentiableAt ℝ ψ y) :\n    0 ≤ divergence ψ x y",
+      "statement_hash": "d130de4f7491f134125635a6fcd44838d923c7e8a65adf2f819838860cce0e67",
+      "file": "BanditRLProof/OnlineBregmanProximal.lean",
+      "context": "real normed vector space"
+    },
+    {
+      "declaration": "BanditRL.OnlineBregman.proximal_one_step",
+      "exact_proposed_header": "theorem proximal_one_step (V : Set E) (f ψ : E → ℝ) (η : ℝ) (hη : 0 < η)\n    (x p : E) (hp : p ∈ V) (hf : ConvexOn ℝ V f)\n    (hdx : DifferentiableAt ℝ ψ x) (hdp : DifferentiableAt ℝ ψ p)\n    (hmin : IsMinOn (fun z => f z + η⁻¹ * divergence ψ z x) V p) :\n    ∀ u ∈ V, η * (f p - f u) ≤\n      divergence ψ u x - divergence ψ u p - divergence ψ p x",
+      "statement_hash": "b34d4ee5d1fe4c00a6082ea81a2f2dddced22e7ffd710f30c21aa54a7ea546ff",
+      "file": "BanditRLProof/OnlineBregmanProximal.lean",
+      "context": "real normed vector space"
+    },
+    {
+      "declaration": "BanditRL.OnlineBregman.divergence_eq_gradient",
+      "exact_proposed_header": "theorem divergence_eq_gradient (ψ : E → ℝ) (x y : E)\n    (hd : DifferentiableAt ℝ ψ y) :\n    divergence ψ x y = ψ x - ψ y - inner ℝ (gradient ψ y) (x - y)",
+      "statement_hash": "a7ccda7d19036fef3af76e3b62095cf816cd81c04f7ad10e5db64f4785bf8ea1",
+      "file": "BanditRLProof/OnlineBregmanProximal.lean",
+      "context": "complete real inner-product space"
+    }
+  ],
+  "current_production_count": 3,
+  "explicitly_corrected_legacy_note_count": 6,
+  "source_card_count": 9,
+  "source_math_containers": 12,
+  "expected_original_images": 15,
+  "no_Test_catalogue": true,
+  "transport": "Actual local file URI; no new HTTP service or live claim."
+}

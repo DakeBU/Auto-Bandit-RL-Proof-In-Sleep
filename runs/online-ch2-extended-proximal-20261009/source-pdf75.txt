@@ -1,0 +1,32 @@
+6.3 Convex Analysis Bits: Bregman Divergence63
+2 4 6 8 10 12 14
+5
+10
+15
+˜f(x)
+ˆf(x)
+f(x0)
+x0
+Figure 6.3Approximations off(x).
+where we used the fact that the argmin is independent of additive constants and positive
+rescalings, andΠ V is the Euclidean projection ontoV, i.e.,Π V(x) = argminy∈V ∥x−y∥2.
+The new way to write the update of OSD in (6.2) will be the core ingredient for designing
+Online Mirror Descent (OMD). In fact, OMD is a strict generalization of that update when
+we use a different way to measure the locality ofxfromx t. That is, we measured the
+distance to the current point with the squared L 2 norm. What happens if we change the
+norm? Do we even have to use a norm?
+To answer these questions, we have to introduce another useful mathematical object: the
+Bregman divergence.
+6.3 Convex Analysis Bits: Bregman Divergence
+We first give a new definition, a slightly stronger notion of convexity.
+Definition 6.3Letf:V ⊆R d →RandVbe a convex set.fisstrictly convexif
+f(αx+ (1−α)y)< αf(x) + (1−α)f(y),∀x,y∈ V,x̸=y,0< α <1.
+From the definition, it is immediate to see that strong convexity with respect to any norm
+implies strict convexity. Note that for a differentiable function, strict convexity also implies
+thatf(y)> f(x) +⟨∇f(x),y−x⟩forx̸=y(Bauschke and Combettes, 2017, Propo-
+sition 17.10).
+We now define our new notion of “distance”.
+Definition 6.4Letψ:X →Rbe strictly convex and differentiable onintX ̸=∅,
+whereXis the domain ofψ. TheBregman divergencewith respect toψis denoted by
+Bψ :X ×intX →Rdefined as
+Bψ(x;y) :=ψ(x)−ψ(y)− ⟨∇ψ(y),x−y⟩.

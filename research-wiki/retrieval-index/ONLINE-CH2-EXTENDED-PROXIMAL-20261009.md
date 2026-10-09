@@ -1,0 +1,3 @@
+# ONLINE-CH2-EXTENDED-PROXIMAL-20261009
+
+Actual pinned typedAPI and four named list-lean-decls searches bound inRUN. Existing source supports/pointfiniteness and minimumorder transport reused, canonical Bregman realoneStep parent exactPR209head65e21be78abfbd4255798e54265ce418651ef70f. Printed T2.21 globalreal support assumptions differ from merely finiteonV extended-real loss; new weighted feasible supports bridge needed. CompleteSpace carried in existing minimum API, explicitly disclosed. Three draft targets no body; requiredfullsource/causal/interior/same-run fixed-variable remainOPEN; no chapterdenominator orperBook duplicategraph.

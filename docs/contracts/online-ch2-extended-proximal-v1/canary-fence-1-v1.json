@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineBregmanExtendedCanary.restricted_linear_outside_center",
+  "file": "Tests/OnlineBregmanExtendedCanary.lean",
+  "statement": "theorem restricted_linear_outside_center : let V : Set ℝ := Icc 0 1 let f : ℝ → EReal := fun z => if z ∈ V then (z : EReal) else ⊤ let ψ : ℝ → ℝ := fun z => z ^ 2 / 2 SourceProper f ∧ (∀ z ∈ V, (SourceSubdifferential f z).Nonempty) ∧ f (-1) = ⊤ ∧ (-1 : ℝ) ∉ V ∧ ConvexOn ℝ V (fun z => (f z).toReal) ∧ ¬ ConvexOn ℝ (univ : Set ℝ) (fun z => (f z).toReal) ∧ StrictConvexOn ℝ univ ψ ∧ IsMinOn (fun z => f z + ((divergence ψ z (-1) : ℝ) : EReal)) V 0 ∧ divergence ψ 0 (-1) = 1 / 2 ∧ (∀ u ∈ V, -u ≤ divergence ψ u (-1) - divergence ψ u 0 - divergence ψ 0 (-1)) ∧ (-1 / 2 : ℝ) ≤ 1 / 2",
+  "statement_hash": "a1e78f83882930aa90a186c336017c7b57f114b4348e89e62d475e5bd2642fdc",
+  "source_assumptions": [],
+  "created_at": "2026-10-09T11:11:49+00:00"
+}

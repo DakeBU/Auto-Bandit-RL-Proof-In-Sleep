@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineBregmanExtendedCanary.restricted_absolute_nonquadratic",
+  "file": "Tests/OnlineBregmanExtendedCanary.lean",
+  "statement": "theorem restricted_absolute_nonquadratic : let V : Set ℝ := Icc (-1) 1 let f : ℝ → EReal := fun z => if z ∈ V then ((|z| : ℝ) : EReal) else ⊤ let ψ : ℝ → ℝ := fun z => z ^ 4 / 4 + z ^ 2 / 2 SourceProper f ∧ (∀ z ∈ V, (SourceSubdifferential f z).Nonempty) ∧ f 2 = ⊤ ∧ ConvexOn ℝ V (fun z => (f z).toReal) ∧ ¬ ConvexOn ℝ (univ : Set ℝ) (fun z => (f z).toReal) ∧ StrictConvexOn ℝ univ ψ ∧ IsMinOn (fun z => f z + ((divergence ψ z (1 / 2) : ℝ) : EReal)) V 0 ∧ ¬ DifferentiableAt ℝ (abs : ℝ → ℝ) 0 ∧ divergence ψ (1 / 2) 0 = 9 / 64 ∧ divergence ψ 0 (1 / 2) = 11 / 64 ∧ (∀ u ∈ V, -|u| ≤ divergence ψ u (1 / 2) - divergence ψ u 0 - divergence ψ 0 (1 / 2)) ∧ (-1 / 2 : ℝ) ≤ -5 / 16",
+  "statement_hash": "e9996f389e47b4272c20a0a4b73cf03ca1a779c11b8ef220ee608f6d71ed4e5d",
+  "source_assumptions": [],
+  "created_at": "2026-10-09T11:11:49+00:00"
+}
