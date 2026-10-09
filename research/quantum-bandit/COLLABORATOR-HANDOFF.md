@@ -46,7 +46,8 @@ lake build
 lake build Tests
 
 Set-Location ../bandit
-# 记录实际 release HEAD；不要用旧的 main 替代研究 checkpoint。
+# 固定数学与证据快照，避免研究分支后来前移导致复现版本变化。
+git switch --detach 64eb285ebecbdc4bf236318776aabc6160fb1851
 git rev-parse HEAD
 git switch -c collab/yourname-bandit-measurement
 lake exe cache get
@@ -58,7 +59,7 @@ lake build QuantumBanditAdapter Canary AdaptiveTranscript AdaptiveTranscriptCana
 lake exe adaptive_dependency_export evidence/adaptive/reproduced-proof-term-graph.json
 ```
 
-每次检查退出状态。网络/缓存失败与 Lean 数学失败分开记录。Bandit 最新已证数学父节点 commit 是 `5638277b618ee4bf0d3c61aae12991f4f2cbdf01`；公开 release 在其上仅增加说明及历史证据。先比对研究分支 ancestry 与 `evidence/adaptive/release-index.json` 中源码/证据 hashes，再把本次 clone 的 HEAD 写入个人 run receipt。不要在他人的活动分支或已有脏工作区 checkout/reset。
+每次检查退出状态。网络/缓存失败与 Lean 数学失败分开记录。Bandit 最新已证数学父节点 commit 是 `5638277b618ee4bf0d3c61aae12991f4f2cbdf01`；固定公开快照 `64eb285ebecbdc4bf236318776aabc6160fb1851` 在其上仅增加说明及历史证据，本交接说明的后续修订不改变这份数学快照。先比对 ancestry 与 `evidence/adaptive/release-index.json` 中源码/证据 hashes，再把两个实际 checkout 的 HEAD 写入个人 run receipt。不要在他人的活动分支或已有脏工作区 checkout/reset。
 
 ## 可以直接交给自己 coding agent 的接续 goal
 
