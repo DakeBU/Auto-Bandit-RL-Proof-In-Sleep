@@ -1,0 +1,15 @@
+from publication_guard_v1 import *
+fixed()
+assert load(RUN / 'post-native-root-audit-v1.json')['all_other_FINAL_inputs_unchanged']
+write(RUN / 'post-native-packet-v1.md', '''# Actual native closure and prospective delivery review
+
+Independently reparse exact pre-native snapshot, one appended accepted trial and lifecycle event, sequence/parent/state and unchanged journal. Only contribution semantic_roundtrip.remaining_semantic_delta, verification.independent_review and graph_contribution.visual_review changed; verification.site_build and all other fields remain byte-semantic unchanged. Identical bounded suffix on exactly OWN task/proof-obligations/retrieval-index; conversion-window unchanged. Seven FINAL inputs changed through exact approved before bytes; all others remain exact. Run publication_guard_v1.fixed independently. Counter3->0 ONLY three frozen extended-loss bridge proof obligations, no definitions/source/chapter closure; all8forwards/general source OPEN and whole16Goal ACTIVE.
+
+Review PR-body-v1.md/PR-plan-v1.json and actual prospective deliver-v1.py/collect-actual-delivery-v1.py/final-evidence-delivery-v1.py. Ordinary scoped commit/push/draft PR stacked on OPENdraftunmerged PR209 exact65e21be78abfbd4255798e54265ce418651ef70f, branch codex/research-online-ch2-bregman. Full current package whitespace must pass0 without exemptions, parent historical RAW preserved. Two nonempty contributor bases, clean status, exact remote/PR title/body/base/draft/unmerged checks. RAW/Git CRLF differences preserved by exact snapshots; Python3.8 at-most-one-final-LF comparison, no removesuffix. Terminal observations ignored tmp then durable exact copies; no self-referential hash/commit loop. Official immediate attach required after creation, actual delivery then separately reviewed. Evidence-only final commit limited to NEW OWN RUN artifacts, no existing math/reader/native changes. No merge/deploy/global credential mutation/retirement; site belongs to clean source2b929d03d7ace7c418986e429d0ccf317a2721c6, no later-head fresh-site/HTTP/live claim.
+
+Create-only post-native-review-v1.md/json with native_verdict, metadata_verdict, prospective_publication_prose_verdict, delivery_helper_verdict, required_repairs, FINAL_sha256, input/report SHA and independent RAW before/after. If accepted list precise scoped prospective delivery allowance. Actual delivery pending; reviewer must not publish/edit current inputs or create native events. Requested distinct staged automated Astra/medium, no human/external/runtime attestation.
+''')
+paths = {p for d in [RUN, CONTRACT] for p in d.rglob('*') if p.is_file() and '__pycache__' not in p.parts}
+paths.update(Path(r['path']) for r in load(RUN / 'FINAL-inputs-v1.json')['rows'])
+write(RUN / 'post-native-inputs-v1.json', dict(rows=rows(paths), FINAL_sha256=sha(RUN / 'FINAL-review-v1.json'), scope='Actual OWN native/metadata closure and prospective scoped delivery only', actual_delivery_PENDING=True, chapter_complete=False, whole_Goal_status='ACTIVE'))
+print('Actual postnative/prospective delivery packet ready; distinct review pending.')

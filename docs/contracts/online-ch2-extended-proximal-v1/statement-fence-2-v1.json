@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineBregman.proximal_one_step_extended",
+  "file": "BanditRLProof/OnlineBregmanExtended.lean",
+  "statement": "theorem proximal_one_step_extended (f : E → EReal) (V : Set E) (hV : Convex ℝ V) (hf : BanditRL.OnlineConvex.SourceProper f) (hs : ∀ z ∈ V, (BanditRL.OnlineConvex.SourceSubdifferential f z).Nonempty) (ψ : E → ℝ) (η : ℝ) (hη : 0 < η) (x p : E) (hp : p ∈ V) (hdx : DifferentiableAt ℝ ψ x) (hdp : DifferentiableAt ℝ ψ p) (hmin : IsMinOn (fun z => f z + ((η⁻¹ * divergence ψ z x : ℝ) : EReal)) V p) : ∀ u ∈ V, η * ((f p).toReal - (f u).toReal) ≤ divergence ψ u x - divergence ψ u p - divergence ψ p x",
+  "statement_hash": "864afb66803553db20e3f5c672129aaec005a15f95a3cdb3f8f9c5e62526513b",
+  "source_assumptions": [],
+  "created_at": "2026-10-09T10:56:55+00:00"
+}

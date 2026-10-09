@@ -1,0 +1,29 @@
+# Canary BODY and exact publication repair v3
+
+Verdict: accepted-with-explicit-delta. BODY verdict: accepted-with-explicit-delta. Materialization verdict: accepted. Required repairs: none for this bounded stage.
+
+Actor /root/source_reviewer is the reused distinct staged automated reviewer, requested GPT-6 Astra / medium. No absolute-blind, human/external review or runtime model attestation is claimed. The prior BODY analysis is reused only at unchanged production/Test and actual compiled evidence hashes. This repair review does not claim a fresh Lean build or rendered-pixel inspection.
+
+All193 current indexed RAW files, original180 v2 inputs, original185 v1 inputs and every2925 baseline file were independently rehashed before and after; common.fixed passed. Original rejected reports/receipts and all failed compiler/selector evidence remain preserved. All five proposed live paths still equal exact before snapshots; no materialization has occurred.
+
+## Repair and exact AST findings
+
+The v3 proposal changes exactly the three new lean_notes by replacing the one ambiguous sentence. The director changes by exactly the same UTF8 byte replacement. The new text explicitly says the minimizer is p=0, the minimum objective value is1/2 when the center is-1, and “The center -1 is outside both V and the loss domain” (actual bound text uses Unicode minus). It no longer assigns outside-domain status to the feasible value1/2. This satisfies the v2 R10-antecedent repair.
+
+The R9 corrected numerical values11/64 and1/2 remain accurate: the loss at minimizer0 is zero, and the respective regularizer values at (0,center) are exactly those values. Both examples use eta1. The eight L1 legacy wording corrections are unchanged from v2, with all exact old/new UTF8 hashes independently checked. Six legacy note lean_notes and two legacy card fields distinguish minimizing point from objective value. Valid unrelated T0 empty-minimum0 text is untouched. These changes are explicitly authorized now; the old v1 scope did not retroactively authorize them.
+
+Four of the five plan rows are exactly v2, including root/Testroot/chapter/readings snapshots. Only the highlights after snapshot advances to v3. The three new notes equal the proposal. Restoring the exact six legacy strings and removing precisely the three appended notes recovers the complete old highlights AST. Restoring the two exact old card fields and removing the one appended source card recovers the complete old readings AST. The chapter row remains the already inspected online-ogd module/goal/completion suffix, and both root files preserve the complete raw prefix with exactly one import append. Thus all other fields, IDs, links, formulas, other Books, old proofs/contracts/receipts and global SGB remain outside the authorized mutation.
+
+## BODY and seven-slot applicability
+
+Production SHA adf36bd3172a96308872323af3128fc94733c005ca9c025a050620804f7ed80b and Test SHA851436f55c0636e0c09fc936f65f068f5e0b171b18e74da8c05bff35af9599dd are unchanged. The actual final focused3309-job success, generic VALUE/standard axioms/safe checks, six selected nodes and twelve direct VALUE pairs, and two independently selected Eq.mp numeric tails remain applicable. No failed id/And.casesOn selector is promoted to successful selected-tail evidence. Generated Test auxiliary is not a canonical production node.
+
+Objects remain fixed scalar restricted EReal losses and polynomial generators; quantifiers retain all12/11 conjuncts, global ambient support comparisons and all feasible comparators; regularity and minima are proved in the Test bodies rather than assumed; conclusions are the same actual extended comparisons and numerical tails; constants/divergence order are unchanged; the examples are deterministic static instances; boundaries retain infinity outside V and no global finite-part convexity. The three production bridges retain their own generic assumptions and source deltas. No mathematical weakening or new source result was introduced by wording repair.
+
+Original R1-R8 remain exact in the receipt. At proposal level, all eight are addressed: proper/global supports and finiteness before conversion; finite-part convexity only on V; explicit membership/finite-on-V and arbitrary eta for the minimum iff; positive eta/both ambient derivatives/actual EReal minimum for the terminal; both negative ordered residuals; first theorem without completeness and other two with inherited completeness; derived-source attribution and remaining source obligations; and separate integration/reader/native/delivery gates. R8 is a retained future-gate obligation, not a claim those future checks have already passed. R9, L1 and the added antecedent repair are satisfied by the actual v3 bytes.
+
+## Exact conditional permission
+
+Authorize only the five before-to-after raw transitions listed verbatim in approved_five_rows, under exact-publication-plan-v3.json SHA f4e345babd233aa38b49075c7cfe7ce8b24b0531bedcff0fe22c9a691590d4e2. Recheck current before hashes and frozen production/Test hashes immediately before materialization. Preserve original historical bindings through explicit snapshots; do not claim old root/reader live bytes remain equal after approved integration. All other baseline files remain immutable under this permission. This is not permission for native acceptance, unrelated metadata or publication.
+
+Combined root/Tests/full harness, registry/site/DOM/original pixels, FINAL/native/post-native/delivery remain pending. Source X/interior/extension locality, actual attained current-loss causal recursion/interiority and sharp fixed/variable same-run telescopes including the maintext fixed-step exercise remain required/open. All eight Chapter2 forwards remain open, Chapter2 partial, proof denominator null and whole Goal ACTIVE. No merge/deploy/main/live/CI or chapter completion claim.

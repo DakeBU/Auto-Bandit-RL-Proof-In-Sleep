@@ -1,0 +1,28 @@
+Context only: Lean4, real inner-product spaces, EReal extended reals. Definitions below are BORROWED existing context, not new owned definitions. Here ⊤ and ⊥ are positive/negative infinity. SourceProper f means no bottom value anywhere and at least one finite real-valued point. SourceSubdifferential f x is {g | ∀ y, f x + (inner ℝ g (y-x) : EReal) ≤ f y}; comparison ranges over ALL ambient points. divergence ψ a b is ψ a - ψ b - fderiv ℝ ψ b (a-b); second argument is the base, actual total Frechet derivative defaults to zero if not differentiable. IsMinOn compares objective values on the set but does NOT provide point membership. These are ONLY proposed theorem statements; no proof exists.
+
+namespace BanditRL.OnlineBregman
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+
+theorem finitePart_convex_of_subdifferentiable (f : E → EReal) (V : Set E)
+    (hV : Convex ℝ V) (hp : BanditRL.OnlineConvex.SourceProper f)
+    (hs : ∀ x ∈ V, (BanditRL.OnlineConvex.SourceSubdifferential f x).Nonempty) :
+    ConvexOn ℝ V (fun x => (f x).toReal)
+
+variable [CompleteSpace E]
+
+theorem proximal_finitePart_minimizer_iff (f : E → EReal) (V : Set E)
+    (ψ : E → ℝ) (η : ℝ) (x p : E) (hp : p ∈ V)
+    (hfin : ∀ z ∈ V, f z ≠ ⊤ ∧ f z ≠ ⊥) :
+    IsMinOn (fun z => f z + ((η⁻¹ * divergence ψ z x : ℝ) : EReal)) V p ↔
+      IsMinOn (fun z => (f z).toReal + η⁻¹ * divergence ψ z x) V p
+
+theorem proximal_one_step_extended (f : E → EReal) (V : Set E)
+    (hV : Convex ℝ V) (hf : BanditRL.OnlineConvex.SourceProper f)
+    (hs : ∀ z ∈ V, (BanditRL.OnlineConvex.SourceSubdifferential f z).Nonempty)
+    (ψ : E → ℝ) (η : ℝ) (hη : 0 < η) (x p : E) (hp : p ∈ V)
+    (hdx : DifferentiableAt ℝ ψ x) (hdp : DifferentiableAt ℝ ψ p)
+    (hmin : IsMinOn (fun z => f z + ((η⁻¹ * divergence ψ z x : ℝ) : EReal)) V p) :
+    ∀ u ∈ V, η * ((f p).toReal - (f u).toReal) ≤
+      divergence ψ u x - divergence ψ u p - divergence ψ p x
+
+end BanditRL.OnlineBregman
