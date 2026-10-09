@@ -1,43 +1,30 @@
-# Proof Obligations: Full Chapter1 source reconciliation and shared graph gate
+# Chapter1 current obligations
 
 Task id: `ONLINE-C1-CHAPTER-AUDIT-20261009`
+Status: `source-reconciled-native; chapter gate pending`
 
-Source card:
-Scenario card:
+Source: Orabona arXiv1912.13213v10,21June2026; SHA cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17; printed1-6/PDF13-18. Current17 source objects are separately reviewed; original16 and source-as-written ordinary-limit definition remain frozen. Actual same-FTL counterexample and separately reviewed source correction are explicit. Four new general-initial performance proofs close one missing source family. 54generic contracts/27canaries/null required proof-leaf total are not coverage percentages. Actual root9105/Tests9270/fullharness472tests7skips/axioms/fences/wholevalues/directVALUE passed on unchanged code/pins. Distinct automated FINAL accepted-with-explicit-delta, report/receipt in current RUN; native transition now executed. Updated status reader/site, own shadow, separate post-native and PR203 delivery review remain prerequisites to chapter acceptance. Whole1-16GoalACTIVE; C2partial/C3-16unenumerated/null/necessaryappendicesrequired; no main/live/merge/deploy. This current document supersedes the retained historical bootstrap template and proving-stage statuses; their exact RAW bytes are preserved before-post-FINAL snapshots.
 
-| Node | Target | Dependencies | Local APIs/imports | Retrieval cards | Intended proof route | Regularity contracts | Mathlib status | Owner | Lean declaration | Gate | Status |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `ONLINE-C1-CHAPTER-AUDIT-20261009-ROOT` | root theorem or definition | conversion window | TBD | TBD | TBD | TBD | project-local | upper | TBD | `lake build && lake build Tests` | planned |
+| Source object | Current source verdict | Public declarations |
+| --- | --- | --- |
+| C1-GAME | accepted-with-explicit-delta | `BanditRL.OnlineLearning.meanPredict_prefix`, `BanditRL.OnlineLearning.meanPredict_mem`, `BanditRL.OnlineLearning.ftlPredict_prefix`, `BanditRL.OnlineLearning.ftlPredict_mem`, `BanditRL.OnlineLearning.randomized_history_policy_independent`, `BanditRL.OnlineLearning.completed_predictable_private_seed_independent` |
+| C1-IID-MEAN | accepted-with-explicit-delta | `BanditRL.OnlineLearning.expected_fixed_prefix_decomposition`, `BanditRL.OnlineLearning.expected_fixed_prefix_minimum`, `BanditRL.OnlineLearning.expectedFixedMinimum_eq_variance`, `BanditRL.OnlineLearning.constant_mean_expectedFixed_excess_zero` |
+| C1-IID-LOWER | accepted-with-explicit-delta | `BanditRL.OnlineLearning.randomized_history_policy_expectedFixed_excess`, `BanditRL.OnlineLearning.ae_predictable_private_seed_expectedFixed_excess`, `BanditRL.OnlineLearning.completed_predictable_private_seed_expectedFixed_excess`, `BanditRL.OnlineLearning.causal_kernel_realization_and_expectedFixed_excess` |
+| C1-EQ1.1-1.2 | accepted-with-explicit-delta | `BanditRL.OnlineLearning.normalized_excess`, `BanditRL.OnlineLearning.history_policy_normalized_expectedFixed_excess`, `BanditRL.OnlineLearning.centered_total_sublinear_iff_average`, `BanditRL.OnlineLearning.randomized_history_policy_success_iff` |
+| C1-REGRET | accepted-with-explicit-delta | `BanditRL.OnlineLearning.comparatorRegret_eq_sum`, `BanditRL.OnlineLearning.guessing_prefix_minimum`, `BanditRL.OnlineLearning.squaredLoss_minimum_eq`, `BanditRL.OnlineLearning.squaredBestRegret_eq_comparatorRegret`, `BanditRL.OnlineLearning.comparatorRegret_le_squaredBestRegret` |
+| C1-NOREGRET | accepted-with-explicit-delta | `BanditRL.OnlineLearning.limitNoRegret_implies_noRegret`, `BanditRL.OnlineLearning.limitNoRegret_iff_noRegret_of_converges`, `BanditRL.OnlineLearning.meanPredict_limitNoRegret_iff_mean_converges`, `BanditRL.OnlineLearning.dyadic_meanPredict_obstruction` |
+| Remark1.1 | accepted-with-explicit-delta | `BanditRL.OnlineLearning.comparatorRegret_eq_sum` |
+| C1-MEAN-PREFIX | accepted-with-explicit-delta | `BanditRL.OnlineLearning.empiricalMean_decomposition`, `BanditRL.OnlineLearning.empiricalMean_minimizes`, `BanditRL.OnlineLearning.empiricalMean_mem`, `BanditRL.OnlineLearning.empiricalMean_unique`, `BanditRL.OnlineLearning.guessing_prefix_minimum` |
+| C1-FTL | accepted-with-explicit-delta | `BanditRL.OnlineLearning.ftlPredict_prefix`, `BanditRL.OnlineLearning.ftlPredict_mem`, `BanditRL.OnlineLearning.ftlPredict_half`, `BanditRL.OnlineLearning.ftlState_first`, `BanditRL.OnlineLearning.ftlState_eq_predict`, `BanditRL.OnlineLearning.ftlState_prefix`, `BanditRL.OnlineLearning.ftlState_mem`, `BanditRL.OnlineLearning.ftlState_half` |
+| Lemma1.2 | accepted-with-explicit-delta | `BanditRL.OnlineLearning.lemma_1_2` |
+| Theorem1.3 | accepted-with-explicit-delta | `BanditRL.OnlineLearning.theorem_1_3`, `BanditRL.OnlineLearning.meanPredict_bestRegret_bound` |
+| C1-STABILITY | accepted-with-explicit-delta | `BanditRL.OnlineLearning.empiricalMean_update`, `BanditRL.OnlineLearning.meanPredict_stability`, `BanditRL.OnlineLearning.meanPredict_initial_stability` |
+| C1-REFINED-REGRET | accepted-with-explicit-delta | `BanditRL.OnlineLearning.meanPredict_regret_refined`, `BanditRL.OnlineLearning.meanPredict_bestRegret_refined` |
+| C1-LOG-UNAVOIDABLE | accepted-with-explicit-delta | `BanditRL.OnlineLearning.GuessingLower.randomized_log_lower` |
+| C1-HARMONIC | accepted-with-explicit-delta | `harmonic_le_one_add_log` |
+| C1-SUCCESS | accepted-with-explicit-delta | `BanditRL.OnlineLearning.meanPredict_noRegret`, `BanditRL.OnlineLearning.meanPredict_bestRegret_average_tendsto_zero`, `BanditRL.OnlineLearning.meanPredict_iid_success` |
+| C1-FTL-ANY-INITIAL-GUARANTEE | accepted-with-explicit-delta |  |
 
-## Failure Classification
+Algorithm uses fixed legal initializer, actual count/mean recurrence and strict past. Source round1 is Lean0. Positive-horizon correction only; first legal loss bound1, half-onlyquarter, reciprocal denominators2..T. G001 -> G002 and G003; G001+actualhalfbestaverage0 -> G004. Existing projection/convex foundations are reused in the same shared registry; no extra library. IID joint independence/private tape/AE feasibility, outside-expectation fixed min and exogenous kernel model are explicit. No false universal ordinary-comparator-limit claim.
 
-Use exactly one:
-
-- source translation gap;
-- local Lean lemma gap;
-- theorem-card dependency;
-- external cited result;
-- semantic interface gap;
-- missing regularity contract;
-- likely false statement or counterexample;
-- invalid route;
-- stale dynamic leaf;
-- connected blocker.
-
-## Reviewer Notes
-
-- Keep failed attempts in `proof-attempts/ONLINE-C1-CHAPTER-AUDIT-20261009/`.
-- Do not promote simulator checks, prose sketches, or theorem cards to certified memory.
-- If an LML theorem is used, cite the upstream declaration and record whether it is imported, ported, or only a theorem card.
-- Do not frequently change proof strategy; record the mathematical reason before pivoting.
-- Mark general leaf lemmas as Mathlib candidates when they should become reusable upstream infrastructure.
-
-
-## Current draft contract
-
-Source Orabona1912.13213v10 exactSHA cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17; printed1-6/PDF13-18 whole maintext, history and independent exercises separate. Current docs/contracts/online-c1-chapter-audit-v1 and own RUN bind sixteen historical source objects/fifty existing exact public declarations. Actual dependency values/axioms and native fences passed, source-contract v1 review pending; no new production proof or chapter acceptance. General-init performance is a source reviewer concern requiring explicit v2 frozen terminals before proof if confirmed, not waived by any-init state/causality. Pinned ordinary-limit definition, true finite Theorem1.3, same-FTL obstruction and correction proposal remain separate. Any target/header/model change requires distinct versioned review. Global SGB, old trials/memory/retrieval/journal untouched; native wrapper redirects only current task evidence to this RUN. Combined whole-chapter gates/delivery pending; total1-16 GoalACTIVE, C2partial/C3-16unenumerated/null/appendicesrequired, main/live unchanged.
-
-
-## Stabilized v3 / first proving leaf
-
-Distinct source CONTRACT/INVENTORY receipt 264ef5d139323bdd0fa32048d3ea1299a2a6ed65610edb70f6c07b6848626da8 accepted-with-explicit-delta, stabilization only. Original16 source rows remain immutable;17th any-initial performance source object adds four exact frozen terminals, proof total null. G001 positive-horizon actual first-loss correction is dependency ready; G002 exact1+tail, G003 upper-epsilon and G004 TRUE-best average-zero remain unproved. This changes the prior draft status without erasing v1 rejection/v2 loose proposal. Source report R1-R10, BODY, separately roundtripped chapter canaries, shared root/Tests/full harness, two-base nonempty contributor/shadow/registry/site/FINAL/native/delivery all mandatory. Old50 math, global frontiers and all historical evidence unchanged. Whole1-16 Goal ACTIVE, no chapter acceptance/merge/deploy.
+Open current gate obligations: applicable updated site/registry/current status DOM/pixels; own native shadow; distinct post-native and actual PR203 remote/attachment/delivery review. These are not new mathematical assumptions. No unproved mandatory source object is dropped. Independent History/Problems1.1/1.2 remain optional.
