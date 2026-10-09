@@ -1,38 +1,29 @@
 # Quantum Bandit frontier: collaborator handoff
 
-Snapshot date: 2026-10-09. **Public research prototype; neither A nor B is complete.**
+Updated: 2026-10-09. **Public research prototype; neither project A nor project B is complete.**
 
-## 给懂 Bandit 的合作者：为什么做这两个题
+## Research questions
 
-经典 Bandit 的主要统计成本是区分很接近的臂。把均值估计到误差 r，普通有界独立样本通常需要约 r⁻² 次观测。量子幅度估计在特定访问模型下能把查询依赖降到约 r⁻¹：环境必须提供奖励生成的酉电路 U 及其匹配逆 U†，算法在测量之前可以相干地反复调用它们。只有普通奖励样本、量子态副本或一台量子计算机，并不自动提供这个能力。
+**A: Finite coherent-block regret.** Establish an implementable estimator and a horizon-safe bandit policy when a fresh quantum block can query one arm at most D times. Count both the reward unitary U and its matching inverse U-dagger. Classical history survives between blocks; quantum registers do not. Regret upper bounds, matching lower bounds and optimality remain open.
 
-“相干”可以先理解为：在测量之前，若干操作共同作用于一个量子态，其振幅能够发生干涉。测量只给经典结果；本课题要求块末丢弃量子态，下一块重新开始，经典历史仍保留。因此 D 是一块中 U/U† 合计调用数的上限，不是自适应轮数，也不是物理门深度。
+**B: Circuit-certified cost-aware multi-fidelity BAI.** Select actual circuit implementations using target-bias certificates, coherence limits and proved query/gate costs. Repetition reduces statistical error, not fixed implementation bias. The complete fidelity-selection algorithm, stopping rule, total-cost theorem and mixed-fidelity lower bound remain open.
 
-**A 问有限相干能力能换来多少累计遗憾改善。** 用有文献依据、但尚未本地形式化的估计成本插值
+The quantum library supplies circuit, measurement, inverse and resource semantics. BanditRLlib supplies confidence, elimination, pull-count, regret and testing structure. Existing classical multi-fidelity work and recent quantum estimation/bandit papers are prior art, not local proof premises. See [the literature audit](evidence/literature-audit.md).
 
-    q_D(r, δ) ≈ 1/r + 1/(D r²)，另含置信对数和整数取整，
+## Current checkpoint
 
-把 elimination 的经典决策层接到真实量子估计器。D=1 应回到经典抽样；相干块足够长时才接近理想幅度估计。对次优臂估计到 gap 量级，每次查询都按该臂 gap 计遗憾，得到候选 gap-dependent 以及 gap-free 上界。证明还必须覆盖截断、ties、K>T、失败概率和所有自适应历史，不能只代入一个 oracle 复杂度公式。上下界匹配目前未完成；不能声称最优。
+- **Compiled research increments:** Born probability stability; aligned circuit reward bias; forward/inverse query words and primitive gate accounting; a cross-library adapter and canaries; actual reset-history PMFs and fixed-finite-block adaptive Hellinger information accumulation.
+- **Conditional transport:** bias plus statistical radius, confidence elimination and recommendation correctness. Actual estimation-tail producers remain missing.
+- **Open roots:** concrete estimation/confidence, horizon-safe A strategy and regret bounds, B fidelity choice/stopping/cost, and information-theoretic lower-bound assembly.
+- **Scope of the newest information theorem:** computational-basis measurement, deterministic classical-history policy, fixed finitely many blocks, natural-number path budget and both environments' expected query costs. It is not a stopping theorem or a K-arm minimax result.
 
-**B 问电路不精确且价格不同的时候，实际应该用哪个档位。** 低成本电路的固定偏差不会靠多测几次消失。若实现偏差证书为 b、统计估计半径为 s，目标均值的有效半径是 b+s。要共同选择档位、相干长度和查询次数，并计入双向制备、已知反射门和其他所声明的成本。classical multi-fidelity BAI 已有强先例；我们的研究价值必须来自真实量子电路资源模型或新成本/下界定理，不能只把经典样本成本替换为一个量子公式。
+Read [the exact research boundaries](research-boundaries.md) and [immutable historical audit evidence](evidence/adaptive/). Public availability does not imply main-library admission; earlier seal coverage and publication-pipeline boundaries remain visible.
 
-两个库的分工是：QuantumComputinglib 产生“这个电路实际测得什么、用了多少资源、实现误差是多少”的证明；BanditRLlib 复用置信、淘汰、拉臂计数、遗憾和 testing 的决策骨架。形式化特别有用，因为量子加速对访问模型很敏感；遗漏 inverse、反射、状态装载或相干记忆，就可能证明了比真实问题更容易的问题。
+## Independent-machine setup
 
-最近参考：Erle–Koczor [arXiv:2608.24434v1](https://arxiv.org/html/2608.24434v1) 的任意深度幅度估计；Liu–Li–Lui [arXiv:2608.14319v1](https://arxiv.org/html/2608.14319v1) 的量子 Bandit 下界；Poiani 等 [arXiv:2406.03033v2](https://arxiv.org/html/2406.03033v2) 的 classical multi-fidelity BAI。详细版本、模型区别和未获取全文的 NeurIPS 2026 记录见 [literature-audit.md](evidence/literature-audit.md)。这不是全球首次或蓝海已确认的声明。
+Prerequisites: Git and elan. All three Lake projects pin Lean 4.29.1 and Mathlib `5e932f97dd25535344f80f9dd8da3aab83df0fe6`. Samplinglib is not a compatible dependency of this checkpoint. Do not copy another contributor's environment caches or local junctions.
 
-## 当前可靠进度
-
-- 已 kernel-check：Born effect stability，aligned Ry 电路的 reward bias，forward/inverse 查询字及原语门数，自适应 reset 历史的实际 PMF 与 Hellinger 信息累积；跨库 adapter 和 canary。
-- 条件式：bias+statistical radius 的 recommendation correctness。统计尾概率仍需要真实估计器生产，不能升格为完整算法。
-- 未证：A 估计器/策略/遗憾上下界，B 档位选择/停止/总成本/混合 fidelity 下界。
-- 最新信息定理限定为固定有限块数、计算基测量、确定性经典历史策略、自然数路径预算。它含两个环境的期望查询成本；不能直接推出 K-arm minimax 下界。
-- 精确边界：[research-boundaries.md](research-boundaries.md)。历史编译凭据和独立七槽审计：[evidence/adaptive/](evidence/adaptive/)。公开可获取不等于主库发表验收。
-
-## 在自己的电脑建立独立环境
-
-前提是 Git 和 elan 可用。两库和 joint Lake 项目固定 Lean 4.29.1，Mathlib commit 为 `5e932f97dd25535344f80f9dd8da3aab83df0fe6`。Samplinglib 当前版本不兼容，不是这个 checkpoint 的依赖。不要复制别人的 `.lake`、本地 junction 或 Python 环境。
-
-在一个新目录中执行下列 PowerShell 命令。两个文件夹必须分别叫 `bandit` 和 `quantum` 并互为同级，这是 joint Lake 路径依赖的要求。
+Use a fresh parent directory. The two sibling directories must be named `bandit` and `quantum` for the joint project's relative path dependencies.
 
 ```powershell
 git clone --branch research/qb261009 https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep.git bandit
@@ -46,10 +37,9 @@ lake build
 lake build Tests
 
 Set-Location ../bandit
-# 固定数学与证据快照，避免研究分支后来前移导致复现版本变化。
 git switch --detach 64eb285ebecbdc4bf236318776aabc6160fb1851
-git rev-parse HEAD
 git switch -c collab/yourname-bandit-measurement
+git rev-parse HEAD
 lake exe cache get
 lake build
 lake build Tests
@@ -59,26 +49,26 @@ lake build QuantumBanditAdapter Canary AdaptiveTranscript AdaptiveTranscriptCana
 lake exe adaptive_dependency_export evidence/adaptive/reproduced-proof-term-graph.json
 ```
 
-每次检查退出状态。网络/缓存失败与 Lean 数学失败分开记录。Bandit 最新已证数学父节点 commit 是 `5638277b618ee4bf0d3c61aae12991f4f2cbdf01`；固定公开快照 `64eb285ebecbdc4bf236318776aabc6160fb1851` 在其上仅增加说明及历史证据，本交接说明的后续修订不改变这份数学快照。先比对 ancestry 与 `evidence/adaptive/release-index.json` 中源码/证据 hashes，再把两个实际 checkout 的 HEAD 写入个人 run receipt。不要在他人的活动分支或已有脏工作区 checkout/reset。
+Check every exit status. Record the actual two commits and distinguish network/cache failures from mathematics failures. Never reset or check out a different branch in an existing dirty collaborator workspace.
 
-历史 source-review 的 BornStability 原始文件 hash 来自 CRLF 工作区；固定 Quantum commit 的 Git blob 为 LF，raw hash 因行尾不同而不同。独立检查确认规范化到 LF 后字节完全相同。后续公开 handoff 的 [portable-source-bindings.json](evidence/adaptive/portable-source-bindings.json) 单独记录五个实际 Lean source 的历史 raw/Git blob/LF hashes；原审计未被改写。23 份公开审计文件由目录内 `-text` 属性保留原始字节。固定数学快照 64eb285 不含这份后补 portability 文件，可从当前 handoff 所属 commit 获取它。
+The fixed Bandit mathematics/evidence release is `64eb285ebecbdc4bf236318776aabc6160fb1851`, whose latest proof-bearing parent is `5638277b618ee4bf0d3c61aae12991f4f2cbdf01`. Later handoff edits do not change that mathematics. The fixed snapshot includes an older handoff version: use this current English handoff for instructions while keeping the mathematics pinned.
 
-## 可以直接交给自己 coding agent 的接续 goal
+Historical BornStability source-review raw hashes came from a CRLF Windows worktree; the pinned Quantum Git blob uses LF. A separate [portable binding supplement](evidence/adaptive/portable-source-bindings.json) records exact historical/Git-blob/canonical-LF hashes and verified normalized byte equality for five Lean sources. The original review is unchanged. Its 23 evidence artifacts retain exact bytes through the directory's `-text` Git attribute. Obtain the later portability supplement from the commit containing this current handoff, rather than assuming it exists in the older mathematics snapshot.
 
-下面是一个有明确验收点的默认 goal。若已有合作者领取它，先在研究 tracking issue 中认领另一个 leaf，避免重复工作；agent 不得擅自给其他协作者发消息。
+## Copyable bounded continuation goal
 
-> 目标：从 BanditRLlib 与 QuantumComputinglib 的公开 research/qb261009 checkpoint 接续 Quantum Bandit frontier。先阅读本库 AGENTS.md/CONTRIBUTING.md、Statement Seal/source-fidelity/semantic-roundtrip/实际 proof-graph 协议和 research/quantum-bandit/README.md、research-boundaries.md、evidence/adaptive/。冻结当前两个 commit、Lean 4.29.1 和 Mathlib pin；在个人分支工作，不改 main、不覆盖协作者，不合并 main。首个有界增量是“真实低深度幅度估计测量模型生产器”，不是重新证明已完成的 Born stability 或 adaptive Hellinger。
+> Continue from the public Quantum Bandit research checkpoint. First read both repositories' AGENTS.md and publication/source-fidelity/Statement Seal/proof-graph protocols, the research README, research-boundaries.md and adaptive evidence. Freeze both actual commits, Lean 4.29.1 and the Mathlib pin; reproduce the adapter and canary in personal branches. Do not redo the completed Born-stability or adaptive-information proofs, overwrite collaborators, or merge main.
 >
-> 精确模型：每块从已知初始态重新开始，经典选一个臂；块内只调用该臂 U/U† 与明确已知 unitary，正向和逆向都按一次查询计入块上限 D、总预算 T 和该臂 gap；块末测量并丢弃全部量子态，经典历史保留。不免费提供关于未知制备态的反射、不免费状态装载或 unitary synthesis，不把置信区间假设成无偏/独立次高斯输出。
+> Complete one bounded increment: an actual depth-limited amplitude-estimation measurement and query-cost producer. Pin the primary model to Erle and Koczor, arXiv:2608.24434v1, Measurement Model Eq. (1) and Algorithm 1. Freeze exact Lean signatures before proof search; independently extract and review the source construction topology. Start with a general finite-dimensional unitary, a known initial basis vector and a known good-coordinate projector. Produce the actual unitarity certificates for known reflections, odd/even query words, output probabilities, response means and literal forward-plus-inverse query counts. Charge the last inverse needed to implement the even-depth unknown-state readout as known-basis measurement. Handle zero queries and D=1. An odd-only schedule does not establish the cited estimator's full admissible-window confidence guarantee.
 >
-> 从 Erle–Koczor arXiv:2608.24434v1 Measurement Model Eq.(1)、Algorithm 1 开始。预先冻结一般有限维酉 U、已知初始基向量和已知 good-coordinate projector 的完整 Lean root signature，再独立抽取/复核 source proof topology。构造已知对角反射的实际酉证书、奇数和偶数查询的字、实际 Born 输出概率与 ±1 response 期望。偶数查询方案须计入最后 U†，把关于未知 U|0> 的测量还原为已知初始态测量。证明 literal query count 不超过所声明的 m；m=0 无查询，D=1 单次抽样。不能只做 odd-depth 后直接引用要求完整深度窗口的 WLSAE confidence theorem。
+> Each block selects one arm classically, starts afresh, permits at most D calls to that arm's U or matching U-dagger, measures once and discards all quantum registers. Both oracle directions consume the horizon and the selected arm's gap. Unknown angles/means are analysis variables, not available algorithm inputs. Reflections, loading, synthesis, known gates and physical depth have explicit resource boundaries. A confidence interval does not imply independent unbiased sub-Gaussian estimator noise. Fixed systematic circuit bias is separate from noise changing between calls.
 >
-> 优先复用 QuantumQueryWord、QueryCircuitCost、PrimitiveSemantics、BornStability、ResetBlockProcess。先在一个实际一比特 Ry/反射原语电路上做 canary 和 gate-count certificate；一般维度的反射合成若尚未完成必须公开列为未证 supplier，不得变成一个假设来伪装闭合总门成本。未知均值/角度只用于数学分析，不能作为算法已知输入。若范围必须收缩，保持原目标并另命名 refined model、给准确 mismatch。
+> Reuse QuantumQueryWord, QueryCircuitCost, PrimitiveSemantics, BornStability and ResetBlockProcess. Produce a real one-qubit primitive-circuit canary and gate-count certificate. If general reflection synthesis remains unproved, name that supplier rather than assume it and claim a complete gate-cost root. Any model refinement must be separately named with an explicit semantic delta.
 >
-> 持续完成这个测量语义与查询成本增量：真实 lake 编译、可运行 canary、#print axioms、sorry/admit/new axiom 扫描、actual compiled type/value dependency graph、distinct blind decoder 和 source reviewer 的七槽审计、两库要求的 build/Tests 和读者/图/Frontier 同步。保留失败尝试和准确 obstruction。验收报告分别标 compiled / conditional / speculative / refuted；WLSAE 窗口与最小二乘置信证明、A 遗憾主定理和 B 成本主定理在生产器没有完成时仍为 open leaves。公开提交走个人分支和 draft PR，不宣称最优/首次，不合并 main。
+> Finish the bounded measurement/cost increment with actual Lake compilation, executable canary, printed axioms, placeholder/new-axiom scan, actual compiled type/value dependency graph and distinct source-blind decoder/source reviewer seven-slot audits. Run both repositories' required build/Tests and publication checks; synchronize reader, graph and frontier evidence without promoting unfinished roots. Retain typed failures. Report compiled, conditional, speculative and refuted separately. Estimator statistics, A regret, B complexity and novelty remain open until their actual producers close. Submit personal branches and draft PRs; do not merge main.
 
-第二位合作者适合领取 B 的 finite feasible-fidelity selector：先对空可行集、b<r、integer query/shot caps、known-gate 计费建立实际选择和成本证书，明确依赖尚未完成的 estimator；不要把条件式成本比较报成完整 ε-BAI。第三条独立 leaf 是停止/单环境信息比较及 hard-oracle/testing reduction；现有双环境 Hellinger 界不能直接产生 K 因子。
+## Parallel leaves and handback
 
-## 本机结果如何交回
+Coordinate leaf ownership in [tracking issue #206](https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/issues/206). Another contributor can own B's finite feasible-fidelity selector, including empty sets, b<r, integer caps and known-gate costs, while retaining the missing-estimator boundary. A separate lower-bound leaf concerns stopped/one-environment information comparison, hard unitary families and testing-to-regret reduction; the existing symmetric information bound does not automatically supply the K factor.
 
-交回 exact source/version/anchor、两个 base/head commits、冻结签名、实际 Lean declarations、proof dependencies、canary、完整验证命令/退出状态、独立审计和未证 leaves。先 push 自己的 branch 再开 draft PR；不要推送环境缓存或提交全部分支。研究公开授权不等于绕过各库发表验收。
+Hand back exact source/version/anchor, frozen signatures, base/head commits, Lean declarations, actual dependencies, canary, verification commands/exit statuses, independent audit and remaining leaves. Push only the personal branch and open a draft PR. Public research authorization does not bypass either library's admission protocol.
