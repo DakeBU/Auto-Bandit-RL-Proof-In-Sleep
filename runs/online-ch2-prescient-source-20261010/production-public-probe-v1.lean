@@ -1,0 +1,14 @@
+import BanditRLProof.OnlinePrescientBregmanSource
+set_option pp.universes true
+#check @BanditRL.OnlineConvex.sourceProper_of_domain
+#print axioms BanditRL.OnlineConvex.sourceProper_of_domain
+#check @BanditRL.OnlinePrescientBregman.penalized_strictConvex
+#print axioms BanditRL.OnlinePrescientBregman.penalized_strictConvex
+#check @BanditRL.OnlinePrescientBregman.advance_eq_some_of_minimizer
+#print axioms BanditRL.OnlinePrescientBregman.advance_eq_some_of_minimizer
+#check @BanditRL.OnlinePrescientBregman.iterate_eq_of_source_updates
+#print axioms BanditRL.OnlinePrescientBregman.iterate_eq_of_source_updates
+#check @BanditRL.OnlinePrescientBregman.source_fixed_regret
+#print axioms BanditRL.OnlinePrescientBregman.source_fixed_regret
+#check @BanditRL.OnlinePrescientBregman.source_variable_regret
+#print axioms BanditRL.OnlinePrescientBregman.source_variable_regret

@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlinePrescientBregman.source_fixed_regret",
+  "file": "BanditRLProof/OnlinePrescientBregmanSource.lean",
+  "statement": "theorem source_fixed_regret (V X : Set E) (hV : Convex ℝ V) (hVn : V.Nonempty) (_hVc : IsClosed V) (hVX : V ⊆ X) (ψ : E → ℝ) (hψ : StrictConvexOn ℝ X ψ) (_hψc : BanditRL.OnlineConvex.SourceClosed (fun z => (ψ z : EReal) + BanditRL.OnlineConvex.extendedIndicator X z)) (hd : DifferentiableOn ℝ ψ (interior X)) (η : ℝ) (hη : 0 < η) (loss : ℕ → E → EReal) (x0 : E) (x : ℕ → E) (T : ℕ) (hinit : x 0 = x0) (hinterior : ∀ t ≤ T, x t ∈ interior X) (hbot : ∀ t < T, ∀ z, loss t z ≠ ⊥) (hdom : ∀ t < T, V ⊆ BanditRL.OnlineConvex.effectiveDomain (loss t)) (hs : ∀ t < T, ∀ z ∈ V, (BanditRL.OnlineConvex.SourceSubdifferential (loss t) z).Nonempty) (hmin : ∀ t < T, x (t + 1) ∈ V ∧ IsMinOn (fun z => loss t z + ((η⁻¹ * divergence ψ z (x t) : ℝ) : EReal)) V (x (t + 1))) (u : E) (hu : u ∈ V) : (∑ t ∈ range T, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤ divergence ψ u x0 / η - (∑ t ∈ range T, divergence ψ (x (t + 1)) (x t)) / η",
+  "statement_hash": "4b973514feeb92792017f58a8754ba5926f6064a2c7dc620d837ec74d19f6c89",
+  "source_assumptions": [],
+  "created_at": "2026-10-09T16:24:06+00:00",
+  "header_origin": "Reviewed exact draft header; lifecycle make_statement_fence API before body. Actual CLI source extraction checked after each real declaration exists.",
+  "scoped_context": "namespace BanditRL.OnlinePrescientBregman\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]\n",
+  "raw_header_sha256": "e490b39ca4c45193ea10661f2ace65b346c73671dfb2f2dfd89a793c6198ccf8"
+}

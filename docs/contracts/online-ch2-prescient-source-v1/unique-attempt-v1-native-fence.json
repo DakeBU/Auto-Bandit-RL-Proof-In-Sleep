@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlinePrescientBregman.advance_eq_some_of_minimizer",
+  "file": "BanditRLProof/OnlinePrescientBregmanSource.lean",
+  "statement": "theorem advance_eq_some_of_minimizer (V X : Set E) (hV : Convex ℝ V) (hVX : V ⊆ X) (ψ : E → ℝ) (hψ : StrictConvexOn ℝ X ψ) (f : E → EReal) (hf : BanditRL.OnlineConvex.SourceProper f) (hs : ∀ z ∈ V, (BanditRL.OnlineConvex.SourceSubdifferential f z).Nonempty) (η : ℝ) (hη : 0 < η) (x p : E) (hp : p ∈ V) (hmin : IsMinOn (fun z => f z + ((η⁻¹ * divergence ψ z x : ℝ) : EReal)) V p) : advance V ψ η f x = some p",
+  "statement_hash": "a7bcb5744198a227804b7ee7719604ba88c51faab05c57da0205758f6198a779",
+  "source_assumptions": [],
+  "created_at": "2026-10-09T16:26:22+00:00"
+}

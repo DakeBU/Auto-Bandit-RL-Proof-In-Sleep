@@ -1,0 +1,3 @@
+# Working digest
+
+Draft six-terminal source-run transport package on exact unmerged PR212 head547137ea. Six types under probe, no theorem proof yet. Native conversion window actually created/fill recorded before stabilization. Preserve all eight required source forward containers until distinct source classification review. First ready leaf is properness from nonempty finite feasible domain/global no-bottom. Later gates: neutral reconstruction, independent anti-anchored review, frozen fingerprints, actual proofs and nondegenerate public canaries, axioms/root/Tests/full harness, shared registry/reader publication/site/review/PR. Whole-book Goal remains active.

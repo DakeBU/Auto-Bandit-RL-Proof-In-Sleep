@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlinePrescientBregmanSourceCanary.fixed_source_run",
+  "file": "Tests/OnlinePrescientBregmanSourceCanary.lean",
+  "statement": "theorem fixed_source_run : let V : Set ℝ := Icc (-1) 1 let ψ : ℝ → ℝ := fun z => z ^ 4 / 4 + z ^ 2 / 2 let f0 : ℝ → EReal := fun z => if z ∈ V then ((|z| : ℝ) : EReal) else ⊤ let f1 : ℝ → EReal := fun z => if z ∈ V then ((-5 * z / 8 : ℝ) : EReal) else ⊤ let loss : ℕ → ℝ → EReal := fun t => if t = 0 then f0 else f1 let x : ℕ → ℝ := fun t => if t = 1 then 0 else 1 / 2 SourceProper f0 ∧ StrictConvexOn ℝ V (fun z => (f0 z).toReal + divergence ψ z (1 / 2)) ∧ advance V ψ 1 f0 (1 / 2) = some 0 ∧ (∀ t ≤ 2, iterate V ψ (fun _ => 1) loss (1 / 2) t = some (x t)) ∧ divergence ψ (x 1) (x 0) = 11 / 64 ∧ divergence ψ (x 2) (x 1) = 9 / 64 ∧ (∀ u ∈ V, (∑ t ∈ range 2, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤ divergence ψ u (1 / 2) / 1 - (∑ t ∈ range 2, divergence ψ (x (t + 1)) (x t)) / 1) ∧ (-9 / 8 : ℝ) ≤ 5 / 16",
+  "statement_hash": "e1e694dd0a35effea620e72cf389b513979391dba1caceb4c74b11248a032003",
+  "source_assumptions": [],
+  "created_at": "2026-10-09T16:38:34+00:00"
+}

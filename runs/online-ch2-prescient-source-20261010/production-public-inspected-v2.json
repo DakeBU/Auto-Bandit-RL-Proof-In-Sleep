@@ -1,0 +1,101 @@
+{
+  "actual_exit": 0,
+  "declarations": [
+    "BanditRL.OnlineConvex.sourceProper_of_domain",
+    "BanditRL.OnlinePrescientBregman.penalized_strictConvex",
+    "BanditRL.OnlinePrescientBregman.advance_eq_some_of_minimizer",
+    "BanditRL.OnlinePrescientBregman.iterate_eq_of_source_updates",
+    "BanditRL.OnlinePrescientBregman.source_fixed_regret",
+    "BanditRL.OnlinePrescientBregman.source_variable_regret"
+  ],
+  "axioms": [
+    {
+      "name": "BanditRL.OnlineConvex.sourceProper_of_domain",
+      "actual_axioms": [
+        "propext",
+        "Classical.choice.{u}",
+        "Quot.sound.{u}"
+      ],
+      "normalized_axiom_names": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "BanditRL.OnlinePrescientBregman.penalized_strictConvex",
+      "actual_axioms": [
+        "propext",
+        "Classical.choice.{u}",
+        "Quot.sound.{u}"
+      ],
+      "normalized_axiom_names": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "BanditRL.OnlinePrescientBregman.advance_eq_some_of_minimizer",
+      "actual_axioms": [
+        "propext",
+        "Classical.choice.{u}",
+        "Quot.sound.{u}"
+      ],
+      "normalized_axiom_names": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "BanditRL.OnlinePrescientBregman.iterate_eq_of_source_updates",
+      "actual_axioms": [
+        "propext",
+        "Classical.choice.{u}",
+        "Quot.sound.{u}"
+      ],
+      "normalized_axiom_names": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "BanditRL.OnlinePrescientBregman.source_fixed_regret",
+      "actual_axioms": [
+        "propext",
+        "Classical.choice.{u}",
+        "Quot.sound.{u}"
+      ],
+      "normalized_axiom_names": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "BanditRL.OnlinePrescientBregman.source_variable_regret",
+      "actual_axioms": [
+        "propext",
+        "Classical.choice.{u}",
+        "Quot.sound.{u}"
+      ],
+      "normalized_axiom_names": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    }
+  ],
+  "actual_stdout": "@BanditRL.OnlineConvex.sourceProper_of_domain.{u_1} : ∀ {E : Type u_1} (f : E → EReal) (V : Set.{u_1} E),\n  Set.Nonempty.{u_1} V →\n    (∀ (z : E), Ne.{1} (f z) Bot.bot.{0}) →\n      Subset.{u_1} V (BanditRL.OnlineConvex.effectiveDomain.{u_1} f) → BanditRL.OnlineConvex.SourceProper.{u_1} f\n'BanditRL.OnlineConvex.sourceProper_of_domain' depends on axioms: [propext, Classical.choice.{u}, Quot.sound.{u}]\n@BanditRL.OnlinePrescientBregman.penalized_strictConvex.{u_1} : ∀ {E : Type u_1} [inst : NormedAddCommGroup.{u_1} E]\n  [inst_1 : InnerProductSpace.{0, u_1} Real E] (V X : Set.{u_1} E),\n  Convex.{0, u_1} Real V →\n    Subset.{u_1} V X →\n      ∀ (ψ : E → Real),\n        StrictConvexOn.{0, u_1, 0} Real X ψ →\n          ∀ (f : E → EReal),\n            BanditRL.OnlineConvex.SourceProper.{u_1} f →\n              (∀ (z : E),\n                  Membership.mem.{u_1, u_1} V z →\n                    Set.Nonempty.{u_1} (BanditRL.OnlineConvex.SourceSubdifferential.{u_1} f z)) →\n                ∀ (η : Real),\n                  LT.lt.{0} 0 η →\n                    ∀ (x : E),\n                      StrictConvexOn.{0, u_1, 0} Real V fun z =>\n                        HAdd.hAdd.{0, 0, 0} (EReal.toReal (f z))\n                          (HMul.hMul.{0, 0, 0} (Inv.inv.{0} η) (BanditRL.OnlineBregman.divergence.{u_1} ψ z x))\n'BanditRL.OnlinePrescientBregman.penalized_strictConvex' depends on axioms: [propext,\n Classical.choice.{u},\n Quot.sound.{u}]\n@BanditRL.OnlinePrescientBregman.advance_eq_some_of_minimizer.{u_1} : ∀ {E : Type u_1}\n  [inst : NormedAddCommGroup.{u_1} E] [inst_1 : InnerProductSpace.{0, u_1} Real E] [CompleteSpace.{u_1} E]\n  (V X : Set.{u_1} E),\n  Convex.{0, u_1} Real V →\n    Subset.{u_1} V X →\n      ∀ (ψ : E → Real),\n        StrictConvexOn.{0, u_1, 0} Real X ψ →\n          ∀ (f : E → EReal),\n            BanditRL.OnlineConvex.SourceProper.{u_1} f →\n              (∀ (z : E),\n                  Membership.mem.{u_1, u_1} V z →\n                    Set.Nonempty.{u_1} (BanditRL.OnlineConvex.SourceSubdifferential.{u_1} f z)) →\n                ∀ (η : Real),\n                  LT.lt.{0} 0 η →\n                    ∀ (x p : E),\n                      Membership.mem.{u_1, u_1} V p →\n                        IsMinOn.{u_1, 0}\n                            (fun z =>\n                              HAdd.hAdd.{0, 0, 0} (f z)\n                                ↑(HMul.hMul.{0, 0, 0} (Inv.inv.{0} η) (BanditRL.OnlineBregman.divergence.{u_1} ψ z x)))\n                            V p →\n                          Eq.{u_1 + 1} (BanditRL.OnlinePrescientBregman.advance.{u_1} V ψ η f x) (some.{u_1} p)\n'BanditRL.OnlinePrescientBregman.advance_eq_some_of_minimizer' depends on axioms: [propext,\n Classical.choice.{u},\n Quot.sound.{u}]\n@BanditRL.OnlinePrescientBregman.iterate_eq_of_source_updates.{u_1} : ∀ {E : Type u_1}\n  [inst : NormedAddCommGroup.{u_1} E] [inst_1 : InnerProductSpace.{0, u_1} Real E] [CompleteSpace.{u_1} E]\n  (V X : Set.{u_1} E),\n  Convex.{0, u_1} Real V →\n    Subset.{u_1} V X →\n      ∀ (ψ : E → Real),\n        StrictConvexOn.{0, u_1, 0} Real X ψ →\n          ∀ (η : Nat → Real) (loss : Nat → E → EReal) (x0 : E) (x : Nat → E) (T : Nat),\n            Eq.{u_1 + 1} (x 0) x0 →\n              (∀ (t : Nat), LT.lt.{0} t T → LT.lt.{0} 0 (η t)) →\n                (∀ (t : Nat), LT.lt.{0} t T → BanditRL.OnlineConvex.SourceProper.{u_1} (loss t)) →\n                  (∀ (t : Nat),\n                      LT.lt.{0} t T →\n                        ∀ (z : E),\n                          Membership.mem.{u_1, u_1} V z →\n                            Set.Nonempty.{u_1} (BanditRL.OnlineConvex.SourceSubdifferential.{u_1} (loss t) z)) →\n                    (∀ (t : Nat),\n                        LT.lt.{0} t T →\n                          And (Membership.mem.{u_1, u_1} V (x (HAdd.hAdd.{0, 0, 0} t 1)))\n                            (IsMinOn.{u_1, 0}\n                              (fun z =>\n                                HAdd.hAdd.{0, 0, 0} (loss t z)\n                                  ↑(HMul.hMul.{0, 0, 0} (Inv.inv.{0} (η t))\n                                      (BanditRL.OnlineBregman.divergence.{u_1} ψ z (x t))))\n                              V (x (HAdd.hAdd.{0, 0, 0} t 1)))) →\n                      ∀ (t : Nat),\n                        LE.le.{0} t T →\n                          Eq.{u_1 + 1} (BanditRL.OnlinePrescientBregman.iterate.{u_1} V ψ η loss x0 t)\n                            (some.{u_1} (x t))\n'BanditRL.OnlinePrescientBregman.iterate_eq_of_source_updates' depends on axioms: [propext,\n Classical.choice.{u},\n Quot.sound.{u}]\n@BanditRL.OnlinePrescientBregman.source_fixed_regret.{u_1} : ∀ {E : Type u_1} [inst : NormedAddCommGroup.{u_1} E]\n  [inst_1 : InnerProductSpace.{0, u_1} Real E] [FiniteDimensional.{0, u_1} Real E] (V X : Set.{u_1} E),\n  Convex.{0, u_1} Real V →\n    Set.Nonempty.{u_1} V →\n      IsClosed.{u_1} V →\n        Subset.{u_1} V X →\n          ∀ (ψ : E → Real),\n            StrictConvexOn.{0, u_1, 0} Real X ψ →\n              (BanditRL.OnlineConvex.SourceClosed.{u_1} fun z =>\n                  HAdd.hAdd.{0, 0, 0} (↑(ψ z)) (BanditRL.OnlineConvex.extendedIndicator.{u_1} X z)) →\n                DifferentiableOn.{0, u_1, 0} Real ψ (interior.{u_1} X) →\n                  ∀ (η : Real),\n                    LT.lt.{0} 0 η →\n                      ∀ (loss : Nat → E → EReal) (x0 : E) (x : Nat → E) (T : Nat),\n                        Eq.{u_1 + 1} (x 0) x0 →\n                          (∀ (t : Nat), LE.le.{0} t T → Membership.mem.{u_1, u_1} (interior.{u_1} X) (x t)) →\n                            (∀ (t : Nat), LT.lt.{0} t T → ∀ (z : E), Ne.{1} (loss t z) Bot.bot.{0}) →\n                              (∀ (t : Nat),\n                                  LT.lt.{0} t T →\n                                    Subset.{u_1} V (BanditRL.OnlineConvex.effectiveDomain.{u_1} (loss t))) →\n                                (∀ (t : Nat),\n                                    LT.lt.{0} t T →\n                                      ∀ (z : E),\n                                        Membership.mem.{u_1, u_1} V z →\n                                          Set.Nonempty.{u_1}\n                                            (BanditRL.OnlineConvex.SourceSubdifferential.{u_1} (loss t) z)) →\n                                  (∀ (t : Nat),\n                                      LT.lt.{0} t T →\n                                        And (Membership.mem.{u_1, u_1} V (x (HAdd.hAdd.{0, 0, 0} t 1)))\n                                          (IsMinOn.{u_1, 0}\n                                            (fun z =>\n                                              HAdd.hAdd.{0, 0, 0} (loss t z)\n                                                ↑(HMul.hMul.{0, 0, 0} (Inv.inv.{0} η)\n                                                    (BanditRL.OnlineBregman.divergence.{u_1} ψ z (x t))))\n                                            V (x (HAdd.hAdd.{0, 0, 0} t 1)))) →\n                                    ∀ (u : E),\n                                      Membership.mem.{u_1, u_1} V u →\n                                        LE.le.{0}\n                                          (∑ t ∈ Finset.range T,\n                                            HSub.hSub.{0, 0, 0} (EReal.toReal (loss t (x (HAdd.hAdd.{0, 0, 0} t 1))))\n                                              (EReal.toReal (loss t u)))\n                                          (HSub.hSub.{0, 0, 0}\n                                            (HDiv.hDiv.{0, 0, 0} (BanditRL.OnlineBregman.divergence.{u_1} ψ u x0) η)\n                                            (HDiv.hDiv.{0, 0, 0}\n                                              (∑ t ∈ Finset.range T,\n                                                BanditRL.OnlineBregman.divergence.{u_1} ψ (x (HAdd.hAdd.{0, 0, 0} t 1))\n                                                  (x t))\n                                              η))\n'BanditRL.OnlinePrescientBregman.source_fixed_regret' depends on axioms: [propext, Classical.choice.{u}, Quot.sound.{u}]\n@BanditRL.OnlinePrescientBregman.source_variable_regret.{u_1} : ∀ {E : Type u_1} [inst : NormedAddCommGroup.{u_1} E]\n  [inst_1 : InnerProductSpace.{0, u_1} Real E] [FiniteDimensional.{0, u_1} Real E] (V X : Set.{u_1} E),\n  Convex.{0, u_1} Real V →\n    Set.Nonempty.{u_1} V →\n      IsClosed.{u_1} V →\n        Subset.{u_1} V X →\n          ∀ (ψ : E → Real),\n            StrictConvexOn.{0, u_1, 0} Real X ψ →\n              (BanditRL.OnlineConvex.SourceClosed.{u_1} fun z =>\n                  HAdd.hAdd.{0, 0, 0} (↑(ψ z)) (BanditRL.OnlineConvex.extendedIndicator.{u_1} X z)) →\n                DifferentiableOn.{0, u_1, 0} Real ψ (interior.{u_1} X) →\n                  ∀ (η : Nat → Real) (loss : Nat → E → EReal) (x0 : E) (x : Nat → E) (T : Nat) (hT : LT.lt.{0} 0 T),\n                    (∀ (t : Nat), LT.lt.{0} t T → LT.lt.{0} 0 (η t)) →\n                      Eq.{u_1 + 1} (x 0) x0 →\n                        (∀ (t : Nat), LE.le.{0} t T → Membership.mem.{u_1, u_1} (interior.{u_1} X) (x t)) →\n                          (∀ (t : Nat),\n                              LT.lt.{0} (HAdd.hAdd.{0, 0, 0} t 1) T → LE.le.{0} (η (HAdd.hAdd.{0, 0, 0} t 1)) (η t)) →\n                            (∀ (t : Nat), LT.lt.{0} t T → ∀ (z : E), Ne.{1} (loss t z) Bot.bot.{0}) →\n                              (∀ (t : Nat),\n                                  LT.lt.{0} t T →\n                                    Subset.{u_1} V (BanditRL.OnlineConvex.effectiveDomain.{u_1} (loss t))) →\n                                (∀ (t : Nat),\n                                    LT.lt.{0} t T →\n                                      ∀ (z : E),\n                                        Membership.mem.{u_1, u_1} V z →\n                                          Set.Nonempty.{u_1}\n                                            (BanditRL.OnlineConvex.SourceSubdifferential.{u_1} (loss t) z)) →\n                                  (∀ (t : Nat),\n                                      LT.lt.{0} t T →\n                                        And (Membership.mem.{u_1, u_1} V (x (HAdd.hAdd.{0, 0, 0} t 1)))\n                                          (IsMinOn.{u_1, 0}\n                                            (fun z =>\n                                              HAdd.hAdd.{0, 0, 0} (loss t z)\n                                                ↑(HMul.hMul.{0, 0, 0} (Inv.inv.{0} (η t))\n                                                    (BanditRL.OnlineBregman.divergence.{u_1} ψ z (x t))))\n                                            V (x (HAdd.hAdd.{0, 0, 0} t 1)))) →\n                                    ∀ (u : E),\n                                      Membership.mem.{u_1, u_1} V u →\n                                        LE.le.{0}\n                                          (∑ t ∈ Finset.range T,\n                                            HSub.hSub.{0, 0, 0} (EReal.toReal (loss t (x (HAdd.hAdd.{0, 0, 0} t 1))))\n                                              (EReal.toReal (loss t u)))\n                                          (HSub.hSub.{0, 0, 0}\n                                            (HDiv.hDiv.{0, 0, 0}\n                                              (Finset.sup'.{0, 0} (Finset.range T) ⋯ fun t =>\n                                                BanditRL.OnlineBregman.divergence.{u_1} ψ u (x t))\n                                              (η (HSub.hSub.{0, 0, 0} T 1)))\n                                            (∑ t ∈ Finset.range T,\n                                              HDiv.hDiv.{0, 0, 0}\n                                                (BanditRL.OnlineBregman.divergence.{u_1} ψ (x (HAdd.hAdd.{0, 0, 0} t 1))\n                                                  (x t))\n                                                (η t)))\n'BanditRL.OnlinePrescientBregman.source_variable_regret' depends on axioms: [propext,\n Classical.choice.{u},\n Quot.sound.{u}]\n",
+  "actual_source": [
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlinePrescientBregmanSource.lean",
+      "sha256": "57832c9dfb4e915f9a0578ffb122792b0aac2b3404da4f6c00f2aa9fcd36bc02"
+    }
+  ],
+  "compiled_focused_terminals": 6,
+  "prior_inspector_failure": "Inline v1 inspector rejected standard axiom names with printed universe suffixes because pp.universes=true. Compiler probe itself actual0 unchanged. v2 normalizes only .{universe} suffixes and retains raw names.",
+  "scope": "Six public declarations/standard-only kernel axioms, not package acceptance."
+}

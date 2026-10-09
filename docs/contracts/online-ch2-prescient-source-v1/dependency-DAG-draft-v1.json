@@ -1,0 +1,59 @@
+{
+  "nodes": [
+    {
+      "name": "sourceProper_of_domain",
+      "dependencies": [],
+      "route": "nonempty feasible witness, EReal.coe_toReal, no-bottom globally",
+      "status": "draft-open"
+    },
+    {
+      "name": "penalized_strictConvex",
+      "dependencies": [
+        "finitePart_convex_of_subdifferentiable"
+      ],
+      "route": "positive inverse, strict convexity on V, affine derivative cancellation",
+      "status": "draft-open"
+    },
+    {
+      "name": "advance_eq_some_of_minimizer",
+      "dependencies": [
+        "penalized_strictConvex",
+        "proximal_finitePart_minimizer_iff",
+        "StrictConvexOn.eq_of_isMinOn"
+      ],
+      "route": "finite feasible values; actual selected minimum equals supplied unique minimum",
+      "status": "draft-open"
+    },
+    {
+      "name": "iterate_eq_of_source_updates",
+      "dependencies": [
+        "advance_eq_some_of_minimizer",
+        "iterate"
+      ],
+      "route": "induction through T; no hseq input, current loss only",
+      "status": "draft-open"
+    },
+    {
+      "name": "source_fixed_regret",
+      "dependencies": [
+        "sourceProper_of_domain",
+        "iterate_eq_of_source_updates",
+        "iterate_fixed_regret"
+      ],
+      "route": "source finite-domain/no-bottom to properness, actual recursive identity, printed fixed conclusion",
+      "status": "draft-open"
+    },
+    {
+      "name": "source_variable_regret",
+      "dependencies": [
+        "sourceProper_of_domain",
+        "iterate_eq_of_source_updates",
+        "iterate_variable_regret"
+      ],
+      "route": "same actual identity; played-pair monotonicity; exact previous-state finite maximum",
+      "status": "draft-open"
+    }
+  ],
+  "lower_routes": 1,
+  "count_boundary": "Six Lean terminals, not six source results or chapter coverage denominator."
+}

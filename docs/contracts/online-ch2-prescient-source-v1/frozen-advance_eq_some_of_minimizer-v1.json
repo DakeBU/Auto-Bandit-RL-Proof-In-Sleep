@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlinePrescientBregman.advance_eq_some_of_minimizer",
+  "file": "BanditRLProof/OnlinePrescientBregmanSource.lean",
+  "statement": "theorem advance_eq_some_of_minimizer (V X : Set E) (hV : Convex ℝ V) (hVX : V ⊆ X) (ψ : E → ℝ) (hψ : StrictConvexOn ℝ X ψ) (f : E → EReal) (hf : BanditRL.OnlineConvex.SourceProper f) (hs : ∀ z ∈ V, (BanditRL.OnlineConvex.SourceSubdifferential f z).Nonempty) (η : ℝ) (hη : 0 < η) (x p : E) (hp : p ∈ V) (hmin : IsMinOn (fun z => f z + ((η⁻¹ * divergence ψ z x : ℝ) : EReal)) V p) : advance V ψ η f x = some p",
+  "statement_hash": "a7bcb5744198a227804b7ee7719604ba88c51faab05c57da0205758f6198a779",
+  "source_assumptions": [],
+  "created_at": "2026-10-09T16:24:06+00:00",
+  "header_origin": "Reviewed exact draft header; lifecycle make_statement_fence API before body. Actual CLI source extraction checked after each real declaration exists.",
+  "scoped_context": "namespace BanditRL.OnlinePrescientBregman\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]\n",
+  "raw_header_sha256": "ac311172eeb55452618fc6de14e3b9d11537a62370fb76f1318746b0f8489103"
+}

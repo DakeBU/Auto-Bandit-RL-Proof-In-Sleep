@@ -1,0 +1,5 @@
+# Director
+
+One integration-node package, required Chapter2 prescient forward chain; Chapters1-16 Goal active. Preserve all parent contracts and all eight chapter forward containers open. Source theorem guarantee is conditional on an actual valid interior argmin run; audit historical universal attainment wording independently before classification. Six fixed terminal candidates have finite scope and actual consumers. Root directs/formalizes/proves in separated phases; distinct reused decoder/reviewer are mandatory under AGENTS, not parallel proof arms.
+
+Reader delta later: source-vs-Lean hypotheses, prescient feedback timing, properness and uniqueness argument, both exact printed bounds, nonattainment boundary. Lean graph: new integration nodes only after compiler proof edges. Overview: bounded dependency advance, chapter still partial. Functor: none-found-with-reason; transports representation of the same algorithm, not a new cross-setting mechanism. No publication/registry edits until focused evidence and approved plan. No merge/deploy authorization.
