@@ -22,6 +22,7 @@ This repository has two connected contributions:
 
 ## 📰 News
 
+- **2026-10-09 — Quantum Bandit frontier auto-formalisation started.** Two linked research projects investigate finite coherent-block regret and circuit-certified cost-aware BAI with QuantumComputinglib. [Research scope and open leaves](research-wiki/open-problems/quantum-bandit-frontier.md) · [Reproducible checkpoint and collaborator goal](https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/64eb285ebecbdc4bf236318776aabc6160fb1851/research/quantum-bandit/COLLABORATOR-HANDOFF.md). Shared analytic/process leaves and cross-library canaries compile on research branches; the estimators, complete algorithms and regret/BAI complexity roots remain open. No novelty, optimality or quantum-advantage result is claimed.
 - **2026-09 — Harness self-comparison.** Structured logs can compare hierarchical and master–worker runs and prepare a bounded GPT diagnosis; zero valid matched pairs means no winner is claimed.
 - **2026-09 — Textbook spine.** Ten teaching chapters and Part-IV Chapters 13–17 now link source pages, algorithms, theorem statements, Lean evidence, and named gaps.
 - **2026-09 — SGB frontier.** The finite missing-pull regret consumer compiles, while the source phase trigger and Theorem 2 terminal remain open.

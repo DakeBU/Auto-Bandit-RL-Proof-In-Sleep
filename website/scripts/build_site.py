@@ -3601,6 +3601,19 @@ def validate_banditrlwiki(
     result_ids = {result["id"] for result in results}
     leaf_ids_seen: set[str] = set()
     paper_titles_by_url: dict[str, str] = {}
+    research_ids: set[str] = set()
+    for project in wiki.get("active_research_projects", []):
+        required = ("id", "title", "started", "status", "model", "scope", "evidence",
+                    "boundary", "open_leaves", "bandit_commit", "quantum_commit",
+                    "checkpoint_url", "handoff_url", "quantum_url")
+        if any(not project.get(key) for key in required):
+            raise ValueError("BanditRLwiki research launch lacks scope/evidence/boundary")
+        if project["id"] in research_ids or project["status"] != "research-started":
+            raise ValueError("BanditRLwiki research launch needs unique id and started status")
+        research_ids.add(project["id"])
+        for key in ("bandit_commit", "quantum_commit"):
+            if not re.fullmatch(r"[0-9a-f]{40}", project[key]):
+                raise ValueError("BanditRLwiki research evidence needs an immutable commit")
     for family in families:
         if not family.get("title") or not family.get("comparison_signature"):
             raise ValueError(f"BanditRLwiki family {family.get('id')} lacks title/signature")
@@ -3808,6 +3821,7 @@ def build_banditrlwiki(
     families = wiki["families"]
     cases = wiki["cases"]
     active_source_audits = wiki.get("active_source_audits", [])
+    active_research_projects = wiki.get("active_research_projects", [])
     family_by_id = {family["id"]: family for family in families}
     cases_by_family: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for case in cases:
@@ -3850,6 +3864,24 @@ def build_banditrlwiki(
 </article>"""
             )
         return "".join(cards)
+
+    def render_research_projects() -> str:
+        cards = []
+        for project in active_research_projects:
+            cards.append(f"""
+<article class="info-card" data-wiki-research-project id="research-{html.escape(project['id'])}">
+  <p class="panel-kicker">Research started · {html.escape(project['started'])} · outside main</p>
+  <h3>{html.escape(project['title'])}</h3>
+  <p>{html.escape(project['scope'])}</p>
+  <p><strong>Access/cost contract.</strong> {html.escape(project['model'])}</p>
+  <p><strong>Research-branch evidence.</strong> {html.escape(project['evidence'])}</p>
+  <div class="callout warning"><strong>Unproved boundary.</strong> {html.escape(project['boundary'])}</div>
+  <details><summary>Next named research leaves</summary>{render_list(project['open_leaves'])}</details>
+  <p><a href="{html.escape(project['checkpoint_url'], quote=True)}">Frozen checkpoint and proof boundary ↗</a> · <a href="{html.escape(project['handoff_url'], quote=True)}">中文说明与接续 goal ↗</a> · <a href="{html.escape(project['quantum_url'], quote=True)}">Matching quantum branch ↗</a></p>
+</article>""")
+        if not cards:
+            return ""
+        return '<section id="active-research-projects"><h2>Active research projects</h2><p>Owner-proposed research and auto-formalisation in progress. These are not admitted bound comparisons, resolved frontiers or globally established literature-open problems.</p><div class="card-grid">' + "".join(cards) + '</div></section>'
 
     page_path = "banditrlwiki/index.html"
     family_cards = "".join(
@@ -3926,6 +3958,7 @@ def build_banditrlwiki(
   <p>These audits expose real compiled progress, but they are not counted among the 13 upper/lower comparison cases until a theorem-level rate contract and a compatible comparison partner are frozen.</p>
   <div class="wiki-source-port-grid">{source_port_cards}</div>
 </section>
+{render_research_projects()}
 <section id="cases" data-wiki>
   <p class="eyebrow">Upper · lower · Lean</p><h2>All comparison cases</h2>
   <div class="wiki-filter-bar">
@@ -3939,6 +3972,8 @@ def build_banditrlwiki(
   <div class="wiki-case-list">{case_cards}</div>
 </section>"""
     toc = [("overview", "Bound & Source Atlas"), ("reading-contract", "Status contract"), ("settings", "Coarse families"), ("topics", "Legacy topic anchor"), ("separation", "Other research views"), ("source-ports", "Source ports"), ("cases", "Cases")]
+    if active_research_projects:
+        toc.insert(-1, ("active-research-projects", "Research projects"))
     write_page(
         output,
         page_path,
@@ -4031,7 +4066,11 @@ def build_banditrlwiki(
 <section id="source-audit-queue"><h2>Source-audit queue</h2><p>These cases have a strong closest result, but a compatible primary upper/lower theorem pair has not yet been frozen. They are not labeled literature-open.</p>{frontier_cards(source_audit_queue, 'literature')}</section>
 <section id="formalization-frontier"><h2>Formalization frontier</h2><p>The mathematics may already be known, but the exact paper theorem or its required semantic bridge is not compiled in BanditRLlib.</p>{frontier_cards(formalization_frontier, 'formalization')}</section>
 <section id="active-source-ports"><h2>Active source ports outside the comparison atlas</h2><p>These two NeurIPS 2025 ports record current compiled progress and exact nonclaims. One now contains a narrowly scoped compiled paper endpoint, while both remain partial audits and remain outside the minimax ledger until their remaining contracts and compatible comparison partners are frozen.</p><div class="wiki-source-port-grid">{render_active_source_audits(frontier_page)}</div></section>
+{render_research_projects()}
 <section id="rules"><h2>How a leaf closes</h2><ol class="contribution-steps"><li><strong>Freeze the contract.</strong><span>Fix assumptions, regret notion, quantifiers, constants, and source location.</span></li><li><strong>Audit primary evidence.</strong><span>Record the closest compatible upper and lower theorem; name every mismatch.</span></li><li><strong>Compile the exact bridge.</strong><span>Close one named proof obligation without adding an unadvertised assumption.</span></li><li><strong>Pass independent gates.</strong><span>Lean, tests, website links, source review, and deployment evidence must agree before status promotion.</span></li></ol></section>"""
+    frontier_toc = [("frontier", "Overview"), ("literature-frontier", "Literature"), ("source-audit-queue", "Audit queue"), ("formalization-frontier", "Formalization"), ("active-source-ports", "Source ports"), ("rules", "Closure rule")]
+    if active_research_projects:
+        frontier_toc.insert(-1, ("active-research-projects", "Research projects"))
     write_page(
         output,
         frontier_page,
@@ -4039,7 +4078,7 @@ def build_banditrlwiki(
             frontier_page,
             "BanditRLwiki Frontier",
             frontier_body,
-            [("frontier", "Overview"), ("literature-frontier", "Literature"), ("source-audit-queue", "Audit queue"), ("formalization-frontier", "Formalization"), ("active-source-ports", "Source ports"), ("rules", "Closure rule")],
+            frontier_toc,
             "banditrlwiki-frontier",
             verified,
             generated_at,

@@ -1171,6 +1171,19 @@ def main() -> int:
             errors.append(f"BanditRLwiki case {case.get('id')} contains a Unicode replacement character")
     wiki_index_path = output / "banditrlwiki" / "index.html"
     wiki_frontier_path = output / "banditrlwiki" / "frontier" / "index.html"
+    research_projects = wiki.get("active_research_projects", [])
+    for research_page in (wiki_index_path, wiki_frontier_path):
+        if not research_page.exists():
+            continue  # Existing page-presence gate reports missing pages.
+        research_source = research_page.read_text(encoding="utf-8")
+        if research_source.count("data-wiki-research-project") != len(research_projects):
+            errors.append(f"{research_page}: research launch count differs from canonical data")
+        for project in research_projects:
+            if project.get("status") != "research-started" or not project.get("boundary"):
+                errors.append("research launch must expose started status and unproved boundary")
+            for key in ("checkpoint_url", "handoff_url", "quantum_url"):
+                if html.escape(project.get(key, ""), quote=True) not in research_source:
+                    errors.append(f"{research_page}: missing frozen research {key}")
     wiki_papers_path = output / "banditrlwiki" / "papers" / "index.html"
     wiki_index_collector = pages.get(wiki_index_path.resolve())
     if wiki_index_collector:
