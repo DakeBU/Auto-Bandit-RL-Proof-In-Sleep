@@ -1,0 +1,38 @@
+2
+Online Subgradient Descent
+In this chapter, we will introduce the Online Subgradient Descent (OSD) algorithm: a generic
+online algorithm to solve online problems with convex losses. First, we will introduce On-
+line Gradient Descent (OGD) for convex differentiable functions, then we will extend it to
+non-differentiable functions.
+2.1 Online Learning with Convex Differentiable Losses
+To summarize what we said in the first chapter, let’s define online learning as the following
+general game:
+•Fort= 1, . . . , T
+–Outputx t ∈ V ⊆R d
+–Pay the lossℓ t(xt), whereℓ t :V →R
+–Receive some feedback onℓ t
+•End for
+The aim of this game is to minimize the regret with respect to any competitoru∈ V:
+RegretT (u) :=
+TX
+t=1
+ℓt(xt)−
+TX
+t=1
+ℓt(u).
+We also said that the way the lossesℓ t are decided is adversarial. Now, without making any
+additional assumptions, we cannot hope to solve this problem. Hence, we must understand
+what reasonable assumptions we can make. Typically, we will try to restrict the choice of
+the loss functions in some way. This is considered reasonable because most of the time,
+we have some say in deciding the set from which the loss functions are picked. So, for
+example, we will consider onlyconvexloss functions. However, convexity might not be
+enough, so we might restrict the class a bit more to, for example, convex functions with
+bounded gradients. On the other hand, assuming knowledge of something about the future
+is not considered a reasonable assumption, because we very rarely have any control over the
+future. In general, the stronger the assumptions, the better the guarantee on the regret will
+be. The best algorithms we will see will guarantee a sublinear regret against the weakest
+assumption we can make, guaranteeingat the same timea smaller regret foreasyadversaries.
+It is also important to remember why minimizing regret is a good objective: given that we
+do not assume anything about how the adversary generates the loss functions, minimizing
+regret is a good metric that takes into account the difficulty of the problem. If an online
+8

@@ -1,0 +1,45 @@
+20Online Subgradient Descent
+Algorithm 2.2Projected Online Subgradient Descent (OSD)
+Require:Non-empty closed convex setV ⊆R d,x 1 ∈ V,η 1, . . . , ηT >0
+1:fort= 1toTdo
+2:Outputx t ∈ V
+3:Pay the lossℓ t(xt), whereℓ t is subdifferentiable onV
+4:Setg t ∈∂ℓ t(xt)
+5:x t+1 = ΠV(xt −η tgt) = argminy∈V ∥xt −η tgt −y∥ 2
+6:end for
+So, we can state theOnline Subgradient Descent (OSD)algorithm in Algorithm 2.2,
+where the only difference from Algorithm 2.1 is line 4.
+Example 2.32Consider the guessing game of the first chapter again, but now change the
+loss function to the absolute loss of the difference:ℓ t(x) =|x−y t|. Now we will need to
+use OSD, because the functions are non-differentiable. We can easily see that
+∂ℓt(x) =
+
+
+
+{1}, x > y t
+[−1,1], x=y t
+{−1}, x < y t .
+Again, running OSD with the optimal learning rate on this problem will give us immediately
+a regret ofO(
+√
+T)asT→ ∞, without having to design a specific strategy for it.
+2.2.3 Unit Analysis Bits
+One might wonder why I did not “simplify the math” by removing some of the constants in
+the bounds, for example, by setting the Lipschitz constantLto1. While this is very common
+in machine learning papers, this is a bad idea because it makes it (i) difficult to check the
+correctness of an equation, and (ii) difficult to correctly implement the algorithm. To explain
+why this is the case, we will have to consider the concepts of “units”.
+When we look at a mathematical formula coming from a physical model, we are used
+to the idea that each quantity has a “unit” of measurement, e.g., meters, seconds, Joules.
+A fundamental principle is that any physically meaningful equation must be dimensionally
+consistent. That is, the units on the left-hand side of an equation must be the same as the
+units on the right-hand side. For example, you cannot sum a quantity measured in meters
+with one measured in seconds.
+It turns out that this simple idea is not limited to physical models and it can be used as
+a sanity check foranymathematical formula, including the ones we see in online learning.
+Let’s assign a symbolic unit to each quantity we are dealing with. For example, let’s denote
+the units of our predictionsxby[x]and the units of the lossℓby[ℓ]. We can now check
+each formula by following a few simple rules. First, we have to make sure that each term
+has the same units. Another rule to keep in mind is that transcendental functions are only
+defined on unitless quantities. So, for example, we can take logarithms and exponentials of
+ratios of quantities with the same units, to obtain a unitless quantity, but not of quantities

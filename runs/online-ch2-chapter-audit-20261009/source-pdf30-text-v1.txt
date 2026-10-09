@@ -1,0 +1,50 @@
+18Online Subgradient Descent
+Hence,Pm
+i=1 gi ∈∂F(z). Since this holds for every choice ofg i ∈∂f i(z), we have
+∂F(z)⊇∂f 1(z) +· · ·+∂f m(z).
+For the second statement, see Bauschke and Combettes (2017, Corollary 16.50).
+Example 2.24Letf(x) =|x|. Then, the subdifferential set∂f(x)is
+∂f(x) =
+
+
+
+{1}, x >0,
+[−1,1], x= 0,
+{−1}, x <0.
+Example 2.25Let’s calculate the subgradient of the indicator function for a non-empty
+convex setV ⊂R d. By definition,g∈∂ι V(x)if
+ιV(y)≥ι V(x) +⟨g,y−x⟩,∀y∈R d .
+This condition implies thatx∈ Vand0≥ ⟨g,y−x⟩for ally∈ V(because fory/∈ V
+the inequality is always verified). The set of allgthat satisfy the above inequality is called
+thenormal cone toVatxand it is denoted byN V(x). Note that the normal cone for any
+x∈intVis{0}(Hint: takey=x+ϵg). For example, forV={x∈R d :∥x∥ 2 ≤1},
+NV(x) ={αx:α≥0}for allx:∥x∥ 2 = 1.
+Another useful theorem is to calculate the subdifferential of the pointwise maximum of
+convex functions.
+Theorem 2.26(Bauschke and Combettes, 2017, Theorem 18.5)Let(f i)i∈I be a finite set
+of proper convex functions fromR d to(−∞,+∞]. Supposex∈ T
+i∈I domf i and eachf i
+is continuous atx. SetF= max i∈I fi and letA(x) ={i∈I|f i(x) =F(x)}be the set
+of the active functions. Then, denoting byconvtheconvex hull, we have
+∂F(x) = conv
+[
+i∈A(x)
+∂fi(x).
+Example 2.27(Subgradients of the Hinge loss)Consider the hinge lossℓ(x) = max(1−
+⟨z,x⟩,0)forz∈R d. The subdifferential set is
+∂ℓ(x) =
+
+
+
+{0},1− ⟨z,x⟩<0
+{−αz:α∈[0,1]},1− ⟨z,x⟩= 0
+{−z},otherwise
+.
+Finally, we can show a result on the subgradient of affine transformations.
+Theorem 2.28Letf:R m →(−∞,+∞]be proper. Defineh(x) =f(Ax+b), where
+A∈R m×d andb∈R m. Then, we haveA ⊤∂f(Ax+b)⊆∂h(x).
+ProofFor anyg∈∂f(Ax+b), we want to show thatA ⊤gis a subgradient ofhinx.
+From the definition of subgradient, for ally∈R d we have
+h(y) =f(Ay+b)≥f(Ax+b) +⟨g,Ay+b−(Ax+b)⟩
+=h(x) +⟨A ⊤g,y−x⟩,
+that implies our stated result.

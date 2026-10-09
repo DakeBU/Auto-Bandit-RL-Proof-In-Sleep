@@ -1,0 +1,60 @@
+{
+  "phase": "proving -> candidate for exact three finite public terminals only",
+  "source_contract_sha256": "90e628cbddf6fd293987baf6b9702c1e91bb58c2981954927d1e7eb4bc0e3521",
+  "contract_reviewer_sha256": "0695897e40d4c7533cd19c168e528f752ed53d534b8e84007d97745cf4db113e",
+  "public_proof_count": 3,
+  "source_family_count": 2,
+  "source_enumeration_v3_sha256": "94bed5963bbdcc745e64547fa98b5101a6a58e843c127e38d8577dfe2af58466",
+  "exact_current_native_headers": [
+    {
+      "declaration": "BanditRL.OnlineConvex.shifted_absolute_convex_differentiable_iff",
+      "native_header": "theorem shifted_absolute_convex_differentiable_iff (c : ℝ) : ConvexOn ℝ Set.univ (fun x : ℝ => |x - c|) ∧ ∀ x : ℝ, DifferentiableAt ℝ (fun w : ℝ => |w - c|) x ↔ x ≠ c",
+      "statement_hash": "8b8744ba4ca017a395835fa05ec28007b7b0179122b30d1a5fc64df8b6d3a1d2"
+    },
+    {
+      "declaration": "BanditRL.OnlineConvex.hinge_convex_differentiable_iff",
+      "native_header": "theorem hinge_convex_differentiable_iff {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (a : E) : ConvexOn ℝ Set.univ (fun x : E => max (1 - inner ℝ a x) 0) ∧ ∀ x : E, DifferentiableAt ℝ (fun w : E => max (1 - inner ℝ a w) 0) x ↔ inner ℝ a x ≠ 1",
+      "statement_hash": "96123d78398d7211f2ee34b63e1330bd04986f943e2cffd99fe8301c263f8f45"
+    },
+    {
+      "declaration": "BanditRL.OnlineConvex.labelled_hinge_convex_differentiable_iff",
+      "native_header": "theorem labelled_hinge_convex_differentiable_iff {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (y : ℝ) (z : E) : ConvexOn ℝ Set.univ (fun x : E => max (1 - y * inner ℝ z x) 0) ∧ (∀ x : E, DifferentiableAt ℝ (fun w : E => max (1 - y * inner ℝ z w) 0) x ↔ y * inner ℝ z x ≠ 1) ∧ (Differentiable ℝ (fun w : E => max (1 - y * inner ℝ z w) 0) ↔ y • z = 0)",
+      "statement_hash": "76b1e6c1dcae81e86d72a8354ef260108edbcdae41dc8b3dd6c55a91e943a57f"
+    }
+  ],
+  "current_production_file": "BanditRLProof/OnlineNonsmoothExamples.lean",
+  "current_production_file_sha256": "2532c49a68dc9192ca7b33a3c691a1ad8b3bb16aa37982d60c04749ee9b7f950",
+  "all_public_exact_type_kernel_sha256": "d9f08a85278629de902993eccf7ce732bf23ef9e3ba0c6bcb359a1525f125ede",
+  "actual_axioms": [
+    {
+      "declaration": "BanditRL.OnlineConvex.shifted_absolute_convex_differentiable_iff",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlineConvex.hinge_convex_differentiable_iff",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlineConvex.labelled_hinge_convex_differentiable_iff",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    }
+  ],
+  "new_canary_contract_sha256": "2be01edb9559ffaee5f82a96fc8fd743e94bb00b9fe092ce9659c4658fef4e1d",
+  "no_old_production_Test_root_pin_or_source_changes": true,
+  "validation_boundary": "Actual focused builds and whole public-type kernel succeeded, own final production module warnings0. Canary BODY/semantic review/root/Tests/full harness/reader/shared registry/site/PR delivery not yet passed.",
+  "chapter_complete": false,
+  "book_complete": false,
+  "whole_Goal_status": "ACTIVE"
+}

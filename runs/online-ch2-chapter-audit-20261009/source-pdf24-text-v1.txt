@@ -1,0 +1,46 @@
+12Online Subgradient Descent
+Algorithm 2.1Projected Online Gradient Descent (OGD)
+Require:Non-empty closed convex setV ⊆R d,x 1 ∈ V,η 1, . . . , ηT >0
+1:fort= 1toTdo
+2:Outputx t ∈ V
+3:Pay the lossℓ t(xt), for a convexℓ t, differentiable on an open set containingV
+4:Setg t =∇ℓ t(xt)
+5:x t+1 = ΠV(xt −η tgt) = argminy∈V ∥xt −η tgt −y∥ 2
+6:end for
+and, in the first round, we can play any admissible point. One might wonder if this strategy
+always works, but the answer is negative!
+Example 2.10(Failure of FTL)LetV= [−1,1]and consider the sequence of losses
+ℓt(x) =z tx, where
+z1 =−0.5,
+zt = 1, t= 2,4, . . .
+zt =−1, t= 3,5, . . .
+Then, apart from the first round where the prediction of FTL is arbitrary in[−1,1], the
+predictions of FTL will bex t = 1forteven andx t =−1fortodd. The cumulative loss
+of the FTL algorithm afterTrounds will therefore beT−1− x1
+2 while the cumulative
+loss of the fixed solutionu= 0is 0. Thus, the regret of FTL with respect tou= 0is
+T−1− x1
+2 ≥T− 3
+2.
+Hence, we will see an alternative strategy that guarantees sublinear regret for convex func-
+tions with bounded gradients. The strategy is calledProjected Online Gradient Descent,
+or justOnline Gradient Descent (OGD), see Algorithm 2.1. In each step, we update the
+prediction of the algorithm by adding the negative gradient of the loss multiplied by a scalar
+ηt >0called thelearning rateorstepsize. Then, we project the result back onto the fea-
+sible setV. Some might notice that this algorithm is similar to Stochastic Gradient Descent,
+but it is not the same thing: here, the loss functions are different at each step, and they are
+not drawn from a fixed distribution but adversarially chosen. We will later see that OGD can
+alsobe used as Stochastic Gradient Descent.
+First, we show the following two auxiliary results. The first proposition proves that Eu-
+clidean projections, the unique pointΠ V(x) := argmin y∈V ∥x−y∥ 2, always decrease
+the distance to points inside the set.
+Proposition 2.11Letx∈R d andy∈ V, whereV ⊆R d is a non-empty closed convex
+set and defineΠ V(x) := argminy∈V ∥x−y∥ 2. Then,∥Π V(x)−y∥ 2 ≤ ∥x−y∥ 2.
+ProofFirst of all, observe thatargmin y∈V ∥x−y∥ 2 = argminy∈V
+1
+2 ∥x−y∥ 2
+2. So, from
+the optimality condition of Theorem 2.8 on the functionf(y) = 1
+2 ∥x−y∥ 2
+2, we obtain
+⟨ΠV(x)−x,y−Π V(x)⟩ ≥0.

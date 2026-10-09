@@ -1,0 +1,91 @@
+{
+  "phase": "stabilized exact unchanged scoped prior contract/BODY/source review reuse; new chapter integration still draft",
+  "source_anchor": "Theorem2.13 variable branch printed13/PDF25 and proof14/PDF26; Algorithm2.1 printed12/PDF24",
+  "source_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+  "targets": [
+    {
+      "name": "BanditRL.OnlineGradientDescentSource.theorem_2_13_variable_bound",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGradientDescentSource.lean",
+      "exact_header": "theorem theorem_2_13_variable_bound (V : Domain E) (η : ℕ → ℝ) (loss : ℕ → E → ℝ) (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (T : ℕ) (hT : 0 < T) (hη : ∀ t < T, 0 < η t) (hmono : ∀ t, t + 1 < T → η (t + 1) ≤ η t) (hloss : ∀ t < T, FeasibleRegularLoss V (loss t)) (D : ℝ) (hdiam : ∀ x ∈ V.carrier, ∀ y ∈ V.carrier, ‖x - y‖ ≤ D) (u : E) (hu : u ∈ V.carrier) : regretVariable V η loss x₁ u T ≤ D ^ 2 / (2 * η (T - 1)) + (∑ t ∈ range T, η t / 2 * ‖gradient (loss t) (iterateVariable V η loss x₁ t)‖ ^ 2) - ‖iterateVariable V η loss x₁ T - u‖ ^ 2 / (2 * η (T - 1))",
+      "statement_hash": "6c560c38b4703eaec4c7ece312373d8aa32246b7e8de5b163801ce07b26bb845",
+      "file_sha256": "627df452453bbdfa2ecf4ddac8b5b85bfd750c74f1db5b81a26e6e20ca2eeec7",
+      "prior_contract": "E:/ABRL/worktrees/research-online-book/docs/contracts/online-ogd-migration-v2/theorem_2_13_variable_bound.json",
+      "prior_contract_sha256": "cfe0c8e50b23cbe57384f85f87e4315897dc363d6841835808ab752d0f882818"
+    },
+    {
+      "name": "BanditRL.OnlineGradientDescentSource.theorem_2_13_variable",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGradientDescentSource.lean",
+      "exact_header": "theorem theorem_2_13_variable (V : Domain E) (hV : Bornology.IsBounded V.carrier) (η : ℕ → ℝ) (loss : ℕ → E → ℝ) (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (T : ℕ) (hT : 0 < T) (hη : ∀ t < T, 0 < η t) (hmono : ∀ t, t + 1 < T → η (t + 1) ≤ η t) (hloss : ∀ t < T, FeasibleRegularLoss V (loss t)) (u : E) (hu : u ∈ V.carrier) : regretVariable V η loss x₁ u T ≤ (Metric.diam V.carrier) ^ 2 / (2 * η (T - 1)) + (∑ t ∈ range T, η t / 2 * ‖gradient (loss t) (iterateVariable V η loss x₁ t)‖ ^ 2) - ‖iterateVariable V η loss x₁ T - u‖ ^ 2 / (2 * η (T - 1))",
+      "statement_hash": "a2e245b1ae6956dbe503326db11d53a1a2f509ddec20c9f6de3fb7684f177119",
+      "file_sha256": "627df452453bbdfa2ecf4ddac8b5b85bfd750c74f1db5b81a26e6e20ca2eeec7",
+      "prior_contract": "E:/ABRL/worktrees/research-online-book/docs/contracts/online-ogd-migration-v2/theorem_2_13_variable.json",
+      "prior_contract_sha256": "f17d2160dc9a6e23aebb0e0eadb34b37896331a53cea8f44af118932848641d4"
+    }
+  ],
+  "prior_receipts": [
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ogd-migration-20261005/source-contract-receipt-v2.json",
+      "sha256": "40b095e1e12d227d2e08e36f4ad09bc97ecbd06d87e8c0287f6abe83c177fb4f",
+      "scope": "v2 two definitions/twelve unproved source-repair target contracts only",
+      "verdict": "accepted-with-explicit-delta"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ogd-migration-20261005/blind-receipt-v2.json",
+      "sha256": "50506c2037bb783cbd7fb3d3e008ca317f6e93fe2812fc3c4c0899616b44129e",
+      "scope": {
+        "target_ids": "M01-M12",
+        "target_count": 12,
+        "context_items": "Q0-Q9",
+        "context_count": 10,
+        "semantic_slots_per_target": 7,
+        "sole_mathematical_file_input_this_pass": "E:/ABRL/worktrees/research-online-book/runs/online-ogd-migration-20261005/blind-packet-v2.md",
+        "source_identity_maps_proofs_compile_evidence_prior_judgments_other_files_read_this_pass": false,
+        "v1_or_other_artifacts_edited": false
+      },
+      "verdict": null
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ogd-migration-20261005/public-body-receipt-v2.json",
+      "sha256": "08a48dacbcf17983ff1238c6f2914289396ce1b530248c76df36b67e42b463c7",
+      "scope": "Actual12 repaired public bodies/2definitions; retained16 old declarations/8definitions;30 new canaries/7definitions",
+      "verdict": "accepted-with-explicit-delta"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ogd-migration-20261005/final-reader-receipt-v2.json",
+      "sha256": "9a9c56cb462db4178de20b3f2fb127948a0f2bc25a294c730c1fae3dc0bd771a",
+      "scope": "Bounded OGD source repair and final reader/evidence only",
+      "verdict": "accepted-with-explicit-delta"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ogd-migration-20261005/accepted-decision-v2.json",
+      "sha256": "66c503c32d952339073282157e13bbf4b0db1093422aed9579672f4b54a2ffbf",
+      "scope": "Actual arbitrary-open source adapter, both same-step inequalities, same-run sharp fixed/variable telescopes and tuned DGsqrtT are closed. Original historical contracts/proofs unchanged.",
+      "verdict": "accepted-local"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ogd-migration-20261005/pr-delivery-v2.json",
+      "sha256": "5f96557154998f4f06905a4b0190529f38a6a7397b1dfea90f07576254db6898",
+      "scope": "Original actual delivery evidence; do not infer wholechapter acceptance",
+      "verdict": "compiled-local-and-draft-PR-delivered"
+    }
+  ],
+  "current_source_file_matches_prior_FINAL": [
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGradientDescentSource.lean",
+      "current_sha256": "627df452453bbdfa2ecf4ddac8b5b85bfd750c74f1db5b81a26e6e20ca2eeec7",
+      "prior_final_sha256": "627df452453bbdfa2ecf4ddac8b5b85bfd750c74f1db5b81a26e6e20ca2eeec7"
+    }
+  ],
+  "semantic_signature": {
+    "objects": "finite-dimensional real Euclidean source; existing complete real Hilbert generalization explicit",
+    "quantifiers": "all positive finite T, fixed initial feasible x1, same eta/loss sequence, every feasible comparator u; no future-loss-selected algorithm",
+    "assumptions": "nonempty closed convex V; bounded V for Metric.diam branch or explicit finite D all-pairs bound; positive nonincreasing finite-prefix eta; source regularity passed through actual ambient-source-to-feasible adapter",
+    "conclusion": "same actual projected-gradient recurrence regret <= D^2/(2eta(T-1))+sum eta(t)||g(t)||^2/2 - ||x(T)-u||^2/(2eta(T-1))",
+    "constants": "source rounds1..T correspondLean0..T-1, Leaniterate T is sourcex(T+1); nonzero terminal retained; zeroD allowed; positiveT excludes eta(-1) empty interpretation",
+    "information": "current loss gradient used only after current output; strict-past prefix producer retained; deterministic pathwise guarantee",
+    "boundary": "fixed-step remains unbounded-domain-capable; variable diameter bound not silently extended to unbounded V; actual current-run gradients; no wholeChapter2/Goal acceptance"
+  },
+  "permitted_edits": "OWN RUN scratch/readiness/fence/audit metadata only; no production/Test/root/source/pin/reader mutation",
+  "chapter2_complete": false,
+  "whole_Goal_status": "ACTIVE"
+}

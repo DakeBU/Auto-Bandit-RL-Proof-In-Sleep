@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineConvex.labelled_hinge_convex_differentiable_iff",
+  "file": "BanditRLProof/OnlineNonsmoothExamples.lean",
+  "statement": "theorem labelled_hinge_convex_differentiable_iff {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (y : ℝ) (z : E) : ConvexOn ℝ Set.univ (fun x : E => max (1 - y * inner ℝ z x) 0) ∧ (∀ x : E, DifferentiableAt ℝ (fun w : E => max (1 - y * inner ℝ z w) 0) x ↔ y * inner ℝ z x ≠ 1) ∧ (Differentiable ℝ (fun w : E => max (1 - y * inner ℝ z w) 0) ↔ y • z = 0)",
+  "statement_hash": "76b1e6c1dcae81e86d72a8354ef260108edbcdae41dc8b3dd6c55a91e943a57f",
+  "source_assumptions": [],
+  "created_at": "2026-10-09T05:44:15+00:00"
+}

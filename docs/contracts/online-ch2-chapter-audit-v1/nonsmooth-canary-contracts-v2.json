@@ -1,0 +1,64 @@
+{
+  "stage": "frozen v2 canary proposition proposals before any canary proof BODY",
+  "targets": [
+    {
+      "declaration": "Tests.OnlineNonsmoothExamples.source_shift_ten",
+      "exact_header": "theorem source_shift_ten :\n    ConvexOn ℝ Set.univ (fun w : ℝ => |w - 10|) ∧\n      ¬ DifferentiableAt ℝ (fun w : ℝ => |w - 10|) 10 ∧\n      DifferentiableAt ℝ (fun w : ℝ => |w - 10|) 9 ∧\n      DifferentiableAt ℝ (fun w : ℝ => |w - 10|) 11",
+      "statement_hash": "9de5d2b4308fee2c96ffd695bf6e3a45277df1a67ada29f8861703cc40278bb6",
+      "owning_module": "Tests/OnlineNonsmoothExamplesCanary.lean"
+    },
+    {
+      "declaration": "Tests.OnlineNonsmoothExamples.positive_negative_labels",
+      "exact_header": "theorem positive_negative_labels :\n    ConvexOn ℝ Set.univ (fun w : ℝ => max (1 - 2 * inner ℝ (3 : ℝ) w) 0) ∧\n      ConvexOn ℝ Set.univ (fun w : ℝ => max (1 - (-2) * inner ℝ (3 : ℝ) w) 0) ∧\n      ¬ DifferentiableAt ℝ (fun w : ℝ => max (1 - 2 * inner ℝ (3 : ℝ) w) 0) (1 / 6) ∧\n      ¬ DifferentiableAt ℝ (fun w : ℝ => max (1 - (-2) * inner ℝ (3 : ℝ) w) 0) (-1 / 6) ∧\n      DifferentiableAt ℝ (fun w : ℝ => max (1 - 2 * inner ℝ (3 : ℝ) w) 0) 0 ∧\n      DifferentiableAt ℝ (fun w : ℝ => max (1 - (-2) * inner ℝ (3 : ℝ) w) 0) 0 ∧\n      ¬ Differentiable ℝ (fun w : ℝ => max (1 - 2 * inner ℝ (3 : ℝ) w) 0) ∧\n      ¬ Differentiable ℝ (fun w : ℝ => max (1 - (-2) * inner ℝ (3 : ℝ) w) 0)",
+      "statement_hash": "357a219af0d004cf1d0a7a27b61be64c6da8fc62edee95f59bbebc6cca0b9a15",
+      "owning_module": "Tests/OnlineNonsmoothExamplesCanary.lean"
+    },
+    {
+      "declaration": "Tests.OnlineNonsmoothExamples.zero_label_and_feature",
+      "exact_header": "theorem zero_label_and_feature (y z : ℝ) :\n    Differentiable ℝ (fun w : ℝ => max (1 - 0 * inner ℝ z w) 0) ∧\n      Differentiable ℝ (fun w : ℝ => max (1 - y * inner ℝ (0 : ℝ) w) 0) ∧\n      ∀ w : ℝ, max (1 - 0 * inner ℝ z w) 0 = 1 ∧\n        max (1 - y * inner ℝ (0 : ℝ) w) 0 = 1",
+      "statement_hash": "484285070916e32a42e4c7b414124dbe5e7a9f167d7f692db08fe38200708d74",
+      "owning_module": "Tests/OnlineNonsmoothExamplesCanary.lean"
+    },
+    {
+      "declaration": "Tests.OnlineNonsmoothExamples.plane_ambient_and_tangential",
+      "exact_header": "theorem plane_ambient_and_tangential :\n    ¬ DifferentiableAt ℝ (fun w : Plane => max (1 - inner ℝ e0 w) 0)\n        (e0 + (3 : ℝ) • e1) ∧\n      DifferentiableAt ℝ (fun w : Plane => max (1 - inner ℝ e0 w) 0) e1 ∧\n      DifferentiableAt ℝ (fun t : ℝ => max (1 - inner ℝ e0 (e0 + (3 + t) • e1)) 0) 0",
+      "statement_hash": "1a87168255a961147155c0ea00477014a8998b126174e81e8d8fda5e2918963a",
+      "owning_module": "Tests/OnlineNonsmoothExamplesCanary.lean"
+    },
+    {
+      "declaration": "Tests.OnlineNonsmoothExamples.dimension_zero",
+      "exact_header": "theorem dimension_zero (y : ℝ) (z : EuclideanSpace ℝ (Fin 0)) :\n    Differentiable ℝ\n        (fun w : EuclideanSpace ℝ (Fin 0) => max (1 - y * inner ℝ z w) 0) ∧\n      ∀ w : EuclideanSpace ℝ (Fin 0), max (1 - y * inner ℝ z w) 0 = 1",
+      "statement_hash": "87b09a17efb0597d2d5d4a1b5584ccf8fd1ba834ee2cb777747df3f4906037f1",
+      "owning_module": "Tests/OnlineNonsmoothExamplesCanary.lean"
+    }
+  ],
+  "production_terminal_hashes": [
+    "8b8744ba4ca017a395835fa05ec28007b7b0179122b30d1a5fc64df8b6d3a1d2",
+    "96123d78398d7211f2ee34b63e1330bd04986f943e2cffd99fe8301c263f8f45",
+    "76b1e6c1dcae81e86d72a8354ef260108edbcdae41dc8b3dd6c55a91e943a57f"
+  ],
+  "actual_context": {
+    "imports": [
+      "BanditRLProof.OnlineNonsmoothExamples",
+      "Tests.OnlineGradientDescentSourceCanary"
+    ],
+    "open_scoped": "InnerProductSpace",
+    "open_namespace": "Tests.OnlineGradientDescentSource",
+    "complete_existing_context_file_sha256": "1a7c22676285c09d4d3354ada355ef0e03fc6a3957a6e27f916a6d6a84ea24f7",
+    "canonical_reused_values": [
+      "Tests.OnlineGradientDescentSource.Plane",
+      "Tests.OnlineGradientDescentSource.e0",
+      "Tests.OnlineGradientDescentSource.e1"
+    ],
+    "value_definitions": "Plane=EuclideanSpace real(Fin2); e0=EuclideanSpace.single0 1; e1=EuclideanSpace.single1 1; canonical existing test definitions, no duplicate per-Book geometry library."
+  },
+  "boundary": "Five public complementary canary propositions, three nondegenerate examples and two explicit degenerate regimes. Not five new source theorems, not chapter coverage. Blind reconstruction and distinct actual BODY review required before acceptance.",
+  "chapter_complete": false,
+  "whole_Goal_status": "ACTIVE",
+  "version": 2,
+  "supersedes_canary_proposal": {
+    "path": "docs/contracts/online-ch2-chapter-audit-v1/nonsmooth-canary-contracts-v1.json",
+    "sha256": "2be01edb9559ffaee5f82a96fc8fd743e94bb00b9fe092ce9659c4658fef4e1d"
+  },
+  "explicit_delta": "Only C004 scalar tangential curve is translated so t=0 is the same point e0+3e1 used by the ambient nonsmooth conjunct. The v1 proposition is true and preserved; its two derivative assertions use different base points. No production terminal changed."
+}

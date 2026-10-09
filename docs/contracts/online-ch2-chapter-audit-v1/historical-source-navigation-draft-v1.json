@@ -1,0 +1,584 @@
+{
+  "stage": "source-navigation-draft",
+  "chapter": 2,
+  "source_version": "arXiv1912.13213v10",
+  "source_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+  "source_extract_path": "tmp/online-ch2-enumeration-source20-35.txt",
+  "source_extract_sha256": "adc5b396aa3d32dff754c77dbd05d708e967d4c88eddad78c97cf34e47e9b935",
+  "numbered_main_entries": 32,
+  "algorithm_boxes": 2,
+  "rows": [
+    {
+      "source_id": "Remark 2.1",
+      "printed_page": 9,
+      "pdf_page": 21,
+      "kind": "Remark",
+      "source_context_fragment": "Remark 2.1I will now introduce some math concepts. If you have a background in Con-\nvex Analysis, this will be easy stuff for you. On the other hand, if you have never seen these\nthings before, they might look a bit scary. Let me tell you the right way to look at them:these\nare tools that will make our job easier. Without these tools, it would be basically impossible\nto design any online learning algorithm. And, no, it is not enough to test the algorithms on\nsome machine learning dataset, because fixed datasets are not adversarial. Without a cor-\nrect proof, you might not realize that your online algorithm fails on particular sequences of\nlosses, as it happened with Adam (Reddi et al., 2018). I promise you that once you under-\nstand the key mathematical concepts, online learning is actually easy.\n2.1.1 Convex Analysis Bits: Convexity\nFigure 2.1Non-convex (left) and convex (right) sets.\n",
+      "source_fragment_sha256": "0a24781ead271842b360975dd9424bd7ef8a177cc390455d9872481667aa6544",
+      "required": false,
+      "historical_lean_name": null,
+      "historical_lean_names": null,
+      "historical_status": "draft",
+      "statement_audit": "draft:inclusive source context, not yet frozen precise semantic signature",
+      "reason_if_nonmathematical": "Remark2.1 is pedagogical prose about the need for proof, not an excluded formal result."
+    },
+    {
+      "source_id": "Definition 2.2",
+      "printed_page": 9,
+      "pdf_page": 21,
+      "kind": "Definition",
+      "source_context_fragment": "Definition 2.2V ⊆R d isconvexif for anyx,y∈ Vand anyλ∈(0,1), we have\nλx+ (1−λ)y∈ V.\nIn words, this means that the setVhas no ‘holes’ or inward dents, see Figure 2.1.\nWe will make use ofextended-real-valued functions, that is, functions that take values\ninR∪ {−∞,+∞}. Forfan extended-real-valued function onR d, itsdomainis the set\ndomf={x∈R d :f(x)<+∞}.\nExtended-real-valued functions allow us to easily consider constrained sets and are a stan-\ndard notation in Convex Optimization (see, e.g., Boyd and Vandenberghe, 2004). For exam-\nple, if I want the predictions of the algorithmxt and the competitoruto be in a setV ⊂Rd, I\ncan just addι V(x)to all the losses, whereι V :R d →(−∞,+∞]is theindicator function\nof the setVdefined as\nιV(x) =\n(\n0,x∈ V,\n+∞,otherwise.\n\nPHYSICAL PAGE 22\n10Online Subgradient Descent\ndomf\nEpigraph\nx\nf(x)\ndomf\nEpigraph\nx\nf(x)\nFigure 2.2Convex (left) and nonconvex (right) functions.\nIn this way, the only way for the algorithm and for the competitor to suffer finite loss is to\npredict inside the setV. Also, extended-real-valued functions will make the use ofFenchel\nconjugatesmore direct, see Section 6.4.1.\nConvex functionswill be an essential ingredient in online learning.\n",
+      "source_fragment_sha256": "88d3eeb60c9863883f9d612598ce794a745309c256f9e4cdd95da8bca7992fe3",
+      "required": true,
+      "historical_lean_name": "BanditRL.OnlineConvex.definition_2_2",
+      "historical_lean_names": [
+        "BanditRL.OnlineConvex.definition_2_2"
+      ],
+      "historical_status": "accepted-local; PR119 open, not merged",
+      "statement_audit": "draft:inclusive source context, not yet frozen precise semantic signature",
+      "reason_if_nonmathematical": null
+    },
+    {
+      "source_id": "Definition 2.3",
+      "printed_page": 10,
+      "pdf_page": 22,
+      "kind": "Definition",
+      "source_context_fragment": "Definition 2.3Letf:R d →[−∞,+∞].fisconvexif the epigraph of the function,\n{(x, y)∈Rd+1 :y≥f(x)}, is convex.\nWe can see a visualization of this definition in Figure 2.2. Note that the definition implies\nthat the domain of a convex function is convex. TheιV(x)is convex iffVis convex, so each\nconvex set is associated with a convex function. Also, observe that iff:R d →(−∞,+∞]\nis convex,f+ι V :R d →(−∞,+∞], whereVis convex, is also convex.\nThe definition above gives rise to the following characterization for convex functions that\ndo not assume the value−∞.\n",
+      "source_fragment_sha256": "db65cd67b75cb1c15bdab6e4fef873f42cb09706927248b1e77f2a046accf910",
+      "required": true,
+      "historical_lean_name": "BanditRL.OnlineConvex.realEpigraph",
+      "historical_lean_names": [
+        "BanditRL.OnlineConvex.realEpigraph",
+        "BanditRL.OnlineConvex.IsConvexExtended"
+      ],
+      "historical_status": "accepted-local; PR119 open, not merged",
+      "statement_audit": "draft:inclusive source context, not yet frozen precise semantic signature",
+      "reason_if_nonmathematical": null
+    },
+    {
+      "source_id": "Theorem 2.4",
+      "printed_page": 10,
+      "pdf_page": 22,
+      "kind": "Theorem",
+      "source_context_fragment": "Theorem 2.4(Rockafellar, 1970, Theorem 4.1)Letf:R d →(−∞,+∞]be such that\ndomfis a convex set. Thenfis convex iff, for any0< λ <1, we have\nf(λx+ (1−λ)y)≤λf(x) + (1−λ)f(y),∀x,y∈domf .\n",
+      "source_fragment_sha256": "4d77ce5b43afb15ef044cb4b5c2dedfbee3a51fc251e03ef94e0c8df6a2d0c09",
+      "required": true,
+      "historical_lean_name": "BanditRL.OnlineConvex.theorem_2_4",
+      "historical_lean_names": [
+        "BanditRL.OnlineConvex.theorem_2_4"
+      ],
+      "historical_status": "accepted-local; PR119 open, not merged",
+      "statement_audit": "draft:inclusive source context, not yet frozen precise semantic signature",
+      "reason_if_nonmathematical": null
+    },
+    {
+      "source_id": "Example 2.5",
+      "printed_page": 10,
+      "pdf_page": 22,
+      "kind": "Example",
+      "source_context_fragment": "Example 2.5Affine functions,f(x) =⟨z,x⟩+b, are convex.\n",
+      "source_fragment_sha256": "ab85b1cb942df55fed1ad6577f07b68af941d4ffbc8f00395993fac2bbd0b159",
+      "required": true,
+      "historical_lean_name": "BanditRL.OnlineConvex.example_2_5",
+      "historical_lean_names": [
+        "BanditRL.OnlineConvex.example_2_5"
+      ],
+      "historical_status": "accepted-local; PR120 open, not merged",
+      "statement_audit": "draft:inclusive source context, not yet frozen precise semantic signature",
+      "reason_if_nonmathematical": null
+    },
+    {
+      "source_id": "Example 2.6",
+      "printed_page": 10,
+      "pdf_page": 22,
+      "kind": "Example",
+      "source_context_fragment": "Example 2.6Norms are always convex; the proof is left as an exercise.\nHow to recognize a convex function? In the most general case, you have to rely on its def-\ninition. However, most of the time, we will recognize them as being obtained by operations\nthat preserve convexity. For example:\n•Iffandgare convex, then their linear combination with non-negative weights is also\nconvex.\n•The composition with an affine transformation preserves the convexity.\n•Iff:R d →Randg:R→Rare convex functions andgis non-decreasing, then\nh(x) =g(f(x))is convex.\n•The pointwise supremum of convex functions is convex.\n\nPHYSICAL PAGE 23\n2.1 Online Learning with Convex Differentiable Losses11\nThe proofs are left as exercises.\nA very important property ofdifferentiableconvex functions is that we can construct a\nlinear lower bound to the function.\n",
+      "source_fragment_sha256": "0c7ed3a803058caebfc0dded892a0a3bea750d951bfa6ab356b867c0bb32dedb",
+      "required": true,
+      "historical_lean_name": "BanditRL.OnlineConvex.example_2_6",
+      "historical_lean_names": [
+        "BanditRL.OnlineConvex.example_2_6"
+      ],
+      "historical_status": "accepted-local; PR120 open, not merged",
+      "statement_audit": "draft:inclusive source context, not yet frozen precise semantic signature",
+      "reason_if_nonmathematical": null
+    },
+    {
+      "source_id": "Theorem 2.7",
+      "printed_page": 11,
+      "pdf_page": 23,
+      "kind": "Theorem",
+      "source_context_fragment": "Theorem 2.7(Rockafellar, 1970, Theorem 25.1 and Corollary 25.1.1)Supposef:R d →\n(−∞,+∞]is a convex function and letx∈int domf. Iffis differentiable atxthen\nf(y)≥f(x) +⟨∇f(x),y−x⟩,∀y∈R d .\nWe will also use the first-order optimality condition for differentiable convex functions:\n",
+      "source_fragment_sha256": "3fb52520df12fd961e6da53d79fc797c7aa574238a20c45504f140db66bc0cd1",
+      "required": true,
+      "historical_lean_name": "BanditRL.OnlineConvex.theorem_2_7",
+      "historical_lean_names": [
+        "BanditRL.OnlineConvex.theorem_2_7"
+      ],
+      "historical_status": "accepted-local; PR123 open, not merged",
+      "statement_audit": "draft:inclusive source context, not yet frozen precise semantic signature",
+      "reason_if_nonmathematical": null
+    },
+    {
+      "source_id": "Theorem 2.8",
+      "printed_page": 11,
+      "pdf_page": 23,
+      "kind": "Theorem",
+      "source_context_fragment": "Theorem 2.8LetVbe a non-empty convex set,x ⋆ ∈ V, andfa function convex and differ-\nentiable over an open set that containsV. Then,x ⋆ ∈argmin x∈V f(x)iff⟨∇f(x ⋆),y−\nx⋆⟩ ≥0,∀y∈ V.\nProofLet us first assume thatx ⋆ satisfies⟨∇f(x ⋆),y−x ⋆⟩ ≥0,∀y∈ V. Then, by\nTheorem 2.7, for anyy∈ V, we have that\nf(y)≥f(x ⋆) +⟨∇f(x ⋆),y−x ⋆⟩ ≥f(x⋆),\nthat is,x ⋆ is the minimizer offoverV.\nNow, assume thatx⋆ is the minimizer offoverVand assume that there existsy∈ Vsuch\nthat⟨∇f(x ⋆),y−x ⋆⟩<0. Considerz(α) =αy+(1−α)x ⋆ whereα∈[0,1]. Note that\nz(α)∈ Vand denote byh(α) =f(z(α)). We have thath ′(0) =⟨∇f(x ⋆),y−x ⋆⟩<0.\nHence, by the definition of derivative, forα⋆ >0sufficiently small we haveh(α ⋆)< h(0),\nthat is,f(z(α ⋆))< f(x⋆), which contradicts thatx ⋆ is the minimizer overV.\nIn words, at the constrained minimum, the gradient makes an angle of90 ◦ or less with\nall the feasible variationsy−x ⋆, hence we cannot decrease the function any further by\nmoving insideV. Moreover, ifx ⋆ ∈intV, by choosingϵsmall enough such thaty=\nx⋆ −ϵ∇f(x ⋆)∈ V, we obtain thatx⋆ is a minimum iff∇f(x ⋆) =0.\nAnother critical property of convex functions is Jensen’s inequality.\n",
+      "source_fragment_sha256": "c69624d949576c28a8195526c3270141750ab6548bf3c53fcb204577a547599d",
+      "required": true,
+      "historical_lean_name": "BanditRL.OnlineConvex.theorem_2_8",
+      "historical_lean_names": null,
+      "historical_status": "accepted-local; PR124 open, not merged",
+      "statement_audit": "draft:inclusive source context, not yet frozen precise semantic signature",
+      "reason_if_nonmathematical": null
+    },
+    {
+      "source_id": "Theorem 2.9",
+      "printed_page": 11,
+      "pdf_page": 23,
+      "kind": "Theorem",
+      "source_context_fragment": "Theorem 2.9(Jensen’s inequality)Letf:R d →(−∞,+∞]be a measurable convex\nfunction andxbe anR d-valued random element on some probability space such thatE[x]\nexists andx∈domfwith probability 1. Then, we have\nE[f(x)]≥f(E[x]).\nWe can now see our first OCO algorithm in the case that the functions are convex and\ndifferentiable.\n2.1.2 Online Gradient Descent\nIn the first chapter, we saw a simple strategy to obtain a logarithmic regret in the guessing\ngame. The strategy was to use the best prediction over the past, that is, theFollow-the-\nLeader (FTL)strategy. In formulas,\nxt = argmin\nx∈V\nt−1X\ni=1\nℓi(x),\n\nPHYSICAL PAGE 24\n12Online Subgradient Descent\n",
+      "source_fragment_sha256": "1e98602ffdc5e90a542eaeabf828a68ba58571bd64b1b858a547b7707962e5fc",
+      "required": true,
+      "historical_lean_name": "BanditRL.OnlineConvex.theorem_2_9",
+      "historical_lean_names": null,
+      "historical_status": "accepted-local",
+      "statement_audit": "draft:inclusive source context, not yet frozen precise semantic signature",
+      "reason_if_nonmathematical": null
+    },
+    {
+      "source_id": "Algorithm 2.1",
+      "printed_page": 12,
+      "pdf_page": 24,
+      "kind": "Algorithm",
+      "source_context_fragment": "Algorithm 2.1Projected Online Gradient Descent (OGD)\nRequire:Non-empty closed convex setV ⊆R d,x 1 ∈ V,η1, . . . , ηT >0\n1:fort= 1toTdo\n2:Outputx t ∈ V\n3:Pay the lossℓ t(xt), for a convexℓ t, differentiable on an open set containingV\n4:Setg t =∇ℓ t(xt)\n5:x t+1 = ΠV(xt −η tgt) = argminy∈V ∥xt −η tgt −y∥ 2\n6:end for\nand, in the first round, we can play any admissible point. One might wonder if this strategy\nalways works, but the answer is negative!\n",
+      "source_fragment_sha256": "810231f365543df9a5f7ec7e8266813a798692c52ad9096ca340e90e17f49724",
+      "required": true,
+      "historical_lean_name": null,
+      "historical_lean_names": null,
+      "historical_status": "unreconciled",
+      "statement_audit": "draft:inclusive source context, not yet frozen precise semantic signature",
+      "reason_if_nonmathematical": null
+    },
+    {
+      "source_id": "Example 2.10",
+      "printed_page": 12,
+      "pdf_page": 24,
+      "kind": "Example",
+      "source_context_fragment": "Example 2.10(Failure of FTL)LetV= [−1,1]and consider the sequence of losses\nℓt(x) =z tx, where\nz1 =−0.5,\nzt = 1, t= 2,4, . . .\nzt =−1, t= 3,5, . . .\nThen, apart from the first round where the prediction of FTL is arbitrary in[−1,1], the\npredictions of FTL will bex t = 1forteven andx t =−1fortodd. The cumulative loss\nof the FTL algorithm afterTrounds will therefore beT−1− x1\n2 while the cumulative\nloss of the fixed solutionu= 0is 0. Thus, the regret of FTL with respect tou= 0is\nT−1− x1\n2 ≥T− 3\n2 .\nHence, we will see an alternative strategy that guarantees sublinear regret for convex func-\ntions with bounded gradients. The strategy is calledProjected Online Gradient Descent,\nor justOnline Gradient Descent (OGD), see Algorithm 2.1. In each step, we update the\nprediction of the algorithm by adding the negative gradient of the loss multiplied by a scalar\nηt >0called thelearning rateorstepsize. Then, we project the result back onto the fea-\nsible setV. Some might notice that this algorithm is similar to Stochastic Gradient Descent,\nbut it is not the same thing: here, the loss functions are different at each step, and they are\nnot drawn from a fixed distribution but adversarially chosen. We will later see that OGD can\nalsobe used as Stochastic Gradient Descent.\nFirst, we show the following two auxiliary results. The first proposition proves that Eu-\nclidean projections, the unique pointΠ V(x) := argmin y∈V ∥x−y∥ 2, always decrease\nthe distance to points inside the set.\n",
+      "source_fragment_sha256": "233c8ce3f1e665c101eb5e6d260bd4badf8e8a38840c796fabe07dc6f286400e",
+      "required": true,
+      "historical_lean_name": "BanditRL.OnlineLearning.example_2_10",
+      "historical_lean_names": null,
+      "historical_status": "accepted-local",
+      "statement_audit": "draft:inclusive source context, not yet frozen precise semantic signature",
+      "reason_if_nonmathematical": null
+    },
+    {
+      "source_id": "Proposition 2.11",
+      "printed_page": 12,
+      "pdf_page": 24,
+      "kind": "Proposition",
+      "source_context_fragment": "Proposition 2.11Letx∈R d andy∈ V, whereV ⊆R d is a non-empty closed convex\nset and defineΠ V(x) := argminy∈V ∥x−y∥ 2. Then,∥Π V(x)−y∥ 2 ≤ ∥x−y∥2.\nProofFirst of all, observe thatargmin y∈V ∥x−y∥ 2 = argminy∈V\n1\n2 ∥x−y∥ 2\n2. So, from\nthe optimality condition of Theorem 2.8 on the functionf(y) = 1\n2 ∥x−y∥ 2\n2, we obtain\n⟨ΠV(x)−x,y−Π V(x)⟩ ≥0.\n\nPHYSICAL PAGE 25\n2.1 Online Learning with Convex Differentiable Losses13\nTherefore,\n∥y−x∥ 2\n2 =∥y−Π V(x) + ΠV(x)−x∥ 2\n2\n=∥y−Π V(x)∥2\n2 + 2⟨y−Π V(x),Π V(x)−x⟩+∥Π V(x)−x∥ 2\n2\n≥ ∥y−ΠV(x)∥2\n2 .\nThe next lemma upper bounds the regret in a single iteration of Algorithm 2.1.\n",
+      "source_fragment_sha256": "c11e229d8f9297516dba1168187f301e03e697a13be5624df7aa67c8c5a49464",
+      "required": true,
+      "historical_lean_name": null,
+      "historical_lean_names": null,
+      "historical_status": "draft",
+      "statement_audit": "draft:inclusive source context, not yet frozen precise semantic signature",
+      "reason_if_nonmathematical": null
+    },
+    {
+      "source_id": "Lemma 2.12",
+      "printed_page": 13,
+      "pdf_page": 25,
+      "kind": "Lemma",
+      "source_context_fragment": "Lemma 2.12LetV ⊆R d be a non-empty closed convex set,ℓt be convex and differentiable\non an open set containingV, andη t >0. Setg t =∇ℓ t(xt)andx t+1 = ΠV(xt −η tgt).\nThen,∀u∈ V, the following inequality holds\nηt(ℓt(xt)−ℓ t(u))≤η t⟨gt,xt −u⟩ ≤1\n2∥xt −u∥ 2\n2 − 1\n2∥xt+1 −u∥ 2\n2 + η2\nt\n2 ∥gt∥2\n2 .\nProofFrom Proposition 2.11 and Theorem 2.7, we have that\n∥xt+1 −u∥ 2\n2 − ∥xt −u∥ 2\n2 ≤ ∥xt −η tgt −u∥ 2\n2 − ∥xt −u∥ 2\n2\n=−2η t⟨gt,xt −u⟩+η 2\nt ∥gt∥2\n2\n≤ −2ηt(ℓt(xt)−ℓ t(u)) +η 2\nt ∥gt∥2\n2 .\nReordering, we have the stated bound.\nWe can prove the following regret guarantee for Algorithm 2.1.\n",
+      "source_fragment_sha256": "9d613dd4d273a3dfcf792de8429fd2eb7cb87e6328e771a80e8c51bdd5983496",
+      "required": true,
+      "historical_lean_name": null,
+      "historical_lean_names": null,
+      "historical_status": "draft",
+      "statement_audit": "draft:inclusive source context, not yet frozen precise semantic signature",
+      "reason_if_nonmathematical": null
+    },
+    {
+      "source_id": "Theorem 2.13",
+      "printed_page": 13,
+      "pdf_page": 25,
+      "kind": "Theorem",
+      "source_context_fragment": "Theorem 2.13LetV ⊆R d be a non-empty closed convex set with diameterD, that is,\nD:= sup x,y∈V ∥x−y∥ 2. Letℓ 1, . . . , ℓT be an arbitrary sequence of convex and differ-\nentiable functions on an open set containingV. Pick anyx 1 ∈ Vand assume0< ηt+1 ≤\nηt, t= 1, . . . , T−1. Then,∀u∈ V, Algorithm 2.1 satisfies the following regret bound\nTX\nt=1\n(ℓt(xt)−ℓ t(u))≤ D2\n2ηT\n+\nTX\nt=1\nηt\n2 ∥gt∥2\n2 − 1\n2ηT\n∥xT+1 −u∥ 2\n2 .\nMoreover, ifηt is constant, i.e.,η t =η∀t= 1, . . . , T, for allu∈ V, we have\nTX\nt=1\n(ℓt(xt)−ℓ t(u))≤ ∥u−x 1∥2\n2\n2η + η\n2\nTX\nt=1\n∥gt∥2\n2 − 1\n2η ∥xT+1 −u∥ 2\n2 .\nProofDividing the inequality in Lemma 2.12 byη t and summing overt= 1, . . . , T, we\n\nPHYSICAL PAGE 26\n14Online Subgradient Descent\nhave\nTX\nt=1\n(ℓt(xt)−ℓ t(u))≤\nTX\nt=1\n\u0012∥xt −u∥ 2\n2\n2ηt\n− ∥xt+1 −u∥ 2\n2\n2ηt\n\u0013\n+\nTX\nt=1\nηt∥gt∥2\n2\n2\n= ∥x1 −u∥ 2\n2\n2η1\n− ∥xT+1 −u∥ 2\n2\n2ηT\n+\nT−1X\nt=1\n\u0012 1\nηt+1\n− 1\nηt\n\u0013 ∥xt+1 −u∥ 2\n2\n2 +\nTX\nt=1\nηt∥gt∥2\n2\n2\n≤ D2\n2η1\n+ D2\n2\nT−1X\nt=1\n\u0012 1\nηt+1\n− 1\nηt\n\u0013\n+\nTX\nt=1\nηt∥gt∥2\n2\n2 − ∥xT+1 −u∥ 2\n2\n2ηT\n= D2\n2η1\n+D 2\n\u0012 1\n2ηT\n− 1\n2η1\n\u0013\n+\nTX\nt=1\nηt∥gt∥2\n2\n2 − ∥xT+1 −u∥ 2\n2\n2ηT\n= D2\n2ηT\n+\nTX\nt=1\nηt\n2 ∥gt∥2\n2 − 1\n2ηT\n∥xT+1 −u∥ 2\n2 .\nIn the same way, whenη t is constant, we have\nTX\nt=1\n(ℓt(xt)−ℓ t(u))≤\nTX\nt=1\n\u0012 1\n2η ∥xt −u∥ 2\n2 − 1\n2η ∥xt+1 −u∥ 2\n2\n\u0013\n+ η\n2\nTX\nt=1\n∥gt∥2\n2\n= 1\n2η ∥x1 −u∥ 2\n2 − 1\n2η ∥xT+1 −u∥ 2\n2 + η\n2\nTX\nt=1\n∥gt∥2\n2 .\nWe can immediately observe a few things.\n•The terms∥g t∥2\n2 are due to the fact that we outputx t before knowing the lossℓ t. Indeed,\nthese terms become non-positive if we were allowed to observeℓ t before producingx t,\nsee Section 15.5.1.\n•In the case of constantη, the bound holds even whenD=∞. Moreover, the first term in\nthe regret depends on ourinitial condition, that is, how farx 1 is from the competitoru.\n•The last term in both bounds is non-positive, so it is usually discarded. Yet, some advanced\nproofs require it, so it is good to be aware of it.\n•If we want to use time-varying learning rates, we need to control the terms∥x t −u∥2\n2. To\ndo it, we assume a bounded domainV. However, this assumption is false in most of the\nmachine learning applications. We will also see in Section 5.2 that this is not an artifact of\nthe proof, that is, OGD can fail in unbounded domains with time-varying learning rates.\nThat said, in the stochastic setting, you can still use a time-varying learning rate in SGD\nwith an unbounded domain, as we will see in Chapter 3.\n•Another important observation is that the regret bound helps us choose the learning rates\nηt. Indeed, it is the only guideline we have. Any other choice that is not justified by a\nregret analysis is not justified at all.\nAs we said, the presence of untuned parameters like the learning rates makes no sense in\nonline learning. So, we have to decide on a strategy to set them. A simple choice is to find\nthe constant learning rate that minimizes the bounds for a fixed number of iterations. We\n\nPHYSICAL PAGE 27\n2.1 Online Learning with Convex Differentiable Losses15\nhave to consider the expression\n∥u−x 1∥2\n2\n2η + η\n2\nTX\nt=1\n∥gt∥2\n2\nand minimize with respect toη. It is easy to see that the optimalηis ∥u−x1∥2√PT\nt=1 ∥gt∥2\n2\n, that would\ngive the regret bound\n∥u−x 1∥2\nvuut\nTX\nt=1\n∥gt∥2\n2 .\nHowever, we have a problem: in order to use this stepsize, we should know all the future gra-\ndients (that depend onηitself!), and the distance between the optimal solution and the initial\npoint. This is clearly impossible: remember that the adversary can choose the sequence of\nfunctions. Hence, it can observe your choice of learning rates and decide the sequence so\nthat your learning rate is no longer the correct one!\nIndeed, it turns out that this kind of rate is completely impossible because it is ruled out by\na lower bound we will show in Chapter 5. Yet, we will see that it is indeed possible to achieve\nvery similar rates usingadaptive(Section 4.2) andparameter-freealgorithms (Chapter 13).\nFor the moment, we can observe that we might be happy to minimize a loose upper bound.\nIn particular, assume that the norm of the gradients is bounded byL, that is∥g t∥2 ≤L.\nAlso, assuming a bounded diameter, we can upper bound∥u−x 1∥2 byD. Hence, we have\nη⋆ = argmin\nη\nD2\n2η + ηL2T\n2 = D\nL\n√\nT\n,\nthat gives a regret bound of\nDL\n√\nT .(2.1)\nSo, indeed, the regret is sublinear in time. In Chapter 5, we will also prove that the this regret\nupper bound is optimal up to constant multiplicative factors.\n",
+      "source_fragment_sha256": "331b46667ff08c27d0c02d466394947c2c37ae4b6d38c5454d6803a5a3933c3e",
+      "required": true,
+      "historical_lean_name": null,
+      "historical_lean_names": [
+        "BanditRL.OnlineGradientDescent.theorem_2_13_fixed",
+        "BanditRL.OnlineGradientDescent.theorem_2_13_variable"
+      ],
+      "historical_status": "accepted-local: fixed and decreasing-step branches; whole Chapter2 incomplete",
+      "statement_audit": "draft:inclusive source context, not yet frozen precise semantic signature",
+      "reason_if_nonmathematical": null
+    },
+    {
+      "source_id": "Example 2.14",
+      "printed_page": 15,
+      "pdf_page": 27,
+      "kind": "Example",
+      "source_context_fragment": "Example 2.14Consider the guessing game of the first chapter; we can easily solve it with\nOGD. Indeed, we just need to calculate the gradients, prove that they are bounded, and find\na way to calculate the projection of a real number in[0,1]. So,ℓ ′\nt(x) = 2(x−y t), that is\nbounded forx, yt ∈[0,1]. The projection on[0,1]is justΠ [0,1](x) = min(max(x,0),1).\nWith the optimal learning rate, the resulting regret would beO(\n√\nT), which is worse than\nthe one we found in the first chapter. Hence, OGD with this choice of the learning rate is\nsuboptimal for this problem. We will see how to make it optimal in Chapter 4.\n",
+      "source_fragment_sha256": "5d57d79d6beb25f4a575b193367d3cec19f8a312f36913ee36d5cc1cf2a36141",
+      "required": true,
+      "historical_lean_name": "BanditRL.OnlineGradientDescent.example_2_14",
+      "historical_lean_names": null,
+      "historical_status": "accepted-local",
+      "statement_audit": "draft:inclusive source context, not yet frozen precise semantic signature",
+      "reason_if_nonmathematical": null
+    },
+    {
+      "source_id": "Example 2.15",
+      "printed_page": 15,
+      "pdf_page": 27,
+      "kind": "Example",
+      "source_context_fragment": "Example 2.15Let’s consider an example of the OCO setting. Consider the problem of\npredicting at daytthe opening price of a stock based on a linear combination of the opening\nprices of the pastddays, represented by a vectorz t ∈R d. So, our prediction at timetwill\nbe⟨z t,xt⟩and the feasible set isV=R d. Once we make our prediction, we receive the\ntrue opening pricey t, and we pay theHuber loss, a convex loss function robust to outliers,\n\nPHYSICAL PAGE 28\n16Online Subgradient Descent\non the difference between our prediction and the opening price:\nℓt(x) =\n(\n1\n2 (⟨zt,x⟩ −yt)2,for|⟨z t,x⟩ −yt| ≤δ,\nδ(|⟨zt,x⟩ −yt| −1\n2 δ),otherwise\nwhereδis the threshold that decides what counts as an outlier, and it should be penalized\nwith a linear error rather than a quadratic one. For this problem, we can use OGD with\nconstant learning rateη∝1/\n√\nT. So, we just need to calculate the gradients:\n∇ℓt(x) =\n(\n(⟨zt,x⟩ −yt)zt,for|⟨z t,x⟩ −yt| ≤δ,\nδsign(⟨zt,x⟩ −yt)zt,otherwise.\nAssuming that all∥z t∥2 are bounded, we also have that the gradients are bounded, satis-\nfying the assumptions of Theorem 2.13. Hence, running OGD, on average, the performance\nof the algorithm will approach the performance of any fixed linear predictor.\n2.2 Online Subgradient Descent\nIn the previous section, we introduced Projected Online Gradient Descent. However, the\ndifferentiability assumption for theℓ t is quite strong. What happens when the losses are\nconvex but not differentiable? For example,ℓt(x) =|x−10|. Note that this situation is more\ncommon than one would think. For example, the hinge loss,ℓt(x) = max(1−yt⟨zt,x⟩,0),\nis not differentiable. It turns out that we can just use OGD, substitutingsubgradientsfor the\ngradients. For this, we need some more convex analysis.\n2.2.1 Convex Analysis Bits: Subgradients\nFirst, we need a couple of technical definitions.\n",
+      "source_fragment_sha256": "837ee4f2c0fc8a35acfb503b869fbd7df78410cf29caaf1a9d3bdbf9179465bd",
+      "required": true,
+      "historical_lean_name": "BanditRL.OnlineHuber.huber_average_eventually",
+      "historical_lean_names": null,
+      "historical_status": "accepted-local",
+      "statement_audit": "draft:inclusive source context, not yet frozen precise semantic signature",
+      "reason_if_nonmathematical": null
+    },
+    {
+      "source_id": "Definition 2.16",
+      "printed_page": 16,
+      "pdf_page": 28,
+      "kind": "Definition",
+      "source_context_fragment": "Definition 2.16A functionf:R d →[−∞,+∞]isclosediff{x:f(x)≤α}is closed\nfor everyα∈R.\nNote that in any Euclidean space (and more generally in any Hausdorff space) a function\nis closed iff it is lower semicontinuous (Bauschke and Combettes, 2017, Lemma 1.24).\n",
+      "source_fragment_sha256": "8c8893140aff0b57af647b2f99df05e2d1985ddc9d077bb264a98b84aa4ab071",
+      "required": true,
+      "historical_lean_name": "BanditRL.OnlineConvex.SourceClosed",
+      "historical_lean_names": null,
+      "historical_status": "accepted-local",
+      "statement_audit": "draft:inclusive source context, not yet frozen precise semantic signature",
+      "reason_if_nonmathematical": null
+    },
+    {
+      "source_id": "Example 2.17",
+      "printed_page": 16,
+      "pdf_page": 28,
+      "kind": "Example",
+      "source_context_fragment": "Example 2.17The indicator function of a setV ⊂R d is closed iffVis closed.\n",
+      "source_fragment_sha256": "a6b33e9020f84b37f15966852e4371be56319fb2c0078e2d3df10ecefcd60fbe",
+      "required": true,
+      "historical_lean_name": "BanditRL.OnlineConvex.sourceClosed_indicator_iff",
+      "historical_lean_names": null,
+      "historical_status": "accepted-local",
+      "statement_audit": "draft:inclusive source context, not yet frozen precise semantic signature",
+      "reason_if_nonmathematical": null
+    },
+    {
+      "source_id": "Definition 2.18",
+      "printed_page": 16,
+      "pdf_page": 28,
+      "kind": "Definition",
+      "source_context_fragment": "Definition 2.18If a functionfis nowhere−∞and finite somewhere, thenfis called\nproper.\nIn this book, we are mainly interested in convex proper functions, which better conform\nto our intuition of what a convex function looks like.\n",
+      "source_fragment_sha256": "07d23c33a5615b6beee244d78dd9f916b6000fea22eb7aa6799a730d2ac552bb",
+      "required": true,
+      "historical_lean_name": "BanditRL.OnlineConvex.SourceProper",
+      "historical_lean_names": null,
+      "historical_status": "accepted-local",
+      "statement_audit": "draft:inclusive source context, not yet frozen precise semantic signature",
+      "reason_if_nonmathematical": null
+    },
+    {
+      "source_id": "Example 2.19",
+      "printed_page": 16,
+      "pdf_page": 28,
+      "kind": "Example",
+      "source_context_fragment": "Example 2.19The indicator function of a setV ⊂R d is proper iffVis non-empty.\nLet’s now define formally what a subgradient is.\n",
+      "source_fragment_sha256": "63f885ce96bb887091cf744078203560375286b487a34a061ca52469f616a2a3",
+      "required": true,
+      "historical_lean_name": "BanditRL.OnlineConvex.sourceProper_indicator_iff",
+      "historical_lean_names": null,
+      "historical_status": "accepted-local",
+      "statement_audit": "draft:inclusive source context, not yet frozen precise semantic signature",
+      "reason_if_nonmathematical": null
+    },
+    {
+      "source_id": "Definition 2.20",
+      "printed_page": 16,
+      "pdf_page": 28,
+      "kind": "Definition",
+      "source_context_fragment": "Definition 2.20For a proper functionf:R d →(−∞,+∞], we define asubgradientof\nfinx∈R d as a vectorg∈R d that satisfies\nf(y)≥f(x) +⟨g,y−x⟩,∀y∈R d .\n\nPHYSICAL PAGE 29\n2.2 Online Subgradient Descent17\nBasically, a subgradient offinxis any vectorgthat allows us to construct a linear\nlower bound tof. Note that the subgradient might not be unique, so we denote thesetof\nsubgradients offinxby∂f(x), called thesubdifferential offatx. A functionfis\nsubdifferentiableatxif∂f(x)̸=∅.\nObserve that iffis proper and convex, then∂f(x)is empty forx/∈domf, because\nthe inequality cannot be satisfied whenf(x) = +∞. Also, the domain of∂f, denoted by\ndom∂f, is the set of allx∈R d such that∂f(x)is non-empty; it is a subset ofdomf.\nA proper convex functionfis always 1 subdifferentiable onint domf(Rockafellar, 1970,\nTheorem 23.4).\nNote that we did not assume the functionfto be convex in the definition of a subgradient.\nHowever, the following theorem tells us that if we have subgradients everywhere, then the\nfunction must be convex.\n",
+      "source_fragment_sha256": "5cfddc11447c51ca70d5338c58e48bccb8ebe6fe4992b68fdaa839c2b9251a98",
+      "required": true,
+      "historical_lean_name": "BanditRL.OnlineConvex.SourceSubdifferential",
+      "historical_lean_names": null,
+      "historical_status": "accepted-local",
+      "statement_audit": "draft:inclusive source context, not yet frozen precise semantic signature",
+      "reason_if_nonmathematical": null
+    },
+    {
+      "source_id": "Theorem 2.21",
+      "printed_page": 17,
+      "pdf_page": 29,
+      "kind": "Theorem",
+      "source_context_fragment": "Theorem 2.21Letf:R d →RandV ⊆R d be a convex set. If∂f(x)̸=∅for allx∈ V,\nthen the restriction offtoVis convex.\nProofFor anyx 1,x2 ∈ Vand for anyλ∈[0,1], considery=λx 1 + (1−λ)x 2 ∈ V\nandg∈∂f(y). Then, we have\nf(x1)≥f(y) +⟨g,x 1 −y⟩=f(y) + (1−λ)⟨g,x 1 −x 2⟩,\nf(x2)≥f(y) +⟨g,x 2 −y⟩=f(y) +λ⟨g,x 2 −x 1⟩.\nMultiplying the first inequality byλand the second one by1−λand adding them together,\nwe have\nλf(x1) + (1−λ)f(x 2)≥f(y) =f(λx 1 + (1−λ)x 2),\nthat implies the convexity offinV.\nThe unique subgradient of a differentiable function is just the gradient, as quantified in\nthe next theorem.\n",
+      "source_fragment_sha256": "aafae3e2038da7aaf872a46f3f1007c70669c51907412475213451caa130a156",
+      "required": true,
+      "historical_lean_name": "BanditRL.OnlineConvex.theorem_2_21",
+      "historical_lean_names": null,
+      "historical_status": "accepted-local",
+      "statement_audit": "draft:inclusive source context, not yet frozen precise semantic signature",
+      "reason_if_nonmathematical": null
+    },
+    {
+      "source_id": "Theorem 2.22",
+      "printed_page": 17,
+      "pdf_page": 29,
+      "kind": "Theorem",
+      "source_context_fragment": "Theorem 2.22(Rockafellar, 1970, Theorem 25.1)If the functionf:R d →[−∞,+∞]\nis convex and finite inx, it is differentiable inxiff the subdifferential consists of a single\nelement, that turns out to be∇f(x).\nWe can also calculate subgradients of the sum of functions.\n",
+      "source_fragment_sha256": "604d492c8f5c89e669405f662f36665388e331cdecf53a559ffe2c5ecd19c8b1",
+      "required": true,
+      "historical_lean_name": "BanditRL.OnlineConvex.theorem_2_22",
+      "historical_lean_names": [
+        "BanditRL.OnlineConvex.theorem_2_22",
+        "BanditRL.OnlineConvex.theorem_2_22_gradient"
+      ],
+      "historical_status": "accepted-local; PR delivery pending, not merged",
+      "statement_audit": "draft:inclusive source context, not yet frozen precise semantic signature",
+      "reason_if_nonmathematical": null
+    },
+    {
+      "source_id": "Theorem 2.23",
+      "printed_page": 17,
+      "pdf_page": 29,
+      "kind": "Theorem",
+      "source_context_fragment": "Theorem 2.23Letf 1, . . . , fm be proper functions onRd, andF=f 1 +···+f m. Then,\n∂F(x)⊇∂f 1(x) +···+∂f m(x),∀x. Note that if one of the sets∂f i(x)is empty, the\nright-hand side is empty and the inclusion is vacuous. Moreover, iff 1, . . . , fm are also\nconvex, closed, anddomf m ∩ Tm−1\ni=1 int domfi ̸=∅, then actually∂F(x) =∂f 1(x) +\n···+∂f m(x),∀x.\nProofFor anyz, when the right-hand side is non-empty, chooseg i ∈∂f i(z)fori=\n1, . . . , m. From the definition of subgradient, we have\nF(x) =\nmX\ni=1\nfi(x)≥\nmX\ni=1\n(fi(z) +⟨g i,x−z⟩) =F(z) +\n* mX\ni=1\ngi,x−z\n+\n.\n1 The stronger version of this theorem uses therelative interiorof the domain off, however, we never need to\nuse it, so we will keep it simple.\n\nPHYSICAL PAGE 30\n18Online Subgradient Descent\nHence, Pm\ni=1 gi ∈∂F(z). Since this holds for every choice ofg i ∈∂f i(z), we have\n∂F(z)⊇∂f 1(z) +···+∂f m(z).\nFor the second statement, see Bauschke and Combettes (2017, Corollary 16.50).\n",
+      "source_fragment_sha256": "0ad8626aaa8a9d0c57693e903120289791a0c301a49cf96a43dcbdc9351a73a2",
+      "required": true,
+      "historical_lean_name": "BanditRL.OnlineConvex.theorem_2_23_equality",
+      "historical_lean_names": [
+        "BanditRL.OnlineConvex.theorem_2_23_inclusion",
+        "BanditRL.OnlineConvex.theorem_2_23_equality"
+      ],
+      "historical_status": "public-compiled-local; both exact endpoints; package acceptance/delivery evidence separate; not merged",
+      "statement_audit": "draft:inclusive source context, not yet frozen precise semantic signature",
+      "reason_if_nonmathematical": null
+    },
+    {
+      "source_id": "Example 2.24",
+      "printed_page": 18,
+      "pdf_page": 30,
+      "kind": "Example",
+      "source_context_fragment": "Example 2.24Letf(x) =|x|. Then, the subdifferential set∂f(x)is\n∂f(x) =\n\n\n\n{1}, x >0,\n[−1,1], x= 0,\n{−1}, x <0.\n",
+      "source_fragment_sha256": "deab61f72c42c3f8bcab9838cdfa947ebc9e47147908cef1aa704e6c4b34bbc3",
+      "required": true,
+      "historical_lean_name": "BanditRL.OnlineConvex.example_2_24",
+      "historical_lean_names": [
+        "BanditRL.OnlineConvex.abs_subgradient_positive",
+        "BanditRL.OnlineConvex.abs_subgradient_zero",
+        "BanditRL.OnlineConvex.abs_subgradient_negative",
+        "BanditRL.OnlineConvex.example_2_24"
+      ],
+      "historical_status": "public-compiled-local; exact three-case equality; package acceptance/delivery evidence separate; not merged",
+      "statement_audit": "draft:inclusive source context, not yet frozen precise semantic signature",
+      "reason_if_nonmathematical": null
+    },
+    {
+      "source_id": "Example 2.25",
+      "printed_page": 18,
+      "pdf_page": 30,
+      "kind": "Example",
+      "source_context_fragment": "Example 2.25Let’s calculate the subgradient of the indicator function for a non-empty\nconvex setV ⊂Rd. By definition,g∈∂ι V(x)if\nιV(y)≥ι V(x) +⟨g,y−x⟩,∀y∈R d .\nThis condition implies thatx∈ Vand0≥ ⟨g,y−x⟩for ally∈ V(because fory/∈ V\nthe inequality is always verified). The set of allgthat satisfy the above inequality is called\nthenormal cone toVatxand it is denoted byN V(x). Note that the normal cone for any\nx∈intVis{0}(Hint: takey=x+ϵg). For example, forV={x∈R d :∥x∥ 2 ≤1},\nNV(x) ={αx:α≥0}for allx:∥x∥ 2 = 1.\nAnother useful theorem is to calculate the subdifferential of the pointwise maximum of\nconvex functions.\n",
+      "source_fragment_sha256": "a4b9524afa17e60e06ba21737813ba41a31ab3b11744535377d76c6a2a30aa38",
+      "required": true,
+      "historical_lean_name": "BanditRL.OnlineConvex.normalCone_unitBall_boundary",
+      "historical_lean_names": [
+        "BanditRL.OnlineConvex.indicator_subdifferential_eq_normalCone",
+        "BanditRL.OnlineConvex.normalCone_interior_eq_zero",
+        "BanditRL.OnlineConvex.normalCone_unitBall_boundary"
+      ],
+      "historical_status": "public-compiled-local; all three source equalities; package acceptance/delivery evidence separate; not merged",
+      "statement_audit": "draft:inclusive source context, not yet frozen precise semantic signature",
+      "reason_if_nonmathematical": null
+    },
+    {
+      "source_id": "Theorem 2.26",
+      "printed_page": 18,
+      "pdf_page": 30,
+      "kind": "Theorem",
+      "source_context_fragment": "Theorem 2.26(Bauschke and Combettes, 2017, Theorem 18.5)Let(f i)i∈I be a finite set\nof proper convex functions fromRd to(−∞,+∞]. Supposex∈ T\ni∈I domf i and eachf i\nis continuous atx. SetF= max i∈I fi and letA(x) ={i∈I|f i(x) =F(x)}be the set\nof the active functions. Then, denoting byconvtheconvex hull, we have\n∂F(x) = conv\n[\ni∈A(x)\n∂fi(x).\n",
+      "source_fragment_sha256": "e8e4a2ff2584978daa7eae6b8dee2d4794aea1866f80c75ab66bdc65002f55f6",
+      "required": true,
+      "historical_lean_name": "BanditRL.OnlineConvex.theorem_2_26",
+      "historical_lean_names": [
+        "BanditRL.OnlineConvex.theorem_2_26"
+      ],
+      "historical_status": "public-compiled-local; full ordinary active-hull equality; package acceptance/delivery separate; not merged",
+      "statement_audit": "draft:inclusive source context, not yet frozen precise semantic signature",
+      "reason_if_nonmathematical": null
+    },
+    {
+      "source_id": "Example 2.27",
+      "printed_page": 18,
+      "pdf_page": 30,
+      "kind": "Example",
+      "source_context_fragment": "Example 2.27(Subgradients of the Hinge loss)Consider the hinge lossℓ(x) = max(1−\n⟨z,x⟩,0)forz∈R d. The subdifferential set is\n∂ℓ(x) =\n\n\n\n{0},1− ⟨z,x⟩<0\n{−αz:α∈[0,1]},1− ⟨z,x⟩= 0\n{−z},otherwise\n.\nFinally, we can show a result on the subgradient of affine transformations.\n",
+      "source_fragment_sha256": "71e7003dbded7eac573b7b35dfc6aa4931b8e65668cf89c592516b1f236fdc91",
+      "required": true,
+      "historical_lean_name": "BanditRL.OnlineConvex.example_2_27",
+      "historical_lean_names": [
+        "BanditRL.OnlineConvex.example_2_27"
+      ],
+      "historical_status": "public-compiled-local; full three-branch hinge equality; package acceptance/delivery separate; not merged",
+      "statement_audit": "draft:inclusive source context, not yet frozen precise semantic signature",
+      "reason_if_nonmathematical": null
+    },
+    {
+      "source_id": "Theorem 2.28",
+      "printed_page": 18,
+      "pdf_page": 30,
+      "kind": "Theorem",
+      "source_context_fragment": "Theorem 2.28Letf:R m →(−∞,+∞]be proper. Defineh(x) =f(Ax+b), where\nA∈R m×d andb∈R m. Then, we haveA ⊤∂f(Ax+b)⊆∂h(x).\nProofFor anyg∈∂f(Ax+b), we want to show thatA ⊤gis a subgradient ofhinx.\nFrom the definition of subgradient, for ally∈R d we have\nh(y) =f(Ay+b)≥f(Ax+b) +⟨g,Ay+b−(Ax+b)⟩\n=h(x) +⟨A ⊤g,y−x⟩,\nthat implies our stated result.\n\nPHYSICAL PAGE 31\n2.2 Online Subgradient Descent19\nWe also have a handy result that upper bounds the norm of subgradients of convexLips-\nchitzfunctions.\n",
+      "source_fragment_sha256": "7c5d97e2756ad51fd3c1b3156dcb3583cf57d2500aefb71532308bff388d4a71",
+      "required": true,
+      "historical_lean_name": "BanditRL.OnlineConvex.theorem_2_28",
+      "historical_lean_names": [
+        "BanditRL.OnlineConvex.theorem_2_28"
+      ],
+      "historical_status": "public-compiled-local; proper-only affine inclusion; acceptance/delivery separate; not merged",
+      "statement_audit": "draft:inclusive source context, not yet frozen precise semantic signature",
+      "reason_if_nonmathematical": null
+    },
+    {
+      "source_id": "Definition 2.29",
+      "printed_page": 19,
+      "pdf_page": 31,
+      "kind": "Definition",
+      "source_context_fragment": "Definition 2.29Letf:R d →(−∞,+∞]. We say thatfisL-Lipschitzover a set\nV ⊆domfwith respect to a norm∥ · ∥if|f(x)−f(y)| ≤L∥x−y∥,∀x,y∈ V.\n",
+      "source_fragment_sha256": "020b82a5fe60dae135468278aa04eb6f3cb5e597e48983c9b3109a07297cc50d",
+      "required": true,
+      "historical_lean_name": "BanditRL.OnlineConvex.SourceLipschitzOn",
+      "historical_lean_names": [
+        "BanditRL.OnlineConvex.SourceLipschitzOn"
+      ],
+      "historical_status": "public-compiled-local; explicit nonnegative convention, full interior iff; acceptance/delivery separate; not merged",
+      "statement_audit": "draft:inclusive source context, not yet frozen precise semantic signature",
+      "reason_if_nonmathematical": null
+    },
+    {
+      "source_id": "Theorem 2.30",
+      "printed_page": 19,
+      "pdf_page": 31,
+      "kind": "Theorem",
+      "source_context_fragment": "Theorem 2.30Letf:R d →(−∞,+∞]be convex and proper. Then,fisL-Lipschitz in\nint domfwith respect to the L 2 norm iff for allx∈int domfandg∈∂f(x)we have\n∥g∥2 ≤L.\nProofFirst, we assumefto beL-Lipschitz, then|f(x)−f(y)| ≤L∥x−y∥ 2,∀x,y∈\nint domf. Letg∈∂f(x). If∥g∥ 2 = 0, then the theorem is true. So, we can safely assume\nit to be different from 0. Forϵ >0small enoughy=x+ϵ g\n∥g∥2\n∈int domf, then\nLϵ=L∥x−y∥ 2 ≥ |f(y)−f(x)| ≥f(y)−f(x)≥ ⟨g,y−x⟩=ϵ∥g∥ 2,\nthat implies that∥g∥ 2 ≤L.\nFor the other implication, the subgradient definition and Cauchy–Schwarz inequality give\nf(x)−f(y)≤ ∥g∥ 2∥x−y∥ 2 ≤L∥x−y∥ 2,\nfor anyx,y∈int domf. Takingg∈∂f(y), we also get\nf(y)−f(x)≤L∥x−y∥ 2 .\nFinally, let’s dispel the common misconception that a convex function must be differen-\ntiable on its domain except possibly at countably many points. For example, consider the\nconvex functionf:R 2 →Rdefined asf(x) =|x 1|that is not differentiable on the line\nsegment betweenv= (0,0)andw= (0,1).\n2.2.2 Analysis with Subgradients\nAs I promised you, with the proper mathematical tools, analyzing online algorithms becomes\neasy. Indeed, switching from gradient to subgradient comes for free! In fact, our analysis of\nOGD with differentiable losses holds as is when using subgradients instead of gradients. The\nreason is that the only property of the gradients that we used in the proof of Theorem 2.13\nwas that\nℓt(xt)−ℓ t(u)≤ ⟨gt,xt −u⟩,\nwhereg t =∇ℓ t(xt). However, the exact same property holds wheng t ∈∂ℓ t(xt). Hence,\nthe regret bounds we proved hold as well, just replacing differentiability with subdifferen-\ntiability and gradients with subgradients. In particular, we have the following lemma.\n",
+      "source_fragment_sha256": "755ce0780e0f87df500ad4e59be35857a00d20189dc1dc06d1298c868dca6ae3",
+      "required": true,
+      "historical_lean_name": "BanditRL.OnlineConvex.theorem_2_30",
+      "historical_lean_names": [
+        "BanditRL.OnlineConvex.theorem_2_30"
+      ],
+      "historical_status": "public-compiled-local; explicit nonnegative convention, full interior iff; acceptance/delivery separate; not merged",
+      "statement_audit": "draft:inclusive source context, not yet frozen precise semantic signature",
+      "reason_if_nonmathematical": null
+    },
+    {
+      "source_id": "Lemma 2.31",
+      "printed_page": 19,
+      "pdf_page": 31,
+      "kind": "Lemma",
+      "source_context_fragment": "Lemma 2.31LetV ⊆R d be a non-empty closed convex set,ℓ t :R d →(−∞,+∞]a\nfunction subdifferentiable onV, andη t >0. Setg t ∈∂ℓ t(xt)andx t+1 = ΠV(xt −η tgt).\nThen,∀u∈ V, we have\nηt(ℓt(xt)−ℓ t(u))≤η t⟨gt,xt −u⟩ ≤1\n2∥xt −u∥ 2\n2 − 1\n2∥xt+1 −u∥ 2\n2 + η2\nt\n2 ∥gt∥2\n2 .\n\nPHYSICAL PAGE 32\n20Online Subgradient Descent\n",
+      "source_fragment_sha256": "ed2b18f24591b49533ef1d789f74c8aad3878797609eba5f1e803272403d682f",
+      "required": true,
+      "historical_lean_name": "BanditRL.OnlineSubgradientDescent.lemma_2_31",
+      "historical_lean_names": null,
+      "historical_status": "accepted-local canonical source-choice package; PR147 OPENdraft, unmerged",
+      "statement_audit": "draft:inclusive source context, not yet frozen precise semantic signature",
+      "reason_if_nonmathematical": null
+    },
+    {
+      "source_id": "Algorithm 2.2",
+      "printed_page": 20,
+      "pdf_page": 32,
+      "kind": "Algorithm",
+      "source_context_fragment": "Algorithm 2.2Projected Online Subgradient Descent (OSD)\nRequire:Non-empty closed convex setV ⊆R d,x 1 ∈ V,η1, . . . , ηT >0\n1:fort= 1toTdo\n2:Outputx t ∈ V\n3:Pay the lossℓ t(xt), whereℓ t is subdifferentiable onV\n4:Setg t ∈∂ℓ t(xt)\n5:x t+1 = ΠV(xt −η tgt) = argminy∈V ∥xt −η tgt −y∥ 2\n6:end for\nSo, we can state theOnline Subgradient Descent (OSD)algorithm in Algorithm 2.2,\nwhere the only difference from Algorithm 2.1 is line 4.\n",
+      "source_fragment_sha256": "766f3a4b1e7f6f7d4e1e91428083d8776289731c558d422c2571d0addeee7340",
+      "required": true,
+      "historical_lean_name": null,
+      "historical_lean_names": null,
+      "historical_status": "unreconciled",
+      "statement_audit": "draft:inclusive source context, not yet frozen precise semantic signature",
+      "reason_if_nonmathematical": null
+    },
+    {
+      "source_id": "Example 2.32",
+      "printed_page": 20,
+      "pdf_page": 32,
+      "kind": "Example",
+      "source_context_fragment": "Example 2.32Consider the guessing game of the first chapter again, but now change the\nloss function to the absolute loss of the difference:ℓ t(x) =|x−y t|. Now we will need to\nuse OSD, because the functions are non-differentiable. We can easily see that\n∂ℓt(x) =\n\n\n\n{1}, x > y t\n[−1,1], x=y t\n{−1}, x < yt .\nAgain, running OSD with the optimal learning rate on this problem will give us immediately\na regret ofO(\n√\nT)asT→ ∞, without having to design a specific strategy for it.\n",
+      "source_fragment_sha256": "9fc325caa9bd5a53e13760595e53d6c18abdbb182e8c824dc0c56bfde9e1de2f",
+      "required": true,
+      "historical_lean_name": "BanditRL.OnlineGuessingSubgradient.example_2_32",
+      "historical_lean_names": [
+        "BanditRL.OnlineGuessingSubgradient.loss_subdifferential_translate",
+        "BanditRL.OnlineGuessingSubgradient.loss_subgradient_positive",
+        "BanditRL.OnlineGuessingSubgradient.loss_subgradient_zero",
+        "BanditRL.OnlineGuessingSubgradient.loss_subgradient_negative",
+        "BanditRL.OnlineGuessingSubgradient.example_2_32_subdifferential",
+        "BanditRL.OnlineGuessingSubgradient.loss_on_unitInterval",
+        "BanditRL.OnlineGuessingSubgradient.loss_subgradient_bound",
+        "BanditRL.OnlineGuessingSubgradient.current_subgradient_bound",
+        "BanditRL.OnlineGuessingSubgradient.loss_step_clamp",
+        "BanditRL.OnlineGuessingSubgradient.guessing_prefix",
+        "BanditRL.OnlineGuessingSubgradient.example_2_32",
+        "BanditRL.OnlineGuessingSubgradient.example_2_32_average_eventually"
+      ],
+      "historical_status": "compiled-local exact public canonical source package; sourcebody/canary/combined gates pass; reader/binding/PR separate",
+      "statement_audit": "draft:inclusive source context, not yet frozen precise semantic signature",
+      "reason_if_nonmathematical": null
+    }
+  ],
+  "unnumbered_main_audit": "Required:game/regret semantics,extended domain/indicator/epigraph,four closure bullets,interior optimality,subdifferential domain/interior facts,Lipschitz bounds,actual OSD transfer,fixed regret/units,causal convex-to-linear reduction,step-size minimization. Reconcile existing groups individually; counts stay null until precise reviewed signatures are frozen.",
+  "current_OGD_accepted_overlay": "runs/online-ogd-migration-20261005/source-inventory-acceptance-overlay-v2.json",
+  "independent_exercises": [
+    {
+      "source_id": "Problem 2.1",
+      "printed_page": 23,
+      "pdf_page": 35,
+      "status": "optional/planned; not default main-text completion"
+    },
+    {
+      "source_id": "Problem 2.2",
+      "printed_page": 23,
+      "pdf_page": 35,
+      "status": "optional/planned; not default main-text completion"
+    },
+    {
+      "source_id": "Problem 2.3",
+      "printed_page": 23,
+      "pdf_page": 35,
+      "status": "optional/planned; not default main-text completion"
+    },
+    {
+      "source_id": "Problem 2.4",
+      "printed_page": 23,
+      "pdf_page": 35,
+      "status": "optional/planned; not default main-text completion"
+    },
+    {
+      "source_id": "Problem 2.5",
+      "printed_page": 23,
+      "pdf_page": 35,
+      "status": "optional/planned; not default main-text completion"
+    }
+  ],
+  "inverse_sqrt_boundary": "Problems2.1/2.2 only:sum1/sqrt(t) and diminishing inverse-sqrt schedule are independent exercises. No formal main-text result is excluded because its proof is an exercise.",
+  "historical_section": "2.4 pedagogical/history commentary, separate from mathematical main text",
+  "actual_parser_failure": "Initial source-heading regex used word boundary and failed on PDF concatenation Remark2.1I; non-digit delimiter repairs heading recognition. Initial assertion was not a source gate.",
+  "mandatory_total": null,
+  "chapter_accepted": false,
+  "whole_book_goal": "active",
+  "main_updated": false,
+  "live_updated": false
+}
