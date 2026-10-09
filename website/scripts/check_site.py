@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import html
 import json
 import re
 from collections import Counter, defaultdict
@@ -1171,6 +1172,34 @@ def main() -> int:
             errors.append(f"BanditRLwiki case {case.get('id')} contains a Unicode replacement character")
     wiki_index_path = output / "banditrlwiki" / "index.html"
     wiki_frontier_path = output / "banditrlwiki" / "frontier" / "index.html"
+    research_projects = wiki.get("active_research_projects", [])
+    topics_index_path = output / "banditrlwiki" / "frontier-topics" / "index.html"
+    for research_page in (wiki_index_path, wiki_frontier_path, topics_index_path):
+        if not research_page.exists():
+            if research_projects and research_page == topics_index_path:
+                errors.append("missing generated BanditRLwiki Frontier topics interface")
+            continue  # Existing page-presence gate reports missing pages.
+        research_source = research_page.read_text(encoding="utf-8")
+        if research_source.count("data-wiki-research-project") != len(research_projects):
+            errors.append(f"{research_page}: research launch count differs from canonical data")
+        for project in research_projects:
+            if project.get("status") != "research-started" or not project.get("boundary"):
+                errors.append("research launch must expose started status and unproved boundary")
+    for project in research_projects:
+        topic_path = output / project["topic_path"]
+        if not topic_path.exists():
+            errors.append("missing generated research topic progress page")
+            continue
+        topic_source = topic_path.read_text(encoding="utf-8")
+        if re.search(r"[\u4e00-\u9fff]", topic_source):
+            errors.append("research topic publication must be English")
+        for key in ("checkpoint_url", "handoff_url", "quantum_url", "tracking_url"):
+            if html.escape(project.get(key, ""), quote=True) not in topic_source:
+                errors.append(f"{topic_path}: missing research {key}")
+        for row in project["progress"]:
+            for key in ("milestone", "status", "boundary"):
+                if html.escape(row[key]) not in topic_source:
+                    errors.append(f"{topic_path}: missing explicit progress {key}")
     wiki_papers_path = output / "banditrlwiki" / "papers" / "index.html"
     wiki_index_collector = pages.get(wiki_index_path.resolve())
     if wiki_index_collector:
