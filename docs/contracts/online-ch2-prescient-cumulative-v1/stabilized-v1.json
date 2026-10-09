@@ -1,0 +1,108 @@
+{
+  "stage": "stabilized",
+  "targets": [
+    {
+      "name": "iterate_divergence_sum",
+      "declaration": "BanditRL.OnlinePrescientBregman.iterate_divergence_sum",
+      "exact_header": "theorem iterate_divergence_sum (V X : Set E) (hV : Convex ℝ V) (ψ : E → ℝ)\n    (hd : DifferentiableOn ℝ ψ (interior X)) (η : ℕ → ℝ)\n    (loss : ℕ → E → EReal) (x0 : E) (x : ℕ → E) (T : ℕ)\n    (hseq : ∀ t ≤ T, iterate V ψ η loss x0 t = some (x t))\n    (hinterior : ∀ t ≤ T, x t ∈ interior X)\n    (hη : ∀ t < T, 0 < η t)\n    (hf : ∀ t < T, BanditRL.OnlineConvex.SourceProper (loss t))\n    (hs : ∀ t < T, ∀ z ∈ V,\n      (BanditRL.OnlineConvex.SourceSubdifferential (loss t) z).Nonempty)\n    (u : E) (hu : u ∈ V) :\n    (∑ t ∈ range T, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤\n      (∑ t ∈ range T, (divergence ψ u (x t) - divergence ψ u (x (t + 1))) / η t) -\n      ∑ t ∈ range T, divergence ψ (x (t + 1)) (x t) / η t",
+      "statement_sha256": "bdbcec04edeaac56c4491cfabaa4a606d2d81f64e10c8c519ce942722aeeea5a",
+      "file": "BanditRLProof/OnlinePrescientBregmanRegret.lean"
+    },
+    {
+      "name": "iterate_fixed_sharp",
+      "declaration": "BanditRL.OnlinePrescientBregman.iterate_fixed_sharp",
+      "exact_header": "theorem iterate_fixed_sharp (V X : Set E) (hV : Convex ℝ V) (ψ : E → ℝ)\n    (hd : DifferentiableOn ℝ ψ (interior X)) (η : ℝ) (hη : 0 < η)\n    (loss : ℕ → E → EReal) (x0 : E) (x : ℕ → E) (T : ℕ)\n    (hseq : ∀ t ≤ T, iterate V ψ (fun _ => η) loss x0 t = some (x t))\n    (hinterior : ∀ t ≤ T, x t ∈ interior X)\n    (hf : ∀ t < T, BanditRL.OnlineConvex.SourceProper (loss t))\n    (hs : ∀ t < T, ∀ z ∈ V,\n      (BanditRL.OnlineConvex.SourceSubdifferential (loss t) z).Nonempty)\n    (u : E) (hu : u ∈ V) :\n    (∑ t ∈ range T, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤\n      divergence ψ u x0 / η - divergence ψ u (x T) / η -\n      (∑ t ∈ range T, divergence ψ (x (t + 1)) (x t)) / η",
+      "statement_sha256": "188ac582493481b8f41e7efaf1ab63dbf467a499c73514fc2fbb3037fa8fffa0",
+      "file": "BanditRLProof/OnlinePrescientBregmanRegret.lean"
+    },
+    {
+      "name": "iterate_variable_sharp",
+      "declaration": "BanditRL.OnlinePrescientBregman.iterate_variable_sharp",
+      "exact_header": "theorem iterate_variable_sharp (V X : Set E) (hV : Convex ℝ V) (ψ : E → ℝ)\n    (hd : DifferentiableOn ℝ ψ (interior X)) (η : ℕ → ℝ)\n    (loss : ℕ → E → EReal) (x0 : E) (x : ℕ → E) (T : ℕ) (hT : 0 < T)\n    (hseq : ∀ t ≤ T, iterate V ψ η loss x0 t = some (x t))\n    (hinterior : ∀ t ≤ T, x t ∈ interior X)\n    (hη : ∀ t < T, 0 < η t)\n    (hmono : ∀ t, t + 1 < T → η (t + 1) ≤ η t)\n    (hf : ∀ t < T, BanditRL.OnlineConvex.SourceProper (loss t))\n    (hs : ∀ t < T, ∀ z ∈ V,\n      (BanditRL.OnlineConvex.SourceSubdifferential (loss t) z).Nonempty)\n    (u : E) (hu : u ∈ V) (M : ℝ)\n    (hbound : ∀ t < T, divergence ψ u (x t) ≤ M) :\n    (∑ t ∈ range T, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤\n      M / η (T - 1) - divergence ψ u (x T) / η (T - 1) -\n      ∑ t ∈ range T, divergence ψ (x (t + 1)) (x t) / η t",
+      "statement_sha256": "66f88b1ada32e29fd13715276f063429dd2b8a9abf50f64f92940dce1a932e8d",
+      "file": "BanditRLProof/OnlinePrescientBregmanRegret.lean"
+    },
+    {
+      "name": "iterate_fixed_regret",
+      "declaration": "BanditRL.OnlinePrescientBregman.iterate_fixed_regret",
+      "exact_header": "theorem iterate_fixed_regret (V X : Set E) (hV : Convex ℝ V) (hVX : V ⊆ X)\n    (ψ : E → ℝ) (hc : StrictConvexOn ℝ X ψ)\n    (hd : DifferentiableOn ℝ ψ (interior X)) (η : ℝ) (hη : 0 < η)\n    (loss : ℕ → E → EReal) (x0 : E) (x : ℕ → E) (T : ℕ)\n    (hseq : ∀ t ≤ T, iterate V ψ (fun _ => η) loss x0 t = some (x t))\n    (hinterior : ∀ t ≤ T, x t ∈ interior X)\n    (hf : ∀ t < T, BanditRL.OnlineConvex.SourceProper (loss t))\n    (hs : ∀ t < T, ∀ z ∈ V,\n      (BanditRL.OnlineConvex.SourceSubdifferential (loss t) z).Nonempty)\n    (u : E) (hu : u ∈ V) :\n    (∑ t ∈ range T, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤\n      divergence ψ u x0 / η -\n      (∑ t ∈ range T, divergence ψ (x (t + 1)) (x t)) / η",
+      "statement_sha256": "57cb27b5edf71b13704a91bf65c3b37988cb00ab1d8fa06e22668b452dcd5909",
+      "file": "BanditRLProof/OnlinePrescientBregmanRegret.lean"
+    },
+    {
+      "name": "iterate_variable_regret",
+      "declaration": "BanditRL.OnlinePrescientBregman.iterate_variable_regret",
+      "exact_header": "theorem iterate_variable_regret (V X : Set E) (hV : Convex ℝ V) (hVX : V ⊆ X)\n    (ψ : E → ℝ) (hc : StrictConvexOn ℝ X ψ)\n    (hd : DifferentiableOn ℝ ψ (interior X)) (η : ℕ → ℝ)\n    (loss : ℕ → E → EReal) (x0 : E) (x : ℕ → E) (T : ℕ) (hT : 0 < T)\n    (hseq : ∀ t ≤ T, iterate V ψ η loss x0 t = some (x t))\n    (hinterior : ∀ t ≤ T, x t ∈ interior X)\n    (hη : ∀ t < T, 0 < η t)\n    (hmono : ∀ t, t + 1 < T → η (t + 1) ≤ η t)\n    (hf : ∀ t < T, BanditRL.OnlineConvex.SourceProper (loss t))\n    (hs : ∀ t < T, ∀ z ∈ V,\n      (BanditRL.OnlineConvex.SourceSubdifferential (loss t) z).Nonempty)\n    (u : E) (hu : u ∈ V) :\n    (∑ t ∈ range T, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤\n      ((range T).sup' (nonempty_range_iff.mpr (Nat.ne_of_gt hT))\n        (fun t => divergence ψ u (x t))) / η (T - 1) -\n      ∑ t ∈ range T, divergence ψ (x (t + 1)) (x t) / η t",
+      "statement_sha256": "3ef0b8101fd8e4d4328eaa09537a35cba6201dbac5719287c9d4b95adab36542",
+      "file": "BanditRLProof/OnlinePrescientBregmanRegret.lean"
+    }
+  ],
+  "context": "import BanditRLProof.OnlinePrescientBregman\nimport BanditRLProof.OnlineGradientDescentVariable\n\nnoncomputable section\nopen Set Finset\nnamespace BanditRL.OnlinePrescientBregman\nopen BanditRL.OnlineBregman\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]\n",
+  "source_card_sha256": "4511642c00db78d9ed37b8b31287f7caaa9122dc7b8d510f9ec1c4624941a972",
+  "draft_sha256": "63eacdca343e423abbe31c37160a660812488c64ee5e911105b87736ff7ec216",
+  "CONTRACT_review_sha256": "fd6658af92eba34f0c7f456e62e86a1e50d5db82e68de8800617fc8e491e7621",
+  "decoder_sha256": "dfe586cef7e49e41548a3129dc40fdd52bc3d1a187e4dd900e56493a209661bc",
+  "reader_requirements": {
+    "R1": "Distinguish source finite Euclidean generator on X from the ambient complete real inner-product representative; divergence target/base order and interior derivative validity must be explicit.",
+    "R2": "Show that hseq certifies the same actual Option recursion through T, including x(0)=x0; no unconditional attainment, interior preservation, measurable or executable optimizer claim.",
+    "R3": "Current loss t is received before paid state x(t+1); source round t+1, last played eta(T-1), and whole-function prefix causality must remain visible.",
+    "R4": "Retain properness and global ambient support on feasible points and explain finite toReal comparisons; never replace them with unrestricted total-toReal convexity.",
+    "R5": "Keep both negative residuals in the sharp bounds; printed corollaries may remove only terminal divergence after proving nonnegativity from convexity on X and valid interior base.",
+    "R6": "Fixed horizons include T0 with its distinct sharp/corollary conclusions; variable bounds require T>0 and exact previous-state range T maximum, with monotonicity only on played adjacent pairs.",
+    "R7": "Five derived interfaces are not five printed results or full source closure. Source hypothesis transport/closed generator representation/valid-run conditions, all eight Chapter2 forwards, Chapter2 partial/null and whole Goal ACTIVE remain explicit.",
+    "R8": "Nondegenerate exact-header canaries, actual proof VALUE/axioms/fences and numeric-tail dependencies, combined root/Tests/full harness, reader/site/registry/personal pixels/FINAL/native/post-native/delivery are separate future gates."
+  },
+  "dependency_DAG": [
+    {
+      "id": "iterate_divergence_sum",
+      "dependencies": [
+        "parent.iterate_one_step",
+        "actual-success/interior-witnesses",
+        "DifferentiableOn.differentiableAt"
+      ],
+      "status": "ready"
+    },
+    {
+      "id": "iterate_fixed_sharp",
+      "dependencies": [
+        "iterate_divergence_sum",
+        "Finset.sum_range_sub'",
+        "actual-initial-identity"
+      ],
+      "status": "pending-dependency"
+    },
+    {
+      "id": "iterate_variable_sharp",
+      "dependencies": [
+        "iterate_divergence_sum",
+        "parent.weighted_potential_sum"
+      ],
+      "status": "pending-dependency"
+    },
+    {
+      "id": "iterate_fixed_regret",
+      "dependencies": [
+        "iterate_fixed_sharp",
+        "parent.divergence_nonneg"
+      ],
+      "status": "pending-dependency"
+    },
+    {
+      "id": "iterate_variable_regret",
+      "dependencies": [
+        "iterate_variable_sharp",
+        "parent.divergence_nonneg",
+        "Finset.le_sup'",
+        "Finset.nonempty_range_iff"
+      ],
+      "status": "pending-dependency"
+    }
+  ],
+  "first_selected_leaf": "iterate_divergence_sum",
+  "allowed_file": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlinePrescientBregmanRegret.lean",
+  "edit_boundary": "Selected exact theorem bodies in new public file only; no old production/Test/root/readers/pins/globalSGB. Other four bodies wait for actual first-leaf progression. Canary/body/integration separate reviews.",
+  "source_container_closed": false,
+  "chapter_proof_total": null,
+  "chapter_complete": false,
+  "whole_Goal_status": "ACTIVE"
+}

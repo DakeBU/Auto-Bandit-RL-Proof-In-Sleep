@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlinePrescientBregman.iterate_fixed_regret",
+  "file": "BanditRLProof/OnlinePrescientBregmanRegret.lean",
+  "statement": "theorem iterate_fixed_regret (V X : Set E) (hV : Convex ℝ V) (hVX : V ⊆ X) (ψ : E → ℝ) (hc : StrictConvexOn ℝ X ψ) (hd : DifferentiableOn ℝ ψ (interior X)) (η : ℝ) (hη : 0 < η) (loss : ℕ → E → EReal) (x0 : E) (x : ℕ → E) (T : ℕ) (hseq : ∀ t ≤ T, iterate V ψ (fun _ => η) loss x0 t = some (x t)) (hinterior : ∀ t ≤ T, x t ∈ interior X) (hf : ∀ t < T, BanditRL.OnlineConvex.SourceProper (loss t)) (hs : ∀ t < T, ∀ z ∈ V, (BanditRL.OnlineConvex.SourceSubdifferential (loss t) z).Nonempty) (u : E) (hu : u ∈ V) : (∑ t ∈ range T, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤ divergence ψ u x0 / η - (∑ t ∈ range T, divergence ψ (x (t + 1)) (x t)) / η",
+  "statement_hash": "bbcef2c2756910c0ee28aae32fcdbc072877b99d397d1879315650ac82642ff4",
+  "source_assumptions": [],
+  "created_at": "2026-10-09T14:40:54+00:00"
+}

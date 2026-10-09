@@ -1,0 +1,18 @@
+{
+  "prior_actual_exit": 1,
+  "prior_receipt_sha256": "4c4ea980f7bc5b6f5efb28ef0a2fb134f0f33e6132c426d3f111c4373ce9cc62",
+  "actual_diagnostic_sha256": "ed430583cdcbeeefdd0872026e8178729137383239e32c3853222c6460b71218",
+  "failure": "Both actual compiled proof roots are And.casesOn from destructuring old conjunctions; the deliberately non-normalizing numeric selector cannot reach And.intro without unfolding/eliminating that outer recursor.",
+  "repair": "Replace only the two old-fact obtain destructurings by exact component projections in local have bindings. Same old facts, actual algorithm and numeric proof transports; no theorem unfolding/proof-irrelevance normalization in audit, no header or production mutation.",
+  "exact_replacements": [
+    {
+      "before": "  obtain ⟨hf0, hf1, hs0, hs1, hstrict, _, _, _, h0, h1, h2, _, hD10, hD01, _, _⟩ :=\n    BanditRL.OnlinePrescientBregmanCanary.two_distinct_current_losses\n",
+      "after": "  have hf0 := BanditRL.OnlinePrescientBregmanCanary.two_distinct_current_losses.1\n  have hf1 := BanditRL.OnlinePrescientBregmanCanary.two_distinct_current_losses.2.1\n  have hs0 := BanditRL.OnlinePrescientBregmanCanary.two_distinct_current_losses.2.2.1\n  have hs1 := BanditRL.OnlinePrescientBregmanCanary.two_distinct_current_losses.2.2.2.1\n  have hstrict := BanditRL.OnlinePrescientBregmanCanary.two_distinct_current_losses.2.2.2.2.1\n  have h0 := BanditRL.OnlinePrescientBregmanCanary.two_distinct_current_losses.2.2.2.2.2.2.2.2.1\n  have h1 := BanditRL.OnlinePrescientBregmanCanary.two_distinct_current_losses.2.2.2.2.2.2.2.2.2.1\n  have h2 := BanditRL.OnlinePrescientBregmanCanary.two_distinct_current_losses.2.2.2.2.2.2.2.2.2.2.1\n  have hD10 := BanditRL.OnlinePrescientBregmanCanary.two_distinct_current_losses.2.2.2.2.2.2.2.2.2.2.2.2.1\n  have hD01 := BanditRL.OnlinePrescientBregmanCanary.two_distinct_current_losses.2.2.2.2.2.2.2.2.2.2.2.2.2.1\n"
+    },
+    {
+      "before": "  obtain ⟨hf0, _, hs0, _, hclosed, hstrict, hdiffAll, hseqOld, _, _, _, _, _, _, _, _⟩ :=\n    fixed_signed_run\n",
+      "after": "  have hf0 := fixed_signed_run.1\n  have hs0 := fixed_signed_run.2.2.1\n  have hclosed := fixed_signed_run.2.2.2.2.1\n  have hstrict := fixed_signed_run.2.2.2.2.2.1\n  have hdiffAll := fixed_signed_run.2.2.2.2.2.2.1\n  have hseqOld := fixed_signed_run.2.2.2.2.2.2.2.1\n"
+    }
+  ],
+  "production_sha256": "415c4c9d3e8b262afd6f849b97afad2b372a7e17233e1ac22dc8f74cc56d038d"
+}

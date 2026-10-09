@@ -1,0 +1,25 @@
+{
+  "stage": "stabilized",
+  "context": "import BanditRLProof.OnlinePrescientBregmanRegret\nimport Tests.OnlinePrescientBregmanCanary\nimport Mathlib.Analysis.Convex.SpecificFunctions.Basic\nnoncomputable section\nopen Set Finset BanditRL.OnlineConvex BanditRL.OnlineBregman BanditRL.OnlinePrescientBregman\nnamespace BanditRL.OnlinePrescientBregmanRegretCanary\n",
+  "targets": [
+    {
+      "name": "fixed_signed_run",
+      "declaration": "BanditRL.OnlinePrescientBregmanRegretCanary.fixed_signed_run",
+      "exact_header": "theorem fixed_signed_run :\n    let V : Set ℝ := Icc (-1) 1\n    let ψ : ℝ → ℝ := fun z => z ^ 4 / 4 + z ^ 2 / 2\n    let f0 : ℝ → EReal := fun z => if z ∈ V then ((|z| : ℝ) : EReal) else ⊤\n    let f1 : ℝ → EReal := fun z => if z ∈ V then ((-5 * z / 8 : ℝ) : EReal) else ⊤\n    let loss : ℕ → ℝ → EReal := fun t => if t = 0 then f0 else f1\n    let x : ℕ → ℝ := fun t => if t = 1 then 0 else 1 / 2\n    SourceProper f0 ∧ SourceProper f1 ∧\n      (∀ z ∈ V, (SourceSubdifferential f0 z).Nonempty) ∧\n      (∀ z ∈ V, (SourceSubdifferential f1 z).Nonempty) ∧\n      SourceClosed (fun z => ((ψ z : ℝ) : EReal)) ∧\n      StrictConvexOn ℝ univ ψ ∧ DifferentiableOn ℝ ψ univ ∧\n      (∀ t ≤ 2, iterate V ψ (fun _ => 1) loss (1 / 2) t = some (x t)) ∧\n      divergence ψ (-1 / 2) (x 2) = 5 / 8 ∧\n      divergence ψ (x 1) (x 0) = 11 / 64 ∧\n      divergence ψ (x 2) (x 1) = 9 / 64 ∧\n      (∀ u ∈ V, (∑ t ∈ range 2, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤\n        (∑ t ∈ range 2, (divergence ψ u (x t) - divergence ψ u (x (t + 1))) / 1) -\n        ∑ t ∈ range 2, divergence ψ (x (t + 1)) (x t) / 1) ∧\n      (∀ u ∈ V, (∑ t ∈ range 2, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤\n        divergence ψ u (1 / 2) / 1 - divergence ψ u (x 2) / 1 -\n        (∑ t ∈ range 2, divergence ψ (x (t + 1)) (x t)) / 1) ∧\n      (∀ u ∈ V, (∑ t ∈ range 2, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤\n        divergence ψ u (1 / 2) / 1 -\n        (∑ t ∈ range 2, divergence ψ (x (t + 1)) (x t)) / 1) ∧\n      (-9 / 8 : ℝ) ≤ -5 / 16 ∧ (-9 / 8 : ℝ) ≤ 5 / 16",
+      "statement_sha256": "2f0b6cfa5ac0b81b94f7a573df0560f9505077efa8600e84ce8542f9ed557c3b",
+      "file": "Tests/OnlinePrescientBregmanRegretCanary.lean"
+    },
+    {
+      "name": "decreasing_signed_run",
+      "declaration": "BanditRL.OnlinePrescientBregmanRegretCanary.decreasing_signed_run",
+      "exact_header": "theorem decreasing_signed_run :\n    let V : Set ℝ := Icc (-1) 1\n    let ψ : ℝ → ℝ := fun z => z ^ 4 / 4 + z ^ 2 / 2\n    let f0 : ℝ → EReal := fun z => if z ∈ V then ((|z| : ℝ) : EReal) else ⊤\n    let f1 : ℝ → EReal := fun z => if z ∈ V then ((-5 * z / 4 : ℝ) : EReal) else ⊤\n    let loss : ℕ → ℝ → EReal := fun t => if t = 0 then f0 else f1\n    let η : ℕ → ℝ := fun t => if t = 0 then 1 else 1 / 2\n    let x : ℕ → ℝ := fun t => if t = 1 then 0 else 1 / 2\n    SourceProper f0 ∧ SourceProper f1 ∧\n      (∀ z ∈ V, (SourceSubdifferential f0 z).Nonempty) ∧\n      (∀ z ∈ V, (SourceSubdifferential f1 z).Nonempty) ∧\n      SourceClosed (fun z => ((ψ z : ℝ) : EReal)) ∧\n      StrictConvexOn ℝ univ ψ ∧ DifferentiableOn ℝ ψ univ ∧\n      η 0 = 1 ∧ η 1 = 1 / 2 ∧\n      (∀ t < 2, 0 < η t) ∧\n      (∀ t, t + 1 < 2 → η (t + 1) ≤ η t) ∧\n      (∀ t ≤ 2, iterate V ψ η loss (1 / 2) t = some (x t)) ∧\n      divergence ψ (-1 / 2) (x 2) = 5 / 8 ∧\n      divergence ψ (-1 / 2) (x 1) = 9 / 64 ∧\n      (∑ t ∈ range 2, divergence ψ (x (t + 1)) (x t) / η t) = 29 / 64 ∧\n      ((range 2).sup' (by decide) (fun t => divergence ψ (-1 / 2) (x t))) = 5 / 8 ∧\n      ((range 2).sup' (by decide) (fun t => divergence ψ (1 / 2) (x t))) = 9 / 64 ∧\n      divergence ψ (1 / 2) (x 0) = 0 ∧\n      (∀ u ∈ V, (∑ t ∈ range 2, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤\n        ((range 2).sup' (by decide) (fun t => divergence ψ u (x t))) / η 1 -\n        divergence ψ u (x 2) / η 1 -\n        ∑ t ∈ range 2, divergence ψ (x (t + 1)) (x t) / η t) ∧\n      (∀ u ∈ V, (∑ t ∈ range 2, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤\n        ((range 2).sup' (by decide) (fun t => divergence ψ u (x t))) / η 1 -\n        ∑ t ∈ range 2, divergence ψ (x (t + 1)) (x t) / η t) ∧\n      (-7 / 4 : ℝ) ≤ -29 / 64 ∧ (-1 / 2 : ℝ) ≤ -11 / 64",
+      "statement_sha256": "5ffdb5e7429d6f812b57d933176ea3bb29bf0352cabd42fb283d55bfd018d1f4",
+      "file": "Tests/OnlinePrescientBregmanRegretCanary.lean"
+    }
+  ],
+  "whole_Goal_status": "ACTIVE",
+  "CONTRACT_review_sha256": "e3d0d9738b180eb1ad437e9fef3c975f0dd19cebf958098188d78a8bdcb7cecb",
+  "decoder_sha256": "52ebd70bd7fd6bff3c2f2f405c75b5d87356c1997fcca6c3da46dbd3c1e39154",
+  "allowed_file": "Tests/OnlinePrescientBregmanRegretCanary.lean",
+  "edit_boundary": "Exact two complete conjunction bodies and necessary imports only. No new named helpers; numeric branches retain required new production proof VALUES. No root/reader/site/publication before separate integration review."
+}

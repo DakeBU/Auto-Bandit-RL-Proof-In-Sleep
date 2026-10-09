@@ -1,0 +1,45 @@
+{
+  "targets": [
+    {
+      "name": "iterate_divergence_sum",
+      "declaration": "BanditRL.OnlinePrescientBregman.iterate_divergence_sum",
+      "exact_header": "theorem iterate_divergence_sum (V X : Set E) (hV : Convex ℝ V) (ψ : E → ℝ)\n    (hd : DifferentiableOn ℝ ψ (interior X)) (η : ℕ → ℝ)\n    (loss : ℕ → E → EReal) (x0 : E) (x : ℕ → E) (T : ℕ)\n    (hseq : ∀ t ≤ T, iterate V ψ η loss x0 t = some (x t))\n    (hinterior : ∀ t ≤ T, x t ∈ interior X)\n    (hη : ∀ t < T, 0 < η t)\n    (hf : ∀ t < T, BanditRL.OnlineConvex.SourceProper (loss t))\n    (hs : ∀ t < T, ∀ z ∈ V,\n      (BanditRL.OnlineConvex.SourceSubdifferential (loss t) z).Nonempty)\n    (u : E) (hu : u ∈ V) :\n    (∑ t ∈ range T, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤\n      (∑ t ∈ range T, (divergence ψ u (x t) - divergence ψ u (x (t + 1))) / η t) -\n      ∑ t ∈ range T, divergence ψ (x (t + 1)) (x t) / η t",
+      "statement_sha256": "bdbcec04edeaac56c4491cfabaa4a606d2d81f64e10c8c519ce942722aeeea5a",
+      "file": "BanditRLProof/OnlinePrescientBregmanRegret.lean"
+    },
+    {
+      "name": "iterate_fixed_sharp",
+      "declaration": "BanditRL.OnlinePrescientBregman.iterate_fixed_sharp",
+      "exact_header": "theorem iterate_fixed_sharp (V X : Set E) (hV : Convex ℝ V) (ψ : E → ℝ)\n    (hd : DifferentiableOn ℝ ψ (interior X)) (η : ℝ) (hη : 0 < η)\n    (loss : ℕ → E → EReal) (x0 : E) (x : ℕ → E) (T : ℕ)\n    (hseq : ∀ t ≤ T, iterate V ψ (fun _ => η) loss x0 t = some (x t))\n    (hinterior : ∀ t ≤ T, x t ∈ interior X)\n    (hf : ∀ t < T, BanditRL.OnlineConvex.SourceProper (loss t))\n    (hs : ∀ t < T, ∀ z ∈ V,\n      (BanditRL.OnlineConvex.SourceSubdifferential (loss t) z).Nonempty)\n    (u : E) (hu : u ∈ V) :\n    (∑ t ∈ range T, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤\n      divergence ψ u x0 / η - divergence ψ u (x T) / η -\n      (∑ t ∈ range T, divergence ψ (x (t + 1)) (x t)) / η",
+      "statement_sha256": "188ac582493481b8f41e7efaf1ab63dbf467a499c73514fc2fbb3037fa8fffa0",
+      "file": "BanditRLProof/OnlinePrescientBregmanRegret.lean"
+    },
+    {
+      "name": "iterate_variable_sharp",
+      "declaration": "BanditRL.OnlinePrescientBregman.iterate_variable_sharp",
+      "exact_header": "theorem iterate_variable_sharp (V X : Set E) (hV : Convex ℝ V) (ψ : E → ℝ)\n    (hd : DifferentiableOn ℝ ψ (interior X)) (η : ℕ → ℝ)\n    (loss : ℕ → E → EReal) (x0 : E) (x : ℕ → E) (T : ℕ) (hT : 0 < T)\n    (hseq : ∀ t ≤ T, iterate V ψ η loss x0 t = some (x t))\n    (hinterior : ∀ t ≤ T, x t ∈ interior X)\n    (hη : ∀ t < T, 0 < η t)\n    (hmono : ∀ t, t + 1 < T → η (t + 1) ≤ η t)\n    (hf : ∀ t < T, BanditRL.OnlineConvex.SourceProper (loss t))\n    (hs : ∀ t < T, ∀ z ∈ V,\n      (BanditRL.OnlineConvex.SourceSubdifferential (loss t) z).Nonempty)\n    (u : E) (hu : u ∈ V) (M : ℝ)\n    (hbound : ∀ t < T, divergence ψ u (x t) ≤ M) :\n    (∑ t ∈ range T, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤\n      M / η (T - 1) - divergence ψ u (x T) / η (T - 1) -\n      ∑ t ∈ range T, divergence ψ (x (t + 1)) (x t) / η t",
+      "statement_sha256": "66f88b1ada32e29fd13715276f063429dd2b8a9abf50f64f92940dce1a932e8d",
+      "file": "BanditRLProof/OnlinePrescientBregmanRegret.lean"
+    },
+    {
+      "name": "iterate_fixed_regret",
+      "declaration": "BanditRL.OnlinePrescientBregman.iterate_fixed_regret",
+      "exact_header": "theorem iterate_fixed_regret (V X : Set E) (hV : Convex ℝ V) (hVX : V ⊆ X)\n    (ψ : E → ℝ) (hc : StrictConvexOn ℝ X ψ)\n    (hd : DifferentiableOn ℝ ψ (interior X)) (η : ℝ) (hη : 0 < η)\n    (loss : ℕ → E → EReal) (x0 : E) (x : ℕ → E) (T : ℕ)\n    (hseq : ∀ t ≤ T, iterate V ψ (fun _ => η) loss x0 t = some (x t))\n    (hinterior : ∀ t ≤ T, x t ∈ interior X)\n    (hf : ∀ t < T, BanditRL.OnlineConvex.SourceProper (loss t))\n    (hs : ∀ t < T, ∀ z ∈ V,\n      (BanditRL.OnlineConvex.SourceSubdifferential (loss t) z).Nonempty)\n    (u : E) (hu : u ∈ V) :\n    (∑ t ∈ range T, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤\n      divergence ψ u x0 / η -\n      (∑ t ∈ range T, divergence ψ (x (t + 1)) (x t)) / η",
+      "statement_sha256": "57cb27b5edf71b13704a91bf65c3b37988cb00ab1d8fa06e22668b452dcd5909",
+      "file": "BanditRLProof/OnlinePrescientBregmanRegret.lean"
+    },
+    {
+      "name": "iterate_variable_regret",
+      "declaration": "BanditRL.OnlinePrescientBregman.iterate_variable_regret",
+      "exact_header": "theorem iterate_variable_regret (V X : Set E) (hV : Convex ℝ V) (hVX : V ⊆ X)\n    (ψ : E → ℝ) (hc : StrictConvexOn ℝ X ψ)\n    (hd : DifferentiableOn ℝ ψ (interior X)) (η : ℕ → ℝ)\n    (loss : ℕ → E → EReal) (x0 : E) (x : ℕ → E) (T : ℕ) (hT : 0 < T)\n    (hseq : ∀ t ≤ T, iterate V ψ η loss x0 t = some (x t))\n    (hinterior : ∀ t ≤ T, x t ∈ interior X)\n    (hη : ∀ t < T, 0 < η t)\n    (hmono : ∀ t, t + 1 < T → η (t + 1) ≤ η t)\n    (hf : ∀ t < T, BanditRL.OnlineConvex.SourceProper (loss t))\n    (hs : ∀ t < T, ∀ z ∈ V,\n      (BanditRL.OnlineConvex.SourceSubdifferential (loss t) z).Nonempty)\n    (u : E) (hu : u ∈ V) :\n    (∑ t ∈ range T, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤\n      ((range T).sup' (nonempty_range_iff.mpr (Nat.ne_of_gt hT))\n        (fun t => divergence ψ u (x t))) / η (T - 1) -\n      ∑ t ∈ range T, divergence ψ (x (t + 1)) (x t) / η t",
+      "statement_sha256": "3ef0b8101fd8e4d4328eaa09537a35cba6201dbac5719287c9d4b95adab36542",
+      "file": "BanditRLProof/OnlinePrescientBregmanRegret.lean"
+    }
+  ],
+  "current_production_count": 5,
+  "source_card_count": 11,
+  "source_math_containers": 14,
+  "expected_original_images": 12,
+  "no_Test_catalogue": true,
+  "transport": "Actual local file URI; no HTTP service or live claim."
+}

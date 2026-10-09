@@ -1,0 +1,30 @@
+{
+  "prior_actual_exit": 1,
+  "prior_receipt_sha256": "f06d4a080098eab21248cd87403ca2b5f42a5bdf61cc88e2c81109f56f80bc2a",
+  "failure": "Finset.sup'_le_iff has explicit nonempty/function parameters; field .mpr was not an instantiated equivalence. Underspecified le_sup' function metavariables failed to elaborate.",
+  "repair": "Use existing Finset.sup'_le with actual nonempty/function parameters and explicit identical functions in le_sup'. Remove one unused simp argument only. Frozen complete headers, loss, actual recurrence, max domain and all numeric targets unchanged.",
+  "exact_replacements": [
+    [
+      "apply Finset.sup'_le_iff.mpr",
+      "apply Finset.sup'_le (by decide) _"
+    ],
+    [
+      "Finset.le_sup' _ (by decide : 0 ∈ range 2)",
+      "Finset.le_sup' (fun t => divergence ψ (-1 / 2) (x t)) (by decide : 0 ∈ range 2)"
+    ],
+    [
+      "Finset.le_sup' _ (by decide : 1 ∈ range 2)",
+      "Finset.le_sup' (fun t => divergence ψ (1 / 2) (x t)) (by decide : 1 ∈ range 2)"
+    ],
+    [
+      "(fun t ht => Finset.le_sup' _ (mem_range.mpr ht))",
+      "(fun t ht => Finset.le_sup' (fun s => divergence ψ u (x s)) (mem_range.mpr ht))"
+    ],
+    [
+      "simp [x, divergence_self]",
+      "simp [divergence_self]"
+    ]
+  ],
+  "frozen_header_sha256": "5ffdb5e7429d6f812b57d933176ea3bb29bf0352cabd42fb283d55bfd018d1f4",
+  "production_sha256": "415c4c9d3e8b262afd6f849b97afad2b372a7e17233e1ac22dc8f74cc56d038d"
+}
