@@ -1,0 +1,116 @@
+Necessary exact definition context only. Not a production file and no proof or verdict is supplied.
+Ambient notation: open Filter MeasureTheory ProbabilityTheory Asymptotics BanditRL.OnlineLearning unitInterval; universes u v w z.
+
+Actual scoped name BanditRL.OnlineLearning.comparatorRegret
+noncomputable def comparatorRegret {X : Type*} (loss : ℕ → X → ℝ)
+    (prediction : ℕ → X) (u : X) (T : ℕ) : ℝ :=
+  (∑ t ∈ Finset.range T, loss t (prediction t)) - ∑ t ∈ Finset.range T, loss t u
+
+Actual scoped name BanditRL.OnlineLearning.NoRegret
+def NoRegret {X : Type*} (V : Set X) (loss : ℕ → X → ℝ) (prediction : ℕ → X) : Prop :=
+  ∀ u ∈ V, ∀ ε : ℝ, 0 < ε → ∀ᶠ T in atTop,
+    comparatorRegret loss prediction u T / T ≤ ε
+
+Actual scoped name BanditRL.OnlineLearning.LimitNoRegret
+def LimitNoRegret {X : Type*} (V : Set X) (loss : ℕ → X → ℝ)
+    (prediction : ℕ → X) : Prop :=
+  ∀ u ∈ V, ∃ a : ℝ, a ≤ 0 ∧
+    Tendsto (fun T : ℕ => comparatorRegret loss prediction u T / T) atTop (nhds a)
+
+Actual scoped name BanditRL.OnlineLearning.empiricalMean
+noncomputable def empiricalMean (y : ℕ → ℝ) (n : ℕ) : ℝ :=
+  (∑ t ∈ Finset.range n, y t) / n
+
+Actual scoped name BanditRL.OnlineLearning.meanPredict
+noncomputable def meanPredict (y : ℕ → ℝ) (t : ℕ) : ℝ :=
+  if t = 0 then 1/2 else empiricalMean y t
+
+Actual scoped name BanditRL.OnlineLearning.ftlPredict
+noncomputable def ftlPredict (initial : ℝ) (y : ℕ → ℝ) (t : ℕ) : ℝ :=
+  if t = 0 then initial else empiricalMean y t
+
+Actual scoped name BanditRL.OnlineLearning.ftlMeanStep
+noncomputable def ftlMeanStep (state : ℕ × ℝ) (target : ℝ) : ℕ × ℝ :=
+  (state.1 + 1, state.2 + (target - state.2) / ((state.1 : ℝ) + 1))
+
+Actual scoped name BanditRL.OnlineLearning.ftlState
+noncomputable def ftlState (initial : ℝ) (y : ℕ → ℝ) : ℕ → ℕ × ℝ
+  | 0 => (0, initial)
+  | t + 1 => ftlMeanStep (ftlState initial y t) (y t)
+
+Actual scoped name BanditRL.OnlineLearning.squaredBestRegret
+noncomputable def squaredBestRegret (y prediction : ℕ → ℝ) (T : ℕ) : ℝ :=
+  (∑ t ∈ Finset.range T, (prediction t - y t)^2) -
+    sInf ((fun u : ℝ => ∑ t ∈ Finset.range T, (u - y t)^2) ''
+      Set.Icc (0 : ℝ) 1)
+
+Actual scoped name BanditRL.OnlineLearning.expectedFixedMinimum
+noncomputable def expectedFixedMinimum {Ω : Type*} [MeasurableSpace Ω]
+    (μ : Measure Ω) (Y : ℕ → Ω → ℝ) (T : ℕ) : ℝ :=
+  sInf ((fun u : ℝ => ∫ ω, ∑ t ∈ Finset.range T, (u - Y t ω)^2 ∂μ) ''
+    Set.Icc (0 : ℝ) 1)
+
+Actual scoped name BanditRL.OnlineLearning.expectedFixedRegret
+noncomputable def expectedFixedRegret {Ω : Type*} [MeasurableSpace Ω]
+    (μ : Measure Ω) (Y prediction : ℕ → Ω → ℝ) (T : ℕ) : ℝ :=
+  (∫ ω, ∑ t ∈ Finset.range T, (prediction t ω - Y t ω)^2 ∂μ) -
+    expectedFixedMinimum μ Y T
+
+Actual scoped name BanditRL.OnlineLearning.privateSeedPastInformation
+def privateSeedPastInformation {Ω : Type u} {Seed : Type v} [MeasurableSpace Seed]
+    (S : Ω → Seed) (Y : ℕ → Ω → ℝ) (t : ℕ) : MeasurableSpace Ω :=
+  MeasurableSpace.comap (fun ω => (S ω, fun i : (↑(Finset.range t) : Type) => Y i ω))
+    inferInstance
+
+Actual scoped name BanditRL.OnlineLearning.KernelDecisionHistory
+abbrev KernelDecisionHistory (t : ℕ) := (Fin t → I) × (Fin t → ℝ)
+
+Actual scoped name BanditRL.OnlineLearning.KernelDecisionSampler
+abbrev KernelDecisionSampler := (t : ℕ) → KernelDecisionHistory t → I → I
+
+Actual scoped name BanditRL.OnlineLearning.kernelGeneratedActions
+def kernelGeneratedActions (f : KernelDecisionSampler) :
+    (t : ℕ) → (Fin t → I) → (Fin t → ℝ) → (Fin t → I)
+  | 0, _, _ => Fin.elim0
+  | t + 1, u, y =>
+      let past := kernelGeneratedActions f t (fun i => u i.castSucc) (fun i => y i.castSucc)
+      Fin.snoc past (f t (past, fun i => y i.castSucc) (u (Fin.last t)))
+
+Actual scoped name BanditRL.OnlineLearning.kernelCausalPolicy
+def kernelCausalPolicy (f : KernelDecisionSampler) (t : ℕ)
+    (q : (ℕ → I) × (Fin t → ℝ)) : I :=
+  f t (kernelGeneratedActions f t (fun i => q.1 i) q.2, q.2) (q.1 t)
+
+Actual scoped name BanditRL.OnlineLearning.kernelGeneratedHistory
+def kernelGeneratedHistory (f : KernelDecisionSampler) (t : ℕ)
+    (ω : (ℕ → I) × (ℕ → ℝ)) : KernelDecisionHistory t :=
+  (kernelGeneratedActions f t (fun i => ω.1 i) (fun i => ω.2 i), fun i => ω.2 i)
+
+Actual scoped name BanditRL.OnlineLearning.kernelGeneratedPrediction
+def kernelGeneratedPrediction (f : KernelDecisionSampler) (t : ℕ)
+    (ω : (ℕ → I) × (ℕ → ℝ)) : I :=
+  kernelCausalPolicy f t (ω.1, fun i => ω.2 i)
+
+Actual scoped name BanditRL.OnlineLearning.dyadicObservation
+noncomputable def dyadicObservation : ℕ → ℝ
+  | 0 => 0
+  | n + 1 => 1 - dyadicObservation (n / 2)
+termination_by n => n
+decreasing_by omega
+
+Actual scoped name BanditRL.OnlineLearning.GuessingLower.binaryStream
+def binaryStream (h : List Bool) (t : ℕ) : Bool :=
+  (h.reverse[t]?).getD false
+
+Actual scoped name BanditRL.OnlineLearning.GuessingLower.binaryValues
+def binaryValues (h : List Bool) (t : ℕ) : ℝ :=
+  if binaryStream h t then 1 else 0
+
+Actual scoped name BanditRL.OnlineLearning.GuessingLower.causalPredict
+noncomputable def causalPredict (A : List Bool → ℝ) (y : ℕ → Bool) (t : ℕ) : ℝ :=
+  A (List.ofFn (fun i : Fin t => y i)).reverse
+
+Actual scoped name BanditRL.OnlineLearning.GuessingLower.pathRegret
+noncomputable def pathRegret (A : List Bool → ℝ) (h : List Bool) : ℝ :=
+  comparatorRegret (fun t x => (x - binaryValues h t)^2)
+    (causalPredict A (binaryStream h)) (empiricalMean (binaryValues h) h.length) h.length

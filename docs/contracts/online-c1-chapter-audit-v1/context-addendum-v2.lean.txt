@@ -1,0 +1,12 @@
+Exact additional context definitions only, with scoped ambient notation already supplied in context-v1.lean.txt. No proof body or source identity is supplied.
+
+Actual scoped name BanditRL.OnlineLearning.kernelUniformTapeLaw
+noncomputable abbrev kernelUniformTapeLaw : Measure (ℕ → I) :=
+  Measure.infinitePi (fun _ : ℕ => (volume : Measure I))
+
+Actual scoped name BanditRL.OnlineLearning.kernelGameLaw
+noncomputable abbrev kernelGameLaw (ν : ProbabilityMeasure (ℕ → ℝ)) : Measure ((ℕ → I) × (ℕ → ℝ)) :=
+  kernelUniformTapeLaw.prod (ν : Measure (ℕ → ℝ))
+
+Actual scoped global name harmonic
+def harmonic : ℕ → ℚ := fun n => ∑ i ∈ Finset.range n, (↑(i + 1))⁻¹

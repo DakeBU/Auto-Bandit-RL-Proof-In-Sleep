@@ -1,0 +1,490 @@
+{
+  "rows": [
+    {
+      "source_id": "C1-GAME",
+      "printed_page": 1,
+      "pdf_page": 13,
+      "kind": "definition/information",
+      "required_maintext": true,
+      "pinned_intent": "Outputs and targets in[0,1], predict before reveal; squared loss. Deterministic/adversarial game and IID motivation separated.",
+      "exact_public_names": [
+        "BanditRL.OnlineLearning.meanPredict_prefix",
+        "BanditRL.OnlineLearning.meanPredict_mem",
+        "BanditRL.OnlineLearning.ftlPredict_prefix",
+        "BanditRL.OnlineLearning.ftlPredict_mem",
+        "BanditRL.OnlineLearning.randomized_history_policy_independent",
+        "BanditRL.OnlineLearning.completed_predictable_private_seed_independent"
+      ],
+      "current_semantic_contract": "Same unit squared-loss game. Strict-prefix deterministic/state causality is produced; IID current independence is produced from independent private randomness and strict past. Pathwise every-realization bound permits an adversary observing the deterministic current choice. It does not assert an arbitrary action-dependent stochastic environment is IID.",
+      "status": "source-reconciled-native; chapter gate pending post-native/site/delivery",
+      "acceptance_permission": "No API presence, old accepted-local flag, theorem count or individual package delivery closes this source object.",
+      "current_gate_status": "source-reconciled-native; chapter gate pending post-native/site/delivery",
+      "current_evidence": {
+        "source_contract": "264ef5d139323bdd0fa32048d3ea1299a2a6ed65610edb70f6c07b6848626da8",
+        "source_correction": "ea1d3ccb42831139b84cce6877a02bdc66cd92917eea18c20ac91b48ef7af9b2",
+        "production_BODY": "ab038b4c25f861d2c0a10b102e1450a89c3a19a515d1c24e97838d3ffa467381",
+        "canary_BODY": "387496d0a7ddf05a3dac7568d053e8d9bfba67e620ae9a2614e80df8d0abbe1a",
+        "combined_gate": "5cfcef0d72b56adb26dc407d6b312c062cdca62b70aaa184bfbe187d39a687a2"
+      },
+      "historical_candidate_status": "draft-chapter-reconciliation; full semantic/current compiled/chapter gates pending",
+      "FINAL_verdict": "accepted-with-explicit-delta",
+      "FINAL_receipt_sha256": "7f0ade24d0d121dcd4d9d7d91a5c73478b5b5d011c6433ec5242e418b02abf50"
+    },
+    {
+      "source_id": "C1-IID-MEAN",
+      "printed_page": 1,
+      "pdf_page": 13,
+      "kind": "unnumbered formal result",
+      "required_maintext": true,
+      "pinned_intent": "Mean minimizes expected squared loss, optimum variance; probability/L2/interval support conditions must be explicit.",
+      "exact_public_names": [
+        "BanditRL.OnlineLearning.expected_fixed_prefix_decomposition",
+        "BanditRL.OnlineLearning.expected_fixed_prefix_minimum",
+        "BanditRL.OnlineLearning.expectedFixedMinimum_eq_variance",
+        "BanditRL.OnlineLearning.constant_mean_expectedFixed_excess_zero"
+      ],
+      "current_semantic_contract": "Mean oracle is an analytical benchmark, never supplied to unknown-law meanPredict. Probability, measurability and AE unit support are explicit. The expected FIXED-comparator minimum lies OUTSIDE expectation; IsLeast is produced before real csInf. No min/expectation interchange.",
+      "status": "source-reconciled-native; chapter gate pending post-native/site/delivery",
+      "acceptance_permission": "No API presence, old accepted-local flag, theorem count or individual package delivery closes this source object.",
+      "current_gate_status": "source-reconciled-native; chapter gate pending post-native/site/delivery",
+      "current_evidence": {
+        "source_contract": "264ef5d139323bdd0fa32048d3ea1299a2a6ed65610edb70f6c07b6848626da8",
+        "source_correction": "ea1d3ccb42831139b84cce6877a02bdc66cd92917eea18c20ac91b48ef7af9b2",
+        "production_BODY": "ab038b4c25f861d2c0a10b102e1450a89c3a19a515d1c24e97838d3ffa467381",
+        "canary_BODY": "387496d0a7ddf05a3dac7568d053e8d9bfba67e620ae9a2614e80df8d0abbe1a",
+        "combined_gate": "5cfcef0d72b56adb26dc407d6b312c062cdca62b70aaa184bfbe187d39a687a2"
+      },
+      "historical_candidate_status": "draft-chapter-reconciliation; full semantic/current compiled/chapter gates pending",
+      "FINAL_verdict": "accepted-with-explicit-delta",
+      "FINAL_receipt_sha256": "7f0ade24d0d121dcd4d9d7d91a5c73478b5b5d011c6433ec5242e418b02abf50"
+    },
+    {
+      "source_id": "C1-IID-LOWER",
+      "printed_page": 1,
+      "pdf_page": 13,
+      "kind": "unnumbered main performance bound",
+      "required_maintext": true,
+      "pinned_intent": "Every causal measurable bounded prediction has cumulative expected loss at least T*variance under IID targets; current-target independence must be derived.",
+      "exact_public_names": [
+        "BanditRL.OnlineLearning.randomized_history_policy_expectedFixed_excess",
+        "BanditRL.OnlineLearning.ae_predictable_private_seed_expectedFixed_excess",
+        "BanditRL.OnlineLearning.completed_predictable_private_seed_expectedFixed_excess",
+        "BanditRL.OnlineLearning.causal_kernel_realization_and_expectedFixed_excess"
+      ],
+      "current_semantic_contract": "Every quantified measurable legal-cube private-seed policy, AE/completed predictable version, and produced unit-valued causal-kernel strategy has nonnegative expected fixed regret under joint IID and independent private randomness. Current independence is derived, not an input oracle. Audit whether these explicit mathematical strategy/information models discharge the source cannot-do-better claim; the arbitrary-protocol/filtration/private-state reduction caveat is preserved for reviewer adjudication, not silently removed.",
+      "status": "source-reconciled-native; chapter gate pending post-native/site/delivery",
+      "acceptance_permission": "No API presence, old accepted-local flag, theorem count or individual package delivery closes this source object.",
+      "current_gate_status": "source-reconciled-native; chapter gate pending post-native/site/delivery",
+      "current_evidence": {
+        "source_contract": "264ef5d139323bdd0fa32048d3ea1299a2a6ed65610edb70f6c07b6848626da8",
+        "source_correction": "ea1d3ccb42831139b84cce6877a02bdc66cd92917eea18c20ac91b48ef7af9b2",
+        "production_BODY": "ab038b4c25f861d2c0a10b102e1450a89c3a19a515d1c24e97838d3ffa467381",
+        "canary_BODY": "387496d0a7ddf05a3dac7568d053e8d9bfba67e620ae9a2614e80df8d0abbe1a",
+        "combined_gate": "5cfcef0d72b56adb26dc407d6b312c062cdca62b70aaa184bfbe187d39a687a2"
+      },
+      "historical_candidate_status": "draft-chapter-reconciliation; full semantic/current compiled/chapter gates pending",
+      "FINAL_verdict": "accepted-with-explicit-delta",
+      "FINAL_receipt_sha256": "7f0ade24d0d121dcd4d9d7d91a5c73478b5b5d011c6433ec5242e418b02abf50"
+    },
+    {
+      "source_id": "C1-EQ1.1-1.2",
+      "printed_page": 1,
+      "pdf_page": 13,
+      "kind": "equations/normalization",
+      "required_maintext": true,
+      "pinned_intent": "Expected total excess over T*variance and average excess over variance; T>0 normalization; sublinear/vanishing equivalence needs precise asymptotic meaning.",
+      "exact_public_names": [
+        "BanditRL.OnlineLearning.normalized_excess",
+        "BanditRL.OnlineLearning.history_policy_normalized_expectedFixed_excess",
+        "BanditRL.OnlineLearning.centered_total_sublinear_iff_average",
+        "BanditRL.OnlineLearning.randomized_history_policy_success_iff"
+      ],
+      "current_semantic_contract": "Exact total-average identity only for T>0. Little-o centered total iff ordinary zero average holds on the same all-time process, using eventually positive horizons. General strategy success is characterized, not asserted for every strategy; T0 is separately an empty extension.",
+      "status": "source-reconciled-native; chapter gate pending post-native/site/delivery",
+      "acceptance_permission": "No API presence, old accepted-local flag, theorem count or individual package delivery closes this source object.",
+      "current_gate_status": "source-reconciled-native; chapter gate pending post-native/site/delivery",
+      "current_evidence": {
+        "source_contract": "264ef5d139323bdd0fa32048d3ea1299a2a6ed65610edb70f6c07b6848626da8",
+        "source_correction": "ea1d3ccb42831139b84cce6877a02bdc66cd92917eea18c20ac91b48ef7af9b2",
+        "production_BODY": "ab038b4c25f861d2c0a10b102e1450a89c3a19a515d1c24e97838d3ffa467381",
+        "canary_BODY": "387496d0a7ddf05a3dac7568d053e8d9bfba67e620ae9a2614e80df8d0abbe1a",
+        "combined_gate": "5cfcef0d72b56adb26dc407d6b312c062cdca62b70aaa184bfbe187d39a687a2"
+      },
+      "historical_candidate_status": "draft-chapter-reconciliation; full semantic/current compiled/chapter gates pending",
+      "FINAL_verdict": "accepted-with-explicit-delta",
+      "FINAL_receipt_sha256": "7f0ade24d0d121dcd4d9d7d91a5c73478b5b5d011c6433ec5242e418b02abf50"
+    },
+    {
+      "source_id": "C1-REGRET",
+      "printed_page": 2,
+      "pdf_page": 14,
+      "kind": "definition",
+      "required_maintext": true,
+      "pinned_intent": "Best-fixed-in-hindsight regret and comparator-parameterized difference of sums; all feasible comparators.",
+      "exact_public_names": [
+        "BanditRL.OnlineLearning.comparatorRegret_eq_sum",
+        "BanditRL.OnlineLearning.guessing_prefix_minimum",
+        "BanditRL.OnlineLearning.squaredLoss_minimum_eq",
+        "BanditRL.OnlineLearning.squaredBestRegret_eq_comparatorRegret",
+        "BanditRL.OnlineLearning.comparatorRegret_le_squaredBestRegret"
+      ],
+      "current_semantic_contract": "Comparator remains a fixed evaluation parameter, not learner input. Both signed comparator regret and true feasible interval minimum are represented. Footnote1 loss domain W/comparator V subsetW mapping was accepted in ONLINE-REGRET-DOMAINS-20261007, not a generic regret performance theorem; new chapter mapping must preserve its typed carrier and no loss evaluation outside declared domain.",
+      "status": "source-reconciled-native; chapter gate pending post-native/site/delivery",
+      "acceptance_permission": "No API presence, old accepted-local flag, theorem count or individual package delivery closes this source object.",
+      "current_gate_status": "source-reconciled-native; chapter gate pending post-native/site/delivery",
+      "current_evidence": {
+        "source_contract": "264ef5d139323bdd0fa32048d3ea1299a2a6ed65610edb70f6c07b6848626da8",
+        "source_correction": "ea1d3ccb42831139b84cce6877a02bdc66cd92917eea18c20ac91b48ef7af9b2",
+        "production_BODY": "ab038b4c25f861d2c0a10b102e1450a89c3a19a515d1c24e97838d3ffa467381",
+        "canary_BODY": "387496d0a7ddf05a3dac7568d053e8d9bfba67e620ae9a2614e80df8d0abbe1a",
+        "combined_gate": "5cfcef0d72b56adb26dc407d6b312c062cdca62b70aaa184bfbe187d39a687a2"
+      },
+      "historical_candidate_status": "draft-chapter-reconciliation; full semantic/current compiled/chapter gates pending",
+      "FINAL_verdict": "accepted-with-explicit-delta",
+      "FINAL_receipt_sha256": "7f0ade24d0d121dcd4d9d7d91a5c73478b5b5d011c6433ec5242e418b02abf50"
+    },
+    {
+      "source_id": "C1-NOREGRET",
+      "printed_page": 2,
+      "pdf_page": 14,
+      "kind": "definition/asymptotic",
+      "required_maintext": true,
+      "pinned_intent": "For every fixed feasible comparator normalized regret at most sublinear; source limit wording vs epsilon eventual upper-bound interface must be reviewed.",
+      "exact_public_names": [
+        "BanditRL.OnlineLearning.limitNoRegret_implies_noRegret",
+        "BanditRL.OnlineLearning.limitNoRegret_iff_noRegret_of_converges",
+        "BanditRL.OnlineLearning.meanPredict_limitNoRegret_iff_mean_converges",
+        "BanditRL.OnlineLearning.dyadic_meanPredict_obstruction"
+      ],
+      "current_semantic_contract": "Literal ordinary finite real nonpositive-limit predicate is kept separate from eventual upper-epsilon NoRegret. Equivalence requires actual comparator-wise convergence. The same bounded actual FTL dyadic counterexample refutes universal ordinary-limit inference from the printed logarithmic upper bound; exact iff characterizes when the literal predicate holds. The pinned source, true finite Theorem1.3, obstruction and separately reviewed correction PROPOSAL are four separate objects. Source definition represented is not a universal convergence proof. Reviewer must decide chapter reconciliation authority; no silent weakened target.",
+      "status": "source-reconciled-native; chapter gate pending post-native/site/delivery",
+      "acceptance_permission": "No API presence, old accepted-local flag, theorem count or individual package delivery closes this source object.",
+      "current_gate_status": "source-reconciled-native; chapter gate pending post-native/site/delivery",
+      "current_evidence": {
+        "source_contract": "264ef5d139323bdd0fa32048d3ea1299a2a6ed65610edb70f6c07b6848626da8",
+        "source_correction": "ea1d3ccb42831139b84cce6877a02bdc66cd92917eea18c20ac91b48ef7af9b2",
+        "production_BODY": "ab038b4c25f861d2c0a10b102e1450a89c3a19a515d1c24e97838d3ffa467381",
+        "canary_BODY": "387496d0a7ddf05a3dac7568d053e8d9bfba67e620ae9a2614e80df8d0abbe1a",
+        "combined_gate": "5cfcef0d72b56adb26dc407d6b312c062cdca62b70aaa184bfbe187d39a687a2"
+      },
+      "historical_candidate_status": "draft-chapter-reconciliation; full semantic/current compiled/chapter gates pending",
+      "FINAL_verdict": "accepted-with-explicit-delta",
+      "FINAL_receipt_sha256": "7f0ade24d0d121dcd4d9d7d91a5c73478b5b5d011c6433ec5242e418b02abf50"
+    },
+    {
+      "source_id": "Remark1.1",
+      "printed_page": 2,
+      "pdf_page": 14,
+      "kind": "remark/semantic",
+      "required_maintext": true,
+      "pinned_intent": "Loss-sequence dependence suppressed in source notation; actual losses remain parameters.",
+      "exact_public_names": [
+        "BanditRL.OnlineLearning.comparatorRegret_eq_sum"
+      ],
+      "current_semantic_contract": "The loss sequence is an explicit parameter of comparatorRegret; notation suppression changes no mathematics. A nondegenerate loss-swap test must expose this dependence, without altering the learner/comparator interface.",
+      "status": "source-reconciled-native; chapter gate pending post-native/site/delivery",
+      "acceptance_permission": "No API presence, old accepted-local flag, theorem count or individual package delivery closes this source object.",
+      "current_gate_status": "source-reconciled-native; chapter gate pending post-native/site/delivery",
+      "current_evidence": {
+        "source_contract": "264ef5d139323bdd0fa32048d3ea1299a2a6ed65610edb70f6c07b6848626da8",
+        "source_correction": "ea1d3ccb42831139b84cce6877a02bdc66cd92917eea18c20ac91b48ef7af9b2",
+        "production_BODY": "ab038b4c25f861d2c0a10b102e1450a89c3a19a515d1c24e97838d3ffa467381",
+        "canary_BODY": "387496d0a7ddf05a3dac7568d053e8d9bfba67e620ae9a2614e80df8d0abbe1a",
+        "combined_gate": "5cfcef0d72b56adb26dc407d6b312c062cdca62b70aaa184bfbe187d39a687a2"
+      },
+      "historical_candidate_status": "draft-chapter-reconciliation; full semantic/current compiled/chapter gates pending",
+      "FINAL_verdict": "accepted-with-explicit-delta",
+      "FINAL_receipt_sha256": "7f0ade24d0d121dcd4d9d7d91a5c73478b5b5d011c6433ec5242e418b02abf50"
+    },
+    {
+      "source_id": "C1-MEAN-PREFIX",
+      "printed_page": 3,
+      "pdf_page": 15,
+      "kind": "unnumbered formal result",
+      "required_maintext": true,
+      "pinned_intent": "Positive-prefix square-loss hindsight minimizer is empirical mean and lies in[0,1]; minimizer existence/uniqueness and finite-prefix identity.",
+      "exact_public_names": [
+        "BanditRL.OnlineLearning.empiricalMean_decomposition",
+        "BanditRL.OnlineLearning.empiricalMean_minimizes",
+        "BanditRL.OnlineLearning.empiricalMean_mem",
+        "BanditRL.OnlineLearning.empiricalMean_unique",
+        "BanditRL.OnlineLearning.guessing_prefix_minimum"
+      ],
+      "current_semantic_contract": "Positive-prefix unique empirical mean is produced and feasible, with actual minimization and least-element identification. T0 uses an explicit empty convention and never claims uniqueness. Unbounded real comparator minimization generalizes source interval without replacing feasible-minimum evidence.",
+      "status": "source-reconciled-native; chapter gate pending post-native/site/delivery",
+      "acceptance_permission": "No API presence, old accepted-local flag, theorem count or individual package delivery closes this source object.",
+      "current_gate_status": "source-reconciled-native; chapter gate pending post-native/site/delivery",
+      "current_evidence": {
+        "source_contract": "264ef5d139323bdd0fa32048d3ea1299a2a6ed65610edb70f6c07b6848626da8",
+        "source_correction": "ea1d3ccb42831139b84cce6877a02bdc66cd92917eea18c20ac91b48ef7af9b2",
+        "production_BODY": "ab038b4c25f861d2c0a10b102e1450a89c3a19a515d1c24e97838d3ffa467381",
+        "canary_BODY": "387496d0a7ddf05a3dac7568d053e8d9bfba67e620ae9a2614e80df8d0abbe1a",
+        "combined_gate": "5cfcef0d72b56adb26dc407d6b312c062cdca62b70aaa184bfbe187d39a687a2"
+      },
+      "historical_candidate_status": "draft-chapter-reconciliation; full semantic/current compiled/chapter gates pending",
+      "FINAL_verdict": "accepted-with-explicit-delta",
+      "FINAL_receipt_sha256": "7f0ade24d0d121dcd4d9d7d91a5c73478b5b5d011c6433ec5242e418b02abf50"
+    },
+    {
+      "source_id": "C1-FTL",
+      "printed_page": 3,
+      "pdf_page": 15,
+      "kind": "algorithm definition",
+      "required_maintext": true,
+      "pinned_intent": "Printed3/PDF15 FTL algorithm family: choose ANY initial point in[0,1], later average EXACT strict-past targets. Printed4/PDF16 Theorem1.3 specializes first point to1/2. Existing meanPredict encodes this specialization; general-initialization source definition remains required separately.",
+      "exact_public_names": [
+        "BanditRL.OnlineLearning.ftlPredict_prefix",
+        "BanditRL.OnlineLearning.ftlPredict_mem",
+        "BanditRL.OnlineLearning.ftlPredict_half",
+        "BanditRL.OnlineLearning.ftlState_first",
+        "BanditRL.OnlineLearning.ftlState_eq_predict",
+        "BanditRL.OnlineLearning.ftlState_prefix",
+        "BanditRL.OnlineLearning.ftlState_mem",
+        "BanditRL.OnlineLearning.ftlState_half"
+      ],
+      "current_semantic_contract": "All feasible initial values have the source strict-past algorithm and true count/mean recursive state; the printed Theorem1.3 performance branch uses exactly initial1/2. Count/mean state update consumes only the next observation. No all-future-sequence arbitrary algorithm existence or best-history minimization oracle.",
+      "status": "source-reconciled-native; chapter gate pending post-native/site/delivery",
+      "acceptance_permission": "No API presence, old accepted-local flag, theorem count or individual package delivery closes this source object.",
+      "current_gate_status": "source-reconciled-native; chapter gate pending post-native/site/delivery",
+      "current_evidence": {
+        "source_contract": "264ef5d139323bdd0fa32048d3ea1299a2a6ed65610edb70f6c07b6848626da8",
+        "source_correction": "ea1d3ccb42831139b84cce6877a02bdc66cd92917eea18c20ac91b48ef7af9b2",
+        "production_BODY": "ab038b4c25f861d2c0a10b102e1450a89c3a19a515d1c24e97838d3ffa467381",
+        "canary_BODY": "387496d0a7ddf05a3dac7568d053e8d9bfba67e620ae9a2614e80df8d0abbe1a",
+        "combined_gate": "5cfcef0d72b56adb26dc407d6b312c062cdca62b70aaa184bfbe187d39a687a2"
+      },
+      "historical_candidate_status": "draft-chapter-reconciliation; full semantic/current compiled/chapter gates pending",
+      "FINAL_verdict": "accepted-with-explicit-delta",
+      "FINAL_receipt_sha256": "7f0ade24d0d121dcd4d9d7d91a5c73478b5b5d011c6433ec5242e418b02abf50"
+    },
+    {
+      "source_id": "Lemma1.2",
+      "printed_page": 4,
+      "pdf_page": 16,
+      "kind": "lemma",
+      "required_maintext": true,
+      "pinned_intent": "Assume each positive-prefix feasible argmin; current-prefix leaders cumulative loss <= final leader loss; arbitrary loss.",
+      "exact_public_names": [
+        "BanditRL.OnlineLearning.lemma_1_2"
+      ],
+      "current_semantic_contract": "Source explicitly assumes feasible exact cumulative minimizers; arbitrary ambient carrier is a harmless geometry-free generalization. Current-prefix hindsight leaders are distinct from the causal FTL predictor. Zero-prefix extension is empty, and no arbitrary argmin existence is claimed.",
+      "status": "source-reconciled-native; chapter gate pending post-native/site/delivery",
+      "acceptance_permission": "No API presence, old accepted-local flag, theorem count or individual package delivery closes this source object.",
+      "current_gate_status": "source-reconciled-native; chapter gate pending post-native/site/delivery",
+      "current_evidence": {
+        "source_contract": "264ef5d139323bdd0fa32048d3ea1299a2a6ed65610edb70f6c07b6848626da8",
+        "source_correction": "ea1d3ccb42831139b84cce6877a02bdc66cd92917eea18c20ac91b48ef7af9b2",
+        "production_BODY": "ab038b4c25f861d2c0a10b102e1450a89c3a19a515d1c24e97838d3ffa467381",
+        "canary_BODY": "387496d0a7ddf05a3dac7568d053e8d9bfba67e620ae9a2614e80df8d0abbe1a",
+        "combined_gate": "5cfcef0d72b56adb26dc407d6b312c062cdca62b70aaa184bfbe187d39a687a2"
+      },
+      "historical_candidate_status": "draft-chapter-reconciliation; full semantic/current compiled/chapter gates pending",
+      "FINAL_verdict": "accepted-with-explicit-delta",
+      "FINAL_receipt_sha256": "7f0ade24d0d121dcd4d9d7d91a5c73478b5b5d011c6433ec5242e418b02abf50"
+    },
+    {
+      "source_id": "Theorem1.3",
+      "printed_page": 4,
+      "pdf_page": 16,
+      "kind": "theorem/algorithm guarantee",
+      "required_maintext": true,
+      "pinned_intent": "Actual strict-past FTL for arbitrary targets[0,1], x1=.5, positive horizon; regret to true hindsight mean <=4+4lnT.",
+      "exact_public_names": [
+        "BanditRL.OnlineLearning.theorem_1_3",
+        "BanditRL.OnlineLearning.meanPredict_bestRegret_bound"
+      ],
+      "current_semantic_contract": "For every finite positive T and actual unit observations, initial1/2 strictpast FTL has true interval-best regret at most4+4lnT. Empirical-mean minimizer is separately produced before literal minimum identification. The learner is fixed, never horizon- or comparator-selected.",
+      "status": "source-reconciled-native; chapter gate pending post-native/site/delivery",
+      "acceptance_permission": "No API presence, old accepted-local flag, theorem count or individual package delivery closes this source object.",
+      "current_gate_status": "source-reconciled-native; chapter gate pending post-native/site/delivery",
+      "current_evidence": {
+        "source_contract": "264ef5d139323bdd0fa32048d3ea1299a2a6ed65610edb70f6c07b6848626da8",
+        "source_correction": "ea1d3ccb42831139b84cce6877a02bdc66cd92917eea18c20ac91b48ef7af9b2",
+        "production_BODY": "ab038b4c25f861d2c0a10b102e1450a89c3a19a515d1c24e97838d3ffa467381",
+        "canary_BODY": "387496d0a7ddf05a3dac7568d053e8d9bfba67e620ae9a2614e80df8d0abbe1a",
+        "combined_gate": "5cfcef0d72b56adb26dc407d6b312c062cdca62b70aaa184bfbe187d39a687a2"
+      },
+      "historical_candidate_status": "draft-chapter-reconciliation; full semantic/current compiled/chapter gates pending",
+      "FINAL_verdict": "accepted-with-explicit-delta",
+      "FINAL_receipt_sha256": "7f0ade24d0d121dcd4d9d7d91a5c73478b5b5d011c6433ec5242e418b02abf50"
+    },
+    {
+      "source_id": "C1-STABILITY",
+      "printed_page": 5,
+      "pdf_page": 17,
+      "kind": "necessary main proof bound",
+      "required_maintext": true,
+      "pinned_intent": "Initial loss difference <=.25; positive later prefix leader movement yields difference <=4/t. Existing uniform bound may be coarser at initial round; preserve exact-source dependency coverage boundary.",
+      "exact_public_names": [
+        "BanditRL.OnlineLearning.empiricalMean_update",
+        "BanditRL.OnlineLearning.meanPredict_stability",
+        "BanditRL.OnlineLearning.meanPredict_initial_stability"
+      ],
+      "current_semantic_contract": "Exact mean update, actual zero-based one-step4/(t+1), and sharp initial1/4 are preserved. They come from the real predictor and current observation, not supplied stability premises.",
+      "status": "source-reconciled-native; chapter gate pending post-native/site/delivery",
+      "acceptance_permission": "No API presence, old accepted-local flag, theorem count or individual package delivery closes this source object.",
+      "current_gate_status": "source-reconciled-native; chapter gate pending post-native/site/delivery",
+      "current_evidence": {
+        "source_contract": "264ef5d139323bdd0fa32048d3ea1299a2a6ed65610edb70f6c07b6848626da8",
+        "source_correction": "ea1d3ccb42831139b84cce6877a02bdc66cd92917eea18c20ac91b48ef7af9b2",
+        "production_BODY": "ab038b4c25f861d2c0a10b102e1450a89c3a19a515d1c24e97838d3ffa467381",
+        "canary_BODY": "387496d0a7ddf05a3dac7568d053e8d9bfba67e620ae9a2614e80df8d0abbe1a",
+        "combined_gate": "5cfcef0d72b56adb26dc407d6b312c062cdca62b70aaa184bfbe187d39a687a2"
+      },
+      "historical_candidate_status": "draft-chapter-reconciliation; full semantic/current compiled/chapter gates pending",
+      "FINAL_verdict": "accepted-with-explicit-delta",
+      "FINAL_receipt_sha256": "7f0ade24d0d121dcd4d9d7d91a5c73478b5b5d011c6433ec5242e418b02abf50"
+    },
+    {
+      "source_id": "C1-REFINED-REGRET",
+      "printed_page": 5,
+      "pdf_page": 17,
+      "kind": "unnumbered main performance bound",
+      "required_maintext": true,
+      "pinned_intent": "Actual causal FTL best-fixed interval regret <=0.25+4 sum(source t=2..T)1/t, with positive horizon, targets in[0,1] and empiricalMean as produced feasible minimizer",
+      "exact_public_names": [
+        "BanditRL.OnlineLearning.meanPredict_regret_refined",
+        "BanditRL.OnlineLearning.meanPredict_bestRegret_refined"
+      ],
+      "current_semantic_contract": "Actual SAME predictor true-minimum regret is at most1/4 + sum of4/(t+2) for t<T-1. This is the printed intermediate estimate and indices/initial term are not absorbed or changed.",
+      "status": "source-reconciled-native; chapter gate pending post-native/site/delivery",
+      "acceptance_permission": "No API presence, old accepted-local flag, theorem count or individual package delivery closes this source object.",
+      "current_gate_status": "source-reconciled-native; chapter gate pending post-native/site/delivery",
+      "current_evidence": {
+        "source_contract": "264ef5d139323bdd0fa32048d3ea1299a2a6ed65610edb70f6c07b6848626da8",
+        "source_correction": "ea1d3ccb42831139b84cce6877a02bdc66cd92917eea18c20ac91b48ef7af9b2",
+        "production_BODY": "ab038b4c25f861d2c0a10b102e1450a89c3a19a515d1c24e97838d3ffa467381",
+        "canary_BODY": "387496d0a7ddf05a3dac7568d053e8d9bfba67e620ae9a2614e80df8d0abbe1a",
+        "combined_gate": "5cfcef0d72b56adb26dc407d6b312c062cdca62b70aaa184bfbe187d39a687a2"
+      },
+      "historical_candidate_status": "draft-chapter-reconciliation; full semantic/current compiled/chapter gates pending",
+      "FINAL_verdict": "accepted-with-explicit-delta",
+      "FINAL_receipt_sha256": "7f0ade24d0d121dcd4d9d7d91a5c73478b5b5d011c6433ec5242e418b02abf50"
+    },
+    {
+      "source_id": "C1-LOG-UNAVOIDABLE",
+      "printed_page": 4,
+      "pdf_page": 16,
+      "kind": "unnumbered lower-bound forward reference/source-claim audit",
+      "required_maintext": true,
+      "pinned_intent": "Source says logarithmic dependence in the guessing problem is unavoidable but does not prove it here. Keep REQUIRED source-claim/lower-bound dependency audit; precise learner/adversary/quantifiers/asymptotic constants/probability mode need a separately reviewed contract and later-source dependencies.",
+      "exact_public_names": [
+        "BanditRL.OnlineLearning.GuessingLower.randomized_log_lower"
+      ],
+      "current_semantic_contract": "Source qualitative logarithmic dependence is necessary. Existing producer quantifies every bounded measurable private-seed causal binary-history policy and positive horizon, produces one deterministic binary sequence with seed-expected regret at least ln(T+2)/6. The1/6 coefficient is derived, not printed/sharp; no full real-valued minimax constant or future-observing strategy impossibility.",
+      "status": "source-reconciled-native; chapter gate pending post-native/site/delivery",
+      "acceptance_permission": "No API presence, old accepted-local flag, theorem count or individual package delivery closes this source object.",
+      "current_gate_status": "source-reconciled-native; chapter gate pending post-native/site/delivery",
+      "current_evidence": {
+        "source_contract": "264ef5d139323bdd0fa32048d3ea1299a2a6ed65610edb70f6c07b6848626da8",
+        "source_correction": "ea1d3ccb42831139b84cce6877a02bdc66cd92917eea18c20ac91b48ef7af9b2",
+        "production_BODY": "ab038b4c25f861d2c0a10b102e1450a89c3a19a515d1c24e97838d3ffa467381",
+        "canary_BODY": "387496d0a7ddf05a3dac7568d053e8d9bfba67e620ae9a2614e80df8d0abbe1a",
+        "combined_gate": "5cfcef0d72b56adb26dc407d6b312c062cdca62b70aaa184bfbe187d39a687a2"
+      },
+      "historical_candidate_status": "draft-chapter-reconciliation; full semantic/current compiled/chapter gates pending",
+      "FINAL_verdict": "accepted-with-explicit-delta",
+      "FINAL_receipt_sha256": "7f0ade24d0d121dcd4d9d7d91a5c73478b5b5d011c6433ec5242e418b02abf50"
+    },
+    {
+      "source_id": "C1-HARMONIC",
+      "printed_page": 6,
+      "pdf_page": 18,
+      "kind": "unnumbered main bound",
+      "required_maintext": true,
+      "pinned_intent": "Sum_{t=1}^T1/t <=1+lnT at positive horizon. Exact local Mathlib theorem reuse and actual VALUE call within Theorem1.3 to be audited.",
+      "exact_public_names": [
+        "harmonic_le_one_add_log"
+      ],
+      "current_semantic_contract": "Reuse exact pinned Mathlib harmonic bound. It is a required proof dependency, not a new ABRL theorem. Finite harmonic normalization and eventual positive T distinguish log0 convention from source natural domain.",
+      "status": "source-reconciled-native; chapter gate pending post-native/site/delivery",
+      "acceptance_permission": "No API presence, old accepted-local flag, theorem count or individual package delivery closes this source object.",
+      "current_gate_status": "source-reconciled-native; chapter gate pending post-native/site/delivery",
+      "current_evidence": {
+        "source_contract": "264ef5d139323bdd0fa32048d3ea1299a2a6ed65610edb70f6c07b6848626da8",
+        "source_correction": "ea1d3ccb42831139b84cce6877a02bdc66cd92917eea18c20ac91b48ef7af9b2",
+        "production_BODY": "ab038b4c25f861d2c0a10b102e1450a89c3a19a515d1c24e97838d3ffa467381",
+        "canary_BODY": "387496d0a7ddf05a3dac7568d053e8d9bfba67e620ae9a2614e80df8d0abbe1a",
+        "combined_gate": "5cfcef0d72b56adb26dc407d6b312c062cdca62b70aaa184bfbe187d39a687a2"
+      },
+      "historical_candidate_status": "draft-chapter-reconciliation; full semantic/current compiled/chapter gates pending",
+      "FINAL_verdict": "accepted-with-explicit-delta",
+      "FINAL_receipt_sha256": "7f0ade24d0d121dcd4d9d7d91a5c73478b5b5d011c6433ec5242e418b02abf50"
+    },
+    {
+      "source_id": "C1-SUCCESS",
+      "printed_page": 6,
+      "pdf_page": 18,
+      "kind": "asymptotic main consequence",
+      "required_maintext": true,
+      "pinned_intent": "Actual FTL regret is logarithmic/sublinear, normalized comparator regret upper-vanishes; not minimax lower bound.",
+      "exact_public_names": [
+        "BanditRL.OnlineLearning.meanPredict_noRegret",
+        "BanditRL.OnlineLearning.meanPredict_bestRegret_average_tendsto_zero",
+        "BanditRL.OnlineLearning.meanPredict_iid_success"
+      ],
+      "current_semantic_contract": "Actual same FTL has upper-epsilon regret, ordinary zero normalized TRUE-best regret, and ordinary zero/little-o expected FIXED regret under joint IID/AEunit support. Ordinary fixed-comparator adversarial convergence is deliberately not inferred, and its bounded obstruction remains visible.",
+      "status": "source-reconciled-native; chapter gate pending post-native/site/delivery",
+      "acceptance_permission": "No API presence, old accepted-local flag, theorem count or individual package delivery closes this source object.",
+      "current_gate_status": "source-reconciled-native; chapter gate pending post-native/site/delivery",
+      "current_evidence": {
+        "source_contract": "264ef5d139323bdd0fa32048d3ea1299a2a6ed65610edb70f6c07b6848626da8",
+        "source_correction": "ea1d3ccb42831139b84cce6877a02bdc66cd92917eea18c20ac91b48ef7af9b2",
+        "production_BODY": "ab038b4c25f861d2c0a10b102e1450a89c3a19a515d1c24e97838d3ffa467381",
+        "canary_BODY": "387496d0a7ddf05a3dac7568d053e8d9bfba67e620ae9a2614e80df8d0abbe1a",
+        "combined_gate": "5cfcef0d72b56adb26dc407d6b312c062cdca62b70aaa184bfbe187d39a687a2"
+      },
+      "historical_candidate_status": "draft-chapter-reconciliation; full semantic/current compiled/chapter gates pending",
+      "FINAL_verdict": "accepted-with-explicit-delta",
+      "FINAL_receipt_sha256": "7f0ade24d0d121dcd4d9d7d91a5c73478b5b5d011c6433ec5242e418b02abf50"
+    },
+    {
+      "source_id": "C1-FTL-ANY-INITIAL-GUARANTEE",
+      "printed_page": 3,
+      "pdf_page": 15,
+      "kind": "required unnumbered algorithm performance guarantee",
+      "required_maintext": true,
+      "source_intent": "Any unit initial FTL family followed by promise the same strategy wins; specialize printed Theorem1.3 half separately.",
+      "source_review_required_terminals": [
+        "same ftlPredict, initialunit, positiveT and bounded scoredprefix: truebestR<=1+sum(range(T-1),4/(t+2))",
+        "same all-time unitstream/initial: upper-epsilon NoRegret for every fixed unitcomparator"
+      ],
+      "lean_names": [
+        "BanditRL.OnlineLearning.ftlPredict_bestRegret_initial_correction",
+        "BanditRL.OnlineLearning.ftlPredict_bestRegret_refined",
+        "BanditRL.OnlineLearning.ftlPredict_upperNoRegret",
+        "BanditRL.OnlineLearning.ftlPredict_bestRegret_average_tendsto_zero"
+      ],
+      "state": "draft-required-unproved",
+      "evidence": "E:\\ABRL\\worktrees\\research-online-book\\runs\\online-c1-chapter-audit-20261009\\source-contract-receipt-v1.json",
+      "source_result_count": 1,
+      "new_target_count": 4,
+      "current_gate_status": "source-reconciled-native; chapter gate pending post-native/site/delivery",
+      "current_evidence": {
+        "source_contract": "264ef5d139323bdd0fa32048d3ea1299a2a6ed65610edb70f6c07b6848626da8",
+        "source_correction": "ea1d3ccb42831139b84cce6877a02bdc66cd92917eea18c20ac91b48ef7af9b2",
+        "production_BODY": "ab038b4c25f861d2c0a10b102e1450a89c3a19a515d1c24e97838d3ffa467381",
+        "canary_BODY": "387496d0a7ddf05a3dac7568d053e8d9bfba67e620ae9a2614e80df8d0abbe1a",
+        "combined_gate": "5cfcef0d72b56adb26dc407d6b312c062cdca62b70aaa184bfbe187d39a687a2"
+      },
+      "historical_candidate_status": null,
+      "status": "source-reconciled-native; chapter gate pending post-native/site/delivery",
+      "FINAL_verdict": "accepted-with-explicit-delta",
+      "FINAL_receipt_sha256": "7f0ade24d0d121dcd4d9d7d91a5c73478b5b5d011c6433ec5242e418b02abf50"
+    }
+  ],
+  "original16_verbatim_source_map": "5db0b0e9f9fbf0fcc7f181133c90faa8135ba9d748c1e5387cc9506503433c20",
+  "required_source_audit_object_count": 17,
+  "canonical_new_public_proofs": 4,
+  "newly_required_source_family_count": 1,
+  "generic_public_contracts": 54,
+  "complementary_Test_canaries": 27,
+  "proof_total": null,
+  "accepted_source_objects_this_current_chapter_gate": 0,
+  "chapter_complete": false,
+  "goal_complete": false,
+  "ordinary_limit_source_reconciliation_explicit": true,
+  "no_maintext_result_excluded": true,
+  "source_objects_semantically_reconciled": 17,
+  "native_transition_executed": true
+}

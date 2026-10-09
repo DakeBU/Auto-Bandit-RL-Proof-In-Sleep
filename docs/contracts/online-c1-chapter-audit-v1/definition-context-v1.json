@@ -1,0 +1,167 @@
+{
+  "context_only": true,
+  "not_a_new_Lean_project": true,
+  "definitions": [
+    {
+      "name": "BanditRL.OnlineLearning.comparatorRegret",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineLearningRegret.lean",
+      "file_sha256": "0bac6b6e454c5d7bd2244fc115bc8df8cbd9b5505302aa81d03baaeeeec204dc",
+      "exact_source_block": "noncomputable def comparatorRegret {X : Type*} (loss : ℕ → X → ℝ)\n    (prediction : ℕ → X) (u : X) (T : ℕ) : ℝ :=\n  (∑ t ∈ Finset.range T, loss t (prediction t)) - ∑ t ∈ Finset.range T, loss t u",
+      "header": "noncomputable def comparatorRegret {X : Type*} (loss : ℕ → X → ℝ) (prediction : ℕ → X) (u : X) (T : ℕ) : ℝ"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.NoRegret",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineLearningRegret.lean",
+      "file_sha256": "0bac6b6e454c5d7bd2244fc115bc8df8cbd9b5505302aa81d03baaeeeec204dc",
+      "exact_source_block": "def NoRegret {X : Type*} (V : Set X) (loss : ℕ → X → ℝ) (prediction : ℕ → X) : Prop :=\n  ∀ u ∈ V, ∀ ε : ℝ, 0 < ε → ∀ᶠ T in atTop,\n    comparatorRegret loss prediction u T / T ≤ ε",
+      "header": "def NoRegret {X : Type*} (V : Set X) (loss : ℕ → X → ℝ) (prediction : ℕ → X) : Prop"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.LimitNoRegret",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineNoRegretSemantics.lean",
+      "file_sha256": "db7482a02bf4643ba3d4b15b29dd5a59418ea111763afeed45c51879b996e5a7",
+      "exact_source_block": "def LimitNoRegret {X : Type*} (V : Set X) (loss : ℕ → X → ℝ)\n    (prediction : ℕ → X) : Prop :=\n  ∀ u ∈ V, ∃ a : ℝ, a ≤ 0 ∧\n    Tendsto (fun T : ℕ => comparatorRegret loss prediction u T / T) atTop (nhds a)",
+      "header": "def LimitNoRegret {X : Type*} (V : Set X) (loss : ℕ → X → ℝ) (prediction : ℕ → X) : Prop"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.empiricalMean",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineLearningMean.lean",
+      "file_sha256": "811dcf3741e3d6dee19b2c4a9f43f4b266808b89843a1719e00f239a4687258b",
+      "exact_source_block": "noncomputable def empiricalMean (y : ℕ → ℝ) (n : ℕ) : ℝ :=\n  (∑ t ∈ Finset.range n, y t) / n",
+      "header": "noncomputable def empiricalMean (y : ℕ → ℝ) (n : ℕ) : ℝ"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.meanPredict",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineLearningFTL.lean",
+      "file_sha256": "8c3574c657f08e0c5291f0689105f9459e92187502f092f4d36d848e52ab4219",
+      "exact_source_block": "noncomputable def meanPredict (y : ℕ → ℝ) (t : ℕ) : ℝ :=\n  if t = 0 then 1/2 else empiricalMean y t",
+      "header": "noncomputable def meanPredict (y : ℕ → ℝ) (t : ℕ) : ℝ"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.ftlPredict",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineLearningFTLState.lean",
+      "file_sha256": "fa33c10252eb5cd51b3ea4cdffb10fa95c37416f3098ceb76d9d58f465ff1765",
+      "exact_source_block": "noncomputable def ftlPredict (initial : ℝ) (y : ℕ → ℝ) (t : ℕ) : ℝ :=\n  if t = 0 then initial else empiricalMean y t",
+      "header": "noncomputable def ftlPredict (initial : ℝ) (y : ℕ → ℝ) (t : ℕ) : ℝ"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.ftlMeanStep",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineLearningFTLState.lean",
+      "file_sha256": "fa33c10252eb5cd51b3ea4cdffb10fa95c37416f3098ceb76d9d58f465ff1765",
+      "exact_source_block": "noncomputable def ftlMeanStep (state : ℕ × ℝ) (target : ℝ) : ℕ × ℝ :=\n  (state.1 + 1, state.2 + (target - state.2) / ((state.1 : ℝ) + 1))",
+      "header": "noncomputable def ftlMeanStep (state : ℕ × ℝ) (target : ℝ) : ℕ × ℝ"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.ftlState",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineLearningFTLState.lean",
+      "file_sha256": "fa33c10252eb5cd51b3ea4cdffb10fa95c37416f3098ceb76d9d58f465ff1765",
+      "exact_source_block": "noncomputable def ftlState (initial : ℝ) (y : ℕ → ℝ) : ℕ → ℕ × ℝ\n  | 0 => (0, initial)\n  | t + 1 => ftlMeanStep (ftlState initial y t) (y t)",
+      "header": "noncomputable def ftlState (initial : ℝ) (y : ℕ → ℝ) : ℕ → ℕ × ℝ | 0 => (0, initial) | t + 1 => ftlMeanStep (ftlState initial y t) (y t) theorem ftlPredict_prefix (initial : ℝ) (y z : ℕ → ℝ) (t : ℕ) (h : ∀ i < t, y i = z i) : ftlPredict initial y t = ftlPredict initial z t"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.squaredBestRegret",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineSquareMinimum.lean",
+      "file_sha256": "7bbfb2538dcdaed8c208571c248723d89ed8980e5e899339aa4c3b48a55c3210",
+      "exact_source_block": "noncomputable def squaredBestRegret (y prediction : ℕ → ℝ) (T : ℕ) : ℝ :=\n  (∑ t ∈ Finset.range T, (prediction t - y t)^2) -\n    sInf ((fun u : ℝ => ∑ t ∈ Finset.range T, (u - y t)^2) ''\n      Set.Icc (0 : ℝ) 1)",
+      "header": "noncomputable def squaredBestRegret (y prediction : ℕ → ℝ) (T : ℕ) : ℝ"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.expectedFixedMinimum",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGuessingIIDBenchmark.lean",
+      "file_sha256": "3581c9b284a86301ad2696db5e48af4473d7ef96e3f6f111730a11ca00aba7b7",
+      "exact_source_block": "noncomputable def expectedFixedMinimum {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) (Y : ℕ → Ω → ℝ) (T : ℕ) : ℝ :=\n  sInf ((fun u : ℝ => ∫ ω, ∑ t ∈ Finset.range T, (u - Y t ω)^2 ∂μ) ''\n    Set.Icc (0 : ℝ) 1)",
+      "header": "noncomputable def expectedFixedMinimum {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) (Y : ℕ → Ω → ℝ) (T : ℕ) : ℝ"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.expectedFixedRegret",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGuessingIIDBenchmark.lean",
+      "file_sha256": "3581c9b284a86301ad2696db5e48af4473d7ef96e3f6f111730a11ca00aba7b7",
+      "exact_source_block": "noncomputable def expectedFixedRegret {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) (Y prediction : ℕ → Ω → ℝ) (T : ℕ) : ℝ :=\n  (∫ ω, ∑ t ∈ Finset.range T, (prediction t ω - Y t ω)^2 ∂μ) -\n    expectedFixedMinimum μ Y T",
+      "header": "noncomputable def expectedFixedRegret {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) (Y prediction : ℕ → Ω → ℝ) (T : ℕ) : ℝ"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.privateSeedPastInformation",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGuessingRandomizedIID.lean",
+      "file_sha256": "5b00b2f3dcd8afd08fd1a29eb0a0f6376dc1bcc5c784feeb1d6efd4040f0e0d3",
+      "exact_source_block": "def privateSeedPastInformation {Ω : Type u} {Seed : Type v} [MeasurableSpace Seed]\n    (S : Ω → Seed) (Y : ℕ → Ω → ℝ) (t : ℕ) : MeasurableSpace Ω :=\n  MeasurableSpace.comap (fun ω => (S ω, fun i : (↑(Finset.range t) : Type) => Y i ω))\n    inferInstance",
+      "header": "def privateSeedPastInformation {Ω : Type u} {Seed : Type v} [MeasurableSpace Seed] (S : Ω → Seed) (Y : ℕ → Ω → ℝ) (t : ℕ) : MeasurableSpace Ω"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.KernelDecisionHistory",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGuessingKernelCausal.lean",
+      "file_sha256": "e4e207c116caf5e92ba5cb22d65289207bba0f19c0277999eee5caa5fb1708d0",
+      "exact_source_block": "abbrev KernelDecisionHistory (t : ℕ) := (Fin t → I) × (Fin t → ℝ)",
+      "header": "abbrev KernelDecisionHistory (t : ℕ)"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.KernelDecisionSampler",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGuessingKernelCausal.lean",
+      "file_sha256": "e4e207c116caf5e92ba5cb22d65289207bba0f19c0277999eee5caa5fb1708d0",
+      "exact_source_block": "abbrev KernelDecisionSampler := (t : ℕ) → KernelDecisionHistory t → I → I",
+      "header": "abbrev KernelDecisionSampler"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.kernelGeneratedActions",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGuessingKernelCausal.lean",
+      "file_sha256": "e4e207c116caf5e92ba5cb22d65289207bba0f19c0277999eee5caa5fb1708d0",
+      "exact_source_block": "def kernelGeneratedActions (f : KernelDecisionSampler) :\n    (t : ℕ) → (Fin t → I) → (Fin t → ℝ) → (Fin t → I)\n  | 0, _, _ => Fin.elim0\n  | t + 1, u, y =>\n      let past := kernelGeneratedActions f t (fun i => u i.castSucc) (fun i => y i.castSucc)\n      Fin.snoc past (f t (past, fun i => y i.castSucc) (u (Fin.last t)))",
+      "header": "def kernelGeneratedActions (f : KernelDecisionSampler) : (t : ℕ) → (Fin t → I) → (Fin t → ℝ) → (Fin t → I) | 0, _, _ => Fin.elim0 | t + 1, u, y => let past := kernelGeneratedActions f t (fun i => u i.castSucc) (fun i => y i.castSucc) Fin.snoc past (f t (past, fun i => y i.castSucc) (u (Fin.last t))) def kernelCausalPolicy (f : KernelDecisionSampler) (t : ℕ) (q : (ℕ → I) × (Fin t → ℝ)) : I"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.kernelCausalPolicy",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGuessingKernelCausal.lean",
+      "file_sha256": "e4e207c116caf5e92ba5cb22d65289207bba0f19c0277999eee5caa5fb1708d0",
+      "exact_source_block": "def kernelCausalPolicy (f : KernelDecisionSampler) (t : ℕ)\n    (q : (ℕ → I) × (Fin t → ℝ)) : I :=\n  f t (kernelGeneratedActions f t (fun i => q.1 i) q.2, q.2) (q.1 t)",
+      "header": "def kernelCausalPolicy (f : KernelDecisionSampler) (t : ℕ) (q : (ℕ → I) × (Fin t → ℝ)) : I"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.kernelGeneratedHistory",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGuessingKernelCausal.lean",
+      "file_sha256": "e4e207c116caf5e92ba5cb22d65289207bba0f19c0277999eee5caa5fb1708d0",
+      "exact_source_block": "def kernelGeneratedHistory (f : KernelDecisionSampler) (t : ℕ)\n    (ω : (ℕ → I) × (ℕ → ℝ)) : KernelDecisionHistory t :=\n  (kernelGeneratedActions f t (fun i => ω.1 i) (fun i => ω.2 i), fun i => ω.2 i)",
+      "header": "def kernelGeneratedHistory (f : KernelDecisionSampler) (t : ℕ) (ω : (ℕ → I) × (ℕ → ℝ)) : KernelDecisionHistory t"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.kernelGeneratedPrediction",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGuessingKernelCausal.lean",
+      "file_sha256": "e4e207c116caf5e92ba5cb22d65289207bba0f19c0277999eee5caa5fb1708d0",
+      "exact_source_block": "def kernelGeneratedPrediction (f : KernelDecisionSampler) (t : ℕ)\n    (ω : (ℕ → I) × (ℕ → ℝ)) : I :=\n  kernelCausalPolicy f t (ω.1, fun i => ω.2 i)",
+      "header": "def kernelGeneratedPrediction (f : KernelDecisionSampler) (t : ℕ) (ω : (ℕ → I) × (ℕ → ℝ)) : I"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.dyadicObservation",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineFTLOscillation.lean",
+      "file_sha256": "87665aface86fbca5265f4da0f6dfecf7348c82064c7648528fcd6267d0de9c6",
+      "exact_source_block": "noncomputable def dyadicObservation : ℕ → ℝ\n  | 0 => 0\n  | n + 1 => 1 - dyadicObservation (n / 2)\ntermination_by n => n\ndecreasing_by omega",
+      "header": "noncomputable def dyadicObservation : ℕ → ℝ | 0 => 0 | n + 1 => 1 - dyadicObservation (n / 2) termination_by n => n decreasing_by omega theorem meanPredict_limitNoRegret_iff_mean_converges (y : ℕ → ℝ) (hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1) : LimitNoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - y t)^2) (meanPredict y) ↔ ∃ m ∈ Set.Icc (0 : ℝ) 1, Tendsto (empiricalMean y) atTop (nhds m)"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.GuessingLower.binaryStream",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGuessingLogLower.lean",
+      "file_sha256": "5f4b6bd8e3300d8b94862aa95f1d46e68ccea11e3b6261bebbf9d60aa6c9a5b1",
+      "exact_source_block": "def binaryStream (h : List Bool) (t : ℕ) : Bool :=\n  (h.reverse[t]?).getD false",
+      "header": "def binaryStream (h : List Bool) (t : ℕ) : Bool"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.GuessingLower.binaryValues",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGuessingLogLower.lean",
+      "file_sha256": "5f4b6bd8e3300d8b94862aa95f1d46e68ccea11e3b6261bebbf9d60aa6c9a5b1",
+      "exact_source_block": "def binaryValues (h : List Bool) (t : ℕ) : ℝ :=\n  if binaryStream h t then 1 else 0",
+      "header": "def binaryValues (h : List Bool) (t : ℕ) : ℝ"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.GuessingLower.causalPredict",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGuessingLogLower.lean",
+      "file_sha256": "5f4b6bd8e3300d8b94862aa95f1d46e68ccea11e3b6261bebbf9d60aa6c9a5b1",
+      "exact_source_block": "noncomputable def causalPredict (A : List Bool → ℝ) (y : ℕ → Bool) (t : ℕ) : ℝ :=\n  A (List.ofFn (fun i : Fin t => y i)).reverse",
+      "header": "noncomputable def causalPredict (A : List Bool → ℝ) (y : ℕ → Bool) (t : ℕ) : ℝ"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.GuessingLower.pathRegret",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGuessingLogLower.lean",
+      "file_sha256": "5f4b6bd8e3300d8b94862aa95f1d46e68ccea11e3b6261bebbf9d60aa6c9a5b1",
+      "exact_source_block": "noncomputable def pathRegret (A : List Bool → ℝ) (h : List Bool) : ℝ :=\n  comparatorRegret (fun t x => (x - binaryValues h t)^2)\n    (causalPredict A (binaryStream h)) (empiricalMean (binaryValues h) h.length) h.length",
+      "header": "noncomputable def pathRegret (A : List Bool → ℝ) (h : List Bool) : ℝ"
+    }
+  ]
+}

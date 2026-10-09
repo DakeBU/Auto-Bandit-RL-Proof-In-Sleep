@@ -1,0 +1,266 @@
+{
+  "targets": [
+    {
+      "id": "C001",
+      "name": "Tests.OnlineLearningChapterAudit.initial_zero_first_regret",
+      "header": "theorem initial_zero_first_regret :\n    squaredBestRegret (fun _ => (1 : ℝ)) (ftlPredict 0 (fun _ => 1)) 1 = 1 ∧\n      squaredBestRegret (fun _ => (1 : ℝ)) (ftlPredict 0 (fun _ => 1)) 1 > (1 : ℝ) / 4",
+      "conclusion": "squaredBestRegret (fun _ => (1 : ℝ)) (ftlPredict 0 (fun _ => 1)) 1 = 1 ∧\n      squaredBestRegret (fun _ => (1 : ℝ)) (ftlPredict 0 (fun _ => 1)) 1 > (1 : ℝ) / 4",
+      "statement_hash": "f3e814685dda5a18507b014b834e344816334b6aa92deee24c8aae27e04dfd2a",
+      "owning_public_path": "Tests/OnlineLearningChapterAuditCanary.lean",
+      "phase": "stabilized; actual canary body pending"
+    },
+    {
+      "id": "C002",
+      "name": "Tests.OnlineLearningChapterAudit.two_round_initial_correction",
+      "header": "theorem two_round_initial_correction :\n    squaredBestRegret falling (ftlPredict 0 falling) 2 =\n      squaredBestRegret falling (meanPredict falling) 2 + (3 : ℝ) / 4",
+      "conclusion": "squaredBestRegret falling (ftlPredict 0 falling) 2 =\n      squaredBestRegret falling (meanPredict falling) 2 + (3 : ℝ) / 4",
+      "statement_hash": "bf3f76552941173c78f2e5edb57f311ae80f434208c7fee0f807cd5406460fb6",
+      "owning_public_path": "Tests/OnlineLearningChapterAuditCanary.lean",
+      "phase": "stabilized; actual canary body pending"
+    },
+    {
+      "id": "C003",
+      "name": "Tests.OnlineLearningChapterAudit.positive_regret_negative_correction",
+      "header": "theorem positive_regret_negative_correction :\n    squaredBestRegret rising (ftlPredict 0 rising) 2 = (1 : ℝ) / 2 ∧\n      squaredBestRegret rising (meanPredict rising) 2 = (3 : ℝ) / 4 ∧\n      ((0 - rising 0)^2 - ((1 : ℝ) / 2 - rising 0)^2) = -(1 : ℝ) / 4",
+      "conclusion": "squaredBestRegret rising (ftlPredict 0 rising) 2 = (1 : ℝ) / 2 ∧\n      squaredBestRegret rising (meanPredict rising) 2 = (3 : ℝ) / 4 ∧\n      ((0 - rising 0)^2 - ((1 : ℝ) / 2 - rising 0)^2) = -(1 : ℝ) / 4",
+      "statement_hash": "f53545c704303bb92d863d72be02aad8208c3edf33bc749cb6fe4343e2ac4453",
+      "owning_public_path": "Tests/OnlineLearningChapterAuditCanary.lean",
+      "phase": "stabilized; actual canary body pending"
+    },
+    {
+      "id": "C004",
+      "name": "Tests.OnlineLearningChapterAudit.general_initial_finite_values",
+      "header": "theorem general_initial_finite_values :\n    squaredBestRegret falling (ftlPredict 0 falling) 2 = (3 : ℝ) / 2 ∧\n      squaredBestRegret falling (ftlPredict 0 falling) 2 ≤ (3 : ℝ) ∧\n      squaredBestRegret (fun _ => (1 : ℝ)) (ftlPredict 0 (fun _ => 1)) 1 ≤ 1",
+      "conclusion": "squaredBestRegret falling (ftlPredict 0 falling) 2 = (3 : ℝ) / 2 ∧\n      squaredBestRegret falling (ftlPredict 0 falling) 2 ≤ (3 : ℝ) ∧\n      squaredBestRegret (fun _ => (1 : ℝ)) (ftlPredict 0 (fun _ => 1)) 1 ≤ 1",
+      "statement_hash": "d721bb36fb0fa4500e25fec13da02da01f433b38f753334ad53ccf2d7235ed55",
+      "owning_public_path": "Tests/OnlineLearningChapterAuditCanary.lean",
+      "phase": "stabilized; actual canary body pending"
+    },
+    {
+      "id": "C005",
+      "name": "Tests.OnlineLearningChapterAudit.same_past_current_reveal",
+      "header": "theorem same_past_current_reveal :\n    ftlState 0 rising 1 = ftlState 0 (fun _ => 0) 1 ∧\n      rising 1 ≠ (0 : ℝ) ∧ ftlState 0 rising 2 ≠ ftlState 0 (fun _ => 0) 2",
+      "conclusion": "ftlState 0 rising 1 = ftlState 0 (fun _ => 0) 1 ∧\n      rising 1 ≠ (0 : ℝ) ∧ ftlState 0 rising 2 ≠ ftlState 0 (fun _ => 0) 2",
+      "statement_hash": "173b0a6d1fce5f9c4cc9ccfdb75f972212725b8d7806ca81fe88125696347e86",
+      "owning_public_path": "Tests/OnlineLearningChapterAuditCanary.lean",
+      "phase": "stabilized; actual canary body pending"
+    },
+    {
+      "id": "C006",
+      "name": "Tests.OnlineLearningChapterAudit.initialized_state_values",
+      "header": "theorem initialized_state_values :\n    ftlState ((3 : ℝ) / 4) rising 0 = (0, (3 : ℝ) / 4) ∧\n      ftlState ((3 : ℝ) / 4) rising 1 = (1, 0) ∧\n      ftlState ((3 : ℝ) / 4) rising 2 = (2, (1 : ℝ) / 2)",
+      "conclusion": "ftlState ((3 : ℝ) / 4) rising 0 = (0, (3 : ℝ) / 4) ∧\n      ftlState ((3 : ℝ) / 4) rising 1 = (1, 0) ∧\n      ftlState ((3 : ℝ) / 4) rising 2 = (2, (1 : ℝ) / 2)",
+      "statement_hash": "6da0585af97fa3d99f601ac16c746e022c0528aed0702f7de680b168f4c2eb88",
+      "owning_public_path": "Tests/OnlineLearningChapterAuditCanary.lean",
+      "phase": "stabilized; actual canary body pending"
+    },
+    {
+      "id": "C007",
+      "name": "Tests.OnlineLearningChapterAudit.all_initial_dyadic_upper",
+      "header": "theorem all_initial_dyadic_upper :\n    ∀ initial ∈ Set.Icc (0 : ℝ) 1,\n      NoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - dyadicObservation t)^2)\n        (ftlPredict initial dyadicObservation)",
+      "conclusion": "∀ initial ∈ Set.Icc (0 : ℝ) 1,\n      NoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - dyadicObservation t)^2)\n        (ftlPredict initial dyadicObservation)",
+      "statement_hash": "b270ea37dff8c09f00b6cf714d13e2a03ea6fec418bee0deeb266fc92bded74f",
+      "owning_public_path": "Tests/OnlineLearningChapterAuditCanary.lean",
+      "phase": "stabilized; actual canary body pending"
+    },
+    {
+      "id": "C008",
+      "name": "Tests.OnlineLearningChapterAudit.nonhalf_dyadic_best_average",
+      "header": "theorem nonhalf_dyadic_best_average :\n    Tendsto (fun T : ℕ => squaredBestRegret dyadicObservation\n      (ftlPredict ((3 : ℝ) / 4) dyadicObservation) T / (T : ℝ)) atTop (nhds (0 : ℝ))",
+      "conclusion": "Tendsto (fun T : ℕ => squaredBestRegret dyadicObservation\n      (ftlPredict ((3 : ℝ) / 4) dyadicObservation) T / (T : ℝ)) atTop (nhds (0 : ℝ))",
+      "statement_hash": "b53ac7e25957c8241c86320532e769c9397cc1e514a7d6557981b72068630cb7",
+      "owning_public_path": "Tests/OnlineLearningChapterAuditCanary.lean",
+      "phase": "stabilized; actual canary body pending"
+    },
+    {
+      "id": "C009",
+      "name": "Tests.OnlineLearningChapterAudit.outside_real_initial_identity",
+      "header": "theorem outside_real_initial_identity :\n    squaredBestRegret (fun _ => (3 : ℝ)) (ftlPredict 2 (fun _ => 3)) 1 =\n      squaredBestRegret (fun _ => (3 : ℝ)) (meanPredict (fun _ => 3)) 1 - (21 : ℝ) / 4",
+      "conclusion": "squaredBestRegret (fun _ => (3 : ℝ)) (ftlPredict 2 (fun _ => 3)) 1 =\n      squaredBestRegret (fun _ => (3 : ℝ)) (meanPredict (fun _ => 3)) 1 - (21 : ℝ) / 4",
+      "statement_hash": "817c5d201c75545bae47f41386ec3db6832d4b4356d05b6ab3a0a99c9f0e3e85",
+      "owning_public_path": "Tests/OnlineLearningChapterAuditCanary.lean",
+      "phase": "stabilized; actual canary body pending"
+    },
+    {
+      "id": "C010",
+      "name": "Tests.OnlineLearningChapterAudit.empty_horizon_not_first_correction",
+      "header": "theorem empty_horizon_not_first_correction :\n    squaredBestRegret falling (ftlPredict 0 falling) 0 = 0 ∧\n      squaredBestRegret falling (meanPredict falling) 0 = 0 ∧\n      ((0 - falling 0)^2 - ((1 : ℝ) / 2 - falling 0)^2) = (3 : ℝ) / 4",
+      "conclusion": "squaredBestRegret falling (ftlPredict 0 falling) 0 = 0 ∧\n      squaredBestRegret falling (meanPredict falling) 0 = 0 ∧\n      ((0 - falling 0)^2 - ((1 : ℝ) / 2 - falling 0)^2) = (3 : ℝ) / 4",
+      "statement_hash": "d725c87feb7b8c212047871d90f57ab97c613061f3352c42d68aaa697c38c9ad",
+      "owning_public_path": "Tests/OnlineLearningChapterAuditCanary.lean",
+      "phase": "stabilized; actual canary body pending"
+    },
+    {
+      "id": "C011",
+      "name": "Tests.OnlineLearningChapterAudit.best_and_fixed_comparator_distinct",
+      "header": "theorem best_and_fixed_comparator_distinct :\n    comparatorRegret (fun t x => (x - falling t)^2) (ftlPredict 0 falling) 0 2 = 1 ∧\n      squaredBestRegret falling (ftlPredict 0 falling) 2 = (3 : ℝ) / 2",
+      "conclusion": "comparatorRegret (fun t x => (x - falling t)^2) (ftlPredict 0 falling) 0 2 = 1 ∧\n      squaredBestRegret falling (ftlPredict 0 falling) 2 = (3 : ℝ) / 2",
+      "statement_hash": "2986177acc4454b7564983dd8f9d1cd500c6170581880e953b5fc374b5c0da8c",
+      "owning_public_path": "Tests/OnlineLearningChapterAuditCanary.lean",
+      "phase": "stabilized; actual canary body pending"
+    },
+    {
+      "id": "C012",
+      "name": "Tests.OnlineLearningChapterAudit.positive_iid_variance_excess",
+      "header": "theorem positive_iid_variance_excess :\n    variance (observation 0) iidLaw = (1 : ℝ) / 4 ∧\n      expectedFixedRegret iidLaw observation (fun t ω => meanPredict ω t) 2 = (1 : ℝ) / 4 ∧\n      expectedFixedRegret iidLaw observation (fun t ω => meanPredict ω t) 2 / (2 : ℝ) = (1 : ℝ) / 8",
+      "conclusion": "variance (observation 0) iidLaw = (1 : ℝ) / 4 ∧\n      expectedFixedRegret iidLaw observation (fun t ω => meanPredict ω t) 2 = (1 : ℝ) / 4 ∧\n      expectedFixedRegret iidLaw observation (fun t ω => meanPredict ω t) 2 / (2 : ℝ) = (1 : ℝ) / 8",
+      "statement_hash": "f4e5a380afdfba4ac761cf0946eb4c2e25afe085466df3ee9a50884177c04ca6",
+      "owning_public_path": "Tests/OnlineLearningChapterAuditCanary.lean",
+      "phase": "stabilized; actual canary body pending"
+    },
+    {
+      "id": "C013",
+      "name": "Tests.OnlineLearningChapterAudit.population_mean_fixed_minimum",
+      "header": "theorem population_mean_fixed_minimum :\n    IsLeast ((fun u : ℝ => ∫ ω, ∑ t ∈ Finset.range 2, (u - observation t ω)^2 ∂iidLaw)\n      '' Set.Icc (0 : ℝ) 1) ((1 : ℝ) / 2) ∧\n      expectedFixedRegret iidLaw observation (fun _ _ => (1 / 2 : ℝ)) 2 = 0",
+      "conclusion": "IsLeast ((fun u : ℝ => ∫ ω, ∑ t ∈ Finset.range 2, (u - observation t ω)^2 ∂iidLaw)\n      '' Set.Icc (0 : ℝ) 1) ((1 : ℝ) / 2) ∧\n      expectedFixedRegret iidLaw observation (fun _ _ => (1 / 2 : ℝ)) 2 = 0",
+      "statement_hash": "74914e3b4d42c1f82b818efd7c885de7debda0a570e8d96318fead734a673500",
+      "owning_public_path": "Tests/OnlineLearningChapterAuditCanary.lean",
+      "phase": "stabilized; actual canary body pending"
+    },
+    {
+      "id": "C014",
+      "name": "Tests.OnlineLearningChapterAudit.expectation_and_hindsight_distinct",
+      "header": "theorem expectation_and_hindsight_distinct :\n    (∫ ω, hindsightMinimum ω 2 ∂iidLaw) = (1 : ℝ) / 4 ∧\n      expectedFixedMinimum iidLaw observation 2 = (1 : ℝ) / 2",
+      "conclusion": "(∫ ω, hindsightMinimum ω 2 ∂iidLaw) = (1 : ℝ) / 4 ∧\n      expectedFixedMinimum iidLaw observation 2 = (1 : ℝ) / 2",
+      "statement_hash": "f3b6f43706f67f65264889ebd177f7b12eaf0b5d289c762f0428c91337f1efd6",
+      "owning_public_path": "Tests/OnlineLearningChapterAuditCanary.lean",
+      "phase": "stabilized; actual canary body pending"
+    },
+    {
+      "id": "C015",
+      "name": "Tests.OnlineLearningChapterAudit.iid_success_total_and_average",
+      "header": "theorem iid_success_total_and_average :\n    Tendsto (fun T => expectedFixedRegret iidLaw observation (fun t ω => meanPredict ω t) T /\n      (T : ℝ)) atTop (nhds (0 : ℝ)) ∧\n      (fun T => expectedFixedRegret iidLaw observation (fun t ω => meanPredict ω t) T) =o[atTop]\n        (fun T : ℕ => (T : ℝ))",
+      "conclusion": "Tendsto (fun T => expectedFixedRegret iidLaw observation (fun t ω => meanPredict ω t) T /\n      (T : ℝ)) atTop (nhds (0 : ℝ)) ∧\n      (fun T => expectedFixedRegret iidLaw observation (fun t ω => meanPredict ω t) T) =o[atTop]\n        (fun T : ℕ => (T : ℝ))",
+      "statement_hash": "87f88d818fc97c243a7f04d66fe2d2744f2511951c9f942de162eb8670dad85f",
+      "owning_public_path": "Tests/OnlineLearningChapterAuditCanary.lean",
+      "phase": "stabilized; actual canary body pending"
+    },
+    {
+      "id": "C016",
+      "name": "Tests.OnlineLearningChapterAudit.loss_sequence_visible_outside_comparators",
+      "header": "theorem loss_sequence_visible_outside_comparators :\n    (RegretDomainsProbe.output 0).val ∈ RegretDomainsProbe.outputW ∧\n      (RegretDomainsProbe.output 0).val ∉ RegretDomainsProbe.sourceV ∧\n      comparatorRegret RegretDomainsProbe.domainLoss RegretDomainsProbe.output\n        RegretDomainsProbe.referenceOne 2 = -2 ∧\n      comparatorRegret (fun t x => 2 * RegretDomainsProbe.domainLoss t x)\n        RegretDomainsProbe.output RegretDomainsProbe.referenceOne 2 = -4",
+      "conclusion": "(RegretDomainsProbe.output 0).val ∈ RegretDomainsProbe.outputW ∧\n      (RegretDomainsProbe.output 0).val ∉ RegretDomainsProbe.sourceV ∧\n      comparatorRegret RegretDomainsProbe.domainLoss RegretDomainsProbe.output\n        RegretDomainsProbe.referenceOne 2 = -2 ∧\n      comparatorRegret (fun t x => 2 * RegretDomainsProbe.domainLoss t x)\n        RegretDomainsProbe.output RegretDomainsProbe.referenceOne 2 = -4",
+      "statement_hash": "ebd82ba27e65af09dd908a20b15f67cbe7f69216cfe2df47a120eaa367be67f8",
+      "owning_public_path": "Tests/OnlineLearningChapterAuditCanary.lean",
+      "phase": "stabilized; actual canary body pending"
+    },
+    {
+      "id": "C017",
+      "name": "Tests.OnlineLearningChapterAudit.produced_minimum_and_empty_nonunique",
+      "header": "theorem produced_minimum_and_empty_nonunique :\n    empiricalMean rising 2 = (1 : ℝ) / 2 ∧\n      sInf ((fun u : ℝ => ∑ t ∈ Finset.range 2, (u - rising t)^2) '' Set.Icc (0 : ℝ) 1) = (1 : ℝ) / 2 ∧\n      ∀ u ∈ Set.Icc (0 : ℝ) 1, (∑ t ∈ Finset.range 0, (u - rising t)^2) = 0",
+      "conclusion": "empiricalMean rising 2 = (1 : ℝ) / 2 ∧\n      sInf ((fun u : ℝ => ∑ t ∈ Finset.range 2, (u - rising t)^2) '' Set.Icc (0 : ℝ) 1) = (1 : ℝ) / 2 ∧\n      ∀ u ∈ Set.Icc (0 : ℝ) 1, (∑ t ∈ Finset.range 0, (u - rising t)^2) = 0",
+      "statement_hash": "be4b333263bb28a2cda2ecf6f1d699c2341f7cf9fd82177d3e3b82159aef522a",
+      "owning_public_path": "Tests/OnlineLearningChapterAuditCanary.lean",
+      "phase": "stabilized; actual canary body pending"
+    },
+    {
+      "id": "C018",
+      "name": "Tests.OnlineLearningChapterAudit.positive_prefix_unique",
+      "header": "theorem positive_prefix_unique :\n    ∀ u : ℝ,\n      (∑ t ∈ Finset.range 2, (u - rising t)^2) ≤\n        (∑ t ∈ Finset.range 2, (empiricalMean rising 2 - rising t)^2) → u = (1 : ℝ) / 2",
+      "conclusion": "∀ u : ℝ,\n      (∑ t ∈ Finset.range 2, (u - rising t)^2) ≤\n        (∑ t ∈ Finset.range 2, (empiricalMean rising 2 - rising t)^2) → u = (1 : ℝ) / 2",
+      "statement_hash": "2c34bb1fe80dd0cf74487b78abf23e24d9aa25e7d0311f635ea7aa06f6ec9074",
+      "owning_public_path": "Tests/OnlineLearningChapterAuditCanary.lean",
+      "phase": "stabilized; actual canary body pending"
+    },
+    {
+      "id": "C019",
+      "name": "Tests.OnlineLearningChapterAudit.concrete_be_the_leader",
+      "header": "theorem concrete_be_the_leader :\n    (∑ t ∈ Finset.range 2, ChapterOneCase0.demoLoss t (ChapterOneCase0.demoLeader (t + 1))) = -2 ∧\n      (∑ t ∈ Finset.range 2, ChapterOneCase0.demoLoss t (ChapterOneCase0.demoLeader 2)) = 0 ∧\n      (∑ t ∈ Finset.range 2, ChapterOneCase0.demoLoss t (ChapterOneCase0.demoLeader (t + 1))) ≤\n        ∑ t ∈ Finset.range 2, ChapterOneCase0.demoLoss t (ChapterOneCase0.demoLeader 2)",
+      "conclusion": "(∑ t ∈ Finset.range 2, ChapterOneCase0.demoLoss t (ChapterOneCase0.demoLeader (t + 1))) = -2 ∧\n      (∑ t ∈ Finset.range 2, ChapterOneCase0.demoLoss t (ChapterOneCase0.demoLeader 2)) = 0 ∧\n      (∑ t ∈ Finset.range 2, ChapterOneCase0.demoLoss t (ChapterOneCase0.demoLeader (t + 1))) ≤\n        ∑ t ∈ Finset.range 2, ChapterOneCase0.demoLoss t (ChapterOneCase0.demoLeader 2)",
+      "statement_hash": "d557b2f0135989907827924dd9c7e1ca28c14f06dc269f8b1621bf734e97da51",
+      "owning_public_path": "Tests/OnlineLearningChapterAuditCanary.lean",
+      "phase": "stabilized; actual canary body pending"
+    },
+    {
+      "id": "C020",
+      "name": "Tests.OnlineLearningChapterAudit.half_refined_and_logarithmic",
+      "header": "theorem half_refined_and_logarithmic :\n    squaredBestRegret rising (meanPredict rising) 2 = (3 : ℝ) / 4 ∧\n      squaredBestRegret rising (meanPredict rising) 2 ≤ (9 : ℝ) / 4 ∧\n      squaredBestRegret rising (meanPredict rising) 2 ≤ 4 + 4 * Real.log 2",
+      "conclusion": "squaredBestRegret rising (meanPredict rising) 2 = (3 : ℝ) / 4 ∧\n      squaredBestRegret rising (meanPredict rising) 2 ≤ (9 : ℝ) / 4 ∧\n      squaredBestRegret rising (meanPredict rising) 2 ≤ 4 + 4 * Real.log 2",
+      "statement_hash": "c8805d8789a9f07ab8eeee162d22ed721dd493c63bfdc4be1584efb2d3038517",
+      "owning_public_path": "Tests/OnlineLearningChapterAuditCanary.lean",
+      "phase": "stabilized; actual canary body pending"
+    },
+    {
+      "id": "C021",
+      "name": "Tests.OnlineLearningChapterAudit.same_stream_later_stability",
+      "header": "theorem same_stream_later_stability :\n    (meanPredict rising 1 - rising 1)^2 - (meanPredict rising 2 - rising 1)^2 = (3 : ℝ) / 4 ∧\n      (meanPredict rising 1 - rising 1)^2 - (meanPredict rising 2 - rising 1)^2 ≤ 4 / ((1 : ℝ) + 1)",
+      "conclusion": "(meanPredict rising 1 - rising 1)^2 - (meanPredict rising 2 - rising 1)^2 = (3 : ℝ) / 4 ∧\n      (meanPredict rising 1 - rising 1)^2 - (meanPredict rising 2 - rising 1)^2 ≤ 4 / ((1 : ℝ) + 1)",
+      "statement_hash": "e4f967fd5099e3f903a27baac828fc5ee305e6a9a97a7a09c739ebc00c2e5b65",
+      "owning_public_path": "Tests/OnlineLearningChapterAuditCanary.lean",
+      "phase": "stabilized; actual canary body pending"
+    },
+    {
+      "id": "C022",
+      "name": "Tests.OnlineLearningChapterAudit.actual_kernel_same_run_excess",
+      "header": "theorem actual_kernel_same_run_excess :\n    (∀ T : ℕ, expectedFixedRegret Tests.OnlineGuessingKernelCausal.gameLaw\n      Tests.OnlineGuessingKernelCausal.target\n      (fun t ω => (Tests.OnlineGuessingKernelCausal.prediction t ω : ℝ)) T = (T : ℝ) / 4) ∧\n      Tests.OnlineGuessingKernelCausal.decisionKernel 1 (Tests.OnlineGuessingKernelCausal.oneHistory 0 1) {1} = (1 / 4 : ℝ≥0∞) ∧\n      Tests.OnlineGuessingKernelCausal.decisionKernel 1 (Tests.OnlineGuessingKernelCausal.oneHistory 1 1) {1} = (3 / 4 : ℝ≥0∞)",
+      "conclusion": "(∀ T : ℕ, expectedFixedRegret Tests.OnlineGuessingKernelCausal.gameLaw\n      Tests.OnlineGuessingKernelCausal.target\n      (fun t ω => (Tests.OnlineGuessingKernelCausal.prediction t ω : ℝ)) T = (T : ℝ) / 4) ∧\n      Tests.OnlineGuessingKernelCausal.decisionKernel 1 (Tests.OnlineGuessingKernelCausal.oneHistory 0 1) {1} = (1 / 4 : ℝ≥0∞) ∧\n      Tests.OnlineGuessingKernelCausal.decisionKernel 1 (Tests.OnlineGuessingKernelCausal.oneHistory 1 1) {1} = (3 / 4 : ℝ≥0∞)",
+      "statement_hash": "f1b0837a068f7b3fcfe034527c6283e9c73d035011eb05a34fcf1c299ba40e84",
+      "owning_public_path": "Tests/OnlineLearningChapterAuditCanary.lean",
+      "phase": "stabilized; actual canary body pending"
+    },
+    {
+      "id": "C023",
+      "name": "Tests.OnlineLearningChapterAudit.correlation_changes_excess",
+      "header": "theorem correlation_changes_excess :\n    expectedFixedRegret iidLaw (fun _ => observation 0)\n      (fun t ω => meanPredict (fun _ => observation 0 ω) t) 2 = -(1 : ℝ) / 4 ∧\n      expectedFixedRegret iidLaw observation (fun t ω => meanPredict ω t) 2 = (1 : ℝ) / 4",
+      "conclusion": "expectedFixedRegret iidLaw (fun _ => observation 0)\n      (fun t ω => meanPredict (fun _ => observation 0 ω) t) 2 = -(1 : ℝ) / 4 ∧\n      expectedFixedRegret iidLaw observation (fun t ω => meanPredict ω t) 2 = (1 : ℝ) / 4",
+      "statement_hash": "314b8a00a6d4fb68a5a5dd5f726adc0dca945537824e8ff36c427461ace1cc6a",
+      "owning_public_path": "Tests/OnlineLearningChapterAuditCanary.lean",
+      "phase": "stabilized; actual canary body pending"
+    },
+    {
+      "id": "C024",
+      "name": "Tests.OnlineLearningChapterAudit.same_actual_ftl_limit_obstruction",
+      "header": "theorem same_actual_ftl_limit_obstruction :\n    NoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - dyadicObservation t)^2) (meanPredict dyadicObservation) ∧\n      Tendsto (fun T : ℕ => squaredBestRegret dyadicObservation (meanPredict dyadicObservation) T / (T : ℝ)) atTop (nhds (0 : ℝ)) ∧\n      (¬ ∃ a : ℝ, Tendsto (fun T : ℕ => comparatorRegret (fun t x => (x - dyadicObservation t)^2)\n        (meanPredict dyadicObservation) 0 T / (T : ℝ)) atTop (nhds a)) ∧\n      ¬ LimitNoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - dyadicObservation t)^2) (meanPredict dyadicObservation)",
+      "conclusion": "NoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - dyadicObservation t)^2) (meanPredict dyadicObservation) ∧\n      Tendsto (fun T : ℕ => squaredBestRegret dyadicObservation (meanPredict dyadicObservation) T / (T : ℝ)) atTop (nhds (0 : ℝ)) ∧\n      (¬ ∃ a : ℝ, Tendsto (fun T : ℕ => comparatorRegret (fun t x => (x - dyadicObservation t)^2)\n        (meanPredict dyadicObservation) 0 T / (T : ℝ)) atTop (nhds a)) ∧\n      ¬ LimitNoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - dyadicObservation t)^2) (meanPredict dyadicObservation)",
+      "statement_hash": "e5f0e2e7aeacb82ac6dfd9671bbba8c1b7b641aa5582d1aa27fe2fce4398027b",
+      "owning_public_path": "Tests/OnlineLearningChapterAuditCanary.lean",
+      "phase": "stabilized; actual canary body pending"
+    },
+    {
+      "id": "C025",
+      "name": "Tests.OnlineLearningChapterAudit.qualitative_log_fixed_binary_witness",
+      "header": "theorem qualitative_log_fixed_binary_witness :\n    ∃ v : List.Vector Bool 2, Real.log 4 / 6 ≤\n      ∫ b, BanditRL.OnlineLearning.GuessingLower.pathRegret (GuessingLogLowerProbe.seededPolicy b) v.toList\n        ∂GuessingLogLowerProbe.coinMeasure",
+      "conclusion": "∃ v : List.Vector Bool 2, Real.log 4 / 6 ≤\n      ∫ b, BanditRL.OnlineLearning.GuessingLower.pathRegret (GuessingLogLowerProbe.seededPolicy b) v.toList\n        ∂GuessingLogLowerProbe.coinMeasure",
+      "statement_hash": "62591872f7cc288e6201c753d2eda0f36bf202907907fd6087561a4954bd182c",
+      "owning_public_path": "Tests/OnlineLearningChapterAuditCanary.lean",
+      "phase": "stabilized; actual canary body pending"
+    },
+    {
+      "id": "C026",
+      "name": "Tests.OnlineLearningChapterAudit.harmonic_two_bound",
+      "header": "theorem harmonic_two_bound :\n    (harmonic 2 : ℝ) = (3 : ℝ) / 2 ∧ (harmonic 2 : ℝ) ≤ 1 + Real.log 2",
+      "conclusion": "(harmonic 2 : ℝ) = (3 : ℝ) / 2 ∧ (harmonic 2 : ℝ) ≤ 1 + Real.log 2",
+      "statement_hash": "bc46044a1023bec5e232f1b7a3901ed307050e80343bdbab478f06f065a07161",
+      "owning_public_path": "Tests/OnlineLearningChapterAuditCanary.lean",
+      "phase": "stabilized; actual canary body pending"
+    },
+    {
+      "id": "C027",
+      "name": "Tests.OnlineLearningChapterAudit.centered_total_average_boundary",
+      "header": "theorem centered_total_average_boundary :\n    (fun T : ℕ => (5 + 3 * (T : ℝ)) - (T : ℝ) * 3) =o[atTop]\n      (fun T : ℕ => (T : ℝ)) ∧\n      ((5 + 3 * (0 : ℝ)) / (0 : ℝ) - 3) = -(3 : ℝ)",
+      "conclusion": "(fun T : ℕ => (5 + 3 * (T : ℝ)) - (T : ℝ) * 3) =o[atTop]\n      (fun T : ℕ => (T : ℝ)) ∧\n      ((5 + 3 * (0 : ℝ)) / (0 : ℝ) - 3) = -(3 : ℝ)",
+      "statement_hash": "25d8952dd2f4642faf0b50d693a77035778da4a2c41f5107d51c5e8d99aa433d",
+      "owning_public_path": "Tests/OnlineLearningChapterAuditCanary.lean",
+      "phase": "stabilized; actual canary body pending"
+    }
+  ],
+  "imports": [
+    "BanditRLProof.OnlineFTLInitializationRegret",
+    "Tests.OnlineLearningChapterOneCanary",
+    "Tests.OnlineLearningRegretDomainsCanary",
+    "Tests.OnlineSquareMinimumCanary",
+    "Tests.OnlineGuessingIIDSuccessCanary",
+    "Tests.OnlineGuessingKernelCausalCanary",
+    "Tests.OnlineFTLOscillationCanary",
+    "Tests.OnlineGuessingLogLowerCanary"
+  ],
+  "setup": "import BanditRLProof.OnlineFTLInitializationRegret\nimport Tests.OnlineLearningChapterOneCanary\nimport Tests.OnlineLearningRegretDomainsCanary\nimport Tests.OnlineSquareMinimumCanary\nimport Tests.OnlineGuessingIIDSuccessCanary\nimport Tests.OnlineGuessingKernelCausalCanary\nimport Tests.OnlineFTLOscillationCanary\nimport Tests.OnlineGuessingLogLowerCanary\n\nnoncomputable section\nopen Filter Asymptotics MeasureTheory ProbabilityTheory BanditRL.OnlineLearning\nopen scoped ENNReal\nopen Tests.OnlineGuessingIIDBenchmark\nnamespace Tests.OnlineLearningChapterAudit\n\ndef rising (t : ℕ) : ℝ := if t = 0 then 0 else 1\ndef falling (t : ℕ) : ℝ := if t = 0 then 1 else 0\n\n",
+  "exact_target_count": 27,
+  "production_scope_unchanged": true,
+  "source_count": 17,
+  "proof_total": null,
+  "chapter_complete": false,
+  "goal_complete": false,
+  "phase": "stabilized exact27 Test headers,2probe definitions; proving",
+  "contract_receipt_sha256": "e73ce0ddabcb71aff166ad5f381204b7d7b17b078af704830681f48354adbd0c"
+}

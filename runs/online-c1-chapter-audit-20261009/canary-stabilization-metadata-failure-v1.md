@@ -1,0 +1,1 @@
+Initial stabilization adapter expected scope key targets; actual reviewer receipt uses exact_targets. Actual exit1 before any stabilization/native/Test output. Original script retained; v2 corrects metadata pointer only, all27 mathematical headers unchanged.

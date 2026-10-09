@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineLearning.meanPredict_limitNoRegret_iff_mean_converges",
+  "file": "BanditRLProof/OnlineFTLOscillation.lean",
+  "statement": "theorem meanPredict_limitNoRegret_iff_mean_converges (y : ℕ → ℝ) (hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1) : LimitNoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - y t)^2) (meanPredict y) ↔ ∃ m ∈ Set.Icc (0 : ℝ) 1, Tendsto (empiricalMean y) atTop (nhds m)",
+  "statement_hash": "f5f7c19e4558ed9c406cc50676605a5ae1559a67869ee9642a7b2f84c4532e88",
+  "source_assumptions": [],
+  "created_at": "2026-10-09T02:35:42+00:00"
+}

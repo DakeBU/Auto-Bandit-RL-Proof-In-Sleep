@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineLearning.limitNoRegret_iff_noRegret_of_converges",
+  "file": "BanditRLProof/OnlineNoRegretSemantics.lean",
+  "statement": "theorem limitNoRegret_iff_noRegret_of_converges {X : Type*} (V : Set X) (loss : ℕ → X → ℝ) (prediction : ℕ → X) (hc : ∀ u ∈ V, ∃ a : ℝ, Tendsto (fun T : ℕ => comparatorRegret loss prediction u T / T) atTop (nhds a)) : LimitNoRegret V loss prediction ↔ NoRegret V loss prediction",
+  "statement_hash": "31eb9d73b92d48583b3a61908ae4c54acdc91f1f2de25bc7a46bf414acd0ea74",
+  "source_assumptions": [],
+  "created_at": "2026-10-09T02:35:39+00:00"
+}

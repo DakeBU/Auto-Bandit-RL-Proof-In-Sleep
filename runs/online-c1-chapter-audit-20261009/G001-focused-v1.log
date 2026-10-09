@@ -1,0 +1,49 @@
+⚠ [3328/3334] Replayed BanditRLProof.OnlineLearningFTL
+warning: BanditRLProof/OnlineLearningFTL.lean:81:41: unused variable `hT`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+✖ [3334/3334] Building BanditRLProof.OnlineFTLInitializationRegret (9.3s)
+trace: .> LEAN_PATH=E:\ABRL\research\.lake\packages\Cli\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\batteries\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\Qq\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\aesop\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\proofwidgets\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\importGraph\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\LeanSearchClient\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\plausible\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\mathlib\.lake\build\lib\lean;E:\ABRL\worktrees\research-online-book\.lake\build\lib\lean c:\Users\admin\.elan\toolchains\leanprover--lean4---v4.29.1\bin\lean.exe E:\ABRL\worktrees\research-online-book\BanditRLProof\OnlineFTLInitializationRegret.lean -o E:\ABRL\worktrees\research-online-book\.lake\build\lib\lean\BanditRLProof\OnlineFTLInitializationRegret.olean -i E:\ABRL\worktrees\research-online-book\.lake\build\lib\lean\BanditRLProof\OnlineFTLInitializationRegret.ilean -c E:\ABRL\worktrees\research-online-book\.lake\build\ir\BanditRLProof\OnlineFTLInitializationRegret.c --setup E:\ABRL\worktrees\research-online-book\.lake\build\ir\BanditRLProof\OnlineFTLInitializationRegret.setup.json --json
+info: BanditRLProof/OnlineFTLInitializationRegret.lean:29:6: Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+error: BanditRLProof/OnlineFTLInitializationRegret.lean:25:59: unsolved goals
+initial : ℝ
+y : ℕ → ℝ
+n : ℕ
+hT : 0 < n + 1
+htail :
+  ∑ t ∈ Finset.range n, (ftlPredict initial y (t + 1) - y (t + 1)) ^ 2 =
+    ∑ t ∈ Finset.range n, (meanPredict y (t + 1) - y (t + 1)) ^ 2
+⊢ ∑ x ∈ Finset.range n,
+            (-((if 1 + x = 0 then 1 / 2 else empiricalMean y (1 + x)) * y (1 + x) * 2) +
+                (if 1 + x = 0 then 1 / 2 else empiricalMean y (1 + x)) ^ 2 +
+              y (1 + x) ^ 2) -
+          (if True then initial else empiricalMean y 0) * y 0 * 2 +
+        (if True then initial else empiricalMean y 0) ^ 2 +
+      y 0 ^ 2 =
+    -1 / 4 +
+                  ∑ x ∈ Finset.range n,
+                    (-((if 1 + x = 0 then 1 / 2 else empiricalMean y (1 + x)) * y (1 + x) * 2) +
+                        (if 1 + x = 0 then 1 / 2 else empiricalMean y (1 + x)) ^ 2 +
+                      y (1 + x) ^ 2) +
+                y 0 -
+              (y 0 * if True then 1 / 2 else empiricalMean y 0) * 2 -
+            y 0 * initial * 2 +
+          y 0 ^ 2 +
+        (if True then 1 / 2 else empiricalMean y 0) ^ 2 +
+      initial ^ 2
+warning: BanditRLProof/OnlineFTLInitializationRegret.lean:28:42: This simp argument is unused:
+  if_pos rfl
+
+Hint: Omit it from the simp argument list.
+  simp only [ftlPredict, meanPredict,̵ ̵i̵f̵_̵p̵o̵s̵ ̵r̵f̵l̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+error: Lean exited with code 1
+Some required targets logged failures:
+- BanditRLProof.OnlineFTLInitializationRegret
+error: build failed

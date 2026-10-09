@@ -1,0 +1,116 @@
+What is Online Learning?5
+0 2 4 6 8 10
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1
+x
+1/x
+1/(x−1)
+Figure 1.1Upper bounding the sum with an integral.
+ProofWe use Lemma 1.2 to upper bound the regret:
+TX
+t=1
+(xt −y t)2 −min
+x∈[0,1]
+TX
+t=1
+(x−y t)2 =
+TX
+t=1
+(x⋆
+t−1 −y t)2 −
+TX
+t=1
+(x⋆
+T −y t)2
+≤
+TX
+t=1
+(x⋆
+t−1 −y t)2 −
+TX
+t=1
+(x⋆
+t −y t)2 .
+Now, let’s take a look at each difference in the sum in the last equation. Fort= 1, we have
+(x⋆
+0 −y 1)2 −(x ⋆
+1 −y 1)2 ≤0.5 2 .
+Fort≥2, we have that
+(x⋆
+t−1 −y t)2 −(x ⋆
+t −y t)2 = (x⋆
+t−1)2 −2y tx⋆
+t−1 −(x ⋆
+t )2 + 2ytx⋆
+t
+= (x⋆
+t−1 +x ⋆
+t −2y t)(x⋆
+t−1 −x ⋆
+t )
+≤ |x⋆
+t−1 +x ⋆
+t −2y t||x ⋆
+t−1 −x ⋆
+t | ≤2|x⋆
+t−1 −x ⋆
+t |
+= 2
+
+1
+t−1
+t−1X
+i=1
+yi − 1
+t
+tX
+i=1
+yi
+
+= 2
+
+ 1
+t−1 − 1
+t
+ t−1X
+i=1
+yi − yt
+t
+
+≤2
+
+1
+t(t−1)
+t−1X
+i=1
+yi
+ + 2|yt|
+t ≤ 2
+t + 2|yt|
+t ≤ 4
+t .
+Hence, overall, we have
+TX
+t=1
+(xt −y t)2 −min
+x∈[0,1]
+TX
+t=1
+(x−y t)2 ≤0.25 + 4
+TX
+t=2
+1
+t ≤4
+TX
+t=1
+1
+t .
+To upper bound the last sum, observe that we are trying to find an upper bound to the gray

@@ -1,0 +1,39 @@
+∀ (initial : ℝ) (y : ℕ → ℝ) (T : ℕ),
+  0 < T →
+    squaredBestRegret y (ftlPredict initial y) T =
+      squaredBestRegret y (meanPredict y) T + ((initial - y 0) ^ 2 - (1 / 2 - y 0) ^ 2) : Prop
+E:\ABRL\worktrees\research-online-book\runs\online-c1-chapter-audit-20261009\general-initialization-draft-typecheck-v2.lean:5:45: warning: unused variable `hT`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (initial : ℝ) (y : ℕ → ℝ) (T : ℕ),
+  0 < T →
+    initial ∈ Set.Icc 0 1 →
+      (∀ t < T, y t ∈ Set.Icc 0 1) → squaredBestRegret y (ftlPredict initial y) T ≤ 5 + 4 * Real.log ↑T : Prop
+E:\ABRL\worktrees\research-online-book\runs\online-c1-chapter-audit-20261009\general-initialization-draft-typecheck-v2.lean:10:45: warning: unused variable `hT`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\runs\online-c1-chapter-audit-20261009\general-initialization-draft-typecheck-v2.lean:11:5: warning: unused variable `hi`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\runs\online-c1-chapter-audit-20261009\general-initialization-draft-typecheck-v2.lean:12:5: warning: unused variable `hy`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (initial : ℝ) (y : ℕ → ℝ),
+  initial ∈ Set.Icc 0 1 →
+    (∀ (t : ℕ), y t ∈ Set.Icc 0 1) → NoRegret (Set.Icc 0 1) (fun t x => (x - y t) ^ 2) (ftlPredict initial y) : Prop
+E:\ABRL\worktrees\research-online-book\runs\online-c1-chapter-audit-20261009\general-initialization-draft-typecheck-v2.lean:17:5: warning: unused variable `hi`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\runs\online-c1-chapter-audit-20261009\general-initialization-draft-typecheck-v2.lean:18:5: warning: unused variable `hy`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+∀ (initial : ℝ) (y : ℕ → ℝ),
+  initial ∈ Set.Icc 0 1 →
+    (∀ (t : ℕ), y t ∈ Set.Icc 0 1) →
+      Tendsto (fun T => squaredBestRegret y (ftlPredict initial y) T / ↑T) atTop (nhds 0) : Prop
+E:\ABRL\worktrees\research-online-book\runs\online-c1-chapter-audit-20261009\general-initialization-draft-typecheck-v2.lean:23:5: warning: unused variable `hi`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\runs\online-c1-chapter-audit-20261009\general-initialization-draft-typecheck-v2.lean:24:5: warning: unused variable `hy`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`

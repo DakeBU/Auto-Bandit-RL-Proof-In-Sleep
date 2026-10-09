@@ -1,0 +1,33 @@
+import BanditRLProof.OnlineLearningFTLState
+import BanditRLProof.OnlineFTLLimitSemantics
+
+open Filter
+
+namespace BanditRL.OnlineLearning
+
+/-- Derived same-run identity: only the scored initial loss differs from half initialization. -/
+theorem ftlPredict_bestRegret_initial_correction (initial : ℝ) (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T) :
+    squaredBestRegret y (ftlPredict initial y) T =
+      squaredBestRegret y (meanPredict y) T +
+        ((initial - y 0)^2 - ((1 : ℝ) / 2 - y 0)^2) := by
+  cases T with
+  | zero => omega
+  | succ n =>
+    have htail :
+        (∑ t ∈ Finset.range n, (ftlPredict initial y (t + 1) - y (t + 1))^2) =
+          ∑ t ∈ Finset.range n, (meanPredict y (t + 1) - y (t + 1))^2 := by
+      apply Finset.sum_congr rfl
+      intro t ht
+      simp [ftlPredict, meanPredict]
+    have hsum :
+        (∑ t ∈ Finset.range (n + 1), (ftlPredict initial y t - y t)^2) =
+          (∑ t ∈ Finset.range (n + 1), (meanPredict y t - y t)^2) +
+            ((initial - y 0)^2 - ((1 : ℝ) / 2 - y 0)^2) := by
+      simp only [Finset.sum_range_succ']
+      rw [htail]
+      simp [ftlPredict, meanPredict]
+    unfold squaredBestRegret
+    rw [hsum]
+    ring
+
+end BanditRL.OnlineLearning

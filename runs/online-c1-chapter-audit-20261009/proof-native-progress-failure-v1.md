@@ -1,0 +1,1 @@
+Actual preparation v1 stopped after two successful failed-attempt records: compiled G001v3 native trial-log rejected unsupported progress class leaf-closure with actual exit2 before mutation. Real help permits compiled-leaf. Preserve original script/logs/exit/snapshots and two append rows; resume only remaining5trial records plus candidateevent. No theorem/header/source repair.

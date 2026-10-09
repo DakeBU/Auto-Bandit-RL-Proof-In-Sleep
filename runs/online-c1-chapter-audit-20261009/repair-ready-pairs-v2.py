@@ -1,0 +1,6 @@
+from common_v1 import *
+fixed()
+write(RUN/'readiness-pair-failure-v1.md','''The first audit-ready-pairs-v1.py execution actually exited1 on the fifth expected dependency pair. The pair was a mistaken semantic association: meanPredict_limitNoRegret_iff_mean_converges does not directly call meanPredict_noRegret; its actual VALUE constants include meanPredict_fixedRegret_limit_iff and meanPredict_limitNoRegret_of_mean_converges. No proof/header changed, no success receipt emitted. A subsequent stdin repair attempt also actually exited1 (common_v1 module path missing), and the requested v2 execution could not start (file absent); it wrote nothing. This saved standalone repair resumes with the actual script-directory import path. Version2 changes only the evidence expectation, preserving both original failures and all frozen targets.''')
+code=(RUN/'audit-ready-pairs-v1.py').read_text(encoding='utf8-sig').replace("(ns+'meanPredict_limitNoRegret_iff_mean_converges',ns+'meanPredict_noRegret')","(ns+'meanPredict_limitNoRegret_iff_mean_converges',ns+'meanPredict_limitNoRegret_of_mean_converges')").replace('required-readiness-value-pairs-v1.json','required-readiness-value-pairs-v2.json')
+write(RUN/'audit-ready-pairs-v2.py',code)
+fixed()

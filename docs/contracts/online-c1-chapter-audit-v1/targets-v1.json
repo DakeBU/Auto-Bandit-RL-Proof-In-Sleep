@@ -1,0 +1,765 @@
+{
+  "version": 1,
+  "phase": "draft",
+  "target_kind": "existing-public-proof audit and chapter integration",
+  "required_source_object_count": 16,
+  "selected_named_proof_values": 50,
+  "new_production_theorems": 0,
+  "count_is_not_source_coverage": true,
+  "targets": [
+    {
+      "id": "A001",
+      "name": "BanditRL.OnlineLearning.GuessingLower.randomized_log_lower",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGuessingLogLower.lean",
+      "header": "theorem randomized_log_lower {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (A : Ω → List Bool → ℝ) (hA : ∀ h, Measurable (fun ω => A ω h)) (hbound : ∀ ω h, A ω h ∈ Icc (0 : ℝ) 1) (T : ℕ) (hT : 0 < T) : ∃ v : List.Vector Bool T, Real.log ((T : ℝ) + 2) / 6 ≤ ∫ ω, pathRegret (A ω) v.toList ∂μ",
+      "statement_hash": "32bd5e443de1ec751e5c4c8d9c99134fc3319f1777ef7cc397966ae963221828",
+      "file_sha256": "5f4b6bd8e3300d8b94862aa95f1d46e68ccea11e3b6261bebbf9d60aa6c9a5b1",
+      "source_ids": [
+        "C1-LOG-UNAVOIDABLE"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A002",
+      "name": "BanditRL.OnlineLearning.ae_predictable_private_seed_expectedFixed_excess",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGuessingAECausal.lean",
+      "header": "theorem ae_predictable_private_seed_expectedFixed_excess {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (hind : iIndepFun Y μ) (S : Ω → Seed) (hS : Measurable S) (hseed : IndepFun S (fun ω t => Y t ω) μ) (F : ℕ → MeasurableSpace Ω) (hF : ∀ t, F t ≤ privateSeedPastInformation S Y t) (prediction : ℕ → Ω → ℝ) (hP : ∀ t, AEStronglyMeasurable[F t] (prediction t) μ) (hpb : ∀ t, ∀ᵐ ω ∂μ, prediction t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) : expectedFixedRegret μ Y prediction T = (∑ t ∈ Finset.range T, ∫ ω, (prediction t ω - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) ∧ 0 ≤ expectedFixedRegret μ Y prediction T",
+      "statement_hash": "ba4a2317c32fef15e0dc2b76c82237a5590ba451f229942454897981fdaf5351",
+      "file_sha256": "623634fa5df3c91dee704be00218b5eac7d513a1f8a0b483ccf730832cd5f814",
+      "source_ids": [
+        "C1-IID-LOWER"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A003",
+      "name": "BanditRL.OnlineLearning.causal_kernel_realization_and_expectedFixed_excess",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGuessingKernelCausal.lean",
+      "header": "theorem causal_kernel_realization_and_expectedFixed_excess (κ : (t : ℕ) → Kernel (KernelDecisionHistory t) I) [∀ t, IsMarkovKernel (κ t)] : ∃ f : KernelDecisionSampler, (∀ t, Measurable (Function.uncurry (f t))) ∧ (∀ t h, (volume : Measure I).map (f t h) = κ t h) ∧ (∀ t, Measurable (kernelCausalPolicy f t)) ∧ (∀ t (u : ℕ → I) (y : ℕ → ℝ) (i : Fin t), kernelGeneratedActions f t (fun j => u j) (fun j => y j) i = kernelGeneratedPrediction f (i : ℕ) (u, y)) ∧ (∀ t (ω ω' : (ℕ → I) × (ℕ → ℝ)), (∀ i, i ≤ t → ω.1 i = ω'.1 i) → (∀ i, i < t → ω.2 i = ω'.2 i) → kernelGeneratedPrediction f t ω = kernelGeneratedPrediction f t ω') ∧ ∀ ν : ProbabilityMeasure (ℕ → ℝ), (∀ t, (kernelGameLaw ν).map (fun ω => (kernelGeneratedHistory f t ω, kernelGeneratedPrediction f t ω)) = (kernelGameLaw ν).map (kernelGeneratedHistory f t) ⊗ₘ κ t) ∧ (∀ t, condDistrib (kernelGeneratedPrediction f t) (kernelGeneratedHistory f t) (kernelGameLaw ν) =ᵐ[(kernelGameLaw ν).map (kernelGeneratedHistory f t)] κ t) ∧ (iIndepFun (fun t (y : ℕ → ℝ) => y t) (ν : Measure (ℕ → ℝ)) → (∀ t, IdentDistrib (fun y : ℕ → ℝ => y t) (fun y : ℕ → ℝ => y 0) (ν : Measure (ℕ → ℝ)) (ν : Measure (ℕ → ℝ))) → (∀ t, ∀ᵐ y ∂(ν : Measure (ℕ → ℝ)), y t ∈ Set.Icc (0 : ℝ) 1) → ∀ T : ℕ, expectedFixedRegret (kernelGameLaw ν) (fun t ω => ω.2 t) (fun t ω => (kernelGeneratedPrediction f t ω : ℝ)) T = (∑ t ∈ Finset.range T, ∫ ω, ((kernelGeneratedPrediction f t ω : ℝ) - ∫ ω, ω.2 0 ∂(kernelGameLaw ν))^2 ∂(kernelGameLaw ν)) ∧ 0 ≤ expectedFixedRegret (kernelGameLaw ν) (fun t ω => ω.2 t) (fun t ω => (kernelGeneratedPrediction f t ω : ℝ)) T)",
+      "statement_hash": "376138ab1ad5ebbd2c83a48200d8f893c386e23e1d0f8d358b05bac922a9e02d",
+      "file_sha256": "e4e207c116caf5e92ba5cb22d65289207bba0f19c0277999eee5caa5fb1708d0",
+      "source_ids": [
+        "C1-IID-LOWER"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A004",
+      "name": "BanditRL.OnlineLearning.centered_total_sublinear_iff_average",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGuessingIIDSuccess.lean",
+      "header": "theorem centered_total_sublinear_iff_average (total : ℕ → ℝ) (c : ℝ) : (fun T => total T - (T : ℝ) * c) =o[atTop] (fun T : ℕ => (T : ℝ)) ↔ Tendsto (fun T => total T / (T : ℝ) - c) atTop (nhds (0 : ℝ))",
+      "statement_hash": "2b5efc191557a8571fe2bba1d5e0fb6d36697e2e139593f2db1f603c286b94d9",
+      "file_sha256": "eca206ce6e2eaccab97b1c9a0912cd639304f049e190bfbc94fe2f5a7bb3821b",
+      "source_ids": [
+        "C1-EQ1.1-1.2"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A005",
+      "name": "BanditRL.OnlineLearning.comparatorRegret_eq_sum",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineLearningRegret.lean",
+      "header": "theorem comparatorRegret_eq_sum {X : Type*} (loss : ℕ → X → ℝ) (prediction : ℕ → X) (u : X) (T : ℕ) : comparatorRegret loss prediction u T = ∑ t ∈ Finset.range T, (loss t (prediction t) - loss t u)",
+      "statement_hash": "f8ffca682a58d76117d4b9ca4d99397c76c82ea95662c82efab255ef8f20a9a6",
+      "file_sha256": "0bac6b6e454c5d7bd2244fc115bc8df8cbd9b5505302aa81d03baaeeeec204dc",
+      "source_ids": [
+        "C1-REGRET",
+        "Remark1.1"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A006",
+      "name": "BanditRL.OnlineLearning.comparatorRegret_le_squaredBestRegret",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineSquareMinimum.lean",
+      "header": "theorem comparatorRegret_le_squaredBestRegret (y prediction : ℕ → ℝ) (T : ℕ) (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) (u : ℝ) (hu : u ∈ Set.Icc (0 : ℝ) 1) : comparatorRegret (fun t x => (x - y t)^2) prediction u T ≤ squaredBestRegret y prediction T",
+      "statement_hash": "fce6774e1cf7be26cce27db6b6010fa0fa7480ff25125224329d75c21bd366ab",
+      "file_sha256": "7bbfb2538dcdaed8c208571c248723d89ed8980e5e899339aa4c3b48a55c3210",
+      "source_ids": [
+        "C1-REGRET"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A007",
+      "name": "BanditRL.OnlineLearning.completed_predictable_private_seed_expectedFixed_excess",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGuessingCompletedCausal.lean",
+      "header": "theorem completed_predictable_private_seed_expectedFixed_excess {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (hind : iIndepFun Y μ) (S : Ω → Seed) (hS : Measurable S) (hseed : IndepFun S (fun ω t => Y t ω) μ) (F : ℕ → MeasurableSpace Ω) (hF : ∀ t, F t ≤ privateSeedPastInformation S Y t) (prediction : ℕ → Ω → ℝ) (hP : ∀ t, @Measurable _ _ (eventuallyMeasurableSpace (F t) (ae μ)) _ (prediction t)) (hpb : ∀ t, ∀ᵐ ω ∂μ, prediction t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) : expectedFixedRegret μ Y prediction T = (∑ t ∈ Finset.range T, ∫ ω, (prediction t ω - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) ∧ 0 ≤ expectedFixedRegret μ Y prediction T",
+      "statement_hash": "622f106e02e67b96148091282549b263d6c57c20e1ca313279fb15f5eb8d9753",
+      "file_sha256": "ef88487377f0dd6e9d6877810348c40277b25b0a76cb3943edae18d1c95fbf93",
+      "source_ids": [
+        "C1-IID-LOWER"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A008",
+      "name": "BanditRL.OnlineLearning.completed_predictable_private_seed_independent",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGuessingCompletedCausal.lean",
+      "header": "theorem completed_predictable_private_seed_independent {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ) (S : Ω → Seed) (hS : Measurable S) (hseed : IndepFun S (fun ω t => Y t ω) μ) (t : ℕ) (F : MeasurableSpace Ω) (hF : F ≤ privateSeedPastInformation S Y t) (P : Ω → ℝ) (hP : @Measurable _ _ (eventuallyMeasurableSpace F (ae μ)) _ P) : IndepFun P (Y t) μ",
+      "statement_hash": "a7f2430c83efaf370b428370b651aaa07923e2819aa190ee60c534ef51f45bfd",
+      "file_sha256": "ef88487377f0dd6e9d6877810348c40277b25b0a76cb3943edae18d1c95fbf93",
+      "source_ids": [
+        "C1-GAME"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A009",
+      "name": "BanditRL.OnlineLearning.constant_mean_expectedFixed_excess_zero",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGuessingIIDBenchmark.lean",
+      "header": "theorem constant_mean_expectedFixed_excess_zero {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) : (∫ ω, Y 0 ω ∂μ) ∈ Set.Icc (0 : ℝ) 1 ∧ expectedFixedRegret μ Y (fun _ _ => ∫ ω, Y 0 ω ∂μ) T = 0",
+      "statement_hash": "987320017eb2b53146c544e9d8031f61270e6f293aabf0aaf7d5c19ca4ce9086",
+      "file_sha256": "3581c9b284a86301ad2696db5e48af4473d7ef96e3f6f111730a11ca00aba7b7",
+      "source_ids": [
+        "C1-IID-MEAN"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A010",
+      "name": "BanditRL.OnlineLearning.dyadic_meanPredict_obstruction",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineFTLOscillation.lean",
+      "header": "theorem dyadic_meanPredict_obstruction : NoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - dyadicObservation t)^2) (meanPredict dyadicObservation) ∧ Tendsto (fun T : ℕ => squaredBestRegret dyadicObservation (meanPredict dyadicObservation) T / (T : ℝ)) atTop (nhds (0 : ℝ)) ∧ (¬ ∃ a : ℝ, Tendsto (fun T : ℕ => comparatorRegret (fun t x => (x - dyadicObservation t)^2) (meanPredict dyadicObservation) 0 T / (T : ℝ)) atTop (nhds a)) ∧ ¬ LimitNoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - dyadicObservation t)^2) (meanPredict dyadicObservation)",
+      "statement_hash": "ff24eefc87da8732c13c81c288f44b5cf03c14836121d98c177ac3dc464df288",
+      "file_sha256": "87665aface86fbca5265f4da0f6dfecf7348c82064c7648528fcd6267d0de9c6",
+      "source_ids": [
+        "C1-NOREGRET"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A011",
+      "name": "BanditRL.OnlineLearning.empiricalMean_decomposition",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineLearningMean.lean",
+      "header": "theorem empiricalMean_decomposition (y : ℕ → ℝ) (n : ℕ) (hn : 0 < n) (u : ℝ) : (∑ t ∈ Finset.range n, (u - y t)^2) = (∑ t ∈ Finset.range n, (empiricalMean y n - y t)^2) + n * (u - empiricalMean y n)^2",
+      "statement_hash": "86985f2eb2dc1083236ddf29983479fcc47fd9a972adfe7f7df4dafc77511661",
+      "file_sha256": "811dcf3741e3d6dee19b2c4a9f43f4b266808b89843a1719e00f239a4687258b",
+      "source_ids": [
+        "C1-MEAN-PREFIX"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A012",
+      "name": "BanditRL.OnlineLearning.empiricalMean_mem",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineLearningMean.lean",
+      "header": "theorem empiricalMean_mem (y : ℕ → ℝ) (n : ℕ) (hn : 0 < n) (hy : ∀ t < n, y t ∈ Set.Icc (0 : ℝ) 1) : empiricalMean y n ∈ Set.Icc (0 : ℝ) 1",
+      "statement_hash": "992c36a6441257fa7cda705063d6eae7bb5af05afbd55c23ed7831be92ac010c",
+      "file_sha256": "811dcf3741e3d6dee19b2c4a9f43f4b266808b89843a1719e00f239a4687258b",
+      "source_ids": [
+        "C1-MEAN-PREFIX"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A013",
+      "name": "BanditRL.OnlineLearning.empiricalMean_minimizes",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineLearningMean.lean",
+      "header": "theorem empiricalMean_minimizes (y : ℕ → ℝ) (n : ℕ) (hn : 0 < n) (u : ℝ) : (∑ t ∈ Finset.range n, (empiricalMean y n - y t)^2) ≤ ∑ t ∈ Finset.range n, (u - y t)^2",
+      "statement_hash": "8bf7977ff009a066a0c1b500e990c38ff7e96bace6da227eae326c9a7f35dfc4",
+      "file_sha256": "811dcf3741e3d6dee19b2c4a9f43f4b266808b89843a1719e00f239a4687258b",
+      "source_ids": [
+        "C1-MEAN-PREFIX"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A014",
+      "name": "BanditRL.OnlineLearning.empiricalMean_unique",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineLearningMean.lean",
+      "header": "theorem empiricalMean_unique (y : ℕ → ℝ) (n : ℕ) (hn : 0 < n) (u : ℝ) (hu : (∑ t ∈ Finset.range n, (u-y t)^2) ≤ ∑ t ∈ Finset.range n, (empiricalMean y n-y t)^2) : u = empiricalMean y n",
+      "statement_hash": "4fc3831d6dbf633adb4c9271972a91f89132d0cbbbb8c432c306856bdf342f7c",
+      "file_sha256": "811dcf3741e3d6dee19b2c4a9f43f4b266808b89843a1719e00f239a4687258b",
+      "source_ids": [
+        "C1-MEAN-PREFIX"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A015",
+      "name": "BanditRL.OnlineLearning.empiricalMean_update",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineLearningFTL.lean",
+      "header": "theorem empiricalMean_update (y : ℕ → ℝ) (t : ℕ) (ht : 0 < t) : empiricalMean y (t+1) = empiricalMean y t + (y t - empiricalMean y t) / (t+1)",
+      "statement_hash": "977acfbc5fab5fdfb7f66249404f094224056bdfd44e3443042af7e2de62fec8",
+      "file_sha256": "8c3574c657f08e0c5291f0689105f9459e92187502f092f4d36d848e52ab4219",
+      "source_ids": [
+        "C1-STABILITY"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A016",
+      "name": "BanditRL.OnlineLearning.expectedFixedMinimum_eq_variance",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGuessingIIDBenchmark.lean",
+      "header": "theorem expectedFixedMinimum_eq_variance {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) : expectedFixedMinimum μ Y T = (T : ℝ) * variance (Y 0) μ",
+      "statement_hash": "6947bc35fb200e340a82a020662f8aa063b28993368a06c07982c21f8d7e07d5",
+      "file_sha256": "3581c9b284a86301ad2696db5e48af4473d7ef96e3f6f111730a11ca00aba7b7",
+      "source_ids": [
+        "C1-IID-MEAN"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A017",
+      "name": "BanditRL.OnlineLearning.expected_fixed_prefix_decomposition",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGuessingIIDBenchmark.lean",
+      "header": "theorem expected_fixed_prefix_decomposition {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) (u : ℝ) : (∫ ω, ∑ t ∈ Finset.range T, (u - Y t ω)^2 ∂μ) = (T : ℝ) * variance (Y 0) μ + (T : ℝ) * (u - ∫ ω, Y 0 ω ∂μ)^2",
+      "statement_hash": "d98658b9d611c1a452c79cdfd740d16cc931c98441054685983e316a252ce9d4",
+      "file_sha256": "3581c9b284a86301ad2696db5e48af4473d7ef96e3f6f111730a11ca00aba7b7",
+      "source_ids": [
+        "C1-IID-MEAN"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A018",
+      "name": "BanditRL.OnlineLearning.expected_fixed_prefix_minimum",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGuessingIIDBenchmark.lean",
+      "header": "theorem expected_fixed_prefix_minimum {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) : (∫ ω, Y 0 ω ∂μ) ∈ Set.Icc (0 : ℝ) 1 ∧ IsLeast ((fun u : ℝ => ∫ ω, ∑ t ∈ Finset.range T, (u - Y t ω)^2 ∂μ) '' Set.Icc (0 : ℝ) 1) ((T : ℝ) * variance (Y 0) μ)",
+      "statement_hash": "759cb8b62c15804a6c911547593d0175dd7df1d118f0b6dd0d2df9c4890233a0",
+      "file_sha256": "3581c9b284a86301ad2696db5e48af4473d7ef96e3f6f111730a11ca00aba7b7",
+      "source_ids": [
+        "C1-IID-MEAN"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A019",
+      "name": "BanditRL.OnlineLearning.ftlPredict_half",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineLearningFTLState.lean",
+      "header": "theorem ftlPredict_half (y : ℕ → ℝ) (t : ℕ) : ftlPredict ((1 : ℝ) / 2) y t = meanPredict y t",
+      "statement_hash": "a650da685a744497382454eccf2588635306c3d4c40da0a99e63d13c9b07943c",
+      "file_sha256": "fa33c10252eb5cd51b3ea4cdffb10fa95c37416f3098ceb76d9d58f465ff1765",
+      "source_ids": [
+        "C1-FTL"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A020",
+      "name": "BanditRL.OnlineLearning.ftlPredict_mem",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineLearningFTLState.lean",
+      "header": "theorem ftlPredict_mem (initial : ℝ) (y : ℕ → ℝ) (t : ℕ) (hi : initial ∈ Set.Icc (0 : ℝ) 1) (hy : ∀ i < t, y i ∈ Set.Icc (0 : ℝ) 1) : ftlPredict initial y t ∈ Set.Icc (0 : ℝ) 1",
+      "statement_hash": "7ac94c60a908f84d05c6324b5cc2b3be366b622a58c16ee97bcee2ea27b2c397",
+      "file_sha256": "fa33c10252eb5cd51b3ea4cdffb10fa95c37416f3098ceb76d9d58f465ff1765",
+      "source_ids": [
+        "C1-GAME",
+        "C1-FTL"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A021",
+      "name": "BanditRL.OnlineLearning.ftlPredict_prefix",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineLearningFTLState.lean",
+      "header": "theorem ftlPredict_prefix (initial : ℝ) (y z : ℕ → ℝ) (t : ℕ) (h : ∀ i < t, y i = z i) : ftlPredict initial y t = ftlPredict initial z t",
+      "statement_hash": "ae2d1e1cecdb9badfb5cf4aab7f3a26ea23939f1d8c3acd6c6e9f1ff7418c0cf",
+      "file_sha256": "fa33c10252eb5cd51b3ea4cdffb10fa95c37416f3098ceb76d9d58f465ff1765",
+      "source_ids": [
+        "C1-GAME",
+        "C1-FTL"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A022",
+      "name": "BanditRL.OnlineLearning.ftlState_eq_predict",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineLearningFTLState.lean",
+      "header": "theorem ftlState_eq_predict (initial : ℝ) (y : ℕ → ℝ) (t : ℕ) : ftlState initial y t = (t, ftlPredict initial y t)",
+      "statement_hash": "31d9a9d7df19f4dab2dbc615bf2bd407cccde96fd352beda09150b6a07eb40b3",
+      "file_sha256": "fa33c10252eb5cd51b3ea4cdffb10fa95c37416f3098ceb76d9d58f465ff1765",
+      "source_ids": [
+        "C1-FTL"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A023",
+      "name": "BanditRL.OnlineLearning.ftlState_first",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineLearningFTLState.lean",
+      "header": "theorem ftlState_first (initial : ℝ) (y : ℕ → ℝ) : ftlState initial y 1 = (1, y 0)",
+      "statement_hash": "1a110f28387d6c6435b72bdbee196cdea8a6bd9cbb9de1d23edff22f20ee283e",
+      "file_sha256": "fa33c10252eb5cd51b3ea4cdffb10fa95c37416f3098ceb76d9d58f465ff1765",
+      "source_ids": [
+        "C1-FTL"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A024",
+      "name": "BanditRL.OnlineLearning.ftlState_half",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineLearningFTLState.lean",
+      "header": "theorem ftlState_half (y : ℕ → ℝ) (t : ℕ) : ftlState ((1 : ℝ) / 2) y t = (t, meanPredict y t)",
+      "statement_hash": "1ead854b9a1230a8fb3869f3bb5ca191e58a6edbcb1de2bace1236d6d56f85db",
+      "file_sha256": "fa33c10252eb5cd51b3ea4cdffb10fa95c37416f3098ceb76d9d58f465ff1765",
+      "source_ids": [
+        "C1-FTL"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A025",
+      "name": "BanditRL.OnlineLearning.ftlState_mem",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineLearningFTLState.lean",
+      "header": "theorem ftlState_mem (initial : ℝ) (y : ℕ → ℝ) (t : ℕ) (hi : initial ∈ Set.Icc (0 : ℝ) 1) (hy : ∀ i < t, y i ∈ Set.Icc (0 : ℝ) 1) : (ftlState initial y t).2 ∈ Set.Icc (0 : ℝ) 1",
+      "statement_hash": "c11845cd50b05c93213dc292654dd155a0c4b0e3d3e776dffefe340aafedc0f0",
+      "file_sha256": "fa33c10252eb5cd51b3ea4cdffb10fa95c37416f3098ceb76d9d58f465ff1765",
+      "source_ids": [
+        "C1-FTL"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A026",
+      "name": "BanditRL.OnlineLearning.ftlState_prefix",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineLearningFTLState.lean",
+      "header": "theorem ftlState_prefix (initial : ℝ) (y z : ℕ → ℝ) (t : ℕ) (h : ∀ i < t, y i = z i) : ftlState initial y t = ftlState initial z t",
+      "statement_hash": "683b0a71ce0933ba9f760728f39a87120b109dec635e0aa0a0e6978d872347ae",
+      "file_sha256": "fa33c10252eb5cd51b3ea4cdffb10fa95c37416f3098ceb76d9d58f465ff1765",
+      "source_ids": [
+        "C1-FTL"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A027",
+      "name": "BanditRL.OnlineLearning.guessing_prefix_minimum",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineSquareMinimum.lean",
+      "header": "theorem guessing_prefix_minimum (y : ℕ → ℝ) (T : ℕ) (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) : empiricalMean y T ∈ Set.Icc (0 : ℝ) 1 ∧ ∀ u ∈ Set.Icc (0 : ℝ) 1, (∑ t ∈ Finset.range T, (empiricalMean y T - y t)^2) ≤ ∑ t ∈ Finset.range T, (u - y t)^2",
+      "statement_hash": "f3d29917e7133f5e923766fa2e4cfb3e644ec4215b1386267e49c857b0d424cb",
+      "file_sha256": "7bbfb2538dcdaed8c208571c248723d89ed8980e5e899339aa4c3b48a55c3210",
+      "source_ids": [
+        "C1-REGRET",
+        "C1-MEAN-PREFIX"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A028",
+      "name": "BanditRL.OnlineLearning.history_policy_normalized_expectedFixed_excess",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGuessingIIDBenchmark.lean",
+      "header": "theorem history_policy_normalized_expectedFixed_excess {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (hind : iIndepFun Y μ) (policy : (t : ℕ) → ((↑(Finset.range t) : Type) → ℝ) → ℝ) (hp : ∀ t, Measurable (policy t)) (hpb : ∀ t z, (∀ i, z i ∈ Set.Icc (0 : ℝ) 1) → policy t z ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) (hT : 0 < T) : (∫ ω, ∑ t ∈ Finset.range T, (policy t (fun i => Y i ω) - Y t ω)^2 ∂μ) / (T : ℝ) - variance (Y 0) μ = expectedFixedRegret μ Y (fun t ω => policy t (fun i => Y i ω)) T / (T : ℝ)",
+      "statement_hash": "ec880ad8f0b9a17ba62060d5fea3cca99f6f57bb331fc862d505dabdcc0f2ec0",
+      "file_sha256": "3581c9b284a86301ad2696db5e48af4473d7ef96e3f6f111730a11ca00aba7b7",
+      "source_ids": [
+        "C1-EQ1.1-1.2"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A029",
+      "name": "BanditRL.OnlineLearning.lemma_1_2",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineLearningFoundations.lean",
+      "header": "theorem lemma_1_2 {X : Type*} (V : Set X) (loss : ℕ → X → ℝ) (leader : ℕ → X) (T : ℕ) (hmem : ∀ n, 0 < n → n ≤ T → leader n ∈ V) (hmin : ∀ n, 0 < n → n ≤ T → ∀ u ∈ V, (∑ t ∈ Finset.range n, loss t (leader n)) ≤ ∑ t ∈ Finset.range n, loss t u) : (∑ t ∈ Finset.range T, loss t (leader (t + 1))) ≤ ∑ t ∈ Finset.range T, loss t (leader T)",
+      "statement_hash": "e87a9e3d0823f50c666d2f290d9a82acea7259a846b0d4698f6bcd339fa6cc0d",
+      "file_sha256": "731c8d706f97ba568a5ff644b7800bb1e69db2022cabde755f7d1c0cbd512fd7",
+      "source_ids": [
+        "Lemma1.2"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A030",
+      "name": "BanditRL.OnlineLearning.limitNoRegret_iff_noRegret_of_converges",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineNoRegretSemantics.lean",
+      "header": "theorem limitNoRegret_iff_noRegret_of_converges {X : Type*} (V : Set X) (loss : ℕ → X → ℝ) (prediction : ℕ → X) (hc : ∀ u ∈ V, ∃ a : ℝ, Tendsto (fun T : ℕ => comparatorRegret loss prediction u T / T) atTop (nhds a)) : LimitNoRegret V loss prediction ↔ NoRegret V loss prediction",
+      "statement_hash": "31eb9d73b92d48583b3a61908ae4c54acdc91f1f2de25bc7a46bf414acd0ea74",
+      "file_sha256": "db7482a02bf4643ba3d4b15b29dd5a59418ea111763afeed45c51879b996e5a7",
+      "source_ids": [
+        "C1-NOREGRET"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A031",
+      "name": "BanditRL.OnlineLearning.limitNoRegret_implies_noRegret",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineNoRegretSemantics.lean",
+      "header": "theorem limitNoRegret_implies_noRegret {X : Type*} (V : Set X) (loss : ℕ → X → ℝ) (prediction : ℕ → X) (hL : LimitNoRegret V loss prediction) : NoRegret V loss prediction",
+      "statement_hash": "e7a2e29af6e060ce2f0eb77c4aa9a9ca156863e29260ea312d629c359cae307a",
+      "file_sha256": "db7482a02bf4643ba3d4b15b29dd5a59418ea111763afeed45c51879b996e5a7",
+      "source_ids": [
+        "C1-NOREGRET"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A032",
+      "name": "BanditRL.OnlineLearning.meanPredict_bestRegret_average_tendsto_zero",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineFTLLimitSemantics.lean",
+      "header": "theorem meanPredict_bestRegret_average_tendsto_zero (y : ℕ → ℝ) (hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1) : Tendsto (fun T : ℕ => squaredBestRegret y (meanPredict y) T / (T : ℝ)) atTop (nhds (0 : ℝ))",
+      "statement_hash": "80dc80f444a9a8e7c3314da200b0cc6f59f63dcc902ec05a2dbd56f775d64029",
+      "file_sha256": "8413f4409dfa5f7506f33cd6cfc6fb0c03f598f877dcbd2b4f0774356d377bf9",
+      "source_ids": [
+        "C1-SUCCESS"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A033",
+      "name": "BanditRL.OnlineLearning.meanPredict_bestRegret_bound",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineSquareMinimum.lean",
+      "header": "theorem meanPredict_bestRegret_bound (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T) (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) : squaredBestRegret y (meanPredict y) T ≤ 4 + 4 * Real.log T",
+      "statement_hash": "1a1df7575ed5f865435d0c80206d0aa74ea7415aca07a22f347817fab66a63d2",
+      "file_sha256": "7bbfb2538dcdaed8c208571c248723d89ed8980e5e899339aa4c3b48a55c3210",
+      "source_ids": [
+        "Theorem1.3"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A034",
+      "name": "BanditRL.OnlineLearning.meanPredict_bestRegret_refined",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineSquareMinimum.lean",
+      "header": "theorem meanPredict_bestRegret_refined (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T) (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) : squaredBestRegret y (meanPredict y) T ≤ (1 : ℝ) / 4 + ∑ t ∈ Finset.range (T - 1), 4 / ((t : ℝ) + 2)",
+      "statement_hash": "1f42f6f8dc9b7fadcf162457167680eef99c17013ebc9156be9d9392b5190e26",
+      "file_sha256": "7bbfb2538dcdaed8c208571c248723d89ed8980e5e899339aa4c3b48a55c3210",
+      "source_ids": [
+        "C1-REFINED-REGRET"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A035",
+      "name": "BanditRL.OnlineLearning.meanPredict_iid_success",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGuessingIIDSuccess.lean",
+      "header": "theorem meanPredict_iid_success {Ω : Type u} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (hind : iIndepFun Y μ) : Tendsto (fun T => expectedFixedRegret μ Y (fun t ω => meanPredict (fun i => Y i ω) t) T / (T : ℝ)) atTop (nhds (0 : ℝ)) ∧ (fun T => expectedFixedRegret μ Y (fun t ω => meanPredict (fun i => Y i ω) t) T) =o[atTop] (fun T : ℕ => (T : ℝ))",
+      "statement_hash": "5ecb5bab6e32438a9b116822bfcfc397a27118432bdb8b2374e16251782aab13",
+      "file_sha256": "eca206ce6e2eaccab97b1c9a0912cd639304f049e190bfbc94fe2f5a7bb3821b",
+      "source_ids": [
+        "C1-SUCCESS"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A036",
+      "name": "BanditRL.OnlineLearning.meanPredict_initial_stability",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineLearningFTL.lean",
+      "header": "theorem meanPredict_initial_stability (y : ℕ → ℝ) (hy : y 0 ∈ Set.Icc (0 : ℝ) 1) : (meanPredict y 0 - y 0)^2 - (empiricalMean y 1 - y 0)^2 ≤ (1 : ℝ) / 4",
+      "statement_hash": "69df4ba9a809f58eb9bad35094f8a2f1fead1adfddb4de3f8f314a63458cf4eb",
+      "file_sha256": "8c3574c657f08e0c5291f0689105f9459e92187502f092f4d36d848e52ab4219",
+      "source_ids": [
+        "C1-STABILITY"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A037",
+      "name": "BanditRL.OnlineLearning.meanPredict_limitNoRegret_iff_mean_converges",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineFTLOscillation.lean",
+      "header": "theorem meanPredict_limitNoRegret_iff_mean_converges (y : ℕ → ℝ) (hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1) : LimitNoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - y t)^2) (meanPredict y) ↔ ∃ m ∈ Set.Icc (0 : ℝ) 1, Tendsto (empiricalMean y) atTop (nhds m)",
+      "statement_hash": "f5f7c19e4558ed9c406cc50676605a5ae1559a67869ee9642a7b2f84c4532e88",
+      "file_sha256": "87665aface86fbca5265f4da0f6dfecf7348c82064c7648528fcd6267d0de9c6",
+      "source_ids": [
+        "C1-NOREGRET"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A038",
+      "name": "BanditRL.OnlineLearning.meanPredict_mem",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineLearningFTL.lean",
+      "header": "theorem meanPredict_mem (y : ℕ → ℝ) (t : ℕ) (hy : ∀ i < t, y i ∈ Set.Icc (0 : ℝ) 1) : meanPredict y t ∈ Set.Icc (0 : ℝ) 1",
+      "statement_hash": "025b2fc1672399669d691b8522e05cfe8a12857203c5f0b1fbb7af859744c1cf",
+      "file_sha256": "8c3574c657f08e0c5291f0689105f9459e92187502f092f4d36d848e52ab4219",
+      "source_ids": [
+        "C1-GAME"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A039",
+      "name": "BanditRL.OnlineLearning.meanPredict_noRegret",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineLearningAsymptotic.lean",
+      "header": "theorem meanPredict_noRegret (y : ℕ → ℝ) (hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1) : NoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - y t)^2) (meanPredict y)",
+      "statement_hash": "756e9a5cef8df9a724f2e5f28829afb9cab1c676ce2160660d073d57f499648f",
+      "file_sha256": "60580602f27c35cb4782d78bd590e73e780023f62e5ae71a06c5a44d09d7ab72",
+      "source_ids": [
+        "C1-SUCCESS"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A040",
+      "name": "BanditRL.OnlineLearning.meanPredict_prefix",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineLearningFTL.lean",
+      "header": "theorem meanPredict_prefix (y z : ℕ → ℝ) (t : ℕ) (h : ∀ i < t, y i = z i) : meanPredict y t = meanPredict z t",
+      "statement_hash": "f5e768e5dbd0bc79df7086c19b9d8d07e4b13b627f3d2f032c603c0aaf9bde3f",
+      "file_sha256": "8c3574c657f08e0c5291f0689105f9459e92187502f092f4d36d848e52ab4219",
+      "source_ids": [
+        "C1-GAME"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A041",
+      "name": "BanditRL.OnlineLearning.meanPredict_regret_refined",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineLearningFTL.lean",
+      "header": "theorem meanPredict_regret_refined (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T) (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) : (∑ t ∈ Finset.range T, (meanPredict y t - y t)^2) - (∑ t ∈ Finset.range T, (empiricalMean y T - y t)^2) ≤ (1 : ℝ) / 4 + ∑ t ∈ Finset.range (T - 1), 4 / ((t : ℝ) + 2)",
+      "statement_hash": "fb0f95d7729dcf9c8f9a92f78a080642b6b05f1198083bacc764b4458efd4d27",
+      "file_sha256": "8c3574c657f08e0c5291f0689105f9459e92187502f092f4d36d848e52ab4219",
+      "source_ids": [
+        "C1-REFINED-REGRET"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A042",
+      "name": "BanditRL.OnlineLearning.meanPredict_stability",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineLearningFTL.lean",
+      "header": "theorem meanPredict_stability (y : ℕ → ℝ) (t : ℕ) (hy : ∀ i ≤ t, y i ∈ Set.Icc (0 : ℝ) 1) : (meanPredict y t - y t)^2 - (empiricalMean y (t+1) - y t)^2 ≤ 4 / (t+1)",
+      "statement_hash": "89ee23556afbd24e6566e6e44b7180c5763f6dd8a1ce882c951dde1c8a8178ae",
+      "file_sha256": "8c3574c657f08e0c5291f0689105f9459e92187502f092f4d36d848e52ab4219",
+      "source_ids": [
+        "C1-STABILITY"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A043",
+      "name": "BanditRL.OnlineLearning.normalized_excess",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineLearningHistory.lean",
+      "header": "theorem normalized_excess (total variance : ℝ) (T : ℕ) (hT : 0 < T) : total / T - variance = (total - T * variance) / T",
+      "statement_hash": "0b4900a9c7b826254353d3b4e0ba435f8df192e75c435fd1f8b4348fe26c7568",
+      "file_sha256": "215adc2883592c1f701c9fc698e1b1438c77e1166197461048de34ceed881eb9",
+      "source_ids": [
+        "C1-EQ1.1-1.2"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A044",
+      "name": "BanditRL.OnlineLearning.randomized_history_policy_expectedFixed_excess",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGuessingRandomizedIID.lean",
+      "header": "theorem randomized_history_policy_expectedFixed_excess {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (hind : iIndepFun Y μ) (S : Ω → Seed) (hS : Measurable S) (hseed : IndepFun S (fun ω t => Y t ω) μ) (policy : (t : ℕ) → (Seed × ((↑(Finset.range t) : Type) → ℝ)) → ℝ) (hp : ∀ t, Measurable (policy t)) (hpb : ∀ t s z, (∀ i, z i ∈ Set.Icc (0 : ℝ) 1) → policy t (s, z) ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) : expectedFixedRegret μ Y (fun t ω => policy t (S ω, fun i => Y i ω)) T = (∑ t ∈ Finset.range T, ∫ ω, (policy t (S ω, fun i => Y i ω) - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) ∧ 0 ≤ expectedFixedRegret μ Y (fun t ω => policy t (S ω, fun i => Y i ω)) T",
+      "statement_hash": "65b2dbf8795c2d28058ba3d293ec741c60479aa1908ddeb22939bc3e3d4793b5",
+      "file_sha256": "5b00b2f3dcd8afd08fd1a29eb0a0f6376dc1bcc5c784feeb1d6efd4040f0e0d3",
+      "source_ids": [
+        "C1-IID-LOWER"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A045",
+      "name": "BanditRL.OnlineLearning.randomized_history_policy_independent",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGuessingRandomizedIID.lean",
+      "header": "theorem randomized_history_policy_independent {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ) (S : Ω → Seed) (hS : Measurable S) (hseed : IndepFun S (fun ω t => Y t ω) μ) (policy : (t : ℕ) → (Seed × ((↑(Finset.range t) : Type) → ℝ)) → ℝ) (hp : ∀ t, Measurable (policy t)) (t : ℕ) : IndepFun (fun ω => policy t (S ω, fun i => Y i ω)) (Y t) μ",
+      "statement_hash": "c8614b26d8b09f914405f790b21840b17477d23f0555bbdfd6d69c2cb1b51949",
+      "file_sha256": "5b00b2f3dcd8afd08fd1a29eb0a0f6376dc1bcc5c784feeb1d6efd4040f0e0d3",
+      "source_ids": [
+        "C1-GAME"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A046",
+      "name": "BanditRL.OnlineLearning.randomized_history_policy_success_iff",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGuessingIIDSuccess.lean",
+      "header": "theorem randomized_history_policy_success_iff {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (hind : iIndepFun Y μ) (S : Ω → Seed) (hS : Measurable S) (hseed : IndepFun S (fun ω t => Y t ω) μ) (policy : (t : ℕ) → (Seed × ((↑(Finset.range t) : Type) → ℝ)) → ℝ) (hp : ∀ t, Measurable (policy t)) (hpb : ∀ t s z, (∀ i, z i ∈ Set.Icc (0 : ℝ) 1) → policy t (s, z) ∈ Set.Icc (0 : ℝ) 1) : let prediction := fun t ω => policy t (S ω, fun i => Y i ω) (∀ T, 0 ≤ expectedFixedRegret μ Y prediction T) ∧ ((fun T => expectedFixedRegret μ Y prediction T) =o[atTop] (fun T : ℕ => (T : ℝ)) ↔ Tendsto (fun T => (∫ ω, ∑ t ∈ Finset.range T, (prediction t ω - Y t ω)^2 ∂μ) / (T : ℝ) - variance (Y 0) μ) atTop (nhds (0 : ℝ))) ∧ (Tendsto (fun T => (∫ ω, ∑ t ∈ Finset.range T, (prediction t ω - Y t ω)^2 ∂μ) / (T : ℝ) - variance (Y 0) μ) atTop (nhds (0 : ℝ)) ↔ Tendsto (fun T => (∑ t ∈ Finset.range T, ∫ ω, (prediction t ω - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) / (T : ℝ)) atTop (nhds (0 : ℝ)))",
+      "statement_hash": "0444ad4add6822a4a7bf0b91fc13cda6dd313d1d5bfd88f0e075abcde66e16c3",
+      "file_sha256": "eca206ce6e2eaccab97b1c9a0912cd639304f049e190bfbc94fe2f5a7bb3821b",
+      "source_ids": [
+        "C1-EQ1.1-1.2"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A047",
+      "name": "BanditRL.OnlineLearning.squaredBestRegret_eq_comparatorRegret",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineSquareMinimum.lean",
+      "header": "theorem squaredBestRegret_eq_comparatorRegret (y prediction : ℕ → ℝ) (T : ℕ) (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) : squaredBestRegret y prediction T = comparatorRegret (fun t x => (x - y t)^2) prediction (empiricalMean y T) T",
+      "statement_hash": "060150e9c35e4c06bc6b27772449fbeb186c57a55139ac90429d1e5ae3cb07f2",
+      "file_sha256": "7bbfb2538dcdaed8c208571c248723d89ed8980e5e899339aa4c3b48a55c3210",
+      "source_ids": [
+        "C1-REGRET"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A048",
+      "name": "BanditRL.OnlineLearning.squaredLoss_minimum_eq",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineSquareMinimum.lean",
+      "header": "theorem squaredLoss_minimum_eq (y : ℕ → ℝ) (T : ℕ) (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) : sInf ((fun u : ℝ => ∑ t ∈ Finset.range T, (u - y t)^2) '' Set.Icc (0 : ℝ) 1) = ∑ t ∈ Finset.range T, (empiricalMean y T - y t)^2",
+      "statement_hash": "03a1a42885cc8d743340fe199b327b40518d2b365a0f1663d58db3758046a395",
+      "file_sha256": "7bbfb2538dcdaed8c208571c248723d89ed8980e5e899339aa4c3b48a55c3210",
+      "source_ids": [
+        "C1-REGRET"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A049",
+      "name": "BanditRL.OnlineLearning.theorem_1_3",
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineLearningFTL.lean",
+      "header": "theorem theorem_1_3 (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T) (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) : (∑ t ∈ Finset.range T, (meanPredict y t - y t)^2) - (∑ t ∈ Finset.range T, (empiricalMean y T - y t)^2) ≤ 4 + 4 * Real.log T",
+      "statement_hash": "d0f480716b07bdd880d0056a5865b565501f5ad43226ecdeab0d27e8cc608afd",
+      "file_sha256": "8c3574c657f08e0c5291f0689105f9459e92187502f092f4d36d848e52ab4219",
+      "source_ids": [
+        "Theorem1.3"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    },
+    {
+      "id": "A050",
+      "name": "harmonic_le_one_add_log",
+      "path": "E:/ABRL/research/.lake/packages/mathlib/Mathlib/NumberTheory/Harmonic/Bounds.lean",
+      "header": "theorem harmonic_le_one_add_log (n : ℕ) : harmonic n ≤ 1 + Real.log n",
+      "statement_hash": "fbc1d2b4020024eadf90efd61f87ee8b8322e16310da87d8dee9dcab7d124fec",
+      "file_sha256": "92f1c8224c4353a057c306ea1b8f35ff51e02b82462916fcd5820491fce11db5",
+      "source_ids": [
+        "C1-HARMONIC"
+      ],
+      "reuse": "reuse_existing",
+      "production_body_or_header_edit_allowed": false,
+      "whole_public_value_check_required": true,
+      "prior_acceptance_not_current_chapter_acceptance": true
+    }
+  ]
+}

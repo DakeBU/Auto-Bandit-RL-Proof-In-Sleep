@@ -1,0 +1,161 @@
+Tests.OnlineLearningChapterAudit.initial_zero_first_regret :
+  squaredBestRegret (fun x => 1) (ftlPredict 0 fun x => 1) 1 = 1 ∧
+    squaredBestRegret (fun x => 1) (ftlPredict 0 fun x => 1) 1 > 1 / 4
+'Tests.OnlineLearningChapterAudit.initial_zero_first_regret' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineLearningChapterAudit.two_round_initial_correction :
+  squaredBestRegret falling (ftlPredict 0 falling) 2 = squaredBestRegret falling (meanPredict falling) 2 + 3 / 4
+'Tests.OnlineLearningChapterAudit.two_round_initial_correction' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Tests.OnlineLearningChapterAudit.positive_regret_negative_correction :
+  squaredBestRegret rising (ftlPredict 0 rising) 2 = 1 / 2 ∧
+    squaredBestRegret rising (meanPredict rising) 2 = 3 / 4 ∧ (0 - rising 0) ^ 2 - (1 / 2 - rising 0) ^ 2 = -1 / 4
+'Tests.OnlineLearningChapterAudit.positive_regret_negative_correction' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Tests.OnlineLearningChapterAudit.general_initial_finite_values :
+  squaredBestRegret falling (ftlPredict 0 falling) 2 = 3 / 2 ∧
+    squaredBestRegret falling (ftlPredict 0 falling) 2 ≤ 3 ∧
+      squaredBestRegret (fun x => 1) (ftlPredict 0 fun x => 1) 1 ≤ 1
+'Tests.OnlineLearningChapterAudit.general_initial_finite_values' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Tests.OnlineLearningChapterAudit.same_past_current_reveal :
+  ftlState 0 rising 1 = ftlState 0 (fun x => 0) 1 ∧ rising 1 ≠ 0 ∧ ftlState 0 rising 2 ≠ ftlState 0 (fun x => 0) 2
+'Tests.OnlineLearningChapterAudit.same_past_current_reveal' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineLearningChapterAudit.initialized_state_values :
+  ftlState (3 / 4) rising 0 = (0, 3 / 4) ∧ ftlState (3 / 4) rising 1 = (1, 0) ∧ ftlState (3 / 4) rising 2 = (2, 1 / 2)
+'Tests.OnlineLearningChapterAudit.initialized_state_values' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineLearningChapterAudit.all_initial_dyadic_upper (initial : ℝ) :
+  initial ∈ Set.Icc 0 1 →
+    NoRegret (Set.Icc 0 1) (fun t x => (x - dyadicObservation t) ^ 2) (ftlPredict initial dyadicObservation)
+'Tests.OnlineLearningChapterAudit.all_initial_dyadic_upper' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineLearningChapterAudit.nonhalf_dyadic_best_average :
+  Tendsto (fun T => squaredBestRegret dyadicObservation (ftlPredict (3 / 4) dyadicObservation) T / ↑T) atTop (nhds 0)
+'Tests.OnlineLearningChapterAudit.nonhalf_dyadic_best_average' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Tests.OnlineLearningChapterAudit.outside_real_initial_identity :
+  squaredBestRegret (fun x => 3) (ftlPredict 2 fun x => 3) 1 =
+    squaredBestRegret (fun x => 3) (meanPredict fun x => 3) 1 - 21 / 4
+'Tests.OnlineLearningChapterAudit.outside_real_initial_identity' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Tests.OnlineLearningChapterAudit.empty_horizon_not_first_correction :
+  squaredBestRegret falling (ftlPredict 0 falling) 0 = 0 ∧
+    squaredBestRegret falling (meanPredict falling) 0 = 0 ∧ (0 - falling 0) ^ 2 - (1 / 2 - falling 0) ^ 2 = 3 / 4
+'Tests.OnlineLearningChapterAudit.empty_horizon_not_first_correction' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Tests.OnlineLearningChapterAudit.best_and_fixed_comparator_distinct :
+  comparatorRegret (fun t x => (x - falling t) ^ 2) (ftlPredict 0 falling) 0 2 = 1 ∧
+    squaredBestRegret falling (ftlPredict 0 falling) 2 = 3 / 2
+'Tests.OnlineLearningChapterAudit.best_and_fixed_comparator_distinct' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Tests.OnlineLearningChapterAudit.positive_iid_variance_excess :
+  Var[observation 0; iidLaw] = 1 / 4 ∧
+    expectedFixedRegret iidLaw observation (fun t ω => meanPredict ω t) 2 = 1 / 4 ∧
+      expectedFixedRegret iidLaw observation (fun t ω => meanPredict ω t) 2 / 2 = 1 / 8
+'Tests.OnlineLearningChapterAudit.positive_iid_variance_excess' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Tests.OnlineLearningChapterAudit.population_mean_fixed_minimum :
+  IsLeast ((fun u => ∫ (ω : ℕ → ℝ), ∑ t ∈ Finset.range 2, (u - observation t ω) ^ 2 ∂iidLaw) '' Set.Icc 0 1) (1 / 2) ∧
+    expectedFixedRegret iidLaw observation (fun x x_1 => 1 / 2) 2 = 0
+'Tests.OnlineLearningChapterAudit.population_mean_fixed_minimum' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Tests.OnlineLearningChapterAudit.expectation_and_hindsight_distinct :
+  ∫ (ω : ℕ → ℝ), hindsightMinimum ω 2 ∂iidLaw = 1 / 4 ∧ expectedFixedMinimum iidLaw observation 2 = 1 / 2
+'Tests.OnlineLearningChapterAudit.expectation_and_hindsight_distinct' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Tests.OnlineLearningChapterAudit.iid_success_total_and_average :
+  Tendsto (fun T => expectedFixedRegret iidLaw observation (fun t ω => meanPredict ω t) T / ↑T) atTop (nhds 0) ∧
+    (fun T => expectedFixedRegret iidLaw observation (fun t ω => meanPredict ω t) T) =o[atTop] fun T => ↑T
+'Tests.OnlineLearningChapterAudit.iid_success_total_and_average' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Tests.OnlineLearningChapterAudit.loss_sequence_visible_outside_comparators :
+  ↑(RegretDomainsProbe.output 0) ∈ RegretDomainsProbe.outputW ∧
+    ↑(RegretDomainsProbe.output 0) ∉ RegretDomainsProbe.sourceV ∧
+      comparatorRegret RegretDomainsProbe.domainLoss RegretDomainsProbe.output RegretDomainsProbe.referenceOne 2 = -2 ∧
+        comparatorRegret (fun t x => 2 * RegretDomainsProbe.domainLoss t x) RegretDomainsProbe.output
+            RegretDomainsProbe.referenceOne 2 =
+          -4
+'Tests.OnlineLearningChapterAudit.loss_sequence_visible_outside_comparators' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Tests.OnlineLearningChapterAudit.produced_minimum_and_empty_nonunique :
+  empiricalMean rising 2 = 1 / 2 ∧
+    sInf ((fun u => ∑ t ∈ Finset.range 2, (u - rising t) ^ 2) '' Set.Icc 0 1) = 1 / 2 ∧
+      ∀ u ∈ Set.Icc 0 1, ∑ t ∈ Finset.range 0, (u - rising t) ^ 2 = 0
+'Tests.OnlineLearningChapterAudit.produced_minimum_and_empty_nonunique' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Tests.OnlineLearningChapterAudit.positive_prefix_unique (u : ℝ) :
+  ∑ t ∈ Finset.range 2, (u - rising t) ^ 2 ≤ ∑ t ∈ Finset.range 2, (empiricalMean rising 2 - rising t) ^ 2 → u = 1 / 2
+'Tests.OnlineLearningChapterAudit.positive_prefix_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineLearningChapterAudit.concrete_be_the_leader :
+  ∑ t ∈ Finset.range 2, ChapterOneCase0.demoLoss t (ChapterOneCase0.demoLeader (t + 1)) = -2 ∧
+    ∑ t ∈ Finset.range 2, ChapterOneCase0.demoLoss t (ChapterOneCase0.demoLeader 2) = 0 ∧
+      ∑ t ∈ Finset.range 2, ChapterOneCase0.demoLoss t (ChapterOneCase0.demoLeader (t + 1)) ≤
+        ∑ t ∈ Finset.range 2, ChapterOneCase0.demoLoss t (ChapterOneCase0.demoLeader 2)
+'Tests.OnlineLearningChapterAudit.concrete_be_the_leader' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineLearningChapterAudit.half_refined_and_logarithmic :
+  squaredBestRegret rising (meanPredict rising) 2 = 3 / 4 ∧
+    squaredBestRegret rising (meanPredict rising) 2 ≤ 9 / 4 ∧
+      squaredBestRegret rising (meanPredict rising) 2 ≤ 4 + 4 * Real.log 2
+'Tests.OnlineLearningChapterAudit.half_refined_and_logarithmic' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Tests.OnlineLearningChapterAudit.same_stream_later_stability :
+  (meanPredict rising 1 - rising 1) ^ 2 - (meanPredict rising 2 - rising 1) ^ 2 = 3 / 4 ∧
+    (meanPredict rising 1 - rising 1) ^ 2 - (meanPredict rising 2 - rising 1) ^ 2 ≤ 4 / (1 + 1)
+'Tests.OnlineLearningChapterAudit.same_stream_later_stability' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Tests.OnlineLearningChapterAudit.actual_kernel_same_run_excess :
+  (∀ (T : ℕ),
+      expectedFixedRegret Tests.OnlineGuessingKernelCausal.gameLaw Tests.OnlineGuessingKernelCausal.target
+          (fun t ω => ↑(Tests.OnlineGuessingKernelCausal.prediction t ω)) T =
+        ↑T / 4) ∧
+    ((Tests.OnlineGuessingKernelCausal.decisionKernel 1) (Tests.OnlineGuessingKernelCausal.oneHistory 0 1)) {1} =
+        1 / 4 ∧
+      ((Tests.OnlineGuessingKernelCausal.decisionKernel 1) (Tests.OnlineGuessingKernelCausal.oneHistory 1 1)) {1} =
+        3 / 4
+'Tests.OnlineLearningChapterAudit.actual_kernel_same_run_excess' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Tests.OnlineLearningChapterAudit.correlation_changes_excess :
+  expectedFixedRegret iidLaw (fun x => observation 0) (fun t ω => meanPredict (fun x => observation 0 ω) t) 2 = -1 / 4 ∧
+    expectedFixedRegret iidLaw observation (fun t ω => meanPredict ω t) 2 = 1 / 4
+'Tests.OnlineLearningChapterAudit.correlation_changes_excess' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineLearningChapterAudit.same_actual_ftl_limit_obstruction :
+  NoRegret (Set.Icc 0 1) (fun t x => (x - dyadicObservation t) ^ 2) (meanPredict dyadicObservation) ∧
+    Tendsto (fun T => squaredBestRegret dyadicObservation (meanPredict dyadicObservation) T / ↑T) atTop (nhds 0) ∧
+      (¬∃ a,
+            Tendsto
+              (fun T =>
+                comparatorRegret (fun t x => (x - dyadicObservation t) ^ 2) (meanPredict dyadicObservation) 0 T / ↑T)
+              atTop (nhds a)) ∧
+        ¬LimitNoRegret (Set.Icc 0 1) (fun t x => (x - dyadicObservation t) ^ 2) (meanPredict dyadicObservation)
+'Tests.OnlineLearningChapterAudit.same_actual_ftl_limit_obstruction' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Tests.OnlineLearningChapterAudit.qualitative_log_fixed_binary_witness :
+  ∃ v,
+    Real.log 4 / 6 ≤
+      ∫ (b : Bool),
+        GuessingLower.pathRegret (GuessingLogLowerProbe.seededPolicy b) v.toList ∂GuessingLogLowerProbe.coinMeasure
+'Tests.OnlineLearningChapterAudit.qualitative_log_fixed_binary_witness' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+Tests.OnlineLearningChapterAudit.harmonic_two_bound : ↑(harmonic 2) = 3 / 2 ∧ ↑(harmonic 2) ≤ 1 + Real.log 2
+'Tests.OnlineLearningChapterAudit.harmonic_two_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+Tests.OnlineLearningChapterAudit.centered_total_average_boundary :
+  ((fun T => 5 + 3 * ↑T - ↑T * 3) =o[atTop] fun T => ↑T) ∧ (5 + 3 * 0) / 0 - 3 = -3
+'Tests.OnlineLearningChapterAudit.centered_total_average_boundary' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
