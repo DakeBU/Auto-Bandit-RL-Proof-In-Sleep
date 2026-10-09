@@ -1,0 +1,13 @@
+# Nonsmooth teaching-link repair v3
+
+Verdict: accepted for this exact reader-link repair and materialization only. All 22 indexed RAW inputs match before and after review; canonical highlights remain unchanged during review.
+
+The actual site-build-v1 command exited1. Its SHA-verified decoded stdout lists exactly one missing_highlight_dependencies entry: BanditRL.OnlineConvex.hinge_convex_differentiable_iff._simp_1_1. Missing highlights and result references are empty. The unchanged builder validate_content rejects dependency names outside its scanned declaration map; its graph construction labels highlight dependency edges as teaching prerequisites. That presentation map is distinct from compiled proof VALUE dependencies.
+
+Independent complete-AST comparisons establish that proposal-v2 to proposal-v3 removes exactly that one entry from the hinge note, and that live highlights to the materialized after snapshot makes exactly the same removal. Every other note, field, formula, explanation, source qualification, ID, link and public parent remains identical. The auxiliary is still present in the unchanged compiled hinge VALUE dependencies, as it should be; all retained teaching parents are actual VALUE dependencies. This repairs an unresolvable public teaching link without deleting mathematical evidence or weakening the registry policy. The old failed site receipt and old proposal remain preserved.
+
+Permission is only to replace the bound highlights before bytes with the exact after snapshot bound in the receipt; proposal-v3 and plan hashes are also bound. Do not remove this auxiliary from compiled graphs, change the generator or public registry policy, change any theorem/Test/root/source/formula, or change other reader nodes. Fresh site build/check, registry/link validation and actual pixels remain required; this approval does not claim the repaired site has already passed.
+
+The three production and five canary BODY reviews are reused at unchanged complete module hashes, not rerun here. Supplied full-harness inspection reports472tests/7skips and applicable roots; the two actual contributor receipts were read with SHA-checked stdout and are nonempty (stack:5production paths/1contract; main:71production paths/68contracts). This narrow review neither reruns nor independently reaccepts full combined gates. No FINAL, chapter, whole-Goal, CI, main/live, merge or delivery acceptance follows. Goal ACTIVE.
+
+Reused distinct automated source reviewer /root/source_reviewer; requested GPT-6 Astra / medium. Prior staged history is disclosed; no human/external review, absolute blindness or runtime model attestation is claimed.
