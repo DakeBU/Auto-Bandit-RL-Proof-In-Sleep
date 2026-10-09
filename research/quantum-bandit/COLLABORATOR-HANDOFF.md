@@ -61,6 +61,8 @@ lake exe adaptive_dependency_export evidence/adaptive/reproduced-proof-term-grap
 
 每次检查退出状态。网络/缓存失败与 Lean 数学失败分开记录。Bandit 最新已证数学父节点 commit 是 `5638277b618ee4bf0d3c61aae12991f4f2cbdf01`；固定公开快照 `64eb285ebecbdc4bf236318776aabc6160fb1851` 在其上仅增加说明及历史证据，本交接说明的后续修订不改变这份数学快照。先比对 ancestry 与 `evidence/adaptive/release-index.json` 中源码/证据 hashes，再把两个实际 checkout 的 HEAD 写入个人 run receipt。不要在他人的活动分支或已有脏工作区 checkout/reset。
 
+历史 source-review 的 BornStability 原始文件 hash 来自 CRLF 工作区；固定 Quantum commit 的 Git blob 为 LF，raw hash 因行尾不同而不同。独立检查确认规范化到 LF 后字节完全相同。后续公开 handoff 的 [portable-source-bindings.json](evidence/adaptive/portable-source-bindings.json) 单独记录五个实际 Lean source 的历史 raw/Git blob/LF hashes；原审计未被改写。23 份公开审计文件由目录内 `-text` 属性保留原始字节。固定数学快照 64eb285 不含这份后补 portability 文件，可从当前 handoff 所属 commit 获取它。
+
 ## 可以直接交给自己 coding agent 的接续 goal
 
 下面是一个有明确验收点的默认 goal。若已有合作者领取它，先在研究 tracking issue 中认领另一个 leaf，避免重复工作；agent 不得擅自给其他协作者发消息。
