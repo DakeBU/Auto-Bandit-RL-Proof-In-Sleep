@@ -1,0 +1,7 @@
+# Bregman proximal comparison
+
+Task ONLINE-CH2-BREGMAN-20261009; proving. Five headers and the complete canonical definition frozen in docs/contracts/online-ch2-bregman-v1/stabilized-v1.json after distinct staged automated CONTRACT accepted-with-explicit-delta. Initial finite ready leaves: self and three-point algebraic identities. Remaining three frozen bodies pending. No source/chapter/Goal closure.
+
+Integrated candidate: clean isolated site build/check/shared registry and two nonempty contributor bases passed at69aeeeaf58364177a06bbc10329ea328c3c13b3c. All10996 complete prior records preserved+6source-qualified production nodes. Local-file DOM11source-guide formulas/zeroerrors/strict desktop geometry/14originals inspected by root;4generated files unchanged. Not HTTP/live. General source/all8 Chapter2 forwards REQUIRED/OPEN; distinct FINAL/native/delivery pending; wholeGoalACTIVE.
+
+BoundedFINAL update: canonical Bregman definition plus five exact dependency proofs and two actual nonsmooth Test families accepted-with-explicit-delta; FINAL SHA ada0b7156d13aa03790ad61640d642fcf7e6f2e763080c3f5fbd4d6748dfb47b. CombinedLean/fullharness/cleanSITEv1/sharedregistry/localfile14pixels passed. OWNnative5->0 ONLY five frozen derived proof obligations, definition separate; postnative/draftPR pending. Fullsource/all8Ch2forwards REQUIRED/OPEN, chapterdenominatornull, wholeGoalACTIVE. Historical pending entries retain stage meaning. No main/live/merge/deploy/retirement/HTTPclaim.

@@ -1,0 +1,11 @@
+# Exact immutable decoder RAW formatting review
+
+Accepted-with-explicit-delta, no required repairs. Reused distinct automated source-reviewer history disclosed; requested Astra/medium is not runtime, human/external or absolute-blind attestation.
+
+All11 indexed RAW inputs match before/after. publication_guard_v1.fixed() passed: the2887 baseline is preserved except the previously approved exact five root/reader transitions, whose immutable before/after snapshots match. Production/Test and complete headers/definition/selected graph remain exact. This is not an unchanged-old-live-root claim or a fresh Lean/harness run.
+
+Decoded the proposal's full-file base64 and compared it byte-for-byte with both original Markdown files. Each file has exactly one trailing-space line: blind-reconstruction-v1.md line83, and canary-blind-v1.md line30. Each line ends in the literal LaTex control-space sequence backslash plus space, inside an aligned quantified formula. The line base64 equals the actual line bytes. Whole-file and line hashes are recorded in the receipt. These received, previously frozen/reviewed source reconstructions must remain unchanged, including their mathematical content and provenance.
+
+Decoded and hash-verified both actual command stdout receipts. Full staged cumulative git diff against exact base71f2219fa1648094eba8aa17b50e443258f436cb exits2 and reports precisely these two file/line trailing-whitespace findings. The prospective scoped command excludes only these two exact paths and actually exits0 with empty stdout. No full exit0 claim, no Lean/source/Test/root/reader/formula/helper exemption and no general whitespace waiver is allowed. An exclusion is valid only while the entire bound file SHA remains exact and the retained full diagnostic set remains exactly these findings. Any new error or file change requires a new review.
+
+Approve this narrow evidence-preserving exception rather than rewriting received historical reports. It does not excuse a mathematical error in those reports or substitute for proof/source review. The already completed harness observation is not independently rerun by this supplemental review, and does not establish site/FINAL/native/publication/delivery acceptance. General source/all8forward containers/Chapter2 remain open and wholeGoal ACTIVE.

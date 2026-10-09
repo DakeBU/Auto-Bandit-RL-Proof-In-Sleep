@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineBregman.proximal_one_step",
+  "file": "BanditRLProof/OnlineBregmanProximal.lean",
+  "statement": "theorem proximal_one_step (V : Set E) (f ψ : E → ℝ) (η : ℝ) (hη : 0 < η) (x p : E) (hp : p ∈ V) (hf : ConvexOn ℝ V f) (hdx : DifferentiableAt ℝ ψ x) (hdp : DifferentiableAt ℝ ψ p) (hmin : IsMinOn (fun z => f z + η⁻¹ * divergence ψ z x) V p) : ∀ u ∈ V, η * (f p - f u) ≤ divergence ψ u x - divergence ψ u p - divergence ψ p x",
+  "statement_hash": "b34d4ee5d1fe4c00a6082ea81a2f2dddced22e7ffd710f30c21aa54a7ea546ff",
+  "source_assumptions": [],
+  "created_at": "2026-10-09T09:55:06+00:00"
+}
