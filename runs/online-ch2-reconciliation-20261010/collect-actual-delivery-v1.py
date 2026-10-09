@@ -1,0 +1,19 @@
+from publication_guard_v5 import *
+fixed();delivery=ROOT/'tmp/online-ch2-reconciliation-delivery-v1'
+actual=load(delivery/'inspected.json')
+head=subprocess.check_output(['git','rev-parse','HEAD'],encoding='utf8').strip()
+assert head==actual['actual_head']==actual['actual_remote_head'] and actual['actual_clean']
+assert isinstance(actual['PR']['number'],int) and actual['PR']['number']>0 and actual['PR']['state']=='OPEN' and actual['PR']['isDraft'] and actual['PR']['mergedAt'] is None
+assert actual['PR']['baseRefName']=='codex/research-online-ch2-unbounded-osd' and actual['stacked_exact_base']==BASE
+assert not load(RUN/'official-PR-attachment-v1.json')['actual_result'].get('isError',False)
+copied=[]
+for p in sorted(delivery.glob('*.json')):
+    q=RUN/('actual-delivery-v1-'+p.name);write(q,p.read_bytes())
+    copied.append(dict(original=p.as_posix(),durable_copy=q.as_posix(),exact_sha256=sha(p)));assert sha(p)==sha(q)
+for row in load(RUN/'post-native-inputs-v1.json')['rows']:assert sha(row['path'])==row['sha256'],row['path']
+write(RUN/'actual-delivery-summary-v1.json',dict(actual=actual,exact_copied_receipts=copied,official_attachment_sha256=sha(RUN/'official-PR-attachment-v1.json'),post_native_review_sha256=sha(RUN/'post-native-review-v1.json'),source_candidate_site_commit=load(RUN/'clean-candidate-site-binding-v1.json')['actual_head'],site_fresh_at_delivered_head=False,all_post_native_review_inputs_unchanged=True,distinct_delivery_review_PENDING=True,prospective_final_commit='Only new OWN RUN actual delivery evidence/review and exact RAW snapshots; no existing math/reader/native mutation',chapter_complete=False,whole_Goal_status='ACTIVE'))
+write(RUN/'actual-delivery-packet-v1.md','# Actual generic FTL draft PR delivery\n\nIndependently inspect actual durable receipts: deliveredhead=remote=OPENdraftunmergedPRhead, exacttitle/body/base/head, parentPR214 exact2e06e21d2acb0bf41142b19266d66d89364e17a0. Two current nonempty contributor gates/scoped staging/fullpackagewhitespace0/noexceptions/RAWCRLFsnapshots. Official successful attachment is durably bound. Independently hash all inputsbeforeafter, permitted FINAL/postnative transitions only. CleanSITEv1 applies onlyto itsboundsourcecommit, not laterdeliveryhead. ActualfileURI28pixels notHTTP/live/mobile. Historical source/canary/API/provenance/integration/attribute/schema repair evidence immutable.\n\nReview final-evidence-delivery-v1.py: onlyNEWOWNRUNactualdelivery/reviewevidence+RAWsnapshot committed/pushed; ignoredterminalobservationsverifynewremote/PRhead withunchangedtitle/body/base/draft/unmerged. No selfreferenceevidenceloop or existingmath/reader/nativeinputmutation, merge/deploy/retirement/globalcredentials. Ninefrozenproofterminals9->0/fourdefinitions/eightFULLcanaries/ONEsourcefamily, not Chapter2/wholeGoal. PartialOptionnotunconditionalattainment/fullinteraction;all8forwardcontainersREQUIREDOPEN/6futuremathunenumerated, whole16GoalACTIVE.\n\nCreate-only actual-delivery-review-v1.md/json withverdict/actual_delivery_verdict/prospective_evidence_only_commit_verdict/required_repairs/report/inputSHAs/independentRAWbeforeafter/actualhead/PR/officialattachmentbindings. DistinctreusedstagedrequestedAstra-medium, nohuman/external/runtimeattestation. Do notpublis/editinputs.\n')
+paths={p for d in [RUN,CONTRACT] for p in d.rglob('*') if p.is_file() and '__pycache__' not in p.parts}
+paths.update(Path(r['path']) for r in load(RUN/'post-native-inputs-v1.json')['rows'])
+write(RUN/'actual-delivery-review-inputs-v1.json',dict(rows=rows(paths),delivered_head=head,PR=actual['PR']['number'],scope='Actual scoped draftPR delivery and prospective evidence-only final commit; bounded FTL foundation and qualified provenance only;Chapter2/wholeGoal remain open',chapter_complete=False,whole_Goal_status='ACTIVE'))
+print('Actual new generic FTL PR delivery evidence durably copied; distinct review pending at',head)
