@@ -1,0 +1,7 @@
+# Preserve exact frozen evidence bytes across platform checkout filters.
+* -text
+# Source snapshots/extractions are immutable audit artifacts, not active code diffs.
+*.raw -diff
+forward-readonly-retrieval/*.txt -diff
+# Rejected v1 helper is a frozen historical input; operative v2 remains a text diff.
+integration_guard_v1.py -diff

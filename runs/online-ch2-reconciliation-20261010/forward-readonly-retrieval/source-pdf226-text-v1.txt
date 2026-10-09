@@ -1,0 +1,57 @@
+214Parameter-free Online Linear Optimization
+xt
+ℓt(x)
+xt
+ℓt(x)
+Figure 13.1Behaviour of KT (left) and OSD with various learning rates and the
+same number of steps (right) whenℓ t(x) =|x−10|for allt.
+So, the regret guarantee of KT used as a one-dimensional OCO algorithm is
+RegretT (u) =
+TX
+t=1
+(ℓt(xt)−ℓ t(u))≤ |u|L
+s
+2Tln
+e|u|T
+ϵ + 1
+
++ϵL,∀u∈R,
+where the only assumption was that the first derivatives (or subderivatives) ofℓt are bounded
+in absolute value byL. The bound is almost optimal because the optimal one has
+√
+Tfactor
+inside the logarithm, instead ofT, see the lower bound in Theorem 5.8. Also, it is important
+to note that any setting ofϵin[1,
+√
+T]would not change the asymptotic rate.
+To appreciate this guarantee, compare it to the one of OMD with learning rateη= α
+L
+√
+T :
+RegretT (u) =
+TX
+t=1
+ℓt(xt)−
+TX
+t=1
+ℓt(u)≤ L
+2
+u2
+α +α
+√
+T ,∀u∈R.
+Hence, the coin-betting approach allows us to get almost the optimal bound, without having
+to solve the impossible task to choose the correct learning rate for each competitor, that is,
+in aparameter-freeway. This motivates the following definition.
+Definition 13.7We callparameter-freeany online algorithm that satisfies the optimal
+regret bound with respect toTand to all the comparators in the feasible setV, up to poly-
+logarithmic multiplicative factors.
+We note explicitly that in this definition, the algorithm is allowed to know the Lipschitz
+constant of the losses. Hence, Algorithm 13.2 is parameter-free.
+It is also interesting to look at what the algorithm does on an easy problem, whereℓt(x) =
+|x−10|. In Figure 13.1, we show the different predictions that the KT and OSD algorithms
+make. The convergence rate of OSD critically depends on the learning rate: too large does
+not give convergence, and too small slows down the convergence. On the other hand, KT
+goesexponentially fasttowards the minimum, and then it automatically backtracks. This
+exponential growth effectively works like a line search procedure. Later in the iterations, KT
+will oscillate around the minimum,automatically shrinking its steps, without any parameter

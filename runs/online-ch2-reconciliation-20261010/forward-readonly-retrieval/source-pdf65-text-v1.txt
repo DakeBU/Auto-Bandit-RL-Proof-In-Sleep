@@ -1,0 +1,67 @@
+5.3 Lower Bound for Unconstrained Online Linear Optimization53
+Since⌈T/2⌉ − ⌊T/2⌋ ≤1and using the integral bounds, we have
+RegretT (0)≥ −1−
+Z ⌈T/2⌉
+i=1
+x−α dx+
+Z T
+0
+x1−α dx−T
+Z T
+⌈T/2⌉
+x−α dx
+=−1− ⌈T/2⌉1−α −1
+1−α + T2−α
+2−α −T T1−α − ⌈T/2⌉1−α
+1−α
+≥ −1 + 1
+1−α − ⌈T/2⌉1−α
+1−α + T2−α
+2−α − T2−α −T(T/2) 1−α
+1−α
+≥ −T1−α
+1−α +
+ 1
+2−α + (1/2)1−α
+1−α − 1
+1−α
+
+T2−α
+=− T1−α
+1−α +ϕ(α)T 2−α ≥ 1
+2ϕ(α)T2−α .
+This lower bound tells us that OSD can indeed fail in unbounded domains when used
+with a polynomially decreasing stepsize. However, it does not rule out the possibility of
+another algorithm working in the same setting. Indeed, we will see in Chapter 7 that Follow-
+the-Regularized-Leader achieves sublinear regret on unbounded domains with time-varying
+regularizers. Yet, its dependence on the other quantities will still be suboptimal, and we
+will obtain the optimal bound only with parameter-free algorithms in Chapter 13. Indeed, in
+the next section, we prove that unconstrained OLO is actually more difficult than OLO in
+bounded domains,for any algorithm.
+5.3 Lower Bound for Unconstrained Online Linear Optimization
+In the unconstrained setting, we proved that OSD withx 1 =0and constant learning rate
+ofη= 1
+L
+√
+T gives a regret of 1
+2 L(∥u∥2
+2 + 1)
+√
+Tfor anyu∈R d. Is this regret optimal?
+It is clear that the regret must be at least linear in∥u∥ 2. In fact, we could select a specific
+u, pass the information of∥u∥ 2 to the online learning algorithm and make the problem
+constrained inV={x:∥x∥ 2 ≤ ∥u∥2}, so that the lower bound for bounded OLO would
+hold. However, we now show that the correct dependence in∥u∥2 is more than linear, so the
+unconstrained setting is strictly more difficult than the bounded one.
+The approach I will follow is toreduce the OLO game to an online game of betting on a
+coin, where the lower bounds are easier to prove. So, let’s introduce the coin-betting online
+game:
+•Start with an initial amount of moneyϵ >0.
+•In each round, the algorithm bets a fraction of its current wealth on the outcome of a coin.
+•The outcome of the coin is revealed, and the algorithm wins or loses its bet at even odds.
+The aim of this online game is to win as much money as possible. Also, as in all the online
+games we consider, we do not assume anything about how the outcomes of the coin are
+decided.
+We will denote byc t ∈ {−1,1}, t= 1, . . . , Tthe outcomes of the coin. The absolute
+value of the signed betting fractionβ t ∈[−1,1]will denote the fraction of money to bet,
+and its sign will denote on which side we are betting. The net gain of the algorithm from the

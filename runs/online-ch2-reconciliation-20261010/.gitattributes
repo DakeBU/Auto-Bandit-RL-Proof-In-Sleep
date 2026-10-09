@@ -1,0 +1,31 @@
+# Preserve exact frozen evidence bytes across platform checkout filters.
+* -text
+# Source snapshots/extractions are immutable audit artifacts, not active code diffs.
+*.raw -diff
+forward-readonly-retrieval/*.txt -diff
+# Rejected v1 helper is a frozen historical input; operative v2 remains a text diff.
+integration_guard_v1.py -diff
+# Preserve the actual frozen CRLF receipts while retaining default whitespace checks.
+current-frontier-v1.json whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+fences/canary-1-v1.json whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+fences/canary-2-v1.json whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+fences/canary-3-v1.json whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+fences/canary-4-v1.json whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+fences/canary-5-v1.json whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+fences/canary-6-v1.json whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+fences/canary-7-v1.json whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+fences/canary-8-v1.json whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+fences/production-1-v1.json whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+fences/production-2-v1.json whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+fences/production-3-v1.json whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+fences/production-4-v1.json whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+fences/production-5-v1.json whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+fences/production-6-v1.json whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+fences/production-7-v1.json whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+fences/production-8-v1.json whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+fences/production-9-v1.json whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+lifecycle-sessions.jsonl whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+lifecycle-state.json whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+neutral-finite-selector-canary-reconstruction-v2.json whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+neutral-finite-selector-reconstruction-v1.json whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+own-artifact-journal.md whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

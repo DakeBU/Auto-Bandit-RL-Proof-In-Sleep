@@ -1,0 +1,106 @@
+38Beyond
+√
+TRegret
+Corollary 4.8Under the assumptions of Theorem 4.7, if in addition we haveµ t =µ >0
+andℓ t isL-Lipschitz with respect to∥ · ∥2 on an open set containingV, fort= 1, . . . , T,
+then we have
+TX
+t=1
+ℓt(xt)−
+TX
+t=1
+ℓt(u)≤ L2
+2µ (1 + lnT).
+Remark 4.9Notice that this corollary implicitly requires a bounded domain, otherwise
+the loss functions will not be Lipschitz, given that they are also strongly convex.
+Remark 4.10Corollary 4.8does notimply that for anyTthe regret will be smaller than
+using learning rates∝ 1
+L
+√
+t . Indeed, depending on the other quantities in the upper bounds,
+the upper bound in Corollary 4.8 is better than that of OSD with Lipschitz losses only forT
+large enough. Moreover, a better upper bound does not necessarily imply a better regret.
+Example 4.11Consider once again the guessing game in the first chapter:ℓ t(x) = (x−
+yt)2. Note that the loss functions are2-strongly convex with respect to| · |. Hence, setting
+ηt = 1
+2t andℓ ′
+t(x) = 2(x−y t)gives a regret ofln(T) + 1.
+We can also use the online-to-batch conversion on strongly convex stochastic problems.
+Example 4.12As done before, we can use the online-to-batch conversion to use Corol-
+lary 4.8 to obtain stochastic subgradient descent algorithms for strongly convex stochastic
+functions. For example, consider the classic Support Vector Machine objective,
+min
+x
+F(x) := λ
+2 ∥x∥2
+2 + 1
+N
+NX
+i=1
+max(1−y i⟨zi,x⟩,0),
+or any other regularized formulation like regularized logistic regression,
+min
+x
+F(x) := λ
+2 ∥x∥2
+2 + 1
+N
+NX
+i=1
+ln(1 + exp(−yi⟨zi,x⟩)),
+wherez i ∈R d,∥z i∥2 ≤R, andy i ∈ {−1,1}. First, notice that the minimizer of both
+expressions has to be in the L2 ball of radius proportional to
+q
+1
+λ (proof left as an exercise).
+Hence, we can setVequal to this set. Then, settingℓ t(x) = λ
+2 ∥x∥2
+2 +max(1−y t⟨zt,x⟩,0)
+orℓ t(x) = λ
+2 ∥x∥2
+2 + ln(1 + exp(−yt⟨zt,x⟩))results inλ-strongly convex loss functions.
+Using Corollary 4.8 and Theorem 3.1 gives immediately
+E
+"
+F
+ 
+1
+T
+TX
+t=1
+xt
+!#
+−min
+x
+F(x) =O
+lnT
+λT
+
+.
+However, we can do better! We can use non-uniform weights in Theorem 3.1 to remove
+the log term and obtain the optimal convergence rate for the stochastic optimization of
+strongly convex functions. Observe thatℓ t(x) = λt
+2 ∥x∥2
+2 +tmax(1−y t⟨zt,x⟩,0)or
+ℓt(x) = λt
+2 ∥x∥2
+2 +tln(1 + exp(−y t⟨zt,x⟩))areλt-strongly convex loss functions. So,
+using Theorem 4.7, we have thatη t = 2
+λt(t+1) and Theorem 3.1 gives immediately
+E
+"
+F
+ 
+2
+T(T+ 1)
+TX
+t=1
+txt
+!#
+−min
+x
+F(x) =O
+ 1
+λT
+
+.

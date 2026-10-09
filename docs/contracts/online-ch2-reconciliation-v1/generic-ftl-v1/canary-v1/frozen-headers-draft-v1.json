@@ -1,0 +1,88 @@
+{
+  "rows": [
+    {
+      "declaration": "Tests.OnlineFTLSelector.quadratic_trajectory",
+      "exact_header": "theorem quadratic_trajectory :\n    (initial : ℝ) = 3 / 4 ∧\n    predict interval initial quadraticLoss 0 = some (3 / 4) ∧\n    predict interval initial quadraticLoss 1 = some (1 / 4) ∧\n    predict interval initial quadraticLoss 2 = some (1 / 2) ∧\n    (1 / 4 : ℝ) ≠ 1 / 2 ∧\n    quadraticLoss 0 (1 / 4) ≠ quadraticLoss 0 (3 / 4) ∧\n    (∀ t ∈ range 3, ∃ p, predict interval initial quadraticLoss t = some p ∧\n      p ∈ interval ∧ IsMinOn (fun x => ∑ i ∈ range t, quadraticLoss i x) interval p)",
+      "normalized_header_sha256": "6cb0656e565dcbcd93501ba80670848d48817598684e86e24ed4bde97a596548",
+      "exact_Prop": "(initial : ℝ) = 3 / 4 ∧\n    predict interval initial quadraticLoss 0 = some (3 / 4) ∧\n    predict interval initial quadraticLoss 1 = some (1 / 4) ∧\n    predict interval initial quadraticLoss 2 = some (1 / 2) ∧\n    (1 / 4 : ℝ) ≠ 1 / 2 ∧\n    quadraticLoss 0 (1 / 4) ≠ quadraticLoss 0 (3 / 4) ∧\n    (∀ t ∈ range 3, ∃ p, predict interval initial quadraticLoss t = some p ∧\n      p ∈ interval ∧ IsMinOn (fun x => ∑ i ∈ range t, quadraticLoss i x) interval p)",
+      "neutral_id": "Terminal1",
+      "BODY": "unwritten",
+      "accepted": false
+    },
+    {
+      "declaration": "Tests.OnlineFTLSelector.current_future_independence",
+      "exact_header": "theorem current_future_independence :\n    quadraticLoss 2 0 ≠ changedLoss 2 0 ∧\n    quadraticLoss 3 0 ≠ changedLoss 3 0 ∧\n    predict interval initial quadraticLoss 2 = predict interval initial changedLoss 2",
+      "normalized_header_sha256": "0523841675b1c8ab851c895892f5c9f299b30cc81956a3deff2458793f732b1e",
+      "exact_Prop": "quadraticLoss 2 0 ≠ changedLoss 2 0 ∧\n    quadraticLoss 3 0 ≠ changedLoss 3 0 ∧\n    predict interval initial quadraticLoss 2 = predict interval initial changedLoss 2",
+      "neutral_id": "Terminal2",
+      "BODY": "unwritten",
+      "accepted": false
+    },
+    {
+      "declaration": "Tests.OnlineFTLSelector.off_domain_invariance",
+      "exact_header": "theorem off_domain_invariance :\n    (2 : ℝ) ∉ interval ∧\n    quadraticLoss 0 2 ≠ offDomainLoss 0 2 ∧\n    (∀ t, EqOn (quadraticLoss t) (offDomainLoss t) interval) ∧\n    select interval (fun i : Fin 2 => quadraticLoss i.val) =\n      select interval (fun i : Fin 2 => offDomainLoss i.val) ∧\n    predict interval initial quadraticLoss 2 = predict interval initial offDomainLoss 2",
+      "normalized_header_sha256": "213981f3f46160d8337fdd859f5316e894c1828980d763dcc0c3aa9ca262617a",
+      "exact_Prop": "(2 : ℝ) ∉ interval ∧\n    quadraticLoss 0 2 ≠ offDomainLoss 0 2 ∧\n    (∀ t, EqOn (quadraticLoss t) (offDomainLoss t) interval) ∧\n    select interval (fun i : Fin 2 => quadraticLoss i.val) =\n      select interval (fun i : Fin 2 => offDomainLoss i.val) ∧\n    predict interval initial quadraticLoss 2 = predict interval initial offDomainLoss 2",
+      "neutral_id": "Terminal3",
+      "BODY": "unwritten",
+      "accepted": false
+    },
+    {
+      "declaration": "Tests.OnlineFTLSelector.tied_minimizers",
+      "exact_header": "theorem tied_minimizers :\n    (0 : ℝ) ∈ interval ∧ (1 : ℝ) ∈ interval ∧ (0 : ℝ) ≠ 1 ∧\n    IsMinOn (cumulative (fun _ : Fin 1 => fun _ : ℝ => 0)) interval 0 ∧\n    IsMinOn (cumulative (fun _ : Fin 1 => fun _ : ℝ => 0)) interval 1 ∧\n    (∃ p, select interval (fun _ : Fin 1 => fun _ : ℝ => 0) = some p ∧\n      p ∈ interval ∧ IsMinOn (cumulative (fun _ : Fin 1 => fun _ : ℝ => 0)) interval p)",
+      "normalized_header_sha256": "b18e9ae46f9505e04c3e0e8f94c996dcd6170ba58c8497f555f887babf11c17e",
+      "exact_Prop": "(0 : ℝ) ∈ interval ∧ (1 : ℝ) ∈ interval ∧ (0 : ℝ) ≠ 1 ∧\n    IsMinOn (cumulative (fun _ : Fin 1 => fun _ : ℝ => 0)) interval 0 ∧\n    IsMinOn (cumulative (fun _ : Fin 1 => fun _ : ℝ => 0)) interval 1 ∧\n    (∃ p, select interval (fun _ : Fin 1 => fun _ : ℝ => 0) = some p ∧\n      p ∈ interval ∧ IsMinOn (cumulative (fun _ : Fin 1 => fun _ : ℝ => 0)) interval p)",
+      "neutral_id": "Terminal4",
+      "BODY": "unwritten",
+      "accepted": false
+    },
+    {
+      "declaration": "Tests.OnlineFTLSelector.empty_domain",
+      "exact_header": "theorem empty_domain :\n    select (∅ : Set ℝ) (fun _ : Fin 1 => fun x : ℝ => x ^ 2) = none",
+      "normalized_header_sha256": "2d1fc4184b71618e6fb0473bfee169dd08a9f12247b7bb7fea1219b3846c8f27",
+      "exact_Prop": "select (∅ : Set ℝ) (fun _ : Fin 1 => fun x : ℝ => x ^ 2) = none",
+      "neutral_id": "Terminal5",
+      "BODY": "unwritten",
+      "accepted": false
+    },
+    {
+      "declaration": "Tests.OnlineFTLSelector.empty_history_and_initialization",
+      "exact_header": "theorem empty_history_and_initialization :\n    (∃ p, select interval (fun i : Fin 0 => Fin.elim0 i) = some p ∧ p ∈ interval) ∧\n    predict interval initial quadraticLoss 0 = some (3 / 4) ∧\n    predict interval otherInitial quadraticLoss 0 = some (1 / 4) ∧\n    predict interval initial quadraticLoss 0 ≠ predict interval otherInitial quadraticLoss 0",
+      "normalized_header_sha256": "bd48d2bf688f3888bfcffbb0bb416acad7e789ce126f78abb637c1b2d8f0e487",
+      "exact_Prop": "(∃ p, select interval (fun i : Fin 0 => Fin.elim0 i) = some p ∧ p ∈ interval) ∧\n    predict interval initial quadraticLoss 0 = some (3 / 4) ∧\n    predict interval otherInitial quadraticLoss 0 = some (1 / 4) ∧\n    predict interval initial quadraticLoss 0 ≠ predict interval otherInitial quadraticLoss 0",
+      "neutral_id": "Terminal6",
+      "BODY": "unwritten",
+      "accepted": false
+    },
+    {
+      "declaration": "Tests.OnlineFTLSelector.affine_nonattainment",
+      "exact_header": "theorem affine_nonattainment :\n    (univ : Set ℝ).Nonempty ∧ IsClosed (univ : Set ℝ) ∧ Convex ℝ (univ : Set ℝ) ∧\n    select univ (fun _ : Fin 1 => fun x : ℝ => x) = none ∧\n    predict univ ⟨0, mem_univ 0⟩ (fun _ : ℕ => fun x : ℝ => x) 0 = some 0 ∧\n    predict univ ⟨0, mem_univ 0⟩ (fun _ : ℕ => fun x : ℝ => x) 1 = none",
+      "normalized_header_sha256": "952c57617097e0f35e5fbd7c897f26ded353b061c87984f5c9c33ad32a966b73",
+      "exact_Prop": "(univ : Set ℝ).Nonempty ∧ IsClosed (univ : Set ℝ) ∧ Convex ℝ (univ : Set ℝ) ∧\n    select univ (fun _ : Fin 1 => fun x : ℝ => x) = none ∧\n    predict univ ⟨0, mem_univ 0⟩ (fun _ : ℕ => fun x : ℝ => x) 0 = some 0 ∧\n    predict univ ⟨0, mem_univ 0⟩ (fun _ : ℕ => fun x : ℝ => x) 1 = none",
+      "neutral_id": "Terminal7",
+      "BODY": "unwritten",
+      "accepted": false
+    },
+    {
+      "declaration": "Tests.OnlineFTLSelector.recovery_after_nonattainment",
+      "exact_header": "theorem recovery_after_nonattainment :\n    predict univ ⟨0, mem_univ 0⟩ affineThenQuadratic 1 = none ∧\n    predict univ ⟨0, mem_univ 0⟩ affineThenQuadratic 2 = some 0 ∧\n    IsMinOn (fun x => ∑ i ∈ range 2, affineThenQuadratic i x) univ 0 ∧\n    (∀ x, (∑ i ∈ range 2, affineThenQuadratic i x) = x ^ 2)",
+      "normalized_header_sha256": "cbb76a40c5e51de93e12b84bf3e116ddc6fe08225256f8ac820de7c1dfc9f550",
+      "exact_Prop": "predict univ ⟨0, mem_univ 0⟩ affineThenQuadratic 1 = none ∧\n    predict univ ⟨0, mem_univ 0⟩ affineThenQuadratic 2 = some 0 ∧\n    IsMinOn (fun x => ∑ i ∈ range 2, affineThenQuadratic i x) univ 0 ∧\n    (∀ x, (∑ i ∈ range 2, affineThenQuadratic i x) = x ^ 2)",
+      "neutral_id": "Terminal8",
+      "BODY": "unwritten",
+      "accepted": false
+    }
+  ],
+  "production_context": [
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineFTLSelector.lean",
+      "sha256": "cd1cae5683edaa40fde18466f1efbca8ad34b295d8dfc3b173a35e0d459405df"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/docs/contracts/online-ch2-reconciliation-v1/generic-ftl-v1/definition-context-v1.lean.txt",
+      "sha256": "112847a69636cd98ea1413861fa77dd5d315493f8c591893b4166080674c6db2"
+    }
+  ],
+  "actual_Test_module": "Tests/OnlineFTLSelectorCanary.lean",
+  "scope": "Eight constructed mathematical instantiations/boundary checks, not eight printed source results."
+}

@@ -1,0 +1,132 @@
+5.1 Lower Bound for Bounded Online Linear Optimization51
+Asatisfies
+RegretT (u) =
+TX
+t=1
+⟨gt,xt⟩ −
+TX
+t=1
+⟨gt,u⟩ ≥
+√
+2LD
+√
+T
+4 .
+ProofLet’s denote byRegret T := maxu∈V RegretT (u). Letv,w∈ Vsuch that∥v−
+w∥2 =D. Letz= v−w
+∥v−w∥2
+, so that⟨z,v−w⟩=D. Letϵ 1, . . . , ϵT be i.i.d. Rademacher
+random variables, that isP{ϵ t = 1}=P{ϵ t =−1}= 1/2, and set the vector of the
+stochastic linear losses ˜gt =Lϵ tz. So, we have
+E˜g1,...,˜gT
+" TX
+t=1
+⟨˜gt,xt⟩ −min
+u∈V
+TX
+t=1
+⟨˜gt,u⟩
+#
+=E ϵ1,...,ϵT
+" TX
+t=1
+Lϵt⟨z,x t⟩ −min
+u∈V
+TX
+t=1
+Lϵt⟨z,u⟩
+#
+=E ϵ1,...,ϵT
+"
+−min
+u∈V
+TX
+t=1
+Lϵt⟨z,u⟩
+#
+=E ϵ1,...,ϵT
+"
+max
+u∈V
+TX
+t=1
+−Lϵt⟨z,u⟩
+#
+=E ϵ1,...,ϵT
+"
+max
+u∈V
+TX
+t=1
+Lϵt⟨z,u⟩
+#
+≥E ϵ1,...,ϵT
+"
+max
+u∈{v,w}
+TX
+t=1
+Lϵt⟨z,u⟩
+#
+=E ϵ1,...,ϵT
+"
+1
+2
+TX
+t=1
+Lϵt⟨z,v+w⟩+ 1
+2
+
+TX
+t=1
+Lϵt⟨z,v−w⟩
+
+#
+= L
+2 Eϵ1,...,ϵT
+"
+TX
+t=1
+ϵt⟨z,v−w⟩
+
+#
+= LD
+2 Eϵ1,...,ϵT
+"
+TX
+t=1
+ϵt
+
+#
+≥
+√
+2LD
+√
+T
+4 .
+where in the first equality we usedE[ϵ t] = 0and the independence ofϵ t andx t, the fact
+thatϵ t and−ϵ t follow the same distribution in the fourth equality,max(a, b) =a+b
+2 + |a−b|
+2
+in the fifth equality, and Khintchine inequality (Theorem A.14) in the last inequality.
+Now, given that the expectation is lower bounded by a positive constant, there exists a
+sequence of realizations of the random variables that gives the same lower bound.
+Remark 5.2Unlike similar proofs, we do not assumeVto be symmetric with respect to0.
+Remark 5.3If the algorithm is randomized, one can easily extend the proof for a lower
+bound on the expected regret of the algorithm with respect to its internal randomization.
+The lower bound is within a constant multiplicative factor from the upper bound we
+proved for Online Subgradient Descent (OSD) with learning ratesη t = D
+L
+√
+t orη= D
+L
+√
+T .
+This means that OSD is asymptotically optimal with both settings of the learning rate.
+At this point, there is an important consideration: how can this be the optimal regret
+when we managed to prove a better regret, for example, with adaptive learning rates in
+Section 4.2? The subtlety is that, constraining the adversary to playL-Lipschitz losses, the
+adversary could always force on the algorithm at least the regret in Theorem 5.1. However,
+we can design algorithms that take advantage ofsuboptimal plays of the adversary. Indeed,
+for example, if the adversary plays in a way that all the subgradients have the same norm
+equal toL, there is nothing to adapt to!

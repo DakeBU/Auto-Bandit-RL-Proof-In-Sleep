@@ -1,0 +1,117 @@
+40Beyond
+√
+TRegret
+Lemma 4.13Leta 0, . . . , aT ≥0andf: [0,+∞)→[0,+∞)a non-increasing contin-
+uous function. Then
+TX
+t=1
+atf
+ 
+a0 +
+tX
+i=1
+ai
+!
+≤
+Z PT
+t=0 at
+a0
+f(x) dx .
+ProofDenote bys t = Pt
+i=0 ai.
+atf
+ 
+a0 +
+tX
+i=1
+ai
+!
+=a tf(st) =
+Z st
+st−1
+f(st)dx≤
+Z st
+st−1
+f(x)dx .
+Summing overt= 1, . . . , T, we have the stated bound.
+Using this lemma withf(x) = 1√x anda 0 →0, we have that
+1
+2D
+TX
+t=1
+∥gt∥2
+2qPt
+i=1 ∥gi∥2
+2
+≤D
+vuut
+TX
+t=1
+∥gt∥2
+2 .
+Surprisingly, this term is only a factor of 2 worse than what we would have got from the
+optimal choice ofη ⋆. However, this learning rate can be computed without knowledge of
+the future, and it can actually be used! Overall, with this choice, we get
+RegretT (u) =
+TX
+t=1
+ℓt(xt)−
+TX
+t=1
+ℓt(u)≤ 3
+2D
+vuut
+TX
+t=1
+∥gt∥2
+2 .(4.4)
+Note that it is possible to improve the constant in front of the bound to
+√
+2by multiplying
+the learning rates by
+√
+2
+2 . So, putting everything together, we have the following theorem.
+Theorem 4.14LetV ⊂R d be a closed non-empty convex set with diameterD, that is,
+maxx,y∈V ∥x−y∥ 2 ≤D. Letℓ 1, . . . , ℓT be an arbitrary sequence of convex functions
+ℓt :R d →(−∞,+∞]subdifferentiable onVfort= 1, . . . , T. Pick anyx1 ∈ V, and run
+OSD withη t =
+√
+2D
+2
+√Pt
+i=1 ∥gi∥2
+2
+, t= 1, . . . , T, and do not update on rounds whengt =0.
+Then,∀u∈ V, the following regret bound holds
+TX
+t=1
+(ℓt(xt)−ℓ t(u))≤D
+vuut2
+TX
+t=1
+∥gt∥2
+2 =
+√
+2 min
+η>0
+ 
+D2
+2η + η
+2
+TX
+t=1
+∥gt∥2
+2
+!
+.
+The second equality in the theorem clearly shows the advantage of this learning rate: we
+obtain (almost) the same guarantee we would have obtained knowing the future gradients!
+This is an interesting result on its own: it gives a principled way to set the learning rates
+with an almost optimal guarantee. Observe that this approach avoids knowing the Lipschitz
+constants of the functions, so the algorithm adapts to them. The downside is that it works
+only in the bounded case. Another important observation is that the sum of the squared
+gradients acts as anintrinsic notion of time, better suited thanTto capture the dependence
+on time.
+There are also other consequences of this simple regret upper bound as we will now see
+by specializing this result to the case that the losses aresmoothorself-bounded.

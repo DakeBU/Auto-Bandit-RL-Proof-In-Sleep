@@ -1,0 +1,109 @@
+13.2 Parameter-free One-Dimensional Online Convex Optimization213
+Algorithm 13.2Krichevsky–Trofimov (KT) OCO Algorithm
+Require:ϵ >0,L >0
+1:fort= 1toTdo
+2:Predictx t =−
+Pt−1
+i=1 gi
+tL
+
+ϵ− Pt−1
+i=1
+gi
+L xi
+
+∈R
+3:Pay the lossℓ t(xt), whereℓ t is subdifferentiable onR
+4:Setg t ∈∂ℓ t(xt)where|g t| ≤L
+5:end for
+13.2.1 KT as a One-Dimensional Online Convex Optimization Algorithm
+Here, we want to use the considerations in the above section to use KT as a parameter-
+free 1-d OCO algorithm. First, let’s see what such an algorithm looks like. KT betsx t =
+βt Wealtht−1, starting withϵmoney. Now, setc t =−g t/Lwhereg t ∈∂ℓ t(xt)and assume
+the lossesℓ t areL-Lipschitz. So, we get
+xt =−
+Pt−1
+i=1 gi
+tL
+ 
+ϵ−
+t−1X
+i=1
+gi
+L xi
+!
+.
+Algorithm 13.2 shows theKrichevsky–Trofimov algorithm for OCO.
+Let’s now see what kind of regret we get. From Theorem 13.4, we have that the KT bettor
+guarantees the following lower bound on the wealth when used withc t =−g t/L:
+ϵ−
+TX
+t=1
+xt
+gt
+L ≥ ϵ
+e
+√
+T
+exp
+ 
+(PT
+t=1 gt)2
+2T L2
+!
+.
+So, we found the functionϕ; we just needϕ ⋆ or an upper bound to it, which can be found
+with the following lemma.
+Lemma 13.6Definef(x) =βexp x2
+2α , forα, β >0,x∈R. Then
+f⋆(y) =|y|
+s
+αW
+αy2
+β2
+
+−βexp
+1
+2W
+αy2
+β2
+
+≤ |y|
+s
+αW
+αy2
+β2
+
+−β
+≤ |y|
+s
+αln
+
+1 + αy2
+β2
+
+−β≤ |y|
+s
+2αln
+
+1 +
+√α|y|
+β
+
+−β,
+whereWis the Lambert function, i.e.,W:R ≥0 →R ≥0 satisfiesx=W(x) exp(W(x)).
+ProofFrom the definition of the Fenchel conjugate, we have
+f⋆(y) = max
+x∈R
+x y−f(x) = max
+x
+x y−βexp x2
+2α,=x ⋆ y−βexp (x⋆)2
+2α ,
+wherex ⋆ = argmax x x y−f(x). We now use the fact thatx ⋆ satisfiesy=f ′(x⋆), to
+havex ⋆ = sign(y)
+q
+αW( αy2
+β2 ), whereW(·)is the Lambert function. Using Lemma A.6
+in the Appendix, we obtain the second-to-last bound. The last one is obtained by using√
+a2 + 1≤ |a|+ 1for alla∈R.

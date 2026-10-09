@@ -1,0 +1,140 @@
+54Lower Bounds for Online Linear Optimization
+beginning of the game until the end of roundtwill be denoted byr t. Given that the money
+is won or lost at even odds, we have
+Money at the end of roundt
+z }| {
+rt +ϵ=
+Money at the beginning of roundt
+z }| {
+rt−1 +ϵ+
+Money won or lost
+z }| {
+ctβt(rt−1 +ϵ) =ϵ
+tY
+i=1
+(1 +β ici),
+where we used the fact thatr 0 = 0. We will also denote byx t =β t(ϵ+r t−1)the signed
+bet of the algorithm on roundt.
+If we got all the outcomes of the coin correct, we would double our money in each round,
+so thatϵ+r T =ϵ2 T . On the other hand, if the adversary can always select a coin outcome
+that is the opposite of our bet, then we would lose money in each round. Hence, we are
+interested in the best any algorithm can do when the adversary is constrained to give us a
+sequence of coins where one side appears more often than the other.
+To facilitate the use of this theorem later on, we will also slightly generalize the problem
+assuming that the coins are in{−L, L}instead of{−1,1}, whereL >0, consequently we
+imposeβ t ∈[− 1
+L , 1
+L ].
+Theorem 5.5LetT≥1be even and0< q≤ T
+2 integer. Then, for any online coin-betting
+algorithm that guarantees non-negative wealth on any sequence ofTcoins in{−L, L}and
+starts with initial wealthϵ, there exists a sequence of coins such that| PT
+t=1 ct| ≥2qLand
+the wealth of the algorithm is upper bounded by
+3ϵ
+2
+ 2q√
+T
++ 1
+
+exp
+
+T·KL Bern
+1
+2 + q
+T ; 1
+2
+
+≤ 3ϵ
+2
+ 2q√
+T
++ 1
+
+exp
+
+2q2
+T + 3.1 q4
+T3
+
+,
+whereKL Bern(p;q)denotes the Kullback–Leibler (KL) divergence between two Bernoulli
+distributions with parameterspandq:
+KLBern(p;q) :=pln
+p
+q
+
++ (1−p) ln
+1−p
+1−q
+
+.
+ProofLetY 1, . . . , YT be independent random variables that take the value of1with prob-
+ability 0.5 and−1with probability 0.5. Hence, we have thatE[ PT
+t=1 xtLYt] = 0, and alsoPT
+t=1 xtLYt ≥ −ϵfor the hypothesis on the betting algorithm. For anyq≥0, it follows
+that
+0 =E
+" TX
+t=1
+xtYt
+#
+=E
+" TX
+t=1
+xtYt
+
+
+TX
+t=1
+Yt
+ <2q
+#
+P
+(
+TX
+t=1
+Yt
+ <2q
+)
++E
+" TX
+t=1
+xtYt
+
+
+TX
+t=1
+Yt
+ ≥2q
+#
+P
+(
+TX
+t=1
+Yt
+ ≥2q
+)
+≥ −ϵ
+L +
+ 
+ϵ
+L +E
+" TX
+t=1
+xtYt
+
+
+TX
+t=1
+Yt
+ ≥2q
+#!
+P
+(
+TX
+t=1
+Yt
+ ≥2q
+)
+,

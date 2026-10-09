@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "Tests.OnlineFTLSelector.off_domain_invariance",
+  "file": "Tests/OnlineFTLSelectorCanary.lean",
+  "statement": "theorem off_domain_invariance : (2 : ℝ) ∉ interval ∧ quadraticLoss 0 2 ≠ offDomainLoss 0 2 ∧ (∀ t, EqOn (quadraticLoss t) (offDomainLoss t) interval) ∧ select interval (fun i : Fin 2 => quadraticLoss i.val) = select interval (fun i : Fin 2 => offDomainLoss i.val) ∧ predict interval initial quadraticLoss 2 = predict interval initial offDomainLoss 2",
+  "statement_hash": "213981f3f46160d8337fdd859f5316e894c1828980d763dcc0c3aa9ca262617a",
+  "source_assumptions": [],
+  "created_at": "2026-10-09T20:41:09+00:00"
+}

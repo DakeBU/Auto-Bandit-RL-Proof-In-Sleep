@@ -1,0 +1,815 @@
+{
+  "actor": {
+    "task": "/root/source_reviewer",
+    "requested_model": "GPT-6 Astra",
+    "requested_reasoning": "medium",
+    "reused_staged_history": true,
+    "runtime_attested": false
+  },
+  "verdict": "rejected",
+  "materialization_verdict": "rejected",
+  "integration_helper_verdict": "rejected",
+  "reader_verdict": "accepted-with-explicit-delta",
+  "source_join_scope_verdict": "accepted-with-explicit-delta; candidate classification only, no source-container acceptance",
+  "required_repairs": [
+    {
+      "id": "M1",
+      "kind": "blocking integration manifest/helper repair",
+      "finding": "prospective-contribution-v1.json lists docs/contracts/online-book-v1/coverage.json in affected_files, but the actual pinned check_contributor_contract.is_production returns False. The diff-aware gate computes covered minus production_set and rejects this as stale coverage.",
+      "required_change": "Create versioned prospective manifest removing only coverage.json from affected_files. Keep coverage among all six exact reviewed plan transitions and retain its source/partial/null boundary. Version helper references and receipt/input bindings to the repaired manifest. Preserve v1 files; independently review the new operative input set before any materialization.",
+      "mathematical_change": false
+    }
+  ],
+  "report": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/integration-plan-review-v1.md",
+  "report_sha256": "73661133f92c161ab87d561bcc31563d7ad3c75a902a1125998a5395404dedc9",
+  "input_manifest": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/integration-plan-review-inputs-v1.json",
+  "input_manifest_sha256": "4bcb778122e6c55039bea1848361bdb0eb66f59db4c4dc53d1c816a5f1bdf3de",
+  "fixed_input_count": 48,
+  "raw_input_checks": [
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/AGENTS.md",
+      "before_sha256": "5642da8728315c0682c9853cbce4f087b2a7a24c9e46397ae7457db67f9c1995",
+      "after_sha256": "5642da8728315c0682c9853cbce4f087b2a7a24c9e46397ae7457db67f9c1995",
+      "expected_sha256": "5642da8728315c0682c9853cbce4f087b2a7a24c9e46397ae7457db67f9c1995",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineFTLSelector.lean",
+      "before_sha256": "cd1cae5683edaa40fde18466f1efbca8ad34b295d8dfc3b173a35e0d459405df",
+      "after_sha256": "cd1cae5683edaa40fde18466f1efbca8ad34b295d8dfc3b173a35e0d459405df",
+      "expected_sha256": "cd1cae5683edaa40fde18466f1efbca8ad34b295d8dfc3b173a35e0d459405df",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/docs/contracts/online-ch2-chapter-audit-v1/complete-source-reconciliation-draft-v3.json",
+      "before_sha256": "94bed5963bbdcc745e64547fa98b5101a6a58e843c127e38d8577dfe2af58466",
+      "after_sha256": "94bed5963bbdcc745e64547fa98b5101a6a58e843c127e38d8577dfe2af58466",
+      "expected_sha256": "94bed5963bbdcc745e64547fa98b5101a6a58e843c127e38d8577dfe2af58466",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/docs/contracts/online-ch2-reconciliation-v1/additional-source-bindings-draft-v1.json",
+      "before_sha256": "8a9398cfd2a76d6fd671d2175c52b26186983a2917551818ff743ec19bd011f0",
+      "after_sha256": "8a9398cfd2a76d6fd671d2175c52b26186983a2917551818ff743ec19bd011f0",
+      "expected_sha256": "8a9398cfd2a76d6fd671d2175c52b26186983a2917551818ff743ec19bd011f0",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/docs/contracts/online-ch2-reconciliation-v1/appropriate-scope-receipt-selection-draft-v1.json",
+      "before_sha256": "4763056dcc337fc74453db86278bd57d2d852173f8925eae4247138b43bda3ef",
+      "after_sha256": "4763056dcc337fc74453db86278bd57d2d852173f8925eae4247138b43bda3ef",
+      "expected_sha256": "4763056dcc337fc74453db86278bd57d2d852173f8925eae4247138b43bda3ef",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/docs/contracts/online-ch2-reconciliation-v1/exact-integration-plan-v1.json",
+      "before_sha256": "8ac6db7ef1a93c15dea1b774a03b826e73323b685842a03afe736f59cad48e80",
+      "after_sha256": "8ac6db7ef1a93c15dea1b774a03b826e73323b685842a03afe736f59cad48e80",
+      "expected_sha256": "8ac6db7ef1a93c15dea1b774a03b826e73323b685842a03afe736f59cad48e80",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/docs/contracts/online-ch2-reconciliation-v1/omitted-definition-context-bindings-draft-v1.json",
+      "before_sha256": "a835d7285d6bb334dabccc6e4c3817c4d8715ffe57dc084ded587979b2b8a5f8",
+      "after_sha256": "a835d7285d6bb334dabccc6e4c3817c4d8715ffe57dc084ded587979b2b8a5f8",
+      "expected_sha256": "a835d7285d6bb334dabccc6e4c3817c4d8715ffe57dc084ded587979b2b8a5f8",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/docs/contracts/online-ch2-reconciliation-v1/prescient-complete-chain-bindings-draft-v1.json",
+      "before_sha256": "539a1fa27afa357ef18f77401dfaa30a94aabbe8fe49205eb738aaf6db09832b",
+      "after_sha256": "539a1fa27afa357ef18f77401dfaa30a94aabbe8fe49205eb738aaf6db09832b",
+      "expected_sha256": "539a1fa27afa357ef18f77401dfaa30a94aabbe8fe49205eb738aaf6db09832b",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/docs/contracts/online-ch2-reconciliation-v1/qualified-source-reconciliation-draft-v4.json",
+      "before_sha256": "7ef4eae2a9a26720445e4399ed23e24146b5f478c4b051b875ff7674995bfdb2",
+      "after_sha256": "7ef4eae2a9a26720445e4399ed23e24146b5f478c4b051b875ff7674995bfdb2",
+      "expected_sha256": "7ef4eae2a9a26720445e4399ed23e24146b5f478c4b051b875ff7674995bfdb2",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/docs/contracts/online-ch2-reconciliation-v1/required-forward-dependencies-draft-v1.json",
+      "before_sha256": "8f9e268012584fef3628ff8b4cf19eeb3b21782cff4160a33bf40a128f5cc7bf",
+      "after_sha256": "8f9e268012584fef3628ff8b4cf19eeb3b21782cff4160a33bf40a128f5cc7bf",
+      "expected_sha256": "8f9e268012584fef3628ff8b4cf19eeb3b21782cff4160a33bf40a128f5cc7bf",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/docs/theorem-publication-protocol.md",
+      "before_sha256": "b1e5ac73cfe0a90742567736b422787c90a51e6b6ff007cc1dc8d598948f687e",
+      "after_sha256": "b1e5ac73cfe0a90742567736b422787c90a51e6b6ff007cc1dc8d598948f687e",
+      "expected_sha256": "b1e5ac73cfe0a90742567736b422787c90a51e6b6ff007cc1dc8d598948f687e",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/chapter2-reconciliation-probe-targets-v1.json",
+      "before_sha256": "6463fd532e25be3b4254f20b8a300788b512c21fc9b9a953ae57cabdc82d04c6",
+      "after_sha256": "6463fd532e25be3b4254f20b8a300788b512c21fc9b9a953ae57cabdc82d04c6",
+      "expected_sha256": "6463fd532e25be3b4254f20b8a300788b512c21fc9b9a953ae57cabdc82d04c6",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/chapter2-reconciliation-public-and-axioms-v1.json",
+      "before_sha256": "114c0ff7c0a3c92b27042fe946fe849978d20c9aae9bdd1bd50e85ac442bc76c",
+      "after_sha256": "114c0ff7c0a3c92b27042fe946fe849978d20c9aae9bdd1bd50e85ac442bc76c",
+      "expected_sha256": "114c0ff7c0a3c92b27042fe946fe849978d20c9aae9bdd1bd50e85ac442bc76c",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/chapter2-reconciliation-public-probe-inspected-v1.json",
+      "before_sha256": "29544b40b022ffe2ea2443e03b9754fcdbae81740fc1379b568d49e4ef78d55b",
+      "after_sha256": "29544b40b022ffe2ea2443e03b9754fcdbae81740fc1379b568d49e4ef78d55b",
+      "expected_sha256": "29544b40b022ffe2ea2443e03b9754fcdbae81740fc1379b568d49e4ef78d55b",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/Chapter2ReconciliationPublicProbeV1.lean",
+      "before_sha256": "433c1de746a1b67f9c815e595384545d4c89e24732f37c48e76875cc21d8f339",
+      "after_sha256": "433c1de746a1b67f9c815e595384545d4c89e24732f37c48e76875cc21d8f339",
+      "expected_sha256": "433c1de746a1b67f9c815e595384545d4c89e24732f37c48e76875cc21d8f339",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/forward-readonly-retrieval-v1.json",
+      "before_sha256": "bf834b2d2ed5e7dfdfa0718039beeb9927c9f1798b078cb75efb8033ec482369",
+      "after_sha256": "bf834b2d2ed5e7dfdfa0718039beeb9927c9f1798b078cb75efb8033ec482369",
+      "expected_sha256": "bf834b2d2ed5e7dfdfa0718039beeb9927c9f1798b078cb75efb8033ec482369",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/ftl-canary-BODY-review-v1.json",
+      "before_sha256": "47f8ec8b77a419c8bd39fc10fccee22a63bff8359d827e8d24c47999ff36d684",
+      "after_sha256": "47f8ec8b77a419c8bd39fc10fccee22a63bff8359d827e8d24c47999ff36d684",
+      "expected_sha256": "47f8ec8b77a419c8bd39fc10fccee22a63bff8359d827e8d24c47999ff36d684",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/ftl-canary-BODY-review-v1.md",
+      "before_sha256": "40ba61755082e468b3897b3e8c8fd6d06f623212dc1eda2ba6074c6f59418403",
+      "after_sha256": "40ba61755082e468b3897b3e8c8fd6d06f623212dc1eda2ba6074c6f59418403",
+      "expected_sha256": "40ba61755082e468b3897b3e8c8fd6d06f623212dc1eda2ba6074c6f59418403",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/ftl-canary-full-public-values-inspected-v1.json",
+      "before_sha256": "3ff7a08edd1efcf2d7a1f7587b2a027ee55bb6d76d1f7ba224b7f000993b9a8a",
+      "after_sha256": "3ff7a08edd1efcf2d7a1f7587b2a027ee55bb6d76d1f7ba224b7f000993b9a8a",
+      "expected_sha256": "3ff7a08edd1efcf2d7a1f7587b2a027ee55bb6d76d1f7ba224b7f000993b9a8a",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/ftl-canary-selected-conjunct-values-v1.json",
+      "before_sha256": "96327b81c4a28db6711e7e338c8355dc85fc05e143bd23dac18a568f095a5665",
+      "after_sha256": "96327b81c4a28db6711e7e338c8355dc85fc05e143bd23dac18a568f095a5665",
+      "expected_sha256": "96327b81c4a28db6711e7e338c8355dc85fc05e143bd23dac18a568f095a5665",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/ftl-canary-selected-value-graph-v1.json",
+      "before_sha256": "63fbb9fb6e49ddd94c48cc590f1fd60faefb7002e742a3efafaebbe24c01b67b",
+      "after_sha256": "63fbb9fb6e49ddd94c48cc590f1fd60faefb7002e742a3efafaebbe24c01b67b",
+      "expected_sha256": "63fbb9fb6e49ddd94c48cc590f1fd60faefb7002e742a3efafaebbe24c01b67b",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/integration-after-BanditRLProof.lean.raw",
+      "before_sha256": "78689ab212418e79f477c6e321265e5456eabafa27ab437ebe9b6988ed9e679a",
+      "after_sha256": "78689ab212418e79f477c6e321265e5456eabafa27ab437ebe9b6988ed9e679a",
+      "expected_sha256": "78689ab212418e79f477c6e321265e5456eabafa27ab437ebe9b6988ed9e679a",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/integration-after-docs--contracts--online-book-v1--coverage.json.raw",
+      "before_sha256": "eccc530ba62bac75db4da470e996811f9b23063aeca8dda34c53b315399ea4ba",
+      "after_sha256": "eccc530ba62bac75db4da470e996811f9b23063aeca8dda34c53b315399ea4ba",
+      "expected_sha256": "eccc530ba62bac75db4da470e996811f9b23063aeca8dda34c53b315399ea4ba",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/integration-after-Tests.lean.raw",
+      "before_sha256": "1b89d5d4c175ca28dd40d493ae549abe506f3009225856afd051b14a96e14de8",
+      "after_sha256": "1b89d5d4c175ca28dd40d493ae549abe506f3009225856afd051b14a96e14de8",
+      "expected_sha256": "1b89d5d4c175ca28dd40d493ae549abe506f3009225856afd051b14a96e14de8",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/integration-after-website--content--chapters.json.raw",
+      "before_sha256": "9b2198a4b319cca2c3942ee093dc360a2619c57f97ad395f7afe7a8c4daa5c01",
+      "after_sha256": "9b2198a4b319cca2c3942ee093dc360a2619c57f97ad395f7afe7a8c4daa5c01",
+      "expected_sha256": "9b2198a4b319cca2c3942ee093dc360a2619c57f97ad395f7afe7a8c4daa5c01",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/integration-after-website--content--highlights.json.raw",
+      "before_sha256": "531da75fad121ae8dd949a19c1d5439964cfcca6905c1dd48561280ae9895cf5",
+      "after_sha256": "531da75fad121ae8dd949a19c1d5439964cfcca6905c1dd48561280ae9895cf5",
+      "expected_sha256": "531da75fad121ae8dd949a19c1d5439964cfcca6905c1dd48561280ae9895cf5",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/integration-after-website--content--readings.json.raw",
+      "before_sha256": "646b494554cfada17566b27ee2bdd455a2ea52d3a382597f42048c0b519c0a78",
+      "after_sha256": "646b494554cfada17566b27ee2bdd455a2ea52d3a382597f42048c0b519c0a78",
+      "expected_sha256": "646b494554cfada17566b27ee2bdd455a2ea52d3a382597f42048c0b519c0a78",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/integration-before-BanditRLProof.lean.raw",
+      "before_sha256": "3a8dcb610ef5a4cc0ff9e0491cbc17d8533fcfbfde6b6f05b1c05020fe120ba7",
+      "after_sha256": "3a8dcb610ef5a4cc0ff9e0491cbc17d8533fcfbfde6b6f05b1c05020fe120ba7",
+      "expected_sha256": "3a8dcb610ef5a4cc0ff9e0491cbc17d8533fcfbfde6b6f05b1c05020fe120ba7",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/integration-before-docs--contracts--online-book-v1--coverage.json.raw",
+      "before_sha256": "f2d4955702c721e9d46057470619e2cc80d642fbeac64d5ca585b1e18b2eba01",
+      "after_sha256": "f2d4955702c721e9d46057470619e2cc80d642fbeac64d5ca585b1e18b2eba01",
+      "expected_sha256": "f2d4955702c721e9d46057470619e2cc80d642fbeac64d5ca585b1e18b2eba01",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/integration-before-Tests.lean.raw",
+      "before_sha256": "485933da8a744dcbd0ec7eebbf6c23f87f90dbc2b69c7811efec68f9f297163f",
+      "after_sha256": "485933da8a744dcbd0ec7eebbf6c23f87f90dbc2b69c7811efec68f9f297163f",
+      "expected_sha256": "485933da8a744dcbd0ec7eebbf6c23f87f90dbc2b69c7811efec68f9f297163f",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/integration-before-website--content--chapters.json.raw",
+      "before_sha256": "7b890b553123c6ca60c95cd2aa28fd89757eb9c461a29aabd098778c24293dde",
+      "after_sha256": "7b890b553123c6ca60c95cd2aa28fd89757eb9c461a29aabd098778c24293dde",
+      "expected_sha256": "7b890b553123c6ca60c95cd2aa28fd89757eb9c461a29aabd098778c24293dde",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/integration-before-website--content--highlights.json.raw",
+      "before_sha256": "e5f88c303e2de985985fbb6a31d7229f28b6fc95b38048d42c6415253718c2dd",
+      "after_sha256": "e5f88c303e2de985985fbb6a31d7229f28b6fc95b38048d42c6415253718c2dd",
+      "expected_sha256": "e5f88c303e2de985985fbb6a31d7229f28b6fc95b38048d42c6415253718c2dd",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/integration-before-website--content--readings.json.raw",
+      "before_sha256": "9992ce0c9b7f8fdf564e6f55523e43e4d3dd2596220801e1c7893b8d508696e1",
+      "after_sha256": "9992ce0c9b7f8fdf564e6f55523e43e4d3dd2596220801e1c7893b8d508696e1",
+      "expected_sha256": "9992ce0c9b7f8fdf564e6f55523e43e4d3dd2596220801e1c7893b8d508696e1",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/integration_guard_v1.py",
+      "before_sha256": "c054277932d5b91f63d6f0c5e9bd69a98728da1a9d2247d68f98f053e8572217",
+      "after_sha256": "c054277932d5b91f63d6f0c5e9bd69a98728da1a9d2247d68f98f053e8572217",
+      "expected_sha256": "c054277932d5b91f63d6f0c5e9bd69a98728da1a9d2247d68f98f053e8572217",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/materialize-integration-v1.py",
+      "before_sha256": "53a3627b6f0c4b2965ec26c5531c726306ddf3bc7deaddab1c4c39c0d7733a9c",
+      "after_sha256": "53a3627b6f0c4b2965ec26c5531c726306ddf3bc7deaddab1c4c39c0d7733a9c",
+      "expected_sha256": "53a3627b6f0c4b2965ec26c5531c726306ddf3bc7deaddab1c4c39c0d7733a9c",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/prepare-integration-plan-v1.py",
+      "before_sha256": "4857e6af4697e4ab26a27e6ea06ee101c2c38a8d11e9590e4e5c34f56891967d",
+      "after_sha256": "4857e6af4697e4ab26a27e6ea06ee101c2c38a8d11e9590e4e5c34f56891967d",
+      "expected_sha256": "4857e6af4697e4ab26a27e6ea06ee101c2c38a8d11e9590e4e5c34f56891967d",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/prepare-prospective-contribution-v1.py",
+      "before_sha256": "b96641800ff1dc3326676ea7dc06a49f079b3988155489eea35bf831214c5a9d",
+      "after_sha256": "b96641800ff1dc3326676ea7dc06a49f079b3988155489eea35bf831214c5a9d",
+      "expected_sha256": "b96641800ff1dc3326676ea7dc06a49f079b3988155489eea35bf831214c5a9d",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/production-BODY-canary-CONTRACT-repair-review-v1.json",
+      "before_sha256": "afa64f1675165d8034eaec08221d678ec3f11e08106c7242627b3c3f409dddb6",
+      "after_sha256": "afa64f1675165d8034eaec08221d678ec3f11e08106c7242627b3c3f409dddb6",
+      "expected_sha256": "afa64f1675165d8034eaec08221d678ec3f11e08106c7242627b3c3f409dddb6",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/production-BODY-canary-CONTRACT-repair-review-v1.md",
+      "before_sha256": "7685a0c53c335555feaf5fb33d01f20880f81b8efc3c1970843e88527302b268",
+      "after_sha256": "7685a0c53c335555feaf5fb33d01f20880f81b8efc3c1970843e88527302b268",
+      "expected_sha256": "7685a0c53c335555feaf5fb33d01f20880f81b8efc3c1970843e88527302b268",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/prospective-contribution-v1.json",
+      "before_sha256": "709cbf7dc82f743ecbdc879e0ae01f4c97142919dac399740b252c0ef6923752",
+      "after_sha256": "709cbf7dc82f743ecbdc879e0ae01f4c97142919dac399740b252c0ef6923752",
+      "expected_sha256": "709cbf7dc82f743ecbdc879e0ae01f4c97142919dac399740b252c0ef6923752",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/reader-proposal-v1.json",
+      "before_sha256": "5557da7e95d05e46b86f4aff5bee884853d3a190adf5e36bec1e41cd01c4105a",
+      "after_sha256": "5557da7e95d05e46b86f4aff5bee884853d3a190adf5e36bec1e41cd01c4105a",
+      "expected_sha256": "5557da7e95d05e46b86f4aff5bee884853d3a190adf5e36bec1e41cd01c4105a",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/registry-baseline-binding-v1.json",
+      "before_sha256": "e10ccb8b1067cc30b8ec6d4ec51378da76e93364ef540ca7697d1148b7a06eb0",
+      "after_sha256": "e10ccb8b1067cc30b8ec6d4ec51378da76e93364ef540ca7697d1148b7a06eb0",
+      "expected_sha256": "e10ccb8b1067cc30b8ec6d4ec51378da76e93364ef540ca7697d1148b7a06eb0",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/registry-baseline-v1.json.gz",
+      "before_sha256": "870a7e63e9051e6a6fe6d2256dac3a65eef01323f180c52ebec08d05d829f577",
+      "after_sha256": "870a7e63e9051e6a6fe6d2256dac3a65eef01323f180c52ebec08d05d829f577",
+      "expected_sha256": "870a7e63e9051e6a6fe6d2256dac3a65eef01323f180c52ebec08d05d829f577",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/staged-module-delta-resolution-v1.json",
+      "before_sha256": "ab040fa485230cfa290564f3f5836dc6ef6f34e1b67194370539353991e0c647",
+      "after_sha256": "ab040fa485230cfa290564f3f5836dc6ef6f34e1b67194370539353991e0c647",
+      "expected_sha256": "ab040fa485230cfa290564f3f5836dc6ef6f34e1b67194370539353991e0c647",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/staged-module-delta-supplement-v1.json",
+      "before_sha256": "f27786a9a3a52183d403a819a43cc686a45fa2fc7adc50e9b6331a6fe26aba5d",
+      "after_sha256": "f27786a9a3a52183d403a819a43cc686a45fa2fc7adc50e9b6331a6fe26aba5d",
+      "expected_sha256": "f27786a9a3a52183d403a819a43cc686a45fa2fc7adc50e9b6331a6fe26aba5d",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-unbounded-osd-20261010/registry-inspected-v1.json",
+      "before_sha256": "6b7e6e8b7a0f14a3ce4d08172ff0aedb61521e1fb2eaf20f7e99964b46758aea",
+      "after_sha256": "6b7e6e8b7a0f14a3ce4d08172ff0aedb61521e1fb2eaf20f7e99964b46758aea",
+      "expected_sha256": "6b7e6e8b7a0f14a3ce4d08172ff0aedb61521e1fb2eaf20f7e99964b46758aea",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/Tests/OnlineFTLSelectorCanary.lean",
+      "before_sha256": "a6e3b16b29c6a5eddcb343cb555457eb52bed35c9c5089a1948e90f30cb1df85",
+      "after_sha256": "a6e3b16b29c6a5eddcb343cb555457eb52bed35c9c5089a1948e90f30cb1df85",
+      "expected_sha256": "a6e3b16b29c6a5eddcb343cb555457eb52bed35c9c5089a1948e90f30cb1df85",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/tools/check_contributor_contract.py",
+      "before_sha256": "2d49be2d3be7b58287d2fa4022441b48f986cb13995c414dfccb1b2ac52d0eff",
+      "after_sha256": "2d49be2d3be7b58287d2fa4022441b48f986cb13995c414dfccb1b2ac52d0eff",
+      "expected_sha256": "2d49be2d3be7b58287d2fa4022441b48f986cb13995c414dfccb1b2ac52d0eff",
+      "unchanged": true
+    }
+  ],
+  "inputs_unchanged": true,
+  "reviewed_plan_sha256": "8ac6db7ef1a93c15dea1b774a03b826e73323b685842a03afe736f59cad48e80",
+  "approved_plan_sha256": null,
+  "approved_rows": [],
+  "reviewed_six_rows": [
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof.lean",
+      "before_snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/integration-before-BanditRLProof.lean.raw",
+      "before_sha256": "3a8dcb610ef5a4cc0ff9e0491cbc17d8533fcfbfde6b6f05b1c05020fe120ba7",
+      "after_snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/integration-after-BanditRLProof.lean.raw",
+      "after_sha256": "78689ab212418e79f477c6e321265e5456eabafa27ab437ebe9b6988ed9e679a",
+      "delta": "Exact RAW prefix plus one import."
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/Tests.lean",
+      "before_snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/integration-before-Tests.lean.raw",
+      "before_sha256": "485933da8a744dcbd0ec7eebbf6c23f87f90dbc2b69c7811efec68f9f297163f",
+      "after_snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/integration-after-Tests.lean.raw",
+      "after_sha256": "1b89d5d4c175ca28dd40d493ae549abe506f3009225856afd051b14a96e14de8",
+      "delta": "Exact RAW prefix plus one import."
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/website/content/chapters.json",
+      "before_snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/integration-before-website--content--chapters.json.raw",
+      "before_sha256": "7b890b553123c6ca60c95cd2aa28fd89757eb9c461a29aabd098778c24293dde",
+      "after_snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/integration-after-website--content--chapters.json.raw",
+      "after_sha256": "9b2198a4b319cca2c3942ee093dc360a2619c57f97ad395f7afe7a8c4daa5c01",
+      "delta": "Only online-ogd append module/goal/completion suffix."
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/website/content/readings.json",
+      "before_snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/integration-before-website--content--readings.json.raw",
+      "before_sha256": "9992ce0c9b7f8fdf564e6f55523e43e4d3dd2596220801e1c7893b8d508696e1",
+      "after_snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/integration-after-website--content--readings.json.raw",
+      "after_sha256": "646b494554cfada17566b27ee2bdd455a2ea52d3a382597f42048c0b519c0a78",
+      "delta": "Only online-ogd append one FTL source-qualified card."
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/website/content/highlights.json",
+      "before_snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/integration-before-website--content--highlights.json.raw",
+      "before_sha256": "e5f88c303e2de985985fbb6a31d7229f28b6fc95b38048d42c6415253718c2dd",
+      "after_snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/integration-after-website--content--highlights.json.raw",
+      "after_sha256": "531da75fad121ae8dd949a19c1d5439964cfcca6905c1dd48561280ae9895cf5",
+      "delta": "Append13canonical notes; every old note unchanged."
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/docs/contracts/online-book-v1/coverage.json",
+      "before_snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/integration-before-docs--contracts--online-book-v1--coverage.json.raw",
+      "before_sha256": "f2d4955702c721e9d46057470619e2cc80d642fbeac64d5ca585b1e18b2eba01",
+      "after_snapshot": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/integration-after-docs--contracts--online-book-v1--coverage.json.raw",
+      "after_sha256": "eccc530ba62bac75db4da470e996811f9b23063aeca8dda34c53b315399ea4ba",
+      "delta": "Only Chapter2 current partial/evidence/source-join/required-open/provenance fields; all other chapters/top-level fields unchanged."
+    }
+  ],
+  "approved_helper_hashes": [],
+  "reviewed_helper_hashes": [
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/integration_guard_v1.py",
+      "sha256": "c054277932d5b91f63d6f0c5e9bd69a98728da1a9d2247d68f98f053e8572217"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/materialize-integration-v1.py",
+      "sha256": "53a3627b6f0c4b2965ec26c5531c726306ddf3bc7deaddab1c4c39c0d7733a9c"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/prepare-integration-plan-v1.py",
+      "sha256": "4857e6af4697e4ab26a27e6ea06ee101c2c38a8d11e9590e4e5c34f56891967d"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/prepare-prospective-contribution-v1.py",
+      "sha256": "b96641800ff1dc3326676ea7dc06a49f079b3988155489eea35bf831214c5a9d"
+    }
+  ],
+  "reader_per_target_review": [
+    {
+      "declaration": "BanditRL.OnlineFTLSelector.cumulative",
+      "verdict": "accepted-with-explicit-delta",
+      "formula": "C_L(x)=\\sum_{i\\in\\mathrm{Fin}(n)}L_i(x).",
+      "assumptions": "An arbitrary type X, feasible subset V and real-valued losses represented on the ambient X. Only their restrictions to V determine this selector. Lean time0 is source round1; the prediction at time t uses exactly losses with indices s<t. All finite history lengths including0, arbitrary X and real losses; no feasible-set or regularity premise.",
+      "proof_reading": "Sum the supplied finite tuple. The empty sum is zero. cumulative_prefix later identifies the exact natural-index strict prefix.",
+      "dependencies": [],
+      "recovery_boundary_present": true
+    },
+    {
+      "declaration": "BanditRL.OnlineFTLSelector.minimizers",
+      "verdict": "accepted-with-explicit-delta",
+      "formula": "M_V(L)=\\{p\\in V:C_L(p)\\le C_L(u)\\ \\forall u\\in V\\}.",
+      "assumptions": "An arbitrary type X, feasible subset V and real-valued losses represented on the ambient X. Only their restrictions to V determine this selector. Lean time0 is source round1; the prediction at time t uses exactly losses with indices s<t. All V, histories and points; V may be empty and the minimum need not be attained.",
+      "proof_reading": "Include both membership and global minimum comparison on V. IsMinOn alone is not used as a replacement for feasibility.",
+      "dependencies": [
+        "BanditRL.OnlineFTLSelector.cumulative"
+      ],
+      "recovery_boundary_present": true
+    },
+    {
+      "declaration": "BanditRL.OnlineFTLSelector.select",
+      "verdict": "accepted-with-explicit-delta",
+      "formula": "S_V(L)=\\begin{cases}\\mathrm{some}(p),&M_V(L)\\ne\\varnothing,\\ p\\in M_V(L),\\\\\\mathrm{none},&M_V(L)=\\varnothing.\\end{cases}",
+      "assumptions": "An arbitrary type X, feasible subset V and real-valued losses represented on the ambient X. Only their restrictions to V determine this selector. Lean time0 is source round1; the prediction at time t uses exactly losses with indices s<t. All V and finite histories, with no nonemptiness or attainment premise.",
+      "proof_reading": "Branch on nonemptiness of exactly the minimizer set and use Classical.choose only in the successful branch. No default minimizer is fabricated.",
+      "dependencies": [
+        "BanditRL.OnlineFTLSelector.minimizers"
+      ],
+      "recovery_boundary_present": true
+    },
+    {
+      "declaration": "BanditRL.OnlineFTLSelector.predict",
+      "verdict": "accepted-with-explicit-delta",
+      "formula": "P_0=\\mathrm{some}(x_0),\\qquad P_t=S_V((\\ell_s)_{s<t})\\quad(t>0).",
+      "assumptions": "An arbitrary type X, feasible subset V and real-valued losses represented on the ambient X. Only their restrictions to V determine this selector. Lean time0 is source round1; the prediction at time t uses exactly losses with indices s<t. A supplied subtype initial:V, arbitrary loss stream and natural time. Feasibility of the initial excludes empty V.",
+      "proof_reading": "Use the given initial at zero; at positive time form Fin t from strict-past losses. Each query is recomputed from its prefix, not an absorbing Option recursion.",
+      "dependencies": [
+        "BanditRL.OnlineFTLSelector.select"
+      ],
+      "recovery_boundary_present": true
+    },
+    {
+      "declaration": "BanditRL.OnlineFTLSelector.cumulative_prefix",
+      "verdict": "accepted-with-explicit-delta",
+      "formula": "C_{(\\ell_s)_{s<t}}(x)=\\sum_{s=0}^{t-1}\\ell_s(x).",
+      "assumptions": "An arbitrary type X, feasible subset V and real-valued losses represented on the ambient X. Only their restrictions to V determine this selector. Lean time0 is source round1; the prediction at time t uses exactly losses with indices s<t. All natural t including0, every stream and ambient point; no V premise.",
+      "proof_reading": "Fin.sum_univ_eq_sum_range transports the same terms without shifting a round or dropping an endpoint.",
+      "dependencies": [],
+      "recovery_boundary_present": true
+    },
+    {
+      "declaration": "BanditRL.OnlineFTLSelector.select_some_spec",
+      "verdict": "accepted-with-explicit-delta",
+      "formula": "S_V(L)=\\mathrm{some}(p)\\Longrightarrow p\\in V\\ \\wedge\\ C_L(p)\\le C_L(u)\\ (u\\in V).",
+      "assumptions": "An arbitrary type X, feasible subset V and real-valued losses represented on the ambient X. Only their restrictions to V determine this selector. Lean time0 is source round1; the prediction at time t uses exactly losses with indices s<t. All V, finite histories and p; assumes the actual equality S_V(L)=some p.",
+      "proof_reading": "Unfold the actual nonempty branch, use choose_spec and identify p by Option.some injectivity. Tied minima do not give the converse for every named p.",
+      "dependencies": [
+        "BanditRL.OnlineFTLSelector.cumulative",
+        "BanditRL.OnlineFTLSelector.minimizers",
+        "BanditRL.OnlineFTLSelector.select"
+      ],
+      "recovery_boundary_present": true
+    },
+    {
+      "declaration": "BanditRL.OnlineFTLSelector.select_none_iff",
+      "verdict": "accepted-with-explicit-delta",
+      "formula": "S_V(L)=\\mathrm{none}\\Longleftrightarrow\\neg\\exists p\\in V,\\ \\forall u\\in V,\\ C_L(p)\\le C_L(u).",
+      "assumptions": "An arbitrary type X, feasible subset V and real-valued losses represented on the ambient X. Only their restrictions to V determine this selector. Lean time0 is source round1; the prediction at time t uses exactly losses with indices s<t. All V and finite histories, including empty domains/history; no compactness premise.",
+      "proof_reading": "Split the same existence branch in both directions. none records nonattainment or empty domain, not timeout or a numerical approximation failure.",
+      "dependencies": [
+        "BanditRL.OnlineFTLSelector.cumulative",
+        "BanditRL.OnlineFTLSelector.minimizers",
+        "BanditRL.OnlineFTLSelector.select"
+      ],
+      "recovery_boundary_present": true
+    },
+    {
+      "declaration": "BanditRL.OnlineFTLSelector.select_congr",
+      "verdict": "accepted-with-explicit-delta",
+      "formula": "L_i|_V=L_i^{\\prime}|_V\\ (\\forall i)\\Longrightarrow S_V(L)=S_V(L^{\\prime}).",
+      "assumptions": "An arbitrary type X, feasible subset V and real-valued losses represented on the ambient X. Only their restrictions to V determine this selector. Lean time0 is source round1; the prediction at time t uses exactly losses with indices s<t. Histories of the same length with EqOn(L_i,L_i',V) for every coordinate; tied minima permitted.",
+      "proof_reading": "Termwise restricted equality gives equal cumulative objectives on V, hence equal complete minimizer sets. Rewriting that set in the same classical choice proves actual Option equality.",
+      "dependencies": [
+        "BanditRL.OnlineFTLSelector.cumulative",
+        "BanditRL.OnlineFTLSelector.minimizers",
+        "BanditRL.OnlineFTLSelector.select"
+      ],
+      "recovery_boundary_present": true
+    },
+    {
+      "declaration": "BanditRL.OnlineFTLSelector.select_eq_some_of_unique",
+      "verdict": "accepted-with-explicit-delta",
+      "formula": "p\\in M_V(L),\\quad M_V(L)\\subseteq\\{p\\}\\Longrightarrow S_V(L)=\\mathrm{some}(p).",
+      "assumptions": "An arbitrary type X, feasible subset V and real-valued losses represented on the ambient X. Only their restrictions to V determine this selector. Lean time0 is source round1; the prediction at time t uses exactly losses with indices s<t. A supplied feasible p, its actual IsMinOn proof and uniqueness among feasible minimizers. These are explicit adapter premises.",
+      "proof_reading": "The some case uses select_some_spec and uniqueness; the none case contradicts select_none_iff and the supplied minimum. The adapter does not establish unconditional attainment.",
+      "dependencies": [
+        "BanditRL.OnlineFTLSelector.cumulative",
+        "BanditRL.OnlineFTLSelector.select",
+        "BanditRL.OnlineFTLSelector.select_none_iff",
+        "BanditRL.OnlineFTLSelector.select_some_spec"
+      ],
+      "recovery_boundary_present": true
+    },
+    {
+      "declaration": "BanditRL.OnlineFTLSelector.predict_zero",
+      "verdict": "accepted-with-explicit-delta",
+      "formula": "P_0=\\mathrm{some}(x_0).",
+      "assumptions": "An arbitrary type X, feasible subset V and real-valued losses represented on the ambient X. Only their restrictions to V determine this selector. Lean time0 is source round1; the prediction at time t uses exactly losses with indices s<t. Arbitrary X,V, supplied initial:V and stream; no loss values inspected.",
+      "proof_reading": "Reduce the zero-time branch of predict. This is the source permission for any admissible initial action, not equality with the separate empty-history selector.",
+      "dependencies": [
+        "BanditRL.OnlineFTLSelector.predict"
+      ],
+      "recovery_boundary_present": true
+    },
+    {
+      "declaration": "BanditRL.OnlineFTLSelector.predict_some_spec",
+      "verdict": "accepted-with-explicit-delta",
+      "formula": "P_t=\\mathrm{some}(p)\\Longrightarrow p\\in V\\ \\wedge\\ \\sum_{s<t}\\ell_s(p)\\le\\sum_{s<t}\\ell_s(u)\\ (u\\in V).",
+      "assumptions": "An arbitrary type X, feasible subset V and real-valued losses represented on the ambient X. Only their restrictions to V determine this selector. Lean time0 is source round1; the prediction at time t uses exactly losses with indices s<t. All natural t including0, feasible initial and actual equality P_t=some p.",
+      "proof_reading": "At zero identify the supplied feasible initial and the empty objective. At positive time use select_some_spec and cumulative_prefix on the same selected tuple.",
+      "dependencies": [
+        "BanditRL.OnlineFTLSelector.cumulative",
+        "BanditRL.OnlineFTLSelector.cumulative_prefix",
+        "BanditRL.OnlineFTLSelector.predict",
+        "BanditRL.OnlineFTLSelector.predict_zero",
+        "BanditRL.OnlineFTLSelector.select",
+        "BanditRL.OnlineFTLSelector.select_some_spec"
+      ],
+      "recovery_boundary_present": true
+    },
+    {
+      "declaration": "BanditRL.OnlineFTLSelector.predict_none_iff",
+      "verdict": "accepted-with-explicit-delta",
+      "formula": "P_t=\\mathrm{none}\\Longleftrightarrow\\neg\\exists p\\in V,\\ \\forall u\\in V,\\ \\sum_{s<t}\\ell_s(p)\\le\\sum_{s<t}\\ell_s(u).",
+      "assumptions": "An arbitrary type X, feasible subset V and real-valued losses represented on the ambient X. Only their restrictions to V determine this selector. Lean time0 is source round1; the prediction at time t uses exactly losses with indices s<t. All natural t including0 and a feasible supplied initial; no regularity or attainment hypothesis.",
+      "proof_reading": "At zero eliminate impossible some=none and exhibit the feasible initial as empty-sum minimizer. At positive time transport select_none_iff through cumulative_prefix.",
+      "dependencies": [
+        "BanditRL.OnlineFTLSelector.cumulative",
+        "BanditRL.OnlineFTLSelector.cumulative_prefix",
+        "BanditRL.OnlineFTLSelector.predict",
+        "BanditRL.OnlineFTLSelector.predict_zero",
+        "BanditRL.OnlineFTLSelector.select",
+        "BanditRL.OnlineFTLSelector.select_none_iff"
+      ],
+      "recovery_boundary_present": true
+    },
+    {
+      "declaration": "BanditRL.OnlineFTLSelector.predict_prefix",
+      "verdict": "accepted-with-explicit-delta",
+      "formula": "\\ell_s|_V=\\ell_s^{\\prime}|_V\\ (s<t)\\Longrightarrow P_t(\\ell)=P_t(\\ell^{\\prime}).",
+      "assumptions": "An arbitrary type X, feasible subset V and real-valued losses represented on the ambient X. Only their restrictions to V determine this selector. Lean time0 is source round1; the prediction at time t uses exactly losses with indices s<t. The SAME feasible initial and V; all s<t losses agree only on V. No equality of current/future or outside-V values.",
+      "proof_reading": "At zero both sides return the same supplied initial. At positive time instantiate select_congr for the Fin t tuple. The stream representation does not grant access to future losses; this equality certifies strict-prefix dependence.",
+      "dependencies": [
+        "BanditRL.OnlineFTLSelector.predict",
+        "BanditRL.OnlineFTLSelector.predict_zero",
+        "BanditRL.OnlineFTLSelector.select",
+        "BanditRL.OnlineFTLSelector.select_congr"
+      ],
+      "recovery_boundary_present": true
+    }
+  ],
+  "recovery_boundary": "P1 none provides no playable action; P2 some0 is an independent longer-prefix query, not a valid complete interaction after failure.",
+  "baseline_check": {
+    "count": 34429,
+    "manifest_sha256": "bd9810ceab548347bca1e01765047d5253f255ce78a11427a8a10d3ffe0d5b93",
+    "before_all_match": true,
+    "after_all_match": true
+  },
+  "allowed_scope": "No v1 materialization. Create-only versioned M1 manifest/helper/input repair may be prepared without changing the six planned content transitions or any frozen inputs.",
+  "chapter_complete": false,
+  "goal_complete": false,
+  "whole_Goal": "ACTIVE",
+  "reviewed_files": [
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/AGENTS.md",
+      "sha256": "5642da8728315c0682c9853cbce4f087b2a7a24c9e46397ae7457db67f9c1995"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineFTLSelector.lean",
+      "sha256": "cd1cae5683edaa40fde18466f1efbca8ad34b295d8dfc3b173a35e0d459405df"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/docs/contracts/online-ch2-chapter-audit-v1/complete-source-reconciliation-draft-v3.json",
+      "sha256": "94bed5963bbdcc745e64547fa98b5101a6a58e843c127e38d8577dfe2af58466"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/docs/contracts/online-ch2-reconciliation-v1/additional-source-bindings-draft-v1.json",
+      "sha256": "8a9398cfd2a76d6fd671d2175c52b26186983a2917551818ff743ec19bd011f0"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/docs/contracts/online-ch2-reconciliation-v1/appropriate-scope-receipt-selection-draft-v1.json",
+      "sha256": "4763056dcc337fc74453db86278bd57d2d852173f8925eae4247138b43bda3ef"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/docs/contracts/online-ch2-reconciliation-v1/exact-integration-plan-v1.json",
+      "sha256": "8ac6db7ef1a93c15dea1b774a03b826e73323b685842a03afe736f59cad48e80"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/docs/contracts/online-ch2-reconciliation-v1/omitted-definition-context-bindings-draft-v1.json",
+      "sha256": "a835d7285d6bb334dabccc6e4c3817c4d8715ffe57dc084ded587979b2b8a5f8"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/docs/contracts/online-ch2-reconciliation-v1/prescient-complete-chain-bindings-draft-v1.json",
+      "sha256": "539a1fa27afa357ef18f77401dfaa30a94aabbe8fe49205eb738aaf6db09832b"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/docs/contracts/online-ch2-reconciliation-v1/qualified-source-reconciliation-draft-v4.json",
+      "sha256": "7ef4eae2a9a26720445e4399ed23e24146b5f478c4b051b875ff7674995bfdb2"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/docs/contracts/online-ch2-reconciliation-v1/required-forward-dependencies-draft-v1.json",
+      "sha256": "8f9e268012584fef3628ff8b4cf19eeb3b21782cff4160a33bf40a128f5cc7bf"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/docs/theorem-publication-protocol.md",
+      "sha256": "b1e5ac73cfe0a90742567736b422787c90a51e6b6ff007cc1dc8d598948f687e"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/chapter2-reconciliation-probe-targets-v1.json",
+      "sha256": "6463fd532e25be3b4254f20b8a300788b512c21fc9b9a953ae57cabdc82d04c6"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/chapter2-reconciliation-public-and-axioms-v1.json",
+      "sha256": "114c0ff7c0a3c92b27042fe946fe849978d20c9aae9bdd1bd50e85ac442bc76c"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/chapter2-reconciliation-public-probe-inspected-v1.json",
+      "sha256": "29544b40b022ffe2ea2443e03b9754fcdbae81740fc1379b568d49e4ef78d55b"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/Chapter2ReconciliationPublicProbeV1.lean",
+      "sha256": "433c1de746a1b67f9c815e595384545d4c89e24732f37c48e76875cc21d8f339"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/forward-readonly-retrieval-v1.json",
+      "sha256": "bf834b2d2ed5e7dfdfa0718039beeb9927c9f1798b078cb75efb8033ec482369"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/ftl-canary-BODY-review-v1.json",
+      "sha256": "47f8ec8b77a419c8bd39fc10fccee22a63bff8359d827e8d24c47999ff36d684"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/ftl-canary-BODY-review-v1.md",
+      "sha256": "40ba61755082e468b3897b3e8c8fd6d06f623212dc1eda2ba6074c6f59418403"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/ftl-canary-full-public-values-inspected-v1.json",
+      "sha256": "3ff7a08edd1efcf2d7a1f7587b2a027ee55bb6d76d1f7ba224b7f000993b9a8a"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/ftl-canary-selected-conjunct-values-v1.json",
+      "sha256": "96327b81c4a28db6711e7e338c8355dc85fc05e143bd23dac18a568f095a5665"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/ftl-canary-selected-value-graph-v1.json",
+      "sha256": "63fbb9fb6e49ddd94c48cc590f1fd60faefb7002e742a3efafaebbe24c01b67b"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/integration-after-BanditRLProof.lean.raw",
+      "sha256": "78689ab212418e79f477c6e321265e5456eabafa27ab437ebe9b6988ed9e679a"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/integration-after-docs--contracts--online-book-v1--coverage.json.raw",
+      "sha256": "eccc530ba62bac75db4da470e996811f9b23063aeca8dda34c53b315399ea4ba"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/integration-after-Tests.lean.raw",
+      "sha256": "1b89d5d4c175ca28dd40d493ae549abe506f3009225856afd051b14a96e14de8"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/integration-after-website--content--chapters.json.raw",
+      "sha256": "9b2198a4b319cca2c3942ee093dc360a2619c57f97ad395f7afe7a8c4daa5c01"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/integration-after-website--content--highlights.json.raw",
+      "sha256": "531da75fad121ae8dd949a19c1d5439964cfcca6905c1dd48561280ae9895cf5"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/integration-after-website--content--readings.json.raw",
+      "sha256": "646b494554cfada17566b27ee2bdd455a2ea52d3a382597f42048c0b519c0a78"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/integration-before-BanditRLProof.lean.raw",
+      "sha256": "3a8dcb610ef5a4cc0ff9e0491cbc17d8533fcfbfde6b6f05b1c05020fe120ba7"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/integration-before-docs--contracts--online-book-v1--coverage.json.raw",
+      "sha256": "f2d4955702c721e9d46057470619e2cc80d642fbeac64d5ca585b1e18b2eba01"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/integration-before-Tests.lean.raw",
+      "sha256": "485933da8a744dcbd0ec7eebbf6c23f87f90dbc2b69c7811efec68f9f297163f"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/integration-before-website--content--chapters.json.raw",
+      "sha256": "7b890b553123c6ca60c95cd2aa28fd89757eb9c461a29aabd098778c24293dde"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/integration-before-website--content--highlights.json.raw",
+      "sha256": "e5f88c303e2de985985fbb6a31d7229f28b6fc95b38048d42c6415253718c2dd"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/integration-before-website--content--readings.json.raw",
+      "sha256": "9992ce0c9b7f8fdf564e6f55523e43e4d3dd2596220801e1c7893b8d508696e1"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/integration_guard_v1.py",
+      "sha256": "c054277932d5b91f63d6f0c5e9bd69a98728da1a9d2247d68f98f053e8572217"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/materialize-integration-v1.py",
+      "sha256": "53a3627b6f0c4b2965ec26c5531c726306ddf3bc7deaddab1c4c39c0d7733a9c"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/prepare-integration-plan-v1.py",
+      "sha256": "4857e6af4697e4ab26a27e6ea06ee101c2c38a8d11e9590e4e5c34f56891967d"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/prepare-prospective-contribution-v1.py",
+      "sha256": "b96641800ff1dc3326676ea7dc06a49f079b3988155489eea35bf831214c5a9d"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/production-BODY-canary-CONTRACT-repair-review-v1.json",
+      "sha256": "afa64f1675165d8034eaec08221d678ec3f11e08106c7242627b3c3f409dddb6"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/production-BODY-canary-CONTRACT-repair-review-v1.md",
+      "sha256": "7685a0c53c335555feaf5fb33d01f20880f81b8efc3c1970843e88527302b268"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/prospective-contribution-v1.json",
+      "sha256": "709cbf7dc82f743ecbdc879e0ae01f4c97142919dac399740b252c0ef6923752"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/reader-proposal-v1.json",
+      "sha256": "5557da7e95d05e46b86f4aff5bee884853d3a190adf5e36bec1e41cd01c4105a"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/registry-baseline-binding-v1.json",
+      "sha256": "e10ccb8b1067cc30b8ec6d4ec51378da76e93364ef540ca7697d1148b7a06eb0"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/registry-baseline-v1.json.gz",
+      "sha256": "870a7e63e9051e6a6fe6d2256dac3a65eef01323f180c52ebec08d05d829f577"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/staged-module-delta-resolution-v1.json",
+      "sha256": "ab040fa485230cfa290564f3f5836dc6ef6f34e1b67194370539353991e0c647"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/staged-module-delta-supplement-v1.json",
+      "sha256": "f27786a9a3a52183d403a819a43cc686a45fa2fc7adc50e9b6331a6fe26aba5d"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-unbounded-osd-20261010/registry-inspected-v1.json",
+      "sha256": "6b7e6e8b7a0f14a3ce4d08172ff0aedb61521e1fb2eaf20f7e99964b46758aea"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/Tests/OnlineFTLSelectorCanary.lean",
+      "sha256": "a6e3b16b29c6a5eddcb343cb555457eb52bed35c9c5089a1948e90f30cb1df85"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/tools/check_contributor_contract.py",
+      "sha256": "2d49be2d3be7b58287d2fa4022441b48f986cb13995c414dfccb1b2ac52d0eff"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/integration-plan-review-inputs-v1.json",
+      "sha256": "4bcb778122e6c55039bea1848361bdb0eb66f59db4c4dc53d1c816a5f1bdf3de"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-reconciliation-20261010/integration-plan-review-v1.md",
+      "sha256": "73661133f92c161ab87d561bcc31563d7ad3c75a902a1125998a5395404dedc9"
+    }
+  ]
+}

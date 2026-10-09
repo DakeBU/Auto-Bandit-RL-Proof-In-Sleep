@@ -1,0 +1,72 @@
+13.5 Combining Parameter-free Algorithms Almost for Free217
+where eachg t ∈∂ℓ t(ˆxt).
+13.5 Combining Parameter-free Algorithms Almost for Free
+We now show a useful application of the property of parameter-free OCO algorithms of
+having constant regret againstu=0.
+Theorem 13.11LetA 1 andA 2 be two OLO algorithms that produce the predictionsx t,1
+andx t,2, and have regrets equal toRegret A1
+T (u)andRegret A2
+T (u), respectively. Then,
+predicting withx t =x t,1 +x t,2, we have for anyu∈R d
+TX
+t=1
+⟨gt,xt⟩ −
+TX
+t=1
+⟨gt,u⟩= min
+u=u1+u2
+RegretA1
+T (u1) + RegretA2
+T (u2).
+Moreover, if both algorithms have a constant regret ofϵagainstu=0, we have for any
+u∈R d
+TX
+t=1
+⟨gt,xt⟩ −
+TX
+t=1
+⟨gt,u⟩ ≤ϵ+ min
+
+RegretA1
+T (u),Regret A2
+T (u)
+
+.
+ProofSetu 1 +u 2 =u. Then,
+TX
+t=1
+⟨gt,xt⟩ −
+TX
+t=1
+⟨gt,u⟩=
+TX
+t=1
+⟨gt,xt,1⟩ −
+TX
+t=1
+⟨gt,u1⟩+
+TX
+t=1
+⟨gt,xt,2⟩ −
+TX
+t=1
+⟨gt,u2⟩.
+Taking the minimum between the bounds withu1 =0andu 2 =0concludes the proof.
+In words, the above theorem allows us to combine online learning algorithms. If the algo-
+rithms we combine have constant regret against the null competitor, then we always get the
+best of the two guarantees.
+Example 13.12We can combine two parameter-free OCO algorithms, one that gives a
+bound that depends on the L 2 norm of the competitor and subgradients, and another one
+specialized to the L 1/L∞ norm of competitor/subgradients. The above theorem assures us
+that we will also get the best guarantee between the two, paying only an additive constant
+factor in the regret.
+Of course, upper-bounding the OCO regret with the linear regret, the above theorem also
+upper bounds the OCO regret.
+13.6 Reduction to Learning with Experts
+In this section, we consider again the LEA setting from Section 6.8. First, remember that the
+regret we got from Exponentiated Gradient (EG) in Section 6.6 (and similarly for the FTRL
+version in Section 7.5) is
+RegretT (u)≤ KL(u;π)
+η + ηT L2
+∞
+2 ,∀u∈∆ d−1,

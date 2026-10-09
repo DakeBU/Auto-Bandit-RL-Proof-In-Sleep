@@ -1,0 +1,143 @@
+5.3 Lower Bound for Unconstrained Online Linear Optimization57
+for this algorithm, there exists a sequence ofg t with|g t| ≤Land a competitoru∈Rwith
+|u|=U, such that
+TX
+t=1
+gt(xt −u)≥R T (U) :=UL
+√
+T
+
+
+vuut2W
+ √
+T UL
+5ϵT
+!
+−1
+
+ −2UL+ϵ T ,
+whereW:R ≥0 →R ≥0 is the Lambert function (see Appendix A.2.1).
+Moreover, assuming there exist0< K1 ≤K 2 <∞such thatK 1 ≤ϵ T ≤K 2 for allT,
+we havelim T→+∞
+RT (U)
+UL
+√
+TlnT = 1.
+ProofConsider the linear lossesℓ t(x) =g tx, where|g t| ≤L.
+Given that the algorithm guarantees a regret of at mostϵT against the null competitor, from
+Theorem 5.7 we have that, if we feed the algorithm with linear losses, we can reinterpret the
+algorithm as a betting algorithm with initial wealthϵ T and that guarantees non-negative
+wealth, where the wealth at timeTis defined asϵ T − PT
+t=1 gtxt.
+SetA=W
+√
+eTUL
+8ϵT
+
+,˜q=
+√
+T
+2
+√
+2A−1, andq=⌊˜q⌋, so that˜q≥q≥˜q−1.
+Observe that the constraint onUensures that
+q≤˜q≤ T3/4
+2 ≤ T
+2 ,(5.1)
+so we can safely use Theorem 5.5, that tells us that there exists a sequence ofc 1, . . . , cT ∈
+{−L, L}such that|PT
+t=1 ct| ≥2qLand
+TX
+t=1
+ctxt ≤ 3
+2
+ 2q√
+T
++ 1
+
+ϵT exp
+
+2q2
+T
+
+exp
+
+3.1 q4
+T3
+
+−ϵ T .
+Moreover, observe that
+exp
+
+2q2
+T
+
+exp
+
+3.1 q4
+T3
+
+≤exp
+
+2 ˜q2
+T
+
+exp
+
+3.1 ˜q4
+T3
+
+≤exp
+
+2 ˜q2
+T
+
+exp
+3.1
+16
+
+≤ 4
+3 exp
+
+2 ˜q2
+T
+
+,
+where in second inequality we used ˜q4
+T3 ≤ 1
+16 from (5.1).
+Setg t =−c t and chooseu=−Usign( PT
+t=1 gt), so we have
+TX
+t=1
+gt(xt −u) =U
+
+TX
+t=1
+gt
+ +
+TX
+t=1
+gtxt
+≥U·2qL−2
+ 2˜q√
+T
++ 1
+
+ϵT exp
+
+2 ˜q2
+T
+
++ϵ T
+≥UL·(2˜q−2)−2
+ 2˜q√
+T
++ 1
+
+ϵT exp
+
+2 ˜q2
+T
+
++ϵ T .

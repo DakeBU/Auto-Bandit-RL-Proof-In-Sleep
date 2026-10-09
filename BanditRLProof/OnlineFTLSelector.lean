@@ -1,0 +1,130 @@
+import Mathlib.Algebra.BigOperators.Fin
+import Mathlib.Data.Real.Basic
+import Mathlib.Order.Filter.Extr
+
+noncomputable section
+open Set Finset
+namespace BanditRL.OnlineFTLSelector
+variable {X : Type*} {n : ℕ}
+
+def cumulative (past : Fin n → X → ℝ) (x : X) : ℝ :=
+  ∑ i, past i x
+
+def minimizers (V : Set X) (past : Fin n → X → ℝ) : Set X :=
+  {x | x ∈ V ∧ IsMinOn (cumulative past) V x}
+
+def select (V : Set X) (past : Fin n → X → ℝ) : Option X := by
+  classical
+  exact if h : (minimizers V past).Nonempty then some (Classical.choose h) else none
+
+def predict (V : Set X) (initial : V) (loss : ℕ → X → ℝ) (t : ℕ) : Option X :=
+  if t = 0 then some (initial : X) else select V (fun i : Fin t => loss i.val)
+
+theorem select_some_spec (V : Set X) (past : Fin n → X → ℝ) (p : X) (h : select V past = some p) :
+    p ∈ V ∧ IsMinOn (cumulative past) V p := by
+  classical
+  unfold select at h
+  split_ifs at h with hatt
+  have he := Option.some.inj h
+  exact he ▸ Classical.choose_spec hatt
+
+theorem select_none_iff (V : Set X) (past : Fin n → X → ℝ) :
+    select V past = none ↔ ¬ ∃ p, p ∈ V ∧ IsMinOn (cumulative past) V p := by
+  classical
+  unfold select
+  split_ifs with hatt
+  · constructor
+    · intro h
+      cases h
+    · intro h
+      exact (h hatt).elim
+  · exact ⟨fun _ => hatt, fun _ => rfl⟩
+
+theorem cumulative_prefix (loss : ℕ → X → ℝ) (t : ℕ) (x : X) :
+    cumulative (fun i : Fin t => loss i.val) x = ∑ i ∈ range t, loss i x := by
+  exact Fin.sum_univ_eq_sum_range (fun i => loss i x) t
+
+theorem select_congr (V : Set X) (past past' : Fin n → X → ℝ) (h : ∀ i, EqOn (past i) (past' i) V) :
+    select V past = select V past' := by
+  classical
+  have hc : EqOn (cumulative past) (cumulative past') V := by
+    intro x hx
+    exact Finset.sum_congr rfl (fun i _ => h i hx)
+  have hm : minimizers V past = minimizers V past' := by
+    apply Set.ext
+    intro x
+    constructor
+    · intro hx
+      refine ⟨hx.1, isMinOn_iff.mpr ?_⟩
+      intro y hy
+      rw [← hc hx.1, ← hc hy]
+      exact isMinOn_iff.mp hx.2 y hy
+    · intro hx
+      refine ⟨hx.1, isMinOn_iff.mpr ?_⟩
+      intro y hy
+      rw [hc hx.1, hc hy]
+      exact isMinOn_iff.mp hx.2 y hy
+  unfold select
+  rw [hm]
+
+theorem predict_zero (V : Set X) (initial : V) (loss : ℕ → X → ℝ) :
+    predict V initial loss 0 = some (initial : X) := by
+  rfl
+
+theorem select_eq_some_of_unique (V : Set X) (past : Fin n → X → ℝ) (p : X) (hp : p ∈ V) (hmin : IsMinOn (cumulative past) V p) (hunique : ∀ q ∈ V, IsMinOn (cumulative past) V q → q = p) :
+    select V past = some p := by
+  cases hs : select V past with
+  | none => exact ((select_none_iff V past).mp hs ⟨p, hp, hmin⟩).elim
+  | some q =>
+      have hq := select_some_spec V past q hs
+      exact congrArg some (hunique q hq.1 hq.2)
+
+theorem predict_some_spec (V : Set X) (initial : V) (loss : ℕ → X → ℝ) (t : ℕ) (p : X) (h : predict V initial loss t = some p) :
+    p ∈ V ∧ IsMinOn (fun x => ∑ i ∈ range t, loss i x) V p := by
+  by_cases ht : t = 0
+  · subst t
+    have hp : (initial : X) = p := Option.some.inj (by simpa only [predict_zero] using h)
+    subst p
+    refine ⟨initial.property, isMinOn_iff.mpr ?_⟩
+    intro x hx
+    simp
+  · have hc : cumulative (fun i : Fin t => loss i.val) =
+        (fun x => ∑ i ∈ range t, loss i x) := by
+      funext x
+      exact cumulative_prefix loss t x
+    rw [← hc]
+    apply select_some_spec V (fun i : Fin t => loss i.val) p
+    simpa only [predict, if_neg ht] using h
+
+theorem predict_none_iff (V : Set X) (initial : V) (loss : ℕ → X → ℝ) (t : ℕ) :
+    predict V initial loss t = none ↔ ¬ ∃ p, p ∈ V ∧ IsMinOn (fun x => ∑ i ∈ range t, loss i x) V p := by
+  by_cases ht : t = 0
+  · subst t
+    constructor
+    · intro h
+      have hn : (some (initial : X) : Option X) = none := by
+        simpa only [predict_zero] using h
+      cases hn
+    · intro h
+      apply (h ⟨initial, initial.property, isMinOn_iff.mpr ?_⟩).elim
+      intro x hx
+      simp
+  · have hc : cumulative (fun i : Fin t => loss i.val) =
+        (fun x => ∑ i ∈ range t, loss i x) := by
+      funext x
+      exact cumulative_prefix loss t x
+    rw [← hc]
+    simpa only [predict, if_neg ht] using
+      select_none_iff V (fun i : Fin t => loss i.val)
+
+theorem predict_prefix (V : Set X) (initial : V) (loss loss' : ℕ → X → ℝ) (t : ℕ) (h : ∀ s < t, EqOn (loss s) (loss' s) V) :
+    predict V initial loss t = predict V initial loss' t := by
+  by_cases ht : t = 0
+  · subst t
+    rw [predict_zero, predict_zero]
+  · simp only [predict, if_neg ht]
+    apply select_congr
+    intro i
+    exact h i.val i.isLt
+
+end BanditRL.OnlineFTLSelector

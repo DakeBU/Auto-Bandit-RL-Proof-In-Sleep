@@ -1,0 +1,80 @@
+{
+  "rows": [
+    {
+      "declaration": "BanditRL.OnlineFTLSelector.cumulative_prefix",
+      "exact_header": "theorem cumulative_prefix (loss : ℕ → X → ℝ) (t : ℕ) (x : X) :\n    cumulative (fun i : Fin t => loss i.val) x = ∑ i ∈ range t, loss i x",
+      "normalized_header_sha256": "71b72fc0bee0b002d718799e8c56c776b982aeb131a16c3c8f52617eeccc91b2",
+      "exact_Prop": "∀ (loss : ℕ → X → ℝ) (t : ℕ) (x : X), cumulative (fun i : Fin t => loss i.val) x = ∑ i ∈ range t, loss i x",
+      "BODY": "unwritten",
+      "current_terminal_closed": false
+    },
+    {
+      "declaration": "BanditRL.OnlineFTLSelector.select_some_spec",
+      "exact_header": "theorem select_some_spec (V : Set X) (past : Fin n → X → ℝ) (p : X) (h : select V past = some p) :\n    p ∈ V ∧ IsMinOn (cumulative past) V p",
+      "normalized_header_sha256": "bcd8b9078a46bd58cb2fa521adc00698bbe057fc7cb9844ff7d6b36a526dc67c",
+      "exact_Prop": "∀ (V : Set X) (past : Fin n → X → ℝ) (p : X) (h : select V past = some p), p ∈ V ∧ IsMinOn (cumulative past) V p",
+      "BODY": "unwritten",
+      "current_terminal_closed": false
+    },
+    {
+      "declaration": "BanditRL.OnlineFTLSelector.select_none_iff",
+      "exact_header": "theorem select_none_iff (V : Set X) (past : Fin n → X → ℝ) :\n    select V past = none ↔ ¬ ∃ p, p ∈ V ∧ IsMinOn (cumulative past) V p",
+      "normalized_header_sha256": "0042ed37a64506bf69842957ed66b24b7a5089aeab135247f71d09f99e817bc4",
+      "exact_Prop": "∀ (V : Set X) (past : Fin n → X → ℝ), select V past = none ↔ ¬ ∃ p, p ∈ V ∧ IsMinOn (cumulative past) V p",
+      "BODY": "unwritten",
+      "current_terminal_closed": false
+    },
+    {
+      "declaration": "BanditRL.OnlineFTLSelector.select_congr",
+      "exact_header": "theorem select_congr (V : Set X) (past past' : Fin n → X → ℝ) (h : ∀ i, EqOn (past i) (past' i) V) :\n    select V past = select V past'",
+      "normalized_header_sha256": "0b78e696ebe780a59061ab400724d81f82d8bb26c28c812a7524576e11bcc108",
+      "exact_Prop": "∀ (V : Set X) (past past' : Fin n → X → ℝ) (h : ∀ i, EqOn (past i) (past' i) V), select V past = select V past'",
+      "BODY": "unwritten",
+      "current_terminal_closed": false
+    },
+    {
+      "declaration": "BanditRL.OnlineFTLSelector.select_eq_some_of_unique",
+      "exact_header": "theorem select_eq_some_of_unique (V : Set X) (past : Fin n → X → ℝ) (p : X) (hp : p ∈ V) (hmin : IsMinOn (cumulative past) V p) (hunique : ∀ q ∈ V, IsMinOn (cumulative past) V q → q = p) :\n    select V past = some p",
+      "normalized_header_sha256": "5b832f27496c2167d36e070bf34e06fdf374e01758a18524e05df11015331e41",
+      "exact_Prop": "∀ (V : Set X) (past : Fin n → X → ℝ) (p : X) (hp : p ∈ V) (hmin : IsMinOn (cumulative past) V p) (hunique : ∀ q ∈ V, IsMinOn (cumulative past) V q → q = p), select V past = some p",
+      "BODY": "unwritten",
+      "current_terminal_closed": false
+    },
+    {
+      "declaration": "BanditRL.OnlineFTLSelector.predict_zero",
+      "exact_header": "theorem predict_zero (V : Set X) (initial : V) (loss : ℕ → X → ℝ) :\n    predict V initial loss 0 = some (initial : X)",
+      "normalized_header_sha256": "5ac4b6562e95b2da8fd0720304c347cae9f1c0af91d52871963db8f6d42c9b76",
+      "exact_Prop": "∀ (V : Set X) (initial : V) (loss : ℕ → X → ℝ), predict V initial loss 0 = some (initial : X)",
+      "BODY": "unwritten",
+      "current_terminal_closed": false
+    },
+    {
+      "declaration": "BanditRL.OnlineFTLSelector.predict_some_spec",
+      "exact_header": "theorem predict_some_spec (V : Set X) (initial : V) (loss : ℕ → X → ℝ) (t : ℕ) (p : X) (h : predict V initial loss t = some p) :\n    p ∈ V ∧ IsMinOn (fun x => ∑ i ∈ range t, loss i x) V p",
+      "normalized_header_sha256": "0408a9a96a34adb67459e7d7be8402e0236dc89c4d6d71b1ce7550d952227562",
+      "exact_Prop": "∀ (V : Set X) (initial : V) (loss : ℕ → X → ℝ) (t : ℕ) (p : X) (h : predict V initial loss t = some p), p ∈ V ∧ IsMinOn (fun x => ∑ i ∈ range t, loss i x) V p",
+      "BODY": "unwritten",
+      "current_terminal_closed": false
+    },
+    {
+      "declaration": "BanditRL.OnlineFTLSelector.predict_none_iff",
+      "exact_header": "theorem predict_none_iff (V : Set X) (initial : V) (loss : ℕ → X → ℝ) (t : ℕ) :\n    predict V initial loss t = none ↔ ¬ ∃ p, p ∈ V ∧ IsMinOn (fun x => ∑ i ∈ range t, loss i x) V p",
+      "normalized_header_sha256": "58a169edfa7bff27c956c4e028ee092ac19b0b58f822e8b32bc99cbfe2fff272",
+      "exact_Prop": "∀ (V : Set X) (initial : V) (loss : ℕ → X → ℝ) (t : ℕ), predict V initial loss t = none ↔ ¬ ∃ p, p ∈ V ∧ IsMinOn (fun x => ∑ i ∈ range t, loss i x) V p",
+      "BODY": "unwritten",
+      "current_terminal_closed": false
+    },
+    {
+      "declaration": "BanditRL.OnlineFTLSelector.predict_prefix",
+      "exact_header": "theorem predict_prefix (V : Set X) (initial : V) (loss loss' : ℕ → X → ℝ) (t : ℕ) (h : ∀ s < t, EqOn (loss s) (loss' s) V) :\n    predict V initial loss t = predict V initial loss' t",
+      "normalized_header_sha256": "8e78c64ecd26dadab9da1e26f0852726736b8fba18558ce0719b0681a87bb79c",
+      "exact_Prop": "∀ (V : Set X) (initial : V) (loss loss' : ℕ → X → ℝ) (t : ℕ) (h : ∀ s < t, EqOn (loss s) (loss' s) V), predict V initial loss t = predict V initial loss' t",
+      "BODY": "unwritten",
+      "current_terminal_closed": false
+    }
+  ],
+  "authority": "Draft exact source text and complete definition context; actual Prop type probe follows, not named theorem BODY compilation.",
+  "source_contract_review": "pending",
+  "production_module": "BanditRLProof/OnlineFTLSelector.lean",
+  "Tests_module": "Tests/OnlineFTLSelectorCanary.lean"
+}

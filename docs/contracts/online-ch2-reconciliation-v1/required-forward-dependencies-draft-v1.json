@@ -1,0 +1,242 @@
+{
+  "rows": [
+    {
+      "source_id": "additional:prescient-lookahead-nonpositive-stability",
+      "owner_chapter": 15,
+      "required_in_whole_book": true,
+      "source_pages": [
+        {
+          "pdf_page": 26,
+          "printed_page": 14,
+          "text_path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/source-pdf26-text-v1.txt",
+          "text_sha256": "07d816ce0a7defd1c5a56f01c79079a50a1beacee320ce7c03d5e61d39bef931",
+          "image_path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/source-pdf26-v1.png",
+          "image_sha256": "8df741272fb3c48c9435f1d3c18231c783f94791ba1560bd19fe0513e308b835"
+        }
+      ],
+      "exact_source_page_texts": [
+        {
+          "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/source-pdf26-text-v1.txt",
+          "sha256": "07d816ce0a7defd1c5a56f01c79079a50a1beacee320ce7c03d5e61d39bef931",
+          "text": "14Online Subgradient Descent\nhave\nTX\nt=1\n(ℓt(xt)−ℓ t(u))≤\nTX\nt=1\n\u0012 ∥xt −u∥ 2\n2\n2ηt\n− ∥xt+1 −u∥ 2\n2\n2ηt\n\u0013\n+\nTX\nt=1\nηt∥gt∥2\n2\n2\n= ∥x1 −u∥ 2\n2\n2η1\n− ∥xT+1 −u∥ 2\n2\n2ηT\n+\nT−1X\nt=1\n\u0012 1\nηt+1\n− 1\nηt\n\u0013 ∥xt+1 −u∥ 2\n2\n2 +\nTX\nt=1\nηt∥gt∥2\n2\n2\n≤ D2\n2η1\n+ D2\n2\nT−1X\nt=1\n\u0012 1\nηt+1\n− 1\nηt\n\u0013\n+\nTX\nt=1\nηt∥gt∥2\n2\n2 − ∥xT+1 −u∥ 2\n2\n2ηT\n= D2\n2η1\n+D 2\n\u0012 1\n2ηT\n− 1\n2η1\n\u0013\n+\nTX\nt=1\nηt∥gt∥2\n2\n2 − ∥xT+1 −u∥ 2\n2\n2ηT\n= D2\n2ηT\n+\nTX\nt=1\nηt\n2 ∥gt∥2\n2 − 1\n2ηT\n∥xT+1 −u∥ 2\n2 .\nIn the same way, whenη t is constant, we have\nTX\nt=1\n(ℓt(xt)−ℓ t(u))≤\nTX\nt=1\n\u0012 1\n2η ∥xt −u∥ 2\n2 − 1\n2η ∥xt+1 −u∥ 2\n2\n\u0013\n+ η\n2\nTX\nt=1\n∥gt∥2\n2\n= 1\n2η ∥x1 −u∥ 2\n2 − 1\n2η ∥xT+1 −u∥ 2\n2 + η\n2\nTX\nt=1\n∥gt∥2\n2 .\nWe can immediately observe a few things.\n•The terms∥g t∥2\n2 are due to the fact that we outputx t before knowing the lossℓ t. Indeed,\nthese terms become non-positive if we were allowed to observeℓ t before producingx t,\nsee Section 15.5.1.\n•In the case of constantη, the bound holds even whenD=∞. Moreover, the first term in\nthe regret depends on ourinitial condition, that is, how farx 1 is from the competitoru.\n•The last term in both bounds is non-positive, so it is usually discarded. Yet, some advanced\nproofs require it, so it is good to be aware of it.\n•If we want to use time-varying learning rates, we need to control the terms∥x t −u∥ 2\n2. To\ndo it, we assume a bounded domainV. However, this assumption is false in most of the\nmachine learning applications. We will also see in Section 5.2 that this is not an artifact of\nthe proof, that is, OGD can fail in unbounded domains with time-varying learning rates.\nThat said, in the stochastic setting, you can still use a time-varying learning rate in SGD\nwith an unbounded domain, as we will see in Chapter 3.\n•Another important observation is that the regret bound helps us choose the learning rates\nηt. Indeed, it is the only guideline we have. Any other choice that is not justified by a\nregret analysis is not justified at all.\nAs we said, the presence of untuned parameters like the learning rates makes no sense in\nonline learning. So, we have to decide on a strategy to set them. A simple choice is to find\nthe constant learning rate that minimizes the bounds for a fixed number of iterations. We\n"
+        }
+      ],
+      "mathematical_intent": "Main-text observation refers to15.5.1: learning current loss BEFORE prediction can make stability nonpositive. Separate prescient proximal identity from causal explicit OGD; constrained negative movement-square/Bregman term need not equal negative ordinary-gradient square. Exact chapter obligation/forward dependency classification awaiting independent source review.",
+      "local_navigation_mapping": "explicit ownership edge proposed",
+      "mathematical_dependency_status": "required/open",
+      "exact_future_theorem_enumeration": "exact separately delivered candidate bound; chapter-source reconciliation pending",
+      "local_Chapter2_accepted": false,
+      "local_explanatory_mapping_does_not_discharge_mathematics": true,
+      "candidate_package": "ONLINE-CH2-PRESCIENT-SOURCE-20261010"
+    },
+    {
+      "source_id": "forward:chapter5-unbounded-variable-OGD-failure",
+      "owner_chapter": 5,
+      "required_in_whole_book": true,
+      "source_pages": [
+        {
+          "pdf_page": 26,
+          "printed_page": 14,
+          "text_path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/source-pdf26-text-v1.txt",
+          "text_sha256": "07d816ce0a7defd1c5a56f01c79079a50a1beacee320ce7c03d5e61d39bef931",
+          "image_path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/source-pdf26-v1.png",
+          "image_sha256": "8df741272fb3c48c9435f1d3c18231c783f94791ba1560bd19fe0513e308b835"
+        }
+      ],
+      "exact_source_page_texts": [
+        {
+          "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/source-pdf26-text-v1.txt",
+          "sha256": "07d816ce0a7defd1c5a56f01c79079a50a1beacee320ce7c03d5e61d39bef931",
+          "text": "14Online Subgradient Descent\nhave\nTX\nt=1\n(ℓt(xt)−ℓ t(u))≤\nTX\nt=1\n\u0012 ∥xt −u∥ 2\n2\n2ηt\n− ∥xt+1 −u∥ 2\n2\n2ηt\n\u0013\n+\nTX\nt=1\nηt∥gt∥2\n2\n2\n= ∥x1 −u∥ 2\n2\n2η1\n− ∥xT+1 −u∥ 2\n2\n2ηT\n+\nT−1X\nt=1\n\u0012 1\nηt+1\n− 1\nηt\n\u0013 ∥xt+1 −u∥ 2\n2\n2 +\nTX\nt=1\nηt∥gt∥2\n2\n2\n≤ D2\n2η1\n+ D2\n2\nT−1X\nt=1\n\u0012 1\nηt+1\n− 1\nηt\n\u0013\n+\nTX\nt=1\nηt∥gt∥2\n2\n2 − ∥xT+1 −u∥ 2\n2\n2ηT\n= D2\n2η1\n+D 2\n\u0012 1\n2ηT\n− 1\n2η1\n\u0013\n+\nTX\nt=1\nηt∥gt∥2\n2\n2 − ∥xT+1 −u∥ 2\n2\n2ηT\n= D2\n2ηT\n+\nTX\nt=1\nηt\n2 ∥gt∥2\n2 − 1\n2ηT\n∥xT+1 −u∥ 2\n2 .\nIn the same way, whenη t is constant, we have\nTX\nt=1\n(ℓt(xt)−ℓ t(u))≤\nTX\nt=1\n\u0012 1\n2η ∥xt −u∥ 2\n2 − 1\n2η ∥xt+1 −u∥ 2\n2\n\u0013\n+ η\n2\nTX\nt=1\n∥gt∥2\n2\n= 1\n2η ∥x1 −u∥ 2\n2 − 1\n2η ∥xT+1 −u∥ 2\n2 + η\n2\nTX\nt=1\n∥gt∥2\n2 .\nWe can immediately observe a few things.\n•The terms∥g t∥2\n2 are due to the fact that we outputx t before knowing the lossℓ t. Indeed,\nthese terms become non-positive if we were allowed to observeℓ t before producingx t,\nsee Section 15.5.1.\n•In the case of constantη, the bound holds even whenD=∞. Moreover, the first term in\nthe regret depends on ourinitial condition, that is, how farx 1 is from the competitoru.\n•The last term in both bounds is non-positive, so it is usually discarded. Yet, some advanced\nproofs require it, so it is good to be aware of it.\n•If we want to use time-varying learning rates, we need to control the terms∥x t −u∥ 2\n2. To\ndo it, we assume a bounded domainV. However, this assumption is false in most of the\nmachine learning applications. We will also see in Section 5.2 that this is not an artifact of\nthe proof, that is, OGD can fail in unbounded domains with time-varying learning rates.\nThat said, in the stochastic setting, you can still use a time-varying learning rate in SGD\nwith an unbounded domain, as we will see in Chapter 3.\n•Another important observation is that the regret bound helps us choose the learning rates\nηt. Indeed, it is the only guideline we have. Any other choice that is not justified by a\nregret analysis is not justified at all.\nAs we said, the presence of untuned parameters like the learning rates makes no sense in\nonline learning. So, we have to decide on a strategy to set them. A simple choice is to find\nthe constant learning rate that minimizes the bounds for a fixed number of iterations. We\n"
+        }
+      ],
+      "mathematical_intent": "Section5.2: time-varying OGD can fail on unbounded domains; retain as future lower-bound/algorithm-failure dependency, not inferred from the failure of a proof bound.",
+      "local_navigation_mapping": "explicit ownership edge proposed",
+      "mathematical_dependency_status": "required/open",
+      "exact_future_theorem_enumeration": "exact separately delivered candidate bound; chapter-source reconciliation pending",
+      "local_Chapter2_accepted": false,
+      "local_explanatory_mapping_does_not_discharge_mathematics": true,
+      "candidate_package": "ONLINE-CH2-UNBOUNDED-OSD-20261010"
+    },
+    {
+      "source_id": "forward:chapter5-oracle-distance-energy-rate-impossibility",
+      "owner_chapter": 5,
+      "required_in_whole_book": true,
+      "source_pages": [
+        {
+          "pdf_page": 27,
+          "printed_page": 15,
+          "text_path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/source-pdf27-text-v1.txt",
+          "text_sha256": "001872080ae5e75d2f3f678fcc78917c05683ad72e201f3497ee7ade20c08b92",
+          "image_path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/source-pdf27-v1.png",
+          "image_sha256": "e0520657f2e74e4bd7bc90e47e2b86f18c21ea03cc99c4b770bffc10ac6761d1"
+        }
+      ],
+      "exact_source_page_texts": [
+        {
+          "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/source-pdf27-text-v1.txt",
+          "sha256": "001872080ae5e75d2f3f678fcc78917c05683ad72e201f3497ee7ade20c08b92",
+          "text": "2.1 Online Learning with Convex Differentiable Losses15\nhave to consider the expression\n∥u−x 1∥2\n2\n2η + η\n2\nTX\nt=1\n∥gt∥2\n2\nand minimize with respect toη. It is easy to see that the optimalηis ∥u−x1∥2√PT\nt=1 ∥gt∥2\n2\n, that would\ngive the regret bound\n∥u−x 1∥2\nvuut\nTX\nt=1\n∥gt∥2\n2 .\nHowever, we have a problem: in order to use this stepsize, we should know all the future gra-\ndients (that depend onηitself!), and the distance between the optimal solution and the initial\npoint. This is clearly impossible: remember that the adversary can choose the sequence of\nfunctions. Hence, it can observe your choice of learning rates and decide the sequence so\nthat your learning rate is no longer the correct one!\nIndeed, it turns out that this kind of rate is completely impossible because it is ruled out by\na lower bound we will show in Chapter 5. Yet, we will see that it is indeed possible to achieve\nvery similar rates usingadaptive(Section 4.2) andparameter-freealgorithms (Chapter 13).\nFor the moment, we can observe that we might be happy to minimize a loose upper bound.\nIn particular, assume that the norm of the gradients is bounded byL, that is∥g t∥2 ≤L.\nAlso, assuming a bounded diameter, we can upper bound∥u−x 1∥2 byD. Hence, we have\nη⋆ = argmin\nη\nD2\n2η + ηL2T\n2 = D\nL\n√\nT\n,\nthat gives a regret bound of\nDL\n√\nT .(2.1)\nSo, indeed, the regret is sublinear in time. In Chapter 5, we will also prove that the this regret\nupper bound is optimal up to constant multiplicative factors.\nExample 2.14Consider the guessing game of the first chapter; we can easily solve it with\nOGD. Indeed, we just need to calculate the gradients, prove that they are bounded, and find\na way to calculate the projection of a real number in[0,1]. So,ℓ ′\nt(x) = 2(x−y t), that is\nbounded forx, y t ∈[0,1]. The projection on[0,1]is justΠ [0,1](x) = min(max(x,0),1).\nWith the optimal learning rate, the resulting regret would beO(\n√\nT), which is worse than\nthe one we found in the first chapter. Hence, OGD with this choice of the learning rate is\nsuboptimal for this problem. We will see how to make it optimal in Chapter 4.\nExample 2.15Let’s consider an example of the OCO setting. Consider the problem of\npredicting at daytthe opening price of a stock based on a linear combination of the opening\nprices of the pastddays, represented by a vectorz t ∈R d. So, our prediction at timetwill\nbe⟨z t,x t⟩and the feasible set isV=R d. Once we make our prediction, we receive the\ntrue opening pricey t, and we pay theHuber loss, a convex loss function robust to outliers,\n"
+        }
+      ],
+      "mathematical_intent": "Oracle eta using comparator distance and future eta-dependent gradients is not a causal choice; full claimed impossibility refers to Chapter5 lower bound.",
+      "local_navigation_mapping": "explicit ownership edge proposed",
+      "mathematical_dependency_status": "required/open",
+      "exact_future_theorem_enumeration": "pending",
+      "local_Chapter2_accepted": false,
+      "local_explanatory_mapping_does_not_discharge_mathematics": true,
+      "candidate_package": null
+    },
+    {
+      "source_id": "forward:chapter5-DLsqrtT-minimax-optimality",
+      "owner_chapter": 5,
+      "required_in_whole_book": true,
+      "source_pages": [
+        {
+          "pdf_page": 27,
+          "printed_page": 15,
+          "text_path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/source-pdf27-text-v1.txt",
+          "text_sha256": "001872080ae5e75d2f3f678fcc78917c05683ad72e201f3497ee7ade20c08b92",
+          "image_path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/source-pdf27-v1.png",
+          "image_sha256": "e0520657f2e74e4bd7bc90e47e2b86f18c21ea03cc99c4b770bffc10ac6761d1"
+        }
+      ],
+      "exact_source_page_texts": [
+        {
+          "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/source-pdf27-text-v1.txt",
+          "sha256": "001872080ae5e75d2f3f678fcc78917c05683ad72e201f3497ee7ade20c08b92",
+          "text": "2.1 Online Learning with Convex Differentiable Losses15\nhave to consider the expression\n∥u−x 1∥2\n2\n2η + η\n2\nTX\nt=1\n∥gt∥2\n2\nand minimize with respect toη. It is easy to see that the optimalηis ∥u−x1∥2√PT\nt=1 ∥gt∥2\n2\n, that would\ngive the regret bound\n∥u−x 1∥2\nvuut\nTX\nt=1\n∥gt∥2\n2 .\nHowever, we have a problem: in order to use this stepsize, we should know all the future gra-\ndients (that depend onηitself!), and the distance between the optimal solution and the initial\npoint. This is clearly impossible: remember that the adversary can choose the sequence of\nfunctions. Hence, it can observe your choice of learning rates and decide the sequence so\nthat your learning rate is no longer the correct one!\nIndeed, it turns out that this kind of rate is completely impossible because it is ruled out by\na lower bound we will show in Chapter 5. Yet, we will see that it is indeed possible to achieve\nvery similar rates usingadaptive(Section 4.2) andparameter-freealgorithms (Chapter 13).\nFor the moment, we can observe that we might be happy to minimize a loose upper bound.\nIn particular, assume that the norm of the gradients is bounded byL, that is∥g t∥2 ≤L.\nAlso, assuming a bounded diameter, we can upper bound∥u−x 1∥2 byD. Hence, we have\nη⋆ = argmin\nη\nD2\n2η + ηL2T\n2 = D\nL\n√\nT\n,\nthat gives a regret bound of\nDL\n√\nT .(2.1)\nSo, indeed, the regret is sublinear in time. In Chapter 5, we will also prove that the this regret\nupper bound is optimal up to constant multiplicative factors.\nExample 2.14Consider the guessing game of the first chapter; we can easily solve it with\nOGD. Indeed, we just need to calculate the gradients, prove that they are bounded, and find\na way to calculate the projection of a real number in[0,1]. So,ℓ ′\nt(x) = 2(x−y t), that is\nbounded forx, y t ∈[0,1]. The projection on[0,1]is justΠ [0,1](x) = min(max(x,0),1).\nWith the optimal learning rate, the resulting regret would beO(\n√\nT), which is worse than\nthe one we found in the first chapter. Hence, OGD with this choice of the learning rate is\nsuboptimal for this problem. We will see how to make it optimal in Chapter 4.\nExample 2.15Let’s consider an example of the OCO setting. Consider the problem of\npredicting at daytthe opening price of a stock based on a linear combination of the opening\nprices of the pastddays, represented by a vectorz t ∈R d. So, our prediction at timetwill\nbe⟨z t,x t⟩and the feasible set isV=R d. Once we make our prediction, we receive the\ntrue opening pricey t, and we pay theHuber loss, a convex loss function robust to outliers,\n"
+        }
+      ],
+      "mathematical_intent": "Optimal up to constants requires a separate minimax lower bound, not supplied by Equation2.1 upper bound.",
+      "local_navigation_mapping": "explicit ownership edge proposed",
+      "mathematical_dependency_status": "required/open",
+      "exact_future_theorem_enumeration": "pending",
+      "local_Chapter2_accepted": false,
+      "local_explanatory_mapping_does_not_discharge_mathematics": true,
+      "candidate_package": null
+    },
+    {
+      "source_id": "forward:chapter3-unbounded-SGD",
+      "owner_chapter": 3,
+      "required_in_whole_book": true,
+      "source_pages": [
+        {
+          "pdf_page": 26,
+          "printed_page": 14,
+          "text_path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/source-pdf26-text-v1.txt",
+          "text_sha256": "07d816ce0a7defd1c5a56f01c79079a50a1beacee320ce7c03d5e61d39bef931",
+          "image_path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/source-pdf26-v1.png",
+          "image_sha256": "8df741272fb3c48c9435f1d3c18231c783f94791ba1560bd19fe0513e308b835"
+        }
+      ],
+      "exact_source_page_texts": [
+        {
+          "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/source-pdf26-text-v1.txt",
+          "sha256": "07d816ce0a7defd1c5a56f01c79079a50a1beacee320ce7c03d5e61d39bef931",
+          "text": "14Online Subgradient Descent\nhave\nTX\nt=1\n(ℓt(xt)−ℓ t(u))≤\nTX\nt=1\n\u0012 ∥xt −u∥ 2\n2\n2ηt\n− ∥xt+1 −u∥ 2\n2\n2ηt\n\u0013\n+\nTX\nt=1\nηt∥gt∥2\n2\n2\n= ∥x1 −u∥ 2\n2\n2η1\n− ∥xT+1 −u∥ 2\n2\n2ηT\n+\nT−1X\nt=1\n\u0012 1\nηt+1\n− 1\nηt\n\u0013 ∥xt+1 −u∥ 2\n2\n2 +\nTX\nt=1\nηt∥gt∥2\n2\n2\n≤ D2\n2η1\n+ D2\n2\nT−1X\nt=1\n\u0012 1\nηt+1\n− 1\nηt\n\u0013\n+\nTX\nt=1\nηt∥gt∥2\n2\n2 − ∥xT+1 −u∥ 2\n2\n2ηT\n= D2\n2η1\n+D 2\n\u0012 1\n2ηT\n− 1\n2η1\n\u0013\n+\nTX\nt=1\nηt∥gt∥2\n2\n2 − ∥xT+1 −u∥ 2\n2\n2ηT\n= D2\n2ηT\n+\nTX\nt=1\nηt\n2 ∥gt∥2\n2 − 1\n2ηT\n∥xT+1 −u∥ 2\n2 .\nIn the same way, whenη t is constant, we have\nTX\nt=1\n(ℓt(xt)−ℓ t(u))≤\nTX\nt=1\n\u0012 1\n2η ∥xt −u∥ 2\n2 − 1\n2η ∥xt+1 −u∥ 2\n2\n\u0013\n+ η\n2\nTX\nt=1\n∥gt∥2\n2\n= 1\n2η ∥x1 −u∥ 2\n2 − 1\n2η ∥xT+1 −u∥ 2\n2 + η\n2\nTX\nt=1\n∥gt∥2\n2 .\nWe can immediately observe a few things.\n•The terms∥g t∥2\n2 are due to the fact that we outputx t before knowing the lossℓ t. Indeed,\nthese terms become non-positive if we were allowed to observeℓ t before producingx t,\nsee Section 15.5.1.\n•In the case of constantη, the bound holds even whenD=∞. Moreover, the first term in\nthe regret depends on ourinitial condition, that is, how farx 1 is from the competitoru.\n•The last term in both bounds is non-positive, so it is usually discarded. Yet, some advanced\nproofs require it, so it is good to be aware of it.\n•If we want to use time-varying learning rates, we need to control the terms∥x t −u∥ 2\n2. To\ndo it, we assume a bounded domainV. However, this assumption is false in most of the\nmachine learning applications. We will also see in Section 5.2 that this is not an artifact of\nthe proof, that is, OGD can fail in unbounded domains with time-varying learning rates.\nThat said, in the stochastic setting, you can still use a time-varying learning rate in SGD\nwith an unbounded domain, as we will see in Chapter 3.\n•Another important observation is that the regret bound helps us choose the learning rates\nηt. Indeed, it is the only guideline we have. Any other choice that is not justified by a\nregret analysis is not justified at all.\nAs we said, the presence of untuned parameters like the learning rates makes no sense in\nonline learning. So, we have to decide on a strategy to set them. A simple choice is to find\nthe constant learning rate that minimizes the bounds for a fixed number of iterations. We\n"
+        }
+      ],
+      "mathematical_intent": "Stochastic setting permits certain varying-rate SGD on unbounded domains; statistical assumptions/model and rate supplied by Chapter3, not adversarial OGD claim.",
+      "local_navigation_mapping": "explicit ownership edge proposed",
+      "mathematical_dependency_status": "required/open",
+      "exact_future_theorem_enumeration": "pending",
+      "local_Chapter2_accepted": false,
+      "local_explanatory_mapping_does_not_discharge_mathematics": true,
+      "candidate_package": null
+    },
+    {
+      "source_id": "forward:chapter4-adaptive-oracle-like-rates",
+      "owner_chapter": 4,
+      "required_in_whole_book": true,
+      "source_pages": [
+        {
+          "pdf_page": 27,
+          "printed_page": 15,
+          "text_path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/source-pdf27-text-v1.txt",
+          "text_sha256": "001872080ae5e75d2f3f678fcc78917c05683ad72e201f3497ee7ade20c08b92",
+          "image_path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/source-pdf27-v1.png",
+          "image_sha256": "e0520657f2e74e4bd7bc90e47e2b86f18c21ea03cc99c4b770bffc10ac6761d1"
+        }
+      ],
+      "exact_source_page_texts": [
+        {
+          "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/source-pdf27-text-v1.txt",
+          "sha256": "001872080ae5e75d2f3f678fcc78917c05683ad72e201f3497ee7ade20c08b92",
+          "text": "2.1 Online Learning with Convex Differentiable Losses15\nhave to consider the expression\n∥u−x 1∥2\n2\n2η + η\n2\nTX\nt=1\n∥gt∥2\n2\nand minimize with respect toη. It is easy to see that the optimalηis ∥u−x1∥2√PT\nt=1 ∥gt∥2\n2\n, that would\ngive the regret bound\n∥u−x 1∥2\nvuut\nTX\nt=1\n∥gt∥2\n2 .\nHowever, we have a problem: in order to use this stepsize, we should know all the future gra-\ndients (that depend onηitself!), and the distance between the optimal solution and the initial\npoint. This is clearly impossible: remember that the adversary can choose the sequence of\nfunctions. Hence, it can observe your choice of learning rates and decide the sequence so\nthat your learning rate is no longer the correct one!\nIndeed, it turns out that this kind of rate is completely impossible because it is ruled out by\na lower bound we will show in Chapter 5. Yet, we will see that it is indeed possible to achieve\nvery similar rates usingadaptive(Section 4.2) andparameter-freealgorithms (Chapter 13).\nFor the moment, we can observe that we might be happy to minimize a loose upper bound.\nIn particular, assume that the norm of the gradients is bounded byL, that is∥g t∥2 ≤L.\nAlso, assuming a bounded diameter, we can upper bound∥u−x 1∥2 byD. Hence, we have\nη⋆ = argmin\nη\nD2\n2η + ηL2T\n2 = D\nL\n√\nT\n,\nthat gives a regret bound of\nDL\n√\nT .(2.1)\nSo, indeed, the regret is sublinear in time. In Chapter 5, we will also prove that the this regret\nupper bound is optimal up to constant multiplicative factors.\nExample 2.14Consider the guessing game of the first chapter; we can easily solve it with\nOGD. Indeed, we just need to calculate the gradients, prove that they are bounded, and find\na way to calculate the projection of a real number in[0,1]. So,ℓ ′\nt(x) = 2(x−y t), that is\nbounded forx, y t ∈[0,1]. The projection on[0,1]is justΠ [0,1](x) = min(max(x,0),1).\nWith the optimal learning rate, the resulting regret would beO(\n√\nT), which is worse than\nthe one we found in the first chapter. Hence, OGD with this choice of the learning rate is\nsuboptimal for this problem. We will see how to make it optimal in Chapter 4.\nExample 2.15Let’s consider an example of the OCO setting. Consider the problem of\npredicting at daytthe opening price of a stock based on a linear combination of the opening\nprices of the pastddays, represented by a vectorz t ∈R d. So, our prediction at timetwill\nbe⟨z t,x t⟩and the feasible set isV=R d. Once we make our prediction, we receive the\ntrue opening pricey t, and we pay theHuber loss, a convex loss function robust to outliers,\n"
+        }
+      ],
+      "mathematical_intent": "Section4.2 adaptive rates can resemble unavailable oracle rates under their exact modified guarantees.",
+      "local_navigation_mapping": "explicit ownership edge proposed",
+      "mathematical_dependency_status": "required/open",
+      "exact_future_theorem_enumeration": "pending",
+      "local_Chapter2_accepted": false,
+      "local_explanatory_mapping_does_not_discharge_mathematics": true,
+      "candidate_package": null
+    },
+    {
+      "source_id": "forward:chapter4-square-OGD-improvement",
+      "owner_chapter": 4,
+      "required_in_whole_book": true,
+      "source_pages": [
+        {
+          "pdf_page": 27,
+          "printed_page": 15,
+          "text_path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/source-pdf27-text-v1.txt",
+          "text_sha256": "001872080ae5e75d2f3f678fcc78917c05683ad72e201f3497ee7ade20c08b92",
+          "image_path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/source-pdf27-v1.png",
+          "image_sha256": "e0520657f2e74e4bd7bc90e47e2b86f18c21ea03cc99c4b770bffc10ac6761d1"
+        }
+      ],
+      "exact_source_page_texts": [
+        {
+          "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/source-pdf27-text-v1.txt",
+          "sha256": "001872080ae5e75d2f3f678fcc78917c05683ad72e201f3497ee7ade20c08b92",
+          "text": "2.1 Online Learning with Convex Differentiable Losses15\nhave to consider the expression\n∥u−x 1∥2\n2\n2η + η\n2\nTX\nt=1\n∥gt∥2\n2\nand minimize with respect toη. It is easy to see that the optimalηis ∥u−x1∥2√PT\nt=1 ∥gt∥2\n2\n, that would\ngive the regret bound\n∥u−x 1∥2\nvuut\nTX\nt=1\n∥gt∥2\n2 .\nHowever, we have a problem: in order to use this stepsize, we should know all the future gra-\ndients (that depend onηitself!), and the distance between the optimal solution and the initial\npoint. This is clearly impossible: remember that the adversary can choose the sequence of\nfunctions. Hence, it can observe your choice of learning rates and decide the sequence so\nthat your learning rate is no longer the correct one!\nIndeed, it turns out that this kind of rate is completely impossible because it is ruled out by\na lower bound we will show in Chapter 5. Yet, we will see that it is indeed possible to achieve\nvery similar rates usingadaptive(Section 4.2) andparameter-freealgorithms (Chapter 13).\nFor the moment, we can observe that we might be happy to minimize a loose upper bound.\nIn particular, assume that the norm of the gradients is bounded byL, that is∥g t∥2 ≤L.\nAlso, assuming a bounded diameter, we can upper bound∥u−x 1∥2 byD. Hence, we have\nη⋆ = argmin\nη\nD2\n2η + ηL2T\n2 = D\nL\n√\nT\n,\nthat gives a regret bound of\nDL\n√\nT .(2.1)\nSo, indeed, the regret is sublinear in time. In Chapter 5, we will also prove that the this regret\nupper bound is optimal up to constant multiplicative factors.\nExample 2.14Consider the guessing game of the first chapter; we can easily solve it with\nOGD. Indeed, we just need to calculate the gradients, prove that they are bounded, and find\na way to calculate the projection of a real number in[0,1]. So,ℓ ′\nt(x) = 2(x−y t), that is\nbounded forx, y t ∈[0,1]. The projection on[0,1]is justΠ [0,1](x) = min(max(x,0),1).\nWith the optimal learning rate, the resulting regret would beO(\n√\nT), which is worse than\nthe one we found in the first chapter. Hence, OGD with this choice of the learning rate is\nsuboptimal for this problem. We will see how to make it optimal in Chapter 4.\nExample 2.15Let’s consider an example of the OCO setting. Consider the problem of\npredicting at daytthe opening price of a stock based on a linear combination of the opening\nprices of the pastddays, represented by a vectorz t ∈R d. So, our prediction at timetwill\nbe⟨z t,x t⟩and the feasible set isV=R d. Once we make our prediction, we receive the\ntrue opening pricey t, and we pay theHuber loss, a convex loss function robust to outliers,\n"
+        }
+      ],
+      "mathematical_intent": "Later Chapter4 tunes/analyzes OGD to obtain improved squared-guessing performance; current generic eta~1/sqrtT package remains suboptimal.",
+      "local_navigation_mapping": "explicit ownership edge proposed",
+      "mathematical_dependency_status": "required/open",
+      "exact_future_theorem_enumeration": "pending",
+      "local_Chapter2_accepted": false,
+      "local_explanatory_mapping_does_not_discharge_mathematics": true,
+      "candidate_package": null
+    },
+    {
+      "source_id": "forward:chapter13-parameter-free-oracle-like-rates",
+      "owner_chapter": 13,
+      "required_in_whole_book": true,
+      "source_pages": [
+        {
+          "pdf_page": 27,
+          "printed_page": 15,
+          "text_path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/source-pdf27-text-v1.txt",
+          "text_sha256": "001872080ae5e75d2f3f678fcc78917c05683ad72e201f3497ee7ade20c08b92",
+          "image_path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/source-pdf27-v1.png",
+          "image_sha256": "e0520657f2e74e4bd7bc90e47e2b86f18c21ea03cc99c4b770bffc10ac6761d1"
+        }
+      ],
+      "exact_source_page_texts": [
+        {
+          "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-chapter-audit-20261009/source-pdf27-text-v1.txt",
+          "sha256": "001872080ae5e75d2f3f678fcc78917c05683ad72e201f3497ee7ade20c08b92",
+          "text": "2.1 Online Learning with Convex Differentiable Losses15\nhave to consider the expression\n∥u−x 1∥2\n2\n2η + η\n2\nTX\nt=1\n∥gt∥2\n2\nand minimize with respect toη. It is easy to see that the optimalηis ∥u−x1∥2√PT\nt=1 ∥gt∥2\n2\n, that would\ngive the regret bound\n∥u−x 1∥2\nvuut\nTX\nt=1\n∥gt∥2\n2 .\nHowever, we have a problem: in order to use this stepsize, we should know all the future gra-\ndients (that depend onηitself!), and the distance between the optimal solution and the initial\npoint. This is clearly impossible: remember that the adversary can choose the sequence of\nfunctions. Hence, it can observe your choice of learning rates and decide the sequence so\nthat your learning rate is no longer the correct one!\nIndeed, it turns out that this kind of rate is completely impossible because it is ruled out by\na lower bound we will show in Chapter 5. Yet, we will see that it is indeed possible to achieve\nvery similar rates usingadaptive(Section 4.2) andparameter-freealgorithms (Chapter 13).\nFor the moment, we can observe that we might be happy to minimize a loose upper bound.\nIn particular, assume that the norm of the gradients is bounded byL, that is∥g t∥2 ≤L.\nAlso, assuming a bounded diameter, we can upper bound∥u−x 1∥2 byD. Hence, we have\nη⋆ = argmin\nη\nD2\n2η + ηL2T\n2 = D\nL\n√\nT\n,\nthat gives a regret bound of\nDL\n√\nT .(2.1)\nSo, indeed, the regret is sublinear in time. In Chapter 5, we will also prove that the this regret\nupper bound is optimal up to constant multiplicative factors.\nExample 2.14Consider the guessing game of the first chapter; we can easily solve it with\nOGD. Indeed, we just need to calculate the gradients, prove that they are bounded, and find\na way to calculate the projection of a real number in[0,1]. So,ℓ ′\nt(x) = 2(x−y t), that is\nbounded forx, y t ∈[0,1]. The projection on[0,1]is justΠ [0,1](x) = min(max(x,0),1).\nWith the optimal learning rate, the resulting regret would beO(\n√\nT), which is worse than\nthe one we found in the first chapter. Hence, OGD with this choice of the learning rate is\nsuboptimal for this problem. We will see how to make it optimal in Chapter 4.\nExample 2.15Let’s consider an example of the OCO setting. Consider the problem of\npredicting at daytthe opening price of a stock based on a linear combination of the opening\nprices of the pastddays, represented by a vectorz t ∈R d. So, our prediction at timetwill\nbe⟨z t,x t⟩and the feasible set isV=R d. Once we make our prediction, we receive the\ntrue opening pricey t, and we pay theHuber loss, a convex loss function robust to outliers,\n"
+        }
+      ],
+      "mathematical_intent": "Parameter-free algorithms give specified oracle-like rates with additional terms/regimes; current algebraic minimization is not this algorithm.",
+      "local_navigation_mapping": "explicit ownership edge proposed",
+      "mathematical_dependency_status": "required/open",
+      "exact_future_theorem_enumeration": "pending",
+      "local_Chapter2_accepted": false,
+      "local_explanatory_mapping_does_not_discharge_mathematics": true,
+      "candidate_package": null
+    }
+  ],
+  "required_open_count": 8,
+  "future_statements_unenumerated_count": 6,
+  "counting_boundary": "Eight source containers/ownership edges, not eight independent theorem counts. Each exact later theorem and necessary dependencies must be enumerated before proof. No difficult target excluded.",
+  "Chapter2_status": "partial",
+  "whole_Goal": "ACTIVE",
+  "chapter_complete": false
+}

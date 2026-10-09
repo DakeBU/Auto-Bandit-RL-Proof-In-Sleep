@@ -1,0 +1,3 @@
+# Read-only retrieval diagnostics
+
+The earlier tool rg search supplied a literal directory/*py path under PowerShell and returned actual exit1/os error123; the relevant tools/abrl_lifecycle.py function names were still printed. This is a transcript of the observed tool result, not a synthetic command receipt. Subsequent exact file/API reads located lean_declaration_header and statement_hash. A guessed uppercase ONLINE-OGD-MIGRATION-20261008 manifest was absent; actual manifest candidates are enumerated from the directory rather than inferred from that guess. No mathematical, source or tracked file changed.

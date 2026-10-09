@@ -1,0 +1,84 @@
+26Online-to-Batch Conversions
+Remark 3.4Using the online-to-batch conversion with online subgradient descent to min-
+imize the expectation of convex Lipschitz functions we can obtain a convergence rate of
+O( 1√
+T ), that is optimal for this class of problems. This should dispel the common miscon-
+ception that online algorithms are suboptimal in the stochastic setting because they are
+designed to work in the adversarial case. Indeed, the opposite is true: virtually any optimal
+guarantee for offline optimization can be recovered using online learning algorithms.
+I stressed the fact that the only meaningful way to define a regret is with respect to an ar-
+bitrary point in the feasible set. This is obvious in the case where we consider unconstrained
+Online Linear Optimization (OLO), because the optimal competitor is unbounded. But, it is
+also true in unconstrained OCO. Let’s see an example of this.
+Example 3.5Consider a problem of binary classification, with inputsz i ∈R d and outputs
+yi ∈ {−1,1}. The loss function is the logistic loss:f(x,(z, y)) = ln(1+exp(−y⟨z,x⟩)).
+Suppose that you want to minimize the training loss over a training set ofNsamples,
+{(zi, yi)}N
+i=1. Also, assume the maximum L 2 norm of the samples isR. That is, we want
+to minimize
+min
+x
+ 
+F(x) := 1
+N
+NX
+i=1
+ln(1 + exp(−yi⟨zi,x⟩))
+!
+.
+So, run the reduction described in Theorem 3.1 forTiterations using OSD. In each iteration,
+constructℓ t(x) = ln(1 + exp(−y t⟨zt,x⟩))by sampling a training point uniformly at
+random from{1, . . . , N}. Setx1 =0andη= 1
+R
+√
+T . We have that
+E
+"
+F
+ 
+1
+T
+TX
+t=1
+xt
+!#
+≤ R
+2
+√
+T
++ min
+u∈Rd
+
+F(u) +R ∥u∥2
+2
+2
+√
+T
+
+.
+In words, we will be R
+2
+√
+T away from the optimal value of the functionFplus aregularizer
+∥u∥2
+2, where the weight of the regularization is R
+2
+√
+T . Now, let’s consider the case that the
+training set is linearly separable, which means that the infimum ofFis 0 and the optimal
+solution does not exist, i.e., informally speaking, it has norm equal to infinity. So, any con-
+vergence guarantee that depends onx⋆ would be vacuous. On the other hand, our guarantee
+above still makes perfect sense.
+Note that the above examples only deal with training loss. However, in the next sections
+we show a more interesting application of the online-to-batch conversion, that is to directly
+minimize the generalization error. Moreover, we will see guarantees in high probability,
+rather than just in expectation.
+3.1.1 Bits on Concentration Inequalities
+We will use a concentration inequality to prove the high probability guarantee, but we will
+need to go beyond the sum of i.i.d. random variables. In particular, we will use the concept
+ofmartingales.
+Let(Ω,(F t)T
+t=0,P)be a filtered probability space, whereT∈N∪{∞}, and letZ 0, Z1, . . .
+be random variables onΩ. Recall that the sequence(Zt)T
+t=0 is adapted ifZt isFt-measurable
+for all0≤t≤T.

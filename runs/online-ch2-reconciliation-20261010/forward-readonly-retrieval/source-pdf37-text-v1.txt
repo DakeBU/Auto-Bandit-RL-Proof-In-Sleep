@@ -1,0 +1,118 @@
+3.1 From Online Learning to Stochastic Optimization25
+where we used the fact thatx t isF t−1-measurable, and thatξ t is independent ofF t−1.
+Hence, (3.1) is proved.
+It remains only to use Jensen’s inequality (Theorem 2.9), using the fact thatFis convex,
+to have
+F
+ 
+1
+PT
+t=1 αt
+TX
+t=1
+αtxt
+!
+≤ 1
+PT
+t=1 αt
+TX
+t=1
+αtF(xt).
+Dividing the regret by PT
+t=1 αt and using the above inequalities gives the stated theorem.
+Let’s now see some applications of this result. Let’s use the above theorem to transform
+Online Subgradient Descent (OSD) into Stochastic Subgradient Descent to minimize the
+training loss of a classifier.
+Example 3.2Consider a problem of binary classification, with inputsz i ∈R d and outputs
+yi ∈ {−1,1}. The loss function is the hinge loss:f(x,(z, y)) = max(1−y⟨z,x⟩,0).
+Suppose that you want to minimize the training loss over a training set ofNsamples,
+{(zi, yi)}N
+i=1. Also, assume the maximum L 2 norm of the samples isR. That is, we want
+to minimize
+min
+x
+ 
+F(x) := 1
+N
+NX
+i=1
+max(1−y i⟨zi,x⟩,0)
+!
+.
+Run the reduction described in Theorem 3.1 forTiterations using OSD. In each iteration,
+constructℓ t(x) = max(1−y t⟨zt,x⟩,0)by sampling a training point uniformly at random
+from{1, . . . , N}. Setx1 =0andη= 1
+R
+√
+T . Assumingargmin x F(x)̸=∅, we have that
+E
+"
+F
+ 
+1
+T
+TX
+t=1
+xt
+!#
+−F(x ⋆)≤R ∥x⋆∥2
+2 + 1
+2
+√
+T
+,
+for allx⋆ ∈argmin x F(x). In words, we used an OCO algorithm to stochastically optimize
+a function, transforming the regret guarantee into a convergence rate guarantee.
+In this last example, we have to use a constant learning rate to minimize the training loss
+over the entire spaceR d. In the next one, we will see a different approach that allows us to
+implicitlyuse a varying learning rate without the need of a bounded feasible set.
+Example 3.3Consider the same setting of the previous example, and let’s change the way
+in which we construct the online losses. Now, useℓ t(x) = 1
+R
+√
+t max(1−y t⟨zt,x⟩,0)and
+step sizeη= 1. Hence, we have
+E
+"
+F
+ 
+1
+PT
+t=1
+1√
+t
+TX
+t=1
+1√
+txt
+!#
+−F(x ⋆)≤ ∥x⋆∥2
+2
+2 PT
+t=1
+1
+R
+√
+t
++ 1
+2 PT
+t=1
+1
+R
+√
+t
+TX
+t=1
+1
+t
+≤R ∥x⋆∥2
+2 + 1 + lnT
+4
+√
+T+ 1−4 ,
+where we used PT
+t=1
+1√
+t ≥2
+√
+T+ 1−2.
