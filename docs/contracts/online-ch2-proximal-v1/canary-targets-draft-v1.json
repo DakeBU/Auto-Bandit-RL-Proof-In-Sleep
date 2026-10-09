@@ -1,0 +1,34 @@
+{
+  "stage": "draft",
+  "targets": [
+    {
+      "declaration": "BanditRL.OnlineProximalCanary.nonsmooth_shifted_quadratic",
+      "exact_proposed_header": "theorem nonsmooth_shifted_quadratic :\n    IsMinOn (fun z : ℝ => |z| + (z - 1 / 2) ^ 2 / 2) univ 0 ∧\n      ¬ DifferentiableAt ℝ (abs : ℝ → ℝ) 0 ∧\n      (∀ u : ℝ, -|u| ≤ -u / 2) ∧\n      (-1 / 4 : ℝ) ≤ -1 / 8",
+      "statement_hash": "d70f666509d4570e5d201c120bfc98bc8216387ee299b3bfaae1d41551be67ca"
+    },
+    {
+      "declaration": "BanditRL.OnlineProximalCanary.boundary_linear_regularizer",
+      "exact_proposed_header": "theorem boundary_linear_regularizer :\n    IsMinOn (fun z : ℝ => z + (-z / 2)) (Icc 0 1) 0 ∧\n      (∀ u ∈ Icc (0 : ℝ) 1, -u ≤ -u / 2) ∧\n      ¬ IsMinOn (fun z : ℝ => z + (-z / 2)) univ 0",
+      "statement_hash": "fa40d4dabb7bcd0374302e4af8a19b931e3baf40973d9024639a97f0ffd1bbd7"
+    },
+    {
+      "declaration": "BanditRL.OnlineProximalCanary.nonconvex_regularizer",
+      "exact_proposed_header": "theorem nonconvex_regularizer :\n    IsMinOn (fun z : ℝ => z ^ 2 + (-z ^ 2 / 2 + z)) univ (-1) ∧\n      ¬ ConvexOn ℝ univ (fun z : ℝ => -z ^ 2 / 2 + z) ∧\n      (∀ u : ℝ, 1 - u ^ 2 ≤ 2 * (u + 1)) ∧\n      (1 : ℝ) ≤ 2",
+      "statement_hash": "6633c448821aae6c6cca6fae0fe7ea62e01907bc782ebc4c3fce1e9ea8d9c4ef"
+    }
+  ],
+  "context_sha256": "512a119511bd285dc722d98473b1981240faa860ed4df8e2ad4aa06c9af4b289",
+  "blind_receipt_sha256": "3fe2fb0273edd7063ae63fcedd9978a36babf2a2767092c1cc076f611af1c7ca",
+  "allowed_file": "Tests/OnlineProximalComparisonCanary.lean",
+  "allowed_scope": "Only these exact3 theorem bodies, proof imports and scoped context; no other production declarations or old root/Test/reader files.",
+  "actual_VALUE_dependency_required": "BanditRL.OnlineProximal.convex_minimizer_comparison",
+  "instance_obligations": [
+    "Prove actual global minimum of abs(z)+(z-1/2)^2/2 at0 and actual abs nondifferentiability; every-comparator inequality and nonzero u1/4 bound derived using public helper.",
+    "Prove actual constrained minimum of z-z/2 at0 on[0,1], every feasible comparator bound using public helper, and failure of global minimum onR via negative comparator.",
+    "Prove actual minimum of z^2+(-z^2/2+z) at-1, actual nonconvexity of regularizer, every-comparator inequality and nonzero u0 bound using public helper."
+  ],
+  "no_source_terminal_count": true,
+  "source_container_closed": false,
+  "chapter_complete": false,
+  "whole_Goal_status": "ACTIVE"
+}

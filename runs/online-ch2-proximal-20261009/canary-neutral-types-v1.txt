@@ -1,0 +1,23 @@
+import BanditRLProof.OnlineProximalComparison
+import Mathlib.Analysis.Calculus.Deriv.Abs
+open Set
+namespace BanditRL.OnlineProximalCanary
+
+theorem nonsmooth_shifted_quadratic :
+    IsMinOn (fun z : ℝ => |z| + (z - 1 / 2) ^ 2 / 2) univ 0 ∧
+      ¬ DifferentiableAt ℝ (abs : ℝ → ℝ) 0 ∧
+      (∀ u : ℝ, -|u| ≤ -u / 2) ∧
+      (-1 / 4 : ℝ) ≤ -1 / 8
+
+theorem boundary_linear_regularizer :
+    IsMinOn (fun z : ℝ => z + (-z / 2)) (Icc 0 1) 0 ∧
+      (∀ u ∈ Icc (0 : ℝ) 1, -u ≤ -u / 2) ∧
+      ¬ IsMinOn (fun z : ℝ => z + (-z / 2)) univ 0
+
+theorem nonconvex_regularizer :
+    IsMinOn (fun z : ℝ => z ^ 2 + (-z ^ 2 / 2 + z)) univ (-1) ∧
+      ¬ ConvexOn ℝ univ (fun z : ℝ => -z ^ 2 / 2 + z) ∧
+      (∀ u : ℝ, 1 - u ^ 2 ≤ 2 * (u + 1)) ∧
+      (1 : ℝ) ≤ 2
+
+end BanditRL.OnlineProximalCanary

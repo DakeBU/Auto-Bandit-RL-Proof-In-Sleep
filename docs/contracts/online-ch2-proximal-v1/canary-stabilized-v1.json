@@ -1,0 +1,30 @@
+{
+  "stage": "stabilized",
+  "targets": [
+    {
+      "declaration": "BanditRL.OnlineProximalCanary.nonsmooth_shifted_quadratic",
+      "exact_proposed_header": "theorem nonsmooth_shifted_quadratic :\n    IsMinOn (fun z : ℝ => |z| + (z - 1 / 2) ^ 2 / 2) univ 0 ∧\n      ¬ DifferentiableAt ℝ (abs : ℝ → ℝ) 0 ∧\n      (∀ u : ℝ, -|u| ≤ -u / 2) ∧\n      (-1 / 4 : ℝ) ≤ -1 / 8",
+      "statement_hash": "d70f666509d4570e5d201c120bfc98bc8216387ee299b3bfaae1d41551be67ca"
+    },
+    {
+      "declaration": "BanditRL.OnlineProximalCanary.boundary_linear_regularizer",
+      "exact_proposed_header": "theorem boundary_linear_regularizer :\n    IsMinOn (fun z : ℝ => z + (-z / 2)) (Icc 0 1) 0 ∧\n      (∀ u ∈ Icc (0 : ℝ) 1, -u ≤ -u / 2) ∧\n      ¬ IsMinOn (fun z : ℝ => z + (-z / 2)) univ 0",
+      "statement_hash": "fa40d4dabb7bcd0374302e4af8a19b931e3baf40973d9024639a97f0ffd1bbd7"
+    },
+    {
+      "declaration": "BanditRL.OnlineProximalCanary.nonconvex_regularizer",
+      "exact_proposed_header": "theorem nonconvex_regularizer :\n    IsMinOn (fun z : ℝ => z ^ 2 + (-z ^ 2 / 2 + z)) univ (-1) ∧\n      ¬ ConvexOn ℝ univ (fun z : ℝ => -z ^ 2 / 2 + z) ∧\n      (∀ u : ℝ, 1 - u ^ 2 ≤ 2 * (u + 1)) ∧\n      (1 : ℝ) ≤ 2",
+      "statement_hash": "6633c448821aae6c6cca6fae0fe7ea62e01907bc782ebc4c3fce1e9ea8d9c4ef"
+    }
+  ],
+  "context_sha256": "512a119511bd285dc722d98473b1981240faa860ed4df8e2ad4aa06c9af4b289",
+  "draft_sha256": "07cf132c1bfc2ad167e26aa1ed76b0dfcaeea0a29c5efb22061b6a1d7b02aa23",
+  "review_sha256": "06feae01fa803781b419dcc26ee221a184581c829ea828c4ea8d685fe19f7f13",
+  "production_sha256": "04dae0024d9a2b61016b4652767f4d678725325a040a02c62680a202ec2593d2",
+  "allowed_file": "Tests/OnlineProximalComparisonCanary.lean",
+  "allowed_scope": "Only these exact3 theorem bodies, proof imports and scoped context; no other production declarations or old root/Test/reader files.",
+  "actual_VALUE_dependency_required": "BanditRL.OnlineProximal.convex_minimizer_comparison",
+  "source_container_closed": false,
+  "chapter_complete": false,
+  "whole_Goal_status": "ACTIVE"
+}

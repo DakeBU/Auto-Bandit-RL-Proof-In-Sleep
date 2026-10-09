@@ -1,0 +1,71 @@
+/-
+Source dependency: Orabona, Online Learning, arXiv:1912.13213v10,
+Chapter 2 post-Theorem 2.13 observation and Section 15.5.1,
+Algorithm 15.8 / Theorem 15.30 (printed pp.265-266, PDF pp.277-278).
+This is a reusable real-valued minimizer comparison, not that full theorem.
+Theorem 2.8 explicitly assumes differentiability of its objective; the present
+proof instead differentiates only h along a feasible segment and permits a
+nonsmooth convex f. An actual supplied minimum of f+h is essential.
+No minimizer existence, uniqueness, recursion, feedback or Bregman regret
+guarantee is asserted. Source extended-real/domain/subgradient bridges and
+the same-run fixed/variable-step algorithm terminals remain required/open.
+The ambient real normed space generalizes the source finite-dimensional space.
+-/
+import Mathlib.Analysis.Convex.Function
+import Mathlib.Analysis.Calculus.LocalExtr.Basic
+import Mathlib.Analysis.Calculus.Deriv.Comp
+import Mathlib.Analysis.Calculus.Deriv.Mul
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.Module
+
+noncomputable section
+open Set
+namespace BanditRL.OnlineProximal
+variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+
+theorem convex_minimizer_comparison (V : Set E) (f h : E → ℝ) (p : E)
+    (hp : p ∈ V) (hf : ConvexOn ℝ V f)
+    (hmin : IsMinOn (fun z => f z + h z) V p)
+    (h' : E →L[ℝ] ℝ) (hd : HasFDerivAt h h' p) :
+    ∀ u ∈ V, f p - f u ≤ h' (u - p) := by
+  intro u hu
+  let q : ℝ → E := fun a => p + a • (u - p)
+  have hq (a : ℝ) : q a = (1 - a) • p + a • u := by
+    dsimp [q]
+    module
+  let H : ℝ → ℝ := fun a => a * (f u - f p) + h (q a) - h p
+  have hminH : IsMinOn H (Icc 0 1) 0 := by
+    intro a ha
+    have hqa : q a ∈ V := by
+      rw [hq]
+      exact hf.1 hp hu (sub_nonneg.mpr ha.2) ha.1 (by ring)
+    have hm : f p + h p ≤ f (q a) + h (q a) := hmin hqa
+    have hc := hf.2 hp hu (sub_nonneg.mpr ha.2) ha.1 (by ring : (1 - a) + a = 1)
+    rw [← hq] at hc
+    simp only [smul_eq_mul] at hc
+    rw [show H 0 = 0 by simp [H, q]]
+    change 0 ≤ a * (f u - f p) + h (q a) - h p
+    have hs := hm.trans (add_le_add_right hc (h (q a)))
+    have he : a * (f u - f p) + h (q a) - h p =
+        ((1 - a) * f p + a * f u + h (q a)) - (f p + h p) := by ring
+    rw [he]
+    exact sub_nonneg.mpr hs
+  have hqd : HasDerivAt q (u - p) 0 := by
+    simpa only [q, one_smul] using
+      ((hasDerivAt_id (0 : ℝ)).smul_const (u - p)).const_add p
+  have hhd : HasDerivAt (fun a => h (q a)) (h' (u - p)) 0 := by
+    exact hd.comp_hasDerivAt_of_eq 0 hqd (by simp [q])
+  have hHd : HasDerivAt H (f u - f p + h' (u - p)) 0 := by
+    simpa only [H, one_mul] using
+      (((hasDerivAt_id (0 : ℝ)).mul_const (f u - f p)).add hhd).sub_const (h p)
+  have ht : (1 : ℝ) ∈ posTangentConeAt (Icc 0 1) 0 := by
+    have hs : segment ℝ (0 : ℝ) 1 ⊆ Icc 0 1 :=
+      (convex_Icc (0 : ℝ) 1).segment_subset (by simp) (by simp)
+    simpa only [sub_zero] using sub_mem_posTangentConeAt_of_segment_subset
+      hs
+  have hn := hminH.localize.hasFDerivWithinAt_nonneg
+    hHd.hasFDerivAt.hasFDerivWithinAt ht
+  simp only [ContinuousLinearMap.toSpanSingleton_apply, smul_eq_mul, one_mul] at hn
+  linarith
+
+end BanditRL.OnlineProximal
