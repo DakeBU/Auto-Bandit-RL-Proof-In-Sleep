@@ -1,0 +1,113 @@
+{
+  "schema_version": "2.0",
+  "id": "CONFIDENCE-INTERVAL-CERTIFICATES-20261009",
+  "route": "shared-confidence-infrastructure",
+  "frontier_cell": "deterministic-error-and-interval-certificates",
+  "source_facing": false,
+  "source": {
+    "kind": "internal-design",
+    "title": "Absolute-error certificates and finite interval comparisons",
+    "version": "Author-derived canonical interface v1, 2026-10-09",
+    "anchor": "docs/confidence-intervals/source-contract.md",
+    "url": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/68e9a4f31a88a7aad998d86fd560180a490c4e80/docs/confidence-intervals/source-contract.md"
+  },
+  "target": "Reusable deterministic composition and interval comparison; no stochastic or algorithmic guarantee",
+  "affected_files": [
+    "BanditRLProof.lean",
+    "BanditRLProof/ConfidenceIntervals.lean",
+    "Tests.lean",
+    "Tests/ConfidenceIntervalsCanary.lean",
+    "docs/confidence-intervals/lesson.md",
+    "docs/confidence-intervals/source-contract.md",
+    "docs/confidence-intervals/formal-packet.md",
+    "docs/confidence-intervals/DependencyExport.lean",
+    "docs/confidence-intervals/proof-term-graph.json"
+  ],
+  "declarations": [
+    "BanditRLProof.ConfidenceIntervals.bias_statistical_composition",
+    "BanditRLProof.ConfidenceIntervals.survivors",
+    "BanditRLProof.ConfidenceIntervals.optimal_survives",
+    "BanditRLProof.ConfidenceIntervals.large_gap_removed"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "new_shared",
+    "searched_existing": [
+      "ProbabilityUnionBound",
+      "FiniteRealArgmax",
+      "ConcentrationConfidenceSchedule",
+      "existing HOO confidence/interval consumers",
+      "Mathlib real absolute-value and Finset filter APIs"
+    ],
+    "reused_declarations": [
+      "abs_add_le",
+      "abs_le",
+      "Finset.mem_filter"
+    ],
+    "new_shared_declarations": [
+      "BanditRLProof.ConfidenceIntervals.survivors"
+    ],
+    "known_consumers": [
+      "BanditRLProof.ConfidenceIntervals.optimal_survives",
+      "BanditRLProof.ConfidenceIntervals.large_gap_removed"
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "One literal interval filter supports two actually compiled consumers. Mathlib supplies arithmetic; no concentration result or maximizer implementation is duplicated."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/generic_blind_decode",
+    "source_reviewer": "/root/generic_source_review",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Canonical deterministic interface accepted. Removal does not require an optimality premise; coverage forces active radii nonnegative, and the active witness plus width upper bound forces r≥0. Exact v2 signature audit occurred after clean-port; superseded-invalid v1 evidence is retained; no fresh pre-proof Source-Anchor chronology or whole-integration acceptance is claimed."
+  },
+  "graph_contribution": {
+    "lean_graph": "new-node",
+    "overview_graph": "no-change-with-reason",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Elementary triangle and interval ordering inside a single real-valued setting; no new typed cross-domain transport.",
+    "focus_targets": [
+      "docs/confidence-intervals/proof-term-graph.json",
+      "BanditRLProof.ConfidenceIntervals"
+    ],
+    "visual_review": "Structural inspection of locally generated Lean Graph module shards confirms the imported module/declarations. Existing layout unchanged; authored source, formula proof, assumption/boundary explanation and folded exact Lean were independently matched. No new screenshot/layout certification claimed.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "no-change-with-reason: generic certificate interface; no textbook theorem route completed.",
+    "banditrlwiki": "no-change-with-reason: no new setting, algorithm or frontier result.",
+    "results_ledger": "no-change-with-reason: no accepted regret/sample-complexity milestone.",
+    "roadmap": "no-change-with-reason: reusable mathematical floor only.",
+    "website_surfaces": [
+      "Automatically generated module/declaration/Lean Graph nodes; generic lesson under docs/confidence-intervals; no conceptual hypergraph change."
+    ]
+  },
+  "truth_boundary": "Deterministic certificates only. No estimator, probability bound, independence, random stopping, runtime or complexity statement. Unmerged contribution; no main integration claim. Source-role delta and corrected seal chronology are explicit in source-review.md; these are canonical reusable node semantics, not a newly sealed original theorem route.",
+  "verification": {
+    "focused_checks": [
+      "lake build BanditRLProof.ConfidenceIntervals Tests.ConfidenceIntervalsCanary",
+      "lake env lean --run docs/confidence-intervals/DependencyExport.lean --compact docs/confidence-intervals/proof-term-graph.json",
+      "#print axioms: propext, Classical.choice, Quot.sound only"
+    ],
+    "bandit_check": "passed python tools/bandit.py check; full library, Tests, proof exporter/placeholder guard and 451 tool tests (7 skipped)",
+    "site_build": "passed python website/scripts/build_site.py --lean-verified; local only",
+    "site_check": "passed python website/scripts/check_site.py; internal links, Lean links and generated site contracts valid",
+    "independent_review": "docs/confidence-intervals/blind-reconstruction.md; source-topology.json; source-topology-review.json; source-review-packet.md; source-review.md. Distinct actors; exact source/formal hashes retained."
+  },
+  "contributor": {
+    "name": "Codex",
+    "role": "formalizer; distinct independent semantic actors recorded separately"
+  }
+}

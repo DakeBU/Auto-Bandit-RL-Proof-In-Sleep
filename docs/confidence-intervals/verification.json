@@ -1,0 +1,43 @@
+{
+  "date": "2026-10-09",
+  "integration_status": "unmerged-candidate",
+  "source_role": "canonical reusable library nodes; no novel research result attributed",
+  "lean_toolchain": "leanprover/lean4:v4.29.1",
+  "base_commit": "6847b678a73db68dee5101d6f05c2453c1405afc",
+  "compiled": true,
+  "canary": "passed; printed axioms limited to propext/Classical.choice/Quot.sound",
+  "new_source_axioms_or_holes": false,
+  "dependency_graph": {
+    "path": "docs/confidence-intervals/proof-term-graph.json",
+    "sha256": "44259597c606c5300600e849cf61bf89b2fc4d581d58cd0fa22a441ac44b19e6",
+    "semantics": "direct compiled type/value constant occurrences, with separate import edges; generated declarations retained"
+  },
+  "semantic_review": "Accepted canonical reusable mathematical semantics by /root/generic_source_review; exact independently bound packets and residual seal/integration boundaries preserved.",
+  "source_topology_review": "accepted by distinct source-only reviewer; exact hashes in source-topology-review.json",
+  "seal_history": "v1 retained as superseded-invalid; v2 exact signature audit explicitly after port, not a retrospective fresh pre-proof Source-Anchor seal",
+  "release_boundary": "Review candidate only. No main merge or public site deployment.",
+  "checks": [
+    {
+      "command": "lake build BanditRLProof.ConfidenceIntervals Tests.ConfidenceIntervalsCanary",
+      "exit_code": 0
+    },
+    {
+      "command": "python tools/bandit.py check",
+      "exit_code": 0,
+      "detail": "root, Tests, proof exporter, placeholder guard, 451 tool tests passed (7 skipped)"
+    },
+    {
+      "command": "python website/scripts/build_site.py --lean-verified",
+      "exit_code": 0
+    },
+    {
+      "command": "python website/scripts/check_site.py",
+      "exit_code": 0
+    },
+    {
+      "command": "python tools/check_contributor_contract.py --base 6847b678a73db68dee5101d6f05c2453c1405afc",
+      "exit_code": null,
+      "status": "pending final metadata commit"
+    }
+  ]
+}
