@@ -1,0 +1,46 @@
+-- Signature seal v1. No proof search performed for these statements at sealing.
+-- Trace uses universe-polymorphic PUnit at n=0 (Unit-equivalent singleton).
+namespace BanditRLProof.AdaptiveTranscript
+open QuantumBlockEncoding
+open scoped Matrix.Norms.L2Operator
+
+theorem finite_kernel_chain {α β : Type*} [Fintype α] [Fintype β]
+    (p q : α → ℝ) (k l : α → β → ℝ)
+    (hp : ∀ h, 0 ≤ p h) (hq : ∀ h, 0 ≤ q h)
+    (hk : ∀ h j, 0 ≤ k h j) (hl : ∀ h j, 0 ≤ l h j)
+    (hk1 : ∀ h, ∑ j, k h j = 1) (hl1 : ∀ h, ∑ j, l h j = 1) :
+    BasisHellinger.hellingerSq (fun h : α × β => p h.1 * k h.1 h.2)
+      (fun h : α × β => q h.1 * l h.1 h.2) =
+      BasisHellinger.hellingerSq p q + ∑ h,
+        Real.sqrt (p h) * Real.sqrt (q h) * BasisHellinger.hellingerSq (k h) (l h)
+
+variable {ι : Type*} [Fintype ι] [DecidableEq ι] {K D : ℕ}
+
+theorem density_nonneg (policy : List ι → ResetBlockProcess.Plan K D ι)
+    (oracle : Fin K → Matrix.unitaryGroup ι ℂ) (ψ : EuclideanSpace ℂ ι)
+    (n : ℕ) (h : Trace ι n) : 0 ≤ density policy oracle ψ n h
+
+theorem density_normalized (policy : List ι → ResetBlockProcess.Plan K D ι)
+    (oracle : Fin K → Matrix.unitaryGroup ι ℂ) (ψ : EuclideanSpace ℂ ι)
+    (hψ : ‖ψ‖ = 1) (n : ℕ) : ∑ h, density policy oracle ψ n h = 1
+
+theorem expectedCost_succ (policy : List ι → ResetBlockProcess.Plan K D ι)
+    (oracle : Fin K → Matrix.unitaryGroup ι ℂ) (ψ : EuclideanSpace ℂ ι)
+    (hψ : ‖ψ‖ = 1) (η : Fin K → ℝ) (n : ℕ) :
+    expectedCost policy oracle ψ η (n + 1) = expectedCost policy oracle ψ η n +
+      ∑ h : Trace ι n, density policy oracle ψ n h *
+        ((QuantumQueryWord.queryCount (policy (history h)).word : ℝ) *
+          η (policy (history h)).arm ^ 2)
+
+theorem adaptive_hellinger_le (policy : List ι → ResetBlockProcess.Plan K D ι)
+    (oracleE oracleF : Fin K → Matrix.unitaryGroup ι ℂ)
+    (ψ : EuclideanSpace ℂ ι) (hψ : ‖ψ‖ = 1) (η : Fin K → ℝ)
+    (hEF : ∀ i, ‖(oracleE i : Matrix ι ι ℂ) - (oracleF i : Matrix ι ι ℂ)‖ ≤ η i)
+    (n : ℕ) :
+    BasisHellinger.hellingerSq (density policy oracleE ψ n) (density policy oracleF ψ n) ≤
+      (D : ℝ) / 2 *
+        (expectedCost policy oracleE ψ η n + expectedCost policy oracleF ψ η n)
+
+-- Post-density, actual PMF construction requires produced density_normalized.
+-- A precise PMF/list bridge signature will be frozen separately before its proof.
+end BanditRLProof.AdaptiveTranscript

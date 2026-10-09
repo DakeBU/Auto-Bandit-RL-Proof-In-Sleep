@@ -1,0 +1,833 @@
+{
+  "schema_version": "1.1",
+  "artifact": "adaptive-source-topology",
+  "source": "C:/qb261009/bandit/.private/attempts/2026-10-09/adaptive-information-source.md",
+  "scope": "Source-first reconstruction from unchanged original source, separate post-review clarification ledger, and this agent's original topology only. No Lean implementation or other review inspected.",
+  "source_status": "Statement frozen before implementation; not proved. All proof nodes below are obligations or intended deductions, not certified implementation facts.",
+  "privacy": "Local private artifact; no publication, push, registry change, or contact with other chats.",
+  "novelty": "No scientific novelty claim or external attribution.",
+  "edge_semantics": "Every depends_on list is one conjunctive AND tail: all listed nodes are needed. Multiple route variants, when present, are explicitly distinguished.",
+  "notation": {
+    "q(h)": "Exact syntactic number of forward plus inverse oracle calls in the plan selected from classical list h; coerced to real in numerical bounds.",
+    "a(h)": "The single arm selected by the shared policy from h.",
+    "w(h)": "q(h) * eta[a(h)]^2, the nonnegative arm-local charge.",
+    "H2(p,q)": "sum_x (sqrt(p[x]) - sqrt(q[x]))^2; no factor 1/2.",
+    "A_E(n)": "sum_h p_E(n,h) * w(list(h)), an expected next-block charge over length-n traces.",
+    "list": "The chronological outcome list obtained by recursively appending the newest outcome.",
+    "actual_history_law": "The previously defined historyLaw referred to by the source; its exact signature and implementation were not inspected.",
+    "history": "The same chronological map as list; injectivity and length n must be proved explicitly.",
+    "historyQueryCost": "The pre-existing syntactic integer query-count definition, counting forward and inverse calls; exact Lean signature was not inspected.",
+    "sealed T": "T : Nat; convert to real only in numerical bounds."
+  },
+  "nodes": [
+    {
+      "id": "R_FINITE_MODEL",
+      "kind": "root_assumption",
+      "statement": "Finite outcome type iota, finite arm type K, and integer query cap D >= 0; K may be empty if a suitable policy exists.",
+      "depends_on": [],
+      "source_basis": "explicit"
+    },
+    {
+      "id": "R_FRESH_STATE",
+      "kind": "root_assumption",
+      "statement": "One supplied normalized fresh pure state psi is used in every block; no quantum state crosses a boundary.",
+      "depends_on": [],
+      "source_basis": "explicit"
+    },
+    {
+      "id": "R_ORACLES",
+      "kind": "root_assumption",
+      "statement": "E and F are two actual unitary oracle families indexed by K. Known gates in every plan are unitary mathematical inputs.",
+      "depends_on": [],
+      "source_basis": "explicit"
+    },
+    {
+      "id": "R_POLICY",
+      "kind": "root_assumption",
+      "statement": "One deterministic policy is shared by E and F and depends only on prior classical outcome lists. A Plan has an arm, a chronological word of known unitaries / forward calls / inverse calls, and a proof q(h) <= D. Empty words are allowed.",
+      "depends_on": [
+        "R_FINITE_MODEL"
+      ],
+      "source_basis": "explicit"
+    },
+    {
+      "id": "R_DISTANCE",
+      "kind": "root_assumption",
+      "statement": "For each arm i, ||E_i - F_i||op <= eta_i. This is the only environment-distance premise.",
+      "depends_on": [
+        "R_ORACLES"
+      ],
+      "source_basis": "explicit"
+    },
+    {
+      "id": "D_TRACE",
+      "kind": "definition",
+      "statement": "Trace(0) = Unit and Trace(n+1) = Trace(n) x iota, with prior trace first and new outcome second. Trace(n) is finite.",
+      "depends_on": [
+        "R_FINITE_MODEL"
+      ],
+      "source_basis": "explicit"
+    },
+    {
+      "id": "D_LIST",
+      "kind": "definition",
+      "statement": "list(()) = [] and list((h,j)) = list(h) ++ [j]. Therefore list(h) has length n for h in Trace(n).",
+      "depends_on": [
+        "D_TRACE"
+      ],
+      "source_basis": "explicit plus elementary consequence"
+    },
+    {
+      "id": "L_LIST_ENCODING",
+      "kind": "bridge_obligation",
+      "statement": "The chronological history map is injective and has length n. Consequently it bijects Trace(n) with length-n lists; use these proved properties in point-mass identities, rather than infer Hellinger invariance from pushforward equality alone.",
+      "depends_on": [
+        "L_HISTORY_LENGTH",
+        "L_HISTORY_INJECTIVE"
+      ],
+      "source_basis": "reconstruction of the required list-law bridge"
+    },
+    {
+      "id": "D_PLAN_SELECTION",
+      "kind": "definition",
+      "statement": "At trace h, select the same plan policy(list(h)) in both environments, hence the same a(h), chronological word, and q(h).",
+      "depends_on": [
+        "R_POLICY",
+        "D_LIST"
+      ],
+      "source_basis": "explicit"
+    },
+    {
+      "id": "L_WORD_UNITARY",
+      "kind": "derived_obligation",
+      "statement": "Actual evaluation of every selected chronological word is unitary in E and F, including inverse calls and the empty word.",
+      "depends_on": [
+        "R_ORACLES",
+        "D_PLAN_SELECTION"
+      ],
+      "source_basis": "explicit existing-mathematics prerequisite; no implementation inspected"
+    },
+    {
+      "id": "L_OUTPUT_NORMALIZED",
+      "kind": "derived_obligation",
+      "statement": "Evaluating a selected word on psi produces a state of norm one in each environment.",
+      "depends_on": [
+        "L_WORD_UNITARY",
+        "R_FRESH_STATE"
+      ],
+      "source_basis": "explicit requirement"
+    },
+    {
+      "id": "D_ACTUAL_KERNEL",
+      "kind": "definition",
+      "statement": "k_E(h,j) and k_F(h,j) are the existing actual computational-basis output probabilities of the selected word on psi under its selected arm's oracle. Measurement is the existing basis measurement.",
+      "depends_on": [
+        "D_PLAN_SELECTION",
+        "R_FRESH_STATE",
+        "R_ORACLES"
+      ],
+      "source_basis": "explicit"
+    },
+    {
+      "id": "L_KERNEL_NONNEGATIVE",
+      "kind": "derived_obligation",
+      "statement": "For all histories and outcomes, k_E(h,j) >= 0 and k_F(h,j) >= 0, from actual basis probability formulas, not an extra kernel premise.",
+      "depends_on": [
+        "D_ACTUAL_KERNEL",
+        "L_WORD_UNITARY"
+      ],
+      "source_basis": "explicit requirement"
+    },
+    {
+      "id": "L_KERNEL_NORMALIZED",
+      "kind": "derived_obligation",
+      "statement": "For every history h, sum_j k_E(h,j) = sum_j k_F(h,j) = 1, from word unitarity and normalized input.",
+      "depends_on": [
+        "D_ACTUAL_KERNEL",
+        "L_OUTPUT_NORMALIZED"
+      ],
+      "source_basis": "explicit requirement"
+    },
+    {
+      "id": "D_H2",
+      "kind": "definition",
+      "statement": "H2(p,q) = sum_x (sqrt(p_x) - sqrt(q_x))^2 on a finite index type, without a factor 1/2.",
+      "depends_on": [
+        "R_FINITE_MODEL"
+      ],
+      "source_basis": "explicit"
+    },
+    {
+      "id": "L_H2_CHAIN_ALGEBRA",
+      "kind": "auxiliary_obligation",
+      "statement": "For arbitrary nonnegative finite parent densities p,q and normalized nonnegative kernels k,l: H2(p*k,q*l) = H2(p,q) + sum_h sqrt(p_h*q_h) * H2(k_h,l_h). Parent normalization is not a premise. Expand finite product sums, square roots of nonnegative products, squares, and use each kernel's mass one.",
+      "depends_on": [
+        "D_H2"
+      ],
+      "local_assumptions": [
+        "Finite parent and child types",
+        "p_h >= 0 and q_h >= 0",
+        "k_hj >= 0 and l_hj >= 0",
+        "sum_j k_hj = sum_j l_hj = 1"
+      ],
+      "source_basis": "explicit identity and proof route"
+    },
+    {
+      "id": "L_AFFINITY_AMGM",
+      "kind": "auxiliary_obligation",
+      "statement": "For nonnegative real p,q: 0 <= sqrt(p*q) and 2*sqrt(p*q) <= p+q. Thus sqrt(p*q) <= (p+q)/2.",
+      "depends_on": [],
+      "local_assumptions": [
+        "p >= 0",
+        "q >= 0"
+      ],
+      "source_basis": "explicit proof route"
+    },
+    {
+      "id": "L_INVERSE_DISTANCE",
+      "kind": "per_word_dependency",
+      "statement": "Inverse oracle calls satisfy ||E_i^(-1) - F_i^(-1)||op <= eta_i, using unitarity and ||E_i^(-1) - F_i^(-1)||op = ||E_i - F_i||op or its sufficient inequality.",
+      "depends_on": [
+        "R_ORACLES",
+        "R_DISTANCE"
+      ],
+      "source_basis": "reconstructed mathematical prerequisite for charging inverse calls"
+    },
+    {
+      "id": "L_WORD_PERTURBATION",
+      "kind": "per_word_dependency",
+      "statement": "A same-arm word with q oracle calls has output state distance at most q*eta_arm: telescope chronological unitary products, charge each forward and inverse occurrence, and give known gates zero environment-difference charge.",
+      "depends_on": [
+        "L_WORD_UNITARY",
+        "R_FRESH_STATE",
+        "R_DISTANCE",
+        "L_INVERSE_DISTANCE",
+        "D_PLAN_SELECTION"
+      ],
+      "source_basis": "reconstruction of the existing per-word mathematics cited by the source"
+    },
+    {
+      "id": "L_BASIS_H2_CONTRACTION",
+      "kind": "per_word_dependency",
+      "statement": "For actual computational-basis masses from two pure states, H2 is bounded by their squared state distance, using sqrt(|amplitude|^2) = |amplitude| and the reverse triangle inequality coordinatewise.",
+      "depends_on": [
+        "D_ACTUAL_KERNEL",
+        "D_H2"
+      ],
+      "source_basis": "reconstruction of the existing per-word mathematics cited by the source"
+    },
+    {
+      "id": "L_QUERY_CAP_ALGEBRA",
+      "kind": "auxiliary_obligation",
+      "statement": "For nonnegative integer query count q <= D, q^2*eta^2 <= D*q*eta^2. q*eta >= 0 follows from the operator-distance bound on the selected arm; eta^2 is always nonnegative.",
+      "depends_on": [
+        "R_POLICY",
+        "R_DISTANCE"
+      ],
+      "source_basis": "reconstructed arithmetic linking per-word estimate and source bound"
+    },
+    {
+      "id": "L_PER_WORD_H2",
+      "kind": "derived_obligation",
+      "statement": "For every history h: H2(k_E(h),k_F(h)) <= D*q(h)*eta[a(h)]^2. This must be produced from existing per-word mathematics, not inserted as a new root assumption.",
+      "depends_on": [
+        "L_WORD_PERTURBATION",
+        "L_BASIS_H2_CONTRACTION",
+        "L_QUERY_CAP_ALGEBRA"
+      ],
+      "source_basis": "explicit claimed available per-word bound with reconstructed prerequisites"
+    },
+    {
+      "id": "D_TRACE_DENSITY",
+      "kind": "definition",
+      "statement": "p_E(0,()) = p_F(0,()) = 1; p_E(n+1,(h,j)) = p_E(n,h)*k_E(list(h),j), similarly F. These are literal recursively defined real densities on Trace(n).",
+      "depends_on": [
+        "D_TRACE",
+        "D_LIST",
+        "D_ACTUAL_KERNEL"
+      ],
+      "source_basis": "explicit"
+    },
+    {
+      "id": "L_DENSITY_NONNEGATIVE",
+      "kind": "derived_obligation",
+      "statement": "Inductively p_E(n,h) >= 0 and p_F(n,h) >= 0.",
+      "depends_on": [
+        "D_TRACE_DENSITY",
+        "L_KERNEL_NONNEGATIVE"
+      ],
+      "source_basis": "required source recurrence consequence"
+    },
+    {
+      "id": "L_DENSITY_NORMALIZED",
+      "kind": "derived_obligation",
+      "statement": "Inductively sum_h p_E(n,h) = sum_h p_F(n,h) = 1, by finite product-sum factorization and actual kernel mass one.",
+      "depends_on": [
+        "D_TRACE_DENSITY",
+        "L_KERNEL_NORMALIZED"
+      ],
+      "source_basis": "required consequence; not a root premise"
+    },
+    {
+      "id": "L_ACTUAL_TRACE_CHAIN",
+      "kind": "derived_obligation",
+      "statement": "H2(p_E(n+1),p_F(n+1)) = H2(p_E(n),p_F(n)) + sum_h sqrt(p_E(n,h)*p_F(n,h))*H2(k_E(list(h)),k_F(list(h))).",
+      "depends_on": [
+        "L_H2_CHAIN_ALGEBRA",
+        "D_TRACE_DENSITY",
+        "L_DENSITY_NONNEGATIVE",
+        "L_KERNEL_NONNEGATIVE",
+        "L_KERNEL_NORMALIZED"
+      ],
+      "source_basis": "explicit proof route instantiated with actual kernels"
+    },
+    {
+      "id": "D_WEIGHT",
+      "kind": "definition",
+      "statement": "w(h) = q(h)*eta[a(h)]^2 >= 0. Both forward and inverse oracle calls are counted; only the arm selected at h is charged.",
+      "depends_on": [
+        "D_PLAN_SELECTION",
+        "R_DISTANCE"
+      ],
+      "source_basis": "explicit"
+    },
+    {
+      "id": "D_PATH_COST",
+      "kind": "definition",
+      "statement": "C(0,()) = 0 and C(n+1,(h,j)) = C(n,h) + w(list(h)). Charge is chosen from the prior history and does not depend on the new outcome j.",
+      "depends_on": [
+        "D_TRACE",
+        "D_LIST",
+        "D_WEIGHT"
+      ],
+      "source_basis": "explicit"
+    },
+    {
+      "id": "L_PATH_COST_NONNEGATIVE",
+      "kind": "derived_obligation",
+      "statement": "C(n,h) >= 0 by induction from nonnegative charges.",
+      "depends_on": [
+        "D_PATH_COST",
+        "D_WEIGHT"
+      ],
+      "source_basis": "elementary source consequence"
+    },
+    {
+      "id": "D_EXPECTED_COST",
+      "kind": "definition",
+      "statement": "EC_E(n) = sum_h p_E(n,h)*C(n,h), and similarly EC_F. These are the two environments' own expectations of the same pathwise cost function.",
+      "depends_on": [
+        "D_TRACE_DENSITY",
+        "D_PATH_COST"
+      ],
+      "source_basis": "explicit"
+    },
+    {
+      "id": "L_EXPECTED_COST_RECURRENCE",
+      "kind": "derived_obligation",
+      "statement": "EC_E(0) = EC_F(0) = 0; EC_E(n+1) = EC_E(n)+A_E(n), and EC_F(n+1) = EC_F(n)+A_F(n). Expand joint sums and use normalization of the actual conditional kernels.",
+      "depends_on": [
+        "D_EXPECTED_COST",
+        "D_TRACE_DENSITY",
+        "D_PATH_COST",
+        "L_KERNEL_NORMALIZED"
+      ],
+      "source_basis": "explicit proof obligation"
+    },
+    {
+      "id": "L_H2_ONE_STEP",
+      "kind": "derived_obligation",
+      "statement": "H2(p_E(n+1),p_F(n+1)) <= H2(p_E(n),p_F(n)) + (D/2)*(A_E(n)+A_F(n)). Bound each chain term by D*w(h)*sqrt(p_E*p_F), then use AM-GM and nonnegative D*w(h).",
+      "depends_on": [
+        "L_ACTUAL_TRACE_CHAIN",
+        "L_PER_WORD_H2",
+        "L_AFFINITY_AMGM",
+        "L_DENSITY_NONNEGATIVE",
+        "D_WEIGHT",
+        "R_FINITE_MODEL"
+      ],
+      "source_basis": "explicit proof route"
+    },
+    {
+      "id": "L_H2_BASE",
+      "kind": "derived_obligation",
+      "statement": "H2(p_E(0),p_F(0)) = 0 and (D/2)*(EC_E(0)+EC_F(0)) = 0.",
+      "depends_on": [
+        "D_H2",
+        "D_TRACE_DENSITY",
+        "L_EXPECTED_COST_RECURRENCE"
+      ],
+      "source_basis": "induction base reconstructed from source definitions"
+    },
+    {
+      "id": "T_WEIGHTED_DENSITY",
+      "kind": "intended_root_theorem",
+      "statement": "For every fixed finite n: H2(p_E(n),p_F(n)) <= (D/2)*(EC_E(n)+EC_F(n)). Induct on n using the exact H2 chain and the actual expected-cost recurrences.",
+      "depends_on": [
+        "L_H2_BASE",
+        "L_H2_ONE_STEP",
+        "L_EXPECTED_COST_RECURRENCE"
+      ],
+      "status": "Source statement unproved; requires implementation verification separately.",
+      "source_basis": "explicit intended root"
+    },
+    {
+      "id": "B_KERNEL_PMF",
+      "kind": "actual_law_bridge_obligation",
+      "statement": "Identify each actual basis output mass k_E(h,j) with the outcome PMF used by the pre-existing reset process, and likewise F. Any PMF construction must use derived nonnegativity and normalization, and agree with the existing actual kernel pointwise.",
+      "depends_on": [
+        "D_ACTUAL_KERNEL",
+        "L_KERNEL_NONNEGATIVE",
+        "L_KERNEL_NORMALIZED"
+      ],
+      "status": "Open in the supplied source; existing signatures not available here.",
+      "source_basis": "necessary decomposition of explicit PMF/list-law bridge requirement"
+    },
+    {
+      "id": "B_TRACE_PMF",
+      "kind": "actual_law_bridge_obligation",
+      "statement": "Construct the finite trace PMF from literal nonnegative normalized densities, with PMF point mass exactly ENNReal.ofReal(p_E(n,h)), and likewise F. State and prove that mass identity explicitly.",
+      "depends_on": [
+        "D_TRACE_DENSITY",
+        "L_DENSITY_NONNEGATIVE",
+        "L_DENSITY_NORMALIZED"
+      ],
+      "status": "Open in the supplied source.",
+      "source_basis": "necessary decomposition of explicit PMF/list-law bridge requirement"
+    },
+    {
+      "id": "B_RESET_LIST_STEP",
+      "kind": "actual_law_bridge_obligation",
+      "statement": "Prove the existing reset historyLaw starts at the empty list and its next step binds the prior list law to the existing actual basis outcome PMF for policy(h), then appends the new outcome. This must use the shared deterministic classical policy and fresh state/reset model.",
+      "depends_on": [
+        "R_FRESH_STATE",
+        "R_POLICY",
+        "B_KERNEL_PMF",
+        "D_LIST"
+      ],
+      "status": "Open in the supplied source; no assumption of this identity may replace proof about existing historyLaw.",
+      "source_basis": "reconstruction of explicit actual reset-law bridge requirement"
+    },
+    {
+      "id": "B_HISTORY_LAW_EQUALITY",
+      "kind": "actual_law_bridge_obligation",
+      "statement": "For each fixed n and environment, pushforward of the finite trace PMF under chronological history equals existing historyLaw(n), proved by induction from the existing reset step. Combine with proved injectivity and length n to establish actual historyLaw point masses. Pushforward equality alone does not assert distance invariance.",
+      "depends_on": [
+        "B_TRACE_PMF_MASS",
+        "B_RESET_LIST_STEP",
+        "L_HISTORY_INJECTIVE",
+        "L_HISTORY_LENGTH",
+        "D_TRACE_DENSITY"
+      ],
+      "status": "Open in the supplied source; required before any theorem about existing historyLaw.",
+      "source_basis": "explicit required bridge, exact implementation-independent obligation reconstructed"
+    },
+    {
+      "id": "B_H2_COST_TRANSPORT",
+      "kind": "actual_law_bridge_obligation",
+      "statement": "On the same finite Trace(n) index type, substitute actual PMF toReal masses equal literal density into finite H2 and weighted finite-sum expectations. Keep the finite trace index and chronological-history representation explicit. A literal infinite-List tsum Hellinger expression is not asserted; pushforward equality alone is insufficient for such a statement.",
+      "depends_on": [
+        "B_TRACE_PMF_TO_REAL",
+        "B_HISTORY_LAW_TO_REAL",
+        "L_HISTORY_INJECTIVE",
+        "L_HISTORY_LENGTH",
+        "D_H2",
+        "D_PATH_COST",
+        "D_EXPECTED_COST"
+      ],
+      "status": "Open in the supplied source.",
+      "source_basis": "necessary consequence of explicit bridge requirement"
+    },
+    {
+      "id": "T_WEIGHTED_ACTUAL_RESET_LAW",
+      "kind": "intended_transported_theorem",
+      "statement": "The weighted finite-trace bound faithfully represents actual reset transcript masses: actual historyLaw(n)(history(h)).toReal equals p(n,h), and history is injective with length n. The Hellinger sum remains over finite Trace(n), with its original finite-trace costs. No literal infinite-List tsum Hellinger equality or theorem is advertised.",
+      "depends_on": [
+        "T_WEIGHTED_DENSITY",
+        "B_H2_COST_TRANSPORT"
+      ],
+      "status": "Bridge-dependent finite-trace interpretation; source-only artifact cannot certify provider proofs.",
+      "source_basis": "explicit contract requirement"
+    },
+    {
+      "id": "D_PATH_QUERIES",
+      "kind": "definition",
+      "statement": "Auxiliary Q(0,()) = 0 and Q(n+1,(h,j)) = Q(n,h) + q(history(h)), counting both forward and inverse calls. It must be explicitly proved equal to existing historyQueryCost(policy,history(h)); a parallel unconnected count is insufficient.",
+      "depends_on": [
+        "D_TRACE",
+        "D_LIST",
+        "D_PLAN_SELECTION"
+      ],
+      "source_basis": "reconstructed explicit pathwise real query-horizon premise"
+    },
+    {
+      "id": "R_UNIFORM_HORIZON",
+      "kind": "corollary_assumption",
+      "statement": "Original-source real-valued budget route: uniform eta and real-coerced total query cost <= real T. Clarification says the sealed consumer specializes to T : Nat, an integer count of actual calls; this node does not assert the sealed theorem proves every real-T variant.",
+      "depends_on": [
+        "D_PATH_QUERIES",
+        "R_DISTANCE"
+      ],
+      "source_basis": "explicit"
+    },
+    {
+      "id": "L_PATH_UNIFORM_COST",
+      "kind": "derived_obligation",
+      "statement": "For uniform eta, C(n,h) = Q(n,h)*eta^2 <= T*eta^2. Prove by unfolding chronological additive costs, then multiply the pathwise horizon by nonnegative eta^2.",
+      "depends_on": [
+        "D_PATH_COST",
+        "D_PATH_QUERIES",
+        "R_UNIFORM_HORIZON"
+      ],
+      "source_basis": "explicit intended route"
+    },
+    {
+      "id": "L_EXPECTED_UNIFORM_COST",
+      "kind": "derived_obligation",
+      "statement": "EC_E(n) <= T*eta^2 and EC_F(n) <= T*eta^2, using density nonnegativity, the pathwise cost bound, and derived total mass one.",
+      "depends_on": [
+        "D_EXPECTED_COST",
+        "L_PATH_UNIFORM_COST",
+        "L_DENSITY_NONNEGATIVE",
+        "L_DENSITY_NORMALIZED"
+      ],
+      "source_basis": "necessary source corollary step"
+    },
+    {
+      "id": "T_UNIFORM_DENSITY",
+      "kind": "intended_corollary",
+      "statement": "Original-source proposed real-budget corollary: H2(p_E(n),p_F(n)) <= D*T*eta^2 under a real-valued pathwise query-cost bound. This algebraic route is separate from the explicitly sealed T : Nat specialization; no proof of every real-T variant is claimed.",
+      "depends_on": [
+        "T_WEIGHTED_DENSITY",
+        "L_EXPECTED_UNIFORM_COST",
+        "R_FINITE_MODEL"
+      ],
+      "source_basis": "explicit",
+      "status": "Original-source intended real-budget route; clarification restricts the sealed consumer to Nat T."
+    },
+    {
+      "id": "T_UNIFORM_ACTUAL_RESET_LAW",
+      "kind": "intended_transported_corollary",
+      "statement": "The original-source real-budget bound can be interpreted through actual masses on the same finite Trace(n) index after explicit PMF-toReal, injective-history, and query-cost bridges. No infinite-List tsum Hellinger statement is asserted; the sealed consumer is the separate Nat T specialization.",
+      "depends_on": [
+        "T_UNIFORM_DENSITY",
+        "B_H2_COST_TRANSPORT",
+        "B_PATH_HISTORY_QUERY_COST",
+        "B_UNIFORM_HISTORY_QUERY_COST"
+      ],
+      "status": "Proposed real-budget route, not a claim about the sealed Nat-budget theorem.",
+      "source_basis": "source requirement applied to uniform corollary"
+    },
+    {
+      "id": "L_ONE_DIFFERING_ARM_SPECIALIZATION",
+      "kind": "future_reduction_support",
+      "statement": "If eta_i = 0 away from one arm a, C is eta_a^2 times the number of calls to a, and the weighted root retains that arm's two-environment expected query cost. This elementary specialization supplies input to a possible future testing reduction but proves no K-arm lower bound.",
+      "depends_on": [
+        "D_WEIGHT",
+        "D_PATH_COST",
+        "T_WEIGHTED_DENSITY"
+      ],
+      "local_assumptions": [
+        "eta_i = 0 for every i != a"
+      ],
+      "source_basis": "source motivation plus elementary specialization"
+    },
+    {
+      "id": "L_HISTORY_LENGTH",
+      "kind": "bridge_obligation",
+      "statement": "For h : Trace(n), List.length(history(h)) = n, by append-one induction. Establish length-n support of actual historyLaw from its reset recurrence where needed.",
+      "depends_on": [
+        "D_LIST"
+      ],
+      "source_basis": "explicit clarification; original encoding consequence"
+    },
+    {
+      "id": "L_HISTORY_INJECTIVE",
+      "kind": "bridge_obligation",
+      "statement": "For each fixed n, history : Trace(n) -> List(iota) is injective. Prove by recursive encoding, using uniqueness of the last outcome and prior history. Injectivity must be explicit when identifying pushed-forward point masses.",
+      "depends_on": [
+        "D_LIST"
+      ],
+      "source_basis": "explicit clarification"
+    },
+    {
+      "id": "B_TRACE_PMF_MASS",
+      "kind": "actual_law_bridge_obligation",
+      "statement": "For every finite trace h, tracePMF_E(n)(h) = ENNReal.ofReal(p_E(n,h)), and likewise F. This is a point-mass identity in ENNReal, not merely total mass or a pushforward-law assertion.",
+      "depends_on": [
+        "B_TRACE_PMF",
+        "L_DENSITY_NONNEGATIVE",
+        "L_DENSITY_NORMALIZED"
+      ],
+      "status": "Requires explicit provider proof; no Lean inspected.",
+      "source_basis": "explicit clarification"
+    },
+    {
+      "id": "B_TRACE_PMF_TO_REAL",
+      "kind": "actual_law_bridge_obligation",
+      "statement": "For each h, (tracePMF_E(n)(h)).toReal = p_E(n,h), and likewise F, by the explicit ofReal point-mass identity and nonnegativity of the density.",
+      "depends_on": [
+        "B_TRACE_PMF_MASS",
+        "L_DENSITY_NONNEGATIVE"
+      ],
+      "status": "Requires explicit provider proof; no Lean inspected.",
+      "source_basis": "explicit clarification"
+    },
+    {
+      "id": "B_HISTORY_LAW_MASS",
+      "kind": "actual_law_bridge_obligation",
+      "statement": "For h : Trace(n), existing historyLaw_E(n)(history(h)) = ENNReal.ofReal(p_E(n,h)), and likewise F. Derive from actual reset-law pushforward equality, explicit trace-PMF masses, and proved injectivity of history; retain length n.",
+      "depends_on": [
+        "B_HISTORY_LAW_EQUALITY",
+        "B_TRACE_PMF_MASS",
+        "L_HISTORY_INJECTIVE",
+        "L_HISTORY_LENGTH"
+      ],
+      "status": "Requires explicit provider proof; no Lean inspected.",
+      "source_basis": "explicit clarification"
+    },
+    {
+      "id": "B_HISTORY_LAW_TO_REAL",
+      "kind": "actual_law_bridge_obligation",
+      "statement": "For h : Trace(n), (existing historyLaw_E(n)(history(h))).toReal = p_E(n,h), and likewise F. Use the actual-law ofReal identity and density nonnegativity. This licenses substitution into a sum indexed by finite Trace(n), not an unproved infinite-List tsum equality.",
+      "depends_on": [
+        "B_HISTORY_LAW_MASS",
+        "L_DENSITY_NONNEGATIVE"
+      ],
+      "status": "Requires explicit provider proof; no Lean inspected.",
+      "source_basis": "explicit clarification"
+    },
+    {
+      "id": "B_HISTORY_QUERY_COST_RECURRENCE",
+      "kind": "existing_cost_bridge_obligation",
+      "statement": "Prove the exact existing historyQueryCost definition has empty-list cost zero and append recurrence historyQueryCost(policy,h ++ [j]) = historyQueryCost(policy,h) + q(policy(h).word), using its actual syntactic forward/inverse call accounting. The displayed function argument order is semantic notation; its Lean signature was not inspected.",
+      "depends_on": [
+        "R_POLICY",
+        "D_PLAN_SELECTION"
+      ],
+      "status": "Requires provider proof about the existing definition, not a new premise.",
+      "source_basis": "explicit clarification"
+    },
+    {
+      "id": "B_PATH_HISTORY_QUERY_COST",
+      "kind": "existing_cost_bridge_obligation",
+      "statement": "For each h : Trace(n), Q(n,h) equals existing historyQueryCost(policy,history(h)) exactly as an integer count. Induct using the existing append recurrence and chronological history map. Both forward and inverse calls preserve their original accounting.",
+      "depends_on": [
+        "D_PATH_QUERIES",
+        "B_HISTORY_QUERY_COST_RECURRENCE",
+        "D_LIST"
+      ],
+      "status": "Requires explicit provider proof; no Lean inspected.",
+      "source_basis": "explicit clarification"
+    },
+    {
+      "id": "B_UNIFORM_HISTORY_QUERY_COST",
+      "kind": "existing_cost_bridge_obligation",
+      "statement": "Under uniform eta, C(n,h) = (existing historyQueryCost(policy,history(h)) coerced to real)*eta^2. Hence EC_E(n) is eta^2 times the finite sum of p_E(n,h) times this exact existing historyQueryCost, and likewise F. This connects the weighted cost to the existing query counter, instead of leaving Q disconnected.",
+      "depends_on": [
+        "D_PATH_COST",
+        "D_EXPECTED_COST",
+        "D_PATH_QUERIES",
+        "B_PATH_HISTORY_QUERY_COST"
+      ],
+      "local_assumptions": [
+        "Uniform eta for every arm"
+      ],
+      "status": "Requires explicit provider proof; no Lean inspected.",
+      "source_basis": "explicit clarification"
+    },
+    {
+      "id": "R_NAT_HORIZON",
+      "kind": "corollary_assumption",
+      "statement": "Sealed consumer specialization: T : Nat is an integer number of oracle calls, eta is uniform, and existing historyQueryCost(policy,history(h)) <= T for every h : Trace(n). This is a fixed finite-block, pathwise query bound; it is not a random-stopping guarantee.",
+      "depends_on": [
+        "B_PATH_HISTORY_QUERY_COST",
+        "R_DISTANCE"
+      ],
+      "source_basis": "explicit clarification of original horizon terminology"
+    },
+    {
+      "id": "L_NAT_UNIFORM_COST",
+      "kind": "derived_obligation",
+      "statement": "Using the exact existing historyQueryCost linkage and its Nat horizon, C(n,h) <= (T coerced to real)*eta^2. Then EC_E(n), EC_F(n) <= (T coerced to real)*eta^2, using derived nonnegative normalized trace densities.",
+      "depends_on": [
+        "R_NAT_HORIZON",
+        "B_UNIFORM_HISTORY_QUERY_COST",
+        "D_EXPECTED_COST",
+        "L_DENSITY_NONNEGATIVE",
+        "L_DENSITY_NORMALIZED"
+      ],
+      "source_basis": "explicit clarified specialization plus elementary expected-cost route"
+    },
+    {
+      "id": "T_NAT_UNIFORM_DENSITY",
+      "kind": "intended_sealed_consumer_specialization",
+      "statement": "For fixed finite n and T : Nat bounding the exact existing total historyQueryCost, H2(p_E(n),p_F(n)) <= (D coerced to real)*(T coerced to real)*eta^2. This specializes a real-valued budget inequality and proves no stopping theorem.",
+      "depends_on": [
+        "T_WEIGHTED_DENSITY",
+        "L_NAT_UNIFORM_COST",
+        "R_FINITE_MODEL"
+      ],
+      "status": "Source-level reconstruction only; sealed implementation not inspected.",
+      "source_basis": "explicit clarification"
+    },
+    {
+      "id": "T_NAT_ACTUAL_TRACE_MASSES",
+      "kind": "intended_transported_corollary",
+      "statement": "The Nat-budget bound holds when each finite trace density is explicitly rewritten as (existing historyLaw(n)(history(h))).toReal, with the Hellinger sum still indexed by finite Trace(n). The history map is injective and has length n; no literal infinite-List tsum Hellinger expression or stopping assertion is used.",
+      "depends_on": [
+        "T_NAT_UNIFORM_DENSITY",
+        "B_H2_COST_TRANSPORT",
+        "B_UNIFORM_HISTORY_QUERY_COST"
+      ],
+      "status": "Bridge-dependent finite-trace interpretation; source-only artifact cannot certify provider proofs.",
+      "source_basis": "explicit clarification"
+    }
+  ],
+  "forbidden_extra_root_premises": [
+    "Actual-kernel normalization or nonnegativity supplied as independent input instead of derived from existing quantum model",
+    "Actual per-word H2 bound supplied as an independent premise instead of produced from existing mathematics",
+    "Conditional information bound",
+    "An assumed adaptive information chain identity",
+    "Unbiasedness",
+    "Independence of estimation errors",
+    "Normalized parent densities in the auxiliary general H2 chain identity",
+    "Assumed identification of a newly constructed density or PMF with existing historyLaw"
+  ],
+  "exclusions": [
+    {
+      "id": "X_RANDOM_POLICY",
+      "statement": "Randomized policies are outside this contract."
+    },
+    {
+      "id": "X_POVM",
+      "statement": "Arbitrary POVMs and alternative measurements are outside this contract."
+    },
+    {
+      "id": "X_STOPPING",
+      "statement": "Random stopping is outside this contract. Encoding halted steps with zero-query words is only a later suggested adapter."
+    },
+    {
+      "id": "X_RUNTIME",
+      "statement": "Finite-bit runtime and algorithmic estimation are outside this contract."
+    },
+    {
+      "id": "X_LEARNING",
+      "statement": "Regret, PAC guarantees, and minimax lower bounds are outside this contract."
+    },
+    {
+      "id": "X_K_ARM",
+      "statement": "A K-arm testing reduction is not proved here."
+    },
+    {
+      "id": "X_SYNTHESIS",
+      "statement": "Known unitary gates and normalized psi are mathematical inputs; no free synthesis/loading assertion is made."
+    },
+    {
+      "id": "X_QUANTUM_MEMORY",
+      "statement": "No quantum state persists across reset blocks; a coherent-across-block process is outside this contract."
+    },
+    {
+      "id": "X_VARIABLE_LENGTH",
+      "statement": "Only a fixed finite number of blocks is addressed; no infinite transcript or variable-length transcript theorem is asserted."
+    },
+    {
+      "id": "X_PUBLIC_GRAPH",
+      "statement": "No public graph or registry changes are authorized."
+    }
+  ],
+  "boundary_cases": [
+    "n = 0: both trace densities are the singleton mass one, C = 0, and H2 = 0.",
+    "q = 0 / empty word: the per-word perturbation and charged cost are zero; actual kernels coincide for the shared known-unitary word.",
+    "D = 0: the policy query cap forces all q = 0, giving zero root bound.",
+    "Empty K: a total Plan-producing policy on all outcome lists cannot exist because [] is a history and every Plan must contain an arm. The phrase 'possibly zero if a policy exists' is conditional and does not assert that such a policy exists.",
+    "Empty iota: normalized computational-basis probabilities on iota cannot exist, so the normalized fresh-state model prevents nonvacuous instances unless outcome indexing differs from what the source says.",
+    "Histories of zero probability: the deterministic policy and actual kernels are still defined there; the finite identity does not divide by parent mass.",
+    "Negative eta on a selected arm is inconsistent with ||E_i-F_i||op <= eta_i. Squared weights are nonnegative without a separate sign hypothesis; any step squaring a non-squared perturbation estimate must establish its right-hand side is nonnegative.",
+    "The cost and horizon quantify over literal traces. No almost-sure-only horizon variant is explicitly specified.",
+    "Clarified sealed budget T is Nat and must bound existing historyQueryCost; a real-valued route is a separate generalization.",
+    "A pushforward-law equality does not alone establish Hellinger invariance; explicit actual PMF point masses, toReal conversion, injectivity, and length n are required for the finite-trace interpretation."
+  ],
+  "source_only_findings": [
+    {
+      "severity": "open_bridge",
+      "statement": "Original source requires an actual PMF/list/historyLaw bridge; clarification makes the ofReal point masses, toReal identities, injective history, and length n explicit. The ledger reports new internal provider proofs, but this source-only artifact cannot verify them. Finite-trace H2 is the advertised root, not a literal infinite-List tsum theorem.",
+      "affected_nodes": [
+        "B_KERNEL_PMF",
+        "B_TRACE_PMF",
+        "B_RESET_LIST_STEP",
+        "B_HISTORY_LAW_EQUALITY",
+        "B_H2_COST_TRANSPORT",
+        "T_WEIGHTED_ACTUAL_RESET_LAW"
+      ]
+    },
+    {
+      "severity": "proof_detail",
+      "statement": "The source cites existing per-word mathematics without giving its exact statement. To justify D*q*eta_arm^2, that mathematics must handle actual normalized basis masses, chronological mixed forward/inverse words, and count every inverse call. The reconstruction exposes sufficient prerequisites but cannot certify the cited implementation.",
+      "affected_nodes": [
+        "L_INVERSE_DISTANCE",
+        "L_WORD_PERTURBATION",
+        "L_BASIS_H2_CONTRACTION",
+        "L_PER_WORD_H2"
+      ]
+    },
+    {
+      "severity": "specification_detail",
+      "statement": "Clarification resolves the sealed horizon as T : Nat, a count of actual forward plus inverse calls measured by existing historyQueryCost. The original real-budget route remains separate; no proof of all real-T variants or random stopping is claimed.",
+      "affected_nodes": [
+        "D_PATH_QUERIES",
+        "R_UNIFORM_HORIZON",
+        "T_UNIFORM_DENSITY"
+      ]
+    },
+    {
+      "severity": "minor_boundary_wording",
+      "statement": "A total list policy that returns an arm rules out an empty arm type in any inhabited instance; the source's empty-K phrase is conditionally harmless but vacuous for the stated total policy model.",
+      "affected_nodes": [
+        "R_FINITE_MODEL",
+        "R_POLICY"
+      ]
+    },
+    {
+      "severity": "no_detected_algebraic_defect",
+      "statement": "The general H2 identity and D/2 weighted coefficient are algebraically consistent. With nonnegative kernels and normalized kernel rows, parent normalization is unnecessary. The chain bound and expected-cost recurrence give the advertised induction; normalizing trace masses is needed for the uniform-horizon expectation bound and PMF bridge. This is a source-level assessment, not a proof or Lean verification.",
+      "affected_nodes": [
+        "L_H2_CHAIN_ALGEBRA",
+        "T_WEIGHTED_DENSITY",
+        "T_UNIFORM_DENSITY"
+      ]
+    }
+  ],
+  "coverage": {
+    "main_root": "T_WEIGHTED_DENSITY",
+    "actual_law_root": "T_WEIGHTED_ACTUAL_RESET_LAW",
+    "uniform_density_corollary": "T_UNIFORM_DENSITY",
+    "uniform_actual_law_corollary": "T_UNIFORM_ACTUAL_RESET_LAW",
+    "weighted_query_cost_retained": true,
+    "actual_reset_law_bridge_explicit": true,
+    "auxiliary_parent_normalization_required": false,
+    "implementation_files_inspected": false,
+    "prior_reviews_inspected": false,
+    "external_sources_inspected": false,
+    "nat_budget_corollary": "T_NAT_UNIFORM_DENSITY",
+    "nat_actual_trace_mass_corollary": "T_NAT_ACTUAL_TRACE_MASSES",
+    "explicit_pmf_ofReal_and_toReal_identity": true,
+    "exact_existing_historyQueryCost_linkage": true,
+    "literal_infinite_list_H2_asserted": false
+  },
+  "clarification_source": "C:/qb261009/bandit/.private/attempts/2026-10-09/adaptive-information-clarifications.md",
+  "source_hashes": [
+    {
+      "hash": "0e06332befd03e2e0fab0d4c1cb22ac226eb690cdc025d3f88426f155cbd5624",
+      "path": "C:/qb261009/bandit/.private/attempts/2026-10-09/adaptive-information-source.md",
+      "algorithm": "SHA256",
+      "role": "Unchanged original frozen source"
+    },
+    {
+      "hash": "4950f4078776899572e2befe1835a475783b27d135a7e92c1769aa5dcbf96ee9",
+      "path": "C:/qb261009/bandit/.private/attempts/2026-10-09/adaptive-information-clarifications.md",
+      "algorithm": "SHA256",
+      "role": "Separate post-review clarification ledger; not retrospectively pre-proof source"
+    }
+  ]
+}

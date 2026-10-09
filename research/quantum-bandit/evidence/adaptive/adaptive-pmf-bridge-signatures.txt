@@ -1,0 +1,26 @@
+-- Pre-proof bridge seal v1. Same policy/word/basis/fresh-state semantics.
+namespace BanditRLProof.AdaptiveTranscript
+open QuantumBlockEncoding
+variable {ι : Type*} [Fintype ι] [DecidableEq ι] {K D : ℕ}
+
+noncomputable def traceLaw (policy : List ι → ResetBlockProcess.Plan K D ι)
+    (oracle : Fin K → Matrix.unitaryGroup ι ℂ) (ψ : EuclideanSpace ℂ ι)
+    (hψ : ‖ψ‖ = 1) : (n : ℕ) → PMF (Trace ι n)
+  | 0 => PMF.pure PUnit.unit
+  | n + 1 => (traceLaw policy oracle ψ hψ n).bind fun h =>
+      (ResetBlockProcess.blockPMF (policy (history h)) oracle ψ hψ).map (Prod.mk h)
+
+theorem traceLaw_apply (policy : List ι → ResetBlockProcess.Plan K D ι)
+    (oracle : Fin K → Matrix.unitaryGroup ι ℂ) (ψ : EuclideanSpace ℂ ι)
+    (hψ : ‖ψ‖ = 1) (n : ℕ) (h : Trace ι n) :
+    traceLaw policy oracle ψ hψ n h = ENNReal.ofReal (density policy oracle ψ n h)
+
+theorem traceLaw_history_eq (policy : List ι → ResetBlockProcess.Plan K D ι)
+    (oracle : Fin K → Matrix.unitaryGroup ι ℂ) (ψ : EuclideanSpace ℂ ι)
+    (hψ : ‖ψ‖ = 1) (n : ℕ) :
+    (traceLaw policy oracle ψ hψ n).map history =
+      ResetBlockProcess.historyLaw policy oracle ψ hψ n
+
+-- Conditional-law equality and normalization are produced, not extra inputs.
+-- Not a claim about general POVMs or random stopping.
+end BanditRLProof.AdaptiveTranscript

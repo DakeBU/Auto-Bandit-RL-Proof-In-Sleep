@@ -4,7 +4,25 @@ Date: 2026-10-09. Status: **kernel-checked prototype increment, publication draf
 Neither project A nor project B is proved complete. No regret advantage, optimality,
 mixed-fidelity optimality, finite-bit implementation, or global novelty is claimed.
 
-## Private continuation: adaptive information milestone
+## Public research release — 2026-10-09
+
+The repository owner has explicitly ended confidentiality and authorized public
+frontier tracking and collaborator handoff. This branch is now a public **research
+prototype**, not an admitted main-library theorem contribution. The two project
+roots remain open. Earlier private-only wording below and in immutable audit
+receipts describes the original run, not the current publication policy.
+
+The exact adaptive source seals, lesson, blind reconstruction, seven-slot review,
+axiom output, actual dependency graph and historical verification receipt are now
+available in [evidence/adaptive/](evidence/adaptive/). Its
+[release index](evidence/adaptive/release-index.json) binds the unchanged evidence
+by hashes. Reproduce with [COLLABORATOR-HANDOFF.md](COLLABORATOR-HANDOFF.md);
+read [research-boundaries.md](research-boundaries.md) before making any claim.
+No conversation transcript, credentials, full third-party paper text or local
+environment cache is part of this release. No main merge or site deployment is
+performed by releasing this branch. Existing publication/seal debt remains visible.
+
+## Historical private continuation: adaptive information milestone
 
 This continuation is local-only. Prior remote research refs were withdrawn; only
 independent generic-library candidates were clean-ported to neutral public branches.

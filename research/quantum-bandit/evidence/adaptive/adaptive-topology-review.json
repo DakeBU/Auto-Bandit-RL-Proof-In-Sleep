@@ -1,0 +1,88 @@
+{
+  "schema_version": "1.0",
+  "artifact": "adaptive-independent-source-topology-review",
+  "reviewer": "Distinct independent agent /root/adaptive_source_review",
+  "phase": "Source-only; completed before any implementation inspection",
+  "read_set": [
+    "adaptive-information-source.md",
+    "adaptive-source-topology.json",
+    "adaptive-information-signatures.txt",
+    "adaptive-pmf-bridge-signatures.txt",
+    "adaptive-budget-signatures.txt"
+  ],
+  "implementation_inspected": false,
+  "prior_reviews_inspected": false,
+  "external_sources_inspected": false,
+  "publication_or_public_mutation": false,
+  "verdict": "Main density route coherent; exhaustive topology acceptance conditional on explicit representation/budget bridge addenda and disambiguation of the list-encoding route. No implementation or theorem certification.",
+  "structural_audit": {
+    "nodes": 47,
+    "distinct_node_ids": 47,
+    "dangling_dependencies": [],
+    "cycle_residue": [],
+    "and_tail_assessment": "The weighted-density and uniform-density routes use sufficient conjunctive tails through transitive prerequisites. Assumptions for the general chain identity remain local. The list-encoding node offers alternative proof routes without separately recording which prerequisites the downstream exact transport requires; see F3.",
+    "scope_coverage": "All explicit source objects, weighted root, uniform corollary, actual-law warning, one-arm future use, exclusions, and boundary cases are represented. PMF real-mass and existing history-query-cost bridges are covered only implicitly and should become explicit obligations."
+  },
+  "independent_algebra_reconstruction": [
+    "For a fixed parent h, expanding each child square gives p_h + q_h - 2 sqrt(p_h) sqrt(q_h) sum_j sqrt(k_hj) sqrt(l_hj), using nonnegative product square roots and both row normalizations.",
+    "The same expression is (sqrt(p_h)-sqrt(q_h))^2 + sqrt(p_h) sqrt(q_h) H2(k_h,l_h). Summing proves the stated identity without parent normalization. sqrt(p_h q_h) equals sqrt(p_h) sqrt(q_h) under the stated signs.",
+    "Word perturbation at most q eta, squared-state-distance domination of basis H2, and q <= D yield H2(k_E,k_F) <= D q eta_arm^2. Any squaring step needs q eta >= 0, obtained from nonnegative operator norm and the distance premise.",
+    "AM-GM gives sqrt(p_E p_F) <= (p_E+p_F)/2. Nonnegative D and charge permit multiplication, so the increment is bounded by D/2 times the two own-law expected next charges.",
+    "Expanding the actual density and additive prior-history cost and summing the new outcome yields EC(n+1)=EC(n)+sum_h p(n,h)w(h). The zero-block base and induction give the weighted root.",
+    "For uniform eta, C=Q eta^2. The pathwise horizon and derived density mass one give each EC <= T eta^2, hence H2 <= D T eta^2. No unbiasedness, conditional-information hypothesis, or estimation-error independence enters."
+  ],
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "required_explicit_bridge",
+      "affected_nodes": ["B_TRACE_PMF", "B_H2_COST_TRANSPORT", "T_UNIFORM_ACTUAL_RESET_LAW"],
+      "finding": "The PMF seal states traceLaw(h)=ENNReal.ofReal(density(h)), while the budget seal concludes an H2 inequality over (traceLaw(h)).toReal. The topology does not separately name the pointwise real-mass bridge required by that sealed conclusion.",
+      "required_addendum": "Record and discharge (traceLaw(h)).toReal=density(h), using produced density_nonneg and ENNReal.toReal_ofReal; also retain finiteness/no-top guarantees wherever real expectations are introduced. Transport the finite H2 sum through that pointwise identity. This is an elementary obligation rather than an additional root premise.",
+      "impact": "The density theorem alone does not syntactically imply the sealed trace-PMF budget expression until this representation bridge is supplied."
+    },
+    {
+      "id": "F2",
+      "severity": "required_existing_function_bridge",
+      "affected_nodes": ["D_PATH_QUERIES", "L_PATH_UNIFORM_COST", "R_UNIFORM_HORIZON"],
+      "finding": "The topology recursively defines Q, but the budget seal uses the existing ResetBlockProcess.historyQueryCost policy (history h). Their equality requires an explicit chronology/recursion bridge; equal informal names do not establish it.",
+      "required_addendum": "Record Q(n,h)=historyQueryCost policy (history h), or prove the sealed weightedCost_uniform directly from the existing function's recursion. Verify the existing cost charges the policy on prior prefixes, counts forward and inverse occurrences, includes no final unused plan, and charges known gates zero.",
+      "impact": "This is necessary to use the sealed hT premise for the source's literal pathwise weighted cost. Existing function behavior remains unverified in this source-only phase."
+    },
+    {
+      "id": "F3",
+      "severity": "and_tail_route_disambiguation",
+      "affected_nodes": ["L_LIST_ENCODING", "B_HISTORY_LAW_EQUALITY", "B_H2_COST_TRANSPORT"],
+      "finding": "L_LIST_ENCODING offers a bijection route or direct pushforward-equality route. Exact H2 transport to list space requires injectivity on the supported traces and support control; a pushforward equality alone generally merges masses and is insufficient for exact H2 equality. Cost transport likewise needs a well-defined compatible list cost.",
+      "required_addendum": "Choose the chronological-history injection/bijection route and include injectivity plus length-n support in the transport AND tail, or separately record a pushforward-contraction route with the H2 inequality and compatible-cost descent needed for that alternative. Directly proving the law equality can avoid constructing a length subtype but cannot omit the needed transport facts.",
+      "impact": "The intended bijection route is sound. The stated alternate route is under-specified for downstream exact transport, so exhaustive AND-tail acceptance is conditional."
+    },
+    {
+      "id": "F4",
+      "severity": "signature_scope_narrowing",
+      "affected_nodes": ["R_UNIFORM_HORIZON", "T_UNIFORM_DENSITY", "T_UNIFORM_ACTUAL_RESET_LAW"],
+      "finding": "The source and topology allow a real horizon T, whereas adaptive_hellinger_budget seals (n T : Nat) and a natural-valued historyQueryCost <= T. Its conclusion is over traceLaw masses, not directly the existing list-valued historyLaw.",
+      "required_addendum": "Label this signature a natural-horizon trace-PMF specialization. Provide a separate real-horizon argument/signature before claiming the full real-T source corollary, and use the actual-list law transport before presenting the corollary as an inequality on list-valued historyLaw.",
+      "impact": "This narrows the corollary but does not undermine the weighted density root. The frozen statement must not be advertised as already covering both broader source conclusions."
+    },
+    {
+      "id": "F5",
+      "severity": "implementation_verification_pending",
+      "affected_nodes": ["L_WORD_UNITARY", "L_INVERSE_DISTANCE", "L_PER_WORD_H2", "B_KERNEL_PMF", "B_RESET_LIST_STEP", "B_HISTORY_LAW_EQUALITY"],
+      "finding": "The source names existing word, basis-probability, block-PMF, and reset-history objects. The graph correctly exposes their obligations, but the supplied source-only files cannot establish exact existing implementations or theorem compatibility.",
+      "required_addendum": "In the later comparison packet verify chronological mixed calls, actual arm selection, actual basis masses, derived normalization, fresh-state reset semantics, PMF point-mass identification, and map-history equality against existing declarations. Keep these produced facts out of the root assumption list.",
+      "impact": "Open proof obligations are appropriate at this phase. No public actual-history theorem is certified here."
+    }
+  ],
+  "assumption_audit": {
+    "acceptable_model_inputs": ["finite basis/outcome type", "finite arm index", "natural per-block cap D", "actual unitary oracle families and known gates", "one normalized fresh pure state", "one shared deterministic prior-list policy returning a bounded word and arm", "per-arm operator-norm difference bounds"],
+    "derived_not_root": ["kernel nonnegativity and normalization", "density nonnegativity and normalization", "inverse-distance control", "per-word H2 bound", "adaptive finite chain identity", "actual PMF/list-law equalities"],
+    "corollary_only": ["uniform eta", "pathwise total query horizon over every finite trace including unreachable traces"],
+    "no_new_sign_assumption_needed": "The operator-distance premise entails eta_i >= 0 for each arm; squared charges need no eta-sign premise. Empty arms make universal premises vacuous, but a total Plan-producing policy itself cannot exist then.",
+    "seal_administrative_differences": ["PUnit is a Unit-equivalent universe-polymorphic singleton.", "Fin K specializes a finite arm type without changing the finite mathematics.", "DecidableEq on the finite outcome type is an administrative implementation condition and must not conceal a mathematical restriction.", "The chain seal uses sqrt(p)*sqrt(q), equivalent to sqrt(p*q) under its explicit nonnegativity premises."]
+  },
+  "boundary_and_exclusion_audit": {
+    "checked": ["n=0", "q=0/empty word", "D=0", "empty arms prevent inhabited total policy", "empty basis prevents normalized state", "zero-probability histories remain defined", "inverse calls charged", "same-arm selected per block", "eta sign from norm bound", "unreachable traces included in horizon"],
+    "scope_exclusions_preserved": ["randomized policies", "general POVMs", "random stopping", "quantum memory across blocks", "runtime and synthesis/loading claims", "regret/PAC/minimax results", "K-arm testing reduction", "infinite or variable-length transcripts", "public graph or registry changes"]
+  },
+  "next_phase_gate": "Review implementation only after a later formal comparison packet is provided. Compare the actual formal signatures/proofs and a distinct blind decoder against the sealed source, including all seven repository semantic slots once their exact schema is supplied. This review does not invent or self-certify that schema."
+}

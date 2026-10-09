@@ -1,0 +1,24 @@
+-- Pre-proof uniform-query horizon consumer seal v1.
+namespace BanditRLProof.AdaptiveTranscript
+open QuantumBlockEncoding
+open scoped Matrix.Norms.L2Operator
+variable {ι : Type*} [Fintype ι] [DecidableEq ι] {K D : ℕ}
+
+theorem weightedCost_uniform (policy : List ι → ResetBlockProcess.Plan K D ι)
+    (η : ℝ) {n : ℕ} (h : Trace ι n) :
+    weightedCost policy (fun _ => η) h =
+      (ResetBlockProcess.historyQueryCost policy (history h) : ℝ) * η ^ 2
+
+theorem adaptive_hellinger_budget (policy : List ι → ResetBlockProcess.Plan K D ι)
+    (oracleE oracleF : Fin K → Matrix.unitaryGroup ι ℂ)
+    (ψ : EuclideanSpace ℂ ι) (hψ : ‖ψ‖ = 1) (η : ℝ)
+    (hEF : ∀ i, ‖(oracleE i : Matrix ι ι ℂ) - (oracleF i : Matrix ι ι ℂ)‖ ≤ η)
+    (n T : ℕ)
+    (hT : ∀ h : Trace ι n, ResetBlockProcess.historyQueryCost policy (history h) ≤ T) :
+    BasisHellinger.hellingerSq
+      (fun h => (traceLaw policy oracleE ψ hψ n h).toReal)
+      (fun h => (traceLaw policy oracleF ψ hψ n h).toReal) ≤ (D : ℝ) * T * η ^ 2
+
+-- The budget premise is explicit and pathwise for all finite traces, including
+-- unreachable ones. It does not implement clipping/stopping; those remain open.
+end BanditRLProof.AdaptiveTranscript

@@ -1,0 +1,59 @@
+{
+  "bindings": {
+    "AdaptiveTranscript.lean": "71c0ed8b63ab6191669c6525833c3ba197cab508f0e8dd28872bbb94dcbabf10",
+    "adaptive-information-source.md": "0e06332befd03e2e0fab0d4c1cb22ac226eb690cdc025d3f88426f155cbd5624",
+    "adaptive-formal-packet.md": "0340e6cfbecaa1e58ee84bfa1d9b85f9fb299fb1a4e8b7c5fa22485f18784e3b",
+    "adaptive-information-signatures.txt": "609141dc8302cbf3f8507ad9f4dd0b8b3c3c4e7696be4ef1378d8a22a75e555d",
+    "adaptive-pmf-bridge-signatures.txt": "ce886c59d30972342287c03987847f7308ced6251ae9b22952e9612494241181",
+    "adaptive-budget-signatures.txt": "f1ee78c230ffca27bf10d0be14875086380b6c8c9e1855b417cf77aab7ac449e"
+  },
+  "signature_checks": [
+    {
+      "declaration": "finite_kernel_chain",
+      "pre_proof_seal": "adaptive-information-signatures.txt",
+      "exact_signature_equal": true
+    },
+    {
+      "declaration": "density_nonneg",
+      "pre_proof_seal": "adaptive-information-signatures.txt",
+      "exact_signature_equal": true
+    },
+    {
+      "declaration": "density_normalized",
+      "pre_proof_seal": "adaptive-information-signatures.txt",
+      "exact_signature_equal": true
+    },
+    {
+      "declaration": "expectedCost_succ",
+      "pre_proof_seal": "adaptive-information-signatures.txt",
+      "exact_signature_equal": true
+    },
+    {
+      "declaration": "adaptive_hellinger_le",
+      "pre_proof_seal": "adaptive-information-signatures.txt",
+      "exact_signature_equal": true
+    },
+    {
+      "declaration": "traceLaw_apply",
+      "pre_proof_seal": "adaptive-pmf-bridge-signatures.txt",
+      "exact_signature_equal": true
+    },
+    {
+      "declaration": "traceLaw_history_eq",
+      "pre_proof_seal": "adaptive-pmf-bridge-signatures.txt",
+      "exact_signature_equal": true
+    },
+    {
+      "declaration": "weightedCost_uniform",
+      "pre_proof_seal": "adaptive-budget-signatures.txt",
+      "exact_signature_equal": true
+    },
+    {
+      "declaration": "adaptive_hellinger_budget",
+      "pre_proof_seal": "adaptive-budget-signatures.txt",
+      "exact_signature_equal": true
+    }
+  ],
+  "all_sealed_root_signatures_exact": true,
+  "boundary": "Internal provider lemmas are not independently Anchor-sealed. Frozen root/consumer statements must all match."
+}
