@@ -1,0 +1,1 @@
+Persistent wholebookGoalACTIVE; PR213 delivered exact2f039d5unmerged. CurrentboundedTheorem5.4 dependency draft11/4; sourcepages64/65 visuallyread; actualAPIv2/targettypev2 only. No sourcecontractacceptance/proofclosed. Firstreadyselectoronlyafterdistinctreview/freeze. Preserveoldregistry/roots/readers/nativebaseline.

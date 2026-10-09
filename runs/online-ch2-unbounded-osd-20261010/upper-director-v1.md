@@ -1,0 +1,1 @@
+One required Chapter2 failure dependency. Preserve whole source Theorem5.4 and phi range/limit. First finite leaf currentSubgradient_affine, then actual step and prefix identity. Full failure bound remains required until frozen end terminal closes; no producer-less consumer or upper-bound-failure substitute. No new chapter acceptance.

@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineUnboundedOSDCanary.finiteDim_source_lower_bound",
+  "file": "Tests/OnlineUnboundedOSDCanary.lean",
+  "statement": "theorem finiteDim_source_lower_bound : ‖direction‖ = 1 ∧ vectorRun 64 1 = direction ∧ (∀ t < 64, ConvexOn ℝ univ (switchLoss 64 direction t) ∧ LipschitzWith 1 (switchLoss 64 direction t)) ∧ (1/15 : ℝ) ≤ phi (1/2) ∧ 2 / ((1 - (1/2 : ℝ)) * phi (1/2)) ≤ (64 : ℝ) ∧ (1/2 : ℝ) * phi (1/2) * (64 : ℝ) ^ (2 - (1/2 : ℝ)) ≤ vectorRegret 64 ∧ (256/15 : ℝ) ≤ vectorRegret 64 ∧ (17 : ℝ) < vectorRegret 64 ∧ (∃ loss : ℕ → EuclideanSpace ℝ (Fin 2) → ℝ, (∀ t < 64, ConvexOn ℝ univ (loss t) ∧ LipschitzWith 1 (loss t)) ∧ (1/2 : ℝ) * phi (1/2) * (64 : ℝ) ^ (2 - (1/2 : ℝ)) ≤ BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (powerSteps (1/2)) (fun t z => (loss t z : EReal)) 0 0 64)",
+  "statement_hash": "1e2f304534f2092b37097795421ebde184254d76c571fda4c922e047adf5e673",
+  "source_assumptions": [],
+  "created_at": "2026-10-09T18:27:53+00:00"
+}

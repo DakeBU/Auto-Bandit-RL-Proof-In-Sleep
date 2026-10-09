@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineUnboundedOSDCanary.scalar_actual_two_rounds",
+  "file": "Tests/OnlineUnboundedOSDCanary.lean",
+  "statement": "theorem scalar_actual_two_rounds : powerSteps (1/2) 0 = 1 ∧ 0 < powerSteps (1/2) 1 ∧ powerSteps (1/2) 1 < powerSteps (1/2) 0 ∧ scalarRun 2 0 = 0 ∧ scalarRun 2 1 = 1 ∧ scalarRun 2 2 = 1 - (2 : ℝ) ^ (-(1/2 : ℝ)) ∧ scalarRegret 2 = 1",
+  "statement_hash": "dafadce52f05c2e4ad06efc2744c3e8d5a8f37ade6e57dfe96bc7d9de194a2e2",
+  "source_assumptions": [],
+  "created_at": "2026-10-09T18:26:06+00:00",
+  "scoped_context_and_definitions": "import BanditRLProof.OnlineUnboundedOSD\nnoncomputable section\nopen Set Finset Filter Topology\nopen scoped InnerProductSpace\nset_option autoImplicit false\nnamespace BanditRL.OnlineUnboundedOSDCanary\nopen BanditRL.OnlineUnboundedOSD\nabbrev scalarRun (T t : ℕ) : ℝ :=\n  BanditRL.OnlineSubgradientDescent.iterate BanditRL.OnlineHuber.fullSpace (powerSteps (1/2))\n    (fun s z => (switchLoss T (1 : ℝ) s z : EReal)) 0 t\nabbrev scalarRegret (T : ℕ) : ℝ :=\n  BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (powerSteps (1/2))\n    (fun s z => (switchLoss T (1 : ℝ) s z : EReal)) 0 0 T\nabbrev direction : EuclideanSpace ℝ (Fin 2) := PiLp.single 2 0 1\nabbrev vectorRun (T t : ℕ) : EuclideanSpace ℝ (Fin 2) :=\n  BanditRL.OnlineSubgradientDescent.iterate BanditRL.OnlineHuber.fullSpace (powerSteps (1/2))\n    (fun s z => (switchLoss T direction s z : EReal)) 0 t\nabbrev vectorRegret (T : ℕ) : ℝ :=\n  BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (powerSteps (1/2))\n    (fun s z => (switchLoss T direction s z : EReal)) 0 0 T\n",
+  "raw_header_sha256": "f6da76b7dacf6f11753bd436c96be9485b1901f99f29ac8027b7c0ff990ff2d5"
+}

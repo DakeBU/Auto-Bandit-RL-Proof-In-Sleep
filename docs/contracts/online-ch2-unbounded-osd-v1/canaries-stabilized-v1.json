@@ -1,0 +1,40 @@
+{
+  "targets": [
+    {
+      "name": "BanditRL.OnlineUnboundedOSDCanary.scalar_actual_two_rounds",
+      "header": "theorem scalar_actual_two_rounds :\n    powerSteps (1/2) 0 = 1 ∧\n    0 < powerSteps (1/2) 1 ∧\n    powerSteps (1/2) 1 < powerSteps (1/2) 0 ∧\n    scalarRun 2 0 = 0 ∧ scalarRun 2 1 = 1 ∧\n    scalarRun 2 2 = 1 - (2 : ℝ) ^ (-(1/2 : ℝ)) ∧\n    scalarRegret 2 = 1",
+      "raw_header_sha256": "f6da76b7dacf6f11753bd436c96be9485b1901f99f29ac8027b7c0ff990ff2d5"
+    },
+    {
+      "name": "BanditRL.OnlineUnboundedOSDCanary.finiteDim_source_lower_bound",
+      "header": "theorem finiteDim_source_lower_bound :\n    ‖direction‖ = 1 ∧ vectorRun 64 1 = direction ∧\n    (∀ t < 64, ConvexOn ℝ univ (switchLoss 64 direction t) ∧\n      LipschitzWith 1 (switchLoss 64 direction t)) ∧\n    (1/15 : ℝ) ≤ phi (1/2) ∧\n    2 / ((1 - (1/2 : ℝ)) * phi (1/2)) ≤ (64 : ℝ) ∧\n    (1/2 : ℝ) * phi (1/2) * (64 : ℝ) ^ (2 - (1/2 : ℝ)) ≤ vectorRegret 64 ∧\n    (256/15 : ℝ) ≤ vectorRegret 64 ∧ (17 : ℝ) < vectorRegret 64 ∧\n    (∃ loss : ℕ → EuclideanSpace ℝ (Fin 2) → ℝ,\n      (∀ t < 64, ConvexOn ℝ univ (loss t) ∧ LipschitzWith 1 (loss t)) ∧\n      (1/2 : ℝ) * phi (1/2) * (64 : ℝ) ^ (2 - (1/2 : ℝ)) ≤\n        BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace\n          (powerSteps (1/2)) (fun t z => (loss t z : EReal)) 0 0 64)",
+      "raw_header_sha256": "bd996f75f3d2f9a6a034ad000ef085aee77da55a178d91bfdf09347848a074ee"
+    }
+  ],
+  "complete_prefix": "import BanditRLProof.OnlineUnboundedOSD\nnoncomputable section\nopen Set Finset Filter Topology\nopen scoped InnerProductSpace\nset_option autoImplicit false\nnamespace BanditRL.OnlineUnboundedOSDCanary\nopen BanditRL.OnlineUnboundedOSD\nabbrev scalarRun (T t : ℕ) : ℝ :=\n  BanditRL.OnlineSubgradientDescent.iterate BanditRL.OnlineHuber.fullSpace (powerSteps (1/2))\n    (fun s z => (switchLoss T (1 : ℝ) s z : EReal)) 0 t\nabbrev scalarRegret (T : ℕ) : ℝ :=\n  BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (powerSteps (1/2))\n    (fun s z => (switchLoss T (1 : ℝ) s z : EReal)) 0 0 T\nabbrev direction : EuclideanSpace ℝ (Fin 2) := PiLp.single 2 0 1\nabbrev vectorRun (T t : ℕ) : EuclideanSpace ℝ (Fin 2) :=\n  BanditRL.OnlineSubgradientDescent.iterate BanditRL.OnlineHuber.fullSpace (powerSteps (1/2))\n    (fun s z => (switchLoss T direction s z : EReal)) 0 t\nabbrev vectorRegret (T : ℕ) : ℝ :=\n  BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (powerSteps (1/2))\n    (fun s z => (switchLoss T direction s z : EReal)) 0 0 T\n",
+  "prefix_sha256": "666965ac60f65af8f6a3873288c821185c2a5013f51e191d3118701743c08c08",
+  "BODY_and_CONTRACT_review": [
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-unbounded-osd-20261010/full-body-canary-review-v1.json",
+      "sha256": "b23b98482347317ad1e93cde37956b88f0c9e3c1eaf537db82e8028d057ba9ef"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-unbounded-osd-20261010/full-body-canary-review-v1.md",
+      "sha256": "cddc53f1b1aa91d483cec07b6b2a086bb230d0e635859b46853e0e1769e9ac87"
+    }
+  ],
+  "neutral_reconstruction": [
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-unbounded-osd-20261010/canary-blind-reconstruction-v1.json",
+      "sha256": "8563b49a394ce817a0d131c859a95a91be9a3ab3852f32793a5639108837a4f7"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-unbounded-osd-20261010/canary-blind-reconstruction-v1.md",
+      "sha256": "990323a7a1ee7ffb8c99c882d1092d87b6cb86224f3157d9e8f63f78c5541d80"
+    }
+  ],
+  "Test": "Tests/OnlineUnboundedOSDCanary.lean",
+  "only_test_lowering_allowed": true,
+  "canary_BODY": "required/open",
+  "full_gates": "required/open"
+}

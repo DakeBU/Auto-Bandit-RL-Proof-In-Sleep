@@ -1,0 +1,84 @@
+{
+  "actual_exit": 0,
+  "raw_stdout": "BanditRL.OnlineUnboundedOSD.powerSteps : ℝ → ℕ → ℝ\n'BanditRL.OnlineUnboundedOSD.powerSteps' depends on axioms: [propext, Classical.choice, Quot.sound]\nBanditRL.OnlineUnboundedOSD.phi : ℝ → ℝ\n'BanditRL.OnlineUnboundedOSD.phi' depends on axioms: [propext, Classical.choice, Quot.sound]\nBanditRL.OnlineUnboundedOSD.switchSlope : ℕ → ℕ → ℝ\n'BanditRL.OnlineUnboundedOSD.switchSlope' depends on axioms: [propext, Classical.choice, Quot.sound]\n@BanditRL.OnlineUnboundedOSD.switchLoss : {E : Type u_1} →\n  [inst : NormedAddCommGroup E] → [InnerProductSpace ℝ E] → ℕ → E → ℕ → E → ℝ\n'BanditRL.OnlineUnboundedOSD.switchLoss' depends on axioms: [propext, Classical.choice, Quot.sound]\n@BanditRL.OnlineUnboundedOSD.currentSubgradient_affine : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]\n  [inst_1 : InnerProductSpace ℝ E] (a x : E) (b : ℝ),\n  BanditRL.OnlineSubgradientDescent.currentSubgradient (fun z => ↑(inner ℝ a z + b)) x = a\n'BanditRL.OnlineUnboundedOSD.currentSubgradient_affine' depends on axioms: [propext, Classical.choice, Quot.sound]\n@BanditRL.OnlineUnboundedOSD.step_affine_fullSpace : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]\n  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (η : ℝ) (a x : E) (b : ℝ),\n  BanditRL.OnlineSubgradientDescent.step BanditRL.OnlineHuber.fullSpace η (fun z => ↑(inner ℝ a z + b)) x = x - η • a\n'BanditRL.OnlineUnboundedOSD.step_affine_fullSpace' depends on axioms: [propext, Classical.choice, Quot.sound]\n@BanditRL.OnlineUnboundedOSD.iterate_affine_prefix : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]\n  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (η : ℕ → ℝ) (a : ℕ → E) (b : ℕ → ℝ) (x0 : E)\n  (t : ℕ),\n  BanditRL.OnlineSubgradientDescent.iterate BanditRL.OnlineHuber.fullSpace η (fun s z => ↑(inner ℝ (a s) z + b s)) x0\n      t =\n    x0 - ∑ s ∈ Finset.range t, η s • a s\n'BanditRL.OnlineUnboundedOSD.iterate_affine_prefix' depends on axioms: [propext, Classical.choice, Quot.sound]\nBanditRL.OnlineUnboundedOSD.powerSteps_pos : ∀ (α : ℝ) (t : ℕ), 0 < BanditRL.OnlineUnboundedOSD.powerSteps α t\n'BanditRL.OnlineUnboundedOSD.powerSteps_pos' depends on axioms: [propext, Classical.choice, Quot.sound]\n@BanditRL.OnlineUnboundedOSD.switching_loss_regular : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]\n  [inst_1 : InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (T : ℕ) (v : E),\n  ‖v‖ = 1 →\n    ∀ (t : ℕ),\n      ConvexOn ℝ Set.univ (BanditRL.OnlineUnboundedOSD.switchLoss T v t) ∧\n        LipschitzWith 1 (BanditRL.OnlineUnboundedOSD.switchLoss T v t)\n'BanditRL.OnlineUnboundedOSD.switching_loss_regular' depends on axioms: [propext, Classical.choice, Quot.sound]\nBanditRL.OnlineUnboundedOSD.switching_scalar_regret_identity : ∀ (α : ℝ) (T : ℕ),\n  BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (BanditRL.OnlineUnboundedOSD.powerSteps α)\n      (fun t z => ↑(BanditRL.OnlineUnboundedOSD.switchLoss T 1 t z)) 0 0 T =\n    -(↑((T + 1) / 2) - ↑(T / 2)) * ∑ i ∈ Finset.range ((T + 1) / 2), BanditRL.OnlineUnboundedOSD.powerSteps α i +\n        ∑ i ∈ Finset.range T, ↑(i + 1) ^ (1 - α) -\n      ↑T * ∑ i ∈ Finset.Ico ((T + 1) / 2) T, BanditRL.OnlineUnboundedOSD.powerSteps α i\n'BanditRL.OnlineUnboundedOSD.switching_scalar_regret_identity' depends on axioms: [propext,\n Classical.choice,\n Quot.sound]\nBanditRL.OnlineUnboundedOSD.phi_range : ∀ (α : ℝ),\n  0 < α → α < 1 → 0 < BanditRL.OnlineUnboundedOSD.phi α ∧ BanditRL.OnlineUnboundedOSD.phi α < 1 - Real.log 2\n'BanditRL.OnlineUnboundedOSD.phi_range' depends on axioms: [propext, Classical.choice, Quot.sound]\nBanditRL.OnlineUnboundedOSD.phi_limit : Filter.Tendsto BanditRL.OnlineUnboundedOSD.phi (nhdsWithin 1 (Set.Iio 1))\n    (nhds (1 - Real.log 2)) ∧\n  3 / 10 ≤ 1 - Real.log 2\n'BanditRL.OnlineUnboundedOSD.phi_limit' depends on axioms: [propext, Classical.choice, Quot.sound]\nBanditRL.OnlineUnboundedOSD.switching_scalar_lower_bound : ∀ (α : ℝ),\n  0 < α →\n    α < 1 →\n      ∀ (T : ℕ),\n        2 / ((1 - α) * BanditRL.OnlineUnboundedOSD.phi α) ≤ ↑T →\n          1 / 2 * BanditRL.OnlineUnboundedOSD.phi α * ↑T ^ (2 - α) ≤\n            BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace\n              (BanditRL.OnlineUnboundedOSD.powerSteps α) (fun t z => ↑(BanditRL.OnlineUnboundedOSD.switchLoss T 1 t z))\n              0 0 T\n'BanditRL.OnlineUnboundedOSD.switching_scalar_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound]\n@BanditRL.OnlineUnboundedOSD.switching_vector_lower_bound : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]\n  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] (α : ℝ),\n  0 < α →\n    α < 1 →\n      ∀ (T : ℕ),\n        2 / ((1 - α) * BanditRL.OnlineUnboundedOSD.phi α) ≤ ↑T →\n          ∀ (v : E),\n            ‖v‖ = 1 →\n              1 / 2 * BanditRL.OnlineUnboundedOSD.phi α * ↑T ^ (2 - α) ≤\n                BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace\n                  (BanditRL.OnlineUnboundedOSD.powerSteps α)\n                  (fun t z => ↑(BanditRL.OnlineUnboundedOSD.switchLoss T v t z)) 0 0 T\n'BanditRL.OnlineUnboundedOSD.switching_vector_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound]\n@BanditRL.OnlineUnboundedOSD.theorem_5_4 : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]\n  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] [Nontrivial E] (α : ℝ),\n  0 < α →\n    α < 1 →\n      ∀ (T : ℕ),\n        2 / ((1 - α) * BanditRL.OnlineUnboundedOSD.phi α) ≤ ↑T →\n          ∃ loss,\n            (∀ t < T, ConvexOn ℝ Set.univ (loss t) ∧ LipschitzWith 1 (loss t)) ∧\n              1 / 2 * BanditRL.OnlineUnboundedOSD.phi α * ↑T ^ (2 - α) ≤\n                BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace\n                  (BanditRL.OnlineUnboundedOSD.powerSteps α) (fun t z => ↑(loss t z)) 0 0 T\n'BanditRL.OnlineUnboundedOSD.theorem_5_4' depends on axioms: [propext, Classical.choice, Quot.sound]\nBanditRL.OnlineUnboundedOSDCanary.scalar_actual_two_rounds : BanditRL.OnlineUnboundedOSD.powerSteps (1 / 2) 0 = 1 ∧\n  0 < BanditRL.OnlineUnboundedOSD.powerSteps (1 / 2) 1 ∧\n    BanditRL.OnlineUnboundedOSD.powerSteps (1 / 2) 1 < BanditRL.OnlineUnboundedOSD.powerSteps (1 / 2) 0 ∧\n      BanditRL.OnlineUnboundedOSDCanary.scalarRun 2 0 = 0 ∧\n        BanditRL.OnlineUnboundedOSDCanary.scalarRun 2 1 = 1 ∧\n          BanditRL.OnlineUnboundedOSDCanary.scalarRun 2 2 = 1 - 2 ^ (-(1 / 2)) ∧\n            BanditRL.OnlineUnboundedOSDCanary.scalarRegret 2 = 1\n'BanditRL.OnlineUnboundedOSDCanary.scalar_actual_two_rounds' depends on axioms: [propext, Classical.choice, Quot.sound]\nBanditRL.OnlineUnboundedOSDCanary.finiteDim_source_lower_bound : ‖BanditRL.OnlineUnboundedOSDCanary.direction‖ = 1 ∧\n  BanditRL.OnlineUnboundedOSDCanary.vectorRun 64 1 = BanditRL.OnlineUnboundedOSDCanary.direction ∧\n    (∀ t < 64,\n        ConvexOn ℝ Set.univ (BanditRL.OnlineUnboundedOSD.switchLoss 64 BanditRL.OnlineUnboundedOSDCanary.direction t) ∧\n          LipschitzWith 1 (BanditRL.OnlineUnboundedOSD.switchLoss 64 BanditRL.OnlineUnboundedOSDCanary.direction t)) ∧\n      1 / 15 ≤ BanditRL.OnlineUnboundedOSD.phi (1 / 2) ∧\n        2 / ((1 - 1 / 2) * BanditRL.OnlineUnboundedOSD.phi (1 / 2)) ≤ 64 ∧\n          1 / 2 * BanditRL.OnlineUnboundedOSD.phi (1 / 2) * 64 ^ (2 - 1 / 2) ≤\n              BanditRL.OnlineUnboundedOSDCanary.vectorRegret 64 ∧\n            256 / 15 ≤ BanditRL.OnlineUnboundedOSDCanary.vectorRegret 64 ∧\n              17 < BanditRL.OnlineUnboundedOSDCanary.vectorRegret 64 ∧\n                ∃ loss,\n                  (∀ t < 64, ConvexOn ℝ Set.univ (loss t) ∧ LipschitzWith 1 (loss t)) ∧\n                    1 / 2 * BanditRL.OnlineUnboundedOSD.phi (1 / 2) * 64 ^ (2 - 1 / 2) ≤\n                      BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace\n                        (BanditRL.OnlineUnboundedOSD.powerSteps (1 / 2)) (fun t z => ↑(loss t z)) 0 0 64\n'BanditRL.OnlineUnboundedOSDCanary.finiteDim_source_lower_bound' depends on axioms: [propext,\n Classical.choice,\n Quot.sound]\n",
+  "axiom_lists": [
+    [
+      "BanditRL.OnlineUnboundedOSD.powerSteps",
+      "propext, Classical.choice, Quot.sound"
+    ],
+    [
+      "BanditRL.OnlineUnboundedOSD.phi",
+      "propext, Classical.choice, Quot.sound"
+    ],
+    [
+      "BanditRL.OnlineUnboundedOSD.switchSlope",
+      "propext, Classical.choice, Quot.sound"
+    ],
+    [
+      "BanditRL.OnlineUnboundedOSD.switchLoss",
+      "propext, Classical.choice, Quot.sound"
+    ],
+    [
+      "BanditRL.OnlineUnboundedOSD.currentSubgradient_affine",
+      "propext, Classical.choice, Quot.sound"
+    ],
+    [
+      "BanditRL.OnlineUnboundedOSD.step_affine_fullSpace",
+      "propext, Classical.choice, Quot.sound"
+    ],
+    [
+      "BanditRL.OnlineUnboundedOSD.iterate_affine_prefix",
+      "propext, Classical.choice, Quot.sound"
+    ],
+    [
+      "BanditRL.OnlineUnboundedOSD.powerSteps_pos",
+      "propext, Classical.choice, Quot.sound"
+    ],
+    [
+      "BanditRL.OnlineUnboundedOSD.switching_loss_regular",
+      "propext, Classical.choice, Quot.sound"
+    ],
+    [
+      "BanditRL.OnlineUnboundedOSD.switching_scalar_regret_identity",
+      "propext,\n Classical.choice,\n Quot.sound"
+    ],
+    [
+      "BanditRL.OnlineUnboundedOSD.phi_range",
+      "propext, Classical.choice, Quot.sound"
+    ],
+    [
+      "BanditRL.OnlineUnboundedOSD.phi_limit",
+      "propext, Classical.choice, Quot.sound"
+    ],
+    [
+      "BanditRL.OnlineUnboundedOSD.switching_scalar_lower_bound",
+      "propext, Classical.choice, Quot.sound"
+    ],
+    [
+      "BanditRL.OnlineUnboundedOSD.switching_vector_lower_bound",
+      "propext, Classical.choice, Quot.sound"
+    ],
+    [
+      "BanditRL.OnlineUnboundedOSD.theorem_5_4",
+      "propext, Classical.choice, Quot.sound"
+    ],
+    [
+      "BanditRL.OnlineUnboundedOSDCanary.scalar_actual_two_rounds",
+      "propext, Classical.choice, Quot.sound"
+    ],
+    [
+      "BanditRL.OnlineUnboundedOSDCanary.finiteDim_source_lower_bound",
+      "propext,\n Classical.choice,\n Quot.sound"
+    ]
+  ],
+  "empty_axiom_lists": [],
+  "complete_test_conjunctions": [
+    7,
+    9
+  ],
+  "public_definitions": 4,
+  "public_proof_terminals": 11,
+  "public_canaries": 2,
+  "full_examples_elaborated": true,
+  "package_accepted": false
+}

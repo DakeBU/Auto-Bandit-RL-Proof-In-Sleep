@@ -1,0 +1,6 @@
+{
+  "actual_exit": 0,
+  "raw_stdout": "powerSteps (1 / 2) 0 = 1 ∧\n  0 < powerSteps (1 / 2) 1 ∧\n    powerSteps (1 / 2) 1 < powerSteps (1 / 2) 0 ∧\n      scalarRun 2 0 = 0 ∧ scalarRun 2 1 = 1 ∧ scalarRun 2 2 = 1 - 2 ^ (-(1 / 2)) ∧ scalarRegret 2 = 1 : Prop\n‖direction‖ = 1 ∧\n  vectorRun 64 1 = direction ∧\n    (∀ t < 64, ConvexOn ℝ Set.univ (switchLoss 64 direction t) ∧ LipschitzWith 1 (switchLoss 64 direction t)) ∧\n      1 / 15 ≤ phi (1 / 2) ∧\n        2 / ((1 - 1 / 2) * phi (1 / 2)) ≤ 64 ∧\n          1 / 2 * phi (1 / 2) * 64 ^ (2 - 1 / 2) ≤ vectorRegret 64 ∧\n            256 / 15 ≤ vectorRegret 64 ∧\n              17 < vectorRegret 64 ∧\n                ∃ loss,\n                  (∀ t < 64, ConvexOn ℝ Set.univ (loss t) ∧ LipschitzWith 1 (loss t)) ∧\n                    1 / 2 * phi (1 / 2) * 64 ^ (2 - 1 / 2) ≤\n                      OnlineSubgradientDescent.regret OnlineHuber.fullSpace (powerSteps (1 / 2))\n                        (fun t z => ↑(loss t z)) 0 0 64 : Prop\n",
+  "types_only": true,
+  "bodies_lowered": false
+}

@@ -1,0 +1,7 @@
+# Actual contributor schema repair
+
+First candidate commit6e6e34c58290849d3e9de1f9ac244e3542409ca0 retained the full proof package. Actual nonempty contributor-stack-v1 exited1: verification.focused_checks must be a string list. It did not build the site. Its ignored terminal receipts were copied exactly into RUN pre-site-failed-v2-*.json.
+
+repair-contributor-schema-v3 emitted one actual OWN repair event and wrapped the exact existing focused_checks string in a singleton list, preserving every word and every other JSON field. Its later summary write collided with the already-created native capture receipt; create-only assertion stopped before new gate creation. Originalfailedwrapper/actualnative0receipt/exactOWNbeforeRAW preserved. Tail-v4 only independently checked the already-applied type fix, wrote a distinct inspected summary and prepared resumedgate; it did not repeat the event or metadata edit.
+
+Resumed commit-and-build-site-v3 passed fullBASEwhitespace and BOTH nonempty contributor gates, then built a truly clean local SITE at99ee7910126db6014e565535252360dc45eb4b80. Sitecheck and fullsharedregistry actual0:11026completeoldobjects unchanged+15newcanonicalproduction=11041,13sourcecards,Testexcluded. Source/Test/root/readers/pins/definitions/fences did not change since actual root/Tests/fullharness. Contributorformat repair is OWN metadata, not a Lean failure or weakened theorem. FINAL/native/delivery remain pending; all8Chapter2forwardcontainers requiredOPENpendingdedicatedreconciliation and wholeGoalACTIVE.

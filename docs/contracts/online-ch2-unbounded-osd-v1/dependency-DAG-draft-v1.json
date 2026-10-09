@@ -1,0 +1,107 @@
+{
+  "nodes": [
+    {
+      "name": "BanditRL.OnlineUnboundedOSD.currentSubgradient_affine",
+      "parents": [
+        "BanditRL.OnlineConvex.affine_subdifferential",
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient"
+      ],
+      "status": "draft"
+    },
+    {
+      "name": "BanditRL.OnlineUnboundedOSD.step_affine_fullSpace",
+      "parents": [
+        "currentSubgradient_affine",
+        "BanditRL.OnlineHuber.project_fullSpace"
+      ],
+      "status": "draft"
+    },
+    {
+      "name": "BanditRL.OnlineUnboundedOSD.iterate_affine_prefix",
+      "parents": [
+        "step_affine_fullSpace",
+        "Finset.sum_range_succ"
+      ],
+      "status": "draft"
+    },
+    {
+      "name": "BanditRL.OnlineUnboundedOSD.powerSteps_pos",
+      "parents": [
+        "Real.rpow_pos_of_pos"
+      ],
+      "status": "draft"
+    },
+    {
+      "name": "BanditRL.OnlineUnboundedOSD.switching_loss_regular",
+      "parents": [
+        "affine convexity",
+        "inner Lipschitz estimate",
+        "switchSlope"
+      ],
+      "status": "draft"
+    },
+    {
+      "name": "BanditRL.OnlineUnboundedOSD.switching_scalar_regret_identity",
+      "parents": [
+        "iterate_affine_prefix",
+        "finite sum reversal",
+        "Nat ceil/floor split",
+        "Real.rpow_add"
+      ],
+      "status": "draft"
+    },
+    {
+      "name": "BanditRL.OnlineUnboundedOSD.phi_range",
+      "parents": [
+        "strictConcaveOn_log_Ioi",
+        "strictConcaveOn_of_deriv2_neg",
+        "Real.hasStrictDerivAt_const_rpow"
+      ],
+      "status": "draft"
+    },
+    {
+      "name": "BanditRL.OnlineUnboundedOSD.phi_limit",
+      "parents": [
+        "HasDerivAt.tendsto_slope_zero_right",
+        "Real.log_two_lt_d9"
+      ],
+      "status": "draft"
+    },
+    {
+      "name": "BanditRL.OnlineUnboundedOSD.switching_scalar_lower_bound",
+      "parents": [
+        "switching_scalar_regret_identity",
+        "phi_range",
+        "MonotoneOn.integral_le_sum",
+        "AntitoneOn.sum_le_integral",
+        "integral_rpow",
+        "threshold arithmetic"
+      ],
+      "status": "draft"
+    },
+    {
+      "name": "BanditRL.OnlineUnboundedOSD.switching_vector_lower_bound",
+      "parents": [
+        "switching_scalar_lower_bound",
+        "iterate_affine_prefix",
+        "unit-vector inner identity"
+      ],
+      "status": "draft"
+    },
+    {
+      "name": "BanditRL.OnlineUnboundedOSD.theorem_5_4",
+      "parents": [
+        "switching_vector_lower_bound",
+        "switching_loss_regular",
+        "existence of unit vector in nontrivial real normed space"
+      ],
+      "status": "draft"
+    }
+  ],
+  "root": "BanditRL.OnlineUnboundedOSD.theorem_5_4",
+  "required_supplementary": [
+    "phi_range",
+    "phi_limit"
+  ],
+  "chapter_total": null
+}

@@ -1,0 +1,89 @@
+52Lower Bounds for Online Linear Optimization
+5.2 Lower Bound for Unconstrained Online Subgradient Descent
+Here, we will focus on a specific algorithm, that is, OSD. We want to show that the limita-
+tion we saw in Chapter 2 of OSD with time-varying stepsizes to be used only on bounded
+domains is real. In fact, we can prove the following lower bound.
+Theorem 5.4Letα∈(0,1),ϕ: (0,1)→(0,1−ln 2)defined asϕ(α) := 1
+2−α +
+(1/2)1−α−1
+1−α , andT≥ 2
+(1−α)ϕ(α) . For unprojected OSD with stepsizesηt =t −α andx 1 =0,
+there exists a sequence ofTconvex and 1-Lipschitz losses such that
+RegretT (0)≥ 1
+2ϕ(α)T2−α .
+Also, we have thatlim α→1 ϕ(α) = 1−ln 2≥0.3.
+ProofWe assumed= 1. Ford≥2, we simply embed the one-dimensional loss vectors
+into the first coordinate ofR d. Note that the condition onTimpliesT≥2. Consider the
+sequence
+(ℓ1(x), . . . , ℓT (x)) = (−x, . . . ,−x| {z }
+⌈T/2⌉
+, x, . . . , x| {z }
+⌊T/2⌋
+).
+That is, the first half consists of−x’s, the second of+x’s. Fort≤ ⌈T/2⌉, we havex t+1 =
+xt +t −α. Unrolling the recurrence and usingx 1 = 0we get
+xt =
+t−1X
+i=1
+i−α, t≤ ⌈T/2⌉+ 1.
+On the other hand, fort≥ ⌈T/2⌉+ 1, we havex t+1 =x t −t −α. Unrolling the recurrence
+up tox ⌈T/2⌉+1 we get
+xt =x ⌈T/2⌉+1 −
+t−1X
+i=⌈T/2⌉+1
+i−α =
+⌈T/2⌉X
+i=1
+i−α −
+t−1X
+i=⌈T/2⌉+1
+i−α, t≥ ⌈T/2⌉+ 1.
+We are ready to lower bound the regret:
+RegretT (0) =−
+⌈T/2⌉X
+t=1
+xt +
+TX
+t=⌈T/2⌉+1
+xt
+=−
+⌈T/2⌉X
+t=1
+t−1X
+i=1
+i−α +
+TX
+t=⌈T/2⌉+1
+
+
+⌈T/2⌉X
+i=1
+i−α −
+t−1X
+i=⌈T/2⌉+1
+i−α
+
+
+=−
+⌈T/2⌉X
+i=1
+⌈T/2⌉ −i
+iα +⌊T/2⌋
+⌈T/2⌉X
+i=1
+i−α −
+TX
+i=⌈T/2⌉+1
+T−i
+iα
+=−
+⌈T/2⌉X
+i=1
+⌈T/2⌉ − ⌊T/2⌋
+iα +
+TX
+i=1
+i1−α −T
+TX
+i=⌈T/2⌉+1
+i−α .

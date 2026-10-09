@@ -1,0 +1,62 @@
+{
+  "imports": "import BanditRLProof.OnlineSubgradientDescent\nimport BanditRLProof.OnlineHinge\nimport BanditRLProof.OnlineHuber\nimport Mathlib.Analysis.SumIntegralComparisons\nimport Mathlib.Analysis.SpecialFunctions.Integrals.Basic\nimport Mathlib.Analysis.Complex.ExponentialBounds\nimport Mathlib.Analysis.Calculus.Deriv.Slope\nimport Mathlib.Analysis.SpecialFunctions.Pow.Deriv\nimport Mathlib.Analysis.Convex.SpecificFunctions.Basic\nnoncomputable section\nopen Set Finset Filter Topology\nopen scoped InnerProductSpace\nset_option autoImplicit false\n",
+  "definitions": "namespace NeutralPacket\ndef schedule (α : ℝ) (t : ℕ) : ℝ := ((t + 1 : ℕ) : ℝ) ^ (-α)\ndef coefficient (α : ℝ) : ℝ := 1 / (2 - α) + ((1 / 2 : ℝ) ^ (1 - α) - 1) / (1 - α)\ndef signPattern (T t : ℕ) : ℝ := if t < (T + 1) / 2 then -1 else 1\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\ndef payoff (T : ℕ) (v : E) (t : ℕ) (z : E) : ℝ := signPattern T t * inner ℝ v z\nend NeutralPacket\n",
+  "targets": [
+    {
+      "id": "claim1",
+      "context": "namespace NeutralPacket\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\n",
+      "header": "theorem claim1 (a x : E) (b : ℝ) :\n    BanditRL.OnlineSubgradientDescent.currentSubgradient\n      (fun z => ((inner ℝ a z + b : ℝ) : EReal)) x = a"
+    },
+    {
+      "id": "claim2",
+      "context": "namespace NeutralPacket\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\nvariable [FiniteDimensional ℝ E]\n",
+      "header": "theorem claim2 (η : ℝ) (a x : E) (b : ℝ) :\n    BanditRL.OnlineSubgradientDescent.step BanditRL.OnlineHuber.fullSpace η\n      (fun z => ((inner ℝ a z + b : ℝ) : EReal)) x = x - η • a"
+    },
+    {
+      "id": "claim3",
+      "context": "namespace NeutralPacket\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\nvariable [FiniteDimensional ℝ E]\n",
+      "header": "theorem claim3 (η : ℕ → ℝ) (a : ℕ → E) (b : ℕ → ℝ)\n    (x0 : E) (t : ℕ) :\n    BanditRL.OnlineSubgradientDescent.iterate BanditRL.OnlineHuber.fullSpace η\n      (fun s z => ((inner ℝ (a s) z + b s : ℝ) : EReal)) x0 t =\n      x0 - ∑ s ∈ range t, η s • a s"
+    },
+    {
+      "id": "claim4",
+      "context": "namespace NeutralPacket\n",
+      "header": "theorem schedule_pos (α : ℝ) (t : ℕ) :\n    0 < schedule α t"
+    },
+    {
+      "id": "claim5",
+      "context": "namespace NeutralPacket\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\nvariable [FiniteDimensional ℝ E]\n",
+      "header": "theorem claim5 (T : ℕ) (v : E) (hv : ‖v‖ = 1) (t : ℕ) :\n    ConvexOn ℝ univ (payoff T v t) ∧ LipschitzWith 1 (payoff T v t)"
+    },
+    {
+      "id": "claim6",
+      "context": "namespace NeutralPacket\n",
+      "header": "theorem claim6 (α : ℝ) (T : ℕ) :\n    BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (schedule α)\n      (fun t z => (payoff T (1 : ℝ) t z : EReal)) 0 0 T =\n      -((((T + 1) / 2 : ℕ) : ℝ) - ((T / 2 : ℕ) : ℝ)) *\n        (∑ i ∈ range ((T + 1) / 2), schedule α i) +\n      (∑ i ∈ range T, ((i + 1 : ℕ) : ℝ) ^ (1 - α)) -\n      (T : ℝ) * (∑ i ∈ Ico ((T + 1) / 2) T, schedule α i)"
+    },
+    {
+      "id": "claim7",
+      "context": "namespace NeutralPacket\n",
+      "header": "theorem coefficient_range (α : ℝ) (hα0 : 0 < α) (hα1 : α < 1) :\n    0 < coefficient α ∧ coefficient α < 1 - Real.log 2"
+    },
+    {
+      "id": "claim8",
+      "context": "namespace NeutralPacket\n",
+      "header": "theorem coefficient_limit :\n    Tendsto coefficient (𝓝[<] (1 : ℝ)) (𝓝 (1 - Real.log 2)) ∧\n      (3 / 10 : ℝ) ≤ 1 - Real.log 2"
+    },
+    {
+      "id": "claim9",
+      "context": "namespace NeutralPacket\n",
+      "header": "theorem claim9 (α : ℝ) (hα0 : 0 < α) (hα1 : α < 1)\n    (T : ℕ) (hT : 2 / ((1 - α) * coefficient α) ≤ (T : ℝ)) :\n    (1 / 2 : ℝ) * coefficient α * (T : ℝ) ^ (2 - α) ≤\n      BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (schedule α)\n      (fun t z => (payoff T (1 : ℝ) t z : EReal)) 0 0 T"
+    },
+    {
+      "id": "claim10",
+      "context": "namespace NeutralPacket\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\nvariable [FiniteDimensional ℝ E]\n",
+      "header": "theorem claim10 (α : ℝ) (hα0 : 0 < α) (hα1 : α < 1)\n    (T : ℕ) (hT : 2 / ((1 - α) * coefficient α) ≤ (T : ℝ)) (v : E) (hv : ‖v‖ = 1) :\n    (1 / 2 : ℝ) * coefficient α * (T : ℝ) ^ (2 - α) ≤\n      BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (schedule α)\n        (fun t z => (payoff T v t z : EReal)) 0 0 T"
+    },
+    {
+      "id": "claim11",
+      "context": "namespace NeutralPacket\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\nvariable [FiniteDimensional ℝ E]\n",
+      "header": "theorem claim11 [Nontrivial E] (α : ℝ) (hα0 : 0 < α) (hα1 : α < 1)\n    (T : ℕ) (hT : 2 / ((1 - α) * coefficient α) ≤ (T : ℝ)) :\n    ∃ loss : ℕ → E → ℝ,\n      (∀ t < T, ConvexOn ℝ univ (loss t) ∧ LipschitzWith 1 (loss t)) ∧\n      (1 / 2 : ℝ) * coefficient α * (T : ℝ) ^ (2 - α) ≤\n        BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (schedule α)\n          (fun t z => (loss t z : EReal)) 0 0 T"
+    }
+  ],
+  "scope": "Source withheld; exact mathematical types and complete definitions with neutralized owned names. Shared API meanings may be read, no paper/source-card/author/proof bodies. Existing related actor history disclosed."
+}
