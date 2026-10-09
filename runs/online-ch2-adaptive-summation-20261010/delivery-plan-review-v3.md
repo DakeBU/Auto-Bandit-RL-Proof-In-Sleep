@@ -1,0 +1,15 @@
+# Delivery manifest-path repair review
+
+Verdict: accepted-with-explicit-delta. Delivery plan verdict: accepted. No required repairs.
+
+Reused distinct staged automated reviewer, requested Astra/medium; related history disclosed, with no human/external/absolute-blind/runtime-model attestation.
+
+All413 current inputs and all405 prior v2 inputs were independently RAW-verified unchanged before/after. The prior rejection and subsequent D1 repair decision remain preserved. Read-only publication_fixed(after_native=True) and native_transition_check passed. No delivery helper was executed by this reviewer.
+
+The complete v4 helper delta was inspected against previously reviewed v3. Besides operative review/plan references and a fresh ignored-tmp delivery-v2 namespace, it adds exactly the current review's input_manifest path to the permitted dirty paths. That path is already SHA-bound by the favorable receipt before the allowance is used, must be inside ROOT via relative_to, and its listed rows are all rehashed. It does not allow a directory, wildcard, another manifest, mutable contents or additional old-file changes. The existing exact stage plan/cached RAW/full whitespace checks remain. Independently reproducing the current dirty-path predicate passed for108 current entries.
+
+The v3 actual preflight failure occurred at dirty scope before stage/commit/push/PR. Four preserved ignored-tmp command receipts independently show exit0 and valid stdout hashes for fresh-fetch, canonical-status, exact OPEN draft/unmerged parent215, and empty existing-PR list. Fetch updates local remote tracking information; this is not evidence that a commit/push/PR occurred. The failed namespace is preserved, and v4 requires a new absent namespace rather than overwriting it.
+
+D1 remains correctly repaired: exact frozen UTF8 body or omission of its single final LF only; no arbitrary whitespace normalization. All other reviewed constraints remain: exact candidate HEAD and parent BASE; favorable postnative/review/hash checks; no existing head PR; scoped stage and index-versus-RAW equality; full BASE whitespace; nonempty committed-diff contributor gates; genuinely clean commit; ordinary nonforce push; exact remote/PR head/base/title/draft/unmerged validation. Contributor checks remain committed-diff checks, not a claim that future metadata has already been committed. The independent post-native and cached-scope audits cover that pending delta.
+
+Approval permits only exact deliver-reviewed-package-v4.py with delivery-plan-v3.json. Immediately after actual creation root must perform official attachment and preserve receipts for distinct actual-delivery review. Unknown/partial outcomes require inspection, not blind retry. No native replay or source/reader/proof change, merge/deploy/main/live/CI/retirement, chapter or Goal closure is authorized. Clean SITE remains bound to6c935087, not a future delivery head. All eight forward containers/six future claims remain required/open and whole Goal ACTIVE.

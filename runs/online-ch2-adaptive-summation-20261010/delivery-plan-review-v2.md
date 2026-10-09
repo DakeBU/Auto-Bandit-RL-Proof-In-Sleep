@@ -1,0 +1,15 @@
+# Versioned delivery comparison repair review
+
+Verdict: accepted-with-explicit-delta. Delivery plan verdict: accepted. D1 is repaired; no required repairs remain.
+
+This is the reused distinct staged automated source-reviewer role, requested Astra/medium. No human/external/absolute-blind or runtime-model attestation. Prior v1 rejection remains intact.
+
+All405 current RAW bindings and all398 prior v1 bindings were independently rehashed unchanged before/after. Read-only publication_fixed(after_native=True) and native_transition_check passed. The full v3 delivery helper and packet/plan/body were read, and its complete diff against v2 inspected. Changes are limited to operative versioned review/plan references and the body-comparison repair. Production, Test, source, readers, native state, gates and PR body remain unchanged.
+
+The frozen body is read from bytes and UTF8 decoded without universal-newline translation. It must contain no CR and terminate with exactly one LF. Remote body may equal that exact string or that string with only its last LF removed. Spaces, tabs, a second final LF, CRLF, interior changes and any other text differences remain significant. An actual Python3.8.10 pure-string probe passed eight cases: exact and one-LF-omitted accepted; extra LF, trailing space, trailing tab, CRLF, space-before-LF and content change rejected. No delivery helper was executed.
+
+The existing safeguards remain: favorable postnative/review/report/index/helper/plan bindings and rehash of every packet input; expected candidate HEAD; fresh exact OPEN draft/unmerged parent215; no preexisting branch PR; exact permitted dirty paths and scoped stage; cached RAW equality and full BASE whitespace; two nonempty contributor checks; genuinely clean commit; ordinary nonforce push; exact remote and PR head/base/title/draft/unmerged checks. The contributor commands inspect already-committed differences, while pending metadata has separately passed exact post-native review and cached scope checks. They are not represented as post-commit verification of a future head.
+
+Approval permits only this exact helper and plan, with the explicit single-final-LF transport allowance. Command receipts stay create-only in ignored tmp after final stage; no RUN writes cause recursive dirty commits. Unknown or partial outcomes require inspection, never blind rerun or duplicate PR creation. Root must immediately invoke official attachment after successful creation and preserve actual receipts for distinct actual-delivery review. No next-package edits before clean exact delivery verification.
+
+This remains prospective approval, not delivered/CI/main/live evidence. Clean local site source6c935087e7820fe6c54c4534fcd02dcfa91c72ee is historical and applicable only by unchanged source/content hashes, not a fresh site at the future delivery head. No native replay, mathematical changes, merge/deploy/retirement, chapter or Goal closure is permitted. All eight forward containers/six future claims remain required/open; Chapter2partial/null and whole Goal ACTIVE.

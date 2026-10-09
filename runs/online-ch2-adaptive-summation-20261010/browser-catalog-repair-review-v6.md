@@ -1,0 +1,13 @@
+# Browser catalog assertion repair v6
+
+Verdict: accepted-with-explicit-delta; no required repairs. Reused distinct staged automated source reviewer /root/source_reviewer, requested GPT-6 Astra / medium; no human/external review, absolute blindness or runtime attestation.
+
+All318 indexed RAW files match before/after and current candidate/gate read-only checks passed twice. The full wrapperv6 and capture CJSv2 changes were inspected against their previously read originals. No proposed helper was executed.
+
+Actual generated module HTML contains the complete theorem statement, not embedded proof BODY. Independently stripping syntax-highlight tags and decoding HTML entities gives exactly the frozen complete header modulo whitespace. Its source link is the exact GitHub repository/blob clean6c935087e7820fe6c54c4534fcd02dcfa91c72ee/production file#L9. Independently read-only git show of that commit's entire production file equals current reviewed RAW bytes. Thus the earlier assertion requiring proof tactic text inside catalog pre.lean-code was false for the actual generator; it was not evidence of a missing Lean proof or weakened statement.
+
+Actual browser commandv2 launched and exited1. Partial three v1 PNGs/DOM/profile remain historical failed-capture evidence; no complete browser report/modulePNG success is inferred. V2 CJS uses wholly new output names; wrapper uses new profilev2, commandv3 and inspectionv2. It retains mathematical/prose/MathML/error/geometry/scroller/builtin-wrap checks. The changed catalog checks test statement keywords and exact pinned source URL, then record embeddedLeanProof=false. Keywords alone are not a general exact-header verifier: for this bounded frozen HTML, exact header equality was independently checked here, generated RAW is bound before/after, and FINAL must still inspect actual pixels. Proof source is linked and hash-bound, not presented as embedded UI proof.
+
+Wrapper additionally requires git-show proof RAW equality at the registry source commit before browser launch. Neither generator nor source/reader/type is changed. Four originals and four generated-input RAW preservation checks remain required. Exact v6 wrapper/CJSv2 capture is allowed only after caller verifies this favorable report/receipt/input/helper binding; these new helpers do not themselves consume this forthcoming review. Any new failure must stop and preserve evidence.
+
+This is an assertion repair, not FINAL/visual acceptance. Personal root and distinct reviewer inspection of all four successful current originals remains pending. No native acceptance, push, merge, deploy, chapter/Goal closure or live/HTTP claim. Existing source/forward/whole-Goal boundaries remain unchanged.

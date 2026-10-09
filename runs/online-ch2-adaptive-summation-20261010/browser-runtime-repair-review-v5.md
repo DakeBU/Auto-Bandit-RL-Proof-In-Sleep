@@ -1,0 +1,11 @@
+# Browser runtime repair review v5
+
+Verdict: accepted-with-explicit-delta; no required repairs. Reused distinct staged automated source reviewer /root/source_reviewer, requested GPT-6 Astra / medium; no human/external/absolute-blind/runtime attestation.
+
+All305 indexed RAW inputs match before/after. Current candidate_guard_v4.candidate_fixed and actual_gates_fixed were independently run read-only twice and passed, including the actual successful retry receipt binding, preserved failedv1, source/root/pins and approved historical transitions. This narrow review does not reopen mathematical acceptance or certify package FINAL.
+
+The complete wrapperv5 and exact diff fromv4 were inspected. Only the Node executable changes from dependencies/node/node.exe to dependencies/node/bin/node.exe, an is_file assertion is added, and the create-only command receipt changes to unused browser-render-command-v2. The actual executable exists. The unchanged capture CJS retains the previously reviewed isolated fileURI profile, source MathJax/card/boundary/geometry checks, builtin catalog wrap, four original screenshots and no-error requirements. Wrapper still compares four generated inputs before/after and leaves personal pixel inspection pending.
+
+The retained failure record describes CreateProcess FileNotFoundError before launch, launched=false and actual_exit=null; it is not a browser exit1 or a completed capture. The old wrapper remains unchanged. New receipt/report/image/profile destinations were absent when checked. The corrected path is consistent with the recorded official dependency bundle; this reviewer independently checked the file, without claiming a fresh dependency-tool invocation.
+
+Allow exact bound run-browser-v5.py plus unchanged capture-integral-reader-v1.cjs only, conditional on caller verifying this favorable receipt/report/input/helper hashes before execution. The wrapper itself preserves candidate/gate checks but does not load this forthcoming review. Any new failure must be retained for separate repair. No execution was performed by reviewer; four original personal root/reviewer pixel checks and FINAL remain pending. No native acceptance, push, merge, deploy, chapter or Goal closure. Local site evidence remains tied to its actual clean source, not to a later evidence head or live HTTP deployment.
