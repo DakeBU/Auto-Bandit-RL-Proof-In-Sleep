@@ -1,0 +1,14 @@
+{
+  "imports": "import BanditRLProof.OnlinePrescientBregmanSource\nimport Tests.OnlinePrescientBregmanRegretCanary\nnoncomputable section\nopen Set Finset BanditRL.OnlineConvex BanditRL.OnlineBregman BanditRL.OnlinePrescientBregman\nnamespace BanditRL.OnlinePrescientBregmanSourceCanary\n",
+  "targets": [
+    {
+      "name": "BanditRL.OnlinePrescientBregmanSourceCanary.fixed_source_run",
+      "header": "theorem fixed_source_run :\n    let V : Set ℝ := Icc (-1) 1\n    let ψ : ℝ → ℝ := fun z => z ^ 4 / 4 + z ^ 2 / 2\n    let f0 : ℝ → EReal := fun z => if z ∈ V then ((|z| : ℝ) : EReal) else ⊤\n    let f1 : ℝ → EReal := fun z => if z ∈ V then ((-5 * z / 8 : ℝ) : EReal) else ⊤\n    let loss : ℕ → ℝ → EReal := fun t => if t = 0 then f0 else f1\n    let x : ℕ → ℝ := fun t => if t = 1 then 0 else 1 / 2\n    SourceProper f0 ∧\n      StrictConvexOn ℝ V (fun z => (f0 z).toReal + divergence ψ z (1 / 2)) ∧\n      advance V ψ 1 f0 (1 / 2) = some 0 ∧\n      (∀ t ≤ 2, iterate V ψ (fun _ => 1) loss (1 / 2) t = some (x t)) ∧\n      divergence ψ (x 1) (x 0) = 11 / 64 ∧\n      divergence ψ (x 2) (x 1) = 9 / 64 ∧\n      (∀ u ∈ V, (∑ t ∈ range 2, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤\n        divergence ψ u (1 / 2) / 1 -\n        (∑ t ∈ range 2, divergence ψ (x (t + 1)) (x t)) / 1) ∧\n      (-9 / 8 : ℝ) ≤ 5 / 16\n"
+    },
+    {
+      "name": "BanditRL.OnlinePrescientBregmanSourceCanary.decreasing_source_run",
+      "header": "theorem decreasing_source_run :\n    let V : Set ℝ := Icc (-1) 1\n    let ψ : ℝ → ℝ := fun z => z ^ 4 / 4 + z ^ 2 / 2\n    let f0 : ℝ → EReal := fun z => if z ∈ V then ((|z| : ℝ) : EReal) else ⊤\n    let f1 : ℝ → EReal := fun z => if z ∈ V then ((-5 * z / 4 : ℝ) : EReal) else ⊤\n    let loss : ℕ → ℝ → EReal := fun t => if t = 0 then f0 else f1\n    let η : ℕ → ℝ := fun t => if t = 0 then 1 else 1 / 2\n    let x : ℕ → ℝ := fun t => if t = 1 then 0 else 1 / 2\n    (∀ t ≤ 2, iterate V ψ η loss (1 / 2) t = some (x t)) ∧\n      (∑ t ∈ range 2, divergence ψ (x (t + 1)) (x t) / η t) = 29 / 64 ∧\n      ((range 2).sup' (by decide) (fun t => divergence ψ (-1 / 2) (x t))) = 5 / 8 ∧\n      (∀ u ∈ V, (∑ t ∈ range 2, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤\n        ((range 2).sup' (by decide) (fun t => divergence ψ u (x t))) / η 1 -\n        ∑ t ∈ range 2, divergence ψ (x (t + 1)) (x t) / η t) ∧\n      (-7 / 4 : ℝ) ≤ -29 / 64\n"
+    }
+  ],
+  "status": "Draft only, no canary body, requires reviewer design/header approval before proof."
+}

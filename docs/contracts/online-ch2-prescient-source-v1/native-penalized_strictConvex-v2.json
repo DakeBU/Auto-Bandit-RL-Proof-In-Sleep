@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlinePrescientBregman.penalized_strictConvex",
+  "file": "BanditRLProof/OnlinePrescientBregmanSource.lean",
+  "statement": "theorem penalized_strictConvex (V X : Set E) (hV : Convex ℝ V) (hVX : V ⊆ X) (ψ : E → ℝ) (hψ : StrictConvexOn ℝ X ψ) (f : E → EReal) (hf : BanditRL.OnlineConvex.SourceProper f) (hs : ∀ z ∈ V, (BanditRL.OnlineConvex.SourceSubdifferential f z).Nonempty) (η : ℝ) (hη : 0 < η) (x : E) : StrictConvexOn ℝ V (fun z => (f z).toReal + η⁻¹ * divergence ψ z x)",
+  "statement_hash": "fd840b2948ccb4d912bcd61209a2cd194f36327b4b556f6a7c6537fa185b8e4e",
+  "source_assumptions": [],
+  "created_at": "2026-10-09T16:38:13+00:00"
+}

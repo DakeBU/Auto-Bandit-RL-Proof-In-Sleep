@@ -1,0 +1,39 @@
+from common import *
+import common as initial
+initial.fixed()
+br=RUN/'six-BODY-review-v1.json';pr=RUN/'publication-plan-review-v1.json'
+for p in [br,pr]:
+    r=load(p)
+    assert r['verdict'] in ['accepted','accepted-with-explicit-delta'] and not r['required_repairs']
+    assert sha(r['report'])==r['report_sha256']
+    assert sha(r['input_manifest'])==r['input_manifest_sha256']
+    for row in load(r['input_manifest'])['rows']:assert sha(row['path'])==row['sha256'],row['path']
+assert load(br)['production_BODY_verdict']=='accepted-with-explicit-delta'
+assert load(br)['canary_BODY_verdict']=='accepted-with-explicit-delta'
+plan=CONTRACT/'exact-publication-plan-v1.json';p=load(plan)
+assert load(pr)['approved_plan_sha256']==sha(plan) and load(pr)['approved_rows']==p['rows']
+for row in p['rows']:assert sha(row['path'])==row['before_sha256'] and sha(row['after_snapshot'])==row['after_sha256']
+proposal=load(RUN/'reader-proposal-v1.json');names=[r['name'] for r in load(CONTRACT/'stabilized-v1.json')['six_targets']]
+tests=[r['name'] for r in load(CONTRACT/'canary-headers-draft-v2.json')['targets']]
+contribution=ROOT/'research-wiki/contribution-contracts'/(TASK+'.json')
+assert not contribution.exists()
+manifest=dict(schema_version='2.0',id=TASK,route='online-learning/chapter-2',frontier_cell='online-ogd',source_facing=True,
+ source=dict(kind='book',title='Online Learning: A Modern Introduction Using Convex Optimization',version='arXiv:1912.13213v10 (2026-06-21), SHA '+PDF_SHA,anchor='Chapter2 required prescient forward dependency, printed14/PDF26; Definitions2.16/2.18, Definition6.4, Algorithm15.8/Theorem15.30 printed265-266/PDF277-278. Source-loss and actual valid-run transport, both printed bounds.',url='https://arxiv.org/pdf/1912.13213v10'),
+ target='Derive source properness, strict penalized objective, unique selected minimum and actual valid-run identity, then both printed prescient regret conclusions. '+proposal['boundary'],
+ affected_files=[PUBLIC.relative_to(ROOT).as_posix(),'BanditRLProof.lean','website/content/chapters.json','website/content/readings.json','website/content/highlights.json'],declarations=names,
+ reuse_plan=dict(classification='adapt',decision='new_shared',searched_existing=['Actual indexed/source Mathlib and project searches, source loss/domain/properness and finitePart convex/minimum APIs, strict minimum uniqueness, canonical advance/iterate and accepted cumulative chain. RUN receipts. No dependency/toolchain upgrade.'],reused_declarations=['EReal.coe_toReal','BanditRL.OnlineBregman.finitePart_convex_of_subdifferentiable','BanditRL.OnlineBregman.proximal_finitePart_minimizer_iff','StrictConvexOn.eq_of_isMinOn','BanditRL.OnlinePrescientBregman.advance','BanditRL.OnlinePrescientBregman.iterate','BanditRL.OnlinePrescientBregman.iterate_fixed_regret','BanditRL.OnlinePrescientBregman.iterate_variable_regret'],new_shared_declarations=names,known_consumers=tests+names[2:],planned_consumers=['Dedicated Chapter2 forward-container reconciliation; later source-qualified Chapter15 reuse without chapter acceptance.'],no_duplicate_wrapper=True,decision_reason='Properness has two actual source endpoint consumers; uniqueness and induction produce actual recursion identity from source argmin updates, replacing an hseq input. No fake desired-bound consumer, duplicated divergence/algorithm, universal-attainment oracle or per-Book library.'),
+ reader_contract=dict(source_anchor_visible=True,natural_language_formula_proof=True,hidden_assumptions_visible=True,source_vs_lean_delta_visible=True,lean_folded=True,dependencies_visible=True,remaining_boundary_visible=True),
+ semantic_roundtrip=dict(required=True,status='accepted',formalizer='/root',blind_decoder='/root/osd_blind',source_reviewer='/root/source_reviewer',verdict='accepted-with-explicit-delta',remaining_semantic_delta='Distinct staged source-withheld six-header reconstruction, anti-anchored CONTRACT/source-classification and production/fullcanary BODY review accepted. Generic helper scopes and source wrapper finite-dimensional/closedness/interior/valid-minimum hypotheses explicitly separated; no universal attainment. Historical draft unconditional-choiceability wording separately reviewed, not a source erratum. Canary v1 wrong numeric-interface draft rejected/versioned v2; all proof/audit failures retained. Reused actor related history disclosed, no human/external/absolute-blind/runtime attestation. FINAL/native/delivery pending. '+proposal['boundary']),
+ graph_contribution=dict(lean_graph='integration-node',overview_graph='updated',functor_hypergraph='none-found-with-reason',functor_reason='Same-source representation and algorithm-run transport; no new cross-setting mechanism or certified functor.',focus_targets=names,visual_review='Eight public/total selected values,0generated auxiliaries,1431coalesced direct TYPE_VALUE presences,20requiredVALUEpairs and2separately selected numeric Eq.mpr branches retaining specific new source endpoints. Complete11020oldregistry objects+6canonicalproduction expected11026; shared registry/site/pixels pending. Not occurrence/fulltransitive/source-count evidence.',edge_semantics='formal-solid; overlays-dashed'),
+ progress_updates=dict(teaching_route='updated: only online-ogd appends module/goal/completion suffix, one source-qualified card and six declaration notes. All old fields/links/other Books preserved.',banditrlwiki='no-change-with-reason: deterministic source-run transport does not change Bandit policies or settings.',results_ledger='no-change-with-reason: no dedicated source-container/chapter closure accepted; bounded task milestone recorded separately.',roadmap='no-change-with-reason: all8Chapter2forwards required/open, Chapter2partial/null, later chapters unenumerated/null, persistent Goal active and globalSGB untouched.',website_surfaces=['website/content/chapters.json','website/content/readings.json','website/content/highlights.json']),
+ truth_boundary=proposal['boundary'],
+ verification=dict(focused_checks=['Six exact production bodies and both complete8/6conjunct canaries compiled;8public values/standard-only axiom lists,8native fences/safe-verifies,20directVALUEpairs and2individually selected numeric endpoint dependencies. No source statement/scoped-context weakening; own raw failure/snapshot receipts retained.'],bandit_check='Pending combined root/Tests/full harness; focused evidence is separate.',site_build='Pending applicable combined Lean gate then isolated local lean-verified site; generated website/_site not edited.',site_check='Pending complete shared registry and reader/browser/original-pixel/FINAL review.',independent_review='Distinct BODY '+sha(br)+' and exact prospective publication plan '+sha(pr)+' accepted; not FINAL/package/chapter acceptance.',owned_test_files=['Tests/OnlinePrescientBregmanSourceCanary.lean'],owned_test_root_files=['Tests.lean']),
+ contributor=dict(name='Codex for Ji Cheng',role='Formalizer with distinct staged automated decoder/source reviewer'))
+write(RUN/'prospective-contribution-v1.json',manifest)
+write(RUN/'publication-review-binding-v1.json',dict(BODY_review_sha256=sha(br),publication_review_sha256=sha(pr),plan_sha256=sha(plan),production_sha256=sha(PUBLIC),Test_sha256=sha(ROOT/'Tests/OnlinePrescientBregmanSourceCanary.lean'),exact_five_rows=p['rows']))
+for row in p['rows']:Path(row['path']).write_bytes(Path(row['after_snapshot']).read_bytes())
+write(contribution,manifest)
+from publication_guard_v1 import fixed as published_fixed
+published_fixed()
+write(RUN/'publication-materialized-v1.json',dict(exact_five_old_rows=p['rows'],old_fields_links_and_other_Books_preserved=True,production_SHA=sha(PUBLIC),Test_SHA=sha(ROOT/'Tests/OnlinePrescientBregmanSourceCanary.lean'),full_combined_gates='pending',site='pending',source_container_closed=False,whole_goal='active'))
+print('Exact reviewed five old paths and own manifest materialized; combined gates pending.')

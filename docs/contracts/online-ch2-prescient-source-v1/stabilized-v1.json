@@ -1,0 +1,91 @@
+{
+  "task": "ONLINE-CH2-PRESCIENT-SOURCE-20261010",
+  "status": "stabilized",
+  "source_fingerprint": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+  "statement_manifest": [
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/docs/contracts/online-ch2-prescient-source-v1/headers-draft-v2.json",
+      "sha256": "d107515d80295cda5d9c5154bfb9e494dd17fafda68509122f5ec4492e5a9c41"
+    }
+  ],
+  "canary_manifest": [
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/docs/contracts/online-ch2-prescient-source-v1/canary-headers-draft-v2.json",
+      "sha256": "5d43b6f4fb06cc162d9c8eb7d2832ac4a7b4dda6f378d3fedba7d921e24db197"
+    }
+  ],
+  "six_targets": [
+    {
+      "name": "BanditRL.OnlineConvex.sourceProper_of_domain",
+      "header": "theorem sourceProper_of_domain (f : E → EReal) (V : Set E)\n    (hV : V.Nonempty) (hbot : ∀ z, f z ≠ ⊥)\n    (hdom : V ⊆ effectiveDomain f) :\n    SourceProper f",
+      "sha256": "062df107e17468469f4c78cd923993c39f92c574dbf15d59a80601358331f5fa",
+      "context": "namespace BanditRL.OnlineConvex\nvariable {E : Type*}\n"
+    },
+    {
+      "name": "BanditRL.OnlinePrescientBregman.penalized_strictConvex",
+      "header": "theorem penalized_strictConvex (V X : Set E) (hV : Convex ℝ V) (hVX : V ⊆ X)\n    (ψ : E → ℝ) (hψ : StrictConvexOn ℝ X ψ)\n    (f : E → EReal) (hf : BanditRL.OnlineConvex.SourceProper f)\n    (hs : ∀ z ∈ V, (BanditRL.OnlineConvex.SourceSubdifferential f z).Nonempty)\n    (η : ℝ) (hη : 0 < η) (x : E) :\n    StrictConvexOn ℝ V (fun z => (f z).toReal + η⁻¹ * divergence ψ z x)",
+      "sha256": "e729fc6fd56c3b4b24d1a8e3753a70468ae1f8718a20def19f8c2c99492f143d",
+      "context": "namespace BanditRL.OnlinePrescientBregman\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\n"
+    },
+    {
+      "name": "BanditRL.OnlinePrescientBregman.advance_eq_some_of_minimizer",
+      "header": "theorem advance_eq_some_of_minimizer (V X : Set E) (hV : Convex ℝ V)\n    (hVX : V ⊆ X) (ψ : E → ℝ) (hψ : StrictConvexOn ℝ X ψ)\n    (f : E → EReal) (hf : BanditRL.OnlineConvex.SourceProper f)\n    (hs : ∀ z ∈ V, (BanditRL.OnlineConvex.SourceSubdifferential f z).Nonempty)\n    (η : ℝ) (hη : 0 < η) (x p : E) (hp : p ∈ V)\n    (hmin : IsMinOn (fun z => f z + ((η⁻¹ * divergence ψ z x : ℝ) : EReal)) V p) :\n    advance V ψ η f x = some p",
+      "sha256": "ac311172eeb55452618fc6de14e3b9d11537a62370fb76f1318746b0f8489103",
+      "context": "namespace BanditRL.OnlinePrescientBregman\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]\n"
+    },
+    {
+      "name": "BanditRL.OnlinePrescientBregman.iterate_eq_of_source_updates",
+      "header": "theorem iterate_eq_of_source_updates (V X : Set E) (hV : Convex ℝ V)\n    (hVX : V ⊆ X) (ψ : E → ℝ) (hψ : StrictConvexOn ℝ X ψ)\n    (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x0 : E) (x : ℕ → E) (T : ℕ)\n    (hinit : x 0 = x0) (hη : ∀ t < T, 0 < η t)\n    (hf : ∀ t < T, BanditRL.OnlineConvex.SourceProper (loss t))\n    (hs : ∀ t < T, ∀ z ∈ V,\n      (BanditRL.OnlineConvex.SourceSubdifferential (loss t) z).Nonempty)\n    (hmin : ∀ t < T, x (t + 1) ∈ V ∧\n      IsMinOn (fun z => loss t z + (((η t)⁻¹ * divergence ψ z (x t) : ℝ) : EReal))\n        V (x (t + 1))) :\n    ∀ t ≤ T, iterate V ψ η loss x0 t = some (x t)",
+      "sha256": "c6a5d2bdde55a80b6638ae51ac5bc566a383bc873e96f65aaaa6e128f8c1b0c4",
+      "context": "namespace BanditRL.OnlinePrescientBregman\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]\n"
+    },
+    {
+      "name": "BanditRL.OnlinePrescientBregman.source_fixed_regret",
+      "header": "theorem source_fixed_regret (V X : Set E) (hV : Convex ℝ V)\n    (hVn : V.Nonempty) (_hVc : IsClosed V) (hVX : V ⊆ X)\n    (ψ : E → ℝ) (hψ : StrictConvexOn ℝ X ψ)\n    (_hψc : BanditRL.OnlineConvex.SourceClosed (fun z =>\n      (ψ z : EReal) + BanditRL.OnlineConvex.extendedIndicator X z))\n    (hd : DifferentiableOn ℝ ψ (interior X))\n    (η : ℝ) (hη : 0 < η) (loss : ℕ → E → EReal)\n    (x0 : E) (x : ℕ → E) (T : ℕ) (hinit : x 0 = x0)\n    (hinterior : ∀ t ≤ T, x t ∈ interior X)\n    (hbot : ∀ t < T, ∀ z, loss t z ≠ ⊥)\n    (hdom : ∀ t < T, V ⊆ BanditRL.OnlineConvex.effectiveDomain (loss t))\n    (hs : ∀ t < T, ∀ z ∈ V,\n      (BanditRL.OnlineConvex.SourceSubdifferential (loss t) z).Nonempty)\n    (hmin : ∀ t < T, x (t + 1) ∈ V ∧\n      IsMinOn (fun z => loss t z + ((η⁻¹ * divergence ψ z (x t) : ℝ) : EReal))\n        V (x (t + 1))) (u : E) (hu : u ∈ V) :\n    (∑ t ∈ range T, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤\n      divergence ψ u x0 / η - (∑ t ∈ range T, divergence ψ (x (t + 1)) (x t)) / η",
+      "sha256": "e490b39ca4c45193ea10661f2ace65b346c73671dfb2f2dfd89a793c6198ccf8",
+      "context": "namespace BanditRL.OnlinePrescientBregman\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]\n"
+    },
+    {
+      "name": "BanditRL.OnlinePrescientBregman.source_variable_regret",
+      "header": "theorem source_variable_regret (V X : Set E) (hV : Convex ℝ V)\n    (hVn : V.Nonempty) (_hVc : IsClosed V) (hVX : V ⊆ X)\n    (ψ : E → ℝ) (hψ : StrictConvexOn ℝ X ψ)\n    (_hψc : BanditRL.OnlineConvex.SourceClosed (fun z =>\n      (ψ z : EReal) + BanditRL.OnlineConvex.extendedIndicator X z))\n    (hd : DifferentiableOn ℝ ψ (interior X))\n    (η : ℕ → ℝ)\n    (loss : ℕ → E → EReal) (x0 : E) (x : ℕ → E) (T : ℕ) (hT : 0 < T)\n    (hη : ∀ t < T, 0 < η t)\n    (hinit : x 0 = x0) (hinterior : ∀ t ≤ T, x t ∈ interior X)\n    (hmono : ∀ t, t + 1 < T → η (t + 1) ≤ η t)\n    (hbot : ∀ t < T, ∀ z, loss t z ≠ ⊥)\n    (hdom : ∀ t < T, V ⊆ BanditRL.OnlineConvex.effectiveDomain (loss t))\n    (hs : ∀ t < T, ∀ z ∈ V,\n      (BanditRL.OnlineConvex.SourceSubdifferential (loss t) z).Nonempty)\n    (hmin : ∀ t < T, x (t + 1) ∈ V ∧\n      IsMinOn (fun z => loss t z + (((η t)⁻¹ * divergence ψ z (x t) : ℝ) : EReal))\n        V (x (t + 1))) (u : E) (hu : u ∈ V) :\n    (∑ t ∈ range T, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤\n      ((range T).sup' (nonempty_range_iff.mpr (Nat.ne_of_gt hT))\n        (fun t => divergence ψ u (x t))) / η (T - 1) -\n      ∑ t ∈ range T, divergence ψ (x (t + 1)) (x t) / η t",
+      "sha256": "f9b5b20fb150e892152c1bcb947d42dfe6b61c96d21ab8362d47e19b86757294",
+      "context": "namespace BanditRL.OnlinePrescientBregman\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]\n"
+    }
+  ],
+  "review": [
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-prescient-source-20261010/blind-reconstruction-v1.json",
+      "sha256": "25e584eb59866715254846d35976ceef861f39939df91c85496e40836e7a6f6e"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-prescient-source-20261010/blind-reconstruction-v1.md",
+      "sha256": "6ddfd8be3c363b8b51e32a7fbcc3cc3515429ed6dd3caec9fe50d48690b01f40"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-prescient-source-20261010/contract-source-review-v1.json",
+      "sha256": "ca372cf693b8bcb7b8536cd0236794e9eaebed2fe2c712cff4af3d1bf5afe62d"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-prescient-source-20261010/contract-source-review-v1.md",
+      "sha256": "898c006e1a26ebe0f51f9764cceac27800e914d65e16c8a7c61c2b6ca8e6b86f"
+    }
+  ],
+  "conversion_window": [
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/conversion-windows/ONLINE-CH2-PRESCIENT-SOURCE-20261010.md",
+      "sha256": "2ea5993eeef3d5c4bc59054543512c652b0e0eb9bac190dc7a47c087a89d0119"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-prescient-source-20261010/native-conversion-window-exact-before-v1.json",
+      "sha256": "2503d6db5f4cdadbfac49b8bb5ba0bfbb502bcc890ef566e0b4d06b0c1b7b978"
+    }
+  ],
+  "DAG": [
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/docs/contracts/online-ch2-prescient-source-v1/dependency-DAG-draft-v1.json",
+      "sha256": "a4310ef02e560e2f9595c92e5c1991016d86147b1d20c07b8a42cb56c1f58950"
+    }
+  ],
+  "proof_scope": "Only new production module and new task evidence; six terminal headers/scoped contexts fixed. No old root/registry/publication changes. First ready proper leaf, then strict/unique/identity/endpoints.",
+  "chapter_status": "incomplete; eight forwards remain open; whole Goal active"
+}

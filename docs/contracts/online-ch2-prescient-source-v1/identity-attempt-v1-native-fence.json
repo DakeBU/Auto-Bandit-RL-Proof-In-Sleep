@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlinePrescientBregman.iterate_eq_of_source_updates",
+  "file": "BanditRLProof/OnlinePrescientBregmanSource.lean",
+  "statement": "theorem iterate_eq_of_source_updates (V X : Set E) (hV : Convex ℝ V) (hVX : V ⊆ X) (ψ : E → ℝ) (hψ : StrictConvexOn ℝ X ψ) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x0 : E) (x : ℕ → E) (T : ℕ) (hinit : x 0 = x0) (hη : ∀ t < T, 0 < η t) (hf : ∀ t < T, BanditRL.OnlineConvex.SourceProper (loss t)) (hs : ∀ t < T, ∀ z ∈ V, (BanditRL.OnlineConvex.SourceSubdifferential (loss t) z).Nonempty) (hmin : ∀ t < T, x (t + 1) ∈ V ∧ IsMinOn (fun z => loss t z + (((η t)⁻¹ * divergence ψ z (x t) : ℝ) : EReal)) V (x (t + 1))) : ∀ t ≤ T, iterate V ψ η loss x0 t = some (x t)",
+  "statement_hash": "69fc7be9869ec183885e324044c22a1840c3b2be795ed0417e78dd7ca10d7231",
+  "source_assumptions": [],
+  "created_at": "2026-10-09T16:27:02+00:00"
+}
