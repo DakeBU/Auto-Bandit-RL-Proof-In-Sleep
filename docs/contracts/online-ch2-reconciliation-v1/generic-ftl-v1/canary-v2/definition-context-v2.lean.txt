@@ -1,0 +1,29 @@
+import BanditRLProof.OnlineFTLSelector
+import Mathlib.Analysis.Convex.Basic
+import Mathlib.Topology.Instances.Real.Lemmas
+import Mathlib.Tactic
+
+noncomputable section
+open Set Finset BanditRL.OnlineFTLSelector
+namespace Tests.OnlineFTLSelector
+
+def interval : Set ℝ := Icc 0 1
+
+def initial : interval := ⟨3 / 4, by norm_num [interval]⟩
+
+def otherInitial : interval := ⟨1 / 4, by norm_num [interval]⟩
+
+def quadraticLoss (t : ℕ) (x : ℝ) : ℝ :=
+  if t = 0 then (x - 1 / 4) ^ 2 else (x - 3 / 4) ^ 2
+
+def changedLoss (t : ℕ) (x : ℝ) : ℝ :=
+  if t < 2 then quadraticLoss t x else x + 100
+
+def offDomainLoss (t : ℕ) (x : ℝ) : ℝ := by
+  classical
+  exact if x ∈ interval then quadraticLoss t x else x + 7
+
+def affineThenQuadratic (t : ℕ) (x : ℝ) : ℝ :=
+  if t = 0 then x else x ^ 2 - x
+
+end Tests.OnlineFTLSelector

@@ -1,0 +1,75 @@
+13.3 Coordinate-wise Parameter-free Online Convex Optimization215
+to tune.Of course, this is a simplified example. In a truly OCO game, the losses are different
+at each time step, and the intuition behind the algorithm becomes more difficult. Yet, the
+regret guarantee of KT assures us that this strategy is principled.
+Remark 13.8Although we derived the KT algorithm for OCO via its connection to the
+coin-betting game, it remains an FTRL algorithm, and with a more involved proof, one
+can prove the same regret guarantee. Problem 13.5 shows a simplification of this idea, by
+designing a parameter-free algorithm directly from the FTRL equality in Lemma 7.1.
+Next, we reduce OCO inR d and Learning with Expert Advice (LEA) to coin betting.
+13.3 Coordinate-wise Parameter-free Online Convex Optimization
+Algorithm 13.3Coordinate-Wise KT for OCO
+Require:ϵ >0,L ∞ >0
+1:fort= 1toTdo
+2:Outputx t ∈R d such thatx t,i =−
+Pt−1
+j=1 gj,i
+L∞t
+
+ϵ− Pt−1
+j=1
+gj,i
+L∞
+xj,i
+
+fori= 1, . . . , d
+3:Pay the lossℓ t(xt), whereℓ t is subdifferentiable inR d
+4:Setg t ∈∂ℓ t(xt)where∥g t∥∞ ≤L ∞
+5:end for
+With AdaGrad (Section 4.2.4), we have already seen that it is possible to decompose an
+OCO problem over the coordinates and use a different one-dimensional OLO algorithm on
+each coordinate. In particular, we saw that
+RegretT (u) =
+TX
+t=1
+ℓt(xt)−
+TX
+t=1
+ℓt(u)≤
+TX
+t=1
+⟨gt,xt⟩ −
+TX
+t=1
+⟨gt,u⟩
+=
+TX
+t=1
+dX
+i=1
+gt,i(xt,i −u i) =
+dX
+i=1
+TX
+t=1
+gt,i(xt,i −u i),
+where the PT
+t=1 gt,i(xt,i −u i)is exactly the regret with respect to the linear losses con-
+structed by the coordinateiof the subgradient.
+Hence, if we have a one-dimensional OLO algorithm, we can usedcopies of it, each
+one fed with the coordinateiof the subgradient. In particular, we might think of using a
+coordinate-wise KTalgorithm. The pseudo-code of this procedure is in Algorithm 13.3.
+The regret bound we get is immediate: we just have to sum the regret over the coordinates.
+Theorem 13.9With the notation in Algorithm 13.3, assume that∥g t∥∞ ≤L ∞. Then,
+∀u∈R d, the following regret bounds hold
+TX
+t=1
+(ℓt(xt)−ℓ t(u))≤L ∞
+dX
+i=1
+|ui|
+q
+2Tln (1 +e|u i|T/ϵ) +dϵL ∞
+≤ ∥u∥1L∞
+q
+2Tln (1 +e∥u∥ ∞T/ϵ) +dϵL ∞ .

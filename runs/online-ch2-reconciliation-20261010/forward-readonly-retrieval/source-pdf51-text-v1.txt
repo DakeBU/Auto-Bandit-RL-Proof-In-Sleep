@@ -1,0 +1,79 @@
+4.2 Adaptive Algorithms:L ⋆ bounds and AdaGrad39
+4.2 Adaptive Algorithms:L ⋆ bounds and AdaGrad
+In this section, we will explore different conditions where we can get better regret upper
+bounds thanO(DL
+√
+T)asT→ ∞. Also, we will obtain these improved guarantees in an
+automaticway. That is, the algorithm will beadaptiveto the characteristics of the sequence
+of loss functions, without having to rely on information about the future.
+4.2.1 Adaptive Learning Rates for Online Subgradient Descent
+Consider the minimization of the regret with linear losses:
+RegretT (u) =
+TX
+t=1
+⟨gt,xt⟩ −
+TX
+t=1
+⟨gt,u⟩.
+Using OSD, in Chapter 2, we said that the regret for bounded domains can be upper bounded
+by
+TX
+t=1
+⟨gt,xt⟩ −
+TX
+t=1
+⟨gt,u⟩ ≤D2
+2ηT
++ 1
+2
+TX
+t=1
+ηt∥gt∥2
+2 .
+With a fixed learning rateη t =η, the learning rate that minimizes this upper bound on the
+regret is
+η⋆ = DqPT
+t=1 ∥gt∥2
+2
+.
+Unfortunately, as we said, this learning rate cannot be used because it assumes knowledge
+of the future rounds. However, we might be lucky, and we might try to just approximate it
+in each round using the knowledge up to timet. That is, we might try to use
+ηt = DqPt
+i=1 ∥gi∥2
+2
+,(4.3)
+and just skip the rounds in whichg t =0to avoid possible divisions by 0. Observe that
+ηT =η ⋆, so the first term of the regret would be exactly what we need! For the other term,
+the optimal learning rate would give us
+1
+2
+TX
+t=1
+η⋆
+T ∥gt∥2
+2 = 1
+2D
+vuut
+TX
+t=1
+∥gt∥2
+2 .
+Now, let’s see what we obtain with our approximation in the other term of the regret:
+1
+2
+TX
+t=1
+ηt∥gt∥2
+2 = 1
+2D
+TX
+t=1
+∥gt∥2
+2qPt
+i=1 ∥gi∥2
+2
+.
+We need a way to upper-bound that sum. The way to treat these sums, as we did in Chapter 1,
+is to try to approximate them with integrals. So, we can use the following very handy lemma
+that generalizes a lot of similar specific ones.

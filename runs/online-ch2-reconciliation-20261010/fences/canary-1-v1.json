@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "Tests.OnlineFTLSelector.quadratic_trajectory",
+  "file": "Tests/OnlineFTLSelectorCanary.lean",
+  "statement": "theorem quadratic_trajectory : (initial : ℝ) = 3 / 4 ∧ predict interval initial quadraticLoss 0 = some (3 / 4) ∧ predict interval initial quadraticLoss 1 = some (1 / 4) ∧ predict interval initial quadraticLoss 2 = some (1 / 2) ∧ (1 / 4 : ℝ) ≠ 1 / 2 ∧ quadraticLoss 0 (1 / 4) ≠ quadraticLoss 0 (3 / 4) ∧ (∀ t ∈ range 3, ∃ p, predict interval initial quadraticLoss t = some p ∧ p ∈ interval ∧ IsMinOn (fun x => ∑ i ∈ range t, quadraticLoss i x) interval p)",
+  "statement_hash": "6cb0656e565dcbcd93501ba80670848d48817598684e86e24ed4bde97a596548",
+  "source_assumptions": [],
+  "created_at": "2026-10-09T20:40:37+00:00"
+}

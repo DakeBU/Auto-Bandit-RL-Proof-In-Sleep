@@ -1,0 +1,9 @@
+# Actual combined gate and index precondition repair
+
+Formalizer /root, same model staged role, no independent-review claim. The immutable production/Test frozen statements and actual BODY bytes are unchanged.
+
+Shared root completed 9115 cached-inclusive jobs and Tests9290, actual exits0. The full tools/bandit.py check command exited1: AnonymousSupplementTests.setUpClass refused BanditRLProof/OnlineFTLSelector.lean because the allowlisted new source was not in the Git index. This failure prevented that class's tests from running;446tests with1error and7skips is not a passing full gate. The recursive placeholder scan did not itself need staging, but the anonymous supplement unit tests do. The previous driver assumption that staging was unnecessary for the entire check was too broad.
+
+The proposed repair changes no theorem, definition, reader or six approved old-source transitions. It stages only the explicit candidate-stage-plan paths, inspects indexed source bytes and active-text whitespace with the separately reviewed immutable-artifact attributes, then retries the genuine complete harness. A source commit and isolated local lean-verified site remain conditional on actual passing markers, nonempty contributor gates and clean source. Distinct precise plan review is pending.
+
+PR214 remains OPEN/draft/unmerged at exact2e06e21. Newly fetched origin/main remains6847b678 and canonical research is clean. This packet is an additive generic strict-past FTL definition foundation, not a new regret bound. P1=none has no playable action; P2=some0 is an independent longer-prefix query and never a valid full interaction after failure. The65overlapping source containers are not a theorem denominator. All8forwardcontainers remain required/open, including6futuremathematicalclaims unenumerated. Chapter2partial/null, Ch3-16unenumerated/null, whole Goal ACTIVE. No merge/deploy/main/live/CI/retirement.

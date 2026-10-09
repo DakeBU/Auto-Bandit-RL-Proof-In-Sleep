@@ -1,0 +1,76 @@
+216Parameter-free Online Linear Optimization
+This theorem suggests that in high-dimensional settingsϵshould be proportional to 1
+d .
+13.4 Parameter-free Algorithms in Any Norm
+The above reduction works only in a finite-dimensional space. Moreover, it gives a depen-
+dence on the competitor with respect to the L1 norm that might be undesirable. So, here we
+use the black-box magnitude/direction reduction from Section 12.3.
+Assume the loss functions areL-Lipschitz with respect to the∥ · ∥2. We can instantiate
+the above theorem using the KT betting algorithm for the one-dimensional learner and OMD
+for the direction learner. For example, letA B be OSD withV={x∈R d :∥x∥ 2 ≤1},
+x1 =0, and learning rateη t =
+√
+2
+2L
+√
+t . LetA 1d be the KT algorithm for one-dimensional
+OCO. Then, using the construction in Algorithm 12.3, we have
+RegretT (u)≤L∥u∥ 2
+q
+ln(e∥u∥2T/ϵ+ 1) + 1
+√
+2T+Lϵ,∀u∈R d .(13.2)
+Using an online-to-batch conversion, this algorithm is a stochastic gradient descent proce-
+dure without learning rates to tune.
+Once again, to better appreciate this kind of guarantee, let’s take a look at the one of
+FTRL (remember that OSD can be used in unbounded domains only with constant learning
+rates). With the regularizerψ t(x) = L
+√
+t
+2α ∥x∥2
+2 andL-Lipschitz losses we get a regret of
+RegretT (u)≤L
+√
+T
+∥u∥2
+2
+2α +α
+
+.
+So, to get the right dependence on∥u∥ 2, we need to tuneα, but we saw that this is impos-
+sible. On the other hand, the regret in (13.2) suffers from a logarithmic factor, which is the
+price to pay not to have to tune parameters.
+In the same way, we can even have a parameter-free regret bound for Lp norms. Assume
+that the loss functions areL q-Lipschitz with respect to∥ · ∥p, where1< p≤2andqis
+such that1/p+ 1/q= 1. LetA B be OMD withV={x∈R d :∥x∥ p ≤1}and learning
+rateη t =
+√p−1
+Lq
+√
+2t (see Section 6.7). LetA 1d be the KT algorithm for one-dimensional OCO.
+Then, using the construction in Algorithm 12.3, we have
+RegretT (u)≤L q
+
+∥u∥p
+q
+ln(e∥u∥pT/ϵ+ 1) + ∥u∥p√p−1
+√
+2T+L qϵ,∀u∈R d .
+Note that the regret againstu=0of the parameter-free construction isconstantwith
+respect toT. It is important to understand that there is nothing special in the origin in the
+unconstrained setting: we could translate the prediction by any offset and get a guarantee
+that treats the offset as the point with constant regret. This is shown in the next proposition.
+Proposition 13.10LetAbe an OLO algorithm that predictsx t and has linear regret
+RegretOLO
+T (u)for anyu∈R d. We have that the regret of the predictions ˆxt =x t +x 0
+for OCO is
+TX
+t=1
+ℓt(ˆxt)−
+TX
+t=1
+ℓt(u)≤
+TX
+t=1
+⟨gt,xt +x 0 −u⟩= Regret OLO
+T (u−x 0),∀u∈R d,

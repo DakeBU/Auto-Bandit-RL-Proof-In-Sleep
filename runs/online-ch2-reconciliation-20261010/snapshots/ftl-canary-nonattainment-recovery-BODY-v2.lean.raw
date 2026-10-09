@@ -1,0 +1,164 @@
+import BanditRLProof.OnlineFTLSelector
+import Mathlib.Analysis.Convex.Basic
+import Mathlib.Topology.Instances.Real.Lemmas
+import Mathlib.Tactic
+
+noncomputable section
+open Set Finset BanditRL.OnlineFTLSelector
+namespace Tests.OnlineFTLSelector
+
+def interval : Set ℝ := Icc 0 1
+
+def initial : interval := ⟨3 / 4, by norm_num [interval]⟩
+
+def otherInitial : interval := ⟨1 / 4, by norm_num [interval]⟩
+
+def quadraticLoss (t : ℕ) (x : ℝ) : ℝ :=
+  if t = 0 then (x - 1 / 4) ^ 2 else (x - 3 / 4) ^ 2
+
+def changedLoss (t : ℕ) (x : ℝ) : ℝ :=
+  if t < 2 then quadraticLoss t x else x + 100
+
+def offDomainLoss (t : ℕ) (x : ℝ) : ℝ := by
+  classical
+  exact if x ∈ interval then quadraticLoss t x else x + 7
+
+def affineThenQuadratic (t : ℕ) (x : ℝ) : ℝ :=
+  if t = 0 then x else x ^ 2 - x
+
+theorem empty_domain :
+    select (∅ : Set ℝ) (fun _ : Fin 1 => fun x : ℝ => x ^ 2) = none := by
+  apply (select_none_iff (∅ : Set ℝ) (fun _ : Fin 1 => fun x : ℝ => x ^ 2)).mpr
+  rintro ⟨p, hp, _⟩
+  exact hp
+
+private theorem selection_witness {n : ℕ} (V : Set ℝ) (past : Fin n → ℝ → ℝ)
+    (p : ℝ) (hp : p ∈ V) (hmin : IsMinOn (cumulative past) V p) :
+    ∃ q, select V past = some q ∧ q ∈ V ∧ IsMinOn (cumulative past) V q := by
+  cases hs : select V past with
+  | none => exact ((select_none_iff V past).mp hs ⟨p, hp, hmin⟩).elim
+  | some q => exact ⟨q, rfl, select_some_spec V past q hs⟩
+
+theorem current_future_independence :
+    quadraticLoss 2 0 ≠ changedLoss 2 0 ∧
+    quadraticLoss 3 0 ≠ changedLoss 3 0 ∧
+    predict interval initial quadraticLoss 2 = predict interval initial changedLoss 2 := by
+  refine ⟨by norm_num [quadraticLoss, changedLoss],
+    by norm_num [quadraticLoss, changedLoss], ?_⟩
+  apply predict_prefix
+  intro s hs x hx
+  simp only [changedLoss, if_pos hs]
+
+theorem off_domain_invariance :
+    (2 : ℝ) ∉ interval ∧
+    quadraticLoss 0 2 ≠ offDomainLoss 0 2 ∧
+    (∀ t, EqOn (quadraticLoss t) (offDomainLoss t) interval) ∧
+    select interval (fun i : Fin 2 => quadraticLoss i.val) =
+      select interval (fun i : Fin 2 => offDomainLoss i.val) ∧
+    predict interval initial quadraticLoss 2 = predict interval initial offDomainLoss 2 := by
+  have heq : ∀ t, EqOn (quadraticLoss t) (offDomainLoss t) interval := by
+    intro t x hx
+    simp only [offDomainLoss, if_pos hx]
+  refine ⟨by norm_num [interval], by norm_num [quadraticLoss, offDomainLoss, interval],
+    heq, ?_, ?_⟩
+  · exact select_congr interval _ _ (fun i => heq i.val)
+  · exact predict_prefix interval initial quadraticLoss offDomainLoss 2 (fun s _ => heq s)
+
+theorem tied_minimizers :
+    (0 : ℝ) ∈ interval ∧ (1 : ℝ) ∈ interval ∧ (0 : ℝ) ≠ 1 ∧
+    IsMinOn (cumulative (fun _ : Fin 1 => fun _ : ℝ => 0)) interval 0 ∧
+    IsMinOn (cumulative (fun _ : Fin 1 => fun _ : ℝ => 0)) interval 1 ∧
+    (∃ p, select interval (fun _ : Fin 1 => fun _ : ℝ => 0) = some p ∧
+      p ∈ interval ∧ IsMinOn (cumulative (fun _ : Fin 1 => fun _ : ℝ => 0)) interval p) := by
+  have h0 : (0 : ℝ) ∈ interval := by norm_num [interval]
+  have h1 : (1 : ℝ) ∈ interval := by norm_num [interval]
+  have hm : ∀ p : ℝ, IsMinOn (cumulative (fun _ : Fin 1 => fun _ : ℝ => 0)) interval p := by
+    intro p
+    apply isMinOn_iff.mpr
+    intro x hx
+    simp [cumulative]
+  exact ⟨h0, h1, by norm_num, hm 0, hm 1,
+    selection_witness interval (fun _ : Fin 1 => fun _ : ℝ => 0) 0 h0 (hm 0)⟩
+
+theorem empty_history_and_initialization :
+    (∃ p, select interval (fun i : Fin 0 => Fin.elim0 i) = some p ∧ p ∈ interval) ∧
+    predict interval initial quadraticLoss 0 = some (3 / 4) ∧
+    predict interval otherInitial quadraticLoss 0 = some (1 / 4) ∧
+    predict interval initial quadraticLoss 0 ≠ predict interval otherInitial quadraticLoss 0 := by
+  have hm : IsMinOn (cumulative (fun i : Fin 0 => Fin.elim0 i)) interval 0 := by
+    apply isMinOn_iff.mpr
+    intro x hx
+    simp [cumulative]
+  obtain ⟨p, hp, hVp, _⟩ := selection_witness interval (fun i : Fin 0 => Fin.elim0 i)
+    0 (by norm_num [interval]) hm
+  refine ⟨⟨p, hp, hVp⟩, predict_zero interval initial quadraticLoss,
+    predict_zero interval otherInitial quadraticLoss, ?_⟩
+  rw [predict_zero, predict_zero]
+  norm_num [initial, otherInitial]
+
+private theorem quadratic_selection {n : ℕ} (V : Set ℝ) (past : Fin n → ℝ → ℝ)
+    (c k d : ℝ) (hc : c ∈ V) (hk : 0 < k)
+    (hsum : ∀ x, cumulative past x = k * (x - c) ^ 2 + d) :
+    select V past = some c := by
+  apply select_eq_some_of_unique V past c hc
+  · apply isMinOn_iff.mpr
+    intro x hx
+    rw [hsum c, hsum x]
+    have hn := mul_nonneg (le_of_lt hk) (sq_nonneg (x - c))
+    nlinarith
+  · intro x hx hmin
+    have hb := isMinOn_iff.mp hmin c hc
+    rw [hsum x, hsum c] at hb
+    have hs : k * (x - c) ^ 2 ≤ k * 0 := by nlinarith [hb]
+    have hz : (x - c) ^ 2 = 0 := le_antisymm (le_of_mul_le_mul_left hs hk) (sq_nonneg _)
+    exact sub_eq_zero.mp (sq_eq_zero_iff.mp hz)
+
+private theorem affine_no_minimum :
+    ¬ ∃ p : ℝ, p ∈ (univ : Set ℝ) ∧ IsMinOn (fun x : ℝ => x) univ p := by
+  rintro ⟨p, _, hm⟩
+  have hb := isMinOn_iff.mp hm (p - 1) (mem_univ _)
+  linarith
+
+theorem affine_nonattainment :
+    (univ : Set ℝ).Nonempty ∧ IsClosed (univ : Set ℝ) ∧ Convex ℝ (univ : Set ℝ) ∧
+    select univ (fun _ : Fin 1 => fun x : ℝ => x) = none ∧
+    predict univ ⟨0, mem_univ 0⟩ (fun _ : ℕ => fun x : ℝ => x) 0 = some 0 ∧
+    predict univ ⟨0, mem_univ 0⟩ (fun _ : ℕ => fun x : ℝ => x) 1 = none := by
+  have hs : select univ (fun _ : Fin 1 => fun x : ℝ => x) = none := by
+    apply (select_none_iff univ (fun _ : Fin 1 => fun x : ℝ => x)).mpr
+    have hc : cumulative (fun _ : Fin 1 => fun x : ℝ => x) = (fun x : ℝ => x) := by
+      funext x
+      simp [cumulative, Fin.sum_univ_one]
+    rw [hc]
+    exact affine_no_minimum
+  have hp : predict univ ⟨0, mem_univ 0⟩ (fun _ : ℕ => fun x : ℝ => x) 1 = none := by
+    apply (predict_none_iff univ ⟨0, mem_univ 0⟩ (fun _ : ℕ => fun x : ℝ => x) 1).mpr
+    simpa using affine_no_minimum
+  exact ⟨⟨0, mem_univ 0⟩, isClosed_univ, convex_univ, hs,
+    predict_zero univ ⟨0, mem_univ 0⟩ (fun _ : ℕ => fun x : ℝ => x), hp⟩
+
+theorem recovery_after_nonattainment :
+    predict univ ⟨0, mem_univ 0⟩ affineThenQuadratic 1 = none ∧
+    predict univ ⟨0, mem_univ 0⟩ affineThenQuadratic 2 = some 0 ∧
+    IsMinOn (fun x => ∑ i ∈ range 2, affineThenQuadratic i x) univ 0 ∧
+    (∀ x, (∑ i ∈ range 2, affineThenQuadratic i x) = x ^ 2) := by
+  have hc : ∀ x, (∑ i ∈ range 2, affineThenQuadratic i x) = x ^ 2 := by
+    intro x
+    norm_num [Finset.sum_range_succ, affineThenQuadratic] <;> ring
+  have h1 : predict univ ⟨0, mem_univ 0⟩ affineThenQuadratic 1 = none := by
+    apply (predict_none_iff univ ⟨0, mem_univ 0⟩ affineThenQuadratic 1).mpr
+    simpa [Finset.sum_range_succ, affineThenQuadratic] using affine_no_minimum
+  have h2 : predict univ ⟨0, mem_univ 0⟩ affineThenQuadratic 2 = some 0 := by
+    change select univ (fun i : Fin 2 => affineThenQuadratic i.val) = some 0
+    apply quadratic_selection univ (fun i : Fin 2 => affineThenQuadratic i.val) 0 1 0
+      (mem_univ 0) (by norm_num)
+    intro x
+    simpa using (cumulative_prefix affineThenQuadratic 2 x).trans (hc x)
+  have hm : IsMinOn (fun x => ∑ i ∈ range 2, affineThenQuadratic i x) univ 0 := by
+    apply isMinOn_iff.mpr
+    intro x hx
+    rw [hc 0, hc x]
+    simpa only [zero_pow (by decide : (2 : ℕ) ≠ 0)] using sq_nonneg x
+  exact ⟨h1, h2, hm, hc⟩
+
+end Tests.OnlineFTLSelector

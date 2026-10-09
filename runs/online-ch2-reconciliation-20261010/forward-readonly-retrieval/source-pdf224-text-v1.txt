@@ -1,0 +1,102 @@
+212Parameter-free Online Linear Optimization
+sequencesx 1,x2, . . . ,xT ∈R d andg 1, . . . ,gT ∈R d. Then,
+−
+TX
+t=1
+⟨gt,xt⟩ ≥ϕ
+ 
+−
+TX
+t=1
+gt
+!
+⇔
+TX
+t=1
+⟨gt,xt −u⟩ ≤ϕ⋆(u),∀u∈R d .
+ProofLet’s prove the left-to-right implication. For anyu∈R d, we have
+TX
+t=1
+⟨gt,xt −u⟩ ≤ −
+TX
+t=1
+⟨gt,u⟩ −ϕ
+ 
+−
+TX
+t=1
+gt
+!
+≤sup
+θ∈Rd
+⟨θ,u⟩ −ϕ(θ) =ϕ⋆ (u).
+For the other implication, we have
+−
+TX
+t=1
+⟨gt,xt⟩= sup
+u∈Rd
+−
+TX
+t=1
+⟨gt,u⟩ −
+TX
+t=1
+⟨gt,xt −u⟩
+≥sup
+u∈Rd
+−
+TX
+t=1
+⟨gt,u⟩ −ϕ⋆ (u) =ϕ
+ 
+−
+TX
+t=1
+gt
+!
+.
+To make sense of the above theorem, assume that we are considering a 1-d problem and
+gt ∈[−L, L]. Then, guaranteeing a lower bound to− PT
+t=1 gtxt can be done through a
+betting strategy that betsx t money on the continuous coinsc t =−g t/L∈[−1,1]. So, the
+theorem implies thatproving a lower bound for the wealth in a coin-betting game implies a
+regret upper bound for the corresponding one-dimensional OLO game. However, proving a
+reward lower bound is easier because it does not depend on the competitoru. Indeed, not
+knowing the norm of the competitor is exactly the reason why tuning the learning rates in
+OMD is hard!
+This consideration immediately gives us the conversion between 1-d OLO and coin bet-
+ting:the outcome of the coin is the negative of the subgradient of the losses on the current
+prediction.Indeed, settingc t =−g t/L, we have that a coin-betting algorithm that betsx t
+would give us
+WealthT =ϵ+
+TX
+t=1
+xtct =ϵ−
+TX
+t=1
+xt
+gt
+L .
+So, a lower bound on the wealth corresponds to a lower bound that can be used in Theo-
+rem 13.5. To obtain a regret guarantee, we only need to calculate the Fenchel conjugate of
+the reward function, assuming it can be expressed as a function of PT
+t=1 ct.
+The last step is to reduce 1-d OCO to 1-d OLO. But this is an easy step that we have done
+many times. Indeed, we have
+RegretT (u) =
+TX
+t=1
+ℓt(xt)−
+TX
+t=1
+ℓt(u)≤
+TX
+t=1
+xtgt −
+TX
+t=1
+gtu,∀u∈R,∀g t ∈∂ℓ t(xt).
+So, to summarize, the Fenchel conjugate of the wealth lower bound for the coin-betting
+game becomes the regret guarantee for the OCO game. In the next section, we specialize all
+these considerations to the KT algorithm.

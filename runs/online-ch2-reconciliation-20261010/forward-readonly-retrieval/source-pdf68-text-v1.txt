@@ -1,0 +1,130 @@
+56Lower Bounds for Online Linear Optimization
+Equivalently, given that 1
+L
+PT
+t=1 ct = 2k−T, we also have that
+max
+−1/L≤β≤1/L
+TY
+t=1
+(1 +βc t) = exp
+ 
+T·KL Bern
+ PT
+t=1 ct
+2LT + 1
+2; 1
+2
+!!
+= exp
+ 
+T·KL Bern
+ 
+|PT
+t=1 ct|
+2LT + 1
+2; 1
+2
+!!
+,
+where in the second equality we used the fact thatKLBern(x+ 1
+2 ; 1
+2 ) = KLBern(−x+ 1
+2 ; 1
+2 ).
+Hence, we have
+3
+2ϵ
+ 2q√
+T
++ 1
+
+exp
+
+T·KL Bern
+1
+2 + q
+T ; 1
+2
+
+≤ 3
+2ϵ
+ 
+|PT
+t=1 ct|
+L
+√
+T
++ 1
+!
+exp
+ 
+T·KL Bern
+ 
+1
+2 + |PT
+t=1 ct|
+2LT ; 1
+2
+!!
+= 3
+2
+ 
+|PT
+t=1 ct|
+L
+√
+T
++ 1
+!
+max
+β
+ϵ
+TY
+t=1
+(1 +c tβ).
+Now, let’s connect the coin-betting game with OLO, thanks to the next theorem.
+Theorem 5.7Letϵ t be a non-negative non-decreasing sequence andAan OLO algorithm
+that guaranteesRegret t(0)≤ϵ t for any sequence ofg 1, . . . ,gt ∈R d with∥g i∥2 ≤L.
+Then, for anyT≥0there existsβ t such thatxt =β t(ϵT −Pt−1
+i=1⟨gi,xi⟩)and∥β t∥2 ≤ 1
+L
+fort= 1, . . . , T.
+ProofDefiner t =− Pt
+i=1⟨gi,xi⟩as the “reward” of the algorithm. So, we have
+Regrett(u) =
+tX
+i=1
+⟨gi,xi⟩ −
+tX
+i=1
+⟨gi,u⟩=−r t +
+* tX
+i=1
+gi,u
++
+.
+Since we assumed thatRegret t(0)≤ϵ t, we always haver t ≥ −ϵt. Using this, we claim
+thatL∥x t∥2 ≤r t−1 +ϵ t for allt= 1, . . . , T. To see this, assume that there is a sequence
+g1, . . . ,gt−1 that givesL∥x t∥2 > rt−1 +ϵ t. If∥x t∥2 = 0then the stated inequality
+holds. Instead, for∥x t∥2 ̸= 0, setg t =L xt
+∥xt∥2
+. For this sequence, we would haver t =
+rt−1 −L∥x t∥2 <−ϵ t, that contradicts the observation thatr t ≥ −ϵt.
+So, from the fact thatL∥xt∥2 ≤r t−1 +ϵ t ≤r t−1 +ϵ T we have that there existsβt such
+thatx t =β t(ϵT +r t−1)and∥β t∥2 ≤ 1
+L .
+This theorem informs us of something important:any OLO algorithm that suffers at most
+a non-decreasing regret intagainst the competitoru=0predicts in the form of a “vecto-
+rial” coin-betting algorithm.
+From this connection to online betting, we now derive a lower bound for OLO.
+Theorem 5.8LetT∈Nbe even and letAbe any OLO algorithm that guarantees regret
+at mostϵ T >0against the null competitor on any sequence ofTlinear andL-Lipschitz
+lossesℓ t :R→Rfort= 1, . . . , T. LetU >0be such that1≤W(
+√
+eTUL
+8ϵT
+)≤
+√
+T
+2 . Then,

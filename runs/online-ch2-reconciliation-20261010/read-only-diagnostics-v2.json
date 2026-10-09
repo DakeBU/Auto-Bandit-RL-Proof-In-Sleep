@@ -1,0 +1,16 @@
+{
+  "scope": "Transcript-visible read-only command failures, no source mutation; not a compiler or safety-policy result.",
+  "entries": [
+    {
+      "command": "rg --files runs -g *source*chapter3* -g *source*chapter4* -g *source*chapter13*",
+      "actual_exit": 1,
+      "diagnosis": "No matching old cache filenames; pinned PDF was subsequently read directly with pypdf."
+    },
+    {
+      "command": "Get-Content runs/online-ch2-unbounded-osd-20261010/prepare-publication-plan-v1.json -TotalCount 15",
+      "actual_exit": 1,
+      "diagnosis": "Guessed JSON companion filename does not exist. The actual .py was read successfully. No retry or write used that absent path."
+    }
+  ],
+  "corrections": "Use rg --files and schema inspection before filenames; preserve failed reads without fabricating captured command receipts."
+}

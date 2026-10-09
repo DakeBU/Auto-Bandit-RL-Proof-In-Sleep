@@ -1,0 +1,94 @@
+{
+  "nodes": [
+    {
+      "id": "definitions",
+      "dependencies": [
+        "Finset finite sum",
+        "Set",
+        "IsMinOn",
+        "Classical.choose"
+      ],
+      "ready": true
+    },
+    {
+      "id": "cumulative_prefix",
+      "dependencies": [
+        "definitions",
+        "Fin.sum_univ_eq_sum_range"
+      ],
+      "ready": true
+    },
+    {
+      "id": "select_some_spec",
+      "dependencies": [
+        "definitions",
+        "Classical.choose_spec"
+      ],
+      "ready": true
+    },
+    {
+      "id": "select_none_iff",
+      "dependencies": [
+        "definitions",
+        "Option constructors"
+      ],
+      "ready": true
+    },
+    {
+      "id": "select_congr",
+      "dependencies": [
+        "definitions",
+        "finite sum congruence",
+        "set extensionality"
+      ],
+      "ready": true
+    },
+    {
+      "id": "select_eq_some_of_unique",
+      "dependencies": [
+        "select_some_spec",
+        "select_none_iff"
+      ],
+      "ready": false
+    },
+    {
+      "id": "predict_zero",
+      "dependencies": [
+        "definitions"
+      ],
+      "ready": true
+    },
+    {
+      "id": "predict_some_spec",
+      "dependencies": [
+        "select_some_spec",
+        "cumulative_prefix",
+        "predict_zero"
+      ],
+      "ready": false
+    },
+    {
+      "id": "predict_none_iff",
+      "dependencies": [
+        "select_none_iff",
+        "cumulative_prefix",
+        "predict_zero"
+      ],
+      "ready": false
+    },
+    {
+      "id": "predict_prefix",
+      "dependencies": [
+        "select_congr"
+      ],
+      "ready": false
+    }
+  ],
+  "first_proof_leaf": "select_some_spec",
+  "allowed_edits_after_stabilization": [
+    "NEW BanditRLProof/OnlineFTLSelector.lean theorem BODY/private helpers only; four definitions and nine public types frozen",
+    "NEW OWN leaf evidence"
+  ],
+  "root_Tests_reader_registry_changes": "later distinct scoped integration review",
+  "chapter_complete": false
+}

@@ -1,0 +1,38 @@
+5
+Lower Bounds for Online Linear Optimization
+In this chapter, we will present some lower bounds for Online Linear Optimization (OLO).
+Since linear losses are convex, this immediately gives us lower bounds for Online Convex
+Optimization (OCO). We will consider both the constrained and the unconstrained case. The
+lower bounds in this chapter are important because they inform us about which algorithms
+are optimal and where the gaps in our knowledge are.
+5.1 Lower Bound for Bounded Online Linear Optimization
+We will first consider the constrained bounded case. Finding a lower bound amounts to
+finding a strategy for the adversary that forces a certain regret onto the algorithm,no matter
+what the algorithm does. We will use the probabilistic method to construct our lower bound.
+The basic method relies on the fact that if for a givenK∈Rwe can construct a sequence
+of random vectors ˜g1, . . . ,˜gT such that
+E
+" TX
+t=1
+⟨˜gt,xt⟩
+#
+≥K,
+this implies that there exists a sequenceg 1, . . . ,gT among all the possible random se-
+quences such that
+TX
+t=1
+⟨gt,xt⟩ ≥K .
+It is easy to see why this is true: if forallsequencesPT
+t=1⟨˜gt,xt⟩< K, then the expectation
+would also be strictly less thanK, contradicting our assumption.
+For us, it means that we prove the existence of a “difficult” sequence of functions through
+a result on the expectation with respect to a distribution over stochastic functions. Why do
+we rely on expectations rather than actually constructing an adversarial sequence? Because
+the use of stochastic loss functions makes it very easy to deal with arbitrary algorithms.
+In particular, we will choose a distribution over stochastic loss functions that makes the
+expected loss of the algorithm equal to 0, independently of the strategy of the algorithm.
+Theorem 5.1LetV ⊂R d be any non-empty bounded closed convex subset. LetD=
+maxv,w∈V ∥v−w∥ 2 >0be the diameter ofV. LetAbe any deterministic algorithm for
+Online Linear Optimization (OLO) onV. LetTbe any positive integer. Then, there exists a
+sequence of vectorsg1, . . . ,gT with∥g t∥2 ≤Landu∈ Vsuch that the regret of algorithm
+50

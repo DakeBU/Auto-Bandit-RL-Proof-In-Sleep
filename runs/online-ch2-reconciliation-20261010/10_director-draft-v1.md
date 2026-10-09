@@ -1,0 +1,5 @@
+# Director draft
+
+Reconcile the frozen65 overlapping Chapter2 source containers with exact current source-qualified statements, complete module bytes, applicable distinct semantic/BODY/FINAL/delivery evidence and the shared declaration registry. Add explicit current bindings for separately delivered nonsmooth examples, prescient source and Theorem5.4 packages; no source claim is marked closed by declaration counts or a hash-only unrelated receipt. All8 forward containers currently remain required/open. Propose their exact chapter-local versus whole-book dependency treatment for separate review; no deletion or silent exclusion. Chapter2 remains partial/null, Chapters3-16 unenumerated/null, Chapters1-16 Goal ACTIVE. Discovering a true missing mathematical terminal enters versioned repair and a fresh typed contract before proof work. No old mathematical terminal may weaken.
+
+One lower route: audit existing exact terminal bindings and their true receipt scope before proposing new coverage. No parallel chapter proof writing; only read-only future dependency lookup. Chapter completion is not a numeric counter over65 containers.

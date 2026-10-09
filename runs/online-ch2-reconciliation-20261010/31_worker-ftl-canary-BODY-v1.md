@@ -1,0 +1,13 @@
+# Formalizer worker: eight frozen generic FTL canary bodies
+
+All eight complete propositions are actual theorem bodies, with the seven exact concrete definitions and frozen eight headers unchanged. Three private Test-only helpers derive a feasible selected witness, a unique positive quadratic minimum and affine nonattainment. They introduce no production theorem, oracle premise or desired regret assumption.
+
+The first boundary proof failed on a dependent Option cases equality; the repaired some branch supplies rfl and passes the actual equation to select_some_spec. The first nonattainment/recovery compiler run exposed a wrong multiplication API, a whole-function cumulative transport and zero-square simplification. Version2 uses the actual order lemma, explicit funext transport and square nonnegativity. RAW failed/repair snapshots remain. Warning cleanup did not disable linters. The initial fence bookkeeping used the wrong frozen JSON key, after the real first fence succeeded; the schema repair reuses that exact first fence and verifies all eight actual hashes.
+
+The concrete quadratic trajectory is genuinely 3/4 -> 1/4 -> 1/2 over times0,1,2, with changed minimizers and nonzero loss difference. Every played point in that finite successful prefix is feasible and minimizes the strict past. Current/future loss changes and off-domain extension changes preserve the actual selector equality. Ties leave the selected endpoint unspecified. Empty history differs from empty domain and from the supplied initial point.
+
+For full-space affine losses the actual selector returns none, despite nonempty/closed/convex geometry. The recovery example has P1=none and P2=some0 because its two-loss objective is x². These are separate prefix queries: P1 has no playable action. This is NOT a valid full online interaction continuing after failure, and NOT a general recovery guarantee.
+
+Focused Test lake build reports genuine Built plus 3286 successful jobs. All eight public complete propositions are instantiated as examples and checked; their actual axioms are standard propext/Classical.choice/Quot.sound. The compiled graph contains13production values,8public Test values and3referenced private helpers. Eleven selected conjunction branches independently retain relevant production VALUE calls, some via those helpers. This is not a full transitive graph or proof-necessity analysis.
+
+This formalizer report is not distinct semantic acceptance. Separate canary BODY review is pending. Root/Tests imports, shared registry/readers, chapter reconciliation, native acceptance, combined harness/site/FINAL and Git delivery remain gated. Chapter2 and the total Goal remain incomplete.
