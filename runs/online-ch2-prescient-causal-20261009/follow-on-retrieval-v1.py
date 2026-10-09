@@ -1,0 +1,27 @@
+from publication_guard_v4 import *
+fixed()
+p = ROOT/'tmp/online-ch2-prescient-cumulative-API-v1.lean'
+write(p, '''import BanditRLProof.OnlinePrescientBregman
+import BanditRLProof.OnlineGradientDescentVariable
+import Mathlib.Algebra.BigOperators.Module
+#check @BanditRL.OnlineGradientDescent.weighted_potential_sum
+#check @DifferentiableOn.differentiableAt
+#check @StrictConvexOn.convexOn
+#check @BanditRL.OnlineBregman.divergence_nonneg
+#check @Finset.sum_range_by_parts
+#check @Finset.sum_range_sub'
+#check @Finset.le_sup'
+#check @Finset.range_nonempty
+''')
+code, out = capture('follow-on-actual-API-retrieval-v1', 'lake', 'env', 'lean', p, required=False)
+write(RUN/'follow-on-retrieval-v1.md', '''# Read-only follow-on cumulative retrieval; no new proof contract
+
+While distinct bounded FINAL reviews fixed inputs, root reread pinned source extracts PDF277-278 (printed265-266) and PDF75 (printed63). Source variable bound uses max over PREVIOUS states0..T-1 divided by last positive eta, retains negative weighted movements; the proof has a sharper negative terminal. Source fixed main-text branch is mandatory despite proof left as exercise. Whole current loss is received before prediction. Actual Option-success and every generated interior state still need explicit source transport in the next package; closed/strictness alone does not establish attainment.
+
+Actual current-project retrieval found OnlineGradientDescent.weighted_potential_sum, not just Mathlib candidates. It is already used by projected OGD/OSD. Taking a(t)=2*B(u,x_t), C=2*M cancels its factor2 and supplies the sharper variable potential sum including negative terminal without a new duplicate telescoping framework. Fixed branch can use actual sum telescoping; actual public producer iterate_one_step remains essential. DifferentiableOn at the open interior supplies both actual base derivatives; StrictConvexOn yields ConvexOn and existing divergence_nonneg can justify dropping a terminal only in printed corollaries. These are prospective reuse observations, not proofs or chapter/source completion.
+
+The exact API probe source is ignored tmp/online-ch2-prescient-cumulative-API-v1.lean; its command receipt contains actual printed types/errors and exit. No theorem body, placeholder, contract freeze or production edit. Next package requires its own reviewed source/statement/context/DAG/decoder/freeze before proving. Current FINAL input bytes remain fixed, and this note does not enlarge its eight-proof scope. Whole Chapters1-16 Goal ACTIVE.
+''')
+fixed()
+print('Follow-on actual API retrieval exit', code)
+print(out[-7000:])
