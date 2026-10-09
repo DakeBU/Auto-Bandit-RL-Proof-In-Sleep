@@ -1,0 +1,71 @@
+import BanditRLProof.OnlinePrescientBregman
+import Tests.OnlineBregmanExtendedCanary
+import Mathlib.Analysis.Convex.SpecificFunctions.Basic
+
+noncomputable section
+open Set BanditRL.OnlineConvex BanditRL.OnlineBregman BanditRL.OnlinePrescientBregman
+namespace BanditRL.OnlinePrescientBregmanCanary
+
+theorem two_distinct_current_losses :
+    let V : Set ℝ := Icc (-1) 1
+    let ψ : ℝ → ℝ := fun z => z ^ 4 / 4 + z ^ 2 / 2
+    let f0 : ℝ → EReal := fun z => if z ∈ V then ((|z| : ℝ) : EReal) else ⊤
+    let f1 : ℝ → EReal := fun z => if z ∈ V then ((-5 * z / 8 : ℝ) : EReal) else ⊤
+    let loss : ℕ → ℝ → EReal := fun t => if t = 0 then f0 else f1
+    SourceProper f0 ∧ SourceProper f1 ∧
+      (∀ z ∈ V, (SourceSubdifferential f0 z).Nonempty) ∧
+      (∀ z ∈ V, (SourceSubdifferential f1 z).Nonempty) ∧
+      StrictConvexOn ℝ univ ψ ∧
+      ¬ DifferentiableAt ℝ (abs : ℝ → ℝ) 0 ∧
+      f0 2 = ⊤ ∧ f1 2 = ⊤ ∧
+      iterate V ψ (fun _ => 1) loss (1 / 2) 0 = some (1 / 2) ∧
+      iterate V ψ (fun _ => 1) loss (1 / 2) 1 = some 0 ∧
+      iterate V ψ (fun _ => 1) loss (1 / 2) 2 = some (1 / 2) ∧
+      (∀ (η' : ℕ → ℝ) (loss' : ℕ → ℝ → EReal),
+        η' 0 = 1 → η' 1 = 1 → loss' 0 = f0 → loss' 1 = f1 →
+        iterate V ψ η' loss' (1 / 2) 2 = some (1 / 2)) ∧
+      divergence ψ 0 (1 / 2) = 11 / 64 ∧
+      divergence ψ (1 / 2) 0 = 9 / 64 ∧
+      (∀ u ∈ V, ((f0 0).toReal - (f0 u).toReal) +
+        ((f1 (1 / 2)).toReal - (f1 u).toReal) ≤
+        divergence ψ u (1 / 2) - divergence ψ u (1 / 2) -
+          divergence ψ 0 (1 / 2) - divergence ψ (1 / 2) 0) ∧
+      (-1 / 2 : ℝ) ≤ -5 / 16
+
+theorem boundary_outside_center_run :
+    let V : Set ℝ := Icc 0 1
+    let f : ℝ → EReal := fun z => if z ∈ V then (z : EReal) else ⊤
+    let ψ : ℝ → ℝ := fun z => z ^ 2 / 2
+    SourceProper f ∧
+      (∀ z ∈ V, (SourceSubdifferential f z).Nonempty) ∧
+      StrictConvexOn ℝ univ ψ ∧ f (-1) = ⊤ ∧ (-1 : ℝ) ∉ V ∧
+      iterate V ψ (fun _ => 1) (fun _ => f) (-1) 1 = some 0 ∧
+      divergence ψ 0 (-1) = 1 / 2 ∧
+      (∀ u ∈ V, -u ≤ divergence ψ u (-1) - divergence ψ u 0 - divergence ψ 0 (-1)) ∧
+      (-1 / 2 : ℝ) ≤ 1 / 2
+
+theorem closed_strict_regularizer_missing_minimum :
+    let V : Set ℝ := Iic 0
+    let f : ℝ → EReal := fun z => (z : EReal)
+    let ψ : ℝ → ℝ := Real.exp
+    V.Nonempty ∧ IsClosed V ∧ Convex ℝ V ∧ (0 : ℝ) ∈ V ∧
+      SourceProper f ∧
+      (∀ z : ℝ, (SourceSubdifferential f z).Nonempty) ∧
+      SourceClosed (fun z => ((ψ z : ℝ) : EReal)) ∧
+      StrictConvexOn ℝ univ ψ ∧
+      (∀ z : ℝ, DifferentiableAt ℝ ψ z) ∧
+      (0 : ℝ) ∈ interior (univ : Set ℝ) ∧
+      (∀ z : ℝ, f z + ((divergence ψ z 0 : ℝ) : EReal) = ((Real.exp z - 1 : ℝ) : EReal)) ∧
+      (¬ ∃ p, p ∈ V ∧ IsMinOn (fun z => f z + ((divergence ψ z 0 : ℝ) : EReal)) V p) ∧
+      advance V ψ 1 f 0 = none ∧
+      (∀ k : ℕ, iterate V ψ (fun _ => 1) (fun _ => f) 0 (k + 1) = none)
+
+theorem interior_extension_boundary_difference :
+    let X : Set ℝ := Ici 0
+    let ψ : ℝ → ℝ := fun z => z ^ 2 + z
+    let φ : ℝ → ℝ := fun z => z ^ 2 + |z|
+    EqOn ψ φ X ∧ ψ (-1) ≠ φ (-1) ∧ (1 : ℝ) ∈ interior X ∧ (2 : ℝ) ∈ X ∧
+      divergence ψ 2 1 = divergence φ 2 1 ∧ divergence ψ 2 1 = 1 ∧
+      divergence ψ 2 0 = 4 ∧ divergence φ 2 0 = 6 ∧ ¬ DifferentiableAt ℝ φ 0
+
+end BanditRL.OnlinePrescientBregmanCanary

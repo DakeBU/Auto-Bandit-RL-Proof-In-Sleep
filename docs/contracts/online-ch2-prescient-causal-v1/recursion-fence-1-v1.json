@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlinePrescientBregman.iterate_succ_some_spec",
+  "file": "BanditRLProof/OnlinePrescientBregman.lean",
+  "statement": "theorem iterate_succ_some_spec (V : Set E) (ψ : E → ℝ) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x0 p : E) (t : ℕ) (h : iterate V ψ η loss x0 (t + 1) = some p) : ∃ x, iterate V ψ η loss x0 t = some x ∧ p ∈ V ∧ IsMinOn (fun z => loss t z + (((η t)⁻¹ * divergence ψ z x : ℝ) : EReal)) V p",
+  "statement_hash": "6b8dcca367376affe2ee91bb44ec9fc3810d5f4af2d08402b0a582a9bd3ffb78",
+  "source_assumptions": [],
+  "created_at": "2026-10-09T12:23:52+00:00"
+}

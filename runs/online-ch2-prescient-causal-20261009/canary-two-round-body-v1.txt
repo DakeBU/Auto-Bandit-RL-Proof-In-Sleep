@@ -1,0 +1,163 @@
+ := by
+  dsimp only
+  let V : Set ℝ := Icc (-1) 1
+  let ψ : ℝ → ℝ := fun z => z ^ 4 / 4 + z ^ 2 / 2
+  let f0 : ℝ → EReal := fun z => if z ∈ V then ((|z| : ℝ) : EReal) else ⊤
+  let f1 : ℝ → EReal := fun z => if z ∈ V then ((-5 * z / 8 : ℝ) : EReal) else ⊤
+  let loss : ℕ → ℝ → EReal := fun t => if t = 0 then f0 else f1
+  obtain ⟨hf0, hs0, _, _, _, hstrict, hm0, hnondiff, hD10, hD01, _, _⟩ :=
+    BanditRL.OnlineBregmanExtendedCanary.restricted_absolute_nonquadratic
+  have hzero : (0 : ℝ) ∈ V := by norm_num [V]
+  have hhalf : (1 / 2 : ℝ) ∈ V := by norm_num [V]
+  have hf1 : SourceProper f1 := by
+    refine ⟨?_, 0, 0, ?_⟩
+    · intro z
+      by_cases hz : z ∈ V <;> simp [f1, hz]
+    · simp [f1, hzero]
+  have hs1 : ∀ z ∈ V, (SourceSubdifferential f1 z).Nonempty := by
+    intro z hz
+    refine ⟨-5 / 8, ?_⟩
+    intro y
+    change f1 z + (inner ℝ (-5 / 8 : ℝ) (y - z) : EReal) ≤ f1 y
+    by_cases hy : y ∈ V
+    · simp only [f1, if_pos hz, if_pos hy, ← EReal.coe_add, EReal.coe_le_coe_iff]
+      change -5 * z / 8 + (y - z) * (-5 / 8) ≤ -5 * y / 8
+      linarith
+    · simp only [f1, if_pos hz, if_neg hy]
+      exact le_top
+  have hd (z : ℝ) : HasDerivAt ψ (z ^ 3 + z) z := by
+    convert (((hasDerivAt_id z).pow 4).div_const 4).add
+      (((hasDerivAt_id z).pow 2).div_const 2) using 1
+    dsimp [ψ, id]
+    ring
+  have hD (a b : ℝ) : divergence ψ a b = ψ a - ψ b - (b ^ 3 + b) * (a - b) := by
+    rw [divergence, fderiv_eq_deriv_mul, (hd b).deriv]
+  have hD0 (z : ℝ) : divergence ψ z 0 = z ^ 4 / 4 + z ^ 2 / 2 := by
+    rw [hD]
+    simp [ψ]
+  have huniq0 (p : ℝ) (hp : p ∈ V)
+      (hm : IsMinOn (fun z => f0 z + ((divergence ψ z (1 / 2) : ℝ) : EReal)) V p) : p = 0 := by
+    have hh : |p| + divergence ψ p (1 / 2) ≤ |(0 : ℝ)| + divergence ψ 0 (1 / 2) := by
+      have hh := hm hzero
+      simpa only [f0, if_pos hp, if_pos hzero, ← EReal.coe_add, EReal.coe_le_coe_iff] using hh
+    rw [hD, hD] at hh
+    dsimp [ψ] at hh
+    norm_num at hh
+    have hpos : 0 ≤ p ^ 4 / 4 + p ^ 2 / 2 := by
+      nlinarith [sq_nonneg p, sq_nonneg (p ^ 2)]
+    have hle : p ≤ 0 := by nlinarith [le_abs_self p]
+    have hge : 0 ≤ p := by nlinarith [neg_le_abs p]
+    exact le_antisymm hle hge
+  have ha0 : advance V ψ 1 f0 (1 / 2) = some 0 := by
+    cases h : advance V ψ 1 f0 (1 / 2) with
+    | none =>
+        have hn := (advance_none_iff V ψ 1 f0 (1 / 2)).mp h
+        exact (hn ⟨0, hzero, by simpa only [inv_one, one_mul] using hm0⟩).elim
+    | some p =>
+        obtain ⟨hp, hm⟩ := advance_some_spec V ψ 1 f0 (1 / 2) p h
+        have he := huniq0 p hp (by simpa only [inv_one, one_mul] using hm)
+        exact congrArg some he
+  have h1 : iterate V ψ (fun _ => 1) loss (1 / 2) 1 = some 0 := by
+    change advance V ψ 1 f0 (1 / 2) = some 0
+    exact ha0
+  have hfact (z : ℝ) : z ^ 4 / 4 + z ^ 2 / 2 - 5 * z / 8 + 11 / 64 =
+      (z - 1 / 2) ^ 2 * ((z + 1 / 2) ^ 2 / 4 + 5 / 8) := by ring
+  have hfin1 : ∀ z ∈ V, f1 z ≠ ⊤ ∧ f1 z ≠ ⊥ := by
+    intro z hz
+    simp only [f1, if_pos hz]
+    exact ⟨EReal.coe_ne_top _, EReal.coe_ne_bot _⟩
+  have hm1real : IsMinOn (fun z => (f1 z).toReal + (1 : ℝ)⁻¹ * divergence ψ z 0) V (1 / 2) := by
+    intro z hz
+    change (f1 (1 / 2)).toReal + (1 : ℝ)⁻¹ * divergence ψ (1 / 2) 0 ≤
+      (f1 z).toReal + (1 : ℝ)⁻¹ * divergence ψ z 0
+    simp only [f1, if_pos hhalf, if_pos hz, EReal.toReal_coe, inv_one, one_mul]
+    rw [hD0, hD0]
+    have hq : 0 ≤ (z - 1 / 2) ^ 2 * ((z + 1 / 2) ^ 2 / 4 + 5 / 8) :=
+      mul_nonneg (sq_nonneg _) (by positivity)
+    nlinarith only [hq, hfact z]
+  have hm1 : IsMinOn (fun z => f1 z + ((divergence ψ z 0 : ℝ) : EReal)) V (1 / 2) := by
+    simpa only [inv_one, one_mul] using
+      (proximal_finitePart_minimizer_iff f1 V ψ 1 0 (1 / 2) hhalf hfin1).mpr hm1real
+  have huniq1 (p : ℝ) (hp : p ∈ V)
+      (hm : IsMinOn (fun z => f1 z + ((divergence ψ z 0 : ℝ) : EReal)) V p) : p = 1 / 2 := by
+    have hh : -5 * p / 8 + divergence ψ p 0 ≤
+        -5 * (1 / 2) / 8 + divergence ψ (1 / 2) 0 := by
+      have hh := hm hhalf
+      simpa only [f1, if_pos hp, if_pos hhalf, ← EReal.coe_add, EReal.coe_le_coe_iff] using hh
+    rw [hD0, hD0] at hh
+    have hlow : (5 / 8 : ℝ) * (p - 1 / 2) ^ 2 ≤
+        p ^ 4 / 4 + p ^ 2 / 2 - 5 * p / 8 + 11 / 64 := by
+      rw [hfact]
+      nlinarith only [mul_nonneg (sq_nonneg (p - 1 / 2)) (sq_nonneg (p + 1 / 2))]
+    have hsq : (p - 1 / 2) ^ 2 = 0 := by
+      apply le_antisymm ?_ (sq_nonneg _)
+      nlinarith only [hlow, hh]
+    have he : p - 1 / 2 = 0 := sq_eq_zero_iff.mp hsq
+    linarith
+  have hatt : ∀ t < 2, ∀ x, iterate V ψ (fun _ => 1) loss (1 / 2) t = some x →
+      ∃ p, p ∈ V ∧ IsMinOn (fun z => loss t z + (((1 : ℝ)⁻¹ * divergence ψ z x : ℝ) : EReal)) V p := by
+    intro t ht x hx
+    have ht' : t = 0 ∨ t = 1 := by omega
+    rcases ht' with ht' | ht'
+    · subst t
+      have he : x = (1 / 2 : ℝ) := (Option.some.inj hx).symm
+      subst x
+      refine ⟨0, hzero, ?_⟩
+      simpa [loss] using hm0
+    · subst t
+      have he : x = 0 := Option.some.inj (hx.symm.trans h1)
+      subst x
+      refine ⟨1 / 2, hhalf, ?_⟩
+      simpa [loss] using hm1
+  have h2 : iterate V ψ (fun _ => 1) loss (1 / 2) 2 = some (1 / 2) := by
+    obtain ⟨p, hp⟩ := iterate_complete_of_step_attained V ψ (fun _ => 1) loss (1 / 2) 2 hatt
+    obtain ⟨y, hy, hpV, hm⟩ := iterate_succ_some_spec V ψ (fun _ => 1) loss (1 / 2) p 1 hp
+    have he : y = 0 := Option.some.inj (hy.symm.trans h1)
+    subst y
+    have hpe : p = 1 / 2 := huniq1 p hpV (by simpa [loss] using hm)
+    simpa only [hpe] using hp
+  have hprefix : ∀ (η' : ℕ → ℝ) (loss' : ℕ → ℝ → EReal),
+      η' 0 = 1 → η' 1 = 1 → loss' 0 = f0 → loss' 1 = f1 →
+      iterate V ψ η' loss' (1 / 2) 2 = some (1 / 2) := by
+    intro η' loss' hη0 hη1 hl0 hl1
+    have he := iterate_prefix V ψ η' (fun _ => 1) loss' loss (1 / 2) 2
+      (by
+        intro s hs
+        have ht : s = 0 ∨ s = 1 := by omega
+        rcases ht with rfl | rfl
+        · exact hη0
+        · exact hη1)
+      (by
+        intro s hs
+        have ht : s = 0 ∨ s = 1 := by omega
+        rcases ht with rfl | rfl
+        · simpa [loss] using hl0
+        · simpa [loss] using hl1)
+    exact he.trans h2
+  have hb : ∀ u ∈ V, ((f0 0).toReal - (f0 u).toReal) +
+      ((f1 (1 / 2)).toReal - (f1 u).toReal) ≤
+      divergence ψ u (1 / 2) - divergence ψ u (1 / 2) -
+        divergence ψ 0 (1 / 2) - divergence ψ (1 / 2) 0 := by
+    intro u hu
+    have a := iterate_one_step V (convex_Icc (-1 : ℝ) 1) ψ (fun _ => 1) loss
+      (1 / 2) (1 / 2) 0 0 rfl h1 (by norm_num) hf0 hs0
+      (hd (1 / 2)).differentiableAt (hd 0).differentiableAt u hu
+    have b := iterate_one_step V (convex_Icc (-1 : ℝ) 1) ψ (fun _ => 1) loss
+      (1 / 2) 0 (1 / 2) 1 h1 h2 (by norm_num) hf1 hs1
+      (hd 0).differentiableAt (hd (1 / 2)).differentiableAt u hu
+    change 1 * ((f0 0).toReal - (f0 u).toReal) ≤
+      divergence ψ u (1 / 2) - divergence ψ u 0 - divergence ψ 0 (1 / 2) at a
+    change 1 * ((f1 (1 / 2)).toReal - (f1 u).toReal) ≤
+      divergence ψ u 0 - divergence ψ u (1 / 2) - divergence ψ (1 / 2) 0 at b
+    linarith only [a, b]
+  refine ⟨hf0, hf1, hs0, hs1, hstrict, hnondiff, by norm_num [f0, V],
+    by norm_num [f1, V], rfl, h1, h2, hprefix, hD01, hD10, hb, ?_⟩
+  have hh := hb (1 / 2) hhalf
+  have hl : ((f0 0).toReal - (f0 (1 / 2)).toReal) +
+      ((f1 (1 / 2)).toReal - (f1 (1 / 2)).toReal) = -1 / 2 := by
+    norm_num [f0, f1, V]
+  have hr : divergence ψ (1 / 2) (1 / 2) - divergence ψ (1 / 2) (1 / 2) -
+      divergence ψ 0 (1 / 2) - divergence ψ (1 / 2) 0 = -5 / 16 := by
+    rw [hD01, hD10]
+    ring
+  exact Eq.mp (congrArg₂ (fun a b : ℝ => a ≤ b) hl hr) hh

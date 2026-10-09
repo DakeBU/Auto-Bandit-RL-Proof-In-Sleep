@@ -1,0 +1,48 @@
+ := by
+  dsimp only
+  let V : Set ℝ := Icc 0 1
+  let f : ℝ → EReal := fun z => if z ∈ V then (z : EReal) else ⊤
+  let ψ : ℝ → ℝ := fun z => z ^ 2 / 2
+  obtain ⟨hf, hs, htop, hout, _, _, hstrict, hm, hmove, _, _⟩ :=
+    BanditRL.OnlineBregmanExtendedCanary.restricted_linear_outside_center
+  have hz : (0 : ℝ) ∈ V := by norm_num [V]
+  have hd (z : ℝ) : HasDerivAt ψ z z := by
+    convert ((hasDerivAt_id z).pow 2).div_const 2 using 1 <;> dsimp [ψ, id] <;> ring
+  have hD (a b : ℝ) : divergence ψ a b = (a - b) ^ 2 / 2 := by
+    rw [divergence, fderiv_eq_deriv_mul, (hd b).deriv]
+    dsimp [ψ]
+    ring
+  have huniq (p : ℝ) (hp : p ∈ V)
+      (hmin : IsMinOn (fun z => f z + ((divergence ψ z (-1) : ℝ) : EReal)) V p) : p = 0 := by
+    have hh : p + divergence ψ p (-1) ≤ 0 + divergence ψ 0 (-1) := by
+      have hh := hmin hz
+      simpa only [f, if_pos hp, if_pos hz, ← EReal.coe_add, EReal.coe_le_coe_iff] using hh
+    rw [hD, hD] at hh
+    have hpos : 0 ≤ p := hp.1
+    nlinarith [sq_nonneg p]
+  have ha : advance V ψ 1 f (-1) = some 0 := by
+    cases h : advance V ψ 1 f (-1) with
+    | none =>
+        have hn := (advance_none_iff V ψ 1 f (-1)).mp h
+        exact (hn ⟨0, hz, by simpa only [inv_one, one_mul] using hm⟩).elim
+    | some p =>
+        obtain ⟨hp, hmin⟩ := advance_some_spec V ψ 1 f (-1) p h
+        have he := huniq p hp (by simpa only [inv_one, one_mul] using hmin)
+        exact congrArg some he
+  have hrun : iterate V ψ (fun _ => 1) (fun _ => f) (-1) 1 = some 0 := by
+    change advance V ψ 1 f (-1) = some 0
+    exact ha
+  have hb : ∀ u ∈ V, -u ≤ divergence ψ u (-1) - divergence ψ u 0 - divergence ψ 0 (-1) := by
+    intro u hu
+    have hh := iterate_one_step V (convex_Icc (0 : ℝ) 1) ψ (fun _ => 1) (fun _ => f)
+      (-1) (-1) 0 0 rfl hrun (by norm_num) hf hs (hd (-1)).differentiableAt
+      (hd 0).differentiableAt u hu
+    simpa only [f, if_pos hz, if_pos hu, EReal.toReal_coe, one_mul, zero_sub] using hh
+  refine ⟨hf, hs, hstrict, htop, hout, hrun, hmove, hb, ?_⟩
+  have hh := hb (1 / 2) (by norm_num [V])
+  have hl : -(1 / 2 : ℝ) = -1 / 2 := by norm_num
+  have hr : divergence ψ (1 / 2) (-1) - divergence ψ (1 / 2) 0 -
+      divergence ψ 0 (-1) = 1 / 2 := by
+    rw [hD, hD, hD]
+    norm_num
+  exact Eq.mp (congrArg₂ (fun a b : ℝ => a ≤ b) hl hr) hh

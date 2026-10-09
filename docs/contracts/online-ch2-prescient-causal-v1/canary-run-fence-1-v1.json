@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlinePrescientBregmanCanary.boundary_outside_center_run",
+  "file": "Tests/OnlinePrescientBregmanCanary.lean",
+  "statement": "theorem boundary_outside_center_run : let V : Set ℝ := Icc 0 1 let f : ℝ → EReal := fun z => if z ∈ V then (z : EReal) else ⊤ let ψ : ℝ → ℝ := fun z => z ^ 2 / 2 SourceProper f ∧ (∀ z ∈ V, (SourceSubdifferential f z).Nonempty) ∧ StrictConvexOn ℝ univ ψ ∧ f (-1) = ⊤ ∧ (-1 : ℝ) ∉ V ∧ iterate V ψ (fun _ => 1) (fun _ => f) (-1) 1 = some 0 ∧ divergence ψ 0 (-1) = 1 / 2 ∧ (∀ u ∈ V, -u ≤ divergence ψ u (-1) - divergence ψ u 0 - divergence ψ 0 (-1)) ∧ (-1 / 2 : ℝ) ≤ 1 / 2",
+  "statement_hash": "eeceb38004480d9dd5001ce7d6000e63f12df4053304a30ab0f19c65545096cb",
+  "source_assumptions": [],
+  "created_at": "2026-10-09T12:49:00+00:00"
+}

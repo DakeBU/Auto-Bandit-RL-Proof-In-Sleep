@@ -1,0 +1,215 @@
+{
+  "stage": "draft",
+  "targets": [
+    {
+      "declaration": "BanditRL.OnlineBregman.divergence_extension_eq",
+      "exact_proposed_header": "theorem divergence_extension_eq (X : Set E) (ψ φ : E → ℝ)\n    (hEq : EqOn ψ φ X) (a b : E) (ha : a ∈ X) (hb : b ∈ interior X) :\n    divergence ψ a b = divergence φ a b",
+      "statement_hash": "989325c00a78f2f6c2b2e186c6cbdfa9132100d252807194d03644d67a96f02a",
+      "file": "BanditRLProof/OnlinePrescientBregman.lean",
+      "context": "real normed vector space; no completeness/finite-dimensionality"
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.advance_some_spec",
+      "exact_proposed_header": "theorem advance_some_spec (V : Set E) (ψ : E → ℝ) (η : ℝ)\n    (f : E → EReal) (x p : E) (h : advance V ψ η f x = some p) :\n    p ∈ V ∧ IsMinOn (fun z => f z + ((η⁻¹ * divergence ψ z x : ℝ) : EReal)) V p",
+      "statement_hash": "6c5282eda3994fc5b335f501e3792a16175154574ee3a3edee72e96402c7bd42",
+      "file": "BanditRLProof/OnlinePrescientBregman.lean",
+      "context": "real normed vector space; no completeness/finite-dimensionality"
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.advance_none_iff",
+      "exact_proposed_header": "theorem advance_none_iff (V : Set E) (ψ : E → ℝ) (η : ℝ)\n    (f : E → EReal) (x : E) :\n    advance V ψ η f x = none ↔ ¬ ∃ p, p ∈ V ∧\n      IsMinOn (fun z => f z + ((η⁻¹ * divergence ψ z x : ℝ) : EReal)) V p",
+      "statement_hash": "765edcdc571a725c4ba75bada3ed1e969fb8f427067255f842a96d58e623fbf1",
+      "file": "BanditRLProof/OnlinePrescientBregman.lean",
+      "context": "real normed vector space; no completeness/finite-dimensionality"
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.iterate_prefix",
+      "exact_proposed_header": "theorem iterate_prefix (V : Set E) (ψ : E → ℝ) (η η' : ℕ → ℝ)\n    (loss loss' : ℕ → E → EReal) (x0 : E) (t : ℕ)\n    (hη : ∀ s < t, η s = η' s) (hloss : ∀ s < t, loss s = loss' s) :\n    iterate V ψ η loss x0 t = iterate V ψ η' loss' x0 t",
+      "statement_hash": "7d22593e344ce1ad3809ab9edc8cd653e74813e5edc855b42a85a185d475e931",
+      "file": "BanditRLProof/OnlinePrescientBregman.lean",
+      "context": "real normed vector space; no completeness/finite-dimensionality"
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.iterate_succ_some_spec",
+      "exact_proposed_header": "theorem iterate_succ_some_spec (V : Set E) (ψ : E → ℝ) (η : ℕ → ℝ)\n    (loss : ℕ → E → EReal) (x0 p : E) (t : ℕ)\n    (h : iterate V ψ η loss x0 (t + 1) = some p) :\n    ∃ x, iterate V ψ η loss x0 t = some x ∧ p ∈ V ∧\n      IsMinOn (fun z => loss t z + (((η t)⁻¹ * divergence ψ z x : ℝ) : EReal)) V p",
+      "statement_hash": "6b8dcca367376affe2ee91bb44ec9fc3810d5f4af2d08402b0a582a9bd3ffb78",
+      "file": "BanditRLProof/OnlinePrescientBregman.lean",
+      "context": "real normed vector space; no completeness/finite-dimensionality"
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.iterate_no_recovery",
+      "exact_proposed_header": "theorem iterate_no_recovery (V : Set E) (ψ : E → ℝ) (η : ℕ → ℝ)\n    (loss : ℕ → E → EReal) (x0 : E) (t k : ℕ)\n    (h : iterate V ψ η loss x0 t = none) :\n    iterate V ψ η loss x0 (t + k) = none",
+      "statement_hash": "69e7a057bf2bca85cc0b62417dfebb48a0af3d451ea39cfc61c500e477e4ec7d",
+      "file": "BanditRLProof/OnlinePrescientBregman.lean",
+      "context": "real normed vector space; no completeness/finite-dimensionality"
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.iterate_complete_of_step_attained",
+      "exact_proposed_header": "theorem iterate_complete_of_step_attained (V : Set E) (ψ : E → ℝ) (η : ℕ → ℝ)\n    (loss : ℕ → E → EReal) (x0 : E) (T : ℕ)\n    (hatt : ∀ t < T, ∀ x, iterate V ψ η loss x0 t = some x →\n      ∃ p, p ∈ V ∧\n        IsMinOn (fun z => loss t z + (((η t)⁻¹ * divergence ψ z x : ℝ) : EReal)) V p) :\n    ∃ p, iterate V ψ η loss x0 T = some p",
+      "statement_hash": "46e97b3a873699bef9cc89328b2658f956ebf58688a97a21c990df8e10843db5",
+      "file": "BanditRLProof/OnlinePrescientBregman.lean",
+      "context": "real normed vector space; no completeness/finite-dimensionality"
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.iterate_one_step",
+      "exact_proposed_header": "theorem iterate_one_step (V : Set E) (hV : Convex ℝ V) (ψ : E → ℝ)\n    (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x0 x p : E) (t : ℕ)\n    (hx : iterate V ψ η loss x0 t = some x)\n    (hp : iterate V ψ η loss x0 (t + 1) = some p)\n    (hη : 0 < η t) (hf : BanditRL.OnlineConvex.SourceProper (loss t))\n    (hs : ∀ z ∈ V, (BanditRL.OnlineConvex.SourceSubdifferential (loss t) z).Nonempty)\n    (hdx : DifferentiableAt ℝ ψ x) (hdp : DifferentiableAt ℝ ψ p) :\n    ∀ u ∈ V, η t * ((loss t p).toReal - (loss t u).toReal) ≤\n      divergence ψ u x - divergence ψ u p - divergence ψ p x",
+      "statement_hash": "d58f337a831832c0b05ab8d552f67f0f452b9c2aa4461afa04746ca9f70c2717",
+      "file": "BanditRLProof/OnlinePrescientBregman.lean",
+      "context": "complete real inner-product space"
+    }
+  ],
+  "definitions": [
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.advance",
+      "exact_definition": "def advance (V : Set E) (ψ : E → ℝ) (η : ℝ) (f : E → EReal) (x : E) : Option E := by\n  classical\n  exact if h : ∃ p, p ∈ V ∧\n      IsMinOn (fun z => f z + ((η⁻¹ * divergence ψ z x : ℝ) : EReal)) V p\n    then some (Classical.choose h) else none",
+      "exact_definition_UTF8_sha256": "77e7c82a0b4f2fef253b605c7c201e79267438f80c8edb00d84d03a79c98dcf7"
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.iterate",
+      "exact_definition": "def iterate (V : Set E) (ψ : E → ℝ) (η : ℕ → ℝ)\n    (loss : ℕ → E → EReal) (x0 : E) : ℕ → Option E\n  | 0 => some x0\n  | t + 1 => (iterate V ψ η loss x0 t).bind (advance V ψ (η t) (loss t))",
+      "exact_definition_UTF8_sha256": "c5f4a473a26961efb119e68482c517c3856332bfe21ff10932821ce1967cc6a2"
+    }
+  ],
+  "context_sha256": "897539cd73f01c6cdd0e7411d62364d0a7050f4ad2dac84a2707fb81e7efdccd",
+  "source_card_sha256": "d124945dc6bdb1edde76ef4850896d6ef08d93e059aa62cecea1298e35e20df7",
+  "semantic_slots": {
+    "objects": "Same canonical fderiv Bregman divergence; domain X and two ambient representatives agreeing on X. A current-only noncomputable partial argmin update and Option-valued recursion; actual EReal current objectives. Eight proof targets and two exact definitions.",
+    "quantifiers": "Extension comparison all targets in X and bases in interior X. Update receives one current f and eta and prior point, not a horizon/comparator/future sequence. Prefix agreement on s<t determines state t, hence prediction t+1 uses losses through t only. Completion assumes actual argmin attainment at every reached prior state below T, not a desired regret bound.",
+    "assumptions": "Static partial-update specs need no convexity/properness/eta positivity. Missing argmin yields none; none remains absorbing. Source instantiation and last one-step need proper loss/global supports on convex V, positive current eta and both actual psi derivatives. Full theorem will need source interior regularity and generated interior condition; none of those are inferred from closedness/strict convexity alone.",
+    "conclusion": "Ambient representation independence of ordered divergence at interior bases; actual feasible argmin production whenever update returns; exact failure characterization; genuine prefix causality; absorbing failure; completion from local attainment; derive signed one-step from the very same produced transition and accepted extended-loss bridge, retaining both negative residuals.",
+    "normalization": "Lean state0=source x0, state(t+1)=source prediction x_(t+1) after receiving Lean loss t/source loss_(t+1). Option none is mathematical non-attainment, not numerical optimizer failure. Eta inverse uses Lean total inverse; zero/negative allowed only generic static definitions/specs, never source positive-eta performance. No infinity subtraction in performance; proper global supports derive finite compared values.",
+    "information": "No arbitrary existence of a future-aware complete algorithm. Input sequence is consumed recursively one current loss at a time; explicit prefix theorem certifies this. Local attainment condition is a theorem premise about actual prior states, not an oracle consulted by the producer on future losses. Noncomputable choice is mathematical, not an executable solver.",
+    "boundary": "Initial center may be outside V and loss domain. V may be empty for generic partial definitions/specs, causing none. Losses may be improper/infinite for generic specs but source one-step forbids this via properness/global supports; no finite-loss claim for generic chooser. Extension equality requires target in X/base interior X; boundary fderiv default is not source differentiation. No universal attainment/interior preservation theorem from source regularity is claimed."
+  },
+  "dependency_DAG": [
+    {
+      "id": "divergence_extension_eq",
+      "dependencies": [
+        "pinned-mathlib.EventuallyEq.fderiv_eq",
+        "interior-neighborhood-agreement"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "advance_some_spec",
+      "dependencies": [
+        "advance-exact-definition",
+        "Classical.choose_spec"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "advance_none_iff",
+      "dependencies": [
+        "advance-exact-definition"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "iterate_prefix",
+      "dependencies": [
+        "iterate-exact-definition",
+        "current-only-advance"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "iterate_succ_some_spec",
+      "dependencies": [
+        "advance_some_spec",
+        "Option.bind_eq_some_iff"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "iterate_no_recovery",
+      "dependencies": [
+        "iterate-exact-definition",
+        "Option.none_bind"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "iterate_complete_of_step_attained",
+      "dependencies": [
+        "advance_none_iff",
+        "iterate-exact-definition",
+        "local-step-attainment"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "iterate_one_step",
+      "dependencies": [
+        "iterate_succ_some_spec",
+        "accepted-proximal_one_step_extended"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "source-interior-condition-on-generated-run",
+      "dependencies": [
+        "source-assumed-interiority-correct-encoding"
+      ],
+      "status": "required-open"
+    },
+    {
+      "id": "same-run-sharp-fixed-telescope",
+      "dependencies": [
+        "iterate_one_step",
+        "source-interior-condition-on-generated-run"
+      ],
+      "status": "required-open"
+    },
+    {
+      "id": "same-run-variable-telescope",
+      "dependencies": [
+        "iterate_one_step",
+        "source-interior-condition-on-generated-run"
+      ],
+      "status": "required-open"
+    },
+    {
+      "id": "full-general-prescient-container",
+      "dependencies": [
+        "divergence_extension_eq",
+        "iterate_prefix",
+        "iterate_complete_of_step_attained",
+        "same-run-sharp-fixed-telescope",
+        "same-run-variable-telescope"
+      ],
+      "status": "required-open"
+    }
+  ],
+  "source_to_Lean_delta": [
+    {
+      "kind": "generalization",
+      "detail": "Normed real vector space for locality/partial recursion; inherited complete real inner-product context only for extended one-step parent. Generic logical specs accept arbitrary eta/V/loss; source performance restricted as above."
+    },
+    {
+      "kind": "explicit-definedness",
+      "detail": "Algorithm argmin notation does not supply an existence proof. Option exposes non-attainment instead of inventing a point; completed runs satisfy the actual update. Source T15.30 separately assumes iterates interior. Full same-run theorem and source hypothesis transport remain mandatory."
+    },
+    {
+      "kind": "representation",
+      "detail": "Source psi:X->R handled by agreement of ambient representatives on X at interior bases; no ambient default derivative at boundary is licensed. Mathlib existing local derivative APIs reused; no duplicate derivative-theory library."
+    },
+    {
+      "kind": "unresolved",
+      "detail": "Same-run fixed/variable cumulative source bounds and precise source interior condition remain REQUIRED/OPEN; all8Chapter2forwards open. No full Algorithm15.8/T15.30/Chapter2/Chapter6/15/book acceptance or source erratum."
+    }
+  ],
+  "planned_canaries": [
+    "Two actually generated distinct-loss rounds with nonquadratic regularizer/absolute then affine restricted losses, top outside and nonzero movements; derive output minima and consume actual same-transition one-step. Exact Test targets separately reviewed before bodies.",
+    "Actual boundary-minimum update with center outside V AND loss domain; reuse accepted exact minima plus uniqueness, no assumed selected output.",
+    "Proper linear current loss with psi=exp on V=X=R, eta1,x0=0: audit candidate objective exp(z)-1/no attained minimum. This is a proposed counterexample audit, NOT compiled/proven/source erratum; must prove source regularity and none/no-recovery if used.",
+    "Two ambient representatives z^2+z and z^2+abs(z) agree on nonnegative halfline; actual interior-base equality with different outside values, boundary counterexample illustrates why interior cannot be dropped. Exact Test types separately reviewed."
+  ],
+  "lower_boundary": "After distinct neutral/source contract review freeze eight exact proof headers/context and two full definition bodies. First select only ready divergence_extension_eq; then partial-update/spec/causal leaves by readiness. No proof body before stabilization, no old roots/Test/readers/globalfrontier changes. New target/context/definition edits require versioned review.",
+  "local_proof_obligations": 8,
+  "new_owned_definitions": 2,
+  "source_container_closed": false,
+  "chapter_proof_total": null,
+  "chapter_complete": false,
+  "whole_Goal_status": "ACTIVE"
+}
