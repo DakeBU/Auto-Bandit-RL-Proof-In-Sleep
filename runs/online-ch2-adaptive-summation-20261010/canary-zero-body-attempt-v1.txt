@@ -1,0 +1,11 @@
+  let f : ℝ → ℝ := fun x => max (3 - x) 0
+  have hcont : Continuous f := (continuous_const.sub continuous_id).max continuous_const
+  have hmono : AntitoneOn f (Set.Ici 0) := by
+    intro x hx y hy hxy
+    exact max_le_max (sub_le_sub_left hxy 3) le_rfl
+  have hnonneg : ∀ x ∈ Set.Ici 0, 0 ≤ f x := fun x _ => le_max_right _ _
+  refine ⟨?_, ?_, by norm_num [f]⟩
+  · exact BanditRL.OnlineAdaptiveSummation.lemma_4_13 2 (fun _ => 1) f 0
+      (by norm_num) (by intro t ht; omega) hcont.continuousOn hmono hnonneg
+  · exact BanditRL.OnlineAdaptiveSummation.lemma_4_13 2 (fun _ => 0) f 3
+      (by norm_num) (by intro t ht; norm_num) hcont.continuousOn hmono hnonneg

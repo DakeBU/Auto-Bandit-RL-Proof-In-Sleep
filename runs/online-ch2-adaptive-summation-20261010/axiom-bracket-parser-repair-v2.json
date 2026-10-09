@@ -1,0 +1,17 @@
+{
+  "observed_tool_actual_exit": 1,
+  "failed_helper": [
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-adaptive-summation-20261010/prepare-canary-body-review-v1.py",
+      "sha256": "1b0858540440c222b2010cc77da0e205e72eef5faa01b39d54c6e35a55f81d9f"
+    }
+  ],
+  "failure": "Axiom bracket parser split only comma-space, rejecting the first wrapped multiline canary bracket despite its actual three baseline axioms. No compiler or mathematical failure.",
+  "actual_brackets": [
+    "propext, Classical.choice, Quot.sound",
+    "propext,\n Classical.choice,\n Quot.sound",
+    "propext, Classical.choice, Quot.sound"
+  ],
+  "repair": "Split at comma and strip whitespace on each name; keep the exact allowlist and expected bracket counts; preserve raw compiler receipts.",
+  "proof_sources_unchanged": true
+}

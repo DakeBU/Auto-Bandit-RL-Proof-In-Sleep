@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "Tests.OnlineAdaptiveSummationCanary.zero_boundaries_canary",
+  "file": "Tests/OnlineAdaptiveSummationCanary.lean",
+  "statement": "theorem zero_boundaries_canary : (∑ t ∈ range 0, (1 : ℝ) * (fun x : ℝ => max (3 - x) 0) (2 + ∑ _i ∈ range (t + 1), (1 : ℝ))) ≤ (∫ x in (2 : ℝ)..(2 + ∑ _i ∈ range 0, (1 : ℝ)), (fun x : ℝ => max (3 - x) 0) x) ∧ (∑ t ∈ range 3, (0 : ℝ) * (fun x : ℝ => max (3 - x) 0) (2 + ∑ _i ∈ range (t + 1), (0 : ℝ))) ≤ (∫ x in (2 : ℝ)..(2 + ∑ _i ∈ range 3, (0 : ℝ)), (fun x : ℝ => max (3 - x) 0) x) ∧ (fun x : ℝ => max (3 - x) 0) 2 = 1",
+  "statement_hash": "fc363b267387bfd155086697483cb1309edc8f10821b6eecbee24e2e7065abb3",
+  "source_assumptions": [],
+  "created_at": "2026-10-09T22:27:57+00:00"
+}

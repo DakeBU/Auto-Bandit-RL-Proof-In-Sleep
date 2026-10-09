@@ -1,0 +1,110 @@
+{
+  "schema_version": "2.0",
+  "id": "ONLINE-CH2-ADAPTIVE-SUMMATION-20261010",
+  "route": "online-learning/chapter-2/required-adaptive-rate-dependency",
+  "frontier_cell": "online-ogd",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10 (2026-06-21), SHA256 cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchor": "Lemma4.13 printed40/PDF52, necessary Chapter2 adaptive-rate prerequisite.",
+    "url": "https://arxiv.org/pdf/1912.13213v10"
+  },
+  "target": "For every nonnegative initial offset c, natural finite horizon T, real increment stream b with b_t>=0 for t<T, and real function f continuous, nonincreasing and nonnegative on [0,infinity), define s_0=c and s_(t+1)=s_t+b_t. Then sum(t<T)b_t*f(s_(t+1)) is at most the integral of f from c to s_T. All zero cases are included. One reusable integral-comparison lemma is a prerequisite for the required Chapter2 adaptive-rate forward claim. Actual causal adaptive OSD, zero-gradient skipping, zero-radius/zero-energy cases, inverse-square-root energy summation, Eq.(4.4), Theorem4.14 and its displayed minimum-versus-infimum edge remain required/open. All eight Chapter2 forward containers and six future mathematical claims remain required/open. Chapter2 remains partial with null complete proof total; Chapters3-16 remain unenumerated/null. Chapter4 is not a new main task. Whole Chapters1-16 Goal ACTIVE. Stacked on OPEN draft unmerged PR215 exact 8f31042350bd8eeb1c9108257c58e2b3aafaebfb. No merge, deployment, main/live or retirement claim.",
+  "affected_files": [
+    "BanditRLProof/OnlineAdaptiveSummation.lean",
+    "BanditRLProof.lean",
+    "website/content/chapters.json",
+    "website/content/readings.json",
+    "website/content/highlights.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineAdaptiveSummation.lemma_4_13"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "new_shared",
+    "searched_existing": [
+      "Actual OWN native reference-index/list cards/search-memory/list-lean-decls and pinned intervalIntegral API retrieval; existing unit-grid sum/integral comparison has different increments."
+    ],
+    "reused_declarations": [
+      "ContinuousOn.intervalIntegrable_of_Icc",
+      "intervalIntegral.integral_mono_on",
+      "intervalIntegral.integral_const",
+      "intervalIntegral.sum_integral_adjacent_intervals"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineAdaptiveSummation.lemma_4_13"
+    ],
+    "known_consumers": [
+      "Tests.OnlineAdaptiveSummationCanary.nonconstant_zero_increment_canary",
+      "Tests.OnlineAdaptiveSummationCanary.zero_boundaries_canary"
+    ],
+    "planned_consumers": [
+      "Chapter2 required adaptive OSD energy bound; remains open, no formal edge yet."
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "One mathlib-candidate canonical finite arbitrary-increment comparison, composed from pinned integral APIs. No per-Book project, toolchain upgrade or external dependency."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/osd_blind",
+    "source_reviewer": "/root/source_reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Lean b_t is source a_(t+1), while c is the separate source a0. The ambient real extension is constrained only on the nonnegative half-line, including relative continuity at zero; negative arguments are unused. The public type retains source f>=0 although this proof does not use that premise. No positivity, global regularity or integrability premise is added. Related staged automated actor history disclosed; no human/external/absolute-blind/runtime attestation. Exact CONTRACT, production BODY and canary BODY reviews retained; integration/FINAL/native/postnative/delivery still pending."
+  },
+  "graph_contribution": {
+    "lean_graph": "new-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "A deterministic interval comparison alone supplies no cross-setting transport or certified functor. Future supporting-line/Tsallis reuse is not an edge here.",
+    "focus_targets": [
+      "BanditRL.OnlineAdaptiveSummation.lemma_4_13"
+    ],
+    "visual_review": "Required new source card/teaching note/folded Lean/module original pixels; pending. One new canonical production node; complete11054oldregistryobjects must remain unchanged; expected11055 total and15 source cards. Direct compiled TYPE/VALUE and three selected branch presences only; not proof necessity or chapter count.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: one online-ogd module/learning goal/bounded completion suffix/source-qualified card/teaching note; all older links and complete objects retained.",
+    "banditrlwiki": "no-change-with-reason: deterministic integration prerequisite changes no Bandit policy or setting guarantee.",
+    "results_ledger": "no-change-with-reason: no chapter or global route milestone completed; OWN scoped ledger retains foundation growth.",
+    "roadmap": "updated: Chapter2 partial/null, all8forward and6futureclaims required/open; Chapter4 still unenumerated/null, globalSGB unchanged.",
+    "website_surfaces": [
+      "website/content/chapters.json",
+      "website/content/readings.json",
+      "website/content/highlights.json"
+    ]
+  },
+  "truth_boundary": "One reusable integral-comparison lemma is a prerequisite for the required Chapter2 adaptive-rate forward claim. Actual causal adaptive OSD, zero-gradient skipping, zero-radius/zero-energy cases, inverse-square-root energy summation, Eq.(4.4), Theorem4.14 and its displayed minimum-versus-infimum edge remain required/open. All eight Chapter2 forward containers and six future mathematical claims remain required/open. Chapter2 remains partial with null complete proof total; Chapters3-16 remain unenumerated/null. Chapter4 is not a new main task. Whole Chapters1-16 Goal ACTIVE. Stacked on OPEN draft unmerged PR215 exact 8f31042350bd8eeb1c9108257c58e2b3aafaebfb. No merge, deployment, main/live or retirement claim.",
+  "verification": {
+    "focused_checks": [
+      "Actual production focused build0/3285jobs; actual two FULL Test BODY buildv3 0/3323jobs. Full public probes/standard axioms,3 native fences/safe-verifies;3compiledvalues/3selected inequality VALUE branches. Failed API attempts and parser repair retained. Frozen complete types/context unchanged."
+    ],
+    "bandit_check": "Combined root/Tests/full harness and contributor/shadow gates required; pending at prospective integration freeze.",
+    "site_build": "Isolated local lean-verified build only after current combined Lean gate; generated website/_site untouched; no live claim.",
+    "site_check": "Actual site/shared registry/original-pixel checks required; pending.",
+    "independent_review": "Distinct exact source CONTRACT/production BODY/canary CONTRACT/BODY accepted-with-explicit-delta; integration/FINAL/native/postnative/delivery pending.",
+    "owned_test_files": [
+      "Tests/OnlineAdaptiveSummationCanary.lean"
+    ],
+    "owned_test_root_files": [
+      "Tests.lean"
+    ]
+  },
+  "contributor": {
+    "name": "Codex for Ji Cheng",
+    "role": "Formalizer with distinct reused staged automated decoder and source reviewer"
+  }
+}
