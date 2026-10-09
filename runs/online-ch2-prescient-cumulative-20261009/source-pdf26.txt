@@ -1,0 +1,137 @@
+14Online Subgradient Descent
+have
+TX
+t=1
+(ℓt(xt)−ℓ t(u))≤
+TX
+t=1
+∥xt −u∥ 2
+2
+2ηt
+− ∥xt+1 −u∥ 2
+2
+2ηt
+
++
+TX
+t=1
+ηt∥gt∥2
+2
+2
+= ∥x1 −u∥ 2
+2
+2η1
+− ∥xT+1 −u∥ 2
+2
+2ηT
++
+T−1X
+t=1
+ 1
+ηt+1
+− 1
+ηt
+ ∥xt+1 −u∥ 2
+2
+2 +
+TX
+t=1
+ηt∥gt∥2
+2
+2
+≤ D2
+2η1
++ D2
+2
+T−1X
+t=1
+ 1
+ηt+1
+− 1
+ηt
+
++
+TX
+t=1
+ηt∥gt∥2
+2
+2 − ∥xT+1 −u∥ 2
+2
+2ηT
+= D2
+2η1
++D 2
+ 1
+2ηT
+− 1
+2η1
+
++
+TX
+t=1
+ηt∥gt∥2
+2
+2 − ∥xT+1 −u∥ 2
+2
+2ηT
+= D2
+2ηT
++
+TX
+t=1
+ηt
+2 ∥gt∥2
+2 − 1
+2ηT
+∥xT+1 −u∥ 2
+2 .
+In the same way, whenη t is constant, we have
+TX
+t=1
+(ℓt(xt)−ℓ t(u))≤
+TX
+t=1
+ 1
+2η ∥xt −u∥ 2
+2 − 1
+2η ∥xt+1 −u∥ 2
+2
+
++ η
+2
+TX
+t=1
+∥gt∥2
+2
+= 1
+2η ∥x1 −u∥ 2
+2 − 1
+2η ∥xT+1 −u∥ 2
+2 + η
+2
+TX
+t=1
+∥gt∥2
+2 .
+We can immediately observe a few things.
+•The terms∥g t∥2
+2 are due to the fact that we outputx t before knowing the lossℓ t. Indeed,
+these terms become non-positive if we were allowed to observeℓ t before producingx t,
+see Section 15.5.1.
+•In the case of constantη, the bound holds even whenD=∞. Moreover, the first term in
+the regret depends on ourinitial condition, that is, how farx 1 is from the competitoru.
+•The last term in both bounds is non-positive, so it is usually discarded. Yet, some advanced
+proofs require it, so it is good to be aware of it.
+•If we want to use time-varying learning rates, we need to control the terms∥x t −u∥2
+2. To
+do it, we assume a bounded domainV. However, this assumption is false in most of the
+machine learning applications. We will also see in Section 5.2 that this is not an artifact of
+the proof, that is, OGD can fail in unbounded domains with time-varying learning rates.
+That said, in the stochastic setting, you can still use a time-varying learning rate in SGD
+with an unbounded domain, as we will see in Chapter 3.
+•Another important observation is that the regret bound helps us choose the learning rates
+ηt. Indeed, it is the only guideline we have. Any other choice that is not justified by a
+regret analysis is not justified at all.
+As we said, the presence of untuned parameters like the learning rates makes no sense in
+online learning. So, we have to decide on a strategy to set them. A simple choice is to find
+the constant learning rate that minimizes the bounds for a fixed number of iterations. We

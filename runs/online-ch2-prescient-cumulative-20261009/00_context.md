@@ -1,0 +1,9 @@
+# Bounded same-run prescient cumulative package
+
+Whole Chapters1-16 Goal ACTIVE; Chapter2 partial, all8 forward containers REQUIRED/OPEN, Ch3-16 unenumerated/null. No progress inferred from proof counts. Current branch stacks on PR211 exact head24de0231aa067f141251aac5c20deb58e448ea66, OPEN draft/unmerged; origin/main remains separately audited.
+
+Source SHA and extracts are pinned in source-card-v1. SourceAlgorithm15.8 reads current loss before choosing its paid prediction. Same existing Option recursion is used without modification. Five exact proposed public targets, no new definitions: shared actual per-round sum interface (two real consumers), sharp fixed/variable bounds with both negative residuals, and printed fixed/finite-max corollaries. Actual output witnesses are posthoc certificates of this particular recursion; they do not supply arbitrary desired one-step or future-aware algorithm existence.
+
+Director/formalizer/architect/worker: root in separated phases. Required distinct automated semantic actors reuse existing osd_blind and source_reviewer; no new math workers/parallel routes. Requested Astra/medium, no runtime attestation/human/external/absolute-blindness claim. Default one lower route. Draft cannot be promoted without exact-context neutral reconstruction and anti-anchored source review. Proof search may edit only selected frozen bodies in new module and OWN records; old production/Test/pins/readers/registries/globalSGB immutable until separately reviewed integration.
+
+Success: theorem-edge same actual Option run -> signed cumulative performance. Full source hypothesis transport/closed generator representation and Chapter2 containers remain required. No merge/deployment authorized or executed here. Sourcefixed proof-left-as-exercise is mandatory and included.

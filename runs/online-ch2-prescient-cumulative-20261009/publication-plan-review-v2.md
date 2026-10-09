@@ -1,0 +1,13 @@
+# Publication v2 repair review
+
+The exact formula repair is accepted; execution/materialization through the proposed v2 helper is rejected pending P3. This is a reused distinct staged automated review, requested Astra/medium, without human/external/absolute-blind or runtime model attestation. Prior BODY and rejected publication v1 remain immutable.
+
+P1 is satisfied: the variable-sharp formula now separately states eta_t>0 for 0<=t<T and eta_(t+1)<=eta_t for t+1<T. At T=1 it requires eta0 positivity and no unplayed step comparison. Independent parsed comparison found this as the only proposal change and the only after-highlights change (new note index453). All four other planned rows are byte-identical to v1. Every canonical file remains at BEFORE. The five exact row hashes are recorded as reviewed, not executable approval.
+
+P2's proposed delay disclosure is satisfactory: the helper would first capture OWN native bytes, call actual help and conversion-window CLI, preserve the unfilled template, append frozen director intent and explicitly say the artifact did not exist at stabilization. This is prospective; no CLI/artifact creation is certified. It authorizes no new mathematical premise or backdating. Actual effects and OWN journal suffixes must later be audited.
+
+P3 blocks this helper: its initial input loop names publication-plan-review-inputs-v1.json, not the current v2 index. Although it binds approved plan rows and later baseline/production hashes, that does not recheck every newly reviewed helper/guard/proposal byte. A new version must bind the accepted receipt's operative input-manifest hash and rehash that complete index before any writes or native command, alongside BODY inputs. Preserve v2; do not run it.
+
+The proposed publication_guard_v2 correctly separates exact UTF8 header SHA from normalized native statement hashes, preserves nonallowed baseline rows and exact five after snapshots, fixes production/Test whole-file hashes and selected graph. The former unexecuted guard's raw-versus-normalized comparison mistake is not a mathematical or compiler failure. The new contribution describes focused evidence and pending combined/site/FINAL gates; it does not close the source container. Its actual creation remains dependent on a corrected integration helper.
+
+All 288 indexed RAW inputs matched before and after, and common.fixed checked all32928 baseline rows and the pinned PDF before/after. No existing file was changed. No fresh site/pixel/combined/native execution claim follows. Source transport/valid-run obligations, all eight Chapter2 forwards, Chapter2 partial/null and whole Goal ACTIVE remain unchanged. No v2 materialization is authorized until the narrow helper repair is independently accepted.

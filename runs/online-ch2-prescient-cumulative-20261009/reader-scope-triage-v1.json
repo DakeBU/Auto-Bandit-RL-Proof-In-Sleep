@@ -1,0 +1,79 @@
+{
+  "actor": {
+    "task": "/root/source_reviewer",
+    "requested_model": "GPT-6 Astra",
+    "requested_reasoning": "medium",
+    "reused_staged_history": true,
+    "runtime_attested": false
+  },
+  "verdict": "blocking-reader-repair",
+  "reader_verdict": "rejected",
+  "report": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-prescient-cumulative-20261009/reader-scope-triage-v1.md",
+  "report_sha256": "3d7ea3fad0e8f0ce0301905b05f9735b3bb614c30a0ac66aceec25ce07e5d580",
+  "fixed_input_count": 5,
+  "raw_input_checks": [
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/docs/contracts/online-ch2-prescient-cumulative-v1/stabilized-v1.json",
+      "before_sha256": "133dc1226bda7c19168950a0574dd0c14208fe83714f4e9d141839ddc2012a41",
+      "after_sha256": "133dc1226bda7c19168950a0574dd0c14208fe83714f4e9d141839ddc2012a41",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/docs/contracts/online-ch2-prescient-cumulative-v1/targets-draft-v1.json",
+      "before_sha256": "63eacdca343e423abbe31c37160a660812488c64ee5e911105b87736ff7ec216",
+      "after_sha256": "63eacdca343e423abbe31c37160a660812488c64ee5e911105b87736ff7ec216",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlinePrescientBregmanRegret.lean",
+      "before_sha256": "415c4c9d3e8b262afd6f849b97afad2b372a7e17233e1ac22dc8f74cc56d038d",
+      "after_sha256": "415c4c9d3e8b262afd6f849b97afad2b372a7e17233e1ac22dc8f74cc56d038d",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/website/content/highlights.json",
+      "before_sha256": "ac6e7c80b070dec14a223658ec26b436d36a690fae56fcb07581e615797a6201",
+      "after_sha256": "ac6e7c80b070dec14a223658ec26b436d36a690fae56fcb07581e615797a6201",
+      "unchanged": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/website/content/readings.json",
+      "before_sha256": "34c3ab3a174213aa5283a4d8e8db19c6ff52ddd6b1465d1ea7613b42deda75ec",
+      "after_sha256": "34c3ab3a174213aa5283a4d8e8db19c6ff52ddd6b1465d1ea7613b42deda75ec",
+      "unchanged": true
+    }
+  ],
+  "inputs_unchanged": true,
+  "occurrences": {
+    "website\\content\\highlights.json": [
+      "/highlights/451/plain",
+      "/highlights/451/lean_notes",
+      "/highlights/452/plain",
+      "/highlights/452/lean_notes",
+      "/highlights/453/plain",
+      "/highlights/453/lean_notes",
+      "/highlights/454/plain",
+      "/highlights/454/lean_notes",
+      "/highlights/455/plain",
+      "/highlights/455/lean_notes"
+    ],
+    "website\\content\\readings.json": [
+      "/readings/10/source_theorems/10/plain",
+      "/readings/10/source_theorems/10/fallback",
+      "/readings/10/source_theorems/10/contract/assumptions"
+    ]
+  },
+  "required_repairs": [
+    {
+      "id": "R-scope",
+      "finding": "Shared prose overrestricts iterate_divergence_sum to positive horizon/nonincreasing schedules and conflates its sum with the later previous-state cap/MAX.",
+      "suggested_replacement": "The shared iterate_divergence_sum interface allows every natural horizon T, including T=0, and any schedule with eta_t>0 for t<T; it assumes no monotonicity. The fixed-step interfaces allow T=0 with a positive constant step. Only iterate_variable_sharp and iterate_variable_regret require T>0 and eta_(t+1)<=eta_t for t+1<T; their cap or finite maximum concerns previous states 0,...,T-1, not x(T).",
+      "scope": "Only shared scope prose in five new notes plain/lean_notes and the new card plain/fallback/contract.assumptions; separately freeze/review exact repair, preserve mathematical and unrelated bytes."
+    }
+  ],
+  "BODY_acceptance_changed": false,
+  "FINAL_accepted": false,
+  "chapter_complete": false,
+  "goal_complete": false,
+  "whole_Goal_status": "ACTIVE"
+}

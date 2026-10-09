@@ -1,0 +1,14 @@
+{
+  "command": [
+    "python",
+    "-B",
+    "-X",
+    "utf8",
+    "runs/online-ch2-prescient-cumulative-20261009/prepare-delivery-helpers-v2.py"
+  ],
+  "actual_tool_process_exit": 1,
+  "observed_failure": "All four prospective helper files were written; syntax compilation then rejected record-acceptance-v1.py because the generator expanded newline escapes inside one memory-digest string literal. None of these helpers was executed; no native acceptance/push/PR occurred.",
+  "invalid_helper_sha256": "91771851692bbd3fb3e8e0230483e61d778fc78dd162ef0779a07c8560024a40",
+  "repair": "Versioned record-acceptance-v2 replaces only the memory-digest write with a raw-source literal. Three other prospective helper syntax checks passed separately. Preserve invalid v1 and both generator failures.",
+  "whole_Goal_status": "ACTIVE"
+}

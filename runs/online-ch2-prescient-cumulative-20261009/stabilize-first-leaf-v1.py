@@ -1,0 +1,22 @@
+from common import *
+fixed()
+review=RUN/'CONTRACT-review-v1.json'
+assert sha(review)=='fd6658af92eba34f0c7f456e62e86a1e50d5db82e68de8800617fc8e491e7621'
+r=load(review)
+assert r['verdict']=='accepted-with-explicit-delta' and not r['required_repairs'] and r['inputs_unchanged']
+for p in load(RUN/'contract-review-inputs-v1.json')['rows']:
+    assert sha(p['path'])==p['sha256'],p['path']
+draft=load(CONTRACT/'targets-draft-v1.json')
+names=[t['name'] for t in draft['targets']]
+assert names==['iterate_divergence_sum','iterate_fixed_sharp','iterate_variable_sharp','iterate_fixed_regret','iterate_variable_regret']
+write(RUN/'pre-stabilization-native-exact-v1.json',dict(rows=[dict(path=p.as_posix(),sha256=sha(p),raw_base64=base64.b64encode(p.read_bytes()).decode('ascii')) for p in [RUN/'lifecycle-sessions.jsonl',RUN/'lifecycle-state.json']]))
+dag=[dict(id=n,dependencies=d,status='ready' if i==0 else 'pending-dependency') for i,(n,d) in enumerate(zip(names,[['parent.iterate_one_step','actual-success/interior-witnesses','DifferentiableOn.differentiableAt'],['iterate_divergence_sum','Finset.sum_range_sub\x27','actual-initial-identity'],['iterate_divergence_sum','parent.weighted_potential_sum'],['iterate_fixed_sharp','parent.divergence_nonneg'],['iterate_variable_sharp','parent.divergence_nonneg','Finset.le_sup\x27','Finset.nonempty_range_iff']]))]
+write(CONTRACT/'stabilized-v1.json',dict(stage='stabilized',targets=draft['targets'],context=draft['context'],source_card_sha256=sha(CONTRACT/'source-card-v1.json'),draft_sha256=sha(CONTRACT/'targets-draft-v1.json'),CONTRACT_review_sha256=sha(review),decoder_sha256=sha(RUN/'blind-reconstruction-v1.json'),reader_requirements=r['required_reader_corrections'],dependency_DAG=dag,first_selected_leaf=names[0],allowed_file=PUBLIC.as_posix(),edit_boundary='Selected exact theorem bodies in new public file only; no old production/Test/root/readers/pins/globalSGB. Other four bodies wait for actual first-leaf progression. Canary/body/integration separate reviews.',source_container_closed=False,chapter_proof_total=None,chapter_complete=False,whole_Goal_status='ACTIVE'))
+event('native-stabilized-event-v1','stabilized',dict(contract_sha256=sha(CONTRACT/'stabilized-v1.json'),CONTRACT_review_sha256=sha(review),targets=[t['statement_sha256'] for t in draft['targets']],whole_Goal_status='ACTIVE'))
+event('native-first-proving-event-v1','proving',dict(selected_leaf=names[0],statement_sha256=draft['targets'][0]['statement_sha256'],dependency_status='ready',whole_Goal_status='ACTIVE'))
+write(ROOT/('tasks/'+TASK+'.md'),'# '+TASK+'\n\n'+(RUN/'00_context.md').read_text(encoding='utf8')+'\nExact frozen contract: '+str(CONTRACT.relative_to(ROOT))+'/stabilized-v1.json. Only first selected leaf proving. No new proof yet.\n')
+write(ROOT/('proof-obligations/'+TASK+'.md'),'# Five frozen cumulative proof obligations\n\n'+ '\n'.join('- '+t['declaration']+' | '+t['statement_sha256']+' | '+('proving' if i==0 else 'pending dependencies') for i,t in enumerate(draft['targets']))+'\n\nIndependent public canaries/focused/axiom/root/Tests/fullharness/shadow/reader/sharedregistry/contributor/semantic/native/PR gates pending. Source transport, all8Chapter2forwards, Chapter2/null and entire Goal remain open.\n')
+write(ROOT/('research-wiki/retrieval-index/'+TASK+'.md'),'# Same-run cumulative retrieval\n\nReuse canonical iterate_one_step, weighted_potential_sum(a=2B,C=2M), divergence_nonneg, DifferentiableOn.differentiableAt, StrictConvexOn.convexOn, Finset.sum_range_sub\x27/le_sup\x27/nonempty_range_iff. Actual five-header Prop-valued type probe exited0; no proof value. Prior wrong Finset.range_nonempty failure is retained under parent PR211 follow-on retrieval.\n\nSource/sourcehypothesis transport is not certified by API compatibility. Ch2 forwards remainrequired/open; no declarationcount completion.\n')
+write(RUN/'memory_digest.md','# Bounded memory: stabilized, first leaf proving\n\nFive exact target/context hashes and sourcePDFsha pinned by stabilized-v1. Distinct decoder/sourceCONTRACT accepted-with-explicit-delta. ActualOption run and interior derivative transport, not desiredoneStep premise. Existing weighted_potential_sum reused; no new Abel library. No new proof yet; subsequent evidence/versioned digest will state actual compiled/semantic/gate results. No source/chapter/Goal acceptance.\n')
+fixed()
+print('Exact5 stabilized; actual OWN events; only first ready leaf selected.')
