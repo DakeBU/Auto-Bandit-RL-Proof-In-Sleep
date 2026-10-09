@@ -1,0 +1,2 @@
+TASK ONLINE-CH2-PROXIMAL-20261009
+Root Goal Chapters1-16 ACTIVE; Chapter2 partial. Current finite leaf real-minimizer-comparison draft. Source general Algorithm15.8/Theorem15.30 required-open. Actual minimum f+h assumed as input to a helper, derivative only h; no loss smoothness. Typed API retrieval local; missingabs imports/names in scratch are retained and do not falsify the target. Do not dispatch body before independent source/contract review. Prior affine producer remains accepted/delivered in unmergedPR205.

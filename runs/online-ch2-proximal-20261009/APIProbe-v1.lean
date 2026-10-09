@@ -1,0 +1,17 @@
+import Mathlib.Analysis.Convex.Function
+import Mathlib.Analysis.Calculus.LocalExtr.Basic
+import Mathlib.Analysis.Calculus.Deriv.Comp
+import Mathlib.Analysis.Calculus.Deriv.Mul
+#check IsLocalMinOn.hasFDerivWithinAt_nonneg
+#check sub_mem_posTangentConeAt_of_segment_subset
+#check Convex.segment_subset
+#check ConvexOn
+#check HasFDerivAt.comp_hasDerivAt
+#check HasFDerivAt.comp_hasDerivAt_of_eq
+#check HasDerivAt.hasFDerivAt
+#check HasDerivAt.smul_const
+#check HasDerivAt.const_add
+#check HasDerivAt.mul_const
+#check IsMinOn.localize
+#check ContinuousLinearMap.smulRight
+#check not_differentiableAt_abs_zero

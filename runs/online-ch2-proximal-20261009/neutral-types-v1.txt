@@ -1,0 +1,17 @@
+import Mathlib.Analysis.Convex.Function
+import Mathlib.Analysis.Calculus.LocalExtr.Basic
+import Mathlib.Analysis.Calculus.Deriv.Comp
+import Mathlib.Analysis.Calculus.Deriv.Mul
+
+noncomputable section
+open Set
+namespace BanditRL.OnlineProximal
+variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+
+theorem convex_minimizer_comparison (V : Set E) (f h : E → ℝ) (p : E)
+    (hp : p ∈ V) (hf : ConvexOn ℝ V f)
+    (hmin : IsMinOn (fun z => f z + h z) V p)
+    (h' : E →L[ℝ] ℝ) (hd : HasFDerivAt h h' p) :
+    ∀ u ∈ V, f p - f u ≤ h' (u - p)
+
+end BanditRL.OnlineProximal

@@ -1,0 +1,101 @@
+{
+  "stage": "stabilized",
+  "targets": [
+    {
+      "declaration": "BanditRL.OnlineProximal.convex_minimizer_comparison",
+      "exact_proposed_header": "theorem convex_minimizer_comparison (V : Set E) (f h : E → ℝ) (p : E)\n    (hp : p ∈ V) (hf : ConvexOn ℝ V f)\n    (hmin : IsMinOn (fun z => f z + h z) V p)\n    (h' : E →L[ℝ] ℝ) (hd : HasFDerivAt h h' p) :\n    ∀ u ∈ V, f p - f u ≤ h' (u - p)",
+      "statement_hash": "86024f8c637edd320deb96d42e1733e9175bb34b56cecc7a35f871471e06b06d",
+      "file": "BanditRLProof/OnlineProximalComparison.lean"
+    }
+  ],
+  "scoped_context": "arbitrary real normed vector space; no completeness, finite dimension or inner product",
+  "semantic_slots": {
+    "objects": "V subset E; total real f,h; supplied p in V; continuous linear hprime",
+    "quantifiers": "V f h p hp hf hmin hprime hd, then every u in V; same p and objective",
+    "regularity": "f convex on V, h ambient Frechet differentiable at p only, actual minimization of f+h on V. No derivative of f or convexity of h.",
+    "conclusion": "f(p)-f(u) <= hprime(u-p), no existential minimizer or assumed regret/stability bound",
+    "constants": "no step size or normalization, no denominator; u=p and singleton sets allowed",
+    "information": "deterministic supplied minimizer; no algorithm/time/feedback or existence/uniqueness conclusion",
+    "boundary": "Real-valued comparison helper, not full extended-real/Bregman/recursive source theorem. Actual attainment and finitePart bridges remain required."
+  },
+  "source_card_sha256": "a75cc8256641fe31e013eaec5a11a0ab680c492cb3b1f299650b053faff520b2",
+  "draft_sha256": "4bcb6a9a5a52159e67eaf2e212aa0825a0e7bf284053769800055d21536a1bc8",
+  "context_sha256": "195ed37e7c6e23770dccfa77e5fd3a16ebaa27c17aebe8eb961cb9467db46b06",
+  "review_sha256": "2bdcf94024ae844f49c63ad727c34dbe1367f5d352ce14547ef22162cb57ae04",
+  "initial_lower_leaf": {
+    "declaration": "BanditRL.OnlineProximal.convex_minimizer_comparison",
+    "exact_proposed_header": "theorem convex_minimizer_comparison (V : Set E) (f h : E → ℝ) (p : E)\n    (hp : p ∈ V) (hf : ConvexOn ℝ V f)\n    (hmin : IsMinOn (fun z => f z + h z) V p)\n    (h' : E →L[ℝ] ℝ) (hd : HasFDerivAt h h' p) :\n    ∀ u ∈ V, f p - f u ≤ h' (u - p)",
+    "statement_hash": "86024f8c637edd320deb96d42e1733e9175bb34b56cecc7a35f871471e06b06d",
+    "file": "BanditRLProof/OnlineProximalComparison.lean"
+  },
+  "dependency_DAG": [
+    {
+      "id": "minimizer-comparison",
+      "declaration": "BanditRL.OnlineProximal.convex_minimizer_comparison",
+      "status": "draft",
+      "dependencies": [
+        "mathlib-convex-segment",
+        "mathlib-derivative-composition",
+        "mathlib-local-min-tangent"
+      ]
+    },
+    {
+      "id": "Bregman-three-point",
+      "status": "required-open",
+      "dependencies": []
+    },
+    {
+      "id": "real-Bregman-proximal-one-step",
+      "status": "required-open",
+      "dependencies": [
+        "minimizer-comparison",
+        "Bregman-three-point"
+      ]
+    },
+    {
+      "id": "extended-real-finite-domain-bridge",
+      "status": "required-open",
+      "dependencies": [
+        "minimizer-comparison"
+      ]
+    },
+    {
+      "id": "attained-current-loss-recursion",
+      "status": "required-open",
+      "dependencies": []
+    },
+    {
+      "id": "same-valid-run-sharp-constant-telescope",
+      "status": "required-open",
+      "dependencies": [
+        "real-Bregman-proximal-one-step",
+        "extended-real-finite-domain-bridge",
+        "attained-current-loss-recursion"
+      ]
+    },
+    {
+      "id": "same-valid-run-variable-telescope",
+      "status": "required-open",
+      "dependencies": [
+        "real-Bregman-proximal-one-step",
+        "extended-real-finite-domain-bridge",
+        "attained-current-loss-recursion"
+      ]
+    },
+    {
+      "id": "general-source-prescient-container",
+      "status": "required-open",
+      "dependencies": [
+        "same-valid-run-sharp-constant-telescope",
+        "same-valid-run-variable-telescope"
+      ]
+    }
+  ],
+  "dependency_evidence": "Pinned typed mathlib APIs inspected; no target proof compiled yet.",
+  "allowed_production_file": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineProximalComparison.lean",
+  "edit_boundary": "Exact one proposed theorem body and imports needed for that proof; no new production declarations, root/Test/reader or old files. Header or scoped semantic-context change requires versioned review.",
+  "advance": "reusable foundation growth for the required general prescient source dependency",
+  "source_container_closed": false,
+  "chapter_complete": false,
+  "whole_Goal_status": "ACTIVE"
+}

@@ -1,0 +1,3 @@
+# ONLINE-CH2-PROXIMAL-20261009
+
+One frozen real convex minimizer comparison and three nonsmooth/boundary/nonconvex-regularizer Test families have actual focused/public VALUE/kernel/standard axioms/native guards and distinct CONTRACT/BODY/B1 proof-route review. Actual combined root/Tests/full harness markers inspected. This lowers one required general prescient dependency, not a source theorem/chapter denominator. All eight Chapter2 forwards, general Bregman and extended-real bridges, attained current-loss recursion/interior validity, fixed/variable same-run bounds remain REQUIRED/OPEN. Shared site/registry/DOM/pixels/contributor/FINAL/native/delivery pending. Whole Chapters1–16 GoalACTIVE.

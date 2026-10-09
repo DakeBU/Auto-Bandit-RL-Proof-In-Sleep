@@ -1,0 +1,105 @@
+{
+  "stage": "draft",
+  "targets": [
+    {
+      "declaration": "BanditRL.OnlineProximal.convex_minimizer_comparison",
+      "exact_proposed_header": "theorem convex_minimizer_comparison (V : Set E) (f h : E → ℝ) (p : E)\n    (hp : p ∈ V) (hf : ConvexOn ℝ V f)\n    (hmin : IsMinOn (fun z => f z + h z) V p)\n    (h' : E →L[ℝ] ℝ) (hd : HasFDerivAt h h' p) :\n    ∀ u ∈ V, f p - f u ≤ h' (u - p)",
+      "statement_hash": "86024f8c637edd320deb96d42e1733e9175bb34b56cecc7a35f871471e06b06d",
+      "file": "BanditRLProof/OnlineProximalComparison.lean"
+    }
+  ],
+  "scoped_context": "arbitrary real normed vector space; no completeness, finite dimension or inner product",
+  "semantic_slots": {
+    "objects": "V subset E; total real f,h; supplied p in V; continuous linear hprime",
+    "quantifiers": "V f h p hp hf hmin hprime hd, then every u in V; same p and objective",
+    "regularity": "f convex on V, h ambient Frechet differentiable at p only, actual minimization of f+h on V. No derivative of f or convexity of h.",
+    "conclusion": "f(p)-f(u) <= hprime(u-p), no existential minimizer or assumed regret/stability bound",
+    "constants": "no step size or normalization, no denominator; u=p and singleton sets allowed",
+    "information": "deterministic supplied minimizer; no algorithm/time/feedback or existence/uniqueness conclusion",
+    "boundary": "Real-valued comparison helper, not full extended-real/Bregman/recursive source theorem. Actual attainment and finitePart bridges remain required."
+  },
+  "dag": [
+    {
+      "id": "minimizer-comparison",
+      "declaration": "BanditRL.OnlineProximal.convex_minimizer_comparison",
+      "status": "draft",
+      "dependencies": [
+        "mathlib-convex-segment",
+        "mathlib-derivative-composition",
+        "mathlib-local-min-tangent"
+      ]
+    },
+    {
+      "id": "Bregman-three-point",
+      "status": "required-open",
+      "dependencies": []
+    },
+    {
+      "id": "real-Bregman-proximal-one-step",
+      "status": "required-open",
+      "dependencies": [
+        "minimizer-comparison",
+        "Bregman-three-point"
+      ]
+    },
+    {
+      "id": "extended-real-finite-domain-bridge",
+      "status": "required-open",
+      "dependencies": [
+        "minimizer-comparison"
+      ]
+    },
+    {
+      "id": "attained-current-loss-recursion",
+      "status": "required-open",
+      "dependencies": []
+    },
+    {
+      "id": "same-valid-run-sharp-constant-telescope",
+      "status": "required-open",
+      "dependencies": [
+        "real-Bregman-proximal-one-step",
+        "extended-real-finite-domain-bridge",
+        "attained-current-loss-recursion"
+      ]
+    },
+    {
+      "id": "same-valid-run-variable-telescope",
+      "status": "required-open",
+      "dependencies": [
+        "real-Bregman-proximal-one-step",
+        "extended-real-finite-domain-bridge",
+        "attained-current-loss-recursion"
+      ]
+    },
+    {
+      "id": "general-source-prescient-container",
+      "status": "required-open",
+      "dependencies": [
+        "same-valid-run-sharp-constant-telescope",
+        "same-valid-run-variable-telescope"
+      ]
+    }
+  ],
+  "initial_dependency_status": {
+    "mathlib_convex_segment": "actual pinned definition/API inspected",
+    "mathlib_derivative_composition": "actual typed #check printed",
+    "mathlib_local_min_tangent": "actual typed #check printed"
+  },
+  "source_to_Lean_delta": "This library helper extracts the loss comparison without differentiability of f. Source Theorem2.8 is differentiable and cannot directly supply nonsmooth optimality. No claim of equivalent premises or source erratum. Real finite-part representation and algorithm assumptions are later obligations.",
+  "reuse": "new_shared; no existing same contract found; reuse pinned mathlib calculus and convex segment APIs; no external dependency/toolchain change",
+  "consumer_edges": [
+    {
+      "target": "real-Bregman-proximal-one-step",
+      "status": "required-open; not yet actual proof edge"
+    },
+    {
+      "target": "nonsmooth absolute loss plus shifted quadratic minimizer canary",
+      "status": "planned nondegenerate instance; not a source terminal"
+    }
+  ],
+  "lower_boundary": "Only exact one header/body in new OnlineProximalComparison.lean after independent contract review. No roots/Tests/reader/global frontier or old files before separate plans.",
+  "source_container_closed": false,
+  "chapter_complete": false,
+  "whole_Goal_status": "ACTIVE"
+}

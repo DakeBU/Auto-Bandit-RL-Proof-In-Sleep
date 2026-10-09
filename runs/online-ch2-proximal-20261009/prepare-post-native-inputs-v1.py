@@ -1,0 +1,16 @@
+from publication_guard_v2 import *
+fixed()
+assert load(RUN/'post-native-root-audit-v1.json')['all_other_FINAL_inputs_unchanged']
+write(RUN/'post-native-packet-v1.md','''# Post-native and prospective delivery review
+
+Read FINAL exact accepted receipt and pre-native-exact-bytes-v1.json. Independently reparse appended one trial/event, sequence/parent/state, unchanged journal, exactly five contribution metadata fields and identical bounded suffix on exactly four OWN documents. Re-run publication_guard_v2.fixed(). For changed FINAL inputs resolve exact before bytes through pre-native snapshot; every other FINAL input must still match. Counter1->0 closes only one derived real comparison, no printed source/chapter coverage. General source/all8Ch2forwards remain REQUIRED/OPEN; wholeGoalACTIVE.
+
+Review PR-body-v1.md and PR-plan-v1.json, plus actual prospective deliver-v1.py. Ordinary scoped commit/push/draftPR only, stacked on OPEN unmerged PR205 exactbase29086b6f3a033f6536054f4d9a06ae0e9b2f8a91. Delivery observations ignored tmp until later exact evidence collection, no self-referential receipt loop. Actual final-stage receipt is included in ignored observations; Python3.8-compatible at-most-one-final-LF comparison, never removesuffix. Rechecks clean scope, two nonempty contributor bases, exact remote head/PR title/body/base/draft/unmerged. Exact two SHA-bound received decoder EOF exceptions only; actual full/scoped diff retained, RAW Git-filter differences preserved, no code/Test/reader/source/formula exemption. Immediate official attachment after successful PR creation remains required, followed by actual delivery evidence/review. No merge/deploy/global credentials/worktree retirement; local file pixel evidence is not HTTP/live or later-head site freshness.
+
+Create-only post-native-review-v1.md/json with separate native_verdict, metadata_verdict, prospective_publication_prose_verdict, delivery_helper_verdict, required_repairs, FINAL_sha256, input/report hashes and RAW before/after. If accepted specify exact scoped prospective delivery allowance; actual delivery not yet run. Preserve all inputs, no new native events/edits/publication by reviewer. Requested distinct staged automated Astra/medium role, no human/external/runtime attestation.
+''')
+paths={p for d in [RUN,CONTRACT] for p in d.rglob('*') if p.is_file() and '__pycache__' not in p.parts}
+paths.update(Path(r['path']) for r in load(RUN/'FINAL-inputs-v1.json')['rows'])
+paths.update([CONTRIBUTION,*[ROOT/d/(TASK+'.md') for d in ['tasks','proof-obligations','conversion-windows','research-wiki/retrieval-index']]])
+write(RUN/'post-native-inputs-v1.json',dict(rows=rows(paths),FINAL_sha256=sha(RUN/'FINAL-review-v1.json'),scope='Actual OWN native/metadata closure and prospective scoped delivery only',actual_delivery_PENDING=True,chapter_complete=False,whole_Goal_status='ACTIVE'))
+print('Actual post-native/prospective delivery packet ready; distinct review pending.')
