@@ -1,0 +1,7 @@
+# Actual prescient cumulative draft PR delivery
+
+Independently inspect actual durable receipts: deliveredhead=remote=OPENdraftunmergedPRhead, exacttitle/body/base/head, parentPR211 exact24de0231aa067f141251aac5c20deb58e448ea66. Two current nonempty contributor gates/scoped staging/fullpackagewhitespace0/noexceptions/RAWCRLFsnapshots. Official successful attachment is durably bound. Independently hash all inputsbeforeafter, permitted FINAL/postnative transitions only. CleanSITEv2 applies onlyto itsboundsourcecommit, not laterdeliveryhead. ActualfileURI12pixels notHTTP/live/mobile. Priorreaderambiguity/exact13fieldrepair/failurehistoryimmutable.
+
+Review final-evidence-delivery-v1.py: onlyNEWOWNRUNactualdelivery/reviewevidence+RAWsnapshot committed/pushed; ignoredterminalobservationsverifynewremote/PRhead withunchangedtitle/body/base/draft/unmerged. No selfreferenceevidenceloop or existingmath/reader/nativeinputmutation, merge/deploy/retirement/globalcredentials. Fiveconditionalproofs5->0/twofullcanaries, not fullsource/chapter/Goal. Full sourceX/interiorgenerator/loss premise transport andvalidrunwrapper/all8forwards REQUIREDOPEN, whole16GoalACTIVE.
+
+Create-only actual-delivery-review-v1.md/json withverdict/actual_delivery_verdict/prospective_evidence_only_commit_verdict/required_repairs/report/inputSHAs/independentRAWbeforeafter/actualhead/PR/officialattachmentbindings. DistinctreusedstagedrequestedAstra-medium, nohuman/external/runtimeattestation. Do notpublis/editinputs.
