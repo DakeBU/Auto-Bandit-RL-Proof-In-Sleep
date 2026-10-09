@@ -1,0 +1,42 @@
+{
+  "url": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/pull/204",
+  "reviewed_delivery_head": "24e9b65f9958699c0188bba58313b2f1140a95c1",
+  "bounded_public_terminals": [
+    {
+      "declaration": "BanditRL.OnlineConvex.shifted_absolute_convex_differentiable_iff",
+      "owning_module": "BanditRLProof/OnlineNonsmoothExamples.lean",
+      "exact_proposed_header": "theorem shifted_absolute_convex_differentiable_iff (c : ℝ) :\n    ConvexOn ℝ Set.univ (fun x : ℝ => |x - c|) ∧\n      ∀ x : ℝ, DifferentiableAt ℝ (fun w : ℝ => |w - c|) x ↔ x ≠ c",
+      "statement_hash": "8b8744ba4ca017a395835fa05ec28007b7b0179122b30d1a5fc64df8b6d3a1d2",
+      "phase": "draft before distinct blind/source review"
+    },
+    {
+      "declaration": "BanditRL.OnlineConvex.hinge_convex_differentiable_iff",
+      "owning_module": "BanditRLProof/OnlineNonsmoothExamples.lean",
+      "exact_proposed_header": "theorem hinge_convex_differentiable_iff {E : Type*} [NormedAddCommGroup E]\n    [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (a : E) :\n    ConvexOn ℝ Set.univ (fun x : E => max (1 - inner ℝ a x) 0) ∧\n      ∀ x : E, DifferentiableAt ℝ (fun w : E => max (1 - inner ℝ a w) 0) x ↔\n        inner ℝ a x ≠ 1",
+      "statement_hash": "96123d78398d7211f2ee34b63e1330bd04986f943e2cffd99fe8301c263f8f45",
+      "phase": "draft before distinct blind/source review"
+    },
+    {
+      "declaration": "BanditRL.OnlineConvex.labelled_hinge_convex_differentiable_iff",
+      "owning_module": "BanditRLProof/OnlineNonsmoothExamples.lean",
+      "exact_proposed_header": "theorem labelled_hinge_convex_differentiable_iff {E : Type*} [NormedAddCommGroup E]\n    [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (y : ℝ) (z : E) :\n    ConvexOn ℝ Set.univ (fun x : E => max (1 - y * inner ℝ z x) 0) ∧\n      (∀ x : E, DifferentiableAt ℝ (fun w : E => max (1 - y * inner ℝ z w) 0) x ↔\n        y * inner ℝ z x ≠ 1) ∧\n      (Differentiable ℝ (fun w : E => max (1 - y * inner ℝ z w) 0) ↔ y • z = 0)",
+      "statement_hash": "76b1e6c1dcae81e86d72a8354ef260108edbcdae41dc8b3dd6c55a91e943a57f",
+      "phase": "draft before distinct blind/source review"
+    }
+  ],
+  "source_families": 2,
+  "canaries": 5,
+  "FINAL_sha256": "b3f416c09f63a980067ab044bc3a550396fcbe998bbf6408b253030b5cc4d723",
+  "post_native_sha256": "f346c03e6c2feae3799b425c862e42d9b9e0f900899eda6f739a1b020c53443e",
+  "actual_delivery_review_sha256": "8674e236ef7f13bc6a32a49580c6cb2841c33949292cc9c119d7828e205a7e7b",
+  "state": "bounded-package accepted-with-explicit-delta; reviewable OPEN draft PR delivered; final evidence-only HEAD observed separately in ignored tmp",
+  "source_inventory": "enumeration only;65 overlapping containers; independent proof denominatornull",
+  "required_forward_references_still_open": 8,
+  "chapter_complete": false,
+  "goal_complete": false,
+  "whole_Goal_status": "ACTIVE",
+  "merged": false,
+  "deployed": false,
+  "CI_build_certified": false,
+  "checkout": "Retained in active use for next Chapter2 leaf"
+}
