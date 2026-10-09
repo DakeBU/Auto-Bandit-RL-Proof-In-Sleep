@@ -1,0 +1,7 @@
+# Actual unbounded OSD draft PR delivery
+
+Independently inspect actual durable receipts: deliveredhead=remote=OPENdraftunmergedPRhead, exacttitle/body/base/head, parentPR213 exact2f039d55ad2f9a9f9b97027287709804689cf46d. Two current nonempty contributor gates/scoped staging/fullpackagewhitespace0/noexceptions/RAWCRLFsnapshots. Official successful attachment is durably bound. Independently hash all inputsbeforeafter, permitted FINAL/postnative transitions only. CleanSITEv1 applies onlyto itsboundsourcecommit, not laterdeliveryhead. ActualfileURI32pixels notHTTP/live/mobile. Historical source/canary/API/wrapper repair evidence immutable.
+
+Review final-evidence-delivery-v1.py: onlyNEWOWNRUNactualdelivery/reviewevidence+RAWsnapshot committed/pushed; ignoredterminalobservationsverifynewremote/PRhead withunchangedtitle/body/base/draft/unmerged. No selfreferenceevidenceloop or existingmath/reader/nativeinputmutation, merge/deploy/retirement/globalcredentials. Elevenfrozenproofterminals11->0/fourdefinitions/twofull7/9canaries, not Chapter2/Chapter5/wholeGoal. Notminimaxagainst-all-learners;all8forwardcontainers REQUIREDOPEN pending dedicated reconciliation, whole16GoalACTIVE.
+
+Create-only actual-delivery-review-v1.md/json withverdict/actual_delivery_verdict/prospective_evidence_only_commit_verdict/required_repairs/report/inputSHAs/independentRAWbeforeafter/actualhead/PR/officialattachmentbindings. DistinctreusedstagedrequestedAstra-medium, nohuman/external/runtimeattestation. Do notpublis/editinputs.
