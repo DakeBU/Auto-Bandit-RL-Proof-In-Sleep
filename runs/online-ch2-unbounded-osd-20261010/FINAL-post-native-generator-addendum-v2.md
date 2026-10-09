@@ -1,0 +1,3 @@
+# Prospective helper-generator correction
+
+Review prepare-post-native-v2.py and post-native-generator-repair-plan-v2.json with FINAL. Original prepare-post-native-v1.py remains unchanged and unexecuted. Only one replacement tuple is added, so the three future OWN delivery helpers adapted from PR213 import approved publication_guard_v2, which retains exact historical original-guard RAW recovery and all other baseline checks. No mathematical, reader, contract, native or generated-site mutation. No delivery helper is generated or executed before applicable native acceptance and distinct post-native review. Bind the exact v2 generator SHA separately in FINAL if approved. Later use v2 only; all other contents and evidence filenames match v1.
