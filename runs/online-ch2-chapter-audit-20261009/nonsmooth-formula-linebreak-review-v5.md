@@ -1,0 +1,15 @@
+# Nonsmooth formula line-break review v5
+
+Verdict: accepted for the exact one-field display repair and materialization only. All22 fixed RAW inputs match before and after; no canonical input was modified by this reviewer.
+
+Independent decoded-string comparison confirms proposal-v4/v5 differ only in the new source card math field. The new string wraps the three original formulas in aligned, with one leading alignment marker and two row separators replacing exactly the two between-formula qquad separators. Removing that display wrapper and restoring the two separators reproduces the original string byte-for-byte, including all formula text, signs, quantifiers, subscripts, order and punctuation. This is not a mathematical statement change. A complete expected canonical readings AST, modified at precisely that card/math field, equals the proposed after snapshot. Notes, old cards, assumptions, source qualification, labels, links, roots and proofs remain unchanged.
+
+The original browser command exited1 with a waitForFunction timeout, retained as a real failed capture. Its invocation expected two formulas. Separate supplied diagnostic-v2 records two source cards but eight source-guide TeX nodes and eight MathJax containers: six old proof-bridge formulas plus two source cards. It records MathJax startup, zero math errors, and empty error/failed-request arrays. Correcting the total-formula expectation to8 is justified by that actual DOM; it must not waive rendering/error checks or conflate cards with formulas.
+
+The diagnostic records source-card containers rendered1573.875px wide with parent width1606px; the classification identifies the actual desktop viewport as1440px. Both source-card containers share the expanded grid width. Therefore zero internal parent scrolling does NOT prove viewport fit. The proposal addresses the new long combined formula, but its effectiveness has not yet been demonstrated. Fresh strict viewport geometry and actual original-pixel review remain mandatory for both cards and surrounding content. This review does not claim that line-breaking has already fixed overflow, that browser-v1 succeeded, or that current pixels passed.
+
+Permission is only the exact readings.json before-to-after RAW transition bound in the receipt, plus correcting future capture's source-guide count to8 while retaining the separate two-card assertion and all geometry/error checks. No CSS/DOM forgery, renderer/checker weakening, math or other field mutation is permitted. A future capture implementation and actual results are not independently accepted here.
+
+Prior production/canary BODY findings are reused only at the unchanged complete hashes. No fresh Lean run, full gate/registry reacceptance, FINAL, Chapter2, whole-Goal, CI, merge/main/live or delivery acceptance follows. Preserve the failed capture, diagnostics and v4 proposal. Fresh site/check/registry/DOM/pixels and final package review remain required; Goal ACTIVE.
+
+Reused distinct automated source reviewer /root/source_reviewer; requested GPT-6 Astra / medium. Prior staged history disclosed, no human/external review, absolute blindness or model-runtime attestation.
