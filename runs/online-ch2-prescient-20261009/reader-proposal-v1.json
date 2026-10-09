@@ -1,0 +1,180 @@
+{
+  "route": "online-ogd",
+  "notes": [
+    {
+      "full_name": "BanditRL.OnlinePrescientLinear.advance_sharp_bound",
+      "title": "Affine prescient foundation: Actual projection: sharp negative movement energy",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 160,
+      "plain": "Set p=projectionV(x-eta*g). The attained projection and variational characterization give inner(x-eta*g-p,u-p)<=0. Rearrange to eta inner(g,p-u)<=inner(x-p,p-u). Expand the three-point squared-distance identity and divide by positive2eta. This constructs the inequality from the actual projection, without a supplied regret certificate.",
+      "math": "\\begin{aligned}\\langle g,p-u\\rangle&\\le\\frac{\\|x-u\\|^2-\\|p-u\\|^2-\\|p-x\\|^2}{2\\eta},\\\\p&=\\Pi_V(x-\\eta g).\\end{aligned}",
+      "intuition": "The played point already uses the current loss vector. Its negative energy is actual movement on this constrained trajectory.",
+      "why": "Construct the required Euclidean affine dependency for Chapter2’s prescient forward observation; preserve its open general source boundary.",
+      "position": "Orabona arXiv:1912.13213v10,2026-06-21: Chapter2 printed14/PDF26 first post-Theorem2.13 observation, read with Section15.5.1, Algorithm15.8 and Theorem15.30 printed265–266/PDF277–278. Derived affine/quadratic specialization, not the full theorem. SHA cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17.",
+      "proof_idea": "Set p=projectionV(x-eta*g). The attained projection and variational characterization give inner(x-eta*g-p,u-p)<=0. Rearrange to eta inner(g,p-u)<=inner(x-p,p-u). Expand the three-point squared-distance identity and divide by positive2eta. This constructs the inequality from the actual projection, without a supplied regret certificate. Actual shared projection uses exists_norm_eq_iInf_of_complete_convex and norm_eq_iInf_iff_real_inner_le_zero; squared-distance algebra uses norm_sub_sq_real.",
+      "lean_notes": "V is nonempty, closed and convex. Every feasible comparator u and every natural horizon T, including0. The initial center x0 is arbitrary in the ambient space and may lie outsideV. For minimization and regret inequalities eta>0 is fixed; feasibility/prefix/offset algebra need no positive eta. No bounded-domain or gradient-bound premise. Source X=E makes x0 interior automatic; finite Euclidean source instance extends here to complete real Hilbert E. Receive the current affine loss l_t(x)=inner(g_t,x)+b_t BEFORE playing p_t. State z0=x0, z_(t+1)=projectionV(z_t-eta*g_t), p_t=z_(t+1). Lean t=0 is source round1; source initial x0 is retained. This information order differs from Algorithm2.1, which plays before receiving current loss. Arbitrary future vectors cannot affect p_t; the current vector can. The real recursion is classical mathematical projection, not a numerical implementation or sampler. This is an affine-loss quadratic Euclidean prescient foundation, explicitly extended to complete real Hilbert spaces; seven declarations form one producer chain, not seven printed results. The full general convex/subdifferentiable/Bregman/time-varying Algorithm15.8/Theorem15.30 and the full Chapter2 prescient source container remain REQUIRED/OPEN, including the source constant-step proof left as an exercise. All eight Chapter2 mathematical forward containers remain open. Chapter2 and whole Chapters1–16 Goal are incomplete; no main/live, merge or deployment claim. This branch is stacked on exact unmerged PR204 head b1486aa11451556858fda44eabf356ba26ab01b8.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescent.Domain",
+        "BanditRL.OnlineGradientDescent.Domain.carrier",
+        "BanditRL.OnlineGradientDescent.Domain.convex",
+        "BanditRL.OnlineGradientDescent.project",
+        "BanditRL.OnlineGradientDescent.project_spec",
+        "BanditRL.OnlinePrescientLinear.advance"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlinePrescientLinear.advance_proximal_minimizer",
+      "title": "Affine prescient foundation: The selected affine proximal minimizer",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 161,
+      "plain": "The projection theorem supplies feasibility of the actual selected point p. Move its movement-square term in the sharp one-step inequality to the left and drop the nonnegative final comparator-distance magnitude. Expand inner(g,p-u), cancel the same arbitrary offset b, and use norm(x-u)=norm(u-x). Thus this selected p minimizes the known-current affine proximal objective overV; no argmin oracle is assumed.",
+      "math": "\\begin{aligned}p&\\in V,\\\\\\langle g,p\\rangle+b+\\frac{\\|p-x\\|^2}{2\\eta}&\\le\\langle g,u\\rangle+b+\\frac{\\|u-x\\|^2}{2\\eta}\\quad(u\\in V).\\end{aligned}",
+      "intuition": "The played point already uses the current loss vector. Its negative energy is actual movement on this constrained trajectory.",
+      "why": "Construct the required Euclidean affine dependency for Chapter2’s prescient forward observation; preserve its open general source boundary.",
+      "position": "Orabona arXiv:1912.13213v10,2026-06-21: Chapter2 printed14/PDF26 first post-Theorem2.13 observation, read with Section15.5.1, Algorithm15.8 and Theorem15.30 printed265–266/PDF277–278. Derived affine/quadratic specialization, not the full theorem. SHA cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17.",
+      "proof_idea": "The projection theorem supplies feasibility of the actual selected point p. Move its movement-square term in the sharp one-step inequality to the left and drop the nonnegative final comparator-distance magnitude. Expand inner(g,p-u), cancel the same arbitrary offset b, and use norm(x-u)=norm(u-x). Thus this selected p minimizes the known-current affine proximal objective overV; no argmin oracle is assumed. Actual shared projection uses exists_norm_eq_iInf_of_complete_convex and norm_eq_iInf_iff_real_inner_le_zero; squared-distance algebra uses norm_sub_sq_real.",
+      "lean_notes": "V is nonempty, closed and convex. Every feasible comparator u and every natural horizon T, including0. The initial center x0 is arbitrary in the ambient space and may lie outsideV. For minimization and regret inequalities eta>0 is fixed; feasibility/prefix/offset algebra need no positive eta. No bounded-domain or gradient-bound premise. Source X=E makes x0 interior automatic; finite Euclidean source instance extends here to complete real Hilbert E. Receive the current affine loss l_t(x)=inner(g_t,x)+b_t BEFORE playing p_t. State z0=x0, z_(t+1)=projectionV(z_t-eta*g_t), p_t=z_(t+1). Lean t=0 is source round1; source initial x0 is retained. This information order differs from Algorithm2.1, which plays before receiving current loss. Arbitrary future vectors cannot affect p_t; the current vector can. The real recursion is classical mathematical projection, not a numerical implementation or sampler. This is an affine-loss quadratic Euclidean prescient foundation, explicitly extended to complete real Hilbert spaces; seven declarations form one producer chain, not seven printed results. The full general convex/subdifferentiable/Bregman/time-varying Algorithm15.8/Theorem15.30 and the full Chapter2 prescient source container remain REQUIRED/OPEN, including the source constant-step proof left as an exercise. All eight Chapter2 mathematical forward containers remain open. Chapter2 and whole Chapters1–16 Goal are incomplete; no main/live, merge or deployment claim. This branch is stacked on exact unmerged PR204 head b1486aa11451556858fda44eabf356ba26ab01b8.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescent.Domain",
+        "BanditRL.OnlineGradientDescent.Domain.carrier",
+        "BanditRL.OnlineGradientDescent.project",
+        "BanditRL.OnlineGradientDescent.project_spec",
+        "BanditRL.OnlinePrescientLinear.advance",
+        "BanditRL.OnlinePrescientLinear.advance_sharp_bound"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlinePrescientLinear.prediction_mem",
+      "title": "Affine prescient foundation: Feasible played predictions from any initial center",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 162,
+      "plain": "At every natural t, predictiont is projectionV(state_t-eta*g_t). The attained projection theorem gives membership directly. The initial center need not be feasible and no sign of eta is needed.",
+      "math": "\\forall t\\in\\mathbb N,\\quad p_t=z_{t+1}\\in V.",
+      "intuition": "The played point already uses the current loss vector. Its negative energy is actual movement on this constrained trajectory.",
+      "why": "Construct the required Euclidean affine dependency for Chapter2’s prescient forward observation; preserve its open general source boundary.",
+      "position": "Orabona arXiv:1912.13213v10,2026-06-21: Chapter2 printed14/PDF26 first post-Theorem2.13 observation, read with Section15.5.1, Algorithm15.8 and Theorem15.30 printed265–266/PDF277–278. Derived affine/quadratic specialization, not the full theorem. SHA cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17.",
+      "proof_idea": "At every natural t, predictiont is projectionV(state_t-eta*g_t). The attained projection theorem gives membership directly. The initial center need not be feasible and no sign of eta is needed. Actual shared projection uses exists_norm_eq_iInf_of_complete_convex and norm_eq_iInf_iff_real_inner_le_zero; squared-distance algebra uses norm_sub_sq_real.",
+      "lean_notes": "V is nonempty, closed and convex. Every feasible comparator u and every natural horizon T, including0. The initial center x0 is arbitrary in the ambient space and may lie outsideV. For minimization and regret inequalities eta>0 is fixed; feasibility/prefix/offset algebra need no positive eta. No bounded-domain or gradient-bound premise. Source X=E makes x0 interior automatic; finite Euclidean source instance extends here to complete real Hilbert E. Receive the current affine loss l_t(x)=inner(g_t,x)+b_t BEFORE playing p_t. State z0=x0, z_(t+1)=projectionV(z_t-eta*g_t), p_t=z_(t+1). Lean t=0 is source round1; source initial x0 is retained. This information order differs from Algorithm2.1, which plays before receiving current loss. Arbitrary future vectors cannot affect p_t; the current vector can. The real recursion is classical mathematical projection, not a numerical implementation or sampler. This is an affine-loss quadratic Euclidean prescient foundation, explicitly extended to complete real Hilbert spaces; seven declarations form one producer chain, not seven printed results. The full general convex/subdifferentiable/Bregman/time-varying Algorithm15.8/Theorem15.30 and the full Chapter2 prescient source container remain REQUIRED/OPEN, including the source constant-step proof left as an exercise. All eight Chapter2 mathematical forward containers remain open. Chapter2 and whole Chapters1–16 Goal are incomplete; no main/live, merge or deployment claim. This branch is stacked on exact unmerged PR204 head b1486aa11451556858fda44eabf356ba26ab01b8.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescent.Domain",
+        "BanditRL.OnlineGradientDescent.Domain.carrier",
+        "BanditRL.OnlineGradientDescent.project",
+        "BanditRL.OnlineGradientDescent.project_spec",
+        "BanditRL.OnlinePrescientLinear.iterate"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlinePrescientLinear.prediction_prefix",
+      "title": "Affine prescient foundation: Current-inclusive prefix and future exclusion",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 163,
+      "plain": "Induct on the number n of applied updates: if two streams agree at every s<n, their staten agrees. For predictiont take n=t+1, so agreement is needed for s<=t. Later vectors are never consulted; this deliberately includes the current vector.",
+      "math": "(\\forall s\\le t,\\ g_s=g'_s)\\Longrightarrow p_t(g)=p_t(g\\prime).",
+      "intuition": "The played point already uses the current loss vector. Its negative energy is actual movement on this constrained trajectory.",
+      "why": "Construct the required Euclidean affine dependency for Chapter2’s prescient forward observation; preserve its open general source boundary.",
+      "position": "Orabona arXiv:1912.13213v10,2026-06-21: Chapter2 printed14/PDF26 first post-Theorem2.13 observation, read with Section15.5.1, Algorithm15.8 and Theorem15.30 printed265–266/PDF277–278. Derived affine/quadratic specialization, not the full theorem. SHA cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17.",
+      "proof_idea": "Induct on the number n of applied updates: if two streams agree at every s<n, their staten agrees. For predictiont take n=t+1, so agreement is needed for s<=t. Later vectors are never consulted; this deliberately includes the current vector. Actual shared projection uses exists_norm_eq_iInf_of_complete_convex and norm_eq_iInf_iff_real_inner_le_zero; squared-distance algebra uses norm_sub_sq_real.",
+      "lean_notes": "V is nonempty, closed and convex. Every feasible comparator u and every natural horizon T, including0. The initial center x0 is arbitrary in the ambient space and may lie outsideV. For minimization and regret inequalities eta>0 is fixed; feasibility/prefix/offset algebra need no positive eta. No bounded-domain or gradient-bound premise. Source X=E makes x0 interior automatic; finite Euclidean source instance extends here to complete real Hilbert E. Receive the current affine loss l_t(x)=inner(g_t,x)+b_t BEFORE playing p_t. State z0=x0, z_(t+1)=projectionV(z_t-eta*g_t), p_t=z_(t+1). Lean t=0 is source round1; source initial x0 is retained. This information order differs from Algorithm2.1, which plays before receiving current loss. Arbitrary future vectors cannot affect p_t; the current vector can. The real recursion is classical mathematical projection, not a numerical implementation or sampler. This is an affine-loss quadratic Euclidean prescient foundation, explicitly extended to complete real Hilbert spaces; seven declarations form one producer chain, not seven printed results. The full general convex/subdifferentiable/Bregman/time-varying Algorithm15.8/Theorem15.30 and the full Chapter2 prescient source container remain REQUIRED/OPEN, including the source constant-step proof left as an exercise. All eight Chapter2 mathematical forward containers remain open. Chapter2 and whole Chapters1–16 Goal are incomplete; no main/live, merge or deployment claim. This branch is stacked on exact unmerged PR204 head b1486aa11451556858fda44eabf356ba26ab01b8.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescent.Domain",
+        "BanditRL.OnlinePrescientLinear.advance",
+        "BanditRL.OnlinePrescientLinear.iterate",
+        "BanditRL.OnlinePrescientLinear.iterate.eq_2"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlinePrescientLinear.regret_eq_loss_difference",
+      "title": "Affine prescient foundation: Arbitrary affine offsets on the same trajectory",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 164,
+      "plain": "For each played prediction, inner(g,p-u)=inner(g,p)-inner(g,u). Add the same arbitrary real offset b_t to both losses and cancel it. Sum on the identical rangeT generated trajectory; this is signed fixed-comparator cumulative affine loss, without stochastic or expectation semantics.",
+      "math": "\\begin{aligned}R_T(u)&=\\sum_{t<T}\\langle g_t,p_t-u\\rangle\\\\&=\\sum_{t<T}[(\\langle g_t,p_t\\rangle+b_t)-(\\langle g_t,u\\rangle+b_t)].\\end{aligned}",
+      "intuition": "The played point already uses the current loss vector. Its negative energy is actual movement on this constrained trajectory.",
+      "why": "Construct the required Euclidean affine dependency for Chapter2’s prescient forward observation; preserve its open general source boundary.",
+      "position": "Orabona arXiv:1912.13213v10,2026-06-21: Chapter2 printed14/PDF26 first post-Theorem2.13 observation, read with Section15.5.1, Algorithm15.8 and Theorem15.30 printed265–266/PDF277–278. Derived affine/quadratic specialization, not the full theorem. SHA cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17.",
+      "proof_idea": "For each played prediction, inner(g,p-u)=inner(g,p)-inner(g,u). Add the same arbitrary real offset b_t to both losses and cancel it. Sum on the identical rangeT generated trajectory; this is signed fixed-comparator cumulative affine loss, without stochastic or expectation semantics. Actual shared projection uses exists_norm_eq_iInf_of_complete_convex and norm_eq_iInf_iff_real_inner_le_zero; squared-distance algebra uses norm_sub_sq_real.",
+      "lean_notes": "V is nonempty, closed and convex. Every feasible comparator u and every natural horizon T, including0. The initial center x0 is arbitrary in the ambient space and may lie outsideV. For minimization and regret inequalities eta>0 is fixed; feasibility/prefix/offset algebra need no positive eta. No bounded-domain or gradient-bound premise. Source X=E makes x0 interior automatic; finite Euclidean source instance extends here to complete real Hilbert E. Receive the current affine loss l_t(x)=inner(g_t,x)+b_t BEFORE playing p_t. State z0=x0, z_(t+1)=projectionV(z_t-eta*g_t), p_t=z_(t+1). Lean t=0 is source round1; source initial x0 is retained. This information order differs from Algorithm2.1, which plays before receiving current loss. Arbitrary future vectors cannot affect p_t; the current vector can. The real recursion is classical mathematical projection, not a numerical implementation or sampler. This is an affine-loss quadratic Euclidean prescient foundation, explicitly extended to complete real Hilbert spaces; seven declarations form one producer chain, not seven printed results. The full general convex/subdifferentiable/Bregman/time-varying Algorithm15.8/Theorem15.30 and the full Chapter2 prescient source container remain REQUIRED/OPEN, including the source constant-step proof left as an exercise. All eight Chapter2 mathematical forward containers remain open. Chapter2 and whole Chapters1–16 Goal are incomplete; no main/live, merge or deployment claim. This branch is stacked on exact unmerged PR204 head b1486aa11451556858fda44eabf356ba26ab01b8.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescent.Domain",
+        "BanditRL.OnlinePrescientLinear.prediction",
+        "BanditRL.OnlinePrescientLinear.regret"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlinePrescientLinear.regret_sharp_bound",
+      "title": "Affine prescient foundation: Same-run telescope with both negative residuals",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 165,
+      "plain": "Multiply the desired inequality by positive2eta. Induct onT and apply the actual one-step producer to stateT and currentgT. The two adjacent comparator-distance squares cancel exactly, while each actual movement square is subtracted. Divide back by2eta. The baseT=0 has empty regret and empty movement sum, with terminalstate0=x0.",
+      "math": "\\begin{aligned}R_T(u)\\le{}&\\frac{\\|x_0-u\\|^2-\\|z_T-u\\|^2}{2\\eta}\\\\&-\\frac1{2\\eta}\\sum_{t<T}\\|z_{t+1}-z_t\\|^2.\\end{aligned}",
+      "intuition": "The played point already uses the current loss vector. Its negative energy is actual movement on this constrained trajectory.",
+      "why": "Construct the required Euclidean affine dependency for Chapter2’s prescient forward observation; preserve its open general source boundary.",
+      "position": "Orabona arXiv:1912.13213v10,2026-06-21: Chapter2 printed14/PDF26 first post-Theorem2.13 observation, read with Section15.5.1, Algorithm15.8 and Theorem15.30 printed265–266/PDF277–278. Derived affine/quadratic specialization, not the full theorem. SHA cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17.",
+      "proof_idea": "Multiply the desired inequality by positive2eta. Induct onT and apply the actual one-step producer to stateT and currentgT. The two adjacent comparator-distance squares cancel exactly, while each actual movement square is subtracted. Divide back by2eta. The baseT=0 has empty regret and empty movement sum, with terminalstate0=x0. Actual shared projection uses exists_norm_eq_iInf_of_complete_convex and norm_eq_iInf_iff_real_inner_le_zero; squared-distance algebra uses norm_sub_sq_real.",
+      "lean_notes": "V is nonempty, closed and convex. Every feasible comparator u and every natural horizon T, including0. The initial center x0 is arbitrary in the ambient space and may lie outsideV. For minimization and regret inequalities eta>0 is fixed; feasibility/prefix/offset algebra need no positive eta. No bounded-domain or gradient-bound premise. Source X=E makes x0 interior automatic; finite Euclidean source instance extends here to complete real Hilbert E. Receive the current affine loss l_t(x)=inner(g_t,x)+b_t BEFORE playing p_t. State z0=x0, z_(t+1)=projectionV(z_t-eta*g_t), p_t=z_(t+1). Lean t=0 is source round1; source initial x0 is retained. This information order differs from Algorithm2.1, which plays before receiving current loss. Arbitrary future vectors cannot affect p_t; the current vector can. The real recursion is classical mathematical projection, not a numerical implementation or sampler. This is an affine-loss quadratic Euclidean prescient foundation, explicitly extended to complete real Hilbert spaces; seven declarations form one producer chain, not seven printed results. The full general convex/subdifferentiable/Bregman/time-varying Algorithm15.8/Theorem15.30 and the full Chapter2 prescient source container remain REQUIRED/OPEN, including the source constant-step proof left as an exercise. All eight Chapter2 mathematical forward containers remain open. Chapter2 and whole Chapters1–16 Goal are incomplete; no main/live, merge or deployment claim. This branch is stacked on exact unmerged PR204 head b1486aa11451556858fda44eabf356ba26ab01b8.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescent.Domain",
+        "BanditRL.OnlineGradientDescent.Domain.carrier",
+        "BanditRL.OnlinePrescientLinear.advance",
+        "BanditRL.OnlinePrescientLinear.advance_sharp_bound",
+        "BanditRL.OnlinePrescientLinear.iterate",
+        "BanditRL.OnlinePrescientLinear.prediction",
+        "BanditRL.OnlinePrescientLinear.regret"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlinePrescientLinear.regret_source_bound",
+      "title": "Affine prescient foundation: Retain movement energy after dropping the terminal residual",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 166,
+      "plain": "Apply the sharp same-run cumulative bound and remove only the nonnegative terminal-distance quotient. The negative movement energy remains. On constrainedV, this is not generally negative eta/2 times ordinary-gradient energy: projection can clip the step; the canary proves an explicit failure of that naive substitution. This is not an author erratum or a claim that the qualitative source observation is false.",
+      "math": "\\begin{aligned}R_T(u)\\le{}&\\frac{\\|x_0-u\\|^2}{2\\eta}\\\\&-\\frac1{2\\eta}\\sum_{t<T}\\|z_{t+1}-z_t\\|^2.\\end{aligned}",
+      "intuition": "The played point already uses the current loss vector. Its negative energy is actual movement on this constrained trajectory.",
+      "why": "Construct the required Euclidean affine dependency for Chapter2’s prescient forward observation; preserve its open general source boundary.",
+      "position": "Orabona arXiv:1912.13213v10,2026-06-21: Chapter2 printed14/PDF26 first post-Theorem2.13 observation, read with Section15.5.1, Algorithm15.8 and Theorem15.30 printed265–266/PDF277–278. Derived affine/quadratic specialization, not the full theorem. SHA cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17.",
+      "proof_idea": "Apply the sharp same-run cumulative bound and remove only the nonnegative terminal-distance quotient. The negative movement energy remains. On constrainedV, this is not generally negative eta/2 times ordinary-gradient energy: projection can clip the step; the canary proves an explicit failure of that naive substitution. This is not an author erratum or a claim that the qualitative source observation is false. Actual shared projection uses exists_norm_eq_iInf_of_complete_convex and norm_eq_iInf_iff_real_inner_le_zero; squared-distance algebra uses norm_sub_sq_real.",
+      "lean_notes": "V is nonempty, closed and convex. Every feasible comparator u and every natural horizon T, including0. The initial center x0 is arbitrary in the ambient space and may lie outsideV. For minimization and regret inequalities eta>0 is fixed; feasibility/prefix/offset algebra need no positive eta. No bounded-domain or gradient-bound premise. Source X=E makes x0 interior automatic; finite Euclidean source instance extends here to complete real Hilbert E. Receive the current affine loss l_t(x)=inner(g_t,x)+b_t BEFORE playing p_t. State z0=x0, z_(t+1)=projectionV(z_t-eta*g_t), p_t=z_(t+1). Lean t=0 is source round1; source initial x0 is retained. This information order differs from Algorithm2.1, which plays before receiving current loss. Arbitrary future vectors cannot affect p_t; the current vector can. The real recursion is classical mathematical projection, not a numerical implementation or sampler. This is an affine-loss quadratic Euclidean prescient foundation, explicitly extended to complete real Hilbert spaces; seven declarations form one producer chain, not seven printed results. The full general convex/subdifferentiable/Bregman/time-varying Algorithm15.8/Theorem15.30 and the full Chapter2 prescient source container remain REQUIRED/OPEN, including the source constant-step proof left as an exercise. All eight Chapter2 mathematical forward containers remain open. Chapter2 and whole Chapters1–16 Goal are incomplete; no main/live, merge or deployment claim. This branch is stacked on exact unmerged PR204 head b1486aa11451556858fda44eabf356ba26ab01b8.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescent.Domain",
+        "BanditRL.OnlineGradientDescent.Domain.carrier",
+        "BanditRL.OnlinePrescientLinear.iterate",
+        "BanditRL.OnlinePrescientLinear.prediction",
+        "BanditRL.OnlinePrescientLinear.regret",
+        "BanditRL.OnlinePrescientLinear.regret_sharp_bound"
+      ]
+    }
+  ],
+  "card": {
+    "label": "Chapter2 prescient observation: affine Euclidean foundation only",
+    "pages": "printed14,265–266 / PDF26,277–278",
+    "pdf_page": 26,
+    "url": "https://arxiv.org/pdf/1912.13213v10",
+    "math": "\\begin{aligned}p_t=z_{t+1}&=\\Pi_V(z_t-\\eta g_t),\\quad z_0=x_0.\\\\R_T(u)\\le{}&\\frac{\\|x_0-u\\|^2-\\|z_T-u\\|^2}{2\\eta}\\\\&-\\frac1{2\\eta}\\sum_{t<T}\\|z_{t+1}-z_t\\|^2.\\end{aligned}",
+    "plain": "Receive the current affine loss l_t(x)=inner(g_t,x)+b_t BEFORE playing p_t. State z0=x0, z_(t+1)=projectionV(z_t-eta*g_t), p_t=z_(t+1). Lean t=0 is source round1; source initial x0 is retained. This information order differs from Algorithm2.1, which plays before receiving current loss. Arbitrary future vectors cannot affect p_t; the current vector can. The real recursion is classical mathematical projection, not a numerical implementation or sampler. V is nonempty, closed and convex. Every feasible comparator u and every natural horizon T, including0. The initial center x0 is arbitrary in the ambient space and may lie outsideV. For minimization and regret inequalities eta>0 is fixed; feasibility/prefix/offset algebra need no positive eta. No bounded-domain or gradient-bound premise. Source X=E makes x0 interior automatic; finite Euclidean source instance extends here to complete real Hilbert E. Set p=projectionV(x-eta*g). The attained projection and variational characterization give inner(x-eta*g-p,u-p)<=0. Rearrange to eta inner(g,p-u)<=inner(x-p,p-u). Expand the three-point squared-distance identity and divide by positive2eta. This constructs the inequality from the actual projection, without a supplied regret certificate. Multiply the desired inequality by positive2eta. Induct onT and apply the actual one-step producer to stateT and currentgT. The two adjacent comparator-distance squares cancel exactly, while each actual movement square is subtracted. Divide back by2eta. The baseT=0 has empty regret and empty movement sum, with terminalstate0=x0. Apply the sharp same-run cumulative bound and remove only the nonnegative terminal-distance quotient. The negative movement energy remains. On constrainedV, this is not generally negative eta/2 times ordinary-gradient energy: projection can clip the step; the canary proves an explicit failure of that naive substitution. This is not an author erratum or a claim that the qualitative source observation is false.",
+    "fallback": "Receive the current affine loss l_t(x)=inner(g_t,x)+b_t BEFORE playing p_t. State z0=x0, z_(t+1)=projectionV(z_t-eta*g_t), p_t=z_(t+1). Lean t=0 is source round1; source initial x0 is retained. This information order differs from Algorithm2.1, which plays before receiving current loss. Arbitrary future vectors cannot affect p_t; the current vector can. The real recursion is classical mathematical projection, not a numerical implementation or sampler. Multiply the desired inequality by positive2eta. Induct onT and apply the actual one-step producer to stateT and currentgT. The two adjacent comparator-distance squares cancel exactly, while each actual movement square is subtracted. Divide back by2eta. The baseT=0 has empty regret and empty movement sum, with terminalstate0=x0. Apply the sharp same-run cumulative bound and remove only the nonnegative terminal-distance quotient. The negative movement energy remains. On constrainedV, this is not generally negative eta/2 times ordinary-gradient energy: projection can clip the step; the canary proves an explicit failure of that naive substitution. This is not an author erratum or a claim that the qualitative source observation is false.",
+    "relationship": "Faithful affine-loss quadratic specialization of the source prescient mechanism, with explicit complete-Hilbert generalization. The source’s general negative Bregman movement is retained as Euclidean movement, not silently replaced by ordinary-gradient energy. This is an affine-loss quadratic Euclidean prescient foundation, explicitly extended to complete real Hilbert spaces; seven declarations form one producer chain, not seven printed results. The full general convex/subdifferentiable/Bregman/time-varying Algorithm15.8/Theorem15.30 and the full Chapter2 prescient source container remain REQUIRED/OPEN, including the source constant-step proof left as an exercise. All eight Chapter2 mathematical forward containers remain open. Chapter2 and whole Chapters1–16 Goal are incomplete; no main/live, merge or deployment claim. This branch is stacked on exact unmerged PR204 head b1486aa11451556858fda44eabf356ba26ab01b8.",
+    "contract": {
+      "model": "Receive the current affine loss l_t(x)=inner(g_t,x)+b_t BEFORE playing p_t. State z0=x0, z_(t+1)=projectionV(z_t-eta*g_t), p_t=z_(t+1). Lean t=0 is source round1; source initial x0 is retained. This information order differs from Algorithm2.1, which plays before receiving current loss. Arbitrary future vectors cannot affect p_t; the current vector can. The real recursion is classical mathematical projection, not a numerical implementation or sampler.",
+      "assumptions": "V is nonempty, closed and convex. Every feasible comparator u and every natural horizon T, including0. The initial center x0 is arbitrary in the ambient space and may lie outsideV. For minimization and regret inequalities eta>0 is fixed; feasibility/prefix/offset algebra need no positive eta. No bounded-domain or gradient-bound premise. Source X=E makes x0 interior automatic; finite Euclidean source instance extends here to complete real Hilbert E.",
+      "parameters": "Arbitrary fixed eta>0, entire vector/offset streams as mathematical input, but prediction depends only on current-inclusive finite prefix. Same chosen recursive path for every feasible fixed comparator and everyT.",
+      "regret": "Finite signed deterministic fixed-comparator cumulative affine loss at the post-update played points. No expectation, randomization or standard strict-past algorithm guarantee.",
+      "guarantee": "Actual proximal minimizing projection, feasibility, current-inclusive prefix, offset identity and same-run sharp cumulative bound. This is an affine-loss quadratic Euclidean prescient foundation, explicitly extended to complete real Hilbert spaces; seven declarations form one producer chain, not seven printed results. The full general convex/subdifferentiable/Bregman/time-varying Algorithm15.8/Theorem15.30 and the full Chapter2 prescient source container remain REQUIRED/OPEN, including the source constant-step proof left as an exercise. All eight Chapter2 mathematical forward containers remain open. Chapter2 and whole Chapters1–16 Goal are incomplete; no main/live, merge or deployment claim. This branch is stacked on exact unmerged PR204 head b1486aa11451556858fda44eabf356ba26ab01b8."
+    },
+    "local_status": {
+      "status": "compiled",
+      "label": "Affine prescient proof bodies compiled; package gates pending",
+      "boundary": "This is an affine-loss quadratic Euclidean prescient foundation, explicitly extended to complete real Hilbert spaces; seven declarations form one producer chain, not seven printed results. The full general convex/subdifferentiable/Bregman/time-varying Algorithm15.8/Theorem15.30 and the full Chapter2 prescient source container remain REQUIRED/OPEN, including the source constant-step proof left as an exercise. All eight Chapter2 mathematical forward containers remain open. Chapter2 and whole Chapters1–16 Goal are incomplete; no main/live, merge or deployment claim. This branch is stacked on exact unmerged PR204 head b1486aa11451556858fda44eabf356ba26ab01b8."
+    }
+  },
+  "boundary": "This is an affine-loss quadratic Euclidean prescient foundation, explicitly extended to complete real Hilbert spaces; seven declarations form one producer chain, not seven printed results. The full general convex/subdifferentiable/Bregman/time-varying Algorithm15.8/Theorem15.30 and the full Chapter2 prescient source container remain REQUIRED/OPEN, including the source constant-step proof left as an exercise. All eight Chapter2 mathematical forward containers remain open. Chapter2 and whole Chapters1–16 Goal are incomplete; no main/live, merge or deployment claim. This branch is stacked on exact unmerged PR204 head b1486aa11451556858fda44eabf356ba26ab01b8.",
+  "new_module_glob": "BanditRLProof/OnlinePrescientLinear.lean",
+  "added_learning_goal": "Follow a distinct current-before-prediction affine prescient path, and retain actual movement energy rather than assuming constrained gradient-energy equality.",
+  "completion_extension": " Additive affine prescient foundation: seven public producer-chain terminals and five complementary canaries; this does not close the general prescient observation or Chapter2. This is an affine-loss quadratic Euclidean prescient foundation, explicitly extended to complete real Hilbert spaces; seven declarations form one producer chain, not seven printed results. The full general convex/subdifferentiable/Bregman/time-varying Algorithm15.8/Theorem15.30 and the full Chapter2 prescient source container remain REQUIRED/OPEN, including the source constant-step proof left as an exercise. All eight Chapter2 mathematical forward containers remain open. Chapter2 and whole Chapters1–16 Goal are incomplete; no main/live, merge or deployment claim. This branch is stacked on exact unmerged PR204 head b1486aa11451556858fda44eabf356ba26ab01b8."
+}

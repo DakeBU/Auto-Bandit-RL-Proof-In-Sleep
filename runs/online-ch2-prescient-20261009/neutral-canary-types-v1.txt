@@ -1,0 +1,79 @@
+import BanditRLProof.OnlinePrescientLinear
+import BanditRLProof.OnlineGradientDescentSource
+
+noncomputable section
+open Set Finset
+open scoped InnerProductSpace
+open BanditRL.OnlinePrescientLinear
+open BanditRL.OnlineGradientDescent (Domain)
+namespace Tests.OnlinePrescientLinear
+
+def interval : Domain ℝ where
+  carrier := Icc (-1) 1
+  nonempty := ⟨0, by norm_num⟩
+  closed := isClosed_Icc
+  convex := convex_Icc (-1) 1
+
+def whole : Domain ℝ where
+  carrier := univ
+  nonempty := ⟨0, mem_univ 0⟩
+  closed := isClosed_univ
+  convex := convex_univ
+
+def signals (t : ℕ) : ℝ := if t = 0 then 6 else -1
+
+Proposed type-only canaries, no theorem bodies or compilation claim.
+Imported four production definitions are fixed in neutral-types-v1.txt.
+
+theorem active_projection_values :
+    prediction interval (1 / 2) signals 1 0 = -1 ∧
+    prediction interval (1 / 2) signals 1 1 = -(1 / 2) ∧
+    regret interval (1 / 2) signals 1 0 2 = -(11 / 2) ∧
+    (∑ t ∈ range 2,
+      ‖prediction interval (1 / 2) signals 1 t - iterate interval (1 / 2) signals 1 t‖ ^ 2) =
+        17 / 4 ∧
+    ‖iterate interval (1 / 2) signals 1 2 - 0‖ ^ 2 = 1 / 4 ∧
+    ‖(1 : ℝ) - 0‖ ^ 2 / (2 * (1 / 2)) -
+      ‖iterate interval (1 / 2) signals 1 2 - 0‖ ^ 2 / (2 * (1 / 2)) -
+      (∑ t ∈ range 2,
+        ‖prediction interval (1 / 2) signals 1 t - iterate interval (1 / 2) signals 1 t‖ ^ 2) /
+          (2 * (1 / 2)) = -(7 / 2)
+
+theorem constrained_gradient_sign_counterexample :
+    (∀ (t : ℕ) (x : ℝ),
+      gradient (fun w : ℝ => inner ℝ (signals t) w) x = signals t) ∧
+    (‖(1 : ℝ) - 0‖ ^ 2 / (2 * (1 / 2)) -
+      ‖iterate interval (1 / 2) signals 1 2 - 0‖ ^ 2 / (2 * (1 / 2)) -
+      (1 / 2) / 2 * (∑ t ∈ range 2, ‖signals t‖ ^ 2)) = -(17 / 2) ∧
+    ¬ (regret interval (1 / 2) signals 1 0 2 ≤
+      ‖(1 : ℝ) - 0‖ ^ 2 / (2 * (1 / 2)) -
+        ‖iterate interval (1 / 2) signals 1 2 - 0‖ ^ 2 / (2 * (1 / 2)) -
+        (1 / 2) / 2 * (∑ t ∈ range 2, ‖signals t‖ ^ 2))
+
+theorem unbounded_exact_identity :
+    prediction whole (1 / 2) signals 1 0 = -2 ∧
+    prediction whole (1 / 2) signals 1 1 = -(3 / 2) ∧
+    regret whole (1 / 2) signals 1 0 2 = -(21 / 2) ∧
+    regret whole (1 / 2) signals 1 0 2 =
+      ‖(1 : ℝ) - 0‖ ^ 2 / (2 * (1 / 2)) -
+        ‖iterate whole (1 / 2) signals 1 2 - 0‖ ^ 2 / (2 * (1 / 2)) -
+        (1 / 2) / 2 * (∑ t ∈ range 2, ‖signals t‖ ^ 2)
+
+theorem current_and_future_information :
+    prediction interval (1 / 2) signals 1 0 ≠
+      prediction interval (1 / 2) (fun _ => 0) 1 0 ∧
+    ∀ h : ℕ → ℝ, h 0 = 6 → prediction interval (1 / 2) h 1 0 = -1
+
+theorem outside_initial_center_and_empty_horizon :
+    (3 : ℝ) ∉ interval.carrier ∧
+    prediction interval 1 (fun _ => 0) 3 0 = 1 ∧
+    ‖prediction interval 1 (fun _ => 0) 3 0 - iterate interval 1 (fun _ => 0) 3 0‖ ^ 2 = 4 ∧
+    regret interval 1 (fun _ => 0) 3 0 0 = 0 ∧
+    ∀ u ∈ interval.carrier,
+      regret interval 1 (fun _ => 0) 3 u 0 ≤ ‖(3 : ℝ) - u‖ ^ 2 / (2 * 1) -
+        ‖iterate interval 1 (fun _ => 0) 3 0 - u‖ ^ 2 / (2 * 1) -
+        (∑ t ∈ range 0,
+          ‖prediction interval 1 (fun _ => 0) 3 t - iterate interval 1 (fun _ => 0) 3 t‖ ^ 2) /
+            (2 * 1)
+
+end Tests.OnlinePrescientLinear

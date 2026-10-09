@@ -1,0 +1,172 @@
+import BanditRLProof.OnlinePrescientLinear
+import BanditRLProof.OnlineGradientDescentSource
+
+noncomputable section
+open Set Finset
+open scoped InnerProductSpace
+open BanditRL.OnlinePrescientLinear
+open BanditRL.OnlineGradientDescent (Domain)
+namespace Tests.OnlinePrescientLinear
+
+def interval : Domain ℝ where
+  carrier := Icc (-1) 1
+  nonempty := ⟨0, by norm_num⟩
+  closed := isClosed_Icc
+  convex := convex_Icc (-1) 1
+
+def whole : Domain ℝ where
+  carrier := univ
+  nonempty := ⟨0, mem_univ 0⟩
+  closed := isClosed_univ
+  convex := convex_univ
+
+def signals (t : ℕ) : ℝ := if t = 0 then 6 else -1
+
+-- Explicit scalar instances of the existing selected-projection characterization.
+private theorem interval_project_neg_two :
+    BanditRL.OnlineGradientDescent.project interval (-2) = -1 := by
+  apply BanditRL.OnlineGradientDescent.project_eq_of_variational interval (-2) (-1)
+    (by norm_num [interval])
+  intro w hw
+  change -1 ≤ w ∧ w ≤ 1 at hw
+  change (w - (-1)) * ((-2 : ℝ) - (-1)) ≤ 0
+  exact mul_nonpos_of_nonneg_of_nonpos (by linarith only [hw.1]) (by norm_num)
+
+private theorem interval_project_mem (z : ℝ) (hz : z ∈ interval.carrier) :
+    BanditRL.OnlineGradientDescent.project interval z = z := by
+  apply BanditRL.OnlineGradientDescent.project_eq_of_variational interval z z hz
+  intro w hw
+  simp
+
+private theorem interval_project_three :
+    BanditRL.OnlineGradientDescent.project interval 3 = 1 := by
+  apply BanditRL.OnlineGradientDescent.project_eq_of_variational interval 3 1
+    (by norm_num [interval])
+  intro w hw
+  change -1 ≤ w ∧ w ≤ 1 at hw
+  change (w - 1) * ((3 : ℝ) - 1) ≤ 0
+  exact mul_nonpos_of_nonpos_of_nonneg (by linarith only [hw.2]) (by norm_num)
+
+private theorem whole_project (z : ℝ) :
+    BanditRL.OnlineGradientDescent.project whole z = z := by
+  apply BanditRL.OnlineGradientDescent.project_eq_of_variational whole z z (by trivial)
+  intro w hw
+  simp
+
+private theorem interval_states :
+    iterate interval (1 / 2) signals 1 1 = -1 ∧
+    iterate interval (1 / 2) signals 1 2 = -(1 / 2) := by
+  have h1 : iterate interval (1 / 2) signals 1 1 = -1 := by
+    change BanditRL.OnlineGradientDescent.project interval
+      ((1 : ℝ) - (1 / 2) * signals 0) = -1
+    norm_num [signals]
+    exact interval_project_neg_two
+  refine ⟨h1, ?_⟩
+  rw [iterate, h1]
+  change BanditRL.OnlineGradientDescent.project interval
+    ((-1 : ℝ) - (1 / 2) * signals 1) = -(1 / 2)
+  norm_num [signals]
+  exact interval_project_mem _ (by norm_num [interval])
+
+private theorem whole_states :
+    iterate whole (1 / 2) signals 1 1 = -2 ∧
+    iterate whole (1 / 2) signals 1 2 = -(3 / 2) := by
+  have h1 : iterate whole (1 / 2) signals 1 1 = -2 := by
+    change BanditRL.OnlineGradientDescent.project whole
+      ((1 : ℝ) - (1 / 2) * signals 0) = -2
+    rw [whole_project]
+    norm_num [signals]
+  refine ⟨h1, ?_⟩
+  rw [iterate, h1]
+  change BanditRL.OnlineGradientDescent.project whole
+    ((-2 : ℝ) - (1 / 2) * signals 1) = -(3 / 2)
+  rw [whole_project]
+  norm_num [signals]
+
+theorem active_projection_values :
+    prediction interval (1 / 2) signals 1 0 = -1 ∧
+    prediction interval (1 / 2) signals 1 1 = -(1 / 2) ∧
+    regret interval (1 / 2) signals 1 0 2 = -(11 / 2) ∧
+    (∑ t ∈ range 2,
+      ‖prediction interval (1 / 2) signals 1 t - iterate interval (1 / 2) signals 1 t‖ ^ 2) =
+        17 / 4 ∧
+    ‖iterate interval (1 / 2) signals 1 2 - 0‖ ^ 2 = 1 / 4 ∧
+    ‖(1 : ℝ) - 0‖ ^ 2 / (2 * (1 / 2)) -
+      ‖iterate interval (1 / 2) signals 1 2 - 0‖ ^ 2 / (2 * (1 / 2)) -
+      (∑ t ∈ range 2,
+        ‖prediction interval (1 / 2) signals 1 t - iterate interval (1 / 2) signals 1 t‖ ^ 2) /
+          (2 * (1 / 2)) = -(7 / 2) := by
+  rcases interval_states with ⟨h1, h2⟩
+  have h0 : iterate interval (1 / 2) signals 1 0 = 1 := rfl
+  simp only [regret, sum_range_succ, prediction]
+  norm_num [h0, h1, h2, signals, RCLike.inner_apply, Real.norm_eq_abs]
+
+theorem constrained_gradient_sign_counterexample :
+    (∀ (t : ℕ) (x : ℝ),
+      gradient (fun w : ℝ => inner ℝ (signals t) w) x = signals t) ∧
+    (‖(1 : ℝ) - 0‖ ^ 2 / (2 * (1 / 2)) -
+      ‖iterate interval (1 / 2) signals 1 2 - 0‖ ^ 2 / (2 * (1 / 2)) -
+      (1 / 2) / 2 * (∑ t ∈ range 2, ‖signals t‖ ^ 2)) = -(17 / 2) ∧
+    ¬ (regret interval (1 / 2) signals 1 0 2 ≤
+      ‖(1 : ℝ) - 0‖ ^ 2 / (2 * (1 / 2)) -
+        ‖iterate interval (1 / 2) signals 1 2 - 0‖ ^ 2 / (2 * (1 / 2)) -
+        (1 / 2) / 2 * (∑ t ∈ range 2, ‖signals t‖ ^ 2)) := by
+  refine ⟨fun t x => BanditRL.OnlineGradientDescentSource.gradient_linear (signals t) x, ?_⟩
+  rcases interval_states with ⟨h1, h2⟩
+  have h0 : iterate interval (1 / 2) signals 1 0 = 1 := rfl
+  simp only [regret, sum_range_succ, prediction]
+  norm_num [h0, h1, h2, signals, RCLike.inner_apply, Real.norm_eq_abs]
+
+theorem unbounded_exact_identity :
+    prediction whole (1 / 2) signals 1 0 = -2 ∧
+    prediction whole (1 / 2) signals 1 1 = -(3 / 2) ∧
+    regret whole (1 / 2) signals 1 0 2 = -(21 / 2) ∧
+    regret whole (1 / 2) signals 1 0 2 =
+      ‖(1 : ℝ) - 0‖ ^ 2 / (2 * (1 / 2)) -
+        ‖iterate whole (1 / 2) signals 1 2 - 0‖ ^ 2 / (2 * (1 / 2)) -
+        (1 / 2) / 2 * (∑ t ∈ range 2, ‖signals t‖ ^ 2) := by
+  rcases whole_states with ⟨h1, h2⟩
+  have h0 : iterate whole (1 / 2) signals 1 0 = 1 := rfl
+  simp only [regret, sum_range_succ, prediction]
+  norm_num [h0, h1, h2, signals, RCLike.inner_apply, Real.norm_eq_abs]
+
+theorem current_and_future_information :
+    prediction interval (1 / 2) signals 1 0 ≠
+      prediction interval (1 / 2) (fun _ => 0) 1 0 ∧
+    ∀ h : ℕ → ℝ, h 0 = 6 → prediction interval (1 / 2) h 1 0 = -1 := by
+  have hp : prediction interval (1 / 2) signals 1 0 = -1 := interval_states.1
+  have hz : prediction interval (1 / 2) (fun _ => 0) 1 0 = 1 := by
+    change BanditRL.OnlineGradientDescent.project interval ((1 : ℝ) - (1 / 2) * 0) = 1
+    norm_num
+    exact interval_project_mem _ (by norm_num [interval])
+  refine ⟨by rw [hp, hz]; norm_num, ?_⟩
+  intro h hh
+  rw [prediction_prefix interval (1 / 2) h signals 1 0 (by
+    intro s hs
+    have : s = 0 := by omega
+    subst s
+    simpa only [signals, if_pos rfl] using hh)]
+  exact hp
+
+theorem outside_initial_center_and_empty_horizon :
+    (3 : ℝ) ∉ interval.carrier ∧
+    prediction interval 1 (fun _ => 0) 3 0 = 1 ∧
+    ‖prediction interval 1 (fun _ => 0) 3 0 - iterate interval 1 (fun _ => 0) 3 0‖ ^ 2 = 4 ∧
+    regret interval 1 (fun _ => 0) 3 0 0 = 0 ∧
+    ∀ u ∈ interval.carrier,
+      regret interval 1 (fun _ => 0) 3 u 0 ≤ ‖(3 : ℝ) - u‖ ^ 2 / (2 * 1) -
+        ‖iterate interval 1 (fun _ => 0) 3 0 - u‖ ^ 2 / (2 * 1) -
+        (∑ t ∈ range 0,
+          ‖prediction interval 1 (fun _ => 0) 3 t - iterate interval 1 (fun _ => 0) 3 t‖ ^ 2) /
+            (2 * 1) := by
+  have hp : prediction interval 1 (fun _ => 0) 3 0 = 1 := by
+    change BanditRL.OnlineGradientDescent.project interval ((3 : ℝ) - 1 * 0) = 1
+    norm_num
+    exact interval_project_three
+  refine ⟨by norm_num [interval], hp, ?_, ?_, ?_⟩
+  · norm_num [hp, iterate]
+  · simp [regret]
+  · intro u hu
+    exact regret_sharp_bound interval 1 (by norm_num) (fun _ => 0) 3 u 0 hu
+
+end Tests.OnlinePrescientLinear

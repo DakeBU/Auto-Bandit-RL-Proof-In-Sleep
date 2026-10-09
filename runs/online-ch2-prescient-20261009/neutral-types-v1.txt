@@ -1,0 +1,61 @@
+import BanditRLProof.OnlineGradientDescent
+
+noncomputable section
+open Set Finset
+open scoped InnerProductSpace
+namespace BanditRL.OnlinePrescientLinear
+open BanditRL.OnlineGradientDescent
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]
+
+def advance (V : Domain E) (η : ℝ) (g x : E) : E :=
+  project V (x - η • g)
+
+def iterate (V : Domain E) (η : ℝ) (g : ℕ → E) (x0 : E) : ℕ → E
+  | 0 => x0
+  | t + 1 => advance V η (g t) (iterate V η g x0 t)
+
+def prediction (V : Domain E) (η : ℝ) (g : ℕ → E) (x0 : E) (t : ℕ) : E :=
+  iterate V η g x0 (t + 1)
+
+def regret (V : Domain E) (η : ℝ) (g : ℕ → E) (x0 u : E) (T : ℕ) : ℝ :=
+  ∑ t ∈ range T, inner ℝ (g t) (prediction V η g x0 t - u)
+
+The following are proposed type-only terminals, with no theorem bodies and no compilation claim.
+
+theorem advance_sharp_bound (V : Domain E) (η : ℝ) (hη : 0 < η) (g x u : E)
+    (hu : u ∈ V.carrier) :
+    inner ℝ g (advance V η g x - u) ≤
+      (‖x - u‖ ^ 2 - ‖advance V η g x - u‖ ^ 2 - ‖advance V η g x - x‖ ^ 2) /
+        (2 * η)
+
+theorem advance_proximal_minimizer (V : Domain E) (η : ℝ) (hη : 0 < η) (g x : E)
+    (b : ℝ) :
+    advance V η g x ∈ V.carrier ∧ ∀ u ∈ V.carrier,
+      inner ℝ g (advance V η g x) + b + ‖advance V η g x - x‖ ^ 2 / (2 * η) ≤
+        inner ℝ g u + b + ‖u - x‖ ^ 2 / (2 * η)
+
+theorem prediction_mem (V : Domain E) (η : ℝ) (g : ℕ → E) (x0 : E) (t : ℕ) :
+    prediction V η g x0 t ∈ V.carrier
+
+theorem prediction_prefix (V : Domain E) (η : ℝ) (g g' : ℕ → E) (x0 : E) (t : ℕ)
+    (h : ∀ s ≤ t, g s = g' s) :
+    prediction V η g x0 t = prediction V η g' x0 t
+
+theorem regret_eq_loss_difference (V : Domain E) (η : ℝ) (g : ℕ → E) (b : ℕ → ℝ)
+    (x0 u : E) (T : ℕ) :
+    regret V η g x0 u T =
+      ∑ t ∈ range T, ((inner ℝ (g t) (prediction V η g x0 t) + b t) -
+        (inner ℝ (g t) u + b t))
+
+theorem regret_sharp_bound (V : Domain E) (η : ℝ) (hη : 0 < η) (g : ℕ → E)
+    (x0 u : E) (T : ℕ) (hu : u ∈ V.carrier) :
+    regret V η g x0 u T ≤ ‖x0 - u‖ ^ 2 / (2 * η) -
+      ‖iterate V η g x0 T - u‖ ^ 2 / (2 * η) -
+      (∑ t ∈ range T, ‖prediction V η g x0 t - iterate V η g x0 t‖ ^ 2) / (2 * η)
+
+theorem regret_source_bound (V : Domain E) (η : ℝ) (hη : 0 < η) (g : ℕ → E)
+    (x0 u : E) (T : ℕ) (hu : u ∈ V.carrier) :
+    regret V η g x0 u T ≤ ‖x0 - u‖ ^ 2 / (2 * η) -
+      (∑ t ∈ range T, ‖prediction V η g x0 t - iterate V η g x0 t‖ ^ 2) / (2 * η)
+
+end BanditRL.OnlinePrescientLinear

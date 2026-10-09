@@ -1,0 +1,14 @@
+{
+  "actual_exit": 1,
+  "receipt_sha256": "8ed936b988997a2b7db6b3584fd0950b316aa4a98a8c51b81112ed17dfdf3649",
+  "classification": "local Lean API/normalization gap",
+  "findings": [
+    "Selected add_le_add_right resolves to addition in the other order; real addition arithmetic is the same but types are not definitionally aligned.",
+    "add_sub_add_right is not a pinned identifier; affine offset cancellation must use explicit ring algebra."
+  ],
+  "repair": "Use linarith on already-proved scalar inequality for addition; prove each finite-sum summand equality by inner_sub_right/ring.",
+  "headers_unchanged": true,
+  "first_proof_prefix_unchanged": true,
+  "source_container_closed": false,
+  "whole_Goal_status": "ACTIVE"
+}
