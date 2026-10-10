@@ -1,0 +1,3 @@
+# Director draft
+
+Select exactly the required adaptive-energy source display on printed40. Freeze three headers implementing an abstract inequality, norm specialization and D-scaled source endpoint; count one source family and retain the entire adaptive algorithm parent as open. First finite ready leaf is the abstract sum using the existing Tsallis supporting-line fact; later two leaves are adapters only after it compiles. No new main chapter, general OMD or Tsallis dual guarantee. Preserve all zero boundaries and exact dependency truth. Review contract before BODY, then prove rather than adding an assumed energy bound consumer.

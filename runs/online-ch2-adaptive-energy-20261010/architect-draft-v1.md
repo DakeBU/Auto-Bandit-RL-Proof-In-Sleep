@@ -1,0 +1,3 @@
+# Architect draft
+
+Search shared production and pinned Mathlib APIs. Reuse the actual square-root supporting-line proof in TsallisFTRLStationarity; do not duplicate its polynomial argument or claim Lemma4.13 as a direct edge without calling it. Cumulative nonnegative energy permits a case split at zero current prefix. Positive branch reverses the supporting-line inequality; zero branch forces increment and preceding prefix to0. Inductively telescope. Instantiate a_t=norm(g_t)^2 and multiply by nonnegative D/2. Source proof's limiting route is replaced by an algebraic source-faithful proof, with no continuity-at-zero premise. Terminal types are not weakened for tactic convenience.

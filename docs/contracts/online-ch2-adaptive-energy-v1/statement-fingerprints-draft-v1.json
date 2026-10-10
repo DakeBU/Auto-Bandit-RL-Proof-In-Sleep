@@ -1,0 +1,22 @@
+{
+  "rows": [
+    {
+      "declaration": "BanditRL.OnlineAdaptiveEnergy.sum_div_sqrt_prefix",
+      "statement": "theorem sum_div_sqrt_prefix (a : ℕ → ℝ) (T : ℕ) (ha : ∀ t < T, 0 ≤ a t) : (∑ t ∈ range T, a t / Real.sqrt (∑ i ∈ range (t + 1), a i)) ≤ 2 * Real.sqrt (∑ i ∈ range T, a i)",
+      "statement_hash": "4b607f692f9b095616997daadbb4e55e239c6ebb6706f467efbcfb89f6c837b3"
+    },
+    {
+      "declaration": "BanditRL.OnlineAdaptiveEnergy.norm_sq_sum_div_sqrt_prefix",
+      "statement": "theorem norm_sq_sum_div_sqrt_prefix {E : Type*} [NormedAddCommGroup E] (g : ℕ → E) (T : ℕ) : (∑ t ∈ range T, ‖g t‖ ^ 2 / Real.sqrt (∑ i ∈ range (t + 1), ‖g i‖ ^ 2)) ≤ 2 * Real.sqrt (∑ i ∈ range T, ‖g i‖ ^ 2)",
+      "statement_hash": "3b9a60e734099bdfbc22d33249a03695e1ad9dafd593b3738e8e1384e5700018"
+    },
+    {
+      "declaration": "BanditRL.OnlineAdaptiveEnergy.source_energy_term_bound",
+      "statement": "theorem source_energy_term_bound {E : Type*} [NormedAddCommGroup E] (g : ℕ → E) (T : ℕ) (D : ℝ) (hD : 0 ≤ D) : D / 2 * (∑ t ∈ range T, ‖g t‖ ^ 2 / Real.sqrt (∑ i ∈ range (t + 1), ‖g i‖ ^ 2)) ≤ D * Real.sqrt (∑ i ∈ range T, ‖g i‖ ^ 2)",
+      "statement_hash": "3411ac15e6260fe76db36edd1713fb44dc76f04202adf74e86e4370284683489"
+    }
+  ],
+  "header_file_sha256": "71b0073cbe523b3fd372c92e504e7153cfad052969c05cd70490d9ca1c3eb629",
+  "context_sha256": "88ecb39958e85587e4e4afe3ebb581cf274b94bd9f135cc1f5bdfda75e428156",
+  "provenance": "Actual pinned harness header parser and normalized statement_hash applied to draft header transcript; no theorem BODY or compiled declaration is claimed."
+}

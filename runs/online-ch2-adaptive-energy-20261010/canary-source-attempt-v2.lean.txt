@@ -1,0 +1,55 @@
+import BanditRLProof.OnlineAdaptiveEnergy
+
+noncomputable section
+open Finset
+
+namespace Tests.OnlineAdaptiveEnergyCanary
+
+theorem nonzero_energy_zero_prefix_canary :
+    let g : ℕ → ℝ := fun t => if t = 1 then 3 else if t = 3 then 4 else 0
+    let Q : (ℕ → ℝ) → ℕ → ℝ := fun v n =>
+      ∑ t ∈ range n, ‖v t‖ ^ 2 / Real.sqrt (∑ i ∈ range (t + 1), ‖v i‖ ^ 2)
+    let S : (ℕ → ℝ) → ℕ → ℝ := fun v n => ∑ i ∈ range n, ‖v i‖ ^ 2
+    (2 : ℝ) / 2 * Q g 4 ≤ 2 * Real.sqrt (S g 4) ∧
+      Q g 4 = 31 / 5 ∧ S g 4 = 25 ∧ Q g 4 < 2 * Real.sqrt (S g 4) ∧
+      g 0 = 0 ∧ g 2 = 0 ∧ g 1 = 3 ∧ g 3 = 4 := by
+  let g : ℕ → ℝ := fun t => if t = 1 then 3 else if t = 3 then 4 else 0
+  let Q : (ℕ → ℝ) → ℕ → ℝ := fun v n =>
+    ∑ t ∈ range n, ‖v t‖ ^ 2 / Real.sqrt (∑ i ∈ range (t + 1), ‖v i‖ ^ 2)
+  let S : (ℕ → ℝ) → ℕ → ℝ := fun v n => ∑ i ∈ range n, ‖v i‖ ^ 2
+  change (2 : ℝ) / 2 * Q g 4 ≤ 2 * Real.sqrt (S g 4) ∧
+    Q g 4 = 31 / 5 ∧ S g 4 = 25 ∧ Q g 4 < 2 * Real.sqrt (S g 4) ∧
+    g 0 = 0 ∧ g 2 = 0 ∧ g 1 = 3 ∧ g 3 = 4
+  have hsource := BanditRL.OnlineAdaptiveEnergy.source_energy_term_bound g 4 2 (by norm_num)
+  have hsum : Q g 4 = 31 / 5 := by
+    norm_num [Q, g, sum_range_succ, Real.norm_eq_abs]
+  have henergy : S g 4 = 25 := by
+    norm_num [S, g, sum_range_succ, Real.norm_eq_abs]
+  refine ⟨hsource, hsum, henergy, ?_, rfl, rfl, rfl, rfl⟩
+  have hprefix := BanditRL.OnlineAdaptiveEnergy.source_energy_term_bound g 3 2 (by norm_num)
+  have hp : Q g 3 ≤ 2 * Real.sqrt (S g 3) := by
+    simpa only [show (2 : ℝ) / 2 = 1 by norm_num, one_mul] using hprefix
+  calc
+    Q g 4 = Q g 3 + 16 / 5 := by
+      norm_num [Q, g, sum_range_succ, Real.norm_eq_abs]
+    _ ≤ 2 * Real.sqrt (S g 3) + 16 / 5 := add_le_add hp (le_refl (16 / 5 : ℝ))
+    _ < 2 * Real.sqrt (S g 4) := by
+      norm_num [S, g, sum_range_succ, Real.norm_eq_abs]
+
+theorem zero_boundaries_canary :
+    let g₁ : ℕ → ℝ := fun _ => 1
+    let g₀ : ℕ → ℝ := fun _ => 0
+    let Q : (ℕ → ℝ) → ℕ → ℝ := fun v n =>
+      ∑ t ∈ range n, ‖v t‖ ^ 2 / Real.sqrt (∑ i ∈ range (t + 1), ‖v i‖ ^ 2)
+    let S : (ℕ → ℝ) → ℕ → ℝ := fun v n => ∑ i ∈ range n, ‖v i‖ ^ 2
+    ((2 : ℝ) / 2 * Q g₁ 0 ≤ 2 * Real.sqrt (S g₁ 0)) ∧
+      ((2 : ℝ) / 2 * Q g₀ 3 ≤ 2 * Real.sqrt (S g₀ 3)) ∧
+      ((0 : ℝ) / 2 * Q g₁ 2 ≤ 0 * Real.sqrt (S g₁ 2)) := by
+  exact ⟨BanditRL.OnlineAdaptiveEnergy.source_energy_term_bound (fun _ : ℕ => (1 : ℝ)) 0 2
+      (by norm_num),
+    BanditRL.OnlineAdaptiveEnergy.source_energy_term_bound (fun _ : ℕ => (0 : ℝ)) 3 2
+      (by norm_num),
+    BanditRL.OnlineAdaptiveEnergy.source_energy_term_bound (fun _ : ℕ => (1 : ℝ)) 2 0
+      (by norm_num)⟩
+
+end Tests.OnlineAdaptiveEnergyCanary

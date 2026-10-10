@@ -1,0 +1,27 @@
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+import Mathlib.Tactic
+
+noncomputable section
+open Finset
+namespace NeutralCompleteEnergyExamples
+
+theorem finite_example :
+    let w : ℕ → ℝ := fun t => if t = 1 then 3 else if t = 3 then 4 else 0
+    let A : (ℕ → ℝ) → ℕ → ℝ := fun z m =>
+      ∑ t ∈ range m, ‖z t‖ ^ 2 / Real.sqrt (∑ i ∈ range (t + 1), ‖z i‖ ^ 2)
+    let B : (ℕ → ℝ) → ℕ → ℝ := fun z m => ∑ i ∈ range m, ‖z i‖ ^ 2
+    (2 : ℝ) / 2 * A w 4 ≤ 2 * Real.sqrt (B w 4) ∧
+      A w 4 = 31 / 5 ∧ B w 4 = 25 ∧ A w 4 < 2 * Real.sqrt (B w 4) ∧
+      w 0 = 0 ∧ w 2 = 0 ∧ w 1 = 3 ∧ w 3 = 4 := by
+
+theorem boundary_example :
+    let v₁ : ℕ → ℝ := fun _ => 1
+    let v₀ : ℕ → ℝ := fun _ => 0
+    let A : (ℕ → ℝ) → ℕ → ℝ := fun z m =>
+      ∑ t ∈ range m, ‖z t‖ ^ 2 / Real.sqrt (∑ i ∈ range (t + 1), ‖z i‖ ^ 2)
+    let B : (ℕ → ℝ) → ℕ → ℝ := fun z m => ∑ i ∈ range m, ‖z i‖ ^ 2
+    ((2 : ℝ) / 2 * A v₁ 0 ≤ 2 * Real.sqrt (B v₁ 0)) ∧
+      ((2 : ℝ) / 2 * A v₀ 3 ≤ 2 * Real.sqrt (B v₀ 3)) ∧
+      ((0 : ℝ) / 2 * A v₁ 2 ≤ 0 * Real.sqrt (B v₁ 2)) := by
+
+end NeutralCompleteEnergyExamples
