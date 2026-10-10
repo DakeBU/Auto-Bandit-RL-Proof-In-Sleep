@@ -1,0 +1,24 @@
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+import Mathlib.Tactic
+
+noncomputable section
+open Finset
+namespace NeutralEnergyReconstruction
+
+theorem prefix_bound (b : ℕ → ℝ) (n : ℕ)
+    (hb : ∀ t < n, 0 ≤ b t) :
+    (∑ t ∈ range n, b t / Real.sqrt (∑ i ∈ range (t + 1), b i)) ≤
+      2 * Real.sqrt (∑ i ∈ range n, b i) := by
+
+theorem vector_bound {E : Type*} [NormedAddCommGroup E]
+    (v : ℕ → E) (n : ℕ) :
+    (∑ t ∈ range n, ‖v t‖ ^ 2 / Real.sqrt (∑ i ∈ range (t + 1), ‖v i‖ ^ 2)) ≤
+      2 * Real.sqrt (∑ i ∈ range n, ‖v i‖ ^ 2) := by
+
+theorem scaled_bound {E : Type*} [NormedAddCommGroup E]
+    (v : ℕ → E) (n : ℕ) (R : ℝ) (hR : 0 ≤ R) :
+    R / 2 * (∑ t ∈ range n,
+      ‖v t‖ ^ 2 / Real.sqrt (∑ i ∈ range (t + 1), ‖v i‖ ^ 2)) ≤
+      R * Real.sqrt (∑ i ∈ range n, ‖v i‖ ^ 2) := by
+
+end NeutralEnergyReconstruction

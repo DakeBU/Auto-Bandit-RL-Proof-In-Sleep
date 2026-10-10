@@ -1,0 +1,67 @@
+import BanditRLProof.TsallisFTRLStationarity
+import Mathlib.Tactic
+
+noncomputable section
+open Finset
+
+namespace BanditRL.OnlineAdaptiveEnergy
+
+/-- Orabona v10, printed40: the scalar energy calculation includes zero prefixes.
+The shared square-root supporting line supplies the positive-prefix step. -/
+theorem sum_div_sqrt_prefix (a : ℕ → ℝ) (T : ℕ)
+    (ha : ∀ t < T, 0 ≤ a t) :
+    (∑ t ∈ range T, a t / Real.sqrt (∑ i ∈ range (t + 1), a i)) ≤
+      2 * Real.sqrt (∑ i ∈ range T, a i) := by
+  induction T with
+  | zero => simp
+  | succ T ih =>
+      have hprev : 0 ≤ ∑ i ∈ range T, a i :=
+        sum_nonneg (fun i hi => ha i (Nat.lt_succ_of_lt (mem_range.mp hi)))
+      have hcur : 0 ≤ ∑ i ∈ range (T + 1), a i :=
+        sum_nonneg (fun i hi => ha i (mem_range.mp hi))
+      have hi := ih (fun i hi => ha i (Nat.lt_succ_of_lt hi))
+      have hstep : a T / Real.sqrt (∑ i ∈ range (T + 1), a i) ≤
+          2 * (Real.sqrt (∑ i ∈ range (T + 1), a i) -
+            Real.sqrt (∑ i ∈ range T, a i)) := by
+        by_cases hpos : 0 < ∑ i ∈ range (T + 1), a i
+        · have hs := BanditRLProof.Tsallis.two_mul_sqrt_sub_sqrt_le_sub_div_sqrt
+            hpos hprev
+          have heq : ((∑ i ∈ range T, a i) - (∑ i ∈ range (T + 1), a i)) /
+              Real.sqrt (∑ i ∈ range (T + 1), a i) =
+              -(a T / Real.sqrt (∑ i ∈ range (T + 1), a i)) := by
+            rw [sum_range_succ a T]
+            ring
+          rw [heq] at hs
+          linarith
+        · have hz : (∑ i ∈ range (T + 1), a i) = 0 :=
+            le_antisymm (le_of_not_gt hpos) hcur
+          have hinc := ha T (Nat.lt_succ_self T)
+          have hadd := sum_range_succ a T
+          have haT : a T = 0 := by linarith
+          have hprev0 : (∑ i ∈ range T, a i) = 0 := by linarith
+          simp [hz, haT, hprev0]
+      rw [sum_range_succ (fun t =>
+        a t / Real.sqrt (∑ i ∈ range (t + 1), a i)) T]
+      linarith
+
+/-- The scalar prefix bound instantiated by squared feedback norms. -/
+theorem norm_sq_sum_div_sqrt_prefix {E : Type*} [NormedAddCommGroup E]
+    (g : ℕ → E) (T : ℕ) :
+    (∑ t ∈ range T, ‖g t‖ ^ 2 / Real.sqrt (∑ i ∈ range (t + 1), ‖g i‖ ^ 2)) ≤
+      2 * Real.sqrt (∑ i ∈ range T, ‖g i‖ ^ 2) := by
+  exact sum_div_sqrt_prefix (fun t => ‖g t‖ ^ 2) T (fun _ _ => sq_nonneg _)
+
+/-- Orabona v10, printed40: the unnumbered energy display before Eq.(4.4).
+This analytic comparison does not construct an adaptive OSD trajectory. -/
+theorem source_energy_term_bound {E : Type*} [NormedAddCommGroup E]
+    (g : ℕ → E) (T : ℕ) (D : ℝ) (hD : 0 ≤ D) :
+    D / 2 * (∑ t ∈ range T,
+      ‖g t‖ ^ 2 / Real.sqrt (∑ i ∈ range (t + 1), ‖g i‖ ^ 2)) ≤
+      D * Real.sqrt (∑ i ∈ range T, ‖g i‖ ^ 2) := by
+  calc
+    _ ≤ D / 2 * (2 * Real.sqrt (∑ i ∈ range T, ‖g i‖ ^ 2)) :=
+      mul_le_mul_of_nonneg_left (norm_sq_sum_div_sqrt_prefix g T)
+        (div_nonneg hD (by norm_num))
+    _ = _ := by ring
+
+end BanditRL.OnlineAdaptiveEnergy

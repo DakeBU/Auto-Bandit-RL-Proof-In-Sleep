@@ -1,0 +1,113 @@
+{
+  "schema_version": "2.0",
+  "id": "ONLINE-CH2-ADAPTIVE-ENERGY-20261010",
+  "route": "online-learning/chapter-2/required-adaptive-rate-dependency",
+  "frontier_cell": "online-ogd",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10 (2026-06-21), SHA256 cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchor": "Unnumbered cumulative-energy display after Lemma4.13 and before Eq.(4.4), printed40/PDF52.",
+    "url": "https://arxiv.org/pdf/1912.13213v10"
+  },
+  "target": "For every finite horizon T, normed additive commutative group E, feedback stream g from natural indices to E and nonnegative scalar D, the sum of squared feedback norms divided by the square root of their cumulative energy, multiplied by D/2, is at most D times the square root of total energy. An abstract nonnegative increment theorem and its squared-norm specialization supply the same bound. One source energy-display family is now a reusable prerequisite for the required Chapter2 adaptive-rate forward claim, represented by three production proofs and two full canaries, not three independent source results. Actual causal adaptive OSD, zero-feedback skipping, zero-radius/zero-energy regret, zero-weight potential, Eq.(4.4), Theorem4.14 and its minimum-versus-infimum edge remain required/open. All eight Chapter2 forward containers and six future mathematical claims remain required/open. Chapter2 partial/null; Chapters3-16 unenumerated/null; Chapter4 is not a competing main task. Whole Chapters1-16 Goal ACTIVE. Stacked on OPEN draft unmerged PR216 exact 873039ee2d3247eacaa9b3c95d765954e6453611. No merge, deployment, main/live or retirement claim.",
+  "affected_files": [
+    "BanditRLProof/OnlineAdaptiveEnergy.lean",
+    "BanditRLProof.lean",
+    "website/content/chapters.json",
+    "website/content/readings.json",
+    "website/content/highlights.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineAdaptiveEnergy.sum_div_sqrt_prefix",
+    "BanditRL.OnlineAdaptiveEnergy.norm_sq_sum_div_sqrt_prefix",
+    "BanditRL.OnlineAdaptiveEnergy.source_energy_term_bound"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "new_shared",
+    "searched_existing": [
+      "Actual pinned native retrieval/list-lean-decls; unit-increment sqrt schedule is insufficient for arbitrary energy."
+    ],
+    "reused_declarations": [
+      "BanditRLProof.Tsallis.two_mul_sqrt_sub_sqrt_le_sub_div_sqrt"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineAdaptiveEnergy.sum_div_sqrt_prefix",
+      "BanditRL.OnlineAdaptiveEnergy.norm_sq_sum_div_sqrt_prefix",
+      "BanditRL.OnlineAdaptiveEnergy.source_energy_term_bound"
+    ],
+    "known_consumers": [
+      "Tests.OnlineAdaptiveEnergyCanary.nonzero_energy_zero_prefix_canary",
+      "Tests.OnlineAdaptiveEnergyCanary.zero_boundaries_canary"
+    ],
+    "planned_consumers": [
+      "Required Chapter2 actual causal adaptive OSD; remains open."
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "One canonical energy-display family, abstract scalar proof plus norm and scale adapters; actual shared Tsallis parent reused, no per-Book project/toolchain/dependency upgrade."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/osd_blind",
+    "source_reviewer": "/root/source_reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Source t=1..T is Lean t=0..T-1; each denominator includes the current increment. The analytic theorem generalizes Euclidean squared norms to a normed additive commutative group. D is a nonnegative scalar here; interpreting it as domain diameter belongs to the future OSD consumer. Real division is totalized: zero cumulative energy forces the nonnegative current increment to be zero, so its summand is zero. This includes leading/interior zero feedback, empty horizon and D=0 without a positive-energy premise. It does not establish an algorithmic skip rule. The source invokes Lemma4.13 with a positive offset and a limit; our proof instead uses the existing square-root supporting line and handles zero prefixes algebraically. No continuity of inverse square root at zero is asserted. Lemma4.13 is source correspondence, not a direct Lean proof dependency. Distinct reused automated decoder/source reviewer; related history disclosed. Exact CONTRACT/production BODY/canary CONTRACT/BODY reviews retained; integration/combined/site/FINAL/native/delivery pending. No external/human/absolute-blind/runtime attestation."
+  },
+  "graph_contribution": {
+    "lean_graph": "new-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "An algebraic supporting-line reuse across Tsallis and energy summation is an actual theorem edge, not a separately certified equivalence functor.",
+    "focus_targets": [
+      "BanditRL.OnlineAdaptiveEnergy.sum_div_sqrt_prefix",
+      "BanditRL.OnlineAdaptiveEnergy.norm_sq_sum_div_sqrt_prefix",
+      "BanditRL.OnlineAdaptiveEnergy.source_energy_term_bound"
+    ],
+    "visual_review": "Pending actual new source card/teaching note/folded Lean/module original pixels and complete11055oldregistryobjects plus3production nodes=11058;16cards. Structural counts are not independent source-result/chapter totals.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: Append one shared module, learning goal, bounded suffix, source-qualified card and teaching note; preserve all older Book objects and links.",
+    "banditrlwiki": "no-change-with-reason: analytic prerequisite changes no Bandit policy or guarantee.",
+    "results_ledger": "no-change-with-reason: bounded foundation growth does not complete a chapter/global route.",
+    "roadmap": "updated: Chapter2 partial/null, all8forward and6futureclaims required/open; Chapter4 unenumerated/null; global SGB untouched.",
+    "website_surfaces": [
+      "website/content/chapters.json",
+      "website/content/readings.json",
+      "website/content/highlights.json"
+    ]
+  },
+  "truth_boundary": "One source energy-display family is now a reusable prerequisite for the required Chapter2 adaptive-rate forward claim, represented by three production proofs and two full canaries, not three independent source results. Actual causal adaptive OSD, zero-feedback skipping, zero-radius/zero-energy regret, zero-weight potential, Eq.(4.4), Theorem4.14 and its minimum-versus-infimum edge remain required/open. All eight Chapter2 forward containers and six future mathematical claims remain required/open. Chapter2 partial/null; Chapters3-16 unenumerated/null; Chapter4 is not a competing main task. Whole Chapters1-16 Goal ACTIVE. Stacked on OPEN draft unmerged PR216 exact 873039ee2d3247eacaa9b3c95d765954e6453611. No merge, deployment, main/live or retirement claim.",
+  "verification": {
+    "focused_checks": [
+      "Actual scalar and allthree focused production builds0; two FULL canary buildv2 0 after retained BODY API-orientation failurev1. Five full public applications/standard axiom audits, five native fences/safe-verifies, actual three-parent chain and five selected inequality public calls. Initial fence annotation failure retained. Frozen headers/context unchanged."
+    ],
+    "bandit_check": "Combined root/Tests/full harness and nonempty contributor/shadow gates required; pending.",
+    "site_build": "Pending isolated clean-source build after applicable combined gate; generated website/_site untouched; no live claim.",
+    "site_check": "Pending shared registry/actual original-pixel checks.",
+    "independent_review": "Distinct source CONTRACT/production BODY/canary CONTRACT/BODY; integration/FINAL/native/delivery pending.",
+    "owned_test_files": [
+      "Tests/OnlineAdaptiveEnergyCanary.lean"
+    ],
+    "owned_test_root_files": [
+      "Tests.lean"
+    ]
+  },
+  "contributor": {
+    "name": "Codex for Ji Cheng",
+    "role": "Formalizer with distinct reused staged automated decoder and source reviewer"
+  }
+}

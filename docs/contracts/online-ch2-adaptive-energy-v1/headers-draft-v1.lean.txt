@@ -1,0 +1,15 @@
+theorem sum_div_sqrt_prefix (a : ℕ → ℝ) (T : ℕ)
+    (ha : ∀ t < T, 0 ≤ a t) :
+    (∑ t ∈ range T, a t / Real.sqrt (∑ i ∈ range (t + 1), a i)) ≤
+      2 * Real.sqrt (∑ i ∈ range T, a i) := by
+
+theorem norm_sq_sum_div_sqrt_prefix {E : Type*} [NormedAddCommGroup E]
+    (g : ℕ → E) (T : ℕ) :
+    (∑ t ∈ range T, ‖g t‖ ^ 2 / Real.sqrt (∑ i ∈ range (t + 1), ‖g i‖ ^ 2)) ≤
+      2 * Real.sqrt (∑ i ∈ range T, ‖g i‖ ^ 2) := by
+
+theorem source_energy_term_bound {E : Type*} [NormedAddCommGroup E]
+    (g : ℕ → E) (T : ℕ) (D : ℝ) (hD : 0 ≤ D) :
+    D / 2 * (∑ t ∈ range T,
+      ‖g t‖ ^ 2 / Real.sqrt (∑ i ∈ range (t + 1), ‖g i‖ ^ 2)) ≤
+      D * Real.sqrt (∑ i ∈ range T, ‖g i‖ ^ 2) := by

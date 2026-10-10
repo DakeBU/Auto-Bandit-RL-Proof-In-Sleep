@@ -1,0 +1,7 @@
+# Context
+
+Persistent unbudgeted Orabona Chapters1-16 Goal is ACTIVE. Current main chapter is2; Chapter1 mapping is accepted-local with explicit source correction. PR216 delivered one Lemma4.13 prerequisite, not adaptive OSD or chapter closure. Its exact unmerged head873039ee2d3247eacaa9b3c95d765954e6453611 is this branch's stacked base. Actual attachment and distinct delivery review are preserved under ignored tmp/online-ch2-adaptive-summation-delivery-v2 and are explicitly not committed; core mathematical/contract/Lean/role evidence is committed in PR216.
+
+Root inspected source original PDF52 again at original detail, including the unnumbered energy display, Eq4.4 and Theorem4.14. Pinned PDF SHA cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17. Draft audit preserves35392 preexisting tracked RAW files and shared Git/.lake links. No canonical main, anonymous material, old source, stores or other worktrees are edited. Reused worktree E:/ABRL/worktrees/research-online-book, new branch codex/research-online-ch2-adaptive-energy. No new Goal or reset of total progress.
+
+Use actual existing CLI with OWN redirected trials/session/artifact journal/retrieval; global SGB stays unchanged. Commands and output are separate from compiler/semantic judgments. Root is director/architect/formalizer, with distinct reused decoder and source-reviewer actors as repository AGENTS requires. Astra/medium requested throughout. Draft is not stabilized or compiled mathematics.
