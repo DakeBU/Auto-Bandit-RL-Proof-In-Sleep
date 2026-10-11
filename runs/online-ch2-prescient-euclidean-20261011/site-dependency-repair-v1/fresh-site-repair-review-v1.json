@@ -1,0 +1,39 @@
+{
+  "utc": "2026-10-11T07:25:39.706210+00:00",
+  "actor": "/root/adaptive_reviewer",
+  "requested_model_effort": "GPT-6 Astra / medium; runtime not attested",
+  "verdict": "accepted-bounded-one-field-repair",
+  "blocking_repairs": [],
+  "path": "website/content/highlights.json",
+  "pointer": "/highlights/497/dependencies",
+  "before": [
+    "hasStrictFDerivAt_norm_sq",
+    "HasGradientAt.fderiv_apply",
+    "norm_sub_sq_real"
+  ],
+  "after": [],
+  "before_raw_sha256": "671cc9950ce54efeca34a768003d3a20fcdb89915050964d1a5f4ef72cc60916",
+  "approved_after_raw_sha256": "43df4440422f70f042c6468af344fcc51fb3adfa798c79bf08227fcac2c4abda",
+  "all_other_bytes_preserved": true,
+  "lean_notes_unchanged": true,
+  "reason": "build_site.validate_declaration_references requires dependencies to be project scanner declarations. These three external Mathlib facts are absent from that registry but remain explicit in lean_notes and compiler VALUE evidence. No mathematical dependency is removed.",
+  "evidence": [
+    {
+      "path": "website/scripts/build_site.py",
+      "sha256": "4fe18b8b9a543ff5256a278f49d160424b30ba2185c946f3d6081ad5460ccaff"
+    },
+    {
+      "path": "runs/online-ch2-prescient-euclidean-20261011/formalizer-core-v1/type-value-constants-v1.json",
+      "sha256": "32855356493f3e7048ba9eccce9d8186f2dbf48b601061f200ff5c2722929f4c"
+    },
+    {
+      "path": "tmp/online-ch2-prescient-euclidean-gates-20261011/actual-evidence-v1/site-preflight-v1/receipt.json",
+      "sha256": "4c368e78bad081bc35d8ed7b5f905e488b212046c46ab0931af39b1b6602f405"
+    },
+    {
+      "path": "tmp/online-ch2-prescient-euclidean-gates-20261011/actual-evidence-v1/site-preflight-v1/stderr.raw",
+      "sha256": "6b7f6eb86d84b1624b5fe3196de5dd4d3dea167c773e1e4f68921970d3994f23"
+    }
+  ],
+  "scope": "Proposal only; no source, metadata, gate or Git mutation; failed preflight preserved; fresh actual site gate required."
+}

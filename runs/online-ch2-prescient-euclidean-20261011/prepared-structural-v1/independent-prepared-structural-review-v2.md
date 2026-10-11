@@ -1,0 +1,1 @@
+Accepted prepared structural v4 only. Q1 is repaired by full fresh inventory and selected ZIP row equality using the exact pinned recorder definitions. A reviewed execution-ready successor spec and real successful clean gates/site remain required. Reader HTTP-byte binding Q2 remains separate and open. No checker was executed.
