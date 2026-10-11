@@ -1,0 +1,2184 @@
+{
+  "verdict": "baseline-strategy-reviewed; no gate executed",
+  "utc": "2026-10-11T09:52:19.159900+00:00",
+  "actor": "/root/adaptive_reviewer",
+  "requested_model": "GPT-6 Astra",
+  "requested_effort": "medium",
+  "runtime_independently_attested": false,
+  "HEAD": "c445c93f7e4cda1408279d614858c904e346ad47",
+  "MERGE_HEAD": "f07aa9a2a5df241087ffab1c3579d1b59d8bf6f6",
+  "checker_sha256": "2ba2e53a1f3194a13755140d9d755e3ff19d70f8e6d09bacfe318fb5ca4d1dd6",
+  "draft_v2_sha256": "cf4abeaac313fd66d49581dd3f7020c98bccaaf9098b56707bedec261698c735",
+  "prospective_baselines": [
+    {
+      "base": "c445c93f7e4cda1408279d614858c904e346ad47",
+      "prospective_index_changed_paths": 11,
+      "production": [
+        "BanditRLProof/OnlineGradientDescent.lean",
+        "website/content/books.json",
+        "website/content/chapters.json",
+        "website/content/highlights.json",
+        "website/content/readings.json",
+        "website/scripts/build_site.py",
+        "website/scripts/check_site.py"
+      ],
+      "changed_contracts": [
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-CH2-INTEGRATION-20261011.json",
+          "sha256": "26782530df14c190c5f30b0ea0c2f5e6ea2b76228948b0ce1134bd9cde2a6dbd",
+          "affected_files": [
+            "BanditRLProof.lean",
+            "BanditRLProof/OnlineConvexExtended.lean",
+            "BanditRLProof/OnlineConvexExamples.lean",
+            "BanditRLProof/OnlineConvexFirstOrder.lean",
+            "BanditRLProof/OnlineGradientDescent.lean",
+            "BanditRLProof/OnlineGradientDescentVariable.lean",
+            "BanditRLProof/OnlineGradientDescentSource.lean",
+            "website/content/books.json",
+            "website/content/chapters.json",
+            "website/content/highlights.json",
+            "website/content/readings.json",
+            "website/scripts/build_site.py",
+            "website/scripts/check_site.py"
+          ]
+        }
+      ],
+      "prospective_new_draft_added_to_coverage": true,
+      "stale": [
+        "BanditRLProof.lean",
+        "BanditRLProof/OnlineConvexExamples.lean",
+        "BanditRLProof/OnlineConvexExtended.lean",
+        "BanditRLProof/OnlineConvexFirstOrder.lean",
+        "BanditRLProof/OnlineGradientDescentSource.lean",
+        "BanditRLProof/OnlineGradientDescentVariable.lean"
+      ],
+      "uncovered": [],
+      "status_rows_sha256": "39edac1d9e63022b57b5bb8088f646aefc8e49ffab8061d18581d3b189c7cf17"
+    },
+    {
+      "base": "f07aa9a2a5df241087ffab1c3579d1b59d8bf6f6",
+      "prospective_index_changed_paths": 36353,
+      "production": [
+        "BanditRLProof.lean",
+        "BanditRLProof/OnlineAdaptiveBenchmark.lean",
+        "BanditRLProof/OnlineAdaptiveEnergy.lean",
+        "BanditRLProof/OnlineAdaptiveOSD.lean",
+        "BanditRLProof/OnlineAdaptivePotential.lean",
+        "BanditRLProof/OnlineAdaptiveSummation.lean",
+        "BanditRLProof/OnlineAffineSubgradient.lean",
+        "BanditRLProof/OnlineBregmanExtended.lean",
+        "BanditRLProof/OnlineBregmanProximal.lean",
+        "BanditRLProof/OnlineClosedProper.lean",
+        "BanditRLProof/OnlineConstraintFiniteLoss.lean",
+        "BanditRLProof/OnlineConvexBarycenter.lean",
+        "BanditRLProof/OnlineConvexClosures.lean",
+        "BanditRLProof/OnlineConvexMinorant.lean",
+        "BanditRLProof/OnlineConvexNondifferentiability.lean",
+        "BanditRLProof/OnlineConvexOptimality.lean",
+        "BanditRLProof/OnlineConvexSums.lean",
+        "BanditRLProof/OnlineConvexUncountability.lean",
+        "BanditRLProof/OnlineCumulativePotential.lean",
+        "BanditRLProof/OnlineExpectation.lean",
+        "BanditRLProof/OnlineFTLFailure.lean",
+        "BanditRLProof/OnlineFTLInitializationRegret.lean",
+        "BanditRLProof/OnlineFTLLimitSemantics.lean",
+        "BanditRLProof/OnlineFTLOscillation.lean",
+        "BanditRLProof/OnlineFTLSelector.lean",
+        "BanditRLProof/OnlineGradientDescent.lean",
+        "BanditRLProof/OnlineGuessingAECausal.lean",
+        "BanditRLProof/OnlineGuessingComparison.lean",
+        "BanditRLProof/OnlineGuessingCompletedCausal.lean",
+        "BanditRLProof/OnlineGuessingIIDBenchmark.lean",
+        "BanditRLProof/OnlineGuessingIIDSuccess.lean",
+        "BanditRLProof/OnlineGuessingKernelCausal.lean",
+        "BanditRLProof/OnlineGuessingLogLower.lean",
+        "BanditRLProof/OnlineGuessingLower.lean",
+        "BanditRLProof/OnlineGuessingOGD.lean",
+        "BanditRLProof/OnlineGuessingRandomizedIID.lean",
+        "BanditRLProof/OnlineGuessingSubgradient.lean",
+        "BanditRLProof/OnlineGuessingSubgradientPolicy.lean",
+        "BanditRLProof/OnlineHinge.lean",
+        "BanditRLProof/OnlineHuber.lean",
+        "BanditRLProof/OnlineJensen.lean",
+        "BanditRLProof/OnlineLearningAsymptotic.lean",
+        "BanditRLProof/OnlineLearningFTL.lean",
+        "BanditRLProof/OnlineLearningFTLState.lean",
+        "BanditRLProof/OnlineLearningFoundations.lean",
+        "BanditRLProof/OnlineLearningHistory.lean",
+        "BanditRLProof/OnlineLearningIID.lean",
+        "BanditRLProof/OnlineLearningInformation.lean",
+        "BanditRLProof/OnlineLearningMean.lean",
+        "BanditRLProof/OnlineLearningRegret.lean",
+        "BanditRLProof/OnlineLearningStochastic.lean",
+        "BanditRLProof/OnlineLinearization.lean",
+        "BanditRLProof/OnlineLipschitzSubgradient.lean",
+        "BanditRLProof/OnlineNoRegretSemantics.lean",
+        "BanditRLProof/OnlineNonsmoothExamples.lean",
+        "BanditRLProof/OnlineNormalCone.lean",
+        "BanditRLProof/OnlineOptimalStep.lean",
+        "BanditRLProof/OnlinePrescientBregman.lean",
+        "BanditRLProof/OnlinePrescientBregmanRegret.lean",
+        "BanditRLProof/OnlinePrescientBregmanSource.lean",
+        "BanditRLProof/OnlinePrescientEuclidean.lean",
+        "BanditRLProof/OnlinePrescientLinear.lean",
+        "BanditRLProof/OnlineProximalComparison.lean",
+        "BanditRLProof/OnlineSquareMinimum.lean",
+        "BanditRLProof/OnlineSubgradientAbsolute.lean",
+        "BanditRLProof/OnlineSubgradientBasic.lean",
+        "BanditRLProof/OnlineSubgradientDescent.lean",
+        "BanditRLProof/OnlineSubgradientDifferentiability.lean",
+        "BanditRLProof/OnlineSubgradientInterior.lean",
+        "BanditRLProof/OnlineSubgradientMax.lean",
+        "BanditRLProof/OnlineSubgradientPolicy.lean",
+        "BanditRLProof/OnlineSubgradientSum.lean",
+        "BanditRLProof/OnlineUnboundedOGD.lean",
+        "BanditRLProof/OnlineUnboundedOSD.lean",
+        "BanditRLProof/OnlineUnitScaling.lean",
+        "BanditRLProof/OnlineWeightedPotential.lean",
+        "website/content/books.json",
+        "website/content/chapters.json",
+        "website/content/declaration-boundaries.json",
+        "website/content/highlights.json",
+        "website/content/readings.json",
+        "website/scripts/build_site.py",
+        "website/scripts/check_site.py",
+        "website/static/lean-graph.js"
+      ],
+      "changed_contracts": [
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-AFFINE-SUBGRADIENT-20261003.json",
+          "sha256": "58aaa1f141cc3d3a5f98c4e92193de56c8b2384e00e3d370113c7790388f19f0",
+          "affected_files": [
+            "BanditRLProof.lean",
+            "BanditRLProof/OnlineAffineSubgradient.lean",
+            "website/content/books.json",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-C1-CHAPTER-AUDIT-20261009.json",
+          "sha256": "7d1e08a994d5b392e3929dc638f25338ab8dc681ec4ec64ddd20ddfff77d7b1b",
+          "affected_files": [
+            "BanditRLProof/OnlineFTLInitializationRegret.lean",
+            "BanditRLProof.lean",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-CH2-ADAPTIVE-ENERGY-20261010.json",
+          "sha256": "105b54e3757b72cf1538e9d17ee5e0ff219ed75892bd19bbff02bdad60d3e3b4",
+          "affected_files": [
+            "BanditRLProof/OnlineAdaptiveEnergy.lean",
+            "BanditRLProof.lean",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-CH2-ADAPTIVE-OSD-20261010.json",
+          "sha256": "44b26d8231313655fa69a6db2b9f365157c0c8bde2b103ae2fdfb613e534f024",
+          "affected_files": [
+            "BanditRLProof/OnlineAdaptivePotential.lean",
+            "BanditRLProof/OnlineAdaptiveOSD.lean",
+            "BanditRLProof/OnlineAdaptiveBenchmark.lean",
+            "BanditRLProof.lean",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-CH2-ADAPTIVE-SUMMATION-20261010.json",
+          "sha256": "e029bde78a07cb5a2725b1cea8dd6c4cd7c41350109f07b741a9ebfb44ae010a",
+          "affected_files": [
+            "BanditRLProof/OnlineAdaptiveSummation.lean",
+            "BanditRLProof.lean",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-CH2-BREGMAN-20261009.json",
+          "sha256": "8513b4854681902ed0b046e6cf36bdf4246610be611dad3b19876fcac3e45acf",
+          "affected_files": [
+            "BanditRLProof/OnlineBregmanProximal.lean",
+            "BanditRLProof.lean",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-CH2-EXTENDED-PROXIMAL-20261009.json",
+          "sha256": "ab42fee379cc4837276cc3b3575c90d19abfffb578a589b59eea7562549dfb9f",
+          "affected_files": [
+            "BanditRLProof/OnlineBregmanExtended.lean",
+            "BanditRLProof.lean",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-CH2-NONSMOOTH-20261009.json",
+          "sha256": "ba97458b01cf9a374a52889886df6482f18a304fefc372ef7fd0f5f83aad31ca",
+          "affected_files": [
+            "BanditRLProof/OnlineNonsmoothExamples.lean",
+            "BanditRLProof.lean",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-CH2-PRESCIENT-20261009.json",
+          "sha256": "d63b8a0620f12ffda1f1e15a0e4b876c2f9a89e30628a102b8b1a71362f5c299",
+          "affected_files": [
+            "BanditRLProof/OnlinePrescientLinear.lean",
+            "BanditRLProof.lean",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-CH2-PRESCIENT-CAUSAL-20261009.json",
+          "sha256": "b17b12fe39c9502e254327efb24ed93037693852ba99d94b2df44dd21aeeb474",
+          "affected_files": [
+            "BanditRLProof/OnlinePrescientBregman.lean",
+            "BanditRLProof.lean",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/declaration-boundaries.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-CH2-PRESCIENT-CUMULATIVE-20261009.json",
+          "sha256": "a63b693255344cf416a6fc9daebcb7bebf72c3fffb73ba61c87ef3160f57a90b",
+          "affected_files": [
+            "BanditRLProof/OnlinePrescientBregmanRegret.lean",
+            "BanditRLProof.lean",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-CH2-PRESCIENT-EUCLIDEAN-20261011.json",
+          "sha256": "82b291d12ca9c0e00eb75692c06b1101d7f01bd72cfacd635a6b350c345bbc46",
+          "affected_files": [
+            "BanditRLProof/OnlinePrescientEuclidean.lean",
+            "BanditRLProof.lean",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-CH2-PRESCIENT-SOURCE-20261010.json",
+          "sha256": "a4f9267242ee573bdc5fd3c8618ecf5835b009ae86160e0be4d480e0abae439b",
+          "affected_files": [
+            "BanditRLProof/OnlinePrescientBregmanSource.lean",
+            "BanditRLProof.lean",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-CH2-PROXIMAL-20261009.json",
+          "sha256": "9d50b95482fba2fd32490ed1f748cd1fe7f2310ac497790f51a032b356314c5f",
+          "affected_files": [
+            "BanditRLProof/OnlineProximalComparison.lean",
+            "BanditRLProof.lean",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-CH2-RECONCILIATION-20261010.json",
+          "sha256": "07742d81a25c12f4fb3a154818ad90849a798dcd96eae8086faffcf01895c2d7",
+          "affected_files": [
+            "BanditRLProof/OnlineFTLSelector.lean",
+            "BanditRLProof.lean",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-CH2-UNBOUNDED-OGD-20261011.json",
+          "sha256": "6808c935fbecade7b83f510a173e402805afe3daa097bc77b2112d286b9ccbe4",
+          "affected_files": [
+            "BanditRLProof/OnlineUnboundedOGD.lean",
+            "BanditRLProof.lean",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-CH2-UNBOUNDED-OSD-20261010.json",
+          "sha256": "8bf4afc33573501b3fa287256da74f204ed856eba738350feb2c97c6c7e70452",
+          "affected_files": [
+            "BanditRLProof/OnlineUnboundedOSD.lean",
+            "BanditRLProof.lean",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-CH2-WEIGHTED-IDENTITY-20261011.json",
+          "sha256": "9d6e041bcd107d58352c64ae1783e8da09894104875cc95bbb89e8799989395d",
+          "affected_files": [
+            "BanditRLProof/OnlineWeightedPotential.lean",
+            "BanditRLProof.lean",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-CLOSED-PROPER-20261003.json",
+          "sha256": "b86daaa63a78eaa53db250591d9fbd040d3cec59961f6486b43c1a26d9d09095",
+          "affected_files": [
+            "BanditRLProof.lean",
+            "BanditRLProof/OnlineClosedProper.lean",
+            "website/content/books.json",
+            "website/content/chapters.json",
+            "website/content/highlights.json",
+            "website/content/readings.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-CONVEX-MIGRATION-20261005.json",
+          "sha256": "b1aa1e62f8226f2b8adf1843c7127cb3c941219c2c31c3c10d8eb2ed84496803",
+          "affected_files": [
+            "BanditRLProof/OnlineConvexExtended.lean",
+            "BanditRLProof/OnlineConvexExamples.lean",
+            "BanditRLProof/OnlineConvexClosures.lean",
+            "BanditRLProof/OnlineConvexSums.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-FTL-MIGRATION-20261005.json",
+          "sha256": "3224f5031e9c8527b8c0d5aab4e77a75ff948e3590f74fa0b7968a7d96a49ff2",
+          "affected_files": [
+            "BanditRLProof/OnlineFTLFailure.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-GUESSING-OSD-20261004.json",
+          "sha256": "388e8d2338a4d31ee8a309de3b2748c40ed1310867d9d8455e00c3c40fe3bfc1",
+          "affected_files": [
+            "BanditRLProof.lean",
+            "BanditRLProof/OnlineGuessingSubgradient.lean",
+            "website/content/books.json",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/scripts/build_site.py",
+            "website/scripts/check_site.py"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-HINGE-20261003.json",
+          "sha256": "f5639e1bbaa7ae69dca750eb3bf75d955063fc02d17d80a5d824bc9c0d3b57ee",
+          "affected_files": [
+            "BanditRLProof.lean",
+            "BanditRLProof/OnlineHinge.lean",
+            "website/content/books.json",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/scripts/build_site.py"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-HUBER-EXAMPLE-2.15-20261003.json",
+          "sha256": "462bb4f008ef70b068b198a8eef66b6906b7c95361f455256a04528c9fc2af25",
+          "affected_files": [
+            "BanditRLProof.lean",
+            "BanditRLProof/OnlineHuber.lean",
+            "website/content/books.json",
+            "website/content/chapters.json",
+            "website/content/highlights.json",
+            "website/content/readings.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-LINEARIZATION-20261004.json",
+          "sha256": "c4543b5ef9754d9b4f0a6af099449ff0ffb26c88d99016dd27b497ae4956a6f1",
+          "affected_files": [
+            "BanditRLProof.lean",
+            "BanditRLProof/OnlineLinearization.lean",
+            "website/content/books.json",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/scripts/build_site.py",
+            "website/scripts/check_site.py",
+            "website/static/lean-graph.js"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-LIPSCHITZ-20261004.json",
+          "sha256": "6da681f75df53b4a2e6cf2a717a617058ab4534ee9d98c3824fb449ffcb083c2",
+          "affected_files": [
+            "BanditRLProof.lean",
+            "BanditRLProof/OnlineLipschitzSubgradient.lean",
+            "website/content/books.json",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/scripts/build_site.py"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-NORMAL-CONE-20261003.json",
+          "sha256": "d549bedade09a18697bf8cb4aeff46b07320bbce5786ccc1a079501155321950",
+          "affected_files": [
+            "BanditRLProof.lean",
+            "BanditRLProof/OnlineNormalCone.lean",
+            "website/content/books.json",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-OGD-MIGRATION-20261005.json",
+          "sha256": "c0d2791beab41802139ea18d4228c4094fa5a64aab0c2d94771a6ed19a7ad436",
+          "affected_files": [
+            "BanditRLProof.lean",
+            "BanditRLProof/OnlineGradientDescent.lean",
+            "BanditRLProof/OnlineGradientDescentVariable.lean",
+            "BanditRLProof/OnlineGradientDescentSource.lean",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-OPTIMAL-STEP-20261004.json",
+          "sha256": "fc7472f29e4f4d7b326691f840c8c114806071af8e888f698ab6e81efe83e603",
+          "affected_files": [
+            "BanditRLProof.lean",
+            "BanditRLProof/OnlineOptimalStep.lean",
+            "website/content/books.json",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/scripts/build_site.py",
+            "website/scripts/check_site.py"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-OSD-20261004.json",
+          "sha256": "930849e19431aec1e44d42617f21c42e4bb107c4eecb579b0b59f21466b48789",
+          "affected_files": [
+            "BanditRLProof.lean",
+            "BanditRLProof/OnlineSubgradientDescent.lean",
+            "website/content/books.json",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/scripts/build_site.py",
+            "website/scripts/check_site.py"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-OSD-POLICY-20261004.json",
+          "sha256": "f3002707f00a8557706513962f45c76a8b8555780c35d3b824379eb3144992d3",
+          "affected_files": [
+            "BanditRLProof.lean",
+            "BanditRLProof/OnlineSubgradientPolicy.lean",
+            "website/content/books.json",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/scripts/build_site.py",
+            "website/scripts/check_site.py"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-SUBGRADIENT-ABSOLUTE-20261003.json",
+          "sha256": "3cf0f4587f133b10e8289846428a3c0455b44c849d0a682a50d83cbee64358d1",
+          "affected_files": [
+            "BanditRLProof.lean",
+            "BanditRLProof/OnlineSubgradientAbsolute.lean",
+            "website/content/books.json",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-SUBGRADIENT-BASIC-20261003.json",
+          "sha256": "24d2116c2e2ce1c4b30723d3b6e403aa8916ef7c5110b60c67edf7ea5ac91040",
+          "affected_files": [
+            "BanditRLProof.lean",
+            "BanditRLProof/OnlineSubgradientBasic.lean",
+            "website/content/books.json",
+            "website/content/chapters.json",
+            "website/content/highlights.json",
+            "website/content/readings.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-SUBGRADIENT-DIFFERENTIABILITY-20261003.json",
+          "sha256": "1462d462a69bb63f6814ccd30f7cdc7c067b0352cc2c6665ae59f06c486cc5b3",
+          "affected_files": [
+            "BanditRLProof.lean",
+            "BanditRLProof/OnlineConvexMinorant.lean",
+            "BanditRLProof/OnlineSubgradientDifferentiability.lean",
+            "website/content/books.json",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-SUBGRADIENT-INTERIOR-20261003.json",
+          "sha256": "04c2095a40b1aa365862a2f4ead27e36f962a4586277b60dec5c18b6c824834b",
+          "affected_files": [
+            "BanditRLProof.lean",
+            "BanditRLProof/OnlineConvexMinorant.lean",
+            "BanditRLProof/OnlineSubgradientInterior.lean",
+            "website/content/books.json",
+            "website/content/chapters.json",
+            "website/content/highlights.json",
+            "website/content/readings.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-SUBGRADIENT-MAX-20261003.json",
+          "sha256": "ec95752124b7524817eb399ee21c045caac16213d1b321de820a2e069bf3e954",
+          "affected_files": [
+            "BanditRLProof.lean",
+            "BanditRLProof/OnlineSubgradientMax.lean",
+            "website/content/books.json",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-SUBGRADIENT-SUM-20261003.json",
+          "sha256": "899c820dcf9620e0805ddb9e4da1fc621ca9719ec429597732f95ca2b48aa4f2",
+          "affected_files": [
+            "BanditRLProof.lean",
+            "BanditRLProof/OnlineSubgradientSum.lean",
+            "website/content/books.json",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-UNIT-SCALING-20261004.json",
+          "sha256": "a5078f1fbdd02abe0525bba9513d0d46beb954a13d516364c400275a535da85c",
+          "affected_files": [
+            "BanditRLProof.lean",
+            "BanditRLProof/OnlineUnitScaling.lean",
+            "website/content/books.json",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/scripts/build_site.py",
+            "website/scripts/check_site.py"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-ae-causal-20261008.json",
+          "sha256": "0c23e3a23e8f761f9fe70fa19c8aee9179b3dbdb1ea21bf09f9b93bdd979fb37",
+          "affected_files": [
+            "BanditRLProof/OnlineGuessingAECausal.lean",
+            "BanditRLProof.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-affine-subgradient-migration-20261007.json",
+          "sha256": "093b9bd38c8ecbef1b9e2c0e5f0ba9ed62c35e3f48d3a0f5a584da166122d59c",
+          "affected_files": [
+            "BanditRLProof/OnlineAffineSubgradient.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-barycenter-migration-20261005.json",
+          "sha256": "c32deaf3c43bb916d02a7e0d1df901d420258a374d4a10d256434ddb1d570d47",
+          "affected_files": [
+            "BanditRLProof/OnlineConvexBarycenter.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-c1-core-audit-20261008.json",
+          "sha256": "bdaa4035eecd6f1d21e6b129e5d881c779d0efad51d6ee99698d4cc16d017e77",
+          "affected_files": [
+            "BanditRLProof/OnlineLearningFoundations.lean",
+            "BanditRLProof/OnlineLearningStochastic.lean",
+            "BanditRLProof/OnlineLearningInformation.lean",
+            "BanditRLProof/OnlineLearningIID.lean",
+            "BanditRLProof/OnlineLearningHistory.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-ch2-b4-finite-identity-20261011.json",
+          "sha256": "e413f5b000cc2424927710631a175a9bb085c610c6dc22468f49958ac3692122",
+          "affected_files": [
+            "BanditRLProof/OnlineCumulativePotential.lean",
+            "BanditRLProof.lean",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-closed-proper-migration-20261006.json",
+          "sha256": "78581261e0cb36309cbc52fc84e76906cd063c5e85fdeb9a615615ffd2e78e39",
+          "affected_files": [
+            "BanditRLProof/OnlineClosedProper.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-completed-causal-20261008.json",
+          "sha256": "c05e444ea12f5acdb6f5e1d0654a28f33c76eb75033c9e58b1a018de62f71e34",
+          "affected_files": [
+            "BanditRLProof/OnlineGuessingCompletedCausal.lean",
+            "BanditRLProof.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-convex-nondifferentiability-20261007.json",
+          "sha256": "f2d3b71301226e3c38147d4b0bf4867981dbf90c0f49d912fa291cdb27126c97",
+          "affected_files": [
+            "BanditRLProof/OnlineConvexNondifferentiability.lean",
+            "BanditRLProof.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-convex-uncountability-20261007.json",
+          "sha256": "76c42f559f13240dc83c65d79625ac64e880b7ce14ae121b8e33ded312015ed8",
+          "affected_files": [
+            "BanditRLProof/OnlineConvexUncountability.lean",
+            "BanditRLProof.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-expectation-migration-20261005.json",
+          "sha256": "4afe2c3f98bfe9190fe138f9409c4d0965cda77cb3912ac96b2ca1f9eb13d1bb",
+          "affected_files": [
+            "BanditRLProof/OnlineExpectation.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-finite-loss-20261005.json",
+          "sha256": "fbebe590888c67f720c9bc660714fe3cb84a2b4a7dfd1f61e989d79c0a68e653",
+          "affected_files": [
+            "BanditRLProof/OnlineConstraintFiniteLoss.lean",
+            "BanditRLProof.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-first-order-migration-20261005.json",
+          "sha256": "987c3ebb9f15c56c2f5b0b4c69ddc1d25e9be6710dc82f02cb76e79c61e4753d",
+          "affected_files": [
+            "BanditRLProof/OnlineConvexFirstOrder.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-foundations-public-20261007.json",
+          "sha256": "3c596db70db53ab470ac7b0f7c33ae2b64ae33ba3cfc01c11e58dbef334aa001",
+          "affected_files": [
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-ftl-limit-20261009.json",
+          "sha256": "d28b7d976d9d412ce08cf3d270aab7a710d51feea7ee280f199a936a98d62eeb",
+          "affected_files": [
+            "BanditRLProof/OnlineFTLLimitSemantics.lean",
+            "BanditRLProof.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-ftl-obstruction-20261009.json",
+          "sha256": "a4f6f0ccbd8027353ee976e8da6f1d571ad12d45e99e67b9c1bd1a42e5c30a70",
+          "affected_files": [
+            "BanditRLProof/OnlineFTLOscillation.lean",
+            "BanditRLProof.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-ftl-sharp-20261007.json",
+          "sha256": "fe878de92442109694faa5619ea8bf29e14b1caf8e29d5d82151779f4cf85b11",
+          "affected_files": [
+            "BanditRLProof/OnlineLearningFTL.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-ftl-state-20261007.json",
+          "sha256": "a98513fc1dc85e3ca604c9421e24ad1b56217414215589e0599b525323346cbe",
+          "affected_files": [
+            "BanditRLProof/OnlineLearningMean.lean",
+            "BanditRLProof/OnlineLearningFTLState.lean",
+            "BanditRLProof.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json",
+            "website/scripts/build_site.py",
+            "website/content/declaration-boundaries.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-guessing-log-lower-20261008.json",
+          "sha256": "58b88baf89216f04db7ec3e37e53851db56a0e0af2abbb67cc229da9c4f88c08",
+          "affected_files": [
+            "BanditRLProof/OnlineGuessingLogLower.lean",
+            "BanditRLProof.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-guessing-migration-20261006.json",
+          "sha256": "89dbf74f80d32d7b138eda572cc426bc99d94148f0903694f62bad128ab20d86",
+          "affected_files": [
+            "BanditRLProof/OnlineGuessingOGD.lean",
+            "BanditRLProof/OnlineGuessingLower.lean",
+            "BanditRLProof/OnlineGuessingComparison.lean",
+            "BanditRLProof.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-guessing-osd-policy-20261007.json",
+          "sha256": "c57f6bbd824259c22446fdaf85934ea879c947f017c9d2af53da06d397f1d7c5",
+          "affected_files": [
+            "BanditRLProof/OnlineGuessingSubgradientPolicy.lean",
+            "BanditRLProof.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-guessing-public-20261007.json",
+          "sha256": "24ad6400893e3e23ee5f02eb20febc3c42be76fdd3d1c8ab84fd6e06c9284af7",
+          "affected_files": [
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-hinge-migration-20261007.json",
+          "sha256": "2be71d2c64653f41e244970ea1f875564b607dc4a4ac0660706d192fefeae0ce",
+          "affected_files": [
+            "BanditRLProof/OnlineHinge.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-huber-migration-20261006.json",
+          "sha256": "61fed4e47d2d042f4b187221b912c176d509a4643941c26987120aeb54b352d0",
+          "affected_files": [
+            "BanditRLProof/OnlineHuber.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-iid-benchmark-20261008.json",
+          "sha256": "daa34278551d366a2086604955672cf409d0c764d3c72927e7fd76fa6e57dc36",
+          "affected_files": [
+            "BanditRLProof/OnlineGuessingIIDBenchmark.lean",
+            "BanditRLProof.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-iid-success-20261008.json",
+          "sha256": "420e86f5c5293be3243d2ecc5d335818a30cef30423c020f5cd6d90d668b2a28",
+          "affected_files": [
+            "BanditRLProof/OnlineGuessingIIDSuccess.lean",
+            "BanditRLProof.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-jensen-migration-20261005.json",
+          "sha256": "a3d68e549dd5d7459d382741f043646391f79dcd84ae1cbd0a720c1f5dce8268",
+          "affected_files": [
+            "BanditRLProof/OnlineJensen.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-kernel-causal-20261008.json",
+          "sha256": "c499a8b6a755ebf29f6d1a6a22e91ccdce60081bf6a5bc6908f4c111dfdfe908",
+          "affected_files": [
+            "BanditRLProof/OnlineGuessingKernelCausal.lean",
+            "BanditRLProof.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-linearization-public-20261007.json",
+          "sha256": "a165b476d4c1730d83d5931662e2168cb1c728e68df3c124ebaa0dfa155c9bf0",
+          "affected_files": [
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-lipschitz-migration-20261007.json",
+          "sha256": "f0aba6745779afd47e185d13c8e5efb7ade8721989906aace829f05a03c629ca",
+          "affected_files": [
+            "BanditRLProof/OnlineLipschitzSubgradient.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-minorant-migration-20261005.json",
+          "sha256": "0e219a77351cf3ee041e3d1ad0500178f8282da7ca0255ece2de50d5a54e50ad",
+          "affected_files": [
+            "BanditRLProof/OnlineConvexMinorant.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-no-regret-20261008.json",
+          "sha256": "7ed969af3b86151f8319fcf487d2e5ac92a0011284ce714ea6bd0f3931e7b729",
+          "affected_files": [
+            "BanditRLProof/OnlineNoRegretSemantics.lean",
+            "BanditRLProof/OnlineLearningAsymptotic.lean",
+            "BanditRLProof.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-normal-cone-migration-20261007.json",
+          "sha256": "2e9b38ad607ce5fd472e32193f0fc1fd64cca8884232a368b729463cd2479043",
+          "affected_files": [
+            "BanditRLProof/OnlineNormalCone.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-optimal-step-public-20261007.json",
+          "sha256": "4d2828804a7a05ee3a6d9623ba22ffb074801ae7be5a070659cfacc10c9f3dca",
+          "affected_files": [
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-optimality-migration-20261005.json",
+          "sha256": "91645e175dd31ec708877257574f8d9da29de35078c1a5e5fd123f5691f48b09",
+          "affected_files": [
+            "BanditRLProof/OnlineConvexOptimality.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-osd-policy-public-20261007.json",
+          "sha256": "0ff90ba5e7d18e7df12bafb012488752e3f8af00b12e20cabcbd385ec04a4818",
+          "affected_files": [
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-osd-public-20261007.json",
+          "sha256": "024e229d1682434f6837fbcec6634ab3769037a97b98c166b495ed26416c7e4a",
+          "affected_files": [
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-randomized-iid-20261008.json",
+          "sha256": "8fcfb835f48ce4319ea0703d80ac60445ce011c429868cd55e220c18ba8bf3cc",
+          "affected_files": [
+            "BanditRLProof/OnlineGuessingRandomizedIID.lean",
+            "BanditRLProof.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-regret-domains-20261007.json",
+          "sha256": "372c784c45d7c790535509a5e601f520437405b970ad2905f362511bad5247a3",
+          "affected_files": [
+            "BanditRLProof/OnlineLearningRegret.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-square-minimum-20261008.json",
+          "sha256": "152821f0355d03c57b828cf26b31e05a278d691de1d2179bb0b58ebfb57ad52b",
+          "affected_files": [
+            "BanditRLProof/OnlineSquareMinimum.lean",
+            "BanditRLProof.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-subgradient-absolute-migration-20261007.json",
+          "sha256": "657ea5b36ff2800594c04d6125cb4fbe43ba91dcce58a0530cd3ebe1d4432520",
+          "affected_files": [
+            "BanditRLProof/OnlineSubgradientAbsolute.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-subgradient-basic-migration-20261006.json",
+          "sha256": "16675d0b1948f8a3900d8eb1d9770c31d21108857530e01edca5787433a1bf21",
+          "affected_files": [
+            "BanditRLProof/OnlineSubgradientBasic.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-subgradient-differentiability-migration-20261007.json",
+          "sha256": "c6d6f021b574c355e3194e3c294908417cef136466c5076fa22aa37da9f7157b",
+          "affected_files": [
+            "BanditRLProof/OnlineSubgradientDifferentiability.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-subgradient-interior-migration-20261006.json",
+          "sha256": "7d8827b453ff09c9f190acf94b48f7848895fb59d76d1b8ffa19dd60bf9d1037",
+          "affected_files": [
+            "BanditRLProof/OnlineSubgradientInterior.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-subgradient-max-migration-20261007.json",
+          "sha256": "597ff3ea3e1e6c24be2460d3120baab4bf73dfef032d76a10fa0e41a7899052b",
+          "affected_files": [
+            "BanditRLProof/OnlineSubgradientMax.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-subgradient-sum-migration-20261007.json",
+          "sha256": "4a9e4fde5590784e4f7d97651a5220e02b10e1c5ea5bf37ea169c6b011363885",
+          "affected_files": [
+            "BanditRLProof/OnlineSubgradientSum.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-unit-scaling-public-20261007.json",
+          "sha256": "fad72dfe126f4a7a5d18434b616136000078b8b8b4d1a507a48452d9179848d8",
+          "affected_files": [
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        }
+      ],
+      "prospective_new_draft_added_to_coverage": true,
+      "stale": [
+        "BanditRLProof/OnlineConvexExamples.lean",
+        "BanditRLProof/OnlineConvexExtended.lean",
+        "BanditRLProof/OnlineConvexFirstOrder.lean",
+        "BanditRLProof/OnlineGradientDescentSource.lean",
+        "BanditRLProof/OnlineGradientDescentVariable.lean"
+      ],
+      "uncovered": [],
+      "status_rows_sha256": "852d2a6d601bfb9e557b578503611f1d4d4bc7989e8df0976bd29f364544faa2"
+    },
+    {
+      "base": "fea256b1c03b14b79c6c84a965e8ac2b5a738f64",
+      "prospective_index_changed_paths": 36366,
+      "production": [
+        "BanditRLProof.lean",
+        "BanditRLProof/OnlineAdaptiveBenchmark.lean",
+        "BanditRLProof/OnlineAdaptiveEnergy.lean",
+        "BanditRLProof/OnlineAdaptiveOSD.lean",
+        "BanditRLProof/OnlineAdaptivePotential.lean",
+        "BanditRLProof/OnlineAdaptiveSummation.lean",
+        "BanditRLProof/OnlineAffineSubgradient.lean",
+        "BanditRLProof/OnlineBregmanExtended.lean",
+        "BanditRLProof/OnlineBregmanProximal.lean",
+        "BanditRLProof/OnlineClosedProper.lean",
+        "BanditRLProof/OnlineConstraintFiniteLoss.lean",
+        "BanditRLProof/OnlineConvexBarycenter.lean",
+        "BanditRLProof/OnlineConvexClosures.lean",
+        "BanditRLProof/OnlineConvexExamples.lean",
+        "BanditRLProof/OnlineConvexExtended.lean",
+        "BanditRLProof/OnlineConvexFirstOrder.lean",
+        "BanditRLProof/OnlineConvexMinorant.lean",
+        "BanditRLProof/OnlineConvexNondifferentiability.lean",
+        "BanditRLProof/OnlineConvexOptimality.lean",
+        "BanditRLProof/OnlineConvexSums.lean",
+        "BanditRLProof/OnlineConvexUncountability.lean",
+        "BanditRLProof/OnlineCumulativePotential.lean",
+        "BanditRLProof/OnlineExpectation.lean",
+        "BanditRLProof/OnlineFTLFailure.lean",
+        "BanditRLProof/OnlineFTLInitializationRegret.lean",
+        "BanditRLProof/OnlineFTLLimitSemantics.lean",
+        "BanditRLProof/OnlineFTLOscillation.lean",
+        "BanditRLProof/OnlineFTLSelector.lean",
+        "BanditRLProof/OnlineGradientDescent.lean",
+        "BanditRLProof/OnlineGradientDescentSource.lean",
+        "BanditRLProof/OnlineGradientDescentVariable.lean",
+        "BanditRLProof/OnlineGuessingAECausal.lean",
+        "BanditRLProof/OnlineGuessingComparison.lean",
+        "BanditRLProof/OnlineGuessingCompletedCausal.lean",
+        "BanditRLProof/OnlineGuessingIIDBenchmark.lean",
+        "BanditRLProof/OnlineGuessingIIDSuccess.lean",
+        "BanditRLProof/OnlineGuessingKernelCausal.lean",
+        "BanditRLProof/OnlineGuessingLogLower.lean",
+        "BanditRLProof/OnlineGuessingLower.lean",
+        "BanditRLProof/OnlineGuessingOGD.lean",
+        "BanditRLProof/OnlineGuessingRandomizedIID.lean",
+        "BanditRLProof/OnlineGuessingSubgradient.lean",
+        "BanditRLProof/OnlineGuessingSubgradientPolicy.lean",
+        "BanditRLProof/OnlineHinge.lean",
+        "BanditRLProof/OnlineHuber.lean",
+        "BanditRLProof/OnlineJensen.lean",
+        "BanditRLProof/OnlineLearningAsymptotic.lean",
+        "BanditRLProof/OnlineLearningFTL.lean",
+        "BanditRLProof/OnlineLearningFTLState.lean",
+        "BanditRLProof/OnlineLearningFoundations.lean",
+        "BanditRLProof/OnlineLearningHistory.lean",
+        "BanditRLProof/OnlineLearningIID.lean",
+        "BanditRLProof/OnlineLearningInformation.lean",
+        "BanditRLProof/OnlineLearningMean.lean",
+        "BanditRLProof/OnlineLearningRegret.lean",
+        "BanditRLProof/OnlineLearningStochastic.lean",
+        "BanditRLProof/OnlineLinearization.lean",
+        "BanditRLProof/OnlineLipschitzSubgradient.lean",
+        "BanditRLProof/OnlineNoRegretSemantics.lean",
+        "BanditRLProof/OnlineNonsmoothExamples.lean",
+        "BanditRLProof/OnlineNormalCone.lean",
+        "BanditRLProof/OnlineOptimalStep.lean",
+        "BanditRLProof/OnlinePrescientBregman.lean",
+        "BanditRLProof/OnlinePrescientBregmanRegret.lean",
+        "BanditRLProof/OnlinePrescientBregmanSource.lean",
+        "BanditRLProof/OnlinePrescientEuclidean.lean",
+        "BanditRLProof/OnlinePrescientLinear.lean",
+        "BanditRLProof/OnlineProximalComparison.lean",
+        "BanditRLProof/OnlineSquareMinimum.lean",
+        "BanditRLProof/OnlineSubgradientAbsolute.lean",
+        "BanditRLProof/OnlineSubgradientBasic.lean",
+        "BanditRLProof/OnlineSubgradientDescent.lean",
+        "BanditRLProof/OnlineSubgradientDifferentiability.lean",
+        "BanditRLProof/OnlineSubgradientInterior.lean",
+        "BanditRLProof/OnlineSubgradientMax.lean",
+        "BanditRLProof/OnlineSubgradientPolicy.lean",
+        "BanditRLProof/OnlineSubgradientSum.lean",
+        "BanditRLProof/OnlineUnboundedOGD.lean",
+        "BanditRLProof/OnlineUnboundedOSD.lean",
+        "BanditRLProof/OnlineUnitScaling.lean",
+        "BanditRLProof/OnlineWeightedPotential.lean",
+        "website/content/books.json",
+        "website/content/chapters.json",
+        "website/content/declaration-boundaries.json",
+        "website/content/highlights.json",
+        "website/content/readings.json",
+        "website/scripts/build_site.py",
+        "website/scripts/check_site.py",
+        "website/static/lean-graph.js"
+      ],
+      "changed_contracts": [
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-AFFINE-SUBGRADIENT-20261003.json",
+          "sha256": "58aaa1f141cc3d3a5f98c4e92193de56c8b2384e00e3d370113c7790388f19f0",
+          "affected_files": [
+            "BanditRLProof.lean",
+            "BanditRLProof/OnlineAffineSubgradient.lean",
+            "website/content/books.json",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-C1-CHAPTER-AUDIT-20261009.json",
+          "sha256": "7d1e08a994d5b392e3929dc638f25338ab8dc681ec4ec64ddd20ddfff77d7b1b",
+          "affected_files": [
+            "BanditRLProof/OnlineFTLInitializationRegret.lean",
+            "BanditRLProof.lean",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-CH2-ADAPTIVE-ENERGY-20261010.json",
+          "sha256": "105b54e3757b72cf1538e9d17ee5e0ff219ed75892bd19bbff02bdad60d3e3b4",
+          "affected_files": [
+            "BanditRLProof/OnlineAdaptiveEnergy.lean",
+            "BanditRLProof.lean",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-CH2-ADAPTIVE-OSD-20261010.json",
+          "sha256": "44b26d8231313655fa69a6db2b9f365157c0c8bde2b103ae2fdfb613e534f024",
+          "affected_files": [
+            "BanditRLProof/OnlineAdaptivePotential.lean",
+            "BanditRLProof/OnlineAdaptiveOSD.lean",
+            "BanditRLProof/OnlineAdaptiveBenchmark.lean",
+            "BanditRLProof.lean",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-CH2-ADAPTIVE-SUMMATION-20261010.json",
+          "sha256": "e029bde78a07cb5a2725b1cea8dd6c4cd7c41350109f07b741a9ebfb44ae010a",
+          "affected_files": [
+            "BanditRLProof/OnlineAdaptiveSummation.lean",
+            "BanditRLProof.lean",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-CH2-BREGMAN-20261009.json",
+          "sha256": "8513b4854681902ed0b046e6cf36bdf4246610be611dad3b19876fcac3e45acf",
+          "affected_files": [
+            "BanditRLProof/OnlineBregmanProximal.lean",
+            "BanditRLProof.lean",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-CH2-EXTENDED-PROXIMAL-20261009.json",
+          "sha256": "ab42fee379cc4837276cc3b3575c90d19abfffb578a589b59eea7562549dfb9f",
+          "affected_files": [
+            "BanditRLProof/OnlineBregmanExtended.lean",
+            "BanditRLProof.lean",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-CH2-INTEGRATION-20261011.json",
+          "sha256": "26782530df14c190c5f30b0ea0c2f5e6ea2b76228948b0ce1134bd9cde2a6dbd",
+          "affected_files": [
+            "BanditRLProof.lean",
+            "BanditRLProof/OnlineConvexExtended.lean",
+            "BanditRLProof/OnlineConvexExamples.lean",
+            "BanditRLProof/OnlineConvexFirstOrder.lean",
+            "BanditRLProof/OnlineGradientDescent.lean",
+            "BanditRLProof/OnlineGradientDescentVariable.lean",
+            "BanditRLProof/OnlineGradientDescentSource.lean",
+            "website/content/books.json",
+            "website/content/chapters.json",
+            "website/content/highlights.json",
+            "website/content/readings.json",
+            "website/scripts/build_site.py",
+            "website/scripts/check_site.py"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-CH2-NONSMOOTH-20261009.json",
+          "sha256": "ba97458b01cf9a374a52889886df6482f18a304fefc372ef7fd0f5f83aad31ca",
+          "affected_files": [
+            "BanditRLProof/OnlineNonsmoothExamples.lean",
+            "BanditRLProof.lean",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-CH2-PRESCIENT-20261009.json",
+          "sha256": "d63b8a0620f12ffda1f1e15a0e4b876c2f9a89e30628a102b8b1a71362f5c299",
+          "affected_files": [
+            "BanditRLProof/OnlinePrescientLinear.lean",
+            "BanditRLProof.lean",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-CH2-PRESCIENT-CAUSAL-20261009.json",
+          "sha256": "b17b12fe39c9502e254327efb24ed93037693852ba99d94b2df44dd21aeeb474",
+          "affected_files": [
+            "BanditRLProof/OnlinePrescientBregman.lean",
+            "BanditRLProof.lean",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/declaration-boundaries.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-CH2-PRESCIENT-CUMULATIVE-20261009.json",
+          "sha256": "a63b693255344cf416a6fc9daebcb7bebf72c3fffb73ba61c87ef3160f57a90b",
+          "affected_files": [
+            "BanditRLProof/OnlinePrescientBregmanRegret.lean",
+            "BanditRLProof.lean",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-CH2-PRESCIENT-EUCLIDEAN-20261011.json",
+          "sha256": "82b291d12ca9c0e00eb75692c06b1101d7f01bd72cfacd635a6b350c345bbc46",
+          "affected_files": [
+            "BanditRLProof/OnlinePrescientEuclidean.lean",
+            "BanditRLProof.lean",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-CH2-PRESCIENT-SOURCE-20261010.json",
+          "sha256": "a4f9267242ee573bdc5fd3c8618ecf5835b009ae86160e0be4d480e0abae439b",
+          "affected_files": [
+            "BanditRLProof/OnlinePrescientBregmanSource.lean",
+            "BanditRLProof.lean",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-CH2-PROXIMAL-20261009.json",
+          "sha256": "9d50b95482fba2fd32490ed1f748cd1fe7f2310ac497790f51a032b356314c5f",
+          "affected_files": [
+            "BanditRLProof/OnlineProximalComparison.lean",
+            "BanditRLProof.lean",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-CH2-RECONCILIATION-20261010.json",
+          "sha256": "07742d81a25c12f4fb3a154818ad90849a798dcd96eae8086faffcf01895c2d7",
+          "affected_files": [
+            "BanditRLProof/OnlineFTLSelector.lean",
+            "BanditRLProof.lean",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-CH2-UNBOUNDED-OGD-20261011.json",
+          "sha256": "6808c935fbecade7b83f510a173e402805afe3daa097bc77b2112d286b9ccbe4",
+          "affected_files": [
+            "BanditRLProof/OnlineUnboundedOGD.lean",
+            "BanditRLProof.lean",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-CH2-UNBOUNDED-OSD-20261010.json",
+          "sha256": "8bf4afc33573501b3fa287256da74f204ed856eba738350feb2c97c6c7e70452",
+          "affected_files": [
+            "BanditRLProof/OnlineUnboundedOSD.lean",
+            "BanditRLProof.lean",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-CH2-WEIGHTED-IDENTITY-20261011.json",
+          "sha256": "9d6e041bcd107d58352c64ae1783e8da09894104875cc95bbb89e8799989395d",
+          "affected_files": [
+            "BanditRLProof/OnlineWeightedPotential.lean",
+            "BanditRLProof.lean",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-CLOSED-PROPER-20261003.json",
+          "sha256": "b86daaa63a78eaa53db250591d9fbd040d3cec59961f6486b43c1a26d9d09095",
+          "affected_files": [
+            "BanditRLProof.lean",
+            "BanditRLProof/OnlineClosedProper.lean",
+            "website/content/books.json",
+            "website/content/chapters.json",
+            "website/content/highlights.json",
+            "website/content/readings.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-CONVEX-MIGRATION-20261005.json",
+          "sha256": "b1aa1e62f8226f2b8adf1843c7127cb3c941219c2c31c3c10d8eb2ed84496803",
+          "affected_files": [
+            "BanditRLProof/OnlineConvexExtended.lean",
+            "BanditRLProof/OnlineConvexExamples.lean",
+            "BanditRLProof/OnlineConvexClosures.lean",
+            "BanditRLProof/OnlineConvexSums.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-FTL-MIGRATION-20261005.json",
+          "sha256": "3224f5031e9c8527b8c0d5aab4e77a75ff948e3590f74fa0b7968a7d96a49ff2",
+          "affected_files": [
+            "BanditRLProof/OnlineFTLFailure.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-GUESSING-OSD-20261004.json",
+          "sha256": "388e8d2338a4d31ee8a309de3b2748c40ed1310867d9d8455e00c3c40fe3bfc1",
+          "affected_files": [
+            "BanditRLProof.lean",
+            "BanditRLProof/OnlineGuessingSubgradient.lean",
+            "website/content/books.json",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/scripts/build_site.py",
+            "website/scripts/check_site.py"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-HINGE-20261003.json",
+          "sha256": "f5639e1bbaa7ae69dca750eb3bf75d955063fc02d17d80a5d824bc9c0d3b57ee",
+          "affected_files": [
+            "BanditRLProof.lean",
+            "BanditRLProof/OnlineHinge.lean",
+            "website/content/books.json",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/scripts/build_site.py"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-HUBER-EXAMPLE-2.15-20261003.json",
+          "sha256": "462bb4f008ef70b068b198a8eef66b6906b7c95361f455256a04528c9fc2af25",
+          "affected_files": [
+            "BanditRLProof.lean",
+            "BanditRLProof/OnlineHuber.lean",
+            "website/content/books.json",
+            "website/content/chapters.json",
+            "website/content/highlights.json",
+            "website/content/readings.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-LINEARIZATION-20261004.json",
+          "sha256": "c4543b5ef9754d9b4f0a6af099449ff0ffb26c88d99016dd27b497ae4956a6f1",
+          "affected_files": [
+            "BanditRLProof.lean",
+            "BanditRLProof/OnlineLinearization.lean",
+            "website/content/books.json",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/scripts/build_site.py",
+            "website/scripts/check_site.py",
+            "website/static/lean-graph.js"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-LIPSCHITZ-20261004.json",
+          "sha256": "6da681f75df53b4a2e6cf2a717a617058ab4534ee9d98c3824fb449ffcb083c2",
+          "affected_files": [
+            "BanditRLProof.lean",
+            "BanditRLProof/OnlineLipschitzSubgradient.lean",
+            "website/content/books.json",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/scripts/build_site.py"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-NORMAL-CONE-20261003.json",
+          "sha256": "d549bedade09a18697bf8cb4aeff46b07320bbce5786ccc1a079501155321950",
+          "affected_files": [
+            "BanditRLProof.lean",
+            "BanditRLProof/OnlineNormalCone.lean",
+            "website/content/books.json",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-OGD-MIGRATION-20261005.json",
+          "sha256": "c0d2791beab41802139ea18d4228c4094fa5a64aab0c2d94771a6ed19a7ad436",
+          "affected_files": [
+            "BanditRLProof.lean",
+            "BanditRLProof/OnlineGradientDescent.lean",
+            "BanditRLProof/OnlineGradientDescentVariable.lean",
+            "BanditRLProof/OnlineGradientDescentSource.lean",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-OPTIMAL-STEP-20261004.json",
+          "sha256": "fc7472f29e4f4d7b326691f840c8c114806071af8e888f698ab6e81efe83e603",
+          "affected_files": [
+            "BanditRLProof.lean",
+            "BanditRLProof/OnlineOptimalStep.lean",
+            "website/content/books.json",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/scripts/build_site.py",
+            "website/scripts/check_site.py"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-OSD-20261004.json",
+          "sha256": "930849e19431aec1e44d42617f21c42e4bb107c4eecb579b0b59f21466b48789",
+          "affected_files": [
+            "BanditRLProof.lean",
+            "BanditRLProof/OnlineSubgradientDescent.lean",
+            "website/content/books.json",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/scripts/build_site.py",
+            "website/scripts/check_site.py"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-OSD-POLICY-20261004.json",
+          "sha256": "f3002707f00a8557706513962f45c76a8b8555780c35d3b824379eb3144992d3",
+          "affected_files": [
+            "BanditRLProof.lean",
+            "BanditRLProof/OnlineSubgradientPolicy.lean",
+            "website/content/books.json",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/scripts/build_site.py",
+            "website/scripts/check_site.py"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-SUBGRADIENT-ABSOLUTE-20261003.json",
+          "sha256": "3cf0f4587f133b10e8289846428a3c0455b44c849d0a682a50d83cbee64358d1",
+          "affected_files": [
+            "BanditRLProof.lean",
+            "BanditRLProof/OnlineSubgradientAbsolute.lean",
+            "website/content/books.json",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-SUBGRADIENT-BASIC-20261003.json",
+          "sha256": "24d2116c2e2ce1c4b30723d3b6e403aa8916ef7c5110b60c67edf7ea5ac91040",
+          "affected_files": [
+            "BanditRLProof.lean",
+            "BanditRLProof/OnlineSubgradientBasic.lean",
+            "website/content/books.json",
+            "website/content/chapters.json",
+            "website/content/highlights.json",
+            "website/content/readings.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-SUBGRADIENT-DIFFERENTIABILITY-20261003.json",
+          "sha256": "1462d462a69bb63f6814ccd30f7cdc7c067b0352cc2c6665ae59f06c486cc5b3",
+          "affected_files": [
+            "BanditRLProof.lean",
+            "BanditRLProof/OnlineConvexMinorant.lean",
+            "BanditRLProof/OnlineSubgradientDifferentiability.lean",
+            "website/content/books.json",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-SUBGRADIENT-INTERIOR-20261003.json",
+          "sha256": "04c2095a40b1aa365862a2f4ead27e36f962a4586277b60dec5c18b6c824834b",
+          "affected_files": [
+            "BanditRLProof.lean",
+            "BanditRLProof/OnlineConvexMinorant.lean",
+            "BanditRLProof/OnlineSubgradientInterior.lean",
+            "website/content/books.json",
+            "website/content/chapters.json",
+            "website/content/highlights.json",
+            "website/content/readings.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-SUBGRADIENT-MAX-20261003.json",
+          "sha256": "ec95752124b7524817eb399ee21c045caac16213d1b321de820a2e069bf3e954",
+          "affected_files": [
+            "BanditRLProof.lean",
+            "BanditRLProof/OnlineSubgradientMax.lean",
+            "website/content/books.json",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-SUBGRADIENT-SUM-20261003.json",
+          "sha256": "899c820dcf9620e0805ddb9e4da1fc621ca9719ec429597732f95ca2b48aa4f2",
+          "affected_files": [
+            "BanditRLProof.lean",
+            "BanditRLProof/OnlineSubgradientSum.lean",
+            "website/content/books.json",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/ONLINE-UNIT-SCALING-20261004.json",
+          "sha256": "a5078f1fbdd02abe0525bba9513d0d46beb954a13d516364c400275a535da85c",
+          "affected_files": [
+            "BanditRLProof.lean",
+            "BanditRLProof/OnlineUnitScaling.lean",
+            "website/content/books.json",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/scripts/build_site.py",
+            "website/scripts/check_site.py"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-ae-causal-20261008.json",
+          "sha256": "0c23e3a23e8f761f9fe70fa19c8aee9179b3dbdb1ea21bf09f9b93bdd979fb37",
+          "affected_files": [
+            "BanditRLProof/OnlineGuessingAECausal.lean",
+            "BanditRLProof.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-affine-subgradient-migration-20261007.json",
+          "sha256": "093b9bd38c8ecbef1b9e2c0e5f0ba9ed62c35e3f48d3a0f5a584da166122d59c",
+          "affected_files": [
+            "BanditRLProof/OnlineAffineSubgradient.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-barycenter-migration-20261005.json",
+          "sha256": "c32deaf3c43bb916d02a7e0d1df901d420258a374d4a10d256434ddb1d570d47",
+          "affected_files": [
+            "BanditRLProof/OnlineConvexBarycenter.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-c1-core-audit-20261008.json",
+          "sha256": "bdaa4035eecd6f1d21e6b129e5d881c779d0efad51d6ee99698d4cc16d017e77",
+          "affected_files": [
+            "BanditRLProof/OnlineLearningFoundations.lean",
+            "BanditRLProof/OnlineLearningStochastic.lean",
+            "BanditRLProof/OnlineLearningInformation.lean",
+            "BanditRLProof/OnlineLearningIID.lean",
+            "BanditRLProof/OnlineLearningHistory.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-ch2-b4-finite-identity-20261011.json",
+          "sha256": "e413f5b000cc2424927710631a175a9bb085c610c6dc22468f49958ac3692122",
+          "affected_files": [
+            "BanditRLProof/OnlineCumulativePotential.lean",
+            "BanditRLProof.lean",
+            "website/content/chapters.json",
+            "website/content/readings.json",
+            "website/content/highlights.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-closed-proper-migration-20261006.json",
+          "sha256": "78581261e0cb36309cbc52fc84e76906cd063c5e85fdeb9a615615ffd2e78e39",
+          "affected_files": [
+            "BanditRLProof/OnlineClosedProper.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-completed-causal-20261008.json",
+          "sha256": "c05e444ea12f5acdb6f5e1d0654a28f33c76eb75033c9e58b1a018de62f71e34",
+          "affected_files": [
+            "BanditRLProof/OnlineGuessingCompletedCausal.lean",
+            "BanditRLProof.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-convex-nondifferentiability-20261007.json",
+          "sha256": "f2d3b71301226e3c38147d4b0bf4867981dbf90c0f49d912fa291cdb27126c97",
+          "affected_files": [
+            "BanditRLProof/OnlineConvexNondifferentiability.lean",
+            "BanditRLProof.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-convex-uncountability-20261007.json",
+          "sha256": "76c42f559f13240dc83c65d79625ac64e880b7ce14ae121b8e33ded312015ed8",
+          "affected_files": [
+            "BanditRLProof/OnlineConvexUncountability.lean",
+            "BanditRLProof.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-expectation-migration-20261005.json",
+          "sha256": "4afe2c3f98bfe9190fe138f9409c4d0965cda77cb3912ac96b2ca1f9eb13d1bb",
+          "affected_files": [
+            "BanditRLProof/OnlineExpectation.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-finite-loss-20261005.json",
+          "sha256": "fbebe590888c67f720c9bc660714fe3cb84a2b4a7dfd1f61e989d79c0a68e653",
+          "affected_files": [
+            "BanditRLProof/OnlineConstraintFiniteLoss.lean",
+            "BanditRLProof.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-first-order-migration-20261005.json",
+          "sha256": "987c3ebb9f15c56c2f5b0b4c69ddc1d25e9be6710dc82f02cb76e79c61e4753d",
+          "affected_files": [
+            "BanditRLProof/OnlineConvexFirstOrder.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-foundations-public-20261007.json",
+          "sha256": "3c596db70db53ab470ac7b0f7c33ae2b64ae33ba3cfc01c11e58dbef334aa001",
+          "affected_files": [
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-ftl-limit-20261009.json",
+          "sha256": "d28b7d976d9d412ce08cf3d270aab7a710d51feea7ee280f199a936a98d62eeb",
+          "affected_files": [
+            "BanditRLProof/OnlineFTLLimitSemantics.lean",
+            "BanditRLProof.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-ftl-obstruction-20261009.json",
+          "sha256": "a4f6f0ccbd8027353ee976e8da6f1d571ad12d45e99e67b9c1bd1a42e5c30a70",
+          "affected_files": [
+            "BanditRLProof/OnlineFTLOscillation.lean",
+            "BanditRLProof.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-ftl-sharp-20261007.json",
+          "sha256": "fe878de92442109694faa5619ea8bf29e14b1caf8e29d5d82151779f4cf85b11",
+          "affected_files": [
+            "BanditRLProof/OnlineLearningFTL.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-ftl-state-20261007.json",
+          "sha256": "a98513fc1dc85e3ca604c9421e24ad1b56217414215589e0599b525323346cbe",
+          "affected_files": [
+            "BanditRLProof/OnlineLearningMean.lean",
+            "BanditRLProof/OnlineLearningFTLState.lean",
+            "BanditRLProof.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json",
+            "website/scripts/build_site.py",
+            "website/content/declaration-boundaries.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-guessing-log-lower-20261008.json",
+          "sha256": "58b88baf89216f04db7ec3e37e53851db56a0e0af2abbb67cc229da9c4f88c08",
+          "affected_files": [
+            "BanditRLProof/OnlineGuessingLogLower.lean",
+            "BanditRLProof.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-guessing-migration-20261006.json",
+          "sha256": "89dbf74f80d32d7b138eda572cc426bc99d94148f0903694f62bad128ab20d86",
+          "affected_files": [
+            "BanditRLProof/OnlineGuessingOGD.lean",
+            "BanditRLProof/OnlineGuessingLower.lean",
+            "BanditRLProof/OnlineGuessingComparison.lean",
+            "BanditRLProof.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-guessing-osd-policy-20261007.json",
+          "sha256": "c57f6bbd824259c22446fdaf85934ea879c947f017c9d2af53da06d397f1d7c5",
+          "affected_files": [
+            "BanditRLProof/OnlineGuessingSubgradientPolicy.lean",
+            "BanditRLProof.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-guessing-public-20261007.json",
+          "sha256": "24ad6400893e3e23ee5f02eb20febc3c42be76fdd3d1c8ab84fd6e06c9284af7",
+          "affected_files": [
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-hinge-migration-20261007.json",
+          "sha256": "2be71d2c64653f41e244970ea1f875564b607dc4a4ac0660706d192fefeae0ce",
+          "affected_files": [
+            "BanditRLProof/OnlineHinge.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-huber-migration-20261006.json",
+          "sha256": "61fed4e47d2d042f4b187221b912c176d509a4643941c26987120aeb54b352d0",
+          "affected_files": [
+            "BanditRLProof/OnlineHuber.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-iid-benchmark-20261008.json",
+          "sha256": "daa34278551d366a2086604955672cf409d0c764d3c72927e7fd76fa6e57dc36",
+          "affected_files": [
+            "BanditRLProof/OnlineGuessingIIDBenchmark.lean",
+            "BanditRLProof.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-iid-success-20261008.json",
+          "sha256": "420e86f5c5293be3243d2ecc5d335818a30cef30423c020f5cd6d90d668b2a28",
+          "affected_files": [
+            "BanditRLProof/OnlineGuessingIIDSuccess.lean",
+            "BanditRLProof.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-jensen-migration-20261005.json",
+          "sha256": "a3d68e549dd5d7459d382741f043646391f79dcd84ae1cbd0a720c1f5dce8268",
+          "affected_files": [
+            "BanditRLProof/OnlineJensen.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-kernel-causal-20261008.json",
+          "sha256": "c499a8b6a755ebf29f6d1a6a22e91ccdce60081bf6a5bc6908f4c111dfdfe908",
+          "affected_files": [
+            "BanditRLProof/OnlineGuessingKernelCausal.lean",
+            "BanditRLProof.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-linearization-public-20261007.json",
+          "sha256": "a165b476d4c1730d83d5931662e2168cb1c728e68df3c124ebaa0dfa155c9bf0",
+          "affected_files": [
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-lipschitz-migration-20261007.json",
+          "sha256": "f0aba6745779afd47e185d13c8e5efb7ade8721989906aace829f05a03c629ca",
+          "affected_files": [
+            "BanditRLProof/OnlineLipschitzSubgradient.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-minorant-migration-20261005.json",
+          "sha256": "0e219a77351cf3ee041e3d1ad0500178f8282da7ca0255ece2de50d5a54e50ad",
+          "affected_files": [
+            "BanditRLProof/OnlineConvexMinorant.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-no-regret-20261008.json",
+          "sha256": "7ed969af3b86151f8319fcf487d2e5ac92a0011284ce714ea6bd0f3931e7b729",
+          "affected_files": [
+            "BanditRLProof/OnlineNoRegretSemantics.lean",
+            "BanditRLProof/OnlineLearningAsymptotic.lean",
+            "BanditRLProof.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-normal-cone-migration-20261007.json",
+          "sha256": "2e9b38ad607ce5fd472e32193f0fc1fd64cca8884232a368b729463cd2479043",
+          "affected_files": [
+            "BanditRLProof/OnlineNormalCone.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-optimal-step-public-20261007.json",
+          "sha256": "4d2828804a7a05ee3a6d9623ba22ffb074801ae7be5a070659cfacc10c9f3dca",
+          "affected_files": [
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-optimality-migration-20261005.json",
+          "sha256": "91645e175dd31ec708877257574f8d9da29de35078c1a5e5fd123f5691f48b09",
+          "affected_files": [
+            "BanditRLProof/OnlineConvexOptimality.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-osd-policy-public-20261007.json",
+          "sha256": "0ff90ba5e7d18e7df12bafb012488752e3f8af00b12e20cabcbd385ec04a4818",
+          "affected_files": [
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-osd-public-20261007.json",
+          "sha256": "024e229d1682434f6837fbcec6634ab3769037a97b98c166b495ed26416c7e4a",
+          "affected_files": [
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-randomized-iid-20261008.json",
+          "sha256": "8fcfb835f48ce4319ea0703d80ac60445ce011c429868cd55e220c18ba8bf3cc",
+          "affected_files": [
+            "BanditRLProof/OnlineGuessingRandomizedIID.lean",
+            "BanditRLProof.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-regret-domains-20261007.json",
+          "sha256": "372c784c45d7c790535509a5e601f520437405b970ad2905f362511bad5247a3",
+          "affected_files": [
+            "BanditRLProof/OnlineLearningRegret.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-square-minimum-20261008.json",
+          "sha256": "152821f0355d03c57b828cf26b31e05a278d691de1d2179bb0b58ebfb57ad52b",
+          "affected_files": [
+            "BanditRLProof/OnlineSquareMinimum.lean",
+            "BanditRLProof.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-subgradient-absolute-migration-20261007.json",
+          "sha256": "657ea5b36ff2800594c04d6125cb4fbe43ba91dcce58a0530cd3ebe1d4432520",
+          "affected_files": [
+            "BanditRLProof/OnlineSubgradientAbsolute.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-subgradient-basic-migration-20261006.json",
+          "sha256": "16675d0b1948f8a3900d8eb1d9770c31d21108857530e01edca5787433a1bf21",
+          "affected_files": [
+            "BanditRLProof/OnlineSubgradientBasic.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-subgradient-differentiability-migration-20261007.json",
+          "sha256": "c6d6f021b574c355e3194e3c294908417cef136466c5076fa22aa37da9f7157b",
+          "affected_files": [
+            "BanditRLProof/OnlineSubgradientDifferentiability.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-subgradient-interior-migration-20261006.json",
+          "sha256": "7d8827b453ff09c9f190acf94b48f7848895fb59d76d1b8ffa19dd60bf9d1037",
+          "affected_files": [
+            "BanditRLProof/OnlineSubgradientInterior.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-subgradient-max-migration-20261007.json",
+          "sha256": "597ff3ea3e1e6c24be2460d3120baab4bf73dfef032d76a10fa0e41a7899052b",
+          "affected_files": [
+            "BanditRLProof/OnlineSubgradientMax.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-subgradient-sum-migration-20261007.json",
+          "sha256": "4a9e4fde5590784e4f7d97651a5220e02b10e1c5ea5bf37ea169c6b011363885",
+          "affected_files": [
+            "BanditRLProof/OnlineSubgradientSum.lean",
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        },
+        {
+          "path": "research-wiki/contribution-contracts/online-unit-scaling-public-20261007.json",
+          "sha256": "fad72dfe126f4a7a5d18434b616136000078b8b8b4d1a507a48452d9179848d8",
+          "affected_files": [
+            "website/content/readings.json",
+            "website/content/highlights.json",
+            "website/content/chapters.json"
+          ]
+        }
+      ],
+      "prospective_new_draft_added_to_coverage": true,
+      "stale": [],
+      "uncovered": [],
+      "status_rows_sha256": "792df94ff9e04387f0ac3ccdfe68adee4c233d98c5ace5e7c39848c7ede00573"
+    }
+  ],
+  "semantics": [
+    "Actual diff_entries executes git diff --name-status BASE...HEAD; staged/uncommitted merge not included. After merge commit both parents become ancestors, so staged index comparisons predict their two-way committed tree comparisons.",
+    "All changed nondeleted contribution JSON manifests are validated; covered is their union. Stale is covered minus all changed protected paths. A new manifest cannot subtract old stale coverage.",
+    "Historical main integration manifest is byte-identical index vs main; retain it. No old accepted record alteration or cosmetic mathematics edits to manufacture changed paths."
+  ],
+  "recommendation": {
+    "aggregate_command": "<bundled-python-3.12> -B -X utf8 tools/check_contributor_contract.py --base fea256b1c03b14b79c6c84a965e8ac2b5a738f64",
+    "when": "Only after actual clean merge/reconciliation commit including new manifest and intended final content; capture actual exit/output/counts.",
+    "scope": "Cumulative integration since common ancestor; not equivalent to PR-base delta gate. Current prospective covered/protected sets match89, but pure validation of all historical manifests and actual runtime success remain unasserted.",
+    "supplement": "Independently preserve exact seven protected changes relative first parent c445, review draft7 matches, retain unchanged inherited main contract bytes and five common source bytes.",
+    "actual_PR_base_gate": "If CI requires --base c445 or --base f07, preserve any actual failure and resolve governance semantics separately. Do not substitute fea while labeling it actual PR base. No checker patch authorized here."
+  },
+  "successor_corrections": [
+    "New manifest seven affected_files accurately names first-parent maintenance delta; do not inflate it to13/89 solely to appease gate. Add a separate durable baseline sidecar or verification prose explaining aggregate fea baseline and first-parent7 reconciliation review.",
+    "Fix any prose claiming current actual PR-base contributor pass; all gates pending.",
+    "Historical main record remains unchanged, and branch historical manifests remain immutable. For future true PR-base gate, a separately reviewed checker design would need classify inherited parent-identical manifests as historical and validate coverage obligations relative appropriate origin; this is not presently implemented."
+  ],
+  "not_performed": [
+    "No source/manifest edits",
+    "No commit/write-tree/merge",
+    "No actual contributor gate",
+    "No CI configuration or checker mutation"
+  ]
+}

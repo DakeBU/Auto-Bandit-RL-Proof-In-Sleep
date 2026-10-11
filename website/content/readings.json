@@ -2028,6 +2028,43 @@
         ],
         "takeaway": "Both the projection and the terminal residual matter in a changing-loss instance.",
         "boundary": "This exact-real example is kernel-checked in Tests.OnlineGradientDescentCanary; it is not a numerical experiment. The tuned-rate test uses its own specified trajectory. The repaired endpoints are instantiated in Tests.OnlineGradientDescentSourceCanary. A separate exact plane canary uses V={(x,0)}, f(x,y)=max(exp(-x),y), U={y<exp(-x)}. It proves U open/nonconvex, V unbounded, actual gradient(-1,0) at0 and next(1,0) for eta1, positive regret 1-exp(-2) against(2,0), and terminal square1. This is not a Lean proof that every alternative convex differentiability neighborhood fails. The horizon-tuned interval bound does not claim each tuned iterate clips."
+      },
+      "proof_bridge": {
+        "title": "Projection, one-step progress and the two telescopes",
+        "summary": "The projected-gradient update yields a squared-distance inequality. A supporting-gradient bound turns this into regret; fixed and varying rates then use separate telescoping routes.",
+        "steps": [
+          {
+            "title": "Establish projection and expand the update",
+            "detail": "A nonempty closed convex set in a complete real inner-product space has a norm minimizer. If p and q are both minimizers, their two variational inequalities force their squared separation to vanish. This library proof fills the existence-and-uniqueness obligation that the selected source pages state without proof. Projection cannot increase distance to a feasible comparator u. Apply this to z=x_t-eta_t g_t and expand the squared norm. Initialization and projection membership also show that every iterate is feasible.",
+            "math": "\\(\\langle z-p,q-p\\rangle\\le0,\\quad\\langle z-q,p-q\\rangle\\le0\\quad\\Longrightarrow\\quad\\|q-p\\|^2\\le0\\quad\\Longrightarrow\\quad p=q.\\) \\(\\|x_{t+1}-u\\|^2\\le\\|x_t-u\\|^2-2\\eta_t\\langle g_t,x_t-u\\rangle+\\eta_t^2\\|g_t\\|^2.\\)",
+            "fallback": "Two nearest points coincide; the projection is well defined. Projection and square expansion bound the next squared distance."
+          },
+          {
+            "title": "Convert distance progress into instantaneous regret",
+            "detail": "Convexity and differentiability give ell_t(x_t)-ell_t(u) at most the gradient inner product, with g_t the actual gradient at x_t. Divide the preceding inequality by the positive played rate. Set a_t=||x_t-u||^2.",
+            "math": "\\(\\ell_t(x_t)-\\ell_t(u)\\le\\langle g_t,x_t-u\\rangle\\le\\frac{a_t-a_{t+1}}{2\\eta_t}+\\frac{\\eta_t}{2}\\|g_t\\|^2.\\)",
+            "fallback": "The one-step bound keeps the actual gradient and both factors of one half."
+          },
+          {
+            "title": "Use ordinary telescoping for a fixed rate",
+            "detail": "Sum the one-step bound with one positive eta. Consecutive distance terms cancel, leaving the exact initial distance and the negative terminal residual. No diameter bound is needed.",
+            "math": "\\(R_T(u)\\le\\frac{a_1}{2\\eta}+\\frac{\\eta}{2}\\sum_{t=1}^T\\|g_t\\|^2-\\frac{a_{T+1}}{2\\eta}.\\)",
+            "fallback": "Fixed rates telescope with exact initial and terminal squared distances."
+          },
+          {
+            "title": "Use weighted telescoping for decreasing rates",
+            "detail": "For a positive horizon and positive nonincreasing played rates, the reciprocal differences are nonnegative. Bound the initial and intermediate squared distances by D^2 using feasibility and the domain diameter bound, and telescope the reciprocal coefficients. Keep the final negative distance term.",
+            "math": "\\(\\sum_{t=1}^T\\frac{a_t-a_{t+1}}{2\\eta_t}=\\frac{a_1}{2\\eta_1}+\\frac12\\sum_{t<T}\\left(\\frac1{\\eta_{t+1}}-\\frac1{\\eta_t}\\right)a_{t+1}-\\frac{a_{T+1}}{2\\eta_T}\\le\\frac{D^2-a_{T+1}}{2\\eta_T}.\\)",
+            "fallback": "Weighted telescoping needs bounded distances and nonincreasing positive rates."
+          },
+          {
+            "title": "Tune only in the positive, known-bound regime",
+            "detail": "Given D>0, G>0, T>0 and valid bounds on domain distances and actual-run gradient norms, choose eta=D/(G sqrt(T)). Use the fixed-rate bound, replace initial distance by D and energy by T G^2, then discard the nonpositive residual. This uses known bounds, not inaccessible future gradients or the unknown comparator.",
+            "math": "\\(\\eta=\\frac D{G\\sqrt T}>0,\\qquad R_T(u)\\le\\frac{D^2}{2\\eta}+\\frac{\\eta G^2T}{2}=DG\\sqrt T.\\)",
+            "fallback": "The positive known-bound prescription yields the square-root regret upper bound."
+          }
+        ],
+        "boundary": "The public source-facing endpoints use convexity on the feasible set and differentiability of a supplied ambient extension on an open neighborhood; the legacy RegularLoss helper has stronger convex-open assumptions and is labelled separately. Complete real Hilbert spaces generalize the source Euclidean setting. The fixed-rate formalization also permits zero rounds; variable-rate and tuned endpoints retain their positive-horizon requirements. No executable projection solver, stochastic guarantee, optimality lower bound or whole-chapter completion is claimed."
       }
     },
     {
@@ -2734,6 +2771,37 @@
         ],
         "takeaway": "The theorem handles genuine infinite values outside the domain without replacing them by zero.",
         "boundary": "The public Lean canary proves this instance and checks the separate bottom-valued definition and empty-domain boundary. It does not establish the remaining Chapter 2 results."
+      },
+      "proof_bridge": {
+        "title": "Real heights keep extended-real convexity precise",
+        "summary": "These are the library proof routes for the selected definitions, domain and indicator consequences, Theorem 2.4 and Examples 2.5–2.6. Orabona cites Rockafellar for Theorem 2.4 and leaves the norm example as an exercise.",
+        "steps": [
+          {
+            "title": "Project the epigraph to the effective domain",
+            "detail": "Every value below positive infinity has a real upper bound, even when the value is negative infinity. Lift two domain points to real epigraph heights. Convexity combines these lifts; the resulting finite height witnesses domain membership.",
+            "math": "\\(\\operatorname{dom}f=\\{x:f(x)<+\\infty\\},\\qquad\\operatorname{epi}_{\\mathbb R}f=\\{(x,r):f(x)\\le r,\\ r\\in\\mathbb R\\}.\\)",
+            "fallback": "Domain points admit real epigraph heights; their convex combinations do too."
+          },
+          {
+            "title": "Use real values only where finiteness is proved",
+            "detail": "For Theorem 2.4, the no-negative-infinity hypothesis and domain membership prove that each value is finite. Convexity of the effective domain proves this also for the interpolated point. The real epigraph equivalence then translates the ordinary convexity inequality in both directions. Infinite values are never globally identified with zero.",
+            "math": "\\(f(\\theta x+(1-\\theta)y)\\le\\theta f(x)+(1-\\theta)f(y),\\quad x,y\\in\\operatorname{dom}f,\\quad0<\\theta<1.\\)",
+            "fallback": "Under no-bottom and a convex effective domain, the strict-weight inequality is equivalent to epigraph convexity."
+          },
+          {
+            "title": "Read constraints as epigraph intersections",
+            "detail": "The indicator epigraph is the product of the feasible set and nonnegative real heights. Adding an indicator intersects the original epigraph with the feasible cylinder; the no-bottom assumption excludes ambiguous infinite addition. Convexity follows from products and intersections of convex sets.",
+            "math": "\\(\\operatorname{epi}_{\\mathbb R}\\iota_V=V\\times[0,\\infty),\\qquad\\operatorname{epi}_{\\mathbb R}(f+\\iota_V)=\\operatorname{epi}_{\\mathbb R}f\\cap(V\\times\\mathbb R).\\)",
+            "fallback": "Indicator convexity is equivalent to convexity of V; adding it restricts the epigraph to V."
+          },
+          {
+            "title": "Check the affine and norm examples",
+            "detail": "Affine evaluation preserves convex combinations exactly. For the norm, apply the triangle inequality followed by nonnegative homogeneity. The real-valued coercion bridge transfers these inequalities into the same extended-real epigraph definition.",
+            "math": "\\(\\|\\theta x+(1-\\theta)y\\|\\le\\theta\\|x\\|+(1-\\theta)\\|y\\|,\\qquad0\\le\\theta\\le1.\\)",
+            "fallback": "Affine functions satisfy equality; the norm satisfies the convexity inequality."
+          }
+        ],
+        "boundary": "Abstract real modules and normed spaces generalize the printed Euclidean examples. Empty domains are permitted. No-bottom is required only where stated. The separate finite-loss/domain-intersection theorem, closure constructions and the rest of Chapter 2 are outside this integration."
       }
     },
     {
@@ -2955,6 +3023,31 @@
         ],
         "takeaway": "Local differentiation supports a statement about all comparator points.",
         "boundary": "The public canary proves local differentiability, the nonzero gradient and both comparator cases; later Chapter2 results remain required."
+      },
+      "proof_bridge": {
+        "title": "From a local finite representation to every comparator",
+        "summary": "Theorem 2.7 is attributed to Rockafellar in the source. The implementation supplies a local finite-value bridge and a line-segment derivative argument, then treats an infinite comparator separately.",
+        "steps": [
+          {
+            "title": "Recover the function near the interior point",
+            "detail": "At x in the ambient interior of the effective domain, a whole neighborhood has values below positive infinity. Together with the global no-bottom assumption, these values are finite. Let iota denote the embedding from real to extended-real values. The embedded canonical real representative agrees with f locally, which gives the intended meaning to differentiability at x.",
+            "math": "\\(F(z)=(f(z)).\\operatorname{toReal},\\qquad\\iota(F(z))=f(z)\\quad\\text{for all }z\\text{ in a neighborhood of }x.\\)",
+            "fallback": "The real representative agrees with f near x, after embedding into the extended reals."
+          },
+          {
+            "title": "Compare the derivative with a secant slope",
+            "detail": "For a comparator y in the effective domain, restrict the convex real representative to the segment x+t(y-x). Its derivative at zero is the gradient inner product. Convexity bounds this derivative by the secant slope from zero to one.",
+            "math": "\\(h(t)=F(x+t(y-x)),\\qquad h^{\\prime}(0)=\\langle\\nabla F(x),y-x\\rangle\\le h(1)-h(0).\\)",
+            "fallback": "The directional derivative is at most the secant slope to a finite comparator."
+          },
+          {
+            "title": "Restore extended-real values and include outside points",
+            "detail": "Rearrange the secant inequality and embed the finite values back into EReal. If y is outside the effective domain, f(y) is positive infinity, so the same lower bound is automatic. This split preserves the source quantifier over every ambient comparator.",
+            "math": "\\(\\forall y,\\qquad f(x)+\\langle\\nabla F(x),y-x\\rangle\\le f(y).\\)",
+            "fallback": "The supporting-gradient inequality holds for all y, including those with f(y)=positive infinity."
+          }
+        ],
+        "boundary": "The formal result generalizes the Euclidean setting to a complete real inner-product space. It retains global no-bottom, convex epigraph, ambient interior at x and differentiability of the local real representative. It does not require differentiability at every comparator or replace infinite values globally by zero."
       }
     },
     {

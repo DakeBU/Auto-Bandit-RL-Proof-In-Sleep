@@ -8600,6 +8600,21 @@
       "proof_idea": "Put H_t(v)=sum_{i<t}loss_i(v), so G_t=psi_t+H_(t+1). The regularizer parts of the within-G sum, together with the interior drift, telescope to psi_0(y_0)-psi_(T-1)(z). The cumulative-loss parts telescope to sum_{t<T}loss_t(y_t)-H_T(z). Adding the final comparator regularizer minus the initial played regularizer and the retained G_(T-1)(z)-G_(T-1)(u) leaves exactly the regret. This is the mathematical cancellation argument, not a claimed implementation route.",
       "lean_notes": "E has no additional typeclass assumptions; psi/loss are real-valued and T>0 is the only propositional premise. The boundary regularizer difference is psi_(T-1)(u)-psi_0(y_0): final comparator regularizer minus initial played regularizer. Local y and G are definitions, not extra hypotheses. The exact Lean header and full-proof source link use the declaration fold; these notes do not claim a complete rendered source-proof graph. Selected actual compiled direct VALUE occurrences are Nat.recAux, Finset.sum_range_succ, Finset.sum_range_zero and Nat.sub_add_cancel. Occurrence does not establish logical necessity or a complete transitive graph; Nat.rec is not the exported direct constant. The source-only AND topology remains distinct from these implementation occurrences. Locally compiled and independently production-BODY-reviewed finite-real identity; two compiled public canaries specialize the same core to check a positive gap, nonzero drift and the terminal splice. Full source performance bounds remain open. Unmerged and unpublished.",
       "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescent.project_existsUnique",
+      "title": "A unique nearest point exists before selection",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 0,
+      "plain": "Every nonempty closed convex subset of a complete real inner-product space has exactly one point minimizing distance from any ambient point.",
+      "math": "\\(\\exists! p\\in V,\\quad \\|z-p\\|=\\inf_{w\\in V}\\|z-w\\|.\\)",
+      "intuition": "Existence supplies a minimizer. Convexity makes two minimizers satisfy opposite variational inequalities, forcing their squared separation to vanish.",
+      "why": "Algorithm 2.1 and Proposition 2.11 use a well-defined unique Euclidean projection. This theorem establishes existence and uniqueness before the existing choice-based definition.",
+      "position": "Well-definedness obligation for Orabona v10, printed p.12 / PDF p.24. The proof is library-derived; it is not an additional numbered source theorem.",
+      "proof_idea": "Take a minimizer from Mathlib. For two minimizing points p and q, the variational characterization gives <z-p,q-p> <= 0 and <z-q,p-q> <= 0. Adding these inequalities gives ||q-p||^2 <= 0, hence q=p.",
+      "lean_notes": "The source finite-dimensional Euclidean setting is generalized to a complete real inner-product space. Nonempty, closed and convex are explicit Domain fields; no boundedness or compactness is added. project_spec characterizes the unchanged selected projection using exactly this minimizer predicate. No executable solver, arbitrary Banach-space projection or nonexpansiveness claim. The proof reuses Mathlib exists_norm_eq_iInf_of_complete_convex and norm_eq_iInf_iff_real_inner_le_zero; these upstream dependencies are not local declaration nodes.",
+      "dependencies": []
     }
   ]
 }

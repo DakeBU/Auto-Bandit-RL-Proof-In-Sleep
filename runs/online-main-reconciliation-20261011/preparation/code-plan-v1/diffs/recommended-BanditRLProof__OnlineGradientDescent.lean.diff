@@ -1,0 +1,26 @@
+--- HEAD/BanditRLProof/OnlineGradientDescent.lean
++++ candidate/BanditRLProof/OnlineGradientDescent.lean
+@@ -30,6 +30,23 @@
+   nonempty : carrier.Nonempty
+   closed : IsClosed carrier
+   convex : Convex ℝ carrier
++
++/-- Every nonempty closed convex domain has a unique nearest point before any choice is made.
++This establishes the well-definedness of the same projection used below. -/
++theorem project_existsUnique (V : Domain E) (z : E) :
++    ∃! p : E, p ∈ V.carrier ∧ ‖z - p‖ = ⨅ w : V.carrier, ‖z - w‖ := by
++  obtain ⟨p, hp, hmin⟩ := exists_norm_eq_iInf_of_complete_convex V.nonempty
++    V.closed.isComplete V.convex z
++  refine ⟨p, ⟨hp, hmin⟩, ?_⟩
++  intro q hq
++  have hpq := (norm_eq_iInf_iff_real_inner_le_zero V.convex hp).mp hmin q hq.1
++  have hqp := (norm_eq_iInf_iff_real_inner_le_zero V.convex hq.1).mp hq.2 p hp
++  rw [show p - q = -(q - p) by abel, inner_neg_right] at hqp
++  have he : inner ℝ (z - p) (q - p) - inner ℝ (z - q) (q - p) = ‖q - p‖ ^ 2 := by
++    rw [← inner_sub_left, show (z - p) - (z - q) = q - p by abel,
++      real_inner_self_eq_norm_sq]
++  have hn : ‖q - p‖ = 0 := by nlinarith [norm_nonneg (q - p)]
++  exact sub_eq_zero.mp (norm_eq_zero.mp hn)
+ 
+ /-- The unique nearest point, constructed from the Hilbert projection theorem. -/
+ def project (V : Domain E) (z : E) : E :=

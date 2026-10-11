@@ -1,0 +1,11 @@
+# Independent prepared reconciliation review
+
+Prepared conditional, with one exact-V1 application blocker: the canary candidate preserves the Git blob but not current worktree RAW. Suggested SHA12484bed1dd4b2e2d3c917dd49b9f6ccbe2fd848b25dc1b2f8f4c5bd3d322a7e is LF; actual clean RAW SHA f2a05231cbbb2b1428d7d2924a9f83e45042c769603784abb9e53a19916344f0 has117 CRLF lines. Create and pin the proposed V2 RAW-preserving override before applying. No mathematical repair is needed.
+
+Independent checks verified both plan hashes, all12 book archives against Git blobs,21 code input blobs,4 content candidates and7 code candidates. Both-parent source-card non-status fields are exact, including assumptions/math/URLs. Three main proof bridges are exact; actual projection-existence producer and the referenced shared convex/first-order declarations exist. Module membership is preserved; all40 teaching chapters have one primary owner (Bandit10, Online30). Highlights preserve both object multisets:502 entries,501 names, exactly the inherited PosteriorKernel duplicate.
+
+Roots preserve current RAW and all main imports. OGD adds only the exact main theorem block. Actual Python diffs retain schema3 search and boundary checks while integrating ownership navigation and Bandit counts. All37 test methods are retained parent union; no head assertion is removed. Main's three-route constant is generalized to exact actual ownership with the original three required. These are structural checks, not executed tests.
+
+Compact status preserves Chapter2 partial,7+6 open boundaries,null denominator and active full-book scope. Frozen inventory remains61cf1901a632aeee35ee71511ba53b115ae0958649ea78b786536a4404684ba1. Historical pending/unmerged card text is preserved as earlier package evidence, not new main/live acceptance. Retain the12 exact original archives durably at application; do not rely solely on ignored temporary storage.
+
+Fresh combined Lean/Tests/harness, source-line/hash successor evidence, registry/search/site gates and actual merged-tree checks remain required. The branch schema3 decoder must survive the merge. No canonical change, merge, compile, site execution, strong-convex freeze or whole-chapter acceptance occurred.
