@@ -1,0 +1,61 @@
+import BanditRLProof.OnlinePrescientBregmanSource
+import Mathlib.Analysis.InnerProductSpace.Calculus
+import Mathlib.Analysis.Convex.Strong
+import Mathlib.Tactic
+
+noncomputable section
+open Set Finset
+open BanditRL.OnlineBregman
+set_option autoImplicit false
+
+namespace BanditRL.OnlineBregman
+
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]
+
+theorem quadratic_geometry (x y : E) :
+    HasGradientAt (fun z : E => ‖z‖ ^ 2 / 2) y y ∧
+    divergence (fun z : E => ‖z‖ ^ 2 / 2) x y = ‖x - y‖ ^ 2 / 2
+
+end BanditRL.OnlineBregman
+
+namespace BanditRL.OnlinePrescientBregman
+
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    [FiniteDimensional ℝ E]
+
+theorem euclidean_variable_regret (V : Set E) (hV : Convex ℝ V)
+    (hVn : V.Nonempty) (hVc : IsClosed V)
+    (η : ℕ → ℝ) (loss : ℕ → E → EReal)
+    (x0 : E) (x : ℕ → E) (T : ℕ) (hT : 0 < T)
+    (hη : ∀ t < T, 0 < η t) (hinit : x 0 = x0)
+    (hmono : ∀ t, t + 1 < T → η (t + 1) ≤ η t)
+    (hbot : ∀ t < T, ∀ z, loss t z ≠ ⊥)
+    (hdom : ∀ t < T, V ⊆ BanditRL.OnlineConvex.effectiveDomain (loss t))
+    (hs : ∀ t < T, ∀ z ∈ V,
+      (BanditRL.OnlineConvex.SourceSubdifferential (loss t) z).Nonempty)
+    (hmin : ∀ t < T, x (t + 1) ∈ V ∧
+      IsMinOn (fun z => loss t z + ((‖z - x t‖ ^ 2 / (2 * η t) : ℝ) : EReal))
+        V (x (t + 1))) (u : E) (hu : u ∈ V) :
+    (∀ t ≤ T, iterate V (fun z : E => ‖z‖ ^ 2 / 2) η loss x0 t = some (x t)) ∧
+    (∑ t ∈ range T, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤
+      ((range T).sup' (nonempty_range_iff.mpr (Nat.ne_of_gt hT))
+        (fun t => ‖u - x t‖ ^ 2 / 2)) / η (T - 1) -
+      ∑ t ∈ range T, ‖x (t + 1) - x t‖ ^ 2 / (2 * η t)
+
+theorem euclidean_fixed_regret (V : Set E) (hV : Convex ℝ V)
+    (hVn : V.Nonempty) (hVc : IsClosed V)
+    (η : ℝ) (hη : 0 < η) (loss : ℕ → E → EReal)
+    (x0 : E) (x : ℕ → E) (T : ℕ) (hinit : x 0 = x0)
+    (hbot : ∀ t < T, ∀ z, loss t z ≠ ⊥)
+    (hdom : ∀ t < T, V ⊆ BanditRL.OnlineConvex.effectiveDomain (loss t))
+    (hs : ∀ t < T, ∀ z ∈ V,
+      (BanditRL.OnlineConvex.SourceSubdifferential (loss t) z).Nonempty)
+    (hmin : ∀ t < T, x (t + 1) ∈ V ∧
+      IsMinOn (fun z => loss t z + ((‖z - x t‖ ^ 2 / (2 * η) : ℝ) : EReal))
+        V (x (t + 1))) (u : E) (hu : u ∈ V) :
+    (∀ t ≤ T, iterate V (fun z : E => ‖z‖ ^ 2 / 2) (fun _ => η) loss x0 t = some (x t)) ∧
+    (∑ t ∈ range T, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤
+      ‖u - x0‖ ^ 2 / (2 * η) -
+      (∑ t ∈ range T, ‖x (t + 1) - x t‖ ^ 2) / (2 * η)
+
+end BanditRL.OnlinePrescientBregman

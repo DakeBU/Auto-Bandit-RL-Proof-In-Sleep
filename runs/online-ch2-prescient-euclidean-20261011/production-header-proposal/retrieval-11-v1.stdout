@@ -1,0 +1,75 @@
+BanditRLProof\OnlinePrescientBregman.lean:11:theorem divergence_extension_eq (X : Set E) (ψ φ : E → ℝ)
+BanditRLProof\OnlinePrescientBregman.lean:13:    divergence ψ a b = divergence φ a b := by
+BanditRLProof\OnlinePrescientBregman.lean:19:  simp only [divergence, hEq ha, hEq (interior_subset hb), hd]
+BanditRLProof\OnlinePrescientBregman.lean:30:      IsMinOn (fun z => f z + ((η⁻¹ * divergence ψ z x : ℝ) : EReal)) V p
+BanditRLProof\OnlinePrescientBregman.lean:40:    p ∈ V ∧ IsMinOn (fun z => f z + ((η⁻¹ * divergence ψ z x : ℝ) : EReal)) V p := by
+BanditRLProof\OnlinePrescientBregman.lean:50:      IsMinOn (fun z => f z + ((η⁻¹ * divergence ψ z x : ℝ) : EReal)) V p := by
+BanditRLProof\OnlinePrescientBregman.lean:77:      IsMinOn (fun z => loss t z + (((η t)⁻¹ * divergence ψ z x : ℝ) : EReal)) V p := by
+BanditRLProof\OnlinePrescientBregman.lean:98:        IsMinOn (fun z => loss t z + (((η t)⁻¹ * divergence ψ z x : ℝ) : EReal)) V p) :
+BanditRLProof\OnlinePrescientBregman.lean:132:      divergence ψ u x - divergence ψ u p - divergence ψ p x := by
+BanditRLProof\OnlineBregmanProximal.lean:9:`divergence` is the base. Its total `fderiv` formula alone does not imply positivity
+BanditRLProof\OnlineBregmanProximal.lean:25:/-- Ordered divergence formed from the actual Fréchet derivative at its base. -/
+BanditRLProof\OnlineBregmanProximal.lean:26:def divergence (ψ : E → ℝ) (x y : E) : ℝ :=
+BanditRLProof\OnlineBregmanProximal.lean:30:theorem divergence_self (ψ : E → ℝ) (x : E) :
+BanditRLProof\OnlineBregmanProximal.lean:31:    divergence ψ x x = 0 := by
+BanditRLProof\OnlineBregmanProximal.lean:32:  simp [divergence]
+BanditRLProof\OnlineBregmanProximal.lean:36:    divergence ψ z x + divergence ψ x y - divergence ψ z y =
+BanditRLProof\OnlineBregmanProximal.lean:38:  simp only [divergence, ContinuousLinearMap.sub_apply, map_sub]
+BanditRLProof\OnlineBregmanProximal.lean:42:theorem divergence_nonneg (X : Set E) (ψ : E → ℝ) (hψ : ConvexOn ℝ X ψ)
+BanditRLProof\OnlineBregmanProximal.lean:44:    0 ≤ divergence ψ x y := by
+BanditRLProof\OnlineBregmanProximal.lean:55:  dsimp [divergence]
+BanditRLProof\OnlineBregmanProximal.lean:65:    (hmin : IsMinOn (fun z => f z + η⁻¹ * divergence ψ z x) V p) :
+BanditRLProof\OnlineBregmanProximal.lean:67:      divergence ψ u x - divergence ψ u p - divergence ψ p x := by
+BanditRLProof\OnlineBregmanProximal.lean:72:  have hpen : HasFDerivAt (fun z => η⁻¹ * divergence ψ z x)
+BanditRLProof\OnlineBregmanProximal.lean:74:    simpa only [divergence, Pi.sub_apply, Pi.smul_apply, smul_eq_mul] using
+BanditRLProof\OnlineBregmanProximal.lean:78:    (fun z => η⁻¹ * divergence ψ z x) p hp hf hmin
+BanditRLProof\OnlineBregmanProximal.lean:94:theorem divergence_eq_gradient (ψ : E → ℝ) (x y : E)
+BanditRLProof\OnlineBregmanProximal.lean:96:    divergence ψ x y = ψ x - ψ y - inner ℝ (gradient ψ y) (x - y) := by
+BanditRLProof\OnlineBregmanProximal.lean:97:  rw [divergence, hd.hasGradientAt.fderiv_apply]
+BanditRLProof\OnlinePrescientBregmanSource.lean:10:divergence, selector and recursion are reused. No new per-Book project.
+BanditRLProof\OnlinePrescientBregmanSource.lean:40:    StrictConvexOn ℝ V (fun z => (f z).toReal + η⁻¹ * divergence ψ z x) := by
+BanditRLProof\OnlinePrescientBregmanSource.lean:53:  have hD : divergence ψ (a • p + b • q) x <
+BanditRLProof\OnlinePrescientBregmanSource.lean:54:      a * divergence ψ p x + b * divergence ψ q x := by
+BanditRLProof\OnlinePrescientBregmanSource.lean:55:    unfold divergence
+BanditRLProof\OnlinePrescientBregmanSource.lean:72:    (hmin : IsMinOn (fun z => f z + ((η⁻¹ * divergence ψ z x : ℝ) : EReal)) V p) :
+BanditRLProof\OnlinePrescientBregmanSource.lean:82:      IsMinOn (fun z => f z + ((η⁻¹ * divergence ψ z x : ℝ) : EReal)) V q :=
+BanditRLProof\OnlinePrescientBregmanSource.lean:105:      IsMinOn (fun z => loss t z + (((η t)⁻¹ * divergence ψ z (x t) : ℝ) : EReal))
+BanditRLProof\OnlinePrescientBregmanSource.lean:144:      IsMinOn (fun z => loss t z + ((η⁻¹ * divergence ψ z (x t) : ℝ) : EReal))
+BanditRLProof\OnlinePrescientBregmanSource.lean:147:      divergence ψ u x0 / η - (∑ t ∈ range T, divergence ψ (x (t + 1)) (x t)) / η := by
+BanditRLProof\OnlinePrescientBregmanSource.lean:176:      IsMinOn (fun z => loss t z + (((η t)⁻¹ * divergence ψ z (x t) : ℝ) : EReal))
+BanditRLProof\OnlinePrescientBregmanSource.lean:180:        (fun t => divergence ψ u (x t))) / η (T - 1) -
+BanditRLProof\OnlinePrescientBregmanSource.lean:181:      ∑ t ∈ range T, divergence ψ (x (t + 1)) (x t) / η t := by
+BanditRLProof\OnlinePrescientBregmanRegret.lean:10:theorem iterate_divergence_sum (V X : Set E) (hV : Convex ℝ V) (ψ : E → ℝ)
+BanditRLProof\OnlinePrescientBregmanRegret.lean:21:      (∑ t ∈ range T, (divergence ψ u (x t) - divergence ψ u (x (t + 1))) / η t) -
+BanditRLProof\OnlinePrescientBregmanRegret.lean:22:      ∑ t ∈ range T, divergence ψ (x (t + 1)) (x t) / η t := by
+BanditRLProof\OnlinePrescientBregmanRegret.lean:25:        (divergence ψ u (x t) - divergence ψ u (x (t + 1))) / η t -
+BanditRLProof\OnlinePrescientBregmanRegret.lean:26:          divergence ψ (x (t + 1)) (x t) / η t := by
+BanditRLProof\OnlinePrescientBregmanRegret.lean:50:      divergence ψ u x0 / η - divergence ψ u (x T) / η -
+BanditRLProof\OnlinePrescientBregmanRegret.lean:51:      (∑ t ∈ range T, divergence ψ (x (t + 1)) (x t)) / η := by
+BanditRLProof\OnlinePrescientBregmanRegret.lean:52:  have h := iterate_divergence_sum V X hV ψ hd (fun _ => η) loss x0 x T
+BanditRLProof\OnlinePrescientBregmanRegret.lean:68:    (hbound : ∀ t < T, divergence ψ u (x t) ≤ M) :
+BanditRLProof\OnlinePrescientBregmanRegret.lean:70:      M / η (T - 1) - divergence ψ u (x T) / η (T - 1) -
+BanditRLProof\OnlinePrescientBregmanRegret.lean:71:      ∑ t ∈ range T, divergence ψ (x (t + 1)) (x t) / η t := by
+BanditRLProof\OnlinePrescientBregmanRegret.lean:72:  have hsum := iterate_divergence_sum V X hV ψ hd η loss x0 x T
+BanditRLProof\OnlinePrescientBregmanRegret.lean:75:    (fun t => 2 * divergence ψ u (x t)) η (2 * M) T hT hη hmono
+BanditRLProof\OnlinePrescientBregmanRegret.lean:92:      divergence ψ u x0 / η -
+BanditRLProof\OnlinePrescientBregmanRegret.lean:93:      (∑ t ∈ range T, divergence ψ (x (t + 1)) (x t)) / η := by
+BanditRLProof\OnlinePrescientBregmanRegret.lean:96:  have hterminal := divergence_nonneg X ψ hc.convexOn u (x T) (hVX hu)
+BanditRLProof\OnlinePrescientBregmanRegret.lean:99:  have hquot : 0 ≤ divergence ψ u (x T) / η := div_nonneg hterminal hη.le
+BanditRLProof\OnlinePrescientBregmanRegret.lean:116:        (fun t => divergence ψ u (x t))) / η (T - 1) -
+BanditRLProof\OnlinePrescientBregmanRegret.lean:117:      ∑ t ∈ range T, divergence ψ (x (t + 1)) (x t) / η t := by
+BanditRLProof\OnlinePrescientBregmanRegret.lean:119:    (fun t => divergence ψ u (x t))
+BanditRLProof\OnlinePrescientBregmanRegret.lean:120:  have hbound (t : ℕ) (ht : t < T) : divergence ψ u (x t) ≤ M :=
+BanditRLProof\OnlinePrescientBregmanRegret.lean:121:    Finset.le_sup' (fun t => divergence ψ u (x t)) (mem_range.mpr ht)
+BanditRLProof\OnlinePrescientBregmanRegret.lean:124:  have hterminal := divergence_nonneg X ψ hc.convexOn u (x T) (hVX hu)
+BanditRLProof\OnlinePrescientBregmanRegret.lean:128:  have hquot : 0 ≤ divergence ψ u (x T) / η (T - 1) :=
+BanditRLProof\OnlineBregmanExtended.lean:65:    IsMinOn (fun z => f z + ((η⁻¹ * divergence ψ z x : ℝ) : EReal)) V p ↔
+BanditRLProof\OnlineBregmanExtended.lean:66:      IsMinOn (fun z => (f z).toReal + η⁻¹ * divergence ψ z x) V p := by
+BanditRLProof\OnlineBregmanExtended.lean:67:  let F : E → EReal := fun z => f z + ((η⁻¹ * divergence ψ z x : ℝ) : EReal)
+BanditRLProof\OnlineBregmanExtended.lean:68:  have he : ∀ z ∈ V, F z = (((f z).toReal + η⁻¹ * divergence ψ z x : ℝ) : EReal) := by
+BanditRLProof\OnlineBregmanExtended.lean:70:    change f z + ((η⁻¹ * divergence ψ z x : ℝ) : EReal) = _
+BanditRLProof\OnlineBregmanExtended.lean:72:      _ = ((f z).toReal : EReal) + ((η⁻¹ * divergence ψ z x : ℝ) : EReal) :=
+BanditRLProof\OnlineBregmanExtended.lean:73:        congrArg (fun v : EReal => v + ((η⁻¹ * divergence ψ z x : ℝ) : EReal))
+BanditRLProof\OnlineBregmanExtended.lean:80:  have hreal : ∀ z ∈ V, (F z).toReal = (f z).toReal + η⁻¹ * divergence ψ z x := by
+BanditRLProof\OnlineBregmanExtended.lean:102:    (hmin : IsMinOn (fun z => f z + ((η⁻¹ * divergence ψ z x : ℝ) : EReal)) V p) :
+BanditRLProof\OnlineBregmanExtended.lean:104:      divergence ψ u x - divergence ψ u p - divergence ψ p x := by

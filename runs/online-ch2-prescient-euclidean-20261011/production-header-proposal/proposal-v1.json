@@ -1,0 +1,108 @@
+{
+  "status": "proposed; independent header/source review and blind reconstruction pending; no BODY authorization",
+  "actor": "/root/adaptive_formalizer",
+  "requested_model": "GPT-6 Astra",
+  "requested_effort": "medium",
+  "runtime_attestation": false,
+  "created_utc": "2026-10-11T05:40:48.594729+00:00",
+  "source_candidate_head": "fff9bb2687759fdfd9db7f8690ad7169054b8936",
+  "branch": "codex/research-online-ch2-unbounded-ogd",
+  "source": {
+    "arxiv": "1912.13213v10",
+    "pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "pages_pdf": [
+      26,
+      277,
+      278
+    ],
+    "printed_pages": [
+      14,
+      265,
+      266
+    ],
+    "pixel_inspected_this_turn": [
+      277
+    ],
+    "scope_adjudication_sha256": "1056a4051c15e2e95b1d0b50302d14211661da078436e170e7162885c1d2a0de"
+  },
+  "targets": [
+    "forward:prescient-lookahead",
+    "later:lookahead/branch-03"
+  ],
+  "before_work": {
+    "source_anchor": "C2 negative stability forward pointer; Algorithm15.8 and both Theorem15.30 bounds, including fixed-step exercise",
+    "theorem_sized_target": "One shared actual-gradient/quadratic-divergence identity and two full same-run general EReal source specializations",
+    "frontier_owner": "existing prescient Euclidean branch; parent owns closure adjudication and global ledger",
+    "proposed_modules": [
+      "BanditRLProof/OnlineBregmanQuadratic.lean",
+      "BanditRLProof/OnlinePrescientEuclidean.lean"
+    ],
+    "declarations": [
+      "BanditRL.OnlineBregman.quadratic_geometry",
+      "BanditRL.OnlinePrescientBregman.euclidean_variable_regret",
+      "BanditRL.OnlinePrescientBregman.euclidean_fixed_regret"
+    ],
+    "semantic_fingerprint": "real Hilbert shared identity; finite-dimensional Euclidean source consumers; closed convex nonempty V; no-bottom ambient EReal losses finite on V; global supports at all V; actual attained squared-distance updates; same Option run; new-state losses; signed negative movement squared; variable finite max over pre-update states and last used positive eta",
+    "reuse_decision": "adapt by substitution; do not reprove cumulative regret. Shared quadratic identity has two concrete consumers, variable and fixed source endpoints.",
+    "reader_publication_delta": "Display quadratic derivative and ordered divergence calculation, then two full negative-square bounds with same-run indexing, partial-selector failure boundary and X=univ specialization. No B4 repair claim.",
+    "blind_source_review_plan": "Fresh blind actor receives neutral complete headers and imported definition context only; distinct source reviewer compares both bounds and source-scope receipt before freeze. No proof begins from this proposal.",
+    "progress_delta": "proposed source bridge only; no proof/source-target closure or denominator changes",
+    "Lean_Overview_Functor_graph": "If accepted later, shared geometry -> two actual endpoint consumers; existing source endpoints -> corresponding consumers. These are intended proof routes, not exported VALUE dependencies; module import arrows are not proof edges."
+  },
+  "assumption_mapping": {
+    "ambient": "Consumers retain finite-dimensional real inner product E; X is explicitly univ. This is a quadratic specialization, not an equivalence for all original regularizers/X.",
+    "regularizer": "psi(z)=norm(z)^2/2 globally. HasGradientAt y y is proved, not an arbitrary chosen derivative. Shared identity generalizes to complete real Hilbert E.",
+    "interior": "interior(univ)=univ makes x0 and all actual states interior automatically. x0 need not lie in V.",
+    "regularity": "Strict convexity, global differentiability and source closedness of quadratic extension on univ are derived locally from Mathlib; not supplied as new user premises.",
+    "loss": "Retain ambient no-bottom, V domain inclusion and nonempty global SourceSubdifferential at every feasible point. No affine, smooth, bounded-gradient, Lipschitz or globally finite restriction.",
+    "existence": "hmin explicitly supplies feasible attained minimizers each round. Closedness alone is never used as universal attainment. Strong strict convex uniqueness identifies the SAME existing partial selector; Option none remains possible without hmin.",
+    "indexing": "Lean t=0..T-1 corresponds to source round t+1. loss t and eta t select x(t+1) from x t; source loss is paid at x(t+1). Last step eta(T-1); max states x0..x(T-1); final movement xT-x(T-1) retained.",
+    "steps": "Variable T>0 with positive used steps, adjacent monotonicity only t+1<T. Fixed eta>0, T=0 permitted as explicit harmless generalization.",
+    "radius": "Exact Finset.sup of half squared distances; no substituted supplied radius, boundedness or diameter premise.",
+    "B4": "7.47/15.31 terminal repairs remain open and outside this Algorithm15.8 leaf."
+  },
+  "route": [
+    "Mathlib hasStrictFDerivAt_norm_sq; divide actual derivative by 2; identify HasGradientAt via real inner dual; expand norm_sub_sq_real to obtain canonical divergence identity.",
+    "Mathlib strongConvexOn_iff_convex at modulus1 reduces quadratic strong convexity to constant0; StrongConvexOn.strictConvexOn. Quadratic continuity gives real closed sublevel sets for SourceClosed on univ.",
+    "Rewrite squared-distance objective with canonical divergence; sourceProper_of_domain; iterate_eq_of_source_updates gives actual run equality; source_variable_regret/source_fixed_regret supply full respective bounds. Rewrite exact geometry only, preserving negative sign and coefficients."
+  ],
+  "reuse": {
+    "local": "Existing divergence, advance, iterate, sourceProper_of_domain, iterate_eq_of_source_updates, source_variable_regret, source_fixed_regret; no duplicate selector or cumulative algebra.",
+    "mathlib": "hasStrictFDerivAt_norm_sq, norm_sub_sq_real, strongConvexOn_iff_convex, StrongConvexOn.strictConvexOn; pinned local package inspected.",
+    "LML": "card-only search; no matching quadratic-Bregman/prescient card found in targeted card query; no imported LML API used.",
+    "external_upstream": "No network dependency or unpinned remote theorem relied upon."
+  },
+  "remaining_before_freeze": [
+    "Independent exact header and source review",
+    "Fresh blind reconstruction from complete neutral context",
+    "Parent decides public shared geometry conjunction versus separate derivative/identity API; present proposal deliberately uses one declaration with two meaningful conclusions",
+    "Candidate syntax/import closure uncompiled by authorization; no claim of elaboration success"
+  ],
+  "inputs": {
+    "BanditRLProof/OnlineBregmanExtended.lean": "adf36bd3172a96308872323af3128fc94733c005ca9c025a050620804f7ed80b",
+    "BanditRLProof/OnlineBregmanProximal.lean": "8708aa5e15ff334ce8070cc976634ebaf8dc63314d3da95b502640f68350288f",
+    "BanditRLProof/OnlinePrescientBregman.lean": "777826797a512b541d001a488899c6918f9d1404c1ba2f97811a11220648f3fc",
+    "BanditRLProof/OnlinePrescientBregmanRegret.lean": "415c4c9d3e8b262afd6f849b97afad2b372a7e17233e1ac22dc8f74cc56d038d",
+    "BanditRLProof/OnlinePrescientBregmanSource.lean": "57832c9dfb4e915f9a0578ffb122792b0aac2b3404da4f6c00f2aa9fcd36bc02",
+    "BanditRLProof/OnlinePrescientLinear.lean": "a7098ef90e812a20616963756f203609758ccc9701d6a30bfe0152cefe3849bc",
+    "BanditRLProof/OnlineSubgradientBasic.lean": "af3d3f56e4a64cd8adbe47368caf5382e63b428f01da29a121c28c8014f352a5",
+    "BanditRLProof/OnlineClosedProper.lean": "c66f00c33b45fb8a0e11583eeadf506e176c16166ce2af02f41f0674507cebe7",
+    "BanditRLProof/OnlineConvexExtended.lean": "bd30bb95a46ccdc3f6d25f808c175af5fee71d075c2b46ffcf6508f15f1ed66a",
+    "lean-toolchain": "b15a57f8ea4c890197465ce1156667ae13d9ed4ab8a9f263a920bf010d967d82",
+    "lake-manifest.json": "87c3e616f86244550ef39e7415186b11c1d4cf4bef20173196a619d9d4d48f48",
+    "tools/bandit.py": "d4a5a27189b200ac977e5b6b3ce3bce5880dff1b7530461aab6860352199da9c",
+    "tmp/online-ch2-prescient-closure-readiness-20261011/source-scope-adjudication-v1.json": "1056a4051c15e2e95b1d0b50302d14211661da078436e170e7162885c1d2a0de",
+    "tmp/online-ch2-prescient-closure-readiness-20261011/v1.json": "dbc29a4da2ea3c0d77b4fe1f50e385edb5a1cd8cc50cabee41cbc0d313a1ca46",
+    "tmp/online-ch2-prescient-closure-readiness-20261011/source-review-277.png": "339f31ebcbcdd5d32faf6b4265b1fa24f136d16bb6196ccf57550e653996be76",
+    "tmp/online-ch2-prescient-closure-readiness-20261011/pdf-277-text-v1.txt": "3a7a542207648c22226c4a5310bd7b77ea59e10acc5aacaad8ec4cd9fbaf0b74",
+    "tmp/online-ch2-prescient-closure-readiness-20261011/pdf-278-text-v1.txt": "81a9b2322b61cb62cba6628798e81d3e99107057dda69e5a7b16d07d34304630",
+    ".lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Calculus.lean": "de21a13069c700d3a12935d64b5541faa677e23f0e6503517c538db1237a30f2",
+    ".lake/packages/mathlib/Mathlib/Analysis/Convex/Strong.lean": "6ff478d50f5adf0d215c8745530645f1d2c041308752df5c0cc47f302f6f2b42"
+  },
+  "artifacts": {
+    "neutral-complete-headers-v1.txt": "1d6cda54b46476323dccaeae6fc3b33e8d1494bb655b99045ea2cde569b8e20a",
+    "neutral-imported-definitions-v1.txt": "dff55f4b3262afa2869e8dce05cf27bde92b8ef94945f31c7a198a0c8f39c9a1",
+    "standard-definition-context-v1.json": "9010bcdc02fdea78ed3654807f47246985582ec88e4965d41ee1c5dd7c1f36f9",
+    "retrieval-receipt-v1.json": "58f1e75104766a6aa075977d1adfebf76962950931c14a056dc81c8733909d05"
+  }
+}

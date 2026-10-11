@@ -1,0 +1,11 @@
+Prove that the explicit affine construction in Orabona v10 Theorem 5.4 also drives actual variable-step OGD on the full Euclidean space. Preserve the exact horizon threshold, half-phi lower bound, zero initialization/comparator and source schedule; construct globally convex, 1-Lipschitz, differentiable losses.
+
+Two complete public canaries check the actual scalar two-round trajectory (explicitly below the source threshold) and a 64-round two-dimensional witness with the printed bound, at least 256/15 and strictly more than 17. Shared Book integration preserves all 11,100 previous canonical nodes and adds one producer node.
+
+Separate source reconciliation accepts exactly three frozen target rows within one unbounded-variable-OGD container. Seven Chapter 2 forward containers, six future mathematical claims and B1-B7 repairs remain open. Chapter 2 stays partial with a null complete proof denominator; the Chapters 1-16 Goal remains active. Loss families may depend on T; no single infinite stream or all-schedules result is claimed.
+
+Validation at source/metadata commit `609da50f3f5a41dca9ff2ab6d6d0cf8559d89487`: combined Lean root (9,122 jobs), Tests (9,303 jobs), full harness (472 tests, 7 skipped), public canaries, standard-axiom audit, contributor check, site build/check, registry preservation and three independently viewed original local screenshots. Actual failed site-status validation and its one-field repair are retained. Individual native fences ran; the native whole-loop did not.
+
+Evidence/delivery commit: `8045070bf1ee53c83778d04eb168f8ad6f728b59`. Acceptance: `runs/online-ch2-unbounded-ogd-20261011/accepted-current-source-target-package-v1.json` SHA256 `55229d09bb8ef9e1a7ba16245fdd423c1c5870a576413978806dee1dc378efc3`; independent post-adoption FINAL SHA256 `98148c5a2b582ec8a2d7a5a1d6c925171bfaea6e068c67686e3e13a54ff8c059`. Selected 1,309 source/input paths and RAW hashes remain identical after the evidence-only commit.
+
+Stacked on `codex/research-online-ch2-target-freeze` at `f86aaded30581da02eba1f0a8691f990cf9ed4f3` (draft PR #219). Main independently advanced to `fea256b1c03b14b79c6c84a965e8ac2b5a738f64`; integration with latest main remains a later gate. This package is unmerged and unpublished; no live-site claim.
