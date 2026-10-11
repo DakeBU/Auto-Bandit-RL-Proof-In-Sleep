@@ -1,0 +1,3 @@
+theorem eta_eq_energy (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) :
+    eta V α D loss x₁ p t = α * D / Real.sqrt (energy V α D loss x₁ p (t + 1)) := by

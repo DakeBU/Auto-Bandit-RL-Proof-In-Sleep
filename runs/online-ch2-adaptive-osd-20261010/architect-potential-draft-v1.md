@@ -1,0 +1,1 @@
+Use Mathlib summation by parts with g_i=a_i-a_(i+1), then telescope prefixes. Bound increment-weight terms using a_i<=C and nonnegative adjacent weight differences. The residual first-weight factor is nonpositive because a0<=C and w0>=0. Retain terminal a_T with last weight. One lower route; no tactics before exact header/source review.

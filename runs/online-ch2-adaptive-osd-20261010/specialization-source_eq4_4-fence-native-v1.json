@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "declaration": "source_eq4_4",
+  "file": "BanditRLProof/OnlineAdaptiveOSD.lean",
+  "statement": "theorem source_eq4_4 (V : Domain (E := E)) (D : ℝ) (hD : 0 ≤ D) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (hx₁ : x₁ ∈ V.carrier) (T : ℕ) (hconvex : ∀ t < T, IsConvexExtended (loss t)) (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) (hlegal : LegalFeedback V 1 D loss x₁ p T) (hdiam : ∀ x ∈ V.carrier, ∀ y ∈ V.carrier, ‖x - y‖ ≤ D) (u : E) (hu : u ∈ V.carrier) : regret V 1 D loss x₁ p u T ≤ (3 / 2 : ℝ) * D * Real.sqrt (energy V 1 D loss x₁ p T)",
+  "statement_hash": "82b1d362619c79bbb8ed460c4a8f02c02cc0b20f804d94634b9174bc3903fd89",
+  "source_assumptions": [
+    "(hconvex : ∀ t < T, IsConvexExtended (loss t))"
+  ],
+  "created_at": "2026-10-10T02:30:07+00:00"
+}

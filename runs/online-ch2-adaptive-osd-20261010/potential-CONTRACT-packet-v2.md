@@ -1,0 +1,5 @@
+# Versioned source-provenance repair review
+
+Resolve v1 required repairS1 using operative source-card-v2, source-proof-display-retraction-v1 and potential-contract-draft-v2. Original source/proposal/card/rejected-review remain unchanged. Rebind exact SAME mathematical header/context/fingerprint and existing complete neutral reconstruction; no new decode is needed for an attribution-only repair. Confirm source PDF26 has /2 and no author erratum or terminal weakening is claimed. Native rejected review1->1 and repair event transport actual earlier judgment; no mathematical BODY exists.
+
+OutputONLY potential-CONTRACT-review-v2.md/json: verdict/required_repairs/report+sha/input_manifest+sha, all RAW before/after, S1resolution and header/context unchanged. If favorable authorize only NEW BanditRLProof/OnlineAdaptivePotential.lean exact context/header/BODY; no algorithm/roots/Test/readers/pins. Keep rejected source proposal and bootstrap operational failure. WholeGoalACTIVE; causal parent required draft. UTF8write_bytes singleLF. No proving or mutation by reviewer.

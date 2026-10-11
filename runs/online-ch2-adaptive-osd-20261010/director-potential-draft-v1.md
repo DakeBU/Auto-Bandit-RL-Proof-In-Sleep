@@ -1,0 +1,1 @@
+Select only the dependency-ready weighted potential leaf. The parent is actual causal adaptive OSD, not an eta-schedule existence consumer. Keep source/algorithm/chapters required; no package/chapter closure from this leaf.

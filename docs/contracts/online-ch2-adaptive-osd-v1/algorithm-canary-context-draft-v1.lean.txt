@@ -1,0 +1,23 @@
+import BanditRLProof.OnlineAdaptiveBenchmark
+import BanditRLProof.OnlineGuessingOGD
+
+noncomputable section
+open Set Finset BanditRL.OnlineConvex BanditRL.OnlineAdaptiveOSD
+namespace AdaptiveProbe
+abbrev V := BanditRL.OnlineGradientDescent.unitInterval
+
+def W : Domain (E := ℝ) where
+  carrier := {0}
+  nonempty := ⟨0, rfl⟩
+  closed := isClosed_singleton
+  convex := convex_singleton 0
+
+def feedback (t : ℕ) : ℝ := if t = 1 then 3 else if t = 3 then -4 else 0
+def loss (t : ℕ) (x : ℝ) : EReal := ((feedback t * x : ℝ) : EReal)
+def policy : SupportPolicy (E := ℝ) := fun t _ _ _ => feedback t
+def futureLoss (t : ℕ) (x : ℝ) : EReal := if t < 2 then loss t x else (7 : EReal)
+def zeroLoss (_ : ℕ) (_ : ℝ) : EReal := 0
+def zeroPolicy : SupportPolicy (E := ℝ) := fun _ _ _ _ => 0
+abbrev x (α : ℝ) (t : ℕ) := output V α 1 loss (1 / 2) policy t
+abbrev q (α : ℝ) (t : ℕ) := energy V α 1 loss (1 / 2) policy t
+abbrev r (α : ℝ) (t : ℕ) := eta V α 1 loss (1 / 2) policy t

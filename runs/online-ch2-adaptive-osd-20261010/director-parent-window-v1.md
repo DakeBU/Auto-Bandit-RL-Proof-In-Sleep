@@ -1,0 +1,1 @@
+Review actual one-step BODYs separately, then authorize only the unchanged already-frozen all-T,D>=0 negative-terminal regret_bound. True frontier has lowered from actual causal state to actual one-step; finish same-run summation rather than introducing a consumer premise. Preserve zero-feedback/zero-energy/zero-diameter branches and exact source/support information boundary.

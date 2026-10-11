@@ -1,0 +1,11 @@
+# Potential leaf contract v1
+
+Model: finite real sequences on natural indices. Quantifiers: all a,w,C,T with T>0; played weights nonnegative, adjacent weights nondecreasing before T, a_t<=C for t<T. Conclusion: weighted potential decrement sum<=C*w_(T-1)-a_T*w_(T-1). T, last-weight indexing and negative terminal are frozen in the header/fingerprint. Zero and stalled weights, signed potentials and unrestricted terminal a_T are allowed. There is no probability, oracle, loss regularity, comparator, future information or regret premise.
+
+Reuse decision: adapt Mathlib Finset.sum_range_by_parts plus existing telescoping sums. The existing OnlineGradientDescent.weighted_potential_sum requires every eta>0 and therefore cannot handle a leading zero-energy prefix directly. Do not copy its induction as a second foundational summation theory. This generic algebraic extension is mathlib-candidate; a single shared module is planned. Source correspondence, not a direct Lean dependency: Theorem2.13 proof. Finite leaf edit window AFTER favorable contract review: create only OnlineAdaptivePotential.lean with this exact context/header and proof BODY. No root, Test, reader, old contract, toolchain or dependency edit. No algorithm definition or performance endpoint is stabilized by this contract.
+
+Roles: root director/architect/formalizer; reused distinct osd_blind reconstructs a neutral header without source; reused distinct source_reviewer compares source/intent/Lean/decoder before proving. Related role history is disclosed; no human/external/absolute-blind/runtime attestation. Later BODY/canary/combined/reader/registry/axiom/native/delivery gates remain separate and required.
+
+## Operative source version and retained rejection
+
+Operative source-card-v2 plus source-proof-display-retraction-v1 supersede only the rejected source reading in v1. No source erratum is claimed for printed14. Header/context/fingerprint v1 remain identical and mathematical terminal accepted separately in the rejected combined v1 review. The v2 source binding needs favorable review before stabilization or proving.

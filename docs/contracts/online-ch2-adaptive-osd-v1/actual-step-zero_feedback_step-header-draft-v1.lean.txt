@@ -1,0 +1,7 @@
+theorem zero_feedback_step (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ)
+    (hloss : BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t))
+    (hg : selected V α D loss x₁ p t ∈ SourceSubdifferential (loss t) (output V α D loss x₁ p t))
+    (hz : selected V α D loss x₁ p t = 0) (u : E) (hu : u ∈ V.carrier) :
+    output V α D loss x₁ p (t + 1) = output V α D loss x₁ p t ∧
+    (loss t (output V α D loss x₁ p t)).toReal - (loss t u).toReal ≤ 0 := by

@@ -1,0 +1,14 @@
+import BanditRLProof.OnlineAdaptiveOSD
+import BanditRLProof.OnlineLinearization
+#check BanditRL.OnlineSubgradientDescent.lemma_2_31
+#check BanditRL.OnlineLinearization.support_gap
+#check BanditRL.OnlineGradientDescent.project_spec
+#check BanditRL.OnlineAdaptiveOSD.output_succ
+#check BanditRL.OnlineAdaptiveOSD.output_mem
+#check BanditRL.OnlineAdaptiveOSD.energy_succ
+#check BanditRL.OnlineAdaptiveOSD.energy_nonneg
+#check BanditRL.OnlineAdaptiveOSD.eta_eq_energy
+#check Real.sqrt_pos
+#check Real.sqrt_le_sqrt
+#check Finset.sum_le_sum
+#check Finset.sum_nonneg

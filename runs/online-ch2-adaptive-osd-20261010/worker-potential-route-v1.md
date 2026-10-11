@@ -1,0 +1,1 @@
+Actual ready APIs: Finset.sum_range_by_parts, sum_range_sub, sum_range_sub'; pinned Module+Tactic imports. Lower route: byparts for decrement stream, telescope prefixes, bound interior terms using C and nonnegative weight differences, use first weight nonnegative, retain terminal. One frozen terminal; no tactic/source/assumption pivot.

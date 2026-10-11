@@ -1,0 +1,1 @@
+Finish the required printed scalar comparator equality honestly: all-nonnegative infimum, exact attainable regimes, full positive unique minimum, linked as a complete conjunction to the same actual source-convex trajectory guarantee. Do not omit mixed-zero regimes or optimize rerun learners.

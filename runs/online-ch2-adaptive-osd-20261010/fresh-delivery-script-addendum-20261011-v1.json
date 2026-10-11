@@ -1,0 +1,27 @@
+{
+  "actor": "/root/adaptive_reviewer",
+  "requested_model": "GPT-6 Astra",
+  "requested_reasoning_effort": "medium",
+  "runtime_attestation": false,
+  "created_at_utc": "2026-10-11T02:34:40.168313+00:00",
+  "scope": "Additive S2 to fresh-frontier-delivery-review-20261011-v1; frontier approval unchanged",
+  "scripts_verdict": "rejected-pending-S1-and-S2",
+  "blocking_repairs": [
+    {
+      "id": "S2",
+      "issue": "Axiom regex misses multiline wrapped signed_zero_and_free_terminal output; actual parser returned38 before count39 assertion",
+      "repair": "Use multiline-spanning bracket parser plus comma split/whitespace stripping; retain expected39 and exact theorem/canary identities"
+    }
+  ],
+  "raw_bindings": [
+    {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\runs\\online-ch2-adaptive-osd-20261010\\summarize-axioms-prepared-20261011-v2.py",
+      "raw_sha256": "ee406dc1be2b80c60c8334573745ad1a362e32df1f34c8c46962d5aa358df9ba"
+    },
+    {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\runs\\online-ch2-adaptive-osd-20261010\\potential-canary-public-probe-v1.json",
+      "raw_sha256": "3a02c0496b595f3db10644a4255a031cde297a5e377455c10820632fc281a680"
+    }
+  ],
+  "gates_executed": false
+}

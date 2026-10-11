@@ -1,0 +1,6 @@
+theorem zero_energy_canary :
+    (∀ t : ℕ, output V 1 1 zeroLoss (1 / 2) zeroPolicy t = 1 / 2) ∧
+    (∀ T : ℕ, energy V 1 1 zeroLoss (1 / 2) zeroPolicy T = 0) ∧
+    regret V 1 1 zeroLoss (1 / 2) zeroPolicy 0 4 = 0 ∧
+    ‖output V 1 1 zeroLoss (1 / 2) zeroPolicy 4 - 0‖ ^ 2 = 1 / 4 ∧
+    regret V 1 1 zeroLoss (1 / 2) zeroPolicy 0 4 ≤ 0 := by

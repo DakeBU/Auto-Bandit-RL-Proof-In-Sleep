@@ -1,0 +1,12 @@
+theorem source_theorem4_14_infimum (V : Domain (E := E)) (D : ℝ) (hD : 0 ≤ D)
+    (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (hx₁ : x₁ ∈ V.carrier)
+    (T : ℕ) (hconvex : ∀ t < T, IsConvexExtended (loss t))
+    (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t))
+    (hlegal : LegalFeedback V (Real.sqrt 2 / 2) D loss x₁ p T)
+    (hdiam : ∀ x ∈ V.carrier, ∀ y ∈ V.carrier, ‖x - y‖ ≤ D) (u : E) (hu : u ∈ V.carrier) :
+    regret V (Real.sqrt 2 / 2) D loss x₁ p u T ≤
+      D * Real.sqrt (2 * energy V (Real.sqrt 2 / 2) D loss x₁ p T) ∧
+    D * Real.sqrt (2 * energy V (Real.sqrt 2 / 2) D loss x₁ p T) =
+      Real.sqrt 2 * sInf {b : ℝ | ∃ η : ℝ, 0 < η ∧
+        b = BanditRL.OnlineOptimalStep.upperBound (D ^ 2)
+          (energy V (Real.sqrt 2 / 2) D loss x₁ p T) η} := by

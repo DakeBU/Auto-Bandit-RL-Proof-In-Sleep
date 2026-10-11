@@ -1,0 +1,3 @@
+# Causal adaptive OSD continuation
+
+Canonical E:/ABRL/research; isolated existing checkout E:/ABRL/worktrees/research-online-book. Branch codex/research-online-ch2-adaptive-osd; exact stacked base 0283616c8439b09fc49d5e35373ff74aa11371cc from delivered OPEN draft/unmerged PR217. Previous package closed ONE energy-display family, not algorithm/Chapter2. Actual initial tracked diff empty; relevant RAW + exact Git tree baseline retained, no claim of a new complete35392RAW scan. Shared .lake/Git stores/Book graph retained. Same persistent Chapters1-16 Goal ACTIVE; requested Astra/medium without runtime attestation.

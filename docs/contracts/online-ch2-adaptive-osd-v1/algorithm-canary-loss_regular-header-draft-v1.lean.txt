@@ -1,0 +1,4 @@
+theorem loss_regular (U : Domain (E := ℝ)) (t : ℕ) :
+    IsConvexExtended (loss t) ∧
+    BanditRL.OnlineSubgradientDescent.SubdifferentiableOn U (loss t) ∧
+    ∀ z : ℝ, feedback t ∈ SourceSubdifferential (loss t) z := by

@@ -1,0 +1,1 @@
+Seven exact complete headers/context TYPE-checked; finite new-Test window proposed after distinct decoder and source CONTRACT review. Existing public graph remains unchanged. Benchmark BODY favorable prerequisite for repaired performance consumer.
