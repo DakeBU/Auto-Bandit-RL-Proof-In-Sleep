@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "scope": "ONLINE-CH2-CLOSURES-INTEGRATION-20261011",
-  "baseline": "f07aa9a2a5df241087ffab1c3579d1b59d8bf6f6",
+  "baseline": "4490854eea1d7e5b8ef224980e2c2d641a85df28",
   "frozen_source_tip": "8045070bf1ee53c83778d04eb168f8ad6f728b59",
   "original_prs": [
     121,
@@ -83,6 +83,36 @@
       "path": "website/content/readings.json",
       "sha256_raw": "ec7e5e453228ce1e67d376de158dec092f3cba832cda551c5c771754060f5014",
       "sha256_git_lf": "ec7e5e453228ce1e67d376de158dec092f3cba832cda551c5c771754060f5014"
+    },
+    {
+      "path": "README.md",
+      "sha256_raw": "0d41f89dc58059f699e0350dab73142d9829cb9ac28e13e2fea63464995d9027",
+      "sha256_git_lf": "91e37bd1457ef52b6ac7f723fc820062dcedd7c6423d27224cb72d21867d8a24"
+    },
+    {
+      "path": "docs/math-2-0-positioning.md",
+      "sha256_raw": "550060345d116f211eb07f5706dcf1df175e1197d5978942695470c5d9c170bd",
+      "sha256_git_lf": "e50574441d9e3f840661e5bb4c6e0904291f462bc6cba725b9b64573bb294572"
+    },
+    {
+      "path": "research-wiki/contribution-contracts/MATH-2-0-POSITIONING-20261011.json",
+      "sha256_raw": "0e9cfa2d3200054de437373056b7cafe74390e3996d0a9f6952c967be69cc96d",
+      "sha256_git_lf": "50d4ddef5ed25c2023a3f8c4dd68d7b50075becf92c824494d4970d76585c9a7"
+    },
+    {
+      "path": "website/content/math_2_0.json",
+      "sha256_raw": "622349989bdba5f6a75eb8acd7b1f470b158b58b19d12e885ba4e7ed918b71fd",
+      "sha256_git_lf": "b33208a79a0b49c841d5ee6e17bffb502326803ae3dce07b819545011bb4b4ca"
+    },
+    {
+      "path": "website/scripts/build_site.py",
+      "sha256_raw": "ed8011a6b74e17109cfb940371ada26900719b059d323c91844f267fdc541dce",
+      "sha256_git_lf": "85ddc696e0acf4af7534ff1c13ff58470ac03e65cc3ffb6e1f4d47e0fa436338"
+    },
+    {
+      "path": "website/static/site.css",
+      "sha256_raw": "23e6cbfb30d0d02d127d80f9858a93dba026efe197216553e2ebda2f0edb879d",
+      "sha256_git_lf": "7f602fc1a91dc5cec9efb6362d5f63daaa0b268a341bbcb80b5716be89f8bb4e"
     }
   ],
   "hash_convention": "Raw SHA256 seals reviewed bytes; Git LF SHA256 makes checkout CRLF normalization explicit.",
@@ -170,6 +200,18 @@
     {
       "name": "batch2-render-check-v3.json",
       "sha256": "8c84c987bfeea0ad1d2e9bbf7cad5ee844d52058c30cda68be4cef9fdb78ab63"
+    },
+    {
+      "name": "batch2-latest-main-preparation.json",
+      "sha256": "ac9b949966fdf00d9cce7b845097037d066fcd3703ad78eb1c5663691e77de49"
+    },
+    {
+      "name": "batch2-gate-4-receipt.json",
+      "sha256": "dd6d1999c7e6783a69a4d17582e1d52b756c5eb333aa3c7b5aaf16ad9492b573"
+    },
+    {
+      "name": "batch2-latest-main-render-check.json",
+      "sha256": "ee70730266658f5577f677483c19e0678c3018710043bf38d1ce9d28b5d9161d"
     }
   ],
   "local_gate": {
@@ -182,16 +224,11 @@
         "command": [
           "py",
           "-3.12",
-          "-m",
-          "unittest",
-          "discover",
-          "-s",
-          "tools",
-          "-p",
-          "test_book_registry.py"
+          "tools/bandit.py",
+          "check"
         ],
         "exitCode": 0,
-        "log": "batch2-publication-gate-3-1.log"
+        "log": "batch2-gate-4-1.log"
       },
       {
         "command": [
@@ -201,7 +238,7 @@
           "--lean-verified"
         ],
         "exitCode": 0,
-        "log": "batch2-publication-gate-3-2.log"
+        "log": "batch2-gate-4-2.log"
       },
       {
         "command": [
@@ -210,7 +247,7 @@
           "website/scripts/check_site.py"
         ],
         "exitCode": 0,
-        "log": "batch2-publication-gate-3-3.log"
+        "log": "batch2-gate-4-3.log"
       },
       {
         "command": [
@@ -220,10 +257,13 @@
           "--check"
         ],
         "exitCode": 0,
-        "log": "batch2-publication-gate-3-4.log"
+        "log": "batch2-gate-4-4.log"
       }
     ],
-    "render_cases": 4
+    "render_cases": 8
   },
-  "boundary": "Bounded local acceptance. Exact-head CI, merge and deployment are separate. No entire original PR supersession, branch retirement, purification, Exposition Seal or whole-chapter completion is inferred. Private transcripts and local paths stay in maintenance."
+  "boundary": "Bounded local acceptance. Exact-head CI, merge and deployment are separate. No entire original PR supersession, branch retirement, purification, Exposition Seal or whole-chapter completion is inferred. Private transcripts and local paths stay in maintenance.",
+  "previous_baseline": "f07aa9a2a5df241087ffab1c3579d1b59d8bf6f6",
+  "main_integration_commit": "d0fb216cb10651bfaa52a80fa3a68b6ca0446e3b",
+  "latest_main_integration": "Preserves the independent Math 2.0 publication update on main. All 22 v3 source/math/reader review inputs remain raw-byte identical; full combined gate and eight render cases passed again."
 }
