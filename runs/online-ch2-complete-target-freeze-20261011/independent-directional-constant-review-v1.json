@@ -1,0 +1,205 @@
+{
+  "verdict": "accepted-directional-counterexample-only",
+  "blocking_repairs": [],
+  "actor": "/root/adaptive_reviewer",
+  "requested_model": "GPT-6 Astra",
+  "requested_reasoning_effort": "medium",
+  "runtime_model_attested": false,
+  "scope": "Independent source-only mathematical audit; no Lean proof/build or OSD package mutation",
+  "source": {
+    "path": "E:/ABRL/worktrees/research-online-ogd/tmp/pdfs/orabona-v10.pdf",
+    "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "version": "Orabona v10"
+  },
+  "personally_viewed_original_renders": [
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/tmp/online-ch2-direction-constant-independent-review-20261011/source-PDF32.png",
+      "sha256": "936cc5af85006f82552a0665f3c9e98ada6d334f18d3fc7f9c8166bbf61fbf0c",
+      "PDF_page": 32,
+      "printed_page": 20
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/tmp/online-ch2-direction-constant-independent-review-20261011/source-PDF215.png",
+      "sha256": "1012cb78e32ed3be928e63a908a6b1b75bebc740beb22a04706faf7b312a9795",
+      "PDF_page": 215,
+      "printed_page": 203
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/tmp/online-ch2-direction-constant-independent-review-20261011/source-PDF216.png",
+      "sha256": "d6bc8e440b174057c3cb230d98e26107ae024b96c2bcb3740f5f3a811c556a9d",
+      "PDF_page": 216,
+      "printed_page": 204
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/tmp/online-ch2-direction-constant-independent-review-20261011/source-PDF228.png",
+      "sha256": "eaa3453959a3f09dddccd960ccd5a460170054200d75d462273f8e123f497dea",
+      "PDF_page": 228,
+      "printed_page": 216
+    }
+  ],
+  "source_reading": {
+    "Algorithm2_2": "Output x_t, then use g_t and eta_t to project x_t-eta_t*g_t into V.",
+    "Algorithm12_3": "Direction learner receives the original gradient linear loss; magnitude learner receives scalar s_t=<g_t,direction_t>.",
+    "Theorem12_16": "For nonzero comparator, total linear regret decomposes exactly into magnitude regret at ||u|| plus ||u|| times direction regret at u/||u||.",
+    "Section13_4_Eq13_2": "PDF228/printed216 specifies unit Euclidean ball, x1=0 and eta_t=sqrt2/(2Lsqrt(t)), followed by combined KT/direction guarantee."
+  },
+  "hypotheses_checked": [
+    "[-1,1] is a nonempty closed convex scalar Euclidean unit ball; x1=0 and u=1 are feasible.",
+    "All stepsizes are positive and use the actual round t, including zero-gradient rounds.",
+    "Each linear loss is convex, finite, subdifferentiable globally and at most1-Lipschitz; its unique subgradient is g_t with |g_t|<=1.",
+    "Gradients are predetermined and valid at any combined learner output, so the direction input sequence is admissible under Algorithm12.3.",
+    "Comparator direction1 has norm1 and comes from any positive scalar combined comparator; no infeasible direction is used."
+  ],
+  "exact_arithmetic_proof": "Let d=1, V=[-1,1], L=1, u=1, T=16 and ell_t(x)=g_t*x, with g_1=g_2=1, g_3=...=g_8=0, g_9=...=g_16=-1. The printed eta_t=sqrt(2)/(2*sqrt(t)) equals1/sqrt(2t). Algorithm2.2 plays x_t before updating x_(t+1)=clamp(x_t-eta_t*g_t). Thus x_1=0 and x_2=-1/sqrt2. Since1/sqrt2>1/2, x_2-eta_2<-1 and x_3=-1. Six zero gradients preserve x_3=...=x_9=-1. Each late eta_s with9<=s<=16 is strictly below1/4. Every partial sum of these eight increments is below2, so no late step clips at+1; increments are positive so no lower clipping. Therefore x_t=-1+sum_(s=9)^(t-1)1/sqrt(2s),9<=t<=17. The first two regret terms sum to-2-1/sqrt2; the zero-gradient terms vanish. Summing the eight late terms1-x_t yields16-sum_(s=9)^15(16-s)/sqrt(2s). Hence R_16=14-1/sqrt2-sum_(s=9)^15(16-s)/sqrt(2s). Because1/sqrt2<1, each1/sqrt(2s)<1/4 and sum_(s=9)^15(16-s)=28, R_16>14-1-28/4=6. Finally6>sqrt32 since36>32. This is an exact strict counterexample to R_T^direction(u)<=L*sqrt(2T) for this printed direction algorithm.",
+  "numeric_crosscheck_only": {
+    "precision_decimal_digits": 70,
+    "regret": "7.269949382580354869121070710311192959634452734595613692232790290784318",
+    "claimed_direction_bound": "5.656854249492380195206754896838792314278687501507792292706718951962930",
+    "trace": [
+      {
+        "t": 1,
+        "g": 1,
+        "played_x": "0",
+        "eta": "0.7071067811865475244008443621048490392848359376884740365883398689953665",
+        "regret_increment": "-1",
+        "next_x": "-0.7071067811865475244008443621048490392848359376884740365883398689953665"
+      },
+      {
+        "t": 2,
+        "g": 1,
+        "played_x": "-0.7071067811865475244008443621048490392848359376884740365883398689953665",
+        "eta": "0.5",
+        "regret_increment": "-1.707106781186547524400844362104849039284835937688474036588339868995366",
+        "next_x": "-1"
+      },
+      {
+        "t": 3,
+        "g": 0,
+        "played_x": "-1",
+        "eta": "0.4082482904638630163662140124509818986609912467761116880721154278751601",
+        "regret_increment": "-0",
+        "next_x": "-1"
+      },
+      {
+        "t": 4,
+        "g": 0,
+        "played_x": "-1",
+        "eta": "0.3535533905932737622004221810524245196424179688442370182941699344976831",
+        "regret_increment": "-0",
+        "next_x": "-1"
+      },
+      {
+        "t": 5,
+        "g": 0,
+        "played_x": "-1",
+        "eta": "0.3162277660168379331998893544432718533719555139325216826857504852792595",
+        "regret_increment": "-0",
+        "next_x": "-1"
+      },
+      {
+        "t": 6,
+        "g": 0,
+        "played_x": "-1",
+        "eta": "0.2886751345948128822545743902509787278238008756350634380093011632419888",
+        "regret_increment": "-0",
+        "next_x": "-1"
+      },
+      {
+        "t": 7,
+        "g": 0,
+        "played_x": "-1",
+        "eta": "0.2672612419124243846845534808797535215540014148413376390216961048085740",
+        "regret_increment": "-0",
+        "next_x": "-1"
+      },
+      {
+        "t": 8,
+        "g": 0,
+        "played_x": "-1",
+        "eta": "0.25",
+        "regret_increment": "-0",
+        "next_x": "-1"
+      },
+      {
+        "t": 9,
+        "g": -1,
+        "played_x": "-1",
+        "eta": "0.2357022603955158414669481207016163464282786458961580121961132896651221",
+        "regret_increment": "2",
+        "next_x": "-0.7642977396044841585330518792983836535717213541038419878038867103348779"
+      },
+      {
+        "t": 10,
+        "g": -1,
+        "played_x": "-0.7642977396044841585330518792983836535717213541038419878038867103348779",
+        "eta": "0.2236067977499789696409173668731276235440618359611525724270897245410521",
+        "regret_increment": "1.764297739604484158533051879298383653571721354103841987803886710334878",
+        "next_x": "-0.5406909418545051888921345124252560300276595181426894153767969857938258"
+      },
+      {
+        "t": 11,
+        "g": -1,
+        "played_x": "-0.5406909418545051888921345124252560300276595181426894153767969857938258",
+        "eta": "0.2132007163556104342984377324338393763903740160641698706184409950462284",
+        "regret_increment": "1.540690941854505188892134512425256030027659518142689415376796985793826",
+        "next_x": "-0.3274902254988947545936967799914166536372855020785195447583559907475974"
+      },
+      {
+        "t": 12,
+        "g": -1,
+        "played_x": "-0.3274902254988947545936967799914166536372855020785195447583559907475974",
+        "eta": "0.2041241452319315081831070062254909493304956233880558440360577139375800",
+        "regret_increment": "1.327490225498894754593696779991416653637285502078519544758355990747597",
+        "next_x": "-0.1233660802669632464105897737659257043067898786904637007222982768100174"
+      },
+      {
+        "t": 13,
+        "g": -1,
+        "played_x": "-0.1233660802669632464105897737659257043067898786904637007222982768100174",
+        "eta": "0.1961161351381840319241624657316454611370681133115229387532681078625359",
+        "regret_increment": "1.123366080266963246410589773765925704306789878690463700722298276810017",
+        "next_x": "0.0727500548712207855135726919657197568302782346210592380309698310525185"
+      },
+      {
+        "t": 14,
+        "g": -1,
+        "played_x": "0.0727500548712207855135726919657197568302782346210592380309698310525185",
+        "eta": "0.1889822365046136136072582681170900304078756559344607271691667470857906",
+        "regret_increment": "0.9272499451287792144864273080342802431697217653789407619690301689474815",
+        "next_x": "0.2617322913758343991208309600828097872381538905555199652001365781383091"
+      },
+      {
+        "t": 15,
+        "g": -1,
+        "played_x": "0.2617322913758343991208309600828097872381538905555199652001365781383091",
+        "eta": "0.1825741858350553711523232609336007113175815649993277514089648165774978",
+        "regret_increment": "0.7382677086241656008791690399171902127618461094444800347998634218616909",
+        "next_x": "0.4443064772108897702731542210164104985557354555548477166091013947158069"
+      },
+      {
+        "t": 16,
+        "g": -1,
+        "played_x": "0.4443064772108897702731542210164104985557354555548477166091013947158069",
+        "eta": "0.1767766952966368811002110905262122598212089844221185091470849672488416",
+        "regret_increment": "0.5556935227891102297268457789835895014442645444451522833908986052841931",
+        "next_x": "0.6210831725075266513733653115426227583769444399769662257561863619646485"
+      }
+    ]
+  },
+  "claim_status": {
+    "standalone_directional_L_sqrt_2T": "refuted for printed OSD stepsizes",
+    "standalone_bound_explicitly_displayed_on_PDF228": false,
+    "connection_to_Eq13_2": "Inferred component bound sufficient for the standard sum-of-separate-bounds derivation; failure blocks that naive instantiation.",
+    "combined_Eq13_2": "not refuted or proved by this audit; exact KT regret and its slack are not analyzed",
+    "Theorem12_16_decomposition": "not challenged",
+    "corrected_constant_or_algorithm": "none accepted; any altered rate, constant or FTRL/OSD substitution requires explicit separate statement and proof",
+    "Chapter2_or_OSD_package": "no change or acceptance implication"
+  },
+  "independence": "Derived exact trajectory and inequalities from personally inspected source before any decoder certificate became available; supplied candidate sequence was the audit target.",
+  "state_boundary": {
+    "HEAD": "7291d3395d462d1e921b25d035d120c0f3755feb",
+    "clean": true,
+    "writes": "ignored tmp renders and review only",
+    "Lean_or_RUN_or_Git_mutation": false
+  }
+}
