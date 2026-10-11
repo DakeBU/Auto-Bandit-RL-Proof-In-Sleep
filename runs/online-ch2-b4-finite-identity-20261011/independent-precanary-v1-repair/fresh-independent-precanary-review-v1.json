@@ -1,0 +1,117 @@
+{
+  "UTC": "2026-10-11T08:42:59.602450+00:00",
+  "actor": "/root/adaptive_reviewer",
+  "requested_model": "GPT-6 Astra",
+  "requested_reasoning_effort": "medium",
+  "runtime_independently_attested": false,
+  "verdict": "repair-precanary-context",
+  "blocking_repairs": [
+    {
+      "id": "Z1",
+      "finding": "Seven active governance inputs are RAW hashed but absent from the actual selected ZIP. Thus the required governance snapshot is incomplete despite actual command exit0 and capture_integrity_ok=true.",
+      "missing_exact_paths": [
+        {
+          "path": "AGENTS.md",
+          "raw_sha256": "6635867d8d12521d553d503e3c461b30d995f56db06f5acc3eb1745ec8688a93",
+          "bytes": 10449
+        },
+        {
+          "path": "CONTRIBUTING.md",
+          "raw_sha256": "ea004f626be82fde7e4b5c42dacd112cdba47574333c4b8af1fd2593d45bd11f",
+          "bytes": 6516
+        },
+        {
+          "path": "README.md",
+          "raw_sha256": "d87cb0cfb1527659a7948d6adad488ff45061388b9f2d68dc3a0da865b73fa9b",
+          "bytes": 38655
+        },
+        {
+          "path": "docs/contracts/online-book-v1/coverage.json",
+          "raw_sha256": "c41f8beecc5265ac31156016c2825adcb793f6d24a09050bd004bb0f499f1651",
+          "bytes": 12505
+        },
+        {
+          "path": "docs/contribution-contract.schema.json",
+          "raw_sha256": "ca2537b18ca59a59d341b1f8c71b3969af4864ab6e06abce8781eb9f2f86ff99",
+          "bytes": 8717
+        },
+        {
+          "path": "docs/contributor-codex-contract.md",
+          "raw_sha256": "bf1bea6a7532f1a192f6289107e3120a6428b2806850cfe69bb62c71865a8353",
+          "bytes": 7546
+        },
+        {
+          "path": "docs/theorem-publication-protocol.md",
+          "raw_sha256": "71772f56444ba1e919aab9cc0d8caab3f0fb6b20887a12aa0f73001afd1c4385",
+          "bytes": 6069
+        }
+      ],
+      "minimal_repair": "Preserve original recorder/capture/seal. Add exactly these seven paths to successor selected_for_zip exact set; independently review it and an explicit immutable-original-seal/addendum checker. Commit the append-only preparation, then capture a fresh clean actual context and independently verify the complete RAW/ZIP set."
+    }
+  ],
+  "capture_receipt_sha256": "e6c392b3a8f044b5106f421768837f651818818c54030fffe38de28fee65ccf9",
+  "HEAD": "46ff1cee7d4d8fd586063d29b7eeab93018ba08b",
+  "actual_exit": 0,
+  "capture_integrity_ok": true,
+  "verified": {
+    "current_source_reenumeration_equals_before_after": 1318,
+    "selected_ZIP_exact_members_hash_sizes": 1311,
+    "five_named_new_governance_inputs_in_RAW_and_ZIP": true,
+    "original_seal_rows": 317,
+    "complete_own_DOC_RUN_core_plus_seal_RAW_equals_HEAD_blobs": 318,
+    "core_sha256": "61c811c0b1f941ec22ac41f64e555a0e4d4d8dc32b8145ea53808dbdc0fc17da",
+    "Test_absent": true,
+    "current_HEAD_branch_clean": true,
+    "Mathlib_HEAD": "5e932f97dd25535344f80f9dd8da3aab83df0fe6",
+    "Mathlib_status_clean": true,
+    "first_conjunct_direct_consumer_contract_retained": true
+  },
+  "whitespace_failure": {
+    "default_actual_exit": 2,
+    "CRLF_diagnostics": 116,
+    "file": "runs/online-ch2-b4-finite-identity-20261011/canary-neutral-blind/fresh-blind-v1.json",
+    "each_flagged_raw_line_ends_CR_with_no_preceding_space_tab": true,
+    "command_local_configuration": "core.whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol",
+    "actual_success_exit": 0,
+    "independent_read_only_committed_diff_check_exit": 0,
+    "all_failure_and_success_receipt_stream_hashes_checked": true,
+    "no_frozen_byte_rewrite": true,
+    "not_a_math_failure": true
+  },
+  "scope": "No Test BODY authorization, proof rerun, whole-gate or chapter acceptance. Seven containers/six future claims/B4 remain OPEN; Goal ACTIVE.",
+  "review_limitation_correction": "Earlier prepared-recorder approval checked the five new governance inputs but did not identify the seven other governance files omitted by selected_for_zip. This actual review preserves and reports that scope gap.",
+  "inputs": [
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/tmp/online-ch2-b4-finite-identity-precanary-20261011/context-v1/capture-helper.py.txt",
+      "sha256": "d7d10142361f940c51712e7dd174dfae51ad768f65f87f26decd87d91faf58fc"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/tmp/online-ch2-b4-finite-identity-precanary-20261011/context-v1/post-source-inputs.json",
+      "sha256": "0756840f996253b0fde712e42284a14484bf195e80a55b8eeecd377b4b980fcb"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/tmp/online-ch2-b4-finite-identity-precanary-20261011/context-v1/pre-selected-source-raw.zip",
+      "sha256": "19724644dbcb4b9b4ec2625839e37e2cc67be21b0258fab8fcd48566b346ea89"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/tmp/online-ch2-b4-finite-identity-precanary-20261011/context-v1/pre-selected-ZIP-inputs.json",
+      "sha256": "6a91255ae792b999c78d6b0b3ada91af1c7b1a5bc4bba1386d8c30f09f32e351"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/tmp/online-ch2-b4-finite-identity-precanary-20261011/context-v1/pre-source-inputs.json",
+      "sha256": "0756840f996253b0fde712e42284a14484bf195e80a55b8eeecd377b4b980fcb"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/tmp/online-ch2-b4-finite-identity-precanary-20261011/context-v1/receipt.json",
+      "sha256": "e6c392b3a8f044b5106f421768837f651818818c54030fffe38de28fee65ccf9"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/tmp/online-ch2-b4-finite-identity-precanary-20261011/context-v1/stderr.raw",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/tmp/online-ch2-b4-finite-identity-precanary-20261011/context-v1/stdout.raw",
+      "sha256": "c6bbe2017e8e6c0b79d7dff4f31bba1e1172f823ca034a81fd85c99fac0fc173"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "UTC": "2026-10-11T08:43:40.425596+00:00",
+  "actor": "/root/adaptive_reviewer",
+  "verdict": "repair-prepared-checker-v3",
+  "blocking_repairs": [
+    {
+      "id": "P1",
+      "finding": "Only compares addendum original_seal_sha256 with current seal hash; original immutable seal hash7d69... is not pinned.",
+      "repair": "Assert exact original seal SHA7d69c7a32df454ab91324c7b2aeb120e6bc736847fc3c429695711e2678504e8."
+    },
+    {
+      "id": "P2",
+      "finding": "New independent-preparation review file is required and hashed but its verdict and approved helper hashes are never checked; only older canary contract review verdict is checked.",
+      "repair": "Read new prepared review, require favorable verdict and empty blockers, compare its approved checker and recorder hashes with actual helper bytes."
+    }
+  ],
+  "checker_v3_sha256": "942f099838fe28435cfd76b337a720a88e10f4cb41c15e4dffd265793884c754",
+  "recorder_v2_sha256": "bafe784fad8810f866105ffd19e3504f70ebf1e28949611549d584630a5b7ce8",
+  "recorder_v2_exact_delta_accepted": "Only adds seven missing governance paths to selected_for_zip exact set. All actual argv, stream capture, clean checks, inventory, ZIP and postchecks unchanged.",
+  "executed": false,
+  "scope": "Prepared design only; no source or original seal edits, no Test authorization."
+}
