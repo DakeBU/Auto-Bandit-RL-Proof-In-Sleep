@@ -1,0 +1,42 @@
+--- capture-support-reader-v5.cjs
++++ capture-support-reader-v6.cjs
+@@ -563,6 +563,31 @@
+       if(!(await catalog.locator('.source-links a').evaluateAll(xs=>xs.map(x=>x.href))).includes(sourceURL))throw Error('Catalog pinned complete source link '+name);
+       await offeredLeanProofs(catalog,sourceText,stem+'-catalog');const catalogShots=await strictPanelShots(catalog,stem+'-catalog');write(stem+'-catalog-dom.html',await page.content());
+       report.correctedMain.lessons.push({name,chapter:lesson.chapter,ancestorState,initial,catalogInitialOpen,statement:normalizedStatement,sourceURL,sourceSHA256:hash(Buffer.from(sourceText)),foldedShots,openShots,catalogShots});
++      const retained=mainRender.retained_parent_bindings.find(x=>x.consumer===name);
++      if(retained){
++        if(!lesson.dependencies.includes(retained.parent))throw Error('Retained real parent dependency '+name);
++        const call=fs.readFileSync(path.join(root,retained.consumer_source),'utf8').split(/\r?\n/)[retained.actual_call_line-1];
++        if(!call.includes(':= affine_support_of_domain_interior '))throw Error('Actual unchanged parent application '+name);
++        const parentNodes=registry.nodes.filter(x=>x.id==='declaration:'+retained.parent),parentLessons=highlights.filter(x=>x.full_name===retained.parent);
++        if(parentNodes.length!==1||parentLessons.length!==1||parentLessons[0].chapter!=='online-minorant')throw Error('One retained canonical parent '+name);
++        const parentNode=parentNodes[0],parentURL=new URL('/chapters/online-minorant/',url).href;
++        await exactHTTP(parentURL);await page.goto(parentURL,{waitUntil:'networkidle',timeout:60000});
++        const parentPanel=await exactOne('[id="'+parentNode.url.split('#')[1]+'-teaching"]','retained parent lesson');await openRecordedAncestors(parentPanel,name+' shared parent');
++        const actualLink=parentPanel.locator('.source-links a').filter({hasText:'Open in the declaration catalog'});
++        if(await actualLink.count()!==1)throw Error('Actual canonical parent catalog link '+name);
++        const href=await actualLink.evaluate(e=>e.href),expectedHref=new URL('/'+parentNode.url,url).href;
++        if(href!==expectedHref)throw Error('Canonical parent link target '+name);
++        const parentLessonShots=await strictPanelShots(parentPanel,stem+'-retained-parent-lesson');
++        await exactHTTP(href.split('#')[0]);await actualLink.click();await page.waitForURL(expectedHref,{timeout:60000});
++        const parentCatalog=await exactOne('[id="'+parentNode.url.split('#')[1]+'"]','clicked canonical parent');await openRecordedAncestors(parentCatalog,name+' clicked parent');
++        const openedByNavigation=await parentCatalog.evaluate(e=>e.open);if(!openedByNavigation)await parentCatalog.locator(':scope > summary').click();
++        const parentEntry=mainRender.chapters.flatMap(x=>x.lessons).find(x=>x.highlight.full_name===retained.parent);if(!parentEntry)throw Error('Reviewed parent source entry absent');
++        await verifyWrapControl(parentCatalog,norm(parentEntry.declaration.statement),retained.parent);
++        const parentCatalogShots=await strictPanelShots(parentCatalog,stem+'-retained-parent-catalog');write(stem+'-retained-parent-dom.html',await page.content());
++        report.correctedMain.retainedParentChecks ||= [];
++        report.correctedMain.retainedParentChecks.push({consumer:name,parent:retained.parent,actualSourceCall:{file:retained.consumer_source,line:retained.actual_call_line,text:call},consumerDependencyVisible:true,consumerInlineParentLinks:value.links.filter(x=>norm(x.text).includes(retained.parent)),inlineLinkBoundary:'Current renderer lists dependency names as code; these are not falsely described as clickable inline links. The real canonical parent lesson-to-catalog link is clicked and its target captured.',clickedCanonicalParentLink:href,openedByNavigation,parentLessonShots,parentCatalogShots});
++      }
++
+     }
+     for(const chapter of mainRender.chapters){
+       const chapterURL=new URL('/chapters/'+chapter.slug+'/',url).href;
+@@ -612,6 +637,7 @@
+     write('math2-directions-dom.html',await page.content());
+     for(const [p,sha] of Object.entries(mainRender.source_RAW))if(hash(fs.readFileSync(path.join(root,p)))!==sha)throw Error('Corrected-main source changed during capture '+p);
+     if(hash(fs.readFileSync(path.join(root,inputSpec.corrected_main_render_inputs.path)))!==hash(mainRenderBytes))throw Error('Corrected-main payload changed');
++    if(report.correctedMain.retainedParentChecks?.length!==2)throw Error('Both retained real-parent cases required');
+     report.correctedMain.allRequiredCasesCaptured=true;
+ 
+     if(hash(fs.readFileSync(path.join(root,growthRel)))!==hash(growthBytes)||hash(fs.readFileSync(path.join(root,'docs/contracts/online-ch2-b4-strong-convex-growth-v1/neutral-frozen-header-v1.txt')))!==hash(growthFrozen))throw Error('Growth source/header changed during capture');

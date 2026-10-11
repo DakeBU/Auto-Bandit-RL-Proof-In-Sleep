@@ -1,0 +1,48 @@
+--- capture-support-reader-v6.cjs
++++ capture-support-reader-v7.cjs
+@@ -599,10 +599,43 @@
+       if(await page.locator('article.source-theorem-card').count()!==cards.length)throw Error('Exact current source card count '+chapter.slug);
+       for(let i=0;i<cards.length;i++){
+         const expected=cards[i],panel=await exactCard(expected.label),label='main-'+chapter.slug+'-source-'+i;
++        const disclosure=panel.locator('xpath=parent::details[contains(concat(" ",normalize-space(@class)," ")," source-theorem-disclosure ")]');
++        if(await disclosure.count()>1)throw Error('Unique source disclosure '+label);
++        let disclosureState=null;
++        if(await disclosure.count()===1){
++          const initiallyOpen=await disclosure.evaluate(e=>e.open);
++          const summary=disclosure.locator(':scope > summary');
++          if(await summary.count()!==1)throw Error('Unique source disclosure summary '+label);
++          disclosureState={initiallyOpen,summary:await data(summary),initialSummaryScreenshots:await strictPanelShots(summary,label+'-initial-summary')};
++        }
+         const ancestors=await openRecordedAncestors(panel,label);const value=await readyMath(panel,label,Boolean(expected.math));
+-        requireWords(value.text,[expected.label,expected.plain,expected.relationship,...Object.values(expected.contract||{}),...(expected.local_status?[expected.local_status.label,expected.local_status.boundary]:[])],label);
++        requireWords(value.text,[expected.label,expected.plain,expected.relationship,...Object.values(expected.contract||{}),...(expected.local_status?[expected.local_status.boundary]:[])],label);
++        let localStatus=null;
++        if(expected.local_status){
++          const statusBox=panel.locator(':scope > .source-route-status');
++          if(await statusBox.count()!==1)throw Error('Unique local status box '+label);
++          const badge=statusBox.locator(':scope > span.status');
++          if(await badge.count()!==1)throw Error('Unique local status badge '+label);
++          const states=[];
++          for(const width of [1440,390]){
++            await page.setViewportSize({width,height:1800});await badge.scrollIntoViewIfNeeded();
++            if(!(await badge.isVisible()))throw Error('Local status not visible '+label+' '+width);
++            const state=await badge.evaluate(e=>({raw:e.textContent,visible:e.innerText,textTransform:getComputedStyle(e).textTransform,classes:[...e.classList],width:e.getBoundingClientRect().width,height:e.getBoundingClientRect().height}));
++            if(norm(state.raw)!==norm(expected.local_status.label)||state.textTransform!=='uppercase'||norm(state.visible)!==norm(expected.local_status.label).toUpperCase()||!state.classes.includes(expected.local_status.status)||state.width<=0||state.height<=0)throw Error('Exact local status raw/rendered binding '+label+' '+width);
++            requireWords((await data(statusBox)).text,[expected.local_status.boundary],label+' local status boundary');
++            states.push({width,...state});
++          }
++          localStatus={expected:expected.local_status,states,screenshots:await strictPanelShots(statusBox,label+'-local-status')};
++          if(await disclosure.count()===1){
++            const summaryBadge=disclosure.locator(':scope > summary .source-route-summary-meta > span.status');
++            if(await summaryBadge.count()!==1||!(await summaryBadge.isVisible()))throw Error('Unique visible summary status '+label);
++            const summaryState=await summaryBadge.evaluate(e=>({raw:e.textContent,visible:e.innerText,textTransform:getComputedStyle(e).textTransform,classes:[...e.classList]}));
++            if(norm(summaryState.raw)!==norm(expected.local_status.label)||summaryState.textTransform!=='uppercase'||norm(summaryState.visible)!==norm(expected.local_status.label).toUpperCase()||!summaryState.classes.includes(expected.local_status.status))throw Error('Exact summary status binding '+label);
++            localStatus.summaryState=summaryState;
++          }
++        }
+         const expectedPDF=expected.pdf_page?expected.url.split('#')[0]+'#page='+expected.pdf_page:expected.url;if(!value.links.some(x=>x.href===expectedPDF))throw Error('Exact source PDF anchor '+label);
+-        report.correctedMain.sourceCards.push({chapter:chapter.slug,label:expected.label,ancestors,...value,screenshots:await strictPanelShots(panel,label)});
++        report.correctedMain.sourceCards.push({chapter:chapter.slug,label:expected.label,disclosureState,localStatus,ancestors,...value,screenshots:await strictPanelShots(panel,label)});
+       }
+       for(const [field,selector,words] of [
+         ['notation','#notation',reading.notation.flatMap(x=>[x.term,x.meaning])],

@@ -1,0 +1,46 @@
+--- capture-support-reader-v9.cjs
++++ capture-support-reader-v10.cjs
+@@ -204,7 +204,7 @@
+         throw Error('Clipped panel '+name+' width='+width+' geometry='+JSON.stringify(geometry));
+       }
+       attempt.phase='geometry-passed';
+-      const file = name + '-'+width+'.png'; await panel.screenshot({ path: path.join(output, file), timeout: 60000 });
++      const file = name + '-'+width+'.png'; await closeReaderSidebar(name+' '+width+' before panel screenshot');await panel.screenshot({ path: path.join(output, file), timeout: 60000 });
+       const item = { file, sha256: hash(fs.readFileSync(path.join(output, file))), geometry }; report.images.push(item); shots.push(item); } return shots;
+     }
+     async function verifyWrapControl(panel, expectedStatement, label) {
+@@ -525,7 +525,7 @@
+       const math=panel.locator('mjx-container'),verified=[];
+       for(let i=0;i<await math.count();i++){
+         const node=math.nth(i);
+-        const candidate=await node.evaluate(e=>{const q=e.getBoundingClientRect();return q.width>0&&q.height>0&&e.scrollWidth>e.clientWidth+1;});
++        const candidate=await node.evaluate(e=>{const q=e.getBoundingClientRect(),r=e.closest('.math-statement'),p=r?.getBoundingClientRect();return q.width>0&&q.height>0&&((e.clientWidth>0&&e.scrollWidth>e.clientWidth+1)||(r&&r.scrollWidth>r.clientWidth+1)||(p&&(q.left<p.left-1||q.right>p.right+1)));});
+         if(!candidate)continue;
+         const region=node.locator('xpath=ancestor::*[contains(concat(" ",normalize-space(@class)," ")," math-statement ")][1]');
+         if(await region.count()!==1)throw Error('Overflowed MathJax lacks unique formula region '+label);
+@@ -541,10 +541,10 @@
+         for(const edge of ['left','right']){
+           await region.evaluate((r,edge)=>{r.scrollLeft=edge==='left'?0:r.scrollWidth;},edge);
+           await page.waitForTimeout(50);await region.scrollIntoViewIfNeeded();
+-          const state=await node.evaluate(e=>{const r=e.closest('.math-statement'),q=r.getBoundingClientRect(),m=e.querySelector(':scope > mjx-math').getBoundingClientRect();return {scrollLeft:r.scrollLeft,maxScroll:r.scrollWidth-r.clientWidth,regionLeft:q.left,regionRight:q.right,mathLeft:m.left,mathRight:m.right,mathText:e.textContent};});
++          const state=await node.evaluate(e=>{const r=e.closest('.math-statement'),q=r.getBoundingClientRect(),m=e.querySelector(':scope > mjx-math').getBoundingClientRect();return {scrollLeft:r.scrollLeft,maxScroll:r.scrollWidth-r.clientWidth,regionLeft:q.left,regionRight:q.right,regionClientWidth:r.clientWidth,regionScrollWidth:r.scrollWidth,nodeDisplay:getComputedStyle(e).display,nodeClientWidth:e.clientWidth,nodeScrollWidth:e.scrollWidth,nodeLeft:e.getBoundingClientRect().left,nodeRight:e.getBoundingClientRect().right,mathLeft:m.left,mathRight:m.right,mathText:e.textContent};});
+           if(edge==='left'&&(Math.abs(state.scrollLeft)>1||state.mathLeft<state.regionLeft-1))throw Error('Formula left edge unreachable '+label);
+           if(edge==='right'&&(state.scrollLeft<=1||Math.abs(state.scrollLeft-state.maxScroll)>1||state.mathRight>state.regionRight+1))throw Error('Formula right edge unreachable '+label);
+-          const file=label+'-math-'+i+'-'+width+'-'+edge+'.png';await region.screenshot({path:path.join(output,file),timeout:60000});
++          const file=label+'-math-'+i+'-'+width+'-'+edge+'.png';await closeReaderSidebar(label+' '+width+' '+edge+' before formula screenshot');await region.screenshot({path:path.join(output,file),timeout:60000});
+           const shot={file,sha256:hash(fs.readFileSync(path.join(output,file)))};report.images.push(shot);shots.push(shot);states.push({edge,...state});
+         }
+         if(states[0].mathText!==states[1].mathText||states[1].mathLeft>=states[0].mathLeft-1)throw Error('Formula content or movement mismatch '+label);
+@@ -567,10 +567,10 @@
+             const verifiedMathIndex=e.tagName==='MJX-CONTAINER'?[...el.querySelectorAll('mjx-container')].indexOf(e):-1;
+             const verifiedOwnOverflow=verifiedMathIndex>=0&&verifiedMath.includes(verifiedMathIndex);
+             const ancestors=[];for(let a=e.parentElement;a&&a!==el.parentElement;a=a.parentElement){const b=a.getBoundingClientRect(),s=getComputedStyle(a);if(['hidden','clip'].includes(s.overflowX)&&(q.left<b.left-1||q.right>b.right+1))ancestors.push({tag:a.tagName,class:a.className,overflowX:s.overflowX,left:b.left,right:b.right});}
+-            return q.left<p.left-1||q.right>p.right+1||(ownOverflow&&!verifiedOwnOverflow)||ancestors.length?[{tag:e.tagName,class:e.className,text:e.textContent.slice(0,180),left:q.left,right:q.right,scrollWidth:e.scrollWidth,clientWidth:e.clientWidth,clippingAncestors:ancestors}]:[];
++            return ((q.left<p.left-1||q.right>p.right+1||ownOverflow)&&!verifiedOwnOverflow)||ancestors.length?[{tag:e.tagName,class:e.className,text:e.textContent.slice(0,180),left:q.left,right:q.right,scrollWidth:e.scrollWidth,clientWidth:e.clientWidth,clippingAncestors:ancestors}]:[];
+           });
+         },verifiedMath);
+-        if(bad.length){write('strict-clipping-'+label+'-'+width+'.json',JSON.stringify(bad,null,2));await page.screenshot({path:path.join(output,'strict-clipping-'+label+'-'+width+'.png'),fullPage:false});throw Error('Visible descendant clipping '+label+' '+width);}
++        if(bad.length){write('strict-clipping-'+label+'-'+width+'.json',JSON.stringify(bad,null,2));await closeReaderSidebar(label+' '+width+' before diagnostic screenshot');await page.screenshot({path:path.join(output,'strict-clipping-'+label+'-'+width+'.png'),fullPage:false});throw Error('Visible descendant clipping '+label+' '+width);}
+       }
+       return await screenshot(panel,label);
+     }

@@ -1,0 +1,127 @@
+{
+  "schema_version": "3.0",
+  "id": "ONLINE-FORMULA-SCROLL-AFFORDANCE-20261012",
+  "route": "online-learning/reader/formula-scroll-affordance",
+  "frontier_cell": "online-convex",
+  "source_facing": false,
+  "source": {
+    "kind": "internal-design",
+    "title": "Make existing overflowing-formula scroll affordance visible at all viewport widths",
+    "version": "candidate from 95cfc51fa11619217f8153614d5b5b8a6c04aa2d",
+    "anchor": "website/static/site.css existing math-statement.is-scrollable rule; actual-render-v6 desktop proof-bridge failure",
+    "url": ""
+  },
+  "target": "Move the existing conditional formula scroll-hint styling from the max-width:760px media rule to global scope, with identical declarations. Only math-statement.is-scrollable hints become visible; non-overflowing hints remain hidden. Preserve existing cue text, formula content, scrolling behavior, source exposition and mathematical claims.",
+  "affected_files": [
+    "website/static/site.css"
+  ],
+  "declarations": [],
+  "reuse_plan": {
+    "classification": "reuse",
+    "decision": "reuse_existing",
+    "searched_existing": [
+      "Existing .overflow-hint default hidden rule, .math-statement.math-rendered overflow-x:auto, and conditional mobile-only display:flex hint.",
+      "Actual desktop1440 source proof-bridge formula clientWidth463/scrollWidth482, is-scrollable and overflowXauto but hintVisiblefalse."
+    ],
+    "reused_declarations": [],
+    "new_shared_declarations": [],
+    "known_consumers": [
+      "Existing source-card, proof-bridge, worked-example and lesson formula scroll regions"
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Reuse identical existing conditional hint style and text at every width. No new generator, CSS class, mathematical definition or declaration."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": false,
+    "status": "not-required",
+    "formalizer": "not-applicable: CSS maintenance only",
+    "blind_decoder": "not-applicable: no Lean or source-statement delta",
+    "source_reviewer": "Pending distinct concrete repair review; original source and failure evidence preserved",
+    "verdict": "not-required",
+    "remaining_semantic_delta": "No mathematical or prose delta; CSS scope only."
+  },
+  "graph_contribution": {
+    "lean_graph": "reuse-only",
+    "overview_graph": "no-change-with-reason",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "No mathematical or dependency change; existing graph unchanged.",
+    "focus_targets": [],
+    "visual_review": "Pending new same-source desktop/narrow reader captures, actual scroll endpoint evidence and independent pixel review.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "no-change-with-reason: route order and lesson ownership unchanged.",
+    "banditrlwiki": "no-change-with-reason: no claim or case changes.",
+    "results_ledger": "no-change-with-reason: no mathematical or completion increment.",
+    "roadmap": "no-change-with-reason: all Chapter2 and book obligations unchanged.",
+    "website_surfaces": [
+      "website/static/site.css"
+    ]
+  },
+  "truth_boundary": "Reader affordance repair only. No Lean, proof, paper, content JSON, generator, source statement, route, highlight or count changes. Preserve40routes/504highlights/25OGDcards/33Bookrefs/4navigation and Chapter2partial/acceptedfalse/7+6/null/B1-B7/fullB4/bookGoalOPEN. All95c gates and failed render attempts remain historical after application. New commit requires fresh matching-source gates, structural/site/browser and independent reader review. No application/build/reader/Exposition/purification/main/live acceptance claimed.",
+  "verification": {
+    "focused_checks": [
+      "Exact CSS candidate removes one mobile conditional block and inserts identical declarations globally; all other RAW bytes preserved.",
+      "Actual-render-v6 failed at1440 with real scroll range but no visible cue; all71 PNGs and failure artifacts hash-bound in proposal."
+    ],
+    "bandit_check": "Pending fresh combined root/Tests/full-harness and governance gates on the committed repair candidate.",
+    "site_build": "Pending fresh plain and matching-source verified isolated site builds after required proof gates.",
+    "site_check": "Pending official site checks, exact structural replay, real scroll endpoints at1440/390 and independent pixel review.",
+    "independent_review": "Tooling diagnosis/proposal prepared; separate concrete source/publishing review pending before application."
+  },
+  "contributor": {
+    "name": "Ji Cheng with Codex assistance",
+    "role": "CSS maintenance preparation with distinct tooling/source review; no mathematical authorship."
+  },
+  "learning_contract": {
+    "control_plane_math_authority": false,
+    "process_memory_checked": true,
+    "process_memory_ids": [
+      "ABRL-PM-MATCHED-HARNESS-EVIDENCE",
+      "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS"
+    ],
+    "failure_class": "IMPLEMENTATION_FAILED",
+    "salvage": {
+      "required": true,
+      "status": "completed",
+      "reason": "Preserve all95c proof/gate receipts and failed reader runs; reuse exact existing scroll-hint declarations and text. Candidate not applied.",
+      "promoted_fragments": [],
+      "discarded_fragments": []
+    },
+    "parallelism": {
+      "decision": "serial",
+      "direction_fingerprints": [
+        "single-global-scope-existing-conditional-formula-scroll-hint"
+      ],
+      "expected_information_gain": "One CSS scope repair, no alternate mathematical route.",
+      "shared_verified_context_digest": "5b126bf7c0739879b941dfddba81fef3ae3ba9819c06d24cac6b805c5c29698c"
+    },
+    "cross_route_blind_spot_audit": {
+      "required": false,
+      "status": "not-applicable",
+      "evidence": "No parallel proof routes; inspect one existing CSS conditional rule across viewport widths.",
+      "canonical_route": "Existing conditional math-statement.is-scrollable hint",
+      "selection_reason": "Move identical rule to global scope."
+    },
+    "reader_backpressure": {
+      "purification_status": "pending",
+      "exposition_seal_status": "pending",
+      "reader_debt_delta": 0,
+      "exposition_evidence": "Fresh repaired-reader review pending; zero debt remains budget, not measured acceptance.",
+      "source_expansion_nodes": [],
+      "lean_expansion_nodes": [],
+      "assumptions_preserved": true,
+      "boundary_preserved": true
+    }
+  }
+}

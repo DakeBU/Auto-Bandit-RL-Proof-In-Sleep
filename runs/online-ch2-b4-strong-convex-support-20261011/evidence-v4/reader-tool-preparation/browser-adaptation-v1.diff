@@ -1,0 +1,123 @@
+--- capture-reconciliation-reader-v11.cjs
++++ capture-support-reader-v1.cjs
+@@ -4,13 +4,27 @@
+ const norm = s => s.replace(/[\u200b\u00ad]/g, '').replace(/\s+/g, ' ').trim();
+ const inside = (p, base) => { const rel = path.relative(base, p); return rel && !rel.startsWith('..') && !path.isAbsolute(rel); };
+ (async () => {
+-  const [url, outputArg, profileArg, registryArg, rootArg, siteArg, gateArg, gateSHA, expectedHead] = process.argv.slice(2);
+-  if (process.argv.slice(2).length !== 9) throw Error('Expected URL OUTPUT PROFILE REGISTRY ROOT SITE COMBINED_GATE_RECEIPT GATE_SHA256 HEAD');
+-  const root = fs.realpathSync(rootArg), base = path.join(root, 'tmp', 'online-main-reconciliation-reader-qa-20261011');
++  const [url, outputArg, profileArg, registryArg, rootArg, siteArg, gateArg, gateSHA, expectedHead, specArg, specSHA] = process.argv.slice(2);
++  if (process.argv.slice(2).length !== 11) throw Error('Expected URL OUTPUT PROFILE REGISTRY ROOT SITE COMBINED_GATE_RECEIPT GATE_SHA256 HEAD SPEC SPEC_SHA256');
++  const root = fs.realpathSync(rootArg), base = path.join(root, 'tmp', 'online-support-reader-tool-preparation-20261012');
+   const output = path.resolve(outputArg), profile = path.resolve(profileArg), registryFile = fs.realpathSync(registryArg);
+   const expectedSite = fs.realpathSync(siteArg);
+   const gitState = () => { const run = (...args) => require('child_process').execFileSync('git',args,{cwd:root,encoding:'utf8'}).trim(); return {HEAD:run('rev-parse','HEAD'),branch:run('branch','--show-current'),status:run('status','--porcelain')}; };
+   const currentGitBefore = gitState();
++  const specBytes=fs.readFileSync(specArg),inputSpec=JSON.parse(specBytes);
++  if(hash(specBytes)!==specSHA||inputSpec.ready_for_execution!==true||inputSpec.head!==expectedHead||inputSpec.branch!==currentGitBefore.branch)throw Error('Executable pinned support spec required');
++  if(hash(fs.readFileSync(__filename))!==inputSpec.browser_helper_sha256)throw Error('Reader helper SHA binding');
++  for(const [p,sha] of Object.entries(inputSpec.bindings))if(hash(fs.readFileSync(path.join(root,p)))!==sha)throw Error('Input RAW changed '+p);
++  for(const role of ['full_harness','site_build_verified','site_check']){
++    const b=inputSpec.evidence_required[role];if(!b||hash(fs.readFileSync(b.path))!==b.sha256)throw Error('Missing gate binding '+role);
++    const g=JSON.parse(fs.readFileSync(b.path));if(g.actual_exit!==0||g.capture_integrity_ok!==true||g.complete_source_path_set_and_RAW_unchanged!==true||g.pre_git.HEAD!==expectedHead||g.post_git.HEAD!==expectedHead||g.pre_git.status_porcelain_v1_z_hex!==''||g.post_git.status_porcelain_v1_z_hex!=='')throw Error('Unsuccessful exact-head gate '+role);
++  }
++  const fallback=inputSpec.evidence_required.browser_unavailable_observation;
++  if(!fallback||hash(fs.readFileSync(fallback.path))!==fallback.sha256)throw Error('Documented actual browser capability observation required for isolated fallback');
++  const structural=inputSpec.evidence_required.structural_result;
++  if(!structural||hash(fs.readFileSync(structural.path))!==structural.sha256)throw Error('Pinned passed structural check required');
++  const sr=JSON.parse(fs.readFileSync(structural.path));if(sr.actual_exit!==0||sr.pre_git.HEAD!==expectedHead||sr.post_git.HEAD!==expectedHead)throw Error('Structural receipt mismatch');
++
+   if(currentGitBefore.HEAD !== expectedHead || currentGitBefore.status !== '') throw Error('Current clean candidate Git state required');
+   if (!inside(expectedSite, path.join(root,'tmp'))) throw Error('Site must be isolated under root/tmp');
+   const gateBytes = fs.readFileSync(gateArg), gate = JSON.parse(gateBytes);
+@@ -146,6 +160,11 @@
+     page.on('requestfailed', req => report.failedRequests.push({ url: req.url(), failure: req.failure() }));
+     await page.goto(url, { waitUntil: 'networkidle', timeout: 60000 });
+     await page.waitForFunction(() => [...document.querySelectorAll('article.source-theorem-card')].some(el => el.textContent.includes('Corrected terminal accounting: the finite-real regret identity') && el.querySelector('mjx-container')), null, { timeout: 60000 });
++
++    const bookNav=await page.locator('[data-nav-group="books"] > .nav-group-links > a').evaluateAll(xs=>xs.map(x=>new URL(x.href).pathname).filter(x=>/\/books\/[^/]+\/(?:index.html)?$/.test(x)).sort());
++    const expectedBookNav=['bandit','reinforcement-learning','online-learning','conformal-prediction'].map(x=>'/books/'+x+'/index.html').sort();
++    if(JSON.stringify(bookNav.map(x=>x.endsWith('/')?x+'index.html':x))!==JSON.stringify(expectedBookNav))throw Error('Four Book navigation links must remain exact');
++    report.fourBookNavigation=bookNav;
+     // Actual final QA: no injected CSS. Every current source card is measured.
+     report.allSourceCardGeometry=[];
+     for(const width of [1440,390]) {
+@@ -154,7 +173,7 @@
+       await page.waitForTimeout(200);
+       const rows=await page.locator('article.source-theorem-card').evaluateAll(xs=>xs.map(e=>{const q=e.getBoundingClientRect();const parts=[...e.querySelectorAll('.source-theorem-heading,.source-theorem-heading a,.source-route-status,.source-route-status>.status')].map(p=>{const b=p.getBoundingClientRect();return {class:p.className,left:b.left,right:b.right,scrollWidth:p.scrollWidth,clientWidth:p.clientWidth};});return {title:e.querySelector('h3')?.innerText,left:q.left,right:q.right,scrollWidth:e.scrollWidth,clientWidth:e.clientWidth,parts};}));
+       report.allSourceCardGeometry.push({width,rows});
+-      if(rows.length!==24)throw Error('Expected preserved23 plus one new growth source card');
++      if(rows.length!==25)throw Error('Expected preserved24 plus one reviewed support source card');
+       const bad=rows.filter(x=>x.left<0||x.right>width+1||x.scrollWidth>x.clientWidth+1||x.parts.some(p=>p.left<x.left-1||p.right>x.right+1||p.scrollWidth>p.clientWidth+1));
+       if(bad.length)throw Error('Actual source-card geometry overflow '+JSON.stringify(bad));
+     }
+@@ -342,6 +361,58 @@
+     if(!(await growthCatalog.locator('.source-links a').evaluateAll(xs=>xs.map(x=>x.href))).includes(expectedGrowth))throw Error('Growth catalog pinned complete-proof link wrong');
+     report.modules.push({fullName:growthName,sourceSHA256:hash(growthBytes),frozenHeaderSHA256:hash(growthFrozen),sourceLink:expectedGrowth,code:growthCode,screenshot:await screenshot(growthCatalog,'growth-catalog')});
+     write('growth-catalog-dom.html',await page.content());
++    {
++    // New conditional strong-convex support leaf; existing B4/OGD checks above retained.
++    const supportName='BanditRL.OnlineConvex.stronglyConvex_support_growth';
++    const supportRel='BanditRLProof/OnlineStrongConvexSupport.lean';
++    const supportBytes=fs.readFileSync(path.join(root,supportRel)),supportSource=supportBytes.toString('utf8');
++    if(hash(supportBytes)!=='f3a475b58661a4efefdb33b9715852a08008940bd437e1cb3ad64862b772d1e5')throw Error('Reviewed support production bytes changed');
++    const supportFrozen=fs.readFileSync(path.join(root,'docs/contracts/online-ch2-b4-strong-convex-support-v1/neutral-frozen-header-v1.txt'));
++    if(hash(supportFrozen)!=='23e26732b827730a343a1dd758a19a39d4f8d4af06941330f9636272d3114d57')throw Error('Frozen support declaration changed');
++    if(!/^import BanditRLProof\.OnlineStrongConvexSupport\s*$/m.test(sourceRoot))throw Error('Support shared-root import absent');
++    const supportToken='theorem stronglyConvex_support_growth',gs=supportSource.indexOf(supportToken),gf=supportFrozen.toString('utf8'),gfs=gf.indexOf(supportToken),gfe=gf.indexOf('\nend BanditRL.OnlineConvex',gfs);
++    const bodyMarker=gs<0?null:/\s*:=\s*by/.exec(supportSource.slice(gs));
++    if(gs<0||gfs<0||gfe<0||!bodyMarker)throw Error('Support full header boundaries missing');
++    const supportHeader=norm(gf.slice(gfs,gfe));
++    if(norm(supportSource.slice(gs,gs+bodyMarker.index))!==supportHeader)throw Error('Support actual/frozen complete header mismatch');
++    const supportLine=supportSource.slice(0,gs).split('\n').length;
++    const supportNodes=registry.nodes.filter(x=>x.id==='declaration:'+supportName),supportLessons=highlights.filter(x=>x.full_name===supportName);
++    if(supportNodes.length!==1||supportLessons.length!==1||supportNodes[0].status!=='compiled')throw Error('Support unique compiled node/lesson missing');
++    const supportNode=supportNodes[0],supportLesson=supportLessons[0],supportAnchor=supportNode.url.split('#')[1];
++    if(!supportAnchor)throw Error('Support declaration anchor missing');
++    await exactHTTP(new URL('../../'+supportNode.url.split('#')[0],url).href);
++    const expectedSupport=`https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/${expectedHead}/${supportRel}#L${supportLine}`;
++    await page.goto(url,{waitUntil:'networkidle',timeout:60000});
++    const supportCard=page.locator('article.source-theorem-card').filter({hasText:'Lemma4.2 forward dependency: quadratic lower bound at a supplied support'});
++    if(await supportCard.count()!==1)throw Error('Support coherent source card missing/duplicated');
++    await openAncestors(supportCard);
++    await supportCard.locator('mjx-container').first().waitFor({state:'visible',timeout:60000});
++    const gc=await data(supportCard);
++    if(!gc.mathContainers||gc.mathErrors||!gc.links.some(x=>x.href==='https://arxiv.org/pdf/1912.13213v10#page=46'))throw Error('Support source/formula/PDF binding');
++    requireWords(gc.text,['SourceProper','effectiveDomain','lambda/2','0<a<1','finite','Supply p','B1-B7','7.47/15.31','OPEN'],'support source contract');
++    report.panels.push({kind:'support-source-card',...gc,screenshot:await screenshot(supportCard,'support-source-card')});
++    const supportPanel=page.locator('[id="'+supportAnchor+'-teaching"]');
++    if(await supportPanel.count()!==1)throw Error('Support lesson missing/duplicated');
++    await openAncestors(supportPanel);await supportPanel.locator('details.technical-reading').evaluate(e=>e.open=true);
++    if(await supportPanel.locator('details.exact-lean').evaluate(e=>e.open))throw Error('Support exact header must initially remain folded');
++    const gd=await data(supportPanel);
++    requireWords(gd.text,[supportName,supportLesson.plain,supportLesson.proof_idea,'lambda/2','finite','B1-B7','7.47/15.31'],'support teaching');
++    if(!gd.mathContainers||gd.mathErrors||norm(await supportPanel.locator('details.exact-lean pre').textContent())!==supportHeader)throw Error('Support lesson formula/full-header mismatch');
++    for(const dependency of supportLesson.dependencies)requireWords(gd.text,[dependency],'support dependency');
++    if(!gd.links.some(x=>x.href===expectedSupport))throw Error('Support lesson full-proof source link missing/wrong');
++    report.panels.push({kind:'support-teaching',...gd,foldedExactHeader:supportHeader,screenshot:await screenshot(supportPanel,'support-lesson')});
++    write('support-chapter-dom.html',await page.content());
++    await page.goto(new URL('../../'+supportNode.url.split('#')[0],url).href,{waitUntil:'networkidle',timeout:60000});
++    const supportCatalog=page.locator('[id="'+supportAnchor+'"]');
++    if(await supportCatalog.count()!==1)throw Error('Support catalog declaration missing');
++    await supportCatalog.evaluate(e=>e.open=true);await openAncestors(supportCatalog);
++    await verifyWrapControl(supportCatalog,supportHeader,supportName);
++    const supportCode=await supportCatalog.locator('pre.lean-code').evaluate(e=>({text:e.textContent,scrollWidth:e.scrollWidth,clientWidth:e.clientWidth}));
++    if(norm(supportCode.text)!==supportHeader||supportCode.scrollWidth>supportCode.clientWidth+1)throw Error('Support catalog exact header clipping/mismatch');
++    if(!(await supportCatalog.locator('.source-links a').evaluateAll(xs=>xs.map(x=>x.href))).includes(expectedSupport))throw Error('Support catalog pinned complete-proof link wrong');
++    report.modules.push({fullName:supportName,sourceSHA256:hash(supportBytes),frozenHeaderSHA256:hash(supportFrozen),sourceLink:expectedSupport,code:supportCode,screenshot:await screenshot(supportCatalog,'support-catalog')});
++    write('support-catalog-dom.html',await page.content());
++    }
+     const books=JSON.parse(fs.readFileSync(path.join(root,'website/content/books.json'))).books;
+     const chapters=JSON.parse(fs.readFileSync(path.join(root,'website/content/chapters.json'))).chapters;
+     const owners=new Map();for(const b of books)if(b.status==='source-mapped')for(const ref of b.chapter_refs)if(ref.startsWith('teaching:')&&chapters.some(c=>'teaching:'+c.slug===ref)&&!owners.has(ref))owners.set(ref,b.id);
+@@ -418,6 +489,9 @@
+     report.currentGitAfter=gitState();
+     if(JSON.stringify(report.currentGitAfter)!==JSON.stringify(currentGitBefore) || report.currentGitAfter.HEAD!==expectedHead || report.currentGitAfter.status!=='') throw Error('Current Git changed during reader capture');
+     if(hash(fs.readFileSync(__filename))!==report.readerHelperSHA256) throw Error('Reader helper changed during capture');
++    for(const [p,sha] of Object.entries(inputSpec.bindings))if(hash(fs.readFileSync(path.join(root,p)))!==sha)throw Error('Input changed during capture '+p);
++    if(hash(fs.readFileSync(specArg))!==specSHA)throw Error('Spec changed during capture');
++    report.inputSpecSHA256=specSHA;
+     report.finishedUTC=new Date().toISOString();report.profilePreserved=profile;
+     report.verdict='Capture complete; personal pixel review and dependency-link presentation adjudication remain separate.';
+     write('reconciliation-render-v1.json',JSON.stringify(report,null,2)+'\n');
