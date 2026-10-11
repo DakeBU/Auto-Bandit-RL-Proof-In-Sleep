@@ -1,0 +1,23 @@
+namespace ZeroCurvature
+theorem zero_curvature_division_is_false :
+    Convex ℝ feasible ∧
+    (∀ i < (0 : ℕ) + 1, ∀ x, losses i x ≠ ⊥) ∧
+    (∀ i < (0 : ℕ) + 1, feasible ⊆ effectiveDomain (losses i)) ∧
+    (∀ x ∈ feasible, ∀ y ∈ feasible, ∀ a : ℝ, 0 < a → a < 1 →
+      currentObjective (a • x + (1 - a) • y) ≤
+        (a : EReal) * currentObjective x + ((1 - a : ℝ) : EReal) * currentObjective y -
+          ((((0 : ℝ) / 2) * a * (1 - a) * ‖x - y‖ ^ 2 : ℝ) : EReal)) ∧
+    IsMinOn predictionObjective feasible 0 ∧
+    (∀ z ∈ feasible,
+      (losses 0 0).toReal - hint 0 + support (z - 0) ≤
+        (losses 0 z).toReal - hint z) ∧
+    (0 : ℝ) ∈ feasible ∧ (-1 : ℝ) ∈ feasible ∧
+    ‖support‖ = (1 : ℝ) ∧
+    currentObjective 0 = (0 : EReal) ∧
+    currentObjective (-1) = ((-1 : ℝ) : EReal) ∧
+    (currentObjective 0).toReal - (currentObjective (-1)).toReal = (1 : ℝ) ∧
+    ‖support‖ ^ 2 / (2 * (0 : ℝ)) = (0 : ℝ) ∧
+    ¬ ((currentObjective 0).toReal - (currentObjective (-1)).toReal ≤
+      ‖support‖ ^ 2 / (2 * (0 : ℝ)))
+end ZeroCurvature
+

@@ -1,0 +1,34 @@
+(currentObjective 0).toReal - (currentObjective (-2)).toReal ≤ ‖support‖ ^ 2 / (2 * 1) ∧
+  IsMinOn predictionObjective feasible 0 ∧
+    ¬IsMinOn currentObjective feasible 0 ∧
+      (∀ z ∈ feasible, (losses 0 0).toReal - hint 0 + support (z - 0) ≤ (losses 0 z).toReal - hint z) ∧
+        support ≠ 0 ∧
+          ‖support‖ = 2 ∧
+            0 ∈ feasible ∧
+              -2 ∈ feasible ∧
+                3 ∉ feasible ∧
+                  currentObjective 0 = 0 ∧
+                    currentObjective (-2) = ↑(-2) ∧
+                      currentObjective 3 = ⊤ ∧
+                        (currentObjective 0).toReal - (currentObjective (-2)).toReal = 2 ∧
+                          ‖support‖ ^ 2 / (2 * 1) = 2 : Prop
+Convex ℝ feasible ∧
+  (∀ i < 0 + 1, ∀ (x : ℝ), losses i x ≠ ⊥) ∧
+    (∀ i < 0 + 1, feasible ⊆ effectiveDomain (losses i)) ∧
+      (∀ x ∈ feasible,
+          ∀ y ∈ feasible,
+            ∀ (a : ℝ),
+              0 < a →
+                a < 1 →
+                  currentObjective (a • x + (1 - a) • y) ≤
+                    ↑a * currentObjective x + ↑(1 - a) * currentObjective y - ↑(0 / 2 * a * (1 - a) * ‖x - y‖ ^ 2)) ∧
+        IsMinOn predictionObjective feasible 0 ∧
+          (∀ z ∈ feasible, (losses 0 0).toReal - hint 0 + support (z - 0) ≤ (losses 0 z).toReal - hint z) ∧
+            0 ∈ feasible ∧
+              -1 ∈ feasible ∧
+                ‖support‖ = 1 ∧
+                  currentObjective 0 = 0 ∧
+                    currentObjective (-1) = ↑(-1) ∧
+                      (currentObjective 0).toReal - (currentObjective (-1)).toReal = 1 ∧
+                        ‖support‖ ^ 2 / (2 * 0) = 0 ∧
+                          ¬(currentObjective 0).toReal - (currentObjective (-1)).toReal ≤ ‖support‖ ^ 2 / (2 * 0) : Prop

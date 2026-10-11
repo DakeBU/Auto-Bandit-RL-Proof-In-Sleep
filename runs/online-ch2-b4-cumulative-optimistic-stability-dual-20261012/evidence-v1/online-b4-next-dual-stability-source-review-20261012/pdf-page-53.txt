@@ -1,0 +1,58 @@
+4.2 Adaptive Algorithms:L ⋆ bounds and AdaGrad41
+4.2.2 Convex Analysis Bits: Dual Norms, Smooth, and Self-Bounded Functions
+We now consider a family of loss functions that have the characteristic of being lower
+bounded by the squared norm of their subgradients. We will also introduce the concept
+ofdual norms. While dual norms are not strictly needed for this topic, they give more gen-
+erality, and at the same time, they allow me to slowly introduce some of the concepts that
+will be needed for the chapter on Online Mirror Descent.
+Definition 4.15Thedual norm∥·∥ ⋆ of a norm∥·∥is defined as∥θ∥ ⋆ = maxx:∥x∥≤1 ⟨θ,x⟩.
+Remark 4.16The definition of dual norm immediately implies⟨θ,x⟩ ≤ ∥θ∥ ⋆∥x∥.
+Example 4.17The dual norm of the L 2 norm is the L2 norm. We can easily prove it. First
+of all, ifθ=0, then the dual norm is 0 too. Hence, let’s assume thatθ̸=0. We have
+∥θ∥⋆ = max x:∥x∥2≤1 ⟨θ,x⟩ ≤ ∥θ∥ 2 by Cauchy–Schwarz inequality. Also, setv= θ
+∥θ∥2
+,
+somax x:∥x∥2≤1 ⟨θ,x⟩ ≥ ⟨θ,v⟩=∥θ∥ 2.
+Example 4.18Letp≥1. The L p norm of a vectorx∈R d is defined as∥x∥ p =
+(Pd
+i=1 |xi|p)1/p. The dual norm is theq-norm where 1
+p + 1
+q = 1. Note that the dual of
+the L1 norm is the L ∞ norm, defined as∥x∥ ∞ = max i=1,...,d |xi|. The proof is left as an
+exercise to the reader.
+Example 4.19LetAbe a positive definite matrix, then it is possible to show that∥x∥ A :=√
+x⊤Axis a norm. The dual norm is∥x∥ A−1 =
+√
+x⊤A−1x. In fact, we have that the dual
+norm of∥ · ∥ A is defined as
+∥θ∥⋆ = max
+x:∥x∥A≤1
+⟨θ,x⟩= max
+x:x⊤Ax≤1
+θ⊤x= max
+y:y ⊤y≤1
+θ⊤A−1/2y= max
+y:∥y∥2≤1
+(A−1/2θ)⊤y
+=∥A −1/2θ∥2 =
+p
+θ⊤A−1θ,
+where we have used the change of variabley=A 1/2xin the third equality and the dual
+norm of the L2 norm from Example 4.17 in the second to last equality.
+If you do not know the concept ofoperator norms, the concept of dual norm can be a
+bit weird at first. One way to understand it is that it is a way to measure how “big” linear
+functionals are. For example, consider the linear functionf(x) =⟨z,x⟩, we want to try to
+understand how big it is. So, we can measuremaxx̸=0
+⟨z,x⟩
+∥x∥ , that is, we measure how big the
+output of the linear functional is compared to its inputx, wherexis measured with some
+norm. Now, you can show that the above is equivalent to the dual norm ofz.
+We have the following lemma that will be useful in the later chapters.
+Lemma 4.20Let∥ · ∥be a norm onR d, and let∥ · ∥⋆ be its dual norm. Then, for everyθ∈
+Rd and everyα∈R ≥0, there existsx∈R d such that∥x∥=αand⟨θ,x⟩=∥θ∥ ⋆∥x∥.
+ProofIfα= 0, choosex=0. Hence, assumeα >0.
+Ifθ=0, choose anyxsuch that∥x∥=α. Otherwise, by the definition of dual norm,
+there existsvwith∥v∥ ≤1such that
+⟨θ,v⟩= max
+u:∥u∥≤1
+⟨θ,u⟩=∥θ∥ ⋆ .

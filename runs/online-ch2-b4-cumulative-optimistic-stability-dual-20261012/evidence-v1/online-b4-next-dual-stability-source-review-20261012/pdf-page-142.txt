@@ -1,0 +1,71 @@
+130Follow-the-Regularized-Leader
+assume∂(ℓ t − ˜ℓt)(xt)to be non-empty andF t +ℓ t to be closed, subdifferentiable, and
+λt-strongly convex with respect to∥ · ∥inV. Then, we have
+TX
+t=1
+(ℓt(xt)−ℓ t(u))≤ψ T (u)−ψ 1(x1) +
+TX
+t=1
+
+⟨ˆgt,x t −x t+1⟩ − λt
+2 ∥xt −x t+1∥2
+
++
+T−1X
+t=1
+[ψt(xt+1)−ψ t+1(xt+1)]
+≤ψ T (u)−ψ 1(x1) +
+TX
+t=1
+∥ˆgt∥2
+⋆
+2λt
++
+T−1X
+t=1
+[ψt(xt+1)−ψ t+1(xt+1)],
+for allu∈ Vand all ˆgt ∈∂(ℓ t − ˜ℓt)(xt)fort= 1, . . . , T.
+ProofWe can interpret the Optimistic FTRL as FTRL with a regularizer ˜ψt(x) =ψ t(x)+
+˜ℓt(x). So, as in Lemma 7.5, the existence and uniqueness ofx t is given by Theorem 6.9.
+Also, note that ˜ℓT+1 does not influence the regret of the algorithm over theTrounds, so we
+can set ˜ℓT+1 = ˜ℓT .
+DefineF t(x) =ψ t(x) +Pt−1
+i=1 ℓi(x). We can use Lemma 7.1 withψ T+1 =ψ T . Given
+thatu∈ V, we can discard the last term in the lemma because non-positive, to obtain
+TX
+t=1
+ℓt(xt)−
+TX
+t=1
+ℓt(u)
+≤ ˜ℓT (u) +ψ T (u)−min
+x∈V
+(˜ℓ1(x) +ψ 1(x))
++
+TX
+t=1
+[Ft(xt)−F t+1(xt+1) +ℓ t(xt)] +
+T−1X
+t=1
+[˜ℓt(xt)− ˜ℓt+1(xt+1)]
+=ψ T (u)−ψ 1(x1) +
+TX
+t=1
+[Ft(xt)−F t+1(xt+1) +ℓ t(xt)],
+where we used the fact that the terms ˜ℓt(xt)− ˜ℓt+1(xt+1)form a telescopic sum and
+minx∈V (˜ℓ1(x)+ψ1(x)) = ˜ℓ1(x1)+ψ1(x1). Now focus on the termsFt(xt)−Ft+1(xt+1)+
+ℓt(xt). Observe thatF t(x)+ℓ t(x)+ι V(x)isλ t-strongly convex with respect to∥·∥, hence
+from Lemma 4.2 we have
+Ft(xt)−F t+1(xt+1) +ℓ t(xt)
+= (Ft(xt) +ℓ t(xt))−(F t(xt+1) +ℓ t(xt+1)) +ψ t(xt+1)−ψ t+1(xt+1)
+≤ ⟨ˆgt,x t −x t+1⟩ − λt
+2 ∥xt −x t+1∥2 +ψ t(xt+1)−ψ t+1(xt+1),
+for all ˆgt ∈∂(F t +ℓ t +ι V)(xt). Observing thatx t = argminx∈V Ft(x)+ ˜ℓt(x), we have
+0∈∂(F t+˜ℓt+ιV)(xt). Hence, using Theorem 2.23,∂(ℓt−˜ℓt)(xt)⊆∂(F t+ℓt+ιV)(xt).
+For the second inequality, by the definition of dual norms, we have that
+⟨ˆgt,x t−xt+1⟩− λt∥xt −x t+1∥2
+2 ≤ ∥ˆgt∥⋆∥xt−xt+1∥− λt∥xt −x t+1∥2
+2 ≤ ∥ˆgt∥2
+⋆
+2λt
+.

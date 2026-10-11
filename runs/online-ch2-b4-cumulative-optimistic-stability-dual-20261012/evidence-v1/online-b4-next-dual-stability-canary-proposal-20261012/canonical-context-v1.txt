@@ -1,0 +1,31 @@
+import BanditRLProof.OnlineCumulativeOptimisticStabilityDual
+
+noncomputable section
+open Set Finset
+namespace BanditRL.Tests.OnlineCumulativeOptimisticStabilityDualCanary
+open BanditRL.OnlineConvex
+
+namespace Tight
+def feasible : Set ℝ := Set.Icc (-2 : ℝ) 2
+def regularizer (x : ℝ) : ℝ := x ^ 2 / 2
+def hint (_ : ℝ) : ℝ := 0
+def losses (_ : ℕ) (x : ℝ) : EReal := ((2 * x : ℝ) : EReal)
+def predictionObjective (x : ℝ) : EReal :=
+  (regularizer x : EReal) + ∑ i ∈ range 0, losses i x + (hint x : EReal)
+def currentObjective (x : ℝ) : EReal :=
+  (regularizer x : EReal) + ∑ i ∈ range 1, losses i x + extendedIndicator feasible x
+def support : ℝ →L[ℝ] ℝ := (2 : ℝ) • ContinuousLinearMap.id ℝ ℝ
+end Tight
+
+namespace ZeroCurvature
+def feasible : Set ℝ := Set.Icc (-1 : ℝ) 1
+def regularizer (_ : ℝ) : ℝ := 0
+def hint (_ : ℝ) : ℝ := 0
+def losses (_ : ℕ) (x : ℝ) : EReal := (x : EReal)
+def predictionObjective (x : ℝ) : EReal :=
+  (regularizer x : EReal) + ∑ i ∈ range 0, losses i x + (hint x : EReal)
+def currentObjective (x : ℝ) : EReal :=
+  (regularizer x : EReal) + ∑ i ∈ range 1, losses i x + extendedIndicator feasible x
+def support : ℝ →L[ℝ] ℝ := ContinuousLinearMap.id ℝ ℝ
+end ZeroCurvature
+

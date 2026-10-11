@@ -1,0 +1,93 @@
+266Saddle-Point Optimization and Online Algorithms
+Algorithm 15.9Be-the-Regularized-Leader Algorithm
+Require:Non-empty closed convexV ⊂ X ⊆R d,ψ 1, . . . , ψT regularizers
+1:fort= 1toTdo
+2:Receiveℓ t :R d →(−∞,+∞], whereV ⊆domℓ t
+3:x t ∈argmin x∈V ψt(x) +Pt
+i=1 ℓi(x)
+4:Pay the lossℓ t(xt)
+5:end for
+where in the last equality we used Lemma 6.7. Dividing byη t and summing overt=
+1, . . . , T, we have
+TX
+t=1
+(ℓt(xt)−ℓ t(u))≤
+TX
+t=1
+ Bψ(u;x t−1)
+ηt
+− Bψ(u;x t)
+ηt
+
+−
+TX
+t=1
+Bψ(xt;x t−1)
+ηt
+= Bψ(u;x 0)
+η1
+− Bψ(u;x T )
+ηT
++
+T−1X
+t=1
+ 1
+ηt+1
+− 1
+ηt
+
+Bψ(u;x t)−
+TX
+t=1
+Bψ(xt;x t−1)
+ηt
+≤ D2
+η1
++D 2
+T−1X
+t=1
+ 1
+ηt+1
+− 1
+ηt
+
+−
+TX
+t=1
+Bψ(xt;x t−1)
+ηt
+= D2
+η1
++D 2
+ 1
+ηT
+− 1
+η1
+
+−
+TX
+t=1
+Bψ(xt;x t−1)
+ηt
+= D2
+ηT
+−
+TX
+t=1
+Bψ(xt;x t−1)
+ηt
+,
+where we denoted byD 2 = max0≤t≤T−1 Bψ(u;x t).
+The second statement is left as an exercise.
+The regret of Prescient Online Mirror Descent contains the negative terms we needed
+from the optimistic algorithms.
+Analogously, we can obtain a version of FTRL that uses the knowledge of the current
+loss:Be-The-Regularized-Leader (BTRL), that predicts in each time step withx t ∈
+argminx∈V ψt(x) +Pt
+i=1 ℓi(x), see Algorithm 15.9.
+Ifψ t ≡0, then Be-The-Regularized-Leader becomes theBe-The-Leaderalgorithm.
+BTRL can be thought of as Optimistic FTRL where ˜ℓt =ℓ t. Hence, from the regret of
+Optimistic FTRL in Theorem 7.47, we immediately have the following theorem.
+Theorem 15.31LetV ⊂R d be convex, closed, and non-empty. Assume fort= 1, . . . , T
+thatψ t +Pt
+i=1 ℓi is proper, closed, andλ t-strongly convex with respect to∥ · ∥. Then, for

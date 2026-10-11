@@ -1,0 +1,47 @@
+∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E] (V : Set E),
+  Convex ℝ V →
+    ∀ (psi hint : E → ℝ) (loss : ℕ → E → EReal) (n : ℕ) (lam : ℝ),
+      (∀ i < n + 1, ∀ (x : E), loss i x ≠ ⊥) →
+        (∀ i < n + 1, V ⊆ effectiveDomain (loss i)) →
+          0 < lam →
+            (let G := fun x => ↑(psi x) + ∑ i ∈ Finset.range (n + 1), loss i x + extendedIndicator V x;
+              ∀ x ∈ V,
+                ∀ y ∈ V,
+                  ∀ (a : ℝ),
+                    0 < a →
+                      a < 1 →
+                        G (a • x + (1 - a) • y) ≤ ↑a * G x + ↑(1 - a) * G y - ↑(lam / 2 * a * (1 - a) * ‖x - y‖ ^ 2)) →
+              ∀ p ∈ V,
+                IsMinOn (fun x => ↑(psi x) + ∑ i ∈ Finset.range n, loss i x + ↑(hint x)) V p →
+                  ∀ (g : E →L[ℝ] ℝ),
+                    (∀ z ∈ V, (loss n p).toReal - hint p + g (z - p) ≤ (loss n z).toReal - hint z) →
+                      ∀ q ∈ V,
+                        let G := fun x => ↑(psi x) + ∑ i ∈ Finset.range (n + 1), loss i x + extendedIndicator V x;
+                        (G p).toReal - (G q).toReal ≤ ‖g‖ ^ 2 / (2 * lam) : Prop
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-next-dual-stability-body-20261012\HeaderElaboration-v2.lean:9:17: warning: unused variable `hV`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-next-dual-stability-body-20261012\HeaderElaboration-v2.lean:11:5: warning: unused variable `hbot`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-next-dual-stability-body-20261012\HeaderElaboration-v2.lean:12:5: warning: unused variable `hdom`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-next-dual-stability-body-20261012\HeaderElaboration-v2.lean:13:5: warning: unused variable `hlam`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-next-dual-stability-body-20261012\HeaderElaboration-v2.lean:14:5: warning: unused variable `hstrong`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-next-dual-stability-body-20261012\HeaderElaboration-v2.lean:20:13: warning: unused variable `hp`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-next-dual-stability-body-20261012\HeaderElaboration-v2.lean:21:5: warning: unused variable `hprediction`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-next-dual-stability-body-20261012\HeaderElaboration-v2.lean:24:5: warning: unused variable `hdifference`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-next-dual-stability-body-20261012\HeaderElaboration-v2.lean:26:13: warning: unused variable `hq`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`

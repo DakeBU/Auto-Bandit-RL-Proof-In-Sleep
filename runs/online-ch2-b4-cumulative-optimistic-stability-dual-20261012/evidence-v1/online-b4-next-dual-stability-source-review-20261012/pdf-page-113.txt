@@ -1,0 +1,51 @@
+7.2 FTRL Regret Bound using Strong Convexity101
+Let’s take a closer look at the equality. Ifu∈ V, we have that the sum of the last two terms
+on the r.h.s. is negative. On the other hand, the first two terms on the r.h.s. are similar to what
+we got in OMD. The interesting part is the sum of the termsFt(xt)−F t+1(xt+1) +ℓt(xt).
+To give an intuition of what is going on, let’s consider the case when the regularizer is
+constant over time, i.e.,ψ t =ψ. Hence, the terms in the sum can be rewritten as
+Ft(xt)−F t+1(xt+1) +ℓ t(xt) =ψ(x t) +
+tX
+i=1
+ℓi(xt)−
+ 
+ψ(xt+1) +
+tX
+i=1
+ℓi(xt+1)
+!
+.
+Hence, we are measuring the distance between the value of the regularized losses in two
+consecutive predictions of the algorithms. Roughly speaking, ifx t ≈x t+1 and the losses
+plus regularization are “nice” then this term will be small. This should remind you exactly
+of the OMD update, where weconstrainx t+1 to be close tox t. Instead, here the two pre-
+dictions will be close one to the other if the minimizer of the regularized losses up to timet
+is close to the minimizer of the losses up to timet+ 1. So, like in OMD, the regularizer here
+will play the critical role ofstabilizingthe predictions, if the losses do not possess enough
+curvature.
+However, while surprising, the above equality is not yet a regret bound, because it is “im-
+plicit”. In fact, the losses are appearing on both sides of the equation. So, in the following,
+we will see different ways to get an explicit upper bound from Lemma 7.1.
+7.2 FTRL Regret Bound using Strong Convexity
+An easy case to get a regret upper bound for FTRL is when the losses plus the regularizer
+are strongly convex, as we prove in the next lemma.
+Lemma 7.5With the notation in Algorithm 7.1, denote byF t(x) =ψ t(x) +Pt−1
+i=1 ℓi(x).
+Assume thatV ⊆ Xis non-empty, closed, and convex. IfF t is closed, subdifferentiable,
+and strongly convex inV, thenx t exists and is unique. In addition, assume∂ℓ t(xt)to be
+non-empty andF t +ℓ t to be closed, subdifferentiable, andλ t-strongly convex with respect
+to∥ · ∥inV. Then, we have
+Ft(xt)−F t+1(xt+1) +ℓ t(xt)
+≤ ⟨g t,x t −x t+1⟩ − λt
+2 ∥xt −x t+1∥2 +ψ t(xt+1)−ψ t+1(xt+1)
+≤ ∥gt∥2
+⋆
+2λt
++ψ t(xt+1)−ψ t+1(xt+1),∀g t ∈∂ℓ t(xt).
+ProofThe existence and uniqueness are given by Theorem 6.9. Then, we have
+Ft(xt)−F t+1(xt+1) +ℓ t(xt)
+= (Ft(xt) +ℓ t(xt))−(F t(xt+1) +ℓ t(xt+1)) +ψ t(xt+1)−ψ t+1(xt+1)
+= (Ft(xt) +ℓ t(xt) +ι V(xt))−(F t(xt+1) +ℓ t(xt+1) +ι V(xt+1))
++ψ t(xt+1)−ψ t+1(xt+1)
+≤ ⟨g t,x t −x t+1⟩ − λt
+2 ∥xt −x t+1∥2 +ψ t(xt+1)−ψ t+1(xt+1),
