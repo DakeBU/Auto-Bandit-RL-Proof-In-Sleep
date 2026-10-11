@@ -1,0 +1,84 @@
+{
+  "UTC": "2026-10-11T08:35:49.169693+00:00",
+  "status": "CANARY FREEZE PROPOSAL; independent review pending; NO Test BODY AUTHORIZATION",
+  "requested_model_effort": "GPT-6 Astra / medium; runtime not independently attested",
+  "production_core": {
+    "path": "BanditRLProof/OnlineCumulativePotential.lean",
+    "sha256": "61c811c0b1f941ec22ac41f64e555a0e4d4d8dc32b8145ea53808dbdc0fc17da",
+    "bytes": 1980
+  },
+  "production_header": {
+    "path": "docs/contracts/online-ch2-b4-finite-identity-v1/neutral-frozen-header-v1.txt",
+    "sha256": "92e0dcfac53595e35b68bfd8083c09640d06da809355ab02ec4eb4b007b0bd67",
+    "bytes": 735
+  },
+  "production_statement_seal": {
+    "path": "docs/contracts/online-ch2-b4-finite-identity-v1/leaf-freeze-receipt-v1.json",
+    "sha256": "9150e0fd1342375bf13c7313b7b6715e7e4bdde5edd6078689474381d3ca80cd",
+    "bytes": 28834
+  },
+  "production_report": {
+    "path": "runs/online-ch2-b4-finite-identity-20261011/production-core/core-report-v2.json",
+    "sha256": "5c55e8ea41cf2c18af4c47f9929233e7e4afcf903de00f654fd00edec1ab98aa",
+    "bytes": 4030
+  },
+  "reviews": [
+    {
+      "path": "runs/online-ch2-b4-finite-identity-20261011/canary-neutral-blind/fresh-blind-v1.json",
+      "sha256": "f29ac0fd3ed86e73cb5cc0ff52600750c86505f03fb7547f3d028790bc431428",
+      "bytes": 10943
+    },
+    {
+      "path": "runs/online-ch2-b4-finite-identity-20261011/canary-source-header/source-header-review-v1.json",
+      "sha256": "b581b3fff2379b4805fd7e472b12bd7d4cca4e2dc13d519b3d2e4f7f3b364939",
+      "bytes": 9795
+    },
+    {
+      "path": "runs/online-ch2-b4-finite-identity-20261011/independent-production-body/fresh-production-body-review-v1.json",
+      "sha256": "4b3246ef699eba8c3df7a8063e12342f86211c43b60efd121ce2bccb58c8aac6",
+      "bytes": 26772
+    }
+  ],
+  "header_elaboration": {
+    "path": "runs/online-ch2-b4-finite-identity-20261011/canary-header-elaboration/canary-header-elaboration-report-v1.json",
+    "sha256": "e9602bd4e769c44a00e458372d8f0e4fc833bddccfc846532710b461a06e32a7",
+    "bytes": 2364
+  },
+  "headers": [
+    {
+      "path": "docs/contracts/online-ch2-b4-finite-identity-v1/canary-neutral-one-round-frozen-header-v1.txt",
+      "sha256": "7d10ab86d93f97a5ac03db64ce96b8759a0a64d7bd440fa5bfbbe666717be75e",
+      "bytes": 1518
+    },
+    {
+      "path": "docs/contracts/online-ch2-b4-finite-identity-v1/canary-neutral-two-round-frozen-header-v1.txt",
+      "sha256": "718a2eb714597c34033cc4d35af06b00b3718768cd60799800c6e487c777af64",
+      "bytes": 1418
+    }
+  ],
+  "test_module": "Tests/OnlineCumulativePotentialCanary.lean",
+  "public_theorems": 2,
+  "public_definitions": 0,
+  "semantic_delta": "Concrete finite-real algebra witnesses only. No optimizer/actual algorithm/EReal/analytic performance theorem asserted.",
+  "consumer_requirement": "FIRST conjunct of EACH theorem must specialize BanditRL.OnlineCumulativePotential.finite_regret_identity directly; numeric remaining conjuncts may use norm_num. Actual compiled VALUE occurrence of the production theorem must be verified.",
+  "source_witnesses": [
+    "T=1 positive retained terminal gap 1/36, truncated bound false.",
+    "T=2 signed regularizer drift -1/2 and terminal y2=2 differs from unscored x2=100."
+  ],
+  "shared_context": "Each complete header retains its exact three imports, noncomputable section/open Finset/namespace and all local lets. Shared combined Test file may deduplicate common context only with exact per-theorem reconstruction.",
+  "chapter_state": {
+    "chapter2": "partial",
+    "accepted": false,
+    "required_open_containers": 7,
+    "future_claims_open": 6,
+    "whole_B4": "OPEN",
+    "Goal": "ACTIVE",
+    "main_live_updated": false
+  },
+  "authorization": "Independent contract audit, exact canary seal, clean committed context, independent pre-canary review, then explicit parent authorization are required before Test BODY.",
+  "ports": {
+    "path": "runs/online-ch2-b4-finite-identity-20261011/exact-proof-and-canary-input-port-manifest-v1.json",
+    "sha256": "de35d3906a468576f8e2089e120312cb33cfd11ef54b9dcaa33c532d9b52452c",
+    "bytes": 50593
+  }
+}

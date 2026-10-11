@@ -1,0 +1,105 @@
+{
+  "status": "PROVED_LOCAL candidate; distinct BODY review and integration pending",
+  "UTC": "2026-10-11T08:24:45.322751+00:00",
+  "canonical_source": "E:/ABRL/research",
+  "worktree": "E:\\ABRL\\worktrees\\research-online-book",
+  "branch": "codex/research-online-ch2-b4-finite-identity",
+  "HEAD": "40c2f30f7cee38c9d2f716ffdac18a459a5af25a",
+  "dirty_state": "?? BanditRLProof/OnlineCumulativePotential.lean",
+  "core_path": "BanditRLProof/OnlineCumulativePotential.lean",
+  "core_sha256": "61c811c0b1f941ec22ac41f64e555a0e4d4d8dc32b8145ea53808dbdc0fc17da",
+  "frozen_header_sha256": "92e0dcfac53595e35b68bfd8083c09640d06da809355ab02ec4eb4b007b0bd67",
+  "full_header_BODY_erasure_exact": true,
+  "public_declarations": [
+    "BanditRL.OnlineCumulativePotential.finite_regret_identity"
+  ],
+  "new_public_helper_definitions": 0,
+  "binder_ledger": [
+    {
+      "name": "E",
+      "type": "Type u"
+    },
+    {
+      "name": "psi",
+      "type": "Nat -> E -> Real"
+    },
+    {
+      "name": "loss",
+      "type": "Nat -> E -> Real"
+    },
+    {
+      "name": "x",
+      "type": "Nat -> E"
+    },
+    {
+      "name": "u",
+      "type": "E"
+    },
+    {
+      "name": "z",
+      "type": "E"
+    },
+    {
+      "name": "T",
+      "type": "Nat"
+    },
+    {
+      "name": "hT",
+      "type": "0 < T"
+    }
+  ],
+  "source_assumptions": [
+    "hT : 0 < T"
+  ],
+  "statement_lets": [
+    "y t := if t = T then z else x t",
+    "G t v := psi t v + sum i in range(t+1), loss i v"
+  ],
+  "native_fence_result": "ok; normalized statement hash c2cb4ca47c4dfdf02982813b71c52e17d402971cbe6a48fdecf69591a21f0fad; no forbidden tokens",
+  "actual_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "TYPE_constant_count": 20,
+  "VALUE_constant_count": 145,
+  "constant_export": "compiled-constant-occurrences-v3.json; actual compiled direct occurrences only, not logical necessity or transitive dependency graph",
+  "public_probe": "public-compiled-probe-full-v2.json; exit 0; pp.all and pp.proofs true; no ellipsis marker in raw",
+  "full_proof_print_bytes": 20815000,
+  "actual_named_mathematical_parents": [
+    "Finset.sum_range_succ",
+    "Finset.sum_range_zero",
+    "Nat.sub_add_cancel",
+    "Nat.recAux",
+    "standard real algebra / ring normalization / linear arithmetic"
+  ],
+  "failed_attempts": [
+    {
+      "receipt": "focused-v1.json",
+      "classification": "IMPLEMENTATION_FAILED",
+      "reason": "Redundant second simp made no progress; removed, no statement change."
+    },
+    {
+      "receipt": "public-compiled-probe-v1.json",
+      "classification": "ENV_BLOCKED",
+      "reason": "Lake search path selected existing .lake namespace directory before ignored compiled target; resolved with captured actual Lake LEAN_PATH plus target directory first."
+    },
+    {
+      "receipt": "public-compiled-probe-full-v1.json",
+      "classification": "ENV_BLOCKED",
+      "reason": "Unknown pp.maxDepth option in print probe; removed option, core unchanged."
+    }
+  ],
+  "artifact_policy": "All failed candidates and stdout/stderr retained. Manifest excludes itself and its verification receipt; every other artifact recursively hashed. No hashes computed from empty placeholder/self files.",
+  "remaining": [
+    "distinct BODY review",
+    "canary BODY not authorized in this task",
+    "root/Tests/full harness/site integration and publication",
+    "EReal adapter, attainment, optimizer/trajectory producers, sharp Young endpoints",
+    "complete B4, seven containers, six future claims, chapter and Goal closure"
+  ],
+  "worktree_disposition": "Retained, active. No commit or push performed by formalizer.",
+  "requested_model_effort": "GPT-6 Astra / medium; runtime not independently attested",
+  "evidence_label_correction": "Nat.rec in v1 was an induction-concept label incorrectly listed among actual parents. Exact direct VALUE constant is Nat.recAux; no mathematical statement/proof change.",
+  "supersedes_report_sha256": "d54e4ec0cb4e082d1531bf10772ec877570431687ee7ab729c04bb16a525b70a"
+}

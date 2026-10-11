@@ -1,0 +1,117 @@
+{
+  "schema_version": 1,
+  "actor": "/root/b4_finite_identity_canary_blind",
+  "requested_model": "Astra",
+  "requested_reasoning": "medium",
+  "runtime_independently_attested": false,
+  "exposure": {
+    "external_inputs_read_count": 2,
+    "only_designated_headers_read": true,
+    "inherited_context": "Generic system/developer context, tool and skills catalog, embedded memory summary (not consulted for reconstruction), workspace AGENTS instructions, parent task message",
+    "no_other_files_read": true,
+    "no_source_fidelity_claim": true,
+    "no_compile_or_proof_claim": true,
+    "bodies_supplied": false
+  },
+  "inputs": [
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/tmp/online-ch2-b4-finite-identity-canary-proposal-20261011/neutral-one-round-complete-header-v1.txt",
+      "sha256": "7d10ab86d93f97a5ac03db64ce96b8759a0a64d7bd440fa5bfbbe666717be75e",
+      "matches_requested": true
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/tmp/online-ch2-b4-finite-identity-canary-proposal-20261011/neutral-two-round-complete-header-v1.txt",
+      "sha256": "718a2eb714597c34033cc4d35af06b00b3718768cd60799800c6e487c777af64",
+      "matches_requested": true
+    }
+  ],
+  "shared": {
+    "indices": "natural",
+    "values": "real",
+    "inclusive_G": "psi(t,v) + sum_{i=0}^t loss(i,v)",
+    "splice": "y(t)=z if t=T, else x(t)",
+    "R": "sum_{0<=t<T} (loss(t,y(t))-loss(t,u))",
+    "A": "psi(T-1,u)-psi(0,y(0))",
+    "B": "sum_{0<=t<T} (G(t,y(t))-G(t,y(t+1)))",
+    "C": "sum_{0<=t<T-1} (psi(t,y(t+1))-psi(t+1,y(t+1)))",
+    "D": "G(T-1,z)-G(T-1,u)",
+    "natural_subtraction_truncated": true,
+    "premises": [],
+    "arbitrary_T_claim": false,
+    "T_zero_claim": false
+  },
+  "declarations": [
+    {
+      "name": "finite_identity_one_round_positive_gap",
+      "lets": [
+        "psi(t,v)=v^2/2",
+        "loss(t,v)=(v-1)^2/2",
+        "x(t)=1/2",
+        "u=1/2",
+        "z=2/3",
+        "T=1",
+        "y(t)=if t=T then z else x(t)",
+        "G(t,v)=psi(t,v)+sum_{i=0}^t loss(i,v)"
+      ],
+      "conjuncts": [
+        "R=A+B+C+D",
+        "R=0",
+        "A=0",
+        "B=-1/36",
+        "C=0",
+        "D=1/36",
+        "NOT (R<=A+B+C)"
+      ],
+      "round_indices": [
+        0
+      ],
+      "variation_indices": [],
+      "terminal_index": 1
+    },
+    {
+      "name": "finite_identity_two_round_terminal_splice",
+      "lets": [
+        "psi(t,v)=((t:R)+1)*v^2/2",
+        "loss(t,v)=if t=0 then v else if t=1 then -2*v+1 else 0",
+        "x(t)=if t=0 then 0 else if t=1 then 1 else 100",
+        "u=3",
+        "z=2",
+        "T=2",
+        "y(t)=if t=T then z else x(t)",
+        "G(t,v)=psi(t,v)+sum_{i=0}^t loss(i,v)"
+      ],
+      "conjuncts": [
+        "R=A+B+C+D",
+        "R=1",
+        "A=9",
+        "B=-7/2",
+        "C=-1/2",
+        "D=-4",
+        "x(2)=100",
+        "y(2)=2",
+        "y(2)!=x(2)"
+      ],
+      "round_indices": [
+        0,
+        1
+      ],
+      "variation_indices": [
+        0
+      ],
+      "terminal_index": 2
+    }
+  ],
+  "findings": [
+    "No mathematical ambiguity or numeric inconsistency identified in the exposed headers by direct arithmetic reconstruction.",
+    "One-round final conjunct negates the bound omitting positive D.",
+    "Two-round endpoint splice affects only t=2; y(t)=100 for t>=3.",
+    "No algorithm/minimizer/convexity premise.",
+    "No theorem bodies, source comparison, Lean elaboration, compilation, proof, or gate."
+  ],
+  "output_policy": {
+    "create_only": true,
+    "ignored_status": "Task-described; not independently inspected to preserve input boundary",
+    "production_modified": false
+  },
+  "full_reconstruction_markdown": "# Fresh source-blind reconstruction v1\n\n## Actor and exposure\n\nActor: delegated agent /root/b4_finite_identity_canary_blind. Requested configuration: Astra medium; runtime model and reasoning configuration were not independently attested. This report does not certify that requested configuration was used.\n\nOnly two external input files were actually read, both specified neutral complete-header text files. No PDF, source prose, imported Lean module, review, parent rationale, other workspace file, repository metadata, or memory file was opened. The actor inherited generic system/developer context, the available-tools and skills catalog, memory summary already embedded in that context, workspace AGENTS instructions, and the parent task message. It did not consult or use that embedded memory summary for reconstruction. Thus “source-blind” describes the two-file input boundary, not an assertion of an empty conversation context.\n\nInputs, actual SHA256:\n\n- E:/ABRL/worktrees/research-online-book/tmp/online-ch2-b4-finite-identity-canary-proposal-20261011/neutral-one-round-complete-header-v1.txt: 7d10ab86d93f97a5ac03db64ce96b8759a0a64d7bd440fa5bfbbe666717be75e\n- E:/ABRL/worktrees/research-online-book/tmp/online-ch2-b4-finite-identity-canary-proposal-20261011/neutral-two-round-complete-header-v1.txt: 718a2eb714597c34033cc4d35af06b00b3718768cd60799800c6e487c777af64\n\nBoth match the requested hashes. Both texts name namespace BanditRL.OnlineCumulativePotentialCanary, list imports, and supply a theorem type without a body. Imports were not opened. No Lean proof, elaboration, build, gate, source comparison, or source-faithfulness assessment was performed.\n\n## Shared exact notation and identity\n\nAll time indices are natural numbers; v, u, z and all function values are real. Define sum over range n as sum over integer indices 0 <= t < n, with empty sums zero. Natural subtraction T-1 is truncated subtraction. G(t,v) = psi(t,v) + sum_{i=0}^{t} loss(i,v): its loss sum is inclusive of index t.\n\nFor each separately specified set of local lets below, abbreviate:\n\nR = sum_{t=0}^{T-1} [loss(t,y(t)) - loss(t,u)].\nA = psi(T-1,u) - psi(0,y(0)).\nB = sum_{t=0}^{T-1} [G(t,y(t)) - G(t,y(t+1))].\nC = sum_{0 <= t < T-1} [psi(t,y(t+1)) - psi(t+1,y(t+1))].\nD = G(T-1,z) - G(T-1,u).\n\nEach first conjunct is exactly R = A + B + C + D. In particular the terminal correction has the order z minus u, the potential variation has order t minus t+1, and the within-round difference uses the SAME G(t,.) at y(t) and y(t+1). In the header the final two terms are written '+ G(T-1,z) - G(T-1,u)', equivalent to +D. These abbreviations are exposition, not extra Lean hypotheses or lets.\n\n## One-round declaration\n\nName: finite_identity_one_round_positive_gap.\n\nAll local lets, in order:\n\n1. psi : N -> R -> R, psi(t,v) = v^2/2 for every t.\n2. loss : N -> R -> R, loss(t,v) = (v-1)^2/2 for every t.\n3. x : N -> R, x(t) = 1/2 for every t.\n4. u : R = 1/2.\n5. z : R = 2/3.\n6. T : N = 1.\n7. y : N -> R, y(t) = z if t=T, and x(t) otherwise.\n8. G : N -> R -> R, G(t,v) = psi(t,v) + sum_{i=0}^{t} loss(i,v).\n\nConsequently y(1)=2/3, and y(t)=1/2 for all t != 1, including t=0 and t>=2. This is a single-index endpoint splice, not a persistent change of all later points. For every natural t, G(t,v) = v^2/2 + (t+1)(v-1)^2/2, where t+1 is interpreted as a real coefficient.\n\nThe entire proposition is the conjunction of these SEVEN statements:\n\n1. R = A+B+C+D.\n2. R = 0.\n3. A = 0.\n4. B = -1/36.\n5. C = 0.\n6. D = +1/36.\n7. NOT (R <= A+B+C).\n\nExplicit index expansion: R=loss(0,y(0))-loss(0,u); A=psi(0,u)-psi(0,y(0)); B=G(0,y(0))-G(0,y(1)); C is the empty sum; D=G(0,z)-G(0,u).\n\nOrdinary arithmetic cross-check: G(0,1/2)=1/4 and G(0,2/3)=5/18, giving B=-1/36 and D=1/36. The identity is 0 = 0-1/36+0+1/36. The last conjunct is NOT (0 <= -1/36), equivalently 0 > -1/36. It negates a bound that omits D; it does not negate the identity.\n\n## Two-round declaration\n\nName: finite_identity_two_round_terminal_splice.\n\nAll local lets, in order:\n\n1. psi : N -> R -> R, psi(t,v) = ((t:R)+1)*v^2/2.\n2. loss : N -> R -> R, loss(0,v)=v; loss(1,v)=-2v+1; loss(t,v)=0 for t>=2.\n3. x : N -> R, x(0)=0; x(1)=1; x(t)=100 for t>=2.\n4. u : R = 3.\n5. z : R = 2.\n6. T : N = 2.\n7. y : N -> R, y(t) = z if t=T, and x(t) otherwise.\n8. G : N -> R -> R, G(t,v) = psi(t,v) + sum_{i=0}^{t} loss(i,v).\n\nConsequently y(0)=0, y(1)=1, y(2)=2, and y(t)=100 for t>=3. Again only the exact endpoint index is spliced. G(0,v)=v^2/2+v; for every t>=1, G(t,v)=((t:R)+1)*v^2/2-v+1. In particular G(1,v)=v^2-v+1.\n\nThe entire proposition is the conjunction of these NINE statements:\n\n1. R = A+B+C+D.\n2. R = 1.\n3. A = 9.\n4. B = -7/2.\n5. C = -1/2.\n6. D = -4.\n7. x(2) = 100.\n8. y(2) = 2.\n9. y(2) != x(2).\n\nExplicit index expansion:\n\nR = [loss(0,0)-loss(0,3)] + [loss(1,1)-loss(1,3)] = -3+4 = 1.\nA = psi(1,3)-psi(0,0) = 9.\nB = [G(0,0)-G(0,1)] + [G(1,1)-G(1,2)] = (0-3/2)+(1-3) = -7/2.\nC = psi(0,y(1))-psi(1,y(1)) = 1/2-1 = -1/2.\nD = G(1,2)-G(1,3) = 3-7 = -4.\n\nThus the displayed identity reduces to 1 = 9-7/2-1/2-4. The original endpoint x(2)=100 does not enter B: the t=1 term uses the spliced y(2)=2. No failed-inequality conjunct is present in this declaration.\n\n## Premises, boundaries, ambiguity and evidence limits\n\nThese are closed propositions with fixed local definitions. There are no free theorem arguments and no algorithm, update-rule, minimizer, convexity, differentiability, feasibility, or domain-restriction premises. The variable v ranges over all real numbers and time functions are defined on all natural numbers. Some defined functions may possess further properties, but no such property is a premise or a conjunct here. The names x and y do not themselves impose an algorithmic interpretation.\n\nT is exactly 1 in the first declaration and exactly 2 in the second. Neither theorem quantifies over arbitrary horizons or asserts a T=0 case. T-1 is respectively 0 and 1, so the variation sums are respectively empty and a singleton with t=0. The round sums are respectively the singleton {0} and the pair {0,1}. Both require the value y(T) through the last summand of B, but include loss indices only through T-1 in R and terminal G.\n\nNo ambiguous mathematical expression or inconsistent numeric conjunct was found in the exposed headers by direct arithmetic reconstruction. The first header intentionally includes the negation of a false bound with its terminal gap omitted; this is consistent with its positive D. The second explicitly distinguishes x(T) from y(T). These observations concern only the exposed statements. Because no theorem body was supplied, this report establishes no Lean elaboration, compilation, proof, general theorem, or correspondence with any external source.\n\nOutputs were created only in the requested temporary output directory. No production, root, Tests, documentation, or RUN files were modified. The output location was described as ignored by the task; ignore status was not independently inspected, because that would exceed the two-input exposure boundary."
+}

@@ -1,0 +1,197 @@
+{
+  "verdict": "accepted-with-explicit-delta; two finite-real complete canary HEADER contracts only",
+  "blockers": [],
+  "required_header_repairs": [],
+  "actor": "/root/adaptive_decoder",
+  "requested_model": "GPT-6 Astra",
+  "requested_effort": "medium",
+  "runtime_attestation": null,
+  "source_exposed": true,
+  "input_raw_sha256_before": {
+    "tmp/online-ch2-b4-finite-identity-canary-proposal-20261011/neutral-one-round-complete-header-v1.txt": "7d10ab86d93f97a5ac03db64ce96b8759a0a64d7bd440fa5bfbbe666717be75e",
+    "tmp/online-ch2-b4-finite-identity-canary-proposal-20261011/neutral-two-round-complete-header-v1.txt": "718a2eb714597c34033cc4d35af06b00b3718768cd60799800c6e487c777af64",
+    "tmp/online-ch2-b4-finite-identity-canary-proposal-20261011/canary-header-proposal-v1.json": "1cd3020f366a77448e137b153d5ea99e03edd0f6105d5276cee87e22c236547a",
+    "tmp/online-ch2-b4-finite-identity-canary-blind-20261011/fresh-blind-v1.json": "f29ac0fd3ed86e73cb5cc0ff52600750c86505f03fb7547f3d028790bc431428",
+    "tmp/online-ch2-b4-finite-identity-proposal-20261011/neutral-proposed-header-v1.txt": "92e0dcfac53595e35b68bfd8083c09640d06da809355ab02ec4eb4b007b0bd67",
+    "tmp/online-ch2-b4-finite-identity-source-review-20261011/source-header-review-v1.json": "adda7e17c6ebf0ba1b8c24d9cd78e0df763f55000521ec01fb8d94b51229228f",
+    "tmp/online-ch2-b4-finite-identity-source-review-20261011/topology-proposal-v2.json": "d7d6051f3788797b53a19d5d80f163bdca80491281ec13be998b4c2d106ad8bc"
+  },
+  "source_pdf": {
+    "path": "E:\\ABRL\\worktrees\\research-online-ogd\\tmp\\pdfs\\orabona-v10.pdf",
+    "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "pages": [
+      {
+        "pdf_page": 141,
+        "printed_page": 129,
+        "pixel_path": "tmp/online-ch2-b4-next-readiness-20261011/source-141.png",
+        "pixel_sha256": "eacd665a728fa4bad76135f73257caea8cf20a96994126425f55f467aca50778",
+        "personally_inspected_this_review": true
+      },
+      {
+        "pdf_page": 142,
+        "printed_page": 130,
+        "pixel_path": "tmp/online-ch2-b4-next-readiness-20261011/source-142.png",
+        "pixel_sha256": "26a4994bf093a5166eb1a1680cbc1be9e68e415b3eadf7933c78c962e56034ea",
+        "personally_inspected_this_review": true
+      },
+      {
+        "pdf_page": 278,
+        "printed_page": 266,
+        "pixel_path": "runs/online-ch2-prescient-euclidean-20261011/source-topology-proposal-v1/source-278.png",
+        "pixel_sha256": "da2892ede98285b4cfdaa08885ccab01df049ddf898a92dd0ad48a48316b68bd",
+        "personally_inspected_this_review": true
+      },
+      {
+        "pdf_page": 279,
+        "printed_page": 267,
+        "pixel_path": "tmp/online-ch2-b4-next-readiness-20261011/source-279.png",
+        "pixel_sha256": "08293ec9ebf9839584c2ddb694116fd142d7b1437ff11bc135896863bc11d3d8",
+        "personally_inspected_this_review": true
+      }
+    ]
+  },
+  "pixel_review_timing": "Personally inspected PDF141/142/278/279 earlier in this same source-review sequence; this turn rehashed PDF and reused exact pixel bindings, did not claim a new pixel-view tool call.",
+  "seven_slots": {
+    "objects": "Two closed propositions over real-valued natural-time psi/loss/x with local comparator u,terminal z,horizon T,splice y,inclusive G.",
+    "quantifiers": "No free theorem parameters or premises. Local lambdas define total functions for all natural times and real states; horizons exactly1 and2.",
+    "hypotheses": "None. Positive horizon discharged by fixed numeral when future production consumer is invoked. No optimizer/convexity/algorithm/probabilistic/casual premise.",
+    "conclusions": "First full specialized identity plus all concrete numeric/boundary conjuncts: seven one-round conjuncts and nine two-round conjuncts.",
+    "constants": "Case1 R0,A0,B=-1/36,C0,D=1/36 and negated dropped-gap bound. Case2 R1,A9,B=-7/2,C=-1/2,D=-4,x2=100,y2=2,y2!=x2. Exact rational constants.",
+    "indexing": "G_t includes losses0..t; R,B rangeT; drift range(T-1); terminal G_(T-1). y only changes coordinateT. All scored y(t)=x(t),t<T; x(T) is unscored.",
+    "boundaries": "Finite-real bookkeeping only. No T0, arbitrary-horizon, actual FTRL trajectory, EReal adapter, minimizer/strong-convexity or full corrected7.47/15.31 claim."
+  },
+  "lets_audit": [
+    {
+      "case": 1,
+      "lets": [
+        "psi(t,v)=v^2/2",
+        "loss(t,v)=(v-1)^2/2",
+        "x(t)=1/2",
+        "u=1/2",
+        "z=2/3",
+        "T=1",
+        "y(t)=if t=T then z else x(t)",
+        "G(t,v)=psi(t,v)+sum_{i<t+1}loss(i,v)"
+      ],
+      "classification": "TYPING/definitional concrete specialization; no new hypotheses or named helpers"
+    },
+    {
+      "case": 2,
+      "lets": [
+        "psi(t,v)=((t:Real)+1)*v^2/2",
+        "loss(0,v)=v;loss(1,v)=-2v+1;loss(t>=2,v)=0",
+        "x(0)=0;x(1)=1;x(t>=2)=100",
+        "u=3",
+        "z=2",
+        "T=2",
+        "y(t)=if t=T then z else x(t)",
+        "G(t,v)=psi(t,v)+sum_{i<t+1}loss(i,v)"
+      ],
+      "classification": "TYPING/definitional concrete specialization; no new hypotheses or named helpers"
+    }
+  ],
+  "conjunct_audit": {
+    "one": [
+      "R=A+B+C+D",
+      "R=0",
+      "A=0",
+      "B=-1/36",
+      "C=0",
+      "D=1/36",
+      "NOT(R<=A+B+C)"
+    ],
+    "two": [
+      "R=A+B+C+D",
+      "R=1",
+      "A=9",
+      "B=-7/2",
+      "C=-1/2",
+      "D=-4",
+      "x2=100",
+      "y2=2",
+      "y2!=x2"
+    ]
+  },
+  "independent_fraction_checks": [
+    {
+      "case": 1,
+      "T": 1,
+      "R_A_B_C_D": [
+        "0",
+        "0",
+        "-1/36",
+        "0",
+        "1/36"
+      ],
+      "within_terms": [
+        "-1/36"
+      ],
+      "drift_terms": [],
+      "original_xT": "1/2",
+      "spliced_yT": "2/3",
+      "gap_omitted_inequality": false,
+      "first_full_identity_matches_production_after_only_outer_parentheses_whitespace": true
+    },
+    {
+      "case": 2,
+      "T": 2,
+      "R_A_B_C_D": [
+        "1",
+        "9",
+        "-7/2",
+        "-1/2",
+        "-4"
+      ],
+      "within_terms": [
+        "-3/2",
+        "-2"
+      ],
+      "drift_terms": [
+        "-1/2"
+      ],
+      "original_xT": "100",
+      "spliced_yT": "2",
+      "gap_omitted_inequality": true,
+      "first_full_identity_matches_production_after_only_outer_parentheses_whitespace": true
+    }
+  ],
+  "anti_anchoring_findings": [
+    "Textual mathematical expression comparison confirms EACH complete first conjunct is the production equality under identical local lets; no endpoint/drift term dropped.",
+    "One-round counterexample is only to dropping positive arbitrary G gap. Header does NOT prove that x/z are actual FTRL minima, even though its values coincide with the prior source witness. It does not formally refute a broad algorithm class or whole source.",
+    "Two-round nonzero drift tests correct time-varying psi; sentinel x2=100 versus y2=2 tests unscored splice without replacing x0/x1. Scored losses use only0,1.",
+    "First conjunct could be proved numerically in isolation: HEADER alone cannot guarantee direct production consumption. The prospectus obligation must be checked in future BODY and actual VALUE export; an unused call is insufficient."
+  ],
+  "future_BODY_contract": {
+    "first_conjunct_each": "Directly specialize BanditRL.OnlineCumulativePotential.finite_regret_identity with displayed psi/loss/x/u/z/T and proof T>0, and use that result to construct first conjunct.",
+    "other_conjuncts": "Numeric automation allowed for concrete values and inequalities.",
+    "not_verified_now": "No implementation/proof term exists in this audit; imports prospective/unelaborated."
+  },
+  "no_EXCESS": true,
+  "named_helper_definitions": 0,
+  "no_probability_or_causality_premises": true,
+  "source_delta": "Closed finite-real public Test instances of repaired algebra clause, not source-general performance theorems. Negative dropped-gap test is narrower than source counterexample analysis; full corrected endpoints remain OPEN.",
+  "blind_join": "Distinct source-unexposed two-header decoder matches both exact RAW hashes and all conjuncts; generic inherited context disclosed. No source-fidelity verdict borrowed from blind role.",
+  "required_next_steps": [
+    "Production BODY acceptance first",
+    "Separate canary freeze and pre-canary context",
+    "Explicit Test BODY authorization",
+    "Later direct-consumer BODY/VALUE and actual compilation/review gates"
+  ],
+  "not_authorized": [
+    "Production/Test BODY writing",
+    "Header freeze",
+    "Canonical DOC/RUN mutations",
+    "Compile/build",
+    "B4/container/chapter closure"
+  ],
+  "input_raw_sha256_after": {
+    "tmp/online-ch2-b4-finite-identity-canary-proposal-20261011/neutral-one-round-complete-header-v1.txt": "7d10ab86d93f97a5ac03db64ce96b8759a0a64d7bd440fa5bfbbe666717be75e",
+    "tmp/online-ch2-b4-finite-identity-canary-proposal-20261011/neutral-two-round-complete-header-v1.txt": "718a2eb714597c34033cc4d35af06b00b3718768cd60799800c6e487c777af64",
+    "tmp/online-ch2-b4-finite-identity-canary-proposal-20261011/canary-header-proposal-v1.json": "1cd3020f366a77448e137b153d5ea99e03edd0f6105d5276cee87e22c236547a",
+    "tmp/online-ch2-b4-finite-identity-canary-blind-20261011/fresh-blind-v1.json": "f29ac0fd3ed86e73cb5cc0ff52600750c86505f03fb7547f3d028790bc431428",
+    "tmp/online-ch2-b4-finite-identity-proposal-20261011/neutral-proposed-header-v1.txt": "92e0dcfac53595e35b68bfd8083c09640d06da809355ab02ec4eb4b007b0bd67",
+    "tmp/online-ch2-b4-finite-identity-source-review-20261011/source-header-review-v1.json": "adda7e17c6ebf0ba1b8c24d9cd78e0df763f55000521ec01fb8d94b51229228f",
+    "tmp/online-ch2-b4-finite-identity-source-review-20261011/topology-proposal-v2.json": "d7d6051f3788797b53a19d5d80f163bdca80491281ec13be998b4c2d106ad8bc"
+  },
+  "inputs_unchanged": true
+}

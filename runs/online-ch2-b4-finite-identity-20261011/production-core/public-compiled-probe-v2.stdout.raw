@@ -1,0 +1,877 @@
+BanditRL.OnlineCumulativePotential.finite_regret_identity.{u_1} {E : Type u_1} (psi loss : ℕ → E → ℝ) (x : ℕ → E)
+  (u z : E) (T : ℕ) (hT : 0 < T) :
+  have y := fun t => if t = T then z else x t;
+  have G := fun t v => psi t v + ∑ i ∈ Finset.range (t + 1), loss i v;
+  ∑ t ∈ Finset.range T, (loss t (y t) - loss t u) =
+    psi (T - 1) u - psi 0 (y 0) + ∑ t ∈ Finset.range T, (G t (y t) - G t (y (t + 1))) +
+          ∑ t ∈ Finset.range (T - 1), (psi t (y (t + 1)) - psi (t + 1) (y (t + 1))) +
+        G (T - 1) z -
+      G (T - 1) u
+theorem BanditRL.OnlineCumulativePotential.finite_regret_identity.{u_1} : ∀ {E : Type u_1} (psi loss : ℕ → E → ℝ)
+  (x : ℕ → E) (u z : E) (T : ℕ),
+  0 < T →
+    have y := fun t => if t = T then z else x t;
+    have G := fun t v => psi t v + ∑ i ∈ Finset.range (t + 1), loss i v;
+    ∑ t ∈ Finset.range T, (loss t (y t) - loss t u) =
+      psi (T - 1) u - psi 0 (y 0) + ∑ t ∈ Finset.range T, (G t (y t) - G t (y (t + 1))) +
+            ∑ t ∈ Finset.range (T - 1), (psi t (y (t + 1)) - psi (t + 1) (y (t + 1))) +
+          G (T - 1) z -
+        G (T - 1) u :=
+fun {E} psi loss x u z T hT =>
+  let y := fun t => if t = T then z else x t;
+  let G := fun t v => psi t v + ∑ i ∈ Finset.range (t + 1), loss i v;
+  id
+    (have hG := fun n v =>
+      Eq.mpr
+        (id
+          (congr
+            (congrArg Eq
+              (Eq.trans
+                (congrFun'
+                  (congrFun'
+                    (funext fun t =>
+                      funext fun v => congrArg (HAdd.hAdd (psi t v)) (Finset.sum_range_succ (fun x => loss x v) t))
+                    (n + 1))
+                  v)
+                (congrArg (HAdd.hAdd (psi (n + 1) v))
+                  (congrFun' (congrArg HAdd.hAdd (Finset.sum_range_succ (fun x => loss x v) n)) (loss (n + 1) v)))))
+            (congrFun'
+              (congrArg HAdd.hAdd
+                (congrFun'
+                  (congrArg HSub.hSub
+                    (congrFun'
+                      (congrArg HAdd.hAdd
+                        (congrFun'
+                          (congrFun'
+                            (funext fun t =>
+                              funext fun v =>
+                                congrArg (HAdd.hAdd (psi t v)) (Finset.sum_range_succ (fun x => loss x v) t))
+                            n)
+                          v))
+                      (psi (n + 1) v)))
+                  (psi n v)))
+              (loss (n + 1) v))))
+        (Mathlib.Tactic.Ring.of_eq
+          (Mathlib.Tactic.Ring.add_congr (Mathlib.Tactic.Ring.atom_pf (psi (n + 1) v))
+            (Mathlib.Tactic.Ring.add_congr
+              (Mathlib.Tactic.Ring.add_congr (Mathlib.Tactic.Ring.atom_pf (∑ i ∈ Finset.range n, loss i v))
+                (Mathlib.Tactic.Ring.atom_pf (loss n v))
+                (Mathlib.Tactic.Ring.add_pf_add_lt ((∑ i ∈ Finset.range n, loss i v) ^ Nat.rawCast 1 * Nat.rawCast 1)
+                  (Mathlib.Tactic.Ring.add_pf_zero_add (loss n v ^ Nat.rawCast 1 * Nat.rawCast 1 + 0))))
+              (Mathlib.Tactic.Ring.atom_pf (loss (n + 1) v))
+              (Mathlib.Tactic.Ring.add_pf_add_lt ((∑ i ∈ Finset.range n, loss i v) ^ Nat.rawCast 1 * Nat.rawCast 1)
+                (Mathlib.Tactic.Ring.add_pf_add_lt (loss n v ^ Nat.rawCast 1 * Nat.rawCast 1)
+                  (Mathlib.Tactic.Ring.add_pf_zero_add (loss (n + 1) v ^ Nat.rawCast 1 * Nat.rawCast 1 + 0)))))
+            (Mathlib.Tactic.Ring.add_pf_add_lt (psi (n + 1) v ^ Nat.rawCast 1 * Nat.rawCast 1)
+              (Mathlib.Tactic.Ring.add_pf_zero_add
+                ((∑ i ∈ Finset.range n, loss i v) ^ Nat.rawCast 1 * Nat.rawCast 1 +
+                  (loss n v ^ Nat.rawCast 1 * Nat.rawCast 1 + (loss (n + 1) v ^ Nat.rawCast 1 * Nat.rawCast 1 + 0))))))
+          (Mathlib.Tactic.Ring.add_congr
+            (Mathlib.Tactic.Ring.sub_congr
+              (Mathlib.Tactic.Ring.add_congr
+                (Mathlib.Tactic.Ring.add_congr (Mathlib.Tactic.Ring.atom_pf (psi n v))
+                  (Mathlib.Tactic.Ring.add_congr (Mathlib.Tactic.Ring.atom_pf (∑ i ∈ Finset.range n, loss i v))
+                    (Mathlib.Tactic.Ring.atom_pf (loss n v))
+                    (Mathlib.Tactic.Ring.add_pf_add_lt
+                      ((∑ i ∈ Finset.range n, loss i v) ^ Nat.rawCast 1 * Nat.rawCast 1)
+                      (Mathlib.Tactic.Ring.add_pf_zero_add (loss n v ^ Nat.rawCast 1 * Nat.rawCast 1 + 0))))
+                  (Mathlib.Tactic.Ring.add_pf_add_gt ((∑ i ∈ Finset.range n, loss i v) ^ Nat.rawCast 1 * Nat.rawCast 1)
+                    (Mathlib.Tactic.Ring.add_pf_add_gt (loss n v ^ Nat.rawCast 1 * Nat.rawCast 1)
+                      (Mathlib.Tactic.Ring.add_pf_add_zero (psi n v ^ Nat.rawCast 1 * Nat.rawCast 1 + 0)))))
+                (Mathlib.Tactic.Ring.atom_pf (psi (n + 1) v))
+                (Mathlib.Tactic.Ring.add_pf_add_gt (psi (n + 1) v ^ Nat.rawCast 1 * Nat.rawCast 1)
+                  (Mathlib.Tactic.Ring.add_pf_add_zero
+                    ((∑ i ∈ Finset.range n, loss i v) ^ Nat.rawCast 1 * Nat.rawCast 1 +
+                      (loss n v ^ Nat.rawCast 1 * Nat.rawCast 1 + (psi n v ^ Nat.rawCast 1 * Nat.rawCast 1 + 0))))))
+              (Mathlib.Tactic.Ring.atom_pf (psi n v))
+              (Mathlib.Tactic.Ring.sub_pf
+                (Mathlib.Tactic.Ring.neg_add
+                  (Mathlib.Tactic.Ring.neg_mul (psi n v) (Nat.rawCast 1)
+                    (Mathlib.Tactic.Ring.neg_one_mul
+                      (Mathlib.Meta.NormNum.IsInt.to_raw_eq
+                        (Mathlib.Meta.NormNum.isInt_mul (Eq.refl HMul.hMul)
+                          (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                          (Mathlib.Meta.NormNum.IsNat.to_isInt (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))
+                          (Eq.refl (Int.negOfNat 1))))))
+                  Mathlib.Tactic.Ring.neg_zero)
+                (Mathlib.Tactic.Ring.add_pf_add_lt (psi (n + 1) v ^ Nat.rawCast 1 * Nat.rawCast 1)
+                  (Mathlib.Tactic.Ring.add_pf_add_lt ((∑ i ∈ Finset.range n, loss i v) ^ Nat.rawCast 1 * Nat.rawCast 1)
+                    (Mathlib.Tactic.Ring.add_pf_add_lt (loss n v ^ Nat.rawCast 1 * Nat.rawCast 1)
+                      (Mathlib.Tactic.Ring.add_pf_add_overlap_zero
+                        (Mathlib.Tactic.Ring.add_overlap_pf_zero (psi n v) (Nat.rawCast 1)
+                          (Mathlib.Meta.NormNum.IsInt.to_isNat
+                            (Mathlib.Meta.NormNum.isInt_add (Eq.refl HAdd.hAdd)
+                              (Mathlib.Meta.NormNum.IsNat.to_isInt (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))
+                              (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1)) (Eq.refl (Int.ofNat 0)))))
+                        (Mathlib.Tactic.Ring.add_pf_zero_add 0)))))))
+            (Mathlib.Tactic.Ring.atom_pf (loss (n + 1) v))
+            (Mathlib.Tactic.Ring.add_pf_add_lt (psi (n + 1) v ^ Nat.rawCast 1 * Nat.rawCast 1)
+              (Mathlib.Tactic.Ring.add_pf_add_lt ((∑ i ∈ Finset.range n, loss i v) ^ Nat.rawCast 1 * Nat.rawCast 1)
+                (Mathlib.Tactic.Ring.add_pf_add_lt (loss n v ^ Nat.rawCast 1 * Nat.rawCast 1)
+                  (Mathlib.Tactic.Ring.add_pf_zero_add (loss (n + 1) v ^ Nat.rawCast 1 * Nat.rawCast 1 + 0)))))));
+    have hmain := fun n =>
+      Nat.recAux
+        (Eq.mpr
+          (id
+            (congr
+              (congrArg Eq
+                (Eq.trans
+                  (Eq.trans
+                    (Finset.sum_congr (congrArg Finset.range (zero_add 1)) fun x a => Eq.refl (loss x (y x) - loss x u))
+                    (Finset.sum_range_succ (fun x => loss x (y x) - loss x u) 0))
+                  (Eq.trans
+                    (congrFun' (congrArg HAdd.hAdd (Finset.sum_range_zero fun k => loss k (y k) - loss k u))
+                      (loss 0 (y 0) - loss 0 u))
+                    (zero_add (loss 0 (y 0) - loss 0 u)))))
+              (congr
+                (congrArg HSub.hSub
+                  (congr
+                    (congrArg HAdd.hAdd
+                      (congr
+                        (congrArg HAdd.hAdd
+                          (congrArg (HAdd.hAdd (psi 0 u - psi 0 (y 0)))
+                            (Eq.trans
+                              (Eq.trans
+                                (Finset.sum_congr (congrArg Finset.range (zero_add 1)) fun x a =>
+                                  congr
+                                    (congrArg HSub.hSub
+                                      (congrFun'
+                                        (congrFun'
+                                          (funext fun t =>
+                                            funext fun v =>
+                                              congrArg (HAdd.hAdd (psi t v))
+                                                (Finset.sum_range_succ (fun x => loss x v) t))
+                                          x)
+                                        (y x)))
+                                    (congrFun'
+                                      (congrFun'
+                                        (funext fun t =>
+                                          funext fun v =>
+                                            congrArg (HAdd.hAdd (psi t v))
+                                              (Finset.sum_range_succ (fun x => loss x v) t))
+                                        x)
+                                      (y (x + 1))))
+                                (Finset.sum_range_succ
+                                  (fun x =>
+                                    psi x (y x) + (∑ i ∈ Finset.range x, loss i (y x) + loss x (y x)) -
+                                      (psi x (y (x + 1)) +
+                                        (∑ i ∈ Finset.range x, loss i (y (x + 1)) + loss x (y (x + 1)))))
+                                  0))
+                              (Eq.trans
+                                (congr
+                                  (congrArg HAdd.hAdd
+                                    (Finset.sum_range_zero fun k =>
+                                      psi k (y k) + (∑ i ∈ Finset.range k, loss i (y k) + loss k (y k)) -
+                                        (psi k (y (k + 1)) +
+                                          (∑ i ∈ Finset.range k, loss i (y (k + 1)) + loss k (y (k + 1))))))
+                                  (congr
+                                    (congrArg HSub.hSub
+                                      (congrArg (HAdd.hAdd (psi 0 (y 0)))
+                                        (Eq.trans
+                                          (congrFun' (congrArg HAdd.hAdd (Finset.sum_range_zero fun k => loss k (y 0)))
+                                            (loss 0 (y 0)))
+                                          (zero_add (loss 0 (y 0))))))
+                                    (congr (congrArg HAdd.hAdd (congrArg (psi 0) (congrArg y (zero_add 1))))
+                                      (Eq.trans
+                                        (congr
+                                          (congrArg HAdd.hAdd
+                                            (Eq.trans
+                                              (Finset.sum_congr (Eq.refl (Finset.range 0)) fun x a =>
+                                                congrArg (loss x) (congrArg y (zero_add 1)))
+                                              (Finset.sum_range_zero fun k => loss k (y 1))))
+                                          (congrArg (loss 0) (congrArg y (zero_add 1))))
+                                        (zero_add (loss 0 (y 1)))))))
+                                (zero_add (psi 0 (y 0) + loss 0 (y 0) - (psi 0 (y 1) + loss 0 (y 1))))))))
+                        (Finset.sum_range_zero fun k => psi k (y (k + 1)) - psi (k + 1) (y (k + 1)))))
+                    (Eq.trans
+                      (congr
+                        (congrFun'
+                          (funext fun t =>
+                            funext fun v =>
+                              congrArg (HAdd.hAdd (psi t v)) (Finset.sum_range_succ (fun x => loss x v) t))
+                          0)
+                        (congrArg y (zero_add 1)))
+                      (congrArg (HAdd.hAdd (psi 0 (y 1)))
+                        (Eq.trans
+                          (congrFun' (congrArg HAdd.hAdd (Finset.sum_range_zero fun k => loss k (y 1))) (loss 0 (y 1)))
+                          (zero_add (loss 0 (y 1))))))))
+                (Eq.trans
+                  (congrFun'
+                    (congrFun'
+                      (funext fun t =>
+                        funext fun v => congrArg (HAdd.hAdd (psi t v)) (Finset.sum_range_succ (fun x => loss x v) t))
+                      0)
+                    u)
+                  (congrArg (HAdd.hAdd (psi 0 u))
+                    (Eq.trans (congrFun' (congrArg HAdd.hAdd (Finset.sum_range_zero fun k => loss k u)) (loss 0 u))
+                      (zero_add (loss 0 u))))))))
+          (Mathlib.Tactic.Ring.of_eq
+            (Mathlib.Tactic.Ring.sub_congr (Mathlib.Tactic.Ring.atom_pf (loss 0 (y 0)))
+              (Mathlib.Tactic.Ring.atom_pf (loss 0 u))
+              (Mathlib.Tactic.Ring.sub_pf
+                (Mathlib.Tactic.Ring.neg_add
+                  (Mathlib.Tactic.Ring.neg_mul (loss 0 u) (Nat.rawCast 1)
+                    (Mathlib.Tactic.Ring.neg_one_mul
+                      (Mathlib.Meta.NormNum.IsInt.to_raw_eq
+                        (Mathlib.Meta.NormNum.isInt_mul (Eq.refl HMul.hMul)
+                          (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                          (Mathlib.Meta.NormNum.IsNat.to_isInt (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))
+                          (Eq.refl (Int.negOfNat 1))))))
+                  Mathlib.Tactic.Ring.neg_zero)
+                (Mathlib.Tactic.Ring.add_pf_add_lt (loss 0 (y 0) ^ Nat.rawCast 1 * Nat.rawCast 1)
+                  (Mathlib.Tactic.Ring.add_pf_zero_add (loss 0 u ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast + 0)))))
+            (Mathlib.Tactic.Ring.sub_congr
+              (Mathlib.Tactic.Ring.add_congr
+                (Mathlib.Tactic.Ring.add_congr
+                  (Mathlib.Tactic.Ring.add_congr
+                    (Mathlib.Tactic.Ring.sub_congr (Mathlib.Tactic.Ring.atom_pf (psi 0 u))
+                      (Mathlib.Tactic.Ring.atom_pf (psi 0 (y 0)))
+                      (Mathlib.Tactic.Ring.sub_pf
+                        (Mathlib.Tactic.Ring.neg_add
+                          (Mathlib.Tactic.Ring.neg_mul (psi 0 (y 0)) (Nat.rawCast 1)
+                            (Mathlib.Tactic.Ring.neg_one_mul
+                              (Mathlib.Meta.NormNum.IsInt.to_raw_eq
+                                (Mathlib.Meta.NormNum.isInt_mul (Eq.refl HMul.hMul)
+                                  (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                                  (Mathlib.Meta.NormNum.IsNat.to_isInt (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))
+                                  (Eq.refl (Int.negOfNat 1))))))
+                          Mathlib.Tactic.Ring.neg_zero)
+                        (Mathlib.Tactic.Ring.add_pf_add_lt (psi 0 u ^ Nat.rawCast 1 * Nat.rawCast 1)
+                          (Mathlib.Tactic.Ring.add_pf_zero_add
+                            (psi 0 (y 0) ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast + 0)))))
+                    (Mathlib.Tactic.Ring.sub_congr
+                      (Mathlib.Tactic.Ring.add_congr (Mathlib.Tactic.Ring.atom_pf (psi 0 (y 0)))
+                        (Mathlib.Tactic.Ring.atom_pf (loss 0 (y 0)))
+                        (Mathlib.Tactic.Ring.add_pf_add_gt (loss 0 (y 0) ^ Nat.rawCast 1 * Nat.rawCast 1)
+                          (Mathlib.Tactic.Ring.add_pf_add_zero (psi 0 (y 0) ^ Nat.rawCast 1 * Nat.rawCast 1 + 0))))
+                      (Mathlib.Tactic.Ring.add_congr (Mathlib.Tactic.Ring.atom_pf (psi 0 (y 1)))
+                        (Mathlib.Tactic.Ring.atom_pf (loss 0 (y 1)))
+                        (Mathlib.Tactic.Ring.add_pf_add_lt (psi 0 (y 1) ^ Nat.rawCast 1 * Nat.rawCast 1)
+                          (Mathlib.Tactic.Ring.add_pf_zero_add (loss 0 (y 1) ^ Nat.rawCast 1 * Nat.rawCast 1 + 0))))
+                      (Mathlib.Tactic.Ring.sub_pf
+                        (Mathlib.Tactic.Ring.neg_add
+                          (Mathlib.Tactic.Ring.neg_mul (psi 0 (y 1)) (Nat.rawCast 1)
+                            (Mathlib.Tactic.Ring.neg_one_mul
+                              (Mathlib.Meta.NormNum.IsInt.to_raw_eq
+                                (Mathlib.Meta.NormNum.isInt_mul (Eq.refl HMul.hMul)
+                                  (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                                  (Mathlib.Meta.NormNum.IsNat.to_isInt (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))
+                                  (Eq.refl (Int.negOfNat 1))))))
+                          (Mathlib.Tactic.Ring.neg_add
+                            (Mathlib.Tactic.Ring.neg_mul (loss 0 (y 1)) (Nat.rawCast 1)
+                              (Mathlib.Tactic.Ring.neg_one_mul
+                                (Mathlib.Meta.NormNum.IsInt.to_raw_eq
+                                  (Mathlib.Meta.NormNum.isInt_mul (Eq.refl HMul.hMul)
+                                    (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                                    (Mathlib.Meta.NormNum.IsNat.to_isInt (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))
+                                    (Eq.refl (Int.negOfNat 1))))))
+                            Mathlib.Tactic.Ring.neg_zero))
+                        (Mathlib.Tactic.Ring.add_pf_add_lt (loss 0 (y 0) ^ Nat.rawCast 1 * Nat.rawCast 1)
+                          (Mathlib.Tactic.Ring.add_pf_add_lt (psi 0 (y 0) ^ Nat.rawCast 1 * Nat.rawCast 1)
+                            (Mathlib.Tactic.Ring.add_pf_zero_add
+                              (psi 0 (y 1) ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast +
+                                (loss 0 (y 1) ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast + 0)))))))
+                    (Mathlib.Tactic.Ring.add_pf_add_gt (loss 0 (y 0) ^ Nat.rawCast 1 * Nat.rawCast 1)
+                      (Mathlib.Tactic.Ring.add_pf_add_lt (psi 0 u ^ Nat.rawCast 1 * Nat.rawCast 1)
+                        (Mathlib.Tactic.Ring.add_pf_add_overlap_zero
+                          (Mathlib.Tactic.Ring.add_overlap_pf_zero (psi 0 (y 0)) (Nat.rawCast 1)
+                            (Mathlib.Meta.NormNum.IsInt.to_isNat
+                              (Mathlib.Meta.NormNum.isInt_add (Eq.refl HAdd.hAdd)
+                                (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                                (Mathlib.Meta.NormNum.IsNat.to_isInt (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))
+                                (Eq.refl (Int.ofNat 0)))))
+                          (Mathlib.Tactic.Ring.add_pf_zero_add
+                            (psi 0 (y 1) ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast +
+                              (loss 0 (y 1) ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast + 0)))))))
+                  (Mathlib.Tactic.Ring.cast_zero (Mathlib.Meta.NormNum.isNat_ofNat ℝ Nat.cast_zero))
+                  (Mathlib.Tactic.Ring.add_pf_add_zero
+                    (loss 0 (y 0) ^ Nat.rawCast 1 * Nat.rawCast 1 +
+                      (psi 0 u ^ Nat.rawCast 1 * Nat.rawCast 1 +
+                        (psi 0 (y 1) ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast +
+                          (loss 0 (y 1) ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast + 0))))))
+                (Mathlib.Tactic.Ring.add_congr (Mathlib.Tactic.Ring.atom_pf (psi 0 (y 1)))
+                  (Mathlib.Tactic.Ring.atom_pf (loss 0 (y 1)))
+                  (Mathlib.Tactic.Ring.add_pf_add_lt (psi 0 (y 1) ^ Nat.rawCast 1 * Nat.rawCast 1)
+                    (Mathlib.Tactic.Ring.add_pf_zero_add (loss 0 (y 1) ^ Nat.rawCast 1 * Nat.rawCast 1 + 0))))
+                (Mathlib.Tactic.Ring.add_pf_add_lt (loss 0 (y 0) ^ Nat.rawCast 1 * Nat.rawCast 1)
+                  (Mathlib.Tactic.Ring.add_pf_add_lt (psi 0 u ^ Nat.rawCast 1 * Nat.rawCast 1)
+                    (Mathlib.Tactic.Ring.add_pf_add_overlap_zero
+                      (Mathlib.Tactic.Ring.add_overlap_pf_zero (psi 0 (y 1)) (Nat.rawCast 1)
+                        (Mathlib.Meta.NormNum.IsInt.to_isNat
+                          (Mathlib.Meta.NormNum.isInt_add (Eq.refl HAdd.hAdd)
+                            (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                            (Mathlib.Meta.NormNum.IsNat.to_isInt (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))
+                            (Eq.refl (Int.ofNat 0)))))
+                      (Mathlib.Tactic.Ring.add_pf_add_overlap_zero
+                        (Mathlib.Tactic.Ring.add_overlap_pf_zero (loss 0 (y 1)) (Nat.rawCast 1)
+                          (Mathlib.Meta.NormNum.IsInt.to_isNat
+                            (Mathlib.Meta.NormNum.isInt_add (Eq.refl HAdd.hAdd)
+                              (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                              (Mathlib.Meta.NormNum.IsNat.to_isInt (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))
+                              (Eq.refl (Int.ofNat 0)))))
+                        (Mathlib.Tactic.Ring.add_pf_zero_add 0))))))
+              (Mathlib.Tactic.Ring.add_congr (Mathlib.Tactic.Ring.atom_pf (psi 0 u))
+                (Mathlib.Tactic.Ring.atom_pf (loss 0 u))
+                (Mathlib.Tactic.Ring.add_pf_add_gt (loss 0 u ^ Nat.rawCast 1 * Nat.rawCast 1)
+                  (Mathlib.Tactic.Ring.add_pf_add_zero (psi 0 u ^ Nat.rawCast 1 * Nat.rawCast 1 + 0))))
+              (Mathlib.Tactic.Ring.sub_pf
+                (Mathlib.Tactic.Ring.neg_add
+                  (Mathlib.Tactic.Ring.neg_mul (loss 0 u) (Nat.rawCast 1)
+                    (Mathlib.Tactic.Ring.neg_one_mul
+                      (Mathlib.Meta.NormNum.IsInt.to_raw_eq
+                        (Mathlib.Meta.NormNum.isInt_mul (Eq.refl HMul.hMul)
+                          (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                          (Mathlib.Meta.NormNum.IsNat.to_isInt (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))
+                          (Eq.refl (Int.negOfNat 1))))))
+                  (Mathlib.Tactic.Ring.neg_add
+                    (Mathlib.Tactic.Ring.neg_mul (psi 0 u) (Nat.rawCast 1)
+                      (Mathlib.Tactic.Ring.neg_one_mul
+                        (Mathlib.Meta.NormNum.IsInt.to_raw_eq
+                          (Mathlib.Meta.NormNum.isInt_mul (Eq.refl HMul.hMul)
+                            (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                            (Mathlib.Meta.NormNum.IsNat.to_isInt (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))
+                            (Eq.refl (Int.negOfNat 1))))))
+                    Mathlib.Tactic.Ring.neg_zero))
+                (Mathlib.Tactic.Ring.add_pf_add_lt (loss 0 (y 0) ^ Nat.rawCast 1 * Nat.rawCast 1)
+                  (Mathlib.Tactic.Ring.add_pf_add_gt (loss 0 u ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast)
+                    (Mathlib.Tactic.Ring.add_pf_add_overlap_zero
+                      (Mathlib.Tactic.Ring.add_overlap_pf_zero (psi 0 u) (Nat.rawCast 1)
+                        (Mathlib.Meta.NormNum.IsInt.to_isNat
+                          (Mathlib.Meta.NormNum.isInt_add (Eq.refl HAdd.hAdd)
+                            (Mathlib.Meta.NormNum.IsNat.to_isInt (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))
+                            (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1)) (Eq.refl (Int.ofNat 0)))))
+                      (Mathlib.Tactic.Ring.add_pf_zero_add 0))))))))
+        (fun n ih =>
+          Eq.mpr
+            (id
+              (congr
+                (congrArg Eq
+                  (Eq.trans (Finset.sum_range_succ (fun x => loss x (y x) - loss x u) (n + 1))
+                    (congrFun' (congrArg HAdd.hAdd (Finset.sum_range_succ (fun x => loss x (y x) - loss x u) n))
+                      (loss (n + 1) (y (n + 1)) - loss (n + 1) u))))
+                (congrFun'
+                  (congrArg HSub.hSub
+                    (congrFun'
+                      (congrArg HAdd.hAdd
+                        (congr
+                          (congrArg HAdd.hAdd
+                            (congrArg (HAdd.hAdd (psi (n + 1) u - psi 0 (y 0)))
+                              (Eq.trans (Finset.sum_range_succ (fun x => G x (y x) - G x (y (x + 1))) (n + 1))
+                                (congrFun'
+                                  (congrArg HAdd.hAdd (Finset.sum_range_succ (fun x => G x (y x) - G x (y (x + 1))) n))
+                                  (G (n + 1) (y (n + 1)) - G (n + 1) (y (n + 1 + 1)))))))
+                          (Finset.sum_range_succ (fun x => psi x (y (x + 1)) - psi (x + 1) (y (x + 1))) n)))
+                      (G (n + 1) (y (n + 1 + 1)))))
+                  (G (n + 1) u))))
+            (Eq.mpr
+              (id
+                (congrArg
+                  (fun _a =>
+                    ∑ t ∈ Finset.range n, (loss t (y t) - loss t u) + (loss n (y n) - loss n u) +
+                        (loss (n + 1) (y (n + 1)) - loss (n + 1) u) =
+                      psi (n + 1) u - psi 0 (y 0) +
+                              (∑ t ∈ Finset.range n, (G t (y t) - G t (y (t + 1))) + (G n (y n) - G n (y (n + 1))) +
+                                (_a - G (n + 1) (y (n + 1 + 1)))) +
+                            (∑ t ∈ Finset.range n, (psi t (y (t + 1)) - psi (t + 1) (y (t + 1))) +
+                              (psi n (y (n + 1)) - psi (n + 1) (y (n + 1)))) +
+                          G (n + 1) (y (n + 1 + 1)) -
+                        G (n + 1) u)
+                  (hG n (y (n + 1)))))
+              (Eq.mpr
+                (id
+                  (congrArg
+                    (fun _a =>
+                      ∑ t ∈ Finset.range n, (loss t (y t) - loss t u) + (loss n (y n) - loss n u) +
+                          (loss (n + 1) (y (n + 1)) - loss (n + 1) u) =
+                        psi (n + 1) u - psi 0 (y 0) +
+                                (∑ t ∈ Finset.range n, (G t (y t) - G t (y (t + 1))) + (G n (y n) - G n (y (n + 1))) +
+                                  (G n (y (n + 1)) + psi (n + 1) (y (n + 1)) - psi n (y (n + 1)) +
+                                      loss (n + 1) (y (n + 1)) -
+                                    _a)) +
+                              (∑ t ∈ Finset.range n, (psi t (y (t + 1)) - psi (t + 1) (y (t + 1))) +
+                                (psi n (y (n + 1)) - psi (n + 1) (y (n + 1)))) +
+                            _a -
+                          G (n + 1) u)
+                    (hG n (y (n + 1 + 1)))))
+                (Eq.mpr
+                  (id
+                    (congrArg
+                      (fun _a =>
+                        ∑ t ∈ Finset.range n, (loss t (y t) - loss t u) + (loss n (y n) - loss n u) +
+                            (loss (n + 1) (y (n + 1)) - loss (n + 1) u) =
+                          psi (n + 1) u - psi 0 (y 0) +
+                                  (∑ t ∈ Finset.range n, (G t (y t) - G t (y (t + 1))) + (G n (y n) - G n (y (n + 1))) +
+                                    (G n (y (n + 1)) + psi (n + 1) (y (n + 1)) - psi n (y (n + 1)) +
+                                        loss (n + 1) (y (n + 1)) -
+                                      (G n (y (n + 1 + 1)) + psi (n + 1) (y (n + 1 + 1)) - psi n (y (n + 1 + 1)) +
+                                        loss (n + 1) (y (n + 1 + 1))))) +
+                                (∑ t ∈ Finset.range n, (psi t (y (t + 1)) - psi (t + 1) (y (t + 1))) +
+                                  (psi n (y (n + 1)) - psi (n + 1) (y (n + 1)))) +
+                              (G n (y (n + 1 + 1)) + psi (n + 1) (y (n + 1 + 1)) - psi n (y (n + 1 + 1)) +
+                                loss (n + 1) (y (n + 1 + 1))) -
+                            _a)
+                      (hG n u)))
+                  (Mathlib.Tactic.Linarith.eq_of_not_lt_of_not_gt
+                    (∑ t ∈ Finset.range n, (loss t (y t) - loss t u) + (loss n (y n) - loss n u) +
+                      (loss (n + 1) (y (n + 1)) - loss (n + 1) u))
+                    (psi (n + 1) u - psi 0 (y 0) +
+                            (∑ t ∈ Finset.range n, (G t (y t) - G t (y (t + 1))) + (G n (y n) - G n (y (n + 1))) +
+                              (G n (y (n + 1)) + psi (n + 1) (y (n + 1)) - psi n (y (n + 1)) +
+                                  loss (n + 1) (y (n + 1)) -
+                                (G n (y (n + 1 + 1)) + psi (n + 1) (y (n + 1 + 1)) - psi n (y (n + 1 + 1)) +
+                                  loss (n + 1) (y (n + 1 + 1))))) +
+                          (∑ t ∈ Finset.range n, (psi t (y (t + 1)) - psi (t + 1) (y (t + 1))) +
+                            (psi n (y (n + 1)) - psi (n + 1) (y (n + 1)))) +
+                        (G n (y (n + 1 + 1)) + psi (n + 1) (y (n + 1 + 1)) - psi n (y (n + 1 + 1)) +
+                          loss (n + 1) (y (n + 1 + 1))) -
+                      (G n u + psi (n + 1) u - psi n u + loss (n + 1) u))
+                    (Not.intro fun a =>
+                      Mathlib.Tactic.Linarith.lt_irrefl
+                        (Eq.mp
+                          (congrArg (fun _a => _a < 0)
+                            (Mathlib.Tactic.Ring.of_eq
+                              (Mathlib.Tactic.Ring.add_congr
+                                (Mathlib.Tactic.Ring.neg_congr
+                                  (Mathlib.Tactic.Ring.sub_congr
+                                    (Mathlib.Tactic.Ring.add_congr
+                                      (Mathlib.Tactic.Ring.atom_pf (∑ t ∈ Finset.range n, (loss t (y t) - loss t u)))
+                                      (Mathlib.Tactic.Ring.sub_congr (Mathlib.Tactic.Ring.atom_pf (loss n (y n)))
+                                        (Mathlib.Tactic.Ring.atom_pf (loss n u))
+                                        (Mathlib.Tactic.Ring.sub_pf
+                                          (Mathlib.Tactic.Ring.neg_add
+                                            (Mathlib.Tactic.Ring.neg_mul (loss n u) (Nat.rawCast 1)
+                                              (Mathlib.Tactic.Ring.neg_one_mul
+                                                (Mathlib.Meta.NormNum.IsInt.to_raw_eq
+                                                  (Mathlib.Meta.NormNum.isInt_mul (Eq.refl HMul.hMul)
+                                                    (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                                                    (Mathlib.Meta.NormNum.IsNat.to_isInt
+                                                      (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))
+                                                    (Eq.refl (Int.negOfNat 1))))))
+                                            Mathlib.Tactic.Ring.neg_zero)
+                                          (Mathlib.Tactic.Ring.add_pf_add_lt
+                                            (loss n (y n) ^ Nat.rawCast 1 * Nat.rawCast 1)
+                                            (Mathlib.Tactic.Ring.add_pf_zero_add
+                                              (loss n u ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast + 0)))))
+                                      (Mathlib.Tactic.Ring.add_pf_add_lt
+                                        ((∑ t ∈ Finset.range n, (loss t (y t) - loss t u)) ^ Nat.rawCast 1 *
+                                          Nat.rawCast 1)
+                                        (Mathlib.Tactic.Ring.add_pf_zero_add
+                                          (loss n (y n) ^ Nat.rawCast 1 * Nat.rawCast 1 +
+                                            (loss n u ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast + 0)))))
+                                    (Mathlib.Tactic.Ring.sub_congr
+                                      (Mathlib.Tactic.Ring.add_congr
+                                        (Mathlib.Tactic.Ring.add_congr
+                                          (Mathlib.Tactic.Ring.add_congr
+                                            (Mathlib.Tactic.Ring.sub_congr (Mathlib.Tactic.Ring.atom_pf (psi n u))
+                                              (Mathlib.Tactic.Ring.atom_pf (psi 0 (y 0)))
+                                              (Mathlib.Tactic.Ring.sub_pf
+                                                (Mathlib.Tactic.Ring.neg_add
+                                                  (Mathlib.Tactic.Ring.neg_mul (psi 0 (y 0)) (Nat.rawCast 1)
+                                                    (Mathlib.Tactic.Ring.neg_one_mul
+                                                      (Mathlib.Meta.NormNum.IsInt.to_raw_eq
+                                                        (Mathlib.Meta.NormNum.isInt_mul (Eq.refl HMul.hMul)
+                                                          (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                                                          (Mathlib.Meta.NormNum.IsNat.to_isInt
+                                                            (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))
+                                                          (Eq.refl (Int.negOfNat 1))))))
+                                                  Mathlib.Tactic.Ring.neg_zero)
+                                                (Mathlib.Tactic.Ring.add_pf_add_lt
+                                                  (psi n u ^ Nat.rawCast 1 * Nat.rawCast 1)
+                                                  (Mathlib.Tactic.Ring.add_pf_zero_add
+                                                    (psi 0 (y 0) ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast + 0)))))
+                                            (Mathlib.Tactic.Ring.add_congr
+                                              (Mathlib.Tactic.Ring.atom_pf
+                                                (∑ t ∈ Finset.range n, (G t (y t) - G t (y (t + 1)))))
+                                              (Mathlib.Tactic.Ring.sub_congr
+                                                (Mathlib.Tactic.Ring.add_congr
+                                                  (Mathlib.Tactic.Ring.atom_pf (psi n (y n)))
+                                                  (Mathlib.Tactic.Ring.atom_pf
+                                                    (∑ i ∈ Finset.range (n + 1), loss i (y n)))
+                                                  (Mathlib.Tactic.Ring.add_pf_add_lt
+                                                    (psi n (y n) ^ Nat.rawCast 1 * Nat.rawCast 1)
+                                                    (Mathlib.Tactic.Ring.add_pf_zero_add
+                                                      ((∑ i ∈ Finset.range (n + 1), loss i (y n)) ^ Nat.rawCast 1 *
+                                                          Nat.rawCast 1 +
+                                                        0))))
+                                                (Mathlib.Tactic.Ring.add_congr
+                                                  (Mathlib.Tactic.Ring.atom_pf (psi n (y (n + 1))))
+                                                  (Mathlib.Tactic.Ring.atom_pf
+                                                    (∑ i ∈ Finset.range (n + 1), loss i (y (n + 1))))
+                                                  (Mathlib.Tactic.Ring.add_pf_add_lt
+                                                    (psi n (y (n + 1)) ^ Nat.rawCast 1 * Nat.rawCast 1)
+                                                    (Mathlib.Tactic.Ring.add_pf_zero_add
+                                                      ((∑ i ∈ Finset.range (n + 1), loss i (y (n + 1))) ^
+                                                            Nat.rawCast 1 *
+                                                          Nat.rawCast 1 +
+                                                        0))))
+                                                (Mathlib.Tactic.Ring.sub_pf
+                                                  (Mathlib.Tactic.Ring.neg_add
+                                                    (Mathlib.Tactic.Ring.neg_mul (psi n (y (n + 1))) (Nat.rawCast 1)
+                                                      (Mathlib.Tactic.Ring.neg_one_mul
+                                                        (Mathlib.Meta.NormNum.IsInt.to_raw_eq
+                                                          (Mathlib.Meta.NormNum.isInt_mul (Eq.refl HMul.hMul)
+                                                            (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                                                            (Mathlib.Meta.NormNum.IsNat.to_isInt
+                                                              (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))
+                                                            (Eq.refl (Int.negOfNat 1))))))
+                                                    (Mathlib.Tactic.Ring.neg_add
+                                                      (Mathlib.Tactic.Ring.neg_mul
+                                                        (∑ i ∈ Finset.range (n + 1), loss i (y (n + 1))) (Nat.rawCast 1)
+                                                        (Mathlib.Tactic.Ring.neg_one_mul
+                                                          (Mathlib.Meta.NormNum.IsInt.to_raw_eq
+                                                            (Mathlib.Meta.NormNum.isInt_mul (Eq.refl HMul.hMul)
+                                                              (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                                                              (Mathlib.Meta.NormNum.IsNat.to_isInt
+                                                                (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))
+                                                              (Eq.refl (Int.negOfNat 1))))))
+                                                      Mathlib.Tactic.Ring.neg_zero))
+                                                  (Mathlib.Tactic.Ring.add_pf_add_lt
+                                                    (psi n (y n) ^ Nat.rawCast 1 * Nat.rawCast 1)
+                                                    (Mathlib.Tactic.Ring.add_pf_add_lt
+                                                      ((∑ i ∈ Finset.range (n + 1), loss i (y n)) ^ Nat.rawCast 1 *
+                                                        Nat.rawCast 1)
+                                                      (Mathlib.Tactic.Ring.add_pf_zero_add
+                                                        (psi n (y (n + 1)) ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast +
+                                                          ((∑ i ∈ Finset.range (n + 1), loss i (y (n + 1))) ^
+                                                                Nat.rawCast 1 *
+                                                              (Int.negOfNat 1).rawCast +
+                                                            0)))))))
+                                              (Mathlib.Tactic.Ring.add_pf_add_lt
+                                                ((∑ t ∈ Finset.range n, (G t (y t) - G t (y (t + 1)))) ^ Nat.rawCast 1 *
+                                                  Nat.rawCast 1)
+                                                (Mathlib.Tactic.Ring.add_pf_zero_add
+                                                  (psi n (y n) ^ Nat.rawCast 1 * Nat.rawCast 1 +
+                                                    ((∑ i ∈ Finset.range (n + 1), loss i (y n)) ^ Nat.rawCast 1 *
+                                                        Nat.rawCast 1 +
+                                                      (psi n (y (n + 1)) ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast +
+                                                        ((∑ i ∈ Finset.range (n + 1), loss i (y (n + 1))) ^
+                                                              Nat.rawCast 1 *
+                                                            (Int.negOfNat 1).rawCast +
+                                                          0)))))))
+                                            (Mathlib.Tactic.Ring.add_pf_add_lt (psi n u ^ Nat.rawCast 1 * Nat.rawCast 1)
+                                              (Mathlib.Tactic.Ring.add_pf_add_lt
+                                                (psi 0 (y 0) ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast)
+                                                (Mathlib.Tactic.Ring.add_pf_zero_add
+                                                  ((∑ t ∈ Finset.range n, (G t (y t) - G t (y (t + 1)))) ^
+                                                        Nat.rawCast 1 *
+                                                      Nat.rawCast 1 +
+                                                    (psi n (y n) ^ Nat.rawCast 1 * Nat.rawCast 1 +
+                                                      ((∑ i ∈ Finset.range (n + 1), loss i (y n)) ^ Nat.rawCast 1 *
+                                                          Nat.rawCast 1 +
+                                                        (psi n (y (n + 1)) ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast +
+                                                          ((∑ i ∈ Finset.range (n + 1), loss i (y (n + 1))) ^
+                                                                Nat.rawCast 1 *
+                                                              (Int.negOfNat 1).rawCast +
+                                                            0)))))))))
+                                          (Mathlib.Tactic.Ring.atom_pf
+                                            (∑ t ∈ Finset.range n, (psi t (y (t + 1)) - psi (t + 1) (y (t + 1)))))
+                                          (Mathlib.Tactic.Ring.add_pf_add_lt (psi n u ^ Nat.rawCast 1 * Nat.rawCast 1)
+                                            (Mathlib.Tactic.Ring.add_pf_add_lt
+                                              (psi 0 (y 0) ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast)
+                                              (Mathlib.Tactic.Ring.add_pf_add_lt
+                                                ((∑ t ∈ Finset.range n, (G t (y t) - G t (y (t + 1)))) ^ Nat.rawCast 1 *
+                                                  Nat.rawCast 1)
+                                                (Mathlib.Tactic.Ring.add_pf_add_lt
+                                                  (psi n (y n) ^ Nat.rawCast 1 * Nat.rawCast 1)
+                                                  (Mathlib.Tactic.Ring.add_pf_add_lt
+                                                    ((∑ i ∈ Finset.range (n + 1), loss i (y n)) ^ Nat.rawCast 1 *
+                                                      Nat.rawCast 1)
+                                                    (Mathlib.Tactic.Ring.add_pf_add_lt
+                                                      (psi n (y (n + 1)) ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast)
+                                                      (Mathlib.Tactic.Ring.add_pf_add_lt
+                                                        ((∑ i ∈ Finset.range (n + 1), loss i (y (n + 1))) ^
+                                                            Nat.rawCast 1 *
+                                                          (Int.negOfNat 1).rawCast)
+                                                        (Mathlib.Tactic.Ring.add_pf_zero_add
+                                                          ((∑ t ∈ Finset.range n,
+                                                                  (psi t (y (t + 1)) - psi (t + 1) (y (t + 1)))) ^
+                                                                Nat.rawCast 1 *
+                                                              Nat.rawCast 1 +
+                                                            0))))))))))
+                                        (Mathlib.Tactic.Ring.add_congr (Mathlib.Tactic.Ring.atom_pf (psi n (y (n + 1))))
+                                          (Mathlib.Tactic.Ring.atom_pf (∑ i ∈ Finset.range (n + 1), loss i (y (n + 1))))
+                                          (Mathlib.Tactic.Ring.add_pf_add_lt
+                                            (psi n (y (n + 1)) ^ Nat.rawCast 1 * Nat.rawCast 1)
+                                            (Mathlib.Tactic.Ring.add_pf_zero_add
+                                              ((∑ i ∈ Finset.range (n + 1), loss i (y (n + 1))) ^ Nat.rawCast 1 *
+                                                  Nat.rawCast 1 +
+                                                0))))
+                                        (Mathlib.Tactic.Ring.add_pf_add_lt (psi n u ^ Nat.rawCast 1 * Nat.rawCast 1)
+                                          (Mathlib.Tactic.Ring.add_pf_add_lt
+                                            (psi 0 (y 0) ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast)
+                                            (Mathlib.Tactic.Ring.add_pf_add_lt
+                                              ((∑ t ∈ Finset.range n, (G t (y t) - G t (y (t + 1)))) ^ Nat.rawCast 1 *
+                                                Nat.rawCast 1)
+                                              (Mathlib.Tactic.Ring.add_pf_add_lt
+                                                (psi n (y n) ^ Nat.rawCast 1 * Nat.rawCast 1)
+                                                (Mathlib.Tactic.Ring.add_pf_add_lt
+                                                  ((∑ i ∈ Finset.range (n + 1), loss i (y n)) ^ Nat.rawCast 1 *
+                                                    Nat.rawCast 1)
+                                                  (Mathlib.Tactic.Ring.add_pf_add_overlap_zero
+                                                    (Mathlib.Tactic.Ring.add_overlap_pf_zero (psi n (y (n + 1)))
+                                                      (Nat.rawCast 1)
+                                                      (Mathlib.Meta.NormNum.IsInt.to_isNat
+                                                        (Mathlib.Meta.NormNum.isInt_add (Eq.refl HAdd.hAdd)
+                                                          (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                                                          (Mathlib.Meta.NormNum.IsNat.to_isInt
+                                                            (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))
+                                                          (Eq.refl (Int.ofNat 0)))))
+                                                    (Mathlib.Tactic.Ring.add_pf_add_overlap_zero
+                                                      (Mathlib.Tactic.Ring.add_overlap_pf_zero
+                                                        (∑ i ∈ Finset.range (n + 1), loss i (y (n + 1))) (Nat.rawCast 1)
+                                                        (Mathlib.Meta.NormNum.IsInt.to_isNat
+                                                          (Mathlib.Meta.NormNum.isInt_add (Eq.refl HAdd.hAdd)
+                                                            (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                                                            (Mathlib.Meta.NormNum.IsNat.to_isInt
+                                                              (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))
+                                                            (Eq.refl (Int.ofNat 0)))))
+                                                      (Mathlib.Tactic.Ring.add_pf_add_zero
+                                                        ((∑ t ∈ Finset.range n,
+                                                                (psi t (y (t + 1)) - psi (t + 1) (y (t + 1)))) ^
+                                                              Nat.rawCast 1 *
+                                                            Nat.rawCast 1 +
+                                                          0))))))))))
+                                      (Mathlib.Tactic.Ring.add_congr (Mathlib.Tactic.Ring.atom_pf (psi n u))
+                                        (Mathlib.Tactic.Ring.atom_pf (∑ i ∈ Finset.range (n + 1), loss i u))
+                                        (Mathlib.Tactic.Ring.add_pf_add_lt (psi n u ^ Nat.rawCast 1 * Nat.rawCast 1)
+                                          (Mathlib.Tactic.Ring.add_pf_zero_add
+                                            ((∑ i ∈ Finset.range (n + 1), loss i u) ^ Nat.rawCast 1 * Nat.rawCast 1 +
+                                              0))))
+                                      (Mathlib.Tactic.Ring.sub_pf
+                                        (Mathlib.Tactic.Ring.neg_add
+                                          (Mathlib.Tactic.Ring.neg_mul (psi n u) (Nat.rawCast 1)
+                                            (Mathlib.Tactic.Ring.neg_one_mul
+                                              (Mathlib.Meta.NormNum.IsInt.to_raw_eq
+                                                (Mathlib.Meta.NormNum.isInt_mul (Eq.refl HMul.hMul)
+                                                  (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                                                  (Mathlib.Meta.NormNum.IsNat.to_isInt
+                                                    (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))
+                                                  (Eq.refl (Int.negOfNat 1))))))
+                                          (Mathlib.Tactic.Ring.neg_add
+                                            (Mathlib.Tactic.Ring.neg_mul (∑ i ∈ Finset.range (n + 1), loss i u)
+                                              (Nat.rawCast 1)
+                                              (Mathlib.Tactic.Ring.neg_one_mul
+                                                (Mathlib.Meta.NormNum.IsInt.to_raw_eq
+                                                  (Mathlib.Meta.NormNum.isInt_mul (Eq.refl HMul.hMul)
+                                                    (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                                                    (Mathlib.Meta.NormNum.IsNat.to_isInt
+                                                      (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))
+                                                    (Eq.refl (Int.negOfNat 1))))))
+                                            Mathlib.Tactic.Ring.neg_zero))
+                                        (Mathlib.Tactic.Ring.add_pf_add_overlap_zero
+                                          (Mathlib.Tactic.Ring.add_overlap_pf_zero (psi n u) (Nat.rawCast 1)
+                                            (Mathlib.Meta.NormNum.IsInt.to_isNat
+                                              (Mathlib.Meta.NormNum.isInt_add (Eq.refl HAdd.hAdd)
+                                                (Mathlib.Meta.NormNum.IsNat.to_isInt
+                                                  (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))
+                                                (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                                                (Eq.refl (Int.ofNat 0)))))
+                                          (Mathlib.Tactic.Ring.add_pf_add_lt
+                                            (psi 0 (y 0) ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast)
+                                            (Mathlib.Tactic.Ring.add_pf_add_lt
+                                              ((∑ t ∈ Finset.range n, (G t (y t) - G t (y (t + 1)))) ^ Nat.rawCast 1 *
+                                                Nat.rawCast 1)
+                                              (Mathlib.Tactic.Ring.add_pf_add_lt
+                                                (psi n (y n) ^ Nat.rawCast 1 * Nat.rawCast 1)
+                                                (Mathlib.Tactic.Ring.add_pf_add_lt
+                                                  ((∑ i ∈ Finset.range (n + 1), loss i (y n)) ^ Nat.rawCast 1 *
+                                                    Nat.rawCast 1)
+                                                  (Mathlib.Tactic.Ring.add_pf_add_lt
+                                                    ((∑ t ∈ Finset.range n,
+                                                          (psi t (y (t + 1)) - psi (t + 1) (y (t + 1)))) ^
+                                                        Nat.rawCast 1 *
+                                                      Nat.rawCast 1)
+                                                    (Mathlib.Tactic.Ring.add_pf_zero_add
+                                                      ((∑ i ∈ Finset.range (n + 1), loss i u) ^ Nat.rawCast 1 *
+                                                          (Int.negOfNat 1).rawCast +
+                                                        0))))))))))
+                                    (Mathlib.Tactic.Ring.sub_pf
+                                      (Mathlib.Tactic.Ring.neg_add
+                                        (Mathlib.Tactic.Ring.neg_mul (psi 0 (y 0)) (Nat.rawCast 1)
+                                          (Mathlib.Tactic.Ring.neg_one_mul
+                                            (Mathlib.Meta.NormNum.IsNat.to_raw_eq
+                                              (Mathlib.Meta.NormNum.IsInt.to_isNat
+                                                (Mathlib.Meta.NormNum.isInt_mul (Eq.refl HMul.hMul)
+                                                  (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                                                  (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                                                  (Eq.refl (Int.ofNat 1)))))))
+                                        (Mathlib.Tactic.Ring.neg_add
+                                          (Mathlib.Tactic.Ring.neg_mul
+                                            (∑ t ∈ Finset.range n, (G t (y t) - G t (y (t + 1)))) (Nat.rawCast 1)
+                                            (Mathlib.Tactic.Ring.neg_one_mul
+                                              (Mathlib.Meta.NormNum.IsInt.to_raw_eq
+                                                (Mathlib.Meta.NormNum.isInt_mul (Eq.refl HMul.hMul)
+                                                  (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                                                  (Mathlib.Meta.NormNum.IsNat.to_isInt
+                                                    (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))
+                                                  (Eq.refl (Int.negOfNat 1))))))
+                                          (Mathlib.Tactic.Ring.neg_add
+                                            (Mathlib.Tactic.Ring.neg_mul (psi n (y n)) (Nat.rawCast 1)
+                                              (Mathlib.Tactic.Ring.neg_one_mul
+                                                (Mathlib.Meta.NormNum.IsInt.to_raw_eq
+                                                  (Mathlib.Meta.NormNum.isInt_mul (Eq.refl HMul.hMul)
+                                                    (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                                                    (Mathlib.Meta.NormNum.IsNat.to_isInt
+                                                      (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))
+                                                    (Eq.refl (Int.negOfNat 1))))))
+                                            (Mathlib.Tactic.Ring.neg_add
+                                              (Mathlib.Tactic.Ring.neg_mul (∑ i ∈ Finset.range (n + 1), loss i (y n))
+                                                (Nat.rawCast 1)
+                                                (Mathlib.Tactic.Ring.neg_one_mul
+                                                  (Mathlib.Meta.NormNum.IsInt.to_raw_eq
+                                                    (Mathlib.Meta.NormNum.isInt_mul (Eq.refl HMul.hMul)
+                                                      (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                                                      (Mathlib.Meta.NormNum.IsNat.to_isInt
+                                                        (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))
+                                                      (Eq.refl (Int.negOfNat 1))))))
+                                              (Mathlib.Tactic.Ring.neg_add
+                                                (Mathlib.Tactic.Ring.neg_mul
+                                                  (∑ t ∈ Finset.range n, (psi t (y (t + 1)) - psi (t + 1) (y (t + 1))))
+                                                  (Nat.rawCast 1)
+                                                  (Mathlib.Tactic.Ring.neg_one_mul
+                                                    (Mathlib.Meta.NormNum.IsInt.to_raw_eq
+                                                      (Mathlib.Meta.NormNum.isInt_mul (Eq.refl HMul.hMul)
+                                                        (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                                                        (Mathlib.Meta.NormNum.IsNat.to_isInt
+                                                          (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))
+                                                        (Eq.refl (Int.negOfNat 1))))))
+                                                (Mathlib.Tactic.Ring.neg_add
+                                                  (Mathlib.Tactic.Ring.neg_mul (∑ i ∈ Finset.range (n + 1), loss i u)
+                                                    (Nat.rawCast 1)
+                                                    (Mathlib.Tactic.Ring.neg_one_mul
+                                                      (Mathlib.Meta.NormNum.IsNat.to_raw_eq
+                                                        (Mathlib.Meta.NormNum.IsInt.to_isNat
+                                                          (Mathlib.Meta.NormNum.isInt_mul (Eq.refl HMul.hMul)
+                                                            (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                                                            (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                                                            (Eq.refl (Int.ofNat 1)))))))
+                                                  Mathlib.Tactic.Ring.neg_zero))))))
+                                      (Mathlib.Tactic.Ring.add_pf_add_lt
+                                        ((∑ t ∈ Finset.range n, (loss t (y t) - loss t u)) ^ Nat.rawCast 1 *
+                                          Nat.rawCast 1)
+                                        (Mathlib.Tactic.Ring.add_pf_add_lt
+                                          (loss n (y n) ^ Nat.rawCast 1 * Nat.rawCast 1)
+                                          (Mathlib.Tactic.Ring.add_pf_add_lt
+                                            (loss n u ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast)
+                                            (Mathlib.Tactic.Ring.add_pf_zero_add
+                                              (psi 0 (y 0) ^ Nat.rawCast 1 * Nat.rawCast 1 +
+                                                ((∑ t ∈ Finset.range n, (G t (y t) - G t (y (t + 1)))) ^ Nat.rawCast 1 *
+                                                    (Int.negOfNat 1).rawCast +
+                                                  (psi n (y n) ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast +
+                                                    ((∑ i ∈ Finset.range (n + 1), loss i (y n)) ^ Nat.rawCast 1 *
+                                                        (Int.negOfNat 1).rawCast +
+                                                      ((∑ t ∈ Finset.range n,
+                                                              (psi t (y (t + 1)) - psi (t + 1) (y (t + 1)))) ^
+                                                            Nat.rawCast 1 *
+                                                          (Int.negOfNat 1).rawCast +
+                                                        ((∑ i ∈ Finset.range (n + 1), loss i u) ^ Nat.rawCast 1 *
+                                                            Nat.rawCast 1 +
+                                                          0))))))))))))
+                                  (Mathlib.Tactic.Ring.neg_add
+                                    (Mathlib.Tactic.Ring.neg_mul (∑ t ∈ Finset.range n, (loss t (y t) - loss t u))
+                                      (Nat.rawCast 1)
+                                      (Mathlib.Tactic.Ring.neg_one_mul
+                                        (Mathlib.Meta.NormNum.IsInt.to_raw_eq
+                                          (Mathlib.Meta.NormNum.isInt_mul (Eq.refl HMul.hMul)
+                                            (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                                            (Mathlib.Meta.NormNum.IsNat.to_isInt
+                                              (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))
+                                            (Eq.refl (Int.negOfNat 1))))))
+                                    (Mathlib.Tactic.Ring.neg_add
+                                      (Mathlib.Tactic.Ring.neg_mul (loss n (y n)) (Nat.rawCast 1)
+                                        (Mathlib.Tactic.Ring.neg_one_mul
+                                          (Mathlib.Meta.NormNum.IsInt.to_raw_eq
+                                            (Mathlib.Meta.NormNum.isInt_mul (Eq.refl HMul.hMul)
+                                              (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                                              (Mathlib.Meta.NormNum.IsNat.to_isInt
+                                                (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))
+                                              (Eq.refl (Int.negOfNat 1))))))
+                                      (Mathlib.Tactic.Ring.neg_add
+                                        (Mathlib.Tactic.Ring.neg_mul (loss n u) (Nat.rawCast 1)
+                                          (Mathlib.Tactic.Ring.neg_one_mul
+                                            (Mathlib.Meta.NormNum.IsNat.to_raw_eq
+                                              (Mathlib.Meta.NormNum.IsInt.to_isNat
+                                                (Mathlib.Meta.NormNum.isInt_mul (Eq.refl HMul.hMul)
+                                                  (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                                                  (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                                                  (Eq.refl (Int.ofNat 1)))))))
+                                        (Mathlib.Tactic.Ring.neg_add
+                                          (Mathlib.Tactic.Ring.neg_mul (psi 0 (y 0)) (Nat.rawCast 1)
+                                            (Mathlib.Tactic.Ring.neg_one_mul
+                                              (Mathlib.Meta.NormNum.IsInt.to_raw_eq
+                                                (Mathlib.Meta.NormNum.isInt_mul (Eq.refl HMul.hMul)
+                                                  (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                                                  (Mathlib.Meta.NormNum.IsNat.to_isInt
+                                                    (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))
+                                                  (Eq.refl (Int.negOfNat 1))))))
+                                          (Mathlib.Tactic.Ring.neg_add
+                                            (Mathlib.Tactic.Ring.neg_mul
+                                              (∑ t ∈ Finset.range n, (G t (y t) - G t (y (t + 1)))) (Nat.rawCast 1)
+                                              (Mathlib.Tactic.Ring.neg_one_mul
+                                                (Mathlib.Meta.NormNum.IsNat.to_raw_eq
+                                                  (Mathlib.Meta.NormNum.IsInt.to_isNat
+                                                    (Mathlib.Meta.NormNum.isInt_mul (Eq.refl HMul.hMul)
+                                                      (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                                                      (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                                                      (Eq.refl (Int.ofNat 1)))))))
+                                            (Mathlib.Tactic.Ring.neg_add
+                                              (Mathlib.Tactic.Ring.neg_mul (psi n (y n)) (Nat.rawCast 1)
+                                                (Mathlib.Tactic.Ring.neg_one_mul
+                                                  (Mathlib.Meta.NormNum.IsNat.to_raw_eq
+                                                    (Mathlib.Meta.NormNum.IsInt.to_isNat
+                                                      (Mathlib.Meta.NormNum.isInt_mul (Eq.refl HMul.hMul)
+                                                        (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                                                        (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                                                        (Eq.refl (Int.ofNat 1)))))))
+                                              (Mathlib.Tactic.Ring.neg_add
+                                                (Mathlib.Tactic.Ring.neg_mul (∑ i ∈ Finset.range (n + 1), loss i (y n))
+                                                  (Nat.rawCast 1)
+                                                  (Mathlib.Tactic.Ring.neg_one_mul
+                                                    (Mathlib.Meta.NormNum.IsNat.to_raw_eq
+                                                      (Mathlib.Meta.NormNum.IsInt.to_isNat
+                                                        (Mathlib.Meta.NormNum.isInt_mul (Eq.refl HMul.hMul)
+                                                          (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                                                          (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                                                          (Eq.refl (Int.ofNat 1)))))))
+                                                (Mathlib.Tactic.Ring.neg_add
+                                                  (Mathlib.Tactic.Ring.neg_mul
+                                                    (∑ t ∈ Finset.range n,
+                                                      (psi t (y (t + 1)) - psi (t + 1) (y (t + 1))))
+                                                    (Nat.rawCast 1)
+                                                    (Mathlib.Tactic.Ring.neg_one_mul
+                                                      (Mathlib.Meta.NormNum.IsNat.to_raw_eq
+                                                        (Mathlib.Meta.NormNum.IsInt.to_isNat
+                                                          (Mathlib.Meta.NormNum.isInt_mul (Eq.refl HMul.hMul)
+                                                            (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                                                            (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                                                            (Eq.refl (Int.ofNat 1)))))))
+                                                  (Mathlib.Tactic.Ring.neg_add
+                                                    (Mathlib.Tactic.Ring.neg_mul (∑ i ∈ Finset.range (n + 1), loss i u)
+                                                      (Nat.rawCast 1)
+                                                      (Mathlib.Tactic.Ring.neg_one_mul
+                                                        (Mathlib.Meta.NormNum.IsInt.to_raw_eq
+                                                          (Mathlib.Meta.NormNum.isInt_mul (Eq.refl HMul.hMul)
+                                                            (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                                                            (Mathlib.Meta.NormNum.IsNat.to_isInt
+                                                              (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))
+                                                            (Eq.refl (Int.negOfNat 1))))))
+                                                    Mathlib.Tactic.Ring.neg_zero))))))))))
+                                (Mathlib.Tactic.Ring.sub_congr
+                                  (Mathlib.Tactic.Ring.add_congr
+                                    (Mathlib.Tactic.Ring.add_congr
+                                      (Mathlib.Tactic.Ring.atom_pf (∑ t ∈ Finset.range n, (loss t (y t) - loss t u)))
+                                      (Mathlib.Tactic.Ring.sub_congr (Mathlib.Tactic.Ring.atom_pf (loss n (y n)))
+                                        (Mathlib.Tactic.Ring.atom_pf (loss n u))
+                                        (Mathlib.Tactic.Ring.sub_pf
+                                          (Mathlib.Tactic.Ring.neg_add (Mathlib.Tactic.Ring.neg_mul (loss n u) ⋯ ⋯) ⋯)
+                                          ⋯))
+                                      ⋯)
+                                    ⋯ ⋯)
+                                  ⋯ ⋯)
+                                ⋯)
+                              ⋯))
+                          ⋯))
+                    ⋯)))))
+        ⋯;
+    ⋯)
+'BanditRL.OnlineCumulativePotential.finite_regret_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
