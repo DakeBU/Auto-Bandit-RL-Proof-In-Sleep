@@ -1,0 +1,98 @@
+{
+  "status": "focused compiled candidate, independent BODY and combined gates pending",
+  "source_sha256": "e8defe495324af6b1f82500c8c1f2138feacf025ebcfeef245c96edb37f23662",
+  "production_source_sha256": "313c8522a40599846d79df32d2a8a42014a3338f814286df7ffe9603554d6b50",
+  "public_canaries": 2,
+  "exact_context_abbreviations": 4,
+  "extra_public_helpers": 0,
+  "compiler_attempts": [
+    {
+      "name": "canary-focused-v1.json",
+      "actual_exit": 0
+    },
+    {
+      "name": "canary-public-probe-v1.json",
+      "actual_exit": 0
+    },
+    {
+      "name": "canary-type-value-export-v1.json",
+      "actual_exit": 0
+    }
+  ],
+  "compiler_failures": 0,
+  "exact_headers_context_fences_safe_verify": true,
+  "axioms": [
+    {
+      "declaration": "UnboundedOGDProbe.scalar_actual_two_rounds",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "UnboundedOGDProbe.finiteDim_terminal_lower_bound",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    }
+  ],
+  "whole_VALUE_occurrences": {
+    "UnboundedOGDProbe.scalar_actual_two_rounds": [
+      "BanditRL.OnlineGradientDescentSource.gradient_linear",
+      "BanditRL.OnlineHuber.project_fullSpace",
+      "BanditRL.OnlineUnboundedOSD.switching_loss_regular",
+      "ContinuousLinearMap.differentiable",
+      "BanditRL.OnlineUnboundedOSD.phi_range"
+    ],
+    "UnboundedOGDProbe.finiteDim_terminal_lower_bound": [
+      "BanditRL.OnlineUnboundedOGD.regret_lower_bound",
+      "BanditRL.OnlineUnboundedOSDCanary.finiteDim_source_lower_bound"
+    ]
+  },
+  "occurrence_boundary": "Two complete compiled canary declaration TYPE/VALUE constant sets. Occurrence is not necessity, a complete transitive dependency graph, source acceptance or library utility. Imported-module membership is not a theorem implication.",
+  "case1": "Actual scalar OGD gradient/global differentiability/regularity and three states; pre-update regret1; positive distinct steps; strict T2 below threshold. No recurrence premise.",
+  "case2": "Prior OSD canary phi/threshold projections, exact power512 and new OGD terminal theorem with same existential witness for all regularity and three bounds. No OSD/OGD regret conflation or duplicated lower-bound analysis.",
+  "receipts_and_compiler_sources": [
+    {
+      "path": "runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1.json",
+      "sha256": "2f701a8e926d8ed45d447b7244c1020b0a9216de8cbfc2863cb04610b09c2e2d"
+    },
+    {
+      "path": "runs/online-ch2-unbounded-ogd-20261011/canary-header-fences-safe-verify-v1.json",
+      "sha256": "a5c738129c2220c81e7ee75afdd4fba9690af5a0dde1397e6fd7c73a4e2b448e"
+    },
+    {
+      "path": "runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1.json",
+      "sha256": "a2d906f90873a5bd7fccee1fd392a06d1e8a3c4d5161d6cfc4435e656797e6a6"
+    },
+    {
+      "path": "runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1.json",
+      "sha256": "124dc17efdfda0442f7cd56176efb2c5bf535132aeb2e2a206d1b38fae072964"
+    },
+    {
+      "path": "runs/online-ch2-unbounded-ogd-20261011/canary-type-value-constants-v1.json",
+      "sha256": "ef058b1e2ff22caa2bf42af2df9af56c6d5ddf476a0ebba793a3a3dd5f7d6d73"
+    },
+    {
+      "path": "runs/online-ch2-unbounded-ogd-20261011/CanaryPublicProbeV1.lean",
+      "sha256": "e4cf2648b660788d2de95b0c33d248e09963d3a27ae22dba436ede3c08c7fcbe"
+    },
+    {
+      "path": "runs/online-ch2-unbounded-ogd-20261011/ExportCanaryValuesV1.lean",
+      "sha256": "868c3cf61a103f5f2a9c75b7de514b9870b36dff52e9f5b7a9231f19cc5f042b"
+    },
+    {
+      "path": "runs/online-ch2-unbounded-ogd-20261011/capture-canary-compiler-v1.py",
+      "sha256": "28de27ecb0c24cf0d0602dd67bde32274f5afeb08f35b77f882baa2ccbb30c13"
+    }
+  ],
+  "source_snapshots": "Every compiler attempt records exact source snapshots, unchanged pre/post hashes, UTC argv/actual exit and full stdout/stderr. Probe/export source files create-only and hashed.",
+  "summary_tooling_note": "Initial summary read omitted encoding on machine JSON and raised GBK UnicodeDecodeError before writing summary. Re-read explicitly UTF8; no compiler failure, no input mutation.",
+  "root_Tests_harness_site_native_acceptance": false,
+  "source_obligations_closed": 0,
+  "B1_B7": "unchanged",
+  "Goal": "ACTIVE"
+}

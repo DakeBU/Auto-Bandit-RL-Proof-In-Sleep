@@ -1,0 +1,24 @@
+{
+  "kind": "noncompiler summary tooling read failure, not failed proof",
+  "original_tool_reference": {
+    "tool": "functions.exec / tools.exec_command",
+    "chunk_id": "fede3b",
+    "known_actual_exit_code": 1,
+    "shell_invocation": "PowerShell here-string piped to python -B -",
+    "cwd": "E:/ABRL/worktrees/research-online-book"
+  },
+  "original_displayed_exception_exact": "Traceback (most recent call last):\n  File \"<stdin>\", line 6, in <module>\n  File \"C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python38\\lib\\pathlib.py\", line 1237, in read_text\n    return f.read()\nUnicodeDecodeError: 'gbk' codec can't decode byte 0x80 in position 13341: illegal multibyte sequence\n",
+  "failed_expression": "json.loads((d/'canary-type-value-constants-v1.json').read_text())",
+  "source_of_exception": "Exact model-visible tool response in this turn, not a separately captured original raw stdout/stderr file.",
+  "full_original_raw_stream_available": false,
+  "full_original_raw_sha256": null,
+  "original_full_argv_receipt_available": false,
+  "byte_fidelity_boundary": "Displayed traceback copied verbatim as text; original subprocess stream bytes and shell process argv were not separately retained. No reconstructed full raw output or byte hash is claimed.",
+  "correction": "Re-read JSON with Path.read_text(encoding='utf-8'); complete summary written create-only after successful checks.",
+  "successful_summary": "canary-compiled-candidate-summary-v1.json",
+  "successful_summary_sha256": "d7691e3f00544955ee27fa7f9b3709e3e7b9afb0427eec3edd902c01bc10531e",
+  "compiler_invoked_by_failed_summary": false,
+  "proof_failure": false,
+  "source_modified": false,
+  "recompile_for_correction": false
+}
