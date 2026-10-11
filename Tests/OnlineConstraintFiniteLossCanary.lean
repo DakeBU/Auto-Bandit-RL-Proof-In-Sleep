@@ -1,0 +1,59 @@
+import BanditRLProof
+
+noncomputable section
+open Set BanditRL.OnlineConvex
+
+namespace Tests.OnlineConstraintFiniteLossCanary
+
+theorem nonconstant_finite_inside :
+    (∃ r : ℝ, (2 : EReal) + extendedIndicator (Ici (0 : ℝ)) 2 = (r : EReal)) ∧
+    (∃ r : ℝ, (3 : EReal) + extendedIndicator (Ici (0 : ℝ)) 3 = (r : EReal)) ∧
+    (2 : EReal) ≠ 3 := by
+  refine ⟨(finite_add_indicator_iff (fun x : ℝ => (x : EReal)) _ 2).mpr ?_,
+    (finite_add_indicator_iff (fun x : ℝ => (x : EReal)) _ 3).mpr ?_, ?_⟩
+  · exact ⟨by norm_num, 2, rfl⟩
+  · exact ⟨by norm_num, 3, rfl⟩
+  · norm_num
+
+theorem finite_outside_not_finite :
+    ¬ ∃ r : ℝ, (-1 : EReal) + extendedIndicator (Ici (0 : ℝ)) (-1) = (r : EReal) := by
+  intro hr
+  have hx := ((finite_add_indicator_iff (fun _ : ℝ => (-1 : EReal)) _ (-1)).mp hr).1
+  norm_num at hx
+
+theorem top_inside_not_finite :
+    ¬ ∃ r : ℝ, (⊤ : EReal) + extendedIndicator (Ici (0 : ℝ)) 2 = (r : EReal) := by
+  rw [finite_add_indicator_iff (fun _ : ℝ => (⊤ : EReal))]
+  simp
+
+theorem bottom_anywhere_not_finite (V : Set ℝ) (x : ℝ) :
+    ¬ ∃ r : ℝ, (⊥ : EReal) + extendedIndicator V x = (r : EReal) := by
+  rw [finite_add_indicator_iff (fun _ : ℝ => (⊥ : EReal))]
+  simp
+
+theorem empty_set_no_finite_loss (f : ℝ → EReal) (x : ℝ) :
+    ¬ ∃ r : ℝ, f x + extendedIndicator ∅ x = (r : EReal) := by
+  rw [finite_add_indicator_iff]
+  simp
+
+theorem real_domain_intersection :
+    effectiveDomain (fun x : ℝ => (x : EReal) + extendedIndicator (Ici 0) x) = Ici 0 := by
+  rw [effectiveDomain_add_indicator (fun x : ℝ => (x : EReal)) EReal.coe_ne_bot]
+  ext x
+  simp [effectiveDomain]
+
+theorem bottom_outside_domain_leak :
+    (0 : ℝ) ∈ effectiveDomain (fun _ : ℝ => (⊥ : EReal) + extendedIndicator ∅ 0) ∧
+    (0 : ℝ) ∉ effectiveDomain (fun _ : ℝ => (⊥ : EReal)) ∩ (∅ : Set ℝ) := by
+  simp [effectiveDomain, extendedIndicator]
+
+theorem domain_identity_without_noBottom_false :
+    effectiveDomain (fun x : ℝ => (⊥ : EReal) + extendedIndicator ∅ x) ≠
+      effectiveDomain (fun _ : ℝ => (⊥ : EReal)) ∩ (∅ : Set ℝ) := by
+  intro h
+  have hx : (0 : ℝ) ∈ effectiveDomain (fun x : ℝ => (⊥ : EReal) + extendedIndicator ∅ x) := by
+    simp [effectiveDomain, extendedIndicator]
+  rw [h] at hx
+  simp at hx
+
+end Tests.OnlineConstraintFiniteLossCanary
