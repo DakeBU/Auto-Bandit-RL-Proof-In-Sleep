@@ -1,0 +1,836 @@
+{
+  "status": "SOURCE-ONLY TOPOLOGY v2 PROPOSAL; T1-T4 repaired for distinct review, not self-accepted/frozen/proved",
+  "input_raw_sha256": {
+    "tmp/online-ch2-b4-finite-identity-proposal-20261011/header-proposal-v1.json": "7a5848efbf57ba9c76c987baae75856331100325fc4c9130ead409b5ba3815fb",
+    "tmp/online-ch2-b4-finite-identity-proposal-20261011/neutral-proposed-header-v1.txt": "92e0dcfac53595e35b68bfd8083c09640d06da809355ab02ec4eb4b007b0bd67",
+    "runs/online-ch2-prescient-euclidean-20261011/next-b4-readiness/v1.json": "4f9487f88840360b476bce2b7cff01748d414ba712e13baa9b785412effd1fcf",
+    "docs/contracts/online-ch2-complete-target-freeze-v1/effective-targets-frozen-v3.2.json": "61cf1901a632aeee35ee71511ba53b115ae0958649ea78b786536a4404684ba1",
+    "BanditRLProof/OnlineWeightedPotential.lean": "63d94480e5e5a337acf5019c62e092fd36b1d2bf1a6edfc6f5b6bc5b95aa885a",
+    "BanditRLProof/TsallisFTRLRegret.lean": "9a30a84e6dc0a20870aceb49826962c4ea783c09cf5262030a3d90f71966802f",
+    ".lake/packages/mathlib/Mathlib/Algebra/BigOperators/Module.lean": "7915167fbdf0a0a3fc1ebb3e12f1b349ce37c41d5626d3702c4b302f9f6fbc61"
+  },
+  "source_pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+  "nodes": [
+    {
+      "id": "SRC-ALG7.8",
+      "kind": "SOURCE_ALGORITHM",
+      "claim": "Real rounds choose a minimizer of psi_t+hint_t+past losses, then receive/pay current loss at x_t.",
+      "pdf_pages": [
+        141
+      ],
+      "scope": "retained context",
+      "hypothesis_ids": [],
+      "claim_sha256": "52dcccc993c77a4cb8937d35b40cc6c21ac9aa357cbfa1eaf99b7a1cd7c536ab"
+    },
+    {
+      "id": "SRC-7.47-SHARP",
+      "kind": "SOURCE_BOUND",
+      "claim": "Printed sharp bound sums negative movement through terminal T with interior regularizer drift.",
+      "pdf_pages": [
+        141,
+        142
+      ],
+      "scope": "Literal printed sharp-bound claim retained; source cancellation/sharp completion refuted in specified convention; not a corrected endpoint",
+      "hypothesis_ids": [],
+      "claim_sha256": "006485971446901825f2610b127f78c8dcee17dd949c7578f2538fdda151f822",
+      "repair_reason": "T2 preserves literal claim but separates corrected target ownership."
+    },
+    {
+      "id": "SRC-TERMINAL-REPEAT",
+      "kind": "SOURCE_PROOF_STEP",
+      "claim": "The proof chooses virtual source hint_(T+1)=hint_T and psi_(T+1)=psi_T. This choice leaves all T scored rounds unchanged; repetition alone is legitimate and is not classified SOURCE_INVALID.",
+      "pdf_pages": [
+        142
+      ],
+      "scope": "Retained legitimate virtual choice; invalid cancellation separated in SRC-INVALID-CANCELLATION",
+      "hypothesis_ids": [],
+      "claim_sha256": "4dff1ce8aadefd74c8051a2b540c3128ee8ff1a7376a93def4ee279438c39918",
+      "repair_reason": "T4 separates a legal virtual choice from its unsupported claimed consequence."
+    },
+    {
+      "id": "SRC-STABILITY",
+      "kind": "SOURCE_PROOF_STEP",
+      "claim": "Strong-convex lower bound and same permitted subgradient insertion yield one-step linear-minus-quadratic stability.",
+      "pdf_pages": [
+        142
+      ],
+      "scope": "OPEN analytic dependency",
+      "hypothesis_ids": [],
+      "claim_sha256": "be1fdf64b67c448361066f9b897014e27a6c7e3460609866f02f7497d00864f9"
+    },
+    {
+      "id": "SRC-YOUNG",
+      "kind": "SOURCE_PROOF_STEP",
+      "claim": "Dual norm and quadratic completion yield squared dual norm divided by 2lambda.",
+      "pdf_pages": [
+        142
+      ],
+      "scope": "OPEN analytic dependency",
+      "hypothesis_ids": [],
+      "claim_sha256": "d75b1ae2109fe995c30ee906820f22786858e44bae495d3dec2b5c652bc5b919"
+    },
+    {
+      "id": "SRC-ALG15.9",
+      "kind": "SOURCE_ALGORITHM",
+      "claim": "BTRL sees current loss, chooses a minimizer of inclusive cumulative G_t, and scores x_t; no terminal ghost is specified.",
+      "pdf_pages": [
+        278
+      ],
+      "scope": "retained context",
+      "hypothesis_ids": [],
+      "claim_sha256": "95cecf751c4cbbd2b43d30b6402c155e0b5d27029ac5c27e15afc28918c5ded9"
+    },
+    {
+      "id": "SRC-15.31",
+      "kind": "SOURCE_BOUND",
+      "claim": "Printed BTRL negative movement sum goes through T; terminal requires labeled correction.",
+      "pdf_pages": [
+        278,
+        279
+      ],
+      "scope": "Literal printed bound retained with unspecified extra terminal state; not a corrected endpoint",
+      "hypothesis_ids": [],
+      "claim_sha256": "1ac272f16ff8ddf935333989d069ca2f92f0b68259f5168ee9f71cf7100c52d7",
+      "repair_reason": "T2 preserves literal claim but separates corrected target ownership."
+    },
+    {
+      "id": "REPAIR-FINITE-VALUES",
+      "kind": "CORRECTION_INTERFACE",
+      "claim": "All displayed arithmetic is finite real-valued; extended source adapter is separate.",
+      "pdf_pages": [
+        142,
+        278,
+        279
+      ],
+      "scope": "leaf",
+      "hypothesis_ids": [
+        "H-REAL"
+      ],
+      "claim_sha256": "7d73a964f6f91f6cc47359acd2ac24c7ff25be23184cf7f1e2b392f2b253d6c5"
+    },
+    {
+      "id": "LEAF-SPLICE",
+      "kind": "CORRECTION_INTERFACE",
+      "claim": "T>0 and y(t)=if t=T then z else x(t) preserve every played t<T while setting y(T)=z.",
+      "pdf_pages": [
+        142
+      ],
+      "scope": "leaf",
+      "hypothesis_ids": [
+        "H-POSITIVE-T"
+      ],
+      "claim_sha256": "333ab7e9362bb85d19531f3e4465c37794e67b861838663b8cfe0d6d81218cfa"
+    },
+    {
+      "id": "LEAF-CUMULATIVE",
+      "kind": "CORRECTION_DEFINITION",
+      "claim": "G_t(v)=psi_t(v)+sum_{i=0}^t loss_i(v); successor difference separates current loss and regularizer drift.",
+      "pdf_pages": [
+        142
+      ],
+      "scope": "leaf",
+      "hypothesis_ids": [
+        "H-REAL"
+      ],
+      "claim_sha256": "699c863fa19b268df8e4f1469375368943b3f99be1d5c42ccef491b25f696aee"
+    },
+    {
+      "id": "LEAF-INTERNAL-CANCELLATION",
+      "kind": "CORRECTION_ALGEBRA",
+      "claim": "Adjacent cumulative terms cancel only after retaining regularizer drift at next state for t=0..T-2.",
+      "pdf_pages": [
+        142
+      ],
+      "scope": "leaf",
+      "hypothesis_ids": [
+        "H-POSITIVE-T",
+        "H-REAL"
+      ],
+      "claim_sha256": "98cfb4e2c3f227df16405094ce1127330be8960678f51bcba1200705d9ed0262"
+    },
+    {
+      "id": "LEAF-TERMINAL-GAP",
+      "kind": "CORRECTION_ALGEBRA",
+      "claim": "Retain +G_(T-1)(z)-G_(T-1)(u), with no sign assumption.",
+      "pdf_pages": [
+        142
+      ],
+      "scope": "leaf",
+      "hypothesis_ids": [
+        "H-REAL"
+      ],
+      "claim_sha256": "fa27c52863ad84a18f3481a9d0a1331c27ea290972ae4f1ac7439abd21bc62c1"
+    },
+    {
+      "id": "LEAF-IDENTITY",
+      "kind": "CORRECTED_LEAF_TARGET",
+      "claim": "Exact zero-index finite regret equality of the unchanged proposed header, including all endpoints and interior drift.",
+      "pdf_pages": [
+        142,
+        278,
+        279
+      ],
+      "scope": "leaf",
+      "hypothesis_ids": [
+        "H-POSITIVE-T",
+        "H-REAL"
+      ],
+      "claim_sha256": "d0a1c41b886919cea97a2a1230f78b40373dedeaafbe238d17b50b1765df6622",
+      "repair_reason": "Editorial: proposed HEADER is not frozen; no mathematical change."
+    },
+    {
+      "id": "OPEN-EREAL",
+      "kind": "REMAINING_DEPENDENCY",
+      "claim": "Produce explicit finite evaluations/support domains and justify every subtraction/toReal transport.",
+      "pdf_pages": [
+        141,
+        142,
+        278
+      ],
+      "scope": "OPEN",
+      "hypothesis_ids": [],
+      "claim_sha256": "fdac8c2cf5119c991259b46a67d1a056c3e6865a39e9c8fc2b376127e4551cc8"
+    },
+    {
+      "id": "OPEN-GHOST",
+      "kind": "REMAINING_DEPENDENCY",
+      "claim": "Preserve source rounds s=1..T. With ghost psi_source(T+1)=psi_source(T) and hint_source(T+1)=0, produce a feasible finite attained minimizer z of source G_T=psi_source(T)+sum_{s=1}^T loss_source(s). This equals leaf G(T-1); splice y(T)=z. Only proved minimality plus finite comparator permits leaf G(T-1,z)-G(T-1,u)<=0; arbitrary z has no sign condition.",
+      "pdf_pages": [
+        142
+      ],
+      "scope": "OPEN",
+      "hypothesis_ids": [],
+      "claim_sha256": "ed675bd6bf07ea738085d0c76a56a02980d8cecb0acda2a20b84586cda0e3dd8",
+      "repair_reason": "T3 makes source versus leaf time explicit and preserves attainment/finiteness debt."
+    },
+    {
+      "id": "OPEN-SUPPORT",
+      "kind": "REMAINING_DEPENDENCY",
+      "claim": "Qualify constrained support/sum-rule and strong-convexity hypotheses; source references Lemma4.2, Theorem2.23 and Theorem6.9, not verified by this algebra leaf.",
+      "pdf_pages": [
+        142
+      ],
+      "scope": "OPEN",
+      "hypothesis_ids": [],
+      "claim_sha256": "66758837751beb3fd712fba80330b5aa614e1f7da3d3bfef89c5b276a9c53f2e"
+    },
+    {
+      "id": "OPEN-BTRL",
+      "kind": "REMAINING_DEPENDENCY",
+      "claim": "Bind source actual BTRL minima x_source(s), s=1..T. Choose source ghost x_source(T+1)=x_source(T), corresponding to leaf z=x(T-1), y(T)=z; original leaf x(T) is unused. Corrected movement sum s=1..T-1 maps to leaf t=0..T-2. Optional source -lambda_T*norm(u-x_source(T))^2/2 sharpening remains separate.",
+      "pdf_pages": [
+        278,
+        279
+      ],
+      "scope": "OPEN",
+      "hypothesis_ids": [],
+      "claim_sha256": "0f6a8c2b908fb388bab7ec17d668ba24045fe71a1136a812c5361dfb1e86f8fd",
+      "repair_reason": "T3 fixes last played state and distinguishes unused leaf x(T)."
+    },
+    {
+      "id": "SRC-PREDICTION-MOTIVATION",
+      "kind": "SOURCE_CONTEXT",
+      "claim": "PDF141 allows arbitrary generation of predicted losses with no predictive accuracy assumption; perfect hints motivate improved regret, while wrong hints should retain worst-case behavior. This is context, not a new premise or a proved standalone bound.",
+      "pdf_pages": [
+        141
+      ],
+      "printed_pages": [
+        129
+      ],
+      "scope": "EXCLUDED_FROM_FINITE_LEAF; retained owning-source context",
+      "source_locator": "Paragraphs immediately below Algorithm7.8 through Theorem7.47 introduction",
+      "hypothesis_ids": [],
+      "claim_sha256": "c43b790c456a496ae1c3432038329cebb9452aed8fede006378ebeef33e52876",
+      "verification": "Unproved source/context/correction obligation, not a Lean VALUE dependency"
+    },
+    {
+      "id": "SRC-FTRL-REINTERPRET",
+      "kind": "SOURCE_PROOF_STEP",
+      "claim": "Optimistic FTRL is reinterpreted as FTRL with regularizer psi_source(s)+hint_source(s); this is the source proof setup, not permission to alter the T real rounds.",
+      "pdf_pages": [
+        142
+      ],
+      "printed_pages": [
+        130
+      ],
+      "scope": "Retained source derivation context; no actual interface equivalence proved here",
+      "source_locator": "First proof paragraph",
+      "hypothesis_ids": [],
+      "claim_sha256": "17b367bb22bc8f87db0119ddc77000a64d29ba8974abc464198d4a48a84ac7c1",
+      "verification": "Unproved source/context/correction obligation, not a Lean VALUE dependency"
+    },
+    {
+      "id": "SRC-EXISTENCE-UNIQUENESS",
+      "kind": "SOURCE_CLAIM",
+      "claim": "Under printed closed/subdifferentiable/strongly-convex F_source(s)+hint_source(s) assumptions, Theorem7.47 asserts each real-round x_source(s) exists and is unique; proof invokes Lemma7.5 and Theorem6.9. Properness/restriction and attainment qualifications remain OPEN; citation is not a proof in this leaf.",
+      "pdf_pages": [
+        141,
+        142
+      ],
+      "printed_pages": [
+        129,
+        130
+      ],
+      "scope": "OPEN analytic/producer claim; not a finite-identity premise",
+      "source_locator": "Theorem7.47 opening on PDF141 and first proof paragraph PDF142",
+      "hypothesis_ids": [],
+      "claim_sha256": "96f6cd9fbf2a36d88592dcd6f3daf00edc382b2c0e0247422f365a93c825e21b",
+      "verification": "Unproved source/context/correction obligation, not a Lean VALUE dependency"
+    },
+    {
+      "id": "SRC-LEMMA7.1-GAP",
+      "kind": "SOURCE_PROOF_STEP",
+      "claim": "Proof applies Lemma7.1 with repeated regularizer and discards its nonpositive comparator gap for the hinted terminal objective. Such hinted gap does not automatically give a nonpositive unhinted G_source(T) gap.",
+      "pdf_pages": [
+        142
+      ],
+      "printed_pages": [
+        130
+      ],
+      "scope": "OPEN source application qualification; retain exact objective distinction",
+      "source_locator": "Proof paragraph preceding first displayed regret comparison",
+      "hypothesis_ids": [],
+      "claim_sha256": "df6bb3a9685c0c6840cca828c0116d3cca76887a0695ec3c6216d0897d23abc6",
+      "verification": "Unproved source/context/correction obligation, not a Lean VALUE dependency"
+    },
+    {
+      "id": "SRC-INITIAL-MINIMUM",
+      "kind": "SOURCE_PROOF_STEP",
+      "claim": "At real initial minimizer x_source(1), min_V(psi_source(1)+hint_source(1)) equals its value. Source then claims hint telescoping cancels all displayed hint terms; that second claim needs the terminal residue tracked separately.",
+      "pdf_pages": [
+        142
+      ],
+      "printed_pages": [
+        130
+      ],
+      "scope": "Initial minimizer substitution conditional; cancellation assessed separately",
+      "source_locator": "First displayed comparison and explanatory paragraph below it",
+      "hypothesis_ids": [],
+      "claim_sha256": "0a97598f396080fad7ae6c4d0906ca4256352841495c9465d724e6eb42c49fce",
+      "verification": "Unproved source/context/correction obligation, not a Lean VALUE dependency"
+    },
+    {
+      "id": "SRC-INVALID-CANCELLATION",
+      "kind": "SOURCE_INVALID_STEP",
+      "claim": "The claimed hint cancellation omits hint_source(T+1)(u)-hint_source(T+1)(z), equal to hint_source(T)(u)-hint_source(T)(z) under repetition. The T1 quadratic witness refutes the associated repeated-hint sharp completion (0<=-1/36). Repetition itself, all repaired endpoints and all Young alternatives are not refuted.",
+      "pdf_pages": [
+        142
+      ],
+      "printed_pages": [
+        130
+      ],
+      "scope": "SOURCE_INVALID limited cancellation/sharp completion; no blanket source invalidity",
+      "source_locator": "Equality removing hints in proof and retained rational witness",
+      "hypothesis_ids": [],
+      "claim_sha256": "13598e5fcd86a9525aaba786da2dc37f138894e2dad31a016f46c1348c07c832",
+      "verification": "Unproved source/context/correction obligation, not a Lean VALUE dependency"
+    },
+    {
+      "id": "SRC-BTRL-PERFECT-HINT",
+      "kind": "SOURCE_SPECIALIZATION",
+      "claim": "PDF278 identifies BTRL as optimistic FTRL with hint_source(s)=loss_source(s) on played rounds, since current loss is observed before output. This matches the real-round minimization but does not fix the unplayed terminal hint/state or validate the transported sharp bound.",
+      "pdf_pages": [
+        278
+      ],
+      "printed_pages": [
+        266
+      ],
+      "scope": "Retained substantive real-round specialization; analytic endpoint OPEN",
+      "source_locator": "Paragraph immediately preceding Theorem15.31",
+      "hypothesis_ids": [],
+      "claim_sha256": "10256ad2debd6223a47d6ddb6c6f5f2dedf686a21ce9c3baf42d76486e2d905a",
+      "verification": "Unproved source/context/correction obligation, not a Lean VALUE dependency"
+    },
+    {
+      "id": "SRC-ZERO-REG-BTL",
+      "kind": "SOURCE_SPECIALIZATION",
+      "claim": "When every regularizer is zero, the BTRL update becomes Be-The-Leader; Remark15.32 states nonpositive regret. This substantive specialization is retained but excluded from finite-identity proof scope; its bound is not certified here.",
+      "pdf_pages": [
+        278,
+        279
+      ],
+      "printed_pages": [
+        266,
+        267
+      ],
+      "scope": "EXCLUDED_FROM_FINITE_LEAF; owning target retained",
+      "source_locator": "Zero-regularizer paragraph and Remark15.32",
+      "hypothesis_ids": [],
+      "claim_sha256": "92a8adefeac9f59da061e85481a73c6fba9f04293d589f83949226de17d4fdc1",
+      "verification": "Unproved source/context/correction obligation, not a Lean VALUE dependency"
+    },
+    {
+      "id": "SRC-GRADIENT-ABSENCE",
+      "kind": "SOURCE_INTERPRETATION",
+      "claim": "BTRL displayed bound has no nonnegative gradient terms and retains negative movement terms. This describes the printed formula; it does not settle the unspecified terminal or imply all regularized total regret is nonpositive.",
+      "pdf_pages": [
+        279
+      ],
+      "printed_pages": [
+        267
+      ],
+      "scope": "Retained mathematical interpretation; corrected endpoint still OPEN",
+      "source_locator": "Paragraph after Remark15.32",
+      "hypothesis_ids": [],
+      "claim_sha256": "7fa10a5e75a440c458fcb58038743d03dd887f1cb6c95aea1d3316a0888df933",
+      "verification": "Unproved source/context/correction obligation, not a Lean VALUE dependency"
+    },
+    {
+      "id": "CORRECTED-7.47-SHARP",
+      "kind": "CORRECTED_ENDPOINT",
+      "claim": "Under unchanged real-round Algorithm7.8 plus all qualified support/finiteness/strong-convexity premises and an attained zero-hint ghost z minimizing source G_T=leaf G(T-1), target R_T(u)<=psi_T(u)-psi_1(x_1)+sum_{s=1}^T[<ghat_s,x_s-x_(s+1)>-lambda_s*norm(x_s-x_(s+1))^2/2]+sum_{s<T}[psi_s(x_(s+1))-psi_(s+1)(x_(s+1))]. Source one-based notation throughout; x_(T+1)=z.",
+      "pdf_pages": [
+        141,
+        142
+      ],
+      "printed_pages": [
+        129,
+        130
+      ],
+      "scope": "OPEN mandatory labeled correction; not literal source theorem acceptance",
+      "source_locator": "Frozen repair:7.47-terminal corrected sharp endpoint",
+      "hypothesis_ids": [],
+      "claim_sha256": "ee62559ae7ce3c9d4afda7d772db59bee6e1d02e07ecf60f8ec8a51eb835bc6a",
+      "verification": "Unproved source/context/correction obligation, not a Lean VALUE dependency"
+    },
+    {
+      "id": "CORRECTED-7.47-YOUNG",
+      "kind": "CORRECTED_ENDPOINT",
+      "claim": "From CORRECTED-7.47-SHARP and qualified dual-norm/Young estimate, replace each source stability bracket by norm(ghat_s)_dual^2/(2lambda_s), retaining identical boundary/drift terms and source s=1..T.",
+      "pdf_pages": [
+        142
+      ],
+      "printed_pages": [
+        130
+      ],
+      "scope": "OPEN mandatory corrected Young endpoint",
+      "source_locator": "Frozen repair:7.47-terminal Young clause",
+      "hypothesis_ids": [],
+      "claim_sha256": "4857eff47b51fcacde053ea95c88321477a9c349c2a8d37603841d2974bf29a9",
+      "verification": "Unproved source/context/correction obligation, not a Lean VALUE dependency"
+    },
+    {
+      "id": "CORRECTED-15.31",
+      "kind": "CORRECTED_ENDPOINT",
+      "claim": "For actual source BTRL minimizers, qualified proper/closed positive-lambda strongly-convex source G_s and finite feasible evaluations, choose x_source(T+1)=x_source(T) (leaf z=x(T-1)). Target R_T(u)<=psi_T(u)-psi_1(x_1)-sum_{s=1}^{T-1}lambda_s*norm(x_s-x_(s+1))^2/2+sum_{s=1}^{T-1}[psi_s(x_(s+1))-psi_(s+1)(x_(s+1))]. Optional stronger terminal comparator-distance term remains separate.",
+      "pdf_pages": [
+        278,
+        279
+      ],
+      "printed_pages": [
+        266,
+        267
+      ],
+      "scope": "OPEN mandatory labeled correction; not literal source theorem acceptance",
+      "source_locator": "Frozen repair:15.31-terminal",
+      "hypothesis_ids": [],
+      "claim_sha256": "8162f8925eb3d4d0739d7c509e54d1fa7f452ff0959c1085d37e88de64d50e48",
+      "verification": "Unproved source/context/correction obligation, not a Lean VALUE dependency"
+    }
+  ],
+  "edges": [
+    {
+      "inputs": [
+        "REPAIR-FINITE-VALUES",
+        "LEAF-SPLICE",
+        "LEAF-CUMULATIVE",
+        "LEAF-INTERNAL-CANCELLATION",
+        "LEAF-TERMINAL-GAP"
+      ],
+      "output": "LEAF-IDENTITY",
+      "semantics": "AND corrected algebra decomposition; proposal, not observed implementation",
+      "id": "C1",
+      "edge_kind": "proposed_corrected_AND_obligation",
+      "verified": false,
+      "remaining_status": "OPEN; no BODY/actual proof route read"
+    },
+    {
+      "inputs": [
+        "LEAF-IDENTITY",
+        "SRC-ALG7.8",
+        "OPEN-EREAL",
+        "OPEN-GHOST",
+        "OPEN-SUPPORT",
+        "SRC-STABILITY",
+        "SRC-EXISTENCE-UNIQUENESS"
+      ],
+      "output": "CORRECTED-7.47-SHARP",
+      "semantics": "AND for labeled corrected endpoint ONLY, never restores literal repeated-hint claim",
+      "id": "C2",
+      "edge_kind": "proposed_corrected_AND_obligation",
+      "verified": false,
+      "remaining_status": "OPEN; no BODY/actual proof route read"
+    },
+    {
+      "inputs": [
+        "CORRECTED-7.47-SHARP",
+        "SRC-YOUNG"
+      ],
+      "output": "CORRECTED-7.47-YOUNG",
+      "semantics": "AND; remaining target",
+      "id": "C3",
+      "edge_kind": "proposed_corrected_AND_obligation",
+      "verified": false,
+      "remaining_status": "OPEN; no BODY/actual proof route read"
+    },
+    {
+      "inputs": [
+        "LEAF-IDENTITY",
+        "SRC-ALG15.9",
+        "OPEN-EREAL",
+        "OPEN-SUPPORT",
+        "OPEN-BTRL"
+      ],
+      "output": "CORRECTED-15.31",
+      "semantics": "AND for corrected t<T endpoint only",
+      "id": "C4",
+      "edge_kind": "proposed_corrected_AND_obligation",
+      "verified": false,
+      "remaining_status": "OPEN; no BODY/actual proof route read"
+    }
+  ],
+  "excluded": [
+    {
+      "id": "EX-7.44-7.46",
+      "pages": [
+        141
+      ],
+      "reason": "Preceding forecaster bound, optimality and improper-learning remark are not dependencies of this finite algebra leaf; not removed from owning chapter."
+    },
+    {
+      "id": "EX-15.30",
+      "pages": [
+        278
+      ],
+      "reason": "Preceding mirror-descent proof and fixed-case exercise belong to separately handled prescient Euclidean leaf; not a premise of cumulative identity."
+    },
+    {
+      "id": "EX-15.32-GAME",
+      "pages": [
+        279
+      ],
+      "reason": "BTL remark and X/Y game-combination bound remain owning-chapter results; this algebra leaf does not certify them."
+    },
+    {
+      "id": "EX-HISTORY",
+      "pages": [
+        279
+      ],
+      "reason": "History claims outside bounded target; no chapter-wide completion implied."
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "H-REAL",
+      "classification": "STANDING",
+      "meaning": "Real-valued total interface; finite-value specialization, not EReal assumption discharge."
+    },
+    {
+      "id": "H-POSITIVE-T",
+      "classification": "STANDING",
+      "meaning": "T>0 frozen finite endpoint convention."
+    }
+  ],
+  "route_semantics": "Corrected edges are unverified AND obligations with distinct corrected output IDs. Source narrative edges describe printed derivation/specialization including its invalid step, never certify it. No verified OR route or actual Lean VALUE dependency is asserted. Finite algebra leaf may later use induction or telescope; this is not a theorem necessity claim.",
+  "source_hypotheses_not_leaf_edges": [
+    "Convex closed nonempty feasible V",
+    "Proper/closed strong-convex objectives",
+    "Subgradients of loss minus hint",
+    "Positive lambda and dual norm",
+    "Actual minimizers/attainment"
+  ],
+  "open_external_citations_not_recertified": [
+    "Lemma7.1",
+    "Lemma7.5",
+    "Theorem6.9",
+    "Lemma4.2",
+    "Theorem2.23"
+  ],
+  "source_only_no_future_BODY": true,
+  "version": 2,
+  "prior_version": {
+    "path": "tmp/online-ch2-b4-finite-identity-source-review-20261011/topology-proposal-v1.json",
+    "sha256": "1338aa71bb80ab820b89f77d8f3e4e50dd9f9d0cdf05b16471859aaadc83e24f"
+  },
+  "repair_review": {
+    "path": "tmp/online-ch2-b4-finite-identity-topology-review-20261011/fresh-independent-source-topology-review-v1.json",
+    "sha256": "701e22c6dfe28a7e5bfd7f1c83a96dadb0af411867947ff35e3d65f76d242d7b",
+    "verdict": "repair-before-source-topology-acceptance"
+  },
+  "actor": "/root/adaptive_decoder",
+  "requested_model_effort": "GPT-6 Astra / medium; runtime not attested",
+  "index_mapping": {
+    "source_round_s": "s=1..T corresponds leaf t=s-1",
+    "source_regularizer": "psi_source(s)=psi_leaf(s-1)",
+    "source_loss": "loss_source(s)=loss_leaf(s-1)",
+    "source_past_objective": "F_source(s)=psi_source(s)+sum_{i<s}loss_source(i); differs from inclusive G",
+    "source_inclusive_objective": "G_source(s)=psi_source(s)+sum_{i<=s}loss_source(i)=G_leaf(s-1)",
+    "played_state": "x_source(s)=x_leaf(s-1)=y(s-1) for1<=s<=T",
+    "terminal": "source x_source(T+1)=z corresponds y(T)=z, not original arbitrary x_leaf(T)",
+    "last_played_BTRL": "source x_source(T)=leaf x(T-1); BTRL ghost chooses z=x(T-1)",
+    "interior_drift": "source s=1..T-1 corresponds leaf t=0..T-2 and state y(t+1)=x(t+1)",
+    "wrong_extension_warning": "Leaf G(T) adds loss(T) beyond horizon; original leaf x(T) is an unused tail value. Neither may substitute for source G_T or source x_T."
+  },
+  "source_narrative_edges": [
+    {
+      "id": "S1",
+      "inputs": [
+        "SRC-ALG7.8",
+        "SRC-FTRL-REINTERPRET"
+      ],
+      "output": "SRC-EXISTENCE-UNIQUENESS",
+      "semantics": "Source invokes Lemma7.5/Theorem6.9; analytic applicability OPEN",
+      "verified": false
+    },
+    {
+      "id": "S2",
+      "inputs": [
+        "SRC-LEMMA7.1-GAP",
+        "SRC-INITIAL-MINIMUM",
+        "SRC-TERMINAL-REPEAT"
+      ],
+      "output": "SRC-INVALID-CANCELLATION",
+      "semantics": "Documents claimed source cancellation and its bounded counterevidence; not a valid implication",
+      "verified": false
+    },
+    {
+      "id": "S3",
+      "inputs": [
+        "SRC-INVALID-CANCELLATION",
+        "SRC-STABILITY"
+      ],
+      "output": "SRC-7.47-SHARP",
+      "semantics": "Printed route to literal sharp claim; blocked by cancellation defect, not certified",
+      "verified": false
+    },
+    {
+      "id": "S4",
+      "inputs": [
+        "SRC-ALG7.8",
+        "SRC-BTRL-PERFECT-HINT"
+      ],
+      "output": "SRC-ALG15.9",
+      "semantics": "Source real-round reinterpretation only; no terminal conclusion",
+      "verified": false
+    },
+    {
+      "id": "S5",
+      "inputs": [
+        "SRC-7.47-SHARP",
+        "SRC-BTRL-PERFECT-HINT"
+      ],
+      "output": "SRC-15.31",
+      "semantics": "Printed endpoint transfer; terminal correction remains unresolved",
+      "verified": false
+    },
+    {
+      "id": "S6",
+      "inputs": [
+        "SRC-ALG15.9"
+      ],
+      "output": "SRC-ZERO-REG-BTL",
+      "semantics": "Printed zero-regularizer specialization; bound not proved by this leaf",
+      "verified": false
+    },
+    {
+      "id": "S7",
+      "inputs": [
+        "SRC-15.31"
+      ],
+      "output": "SRC-GRADIENT-ABSENCE",
+      "semantics": "Source formula interpretation, not corrected-bound certification",
+      "verified": false
+    }
+  ],
+  "version_mapping": {
+    "old_nodes": [
+      {
+        "old_id": "SRC-ALG7.8",
+        "new_id": "SRC-ALG7.8",
+        "old_claim_sha256": "52dcccc993c77a4cb8937d35b40cc6c21ac9aa357cbfa1eaf99b7a1cd7c536ab",
+        "new_claim_sha256": "52dcccc993c77a4cb8937d35b40cc6c21ac9aa357cbfa1eaf99b7a1cd7c536ab",
+        "disposition": "unchanged",
+        "reason": "No change"
+      },
+      {
+        "old_id": "SRC-7.47-SHARP",
+        "new_id": "SRC-7.47-SHARP",
+        "old_claim_sha256": "006485971446901825f2610b127f78c8dcee17dd949c7578f2538fdda151f822",
+        "new_claim_sha256": "006485971446901825f2610b127f78c8dcee17dd949c7578f2538fdda151f822",
+        "disposition": "clarified with original retained in v1",
+        "reason": "T2 preserves literal claim but separates corrected target ownership."
+      },
+      {
+        "old_id": "SRC-TERMINAL-REPEAT",
+        "new_id": "SRC-TERMINAL-REPEAT",
+        "old_claim_sha256": "b08703410e45539ee2a5446e8c81f8b7e962fdab69f437ffa9991479e849e017",
+        "new_claim_sha256": "4dff1ce8aadefd74c8051a2b540c3128ee8ff1a7376a93def4ee279438c39918",
+        "disposition": "clarified with original retained in v1",
+        "reason": "T4 separates a legal virtual choice from its unsupported claimed consequence."
+      },
+      {
+        "old_id": "SRC-STABILITY",
+        "new_id": "SRC-STABILITY",
+        "old_claim_sha256": "be1fdf64b67c448361066f9b897014e27a6c7e3460609866f02f7497d00864f9",
+        "new_claim_sha256": "be1fdf64b67c448361066f9b897014e27a6c7e3460609866f02f7497d00864f9",
+        "disposition": "unchanged",
+        "reason": "No change"
+      },
+      {
+        "old_id": "SRC-YOUNG",
+        "new_id": "SRC-YOUNG",
+        "old_claim_sha256": "d75b1ae2109fe995c30ee906820f22786858e44bae495d3dec2b5c652bc5b919",
+        "new_claim_sha256": "d75b1ae2109fe995c30ee906820f22786858e44bae495d3dec2b5c652bc5b919",
+        "disposition": "unchanged",
+        "reason": "No change"
+      },
+      {
+        "old_id": "SRC-ALG15.9",
+        "new_id": "SRC-ALG15.9",
+        "old_claim_sha256": "95cecf751c4cbbd2b43d30b6402c155e0b5d27029ac5c27e15afc28918c5ded9",
+        "new_claim_sha256": "95cecf751c4cbbd2b43d30b6402c155e0b5d27029ac5c27e15afc28918c5ded9",
+        "disposition": "unchanged",
+        "reason": "No change"
+      },
+      {
+        "old_id": "SRC-15.31",
+        "new_id": "SRC-15.31",
+        "old_claim_sha256": "1ac272f16ff8ddf935333989d069ca2f92f0b68259f5168ee9f71cf7100c52d7",
+        "new_claim_sha256": "1ac272f16ff8ddf935333989d069ca2f92f0b68259f5168ee9f71cf7100c52d7",
+        "disposition": "clarified with original retained in v1",
+        "reason": "T2 preserves literal claim but separates corrected target ownership."
+      },
+      {
+        "old_id": "REPAIR-FINITE-VALUES",
+        "new_id": "REPAIR-FINITE-VALUES",
+        "old_claim_sha256": "7d73a964f6f91f6cc47359acd2ac24c7ff25be23184cf7f1e2b392f2b253d6c5",
+        "new_claim_sha256": "7d73a964f6f91f6cc47359acd2ac24c7ff25be23184cf7f1e2b392f2b253d6c5",
+        "disposition": "unchanged",
+        "reason": "No change"
+      },
+      {
+        "old_id": "LEAF-SPLICE",
+        "new_id": "LEAF-SPLICE",
+        "old_claim_sha256": "333ab7e9362bb85d19531f3e4465c37794e67b861838663b8cfe0d6d81218cfa",
+        "new_claim_sha256": "333ab7e9362bb85d19531f3e4465c37794e67b861838663b8cfe0d6d81218cfa",
+        "disposition": "unchanged",
+        "reason": "No change"
+      },
+      {
+        "old_id": "LEAF-CUMULATIVE",
+        "new_id": "LEAF-CUMULATIVE",
+        "old_claim_sha256": "699c863fa19b268df8e4f1469375368943b3f99be1d5c42ccef491b25f696aee",
+        "new_claim_sha256": "699c863fa19b268df8e4f1469375368943b3f99be1d5c42ccef491b25f696aee",
+        "disposition": "unchanged",
+        "reason": "No change"
+      },
+      {
+        "old_id": "LEAF-INTERNAL-CANCELLATION",
+        "new_id": "LEAF-INTERNAL-CANCELLATION",
+        "old_claim_sha256": "98cfb4e2c3f227df16405094ce1127330be8960678f51bcba1200705d9ed0262",
+        "new_claim_sha256": "98cfb4e2c3f227df16405094ce1127330be8960678f51bcba1200705d9ed0262",
+        "disposition": "unchanged",
+        "reason": "No change"
+      },
+      {
+        "old_id": "LEAF-TERMINAL-GAP",
+        "new_id": "LEAF-TERMINAL-GAP",
+        "old_claim_sha256": "fa27c52863ad84a18f3481a9d0a1331c27ea290972ae4f1ac7439abd21bc62c1",
+        "new_claim_sha256": "fa27c52863ad84a18f3481a9d0a1331c27ea290972ae4f1ac7439abd21bc62c1",
+        "disposition": "unchanged",
+        "reason": "No change"
+      },
+      {
+        "old_id": "LEAF-IDENTITY",
+        "new_id": "LEAF-IDENTITY",
+        "old_claim_sha256": "5e5fe1b908ee209e671328fa506919b67172c29e21519d35868d16b59bdf9993",
+        "new_claim_sha256": "d0a1c41b886919cea97a2a1230f78b40373dedeaafbe238d17b50b1765df6622",
+        "disposition": "clarified with original retained in v1",
+        "reason": "Editorial: proposed HEADER is not frozen; no mathematical change."
+      },
+      {
+        "old_id": "OPEN-EREAL",
+        "new_id": "OPEN-EREAL",
+        "old_claim_sha256": "fdac8c2cf5119c991259b46a67d1a056c3e6865a39e9c8fc2b376127e4551cc8",
+        "new_claim_sha256": "fdac8c2cf5119c991259b46a67d1a056c3e6865a39e9c8fc2b376127e4551cc8",
+        "disposition": "unchanged",
+        "reason": "No change"
+      },
+      {
+        "old_id": "OPEN-GHOST",
+        "new_id": "OPEN-GHOST",
+        "old_claim_sha256": "596c59099cbf10b254d5c56eea326fa14fe9d9e16254681086fab4e75b797991",
+        "new_claim_sha256": "ed675bd6bf07ea738085d0c76a56a02980d8cecb0acda2a20b84586cda0e3dd8",
+        "disposition": "clarified with original retained in v1",
+        "reason": "T3 makes source versus leaf time explicit and preserves attainment/finiteness debt."
+      },
+      {
+        "old_id": "OPEN-SUPPORT",
+        "new_id": "OPEN-SUPPORT",
+        "old_claim_sha256": "66758837751beb3fd712fba80330b5aa614e1f7da3d3bfef89c5b276a9c53f2e",
+        "new_claim_sha256": "66758837751beb3fd712fba80330b5aa614e1f7da3d3bfef89c5b276a9c53f2e",
+        "disposition": "unchanged",
+        "reason": "No change"
+      },
+      {
+        "old_id": "OPEN-BTRL",
+        "new_id": "OPEN-BTRL",
+        "old_claim_sha256": "e37f52b1455c7a7d0499fa0cc9af1324171dead3d2ffeebe364428ba70205163",
+        "new_claim_sha256": "0f6a8c2b908fb388bab7ec17d668ba24045fe71a1136a812c5361dfb1e86f8fd",
+        "disposition": "clarified with original retained in v1",
+        "reason": "T3 fixes last played state and distinguishes unused leaf x(T)."
+      }
+    ],
+    "old_exclusions": [
+      {
+        "old_id": "EX-7.44-7.46",
+        "new_id": "EX-7.44-7.46",
+        "disposition": "exact object retained"
+      },
+      {
+        "old_id": "EX-15.30",
+        "new_id": "EX-15.30",
+        "disposition": "exact object retained"
+      },
+      {
+        "old_id": "EX-15.32-GAME",
+        "new_id": "EX-15.32-GAME",
+        "disposition": "exact object retained"
+      },
+      {
+        "old_id": "EX-HISTORY",
+        "new_id": "EX-HISTORY",
+        "disposition": "exact object retained"
+      }
+    ],
+    "added_node_ids": [
+      "SRC-PREDICTION-MOTIVATION",
+      "SRC-FTRL-REINTERPRET",
+      "SRC-EXISTENCE-UNIQUENESS",
+      "SRC-LEMMA7.1-GAP",
+      "SRC-INITIAL-MINIMUM",
+      "SRC-INVALID-CANCELLATION",
+      "SRC-BTRL-PERFECT-HINT",
+      "SRC-ZERO-REG-BTL",
+      "SRC-GRADIENT-ABSENCE",
+      "CORRECTED-7.47-SHARP",
+      "CORRECTED-7.47-YOUNG",
+      "CORRECTED-15.31"
+    ],
+    "old_edges": {
+      "C1": "retained algebra AND",
+      "C2": "corrected output separated from literal SRC-7.47-SHARP; existence qualification explicit",
+      "C3": "dangling output replaced by declared CORRECTED-7.47-YOUNG",
+      "C4": "corrected output separated from literal SRC-15.31"
+    }
+  },
+  "repair_resolution_proposed": {
+    "T1": "Nine explicit source-context/claim nodes add all identified missing paragraph dispositions; source analytic claims stay OPEN.",
+    "T2": "Three corrected endpoint nodes declared; corrected edges retargeted, literal bound claim text unchanged; source narrative edges separate.",
+    "T3": "Explicit source/leaf map and OPEN-GHOST/OPEN-BTRL corrected indexing; arbitrary z retains unrestricted gap.",
+    "T4": "Legitimate repeat node separated from invalid cancellation node; exact limited witness scope preserved."
+  },
+  "header_unchanged_sha256": "92e0dcfac53595e35b68bfd8083c09640d06da809355ab02ec4eb4b007b0bd67",
+  "source_pixel_review": "Personally inspected PDF141,142,278,279 in immediately preceding source review; no new PDF or BODY input needed. Source-header-review-v1.json pins each viewed pixel.",
+  "scope_boundary": "No header/binder mutation, freeze, proof authorization, source correction closure, status update or verified analytic route. All7 containers+6future claims and mandatory B4 endpoints remain open."
+}

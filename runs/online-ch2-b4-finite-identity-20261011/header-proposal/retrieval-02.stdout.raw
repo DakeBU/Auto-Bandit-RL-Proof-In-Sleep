@@ -1,0 +1,41 @@
+8:regularized be-the-leader theorem and the standard FTRL stability/penalty
+14:estimation, self-bounding conversion, or a final Tsallis-INF regret theorem.
+23:noncomputable def cumulativeLoss {Action : Type u}
+27:@[simp] theorem cumulativeLoss_zero {Action : Type u}
+29:    cumulativeLoss loss 0 = 0 := by
+31:  simp [cumulativeLoss]
+34:theorem cumulativeLoss_succ {Action : Type u}
+36:    cumulativeLoss loss (t + 1) =
+37:      fun action => cumulativeLoss loss t action + loss t action := by
+39:  simp [cumulativeLoss, Finset.sum_range_succ]
+42:theorem linearLoss_add_right {Action : Type u}
+49:theorem linearLoss_cumulativeLoss {Action : Type u}
+52:    linearLoss arms p (cumulativeLoss loss T) =
+54:  simp only [linearLoss, cumulativeLoss, Finset.mul_sum]
+58:theorem regularizedObjective_cumulativeLoss_succ {Action : Type u}
+62:    regularizedObjective arms eta regularizer (cumulativeLoss loss (t + 1)) p =
+63:      regularizedObjective arms eta regularizer (cumulativeLoss loss t) p +
+65:  rw [cumulativeLoss_succ, regularizedObjective, regularizedObjective,
+76:theorem eta_mul_sum_next_linearLoss_add_regularizer_zero_le_objective
+85:        (cumulativeLoss loss t) (p t)) :
+90:          (cumulativeLoss loss T) (p T) := by
+93:      simp [regularizedObjective, cumulativeLoss, linearLoss]
+97:            (cumulativeLoss loss t) (p t) := by
+105:              (cumulativeLoss loss T) (p T) <=
+107:              (cumulativeLoss loss T) (p (T + 1)) :=
+120:              (cumulativeLoss loss T) (p (T + 1)) +
+127:              (cumulativeLoss loss (T + 1)) (p (T + 1)) :=
+128:          (regularizedObjective_cumulativeLoss_succ
+134:theorem sum_next_linearLoss_sub_comparator_le_regularizer_penalty
+144:        (cumulativeLoss loss t) (p t))
+156:          (cumulativeLoss loss T) (p T) <=
+158:          (cumulativeLoss loss T) q :=
+162:  rw [regularizedObjective, linearLoss_cumulativeLoss] at htotal
+178:regularizer penalty. No convexity or minimizer-existence theorem is hidden:
+181:theorem cumulativeLinearLoss_sub_comparator_le_stability_add_penalty
+191:        (cumulativeLoss loss t) (p t))
+227:theorem cumulativeLinearLoss_sub_comparator_le_stability_add_penalty_simplex
+236:        (cumulativeLoss loss t) (p t))
+254:theorem negEntropyRegularizer_sub_eq_powerSum_sub_div
+273:theorem cumulativeLinearLoss_sub_comparator_le_stability_add_powerSumPenalty
+282:        (FTRL.cumulativeLoss loss t) (p t))

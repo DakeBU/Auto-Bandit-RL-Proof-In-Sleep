@@ -1,0 +1,52 @@
+{
+  "UTC": "2026-10-11T09:16:58.895953+00:00",
+  "actor": "/root/adaptive_reviewer",
+  "requested_model": "GPT-6 Astra",
+  "requested_effort": "medium",
+  "runtime_independently_attested": false,
+  "verdict": "repair-prepared-structural-QA",
+  "blocking_repairs": [
+    {
+      "id": "B1",
+      "location": "spec bindings loop versus a.baseline reads",
+      "finding": "Spec hashes canonical baseline files, but comparison reads independently supplied --baseline directory without linking it to those pinned paths. One baseline could be verified while another is compared.",
+      "minimal_repair": "Require resolved a.baseline equals the exact pinned canonical integration-baseline directory, or compare SHA for each actual a.baseline/{chapters,readings,highlights,previous-registry-v1}.json against the corresponding spec binding before loading."
+    }
+  ],
+  "positive_checks": [
+    "All seven current spec input hashes verified. Checker source parsed read-only; no gate-dependent execution.",
+    "11104 old nodes are compared as whole parsed objects; duplicates and exact sole new ID are checked, new count11105.",
+    "Three source JSON append removals restore entire old parsed structures; sourcecard counts22to23 and exact new name/card identity checked.",
+    "Current complete active source inventory is re-enumerated via pinned recorder without running recorder main; equality to pre/post RAW and exact selected rows required.",
+    "Every ZIP member hash/size and exact duplicate-free set verified; all12 governance paths required in RAW and ZIP.",
+    "Actual gate SHA, command/exit/integrity, cwd and expected clean HEAD checked; current Git checked before/after.",
+    "Registry/site require sameHEAD,lean_verified true,clean manifest and new node compiled; source-only preflight cannot pass these predicates.",
+    "Frozen source inventory/core/Test pins plus C2partial/acceptedfalse/null/7+6 enforced.",
+    "No full source topology or transitive graph/render claim; human visual review separate."
+  ],
+  "limits": [
+    "Not hardcoded to1322 rows: actual counts must equal re-enumerated current set and receipt counts, avoiding a misleading fixed-count-only check.",
+    "Exact new append mathematical contents rely on approved source candidate binding and separate integration review; this script checks their identity and preservation structure.",
+    "Output restricted to own ignored QA namespace and create-only, with recorded actual failure if runtime assertions fail."
+  ],
+  "inputs": [
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/tmp/online-ch2-b4-finite-identity-structural-qa-20261011/check-b4-structure-v1.py",
+      "sha256": "b876af326bab48f05f6e85dc40a0db65643851748eab698168fc13a5a21f84ad"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/tmp/online-ch2-b4-finite-identity-structural-qa-20261011/input-spec-v1.json",
+      "sha256": "f3bdb4f0e108060dd676b190f6e8b1fd4fce422fc35abfc8c22358b59b73f3b7"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/tmp/online-ch2-b4-finite-identity-structural-qa-20261011/preparation-v1.json",
+      "sha256": "f72f8993aa1c0fe9a11d7b74a0903f7e4adf39723779051176b96bfbe8558985"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/tmp/online-ch2-b4-finite-identity-structural-qa-20261011/run-after-parent-confirmation-v1.txt",
+      "sha256": "aa1cd7cfd3e29d6e6aef291338caeddcc1bf73d0645b91799035511e7997c80e"
+    }
+  ],
+  "executed": false,
+  "no_canonical_changes": true
+}

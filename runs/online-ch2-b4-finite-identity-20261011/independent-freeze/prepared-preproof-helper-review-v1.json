@@ -1,0 +1,33 @@
+{
+  "UTC": "2026-10-11T08:07:26.841270+00:00",
+  "actor": "/root/adaptive_reviewer",
+  "requested_model_effort": "GPT-6 Astra / medium; runtime not attested",
+  "verdict": "repair-before-preproof-capture-helper-execution",
+  "helper_sha256": "815d4e9f320ad06f53c7b51ac76ebad55da5516d1b05a59e0e113201a15c10d3",
+  "canonical_copy_exact": true,
+  "contract_review_unchanged_sha256": "eaf9e2864cd0acd8c6fe1cc67a4e97d7688138ee33effc9b138657ac5483c686",
+  "blocking_repairs": [
+    {
+      "id": "P1",
+      "location": "selection() / rows()",
+      "finding": "Only git ls-files supplies Lean paths. A pre-existing or newly created ignored Lean file under active BanditRLProof/Tests is absent from both selection passes and clean git status.",
+      "repair": "Union tracked names with filesystem .lean enumeration in both active source trees for each selection; require ordinary in-root files. Enumerate current own DOC/RUN ordinary files consistently or explicitly ensure their set is tracked after freeze. Keep exact before/after row/path-set equality."
+    },
+    {
+      "id": "P2",
+      "location": "final context checks",
+      "finding": "Core/Test absence is checked only before; Mathlib HEAD/clean only once before ZIP. Final receipt overstates stable absent/clean context if those change later.",
+      "repair": "Repeat core/Test absence and Mathlib HEAD/clean checks after final RAW inventory/ZIP verification, bind both actual receipts and equal pinned HEAD. Preserve all failure receipts; no success on failed repeat."
+    }
+  ],
+  "nonblocking_hardening": "Before helper run, parent seal must contain a nonempty exact frozen_inputs set including full header, contract and review bindings; independent context review must inspect the actual seal. Current all(...) alone is vacuous for an empty seal list. Prefer an explicit minimum required-path assertion.",
+  "positive_checks": [
+    "Exact two helper copies and AST syntax verified, no execution.",
+    "Recomputes selected rows, verifies real ZIP exact entries/raw hashes, and checks main HEAD/branch/clean before/after.",
+    "Original full imports and two Mathlib source files included; selected scope does not claim complete historical repository archive.",
+    "Actual command argv/exit/streams retained; create-only output namespace."
+  ],
+  "BODY_authorized": false,
+  "execution_performed": false,
+  "canonical_writes": false
+}

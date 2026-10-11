@@ -1,0 +1,33 @@
+BanditRLProof\OnlineAdaptiveOSD.lean:206:  · simp only [regret, heq, sub_self, sum_const_zero]
+BanditRLProof\OnlineGuessingRandomizedIID.lean:137:    exact iid_cumulative_prediction_decomposition μ Y hY hlaw hb prediction hL hInd T
+BanditRLProof\OnlineGuessingLogLower.lean:294:/-- Source cumulative learner squared loss on exactly the decoded path. -/
+BanditRLProof\OnlineGuessingIIDBenchmark.lean:79:theorem iid_cumulative_prediction_decomposition {Ω : Type*} [MeasurableSpace Ω]
+BanditRLProof\OnlineGuessingIIDBenchmark.lean:131:    exact iid_cumulative_prediction_decomposition μ Y hY hlaw hb _ hP hInd T
+BanditRLProof\OnlineGuessingIIDBenchmark.lean:160:    exact iid_cumulative_prediction_decomposition μ Y hY hlaw hb _ hP hInd T
+BanditRLProof\OnlineGuessingComparison.lean:5:cumulative square loss 1/4. The actual horizon-tuned projected OGD starts at 1
+BanditRLProof\OnlineGuessingComparison.lean:23:theorem meanPredict_zero_cumulativeLoss (T : ℕ) (hT : 0 < T) :
+BanditRLProof\OnlineGuessingComparison.lean:43:  rw [meanPredict_zero_cumulativeLoss ((2*n)^2) (by positivity)]
+BanditRLProof\OnlineGuessingSubgradientPolicy.lean:16:not a supplied regret inequality or a universal off-path oracle premise.
+BanditRLProof\OnlineGuessingAECausal.lean:99:    exact iid_cumulative_prediction_decomposition μ Y hY hlaw hb prediction hL hInd T
+BanditRLProof\OnlineGradientDescentSource.lean:81:/-- Fixed-step telescope on the actual recurrence; no bounded-domain premise. -/
+BanditRLProof\OnlineGradientDescentSource.lean:129:/-- The weighted potential telescope retains the negative terminal at the last played step. -/
+BanditRLProof\OnlineLearningRegret.lean:39:/-- Upper sublinear regret. This does not require nonnegative regret or existence of its limit. -/
+BanditRLProof\OnlineLearningMean.lean:47:/-- Positive-horizon cumulative squared loss has the unique empirical-mean minimizer. -/
+BanditRLProof\OnlineNoRegretSemantics.lean:54:theorem regret_eq (T : ℕ) (u : ℝ) :
+BanditRLProof\OnlineNoRegretSemantics.lean:75:  rw [regret_eq]
+BanditRLProof\OnlineNoRegretSemantics.lean:88:  rw [regret_eq]
+BanditRLProof\OnlineNoRegretSemantics.lean:97:  rw [regret_eq]
+BanditRLProof\OnlineFTLSelector.lean:10:def cumulative (past : Fin n → X → ℝ) (x : X) : ℝ :=
+BanditRLProof\OnlineFTLSelector.lean:14:  {x | x ∈ V ∧ IsMinOn (cumulative past) V x}
+BanditRLProof\OnlineFTLSelector.lean:24:    p ∈ V ∧ IsMinOn (cumulative past) V p := by
+BanditRLProof\OnlineFTLSelector.lean:32:    select V past = none ↔ ¬ ∃ p, p ∈ V ∧ IsMinOn (cumulative past) V p := by
+BanditRLProof\OnlineFTLSelector.lean:43:theorem cumulative_prefix (loss : ℕ → X → ℝ) (t : ℕ) (x : X) :
+BanditRLProof\OnlineFTLSelector.lean:44:    cumulative (fun i : Fin t => loss i.val) x = ∑ i ∈ range t, loss i x := by
+BanditRLProof\OnlineFTLSelector.lean:50:  have hc : EqOn (cumulative past) (cumulative past') V := by
+BanditRLProof\OnlineFTLSelector.lean:74:theorem select_eq_some_of_unique (V : Set X) (past : Fin n → X → ℝ) (p : X) (hp : p ∈ V) (hmin : IsMinOn (cumulative past) V p) (hunique : ∀ q ∈ V, IsMinOn (cumulative past) V q → q = p) :
+BanditRLProof\OnlineFTLSelector.lean:91:  · have hc : cumulative (fun i : Fin t => loss i.val) =
+BanditRLProof\OnlineFTLSelector.lean:94:      exact cumulative_prefix loss t x
+BanditRLProof\OnlineFTLSelector.lean:112:  · have hc : cumulative (fun i : Fin t => loss i.val) =
+BanditRLProof\OnlineFTLSelector.lean:115:      exact cumulative_prefix loss t x
+BanditRLProof\OnlinePrescientLinear.lean:107:theorem regret_eq_loss_difference (V : Domain E) (η : ℝ) (g : ℕ → E) (b : ℕ → ℝ)
+BanditRLProof\OnlineSquareMinimum.lean:41:/-- Signed pathwise minimum regret equals regret at the produced empirical mean. -/

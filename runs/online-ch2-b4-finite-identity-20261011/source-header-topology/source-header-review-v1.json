@@ -1,0 +1,173 @@
+{
+  "verdict": "accepted-with-explicit-delta SOURCE HEADER scope only; blind binding pending; no freeze/BODY authorization",
+  "actor": "/root/adaptive_decoder",
+  "requested_model": "GPT-6 Astra",
+  "requested_effort": "medium",
+  "runtime_attestation": null,
+  "source_exposed": true,
+  "blind_status": "Independent neutral decoder still running; no blind receipt read or acceptance inferred. Append separate binding later.",
+  "input_raw_sha256": {
+    "tmp/online-ch2-b4-finite-identity-proposal-20261011/header-proposal-v1.json": "7a5848efbf57ba9c76c987baae75856331100325fc4c9130ead409b5ba3815fb",
+    "tmp/online-ch2-b4-finite-identity-proposal-20261011/neutral-proposed-header-v1.txt": "92e0dcfac53595e35b68bfd8083c09640d06da809355ab02ec4eb4b007b0bd67",
+    "runs/online-ch2-prescient-euclidean-20261011/next-b4-readiness/v1.json": "4f9487f88840360b476bce2b7cff01748d414ba712e13baa9b785412effd1fcf",
+    "docs/contracts/online-ch2-complete-target-freeze-v1/effective-targets-frozen-v3.2.json": "61cf1901a632aeee35ee71511ba53b115ae0958649ea78b786536a4404684ba1",
+    "BanditRLProof/OnlineWeightedPotential.lean": "63d94480e5e5a337acf5019c62e092fd36b1d2bf1a6edfc6f5b6bc5b95aa885a",
+    "BanditRLProof/TsallisFTRLRegret.lean": "9a30a84e6dc0a20870aceb49826962c4ea783c09cf5262030a3d90f71966802f",
+    ".lake/packages/mathlib/Mathlib/Algebra/BigOperators/Module.lean": "7915167fbdf0a0a3fc1ebb3e12f1b349ce37c41d5626d3702c4b302f9f6fbc61"
+  },
+  "source_pdf": {
+    "path": "E:\\ABRL\\worktrees\\research-online-ogd\\tmp\\pdfs\\orabona-v10.pdf",
+    "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "pages": [
+      {
+        "pdf_page": 141,
+        "printed_page": 129,
+        "pixel_path": "tmp/online-ch2-b4-next-readiness-20261011/source-141.png",
+        "pixel_sha256": "eacd665a728fa4bad76135f73257caea8cf20a96994126425f55f467aca50778",
+        "personally_inspected_this_review": true
+      },
+      {
+        "pdf_page": 142,
+        "printed_page": 130,
+        "pixel_path": "tmp/online-ch2-b4-next-readiness-20261011/source-142.png",
+        "pixel_sha256": "26a4994bf093a5166eb1a1680cbc1be9e68e415b3eadf7933c78c962e56034ea",
+        "personally_inspected_this_review": true
+      },
+      {
+        "pdf_page": 278,
+        "printed_page": 266,
+        "pixel_path": "runs/online-ch2-prescient-euclidean-20261011/source-topology-proposal-v1/source-278.png",
+        "pixel_sha256": "da2892ede98285b4cfdaa08885ccab01df049ddf898a92dd0ad48a48316b68bd",
+        "personally_inspected_this_review": true
+      },
+      {
+        "pdf_page": 279,
+        "printed_page": 267,
+        "pixel_path": "tmp/online-ch2-b4-next-readiness-20261011/source-279.png",
+        "pixel_sha256": "08293ec9ebf9839584c2ddb694116fd142d7b1437ff11bc135896863bc11d3d8",
+        "personally_inspected_this_review": true
+      }
+    ]
+  },
+  "seven_slots": {
+    "objects": "Arbitrary type E; real-valued psi_t and loss_t; arbitrary trajectory x, comparator u and terminal z; positive natural horizon T.",
+    "quantifiers": "Universal over E, each function, every x,u,z,T with T>0. No bounded set or implicit algorithm quantifier.",
+    "hypotheses": [
+      "T>0 only explicit propositional hypothesis",
+      "Real codomain supplies finite arithmetic; no convexity, optimizer, hints, measurable/causal strategy or norm structure"
+    ],
+    "conclusion": "Exact regret equality = final comparator regularizer minus initial played regularizer + sum of within-G differences + interior regularizer drift + terminal G gap.",
+    "constants": "All coefficients exactly +1 or -1; no lambda, half-square or Young constant at this algebra leaf.",
+    "causal_indexing": "Source round s=1..T maps t=s-1. y(t)=x(t) for t<T, y(T)=z. G_t=psi_t+sum_{i=0}^t loss_i. Drift t=0..T-2 uses y(t+1). x(T) is unused; no retrospective replacement of a scored action.",
+    "boundaries": "T=1 drift empty; T=0 excluded. Real-valued arbitrary-type generalization is an explicitly labeled finite-value bookkeeping component, not full EReal source or either corrected regret inequality."
+  },
+  "atomic_binder_audit": [
+    {
+      "binder": "E",
+      "classification": "TYPING",
+      "reason": "Type*; arbitrary carrier generalizes source Euclidean feasible states for algebra only."
+    },
+    {
+      "binder": "psi",
+      "classification": "STANDING",
+      "reason": "Natural-time total real-valued functions; source regularizer values restricted to this finite-real algebra interface."
+    },
+    {
+      "binder": "loss",
+      "classification": "STANDING",
+      "reason": "Natural-time total real-valued functions; source EReal losses require a separate finite-evaluation adapter."
+    },
+    {
+      "binder": "x",
+      "classification": "SOURCE",
+      "reason": "Played finite sequence extended to a total sequence for indexing, with arbitrary unused tail; no algorithm premise needed for equality."
+    },
+    {
+      "binder": "u",
+      "classification": "SOURCE",
+      "reason": "Arbitrary comparator in the chosen carrier; feasible-set embedding remains external."
+    },
+    {
+      "binder": "z",
+      "classification": "SOURCE",
+      "reason": "Arbitrary terminal point of frozen corrected algebra clause; no minimizer or recurrence assumed."
+    },
+    {
+      "binder": "T",
+      "classification": "SOURCE",
+      "reason": "Finite natural horizon."
+    },
+    {
+      "binder": "hT",
+      "classification": "STANDING",
+      "reason": "Positive horizon of frozen correction; avoids Nat-subtraction terminal degeneracy."
+    }
+  ],
+  "local_lets": [
+    {
+      "name": "y",
+      "classification": "TYPING",
+      "meaning": "Endpoint splice, no hypothesis; t<T unchanged and y(T)=z."
+    },
+    {
+      "name": "G",
+      "classification": "TYPING",
+      "meaning": "Inclusive cumulative potential definition, no extra premise."
+    }
+  ],
+  "T1": "loss0(x0)-loss0(u)=psi0(u)-psi0(x0)+G0(x0)-G0(z)+G0(z)-G0(u). Terminal gap cancels only algebraically with within-G term; cannot simply discard it.",
+  "source_scope_adjudication": {
+    "finite_identity_clause": "Exact unchanged frozen repair:7.47-terminal algebra; source-neutral state abstraction and globally real function interface disclosed.",
+    "whole_7_47": "OPEN; actual hinted producer, well-formed EReal adapter, zero-hint ghost attainment, subgradient qualification, stability and Young bound absent.",
+    "whole_15_31": "OPEN; actual BTRL minima and x(T+1)=x(T) ghost with interior movement bound absent.",
+    "source_invalid": "Only the checked repeated-final-hint sharp completion is refuted; algorithms and all potential corrected/Young statements are not blanket refuted.",
+    "no_new_assumptions": true,
+    "no_added_helper_definitions": true,
+    "type_readiness": "Visible imports support real finite sums and Nat equality under noncomputable section; no Lean elaboration/build performed."
+  },
+  "blocking_header_repairs": [],
+  "remaining_acceptance_gates": [
+    "Fresh independent blind binding",
+    "Parent scope approval and header freeze before BODY",
+    "Independent review of source-only topology proposal"
+  ],
+  "reuse_inspection": [
+    {
+      "path": "BanditRLProof/OnlineWeightedPotential.lean",
+      "declaration": "BanditRL.OnlineWeightedPotential.weighted_difference_sum_eq",
+      "finding": "Exact separable weighted scalar difference identity, not arbitrary time-varying function cumulative identity. Optional telescope substrate; no required actual edge asserted."
+    },
+    {
+      "path": "BanditRLProof/TsallisFTRLRegret.lean",
+      "declarations": [
+        "BanditRLProof.FTRL.cumulativeLoss",
+        "BanditRLProof.FTRL.cumulativeLoss_succ",
+        "BanditRLProof.FTRL.eta_mul_sum_next_linearLoss_add_regularizer_zero_le_objective"
+      ],
+      "finding": "First two generic prefix sum infrastructure, strict-prefix index differs from G inclusive loss. Regret endpoint imposes finite-action linear objectives and explicit minimizer inequalities; no black-box replacement of target."
+    },
+    {
+      "path": ".lake/packages/mathlib/Mathlib/Algebra/BigOperators/Module.lean",
+      "declaration": "Finset.sum_range_by_parts",
+      "finding": "Available scalar/module finite summation route; not necessary and no actual proof dependency claimed."
+    }
+  ],
+  "counterexample": {
+    "T": 1,
+    "psi": "v^2/2",
+    "loss_and_hint": "(v-1)^2/2",
+    "played_x": "1/2",
+    "repeated_hint_z": "2/3",
+    "u": "1/2",
+    "lambda": 2,
+    "regret": "0",
+    "sharp_rhs": "-1/36",
+    "identity_G_gap": "1/36",
+    "hint_difference": "5/72",
+    "scope": "Ordinary rational arithmetic/source audit; not a Lean theorem or new canary freeze."
+  },
+  "body_read": false,
+  "build_run": false,
+  "status_changes": false,
+  "inputs_unchanged": true
+}

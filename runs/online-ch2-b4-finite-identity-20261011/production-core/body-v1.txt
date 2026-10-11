@@ -1,0 +1,30 @@
+  let y : ℕ → E := fun t => if t = T then z else x t
+  let G : ℕ → E → ℝ := fun t v => psi t v + ∑ i ∈ range (t + 1), loss i v
+  change (∑ t ∈ range T, (loss t (y t) - loss t u)) =
+    psi (T - 1) u - psi 0 (y 0) +
+    (∑ t ∈ range T, (G t (y t) - G t (y (t + 1)))) +
+    (∑ t ∈ range (T - 1),
+      (psi t (y (t + 1)) - psi (t + 1) (y (t + 1)))) +
+    G (T - 1) z - G (T - 1) u
+  have hG (n : ℕ) (v : E) :
+      G (n + 1) v = G n v + psi (n + 1) v - psi n v + loss (n + 1) v := by
+    simp only [G, sum_range_succ]
+    ring
+  have hmain (n : ℕ) :
+      (∑ t ∈ range (n + 1), (loss t (y t) - loss t u)) =
+        psi n u - psi 0 (y 0) +
+        (∑ t ∈ range (n + 1), (G t (y t) - G t (y (t + 1)))) +
+        (∑ t ∈ range n, (psi t (y (t + 1)) - psi (t + 1) (y (t + 1)))) +
+        G n (y (n + 1)) - G n u := by
+    induction n with
+    | zero =>
+      simp only [sum_range_succ, sum_range_zero, zero_add, G]
+      simp only [sum_range_succ, sum_range_zero, zero_add]
+      ring
+    | succ n ih =>
+      simp only [Nat.succ_eq_add_one, sum_range_succ] at ih ⊢
+      rw [hG n (y (n + 1)), hG n (y (n + 1 + 1)), hG n u]
+      linarith
+  have hindex : T - 1 + 1 = T := Nat.sub_add_cancel hT
+  have hend : y T = z := by simp [y]
+  simpa only [hindex, hend] using hmain (T - 1)

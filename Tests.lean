@@ -208,3 +208,4 @@ import Tests.OnlineAdaptiveOSDCanary
 import Tests.OnlineWeightedPotentialCanary
 import Tests.OnlineUnboundedOGDCanary
 import Tests.OnlinePrescientEuclideanCanary
+import Tests.OnlineCumulativePotentialCanary

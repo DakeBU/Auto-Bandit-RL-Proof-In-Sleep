@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "declaration": "BanditRL.OnlineCumulativePotential.finite_regret_identity",
+  "file": "BanditRLProof/OnlineCumulativePotential.lean",
+  "statement": "theorem finite_regret_identity {E : Type*} (psi loss : \u2115 \u2192 E \u2192 \u211d) (x : \u2115 \u2192 E) (u z : E) (T : \u2115) (hT : 0 < T) : let y : \u2115 \u2192 E := fun t => if t = T then z else x t let G : \u2115 \u2192 E \u2192 \u211d := fun t v => psi t v + \u2211 i \u2208 range (t + 1), loss i v (\u2211 t \u2208 range T, (loss t (y t) - loss t u)) = psi (T - 1) u - psi 0 (y 0) + (\u2211 t \u2208 range T, (G t (y t) - G t (y (t + 1)))) + (\u2211 t \u2208 range (T - 1), (psi t (y (t + 1)) - psi (t + 1) (y (t + 1)))) + G (T - 1) z - G (T - 1) u",
+  "statement_hash": "c2cb4ca47c4dfdf02982813b71c52e17d402971cbe6a48fdecf69591a21f0fad",
+  "source_assumptions": [
+    "hT : 0 < T"
+  ],
+  "created_at": "2026-10-11T08:19:24+00:00"
+}

@@ -1,0 +1,327 @@
+{
+  "status": "SOURCE-ONLY TOPOLOGY PROPOSAL; distinct reviewer required; no self-acceptance",
+  "input_raw_sha256": {
+    "tmp/online-ch2-b4-finite-identity-proposal-20261011/header-proposal-v1.json": "7a5848efbf57ba9c76c987baae75856331100325fc4c9130ead409b5ba3815fb",
+    "tmp/online-ch2-b4-finite-identity-proposal-20261011/neutral-proposed-header-v1.txt": "92e0dcfac53595e35b68bfd8083c09640d06da809355ab02ec4eb4b007b0bd67",
+    "runs/online-ch2-prescient-euclidean-20261011/next-b4-readiness/v1.json": "4f9487f88840360b476bce2b7cff01748d414ba712e13baa9b785412effd1fcf",
+    "docs/contracts/online-ch2-complete-target-freeze-v1/effective-targets-frozen-v3.2.json": "61cf1901a632aeee35ee71511ba53b115ae0958649ea78b786536a4404684ba1",
+    "BanditRLProof/OnlineWeightedPotential.lean": "63d94480e5e5a337acf5019c62e092fd36b1d2bf1a6edfc6f5b6bc5b95aa885a",
+    "BanditRLProof/TsallisFTRLRegret.lean": "9a30a84e6dc0a20870aceb49826962c4ea783c09cf5262030a3d90f71966802f",
+    ".lake/packages/mathlib/Mathlib/Algebra/BigOperators/Module.lean": "7915167fbdf0a0a3fc1ebb3e12f1b349ce37c41d5626d3702c4b302f9f6fbc61"
+  },
+  "source_pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+  "nodes": [
+    {
+      "id": "SRC-ALG7.8",
+      "kind": "SOURCE_ALGORITHM",
+      "claim": "Real rounds choose a minimizer of psi_t+hint_t+past losses, then receive/pay current loss at x_t.",
+      "pdf_pages": [
+        141
+      ],
+      "scope": "retained context",
+      "hypothesis_ids": [],
+      "claim_sha256": "52dcccc993c77a4cb8937d35b40cc6c21ac9aa357cbfa1eaf99b7a1cd7c536ab"
+    },
+    {
+      "id": "SRC-7.47-SHARP",
+      "kind": "SOURCE_BOUND",
+      "claim": "Printed sharp bound sums negative movement through terminal T with interior regularizer drift.",
+      "pdf_pages": [
+        141,
+        142
+      ],
+      "scope": "OPEN full corrected target",
+      "hypothesis_ids": [],
+      "claim_sha256": "006485971446901825f2610b127f78c8dcee17dd949c7578f2538fdda151f822"
+    },
+    {
+      "id": "SRC-TERMINAL-REPEAT",
+      "kind": "SOURCE_PROOF_STEP",
+      "claim": "Proof explicitly repeats final hint and final regularizer; apparent hint cancellation omits terminal residual.",
+      "pdf_pages": [
+        142
+      ],
+      "scope": "SOURCE_INVALID under witnessed sharp completion",
+      "hypothesis_ids": [],
+      "claim_sha256": "b08703410e45539ee2a5446e8c81f8b7e962fdab69f437ffa9991479e849e017"
+    },
+    {
+      "id": "SRC-STABILITY",
+      "kind": "SOURCE_PROOF_STEP",
+      "claim": "Strong-convex lower bound and same permitted subgradient insertion yield one-step linear-minus-quadratic stability.",
+      "pdf_pages": [
+        142
+      ],
+      "scope": "OPEN analytic dependency",
+      "hypothesis_ids": [],
+      "claim_sha256": "be1fdf64b67c448361066f9b897014e27a6c7e3460609866f02f7497d00864f9"
+    },
+    {
+      "id": "SRC-YOUNG",
+      "kind": "SOURCE_PROOF_STEP",
+      "claim": "Dual norm and quadratic completion yield squared dual norm divided by 2lambda.",
+      "pdf_pages": [
+        142
+      ],
+      "scope": "OPEN analytic dependency",
+      "hypothesis_ids": [],
+      "claim_sha256": "d75b1ae2109fe995c30ee906820f22786858e44bae495d3dec2b5c652bc5b919"
+    },
+    {
+      "id": "SRC-ALG15.9",
+      "kind": "SOURCE_ALGORITHM",
+      "claim": "BTRL sees current loss, chooses a minimizer of inclusive cumulative G_t, and scores x_t; no terminal ghost is specified.",
+      "pdf_pages": [
+        278
+      ],
+      "scope": "retained context",
+      "hypothesis_ids": [],
+      "claim_sha256": "95cecf751c4cbbd2b43d30b6402c155e0b5d27029ac5c27e15afc28918c5ded9"
+    },
+    {
+      "id": "SRC-15.31",
+      "kind": "SOURCE_BOUND",
+      "claim": "Printed BTRL negative movement sum goes through T; terminal requires labeled correction.",
+      "pdf_pages": [
+        278,
+        279
+      ],
+      "scope": "OPEN full corrected target",
+      "hypothesis_ids": [],
+      "claim_sha256": "1ac272f16ff8ddf935333989d069ca2f92f0b68259f5168ee9f71cf7100c52d7"
+    },
+    {
+      "id": "REPAIR-FINITE-VALUES",
+      "kind": "CORRECTION_INTERFACE",
+      "claim": "All displayed arithmetic is finite real-valued; extended source adapter is separate.",
+      "pdf_pages": [
+        142,
+        278,
+        279
+      ],
+      "scope": "leaf",
+      "hypothesis_ids": [
+        "H-REAL"
+      ],
+      "claim_sha256": "7d73a964f6f91f6cc47359acd2ac24c7ff25be23184cf7f1e2b392f2b253d6c5"
+    },
+    {
+      "id": "LEAF-SPLICE",
+      "kind": "CORRECTION_INTERFACE",
+      "claim": "T>0 and y(t)=if t=T then z else x(t) preserve every played t<T while setting y(T)=z.",
+      "pdf_pages": [
+        142
+      ],
+      "scope": "leaf",
+      "hypothesis_ids": [
+        "H-POSITIVE-T"
+      ],
+      "claim_sha256": "333ab7e9362bb85d19531f3e4465c37794e67b861838663b8cfe0d6d81218cfa"
+    },
+    {
+      "id": "LEAF-CUMULATIVE",
+      "kind": "CORRECTION_DEFINITION",
+      "claim": "G_t(v)=psi_t(v)+sum_{i=0}^t loss_i(v); successor difference separates current loss and regularizer drift.",
+      "pdf_pages": [
+        142
+      ],
+      "scope": "leaf",
+      "hypothesis_ids": [
+        "H-REAL"
+      ],
+      "claim_sha256": "699c863fa19b268df8e4f1469375368943b3f99be1d5c42ccef491b25f696aee"
+    },
+    {
+      "id": "LEAF-INTERNAL-CANCELLATION",
+      "kind": "CORRECTION_ALGEBRA",
+      "claim": "Adjacent cumulative terms cancel only after retaining regularizer drift at next state for t=0..T-2.",
+      "pdf_pages": [
+        142
+      ],
+      "scope": "leaf",
+      "hypothesis_ids": [
+        "H-POSITIVE-T",
+        "H-REAL"
+      ],
+      "claim_sha256": "98cfb4e2c3f227df16405094ce1127330be8960678f51bcba1200705d9ed0262"
+    },
+    {
+      "id": "LEAF-TERMINAL-GAP",
+      "kind": "CORRECTION_ALGEBRA",
+      "claim": "Retain +G_(T-1)(z)-G_(T-1)(u), with no sign assumption.",
+      "pdf_pages": [
+        142
+      ],
+      "scope": "leaf",
+      "hypothesis_ids": [
+        "H-REAL"
+      ],
+      "claim_sha256": "fa27c52863ad84a18f3481a9d0a1331c27ea290972ae4f1ac7439abd21bc62c1"
+    },
+    {
+      "id": "LEAF-IDENTITY",
+      "kind": "CORRECTED_LEAF_TARGET",
+      "claim": "Exact zero-index finite regret equality of the frozen proposed header, including all endpoints and interior drift.",
+      "pdf_pages": [
+        142,
+        278,
+        279
+      ],
+      "scope": "leaf",
+      "hypothesis_ids": [
+        "H-POSITIVE-T",
+        "H-REAL"
+      ],
+      "claim_sha256": "5e5fe1b908ee209e671328fa506919b67172c29e21519d35868d16b59bdf9993"
+    },
+    {
+      "id": "OPEN-EREAL",
+      "kind": "REMAINING_DEPENDENCY",
+      "claim": "Produce explicit finite evaluations/support domains and justify every subtraction/toReal transport.",
+      "pdf_pages": [
+        141,
+        142,
+        278
+      ],
+      "scope": "OPEN",
+      "hypothesis_ids": [],
+      "claim_sha256": "fdac8c2cf5119c991259b46a67d1a056c3e6865a39e9c8fc2b376127e4551cc8"
+    },
+    {
+      "id": "OPEN-GHOST",
+      "kind": "REMAINING_DEPENDENCY",
+      "claim": "Preserve actual rounds; zero terminal hint and repeated regularizer require an attained finite minimizer of G_T before dropping gap.",
+      "pdf_pages": [
+        142
+      ],
+      "scope": "OPEN",
+      "hypothesis_ids": [],
+      "claim_sha256": "596c59099cbf10b254d5c56eea326fa14fe9d9e16254681086fab4e75b797991"
+    },
+    {
+      "id": "OPEN-SUPPORT",
+      "kind": "REMAINING_DEPENDENCY",
+      "claim": "Qualify constrained support/sum-rule and strong-convexity hypotheses; source references Lemma4.2, Theorem2.23 and Theorem6.9, not verified by this algebra leaf.",
+      "pdf_pages": [
+        142
+      ],
+      "scope": "OPEN",
+      "hypothesis_ids": [],
+      "claim_sha256": "66758837751beb3fd712fba80330b5aa614e1f7da3d3bfef89c5b276a9c53f2e"
+    },
+    {
+      "id": "OPEN-BTRL",
+      "kind": "REMAINING_DEPENDENCY",
+      "claim": "Bind actual BTRL minima; terminal z=x_T; derive t<T squared movements and optional comparator-distance sharpening separately.",
+      "pdf_pages": [
+        278,
+        279
+      ],
+      "scope": "OPEN",
+      "hypothesis_ids": [],
+      "claim_sha256": "e37f52b1455c7a7d0499fa0cc9af1324171dead3d2ffeebe364428ba70205163"
+    }
+  ],
+  "edges": [
+    {
+      "inputs": [
+        "REPAIR-FINITE-VALUES",
+        "LEAF-SPLICE",
+        "LEAF-CUMULATIVE",
+        "LEAF-INTERNAL-CANCELLATION",
+        "LEAF-TERMINAL-GAP"
+      ],
+      "output": "LEAF-IDENTITY",
+      "semantics": "AND corrected algebra decomposition; proposal, not observed implementation"
+    },
+    {
+      "inputs": [
+        "LEAF-IDENTITY",
+        "SRC-ALG7.8",
+        "OPEN-EREAL",
+        "OPEN-GHOST",
+        "OPEN-SUPPORT",
+        "SRC-STABILITY"
+      ],
+      "output": "SRC-7.47-SHARP",
+      "semantics": "AND for labeled corrected endpoint ONLY, never restores literal repeated-hint claim"
+    },
+    {
+      "inputs": [
+        "SRC-7.47-SHARP",
+        "SRC-YOUNG"
+      ],
+      "output": "future corrected Young endpoint",
+      "semantics": "AND; remaining target"
+    },
+    {
+      "inputs": [
+        "LEAF-IDENTITY",
+        "SRC-ALG15.9",
+        "OPEN-EREAL",
+        "OPEN-SUPPORT",
+        "OPEN-BTRL"
+      ],
+      "output": "SRC-15.31",
+      "semantics": "AND for corrected t<T endpoint only"
+    }
+  ],
+  "excluded": [
+    {
+      "id": "EX-7.44-7.46",
+      "pages": [
+        141
+      ],
+      "reason": "Preceding forecaster bound, optimality and improper-learning remark are not dependencies of this finite algebra leaf; not removed from owning chapter."
+    },
+    {
+      "id": "EX-15.30",
+      "pages": [
+        278
+      ],
+      "reason": "Preceding mirror-descent proof and fixed-case exercise belong to separately handled prescient Euclidean leaf; not a premise of cumulative identity."
+    },
+    {
+      "id": "EX-15.32-GAME",
+      "pages": [
+        279
+      ],
+      "reason": "BTL remark and X/Y game-combination bound remain owning-chapter results; this algebra leaf does not certify them."
+    },
+    {
+      "id": "EX-HISTORY",
+      "pages": [
+        279
+      ],
+      "reason": "History claims outside bounded target; no chapter-wide completion implied."
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "H-REAL",
+      "classification": "STANDING",
+      "meaning": "Real-valued total interface; finite-value specialization, not EReal assumption discharge."
+    },
+    {
+      "id": "H-POSITIVE-T",
+      "classification": "STANDING",
+      "meaning": "T>0 frozen finite endpoint convention."
+    }
+  ],
+  "route_semantics": "Leaf decomposition is AND. Implementation may use induction or generic telescoping as alternative proof routes; no BODY read, no actual route/necessity asserted. Source proof graph/corrected target graph must not be confused with future Lean VALUE dependency export.",
+  "source_hypotheses_not_leaf_edges": [
+    "Convex closed nonempty feasible V",
+    "Proper/closed strong-convex objectives",
+    "Subgradients of loss minus hint",
+    "Positive lambda and dual norm",
+    "Actual minimizers/attainment"
+  ],
+  "open_external_citations_not_recertified": [
+    "Lemma7.1",
+    "Lemma7.5",
+    "Theorem6.9",
+    "Lemma4.2",
+    "Theorem2.23"
+  ],
+  "source_only_no_future_BODY": true
+}

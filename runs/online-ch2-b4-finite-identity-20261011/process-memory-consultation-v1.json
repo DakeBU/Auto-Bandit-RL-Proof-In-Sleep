@@ -1,0 +1,70 @@
+{
+  "UTC": "2026-10-11T08:03:27.942994+00:00",
+  "memory": {
+    "path": "runs/process_memory.json",
+    "sha256": "d85256d30393b733554a040c0f5fb729e70639e6734fc775ef0e920089a0c578",
+    "bytes": 4218
+  },
+  "control_plane_math_authority": false,
+  "consulted": [
+    {
+      "id": "ABRL-PM-MATCHED-HARNESS-EVIDENCE",
+      "process_only": true,
+      "evidence_checks": [
+        {
+          "path": "runs/harness-comparison/latest.json",
+          "sha256": "31bbf69dbc9254468ffb2348735108e1c79a12d7ac7247ad47368a9a5bb7744c",
+          "needle": "\"matched_experiments\": []",
+          "found": true
+        },
+        {
+          "path": "runs/harness-comparison/latest.json",
+          "sha256": "31bbf69dbc9254468ffb2348735108e1c79a12d7ac7247ad47368a9a5bb7744c",
+          "needle": "\"minimum_matched_experiments\": 2",
+          "found": true
+        }
+      ],
+      "application": "Keep atomic inputs, retain mathematical targets after tooling/API failures, preserve verified fragments, and leave scheduler defaults unchanged."
+    },
+    {
+      "id": "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS",
+      "process_only": true,
+      "evidence_checks": [
+        {
+          "path": "runs/trials.jsonl",
+          "sha256": "7fc52067114ba0c8d31779b8496bb181f921f243abf39424a7308e0775f05a98",
+          "needle": "SafeVerify metadata guard failed",
+          "found": true
+        }
+      ],
+      "application": "Keep atomic inputs, retain mathematical targets after tooling/API failures, preserve verified fragments, and leave scheduler defaults unchanged."
+    },
+    {
+      "id": "ABRL-NK-WINDOWS-PATH-LENGTH",
+      "process_only": true,
+      "evidence_checks": [
+        {
+          "path": "runs/trials.jsonl",
+          "sha256": "7fc52067114ba0c8d31779b8496bb181f921f243abf39424a7308e0775f05a98",
+          "needle": "path too long",
+          "found": true
+        }
+      ],
+      "application": "Keep atomic inputs, retain mathematical targets after tooling/API failures, preserve verified fragments, and leave scheduler defaults unchanged."
+    },
+    {
+      "id": "ABRL-NK-EXP3-API-SHAPE",
+      "process_only": true,
+      "evidence_checks": [
+        {
+          "path": "runs/trials.jsonl",
+          "sha256": "7fc52067114ba0c8d31779b8496bb181f921f243abf39424a7308e0775f05a98",
+          "needle": "API/algebra mismatches",
+          "found": true
+        }
+      ],
+      "application": "Keep atomic inputs, retain mathematical targets after tooling/API failures, preserve verified fragments, and leave scheduler defaults unchanged."
+    }
+  ],
+  "scheduler_defaults_changed": false
+}

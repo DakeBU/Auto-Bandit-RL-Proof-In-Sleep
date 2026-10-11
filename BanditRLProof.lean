@@ -793,3 +793,4 @@ import BanditRLProof.OnlineAdaptiveBenchmark
 import BanditRLProof.OnlineWeightedPotential
 import BanditRLProof.OnlineUnboundedOGD
 import BanditRLProof.OnlinePrescientEuclidean
+import BanditRLProof.OnlineCumulativePotential

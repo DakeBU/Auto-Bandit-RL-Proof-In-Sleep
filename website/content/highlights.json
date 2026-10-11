@@ -8584,6 +8584,22 @@
         "BanditRL.OnlinePrescientBregman.iterate_eq_of_source_updates",
         "BanditRL.OnlinePrescientBregman.source_fixed_regret"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineCumulativePotential.finite_regret_identity",
+      "title": "Why the terminal gap belongs in the regret identity",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 340,
+      "source_match": "closest-source",
+      "plain": "An arbitrary state type E, total real-valued functions psi and loss on natural time and E, an arbitrary sequence x, comparator u and terminal z, and a natural horizon T>0. No convexity, norm, optimizer, algorithm, probability or causal premise is required. Finite real arithmetic is a specialization: the full EReal/domain adapter remains separate. Indices are zero-based: source round s corresponds to t=s-1. G includes the current loss through t. Only the unscored coordinate T is spliced to z; all y(t)=x(t) for t<T. The original x(T) is unused. The interior drift has indices0..T-2; forT1 it is empty. T0 is not claimed.",
+      "math": "\\begin{gathered}G_t(v)=\\psi_t(v)+\\sum_{i=0}^{t}\\ell_i(v),\\quad y_t=\\begin{cases}z&t=T,\\\\x_t&t\\ne T.\\end{cases}\\\\R_T(u)=\\sum_{t=0}^{T-1}(\\ell_t(y_t)-\\ell_t(u))\\\\=\\psi_{T-1}(u)-\\psi_0(y_0)+\\sum_{t=0}^{T-1}\\bigl(G_t(y_t)-G_t(y_{t+1})\\bigr)\\\\\\quad+\\sum_{t=0}^{T-2}\\bigl(\\psi_t(y_{t+1})-\\psi_{t+1}(y_{t+1})\\bigr)+G_{T-1}(z)-G_{T-1}(u).\\end{gathered}",
+      "intuition": "The terminal point appears once with a minus sign inside the last within-potential difference and once with a plus sign in the endpoint gap. Their cancellation explains why the scored regret does not depend on an unplayed endpoint.",
+      "why": "One shared algebraic component needed by labeled terminal corrections, not a complete regret theorem or source-container count.",
+      "position": "Finite-real corrected accounting near Theorem7.47 proof, PDF141–142; related Theorem15.31 terminal convention, PDF278–279. The full EReal adapter, actual optimistic-FTRL/BTRL producers, ghost attainment, support qualification, strong-convex stability, Young estimate and whole corrected7.47/15.31 bounds remain open. A positive arbitrary terminal gap cannot be discarded.",
+      "proof_idea": "Put H_t(v)=sum_{i<t}loss_i(v), so G_t=psi_t+H_(t+1). The regularizer parts of the within-G sum, together with the interior drift, telescope to psi_0(y_0)-psi_(T-1)(z). The cumulative-loss parts telescope to sum_{t<T}loss_t(y_t)-H_T(z). Adding the final comparator regularizer minus the initial played regularizer and the retained G_(T-1)(z)-G_(T-1)(u) leaves exactly the regret. This is the mathematical cancellation argument, not a claimed implementation route.",
+      "lean_notes": "E has no additional typeclass assumptions; psi/loss are real-valued and T>0 is the only propositional premise. The boundary regularizer difference is psi_(T-1)(u)-psi_0(y_0): final comparator regularizer minus initial played regularizer. Local y and G are definitions, not extra hypotheses. The exact Lean header and full-proof source link use the declaration fold; these notes do not claim a complete rendered source-proof graph. Selected actual compiled direct VALUE occurrences are Nat.recAux, Finset.sum_range_succ, Finset.sum_range_zero and Nat.sub_add_cancel. Occurrence does not establish logical necessity or a complete transitive graph; Nat.rec is not the exported direct constant. The source-only AND topology remains distinct from these implementation occurrences. Locally compiled and independently production-BODY-reviewed finite-real identity; two compiled public canaries specialize the same core to check a positive gap, nonzero drift and the terminal splice. Full source performance bounds remain open. Unmerged and unpublished.",
+      "dependencies": []
     }
   ]
 }

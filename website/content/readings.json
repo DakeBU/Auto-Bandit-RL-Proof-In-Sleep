@@ -1979,6 +1979,28 @@
             "label": "Compiled prescient Euclidean specialization",
             "boundary": "Compiled local prescient Euclidean specialization; package validation and source-target reconciliation are recorded separately. Chapter2 remains partial and the Chapters1–16 Goal active. This is unmerged and unpublished."
           }
+        },
+        {
+          "label": "Corrected terminal accounting: the finite-real regret identity",
+          "pages": "printed129–130,266–267 / PDF141–142,278–279",
+          "pdf_page": 142,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=142",
+          "math": "\\begin{gathered}G_t(v)=\\psi_t(v)+\\sum_{i=0}^{t}\\ell_i(v),\\quad y_t=\\begin{cases}z&t=T,\\\\x_t&t\\ne T.\\end{cases}\\\\R_T(u)=\\sum_{t=0}^{T-1}(\\ell_t(y_t)-\\ell_t(u))\\\\=\\psi_{T-1}(u)-\\psi_0(y_0)+\\sum_{t=0}^{T-1}\\bigl(G_t(y_t)-G_t(y_{t+1})\\bigr)\\\\\\quad+\\sum_{t=0}^{T-2}\\bigl(\\psi_t(y_{t+1})-\\psi_{t+1}(y_{t+1})\\bigr)+G_{T-1}(z)-G_{T-1}(u).\\end{gathered}",
+          "plain": "An arbitrary state type E, total real-valued functions psi and loss on natural time and E, an arbitrary sequence x, comparator u and terminal z, and a natural horizon T>0. No convexity, norm, optimizer, algorithm, probability or causal premise is required. Finite real arithmetic is a specialization: the full EReal/domain adapter remains separate. Indices are zero-based: source round s corresponds to t=s-1. G includes the current loss through t. Only the unscored coordinate T is spliced to z; all y(t)=x(t) for t<T. The original x(T) is unused. The interior drift has indices0..T-2; forT1 it is empty. T0 is not claimed.",
+          "fallback": "Regret equals the final comparator regularizer minus the initial played regularizer, plus within-potential differences, interior regularizer drift and the terminal cumulative-objective gap.",
+          "relationship": "This is the finite-real corrected algebra subclause of repair:7.47-terminal, related to the terminal correction of Theorem15.31; it is not the literal full printed theorem. The source uses Euclidean feasible states and extended losses; the algebra abstracts the carrier and uses globally real functions. Repeating a virtual final hint is legitimate, but omitting its terminal residual can invalidate the sharp bound. The full EReal adapter, actual optimistic-FTRL/BTRL producers, ghost attainment, support qualification, strong-convex stability, Young estimate and whole corrected7.47/15.31 bounds remain open. A positive arbitrary terminal gap cannot be discarded.",
+          "contract": {
+            "model": "Exact deterministic accounting for arbitrary states and functions; no algorithmic run is asserted. Indices are zero-based: source round s corresponds to t=s-1. G includes the current loss through t. Only the unscored coordinate T is spliced to z; all y(t)=x(t) for t<T. The original x(T) is unused. The interior drift has indices0..T-2; forT1 it is empty. T0 is not claimed.",
+            "assumptions": "An arbitrary state type E, total real-valued functions psi and loss on natural time and E, an arbitrary sequence x, comparator u and terminal z, and a natural horizon T>0. No convexity, norm, optimizer, algorithm, probability or causal premise is required. Finite real arithmetic is a specialization: the full EReal/domain adapter remains separate.",
+            "parameters": "T is a positive natural number. u and z are independent arbitrary states; no relation between z and original x(T).",
+            "regret": "R_T(u)=sum_{t<T}(loss_t(y_t)-loss_t(u)); the scored states are unchanged by the terminal splice.",
+            "guarantee": "Full equality including every endpoint and drift term. The full EReal adapter, actual optimistic-FTRL/BTRL producers, ghost attainment, support qualification, strong-convex stability, Young estimate and whole corrected7.47/15.31 bounds remain open. A positive arbitrary terminal gap cannot be discarded."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Locally compiled corrected finite-real identity",
+            "boundary": "Locally compiled and independently production-BODY-reviewed finite-real identity; two compiled public canaries specialize the same core to check a positive gap, nonzero drift and the terminal splice. Full source performance bounds remain open. Unmerged and unpublished."
+          }
         }
       ],
       "worked_example": {

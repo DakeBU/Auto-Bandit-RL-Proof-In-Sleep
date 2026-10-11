@@ -1,0 +1,4 @@
+
+### B4 finite-real cumulative regret identity — proposed addition
+
+`BanditRL.OnlineCumulativePotential.finite_regret_identity` is one locally compiled and independently BODY-reviewed candidate for the finite-real corrected algebra subclause near Orabona v10 Theorem7.47 (PDF141–142), related to the Theorem15.31 terminal repair (PDF278–279). It retains the exact final comparator regularizer minus initial played regularizer, within-potential sum, interior drift and arbitrary terminal gap; T>0 and y(T)=z are explicit. No optimizer/algorithm or extended-real performance bound is asserted. Canary and combined package gates, publication and purification remain pending. Full EReal/producer/attainment/support/stability/Young and both corrected parent endpoints remain open. Chapter2 remains partial with seven containers and six future claims open, accepted=false and null complete proof denominator; Chapters1–16 Goal ACTIVE. Unmerged and unpublished.
