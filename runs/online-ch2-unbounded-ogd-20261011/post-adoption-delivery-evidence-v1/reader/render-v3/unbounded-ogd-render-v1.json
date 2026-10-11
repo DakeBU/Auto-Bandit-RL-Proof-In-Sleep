@@ -1,0 +1,85 @@
+{
+  "url": "http://127.0.0.1:8878/chapters/online-ogd/",
+  "siteSourceCommit": "609da50f3f5a41dca9ff2ab6d6d0cf8559d89487",
+  "sourceCards": 21,
+  "panels": [
+    {
+      "kind": "source-card",
+      "index": 20,
+      "text": "SOURCE THEOREM · FAITHFUL RESTATEMENT\nChapter 2 forward claim: actual OGD inherits Theorem 5.4’s affine lower bound\nOriginal at printed14,52–53 / PDF26,64–65 ↗\nBOUNDED ACTUAL OGD SOURCE RECONCILIATION ACCEPTED-LOCAL\nThe actual OGD package is accepted-local; docs/contracts/online-ch2-unbounded-ogd-v1/source-target-reconciliation-accepted-v1.json reconciles only the unbounded-variable-OGD-failure container. Seven required Chapter 2 forward containers and all six future mathematical claims remain open. B1-B7 and all other hard targets are preserved. Chapter 2 remains partial, accepted=false and complete proof denominator=null; Chapters 1-16 Goal ACTIVE. Main and live publication are unchanged; no merge, deployment or native whole-loop acceptance is claimed.\n\nAmbient Lean context: {E : Type*}, [NormedAddCommGroup E], [InnerProductSpace ℝ E], [FiniteDimensional ℝ E], and [Nontrivial E]. For every nontrivial finite-dimensional real inner-product space E, every 0<alpha<1, and every natural T satisfying T>=2/((1-alpha)*phi(alpha)), there exists a horizon-dependent sequence of globally convex, 1-Lipschitz, differentiable real losses. The SAME actual OnlineGradientDescent.iterateVariable/regretVariable run on fullSpace starts at zero and compares with zero, with source eta_t=t^(-alpha).\n\nMODEL\nSame causal actual OGD recursion and pre-update regret on the full space.\nASSUMPTIONS\nAmbient Lean context: {E : Type*}, [NormedAddCommGroup E], [InnerProductSpace ℝ E], [FiniteDimensional ℝ E], and [Nontrivial E]. For every nontrivial finite-dimensional real inner-product space E, every 0<alpha<1, and every natural T satisfying T>=2/((1-alpha)*phi(alpha)), there exists a horizon-dependent sequence of globally convex, 1-Lipschitz, differentiable real losses. The SAME actual OnlineGradientDescent.iterateVariable/regretVariable run on fullSpace starts at zero and compares with zero, with source eta_t=t^(-alpha).\nALGORITHM PARAMETERS\nLean loss index t is source round t+1; eta(t)=(t+1)^(-alpha), state0=x1=0, and loss t is scored at state t before updating to state(t+1). Comparator0 is unchanged. Existing phi_range and phi_limit remain separate accepted OSD supplements, not new direct proof parents of this terminal.\nREGRET NOTION\nR_T(0)=sum_{t=1}^T (loss_t(x_t)-loss_t(0)); exact factor1/2, zero initial point and comparator.\nGUARANTEE\nChoose a unit vector v and m=ceil(T/2). Let loss_t(z)=-<v,z> for source t<=m and +<v,z> thereafter. Each loss is globally differentiable, convex and 1-Lipschitz. Its actual gradient and the canonical OSD selected subgradient both equal the signed unit vector. Induction identifies the two actual trajectories at every time; their pre-update regret sums agree. Apply the accepted switching_vector_lower_bound to obtain the same exact half-phi bound. The loss stream may depend on T; no fixed infinite witness or Tendsto theorem is asserted.\nSource mathematical statement.\n\n\n𝜙\n(\n𝛼\n)\n=\n1\n2\n−\n𝛼\n+\n2\n𝛼\n−\n1\n−\n1\n1\n−\n𝛼\n,\n0\n<\n𝛼\n<\n1\n,\n𝑇\n≥\n2\n(\n1\n−\n𝛼\n)\n𝜙\n(\n𝛼\n)\n,\n\n\n∃\n(\nℓ\n𝑡\n)\n𝑡\n=\n1\n𝑇\n convex, 1-Lipschitz and differentiable\n:\n𝑅\n𝑇\nOGD\n(\n0\n)\n≥\n1\n2\n𝜙\n(\n𝛼\n)\n𝑇\n2\n−\n𝛼\n.\n\nBanditRLlib relationship. Chapter 2 printed14/PDF26 points to Section5.2. Theorem5.4 printed52–53/PDF64–65 literally states OSD; this result proves its explicit affine witness also drives actual OGD. Global differentiability is a proved strengthening of the witness regularity. Coordinate-free nontrivial finite-dimensional real inner-product spaces express the source Euclidean positive-dimensional construction. This is one specified polynomial schedule family, not every varying schedule or every learner. See the literal OSD statement at https://arxiv.org/pdf/1912.13213v10#page=64 and its proof at https://arxiv.org/pdf/1912.13213v10#page=65. The actual OGD package is accepted-local; docs/contracts/online-ch2-unbounded-ogd-v1/source-target-reconciliation-accepted-v1.json reconciles only the unbounded-variable-OGD-failure container. Seven required Chapter 2 forward containers and all six future mathematical claims remain open. B1-B7 and all other hard targets are preserved. Chapter 2 remains partial, accepted=false and complete proof denominator=null; Chapters 1-16 Goal ACTIVE. Main and live publication are unchanged; no merge, deployment or native whole-loop acceptance is claimed.\n\nThe mathematical content is restated in this site's notation; wording is ours. See printed14,52–53 / PDF26,64–65 in the linked source for the original statement and full assumptions.",
+      "mathContainers": 1,
+      "mathErrors": 0,
+      "sourceLinks": [
+        "https://arxiv.org/pdf/1912.13213v10#page=26"
+      ],
+      "file": "unbounded-ogd-source-card-20-v1.png",
+      "geometry": {
+        "left": 343.390625,
+        "right": 1400.609375,
+        "height": 1578.25,
+        "top": 179.671875,
+        "bottom": 1757.921875,
+        "scrollWidth": 1057,
+        "clientWidth": 1057,
+        "viewportWidth": 1440,
+        "viewportHeight": 1929
+      }
+    },
+    {
+      "kind": "teaching-proof",
+      "name": "regret_lower_bound",
+      "text": "MATHEMATICS ↔ LEAN\nClosest local match to the source theorem\nWhy decreasing-step OGD can fail without a bounded domain\n\nLEAN DECLARATION\nBanditRL.OnlineUnboundedOGD.regret_lower_bound\n\nCOMPILED\n\nPlain-English statement. Ambient Lean context: {E : Type*}, [NormedAddCommGroup E], [InnerProductSpace ℝ E], [FiniteDimensional ℝ E], and [Nontrivial E]. For every nontrivial finite-dimensional real inner-product space E, every 0<alpha<1, and every natural T satisfying T>=2/((1-alpha)*phi(alpha)), there exists a horizon-dependent sequence of globally convex, 1-Lipschitz, differentiable real losses. The SAME actual OnlineGradientDescent.iterateVariable/regretVariable run on fullSpace starts at zero and compares with zero, with source eta_t=t^(-alpha).\n\nMathematical reading.\n\n\n𝜙\n(\n𝛼\n)\n=\n1\n2\n−\n𝛼\n+\n2\n𝛼\n−\n1\n−\n1\n1\n−\n𝛼\n,\n0\n<\n𝛼\n<\n1\n,\n𝑇\n≥\n2\n(\n1\n−\n𝛼\n)\n𝜙\n(\n𝛼\n)\n,\n\n\n∃\n(\nℓ\n𝑡\n)\n𝑡\n=\n1\n𝑇\n convex, 1-Lipschitz and differentiable\n:\n𝑅\n𝑇\nOGD\n(\n0\n)\n≥\n1\n2\n𝜙\n(\n𝛼\n)\n𝑇\n2\n−\n𝛼\n.\nIntuition\nLarger early steps move the learner along a unit direction; after the affine slope switches halfway through, smaller later steps make the return too slow. The proof tracks the actual gradient trajectory.\nWhy it is needed\nSupply the algorithm-specific OGD bridge for the Chapter 2 unbounded-domain forward claim.\nPlace in the proof\nChapter 2 printed14/PDF26 points to Section5.2. Theorem5.4 printed52–53/PDF64–65 literally states OSD; this result proves its explicit affine witness also drives actual OGD. Global differentiability is a proved strengthening of the witness regularity. Coordinate-free nontrivial finite-dimensional real inner-product spaces express the source Euclidean positive-dimensional construction. This is one specified polynomial schedule family, not every varying schedule or every learner.\nProof and Lean reading notes\nProof idea\nChoose a unit vector v and m=ceil(T/2). Let loss_t(z)=-<v,z> for source t<=m and +<v,z> thereafter. Each loss is globally differentiable, convex and 1-Lipschitz. Its actual gradient and the canonical OSD selected subgradient both equal the signed unit vector. Induction identifies the two actual trajectories at every time; their pre-update regret sums agree. Apply the accepted switching_vector_lower_bound to obtain the same exact half-phi bound. The loss stream may depend on T; no fixed infinite witness or Tendsto theorem is asserted.\nLean reading notes\nAmbient Lean context: {E : Type*}, [NormedAddCommGroup E], [InnerProductSpace ℝ E], [FiniteDimensional ℝ E], and [Nontrivial E]. Lean loss index t is source round t+1; eta(t)=(t+1)^(-alpha), state0=x1=0, and loss t is scored at state t before updating to state(t+1). Comparator0 is unchanged. Existing phi_range and phi_limit remain separate accepted OSD supplements, not new direct proof parents of this terminal. Selected actual compiled VALUE parents: BanditRL.OnlineGradientDescentSource.gradient_linear, BanditRL.OnlineUnboundedOSD.currentSubgradient_affine, BanditRL.OnlineUnboundedOSD.switching_loss_regular, BanditRL.OnlineUnboundedOSD.switching_vector_lower_bound. Selected external Mathlib occurrences: exists_norm_eq, ContinuousLinearMap.differentiable, real_inner_smul_left. Occurrence is not necessity or a complete transitive graph. The actual OGD package is accepted-local; docs/contracts/online-ch2-unbounded-ogd-v1/source-target-reconciliation-accepted-v1.json reconciles only the unbounded-variable-OGD-failure container. Seven required Chapter 2 forward containers and all six future mathematical claims remain open. B1-B7 and all other hard targets are preserved. Chapter 2 remains partial, accepted=false and complete proof denominator=null; Chapters 1-16 Goal ACTIVE. Main and live publication are unchanged; no merge, deployment or native whole-loop acceptance is claimed. The ambient assumptions listed above are part of the theorem; the full-proof source link includes the section declarations.\nTeaching dependencies\nBanditRL.OnlineGradientDescentSource.gradient_linear, BanditRL.OnlineUnboundedOSD.currentSubgradient_affine, BanditRL.OnlineUnboundedOSD.switching_loss_regular, BanditRL.OnlineUnboundedOSD.switching_vector_lower_bound\nExact Lean statement\nOpen in the declaration catalog\nOpen source at line 12",
+      "mathContainers": 1,
+      "mathErrors": 0,
+      "file": "unbounded-ogd-teaching-regret_lower_bound-v1.png",
+      "geometry": {
+        "left": 357.78125,
+        "right": 1386.21875,
+        "height": 2505.359375,
+        "top": 180.359375,
+        "bottom": 2685.71875,
+        "scrollWidth": 1026,
+        "clientWidth": 1026,
+        "viewportWidth": 1440,
+        "viewportHeight": 2856
+      }
+    }
+  ],
+  "modules": [
+    {
+      "name": "regret_lower_bound",
+      "moduleURL": "http://127.0.0.1:8878/modules/banditrlproof-onlineunboundedogd/index.html",
+      "code": {
+        "text": "theorem regret_lower_bound [Nontrivial E] (α : ℝ) (hα0 : 0 < α) (hα1 : α < 1) (T : ℕ) (hT : 2 / ((1 - α) * BanditRL.OnlineUnboundedOSD.phi α) ≤ (T : ℝ)) : ∃ loss : ℕ → E → ℝ, (∀ t < T, ConvexOn ℝ univ (loss t) ∧ LipschitzWith 1 (loss t) ∧ Differentiable ℝ (loss t)) ∧ (1 / 2 : ℝ) * BanditRL.OnlineUnboundedOSD.phi α * (T : ℝ) ^ (2 - α) ≤ BanditRL.OnlineGradientDescent.regretVariable BanditRL.OnlineHuber.fullSpace (BanditRL.OnlineUnboundedOSD.powerSteps α) loss 0 0 T",
+        "scrollWidth": 1030,
+        "clientWidth": 1030,
+        "whiteSpace": "pre-wrap"
+      },
+      "sourceLink": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/609da50f3f5a41dca9ff2ab6d6d0cf8559d89487/BanditRLProof/OnlineUnboundedOGD.lean#L12",
+      "actualBuiltinWrapButtonClicked": true,
+      "proofBODYViaSourceLink": true,
+      "file": "unbounded-ogd-module-regret_lower_bound-v1.png",
+      "geometry": {
+        "left": 342.390625,
+        "right": 1401.609375,
+        "height": 547.984375,
+        "top": 996.390625,
+        "bottom": 1544.375,
+        "scrollWidth": 1057,
+        "clientWidth": 1057,
+        "viewportWidth": 1440,
+        "viewportHeight": 1800
+      }
+    }
+  ],
+  "images": [
+    "unbounded-ogd-source-card-20-v1.png",
+    "unbounded-ogd-teaching-regret_lower_bound-v1.png",
+    "unbounded-ogd-module-regret_lower_bound-v1.png"
+  ],
+  "errors": [],
+  "failed": [],
+  "sourceHorizontalScrollers": [],
+  "profilePreserved": "tmp/online-ch2-unbounded-ogd-reader-qa-20261011/edge-profile-v3",
+  "scope": "Actual isolated local HTTP desktop rendering; source-link targets checked separately after push; original pixels require personal inspection. No live/mobile claim."
+}
