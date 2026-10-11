@@ -121,3 +121,9 @@ import Tests.OnlineConvexBarycenterCanary
 import Tests.OnlineExpectationCanary
 import Tests.OnlineConvexMinorantCanary
 import Tests.OnlineJensenCanary
+import Tests.OnlineClosedProperCanary
+import Tests.OnlineDifferentiabilityBoundaryCanary
+import Tests.OnlineRelativeSubgradientCanary
+import Tests.OnlineSubgradientBasicCanary
+import Tests.OnlineSubgradientDifferentiabilityCanary
+import Tests.OnlineSubgradientInteriorCanary

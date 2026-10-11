@@ -715,3 +715,7 @@ import BanditRLProof.OnlineConvexBarycenter
 import BanditRLProof.OnlineExpectation
 import BanditRLProof.OnlineConvexMinorant
 import BanditRLProof.OnlineJensen
+import BanditRLProof.OnlineClosedProper
+import BanditRLProof.OnlineSubgradientBasic
+import BanditRLProof.OnlineSubgradientInterior
+import BanditRLProof.OnlineSubgradientDifferentiability

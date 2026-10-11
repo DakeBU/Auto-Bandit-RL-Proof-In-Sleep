@@ -2737,7 +2737,7 @@
       "plain": "Convexity and finiteness throughout a neighborhood produce a global affine support touching at the selected point. The proof derives no-bottom; no differentiability of the loss is assumed.",
       "math": "\\(a(x)+b=f(x),\\quad a(y)+b\\le f(y)\\)",
       "intuition": "Convexity and finiteness throughout a neighborhood produce a global affine support touching at the selected point. The proof derives no-bottom; no differentiability of the loss is assumed.",
-      "why": "Library dependency in the global-minorant route used by Jensen.",
+      "why": "Library dependency in the global-minorant route used by Jensen. The same canonical contact interface also supports the subgradient-existence and differentiability readers.",
       "position": "Supporting library lemma for the Jensen implementation; no separate printed source theorem is claimed here.",
       "proof_idea": "Convexity and finiteness throughout a neighborhood produce a global affine support touching at the selected point. The proof derives no-bottom; no differentiability of the loss is assumed.",
       "lean_notes": "Finite-dimensional real normed space. The finite-neighborhood lemma derives no-bottom; the domain-interior lemma assumes it. No measure, probability or loss-differentiability binder.",
@@ -2754,12 +2754,233 @@
       "plain": "No-bottom and ambient domain-interior membership imply neighborhood finiteness, so the preceding support theorem applies.",
       "math": "\\(a(x)+b=f(x),\\quad\\forall y,\\ a(y)+b\\le f(y)\\)",
       "intuition": "No-bottom and ambient domain-interior membership imply neighborhood finiteness, so the preceding support theorem applies.",
-      "why": "Library dependency in the global-minorant route used by Jensen.",
+      "why": "Library dependency in the global-minorant route used by Jensen. The same canonical contact interface also supports the subgradient-existence and differentiability readers.",
       "position": "Supporting library lemma for the Jensen implementation; no separate printed source theorem is claimed here.",
       "proof_idea": "No-bottom and ambient domain-interior membership imply neighborhood finiteness, so the preceding support theorem applies.",
       "lean_notes": "Finite-dimensional real normed space. The finite-neighborhood lemma derives no-bottom; the domain-interior lemma assumes it. No measure, probability or loss-differentiability binder.",
       "dependencies": [
         "BanditRL.OnlineConvex.affine_support_of_finite_neighborhood"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.sourceClosed_iff_lowerSemicontinuous",
+      "title": "Closedness and lower semicontinuity",
+      "chapter": "online-closed-proper",
+      "featured": false,
+      "teaching_order": 1,
+      "plain": "Take complements of real closed sublevels. The strict superlevel above negative infinity is the union of real strict superlevels; above positive infinity it is empty. This supplies every extended-real threshold.",
+      "math": "\\(\\operatorname{SourceClosed}(f)\\iff f\\text{ is lower semicontinuous}\\)",
+      "intuition": "Take complements of real closed sublevels. The strict superlevel above negative infinity is the union of real strict superlevels; above positive infinity it is empty. This supplies every extended-real threshold.",
+      "why": "Source-qualified prerequisite in the same shared Lean/Book registry; no new proof-count gain or Chapter2 completion.",
+      "position": "Orabona v10 printed16/PDF28; four numbered anchors/two definitions/two examples plus REQUIRED unnumbered equivalence,3retainedproofs/0newnodes.",
+      "proof_idea": "Take complements of real closed sublevels. The strict superlevel above negative infinity is the union of real strict superlevels; above positive infinity it is empty. This supplies every extended-real threshold.",
+      "lean_notes": "Arbitrary topological spaces generalize the source Euclidean/Hausdorff scope. No convexity, properness or separation premise is needed for closedness. The properness definition needs no topology, although its indicator equivalence retains a topology instance. The source cites the lower-semicontinuity equivalence externally and supplies no proofs for the two indicator examples; the explanations here are library proofs. Later source obligations, Chapter 2 and the whole book remain incomplete.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.sourceClosed_indicator_iff",
+      "title": "Closed constraint indicators",
+      "chapter": "online-closed-proper",
+      "featured": false,
+      "teaching_order": 2,
+      "plain": "For a real cut r, the indicator sublevel is V when r>=0 and empty otherwise. In particular the cut0 recovers V.",
+      "math": "\\(\\operatorname{SourceClosed}(I_V)\\iff V\\text{ is closed}\\)",
+      "intuition": "For a real cut r, the indicator sublevel is V when r>=0 and empty otherwise. In particular the cut0 recovers V.",
+      "why": "Source-qualified prerequisite in the same shared Lean/Book registry; no new proof-count gain or Chapter2 completion.",
+      "position": "Orabona v10 printed16/PDF28; four numbered anchors/two definitions/two examples plus REQUIRED unnumbered equivalence,3retainedproofs/0newnodes.",
+      "proof_idea": "Direct canonical indicator cuts V if r>=0 else empty, with r0 necessity; independent of the LSC theorem.",
+      "lean_notes": "Arbitrary topological spaces generalize the source Euclidean/Hausdorff scope. No convexity, properness or separation premise is needed for closedness. The properness definition needs no topology, although its indicator equivalence retains a topology instance. The source cites the lower-semicontinuity equivalence externally and supplies no proofs for the two indicator examples; the explanations here are library proofs. Later source obligations, Chapter 2 and the whole book remain incomplete.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.extendedIndicator"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.sourceProper_indicator_iff",
+      "title": "Proper constraint indicators",
+      "chapter": "online-closed-proper",
+      "featured": false,
+      "teaching_order": 3,
+      "plain": "The indicator never equals negative infinity; it has a finite real value exactly when a point of V exists.",
+      "math": "\\(\\operatorname{SourceProper}(I_V)\\iff V\\ne\\varnothing\\)",
+      "intuition": "The indicator never equals negative infinity; it has a finite real value exactly when a point of V exists.",
+      "why": "Source-qualified prerequisite in the same shared Lean/Book registry; no new proof-count gain or Chapter2 completion.",
+      "position": "Orabona v10 printed16/PDF28; four numbered anchors/two definitions/two examples plus REQUIRED unnumbered equivalence,3retainedproofs/0newnodes.",
+      "proof_idea": "The indicator never equals negative infinity; it has a finite real value exactly when a point of V exists.",
+      "lean_notes": "Arbitrary topological spaces generalize the source Euclidean/Hausdorff scope. No convexity, properness or separation premise is needed for closedness. The properness definition needs no topology, although its indicator equivalence retains a topology instance. The source cites the lower-semicontinuity equivalence externally and supplies no proofs for the two indicator examples; the explanations here are library proofs. Later source obligations, Chapter 2 and the whole book remain incomplete.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.extendedIndicator"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.subgradient_point_finite",
+      "title": "Support points have finite values",
+      "chapter": "online-subgradient-basic",
+      "featured": false,
+      "teaching_order": 1,
+      "plain": "A finite witness contradicts the global support inequality if the support point has value positive infinity.",
+      "math": "\\(g\\in\\partial f(x),\\ f\\text{ proper}\\ \\Longrightarrow\\ x\\in\\operatorname{dom}f\\)",
+      "intuition": "A finite witness contradicts the global support inequality if the support point has value positive infinity.",
+      "why": "Source-qualified reuse in SAME shared Lean/Book registry; no new proof-count gain or Chapter2 completion.",
+      "position": "Orabona v10 printed16-17/PDF28-29;2numberedanchors+required adjacent unnumbered domain group/2retainedproof1definition/0newnodes.",
+      "proof_idea": "Actual subgradient_point_finite requires SourceProper and global support, but drops convexity from the adjacent source observation: a stronger theorem. A finite global witness rules out f(x)=top. Universal x,g membership->domain exactly yields {x|S(f,x).Nonempty} subset effectiveDomain and empty support outside domain by unpacking g/contradiction. No converse or existence producer.",
+      "lean_notes": "The generic support predicate extends the printed proper-function definition to all extended-real functions. The support-point lemma retains properness and drops the source observation's convexity hypothesis. Theorem 2.21 keeps globally real f, convex V and a global support at each point of V; arbitrary real inner-product spaces generalize Euclidean space. Neither completeness nor finite dimension is assumed. Later source obligations, Chapter 2 and the whole book remain incomplete.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.SourceProper",
+        "BanditRL.OnlineConvex.SourceSubdifferential",
+        "BanditRL.OnlineConvex.effectiveDomain"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.theorem_2_21",
+      "title": "Everywhere subgradients imply convexity",
+      "chapter": "online-subgradient-basic",
+      "featured": false,
+      "teaching_order": 2,
+      "plain": "At a convex combination choose one global support, apply it at both endpoints, multiply by the nonnegative weights and cancel the linear terms.",
+      "math": "\\((\\forall x\\in V,\\ \\partial f(x)\\ne\\varnothing)\\Longrightarrow f|_V\\text{ convex}\\)",
+      "intuition": "At a convex combination choose one global support, apply it at both endpoints, multiply by the nonnegative weights and cancel the linear terms.",
+      "why": "Source-qualified reuse in SAME shared Lean/Book registry; no new proof-count gain or Chapter2 completion.",
+      "position": "Orabona v10 printed16-17/PDF28-29;2numberedanchors+required adjacent unnumbered domain group/2retainedproof1definition/0newnodes.",
+      "proof_idea": "Support at convex mixture; global tests at both endpoints; nonnegative weights incl0/1 cancel actual inner displacements. Theorem2.21 uses globally REAL f, Convex V and forall x in V exists g forall ambient y supporting inequality. Support existence is the printed hypothesis, not a produced general existence theorem or desired convexity input. No merely finite-on-V EReal extension.",
+      "lean_notes": "The generic support predicate extends the printed proper-function definition to all extended-real functions. The support-point lemma retains properness and drops the source observation's convexity hypothesis. Theorem 2.21 keeps globally real f, convex V and a global support at each point of V; arbitrary real inner-product spaces generalize Euclidean space. Neither completeness nor finite dimension is assumed. Later source obligations, Chapter 2 and the whole book remain incomplete.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.SourceSubdifferential"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.subgradient_exists_of_domain_interior",
+      "title": "Interior points admit global subgradients",
+      "chapter": "online-subgradient-interior",
+      "featured": false,
+      "teaching_order": 1,
+      "plain": "A proper convex extended-real function has a global supporting vector at every point of the interior of its effective domain.",
+      "math": "\\(x\\in\\operatorname{int}(\\operatorname{dom}f)\\Longrightarrow\\partial f(x)\\ne\\varnothing\\)",
+      "intuition": "An epigraph support at an interior domain point cannot be vertical.",
+      "why": "Provides prescribed-point contact or a global supporting vector in the ambient/relative-interior route. The retained stack proofs are integrated without mathematical changes.",
+      "position": "Orabona v10 printed17/PDF29; ambient assertion and required relative-interior footnote1, zero numbered anchors.",
+      "proof_idea": "Accepted ambient-contact theorem followed by actual Riesz and linearity; global queries include top outside domain.",
+      "lean_notes": "The vector results require a finite-dimensional real inner-product space and proper convex f. The contact helper only needs a finite-dimensional real normed space, no bottom values, convexity and the specified relative-interior point; these imply a finite witness. Contact is at that same point and the lower bound tests every ambient query. The source cites Rockafellar Theorem 23.4 without a local proof; this page explains the library construction. No boundary-wide existence, uniqueness or selection algorithm is claimed. Later source obligations, Chapter 2 and the whole book remain incomplete.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.affine_support_of_domain_interior",
+        "BanditRL.OnlineConvex.SourceSubdifferential"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.singleton_subdifferential_interior",
+      "title": "Singleton forces an interior point",
+      "chapter": "online-subgradient-differentiability",
+      "featured": false,
+      "teaching_order": 1,
+      "plain": "For a convex extended-real function finite at x in a finite-dimensional real inner-product space, a singleton global support set forces x into the ambient interior of its effective domain.",
+      "math": "\\(f\\text{ convex},\\ f(x)\\in\\mathbb R,\\ \\partial f(x)=\\{g\\}\\Longrightarrow x\\in\\operatorname{int}(\\operatorname{dom}f).\\)",
+      "intuition": "A finite point with a singleton global support set belongs to the ambient domain interior.",
+      "why": "Supports the singleton/gradient equivalence under the explicitly stated ambient real-germ interpretation. The source scope and differentiability gaps remain visible in the reader.",
+      "position": "Supporting lemma or endpoint for the separately specified library interpretation of Theorem 2.22; source scope and differentiability gaps remain explicit.",
+      "proof_idea": "A nonzero supporting normal at the ORIGINAL domain boundary yields a distinct global support g+d and contradicts singleton equality.",
+      "lean_notes": "The source defines subgradients for proper functions, but Theorem 2.22 prints a wider codomain without reconciling that scope (G-T22-SCOPE). It does not define extended-valued differentiability in the inspected passage (G-T22-DIFF). The library therefore separately specifies a total support predicate and an ambient finite-real-germ interpretation; these are explicit interpretations, not definitions supplied by that passage. The eleven theorems use finite-dimensional real inner-product spaces; the germ definition itself omits finite dimension. No-bottom and ambient interior are derived in the terminal directions, while individual helpers retain their stated local-finiteness, Lipschitz, continuity and nonbottom-filter premises. The source gives no local proof; the construction below is the library proof. Later source obligations, Chapter 2 and the whole book remain incomplete.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.singleton_subgradient_tendsto",
+      "title": "Compactness identifies every support limit",
+      "chapter": "online-subgradient-differentiability",
+      "featured": false,
+      "teaching_order": 4,
+      "plain": "Nearby supports converge to the singleton element using the actual local uniform bound and closed-graph limit.",
+      "math": "\\(g_y\\longrightarrow g\\)",
+      "intuition": "Nearby supports converge to the singleton element using the actual local uniform bound and closed-graph limit.",
+      "why": "Supports the singleton/gradient equivalence under the explicitly stated ambient real-germ interpretation. The source scope and differentiability gaps remain visible in the reader.",
+      "position": "Supporting lemma or endpoint for the separately specified library interpretation of Theorem 2.22; source scope and differentiability gaps remain explicit.",
+      "proof_idea": "Positive local ball bounds every actual nearby support; compact closedBall and unique global support limit on a NeBot filter produce convergence without assuming a gs limit.",
+      "lean_notes": "The source defines subgradients for proper functions, but Theorem 2.22 prints a wider codomain without reconciling that scope (G-T22-SCOPE). It does not define extended-valued differentiability in the inspected passage (G-T22-DIFF). The library therefore separately specifies a total support predicate and an ambient finite-real-germ interpretation; these are explicit interpretations, not definitions supplied by that passage. The eleven theorems use finite-dimensional real inner-product spaces; the germ definition itself omits finite dimension. No-bottom and ambient interior are derived in the terminal directions, while individual helpers retain their stated local-finiteness, Lipschitz, continuity and nonbottom-filter premises. The source gives no local proof; the construction below is the library proof. Later source obligations, Chapter 2 and the whole book remain incomplete.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.singleton_subdifferential_hasGradientAt",
+      "title": "Recover the Frechet gradient",
+      "chapter": "online-subgradient-differentiability",
+      "featured": false,
+      "teaching_order": 5,
+      "plain": "Two genuine supporting inequalities squeeze the derivative residual by a coefficient tending to zero.",
+      "math": "\\(\\|f(y)-f(x)-\\langle g,y-x\\rangle\\|=o(\\|y-x\\|)\\)",
+      "intuition": "Two genuine supporting inequalities squeeze the derivative residual by a coefficient tending to zero.",
+      "why": "Supports the singleton/gradient equivalence under the explicitly stated ambient real-germ interpretation. The source scope and differentiability gaps remain visible in the reader.",
+      "position": "Supporting lemma or endpoint for the separately specified library interpretation of Theorem 2.22; source scope and differentiability gaps remain explicit.",
+      "proof_idea": "A nonzero supporting normal at a domain boundary would give a second support g+d, so a singleton forces ambient interior. Convex local Lipschitzness bounds every nearby support; genuine nonbottom-filter limits and finite-dimensional compactness identify the selected support limit. Two actual global inequalities bound the nonnegative remainder by norm(G(y)-g)*norm(y-x), yielding the Frechet derivative. Proof-internal choice is not an algorithm or computational oracle.",
+      "lean_notes": "The source defines subgradients for proper functions, but Theorem 2.22 prints a wider codomain without reconciling that scope (G-T22-SCOPE). It does not define extended-valued differentiability in the inspected passage (G-T22-DIFF). The library therefore separately specifies a total support predicate and an ambient finite-real-germ interpretation; these are explicit interpretations, not definitions supplied by that passage. The eleven theorems use finite-dimensional real inner-product spaces; the germ definition itself omits finite dimension. No-bottom and ambient interior are derived in the terminal directions, while individual helpers retain their stated local-finiteness, Lipschitz, continuity and nonbottom-filter premises. The source gives no local proof; the construction below is the library proof. Later source obligations, Chapter 2 and the whole book remain incomplete.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.singleton_subdifferential_interior",
+        "BanditRL.OnlineConvex.singleton_subgradient_tendsto"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.theorem_2_22",
+      "title": "Differentiability iff singleton subdifferential",
+      "chapter": "online-subgradient-differentiability",
+      "featured": false,
+      "teaching_order": 6,
+      "plain": "Convex extended-real f finite at x is differentiable iff the global subdifferential is a singleton.",
+      "math": "\\(f\\text{ differentiable at }x\\iff\\exists g,\\partial f(x)=\\{g\\}\\)",
+      "intuition": "Convex extended-real f finite at x is differentiable iff the global subdifferential is a singleton.",
+      "why": "Supports the singleton/gradient equivalence under the explicitly stated ambient real-germ interpretation. The source scope and differentiability gaps remain visible in the reader.",
+      "position": "Supporting lemma or endpoint for the separately specified library interpretation of Theorem 2.22; source scope and differentiability gaps remain explicit.",
+      "proof_idea": "A real germ supplies finite-neighborhood affine CONTACT, hence global noBottom. Regularity and accepted Theorem2.7 produce actual global gradient support. A local minimum of the supported residual has derivative zero; Riesz injectivity gives uniqueness. Eventual equality of real representatives gives the same gradient. A nonzero supporting normal at a domain boundary would give a second support g+d, so a singleton forces ambient interior. Convex local Lipschitzness bounds every nearby support; genuine nonbottom-filter limits and finite-dimensional compactness identify the selected support limit. Two actual global inequalities bound the nonnegative remainder by norm(G(y)-g)*norm(y-x), yielding the Frechet derivative. Proof-internal choice is not an algorithm or computational oracle.",
+      "lean_notes": "The source defines subgradients for proper functions, but Theorem 2.22 prints a wider codomain without reconciling that scope (G-T22-SCOPE). It does not define extended-valued differentiability in the inspected passage (G-T22-DIFF). The library therefore separately specifies a total support predicate and an ambient finite-real-germ interpretation; these are explicit interpretations, not definitions supplied by that passage. The eleven theorems use finite-dimensional real inner-product spaces; the germ definition itself omits finite dimension. No-bottom and ambient interior are derived in the terminal directions, while individual helpers retain their stated local-finiteness, Lipschitz, continuity and nonbottom-filter premises. The source gives no local proof; the construction below is the library proof. Later source obligations, Chapter 2 and the whole book remain incomplete.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.singleton_subdifferential_hasGradientAt",
+        "BanditRL.OnlineConvex.theorem_2_22_gradient"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.theorem_2_22_gradient",
+      "title": "The singleton is the actual gradient",
+      "chapter": "online-subgradient-differentiability",
+      "featured": false,
+      "teaching_order": 7,
+      "plain": "SourceDifferentiableAt means a real differentiable representative h agrees with f throughout an AMBIENT neighborhood of x. It entails actual local finiteness, not merely smoothness of toReal or differentiation within the domain/affine span. The gradient identity holds for EVERY such representative.",
+      "math": "\\(\\partial f(x)=\\{\\nabla h(x)\\}\\)",
+      "intuition": "Every differentiable real representative agreeing with f near x has its gradient as the unique global subgradient.",
+      "why": "Supports the singleton/gradient equivalence under the explicitly stated ambient real-germ interpretation. The source scope and differentiability gaps remain visible in the reader.",
+      "position": "Supporting lemma or endpoint for the separately specified library interpretation of Theorem 2.22; source scope and differentiability gaps remain explicit.",
+      "proof_idea": "A real germ supplies finite-neighborhood affine CONTACT, hence global noBottom. Regularity and accepted Theorem2.7 produce actual global gradient support. A local minimum of the supported residual has derivative zero; Riesz injectivity gives uniqueness. Eventual equality of real representatives gives the same gradient.",
+      "lean_notes": "The source defines subgradients for proper functions, but Theorem 2.22 prints a wider codomain without reconciling that scope (G-T22-SCOPE). It does not define extended-valued differentiability in the inspected passage (G-T22-DIFF). The library therefore separately specifies a total support predicate and an ambient finite-real-germ interpretation; these are explicit interpretations, not definitions supplied by that passage. The eleven theorems use finite-dimensional real inner-product spaces; the germ definition itself omits finite dimension. No-bottom and ambient interior are derived in the terminal directions, while individual helpers retain their stated local-finiteness, Lipschitz, continuity and nonbottom-filter premises. The source gives no local proof; the construction below is the library proof. Later source obligations, Chapter 2 and the whole book remain incomplete.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.affine_support_of_finite_neighborhood"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.affine_support_of_relative_domain_interior",
+      "title": "Affine contact at the prescribed relative-interior point",
+      "chapter": "online-subgradient-interior",
+      "featured": false,
+      "teaching_order": 2,
+      "plain": "The functional and intercept satisfy a(x)+b=f(x) AT THE SPECIFIED x and a(y)+b<=f(y) for EVERY ambient y. A pure global minorant or contact at a different point is insufficient.",
+      "math": "\\(x\\in\\operatorname{ri}(\\operatorname{dom}f)\\Rightarrow\\exists a,b,\\ a(x)+b=f(x),\\ \\forall y,\\ a(y)+b\\le f(y)\\)",
+      "intuition": "Make the prescribed point the affine origin; retain equality while extending the functional.",
+      "why": "Provides prescribed-point contact or a global supporting vector in the ambient/relative-interior route. The retained stack proofs are integrated without mathematical changes.",
+      "position": "Necessary shared library intermediate for Orabona v10 printed17/PDF29 footnote1; not a separately printed theorem.",
+      "proof_idea": "Keep the supplied x as affine origin p=x, restrict f to the direction space of affineSpan(domain), transport the given ri membership to domain interior at0, and invoke the accepted canonical ambient CONTACT theorem. Extend its linear functional to all E, obtain continuity from finite dimensionality, and correct the intercept to b-Gp. Recover contact at the SAME original x; outside the domain f(y)=top. Riesz and linearity then yield the global supporting vector. Existing convex_affine_minorant is only an implementation method donor; its public output drops contact and is not a theorem-value dependency.",
+      "lean_notes": "The vector results require a finite-dimensional real inner-product space and proper convex f. The contact helper only needs a finite-dimensional real normed space, no bottom values, convexity and the specified relative-interior point; these imply a finite witness. Contact is at that same point and the lower bound tests every ambient query. The source cites Rockafellar Theorem 23.4 without a local proof; this page explains the library construction. No boundary-wide existence, uniqueness or selection algorithm is claimed. Later source obligations, Chapter 2 and the whole book remain incomplete.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.affine_support_of_domain_interior"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.subgradient_exists_of_relative_domain_interior",
+      "title": "Relative-interior points admit global subgradients",
+      "chapter": "online-subgradient-interior",
+      "featured": false,
+      "teaching_order": 3,
+      "plain": "Every proper convex function has a global supporting vector at every specified relative-interior point of its effective domain.",
+      "math": "\\(x\\in\\operatorname{ri}(\\operatorname{dom}f)\\Longrightarrow\\partial f(x)\\ne\\varnothing\\)",
+      "intuition": "Contact at the original point turns the extended affine lower bound into a subgradient inequality.",
+      "why": "Provides prescribed-point contact or a global supporting vector in the ambient/relative-interior route. The retained stack proofs are integrated without mathematical changes.",
+      "position": "Orabona v10 printed17/PDF29 footnote1, required unnumbered source branch.",
+      "proof_idea": "Invoke new prescribed-point relative affine contact; Riesz representation and linearity yield the SAME global SourceSubdifferential.",
+      "lean_notes": "The vector results require a finite-dimensional real inner-product space and proper convex f. The contact helper only needs a finite-dimensional real normed space, no bottom values, convexity and the specified relative-interior point; these imply a finite witness. Contact is at that same point and the lower bound tests every ambient query. The source cites Rockafellar Theorem 23.4 without a local proof; this page explains the library construction. No boundary-wide existence, uniqueness or selection algorithm is claimed. Later source obligations, Chapter 2 and the whole book remain incomplete.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.affine_support_of_relative_domain_interior",
+        "BanditRL.OnlineConvex.SourceSubdifferential"
       ]
     }
   ]
