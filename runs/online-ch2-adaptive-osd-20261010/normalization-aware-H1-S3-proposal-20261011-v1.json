@@ -1,0 +1,36 @@
+{
+  "status": "prepared-only; distinct normalization review required; no helper executed",
+  "H0": "39e4bc0102227fce549c692bd5f18f20cc4b9983",
+  "audit": {
+    "path": "tmp/online-ch2-adaptive-osd-H0-RAW-normalization-audit-20261011-v1.json",
+    "sha256": "9d572dd1639994ade743a5ba4cb20b30099132bc3855c35e542bfd45ec861b83"
+  },
+  "H1_helper": {
+    "path": "tmp/online-ch2-adaptive-osd-H1-preparation-20261011/commit-reviewed-adaptive-evidence-prepared-20261011-v3.py",
+    "sha256": "08633cad398d68135fe6cd2fc586c645229b6349eb58c26b2a4c0526e7b5caef"
+  },
+  "S3_inspector": {
+    "path": "tmp/online-ch2-adaptive-osd-S3-preparation-20261011/inspect-exact-head-delivery-prepared-20261011-v6.py",
+    "sha256": "f380934346b0aaac8f6a7e5c9bbfbdd0e975059c70d81afcb6fb5e434c3b9acb"
+  },
+  "finite_exception_count": 979,
+  "exact_RAW_Git_count": 196,
+  "owned_canonical_paths_exact_RAW_count": 12,
+  "owned_exception_overlap": 0,
+  "normalization": "Per listed path only: rawSHA and byte count/CRLF count equal immutable audit, CRLF-to-LF hash and Git blob identity match pinned H0 blob. No blanket conversion, source write or Git filter change. Complete1175 raw sourcebinding still exactly unchanged. H0/H1/index Git blobs remain equal.",
+  "review_schema": [
+    "verdict=accepted",
+    "blocking_repairs=[]",
+    "approved_normalization_audit_sha256",
+    "approved_H1_helper_sha256",
+    "approved_S3_inspector_sha256"
+  ],
+  "CLI": [
+    "--normalization-audit actual_exact_copy_path",
+    "--normalization-review actual_review_path",
+    "--normalization-review-sha actual_immutable_review_SHA"
+  ],
+  "retained_failure": "tmp/online-ch2-adaptive-osd-H1-commit-20261011-v1.json; actual_exit1 before any Git command mutation, commands=[]",
+  "other_gates": "Existing postnative design approval/state hashpair, explicit H1 approval for S3, scopes, clean state, prefix preservation, staged evidence RAW, zero whitespace and exact commit message remain unchanged.",
+  "validation": "AST compile only; finite audit uniqueness/owned12 nonintersection checked read-only; no Git mutation or RUN write"
+}
