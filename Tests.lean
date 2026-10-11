@@ -113,3 +113,5 @@ import Tests.OnlineConvexFirstOrderCanary
 import Tests.OnlineGradientDescentCanary
 import Tests.OnlineGradientDescentVariableCanary
 import Tests.OnlineGradientDescentSourceCanary
+import Tests.OnlineConvexClosuresCanary
+import Tests.OnlineConvexSumsCanary

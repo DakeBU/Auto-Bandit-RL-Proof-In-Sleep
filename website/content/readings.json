@@ -1843,7 +1843,166 @@
             "fallback": "Affine functions satisfy equality; the norm satisfies the convexity inequality."
           }
         ],
-        "boundary": "Abstract real modules and normed spaces generalize the printed Euclidean examples. Empty domains are permitted. No-bottom is required only where stated. The separate finite-loss/domain-intersection theorem, closure constructions and the rest of Chapter 2 are outside this integration."
+        "boundary": "Abstract real modules and normed spaces generalize the printed Euclidean examples. Empty domains are permitted. No-bottom is required only where stated. Closure constructions have a separate bounded reader; the finite-loss/domain-intersection consequence and the rest of Chapter 2 remain outside these foundation proofs."
+      }
+    },
+    {
+      "slug": "online-convex-closures",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10, 21 June 2026",
+        "sections": "Section 2.1.1, four unnumbered closure bullets; proofs assigned as exercises on the following page",
+        "pages": "printed pp. 10–11 / physical PDF pp. 22–23",
+        "pdf_page": 22,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "dom f",
+          "meaning": "Points where f is strictly below positive infinity; negative infinity is included."
+        },
+        {
+          "term": "epigraph",
+          "meaning": "Pairs (x,r) with real height r at least f(x). Infinite heights are not coordinates."
+        },
+        {
+          "term": "upperAdd",
+          "meaning": "Named top-dominant addition -(-a+-b); ordinary EReal addition is bottom-dominant. Attributed interpretation of the unstated source convention, with zero-times-infinity=zero in scalar multiplication."
+        }
+      ],
+      "algorithm": {
+        "title": "Recognize a convex construction",
+        "kind": "mathematical closure rules",
+        "steps": [
+          {
+            "title": "Affine input",
+            "detail": "Pull the epigraph back along an affine map that leaves heights unchanged."
+          },
+          {
+            "title": "Supremum",
+            "detail": "Intersect all the epigraphs, including an empty indexed family."
+          },
+          {
+            "title": "Monotone composition",
+            "detail": "For real f and g, combine convexity with global monotonicity of g."
+          }
+        ]
+      },
+      "teaching_route": [
+        "BanditRL.OnlineConvex.convex_comp_affine",
+        "BanditRL.OnlineConvex.convex_iSup",
+        "BanditRL.OnlineConvex.convex_comp_monotone",
+        "BanditRL.OnlineConvex.convex_nonneg_linear_combination"
+      ],
+      "source_theorems": [
+        {
+          "label": "Three convexity-preserving operations",
+          "pages": "printed p. 10",
+          "pdf_page": 22,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "f\\circ A,\\qquad\\sup_i f_i,\\qquad g\\circ f",
+          "fallback": "Affine precomposition, pointwise supremum, and monotone real convex composition preserve convexity.",
+          "plain": "These are three of the four printed closure statements. Their proofs are left as exercises. The empty-family result uses the explicit library convention sup(empty) = negative infinity.",
+          "relationship": "The three shared endpoints are convex_comp_affine, convex_iSup and convex_comp_monotone. Real-module carriers generalize the printed Euclidean spaces. The source does not spell out an empty-supremum convention; the complete-lattice convention is made explicit here. The proof bridge below describes the library proofs, not an author-supplied derivation.",
+          "contract": {
+            "model": "Extended-real epigraph convexity for affine maps and suprema; real-valued functions for monotone composition.",
+            "assumptions": "Arbitrary affine map and arbitrary index for extended-real inputs, including empty index. Composition keeps globally real-valued convex f and g and globally nondecreasing g; g is not applied to infinite values.",
+            "parameters": "All input points; empty family included.",
+            "regret": "These are convexity-preservation implications, not regret bounds.",
+            "guarantee": "Convexity of the three named constructions."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Scoped convexity proof",
+            "boundary": "Later Chapter2 results remain incomplete."
+          }
+        },
+        {
+          "label": "Nonnegative linear combinations with convex upper addition",
+          "pages": "printed p. 10",
+          "pdf_page": 22,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "a f(x)\\mathbin{+_{\\mathrm{upper}}}b g(x),\\qquad a,b\\ge0",
+          "fallback": "Nonnegative scaling and convex upper addition preserve extended-real epigraph convexity.",
+          "plain": "At mixed infinities, named upper addition returns positive infinity; the convention is an explicitly attributed interpretation and is not printed by Orabona. Ordinary mathlib EReal addition differs.",
+          "relationship": "The shared endpoint is convex_nonneg_linear_combination. Orabona leaves the mixed-infinity arithmetic unspecified. The top-dominant interpretation is separately attributed to Rockafellar, Conjugate Duality and Optimization, printed p. 6 / physical PDF p. 17: https://sites.math.washington.edu/~rtr/papers/rtr054-ConjugateDuality.pdf (SHA256 29d57ab07857b8270c175343746c77b4138f2db6161ae20174a0bba076991b0e). That paragraph states convex sum closure under the convention; it does not supply the witness proof below. Zero times either infinity equals zero is an additional explicit library arithmetic convention, not a rule established by this Rockafellar paragraph. The public spike canary disproves closure under ordinary bottom-dominant EReal addition.",
+          "contract": {
+            "model": "Arbitrary extended-real epigraph-convex functions on real vector spaces.",
+            "assumptions": "Convex f and g, nonnegative real coefficients; top-dominant upperAdd and zero-times-infinity=zero are explicit operations.",
+            "parameters": "All points and all coefficients >=0, including zero.",
+            "regret": "These are convexity-preservation implications, not regret bounds.",
+            "guarantee": "Convexity of the upper-addition combination, with both infinities retained."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Explicit upper-addition proof",
+            "boundary": "The operation convention is part of the contract; this is not a theorem for ordinary EReal addition and does not complete Chapter2."
+          }
+        }
+      ],
+      "worked_example": {
+        "title": "Intersect two constraints by a supremum",
+        "steps": [
+          {
+            "title": "Keep both constraints",
+            "detail": "The supremum is finite only where both input indicators are zero.",
+            "math": "\\sup\\{\\iota_{[0,\\infty)}(x),\\iota_{(-\\infty,2]}(x)\\}",
+            "fallback": "Both constraints must hold."
+          },
+          {
+            "title": "Check a feasible value",
+            "detail": "At x=1 both indicators are zero, so the supremum is zero.",
+            "math": "h(1)=0",
+            "fallback": "One is feasible."
+          },
+          {
+            "title": "Check an excluded value",
+            "detail": "At x=3 the upper constraint fails, so the supremum is positive infinity.",
+            "math": "h(3)=+\\infty",
+            "fallback": "Three is excluded."
+          }
+        ],
+        "takeaway": "An epigraph intersection gives convexity of the resulting constrained loss.",
+        "boundary": "The public canary verifies these distinct values and convexity, and separately instantiates empty-index and noninjective-affine cases. The separate upper-addition canary distinguishes convex-analysis addition from ordinary EReal addition. Later Chapter2 results remain incomplete.",
+        "intro": "Take the zero-or-positive-infinity indicators of x>=0 and x<=2."
+      },
+      "proof_bridge": {
+        "title": "Four constructions through real-height epigraphs",
+        "summary": "Orabona leaves all four proofs as exercises. These are the retained library proof routes. Rockafellar supplies the separately attributed mixed-addition convention; neither source is credited with the implementation arguments below.",
+        "steps": [
+          {
+            "title": "Pull back along the affine input map",
+            "detail": "A point (x,r) lies in the new epigraph exactly when (A(x),r) lies in the old one. The map that applies A to the input and leaves the real height unchanged is affine. Its preimage of a convex set is convex. Injectivity, nonempty domains and finite-valued losses are unnecessary.",
+            "math": "\\(\\operatorname{epi}_{\\mathbb R}(f\\circ A)=\\{(x,r):(A(x),r)\\in\\operatorname{epi}_{\\mathbb R}f\\}.\\)",
+            "fallback": "The new epigraph is an affine preimage of the old epigraph."
+          },
+          {
+            "title": "Turn a supremum into an intersection",
+            "detail": "A real height bounds the supremum precisely when it bounds every family member. Intersections of convex epigraphs are convex. For the empty family, the library supremum is negative infinity and the intersection is the whole product space; this is an explicit formal boundary convention.",
+            "math": "\\(\\operatorname{epi}_{\\mathbb R}(\\sup_i f_i)=\\bigcap_i\\operatorname{epi}_{\\mathbb R}f_i,\\qquad\\sup\\varnothing=-\\infty.\\)",
+            "fallback": "One height bounds the supremum if and only if it bounds every member."
+          },
+          {
+            "title": "Use monotonicity between two real convexity inequalities",
+            "detail": "Here f and g are globally real-valued. Convexity of f first bounds its value at a convex combination. Global monotonicity of g carries that inequality through g; convexity of g then bounds the real convex combination. The finite-value coercion equivalence transfers this argument to the epigraph predicate.",
+            "math": "\\(g(f(\\theta x+(1-\\theta)y))\\le g(\\theta f(x)+(1-\\theta)f(y))\\le\\theta g(f(x))+(1-\\theta)g(f(y)),\\quad0\\le\\theta\\le1.\\)",
+            "fallback": "Apply convexity of f, monotonicity of g, and convexity of g in that order."
+          },
+          {
+            "title": "Use upper addition and finite-height witnesses",
+            "detail": "The named operation is upperAdd(a,b) = -(-a + -b), using ordinary bottom-dominant EReal addition inside. It agrees with real addition on finite inputs and returns positive infinity whenever either input is positive infinity, including mixed infinities. These laws follow by the extended-real cases; they are supporting library facts rather than additional printed Orabona theorems. For any extended-real a and b and real h, the upper sum is at most h exactly when a and b admit real upper heights r and s whose sum is at most h. The finite and infinite cases establish this equivalence. Lift two epigraph points using these witnesses, apply convexity to f and g separately, and add the resulting real height inequalities.",
+            "math": "\\(a+_{\\rm upper}b=-((-a)+(-b)),\\qquad (+\\infty)+_{\\rm upper}(-\\infty)=+\\infty,\\qquad r+_{\\rm upper}s=r+s\\ (r,s\\in\\mathbb R).\\) \\(a+_{\\rm upper}b\\le h\\iff\\exists r,s\\in\\mathbb R:\\ a\\le r,\\ b\\le s,\\ r+s\\le h.\\)",
+            "fallback": "Upper addition agrees with real addition but lets positive infinity dominate. Witness heights reduce upper-sum convexity to two ordinary real height inequalities."
+          },
+          {
+            "title": "Separate zero scaling from positive scaling",
+            "detail": "At zero weight the explicit scalar convention makes the function constantly zero, including infinite original values. For a positive weight, divide the finite epigraph height by that weight and use convexity of the original function. Scaling f and g independently and then applying upper-sum convexity proves the full nonnegative combination, without properness or a common nonempty domain.",
+            "math": "\\(c>0:\\quad cf(x)\\le h\\iff f(x)\\le h/c,\\qquad 0f(x)=0;\\qquad af+_{\\rm upper}bg\\text{ is convex for }a,b\\ge0.\\)",
+            "fallback": "Handle zero coefficients explicitly, divide positive coefficients, then combine the two convex functions."
+          }
+        ],
+        "boundary": "Real modules generalize the Euclidean source. Affine precomposition and suprema allow both infinities; monotone composition keeps real-valued f and g and global monotonicity. Empty supremum, top-dominant addition and zero-times-infinity are explicit conventions, not silently attributed source text. Ordinary EReal addition is not covered by the weighted-sum claim. This package does not prove the finite-loss/domain-intersection consequence, later Chapter 2 routes, or an online regret guarantee."
       }
     },
     {

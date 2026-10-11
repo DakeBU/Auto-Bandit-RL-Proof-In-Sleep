@@ -707,3 +707,5 @@ import BanditRLProof.OnlineConvexFirstOrder
 import BanditRLProof.OnlineGradientDescent
 import BanditRLProof.OnlineGradientDescentVariable
 import BanditRLProof.OnlineGradientDescentSource
+import BanditRLProof.OnlineConvexClosures
+import BanditRLProof.OnlineConvexSums

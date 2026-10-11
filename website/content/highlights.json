@@ -2365,6 +2365,75 @@
       "proof_idea": "Take a minimizer from Mathlib. For two minimizing points p and q, the variational characterization gives <z-p,q-p> <= 0 and <z-q,p-q> <= 0. Adding these inequalities gives ||q-p||^2 <= 0, hence q=p.",
       "lean_notes": "The source finite-dimensional Euclidean setting is generalized to a complete real inner-product space. Nonempty, closed and convex are explicit Domain fields; no boundedness or compactness is added. project_spec characterizes the unchanged selected projection using exactly this minimizer predicate. No executable solver, arbitrary Banach-space projection or nonexpansiveness claim. The proof reuses Mathlib exists_norm_eq_iInf_of_complete_convex and norm_eq_iInf_iff_real_inner_le_zero; these upstream dependencies are not local declaration nodes.",
       "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.convex_comp_affine",
+      "title": "Convexity under affine precomposition",
+      "chapter": "online-convex-closures",
+      "featured": false,
+      "teaching_order": 1,
+      "plain": "An arbitrary affine change of input preserves extended-real epigraph convexity.",
+      "math": "\\(x\\mapsto f(Ax)\\)",
+      "intuition": "An arbitrary affine change of input preserves extended-real epigraph convexity.",
+      "why": "An exact main-text closure operation used to recognize convex losses.",
+      "position": "Orabona v10, printed p. 10 / PDF p. 22, closure bullets; proofs assigned as exercises on printed p. 11.",
+      "proof_idea": "Take the epigraph preimage under the product affine map preserving heights.",
+      "lean_notes": "No extra domain/image-convexity, finite-value or nonempty-index hypotheses are introduced. Mathlib API use is recorded in the proof explanation and compiled dependency evidence; this teaching link points to the shared epigraph definition.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.realEpigraph"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.convex_iSup",
+      "title": "Convexity of pointwise suprema",
+      "chapter": "online-convex-closures",
+      "featured": false,
+      "teaching_order": 2,
+      "plain": "The supremum of an arbitrary convex family is convex, including an empty index.",
+      "math": "\\(x\\mapsto\\sup_i f_i(x)\\)",
+      "intuition": "The supremum of an arbitrary convex family is convex, including an empty index.",
+      "why": "An exact main-text closure operation used to recognize convex losses.",
+      "position": "Orabona v10, printed p. 10 / PDF p. 22, closure bullets; proofs assigned as exercises on printed p. 11.",
+      "proof_idea": "Identify the real-height epigraph with the intersection of all input epigraphs.",
+      "lean_notes": "No extra domain/image-convexity, finite-value or nonempty-index hypotheses are introduced. Mathlib API use is recorded in the proof explanation and compiled dependency evidence; this teaching link points to the shared epigraph definition. The empty-index case uses the explicit complete-lattice supremum convention, not an arithmetic convention stated by Orabona.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.realEpigraph"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.convex_comp_monotone",
+      "title": "Monotone convex composition",
+      "chapter": "online-convex-closures",
+      "featured": false,
+      "teaching_order": 3,
+      "plain": "Real convex f and globally nondecreasing convex g have convex composition.",
+      "math": "\\(x\\mapsto g(f(x))\\)",
+      "intuition": "Real convex f and globally nondecreasing convex g have convex composition.",
+      "why": "An exact main-text closure operation used to recognize convex losses.",
+      "position": "Orabona v10, printed p. 10 / PDF p. 22, closure bullets; proofs assigned as exercises on printed p. 11.",
+      "proof_idea": "Combine f convexity, global monotonicity, and g convexity through the finite embedding iff.",
+      "lean_notes": "Globally real-valued convex f and g, with global Monotone g, exactly as printed. No extension of g to infinite values or extra convex-image premise. General real-module inputs include the source Euclidean setting.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.convexExtended_coe_iff"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.convex_nonneg_linear_combination",
+      "title": "Nonnegative combinations with convex upper addition",
+      "chapter": "online-convex-closures",
+      "featured": false,
+      "teaching_order": 4,
+      "plain": "General extended-real convex functions remain convex under nonnegative scaling and top-dominant upper addition.",
+      "math": "\\(x\\mapsto a f(x)\\mathbin{+_{\\mathrm{upper}}}b g(x),\\quad a,b\\ge0\\)",
+      "intuition": "The operation at mixed infinities matters for the epigraph.",
+      "why": "Completes the remaining closure operation under an explicitly documented convex-analysis convention.",
+      "position": "Orabona v10, printed p. 10 / PDF p. 22, closure bullets; proofs assigned as exercises on printed p. 11.",
+      "proof_idea": "Decompose finite upper heights into two real witnesses, combine epigraph points, then split scaling into zero and positive cases.",
+      "lean_notes": "No noBottom, properness, common-domain or positive-only coefficient restriction. Named upperAdd uses an explicitly attributed Rockafellar convention not printed by Orabona; scalar multiplication includes zero-times-infinity=zero. Ordinary EReal addition has the public spike counterexample. Zero-times-infinity is an explicit library convention; the cited Rockafellar paragraph discusses strictly positive scaling nearby and does not establish the zero case.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.convex_upperAdd",
+        "BanditRL.OnlineConvex.convex_nonneg_mul"
+      ]
     }
   ]
 }

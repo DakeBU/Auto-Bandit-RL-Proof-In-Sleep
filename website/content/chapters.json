@@ -333,9 +333,9 @@
       "status": "compiled",
       "summary": "Real-height epigraphs, effective domains, constraint indicators and the source convexity characterization.",
       "audience": "Readers of Orabona Chapter 2 convex-analysis foundations.",
-      "completion_definition": "Definitions 2.2–2.3, Theorem 2.4 with no negative infinity and a convex effective domain, the domain/indicator consequences, and Examples 2.5–2.6. The norm example includes the proof left as an exercise. Convexity closure constructions and the separate finite-loss/domain-intersection consequence require separate integration. This does not complete Chapter 2.",
+      "completion_definition": "Definitions 2.2–2.3, Theorem 2.4 with no negative infinity and a convex effective domain, the domain/indicator consequences, and Examples 2.5–2.6. The norm example includes the proof left as an exercise. Closure constructions have a separate bounded reader. The finite-loss/domain-intersection consequence remains outside this foundation package. This does not complete Chapter 2.",
       "completion_blockers": [
-        "The separate finite-loss/domain-of-sum intersection theorem, closure constructions and remaining Chapter 2 results require separate integration. Membership in V alone does not ensure finite f."
+        "The separate finite-loss/domain-of-sum intersection theorem and remaining Chapter 2 results require separate integration. Membership in V alone does not ensure finite f."
       ],
       "learning_goals": [
         "Keep positive and negative infinity distinct from finite real values.",
@@ -345,6 +345,32 @@
       "module_globs": [
         "BanditRLProof/OnlineConvexExtended.lean",
         "BanditRLProof/OnlineConvexExamples.lean"
+      ],
+      "open_gaps": [
+        "The rest of Chapter 2 remains incomplete.",
+        "These mathematical interfaces are not a complete online algorithm or whole-book proof."
+      ]
+    },
+    {
+      "slug": "online-convex-closures",
+      "title": "Convexity-preserving constructions",
+      "short_title": "Convex constructions",
+      "status": "compiled",
+      "summary": "Affine precomposition, arbitrary suprema, monotone real composition and nonnegative combinations with explicit convex upper addition.",
+      "audience": "Readers of Orabona Chapter 2 convex-analysis foundations.",
+      "completion_definition": "Four printed closure statements under explicit interface conventions: arbitrary affine precomposition, indexed suprema, globally real monotone composition and nonnegative combinations using attributed top-dominant upper addition. Twelve retained declarations support these four endpoints; this does not complete Chapter 2.",
+      "completion_blockers": [
+        "The separate finite-loss/domain-intersection consequence, optimality, Jensen, subgradient theory and later Chapter 2 routes remain outside this integration."
+      ],
+      "learning_goals": [
+        "Use affine changes of input without extra map assumptions.",
+        "Recognize the epigraph intersection behind an arbitrary supremum.",
+        "Keep the real-valued and global-monotonicity hypotheses of composition.",
+        "Distinguish convex upper addition from ordinary bottom-dominant EReal addition."
+      ],
+      "module_globs": [
+        "BanditRLProof/OnlineConvexClosures.lean",
+        "BanditRLProof/OnlineConvexSums.lean"
       ],
       "open_gaps": [
         "The rest of Chapter 2 remains incomplete.",
