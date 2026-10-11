@@ -107,3 +107,9 @@ import Tests.HeavyTailRegretCapCanary
 import Tests.MusicalChairsCoordinationCanary
 import Tests.MusicalChairsCoordinationRegretCanary
 import Tests.MusicalChairsLearnerCanary
+import Tests.OnlineConvexExtendedCanary
+import Tests.OnlineConvexExamplesCanary
+import Tests.OnlineConvexFirstOrderCanary
+import Tests.OnlineGradientDescentCanary
+import Tests.OnlineGradientDescentVariableCanary
+import Tests.OnlineGradientDescentSourceCanary

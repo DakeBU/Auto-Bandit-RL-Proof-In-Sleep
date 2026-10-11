@@ -277,7 +277,9 @@
       "position": "It connects the generated conditional reward law to the self-normalized matrix layer.",
       "proof_idea": "Apply the conditional sub-Gaussian MGF lemma at each round, use predictable measurability and the projection bound, and assemble the compensated sum.",
       "lean_notes": "The theorem explicitly requires a probability measure, filtration, strong adaptation, predictable projections, nonnegative projection bounds, and per-round conditional MGF witnesses. It is not an independence-only Hoeffding statement.",
-      "dependencies": ["BanditRLProof.ConditionalExpectationReward.historyStepKernelFamily_centeredReward_succ_hasCondSubgaussianMGF_trajMeasure"]
+      "dependencies": [
+        "BanditRLProof.ConditionalExpectationReward.historyStepKernelFamily_centeredReward_succ_hasCondSubgaussianMGF_trajMeasure"
+      ]
     },
     {
       "full_name": "BanditRLProof.OFUL.measure_finiteHorizonRidgeEstimate_error_matrixNorm_gt_confidenceRadius_le",
@@ -290,7 +292,9 @@
       "position": "It consumes the Gaussian-mixture self-normalized bound and feeds the optimistic finite-action score.",
       "proof_idea": "Rewrite the ridge error into noise and regularization terms, control the first by the determinant-ratio tail, bound the second by the supplied bias radius, and use the matrix-norm triangle inequality.",
       "lean_notes": "Positive definiteness, feature/noise measurability, adaptation, response identity, positive variance scale, delta domain, and the bias bound are explicit in the signature.",
-      "dependencies": ["BanditRLProof.OFUL.fixedDirectionCompensatedScore_hasMGFUpperBoundAt"]
+      "dependencies": [
+        "BanditRLProof.OFUL.fixedDirectionCompensatedScore_hasMGFUpperBoundAt"
+      ]
     },
     {
       "full_name": "BanditRLProof.OFUL.finiteHistoryTelescopingScalarRidgeOptimisticAlgorithm",
@@ -303,7 +307,9 @@
       "position": "It is the algorithm node between measurable optimistic selection and the generated all-time confidence/regret consumers.",
       "proof_idea": "Build ridge statistics from the finite history, compute scheduled scores for every finite arm, and use the measurable strict-improvement fold to choose a deterministic tie-breaking maximizer.",
       "lean_notes": "The arguments include arm count, regularization, features, noise scale, outer confidence budget, and parameter-radius bound, but no terminal horizon. The definition itself is not a regret theorem.",
-      "dependencies": ["BanditRLProof.OFUL.measure_finiteHorizonRidgeEstimate_error_matrixNorm_gt_confidenceRadius_le"]
+      "dependencies": [
+        "BanditRLProof.OFUL.measure_finiteHorizonRidgeEstimate_error_matrixNorm_gt_confidenceRadius_le"
+      ]
     },
     {
       "full_name": "BanditRLProof.OFUL.measure_telescopingCanonicalHistoryTrajectory_allTimeConfidenceFailureSet_le_of_linearSubgaussianEnvironment",
@@ -316,7 +322,10 @@
       "position": "It consumes the kernel-level linear sub-Gaussian producer and is the probability parent of the all-horizon regret terminal.",
       "proof_idea": "Convert the environment's initial/successor centered MGF laws into the canonical predictable residual source, apply every scheduled fixed-time ridge tail, and sum the telescoping shares.",
       "lean_notes": "CanonicalLinearSubgaussianEnvironmentLaw stores theta norm and kernel MGF laws, not this conclusion. The displayed trajectory measure uses exactly finiteHistoryTelescopingScalarRidgeOptimisticAlgorithm.",
-      "dependencies": ["BanditRLProof.OFUL.finiteHistoryTelescopingScalarRidgeOptimisticAlgorithm", "BanditRLProof.OFUL.CanonicalLinearSubgaussianEnvironmentLaw"]
+      "dependencies": [
+        "BanditRLProof.OFUL.finiteHistoryTelescopingScalarRidgeOptimisticAlgorithm",
+        "BanditRLProof.OFUL.CanonicalLinearSubgaussianEnvironmentLaw"
+      ]
     },
     {
       "full_name": "BanditRLProof.OFUL.telescopingCanonicalStandardHighProbabilityPseudoRegret_nonneg_and_allHorizon_tail_le_explicitBound_of_linearSubgaussianEnvironment_of_featureBound_le_regularization",
@@ -330,7 +339,10 @@
       "position": "It joins all-time ridge confidence, finite-action optimism, selected-width summation, and the initial-round gap bound.",
       "proof_idea": "Transport confidence to each selected action, convert optimism to gap bounds, sum widths with Cauchy-Schwarz and the log-determinant inequality, then show every violation belongs to the all-time failure event.",
       "lean_notes": "Finite actions/features, positive regularization/noise scale, 0<delta<=1, nonnegative S and L2, L2<=lambda, a feature-square bound, an optimal arm, and the canonical kernel-law producer are explicit. Sharp/minimax constants are not claimed.",
-      "dependencies": ["BanditRLProof.OFUL.measure_telescopingCanonicalHistoryTrajectory_allTimeConfidenceFailureSet_le_of_linearSubgaussianEnvironment", "BanditRLProof.OFUL.sum_range_min_prefix_update_le_two_trace_average_log"]
+      "dependencies": [
+        "BanditRLProof.OFUL.measure_telescopingCanonicalHistoryTrajectory_allTimeConfidenceFailureSet_le_of_linearSubgaussianEnvironment",
+        "BanditRLProof.OFUL.sum_range_min_prefix_update_le_two_trace_average_log"
+      ]
     },
     {
       "full_name": "BanditRLProof.OFUL.integral_stoppedValue_canonicalStandardHighProbabilityPseudoRegret_nonneg_and_le_quadraticCoefficient_mul_stoppingTimeRoundSecondMoment_add_initialGap_mul_sqrt_stoppingTimeRoundSecondMoment_mul_sqrt_delta_and_stoppedViolation_measure_le_of_squareIntegrableFiniteStoppingTime",
@@ -343,7 +355,9 @@
       "position": "It is the strongest random-horizon consumer inside the scoped Chapter 5 completion route.",
       "proof_idea": "Use stopped-value measurability and adaptation, split good and bad trajectories, integrate the quadratic envelope at tau, and bound the bad indicator by the stopping-round second moment times sqrt(delta).",
       "lean_notes": "The theorem explicitly requires the canonical all-round filtration, IsStoppingTime, and SquareIntegrableFiniteStoppingTime, which includes a.e. finiteness and integrability/second-moment control. It is not universal optional stopping or an almost-sure consistency theorem.",
-      "dependencies": ["BanditRLProof.OFUL.telescopingCanonicalStandardHighProbabilityPseudoRegret_nonneg_and_allHorizon_tail_le_explicitBound_of_linearSubgaussianEnvironment_of_featureBound_le_regularization"]
+      "dependencies": [
+        "BanditRLProof.OFUL.telescopingCanonicalStandardHighProbabilityPseudoRegret_nonneg_and_allHorizon_tail_le_explicitBound_of_linearSubgaussianEnvironment_of_featureBound_le_regularization"
+      ]
     },
     {
       "full_name": "BanditRLProof.PosteriorKernel.canonicalPosterior_kernel_ae_eq_condDistrib_of_pair_map_eq",
@@ -370,7 +384,9 @@
       "position": "It consumes posterior-kernel correctness and feeds the recursive trajectory sampler.",
       "proof_idea": "Construct the canonical sampler measure, apply posterior equals conditional environment law, and map both sides through the measurable best-action selector.",
       "lean_notes": "Standard Borel/nonempty environment and action spaces, a probability prior, Markov likelihood, and measurable bestAction are explicit. This is one-step matching, not yet a generated multi-round regret theorem.",
-      "dependencies": ["BanditRLProof.PosteriorKernel.canonicalPosterior_kernel_ae_eq_condDistrib_of_pair_map_eq"]
+      "dependencies": [
+        "BanditRLProof.PosteriorKernel.canonicalPosterior_kernel_ae_eq_condDistrib_of_pair_map_eq"
+      ]
     },
     {
       "full_name": "BanditRLProof.Thompson.uniformReferenceThompsonAlgorithm_trajectory_condDistrib_action_ae_eq_bestAction",
@@ -383,7 +399,9 @@
       "position": "It is the bridge from the canonical one-step sampler to the generated finite-history score identities.",
       "proof_idea": "Build the recursive history algorithm and canonical environment trajectory kernel, extract the actual finite history, apply density and conditional-law invariance, and identify the successor coordinate.",
       "lean_notes": "The canary restates the complete algorithm, trajectoryKernel, actualMeasure, actualHistory, and nextAction let chain. It is not an adjoined sampler theorem.",
-      "dependencies": ["BanditRLProof.Thompson.canonicalSampler_condDistrib_action_ae_eq_bestAction"]
+      "dependencies": [
+        "BanditRLProof.Thompson.canonicalSampler_condDistrib_action_ae_eq_bestAction"
+      ]
     },
     {
       "full_name": "BanditRLProof.Thompson.integral_trajectoryBayesMeanRegret_eq_add_historyScore",
@@ -396,7 +414,9 @@
       "position": "It follows recursive probability matching and precedes the concrete clipped-UCB specialization.",
       "proof_idea": "Apply the finite-history conditional-distribution equality to each score, integrate the score identity, sum over the finite horizon, and regroup the mean differences.",
       "lean_notes": "The theorem retains separate integrability hypotheses for selector means, selected means, selected scores, and selector scores. The decomposition is valid for any measurable selector; `trajectoryBayesMeanRegret` is genuinely Bayesian pseudo-regret only when `IsOptimalMeanSelector mean bestAction` is available.",
-      "dependencies": ["BanditRLProof.Thompson.uniformReferenceThompsonAlgorithm_trajectory_condDistrib_action_ae_eq_bestAction"]
+      "dependencies": [
+        "BanditRLProof.Thompson.uniformReferenceThompsonAlgorithm_trajectory_condDistrib_action_ae_eq_bestAction"
+      ]
     },
     {
       "full_name": "BanditRLProof.Thompson.integral_trajectoryBayesMeanRegret_eq_add_clippedUCB",
@@ -410,7 +430,9 @@
       "position": "It consumes the history-score decomposition and feeds the two stationary clipped-score expectation inequalities.",
       "proof_idea": "Prove the clipped score is measurable and uniformly bounded, automatically obtain the needed integrability, and instantiate the general history-score equality.",
       "lean_notes": "The mean surface must be measurable and contained in [l,u]. The theorem is comparator-relative algebra and does not itself assert selector optimality or provide the stationary concentration bounds.",
-      "dependencies": ["BanditRLProof.Thompson.integral_trajectoryBayesMeanRegret_eq_add_historyScore"]
+      "dependencies": [
+        "BanditRLProof.Thompson.integral_trajectoryBayesMeanRegret_eq_add_historyScore"
+      ]
     },
     {
       "full_name": "BanditRLProof.Thompson.canonicalLatentArmStreamTrajectory_reward_eq_rewardFromArmStream_ae",
@@ -423,7 +445,9 @@
       "position": "It connects the recursive generated trajectory to arm-stream concentration and clipped-score expectation bounds.",
       "proof_idea": "Use the canonical step-kernel construction and induction over finite trajectory prefixes to identify each feedback draw with rewardFromArmStream at the selected pull count.",
       "lean_notes": "The equality is almost everywhere under the canonical generated trajectory kernel for each latent environment/stream input. It is a support/alignment theorem, not independence stated by fiat.",
-      "dependencies": ["BanditRLProof.Thompson.uniformReferenceThompsonAlgorithm_trajectory_condDistrib_action_ae_eq_bestAction"]
+      "dependencies": [
+        "BanditRLProof.Thompson.uniformReferenceThompsonAlgorithm_trajectory_condDistrib_action_ae_eq_bestAction"
+      ]
     },
     {
       "full_name": "BanditRLProof.Thompson.stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_trajectoryBayesMeanRegret_le",
@@ -679,7 +703,9 @@
       "position": "It is the fixed-model asymptotic consumer of the compiled ridge-confidence, optimism, width-summation, and bad-event expectation route.",
       "proof_idea": "First prove the explicit expected bound is little-o of the natural horizon scale, transfer the bound to the canonical generated regret, and rewrite division as the expected-average definition.",
       "lean_notes": "The limit is for the horizon-indexed generated family in the theorem's fixed model. It is not a one-policy anytime, pathwise, minimax, or uniform-over-parameter consistency claim.",
-      "dependencies": ["BanditRLProof.OFUL.sum_range_min_prefix_update_le_two_trace_average_log"]
+      "dependencies": [
+        "BanditRLProof.OFUL.sum_range_min_prefix_update_le_two_trace_average_log"
+      ]
     },
     {
       "full_name": "BanditRLProof.Tsallis.integral_sampledOracleRestartHalfTsallisFiniteArmIndependentGlobalMeanChangeDynamicRegret_le",
@@ -691,7 +717,9 @@
       "position": "This is the current terminal of the full-information population-mean oracle-restart branch.",
       "proof_idea": "Construct the exact change-point schedule, prove its epoch count is the global switch count plus one, show the epoch-start best arm stays mean-optimal, transport the generated local stability certificates, and invoke the compiled restart assembly.",
       "lean_notes": "The schedule sees population-mean changes. An observable detector with delay and false alarms is a different, still-open random-schedule theorem route.",
-      "dependencies": ["BanditRLProof.Tsallis.sampledScheduledHalfTsallisPredictableMovingComparatorEnvironmentRegret_le_oracleRestartSwitchCountSqrt"]
+      "dependencies": [
+        "BanditRLProof.Tsallis.sampledScheduledHalfTsallisPredictableMovingComparatorEnvironmentRegret_le_oracleRestartSwitchCountSqrt"
+      ]
     },
     {
       "full_name": "BanditRLProof.FiniteHorizonRL.MDP",
@@ -719,7 +747,9 @@
       "position": "It joins Bellman optimality to occupancy-based empirical-model and optimistic-certificate consumers.",
       "proof_idea": "Prove a one-step Bellman difference identity, integrate it through the induced state kernel, and telescope recursively over the remaining horizon.",
       "lean_notes": "The occupancy recursion and all measurability/integrability obligations are explicit. This is expected policy regret, not realized sample-path regret.",
-      "dependencies": ["BanditRLProof.FiniteHorizonRL.MDP.optimalValueAt_dominates_and_is_attained"]
+      "dependencies": [
+        "BanditRLProof.FiniteHorizonRL.MDP.optimalValueAt_dominates_and_is_attained"
+      ]
     },
     {
       "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeStochasticEmpiricalOptimisticSource.exploratorySource_trajectoryMeasure_projectedCumulativeInverseSqrtPathSupport_decayingExplorationAverageRealizedBehaviorConsistency_allWindows_of_standardBorel",
@@ -731,7 +761,9 @@
       "position": "It is the regularity-closed all-window parent for later natural-causal, first-passage, and stopping-time constructions.",
       "proof_idea": "Combine cumulative empirical transition confidence, path-support visit floors, known reward transport, optimistic planning, selected-return concentration, the decaying exploration schedule, and asymptotic estimates for both coordinates.",
       "lean_notes": "The long signature records finite nonempty Standard Borel spaces, exact generated sources, support, bounded means, sub-Gaussian rewards, and horizon positivity. It is not a minimax UCB-VI theorem.",
-      "dependencies": ["BanditRLProof.FiniteHorizonRL.MarkovPolicy.expectedRegret_eq_occupancyGapRemaining"]
+      "dependencies": [
+        "BanditRLProof.FiniteHorizonRL.MarkovPolicy.expectedRegret_eq_occupancyGapRemaining"
+      ]
     },
     {
       "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledCausalSource_inverseSqrtThresholdUnboundedHittingAfter_stoppedAverageRealizedBehaviorRegret_integrable_and_integral_le_threshold",
@@ -937,7 +969,7 @@
       "full_name": "BanditRLProof.LowerBounds.IsMinimaxOptimal",
       "chapter": "foundations",
       "plain": "A policy is minimax optimal only if it belongs to the chosen policy class and its worst-case regret over the chosen environment class attains that class's minimax value.",
-      "math": "\u005cpi\u005cin\u005cmathcal P\u005cquad\u005ctext{and}\u005cquad\u005csup_{\u005cnu\u005cin\u005cmathcal E}R_n(\u005cpi,\u005cnu)=\u005cinf_{\u005cpi'\u005cin\u005cmathcal P}\u005csup_{\u005cnu\u005cin\u005cmathcal E}R_n(\u005cpi',\u005cnu).",
+      "math": "\\pi\\in\\mathcal P\\quad\\text{and}\\quad\\sup_{\\nu\\in\\mathcal E}R_n(\\pi,\\nu)=\\inf_{\\pi'\\in\\mathcal P}\\sup_{\\nu\\in\\mathcal E}R_n(\\pi',\\nu).",
       "intuition": "The same policy can be minimax optimal for one horizon or environment class and fail to be optimal for another.",
       "why": "This compiles the explicit Chapter 13 warning that minimax optimality is not a property of a policy alone.",
       "position": "It refines the minimax value surface without asserting that an arbitrary infimum has a minimizing policy.",
@@ -951,7 +983,7 @@
       "full_name": "BanditRLProof.LowerBounds.gaussianSampleMeanThresholdRisk_le_exp",
       "chapter": "foundations",
       "plain": "For the two Gaussian observation laws with means zero and Delta and variance one over n, the midpoint decision's worst-case error probability is at most exp(-n Delta squared over eight).",
-      "math": "\u005cmax_{\u005cmu\u005cin\u005c{0,\u005cDelta\u005c}}\u005cmathbb P_{\u005cmathcal N(\u005cmu,1/n)}(\u005chat\u005cmu\u005cneq\u005cmu)\u005cle\u005cexp(-n\u005cDelta^2/8).",
+      "math": "\\max_{\\mu\\in\\{0,\\Delta\\}}\\mathbb P_{\\mathcal N(\\mu,1/n)}(\\hat\\mu\\neq\\mu)\\le\\exp(-n\\Delta^2/8).",
       "intuition": "A larger sample size or a wider separation makes the two Gaussian hypotheses exponentially easier to distinguish.",
       "why": "It adds a real two-hypothesis probability theorem for the opening of Section 13.1 while leaving the sharper source display auditable.",
       "position": "This is a symmetric Chernoff companion, distinct from the separately compiled exact two-sided Mills-ratio Eq. (13.1).",
@@ -1134,11 +1166,11 @@
       "full_name": "BanditRLProof.LowerBounds.klDiv_compProd_same_left_eq_lintegral_klDiv_of_measurable",
       "chapter": "foundations",
       "plain": "When two one-step joint laws share the same first marginal, their relative entropy is the first-law integral of the pointwise relative entropy between their conditional kernels.",
-      "math": "D(\u03bc\u2297\u03ba\\Vert\u03bc\u2297\u03b7)=\u222b D(\u03ba_x\\Vert\u03b7_x)\\,\u03bc(dx).",
+      "math": "D(μ⊗κ\\Vertμ⊗η)=∫ D(κ_x\\Vertη_x)\\,μ(dx).",
       "intuition": "The shared past contributes no information; only the next conditional observation separates the two laws, and its cost is averaged over histories actually seen under the first law.",
       "why": "This closes the conditional-kernel chain-rule gap that previously prevented arm-level KL costs from being accumulated along an adaptive bandit history.",
       "position": "It is the measure-theoretic engine of Chapter 15 Lemma 15.1, before specializing the conditional kernels to one randomized policy and finite arms.",
-      "proof_idea": "Identify the joint Radon\u2013Nikodym derivative fibrewise, integrate its logarithm under the composition product, and preserve the singular branch: positive first-law mass on an infinite-KL fibre makes both sides infinite.",
+      "proof_idea": "Identify the joint Radon–Nikodym derivative fibrewise, integrate its logarithm under the composition product, and preserve the singular branch: positive first-law mass on an infinite-KL fibre makes both sides infinite.",
       "lean_notes": "The theorem assumes a finite first measure, finite Markov kernels, countably generated target measurable space, and measurability of the pointwise KL function. It does not assume absolute continuity or finite KL.",
       "dependencies": []
     },
@@ -1146,10 +1178,10 @@
       "full_name": "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum",
       "chapter": "foundations",
       "plain": "For one common randomized policy in two finite-arm environments, the directed KL between their canonical finite history laws equals the sum of first-environment expected pull counts times the directed KL of each arm law.",
-      "math": "D(\\mathbb P_{\u03bd,\u03c0}^{(n)}\\Vert\\mathbb P_{\u03bd',\u03c0}^{(n)})=\\sum_a \\mathbb E_{\u03bd,\u03c0}[T_a(n)]D(P_a\\Vert P'_a).",
+      "math": "D(\\mathbb P_{ν,π}^{(n)}\\Vert\\mathbb P_{ν',π}^{(n)})=\\sum_a \\mathbb E_{ν,π}[T_a(n)]D(P_a\\Vert P'_a).",
       "intuition": "At every round the same policy cancels from the likelihood ratio; an arm pays information only when the policy selects it, so repeated conditional costs regroup into expected pull counts.",
       "why": "This is the compiled Chapter 15 change-of-environment identity used by minimax, instance-dependent, and high-probability lower-bound routes.",
-      "position": "It is the local source-facing counterpart of Lattimore\u2013Szepesv\u00e1ri Lemma 15.1. The compiled Theorem 15.2 consumes it; later Chapter 16\u201317 terminals remain separate.",
+      "position": "It is the local source-facing counterpart of Lattimore–Szepesvári Lemma 15.1. The compiled Theorem 15.2 consumes it; later Chapter 16–17 terminals remain separate.",
       "proof_idea": "Recursively expose the canonical finite history law as a composition product, apply the same-policy conditional KL identity at each successor, sum over finite actions, and identify policy arm masses with lower integrals of realized pull counts.",
       "lean_notes": "Finite arms and a countably generated reward space are explicit. The equality uses ENNReal KL and lower-integral expected counts, covers singular or infinite arm KL, and uses the first environment in both the history law and expectation. The local lastRound index denotes lastRound+1 observations.",
       "dependencies": [
@@ -1220,8 +1252,8 @@
       "math": "\\forall \\pi,\\ k>1,\\ n\\ge k-1:\\quad \\exists \\mu\\in[0,1]^k,\\quad R_n^{\\mathrm{pseudo}}(\\pi,\\mu)\\ge\\frac{1}{27}\\sqrt{(k-1)n}.",
       "intuition": "A policy cannot explore every alternative often under the base instance. Raising one lightly sampled arm creates a competing environment that stays close in history KL, so the policy must incur substantial regret in at least one of the two worlds.",
       "why": "This is the first complete source-facing textbook minimax theorem in the Part IV spine: it joins reusable probability, history-law, Gaussian, event, and lattice layers into the exact external endpoint.",
-      "position": "It is the compiled counterpart of Lattimore\u2013Szepesv\u00e1ri Theorem 15.2 and implies the coarser Chapter 13 order statement with c=1/54. It does not promote the Bernoulli notes, exercises, or Chapter 16\u201317 terminals.",
-      "proof_idea": "Give the source's first arm (Lean Fin 0) mean Delta, select a least-explored alternative under the base law, raise only that arm to 2 Delta, use Lemma 15.1 to bound the directed history KL by one half, apply Bretagnolle\u2013Huber to the source event T_1(n) at most n/2 (Lean T_0), and tune Delta so the exponential constant yields 1/27.",
+      "position": "It is the compiled counterpart of Lattimore–Szepesvári Theorem 15.2 and implies the coarser Chapter 13 order statement with c=1/54. It does not promote the Bernoulli notes, exercises, or Chapter 16–17 terminals.",
+      "proof_idea": "Give the source's first arm (Lean Fin 0) mean Delta, select a least-explored alternative under the base law, raise only that arm to 2 Delta, use Lemma 15.1 to bound the directed history KL by one half, apply Bretagnolle–Huber to the source event T_1(n) at most n/2 (Lean T_0), and tune Delta so the exponential constant yields 1/27.",
       "lean_notes": "The policy is an arbitrary randomized HistoryAlgorithm used unchanged in both environments. Expected pseudo-regret is an ENNReal lower integral on the actual canonical history measure and is the source's standard Lemma 4.5-equivalent form; no separate reward-sum regret bridge is claimed here. lastRound=n-1 encodes exactly n observations. The environment witness certifies every mean lies in [0,1] and identifies an optimal arm.",
       "dependencies": [
         "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum",
@@ -1833,6 +1865,506 @@
       "dependencies": [
         "BanditRLProof.LowerBounds.adversarialRegretLowerExpression_ge_quarter"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescent.iterate",
+      "title": "Algorithm 2.1: projected OGD",
+      "chapter": "online-ogd",
+      "featured": true,
+      "teaching_order": 1,
+      "plain": "The next iterate uses the current gradient after the current prediction is output.",
+      "math": "\\(x_{t+1}=\\Pi_V(x_t-\\eta\\nabla\\ell_t(x_t))\\)",
+      "intuition": "The next iterate uses the current gradient after the current prediction is output.",
+      "why": "This supplies the next interface in the same source-aligned projected OGD chain.",
+      "position": "Orabona v10 Chapter 2 fixed-step package; not the whole chapter.",
+      "proof_idea": "Recursion from the fixed initial point; iterate_prefix proves strict-prefix causality.",
+      "lean_notes": "Real Hilbert-space statements specialize to finite-dimensional Euclidean space. Lean time 0 is source round 1. No probabilistic regret claim.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescent.proposition_2_11",
+      "title": "Proposition 2.11: projection decreases distance",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 2,
+      "plain": "Projection cannot increase distance to a feasible comparator.",
+      "math": "\\(\\|\\Pi_V(z)-u\\|\\le\\|z-u\\|\\)",
+      "intuition": "Projection cannot increase distance to a feasible comparator.",
+      "why": "This supplies the next interface in the same source-aligned projected OGD chain.",
+      "position": "Orabona v10 Chapter 2 fixed-step package; not the whole chapter.",
+      "proof_idea": "Use the Hilbert projection variational inequality and expand squared distance.",
+      "lean_notes": "Real Hilbert-space statements specialize to finite-dimensional Euclidean space. Lean time 0 is source round 1. No probabilistic regret claim.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescent.project_spec"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescent.lemma_2_12",
+      "title": "Lemma 2.12: one-step regret (historical stronger interface)",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 3,
+      "plain": "Convexity linearizes loss; projection turns that inner product into a potential decrease plus gradient energy.",
+      "math": "\\(\\eta(\\ell_t(x_t)-\\ell_t(u))\\le\\eta\\langle g_t,x_t-u\\rangle\\le\\frac{\\|x_t-u\\|^2-\\|x_{t+1}-u\\|^2+\\eta^2\\|g_t\\|^2}{2}\\)",
+      "intuition": "Convexity linearizes loss; projection turns that inner product into a potential decrease plus gradient energy.",
+      "why": "This supplies the next interface in the same source-aligned projected OGD chain.",
+      "position": "Historical stronger-assumption interface in the same shared library; source cards use the repaired namespace.",
+      "proof_idea": "Derive first_order through a differentiable convex affine restriction, then expand the actual projected update.",
+      "lean_notes": "Real Hilbert-space statements specialize to finite-dimensional Euclidean space. Lean time 0 is source round 1. No probabilistic regret claim. Uses RegularLoss with a convex open differentiability neighborhood. The repaired arbitrary-open source endpoint is BanditRL.OnlineGradientDescentSource.lemma_2_12. Old links and true proofs are retained.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescent.first_order",
+        "BanditRL.OnlineGradientDescent.proposition_2_11",
+        "BanditRL.OnlineGradientDescent.step"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescent.theorem_2_13_fixed",
+      "title": "Theorem 2.13: fixed step only (historical stronger interface)",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 4,
+      "plain": "Cumulative comparator regret retains the negative terminal squared distance, with no bounded-domain premise.",
+      "math": "\\(R_T(u)\\le\\frac{\\|x_1-u\\|^2}{2\\eta}+\\frac\\eta2\\sum_{t=1}^T\\|g_t\\|^2-\\frac{\\|x_{T+1}-u\\|^2}{2\\eta}\\)",
+      "intuition": "Cumulative comparator regret retains the negative terminal squared distance, with no bounded-domain premise.",
+      "why": "This supplies the next interface in the same source-aligned projected OGD chain.",
+      "position": "Historical stronger-assumption interface in the same shared library; source cards use the repaired namespace.",
+      "proof_idea": "Sum the generated trajectory one-step inequality and telescope; divide by the positive fixed step.",
+      "lean_notes": "Real Hilbert-space statements specialize to finite-dimensional Euclidean space. Lean time 0 is source round 1. No probabilistic regret claim. Uses RegularLoss with a convex open differentiability neighborhood. The repaired arbitrary-open source endpoint is BanditRL.OnlineGradientDescentSource.theorem_2_13_fixed. Old links and true proofs are retained.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescent.lemma_2_12",
+        "BanditRL.OnlineGradientDescent.iterate_mem",
+        "BanditRL.OnlineGradientDescent.regret"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescent.equation_2_1",
+      "title": "Equation (2.1): horizon tuning (historical stronger interface)",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 5,
+      "plain": "A priori diameter and gradient bounds yield the source square-root regret rate.",
+      "math": "\\(\\eta=\\frac{D}{G\\sqrt T},\\qquad R_T(u)\\le DG\\sqrt T\\)",
+      "intuition": "A priori diameter and gradient bounds yield the source square-root regret rate.",
+      "why": "This supplies the next interface in the same source-aligned projected OGD chain.",
+      "position": "Historical stronger-assumption interface in the same shared library; source cards use the repaired namespace.",
+      "proof_idea": "Bound initial distance and gradient energy, then simplify the positive horizon-tuned step.",
+      "lean_notes": "Real Hilbert-space statements specialize to finite-dimensional Euclidean space. Lean time 0 is source round 1. No probabilistic regret claim. Uses RegularLoss with a convex open differentiability neighborhood. The repaired arbitrary-open source endpoint is BanditRL.OnlineGradientDescentSource.equation_2_1. Old links and true proofs are retained.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescent.theorem_2_13_fixed",
+        "BanditRL.OnlineGradientDescent.equation_2_1_distance"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.definition_2_2",
+      "title": "Definition 2.2: convex sets",
+      "chapter": "online-convex",
+      "featured": false,
+      "teaching_order": 1,
+      "plain": "The source open-weight definition agrees with the shared convex-set API.",
+      "math": "\\(\\forall x,y\\in V,\\;0<\\theta<1:\\;\\theta x+(1-\\theta)y\\in V\\)",
+      "intuition": "The source open-weight definition agrees with the shared convex-set API.",
+      "why": "This is a source-qualified Chapter 2 foundation in the shared Lean graph.",
+      "position": "Orabona v10, printed pages 9-10.",
+      "proof_idea": "Apply the positive-weight characterization and identify the second weight with one minus the first.",
+      "lean_notes": "Definition 2.3 permits both infinities. Theorem 2.4 and indicator addition retain their explicit no-negative-infinity conditions. Remaining Chapter 2 results are not completed.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.convex_indicator_iff",
+      "title": "Constraint indicators characterize convex sets",
+      "chapter": "online-convex",
+      "featured": false,
+      "teaching_order": 2,
+      "plain": "Zero on the feasible set and positive infinity outside express the set as a function.",
+      "math": "\\(\\iota_V\\text{ is convex}\\iff V\\text{ is convex}\\)",
+      "intuition": "Zero on the feasible set and positive infinity outside express the set as a function.",
+      "why": "This is a source-qualified Chapter 2 foundation in the shared Lean graph.",
+      "position": "Orabona v10, printed pages 9-10.",
+      "proof_idea": "Identify the epigraph as the feasible set times nonnegative real heights; use convexity of the effective domain for the converse.",
+      "lean_notes": "Definition 2.3 permits both infinities. Theorem 2.4 and indicator addition retain their explicit no-negative-infinity conditions. Remaining Chapter 2 results are not completed.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.convex_effectiveDomain",
+        "BanditRL.OnlineConvex.effectiveDomain_indicator"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.convex_add_indicator",
+      "title": "Adding a convex constraint",
+      "chapter": "online-convex",
+      "featured": false,
+      "teaching_order": 3,
+      "plain": "Adding a convex constraint preserves convexity when the original function never takes negative infinity.",
+      "math": "\\(f+\\iota_V\\text{ is convex}\\)",
+      "intuition": "Adding a convex constraint preserves convexity when the original function never takes negative infinity.",
+      "why": "This is a source-qualified Chapter 2 foundation in the shared Lean graph.",
+      "position": "Orabona v10, printed pages 9-10.",
+      "proof_idea": "The constrained epigraph is the original epigraph intersected with the feasible cylinder.",
+      "lean_notes": "Definition 2.3 permits both infinities. Theorem 2.4 and indicator addition retain their explicit no-negative-infinity conditions. Remaining Chapter 2 results are not completed.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.realEpigraph",
+        "BanditRL.OnlineConvex.extendedIndicator"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.theorem_2_4",
+      "title": "Theorem 2.4: epigraph and weighted values",
+      "chapter": "online-convex",
+      "featured": false,
+      "teaching_order": 4,
+      "plain": "For f that never takes negative infinity and has convex effective domain, epigraph convexity is equivalent to the interior-weight inequality on domain points.",
+      "math": "\\(f\\text{ convex}\\iff\\forall x,y\\in\\operatorname{dom}f,\\;0<\\theta<1:\\;f(\\theta x+(1-\\theta)y)\\le\\theta f(x)+(1-\\theta)f(y)\\)",
+      "intuition": "For f that never takes negative infinity and has convex effective domain, epigraph convexity is equivalent to the interior-weight inequality on domain points.",
+      "why": "This is a source-qualified Chapter 2 foundation in the shared Lean graph.",
+      "position": "Orabona v10, printed pages 9-10.",
+      "proof_idea": "Prove the exact real-height epigraph bridge and apply the existing real-valued positive-weight convexity equivalence.",
+      "lean_notes": "Explicit noBottom and convex effective domain; the domain may be unbounded, empty or infinite in cardinality. Real epigraph heights and strict interior weights; finite-value conversions are proved, not assumed.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.convexExtended_iff_toReal"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.finitePart_eventually",
+      "title": "A locally exact finite representation",
+      "chapter": "online-first-order",
+      "featured": false,
+      "teaching_order": 1,
+      "plain": "Global exclusion of negative infinity and ambient-interior membership prove that canonical toReal embeds back to f locally near x.",
+      "math": "\\((f(z).\\mathrm{toReal}:\\overline{\\mathbb R})=f(z)\\text{ locally at }x\\)",
+      "intuition": "Global exclusion of negative infinity and ambient-interior membership prove that canonical toReal embeds back to f locally near x.",
+      "why": "Establishes the exact first-order foundation for later online convex analysis.",
+      "position": "Library local representation helper for Theorem2.7, Orabona v10 printedp11/PDF23; not a separate printed theorem.",
+      "proof_idea": "Use the open interior and prove both infinite values are excluded there.",
+      "lean_notes": "No convexity or differentiability premise is used. General domain f<top can include bottom, so global noBottom is explicit. Local identity only; top may occur away from x. Ambient, not relative, interior.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.effectiveDomain"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.convex_gradient_lower_bound",
+      "title": "A real supporting-gradient inequality",
+      "chapter": "online-first-order",
+      "featured": false,
+      "teaching_order": 2,
+      "plain": "For everywhere-real f, ConvexOn V, x/y in V and an ambient derivative at x give the supporting bound at y.",
+      "math": "\\(f(x)+\\langle\\nabla f(x),y-x\\rangle\\le f(y)\\)",
+      "intuition": "For everywhere-real f, ConvexOn V, x/y in V and an ambient derivative at x give the supporting bound at y.",
+      "why": "Establishes the exact first-order foundation for later online convex analysis.",
+      "position": "Generalized everywhere-real library helper supporting Theorem2.7, Orabona v10 printedp11/PDF23; not another printed theorem.",
+      "proof_idea": "Restrict to the affine line through x and y and apply the convex derivative-slope inequality.",
+      "lean_notes": "ConvexOn includes convex V. V need not be open, closed or bounded; no extended-real local representation lemma is needed by this real helper. Differentiability is ambient at x only, and y must belong to V.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.theorem_2_7",
+      "title": "Orabona Theorem 2.7: all comparator points",
+      "chapter": "online-first-order",
+      "featured": false,
+      "teaching_order": 3,
+      "plain": "Global noBottom, convexity, ambient-interior x and differentiability of canonical F(z)=(f(z)).toReal at x give the bound for every y, including positive infinity outside the domain.",
+      "math": "\\(f(x)+\\langle\\nabla f(x),y-x\\rangle\\le f(y),\\quad\\forall y\\)",
+      "intuition": "Global noBottom, convexity, ambient-interior x and differentiability of canonical F(z)=(f(z)).toReal at x give the bound for every y, including positive infinity outside the domain.",
+      "why": "Establishes the exact first-order foundation for later online convex analysis.",
+      "position": "Orabona v10 printedp11/PDF23.",
+      "proof_idea": "Use local finite agreement and the real supporting bound on the domain; handle its complement by positive infinity.",
+      "lean_notes": "The neighborhood lemma proves local embedded F=f near x; neither global equality with f nor global convexity of F is claimed. Domain comparators use the finite ConvexOn bridge; outside-domain f(y)=top is proved. Complete real inner-product spaces generalize the source Euclidean setting.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.finitePart_eventually",
+        "BanditRL.OnlineConvex.convex_gradient_lower_bound",
+        "BanditRL.OnlineConvex.convexExtended_iff_toReal"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescentSource.FeasibleRegularLoss",
+      "title": "Feasible-point loss regularity",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 10,
+      "plain": "Convexity on V and ambient derivatives at every feasible point.",
+      "math": "\\(\\operatorname{ConvexOn}(V,f)\\ \\land\\ \\forall x\\in V,\\ f\\text{ differentiable at }x\\)",
+      "intuition": "Convexity on V and ambient derivatives at every feasible point.",
+      "why": "One repaired source chain using the existing shared projected algorithm.",
+      "position": "Orabona v10 printed12–15/PDF24–27; library refinement, not an extra printed source result.",
+      "proof_idea": "This is the weaker library interface; boundary/thin-domain points are included.",
+      "lean_notes": "Convexity on V and a supplied ambient real extension differentiable on an arbitrary open U containing V. U need not be convex. source_to_feasible proves the conversion to FeasibleRegularLoss: convexity on V and ambient derivatives at every feasible point. On a thin V the supplied extension fixes the gradient; extension independence is not claimed. Compiled local OGD source-repair candidate, with distinct source/body review. Full harness, actual graph, shared Book registry, final reader/site and PR gates remain separate. This is not all Chapter2 or the whole book, and is not merged or live.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescentSource.SourceRegularLoss",
+      "title": "Arbitrary-open source regularity",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 11,
+      "plain": "Convexity on V and a supplied ambient real extension differentiable on an arbitrary open U containing V. U need not be convex. source_to_feasible proves the conversion to FeasibleRegularLoss: convexity on V and ambient derivatives at every feasible point. On a thin V the supplied extension fixes the gradient; extension independence is not claimed.",
+      "math": "\\(\\exists U\\supseteq V:\\ U\\text{ open},\\ f\\text{ convex on }V,\\ f\\text{ differentiable on }U\\)",
+      "intuition": "Convexity on V and a supplied ambient real extension differentiable on an arbitrary open U containing V. U need not be convex. source_to_feasible proves the conversion to FeasibleRegularLoss: convexity on V and ambient derivatives at every feasible point. On a thin V the supplied extension fixes the gradient; extension independence is not claimed.",
+      "why": "One repaired source chain using the existing shared projected algorithm.",
+      "position": "Orabona v10 printed12–15/PDF24–27; library refinement, not an extra printed source result.",
+      "proof_idea": "A supplied ambient extension; not an extension-existence or extension-independence theorem.",
+      "lean_notes": "Convexity on V and a supplied ambient real extension differentiable on an arbitrary open U containing V. U need not be convex. source_to_feasible proves the conversion to FeasibleRegularLoss: convexity on V and ambient derivatives at every feasible point. On a thin V the supplied extension fixes the gradient; extension independence is not claimed. Compiled local OGD source-repair candidate, with distinct source/body review. Full harness, actual graph, shared Book registry, final reader/site and PR gates remain separate. This is not all Chapter2 or the whole book, and is not merged or live.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescentSource.source_to_feasible",
+      "title": "Source hypothesis supplies the weaker interface",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 12,
+      "plain": "Every point of V lies in the open differentiability neighborhood.",
+      "math": "\\(\\mathrm{SourceRegularLoss}(V,f)\\Rightarrow\\mathrm{FeasibleRegularLoss}(V,f)\\)",
+      "intuition": "Every point of V lies in the open differentiability neighborhood.",
+      "why": "One repaired source chain using the existing shared projected algorithm.",
+      "position": "Orabona v10 printed12–15/PDF24–27; library refinement, not an extra printed source result.",
+      "proof_idea": "Openness supplies a neighborhood at each feasible point; DifferentiableOn gives the ambient derivative.",
+      "lean_notes": "Convexity on V and a supplied ambient real extension differentiable on an arbitrary open U containing V. U need not be convex. source_to_feasible proves the conversion to FeasibleRegularLoss: convexity on V and ambient derivatives at every feasible point. On a thin V the supplied extension fixes the gradient; extension independence is not claimed. Compiled local OGD source-repair candidate, with distinct source/body review. Full harness, actual graph, shared Book registry, final reader/site and PR gates remain separate. This is not all Chapter2 or the whole book, and is not merged or live.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescentSource.SourceRegularLoss",
+        "BanditRL.OnlineGradientDescentSource.FeasibleRegularLoss"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescentSource.regular_to_feasible",
+      "title": "Compatibility with the historical predicate",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 13,
+      "plain": "The retained stronger predicate also supplies the repaired interface.",
+      "math": "\\(\\mathrm{RegularLoss}(V,f)\\Rightarrow\\mathrm{FeasibleRegularLoss}(V,f)\\)",
+      "intuition": "The retained stronger predicate also supplies the repaired interface.",
+      "why": "One repaired source chain using the existing shared projected algorithm.",
+      "position": "Orabona v10 printed12–15/PDF24–27; library refinement, not an extra printed source result.",
+      "proof_idea": "Restrict convexity from the old U to convex V and take local ambient derivatives. No reverse implication.",
+      "lean_notes": "Convexity on V and a supplied ambient real extension differentiable on an arbitrary open U containing V. U need not be convex. source_to_feasible proves the conversion to FeasibleRegularLoss: convexity on V and ambient derivatives at every feasible point. On a thin V the supplied extension fixes the gradient; extension independence is not claimed. Compiled local OGD source-repair candidate, with distinct source/body review. Full harness, actual graph, shared Book registry, final reader/site and PR gates remain separate. This is not all Chapter2 or the whole book, and is not merged or live.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescent.RegularLoss",
+        "BanditRL.OnlineGradientDescentSource.FeasibleRegularLoss"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescentSource.linear_regular",
+      "title": "True linear loss satisfies the stronger interface",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 14,
+      "plain": "The function z ↦ inner(g,z) is globally convex and differentiable.",
+      "math": "\\(f_g(z)=\\langle g,z\\rangle\\)",
+      "intuition": "The function z ↦ inner(g,z) is globally convex and differentiable.",
+      "why": "One repaired source chain using the existing shared projected algorithm.",
+      "position": "Orabona v10 printed12–15/PDF24–27; library refinement, not an extra printed source result.",
+      "proof_idea": "The continuous Riesz dual supplies an actual linear map and derivative, including g=0 and unbounded V.",
+      "lean_notes": "Convexity on V and a supplied ambient real extension differentiable on an arbitrary open U containing V. U need not be convex. source_to_feasible proves the conversion to FeasibleRegularLoss: convexity on V and ambient derivatives at every feasible point. On a thin V the supplied extension fixes the gradient; extension independence is not claimed. Compiled local OGD source-repair candidate, with distinct source/body review. Full harness, actual graph, shared Book registry, final reader/site and PR gates remain separate. This is not all Chapter2 or the whole book, and is not merged or live.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescent.RegularLoss"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescentSource.gradient_linear",
+      "title": "Actual gradient of the linear loss",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 15,
+      "plain": "The gradient of inner(g,·) equals g at every ambient point.",
+      "math": "\\(\\nabla f_g(x)=g\\)",
+      "intuition": "The gradient of inner(g,·) equals g at every ambient point.",
+      "why": "One repaired source chain using the existing shared projected algorithm.",
+      "position": "Orabona v10 printed12–15/PDF24–27; library refinement, not an extra printed source result.",
+      "proof_idea": "Use the derivative of the continuous dual and the Riesz gradient identity; this is a producer, not an oracle assumption.",
+      "lean_notes": "Convexity on V and a supplied ambient real extension differentiable on an arbitrary open U containing V. U need not be convex. source_to_feasible proves the conversion to FeasibleRegularLoss: convexity on V and ambient derivatives at every feasible point. On a thin V the supplied extension fixes the gradient; extension independence is not claimed. Compiled local OGD source-repair candidate, with distinct source/body review. Full harness, actual graph, shared Book registry, final reader/site and PR gates remain separate. This is not all Chapter2 or the whole book, and is not merged or live.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescentSource.first_order",
+      "title": "Feasible-set first-order comparison",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 16,
+      "plain": "Loss comparison follows from convexity on V and the ambient derivative.",
+      "math": "\\(f(x)-f(u)\\le\\langle\\nabla f(x),x-u\\rangle\\)",
+      "intuition": "Loss comparison follows from convexity on V and the ambient derivative.",
+      "why": "One repaired source chain using the existing shared projected algorithm.",
+      "position": "Orabona v10 printed12–15/PDF24–27; library refinement, not an extra printed source result.",
+      "proof_idea": "Apply the existing feasible convex_gradient_lower_bound and reverse the displacement.",
+      "lean_notes": "Convexity on V and a supplied ambient real extension differentiable on an arbitrary open U containing V. U need not be convex. source_to_feasible proves the conversion to FeasibleRegularLoss: convexity on V and ambient derivatives at every feasible point. On a thin V the supplied extension fixes the gradient; extension independence is not claimed. Compiled local OGD source-repair candidate, with distinct source/body review. Full harness, actual graph, shared Book registry, final reader/site and PR gates remain separate. This is not all Chapter2 or the whole book, and is not merged or live.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescentSource.FeasibleRegularLoss",
+        "BanditRL.OnlineConvex.convex_gradient_lower_bound"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescentSource.lemma_2_12",
+      "title": "Lemma 2.12 with source regularity",
+      "chapter": "online-ogd",
+      "featured": true,
+      "teaching_order": 17,
+      "plain": "Both source one-step inequalities hold for the same actual projected update.",
+      "math": "\\(\\eta(f(x)-f(u))\\le\\eta\\langle g,x-u\\rangle\\le\\tfrac12\\|x-u\\|^2-\\tfrac12\\|x^+-u\\|^2+\\tfrac{\\eta^2}2\\|g\\|^2\\)",
+      "intuition": "Both source one-step inequalities hold for the same actual projected update.",
+      "why": "One repaired source chain using the existing shared projected algorithm.",
+      "position": "Orabona v10 printed12–15/PDF24–27; library refinement, not an extra printed source result.",
+      "proof_idea": "Proved first-order bound plus genuine affine specialization of the retained quadratic lemma. No assumed one-step bound.",
+      "lean_notes": "Convexity on V and a supplied ambient real extension differentiable on an arbitrary open U containing V. U need not be convex. source_to_feasible proves the conversion to FeasibleRegularLoss: convexity on V and ambient derivatives at every feasible point. On a thin V the supplied extension fixes the gradient; extension independence is not claimed. Compiled local OGD source-repair candidate, with distinct source/body review. Full harness, actual graph, shared Book registry, final reader/site and PR gates remain separate. This is not all Chapter2 or the whole book, and is not merged or live.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescentSource.first_order",
+        "BanditRL.OnlineGradientDescentSource.linear_regular",
+        "BanditRL.OnlineGradientDescentSource.gradient_linear",
+        "BanditRL.OnlineGradientDescent.lemma_2_12",
+        "BanditRL.OnlineGradientDescent.step"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescentSource.theorem_2_13_fixed",
+      "title": "Theorem 2.13 fixed step with source regularity",
+      "chapter": "online-ogd",
+      "featured": true,
+      "teaching_order": 18,
+      "plain": "No bounded-domain premise; the negative terminal distance is retained.",
+      "math": "\\(R_T(u)\\le\\frac{\\|x_1-u\\|^2}{2\\eta}+\\frac\\eta2\\sum_t\\|g_t\\|^2-\\frac{\\|x_{T+1}-u\\|^2}{2\\eta}\\)",
+      "intuition": "No bounded-domain premise; the negative terminal distance is retained.",
+      "why": "One repaired source chain using the existing shared projected algorithm.",
+      "position": "Orabona v10 printed12–15/PDF24–27; library refinement, not an extra printed source result.",
+      "proof_idea": "Sum the actual same-run one-step chain by induction, telescope and divide by eta>0. T=0 is a canceling extension.",
+      "lean_notes": "Convexity on V and a supplied ambient real extension differentiable on an arbitrary open U containing V. U need not be convex. source_to_feasible proves the conversion to FeasibleRegularLoss: convexity on V and ambient derivatives at every feasible point. On a thin V the supplied extension fixes the gradient; extension independence is not claimed. Compiled local OGD source-repair candidate, with distinct source/body review. Full harness, actual graph, shared Book registry, final reader/site and PR gates remain separate. This is not all Chapter2 or the whole book, and is not merged or live.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescentSource.lemma_2_12",
+        "BanditRL.OnlineGradientDescent.iterate_mem",
+        "BanditRL.OnlineGradientDescent.regret"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescentSource.variable_one_step",
+      "title": "Actual variable-step loss comparison",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 19,
+      "plain": "The current scheduled update supplies its divided one-step inequality.",
+      "math": "\\(\\ell_t(x_t)-\\ell_t(u)\\le\\frac{\\|x_t-u\\|^2-\\|x_{t+1}-u\\|^2}{2\\eta_t}+\\frac{\\eta_t}2\\|g_t\\|^2\\)",
+      "intuition": "The current scheduled update supplies its divided one-step inequality.",
+      "why": "One repaired source chain using the existing shared projected algorithm.",
+      "position": "Orabona v10 printed12–15/PDF24–27; library refinement, not an extra printed source result.",
+      "proof_idea": "Use new lemma_2_12 and actual iterateVariable feasibility; only current eta_t must be positive here.",
+      "lean_notes": "Convexity on V and a supplied ambient real extension differentiable on an arbitrary open U containing V. U need not be convex. source_to_feasible proves the conversion to FeasibleRegularLoss: convexity on V and ambient derivatives at every feasible point. On a thin V the supplied extension fixes the gradient; extension independence is not claimed. Compiled local OGD source-repair candidate, with distinct source/body review. Full harness, actual graph, shared Book registry, final reader/site and PR gates remain separate. This is not all Chapter2 or the whole book, and is not merged or live.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescentSource.lemma_2_12",
+        "BanditRL.OnlineGradientDescent.iterateVariable_mem"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescentSource.theorem_2_13_variable_bound",
+      "title": "Sharp decreasing-step diameter-upper-bound interface",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 20,
+      "plain": "A pairwise distance upper bound supplies the weighted potential telescope.",
+      "math": "\\(R_T(u)\\le\\frac{D^2}{2\\eta_T}+\\sum_t\\frac{\\eta_t}2\\|g_t\\|^2-\\frac{\\|x_{T+1}-u\\|^2}{2\\eta_T}\\)",
+      "intuition": "A pairwise distance upper bound supplies the weighted potential telescope.",
+      "why": "One repaired source chain using the existing shared projected algorithm.",
+      "position": "Orabona v10 printed12–15/PDF24–27; library refinement, not an extra printed source result.",
+      "proof_idea": "T>=1, positive adjacent nonincreasing used steps; Lean last step is eta(T-1). D=0 allowed. Preserve the negative terminal.",
+      "lean_notes": "Convexity on V and a supplied ambient real extension differentiable on an arbitrary open U containing V. U need not be convex. source_to_feasible proves the conversion to FeasibleRegularLoss: convexity on V and ambient derivatives at every feasible point. On a thin V the supplied extension fixes the gradient; extension independence is not claimed. Compiled local OGD source-repair candidate, with distinct source/body review. Full harness, actual graph, shared Book registry, final reader/site and PR gates remain separate. This is not all Chapter2 or the whole book, and is not merged or live.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescentSource.variable_one_step",
+        "BanditRL.OnlineGradientDescent.weighted_potential_sum",
+        "BanditRL.OnlineGradientDescent.iterateVariable_mem"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescentSource.theorem_2_13_variable",
+      "title": "Theorem 2.13 exact finite diameter",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 21,
+      "plain": "Boundedness makes Metric.diam the source diameter in the repaired same-run bound.",
+      "math": "\\(D=\\operatorname{diam}(V)\\)",
+      "intuition": "Boundedness makes Metric.diam the source diameter in the repaired same-run bound.",
+      "why": "One repaired source chain using the existing shared projected algorithm.",
+      "position": "Orabona v10 printed12–15/PDF24–27; library refinement, not an extra printed source result.",
+      "proof_idea": "Apply the pairwise-bound producer with Metric.dist_le_diam_of_mem. No compactness or convex-open-neighborhood assumption.",
+      "lean_notes": "Convexity on V and a supplied ambient real extension differentiable on an arbitrary open U containing V. U need not be convex. source_to_feasible proves the conversion to FeasibleRegularLoss: convexity on V and ambient derivatives at every feasible point. On a thin V the supplied extension fixes the gradient; extension independence is not claimed. Compiled local OGD source-repair candidate, with distinct source/body review. Full harness, actual graph, shared Book registry, final reader/site and PR gates remain separate. This is not all Chapter2 or the whole book, and is not merged or live.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescentSource.theorem_2_13_variable_bound"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescentSource.equation_2_1_distance",
+      "title": "Positive horizon tuning for one comparator",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 22,
+      "plain": "An initial-distance bound and actual tuned-run gradient bounds give DG sqrtT.",
+      "math": "\\(\\eta=\\frac{D}{G\\sqrt T},\\qquad R_T(u)\\le DG\\sqrt T\\)",
+      "intuition": "An initial-distance bound and actual tuned-run gradient bounds give DG sqrtT.",
+      "why": "One repaired source chain using the existing shared projected algorithm.",
+      "position": "Orabona v10 printed12–15/PDF24–27; library refinement, not an extra printed source result.",
+      "proof_idea": "D,G,T>0. Bound the initial distance and energy in the fixed sharp producer, then discard the nonnegative terminal magnitude. No future-gradient optimizer.",
+      "lean_notes": "Convexity on V and a supplied ambient real extension differentiable on an arbitrary open U containing V. U need not be convex. source_to_feasible proves the conversion to FeasibleRegularLoss: convexity on V and ambient derivatives at every feasible point. On a thin V the supplied extension fixes the gradient; extension independence is not claimed. Compiled local OGD source-repair candidate, with distinct source/body review. Full harness, actual graph, shared Book registry, final reader/site and PR gates remain separate. This is not all Chapter2 or the whole book, and is not merged or live.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescentSource.theorem_2_13_fixed"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescentSource.equation_2_1",
+      "title": "Equation (2.1) with arbitrary-open regularity",
+      "chapter": "online-ogd",
+      "featured": true,
+      "teaching_order": 23,
+      "plain": "One prescribed tuned trajectory satisfies DG sqrtT for every feasible comparator.",
+      "math": "\\(\\forall u\\in V,\\ R_T(u)\\le DG\\sqrt T\\)",
+      "intuition": "One prescribed tuned trajectory satisfies DG sqrtT for every feasible comparator.",
+      "why": "One repaired source chain using the existing shared projected algorithm.",
+      "position": "Orabona v10 printed12–15/PDF24–27; library refinement, not an extra printed source result.",
+      "proof_idea": "Positive D,G,T, pairwise domain distances<=D, actual tuned-run gradient norms<=G. No comparator-dependent rerun or anytime bound.",
+      "lean_notes": "Convexity on V and a supplied ambient real extension differentiable on an arbitrary open U containing V. U need not be convex. source_to_feasible proves the conversion to FeasibleRegularLoss: convexity on V and ambient derivatives at every feasible point. On a thin V the supplied extension fixes the gradient; extension independence is not claimed. Compiled local OGD source-repair candidate, with distinct source/body review. Full harness, actual graph, shared Book registry, final reader/site and PR gates remain separate. This is not all Chapter2 or the whole book, and is not merged or live.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescentSource.equation_2_1_distance"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.example_2_5",
+      "title": "Orabona Example 2.5: affine functions",
+      "chapter": "online-convex",
+      "featured": false,
+      "teaching_order": 5,
+      "plain": "Every inner-product affine function is convex under the shared epigraph definition.",
+      "math": "\\(f(x)=\\langle z,x\\rangle+b\\)",
+      "intuition": "Finite real values embed exactly into extended-real epigraphs.",
+      "why": "Connects basic source examples to the same convexity definition used by later theory.",
+      "position": "Orabona v10, printed page 10, PDF page 22.",
+      "proof_idea": "Use the proved real embedding equivalence, then the affine identity or pinned mathlib norm convexity.",
+      "lean_notes": "No bounded-domain or nonzero-value assumptions; the public canary includes nondegenerate cases.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.convexExtended_coe_iff"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.example_2_6",
+      "title": "Orabona Example 2.6: norms",
+      "chapter": "online-convex",
+      "featured": false,
+      "teaching_order": 6,
+      "plain": "Every real norm is convex under the shared epigraph definition.",
+      "math": "\\(f(x)=\\|x\\|\\)",
+      "intuition": "Finite real values embed exactly into extended-real epigraphs.",
+      "why": "Connects basic source examples to the same convexity definition used by later theory.",
+      "position": "Orabona v10, printed page 10, PDF page 22.",
+      "proof_idea": "Use the proved real embedding equivalence, then the affine identity or pinned mathlib norm convexity.",
+      "lean_notes": "No bounded-domain or nonzero-value assumptions; the public canary includes nondegenerate cases.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.convexExtended_coe_iff"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescent.project_existsUnique",
+      "title": "A unique nearest point exists before selection",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 0,
+      "plain": "Every nonempty closed convex subset of a complete real inner-product space has exactly one point minimizing distance from any ambient point.",
+      "math": "\\(\\exists! p\\in V,\\quad \\|z-p\\|=\\inf_{w\\in V}\\|z-w\\|.\\)",
+      "intuition": "Existence supplies a minimizer. Convexity makes two minimizers satisfy opposite variational inequalities, forcing their squared separation to vanish.",
+      "why": "Algorithm 2.1 and Proposition 2.11 use a well-defined unique Euclidean projection. This theorem establishes existence and uniqueness before the existing choice-based definition.",
+      "position": "Well-definedness obligation for Orabona v10, printed p.12 / PDF p.24. The proof is library-derived; it is not an additional numbered source theorem.",
+      "proof_idea": "Take a minimizer from Mathlib. For two minimizing points p and q, the variational characterization gives <z-p,q-p> <= 0 and <z-q,p-q> <= 0. Adding these inequalities gives ||q-p||^2 <= 0, hence q=p.",
+      "lean_notes": "The source finite-dimensional Euclidean setting is generalized to a complete real inner-product space. Nonempty, closed and convex are explicit Domain fields; no boundedness or compactness is added. project_spec characterizes the unchanged selected projection using exactly this minimizer predicate. No executable solver, arbitrary Banach-space projection or nonexpansiveness claim. The proof reuses Mathlib exists_norm_eq_iInf_of_complete_convex and norm_eq_iInf_iff_real_inner_le_zero; these upstream dependencies are not local declaration nodes.",
+      "dependencies": []
     }
   ]
 }
