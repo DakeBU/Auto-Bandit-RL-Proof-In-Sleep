@@ -1,0 +1,197 @@
+{
+  "schema_version": "3.0",
+  "id": "ONLINE-CH2-CLOSURES-INTEGRATION-20261011",
+  "route": "online-learning / bounded Chapter 2 convexity closures",
+  "frontier_cell": "online-convex-closures",
+  "source_facing": true,
+  "source": {
+    "kind": "textbook",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10",
+    "anchor": "Four unnumbered convexity-closure bullets, printed p.10 / PDF p.22, and omitted-proof notice p.11 / PDF p.23; separate Rockafellar convex-addition interpretation at printed p.6 / PDF p.17.",
+    "url": "https://arxiv.org/abs/1912.13213v10",
+    "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17"
+  },
+  "target": "Integrate two retained convexity closure modules, two canaries and one source-attributed reader into the existing shared project; preserve every original proof and explicit extended-arithmetic boundary.",
+  "affected_files": [
+    "BanditRLProof.lean",
+    "BanditRLProof/OnlineConvexClosures.lean",
+    "BanditRLProof/OnlineConvexSums.lean",
+    "website/content/books.json",
+    "website/content/chapters.json",
+    "website/content/highlights.json",
+    "website/content/readings.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineConvex.convex_comp_affine",
+    "BanditRL.OnlineConvex.convex_iSup",
+    "BanditRL.OnlineConvex.convex_comp_monotone",
+    "BanditRL.OnlineConvex.upperAdd",
+    "BanditRL.OnlineConvex.upperAdd_coe",
+    "BanditRL.OnlineConvex.upperAdd_top",
+    "BanditRL.OnlineConvex.top_upperAdd",
+    "BanditRL.OnlineConvex.upperAdd_le_coe_iff",
+    "BanditRL.OnlineConvex.convex_upperAdd",
+    "BanditRL.OnlineConvex.positive_mul_le_coe_iff",
+    "BanditRL.OnlineConvex.convex_nonneg_mul",
+    "BanditRL.OnlineConvex.convex_nonneg_linear_combination"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Current main shared convexity definitions and finite-coercion equivalence",
+      "Mathlib Analysis/Convex/Basic.lean convex_iInter and Convex.affine_preimage",
+      "Frozen Online stack at 8045070bf1ee53c83778d04eb168f8ad6f728b59"
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineConvex.realEpigraph",
+      "BanditRL.OnlineConvex.IsConvexExtended",
+      "BanditRL.OnlineConvex.convexExtended_coe_iff",
+      "Convex.affine_preimage",
+      "convex_iInter"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineConvex.convex_comp_affine",
+      "BanditRL.OnlineConvex.convex_iSup",
+      "BanditRL.OnlineConvex.convex_comp_monotone",
+      "BanditRL.OnlineConvex.upperAdd",
+      "BanditRL.OnlineConvex.upperAdd_coe",
+      "BanditRL.OnlineConvex.upperAdd_top",
+      "BanditRL.OnlineConvex.top_upperAdd",
+      "BanditRL.OnlineConvex.upperAdd_le_coe_iff",
+      "BanditRL.OnlineConvex.convex_upperAdd",
+      "BanditRL.OnlineConvex.positive_mul_le_coe_iff",
+      "BanditRL.OnlineConvex.convex_nonneg_mul",
+      "BanditRL.OnlineConvex.convex_nonneg_linear_combination"
+    ],
+    "known_consumers": [
+      "convex_nonneg_linear_combination consumes convex_nonneg_mul and convex_upperAdd",
+      "Both shared canaries exercise the endpoints and boundary counterexamples"
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Reuse unchanged existing Online proofs and main convexity API; no duplicate foundational project or new proof wrapper."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "Current root integration formalizer; retained original proofs",
+    "blind_decoder": "Separate current neutral-statement decoder",
+    "source_reviewer": "Separate current source/binder/body/reader reviewer; also independently reviewed source topology before implementation exposure",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Real-module generalization; affine-input interpretation; arbitrary and empty indexed suprema under explicit lattice convention; globally finite-real monotone composition; separately attributed Rockafellar top-dominant addition and additional library zero-scaling convention. Helpers refine implementation and are not numbered source theorems."
+  },
+  "graph_contribution": {
+    "lean_graph": "new-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Integration of existing epigraph closure mechanisms. No new cross-domain transport certificate or stabilized functor is proved.",
+    "focus_targets": [
+      "online-convex-closures",
+      "online-convex"
+    ],
+    "visual_review": "New closure reader and changed foundation reader checked at 1440px and 390px with MathJax, folded Lean, Book breadcrumb/navigation and accessible formula overflow; registry includes 69 Online declarations.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: one bounded closure reader with four endpoints and explicit arithmetic conventions",
+    "banditrlwiki": "no-change-with-reason: Bandit cases and Extended Topics endpoints unchanged",
+    "results_ledger": "updated: research-wiki/integrations/ONLINE-CH2-CLOSURES-INTEGRATION-20261011/README.md",
+    "roadmap": "updated: four bounded Online chapter references; chapter/book completion remains open",
+    "website_surfaces": [
+      "Shared Online Book metadata",
+      "Closure reader and four highlights",
+      "Foundation reader remaining boundary",
+      "Canonical shared declaration and module graphs"
+    ]
+  },
+  "truth_boundary": "Twelve library declarations support four unnumbered source closure statements. Real modules, empty index families and explicit extended arithmetic are disclosed. No source author proof is supplied by the inspected passages. Finite-loss/domain-intersection and later Chapter 2 routes remain open. No whole-PR supersession, purification, full Exposition Seal, merge or deployment follows from this bounded integration.",
+  "verification": {
+    "focused_checks": [
+      "Focused production and canary build passed 9053 jobs",
+      "Book registry tests passed after reader grouping",
+      "Staged diff check and four desktop/mobile render checks passed"
+    ],
+    "bandit_check": "Passed combined library 9052 jobs, Tests 9166 jobs, exporter, strict scan and 455 tests/7 platform skips; source bytes unchanged thereafter",
+    "site_build": "Passed --lean-verified after combined gate and independently reviewed reader grouping",
+    "site_check": "passed",
+    "independent_review": "Source-only topology separately accepted; blind neutral reconstruction complete; source/binder/body/reader v1 and exact grouping v2 accepted with explicit deltas"
+  },
+  "contributor": {
+    "name": "OpenAI Codex",
+    "role": "Integration and maintenance; original proof authors and historical review roles retained by immutable source provenance"
+  },
+  "learning_contract": {
+    "control_plane_math_authority": false,
+    "process_memory_checked": true,
+    "process_memory_ids": [
+      "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS",
+      "ABRL-NK-WINDOWS-PATH-LENGTH"
+    ],
+    "failure_class": "NONE",
+    "salvage": {
+      "required": true,
+      "status": "completed",
+      "reason": "First site build rejected six reader steps. All proof and reader content retained; adjacent arithmetic/witness text regrouped into five steps, independently reviewed and publication gate passed. Earlier failed receipt retained.",
+      "promoted_fragments": [
+        "BanditRLProof/OnlineConvexClosures.lean",
+        "BanditRLProof/OnlineConvexSums.lean"
+      ],
+      "discarded_fragments": []
+    },
+    "parallelism": {
+      "decision": "serial",
+      "direction_fingerprints": [
+        "retained-epigraph-convexity-closure-proofs"
+      ],
+      "expected_information_gain": "Distinct blind, source and topology reviewers satisfy role separation; these are audits, not competing proof directions.",
+      "shared_verified_context_digest": "Orabona cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17; Rockafellar 29d57ab07857b8270c175343746c77b4138f2db6161ae20174a0bba076991b0e"
+    },
+    "cross_route_blind_spot_audit": {
+      "required": false,
+      "status": "not-applicable",
+      "evidence": "",
+      "canonical_route": "retained library proof routes",
+      "selection_reason": "No parallel mathematical proof-route competition."
+    },
+    "reader_backpressure": {
+      "purification_status": "pending",
+      "exposition_seal_status": "pending",
+      "reader_debt_delta": 0,
+      "exposition_evidence": "Five-step mathematical reader independently reviewed; four desktop/mobile checks passed. Full purification and Exposition Seal not claimed.",
+      "source_expansion_nodes": [
+        "B2-O-AFF",
+        "B2-O-SUP",
+        "B2-O-MONO",
+        "B2-O-LIN",
+        "B2-R-ADD"
+      ],
+      "lean_expansion_nodes": [
+        "BanditRL.OnlineConvex.convex_comp_affine",
+        "BanditRL.OnlineConvex.convex_iSup",
+        "BanditRL.OnlineConvex.convex_comp_monotone",
+        "BanditRL.OnlineConvex.upperAdd",
+        "BanditRL.OnlineConvex.upperAdd_coe",
+        "BanditRL.OnlineConvex.upperAdd_top",
+        "BanditRL.OnlineConvex.top_upperAdd",
+        "BanditRL.OnlineConvex.upperAdd_le_coe_iff",
+        "BanditRL.OnlineConvex.convex_upperAdd",
+        "BanditRL.OnlineConvex.positive_mul_le_coe_iff",
+        "BanditRL.OnlineConvex.convex_nonneg_mul",
+        "BanditRL.OnlineConvex.convex_nonneg_linear_combination"
+      ],
+      "assumptions_preserved": true,
+      "boundary_preserved": true
+    }
+  }
+}
