@@ -1,0 +1,120 @@
+{
+  "status": "prepared only; no gates executed by this plan",
+  "helper": {
+    "path": "tmp/online-ch2-weighted-identity-gates-20261011/capture-gate-v1.py",
+    "raw_sha256": "a0746e86baadf247316bc9c099d0c0c0e8bde35daee32322aff830c69c7df60e",
+    "syntax_validation": "ast.parse only, helper not executed"
+  },
+  "evidence_destination_proposed": "runs/online-ch2-weighted-identity-gates-20261011/<unique-label>/",
+  "source_binding_strategy": "Every tracked ordinary repository file except the declared current evidence namespace, plus all files in production/Tests/tools/website scripts-content-static/contribution-contract source trees, fixed root/toolchain files, and explicit --owned-source paths. Complete sorted path-set+RAW comparison before and after, no CRLF normalization or RAW-versus-Git-blob equivalence claim. Full RAW snapshots in create-only zip; exact helper copied. Stronger than prior 1175-source subset; includes historical tracked evidence and may be large. No ignored .lake/node_modules traversal.",
+  "git_state": "Exact HEAD, branch and NUL-delimited porcelain status raw hex pre/post. HEAD/branch change fails capture integrity; status differences recorded separately because evidence creation/authorized generated outputs may affect status. A receipt actual_exit0 alone never proves clean candidate/publication readiness.",
+  "ordered_commands": [
+    {
+      "stage": 1,
+      "argv": [
+        "lake",
+        "build"
+      ],
+      "meaning": "Shared default project root; focused module build does not replace this."
+    },
+    {
+      "stage": 2,
+      "argv": [
+        "lake",
+        "build",
+        "Tests"
+      ],
+      "meaning": "Combined Tests target."
+    },
+    {
+      "stage": 3,
+      "argv": [
+        "python",
+        "-B",
+        "tools/bandit.py",
+        "check"
+      ],
+      "meaning": "Authoritative full harness itself reruns lake build and Tests, compiles tools/ProofGraphExport.lean, scans forbidden placeholders in production/Tests, runs unittest discovery tools/test_*.py, then prints check passed."
+    }
+  ],
+  "after_candidate_commit": [
+    {
+      "argv": [
+        "python",
+        "-B",
+        "tools/check_contributor_contract.py",
+        "--base",
+        "<exact reviewed base commit>"
+      ],
+      "preconditions": [
+        "Source and contribution manifest committed; real nonempty base..HEAD diff",
+        "Parent must supply exact expected five protected paths; bind actual changed protected set and check all five present",
+        "Reject N/A, changed paths0 or affected production paths0 even if actual exit0; verify no uncovered protected path"
+      ],
+      "not_ready_reason": "Generic recorder does not replace contributor-specific nonempty/diff coverage guard."
+    },
+    {
+      "argv": [
+        "python",
+        "-B",
+        "website/scripts/build_site.py",
+        "--lean-verified"
+      ],
+      "preconditions": [
+        "Actual root/Tests/full-harness exit0 and stable source binding",
+        "Fresh candidate commit and clean-source review",
+        "Parent separately authorizes website generation; outputs identify exact candidate HEAD"
+      ]
+    },
+    {
+      "argv": [
+        "python",
+        "-B",
+        "website/scripts/check_site.py"
+      ],
+      "preconditions": [
+        "Fresh site build receipt and exact same source binding/candidate",
+        "Pixel/reader review remains separate; local checker is not live deployment"
+      ]
+    }
+  ],
+  "CLI_inspection_only": [
+    "build_site supports --output, --lean-verified, --public-base-url, --public-snapshot-base-url",
+    "check_site supports --output, --allow-unverified, --expect-public-base-url; do not use allow-unverified for accepted delivery",
+    "contributor checker supports --base or --ci; requires production change and changed contribution contract"
+  ],
+  "limitations": [
+    "No gate run, no commit/stage, no canonical/root/site/native edit in helper preparation.",
+    "Caller supplies exact argv after --; shell=False. Helper records all return codes without interpreting task-specific success phrases.",
+    "Missing/deleted/symlink source input fails closed. Only existing ordinary repository files are snapshotted.",
+    "New source path additions during a command fail full inventory equality.",
+    "This helper writes only its evidence directory itself; authorized subprocess side effects are governed by caller command approval, not a sandbox.",
+    "No claim of lifecycle enforcement or native acceptance."
+  ],
+  "inspected_instructions": [
+    {
+      "path": "tools/bandit.py",
+      "sha256": "d4a5a27189b200ac977e5b6b3ce3bce5880dff1b7530461aab6860352199da9c"
+    },
+    {
+      "path": "tools/check_contributor_contract.py",
+      "sha256": "2d49be2d3be7b58287d2fa4022441b48f986cb13995c414dfccb1b2ac52d0eff"
+    },
+    {
+      "path": "website/scripts/build_site.py",
+      "sha256": "4fe18b8b9a543ff5256a278f49d160424b30ba2185c946f3d6081ad5460ccaff"
+    },
+    {
+      "path": "website/scripts/check_site.py",
+      "sha256": "f11f80d491deab82c2f722018670078b42fd58303044e030fe2f3ba34c905ad4"
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "sha256": "12d8dbaaf3fe1ad3179719bb4ddaf4a0cb8e920a05f4cf0232ce8b5db1977a29"
+    },
+    {
+      "path": "docs/contributor-codex-contract.md",
+      "sha256": "d7dfa3406def35de292b202f45ff8303b9a550310bd00979be838e5a2348a498"
+    }
+  ]
+}
