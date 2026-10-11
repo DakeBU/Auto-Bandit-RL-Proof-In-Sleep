@@ -1,0 +1,414 @@
+                                        6.13 History Bits                                                95
+
+  In OMD with delays we predict the same x1 for the first τ + 1 rounds and
+                   xt+1 = argmin Bψ (x; xt ) + ηt ⟨g t−τ , x⟩,     ∀t ≥ τ + 1 .
+                             x∈V
+
+On the other hand, Optimistic OMD without delays updates with
+                     xt+1 = argmin Bψ (x; xt ) + ηt ⟨g t + g̃ t+1 − g̃ t , x⟩,
+                               x∈V
+
+where g̃ 1 = 0. So, the two are equivalent by setting g̃ t+1 − g̃ t = g t−τ − g t . So, unrolling,
+                     Pt
+we have g̃ t+1 = − i=max(1,t−τ +1) g i . In other words, we are receiving a very poor hint
+that corresponds to the delayed feedback.
+   The above observation is very powerful because it immediately gives us the regret guaran-
+tee of OMD with delays. Let’s consider OMD with delayed feedback and constant learning
+rate. Following the delay-to-optimism conversion in the previous section, we set g̃ t+1 =
+   Pt
+− i=max(1,t−τ +1) g i for t = 1, . . . , T − 1, yet we must also set g̃ T +1 = 0. Hence, for all
+u ∈ V , we obtain a regret upper bound with reduced terms in the sum for the first T − 1
+rounds:
+  T
+  X
+         ⟨g t , xt − u⟩
+   t=1
+                                                                                                 2
+                           T −1       t                                          T
+           Bψ (u; x1 ) η X          X                                  η         X
+         ≤            +                       g           ∥g t−τ ∥⋆ +                       gi       .
+               η        λ t=τ +1 i=max(1,t−τ ) i                      2λ   i=max(1,T −τ )
+                                                      ⋆                                          ⋆
+
+That is, assuming g t is bounded for all t, we improved the worst-case dependence in the
+dominant term of the bound from τ√2 to τ . Optimally choosing the learning rate, we obtain
+the optimal regret guarantee of O( τ T ).
+
+
+                                       6.13 History Bits
+The Bregman divergence was introduced by Bregman (1967) as a particular example of a
+distance-like function satisfying certain properties, to generalize the cyclic projection al-
+gorithm to general topological vector spaces. Often people drop the condition on the strict
+convexity (e.g., Bauschke et al., 2003), but in reality it is part of the original definition by
+Bregman (1967).
+   Mirror Descent (MD) was introduced by Nemirovskij and Yudin (1983) in the offline
+setting. The description of MD with Bregman divergence that I described here (with minor
+changes) was done by Beck and Teboulle (2003). The minor changes are in decoupling the
+domain X of ψ from the feasibility set V . This allows us to use functions ψ that do not
+satisfy the condition (6.5), but they satisfy (6.6). In the online setting, the mirror descent
+scheme was used for the first time by Warmuth and Jagota (1997).
+   Most of the online learning literature for OMD assumes ψ to be Legendre (see, e.g., Cesa-
+Bianchi and Lugosi, 2006) that corresponds to assuming (6.5) (or limx→bdry X ∥∇ψ(x)∥2 =
++∞, see (Rockafellar, 1970, Theorem 26.1 and Lemma 26.2)). This condition allows us to
+prove that ∇ψV⋆ = (∇ψV )−1 . However, it turns out that the Legendre condition is not
+necessary, and we only need the function ψ to be differentiable on the predictions xt . For
+96                                       Online Mirror Descent
+
+example, we only need one of the two conditions in (6.5) or (6.6) to hold. Removing the
+Legendre assumption makes it easier to use OMD with different combinations of feasibil-
+ity sets/Bregman divergences. So, I did not introduce the concept of Legendre functions at
+all, relying instead on (a minor modification of) OMD as described by Beck and Teboulle
+(2003). Theorem 6.8 is derived from (Bauschke and Borwein, 1997, Theorem 3.12).
+   The proof of Theorem 6.26 is based on the one in Kakade et al. (2009).
+   The concept of local norms was introduced in Abernethy et al. (2008) for FTRL with
+self-concordant regularizers.
+   The EG algorithm was introduced by Kivinen and Warmuth (1997), but not as a specific
+instantiation of OMD. Beck and Teboulle (2003) rediscover EG for the offline case as an ex-
+ample of MD. Later, Cesa-Bianchi and Lugosi (2006) shows that EG is just an instantiation
+of OMD. The p-norm algorithms for online prediction were originally introduced by Grove
+et al. (1997, 2001). Lemma 6.35 is well-known, but I could not find a good proof for it,1
+so I wrote one. The trick to set q = 2 ln d is from Gentile and Littlestone (1999); Gentile
+(2003) (online learning) and apparently rediscovered in Ben-Tal et al. (2001) (optimization).
+The LEA setting was introduced by Littlestone and Warmuth (1994) and Vovk (1990). The
+ideas in Algorithm 6.3 are based on the Multiplicative Weights algorithm (Littlestone and
+Warmuth, 1994) and the Hedge algorithm (Freund and Schapire, 1995, 1997), both being
+just OMD/FTRL with the entropic distance generating function/regularizer. As a side note,
+the weighted majority algorithm was also discovered independently in the game theory lit-
+erature by Fudenberg and Levine (1995). For two qexperts with losses in [0, 1], Cover (1965)
+                                                   T
+showed that the asymptotic minimax regret is 2π      and proposed an algorithm achieving
+                                                                             other hand, for
+it. Notably, the approach in Cover (1965) is based on online betting. On the q
+more than 2 experts and losses in [0, 1], the minimax regret is (1 + o(1)) T ln      2
+                                                                                       d
+                                                                                         , where
+o(1) → 0 when d, T → ∞ (Cesa-Bianchi et al., 1993, 1997). By now, the literature on
+LEA is huge, with tons of variations over algorithms and settings.
+   The multi-scale setting was introduced independently2 and around the same time by
+Bubeck et al. (2017, 2019) and Foster et al. (2017). Bubeck et al. (2017, 2019) propose
+two algorithms, one for non-positive losses and one for generic losses. Unfortunately, their
+proof for the generic losses appears to be wrong and not easily fixable. Their bound is sim-
+ilar to the one we proved here. Foster et al. (2017) proved a stronger result, where the term
+in the logarithm depends on ci /πi rather than on the sum of the scales and the minimal
+value. However, this algorithm has a computational complexity at step t of O(t). Cutkosky
+and Orabona (2018) proposed another solution that achieves the same bound of Foster et al.
+(2017), but with constant computational complexity. The algorithm I describe here is a sim-
+plification of the one in Chen et al. (2021). The bound is worse than the one in Cutkosky
+and Orabona (2018) and Foster et al. (2017), but it is simpler to describe, and it also allowed
+me to describe the method of the shifted surrogate loss. The use of shifted surrogate losses
+in LEA setting was proposed in Hazan and Kale (2008, 2010) and later used in Steinhardt
+and Liang (2014). Interestingly, these shifted surrogates can be understood as an approxi-
+mation of the coin-betting instantaneous log wealth, as one can see by comparing the update
+1 People often cite Shalev-Shwartz (2007, Lemma 17), but it has a wrong proof because it ignores the fact that
+  the function is not twice differentiable.
+2 Dylan Foster, personal communication, 2026
+                                        6.14 Exercises                                        97
+
+of Squint (Koolen and van Erven, 2015) with the update of the KT-based parameter-free
+algorithm for LEA.
+    The construction in Section 6.10 is from Foster et al. (2017), but they require N func-
+tion values per step, while we use only one subgradient per step using the linearization idea
+proposed in MetaGrad (van Erven and Koolen, 2016; van Erven et al., 2021). The idea of
+restricting the norm of the competitor to the “meaningful ones” is not necessary in the origi-
+nal formulation by Foster et al. (2017), but it is standard, and it has been rediscovered many
+times in different forms, e.g., in a method privately proposed by Nemirovski in 2013 and
+described in the ICML 2020 tutorial3 on “Parameter-free Online Optimization” by Orabona
+and Cutkosky, in Orabona (2014, Theorem 2), in Cutkosky (2019c, Section 5).
+    The idea of “hallucinating” future losses used in Optimistic OMD is originally from
+Azoury and Warmuth (2001) in the Forward Algorithm. Apparently, this idea was forgotten
+and rediscovered by Chiang et al. (2012) that used the previous loss function as an estimate
+of the next one, showing smaller regret in the case that the losses have small temporal vari-
+ation. Later, Rakhlin and Sridharan (2013b) generalized this idea in the Optimistic OMD
+algorithm. Surprisingly enough, the procedure using two Optimistic OGD algorithms to
+solve saddle-point problems was already proposed by Popov (1980), see also Section 15.6.
+Optimistic OMD was proposed in Rakhlin and Sridharan (2013b) with a two-step update. It
+was then simplified to the one-step updates I presented here by Joulani et al. (2017). How-
+ever, Malitsky (2015) presented a version of Popov’s algorithm for variational inequalities
+with only one projection that is essentially Optimistic OGD with one projection. The proof
+I present here is based on the one I proposed for Optimistic FTRL in Section 7.12.
+    Weinberger and Ordentlich (2002) were the first to analyze the delayed feedback problem.
+They considered the adversarial√full information setting with a fixed, known delay τ . They
+achieved the optimal rate of O( τ T ) with a black-box reduction, by running τ + 1 online
+algorithms on subsampled sequences. Zinkevich et al. (2009) analyzed OMD with delayed
+feedback and obtained the optimal regret. Joulani et al. (2013) unified most of the prior
+research on the effect of delay in adversarial and stochastic problems. McMahan and Streeter
+(2014) studied a variant of AdaGrad with delays. Quanrud and Khashabi (2015) studied
+OGD and FTRL with adversarially chosen delays, while Joulani et al. (2016) studied OMD
+and FTRL-Proximal with adaptive learning rates.
+    The equivalence of delays/bad hints and the improved regret guarantees for Optimistic
+OMD and Optimistic FTRL are due to Flaspohler et al. (2021). However, their OMD bound
+contains a small mistake: they are missing the last terms in the bound, because we set
+g̃ T +1 = 0, breaking the equivalence between optimistic and delayed updates for xT +1 .
+Note that while the choice of xT +1 does not influence the algorithm in the rounds 1, . . . , T ,
+its value appears in the regret upper bound. Flaspohler et al. (2021) also show that Regret
+Matching and Regret Matching+ algorithms automatically adapts to the delay τ .
+    Lemma 6.39 is from Joulani et al. (2016).
+
+
+                                       6.14 Exercises
+Problem 6.1 Prove the three-points equality for Bregman divergences in Lemma 6.7.
+3   https://parameterfree.com/icml-tutorial/
+98                                   Online Mirror Descent
+
+Problem 6.2 Let A ∈ Rd×d be a positive definite matrix. Define ∥x∥2A = x⊤ Ax. Prove
+that 21 ∥x − y∥2A is the Bregman divergence Bψ (x; y) associated with ψ(x) = 12 ∥x∥2A .
+Problem 6.3 Let ψ : X → R be a distance generating function and Bψ its associated
+Bregman divergence. Fix y ∈ int X and define f (x) = Bψ (x; y). For any v ∈ int X and
+x ∈ X , prove that Bf (x; v) = Bψ (x; v).
+Problem 6.4 We want to show an equality quantifying the gap in Fenchel–Young’s in-
+equality with a Bregman divergence term. Assume that f and f ⋆ are differentiable, f strictly
+convex, and dom f = Rd . Prove that
+                       f (x) + f ⋆ (θ) = ⟨θ, x⟩ + Bf (x; ∇f ⋆ (θ)) .
+Problem 6.5 Let f : Rd → (−∞, +∞] be even. Prove that f ⋆ is even.
+Problem 6.6 In the proof of OMD, we have the terms −Bψ (xt+1 ; xt )+⟨ηt g t , xt −xt+1 ⟩.
+Prove that they can be lower bounded by Bψ (xt ; xt+1 ).
+Problem 6.7 Generalize the concept of strong convexity to Bregman divergences, instead
+of norms, and prove a logarithmic regret guarantee for such functions using OMD.
+Problem 6.8 Consider the setting of Theorem 6.11, assume that supx,y∈V Bψ (x; y) ≤
+D2 , and that ∥g t ∥⋆ ≤ L for all t. Suppose that the time horizon T is not known in advance.
+  Use the following doubling trick. Split time into epochs of lengths 1, 2, 4, . . . . At the
+beginning of each epoch of length 2k , restart OMD
+                                                 √
+                                                       from an arbitrary point in int X ∩ V and
+run it with the constant learning rate ηk = D    √ 2λ . Prove that, for every T ≥ 1 and every
+                                               L 2k
+u ∈ V , this algorithm satisfies
+                        T
+                        X                                 2 DL √
+                               (ℓt (xt ) − ℓt (u)) ≤ √      √    T.
+                         t=1                             2−1 λ
+Problem 6.9 Derive the EG update rule and regret bound in the case that the algorithm
+starts from an arbitrary vector x1 in the probability simplex.
+Problem 6.10 Show that EG is invariant toP  additive constants added to the loss vectors.
+                                              d    2
+Use this observation to show that the terms i=1 gt,i xt,i for t = 1, . . . , T in the regret
+                               Pd               2
+upper bound can be tightened to i=1 (gt,i − mt ) xt,i for any mt ∈ R.
+Problem 6.11 Extend Theorem 5.1 to arbitrary norms, measuring the diameter with re-
+spect to a norm ∥ · ∥ and considering losses L-Lipschitz with respect to ∥ · ∥.
+Problem 6.12 In this problem, we will tackle Online Non-Convex Optimization. Assume
+that V ⊂ Rd is the feasible set and it is convex and bounded. The losses ℓt : Rd → [0, 1]
+are non-convex and 1-Lipschitz with respect to ∥ · ∥2 . Prove that there exists a randomized
+algorithm that achieves sublinear regret on this problem, assuming knowledge
+                                                                          √        of the total
+number of rounds T . Hint: aim for something like E[RegretT (u)] = O( dT ln T ) and do
+not worry about the efficiency of the algorithm.
+                                              7
+
+                    Follow-the-Regularized-Leader
+
+
+
+Until now, we focused only on Online Subgradient Descent and its generalization, Online
+Mirror Descent, with a brief ad-hoc analysis of Follow-the-Leader (FTL) in the first chapter.
+In this chapter, we will extend FTL to a powerful and generic algorithm to do Online Convex
+Optimization (OCO): Follow-the-Regularized-Leader (FTRL).
+   FTRL is a very intuitive algorithm: at each time step, it will play the minimizer of the sum
+of the past losses plus a time-varying regularizer, ψt . We will see that the regularization is
+needed to make the algorithm “more stable” with linear losses and avoid the jumping back
+and forth that we saw in Example 2.10.
+
+
+                  7.1 The Follow-the-Regularized-Leader Algorithm
+
+Algorithm 7.1 Follow-the-Regularized-Leader (FTRL)
+Require: A sequence of regularizers ψ1 , . . . , ψT : X → R, closed non-empty set V ⊆
+    X ⊆ Rd
+ 1: for t = 1 to T do
+                                         Pt−1
+ 2:    Output xt ∈ argminx∈V ψt (x) + i=1 ℓi (x)
+ 3:    Receive ℓt : Rd → (−∞, +∞] and pay the loss ℓt (xt )
+ 4: end for
+
+
+   In Follow-the-Regularized-Leader (FTRL), in each round we output the minimizer of
+the regularized cumulative past losses, see Algorithm 7.1. It should be clear that FTRL is not
+an algorithm, but a family of algorithms, in the same way that Online Mirror Descent (OMD)
+is a family of algorithms.
+   Before analyzing FTRL, let’s get some intuition on it. In OMD, we saw that the “state”
+of the algorithm is stored in the current iterate xt , in the sense that the next iterate xt+1
+depends on xt and the loss received at time t, plus obviously the choice of the learning rate.
+Instead, in FTRL, the next iterate xt+1 depends on the entire history of losses received up to
+time t and on the regularizer used at time t. This has an immediate consequence: in the case
+that V is bounded, OMD will only “remember” the last xt and nothing else. On the other
+hand, FTRL keeps in memory the entire history of the past, which in principle allows us to
+recover the iterates before the projection in V .
+   This difference in behavior might make the reader think that FTRL is more computation-
+ally and memory-expensive. And indeed it is! But, in Section 7.3 we will also see that there
+
+                                              99
+100                                 Follow-the-Regularized-Leader
+
+is a way to consider approximate losses that makes the algorithm as expensive as OMD, yet
+retaining the same or more information than OMD.
+    For FTRL, we prove an equality for the regret. This equality factors the regret in three
+terms that have precise meanings and can be easily upper-bounded with some familiar quan-
+tities.
+
+Lemma 7.1 Let ψ1 , . . . , ψT +1 : X → R be a sequence of regularization functions
+                                                                          Pt−1 and
+V ⊆ X ⊆ Rd a closed and non-empty set. Denote by Ft (x) = ψt (x) + i=1 ℓi (x),
+where ℓt : Rd → (−∞, +∞] for all t. Assume that argminx∈V Ft (x) is not empty and set
+xt ∈ argminx∈V Ft (x). Then, for all u ∈ X , we have
+ T
+ X                                                         T
+                                                           X
+       (ℓt (xt ) − ℓt (u)) = ψT +1 (u) − min ψ1 (x) +            [Ft (xt ) − Ft+1 (xt+1 ) + ℓt (xt )]
+                                            x∈V
+ t=1                                                       t=1
+
+                              + FT +1 (xT +1 ) − FT +1 (u) .
+
+In addition, the choice of ψT +1 does not change the iterates x1 , . . . , xT of the algorithm.
+
+Proof Given that the terms ℓt (xt ) appear on both sides of the equality, we just have to
+verify that
+                 T
+                 X                                         T
+                                                           X
+             −         ℓt (u) = ψT +1 (u) − min ψ1 (x) +         [Ft (xt ) − Ft+1 (xt+1 )]
+                                            x∈V
+                 t=1                                       t=1
+
+                               + FT +1 (xT +1 ) − FT +1 (u) .
+
+Remembering that F1 (x1 ) = minx∈V ψ1 (x) and using the fact that the sum with Ft is
+telescopic, we have
+    T
+    X
+−         ℓt (u) = ψT +1 (u) − F1 (x1 ) + F1 (x1 ) − FT +1 (xT +1 ) + FT +1 (xT +1 ) − FT +1 (u)
+    t=1
+
+                 = ψT +1 (u) − FT +1 (u),
+
+that is true by the definition of FT +1 . The second statement is immediate.
+
+Remark 7.2 We basically did not assume anything on ℓt nor on ψt , hence the above
+equality holds even for non-convex losses and regularizers. Yet, solving the minimization
+problem at each step might be computationally infeasible.
+
+Remark 7.3 The FTRL algorithm is invariant to any constant added to the regularizers,
+hence we can always state the regret guarantee with ψt (u) − minx∈V ψt (x) instead of
+ψt (u). However, for clarity, we will sometimes explicitly choose the regularizers such that
+their minimum in V is 0.
+
+Remark 7.4 The terms ℓt (xt ) appear on the left and right of the equality. Hence, in some
+proofs we can substitute them with some other terms, for example ℓt (x̃t ) where x̃t is not
+the FTRL prediction. In other words, we can write the same equality for the prediction of a
+generic algorithm whose regret will depend on the prediction of the FTRL algorithm.
+                         7.2 FTRL Regret Bound using Strong Convexity                          101
+
+  Let’s take a closer look at the equality. If u ∈ V , we have that the sum of the last two terms
+on the r.h.s. is negative. On the other hand, the first two terms on the r.h.s. are similar to what
+we got in OMD. The interesting part is the sum of the terms Ft (xt ) − Ft+1 (xt+1 ) + ℓt (xt ).
+To give an intuition of what is going on, let’s consider the case when the regularizer is
+constant over time, i.e., ψt = ψ . Hence, the terms in the sum can be rewritten as
+                                                    t                             t
+                                                                                               !
+                                                  X                              X
+ Ft (xt ) − Ft+1 (xt+1 ) + ℓt (xt ) = ψ(xt ) +         ℓi (xt ) − ψ(xt+1 ) +         ℓi (xt+1 ) .
+                                                  i=1                           i=1
+
+Hence, we are measuring the distance between the value of the regularized losses in two
+consecutive predictions of the algorithms. Roughly speaking, if xt ≈ xt+1 and the losses
+plus regularization are “nice” then this term will be small. This should remind you exactly
+of the OMD update, where we constrain xt+1 to be close to xt . Instead, here the two pre-
+dictions will be close one to the other if the minimizer of the regularized losses up to time t
+is close to the minimizer of the losses up to time t + 1. So, like in OMD, the regularizer here
+will play the critical role of stabilizing the predictions, if the losses do not possess enough
+curvature.
+   However, while surprising, the above equality is not yet a regret bound, because it is “im-
+plicit”. In fact, the losses are appearing on both sides of the equation. So, in the following,
+we will see different ways to get an explicit upper bound from Lemma 7.1.
+
+
+                     7.2 FTRL Regret Bound using Strong Convexity
+An easy case to get a regret upper bound for FTRL is when the losses plus the regularizer
+are strongly convex, as we prove in the next lemma.
+                                                                              Pt−1
+Lemma 7.5 With the notation in Algorithm 7.1, denote by Ft (x) = ψt (x) + i=1 ℓi (x).
+Assume that V ⊆ X is non-empty, closed, and convex. If Ft is closed, subdifferentiable,
+and strongly convex in V , then xt exists and is unique. In addition, assume ∂ℓt (xt ) to be
+non-empty and Ft + ℓt to be closed, subdifferentiable, and λt -strongly convex with respect
+to ∥ · ∥ in V . Then, we have
+            Ft (xt ) − Ft+1 (xt+1 ) + ℓt (xt )
+                                         λt
+                ≤ ⟨g t , xt − xt+1 ⟩ − ∥xt − xt+1 ∥2 + ψt (xt+1 ) − ψt+1 (xt+1 )
+                                         2
+                   ∥g t ∥2⋆
+                ≤           + ψt (xt+1 ) − ψt+1 (xt+1 ), ∀g t ∈ ∂ℓt (xt ) .
+                     2λt
+Proof     The existence and uniqueness are given by Theorem 6.9. Then, we have
+        Ft (xt ) − Ft+1 (xt+1 ) + ℓt (xt )
+            = (Ft (xt ) + ℓt (xt )) − (Ft (xt+1 ) + ℓt (xt+1 )) + ψt (xt+1 ) − ψt+1 (xt+1 )
+            = (Ft (xt ) + ℓt (xt ) + ιV (xt )) − (Ft (xt+1 ) + ℓt (xt+1 ) + ιV (xt+1 ))
+             + ψt (xt+1 ) − ψt+1 (xt+1 )
+                                    λt
+            ≤ ⟨g t , xt − xt+1 ⟩ − ∥xt − xt+1 ∥2 + ψt (xt+1 ) − ψt+1 (xt+1 ),
+                                    2
+102                                    Follow-the-Regularized-Leader
+
+where in the second inequality we used Lemma 4.2 for the function Ft + ℓt + ιV with g t ∈
+∂(Ft +ℓt +ιV )(xt ). Observing that xt = argminx∈V Ft (x), we have 0 ∈ ∂(Ft +ιV )(xt )
+by Theorem 6.27. Hence, using Theorem 2.23, we have ∂ℓt (xt ) ⊆ ∂(Ft + ℓt + ιV )(xt ).
+  The second inequality is obtained observing that ⟨g t , xt − xt+1 ⟩ ≤ ∥g t ∥⋆ ∥xt − xt+1 ∥
+                                                   2
+and using the elementary inequality ax − 2b x2 ≤ a2b for x ∈ R and a, b > 0.
+
+  Let’s see an immediate application of this lemma.
+
+Corollary 7.6 With the notation in Algorithm 7.1, let V be non-empty, closed, and convex.
+Let ψ : V → R be a closed and µ-strongly convex function with respect to ∥ · ∥. Set the
+                                       1
+sequence of regularizers as ψt (x) = ηt−1 (ψ(x) − minz∈V ψ(z)) for t = 1, . . . , T and
+ψT +1 = ψT . Assume each ℓt subdifferentiable in V . Then, for all u ∈ V , FTRL guarantees
+T                                                             T
+X                                 ψ(u) − minx∈V ψ(x) X ηt−1
+      (ℓt (xt ) − ℓt (u)) ≤                                +           ∥g t ∥2⋆
+t=1
+                                           ηT −1             t=1
+                                                                   2µ
+                                    T −1              
+                                    X        1     1
+                                  +              −       (ψ(xt+1 ) − min ψ(z)),   ∀g t ∈ ∂ℓt (xt ) .
+                                    t=1
+                                           η t−1   η t                z∈V
+
+
+Moreover,
+ √
+          if the functions ℓt are L-Lipschitz on an open set containing V , setting ηt−1 =
+α µ
+ √ we get
+L t
+
+         T                  T                                        √
+                                                 ψ(u) − minx ψ(x)
+                                             
+         X                  X                                        L T
+               ℓt (xt ) −         ℓt (u) ≤                        +α √ ,          ∀u ∈ V .
+         t=1                t=1
+                                                        α              µ
+
+Proof The corollary is immediate from Lemma 7.1, Lemma 7.5, and the observation that
+from the assumptions we have ψt (x) − ψt+1 (x) ≤ 0, ∀x ∈ V .
+
+   This might look like the same regret guarantee of OMD; however, here there is a very
+important difference: the last term contains a time-varying element (ηt ), but the domain does
+                                                         1
+not have to be bounded! Also, I used the regularizer ηt−1   ψ(x) and not η1t ψ(x) to remind
+you of another important difference: In OMD the learning rate ηt is chosen after receiving
+information about ℓt , through the subgradient g t , while here you have to choose it before
+observing ℓt .
+
+
+
+                                       7.2.1 Proximal Regularizers
+We can obtain a slightly stronger guarantee in the case that the regularizer is proximal, that
+is, it satisfies that xt ∈ argminx∈V ψt+1 (x) − ψt (x) for all t.
+                                                                                     Pt−1
+Lemma 7.7 With the notation in Algorithm 7.1, denote by Ft (x) = ψt (x) + i=1 ℓi (x)
+for all t. Assume that V ⊆ X is non-empty, closed, and convex. Also, assume that Ft+1 is
+closed, subdifferentiable, and λt+1 -strongly convex with respect to ∥ · ∥ in V , the regularizer
+is such that xt ∈ argminx∈V ψt+1 (x) − ψt (x). Then, xt+1 exists and is unique. Moreover,
+

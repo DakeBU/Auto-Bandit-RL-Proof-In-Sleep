@@ -1,0 +1,72 @@
+tmp/online-ch2-b4-next-strong-convex-header-20261011/HeaderTypeProbe.lean:11:5: warning: unused variable `hf`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+tmp/online-ch2-b4-next-strong-convex-header-20261011/HeaderTypeProbe.lean:11:27: warning: unused variable `hV`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+tmp/online-ch2-b4-next-strong-convex-header-20261011/HeaderTypeProbe.lean:12:5: warning: unused variable `hdom`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+tmp/online-ch2-b4-next-strong-convex-header-20261011/HeaderTypeProbe.lean:12:36: warning: unused variable `hlam`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+tmp/online-ch2-b4-next-strong-convex-header-20261011/HeaderTypeProbe.lean:13:5: warning: unused variable `hstrong`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+tmp/online-ch2-b4-next-strong-convex-header-20261011/HeaderTypeProbe.lean:17:13: warning: unused variable `hp`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+tmp/online-ch2-b4-next-strong-convex-header-20261011/HeaderTypeProbe.lean:17:26: warning: unused variable `hmin`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+tmp/online-ch2-b4-next-strong-convex-header-20261011/HeaderTypeProbe.lean:18:13: warning: unused variable `hq`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+BanditRL.OnlineConvex.stronglyConvex_minimum_growth_typeprobe.{u_1} {E : Type u_1} [NormedAddCommGroup E]
+  [NormedSpace ℝ E] (f : E → EReal) (V : Set E) (lam : ℝ) (hf : SourceProper f) (hV : Convex ℝ V)
+  (hdom : V ⊆ effectiveDomain f) (hlam : 0 ≤ lam)
+  (hstrong :
+    ∀ x ∈ V,
+      ∀ y ∈ V,
+        ∀ (a : ℝ),
+          0 < a → a < 1 → f (a • x + (1 - a) • y) ≤ ↑a * f x + ↑(1 - a) * f y - ↑(lam / 2 * a * (1 - a) * ‖x - y‖ ^ 2))
+  (p : E) (hp : p ∈ V) (hmin : IsMinOn f V p) (q : E) (hq : q ∈ V) : Prop
+def BanditRL.OnlineConvex.stronglyConvex_minimum_growth_typeprobe.{u_1} : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] →
+    [inst_1 : NormedSpace ℝ E] →
+      (f : E → EReal) →
+        (V : Set E) →
+          (lam : ℝ) →
+            SourceProper f →
+              Convex ℝ V →
+                V ⊆ effectiveDomain f →
+                  0 ≤ lam →
+                    (∀ x ∈ V,
+                        ∀ y ∈ V,
+                          ∀ (a : ℝ),
+                            0 < a →
+                              a < 1 →
+                                f (a • x + (1 - a) • y) ≤
+                                  ↑a * f x + ↑(1 - a) * f y - ↑(lam / 2 * a * (1 - a) * ‖x - y‖ ^ 2)) →
+                      (p : E) → p ∈ V → IsMinOn f V p → (q : E) → q ∈ V → Prop :=
+fun {E} [NormedAddCommGroup E] [NormedSpace ℝ E] f V lam hf hV hdom hlam hstrong p hp hmin q hq =>
+  (f p).toReal + lam / 2 * ‖q - p‖ ^ 2 ≤ (f q).toReal
+BanditRL.OnlineConvex.SourceProper.{u_1} {E : Type u_1} (f : E → EReal) : Prop
+def BanditRL.OnlineConvex.SourceProper.{u_1} : {E : Type u_1} → (E → EReal) → Prop :=
+fun {E} f => (∀ (x : E), f x ≠ ⊥) ∧ ∃ x r, f x = ↑r
+def BanditRL.OnlineConvex.effectiveDomain.{u_1} : {E : Type u_1} → (E → EReal) → Set E :=
+fun {E} f => {x | f x < ⊤}
+def StrongConvexOn.{u_1} : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] → [NormedSpace ℝ E] → Set E → ℝ → (E → ℝ) → Prop :=
+fun {E} [NormedAddCommGroup E] [NormedSpace ℝ E] s m => UniformConvexOn s fun r => m / 2 * r ^ 2
+def UniformConvexOn.{u_1} : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] → [NormedSpace ℝ E] → Set E → (ℝ → ℝ) → (E → ℝ) → Prop :=
+fun {E} [NormedAddCommGroup E] [NormedSpace ℝ E] s φ f =>
+  Convex ℝ s ∧
+    ∀ ⦃x : E⦄,
+      x ∈ s →
+        ∀ ⦃y : E⦄,
+          y ∈ s → ∀ ⦃a b : ℝ⦄, 0 ≤ a → 0 ≤ b → a + b = 1 → f (a • x + b • y) ≤ a • f x + b • f y - a * b * φ ‖x - y‖
+IsMinOn.{u, v} {α : Type u} {β : Type v} [Preorder β] (f : α → β) (s : Set α) (a : α) : Prop
+EReal.coe_toReal {x : EReal} (hx : x ≠ ⊤) (h'x : x ≠ ⊥) : ↑x.toReal = x
+EReal.toReal_le_toReal {x y : EReal} (h : x ≤ y) (hx : x ≠ ⊥) (hy : y ≠ ⊤) : x.toReal ≤ y.toReal

@@ -1,0 +1,5 @@
+Header/source semantics are conditionally eligible; no canonical freeze or BODY authorization. All75 path/hash/size occurrences across65 unique files match, including unchanged801-byte header ded5adebef211f810552abbc4eced856dd9fff59f268989e9c1ff5a4ecd3d590 and actual current library/dependency inputs. Literal V, properness, lambda>=0, lambda/2, finite transport and explicitly generalized ambient remain correct. Distinct blind/source/topology reviews and V1 repair are bound. Direct growth is not confused with printed-source support coverage.
+
+Before promotion, make two small metadata repairs in a successor: identify hp/hmin/hq authoritatively as CONDITIONAL_TARGET rather than inheriting the stale proposal SOURCE classification; mark the embedded old binder audit historical. Add explicit accepted:false and complete_proof_denominator:null to chapter_state. These repair presentation/governance, not the mathematical header.
+
+Maintenance gates, committed exact successor, clean independent preproof verification and explicit parent BODY authorization remain pending. No proof search, BODY, build, tracked change, target closure or canonical freeze occurred.

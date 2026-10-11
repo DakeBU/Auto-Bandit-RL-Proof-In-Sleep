@@ -1,0 +1,189 @@
+{
+  "schema_version": 1,
+  "status": "source-interface-readiness-proposal-not-frozen",
+  "actor": "/root/adaptive_decoder",
+  "requested_model": "GPT-6 Astra",
+  "requested_effort": "medium",
+  "runtime_attested": false,
+  "source_exposed": true,
+  "pdf": {
+    "path": "E:\\ABRL\\worktrees\\research-online-ogd\\tmp\\pdfs\\orabona-v10.pdf",
+    "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17"
+  },
+  "pages": [
+    {
+      "pdf_page": 21,
+      "printed_page": 9,
+      "text_sha256": "cc8bcee96d1cbaa054ed256834c32bfa9b9ed0655e71a9615606de59d153f87a",
+      "pixel_sha256": "62d5910b2f8352ab67a6a1aa2a66ce5cc9338c5be96823b96ad6dbdfad78bd3e",
+      "pixels_personally_viewed": true
+    },
+    {
+      "pdf_page": 28,
+      "printed_page": 16,
+      "text_sha256": "ff7b8d57d2c025ca7c35848d18c7c20fc76d298e8151474d533d85b6fb2f2a42",
+      "pixel_sha256": "4ef93c859b2e47c41da218f40369d42cf8e05adeec70dbd819af624d4a927032",
+      "pixels_personally_viewed": true
+    },
+    {
+      "pdf_page": 46,
+      "printed_page": 34,
+      "text_sha256": "405b995fe88f805c91517e99bfc3ec55289e604a62957e14e0d45c7c6f204258",
+      "pixel_sha256": "36878dd73cbb39afe240a2805c3bbe9ced37e3b4de80843879f6b1b01ec738ab",
+      "pixels_personally_viewed": true
+    },
+    {
+      "pdf_page": 47,
+      "printed_page": 35,
+      "text_sha256": "53d6fc0914070be34ab4c0de41b6d32c04db8359411fa94efd50d3263847cc06",
+      "pixel_sha256": "b3f4769c3995a92588243265cd3c1b37c4fa2531debcbaa0e70b789aa768b302",
+      "pixels_personally_viewed": true
+    },
+    {
+      "pdf_page": 303,
+      "printed_page": 291,
+      "text_sha256": "b63f436825e677a7e52384b8b23a89ec72e4268a0aa2d32cb6ab2ebf59780f9e",
+      "pixel_sha256": "1b554ba67784264fd0445cf63f8579b4f84331c5d0f959b28d81a4b1453304fa",
+      "pixels_personally_viewed": true
+    }
+  ],
+  "current_library_inputs": [
+    {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\.lake\\packages\\mathlib\\Mathlib\\Analysis\\Convex\\Strong.lean",
+      "sha256": "6ff478d50f5adf0d215c8745530645f1d2c041308752df5c0cc47f302f6f2b42"
+    },
+    {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\BanditRLProof\\OnlineConvexExtended.lean",
+      "sha256": "bd30bb95a46ccdc3f6d25f808c175af5fee71d075c2b46ffcf6508f15f1ed66a"
+    },
+    {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\BanditRLProof\\OnlineClosedProper.lean",
+      "sha256": "c66f00c33b45fb8a0e11583eeadf506e176c16166ce2af02f41f0674507cebe7"
+    },
+    {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\BanditRLProof\\OnlinePrescientBregmanSource.lean",
+      "sha256": "57832c9dfb4e915f9a0578ffb122792b0aac2b3404da4f6c00f2aa9fcd36bc02"
+    }
+  ],
+  "source_facts": [
+    {
+      "id": "S-DOM",
+      "anchor": "PDF21 printed9",
+      "statement": "dom f = {x | f(x) < +infinity}; this alone includes bottom."
+    },
+    {
+      "id": "S-PROPER",
+      "anchor": "Definition2.18 PDF28 printed16",
+      "statement": "Proper means no negative infinity anywhere and finite at at least one point."
+    },
+    {
+      "id": "S-STRONG",
+      "anchor": "Definition4.1 PDF46 printed34",
+      "statement": "lambda >= 0; proper f:R^d -> (-infinity,+infinity]; chosen norm; convex V subset dom f. For every x,y in V and 0<alpha<1, f(alpha*x+(1-alpha)*y) <= alpha*f(x)+(1-alpha)*f(y) - (lambda/2)*alpha*(1-alpha)*norm(x-y)^2."
+    },
+    {
+      "id": "S-SUPPORT",
+      "anchor": "Lemma4.2 PDF46-47 printed34-35",
+      "statement": "Support characterization additionally uses convex V subset dom(partial f); quantified over all x,y in V and all g in partial f(y). Not required for the direct definition bridge."
+    },
+    {
+      "id": "S-APPENDIX",
+      "anchor": "AppendixA PDF303 printed291",
+      "statement": "A.1 integral route requires interior-domain points; A.3 attainment requires compact V, lower semicontinuity, Hausdorff ambient, and V intersect dom f nonempty. Neither licenses attainment on an arbitrary closed unbounded set."
+    }
+  ],
+  "interface": {
+    "literal_source_domain": "V subset effectiveDomain f, hence D=V intersect effectiveDomain f equals V. Do not silently replace the literal source set by a smaller D.",
+    "precise_equivalence_candidate": "For real normed E, f:E->EReal, global no-bottom, convex V, V subset effectiveDomain f, lambda>=0: the displayed source interior-weight inequality on V is equivalent to StrongConvexOn V lambda (fun x => (f x).toReal). SourceProper f is retained as source premise; a finite witness derives it when V is nonempty. This equivalence remains to be proved in Lean.",
+    "coefficient": "Mathlib UniformConvexOn subtracts a*b*(lambda/2*norm(x-y)^2); exactly the source lambda/2 after real multiplication reassociation.",
+    "endpoints": "Mathlib quantifies a,b>=0 with a+b=1. Interior a,b are alpha and 1-alpha; boundary a=0 or b=0 reduces to equality. Convex V and V subset dom f ensure all evaluated segment values are finite.",
+    "ambient_delta": "Arbitrary real normed spaces generalize source R^d with its chosen norm; no inner product, finite dimensionality or completeness is needed for the definitional bridge.",
+    "general_D_route": "For arbitrary V, D=V intersect effectiveDomain f can be used as an explicitly generalized finite-domain interface, provided Convex D and the necessary finite witness are independently supplied/derived. It is not equivalent to literal strong convexity on V unless V subset dom f (or a separately reviewed interpretation) is established.",
+    "closed_top_outside": "Closedness and top outside V are not Definition4.1 hypotheses. They may belong to later constrained algorithms; top outside V is harmless when every conversion is restricted to finite points in V. Closedness is not needed for the equivalence.",
+    "proper_restriction": "Ambient properness does not imply properness after restriction to V: f=indicator({0}), V={1} is proper closed convex ambient data but restricted function is everywhere top. Require an actual finite point in V.",
+    "no_totalization": "Never infer extended strong convexity from unrestricted toReal. Top and bottom map to zero; constant-top f on a singleton has a vacuous real strong-convex inequality for every lambda but is not proper. No-bottom plus domain membership are required at endpoints and segment."
+  },
+  "available_reuse": [
+    {
+      "file": "BanditRLProof/OnlineConvexExtended.lean",
+      "declarations": [
+        "effectiveDomain",
+        "convex_effectiveDomain",
+        "realEpigraph_toReal",
+        "convexExtended_iff_toReal",
+        "theorem_2_4"
+      ],
+      "scope": "Existing ordinary-convex finite-domain/coercion pattern; no existing strong-convex equivalence asserted."
+    },
+    {
+      "file": "BanditRLProof/OnlineClosedProper.lean",
+      "declarations": [
+        "SourceProper",
+        "SourceClosed"
+      ],
+      "scope": "Exact properness/closedness vocabulary."
+    },
+    {
+      "file": "BanditRLProof/OnlinePrescientBregmanSource.lean",
+      "declarations": [
+        "sourceProper_of_domain"
+      ],
+      "scope": "Nonempty finite domain plus no-bottom derives properness; no attained-minimum or support claim."
+    },
+    {
+      "file": ".lake/packages/mathlib/Mathlib/Analysis/Convex/Strong.lean",
+      "declarations": [
+        "UniformConvexOn",
+        "StrongConvexOn",
+        "StrongConvexOn.strictConvexOn"
+      ],
+      "scope": "Real normed-space modulus definition; positive parameter required for strict consequence."
+    }
+  ],
+  "AND_dependencies": [
+    {
+      "id": "A1",
+      "claim": "Adjudicate literal V subset dom f versus explicitly generalized D for the next target.",
+      "status": "required-before-header-freeze"
+    },
+    {
+      "id": "A2",
+      "claim": "Prove EReal/source inequality iff real inequality at finite endpoints and convex segment, retaining no-bottom.",
+      "status": "unproved-bridge"
+    },
+    {
+      "id": "A3",
+      "claim": "Prove interior-weight versus Mathlib closed barycentric-weight equivalence and exact coefficient normalization.",
+      "status": "unproved-bridge"
+    },
+    {
+      "id": "A4",
+      "claim": "For a generalized D, derive convexity from actual extended convexity plus convex V, or otherwise establish it; proper/closed alone do not suffice.",
+      "status": "conditional-dependency"
+    },
+    {
+      "id": "A5",
+      "claim": "Attained-minimum quadratic growth must be a conclusion from strong convexity, finite attained minimizer and segment argument, never a replacement hypothesis.",
+      "status": "next-substantive-theorem-unproved"
+    },
+    {
+      "id": "A6",
+      "claim": "Later actual BTRL/FTRL selector, attainment, support if used, cumulative EReal adapter, terminal convention and corrected whole bounds remain separate mandatory obligations.",
+      "status": "open"
+    }
+  ],
+  "next_header_design_recommendation": "First freeze only after source-domain adjudication: an exact source-to-Mathlib equivalence on finite convex V, then the substantive attained-minimum quadratic growth endpoint (or a single combined theorem with source inequality premise). Use lambda>0 for intended algorithm growth; Definition4.1 bridge itself preserves lambda>=0. No desired-growth premise, no automatically invented support or optimizer.",
+  "appendix_dependency_verdict": "No appendix theorem is needed for the definitional bridge. A.1 and A.3 are reviewed boundaries, not imported necessities. Lemma4.2 is an optional support route with additional domain-of-subgradient obligation; not an established alternate proof of the next target here.",
+  "governance": {
+    "new_header_frozen": false,
+    "lean_body_written": false,
+    "build_run": false,
+    "canonical_changes": false,
+    "source_container_closed": false,
+    "open_containers": 7,
+    "future_claims": 6,
+    "chapter2": "partial",
+    "proof_denominator": null,
+    "goal": "ACTIVE inherited task boundary, not independently queried"
+  }
+}

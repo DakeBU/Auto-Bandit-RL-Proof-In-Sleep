@@ -1,0 +1,31 @@
+{
+  "verdict": "REPAIR_APPLICATION_DESIGN_REVIEW",
+  "proposal_sha256": "2bf370855c2a14b22b0f000905d4cf2669b7a7be6d9b11fece435ffe348f5eaa",
+  "emitter_sha256": "8cd6f06eba59efac539e9d8afc1076d87f15fa31fd834a4cfe15380c848f0831",
+  "readiness_sha256": "f9fb655d7932598e0a799865c1e56be6b8853f0675ee5d6bec54fdea1b8a0e93",
+  "repair_response_sha256": "f5e0e904242825892c88a609ca16809bc7ec7d58a1e06c90d7a022de78bbb0ce",
+  "blockers": [
+    {
+      "id": "DUPLICATE_INCREMENT_DESTINATIONS",
+      "detail": "required_v3_increments lists emit-canonical-freeze-v3.1.ps1 and prepare-application-v3.1.ps1 twice each with identical destination. Emitter HashSet destination preflight necessarily rejects Duplicate destination before copy.",
+      "repair": "Create explicit successor retaining one exact row per destination and preserving all unique history. Do not execute V3.2 or weaken duplicate protection."
+    }
+  ],
+  "checks_passed": [
+    "135 static rows comprise exact original133 plus two separate local gitattributes rows.",
+    "All135 static plus29 increment source SHA/lengths match.",
+    "Required current dependency paths each occur exactly once in independent readiness with exact hash; all nine gate bindings match.",
+    "Readiness cross-binds actual HEAD, PASS_PREPROOF_SOURCE_READINESS, maintenance false and reader pending. Independent application review must bind proposal/emitter/readiness.",
+    "Normalized hardcoded destination roots, reparse checks, no overwrite, atomic receipt and checked Git remain.",
+    "Local gitattributes * -text preserves archived RAW; attributes affect only new evidence subtrees.",
+    "Math V2/header/inventory untouched; old133 rows exact. Explicit workflow successor and all future gates retained."
+  ],
+  "limitations": [
+    "No emitter execution.",
+    "Current4034 only. If HEAD changes, readiness itself must bind new current HEAD as required by ReviewBinding; optional continuity cannot override a mismatching readiness HEAD.",
+    "Historical V1/V2 conditions not falsely marked met. Reader failure remains open."
+  ],
+  "maintenance_accepted": false,
+  "canonical_freeze_applied": false,
+  "BODY_authorized": false
+}

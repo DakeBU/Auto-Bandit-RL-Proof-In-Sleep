@@ -1,0 +1,35 @@
+2.1 Online Learning with Convex Differentiable Losses9
+learning algorithm is able to guarantee a sublinear regret, it means that its performance on
+average will approach the performance of any fixed strategy. As said, we will see that in
+many situations, if the adversary is “weak”, for example, it is a fixed stochastic distribution
+over the loss functions, being prepared for the worst-case scenario will not preclude us from
+getting the best guarantee anyway.
+For a while, we will focus on the case thatℓ t are convex, and this problem will be called
+Online Convex Optimization (OCO). Later, we will see how toconvexifysome specific
+non-convex online problems.
+Remark 2.1I will now introduce some math concepts. If you have a background in Con-
+vex Analysis, this will be easy stuff for you. On the other hand, if you have never seen these
+things before, they might look a bit scary. Let me tell you the right way to look at them:these
+are tools that will make our job easier. Without these tools, it would be basically impossible
+to design any online learning algorithm. And, no, it is not enough to test the algorithms on
+some machine learning dataset, because fixed datasets are not adversarial. Without a cor-
+rect proof, you might not realize that your online algorithm fails on particular sequences of
+losses, as it happened with Adam (Reddi et al., 2018). I promise you that once you under-
+stand the key mathematical concepts, online learning is actually easy.
+2.1.1 Convex Analysis Bits: Convexity
+Figure 2.1Non-convex (left) and convex (right) sets.
+Definition 2.2V ⊆R d isconvexif for anyx,y∈ Vand anyλ∈(0,1), we have
+λx+ (1−λ)y∈ V.
+In words, this means that the setVhas no ‘holes’ or inward dents, see Figure 2.1.
+We will make use ofextended-real-valued functions, that is, functions that take values
+inR∪ {−∞,+∞}. Forfan extended-real-valued function onR d, itsdomainis the set
+domf={x∈R d :f(x)<+∞}.
+Extended-real-valued functions allow us to easily consider constrained sets and are a stan-
+dard notation in Convex Optimization (see, e.g., Boyd and Vandenberghe, 2004). For exam-
+ple, if I want the predictions of the algorithmxt and the competitoruto be in a setV ⊂R d, I
+can just addι V(x)to all the losses, whereι V :R d →(−∞,+∞]is theindicator function
+of the setVdefined as
+ιV(x) =
+(
+0,x∈ V,
++∞,otherwise.

@@ -1,0 +1,334 @@
+{
+  "schema_version": 1,
+  "status": "INDEPENDENT_SOURCE_TOPOLOGY; OPEN_AND_LEAVES_RETAINED",
+  "nodes": [
+    {
+      "id": "D41",
+      "classification": "SOURCE",
+      "claim": "Definition4.1 PDF46 literal proper/finite convex V and interpolation"
+    },
+    {
+      "id": "L42",
+      "classification": "SOURCE_OPEN",
+      "claim": "Lemma4.2 PDF46-47 support equivalence, subgradient-domain qualification; source endpoint argument and converse"
+    },
+    {
+      "id": "OPT",
+      "classification": "SOURCE_OPEN",
+      "claim": "Theorem6.27 PDF86, proper restricted objective minimum iff zero support"
+    },
+    {
+      "id": "SUM",
+      "classification": "SOURCE_OPEN",
+      "claim": "Theorem2.23 PDF29 inclusion for proper summands; equality qualification only if needed"
+    },
+    {
+      "id": "EXIST",
+      "classification": "SOURCE_OPEN",
+      "claim": "Theorem6.9 PDF78: positive curvature + proper closed + nonempty subgradient domain, compact sublevel and A.3"
+    },
+    {
+      "id": "A3",
+      "classification": "SOURCE_QUALIFIED",
+      "claim": "PDF303 compact set, lower semicontinuity, Hausdorff, nonempty finite-domain intersection"
+    },
+    {
+      "id": "L75",
+      "classification": "SOURCE_OPEN",
+      "claim": "Lemma7.5 PDF113-114 constrained support stability and dual-norm/Young"
+    },
+    {
+      "id": "L71",
+      "classification": "SOURCE_UNREAD_OPEN",
+      "claim": "Lemma7.1 referenced PDF142; underlying source paragraph not independently read in this review"
+    },
+    {
+      "id": "FTRL",
+      "classification": "SOURCE_OPEN",
+      "claim": "7.47 PDF141-142 hinted optimizer, support inclusion, source telescoping, stability, Young; corrected contract still required"
+    },
+    {
+      "id": "BTRL",
+      "classification": "SOURCE_OPEN",
+      "claim": "15.31 PDF278-279 printed specialization hint=loss of 7.47"
+    },
+    {
+      "id": "FINITE",
+      "classification": "IMPLEMENTATION_OPEN",
+      "claim": "EReal to finite real bridge at endpoints and segments"
+    },
+    {
+      "id": "WEIGHTS",
+      "classification": "OPTIONAL_IMPLEMENTATION_OPEN",
+      "claim": "Interior to closed barycentric weights only if Mathlib route used"
+    },
+    {
+      "id": "GROWTH",
+      "classification": "GENERALIZED_DEPENDENCY_UNPROVED",
+      "claim": "Conditional attained-minimum growth from D41 on arbitrary real normed E; not literal source support theorem"
+    },
+    {
+      "id": "ACTUAL",
+      "classification": "PRODUCER_OPEN",
+      "claim": "Actual inclusive objective G_s, properness, finite values on literal V, curvature, chosen selector, attainment"
+    },
+    {
+      "id": "JOIN",
+      "classification": "ALTERNATE_ROUTE_OPEN",
+      "claim": "Corrected finite identity, growth for s<T, z=x_T zero movement, comparator terminal minimum gap"
+    },
+    {
+      "id": "WHOLE",
+      "classification": "OPEN",
+      "claim": "Corrected whole BTRL/FTRL source targets remain mandatory"
+    }
+  ],
+  "and_edges": [
+    {
+      "parents": [
+        "D41",
+        "qualified support existence"
+      ],
+      "child": "L42",
+      "classification": "SOURCE"
+    },
+    {
+      "parents": [
+        "L42",
+        "positive curvature",
+        "proper closed finite-dimensional objective",
+        "nonempty subgradient domain",
+        "A3"
+      ],
+      "child": "EXIST",
+      "classification": "SOURCE"
+    },
+    {
+      "parents": [
+        "EXIST",
+        "OPT",
+        "SUM",
+        "L42",
+        "dual norm",
+        "positive-curvature Young"
+      ],
+      "child": "L75",
+      "classification": "SOURCE"
+    },
+    {
+      "parents": [
+        "L75",
+        "EXIST",
+        "OPT",
+        "SUM",
+        "L42",
+        "L71",
+        "hinted objective and difference support",
+        "source terminal/telescoping correction"
+      ],
+      "child": "FTRL",
+      "classification": "SOURCE"
+    },
+    {
+      "parents": [
+        "FTRL",
+        "hint=loss specialization",
+        "proper/finite and attainment qualification",
+        "terminal correction"
+      ],
+      "child": "BTRL",
+      "classification": "SOURCE"
+    },
+    {
+      "parents": [
+        "D41",
+        "FINITE",
+        "supplied feasible IsMinOn",
+        "feasible comparator"
+      ],
+      "child": "GROWTH",
+      "classification": "GENERALIZED_DEPENDENCY_NOT_PRINTED_SOURCE_ROUTE"
+    },
+    {
+      "parents": [
+        "GROWTH",
+        "ACTUAL",
+        "accepted finite identity",
+        "corrected terminal convention"
+      ],
+      "child": "JOIN",
+      "classification": "ALTERNATE_BTRL_ROUTE_NOT_SOURCE_COVERAGE"
+    },
+    {
+      "parents": [
+        "JOIN",
+        "required source proof coverage or explicitly reviewed alternate-route policy"
+      ],
+      "child": "WHOLE",
+      "classification": "COVERAGE_AND"
+    }
+  ],
+  "or_routes": "No proved alternative route accepted. Direct growth route is candidate generalized dependency only; WEIGHTS is optional implementation path, not an unavoidable source edge.",
+  "not_required_for_leaf": [
+    "Thm4.3 equivalence/Hessian route",
+    "AppendixA.1 integral route",
+    "A.3 attainment",
+    "nonzero support stability",
+    "actual optimizer producer"
+  ],
+  "mandatory_outside_leaf": [
+    "All printed whole-source target dependencies or explicitly reviewed replacements",
+    "Corrected FTRL terminal/hint treatment",
+    "Corrected BTRL terminal indexed join",
+    "Attainment and cumulative finite-domain adapters"
+  ],
+  "missing_source_readings": [
+    "Lemma7.1 source statement/proof",
+    "Existing corrected whole-target contract not supplied/read here"
+  ],
+  "source_pages": [
+    {
+      "pdf_page": 21,
+      "printed_page": 9,
+      "text_sha256": "1c982afac6db4ec44c418a9c2ad3b64608a2847464771df7242ecd817ce3a664",
+      "pixels_sha256": "a860bc0f4b01a75514d5c476bfc606ebf2b778282a2dc3bd436cd420d05b8005",
+      "pixels_personally_viewed": true
+    },
+    {
+      "pdf_page": 28,
+      "printed_page": 16,
+      "text_sha256": "9eae277eb358272ee1a28263d2fa1d9b2dfcc5506e61bc7128bb111a0fe55fac",
+      "pixels_sha256": "7cb08b549bbd9f894184f758cf4b50e78a9809cc3052c423703f9b3b50ad0829",
+      "pixels_personally_viewed": true
+    },
+    {
+      "pdf_page": 29,
+      "printed_page": 17,
+      "text_sha256": "2613df45ad1e77facb82d03982932244678224b4cc7ceae7762568c48a0c16cf",
+      "pixels_sha256": "0809a9f822f8d39e6372cbee0d90012fbad05d39e2e1e5f0f33de5af9087059b",
+      "pixels_personally_viewed": true
+    },
+    {
+      "pdf_page": 46,
+      "printed_page": 34,
+      "text_sha256": "a9c52f344a15493f6640fcdae5aff7d3323e131d7790e49db50932e349ab97fa",
+      "pixels_sha256": "d9dc9e21baa9e27c75f749463aaef6da62b3035612a66d06a3868e05e7bfaf49",
+      "pixels_personally_viewed": true
+    },
+    {
+      "pdf_page": 47,
+      "printed_page": 35,
+      "text_sha256": "ee7b448c956a870c50446e54322131262c447ef72b7bafc3c0e3709532238462",
+      "pixels_sha256": "cc7368fa92bc2d244bbe08a02d0479592815beb1b8264d5bba4cc4b5331bd5ef",
+      "pixels_personally_viewed": true
+    },
+    {
+      "pdf_page": 48,
+      "printed_page": 36,
+      "text_sha256": "8a0c06127b0304bf8779baa867313bd6ad53dfb189b9fff1cf39c4aa4ce232f3",
+      "pixels_sha256": "e4c1dd2e7c345a2edbf5032d2a19b2e3407b2cab8726c4efe10e23194a946f83",
+      "pixels_personally_viewed": true
+    },
+    {
+      "pdf_page": 78,
+      "printed_page": 66,
+      "text_sha256": "0cc29e9fefa8b42921b352dfa56c11d0d545d7c93f3be94d7810ea99dbc2533e",
+      "pixels_sha256": "d7a0f8dd302530deecd0aa0b52479b790253fe2661d6a9a110614e5d134228dd",
+      "pixels_personally_viewed": true
+    },
+    {
+      "pdf_page": 86,
+      "printed_page": 74,
+      "text_sha256": "4a66ee13ab17b8b89c48ae7e2e0d7db2c2a153c46fbbe62f5425bb7351ad63b4",
+      "pixels_sha256": "4a00913ee11e4dce4222098d97f674a25d75d1ad28d91728487002ebbb64c590",
+      "pixels_personally_viewed": true
+    },
+    {
+      "pdf_page": 113,
+      "printed_page": 101,
+      "text_sha256": "e2a72f65fde4e44abf402d0c3815f1cd53e52d88e060559e1a200497abbbc042",
+      "pixels_sha256": "573e510f257b66a42862f4f9a7102045a049494bd13cb1fb1067aceaa63e6982",
+      "pixels_personally_viewed": true
+    },
+    {
+      "pdf_page": 114,
+      "printed_page": 102,
+      "text_sha256": "54333b6adb465521c1640fd9c68289db2cb6cdcef1bc13cf734d8add1a6d0b5d",
+      "pixels_sha256": "4b00be5cb1beefe34cc11caa22291fad712973295bbb1df52a1d98a7151cdee0",
+      "pixels_personally_viewed": true
+    },
+    {
+      "pdf_page": 141,
+      "printed_page": 129,
+      "text_sha256": "dbfea1769d570c4e57bb3f93f7fd9b865233f495c47c69b9335e3d3478e7df4e",
+      "pixels_sha256": "1f6273bf74d48eb07bf97d37139805620e301b49a95f5b99251f9cd4e056ac56",
+      "pixels_personally_viewed": true
+    },
+    {
+      "pdf_page": 142,
+      "printed_page": 130,
+      "text_sha256": "486e8c3434bbe9d668b6ba86d6970ba3014213de0be6d8db657d6a7d86ff94ce",
+      "pixels_sha256": "6ec12d121ab39ff671bb2474c9de87802b4dacdbe8170ba18ff5d6bf08ce1888",
+      "pixels_personally_viewed": true
+    },
+    {
+      "pdf_page": 278,
+      "printed_page": 266,
+      "text_sha256": "82a0457980da5af1fa4c75acbfa84a982e417197e29dad73508d5800ccc928af",
+      "pixels_sha256": "15ed93124e7875c34eba69d95cf4c8b3579ed42a820651b7459d97215b361ee6",
+      "pixels_personally_viewed": true
+    },
+    {
+      "pdf_page": 279,
+      "printed_page": 267,
+      "text_sha256": "66de52632c2434bc03952a74e84510dda7b68077d0d60e8257763403dae7bc35",
+      "pixels_sha256": "5477559df42324296d7a46f51c60aab7d7487ab59c5cbd446066748b7485d3de",
+      "pixels_personally_viewed": true
+    },
+    {
+      "pdf_page": 303,
+      "printed_page": 291,
+      "text_sha256": "405851fe48af1a85546caa24d38cdc932f2194aff88fb67cd27048046d96b582",
+      "pixels_sha256": "de6958bb77e2aadcadaeb572e1b3336afd19beefb5b33b3417c123ca31292dad",
+      "pixels_personally_viewed": true
+    }
+  ],
+  "issues": [
+    {
+      "id": "R1",
+      "severity": "repair-before-source-topology-freeze",
+      "finding": "Proposal topology is a mathematical implementation dependency proposal, not reconstruction of printed source proof. Printed 15.31 is explicitly a specialization of 7.47; 7.47 uses Lemma4.2, constrained zero-subgradient, Thm2.23, Lemma7.1, and existence via 7.5/6.9.",
+      "repair": "Keep independent printed-source graph and generalized dependency graph separate; retain each uncovered source node as open."
+    },
+    {
+      "id": "R2",
+      "severity": "classification-repair",
+      "finding": "Growth header is not a verbatim named source theorem and is broader than the printed Lemma4.2 support characterization. Local IsMinOn f V p does not imply 0 in the ambient subgradient of f.",
+      "repair": "Label conditional generalized dependency from Definition4.1 plus attained minimum. Source support route needs restricted f+indicator(V), properness/finiteness and qualified subgradient-domain obligations. Do not call source proof covered by direct segment route."
+    },
+    {
+      "id": "R3",
+      "severity": "open-producer-and",
+      "finding": "Theorem6.9 PDF78 requires lambda>0, proper closed strongly convex objective on its domain and nonempty subgradient domain; finite-dimensional compact sublevels plus A.3 produce attainment. None follows from this header.",
+      "repair": "Retain restriction/properness/finite witness, support/closedness/modulus and finite-dimensional compactness producer obligations. Do not generalize attainment to arbitrary normed E by this conditional theorem."
+    },
+    {
+      "id": "R4",
+      "severity": "open-corrected-target-and",
+      "finding": "PDF142 printed telescoping and terminal handling need separately reviewed correction; PDF279 prints x_(T+1) without the proposed zero-terminal convention. This review inspected the raw source, not a corrected-contract artifact.",
+      "repair": "Bind the existing corrected target/erratum contract before any whole-bound acceptance. Prove ghost or terminal choice and exact indexed finite identity join; keep both whole FTRL/BTRL targets open."
+    },
+    {
+      "id": "R5",
+      "severity": "source-scope-qualification",
+      "finding": "Thm2.23 basic inclusion requires proper summands; its equality version additionally needs convexity, closedness and domain-interior qualification. The FTRL use is inclusion, not equality.",
+      "repair": "Do not impose the stronger equality hypotheses by default. Establish properness and actual support inclusion for the chosen difference/hinted objectives; preserve source-domain correction if needed."
+    },
+    {
+      "id": "R6",
+      "severity": "source-proof-coverage-note",
+      "finding": "Lemma4.2 converse printed PDF47 changes an inequality into equality in its last display. Thm4.3 reverse direction invokes A.1, whose PDF303 statement restricts endpoints to int dom f.",
+      "repair": "Retain these as separate source proof corrections/coverage obligations if those source routes are claimed; neither needed for this conditional direct growth leaf."
+    }
+  ]
+}
