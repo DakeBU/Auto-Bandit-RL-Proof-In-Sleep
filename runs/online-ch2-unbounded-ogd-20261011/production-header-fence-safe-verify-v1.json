@@ -1,0 +1,28 @@
+{
+  "source_sha256": "313c8522a40599846d79df32d2a8a42014a3338f814286df7ffe9603554d6b50",
+  "frozen_header_sha256": "fd0cccb6f5deb86a63466516a49531db7599cb983620072782726e5ecc136efa",
+  "exact_raw_header_equal": true,
+  "exact_context_equal": true,
+  "fence": {
+    "schema_version": 1,
+    "declaration": "regret_lower_bound",
+    "file": "BanditRLProof/OnlineUnboundedOGD.lean",
+    "statement": "theorem regret_lower_bound [Nontrivial E] (α : ℝ) (hα0 : 0 < α) (hα1 : α < 1) (T : ℕ) (hT : 2 / ((1 - α) * BanditRL.OnlineUnboundedOSD.phi α) ≤ (T : ℝ)) : ∃ loss : ℕ → E → ℝ, (∀ t < T, ConvexOn ℝ univ (loss t) ∧ LipschitzWith 1 (loss t) ∧ Differentiable ℝ (loss t)) ∧ (1 / 2 : ℝ) * BanditRL.OnlineUnboundedOSD.phi α * (T : ℝ) ^ (2 - α) ≤ BanditRL.OnlineGradientDescent.regretVariable BanditRL.OnlineHuber.fullSpace (BanditRL.OnlineUnboundedOSD.powerSteps α) loss 0 0 T",
+    "statement_hash": "99964d5404dcab5b2c90032de3d69b7393ff1cd158d8a7f98aca67084897fa8c",
+    "source_assumptions": [
+      "[Nontrivial E]",
+      "hα0 : 0 < α",
+      "hα1 : α < 1",
+      "Differentiable ℝ (loss t)"
+    ],
+    "created_at": "2026-10-11T05:08:16+00:00"
+  },
+  "safe_verify": {
+    "ok": true,
+    "declaration": "regret_lower_bound",
+    "expected_statement_hash": "99964d5404dcab5b2c90032de3d69b7393ff1cd158d8a7f98aca67084897fa8c",
+    "actual_statement_hash": "99964d5404dcab5b2c90032de3d69b7393ff1cd158d8a7f98aca67084897fa8c",
+    "source_assumptions_preserved": true,
+    "findings": []
+  }
+}

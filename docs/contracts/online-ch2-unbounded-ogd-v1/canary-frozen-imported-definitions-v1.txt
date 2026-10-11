@@ -1,0 +1,60 @@
+import BanditRLProof.OnlineUnboundedOSD
+import BanditRLProof.OnlineGradientDescentSource
+import Mathlib.Tactic
+
+noncomputable section
+open Set Finset
+open scoped InnerProductSpace
+
+namespace BanditRL.OnlineUnboundedOSD
+def powerSteps (α : ℝ) (t : ℕ) : ℝ := ((t + 1 : ℕ) : ℝ) ^ (-α)
+
+def phi (α : ℝ) : ℝ := 1 / (2 - α) + ((1 / 2 : ℝ) ^ (1 - α) - 1) / (1 - α)
+
+end BanditRL.OnlineUnboundedOSD
+
+namespace BanditRL.OnlineGradientDescent
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]
+structure Domain (E : Type*) [NormedAddCommGroup E] [InnerProductSpace ℝ E] where
+  carrier : Set E
+  nonempty : carrier.Nonempty
+  closed : IsClosed carrier
+  convex : Convex ℝ carrier
+
+def project (V : Domain E) (z : E) : E :=
+  Classical.choose (exists_norm_eq_iInf_of_complete_convex V.nonempty
+    V.closed.isComplete V.convex z)
+
+def step (V : Domain E) (η : ℝ) (f : E → ℝ) (x : E) : E :=
+  project V (x - η • gradient f x)
+
+end BanditRL.OnlineGradientDescent
+
+namespace BanditRL.OnlineGradientDescent
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]
+def iterateVariable (V : Domain E) (η : ℕ → ℝ) (loss : ℕ → E → ℝ) (x₁ : E) : ℕ → E
+  | 0 => x₁
+  | t + 1 => step V (η t) (loss t) (iterateVariable V η loss x₁ t)
+
+def regretVariable (V : Domain E) (η : ℕ → ℝ) (loss : ℕ → E → ℝ)
+    (x₁ u : E) (T : ℕ) : ℝ :=
+  ∑ t ∈ range T, (loss t (iterateVariable V η loss x₁ t) - loss t u)
+
+end BanditRL.OnlineGradientDescent
+
+namespace BanditRL.OnlineHuber
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]
+open BanditRL.OnlineGradientDescent
+def fullSpace : Domain E :=
+  ⟨Set.univ, Set.univ_nonempty, isClosed_univ, convex_univ⟩
+
+end BanditRL.OnlineHuber
+
+namespace BanditRL.OnlineUnboundedOSD
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+
+def switchSlope (T t : ℕ) : ℝ := if t < (T + 1) / 2 then -1 else 1
+
+def switchLoss (T : ℕ) (v : E) (t : ℕ) (z : E) : ℝ := switchSlope T t * inner ℝ v z
+
+end BanditRL.OnlineUnboundedOSD

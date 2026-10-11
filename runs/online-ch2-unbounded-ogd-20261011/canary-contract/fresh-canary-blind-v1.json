@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "role": "source_unexposed_statement_decoder_continuation",
+  "source_unexposed": true,
+  "exposure_declaration": "Current reads only assigned neutral canary headers and neutral definitions. Previous reads only neutral terminal header/definitions. Assignment and inherited workspace/team instructions visible. No original source, source book, production body, adjacent prospectus, reviews or verdicts read.",
+  "requested_model": "Astra",
+  "requested_reasoning_effort": "medium",
+  "runtime_model_attestation": false,
+  "runtime_effort_attestation": false,
+  "input_raw_sha256": [
+    {
+      "path": "neutral-canary-headers-v1.txt",
+      "sha256": "bfa5398e87af36f6637f9c2bcbbad56da074611c4007e0802287dcc0737f7453",
+      "matches_expected": true
+    },
+    {
+      "path": "neutral-imported-definitions-v1.txt",
+      "sha256": "d9e196391b2aad8e2c4f279e14ae8eef142dd2d4c44a46ab77290416d3510d9e",
+      "matches_expected": true
+    }
+  ],
+  "shared_iteration": "eta_t=(t+1)^(-1/2); x_0=0; x_(t+1)=x_t-eta_t*gradient(f_t)(x_t), since projection onto the whole space is identity.",
+  "shared_score": "R_T(0)=sum_{t=0}^{T-1}(f_t(x_t)-f_t(0)); actual recursion; fixed zero comparator; cumulative signed regret, not average or terminal score.",
+  "theorems": [
+    {
+      "name": "scalar_actual_two_rounds",
+      "objects": "Real scalar space; fixed switchLoss with T=2 and v=1; initial point/comparator zero; eta=powerSteps(1/2).",
+      "assumptions": [],
+      "quantifier_order": "Closed conjunction, separate universal z quantifiers for loss and gradient identities; universal natural t<2 for regularity; no existential losses.",
+      "conjuncts": [
+        "eta_0=1",
+        "eta_1=2^(-1/2)",
+        "0<eta_1",
+        "eta_1<eta_0",
+        "For every real z, f_0(z)=-z and f_1(z)=z",
+        "For every natural t<2, f_t convex on all R, globally 1-Lipschitz, everywhere real differentiable",
+        "For every real z, gradient f_0(z)=-1 and gradient f_1(z)=1",
+        "x_0=0",
+        "x_1=1",
+        "x_2=1-2^(-1/2)",
+        "R_2(0)=1",
+        "2<2/((1-1/2)*phi(1/2))"
+      ],
+      "scoring": "Two scored points x_0=0 and x_1=1; summands 0 and 1; x_2 is not scored.",
+      "boundaries": "The two-round horizon is strictly below the terminal threshold; no threshold-based terminal theorem application at T=2 is asserted. Regularity clause only for t<2."
+    },
+    {
+      "name": "finiteDim_terminal_lower_bound",
+      "objects": "Two-dimensional real Euclidean space with Euclidean norm; alpha=1/2; T=64; existential loss sequence; initial point and comparator the zero vector.",
+      "assumptions": [],
+      "quantifier_order": "Closed conjunction of three numeric claims and one existential loss-sequence claim. Universal natural t<64 and all three regret bounds are inside the same existential witness.",
+      "outer_conjuncts": [
+        "1/15<=phi(1/2)",
+        "2/((1-1/2)*phi(1/2))<=64",
+        "64^(2-1/2)=512",
+        "Exists one loss sequence with regularity and three simultaneous lower bounds"
+      ],
+      "witness_conjuncts": [
+        "For every natural t<64, loss_t is convex on all space, globally 1-Lipschitz and everywhere real differentiable",
+        "(1/2)*phi(1/2)*64^(2-1/2)<=R_64(0)",
+        "256/15<=R_64(0)",
+        "17<R_64(0)"
+      ],
+      "scoring": "Actual gradient iterations from x_0=(0,0), losses scored at x_0,...,x_63 against the fixed zero vector.",
+      "boundaries": "Fixed horizon 64 precedes existential witness; no uniform witness for other horizons; no formula supplied for losses or iterates; no asserted identity with scalar switch losses; regularity only for t<64."
+    }
+  ],
+  "comprehension_blockers": [],
+  "opacity": [
+    "Two-dimensional loss witness construction absent.",
+    "Proof bodies absent.",
+    "Foundational imported gradient and projection-existence internals not expanded or inspected."
+  ],
+  "validation_boundary": "Statement decoding only; no proof, compilation or source-faithfulness verdict; no canonical edit/build.",
+  "full_decoding_markdown": "# Source-unexposed canary statement decoding\n\n## Provenance and exposure\n\nOnly the two assigned neutral files were read in this continuation. Previously this decoder read only a neutral terminal theorem header and neutral definitions, and produced a statement decoding. No original mathematical source, source book, production body, adjacent prospectus, review or verdict was consulted. The assignment and inherited workspace/team instructions were visible. No source identity is guessed, and no proof or compilation is assessed.\n\nVerified raw input SHA-256 hashes:\n\n- `neutral-canary-headers-v1.txt`: `bfa5398e87af36f6637f9c2bcbbad56da074611c4007e0802287dcc0737f7453`\n- `neutral-imported-definitions-v1.txt`: `d9e196391b2aad8e2c4f279e14ae8eef142dd2d4c44a46ab77290416d3510d9e`\n\nThe assignment requests model Astra and reasoning effort medium. These are requested settings, not an attestation of the executing runtime model or effort.\n\n## Shared definitions and metric\n\nBoth statements use the deterministic schedule\n\n\\[\n\\eta_t=(t+1)^{-1/2},\\qquad t\\in\\mathbb N,\n\\]\n\nwhere the natural number t+1 is cast to the reals before taking the real power. For losses f_t on a real inner-product space, the supplied recursion is\n\n\\[\nx_0=0,\\qquad x_{t+1}=P_E\\bigl(x_t-\\eta_t\\nabla f_t(x_t)\\bigr)\n=x_t-\\eta_t\\nabla f_t(x_t).\n\\]\n\nHere the domain is the entire space E. The supplied project definition chooses a point minimizing distance in that domain; for the full space the projection is mathematically the identity. The parameter named x1 in the imported recursion is the iterate at index zero. The regret is the signed sum\n\n\\[\nR_T(0)=\\sum_{t=0}^{T-1}\\bigl(f_t(x_t)-f_t(0)\\bigr).\n\\]\n\nThus the first zero argument is the initial point, and the second is the fixed comparator. This is cumulative regret against zero, not an average, norm, absolute value, terminal loss, or an explicit minimization over comparators. The iterates inside this score are the actual gradient recursion. The final scored point is x_(T-1); x_T is the next update and is not scored in R_T.\n\nThe common scalar is\n\n\\[\n\\phi(\\alpha)=\\frac{1}{2-\\alpha}+\\frac{(1/2)^{1-\\alpha}-1}{1-\\alpha}.\n\\]\n\nThe gradients are those of the current loss at the current iterate. No stochastic oracle, noisy feedback, bandit feedback, randomized algorithm, or filtration is specified.\n\n## Statement 1: scalar_actual_two_rounds\n\nThis theorem has no free parameters or explicit hypotheses. Its loss sequence is fixed, not existential. It takes E=R with its ordinary absolute-value norm and inner product, alpha=1/2, initial point zero, comparator zero and horizon T=2. The supplied switch definition uses natural-number division:\n\n\\[\ns_t=\\begin{cases}-1,&t<(2+1)\\mathbin{\\mathrm{div}}2=1,\\\\1,&t\\geq1,\\end{cases}\n\\qquad f_t(z)=s_t\\langle1,z\\rangle=s_tz.\n\\]\n\nIts entire conclusion is the following conjunction, preserving all twelve outer clauses:\n\n1. The first step size is eta_0=1.\n2. The second step size is eta_1=2^(-1/2).\n3. The second step size is strictly positive.\n4. The second step size is strictly smaller than the first.\n5. For every real z, f_0(z)=-z and f_1(z)=z.\n6. For every natural t<2, f_t is convex on all of R, globally 1-Lipschitz, and real differentiable everywhere.\n7. For every real z, the gradient of f_0 at z is -1 and the gradient of f_1 at z is 1.\n8. The actual initial iterate is x_0=0.\n9. The actual iterate after the first update is x_1=1.\n10. The actual iterate after the second update is x_2=1-2^(-1/2).\n11. The actual two-round regret against zero is R_2(0)=1.\n12. The horizon two is strictly below the displayed threshold: 2 < 2/((1-1/2)*phi(1/2)).\n\nIn compact mathematical form, its iteration and scoring clauses read\n\n\\[\nx_0=0,\\quad x_1=1,\\quad x_2=1-2^{-1/2},\\qquad\nR_2(0)=[f_0(0)-f_0(0)]+[f_1(1)-f_1(0)]=0+1=1.\n\\]\n\nRound 0 scores the initial point before the first update. Round 1 scores x_1=1 before applying the second, smaller step. The stated value of x_2 is an actual update value, but does not contribute another summand to the two-round score.\n\nQuantifier order is a closed conjunction with two separately scoped universal quantifiers over z and a separate universal quantifier over natural t<2. The theorem does not assume the regularity or gradient formulas; it asserts them for this fixed sequence. Its final strict inequality explicitly puts T=2 outside the threshold condition appearing in the prior neutral terminal header. It does not assert application of that terminal lower-bound theorem at T=2.\n\n## Statement 2: finiteDim_terminal_lower_bound\n\nThis is also a closed theorem with no explicit hypotheses. It fixes alpha=1/2 and T=64. Its domain is EuclideanSpace R (Fin 2), namely the two-dimensional real Euclidean inner-product space with its Euclidean norm. It is not the scalar domain used in Statement 1.\n\nThere are four outer conjuncts:\n\n1. phi(1/2) >= 1/15.\n2. The threshold 2/((1-1/2)*phi(1/2)) is at most 64.\n3. The real power 64^(2-1/2) equals 512.\n4. There exists a single loss sequence f:N -> R^2 -> R satisfying all the following inner conjuncts simultaneously:\n   - For every natural t<64, f_t is convex on all of R^2, globally 1-Lipschitz in Euclidean distance, and real differentiable everywhere.\n   - Its actual gradient-descent regret against zero is at least (1/2)*phi(1/2)*64^(2-1/2).\n   - That same regret is at least 256/15.\n   - That same regret is strictly greater than 17.\n\nEquivalently, with the supplied recursion, the existential conclusion includes\n\n\\[\n\\exists (f_t)_{t\\in\\mathbb N},\\quad\n\\bigl[\\forall t<64:\\ f_t\\text{ is convex, 1-Lipschitz and differentiable on }\\mathbb R^2\\bigr],\n\\]\n\\[\nx_0=(0,0),\\quad x_{t+1}=x_t-(t+1)^{-1/2}\\nabla f_t(x_t),\\quad\nR_{64}(0)=\\sum_{t=0}^{63}\\bigl(f_t(x_t)-f_t(0)\\bigr),\n\\]\n\\[\n\\frac12\\phi(1/2)\\,64^{3/2}\\leq R_{64}(0),\\qquad\n\\frac{256}{15}\\leq R_{64}(0),\\qquad 17<R_{64}(0).\n\\]\n\nThe universally quantified round index lies inside the existential loss-sequence clause. The three lower bounds all refer to the same witness and its same actual recursion. The first three outer numeric conjuncts do not depend on the chosen sequence. Because the horizon is fixed at 64 before the existential choice, this statement gives no horizon-uniform witness and no claim for arbitrary T. No formula for this two-dimensional loss witness or its iterates is supplied; it need not be identified with the scalar switch sequence, and the neutral text does not assert that identification.\n\n## Boundaries and missing context\n\nThe scalar losses are explicitly defined for all natural times by switchLoss, but the regularity conjunction in Statement 1 only quantifies t<2. The second loss sequence is defined for all natural times, but its asserted regularity only covers t<64. A Lipschitz constant of 1 is an admissible upper bound; the statement does not assert that the smallest Lipschitz constant is exactly 1.\n\nDifferentiable R means real Frechet differentiability at every point. It does not itself assert a continuous derivative, a Lipschitz gradient, twice differentiability, or strong convexity. Statement 2's convexity, Lipschitzness and differentiability are existential witness guarantees, not assumptions imposed on an externally supplied loss sequence. Statement 1 additionally exposes the gradients of its two scored losses everywhere.\n\nThere are no theorem proof bodies. The imported gradient and foundational projection-existence definitions are not expanded; their standard mathematical meanings suffice to decode the statements, while their internal implementations remain uninspected. The two-dimensional loss construction is opaque, as expected for an existential statement. These omissions block construction/proof verification, but do not block statement comprehension. The theorem headers alone establish no compilation, successful proof checking, or source-faithfulness verdict. No canonical edit or build was performed."
+}

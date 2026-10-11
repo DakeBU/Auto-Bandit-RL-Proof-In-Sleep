@@ -1,0 +1,85 @@
+{
+  "status": "exactly two complete canary header proposals; no BODY/build/canonical authorization",
+  "owning_file_proposed": "Tests/OnlineUnboundedOGDCanary.lean",
+  "public_canaries": [
+    {
+      "name": "UnboundedOGDProbe.scalar_actual_two_rounds",
+      "header_sha256": "7a1674db700918c3bfdc7aa4cfe0ed0d8b23c1d13d113d29401c3000a3194aec"
+    },
+    {
+      "name": "UnboundedOGDProbe.finiteDim_terminal_lower_bound",
+      "header_sha256": "8188672106d6fe88e2682901e23578a12f4538e3fba5d7db1106de42c272e838"
+    }
+  ],
+  "public_context_abbreviations": [
+    "eta",
+    "scalarLoss",
+    "scalarRun",
+    "scalarRegret"
+  ],
+  "new_public_helpers": [],
+  "neutral_files": [
+    {
+      "path": "neutral-canary-headers-v1.txt",
+      "sha256": "bfa5398e87af36f6637f9c2bcbbad56da074611c4007e0802287dcc0737f7453"
+    },
+    {
+      "path": "neutral-imported-definitions-v1.txt",
+      "sha256": "d9e196391b2aad8e2c4f279e14ae8eef142dd2d4c44a46ab77290416d3510d9e"
+    }
+  ],
+  "source": {
+    "version": "arXiv1912.13213v10",
+    "pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "C2_pointer": "PDF26 printed14",
+    "owning_Theorem5_4": "PDF64-65 printed52-53"
+  },
+  "case1_semantics": "Actual source switchLoss at T2 with v=1, alpha1/2. Prove exact affine losses, convexity/1-Lipschitzness/global differentiability, actual gradients at all scalar points, positive distinct prescribed steps, actual OGD states0,1,1-2^(-1/2), pre-update comparator0 regret1. T2 is strictly below the terminal theorem threshold, explicitly proved in conclusion; this illustrates the producer and is not a theorem5.4 application.",
+  "case2_semantics": "Concrete nontrivial EuclideanSpace R Fin2, alpha1/2,T64. Construct/prove threshold and phi lower bound, exact power512, then use new terminal actual OGD existential. All regularity and three regret bounds refer to the SAME existential loss sequence. Threshold is a conclusion, never an input premise. This complete metric specialization complements the independent actual producer canary, not a bare mirror consumer.",
+  "quantifier_order": "Both public theorems closed, no trajectory/gradient/regularity/threshold premises. Case2 exists loss precedes forall played t; horizon fixed64 and witness remains horizon-specific. Case1 is deterministic all-point affine statement and actual iteration.",
+  "reuse_plan": {
+    "case1": [
+      "Existing fullSpace, iterateVariable and regretVariable definitions",
+      "gradient_linear + linear functional differentiability; switching_loss_regular",
+      "Existing OSD scalar_actual_two_rounds positivity/decreasing-step projections may be reused; actual OGD trace must be proved against its own producer, not inferred from source names",
+      "phi_range gives positivity/upper bound sufficient for strict below-threshold conclusion; no new analytic lower bound"
+    ],
+    "case2": [
+      "Project phi>=1/15 and threshold<=64 from existing Tests.OnlineUnboundedOSDCanary.finiteDim_source_lower_bound",
+      "Reuse the short exact Real.rpow_add/sqrt power512 calculation (local prior hpower is not an exported theorem; no fictional API claim)",
+      "Apply BanditRL.OnlineUnboundedOGD.regret_lower_bound at actual E2,alpha1/2,T64 with proved threshold",
+      "Combine new same-witness printed lower bound with phi>=1/15,power512 to derive >=256/15 and >17; do not borrow OSD vectorRegret as if it were OGD regret"
+    ]
+  },
+  "proof_dependency_expectation": "Case2 printed-bound existential must contain the actual new production theorem call. Complete case1 actual trajectory and regularity/gradient calls are independently reviewed. Occurrence evidence later is distinct from proof necessity.",
+  "bridge_scope": "No automatic extraction of new shared public trajectory lemma from these semantic tests; keep any local bridge local.",
+  "existing_input_hashes": [
+    {
+      "path": "Tests/OnlineUnboundedOSDCanary.lean",
+      "sha256": "bd04685f5e8c59b982c2de751f374881d31069085491e80f4053f06ecbb93238"
+    },
+    {
+      "path": "BanditRLProof/OnlineUnboundedOGD.lean",
+      "sha256": "313c8522a40599846d79df32d2a8a42014a3338f814286df7ffe9603554d6b50"
+    },
+    {
+      "path": "BanditRLProof/OnlineUnboundedOSD.lean",
+      "sha256": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8"
+    },
+    {
+      "path": "BanditRLProof/OnlineGradientDescentSource.lean",
+      "sha256": "627df452453bbdfa2ecf4ddac8b5b85bfd750c74f1db5b81a26e6e20ca2eeec7"
+    },
+    {
+      "path": "tmp/online-ch2-next-target-prospectus-20261011/next-target-header-v1-neutral-definitions.txt",
+      "sha256": "707df92f3a1660b96427ee14949e10ff92d3095a064ebfcce143c6dd2bdcd2cd"
+    }
+  ],
+  "next_gate": "Fresh distinct blind reconstruction of two headers plus neutral definitions, then distinct source-canary review, parent frozen-contract receipt, only then BODY authorization.",
+  "all_B1_B7": "unchanged",
+  "required_open_containers": 8,
+  "pending_future_claims": 6,
+  "source_denominator": null,
+  "container_closed": false,
+  "Goal": "ACTIVE"
+}
