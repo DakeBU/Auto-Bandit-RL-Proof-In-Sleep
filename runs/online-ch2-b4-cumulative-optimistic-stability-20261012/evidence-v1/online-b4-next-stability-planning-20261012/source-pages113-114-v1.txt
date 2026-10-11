@@ -1,0 +1,116 @@
+                         7.2 FTRL Regret Bound using Strong Convexity                          101
+
+  Let’s take a closer look at the equality. If u ∈ V , we have that the sum of the last two terms
+on the r.h.s. is negative. On the other hand, the first two terms on the r.h.s. are similar to what
+we got in OMD. The interesting part is the sum of the terms Ft (xt ) − Ft+1 (xt+1 ) + ℓt (xt ).
+To give an intuition of what is going on, let’s consider the case when the regularizer is
+constant over time, i.e., ψt = ψ . Hence, the terms in the sum can be rewritten as
+                                                    t                             t
+                                                                                               !
+                                                  X                              X
+ Ft (xt ) − Ft+1 (xt+1 ) + ℓt (xt ) = ψ(xt ) +         ℓi (xt ) − ψ(xt+1 ) +         ℓi (xt+1 ) .
+                                                  i=1                           i=1
+
+Hence, we are measuring the distance between the value of the regularized losses in two
+consecutive predictions of the algorithms. Roughly speaking, if xt ≈ xt+1 and the losses
+plus regularization are “nice” then this term will be small. This should remind you exactly
+of the OMD update, where we constrain xt+1 to be close to xt . Instead, here the two pre-
+dictions will be close one to the other if the minimizer of the regularized losses up to time t
+is close to the minimizer of the losses up to time t + 1. So, like in OMD, the regularizer here
+will play the critical role of stabilizing the predictions, if the losses do not possess enough
+curvature.
+   However, while surprising, the above equality is not yet a regret bound, because it is “im-
+plicit”. In fact, the losses are appearing on both sides of the equation. So, in the following,
+we will see different ways to get an explicit upper bound from Lemma 7.1.
+
+
+                     7.2 FTRL Regret Bound using Strong Convexity
+An easy case to get a regret upper bound for FTRL is when the losses plus the regularizer
+are strongly convex, as we prove in the next lemma.
+                                                                              Pt−1
+Lemma 7.5 With the notation in Algorithm 7.1, denote by Ft (x) = ψt (x) + i=1 ℓi (x).
+Assume that V ⊆ X is non-empty, closed, and convex. If Ft is closed, subdifferentiable,
+and strongly convex in V , then xt exists and is unique. In addition, assume ∂ℓt (xt ) to be
+non-empty and Ft + ℓt to be closed, subdifferentiable, and λt -strongly convex with respect
+to ∥ · ∥ in V . Then, we have
+            Ft (xt ) − Ft+1 (xt+1 ) + ℓt (xt )
+                                         λt
+                ≤ ⟨g t , xt − xt+1 ⟩ − ∥xt − xt+1 ∥2 + ψt (xt+1 ) − ψt+1 (xt+1 )
+                                         2
+                   ∥g t ∥2⋆
+                ≤           + ψt (xt+1 ) − ψt+1 (xt+1 ), ∀g t ∈ ∂ℓt (xt ) .
+                     2λt
+Proof     The existence and uniqueness are given by Theorem 6.9. Then, we have
+        Ft (xt ) − Ft+1 (xt+1 ) + ℓt (xt )
+            = (Ft (xt ) + ℓt (xt )) − (Ft (xt+1 ) + ℓt (xt+1 )) + ψt (xt+1 ) − ψt+1 (xt+1 )
+            = (Ft (xt ) + ℓt (xt ) + ιV (xt )) − (Ft (xt+1 ) + ℓt (xt+1 ) + ιV (xt+1 ))
+             + ψt (xt+1 ) − ψt+1 (xt+1 )
+                                    λt
+            ≤ ⟨g t , xt − xt+1 ⟩ − ∥xt − xt+1 ∥2 + ψt (xt+1 ) − ψt+1 (xt+1 ),
+                                    2
+102                                    Follow-the-Regularized-Leader
+
+where in the second inequality we used Lemma 4.2 for the function Ft + ℓt + ιV with g t ∈
+∂(Ft +ℓt +ιV )(xt ). Observing that xt = argminx∈V Ft (x), we have 0 ∈ ∂(Ft +ιV )(xt )
+by Theorem 6.27. Hence, using Theorem 2.23, we have ∂ℓt (xt ) ⊆ ∂(Ft + ℓt + ιV )(xt ).
+  The second inequality is obtained observing that ⟨g t , xt − xt+1 ⟩ ≤ ∥g t ∥⋆ ∥xt − xt+1 ∥
+                                                   2
+and using the elementary inequality ax − 2b x2 ≤ a2b for x ∈ R and a, b > 0.
+
+  Let’s see an immediate application of this lemma.
+
+Corollary 7.6 With the notation in Algorithm 7.1, let V be non-empty, closed, and convex.
+Let ψ : V → R be a closed and µ-strongly convex function with respect to ∥ · ∥. Set the
+                                       1
+sequence of regularizers as ψt (x) = ηt−1 (ψ(x) − minz∈V ψ(z)) for t = 1, . . . , T and
+ψT +1 = ψT . Assume each ℓt subdifferentiable in V . Then, for all u ∈ V , FTRL guarantees
+T                                                             T
+X                                 ψ(u) − minx∈V ψ(x) X ηt−1
+      (ℓt (xt ) − ℓt (u)) ≤                                +           ∥g t ∥2⋆
+t=1
+                                           ηT −1             t=1
+                                                                   2µ
+                                    T −1              
+                                    X        1     1
+                                  +              −       (ψ(xt+1 ) − min ψ(z)),   ∀g t ∈ ∂ℓt (xt ) .
+                                    t=1
+                                           η t−1   η t                z∈V
+
+
+Moreover,
+ √
+          if the functions ℓt are L-Lipschitz on an open set containing V , setting ηt−1 =
+α µ
+ √ we get
+L t
+
+         T                  T                                        √
+                                                 ψ(u) − minx ψ(x)
+                                             
+         X                  X                                        L T
+               ℓt (xt ) −         ℓt (u) ≤                        +α √ ,          ∀u ∈ V .
+         t=1                t=1
+                                                        α              µ
+
+Proof The corollary is immediate from Lemma 7.1, Lemma 7.5, and the observation that
+from the assumptions we have ψt (x) − ψt+1 (x) ≤ 0, ∀x ∈ V .
+
+   This might look like the same regret guarantee of OMD; however, here there is a very
+important difference: the last term contains a time-varying element (ηt ), but the domain does
+                                                         1
+not have to be bounded! Also, I used the regularizer ηt−1   ψ(x) and not η1t ψ(x) to remind
+you of another important difference: In OMD the learning rate ηt is chosen after receiving
+information about ℓt , through the subgradient g t , while here you have to choose it before
+observing ℓt .
+
+
+
+                                       7.2.1 Proximal Regularizers
+We can obtain a slightly stronger guarantee in the case that the regularizer is proximal, that
+is, it satisfies that xt ∈ argminx∈V ψt+1 (x) − ψt (x) for all t.
+                                                                                     Pt−1
+Lemma 7.7 With the notation in Algorithm 7.1, denote by Ft (x) = ψt (x) + i=1 ℓi (x)
+for all t. Assume that V ⊆ X is non-empty, closed, and convex. Also, assume that Ft+1 is
+closed, subdifferentiable, and λt+1 -strongly convex with respect to ∥ · ∥ in V , the regularizer
+is such that xt ∈ argminx∈V ψt+1 (x) − ψt (x). Then, xt+1 exists and is unique. Moreover,
+

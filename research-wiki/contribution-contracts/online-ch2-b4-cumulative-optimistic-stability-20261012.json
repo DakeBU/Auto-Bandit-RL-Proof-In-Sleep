@@ -1,0 +1,224 @@
+{
+  "schema_version": "3.0",
+  "id": "ONLINE-CH2-B4-CUMULATIVE-OPTIMISTIC-STABILITY-20261012",
+  "route": "online-learning/chapter-2/b4-cumulative-optimistic-stability",
+  "frontier_cell": "online-ogd",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10; SHA256 cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchor": "Lemma7.5 printed101-102/PDF113-114; Algorithm7.8 and Theorem7.47 printed129-130/PDF141-142, finite common-domain sharp-stability branch",
+    "url": "https://arxiv.org/pdf/1912.13213v10#page=142"
+  },
+  "target": "Let V be convex in a real normed space E with its original norm. Let A(x)=psi(x)+sum_(i<n)loss_i(x), and G(x)=psi(x)+sum_(i<n+1)loss_i(x)+indicator_V(x). Each included loss excludes bottom globally and is finite on V. Suppose the actual total G has lambda-strong curvature on V, lambda>=0, p belongs to V and minimizes A+hint on V. Let the continuous functional g support loss_n-hint at p on V. Then for every q in V, G(p)-G(q)<=g(p-q)-(lambda/2)||p-q||^2. Feasible values are proved finite internally before using toReal. This is the sharp local stability implication in the finite common-domain branch of Lemma7.5 and Theorem7.47, not either complete numbered result. Source Algorithm7.8 only requires the played point to lie in the current loss domain; common finiteness on V is an explicit branch qualification. Algorithm15.9 already prints the common-domain condition. Local continuous-dual support is weaker than source global coordinate subgradient membership; only the global-to-local implication is intended. The ambient arbitrary real normed space generalizes the source finite-dimensional conditional inequality; no finite-dimensional attainment claim follows. The header assumes total-objective curvature, not regularizer-only curvature. n=0, lambda=0 and nonzero g are allowed. The actual prediction minimum supplies p, not a hidden minimum of G. No closedness, support-existence or attainment conclusion is supplied.",
+  "affected_files": [
+    "BanditRLProof/OnlineCumulativeOptimisticStability.lean",
+    "website/content/books.json",
+    "website/content/chapters.json",
+    "website/content/readings.json",
+    "website/content/highlights.json",
+    "BanditRLProof.lean"
+  ],
+  "declarations": [
+    "BanditRL.OnlineConvex.cumulative_optimistic_stability"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "OnlineStrongConvexSupport supplied-support growth",
+      "OnlinePrescientBregmanSource properness from actual finite domain",
+      "OnlineStrongConvexMinimum existing minimum growth; insufficient when p does not minimize G",
+      "OnlineCumulativePotential finite identity actual downstream summand"
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineConvex.stronglyConvex_support_growth",
+      "BanditRL.OnlineConvex.sourceProper_of_domain",
+      "BanditRL.OnlineConvex.SourceProper",
+      "BanditRL.OnlineConvex.effectiveDomain",
+      "BanditRL.OnlineConvex.extendedIndicator"
+    ],
+    "new_shared_declarations": [],
+    "known_consumers": [
+      "BanditRL.Tests.OnlineCumulativeOptimisticStabilityCanary.tight_stability_at_nonminimizer (actual first-conjunction provider, experimental)"
+    ],
+    "planned_consumers": [
+      "Positive-curvature dual-norm optimization",
+      "Finite regret identity assembly with explicit qualified terminal correction"
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Constructs previously missing support of actual cumulative G from the actual prior-plus-hint minimizer and local difference support; calls existing growth theorem. Does not assume G support or G minimum."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root/b4_next_leaf_formalizer_20261012",
+    "blind_decoder": "Independent neutral decoder, evidenced by tmp/neutral-declaration-20261012-s1/reconstruction-v1.json SHA84b44b2f28a06b4d70be65f97364732a549f7e7829d74e94a414924d15f38404; actor identifier not asserted",
+    "source_reviewer": "/root/support_reader_source_review_20261012",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "This is the sharp local stability implication in the finite common-domain branch of Lemma7.5 and Theorem7.47, not either complete numbered result. Source Algorithm7.8 only requires the played point to lie in the current loss domain; common finiteness on V is an explicit branch qualification. Algorithm15.9 already prints the common-domain condition. Local continuous-dual support is weaker than source global coordinate subgradient membership; only the global-to-local implication is intended. The ambient arbitrary real normed space generalizes the source finite-dimensional conditional inequality; no finite-dimensional attainment claim follows. The header assumes total-objective curvature, not regularizer-only curvature. n=0, lambda=0 and nonzero g are allowed. The actual prediction minimum supplies p, not a hidden minimum of G. No closedness, support-existence or attainment conclusion is supplied. Independent experimental core/canary BODY reviews accepted the explicit deltas; canonical and publication acceptance remain pending."
+  },
+  "graph_contribution": {
+    "lean_graph": "integration-node",
+    "overview_graph": "no-change-with-reason",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "An actual convex-analytic stability producer; no new certified categorical functor.",
+    "focus_targets": [
+      "BanditRL.OnlineConvex.cumulative_optimistic_stability"
+    ],
+    "visual_review": "Pending independent publication and reader review of new stability entry plus reviewed existing vector local-catalog mapping repair; four local edges and all mathematics preserved.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: one new stability card/lesson/module owner plus explicitly reviewed two-field presentation repair of one old vector highlight; no added route/navigation or completion.",
+    "banditrlwiki": "no-change-with-reason: no new accepted algorithmic bound or setting",
+    "results_ledger": "no-change-with-reason: scratch proof only, canonical package acceptance pending",
+    "roadmap": "no-change-with-reason: B4, Chapter2 and Chapters1-16 OPEN/ACTIVE",
+    "website_surfaces": [
+      "website/content/books.json",
+      "website/content/chapters.json",
+      "website/content/readings.json",
+      "website/content/highlights.json"
+    ]
+  },
+  "truth_boundary": "Experimental core and the closed canary compiled and passed separate independent source/BODY reviews. This canonical stability integration packet is proposed only: canonical focused builds, imported TYPE/VALUE identity and axiom audits, combined gates, publication review and same-source reader Exposition Seal remain pending. The divided dual-norm bound is a separate proposed positive-curvature edge. No support-existence, attainment, uniqueness, full Lemma7.5, full corrected Theorem7.47 or full Theorem15.31 is claimed. The optimistic identity retains G_T(z)-G_T(u); a repeated final hint can leave it positive. An approved unhinted ghost needs an actual attained minimizer of G_T; truncating stability alone does not repair the gap. The BTRL repeated-point ghost and t<T movement truncation remain separate obligations. Seven open-forward containers, six future claims, null mandatory denominator and accepted=false remain unchanged, as do all C1-16 hard targets. No merge or live acceptance claim.",
+  "verification": {
+    "focused_checks": [
+      "Experimental core header and candidateV1 actual0; TYPE107/VALUE332,standard3axioms; exact1474-byte header.",
+      "Imported actual G TYPE/VALUE alpha equality, all17 support-growth operands, actual properness G with p/hp witness, prediction/difference premises at z/hz.",
+      "Experimental canary candidateV2 actual0; TYPE78/VALUE431,standard3axioms; exact13conjunct context, actual first-conjunction21-argument producer n0/lambda1/p0/q-1.",
+      "One unused-simp warning retained; failed audit versions and pre-Lean UTF-8 construction failure retained.",
+      "Canonical focused builds and genuine alpha identity not run by this proposal.",
+      "Object-level V3 check: exactly one existing vector highlight changes dependencies and lean_notes as reviewed; 506 other existing objects unchanged; one new stability object unchanged from V2. External Mathlib proof names remain rendered; site gate acceptance still pending."
+    ],
+    "bandit_check": "Pending same-source shared root, Tests and full tools/bandit.py check.",
+    "site_build": "Pending matching Lean gates before isolated build_site.py --lean-verified.",
+    "site_check": "Pending check_site.py, preservation tests and independent reader Exposition Seal.",
+    "independent_review": "Core and canary body-source-verdict-v1 accepted experimental BODY with explicit delta. Exact review/source/freeze/capture evidence is bound in compact port selection; publication review pending."
+  },
+  "contributor": {
+    "name": "Ji Cheng with Codex assistance",
+    "role": "Exact interface/proof formalizer; separate decoder and source/BODY reviewer named in evidence."
+  },
+  "learning_contract": {
+    "control_plane_math_authority": false,
+    "process_memory_checked": true,
+    "process_memory_ids": [
+      "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS"
+    ],
+    "failure_class": "NONE",
+    "salvage": {
+      "required": true,
+      "status": "completed",
+      "reason": "Retain failed canary audit numeral-encoding checks and pre-Lean UTF-8 construction failure; mathematical core/canary compilation succeeded. No failed file erased or proof/header changed to bypass failure.",
+      "promoted_fragments": [],
+      "discarded_fragments": []
+    },
+    "parallelism": {
+      "decision": "serial",
+      "direction_fingerprints": [
+        "cumulative-optimistic-stability:02af57553780cae22e509ed7b9fd97a26c8bdeca7e539e1ef0e7ff56cf3e9b8d"
+      ],
+      "expected_information_gain": "One proof route, distinct independent review roles.",
+      "shared_verified_context_digest": "b713181a47d73e4858a39309986bcb6ad98e4b24bea68911b0e7f24f51cfa51b"
+    },
+    "cross_route_blind_spot_audit": {
+      "required": false,
+      "status": "not-applicable",
+      "evidence": "Single construction route.",
+      "canonical_route": "Actual prediction inequality plus local difference support produces G support; existing support growth",
+      "selection_reason": "Substantive missing support producer at p which need not minimize current G; finite common-domain qualification explicit."
+    },
+    "reader_backpressure": {
+      "purification_status": "pending",
+      "exposition_seal_status": "pending",
+      "reader_debt_delta": 1,
+      "exposition_evidence": "Proposed exact-source single lesson; one pending bounded reader packet, not acceptance.",
+      "source_expansion_nodes": [
+        "ALGORITHM7.8-PREDICTION-MINIMUM",
+        "LEMMA7.5-SUPPORT-CONSTRUCTION",
+        "THEOREM7.47-SHARP-STABILITY",
+        "OPEN-DUAL-NORM",
+        "OPEN-ATTAINMENT",
+        "POSITIVE-TERMINAL-GAP"
+      ],
+      "lean_expansion_nodes": [
+        "BanditRL.OnlineConvex.cumulative_optimistic_stability",
+        "BanditRL.OnlineConvex.stronglyConvex_support_growth",
+        "BanditRL.OnlineConvex.sourceProper_of_domain",
+        "BanditRL.OnlineConvex.SourceProper",
+        "BanditRL.OnlineConvex.effectiveDomain",
+        "BanditRL.OnlineConvex.extendedIndicator"
+      ],
+      "assumptions_preserved": true,
+      "boundary_preserved": true
+    }
+  },
+  "presentation_repair": {
+    "source_facing": false,
+    "status": "REVIEWED_PRESENTATION_REPAIR_PROPOSED_FOR_SAME_PACKET",
+    "target": "website/content/highlights.json",
+    "base_head": "2a76602d560fd1b17c223224ae7525898e1ec34a",
+    "parent_review": {
+      "path": "tmp/online-support-resume-20261012/external-highlight-mapping-parent-review-v1.json",
+      "bytes": 1693,
+      "sha256": "dd610b6213fc097ed5595ff0e6ff087061932201cb38e2e065a48d44cdba2569"
+    },
+    "diagnosis": {
+      "path": "tmp/online-vector-8f-ci-source-diagnosis-20261012/diagnosis-and-repair-proposal-v2.json",
+      "bytes": 5429,
+      "sha256": "0a3f2e9ceb8eef60e793400d58704b7a852ab3e5f4ec53d05bd6dbf97772eff4"
+    },
+    "reviewed_repair_candidate": {
+      "path": "tmp/online-vector-8f-ci-source-diagnosis-20261012/highlights-candidate-2a766-v2.json",
+      "bytes": 1525533,
+      "sha256": "9c5452f799f9cb000bf46ae432409e4c290ba2a86497c0adfbc8a1b1fed40bc7"
+    },
+    "existing_object_changes": [
+      {
+        "index": 504,
+        "full_name": "BanditRL.OnlineConvex.stronglyConvex_sourceSubgradient_growth",
+        "fields": [
+          "lean_notes",
+          "dependencies"
+        ],
+        "old": {
+          "lean_notes": "Two kernel-checked experimental canaries use E=R^2 with the sup norm, V=[-1,1]^2, f(x)=(x0^2+x1^2)/2+x0 on V and top outside, p=0 and q=(1,1). For ordinary coordinates and g=(1,0), the chosen squared norm is1 and coordinate Euclidean squared norm is2; the correct bound is3/2<=2, while a wrong Euclidean penalty still gives2<=2, so this first numerical bound alone cannot detect that error. Scaling coordinates to e prime=2e and g prime=g/2 preserves pairing1 and the E penalty1/2, while the coordinate squared norm becomes8. The wrong substituted penalty would give5<=2, which the second canary explicitly refutes. Both first-conjunction providers directly apply the adapter with internally proved source premises, including global support outside V. Experimental imported core TYPE127/VALUE222 include actual support-growth, internally derived finite dimensionality and continuous linear-map conversion. Two canary first providers are direct19-argument adapter applications. Standard axioms only. Only experimental scratch core/canary compilation and imported audits have passed, with independent mathematical BODY/source reviews accepted with explicit delta. Canonical installation, production alpha-normalized TYPE/VALUE comparison, new combined gates, publication review and reader Exposition Seal remain pending. No accepted actual cumulative FTRL/BTRL producer, full Lemma4.2 iff/converse, support existence, qualified attainment, full stability or corrected Theorem7.47/15.31 is claimed. Chapter2, B4 and Chapters1-16 remain OPEN/ACTIVE; complete proof denominator stays null, seven forward containers and six future claims remain, accepted=false. No merge or live claim; support-leaf reader acceptance remains separate and pending.",
+          "dependencies": [
+            "BanditRL.OnlineConvex.stronglyConvex_support_growth",
+            "BanditRL.OnlineConvex.SourceSubdifferential",
+            "BanditRL.OnlineConvex.SourceProper",
+            "BanditRL.OnlineConvex.effectiveDomain",
+            "LinearEquiv.finiteDimensional",
+            "LinearMap.toContinuousLinearMap"
+          ]
+        },
+        "new": {
+          "lean_notes": "Two kernel-checked experimental canaries use E=R^2 with the sup norm, V=[-1,1]^2, f(x)=(x0^2+x1^2)/2+x0 on V and top outside, p=0 and q=(1,1). For ordinary coordinates and g=(1,0), the chosen squared norm is1 and coordinate Euclidean squared norm is2; the correct bound is3/2<=2, while a wrong Euclidean penalty still gives2<=2, so this first numerical bound alone cannot detect that error. Scaling coordinates to e prime=2e and g prime=g/2 preserves pairing1 and the E penalty1/2, while the coordinate squared norm becomes8. The wrong substituted penalty would give5<=2, which the second canary explicitly refutes. Both first-conjunction providers directly apply the adapter with internally proved source premises, including global support outside V. Experimental imported core TYPE127/VALUE222 include actual support-growth, internally derived finite dimensionality and continuous linear-map conversion. Two canary first providers are direct19-argument adapter applications. Standard axioms only. Only experimental scratch core/canary compilation and imported audits have passed, with independent mathematical BODY/source reviews accepted with explicit delta. Canonical installation, production alpha-normalized TYPE/VALUE comparison, new combined gates, publication review and reader Exposition Seal remain pending. No accepted actual cumulative FTRL/BTRL producer, full Lemma4.2 iff/converse, support existence, qualified attainment, full stability or corrected Theorem7.47/15.31 is claimed. Chapter2, B4 and Chapters1-16 remain OPEN/ACTIVE; complete proof denominator stays null, seven forward containers and six future claims remain, accepted=false. No merge or live claim; support-leaf reader acceptance remains separate and pending. Mathlib proof dependencies (outside the local declaration catalog): LinearEquiv.finiteDimensional and LinearMap.toContinuousLinearMap.",
+          "dependencies": [
+            "BanditRL.OnlineConvex.stronglyConvex_support_growth",
+            "BanditRL.OnlineConvex.SourceSubdifferential",
+            "BanditRL.OnlineConvex.SourceProper",
+            "BanditRL.OnlineConvex.effectiveDomain"
+          ]
+        }
+      }
+    ],
+    "existing_object_count": 507,
+    "unchanged_existing_objects": 506,
+    "new_stability_objects": 1,
+    "total_objects": 508,
+    "meaning": "Remove two external Mathlib names only from the local-catalog dependency field, preserving their exact names in rendered lean_notes and all four genuine local edges. No mathematical, source, proof, validator or declaration changes.",
+    "site_acceptance": false
+  }
+}

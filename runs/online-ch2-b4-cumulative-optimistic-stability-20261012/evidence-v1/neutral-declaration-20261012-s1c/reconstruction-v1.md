@@ -1,0 +1,82 @@
+# Blind closed-conjunction reconstruction
+
+Verified inputs:
+
+- `context-v1.txt`: 687 bytes; SHA-256 `edae49192f0cb42e95c415f870805faf31b9b335b94cd82ed1b99f283098a23e`.
+- `declaration-v1.txt`: 835 bytes; SHA-256 `5409c8056cd95fb72b96dceaca5b91b4ea6dd1babbf3b7ee52e8f0466e5823c9`.
+- `definition-context-v1.txt`: 408 bytes; SHA-256 `4cb545c3d1393f1013f189be22ff8320814a940fc285d1f68782743dcb218163`.
+
+## objects
+
+- The carrier is the real normed space R. feasible is the closed interval [-1,1]; write V for this interval.
+- regularizer(x)=x^2/2, hint(x)=0, and losses(i,x)=embed(x) for every natural i. The loss definition ignores its index.
+- predictionObjective(x), written P(x), is embed(regularizer(x)) plus the loss sum over range 0 plus embed(hint(x)). Therefore P(x)=embed(x^2/2) for every real x.
+- currentObjective(x), written G(x), is embed(regularizer(x)) plus the loss sum over range 1 plus extendedIndicator(V,x). Hence G(x)=embed(x^2/2+x) on V and G(x)=top outside V.
+- support is the identity continuous real linear map: support(t)=t. The fixed base point is 0 and the fixed comparison point is -1. The additional test point 2 is outside V.
+
+## domains_types
+
+- This is a closed theorem type: no variable parameters or input hypotheses precede the colon. Its conclusion is a conjunction of fixed assertions.
+- V is a Set R. regularizer and hint map R to R. losses maps Nat to R to EReal. P and G map R to EReal.
+- support has type R ->L[R] R. It is functional application, not a separate coordinate inner product.
+- The supporting inequality's z ranges over R subject to z in V. IsMinOn comparisons also quantify real z with z in V.
+- Norms are the original norm on R, namely absolute value. No coordinate transform or different Euclidean norm is present.
+- The first inequality, local support inequality, objective-gap equality and right-side equality are comparisons in R using toReal where indicated. MinOn comparisons and G-value equalities are in EReal. support != 0 compares continuous linear maps; membership claims are propositions about V.
+
+## assumptions
+
+- There are no external premises in this declaration. All listed minimizer, support, feasibility, nonminimizer and numerical assertions are conjuncts of its conclusion.
+- By the supplied definition, IsMinOn P V 0 means: for every real z, z in V implies P(0)<=P(z). Feasibility of 0 is separately asserted.
+- The assertion NOT IsMinOn G V 0 means NOT (for every real z, z in V implies G(0)<=G(z)). It is not a statement that every feasible point has a smaller value.
+- The local support conjunct means: for every z in V, toReal(losses(0,0))-hint(0)+support(z-0) <= toReal(losses(0,z))-hint(z). No assertion about all real z outside V is encoded by this quantifier.
+- extendedIndicator is 0 on V and top outside V. All raw loss and regularizer values are finite by their literal definitions; the infinite G-value at 2 comes from the indicator.
+- effectiveDomain f is defined in the supplied auxiliary context as {x | f(x)<top}, but effectiveDomain does not occur in this declaration's type. SourceProper, no-bottom premises, general strong-convexity premises and global-subdifferential membership also do not occur in this type.
+
+## quantifiers
+
+- The supporting inequality is for every z in R, z in V -> the displayed real inequality, with support fixed in advance as the identity map.
+- The prediction minimizer assertion expands to for every z in R, z in V -> P(0)<=P(z).
+- The current nonminimizer assertion negates the whole universal feasible comparison for G. The separately given point -1 and its objective value identify a failed comparison.
+- All other conjuncts are fixed facts about 0, -1, 2, the fixed map support, or the difference 0-(-1).
+- There is no quantifier over arbitrary base points, comparison points, horizons, loss sequences, strong-convexity parameters or alternative supporting functionals, and no existential choice of a functional.
+
+## operations
+
+- range 0 is empty, so the prediction loss sum is zero. range 1 contains only 0, so the current loss sum is losses(0,x)=embed(x). The formula therefore explicitly includes the current loss in G while P contains no losses.
+- For feasible z, the local support inequality reduces to 0-0+(z-0) <= z-0, exactly z<=z. The declared property is local to V; the literal formulas also make this same equality valid for every real z. That latter observation does not change the scope of the quantified conjunct.
+- The local support displacement is z-0. At z=-1 it is -1. The first inequality uses the opposite displacement 0-(-1)=1, and support(1)=1.
+- The original real norm gives norm(0-(-1))=abs(1)=1 and its square is 1. The right side of the first inequality is 1-(1/2)*1=1/2.
+- G(0)=embed(0), and G(-1)=embed(((-1)^2)/2+(-1))=embed(-1/2). Thus toReal(G(0))-toReal(G(-1))=0-(-1/2)=1/2.
+- The first inequality is exactly 1/2<=1/2. The final two conjuncts separately certify that both sides equal 1/2, so the inequality is tight at these fixed points.
+- The minimizer comparison for P reads embed(0)<=embed(z^2/2) for every z in [-1,1]. The failed current-objective comparison at z=-1 reads embed(0)<=embed(-1/2), which is false.
+- support != 0 is a claim about the whole map, consistent with support(1)=1 even though support(0)=0.
+- 2 is outside V, so its indicator is top and G(2)=top despite its finite regularizer and raw loss. The supplied toReal convention implies toReal(G(2))=0; this would not make G(2) a finite value or justify treating it as a feasible endpoint.
+- Both endpoints in the actual gap, 0 and -1, lie in V and have finite G-values. Their toReal values preserve their actual real objective values.
+
+## conclusion
+
+- The literal closed conjunction asserts, in order: (1) the fixed stability inequality at 0 and -1; (2) 0 minimizes P over V; (3) 0 does not minimize G over V; (4) the local supporting inequality for losses 0 minus hint at 0; (5) support is nonzero; (6) 0 belongs to V; (7) -1 belongs to V; (8) 2 does not belong to V; (9) G(0)=0; (10) G(-1)=embed(-1/2); (11) G(2)=top; (12) the real objective gap is 1/2; and (13) the real linear-minus-quadratic expression is 1/2.
+- The declaration simultaneously displays prediction minimization and failure of current-objective minimization at the same base point. The word 'nonminimizer' is explained by its explicit negated MinOn conjunct, without relying on the theorem name.
+- The equalities certify tightness of this one stated comparison if the closed type is proved. They do not alone certify universal sharpness over a class of objectives, parameters or norms.
+- The type does not assert that -1 minimizes G, although its value is sufficient to witness that 0 fails to minimize G. A broader minimizer characterization is not needed to read the type.
+- No general conditional stability theorem, converse, algorithm, sequence of iterates, horizon-wise result or quantitative bound for arbitrary comparison points is asserted by this closed conjunction.
+- Neither the import line nor the theorem name encodes proof usage. The type does not certify that any imported stability theorem was applied, that any particular premises were discharged via it, or that a specific proof dependency or provider was used.
+- A checked inhabitant of this closed type would establish its conjuncts. These three input files provide no proof body or checking result, so this reconstruction does not establish compilation, proof method, source correspondence or source fidelity.
+
+## edge_cases
+
+- V is explicitly nonempty and includes both comparison endpoints; -1 is a boundary point permitted by the closed interval. The support universal is not vacuous from an empty feasible set.
+- The prediction prefix is empty while the current prefix contains index 0. These are fixed definitions; there is no universally quantified horizon in the theorem.
+- The coefficient of the quadratic term is fixed at 1/2. There is no variable lam and no zero-parameter case quantified by this type.
+- The support map is nonzero, and the fixed displacement is nonzero. The tight equality is not merely the degenerate equal-endpoint case.
+- The local support inequality permits z=0, where both sides are zero. Its universal scope remains all feasible z.
+- Global validity of the support formula is visible from the literal functions, but the theorem's support conjunct itself only promises the condition on V and does not assert global-subdifferential membership.
+- The infinite objective value at 2 is explicit; EReal.toReal maps it to zero. None of the stated feasible objective-gap comparisons uses 2.
+- No reversal of the displacement in the main inequality is licensed without a sign change: support((-1)-0)=-1, whereas the displayed support(0-(-1))=1.
+
+## Uncertainty and scope
+
+- Only context-v1.txt, declaration-v1.txt and definition-context-v1.txt in the current S1C neutral directory were inspected. Their byte counts and SHA-256 hashes were verified against the supplied values.
+- No previous header or packet, imported module, theorem body, source paper, review, contract or other file was consulted. No Lean execution, proof search, numerical proof search or external lookup was performed.
+- Arithmetic simplifications above are direct symbolic readings of the supplied formulas. Standard real norm, finite-sum and coercion meanings are used without consulting implementations.
+- The reconstruction makes no source identity, version, source-fidelity or proof-use inference.

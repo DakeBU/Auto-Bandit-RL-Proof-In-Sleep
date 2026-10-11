@@ -1,0 +1,108 @@
+{
+  "status": "ACTUAL_CI_WEBSITE_CONTENT_FAILURE_BOUNDED_REPAIR_PROPOSAL_ONLY",
+  "observed_utc": "2026-10-11T20:38:02.302265+00:00",
+  "repository": "DakeBU/Auto-Bandit-RL-Proof-In-Sleep",
+  "run": 38170035283,
+  "job": 114560531099,
+  "head": "8f1692cca6b6f08e9588666849b31b0f462352e7",
+  "steps": {
+    "Lean_library_Tests": "success",
+    "full_harness": "488tests68.478s3skips passed in successful build step",
+    "website_build": "failure actual1",
+    "site_check": "skipped",
+    "upload": "skipped"
+  },
+  "failure": "missing_highlight_dependencies only LinearEquiv.finiteDimensional and LinearMap.toContinuousLinearMap",
+  "classification": "Source-content catalog mapping, not Lean proof failure or infrastructure",
+  "cause": "build_site scan_declarations enumerates local BanditRLProof/*.lean and root; validate_content requires every highlight.dependencies name inside this local catalog. These two genuine Mathlib dependencies are outside it.",
+  "retrieval": "Initial gh API log call rejected ANSI escape output; --allow-escape-sequences succeeded. Raw attempt/error retained; no log command success inferred from empty file. Initial wrong-owner request returned404 before verified DakeBU request.",
+  "proposed_repair": {
+    "base_head": "2a76602d560fd1b17c223224ae7525898e1ec34a",
+    "base_RAW_sha256": "635413b2b365bf36055d0b80011745518689dbda1c58f002d97c54e3230c36b0",
+    "target": "website/content/highlights.json",
+    "candidate": "tmp\\online-vector-8f-ci-source-diagnosis-20261012\\highlights-candidate-2a766-v2.json",
+    "candidate_sha256": "9c5452f799f9cb000bf46ae432409e4c290ba2a86497c0adfbc8a1b1fed40bc7",
+    "only_changes": [
+      "Remove two external names from the local-catalog dependencies field of exactly one vector highlight",
+      "Append both exact names to its rendered lean_notes as Mathlib proof dependencies outside the local catalog"
+    ],
+    "preserved": "All mathematical source/hypotheses/proof terms/source cards/counts/routes and four genuine local dependencies; external proof dependencies remain visible. No validator relaxation or dummy declarations."
+  },
+  "further_requirements": [
+    "Independent proposal review and source-false maintenance native record before parent applies",
+    "Any future iff candidate/reader snapshot containing old vector highlight must be explicitly rebased with new hashes; do not silently relabel old packet approval",
+    "Fresh actual site/gates at repaired head; current historical Lean/alpha remain bound to original heads",
+    "No canonical changes/builds/browser executed here"
+  ],
+  "PR231_observation": {
+    "run": 38170796835,
+    "head": "a0f9a488b84a8efade720b051235cd48ff311ff9",
+    "status": "in_progress",
+    "conclusion": null,
+    "same_failure": "Not yet observed; current source contains same two references"
+  },
+  "evidence": {
+    "annotations-stderr.raw": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "annotations-stdout.raw": {
+      "sha256": "89927dd501723c4846581ad7cf4848e7f2c3c9c09e3abd054637f810118a694f",
+      "bytes": 756
+    },
+    "check-stderr.raw": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "check-stdout.raw": {
+      "sha256": "4e138632a0d5c2d3918eb4add052353cd8dfeddc0ad4bf17b34dbf725e98c29d",
+      "bytes": 3737
+    },
+    "highlights-candidate-a0f-v1.diff": {
+      "sha256": "e4dd8a2a6bba327e590757b59001856a9c5ad09e053448a0bf2919fe6f2fdaa2",
+      "bytes": 5817
+    },
+    "highlights-candidate-a0f-v1.json": {
+      "sha256": "9c5452f799f9cb000bf46ae432409e4c290ba2a86497c0adfbc8a1b1fed40bc7",
+      "bytes": 1525533
+    },
+    "job-log-stderr.raw": {
+      "sha256": "8b6407b2fdbca54bf3d53fb93e79a3560dbe59567fa5044cfee4bed1b5b6e467",
+      "bytes": 99
+    },
+    "job-log-stdout.raw": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "job-log-v2-stderr.raw": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "job-log-v2-stdout.raw": {
+      "sha256": "1d215ea051506cd80a6e4b652169411220eff47a13bf5fa6268a93ec89940507",
+      "bytes": 4534268
+    },
+    "job-stderr.raw": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "job-stdout.raw": {
+      "sha256": "26c7ab1ae1627d8737c9b0cf3e3a9cb7ac8433c689630ac522a2ad1396a3e8c7",
+      "bytes": 3074
+    },
+    "run231-stderr.raw": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "run231-stdout.raw": {
+      "sha256": "29f46752f1541f9a7efee019d19aab4c5ca2a594141e4dfa7c820e7a91bb3e70",
+      "bytes": 14261
+    },
+    "website-failure-excerpt-v1.raw": {
+      "sha256": "02acf86497db807eeaa6f3e38e6947208304e622016255c327fd74bcdffb4020",
+      "bytes": 1316
+    }
+  },
+  "predecessor_sha256": "fa1e9caa962f088977c9314b75cae87855ecfab7747bbdf60bc992f2a058edd0",
+  "correction": "Parent installed iff while read-only diagnosis was running. Candidate bytes were based on actual iff highlights SHA635413, not a0f. V1 filename/head label is superseded; identical candidate RAW now truthfully bound to2a766. No production edits."
+}

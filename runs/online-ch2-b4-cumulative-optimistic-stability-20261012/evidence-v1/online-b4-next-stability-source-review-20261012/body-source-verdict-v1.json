@@ -1,0 +1,127 @@
+{
+  "status": "ACCEPTED_EXPERIMENTAL_BODY_SOURCE_WITH_EXPLICIT_SOURCE_DELTA",
+  "candidate": {
+    "path": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-b4-next-stability-body-20261012\\candidate-v1.lean",
+    "bytes": 4650,
+    "sha256": "02af57553780cae22e509ed7b9fd97a26c8bdeca7e539e1ef0e7ff56cf3e9b8d"
+  },
+  "frozen_header_sha256": "b713181a47d73e4858a39309986bcb6ad98e4b24bea68911b0e7f24f51cfa51b",
+  "compiled_report_sha256": "b433c51b660f2ef9145961ce33f0146702e0427ccf0eadcc36247f9279d5b344",
+  "audit_sha256": "0f4b32f4e3d7375002fac7d67ef2de8d8e9c2243126273b8757e32ebc540fb06",
+  "probe_sha256": "d0020aca9ff43bd083de7a41048aae91a210473be32ab134d2486944070abf35",
+  "source_precheck_sha256": "191fa72dc4317a1856be068559a0e698f4606739bc468228258fe9cd8582b3a1",
+  "seven_slots": {
+    "objects": "Exact total G and predicted-prefix objective remain distinct",
+    "domains": "General real normed E; original norm and continuous dual; finite V losses and global no-bottom through n",
+    "assumptions": "Exact frozen header; no hminG, extra curvature restriction, support-of-G or performance assumption",
+    "quantifiers": "All i<n+1 and ambient no-bottom, all feasible loss finiteness; local all-z fixed-g support; arbitrary feasible q",
+    "operations": "Finite EReal sums converted only after finite proof; hint cancellation, current index n, lam/2 and sign g(p-q) exact",
+    "conclusion": "Actual cumulative G difference with original-norm negative quadratic term",
+    "edge_cases": "n0 includes loss0; lambda0 without division; top outside V and nonminG permitted; hp supplies witness"
+  },
+  "body_findings": [
+    "hfinite uses both hdom and hbot; hsumBot proves no bottom for every partial sum globally",
+    "hvalue derives exact real feasible cumulative value; hout uses no-bottom to prove top outside V",
+    "hGbot/hGdom and real feasible witness p/hp feed sourceProper_of_domain on actual G",
+    "hprior converts actual prediction objective to finite real sum; actual hprediction at z/hz plus hdifference z/hz algebraically cancels hint and produces local support of G",
+    "Actual stronglyConvex_support_growth consumes same G,V,lam,hproper,hV,hGdom,hlam,hstrong,p,hp,g,derived hsupport,q,hq",
+    "Functional map_sub and norm symmetry give final sign/original penalty; no minimizer assumption on G or q introduced"
+  ],
+  "actual_imported_evidence": {
+    "TYPE_count": 107,
+    "VALUE_count": 332,
+    "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "header_focused_import_exit": [
+      0,
+      0,
+      0
+    ],
+    "integrity": true,
+    "actual_G_TYPE_VALUE_alpha_equal": true,
+    "provider_operands": [
+      {
+        "provider": "BanditRL.OnlineConvex.sourceProper_of_domain",
+        "passed": true,
+        "operands": [
+          "G",
+          "V",
+          "Exists.intro p hp",
+          "hGbot",
+          "hGdom"
+        ],
+        "arity": 6
+      },
+      {
+        "within_derived_hsupport": true,
+        "premise": "hprediction",
+        "passed": true,
+        "operands": [
+          "z",
+          "hz"
+        ]
+      },
+      {
+        "within_derived_hsupport": true,
+        "premise": "hdifference",
+        "passed": true,
+        "operands": [
+          "z",
+          "hz"
+        ]
+      },
+      {
+        "provider": "BanditRL.OnlineConvex.stronglyConvex_support_growth",
+        "passed": true,
+        "operands": [
+          "E",
+          "inst._@.tmp.online-b4-next-stability-body-20261012.candidate-v1.1392283117._hygCtx._hyg.3",
+          "inst._@.tmp.online-b4-next-stability-body-20261012.candidate-v1.1392283117._hygCtx._hyg.6",
+          "G",
+          "V",
+          "lam",
+          "hproper",
+          "hV",
+          "hGdom",
+          "hlam",
+          "hstrong",
+          "p",
+          "hp",
+          "g",
+          "hsupport",
+          "q",
+          "hq"
+        ],
+        "arity": 17
+      }
+    ],
+    "origins": [
+      {
+        "resolved_olean": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-b4-next-stability-body-20261012\\CumulativeOptimisticStabilityCandidate.olean",
+        "module": "CumulativeOptimisticStabilityCandidate",
+        "declaration": "BanditRL.OnlineConvex.cumulative_optimistic_stability"
+      },
+      {
+        "resolved_olean": "E:\\ABRL\\worktrees\\research-online-book\\.lake\\build\\lib\\lean\\BanditRLProof\\OnlineStrongConvexSupport.olean",
+        "module": "BanditRLProof.OnlineStrongConvexSupport",
+        "declaration": "BanditRL.OnlineConvex.stronglyConvex_support_growth"
+      },
+      {
+        "resolved_olean": "E:\\ABRL\\worktrees\\research-online-book\\.lake\\build\\lib\\lean\\BanditRLProof\\OnlinePrescientBregmanSource.olean",
+        "module": "BanditRLProof.OnlinePrescientBregmanSource",
+        "declaration": "BanditRL.OnlineConvex.sourceProper_of_domain"
+      }
+    ]
+  },
+  "audit_precision_limit": "Probe within_derived_hsupport flag tests ctx.contains hprior, not structural ancestry of the hsupport let value itself. Exact same z/hz premise applications and four observed rows are checked. Their actual placement inside hsupport is verified independently from full source BODY; do not advertise the flag alone as an exact lexical-owner certificate.",
+  "source_delta": "Retain accepted finite-common-domain branch and general local-continuous-dual conditional intermediate. Does not prove source-global support existence, algorithmic attainment/uniqueness, dual-norm Young result, terminal ghost correction or full Lemma7.5/Theorem7.47/15.31.",
+  "limits": [
+    "Experimental scratch proof only; no canonical installation/alpha identity/root/harness/reader acceptance",
+    "No Lean execution by reviewer; exact current receipts/stdout/source/audit/probe personally inspected",
+    "Public canary BODY still separate"
+  ],
+  "blockers": []
+}

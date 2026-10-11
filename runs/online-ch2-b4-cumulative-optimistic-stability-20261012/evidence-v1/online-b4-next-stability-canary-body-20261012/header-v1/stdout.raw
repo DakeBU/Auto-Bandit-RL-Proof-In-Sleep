@@ -1,0 +1,13 @@
+(currentObjective 0).toReal - (currentObjective (-1)).toReal ≤ support (0 - -1) - 1 / 2 * ‖0 - -1‖ ^ 2 ∧
+  IsMinOn predictionObjective feasible 0 ∧
+    ¬IsMinOn currentObjective feasible 0 ∧
+      (∀ z ∈ feasible, (losses 0 0).toReal - hint 0 + support (z - 0) ≤ (losses 0 z).toReal - hint z) ∧
+        support ≠ 0 ∧
+          0 ∈ feasible ∧
+            -1 ∈ feasible ∧
+              2 ∉ feasible ∧
+                currentObjective 0 = 0 ∧
+                  currentObjective (-1) = ↑(-(1 / 2)) ∧
+                    currentObjective 2 = ⊤ ∧
+                      (currentObjective 0).toReal - (currentObjective (-1)).toReal = 1 / 2 ∧
+                        support (0 - -1) - 1 / 2 * ‖0 - -1‖ ^ 2 = 1 / 2 : Prop

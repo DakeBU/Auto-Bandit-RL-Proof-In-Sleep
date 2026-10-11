@@ -1,0 +1,293 @@
+[
+  {
+    "target_id": "forward:prescient-lookahead",
+    "source_id": "forward:prescient-lookahead",
+    "scope_tag": "mainrequired",
+    "domain": "Finite-dimensional real Euclidean space unless explicitly quantified otherwise",
+    "assumptions": "Exactly the explicit premises in effective_statement and named child interfaces; no historical recommendation adds premises implicitly",
+    "effective_statement": "Observing ell_t before output can make stability/gradient-square terms nonpositive; Section15.5.1.",
+    "branch": "source contract",
+    "status": "precise proposed target; external approval and proof pending",
+    "implementation_acceptance": false,
+    "source_locator": {
+      "pdf_pages_1based": [
+        26
+      ],
+      "source_anchor": "these terms become non-positive",
+      "source_excerpt_sha256": "76eda1d8d1c97ff83f9937489bf8921f564a53627124d77755c51e991bb53c81"
+    },
+    "decisions_applied": [],
+    "semantic_decisions_pending": [],
+    "proof_body_ready": false,
+    "proof_body_ready_reason": "No next proof before distinct effective-target freeze approval; listed semantic decisions and open repairs remain explicit.",
+    "claim_kind": "mathematical target or required repair obligation"
+  },
+  {
+    "target_id": "repair:7.47-terminal",
+    "source_id": "forward:prescient-lookahead",
+    "scope_tag": "necessarydependency",
+    "domain": "Finite-dimensional real Euclidean space unless explicitly quantified otherwise",
+    "assumptions": "Exactly the explicit premises in effective_statement and named child interfaces; no historical recommendation adds premises implicitly",
+    "effective_statement": "For G_t=psi_t+sum_(i<=t)ell_i,arbitrary feasible z=x_(T+1) and finite displayed values, R_T(u)=psi_T(u)-psi1(x1)+sum_(t<=T)(G_t(x_t)-G_t(x_(t+1)))+sum_(t<T)(psi_t(x_(t+1))-psi_(t+1)(x_(t+1)))+G_T(z)-G_T(u). Mandatory labelled correction: retain real-round Algorithm7.8/hypotheses; define ghost psi_(T+1)=psi_T,h_(T+1)=0 and z in argmin G_T, proving attainment and all support/finiteness conditions. Then terminal gap<=0 yields printed sharp bound and Young bound. Repeating final hint instead requires adding h_(T+1)(u)-h_(T+1)(z), not cancelling it. The repeated-hint quadratic completion is refuted; no statement of equivalence to literal original is accepted.",
+    "branch": "terminal statement correction",
+    "status": "mandatory source-repair contract open",
+    "implementation_acceptance": false,
+    "semantic_decisions_pending": [
+      "B4"
+    ],
+    "proof_body_ready": false,
+    "proof_body_ready_reason": "No next proof before distinct effective-target freeze approval; listed semantic decisions and open repairs remain explicit.",
+    "claim_kind": "mathematical target or required repair obligation"
+  },
+  {
+    "target_id": "repair:15.31-terminal",
+    "source_id": "forward:prescient-lookahead",
+    "scope_tag": "necessarydependency",
+    "domain": "Finite-dimensional real Euclidean space unless explicitly quantified otherwise",
+    "assumptions": "Exactly the explicit premises in effective_statement and named child interfaces; no historical recommendation adds premises implicitly",
+    "effective_statement": "For BTRL with T>=1,proper closed lambda_t-strongly convex cumulative G_t,lambda_t>0,finite feasible played/comparator values and actual minimizers x_t, define ghost x_(T+1)=x_T. Prove R_T(u)<=psi_T(u)-psi1(x1)-sum_(t<T)lambda_t||x_t-x_(t+1)||^2/2+sum_(t<T)(psi_t(x_(t+1))-psi_(t+1)(x_(t+1))). Optional stronger endpoint is-lambda_T||u-x_T||^2/2. Original Algorithm15.9 defines no x_(T+1); repeating last loss gives checked0<=-1/36 and is not accepted.",
+    "branch": "terminal statement correction",
+    "status": "mandatory source-repair contract open",
+    "implementation_acceptance": false,
+    "semantic_decisions_pending": [
+      "B4"
+    ],
+    "proof_body_ready": false,
+    "proof_body_ready_reason": "No next proof before distinct effective-target freeze approval; listed semantic decisions and open repairs remain explicit.",
+    "claim_kind": "mathematical target or required repair obligation"
+  },
+  {
+    "target_id": "later:lookahead/branch-01",
+    "source_id": "additional:prescient-lookahead-nonpositive-stability",
+    "scope_tag": "mainrequired",
+    "domain": "Finite-dimensional real Euclidean space unless explicitly quantified otherwise",
+    "assumptions": "Exactly the explicit premises in effective_statement and named child interfaces; no historical recommendation adds premises implicitly",
+    "effective_statement": "Algorithm15.8: nonempty closed convex V subset X, strictly convex psi:X->R differentiable on int X, x_0 in int X, positive eta_t. Receive whole loss ell_t with V subset dom ell_t before choosing x_t in argmin_{x in V}(ell_t(x)+B_psi(x;x_(t-1))/eta_t), then pay ell_t(x_t).",
+    "branch": "later-source branch",
+    "status": "retained later target; independent approval/proof pending",
+    "implementation_acceptance": false,
+    "source_locator": {
+      "pdf_pages_1based": [
+        277,
+        278
+      ],
+      "printed_pages": [
+        265,
+        266
+      ],
+      "marker": "Algorithm 15.8",
+      "excerpt": "Algorithm 15.8Prescient Online Mirror Descent\nRequire:Non-empty closed convexV ⊂ X ⊆R d,ψ:X →Rstrictly convex and\ndifferentiable onintX,x 0 ∈intX,η 1, . . . , ηT >0\n1:fort= 1toTdo\n2:Receiveℓ t :R d →(−∞,+∞], whereV ⊆domℓ t\n3:x t ∈argmin x∈V ℓt(x) + 1\nηt\nBψ(x;xt−1)\n4:Pay the lossℓ t(xt)\n5:end for\n15.5.1 Prescient Online Mirror Descent and Be-The-Regularized-Leader\nThe results in the previous section are interesting from a game-theoretic point of view, be-\ncause they show that two players can converge to an equilibrium without any “communica-\ntio",
+      "excerpt_sha256": "fd74bb527b82b529cefe9258768e11c463cbaf9d8a38435b750da4836eca0cb0"
+    },
+    "semantic_decisions_pending": [],
+    "proof_body_ready": false,
+    "proof_body_ready_reason": "No next proof before distinct effective-target freeze approval; listed semantic decisions and open repairs remain explicit.",
+    "claim_kind": "mathematical target or required repair obligation"
+  },
+  {
+    "target_id": "later:lookahead/branch-02",
+    "source_id": "additional:prescient-lookahead-nonpositive-stability",
+    "scope_tag": "mainrequired",
+    "domain": "Finite-dimensional real Euclidean space unless explicitly quantified otherwise",
+    "assumptions": "Exactly the explicit premises in effective_statement and named child interfaces; no historical recommendation adds premises implicitly",
+    "effective_statement": "Theorem15.30: additionally psi closed, iterates x_t in int X, losses subdifferentiable on V, nonincreasing steps. For every u in V: regret<=max_{0<=t<=T-1}B_psi(u;x_t)/eta_T-sum_{t=1}^T B_psi(x_t;x_(t-1))/eta_t. Constant eta: regret<=B_psi(u;x_0)/eta-sum B_psi(x_t;x_(t-1))/eta. The constant-step proof is explicitly left as an exercise and remains mandatory.",
+    "branch": "later-source branch",
+    "status": "retained later target; independent approval/proof pending",
+    "implementation_acceptance": false,
+    "source_locator": {
+      "pdf_pages_1based": [
+        277,
+        278
+      ],
+      "printed_pages": [
+        265,
+        266
+      ],
+      "marker": "Algorithm 15.8",
+      "excerpt": "Algorithm 15.8Prescient Online Mirror Descent\nRequire:Non-empty closed convexV ⊂ X ⊆R d,ψ:X →Rstrictly convex and\ndifferentiable onintX,x 0 ∈intX,η 1, . . . , ηT >0\n1:fort= 1toTdo\n2:Receiveℓ t :R d →(−∞,+∞], whereV ⊆domℓ t\n3:x t ∈argmin x∈V ℓt(x) + 1\nηt\nBψ(x;xt−1)\n4:Pay the lossℓ t(xt)\n5:end for\n15.5.1 Prescient Online Mirror Descent and Be-The-Regularized-Leader\nThe results in the previous section are interesting from a game-theoretic point of view, be-\ncause they show that two players can converge to an equilibrium without any “communica-\ntio",
+      "excerpt_sha256": "fd74bb527b82b529cefe9258768e11c463cbaf9d8a38435b750da4836eca0cb0"
+    },
+    "semantic_decisions_pending": [],
+    "proof_body_ready": false,
+    "proof_body_ready_reason": "No next proof before distinct effective-target freeze approval; listed semantic decisions and open repairs remain explicit.",
+    "claim_kind": "mathematical target or required repair obligation"
+  },
+  {
+    "target_id": "later:lookahead/branch-03",
+    "source_id": "additional:prescient-lookahead-nonpositive-stability",
+    "scope_tag": "mainrequired",
+    "domain": "Finite-dimensional real Euclidean space unless explicitly quantified otherwise",
+    "assumptions": "Exactly the explicit premises in effective_statement and named child interfaces; no historical recommendation adds premises implicitly",
+    "effective_statement": "Euclidean psi(x)=||x||^2/2 specializes the negative stability term to -sum||x_t-x_(t-1)||^2/(2eta_t), with no positive gradient-square term. The total bound need not be nonpositive because the initial comparator potential is positive.",
+    "branch": "later-source branch",
+    "status": "retained later target; independent approval/proof pending",
+    "implementation_acceptance": false,
+    "source_locator": {
+      "pdf_pages_1based": [
+        277,
+        278
+      ],
+      "printed_pages": [
+        265,
+        266
+      ],
+      "marker": "Algorithm 15.8",
+      "excerpt": "Algorithm 15.8Prescient Online Mirror Descent\nRequire:Non-empty closed convexV ⊂ X ⊆R d,ψ:X →Rstrictly convex and\ndifferentiable onintX,x 0 ∈intX,η 1, . . . , ηT >0\n1:fort= 1toTdo\n2:Receiveℓ t :R d →(−∞,+∞], whereV ⊆domℓ t\n3:x t ∈argmin x∈V ℓt(x) + 1\nηt\nBψ(x;xt−1)\n4:Pay the lossℓ t(xt)\n5:end for\n15.5.1 Prescient Online Mirror Descent and Be-The-Regularized-Leader\nThe results in the previous section are interesting from a game-theoretic point of view, be-\ncause they show that two players can converge to an equilibrium without any “communica-\ntio",
+      "excerpt_sha256": "fd74bb527b82b529cefe9258768e11c463cbaf9d8a38435b750da4836eca0cb0"
+    },
+    "semantic_decisions_pending": [],
+    "proof_body_ready": false,
+    "proof_body_ready_reason": "No next proof before distinct effective-target freeze approval; listed semantic decisions and open repairs remain explicit.",
+    "claim_kind": "mathematical target or required repair obligation"
+  },
+  {
+    "target_id": "later:lookahead/branch-04",
+    "source_id": "additional:prescient-lookahead-nonpositive-stability",
+    "scope_tag": "optionalroute",
+    "domain": "Finite-dimensional real Euclidean space unless explicitly quantified otherwise",
+    "assumptions": "Exactly the explicit premises in effective_statement and named child interfaces; no historical recommendation adds premises implicitly",
+    "effective_statement": "The original BTRL15.31 contract is retained verbatim in archival_sources. Effective guarantee is repair:15.31-terminal with repair:7.47-terminal prerequisite; no unrepaired endpoint inequality is asserted.",
+    "branch": "later-source branch",
+    "status": "alternate route optional for C2 implication; already-inventoried theorem and its repair remain required/open",
+    "implementation_acceptance": false,
+    "source_locator": {
+      "pdf_pages_1based": [
+        277,
+        278
+      ],
+      "printed_pages": [
+        265,
+        266
+      ],
+      "marker": "Algorithm 15.8",
+      "excerpt": "Algorithm 15.8Prescient Online Mirror Descent\nRequire:Non-empty closed convexV ⊂ X ⊆R d,ψ:X →Rstrictly convex and\ndifferentiable onintX,x 0 ∈intX,η 1, . . . , ηT >0\n1:fort= 1toTdo\n2:Receiveℓ t :R d →(−∞,+∞], whereV ⊆domℓ t\n3:x t ∈argmin x∈V ℓt(x) + 1\nηt\nBψ(x;xt−1)\n4:Pay the lossℓ t(xt)\n5:end for\n15.5.1 Prescient Online Mirror Descent and Be-The-Regularized-Leader\nThe results in the previous section are interesting from a game-theoretic point of view, be-\ncause they show that two players can converge to an equilibrium without any “communica-\ntio",
+      "excerpt_sha256": "fd74bb527b82b529cefe9258768e11c463cbaf9d8a38435b750da4836eca0cb0"
+    },
+    "semantic_decisions_pending": [],
+    "proof_body_ready": false,
+    "proof_body_ready_reason": "No next proof before distinct effective-target freeze approval; listed semantic decisions and open repairs remain explicit.",
+    "claim_kind": "mathematical target or required repair obligation",
+    "scope": {
+      "primary_chapter2_euclidean_implication": "optionalroute",
+      "book_goal_required": true,
+      "required_in_owning_chapter": 15,
+      "scope_basis": "Retained source mathematics or mandatory source repair in the owning chapter; optional only as a route for the primary Chapter2 Euclidean implication. Existing source/repair distinction unchanged."
+    }
+  },
+  {
+    "target_id": "dependency:Lemma7.5",
+    "source_id": "Lemma7.5",
+    "scope_tag": "necessarydependency",
+    "domain": "Finite-dimensional real Euclidean space unless explicitly quantified otherwise",
+    "assumptions": "Exactly the explicit premises in effective_statement and named child interfaces; no historical recommendation adds premises implicitly",
+    "effective_statement": "For nonempty closed convex V, F_t closed/subdifferentiable/strongly convex gives unique x_t. If partial ell_t(x_t) nonempty and F_t+ell_t closed/subdifferentiable/lambda_t-strongly convex, stability<=<g_t,x_t-x_(t+1)>-lambda_t||x_t-x_(t+1)||^2/2+psi_t(x_(t+1))-psi_(t+1)(x_(t+1))<=||g_t||_*^2/(2lambda_t)+same regularizer difference, every g_t in partial ell_t(x_t).",
+    "branch": "selected dependency",
+    "status": "selected source dependency; proof pending",
+    "implementation_acceptance": false,
+    "source_locator": {
+      "pdf_pages_1based": [
+        113,
+        114
+      ],
+      "printed_pages": [
+        101,
+        102
+      ],
+      "marker": "Lemma 7.5",
+      "excerpt": "Lemma 7.5With the notation in Algorithm 7.1, denote byF t(x) =ψ t(x) +Pt−1\ni=1 ℓi(x).\nAssume thatV ⊆ Xis non-empty, closed, and convex. IfF t is closed, subdifferentiable,\nand strongly convex inV, thenx t exists and is unique. In addition, assume∂ℓ t(xt)to be\nnon-empty andF t +ℓ t to be closed, subdifferentiable, andλ t-strongly convex with respect\nto∥ · ∥inV. Then, we have\nFt(xt)−F t+1(xt+1) +ℓ t(xt)\n≤ ⟨gt,xt −x t+1⟩ −λt\n2 ∥xt −x t+1∥2 +ψ t(xt+1)−ψ t+1(xt+1)\n≤ ∥gt∥2\n⋆\n2λt\n+ψ t(xt+1)−ψ t+1(xt+1),∀g t ∈∂ℓ t(xt).\nProofThe existence and uniqueness",
+      "excerpt_sha256": "8634f446d9873c3c4b79dee2f537903a2c82d7c3bdc31a84f9687515a1ca85c3"
+    },
+    "semantic_decisions_pending": [],
+    "proof_body_ready": false,
+    "proof_body_ready_reason": "No next proof before distinct effective-target freeze approval; listed semantic decisions and open repairs remain explicit.",
+    "claim_kind": "mathematical target or required repair obligation"
+  },
+  {
+    "target_id": "dependency:Algorithm7.8-Theorem7.47",
+    "source_id": "Algorithm7.8-Theorem7.47",
+    "scope_tag": "necessarydependency",
+    "domain": "Finite-dimensional real Euclidean space unless explicitly quantified otherwise",
+    "assumptions": "Exactly the explicit premises in effective_statement and named child interfaces; no historical recommendation adds premises implicitly",
+    "effective_statement": "Effective target is repair:7.47-terminal; immutable original algorithm/statement/hypotheses are retained in archival_sources.",
+    "branch": "selected dependency",
+    "status": "terminal source-statement repair open",
+    "implementation_acceptance": false,
+    "source_locator": {
+      "pdf_pages_1based": [
+        141,
+        142
+      ],
+      "printed_pages": [
+        129,
+        130
+      ],
+      "marker": "Algorithm 7.8",
+      "excerpt": "Algorithm 7.8Optimistic Follow-the-Regularized-Leader (Optimistic FTRL)\nRequire:A sequence of regularizersψ 1, . . . , ψT :X →R, closed non-empty convex set\nV ⊆ X ⊆Rd\n1:fort= 1toTdo\n2:Predict next loss ˜ℓt :V →R\n3:Outputx t ∈argmin x∈V ψt(x) + ˜ℓt(x) + Pt−1\ni=1 ℓi(x)\n4:Receiveℓ t :R d →(−∞,+∞]such thatx t ∈domℓ t, and pay the lossℓ t(xt)\n5:end for\nIn Section 6.11, we have seen that it is possible to achieve better regret guarantees through\nthe so-called Optimistic OMD, which uses a prediction of the next gradient. Here, we will\nextend the same idea to FTRL, where we predict the next loss function. If our predicted\nloss is correct, we can expect the regret to decrease. However, if our prediction is wrong,\nwe still want to recover the worst-case guarantee. Such an algorithm is calledOptimistic\nFTRL, see Algorithm 7.8. As in Optimistic OMD, we do not make any assumption on how\nthe prediction of the next loss is generated.\nLet’s see why this is a good idea. Remember that FTRL simply predicts with the mini-\nmizer of the previous losses plus a time-varying regularizer. Let’s assume for a m",
+      "excerpt_sha256": "d76b4a8cdcb465d7f6bd1d00a7bbd95a09c51819b85e55402f4c89f2ab8107ae"
+    },
+    "semantic_decisions_pending": [],
+    "proof_body_ready": false,
+    "proof_body_ready_reason": "No next proof before distinct effective-target freeze approval; listed semantic decisions and open repairs remain explicit.",
+    "claim_kind": "mathematical target or required repair obligation"
+  },
+  {
+    "target_id": "dependency:Algorithm15.9-Theorem15.31",
+    "source_id": "Algorithm15.9-Theorem15.31",
+    "scope_tag": "optionalroute",
+    "domain": "Finite-dimensional real Euclidean space unless explicitly quantified otherwise",
+    "assumptions": "Exactly the explicit premises in effective_statement and named child interfaces; no historical recommendation adds premises implicitly",
+    "effective_statement": "Effective target is repair:15.31-terminal; original retained and never silently omitted.",
+    "branch": "selected dependency",
+    "status": "route optional for C2 implication, retained theorem repair remains required/open",
+    "implementation_acceptance": false,
+    "source_locator": {
+      "pdf_pages_1based": [
+        278,
+        279
+      ],
+      "printed_pages": [
+        266,
+        267
+      ],
+      "marker": "Algorithm 15.9",
+      "excerpt": "Algorithm 15.9Be-the-Regularized-Leader Algorithm\nRequire:Non-empty closed convexV ⊂ X ⊆Rd,ψ 1, . . . , ψT regularizers\n1:fort= 1toTdo\n2:Receiveℓ t :R d →(−∞,+∞], whereV ⊆domℓ t\n3:x t ∈argmin x∈V ψt(x) + Pt\ni=1 ℓi(x)\n4:Pay the lossℓ t(xt)\n5:end for\nwhere in the last equality we used Lemma 6.7. Dividing byη t and summing overt=\n1, . . . , T, we have\nTX\nt=1\n(ℓt(xt)−ℓ t(u))≤\nTX\nt=1\n\u0012Bψ(u;xt−1)\nηt\n− Bψ(u;xt)\nηt\n\u0013\n−\nTX\nt=1\nBψ(xt;xt−1)\nηt\n= Bψ(u;x0)\nη1\n− Bψ(u;xT )\nηT\n+\nT−1X\nt=1\n\u0012 1\nηt+1\n− 1\nηt\n\u0013\nBψ(u;xt)−\nTX\nt=1\nBψ(xt;xt−1)\nηt\n≤ D2\nη1\n+D 2\nT−1X\nt=1\n\u0012 1\nηt+1\n− 1\nηt\n\u0013\n−\nTX\nt=1\nBψ(xt;xt−1)\nηt\n= D2\nη1\n+D 2\n\u0012 1\nηT\n− 1\nη1\n\u0013\n−\nTX\nt=1\nBψ(xt;xt−1)\nηt\n= D2\nηT\n−\nTX\nt=1\nBψ(xt;xt−1)\nηt\n,\nwhere we denoted byD 2 = max0≤t≤T−1 Bψ(u;xt).\nThe second statement is left as an exercise.\nThe regret of Prescient Online Mirror Descent contains the negative terms we needed\nfrom the optimistic algorithms.\nAnalogously, we can obtain a version of FTRL that uses the knowledge of the current\nloss:Be-The-Regularized-Leader (BTRL), that predicts in each time step withx t ∈\nargminx∈V ψt(x) + Pt\ni=1 ℓi(x), see Algorithm 15.9",
+      "excerpt_sha256": "8959c97909101e663ecee57b13505c91f6a0ad917eac09dc05452b9537e950aa"
+    },
+    "semantic_decisions_pending": [],
+    "proof_body_ready": false,
+    "proof_body_ready_reason": "No next proof before distinct effective-target freeze approval; listed semantic decisions and open repairs remain explicit.",
+    "claim_kind": "mathematical target or required repair obligation",
+    "scope": {
+      "primary_chapter2_euclidean_implication": "optionalroute",
+      "book_goal_required": true,
+      "required_in_owning_chapter": 15,
+      "scope_basis": "Retained source mathematics or mandatory source repair in the owning chapter; optional only as a route for the primary Chapter2 Euclidean implication. Existing source/repair distinction unchanged."
+    }
+  },
+  {
+    "target_id": "dependency:dual-norm-Lipschitz-adapter",
+    "source_id": "dual-norm-Lipschitz-adapter",
+    "scope_tag": "necessarydependency",
+    "domain": "Finite-dimensional real Euclidean space unless explicitly quantified otherwise",
+    "assumptions": "Exactly the explicit premises in effective_statement and named child interfaces; no historical recommendation adds premises implicitly",
+    "effective_statement": "On open neighborhood of V, L-Lipschitz in primal norm implies every ambient legal subgradient on V has dual norm<=L, using dual norm definition/support and sufficiently small feasible perturbations.",
+    "branch": "selected dependency",
+    "status": "selected source dependency; proof pending",
+    "implementation_acceptance": false,
+    "source_locator": {
+      "pdf_pages_1based": [
+        114
+      ],
+      "printed_pages": [
+        102
+      ],
+      "marker": "Moreover, if",
+      "excerpt": "Moreover, if the functionsℓ t areL-Lipschitz on an open set containingV, settingη t−1 =\nα√µ\nL\n√\nt we get\nTX\nt=1\nℓt(xt)−\nTX\nt=1\nℓt(u)≤\n\u0012ψ(u)−min x ψ(x)\nα +α\n\u0013 L\n√\nT√µ ,∀u∈ V.\nProofThe corollary is immediate from Lemma 7.1, Lemma 7.5, and the observation that\nfrom the assumptions we haveψ t(x)−ψ t+1(x)≤0,∀x∈ V.\nThis might look like the same regret guarantee of OMD; however, here there is a very\nimportant difference: the last term contains a time-varying element (ηt), but the domain does\nnot have to be bounded! Also, I used the regularizer 1\nηt−1\nψ(x)and not 1\nηt\nψ(x)to remind\nyou of another important difference: In OMD the learning rateη t is chosen after receiving\ninformation aboutℓ t, through the subgradientg t, while here you have to choose itbefore\nobservingℓ t.\n7.2.1 Proximal Regularizers\nWe can obtain a slightly stronger guarantee in the case that the regularizer isproximal, that\nis, it satisfies thatx t ∈argmin x∈V ψt+1(x)−ψ t(x)for allt.\nLemma 7.7With the notation in Algorithm 7.1, denote byF t(x) =ψ t(x) + Pt−1\ni=1 ℓi(x)\nfor allt. Assume thatV ⊆ Xis non-empty, closed, and conv",
+      "excerpt_sha256": "69e24e7201e93ad29fe92079cea8d0b7d194e9ed2d81985c76f3d301193ee088"
+    },
+    "semantic_decisions_pending": [],
+    "proof_body_ready": false,
+    "proof_body_ready_reason": "No next proof before distinct effective-target freeze approval; listed semantic decisions and open repairs remain explicit.",
+    "claim_kind": "mathematical target or required repair obligation"
+  }
+]

@@ -1,0 +1,15 @@
+theorem tight_stability_at_nonminimizer :
+    (currentObjective 0).toReal - (currentObjective (-1)).toReal ≤
+      support ((0 : ℝ) - (-1)) - (1 / 2 : ℝ) * ‖(0 : ℝ) - (-1)‖ ^ 2 ∧
+    IsMinOn predictionObjective feasible 0 ∧
+    ¬ IsMinOn currentObjective feasible 0 ∧
+    (∀ z ∈ feasible,
+      (losses 0 0).toReal - hint 0 + support (z - 0) ≤
+        (losses 0 z).toReal - hint z) ∧
+    support ≠ 0 ∧
+    (0 : ℝ) ∈ feasible ∧ (-1 : ℝ) ∈ feasible ∧ (2 : ℝ) ∉ feasible ∧
+    currentObjective 0 = (0 : EReal) ∧
+    currentObjective (-1) = ((-(1 / 2 : ℝ) : ℝ) : EReal) ∧
+    currentObjective 2 = ⊤ ∧
+    (currentObjective 0).toReal - (currentObjective (-1)).toReal = (1 / 2 : ℝ) ∧
+    support ((0 : ℝ) - (-1)) - (1 / 2 : ℝ) * ‖(0 : ℝ) - (-1)‖ ^ 2 = (1 / 2 : ℝ)
