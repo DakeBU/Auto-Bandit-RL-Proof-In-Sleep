@@ -215,3 +215,4 @@ import Tests.OnlineStrongConvexSupportCanary
 import Tests.OnlineStrongConvexSourceSubgradientCanary
 import Tests.OnlineCumulativeStrongConvexCanary
 import Tests.OnlineStrongConvexSubgradientIffCanary
+import Tests.OnlineCumulativeOptimisticStabilityCanary

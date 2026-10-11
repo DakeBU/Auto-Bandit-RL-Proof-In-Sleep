@@ -1,0 +1,87 @@
+{
+  "status": "CANONICAL_INTEGRATION_PROPOSAL_ONLY",
+  "source": {
+    "version": "Orabona arXiv1912.13213v10",
+    "pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchors": [
+      "Lemma7.5 printed101-102/PDF113-114 sharp stability branch",
+      "Algorithm7.8/Theorem7.47 printed129-130/PDF141-142 local support construction",
+      "Algorithm15.9 common domain printed266/PDF278"
+    ]
+  },
+  "public_declaration": "BanditRL.OnlineConvex.cumulative_optimistic_stability",
+  "module": "BanditRLProof/OnlineCumulativeOptimisticStability.lean",
+  "exact_statement": "import BanditRLProof.OnlineStrongConvexSupport\nimport BanditRLProof.OnlinePrescientBregmanSource\nimport Mathlib.Algebra.BigOperators.Group.Finset.Basic\n\nnoncomputable section\nopen Set Finset\nnamespace BanditRL.OnlineConvex\n\ntheorem cumulative_optimistic_stability {E : Type*}\n    [NormedAddCommGroup E] [NormedSpace ℝ E]\n    (V : Set E) (hV : Convex ℝ V)\n    (psi hint : E → ℝ) (loss : ℕ → E → EReal) (n : ℕ) (lam : ℝ)\n    (hbot : ∀ i < n + 1, ∀ x, loss i x ≠ ⊥)\n    (hdom : ∀ i < n + 1, V ⊆ effectiveDomain (loss i))\n    (hlam : 0 ≤ lam)\n    (hstrong : let G : E → EReal := fun x =>\n        (psi x : EReal) + ∑ i ∈ range (n + 1), loss i x + extendedIndicator V x\n      ∀ x ∈ V, ∀ y ∈ V, ∀ a : ℝ, 0 < a → a < 1 →\n        G (a • x + (1 - a) • y) ≤\n          (a : EReal) * G x + ((1 - a : ℝ) : EReal) * G y -\n            (((lam / 2) * a * (1 - a) * ‖x - y‖ ^ 2 : ℝ) : EReal))\n    (p : E) (hp : p ∈ V)\n    (hprediction : IsMinOn (fun x =>\n      (psi x : EReal) + ∑ i ∈ range n, loss i x + (hint x : EReal)) V p)\n    (g : E →L[ℝ] ℝ)\n    (hdifference : ∀ z ∈ V,\n      (loss n p).toReal - hint p + g (z - p) ≤ (loss n z).toReal - hint z)\n    (q : E) (hq : q ∈ V) :\n    let G : E → EReal := fun x =>\n      (psi x : EReal) + ∑ i ∈ range (n + 1), loss i x + extendedIndicator V x\n    (G p).toReal - (G q).toReal ≤\n      g (p - q) - (lam / 2) * ‖p - q‖ ^ 2\n\nend BanditRL.OnlineConvex\n",
+  "binder_ledger": {
+    "status": "PROPOSED_DERIVED_FINITE_BRANCH_NOT_FULL_NUMBERED_THEOREM",
+    "binders": [
+      {
+        "binder": "E/norm/real module",
+        "classification": "TYPING",
+        "meaning": "Arbitrary original norm. Continuous dual is the support-growth interface; conditional extension beyond finite source carrier."
+      },
+      {
+        "binder": "V,hV",
+        "classification": "SOURCE",
+        "meaning": "Literal convex source feasible set. Nonempty follows from actual hp. Closedness not needed for this conditional local inequality; remains mandatory for source attainment parent."
+      },
+      {
+        "binder": "psi,hint,loss,n",
+        "classification": "TYPING",
+        "meaning": "Current regularizer, current hint, actual loss sequence through current index n. n counts prior losses; G uses range(n+1). Ambient real psi/hint are extensions of their source domains, only values on V used."
+      },
+      {
+        "binder": "hbot",
+        "classification": "SOURCE",
+        "meaning": "Original source losses exclude bottom globally; required for ordinary EReal sum."
+      },
+      {
+        "binder": "hdom",
+        "classification": "RULED",
+        "meaning": "Declared finite-value branch: every included loss below top on all V, jointly with hbot finite there. Stronger than Algorithm7.8 played-point domain requirement; full extended/infinite-comparator branches remain OPEN. Already printed common-domain requirement in Algorithm15.9."
+      },
+      {
+        "binder": "hlam,hstrong",
+        "classification": "SOURCE",
+        "meaning": "Exact total current-inclusive objective curvature, no componentwise regularizer curvature assumption. Lambda0 valid for sharp inequality; positive lambda needed separately for division-based Young bound."
+      },
+      {
+        "binder": "p,hp,hprediction",
+        "classification": "SOURCE",
+        "meaning": "Actual Algorithm7.8 prediction rule at the explicit prior-prefix-plus-hint function. This is supplied actual algorithmic minimization, not a hidden minimum of G or affine tilt, not an attainment theorem."
+      },
+      {
+        "binder": "g,hdifference",
+        "classification": "RULED",
+        "meaning": "Explicit source-generalizing interface: continuous-linear support of current loss-minus-hint restricted to V. Source global coordinate subgradient implies this local support after real-value and coordinate-functional transport. No all-point support or global support of G is assumed."
+      },
+      {
+        "binder": "q,hq",
+        "classification": "TYPING",
+        "meaning": "Any feasible comparison point; can later be next prediction or approved terminal ghost. No minimizer property at q required."
+      }
+    ],
+    "mandatory_delta": "Two qualified interfaces are explicit: finite common-domain branch and local continuous-dual difference support. Independent review must approve these as a derived intermediate, never as full Lemma7.5/7.47 or a silent replacement of frozen originals."
+  },
+  "header": {
+    "path": "tmp/online-b4-next-stability-freeze-20261012/neutral-frozen-header-v1.txt",
+    "bytes": 1474,
+    "sha256": "b713181a47d73e4858a39309986bcb6ad98e4b24bea68911b0e7f24f51cfa51b"
+  },
+  "body_raw_sha256": "02af57553780cae22e509ed7b9fd97a26c8bdeca7e539e1ef0e7ff56cf3e9b8d",
+  "source_delta": "This is the sharp local stability implication in the finite common-domain branch of Lemma7.5 and Theorem7.47, not either complete numbered result. Source Algorithm7.8 only requires the played point to lie in the current loss domain; common finiteness on V is an explicit branch qualification. Algorithm15.9 already prints the common-domain condition. Local continuous-dual support is weaker than source global coordinate subgradient membership; only the global-to-local implication is intended. The ambient arbitrary real normed space generalizes the source finite-dimensional conditional inequality; no finite-dimensional attainment claim follows. The header assumes total-objective curvature, not regularizer-only curvature. n=0, lambda=0 and nonzero g are allowed. The actual prediction minimum supplies p, not a hidden minimum of G. No closedness, support-existence or attainment conclusion is supplied.",
+  "implementation_spine": "First use no-bottom and below-top together to obtain finite real values of every included loss on V. Induct over the prefix to establish no-bottom globally and exact real finite-sum identities on V. The indicator makes G top outside V; p in V provides the witness for sourceProper_of_domain on this actual G. For z in V, add A(p)+hint(p)<=A(z)+hint(z) from the prediction minimum to loss_n(p)-hint(p)+g(z-p)<=loss_n(z)-hint(z). Hints cancel and the finite-prefix decomposition yields G(p)+g(z-p)<=G(z). This newly produced support is passed to stronglyConvex_support_growth on the same G,V,lambda,p,g,q. Finally use linearity g(q-p)=-g(p-q) and norm symmetry to rearrange the bound. The source describes the support construction using zero support at the predicted minimum and subgradient sum inclusion; the implementation proves the same local inequality directly rather than adding public zero-support wrappers.",
+  "consumers": "The closed 13-conjunct consumer uses E=R, V=[-1,1], n=0, psi(x)=x^2/2, hint=0, loss_i(x)=x, p=0, q=-1, lambda=1 and g(x)=x. It proves all component premises internally and its first conjunction genuinely applies cumulative_optimistic_stability to those exact operands. The current objective is G(x)=x^2/2+x on V and top outside. p minimizes the prediction objective but does NOT minimize G. Both sides of the sharp bound equal1/2, support is nonzero, G(0)=0, G(-1)=-1/2 and G(2)=top. It also proves the local difference-support premise and feasible/outside points. This demonstrates the missing support producer at a genuine nonminimum of G; numerical arithmetic does not replace the actual theorem call. This consumer exercises n0 and positive lambda, not all possible lambda0 or bottom-loss edge cases.",
+  "canary_frozen_context": {
+    "path": "tmp/online-b4-next-stability-canary-freeze-20261012/canonical-context-and-statement-v1.txt",
+    "bytes": 1584,
+    "sha256": "42139a2296bf71e8f5b27401b209d3530e73791a1e1ea7311944de80e7ba0273"
+  },
+  "statement_fingerprint": {
+    "raw_header_sha256": "b713181a47d73e4858a39309986bcb6ad98e4b24bea68911b0e7f24f51cfa51b",
+    "canonical_alpha_TYPE": null,
+    "canonical_alpha_VALUE": null,
+    "status": "PENDING genuine canonical builds and imported audit; RAW equality alone is not alpha identity"
+  },
+  "truth_boundary": "Experimental core and the closed canary compiled and passed separate independent source/BODY reviews. This canonical stability integration packet is proposed only: canonical focused builds, imported TYPE/VALUE identity and axiom audits, combined gates, publication review and same-source reader Exposition Seal remain pending. The divided dual-norm bound is a separate proposed positive-curvature edge. No support-existence, attainment, uniqueness, full Lemma7.5, full corrected Theorem7.47 or full Theorem15.31 is claimed. The optimistic identity retains G_T(z)-G_T(u); a repeated final hint can leave it positive. An approved unhinted ghost needs an actual attained minimizer of G_T; truncating stability alone does not repair the gap. The BTRL repeated-point ghost and t<T movement truncation remain separate obligations. Seven open-forward containers, six future claims, null mandatory denominator and accepted=false remain unchanged, as do all C1-16 hard targets. No merge or live acceptance claim."
+}

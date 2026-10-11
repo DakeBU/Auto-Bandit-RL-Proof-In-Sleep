@@ -1,0 +1,95 @@
+{
+  "status": "ACCEPTED_EXPERIMENTAL_CANARY_BODY_SOURCE_ONLY",
+  "candidate": {
+    "path": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-b4-next-stability-canary-body-20261012\\candidate-v2.lean",
+    "bytes": 4201,
+    "sha256": "0489b87faedfa3385609019c2455716b24afc258e6d6cb45974a2750476d509a"
+  },
+  "compiled_report_sha256": "4d88593816ee6e212e00a4871e974aaee93a23892e61b4113a5b1e7222813db5",
+  "audit_sha256": "ff3d37142a58a2f97e951a59e157b14bbdc4eaa98cfc4f7d1cc12078a0e48644",
+  "probe_sha256": "ad13f4d464eb1e42762996c4ba8eb58c6a838f3ba3391b7765f5daca34c5ab5f",
+  "source_prefreeze_sha256": "2d7bf3ad93bad45a6933675648d83b3e5ddd72289d5d147d2f6414cbb3c9d9a5",
+  "frozen_scratch_context_bytes": 1573,
+  "frozen_scratch_context_sha256": "e35a9da70abf7ccb9cb6fe28195d3684bb77bc1e9ecba7415d6521e4b247aa76",
+  "source_findings": [
+    "Exact frozen helper definitions and all13 conjuncts preserved; closed theorem has no public premise binder",
+    "hvalue proves finite quadratic-plus-linear value only on V",
+    "Prediction minimum from square nonnegativity; local difference support by exact identity; global loss no-bottom and feasible domain by real coercions",
+    "Total lambda1 curvature produced from interval convexity plus quadratic identity using original scalar norm; no returned-G curvature or performance assumed",
+    "Actual bound calls cumulative_optimistic_stability at exact n0/lam1/p0/q-1 with internal producers and interval convexity/nonnegative curvature; this bound is first And.intro proof",
+    "Other conjuncts independently establish strict nonminimum witness G(-1)<G0, nonzero functional at1, feasible endpoints/infeasible2, top outside and tight1/2 on both sides",
+    "No forced G-minimizer hypothesis, local-to-global inference, component restriction or terminal cancellation"
+  ],
+  "imported_evidence": {
+    "TYPE": 78,
+    "VALUE": 431,
+    "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "header_focused_import_actual_exit": [
+      0,
+      0,
+      0
+    ],
+    "clean_recorded_head": "a0f9a488b84a8efade720b051235cd48ff311ff9",
+    "first_conjunction_actual_bound": true,
+    "provider_operands": [
+      {
+        "provider": "BanditRL.OnlineConvex.cumulative_optimistic_stability",
+        "passed": true,
+        "internal_proofs": [
+          "hbot",
+          "hdom",
+          "hstrong",
+          "h0",
+          "hprediction",
+          "hdifference",
+          "hm1"
+        ],
+        "concrete_operands": [
+          "feasible",
+          "regularizer",
+          "hint",
+          "losses",
+          "n=0",
+          "lambda=1",
+          "p=0",
+          "support",
+          "q=-1"
+        ],
+        "arity": 21
+      }
+    ],
+    "module_origins": [
+      {
+        "resolved_olean": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-b4-next-stability-canary-body-20261012\\CumulativeOptimisticStabilityCanary.olean",
+        "module": "CumulativeOptimisticStabilityCanary",
+        "declaration": "BanditRL.Tests.OnlineCumulativeOptimisticStabilityCanary.tight_stability_at_nonminimizer"
+      },
+      {
+        "resolved_olean": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-b4-next-stability-body-20261012\\CumulativeOptimisticStabilityCandidate.olean",
+        "module": "CumulativeOptimisticStabilityCandidate",
+        "declaration": "BanditRL.OnlineConvex.cumulative_optimistic_stability"
+      }
+    ]
+  },
+  "audit_precision": "Actual first conjunct is named bound and exactly one parent arity21 application has checked concrete operands/internal binders. Source BODY additionally verifies that application defines bound. hV convex_Icc and hlam norm_num are inspected in source; probe does not separately structurally certify those two proof arguments.",
+  "retained_failures": {
+    "construction": "Explicit UTF8 construction predecessor failed before Lean; empty V1 retained",
+    "audit_versions": [
+      1,
+      2,
+      3
+    ],
+    "audit_classification": "All three actualexit1 are imported numeral Expr-pattern mismatches, with unchanged candidate/olean; they are not failed canary proof compilation",
+    "focused_warning": "One unused EReal.coe_le_coe_iff simp argument warning retained; no suppression requested"
+  },
+  "limits": [
+    "Experimental scratch only; no canonical install/alpha/root/Tests/full harness/reader acceptance",
+    "No universal sharpness, lambda0/nonEuclidean/local-not-global discriminator, attainment or full7.47/15.31 claim",
+    "No reviewer Lean/tool execution; full source/probe/compactaudit/receipts and actual stdio inspected"
+  ],
+  "blockers": []
+}

@@ -1,0 +1,114 @@
+                            7.12 Optimistic Follow-the-Regularized-Leader                           129
+
+using the prediction strategy in Algorithm 7.7, for all u ∈ Rd , we have
+   T                                  T
+                                                                                 dY 2        R2 T
+                                                                                                 
+   X 1                                X 1                              λ
+             (⟨z t , xt ⟩ − yt )2 −             (⟨z t , u⟩ − yt )2 ≤     ∥u∥22 +      ln 1 +        .
+   t=1
+         2                            t=1
+                                            2                          2          2           λd
+Remark 7.45 It is possible to show that the regret of the Vovk–Azoury–Warmuth forecaster
+is optimal up to multiplicative factors (Cesa-Bianchi and Lugosi, 2006, Theorem 11.9).
+Remark 7.46 We say that an online learning algorithm is improper if the prediction
+strategy can be chosen from a larger class than the competitor one. So, the Vovk–Azoury–
+Warmuth forecaster is improper because we measure its regret with respect to a linear pre-
+dictor u, but the Vovk–Azoury–Warmuth prediction depends in a non-linear way on z t .
+
+
+                        7.12 Optimistic Follow-the-Regularized-Leader
+
+Algorithm 7.8 Optimistic Follow-the-Regularized-Leader (Optimistic FTRL)
+Require: A sequence of regularizers ψ1 , . . . , ψT : X → R, closed non-empty convex set
+    V ⊆ X ⊆ Rd
+ 1: for t = 1 to T do
+ 2:    Predict next loss ℓ̃t : V → R                 Pt−1
+ 3:    Output xt ∈ argminx∈V ψt (x) + ℓ̃t (x) + i=1 ℓi (x)
+ 4:    Receive ℓt : Rd → (−∞, +∞] such that xt ∈ dom ℓt , and pay the loss ℓt (xt )
+ 5: end for
+
+
+   In Section 6.11, we have seen that it is possible to achieve better regret guarantees through
+the so-called Optimistic OMD, which uses a prediction of the next gradient. Here, we will
+extend the same idea to FTRL, where we predict the next loss function. If our predicted
+loss is correct, we can expect the regret to decrease. However, if our prediction is wrong,
+we still want to recover the worst-case guarantee. Such an algorithm is called Optimistic
+FTRL, see Algorithm 7.8. As in Optimistic OMD, we do not make any assumption on how
+the prediction of the next loss is generated.
+   Let’s see why this is a good idea. Remember that FTRL simply predicts with the mini-
+mizer of the previous losses plus a time-varying regularizer. Let’s assume for a moment that
+instead we have the gift of predicting the future, so we do know the next loss ahead of time.
+Then, we could predict with its minimizer and suffer a negative regret. However, probably
+our foresight abilities are not so powerful, so our prediction of the next loss might be in-
+accurate. In this case, a better idea might be just to add our predicted loss to the previous
+ones and minimize the regularized sum. We would expect the regret guarantee to improve if
+our prediction of the future loss is precise. At the same time, if the prediction is wrong, we
+expect its influence to be limited, given that we use it together with all the past losses.
+   All these intuitions can be formalized in the following theorem.
+
+                            Pt−1 in Algorithm 7.8, let V be convex, closed, non-empty. De-
+Theorem 7.47 With the notation
+note by Ft (x) = ψt (x) + i=1 ℓi (x). For t = 1, . . . , T , if Ft + ℓ̃t is closed, subdifferen-
+tiable, and strongly convex in V , then xt exists and is unique. In addition, for t = 1, . . . , T ,
+130                                      Follow-the-Regularized-Leader
+
+assume ∂(ℓt − ℓ̃t )(xt ) to be non-empty and Ft + ℓt to be closed, subdifferentiable, and
+λt -strongly convex with respect to ∥ · ∥ in V . Then, we have
+ T                                                 T                                     
+X                                                X                         λt
+     (ℓt (xt ) − ℓt (u)) ≤ ψT (u) − ψ1 (x1 ) +        ⟨ĝ t , xt − xt+1 ⟩ − ∥xt − xt+1 ∥2
+t=1                                               t=1
+                                                                           2
+                                   T
+                                   X −1
+                               +          [ψt (xt+1 ) − ψt+1 (xt+1 )]
+                                   t=1
+                                                           T                 T −1
+                                                           X ∥ĝ ∥2t ⋆
+                                                                             X
+                             ≤ ψT (u) − ψ1 (x1 ) +                       +          [ψt (xt+1 ) − ψt+1 (xt+1 )] ,
+                                                           t=1
+                                                                 2λt         t=1
+
+for all u ∈ V and all ĝ t ∈ ∂(ℓt − ℓ̃t )(xt ) for t = 1, . . . , T .
+Proof We can interpret the Optimistic FTRL as FTRL with a regularizer ψ̃t (x) = ψt (x)+
+ℓ̃t (x). So, as in Lemma 7.5, the existence and uniqueness of xt is given by Theorem 6.9.
+Also, note that ℓ̃T +1 does not influence the regret of the algorithm over the T rounds, so we
+can set ℓ̃T +1 = ℓ̃T .         Pt−1
+     Define Ft (x) = ψt (x) + i=1 ℓi (x). We can use Lemma 7.1 with ψT +1 = ψT . Given
+that u ∈ V , we can discard the last term in the lemma because non-positive, to obtain
+          T
+          X                  T
+                             X
+                ℓt (xt ) −         ℓt (u)
+          t=1                t=1
+
+             ≤ ℓ̃T (u) + ψT (u) − min (ℓ̃1 (x) + ψ1 (x))
+                                             x∈V
+                     T
+                     X                                                   T
+                                                                         X −1
+                 +         [Ft (xt ) − Ft+1 (xt+1 ) + ℓt (xt )] +              [ℓ̃t (xt ) − ℓ̃t+1 (xt+1 )]
+                     t=1                                                 t=1
+                                              T
+                                              X
+             = ψT (u) − ψ1 (x1 ) +                  [Ft (xt ) − Ft+1 (xt+1 ) + ℓt (xt )],
+                                              t=1
+
+where we used the fact that the terms ℓ̃t (xt ) − ℓ̃t+1 (xt+1 ) form a telescopic sum and
+minx∈V (ℓ̃1 (x)+ψ1 (x)) = ℓ̃1 (x1 )+ψ1 (x1 ). Now focus on the terms Ft (xt )−Ft+1 (xt+1 )+
+ℓt (xt ). Observe that Ft (x)+ℓt (x)+ιV (x) is λt -strongly convex with respect to ∥·∥, hence
+from Lemma 4.2 we have
+      Ft (xt ) − Ft+1 (xt+1 ) + ℓt (xt )
+          = (Ft (xt ) + ℓt (xt )) − (Ft (xt+1 ) + ℓt (xt+1 )) + ψt (xt+1 ) − ψt+1 (xt+1 )
+                                  λt
+          ≤ ⟨ĝ t , xt − xt+1 ⟩ − ∥xt − xt+1 ∥2 + ψt (xt+1 ) − ψt+1 (xt+1 ),
+                                  2
+for all ĝ t ∈ ∂(Ft + ℓt + ιV )(xt ). Observing that xt = argminx∈V Ft (x) + ℓ̃t (x), we have
+0 ∈ ∂(Ft + ℓ̃t +ιV )(xt ). Hence, using Theorem 2.23, ∂(ℓt − ℓ̃t )(xt ) ⊆ ∂(Ft +ℓt +ιV )(xt ).
+   For the second inequality, by the definition of dual norms, we have that
+                       λt ∥xt − xt+1 ∥2                         λt ∥xt − xt+1 ∥2  ∥ĝ ∥2
+ ⟨ĝ t , xt −xt+1 ⟩−                    ≤ ∥ĝ t ∥⋆ ∥xt −xt+1 ∥−                  ≤ t ⋆.
+                              2                                        2           2λt
+
