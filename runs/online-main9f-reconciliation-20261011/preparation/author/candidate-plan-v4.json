@@ -1,0 +1,1212 @@
+{
+  "status": "CANDIDATE_V4_REQUIRES_INDEPENDENT_CONCRETE_REVIEW",
+  "local": "3db67ccf41c1c5a312c625b7ed9a2440f1183b7f",
+  "incoming_main": "9f031681d3697b82b210edd9ab736a6d4ad391f5",
+  "changes": [
+    {
+      "locator": "website/content/readings.json/online-convex/source_theorems/Constraint indicators and adding constraints",
+      "before": {
+        "label": "Constraint indicators and adding constraints",
+        "pages": "printed pp. 9-10",
+        "pdf_page": 21,
+        "url": "https://arxiv.org/pdf/1912.13213v10",
+        "math": "\\iota_V(x)=\\begin{cases}0&x\\in V,\\\\+\\infty&x\\notin V.\\end{cases}",
+        "fallback": "The constraint indicator is convex exactly when its set is convex; adding it to a convex function that never takes negative infinity preserves convexity.",
+        "plain": "This is the extended-real constraint indicator, not the zero-outside indicator used in some other contexts.",
+        "relationship": "Shared interfaces: BanditRL.OnlineConvex.convex_indicator_iff and BanditRL.OnlineConvex.convex_add_indicator.",
+        "contract": {
+          "model": "The same extended-real epigraph model.",
+          "assumptions": "No nonempty-domain assumption. Adding constraints uses a convex feasible set and a convex function that never takes negative infinity.",
+          "parameters": "A feasible set V and an extended-real function f.",
+          "regret": "No algorithmic performance statement is made here.",
+          "guarantee": "Indicator convexity equivalence and convexity of f plus the indicator."
+        },
+        "local_status": {
+          "status": "compiled",
+          "label": "Constraint foundation",
+          "boundary": "Named indicator/domain/convexity endpoints and the separately source-frozen finite-loss iff/domain-intersection helper have shared implementations. Membership alone does not ensure finite f. Four closure constructions retain separate migration acceptance. Chapter2 and whole-book acceptance remain incomplete."
+        }
+      },
+      "after": {
+        "label": "Constraint indicators and adding constraints",
+        "pages": "printed pp. 9-10",
+        "pdf_page": 21,
+        "url": "https://arxiv.org/pdf/1912.13213v10",
+        "math": "\\iota_V(x)=\\begin{cases}0&x\\in V,\\\\+\\infty&x\\notin V.\\end{cases}",
+        "fallback": "The constraint indicator is convex exactly when its set is convex; adding it to a convex function that never takes negative infinity preserves convexity.",
+        "plain": "This is the extended-real constraint indicator, not the zero-outside indicator used in some other contexts.",
+        "relationship": "Shared interfaces: BanditRL.OnlineConvex.convex_indicator_iff and BanditRL.OnlineConvex.convex_add_indicator. The separate finite-loss necessity is refined to an exact iff by finite_add_indicator_iff. effectiveDomain_add_indicator gives the domain intersection under global no-bottom. Orabona specifies neither mixed-infinity addition nor a total ambient extension of the original V-to-real game losses in this passage. Applying ordinary bottom-dominant EReal addition to arbitrary ambient extended-real f is an explicit library interpretation and refinement.",
+        "contract": {
+          "model": "The same extended-real epigraph model.",
+          "assumptions": "No nonempty-domain assumption. Adding constraints uses a convex feasible set and a convex function that never takes negative infinity.",
+          "parameters": "A feasible set V and an extended-real function f.",
+          "regret": "No algorithmic performance statement is made here.",
+          "guarantee": "Indicator convexity equivalence and convexity of f plus the indicator. Finite constrained loss is equivalent to feasibility and finite original loss. The below-top domain equals the domain intersection only under no-bottom."
+        },
+        "local_status": {
+          "status": "compiled",
+          "label": "Constraint foundation",
+          "boundary": "The exact finite-loss iff refines the source necessary condition. Ordinary EReal addition permits bottom in that iff; the separate below-top domain identity requires global no-bottom. Membership alone does not ensure finite original loss. Later Chapter 2 obligations remain open."
+        }
+      },
+      "reason": "reviewed incoming source-card correction"
+    },
+    {
+      "locator": "website/content/readings.json/online-convex/proof_bridge",
+      "before": {
+        "title": "Real heights keep extended-real convexity precise",
+        "summary": "These are the library proof routes for the selected definitions, domain and indicator consequences, Theorem 2.4 and Examples 2.5–2.6. Orabona cites Rockafellar for Theorem 2.4 and leaves the norm example as an exercise.",
+        "steps": [
+          {
+            "title": "Project the epigraph to the effective domain",
+            "detail": "Every value below positive infinity has a real upper bound, even when the value is negative infinity. Lift two domain points to real epigraph heights. Convexity combines these lifts; the resulting finite height witnesses domain membership.",
+            "math": "\\(\\operatorname{dom}f=\\{x:f(x)<+\\infty\\},\\qquad\\operatorname{epi}_{\\mathbb R}f=\\{(x,r):f(x)\\le r,\\ r\\in\\mathbb R\\}.\\)",
+            "fallback": "Domain points admit real epigraph heights; their convex combinations do too."
+          },
+          {
+            "title": "Use real values only where finiteness is proved",
+            "detail": "For Theorem 2.4, the no-negative-infinity hypothesis and domain membership prove that each value is finite. Convexity of the effective domain proves this also for the interpolated point. The real epigraph equivalence then translates the ordinary convexity inequality in both directions. Infinite values are never globally identified with zero.",
+            "math": "\\(f(\\theta x+(1-\\theta)y)\\le\\theta f(x)+(1-\\theta)f(y),\\quad x,y\\in\\operatorname{dom}f,\\quad0<\\theta<1.\\)",
+            "fallback": "Under no-bottom and a convex effective domain, the strict-weight inequality is equivalent to epigraph convexity."
+          },
+          {
+            "title": "Read constraints as epigraph intersections",
+            "detail": "The indicator epigraph is the product of the feasible set and nonnegative real heights. Adding an indicator intersects the original epigraph with the feasible cylinder; the no-bottom assumption excludes ambiguous infinite addition. Convexity follows from products and intersections of convex sets.",
+            "math": "\\(\\operatorname{epi}_{\\mathbb R}\\iota_V=V\\times[0,\\infty),\\qquad\\operatorname{epi}_{\\mathbb R}(f+\\iota_V)=\\operatorname{epi}_{\\mathbb R}f\\cap(V\\times\\mathbb R).\\)",
+            "fallback": "Indicator convexity is equivalent to convexity of V; adding it restricts the epigraph to V."
+          },
+          {
+            "title": "Check the affine and norm examples",
+            "detail": "Affine evaluation preserves convex combinations exactly. For the norm, apply the triangle inequality followed by nonnegative homogeneity. The real-valued coercion bridge transfers these inequalities into the same extended-real epigraph definition.",
+            "math": "\\(\\|\\theta x+(1-\\theta)y\\|\\le\\theta\\|x\\|+(1-\\theta)\\|y\\|,\\qquad0\\le\\theta\\le1.\\)",
+            "fallback": "Affine functions satisfy equality; the norm satisfies the convexity inequality."
+          }
+        ],
+        "boundary": "Abstract real modules and normed spaces generalize the printed Euclidean examples. Empty domains are permitted. No-bottom is required only where stated. Closure constructions have a separate bounded reader; the finite-loss/domain-intersection consequence and the rest of Chapter 2 remain outside these foundation proofs."
+      },
+      "after": {
+        "title": "Real heights keep extended-real convexity precise",
+        "summary": "These are the library proof routes for the selected definitions, domain and indicator consequences, Theorem 2.4 and Examples 2.5–2.6. Orabona cites Rockafellar for Theorem 2.4 and leaves the norm example as an exercise.",
+        "steps": [
+          {
+            "title": "Project the epigraph to the effective domain",
+            "detail": "Every value below positive infinity has a real upper bound, even when the value is negative infinity. Lift two domain points to real epigraph heights. Convexity combines these lifts; the resulting finite height witnesses domain membership.",
+            "math": "\\(\\operatorname{dom}f=\\{x:f(x)<+\\infty\\},\\qquad\\operatorname{epi}_{\\mathbb R}f=\\{(x,r):f(x)\\le r,\\ r\\in\\mathbb R\\}.\\)",
+            "fallback": "Domain points admit real epigraph heights; their convex combinations do too."
+          },
+          {
+            "title": "Use real values only where finiteness is proved",
+            "detail": "For Theorem 2.4, the no-negative-infinity hypothesis and domain membership prove that each value is finite. Convexity of the effective domain proves this also for the interpolated point. The real epigraph equivalence then translates the ordinary convexity inequality in both directions. Infinite values are never globally identified with zero.",
+            "math": "\\(f(\\theta x+(1-\\theta)y)\\le\\theta f(x)+(1-\\theta)f(y),\\quad x,y\\in\\operatorname{dom}f,\\quad0<\\theta<1.\\)",
+            "fallback": "Under no-bottom and a convex effective domain, the strict-weight inequality is equivalent to epigraph convexity."
+          },
+          {
+            "title": "Read constraints as epigraph intersections",
+            "detail": "The indicator epigraph is the product of the feasible set and nonnegative real heights. Adding an indicator intersects the original epigraph with the feasible cylinder; the no-bottom assumption excludes ambiguous infinite addition. Convexity follows from products and intersections of convex sets.",
+            "math": "\\(\\operatorname{epi}_{\\mathbb R}\\iota_V=V\\times[0,\\infty),\\qquad\\operatorname{epi}_{\\mathbb R}(f+\\iota_V)=\\operatorname{epi}_{\\mathbb R}f\\cap(V\\times\\mathbb R).\\)",
+            "fallback": "Indicator convexity is equivalent to convexity of V; adding it restricts the epigraph to V."
+          },
+          {
+            "title": "Check the affine and norm examples",
+            "detail": "Affine evaluation preserves convex combinations exactly. For the norm, apply the triangle inequality followed by nonnegative homogeneity. The real-valued coercion bridge transfers these inequalities into the same extended-real epigraph definition.",
+            "math": "\\(\\|\\theta x+(1-\\theta)y\\|\\le\\theta\\|x\\|+(1-\\theta)\\|y\\|,\\qquad0\\le\\theta\\le1.\\)",
+            "fallback": "Affine functions satisfy equality; the norm satisfies the convexity inequality."
+          },
+          {
+            "title": "Separate finite loss from the below-top domain",
+            "detail": "Inside V the indicator is zero. Outside V it is top: adding bottom gives bottom, and adding a finite value or top gives top, never a finite real. Thus a finite constrained value requires both feasibility and a finite original value. The separate domain identity excludes bottom globally, so outside V the sum is top.",
+            "math": "\\(f(x)+\\iota_V(x)\\in\\mathbb R\\iff x\\in V\\ \\land\\ f(x)\\in\\mathbb R;\\qquad f> -\\infty\\Rightarrow\\operatorname{dom}(f+\\iota_V)=\\operatorname{dom}f\\cap V.\\)",
+            "fallback": "Finite values exclude both infinities; the below-top domain excludes only positive infinity."
+          }
+        ],
+        "boundary": "Real modules and normed spaces generalize the Euclidean examples; the pointwise finite-loss algebra permits arbitrary carriers. Empty domains remain allowed. No-bottom is essential for the separate domain-intersection result, not for the finite-loss iff. Closure constructions, optimality and Jensen have separate bounded readers; Chapter 2 remains incomplete. The source passage does not specify mixed-infinity arithmetic or a total ambient extension of the original game losses; the pointwise result uses an explicitly chosen ordinary EReal interpretation."
+      },
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/readings.json/online-first-order/source_theorems/Theorem2.7: supporting gradient",
+      "before": {
+        "label": "Theorem2.7: supporting gradient",
+        "pages": "printedp11",
+        "pdf_page": 23,
+        "url": "https://arxiv.org/pdf/1912.13213v10",
+        "math": "f(x)+\\langle\\nabla f(x),y-x\\rangle\\le f(y),\\qquad\\forall y",
+        "fallback": "A differentiable interior point of an extended-real convex function has a global supporting-gradient bound.",
+        "plain": "Under global noBottom, convexity, ambient-interior membership and differentiability of canonical F at x, the comparator is every y, including positive infinity outside the domain.",
+        "relationship": "Exact shared extended-real endpoint theorem_2_7; finitePart_eventually is a local representation helper and convex_gradient_lower_bound a generalized everywhere-real ConvexOn helper, not additional printed theorems. Historical OnlineGradientDescent.first_order uses stronger RegularLoss: convexity and differentiability on a convex open neighborhood containing V. Separately, OnlineGradientDescentSource.source_to_feasible derives feasible-set convexity and ambient derivatives from the source arbitrary-open differentiability neighborhood; its first_order reuses the real helper. Neither connection is an equivalence between these regularity predicates.",
+        "contract": {
+          "model": "Extended-real convex functions on complete real inner-product spaces, including finite-dimensional Euclidean space.",
+          "assumptions": "Global noBottom and convex real-height epigraph; x in ambient interior of effectiveDomain; DifferentiableAt of canonical F(z)=(f(z)).toReal at x. finitePart_eventually proves local embedding identity near x; no global identity with f or global convexity of F is asserted.",
+          "parameters": "Every comparator y, including points outside the domain.",
+          "regret": "A first-order convex-analysis inequality, not a regret theorem.",
+          "guarantee": "f(x)+embedded inner(gradient F x,y-x) <= f(y) for every y; outside-domain f(y)=positive infinity remains in the conclusion. No bounded/closed domain or global differentiability hypothesis."
+        },
+        "local_status": {
+          "status": "compiled",
+          "label": "Full extended-real supporting bound",
+          "boundary": "Theorem2.7 and two explicitly classified library helpers only; Chapter2 and the whole book remain incomplete. Later source and legacy migration obligations, including Jensen mapped separately, are still required."
+        }
+      },
+      "after": {
+        "label": "Theorem2.7: supporting gradient",
+        "pages": "printedp11",
+        "pdf_page": 23,
+        "url": "https://arxiv.org/pdf/1912.13213v10",
+        "math": "f(x)+\\langle\\nabla f(x),y-x\\rangle\\le f(y),\\qquad\\forall y",
+        "fallback": "A differentiable interior point of an extended-real convex function has a global supporting-gradient bound.",
+        "plain": "Under global noBottom, convexity, ambient-interior membership and differentiability of canonical F at x, the comparator is every y, including positive infinity outside the domain.",
+        "relationship": "Exact shared extended-real endpoint theorem_2_7; finitePart_eventually is a local representation helper and convex_gradient_lower_bound a generalized everywhere-real ConvexOn helper, not additional printed theorems. Historical OnlineGradientDescent.first_order uses stronger RegularLoss: convexity and differentiability on a convex open neighborhood containing V. Separately, OnlineGradientDescentSource.source_to_feasible derives feasible-set convexity and ambient derivatives from the source arbitrary-open differentiability neighborhood; its first_order reuses the real helper. Neither connection is an equivalence between these regularity predicates.",
+        "contract": {
+          "model": "Extended-real convex functions on complete real inner-product spaces, including finite-dimensional Euclidean space.",
+          "assumptions": "Global noBottom and convex real-height epigraph; x in ambient interior of effectiveDomain; DifferentiableAt of canonical F(z)=(f(z)).toReal at x. finitePart_eventually proves local embedding identity near x; no global identity with f or global convexity of F is asserted.",
+          "parameters": "Every comparator y, including points outside the domain.",
+          "regret": "A first-order convex-analysis inequality, not a regret theorem.",
+          "guarantee": "f(x)+embedded inner(gradient F x,y-x) <= f(y) for every y; outside-domain f(y)=positive infinity remains in the conclusion. No bounded/closed domain or global differentiability hypothesis."
+        },
+        "local_status": {
+          "status": "compiled",
+          "label": "Full extended-real supporting bound",
+          "boundary": "Theorem2.7 and two explicitly classified library helpers only; Chapter2 and the whole book remain incomplete. Optimality and Jensen have separate bounded readers; subgradient theory, linearization and later source or legacy migration obligations remain outside this integration."
+        }
+      },
+      "reason": "reviewed incoming source-card correction"
+    },
+    {
+      "locator": "website/content/readings.json/online-optimality/source_theorems/Theorem2.8 and following unnumbered interior consequence",
+      "before": {
+        "label": "Theorem2.8 and following unnumbered interior consequence",
+        "pages": "printedp11",
+        "pdf_page": 23,
+        "url": "https://arxiv.org/pdf/1912.13213v10",
+        "math": "x\\in\\operatorname{argmin}_{z\\in V} f(z)\\iff\\langle\\nabla f(x),y-x\\rangle\\ge0\\quad\\forall y\\in V",
+        "fallback": "A convex differentiable function is minimized precisely when all feasible directional inner products are nonnegative.",
+        "plain": "Every feasible directional inner product characterizes the given constrained minimum. The following mandatory unnumbered source consequence adds ambient interior V for gradient-zero equivalence; boundary gradients may be nonzero.",
+        "relationship": "Shared theorem_2_8 weakens source neighborhood convexity to ConvexOn V F, yielding a stronger theorem, not a stronger premise or equivalence of assumptions. Source neighborhood convexity restricts to V; the public canary constructs ConvexOn U then restricts it. Actual U need not be convex. minOn_real_iff_gradient and minOn_finitePart_iff are generalized real and finite-order library helpers, not printed theorems. interior_min_iff_gradient_zero represents the mandatory following unnumbered main-text consequence.",
+        "contract": {
+          "model": "Complete real inner-product spaces explicitly generalize source Euclidean spaces; EReal f and canonical F(z)=(f(z)).toReal, finite and differentiable on supplied open U containing V.",
+          "assumptions": "Nonempty convex V, explicit x in V; arbitrary open U contains V; f excludes both infinities on U, so embedded F=f there and locally near x; DifferentiableOn F U; ConvexOn V F. No convex U or global noBottom/finite/convex F premise outside U. Ambient interior V is additional for gradient-zero equivalence; the differentiability premise is retained.",
+          "parameters": "Every feasible y; interior membership is additional for gradient-zero equivalence.",
+          "regret": "A convex optimality characterization, not a regret theorem.",
+          "guarantee": "Original EReal IsMinOn f V x iff every feasible inner(gradient F x,y-x)>=0; with ambient interior V, iff gradient F x=0. No optimizer existence, uniqueness, closedness, boundedness or zero minimum-value claim."
+        },
+        "local_status": {
+          "status": "compiled",
+          "label": "Optimality and interior consequence",
+          "boundary": "Theorem2.8, its mandatory following unnumbered consequence and two explicitly classified library helpers only; Chapter2 and the whole book remain incomplete, including later source and legacy migrations/Jensen mapped separately."
+        }
+      },
+      "after": {
+        "label": "Theorem2.8 and following unnumbered interior consequence",
+        "pages": "printedp11",
+        "pdf_page": 23,
+        "url": "https://arxiv.org/pdf/1912.13213v10",
+        "math": "x\\in\\operatorname{argmin}_{z\\in V} f(z)\\iff\\langle\\nabla f(x),y-x\\rangle\\ge0\\quad\\forall y\\in V",
+        "fallback": "A convex differentiable function is minimized precisely when all feasible directional inner products are nonnegative.",
+        "plain": "Every feasible directional inner product characterizes the given constrained minimum. The following mandatory unnumbered source consequence adds ambient interior V for gradient-zero equivalence; boundary gradients may be nonzero.",
+        "relationship": "Shared theorem_2_8 weakens source neighborhood convexity to ConvexOn V F, yielding a stronger theorem, not a stronger premise or equivalence of assumptions. Source neighborhood convexity restricts to V; the public canary constructs ConvexOn U then restricts it. Actual U need not be convex. minOn_real_iff_gradient and minOn_finitePart_iff are generalized real and finite-order library helpers, not printed theorems. interior_min_iff_gradient_zero represents the mandatory following unnumbered main-text consequence.",
+        "contract": {
+          "model": "Complete real inner-product spaces explicitly generalize source Euclidean spaces; EReal f and canonical F(z)=(f(z)).toReal, finite and differentiable on supplied open U containing V.",
+          "assumptions": "Nonempty convex V, explicit x in V; arbitrary open U contains V; f excludes both infinities on U, so embedded F=f there and locally near x; DifferentiableOn F U; ConvexOn V F. No convex U or global noBottom/finite/convex F premise outside U. Ambient interior V is additional for gradient-zero equivalence; the differentiability premise is retained.",
+          "parameters": "Every feasible y; interior membership is additional for gradient-zero equivalence.",
+          "regret": "A convex optimality characterization, not a regret theorem.",
+          "guarantee": "Original EReal IsMinOn f V x iff every feasible inner(gradient F x,y-x)>=0; with ambient interior V, iff gradient F x=0. No optimizer existence, uniqueness, closedness, boundedness or zero minimum-value claim."
+        },
+        "local_status": {
+          "status": "compiled",
+          "label": "Optimality and interior consequence",
+          "boundary": "Theorem 2.8, its following interior consequence and two library helpers. Jensen has a separate reader; later Chapter 2 obligations remain outside this package."
+        }
+      },
+      "reason": "reviewed incoming source-card correction"
+    },
+    {
+      "locator": "website/content/readings.json/online-optimality/proof_bridge",
+      "before": null,
+      "after": {
+        "title": "Feasible directions characterize a constrained minimum",
+        "summary": "These are the retained library proof steps. The source attribution and the explicit generalization of neighborhood convexity are stated above. The source proves the interior implication by a small displacement opposite the gradient; this implementation instead applies local-minimum Fermat after proving ambient local minimality.",
+        "steps": [
+          {
+            "title": "Transfer finite values without changing order",
+            "detail": "Put F(z)=(f(z)).toReal. F embeds back to f on the finite open neighborhood U, hence on V. Rewrite both compared values at x and y to transfer minimum inequalities. This order helper needs finiteness only on V and explicit x membership; its ambient complete-inner-product context is retained.",
+            "math": "\\((F(z):\\overline{\\mathbb R})=f(z)\\ (z\\in U),\\qquad \\operatorname{IsMinOn}(f,V,x)\\iff\\operatorname{IsMinOn}(F,V,x).\\)",
+            "fallback": "Finite coercions preserve each comparison on V."
+          },
+          {
+            "title": "Differentiate along a feasible segment",
+            "detail": "A constrained minimum on convex V has nonnegative derivative along y-x for every feasible y. The actual derivative at x is supplied by differentiability on open U. The real helper uses the positive tangent cone of the segment.",
+            "math": "\\(F(x+t(y-x))\\ge F(x)\\ (0\\le t\\le1)\\quad\\Longrightarrow\\quad\\langle\\nabla F(x),y-x\\rangle\\ge0.\\)",
+            "fallback": "A feasible segment cannot initially decrease from a minimum."
+          },
+          {
+            "title": "Use the supporting inequality for sufficiency",
+            "detail": "Convexity on V gives the previously proved gradient lower bound. If every feasible inner product is nonnegative, the bound proves F(y) at least F(x), and finite coercion gives the original minimum.",
+            "math": "\\(F(y)\\ge F(x)+\\langle\\nabla F(x),y-x\\rangle\\ge F(x),\\qquad y\\in V.\\)",
+            "fallback": "The supporting plane turns the directional condition into a global minimum on V."
+          },
+          {
+            "title": "Add ambient interior for zero gradient",
+            "detail": "At an ambient-interior point, the constrained minimum is an ambient local minimum, so Fermat gives zero gradient. Conversely, zero gradient satisfies every feasible directional inequality. A boundary point need not have zero gradient.",
+            "math": "\\(x\\in\\operatorname{int}V:\\quad\\operatorname{IsMinOn}(f,V,x)\\iff\\nabla F(x)=0.\\)",
+            "fallback": "Only the interior consequence identifies minima with zero gradient."
+          }
+        ],
+        "boundary": "Complete real inner-product spaces generalize Euclidean space. Convexity is required on V only; this weakens the source neighborhood-convexity premise and yields a stronger theorem. U is open but need not be convex. Membership, finite values and actual differentiability remain explicit. No existence, uniqueness, closedness or boundedness is claimed."
+      },
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/readings.json/online-expectation/notation",
+      "before": [
+        {
+          "term": "positiveIntegral",
+          "meaning": "Total ENNReal lower integral of f.toENNReal on arbitrary measure/sample space; no function measurability, integrability, probability or normalization premise in the definition."
+        },
+        {
+          "term": "negativeIntegral",
+          "meaning": "Total ENNReal lower integral of (-f).toENNReal, the magnitude of the negative part. A separate Jensen producer must prove this finite under source assumptions."
+        },
+        {
+          "term": "signedExpectation",
+          "meaning": "Unnormalized EReal difference of the two parts. Legitimate signed-integral interpretation needs appropriate measurability and at least one finite part. Both infinite gives formal bottom here, not a valid signed expectation."
+        }
+      ],
+      "after": [
+        {
+          "term": "positiveIntegral",
+          "meaning": "Total ENNReal lower integral of f.toENNReal on arbitrary measure/sample space; no function measurability, integrability, probability or normalization premise in the definition."
+        },
+        {
+          "term": "negativeIntegral",
+          "meaning": "Total ENNReal lower integral of (-f).toENNReal, the magnitude of the negative part. The Jensen producer proves it finite from the parent assumptions."
+        },
+        {
+          "term": "signedExpectation",
+          "meaning": "Unnormalized EReal difference of the two parts. Legitimate signed-integral interpretation needs appropriate measurability and at least one finite part. Both infinite gives formal bottom here, not a valid signed expectation."
+        }
+      ],
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/readings.json/online-expectation/algorithm",
+      "before": {
+        "title": "Interpret the signed integral",
+        "kind": "mathematical representation, not an online algorithm",
+        "steps": [
+          {
+            "title": "Split positive and negative parts",
+            "detail": "Both parts are total nonnegative extended lower integrals, even without a supplied measurability premise; this does not certify classical measurable expectation semantics."
+          },
+          {
+            "title": "Prove a finite part",
+            "detail": "Actual Bochner Integrable real f includes a.e. strong measurability and finite norm integral, proving both parts finite and exact embedded-real compatibility. This does not extend to a nonintegrable default-zero Bochner integral. Jensen must separately produce finite negative part via an affine minorant; loss integrability is not a source premise."
+          },
+          {
+            "title": "Retain infinite positive mass",
+            "detail": "A.e. nonnegativity alone gives the formal negative-zero reduction without extra measurable/integrable premises. The positive-infinite helper separately retains negative part != infinity, excluding both-infinite arithmetic."
+          }
+        ]
+      },
+      "after": {
+        "title": "Interpret the signed integral",
+        "kind": "mathematical representation, not an online algorithm",
+        "steps": [
+          {
+            "title": "Split positive and negative parts",
+            "detail": "Both parts are total nonnegative extended lower integrals, even without a supplied measurability premise; this does not certify classical measurable expectation semantics."
+          },
+          {
+            "title": "Prove a finite part",
+            "detail": "Actual Bochner Integrable real f includes a.e. strong measurability and finite norm integral, proving both parts finite and exact embedded-real compatibility. This does not extend to a nonintegrable default-zero Bochner integral. The Jensen producer proves finite negative part via an affine minorant; loss integrability is not a source premise."
+          },
+          {
+            "title": "Retain infinite positive mass",
+            "detail": "A.e. nonnegativity alone gives the formal negative-zero reduction without extra measurable/integrable premises. The positive-infinite helper separately retains negative part != infinity, excluding both-infinite arithmetic."
+          }
+        ]
+      },
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/readings.json/online-expectation/source_theorems/Theorem2.9: separately mapped parent Jensen endpoint",
+      "before": {
+        "label": "Theorem2.9: separately mapped parent Jensen endpoint",
+        "pages": "printedp11",
+        "pdf_page": 23,
+        "url": "https://arxiv.org/pdf/1912.13213v10",
+        "math": "f(\\mathbb E X)\\le\\mathbb E[f(X)]",
+        "fallback": "A measurable convex extended-real loss at the mean is bounded by its possibly infinite expected loss.",
+        "plain": "Only X is assumed integrable; loss integrability and a closed domain are not assumed.",
+        "relationship": "This page revalidates seven representation helpers and three definitions, not seven printed results or Jensen itself. The historical shared theorem_2_9 proof is retained and compiled; it and its affine-minorant/nonclosed-barycenter dependencies require separate distinct semantic revalidation. This foundation receipt does not accept that parent or its negative-part producer.",
+        "contract": {
+          "model": "Finite-dimensional real random vectors under a probability law.",
+          "assumptions": "Measurable convex loss never negative infinity; measurable integrable X lies in the effective domain almost surely.",
+          "parameters": "Arbitrary probability space and finite dimension.",
+          "regret": "An expectation inequality, not a regret bound.",
+          "guarantee": "The required source endpoint allows positive-infinite expected loss and must prove finite negative part."
+        },
+        "local_status": {
+          "status": "compiled",
+          "label": "Representation foundations recompiled; historical parent retained for separate revalidation",
+          "boundary": "Only seven retained library proofs and three unchanged definitions are reviewed here; source Theorem2.9, later dependencies, Chapter2 and the whole book are not accepted by this package."
+        }
+      },
+      "after": {
+        "label": "Theorem 2.9: parent Jensen endpoint",
+        "pages": "printedp11",
+        "pdf_page": 23,
+        "url": "https://arxiv.org/pdf/1912.13213v10",
+        "math": "f(\\mathbb E X)\\le\\mathbb E[f(X)]",
+        "fallback": "A measurable convex extended-real loss at the mean is bounded by its possibly infinite expected loss.",
+        "plain": "Only X is assumed integrable; loss integrability and a closed domain are not assumed.",
+        "relationship": "This page presents supporting library declarations for the Jensen endpoint displayed in the separate Jensen reader. They are not additional printed source theorems. The proof bridge explains their actual assumptions and bodies; the parent and these dependencies are reviewed together in this bounded integration.",
+        "contract": {
+          "model": "Finite-dimensional real random vectors under a probability law.",
+          "assumptions": "Measurable convex loss never negative infinity; measurable integrable X lies in the effective domain almost surely.",
+          "parameters": "Arbitrary probability space and finite dimension.",
+          "regret": "An expectation inequality, not a regret bound.",
+          "guarantee": "Jensen allows positive-infinite expected loss; its negative-part producer proves finite negative part from the stated parent assumptions."
+        },
+        "local_status": {
+          "status": "compiled",
+          "label": "Shared library dependencies for the Jensen reader",
+          "boundary": "The parent theorem has a separate reader in this bounded package. Dependency counts are not counts of printed source results. Chapter 2 and the whole book remain incomplete."
+        }
+      },
+      "reason": "Replace same semantic parent card in original slot, including reviewed label rename; avoid duplicate/stale parent claim"
+    },
+    {
+      "locator": "website/content/readings.json/online-expectation/worked_example",
+      "before": {
+        "title": "Finite values can have an infinite integral",
+        "intro": "The identity integral over dirac(-1)+dirac(3) is 2 under a measure of mass TWO, not probability expectation1. Growing n+1 under infinite counting measure tests the positive-infinite signed-integral branch; neither law is a Jensen probability instance.",
+        "steps": [
+          {
+            "title": "Keep signed finite values",
+            "detail": "Both signed atoms contribute to the unnormalized integral2. There is no division by total mass2 in these definitions.",
+            "math": "(-1)+3=2",
+            "fallback": "Both signs contribute; this measure has total mass two."
+          },
+          {
+            "title": "Keep infinite total mass",
+            "detail": "Every n+1 is finite and nonnegative, but their counting integral is infinite.",
+            "math": "\\sum_{n\\ge0}(n+1)=+\\infty",
+            "fallback": "No nonintegrable value is replaced by zero."
+          },
+          {
+            "title": "Separate the source theorem",
+            "detail": "Counting measure has infinite mass and is not a probability law. The historical Source Jensen geometric probability canary is separate and requires its own distinct revalidation.",
+            "math": "\\mu(\\mathbb N)=+\\infty",
+            "fallback": "This is a foundation test, not a full Jensen instance."
+          }
+        ],
+        "takeaway": "The representation preserves both finite signed integrals and legitimate infinite results.",
+        "boundary": "Only these nonprobability foundation canaries are freshly replayed in this package. The probability-law infinite-loss and nonclosed-domain parent canaries remain separate review obligations."
+      },
+      "after": {
+        "title": "Finite values can have an infinite integral",
+        "intro": "The identity integral over dirac(-1)+dirac(3) is 2 under a measure of mass TWO, not probability expectation1. Growing n+1 under infinite counting measure tests the positive-infinite signed-integral branch; neither law is a Jensen probability instance.",
+        "steps": [
+          {
+            "title": "Keep signed finite values",
+            "detail": "Both signed atoms contribute to the unnormalized integral2. There is no division by total mass2 in these definitions.",
+            "math": "(-1)+3=2",
+            "fallback": "Both signs contribute; this measure has total mass two."
+          },
+          {
+            "title": "Keep infinite total mass",
+            "detail": "Every n+1 is finite and nonnegative, but their counting integral is infinite.",
+            "math": "\\sum_{n\\ge0}(n+1)=+\\infty",
+            "fallback": "No nonintegrable value is replaced by zero."
+          },
+          {
+            "title": "Separate the source theorem",
+            "detail": "Counting measure has infinite mass and is not a probability law. The separate Jensen reader displays the geometric probability-law infinite-loss canary included in this bounded integration.",
+            "math": "\\mu(\\mathbb N)=+\\infty",
+            "fallback": "This is a foundation test, not a full Jensen instance."
+          }
+        ],
+        "takeaway": "The representation preserves both finite signed integrals and legitimate infinite results.",
+        "boundary": "These examples test arbitrary-measure signed-integral foundations. The distinct probability-law infinite-loss and nonclosed-domain Jensen canaries are included and checked with the parent in this bounded package."
+      },
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/readings.json/online-expectation/proof_bridge",
+      "before": null,
+      "after": {
+        "title": "Keep the two signed parts visible",
+        "summary": "These three literal definitions and seven library lemmas provide a representation for the separately displayed Jensen endpoint. They are not seven printed source theorems.",
+        "steps": [
+          {
+            "title": "Define nonnegative lower integrals",
+            "detail": "For arbitrary measure and extended-real f, define positive and negative parts through toENNReal. These total definitions make sense without a measurability binder; that alone does not establish classical measurable signed-expectation semantics.",
+            "math": "\\(P_\\mu(f)=\\int (f)^+\\,d\\mu,\\qquad N_\\mu(f)=\\int (-f)^+\\,d\\mu,\\qquad S_\\mu(f)=P_\\mu(f)-N_\\mu(f).\\)",
+            "fallback": "The total signed expression is the difference of two nonnegative extended integrals."
+          },
+          {
+            "title": "Recover the real integral when integrability is proved",
+            "detail": "Actual Bochner Integrable real f makes its positive and negative parts integrable. Both lower integrals are finite, so the positive-minus-negative identity gives the embedded real integral. A nonintegrable total integral returning zero does not satisfy this premise.",
+            "math": "\\(f\\in L^1(\\mu)\\quad\\Longrightarrow\\quad P_\\mu(f),N_\\mu(f)<\\infty,\\qquad S_\\mu(f)=\\int f\\,d\\mu.\\)",
+            "fallback": "Genuine integrability justifies finite subtraction and real compatibility."
+          },
+          {
+            "title": "Retain a legitimate infinite result",
+            "detail": "If f is nonnegative almost everywhere, its negative part vanishes. More generally an infinite positive part and a finite negative part give positive infinity. Both parts infinite are excluded from this interpretation; the pinned total arithmetic otherwise returns bottom.",
+            "math": "\\(f\\ge0\\text{ a.e.}\\Rightarrow N_\\mu(f)=0;\\qquad P_\\mu(f)=\\infty,\\ N_\\mu(f)<\\infty\\Rightarrow S_\\mu(f)=+\\infty.\\)",
+            "fallback": "Finite negative part makes the positive-infinite branch legitimate."
+          }
+        ],
+        "boundary": "These interfaces allow arbitrary measures and are not automatically normalized expectations. The mass-two and counting-measure canaries are integral examples. Jensen separately proves finite negative loss part under a probability law; loss integrability is not supplied as a parent assumption."
+      },
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/readings.json/online-barycenter/source_theorems/Theorem2.9: separately mapped parent Jensen endpoint",
+      "before": {
+        "label": "Theorem2.9: separately mapped parent Jensen endpoint",
+        "pages": "printedp11",
+        "pdf_page": 23,
+        "url": "https://arxiv.org/pdf/1912.13213v10",
+        "math": "f(\\mathbb E X)\\le\\mathbb E[f(X)]",
+        "fallback": "A measurable convex extended-real loss at the mean is bounded by its possibly infinite expected loss.",
+        "plain": "Only X is assumed integrable; loss integrability and a closed domain are not assumed.",
+        "relationship": "This page revalidates three retained library dependencies, not three printed results or Jensen itself. Historical theorem_2_9 compilation is retained; source Jensen, its affine-minorant negative-part producer and probability-loss canaries require separate distinct revalidation. This receipt accepts only the barycenter dependency.",
+        "contract": {
+          "model": "Finite-dimensional real random vectors under a probability law.",
+          "assumptions": "Measurable convex loss never negative infinity; measurable integrable X lies in the effective domain almost surely.",
+          "parameters": "Arbitrary probability space and finite dimension.",
+          "regret": "An expectation inequality, not a regret bound.",
+          "guarantee": "The required source endpoint allows positive-infinite expected loss and must prove finite negative part."
+        },
+        "local_status": {
+          "status": "compiled",
+          "label": "Barycenter dependency recompiled; historical Jensen parent awaits separate revalidation",
+          "boundary": "This package does not accept Orabona Theorem2.9, Chapter2 or the whole book. Three retained proofs, no definitions or new proof code/nodes."
+        }
+      },
+      "after": {
+        "label": "Theorem 2.9: parent Jensen endpoint",
+        "pages": "printedp11",
+        "pdf_page": 23,
+        "url": "https://arxiv.org/pdf/1912.13213v10",
+        "math": "f(\\mathbb E X)\\le\\mathbb E[f(X)]",
+        "fallback": "A measurable convex extended-real loss at the mean is bounded by its possibly infinite expected loss.",
+        "plain": "Only X is assumed integrable; loss integrability and a closed domain are not assumed.",
+        "relationship": "This page presents supporting library declarations for the Jensen endpoint displayed in the separate Jensen reader. They are not additional printed source theorems. The proof bridge explains their actual assumptions and bodies; the parent and these dependencies are reviewed together in this bounded integration.",
+        "contract": {
+          "model": "Finite-dimensional real random vectors under a probability law.",
+          "assumptions": "Measurable convex loss never negative infinity; measurable integrable X lies in the effective domain almost surely.",
+          "parameters": "Arbitrary probability space and finite dimension.",
+          "regret": "An expectation inequality, not a regret bound.",
+          "guarantee": "Jensen allows positive-infinite expected loss; its negative-part producer proves finite negative part from the stated parent assumptions."
+        },
+        "local_status": {
+          "status": "compiled",
+          "label": "Shared library dependencies for the Jensen reader",
+          "boundary": "The parent theorem has a separate reader in this bounded package. Dependency counts are not counts of printed source results. Chapter 2 and the whole book remain incomplete."
+        }
+      },
+      "reason": "Replace same semantic parent card in original slot, including reviewed label rename; avoid duplicate/stale parent claim"
+    },
+    {
+      "locator": "website/content/readings.json/online-barycenter/worked_example",
+      "before": {
+        "title": "A nonclosed ray in a line",
+        "intro": "The verified law is half dirac1 plus half dirac3, of total mass1. The distinct support vectors (1,0) and (3,0) lie in the nonclosed lower-dimensional ray {(x,0):x>0}; its mean is (2,0).",
+        "steps": [
+          {
+            "title": "Keep the set nonclosed",
+            "detail": "The origin is missing; the public canary proves this set is not closed.",
+            "math": "s=\\{(x,0):x>0\\}",
+            "fallback": "The ray lies in a proper line of the plane."
+          },
+          {
+            "title": "Compute the actual mean",
+            "detail": "The probability law is verified and its vector integral is (2,0).",
+            "math": "\\mathbb E X=(2,0)",
+            "fallback": "The two support vectors are distinct."
+          },
+          {
+            "title": "Instantiate the public theorem",
+            "detail": "The theorem concludes membership in the original ray, not merely the closed ray.",
+            "math": "\\mathbb E X\\in s",
+            "fallback": "The source interface accepts a nonclosed lower-dimensional convex set."
+          }
+        ],
+        "takeaway": "The public general theorem reaches the original nonclosed ray, with genuine integrability and probability normalization. Its proof does not impose finite support on arbitrary X.",
+        "boundary": "This freshly replayed nonconstant probability canary tests only the barycenter dependency. Source Jensen and its probability infinite-loss/nonclosed-domain canaries remain separate revalidation obligations."
+      },
+      "after": {
+        "title": "A nonclosed ray in a line",
+        "intro": "The verified law is half dirac1 plus half dirac3, of total mass1. The distinct support vectors (1,0) and (3,0) lie in the nonclosed lower-dimensional ray {(x,0):x>0}; its mean is (2,0).",
+        "steps": [
+          {
+            "title": "Keep the set nonclosed",
+            "detail": "The origin is missing; the public canary proves this set is not closed.",
+            "math": "s=\\{(x,0):x>0\\}",
+            "fallback": "The ray lies in a proper line of the plane."
+          },
+          {
+            "title": "Compute the actual mean",
+            "detail": "The probability law is verified and its vector integral is (2,0).",
+            "math": "\\mathbb E X=(2,0)",
+            "fallback": "The two support vectors are distinct."
+          },
+          {
+            "title": "Instantiate the public theorem",
+            "detail": "The theorem concludes membership in the original ray, not merely the closed ray.",
+            "math": "\\mathbb E X\\in s",
+            "fallback": "The source interface accepts a nonclosed lower-dimensional convex set."
+          }
+        ],
+        "takeaway": "The public general theorem reaches the original nonclosed ray, with genuine integrability and probability normalization. Its proof does not impose finite support on arbitrary X.",
+        "boundary": "This nonconstant probability canary tests the barycenter dependency. The parent Jensen reader separately displays its probability infinite-loss and nonclosed-domain canaries; those are also included in this bounded integration."
+      },
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/readings.json/online-barycenter/proof_bridge",
+      "before": null,
+      "after": {
+        "title": "Reach the original convex set",
+        "summary": "This is the library induction used by Jensen. The target is membership in the possibly nonclosed set itself.",
+        "steps": [
+          {
+            "title": "Begin with closure membership",
+            "detail": "Closed-convex integral theory places the mean m in closure s. If m were absent from s, it could not lie in its ambient interior.",
+            "math": "\\(m=\\int X\\,d\\mu\\in\\overline{s},\\qquad m\\notin s\\Rightarrow m\\notin\\operatorname{int}s.\\)",
+            "fallback": "Closure membership starts the argument but does not finish it."
+          },
+          {
+            "title": "Produce a nonzero support",
+            "detail": "For nonempty ambient interior use geometric separation; otherwise annihilate the proper affine-span direction. Either route gives a nonzero continuous linear functional supporting s at m. These are alternative geometric cases.",
+            "math": "\\(\\exists a\\ne0:\\quad a(y)\\le a(m)\\quad(y\\in s).\\)",
+            "fallback": "Separation or a proper affine span supplies the supporting functional."
+          },
+          {
+            "title": "Turn the inequality into almost-sure equality",
+            "detail": "Linear integral commutation and probability mass one make the integrals of a(X) and the constant a(m) equal. Together with the almost-sure inequality and integrability this forces equality of these scalar values almost everywhere.",
+            "math": "\\(a(X)\\le a(m)\\text{ a.e.},\\quad\\int a(X)\\,d\\mu=a(m)\\quad\\Longrightarrow\\quad a(X)=a(m)\\text{ a.e.}\\)",
+            "fallback": "The functional values agree almost surely; X need not be constant."
+          },
+          {
+            "title": "Descend into the proper kernel",
+            "detail": "Center X at m and lift it into K=ker a almost everywhere, using zero only on the null exceptional set. The subtype isometry proves integrability and linear integral commutation proves mean zero. The affine preimage of s is convex and contains the lift almost surely. Its dimension is strictly smaller, so strong induction puts zero in that preimage and therefore m in s.",
+            "math": "\\(K=\\ker a,\\quad\\dim K<\\dim E,\\quad Y=X-m\\text{ a.e.},\\quad\\int Y\\,d\\mu=0,\\quad 0\\in\\{v\\in K:v+m\\in s\\}.\\)",
+            "fallback": "A lower-dimensional convex-set statement proves the original membership."
+          }
+        ],
+        "boundary": "Finite dimension, probability mass one, genuine integrability and almost-sure set membership are retained. Closedness, nonempty ambient interior and finite support are not assumed. The scalar support-equality helper allows a zero functional; the geometric step produces a nonzero one for rank descent."
+      },
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/readings.json/online-minorant/notation",
+      "before": [
+        {
+          "term": "proper function",
+          "meaning": "For the general terminal: global no-bottom and nonempty effective domain f<top, so domain points are genuinely finite. The finite-neighbourhood helper instead derives global no-bottom. All actual types use finite-dimensional real normed E, without supplied Borel, measurable, probability, inner-product or CompleteSpace classes; old Borel prose is historical stale evidence."
+        },
+        {
+          "term": "affine minorant",
+          "meaning": "A continuous real linear a plus real b lies below f at ALL ambient points, including top outside domain. The first two helpers additionally touch f at chosen x; the last two conclusions give only the global bound. a may be zero, without uniqueness, normalization, chosen boundary contact or quantitative norm bounds."
+        },
+        {
+          "term": "relative interior",
+          "meaning": "The general producer generates intrinsic interior within the affine span, translates to its direction space and proves ambient interior there, then extends the actual linear functional and corrects the intercept. Ambient domain-interior assumptions remain in the two interior helpers; only domain nonempty is needed by the general terminal."
+        }
+      ],
+      "after": [
+        {
+          "term": "proper function",
+          "meaning": "For the general terminal: global no-bottom and nonempty effective domain f<top, so domain points are genuinely finite. The finite-neighbourhood helper instead derives global no-bottom. All actual types use finite-dimensional real normed E, without supplied Borel, measurable, probability, inner-product or CompleteSpace classes."
+        },
+        {
+          "term": "affine minorant",
+          "meaning": "A continuous real linear a plus real b lies below f at ALL ambient points, including top outside domain. The first two helpers additionally touch f at chosen x; the last two conclusions give only the global bound. a may be zero, without uniqueness, normalization, chosen boundary contact or quantitative norm bounds."
+        },
+        {
+          "term": "relative interior",
+          "meaning": "The general producer generates intrinsic interior within the affine span, translates to its direction space and proves ambient interior there, then extends the actual linear functional and corrects the intercept. Ambient domain-interior assumptions remain in the two interior helpers; only domain nonempty is needed by the general terminal."
+        }
+      ],
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/readings.json/online-minorant/teaching_route",
+      "before": [
+        "BanditRL.OnlineConvex.affine_minorant_of_domain_interior",
+        "BanditRL.OnlineConvex.convex_affine_minorant"
+      ],
+      "after": [
+        "BanditRL.OnlineConvex.affine_support_of_finite_neighborhood",
+        "BanditRL.OnlineConvex.affine_support_of_domain_interior",
+        "BanditRL.OnlineConvex.affine_minorant_of_domain_interior",
+        "BanditRL.OnlineConvex.convex_affine_minorant"
+      ],
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/readings.json/online-minorant/source_theorems/Theorem2.9: separately mapped parent Jensen endpoint",
+      "before": {
+        "label": "Theorem2.9: separately mapped parent Jensen endpoint",
+        "pages": "printedp11",
+        "pdf_page": 23,
+        "url": "https://arxiv.org/pdf/1912.13213v10",
+        "math": "f(\\mathbb E X)\\le\\mathbb E[f(X)]",
+        "fallback": "A measurable convex extended-real loss at the mean is bounded by its possibly infinite expected loss.",
+        "plain": "Only X is assumed integrable; loss integrability and a closed domain are not assumed.",
+        "relationship": "This page revalidates four retained library dependencies, not four printed results or Jensen itself. The two teaching links are selected representatives, not the full public declaration set or exhaustive actual graph. Historical shared theorem_2_9 compilation remains separate; its finite-negative-part producer and source probability-loss canaries require distinct revalidation. No loss-integrability premise is added to that source parent.",
+        "contract": {
+          "model": "Finite-dimensional real random vectors under a probability law.",
+          "assumptions": "Measurable convex loss never negative infinity; measurable integrable X lies in the effective domain almost surely.",
+          "parameters": "Arbitrary probability space and finite dimension.",
+          "regret": "An expectation inequality, not a regret bound.",
+          "guarantee": "The required source endpoint allows positive-infinite expected loss and must prove finite negative part."
+        },
+        "local_status": {
+          "status": "compiled",
+          "label": "Affine-support/minorant dependency recompiled; historical Jensen parent awaits separate revalidation",
+          "boundary": "Only four retained library proofs, no production definitions or new proof code/nodes; this package does not accept source Jensen, Chapter2 or the whole book."
+        }
+      },
+      "after": {
+        "label": "Theorem 2.9: parent Jensen endpoint",
+        "pages": "printedp11",
+        "pdf_page": 23,
+        "url": "https://arxiv.org/pdf/1912.13213v10",
+        "math": "f(\\mathbb E X)\\le\\mathbb E[f(X)]",
+        "fallback": "A measurable convex extended-real loss at the mean is bounded by its possibly infinite expected loss.",
+        "plain": "Only X is assumed integrable; loss integrability and a closed domain are not assumed.",
+        "relationship": "This page presents supporting library declarations for the Jensen endpoint displayed in the separate Jensen reader. They are not additional printed source theorems. The proof bridge explains their actual assumptions and bodies; the parent and these dependencies are reviewed together in this bounded integration.",
+        "contract": {
+          "model": "Finite-dimensional real random vectors under a probability law.",
+          "assumptions": "Measurable convex loss never negative infinity; measurable integrable X lies in the effective domain almost surely.",
+          "parameters": "Arbitrary probability space and finite dimension.",
+          "regret": "An expectation inequality, not a regret bound.",
+          "guarantee": "Jensen allows positive-infinite expected loss; its negative-part producer proves finite negative part from the stated parent assumptions."
+        },
+        "local_status": {
+          "status": "compiled",
+          "label": "Shared library dependencies for the Jensen reader",
+          "boundary": "The parent theorem has a separate reader in this bounded package. Dependency counts are not counts of printed source results. Chapter 2 and the whole book remain incomplete."
+        }
+      },
+      "reason": "Replace same semantic parent card in original slot, including reviewed label rename; avoid duplicate/stale parent claim"
+    },
+    {
+      "locator": "website/content/readings.json/online-minorant/worked_example",
+      "before": {
+        "title": "A varying finite loss on a nonclosed ray",
+        "intro": "The actual canary loss equals coordinate p.1 on the nonclosed lower-dimensional ray {(x,0):x>0}, and top outside. The base coordinate is finite everywhere in its upperAdd representation, so this example does not settle mixed-infinity conventions generally.",
+        "steps": [
+          {
+            "title": "Check the domain",
+            "detail": "The ray is convex, nonclosed and lies in a proper line.",
+            "math": "\\operatorname{dom}f=\\{(x,0):x>0\\}",
+            "fallback": "No ambient interior assumption is available."
+          },
+          {
+            "title": "Instantiate the global target",
+            "detail": "The public canary obtains a continuous affine minorant and verifies distinct finite values.",
+            "math": "f(1,0)=1,\\quad f(3,0)=3",
+            "fallback": "The function is not constant on its effective domain."
+          },
+          {
+            "title": "Keep outside-domain values explicit",
+            "detail": "At (0,1), the loss is positive infinity; the global affine inequality still applies.",
+            "math": "f(0,1)=+\\infty",
+            "fallback": "The domain restriction is part of the actual extended-real function."
+          }
+        ],
+        "takeaway": "The general public theorem handles this lower-dimensional nonclosed domain and gives an all-ambient affine inequality, without a chosen contact or nonzero-slope guarantee.",
+        "boundary": "Six retained canary proofs and one definition verify formula, no-bottom, convexity, exact domain, global minorant and values1/3/top with nonclosed domain. This geometric dependency test is not a probability Jensen-loss test; parent and its probability canaries remain separate revalidation obligations."
+      },
+      "after": {
+        "title": "A varying finite loss on a nonclosed ray",
+        "intro": "The actual canary loss equals coordinate p.1 on the nonclosed lower-dimensional ray {(x,0):x>0}, and top outside. The base coordinate is finite everywhere in its upperAdd representation, so this example does not settle mixed-infinity conventions generally.",
+        "steps": [
+          {
+            "title": "Check the domain",
+            "detail": "The ray is convex, nonclosed and lies in a proper line.",
+            "math": "\\operatorname{dom}f=\\{(x,0):x>0\\}",
+            "fallback": "No ambient interior assumption is available."
+          },
+          {
+            "title": "Instantiate the global target",
+            "detail": "The public canary obtains a continuous affine minorant and verifies distinct finite values.",
+            "math": "f(1,0)=1,\\quad f(3,0)=3",
+            "fallback": "The function is not constant on its effective domain."
+          },
+          {
+            "title": "Keep outside-domain values explicit",
+            "detail": "At (0,1), the loss is positive infinity; the global affine inequality still applies.",
+            "math": "f(0,1)=+\\infty",
+            "fallback": "The domain restriction is part of the actual extended-real function."
+          }
+        ],
+        "takeaway": "The general public theorem handles this lower-dimensional nonclosed domain and gives an all-ambient affine inequality, without a chosen contact or nonzero-slope guarantee.",
+        "boundary": "Six retained canary proofs and one definition verify formula, no-bottom, convexity, exact domain, global minorant and values 1/3/top on a nonclosed domain. This geometric dependency test is distinct from the parent Jensen probability canaries, which are also included in this bounded integration."
+      },
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/readings.json/online-minorant/proof_bridge",
+      "before": null,
+      "after": {
+        "title": "Build a global affine lower bound",
+        "summary": "The library proves a minorant before using it in the negative-part bound. Its existence is a dependency conclusion, not an extra Jensen hypothesis.",
+        "steps": [
+          {
+            "title": "Support a finite epigraph boundary",
+            "detail": "If f is finite throughout a neighborhood of x, the point (x,f(x)) lies on the boundary of the real-height epigraph. A nonzero separating functional splits as L(y,t)=A(y)+ct. Upward epigraph closure gives c at most zero. If c were zero, A would have a local maximum and hence be zero; this contradicts the nonzero separator.",
+            "math": "\\(L(y,t)=A(y)+ct,\\qquad c\\le0,\\qquad c\\ne0\\quad\\Longrightarrow\\quad c<0.\\)",
+            "fallback": "Neighborhood finiteness excludes a vertical supporting hyperplane."
+          },
+          {
+            "title": "Normalize only after proving the sign",
+            "detail": "The negative coefficient also excludes a bottom value anywhere: arbitrary real heights above a bottom value contradict the support inequality. Division by c then gives a global affine lower bound touching f at x. No derivative of f is assumed; Fermat is used only on auxiliary identity and linear functions.",
+            "math": "\\(a=-c^{-1}A,\\qquad b=f(x)+A(x)/c,\\qquad a(x)+b=f(x),\\quad a(y)+b\\le f(y).\\)",
+            "fallback": "The sign proof justifies division and produces the affine support."
+          },
+          {
+            "title": "Find interior in the affine span",
+            "detail": "For a nowhere-bottom convex function with nonempty effective domain, finite-dimensional convexity supplies an intrinsic-interior point. Translate the affine span to its direction space and restrict f there. The restricted domain has ambient interior, so the preceding support construction supplies a minorant in that space.",
+            "math": "\\(S=\\operatorname{aff}(\\operatorname{dom}f),\\qquad F(v)=f(p+v),\\qquad 0\\in\\operatorname{int}(\\operatorname{dom}F).\\)",
+            "fallback": "Relative geometry handles lower-dimensional domains."
+          },
+          {
+            "title": "Extend and correct the intercept",
+            "detail": "Extend the restricted linear functional to the ambient finite-dimensional space, where it is continuous. Correct its intercept by subtracting its value at p. Domain points are represented as p+v; outside the domain the upper value is positive infinity, so the bound holds there too.",
+            "math": "\\(G|_{S.direction}=a,\\qquad G(y)+(b-G(p))\\le f(y)\\quad\\text{for all }y.\\)",
+            "fallback": "Linear extension and the intercept correction give the global bound."
+          }
+        ],
+        "boundary": "The global result assumes only finite-dimensional real normed space, no bottom, convex real epigraph and nonempty effective domain. No measurable/probability/CompleteSpace binder, closedness, lower semicontinuity, loss differentiability or full-dimensional domain is supplied. Global minorants need not touch a specified boundary point or have nonzero slope."
+      },
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/readings.json/online-jensen/source_theorems/Theorem2.9: Jensen inequality",
+      "before": {
+        "label": "Theorem2.9: Jensen inequality",
+        "pages": "printedp11",
+        "pdf_page": 23,
+        "url": "https://arxiv.org/pdf/1912.13213v10",
+        "math": "f(\\mathbb E X)\\le\\mathbb E[f(X)]",
+        "fallback": "A measurable convex extended-real loss at the mean is bounded by its possibly infinite expected loss.",
+        "plain": "Only X is assumed integrable; loss integrability and a closed domain are not assumed.",
+        "relationship": "One printed Theorem2.9 plus its necessary negative-part library producer, not two printed results. Source finite-mean wording is explicitly interpreted as ordinary finite Lebesgue coordinate expectations, corresponding to genuine Bochner Integrable X in finite-dimensional Euclidean spaces. Actual finite-dimensional real normed measurable/Borel generality includes those source instances. No loss-integrability, closedness, lsc, full-dimensional-domain or finite-support-law assumption is added. Historical compilation and this distinct contract/body review remain separate from the final recorded package decision.",
+        "contract": {
+          "model": "Finite-dimensional real normed measurable/Borel vectors, including source Euclidean spaces, under an arbitrary probability law of mass1.",
+          "assumptions": "Global no-bottom measurable convex extended loss; separate measurable X, genuinely Integrable X and AE below-top domain membership. No loss-integrability or closed/full-dimensional-domain premise.",
+          "parameters": "Arbitrary probability space and finite dimension, including dimension0; no supplied CompleteSpace/inner-product parameter, no infinite-dimensional source claim.",
+          "regret": "An expectation inequality, not a regret bound.",
+          "guarantee": "The required source endpoint allows positive-infinite expected loss and must prove finite negative part."
+        },
+        "local_status": {
+          "status": "compiled",
+          "label": "Source Jensen and produced finite negative part, freshly recompiled",
+          "boundary": "Exactly one source theorem and one necessary producer. Frozen producer measurability premises stay in its signature even where its body does not use them. Final package evidence is recorded separately; Chapter2 mandatory total remains null/incomplete and the whole book Goal active."
+        }
+      },
+      "after": {
+        "label": "Theorem2.9: Jensen inequality",
+        "pages": "printedp11",
+        "pdf_page": 23,
+        "url": "https://arxiv.org/pdf/1912.13213v10",
+        "math": "f(\\mathbb E X)\\le\\mathbb E[f(X)]",
+        "fallback": "A measurable convex extended-real loss at the mean is bounded by its possibly infinite expected loss.",
+        "plain": "Only X is assumed integrable; loss integrability and a closed domain are not assumed.",
+        "relationship": "One printed Theorem2.9 plus its necessary negative-part library producer, not two printed results. Source finite-mean wording is explicitly interpreted as ordinary finite Lebesgue coordinate expectations, corresponding to genuine Bochner Integrable X in finite-dimensional Euclidean spaces. Actual finite-dimensional real normed measurable/Borel generality includes those source instances. No loss-integrability, closedness, lsc, full-dimensional-domain or finite-support-law assumption is added.",
+        "contract": {
+          "model": "Finite-dimensional real normed measurable/Borel vectors, including source Euclidean spaces, under an arbitrary probability law of mass1.",
+          "assumptions": "Global no-bottom measurable convex extended loss; separate measurable X, genuinely Integrable X and AE below-top domain membership. No loss-integrability or closed/full-dimensional-domain premise.",
+          "parameters": "Arbitrary probability space and finite dimension, including dimension0; no supplied CompleteSpace/inner-product parameter, no infinite-dimensional source claim.",
+          "regret": "An expectation inequality, not a regret bound.",
+          "guarantee": "Jensen allows positive-infinite expected loss; its negative-part producer proves finite negative part from the stated parent assumptions."
+        },
+        "local_status": {
+          "status": "compiled",
+          "label": "Jensen inequality and finite-negative-part producer",
+          "boundary": "One printed theorem and one necessary library producer. Unused measurability premises of the producer remain in its frozen signature. Chapter 2 and whole-book completion are not claimed."
+        }
+      },
+      "reason": "reviewed incoming source-card correction"
+    },
+    {
+      "locator": "website/content/readings.json/online-jensen/proof_bridge",
+      "before": null,
+      "after": {
+        "title": "Produce the expectation bound in two cases",
+        "summary": "These are the retained library steps for the displayed source inequality. The input has genuine finite Lebesgue coordinate means, represented by Bochner integrability in finite dimension. The inspected source prints no Jensen proof or extended-expectation well-definedness argument; the library steps below supply those obligations.",
+        "steps": [
+          {
+            "title": "Produce a finite negative part",
+            "detail": "Probability mass one and almost-sure domain membership give a nonempty-domain witness. Apply the global affine-minorant theorem to obtain a(X)+b, integrable because X is integrable. Its negative part bounds the negative loss part, proving the latter finite.",
+            "math": "\\(a(x)+b\\le f(x)\\quad\\Longrightarrow\\quad(f(X))^-\\le(a(X)+b)^-,\\qquad N_\\mu(f\\circ X)<\\infty.\\)",
+            "fallback": "The proof derives finite negative part; it is not an additional premise."
+          },
+          {
+            "title": "Separate the positive-infinite case",
+            "detail": "If the positive loss integral is infinite, the finite negative part makes the signed expectation positive infinity. The desired inequality then follows from the top element. This branch does not separately assert finite expected loss.",
+            "math": "\\(P_\\mu(f\\circ X)=\\infty\\quad\\Longrightarrow\\quad S_\\mu(f\\circ X)=+\\infty,\\qquad f(\\mathbb EX)\\le+\\infty.\\)",
+            "fallback": "Infinite positive loss is allowed after controlling the negative part."
+          },
+          {
+            "title": "Prove integrability in the finite case",
+            "detail": "Otherwise set Y=toReal(f(X)). Measurability and almost-sure domain membership, together with no bottom, give an exact finite embedding almost everywhere. The finite positive and negative part integrals make their maxima integrable; subtracting them proves Y integrable.",
+            "math": "\\(Y=(f\\circ X).toReal,\\qquad (Y:\\overline{\\mathbb R})=f(X)\\text{ a.e.},\\qquad Y=\\max(Y,0)-\\max(-Y,0)\\in L^1.\\)",
+            "fallback": "Loss integrability is obtained inside this case, rather than assumed globally."
+          },
+          {
+            "title": "Take the mean in the original epigraph",
+            "detail": "The integrable pair (X,Y) lies almost surely in the convex real-height epigraph. The finite-dimensional barycenter theorem places its mean in that same possibly nonclosed epigraph. The pair-integral identity and signed-real compatibility identify the resulting height with the expected loss.",
+            "math": "\\((\\mathbb EX,\\mathbb EY)\\in\\operatorname{epi}_{\\mathbb R}f\\quad\\Longrightarrow\\quad f(\\mathbb EX)\\le\\mathbb EY=S_\\mu(f\\circ X).\\)",
+            "fallback": "Actual epigraph membership gives the finite-case inequality."
+          }
+        ],
+        "boundary": "The loss is measurable, nowhere bottom and convex; X is measurable, genuinely integrable and in the effective domain almost surely under a probability law. Positive-infinite expected loss is allowed. No supplied loss integrability, closedness, lower semicontinuity, full-dimensional domain or finite-support law is added. Both-infinite subtraction is unreachable. This is not whole-chapter or whole-book completion."
+      },
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/highlights.json/BanditRL.OnlineConvex.positiveIntegral_coe_ne_top/why",
+      "before": "Supplies the separately mapped Jensen parent with finite or infinite signed-integral representation; this migration does not accept that parent.",
+      "after": "Supports the Jensen proof through the explicit library dependency shown in the associated reader.",
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/highlights.json/BanditRL.OnlineConvex.signedExpectation_coe_integrable/why",
+      "before": "Supplies the separately mapped Jensen parent with finite or infinite signed-integral representation; this migration does not accept that parent.",
+      "after": "Supports the Jensen proof through the explicit library dependency shown in the associated reader.",
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/highlights.json/BanditRL.OnlineConvex.signedExpectation_of_nonneg/why",
+      "before": "Supplies the separately mapped Jensen parent with finite or infinite signed-integral representation; this migration does not accept that parent.",
+      "after": "Supports the Jensen proof through the explicit library dependency shown in the associated reader.",
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/highlights.json/BanditRL.OnlineConvex.signedExpectation_eq_top/why",
+      "before": "Supplies the separately mapped Jensen parent with finite or infinite signed-integral representation; this migration does not accept that parent.",
+      "after": "Supports the Jensen proof through the explicit library dependency shown in the associated reader.",
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/highlights.json/BanditRL.OnlineConvex.supporting_functional_ae_eq_mean/why",
+      "before": "Supplies the nonclosed-convex-set barycenter needed by the separately mapped Jensen parent. This package does not accept Jensen.",
+      "after": "Supports the Jensen proof through the explicit library dependency shown in the associated reader.",
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/highlights.json/BanditRL.OnlineConvex.supporting_functional_at_closure/why",
+      "before": "Supplies the nonclosed-convex-set barycenter needed by the separately mapped Jensen parent. This package does not accept Jensen.",
+      "after": "Supports the Jensen proof through the explicit library dependency shown in the associated reader.",
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/highlights.json/BanditRL.OnlineConvex.integral_mem_convex_finiteDimensional/why",
+      "before": "Supplies the nonclosed-convex-set barycenter needed by the separately mapped Jensen parent. This package does not accept Jensen.",
+      "after": "Supports the Jensen proof through the explicit library dependency shown in the associated reader.",
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/highlights.json/BanditRL.OnlineConvex.affine_minorant_of_domain_interior/teaching_order",
+      "before": 1,
+      "after": 3,
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/highlights.json/BanditRL.OnlineConvex.affine_minorant_of_domain_interior/why",
+      "before": "Supplies a future integrable affine lower bound for the separately reviewed Jensen negative-part producer; this package does not accept that producer or Jensen.",
+      "after": "Supports the Jensen proof through the explicit library dependency shown in the associated reader.",
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/highlights.json/BanditRL.OnlineConvex.affine_minorant_of_domain_interior/lean_notes",
+      "before": "Finite-dimensional real normed E, no supplied Borel/measurable/probability/CompleteSpace/inner-product parameter. This helper still needs AMBIENT domain interior; it does not discharge the general terminal or claim relative interior suffices here. The output slope mayzero. Two curated teaching links represent four public results, not the exhaustive actual graph.",
+      "after": "Finite-dimensional real normed E, no supplied Borel/measurable/probability/CompleteSpace/inner-product parameter. This helper still needs AMBIENT domain interior; it does not discharge the general terminal or claim relative interior suffices here. The output slope mayzero. All four public results have teaching links; these links are not an exhaustive compiler dependency graph.",
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/highlights.json/BanditRL.OnlineConvex.convex_affine_minorant/teaching_order",
+      "before": 2,
+      "after": 4,
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/highlights.json/BanditRL.OnlineConvex.convex_affine_minorant/why",
+      "before": "Supplies a future integrable affine lower bound for the separately reviewed Jensen negative-part producer; this package does not accept that producer or Jensen.",
+      "after": "Supports the Jensen proof through the explicit library dependency shown in the associated reader.",
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/highlights.json/BanditRL.OnlineConvex.finite_add_indicator_iff/lean_notes",
+      "before": "The source printed9-10/PDF21-22 gives a necessary condition: finite constrained loss requires x in V. The iff is an explicit library refinement adding finite original f(x). Arbitrary carriers generalize Rd for this algebra. Ordinary bottom-dominant EReal addition is retained. Finite-real witness existence excludes both infinities; below-top effectiveDomain includes bottom. No noBottom premise on finite_add_indicator_iff; global noBottom is essential on effectiveDomain_add_indicator. Convexity/topology/nonempty V are unnecessary here. Two new compiled-local finite-loss/domain proofs close only the explicitly frozen unnumbered consequence and its separately hypothesized domain helper; not completion of Chapter 2 or Chapters1-16. Remaining main-text source/migration audit is mandatory. No merge or live publication is implied.",
+      "after": "The source printed9-10/PDF21-22 gives a necessary condition: finite constrained loss requires x in V. The iff is an explicit library refinement adding finite original f(x). Arbitrary carriers generalize Rd for this algebra. Ordinary bottom-dominant EReal addition is retained. Finite-real witness existence excludes both infinities; below-top effectiveDomain includes bottom. No noBottom premise on finite_add_indicator_iff; global noBottom is essential on effectiveDomain_add_indicator. Convexity/topology/nonempty V are unnecessary here. Two retained proofs are integrated here; later Chapter 2 obligations remain outside this package. The source passage specifies neither mixed-infinity addition nor a total ambient extension of V-to-real game losses; the arbitrary ambient EReal formulation is an explicit library refinement.",
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/highlights.json/BanditRL.OnlineConvex.effectiveDomain_add_indicator/lean_notes",
+      "before": "The source printed9-10/PDF21-22 gives a necessary condition: finite constrained loss requires x in V. The iff is an explicit library refinement adding finite original f(x). Arbitrary carriers generalize Rd for this algebra. Ordinary bottom-dominant EReal addition is retained. Finite-real witness existence excludes both infinities; below-top effectiveDomain includes bottom. No noBottom premise on finite_add_indicator_iff; global noBottom is essential on effectiveDomain_add_indicator. Convexity/topology/nonempty V are unnecessary here. Two new compiled-local finite-loss/domain proofs close only the explicitly frozen unnumbered consequence and its separately hypothesized domain helper; not completion of Chapter 2 or Chapters1-16. Remaining main-text source/migration audit is mandatory. No merge or live publication is implied.",
+      "after": "The source printed9-10/PDF21-22 gives a necessary condition: finite constrained loss requires x in V. The iff is an explicit library refinement adding finite original f(x). Arbitrary carriers generalize Rd for this algebra. Ordinary bottom-dominant EReal addition is retained. Finite-real witness existence excludes both infinities; below-top effectiveDomain includes bottom. No noBottom premise on finite_add_indicator_iff; global noBottom is essential on effectiveDomain_add_indicator. Convexity/topology/nonempty V are unnecessary here. Two retained proofs are integrated here; later Chapter 2 obligations remain outside this package. The source passage specifies neither mixed-infinity addition nor a total ambient extension of V-to-real game losses; the arbitrary ambient EReal formulation is an explicit library refinement.",
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/highlights.json/BanditRL.OnlineConvex.affine_support_of_finite_neighborhood/title",
+      "before": "Affine contact from local finiteness",
+      "after": "Affine contact from neighborhood finiteness",
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/highlights.json/BanditRL.OnlineConvex.affine_support_of_finite_neighborhood/chapter",
+      "before": "online-subgradient-differentiability",
+      "after": "online-minorant",
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/highlights.json/BanditRL.OnlineConvex.affine_support_of_finite_neighborhood/teaching_order",
+      "before": 0,
+      "after": 1,
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/highlights.json/BanditRL.OnlineConvex.affine_support_of_finite_neighborhood/plain",
+      "before": "A convex extended-real function finite near x has an affine support touching at x and valid globally.",
+      "after": "Convexity and finiteness throughout a neighborhood produce a global affine support touching at the selected point. The proof derives no-bottom; no differentiability of the loss is assumed.",
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/highlights.json/BanditRL.OnlineConvex.affine_support_of_finite_neighborhood/intuition",
+      "before": "A convex extended-real function finite near x has an affine support touching at x and valid globally.",
+      "after": "Convexity and finiteness throughout a neighborhood produce a global affine support touching at the selected point. The proof derives no-bottom; no differentiability of the loss is assumed.",
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/highlights.json/BanditRL.OnlineConvex.affine_support_of_finite_neighborhood/why",
+      "before": "Source-qualified links reuse the SAME declaration registry; zero new production math nodes. ONE printed source Theorem2.22; eleven retained proof declarations and one complete definition are a proof refinement, not eleven printed results. Zero new production mathematics or canonical registry nodes. Actual selected graph21nodes3026direct references includes11producerproofs/1definition/9canaryproofs;20required value pairs; not a full registry graph. Earlier12node1880readiness is separate and exactly retained.",
+      "after": "Library dependency in the global-minorant route used by Jensen.",
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/highlights.json/BanditRL.OnlineConvex.affine_support_of_finite_neighborhood/position",
+      "before": "Orabona v10 Theorem2.22 printed17/PDF29: one source result, necessary shared proof interfaces.",
+      "after": "Supporting library lemma for the Jensen implementation; no separate printed source theorem is claimed here.",
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/highlights.json/BanditRL.OnlineConvex.affine_support_of_finite_neighborhood/proof_idea",
+      "before": "Accepted shared finite-neighborhood affine CONTACT dependency, unchanged; not another printed source theorem.",
+      "after": "Convexity and finiteness throughout a neighborhood produce a global affine support touching at the selected point. The proof derives no-bottom; no differentiability of the loss is assumed.",
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/highlights.json/BanditRL.OnlineConvex.affine_support_of_finite_neighborhood/lean_notes",
+      "before": "The eleven proof declarations use finite-dimensional real inner-product spaces, with completeness derived and dimension0 allowed; ambient space has zero and is nonempty. The complete real-germ definition itself has no finite-dimension binder. No arbitrary infinite-dimensional equivalence is claimed. NoBottom, NeBot, finite positive ball, local Lipschitz and continuity premises belong to particular intermediate interfaces, not the full source terminal. The generic support predicate permits all EReal functions; each theorem direction here derives noBottom before finite-part conversion. Theorem2.22 assumes convex real-height epigraph and an actual finite real value at x. Properness/noBottom and ambient interior are DERIVED in its directions; no closedness/lsc/boundedness/Lipschitz/interior oracle is added. Supports test ALL ambient y, including top outside the finite neighborhood.",
+      "after": "Finite-dimensional real normed space. The finite-neighborhood lemma derives no-bottom; the domain-interior lemma assumes it. No measure, probability or loss-differentiability binder.",
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/highlights.json/BanditRL.OnlineConvex.affine_support_of_finite_neighborhood/dependencies",
+      "before": [],
+      "after": [
+        "BanditRL.OnlineConvex.supporting_functional_at_closure"
+      ],
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/highlights.json/BanditRL.OnlineConvex.affine_support_of_domain_interior/title",
+      "before": "An affine support touching at the interior point",
+      "after": "Affine contact at a domain-interior point",
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/highlights.json/BanditRL.OnlineConvex.affine_support_of_domain_interior/chapter",
+      "before": "online-subgradient-interior",
+      "after": "online-minorant",
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/highlights.json/BanditRL.OnlineConvex.affine_support_of_domain_interior/teaching_order",
+      "before": 0,
+      "after": 2,
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/highlights.json/BanditRL.OnlineConvex.affine_support_of_domain_interior/plain",
+      "before": "A nowhere-bottom convex extended-real function has an affine global lower bound attaining its value at any specified interior domain point.",
+      "after": "No-bottom and ambient domain-interior membership imply neighborhood finiteness, so the preceding support theorem applies.",
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/highlights.json/BanditRL.OnlineConvex.affine_support_of_domain_interior/intuition",
+      "before": "Retain the equality at the supported epigraph point when normalizing the separating functional.",
+      "after": "No-bottom and ambient domain-interior membership imply neighborhood finiteness, so the preceding support theorem applies.",
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/highlights.json/BanditRL.OnlineConvex.affine_support_of_domain_interior/why",
+      "before": "One canonical shared registry supplies both source branches; one retained producer and two new proofs tracked separately.",
+      "after": "Library dependency in the global-minorant route used by Jensen.",
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/highlights.json/BanditRL.OnlineConvex.affine_support_of_domain_interior/position",
+      "before": "Orabona v10 printed17/PDF29; ambient assertion and required relative-interior footnote1, zero numbered anchors.",
+      "after": "Supporting library lemma for the Jensen implementation; no separate printed source theorem is claimed here.",
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/highlights.json/BanditRL.OnlineConvex.affine_support_of_domain_interior/proof_idea",
+      "before": "An interior domain point excludes a vertical epigraph support; a negative height coefficient can be normalized.",
+      "after": "No-bottom and ambient domain-interior membership imply neighborhood finiteness, so the preceding support theorem applies.",
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/highlights.json/BanditRL.OnlineConvex.affine_support_of_domain_interior/lean_notes",
+      "before": "Accepted shared finiteD REAL NORMED ambient-contact dependency, unchanged; noBottom plus ambient domain interior implies a finite point.",
+      "after": "Finite-dimensional real normed space. The finite-neighborhood lemma derives no-bottom; the domain-interior lemma assumes it. No measure, probability or loss-differentiability binder.",
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/chapters.json/online-convex/learning_goals",
+      "before": [
+        "Keep positive and negative infinity distinct from finite real values.",
+        "Understand why an epigraph characterizes convexity.",
+        "Convert between epigraph convexity and interior-weight inequalities under the exact source assumptions.",
+        "Distinguish finite constrained loss from the below-top domain; keep noBottom on the separate domain identity."
+      ],
+      "after": [
+        "Keep positive and negative infinity distinct from finite real values.",
+        "Understand why an epigraph characterizes convexity.",
+        "Convert between epigraph convexity and interior-weight inequalities under the exact source assumptions.",
+        "Distinguish finite constrained loss from the below-top domain and retain no-bottom on the domain identity."
+      ],
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/chapters.json/online-expectation/completion_definition",
+      "before": "Seven retained library proofs and three unchanged definitions, zero new proof code/nodes. This is not completion of Orabona Theorem2.9, its negative-part producer, Chapter2 or the whole book; the parent requires separate distinct revalidation.",
+      "after": "Seven retained library proofs and three unchanged definitions support signed-integral semantics in the shared library. This foundation route alone is not completion of Orabona Theorem2.9 or Chapter2; the separately integrated Jensen route includes its finite-negative-part producer.",
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/chapters.json/online-expectation/completion_blockers",
+      "before": [
+        "The historical full Jensen proof and its affine-minorant/nonclosed-barycenter dependencies need separate distinct revalidation; source loss-integrability cannot be added and probability-law canaries are separate.",
+        "Chapter2 mandatory total remains incomplete/null; all remaining main-text obligations and the whole Goal remain open."
+      ],
+      "after": [
+        "Chapter2 mandatory total remains incomplete/null; all remaining main-text obligations and the whole Goal remain open. The separately integrated Jensen route retains the source probability and finite-mean premises without adding loss integrability."
+      ],
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/chapters.json/online-barycenter/completion_blockers",
+      "before": [
+        "The historical source Jensen proof, affine-minorant negative-part producer and probability-loss canaries require separate distinct revalidation; this dependency receipt does not accept that parent.",
+        "Chapter2 mandatory total remains incomplete/null; remaining main-text obligations and the Chapters1-16 Goal stay open."
+      ],
+      "after": [
+        "Chapter2 mandatory total remains incomplete/null; remaining main-text obligations and the Chapters1-16 Goal stay open. The separately integrated Jensen route includes its affine-minorant negative-part producer and probability-loss canaries."
+      ],
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/chapters.json/online-minorant/completion_definition",
+      "before": "Four retained proofs: two touching-support helpers and two global-minorant results, zero new proof code/nodes. The two teaching links are selected representatives. This is not completion of Orabona Theorem2.9 or Chapter2.",
+      "after": "Four retained proofs: two touching-support helpers and two global-minorant results, zero new proof code/nodes. All four are linked in the teaching route. This dependency route alone is not completion of Orabona Theorem2.9 or Chapter2.",
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/chapters.json/online-minorant/completion_blockers",
+      "before": [
+        "Historical source Jensen and its finite-negative-part producer/probability-loss canaries require separate distinct revalidation; loss integrability cannot be added to the source assumptions.",
+        "Chapter2 mandatory total remains incomplete/null; all remaining main-text obligations and the Chapters1-16 Goal remain open."
+      ],
+      "after": [
+        "Chapter2 mandatory total remains incomplete/null; all remaining main-text obligations and the Chapters1-16 Goal remain open. The separately integrated source Jensen proof includes its finite-negative-part producer and probability-loss canaries; loss integrability is not a source assumption."
+      ],
+      "reason": "reviewed incoming main correction"
+    },
+    {
+      "locator": "website/content/books.json/online-learning/summary",
+      "before": "Orabona v10 shares one canonical Lean library: Chapter 1 foundations, extended convexity, closure constructions and supporting gradients, projected OGD with fixed or decreasing steps, and subsequent bounded Chapter 2 packages. Probability, EXP3 and Tsallis references remain shared. Chapter 2 and the Chapters 1-16 program remain incomplete.",
+      "after": "Orabona v10 shares one canonical Lean library: Chapter 1 foundations, extended convexity, closure constructions and supporting gradients, projected OGD with fixed or decreasing steps, and subsequent bounded Chapter 2 packages. Probability, EXP3 and Tsallis references remain shared. Chapter 2 and the Chapters 1-16 program remain incomplete. Constrained optimality, signed-integral foundations and the qualified Jensen theorem are separately integrated into this shared library; their bounded scopes do not complete Chapter 2.",
+      "reason": "reviewed incoming main correction"
+    }
+  ],
+  "files": [
+    {
+      "path": "BanditRLProof.lean",
+      "sha256": "fc6131d4374ffca079f2e2bd8368e691413e48ed2c31c3961db9745d636419f5",
+      "bytes": 50248
+    },
+    {
+      "path": "Tests.lean",
+      "sha256": "60a40af3e69b92db3f9e2674df28090805070f6d05fdf1e3465f4512e26831c2",
+      "bytes": 8437
+    },
+    {
+      "path": "BanditRLProof/OnlineConstraintFiniteLoss.lean",
+      "sha256": "f509d69341eb6397a6b7a30875893e026cdc03bf35ec2d6c3698747d7a07a00d",
+      "bytes": 1937
+    },
+    {
+      "path": "BanditRLProof/OnlineConvexMinorant.lean",
+      "sha256": "57444720dbe8783ae9f99ff2bca829c04b81f95bbe79df2af4d00a74ebde3691",
+      "bytes": 8451
+    },
+    {
+      "path": "website/content/books.json",
+      "sha256": "e46602bab9152d3fb0bd90e16416faaca743d3e4abdb94f041cbf689ce7f80bf",
+      "bytes": 4855
+    },
+    {
+      "path": "website/content/chapters.json",
+      "sha256": "28c32318ccc86cf0c3b6ebe19ab36bf99a5b7237bc18d4422b47dc381fe72834",
+      "bytes": 123196
+    },
+    {
+      "path": "website/content/highlights.json",
+      "sha256": "21813bd36a90ea50f40f59513fb0cd237cedda6198549169fa6150b57db06cad",
+      "bytes": 1503047
+    },
+    {
+      "path": "website/content/readings.json",
+      "sha256": "55e5dda76f8816cc9205d4bd78d1d96bf2851fa407c1896728e4b003b5477b2f",
+      "bytes": 919643
+    }
+  ],
+  "untouched_resolution": "Keep entire current tools/test_book_registry.py; it already includes all incoming coverage with richer schema3/ownership dynamic count assertions. Generator/README/governance accept normal main three-way merge.",
+  "gates": "not run",
+  "production": "not changed",
+  "failure_v2": "Two root snapshots were Git blobs, not original RAW; V3 uses original unchanged current RAW including two final CR bytes. V2 remains retained; no production mutation.",
+  "failure_v3": "Exact label matching treated renamed parent cards as3newcards and left stale claims. V4 replaces each original semantic parent card in place with reviewed main card; all old objects retained in snapshots/history. No target removed.",
+  "semantic_parent_card_repairs": [
+    {
+      "slug": "online-expectation",
+      "old_label": "Theorem2.9: separately mapped parent Jensen endpoint",
+      "new_label": "Theorem 2.9: parent Jensen endpoint",
+      "cards_before": 1,
+      "cards_after": 1
+    },
+    {
+      "slug": "online-barycenter",
+      "old_label": "Theorem2.9: separately mapped parent Jensen endpoint",
+      "new_label": "Theorem 2.9: parent Jensen endpoint",
+      "cards_before": 1,
+      "cards_after": 1
+    },
+    {
+      "slug": "online-minorant",
+      "old_label": "Theorem2.9: separately mapped parent Jensen endpoint",
+      "new_label": "Theorem 2.9: parent Jensen endpoint",
+      "cards_before": 1,
+      "cards_after": 1
+    }
+  ]
+}

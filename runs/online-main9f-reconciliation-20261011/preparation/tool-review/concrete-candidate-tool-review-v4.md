@@ -1,0 +1,7 @@
+# Concrete reconciliation V4: independent tool successor review
+
+Accepted within bounded tooling scope; blockers empty. Corrects the scope of the previous V3 tool acceptance: V3 proved preservation and schema conformity, but did not detect that changed labels caused semantically duplicate Jensen parent cards. Distinct source review was necessary and found that defect; V3 is not a semantic-card-uniqueness acceptance.
+
+All60 V4 inverse corrections restore the complete four old JSON documents exactly, including the three original parent objects. In online-expectation, online-barycenter and online-minorant, the old parent is now replaced at its original slot by exactly one main corrected parent card. Card counts stay one-for-one, old stale label is absent and full new object equals incoming main. Original objects remain available in the pinned old snapshots; no mandatory source target is removed. All seven other candidate files are byte-identical to V3. All eight V4 plan SHA/size bindings match.
+
+Actual unchanged standard-library validate_contract on native V2 returns no errors; its seven protected affected files are unchanged. Native records the prior V3 semantic duplication failure and current correction rather than relabelling it successful. No new semantic roundtrip, mathematical acceptance or completed full gate is claimed by this tool review. No tracked edit, merge, build, browser or full contributor CLI run. Requested GPT-6 Astra / medium; runtime not attested.

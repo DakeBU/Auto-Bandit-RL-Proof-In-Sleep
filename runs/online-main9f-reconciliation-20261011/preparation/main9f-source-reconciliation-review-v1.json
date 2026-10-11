@@ -1,0 +1,146 @@
+{
+  "verdict": "PASS_BOUNDED_MAIN_CORRECTION_RECONCILIATION_PLAN",
+  "local_HEAD": "3db67ccf41c1c5a312c625b7ed9a2440f1183b7f",
+  "incoming_main": "9f031681d3697b82b210edd9ab736a6d4ad391f5",
+  "base_main": "1225baf19f8d247ea4b071a3cd4fd7e483b14deb",
+  "counts": {
+    "readings": {
+      "local_rows": 40,
+      "main_rows": 19,
+      "main_only_ids": []
+    },
+    "chapters": {
+      "local_rows": 40,
+      "main_rows": 19,
+      "main_only_ids": []
+    },
+    "highlights": {
+      "local_rows": 503,
+      "main_rows": 173,
+      "main_only_ids": []
+    }
+  },
+  "lean_comparisons": [
+    {
+      "path": "BanditRLProof/OnlineConstraintFiniteLoss.lean",
+      "local_sha256": "aeb108d1df6c436b4d703599b06519055c16a444624be19fdb1779f7cd0ab73e",
+      "main_sha256": "f509d69341eb6397a6b7a30875893e026cdc03bf35ec2d6c3698747d7a07a00d",
+      "exact_after_initial_comment": true,
+      "whole_blob_equal": false
+    },
+    {
+      "path": "Tests/OnlineConstraintFiniteLossCanary.lean",
+      "whole_blob_equal": true,
+      "sha256": "9e520c29226c568f911d5b9efcf1cdcfae45815defc8b54e7a6f6372fee1a4d1"
+    },
+    {
+      "path": "BanditRLProof/OnlineConvexOptimality.lean",
+      "local_sha256": "e0827b1fdba8f65640582b866c4971a1f49c78c64f685bb5e083959336d7523c",
+      "main_sha256": "e0827b1fdba8f65640582b866c4971a1f49c78c64f685bb5e083959336d7523c",
+      "exact_after_initial_comment": true,
+      "whole_blob_equal": true
+    },
+    {
+      "path": "Tests/OnlineConvexOptimalityCanary.lean",
+      "whole_blob_equal": true,
+      "sha256": "bc4cfaa474b9c7007158f906f1a325f8a1deeb8e02902fa2d299e3ca7f8a1a9b"
+    },
+    {
+      "path": "BanditRLProof/OnlineConvexBarycenter.lean",
+      "local_sha256": "962e71ff377481a02a31af6a7fe133ae0ad154fb907437ce3630780788940df4",
+      "main_sha256": "962e71ff377481a02a31af6a7fe133ae0ad154fb907437ce3630780788940df4",
+      "exact_after_initial_comment": true,
+      "whole_blob_equal": true
+    },
+    {
+      "path": "Tests/OnlineConvexBarycenterCanary.lean",
+      "whole_blob_equal": true,
+      "sha256": "5a07ea5205911953d3c62b778d45c5471b5454b823a26be83ecbb4f958ba9a46"
+    },
+    {
+      "path": "BanditRLProof/OnlineExpectation.lean",
+      "local_sha256": "5d2f92d109f72594a4a5033595798735fd2091ceb635ae9793c206bdadfc7424",
+      "main_sha256": "5d2f92d109f72594a4a5033595798735fd2091ceb635ae9793c206bdadfc7424",
+      "exact_after_initial_comment": true,
+      "whole_blob_equal": true
+    },
+    {
+      "path": "Tests/OnlineExpectationCanary.lean",
+      "whole_blob_equal": true,
+      "sha256": "768caeea218143c640ab76d190be350e9c7d5094ffb27985fe10ad4d839daeb6"
+    },
+    {
+      "path": "BanditRLProof/OnlineConvexMinorant.lean",
+      "local_sha256": "8ca81ca0b79248a15df47556057175fd6b4712d33a082508c543bd7760a15742",
+      "main_sha256": "57444720dbe8783ae9f99ff2bca829c04b81f95bbe79df2af4d00a74ebde3691",
+      "exact_after_initial_comment": true,
+      "whole_blob_equal": false
+    },
+    {
+      "path": "Tests/OnlineConvexMinorantCanary.lean",
+      "whole_blob_equal": true,
+      "sha256": "d5b2e9813afe967b932a2dea26ae7eecf03acab68aff850709924bd1f669fd0c"
+    },
+    {
+      "path": "BanditRLProof/OnlineJensen.lean",
+      "local_sha256": "88e572e3e9d51cca07fbb2f654c488cd4e39c29089ac7f87492c687018414a6c",
+      "main_sha256": "88e572e3e9d51cca07fbb2f654c488cd4e39c29089ac7f87492c687018414a6c",
+      "exact_after_initial_comment": true,
+      "whole_blob_equal": true
+    },
+    {
+      "path": "Tests/OnlineJensenCanary.lean",
+      "whole_blob_equal": true,
+      "sha256": "e0b70b3acd5227def4f8fc419101f1926f7f6b73e6a5a5103768d31e8d560828"
+    }
+  ],
+  "inventory_sha256": "198389f217161ad21b23539a2eff07ba4737eeda4620edb919d8bbfd971a11d1",
+  "recommended_object_plan": [
+    {
+      "surface": "Lean modules",
+      "action": "Accept incoming complete files only for OnlineConstraintFiniteLoss and OnlineConvexMinorant: entire content after initial block comment identical. Other four modules and six canaries already exact; do not duplicate imports or re-author proofs.",
+      "semantic_reason": "Finite-loss header now labels arbitrary ambient extension and bottom-dominant addition as interpretation/refinement; minorant header no longer falsely says the already integrated finite-negative producer is open. Neither changes any declaration/BODY."
+    },
+    {
+      "surface": "readings online-convex",
+      "action": "Update the constraint-indicator source card by its label to incoming version and accept incoming proof_bridge including finite-loss vs below-top-domain case analysis. Preserve every other local card and fields.",
+      "semantic_reason": "No-bottom is required for domain intersection, not finite-witness iff; source passage does not fix mixed infinities/ambient extension."
+    },
+    {
+      "surface": "readings online-optimality/online-expectation/online-barycenter/online-minorant/online-jensen",
+      "action": "Use the inventory to apply incoming changed fields by slug, preserving unmodified local fields. Accept full new proof_bridge, corresponding source-card corrections and minorant worked_example updates; match cards by label rather than positional truncation.",
+      "semantic_reason": "Accurate source/library attribution, neighborhood-vs-V convexity generalization, arbitrary-measure expectation vs probability Jensen, actual original nonclosed-set barycenter, global minorant rank/extension and internally produced negative part. No loss integrability/closed-domain assumption added."
+    },
+    {
+      "surface": "readings online-ogd",
+      "action": "Retain local complete source_theorems list (24 cards), including finite identity and minimum-growth; do not replace with shorter main list. Both share old source cards. Keep four curated navigation entries; future support candidate appended only after rebase."
+    },
+    {
+      "surface": "chapters",
+      "action": "Keep all40 rows and local order. For five optimality/Jensen slugs adopt bounded integrated completion language, retaining precise local counts/scope qualifiers if helpful; minorant must say allfour linked rather than twoselected. Update online-convex finite-loss status without deleting local completion boundaries. Preserve online-ogd full module union, learning goals and hard open_gaps, exact C2partial/7+6/null/Goal-active and subgradient/actualcumulative boundary. Never replace this row wholesale with shorter main. Closure/first-order source boundaries may take incoming concise integrated wording while retaining noncompletion and precise hypotheses."
+    },
+    {
+      "surface": "highlights",
+      "action": "Keep full503 object sequence/multiplicities, including inherited PosteriorKernel duplicate2 and growth. Apply incoming corrections only to matched full_name and explicit changed fields from inventory, not append main173 wholesale. Preserve each unrelated local object exactly. For shared duplicates require full-object/multiset care, not dict-based deletion.",
+      "semantic_reason": "Main updates source provenance, minorant contact-vs-global descriptions, attribution and helper-parent roles. These are replacements of existing local metadata, not new declarations."
+    },
+    {
+      "surface": "books",
+      "action": "Preserve richer local summary prefix and all33 chapter_refs/order; all five incoming new routes already included locally. Add concise constrained optimality/signed expectation/Jensen integration wording while preserving incomplete C2/book status. Do not overwrite with main shorter reference list."
+    },
+    {
+      "surface": "roots/tests/generator/governance",
+      "action": "Six imports already exist; retain local roots exactly unless genuinely absent main import found. Resolve test_book_registry by retaining local schema3/ownership/count-union assertions while carrying incoming expectations. Carry independent main Math2.0 governance/prose changes without treating them as new mathematics; tooling review should handle implementation merge."
+    }
+  ],
+  "source_semantic_assessment": "Incoming selected reader explanations are mathematically consistent with retained interfaces: minOn finite comparison uses finite V; necessity and sufficiency/ambient interior are distinct. Signed expectation is total but both-infinite subtraction not classical expectation; Jensen internally proves negative part finite. Barycenter targets original possibly nonclosed convex set; global minorant need not touch a specified point or have nonzero slope. Source literal routes vs library proofs are explicit. This is integration review of accepted main material, not a fresh full six-module proof/source acceptance.",
+  "preserve_support_work": "Current untracked support core/canaries and freeze/evidence artifacts untouched. PublicationV2 repair review remains historical; regenerate V3 against reconciled exact base after actual merge.",
+  "blockers": [],
+  "required_after_real_merge": [
+    "Resolve actual object-level diffs with unique append/dedup checks",
+    "Verify all old objects preserved modulo explicitly inventoried corrections; compare full highlight Counter",
+    "Recheck mathematics raw after comment removal and all target inventory bytes",
+    "Fresh clean-source combined gates and actual reader review, no inherited pass relabeling"
+  ],
+  "actions": "Read-only Git/source/JSON comparison; no production mutation, merge, compilation or other worktree edit."
+}

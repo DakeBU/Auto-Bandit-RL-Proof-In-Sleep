@@ -1,0 +1,3 @@
+# Main9f reconciliation evidence
+
+Exact preparation and independent reviews for a true merge of incoming main9f into the accumulated Online Book branch. V1 duplicate-index failure, V2 root Git-blob/RAW mismatch and V3 renamed-parent-card duplication are retained. V4 preserves original RAW roots, all40 local routes,503 highlights and24OGD cards, applying60 explicit metadata corrections. Two Lean differences are initial explanatory comments only. Support proof/canaries remain separate untracked candidates at this merge. No fresh combined gate, chapter acceptance, main integration of this branch or publication is claimed.

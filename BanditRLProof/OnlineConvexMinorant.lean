@@ -12,7 +12,9 @@ effective domain. Its body produces the intrinsic-interior affine-span
 restriction, direction-space interior and actual linear extension/intercept
 correction, without closedness, lsc or loss differentiability assumptions.
 All four original headers/proof bytes remain fixed in the 20261005 migration.
-Jensen's finite-negative-part producer, Chapter 2 and the whole Goal stay open.
+The bounded integration also includes Jensen's finite-negative-part producer.
+This dependency module alone does not establish the parent; Chapter 2 and the
+whole book remain incomplete.
 -/
 import BanditRLProof.OnlineConvexBarycenter
 import BanditRLProof.OnlineConvexExtended

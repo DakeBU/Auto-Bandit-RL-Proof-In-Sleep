@@ -15,9 +15,9 @@
 
 **BanditRLlib is human-understanding infrastructure for sequential learning:**
 learn why a guarantee holds, follow its Lean evidence, and see where its
-assumptions break. In response to Terence Tao's [*Math 2.0* report (October 2026,
+assumptions break. These original aims predate and resonate with Terence Tao's [*Math 2.0* report (October 2026,
 pp. 22, 25–26)](https://teorth.github.io/tao-web/slides/math-2-0-caltech-2026.pdf),
-we organize our contribution around his examples:
+we use his examples to discuss our existing work and next contributions:
 
 - **Foundations (2, 3):** a living, source-linked BanditRLwiki and a reusable,
   high-quality Lean library.
@@ -33,7 +33,7 @@ we organize our contribution around his examples:
 Together with [Samplinglib](https://dakebu.github.io/Automization-Sampling-Optimisation-Geometry-Lib/)
 and [QuantumComputinglib](https://dakebu.github.io/Quantum-Computing-Block-Encoding/),
 we connect sampling mechanisms, quantum interfaces and sequential-learning
-guarantees. This is our response to Tao's examples, not an endorsement or a claim
+guarantees. This is an alignment between our original aims and Tao's examples, not an endorsement or a claim
 that every research direction is already realized.
 
 This repository has two connected contributions:

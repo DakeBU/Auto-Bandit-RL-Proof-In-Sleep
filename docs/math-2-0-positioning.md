@@ -6,7 +6,7 @@ guarantee holds, reuse its proof ideas, and see where its assumptions stop apply
 ABRL is the proof/review harness; BanditRLlib is the maintained mathematical library
 and reader interface.
 
-This position responds to Terence Tao's [*Math 2.0* report, October 2026](https://teorth.github.io/tao-web/slides/math-2-0-caltech-2026.pdf),
+Our original aims predate and resonate with Terence Tao's [*Math 2.0* report, October 2026](https://teorth.github.io/tao-web/slides/math-2-0-caltech-2026.pdf),
 especially pp. 21–22 and 25–26. The nine directions on the
 [public positioning page](https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/math-2-0/)
 are our organization of his examples, not an official nine-goal program or an
@@ -58,6 +58,8 @@ links to existing evidence. Update the data before revising public copy.
   graph size or compression is not an automatic novelty or scientific-value score.
 - Formal proofs and counterexamples examine the specified mathematical model.
   Whether a real environment satisfies the model requires external evidence.
+
+Public introductions should lead with our original mission, explain the concrete value for new readers, and describe Tao's examples as a match. We invite learning theorists, educators, formalization researchers and mathematical-AI collaborators to improve the teaching and test which proof mechanisms transfer.
 
 This communication protocol supplements the theorem-publication and
 proof-digestion protocols; it does not change theorem acceptance gates.

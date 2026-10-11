@@ -2328,7 +2328,7 @@ def build_index(
 </section>
 
 <aside class="math-mission-strip" id="math-2-0" aria-labelledby="math-mission-title">
-  <p class="eyebrow">Our response to Terence Tao’s Math 2.0</p>
+  <p class="eyebrow">Our original aims meet Terence Tao’s Math 2.0</p>
   <h2 id="math-mission-title">A living network → understandable mathematics → new ideas.</h2>
   <p>Source-linked research maps and a reusable Lean library are the foundations. Clear explanations and interactive teaching are the human value. Proof-method transfer, ablation and verified theorem neighborhoods are the research agenda.</p>
   <a href="{href_from(page_path, 'math-2-0/index.html')}">Explore all nine directions, with current evidence and next steps →</a>
@@ -2539,7 +2539,8 @@ def build_math_2_0(output: Path, verified: bool, generated_at: str) -> None:
   <h1 class="page-title">{html.escape(content['title'])}</h1>
   <p class="hero-purpose">{html.escape(content['mission'])}</p>
   <p class="lede">A living knowledge network and a reusable Lean library support clearer explanations, interactive teaching and the search for transferable proof ideas.</p>
-  <p>Terence Tao’s <a href="{html.escape(source['url'], quote=True)}"><cite>{html.escape(source['title'])}</cite>, {html.escape(source['date'])}</a> argues that AI should strengthen human understanding throughout mathematics. Below is our response to nine examples on pp. {html.escape(source['pages'])}, organized by foundations, human value and research agenda.</p>
+  <p>Terence Tao’s <a href="{html.escape(source['url'], quote=True)}"><cite>{html.escape(source['title'])}</cite>, {html.escape(source['date'])}</a> argues that AI should strengthen human understanding throughout mathematics. Our original goals of connected knowledge, checked proofs and clearer teaching predate and resonate with this report. Below we match our work and next questions to nine examples on pp. {html.escape(source['pages'])}, organized by foundations, human value and research agenda.</p>
+  <p>We welcome collaborators in learning theory, education, formalization and mathematical AI to improve the explanations and test how proof maps can guide new methods.</p>
   <p class="mission-boundary">These are examples in Tao’s talk, not an official nine-goal program or an endorsement. “Current foundation” links to existing work; “Next contribution” names work still to do.</p>
 </section>
 {''.join(sections)}
