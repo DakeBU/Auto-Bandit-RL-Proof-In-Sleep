@@ -1,0 +1,197 @@
+{
+  "status": "CSS-author candidate only; independent review required",
+  "actor": "/root/adaptive_decoder",
+  "requested_model": "GPT-6 Astra",
+  "requested_effort": "medium",
+  "runtime_attested": false,
+  "source_HEAD": "4034f9d3c63acbb3a1b62a2683ed35c204923246",
+  "git_status_hex": "",
+  "apply_only": "candidate-site-v2.css replaces website/static/site.css after independent approval; v1 candidate retained as failed narrower attempt",
+  "original_sha256": "775a3b696a1112188fb0eef587a16fa38b1c6188090313a781e1e0dcacc47791",
+  "candidate_sha256": "5b126bf7c0739879b941dfddba81fef3ae3ba9819c06d24cac6b805c5c29698c",
+  "candidate_bytes": 135438,
+  "diff_sha256": "12a12d2b1db39aeaec19cad52c5d642d31cde46842fc757c482ce5ab69fd3141",
+  "input_pins": {
+    "website/static/site.css": "775a3b696a1112188fb0eef587a16fa38b1c6188090313a781e1e0dcacc47791",
+    "website/scripts/build_site.py": "101e495a604e3291f1b9f87c04841b1551487167f32568b292a213e8dfeb9bd8",
+    "tmp/online-main-reconciliation-reader-qa-20261011/actual-v3/reconciliation-render-failure-v1.json": "1679c88116a07804f073da19dad7f8fec4c19855f28ad6c3eca9f509e616bad5",
+    "tmp/online-main-reconciliation-reader-qa-20261011/capture-reconciliation-reader-v9.cjs": "5585639863740df5d896865fc9f3f7369f9f094c75d759c66d8a724bc32eb3c6"
+  },
+  "CSS_changes": [
+    {
+      "selector": ".source-route-status",
+      "rule": "flex-wrap: wrap",
+      "reason": "Allow badge and status text to use separate flex rows at any constrained width."
+    },
+    {
+      "selector": ".source-route-status > span, .source-route-summary-meta",
+      "rules": [
+        "min-width: 0",
+        "max-width: 100%"
+      ],
+      "reason": "Bound state/summary components to their available row width."
+    },
+    {
+      "selector": ".source-route-status > .status, .source-route-summary-meta > .status",
+      "rules": [
+        "max-width: 100%",
+        "white-space: normal",
+        "overflow-wrap: anywhere"
+      ],
+      "reason": "Override global nowrap only for source-card badges, preserving full badge text."
+    },
+    {
+      "selector": ".source-theorem-card > p, .source-theorem-contract dd",
+      "rule": "overflow-wrap: anywhere",
+      "reason": "Independent all-card preview exposed long qualified declaration names/text in20 source-note paragraphs,2 plain paragraphs and2 contract dd entries after badge repair; targeted prose wrapping avoids concealment."
+    }
+  ],
+  "preserved": [
+    "all production source/math/content/registry duplicates",
+    "all existing CSS except stated insertions",
+    "all original clipping predicates in production reader",
+    "existing formula/Lean scrolling and wrap controls",
+    "existing generated site files"
+  ],
+  "simulated_preview": {
+    "method": "fresh isolated Edge profiles and DOM injected CSS; raw generated HTTP/source bindings retained, injection explicitly labelled simulated",
+    "candidate_is_source_HEAD": false,
+    "actual_exits": [
+      {
+        "attempt": "preview-v1",
+        "exit": 1,
+        "reason": "all-card scan found long source prose overflow after badge fixed"
+      },
+      {
+        "attempt": "diagnostic-v2",
+        "exit": 1,
+        "reason": "same overflow retained; expanded element diagnostics"
+      },
+      {
+        "attempt": "preview-v3",
+        "exit": 1,
+        "reason": "all23 cards and B4 card/lesson passed geometry; helper required uppercase ACTIVE but compact page uses active"
+      },
+      {
+        "attempt": "preview-v4",
+        "exit": 1,
+        "reason": "Only for further diagnostics ACTIVE failure deferred, retained for final failure; reached chapter screenshots, then rejected module wrap initial-state mismatch"
+      }
+    ],
+    "all23_source_cards": [
+      {
+        "viewport": 1440,
+        "count": 23,
+        "max_right": 1400.609375,
+        "max_scroll_minus_client": 0
+      },
+      {
+        "viewport": 390,
+        "count": 23,
+        "max_right": 373,
+        "max_scroll_minus_client": 0
+      }
+    ],
+    "completed_panel_images": [
+      {
+        "file": "source-card-v1-1440.png",
+        "sha256": "b451a2bf7e297ac922b7c0dbdbd5c3354c16dc09c0e9a9e499e3b37050d49249",
+        "geometry": {
+          "left": 343.390625,
+          "right": 1400.609375,
+          "top": 179.921875,
+          "bottom": 1593.03125,
+          "height": 1413.109375,
+          "scrollWidth": 1057,
+          "clientWidth": 1057,
+          "viewportWidth": 1440,
+          "viewportHeight": 1814
+        }
+      },
+      {
+        "file": "source-card-v1-390.png",
+        "sha256": "96b784ad2c9b41f9f771bdfdcbc4273ca40fc501c333efd8e0bd0c5e96d27126",
+        "geometry": {
+          "left": 17,
+          "right": 373,
+          "top": 179.9375,
+          "bottom": 2892.6875,
+          "height": 2712.75,
+          "scrollWidth": 356,
+          "clientWidth": 356,
+          "viewportWidth": 390,
+          "viewportHeight": 3113
+        }
+      },
+      {
+        "file": "lesson-finite_regret_identity-v1-1440.png",
+        "sha256": "17067b8fbb9fe07b0aba1fddec702096bc81f4f709cc421413b664f3531af565",
+        "geometry": {
+          "left": 357.78125,
+          "right": 1386.21875,
+          "top": 180.375,
+          "bottom": 2275.421875,
+          "height": 2095.046875,
+          "scrollWidth": 1026,
+          "clientWidth": 1026,
+          "viewportWidth": 1440,
+          "viewportHeight": 2496
+        }
+      },
+      {
+        "file": "lesson-finite_regret_identity-v1-390.png",
+        "sha256": "b701d3c51c358813d0ed26c4096cd042022e04ba22a4f778f161baae42af8fe0",
+        "geometry": {
+          "left": 31.390625,
+          "right": 358.609375,
+          "top": 179.5,
+          "bottom": 4058.65625,
+          "height": 3879.15625,
+          "scrollWidth": 325,
+          "clientWidth": 325,
+          "viewportWidth": 390,
+          "viewportHeight": 4280
+        }
+      },
+      {
+        "file": "chapter-boundary-v1-1440.png",
+        "sha256": "440039891d998d0a06e22d5c3821c08f377b487ea466cc4cfb04a0fc2c6a8823",
+        "geometry": {
+          "left": 342.390625,
+          "right": 1401.609375,
+          "top": 180.46875,
+          "bottom": 634.71875,
+          "height": 454.25,
+          "scrollWidth": 1059,
+          "clientWidth": 1059,
+          "viewportWidth": 1440,
+          "viewportHeight": 1800
+        }
+      },
+      {
+        "file": "chapter-boundary-v1-390.png",
+        "sha256": "629fb4d2e09581dab89da9c2e951400b2ba1a1f41838d983b0d06ccb5ffc036d",
+        "geometry": {
+          "left": 16,
+          "right": 374,
+          "top": 179.84375,
+          "bottom": 1148,
+          "height": 968.15625,
+          "scrollWidth": 358,
+          "clientWidth": 358,
+          "viewportWidth": 390,
+          "viewportHeight": 1800
+        }
+      }
+    ],
+    "remaining_unexecuted": "Module wrap, unique projection and Book panels not completed due genuine retained helper state failure. No full-reader or CSS acceptance claimed."
+  },
+  "evidence_hashes": {
+    "preview-receipt-v1.json": "a5ba9961b89366aa43a58ae1b0b028db828270b41d49bbe4f1da9f4f1d747400",
+    "preview-receipt-v3.json": "712393dfc2b11c388dc938a8c56d01285db14eec975a684410b15f2455b4241c",
+    "preview-receipt-v4.json": "e82abe643210a4aac998dc8814e09016de6f750172a3bddae195bd8eaa86ef28",
+    "preview-v4\\reconciliation-render-failure-v1.json": "df637b1eb982cc769693e5b6b213e019b3a5c988944432d05927e8bdbb73ded8",
+    "simulated-reader-preview-v4.cjs": "e1fb3ec3cd2340a51c0a228b1742e19236b81e941d28696b7c90e7c842b14244"
+  },
+  "next": "Distinct CSS review of candidate-v2 exact diff; separately adjudicate helper ACTIVE/wrap assumptions without hiding actual failures. No production edits or fullgate here."
+}
