@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "policy": {
+    "control_plane_math_authority": false,
+    "salvage_before_discard": true,
+    "scheduler_default_change_requires_matched_experiments": 2,
+    "parallelism": "evidence-gated",
+    "parallel_requires_distinct_direction_fingerprints": true,
+    "cross_route_audit_if_parallel": true,
+    "failure_classes": [
+      "REFUTED",
+      "SOURCE_INVALID",
+      "API_BLOCKED",
+      "ENV_BLOCKED",
+      "IMPLEMENTATION_FAILED",
+      "NONE"
+    ],
+    "reader_backpressure_tracks": [
+      "merged_not_purified",
+      "purification_age",
+      "fine_to_conceptual_ratio"
+    ]
+  },
+  "entries": [
+    {
+      "id": "ABRL-PM-MATCHED-HARNESS-EVIDENCE",
+      "kind": "standing_instruction",
+      "status": "active",
+      "scope": [
+        "scheduler",
+        "harness-comparison"
+      ],
+      "instruction": "Do not change the default hierarchical/master-worker scheduling policy from unmatched runs. Require the configured minimum number of matched experiments on the same frozen target and route-packet hash with reviewer-owned verdicts.",
+      "process_only": true,
+      "evidence": [
+        {
+          "file": "runs/harness-comparison/latest.json",
+          "needle": "\"matched_experiments\": []",
+          "evidence_kind": "deterministic_harness_report"
+        },
+        {
+          "file": "runs/harness-comparison/latest.json",
+          "needle": "\"minimum_matched_experiments\": 2",
+          "evidence_kind": "deterministic_harness_report"
+        }
+      ],
+      "expires_when": "Replace only after the deterministic harness-comparison policy itself is intentionally versioned and independently reviewed."
+    },
+    {
+      "id": "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS",
+      "kind": "standing_instruction",
+      "status": "active",
+      "scope": [
+        "source-fidelity",
+        "SafeVerify",
+        "metadata"
+      ],
+      "instruction": "Record source-facing assumptions as atomic Lean-facing assumption items rather than one opaque prose blob so statement-fence checks can bind each assumption explicitly.",
+      "process_only": true,
+      "evidence": [
+        {
+          "file": "runs/trials.jsonl",
+          "needle": "SafeVerify metadata guard failed",
+          "evidence_kind": "reviewed_trial_failure"
+        }
+      ],
+      "expires_when": "Retire only when the statement-fence format mechanically derives atomic assumptions from the elaborated interface."
+    },
+    {
+      "id": "ABRL-NK-WINDOWS-PATH-LENGTH",
+      "kind": "negative_knowledge",
+      "status": "active",
+      "scope": [
+        "windows",
+        "build-system",
+        "module-paths"
+      ],
+      "classification": "ENV_BLOCKED",
+      "statement": "A long generated module/output path can prevent .olean creation even when direct Lean source compilation succeeds; this is environment evidence, not a theorem or proof-route refutation.",
+      "route_effect": "diagnostic-only",
+      "invalidation_keys": [
+        "filesystem path length policy",
+        "module filename",
+        "build worktree root"
+      ],
+      "evidence": [
+        {
+          "file": "runs/trials.jsonl",
+          "needle": "path too long",
+          "evidence_kind": "reviewed_trial_failure"
+        }
+      ]
+    },
+    {
+      "id": "ABRL-NK-EXP3-API-SHAPE",
+      "kind": "negative_knowledge",
+      "status": "active",
+      "scope": [
+        "Exp3",
+        "Lean API",
+        "finite-set algebra"
+      ],
+      "classification": "API_BLOCKED",
+      "statement": "The recorded EXP3 route initially failed on explicit Finset nonempty-witness and ENNReal algebra/API shape obligations; the theorem route was retained and repaired, so the failure must not retire the mathematics.",
+      "route_effect": "diagnostic-only",
+      "invalidation_keys": [
+        "Mathlib API",
+        "local normalization API",
+        "route implementation"
+      ],
+      "evidence": [
+        {
+          "file": "runs/trials.jsonl",
+          "needle": "API/algebra mismatches",
+          "evidence_kind": "reviewed_trial_failure"
+        }
+      ]
+    }
+  ]
+}
