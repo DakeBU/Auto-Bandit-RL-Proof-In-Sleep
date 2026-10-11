@@ -1,0 +1,22 @@
+{
+  "schema": "ABRL evidence-only whitespace preservation repair",
+  "created_utc": "2026-10-11T13:16:17.132556+00:00",
+  "actor": "/root",
+  "initial_commit": "210ed4fb4c1bb6e2ab0fc08f16974fb92394d6e0",
+  "failure_class": "ENV_BLOCKED",
+  "actual_replayed_check": [
+    "git",
+    "-c",
+    "core.longpaths=true",
+    "diff",
+    "--check",
+    "60f7c33ba3ffb550f1eef8831435486dba086949",
+    "210ed4fb4c1bb6e2ab0fc08f16974fb92394d6e0"
+  ],
+  "v1_actual_exit": 2,
+  "v2_actual_exit": 2,
+  "v3_actual_exit": 0,
+  "repair": "Only this exact RUN archive recognizes CR as line ending. Only exact copied local-verification/documentation.yml.run-v2.sh retains its captured final blank line. No evidence bytes or production whitespace rule altered.",
+  "root_mistake": "Original PowerShell multi-command invocation continued to commit after diffcheck failed. Original commit retained; corrective commit binds replayed failures and narrow archive-only attributes. Original tool output truncated; replay streams are separate actual executions, not recovered originals.",
+  "math_or_checker_or_historical_manifest_changed": false
+}
