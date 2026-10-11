@@ -1493,8 +1493,7 @@
         "BanditRL.OnlineGradientDescent.iterate",
         "BanditRL.OnlineGradientDescentSource.lemma_2_12",
         "BanditRL.OnlineGradientDescentSource.theorem_2_13_fixed",
-        "BanditRL.OnlineGradientDescentSource.equation_2_1",
-        "BanditRL.OnlineConvex.stronglyConvex_minimum_growth"
+        "BanditRL.OnlineGradientDescentSource.equation_2_1"
       ],
       "source_theorems": [
         {
@@ -2011,7 +2010,7 @@
           "math": "\\begin{gathered}f(p)+\\frac{\\lambda}{2}\\lVert q-p\\rVert^2\\le f(q),\\quad p\\in\\operatorname{argmin}_{x\\in V}f(x),\\quad q\\in V.\\\\c=\\frac{\\lambda}{2}\\lVert q-p\\rVert^2,\\quad g=f(q)-f(p)\\ge0.\\\\g<c\\Longrightarrow a=\\frac{g+c}{2c}\\in(0,1),\\quad 0\\le(1-a)(g-ca)<0.\\end{gathered}",
           "plain": "Let E be a real normed space and f:E to EReal be SourceProper: f never equals bottom and has a finite value somewhere. Let V be convex and contained in effectiveDomain f, so all feasible values are finite, and let lambda>=0. Assume the strong-convex segment inequality with coefficient lambda/2 for every feasible pair and every real weight 0<a<1. Supply p in V attaining the minimum over V. Then every q in V satisfies f(p)+(lambda/2)||q-p||^2<=f(q), read through toReal only at these finite endpoints.",
           "fallback": "A supplied feasible minimum of a strongly convex extended-real objective has quadratic growth on the convex feasible set where the objective is finite.",
-          "relationship": "This is a derived conditional consequence of the pinned definition, with an explicit normed-space generalization; it is not a newly attributed numbered theorem or the complete Chapter4 main result. The literal source-support route and actual implementation proof dependencies stay separate. Write c=(lambda/2)||q-p||^2 and g=f(q)-f(p)>=0. If g<c, then c>0 and a=(g+c)/(2c) lies strictly between0 and1. Convex feasibility, minimality at p and strong convexity give f(p)<=a f(p)+(1-a)f(q)-c a(1-a). Thus (1-a)(g-ca)>=0. But ca=(g+c)/2>g and1-a>0, a contradiction. When lambda=0 or p=q, no violating gap can enter this contradiction branch. The Lean proof composes the extended-real order inequalities before converting their finite endpoints; it never assumes a finite value by silently totalizing infinity. This is a locally compiled conditional B4 dependency. It does not prove existence or uniqueness of a minimum, an actual cumulative FTRL/BTRL minimizer, or either corrected full performance bound. Chapter 2 remains partial with seven required forward containers and six future claims open; B1-B7, full B4 and corrected7.47/15.31 remain open. Unmerged and unpublished.",
+          "relationship": "The shared Lean declaration is BanditRL.OnlineConvex.stronglyConvex_minimum_growth. This is a derived conditional consequence of the pinned definition, with an explicit normed-space generalization; it is not a newly attributed numbered theorem or the complete Chapter4 main result. The literal source-support route and actual implementation proof dependencies stay separate. Write c=(lambda/2)||q-p||^2 and g=f(q)-f(p)>=0. If g<c, then c>0 and a=(g+c)/(2c) lies strictly between0 and1. Convex feasibility, minimality at p and strong convexity give f(p)<=a f(p)+(1-a)f(q)-c a(1-a). Thus (1-a)(g-ca)>=0. But ca=(g+c)/2>g and1-a>0, a contradiction. When lambda=0 or p=q, no violating gap can enter this contradiction branch. The Lean proof composes the extended-real order inequalities before converting their finite endpoints; it never assumes a finite value by silently totalizing infinity. This is a locally compiled conditional B4 dependency. It does not prove existence or uniqueness of a minimum, an actual cumulative FTRL/BTRL minimizer, or either corrected full performance bound. Chapter 2 remains partial with seven required forward containers and six future claims open; B1-B7, full B4 and corrected7.47/15.31 remain open. Unmerged and unpublished.",
           "contract": {
             "model": "One proper extended-real objective on a convex feasible set where f is finite; no algorithmic run or selected cumulative objective is asserted.",
             "assumptions": "Let E be a real normed space and f:E to EReal be SourceProper: f never equals bottom and has a finite value somewhere. Let V be convex and contained in effectiveDomain f, so all feasible values are finite, and let lambda>=0. Assume the strong-convex segment inequality with coefficient lambda/2 for every feasible pair and every real weight 0<a<1. Supply p in V attaining the minimum over V. Then every q in V satisfies f(p)+(lambda/2)||q-p||^2<=f(q), read through toReal only at these finite endpoints.",
@@ -2824,7 +2823,7 @@
             "fallback": "Affine functions satisfy equality; the norm satisfies the convexity inequality."
           }
         ],
-        "boundary": "Abstract real modules and normed spaces generalize the printed Euclidean examples. Empty domains are permitted. No-bottom is required only where stated. The separate finite-loss/domain-intersection theorem, closure constructions and the rest of Chapter 2 are outside this integration."
+        "boundary": "Abstract real modules and normed spaces generalize the printed Euclidean examples. Empty domains are permitted. No-bottom is required only where stated. Closure constructions have a separate bounded reader; the finite-loss/domain-intersection consequence and the rest of Chapter 2 remain outside these foundation proofs."
       }
     },
     {
@@ -2833,8 +2832,8 @@
         "title": "Online Learning: A Modern Introduction Using Convex Optimization",
         "authors": "Francesco Orabona",
         "edition": "arXiv:1912.13213v10, 21 June 2026",
-        "sections": "Section2.1.1, four unnumbered closure operations; explicit upper-addition interpretation",
-        "pages": "printedp10/PDF22",
+        "sections": "Section 2.1.1, four unnumbered closure bullets; proofs assigned as exercises on the following page",
+        "pages": "printed pp. 10–11 / physical PDF pp. 22–23",
         "pdf_page": 22,
         "url": "https://arxiv.org/pdf/1912.13213v10"
       },
@@ -2947,6 +2946,43 @@
         "takeaway": "An epigraph intersection gives convexity of the resulting constrained loss.",
         "boundary": "The public canary verifies these distinct values and convexity, and separately instantiates empty-index and noninjective-affine cases. The separate upper-addition canary distinguishes convex-analysis addition from ordinary EReal addition. Later Chapter2 results remain incomplete.",
         "intro": "Take the zero-or-positive-infinity indicators of x>=0 and x<=2."
+      },
+      "proof_bridge": {
+        "title": "Four constructions through real-height epigraphs",
+        "summary": "Orabona leaves all four proofs as exercises. These are the retained library proof routes. Rockafellar supplies the separately attributed mixed-addition convention; neither source is credited with the implementation arguments below.",
+        "steps": [
+          {
+            "title": "Pull back along the affine input map",
+            "detail": "A point (x,r) lies in the new epigraph exactly when (A(x),r) lies in the old one. The map that applies A to the input and leaves the real height unchanged is affine. Its preimage of a convex set is convex. Injectivity, nonempty domains and finite-valued losses are unnecessary.",
+            "math": "\\(\\operatorname{epi}_{\\mathbb R}(f\\circ A)=\\{(x,r):(A(x),r)\\in\\operatorname{epi}_{\\mathbb R}f\\}.\\)",
+            "fallback": "The new epigraph is an affine preimage of the old epigraph."
+          },
+          {
+            "title": "Turn a supremum into an intersection",
+            "detail": "A real height bounds the supremum precisely when it bounds every family member. Intersections of convex epigraphs are convex. For the empty family, the library supremum is negative infinity and the intersection is the whole product space; this is an explicit formal boundary convention.",
+            "math": "\\(\\operatorname{epi}_{\\mathbb R}(\\sup_i f_i)=\\bigcap_i\\operatorname{epi}_{\\mathbb R}f_i,\\qquad\\sup\\varnothing=-\\infty.\\)",
+            "fallback": "One height bounds the supremum if and only if it bounds every member."
+          },
+          {
+            "title": "Use monotonicity between two real convexity inequalities",
+            "detail": "Here f and g are globally real-valued. Convexity of f first bounds its value at a convex combination. Global monotonicity of g carries that inequality through g; convexity of g then bounds the real convex combination. The finite-value coercion equivalence transfers this argument to the epigraph predicate.",
+            "math": "\\(g(f(\\theta x+(1-\\theta)y))\\le g(\\theta f(x)+(1-\\theta)f(y))\\le\\theta g(f(x))+(1-\\theta)g(f(y)),\\quad0\\le\\theta\\le1.\\)",
+            "fallback": "Apply convexity of f, monotonicity of g, and convexity of g in that order."
+          },
+          {
+            "title": "Use upper addition and finite-height witnesses",
+            "detail": "The named operation is upperAdd(a,b) = -(-a + -b), using ordinary bottom-dominant EReal addition inside. It agrees with real addition on finite inputs and returns positive infinity whenever either input is positive infinity, including mixed infinities. These laws follow by the extended-real cases; they are supporting library facts rather than additional printed Orabona theorems. For any extended-real a and b and real h, the upper sum is at most h exactly when a and b admit real upper heights r and s whose sum is at most h. The finite and infinite cases establish this equivalence. Lift two epigraph points using these witnesses, apply convexity to f and g separately, and add the resulting real height inequalities.",
+            "math": "\\(a+_{\\rm upper}b=-((-a)+(-b)),\\qquad (+\\infty)+_{\\rm upper}(-\\infty)=+\\infty,\\qquad r+_{\\rm upper}s=r+s\\ (r,s\\in\\mathbb R).\\) \\(a+_{\\rm upper}b\\le h\\iff\\exists r,s\\in\\mathbb R:\\ a\\le r,\\ b\\le s,\\ r+s\\le h.\\)",
+            "fallback": "Upper addition agrees with real addition but lets positive infinity dominate. Witness heights reduce upper-sum convexity to two ordinary real height inequalities."
+          },
+          {
+            "title": "Separate zero scaling from positive scaling",
+            "detail": "At zero weight the explicit scalar convention makes the function constantly zero, including infinite original values. For a positive weight, divide the finite epigraph height by that weight and use convexity of the original function. Scaling f and g independently and then applying upper-sum convexity proves the full nonnegative combination, without properness or a common nonempty domain.",
+            "math": "\\(c>0:\\quad cf(x)\\le h\\iff f(x)\\le h/c,\\qquad 0f(x)=0;\\qquad af+_{\\rm upper}bg\\text{ is convex for }a,b\\ge0.\\)",
+            "fallback": "Handle zero coefficients explicitly, divide positive coefficients, then combine the two convex functions."
+          }
+        ],
+        "boundary": "Real modules generalize the Euclidean source. Affine precomposition and suprema allow both infinities; monotone composition keeps real-valued f and g and global monotonicity. Empty supremum, top-dominant addition and zero-times-infinity are explicit conventions, not silently attributed source text. Ordinary EReal addition is not covered by the weighted-sum claim. This package does not prove the finite-loss/domain-intersection consequence, later Chapter 2 routes, or an online regret guarantee."
       }
     },
     {
