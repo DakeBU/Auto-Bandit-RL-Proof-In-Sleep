@@ -1,0 +1,60 @@
+15.5 Faster Rates Through Optimism265
+Algorithm 15.8Prescient Online Mirror Descent
+Require:Non-empty closed convexV ⊂ X ⊆R d,ψ:X →Rstrictly convex and
+differentiable onintX,x 0 ∈intX,η 1, . . . , ηT >0
+1:fort= 1toTdo
+2:Receiveℓ t :R d →(−∞,+∞], whereV ⊆domℓ t
+3:x t ∈argmin x∈V ℓt(x) + 1
+ηt
+Bψ(x;x t−1)
+4:Pay the lossℓ t(xt)
+5:end for
+15.5.1 Prescient Online Mirror Descent and Be-The-Regularized-Leader
+The results in the previous section are interesting from a game-theoretic point of view, be-
+cause they show that two players can converge to an equilibrium without any “communica-
+tion”. However, if we only care about converging to the saddle point without worrying about
+communication, we can easily do better. For example, we can use the fact that it is fine if
+one of the two players “cheats” by looking at the loss at the beginning of each round, mak-
+ing its regret non-positive, while the other uses optimistic updates. However, as discussed
+in Remark 15.16, this will change the oracle, because now one of the algorithms needs to
+access the functions rather than only their gradients.
+For example, we saw the use of best response. However, best response only guarantees
+non-positive regret, while for the optimistic proof above we need some specific negative
+terms. It turns out we can achieve them with another algorithm:Prescient Online Mirror
+Descent, that predicts in each round withx t ∈argmin x∈V ℓt(x) + 1
+ηt
+Bψ(x;x t−1), see
+Algorithm 15.8.
+Theorem 15.30Letψ:X →Rdifferentiable inintX, closed, and strictly convex. Let
+V ⊆ Xbe a non-empty closed convex set. Assumex t ∈intX,ℓ t subdifferentiable onV,
+andη t+1 ≤η t, fort= 1, . . . , T. Then,∀u∈ V, Algorithm 15.8 satisfies
+TX
+t=1
+ℓt(xt)−
+TX
+t=1
+ℓt(u)≤max
+0≤t≤T−1
+Bψ(u;x t)
+ηT
+−
+TX
+t=1
+1
+ηt
+Bψ(xt;x t−1).
+Moreover, ifη t is constant, i.e.,η t =η∀t= 1, . . . , T, we have
+TX
+t=1
+(ℓt(xt)−ℓ t(u))≤ Bψ(u;x 0)
+η − 1
+η
+TX
+t=1
+Bψ(xt;x t−1).
+ProofFrom the first-order optimality condition of Theorem 2.8 on the update, we have
+that there existsg t ∈∂ℓ t(xt)such that
+⟨ηtgt +∇ψ(x t)− ∇ψ(x t−1),u−x t⟩ ≥0,∀u∈ V.
+Hence, we have
+ηt(ℓt(xt)−ℓ t(u))≤ ⟨η tgt,x t −u⟩ ≤ ⟨∇ψ(x t−1)− ∇ψ(x t),x t −u⟩
+=B ψ(u;x t−1)−B ψ(u;x t)−B ψ(xt;x t−1),

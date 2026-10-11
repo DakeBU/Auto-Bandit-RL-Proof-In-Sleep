@@ -1,0 +1,159 @@
+{
+  "status": "focused compiled candidate only; independent BODY/canaries/combined gates not accepted here",
+  "requested_model": "GPT-6 Astra",
+  "requested_effort": "medium",
+  "runtime_attestation": false,
+  "created_utc": "2026-10-11T06:50:13.091799+00:00",
+  "source": {
+    "path": "BanditRLProof/OnlinePrescientEuclidean.lean",
+    "raw_sha256": "9b755a12d540c1039b068e4b97af90ac483a58fd1a8b40af9c806264f95d42b8",
+    "public_declarations": [
+      "BanditRL.OnlineBregman.quadratic_geometry",
+      "BanditRL.OnlinePrescientBregman.euclidean_variable_regret",
+      "BanditRL.OnlinePrescientBregman.euclidean_fixed_regret"
+    ],
+    "new_public_helpers": 0
+  },
+  "frozen_headers": {
+    "path": "docs/contracts/online-ch2-prescient-euclidean-v1/neutral-frozen-headers-v1.txt",
+    "sha256": "1d6cda54b46476323dccaeae6fc3b33e8d1494bb655b99045ea2cde569b8e20a",
+    "full_context_and_statements_equal_after_body_erasure": true
+  },
+  "preproof_context": {
+    "path": "runs/online-ch2-prescient-euclidean-20261011/production-preproof-context-v1/receipt.json",
+    "sha256": "a5449e386520464aabed4a3b60b77e05671e798e479f09656e38e58a49a70e87"
+  },
+  "attempts": [
+    {
+      "receipt": "focused-v1.json",
+      "sha256": "492c7eb834a4112d70d1dc3b567e52bb86ddd83cfca4b0f9afbe95a6543437a0",
+      "actual_exit": 1,
+      "source_sha256": "1a789241a9be1db10c378cc11dd062495ece8cb90d8d75d7cc775509309d9dc1",
+      "start_utc": "2026-10-11T06:46:12.663911+00:00",
+      "end_utc": "2026-10-11T06:46:25.947460+00:00",
+      "inputs_unchanged": true
+    },
+    {
+      "receipt": "focused-v2.json",
+      "sha256": "c4c66242818d597bb96b3deb7bb4e4128d8b7fb6d832758fe0342a668e7f899a",
+      "actual_exit": 1,
+      "source_sha256": "ee487b84aa16057fb1c8b860c4d5d3adc123c7d9ef7d15c8a9bb5f1441c01c19",
+      "start_utc": "2026-10-11T06:46:44.647358+00:00",
+      "end_utc": "2026-10-11T06:46:57.154351+00:00",
+      "inputs_unchanged": true
+    },
+    {
+      "receipt": "focused-v3.json",
+      "sha256": "1248f42b74020f79189ee50c030d343f2096c4503944de113bb25001e47b74dc",
+      "actual_exit": 0,
+      "source_sha256": "9b755a12d540c1039b068e4b97af90ac483a58fd1a8b40af9c806264f95d42b8",
+      "start_utc": "2026-10-11T06:47:28.773923+00:00",
+      "end_utc": "2026-10-11T06:47:41.900478+00:00",
+      "inputs_unchanged": true
+    },
+    {
+      "receipt": "public-probe-v1.json",
+      "sha256": "8a19a3b105b208f67e4f931c94c173914dcbb1775482a9ec9cf8eb9608640ac6",
+      "actual_exit": 0,
+      "source_sha256": "9b755a12d540c1039b068e4b97af90ac483a58fd1a8b40af9c806264f95d42b8",
+      "start_utc": "2026-10-11T06:48:24.853949+00:00",
+      "end_utc": "2026-10-11T06:48:37.727836+00:00",
+      "inputs_unchanged": true
+    },
+    {
+      "receipt": "type-value-export-v1.json",
+      "sha256": "7a96e8e30d410dd6928af8b32bbd5705fb42bc8bd622d77cfbe01ca9353325ee",
+      "actual_exit": 0,
+      "source_sha256": "9b755a12d540c1039b068e4b97af90ac483a58fd1a8b40af9c806264f95d42b8",
+      "start_utc": "2026-10-11T06:48:59.813779+00:00",
+      "end_utc": "2026-10-11T06:49:26.621868+00:00",
+      "inputs_unchanged": true
+    }
+  ],
+  "failure_classification": "Two IMPLEMENTATION_FAILED attempts: v1 redundant simp and fixed finite-sum normalization; v2 function pointwise scalar reduction and fixed finite-sum normalization. No negative mathematical verdict or statement change. All snapshots/stdout/stderr retained. v3 repairs local change and explicit finite-sum scalar equality only.",
+  "axioms": [
+    {
+      "declaration": "BanditRL.OnlineBregman.quadratic_geometry",
+      "printed_axioms": [
+        "propext",
+        "Classical.choice.{u}",
+        "Quot.sound.{u}"
+      ],
+      "normalized_axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.euclidean_variable_regret",
+      "printed_axioms": [
+        "propext",
+        "Classical.choice.{u}",
+        "Quot.sound.{u}"
+      ],
+      "normalized_axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.euclidean_fixed_regret",
+      "printed_axioms": [
+        "propext",
+        "Classical.choice.{u}",
+        "Quot.sound.{u}"
+      ],
+      "normalized_axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    }
+  ],
+  "selected_VALUE_occurrences": {
+    "BanditRL.OnlineBregman.quadratic_geometry": [
+      "hasStrictFDerivAt_norm_sq"
+    ],
+    "BanditRL.OnlinePrescientBregman.euclidean_variable_regret": [
+      "BanditRL.OnlineBregman.quadratic_geometry",
+      "BanditRL.OnlinePrescientBregman.iterate_eq_of_source_updates",
+      "BanditRL.OnlinePrescientBregman.source_variable_regret",
+      "StrongConvexOn.strictConvexOn",
+      "strongConvexOn_iff_convex"
+    ],
+    "BanditRL.OnlinePrescientBregman.euclidean_fixed_regret": [
+      "BanditRL.OnlineBregman.quadratic_geometry",
+      "BanditRL.OnlinePrescientBregman.iterate_eq_of_source_updates",
+      "BanditRL.OnlinePrescientBregman.source_fixed_regret",
+      "StrongConvexOn.strictConvexOn",
+      "strongConvexOn_iff_convex"
+    ]
+  },
+  "occurrence_boundary": "Actual complete compiled TYPE/VALUE sets; selected occurrences are not necessity, a transitive closure, imported-module implication, or acceptance. Both endpoints visibly consume shared geometry, exact existing source endpoint and actual selector-run identification.",
+  "scope": {
+    "source_domain": "X=univ explicit specialization; finite-dimensional real inner-product consumers; shared identity complete real Hilbert",
+    "losses": "Full EReal source no-bottom/domain/global-support premises retained; no affine restriction",
+    "attainment": "Conditional attained hmin updates; no universal existence or recovery after None",
+    "steps_and_scoring": "Variable positive nonincreasing used steps, last eta(T-1), pre-update max0..T-1; new-state loss scoring; negative terminal movement retained; fixedT0 permitted",
+    "unrelated_B4": "remains open",
+    "no_edits": "No shared root/Tests/Book/contracts/metadata/attributes edits by formalizer; concurrent parent evidence untouched"
+  },
+  "review_artifacts": {
+    "focused-v3-OnlinePrescientEuclidean.lean.snapshot": "9b755a12d540c1039b068e4b97af90ac483a58fd1a8b40af9c806264f95d42b8",
+    "PublicProbeV1.lean": "0326e50591921a024fe1689bf73730c1a09166ed7bd248f3d561a7e7b1e5742c",
+    "public-probe-v1.stdout": "98e80f251a998e5de07068f1a4f4d773099474375134fc4cdfa18d7524638eae",
+    "ExportValuesV1.lean": "29f6f7399fc97f155ecd92269f546c7822f50188e61d487a29864812d6c782b9",
+    "type-value-constants-v1.json": "32855356493f3e7048ba9eccce9d8186f2dbf48b601061f200ff5c2722929f4c",
+    "header-fences-safe-verify-v1.json": "3e31cb22e6356b6decfff7837cbfa97b9da96a0436591f1ff58f9546e035d05e",
+    "capture-v1.py": "642f3128f51e14b917ee29abde203051a80cb84bedc186a18c9c0c32bcd07606",
+    "capture-v2.py": "070637efb55c8414d3544c6a7281b235695c91cec2266c1215aa62454a3edc70"
+  },
+  "remaining": [
+    "Independent full BODY/source review",
+    "Canary contracts freeze and separate BODY authorization",
+    "Parent root integration and fresh combined gates",
+    "Publication/native/delivery gates as separately applicable"
+  ]
+}

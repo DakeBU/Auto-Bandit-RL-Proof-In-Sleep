@@ -1,0 +1,66 @@
+{
+  "source_sha256": "9b755a12d540c1039b068e4b97af90ac483a58fd1a8b40af9c806264f95d42b8",
+  "frozen_header_sha256": "1d6cda54b46476323dccaeae6fc3b33e8d1494bb655b99045ea2cde569b8e20a",
+  "exact_full_context_and_headers_equal_after_BODY_erasure": true,
+  "native_lifecycle_sha256": "7615541e66a372e939ea2d18684ce78a8f3d8f1202894840ef7fdfdc703c4310",
+  "scope": "Direct pure make_statement_fence/safe_verify calls; only three own declarations/own Lean file, no global MANIFEST writes or whole-loop claim",
+  "rows": [
+    {
+      "fence": {
+        "schema_version": 1,
+        "declaration": "quadratic_geometry",
+        "file": "BanditRLProof/OnlinePrescientEuclidean.lean",
+        "statement": "theorem quadratic_geometry (x y : E) : HasGradientAt (fun z : E => ‖z‖ ^ 2 / 2) y y ∧ divergence (fun z : E => ‖z‖ ^ 2 / 2) x y = ‖x - y‖ ^ 2 / 2",
+        "statement_hash": "8978b045cdcd1f94ea75d0ab201e4fd29a731c3f9f04b1cbe8dbdc03f16fb38c",
+        "source_assumptions": [],
+        "created_at": "2026-10-11T06:48:52+00:00"
+      },
+      "safe_verify": {
+        "ok": true,
+        "declaration": "quadratic_geometry",
+        "expected_statement_hash": "8978b045cdcd1f94ea75d0ab201e4fd29a731c3f9f04b1cbe8dbdc03f16fb38c",
+        "actual_statement_hash": "8978b045cdcd1f94ea75d0ab201e4fd29a731c3f9f04b1cbe8dbdc03f16fb38c",
+        "source_assumptions_preserved": true,
+        "findings": []
+      }
+    },
+    {
+      "fence": {
+        "schema_version": 1,
+        "declaration": "euclidean_variable_regret",
+        "file": "BanditRLProof/OnlinePrescientEuclidean.lean",
+        "statement": "theorem euclidean_variable_regret (V : Set E) (hV : Convex ℝ V) (hVn : V.Nonempty) (hVc : IsClosed V) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x0 : E) (x : ℕ → E) (T : ℕ) (hT : 0 < T) (hη : ∀ t < T, 0 < η t) (hinit : x 0 = x0) (hmono : ∀ t, t + 1 < T → η (t + 1) ≤ η t) (hbot : ∀ t < T, ∀ z, loss t z ≠ ⊥) (hdom : ∀ t < T, V ⊆ BanditRL.OnlineConvex.effectiveDomain (loss t)) (hs : ∀ t < T, ∀ z ∈ V, (BanditRL.OnlineConvex.SourceSubdifferential (loss t) z).Nonempty) (hmin : ∀ t < T, x (t + 1) ∈ V ∧ IsMinOn (fun z => loss t z + ((‖z - x t‖ ^ 2 / (2 * η t) : ℝ) : EReal)) V (x (t + 1))) (u : E) (hu : u ∈ V) : (∀ t ≤ T, iterate V (fun z : E => ‖z‖ ^ 2 / 2) η loss x0 t = some (x t)) ∧ (∑ t ∈ range T, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤ ((range T).sup' (nonempty_range_iff.mpr (Nat.ne_of_gt hT)) (fun t => ‖u - x t‖ ^ 2 / 2)) / η (T - 1) - ∑ t ∈ range T, ‖x (t + 1) - x t‖ ^ 2 / (2 * η t)",
+        "statement_hash": "37e429836cbaa1fcf1ade62990d9967b0acfa60188009b7737ed2dcf94878b16",
+        "source_assumptions": [],
+        "created_at": "2026-10-11T06:48:52+00:00"
+      },
+      "safe_verify": {
+        "ok": true,
+        "declaration": "euclidean_variable_regret",
+        "expected_statement_hash": "37e429836cbaa1fcf1ade62990d9967b0acfa60188009b7737ed2dcf94878b16",
+        "actual_statement_hash": "37e429836cbaa1fcf1ade62990d9967b0acfa60188009b7737ed2dcf94878b16",
+        "source_assumptions_preserved": true,
+        "findings": []
+      }
+    },
+    {
+      "fence": {
+        "schema_version": 1,
+        "declaration": "euclidean_fixed_regret",
+        "file": "BanditRLProof/OnlinePrescientEuclidean.lean",
+        "statement": "theorem euclidean_fixed_regret (V : Set E) (hV : Convex ℝ V) (hVn : V.Nonempty) (hVc : IsClosed V) (η : ℝ) (hη : 0 < η) (loss : ℕ → E → EReal) (x0 : E) (x : ℕ → E) (T : ℕ) (hinit : x 0 = x0) (hbot : ∀ t < T, ∀ z, loss t z ≠ ⊥) (hdom : ∀ t < T, V ⊆ BanditRL.OnlineConvex.effectiveDomain (loss t)) (hs : ∀ t < T, ∀ z ∈ V, (BanditRL.OnlineConvex.SourceSubdifferential (loss t) z).Nonempty) (hmin : ∀ t < T, x (t + 1) ∈ V ∧ IsMinOn (fun z => loss t z + ((‖z - x t‖ ^ 2 / (2 * η) : ℝ) : EReal)) V (x (t + 1))) (u : E) (hu : u ∈ V) : (∀ t ≤ T, iterate V (fun z : E => ‖z‖ ^ 2 / 2) (fun _ => η) loss x0 t = some (x t)) ∧ (∑ t ∈ range T, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤ ‖u - x0‖ ^ 2 / (2 * η) - (∑ t ∈ range T, ‖x (t + 1) - x t‖ ^ 2) / (2 * η)",
+        "statement_hash": "764b100bc1346eaea8ee843a85e8e0ad37634e7a5588b27224aef70e1d74c464",
+        "source_assumptions": [],
+        "created_at": "2026-10-11T06:48:52+00:00"
+      },
+      "safe_verify": {
+        "ok": true,
+        "declaration": "euclidean_fixed_regret",
+        "expected_statement_hash": "764b100bc1346eaea8ee843a85e8e0ad37634e7a5588b27224aef70e1d74c464",
+        "actual_statement_hash": "764b100bc1346eaea8ee843a85e8e0ad37634e7a5588b27224aef70e1d74c464",
+        "source_assumptions_preserved": true,
+        "findings": []
+      }
+    }
+  ]
+}
