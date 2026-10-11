@@ -1,0 +1,36 @@
+4
+Beyond
+√
+TRegret
+The guessing game in the first chapter showed us that it is possible to get logarithmic regret
+in time. However, in Chapter 2, we saw that we get only
+√
+T-regret with Online Subgradient
+Descent (OSD) on the same game. What is the reason? In this chapter, we will see that some
+sequences of losses can possess properties that make it easier for OSD to learn, but we will
+have to change the learning rate a bit.
+4.1 Strong Convexity and Online Subgradient Descent
+The losses in the guessing game in Chapter 1,ℓ t(x) = (x−y t)2 on[0,1], are not just
+Lipschitz. They possess somecurvaturethat can be exploited to achieve a better asymptotic
+regret. In a moment, we will see that the only change we will need to Online Subgradient
+Descent (OSD) is a different learning rate, dictated as usual by the regret analysis.
+The key concept we will need isstrong convexity.
+4.1.1 Convex Analysis Bits: Strong Convexity
+Here, we introduce a stronger concept of convexity that allows us to build a better lower
+bound to a function. Instead of the linear lower bound achievable using subgradients, we
+will make use of aquadraticlower bound.
+Definition 4.1Letλ≥0. A proper functionf:R d →(−∞,+∞]isλ-strongly convex
+with respect to∥ · ∥over a convex setV ⊆domfif
+f(αx+ (1−α)y)≤αf(x) + (1−α)f(y)− 1
+2 λα(1−α)∥x−y∥ 2,
+for allx,y∈ Vand allα∈(0,1).
+We will also say thatfisstrongly convex inV, if there existsλ >0and a norm such
+that the above holds.
+From the definition, it is clear that if a function isλ-strongly convex, it is alsoλ ′-strongly
+convex for any0≤λ ′ < λ. Moreover, convex functions are0-strongly convex.
+We can also obtain an equivalent characterization in terms of subgradients.
+Lemma 4.2Letλ≥0. We have thatf:R d →(−∞,+∞]isλ-strongly convex over a
+convex setV ⊆dom∂fwith respect to∥ · ∥iff
+∀x,y∈ V,∀g∈∂f(y), f(x)≥f(y) +⟨g,x−y⟩+ λ
+2 ∥x−y∥ 2 .
+34

@@ -1,0 +1,94 @@
+{
+  "schema": "neutral-header-reconstruction-v1",
+  "scope": "Header only; no proof validity or source acceptance claim",
+  "authorized_inputs": [
+    {"file":"context-v1.txt","sha256":"dda75233701f136a13d61c7d28e6b73dd2539d142f4504d2ff5f42468ea24f28"},
+    {"file":"declaration-v1.txt","sha256":"6dd6994aca1486626223fe94d723a2cd951d8fa94e489627af9cd68b5e5e0cf5"}
+  ],
+  "theorem": "BanditRL.OnlineConvex.cumulative_optimistic_stability_dual_bound",
+  "binders_in_order": [
+    {"name":"E","kind":"implicit","type":"Type*"},
+    {"name":null,"kind":"instance","type":"NormedAddCommGroup E"},
+    {"name":null,"kind":"instance","type":"NormedSpace ℝ E"},
+    {"name":"V","kind":"explicit","type":"Set E"},
+    {"name":"hV","kind":"explicit_assumption","type":"Convex ℝ V"},
+    {"name":"psi","kind":"explicit","type":"E → ℝ"},
+    {"name":"hint","kind":"explicit","type":"E → ℝ"},
+    {"name":"loss","kind":"explicit","type":"ℕ → E → EReal"},
+    {"name":"n","kind":"explicit","type":"ℕ"},
+    {"name":"lam","kind":"explicit","type":"ℝ"},
+    {"name":"hbot","kind":"explicit_assumption","type":"∀ i < n + 1, ∀ x, loss i x ≠ ⊥"},
+    {"name":"hdom","kind":"explicit_assumption","type":"∀ i < n + 1, V ⊆ effectiveDomain (loss i)"},
+    {"name":"hlam","kind":"explicit_assumption","type":"0 < lam"},
+    {"name":"hstrong","kind":"explicit_assumption","type":"let G : E → EReal := fun x => (psi x : EReal) + ∑ i ∈ range (n + 1), loss i x + extendedIndicator V x; ∀ x ∈ V, ∀ y ∈ V, ∀ a : ℝ, 0 < a → a < 1 → G (a • x + (1 - a) • y) ≤ (a : EReal) * G x + ((1 - a : ℝ) : EReal) * G y - (((lam / 2) * a * (1 - a) * ‖x - y‖ ^ 2 : ℝ) : EReal)"},
+    {"name":"p","kind":"explicit","type":"E"},
+    {"name":"hp","kind":"explicit_assumption","type":"p ∈ V"},
+    {"name":"hprediction","kind":"explicit_assumption","type":"IsMinOn (fun x => (psi x : EReal) + ∑ i ∈ range n, loss i x + (hint x : EReal)) V p"},
+    {"name":"g","kind":"explicit","type":"E →L[ℝ] ℝ"},
+    {"name":"hdifference","kind":"explicit_assumption","type":"∀ z ∈ V, (loss n p).toReal - hint p + g (z - p) ≤ (loss n z).toReal - hint z"},
+    {"name":"q","kind":"explicit","type":"E"},
+    {"name":"hq","kind":"explicit_assumption","type":"q ∈ V"}
+  ],
+  "local_objective": {
+    "header_name":"G",
+    "explanatory_alias":"actualG",
+    "definition":"fun x => (psi x : EReal) + ∑ i ∈ range (n + 1), loss i x + extendedIndicator V x",
+    "separate_let_scopes":["type of hstrong","conclusion after final colon"],
+    "not_a_theorem_argument":true,
+    "loss_indices":"0 through n inclusive",
+    "contains_hint":false,
+    "codomain":"EReal"
+  },
+  "prediction_objective": {
+    "definition":"fun x => (psi x : EReal) + ∑ i ∈ range n, loss i x + (hint x : EReal)",
+    "loss_indices":"0 through n-1; empty for n=0",
+    "contains_hint":true,
+    "minimizer_assumption":"∀ z ∈ V, prediction(p) ≤ prediction(z)",
+    "membership_separate":"hp"
+  },
+  "quantifier_scopes": {
+    "hbot":"∀ i : ℕ, i < n+1 → ∀ x : E, loss i x ≠ bottom; global in x",
+    "hdom":"∀ i : ℕ, i < n+1 → ∀ x : E, x ∈ V → loss i x < top",
+    "hstrong":"∀ x : E, x ∈ V → ∀ y : E, y ∈ V → ∀ a : ℝ, 0 < a → a < 1 → displayed EReal inequality",
+    "hprediction":"∀ z : E, z ∈ V → prediction(p) ≤ prediction(z)",
+    "hdifference":"∀ z : E, z ∈ V → displayed real affine-support inequality",
+    "q":"arbitrary feasible comparator; no minimizer assumption"
+  },
+  "norms": {
+    "hstrong":"given ambient E norm of x-y, squared",
+    "conclusion":"operator norm of continuous real linear functional g, squared",
+    "identification_with_vector_or_inner_product":"none assumed"
+  },
+  "conclusion": {
+    "expression":"let G := actualG; (G p).toReal - (G q).toReal ≤ ‖g‖ ^ 2 / (2 * lam)",
+    "arithmetic":"real",
+    "direction":"upper bound on signed objective gap",
+    "denominator_strictly_positive":true,
+    "rhs_nonnegative":true
+  },
+  "finiteness": {
+    "toReal_hazard":"Both EReal infinities map to zero; unrestricted order/arithmetic preservation cannot be presumed",
+    "loss_on_V":"hbot and hdom imply finite loss i x for all i ≤ n and x ∈ V",
+    "objectives_on_V":"finite real-valued terms plus finite EReal losses; indicator zero",
+    "evaluations":"p, q and quantified z are feasible, so every toReal occurrence is applied to a finite value",
+    "strong_combination":"hV and 0<a<1 make the convex-combination point feasible",
+    "outside_V":"No upper-finiteness hypothesis on loss; no cancellation with infinities is asserted"
+  },
+  "edge_cases": {
+    "empty_V":"Universal convexity/support clauses may be vacuous, but hp and hq cannot be supplied; full premises entail nonempty V",
+    "n_zero":"permitted; prediction is psi+hint and actualG includes loss 0",
+    "later_indices":"no conditions for i > n",
+    "lam_zero_or_negative":"excluded by hlam"
+  },
+  "not_asserted_or_assumed":[
+    "Existence or construction of p, q or g",
+    "q minimizes any objective",
+    "p minimizes actualG",
+    "Differentiability or gradient identification of g",
+    "Convexity or strong convexity of individual loss, psi or hint",
+    "Global affine support outside V",
+    "Inner product, finite-dimensionality or completeness of E",
+    "Absolute objective-gap bound, nonnegative gap, distance bound or regret-sum conclusion",
+    "Proof compilation, proof-body correctness or source faithfulness"
+  ]
+}

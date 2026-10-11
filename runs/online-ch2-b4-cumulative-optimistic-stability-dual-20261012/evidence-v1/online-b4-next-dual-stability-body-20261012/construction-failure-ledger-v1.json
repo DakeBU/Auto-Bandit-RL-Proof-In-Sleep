@@ -1,0 +1,10 @@
+{
+  "scope": "Construction and inventory preparation failures before BODY Lean execution; originals and tool receipts retained",
+  "failures": [
+    {"attempt": "inline candidate preparation 1", "actual_exit": 1, "error": "SyntaxError: bytes can only contain ASCII literal characters", "effect": "No Python execution or file creation", "repair": "Encode Unicode text explicitly"},
+    {"attempt": "inline capture preparation 1", "actual_exit": 1, "error": "UnicodeDecodeError: Windows default GBK could not read UTF-8 Lean", "effect": "capture-v1.py created; subsequent candidate/probe files untouched", "repair": "Explicit UTF-8 reads; preserve created capture"},
+    {"attempt": "inline full closure inventory 1", "actual_exit": 1, "error": "Missing inferred src/lean/Lake/Util/Casing.lean", "effect": "No manifest or successor capture written", "repair": "Exact Lake source root src/lean/lake; saved prepare-closure-v1.py"}
+  ],
+  "Lean_header_attempts": [{"attempt": "header-v1", "actual_exit": 0, "integrity_pass": true}],
+  "body_status_at_creation": "Not yet run"
+}

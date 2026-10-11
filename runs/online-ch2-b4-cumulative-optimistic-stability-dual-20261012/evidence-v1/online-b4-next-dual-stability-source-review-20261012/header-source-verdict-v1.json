@@ -1,0 +1,324 @@
+{
+  "status": "SOURCE_REVIEWED_HEADER_PROPOSAL_ACCEPTED_WITH_EXPLICIT_DELTA",
+  "verdict": "accepted-with-explicit-delta",
+  "scope": "Pre-freeze header/source/blind semantic review only; no Lean elaboration, BODY review, statement seal, proof acceptance or installation authorization.",
+  "reviewer": "/root/support_tool_review_20261012",
+  "independence": "Distinct from formalizer and neutral decoder; source PDF independently read and six cited pages rendered and personally viewed.",
+  "bindings": {
+    "proposal_manifest": {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-b4-next-dual-stability-planning-20261012\\manifest-v1.json",
+      "bytes": 1462,
+      "sha256": "58491da1630a1755f17063939628802b99e37db0c1bcbc771dc4282982375dee"
+    },
+    "header": {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-b4-next-dual-stability-planning-20261012\\neutral-header-proposal-v1.txt",
+      "bytes": 1372,
+      "sha256": "6dd6994aca1486626223fe94d723a2cd951d8fa94e489627af9cd68b5e5e0cf5"
+    },
+    "source_contract": {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-b4-next-dual-stability-planning-20261012\\source-contract-proposal-v1.md",
+      "bytes": 7741,
+      "sha256": "597eabebd444073f0deb495002b3005e7985acdf9ba44fd24d31980df02d5f2f"
+    },
+    "blind_reconstruction": {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\neutral-declaration-20261012-s2\\reconstruction-v1.json",
+      "bytes": 5511,
+      "sha256": "efac1de92d58b36f3afda084ed54a909b3eb446085727c42569a777a0bf069f2"
+    },
+    "neutral_context": {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\neutral-declaration-20261012-s2\\context-v1.txt",
+      "bytes": 692,
+      "sha256": "dda75233701f136a13d61c7d28e6b73dd2539d142f4504d2ff5f42468ea24f28"
+    },
+    "sharp_parent_header": {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-b4-next-stability-freeze-20261012\\neutral-frozen-header-v1.txt",
+      "bytes": 1474,
+      "sha256": "b713181a47d73e4858a39309986bcb6ad98e4b24bea68911b0e7f24f51cfa51b"
+    },
+    "source_pdf": {
+      "path": "E:\\ABRL\\worktrees\\research-online-ogd\\tmp\\pdfs\\orabona-v10.pdf",
+      "bytes": 3483459,
+      "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17"
+    }
+  },
+  "source_pages": {
+    "visually_reviewed_pdf_pages": [
+      113,
+      114,
+      141,
+      142,
+      278,
+      279
+    ],
+    "printed_pages": [
+      101,
+      102,
+      129,
+      130,
+      266,
+      267
+    ],
+    "additional_definition_text_pages": [
+      46,
+      53
+    ],
+    "anchors": [
+      "Lemma7.5",
+      "Algorithm7.8/Theorem7.47",
+      "Algorithm15.9/Theorem15.31",
+      "Definition4.1",
+      "Definition4.15/Remark4.16"
+    ]
+  },
+  "seven_slots": [
+    {
+      "slot": 1,
+      "name": "objects_and_spaces",
+      "verdict": "accepted-with-explicit-delta",
+      "finding": "Source uses finite-dimensional vectors with a chosen norm. Header uses any real normed space and an actual continuous scalar functional, retaining the original primal norm and its operator dual. psi/hint are real ambient functions; losses are ordinary EReal, never bottom and finite on common V. G is the actual prefix through n plus psi and indicator, with no hint. This is a normed-space generalization of the local numerical step, not a coordinate-isometry claim.",
+      "blind_agreement": true
+    },
+    {
+      "slot": 2,
+      "name": "quantifiers",
+      "verdict": "accepted-with-explicit-delta",
+      "finding": "n=0 allowed, current prefix range(n+1), predictive prefix range n; downstream n=t-1. Global no-bottom applies only included loss indices. Feasibility p,q is explicit. Prediction minimization and difference support quantify all z in V. q is arbitrary feasible, stronger than the particular next prediction needed downstream; no q-minimizer/existence claim. All admissible supplied g are covered, including zero.",
+      "blind_agreement": true
+    },
+    {
+      "slot": 3,
+      "name": "assumptions_and_regularity",
+      "verdict": "accepted-with-explicit-delta",
+      "finding": "Convex V, finite included losses on V, supplied prior-plus-hint minimizer p, local continuous-dual support of loss_n-hint, actual total-G curvature, and lambda>0 suffice for the bounded step. Source closedness, subdifferentiability and strong convexity of prediction objective serve attainment/uniqueness in the full theorem, which this header does not assert. Common finite domain is a restriction relative to Algorithm7.8 (only played-point domain printed), consistent with Algorithm15.9 common-domain requirement. No output bound, norm inequality, G-support, regularizer-only curvature, or norm-attaining point is added as premise.",
+      "blind_agreement": true
+    },
+    {
+      "slot": 4,
+      "name": "conclusion_and_metric",
+      "verdict": "accepted-with-explicit-delta",
+      "finding": "Signed actual objective difference G(p)-G(q) is at most ||g||_*^2/(2 lambda), in real arithmetic after justified finite toReal evaluation. Matches the numerical optimization edge in Lemma7.5 and final display of Theorem7.47. It is not an absolute gap, distance, nonnegative gap, regret sum, or full numbered theorem. The regularizer-difference term belongs to subsequent assembly, not this same-psi objective difference.",
+      "blind_agreement": true
+    },
+    {
+      "slot": 5,
+      "name": "constants_and_normalization",
+      "verdict": "accepted",
+      "finding": "Source strong convexity uses lambda/2 and source numerical bound uses 1/(2 lambda); header retains both. For v=p-q, g(v)<=||g|| ||v|| and (lambda||v||-||g||)^2>=0 imply the bound with positive 2lambda. lambda=0 must be excluded although sharp parent allows it. g=0 requires no exclusion. No Euclidean substitution, factor2 drift, asymptotic hiding, or norm attainment is used.",
+      "blind_agreement": true
+    },
+    {
+      "slot": 6,
+      "name": "probability_feedback_and_time",
+      "verdict": "accepted-with-explicit-delta",
+      "finding": "Pure deterministic pointwise implication; no probability, filtration, expectation, or feedback acquisition claim. Prediction objective excludes loss_n and includes hint; actual G includes loss_n and excludes hint. Supplied p encodes the algorithmic minimizer relation without proving trajectory construction. No anticipatory choice is asserted or used.",
+      "blind_agreement": true
+    },
+    {
+      "slot": 7,
+      "name": "boundary",
+      "verdict": "accepted-with-explicit-delta",
+      "finding": "Finite common-domain, local continuous-dual, positive-curvature numerical producer only. No general infinite-valued branch, global support existence, attainment, uniqueness, coordinate-dual identification, trajectory assembly, terminal-gap cancellation, repaired full7.47/15.31, or Book closure. General normed E needs neither finite dimension nor completeness for this implication.",
+      "blind_agreement": true
+    }
+  ],
+  "binder_audit": [
+    {
+      "binders": [
+        "E",
+        "NormedAddCommGroup",
+        "NormedSpace"
+      ],
+      "classification": "TYPING",
+      "delta": "generalization",
+      "reason": "Original norm and continuous dual abstraction; source finite-dimensional instance remains a later explicit representation consumer."
+    },
+    {
+      "binders": [
+        "V",
+        "hV",
+        "psi",
+        "hint",
+        "loss",
+        "n"
+      ],
+      "classification": "SOURCE",
+      "delta": "same with explicit ambient extension and zero-based indexing",
+      "reason": "Actual cumulative/predictive objectives; restriction to V controls ambient extensions."
+    },
+    {
+      "binders": [
+        "hbot"
+      ],
+      "classification": "STANDING",
+      "delta": "source-implicit",
+      "reason": "Source loss codomain excludes negative infinity."
+    },
+    {
+      "binders": [
+        "hdom"
+      ],
+      "classification": "SOURCE",
+      "delta": "explicit bounded special-case restriction",
+      "reason": "Common finite-on-V branch, not full Algorithm7.8 domain regime."
+    },
+    {
+      "binders": [
+        "lam",
+        "hlam"
+      ],
+      "classification": "SOURCE",
+      "delta": "mathematically-necessary",
+      "reason": "Positive-curvature branch is required for the divided numerical step."
+    },
+    {
+      "binders": [
+        "hstrong"
+      ],
+      "classification": "SOURCE",
+      "delta": "same",
+      "reason": "Curvature of actual cumulative G; no regularizer-only strengthening."
+    },
+    {
+      "binders": [
+        "p",
+        "hp",
+        "hprediction"
+      ],
+      "classification": "SOURCE",
+      "delta": "conditioned local step",
+      "reason": "Actual source prediction relation supplied; existence not claimed."
+    },
+    {
+      "binders": [
+        "g",
+        "hdifference"
+      ],
+      "classification": "SOURCE",
+      "delta": "generalization",
+      "reason": "Source subgradient induces this local support on V; continuous-dual formulation avoids unjustified coordinate norm identity."
+    },
+    {
+      "binders": [
+        "q",
+        "hq"
+      ],
+      "classification": "TYPING",
+      "delta": "generalization",
+      "reason": "Arbitrary feasible comparator replaces a particular next prediction in the local bound."
+    }
+  ],
+  "EXCESS_binders": [],
+  "blind_mismatches": [],
+  "mathematical_check": {
+    "parent_delta": "Same sharp parent hypotheses/objectives except lambda>=0 becomes lambda>0; conclusion is numerical dual bound.",
+    "finite_arithmetic": "hbot+hdom imply each included loss real finite on V; real psi/hint and zero indicator preserve finite p,q/convex-combination G. toReal cancellation outside V is not licensed.",
+    "proof_route": "Invoke actual sharp producer; then continuous-functional operator norm bound; then nonnegative square completion with positive denominator. No new public output premise.",
+    "tight_example": "E=R,V=[-2,2],n=0,psi=x^2/2,hint=0,loss0=2x,p=0,q=-2,lambda=1,g(v)=2v: signed gap=2 and RHS=2; p is not current-G minimum.",
+    "excluded_zero_curvature": "V=[-1,1],psi=hint=0,loss0=x,p=0,q=-1,g(v)=v,lambda=0 satisfies sharp local premises; gap=1 while Lean divided RHS=0.",
+    "zero_functional": "g=0 is allowed and yields G(p)<=G(q); no norm attainment argument."
+  },
+  "source_proof_topology": {
+    "included": [
+      "sharp cumulative stability producer",
+      "dual-norm evaluation inequality (Remark4.16)",
+      "positive-curvature scalar quadratic optimization"
+    ],
+    "excluded_with_reason": {
+      "Theorem6.9_attainment_uniqueness": "Different producer; minimizer supplied and no existence conclusion here.",
+      "global_subgradient_existence": "Local support supplied; not derived by this numerical leaf.",
+      "full_regret_identity_and_regularizer_differences": "Separate sum assembly.",
+      "terminal_ghost_and_gap": "Separate repaired terminal convention and attainment obligations."
+    }
+  },
+  "terminal_boundary": "The actual optimistic finite identity retains G_T(z)-G_T(u). Repeating final hint does not make this nonpositive. An unhinted ghost needs hint_(T+1)=0, psi_(T+1)=psi_T and an actual attained minimizer; repeated-hint route needs explicit correction. BTRL repeated-point ghost and movement t<T remain separate; no repeated-loss endpoint endorsement.",
+  "remaining_required": [
+    "Parent-authorized exact statement seal and elaboration without mathematical strengthening",
+    "Proof BODY actually using accepted sharp parent and norm/scalar producers",
+    "Independent BODY/axiom/provider review",
+    "Discriminating actual canary and independent review",
+    "Canonical installation/full project/tests/harness/source/reader gates when authorized"
+  ],
+  "header_frozen": false,
+  "Lean_executed": false,
+  "proof_accepted": false,
+  "full_numbered_theorem_accepted": false,
+  "all_B1_B7_and_C1_16_targets_remain_open": true,
+  "C2_progress_unchanged": {
+    "open_forward": 7,
+    "future": 6,
+    "accepted": false,
+    "mandatory_denominator": null
+  },
+  "artifacts": [
+    {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-b4-next-dual-stability-source-review-20261012\\pdf-page-113.png",
+      "bytes": 159670,
+      "sha256": "d67f68649e78065298f5b82e8bb2343e66411de691db4ac8204faaa85527d9e0"
+    },
+    {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-b4-next-dual-stability-source-review-20261012\\pdf-page-113.txt",
+      "bytes": 2716,
+      "sha256": "e2a72f65fde4e44abf402d0c3815f1cd53e52d88e060559e1a200497abbbc042"
+    },
+    {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-b4-next-dual-stability-source-review-20261012\\pdf-page-114.png",
+      "bytes": 163808,
+      "sha256": "a709a0c7fb997c3283a57d33d09d3faf56b888b4a57fe221b1a750717787c2ab"
+    },
+    {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-b4-next-dual-stability-source-review-20261012\\pdf-page-114.txt",
+      "bytes": 2563,
+      "sha256": "54333b6adb465521c1640fd9c68289db2cb6cdcef1bc13cf734d8add1a6d0b5d"
+    },
+    {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-b4-next-dual-stability-source-review-20261012\\pdf-page-141.png",
+      "bytes": 187846,
+      "sha256": "ae11f0e2fcb792f99d30dde33589df6463dd5d599fa5cd08603aed8a606d9b06"
+    },
+    {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-b4-next-dual-stability-source-review-20261012\\pdf-page-141.txt",
+      "bytes": 3022,
+      "sha256": "dbfea1769d570c4e57bb3f93f7fd9b865233f495c47c69b9335e3d3478e7df4e"
+    },
+    {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-b4-next-dual-stability-source-review-20261012\\pdf-page-142.png",
+      "bytes": 129717,
+      "sha256": "c90dd44faccbc55419e58d4dd3c7edfc9029c0a12f1fcc0ad24b7a4977aa7c4a"
+    },
+    {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-b4-next-dual-stability-source-review-20261012\\pdf-page-142.txt",
+      "bytes": 2224,
+      "sha256": "486e8c3434bbe9d668b6ba86d6970ba3014213de0be6d8db657d6a7d86ff94ce"
+    },
+    {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-b4-next-dual-stability-source-review-20261012\\pdf-page-278.png",
+      "bytes": 120378,
+      "sha256": "3fa07e08018c444e110a5b8a373509429847f508cfc0c9204fa37da29e4b1c5a"
+    },
+    {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-b4-next-dual-stability-source-review-20261012\\pdf-page-278.txt",
+      "bytes": 1804,
+      "sha256": "82a0457980da5af1fa4c75acbfa84a982e417197e29dad73508d5800ccc928af"
+    },
+    {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-b4-next-dual-stability-source-review-20261012\\pdf-page-279.png",
+      "bytes": 158312,
+      "sha256": "eea488de42cca1cb41c00f409c46a84b7a7c3d513eb27f8082f35e6f52d71c27"
+    },
+    {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-b4-next-dual-stability-source-review-20261012\\pdf-page-279.txt",
+      "bytes": 2519,
+      "sha256": "66de52632c2434bc03952a74e84510dda7b68077d0d60e8257763403dae7bc35"
+    },
+    {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-b4-next-dual-stability-source-review-20261012\\pdf-page-46.txt",
+      "bytes": 2007,
+      "sha256": "a9c52f344a15493f6640fcdae5aff7d3323e131d7790e49db50932e349ab97fa"
+    },
+    {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-b4-next-dual-stability-source-review-20261012\\pdf-page-53.txt",
+      "bytes": 3031,
+      "sha256": "dcc82774e52f69b538da2c3f6921a49e56f4f0cda2b0e3c65506e5bbe4824770"
+    }
+  ]
+}

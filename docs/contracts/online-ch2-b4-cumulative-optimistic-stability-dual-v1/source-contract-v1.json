@@ -1,0 +1,180 @@
+{
+  "status": "PROPOSAL_ONLY",
+  "source": {
+    "version": "Orabona v10",
+    "pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchors": [
+      "Lemma7.5 PDF113-114",
+      "Theorem7.47 PDF141-142",
+      "Algorithm15.9 common domain PDF278"
+    ]
+  },
+  "declaration": "BanditRL.OnlineConvex.cumulative_optimistic_stability_dual_bound",
+  "module": "BanditRLProof/OnlineCumulativeOptimisticStabilityDual.lean",
+  "header": {
+    "path": "tmp/online-b4-next-dual-stability-freeze-20261012/neutral-frozen-header-v1.txt",
+    "bytes": 1372,
+    "sha256": "6dd6994aca1486626223fe94d723a2cd951d8fa94e489627af9cd68b5e5e0cf5"
+  },
+  "binder_ledger": {
+    "status": "PROPOSAL_ONLY_NOT_ELABORATED_OR_FROZEN",
+    "binders": [
+      [
+        "E,NormedAddCommGroup,NormedSpace",
+        "Arbitrary original real normed space; no coordinate norm or Hilbert structure"
+      ],
+      [
+        "V,hV",
+        "Feasible convex set; p with hp supplies nonemptiness, no closedness/compactness assumption"
+      ],
+      [
+        "psi,hint",
+        "Real ambient functions used only on V"
+      ],
+      [
+        "loss,n",
+        "Ordinary EReal current prefix range(n+1); n=0 allowed"
+      ],
+      [
+        "lam,hlam",
+        "Strict positive curvature for division; changed explicitly from sharp parent nonnegative curvature"
+      ],
+      [
+        "hbot",
+        "Each included loss excludes bottom globally"
+      ],
+      [
+        "hdom",
+        "Each included loss below top on V; independently needed with hbot"
+      ],
+      [
+        "hstrong",
+        "Actual current cumulative G has lambda curvature on V; not only regularizer"
+      ],
+      [
+        "p,hp,hprediction",
+        "Actual prior-prefix-plus-hint feasible minimizer; never assumed current G minimum"
+      ],
+      [
+        "g,hdifference",
+        "Continuous real dual supporting loss_n-hint locally on V; g=0 allowed"
+      ],
+      [
+        "q,hq",
+        "Arbitrary feasible comparison point, no attainment premise"
+      ]
+    ],
+    "conclusion": "Actual G difference bounded by squared operator norm of g divided by 2 lambda",
+    "hidden_premises": [],
+    "preserved_boundaries": [
+      "No global support existence",
+      "No attainment",
+      "No performance sum or ghost cancellation"
+    ]
+  },
+  "scratch_core": {
+    "path": "tmp/online-b4-next-dual-stability-body-20261012/candidate-v1.lean",
+    "bytes": 1918,
+    "sha256": "f5d25a12b0ee15f7ae1371427d7e9f06e1ffd59c8be14610d8b5e6b4df357d33"
+  },
+  "canonical_core": {
+    "path": "tmp/online-b4-next-dual-stability-integration-proposal-20261012/OnlineCumulativeOptimisticStabilityDual-candidate-v1.lean",
+    "bytes": 1929,
+    "sha256": "0621bdeb768335854ec44ffd938e7e08f01532baa9beddf7e587d98516602803"
+  },
+  "canary_context": {
+    "path": "tmp/online-b4-next-dual-stability-canary-freeze-20261012/canonical-frozen-context-and-statements-v1.txt",
+    "bytes": 3306,
+    "sha256": "cd505b523c0124de97f76a59bdbf24e840d0bb40aa6a6d8a7074e86cdca7fb16"
+  },
+  "source_delta": "This is the divided dual-norm stability implication in the finite common-domain branch of Lemma7.5 and Theorem7.47. Algorithm7.8 only ensures current-loss finiteness at the played point; common finiteness on V is an explicit additional branch qualification. Algorithm15.9 prints a common-domain condition. Local continuous-dual support is implied by, but not identified with, the source global coordinate subgradient condition. The arbitrary real normed ambient generalizes the finite-dimensional conditional inequality without any attainment assertion. The actual total objective supplies curvature, not only a regularizer. Strict lambda>0 is required for this divided bound; n=0 and g=0 remain allowed. The supplied prediction minimum concerns A+hint, not G.",
+  "proof_spine": "Apply cumulative_optimistic_stability to the same V, psi, hint, losses, n, lambda, p, g and q with lambda>=0 derived from positivity. That parent constructs support of the actual G from the prediction minimum and local loss-minus-hint support, then obtains g(p-q)-(lambda/2)||p-q||^2. ContinuousLinearMap.le_opNorm bounds g(p-q) by ||g|| ||p-q|| using the original norm on E. Since 2 lambda>0, multiply by this denominator and use the nonnegative square (lambda||p-q||-||g||)^2 to obtain ||g||^2/(2 lambda). No norm-attaining vector, nonzero g, inner product or isometry is needed.",
+  "consumers": "The tight 14-conjunct consumer uses E=R,V=[-2,2],psi=x^2/2,hint=0,loss_i=2x,n=0,lambda=1,p=0,q=-2,g=2 id. Its first conjunction genuinely invokes the dual theorem with internally proved premises. Here ||g||=2, G(0)=0, G(-2)=-2, and both actual gap and divided bound equal2. The prediction p is not a minimizer of current G; G(3)=top. A separate 14-conjunct zero-curvature discriminator uses V=[-1,1],psi=hint=0,loss_i=x,p=0,q=-1,g=id. It proves every other premise internally, actual gap1, and Lean real division at zero gives0, so the bound is false. It makes no invalid lambda0 call.",
+  "public_consumer_declarations": [
+    "BanditRL.Tests.OnlineCumulativeOptimisticStabilityDualCanary.Tight.tight_dual_stability_at_nonminimizer",
+    "BanditRL.Tests.OnlineCumulativeOptimisticStabilityDualCanary.ZeroCurvature.zero_curvature_division_is_false"
+  ],
+  "presentation_repair": {
+    "status": "EXPLICIT_REVIEWED_PRESENTATION_REPAIR",
+    "source_facing": false,
+    "diagnosis": {
+      "path": "tmp/online-cumulative-606-site-mapping-repair-20261012/diagnosis-and-repair-proposal-v1.json",
+      "bytes": 2454,
+      "sha256": "da6716773595d88d1caf6b3d38153865953148c04fb3253da575d257da372a7f"
+    },
+    "review": {
+      "path": "tmp/online-cumulative-606-site-mapping-source-review-20261012/proposal-source-verdict-v1.json",
+      "bytes": 1704,
+      "sha256": "91a287249d2648595e37911760dca0c0025b49d92206b2b1af5b88b39b6e22bf"
+    },
+    "candidate": {
+      "path": "tmp/online-cumulative-606-site-mapping-repair-20261012/highlights-candidate-606-v1.json",
+      "bytes": 1532451,
+      "sha256": "faf83202ad55a1caee8913cf3f712d6740ec80b366b0f3a70c10847b1635f2f6"
+    },
+    "existing_object_changes": [
+      {
+        "index": 505,
+        "full_name": "BanditRL.OnlineConvex.cumulative_regularizer_source_strongConvex",
+        "fields": [
+          "dependencies",
+          "lean_notes"
+        ],
+        "old": {
+          "full_name": "BanditRL.OnlineConvex.cumulative_regularizer_source_strongConvex",
+          "title": "Cumulative objectives from a strongly convex regularizer",
+          "chapter": "online-ogd",
+          "featured": false,
+          "teaching_order": 348,
+          "source_match": "closest-source",
+          "plain": "Let E be a real normed space with its original arbitrary norm, V a nonempty set, n a natural number and lambda>=0. Let psi:E to R be lambda-strongly convex on V. For every i<n, assume loss_i:E to EReal is never bottom anywhere, is below top on V, and its real restriction is convex on V. Define F(x)=psi(x)+sum_{i<n} loss_i(x)+I_V(x), using ordinary extended-real addition and I_V=0 on V/top outside. Then F is proper, dom(F)=V, F equals the real sum on V, and F satisfies the exact lambda/2 strong interpolation inequality on V. Convexity of V follows from the regularizer hypothesis. The theorem assumes no property of the resulting F.",
+          "math": "\\begin{gathered}F(x)=\\psi(x)+\\sum_{i<n}\\ell_i(x)+I_V(x),\\qquad \\operatorname{dom}F=V,\\\\F|_V=\\psi+\\sum_{i<n}\\ell_i,\\qquad F\\text{ proper},\\\\F(ax+(1-a)y)\\le aF(x)+(1-a)F(y)-\\frac{\\lambda}{2}a(1-a)\\lVert x-y\\rVert_E^2\\quad(x,y\\in V,\\ 0<a<1).\\end{gathered}",
+          "intuition": "The indicator enforces feasibility, the regularizer supplies curvature, and the finite convex loss sum preserves it. Below top and no bottom have distinct jobs.",
+          "why": "Produces the actual constrained objective properties needed before support-growth and eventual stability arguments.",
+          "position": "This is a derived sufficient-condition producer, not the full numbered source theorem. Regularizer-supplied curvature and convex component losses are stronger than assuming curvature of the total objective in Lemma7.5/7.47/15.31. Algorithm15.9 already prints a common-domain condition; common finiteness is a restriction relative to broader extended-real Algorithm7.1 branches, not a newly discovered omission there. Algorithm7.1 has psi:X to R with V subset X, while Corollary7.6 uses psi:V to R; arbitrary real extension outside V has no effect after the indicator. The below-top domain condition alone admits bottom; separate global no-bottom makes the included losses finite on V and prevents mixed-infinity addition. Zero n and zero lambda are allowed. No minimizer, support, finite-dimensionality, strict curvature, closedness or attainment is assumed or produced. Experimental core and both actual-consumer canaries compiled and passed separate source/BODY review. This cumulative canonical packet is proposed only: installation, genuine canonical TYPE/VALUE and axiom audits, combined gates, publication review and reader Exposition Seal remain pending. General cumulative-objective production beyond this sufficient componentwise branch, full Lemma4.2 iff/converse and printed equality correction, all-point support existence, closedness/attainment, stability, full Lemma7.5 and corrected Theorems7.47/15.31 remain OPEN. Chapter2 and Chapters1-16 remain incomplete; seven open forward containers, six future claims, null mandatory denominator and accepted=false are unchanged. No merge or live acceptance is claimed.",
+          "proof_idea": "For each included loss, combine below-top on V with no-bottom to identify its value with the coercion of its real part. Induct over the finite sum to exclude bottom globally and compute the sum on V. The indicator then gives the real finite identity on V and top outside, hence dom(F)=V. Apply the existing sourceProper_of_domain to this actual F, its derived no-bottom property and nonempty V. Finally sum each loss-convexity inequality and add the strongly convex regularizer inequality; rewrite the finite identities and retain precisely (lambda/2)a(1-a)||x-y||^2 in the original E norm. The source proof graph is the sufficient regularizer-curvature branch feeding cumulative parents; attainment and stability nodes are excluded as still open. The implementation uses componentwise finite sums and the shared properness parent, not a supplied-support wrapper. Two closed experimental consumer tests use the producer package as their second conjunct and project that same package into canonical stronglyConvex_support_growth as their first-conjunct provider. For V=[-1,1], n=2, psi(x)=x^2/2 and losses -x and 3x on V/top outside, F(x)=x^2/2+2x on V. At p=0, supplied functional g(z)=2z and q=1, the quadratic support bound is the tight 5/2<=5/2. For n=0, lambda=0 and psi(x)=x, an unused bottom-valued loss family is harmless and the bound is 1<=1. Including one such bottom loss instead makes the objective improper even though that loss remains below top. Both canaries prove all component premises internally and show p=0 is not a minimizer; neither fabricates an algorithmic trajectory or regret bound. They use the existing continuous-dual support parent directly, without a vector-adapter dependency.",
+          "lean_notes": "Only one producer theorem is public; proof-local constructions supply all four output properties. Core transport changes only CRLF to LF; canary transport changes only the scratch core import. Canonical imported statement/proof fingerprints remain pending. Experimental core and both actual-consumer canaries compiled and passed separate source/BODY review. This cumulative canonical packet is proposed only: installation, genuine canonical TYPE/VALUE and axiom audits, combined gates, publication review and reader Exposition Seal remain pending. General cumulative-objective production beyond this sufficient componentwise branch, full Lemma4.2 iff/converse and printed equality correction, all-point support existence, closedness/attainment, stability, full Lemma7.5 and corrected Theorems7.47/15.31 remain OPEN. Chapter2 and Chapters1-16 remain incomplete; seven open forward containers, six future claims, null mandatory denominator and accepted=false are unchanged. No merge or live acceptance is claimed.",
+          "dependencies": [
+            "BanditRL.OnlineConvex.sourceProper_of_domain",
+            "BanditRL.OnlineConvex.SourceProper",
+            "BanditRL.OnlineConvex.effectiveDomain",
+            "BanditRL.OnlineConvex.extendedIndicator",
+            "StrongConvexOn",
+            "Finset.sum_le_sum"
+          ]
+        },
+        "new": {
+          "full_name": "BanditRL.OnlineConvex.cumulative_regularizer_source_strongConvex",
+          "title": "Cumulative objectives from a strongly convex regularizer",
+          "chapter": "online-ogd",
+          "featured": false,
+          "teaching_order": 348,
+          "source_match": "closest-source",
+          "plain": "Let E be a real normed space with its original arbitrary norm, V a nonempty set, n a natural number and lambda>=0. Let psi:E to R be lambda-strongly convex on V. For every i<n, assume loss_i:E to EReal is never bottom anywhere, is below top on V, and its real restriction is convex on V. Define F(x)=psi(x)+sum_{i<n} loss_i(x)+I_V(x), using ordinary extended-real addition and I_V=0 on V/top outside. Then F is proper, dom(F)=V, F equals the real sum on V, and F satisfies the exact lambda/2 strong interpolation inequality on V. Convexity of V follows from the regularizer hypothesis. The theorem assumes no property of the resulting F.",
+          "math": "\\begin{gathered}F(x)=\\psi(x)+\\sum_{i<n}\\ell_i(x)+I_V(x),\\qquad \\operatorname{dom}F=V,\\\\F|_V=\\psi+\\sum_{i<n}\\ell_i,\\qquad F\\text{ proper},\\\\F(ax+(1-a)y)\\le aF(x)+(1-a)F(y)-\\frac{\\lambda}{2}a(1-a)\\lVert x-y\\rVert_E^2\\quad(x,y\\in V,\\ 0<a<1).\\end{gathered}",
+          "intuition": "The indicator enforces feasibility, the regularizer supplies curvature, and the finite convex loss sum preserves it. Below top and no bottom have distinct jobs.",
+          "why": "Produces the actual constrained objective properties needed before support-growth and eventual stability arguments.",
+          "position": "This is a derived sufficient-condition producer, not the full numbered source theorem. Regularizer-supplied curvature and convex component losses are stronger than assuming curvature of the total objective in Lemma7.5/7.47/15.31. Algorithm15.9 already prints a common-domain condition; common finiteness is a restriction relative to broader extended-real Algorithm7.1 branches, not a newly discovered omission there. Algorithm7.1 has psi:X to R with V subset X, while Corollary7.6 uses psi:V to R; arbitrary real extension outside V has no effect after the indicator. The below-top domain condition alone admits bottom; separate global no-bottom makes the included losses finite on V and prevents mixed-infinity addition. Zero n and zero lambda are allowed. No minimizer, support, finite-dimensionality, strict curvature, closedness or attainment is assumed or produced. Experimental core and both actual-consumer canaries compiled and passed separate source/BODY review. This cumulative canonical packet is proposed only: installation, genuine canonical TYPE/VALUE and axiom audits, combined gates, publication review and reader Exposition Seal remain pending. General cumulative-objective production beyond this sufficient componentwise branch, full Lemma4.2 iff/converse and printed equality correction, all-point support existence, closedness/attainment, stability, full Lemma7.5 and corrected Theorems7.47/15.31 remain OPEN. Chapter2 and Chapters1-16 remain incomplete; seven open forward containers, six future claims, null mandatory denominator and accepted=false are unchanged. No merge or live acceptance is claimed.",
+          "proof_idea": "For each included loss, combine below-top on V with no-bottom to identify its value with the coercion of its real part. Induct over the finite sum to exclude bottom globally and compute the sum on V. The indicator then gives the real finite identity on V and top outside, hence dom(F)=V. Apply the existing sourceProper_of_domain to this actual F, its derived no-bottom property and nonempty V. Finally sum each loss-convexity inequality and add the strongly convex regularizer inequality; rewrite the finite identities and retain precisely (lambda/2)a(1-a)||x-y||^2 in the original E norm. The source proof graph is the sufficient regularizer-curvature branch feeding cumulative parents; attainment and stability nodes are excluded as still open. The implementation uses componentwise finite sums and the shared properness parent, not a supplied-support wrapper. Two closed experimental consumer tests use the producer package as their second conjunct and project that same package into canonical stronglyConvex_support_growth as their first-conjunct provider. For V=[-1,1], n=2, psi(x)=x^2/2 and losses -x and 3x on V/top outside, F(x)=x^2/2+2x on V. At p=0, supplied functional g(z)=2z and q=1, the quadratic support bound is the tight 5/2<=5/2. For n=0, lambda=0 and psi(x)=x, an unused bottom-valued loss family is harmless and the bound is 1<=1. Including one such bottom loss instead makes the objective improper even though that loss remains below top. Both canaries prove all component premises internally and show p=0 is not a minimizer; neither fabricates an algorithmic trajectory or regret bound. They use the existing continuous-dual support parent directly, without a vector-adapter dependency.",
+          "lean_notes": "Only one producer theorem is public; proof-local constructions supply all four output properties. Core transport changes only CRLF to LF; canary transport changes only the scratch core import. Canonical imported statement/proof fingerprints remain pending. Experimental core and both actual-consumer canaries compiled and passed separate source/BODY review. This cumulative canonical packet is proposed only: installation, genuine canonical TYPE/VALUE and axiom audits, combined gates, publication review and reader Exposition Seal remain pending. General cumulative-objective production beyond this sufficient componentwise branch, full Lemma4.2 iff/converse and printed equality correction, all-point support existence, closedness/attainment, stability, full Lemma7.5 and corrected Theorems7.47/15.31 remain OPEN. Chapter2 and Chapters1-16 remain incomplete; seven open forward containers, six future claims, null mandatory denominator and accepted=false are unchanged. No merge or live acceptance is claimed. External Mathlib proof dependencies are StrongConvexOn and Finset.sum_le_sum; these remain visible here rather than local-catalog dependency edges.",
+          "dependencies": [
+            "BanditRL.OnlineConvex.sourceProper_of_domain",
+            "BanditRL.OnlineConvex.SourceProper",
+            "BanditRL.OnlineConvex.effectiveDomain",
+            "BanditRL.OnlineConvex.extendedIndicator"
+          ]
+        }
+      }
+    ],
+    "unchanged_existing_objects": 507,
+    "existing_objects": 508,
+    "meaning": "Remove only StrongConvexOn and Finset.sum_le_sum from local catalog dependencies; retain exact names in rendered lean_notes and all four local dependencies. No theorem/validator changes."
+  },
+  "truth_boundary": "Experimental core and both closed canaries compiled and passed independent BODY/source reviews. This dual canonical packet is proposed only: canonical focused builds, whole TYPE/VALUE identity, module-origin/provider/standard-axiom audits, combined root/Tests/full harness, publication review and same-source reader Exposition Seal remain pending. No minimizer is produced by this leaf. Attainment Theorem6.9 and AppendixA.3 are separately proposed dependencies, not accepted producers. General extended-domain stability, full Lemma7.5, corrected Theorem7.47 and Theorem15.31 remain open. The optimistic terminal term G_T(z)-G_T(u) remains until an actual qualified ghost minimum controls it; repeated final hints can leave a positive gap, and truncating stability alone does not repair this. Preserve seven open-forward containers, six future claims, null mandatory denominator, accepted=false and all C1-16 hard targets. No merge or live claim.",
+  "statement_fingerprint": {
+    "raw_header_sha256": "6dd6994aca1486626223fe94d723a2cd951d8fa94e489627af9cd68b5e5e0cf5",
+    "canonical_TYPE": null,
+    "canonical_VALUE": null,
+    "status": "Pending actual canonical whole Expr alpha comparison; RAW is not alpha identity."
+  }
+}

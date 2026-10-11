@@ -1,0 +1,33 @@
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-next-dual-stability-canary-body-20261012\candidate-v1.lean:61:40: error: unsolved goals
+h0 : 0 ∈ feasible
+hm2 : -2 ∈ feasible
+hvalue : ∀ x ∈ feasible, currentObjective x = ↑(x ^ 2 / 2 + 2 * x)
+hprediction : IsMinOn predictionObjective feasible 0
+z : ℝ
+hz : z ∈ feasible
+⊢ 2 * z ≤ (↑2 * ↑z).toReal
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-next-dual-stability-canary-body-20261012\candidate-v1.lean:57:59: warning: This simp argument is unused:
+  EReal.coe_le_coe_iff
+
+Hint: Omit it from the simp argument list.
+  simp only [predictionObjective, sum_range_zero, add_zero, hint, EReal.coe_zero, regularizer,
+  ̲  ̲ ̲ ̲ ̲ ̲zero_pow (by decide : 2 ≠ 0), z̵e̵r̵o̵_̵d̵i̵v̵,̵ ̵E̵R̵e̵a̵l̵.̵c̵o̵e̵_̵l̵e̵_̵c̵o̵e̵_̵i̵f̵f̵]̵z̲e̲r̲o̲_̲d̲i̲v̲]̲
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-next-dual-stability-canary-body-20261012\candidate-v1.lean:152:71: error: unsolved goals
+h0 : 0 ∈ feasible
+hm1 : -1 ∈ feasible
+hvalue : ∀ x ∈ feasible, currentObjective x = ↑x
+hprediction : IsMinOn predictionObjective feasible 0
+hdifference : ∀ z ∈ feasible, (losses 0 0).toReal - hint 0 + support (z - 0) ≤ (losses 0 z).toReal - hint z
+hbot : ∀ i < 0 + 1, ∀ (x : ℝ), losses i x ≠ ⊥
+hdom : ∀ i < 0 + 1, feasible ⊆ effectiveDomain (losses i)
+x : ℝ
+hx : x ∈ feasible
+y : ℝ
+hy : y ∈ feasible
+a : ℝ
+ha : 0 < a
+ha1 : a < 1
+hz : a • x + (1 - a) • y ∈ Set.Icc (-1) 1
+⊢ a * x - a * y + y ≤ a * x - a * y + y
