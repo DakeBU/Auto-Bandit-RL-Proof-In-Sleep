@@ -209,3 +209,5 @@ import Tests.OnlineWeightedPotentialCanary
 import Tests.OnlineUnboundedOGDCanary
 import Tests.OnlinePrescientEuclideanCanary
 import Tests.OnlineCumulativePotentialCanary
+
+import Tests.OnlineStrongConvexMinimumCanary

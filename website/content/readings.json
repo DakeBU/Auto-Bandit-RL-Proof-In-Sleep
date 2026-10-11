@@ -1493,7 +1493,8 @@
         "BanditRL.OnlineGradientDescent.iterate",
         "BanditRL.OnlineGradientDescentSource.lemma_2_12",
         "BanditRL.OnlineGradientDescentSource.theorem_2_13_fixed",
-        "BanditRL.OnlineGradientDescentSource.equation_2_1"
+        "BanditRL.OnlineGradientDescentSource.equation_2_1",
+        "BanditRL.OnlineConvex.stronglyConvex_minimum_growth"
       ],
       "source_theorems": [
         {
@@ -2000,6 +2001,28 @@
             "status": "compiled",
             "label": "Locally compiled corrected finite-real identity",
             "boundary": "Locally compiled and independently production-BODY-reviewed finite-real identity; two compiled public canaries specialize the same core to check a positive gap, nonzero drift and the terminal splice. Full source performance bounds remain open. Unmerged and unpublished."
+          }
+        },
+        {
+          "label": "Derived B4 dependency: quadratic growth at a supplied minimum",
+          "pages": "Definition4.1 printed34 / PDF46; Definition2.18 printed16 / PDF28",
+          "pdf_page": 46,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=46",
+          "math": "\\begin{gathered}f(p)+\\frac{\\lambda}{2}\\lVert q-p\\rVert^2\\le f(q),\\quad p\\in\\operatorname{argmin}_{x\\in V}f(x),\\quad q\\in V.\\\\c=\\frac{\\lambda}{2}\\lVert q-p\\rVert^2,\\quad g=f(q)-f(p)\\ge0.\\\\g<c\\Longrightarrow a=\\frac{g+c}{2c}\\in(0,1),\\quad 0\\le(1-a)(g-ca)<0.\\end{gathered}",
+          "plain": "Let E be a real normed space and f:E to EReal be SourceProper: f never equals bottom and has a finite value somewhere. Let V be convex and contained in effectiveDomain f, so all feasible values are finite, and let lambda>=0. Assume the strong-convex segment inequality with coefficient lambda/2 for every feasible pair and every real weight 0<a<1. Supply p in V attaining the minimum over V. Then every q in V satisfies f(p)+(lambda/2)||q-p||^2<=f(q), read through toReal only at these finite endpoints.",
+          "fallback": "A supplied feasible minimum of a strongly convex extended-real objective has quadratic growth on the convex feasible set where the objective is finite.",
+          "relationship": "This is a derived conditional consequence of the pinned definition, with an explicit normed-space generalization; it is not a newly attributed numbered theorem or the complete Chapter4 main result. The literal source-support route and actual implementation proof dependencies stay separate. Write c=(lambda/2)||q-p||^2 and g=f(q)-f(p)>=0. If g<c, then c>0 and a=(g+c)/(2c) lies strictly between0 and1. Convex feasibility, minimality at p and strong convexity give f(p)<=a f(p)+(1-a)f(q)-c a(1-a). Thus (1-a)(g-ca)>=0. But ca=(g+c)/2>g and1-a>0, a contradiction. When lambda=0 or p=q, no violating gap can enter this contradiction branch. The Lean proof composes the extended-real order inequalities before converting their finite endpoints; it never assumes a finite value by silently totalizing infinity. This is a locally compiled conditional B4 dependency. It does not prove existence or uniqueness of a minimum, an actual cumulative FTRL/BTRL minimizer, or either corrected full performance bound. Chapter 2 remains partial with seven required forward containers and six future claims open; B1-B7, full B4 and corrected7.47/15.31 remain open. Unmerged and unpublished.",
+          "contract": {
+            "model": "One proper extended-real objective on a convex feasible set where f is finite; no algorithmic run or selected cumulative objective is asserted.",
+            "assumptions": "Let E be a real normed space and f:E to EReal be SourceProper: f never equals bottom and has a finite value somewhere. Let V be convex and contained in effectiveDomain f, so all feasible values are finite, and let lambda>=0. Assume the strong-convex segment inequality with coefficient lambda/2 for every feasible pair and every real weight 0<a<1. Supply p in V attaining the minimum over V. Then every q in V satisfies f(p)+(lambda/2)||q-p||^2<=f(q), read through toReal only at these finite endpoints.",
+            "parameters": "lambda>=0; a supplied attained minimum p and any feasible comparator q. The coefficient is exactly lambda/2.",
+            "regret": "No regret bound in this leaf. Full corrected FTRL7.47/BTRL15.31 producers and bounds remain open.",
+            "guarantee": "The displayed quadratic minimum-growth inequality, including lambda=0 and coincident points. This is a locally compiled conditional B4 dependency. It does not prove existence or uniqueness of a minimum, an actual cumulative FTRL/BTRL minimizer, or either corrected full performance bound. Chapter 2 remains partial with seven required forward containers and six future claims open; B1-B7, full B4 and corrected7.47/15.31 remain open. Unmerged and unpublished."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Locally compiled conditional growth dependency",
+            "boundary": "This is a locally compiled conditional B4 dependency. It does not prove existence or uniqueness of a minimum, an actual cumulative FTRL/BTRL minimizer, or either corrected full performance bound. Chapter 2 remains partial with seven required forward containers and six future claims open; B1-B7, full B4 and corrected7.47/15.31 remain open. Unmerged and unpublished."
           }
         }
       ],

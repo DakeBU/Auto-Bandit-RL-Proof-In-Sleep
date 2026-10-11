@@ -1,0 +1,10 @@
+from pathlib import Path
+import subprocess,json,os,hashlib,datetime,sys
+r=Path.cwd();d=r/'tmp/online-ch2-b4-strong-convex-growth-canary-20261011';h=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();py='C:/Users/admin/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe';lake='C:/Users/admin/.elan/bin/lake.exe'
+def state():return subprocess.check_output(['git','status','--porcelain=v1']).decode()
+def run(tag,argv,env=None):
+ out=d/tag;out.mkdir(exist_ok=False);paths=[d/'Canary.lean',d/'neutral-consumer-statements-v1.txt',r/'BanditRLProof/OnlineStrongConvexMinimum.lean',r/'.lake/build/lib/lean/BanditRLProof/OnlineStrongConvexMinimum.olean'];pre={str(p):h(p) for p in paths};gs=state();start=datetime.datetime.now(datetime.timezone.utc).isoformat();z=subprocess.run(argv,cwd=r,env=env,capture_output=True);end=datetime.datetime.now(datetime.timezone.utc).isoformat();(out/'stdout.raw').write_bytes(z.stdout);(out/'stderr.raw').write_bytes(z.stderr);post={str(p):h(p) for p in paths};receipt={'argv':argv,'cwd':str(r),'start_utc':start,'end_utc':end,'actual_exit':z.returncode,'pre_RAW':pre,'post_RAW':post,'unchanged':pre==post,'pre_git_status':gs,'post_git_status':state(),'clean_claim':False,'LEAN_PATH':env.get('LEAN_PATH') if env else None,'stdout_sha256':h(out/'stdout.raw'),'stderr_sha256':h(out/'stderr.raw')};(out/'receipt.json').write_bytes((json.dumps(receipt,indent=2)+'\n').encode());print(tag,z.returncode,z.stdout.decode('utf8',errors='replace')[:1600]);assert pre==post;return z
+z=run('search-path-v1',[lake,'env',py,'-c','import os;print(os.environ["LEAN_PATH"])']);assert z.returncode==0
+env=dict(os.environ);env['LEAN_PATH']=str(d/'compiled')+os.pathsep+z.stdout.decode().strip();lean='C:/Users/admin/.elan/bin/lean.exe'
+z=run('public-olean-v1',[lean,'--root='+str(d),'-o',str(d/'compiled/Canary.olean'),str(d/'Canary.lean')],env);assert z.returncode==0
+z=run('public-probe-v1',[lean,str(d/'PublicProbe.lean')],env);assert z.returncode==0

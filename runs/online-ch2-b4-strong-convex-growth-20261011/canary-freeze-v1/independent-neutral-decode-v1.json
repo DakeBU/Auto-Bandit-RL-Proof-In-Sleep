@@ -1,0 +1,38 @@
+{
+  "actor": "/root/adaptive_decoder",
+  "requested_model": "GPT-6 Astra",
+  "requested_effort": "medium",
+  "runtime_attested": false,
+  "fresh_blind": false,
+  "prior_related_source_exposure": true,
+  "input_hashes_at_report_start": {
+    "tmp/online-ch2-b4-strong-convex-growth-canary-20261011/neutral-consumer-context-v1.txt": "9590616be44f5dcf64a7e17dac96233ca2ef607854bfc8c84bb90e3a2c110c7a",
+    "tmp/online-ch2-b4-strong-convex-growth-canary-20261011/neutral-consumer-statements-v1.txt": "e23d389bee44af90cd640f38759a23a1b7033a47972374199d6dd00bc629d9b4",
+    "docs/contracts/online-ch2-b4-strong-convex-growth-v1/neutral-frozen-header-v1.txt": "ded5adebef211f810552abbc4eced856dd9fff59f268989e9c1ff5a4ecd3d590"
+  },
+  "input_hashes_after": {
+    "tmp/online-ch2-b4-strong-convex-growth-canary-20261011/neutral-consumer-context-v1.txt": "9590616be44f5dcf64a7e17dac96233ca2ef607854bfc8c84bb90e3a2c110c7a",
+    "tmp/online-ch2-b4-strong-convex-growth-canary-20261011/neutral-consumer-statements-v1.txt": "e23d389bee44af90cd640f38759a23a1b7033a47972374199d6dd00bc629d9b4",
+    "docs/contracts/online-ch2-b4-strong-convex-growth-v1/neutral-frozen-header-v1.txt": "ded5adebef211f810552abbc4eced856dd9fff59f268989e9c1ff5a4ecd3d590"
+  },
+  "inputs_unchanged": true,
+  "allowed_input_only": true,
+  "body_read": false,
+  "compiler_run": false,
+  "certificate_ids": [
+    "BanditRL.Tests.OnlineStrongConvexMinimumCanary.square_two_exact_growth",
+    "BanditRL.Tests.OnlineStrongConvexMinimumCanary.interval_zero_extended_domain"
+  ],
+  "verdict": "neutral-statements-reconstructed-with-explicit-limitations",
+  "findings": [
+    "No explicit assumptions make either closed canary vacuous.",
+    "Square equality holds for all real comparators; standalone 9 <= 9 adds no independent constraint.",
+    "Interval top/domain/minimum conjuncts constrain the extended-domain example; exterior toReal is not used in its inequality.",
+    "Signatures alone cannot certify direct core consumption or no hidden imported axioms.",
+    "Imported SourceProper/effectiveDomain/extendedIndicator definitions are not expanded in permitted inputs."
+  ],
+  "report_sha256": "d703d79191051182e6692f65b06010c43b4aedc8725817cbe7c7d4bb307af6b8",
+  "source_acceptance": false,
+  "body_acceptance": false,
+  "compilation_authorized": false
+}
