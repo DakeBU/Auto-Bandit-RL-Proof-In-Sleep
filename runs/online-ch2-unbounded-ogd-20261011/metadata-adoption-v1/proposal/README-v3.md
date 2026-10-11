@@ -1,0 +1,3 @@
+Stable metadata prose proposal; v1/v2 and every earlier snapshot preserved. The proposal itself records fresh metadata gates PENDING at preparation UTC. Reader text states actual bounded acceptance, exact one-container reconciliation, seven+six remaining, C2partial/null and GoalACTIVE. Coverage and chapter authority distinguish separate metadata validation from earlier proof evidence. Contributor manifest pins the successful fff9 proof-source gate and actual package receipt, and points to separately recorded post-adoption validation without asserting it succeeded.
+
+No canonical edits or gates executed. Five before hashes still match. Exactly the same20 JSON-pointer changes as v2; no additional objects or mathematical fields changed.

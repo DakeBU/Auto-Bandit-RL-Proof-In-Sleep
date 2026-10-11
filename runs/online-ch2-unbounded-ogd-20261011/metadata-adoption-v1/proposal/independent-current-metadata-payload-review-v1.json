@@ -1,0 +1,67 @@
+{
+  "verdict": "repair-before-application",
+  "blocking_repairs": [
+    {
+      "id": "M1",
+      "path": "research-wiki/contribution-contracts/ONLINE-CH2-UNBOUNDED-OGD-20261011.json",
+      "pointers": [
+        "/progress_updates/results_ledger",
+        "/progress_updates/roadmap"
+      ],
+      "reason": "Both new strings violate actual checker prefix requirement at tools/check_contributor_contract.py:348-357.",
+      "repair": "Create new version adding updated: prefix to these two AFTER strings, their declared operations, hashes and manifest. Preserve v3 immutable; no broader payload rewrite needed."
+    }
+  ],
+  "reviewer": "/root/adaptive_reviewer",
+  "requested_model_effort": "GPT-6 Astra / medium; runtime not attested",
+  "reviewed_proposal_sha256": "f7b90c3d9c7476255e41610fa2a3c88823e2ed28fc5b7097653c11802ce03c86",
+  "reviewed_manifest_sha256": "dea5e25117cedc401b3ef699f29f08e7f0cd53070d2b7c99cb86761de67bd39d",
+  "approved_five_paths": [],
+  "verified_five_paths": [
+    {
+      "path": "docs/contracts/online-book-v1/coverage.json",
+      "before_sha256": "0e1f758dc4b1672d582341e82433b596864e07fd669f6a79ea4ffbc6017cb60a",
+      "after_sha256": "c41f8beecc5265ac31156016c2825adcb793f6d24a09050bd004bb0f499f1651",
+      "operations": 3
+    },
+    {
+      "path": "website/content/chapters.json",
+      "before_sha256": "61d244bee6fdf8394c7515a1a704c4f18641bc1197dfb681be1fd55ece1281dd",
+      "after_sha256": "74792b4767d6669e867c9034fc8eb09949360f1a1aaadcdd048ef92cb64eca81",
+      "operations": 1
+    },
+    {
+      "path": "website/content/readings.json",
+      "before_sha256": "8d677d53e58cf02265846a76d749d3502b6ad7838b46389372f1bb5a0fe9a599",
+      "after_sha256": "a535032521783bdf3677e4b6729f0e91fe3c86003a9b23ad06a998a732a09716",
+      "operations": 4
+    },
+    {
+      "path": "website/content/highlights.json",
+      "before_sha256": "adc22b3ae19d18b7391cee93349223600cfef71cf55ca15e1a7350ca539650a6",
+      "after_sha256": "1c8c3697a21f24c416848938aaf54fdf9cc5566b9277a65fcaa70783bf4c7a5f",
+      "operations": 1
+    },
+    {
+      "path": "research-wiki/contribution-contracts/ONLINE-CH2-UNBOUNDED-OGD-20261011.json",
+      "before_sha256": "c4052c9136b39a5c58dbbea025ba6facc8e42be2c6d1540b6ec01e4194a53310",
+      "after_sha256": "56fbbdf71b0e6435528275751b8685a3160020e8aad38f722677086f41f3110e",
+      "operations": 11
+    }
+  ],
+  "all_twenty_operations_exhaust_parsed_changes": true,
+  "all_five_current_BEFORE_RAW_match": true,
+  "input_hashes_verified": {
+    "runs/online-ch2-unbounded-ogd-20261011/closure-readiness/three-target-reconciliation-proposal-v1.json": "f88b55fc83a4d68be6801d4fc9126b6d279bcea19cae778397fe7e060916dcc9",
+    "runs/online-ch2-unbounded-ogd-20261011/accepted-bounded-package-v1.json": "b64a16f2ca7d07e720cfebde39f9ff5aacd2cf4519c382836e0252e43698c95b",
+    "runs/online-ch2-unbounded-ogd-20261011/closure-readiness/final-three-target-source-join-review-v1.json": "3b7dd333780808796529d111e9a8d00392b75267c8219648351624e602c9f88c",
+    "docs/contracts/online-ch2-unbounded-ogd-v1/source-target-reconciliation-accepted-v1.json": "c55dfc927e0b984f8ce24dfc49473bca603151bec65baf3c16e208bffcdba7a1"
+  },
+  "nonblocking_findings": [
+    "Exactly one source container 8-to-7 is authorized by separately accepted package/join/overlay; all six future claims and B1-B7 remain open; C2 partial accepted=false null denominator Goal ACTIVE.",
+    "Old reader cards, lessons and unrelated objects unchanged by complete operation replay. Chapter and coverage history strings are exact prefixes. Only newest OGD reader status is updated; formulas, source assumptions and proof content unchanged.",
+    "Stable current accepted-local wording does not instruct readers to rerun internal gates. Manifest separates actual fff9bb proof gate from still-pending post-adoption metadata validation; no fresh gate claimed."
+  ],
+  "scope": "Exact payload review only. No canonical edits/application, gates, chapter, main/live or native whole-loop acceptance.",
+  "utc": "2026-10-11T06:07:11.398053+00:00"
+}
