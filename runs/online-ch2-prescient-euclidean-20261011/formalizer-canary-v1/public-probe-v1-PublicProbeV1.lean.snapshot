@@ -1,0 +1,8 @@
+import Tests.OnlinePrescientEuclideanCanary
+set_option pp.universes true
+#check PrescientEuclideanProbe.variable_quadratic_actual_run
+#print PrescientEuclideanProbe.variable_quadratic_actual_run
+#print axioms PrescientEuclideanProbe.variable_quadratic_actual_run
+#check PrescientEuclideanProbe.fixed_quadratic_actual_run
+#print PrescientEuclideanProbe.fixed_quadratic_actual_run
+#print axioms PrescientEuclideanProbe.fixed_quadratic_actual_run

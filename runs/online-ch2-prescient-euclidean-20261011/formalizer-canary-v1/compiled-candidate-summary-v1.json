@@ -1,0 +1,133 @@
+{
+  "status": "focused compiled complete-canary candidate; independent BODY/source review and combined package gates remain separate",
+  "actor": "/root/adaptive_formalizer",
+  "requested_model": "GPT-6 Astra",
+  "requested_effort": "medium",
+  "runtime_attestation": false,
+  "created_utc": "2026-10-11T07:02:37.760929+00:00",
+  "source": {
+    "path": "Tests/OnlinePrescientEuclideanCanary.lean",
+    "raw_sha256": "dbc2a2f7660e70517a6f50826944976aa9cbbba17e37f88b8bac9fbef97e0122",
+    "public_declarations": [
+      "PrescientEuclideanProbe.variable_quadratic_actual_run",
+      "PrescientEuclideanProbe.fixed_quadratic_actual_run"
+    ],
+    "new_named_definitions_or_helper_theorems": 0
+  },
+  "frozen_headers": {
+    "path": "docs/contracts/online-ch2-prescient-euclidean-v1/neutral-frozen-complete-canary-headers-v1.txt",
+    "sha256": "06b896bedf5883f7aea542035a8c8f99de48c79bc9d9972ca57a82226fc0e6df",
+    "full_context_and_headers_exact_after_body_erasure": true
+  },
+  "precanary_context": {
+    "path": "runs/online-ch2-prescient-euclidean-20261011/pre-canary-context-v1/receipt.json",
+    "sha256": "36087798e3fc89ea91f4e6d4e563bd68c9313e207fc795f6fe444af64ec2a758"
+  },
+  "production_source_sha256_unchanged": "9b755a12d540c1039b068e4b97af90ac483a58fd1a8b40af9c806264f95d42b8",
+  "attempts": [
+    {
+      "receipt": "focused-v1.json",
+      "sha256": "ea07c02373c76a089fc24be2103a56705bf522e4ef00d0671740c323f944ef1e",
+      "actual_exit": 1,
+      "source_sha256": "1414487d955fe9cd9a506b0fb02c7b894c915d6e19ab15f634f5cd0caeef0dfd",
+      "start_utc": "2026-10-11T06:57:41.857133+00:00",
+      "end_utc": "2026-10-11T06:58:57.385664+00:00",
+      "inputs_unchanged": true
+    },
+    {
+      "receipt": "focused-v2.json",
+      "sha256": "c6fcd9e1367035af4b665daff4c37c963d7341f9be86523f8709b2b3786d9744",
+      "actual_exit": 0,
+      "source_sha256": "dbc2a2f7660e70517a6f50826944976aa9cbbba17e37f88b8bac9fbef97e0122",
+      "start_utc": "2026-10-11T06:59:44.888865+00:00",
+      "end_utc": "2026-10-11T07:00:09.017294+00:00",
+      "inputs_unchanged": true
+    },
+    {
+      "receipt": "public-probe-v1.json",
+      "sha256": "99333abefe434c29a395db56c8cd0a1a58bf88cb99b5223e3d1e289c25705bf4",
+      "actual_exit": 0,
+      "source_sha256": "dbc2a2f7660e70517a6f50826944976aa9cbbba17e37f88b8bac9fbef97e0122",
+      "start_utc": "2026-10-11T07:00:26.664805+00:00",
+      "end_utc": "2026-10-11T07:00:48.874542+00:00",
+      "inputs_unchanged": true
+    },
+    {
+      "receipt": "type-value-export-v1.json",
+      "sha256": "c8fa541688a04988afd91bc384a3060bed9470df31c063cd6f834eb9e831ff7b",
+      "actual_exit": 0,
+      "source_sha256": "dbc2a2f7660e70517a6f50826944976aa9cbbba17e37f88b8bac9fbef97e0122",
+      "start_utc": "2026-10-11T07:01:18.142957+00:00",
+      "end_utc": "2026-10-11T07:01:55.433025+00:00",
+      "inputs_unchanged": true
+    }
+  ],
+  "failure_summary": "One IMPLEMENTATION_FAILED compiler attempt: unconstrained time metavariables in unindexed domain rewrite, incomplete EReal proximal comparison unfolding, unavailable unqualified range_succ/numeric sup normalization. Repaired only local proof terms. Original source/stdout/stderr retained. Separate exporter-preparation GBK read failure is not a mathematical/compiler failure; exact observed error recorded and UTF8 correction applied.",
+  "axioms": [
+    {
+      "declaration": "PrescientEuclideanProbe.variable_quadratic_actual_run",
+      "printed": [
+        "propext",
+        "Classical.choice.{u}",
+        "Quot.sound.{u}"
+      ],
+      "normalized": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "PrescientEuclideanProbe.fixed_quadratic_actual_run",
+      "printed": [
+        "propext",
+        "Classical.choice.{u}",
+        "Quot.sound.{u}"
+      ],
+      "normalized": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    }
+  ],
+  "selected_VALUE_occurrences": {
+    "PrescientEuclideanProbe.variable_quadratic_actual_run": [
+      "BanditRL.OnlineBregman.finitePart_convex_of_subdifferentiable",
+      "BanditRL.OnlineConvex.convexExtended_iff_toReal",
+      "BanditRL.OnlineConvex.sourceProper_of_domain",
+      "BanditRL.OnlinePrescientBregman.euclidean_variable_regret",
+      "SubgradientProbe.square_support"
+    ],
+    "PrescientEuclideanProbe.fixed_quadratic_actual_run": [
+      "BanditRL.OnlineBregman.finitePart_convex_of_subdifferentiable",
+      "BanditRL.OnlineConvex.convexExtended_iff_toReal",
+      "BanditRL.OnlineConvex.sourceProper_of_domain",
+      "BanditRL.OnlinePrescientBregman.euclidean_fixed_regret",
+      "SubgradientProbe.square_support"
+    ]
+  },
+  "occurrence_scope": "Complete theorem TYPE/VALUE constant occurrence sets only, not necessity or branch-specific subterm export. Source/public proof shows hcore projections supplying run and bound; exact branch necessity is not claimed.",
+  "proof_route": {
+    "regularity": "Existing square_support -> half-scaled global support on V; top outside handled explicitly; sourceProper_of_domain and finitePart_convex_of_subdifferentiable/convexExtended_iff_toReal preserve actual EReal domain.",
+    "minimizers": "Actual two round squared objectives reduce to nonnegative (z-1)^2 and (z-last)^2; these establish attained minima and feasible states without run premises.",
+    "new_endpoint_use": "In each proof hcore(u,hu) is the corresponding new production theorem. Its .1 at comparator0 supplies exact Option iteration; its .2 for all u supplies the frozen all-comparator bound; hnum is converted from that same .2 at0. No unused theorem invocation or standalone numeric substitute.",
+    "values": "Variable states2,1,2/3; post-regret13/18, pre-regret5/2, movement1/2+1/9, bound61/18. Fixed states2,1,1/2; post-regret5/8, pre-regret5/2, movement1/2+1/8, bound11/8."
+  },
+  "evidence": {
+    "focused-v2-OnlinePrescientEuclideanCanary.lean.snapshot": "dbc2a2f7660e70517a6f50826944976aa9cbbba17e37f88b8bac9fbef97e0122",
+    "PublicProbeV1.lean": "06b7a82e2f70c18e6da9be452363c0091dc8d1d260cdd11496f8056ef1f4ea07",
+    "public-probe-v1.stdout": "2999c937b7090b3e672b825917ae59d36ab1de675146bc9976cd564b52457c06",
+    "ExportValuesV1.lean": "8add35553e9e421bfb95b10d873024fcffc1f26697e47305be42405549f4ff79",
+    "type-value-constants-v1.json": "476229819038865d1dabd2001347372bf651d455b112bedf43f810b111d5371f",
+    "header-fences-safe-verify-v1.json": "403600e70db8fa98fb375b70050f9fd1a7101142d3788461b3928d1ad65bae62",
+    "exporter-preparation-encoding-failure-v1.json": "a70ec28841d9fcba3882f22bb75d2940997278b07542b2788bb71e03cc1cece4",
+    "capture-v1.py": "7dc6bb10e947d5a344930baa2de493cef0e1dee444a97c5c576236bd6125ee4d"
+  },
+  "boundaries": [
+    "No production/core/root/metadata/Git changes by formalizer",
+    "No universal all-loss attainment or None recovery",
+    "No repair of source author-optimality gap or B4 terminals",
+    "No independent/combined/native/publication acceptance claimed"
+  ]
+}

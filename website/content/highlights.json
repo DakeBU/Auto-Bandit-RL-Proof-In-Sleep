@@ -8526,6 +8526,68 @@
         "BanditRL.OnlineUnboundedOSD.switching_loss_regular",
         "BanditRL.OnlineUnboundedOSD.switching_vector_lower_bound"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineBregman.quadratic_geometry",
+      "title": "Prescient Euclidean geometry: the quadratic derivative and divergence",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 330,
+      "source_match": "closest-source",
+      "plain": "Complete real Hilbert E: NormedAddCommGroup E, InnerProductSpace ℝ E, CompleteSpace E; arbitrary x,y. Actual gradient y and exact divergence identity form one conjunction.",
+      "math": "\\psi(z)=\\frac12\\|z\\|^2,\\qquad\\nabla\\psi(y)=y,\\qquad B_\\psi(x;y)=\\frac12\\|x-y\\|^2.",
+      "intuition": "The tangent plane of the quadratic leaves exactly half the squared distance between the two points.",
+      "why": "One of three declaration-bound parts of the same prescient Euclidean lesson.",
+      "position": "Algorithm15.8/Theorem15.30, PDF277–278; C2 pointer PDF26. Quadratic X=univ specialization; fixed proof exercise remains mandatory. The author’s constrained optimality/global-support step on PDF277 retains an unresolved source-proof justification. The alternative proximal-comparison route does not certify or erase that claim.",
+      "proof_idea": "Differentiate psi(z)=||z||²/2 to obtain the actual gradient y at y. Substitute the resulting derivative into the shared divergence and expand the squared norm to get Bpsi(x;y)=||x-y||²/2. This geometry theorem makes no algorithm-run conclusion.",
+      "lean_notes": "The complete real Hilbert-space assumptions above belong to this theorem. The full-proof source link exposes its section declarations. Selected actual compiled VALUE occurrences: hasStrictFDerivAt_norm_sq, HasGradientAt.fderiv_apply, norm_sub_sq_real. Occurrence is not necessity or a complete transitive graph. Compiled local prescient Euclidean specialization; package validation and source-target reconciliation are recorded separately. Chapter2 remains partial and the Chapters1–16 Goal active. This is unmerged and unpublished.",
+      "dependencies": [
+        "hasStrictFDerivAt_norm_sq",
+        "HasGradientAt.fderiv_apply",
+        "norm_sub_sq_real"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlinePrescientBregman.euclidean_variable_regret",
+      "title": "Prescient Euclidean bound with decreasing steps",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 331,
+      "source_match": "closest-source",
+      "plain": "Finite-dimensional real inner-product E with NormedAddCommGroup E, InnerProductSpace ℝ E and FiniteDimensional ℝ E. V is closed, nonempty and convex. Played EReal losses have no bottom anywhere, are finite on V, and have ambient global supports at every point of V. Each supplied x(t+1) actually attains the squared-distance-penalized minimum on V; initialization x(0)=x0 is fixed. x0 need not belong to V. There is no affine, smooth-loss, globally finite-loss, bounded-gradient or bounded-domain restriction. T>0; positive nonincreasing used steps. Previous-state maximum excludes x(T).",
+      "math": "R_T(u)\\le\\frac{\\max_{0\\le s<T}\\frac12\\|u-x_s\\|^2}{\\eta_{T-1}}-\\sum_{t=0}^{T-1}\\frac{\\|x_{t+1}-x_t\\|^2}{2\\eta_t}.",
+      "intuition": "Current-loss access changes the paid point. Movement contributes negatively, while the comparator potential remains.",
+      "why": "One of three declaration-bound parts of the same prescient Euclidean lesson.",
+      "position": "Algorithm15.8/Theorem15.30, PDF277–278; C2 pointer PDF26. Quadratic X=univ specialization; fixed proof exercise remains mandatory. The author’s constrained optimality/global-support step on PDF277 retains an unresolved source-proof justification. The alternative proximal-comparison route does not certify or erase that claim.",
+      "proof_idea": "Rewrite the actual quadratic penalized objective using the shared divergence identity. Strict convexity identifies each supplied feasible minimizer with the canonical choice, and induction identifies the same Option run. Apply the corresponding general source regret theorem and substitute the quadratic identity, retaining every negative movement term. The comparator u is arbitrary in V, so the theorem applies to every feasible comparator.",
+      "lean_notes": "Receive the entire current loss before choosing the new point and pay that loss at the new point. Lean loss t and eta t are source round t+1: center x(t), output/paid point x(t+1). This differs from ordinary OGD, which scores loss t at x(t). The conclusion identifies the SAME partial Option iterate at every prefix; it is conditional on attained updates and does not assert universal existence. The ambient assumptions above belong to the theorem; the full-proof source link exposes its section context. Selected actual compiled VALUE occurrences: BanditRL.OnlineBregman.quadratic_geometry, BanditRL.OnlineConvex.sourceProper_of_domain, BanditRL.OnlinePrescientBregman.iterate_eq_of_source_updates, BanditRL.OnlinePrescientBregman.source_variable_regret. Occurrence is not necessity or a complete transitive graph. Compiled local prescient Euclidean specialization; package validation and source-target reconciliation are recorded separately. Chapter2 remains partial and the Chapters1–16 Goal active. This is unmerged and unpublished.",
+      "dependencies": [
+        "BanditRL.OnlineBregman.quadratic_geometry",
+        "BanditRL.OnlineConvex.sourceProper_of_domain",
+        "BanditRL.OnlinePrescientBregman.iterate_eq_of_source_updates",
+        "BanditRL.OnlinePrescientBregman.source_variable_regret"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlinePrescientBregman.euclidean_fixed_regret",
+      "title": "Prescient Euclidean bound with a fixed step",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 332,
+      "source_match": "closest-source",
+      "plain": "Finite-dimensional real inner-product E with NormedAddCommGroup E, InnerProductSpace ℝ E and FiniteDimensional ℝ E. V is closed, nonempty and convex. Played EReal losses have no bottom anywhere, are finite on V, and have ambient global supports at every point of V. Each supplied x(t+1) actually attains the squared-distance-penalized minimum on V; initialization x(0)=x0 is fixed. x0 need not belong to V. There is no affine, smooth-loss, globally finite-loss, bounded-gradient or bounded-domain restriction. eta>0; T=0 allowed, giving0<=||u-x0||²/(2eta). No empty maximum is needed.",
+      "math": "R_T(u)\\le\\frac{\\|u-x_0\\|^2}{2\\eta}-\\frac1{2\\eta}\\sum_{t=0}^{T-1}\\|x_{t+1}-x_t\\|^2.",
+      "intuition": "Current-loss access changes the paid point. Movement contributes negatively, while the comparator potential remains.",
+      "why": "One of three declaration-bound parts of the same prescient Euclidean lesson.",
+      "position": "Algorithm15.8/Theorem15.30, PDF277–278; C2 pointer PDF26. Quadratic X=univ specialization; fixed proof exercise remains mandatory. The author’s constrained optimality/global-support step on PDF277 retains an unresolved source-proof justification. The alternative proximal-comparison route does not certify or erase that claim.",
+      "proof_idea": "Rewrite the actual quadratic penalized objective using the shared divergence identity. Strict convexity identifies each supplied feasible minimizer with the canonical choice, and induction identifies the same Option run. Apply the corresponding general source regret theorem and substitute the quadratic identity, retaining every negative movement term. The comparator u is arbitrary in V, so the theorem applies to every feasible comparator.",
+      "lean_notes": "Receive the entire current loss before choosing the new point and pay that loss at the new point. Lean loss t and eta t are source round t+1: center x(t), output/paid point x(t+1). This differs from ordinary OGD, which scores loss t at x(t). The conclusion identifies the SAME partial Option iterate at every prefix; it is conditional on attained updates and does not assert universal existence. The ambient assumptions above belong to the theorem; the full-proof source link exposes its section context. Selected actual compiled VALUE occurrences: BanditRL.OnlineBregman.quadratic_geometry, BanditRL.OnlineConvex.sourceProper_of_domain, BanditRL.OnlinePrescientBregman.iterate_eq_of_source_updates, BanditRL.OnlinePrescientBregman.source_fixed_regret. Occurrence is not necessity or a complete transitive graph. Compiled local prescient Euclidean specialization; package validation and source-target reconciliation are recorded separately. Chapter2 remains partial and the Chapters1–16 Goal active. This is unmerged and unpublished.",
+      "dependencies": [
+        "BanditRL.OnlineBregman.quadratic_geometry",
+        "BanditRL.OnlineConvex.sourceProper_of_domain",
+        "BanditRL.OnlinePrescientBregman.iterate_eq_of_source_updates",
+        "BanditRL.OnlinePrescientBregman.source_fixed_regret"
+      ]
     }
   ]
 }

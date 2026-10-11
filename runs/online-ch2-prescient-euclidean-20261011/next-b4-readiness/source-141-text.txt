@@ -1,0 +1,55 @@
+7.12 Optimistic Follow-the-Regularized-Leader129
+using the prediction strategy in Algorithm 7.7, for allu∈R d, we have
+TX
+t=1
+1
+2(⟨zt,x t⟩ −y t)2 −
+TX
+t=1
+1
+2(⟨zt,u⟩ −y t)2 ≤ λ
+2 ∥u∥2
+2 + dY 2
+2 ln
+
+1 + R2T
+λd
+
+.
+Remark 7.45It is possible to show that the regret of the Vovk–Azoury–Warmuth forecaster
+is optimal up to multiplicative factors (Cesa-Bianchi and Lugosi, 2006, Theorem 11.9).
+Remark 7.46We say that an online learning algorithm isimproperif the prediction
+strategy can be chosen from a larger class than the competitor one. So, the Vovk–Azoury–
+Warmuth forecaster is improper because we measure its regret with respect to a linear pre-
+dictoru, but the Vovk–Azoury–Warmuth prediction depends in a non-linear way onz t.
+7.12 Optimistic Follow-the-Regularized-Leader
+Algorithm 7.8Optimistic Follow-the-Regularized-Leader (Optimistic FTRL)
+Require:A sequence of regularizersψ 1, . . . , ψT :X →R, closed non-empty convex set
+V ⊆ X ⊆R d
+1:fort= 1toTdo
+2:Predict next loss ˜ℓt :V →R
+3:Outputx t ∈argmin x∈V ψt(x) + ˜ℓt(x) +Pt−1
+i=1 ℓi(x)
+4:Receiveℓ t :R d →(−∞,+∞]such thatx t ∈domℓ t, and pay the lossℓ t(xt)
+5:end for
+In Section 6.11, we have seen that it is possible to achieve better regret guarantees through
+the so-called Optimistic OMD, which uses a prediction of the next gradient. Here, we will
+extend the same idea to FTRL, where we predict the next loss function. If our predicted
+loss is correct, we can expect the regret to decrease. However, if our prediction is wrong,
+we still want to recover the worst-case guarantee. Such an algorithm is calledOptimistic
+FTRL, see Algorithm 7.8. As in Optimistic OMD, we do not make any assumption on how
+the prediction of the next loss is generated.
+Let’s see why this is a good idea. Remember that FTRL simply predicts with the mini-
+mizer of the previous losses plus a time-varying regularizer. Let’s assume for a moment that
+instead we have the gift of predicting the future, so we do know the next loss ahead of time.
+Then, we could predict with its minimizer and suffer a negative regret. However, probably
+our foresight abilities are not so powerful, so our prediction of the next loss might be in-
+accurate. In this case, a better idea might be just to add our predicted loss to the previous
+ones and minimize the regularized sum. We would expect the regret guarantee to improve if
+our prediction of the future loss is precise. At the same time, if the prediction is wrong, we
+expect its influence to be limited, given that we use it together with all the past losses.
+All these intuitions can be formalized in the following theorem.
+Theorem 7.47With the notation in Algorithm 7.8, letVbe convex, closed, non-empty. De-
+note byF t(x) =ψ t(x) +Pt−1
+i=1 ℓi(x). Fort= 1, . . . , T, ifF t + ˜ℓt is closed, subdifferen-
+tiable, and strongly convex inV, thenx t exists and is unique. In addition, fort= 1, . . . , T,

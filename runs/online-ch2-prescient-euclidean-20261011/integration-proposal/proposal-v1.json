@@ -1,0 +1,305 @@
+{
+  "status": "proof-free integration PROPOSAL; independent review required",
+  "actor": "/root/adaptive_decoder",
+  "requested_model": "GPT-6 Astra",
+  "requested_effort": "medium",
+  "runtime_attestation": false,
+  "input_raw_sha256": {
+    "website/content/chapters.json": "74792b4767d6669e867c9034fc8eb09949360f1a1aaadcdd048ef92cb64eca81",
+    "website/content/readings.json": "cd71475748324e9cab13ff3c0c08cd980a099e7c6ad77431185a367d2fcedde8",
+    "website/content/highlights.json": "1c8c3697a21f24c416848938aaf54fdf9cc5566b9277a65fcaa70783bf4c7a5f",
+    "BanditRLProof.lean": "5a0e513af1c02d8055f5ce27dab228586e7dc5c18fce7881d128b6506200fab3",
+    "Tests.lean": "8fa5deac4df63a571c65c5180144fdad04258e7ebf852c9a87968dbc28c79a89",
+    "docs/contracts/online-ch2-prescient-euclidean-v1/neutral-frozen-headers-v1.txt": "1d6cda54b46476323dccaeae6fc3b33e8d1494bb655b99045ea2cde569b8e20a",
+    "docs/contracts/online-ch2-prescient-euclidean-v1/neutral-frozen-imported-definitions-v1.txt": "dff55f4b3262afa2869e8dce05cf27bde92b8ef94945f31c7a198a0c8f39c9a1",
+    "runs/online-ch2-prescient-euclidean-20261011/source-topology-proposal-v2/topology.json": "f317dce023cae552746ad8ef38163e646d3b77712feffc73468ceac41efee448",
+    "runs/online-ch2-prescient-euclidean-20261011/fresh-source-topology-review-v2.json": "c97719bbe8264c8d953b311d78355a1ee2d337381a5eb7c3ba1859cf26bb9fe0",
+    "runs/online-ch2-prescient-euclidean-20261011/formalizer-core-v1/type-value-constants-v1.json": "32855356493f3e7048ba9eccce9d8186f2dbf48b601061f200ff5c2722929f4c",
+    "runs/online-ch2-prescient-euclidean-20261011/formalizer-core-v1/compiled-candidate-summary-v1.json": "f2d0af705dd30a75bcd06a2c67a753a6a4c0164ab88b9256c7ad52001c2813b9",
+    "website/scripts/build_site.py": "4fe18b8b9a543ff5256a278f49d160424b30ba2185c946f3d6081ad5460ccaff",
+    "website/scripts/book_registry.py": "2557e84c4a60bbd659d1067843cedbe329a4c0c922244614299ae93d347dce03"
+  },
+  "core_binding_from_compiled_receipt": {
+    "path": "BanditRLProof/OnlinePrescientEuclidean.lean",
+    "raw_sha256": "9b755a12d540c1039b068e4b97af90ac483a58fd1a8b40af9c806264f95d42b8",
+    "public_declarations": [
+      "BanditRL.OnlineBregman.quadratic_geometry",
+      "BanditRL.OnlinePrescientBregman.euclidean_variable_regret",
+      "BanditRL.OnlinePrescientBregman.euclidean_fixed_regret"
+    ],
+    "new_public_helpers": 0
+  },
+  "core_BODY_read": false,
+  "selected_actual_VALUE_parents": {
+    "BanditRL.OnlineBregman.quadratic_geometry": [
+      "hasStrictFDerivAt_norm_sq",
+      "HasGradientAt.fderiv_apply",
+      "norm_sub_sq_real"
+    ],
+    "BanditRL.OnlinePrescientBregman.euclidean_variable_regret": [
+      "BanditRL.OnlineBregman.quadratic_geometry",
+      "BanditRL.OnlineConvex.sourceProper_of_domain",
+      "BanditRL.OnlinePrescientBregman.iterate_eq_of_source_updates",
+      "BanditRL.OnlinePrescientBregman.source_variable_regret"
+    ],
+    "BanditRL.OnlinePrescientBregman.euclidean_fixed_regret": [
+      "BanditRL.OnlineBregman.quadratic_geometry",
+      "BanditRL.OnlineConvex.sourceProper_of_domain",
+      "BanditRL.OnlinePrescientBregman.iterate_eq_of_source_updates",
+      "BanditRL.OnlinePrescientBregman.source_fixed_regret"
+    ]
+  },
+  "json_patches": [
+    {
+      "file": "website/content/chapters.json",
+      "operations": [
+        {
+          "op": "add",
+          "path": "/chapters/10/module_globs/-",
+          "value": "BanditRLProof/OnlinePrescientEuclidean.lean"
+        }
+      ]
+    },
+    {
+      "file": "website/content/readings.json",
+      "operations": [
+        {
+          "op": "add",
+          "path": "/readings/10/source_theorems/-",
+          "value": {
+            "label": "Prescient Euclidean updates: quadratic geometry and both Theorem15.30 bounds",
+            "pages": "printed14,265–266 / PDF26,277–278",
+            "pdf_page": 277,
+            "url": "https://arxiv.org/pdf/1912.13213v10#page=277",
+            "math": "\\begin{gathered}\\psi(z)=\\frac12\\|z\\|^2,\\qquad\\nabla\\psi(y)=y,\\qquad B_\\psi(x;y)=\\frac12\\|x-y\\|^2.\\\\R_T(u)\\le\\frac{\\max_{0\\le s<T}\\frac12\\|u-x_s\\|^2}{\\eta_{T-1}}-\\sum_{t=0}^{T-1}\\frac{\\|x_{t+1}-x_t\\|^2}{2\\eta_t}.\\\\R_T(u)\\le\\frac{\\|u-x_0\\|^2}{2\\eta}-\\frac1{2\\eta}\\sum_{t=0}^{T-1}\\|x_{t+1}-x_t\\|^2.\\end{gathered}",
+            "plain": "Knowing the current loss before output removes the positive gradient-energy term and retains negative squared movement. The initial comparator potential can still make the total bound positive. Finite-dimensional real inner-product E with NormedAddCommGroup E, InnerProductSpace ℝ E and FiniteDimensional ℝ E. V is closed, nonempty and convex. Played EReal losses have no bottom anywhere, are finite on V, and have ambient global supports at every point of V. Each supplied x(t+1) actually attains the squared-distance-penalized minimum on V; initialization x(0)=x0 is fixed. x0 need not belong to V. There is no affine, smooth-loss, globally finite-loss, bounded-gradient or bounded-domain restriction.",
+            "fallback": "Quadratic Bregman divergence is half squared distance. Variable steps use the maximum previous-state potential divided by the last used step; fixed steps use initial potential. Both subtract exact half-weighted squared movements.",
+            "relationship": "Chapter2 PDF26 points to Algorithm15.8 and Theorem15.30 on PDF277–278. Both branches are mandatory, including the fixed proof left as an exercise on PDF278. Specialize X=univ and psi=norm²/2; interior, derivative, strict-convexity and closedness facts are derived rather than added as user premises. The author’s constrained optimality/global-support step on PDF277 retains an unresolved source-proof justification. The alternative proximal-comparison route does not certify or erase that claim. Locally compiled candidate; independent production BODY, complete canary BODY, combined project and final package acceptance pending. All seven Chapter2 forward containers and six future claims remain open; Chapter2 partial, accepted=false, proof denominator=null and Chapters1–16 GoalACTIVE. No source-container closure, main or live-publication claim.",
+            "contract": {
+              "model": "Receive the entire current loss before choosing the new point and pay that loss at the new point. Lean loss t and eta t are source round t+1: center x(t), output/paid point x(t+1). This differs from ordinary OGD, which scores loss t at x(t). The conclusion identifies the SAME partial Option iterate at every prefix; it is conditional on attained updates and does not assert universal existence.",
+              "assumptions": "Finite-dimensional real inner-product E with NormedAddCommGroup E, InnerProductSpace ℝ E and FiniteDimensional ℝ E. V is closed, nonempty and convex. Played EReal losses have no bottom anywhere, are finite on V, and have ambient global supports at every point of V. Each supplied x(t+1) actually attains the squared-distance-penalized minimum on V; initialization x(0)=x0 is fixed. x0 need not belong to V. There is no affine, smooth-loss, globally finite-loss, bounded-gradient or bounded-domain restriction.",
+              "parameters": "Variable: T>0, every used step positive, adjacent played steps nonincreasing, max indices0..T-1, last eta(T-1). Fixed: eta>0 and any T including0.",
+              "regret": "R_T(u)=sum_{t<T}((loss t (x(t+1))).toReal-(loss t u).toReal), for every u in V; scoring is finite on V.",
+              "guarantee": "Each endpoint concludes canonical Option-run equality AND its full signed bound. The shared geometry theorem computes the actual derivative and exact ordered divergence; on complete real Hilbert space it is an explicit generalization of source Euclidean geometry."
+            },
+            "local_status": {
+              "status": "compiled",
+              "label": "Prescient Euclidean candidate; package acceptance pending",
+              "boundary": "Locally compiled candidate; independent production BODY, complete canary BODY, combined project and final package acceptance pending. All seven Chapter2 forward containers and six future claims remain open; Chapter2 partial, accepted=false, proof denominator=null and Chapters1–16 GoalACTIVE. No source-container closure, main or live-publication claim."
+            }
+          }
+        }
+      ]
+    },
+    {
+      "file": "website/content/highlights.json",
+      "operations": [
+        {
+          "op": "add",
+          "path": "/highlights/-",
+          "value": {
+            "full_name": "BanditRL.OnlineBregman.quadratic_geometry",
+            "title": "Prescient Euclidean geometry: the quadratic derivative and divergence",
+            "chapter": "online-ogd",
+            "featured": false,
+            "teaching_order": 330,
+            "source_match": "closest-source",
+            "plain": "Complete real Hilbert E: NormedAddCommGroup E, InnerProductSpace ℝ E, CompleteSpace E; arbitrary x,y. Actual gradient y and exact divergence identity form one conjunction.",
+            "math": "\\psi(z)=\\frac12\\|z\\|^2,\\qquad\\nabla\\psi(y)=y,\\qquad B_\\psi(x;y)=\\frac12\\|x-y\\|^2.",
+            "intuition": "Current-loss access changes the paid point. Movement contributes negatively, while the comparator potential remains.",
+            "why": "One of three declaration-bound parts of the same prescient Euclidean lesson.",
+            "position": "Algorithm15.8/Theorem15.30, PDF277–278; C2 pointer PDF26. Quadratic X=univ specialization; fixed proof exercise remains mandatory. The author’s constrained optimality/global-support step on PDF277 retains an unresolved source-proof justification. The alternative proximal-comparison route does not certify or erase that claim.",
+            "proof_idea": "The quadratic derivative gives half squared distance as the shared divergence. Rewrite each actual penalized objective; strict convexity identifies its supplied feasible minimizer with the canonical choice. Induction gives the same Option run. Apply the corresponding general source bound and substitute the quadratic geometry, preserving the signed movement term. This description separates the intended mathematical route from the limited exported constant-occurrence evidence.",
+            "lean_notes": "Receive the entire current loss before choosing the new point and pay that loss at the new point. Lean loss t and eta t are source round t+1: center x(t), output/paid point x(t+1). This differs from ordinary OGD, which scores loss t at x(t). The conclusion identifies the SAME partial Option iterate at every prefix; it is conditional on attained updates and does not assert universal existence. The ambient assumptions above belong to the theorem; the full-proof source link exposes its section context. Selected actual compiled VALUE occurrences: hasStrictFDerivAt_norm_sq, HasGradientAt.fderiv_apply, norm_sub_sq_real. Occurrence is not necessity or a complete transitive graph. Locally compiled candidate; independent production BODY, complete canary BODY, combined project and final package acceptance pending. All seven Chapter2 forward containers and six future claims remain open; Chapter2 partial, accepted=false, proof denominator=null and Chapters1–16 GoalACTIVE. No source-container closure, main or live-publication claim.",
+            "dependencies": [
+              "hasStrictFDerivAt_norm_sq",
+              "HasGradientAt.fderiv_apply",
+              "norm_sub_sq_real"
+            ]
+          }
+        },
+        {
+          "op": "add",
+          "path": "/highlights/-",
+          "value": {
+            "full_name": "BanditRL.OnlinePrescientBregman.euclidean_variable_regret",
+            "title": "Prescient Euclidean bound with decreasing steps",
+            "chapter": "online-ogd",
+            "featured": false,
+            "teaching_order": 331,
+            "source_match": "closest-source",
+            "plain": "Finite-dimensional real inner-product E with NormedAddCommGroup E, InnerProductSpace ℝ E and FiniteDimensional ℝ E. V is closed, nonempty and convex. Played EReal losses have no bottom anywhere, are finite on V, and have ambient global supports at every point of V. Each supplied x(t+1) actually attains the squared-distance-penalized minimum on V; initialization x(0)=x0 is fixed. x0 need not belong to V. There is no affine, smooth-loss, globally finite-loss, bounded-gradient or bounded-domain restriction. T>0; positive nonincreasing used steps. Previous-state maximum excludes x(T).",
+            "math": "R_T(u)\\le\\frac{\\max_{0\\le s<T}\\frac12\\|u-x_s\\|^2}{\\eta_{T-1}}-\\sum_{t=0}^{T-1}\\frac{\\|x_{t+1}-x_t\\|^2}{2\\eta_t}.",
+            "intuition": "Current-loss access changes the paid point. Movement contributes negatively, while the comparator potential remains.",
+            "why": "One of three declaration-bound parts of the same prescient Euclidean lesson.",
+            "position": "Algorithm15.8/Theorem15.30, PDF277–278; C2 pointer PDF26. Quadratic X=univ specialization; fixed proof exercise remains mandatory. The author’s constrained optimality/global-support step on PDF277 retains an unresolved source-proof justification. The alternative proximal-comparison route does not certify or erase that claim.",
+            "proof_idea": "The quadratic derivative gives half squared distance as the shared divergence. Rewrite each actual penalized objective; strict convexity identifies its supplied feasible minimizer with the canonical choice. Induction gives the same Option run. Apply the corresponding general source bound and substitute the quadratic geometry, preserving the signed movement term. This description separates the intended mathematical route from the limited exported constant-occurrence evidence.",
+            "lean_notes": "Receive the entire current loss before choosing the new point and pay that loss at the new point. Lean loss t and eta t are source round t+1: center x(t), output/paid point x(t+1). This differs from ordinary OGD, which scores loss t at x(t). The conclusion identifies the SAME partial Option iterate at every prefix; it is conditional on attained updates and does not assert universal existence. The ambient assumptions above belong to the theorem; the full-proof source link exposes its section context. Selected actual compiled VALUE occurrences: BanditRL.OnlineBregman.quadratic_geometry, BanditRL.OnlineConvex.sourceProper_of_domain, BanditRL.OnlinePrescientBregman.iterate_eq_of_source_updates, BanditRL.OnlinePrescientBregman.source_variable_regret. Occurrence is not necessity or a complete transitive graph. Locally compiled candidate; independent production BODY, complete canary BODY, combined project and final package acceptance pending. All seven Chapter2 forward containers and six future claims remain open; Chapter2 partial, accepted=false, proof denominator=null and Chapters1–16 GoalACTIVE. No source-container closure, main or live-publication claim.",
+            "dependencies": [
+              "BanditRL.OnlineBregman.quadratic_geometry",
+              "BanditRL.OnlineConvex.sourceProper_of_domain",
+              "BanditRL.OnlinePrescientBregman.iterate_eq_of_source_updates",
+              "BanditRL.OnlinePrescientBregman.source_variable_regret"
+            ]
+          }
+        },
+        {
+          "op": "add",
+          "path": "/highlights/-",
+          "value": {
+            "full_name": "BanditRL.OnlinePrescientBregman.euclidean_fixed_regret",
+            "title": "Prescient Euclidean bound with a fixed step",
+            "chapter": "online-ogd",
+            "featured": false,
+            "teaching_order": 332,
+            "source_match": "closest-source",
+            "plain": "Finite-dimensional real inner-product E with NormedAddCommGroup E, InnerProductSpace ℝ E and FiniteDimensional ℝ E. V is closed, nonempty and convex. Played EReal losses have no bottom anywhere, are finite on V, and have ambient global supports at every point of V. Each supplied x(t+1) actually attains the squared-distance-penalized minimum on V; initialization x(0)=x0 is fixed. x0 need not belong to V. There is no affine, smooth-loss, globally finite-loss, bounded-gradient or bounded-domain restriction. eta>0; T=0 allowed, giving0<=||u-x0||²/(2eta). No empty maximum is needed.",
+            "math": "R_T(u)\\le\\frac{\\|u-x_0\\|^2}{2\\eta}-\\frac1{2\\eta}\\sum_{t=0}^{T-1}\\|x_{t+1}-x_t\\|^2.",
+            "intuition": "Current-loss access changes the paid point. Movement contributes negatively, while the comparator potential remains.",
+            "why": "One of three declaration-bound parts of the same prescient Euclidean lesson.",
+            "position": "Algorithm15.8/Theorem15.30, PDF277–278; C2 pointer PDF26. Quadratic X=univ specialization; fixed proof exercise remains mandatory. The author’s constrained optimality/global-support step on PDF277 retains an unresolved source-proof justification. The alternative proximal-comparison route does not certify or erase that claim.",
+            "proof_idea": "The quadratic derivative gives half squared distance as the shared divergence. Rewrite each actual penalized objective; strict convexity identifies its supplied feasible minimizer with the canonical choice. Induction gives the same Option run. Apply the corresponding general source bound and substitute the quadratic geometry, preserving the signed movement term. This description separates the intended mathematical route from the limited exported constant-occurrence evidence.",
+            "lean_notes": "Receive the entire current loss before choosing the new point and pay that loss at the new point. Lean loss t and eta t are source round t+1: center x(t), output/paid point x(t+1). This differs from ordinary OGD, which scores loss t at x(t). The conclusion identifies the SAME partial Option iterate at every prefix; it is conditional on attained updates and does not assert universal existence. The ambient assumptions above belong to the theorem; the full-proof source link exposes its section context. Selected actual compiled VALUE occurrences: BanditRL.OnlineBregman.quadratic_geometry, BanditRL.OnlineConvex.sourceProper_of_domain, BanditRL.OnlinePrescientBregman.iterate_eq_of_source_updates, BanditRL.OnlinePrescientBregman.source_fixed_regret. Occurrence is not necessity or a complete transitive graph. Locally compiled candidate; independent production BODY, complete canary BODY, combined project and final package acceptance pending. All seven Chapter2 forward containers and six future claims remain open; Chapter2 partial, accepted=false, proof denominator=null and Chapters1–16 GoalACTIVE. No source-container closure, main or live-publication claim.",
+            "dependencies": [
+              "BanditRL.OnlineBregman.quadratic_geometry",
+              "BanditRL.OnlineConvex.sourceProper_of_domain",
+              "BanditRL.OnlinePrescientBregman.iterate_eq_of_source_updates",
+              "BanditRL.OnlinePrescientBregman.source_fixed_regret"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "root_import_proposals": [
+    {
+      "file": "BanditRLProof.lean",
+      "append": "import BanditRLProof.OnlinePrescientEuclidean",
+      "condition": "after independent production BODY and integration approval"
+    },
+    {
+      "file": "Tests.lean",
+      "append": "import Tests.OnlinePrescientEuclideanCanary",
+      "condition": "eventual only; confirm exact Test filename and accepted complete canary source before apply"
+    }
+  ],
+  "atomic_binder_audit": [
+    {
+      "declaration": "BanditRL.OnlineBregman.quadratic_geometry",
+      "ambient": [
+        "E : Type*",
+        "NormedAddCommGroup E",
+        "InnerProductSpace ℝ E",
+        "CompleteSpace E"
+      ],
+      "inputs": [
+        "x,y arbitrary"
+      ],
+      "conclusion_atoms": [
+        "actual HasGradientAt psi y y",
+        "Bpsi(x;y)=||x-y||²/2"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.euclidean_variable_regret",
+      "ambient": [
+        "E : Type*",
+        "NormedAddCommGroup E",
+        "InnerProductSpace ℝ E",
+        "FiniteDimensional ℝ E"
+      ],
+      "inputs": [
+        "convex/nonempty/closed V",
+        "positive used eta",
+        "T>0",
+        "hinit",
+        "played-pair nonincrease",
+        "played global no-bottom",
+        "finite on V",
+        "global support at every feasible point",
+        "actual feasible attained updates",
+        "u in V"
+      ],
+      "conclusion_atoms": [
+        "all t<=T canonical iterate=some x(t)",
+        "all-u full variable signed regret bound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.euclidean_fixed_regret",
+      "ambient": [
+        "E : Type*",
+        "NormedAddCommGroup E",
+        "InnerProductSpace ℝ E",
+        "FiniteDimensional ℝ E"
+      ],
+      "inputs": [
+        "convex/nonempty/closed V",
+        "eta>0",
+        "T natural including0",
+        "hinit",
+        "played global no-bottom",
+        "finite on V",
+        "global support at every feasible point",
+        "actual feasible attained updates",
+        "u in V"
+      ],
+      "conclusion_atoms": [
+        "all t<=T canonical iterate=some x(t)",
+        "all-u full fixed signed regret bound"
+      ]
+    }
+  ],
+  "in_memory_preservation_checks": [
+    {
+      "file": "website/content/chapters.json",
+      "all_old_parsed_objects_preserved_by_reversing_only_named_appends": true,
+      "proposed_after_serialization_sha256": "17fe0e096447259511e706179a8ebe5eae4d19a6b26764ccd073d02e287db795"
+    },
+    {
+      "file": "website/content/readings.json",
+      "all_old_parsed_objects_preserved_by_reversing_only_named_appends": true,
+      "proposed_after_serialization_sha256": "3a4658f96ee8062959963accde7823923af73e34790657170b68c7203c7cc36f"
+    },
+    {
+      "file": "website/content/highlights.json",
+      "all_old_parsed_objects_preserved_by_reversing_only_named_appends": true,
+      "proposed_after_serialization_sha256": "9dc1414e360eaa797b45b73900d8b63b7f20fa0ab9d02874751523d3c7a06804"
+    }
+  ],
+  "old_source_card_count": 21,
+  "proposed_source_card_count": 22,
+  "canonical_new_node_ids": [
+    "declaration:BanditRL.OnlineBregman.quadratic_geometry",
+    "declaration:BanditRL.OnlinePrescientBregman.euclidean_variable_regret",
+    "declaration:BanditRL.OnlinePrescientBregman.euclidean_fixed_regret"
+  ],
+  "lesson_group": {
+    "one_source_card": true,
+    "three_adjacent_existing_schema_highlights": true,
+    "reason": "Current schema binds one highlight to one full_name; grouping is pedagogical, no synthetic canonical declaration or invented multi-name schema."
+  },
+  "layers": {
+    "source": "approved topologyV2 retains unresolved author optimality/global-support justification and mandatory fixed exercise",
+    "Lean": "actual selected VALUE occurrences only; no imported-module=proof-edge or necessity claim",
+    "compressed_spine": "one compact lesson group is a summary of three real declarations, not source coverage count or full source topology",
+    "functor": "quadratic specialization is conceptual transport; no separate formal functor/setting transport theorem asserted; any conceptual arrows dashed overlays"
+  },
+  "pending": [
+    "production BODY acceptance",
+    "canary BODY acceptance",
+    "shared root/Tests/full harness",
+    "contributor/site/registry/visual/integration/FINAL acceptance"
+  ],
+  "unchanged": [
+    "historical completion_definition",
+    "old source cards and highlights",
+    "all unrelated parsed objects",
+    "coverage statuses and seven-plus-six open counts",
+    "frozen source topology/headers",
+    "results/roadmap/global milestones",
+    "generated site and graph files"
+  ],
+  "acceptance_boundaries": "Locally compiled candidate; independent production BODY, complete canary BODY, combined project and final package acceptance pending. All seven Chapter2 forward containers and six future claims remain open; Chapter2 partial, accepted=false, proof denominator=null and Chapters1–16 GoalACTIVE. No source-container closure, main or live-publication claim.",
+  "inputs_unchanged": true
+}
