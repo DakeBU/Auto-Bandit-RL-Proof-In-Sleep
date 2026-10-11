@@ -3953,6 +3953,416 @@
         "takeaway": "Active supports may require convex mixing, while inactive functions contribute no supports; infinity away from the common query remains permitted.",
         "boundary": "Later source obligations, Chapter 2 and the whole book remain incomplete."
       }
+    },
+    {
+      "slug": "online-hinge",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10,21June2026",
+        "sections": "Section 2.2.1, Example 2.27: hinge loss",
+        "pages": "printed18/PDF30",
+        "pdf_page": 30,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "Hinge and margin",
+          "meaning": "The loss is ell_z(x)=max(1-inner(z,x),0), with margin m(x)=1-inner(z,x). Both z and x are arbitrary vectors."
+        },
+        {
+          "term": "Global support",
+          "meaning": "A support g obeys ell_z(x)+inner(g,y-x)<=ell_z(y) at every ambient comparison point y. All hinge values are finite."
+        },
+        {
+          "term": "Full boundary segment",
+          "meaning": "Negative margin gives {0}, positive margin gives {-z}, and zero margin gives every -alpha*z for 0<=alpha<=1. The active union alone omits intermediate mixtures. When z=0, the margin is 1 and the constant loss has support {0}."
+        }
+      ],
+      "algorithm": {
+        "title": "Calculate the complete support set",
+        "kind": "proof flow",
+        "steps": [
+          {
+            "title": "Derive affine supports",
+            "detail": "A vector g supporting inner(a,y)+b is tested at y=x+(g-a). The actual supporting inequality forces inner(g-a,g-a)<=0, hence g=a. Conversely, the affine identity gives support at EVERY ambient y. This proves the full affine singleton without finite dimension."
+          },
+          {
+            "title": "Apply the actual maximum rule",
+            "detail": "The complete retained hingeFamily definition maps Bool false to the affine slope0/offset0 and Bool true to slope-z/offset1. Its two concrete components are f0(y)=0 and f1(y)=inner(-z,y)+1; the definition itself has no finite-dimension or function-regularity premise. Properness, convex epigraphs, finite query values and ambient continuity are proved from real affine algebra. Actual finite-maximum bounds identify their maximum with the hinge, then the full Theorem2.26 yields the ordinary hull of ALL active component supports."
+          },
+          {
+            "title": "Classify activity and take the ordinary hull",
+            "detail": "For m(x)=1-inner(z,x), negative margin activates only f0 and gives{0}; positive margin only f1 and gives{-z}; zero margin activates both and gives the active union{0,-z}. Strict signs exclude the inactive component. The active union itself omits genuine boundary mixtures. The ordinary convex hull of{0,-z} is the entire segment{-alpha z:alpha in[0,1]}, including both endpoints and every intermediate mixture; singleton hulls remain singletons. Both inclusions of the three-branch equality follow, without a hull closure or membership-only replacement."
+          }
+        ]
+      },
+      "teaching_route": [
+        "BanditRL.OnlineConvex.sourceHinge",
+        "BanditRL.OnlineConvex.affine_subdifferential",
+        "BanditRL.OnlineConvex.hinge_subdifferential_hull",
+        "BanditRL.OnlineConvex.example_2_27"
+      ],
+      "source_theorems": [
+        {
+          "label": "Example2.27 hinge loss",
+          "pages": "printed18",
+          "pdf_page": 30,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\(\\ell_z(x)=\\max(1-\\langle z,x\\rangle,0),\\qquad\\partial\\ell_z(x)=\\begin{cases}\\{0\\}&m(x)<0\\\\\\{-\\alpha z:0\\le\\alpha\\le1\\}&m(x)=0\\\\\\{-z\\}&m(x)>0\\end{cases}\\)",
+          "fallback": "For the actual hinge: negative margin gives{0}, equality gives every -alpha z for alpha in[0,1], positive margin gives{-z}.",
+          "plain": "For every z and x in finite-dimensional real Euclidean space, the full ambient hinge subdifferential follows these three cases. At equality no boundary support is omitted.",
+          "relationship": "Example 2.27 states the full three-case equality without a proof (GAP.EXAMPLE-PROOF). The derivation here is the library proof: establish both affine supports and the maximum-rule hypotheses, classify the active components, and take their ordinary convex hull. The main equality and hull theorem use a finite-dimensional real inner-product space; the other helpers and both definitions retain the real inner-product structure without finite dimension. The hinge and both components are finite everywhere, so the shared support predicate agrees with the proper-function source context here. No nonzero z or positive-dimension premise is imposed. A coordinate-isometry adapter is not separately certified.",
+          "contract": {
+            "model": "Finite-dimensional real inner-product hinge calculus; helper contexts are shown in exact Lean.",
+            "assumptions": "Example 2.27 states the full three-case equality without a proof (GAP.EXAMPLE-PROOF). The derivation here is the library proof: establish both affine supports and the maximum-rule hypotheses, classify the active components, and take their ordinary convex hull. The main equality and hull theorem use a finite-dimensional real inner-product space; the other helpers and both definitions retain the real inner-product structure without finite dimension. The hinge and both components are finite everywhere, so the shared support predicate agrees with the proper-function source context here. No nonzero z or positive-dimension premise is imposed. A coordinate-isometry adapter is not separately certified.",
+            "parameters": "Every z,x/candidate g and EVERY ambient support-test y; ALL alpha in inclusive[0,1].",
+            "regret": "No algorithm, regret or probability guarantee is asserted.",
+            "guarantee": "Full three-branch set equality with strict singleton cases and entire boundary segment. z0 is allowed and lies in the positive-margin constant1 branch."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Bounded library declarations",
+            "boundary": "Example 2.27 states the full three-case equality without a proof (GAP.EXAMPLE-PROOF). The derivation here is the library proof: establish both affine supports and the maximum-rule hypotheses, classify the active components, and take their ordinary convex hull. The main equality and hull theorem use a finite-dimensional real inner-product space; the other helpers and both definitions retain the real inner-product structure without finite dimension. The hinge and both components are finite everywhere, so the shared support predicate agrees with the proper-function source context here. No nonzero z or positive-dimension premise is imposed. A coordinate-isometry adapter is not separately certified. Later source obligations, Chapter 2 and the whole book remain incomplete."
+          }
+        }
+      ],
+      "proof_bridge": {
+        "title": "Global affine supports and the ordinary maximum hull",
+        "summary": "The source states the cases without derivation; this library proof applies the full maximum rule.",
+        "steps": [
+          {
+            "title": "Construct the unique affine support",
+            "detail": "A vector g supporting inner(a,y)+b is tested at y=x+(g-a). The actual supporting inequality forces inner(g-a,g-a)<=0, hence g=a. Conversely, the affine identity gives support at EVERY ambient y. This proves the full affine singleton without finite dimension.",
+            "math": "\\(\\partial(\\langle a,\\cdot\\rangle+b)(x)=\\{a\\}\\)",
+            "fallback": "No supplied slope formula or differentiability oracle."
+          },
+          {
+            "title": "Qualify the two actual components",
+            "detail": "The complete retained hingeFamily definition maps Bool false to the affine slope0/offset0 and Bool true to slope-z/offset1. Its two concrete components are f0(y)=0 and f1(y)=inner(-z,y)+1; the definition itself has no finite-dimension or function-regularity premise. Properness, convex epigraphs, finite query values and ambient continuity are proved from real affine algebra. Actual finite-maximum bounds identify their maximum with the hinge, then the full Theorem2.26 yields the ordinary hull of ALL active component supports.",
+            "math": "\\(\\ell_z=\\max(f_0,f_1),\\qquad\\partial\\ell_z(x)=\\operatorname{conv}\\!\\bigcup_{i\\in A(x)}\\partial f_i(x)\\)",
+            "fallback": "All hypotheses of the earlier full maximum rule are actually established."
+          },
+          {
+            "title": "Retain exact activity in each branch",
+            "detail": "For m(x)=1-inner(z,x), negative margin activates only f0 and gives{0}; positive margin only f1 and gives{-z}; zero margin activates both and gives the active union{0,-z}. Strict signs exclude the inactive component. The active union itself omits genuine boundary mixtures.",
+            "math": "\\(U(x)=\\{0\\},\\ \\{0,-z\\},\\ \\{-z\\}\\quad\\text{for }m<0,\\ m=0,\\ m>0\\)",
+            "fallback": "An active union alone is not the full boundary subdifferential."
+          },
+          {
+            "title": "Describe the ordinary pair hull",
+            "detail": "The ordinary convex hull of{0,-z} is the entire segment{-alpha z:alpha in[0,1]}, including both endpoints and every intermediate mixture; singleton hulls remain singletons. Both inclusions of the three-branch equality follow, without a hull closure or membership-only replacement.",
+            "math": "\\(\\operatorname{conv}\\{0,-z\\}=\\{-\\alpha z:0\\le\\alpha\\le1\\}\\)",
+            "fallback": "No closure operation or selected-support shortcut."
+          }
+        ],
+        "boundary": "Example 2.27 states the full three-case equality without a proof (GAP.EXAMPLE-PROOF). The derivation here is the library proof: establish both affine supports and the maximum-rule hypotheses, classify the active components, and take their ordinary convex hull. The main equality and hull theorem use a finite-dimensional real inner-product space; the other helpers and both definitions retain the real inner-product structure without finite dimension. The hinge and both components are finite everywhere, so the shared support predicate agrees with the proper-function source context here. No nonzero z or positive-dimension premise is imposed. A coordinate-isometry adapter is not separately certified. Later source obligations, Chapter 2 and the whole book remain incomplete."
+      },
+      "worked_example": {
+        "title": "Strict branches, a genuine boundary mixture and z=0",
+        "intro": "Five scalar canaries test both strict branches, the entire boundary interval, an intermediate mixture, rejection of a wrong sign, and z=0.",
+        "steps": [
+          {
+            "title": "Strict branches",
+            "detail": "For z=1 in R, x=0 gives margin1 and support{-1}; x=2 gives margin-1 and support{0}.",
+            "math": "\\(\\partial\\ell_1(0)=\\{-1\\},\\qquad\\partial\\ell_1(2)=\\{0\\}\\)",
+            "fallback": "Both sides of the kink retain the correct sign."
+          },
+          {
+            "title": "Entire boundary interval",
+            "detail": "For z=1 and x=1 the full support set is[-1,0]. The support -1/2 belongs, is absent from the active component union{0,-1}, and slope1 is excluded.",
+            "math": "\\(\\partial\\ell_1(1)=[-1,0],\\quad-\\tfrac12\\notin\\{0,-1\\}\\)",
+            "fallback": "Tests the ordinary hull and rejection, not just endpoint membership."
+          },
+          {
+            "title": "Zero vector",
+            "detail": "When z=0 the loss is constantly1 and the margin is always positive. Its global subdifferential is{0} at every x; no z nonzero premise is introduced.",
+            "math": "\\(\\partial\\ell_0(x)=\\{0\\}\\)",
+            "fallback": "The equality branch cannot arise at z=0."
+          }
+        ],
+        "takeaway": "Strict activity produces a singleton; a genuine tie produces an entire closed segment.",
+        "boundary": "Example 2.27 states the full three-case equality without a proof (GAP.EXAMPLE-PROOF). The derivation here is the library proof: establish both affine supports and the maximum-rule hypotheses, classify the active components, and take their ordinary convex hull. The main equality and hull theorem use a finite-dimensional real inner-product space; the other helpers and both definitions retain the real inner-product structure without finite dimension. The hinge and both components are finite everywhere, so the shared support predicate agrees with the proper-function source context here. No nonzero z or positive-dimension premise is imposed. A coordinate-isometry adapter is not separately certified. Later source obligations, Chapter 2 and the whole book remain incomplete."
+      }
+    },
+    {
+      "slug": "online-affine-subgradient",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10,21June2026",
+        "sections": "Section 2.2.1, Theorem 2.28: affine transport",
+        "pages": "printed18/PDF30",
+        "pdf_page": 30,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "Affine map and adjoint",
+          "meaning": "Set h(y)=f(Ay+b). The continuous linear adjoint A* moves an input support in F to a support in E through the identity inner(g,A v)=inner(A* g,v)."
+        },
+        {
+          "term": "Proper input, possibly improper composite",
+          "meaning": "Proper f never equals bottom and has a finite value somewhere. Its affine restriction may still be identically top. The library uses the literal global-support inequality in this case; the printed definition does not specify that extension."
+        },
+        {
+          "term": "Image inclusion",
+          "meaning": "Every g supporting f at Ax+b yields A* g supporting h at x. The theorem gives an inclusion of the entire image set, without convexity or a rank assumption. It does not give equality."
+        }
+      ],
+      "algorithm": {
+        "title": "Transport an actual support",
+        "kind": "proof flow",
+        "steps": [
+          {
+            "title": "Choose a source support",
+            "detail": "Every image element is actual A*g from the full global source support."
+          },
+          {
+            "title": "Test every affine image point",
+            "detail": "Apply hg(Ay+b) to every y and cancel translation by map_sub."
+          },
+          {
+            "title": "Use the adjoint identity",
+            "detail": "Use actual adjoint_inner_left; obtain target all-y support inclusion, never equality."
+          }
+        ]
+      },
+      "teaching_route": [
+        "BanditRL.OnlineConvex.theorem_2_28"
+      ],
+      "source_theorems": [
+        {
+          "label": "Theorem2.28 affine subgradient inclusion",
+          "pages": "printed18",
+          "pdf_page": 30,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\(h(y)=f(Ay+b),\\qquad A^{\\mathsf T}\\partial f(Ax+b)\\subseteq\\partial h(x)\\)",
+          "fallback": "For proper f, every A-transpose g with g a global support of f at Ax+b globally supports h at x.",
+          "plain": "For arbitrary proper f and every affine map, transport global supports through the actual transpose. The source theorem does not require convexity, full rank, properness of h, or nonempty source supports.",
+          "relationship": "Theorem 2.28 assumes only proper f and states inclusion, with no convexity, rank condition or composite-properness premise. Both Lean spaces are finite-dimensional real inner-product spaces and A is a continuous linear map with its actual adjoint; no matrix-coordinate adapter is separately certified. The earlier printed subgradient definition is scoped to proper functions, but the affine composite can be identically top (GAP.AFFINE-PROPER). The library explicitly extends the raw global-support inequality to every EReal function. For an all-top composite its generic support is the entire space and the source support image is empty. This is a disclosed definition extension, not a convention established by the printed definition. Properness of f remains in the statement even though the transport algebra does not use it. No converse is claimed.",
+          "contract": {
+            "model": "Finite-dimensional real inner-product spaces E and F with continuous linear A and its adjoint.",
+            "assumptions": "Theorem 2.28 assumes only proper f and states inclusion, with no convexity, rank condition or composite-properness premise. Both Lean spaces are finite-dimensional real inner-product spaces and A is a continuous linear map with its actual adjoint; no matrix-coordinate adapter is separately certified. The earlier printed subgradient definition is scoped to proper functions, but the affine composite can be identically top (GAP.AFFINE-PROPER). The library explicitly extends the raw global-support inequality to every EReal function. For an all-top composite its generic support is the entire space and the source support image is empty. This is a disclosed definition extension, not a convention established by the printed definition. Properness of f remains in the statement even though the transport algebra does not use it. No converse is claimed.",
+            "parameters": "Every f,A,b,x/sourceg/alltargety; proper finite witness need not lie in the affine range.",
+            "regret": "No algorithm, regret or probability guarantee is asserted.",
+            "guarantee": "Full actual adjoint-image inclusion in support of actual inline composition, one direction only; strict inclusion can occur."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Bounded library declarations",
+            "boundary": "Theorem 2.28 assumes only proper f and states inclusion, with no convexity, rank condition or composite-properness premise. Both Lean spaces are finite-dimensional real inner-product spaces and A is a continuous linear map with its actual adjoint; no matrix-coordinate adapter is separately certified. The earlier printed subgradient definition is scoped to proper functions, but the affine composite can be identically top (GAP.AFFINE-PROPER). The library explicitly extends the raw global-support inequality to every EReal function. For an all-top composite its generic support is the entire space and the source support image is empty. This is a disclosed definition extension, not a convention established by the printed definition. Properness of f remains in the statement even though the transport algebra does not use it. No converse is claimed. Later source obligations, Chapter 2 and the whole book remain incomplete."
+          }
+        }
+      ],
+      "proof_bridge": {
+        "title": "Global support transported by the genuine adjoint",
+        "summary": "Transport the global inequality through the affine map and the actual adjoint.",
+        "steps": [
+          {
+            "title": "Unpack the actual image",
+            "detail": "An image element has the form A*g for g supporting f at Ax+b. No user-supplied pullback or single-step inequality is assumed.",
+            "math": "\\(g\\in\\partial f(Ax+b)\\)",
+            "fallback": "The actual source global support is the input."
+          },
+          {
+            "title": "Apply source support at every Ay+b",
+            "detail": "Because source supports quantify over all F, substitute Ay+b for an arbitrary y in E. Linear subtraction cancels b.",
+            "math": "\\(f(Ax+b)+\\langle g,A(y-x)\\rangle\\le f(Ay+b)\\)",
+            "fallback": "The translation cancels; no future sequence or algorithm is involved."
+          },
+          {
+            "title": "Use the compiled adjoint identity",
+            "detail": "Mathlib ContinuousLinearMap.adjoint_inner_left gives the actual inner-product transpose identity. The resulting inequality is precisely the target global-support definition.",
+            "math": "\\(f(Ax+b)+\\langle A^*g,y-x\\rangle\\le h(y)\\)",
+            "fallback": "All target test points y are covered; inclusion is the exact endpoint."
+          }
+        ],
+        "boundary": "Theorem 2.28 assumes only proper f and states inclusion, with no convexity, rank condition or composite-properness premise. Both Lean spaces are finite-dimensional real inner-product spaces and A is a continuous linear map with its actual adjoint; no matrix-coordinate adapter is separately certified. The earlier printed subgradient definition is scoped to proper functions, but the affine composite can be identically top (GAP.AFFINE-PROPER). The library explicitly extends the raw global-support inequality to every EReal function. For an all-top composite its generic support is the entire space and the source support image is empty. This is a disclosed definition extension, not a convention established by the printed definition. Properness of f remains in the statement even though the transport algebra does not use it. No converse is claimed. Later source obligations, Chapter 2 and the whole book remain incomplete."
+      },
+      "worked_example": {
+        "title": "Nonzero map, nonzero shift and a strict inclusion",
+        "intro": "Seven scalar canary theorems and two test definitions construct a nonzero shifted transport and a proper nonconvex example with strict inclusion.",
+        "steps": [
+          {
+            "title": "A genuine transported support",
+            "detail": "Take f(v)=|v|, A(y)=2y, b=1, x=-1/2. The source query is0. The source support1/2 transports through the actual transpose to1, globally supporting |2y+1| at -1/2.",
+            "math": "\\(A^*(1/2)=1\\in\\partial|2\\cdot+1|(-1/2)\\)",
+            "fallback": "Both the map and shift are nonzero; the output support is nonzero."
+          },
+          {
+            "title": "Proper nonconvex source",
+            "detail": "For f(v)=-|v|, the source is proper and its epigraph is proved nonconvex. At0, testing1 and-1 forces incompatible slopes, so its support set is empty.",
+            "math": "\\(\\partial(-|\\cdot|)(0)=\\varnothing\\)",
+            "fallback": "The nonconvex claim is proved, not merely asserted."
+          },
+          {
+            "title": "The inclusion can be strict",
+            "detail": "Take A=0,b=0,x=3 for the same proper nonconvex source. The composition is the finite zero function, whose global subdifferential is{0}; the actual source adjoint image is empty.",
+            "math": "\\(A^*\\partial f(0)=\\varnothing\\subsetneq\\{0\\}=\\partial(f\\circ0)(3)\\)",
+            "fallback": "The source theorem cannot be strengthened to equality or silently restricted to convex f."
+          }
+        ],
+        "takeaway": "The actual transpose transports supports, and the general proper-function result is only an inclusion.",
+        "boundary": "Theorem 2.28 assumes only proper f and states inclusion, with no convexity, rank condition or composite-properness premise. Both Lean spaces are finite-dimensional real inner-product spaces and A is a continuous linear map with its actual adjoint; no matrix-coordinate adapter is separately certified. The earlier printed subgradient definition is scoped to proper functions, but the affine composite can be identically top (GAP.AFFINE-PROPER). The library explicitly extends the raw global-support inequality to every EReal function. For an all-top composite its generic support is the entire space and the source support image is empty. This is a disclosed definition extension, not a convention established by the printed definition. Properness of f remains in the statement even though the transport algebra does not use it. No converse is claimed. Later source obligations, Chapter 2 and the whole book remain incomplete."
+      }
+    },
+    {
+      "slug": "online-lipschitz",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10,21June2026",
+        "sections": "Section 2.2.1, Definition 2.29 and Theorem 2.30: interior Lipschitz equivalence",
+        "pages": "printed19/PDF31",
+        "pdf_page": 31,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "Finite values on a set",
+          "meaning": "SourceLipschitzOn requires a real witness for every f(x), x in V, and the all-pairs absolute difference bound. The total EReal.toReal operation alone does not certify finiteness."
+        },
+        {
+          "term": "Ambient interior and all supports",
+          "meaning": "U is the ambient interior of dom f. The same L bounds every support vector at every x in U, not just one chosen support. Both sides are vacuous when U is empty."
+        },
+        {
+          "term": "Explicit nonnegative constant",
+          "meaning": "L has type NNReal and may be zero. The source passages omit an explicit sign restriction. The library retains dimension zero and discloses its nonnegative-constant interpretation; a negative-L counterexample on the zero-dimensional space marks the excluded extension."
+        }
+      ],
+      "algorithm": {
+        "title": "Prove both implications on the actual domain interior",
+        "kind": "proof flow",
+        "steps": [
+          {
+            "title": "Restrict the actual pair bound to a ball",
+            "detail": "Every interior query has a positive-radius ambient ball in U. The pair bound and finite values hold on that actual ball, so the existing normalized-support perturbation proves the bound for every g."
+          },
+          {
+            "title": "Construct supports at both pair points",
+            "detail": "Proper convexity and interior membership give actual global supports gx,gy via the accepted interior-existence theorem, not an extra support-existence assumption."
+          },
+          {
+            "title": "Use finite conversion and both signs",
+            "detail": "Convert their supporting inequalities at finite x,y to real inequalities. Cauchy-Schwarz and the uniform norm bound control f(x)-f(y) and f(y)-f(x), giving the full absolute difference."
+          }
+        ]
+      },
+      "teaching_route": [
+        "BanditRL.OnlineConvex.SourceLipschitzOn",
+        "BanditRL.OnlineConvex.theorem_2_30"
+      ],
+      "source_theorems": [
+        {
+          "label": "Definition2.29 finite all-pairs property with disclosed nonnegative convention",
+          "pages": "printed19",
+          "pdf_page": 31,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\(V\\subseteq\\operatorname{dom} f,\\quad |f(x)-f(y)|\\le L\\|x-y\\|\\quad\\forall x,y\\in V,\\quad L\\ge0\\)",
+          "fallback": "Actual finite values on V plus the all-pairs bound, with an explicitly nonnegative Lipschitz constant.",
+          "plain": "A Lipschitz property concerns actual finite values on its stated set. Real projections of infinite values do not satisfy the required finite-value witness.",
+          "relationship": "Definition 2.29 uses finite values on V and an all-pairs bound for a chosen norm. The library predicate includes explicit finite real-value witnesses and needs only a normed additive commutative group; values outside V may be infinite. Theorem 2.30 uses proper convex f, ambient interior of its domain, every global support, and a finite-dimensional real inner-product space. Its norm is the Euclidean-compatible norm, not an arbitrary norm with an unqualified primal support bound. The Lean constant is NNReal, including zero. The inspected source does not explicitly state its sign or positive dimension (GAP.L-SIGN, GAP.DIMENSION); nonnegativity is an explicit library interpretation, not a verbatim printed premise. The retained dimension-zero negative-constant counterexample excludes the unrestricted-real-L extension. The reverse proof obtains both supports from proper convexity and interior membership; existence is a dependency, not an extra hypothesis. The library completes the final absolute-value combination omitted from the printed proof (GAP.ABS-COMBINE). Empty interior and zero dimension remain allowed; no boundary or relative-interior extension is asserted.",
+          "contract": {
+            "model": "Finite-valued normed-group Lipschitz predicate; proper convex finite-dimensional real inner-product theorem.",
+            "assumptions": "Definition 2.29 uses finite values on V and an all-pairs bound for a chosen norm. The library predicate includes explicit finite real-value witnesses and needs only a normed additive commutative group; values outside V may be infinite. Theorem 2.30 uses proper convex f, ambient interior of its domain, every global support, and a finite-dimensional real inner-product space. Its norm is the Euclidean-compatible norm, not an arbitrary norm with an unqualified primal support bound. The Lean constant is NNReal, including zero. The inspected source does not explicitly state its sign or positive dimension (GAP.L-SIGN, GAP.DIMENSION); nonnegativity is an explicit library interpretation, not a verbatim printed premise. The retained dimension-zero negative-constant counterexample excludes the unrestricted-real-L extension. The reverse proof obtains both supports from proper convexity and interior membership; existence is a dependency, not an extra hypothesis. The library completes the final absolute-value combination omitted from the printed proof (GAP.ABS-COMBINE). Empty interior and zero dimension remain allowed; no boundary or relative-interior extension is asserted.",
+            "parameters": "All ordered pairs in V for definition; every interior point and all globally supporting g for theorem.",
+            "regret": "No algorithm, regret or probability guarantee is asserted.",
+            "guarantee": "Finite-on-V and actual all-pairs norm inequality."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Bounded library declarations",
+            "boundary": "Definition 2.29 uses finite values on V and an all-pairs bound for a chosen norm. The library predicate includes explicit finite real-value witnesses and needs only a normed additive commutative group; values outside V may be infinite. Theorem 2.30 uses proper convex f, ambient interior of its domain, every global support, and a finite-dimensional real inner-product space. Its norm is the Euclidean-compatible norm, not an arbitrary norm with an unqualified primal support bound. The Lean constant is NNReal, including zero. The inspected source does not explicitly state its sign or positive dimension (GAP.L-SIGN, GAP.DIMENSION); nonnegativity is an explicit library interpretation, not a verbatim printed premise. The retained dimension-zero negative-constant counterexample excludes the unrestricted-real-L extension. The reverse proof obtains both supports from proper convexity and interior membership; existence is a dependency, not an extra hypothesis. The library completes the final absolute-value combination omitted from the printed proof (GAP.ABS-COMBINE). Empty interior and zero dimension remain allowed; no boundary or relative-interior extension is asserted. Later source obligations, Chapter 2 and the whole book remain incomplete."
+          }
+        },
+        {
+          "label": "Theorem2.30 full interior iff with disclosed nonnegative convention",
+          "pages": "printed19",
+          "pdf_page": 31,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\(f\\ \\text{proper convex},\\ L\\ge0,\\ U=\\operatorname{int}\\operatorname{dom}f:\\quad \\bigl[|f(x)-f(y)|\\le L\\|x-y\\|\\ \\forall x,y\\in U\\bigr]\\Longleftrightarrow\\bigl[\\|g\\|\\le L\\ \\forall x\\in U,\\ g\\in\\partial f(x)\\bigr]\\)",
+          "fallback": "For proper convex f and nonnegative L, finite all-pairs Lipschitz on domain interior iff every global support at every interior query has norm at most L.",
+          "plain": "The actual full equivalence includes both directions and every support. Proper convexity supplies the supports needed for the reverse proof.",
+          "relationship": "Definition 2.29 uses finite values on V and an all-pairs bound for a chosen norm. The library predicate includes explicit finite real-value witnesses and needs only a normed additive commutative group; values outside V may be infinite. Theorem 2.30 uses proper convex f, ambient interior of its domain, every global support, and a finite-dimensional real inner-product space. Its norm is the Euclidean-compatible norm, not an arbitrary norm with an unqualified primal support bound. The Lean constant is NNReal, including zero. The inspected source does not explicitly state its sign or positive dimension (GAP.L-SIGN, GAP.DIMENSION); nonnegativity is an explicit library interpretation, not a verbatim printed premise. The retained dimension-zero negative-constant counterexample excludes the unrestricted-real-L extension. The reverse proof obtains both supports from proper convexity and interior membership; existence is a dependency, not an extra hypothesis. The library completes the final absolute-value combination omitted from the printed proof (GAP.ABS-COMBINE). Empty interior and zero dimension remain allowed; no boundary or relative-interior extension is asserted.",
+          "contract": {
+            "model": "Finite-valued normed-group Lipschitz predicate; proper convex finite-dimensional real inner-product theorem.",
+            "assumptions": "Definition 2.29 uses finite values on V and an all-pairs bound for a chosen norm. The library predicate includes explicit finite real-value witnesses and needs only a normed additive commutative group; values outside V may be infinite. Theorem 2.30 uses proper convex f, ambient interior of its domain, every global support, and a finite-dimensional real inner-product space. Its norm is the Euclidean-compatible norm, not an arbitrary norm with an unqualified primal support bound. The Lean constant is NNReal, including zero. The inspected source does not explicitly state its sign or positive dimension (GAP.L-SIGN, GAP.DIMENSION); nonnegativity is an explicit library interpretation, not a verbatim printed premise. The retained dimension-zero negative-constant counterexample excludes the unrestricted-real-L extension. The reverse proof obtains both supports from proper convexity and interior membership; existence is a dependency, not an extra hypothesis. The library completes the final absolute-value combination omitted from the printed proof (GAP.ABS-COMBINE). Empty interior and zero dimension remain allowed; no boundary or relative-interior extension is asserted.",
+            "parameters": "All ordered pairs in V for definition; every interior point and all globally supporting g for theorem.",
+            "regret": "No algorithm, regret or probability guarantee is asserted.",
+            "guarantee": "Full iff on ambient interior with identical nonnegative constant, no boundary extension."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Bounded library declarations",
+            "boundary": "Definition 2.29 uses finite values on V and an all-pairs bound for a chosen norm. The library predicate includes explicit finite real-value witnesses and needs only a normed additive commutative group; values outside V may be infinite. Theorem 2.30 uses proper convex f, ambient interior of its domain, every global support, and a finite-dimensional real inner-product space. Its norm is the Euclidean-compatible norm, not an arbitrary norm with an unqualified primal support bound. The Lean constant is NNReal, including zero. The inspected source does not explicitly state its sign or positive dimension (GAP.L-SIGN, GAP.DIMENSION); nonnegativity is an explicit library interpretation, not a verbatim printed premise. The retained dimension-zero negative-constant counterexample excludes the unrestricted-real-L extension. The reverse proof obtains both supports from proper convexity and interior membership; existence is a dependency, not an extra hypothesis. The library completes the final absolute-value combination omitted from the printed proof (GAP.ABS-COMBINE). Empty interior and zero dimension remain allowed; no boundary or relative-interior extension is asserted. Later source obligations, Chapter 2 and the whole book remain incomplete."
+          }
+        }
+      ],
+      "proof_bridge": {
+        "title": "Actual supports and two signs establish the full iff",
+        "summary": "Reuse the local norm-ball bound forward, then construct supports at both endpoints for the reverse direction.",
+        "steps": [
+          {
+            "title": "Finite values prevent an infinity projection shortcut",
+            "detail": "At an interior point properness excludes bottom and domain membership excludes top, yielding f(x)=coe(toReal f(x)). SourceLipschitzOn separately requires actual finite witnesses on its set.",
+            "math": "\\(f(x)\\in\\mathbb R\\quad(x\\in U)\\)",
+            "fallback": "No arbitrary representative at an infinite value."
+          },
+          {
+            "title": "Perturb along every given support",
+            "detail": "Choose a positive radius with ball(x,r) subsetU. The earlier norm-ball theorem uses z=x+t g with t=r/(2||g||) for g≠0; source support and Lipschitz give t||g||²≤L t||g||. The zero support case uses L≥0.",
+            "math": "\\(\\|g\\|\\le L\\)",
+            "fallback": "The actual perturbation proof is reused, not an assumed stability consumer."
+          },
+          {
+            "title": "Derive actual source supports at x and y",
+            "detail": "The existing proper-convex interior theorem constructs gx∈∂f(x) and gy∈∂f(y). No subgradient-existence hypothesis is added. Both support inequalities are ambient global.",
+            "math": "\\(f(x)+\\langle g_x,y-x\\rangle\\le f(y),\\quad f(y)+\\langle g_y,x-y\\rangle\\le f(x)\\)",
+            "fallback": "The producer supplies both supports from the source assumptions."
+          },
+          {
+            "title": "Bound both real differences",
+            "detail": "Finite EReal conversion gives ordinary real inequalities. Negative inner products are bounded by their absolute value, Cauchy-Schwarz and L times the actual displacement norm. The two signs give the absolute bound for every pair.",
+            "math": "\\(-L\\|x-y\\|\\le f(x)-f(y)\\le L\\|x-y\\|\\)",
+            "fallback": "Full converse with the same L, without a selected-gradient shortcut."
+          }
+        ],
+        "boundary": "Definition 2.29 uses finite values on V and an all-pairs bound for a chosen norm. The library predicate includes explicit finite real-value witnesses and needs only a normed additive commutative group; values outside V may be infinite. Theorem 2.30 uses proper convex f, ambient interior of its domain, every global support, and a finite-dimensional real inner-product space. Its norm is the Euclidean-compatible norm, not an arbitrary norm with an unqualified primal support bound. The Lean constant is NNReal, including zero. The inspected source does not explicitly state its sign or positive dimension (GAP.L-SIGN, GAP.DIMENSION); nonnegativity is an explicit library interpretation, not a verbatim printed premise. The retained dimension-zero negative-constant counterexample excludes the unrestricted-real-L extension. The reverse proof obtains both supports from proper convexity and interior membership; existence is a dependency, not an extra hypothesis. The library completes the final absolute-value combination omitted from the printed proof (GAP.ABS-COMBINE). Empty interior and zero dimension remain allowed; no boundary or relative-interior extension is asserted. Later source obligations, Chapter 2 and the whole book remain incomplete."
+      },
+      "worked_example": {
+        "title": "Nonzero supports and the finite/boundary checks",
+        "intro": "Eighteen canary theorems, six test definitions and two abbreviations exercise absolute value, affine slope three, zero constant, empty interior, a boundary support, the infinity-toReal trap and dimension zero. These counts include premise helpers.",
+        "steps": [
+          {
+            "title": "Absolute value and slope3",
+            "detail": "For f(x)=|x|, actual pair Lipschitz1 yields the bound for all supports; source±1 supports at±2 make it nonzero and tight. Conversely the full affine support set{3} yields Lipschitz3 for the actual slope3 loss.",
+            "math": "\\(\\partial|\\cdot|(2)=\\{1\\},\\quad\\partial|\\cdot|(-2)=\\{-1\\},\\quad\\partial(3\\cdot)(x)=\\{3\\}\\)",
+            "fallback": "Both directions have constructed concrete data."
+          },
+          {
+            "title": "Empty interior, zero constant and dimension0",
+            "detail": "The singleton indicator has empty ambient domain interior, so both interior conditions are vacuous despite nonzero boundary support3. The constant-zero loss tests L=0; constant9 on EuclideanSpace real(Fin0) tests dimension0.",
+            "math": "\\(U_{I_{\\{0\\}}}=\\varnothing\\)",
+            "fallback": "No positivity/nonempty-interior premise silently added."
+          },
+          {
+            "title": "Halfline boundary and infinity guard",
+            "detail": "The indicator of[0,infinity) is Lipschitz0 on its domain interior and all interior supports are0, while boundary support−2 violates the zero norm bound. Its toReal projection is0 everywhere, including infinite values, but SourceLipschitzOn on the entire ambient line is false because finite witnesses fail.",
+            "math": "\\(-2\\in\\partial I_{[0,\\infty)}(0),\\quad\\|-2\\|>0\\)",
+            "fallback": "Finite-value and interior restrictions are essential, not cosmetic."
+          },
+          {
+            "title": "Explicit negative-L source audit",
+            "detail": "On the admitted zero-dimensional space the proper convex constant-zero loss obeys every literal pair inequality with L=−1 (all distances0), but support0 violates norm0≤−1. The actual compiled audit justifies explicitly restricting the Lipschitz constant to NNReal while keeping zero dimension.",
+            "math": "\\(0\\le(-1)0\\quad\\text{but}\\quad0\\not\\le-1\\)",
+            "fallback": "This delta is disclosed; the formal theorem does not claim unrestricted realL."
+          }
+        ],
+        "takeaway": "Full interior equivalence requires actual finite values, all actual supports and the explicitly nonnegative constant convention.",
+        "boundary": "Definition 2.29 uses finite values on V and an all-pairs bound for a chosen norm. The library predicate includes explicit finite real-value witnesses and needs only a normed additive commutative group; values outside V may be infinite. Theorem 2.30 uses proper convex f, ambient interior of its domain, every global support, and a finite-dimensional real inner-product space. Its norm is the Euclidean-compatible norm, not an arbitrary norm with an unqualified primal support bound. The Lean constant is NNReal, including zero. The inspected source does not explicitly state its sign or positive dimension (GAP.L-SIGN, GAP.DIMENSION); nonnegativity is an explicit library interpretation, not a verbatim printed premise. The retained dimension-zero negative-constant counterexample excludes the unrestricted-real-L extension. The reverse proof obtains both supports from proper convexity and interior membership; existence is a dependency, not an extra hypothesis. The library completes the final absolute-value combination omitted from the printed proof (GAP.ABS-COMBINE). Empty interior and zero dimension remain allowed; no boundary or relative-interior extension is asserted. Later source obligations, Chapter 2 and the whole book remain incomplete."
+      }
     }
   ]
 }

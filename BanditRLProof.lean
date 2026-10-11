@@ -723,3 +723,6 @@ import BanditRLProof.OnlineSubgradientSum
 import BanditRLProof.OnlineSubgradientAbsolute
 import BanditRLProof.OnlineNormalCone
 import BanditRLProof.OnlineSubgradientMax
+import BanditRLProof.OnlineHinge
+import BanditRLProof.OnlineAffineSubgradient
+import BanditRLProof.OnlineLipschitzSubgradient

@@ -1,0 +1,266 @@
+{
+  "schema_version": "3.0",
+  "id": "ONLINE-CH2-HINGE-AFFINE-LIPSCHITZ-INTEGRATION-20261012",
+  "route": "online-learning / hinge loss, affine support transport and interior Lipschitz equivalence",
+  "frontier_cell": "online-lipschitz",
+  "source_facing": true,
+  "source": {
+    "kind": "textbook",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10",
+    "anchor": "Section2.2.1 printed18-19/PDF30-31: Example2.27, Theorem2.28, Definition2.29 and Theorem2.30; required source context separately inventoried.",
+    "url": "https://arxiv.org/abs/1912.13213v10",
+    "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17"
+  },
+  "target": "Integrate three retained production modules and three genuine canary modules into the shared library, with exact source assumptions and explicit convention deltas.",
+  "affected_files": [
+    "BanditRLProof/OnlineHinge.lean",
+    "BanditRLProof/OnlineAffineSubgradient.lean",
+    "BanditRLProof/OnlineLipschitzSubgradient.lean",
+    "BanditRLProof.lean",
+    "website/content/books.json",
+    "website/content/chapters.json",
+    "website/content/readings.json",
+    "website/content/highlights.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineConvex.sourceHinge",
+    "BanditRL.OnlineConvex.affine_subdifferential",
+    "BanditRL.OnlineConvex.hingeFamily",
+    "BanditRL.OnlineConvex.affine_proper",
+    "BanditRL.OnlineConvex.affine_convex",
+    "BanditRL.OnlineConvex.affine_continuous",
+    "BanditRL.OnlineConvex.hinge_max_identity",
+    "BanditRL.OnlineConvex.hinge_subdifferential_hull",
+    "BanditRL.OnlineConvex.hinge_family_support",
+    "BanditRL.OnlineConvex.hinge_family_false",
+    "BanditRL.OnlineConvex.hinge_family_true",
+    "BanditRL.OnlineConvex.hinge_active_negative",
+    "BanditRL.OnlineConvex.hinge_active_positive",
+    "BanditRL.OnlineConvex.hinge_active_zero",
+    "BanditRL.OnlineConvex.example_2_27",
+    "BanditRL.OnlineConvex.theorem_2_28",
+    "BanditRL.OnlineConvex.SourceLipschitzOn",
+    "BanditRL.OnlineConvex.theorem_2_30"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Accepted shared properness/global support/finite maximum/interior support existence/norm-ball declarations",
+      "Frozen retained stack 8045070bf1ee53c83778d04eb168f8ad6f728b59",
+      "Pinned Mathlib continuous linear adjoint, convex hull and inner-product inequalities"
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineConvex.SourceProper",
+      "BanditRL.OnlineConvex.SourceSubdifferential",
+      "BanditRL.OnlineConvex.theorem_2_26",
+      "BanditRL.OnlineConvex.subgradient_norm_le_lipschitz_ball",
+      "BanditRL.OnlineConvex.subgradient_exists_of_domain_interior"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineConvex.sourceHinge",
+      "BanditRL.OnlineConvex.affine_subdifferential",
+      "BanditRL.OnlineConvex.hingeFamily",
+      "BanditRL.OnlineConvex.affine_proper",
+      "BanditRL.OnlineConvex.affine_convex",
+      "BanditRL.OnlineConvex.affine_continuous",
+      "BanditRL.OnlineConvex.hinge_max_identity",
+      "BanditRL.OnlineConvex.hinge_subdifferential_hull",
+      "BanditRL.OnlineConvex.hinge_family_support",
+      "BanditRL.OnlineConvex.hinge_family_false",
+      "BanditRL.OnlineConvex.hinge_family_true",
+      "BanditRL.OnlineConvex.hinge_active_negative",
+      "BanditRL.OnlineConvex.hinge_active_positive",
+      "BanditRL.OnlineConvex.hinge_active_zero",
+      "BanditRL.OnlineConvex.example_2_27",
+      "BanditRL.OnlineConvex.theorem_2_28",
+      "BanditRL.OnlineConvex.SourceLipschitzOn",
+      "BanditRL.OnlineConvex.theorem_2_30"
+    ],
+    "known_consumers": [
+      "Three retained canary modules:30theorems,8testdefinitions,2abbreviations, including premise helpers",
+      "Hinge proof constructs both affine components and applies the accepted full finite-maximum rule",
+      "Interior Lipschitz reverse direction constructs actual supports at both endpoints"
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Retain the original mathematical statements/proofs and canaries. Changes to production comments disclose source boundaries; no second Lean project or copied foundation."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root integration formalizer and reader author",
+    "blind_decoder": "/root/batch6_blind_decoder; neutral actual compiler types and literal definitions only",
+    "source_reviewer": "/root/batch5_source_reviewer; independent source-first seal followed by anti-anchored source/body/reader audit",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "GAP.EXAMPLE-PROOF: the hinge equality has no local printed derivation. GAP.AFFINE-PROPER: the printed proper-function support definition does not settle an improper affine composite; the library explicitly extends the global inequality. GAP.L-SIGN and GAP.DIMENSION: the source passages omit sign and positive-dimension conventions; NNReal is a disclosed library interpretation retaining dimension zero, not a verbatim printed premise. GAP.ABS-COMBINE: the library completes the source proof's implicit final absolute-value step. Finite-dimensional real inner-product carriers generalize Euclidean coordinates; no separate matrix-coordinate or isometry certificate is claimed. The Lipschitz definition permits EReal values outside V beyond the source nowhere-bottom carrier."
+  },
+  "graph_contribution": {
+    "lean_graph": "new-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Canonical convex-support interfaces are reused; no separately certified setting transport or graph-derived mathematical discovery.",
+    "focus_targets": [
+      "online-hinge",
+      "online-affine-subgradient",
+      "online-lipschitz"
+    ],
+    "visual_review": "Six desktop/mobile local reader screenshots actually inspected; MathJax, navigation, folded Lean and formula scrolling checked.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: three bounded readers and seven highlights",
+    "banditrlwiki": "no-change-with-reason: existing Bandit and Extended Topics case endpoints unchanged",
+    "results_ledger": "no-change-with-reason: canonical website/content/results.json unchanged; no research milestone completion change",
+    "roadmap": "no-change-with-reason: canonical roadmap/frontier metadata unchanged; Online Book/chapter teaching metadata adds three routes for a total of twenty",
+    "website_surfaces": [
+      "Online Book/chapter metadata",
+      "Three source-attributed mathematical readers",
+      "Shared canonical declaration registry"
+    ],
+    "integration_evidence": "updated: research-wiki/integrations/ONLINE-CH2-HINGE-AFFINE-LIPSCHITZ-INTEGRATION-20261012/README.md records the candidate and its boundaries"
+  },
+  "truth_boundary": "Fifteen retained theorems and three definitions are candidates for integration into main, not new mathematical discoveries. GAP.EXAMPLE-PROOF: the hinge equality has no local printed derivation. GAP.AFFINE-PROPER: the printed proper-function support definition does not settle an improper affine composite; the library explicitly extends the global inequality. GAP.L-SIGN and GAP.DIMENSION: the source passages omit sign and positive-dimension conventions; NNReal is a disclosed library interpretation retaining dimension zero, not a verbatim printed premise. GAP.ABS-COMBINE: the library completes the source proof's implicit final absolute-value step. Full purification, Exposition Seal, Chapter2/book completion, merge, deployment and original PR closure are separate states.",
+  "verification": {
+    "focused_checks": [
+      "Three production/three canary modules and actual18declaration types compiled",
+      "15theorems and12literal definitions independently reconstructed",
+      "18production declarations use only standard propext/Classical.choice/Quot.sound axioms",
+      "58selected compiler declarations and current source ranges verified; see hash-bound graph receipt",
+      "Six desktop/mobile local reader render cases passed"
+    ],
+    "bandit_check": "Full combined root, Tests, exporter, strict placeholder scan and complete Python harness passed on the successor inputs; exact log receipts are hash-bound.",
+    "site_build": "Passed --lean-verified after successor combined gate",
+    "site_check": "passed",
+    "independent_review": "Source-first topology, expanded declarations, proof bodies, canaries, reader deltas and original six-PR scope reviewed by distinct actors; exact receipts hash-bound."
+  },
+  "contributor": {
+    "name": "OpenAI Codex",
+    "role": "Integration and maintenance; original proof authors and historical review roles retained by immutable source provenance"
+  },
+  "learning_contract": {
+    "control_plane_math_authority": false,
+    "process_memory_checked": true,
+    "process_memory_ids": [
+      "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS",
+      "ABRL-NK-WINDOWS-PATH-LENGTH"
+    ],
+    "failure_class": "NONE",
+    "salvage": {
+      "required": true,
+      "status": "completed",
+      "reason": "Preserved the original historical evidence and first review findings. Corrected unsupported source-convention attribution in one module comment; refreshed stale compiler source ranges after comment changes. Initial zero-result highlight extraction and doc-comment range-check assumption are recorded. Mathematical statements/proofs and canaries preserved.",
+      "promoted_fragments": [
+        "BanditRLProof/OnlineHinge.lean",
+        "BanditRLProof/OnlineAffineSubgradient.lean",
+        "BanditRLProof/OnlineLipschitzSubgradient.lean"
+      ],
+      "discarded_fragments": []
+    },
+    "parallelism": {
+      "decision": "serial",
+      "direction_fingerprints": [
+        "retained-hinge-maximum-affine-adjoint-interior-two-supports"
+      ],
+      "expected_information_gain": "Distinct blind, source and topology reviewers satisfy role separation; these are audits, not competing proof directions.",
+      "shared_verified_context_digest": "Pinned Orabona cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17; frozen stack 8045070bf1ee53c83778d04eb168f8ad6f728b59"
+    },
+    "cross_route_blind_spot_audit": {
+      "required": false,
+      "status": "not-applicable",
+      "evidence": "",
+      "canonical_route": "retained library proof routes",
+      "selection_reason": "No parallel mathematical proof-route competition."
+    },
+    "reader_backpressure": {
+      "purification_status": "pending",
+      "exposition_seal_status": "pending",
+      "reader_debt_delta": 0,
+      "exposition_evidence": "Three formula-bearing reader bridges and explicit convention boundaries independently reviewed and rendered in six cases. Full purification and Exposition Seal remain pending.",
+      "source_expansion_nodes": [
+        "E2.27",
+        "T2.28",
+        "D2.29",
+        "T2.30"
+      ],
+      "lean_expansion_nodes": [
+        "BanditRL.OnlineConvex.sourceHinge",
+        "BanditRL.OnlineConvex.affine_subdifferential",
+        "BanditRL.OnlineConvex.hingeFamily",
+        "BanditRL.OnlineConvex.affine_proper",
+        "BanditRL.OnlineConvex.affine_convex",
+        "BanditRL.OnlineConvex.affine_continuous",
+        "BanditRL.OnlineConvex.hinge_max_identity",
+        "BanditRL.OnlineConvex.hinge_subdifferential_hull",
+        "BanditRL.OnlineConvex.hinge_family_support",
+        "BanditRL.OnlineConvex.hinge_family_false",
+        "BanditRL.OnlineConvex.hinge_family_true",
+        "BanditRL.OnlineConvex.hinge_active_negative",
+        "BanditRL.OnlineConvex.hinge_active_positive",
+        "BanditRL.OnlineConvex.hinge_active_zero",
+        "BanditRL.OnlineConvex.example_2_27",
+        "BanditRL.OnlineConvex.theorem_2_28",
+        "BanditRL.OnlineConvex.SourceLipschitzOn",
+        "BanditRL.OnlineConvex.theorem_2_30"
+      ],
+      "assumptions_preserved": true,
+      "boundary_preserved": true
+    }
+  },
+  "statement_seal": {
+    "version": 1,
+    "source_revision": "arXiv:1912.13213v10",
+    "sealed_statement_record_sha256": "e1b374eb0d1352883b3621396cec780844c2ada64715af5f4af488fdc6fa299d",
+    "actual_elaborated_types_sha256": "c26ddbc5ef62f23fe4ad79feed44c6cdf6e28ccbc99dd96403a0ca8b67fb255a",
+    "binder_audit": "All18production declarations and12literal definition contexts audited; helpers and definitions retain their actual weaker structural contexts. Proof inputs remain dependency edges.",
+    "definition_kind": {
+      "sourceHinge": "Literal finite hinge function on a real inner-product space, with no nonzero-vector or finite-dimension requirement in the definition.",
+      "hingeFamily": "Literal Boolean-indexed pair of affine components, on a real inner-product space without finite dimension.",
+      "SourceLipschitzOn": "Explicit finite witnesses and all-pairs bound on any normed additive commutative group; NNReal is an explicit library sign restriction and values outside V remain unrestricted EReal."
+    }
+  },
+  "source_proof_coverage": {
+    "inventory_sha256": "3168eed99f6f38444a7688e58d62fd854a47cf4998dc4bcb1fda212f5989c41a",
+    "independent_source_first_receipt_sha256": "1454bdc01c5c06d1b0de8036aae02c416f4380ecf2b4d3bc0c1ad8f90894a1dc",
+    "source_gaps": "GAP.EXAMPLE-PROOF: the hinge equality has no local printed derivation. GAP.AFFINE-PROPER: the printed proper-function support definition does not settle an improper affine composite; the library explicitly extends the global inequality. GAP.L-SIGN and GAP.DIMENSION: the source passages omit sign and positive-dimension conventions; NNReal is a disclosed library interpretation retaining dimension zero, not a verbatim printed premise. GAP.ABS-COMBINE: the library completes the source proof's implicit final absolute-value step.",
+    "exclusions": "Adjacent nonsmooth example, OSD/linearization and Lemma2.31 are excluded independent targets. External Bauschke-Combettes and Rockafellar source texts were not inspected.",
+    "alternative_routes": "Hinge margin branches and zero/nonzero support cases are exhaustive cases, not alternative complete proofs. Source topology remains separate from library compiler dependencies."
+  },
+  "proof_digestion": {
+    "existing_substrate": [
+      "Accepted full maximum rule",
+      "Accepted global support and interior existence",
+      "Accepted local Lipschitz norm-ball bound",
+      "Mathlib adjoint and convex-hull APIs"
+    ],
+    "bookkeeping": [
+      "Affine cancellation and support testing",
+      "Finite-value EReal conversions",
+      "Active-component case distinctions and two signed difference bounds"
+    ],
+    "new_to_main_reusable": [
+      "Full hinge supports and affine support helpers",
+      "Actual affine-adjoint image inclusion",
+      "Finite-value Lipschitz predicate and interior equivalence"
+    ],
+    "new_topology": "Retained stack proofs integrated without claiming new source derivations; source omissions and library completion steps remain distinct."
+  },
+  "purification": {
+    "status": "pending",
+    "dead_code_audit": "All18production declarations have selected value/proof consumers; this58node audit is not global irredundancy or dead-code certification.",
+    "duplicate_semantics_audit": "Single canonical library and shared root, tooling and declaration registry.",
+    "canonicalization": "Existing shared definitions and exact mathematical statements retained.",
+    "compressed_spine_delta": "Three source-attributed mathematical proof bridges.",
+    "reader_default_view": "Mathematical explanation first; exact Lean folded; full Exposition Seal not claimed."
+  }
+}
