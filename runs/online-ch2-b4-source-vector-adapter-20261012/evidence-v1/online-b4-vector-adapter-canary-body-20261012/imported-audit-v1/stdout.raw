@@ -1,0 +1,109 @@
+BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.supNorm_nonzero_support :
+  (BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.objective
+              BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.base).toReal +
+          Inner.inner ℝ BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.supportVector
+            (BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.coordinates
+              (BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.query -
+                BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.base)) +
+        1 / 2 *
+          ‖BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.query -
+                BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.base‖ ^
+            2 ≤
+      (BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.objective
+          BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.query).toReal ∧
+    ‖BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.query -
+              BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.base‖ ^
+          2 =
+        1 ∧
+      ‖BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.coordinates
+                (BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.query -
+                  BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.base)‖ ^
+            2 =
+          2 ∧
+        Inner.inner ℝ BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.supportVector
+              (BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.coordinates
+                (BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.query -
+                  BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.base)) =
+            1 ∧
+          BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.supportVector ≠ 0 ∧
+            BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.base ∈
+                BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.feasible ∧
+              BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.query ∈
+                  BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.feasible ∧
+                BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.outside ∉
+                    BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.feasible ∧
+                  BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.objective
+                        BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.base =
+                      0 ∧
+                    BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.objective
+                          BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.query =
+                        2 ∧
+                      BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.objective
+                          BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.outside =
+                        ⊤
+'BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.supNorm_nonzero_support' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.scaledCoordinates_discriminate_wrong_norm :
+  (BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.objective
+              BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.base).toReal +
+          Inner.inner ℝ BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.scaledSupportVector
+            (BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.scaledCoordinates
+              (BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.query -
+                BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.base)) +
+        1 / 2 *
+          ‖BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.query -
+                BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.base‖ ^
+            2 ≤
+      (BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.objective
+          BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.query).toReal ∧
+    ‖BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.query -
+              BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.base‖ ^
+          2 =
+        1 ∧
+      ‖BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.scaledCoordinates
+                (BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.query -
+                  BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.base)‖ ^
+            2 =
+          8 ∧
+        Inner.inner ℝ BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.scaledSupportVector
+              (BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.scaledCoordinates
+                (BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.query -
+                  BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.base)) =
+            1 ∧
+          BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.scaledSupportVector ≠ 0 ∧
+            (∀ (x : BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.E),
+                BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.scaledCoordinates x =
+                  2 • BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.coordinates x) ∧
+              BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.base ∈
+                  BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.feasible ∧
+                BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.query ∈
+                    BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.feasible ∧
+                  BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.outside ∉
+                      BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.feasible ∧
+                    BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.objective
+                          BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.base =
+                        0 ∧
+                      BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.objective
+                            BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.query =
+                          2 ∧
+                        BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.objective
+                              BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.outside =
+                            ⊤ ∧
+                          ¬(BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.objective
+                                      BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.base).toReal +
+                                  Inner.inner ℝ
+                                    BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.scaledSupportVector
+                                    (BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.scaledCoordinates
+                                      (BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.query -
+                                        BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.base)) +
+                                1 / 2 *
+                                  ‖BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.scaledCoordinates
+                                        (BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.query -
+                                          BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.base)‖ ^
+                                    2 ≤
+                              (BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.objective
+                                  BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.query).toReal
+'BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.scaledCoordinates_discriminate_wrong_norm' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

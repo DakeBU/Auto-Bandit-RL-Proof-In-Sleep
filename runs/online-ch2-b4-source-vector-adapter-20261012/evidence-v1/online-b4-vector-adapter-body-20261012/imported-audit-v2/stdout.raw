@@ -1,0 +1,15 @@
+BanditRL.OnlineConvex.stronglyConvex_sourceSubgradient_growth.{u_1} {E : Type u_1} [NormedAddCommGroup E]
+  [NormedSpace ℝ E] (d : ℕ) (e : E ≃ₗ[ℝ] EuclideanSpace ℝ (Fin d)) (f : E → EReal) (V : Set E) (lam : ℝ)
+  (hf : BanditRL.OnlineConvex.SourceProper f) (hV : Convex ℝ V) (hdom : V ⊆ BanditRL.OnlineConvex.effectiveDomain f)
+  (hlam : 0 ≤ lam)
+  (hstrong :
+    ∀ x ∈ V,
+      ∀ y ∈ V,
+        ∀ (a : ℝ),
+          0 < a → a < 1 → f (a • x + (1 - a) • y) ≤ ↑a * f x + ↑(1 - a) * f y - ↑(lam / 2 * a * (1 - a) * ‖x - y‖ ^ 2))
+  (p : E) (hp : p ∈ V) (g : EuclideanSpace ℝ (Fin d))
+  (hg : g ∈ BanditRL.OnlineConvex.SourceSubdifferential (fun u => f (e.symm u)) (e p)) (q : E) (hq : q ∈ V) :
+  (f p).toReal + Inner.inner ℝ g (e (q - p)) + lam / 2 * ‖q - p‖ ^ 2 ≤ (f q).toReal
+'BanditRL.OnlineConvex.stronglyConvex_sourceSubgradient_growth' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

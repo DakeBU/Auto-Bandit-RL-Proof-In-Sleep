@@ -1,0 +1,80 @@
+{
+  "reviewer": "/root/support_reader_source_review_20261012",
+  "role": "Independent source/semantic reviewer distinct from proposing formalizer",
+  "stage": "PRE_FREEZE_CANARY_CONTEXT_AND_HEADER_REVIEW",
+  "verdict": "accepted-with-explicit-delta",
+  "source_semantic_freeze_eligible": true,
+  "statement": {
+    "bytes": 2377,
+    "sha256": "c8ce98d2234538d2fe8b5b9db420440703a1d778b312c5ebcfb7df9a08583be1",
+    "path": "tmp/online-b4-vector-adapter-canary-proposal-20261012/context-and-statements-v1.txt"
+  },
+  "contract": {
+    "path": "tmp/online-b4-vector-adapter-canary-proposal-20261012/contract-proposal-v1.json",
+    "sha256": "33fa5ed18fad83fd7326638686df6fa30ca2f13931ea8947cf4d2e0f19328502"
+  },
+  "source_binding": "Orabona v10 PDF SHAcef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17; Def2.20 global support and Def4.1/Lemma4.2 forward. Reuses personally inspected exact source text from preceding reviews; no fresh source-pixel claim.",
+  "slots": [
+    {
+      "name": "objects",
+      "id": 1,
+      "finding": "E=Fin2->real with canonical sup norm, U=EuclideanSpace real Fin2; coordinates is canonical algebraic equivalence; scaledCoordinates is its composition with multiplication by2. Inner product lives only on U. All context objects are literal concrete definitions, not witness choices."
+    },
+    {
+      "name": "quantifiers",
+      "id": 2,
+      "finding": "No public assumption binders in either canary. Internal proof obligations include true GLOBAL coordinate support for every u in U, equivalently every x in E; checking only feasible x is insufficient to instantiate source definition without explicit outside-top case."
+    },
+    {
+      "name": "assumptions",
+      "id": 3,
+      "finding": "All adapter premises must be internally proved: proper objective, convex box, finite domain, lambda1 nonnegative, genuine strong interpolation, feasible points and global source support. No hmin premise or supplied performance bound. base is actually not a minimum: f((-1,0))=-1/2 < f(base)=0; absence of hmin is substantive."
+    },
+    {
+      "name": "conclusion",
+      "id": 4,
+      "finding": "Both first conjunctions are exact chosen-sup-norm adapter specializations. First additionally certifies norm distinction1versus2/nonzero support/real values/infinite outside. Second certifies1versus8/nonzero scaled support/coordinate scaling plus negation of the exact wrong norm expression."
+    },
+    {
+      "name": "normalization",
+      "id": 5,
+      "finding": "lambda=1 gives coefficient1/2. f(query)=2, f(base)=0, both pairings1; chosen squared norm1 gives3/2<=2. First coordinate squared norm2 gives wrong but true2<=2; second squared norm8 gives false5<=2. All constants match."
+    },
+    {
+      "name": "probability",
+      "id": 6,
+      "finding": "Pure deterministic concrete analytic canaries; no probability/feedback/algorithmic claim."
+    },
+    {
+      "name": "boundary",
+      "id": 7,
+      "finding": "Proposals unelaborated; module import uninstalled. They do not establish adapter BODY, support existence generally, lambda0/d0 test coverage, attainment, full iff, cumulative producers or B4/chapter completion."
+    }
+  ],
+  "mathematical_checks": [
+    "For x inside V, objective is (x0^2+x1^2)/2+x0; outside V, finite real plus canonical indicator top equals top. Never bottom; base gives finite witness. Exact effective domain is V.",
+    "V is coordinatewise closed interval box and convex. All strict interpolation points remain feasible. Interpolation gap equals(a*(1-a)/2)*(dx0^2+dx1^2), at least(a*(1-a)/2)*max(abs(dx0),abs(dx1))^2. Thus lambda1 works in E sup norm.",
+    "Global support at base under ordinary coordinates: pairing with g=(1,0) is x0, and finite objective minus x0 is half sum squares>=0; outside objective is top. Under scaled coordinates inverse divides coordinates by2 and gPrime=(1/2,0), giving same x0 pairing. Support base remains p=0 in both cases.",
+    "supportVector and scaledSupportVector are nonzero; source point is feasible and query=(1,1) lies on boundary. outside=(2,2) truly lies outside and produces top, so no global-finite simplification.",
+    "scaledCoordinates expression and all-x equality are consistent mathematically with algebraic multiplication by2; typing/API exactness intentionally not certified."
+  ],
+  "required_body_audits": [
+    "Each first conjunction proof provider must actually apply stronglyConvex_sourceSubgradient_growth using exact f,V,lambda1,p,g,e,q. Do not merely prove3/2<=2 arithmetically or insert unused theorem occurrence.",
+    "Inspect actual first-conjunction proof extraction/TYPE/VALUE and authentic application arguments; whole theorem occurrence alone is insufficient evidence of the claimed application.",
+    "Production adapter actual VALUE must use stronglyConvex_support_growth with derived continuous functional and restricted true global support.",
+    "Freeze exact context/header and independently compare extraction after authorized body insertion; standard axiom closure and real source premise producers required."
+  ],
+  "freeze_blockers": [],
+  "pending": [
+    "Parent authorization and exact scratch import binding",
+    "Header/context elaboration and actual frozen typing receipt",
+    "Production adapter proof before executable canary compilation",
+    "Canary bodies and independent BODY/source review",
+    "lambda0/d0 proposals are separate optional boundary coverage, not covered by these two headers",
+    "Current parent support reader PNG review remains pending"
+  ],
+  "body_authored": false,
+  "typecheck_claim": false,
+  "build_run": false,
+  "production_changes": false
+}

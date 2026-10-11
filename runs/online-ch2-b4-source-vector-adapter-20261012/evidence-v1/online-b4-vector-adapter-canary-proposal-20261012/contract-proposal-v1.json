@@ -1,0 +1,76 @@
+{
+  "status": "CANARY_CONTEXT_AND_STATEMENT_PROPOSAL_ONLY_UNELABORATED_NO_THEOREM_BODY",
+  "statement_file": {
+    "path": "context-and-statements-v1.txt",
+    "bytes": 2377,
+    "sha256": "c8ce98d2234538d2fe8b5b9db420440703a1d778b312c5ebcfb7df9a08583be1"
+  },
+  "context_definition_kind": "Literal concrete functions, vectors, feasible box and algebraic coordinate equivalences; no choice/default witness and no new proposition bundle.",
+  "intended_import": "BanditRLProof.OnlineStrongConvexSourceSubgradient is a proposed eventual production module, not currently installed. Exact scratch import binding must be supplied by parent at later canary freeze/compile authorization; do not claim this proposal elaborates now.",
+  "source_approved_arithmetic": "proposal-v2.md and independent pre-freeze-source-review-v2.json; this is the first exact Lean canary context/header proposal and requires its own review.",
+  "public_parameters": [],
+  "cases": [
+    {
+      "declaration": "supNorm_nonzero_support",
+      "core_call_required": "First conjunction must use stronglyConvex_sourceSubgradient_growth objective feasible 1 with E=Fin 2 -> real, d=2, e=coordinates, p=base, g=supportVector, q=query. All source premises proved internally.",
+      "computed_values": {
+        "norm_E_squared": 1,
+        "norm_coordinates_squared": 2,
+        "pairing": 1,
+        "f_base": 0,
+        "f_query": 2,
+        "correct_inequality": "3/2 <= 2",
+        "wrong_Euclidean_inequality": "2 <= 2"
+      },
+      "discriminating_limit": "Explicit norm values establish distinct norms but this first inequality alone cannot reject wrong Euclidean penalty."
+    },
+    {
+      "declaration": "scaledCoordinates_discriminate_wrong_norm",
+      "core_call_required": "First conjunction must use same public adapter with e=scaledCoordinates and g=scaledSupportVector. Prove all premises; no reuse of a numeric bound to fake the core edge.",
+      "computed_values": {
+        "norm_E_squared": 1,
+        "norm_coordinates_squared": 8,
+        "pairing": 1,
+        "f_base": 0,
+        "f_query": 2,
+        "correct_inequality": "3/2 <= 2",
+        "wrong_Euclidean_inequality": "5 <= 2 (false)"
+      },
+      "discriminating_limit": "Final negated inequality is the exact wrong norm expression, not an unrelated arithmetic falsehood."
+    }
+  ],
+  "premises_to_discharge_inside_later_bodies": [
+    "SourceProper objective including global no-bottom and genuine finite witness",
+    "Convex real feasible",
+    "feasible subset effectiveDomain objective",
+    "0 <= 1",
+    "Definition4.1 interpolation inequality with lambda=1 and the sup norm on E",
+    "base and query membership",
+    "Global SourceSubdifferential membership for objective composed with coordinate inverse"
+  ],
+  "finite_domain": "Canonical extendedIndicator feasible makes objective finite on exactly the box and top outside. outside=(2,2) witnesses a genuine non-global-finite objective. No bottom value.",
+  "expected_audit": [
+    "Whole canary proof TYPE/VALUE occurrence audit with direct public adapter occurrence in first-conjunction provider",
+    "Production adapter proof VALUE occurrence of stronglyConvex_support_growth",
+    "Standard axiom closure only",
+    "Exact context/header extraction after proof insertion"
+  ],
+  "restrictions": [
+    "No canary theorem BODY authored",
+    "No proof search or compilation performed",
+    "No arbitrary performance/strong-convexity/support premises in public canary signatures",
+    "No source/header/production modifications",
+    "Prior files preserved",
+    "No chapter/B4/global completion claim"
+  ],
+  "resource_state": "Parent full harness pending; no compile release received.",
+  "open_boundaries": [
+    "full Lemma4.2 iff/converse and equality typo",
+    "support existence",
+    "attainment",
+    "cumulative-objective producers",
+    "stability",
+    "full 7.47/15.31 and terminal repairs",
+    "Chapter2 and Chapters1-16 closure"
+  ]
+}

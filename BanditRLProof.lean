@@ -797,3 +797,4 @@ import BanditRLProof.OnlineCumulativePotential
 
 import BanditRLProof.OnlineStrongConvexMinimum
 import BanditRLProof.OnlineStrongConvexSupport
+import BanditRLProof.OnlineStrongConvexSourceSubgradient

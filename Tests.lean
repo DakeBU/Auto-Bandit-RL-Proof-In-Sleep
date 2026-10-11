@@ -212,3 +212,4 @@ import Tests.OnlineCumulativePotentialCanary
 
 import Tests.OnlineStrongConvexMinimumCanary
 import Tests.OnlineStrongConvexSupportCanary
+import Tests.OnlineStrongConvexSourceSubgradientCanary
