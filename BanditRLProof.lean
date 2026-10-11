@@ -709,3 +709,9 @@ import BanditRLProof.OnlineGradientDescentVariable
 import BanditRLProof.OnlineGradientDescentSource
 import BanditRLProof.OnlineConvexClosures
 import BanditRLProof.OnlineConvexSums
+import BanditRLProof.OnlineConstraintFiniteLoss
+import BanditRLProof.OnlineConvexOptimality
+import BanditRLProof.OnlineConvexBarycenter
+import BanditRLProof.OnlineExpectation
+import BanditRLProof.OnlineConvexMinorant
+import BanditRLProof.OnlineJensen

@@ -115,3 +115,9 @@ import Tests.OnlineGradientDescentVariableCanary
 import Tests.OnlineGradientDescentSourceCanary
 import Tests.OnlineConvexClosuresCanary
 import Tests.OnlineConvexSumsCanary
+import Tests.OnlineConstraintFiniteLossCanary
+import Tests.OnlineConvexOptimalityCanary
+import Tests.OnlineConvexBarycenterCanary
+import Tests.OnlineExpectationCanary
+import Tests.OnlineConvexMinorantCanary
+import Tests.OnlineJensenCanary
