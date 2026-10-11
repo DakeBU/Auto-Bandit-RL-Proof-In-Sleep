@@ -1,0 +1,89 @@
+{
+  "schema_version": "2.0",
+  "id": "ONLINE-GROWTH-CI-CONTRIBUTION-HEAD-20261011",
+  "route": "internal/ci/contributor-history-context",
+  "frontier_cell": "n/a",
+  "source_facing": false,
+  "source": {
+    "kind": "internal-design",
+    "title": "PR provenance context versus integration merge context",
+    "version": "2026-10-11-v1",
+    "anchor": "PR226 actual-head and synthetic-merge reproduction",
+    "url": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/pull/226"
+  },
+  "target": "Run unchanged strict contributor provenance check on the exact pull-request contribution head while retaining the synthetic merge checkout for unit tests, Lean/harness and documentation.",
+  "affected_files": [
+    ".github/workflows/contributor-contract.yml",
+    ".github/workflows/documentation.yml"
+  ],
+  "declarations": [],
+  "reuse_plan": {
+    "classification": "out_of_scope",
+    "decision": "out_of_scope",
+    "searched_existing": [
+      "Current strict historical_row_certificate and both CI workflows",
+      "PR226 real source head60f7 and synthetic merge first-parent ancestry"
+    ],
+    "reused_declarations": [],
+    "new_shared_declarations": [],
+    "known_consumers": [
+      "Contributor contract workflow",
+      "Lean and documentation build preflight"
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Infrastructure-only fix; reuse exact unchanged checker and all current historical provenance rules. No mathematical declarations."
+  },
+  "reader_contract": {
+    "source_anchor_visible": false,
+    "natural_language_formula_proof": false,
+    "hidden_assumptions_visible": false,
+    "source_vs_lean_delta_visible": false,
+    "lean_folded": false,
+    "dependencies_visible": false,
+    "remaining_boundary_visible": false
+  },
+  "semantic_roundtrip": {
+    "required": false,
+    "status": "not-required",
+    "formalizer": "/root",
+    "blind_decoder": "",
+    "source_reviewer": "",
+    "verdict": "not-required",
+    "remaining_semantic_delta": "Not source-facing; independent CI design review remains required before delivery."
+  },
+  "graph_contribution": {
+    "lean_graph": "no-change-with-reason",
+    "overview_graph": "no-change-with-reason",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "CI history selection changes no mathematical or conceptual graph.",
+    "focus_targets": [],
+    "visual_review": "No rendered product or reader changed; workflow diff and integration checkout continuity are inspected.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "no-change-with-reason: Infrastructure-only provenance context; no theorem, route, result or chapter status change.",
+    "banditrlwiki": "no-change-with-reason: Infrastructure-only provenance context; no theorem, route, result or chapter status change.",
+    "results_ledger": "no-change-with-reason: Infrastructure-only provenance context; no theorem, route, result or chapter status change.",
+    "roadmap": "no-change-with-reason: Infrastructure-only provenance context; no theorem, route, result or chapter status change.",
+    "website_surfaces": [
+      "no-change-with-reason: Website content, generator and outputs unchanged."
+    ]
+  },
+  "truth_boundary": "This repairs CI context, not the checker or mathematics. Actual PR head and actual PR base are bound separately from the synthetic merge used for Lean/harness/site integration. Push/main/dispatch and merge_group retain current checkout behavior; queue-group historical provenance is not newly certified. Original immutable records and failed runs remain unchanged. No chapter closure, source repair, main/live update or green CI is claimed until fresh actual runs complete.",
+  "verification": {
+    "focused_checks": [
+      "Original immutable head60f7 actual whole CLI againstc445 passed exit0 in clean CI worktree; original PR CI merge checkout failed exit1",
+      "Independent synthetic merge same-tree reproduction drops first-parent integration witnesses; seven certificates fail without changing source tree",
+      "Required next: independent concrete workflow review, contributor/process unit tests, exact repair-head CLI against stacked base and main, actual remote CI"
+    ],
+    "bandit_check": "No Lean code/source changed; original nine gates remain bound to48ca. Remote synthetic-merge Lean/harness must run after preflight repair; not relabelled passed here.",
+    "site_build": "No site sources changed; prior evidence remains historical; actual remote integration build pending.",
+    "site_check": "Actual remote integration site gate pending.",
+    "independent_review": "Pending exact workflow/context review by distinct actor; no mathematical semantic review bypass."
+  },
+  "contributor": {
+    "name": "Ji Cheng / Codex",
+    "role": "CI provenance-context repair; no new mathematical result"
+  }
+}

@@ -1,0 +1,35 @@
+# PR226 CI context diagnosis and bounded repair design
+
+## Conclusion
+
+Accept the proposed two-workflow provenance-context repair design, subject to implementation review and actual rerun. Keep the strict checker, immutable manifests and mathematics unchanged. The initial hypothesis that the seven rows lack genuine source origins is disproved locally. Do not archive or rewrite those manifests to cure this failure.
+
+Actual downloaded CI log checks out refs/remotes/pull/226/merge: synthetic7a80b4af merges head60f7c33ba3ffb550f1eef8831435486dba086949 into actual basec445c93f7e4cda1408279d614858c904e346ad47. Both workflows already fetch depth0. This is not an inferred shallow-clone problem.
+
+The unchanged certificate function, replayed at explicitly pinned real head60f7 and basec445, returns all seven certificates. Independent source-changing creation commits b85dc6 (foundation) and89a596 (closures) have matching source blob/mode; the chosen certificate witness is integration48ca with independent main1225 parent. A scratch dangling commit with exact60f7 tree and parents[c445,60f7] reproduces all seven rejections. No branch/ref/index/worktree was changed. The scratch object is e84a6ec3686198c5c75ed047e9d49cbf8147140c and remains unreachable.
+
+The precise failing mechanism is first-parent witness discovery: from the synthetic merge it follows basec445, omitting real-head integration48ca. The synthetic merge itself is not a valid independent-source witness because its head-side parent already descends from the base. Although post-witness full-history rejection was a plausible hypothesis, that is not needed to explain this reproduction. A local pinned function replay is diagnostic evidence, not actual CIpass or a full CLI gate.
+
+## Minimal implementation contract (design only)
+
+Change only .github/workflows/contributor-contract.yml and .github/workflows/documentation.yml, plus a new accurately scoped repair contribution manifest and evidence RUN. Preserve default synthetic merge checkout for existing unit tests, process-memory checks, Lean/root/Tests/full harness/site integration. Do not run build-site or Lean in the additional worktree.
+
+Only on pull_request events, run the existing strict contributor checker from a fresh detached clean worktree under RUNNER_TEMP at the exact event pull_request.head.sha. Preserve the exact event pull_request.base.sha as CONTRIBUTOR_BASE; never substitute a merge base, origin/main, or arbitrary ancestor. Pass event values through environment variables and validate complete hexadecimal commit IDs before using Git. Require both objects to resolve; if absent, explicitly fetch the corresponding exact PR head/base ref and verify the resolved objects equal the event IDs. Missing/mismatched history must fail closed.
+
+Before checking, record event base/head, primary integration HEAD, detached check HEAD, branch/detached state and cleanliness. Assert detached HEAD equals event head and primary workspace HEAD/status remains unchanged. Execute the unchanged checker in the detached worktree, with schema/process-memory/dependency data from that same exact head. Preserve its exit status and raw output, so a failed contract cannot be masked by cleanup. Clean up only this newly created worktree or retain it under the ephemeral runner namespace for diagnostics. No user/shared workspace operation is needed.
+
+For push/main/workflow_dispatch, preserve current checkout and existing base-selection policy exactly. For merge_group, keep the actual queue checkout/base behavior and explicitly label it; this PR-specific repair does not establish queue certificate compatibility and must not silently substitute an arbitrary PR head. Queue rejection remains a real failure requiring separate evidence.
+
+The two contracts are intentionally distinct: contribution provenance is evaluated at submitted exact PRhead against actual PRbase; integration tests/builds run at synthetic merge HEAD. Logs must name both rather than claiming the checker ran on the integration tree. A new workflow-maintenance manifest lists exactly the two changed protected workflow paths, no historical source rows or dummy math edits. Existing seven records remain byte-identical and active. One direct real CI rerun on the repaired PR is still required; success is not preclaimed.
+
+## Alternatives assessed
+
+1. Retarget unchanged PR226 to main1225: reject as current repair. Exact three-dot scope is37672 paths,87 protected surfaces,89 changed manifests. This violates the bounded delivery requirement even if a main-base check differs.
+2. Retarget to other-task d504aff: same37672 path scope and mergebase1225; no benefit. That task was neither edited nor messaged.
+3. Retarget to historical4034:899 paths,7 protected surfaces,3 contracts; two stale candidate rows remain, and a base branch would need legitimate independent delivery. Do not create a nominal base merely to evade the check.
+4. Clean-port growth onto actual PR223 c445: legitimate fallback but unnecessary after confirmed context diagnosis. Project import closure is growth -> OnlineClosedProper -> OnlineConvexExtended, with both dependencies already byte-identical in c445 Git. Copy only exact accepted new core and Test, append one import each, append growth module/card/highlight semantically, and use a new port-specific manifest covering only actual changed protected files. Preserve full old sourcecard/highlight objects and frozen target scope. Do not copy whole roots/readers/old integration manifests from60f7. Reader/CSS maintenance, if needed on this older base, is a separately disclosed real delta. Retain old native/evidence receipts immutably as historical provenance, not new-snapshot gate results. Requires fresh compatibility/source-gate/reader validation and explicit replacement PR decision.
+5. Byte-preserving relocation of the two active integration manifests to historical archive would remove all seven stale rows while remaining changed manifests cover the14 protected paths on paper. This is not needed or recommended: it changes active historical record placement, needs policy/link review and could obscure genuinely valid provenance. Never rewrite affected_files or invent origin history.
+
+Current PR223 diff:1343 paths,14 protected surfaces,8 changed manifests, no uncovered surface. The seven rows belong exclusively to ONLINE-CH2-INTEGRATION-20261011.json (five) and ONLINE-CH2-CLOSURES-INTEGRATION-20261011.json (two). Exact scopes and per-row blob evidence are in accompanying JSON probes. Git-blob dependency hashes are labeled as such, not assumed equal to Windows working-tree RAW with different line endings.
+
+No tracked edits, branch updates, checker changes, emitter, new production inspection or new math authorization. Scratch Git object only was explicitly authorized for reproduction. Existing support formalizer ownership remains untouched. C2partial/7+6/null and all source targets remain unchanged; actual CI remains failed until a real repaired execution proves otherwise.
