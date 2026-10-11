@@ -1,0 +1,32 @@
+{
+  "actor": "/root/adaptive_decoder",
+  "roles": [
+    "independent helper reviewer",
+    "CSS author not reviewing own CSS"
+  ],
+  "requested_model": "GPT-6 Astra/medium; runtime not attested",
+  "input_reader_sha256": "0597843dee5dd2508069bfed5d3de1fc4ecc00644ac27b7ad8ac9685d35083f7",
+  "verdict": "bounded repair required: one actual-DOM coverage guard",
+  "resolved_prior_findings": {
+    "H1": "All local routed requests use exactHTTP+byte-identical fulfill with supported MIME; external and unsupported resources fail closed; service workers blocked.",
+    "H2": "Original Book document.scrollWidth predicate restored alongside stronger geometry.",
+    "H3": "Visible Book article/section/li/link/heading/prose checked against viewport and clipping ancestors; genuine horizontal scrollers recorded and their boxes checked."
+  },
+  "new_blocker": {
+    "id": "H4",
+    "code": "!elements.some(x=>x.tag==='ARTICLE') || !elements.some(x=>x.tag==='LI')",
+    "actual_evidence": "Generated Bandit #main-content has ARTICLE and10 a.book-chapter-card plus5 a.spine-chapter-card, but zero LI. Online has ARTICLE and33 shared-route LI.",
+    "effect": "Bandit Book always fails coverage-empty despite fully checked actual cards.",
+    "requested_repair": "Use expected actual per-Book structure: Bandit book-chapter-card and Online shared-route LI, preferably count-check against already derived owned route counts; keep article coverage and all clipping assertions."
+  },
+  "syntax_actual_exit": 0,
+  "StructuralV3": "prepared-helper acceptance unchanged",
+  "old_checks": "No removal or weakening beyond already restored H2 observed in V6 diff",
+  "browser_run": false,
+  "final_pixel_acceptance": false,
+  "canonical_edits": false,
+  "inputs": {
+    "tmp/online-main-reconciliation-site-20261011-v3/books/bandit/index.html": "e0e6e6ed653dc97437b3601eb8dff7ad5667aa56515462ff9789e350130ed0ff",
+    "tmp/online-main-reconciliation-site-20261011-v3/books/online-learning/index.html": "70bcec181851f2d4eff3ec666dbdaed9839c3e513877d35237473e92be89c085"
+  }
+}

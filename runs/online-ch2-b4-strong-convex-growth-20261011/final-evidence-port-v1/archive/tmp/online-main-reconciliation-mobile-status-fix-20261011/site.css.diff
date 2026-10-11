@@ -1,0 +1,30 @@
+--- active/site.css
++++ candidate/site.css
+@@ -2822,6 +2822,7 @@
+ 
+ .source-route-status {
+   display: flex;
++  flex-wrap: wrap;
+   gap: 0.55rem 0.8rem;
+   align-items: center;
+   margin: 0.9rem 0;
+@@ -2829,6 +2830,19 @@
+   border: 1px solid var(--line);
+   border-radius: 9px;
+   background: var(--surface-2);
++}
++
++.source-route-status > span,
++.source-route-summary-meta {
++  min-width: 0;
++  max-width: 100%;
++}
++
++.source-route-status > .status,
++.source-route-summary-meta > .status {
++  max-width: 100%;
++  white-space: normal;
++  overflow-wrap: anywhere;
+ }
+ 
+ .source-route-status > span:last-child {

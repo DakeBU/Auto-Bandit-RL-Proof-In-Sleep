@@ -1,0 +1,54 @@
+--- check-reconciliation-structure-v3.py
++++ check-reconciliation-structure-v4.py
+@@ -6,6 +6,7 @@
+ BRANCH=None
+ HELPER='bafe784fad8810f866105ffd19e3504f70ebf1e28949611549d584630a5b7ce8'
+ NAME='BanditRL.OnlineCumulativePotential.finite_regret_identity'
++GROWTH='BanditRL.OnlineConvex.stronglyConvex_minimum_growth'
+ GOV=['README.md','AGENTS.md','CONTRIBUTING.md','docs/contribution-contract.schema.json','docs/contributor-codex-contract.md','docs/theorem-publication-protocol.md','docs/contracts/online-book-v1/coverage.json','docs/proof-digestion-protocol.md','docs/evidence-routed-memory-protocol.md','docs/openai-math-assimilation-protocol.md','research-wiki/openai-math-2026-intake.json','runs/process_memory.json']
+ def digest(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+ def load(p):return json.loads(p.read_bytes())
+@@ -43,8 +44,8 @@
+    encode=lambda x:json.dumps(x,sort_keys=True,ensure_ascii=False,separators=(',',':'))
+    before=Counter(encode(x) for x in old[field]);after=Counter(encode(x) for x in new[field])
+    need(not (before-after),'old highlight objects or multiplicities changed')
+-   additions=list((after-before).elements());need(len(additions)==1,'exactly one new highlight object')
+-   need(json.loads(additions[0])['full_name']=='BanditRL.OnlineGradientDescent.project_existsUnique','only genuinely new unique-projection highlight')
++   additions=list((after-before).elements());need(len(additions)==2,'exactly two new highlight objects since baseline: accepted-main projection and reviewed conditional growth')
++   need({json.loads(v)['full_name'] for v in additions}=={'BanditRL.OnlineGradientDescent.project_existsUnique',GROWTH},'only projection and conditional-growth highlight additions')
+   else:
+    nm={x[key]:x for x in new[field]};need(len(nm)==len(new[field]),'unique reading IDs')
+    for row in old[field]:
+@@ -76,9 +77,9 @@
+   for p in GOV:need(p in raw and p in sm and z.read(p)==(r/p).read_bytes(),'governance RAW ZIP '+p)
+  oldreg=load(a.baseline);reg=load(a.site/'books/registry.json');om={x['id']:x for x in oldreg['nodes']};nm={x['id']:x for x in reg['nodes']}
+  unique='declaration:BanditRL.OnlineGradientDescent.project_existsUnique'
+- need(len(om)==len(oldreg['nodes'])==11105 and len(nm)==len(reg['nodes'])==11106,'registry counts/unique IDs')
++ need(len(om)==len(oldreg['nodes'])==11105 and len(nm)==len(reg['nodes'])==11107,'registry counts/unique IDs')
+  need(all(nm.get(k)==v for k,v in om.items()),'old 11105 registry whole objects changed')
+- need(set(nm)-set(om)=={unique},'sole new main projection theorem')
++ need(set(nm)-set(om)=={unique,'declaration:'+GROWTH},'only main projection and reviewed growth theorem added to baseline')
+  graph=load(a.site/'lean-graph/graph.json');search=load(a.site/'lean-graph/search-index.json');need(search['schema_version']==3,'schema3 preserved')
+  gn={v['id']:v for v in graph['nodes']};need(len(gn)==len(graph['nodes']),'unique graph IDs');seen=set();shards={}
+  for entry in search['entries']:
+@@ -98,9 +99,10 @@
+  need(sum(v=='bandit' for v in owners.values())==10,'Bandit own 10 routes');need(owners.get('teaching:online-ogd')=='online-learning','OGD owned by Online')
+  manifest=load(a.site/'site-manifest.json')
+  for doc in [manifest,reg]:need(doc['source_commit']==HEAD and doc['lean_verified'] is True,'site HEAD/lean_verified')
+- need(manifest['source_dirty'] is False and manifest['declaration_count']==11106,'site clean/count')
++ need(manifest['source_dirty'] is False and manifest['declaration_count']==11107,'site clean/count')
+  need(nm['declaration:'+NAME]['status']=='compiled','B4 node compiled')
+  need(nm[unique]['status']=='compiled','new unique-projection node compiled')
++ need(nm['declaration:'+GROWTH]['status']=='compiled','conditional-growth node compiled')
+  oldlines={m.group(2):oldcore[:m.start()].count('\n')+1 for m in re.finditer(r'^(theorem|def|structure) (\w+)',oldcore,re.M)}
+  newlines={m.group(2):core[:m.start()].count('\n')+1 for m in re.finditer(r'^(theorem|def|structure) (\w+)',core,re.M)}
+  need(set(newlines)-set(oldlines)=={'project_existsUnique'},'exact unique declaration insertion')
+@@ -108,7 +110,7 @@
+  modulehtml=(a.site/'modules/banditrlproof-onlinegradientdescent/index.html').read_text(encoding='utf8')
+  for name,line in newlines.items():need(f'/blob/{HEAD}/BanditRLProof/OnlineGradientDescent.lean#L{line}' in modulehtml,'actual generated source link '+name)
+  need(scope['inventory'](r,namespace,gate['owned_source'])==current,'post-QA complete RAW reenumeration')
+- return {'status':'passed structural QA only' ,'old_registry_nodes_preserved':11105,'new_production_ID':unique,'OGD_inserted_lines':17,'approved_old_object_deltas_used':list(used),'governance_RAW_ZIP_verified':GOV,'RAW_rows':len(current),'ZIP_rows':len(sel),'schema3_nodes_decoded':len(seen),'book_ownership':owners,'chapter2':'partial','open_containers':7,'future_claims':6,'proof_denominator':None,'gate_sha256':digest(a.gate),'site_manifest_sha256':digest(a.site/'site-manifest.json'),'site_registry_sha256':digest(a.site/'books/registry.json')}
++ return {'status':'passed structural QA only' ,'old_registry_nodes_preserved':11105,'new_production_ID':unique,'new_conditional_dependency_ID':'declaration:'+GROWTH,'OGD_inserted_lines':17,'approved_old_object_deltas_used':list(used),'governance_RAW_ZIP_verified':GOV,'RAW_rows':len(current),'ZIP_rows':len(sel),'schema3_nodes_decoded':len(seen),'book_ownership':owners,'chapter2':'partial','open_containers':7,'future_claims':6,'proof_denominator':None,'gate_sha256':digest(a.gate),'site_manifest_sha256':digest(a.site/'site-manifest.json'),'site_registry_sha256':digest(a.site/'books/registry.json')}
+ if __name__=='__main__':
+  p=argparse.ArgumentParser()
+  for x in ['root','baseline','site','gate','spec','output']:p.add_argument('--'+x,type=Path,required=True)

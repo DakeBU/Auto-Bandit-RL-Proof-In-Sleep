@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Understand sequential-learning proofs through source-linked explanations, Lean evidence and navigable proof graphs. Human-understanding infrastructure for Math 2.0.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.OnlineGradientDescent · BanditRLlib">
+  <meta property="og:description" content="Understand sequential-learning proofs through source-linked explanations, Lean evidence and navigable proof graphs. Human-understanding infrastructure for Math 2.0.">
+  <meta property="og:url" content="https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/modules/banditrlproof-onlinegradientdescent/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.OnlineGradientDescent · BanditRLlib">
+  <meta name="twitter:description" content="Understand sequential-learning proofs through source-linked explanations, Lean evidence and navigable proof graphs. Human-understanding infrastructure for Math 2.0.">
+  <link rel="canonical" href="https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/modules/banditrlproof-onlinegradientdescent/">
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.OnlineGradientDescent · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20261011-math-2-0">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../math-2-0/index.html">Math 2.0 mission</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="books" data-nav-group-active="false"><summary class="nav-group-title"><span>Books</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../books/index.html">Books overview</a><a href="../../books/bandit/index.html">Bandit Book</a><a href="../../books/reinforcement-learning/index.html">Reinforcement Learning Book</a><a href="../../books/online-learning/index.html">Online Learning Book</a><a href="../../books/conformal-prediction/index.html">Conformal Prediction Book</a><details class="nav-group" data-nav-group="bandit-book" data-nav-group-active="false"><summary class="nav-group-title"><span>Bandit Book contents</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><p class="nav-section-label">Teaching routes · 01–10</p><a href="../../learning/index.html">Reading paths</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a><p class="nav-section-label">Source chapters · Part IV</p><a href="../../textbook-spine/index.html">Source chapters 13–17</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a><a href="../../books/bandit/index.html#extended-chapters">Beyond the core textbook</a></div></details><details class="nav-group" data-nav-group="online-learning-book" data-nav-group-active="false"><summary class="nav-group-title"><span>Online Learning Book contents</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a class="book-nav-link" href="../../chapters/online-foundations/index.html"><span>01</span>Online foundations</a><a class="book-nav-link" href="../../chapters/online-convex/index.html"><span>02</span>Extended convexity</a><a class="book-nav-link" href="../../chapters/online-convex-closures/index.html"><span>03</span>Convex constructions</a><a class="book-nav-link" href="../../chapters/online-first-order/index.html"><span>04</span>Supporting gradients</a><a class="book-nav-link" href="../../chapters/online-optimality/index.html"><span>05</span>Convex optimality</a><a class="book-nav-link" href="../../chapters/online-expectation/index.html"><span>06</span>Expectation foundations</a><a class="book-nav-link" href="../../chapters/online-barycenter/index.html"><span>07</span>Convex barycenters</a><a class="book-nav-link" href="../../chapters/online-minorant/index.html"><span>08</span>Affine minorants</a><a class="book-nav-link" href="../../chapters/online-jensen/index.html"><span>09</span>Source Jensen</a><a class="book-nav-link" href="../../chapters/online-ftl-failure/index.html"><span>10</span>FTL counterexample</a><a class="book-nav-link" href="../../chapters/online-guessing-ogd/index.html"><span>11</span>Guessing-game OGD</a><a class="book-nav-link" href="../../chapters/online-huber/index.html"><span>12</span>Huber OGD</a><a class="book-nav-link" href="../../chapters/online-closed-proper/index.html"><span>13</span>Closed and proper</a><a class="book-nav-link" href="../../chapters/online-subgradient-basic/index.html"><span>14</span>Subgradient foundations</a><a class="book-nav-link" href="../../chapters/online-subgradient-interior/index.html"><span>15</span>Relative interior supports</a><a class="book-nav-link" href="../../chapters/online-subgradient-differentiability/index.html"><span>16</span>Singleton and real germ</a><a class="book-nav-link" href="../../chapters/online-subgradient-sum/index.html"><span>17</span>Sum rule</a><a class="book-nav-link" href="../../chapters/online-subgradient-absolute/index.html"><span>18</span>Absolute value</a><a class="book-nav-link" href="../../chapters/online-normal-cone/index.html"><span>19</span>Normal cones</a><a class="book-nav-link" href="../../chapters/online-subgradient-max/index.html"><span>20</span>Finite maximum</a><a class="book-nav-link" href="../../chapters/online-hinge/index.html"><span>21</span>Hinge loss</a><a class="book-nav-link" href="../../chapters/online-affine-subgradient/index.html"><span>22</span>Affine chain rule</a><a class="book-nav-link" href="../../chapters/online-lipschitz/index.html"><span>23</span>Lipschitz bounds</a><a class="book-nav-link" href="../../chapters/online-osd/index.html"><span>24</span>Projected OSD</a><a class="book-nav-link" href="../../chapters/online-guessing-osd/index.html"><span>25</span>Absolute-loss guessing</a><a class="book-nav-link" href="../../chapters/online-osd-policy/index.html"><span>26</span>History-dependent OSD</a><a class="book-nav-link" href="../../chapters/online-linearization/index.html"><span>27</span>Convex-to-linear reduction</a><a class="book-nav-link" href="../../chapters/online-ogd/index.html"><span>28</span>Projected OGD</a><a class="book-nav-link" href="../../chapters/online-optimal-step/index.html"><span>29</span>Scalar step-size optimization</a><a class="book-nav-link" href="../../chapters/online-unit-scaling/index.html"><span>30</span>OSD unit scaling</a></div></details></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/setting-atlas/index.html">Bandit Taxonomy</a><a href="../../banditrlwiki/technique-map/index.html">Technique Map</a><a href="../../banditrlwiki/index.html">Bound &amp; Source Atlas</a><a href="../../banditrlwiki/frontier-problems/index.html">Frontier · open problems</a><a href="../../banditrlwiki/frontier/index.html">Lean formalization frontier</a><a href="../../functor-hypergraph/index.html">Functor Hypergraph</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../contributors/index.html">Contributors</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep">GitHub repository <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Lean gate passed before this site build; local proof declarations are shown as compiled.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · Projected OGD</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>Online<wbr>Gradient<wbr>Descent</h1>
+  <p class="lede">Orabona, arXiv:1912.13213v10, Algorithm 2.1, Proposition 2.11, Lemma 2.12, Theorem 2.13 (constant step only), and Eq. (2.1). Time t = 0 denotes source round 1; iterate ... T is source x_(T+1). The Hilbert-space interfaces specialize to finite-dimensional real Euclidean spaces. Loss-dependent declarations below use the stronger historical RegularLoss predicate. OnlineGradientDescentSource supplies the arbitrary-open source regularity interface on the same algorithms. Projection and causal feasibility statements need no loss regularity.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/48ca57cd497a3dcebbeedeb2d54ef3bcefdcd937/BanditRLProof/OnlineGradientDescent.lean"><code>BanditRLProof/OnlineGradientDescent.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/online-ogd/index.html">Projected OGD: Orabona Chapter 2</a></dd></div>
+    <div><dt>Declarations</dt><dd>17</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><span class="empty">No project-local imports.</span></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-onlinegradientdescentvariable/index.html"><code>BanditRLProof.OnlineGradientDescentVariable</code></a>, <a href="../banditrlproof-onlineguessingogd/index.html"><code>BanditRLProof.OnlineGuessingOGD</code></a>, <a href="../banditrlproof-onlinehuber/index.html"><code>BanditRLProof.OnlineHuber</code></a>, <a href="../banditrlproof-onlineprescientlinear/index.html"><code>BanditRLProof.OnlinePrescientLinear</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-37232b437eac">
+  <summary>
+    <span class="kind">structure</span>
+    <code>BanditRL.OnlineGradientDescent.Domain</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A nonempty closed convex feasible set, independent of losses and comparators.</p>
+    <div class="node-memberships"><p><strong>Used in these reading views:</strong> <a href="../../books/online-learning/index.html">Online Learning Book</a></p>
+<p><a href="../../chapters/online-ogd/index.html">Projected OGD: Orabona Chapter 2</a></p>
+<details><summary>Canonical node identity</summary><code>declaration:BanditRL.OnlineGradientDescent.Domain</code><p>Reading membership is not a proof dependency. Exact assumptions remain in the Lean statement.</p></details></div>
+    <pre class="lean-code"><code><span class="kw">structure</span> Domain (E : Type*) [NormedAddCommGroup E] [InnerProductSpace ℝ E] <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/48ca57cd497a3dcebbeedeb2d54ef3bcefdcd937/BanditRLProof/OnlineGradientDescent.lean#L28">Source line 28</a>
+
+      <a href="../../chapters/online-ogd/index.html">Chapter context: Projected OGD</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ae1e99dac73d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRL.OnlineGradientDescent.project_existsUnique</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Every nonempty closed convex domain has a unique nearest point before any choice is made.
+This establishes the well-definedness of the same projection used below.</p>
+    <div class="node-memberships"><p><strong>Used in these reading views:</strong> <a href="../../books/online-learning/index.html">Online Learning Book</a></p>
+<p><a href="../../chapters/online-ogd/index.html">Projected OGD: Orabona Chapter 2</a></p>
+<details><summary>Canonical node identity</summary><code>declaration:BanditRL.OnlineGradientDescent.project_existsUnique</code><p>Reading membership is not a proof dependency. Exact assumptions remain in the Lean statement.</p></details></div>
+    <pre class="lean-code"><code><span class="kw">theorem</span> project_existsUnique (V : Domain E) (z : E) : ∃! p : E, p ∈ V.carrier ∧ ‖z - p‖ = ⨅ w : V.carrier, ‖z - w‖</code></pre>
+    <div class="source-links">
+      <a href="https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/48ca57cd497a3dcebbeedeb2d54ef3bcefdcd937/BanditRLProof/OnlineGradientDescent.lean#L36">Source line 36</a>
+      <a href="../../chapters/online-ogd/index.html#decl-ae1e99dac73d-teaching">Open teaching explanation</a>
+      <a href="../../chapters/online-ogd/index.html">Chapter context: Projected OGD</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c70d833c2fa2">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRL.OnlineGradientDescent.project</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The unique nearest point, constructed from the Hilbert projection theorem.</p>
+    <div class="node-memberships"><p><strong>Used in these reading views:</strong> <a href="../../books/online-learning/index.html">Online Learning Book</a></p>
+<p><a href="../../chapters/online-ogd/index.html">Projected OGD: Orabona Chapter 2</a></p>
+<details><summary>Canonical node identity</summary><code>declaration:BanditRL.OnlineGradientDescent.project</code><p>Reading membership is not a proof dependency. Exact assumptions remain in the Lean statement.</p></details></div>
+    <pre class="lean-code"><code><span class="kw">def</span> project (V : Domain E) (z : E) : E</code></pre>
+    <div class="source-links">
+      <a href="https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/48ca57cd497a3dcebbeedeb2d54ef3bcefdcd937/BanditRLProof/OnlineGradientDescent.lean#L52">Source line 52</a>
+
+      <a href="../../chapters/online-ogd/index.html">Chapter context: Projected OGD</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9a40c482844a">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRL.OnlineGradientDescent.RegularLoss</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Historical stronger regularity: convex and differentiable on a convex open neighborhood.
+For the source arbitrary-open hypothesis, use `OnlineGradientDescentSource.SourceRegularLoss`
+and its proved `source_to_feasible` adapter. This predicate is retained for compatibility.</p>
+    <div class="node-memberships"><p><strong>Used in these reading views:</strong> <a href="../../books/online-learning/index.html">Online Learning Book</a></p>
+<p><a href="../../chapters/online-ogd/index.html">Projected OGD: Orabona Chapter 2</a></p>
+<details><summary>Canonical node identity</summary><code>declaration:BanditRL.OnlineGradientDescent.RegularLoss</code><p>Reading membership is not a proof dependency. Exact assumptions remain in the Lean statement.</p></details></div>
+    <pre class="lean-code"><code><span class="kw">def</span> RegularLoss (V : Domain E) (f : E → ℝ) : Prop</code></pre>
+    <div class="source-links">
+      <a href="https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/48ca57cd497a3dcebbeedeb2d54ef3bcefdcd937/BanditRLProof/OnlineGradientDescent.lean#L59">Source line 59</a>
+
+      <a href="../../chapters/online-ogd/index.html">Chapter context: Projected OGD</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ba8f575b64af">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRL.OnlineGradientDescent.step</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">One update uses only the current point, current loss, and fixed step size.</p>
+    <div class="node-memberships"><p><strong>Used in these reading views:</strong> <a href="../../books/online-learning/index.html">Online Learning Book</a></p>
+<p><a href="../../chapters/online-ogd/index.html">Projected OGD: Orabona Chapter 2</a></p>
+<details><summary>Canonical node identity</summary><code>declaration:BanditRL.OnlineGradientDescent.step</code><p>Reading membership is not a proof dependency. Exact assumptions remain in the Lean statement.</p></details></div>
+    <pre class="lean-code"><code><span class="kw">def</span> step (V : Domain E) (η : ℝ) (f : E → ℝ) (x : E) : E</code></pre>
+    <div class="source-links">
+      <a href="https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/48ca57cd497a3dcebbeedeb2d54ef3bcefdcd937/BanditRLProof/OnlineGradientDescent.lean#L63">Source line 63</a>
+
+      <a href="../../chapters/online-ogd/index.html">Chapter context: Projected OGD</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7269034fa17c">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRL.OnlineGradientDescent.iterate</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Algorithm 2.1, constant step branch. The current loss is read after outputting the point.</p>
+    <div class="node-memberships"><p><strong>Used in these reading views:</strong> <a href="../../books/online-learning/index.html">Online Learning Book</a></p>
+<p><a href="../../chapters/online-ogd/index.html">Projected OGD: Orabona Chapter 2</a></p>
+<details><summary>Canonical node identity</summary><code>declaration:BanditRL.OnlineGradientDescent.iterate</code><p>Reading membership is not a proof dependency. Exact assumptions remain in the Lean statement.</p></details></div>
+    <pre class="lean-code"><code><span class="kw">def</span> iterate (V : Domain E) (η : ℝ) (loss : ℕ → E → ℝ) (x₁ : E) : ℕ → E | <span class="num">0</span> =&gt; x₁ | t + <span class="num">1</span> =&gt; step V η (loss t) (iterate V η loss x₁ t) /-- Comparator regret of this exact generated trajectory over `T` rounds. -/ <span class="kw">def</span> regret (V : Domain E) (η : ℝ) (loss : ℕ → E → ℝ) (x₁ u : E) (T : ℕ) : ℝ</code></pre>
+    <div class="source-links">
+      <a href="https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/48ca57cd497a3dcebbeedeb2d54ef3bcefdcd937/BanditRLProof/OnlineGradientDescent.lean#L67">Source line 67</a>
+      <a href="../../chapters/online-ogd/index.html#decl-7269034fa17c-teaching">Open teaching explanation</a>
+      <a href="../../chapters/online-ogd/index.html">Chapter context: Projected OGD</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-dbfc68b072f3">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRL.OnlineGradientDescent.regret</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Comparator regret of this exact generated trajectory over `T` rounds.</p>
+    <div class="node-memberships"><p><strong>Used in these reading views:</strong> <a href="../../books/online-learning/index.html">Online Learning Book</a></p>
+<p><a href="../../chapters/online-ogd/index.html">Projected OGD: Orabona Chapter 2</a></p>
+<details><summary>Canonical node identity</summary><code>declaration:BanditRL.OnlineGradientDescent.regret</code><p>Reading membership is not a proof dependency. Exact assumptions remain in the Lean statement.</p></details></div>
+    <pre class="lean-code"><code><span class="kw">def</span> regret (V : Domain E) (η : ℝ) (loss : ℕ → E → ℝ) (x₁ u : E) (T : ℕ) : ℝ</code></pre>
+    <div class="source-links">
+      <a href="https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/48ca57cd497a3dcebbeedeb2d54ef3bcefdcd937/BanditRLProof/OnlineGradientDescent.lean#L72">Source line 72</a>
+
+      <a href="../../chapters/online-ogd/index.html">Chapter context: Projected OGD</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ddb0310a5c43">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRL.OnlineGradientDescent.project_spec</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The projection exists in the feasible set and minimizes Euclidean distance.</p>
+    <div class="node-memberships"><p><strong>Used in these reading views:</strong> <a href="../../books/online-learning/index.html">Online Learning Book</a></p>
+<p><a href="../../chapters/online-ogd/index.html">Projected OGD: Orabona Chapter 2</a></p>
+<details><summary>Canonical node identity</summary><code>declaration:BanditRL.OnlineGradientDescent.project_spec</code><p>Reading membership is not a proof dependency. Exact assumptions remain in the Lean statement.</p></details></div>
+    <pre class="lean-code"><code><span class="kw">theorem</span> project_spec (V : Domain E) (z : E) : project V z ∈ V.carrier ∧ ‖z - project V z‖ = ⨅ w : V.carrier, ‖z - w‖</code></pre>
+    <div class="source-links">
+      <a href="https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/48ca57cd497a3dcebbeedeb2d54ef3bcefdcd937/BanditRLProof/OnlineGradientDescent.lean#L76">Source line 76</a>
+
+      <a href="../../chapters/online-ogd/index.html">Chapter context: Projected OGD</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e2f2caeb15d6">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRL.OnlineGradientDescent.project_eq_of_variational</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Characterization that makes the chosen projection publicly instantiable.</p>
+    <div class="node-memberships"><p><strong>Used in these reading views:</strong> <a href="../../books/online-learning/index.html">Online Learning Book</a></p>
+<p><a href="../../chapters/online-ogd/index.html">Projected OGD: Orabona Chapter 2</a></p>
+<details><summary>Canonical node identity</summary><code>declaration:BanditRL.OnlineGradientDescent.project_eq_of_variational</code><p>Reading membership is not a proof dependency. Exact assumptions remain in the Lean statement.</p></details></div>
+    <pre class="lean-code"><code><span class="kw">theorem</span> project_eq_of_variational (V : Domain E) (z p : E) (hp : p ∈ V.carrier) (h : ∀ w ∈ V.carrier, inner ℝ (z - p) (w - p) ≤ <span class="num">0</span>) : project V z = p</code></pre>
+    <div class="source-links">
+      <a href="https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/48ca57cd497a3dcebbeedeb2d54ef3bcefdcd937/BanditRLProof/OnlineGradientDescent.lean#L82">Source line 82</a>
+
+      <a href="../../chapters/online-ogd/index.html">Chapter context: Projected OGD</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d381c149a1f0">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRL.OnlineGradientDescent.proposition_2_11</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Proposition 2.11: distance to every feasible comparator decreases.</p>
+    <div class="node-memberships"><p><strong>Used in these reading views:</strong> <a href="../../books/online-learning/index.html">Online Learning Book</a></p>
+<p><a href="../../chapters/online-ogd/index.html">Projected OGD: Orabona Chapter 2</a></p>
+<details><summary>Canonical node identity</summary><code>declaration:BanditRL.OnlineGradientDescent.proposition_2_11</code><p>Reading membership is not a proof dependency. Exact assumptions remain in the Lean statement.</p></details></div>
+    <pre class="lean-code"><code><span class="kw">theorem</span> proposition_2_11 (V : Domain E) (z u : E) (hu : u ∈ V.carrier) : ‖project V z - u‖ ≤ ‖z - u‖</code></pre>
+    <div class="source-links">
+      <a href="https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/48ca57cd497a3dcebbeedeb2d54ef3bcefdcd937/BanditRLProof/OnlineGradientDescent.lean#L96">Source line 96</a>
+      <a href="../../chapters/online-ogd/index.html#decl-d381c149a1f0-teaching">Open teaching explanation</a>
+      <a href="../../chapters/online-ogd/index.html">Chapter context: Projected OGD</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-dac4421e231b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRL.OnlineGradientDescent.first_order</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Theorem 2.7 interface derived from convex differentiable losses, not a premise.</p>
+    <div class="node-memberships"><p><strong>Used in these reading views:</strong> <a href="../../books/online-learning/index.html">Online Learning Book</a></p>
+<p><a href="../../chapters/online-ogd/index.html">Projected OGD: Orabona Chapter 2</a></p>
+<details><summary>Canonical node identity</summary><code>declaration:BanditRL.OnlineGradientDescent.first_order</code><p>Reading membership is not a proof dependency. Exact assumptions remain in the Lean statement.</p></details></div>
+    <pre class="lean-code"><code><span class="kw">theorem</span> first_order (V : Domain E) (f : E → ℝ) (hf : RegularLoss V f) (x u : E) (hx : x ∈ V.carrier) (hu : u ∈ V.carrier) : f x - f u ≤ inner ℝ (gradient f x) (x - u)</code></pre>
+    <div class="source-links">
+      <a href="https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/48ca57cd497a3dcebbeedeb2d54ef3bcefdcd937/BanditRLProof/OnlineGradientDescent.lean#L107">Source line 107</a>
+
+      <a href="../../chapters/online-ogd/index.html">Chapter context: Projected OGD</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ba30e278cf9d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRL.OnlineGradientDescent.lemma_2_12</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Lemma 2.12 preserves both inequalities of the source&#x27;s one-step chain.</p>
+    <div class="node-memberships"><p><strong>Used in these reading views:</strong> <a href="../../books/online-learning/index.html">Online Learning Book</a></p>
+<p><a href="../../chapters/online-ogd/index.html">Projected OGD: Orabona Chapter 2</a></p>
+<details><summary>Canonical node identity</summary><code>declaration:BanditRL.OnlineGradientDescent.lemma_2_12</code><p>Reading membership is not a proof dependency. Exact assumptions remain in the Lean statement.</p></details></div>
+    <pre class="lean-code"><code><span class="kw">theorem</span> lemma_2_12 (V : Domain E) (f : E → ℝ) (hf : RegularLoss V f) (η : ℝ) (hη : <span class="num">0</span> &lt; η) (x u : E) (hx : x ∈ V.carrier) (hu : u ∈ V.carrier) : η * (f x - f u) ≤ η * inner ℝ (gradient f x) (x - u) ∧ η * inner ℝ (gradient f x) (x - u) ≤ ‖x - u‖ ^ <span class="num">2</span> / <span class="num">2</span> - ‖step V η f x - u‖ ^ <span class="num">2</span> / <span class="num">2</span> + η ^ <span class="num">2</span> / <span class="num">2</span> * ‖gradient f x‖ ^ <span class="num">2</span></code></pre>
+    <div class="source-links">
+      <a href="https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/48ca57cd497a3dcebbeedeb2d54ef3bcefdcd937/BanditRLProof/OnlineGradientDescent.lean#L128">Source line 128</a>
+      <a href="../../chapters/online-ogd/index.html#decl-ba30e278cf9d-teaching">Open teaching explanation</a>
+      <a href="../../chapters/online-ogd/index.html">Chapter context: Projected OGD</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a1e11d1a2cee">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRL.OnlineGradientDescent.iterate_mem</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Algorithm feasibility includes the initial point and the terminal point.</p>
+    <div class="node-memberships"><p><strong>Used in these reading views:</strong> <a href="../../books/online-learning/index.html">Online Learning Book</a></p>
+<p><a href="../../chapters/online-ogd/index.html">Projected OGD: Orabona Chapter 2</a></p>
+<details><summary>Canonical node identity</summary><code>declaration:BanditRL.OnlineGradientDescent.iterate_mem</code><p>Reading membership is not a proof dependency. Exact assumptions remain in the Lean statement.</p></details></div>
+    <pre class="lean-code"><code><span class="kw">theorem</span> iterate_mem (V : Domain E) (η : ℝ) (loss : ℕ → E → ℝ) (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (t : ℕ) : iterate V η loss x₁ t ∈ V.carrier</code></pre>
+    <div class="source-links">
+      <a href="https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/48ca57cd497a3dcebbeedeb2d54ef3bcefdcd937/BanditRLProof/OnlineGradientDescent.lean#L147">Source line 147</a>
+
+      <a href="../../chapters/online-ogd/index.html">Chapter context: Projected OGD</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6c017fcdbf85">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRL.OnlineGradientDescent.iterate_prefix</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Strict-prefix causality: the point output at time `t` does not use loss `t` or later.</p>
+    <div class="node-memberships"><p><strong>Used in these reading views:</strong> <a href="../../books/online-learning/index.html">Online Learning Book</a></p>
+<p><a href="../../chapters/online-ogd/index.html">Projected OGD: Orabona Chapter 2</a></p>
+<details><summary>Canonical node identity</summary><code>declaration:BanditRL.OnlineGradientDescent.iterate_prefix</code><p>Reading membership is not a proof dependency. Exact assumptions remain in the Lean statement.</p></details></div>
+    <pre class="lean-code"><code><span class="kw">theorem</span> iterate_prefix (V : Domain E) (η : ℝ) (loss loss&#x27; : ℕ → E → ℝ) (x₁ : E) (t : ℕ) (h : ∀ s &lt; t, loss s = loss&#x27; s) : iterate V η loss x₁ t = iterate V η loss&#x27; x₁ t</code></pre>
+    <div class="source-links">
+      <a href="https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/48ca57cd497a3dcebbeedeb2d54ef3bcefdcd937/BanditRLProof/OnlineGradientDescent.lean#L154">Source line 154</a>
+
+      <a href="../../chapters/online-ogd/index.html">Chapter context: Projected OGD</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-dab17d4a1ce9">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRL.OnlineGradientDescent.theorem_2_13_fixed</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Theorem 2.13, fixed step: no bounded-domain premise; negative terminal residual retained.</p>
+    <div class="node-memberships"><p><strong>Used in these reading views:</strong> <a href="../../books/online-learning/index.html">Online Learning Book</a></p>
+<p><a href="../../chapters/online-ogd/index.html">Projected OGD: Orabona Chapter 2</a></p>
+<details><summary>Canonical node identity</summary><code>declaration:BanditRL.OnlineGradientDescent.theorem_2_13_fixed</code><p>Reading membership is not a proof dependency. Exact assumptions remain in the Lean statement.</p></details></div>
+    <pre class="lean-code"><code><span class="kw">theorem</span> theorem_2_13_fixed (V : Domain E) (η : ℝ) (hη : <span class="num">0</span> &lt; η) (loss : ℕ → E → ℝ) (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (T : ℕ) (hloss : ∀ t &lt; T, RegularLoss V (loss t)) (u : E) (hu : u ∈ V.carrier) : regret V η loss x₁ u T ≤ ‖x₁ - u‖ ^ <span class="num">2</span> / (<span class="num">2</span> * η) + η / <span class="num">2</span> * (∑ t ∈ range T, ‖gradient (loss t) (iterate V η loss x₁ t)‖ ^ <span class="num">2</span>) - ‖iterate V η loss x₁ T - u‖ ^ <span class="num">2</span> / (<span class="num">2</span> * η)</code></pre>
+    <div class="source-links">
+      <a href="https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/48ca57cd497a3dcebbeedeb2d54ef3bcefdcd937/BanditRLProof/OnlineGradientDescent.lean#L163">Source line 163</a>
+      <a href="../../chapters/online-ogd/index.html#decl-dab17d4a1ce9-teaching">Open teaching explanation</a>
+      <a href="../../chapters/online-ogd/index.html">Chapter context: Projected OGD</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-4e12cd435901">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRL.OnlineGradientDescent.equation_2_1_distance</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Equation (2.1), with the source gradient bound `L` named `G`.
+A distance upper bound suffices; the diameter version below supplies it uniformly.</p>
+    <div class="node-memberships"><p><strong>Used in these reading views:</strong> <a href="../../books/online-learning/index.html">Online Learning Book</a></p>
+<p><a href="../../chapters/online-ogd/index.html">Projected OGD: Orabona Chapter 2</a></p>
+<details><summary>Canonical node identity</summary><code>declaration:BanditRL.OnlineGradientDescent.equation_2_1_distance</code><p>Reading membership is not a proof dependency. Exact assumptions remain in the Lean statement.</p></details></div>
+    <pre class="lean-code"><code><span class="kw">theorem</span> equation_2_1_distance (V : Domain E) (loss : ℕ → E → ℝ) (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (T : ℕ) (hT : <span class="num">0</span> &lt; T) (D G : ℝ) (hD : <span class="num">0</span> &lt; D) (hG : <span class="num">0</span> &lt; G) (hloss : ∀ t &lt; T, RegularLoss V (loss t)) (u : E) (hu : u ∈ V.carrier) (hdist : ‖x₁ - u‖ ≤ D) (hgrad : ∀ t &lt; T, ‖gradient (loss t) (iterate V (D / (G * Real.sqrt T)) loss x₁ t)‖ ≤ G) : regret V (D / (G * Real.sqrt T)) loss x₁ u T ≤ D * G * Real.sqrt T</code></pre>
+    <div class="source-links">
+      <a href="https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/48ca57cd497a3dcebbeedeb2d54ef3bcefdcd937/BanditRLProof/OnlineGradientDescent.lean#L190">Source line 190</a>
+
+      <a href="../../chapters/online-ogd/index.html">Chapter context: Projected OGD</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c279daff3a9b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRL.OnlineGradientDescent.equation_2_1</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Equation (2.1) for one horizon-tuned algorithm and every feasible comparator.
+Any positive diameter upper bound is admissible, including the exact diameter.</p>
+    <div class="node-memberships"><p><strong>Used in these reading views:</strong> <a href="../../books/online-learning/index.html">Online Learning Book</a></p>
+<p><a href="../../chapters/online-ogd/index.html">Projected OGD: Orabona Chapter 2</a></p>
+<details><summary>Canonical node identity</summary><code>declaration:BanditRL.OnlineGradientDescent.equation_2_1</code><p>Reading membership is not a proof dependency. Exact assumptions remain in the Lean statement.</p></details></div>
+    <pre class="lean-code"><code><span class="kw">theorem</span> equation_2_1 (V : Domain E) (loss : ℕ → E → ℝ) (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (T : ℕ) (hT : <span class="num">0</span> &lt; T) (D G : ℝ) (hD : <span class="num">0</span> &lt; D) (hG : <span class="num">0</span> &lt; G) (hdiam : ∀ x ∈ V.carrier, ∀ y ∈ V.carrier, ‖x - y‖ ≤ D) (hloss : ∀ t &lt; T, RegularLoss V (loss t)) (hgrad : ∀ t &lt; T, ‖gradient (loss t) (iterate V (D / (G * Real.sqrt T)) loss x₁ t)‖ ≤ G) : ∀ u ∈ V.carrier, regret V (D / (G * Real.sqrt T)) loss x₁ u T ≤ D * G * Real.sqrt T</code></pre>
+    <div class="source-links">
+      <a href="https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/48ca57cd497a3dcebbeedeb2d54ef3bcefdcd937/BanditRLProof/OnlineGradientDescent.lean#L225">Source line 225</a>
+      <a href="../../chapters/online-ogd/index.html#decl-c279daff3a9b-teaching">Open teaching explanation</a>
+      <a href="../../chapters/online-ogd/index.html">Chapter context: Projected OGD</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Auto-Bandit-RL-Proof-In-Sleep (ABRL)</strong>. Generated from current sources at 2026-10-11T12:27:54+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20261011-math-2-0"></script>
+</body>
+</html>
