@@ -1,0 +1,36 @@
+4.1 Strong Convexity and Online Subgradient Descent35
+ProofLet’s first assume thatfisλ-strongly convex overVwith respect to∥ · ∥. Then, for
+anyα∈(0,1)and anyg∈∂f(y), we have
+⟨g,x−y⟩ ≤ f(αx+ (1−α)y)−f(y)
+α ≤f(x)−f(y)− 1
+2 λ(1−α)∥x−y∥ 2 .
+Taking the limit asα→0, we obtain the statement.
+Let’s now assume that the inequality in the lemma holds, and let’s prove thatfisλ-
+strongly convex. Settingv=αx+ (1−α)y, for anyg∈∂f(v), we have
+⟨g,x−v⟩ ≤f(x)−f(v)− λ
+2 ∥x−v∥ 2,
+⟨g,y−v⟩ ≤f(y)−f(v)− λ
+2 ∥y−v∥ 2 .
+Summing these two inequalities with coefficientsαand1−αand using the definition ofv,
+we have
+0 =⟨g, αx−αv+ (1−α)y−(1−α)v⟩
+=αf(x)−f(αx+ (1−α)y) + (1−α)f(y)−α(1−α) λ
+2 ∥x−y∥ 2 .
+In words, the lemma above tells us that a strongly convex function can be lower bounded
+by a quadratic, where the linear term is the usual one constructed through the subgradient,
+and the quadratic term depends on the strong convexity. Hence, we have a tighter lower
+bound to the function than the one obtained by using convexity alone. This is what we
+would expect using a Taylor expansion on a twice-differentiable convex function and lower-
+bounding the smallest eigenvalue of the Hessian. Indeed, we have the following theorem.
+Theorem 4.3Letf:R d →(−∞,+∞]be proper and convex.
+•fisλ-strongly convex with respect to∥ · ∥indom∂fiff
+⟨gx −g y,x−y⟩ ≥λ∥x−y∥ 2,∀x,y∈dom∂f,g x ∈∂f(x),g y ∈∂f(y).(4.1)
+•Letx,y∈domf. Iffis continuously twice differentiable on an open set containing the
+segment betweenyandx, and it holds that
+⟨∇2f(y+α(x−y))(x−y),x−y⟩ ≥λ∥x−y∥ 2,∀α∈[0,1],(4.2)
+then we have
+f(x)≥f(y) +⟨∇f(y),x−y⟩+ λ
+2 ∥x−y∥ 2 .
+If the assumption holds for anyx,y∈domf, thenfisλ-strongly convex indomfwith
+respect to∥ · ∥.
+ProofFor the first statement, first assume thatfisλ-strongly convex with respect to∥ · ∥.

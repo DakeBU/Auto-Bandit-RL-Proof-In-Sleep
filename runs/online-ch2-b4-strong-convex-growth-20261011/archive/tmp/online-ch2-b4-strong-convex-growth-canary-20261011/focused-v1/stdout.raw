@@ -1,0 +1,65 @@
+tmp\online-ch2-b4-strong-convex-growth-canary-20261011\OnlineStrongConvexMinimumCanary.candidate-v1.lean:43:2: error: unsolved goals
+case refine_1
+hp : SourceProper squareLoss
+hd : univ ⊆ effectiveDomain squareLoss
+hs :
+  ∀ x ∈ univ,
+    ∀ y ∈ univ,
+      ∀ (a : ℝ),
+        0 < a →
+          a < 1 →
+            squareLoss (a • x + (1 - a) • y) ≤
+              ↑a * squareLoss x + ↑(1 - a) * squareLoss y - ↑(2 / 2 * a * (1 - a) * ‖x - y‖ ^ 2)
+hm : IsMinOn squareLoss univ 0
+hg : ∀ (q : ℝ), (squareLoss 0).toReal + 2 / 2 * ‖q - 0‖ ^ 2 ≤ (squareLoss q).toReal
+q : ℝ
+⊢ q ^ 2 = (↑q ^ 2).toReal
+tmp\online-ch2-b4-strong-convex-growth-canary-20261011\OnlineStrongConvexMinimumCanary.candidate-v1.lean:45:4: warning: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+tmp\online-ch2-b4-strong-convex-growth-canary-20261011\OnlineStrongConvexMinimumCanary.candidate-v1.lean:64:69: error: unsolved goals
+h0 : 0 ∈ Icc 0 1
+h1 : 1 ∈ Icc 0 1
+hp : SourceProper intervalLoss
+hV : Convex ℝ (Icc 0 1)
+hd : Icc 0 1 ⊆ effectiveDomain intervalLoss
+x : ℝ
+hx : x ∈ Icc 0 1
+y : ℝ
+hy : y ∈ Icc 0 1
+a : ℝ
+ha : 0 < a
+ha1 : a < 1
+hm : a • x + (1 - a) • y ∈ Icc 0 1
+⊢ (if 0 ≤ a * x + (1 - a) * y ∧ a * x + (1 - a) * y ≤ 1 then 0 else ⊤) ≤ 0
+tmp\online-ch2-b4-strong-convex-growth-canary-20261011\OnlineStrongConvexMinimumCanary.candidate-v1.lean:69:58: error: unsolved goals
+h0 : 0 ∈ Icc 0 1
+h1 : 1 ∈ Icc 0 1
+hp : SourceProper intervalLoss
+hV : Convex ℝ (Icc 0 1)
+hd : Icc 0 1 ⊆ effectiveDomain intervalLoss
+hs :
+  ∀ x ∈ Icc 0 1,
+    ∀ y ∈ Icc 0 1,
+      ∀ (a : ℝ),
+        0 < a →
+          a < 1 →
+            intervalLoss (a • x + (1 - a) • y) ≤
+              ↑a * intervalLoss x + ↑(1 - a) * intervalLoss y - ↑(0 / 2 * a * (1 - a) * ‖x - y‖ ^ 2)
+x : ℝ
+hx : x ∈ Icc 0 1
+⊢ 0 ≤ if 0 ≤ x ∧ x ≤ 1 then 0 else ⊤
+tmp\online-ch2-b4-strong-convex-growth-canary-20261011\OnlineStrongConvexMinimumCanary.candidate-v1.lean:68:51: warning: This simp argument is unused:
+  hm
+
+Hint: Omit it from the simp argument list.
+  simp [intervalLoss, extendedIndicator, hx, hy,̵ ̵h̵m̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+tmp\online-ch2-b4-strong-convex-growth-canary-20261011\OnlineStrongConvexMinimumCanary.candidate-v1.lean:71:43: warning: This simp argument is unused:
+  hx
+
+Hint: Omit it from the simp argument list.
+  simp [intervalLoss, extendedIndicator, hx̵,̵ ̵h̵0]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`

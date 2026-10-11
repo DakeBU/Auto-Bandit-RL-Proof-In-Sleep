@@ -1,0 +1,43 @@
+66Online Mirror Descent
+We will prove it by contradiction. So, assume thatx t+1 ∈bdryX. Setz∈intX ∩ Vand
+defineϕ(λ) =⟨η tgt,(1−λ)x t+1 +λz⟩+B ψ((1−λ)x t+1 +λz;x t)forλ∈(0,1).
+From (6.5), we have that
+lim
+λ→0
+ϕ′(λ) = lim
+λ→0
+(⟨ηtgt,z−x t+1⟩+⟨∇ψ(x t+1 +λ(z−x t+1))− ∇ψ(x t),z−x t+1⟩)
+=−∞.
+Hence, there existsϵ >0such that
+⟨ηtgt,x ϵ⟩+B ψ(xϵ;x t) =ϕ(ϵ)< ϕ(0) =⟨η tgt,x t+1⟩+B ψ(xt+1;x t),
+wherex ϵ := (1−ϵ)x t+1 +ϵz∈intX ∩ V. However, this contradicts the definition of
+xt+1 as an argmin, proving thatx t+1 must be inintX.
+When (6.5) holds, this theorem implies that the predictions of the algorithm always stay
+in the interior ofXwithout the need for any projection. If in additionV=X, the update of
+the algorithm is the solution of an unconstrained problem because the feasible set is implicit
+in the Bregman divergence.
+Now we have a well-defined algorithm, but does it guarantee a sublinear regret? We know
+that at least in one case, it recovers the OSD algorithm, which does work. So, from an intu-
+itive point of view, how well the algorithm works should depend on some characteristic of
+ψ. In particular, a sufficient property will be thestrong convexityofψ. The strong convexity
+also takes care of the existence of the argmin in the algorithm, thanks to the next theorem.
+Theorem 6.9Letλ >0andf:R d →(−∞,+∞]proper, closed, andλ-strongly convex
+with respect to∥ · ∥on its domain. Assumedom∂f̸=∅. Then,fhas exactly one minimizer.
+ProofLety∈dom∂fandg∈∂f(y). From Lemma 4.2, for anyx∈R d, we have
+f(x)≥f(y) +⟨g,x−y⟩+ λ
+2 ∥x−y∥ 2
+≥f(y)− ∥g∥ ⋆∥x∥ − ⟨g,y⟩+ λ
+2 (∥x∥ − ∥y∥)2
+=f(y)− ∥g∥ ⋆∥x∥ − ⟨g,y⟩+ λ
+2 (∥x∥2 +∥y∥ 2 −2∥x∥∥y∥),
+where in the second inequality we used the reverse triangle inequality and the definition of
+dual norms. From the above, we have thatlim∥x∥→∞ f(x) = +∞. In turn, this implies that
+the level sets offare bounded. From the assumption thatfis closed, we get that the level
+sets are compact. Hence, for anyyindomf, the minimum offis the same as the minimum
+offover the set{x:f(x)≤f(y)}, that is, the minimum over a compact set, that exists
+by the Weierstrass theorem, Theorem A.3. The uniqueness is given by the fact that strongly
+convex functions are strictly convex.
+To analyze OMD, we first prove a one-step relationship, similar to the ones we proved for
+Online Gradient Descent (OGD) and OSD. Note how in this lemma, we will use a lot of the
+concepts we introduced till now: strong convexity, dual norms, subgradients, etc. In a way,
+over the past sections, I slowly prepared you to be able to prove this lemma.

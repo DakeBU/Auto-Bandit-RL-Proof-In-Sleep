@@ -794,3 +794,5 @@ import BanditRLProof.OnlineWeightedPotential
 import BanditRLProof.OnlineUnboundedOGD
 import BanditRLProof.OnlinePrescientEuclidean
 import BanditRLProof.OnlineCumulativePotential
+
+import BanditRLProof.OnlineStrongConvexMinimum

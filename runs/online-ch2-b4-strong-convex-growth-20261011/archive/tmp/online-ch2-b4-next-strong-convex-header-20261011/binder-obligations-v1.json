@@ -1,0 +1,166 @@
+{
+  "status": "PROPOSAL ONLY; independent source review pending",
+  "binders": [
+    {
+      "binder": "E",
+      "type": "Type u",
+      "classification": "TYPING",
+      "source_mapping": "Definition4.1 source R^d",
+      "obligation_or_delta": "Explicit real normed-space generalization, not claimed literally identical ambient; requires independent approval."
+    },
+    {
+      "binder": "[NormedAddCommGroup E]",
+      "type": "ambient additive norm",
+      "classification": "TYPING",
+      "source_mapping": "Definition4.1 chosen norm on R^d",
+      "obligation_or_delta": "No InnerProductSpace/FiniteDimensional/CompleteSpace requirement."
+    },
+    {
+      "binder": "[NormedSpace Real E]",
+      "type": "real scalar action compatible with norm",
+      "classification": "TYPING",
+      "source_mapping": "Definition4.1 convex combinations",
+      "obligation_or_delta": ""
+    },
+    {
+      "binder": "f",
+      "type": "E -> EReal",
+      "classification": "TYPING",
+      "source_mapping": "Definition4.1 extended-real proper function",
+      "obligation_or_delta": ""
+    },
+    {
+      "binder": "V",
+      "type": "Set E",
+      "classification": "TYPING",
+      "source_mapping": "Definition4.1 literal chosen convex subset",
+      "obligation_or_delta": ""
+    },
+    {
+      "binder": "lam",
+      "type": "Real",
+      "classification": "TYPING",
+      "source_mapping": "Definition4.1 modulus",
+      "obligation_or_delta": ""
+    },
+    {
+      "binder": "hf",
+      "type": "SourceProper f",
+      "classification": "SOURCE",
+      "source_mapping": "Definition4.1 properness; Definition2.18",
+      "obligation_or_delta": "Expanded exactly into no-bottom everywhere AND existence of one real-valued point. No inherited TopologicalSpace binder, confirmed by #print. Does not assert an attained minimum."
+    },
+    {
+      "binder": "hV",
+      "type": "Convex Real V",
+      "classification": "SOURCE",
+      "source_mapping": "Definition4.1 convex V",
+      "obligation_or_delta": "Used for all segment points; not inferred from closedness/properness."
+    },
+    {
+      "binder": "hdom",
+      "type": "V subset effectiveDomain f",
+      "classification": "SOURCE",
+      "source_mapping": "Definition4.1 V subset dom f; PDF21 domain convention",
+      "obligation_or_delta": "effectiveDomain f={x|f x<top}; hf excludes bottom. Literal V is never replaced by V intersect dom f."
+    },
+    {
+      "binder": "hlam",
+      "type": "0 <= lam",
+      "classification": "SOURCE",
+      "source_mapping": "Definition4.1 lambda>=0",
+      "obligation_or_delta": "Retains zero case. Intended positive-modulus algorithms may supply >0 separately; no positivity required merely for this quantitative inequality. This differs explicitly from older >0 readiness suggestion, not from Definition4.1."
+    },
+    {
+      "binder": "hstrong",
+      "type": "Displayed EReal interior-weight inequality",
+      "classification": "SOURCE",
+      "source_mapping": "Definition4.1 PDF46/printed34",
+      "obligation_or_delta": "No imported real-StrongConvexOn premise is substituted. Each x,y lies in V; a real with 0<a<1; penalty lambda/2*a*(1-a)*norm(x-y)^2."
+    },
+    {
+      "binder": "p",
+      "type": "E",
+      "classification": "TYPING",
+      "source_mapping": "Candidate conditional attained-minimum point",
+      "obligation_or_delta": ""
+    },
+    {
+      "binder": "hp",
+      "type": "p in V",
+      "classification": "SOURCE",
+      "source_mapping": "Source minimum point is feasible",
+      "obligation_or_delta": "IsMinOn alone does not supply membership; hp also gives nonempty V."
+    },
+    {
+      "binder": "hmin",
+      "type": "IsMinOn f V p",
+      "classification": "SOURCE",
+      "source_mapping": "Conditional actual minimum used in BTRL/zero-support strong-convex step",
+      "obligation_or_delta": "Expanded as every v in V satisfies f p <= f v. This is permitted only for the conditional lemma; actual algorithm producer must establish it, not assume it to close whole source theorem."
+    },
+    {
+      "binder": "q",
+      "type": "E",
+      "classification": "TYPING",
+      "source_mapping": "Arbitrary comparison point",
+      "obligation_or_delta": ""
+    },
+    {
+      "binder": "hq",
+      "type": "q in V",
+      "classification": "SOURCE",
+      "source_mapping": "Finite feasible comparison point in literal V",
+      "obligation_or_delta": "Finiteness follows from hf and hdom; not an added finiteness premise."
+    }
+  ],
+  "nested_hstrong_quantifiers": [
+    {
+      "binder": "x",
+      "meaning": "arbitrary E"
+    },
+    {
+      "binder": "hx",
+      "meaning": "x in literal V"
+    },
+    {
+      "binder": "y",
+      "meaning": "arbitrary E"
+    },
+    {
+      "binder": "hy",
+      "meaning": "y in literal V"
+    },
+    {
+      "binder": "a",
+      "meaning": "arbitrary real"
+    },
+    {
+      "binder": "ha",
+      "meaning": "0<a"
+    },
+    {
+      "binder": "ha1",
+      "meaning": "a<1"
+    }
+  ],
+  "project_owned_expansions": {
+    "SourceProper": "(forall x, f x != bottom) AND exists x r:Real, f x = coe r",
+    "effectiveDomain": "{x | f x < top}"
+  },
+  "standard_expansions": {
+    "IsMinOn": "forall v in V, f p <= f v",
+    "Convex": "nonnegative real barycentric weights with sum 1 preserve V"
+  },
+  "forbidden_public_hypotheses": [
+    "quadratic-growth conclusion",
+    "finitePart strong-convexity bridge",
+    "subgradient support vector or support existence",
+    "coercivity",
+    "automatic attainment",
+    "continuity/lower semicontinuity",
+    "closed V",
+    "positive distance",
+    "algorithm recurrence or regret bound"
+  ]
+}

@@ -1,0 +1,11 @@
+import BanditRLProof.OnlineStrongConvexMinimum
+import Mathlib.Tactic
+
+noncomputable section
+open Set
+namespace BanditRL.Tests.OnlineStrongConvexMinimumCanary
+open BanditRL.OnlineConvex
+
+abbrev squareLoss (x : ℝ) : EReal := ((x ^ 2 : ℝ) : EReal)
+abbrev intervalLoss : ℝ → EReal := extendedIndicator (Set.Icc (0 : ℝ) 1)
+

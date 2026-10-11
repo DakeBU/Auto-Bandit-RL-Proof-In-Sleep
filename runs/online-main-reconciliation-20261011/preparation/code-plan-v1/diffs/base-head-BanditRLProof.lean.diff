@@ -1,0 +1,116 @@
+--- base/BanditRLProof.lean
++++ head/BanditRLProof.lean
+@@ -682,7 +682,6 @@
+ import BanditRLProof.PowerCutoffNormalization
+ import BanditRLProof.Algorithms.CUCBPolynomialIntegral
+ import BanditRLProof.Algorithms.CUCBPolynomialRegret
+-
+ import BanditRLProof.Algorithms.CUCBFiniteExample
+ import BanditRLProof.Algorithms.CUCBFiniteSourceExample
+ import BanditRLProof.Algorithms.CUCBFiniteDeterministicExample
+@@ -695,9 +694,103 @@
+ import BanditRLProof.Algorithms.CausalHeterogeneousRegret
+ import BanditRLProof.Algorithms.CausalHeterogeneousLaw
+ import BanditRLProof.Algorithms.CausalParallelRegret
+-
+ import BanditRLProof.Algorithms.HeavyTailRegretCap
+-
+ import BanditRLProof.Algorithms.MusicalChairsCoordinationTime
+ import BanditRLProof.Algorithms.MusicalChairsCoordinationRegret
+ import BanditRLProof.Algorithms.MusicalChairsRealized
++import BanditRLProof.OnlineGradientDescent
++import BanditRLProof.OnlineLearningAsymptotic
++import BanditRLProof.OnlineLearningHistory
++import BanditRLProof.OnlineGradientDescentVariable
++import BanditRLProof.OnlineConvexExtended
++import BanditRLProof.OnlineConvexExamples
++import BanditRLProof.OnlineConvexClosures
++import BanditRLProof.OnlineConvexSums
++import BanditRLProof.OnlineConvexFirstOrder
++import BanditRLProof.OnlineConvexOptimality
++import BanditRLProof.OnlineExpectation
++import BanditRLProof.OnlineConvexBarycenter
++import BanditRLProof.OnlineConvexMinorant
++import BanditRLProof.OnlineJensen
++import BanditRLProof.OnlineFTLFailure
++import BanditRLProof.OnlineGuessingOGD
++import BanditRLProof.OnlineGuessingLower
++import BanditRLProof.OnlineGuessingComparison
++
++import BanditRLProof.OnlineHuber
++import BanditRLProof.OnlineClosedProper
++import BanditRLProof.OnlineSubgradientBasic
++import BanditRLProof.OnlineSubgradientInterior
++import BanditRLProof.OnlineSubgradientDifferentiability
++import BanditRLProof.OnlineSubgradientSum
++import BanditRLProof.OnlineSubgradientAbsolute
++import BanditRLProof.OnlineNormalCone
++import BanditRLProof.OnlineSubgradientMax
++import BanditRLProof.OnlineHinge
++import BanditRLProof.OnlineAffineSubgradient
++import BanditRLProof.OnlineLipschitzSubgradient
++import BanditRLProof.OnlineSubgradientDescent
++import BanditRLProof.OnlineGuessingSubgradient
++import BanditRLProof.OnlineSubgradientPolicy
++import BanditRLProof.OnlineLinearization
++import BanditRLProof.OnlineOptimalStep
++import BanditRLProof.OnlineUnitScaling
++import BanditRLProof.OnlineGradientDescentSource
++import BanditRLProof.OnlineConstraintFiniteLoss
++import BanditRLProof.OnlineConvexNondifferentiability
++import BanditRLProof.OnlineConvexUncountability
++import BanditRLProof.OnlineGuessingSubgradientPolicy
++
++import BanditRLProof.OnlineLearningFTLState
++
++import BanditRLProof.OnlineGuessingLogLower
++
++import BanditRLProof.OnlineNoRegretSemantics
++
++import BanditRLProof.OnlineSquareMinimum
++
++import BanditRLProof.OnlineGuessingIIDBenchmark
++
++import BanditRLProof.OnlineGuessingRandomizedIID
++
++import BanditRLProof.OnlineGuessingIIDSuccess
++
++import BanditRLProof.OnlineGuessingAECausal
++
++import BanditRLProof.OnlineGuessingCompletedCausal
++
++import BanditRLProof.OnlineGuessingKernelCausal
++
++import BanditRLProof.OnlineFTLLimitSemantics
++
++import BanditRLProof.OnlineFTLOscillation
++import BanditRLProof.OnlineFTLInitializationRegret
++
++import BanditRLProof.OnlineNonsmoothExamples
++
++import BanditRLProof.OnlinePrescientLinear
++
++import BanditRLProof.OnlineProximalComparison
++
++import BanditRLProof.OnlineBregmanProximal
++
++import BanditRLProof.OnlineBregmanExtended
++
++import BanditRLProof.OnlinePrescientBregman
++
++import BanditRLProof.OnlinePrescientBregmanRegret
++
++import BanditRLProof.OnlinePrescientBregmanSource
++
++import BanditRLProof.OnlineUnboundedOSD
++
++import BanditRLProof.OnlineFTLSelector
++import BanditRLProof.OnlineAdaptiveSummation
++import BanditRLProof.OnlineAdaptiveEnergy
++import BanditRLProof.OnlineAdaptivePotential
++import BanditRLProof.OnlineAdaptiveOSD
++import BanditRLProof.OnlineAdaptiveBenchmark
++import BanditRLProof.OnlineWeightedPotential
++import BanditRLProof.OnlineUnboundedOGD
++import BanditRLProof.OnlinePrescientEuclidean
++import BanditRLProof.OnlineCumulativePotential

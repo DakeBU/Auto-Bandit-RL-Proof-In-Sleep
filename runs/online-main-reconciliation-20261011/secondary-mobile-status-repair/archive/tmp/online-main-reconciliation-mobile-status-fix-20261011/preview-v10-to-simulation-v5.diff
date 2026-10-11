@@ -1,0 +1,47 @@
+--- capture-reconciliation-reader-v10.cjs
++++ simulated-reader-preview-v5.cjs
+@@ -6,7 +6,7 @@
+ (async () => {
+   const [url, outputArg, profileArg, registryArg, rootArg, siteArg, gateArg, gateSHA, expectedHead] = process.argv.slice(2);
+   if (process.argv.slice(2).length !== 9) throw Error('Expected URL OUTPUT PROFILE REGISTRY ROOT SITE COMBINED_GATE_RECEIPT GATE_SHA256 HEAD');
+-  const root = fs.realpathSync(rootArg), base = path.join(root, 'tmp', 'online-main-reconciliation-reader-qa-20261011');
++  const root = fs.realpathSync(rootArg), base = path.join(root, 'tmp', 'online-main-reconciliation-mobile-status-fix-20261011');
+   const output = path.resolve(outputArg), profile = path.resolve(profileArg), registryFile = fs.realpathSync(registryArg);
+   const expectedSite = fs.realpathSync(siteArg);
+   const gitState = () => { const run = (...args) => require('child_process').execFileSync('git',args,{cwd:root,encoding:'utf8'}).trim(); return {HEAD:run('rev-parse','HEAD'),branch:run('branch','--show-current'),status:run('status','--porcelain')}; };
+@@ -54,7 +54,7 @@
+   const report = { startedUTC: new Date().toISOString(), argv: process.argv.slice(2), url, sourceCommit: registry.source_commit,
+     currentGitBefore, readerHelperSHA256:hash(fs.readFileSync(__filename)), expectedNormalizedHeaderSHA256:hash(Buffer.from(expectedHeader)), expectedHead, gateSHA256: hash(gateBytes), siteDirectory: expectedSite, siteManifestSHA256: hash(siteManifestBytes), rawHTTPBindings: [], registrySHA256: hash(registryBytes), sourceSHA256: hash(sourceBytes), frozenHeadersSHA256: hash(frozen), rootImportVerified: true,
+     canonicalBindings: specs.map(s => ({ fullName: s.fullName, node: s.node, actualSourceLine: s.line })), panels: [], modules: [], images: [],
+-    pageErrors: [], failedRequests: [], dependencyLinkReview: [], scope: 'Isolated local Edge DOM/render capture only. Human pixel/source FINAL review remains separate; desktop1440/mobile390 captures; no live/native or human pixel acceptance.' };
++    pageErrors: [], failedRequests: [], dependencyLinkReview: [], scope: 'SIMULATED CSS-INJECTION PREVIEW ONLY, not source acceptance. Isolated local Edge DOM/render capture only. Human pixel/source FINAL review remains separate; desktop1440/mobile390 captures; no live/native or human pixel acceptance.' };
+   const write = (name, bytes) => fs.writeFileSync(path.join(output, name), bytes, { flag: 'wx' });
+   let context;
+   const mathjaxStartup='https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js';
+@@ -124,6 +124,7 @@
+     for(const spec of specs) await exactHTTP(new URL('../../'+spec.node.url.split('#')[0],url).href);
+     context = await chromium.launchPersistentContext(profile, { executablePath: 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe', headless: true,
+       serviceWorkers:'block', viewport: { width: 1440, height: 1800 }, args: ['--disable-gpu', '--disable-sync', '--disable-background-networking', '--no-first-run'] });
++    await context.addInitScript(css => document.addEventListener('DOMContentLoaded',()=>{const el=document.createElement('style');el.dataset.simulatedCandidate='true';el.textContent=css;document.head.appendChild(el);}), ".source-route-status { flex-wrap: wrap; }\n.source-route-status > span,\n.source-route-summary-meta {\n  min-width: 0;\n  max-width: 100%;\n}\n\n.source-route-status > .status,\n.source-route-summary-meta > .status {\n  max-width: 100%;\n  white-space: normal;\n  overflow-wrap: anywhere;\n}\n\n\n.source-theorem-card > p,\n.source-theorem-contract dd {\n  overflow-wrap: anywhere;\n}\n");
+     await context.route('**/*',async route=>{
+       const type=route.request().resourceType(), target=new URL(route.request().url());
+       if(target.origin!==u.origin) {
+@@ -146,6 +147,18 @@
+     page.on('requestfailed', req => report.failedRequests.push({ url: req.url(), failure: req.failure() }));
+     await page.goto(url, { waitUntil: 'networkidle', timeout: 60000 });
+     await page.waitForFunction(() => [...document.querySelectorAll('article.source-theorem-card')].some(el => el.textContent.includes('Corrected terminal accounting: the finite-real regret identity') && el.querySelector('mjx-container')), null, { timeout: 60000 });
++    report.simulatedCSSPreview=true;
++    report.candidateCSSSHA256='5b126bf7c0739879b941dfddba81fef3ae3ba9819c06d24cac6b805c5c29698c';
++    report.allSourceCardGeometry=[];
++    for(const width of [1440,390]) {
++      await page.setViewportSize({width,height:1800});
++      await page.locator('details.source-theorem-disclosure').evaluateAll(xs=>xs.forEach(e=>e.open=true));
++      await page.waitForTimeout(200);
++      const rows=await page.locator('article.source-theorem-card').evaluateAll(xs=>xs.map(e=>{const q=e.getBoundingClientRect();const parts=[...e.querySelectorAll('.source-theorem-heading,.source-theorem-heading a,.source-route-status,.source-route-status>.status')].map(p=>{const b=p.getBoundingClientRect();return {class:p.className,left:b.left,right:b.right,scrollWidth:p.scrollWidth,clientWidth:p.clientWidth};});return {title:e.querySelector('h3')?.innerText,left:q.left,right:q.right,scrollWidth:e.scrollWidth,clientWidth:e.clientWidth,parts};}));
++      report.allSourceCardGeometry.push({width,rows});
++      const bad=rows.filter(x=>x.left<0||x.right>width+1||x.scrollWidth>x.clientWidth+1||x.parts.some(p=>p.left<x.left-1||p.right>x.right+1||p.scrollWidth>p.clientWidth+1));
++      if(bad.length)throw Error('SIMULATED preview other source-card overflow '+JSON.stringify(bad));
++    }
+     async function openAncestors(panel) {
+       await panel.evaluate(el => { for (let p = el.parentElement; p; p = p.parentElement) if (p.tagName === 'DETAILS') p.open = true; });
+     }

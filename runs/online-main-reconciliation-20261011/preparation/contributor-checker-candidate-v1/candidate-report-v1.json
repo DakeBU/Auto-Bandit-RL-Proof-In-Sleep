@@ -1,0 +1,57 @@
+{
+  "status": "prepared-candidate; development-tested; independent-review-required",
+  "actor": "/root/adaptive_reviewer",
+  "requested_model_effort": "GPT-6 Astra / medium; no independent runtime attestation",
+  "application_files": [
+    {
+      "path": "tools/check_contributor_contract.py",
+      "candidate_sha256": "35f98edff8c77d3c9ecf365d14fe12f5a4851f36a4331c28a6c00b65526198a7",
+      "candidate_bytes": 33549,
+      "active_before_sha256": "2ba2e53a1f3194a13755140d9d755e3ff19d70f8e6d09bacfe318fb5ca4d1dd6"
+    },
+    {
+      "path": "tools/test_contributor_contract.py",
+      "candidate_sha256": "4a592338a2ee90d77845991329e85ee7bda96c6bd5ad6c2d4e8ca3a29bb5f5fe",
+      "candidate_bytes": 11181,
+      "active_before_sha256": "07486f2204041e8858da6ecb5e39d64de48d2ce5da0eb6ff4e9f4a2504dde955"
+    },
+    {
+      "path": "docs/contributor-codex-contract.md",
+      "candidate_sha256": "48dd398da87a267bd82b2f20b3ab6db99909f3ebfbccd75502ecfb65aa49b993",
+      "candidate_bytes": 9299,
+      "active_before_sha256": "bf1bea6a7532f1a192f6289107e3120a6428b2806850cfe69bb62c71865a8353"
+    }
+  ],
+  "development_tests": {
+    "receipt": "development-v4.json",
+    "sha256": "e3b961872f00b73f32dc77e8164547ff4c82b95ba53e3042736a3b98907d63a4",
+    "actual_exit_code": 0,
+    "tests": 15,
+    "original_tests_preserved": 3,
+    "new_real_git_regressions": 12,
+    "duration_seconds": 20.968,
+    "not_clean_candidate_gate": true
+  },
+  "actual_five_row_probe": {
+    "path": "actual-five-row-development-probe-v2.json",
+    "sha256": "a2bcf2fb36fe4da3461f78f4cc7be50c935d1612d598f30420cf23cd78b28f26",
+    "HEAD": "a5ec0ba8198d6b93505b953d1f63d6d5cb63f065",
+    "all_five_certified": true,
+    "scope": "read-only development function calls, not contributor gate execution"
+  },
+  "retained_preparation_history": [
+    "development-v1 14 pass; test harness initially separate module",
+    "development-v2 14 pass after canonical-compatible imports",
+    "development-v3 15 pass adding dirty-path rejection",
+    "development-v4 15 pass with all regressions consolidated into existing test file; separate test_contributor_historical_rows.py now retained development history, DO NOT APPLY",
+    "actual-five-row probe-v1 used default Python3.8 GBK and emitted subprocess UnicodeDecodeError; result False retained. V2 used bundled3.12 -Xutf8 and certified all5. No source/math or checker change for environment repair; v1 error attested toolchunk062aed? Exact actual execution chunk5c230c; terminal output not separately archived raw."
+  ],
+  "mechanism": "Per-manifest-row fail-closed historical certificate; witness merge/base ancestry and inherited immutable manifest, same source Git blob+mode at actualBASE/currentHEAD/original protected change, membership continuity over historical amendments, no dirty relevant path or postmerge manifest changes. All current validation/uncovered checks remain; current/unknown stale rows fail. Certificates printed only with final successful gate.",
+  "limits": [
+    "No active checker/test/doc edit, no Git/source/manifest mutation or production gate.",
+    "Only three application files above; runner/separate test file/probes/receipts/snapshots are development artifacts.",
+    "Use bundled Python3.12 with -X utf8 for actual Windows gate, as existing run_git inherits locale encoding.",
+    "Performance is bounded by reachable Git history scans; missing history/parse failure returns no certificate, never acceptance.",
+    "Synthetic mode/source/provenance fixtures and actual5 rows checked; full harness plus independent review and actual-base gate still required."
+  ]
+}

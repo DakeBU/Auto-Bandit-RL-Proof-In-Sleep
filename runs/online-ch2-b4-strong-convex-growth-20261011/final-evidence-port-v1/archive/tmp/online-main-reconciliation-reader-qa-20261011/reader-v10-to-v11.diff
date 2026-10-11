@@ -1,0 +1,85 @@
+--- capture-reconciliation-reader-v10.cjs
++++ capture-reconciliation-reader-v11.cjs
+@@ -146,6 +146,18 @@
+     page.on('requestfailed', req => report.failedRequests.push({ url: req.url(), failure: req.failure() }));
+     await page.goto(url, { waitUntil: 'networkidle', timeout: 60000 });
+     await page.waitForFunction(() => [...document.querySelectorAll('article.source-theorem-card')].some(el => el.textContent.includes('Corrected terminal accounting: the finite-real regret identity') && el.querySelector('mjx-container')), null, { timeout: 60000 });
++    // Actual final QA: no injected CSS. Every current source card is measured.
++    report.allSourceCardGeometry=[];
++    for(const width of [1440,390]) {
++      await page.setViewportSize({width,height:1800});
++      await page.locator('details.source-theorem-disclosure').evaluateAll(xs=>xs.forEach(e=>e.open=true));
++      await page.waitForTimeout(200);
++      const rows=await page.locator('article.source-theorem-card').evaluateAll(xs=>xs.map(e=>{const q=e.getBoundingClientRect();const parts=[...e.querySelectorAll('.source-theorem-heading,.source-theorem-heading a,.source-route-status,.source-route-status>.status')].map(p=>{const b=p.getBoundingClientRect();return {class:p.className,left:b.left,right:b.right,scrollWidth:p.scrollWidth,clientWidth:p.clientWidth};});return {title:e.querySelector('h3')?.innerText,left:q.left,right:q.right,scrollWidth:e.scrollWidth,clientWidth:e.clientWidth,parts};}));
++      report.allSourceCardGeometry.push({width,rows});
++      if(rows.length!==24)throw Error('Expected preserved23 plus one new growth source card');
++      const bad=rows.filter(x=>x.left<0||x.right>width+1||x.scrollWidth>x.clientWidth+1||x.parts.some(p=>p.left<x.left-1||p.right>x.right+1||p.scrollWidth>p.clientWidth+1));
++      if(bad.length)throw Error('Actual source-card geometry overflow '+JSON.stringify(bad));
++    }
+     async function openAncestors(panel) {
+       await panel.evaluate(el => { for (let p = el.parentElement; p; p = p.parentElement) if (p.tagName === 'DETAILS') p.open = true; });
+     }
+@@ -281,6 +293,55 @@
+     const expectedUnique=`https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/${expectedHead}/${uniqueRel}#L${uniqueLine}`;
+     if(!(await up.locator('.source-links a').evaluateAll(xs=>xs.map(x=>x.href))).includes(expectedUnique))throw Error('Unique pinned whole-proof source link');
+     report.modules.push({fullName:uniqueName,sourceSHA256:hash(uniqueBytes),sourceAmbientContext:uniqueSource.slice(0,us),sourceLink:expectedUnique,screenshot:await screenshot(up,'unique-projection-catalog')});
++    // New conditional strong-convex growth leaf; existing B4/OGD checks above retained.
++    const growthName='BanditRL.OnlineConvex.stronglyConvex_minimum_growth';
++    const growthRel='BanditRLProof/OnlineStrongConvexMinimum.lean';
++    const growthBytes=fs.readFileSync(path.join(root,growthRel)),growthSource=growthBytes.toString('utf8');
++    if(hash(growthBytes)!=='55b37c648437e231f1b967cdc9cfa4102ce1bea6efde3ed81b23884604f89317')throw Error('Reviewed growth production bytes changed');
++    const growthFrozen=fs.readFileSync(path.join(root,'docs/contracts/online-ch2-b4-strong-convex-growth-v1/neutral-frozen-header-v1.txt'));
++    if(hash(growthFrozen)!=='ded5adebef211f810552abbc4eced856dd9fff59f268989e9c1ff5a4ecd3d590')throw Error('Frozen growth declaration changed');
++    if(!/^import BanditRLProof\.OnlineStrongConvexMinimum\s*$/m.test(sourceRoot))throw Error('Growth shared-root import absent');
++    const growthToken='theorem stronglyConvex_minimum_growth',gs=growthSource.indexOf(growthToken),gf=growthFrozen.toString('utf8'),gfs=gf.indexOf(growthToken),gfe=gf.indexOf('\nend BanditRL.OnlineConvex',gfs);
++    const bodyMarker=gs<0?null:/\s*:=\s*by/.exec(growthSource.slice(gs));
++    if(gs<0||gfs<0||gfe<0||!bodyMarker)throw Error('Growth full header boundaries missing');
++    const growthHeader=norm(gf.slice(gfs,gfe));
++    if(norm(growthSource.slice(gs,gs+bodyMarker.index))!==growthHeader)throw Error('Growth actual/frozen complete header mismatch');
++    const growthLine=growthSource.slice(0,gs).split('\n').length;
++    const growthNodes=registry.nodes.filter(x=>x.id==='declaration:'+growthName),growthLessons=highlights.filter(x=>x.full_name===growthName);
++    if(growthNodes.length!==1||growthLessons.length!==1||growthNodes[0].status!=='compiled')throw Error('Growth unique compiled node/lesson missing');
++    const growthNode=growthNodes[0],growthLesson=growthLessons[0],growthAnchor=growthNode.url.split('#')[1];
++    if(!growthAnchor)throw Error('Growth declaration anchor missing');
++    const expectedGrowth=`https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/${expectedHead}/${growthRel}#L${growthLine}`;
++    await page.goto(url,{waitUntil:'networkidle',timeout:60000});
++    const growthCard=page.locator('article.source-theorem-card').filter({hasText:'Derived B4 dependency: quadratic growth at a supplied minimum'});
++    if(await growthCard.count()!==1)throw Error('Growth coherent source card missing/duplicated');
++    await openAncestors(growthCard);
++    await growthCard.locator('mjx-container').first().waitFor({state:'visible',timeout:60000});
++    const gc=await data(growthCard);
++    if(!gc.mathContainers||gc.mathErrors||!gc.links.some(x=>x.href==='https://arxiv.org/pdf/1912.13213v10#page=46'))throw Error('Growth source/formula/PDF binding');
++    requireWords(gc.text,['SourceProper','effectiveDomain','lambda/2','0<a<1','finite','Supply p','B1-B7','7.47/15.31','open'],'growth source contract');
++    report.panels.push({kind:'growth-source-card',...gc,screenshot:await screenshot(growthCard,'growth-source-card')});
++    const growthPanel=page.locator('[id="'+growthAnchor+'-teaching"]');
++    if(await growthPanel.count()!==1)throw Error('Growth lesson missing/duplicated');
++    await openAncestors(growthPanel);await growthPanel.locator('details.technical-reading').evaluate(e=>e.open=true);
++    if(await growthPanel.locator('details.exact-lean').evaluate(e=>e.open))throw Error('Growth exact header must initially remain folded');
++    const gd=await data(growthPanel);
++    requireWords(gd.text,[growthName,growthLesson.plain,growthLesson.proof_idea,'lambda/2','finite','conditional','existence or uniqueness','B1-B7','7.47/15.31','open'],'growth teaching');
++    if(!gd.mathContainers||gd.mathErrors||norm(await growthPanel.locator('details.exact-lean pre').textContent())!==growthHeader)throw Error('Growth lesson formula/full-header mismatch');
++    for(const dependency of growthLesson.dependencies)requireWords(gd.text,[dependency],'growth dependency');
++    if(!gd.links.some(x=>x.href===expectedGrowth))throw Error('Growth lesson full-proof source link missing/wrong');
++    report.panels.push({kind:'growth-teaching',...gd,foldedExactHeader:growthHeader,screenshot:await screenshot(growthPanel,'growth-lesson')});
++    write('growth-chapter-dom.html',await page.content());
++    await page.goto(new URL('../../'+growthNode.url.split('#')[0],url).href,{waitUntil:'networkidle',timeout:60000});
++    const growthCatalog=page.locator('[id="'+growthAnchor+'"]');
++    if(await growthCatalog.count()!==1)throw Error('Growth catalog declaration missing');
++    await growthCatalog.evaluate(e=>e.open=true);await openAncestors(growthCatalog);
++    await verifyWrapControl(growthCatalog,growthHeader,growthName);
++    const growthCode=await growthCatalog.locator('pre.lean-code').evaluate(e=>({text:e.textContent,scrollWidth:e.scrollWidth,clientWidth:e.clientWidth}));
++    if(norm(growthCode.text)!==growthHeader||growthCode.scrollWidth>growthCode.clientWidth+1)throw Error('Growth catalog exact header clipping/mismatch');
++    if(!(await growthCatalog.locator('.source-links a').evaluateAll(xs=>xs.map(x=>x.href))).includes(expectedGrowth))throw Error('Growth catalog pinned complete-proof link wrong');
++    report.modules.push({fullName:growthName,sourceSHA256:hash(growthBytes),frozenHeaderSHA256:hash(growthFrozen),sourceLink:expectedGrowth,code:growthCode,screenshot:await screenshot(growthCatalog,'growth-catalog')});
++    write('growth-catalog-dom.html',await page.content());
+     const books=JSON.parse(fs.readFileSync(path.join(root,'website/content/books.json'))).books;
+     const chapters=JSON.parse(fs.readFileSync(path.join(root,'website/content/chapters.json'))).chapters;
+     const owners=new Map();for(const b of books)if(b.status==='source-mapped')for(const ref of b.chapter_refs)if(ref.startsWith('teaching:')&&chapters.some(c=>'teaching:'+c.slug===ref)&&!owners.has(ref))owners.set(ref,b.id);
+@@ -347,6 +408,7 @@
+       }
+       report.panels.push({kind:'book-owned-navigation',bookId,actual:normalized,expected});write('book-'+bookId+'-dom.html',await page.content());
+     }
++    if(hash(fs.readFileSync(path.join(root,growthRel)))!==hash(growthBytes)||hash(fs.readFileSync(path.join(root,'docs/contracts/online-ch2-b4-strong-convex-growth-v1/neutral-frozen-header-v1.txt')))!==hash(growthFrozen))throw Error('Growth source/header changed during capture');
+     if(hash(fs.readFileSync(path.join(root,uniqueRel)))!==hash(uniqueBytes))throw Error('Unique source changed during capture');
+     if(report.pageErrors.length||report.failedRequests.length)throw Error('Browser console/network failures');
+     if(hash(fs.readFileSync(registryFile))!==report.registrySHA256||hash(fs.readFileSync(path.join(root,sourceRel)))!==report.sourceSHA256)throw Error('Inputs changed during capture');

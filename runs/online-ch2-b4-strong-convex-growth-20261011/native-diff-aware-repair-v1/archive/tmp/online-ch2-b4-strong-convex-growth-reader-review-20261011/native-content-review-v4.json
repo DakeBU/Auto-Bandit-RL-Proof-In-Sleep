@@ -1,0 +1,41 @@
+{
+  "verdict": "PASS_BOUNDED_NATIVE_METADATA_APPLICATION_ELIGIBILITY",
+  "candidate_sha256": "a07f4b350c3162253d06d9b09b930072a8187d42a5cd5a34c0805db732960e4d",
+  "previous_candidate_sha256": "5a84c194ce958e7b5ffa8e89924c40dafca2f438ee9469141ed5d64b0e99bd14",
+  "only_changed_field": "affected_files",
+  "removed_metadata_rows": [
+    "Tests/OnlineStrongConvexMinimumCanary.lean",
+    "Tests.lean"
+  ],
+  "all_other_json_values_identical": true,
+  "checker_findings": "Existing PRODUCTION_PREFIXES and PRODUCTION_EXACT exclude both Tests paths; stale-coverage validation rejects these metadata rows. Checker matches current committed HEAD; no checker weakening proposed.",
+  "tests_retained": "Both actual files unchanged from HEAD; known consumers and verification fields identical to V3. Removal is solely from protected-surface coverage metadata.",
+  "failure_preserved": {
+    "path": "tmp\\online-ch2-b4-strong-convex-growth-body-20261011\\native-diff-aware-failure-v1.json",
+    "sha256": "04767cd52651f597c843eb83a1ae9d9e0abb7eb9e65de689eb68068bbaff6b79",
+    "receipt_sha256": "90e07bbb06269d36d55e4674927cce9ed5ac00b0d226fcf8ef9e2e678456558b",
+    "actual_exit": 1,
+    "stderr_verified": true,
+    "capture_integrity_ok": true,
+    "RAW_inventory_count": 1390,
+    "pre_post_inventory_digest_equal": true
+  },
+  "current_bindings": [
+    {
+      "path": "tools/check_contributor_contract.py",
+      "sha256": "35f98edff8c77d3c9ecf365d14fe12f5a4851f36a4331c28a6c00b65526198a7"
+    },
+    {
+      "path": "Tests/OnlineStrongConvexMinimumCanary.lean",
+      "sha256": "da204780365f4de3b284296ae8e03de0588151c43109816488aba41c4dde5562"
+    },
+    {
+      "path": "Tests.lean",
+      "sha256": "60a40af3e69b92db3f9e2674df28090805070f6d05fdf1e3465f4512e26831c2"
+    }
+  ],
+  "head": "cf1a424f2312e7c5b730717cf0a96d65837894bd",
+  "git_status": "",
+  "blockers": [],
+  "boundary": "Eligible to apply exact V4 metadata and preserve failure. New clean source commit and all required same-source gates, reader pixels, Exposition/final bounded review remain required. No gate executed, no production edit, no leaf/chapter/maintenance/merged/live acceptance."
+}

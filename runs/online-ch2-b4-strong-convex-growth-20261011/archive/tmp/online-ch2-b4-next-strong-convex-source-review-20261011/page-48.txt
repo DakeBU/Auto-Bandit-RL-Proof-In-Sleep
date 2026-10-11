@@ -1,0 +1,45 @@
+36Beyond
+√
+TRegret
+Then, from Lemma 4.2, we have
+⟨gx,y−x⟩ ≤f(x)−f(y)− λ
+2 ∥x−y∥ 2,∀g x ∈∂f(x),
+⟨gy,x−y⟩ ≤f(y)−f(x)− λ
+2 ∥x−y∥ 2,∀g y ∈∂f(y).
+Summing the two inequalities, we have the stated bound.
+Now, assume that the (4.1) holds. Defineh(α) =f(y+α(x−y)),w α =y+α(x−y),
+andg wα ∈∂f(w α). From Theorem 2.28, we have⟨g wα,x−y⟩ ∈∂h(α). Moreover,
+⟨gwα,x−y⟩ − ⟨g y,x−y⟩= 1
+α ⟨gwα −g y,w α −y⟩ ≥ λ
+α ∥wα −y∥ 2 =λα∥x−y∥ 2,
+where we used (4.1) in the inequality. Using the fundamental theorem of calculus for extended-
+real-valued convex functions (Theorem A.1) and this last inequality, we have
+f(x)−f(y)− ⟨g y,x−y⟩=h(1)−h(0)− ⟨g y,x−y⟩
+=
+Z 1
+0
+(⟨gwα,x−y⟩ − ⟨g y,x−y⟩) dα≥ λ
+2 ∥x−y∥ 2 .
+Hence, by Lemma 4.2,fisλ-strongly convex with respect to∥ · ∥.
+For the second statement, assume thatfis twice differentiable and (4.2) holds. Then,
+h′′(α) =⟨∇ 2f(y+α(x−y))(x−y),x−y⟩ ≥λ∥x−y∥ 2 .
+Moreover, from Taylor’s remainder theorem, we have thath(1) =h(0)+h ′(0)+h ′′(β)/2,
+whereβ∈[0,1]. So, we have
+f(x) =h(1) =h(0) +h ′(0) +h ′′(β)/2≥f(y) +⟨∇f(y),x−y⟩+ λ
+2 ∥x−y∥ 2 .
+If it holds for allx,y, then, by Lemma 4.2,fisλ-strongly convex with respect to∥ · ∥.
+Example 4.4Letf(x) = 1
+2 ∥x∥2
+2. Using Theorem 4.3, we have thatfis 1-strongly convex
+with respect to∥ · ∥ 2 inR d.
+However, a strongly convex function does not need to be twice differentiable. Indeed, we
+do not even need plain differentiability. Hence, the use of the subgradient implies that the
+quadratic lower bound does not have to be uniquely determined, as in the next example.
+Example 4.5Consider the strongly convex functionf(x) =|x|+x 2. In Figure 4.1, we
+show two possible quadratic lower bounds to the function atx= 0.
+We also have the following useful property of sums of strongly convex functions.
+Theorem 4.6Letf:R d →(−∞,+∞]beµ 1-strongly convex andg:R d →(−∞,+∞]
+beµ 2-strongly convex in a non-empty convex setV ⊆domf∩domgwith respect to∥ · ∥.
+Then,f+gisµ 1 +µ 2-strongly convex inVwith respect to∥ · ∥.
+ProofIt is enough to sum the inequality in the definition of strong convexity (Defini-
+tion 4.1) for both functions.

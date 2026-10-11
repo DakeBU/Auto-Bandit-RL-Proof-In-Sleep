@@ -1,0 +1,84 @@
+--- base/website/scripts/check_site.py
++++ main/website/scripts/check_site.py
+@@ -55,6 +55,7 @@
+         self.source_links: list[str] = []
+         self.site_sidebar_count = 0
+         self.nav_group_count = 0
++        self.nav_group_ids: list[str] = []
+         self.side_nav_count = 0
+         self.side_nav_toggle_count = 0
+         self.book_nav_link_count = 0
+@@ -208,6 +209,7 @@
+             self.site_sidebar_count += 1
+         if "data-nav-group" in values:
+             self.nav_group_count += 1
++            self.nav_group_ids.append(values["data-nav-group"])
+         if "data-page-toc" in values:
+             self.side_nav_count += 1
+         if "data-toc-toggle" in values:
+@@ -677,6 +679,24 @@
+     )
+     status, label = ("compiled", "Compiled") if verified else ("source", "Source indexed")
+     return bool(summary and f'<span class="status {status}">{label}</span>' in summary.group(1))
++
++
++def expected_book_chapters(books: list[dict], book_id: str, chapter_slugs: set[str]) -> set[str]:
++    book = next(book for book in books if book["id"] == book_id)
++    return {ref.removeprefix("teaching:") for ref in book["chapter_refs"]
++            if ref.startswith("teaching:") and ref.removeprefix("teaching:") in chapter_slugs}
++
++
++def expected_navigation_groups(books: list[dict], chapter_slugs: set[str]) -> set[str]:
++    groups = {"start", "books", "bandit-book", "research", "library", "formalize", "community"}
++    owners: dict[str, str] = {}
++    for book in books:
++        if book.get("status") == "source-mapped":
++            for ref in book["chapter_refs"]:
++                if ref.startswith("teaching:") and ref.removeprefix("teaching:") in chapter_slugs:
++                    owners.setdefault(ref, book["id"])
++    groups.update(owner + "-book" for owner in set(owners.values()) if owner != "bandit")
++    return groups
+ 
+ 
+ def main() -> int:
+@@ -1333,6 +1353,11 @@
+         errors.append("manifest textbook_spine_chapter_count does not match textbook_spine.json")
+     if not (output / "static" / "favicon.svg").exists():
+         errors.append("missing generated SVG favicon")
++    books_config = json.loads((SITE_DIR / "content" / "books.json").read_text(encoding="utf-8"))
++    chapter_slugs = {chapter["slug"] for chapter in json.loads(
++        (SITE_DIR / "content" / "chapters.json").read_text(encoding="utf-8"))["chapters"]}
++    expected_nav_groups = expected_navigation_groups(books_config["books"], chapter_slugs)
++    expected_bandit_chapter_count = len(expected_book_chapters(books_config["books"], "bandit", chapter_slugs))
+     for page, collector in pages.items():
+         page_source = page.read_text(encoding="utf-8")
+         if 'rel="icon"' not in page_source:
+@@ -1340,10 +1365,11 @@
+         for mojibake in ("�", "Ã", "Â", "â€", " â ", "ï»¿", "ᵓ"):
+             if mojibake in page_source:
+                 errors.append(f"{page.relative_to(output)}: contains likely mojibake marker {mojibake!r}")
+-        if collector.nav_group_count != 7:
+-            errors.append(
+-                f"{page.relative_to(output)}: expected seven collapsible navigation groups, "
+-                f"found {collector.nav_group_count}"
++        if (collector.nav_group_count != len(expected_nav_groups)
++                or set(collector.nav_group_ids) != expected_nav_groups):
++            errors.append(
++                f"{page.relative_to(output)}: expected navigation groups {sorted(expected_nav_groups)}, "
++                f"found {collector.nav_group_ids}"
+             )
+         if 'aria-keyshortcuts="/"' not in page_source:
+             errors.append(f"{page.relative_to(output)}: global search is missing its keyboard shortcut")
+@@ -1380,10 +1406,10 @@
+ 
+     for relative in (Path("index.html"), Path("learning/index.html")):
+         collector = pages.get((output / relative).resolve())
+-        if collector and collector.book_chapter_card_count != expected_chapter_count:
++        if collector and collector.book_chapter_card_count != expected_bandit_chapter_count:
+             errors.append(
+                 f"{relative}: book map has {collector.book_chapter_card_count} chapter cards, "
+-                f"expected {expected_chapter_count}"
++                f"expected {expected_bandit_chapter_count} for the Bandit Book"
+             )
+         if collector and collector.primary_textbook_banner_count != 1:
+             errors.append(

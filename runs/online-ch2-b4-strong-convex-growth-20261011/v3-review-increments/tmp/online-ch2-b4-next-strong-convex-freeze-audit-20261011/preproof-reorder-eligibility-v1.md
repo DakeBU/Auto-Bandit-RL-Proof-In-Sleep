@@ -1,0 +1,9 @@
+# Independent preproof workflow reorder eligibility
+
+Verdict: PASS_BOUNDED_PREPROOF_REORDER_ELIGIBILITY. An explicit V3 preproof-only successor is permitted by the inspected repository rules. This does not approve an unseen emitter, issue source readiness, or authorize freeze/BODY.
+
+The proof-digestion protocol places Statement Seal and independent source topology before PROVED_LOCAL, with publication and purification later. The publication protocol places full acceptance gates before requesting merge. The evidence-memory protocol requires reader debt repair capacity and an Exposition Seal for PURIFIED source claims. None makes an unrelated maintenance page pixel defect a universal prohibition on candidate proof work. The V1/V2 maintenance-final prerequisite is an added task workflow; it can be superseded transparently, not fulfilled with invented acceptance.
+
+At clean 4034, all 133 pinned application dependency rows still match. The mathematical V2 contract and neutral header must remain exact. Preserve the conditional attained-minimum/generalized-ambient classification and every unproved source/algorithm bridge. A new independent readiness receipt must bind actual current HEAD, exact dependencies and prior gate source HEAD; archive-only or CSS-only successors require explicit continuity, not rewritten gate receipts.
+
+Require a separately reviewed V3 proposal/emitter and explicit parent freeze authorization, then actual canonical-copy verification and a clean commit before separately authorizing one candidate BODY. V1/V2, failed readers and repair history stay immutable. Reader failure remains open with reserved repair capacity; all post-proof mathematical, semantic, axiom, root/Tests/harness/canary, reader/site, purification and PR gates remain. No maintenance acceptance, proof acceptance, chapter completion, main/live update or Goal completion follows.

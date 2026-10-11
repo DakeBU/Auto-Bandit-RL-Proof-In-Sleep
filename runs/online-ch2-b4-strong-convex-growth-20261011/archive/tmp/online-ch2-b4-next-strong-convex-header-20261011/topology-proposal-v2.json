@@ -1,0 +1,258 @@
+{
+  "schema_version": 2,
+  "status": "REPAIRED TOPOLOGY PROPOSAL; NOT INDEPENDENTLY ACCEPTED OR FROZEN",
+  "UTC": "2026-10-11T09:31:56.535362+00:00",
+  "header_unchanged_sha256": "ded5adebef211f810552abbc4eced856dd9fff59f268989e9c1ff5a4ecd3d590",
+  "supersedes_topology_only": "5275dc53f2f9c7f4406a88df96cebe29f0684dd2e024d79e906d74beb3a3c346",
+  "review_inputs": {
+    "source-header-review-v1.json": "0a23a79c8f1c9a32059441af10f204c1bbe6afcdc27ed28cb684c52a07ed0665",
+    "independent-source-topology-v1.json": "7c62c0de84d402654fe4c8ba9d1de70b8d0d3ff1104db24939e40a29f99f709b"
+  },
+  "edge_direction": "dependency parents -> consumer child",
+  "literal_source_graph": {
+    "nodes": [
+      {
+        "id": "D41",
+        "classification": "SOURCE",
+        "claim": "Definition4.1 PDF46 literal proper/finite convex V and interpolation"
+      },
+      {
+        "id": "L42",
+        "classification": "SOURCE_OPEN",
+        "claim": "Lemma4.2 PDF46-47 support equivalence, subgradient-domain qualification; source endpoint argument and converse"
+      },
+      {
+        "id": "OPT",
+        "classification": "SOURCE_OPEN",
+        "claim": "Theorem6.27 PDF86, proper restricted objective minimum iff zero support"
+      },
+      {
+        "id": "SUM",
+        "classification": "SOURCE_OPEN",
+        "claim": "Theorem2.23 PDF29 inclusion for proper summands; equality qualification only if needed",
+        "qualifications": [
+          "Basic inclusion requires proper summands and actual selected supports; no equality-rule CQ is imposed.",
+          "Equality additionally requires convex closed summands and dom(f_m) intersect common interiors nonempty; only needed if a future route actually uses equality.",
+          "For FTRL, properness of constrained hinted objective and loss-minus-hint, finite values and support at x_t remain OPEN."
+        ]
+      },
+      {
+        "id": "EXIST",
+        "classification": "SOURCE_OPEN",
+        "claim": "Theorem6.9 PDF78: positive curvature + proper closed + nonempty subgradient domain, compact sublevel and A.3",
+        "qualifications": [
+          "lambda>0; proper and closed objective; strong convexity on its domain; nonempty dom(subgradient f).",
+          "Finite-dimensional ambient converts closed bounded sublevels to compact; A.3 requires lower semicontinuity and nonempty finite-domain intersection.",
+          "Restriction f+indicator(V) must itself be proper with a finite feasible witness; ambient properness does not imply restricted properness.",
+          "General normed-space conditional-growth header proves no attainment theorem."
+        ]
+      },
+      {
+        "id": "A3",
+        "classification": "SOURCE_QUALIFIED",
+        "claim": "PDF303 compact set, lower semicontinuity, Hausdorff, nonempty finite-domain intersection"
+      },
+      {
+        "id": "L75",
+        "classification": "SOURCE_OPEN",
+        "claim": "Lemma7.5 PDF113-114 constrained support stability and dual-norm/Young"
+      },
+      {
+        "id": "L71",
+        "classification": "SOURCE_READ_FORMALIZATION_OPEN",
+        "claim": "Lemma7.1 PDF112/printed100: strict-past F_t=psi_t+sum_{i<t}ell_i; supplied nonempty argmins through virtual T+1; exact regret telescope with +F_(T+1)(x_(T+1))-F_(T+1)(u), and no real-round effect from choosing psi_(T+1).",
+        "qualifications": [
+          "V subset X subset R^d, closed nonempty V as printed; real psi on X, losses in (-infinity,+infinity].",
+          "Source proof: cancel learner losses, identify F_1(x_1)=min_V psi_1, telescope F_t and use final cumulative definition.",
+          "General EReal arithmetic with infinite displayed terms remains a finite-value/domain qualification gap; the existing finite-real identity does not silently certify all printed extended arithmetic.",
+          "Terminal gap nonpositive requires u in V and a genuine attained final minimum; original comparator range in lemma is X."
+        ]
+      },
+      {
+        "id": "FTRL",
+        "classification": "SOURCE_OPEN",
+        "claim": "7.47 PDF141-142 hinted optimizer, support inclusion, source telescoping, stability, Young; corrected contract still required"
+      },
+      {
+        "id": "BTRL",
+        "classification": "SOURCE_OPEN",
+        "claim": "15.31 PDF278-279 printed specialization hint=loss of 7.47"
+      }
+    ],
+    "and_edges": [
+      {
+        "parents": [
+          "D41",
+          "qualified support existence"
+        ],
+        "child": "L42",
+        "classification": "SOURCE"
+      },
+      {
+        "parents": [
+          "L42",
+          "positive curvature",
+          "proper closed finite-dimensional objective",
+          "nonempty subgradient domain",
+          "A3"
+        ],
+        "child": "EXIST",
+        "classification": "SOURCE"
+      },
+      {
+        "parents": [
+          "EXIST",
+          "OPT",
+          "SUM",
+          "L42",
+          "dual norm",
+          "positive-curvature Young"
+        ],
+        "child": "L75",
+        "classification": "SOURCE"
+      },
+      {
+        "parents": [
+          "L75",
+          "EXIST",
+          "OPT",
+          "SUM",
+          "L42",
+          "L71",
+          "hinted objective and difference support",
+          "source terminal/telescoping correction"
+        ],
+        "child": "FTRL",
+        "classification": "SOURCE"
+      },
+      {
+        "parents": [
+          "FTRL",
+          "hint=loss specialization",
+          "proper/finite and attainment qualification",
+          "terminal correction"
+        ],
+        "child": "BTRL",
+        "classification": "SOURCE"
+      }
+    ],
+    "backward_reading": "BTRL15.31 specializes FTRL7.47; FTRL7.47 uses L71 telescope AND L42 strong support AND OPT zero support for constrained hinted minimum AND SUM inclusion AND qualified existence via L75/EXIST AND dual-norm quadratic Young.",
+    "coverage_gaps": [
+      "L42 support-domain and converse printed equality step remain reviewed source-proof correction obligations.",
+      "Thm4.3/A.1 route retains interior-domain integral qualification if claimed; not discharged by choosing another implementation.",
+      "Support for restricted objective must be established; constrained IsMinOn alone does not give zero ambient subgradient of original f.",
+      "Properness/support/finite arithmetic at actual cumulative/hinted/difference objectives remain open."
+    ]
+  },
+  "corrected_targets": {
+    "contract_file": "docs/contracts/online-ch2-complete-target-freeze-v1/effective-targets-frozen-v3.2.json",
+    "contract_file_sha256": "61cf1901a632aeee35ee71511ba53b115ae0958649ea78b786536a4404684ba1",
+    "rows": [
+      {
+        "target_id": "repair:7.47-terminal",
+        "json_path": "$.effective_targets[86]",
+        "row_hash_algorithm": "SHA256 of UTF8 JSON ensure_ascii=False sort_keys=True separators=(comma,colon), no trailing LF",
+        "exact_row_sha256": "2c4dbf3a40e082325b09c866382651bbd3f2b89be50af714ea1a50747ca84039",
+        "row_artifact": "repair-7.47-terminal-row-v2.json",
+        "row_file_sha256": "149237b97705ac30da24d07517baf717b5b9f3fa72a7e8cbb8efd0b6cdb4bd50",
+        "effective_statement": "For G_t=psi_t+sum_(i<=t)ell_i,arbitrary feasible z=x_(T+1) and finite displayed values, R_T(u)=psi_T(u)-psi1(x1)+sum_(t<=T)(G_t(x_t)-G_t(x_(t+1)))+sum_(t<T)(psi_t(x_(t+1))-psi_(t+1)(x_(t+1)))+G_T(z)-G_T(u). Mandatory labelled correction: retain real-round Algorithm7.8/hypotheses; define ghost psi_(T+1)=psi_T,h_(T+1)=0 and z in argmin G_T, proving attainment and all support/finiteness conditions. Then terminal gap<=0 yields printed sharp bound and Young bound. Repeating final hint instead requires adding h_(T+1)(u)-h_(T+1)(z), not cancelling it. The repeated-hint quadratic completion is refuted; no statement of equivalence to literal original is accepted.",
+        "retained_status": "mandatory source-repair contract open"
+      },
+      {
+        "target_id": "repair:15.31-terminal",
+        "json_path": "$.effective_targets[87]",
+        "row_hash_algorithm": "SHA256 of UTF8 JSON ensure_ascii=False sort_keys=True separators=(comma,colon), no trailing LF",
+        "exact_row_sha256": "c788a238ebe231431e3bebc74c04d94f0e711634e8c71414ee6f9812aed36c41",
+        "row_artifact": "repair-15.31-terminal-row-v2.json",
+        "row_file_sha256": "86c5fbfdfe1caf8550d870cd6bee8b1cec73fef4167011ab1a455ab826d20210",
+        "effective_statement": "For BTRL with T>=1,proper closed lambda_t-strongly convex cumulative G_t,lambda_t>0,finite feasible played/comparator values and actual minimizers x_t, define ghost x_(T+1)=x_T. Prove R_T(u)<=psi_T(u)-psi1(x1)-sum_(t<T)lambda_t||x_t-x_(t+1)||^2/2+sum_(t<T)(psi_t(x_(t+1))-psi_(t+1)(x_(t+1))). Optional stronger endpoint is-lambda_T||u-x_T||^2/2. Original Algorithm15.9 defines no x_(T+1); repeating last loss gives checked0<=-1/36 and is not accepted.",
+        "retained_status": "mandatory source-repair contract open"
+      }
+    ],
+    "join_obligations": [
+      "7.47: retain all real-round assumptions; zero-hint ghost h_(T+1)=0, psi_(T+1)=psi_T, actual attained z in argmin G_T plus all finiteness/support conditions; gap<=0 derives sharp and Young bounds.",
+      "Repeated final hint is not automatically invalid, but requires residual h_(T+1)(u)-h_(T+1)(z); rejected cancellation/completion remains rejected.",
+      "15.31: actual inclusive finite minimizers, positive curvature and qualified proper/closed cumulative G_t; ghost x_(T+1)=x_T; negative movement sum only t<T; optional comparator-distance terminal sharpening is separate.",
+      "Corrected finite identity supplies only finite algebra; algorithm/analytic/domain/terminal qualifications remain AND leaves."
+    ]
+  },
+  "alternate_implementation_graph": {
+    "classification": "CANDIDATE GENERALIZED DIRECT SEGMENT-GROWTH ROUTE, NOT PRINTED SOURCE PROOF",
+    "nodes": [
+      {
+        "id": "DIRECT-GROWTH",
+        "claim": "Definition4.1 literal V and finite attained minimum imply lambda/2 real quadratic growth by feasible segments; arbitrary real normed ambient and lambda=0 included.",
+        "status": "HEADER SEMANTICS ACCEPTED AS CONDITIONAL GENERALIZATION; BODY UNWRITTEN"
+      },
+      {
+        "id": "FINITE-BRIDGE",
+        "claim": "No-bottom plus V subset dom f gives real order/arithmetic transport at endpoints and segments.",
+        "status": "UNPROVED"
+      },
+      {
+        "id": "MATHLIB-WEIGHTS",
+        "claim": "Interior-to-closed barycentric endpoints and lambda/2 reassociation.",
+        "status": "OPTIONAL IF Mathlib StrongConvexOn route used; not source necessity"
+      },
+      {
+        "id": "ACTUAL-PRODUCERS",
+        "claim": "Actual inclusive objectives, proper finite restriction, modulus, attainment and selector characterization.",
+        "status": "OPEN"
+      },
+      {
+        "id": "BTRL-ALTERNATE-JOIN",
+        "claim": "Direct growth + qualified actual producers + existing finite identity + corrected terminal convention.",
+        "status": "OPEN"
+      }
+    ],
+    "and_edges": [
+      {
+        "parents": [
+          "D41",
+          "FINITE-BRIDGE",
+          "supplied feasible IsMinOn",
+          "feasible comparator"
+        ],
+        "child": "DIRECT-GROWTH"
+      },
+      {
+        "parents": [
+          "DIRECT-GROWTH",
+          "ACTUAL-PRODUCERS",
+          "finite identity",
+          "repair:15.31-terminal"
+        ],
+        "child": "BTRL-ALTERNATE-JOIN"
+      }
+    ],
+    "OR_policy": "No proved OR route accepted. Alternate implementation may discharge a reviewed target, but it does not remove literal-source coverage obligations without explicit independent coverage/replacement acceptance."
+  },
+  "new_source_reading": {
+    "pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "Lemma7_1_pdf_page": 112,
+    "printed_page": 100,
+    "text_file": "source-pages107-114-v2.txt",
+    "text_sha256": "f1ea2ec78c3e2a7a467c7fc00955a10abde794410ca0c388eb2592cb3e136c84",
+    "image_file": "lemma7-1-page112-v2.png",
+    "image_sha256": "eea3ab2cecd18d4581fa371228d08cb93fbdc64288d6bef6720c3e8b2122b671",
+    "pixels_personally_viewed": true,
+    "other_source_readings": "Reviewer page29,78,142 texts read in this repair; their earlier reviewer pixel judgments are attributed, not claimed as new personal pixel inspection."
+  },
+  "remaining_AND": [
+    "literal-source support/inclusion/qualified existence/telescope source nodes",
+    "finite extended arithmetic and cumulative adapter",
+    "actual FTRL/BTRL producers",
+    "corrected terminals and indexing",
+    "independent topology-v2 acceptance",
+    "maintenance integration before next freeze, then clean context and explicit BODY authorization"
+  ],
+  "governance": {
+    "BODY_written": false,
+    "header_changed": false,
+    "canonical_changes": false,
+    "frozen": false,
+    "whole_B4": "OPEN",
+    "open_containers": 7,
+    "future_claims": 6
+  }
+}

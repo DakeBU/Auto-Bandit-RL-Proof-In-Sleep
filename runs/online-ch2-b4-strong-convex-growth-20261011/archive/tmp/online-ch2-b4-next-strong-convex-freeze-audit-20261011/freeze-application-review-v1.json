@@ -1,0 +1,50 @@
+{
+  "verdict": "REPAIR_REQUIRED_BEFORE_EMITTER_EXECUTION; MATHEMATICAL_CONTRACT_ELIGIBILITY_UNCHANGED",
+  "proposal_sha256": "93c1bfd076a043600a2d974b690d221e3705caefa75714b7cfb71d965ca7512c",
+  "emitter_sha256": "e94547d80de157eaadfe8ef61d19da919c600dcc46d7a83b6616e8a165d6d5e7",
+  "observed_head": "3007a59126196279430079a1030727aec53ea807",
+  "archival_integrity": {
+    "rows": 126,
+    "unique_sources": 124,
+    "unique_destinations": 126,
+    "all_hashes_sizes_match": true,
+    "missing_contract_referenced_sources": [],
+    "reviewed_header_source_contract_exact": true,
+    "historical_V1_repairs_retained": true
+  },
+  "current_prerequisites": "All nine non-tmp retained mathematical/toolchain/process-memory pins match current bytes. Historical prepared_head e7 is not intrinsically invalid: authorize only actual final accepted new HEAD, after fresh acceptance receipt and same dependency checks.",
+  "safety_positive": [
+    "No proof BODY, native-manifest install, Lean source edits or commit commands.",
+    "Copy uses overwrite=false and prechecks every archival destination and reserved path.",
+    "Unique case-insensitive lexical destinations and scoped doc/run prefixes checked."
+  ],
+  "repairs": [
+    {
+      "id": "AUTH-RECEIPT",
+      "severity": "BLOCK_EXECUTION",
+      "finding": "Only a boolean maintenance_final_accepted and source_head comparison are enforced. No maintenance final acceptance receipt path/hash or its reviewed HEAD/status is required, authenticated, or archived.",
+      "repair": "Require explicit independently reviewed final acceptance receipt path+SHA256, verify actual receipt bytes, its accepted source HEAD equals current HEAD and successful bounded verdict, bind relevant final-review hash, and archive exact receipt. Reject pending/structural-only receipts. Parent authorization must name these exact bindings."
+    },
+    {
+      "id": "EMITTER-PIN",
+      "severity": "BLOCK_EXECUTION",
+      "finding": "Authorization binds proposal hash but not executing emitter bytes; emitter can change without invalidating proposal authorization.",
+      "repair": "Require authorization emitter_sha256 and check actual PSCommandPath hash against independently reviewed hash before writes; persist that hash in receipt."
+    },
+    {
+      "id": "PHYSICAL-PATH-CREATEONLY",
+      "severity": "BLOCK_EXECUTION",
+      "finding": "ResolveWorkspace checks lexical workspace prefix only, not normalized canonical_doc/run subtree membership after traversal or reparse-point ancestors. Receipt uses WriteAllText after earlier existence check rather than atomic create-new.",
+      "repair": "Normalize approved canonical roots and require every resolved destination under its approved root; reject symlink/junction/reparse ancestors or verify physical final destinations. Use FileMode.CreateNew for receipt. Preserve overwrite=false for copies; validate git exit codes before trusting clean/head context."
+    }
+  ],
+  "additional": "Authorization source_head may safely differ from historical prepared_head only with fresh actual maintenance final receipt, unchanged exact dependencies and distinct clean preproof capture. Do not rewrite historical proposal/context.",
+  "actions": {
+    "executed": false,
+    "tracked_edits": false,
+    "canonical_freeze": false,
+    "body": false,
+    "native_install": false
+  },
+  "pending": "V4 maintenance gates/reader/final acceptance remain parent-owned and unaccepted by this audit."
+}

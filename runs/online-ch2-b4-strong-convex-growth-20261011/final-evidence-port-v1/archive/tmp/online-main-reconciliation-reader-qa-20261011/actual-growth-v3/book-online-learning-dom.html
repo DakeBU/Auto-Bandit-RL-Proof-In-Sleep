@@ -1,0 +1,469 @@
+<!DOCTYPE html><html lang="en" data-theme="blueprint"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Understand sequential-learning proofs through source-linked explanations, Lean evidence and navigable proof graphs. Human-understanding infrastructure for Math 2.0.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="Online Learning Book · BanditRLlib">
+  <meta property="og:description" content="Understand sequential-learning proofs through source-linked explanations, Lean evidence and navigable proof graphs. Human-understanding infrastructure for Math 2.0.">
+  <meta property="og:url" content="https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/books/online-learning/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Online Learning Book · BanditRLlib">
+  <meta name="twitter:description" content="Understand sequential-learning proofs through source-linked explanations, Lean evidence and navigable proof graphs. Human-understanding infrastructure for Math 2.0.">
+  <link rel="canonical" href="https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/books/online-learning/">
+  <meta name="theme-color" content="#176b70">
+  <title>Online Learning Book · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20261011-math-2-0">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style type="text/css">.CtxtMenu_InfoClose {  top:.2em; right:.2em;}
+.CtxtMenu_InfoContent {  overflow:auto; text-align:left; font-size:80%;  padding:.4em .6em; border:1px inset; margin:1em 0px;  max-height:20em; max-width:30em; background-color:#EEEEEE;  white-space:normal;}
+.CtxtMenu_Info.CtxtMenu_MousePost {outline:none;}
+.CtxtMenu_Info {  position:fixed; left:50%; width:auto; text-align:center;  border:3px outset; padding:1em 2em; background-color:#DDDDDD;  color:black;  cursor:default; font-family:message-box; font-size:120%;  font-style:normal; text-indent:0; text-transform:none;  line-height:normal; letter-spacing:normal; word-spacing:normal;  word-wrap:normal; white-space:nowrap; float:none; z-index:201;  border-radius: 15px;                     /* Opera 10.5 and IE9 */  -webkit-border-radius:15px;               /* Safari and Chrome */  -moz-border-radius:15px;                  /* Firefox */  -khtml-border-radius:15px;                /* Konqueror */  box-shadow:0px 10px 20px #808080;         /* Opera 10.5 and IE9 */  -webkit-box-shadow:0px 10px 20px #808080; /* Safari 3 & Chrome */  -moz-box-shadow:0px 10px 20px #808080;    /* Forefox 3.5 */  -khtml-box-shadow:0px 10px 20px #808080;  /* Konqueror */  filter:progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color="gray", Positive="true"); /* IE */}
+</style><style type="text/css">.CtxtMenu_MenuClose {  position:absolute;  cursor:pointer;  display:inline-block;  border:2px solid #AAA;  border-radius:18px;  -webkit-border-radius: 18px;             /* Safari and Chrome */  -moz-border-radius: 18px;                /* Firefox */  -khtml-border-radius: 18px;              /* Konqueror */  font-family: "Courier New", Courier;  font-size:24px;  color:#F0F0F0}
+.CtxtMenu_MenuClose span {  display:block; background-color:#AAA; border:1.5px solid;  border-radius:18px;  -webkit-border-radius: 18px;             /* Safari and Chrome */  -moz-border-radius: 18px;                /* Firefox */  -khtml-border-radius: 18px;              /* Konqueror */  line-height:0;  padding:8px 0 6px     /* may need to be browser-specific */}
+.CtxtMenu_MenuClose:hover {  color:white!important;  border:2px solid #CCC!important}
+.CtxtMenu_MenuClose:hover span {  background-color:#CCC!important}
+.CtxtMenu_MenuClose:hover:focus {  outline:none}
+</style><style type="text/css">.CtxtMenu_Menu {  position:absolute;  background-color:white;  color:black;  width:auto; padding:5px 0px;  border:1px solid #CCCCCC; margin:0; cursor:default;  font: menu; text-align:left; text-indent:0; text-transform:none;  line-height:normal; letter-spacing:normal; word-spacing:normal;  word-wrap:normal; white-space:nowrap; float:none; z-index:201;  border-radius: 5px;                     /* Opera 10.5 and IE9 */  -webkit-border-radius: 5px;             /* Safari and Chrome */  -moz-border-radius: 5px;                /* Firefox */  -khtml-border-radius: 5px;              /* Konqueror */  box-shadow:0px 10px 20px #808080;         /* Opera 10.5 and IE9 */  -webkit-box-shadow:0px 10px 20px #808080; /* Safari 3 & Chrome */  -moz-box-shadow:0px 10px 20px #808080;    /* Forefox 3.5 */  -khtml-box-shadow:0px 10px 20px #808080;  /* Konqueror */}
+.CtxtMenu_MenuItem {  padding: 1px 2em;  background:transparent;}
+.CtxtMenu_MenuArrow {  position:absolute; right:.5em; padding-top:.25em; color:#666666;  font-family: null; font-size: .75em}
+.CtxtMenu_MenuActive .CtxtMenu_MenuArrow {color:white}
+.CtxtMenu_MenuArrow.CtxtMenu_RTL {left:.5em; right:auto}
+.CtxtMenu_MenuCheck {  position:absolute; left:.7em;  font-family: null}
+.CtxtMenu_MenuCheck.CtxtMenu_RTL { right:.7em; left:auto }
+.CtxtMenu_MenuRadioCheck {  position:absolute; left: .7em;}
+.CtxtMenu_MenuRadioCheck.CtxtMenu_RTL {  right: .7em; left:auto}
+.CtxtMenu_MenuInputBox {  padding-left: 1em; right:.5em; color:#666666;  font-family: null;}
+.CtxtMenu_MenuInputBox.CtxtMenu_RTL {  left: .1em;}
+.CtxtMenu_MenuComboBox {  left:.1em; padding-bottom:.5em;}
+.CtxtMenu_MenuSlider {  left: .1em;}
+.CtxtMenu_SliderValue {  position:absolute; right:.1em; padding-top:.25em; color:#333333;  font-size: .75em}
+.CtxtMenu_SliderBar {  outline: none; background: #d3d3d3}
+.CtxtMenu_MenuLabel {  padding: 1px 2em 3px 1.33em;  font-style:italic}
+.CtxtMenu_MenuRule {  border-top: 1px solid #DDDDDD;  margin: 4px 3px;}
+.CtxtMenu_MenuDisabled {  color:GrayText}
+.CtxtMenu_MenuActive {  background-color: #606872;  color: white;}
+.CtxtMenu_MenuDisabled:focus {  background-color: #E8E8E8}
+.CtxtMenu_MenuLabel:focus {  background-color: #E8E8E8}
+.CtxtMenu_ContextMenu:focus {  outline:none}
+.CtxtMenu_ContextMenu .CtxtMenu_MenuItem:focus {  outline:none}
+.CtxtMenu_SelectionMenu {  position:relative; float:left;  border-bottom: none; -webkit-box-shadow:none; -webkit-border-radius:0px; }
+.CtxtMenu_SelectionItem {  padding-right: 1em;}
+.CtxtMenu_Selection {  right: 40%; width:50%; }
+.CtxtMenu_SelectionBox {  padding: 0em; max-height:20em; max-width: none;  background-color:#FFFFFF;}
+.CtxtMenu_SelectionDivider {  clear: both; border-top: 2px solid #000000;}
+.CtxtMenu_Menu .CtxtMenu_MenuClose {  top:-10px; left:-10px}
+</style><style id="MJX-CHTML-styles">
+mjx-container[jax="CHTML"] {
+  line-height: 0;
+}
+
+mjx-container [space="1"] {
+  margin-left: .111em;
+}
+
+mjx-container [space="2"] {
+  margin-left: .167em;
+}
+
+mjx-container [space="3"] {
+  margin-left: .222em;
+}
+
+mjx-container [space="4"] {
+  margin-left: .278em;
+}
+
+mjx-container [space="5"] {
+  margin-left: .333em;
+}
+
+mjx-container [rspace="1"] {
+  margin-right: .111em;
+}
+
+mjx-container [rspace="2"] {
+  margin-right: .167em;
+}
+
+mjx-container [rspace="3"] {
+  margin-right: .222em;
+}
+
+mjx-container [rspace="4"] {
+  margin-right: .278em;
+}
+
+mjx-container [rspace="5"] {
+  margin-right: .333em;
+}
+
+mjx-container [size="s"] {
+  font-size: 70.7%;
+}
+
+mjx-container [size="ss"] {
+  font-size: 50%;
+}
+
+mjx-container [size="Tn"] {
+  font-size: 60%;
+}
+
+mjx-container [size="sm"] {
+  font-size: 85%;
+}
+
+mjx-container [size="lg"] {
+  font-size: 120%;
+}
+
+mjx-container [size="Lg"] {
+  font-size: 144%;
+}
+
+mjx-container [size="LG"] {
+  font-size: 173%;
+}
+
+mjx-container [size="hg"] {
+  font-size: 207%;
+}
+
+mjx-container [size="HG"] {
+  font-size: 249%;
+}
+
+mjx-container [width="full"] {
+  width: 100%;
+}
+
+mjx-box {
+  display: inline-block;
+}
+
+mjx-block {
+  display: block;
+}
+
+mjx-itable {
+  display: inline-table;
+}
+
+mjx-row {
+  display: table-row;
+}
+
+mjx-row > * {
+  display: table-cell;
+}
+
+mjx-mtext {
+  display: inline-block;
+}
+
+mjx-mstyle {
+  display: inline-block;
+}
+
+mjx-merror {
+  display: inline-block;
+  color: red;
+  background-color: yellow;
+}
+
+mjx-mphantom {
+  visibility: hidden;
+}
+
+_::-webkit-full-page-media, _:future, :root mjx-container {
+  will-change: opacity;
+}
+
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0px;
+  left: 0px;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0px 0px 0px !important;
+  border: 0px !important;
+  display: block !important;
+  width: auto !important;
+  overflow: hidden !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+mjx-assistive-mml[display="block"] {
+  width: 100% !important;
+}
+
+mjx-c::before {
+  display: block;
+  width: 0;
+}
+
+.MJX-TEX {
+  font-family: MJXZERO, MJXTEX;
+}
+
+.TEX-B {
+  font-family: MJXZERO, MJXTEX-B;
+}
+
+.TEX-I {
+  font-family: MJXZERO, MJXTEX-I;
+}
+
+.TEX-MI {
+  font-family: MJXZERO, MJXTEX-MI;
+}
+
+.TEX-BI {
+  font-family: MJXZERO, MJXTEX-BI;
+}
+
+.TEX-S1 {
+  font-family: MJXZERO, MJXTEX-S1;
+}
+
+.TEX-S2 {
+  font-family: MJXZERO, MJXTEX-S2;
+}
+
+.TEX-S3 {
+  font-family: MJXZERO, MJXTEX-S3;
+}
+
+.TEX-S4 {
+  font-family: MJXZERO, MJXTEX-S4;
+}
+
+.TEX-A {
+  font-family: MJXZERO, MJXTEX-A;
+}
+
+.TEX-C {
+  font-family: MJXZERO, MJXTEX-C;
+}
+
+.TEX-CB {
+  font-family: MJXZERO, MJXTEX-CB;
+}
+
+.TEX-FR {
+  font-family: MJXZERO, MJXTEX-FR;
+}
+
+.TEX-FRB {
+  font-family: MJXZERO, MJXTEX-FRB;
+}
+
+.TEX-SS {
+  font-family: MJXZERO, MJXTEX-SS;
+}
+
+.TEX-SSB {
+  font-family: MJXZERO, MJXTEX-SSB;
+}
+
+.TEX-SSI {
+  font-family: MJXZERO, MJXTEX-SSI;
+}
+
+.TEX-SC {
+  font-family: MJXZERO, MJXTEX-SC;
+}
+
+.TEX-T {
+  font-family: MJXZERO, MJXTEX-T;
+}
+
+.TEX-V {
+  font-family: MJXZERO, MJXTEX-V;
+}
+
+.TEX-VB {
+  font-family: MJXZERO, MJXTEX-VB;
+}
+
+mjx-stretchy-v mjx-c, mjx-stretchy-h mjx-c {
+  font-family: MJXZERO, MJXTEX-S1, MJXTEX-S4, MJXTEX, MJXTEX-A ! important;
+}
+
+@font-face /* 0 */ {
+  font-family: MJXZERO;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Zero.woff") format("woff");
+}
+
+@font-face /* 1 */ {
+  font-family: MJXTEX;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Main-Regular.woff") format("woff");
+}
+
+@font-face /* 2 */ {
+  font-family: MJXTEX-B;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Main-Bold.woff") format("woff");
+}
+
+@font-face /* 3 */ {
+  font-family: MJXTEX-I;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Math-Italic.woff") format("woff");
+}
+
+@font-face /* 4 */ {
+  font-family: MJXTEX-MI;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Main-Italic.woff") format("woff");
+}
+
+@font-face /* 5 */ {
+  font-family: MJXTEX-BI;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Math-BoldItalic.woff") format("woff");
+}
+
+@font-face /* 6 */ {
+  font-family: MJXTEX-S1;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Size1-Regular.woff") format("woff");
+}
+
+@font-face /* 7 */ {
+  font-family: MJXTEX-S2;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Size2-Regular.woff") format("woff");
+}
+
+@font-face /* 8 */ {
+  font-family: MJXTEX-S3;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Size3-Regular.woff") format("woff");
+}
+
+@font-face /* 9 */ {
+  font-family: MJXTEX-S4;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Size4-Regular.woff") format("woff");
+}
+
+@font-face /* 10 */ {
+  font-family: MJXTEX-A;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_AMS-Regular.woff") format("woff");
+}
+
+@font-face /* 11 */ {
+  font-family: MJXTEX-C;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Calligraphic-Regular.woff") format("woff");
+}
+
+@font-face /* 12 */ {
+  font-family: MJXTEX-CB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Calligraphic-Bold.woff") format("woff");
+}
+
+@font-face /* 13 */ {
+  font-family: MJXTEX-FR;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Fraktur-Regular.woff") format("woff");
+}
+
+@font-face /* 14 */ {
+  font-family: MJXTEX-FRB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Fraktur-Bold.woff") format("woff");
+}
+
+@font-face /* 15 */ {
+  font-family: MJXTEX-SS;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Regular.woff") format("woff");
+}
+
+@font-face /* 16 */ {
+  font-family: MJXTEX-SSB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Bold.woff") format("woff");
+}
+
+@font-face /* 17 */ {
+  font-family: MJXTEX-SSI;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Italic.woff") format("woff");
+}
+
+@font-face /* 18 */ {
+  font-family: MJXTEX-SC;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Script-Regular.woff") format("woff");
+}
+
+@font-face /* 19 */ {
+  font-family: MJXTEX-T;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Typewriter-Regular.woff") format("woff");
+}
+
+@font-face /* 20 */ {
+  font-family: MJXTEX-V;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Vector-Regular.woff") format("woff");
+}
+
+@font-face /* 21 */ {
+  font-family: MJXTEX-VB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Vector-Bold.woff") format("woff");
+}
+</style></head>
+<body data-site-root="../.." class="">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle="" aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar="" aria-label="Site navigation" inert="" aria-hidden="true">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle="" aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search="" type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/" style="">
+      <ul id="global-search-results" class="search-results" data-global-results="" role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden=""></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../math-2-0/index.html">Math 2.0 mission</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group active" data-nav-group="books" data-nav-group-active="true" open=""><summary class="nav-group-title"><span>Books</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../index.html">Books overview</a><a href="../bandit/index.html">Bandit Book</a><a href="../reinforcement-learning/index.html">Reinforcement Learning Book</a><a href="index.html" aria-current="page">Online Learning Book</a><a href="../conformal-prediction/index.html">Conformal Prediction Book</a><details class="nav-group" data-nav-group="bandit-book" data-nav-group-active="false"><summary class="nav-group-title"><span>Bandit Book contents</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><p class="nav-section-label">Teaching routes · 01–10</p><a href="../../learning/index.html">Reading paths</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a><p class="nav-section-label">Source chapters · Part IV</p><a href="../../textbook-spine/index.html">Source chapters 13–17</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a><a href="../bandit/index.html#extended-chapters">Beyond the core textbook</a></div></details><details class="nav-group active" data-nav-group="online-learning-book" data-nav-group-active="true" open=""><summary class="nav-group-title"><span>Online Learning Book contents</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a class="book-nav-link" href="../../chapters/online-foundations/index.html"><span>01</span>Online foundations</a><a class="book-nav-link" href="../../chapters/online-convex/index.html"><span>02</span>Extended convexity</a><a class="book-nav-link" href="../../chapters/online-convex-closures/index.html"><span>03</span>Convex constructions</a><a class="book-nav-link" href="../../chapters/online-first-order/index.html"><span>04</span>Supporting gradients</a><a class="book-nav-link" href="../../chapters/online-optimality/index.html"><span>05</span>Convex optimality</a><a class="book-nav-link" href="../../chapters/online-expectation/index.html"><span>06</span>Expectation foundations</a><a class="book-nav-link" href="../../chapters/online-barycenter/index.html"><span>07</span>Convex barycenters</a><a class="book-nav-link" href="../../chapters/online-minorant/index.html"><span>08</span>Affine minorants</a><a class="book-nav-link" href="../../chapters/online-jensen/index.html"><span>09</span>Source Jensen</a><a class="book-nav-link" href="../../chapters/online-ftl-failure/index.html"><span>10</span>FTL counterexample</a><a class="book-nav-link" href="../../chapters/online-guessing-ogd/index.html"><span>11</span>Guessing-game OGD</a><a class="book-nav-link" href="../../chapters/online-huber/index.html"><span>12</span>Huber OGD</a><a class="book-nav-link" href="../../chapters/online-closed-proper/index.html"><span>13</span>Closed and proper</a><a class="book-nav-link" href="../../chapters/online-subgradient-basic/index.html"><span>14</span>Subgradient foundations</a><a class="book-nav-link" href="../../chapters/online-subgradient-interior/index.html"><span>15</span>Relative interior supports</a><a class="book-nav-link" href="../../chapters/online-subgradient-differentiability/index.html"><span>16</span>Singleton and real germ</a><a class="book-nav-link" href="../../chapters/online-subgradient-sum/index.html"><span>17</span>Sum rule</a><a class="book-nav-link" href="../../chapters/online-subgradient-absolute/index.html"><span>18</span>Absolute value</a><a class="book-nav-link" href="../../chapters/online-normal-cone/index.html"><span>19</span>Normal cones</a><a class="book-nav-link" href="../../chapters/online-subgradient-max/index.html"><span>20</span>Finite maximum</a><a class="book-nav-link" href="../../chapters/online-hinge/index.html"><span>21</span>Hinge loss</a><a class="book-nav-link" href="../../chapters/online-affine-subgradient/index.html"><span>22</span>Affine chain rule</a><a class="book-nav-link" href="../../chapters/online-lipschitz/index.html"><span>23</span>Lipschitz bounds</a><a class="book-nav-link" href="../../chapters/online-osd/index.html"><span>24</span>Projected OSD</a><a class="book-nav-link" href="../../chapters/online-guessing-osd/index.html"><span>25</span>Absolute-loss guessing</a><a class="book-nav-link" href="../../chapters/online-osd-policy/index.html"><span>26</span>History-dependent OSD</a><a class="book-nav-link" href="../../chapters/online-linearization/index.html"><span>27</span>Convex-to-linear reduction</a><a class="book-nav-link" href="../../chapters/online-ogd/index.html"><span>28</span>Projected OGD</a><a class="book-nav-link" href="../../chapters/online-optimal-step/index.html"><span>29</span>Scalar step-size optimization</a><a class="book-nav-link" href="../../chapters/online-unit-scaling/index.html"><span>30</span>OSD unit scaling</a></div></details></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/setting-atlas/index.html">Bandit Taxonomy</a><a href="../../banditrlwiki/technique-map/index.html">Technique Map</a><a href="../../banditrlwiki/index.html">Bound &amp; Source Atlas</a><a href="../../banditrlwiki/frontier-problems/index.html">Frontier · open problems</a><a href="../../banditrlwiki/frontier/index.html">Lean formalization frontier</a><a href="../../functor-hypergraph/index.html">Functor Hypergraph</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../contributors/index.html">Contributors</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep">GitHub repository <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim="" aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Lean gate passed before this site build; local proof declarations are shown as compiled.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><nav class="book-breadcrumb" aria-label="Breadcrumb"><a href="../index.html">Books</a><span aria-hidden="true"> / </span><span aria-current="page">Online Learning Book</span></nav><section class="hero" id="book"><p class="eyebrow">Source-mapped reading view</p><h1 class="page-title">Online Learning Book</h1><p class="lede">Orabona v10 shares one canonical Lean library: Chapter 1 foundations, extended convexity, closure constructions and supporting gradients, projected OGD with fixed or decreasing steps, and subsequent bounded Chapter 2 packages. Probability, EXP3 and Tsallis references remain shared. Chapter 2 and the Chapters 1-16 program remain incomplete.</p><article class="book-source"><h2>Online Learning: A Modern Introduction Using Convex Optimization</h2>
+<p>Francesco Orabona</p><p>arXiv:1912.13213v10, June 21, 2026; final preprint</p>
+<p><a href="https://arxiv.org/abs/1912.13213v10">Read the source ↗</a> · <a href="https://arxiv.org/abs/1912.13213">Official source page ↗</a></p>
+<small>Bibliographic metadata checked 2026-09-13. Page and theorem mappings are separately audited.</small></article></section><section id="existing-reading"><h2>Existing shared reading</h2><p>Source-scoped packages are identified on their chapter pages. Their exact completion boundaries do not cover the rest of this book; older shared reading links retain their original sources.</p><ol class="shared-route"><li><a href="../../chapters/online-foundations/index.html">Online Learning: foundations and Follow-the-Leader</a></li><li><a href="../../chapters/online-convex/index.html">Convexity with extended-real values</a></li><li><a href="../../chapters/online-convex-closures/index.html">Convexity-preserving constructions</a></li><li><a href="../../chapters/online-first-order/index.html">Supporting gradients for extended-real losses</a></li><li><a href="../../chapters/online-optimality/index.html">Constrained convex optimality</a></li><li><a href="../../chapters/online-expectation/index.html">Signed expectation foundations for Jensen</a></li><li><a href="../../chapters/online-barycenter/index.html">Means in arbitrary finite-dimensional convex sets</a></li><li><a href="../../chapters/online-minorant/index.html">Affine lower bounds on arbitrary convex domains</a></li><li><a href="../../chapters/online-jensen/index.html">Jensen with possibly infinite expected loss</a></li><li><a href="../../chapters/online-ftl-failure/index.html">Why Follow-the-Leader can incur linear regret</a></li><li><a href="../../chapters/online-guessing-ogd/index.html">Projected OGD for the squared-loss guessing game</a></li><li><a href="../../chapters/online-huber/index.html">Huber linear prediction with unconstrained OGD</a></li><li><a href="../../chapters/online-closed-proper/index.html">Closed and proper extended-real functions</a></li><li><a href="../../chapters/online-subgradient-basic/index.html">Global subgradients and convex restrictions</a></li><li><a href="../../chapters/online-subgradient-interior/index.html">Global subgradients at relative interior points</a></li><li><a href="../../chapters/online-subgradient-differentiability/index.html">A singleton global support produces the derivative</a></li><li><a href="../../chapters/online-subgradient-sum/index.html">Subgradients of finite sums</a></li><li><a href="../../chapters/online-subgradient-absolute/index.html">Absolute-value subdifferential</a></li><li><a href="../../chapters/online-normal-cone/index.html">Indicator supports and normal cones</a></li><li><a href="../../chapters/online-subgradient-max/index.html">Subdifferential of a finite maximum</a></li><li><a href="../../chapters/online-hinge/index.html">Hinge-loss subdifferential</a></li><li><a href="../../chapters/online-affine-subgradient/index.html">Affine transport of subgradients</a></li><li><a href="../../chapters/online-lipschitz/index.html">Lipschitz bounds and uncountable nonsmoothness</a></li><li><a href="../../chapters/online-osd/index.html">Causal projected online subgradient descent</a></li><li><a href="../../chapters/online-guessing-osd/index.html">Absolute-loss guessing by projected subgradient descent</a></li><li><a href="../../chapters/online-osd-policy/index.html">Projected OSD with legal history-dependent support policies</a></li><li><a href="../../chapters/online-linearization/index.html">Convex losses to causal linear feedback</a></li><li><a href="../../chapters/online-ogd/index.html">Projected OGD: Orabona Chapter 2</a></li><li><a href="../../chapters/online-optimal-step/index.html">Optimal step size for a frozen scalar bound</a></li><li><a href="../../chapters/online-unit-scaling/index.html">Units and actual OSD coordinate transport</a></li><li><a href="../../chapters/probability/index.html">2. Probability, kernels, filtrations, and concentration</a></li><li><a href="../../chapters/exp3/index.html">7. EXP3 and adversarial concentration</a></li><li><a href="../../chapters/tsallis/index.html">8. Tsallis-FTRL, corruption, and nonstationarity</a></li></ol></section>
+<section id="planned-mapping"><h2>Remaining source mapping</h2><p>The mapped routes have bounded source contracts and exact Lean references. Remaining chapters and results require separate source and proof audits; neither this chapter nor the whole book is complete.</p></section><section id="shared-graph"><h2>One underlying Lean graph</h2><p>All references resolve to canonical declarations in the global index. Reading views do not create additional Lean modules.</p><p><a href="../../lean-graph/index.html">Explore the graph</a> · <a href="../registry.json">Download the shared reference registry</a></p></section></main>
+      <aside class="side-nav" data-page-toc="" aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle="" aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current="">Online Learning Book</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link="" href="#book" aria-current="location">Online Learning Book</a><a data-toc-link="" href="#existing-reading">Shared reading</a><a data-toc-link="" href="#planned-mapping">Remaining source mapping</a><a data-toc-link="" href="#shared-graph">Shared graph</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Auto-Bandit-RL-Proof-In-Sleep (ABRL)</strong>. Generated from current sources at 2026-10-11T12:27:54+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20261011-math-2-0"></script>
+
+
+</body></html>

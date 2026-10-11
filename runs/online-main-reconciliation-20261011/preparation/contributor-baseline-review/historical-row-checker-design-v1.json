@@ -1,0 +1,64 @@
+{
+  "status": "design-only; not implemented or approved for execution",
+  "actor": "/root/adaptive_reviewer",
+  "requested_model_effort": "GPT-6 Astra / medium; runtime not independently attested",
+  "utc": "2026-10-11T09:54:45.618877+00:00",
+  "purpose": "Keep actual-PR-base uncovered/stale checks strict while recognizing proven inherited immutable coverage rows. Never edit historical manifests or source to manufacture differences.",
+  "algorithm": [
+    "Keep existing diff_entries(BASE...HEAD), complete protected-path set and full schema validation of every changed manifest. Resolve actual BASE, merge-base and HEAD; record all SHAs. For the narrow new exception require BASE is an ancestor of HEAD; otherwise fail closed/use existing behavior and require normal merge/reconciliation first.",
+    "Compute stale per manifest-row occurrence, not just covered union. Active production rows continue to cover production normally. Never allow one valid historical occurrence to mask another newly authored stale occurrence for the same path.",
+    "For each stale occurrence (manifest M,path P), require M absent at actual BASE. If M existed in BASE and its candidate blob differs, treat as changed historical manifest and do not exempt. Require P a protected regular blob existing at BASE and HEAD, exact same blob+mode at both (not normalized LF, no rename alias, symlink, missing/deleted path).",
+    "Identify an integration merge J in candidate ancestry introducing actual BASE ancestry into the inherited source branch: at least one parent contains BASE, and a distinct source parent S does not contain BASE. Prefer the first such merge on the candidate first-parent chain. This task prospective J is the pending merge; S=c445. Require M at S equals M at HEAD byte-for-byte; all subsequent changes to M from J to HEAD disqualify, even a later revert (conservative). A manifest first written during/after reconciliation is not historical.",
+    "Find a provenance origin O in ancestry of S where M exists, contains the exact affected path P, and P was added/modified as a protected regular source blob relative to O first parent. Require P blob/mode at O == BASE == HEAD. A root commit without parent or a mere metadata-only claim does not qualify. Do not search unreachable --all commits.",
+    "Require the affected-file membership P to remain present in every actual M-changing commit on ancestry slice O..S; removed/re-added rows fail closed. Current M need not equal original O version if historical amendments before S exist: bind every such immutable amendment, validate row continuity and present M==S. This distinguishes historical accepted correction history from modifying a historical manifest in the current integration.",
+    "If any ancestry/blob/path/membership evidence is unavailable or ambiguous, retain original stale failure. No arbitrary max-history truncation may turn into acceptance. Cache git tree/blob lookups, bound traversal operationally and return explicit unresolved failure on limit.",
+    "Emit auditable historical-row certificates with BASE/HEAD/J/S/O, M blob at S/HEAD and origin/amendment blobs, P blob/mode BASE/HEAD/O, original changed-path status and exact schema validation outcome. This establishes historical coverage provenance, NOT proof acceptance or previous runtime gates.",
+    "Final coverage requires every changed protected path covered; every stale occurrence must independently be certified or fail. Report active coverage and exempt historical rows separately, with actual supplied PR base unchanged. Do not count historical rows as newly affected or claim no-op contributor pass."
+  ],
+  "actual_preparation_findings": [
+    {
+      "manifest": "ONLINE-CONVEX-MIGRATION-20261005.json",
+      "origin": "c7a6d803c5ed5fe52fbdfae61dff4b3770113c94",
+      "rows": [
+        "OnlineConvexExtended.lean",
+        "OnlineConvexExamples.lean"
+      ],
+      "checked": "Current manifest equals origin; both source blobs changed at origin and equal main f07/current staged blobs."
+    },
+    {
+      "manifest": "online-first-order-migration-20261005.json",
+      "origin": "10a753f7aa30850a4218414d3375968a3b3ec4e3",
+      "rows": [
+        "OnlineConvexFirstOrder.lean"
+      ],
+      "checked": "Current manifest equals origin; source changed at origin and equals main/current."
+    },
+    {
+      "manifest": "ONLINE-OGD-MIGRATION-20261005.json",
+      "original": "67738890cb8a1fc4b8f2af732f490e68dd05bcaa",
+      "historical_amendment": "f4badedd76f07f68c087b69d3698eac954fbb6ea",
+      "checked": "Current manifest equals f4, not677. Variable module genuinely changed at f4 and matches main; Source module genuinely changed at677 and matches main, but is unchanged atf4. Therefore a naive latest-manifest-commit same-step check incorrectly rejects a genuine inherited Source row; require bound row continuity across immutable history. Full certificates still to be implemented/tested."
+    }
+  ],
+  "regression_cases": [
+    "Positive real merge: manifest introduced alongside source, later merged into base by another history; source exact BASE/HEAD/O; immutable inherited manifest -> exemption only stale row.",
+    "Positive one manifest mixes active changed source with historical identical source; active remains covered, old row separately certified.",
+    "Positive OGD-like historical amendment: one row originally changed in O1, another changed in O2; current exact O2 manifest; continuous old row -> both certified through separate origins.",
+    "Negative new stale manifest authored in merge/current candidate, even if naming an existing unchanged source -> fail.",
+    "Negative inherited manifest modified in current merge or after it, including affected row additions, prose-only edits or modified-then-reverted history -> fail exemption.",
+    "Negative source at original claim differs from BASE/HEAD, even if BASE==HEAD -> fail; no broad unchanged-path waiver.",
+    "Negative origin metadata lists P but P did not change there and no valid earlier row-origin exists -> fail.",
+    "Negative row removed then re-added in historical amendments -> fail conservative continuity.",
+    "Negative identical valid historical row plus separate newly authored stale row naming sameP -> fail latter; avoid covered-union masking.",
+    "Negative uncovered genuinely changed protected source remains failure regardless of historical certificates.",
+    "Negative missing ancestor/shallow history, unavailable blob, source deletion/symlink/rename, unrelated --all commit or non-ancestor actual base -> fail closed.",
+    "Negative caller substitutes older common ancestor while claiming actualPRbase -> receipt must expose actual argument; policy/CI pins actualPRbase.",
+    "Regression all existing source-facing/schema3/duplicate-id/process-memory/checker tests unchanged; real current f07 candidate should certify exactly five historical shared Lean rows, no root waiver. c445 root mismatch must remain unresolved if historical rootblob differs."
+  ],
+  "limitations": [
+    "Design only, no checker/source/manifest edits or gates.",
+    "Historical immutable amendments already in source parent are not current altered manifests; their provenance must be explicit, never silently treat any previous blob as accepted.",
+    "Actual inherited-proof semantic acceptance still belongs to retained original review/gate artifacts.",
+    "Separately review implementation and run focused regression suite, full harness and actual-base contributor gate on new clean commit before acceptance."
+  ]
+}

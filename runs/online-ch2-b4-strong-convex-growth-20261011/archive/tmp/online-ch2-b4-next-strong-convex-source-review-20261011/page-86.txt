@@ -1,0 +1,52 @@
+74Online Mirror Descent
+Example 6.19, we have thatϕ ⋆(x)≥ λ
+2 ∥x∥2. Let’s now calculateϕ⋆(x).
+ϕ⋆(x) = sup
+θ
+⟨θ,x⟩ −f ⋆(θ+u) +f ⋆(u) +⟨θ,∇f ⋆(u)⟩
+=f ⋆(u)− ⟨u,x+∇f ⋆(u)⟩+ sup
+v
+⟨v,x+∇f ⋆(u)⟩ −f ⋆(v)
+=f ⋆(u)− ⟨u,x+∇f ⋆(u)⟩+f(x+∇f ⋆(u))
+=−⟨u,x⟩ −f(∇f ⋆(u)) +f(x+∇f ⋆(u)),
+where we used Theorem 6.13 in the third equality and Theorem 6.14 in the last one. Putting
+everything together, we have
+f(x+y)−f(y)− ⟨u,x⟩ ≥ λ
+2 ∥x∥2,∀u∈∂f(y).
+We will also use the following theorem on the first-order optimality condition.
+Theorem 6.27Letf:R d →(−∞,+∞]be proper. Thenx ⋆ ∈argmin x∈Rd f(x)iff
+0∈∂f(x ⋆).
+ProofWe have that
+x⋆ ∈argmin
+x∈Rd
+f(x)⇔ ∀y∈R d, f(y)≥f(x ⋆) =f(x ⋆) +⟨0,y−x ⋆⟩
+⇔0∈∂f(x ⋆).
+6.4.2 The “Mirror” Interpretation
+Here, we explain the “mirror” interpretation of OMD, using the following theorem.
+Theorem 6.28LetB ψ be the Bregman divergence with respect toψ:X →R, whereψ
+isλ >0strongly convex and closed. LetV ⊆ Xbe a non-empty closed convex set and
+xt ∈ V. Define
+xt+1 = argmin
+x∈V
+⟨gt,x⟩+ 1
+ηt
+Bψ(x;x t),
+and assumeψto be differentiable inx t andx t+1. Then, for anyg t ∈R d, we have
+xt+1 =∇ψ ⋆
+V(∇ψ(xt)−η tgt),(6.8)
+whereψ V is the restriction ofψtoV, that is,ψ V :=ψ+ι V.
+ProofWe have that
+xt+1 = argmin
+x∈V
+⟨gt,x⟩+ 1
+ηt
+Bψ(x;x t)
+= argmin
+x∈V
+ηt⟨gt,x⟩+B ψ(x;x t)
+= argmin
+x∈V
+ηt⟨gt,x⟩+ψ(x)−ψ(x t)− ⟨∇ψ(x t),x−x t⟩
+= argmin
+x∈V
+⟨ηtgt − ∇ψ(xt),x⟩+ψ(x).

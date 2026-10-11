@@ -1,0 +1,132 @@
+{
+  "verdict": "PASS_CANDIDATE_BODY_MATHEMATICAL_SEMANTIC_REVIEW",
+  "scope": "Ignored candidate only; no production integration, proof-seal or maintenance acceptance",
+  "candidate": {
+    "path": "tmp/online-ch2-b4-strong-convex-growth-body-20261011/Candidate-v1.lean",
+    "sha256": "55b37c648437e231f1b967cdc9cfa4102ce1bea6efde3ed81b23884604f89317",
+    "bytes": 2181
+  },
+  "statement_fence": {
+    "path": "tmp/online-ch2-b4-strong-convex-growth-body-20261011/statement-fence-v1.json",
+    "sha256": "a76036587cb9a55367c438daa9cc1b137db8f4c3432fa60884a6306f237fdff6",
+    "bytes": 433
+  },
+  "proof_explanation": {
+    "path": "tmp/online-ch2-b4-strong-convex-growth-body-20261011/proof-explanation-v1.md",
+    "sha256": "3b1e78b6cd33aea03f4eabd465f7c095920c6c76afa861035a5556ff6b3e0cb0",
+    "bytes": 1726
+  },
+  "focused_compile": {
+    "path": "tmp/online-ch2-b4-strong-convex-growth-body-20261011/candidate-v1.json",
+    "sha256": "f9c07cac557e843965f18f4a392c53de83239f38171cffd9b90334658b79e62d",
+    "bytes": 863
+  },
+  "focused_compile_head": "cb7ea30f3f74db0bc459e9629be092665023718f",
+  "dependency_probe": {
+    "path": "tmp/online-ch2-b4-strong-convex-growth-body-20261011/DependencyProbe-v2.lean",
+    "sha256": "f3a3fe8869f6d833817569339555f94d0006c30f7d082073d0527b4f944ab773",
+    "bytes": 2842
+  },
+  "dependency_probe_receipt": {
+    "path": "tmp/online-ch2-b4-strong-convex-growth-body-20261011/dependency-probe-v2.json",
+    "sha256": "1e314b1d37bcf5426a87c93c3f3a57837dd5e23f078705983b91540d2432c0f7",
+    "bytes": 875
+  },
+  "dependency_probe_stdout": {
+    "path": "tmp/online-ch2-b4-strong-convex-growth-body-20261011/dependency-probe-v2.stdout.raw",
+    "sha256": "d6826f92f6e06740cad3dddecbe974fdfb1b759a13434bf9176d6320d0ac4c2d",
+    "bytes": 12062
+  },
+  "current_probe_head": "01c66c0bbfd1e8536939d1ca5c2a67fa092352a1",
+  "clean_current": true,
+  "source_contract_sha256": "aae24add096d1a78e6d1be0c75a5f9141703d196eb2a264f70ea51e74dc5e767",
+  "header_sha256": "ded5adebef211f810552abbc4eced856dd9fff59f268989e9c1ff5a4ecd3d590",
+  "header_fence": "Exact imported context/binders/conclusion prefix and namespace suffix match frozen801-byte header; only :=by BODY inserted; probe contains exact candidate.",
+  "mathematical_audit": [
+    {
+      "step": "Endpoint finite transport",
+      "assessment": "hf.1 excludes bottom globally; hdom excludes top on literal V. coe_toReal receives precisely these two non-infinity proofs. No totalized infinity is treated as a real endpoint."
+    },
+    {
+      "step": "Minimum direction",
+      "assessment": "IsMinOn is f p <= f v for v in V. hbase applies this to q, with bottom exclusion at p and top exclusion at q, exactly matching toReal_le_toReal. Thus g=Q-P>=0."
+    },
+    {
+      "step": "Contradiction and coefficient",
+      "assessment": "c=(lam/2)||q-p||^2; failure gives g<c, hence c>0. a=(g+c)/(2c) satisfies 0<a<1 and 2ca=g+c, with no zero division."
+    },
+    {
+      "step": "Feasible interpolation",
+      "assessment": "Convexity uses p,q in literal V and nonnegative a,1-a summing to1. No intersection-domain replacement or extra closedness/completeness/finite-dimension premise."
+    },
+    {
+      "step": "EReal composition",
+      "assessment": "Compose f p <= f(segment) <= finite endpoint penalty before coercion. Segment toReal is never used. Rewrite both finite endpoints and norm(p-q)=norm(q-p), then cast finite real arithmetic."
+    },
+    {
+      "step": "Strict contradiction",
+      "assessment": "Transported inequality gives (1-a)(ca-g)<=0. Since ca-g=(c-g)/2>0 and1-a>0, same product is positive. Ring/nlinarith closes exactly this contradiction."
+    },
+    {
+      "step": "Degenerate cases",
+      "assessment": "lambda=0 or p=q makes c=0, so g>=0 and g<c already contradict. Empty V cannot instantiate hp. Singleton V allowed. No strictly positive lambda is added."
+    }
+  ],
+  "semantic_boundary": "Conditional attained-minimum quadratic growth in arbitrary real normed ambient. This directly realizes the reviewed segment alternative, not printed source support/optimality/sum-rule/existence route. No actual cumulative/hinted objective, selector, support producer, or terminal correction is discharged.",
+  "dependency_audit": {
+    "direct_TYPE_constants": 85,
+    "direct_VALUE_constants": 383,
+    "meaning": "Actual constant references in theorem type/proof term, not a source coverage graph or transitive dependency closure.",
+    "core_VALUE": [
+      "EReal.coe_toReal",
+      "EReal.toReal_le_toReal",
+      "EReal.coe_le_coe_iff._simp_1",
+      "norm_sub_rev",
+      "IsMinOn",
+      "Convex",
+      "BanditRL.OnlineConvex.SourceProper",
+      "BanditRL.OnlineConvex.effectiveDomain"
+    ],
+    "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "unauthorized_axiom_observed": false,
+    "public_helpers_added": 0,
+    "StrongConvexOn_adapter_used": false
+  },
+  "historical_probe_failure": {
+    "receipt": {
+      "path": "tmp/online-ch2-b4-strong-convex-growth-body-20261011/dependency-probe-v1.json",
+      "sha256": "90062ad1dbc3e77ac52786a42edf549e5d061b2b38377711f557497d8dcc5d34",
+      "bytes": 875
+    },
+    "stdout": {
+      "path": "tmp/online-ch2-b4-strong-convex-growth-body-20261011/dependency-probe-v1.stdout.raw",
+      "sha256": "ecc071c2948b34ebe522f47860e55e462cf0a0243249ced510c1433f764e4f35",
+      "bytes": 255
+    },
+    "actual_exit": 1,
+    "classification": "IMPLEMENTATION_FAILED probe logging unknown liftIO; candidate theorem unchanged; retained V2 fixes probe only"
+  },
+  "continuity": "All21 frozen current dependencies retain hashes; library/root/Tests/toolchain/frozen DOC unchanged cb7 ->01c66. Candidate0 remains cb7; probeV2 actual0 belongs01c66.",
+  "blockers": [],
+  "remaining": [
+    "Independently reviewed meaningful canary and fresh production integration plan/authorization",
+    "Production header/BODY equality plus focused compilation and actual production TYPE/VALUE/axiom review",
+    "Shared root/Tests/full harness, semantic/fidelity and purification checks",
+    "Reader/site/Exposition and contributor/PR gates; retained reader failures not closed here"
+  ],
+  "maintenance_accepted": false,
+  "production_BODY_authorized": false,
+  "production_integrated": false,
+  "proof_sealed": false,
+  "chapter2": "partial",
+  "full_B4": "OPEN",
+  "B1_B7": "OPEN",
+  "open_forward_containers": 7,
+  "future_claims": 6,
+  "proof_denominator": null,
+  "Goal": "ACTIVE"
+}

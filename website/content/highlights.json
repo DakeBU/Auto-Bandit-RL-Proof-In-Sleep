@@ -8600,6 +8600,40 @@
       "proof_idea": "Put H_t(v)=sum_{i<t}loss_i(v), so G_t=psi_t+H_(t+1). The regularizer parts of the within-G sum, together with the interior drift, telescope to psi_0(y_0)-psi_(T-1)(z). The cumulative-loss parts telescope to sum_{t<T}loss_t(y_t)-H_T(z). Adding the final comparator regularizer minus the initial played regularizer and the retained G_(T-1)(z)-G_(T-1)(u) leaves exactly the regret. This is the mathematical cancellation argument, not a claimed implementation route.",
       "lean_notes": "E has no additional typeclass assumptions; psi/loss are real-valued and T>0 is the only propositional premise. The boundary regularizer difference is psi_(T-1)(u)-psi_0(y_0): final comparator regularizer minus initial played regularizer. Local y and G are definitions, not extra hypotheses. The exact Lean header and full-proof source link use the declaration fold; these notes do not claim a complete rendered source-proof graph. Selected actual compiled direct VALUE occurrences are Nat.recAux, Finset.sum_range_succ, Finset.sum_range_zero and Nat.sub_add_cancel. Occurrence does not establish logical necessity or a complete transitive graph; Nat.rec is not the exported direct constant. The source-only AND topology remains distinct from these implementation occurrences. Locally compiled and independently production-BODY-reviewed finite-real identity; two compiled public canaries specialize the same core to check a positive gap, nonzero drift and the terminal splice. Full source performance bounds remain open. Unmerged and unpublished.",
       "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineGradientDescent.project_existsUnique",
+      "title": "A unique nearest point exists before selection",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 0,
+      "plain": "Every nonempty closed convex subset of a complete real inner-product space has exactly one point minimizing distance from any ambient point.",
+      "math": "\\(\\exists! p\\in V,\\quad \\|z-p\\|=\\inf_{w\\in V}\\|z-w\\|.\\)",
+      "intuition": "Existence supplies a minimizer. Convexity makes two minimizers satisfy opposite variational inequalities, forcing their squared separation to vanish.",
+      "why": "Algorithm 2.1 and Proposition 2.11 use a well-defined unique Euclidean projection. This theorem establishes existence and uniqueness before the existing choice-based definition.",
+      "position": "Well-definedness obligation for Orabona v10, printed p.12 / PDF p.24. The proof is library-derived; it is not an additional numbered source theorem.",
+      "proof_idea": "Take a minimizer from Mathlib. For two minimizing points p and q, the variational characterization gives <z-p,q-p> <= 0 and <z-q,p-q> <= 0. Adding these inequalities gives ||q-p||^2 <= 0, hence q=p.",
+      "lean_notes": "The source finite-dimensional Euclidean setting is generalized to a complete real inner-product space. Nonempty, closed and convex are explicit Domain fields; no boundedness or compactness is added. project_spec characterizes the unchanged selected projection using exactly this minimizer predicate. No executable solver, arbitrary Banach-space projection or nonexpansiveness claim. The proof reuses Mathlib exists_norm_eq_iInf_of_complete_convex and norm_eq_iInf_iff_real_inner_le_zero; these upstream dependencies are not local declaration nodes.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.stronglyConvex_minimum_growth",
+      "title": "Quadratic growth at a supplied feasible minimum",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 345,
+      "source_match": "closest-source",
+      "plain": "Let E be a real normed space and f:E to EReal be SourceProper: f never equals bottom and has a finite value somewhere. Let V be convex and contained in effectiveDomain f, so all feasible values are finite, and let lambda>=0. Assume the strong-convex segment inequality with coefficient lambda/2 for every feasible pair and every real weight 0<a<1. Supply p in V attaining the minimum over V. Then every q in V satisfies f(p)+(lambda/2)||q-p||^2<=f(q), read through toReal only at these finite endpoints.",
+      "math": "\\begin{gathered}f(p)+\\frac{\\lambda}{2}\\lVert q-p\\rVert^2\\le f(q),\\quad p\\in\\operatorname{argmin}_{x\\in V}f(x),\\quad q\\in V.\\\\c=\\frac{\\lambda}{2}\\lVert q-p\\rVert^2,\\quad g=f(q)-f(p)\\ge0.\\\\g<c\\Longrightarrow a=\\frac{g+c}{2c}\\in(0,1),\\quad 0\\le(1-a)(g-ca)<0.\\end{gathered}",
+      "intuition": "Strong convexity prevents a point far from an attained minimum from having almost the same objective value.",
+      "why": "A genuine extended-real conditional growth component for the still-open corrected B4 FTRL/BTRL routes.",
+      "position": "Derived consequence of Definition4.1 (printed34/PDF46), with properness from Definition2.18 (printed16/PDF28). Mapped here as a Chapter2 B4 dependency; no Chapter4 main closure or full7.47/15.31 claim.",
+      "proof_idea": "Write c=(lambda/2)||q-p||^2 and g=f(q)-f(p)>=0. If g<c, then c>0 and a=(g+c)/(2c) lies strictly between0 and1. Convex feasibility, minimality at p and strong convexity give f(p)<=a f(p)+(1-a)f(q)-c a(1-a). Thus (1-a)(g-ca)>=0. But ca=(g+c)/2>g and1-a>0, a contradiction. When lambda=0 or p=q, no violating gap can enter this contradiction branch. The Lean proof composes the extended-real order inequalities before converting their finite endpoints; it never assumes a finite value by silently totalizing infinity.",
+      "lean_notes": "The exact public header preserves SourceProper, literal V subset effectiveDomain, lambda>=0 and lambda/2. hp/hmin/hq are conditional target data, not proof ingredients or existence producers. The real normed ambient explicitly generalizes the source finite-dimensional setting; no completeness, closedness, differentiability or finite-dimensional hypothesis is added. The source support topology is separate from this direct segment implementation. Actual compiled VALUE occurrences include EReal.coe_toReal, EReal.toReal_le_toReal and norm_sub_rev; occurrence is not logical necessity or a full transitive dependency graph. This is a locally compiled conditional B4 dependency. It does not prove existence or uniqueness of a minimum, an actual cumulative FTRL/BTRL minimizer, or either corrected full performance bound. Chapter 2 remains partial with seven required forward containers and six future claims open; B1-B7, full B4 and corrected7.47/15.31 remain open. Unmerged and unpublished.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.SourceProper",
+        "BanditRL.OnlineConvex.effectiveDomain"
+      ]
     }
   ]
 }

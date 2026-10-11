@@ -1,0 +1,115 @@
+{
+  "status": "SOURCE-BASED OBLIGATION/TOPOLOGY PROPOSAL; not independently reviewed author-proof reconstruction",
+  "evidence_basis": "Provided source-interface-v1 and next-mathematical-readiness/v1 plus exact existing definition/API readings; no fresh PDF/pixel claim, no new proof BODY inspected or constructed",
+  "nodes": [
+    {
+      "id": "S1",
+      "anchor": "Definition4.1 PDF46/printed34",
+      "claim": "Proper extended f, nonnegative modulus, literal convex V subset dom f, interior strong-convex inequality",
+      "status": "source-interface supplied; candidate header faithful mapping awaits independent review"
+    },
+    {
+      "id": "S2",
+      "anchor": "Definition2.18 PDF28/printed16 + domain PDF21/printed9",
+      "claim": "No bottom and every point in V finite",
+      "status": "existing vocabulary; application-specific finiteness to be derived"
+    },
+    {
+      "id": "B1",
+      "anchor": "source-to-Lean bridge obligation",
+      "claim": "For endpoints and each convex segment point, coe(toReal(f v))=f v; EReal inequality transports to real arithmetic",
+      "status": "UNPROVED dependency, not a public assumption"
+    },
+    {
+      "id": "B2",
+      "anchor": "Definition4.1 versus actual UniformConvexOn",
+      "claim": "Interior a and 1-a match Mathlib nonnegative a,b with a+b=1; boundary a=0 or b=0 gives equality; coefficient reassociation preserves exact lambda/2",
+      "status": "UNPROVED interface bridge, must discharge if using Mathlib route"
+    },
+    {
+      "id": "B3",
+      "anchor": "conditional attained-minimum boundary",
+      "claim": "Transport actual EReal IsMinOn on literal V to finite real values",
+      "status": "standard finite order API available; local application unproved"
+    },
+    {
+      "id": "GROWTH",
+      "anchor": "BTRL/strong-convex minimum step",
+      "claim": "Derive exact lambda/2 minimum growth through feasible segments and scalar endpoint argument, with no continuity of f premise",
+      "status": "NEW substantive unproved conclusion; current file is Prop/type only"
+    },
+    {
+      "id": "ATTAIN",
+      "anchor": "algorithm producer; AppendixA.3 boundary",
+      "claim": "Existence and finite attainment for actual constrained cumulative objective",
+      "status": "OPEN external AND leaf for whole BTRL/FTRL; not supplied by this theorem"
+    },
+    {
+      "id": "SUM",
+      "anchor": "inclusive cumulative objective/source finite identity join",
+      "claim": "Actual EReal sum has finite values at required points; no bottom; source strong-convex modulus; real coercion agrees with regularizer plus inclusive losses",
+      "status": "OPEN external AND leaf"
+    },
+    {
+      "id": "BTRLJOIN",
+      "anchor": "Algorithm15.9 and corrected15.31",
+      "claim": "Correct actual inclusive minimum, application for source s<T; last virtual point equals x_T, hence zero final movement; final minimum gives nonpositive terminal gap",
+      "status": "OPEN external AND leaf"
+    },
+    {
+      "id": "FTRLJOIN",
+      "anchor": "Algorithm7.8/corrected7.47",
+      "claim": "Qualified ghost attainment and nonzero support/hint stability plus sharp Young and terminal accounting",
+      "status": "OPEN external AND leaves; zero-support minimum growth insufficient"
+    }
+  ],
+  "proposed_AND_edges": [
+    {
+      "parents": [
+        "S1",
+        "S2"
+      ],
+      "child": "B1"
+    },
+    {
+      "parents": [
+        "S1",
+        "B1"
+      ],
+      "child": "B2"
+    },
+    {
+      "parents": [
+        "S2",
+        "hmin",
+        "hp"
+      ],
+      "child": "B3"
+    },
+    {
+      "parents": [
+        "B2",
+        "B3",
+        "hq"
+      ],
+      "child": "GROWTH"
+    },
+    {
+      "parents": [
+        "GROWTH",
+        "ATTAIN",
+        "SUM",
+        "actual inclusive selector",
+        "finite identity",
+        "corrected terminal convention"
+      ],
+      "child": "BTRLJOIN"
+    }
+  ],
+  "not_an_AND_dependency": [
+    "Lemma4.2 support characterization is not required for direct segment route; if used, adds dom(subgradient f) obligations.",
+    "AppendixA.1 interior/integral route is not required for this bridge.",
+    "AppendixA.3 compact-attainment theorem is a possible separate producer under its genuine assumptions, not automatic attainment on arbitrary closed unbounded V."
+  ],
+  "route_note": "Chosen proposal exposes source EReal inequality. Mathlib StrongConvexOn is a planned internal interface, not a public binder. A direct interior-segment route could avoid closed-weight conversion, but no such implemented or independently approved alternate OR-route is claimed."
+}

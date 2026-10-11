@@ -1,0 +1,72 @@
+102Follow-the-Regularized-Leader
+where in the second inequality we used Lemma 4.2 for the functionF t +ℓ t +ι V withg t ∈
+∂(Ft+ℓ t+ι V)(xt). Observing thatx t = argminx∈V Ft(x), we have0∈∂(F t+ι V)(xt)
+by Theorem 6.27. Hence, using Theorem 2.23, we have∂ℓ t(xt)⊆∂(F t +ℓ t +ι V)(xt).
+The second inequality is obtained observing that⟨g t,x t −x t+1⟩ ≤ ∥g t∥⋆∥xt −x t+1∥
+and using the elementary inequalityax− b
+2 x2 ≤ a2
+2b forx∈Randa, b >0.
+Let’s see an immediate application of this lemma.
+Corollary 7.6With the notation in Algorithm 7.1, letVbe non-empty, closed, and convex.
+Letψ:V →Rbe a closed andµ-strongly convex function with respect to∥ · ∥. Set the
+sequence of regularizers asψ t(x) = 1
+ηt−1
+(ψ(x)−min z∈V ψ(z))fort= 1, . . . , Tand
+ψT+1 =ψ T . Assume eachℓ t subdifferentiable inV. Then, for allu∈ V, FTRL guarantees
+TX
+t=1
+(ℓt(xt)−ℓ t(u))≤ ψ(u)−min x∈V ψ(x)
+ηT−1
++
+TX
+t=1
+ηt−1
+2µ ∥gt∥2
+⋆
++
+T−1X
+t=1
+ 1
+ηt−1
+− 1
+ηt
+
+(ψ(xt+1)−min
+z∈V
+ψ(z)),∀g t ∈∂ℓ t(xt).
+Moreover, if the functionsℓ t areL-Lipschitz on an open set containingV, settingη t−1 =
+α√µ
+L
+√
+t we get
+TX
+t=1
+ℓt(xt)−
+TX
+t=1
+ℓt(u)≤
+ ψ(u)−min x ψ(x)
+α +α
+ L
+√
+T√µ ,∀u∈ V.
+ProofThe corollary is immediate from Lemma 7.1, Lemma 7.5, and the observation that
+from the assumptions we haveψ t(x)−ψ t+1(x)≤0,∀x∈ V.
+This might look like the same regret guarantee of OMD; however, here there is a very
+important difference: the last term contains a time-varying element (ηt), but the domain does
+not have to be bounded! Also, I used the regularizer 1
+ηt−1
+ψ(x)and not 1
+ηt
+ψ(x)to remind
+you of another important difference: In OMD the learning rateη t is chosen after receiving
+information aboutℓ t, through the subgradientg t, while here you have to choose itbefore
+observingℓ t.
+7.2.1 Proximal Regularizers
+We can obtain a slightly stronger guarantee in the case that the regularizer isproximal, that
+is, it satisfies thatx t ∈argmin x∈V ψt+1(x)−ψ t(x)for allt.
+Lemma 7.7With the notation in Algorithm 7.1, denote byF t(x) =ψ t(x) +Pt−1
+i=1 ℓi(x)
+for allt. Assume thatV ⊆ Xis non-empty, closed, and convex. Also, assume thatF t+1 is
+closed, subdifferentiable, andλ t+1-strongly convex with respect to∥ · ∥inV, the regularizer
+is such thatx t ∈argmin x∈V ψt+1(x)−ψ t(x). Then,x t+1 exists and is unique. Moreover,

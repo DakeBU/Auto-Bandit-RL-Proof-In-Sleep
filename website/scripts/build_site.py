@@ -71,7 +71,7 @@ PAPER_TITLE = (
 PRIMARY_TEXTBOOK_TITLE = "Bandit Algorithms"
 PRIMARY_TEXTBOOK_AUTHORS = "Tor Lattimore and Csaba Szepesvári"
 PRIMARY_TEXTBOOK_URL = "https://tor-lattimore.com/downloads/book/book.pdf"
-ASSET_VERSION = "20260919-taxonomy-techniques"
+ASSET_VERSION = "20261011-math-2-0"
 CATALOG_PAGE_SIZE = 20
 MILESTONE_PAGE_SIZE = 12
 MODULE_PAGE_SIZE = 30
@@ -767,6 +767,22 @@ def declaration_href(page_path: str, declaration: dict[str, Any]) -> str:
     return href_from(page_path, target)
 
 
+def primary_teaching_book(slug: str) -> dict[str, Any]:
+    """Use the first registered source-mapped owner; shared references stay shared."""
+    ref = "teaching:" + slug
+    return next(book for book in SITE_BOOKS.get("books", [])
+                if book.get("status") == "source-mapped" and ref in book["chapter_refs"])
+
+
+def teaching_chapters_for_book(book_id: str, *, owned_only: bool = False) -> list[dict[str, Any]]:
+    book = next((b for b in SITE_BOOKS.get("books", []) if b["id"] == book_id), None)
+    if book is None:
+        return []
+    chapters = {"teaching:" + chapter["slug"]: chapter for chapter in SITE_CHAPTERS}
+    return [chapters[ref] for ref in book["chapter_refs"] if ref in chapters
+            and (not owned_only or primary_teaching_book(chapters[ref]["slug"])["id"] == book_id)]
+
+
 def layout(
     page_path: str,
     title: str,
@@ -782,6 +798,7 @@ def layout(
     root = page_root(page_path)
     start_items = [
         ("overview", "Overview", "index.html"),
+        ("math-2-0", "Math 2.0 mission", "math-2-0/index.html"),
         ("installation", "Installation", "installation/index.html"),
     ]
     library_items = [
@@ -832,9 +849,10 @@ def layout(
             f'<span>{index:02d}</span>{html.escape(chapter["short_title"])}</a>'
         )
 
+    bandit_chapters = teaching_chapters_for_book("bandit")
     book_nav = nav_links([("learning", "Reading paths", "learning/index.html")]) + "".join(
         book_link(index, chapter)
-        for index, chapter in enumerate(SITE_CHAPTERS, start=1)
+        for index, chapter in enumerate(bandit_chapters, start=1)
     )
     def spine_link(chapter: dict[str, Any]) -> str:
         target = f"textbook-spine/{chapter['slug']}/index.html"
@@ -860,21 +878,32 @@ def layout(
             f'<div class="nav-group-links">{links}</div></details>'
         )
 
-    chapter_keys = {chapter["slug"] for chapter in SITE_CHAPTERS}
+    chapter_keys = {chapter["slug"] for chapter in bandit_chapters}
     books_nav = nav_links([("books", "Books overview", "books/index.html")] + [
         (book["id"], book["title"], f"books/{book['id']}/index.html")
         for book in SITE_BOOKS.get("books", [])
     ])
     bandit_active = current in chapter_keys or current in {"learning", "textbook-spine", "bandit"}
-    books_nav += nav_group("bandit-book", "Shared chapter contents",
-        f'<p class="nav-section-label">Teaching routes · 01–{len(SITE_CHAPTERS):02d}</p>' + book_nav +
+    books_nav += nav_group("bandit-book", "Bandit Book contents",
+        f'<p class="nav-section-label">Teaching routes · 01–{len(bandit_chapters):02d}</p>' + book_nav +
         '<p class="nav-section-label">Source chapters · Part IV</p>' + spine_nav +
         nav_links([("extended", "Beyond the core textbook", "books/bandit/index.html#extended-chapters")]), bandit_active)
+    other_book_active = False
+    for book in SITE_BOOKS.get("books", []):
+        if book["id"] == "bandit" or book.get("status") != "source-mapped":
+            continue
+        owned = teaching_chapters_for_book(book["id"], owned_only=True)
+        if not owned:
+            continue
+        active = current == book["id"] or current in {c["slug"] for c in owned}
+        other_book_active = other_book_active or active
+        links = "".join(book_link(index, chapter) for index, chapter in enumerate(owned, start=1))
+        books_nav += nav_group(book["id"] + "-book", book["title"] + " contents", links, active)
     breadcrumb = render_book_breadcrumb(page_path)
     sidebar_groups = "".join(
         [
-            nav_group("start", "Start", start_nav, current in {"overview", "installation"}),
-            nav_group("books", "Books", books_nav, bandit_active or current in {"books", "reinforcement-learning", "online-learning", "conformal-prediction"}),
+            nav_group("start", "Start", start_nav, current in {"overview", "math-2-0", "installation"}),
+            nav_group("books", "Books", books_nav, bandit_active or other_book_active or current in {"books", "reinforcement-learning", "online-learning", "conformal-prediction"}),
             nav_group(
                 "research",
                 "Research atlas",
@@ -946,15 +975,15 @@ def layout(
     canonical_url = public_page_url(page_path)
     social_title = f"{title} · BanditRLlib"
     social_description = (
-        "Verified bandit and reinforcement-learning theory in Lean, with "
-        "source-mapped teaching chapters, exact declarations, and explicit proof boundaries."
+        "Understand sequential-learning proofs through source-linked explanations, "
+        "Lean evidence and navigable proof graphs. Human-understanding infrastructure for Math 2.0."
     )
     return f"""<!doctype html>
 <html lang="en" data-theme="blueprint">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="description" content="{html.escape(social_description, quote=True)}">
   <meta name="citation_title" content="{html.escape(PAPER_TITLE)}">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="BanditRLlib">
@@ -1052,9 +1081,9 @@ def render_book_breadcrumb(page_path: str) -> str:
     if not chapter and not book and page_path not in {"books/index.html", "learning/index.html", "textbook-spine/index.html"}:
         return ""
     if chapter:
-        book = next((b for b in books if chapter["id"] in b["chapter_refs"]), None)
+        book = next(b for b in books if chapter["id"] in b["chapter_refs"])
     elif page_path in {"learning/index.html", "textbook-spine/index.html"}:
-        book = books[0]
+        book = next(b for b in books if b["id"] == "bandit")
     parts = [f'<a href="{href_from(page_path, "books/index.html")}">Books</a>']
     if book:
         target = f"books/{book['id']}/index.html"
@@ -1063,7 +1092,7 @@ def render_book_breadcrumb(page_path: str) -> str:
         parts.append(f'<span aria-current="page">{html.escape(chapter["title"])}</span>')
     trail = '<nav class="book-breadcrumb" aria-label="Breadcrumb">' + '<span aria-hidden="true"> / </span>'.join(parts) + '</nav>'
     if chapter:
-        others = [b for b in books if b != book and chapter["id"] in b["chapter_refs"]]
+        others = [b for b in books if b["id"] != book["id"] and chapter["id"] in b["chapter_refs"]]
         if others:
             trail += '<p class="shared-reading">Also read in: ' + ' · '.join(
                 f'<a href="{href_from(page_path, "books/" + b["id"] + "/index.html")}">{html.escape(b["title"])}</a>' for b in others
@@ -1142,7 +1171,7 @@ def build_books(output: Path, verified: bool, generated_at: str) -> None:
         body = f'''<section class="hero" id="book"><p class="eyebrow">{'Source-mapped reading view' if book['status'] == 'source-mapped' else 'Planned reading map'}</p><h1 class="page-title">{html.escape(book['title'])}</h1><p class="lede">{html.escape(book['summary'])}</p>{source_html}</section>'''
         toc = [("book", book["title"])]
         if book["id"] == "bandit":
-            book_chapters = [c for c in SITE_CHAPTERS if "teaching:" + c["slug"] in book["chapter_refs"]]
+            book_chapters = teaching_chapters_for_book("bandit")
             body += f'''<section id="teaching-routes"><h2>Teaching routes · 01–{len(book_chapters):02d}</h2><p>These curated routes keep their original numbering. They are not the textbook's chapter numbers and do not cover the entire book.</p>{render_book_map(page_path, book_chapters, compact=True)}<p><a href="{href_from(page_path, 'learning/index.html#path')}">Choose a mathematical reading path</a></p></section>
 <section id="source-chapters"><h2>Source chapters · Part IV, 13–17</h2><p>Required main-text contracts have prior merged compilation evidence; optional notes and exercises are not all complete. This build's verification banner states the local gate status.</p><div class="callout warning">Chapter 17 retains explicit source corrections: Claim 17.6 uses <code>T_i ≤ n/2</code>; Theorem 17.4 uses <code>0 &lt; δ ≤ 1/32</code>, <code>c = 1/160</code> and <code>C = 64</code>.</div>{render_textbook_spine_map(page_path, SITE_TEXTBOOK_SPINE, verified)}</section>
 <section id="extended-chapters"><h2>Beyond the core textbook</h2><p>This section used to mix a small set of “Extended Chapters” with BanditRLwiki. It is now only a navigation layer: classification, techniques, literature bounds and open problems have different truth contracts and live on separate pages.</p>
@@ -1161,9 +1190,13 @@ def build_books(output: Path, verified: bool, generated_at: str) -> None:
                 if book["status"] == "source-mapped" else
                 "These links reuse established pages with their original sources and exact Lean boundaries. They do not certify a chapter of the new book."
             )
+            mapping_title = "Remaining source mapping" if book["status"] == "source-mapped" else "Planned source mapping"
+            mapping_text = ("The mapped routes have bounded source contracts and exact Lean references. Remaining chapters and results require separate source and proof audits; neither this chapter nor the whole book is complete."
+                            if book["status"] == "source-mapped" else
+                            "Next: freeze source versions, chapter contracts, assumptions and theorem locators; retrieve existing declarations and prove only the missing interfaces. Chapter numbers, page coverage and completion totals will appear after that audit.")
             body += f'''<section id="existing-reading"><h2>Existing shared reading</h2><p>{mapping_note}</p>{'<ol class="shared-route">' + refs + '</ol>' if refs else '<p>No chapter references registered yet.</p>'}</section>
-<section id="planned-mapping"><h2>Remaining source mapping</h2><p>For each remaining package: freeze source versions, chapter contracts, assumptions and theorem locators; retrieve existing declarations and prove the missing interfaces. Reading-map status is not whole-book completion.</p></section>'''
-            toc += [("existing-reading", "Shared reading"), ("planned-mapping", "Planned mapping")]
+<section id="planned-mapping"><h2>{mapping_title}</h2><p>{mapping_text}</p></section>'''
+            toc += [("existing-reading", "Shared reading"), ("planned-mapping", mapping_title)]
         body += f'''<section id="shared-graph"><h2>One underlying Lean graph</h2><p>All references resolve to canonical declarations in the global index. Reading views do not create additional Lean modules.</p><p><a href="{href_from(page_path, 'lean-graph/index.html')}">Explore the graph</a> · <a href="{href_from(page_path, 'books/registry.json')}">Download the shared reference registry</a></p></section>'''
         toc += [("shared-graph", "Shared graph")]
         write_page(output, page_path, layout(page_path, book["title"], body, toc, book["id"], verified, generated_at))
@@ -2026,7 +2059,8 @@ def render_highlight(
 
 
 def render_primary_textbook_banner() -> str:
-    chapter_statuses = Counter(chapter["status"] for chapter in SITE_CHAPTERS)
+    bandit_chapters = teaching_chapters_for_book("bandit")
+    chapter_statuses = Counter(chapter["status"] for chapter in bandit_chapters)
     source = SITE_TEXTBOOK_SPINE["canonical_source"]
     spine_chapters = SITE_TEXTBOOK_SPINE.get("chapters", [])
     spine_contracts = sum(chapter.get("status") == "compiled" for chapter in spine_chapters)
@@ -2040,7 +2074,7 @@ def render_primary_textbook_banner() -> str:
   <p>The ten-chapter Book Map uses this book as its main mathematical spine. Original papers supplement OFUL, Tsallis-INF, UCBVI, and other source-specific results.</p>
   <a class="button compact" href="{PRIMARY_TEXTBOOK_URL}">Open the free textbook <span aria-hidden="true">↗</span></a>
   <dl class="textbook-coverage" aria-label="Current textbook coverage">
-    <div><dt>Book Map</dt><dd><strong>{len(SITE_CHAPTERS)} source-mapped routes</strong><span>{chapter_statuses.get('compiled', 0)} canonical cores compiled · {chapter_statuses.get('planned', 0)} planned</span></dd></div>
+    <div><dt>Book Map</dt><dd><strong>{len(bandit_chapters)} source-mapped routes</strong><span>{chapter_statuses.get('compiled', 0)} canonical cores compiled · {chapter_statuses.get('planned', 0)} planned</span></dd></div>
     <div><dt>Part IV spine</dt><dd><strong>{spine_contracts} of {len(spine_chapters)} chapter contracts compiled</strong><span>Required scope only, not every exercise. Ch.17 uses explicitly corrected source statements.</span></dd></div>
     <div><dt>Whole textbook</dt><dd><strong>Not claimed complete</strong><span>Coverage is theorem- and route-specific, with exact gaps on every page</span></dd></div>
   </dl>
@@ -2251,7 +2285,7 @@ def build_index(
     counts = Counter(decl["kind"] for decl in declarations)
     status_counts = Counter(result["status"] for result in results)
     placeholder_count = sum(1 for decl in declarations if decl["placeholder"])
-    book_map = render_book_map(page_path, chapters, compact=True)
+    book_map = render_book_map(page_path, teaching_chapters_for_book("bandit"), compact=True)
     learning_routes = render_learning_routes(page_path)
     textbook_spine_map = render_textbook_spine_map(page_path, SITE_TEXTBOOK_SPINE, verified, compact=True)
     contributor_cards = render_contributor_cards(page_path, authors, include_invitation=False)
@@ -2271,16 +2305,16 @@ def build_index(
     )
     body = f"""
 <section class="hero" id="overview">
-  <p class="eyebrow">Verified bandit and reinforcement-learning theory in Lean</p>
+  <p class="eyebrow">Sequential learning · human understanding · Lean</p>
   <h1>BanditRLlib</h1>
-  <p class="lede">Learn bandit and reinforcement-learning theory beside its compiled Lean interfaces, search exact declarations, and contribute one reviewable lemma at a time.</p>
+  <p class="hero-purpose">Understand why a learning guarantee holds—and where it breaks.</p>
+  <p class="lede">Read the proof ideas, follow their Lean evidence, and explore how they connect across bandits, reinforcement learning and online learning.</p>
   <div class="hero-actions">
     <a class="button primary" href="{href_from(page_path, 'books/index.html')}">Explore the Books</a>
     <a class="button" href="{href_from(page_path, 'declarations/index.html')}">Search Declarations</a>
     <a class="button" href="{href_from(page_path, 'community/index.html')}">Contribute a Lemma</a>
   </div>
-  <p class="paper-title"><strong>Paper.</strong> {html.escape(PAPER_TITLE)}</p>
-  <p class="hero-secondary-links"><a href="{GITHUB_REPO}">GitHub repository ↗</a><span aria-hidden="true">·</span><a href="{href_from(page_path, 'banditrlwiki/index.html')}">Compare minimax frontiers</a><span aria-hidden="true">·</span><a href="{href_from(page_path, 'ide/index.html')}">Local experimental workspace</a></p>
+  <p class="hero-secondary-links"><a href="{GITHUB_REPO}">GitHub repository ↗</a><span aria-hidden="true">·</span><a href="{href_from(page_path, 'banditrlwiki/index.html')}">Compare minimax frontiers</a><span aria-hidden="true">·</span><a href="{href_from(page_path, 'math-2-0/index.html')}">Our Math 2.0 mission</a></p>
 </section>
 
 <section id="three-roles" class="audience-paths" aria-labelledby="three-roles-title">
@@ -2293,12 +2327,19 @@ def build_index(
   </div>
 </section>
 
+<aside class="math-mission-strip" id="math-2-0" aria-labelledby="math-mission-title">
+  <p class="eyebrow">Our response to Terence Tao’s Math 2.0</p>
+  <h2 id="math-mission-title">A living network → understandable mathematics → new ideas.</h2>
+  <p>Source-linked research maps and a reusable Lean library are the foundations. Clear explanations and interactive teaching are the human value. Proof-method transfer, ablation and verified theorem neighborhoods are the research agenda.</p>
+  <a href="{href_from(page_path, 'math-2-0/index.html')}">Explore all nine directions, with current evidence and next steps →</a>
+</aside>
+
 <section id="books">
   <p class="eyebrow">Books · shared Lean foundations</p>
   <h2>Choose a book. Follow the same mathematics.</h2>
   <p>Each book is a reading view of one Lean library. Source mapping and local proof status remain explicit.</p>
   {render_books_overview(page_path)}
-  <details class="homepage-details"><summary><span>Shared chapter contents</span><small>Teaching routes · source chapters · coverage</small></summary>
+  <details class="homepage-details"><summary><span>Bandit Book contents</span><small>Teaching routes · source chapters · coverage</small></summary>
   <div class="homepage-details-content">
 <div class="homepage-textbook-stage">
   {primary_textbook}
@@ -2331,6 +2372,7 @@ def build_index(
     <article class="info-card system-card"><span class="level-label">Research system</span><h3>ABRL Adaptive Harness</h3><p>A fixed mathematical target enters an evidence-aware scheduler. The hierarchical route remains the default; bounded master–worker trials use the same hashed route packet, and only separate reviewer verdicts can enter the comparison.</p><a href="{href_from(page_path, 'workflow/index.html')}">Inspect the ABRL harness →</a></article>
     <article class="info-card system-card"><span class="level-label">User-facing library</span><h3>BanditRLlib</h3><p>Compiled Lean declarations → searchable reusable library → textbook-aligned learning → LaTeX↔Lean formalization → community lemma intake.</p><a href="{href_from(page_path, 'declarations/index.html')}">Browse BanditRLlib →</a></article>
   </div>
+  <p class="paper-title"><strong>Paper.</strong> {html.escape(PAPER_TITLE)}</p>
   {render_diagram(page_path, 'system-architecture.mmd', 'A research target enters ABRL and returns as reusable, reviewer-gated BanditRLlib mathematics')}
 </section>
 
@@ -2436,6 +2478,7 @@ python3 tools/bandit.py check</code></pre></article>
     toc = [
         ("overview", "Overview"),
         ("three-roles", "Three ways to use BanditRLlib"),
+        ("math-2-0", "Math 2.0 mission"),
         ("books", "Books"),
         ("primary-textbook", "Primary textbook"),
         ("textbook-spine", "Part IV spine"),
@@ -2457,6 +2500,61 @@ python3 tools/bandit.py check</code></pre></article>
         page_path,
         layout(page_path, "Overview", body, toc, "overview", verified, generated_at),
     )
+
+
+def build_math_2_0(output: Path, verified: bool, generated_at: str) -> None:
+    """Publish the maintained mission without changing mathematical status."""
+    page_path = "math-2-0/index.html"
+    content = load_json(CONTENT_DIR / "math_2_0.json")
+    source = content["source"]
+    directions = {item["number"]: item for item in content["directions"]}
+    sections: list[str] = []
+    for group in content["groups"]:
+        cards: list[str] = []
+        for number in group["directions"]:
+            item = directions[number]
+            links: list[str] = []
+            for evidence in item["evidence"]:
+                target = source_url(evidence["source"]) if "source" in evidence else href_from(page_path, evidence["path"])
+                links.append(f'<a href="{html.escape(target, quote=True)}">{html.escape(evidence["title"])}</a>')
+            cards.append(f"""
+<article class="math-direction" id="direction-{number}">
+  <p class="eyebrow">{number:02d} · Tao’s example · p. {item['page']}</p>
+  <h3>{html.escape(item['title'])}</h3>
+  <p class="math-direction-role">{html.escape(item['role'])}</p>
+  <dl>
+    <div><dt>Current foundation</dt><dd>{html.escape(item['foundation'])}</dd></div>
+    <div><dt>Next contribution</dt><dd>{html.escape(item['next'])}</dd></div>
+  </dl>
+  <p class="math-evidence-links">{' · '.join(links)}</p>
+</article>""")
+        sections.append(f'<section id="{group["id"]}"><h2>{html.escape(group["title"])}</h2><div class="math-direction-grid">{"".join(cards)}</div></section>')
+    sisters = "".join(
+        f'<article class="info-card"><h3><a href="{html.escape(item["url"], quote=True)}">{html.escape(item["name"])}</a></h3><p>{html.escape(item["role"])}</p></article>'
+        for item in content["sisters"]
+    )
+    body = f"""
+<section class="hero" id="mission">
+  <p class="eyebrow">Human-understanding infrastructure for Math 2.0</p>
+  <h1 class="page-title">{html.escape(content['title'])}</h1>
+  <p class="hero-purpose">{html.escape(content['mission'])}</p>
+  <p class="lede">A living knowledge network and a reusable Lean library support clearer explanations, interactive teaching and the search for transferable proof ideas.</p>
+  <p>Terence Tao’s <a href="{html.escape(source['url'], quote=True)}"><cite>{html.escape(source['title'])}</cite>, {html.escape(source['date'])}</a> argues that AI should strengthen human understanding throughout mathematics. Below is our response to nine examples on pp. {html.escape(source['pages'])}, organized by foundations, human value and research agenda.</p>
+  <p class="mission-boundary">These are examples in Tao’s talk, not an official nine-goal program or an endorsement. “Current foundation” links to existing work; “Next contribution” names work still to do.</p>
+</section>
+{''.join(sections)}
+<section id="three-libraries">
+  <h2>Three libraries, one shared purpose</h2>
+  <p>Connect explanations, source evidence and formal proof structure across domains. Each library owns its mathematical foundations; cross-library research links become theorem edges only through checked imports or explicit adapters.</p>
+  <div class="math-sister-grid">{sisters}</div>
+</section>
+<section id="participate">
+  <h2>Contribute a clearer proof or a reusable mathematical step</h2>
+  <p>Start with one sourced claim, one exposition problem or one explicit assumption boundary. The <a href="{href_from(page_path, 'community/index.html')}">contribution guide</a> connects it to the library; our <a href="{source_url('docs/math-2-0-positioning.md')}">public claims and evidence protocol</a> keeps present capabilities and research ambitions distinct.</p>
+</section>
+"""
+    toc = [("mission", "Our mission")] + [(group["id"], group["title"].split(":")[0]) for group in content["groups"]] + [("three-libraries", "Three libraries"), ("participate", "Contribute")]
+    write_page(output, page_path, layout(page_path, content["title"], body, toc, "math-2-0", verified, generated_at))
 
 
 def build_implementation_map(
@@ -2916,14 +3014,17 @@ def build_chapters(
             f"<td>{status_badge('stated' if module['placeholder_count'] else ('compiled' if verified else 'source'))}</td></tr>"
             for module in modules_by_chapter[chapter["slug"]]
         )
-        previous_chapter = chapters[chapter_index - 1] if chapter_index else None
-        next_chapter = chapters[chapter_index + 1] if chapter_index + 1 < len(chapters) else None
+        route_book = primary_teaching_book(chapter["slug"])
+        route_chapters = teaching_chapters_for_book(route_book["id"], owned_only=True)
+        route_index = next(i for i, c in enumerate(route_chapters) if c["slug"] == chapter["slug"])
+        previous_chapter = route_chapters[route_index - 1] if route_index else None
+        next_chapter = route_chapters[route_index + 1] if route_index + 1 < len(route_chapters) else None
         pager_arguments = dict(
             page_path=page_path,
-            sequence_label="Shared teaching routes",
-            index=chapter_index,
-            total=len(chapters),
-            landing_path="books/bandit/index.html#teaching-routes",
+            sequence_label=route_book["title"] + " · Teaching routes",
+            index=route_index,
+            total=len(route_chapters),
+            landing_path=f"books/{route_book['id']}/index.html" + ("#teaching-routes" if route_book["id"] == "bandit" else "#existing-reading"),
             previous=(
                 f"chapters/{previous_chapter['slug']}/index.html",
                 previous_chapter["title"],
@@ -2954,7 +3055,7 @@ def build_chapters(
         )
         body = f"""
 <section class="hero" id="chapter">
-  <p class="eyebrow">Teaching chapter {chapter_index + 1:02d} of {len(chapters):02d} · {chapter_scope_badge}</p>
+  <p class="eyebrow">Teaching chapter {route_index + 1:02d} of {len(route_chapters):02d} · {chapter_scope_badge}</p>
   <h1 class="page-title">{html.escape(chapter['title'])}</h1>
   <p class="lede">{html.escape(chapter['summary'])}</p>
   <p class="chapter-scope-note"><strong>How to read the status.</strong> It describes this page's canonical local Lean route, not completion of the cited textbook chapter or every extension listed below.</p>
@@ -3147,7 +3248,7 @@ def build_learning(
     generated_at: str,
 ) -> None:
     page_path = "learning/index.html"
-    cards = render_book_map(page_path, chapters, detailed=True)
+    cards = render_book_map(page_path, teaching_chapters_for_book("bandit"), detailed=True)
     learning_routes = render_learning_routes(page_path)
     textbook_spine_map = render_textbook_spine_map(page_path, SITE_TEXTBOOK_SPINE, verified)
     primary_textbook = render_primary_textbook_banner()
@@ -4413,12 +4514,12 @@ def build_lean_graph(
     )
     add_node(
         book_group,
-        "Bandit Book · Teaching routes",
+        "Shared library · Teaching routes",
         "curriculum",
         "partial",
         subtitle=f"{len(chapters)} teaching chapters",
-        description="The student-facing route from foundations and concentration to bandit algorithms and finite-horizon RL.",
-        url="../learning/index.html",
+        description="Canonical teaching routes shared by the registered Books; each chapter retains its own source and exact proof boundary.",
+        url="../books/index.html",
         parent=root_id,
         order=1,
         meta=[["Chapters", str(len(chapters))], ["Mapped declarations", f"{len(declarations):,}"]],
@@ -5885,6 +5986,7 @@ def main() -> int:
     (output / ".nojekyll").write_text("", encoding="utf-8")
 
     build_books(output, args.lean_verified, generated_at)
+    build_math_2_0(output, args.lean_verified, generated_at)
     build_index(
         output,
         modules,

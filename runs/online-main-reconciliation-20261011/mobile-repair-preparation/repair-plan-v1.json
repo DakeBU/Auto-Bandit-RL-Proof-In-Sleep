@@ -1,0 +1,64 @@
+{
+  "status": "CSS repair candidate prepared; no application or rendered acceptance",
+  "actor": "/root/adaptive_decoder",
+  "requested_model": "GPT-6 Astra",
+  "requested_effort": "medium",
+  "runtime_attested": false,
+  "HEAD": "e7babdaa0333262b87e3988159178364de33159e",
+  "git_status_hex": "",
+  "target": "website/static/site.css",
+  "original": {
+    "sha256": "2304ca6c9de5fd6771be6b1bfab32bd3ab80e594db85c11aa7d530a30875fb90",
+    "bytes": 133460
+  },
+  "candidate": {
+    "sha256": "0527c9855cbda6100517bf961c5649d5abb10900cdb3668a46b30c4d38a39d14",
+    "bytes": 133519
+  },
+  "diff_sha256": "0b4ccb1a25bb028230d0a401320e2d7cd5688d88e846c39221b34ad5eacb3032",
+  "inputs": {
+    "website/static/site.css": "2304ca6c9de5fd6771be6b1bfab32bd3ab80e594db85c11aa7d530a30875fb90",
+    "website/scripts/build_site.py": "9bfeac8db7ac34b1381326f6bea3a9cb2ecf2055f9cc7a26f85f24ae47a083df",
+    "tmp/online-main-reconciliation-structural-qa-20261011/successor-preparation-and-mobile-diagnosis-v2.json": "4ecfda84ca22cccc7cf1f19695d5e8f7c6ff71e47cae4d0cee3495ad57e3bc3e",
+    "tmp/online-main-reconciliation-reader-qa-20261011/diagnostic-v2/reconciliation-render-failure-v1.json": "ea49cfdcc98facaf35afdee3a44777db2994e151572971127c4173212e1f367e",
+    "tmp/online-main-reconciliation-reader-qa-20261011/diagnostic-v2/diagnostic-source-card-v1-390-dom.html": "86ad6198edde525d612015b9a013ce56b7760c4a997bfbc67273ccbf131ddcc2",
+    "tmp/online-main-reconciliation-reader-qa-20261011/diagnostic-v2/diagnostic-source-card-v1-390.png": "f4f85416b0a1cd6f66e9762f0f2f9175a33b0da7c9f9340ebee13beaa02b880e"
+  },
+  "actual_evidence": {
+    "reviewer_measurement": "390px viewport; route list358px, implicit track629.375px, details min-width:auto, card627.375px, site-content overflow-x:clip",
+    "personal_pixel_view": "diagnostic-v2/diagnostic-source-card-v1-390.png personally viewed; prose/formula/card visibly extend behind right clipping",
+    "actual_DOM": "build_site emits .source-theorem-route-list > details.source-theorem-disclosure > article.source-theorem-card; diagnostic DOM preserves that hierarchy"
+  },
+  "edits": [
+    {
+      "selector": ".source-theorem-route-list",
+      "add": "grid-template-columns: minmax(0, 1fr);",
+      "reason": "Replace implicit auto/min-content track with one track allowed to shrink to available inline size."
+    },
+    {
+      "selector": ".source-theorem-disclosure",
+      "add": "min-width: 0;",
+      "reason": "Allow grid disclosure item to shrink independently of descendant formula intrinsic width."
+    }
+  ],
+  "unchanged": [
+    "all source/math strings and objects",
+    "templates and DOM semantics",
+    "details open/closed behavior",
+    "QA clipping predicates and thresholds",
+    "site-content overflow rule",
+    "existing internal formula overflow-x:auto",
+    "all prior CSS bytes apart from two inserted declarations",
+    "duplicate registry/highlight rows"
+  ],
+  "validation_boundary": "No browser rerun or site build performed for candidate. This targets observed outer-grid expansion; internal descendant clipping/wrapping and horizontal formula accessibility require actual post-application diagnostics with unchanged assertions.",
+  "next_review_and_checks": [
+    "Distinct review of exact two-declaration CSS delta and immutable input hashes.",
+    "After authorized source application and same-HEAD gate/site build, use a fresh output/profile with unchanged reader helper predicates.",
+    "Measure 390/1440 source card left/right against viewport, route grid/details/card widths, scroll/client widths, paragraph/heading/link wrapping and complete formula scroll reachability.",
+    "Check other source theorem cards and closed summaries, both light/dark and keyboard disclosure where existing QA covers them; do not remove clip checks or crop screenshots to manufacture success."
+  ],
+  "canonical_edits": false,
+  "existing_site_products_modified": false,
+  "input_css_unchanged": true
+}

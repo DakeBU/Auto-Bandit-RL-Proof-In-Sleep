@@ -1,0 +1,117 @@
+--- active/tools/test_contributor_contract.py
++++ candidate/tools/test_contributor_contract.py
+@@ -125,5 +125,114 @@
+         self.assertTrue(any("at least two named consumers" in error for error in errors))
+ 
+ 
++import contextlib
++import io
++import json
++import subprocess
++import tempfile
++import unittest
++from pathlib import Path
++from unittest.mock import patch
++from tools import check_contributor_contract as contract
++
++class HistoricalRows(unittest.TestCase):
++    source = "BanditRLProof/Shared.lean"
++    manifest = "research-wiki/contribution-contracts/HIST.json"
++
++    def setUp(self):
++        self.tmp = tempfile.TemporaryDirectory()
++        self.addCleanup(self.tmp.cleanup)
++        self.root = Path(self.tmp.name)
++        self.saved = contract.ROOT
++        contract.ROOT = self.root
++        self.addCleanup(setattr, contract, "ROOT", self.saved)
++        self.git("init", "-b", "main")
++        self.git("config", "user.email", "fixture@example.test")
++        self.git("config", "user.name", "Fixture")
++        self.git("config", "core.autocrlf", "false")
++        self.write("README", "fixture\n")
++        self.commit("root")
++        self.root_commit = self.rev()
++        self.git("checkout", "-b", "source")
++        self.write(self.source, "theorem shared : True := True.intro\n")
++        d = base_contract(); d["affected_files"] = [self.source]
++        self.write(self.manifest, json.dumps(d))
++        self.commit("source and contract")
++        self.origin = self.rev()
++
++    def git(self, *args):
++        p = subprocess.run(["git", *args], cwd=self.root, capture_output=True)
++        if p.returncode: raise AssertionError(p.stderr.decode(errors="replace"))
++        return p.stdout.decode().strip()
++
++    def rev(self): return self.git("rev-parse", "HEAD")
++    def write(self, p, text):
++        q = self.root / p; q.parent.mkdir(parents=True, exist_ok=True); q.write_bytes(text.encode())
++    def commit(self, msg): self.git("add", "."); self.git("commit", "-m", msg)
++    def integrate(self, mismatch=False):
++        raw = (self.root / self.source).read_bytes()
++        self.git("checkout", "main")
++        self.write(self.source, raw.decode() if not mismatch else "different\n")
++        self.commit("independent main integration")
++        self.base = self.rev()
++        if mismatch:
++            # Resolve this intentionally conflicting fixture with main source.
++            p = subprocess.run(["git", "merge", "--no-ff", "source", "-m", "merge"], cwd=self.root, capture_output=True)
++            assert p.returncode != 0
++            self.git("checkout", "--ours", self.source); self.git("add", self.source); self.git("commit", "--no-edit")
++        else: self.git("merge", "--no-ff", "source", "-m", "merge")
++    def cert(self): return contract.historical_row_certificate(self.base, self.manifest, self.source)
++    def test_positive_and_gate(self):
++        self.integrate(); self.assertIsNotNone(self.cert())
++        self.write("website/content/new.json", "{}")
++        d=base_contract(); d["id"]="NEW"; d["affected_files"]=["website/content/new.json"]
++        self.write("research-wiki/contribution-contracts/NEW.json",json.dumps(d));self.commit("active covered")
++        with patch("sys.argv", ["checker", "--base", self.base]), contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
++            self.assertEqual(0, contract.main())
++    def test_new_stale_and_duplicate_not_masked(self):
++        self.integrate(); d=base_contract();d["id"]="NEW";d["affected_files"]=[self.source,"website/content/new.json"]
++        self.write("research-wiki/contribution-contracts/NEW.json",json.dumps(d));self.write("website/content/new.json","{}");self.commit("new stale")
++        self.assertIsNotNone(self.cert())
++        with patch("sys.argv", ["checker", "--base", self.base]), contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
++            self.assertEqual(1, contract.main())
++    def test_dirty_historical_manifest(self):
++        self.integrate();self.write(self.manifest,(self.root/self.manifest).read_text()+" ")
++        self.assertIsNone(self.cert())
++    def test_modified_historical(self):
++        self.integrate();self.write(self.manifest,(self.root/self.manifest).read_text()+" ");self.commit("modify")
++        self.assertIsNone(self.cert())
++    def test_modified_then_reverted(self):
++        self.integrate();raw=(self.root/self.manifest).read_text();self.write(self.manifest,raw+" ");self.commit("modify");self.write(self.manifest,raw);self.commit("revert")
++        self.assertIsNone(self.cert())
++    def test_source_origin_bytes_mismatch(self):
++        self.integrate(mismatch=True);self.assertIsNone(self.cert())
++    def test_source_mode_mismatch(self):
++        self.integrate();self.git("update-index","--chmod=+x",self.source);self.git("commit","-m","mode")
++        self.assertIsNone(self.cert())
++    def test_no_integration_witness(self):
++        self.base=self.root_commit;self.assertIsNone(self.cert())
++    def test_removed_readded(self):
++        raw=(self.root/self.manifest).read_text();d=json.loads(raw);d["affected_files"]=[]
++        self.write(self.manifest,json.dumps(d));self.commit("remove row");self.write(self.manifest,raw);self.commit("readd row")
++        self.integrate();self.assertIsNone(self.cert())
++    def test_historical_prose_amendment(self):
++        d=json.loads((self.root/self.manifest).read_text());d["target"]="historical correction"
++        self.write(self.manifest,json.dumps(d));self.commit("amend historically");self.integrate();self.assertIsNotNone(self.cert())
++    def test_uncovered_production(self):
++        self.integrate();self.write("website/content/new.json","{}");self.commit("uncovered")
++        with patch("sys.argv", ["checker", "--base", self.base]), contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
++            self.assertEqual(1, contract.main())
++    def test_five_rows(self):
++        # Five distinct protected rows, identical independently integrated source.
++        paths=[self.source]+["BanditRLProof/Shared%d.lean"%i for i in range(4)]
++        for p in paths[1:]:self.write(p,"theorem t : True := True.intro\n")
++        d=base_contract();d["affected_files"]=paths;self.write(self.manifest,json.dumps(d));self.commit("five row amendment")
++        payload={p:(self.root/p).read_text() for p in paths}
++        self.git("checkout","main")
++        for p,t in payload.items():self.write(p,t)
++        self.commit("main five");self.base=self.rev();self.git("merge","--no-ff","source","-m","merge")
++        self.assertEqual(5,sum(contract.historical_row_certificate(self.base,self.manifest,p) is not None for p in paths))
++
++
+ if __name__ == "__main__":
+     unittest.main()

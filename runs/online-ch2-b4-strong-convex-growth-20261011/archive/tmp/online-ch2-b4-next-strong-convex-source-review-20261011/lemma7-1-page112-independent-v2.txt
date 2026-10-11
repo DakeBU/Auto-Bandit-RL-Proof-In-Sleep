@@ -1,0 +1,52 @@
+100Follow-the-Regularized-Leader
+is a way to consider approximate losses that makes the algorithm as expensive as OMD, yet
+retaining the same or more information than OMD.
+For FTRL, we prove anequalityfor the regret. This equality factors the regret in three
+terms that have precise meanings and can be easily upper-bounded with some familiar quan-
+tities.
+Lemma 7.1Letψ 1, . . . , ψT+1 :X →Rbe a sequence of regularization functions and
+V ⊆ X ⊆R d a closed and non-empty set. Denote byF t(x) =ψ t(x) +Pt−1
+i=1 ℓi(x),
+whereℓ t :R d →(−∞,+∞]for allt. Assume thatargmin x∈V Ft(x)is not empty and set
+xt ∈argmin x∈V Ft(x). Then, for allu∈ X, we have
+TX
+t=1
+(ℓt(xt)−ℓ t(u)) =ψ T+1 (u)−min
+x∈V
+ψ1(x) +
+TX
+t=1
+[Ft(xt)−F t+1(xt+1) +ℓ t(xt)]
++F T+1 (xT+1 )−F T+1 (u).
+In addition, the choice ofψ T+1 does not change the iteratesx 1, . . . ,xT of the algorithm.
+ProofGiven that the termsℓ t(xt)appear on both sides of the equality, we just have to
+verify that
+−
+TX
+t=1
+ℓt(u) =ψ T+1 (u)−min
+x∈V
+ψ1(x) +
+TX
+t=1
+[Ft(xt)−F t+1(xt+1)]
++F T+1 (xT+1 )−F T+1 (u).
+Remembering thatF 1(x1) = min x∈V ψ1(x)and using the fact that the sum withF t is
+telescopic, we have
+−
+TX
+t=1
+ℓt(u) =ψ T+1 (u)−F 1(x1) +F 1(x1)−F T+1 (xT+1 ) +F T+1 (xT+1 )−F T+1 (u)
+=ψ T+1 (u)−F T+1 (u),
+that is true by the definition ofF T+1 . The second statement is immediate.
+Remark 7.2We basically did not assume anything onℓ t nor onψ t, hence the above
+equality holds even for non-convex losses and regularizers. Yet, solving the minimization
+problem at each step might be computationally infeasible.
+Remark 7.3The FTRL algorithm is invariant to any constant added to the regularizers,
+hence we can always state the regret guarantee withψ t(u)−min x∈V ψt(x)instead of
+ψt(u). However, for clarity, we will sometimes explicitly choose the regularizers such that
+their minimum inVis 0.
+Remark 7.4The termsℓ t(xt)appear on the left and right of the equality. Hence, in some
+proofs we can substitute them with some other terms, for exampleℓ t(˜xt)where ˜xt isnot
+the FTRL prediction. In other words, we can write the same equality for the prediction of a
+generic algorithm whose regret will depend on the prediction of the FTRL algorithm.

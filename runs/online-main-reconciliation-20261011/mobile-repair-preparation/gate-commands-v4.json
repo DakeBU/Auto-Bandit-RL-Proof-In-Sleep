@@ -1,0 +1,115 @@
+[
+  {
+    "role": "production-root",
+    "argv": [
+      "lake",
+      "build",
+      "BanditRLProof"
+    ],
+    "old_receipt": "tmp/online-main-reconciliation-gates-20261011/production-root-v3/receipt.json",
+    "old_receipt_sha256": "ac76b4e93c48986dff60e64f8f197b8f20a1034a0ead3d7b562616ed126232dd"
+  },
+  {
+    "role": "shared-Tests",
+    "argv": [
+      "lake",
+      "build",
+      "Tests"
+    ],
+    "old_receipt": "tmp/online-main-reconciliation-gates-20261011/shared-Tests-v3/receipt.json",
+    "old_receipt_sha256": "d10f9e81cca531c0a7774451b1e01712892605c823d17ccbfa00686216780213"
+  },
+  {
+    "role": "full-harness",
+    "argv": [
+      "C:/Users/admin/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe",
+      "-B",
+      "-X",
+      "utf8",
+      "tools/bandit.py",
+      "check"
+    ],
+    "old_receipt": "tmp/online-main-reconciliation-gates-20261011/full-harness-v3/receipt.json",
+    "old_receipt_sha256": "a8ca95abff718b83e063f09fd6775a42c09f3d02fb828ae677cf82821dee685f"
+  },
+  {
+    "role": "contributor-actual-main-base",
+    "argv": [
+      "C:/Users/admin/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe",
+      "-B",
+      "-X",
+      "utf8",
+      "tools/check_contributor_contract.py",
+      "--base",
+      "f07aa9a2a5df241087ffab1c3579d1b59d8bf6f6"
+    ],
+    "old_receipt": "tmp/online-main-reconciliation-gates-20261011/contributor-actual-main-base-v3/receipt.json",
+    "old_receipt_sha256": "76dcb7310907a79bd2c40d271f2df7c1595cd6a5a21c9cf0685ddd44179f0904"
+  },
+  {
+    "role": "process-memory",
+    "argv": [
+      "C:/Users/admin/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe",
+      "-B",
+      "-X",
+      "utf8",
+      "tools/check_process_memory.py"
+    ],
+    "old_receipt": "tmp/online-main-reconciliation-gates-20261011/process-memory-v3/receipt.json",
+    "old_receipt_sha256": "552ab027ecea6dbd581d3803a2dc88f47064c804b0d91096bcbb818cafa368ca"
+  },
+  {
+    "role": "axiom-audit",
+    "argv": [
+      "lake",
+      "env",
+      "lean",
+      "docs/contracts/online-main-reconciliation-v1/axiom-audit-probe.lean"
+    ],
+    "old_receipt": "tmp/online-main-reconciliation-gates-20261011/axiom-audit-v3/receipt.json",
+    "old_receipt_sha256": "16b1b973ea32b5f9428f8a7022ed93e15834095ac7d71dadef8c5aa3fb99bba3"
+  },
+  {
+    "role": "site-preflight",
+    "argv": [
+      "C:/Users/admin/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe",
+      "-B",
+      "-X",
+      "utf8",
+      "website/scripts/build_site.py",
+      "--output",
+      "tmp/online-main-reconciliation-site-preflight-20261011-v4"
+    ],
+    "old_receipt": "tmp/online-main-reconciliation-gates-20261011/site-preflight-v3/receipt.json",
+    "old_receipt_sha256": "8dfa2e8160c57ab2464e50915ca3a25116e278c9e0a9c90ea3b1bef53bb6aa7c"
+  },
+  {
+    "role": "site-build",
+    "argv": [
+      "C:/Users/admin/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe",
+      "-B",
+      "-X",
+      "utf8",
+      "website/scripts/build_site.py",
+      "--lean-verified",
+      "--output",
+      "tmp/online-main-reconciliation-site-20261011-v4"
+    ],
+    "old_receipt": "tmp/online-main-reconciliation-gates-20261011/site-build-v3/receipt.json",
+    "old_receipt_sha256": "3d99a497d7b21bd85b7fec84b6bc00e26408b59ec70c792d002b28c20c872233"
+  },
+  {
+    "role": "site-check",
+    "argv": [
+      "C:/Users/admin/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe",
+      "-B",
+      "-X",
+      "utf8",
+      "website/scripts/check_site.py",
+      "--output",
+      "tmp/online-main-reconciliation-site-20261011-v4"
+    ],
+    "old_receipt": "tmp/online-main-reconciliation-gates-20261011/site-check-v3/receipt.json",
+    "old_receipt_sha256": "b9aacd052d00490d73307cc06f68e930d8a866ab9278a340ff5dff1e49db37df"
+  }
+]

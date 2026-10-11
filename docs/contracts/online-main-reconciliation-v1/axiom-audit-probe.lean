@@ -1,0 +1,8 @@
+import BanditRLProof.OnlineGradientDescent
+import Tests.OnlineCumulativePotentialCanary
+
+#check BanditRL.OnlineGradientDescent.project_existsUnique
+#print axioms BanditRL.OnlineGradientDescent.project_existsUnique
+#print axioms BanditRL.OnlineCumulativePotential.finite_regret_identity
+#print axioms BanditRL.OnlineCumulativePotentialCanary.finite_identity_one_round_positive_gap
+#print axioms BanditRL.OnlineCumulativePotentialCanary.finite_identity_two_round_terminal_splice

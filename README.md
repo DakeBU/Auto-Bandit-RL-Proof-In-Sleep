@@ -13,6 +13,29 @@
 [Lean declarations](https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/declarations/) ·
 [How to contribute](CONTRIBUTING.md)
 
+**BanditRLlib is human-understanding infrastructure for sequential learning:**
+learn why a guarantee holds, follow its Lean evidence, and see where its
+assumptions break. In response to Terence Tao's [*Math 2.0* report (October 2026,
+pp. 22, 25–26)](https://teorth.github.io/tao-web/slides/math-2-0-caltech-2026.pdf),
+we organize our contribution around his examples:
+
+- **Foundations (2, 3):** a living, source-linked BanditRLwiki and a reusable,
+  high-quality Lean library.
+- **Human value (1, 8):** clearer proofs and interactive teaching, with compressed
+  proof spines and graph drill-down to exact mathematics.
+- **Research agenda (4, 5, 6, 7, 9):** cross-pollinate proof methods; use semantic
+  review to support controlled proof-tool ablations; explore verified theorem
+  neighborhoods; provide appropriately licensed Lean/explanation pairs for
+  specialized models; and expose model-assumption failures.
+
+[Our nine directions: current foundations and next contributions](https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/math-2-0/)
+· [Public claims and evidence protocol](docs/math-2-0-positioning.md).
+Together with [Samplinglib](https://dakebu.github.io/Automization-Sampling-Optimisation-Geometry-Lib/)
+and [QuantumComputinglib](https://dakebu.github.io/Quantum-Computing-Block-Encoding/),
+we connect sampling mechanisms, quantum interfaces and sequential-learning
+guarantees. This is our response to Tao's examples, not an endorsement or a claim
+that every research direction is already realized.
+
 This repository has two connected contributions:
 
 1. **ABRL**, a target-faithful adaptive harness that organizes a mathematical target, retrieval evidence, proof obligations, Lean construction, compiler diagnostics, reviewer feedback, and deterministic acceptance gates; its hierarchical default can now be compared with a bounded master–worker experiment.

@@ -27,9 +27,18 @@ jobs:
       - name: Enforce contributor publication contract
         env:
           CONTRIBUTOR_BASE: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha || github.event.before || github.sha }}
+          CONTRIBUTOR_HEAD: ${{ github.event.pull_request.head.sha }}
         run: |
           python3 -m unittest tools.test_contributor_contract tools.test_process_memory
-          python3 tools/check_contributor_contract.py --ci
+          if [[ -n "$CONTRIBUTOR_HEAD" ]]; then
+            # Provenance is checked on the contribution's real history. Keep
+            # this checkout for integration tests, Lean, and documentation.
+            contract_root="$RUNNER_TEMP/abrl-contributor-head"
+            git worktree add --detach "$contract_root" "$CONTRIBUTOR_HEAD"
+            python3 "$contract_root/tools/check_contributor_contract.py" --ci
+          else
+            python3 tools/check_contributor_contract.py --ci
+          fi
 
       - name: Validate evidence-routed process memory
         run: python3 tools/check_process_memory.py check

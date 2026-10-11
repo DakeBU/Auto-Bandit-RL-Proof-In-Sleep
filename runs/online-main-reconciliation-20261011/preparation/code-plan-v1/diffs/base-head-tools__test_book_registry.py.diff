@@ -1,0 +1,202 @@
+--- base/tools/test_book_registry.py
++++ head/tools/test_book_registry.py
+@@ -117,8 +117,182 @@
+         self.assertIn("June 27, 2026", books["reinforcement-learning"]["source"]["version"])
+         self.assertTrue(books["online-learning"]["source"]["url"].endswith("v10"))
+         self.assertIsNone(books["conformal-prediction"]["source"])
+-        for key in books.keys() - {"bandit"}:
++        self.assertEqual("source-mapped", books["online-learning"]["status"])
++        for key in books.keys() - {"bandit", "online-learning"}:
+             self.assertEqual("planned", books[key]["status"])
++
++    def test_ogd_source_map_uses_shared_public_declarations_and_preserves_scope(self):
++        registry = self.registry()
++        nodes = membership_index(registry)
++        chapter = next(c for c in registry["chapters"] if c["id"] == "teaching:online-ogd")
++        names = ["iterate", "iterate_prefix", "proposition_2_11", "first_order",
++                 "lemma_2_12", "theorem_2_13_fixed", "equation_2_1",
++                 "iterateVariable", "iterateVariable_prefix", "variable_one_step",
++                 "theorem_2_13_variable_bound", "theorem_2_13_variable"]
++        for name in names:
++            key = "declaration:BanditRL.OnlineGradientDescent." + name
++            self.assertIn(key, chapter["node_ids"])
++            self.assertEqual(["online-learning"], nodes[key]["books"])
++            self.assertEqual("source", nodes[key]["status"])
++        scope = next(c for c in self.chapters if c["slug"] == "online-ogd")
++        self.assertIn("not completion of all Chapter 2", scope["completion_definition"])
++        self.assertIn("subgradient", " ".join(scope["open_gaps"]))
++
++    def test_online_foundations_use_the_shared_registry(self):
++        registry = self.registry()
++        nodes = membership_index(registry)
++        chapter = next(c for c in registry["chapters"] if c["id"] == "teaching:online-foundations")
++        for name in ["lemma_1_2", "theorem_1_3", "meanPredict_noRegret", "iid_meanPredict_excess"]:
++            key = "declaration:BanditRL.OnlineLearning." + name
++            self.assertIn(key, chapter["node_ids"])
++            self.assertEqual(["online-learning"], nodes[key]["books"])
++        self.assertIn("teaching:online-ogd", next(b for b in self.config["books"]
++                      if b["id"] == "online-learning")["chapter_refs"])
++
++    def test_extended_convexity_reuses_the_shared_registry(self):
++        registry = self.registry()
++        nodes = membership_index(registry)
++        chapter = next(c for c in registry["chapters"] if c["id"] == "teaching:online-convex")
++        for name in ["effectiveDomain", "IsConvexExtended", "convex_effectiveDomain",
++                     "convex_add_indicator", "theorem_2_4", "example_2_5", "example_2_6", "convex_comp_affine",
++                     "convex_iSup", "convex_comp_monotone", "convex_nonneg_linear_combination"]:
++            key = "declaration:BanditRL.OnlineConvex." + name
++            route = "teaching:online-convex-closures" if name in {
++                "convex_comp_affine", "convex_iSup", "convex_comp_monotone",
++                "convex_nonneg_linear_combination"} else "teaching:online-convex"
++            target = next(c for c in registry["chapters"] if c["id"] == route)
++            self.assertIn(key, target["node_ids"])
++            self.assertEqual(["online-learning"], nodes[key]["books"])
++        scope = next(c for c in self.chapters if c["slug"] == "online-convex")
++        self.assertIn("not completion of all Chapter 2", scope["completion_definition"])
++
++    def test_first_order_uses_shared_source_qualified_declarations(self):
++        registry = self.registry()
++        nodes = membership_index(registry)
++        chapter = next(c for c in registry["chapters"] if c["id"] == "teaching:online-first-order")
++        for name in ["finitePart_eventually", "convex_gradient_lower_bound", "theorem_2_7"]:
++            key = "declaration:BanditRL.OnlineConvex." + name
++            self.assertIn(key, chapter["node_ids"])
++            self.assertEqual(["online-learning"], nodes[key]["books"])
++        self.assertIn("teaching:online-ogd", next(b for b in self.config["books"]
++                      if b["id"] == "online-learning")["chapter_refs"])
++
++    def test_optimality_uses_shared_source_qualified_declarations(self):
++        registry = self.registry()
++        nodes = membership_index(registry)
++        chapter = next(c for c in registry["chapters"] if c["id"] == "teaching:online-optimality")
++        for name in ["minOn_real_iff_gradient", "minOn_finitePart_iff", "theorem_2_8",
++                     "interior_min_iff_gradient_zero"]:
++            key = "declaration:BanditRL.OnlineConvex." + name
++            self.assertIn(key, chapter["node_ids"])
++            self.assertEqual(["online-learning"], nodes[key]["books"])
++
++    def test_expectation_foundations_do_not_claim_full_jensen(self):
++        registry = self.registry()
++        nodes = membership_index(registry)
++        chapter = next(c for c in registry["chapters"] if c["id"] == "teaching:online-expectation")
++        key = "declaration:BanditRL.OnlineConvex.signedExpectation_coe_integrable"
++        self.assertIn(key, chapter["node_ids"])
++        self.assertEqual(["online-learning"], nodes[key]["books"])
++        self.assertNotIn("declaration:BanditRL.OnlineConvex.theorem_2_9", chapter["node_ids"])
++        scope = next(c for c in self.chapters if c["slug"] == "online-expectation")
++        self.assertIn("not completion of Orabona Theorem2.9", scope["completion_definition"])
++
++    def test_barycenter_dependency_uses_shared_registry_without_claiming_jensen(self):
++        registry = self.registry()
++        nodes = membership_index(registry)
++        chapter = next(c for c in registry["chapters"] if c["id"] == "teaching:online-barycenter")
++        key = "declaration:BanditRL.OnlineConvex.integral_mem_convex_finiteDimensional"
++        self.assertIn(key, chapter["node_ids"])
++        self.assertEqual(["online-learning"], nodes[key]["books"])
++        scope = next(c for c in self.chapters if c["slug"] == "online-barycenter")
++        self.assertIn("not completion of Orabona Theorem2.9", scope["completion_definition"])
++
++    def test_minorant_dependency_uses_shared_registry_without_claiming_jensen(self):
++        registry = self.registry()
++        nodes = membership_index(registry)
++        chapter = next(c for c in registry["chapters"] if c["id"] == "teaching:online-minorant")
++        key = "declaration:BanditRL.OnlineConvex.convex_affine_minorant"
++        self.assertIn(key, chapter["node_ids"])
++        self.assertEqual(["online-learning"], nodes[key]["books"])
++        scope = next(c for c in self.chapters if c["slug"] == "online-minorant")
++        self.assertIn("not completion of Orabona Theorem2.9", scope["completion_definition"])
++
++    def test_jensen_source_uses_shared_registry_with_chapter_boundary(self):
++        registry = self.registry()
++        nodes = membership_index(registry)
++        chapter = next(c for c in registry["chapters"] if c["id"] == "teaching:online-jensen")
++        key = "declaration:BanditRL.OnlineConvex.theorem_2_9"
++        self.assertIn(key, chapter["node_ids"])
++        self.assertEqual(["online-learning"], nodes[key]["books"])
++        scope = next(c for c in self.chapters if c["slug"] == "online-jensen")
++        self.assertIn("not completion of Chapter2", scope["completion_definition"])
++
++    def test_ftl_failure_source_uses_shared_registry_with_chapter_boundary(self):
++        registry = self.registry()
++        nodes = membership_index(registry)
++        chapter = next(c for c in registry["chapters"] if c["id"] == "teaching:online-ftl-failure")
++        key = "declaration:BanditRL.OnlineLearning.example_2_10"
++        self.assertIn(key, chapter["node_ids"])
++        self.assertEqual(["online-learning"], nodes[key]["books"])
++        scope = next(c for c in self.chapters if c["slug"] == "online-ftl-failure")
++        self.assertIn("not completion of Chapter2", scope["completion_definition"])
++
++    def test_guessing_ogd_source_uses_shared_registry_with_chapter_boundary(self):
++        registry = self.registry()
++        nodes = membership_index(registry)
++        chapter = next(c for c in registry["chapters"] if c["id"] == "teaching:online-guessing-ogd")
++        key = "declaration:BanditRL.OnlineGradientDescent.example_2_14"
++        self.assertIn("declaration:BanditRL.OnlineGradientDescent.guessing_squared_horizon_lower", chapter["node_ids"])
++        self.assertIn(key, chapter["node_ids"])
++        self.assertEqual(["online-learning"], nodes[key]["books"])
++        scope = next(c for c in self.chapters if c["slug"] == "online-guessing-ogd")
++        self.assertIn("not completion of Chapter2", scope["completion_definition"])
++
++    def test_huber_source_uses_shared_registry_with_chapter_boundary(self):
++        registry = self.registry()
++        nodes = membership_index(registry)
++        chapter = next(c for c in registry["chapters"] if c["id"] == "teaching:online-huber")
++        for name in ("huber_linear_hasGradientAt", "huber_regret_fixed", "huber_average_eventually"):
++            key = "declaration:BanditRL.OnlineHuber." + name
++            self.assertIn(key, chapter["node_ids"])
++            self.assertEqual(["online-learning"], nodes[key]["books"])
++        scope = next(c for c in self.chapters if c["slug"] == "online-huber")
++        self.assertIn("not Chapter2 completion", scope["completion_definition"])
++
++    def test_closed_proper_source_uses_shared_extended_indicator(self):
++        registry = self.registry()
++        nodes = membership_index(registry)
++        chapter = next(c for c in registry["chapters"] if c["id"] == "teaching:online-closed-proper")
++        for name in ("sourceClosed_iff_lowerSemicontinuous", "sourceClosed_indicator_iff", "sourceProper_indicator_iff"):
++            key = "declaration:BanditRL.OnlineConvex." + name
++            self.assertIn(key, chapter["node_ids"])
++            self.assertEqual(["online-learning"], nodes[key]["books"])
++        self.assertIn("declaration:BanditRL.OnlineConvex.extendedIndicator", nodes)
++        scope = next(c for c in self.chapters if c["slug"] == "online-closed-proper")
++        self.assertIn("not Chapter2 completion", scope["completion_definition"])
++
++    def test_subgradient_basic_source_uses_global_support_registry(self):
++        registry = self.registry()
++        nodes = membership_index(registry)
++        chapter = next(c for c in registry["chapters"] if c["id"] == "teaching:online-subgradient-basic")
++        for name in ("SourceSubdifferential", "subgradient_point_finite", "theorem_2_21"):
++            key = "declaration:BanditRL.OnlineConvex." + name
++            self.assertIn(key, chapter["node_ids"])
++            self.assertEqual(["online-learning"], nodes[key]["books"])
++        scope = next(c for c in self.chapters if c["slug"] == "online-subgradient-basic")
++        self.assertIn("not Chapter2 completion", scope["completion_definition"])
++
++    def test_interior_subgradient_uses_shared_producer(self):
++        registry = self.registry()
++        nodes = membership_index(registry)
++        chapter = next(c for c in registry["chapters"] if c["id"] == "teaching:online-subgradient-interior")
++        key = "declaration:BanditRL.OnlineConvex.subgradient_exists_of_domain_interior"
++        self.assertIn(key, chapter["node_ids"])
++        self.assertEqual(["online-learning"], nodes[key]["books"])
++        self.assertIn("declaration:BanditRL.OnlineConvex.affine_support_of_domain_interior", nodes)
++        scope = next(c for c in self.chapters if c["slug"] == "online-subgradient-interior")
++        self.assertIn("not Chapter2 completion", scope["completion_definition"])
+ 
+     def test_preview_badge_cannot_borrow_evidence_from_another_declaration(self):
+         source = ('<details class="declaration" id="a"><summary>'
+@@ -144,10 +318,14 @@
+                 self.assertEqual(1, nav.count('aria-current="page"'))
+                 self.assertNotIn("Learn · Book map", nav)
+                 self.assertNotIn("Textbook spine · Part IV", nav)
+-                self.assertEqual(10, nav.count('class="book-nav-link"'))
++                self.assertEqual(len(self.chapters), nav.count('class="book-nav-link"'))
+                 self.assertEqual(5, nav.count('class="spine-nav-link"'))
+             breadcrumb = site.render_book_breadcrumb("chapters/finite-horizon-rl/index.html")
+             self.assertIn("Reinforcement Learning Book", breadcrumb)
++            ogd_breadcrumb = site.render_book_breadcrumb("chapters/online-ogd/index.html")
++            self.assertIn("Online Learning Book", ogd_breadcrumb)
++            self.assertNotIn("Bandit Book", ogd_breadcrumb)
++            self.assertNotIn("Also read in", ogd_breadcrumb)
+         finally:
+             site.SITE_CHAPTERS, site.SITE_BOOKS, site.SITE_TEXTBOOK_SPINE, site.SITE_REGISTRY = saved
+ 

@@ -1,0 +1,111 @@
+{
+  "schema_version": "3.0",
+  "id": "MATH-2-0-POSITIONING-20261011",
+  "route": "public-positioning-and-reader-entry",
+  "frontier_cell": "publication-only",
+  "source_facing": false,
+  "source": {
+    "kind": "internal-design",
+    "title": "BanditRLlib response to Terence Tao's Math 2.0 examples",
+    "version": "2026-10-11",
+    "anchor": "Math 2.0 slides pp. 22, 25–26; existing BanditRLlib public surfaces",
+    "url": "https://teorth.github.io/tao-web/slides/math-2-0-caltech-2026.pdf"
+  },
+  "target": "Expose the library's foundations, human value and research agenda through a short homepage entry and an evidence-linked nine-direction page; no mathematical or theorem-status change.",
+  "affected_files": [
+    "website/content/math_2_0.json",
+    "website/scripts/build_site.py",
+    "website/static/site.css"
+  ],
+  "declarations": [],
+  "reuse_plan": {
+    "classification": "reuse",
+    "decision": "reuse_existing",
+    "searched_existing": ["README.md", "website/scripts/build_site.py", "website/README.md", "docs/proof-digestion-protocol.md", "docs/theorem-publication-protocol.md", "docs/quantum-bandit-cross-library-protocol.md", "research-wiki/proof-graph/benchmark_report.json"],
+    "reused_declarations": [],
+    "new_shared_declarations": [],
+    "known_consumers": ["homepage readers", "public positioning page readers"],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Reuse existing books, source/assumption atlas, Lean Graph, Functor Hypergraph, proof laboratory and contribution workflow as evidence. Add no theorem, adapter, graph edge or completion claim."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": false,
+    "hidden_assumptions_visible": false,
+    "source_vs_lean_delta_visible": false,
+    "lean_folded": false,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": false,
+    "status": "not-required",
+    "formalizer": "Codex publication editor",
+    "blind_decoder": "not-applicable",
+    "source_reviewer": "not-applicable",
+    "verdict": "not-applicable: no new or changed mathematical statement",
+    "remaining_semantic_delta": "No theorem/source formalization delta. Tao's examples are explicitly presented as examples, with no endorsement, white-box reasoning requirement or fixed nine-goal attribution."
+  },
+  "graph_contribution": {
+    "lean_graph": "no-change-with-reason",
+    "overview_graph": "no-change-with-reason",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Only link to existing formal and conceptual views; do not add a conceptual bridge or alter mathematical graph semantics.",
+    "focus_targets": ["index.html#overview", "index.html#math-2-0", "math-2-0/index.html"],
+    "visual_review": "Parent agent independently reviewed homepage and Math 2.0 page on desktop and at 390×844: readable hero, title and actions; all nine direction IDs present; document content width 375 equals viewport width 375, with no horizontal overflow. Canonical Samplinglib link and licensed model-resource wording corrected from desktop review.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "learning_contract": {
+    "control_plane_math_authority": false,
+    "process_memory_checked": true,
+    "process_memory_ids": ["ABRL-PM-MATCHED-HARNESS-EVIDENCE", "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS", "ABRL-NK-WINDOWS-PATH-LENGTH"],
+    "failure_class": "ENV_BLOCKED",
+    "salvage": {
+      "required": true,
+      "status": "completed",
+      "reason": "The full gate stopped at mathlib cloning (git exit 128) before project Lean compilation; no proof work changed and no mathematical fragments were lost. Preserve all source and complete the standard-library site preview checks.",
+      "promoted_fragments": [],
+      "discarded_fragments": []
+    },
+    "parallelism": {
+      "decision": "serial",
+      "direction_fingerprints": [],
+      "expected_information_gain": "One bounded publication edit; other agents own independent sister-library files.",
+      "shared_verified_context_digest": "not-applicable: no parallel proof routes"
+    },
+    "cross_route_blind_spot_audit": {
+      "required": false,
+      "status": "not-applicable",
+      "evidence": "No competing mathematical proof routes.",
+      "canonical_route": "not-applicable",
+      "selection_reason": "Publication-only change."
+    },
+    "reader_backpressure": {
+      "purification_status": "not-applicable",
+      "exposition_seal_status": "not-applicable",
+      "reader_debt_delta": 0,
+      "exposition_evidence": "New mission page distinguishes existing foundations from next contributions; no source theorem is newly labelled PURIFIED.",
+      "source_expansion_nodes": [],
+      "lean_expansion_nodes": [],
+      "assumptions_preserved": true,
+      "boundary_preserved": true
+    }
+  },
+  "progress_updates": {
+    "teaching_route": "no-change-with-reason: improve entry to existing books; theorem and chapter scope unchanged",
+    "banditrlwiki": "no-change-with-reason: link existing assumption and source atlas; no case or status change",
+    "results_ledger": "no-change-with-reason: publication-only; no result completion delta",
+    "roadmap": "no-change-with-reason: conceptual mission does not modify formalization frontier",
+    "website_surfaces": ["index.html", "math-2-0/index.html", "Start navigation"]
+  },
+  "truth_boundary": "Existing reader interfaces support the mission; ablation results, automatic theorem neighborhoods, new principles, model training and real-world safety validation remain research agenda items. Full local Lean gate did not run beyond dependency acquisition, so only an explicitly unverified preview was built. README.md and docs/math-2-0-positioning.md accompany this bounded publication change but are outside the checker's protected-production affected_files set.",
+  "verification": {
+    "focused_checks": ["python -m py_compile website/scripts/build_site.py: passed", "python tools/check_process_memory.py check: passed", "validate_contract for this manifest: passed", "Focused generated homepage, Math 2.0 and community link/anchor/metadata checks; nine direction IDs and MathJax presence; README presentation checks: passed"],
+    "bandit_check": "python tools/bandit.py check: ENV_BLOCKED at mathlib clone, external git exit 128; project Lean compilation not reached",
+    "site_build": "python website/scripts/build_site.py: passed without --lean-verified; GITHUB_SHA pinned to downloaded upstream f07aa9a2a5df241087ffab1c3579d1b59d8bf6f6 for preview source links",
+    "site_check": "python website/scripts/check_site.py --allow-unverified: passed; 881 HTML pages, 802 modules, 10491 indexed declarations; internal links/anchors, README links, MathJax and publication workflow valid",
+    "independent_review": "Parent agent desktop and 390×844 mobile browser QA passed on homepage and Math 2.0 page, including no horizontal overflow and nine direction IDs. Canonical Samplinglib link and own/appropriately licensed model-resource wording corrected from review. No mathematical semantic audit required for this publication-only delta."
+  },
+  "contributor": {"name": "Dake Bu with Codex assistance", "role": "Public positioning and reader navigation"}
+}

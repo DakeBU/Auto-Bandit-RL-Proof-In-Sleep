@@ -1,0 +1,9 @@
+# Independent contributor-checker review
+
+Accepted as a bounded maintenance candidate; blockers: none. Exactly the three pinned candidate files were reviewed against active originals, the design, and the actual five-row stale failure. This is independent of candidate authorship and does not review my Book wording.
+
+The exception is per manifest/path occurrence. It requires actual-base ancestry, absence of that manifest at base, a real integration merge with an independent source parent, immutable inherited manifest bytes, exact regular source blob and mode at base/HEAD/origin, a genuine source-changing origin containing the row, and continuous membership through historical amendments. Dirty relevant paths or any postmerge manifest change, including reverted changes, disqualify. Schema and duplicate-ID errors still accumulate; uncovered production still fails; a valid inherited row cannot mask another newly stale occurrence. Certificates print only after final validation succeeds.
+
+Independently executed 19 tests: all original3 plus candidate12 and reviewer4 negative cases; actual exit0. Extra cases cover nonancestor base, postmerge-authored manifest, manifest already present at actual base, and metadata-only origin. Separately re-executed the reviewed five-row probe on clean a5ec0ba with actual main base f07: all five certificates produced, exit0. Receipts/raw streams are retained. No canonical edits or full gates occurred.
+
+Documentation honestly describes provenance rather than mathematical/runtime acceptance. Two nonblocking limits remain: repeated uncached Git history scans can be slow; actual PR-base identity must be pinned by caller/CI. Neither creates an acceptance fallback. No absolute completeness claim for the fixture set. Apply only after parent maintenance-contract integration and run new clean actual-base contributor/full harness gates.

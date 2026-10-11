@@ -673,6 +673,88 @@ h3 {
   flex-wrap: wrap;
 }
 
+.hero-purpose {
+  max-width: 30ch;
+  margin: 1rem 0 0;
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: clamp(1.45rem, 2.8vw, 2.25rem);
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+.math-mission-strip {
+  margin: 1.8rem 0 2.4rem;
+  padding: clamp(1.2rem, 3vw, 1.9rem);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.math-mission-strip h2 {
+  margin: 0.5rem 0 0.8rem;
+  max-width: 36ch;
+  font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+}
+
+.math-mission-strip p:not(.eyebrow),
+.mission-boundary {
+  max-width: 76ch;
+  color: var(--muted);
+}
+
+.math-direction-grid,
+.math-sister-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+  gap: 1.1rem;
+}
+
+.math-direction {
+  padding: 1.4rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  scroll-margin-top: 5rem;
+}
+
+.math-direction h3 {
+  margin: 0 0 0.8rem;
+  font-size: 1.4rem;
+}
+
+.math-direction-role {
+  color: var(--ink);
+  font-weight: 650;
+}
+
+.math-direction dl {
+  margin: 1rem 0;
+}
+
+.math-direction dl > div + div {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.math-direction dt {
+  margin-bottom: 0.35rem;
+  color: var(--accent-strong);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.math-direction dd {
+  margin: 0;
+  color: var(--muted);
+}
+
+.math-evidence-links {
+  font-size: 0.9rem;
+}
+
 .button {
   display: inline-flex;
   align-items: center;
@@ -2740,6 +2822,7 @@ tbody tr:hover {
 
 .source-route-status {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.55rem 0.8rem;
   align-items: center;
   margin: 0.9rem 0;
@@ -2747,6 +2830,19 @@ tbody tr:hover {
   border: 1px solid var(--line);
   border-radius: 9px;
   background: var(--surface-2);
+}
+
+.source-route-status > span,
+.source-route-summary-meta {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.source-route-status > .status,
+.source-route-summary-meta > .status {
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .source-route-status > span:last-child {
@@ -2769,10 +2865,12 @@ tbody tr:hover {
 
 .source-theorem-route-list {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.65rem;
 }
 
 .source-theorem-disclosure {
+  min-width: 0;
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--surface);
@@ -6678,3 +6776,8 @@ tbody tr:hover {
 }
 
 .book-breadcrumb + .hero { padding-top: 1.5rem; }
+
+.source-theorem-card > p,
+.source-theorem-contract dd {
+  overflow-wrap: anywhere;
+}

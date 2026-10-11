@@ -1,0 +1,12 @@
+theorem square_two_exact_growth :
+    (∀ q : ℝ, (squareLoss 0).toReal + (2 / 2 : ℝ) * ‖q - 0‖ ^ 2 ≤
+      (squareLoss q).toReal) ∧
+    (∀ q : ℝ, (squareLoss 0).toReal + (2 / 2 : ℝ) * ‖q - 0‖ ^ 2 =
+      (squareLoss q).toReal) ∧ (9 : ℝ) ≤ 9
+
+theorem interval_zero_extended_domain :
+    (intervalLoss 0).toReal + (0 / 2 : ℝ) * ‖(1 : ℝ) - 0‖ ^ 2 ≤
+      (intervalLoss 1).toReal ∧
+    intervalLoss 2 = ⊤ ∧
+    effectiveDomain intervalLoss = Set.Icc (0 : ℝ) 1 ∧
+    IsMinOn intervalLoss (Set.Icc (0 : ℝ) 1) 0

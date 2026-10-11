@@ -1,0 +1,60 @@
+--- capture-reconciliation-reader-v9.cjs
++++ capture-reconciliation-reader-v10.cjs
+@@ -174,6 +174,27 @@
+       const file = name + '-'+width+'.png'; await panel.screenshot({ path: path.join(output, file), timeout: 60000 });
+       const item = { file, sha256: hash(fs.readFileSync(path.join(output, file))), geometry }; report.images.push(item); shots.push(item); } return shots;
+     }
++    async function verifyWrapControl(panel, expectedStatement, label) {
++      const button=panel.locator('[data-code-wrap]'),block=panel.locator('pre.lean-code');
++      if(await button.count()!==1||await block.count()!==1)throw Error('Wrap control/block uniqueness '+label);
++      async function snapshot(phase) {
++        const value=await block.evaluate(e=>({text:e.textContent,whiteSpace:getComputedStyle(e).whiteSpace,classes:e.className}));
++        const aria=await button.getAttribute('aria-pressed');
++        if(!['pre','pre-wrap','break-spaces'].includes(value.whiteSpace))throw Error('Unexpected Lean whitespace mode '+label+' '+value.whiteSpace);
++        const wrapped=value.whiteSpace!=='pre';
++        if(aria!==String(wrapped))throw Error('Wrap aria/computed inconsistency '+label+' '+phase);
++        if(norm(value.text)!==expectedStatement)throw Error('Wrap changed complete header '+label+' '+phase);
++        return {phase,aria,wrapped,...value};
++      }
++      const initial=await snapshot('initial-responsive'),states=[initial];
++      await button.click();const first=await snapshot('first-toggle');states.push(first);
++      if(first.wrapped===initial.wrapped||first.text!==initial.text)throw Error('First wrap toggle failed/content changed '+label);
++      await button.click();const second=await snapshot('second-toggle');states.push(second);
++      if(second.wrapped!==initial.wrapped||second.text!==initial.text)throw Error('Reverse wrap toggle failed/content changed '+label);
++      if(!second.wrapped){await button.click();states.push(await snapshot('restore-wrapped'));}
++      const final=states.at(-1);if(!final.wrapped||final.text!==initial.text)throw Error('Final wrapped state/content mismatch '+label);
++      report.wrapControlChecks ||= [];report.wrapControlChecks.push({label,states});
++    }
+     async function data(panel) { return await panel.evaluate(el => ({ text:el.innerText, mathContainers:el.querySelectorAll('mjx-container').length,
+       mathErrors:el.querySelectorAll('mjx-merror,[data-mjx-error]').length, links:[...el.querySelectorAll('a')].map(a => ({text:a.textContent,href:a.href})),
+       formulas:[...el.querySelectorAll('mjx-container')].map(x => x.textContent) })); }
+@@ -203,7 +224,10 @@
+     const boundary = page.locator('#completion-contract');
+     if (await boundary.count() !== 1) throw Error('Chapter completion contract absent');
+     await boundary.locator('details').evaluate(el => { el.open = true; });
+-    const boundaryData = await data(boundary); requireWords(boundaryData.text,['partial','null','ACTIVE'],'chapter boundary');
++    const boundaryData = await data(boundary);
++    requireWords(boundaryData.text,['partial','null','seven required forward containers','six future mathematical claims remain open','not completion of all Chapter 2'],'chapter boundary');
++    if(!/\bGoal remains active\b/i.test(norm(boundaryData.text)))throw Error('Chapter boundary must explicitly retain Goal remains active');
++    report.chapterBoundarySemanticCheck={partial:true,denominatorNull:true,requiredForwardContainers:7,futureClaimsOpen:6,goalActive:true,wholeChapterIncomplete:true};
+     report.panels.push({kind:'chapter-boundary',...boundaryData,screenshot:await screenshot(boundary,'chapter-boundary-v1')});
+     write('chapter-dom-v1.html',await page.content());
+     for (const spec of specs) {
+@@ -213,7 +237,7 @@
+       const panel = page.locator('[id="'+spec.node.url.split('#')[1]+'"]');
+       if (await panel.count() !== 1) throw Error('Module declaration missing');
+       await panel.evaluate(el=>{el.open=true;}); await openAncestors(panel);
+-      const wrap=panel.locator('[data-code-wrap]'); if(await wrap.getAttribute('aria-pressed')!=='false') throw Error('Unexpected wrap initial state'); await wrap.click();
++      await verifyWrapControl(panel,expectedHeader,spec.fullName);
+       const code=await panel.locator('pre.lean-code').evaluate(el=>({text:el.textContent,scrollWidth:el.scrollWidth,clientWidth:el.clientWidth}));
+       if(norm(code.text)!==expectedHeader||code.scrollWidth>code.clientWidth+1)throw Error('Catalog complete header absent/changed/clipped');
+       const links=await panel.locator('.source-links a').evaluateAll(xs=>xs.map(x=>x.href));
+@@ -252,7 +276,7 @@
+     report.panels.push({kind:'projection-source-bridge',...pd,screenshot:await screenshot(projectionCard,'projection-source-bridge')});
+     await page.goto(new URL('../../'+uniqueNode[0].url.split('#')[0],url).href,{waitUntil:'networkidle',timeout:60000});
+     const up=page.locator('[id="'+uniqueAnchor+'"]');await up.evaluate(e=>e.open=true);
+-    const uw=up.locator('[data-code-wrap]');if(await uw.getAttribute('aria-pressed')==='false')await uw.click();
++    await verifyWrapControl(up,uniqueHeader,uniqueName);
+     if(norm(await up.locator('pre.lean-code').textContent())!==uniqueHeader)throw Error('Unique catalog exact signature');
+     const expectedUnique=`https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/${expectedHead}/${uniqueRel}#L${uniqueLine}`;
+     if(!(await up.locator('.source-links a').evaluateAll(xs=>xs.map(x=>x.href))).includes(expectedUnique))throw Error('Unique pinned whole-proof source link');

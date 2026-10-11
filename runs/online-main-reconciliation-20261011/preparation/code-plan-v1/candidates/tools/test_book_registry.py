@@ -1,0 +1,513 @@
+"""Regression gates for shared book/setting references, without invoking Lean."""
+import copy
+import hashlib
+import json
+import unittest
+from unittest.mock import patch
+from pathlib import Path
+
+from website.scripts import build_site as site
+from website.scripts.book_registry import build_registry, membership_index, verify_reviewed_module, reviewed_module_matches
+from website.scripts.check_site import declaration_has_expected_badge, expected_book_chapters, expected_navigation_groups, LinkCollector
+
+
+class BookRegistryTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.config = site.load_json(site.CONTENT_DIR / "books.json")
+        cls.chapters = site.load_json(site.CONTENT_DIR / "chapters.json")["chapters"]
+        cls.spine = site.load_json(site.CONTENT_DIR / "textbook_spine.json")
+        cls.wiki = site.load_json(site.CONTENT_DIR / "banditrlwiki.json")
+        modules = site.scan_lean_tree()
+        site.assign_chapters(modules, cls.chapters)
+        cls.declarations = [d for m in modules for d in m["declarations"]]
+
+    def registry(self, config=None, wiki=None, declarations=None, verified=False):
+        return build_registry(config or self.config, self.chapters, self.spine,
+                              wiki or self.wiki, declarations or self.declarations,
+                              verified, "fixture-commit")
+
+    def test_explicit_lf_receipt_accepts_eol_only_and_rejects_code_drift(self):
+        source = b"def a := 1\n"
+        evidence = {"normalization": "utf8-crlf-and-cr-to-lf-only",
+                    "production_hashes_lf": {"A.lean": hashlib.sha256(source).hexdigest()}}
+        verify_reviewed_module(evidence, "A.lean", source.replace(b"\n", b"\r\n"))
+        with self.assertRaisesRegex(ValueError, "module hash drift"):
+            verify_reviewed_module(evidence, "A.lean", b"def a := 2\n")
+        evidence["normalization"] = "unspecified"
+        with self.assertRaisesRegex(ValueError, "normalization"):
+            verify_reviewed_module(evidence, "A.lean", source)
+
+    def test_legacy_receipt_retains_raw_byte_check(self):
+        source = b"def a := 1\n"
+        evidence = {"production_hashes": {"A.lean": hashlib.sha256(source).hexdigest()}}
+        verify_reviewed_module(evidence, "A.lean", source)
+        with self.assertRaisesRegex(ValueError, "module hash drift"):
+            verify_reviewed_module(evidence, "A.lean", source.replace(b"\n", b"\r\n"))
+
+    def test_causal_sampling_declarations_use_current_rebinding(self):
+        topic = next(t for t in self.wiki["topics"] if t["id"] == "causal")
+        refs = topic["formalization"]["declarations"]
+        self.assertFalse(any(r["review_receipt"].endswith("causal-sampling-review.json") for r in refs))
+        self.assertEqual(12, sum(r["review_receipt"].endswith("causal-review-rebinding.json") for r in refs))
+
+    def test_one_identity_across_books_preserves_every_indexed_declaration(self):
+        registry = self.registry()
+        nodes = membership_index(registry)
+        self.assertEqual(len(nodes), len(self.declarations))
+        shared = [n for n in nodes.values() if len(n["books"]) > 1]
+        self.assertTrue(shared)
+        rl = next(c for c in registry["chapters"] if c["id"] == "teaching:finite-horizon-rl")
+        self.assertTrue(rl["node_ids"])
+        for key in rl["node_ids"]:
+            self.assertIn("bandit", nodes[key]["books"])
+            self.assertIn("reinforcement-learning", nodes[key]["books"])
+            self.assertEqual("source", nodes[key]["status"])
+
+    def test_duplicate_canonical_id_fails_before_export(self):
+        with self.assertRaisesRegex(ValueError, "duplicate canonical ID"):
+            self.registry(declarations=self.declarations + [self.declarations[0]])
+
+    def test_duplicate_books_and_dangling_chapter_refs_are_rejected(self):
+        config = copy.deepcopy(self.config)
+        config["books"].append(config["books"][0])
+        with self.assertRaisesRegex(ValueError, "duplicate book"):
+            self.registry(config=config)
+        config = copy.deepcopy(self.config)
+        config["books"][1]["chapter_refs"].append("teaching:missing")
+        with self.assertRaisesRegex(ValueError, "invalid chapter reference"):
+            self.registry(config=config)
+
+    def test_invalid_setting_and_case_references_are_rejected(self):
+        wiki = copy.deepcopy(self.wiki)
+        wiki["topics"][0]["related_cases"].append("unknown-case")
+        with self.assertRaisesRegex(ValueError, "unknown related case"):
+            self.registry(wiki=wiki)
+        wiki = copy.deepcopy(self.wiki)
+        wiki["topics"].append(wiki["topics"][0])
+        with self.assertRaisesRegex(ValueError, "duplicate topic"):
+            self.registry(wiki=wiki)
+
+    def test_gate_changes_evidence_only_not_identity_or_membership(self):
+        preview = membership_index(self.registry())
+        verified = membership_index(self.registry(verified=True))
+        self.assertEqual(preview.keys(), verified.keys())
+        for key, node in preview.items():
+            other = verified[key]
+            self.assertEqual({k: v for k, v in node.items() if k != "status"},
+                             {k: v for k, v in other.items() if k != "status"})
+            self.assertEqual("stated" if node["status"] == "stated" else "compiled", other["status"])
+
+    def test_unmapped_topics_have_no_claimed_results_or_compiled_counts(self):
+        registry = self.registry(verified=True)
+        self.assertEqual(10, len(self.wiki["topics"]))
+        topic_ids = {t["id"] for t in self.wiki["topics"] if not t.get("formalization")}
+        for setting in registry["settings"]:
+            if setting["id"] in topic_ids:
+                self.assertEqual([], setting["node_ids"])
+                self.assertEqual("source-audit-pending", setting["status"])
+        method = next(t for t in self.wiki["topics"] if t["id"] == "thompson-bayesian")
+        self.assertEqual("method", method["kind"])
+        self.assertIn("cross-setting", method["tags"])
+        self.assertEqual(12, len(self.wiki["comparison_fields"]))
+
+    def test_source_versions_and_planned_book_boundaries(self):
+        books = {b["id"]: b for b in self.config["books"]}
+        self.assertEqual(4, len(books))
+        self.assertIn("June 27, 2026", books["reinforcement-learning"]["source"]["version"])
+        self.assertTrue(books["online-learning"]["source"]["url"].endswith("v10"))
+        self.assertIsNone(books["conformal-prediction"]["source"])
+        self.assertEqual("source-mapped", books["online-learning"]["status"])
+        for key in books.keys() - {"bandit", "online-learning"}:
+            self.assertEqual("planned", books[key]["status"])
+
+<<<<<<< E:\ABRL\worktrees\research-online-book\tmp\online-main-reconciliation-20261011\code-plan-v1\inputs\head\tools\test_book_registry.py
+    def test_ogd_source_map_uses_shared_public_declarations_and_preserves_scope(self):
+        registry = self.registry()
+        nodes = membership_index(registry)
+        chapter = next(c for c in registry["chapters"] if c["id"] == "teaching:online-ogd")
+        names = ["iterate", "iterate_prefix", "proposition_2_11", "first_order",
+                 "lemma_2_12", "theorem_2_13_fixed", "equation_2_1",
+                 "iterateVariable", "iterateVariable_prefix", "variable_one_step",
+                 "theorem_2_13_variable_bound", "theorem_2_13_variable"]
+        for name in names:
+            key = "declaration:BanditRL.OnlineGradientDescent." + name
+            self.assertIn(key, chapter["node_ids"])
+            self.assertEqual(["online-learning"], nodes[key]["books"])
+            self.assertEqual("source", nodes[key]["status"])
+        scope = next(c for c in self.chapters if c["slug"] == "online-ogd")
+        self.assertIn("not completion of all Chapter 2", scope["completion_definition"])
+        self.assertIn("subgradient", " ".join(scope["open_gaps"]))
+
+    def test_online_foundations_use_the_shared_registry(self):
+        registry = self.registry()
+        nodes = membership_index(registry)
+        chapter = next(c for c in registry["chapters"] if c["id"] == "teaching:online-foundations")
+        for name in ["lemma_1_2", "theorem_1_3", "meanPredict_noRegret", "iid_meanPredict_excess"]:
+            key = "declaration:BanditRL.OnlineLearning." + name
+            self.assertIn(key, chapter["node_ids"])
+            self.assertEqual(["online-learning"], nodes[key]["books"])
+        self.assertIn("teaching:online-ogd", next(b for b in self.config["books"]
+                      if b["id"] == "online-learning")["chapter_refs"])
+
+    def test_extended_convexity_reuses_the_shared_registry(self):
+        registry = self.registry()
+        nodes = membership_index(registry)
+        chapter = next(c for c in registry["chapters"] if c["id"] == "teaching:online-convex")
+        for name in ["effectiveDomain", "IsConvexExtended", "convex_effectiveDomain",
+                     "convex_add_indicator", "theorem_2_4", "example_2_5", "example_2_6", "convex_comp_affine",
+                     "convex_iSup", "convex_comp_monotone", "convex_nonneg_linear_combination"]:
+            key = "declaration:BanditRL.OnlineConvex." + name
+            route = "teaching:online-convex-closures" if name in {
+                "convex_comp_affine", "convex_iSup", "convex_comp_monotone",
+                "convex_nonneg_linear_combination"} else "teaching:online-convex"
+            target = next(c for c in registry["chapters"] if c["id"] == route)
+            self.assertIn(key, target["node_ids"])
+            self.assertEqual(["online-learning"], nodes[key]["books"])
+        scope = next(c for c in self.chapters if c["slug"] == "online-convex")
+        self.assertIn("not completion of all Chapter 2", scope["completion_definition"])
+
+    def test_first_order_uses_shared_source_qualified_declarations(self):
+        registry = self.registry()
+        nodes = membership_index(registry)
+        chapter = next(c for c in registry["chapters"] if c["id"] == "teaching:online-first-order")
+        for name in ["finitePart_eventually", "convex_gradient_lower_bound", "theorem_2_7"]:
+            key = "declaration:BanditRL.OnlineConvex." + name
+            self.assertIn(key, chapter["node_ids"])
+            self.assertEqual(["online-learning"], nodes[key]["books"])
+        self.assertIn("teaching:online-ogd", next(b for b in self.config["books"]
+                      if b["id"] == "online-learning")["chapter_refs"])
+
+    def test_optimality_uses_shared_source_qualified_declarations(self):
+        registry = self.registry()
+        nodes = membership_index(registry)
+        chapter = next(c for c in registry["chapters"] if c["id"] == "teaching:online-optimality")
+        for name in ["minOn_real_iff_gradient", "minOn_finitePart_iff", "theorem_2_8",
+                     "interior_min_iff_gradient_zero"]:
+            key = "declaration:BanditRL.OnlineConvex." + name
+            self.assertIn(key, chapter["node_ids"])
+            self.assertEqual(["online-learning"], nodes[key]["books"])
+
+    def test_expectation_foundations_do_not_claim_full_jensen(self):
+        registry = self.registry()
+        nodes = membership_index(registry)
+        chapter = next(c for c in registry["chapters"] if c["id"] == "teaching:online-expectation")
+        key = "declaration:BanditRL.OnlineConvex.signedExpectation_coe_integrable"
+        self.assertIn(key, chapter["node_ids"])
+        self.assertEqual(["online-learning"], nodes[key]["books"])
+        self.assertNotIn("declaration:BanditRL.OnlineConvex.theorem_2_9", chapter["node_ids"])
+        scope = next(c for c in self.chapters if c["slug"] == "online-expectation")
+        self.assertIn("not completion of Orabona Theorem2.9", scope["completion_definition"])
+
+    def test_barycenter_dependency_uses_shared_registry_without_claiming_jensen(self):
+        registry = self.registry()
+        nodes = membership_index(registry)
+        chapter = next(c for c in registry["chapters"] if c["id"] == "teaching:online-barycenter")
+        key = "declaration:BanditRL.OnlineConvex.integral_mem_convex_finiteDimensional"
+        self.assertIn(key, chapter["node_ids"])
+        self.assertEqual(["online-learning"], nodes[key]["books"])
+        scope = next(c for c in self.chapters if c["slug"] == "online-barycenter")
+        self.assertIn("not completion of Orabona Theorem2.9", scope["completion_definition"])
+
+    def test_minorant_dependency_uses_shared_registry_without_claiming_jensen(self):
+        registry = self.registry()
+        nodes = membership_index(registry)
+        chapter = next(c for c in registry["chapters"] if c["id"] == "teaching:online-minorant")
+        key = "declaration:BanditRL.OnlineConvex.convex_affine_minorant"
+        self.assertIn(key, chapter["node_ids"])
+        self.assertEqual(["online-learning"], nodes[key]["books"])
+        scope = next(c for c in self.chapters if c["slug"] == "online-minorant")
+        self.assertIn("not completion of Orabona Theorem2.9", scope["completion_definition"])
+
+    def test_jensen_source_uses_shared_registry_with_chapter_boundary(self):
+        registry = self.registry()
+        nodes = membership_index(registry)
+        chapter = next(c for c in registry["chapters"] if c["id"] == "teaching:online-jensen")
+        key = "declaration:BanditRL.OnlineConvex.theorem_2_9"
+        self.assertIn(key, chapter["node_ids"])
+        self.assertEqual(["online-learning"], nodes[key]["books"])
+        scope = next(c for c in self.chapters if c["slug"] == "online-jensen")
+        self.assertIn("not completion of Chapter2", scope["completion_definition"])
+
+    def test_ftl_failure_source_uses_shared_registry_with_chapter_boundary(self):
+        registry = self.registry()
+        nodes = membership_index(registry)
+        chapter = next(c for c in registry["chapters"] if c["id"] == "teaching:online-ftl-failure")
+        key = "declaration:BanditRL.OnlineLearning.example_2_10"
+        self.assertIn(key, chapter["node_ids"])
+        self.assertEqual(["online-learning"], nodes[key]["books"])
+        scope = next(c for c in self.chapters if c["slug"] == "online-ftl-failure")
+        self.assertIn("not completion of Chapter2", scope["completion_definition"])
+
+    def test_guessing_ogd_source_uses_shared_registry_with_chapter_boundary(self):
+        registry = self.registry()
+        nodes = membership_index(registry)
+        chapter = next(c for c in registry["chapters"] if c["id"] == "teaching:online-guessing-ogd")
+        key = "declaration:BanditRL.OnlineGradientDescent.example_2_14"
+        self.assertIn("declaration:BanditRL.OnlineGradientDescent.guessing_squared_horizon_lower", chapter["node_ids"])
+        self.assertIn(key, chapter["node_ids"])
+        self.assertEqual(["online-learning"], nodes[key]["books"])
+        scope = next(c for c in self.chapters if c["slug"] == "online-guessing-ogd")
+        self.assertIn("not completion of Chapter2", scope["completion_definition"])
+
+    def test_huber_source_uses_shared_registry_with_chapter_boundary(self):
+        registry = self.registry()
+        nodes = membership_index(registry)
+        chapter = next(c for c in registry["chapters"] if c["id"] == "teaching:online-huber")
+        for name in ("huber_linear_hasGradientAt", "huber_regret_fixed", "huber_average_eventually"):
+            key = "declaration:BanditRL.OnlineHuber." + name
+            self.assertIn(key, chapter["node_ids"])
+            self.assertEqual(["online-learning"], nodes[key]["books"])
+        scope = next(c for c in self.chapters if c["slug"] == "online-huber")
+        self.assertIn("not Chapter2 completion", scope["completion_definition"])
+
+    def test_closed_proper_source_uses_shared_extended_indicator(self):
+        registry = self.registry()
+        nodes = membership_index(registry)
+        chapter = next(c for c in registry["chapters"] if c["id"] == "teaching:online-closed-proper")
+        for name in ("sourceClosed_iff_lowerSemicontinuous", "sourceClosed_indicator_iff", "sourceProper_indicator_iff"):
+            key = "declaration:BanditRL.OnlineConvex." + name
+            self.assertIn(key, chapter["node_ids"])
+            self.assertEqual(["online-learning"], nodes[key]["books"])
+        self.assertIn("declaration:BanditRL.OnlineConvex.extendedIndicator", nodes)
+        scope = next(c for c in self.chapters if c["slug"] == "online-closed-proper")
+        self.assertIn("not Chapter2 completion", scope["completion_definition"])
+
+    def test_subgradient_basic_source_uses_global_support_registry(self):
+        registry = self.registry()
+        nodes = membership_index(registry)
+        chapter = next(c for c in registry["chapters"] if c["id"] == "teaching:online-subgradient-basic")
+        for name in ("SourceSubdifferential", "subgradient_point_finite", "theorem_2_21"):
+            key = "declaration:BanditRL.OnlineConvex." + name
+            self.assertIn(key, chapter["node_ids"])
+            self.assertEqual(["online-learning"], nodes[key]["books"])
+        scope = next(c for c in self.chapters if c["slug"] == "online-subgradient-basic")
+        self.assertIn("not Chapter2 completion", scope["completion_definition"])
+
+    def test_interior_subgradient_uses_shared_producer(self):
+        registry = self.registry()
+        nodes = membership_index(registry)
+        chapter = next(c for c in registry["chapters"] if c["id"] == "teaching:online-subgradient-interior")
+        key = "declaration:BanditRL.OnlineConvex.subgradient_exists_of_domain_interior"
+        self.assertIn(key, chapter["node_ids"])
+        self.assertEqual(["online-learning"], nodes[key]["books"])
+        self.assertIn("declaration:BanditRL.OnlineConvex.affine_support_of_domain_interior", nodes)
+        scope = next(c for c in self.chapters if c["slug"] == "online-subgradient-interior")
+        self.assertIn("not Chapter2 completion", scope["completion_definition"])
+=======
+    def test_online_integration_keeps_one_registry_and_bounded_scope(self):
+        nodes = membership_index(self.registry(verified=True))
+        online_modules = {
+            "BanditRLProof.OnlineConvexExtended",
+            "BanditRLProof.OnlineConvexExamples",
+            "BanditRLProof.OnlineConvexFirstOrder",
+            "BanditRLProof.OnlineGradientDescent",
+            "BanditRLProof.OnlineGradientDescentVariable",
+            "BanditRLProof.OnlineGradientDescentSource",
+        }
+        declarations = [d for d in self.declarations if d["module"] in online_modules]
+        self.assertEqual(57, len(declarations))
+        for declaration in declarations:
+            key = "declaration:" + declaration["full_name"]
+            self.assertIn("online-learning", nodes[key]["books"])
+        for name in ("BanditRL.OnlineConvex.example_2_5",
+                     "BanditRL.OnlineConvex.example_2_6"):
+            self.assertIn("online-learning", nodes["declaration:" + name]["books"])
+        self.assertIn("bandit", nodes["declaration:BanditRLProof.FiniteBanditModel"]["books"])
+>>>>>>> E:\ABRL\worktrees\research-online-book\tmp\online-main-reconciliation-20261011\code-plan-v1\inputs\main\tools\test_book_registry.py
+
+    def test_preview_badge_cannot_borrow_evidence_from_another_declaration(self):
+        source = ('<details class="declaration" id="a"><summary>'
+                  '<span class="status source">Source indexed</span></summary></details>'
+                  '<details class="declaration" id="b"><summary>'
+                  '<span class="status compiled">Compiled</span></summary></details>')
+        self.assertTrue(declaration_has_expected_badge(source, "a", False))
+        self.assertFalse(declaration_has_expected_badge(source, "a", True))
+        self.assertTrue(declaration_has_expected_badge(source, "b", True))
+        self.assertFalse(declaration_has_expected_badge(source, "b", False))
+        self.assertFalse(declaration_has_expected_badge(source, "missing", True))
+
+    def test_navigation_has_one_current_page_and_shared_chapter_context(self):
+        saved = (site.SITE_CHAPTERS, site.SITE_BOOKS, site.SITE_TEXTBOOK_SPINE, site.SITE_REGISTRY)
+        try:
+            site.SITE_CHAPTERS, site.SITE_BOOKS = self.chapters, self.config
+            site.SITE_TEXTBOOK_SPINE, site.SITE_REGISTRY = self.spine, self.registry()
+            for path, key in [("chapters/finite-horizon-rl/index.html", "finite-horizon-rl"),
+                              ("chapters/online-ogd/index.html", "online-ogd"),
+                              ("textbook-spine/chapter-17-high-probability/index.html", "textbook-spine"),
+                              ("books/bandit/index.html", "bandit")]:
+                source = site.layout(path, "Fixture", "", [], key, False, "fixture")
+                nav = source.split('<nav class="sidebar-nav"', 1)[1].split('</nav>', 1)[0]
+                self.assertEqual(1, nav.count('aria-current="page"'))
+                self.assertNotIn("Learn · Book map", nav)
+                self.assertNotIn("Textbook spine · Part IV", nav)
+                self.assertEqual(len(self.chapters), nav.count('class="book-nav-link"'))
+                self.assertEqual(5, nav.count('class="spine-nav-link"'))
+                collector = LinkCollector()
+                collector.feed(source)
+                expected_groups = expected_navigation_groups(self.config["books"], {c["slug"] for c in self.chapters})
+                self.assertEqual(expected_groups, set(collector.nav_group_ids))
+                self.assertEqual(len(expected_groups), collector.nav_group_count)
+                bandit_nav = nav.split('data-nav-group="bandit-book"', 1)[1].split('</details>', 1)[0]
+                self.assertNotIn('chapters/online-', bandit_nav)
+                online_nav = nav.split('data-nav-group="online-learning-book"', 1)[1].split('</details>', 1)[0]
+                self.assertEqual(3, online_nav.count('class="book-nav-link"'))
+                self.assertNotIn('chapters/probability/', online_nav)
+            breadcrumb = site.render_book_breadcrumb("chapters/finite-horizon-rl/index.html")
+            self.assertIn("Reinforcement Learning Book", breadcrumb)
+<<<<<<< E:\ABRL\worktrees\research-online-book\tmp\online-main-reconciliation-20261011\code-plan-v1\inputs\head\tools\test_book_registry.py
+            ogd_breadcrumb = site.render_book_breadcrumb("chapters/online-ogd/index.html")
+            self.assertIn("Online Learning Book", ogd_breadcrumb)
+            self.assertNotIn("Bandit Book", ogd_breadcrumb)
+            self.assertNotIn("Also read in", ogd_breadcrumb)
+=======
+            online_breadcrumb = site.render_book_breadcrumb("chapters/online-ogd/index.html")
+            self.assertIn("Online Learning Book", online_breadcrumb)
+            self.assertNotIn("Bandit Book", online_breadcrumb)
+>>>>>>> E:\ABRL\worktrees\research-online-book\tmp\online-main-reconciliation-20261011\code-plan-v1\inputs\main\tools\test_book_registry.py
+        finally:
+            site.SITE_CHAPTERS, site.SITE_BOOKS, site.SITE_TEXTBOOK_SPINE, site.SITE_REGISTRY = saved
+
+    def test_online_routes_preserve_bandit_coverage_and_shared_identity(self):
+        with patch.multiple(site, SITE_CHAPTERS=self.chapters, SITE_BOOKS=self.config,
+                            SITE_TEXTBOOK_SPINE=self.spine):
+            banner = site.render_primary_textbook_banner()
+            self.assertIn("10 source-mapped routes", banner)
+            self.assertIn("9 canonical cores compiled", banner)
+            self.assertNotIn("13 source-mapped routes", banner)
+            self.assertEqual("online-learning", site.primary_teaching_book("online-ogd")["id"])
+            self.assertEqual("bandit", site.primary_teaching_book("probability")["id"])
+            online = site.teaching_chapters_for_book("online-learning", owned_only=True)
+            self.assertEqual({"online-ogd", "online-convex", "online-first-order"},
+                             {chapter["slug"] for chapter in online})
+            shared = site.teaching_chapters_for_book("online-learning")
+            self.assertIn("probability", {chapter["slug"] for chapter in shared})
+            chapter_slugs = {chapter["slug"] for chapter in self.chapters}
+            bandit_chapters = expected_book_chapters(self.config["books"], "bandit", chapter_slugs)
+            self.assertEqual(10, len(bandit_chapters))
+            self.assertIn("probability", bandit_chapters)
+            self.assertFalse(any(slug.startswith("online-") for slug in bandit_chapters))
+            self.assertIn("online-learning-book", expected_navigation_groups(self.config["books"], chapter_slugs))
+            shared_only = copy.deepcopy(self.config)
+            online_book = next(b for b in shared_only["books"] if b["id"] == "online-learning")
+            online_book["chapter_refs"] = ["teaching:probability", "teaching:exp3"]
+            self.assertNotIn("online-learning-book", expected_navigation_groups(shared_only["books"], chapter_slugs))
+
+    def test_cucb_mapping_uses_canonical_nodes_without_preview_promotion(self):
+        registry = self.registry()
+        topic = next(t for t in self.wiki["topics"] if t["id"] == "combinatorial")
+        setting = next(t for t in registry["settings"] if t["id"] == "combinatorial")
+        self.assertEqual("mapped-reviewed-partial", setting["status"])
+        self.assertFalse(setting["formalization"]["topic_complete"])
+        expected = {"declaration:" + r["name"] for r in topic["formalization"]["declarations"]}
+        self.assertEqual(expected, set(setting["node_ids"]))
+        nodes = membership_index(registry)
+        for key in expected:
+            self.assertEqual("source", nodes[key]["status"])
+            self.assertIn("combinatorial", nodes[key]["settings"])
+
+    def test_topic_mapping_rejects_stale_or_dangling_references(self):
+        for mutation, message in [("hash", "statement hash drift"), ("name", "unknown topic declaration"), ("duplicate", "duplicate topic declaration")]:
+            with self.subTest(mutation=mutation):
+                wiki = copy.deepcopy(self.wiki)
+                refs = next(t for t in wiki["topics"] if t["id"] == "combinatorial")["formalization"]["declarations"]
+                if mutation == "hash":
+                    refs[0]["statement_sha256"] = "0" * 64
+                elif mutation == "name":
+                    refs[0]["name"] = "Not.A.Declaration"
+                else:
+                    refs.append(copy.deepcopy(refs[0]))
+                with self.assertRaisesRegex(ValueError, message):
+                    self.registry(wiki=wiki)
+
+    def test_topic_mapping_cannot_claim_independent_acceptance(self):
+        wiki = copy.deepcopy(self.wiki)
+        next(t for t in wiki["topics"] if t["id"] == "combinatorial")["formalization"]["semantic_status"] = "accepted"
+        with self.assertRaisesRegex(ValueError, "pending independent review"):
+            self.registry(wiki=wiki)
+
+    def test_reviewed_heavy_tail_membership_does_not_promote_preview_or_topic(self):
+        registry = self.registry()
+        setting = next(t for t in registry["settings"] if t["id"] == "heavy-tailed")
+        self.assertEqual("mapped-reviewed-partial", setting["status"])
+        self.assertFalse(setting["formalization"]["topic_complete"])
+        names = {r["name"] for r in setting["formalization"]["declarations"]}
+        self.assertIn("BanditRLProof.HeavyTail.SourcePolicy.robust_expected_regret", names)
+        self.assertIn("BanditRLProof.HeavyTail.SourceCounterexample.literal_printed_bound_false", names)
+        nodes = membership_index(registry)
+        for key in setting["node_ids"]:
+            self.assertEqual("source", nodes[key]["status"])
+            self.assertIn("heavy-tailed", nodes[key]["settings"])
+
+    def test_reviewed_mapping_rejects_proof_body_drift_with_same_statement(self):
+        original_read = Path.read_bytes
+        def changed_proof(path):
+            if path.as_posix().endswith("BanditRLProof/HeavyTailSourceConfidence.lean"):
+                return b"changed proof, same indexed statement"
+            return original_read(path)
+        with patch.object(Path, "read_bytes", changed_proof):
+            with self.assertRaisesRegex(ValueError, "reviewed module hash drift"):
+                self.registry()
+
+    def test_reviewed_mapping_accepts_line_ending_renderings_of_reviewed_modules(self):
+        original_read = Path.read_bytes
+        for rendering in ("crlf", "lf"):
+            def rerendered(path, rendering=rendering):
+                data = original_read(path)
+                if path.suffix == ".lean" or (path.suffix == ".json" and "runs" in path.parts):
+                    data = data.replace(b"\r\n", b"\n")
+                    if rendering == "crlf":
+                        data = data.replace(b"\n", b"\r\n")
+                return data
+            with self.subTest(rendering=rendering), patch.object(Path, "read_bytes", rerendered):
+                self.registry()
+
+    def test_reviewed_module_matches_is_line_ending_independent_but_content_bound(self):
+        import hashlib
+        lf = b"theorem a : 1 = 1 := rfl\nexample : True := trivial\n"
+        crlf = lf.replace(b"\n", b"\r\n")
+        mixed = b"theorem a : 1 = 1 := rfl\r\nexample : True := trivial\n"
+        for recorded_source in (lf, crlf, mixed):
+            recorded = hashlib.sha256(recorded_source).hexdigest()
+            for on_disk in (lf, crlf):
+                with self.subTest(recorded=recorded_source[:12], on_disk=on_disk[:12]):
+                    expected = recorded_source is not mixed
+                    self.assertEqual(expected, reviewed_module_matches(on_disk, recorded, "M.lean", "runs/r.json", []))
+        changed = lf.replace(b"1 = 1", b"1 = 2")
+        self.assertFalse(reviewed_module_matches(changed, hashlib.sha256(lf).hexdigest(), "M.lean", "runs/r.json", []))
+        recorded_mixed = hashlib.sha256(mixed).hexdigest()
+        canonical = hashlib.sha256(lf).hexdigest()
+        record = {"kind": "review-receipt-hash-normalization", "receipts": [{"receipt": "runs/r.json", "entries": [
+            {"path": "M.lean", "recorded_sha256": recorded_mixed, "canonical_lf_sha256": canonical, "bound": True}]}]}
+        self.assertTrue(reviewed_module_matches(crlf, recorded_mixed, "M.lean", "runs/r.json", [record]))
+        self.assertFalse(reviewed_module_matches(changed, recorded_mixed, "M.lean", "runs/r.json", [record]))
+        self.assertFalse(reviewed_module_matches(crlf, recorded_mixed, "M.lean", "runs/other.json", [record]))
+        unbound = copy.deepcopy(record)
+        unbound["receipts"][0]["entries"][0]["bound"] = False
+        self.assertFalse(reviewed_module_matches(crlf, recorded_mixed, "M.lean", "runs/r.json", [unbound]))
+
+    def test_reviewed_mapping_rejects_unbound_receipts_and_topic_promotion(self):
+        for mutation, message in [("hash", "receipt hash drift"),
+                                  ("path", "receipt path"),
+                                  ("reference", "lacks bound review receipt"),
+                                  ("coverage", "does not cover declaration"),
+                                  ("complete", "incomplete topic boundary")]:
+            with self.subTest(mutation=mutation):
+                wiki = copy.deepcopy(self.wiki)
+                mapping = next(t for t in wiki["topics"] if t["id"] == "heavy-tailed")["formalization"]
+                if mutation == "hash":
+                    mapping["review_receipts"][0]["sha256"] = "0" * 64
+                elif mutation == "path":
+                    mapping["review_receipts"][0]["path"] = "runs/../../README.md"
+                elif mutation == "reference":
+                    mapping["declarations"][0]["review_receipt"] = "runs/missing.json"
+                elif mutation == "coverage":
+                    mapping["declarations"][-1]["review_receipt"] = mapping["review_receipts"][0]["path"]
+                else:
+                    mapping["topic_complete"] = True
+                with self.assertRaisesRegex(ValueError, message):
+                    self.registry(wiki=wiki)
+
+
+if __name__ == "__main__":
+    unittest.main()
