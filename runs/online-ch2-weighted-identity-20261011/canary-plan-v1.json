@@ -1,0 +1,72 @@
+{
+  "status": "unproved complete public canary plan",
+  "signed": {
+    "a": [
+      "-2",
+      "3",
+      "-1",
+      "4"
+    ],
+    "w": [
+      "0",
+      "-2",
+      "1"
+    ],
+    "exact_fraction_check": {
+      "lhs": "-13",
+      "initial": "0",
+      "terminal": "-4",
+      "interior": "-9"
+    },
+    "required_conclusion": "Full equality with explicit initial, both interior and terminal terms; signed a and negative/zero weights allowed."
+  },
+  "actual_three_step": {
+    "V": "R, full domain; identity projection",
+    "initial": "0",
+    "eta": [
+      "1",
+      "2",
+      "1"
+    ],
+    "loss": "ell_t(z)=g_t*z; policy returns g_t at all histories",
+    "g": [
+      "1",
+      "-2",
+      "2"
+    ],
+    "trajectory": [
+      "0",
+      "-1",
+      "3",
+      "1"
+    ],
+    "u": "2",
+    "exact_fraction_check": {
+      "lhs": "-1/2",
+      "initial": "2",
+      "terminal": "-1/2",
+      "interior": "-2"
+    },
+    "required_conjunction": [
+      "Actual OGD iterateVariable outputs equal all four listed values",
+      "Actual legal OSD policy output equals same four values, with played feedback legality",
+      "Positive schedule is not nonincreasing; no diameter hypothesis",
+      "Complete source identity evaluates to -1/2, including terminal residual -1/2 and both interior terms",
+      "Equality is applied to actual trajectory definitions, not an assumed recurrence alone"
+    ],
+    "recurrence_fraction_check": true
+  },
+  "one_step_free_terminal": {
+    "a0": "2",
+    "a1": "7",
+    "w0": "3",
+    "lhs": "-15",
+    "required_conclusion": "Full one-step equality, empty interior, no terminal bound"
+  },
+  "additional": [
+    "Constant weight exact telescope preserving nonzero terminal",
+    "Zero weights exact equality",
+    "Optional T=0 separately named extension only if final generic header supports it; not source obligation"
+  ],
+  "publication": "Public named theorem(s), complete conjunctions and frozen headers; decoder receives header/context without BODY; compiler/axiom/branch evidence later."
+}

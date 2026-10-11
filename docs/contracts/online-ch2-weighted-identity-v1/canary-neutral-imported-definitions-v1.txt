@@ -1,0 +1,114 @@
+import BanditRLProof.OnlineGradientDescentSource
+import BanditRLProof.OnlineSubgradientPolicy
+import BanditRLProof.OnlineHuber
+import BanditRLProof.OnlineHinge
+import Mathlib.Tactic
+
+noncomputable section
+open Set Finset
+open scoped InnerProductSpace
+
+namespace BanditRL.OnlineGradientDescent
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]
+
+structure Domain (E : Type*) [NormedAddCommGroup E] [InnerProductSpace ℝ E] where
+  carrier : Set E
+  nonempty : carrier.Nonempty
+  closed : IsClosed carrier
+  convex : Convex ℝ carrier
+
+def project (V : Domain E) (z : E) : E :=
+  Classical.choose (exists_norm_eq_iInf_of_complete_convex V.nonempty
+    V.closed.isComplete V.convex z)
+
+def RegularLoss (V : Domain E) (f : E → ℝ) : Prop :=
+  ∃ U : Set E, IsOpen U ∧ V.carrier ⊆ U ∧ ConvexOn ℝ U f ∧ DifferentiableOn ℝ f U
+
+def step (V : Domain E) (η : ℝ) (f : E → ℝ) (x : E) : E :=
+  project V (x - η • gradient f x)
+
+end BanditRL.OnlineGradientDescent
+
+namespace BanditRL.OnlineGradientDescent
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]
+
+def iterateVariable (V : Domain E) (η : ℕ → ℝ) (loss : ℕ → E → ℝ) (x₁ : E) : ℕ → E
+  | 0 => x₁
+  | t + 1 => step V (η t) (loss t) (iterateVariable V η loss x₁ t)
+
+end BanditRL.OnlineGradientDescent
+
+namespace BanditRL.OnlineGradientDescentSource
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]
+open BanditRL.OnlineGradientDescent
+
+def FeasibleRegularLoss (V : Domain E) (f : E → ℝ) : Prop :=
+  ConvexOn ℝ V.carrier f ∧ ∀ x ∈ V.carrier, DifferentiableAt ℝ f x
+
+end BanditRL.OnlineGradientDescentSource
+
+namespace BanditRL.OnlineConvex
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] 
+
+def SourceProper (f : E → EReal) : Prop :=
+  (∀ x, f x ≠ ⊥) ∧ ∃ x, ∃ r : ℝ, f x = (r : EReal)
+
+end BanditRL.OnlineConvex
+
+namespace BanditRL.OnlineConvex
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] 
+
+def SourceSubdifferential (f : E → EReal) (x : E) : Set E :=
+  {g | ∀ y, f x + (inner ℝ g (y - x) : EReal) ≤ f y}
+
+end BanditRL.OnlineConvex
+
+namespace BanditRL.OnlineSubgradientDescent
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
+open BanditRL.OnlineConvex
+
+abbrev Domain := BanditRL.OnlineGradientDescent.Domain E
+
+def SubdifferentiableOn (V : Domain (E := E)) (f : E → EReal) : Prop :=
+  SourceProper f ∧ ∀ x ∈ V.carrier, (SourceSubdifferential f x).Nonempty
+
+end BanditRL.OnlineSubgradientDescent
+
+namespace BanditRL.OnlineSubgradientPolicy
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
+open BanditRL.OnlineConvex
+
+abbrev Domain := BanditRL.OnlineGradientDescent.Domain E
+
+abbrev SupportPolicy := (t : ℕ) → (Fin t → E → EReal) → (Fin (t + 1) → E) → (E → EReal) → E
+
+def history (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) : (t : ℕ) → Fin (t + 1) → E :=
+  Nat.rec (motive := fun t => Fin (t + 1) → E) (fun _ => x₁)
+    (fun t h => Fin.snoc h
+      (BanditRL.OnlineGradientDescent.project V
+        (h (Fin.last t) - η t • p t (fun i => loss i.val) h (loss t))))
+
+def output (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) : E :=
+  history V η loss x₁ p t (Fin.last t)
+
+def selected (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) : E :=
+  p t (fun i => loss i.val) (history V η loss x₁ p t) (loss t)
+
+def LegalFeedback (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (T : ℕ) : Prop :=
+  ∀ t < T, selected V η loss x₁ p t ∈ SourceSubdifferential (loss t) (output V η loss x₁ p t)
+
+end BanditRL.OnlineSubgradientPolicy
+
+namespace BanditRL.OnlineHuber
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]
+open BanditRL.OnlineGradientDescent
+
+def fullSpace : Domain E :=
+  ⟨Set.univ, Set.univ_nonempty, isClosed_univ, convex_univ⟩
+
+end BanditRL.OnlineHuber
+

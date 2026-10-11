@@ -1,0 +1,7 @@
+import BanditRLProof.OnlineWeightedPotential
+#check BanditRL.OnlineWeightedPotential.weighted_difference_sum_eq
+#print axioms BanditRL.OnlineWeightedPotential.weighted_difference_sum_eq
+#print BanditRL.OnlineWeightedPotential.weighted_difference_sum_eq
+#check BanditRL.OnlineWeightedPotential.distance_potential_sum_eq
+#print axioms BanditRL.OnlineWeightedPotential.distance_potential_sum_eq
+#print BanditRL.OnlineWeightedPotential.distance_potential_sum_eq

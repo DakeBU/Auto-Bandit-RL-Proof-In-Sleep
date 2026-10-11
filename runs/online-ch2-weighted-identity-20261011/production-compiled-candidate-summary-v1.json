@@ -1,0 +1,91 @@
+{
+  "status": "focused compiled candidate; independent BODY review and integration gates pending",
+  "source": {
+    "path": "BanditRLProof/OnlineWeightedPotential.lean",
+    "sha256": "63d94480e5e5a337acf5019c62e092fd36b1d2bf1a6edfc6f5b6bc5b95aa885a"
+  },
+  "frozen_header_context_sha256": "55ae3f02b56be38afad93917f2f4ee080b48e2a332f331d1e83f17d4ef07408f",
+  "production_declarations": 2,
+  "new_helper_declarations": 0,
+  "focused_compiler_attempts": 1,
+  "focused_compiler_failures": 0,
+  "probe_compiler_attempts": 1,
+  "probe_compiler_failures": 0,
+  "unused_premises": [
+    "weighted_difference_sum_eq.hT",
+    "distance_potential_sum_eq.hη"
+  ],
+  "unused_premise_explanation": "Frozen source-domain premises deliberately retained; algebra is valid more broadly. No linter suppression or header modification.",
+  "axioms": [
+    {
+      "declaration": "BanditRL.OnlineWeightedPotential.weighted_difference_sum_eq",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlineWeightedPotential.distance_potential_sum_eq",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    }
+  ],
+  "proof_route": {
+    "weighted_difference_sum_eq": [
+      "Finset.sum_range_by_parts",
+      "Finset.sum_range_sub'",
+      "Finset.sum_range_sub",
+      "Finset.sum_mul",
+      "Finset.sum_sub_distrib",
+      "Finset.sum_congr",
+      "ring normalization"
+    ],
+    "distance_potential_sum_eq": [
+      "BanditRL.OnlineWeightedPotential.weighted_difference_sum_eq",
+      "Finset.mul_sum",
+      "Finset.sum_congr",
+      "div_eq_mul_inv",
+      "mul_inv_rev",
+      "ring normalization"
+    ]
+  },
+  "dependency_boundary": "Selected proof-route occurrences visible in source/public #print outputs, not a complete transitive graph or necessity claim.",
+  "tooling_failures_preserved": 3,
+  "tooling_failure_boundary": "Header-only input unsupported by native parser; normalized-vs-raw header comparison; prose supplied to literal-substring source_assumptions. All repaired without source changes; native fence/safe_verify then passed.",
+  "receipts": [
+    {
+      "path": "runs/online-ch2-weighted-identity-20261011/production-focused-v1.json",
+      "sha256": "4bd9126a219253ab71a530060fc255e2ceaf81f9cd9929fca541388380958566"
+    },
+    {
+      "path": "runs/online-ch2-weighted-identity-20261011/production-header-fences-safe-verify-v1.json",
+      "sha256": "5e4728e56c4420090455529cd6571b64f0ce43c29786b06662a0956a85119de3"
+    },
+    {
+      "path": "runs/online-ch2-weighted-identity-20261011/production-public-probe-v1.json",
+      "sha256": "a1b309cc2178193e9a6cfe58e28b67c9048f1bce9772a27f16b614037013e086"
+    },
+    {
+      "path": "runs/online-ch2-weighted-identity-20261011/production-focused-v1-timing-provenance-note-v1.json",
+      "sha256": "68842981a1f1a485ccbd8c1ae788e6d4e8e568f5c4d5269993c75246f16c774d"
+    },
+    {
+      "path": "runs/online-ch2-weighted-identity-20261011/header-tooling-failure-v1.json",
+      "sha256": "b49d80ec0a230d17d0ad67b832d1fd09bbd0509c4710377b30b9d97beb1bfa8e"
+    },
+    {
+      "path": "runs/online-ch2-weighted-identity-20261011/header-tooling-failure-v2.json",
+      "sha256": "465ae59af6b10dd9ad7d59804ea7690a35f08dda54a87e1fafa436207d6ee9a3"
+    },
+    {
+      "path": "runs/online-ch2-weighted-identity-20261011/header-tooling-failure-v3.json",
+      "sha256": "1f8d29c002a225bdd9ef4019ec513f018b50b01b87daa23dd1d1a1df01dd6b3f"
+    }
+  ],
+  "root_Tests_harness_site_native_acceptance": false,
+  "canary_BODYs_started": false
+}

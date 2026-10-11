@@ -1,0 +1,110 @@
+{
+  "status": "Source-blind reconstruction of five proposed canary declarations from exactly two authorized text files; no compilation, theorem-body inspection, source verification, or proof verification.",
+  "inputs": [
+    {
+      "file": "canary-frozen-contracts-v1.txt",
+      "raw_sha256_before": "7b949b3458841999a7d515209519851280d31afe8ec4e3366f3c2ffa07d65e97",
+      "raw_sha256_after": "7b949b3458841999a7d515209519851280d31afe8ec4e3366f3c2ffa07d65e97"
+    },
+    {
+      "file": "canary-neutral-imported-definitions-v1.txt",
+      "raw_sha256_before": "74289a20fe09dbe101e69ffa7ba093fa8c77fdfef079c8259f67440a7f1af155",
+      "raw_sha256_after": "74289a20fe09dbe101e69ffa7ba093fa8c77fdfef079c8259f67440a7f1af155"
+    }
+  ],
+  "ten_test_definitions": {
+    "V": "The real-line full-space Domain: carrier R, nonempty, closed, and convex.",
+    "signedA": "a_0=-2, a_1=3, a_2=-1, and a_t=4 for every t>=3.",
+    "signedW": "w_0=0, w_1=-2, and w_t=1 for every t>=2.",
+    "eta": "eta_1=2 and eta_t=1 for every other natural t, hence globally positive and increasing from index 0 to 1 then decreasing from 1 to 2.",
+    "feedback": "g_0=1, g_1=-2, and g_t=2 for every t>=2.",
+    "realLoss": "f_t(z)=<g_t,z>_R=g_t z, a real-valued linear loss on R.",
+    "extendedLoss": "F_t(z) is the EReal coercion of <g_t,z>_R+0; it is finite everywhere and numerically g_t z.",
+    "policy": "A SupportPolicy that returns g_t and ignores the supplied previous losses, point history, and current loss. Its value depends only on t.",
+    "ogd": "The actual iterateVariable output with V, eta, realLoss, and initial point 0; it is not a free sequence with an assumed recurrence.",
+    "osd": "The actual policy-driven output with V, eta, extendedLoss, initial point 0, and policy; it is not a free sequence with an assumed recurrence."
+  },
+  "seventeen_imported_definitions": {
+    "OnlineGradientDescent.Domain": "A carrier set in a real inner-product space, together with proofs of nonemptiness, closedness, and convexity.",
+    "OnlineGradientDescent.project": "Classical.choose applied to exists_norm_eq_iInf_of_complete_convex with the domain proofs and z. This expresses the chosen metric-projection point. The underlying Mathlib theorem statement and choice specification are not reproduced in the supplied input.",
+    "OnlineGradientDescent.RegularLoss": "There exists an open U containing the carrier such that f is convex on U and differentiable on U. This definition is supplied but is not the FeasibleRegularLoss predicate asserted by the OGD canary.",
+    "OnlineGradientDescent.step": "project V (x-eta*gradient f x), with scalar action in the general space. It uses the actual gradient operator.",
+    "OnlineGradientDescent.iterateVariable": "At time 0 return the supplied initial point; at time t+1 apply step with eta_t and loss_t to the recursively constructed time-t iterate.",
+    "OnlineGradientDescentSource.FeasibleRegularLoss": "Convexity of f on the carrier AND differentiability at every carrier point in the ambient real space. No open-neighborhood witness is explicitly required by this predicate.",
+    "OnlineConvex.SourceProper": "f never equals negative infinity anywhere, and f has at least one finite real value. Positive infinity at other points is not excluded by this predicate alone.",
+    "OnlineConvex.SourceSubdifferential": "At x, all g such that for EVERY ambient point y, f(x)+<g,y-x> (with the inner product coerced to EReal) <= f(y). This is a global affine-support condition, not only a condition over the carrier.",
+    "OnlineSubgradientDescent.Domain": "Alias of OnlineGradientDescent.Domain in the finite-dimensional real-inner-product context.",
+    "OnlineSubgradientDescent.SubdifferentiableOn": "SourceProper f AND nonemptiness of SourceSubdifferential f x at every x in the carrier.",
+    "OnlineSubgradientPolicy.Domain": "Alias of OnlineGradientDescent.Domain in the finite-dimensional real-inner-product context.",
+    "OnlineSubgradientPolicy.SupportPolicy": "At t, accepts the t previous full loss functions indexed by Fin t, the t+1 points indexed by Fin(t+1), and the current full loss function, then returns one vector. Future losses are absent from these arguments; current-loss access is present. This signature does not impose measurability or an oracle-information restriction beyond those arguments.",
+    "OnlineSubgradientPolicy.history": "Constructs the whole point prefix recursively. At t=0 the only point is the supplied initial point. From prefix h through time t, append project V (h[last]-eta_t*p(t, previous losses, h, current loss)).",
+    "OnlineSubgradientPolicy.output": "The last point of the recursively constructed history at time t.",
+    "OnlineSubgradientPolicy.selected": "The policy value at t supplied with losses at indices <t, history through time t, and loss_t.",
+    "OnlineSubgradientPolicy.LegalFeedback": "For every t<T, the selected vector is in the global SourceSubdifferential of loss_t at the output at t. This is legality along the actual generated trajectory, not for every possible history.",
+    "OnlineHuber.fullSpace": "The Domain with carrier Set.univ and its nonempty, closed, convex proofs."
+  },
+  "seven_slot_reconstructions": [
+    {
+      "name": "signed_weights_complete",
+      "objects_spaces": "The fixed real sequences signedA and signedW, horizon 3.",
+      "quantifier_order": "Closed proposition with no explicit free parameters; a conjunction of fixed-value facts and identities.",
+      "assumptions": "None beyond the supplied definitions and real arithmetic. Signed or zero entries are not excluded.",
+      "conclusion": "a_0=-2,\\ a_1=3,\\ a_2=-1,\\ a_3=4;\\quad w_0=0,\\ w_1=-2,\\ w_2=1;\\quad \\sum_{t=0}^2(a_t-a_{t+1})w_t=a_0w_0-a_3w_2+\\sum_{t=0}^1(w_{t+1}-w_t)a_{t+1}=-13;\\quad -a_3w_2=-4.",
+      "constants_indexing": "All seven displayed sequence entries, the full weighted identity, total -13, and terminal contribution -4 are conjuncts. The left summands are 0,-8,-5. The initial contribution is 0, interior contributions -6,-3 sum to -9, and 0-4-9=-13.",
+      "probability_feedback": "None. This is scalar algebra only.",
+      "boundary_excluded_cases": "This canary fixes T=3, permits a negative weight and a zero weight, and has a nonzero terminal term. It does not quantify over all horizons or prove all signed sequences by itself."
+    },
+    {
+      "name": "one_step_free_terminal_complete",
+      "objects_spaces": "Arbitrary a,w : N -> R, horizon 1.",
+      "quantifier_order": "For every real sequence a, then every real sequence w; no hypotheses.",
+      "assumptions": "None. In particular a_1 and w_0 have no sign or size restrictions.",
+      "conclusion": "\\sum_{t=0}^0(a_t-a_{t+1})w_t=a_0w_0-a_1w_0+\\sum_{t\\in\\varnothing}(w_{t+1}-w_t)a_{t+1},\\qquad \\sum_{t\\in\\varnothing}(w_{t+1}-w_t)a_{t+1}=0.",
+      "constants_indexing": "range 1 has exactly index 0; range 0 is empty. The terminal term -a_1 w_0 is retained. There are two conjuncts: the complete identity and explicit empty-sum equality.",
+      "probability_feedback": "None.",
+      "boundary_excluded_cases": "The terminal value a_1 is freely chosen and unbounded; it is not assumed zero, nonnegative, or bounded by a_0. T=0 and horizons greater than 1 are not asserted by this declaration."
+    },
+    {
+      "name": "constant_zero_weights_complete",
+      "objects_spaces": "Arbitrary a : N -> R, constant real c, natural T.",
+      "quantifier_order": "For every a, then c, then T, given hT : 0<T, four equalities hold conjunctively.",
+      "assumptions": "Only T>0. c may be positive, zero, or negative. No bounds on a.",
+      "conclusion": "\\sum_{t=0}^{T-1}(a_t-a_{t+1})c=a_0c-a_Tc+\\sum_{t=0}^{T-2}(c-c)a_{t+1};\\quad \\sum_{t=0}^{T-1}(a_t-a_{t+1})c=(a_0-a_T)c;\\quad \\sum_{t=0}^{T-1}(a_t-a_{t+1})0=a_0 0-a_T 0+\\sum_{t=0}^{T-2}(0-0)a_{t+1};\\quad \\sum_{t=0}^{T-1}(a_t-a_{t+1})0=0.",
+      "constants_indexing": "The correction terms vanish termwise. All four full/simplified constant and zero-weight equalities are asserted. range(T-1) is empty at T=1; final a_T remains unrestricted.",
+      "probability_feedback": "None.",
+      "boundary_excluded_cases": "T=0 is excluded by hT. T=1 is included. Zero weights are explicitly tested, and constant negative weights are included by universal c."
+    },
+    {
+      "name": "ogd_three_step_complete",
+      "objects_spaces": "The actual ogd algorithm on the complete real inner-product space R, full-space domain V, initial point 0, comparator u=2, three updates and four outputs.",
+      "quantifier_order": "Closed conjunction with no recurrence or regularity hypotheses. The internal regularity/feedback quantifiers range over every natural t<3; the nonmonotonicity conjunct negates forall t, t+1<3 implies eta_(t+1)<=eta_t.",
+      "assumptions": "No explicit theorem assumptions. The domain, losses, step sequence, feedback, and algorithm outputs are the concrete supplied definitions. Regularity and gradient/feedback legality are conclusions to be proved, not premises.",
+      "conclusion": "\\eta_0=1,\\eta_1=2,\\eta_2=1;\\quad (\\forall t<3,\\eta_t>0);\\quad \\neg(\\forall t,\\ t+1<3\\Rightarrow\\eta_{t+1}\\leq\\eta_t);\\quad g_0=1,g_1=-2,g_2=2;\\quad (q_0,q_1,q_2,q_3)=(0,-1,3,1).\\quad \\sum_{t=0}^2\\frac{|q_t-2|^2-|q_{t+1}-2|^2}{2\\eta_t}=\\frac{|q_0-2|^2}{2\\eta_0}-\\frac{|q_3-2|^2}{2\\eta_2}+\\frac12\\sum_{t=0}^1(\\eta_{t+1}^{-1}-\\eta_t^{-1})|q_{t+1}-2|^2=-\\frac12.\\quad \\frac{|q_0-2|^2}{2\\eta_0}=2,\\qquad -\\frac{|q_3-2|^2}{2\\eta_2}=-\\frac12,\\qquad \\frac12\\sum_{t=0}^1(\\eta_{t+1}^{-1}-\\eta_t^{-1})|q_{t+1}-2|^2=-2.",
+      "additional_conclusion": "Every t<3 has FeasibleRegularLoss V realLoss_t: convexity on all R and differentiability at every real point. In addition gradient(realLoss_t)(ogd_t)=g_t for all t<3.",
+      "constants_indexing": "q denotes ogd. Outputs at times 0,1,2,3 are all asserted: 0,-1,3,1. Step/feedback pairs are (1,1),(2,-2),(1,2). Squared comparator distances are 4,9,1,1. Weighted decreases are -5/2,2,0, summing to -1/2. Reciprocal changes are -1/2,+1/2; correction contributions are -9/4,+1/4, summing to -2. Endpoint contributions are +2 and -1/2, so 2-1/2-2=-1/2. No eta_3 occurs. Nonincreasing fails at t=0 because 2<=1 is false; the displayed values also show the later decrease.",
+      "probability_feedback": "No probability or stochastic feedback assumptions. OGD uses gradient of the current loss at the current constructed iterate to produce the next iterate.",
+      "boundary_excluded_cases": "This fixes T=3 and u=2 and does not prove a general regret or convergence bound. All three steps are positive but the schedule is not nonincreasing. The terminal term is nonzero and retained. The signed interior term is negative, so no monotonicity-based sign simplification is licensed. General normed-group algebra of the potential identity does not remove the stronger inner-product/complete or finite-dimensional structure used to define these actual algorithms."
+    },
+    {
+      "name": "osd_three_step_complete",
+      "objects_spaces": "The actual osd algorithm on the complete real inner-product space R, full-space domain V, initial point 0, comparator u=2, three updates and four outputs.",
+      "quantifier_order": "Closed conjunction with no recurrence or regularity hypotheses. The internal regularity/feedback quantifiers range over every natural t<3; the nonmonotonicity conjunct negates forall t, t+1<3 implies eta_(t+1)<=eta_t.",
+      "assumptions": "No explicit theorem assumptions. The domain, losses, step sequence, feedback, and algorithm outputs are the concrete supplied definitions. Regularity and gradient/feedback legality are conclusions to be proved, not premises.",
+      "conclusion": "\\eta_0=1,\\eta_1=2,\\eta_2=1;\\quad (\\forall t<3,\\eta_t>0);\\quad \\neg(\\forall t,\\ t+1<3\\Rightarrow\\eta_{t+1}\\leq\\eta_t);\\quad g_0=1,g_1=-2,g_2=2;\\quad (q_0,q_1,q_2,q_3)=(0,-1,3,1).\\quad \\sum_{t=0}^2\\frac{|q_t-2|^2-|q_{t+1}-2|^2}{2\\eta_t}=\\frac{|q_0-2|^2}{2\\eta_0}-\\frac{|q_3-2|^2}{2\\eta_2}+\\frac12\\sum_{t=0}^1(\\eta_{t+1}^{-1}-\\eta_t^{-1})|q_{t+1}-2|^2=-\\frac12.\\quad \\frac{|q_0-2|^2}{2\\eta_0}=2,\\qquad -\\frac{|q_3-2|^2}{2\\eta_2}=-\\frac12,\\qquad \\frac12\\sum_{t=0}^1(\\eta_{t+1}^{-1}-\\eta_t^{-1})|q_{t+1}-2|^2=-2.",
+      "additional_conclusion": "Every t<3 has SubdifferentiableOn V extendedLoss_t: global properness and a nonempty global support set at every real point. LegalFeedback V eta extendedLoss 0 policy 3 holds along the generated path. The selected vector equals g_t for every t<3.",
+      "constants_indexing": "q denotes osd. Outputs at times 0,1,2,3 are all asserted: 0,-1,3,1. Step/feedback pairs are (1,1),(2,-2),(1,2). Squared comparator distances are 4,9,1,1. Weighted decreases are -5/2,2,0, summing to -1/2. Reciprocal changes are -1/2,+1/2; correction contributions are -9/4,+1/4, summing to -2. Endpoint contributions are +2 and -1/2, so 2-1/2-2=-1/2. No eta_3 occurs. Nonincreasing fails at t=0 because 2<=1 is false; the displayed values also show the later decrease.",
+      "probability_feedback": "No probability or measurability assumptions. The causal history uses only prior losses and points through t; current loss is supplied to the policy after output_t is determined. This particular policy ignores all such data and returns the predetermined g_t. Legality means the global support inequality at output_t for every ambient y and every t<3.",
+      "boundary_excluded_cases": "This fixes T=3 and u=2 and does not prove a general regret or convergence bound. All three steps are positive but the schedule is not nonincreasing. The terminal term is nonzero and retained. The signed interior term is negative, so no monotonicity-based sign simplification is licensed. General normed-group algebra of the potential identity does not remove the stronger inner-product/complete or finite-dimensional structure used to define these actual algorithms."
+    }
+  ],
+  "actual_algorithm_assessment": "Both algorithm canaries assert values of concrete recursively defined algorithms. OGD uses iterateVariable, step, gradient, and project. OSD uses history, output, selected, and SupportPolicy, with global-subgradient legality asserted separately. Neither theorem has an assumed update recurrence as a hypothesis. With full-space projection interpreted as identity and the linear-loss gradient g_t, the three updates give 0-1*1=-1, -1-2*(-2)=3, and 3-1*2=1. These calculations check the intended mathematical interpretation, not elaboration or proofs of projection/gradient facts.",
+  "legality_arithmetic": "For the real/extended linear losses, g_t z is finite for every z and g_t x+g_t(y-x)=g_t y for all x,y. Thus the intended support inequality holds with equality; the linear real losses are convex and differentiable with derivative/gradient g_t. This explains the regularity and legality conjuncts mathematically without asserting that their Lean proofs exist.",
+  "context_uncertainties": [
+    "The two text files provide all ten named test definitions and seventeen imported definitions/aliases needed for the application-level semantic reconstruction.",
+    "Underlying Mathlib declarations, including gradient, EReal arithmetic, the projection-existence theorem, and instances, are referenced rather than reproduced. Exact elaboration and projection-choice specifications were not checked.",
+    "The first file imports the core weighted-potential module; its theorem bodies and the actual canonical modules were not read. No proof dependencies or use of the core lemmas can be established from these headers.",
+    "No source theorem or source identity has been disclosed or read. Therefore source fidelity and source-specific assumptions remain outside this reconstruction.",
+    "No theorem bodies are present, and these are proposed declarations, not compiled/proved results."
+  ],
+  "scope": "Only the two authorized input paths were read in this turn. One initial hashing command contained a misspelled second path and failed for that nonexistent path; the correct authorized path was subsequently hashed successfully. No other content was read. No Git, build, canonical mutation, or source lookup occurred. Outputs are create-only in the requested tmp folder; ignore status was not checked."
+}

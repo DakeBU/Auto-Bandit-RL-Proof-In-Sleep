@@ -1,0 +1,76 @@
+{
+  "status": "proposed; not proof-ready",
+  "source": {
+    "arxiv": "1912.13213v10",
+    "pdf_page": 26,
+    "printed_page": 14,
+    "anchor": "Theorem 2.13 proof, unnumbered second display equality",
+    "pdf_path": "E:/ABRL/worktrees/research-online-ogd/tmp/pdfs/orabona-v10.pdf",
+    "pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "pixel_review": "Full page inspected; factor1/2 and terminal x_(T+1) confirmed",
+    "contract_sha256": "2f4981495ca64cfda8383fb33f081e08bba39e5cb84b93a30a53e96ba0962ce4"
+  },
+  "worktree": "E:\\ABRL\\worktrees\\research-online-book",
+  "branch": "codex/research-online-ch2-adaptive-osd",
+  "head": "7291d3395d462d1e921b25d035d120c0f3755feb",
+  "frontier_owner": "Online Learning Chapter 2 / Theorem2.13 unnumbered weighted-distance equality; whole chapter remains partial, denominator null, all eight forward containers open and six future claims pending",
+  "outcome": "reusable-interface",
+  "reuse_decision": "adapt_existing",
+  "target": "Expose signed weighted difference source normal form from existing Mathlib summation-by-parts, then its source positive-step squared-distance specialization; do not reprove generic upstream algebra",
+  "proposed_files": [
+    "BanditRLProof/OnlineWeightedPotential.lean",
+    "Tests/OnlineWeightedPotentialCanary.lean"
+  ],
+  "proposed_declarations": [
+    "BanditRL.OnlineWeightedPotential.weighted_difference_sum_eq",
+    "BanditRL.OnlineWeightedPotential.distance_potential_sum_eq"
+  ],
+  "declaration_count_boundary": "Names are a proposed API, not two completed source obligations; no proof count or source denominator increase claimed. Final review may collapse adapter if redundant.",
+  "real_consumers": [
+    {
+      "path": "BanditRLProof/OnlineGradientDescentSource.lean",
+      "declaration": "BanditRL.OnlineGradientDescentSource.theorem_2_13_variable_bound",
+      "mapping": "a(t)=norm(iterateVariable(t)-u)^2; w(t)=1/(2 eta(t)); current line139 uses inverse-step inequality",
+      "current_edge": "Existing inequality; future identity reuse must be separately approved, no current body rewrite"
+    },
+    {
+      "path": "BanditRLProof/OnlineAdaptiveOSD.lean",
+      "declaration": "BanditRL.OnlineAdaptiveOSD.regret_bound",
+      "mapping": "a(t)=norm(output(t)-u)^2; w(t)=sqrt(energy(t+1))/(2 alpha D); current line269 calls AdaptivePotential.weighted_potential_sum",
+      "current_edge": "AdaptivePotential already uses Mathlib identity internally; proposed adapter makes common normalized interface available. Zero energy handled by zero weights; no reciprocal zero-step claim."
+    }
+  ],
+  "semantic_fingerprint": {
+    "quantifiers": "forall real sequences a,w and positive finite T; source adapter forall normed trajectories x, comparator u, played positive eta",
+    "initial": "a0*w0",
+    "interior": "sum t<T-1 (w(t+1)-w(t))*a(t+1)",
+    "terminal": "-aT*w(T-1), never erased",
+    "no_premises": [
+      "weight sign",
+      "weight monotonicity",
+      "a sign",
+      "a terminal bound",
+      "diameter",
+      "trajectory dynamics"
+    ],
+    "source_adapter_extra": "positive eta and Euclidean specialization retained; stronger normed-group identity labeled generalization"
+  },
+  "reader_delta": "One adjacent source card/teaching item for the exact unnumbered identity with source image/anchor, all terms and indexing, natural-language expansion/cancellation proof, source-versus-generalization tags, Mathlib dependencies and actual algorithm instantiations; folded exact statement and source link to complete proof after acceptance. No claim this alone proves regret.",
+  "proof_plan": "Apply Finset.sum_range_by_parts to w and successive differences; collapse partial differences with Finset.sum_range_sub'; collect coefficients to source normal form. Substitute a=norm-distance squared and w=1/(2 eta), normalize rational factors. Preserve all endpoints.",
+  "review_plan": "First independent C2 freeze and explicit leaf approval. Freeze final headers/context/source hashes. Distinct blind decoder sees only headers/context; distinct source reviewer compares decoder contract to literal PDF and generalization tags. Formalizer then proves; independent BODY/axiom/complete canary review and full shared root/Tests/harness/publication gates follow. This prospectus accepts no BODY.",
+  "progress_delta": "Proposed missing exposed equality interface only; no completed count, no chapter closure, no forward obligation closure. Existing accepted inequalities remain untouched.",
+  "graph_delta": {
+    "Lean": "candidate integration-node: existing Mathlib core -> proposed source-normal-form shared adapter -> distance specialization and complete actual-run canaries; mathematical consumers are prospective, not fabricated current proof edges",
+    "Overview": "candidate Chapter2 unnumbered equality leaf under variable-rate potential decomposition; no accepted-status change",
+    "Functor": "none-found: ordinary algebraic reuse, no new conceptual bridge claimed"
+  },
+  "blocked_by": [
+    "Independent full C2 target freeze v3.1 currently has source join blockers; wait append-only correction and approval",
+    "Explicit leaf/API approval",
+    "Exact final Lean headers not elaborated; no proof readiness claim"
+  ],
+  "artifacts": [],
+  "supersedes": "prospectus-v1.json: corrected consumer namespace and supplied exact proposed header text; no mathematical target change",
+  "proposed_exact_header_file": "proposed-exact-headers-v2.txt",
+  "proposed_exact_header_sha256": "35da99ac903402054543401762c58f55fefaa6081e55f1e6d9169e633e9fa134"
+}

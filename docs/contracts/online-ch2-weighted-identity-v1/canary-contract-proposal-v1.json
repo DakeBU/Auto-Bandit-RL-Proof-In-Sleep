@@ -1,0 +1,155 @@
+{
+  "status": "proposed exact context and five complete public canary headers; independent review and BODY authorization pending",
+  "context_and_headers": {
+    "path": "canary-frozen-contracts-v1.txt",
+    "sha256": "7b949b3458841999a7d515209519851280d31afe8ec4e3366f3c2ffa07d65e97"
+  },
+  "unchanged_production_headers_sha256": "55ae3f02b56be38afad93917f2f4ee080b48e2a332f331d1e83f17d4ef07408f",
+  "owner_proposed": "Tests/OnlineWeightedPotentialCanary.lean",
+  "namespace": "WeightedIdentityProbe",
+  "public_definitions": [
+    {
+      "name": "V",
+      "kind": "abbrev",
+      "text": "abbrev V : BanditRL.OnlineGradientDescent.Domain ℝ := BanditRL.OnlineHuber.fullSpace",
+      "sha256": "86e0458b19d95a10601eb1cb189edc023399042f308be21e404aae68421ea88b"
+    },
+    {
+      "name": "signedA",
+      "kind": "def",
+      "text": "def signedA (t : ℕ) : ℝ := if t = 0 then -2 else if t = 1 then 3 else if t = 2 then -1 else 4",
+      "sha256": "cdf949352e746e80653655067be0938ee0a6a712924d30007449d853621cfc79"
+    },
+    {
+      "name": "signedW",
+      "kind": "def",
+      "text": "def signedW (t : ℕ) : ℝ := if t = 0 then 0 else if t = 1 then -2 else 1",
+      "sha256": "0ef854908ef9463ca86eccfe80a359148d4e773be90ca4c793cb7d6ae8b98b5e"
+    },
+    {
+      "name": "eta",
+      "kind": "def",
+      "text": "def eta (t : ℕ) : ℝ := if t = 1 then 2 else 1",
+      "sha256": "935707a36ce90d4223400108b3310d7706e9e2dd915c111d06edfb4d2dbabc79"
+    },
+    {
+      "name": "feedback",
+      "kind": "def",
+      "text": "def feedback (t : ℕ) : ℝ := if t = 0 then 1 else if t = 1 then -2 else 2",
+      "sha256": "7913ec29bef74c7a3c4ce6de373cc0b9c9cbded98fda2c7014ffbc725c83fe8c"
+    },
+    {
+      "name": "realLoss",
+      "kind": "def",
+      "text": "def realLoss (t : ℕ) (z : ℝ) : ℝ := inner ℝ (feedback t) z",
+      "sha256": "8908e3446d83d2b51b7365e5c139a0f797129ecb60584e9e8982cfbc22701d75"
+    },
+    {
+      "name": "extendedLoss",
+      "kind": "def",
+      "text": "def extendedLoss (t : ℕ) (z : ℝ) : EReal := ((inner ℝ (feedback t) z + 0 : ℝ) : EReal)",
+      "sha256": "ac2fff6c8e352a63e835c184672e9b3bff5d9f22264b29d977bd396a9f88c69f"
+    },
+    {
+      "name": "policy",
+      "kind": "def",
+      "text": "def policy : BanditRL.OnlineSubgradientPolicy.SupportPolicy (E := ℝ) := fun t _ _ _ => feedback t",
+      "sha256": "8d6e13454ae419383232d07844f3fad9ad41505a9d7128989ca4d0f90b60e3f0"
+    },
+    {
+      "name": "ogd",
+      "kind": "abbrev",
+      "text": "abbrev ogd (t : ℕ) : ℝ := BanditRL.OnlineGradientDescent.iterateVariable V eta realLoss 0 t",
+      "sha256": "12b713b3a88b7574e605e2afa9c450ce000ad7315e943c56685d40ba7cbd64a2"
+    },
+    {
+      "name": "osd",
+      "kind": "abbrev",
+      "text": "abbrev osd (t : ℕ) : ℝ := BanditRL.OnlineSubgradientPolicy.output V eta extendedLoss 0 policy t",
+      "sha256": "9ccf8b1e795a0686a23f721233b7fa0e6759de5dce43a6e9f9858b4a7be2a7cc"
+    }
+  ],
+  "public_theorems": [
+    {
+      "name": "signed_weights_complete",
+      "full_header": "theorem signed_weights_complete :\n    signedA 0 = -2 ∧ signedA 1 = 3 ∧ signedA 2 = -1 ∧ signedA 3 = 4 ∧\n    signedW 0 = 0 ∧ signedW 1 = -2 ∧ signedW 2 = 1 ∧\n    (∑ t ∈ range 3, (signedA t - signedA (t + 1)) * signedW t) =\n      signedA 0 * signedW 0 - signedA 3 * signedW 2 +\n        ∑ t ∈ range 2, (signedW (t + 1) - signedW t) * signedA (t + 1) ∧\n    (∑ t ∈ range 3, (signedA t - signedA (t + 1)) * signedW t) = -13 ∧\n    -(signedA 3 * signedW 2) = -4\n",
+      "sha256": "f0b33ee913449829c42ff1c0ac303ec1506ed82ce128b3aac3c31343442e0d72"
+    },
+    {
+      "name": "one_step_free_terminal_complete",
+      "full_header": "theorem one_step_free_terminal_complete (a w : ℕ → ℝ) :\n    (∑ t ∈ range 1, (a t - a (t + 1)) * w t) =\n      a 0 * w 0 - a 1 * w 0 +\n        ∑ t ∈ range 0, (w (t + 1) - w t) * a (t + 1) ∧\n    (∑ t ∈ range 0, (w (t + 1) - w t) * a (t + 1)) = 0\n",
+      "sha256": "e151f194aaa9734969b44f44126ae394f6cf591a808e30fb16b55b5eca697bd4"
+    },
+    {
+      "name": "constant_zero_weights_complete",
+      "full_header": "theorem constant_zero_weights_complete (a : ℕ → ℝ) (c : ℝ) (T : ℕ) (hT : 0 < T) :\n    (∑ t ∈ range T, (a t - a (t + 1)) * c) =\n      a 0 * c - a T * c + ∑ t ∈ range (T - 1), (c - c) * a (t + 1) ∧\n    (∑ t ∈ range T, (a t - a (t + 1)) * c) = (a 0 - a T) * c ∧\n    (∑ t ∈ range T, (a t - a (t + 1)) * (0 : ℝ)) =\n      a 0 * 0 - a T * 0 + ∑ t ∈ range (T - 1), ((0 : ℝ) - 0) * a (t + 1) ∧\n    (∑ t ∈ range T, (a t - a (t + 1)) * (0 : ℝ)) = 0\n",
+      "sha256": "ff817e1bcd77faf4e2714ff0b6e35758d4f158c9aaa3b5c432c678b1490b1092"
+    },
+    {
+      "name": "ogd_three_step_complete",
+      "full_header": "theorem ogd_three_step_complete :\n    eta 0 = 1 ∧ eta 1 = 2 ∧ eta 2 = 1 ∧\n    (∀ t < 3, 0 < eta t) ∧ ¬ (∀ t, t + 1 < 3 → eta (t + 1) ≤ eta t) ∧\n    feedback 0 = 1 ∧ feedback 1 = -2 ∧ feedback 2 = 2 ∧\n    (∀ t < 3, BanditRL.OnlineGradientDescentSource.FeasibleRegularLoss V (realLoss t)) ∧\n    (∀ t < 3, gradient (realLoss t) (ogd t) = feedback t) ∧\n    ogd 0 = 0 ∧ ogd 1 = -1 ∧ ogd 2 = 3 ∧ ogd 3 = 1 ∧\n    (∑ t ∈ range 3, (‖ogd t - 2‖ ^ 2 - ‖ogd (t + 1) - 2‖ ^ 2) / (2 * eta t)) =\n      ‖ogd 0 - 2‖ ^ 2 / (2 * eta 0) - ‖ogd 3 - 2‖ ^ 2 / (2 * eta 2) +\n        (1 / 2 : ℝ) * ∑ t ∈ range 2,\n          (1 / eta (t + 1) - 1 / eta t) * ‖ogd (t + 1) - 2‖ ^ 2 ∧\n    (∑ t ∈ range 3, (‖ogd t - 2‖ ^ 2 - ‖ogd (t + 1) - 2‖ ^ 2) / (2 * eta t)) = -(1 / 2 : ℝ) ∧\n    ‖ogd 0 - 2‖ ^ 2 / (2 * eta 0) = 2 ∧\n    -(‖ogd 3 - 2‖ ^ 2 / (2 * eta 2)) = -(1 / 2 : ℝ) ∧\n    (1 / 2 : ℝ) * ∑ t ∈ range 2,\n      (1 / eta (t + 1) - 1 / eta t) * ‖ogd (t + 1) - 2‖ ^ 2 = -2\n",
+      "sha256": "45543f4c44cdd923435becaf86e0ad4a46cd161771680ac9663df9f57dc272d9"
+    },
+    {
+      "name": "osd_three_step_complete",
+      "full_header": "theorem osd_three_step_complete :\n    eta 0 = 1 ∧ eta 1 = 2 ∧ eta 2 = 1 ∧\n    (∀ t < 3, 0 < eta t) ∧ ¬ (∀ t, t + 1 < 3 → eta (t + 1) ≤ eta t) ∧\n    feedback 0 = 1 ∧ feedback 1 = -2 ∧ feedback 2 = 2 ∧\n    (∀ t < 3, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (extendedLoss t)) ∧\n    BanditRL.OnlineSubgradientPolicy.LegalFeedback V eta extendedLoss 0 policy 3 ∧\n    (∀ t < 3, BanditRL.OnlineSubgradientPolicy.selected V eta extendedLoss 0 policy t = feedback t) ∧\n    osd 0 = 0 ∧ osd 1 = -1 ∧ osd 2 = 3 ∧ osd 3 = 1 ∧\n    (∑ t ∈ range 3, (‖osd t - 2‖ ^ 2 - ‖osd (t + 1) - 2‖ ^ 2) / (2 * eta t)) =\n      ‖osd 0 - 2‖ ^ 2 / (2 * eta 0) - ‖osd 3 - 2‖ ^ 2 / (2 * eta 2) +\n        (1 / 2 : ℝ) * ∑ t ∈ range 2,\n          (1 / eta (t + 1) - 1 / eta t) * ‖osd (t + 1) - 2‖ ^ 2 ∧\n    (∑ t ∈ range 3, (‖osd t - 2‖ ^ 2 - ‖osd (t + 1) - 2‖ ^ 2) / (2 * eta t)) = -(1 / 2 : ℝ) ∧\n    ‖osd 0 - 2‖ ^ 2 / (2 * eta 0) = 2 ∧\n    -(‖osd 3 - 2‖ ^ 2 / (2 * eta 2)) = -(1 / 2 : ℝ) ∧\n    (1 / 2 : ℝ) * ∑ t ∈ range 2,\n      (1 / eta (t + 1) - 1 / eta t) * ‖osd (t + 1) - 2‖ ^ 2 = -2\n",
+      "sha256": "7504b50a7a75446b689a3ffd08c7b544da0bd5c6f3f22d6c6949ec11a2b087b9"
+    }
+  ],
+  "additional_public_helper_theorems": [],
+  "helper_policy": "Any additional public helper theorem must receive a separate frozen-header proposal before proof. Local proof facts may use the existing affine/gradient APIs. No new domain or arbitrary recurrence axioms.",
+  "actual_algorithm_binding": "ogd abbreviation unfolds existing iterateVariable; osd unfolds existing history-dependent policy output. Neither trajectory is stipulated by a recurrence premise. Policy is a legal fixed feedback instance of the existing API, not a claim of history sensitivity.",
+  "reuse_inputs": [
+    {
+      "path": "BanditRLProof/OnlineGradientDescentSource.lean",
+      "raw_sha256": "627df452453bbdfa2ecf4ddac8b5b85bfd750c74f1db5b81a26e6e20ca2eeec7"
+    },
+    {
+      "path": "BanditRLProof/OnlineSubgradientPolicy.lean",
+      "raw_sha256": "ac8fbfb3eee3c92ebb79b44f33beec33b500105bb7e54df5176c14e886c2c662"
+    },
+    {
+      "path": "BanditRLProof/OnlineHuber.lean",
+      "raw_sha256": "6aa70d9db582884dae95c325445d0d96e963e918bf85a26db2ce67a5159cd1ce"
+    },
+    {
+      "path": "BanditRLProof/OnlineHinge.lean",
+      "raw_sha256": "d3c7ec649a5d231bd30d472ce70bfed20ecdf7069cba30cb630297f99ce16871"
+    },
+    {
+      "path": "Tests/OnlineSubgradientPolicyCanary.lean",
+      "raw_sha256": "f830ff51718c5d8504fd02fd98c7372a48ca4f8928410fb7660645a4e3ecff6b"
+    },
+    {
+      "path": "Tests/OnlineAdaptiveOSDCanary.lean",
+      "raw_sha256": "4b62e01f4f57bce6a3ca45bf8bc021a9c7fceab61fdabefee535306c1e27c905"
+    }
+  ],
+  "reuse_declarations": [
+    "BanditRL.OnlineHuber.fullSpace",
+    "BanditRL.OnlineHuber.project_fullSpace",
+    "BanditRL.OnlineGradientDescentSource.linear_regular",
+    "BanditRL.OnlineGradientDescentSource.regular_to_feasible",
+    "BanditRL.OnlineGradientDescentSource.gradient_linear",
+    "BanditRL.OnlineConvex.affine_convex",
+    "BanditRL.OnlineConvex.affine_proper",
+    "BanditRL.OnlineConvex.affine_subdifferential",
+    "BanditRL.OnlineSubgradientPolicy.output_zero",
+    "BanditRL.OnlineSubgradientPolicy.output_succ",
+    "BanditRL.OnlineSubgradientPolicy.LegalFeedback"
+  ],
+  "notes": [
+    "Five complete public conjunctive canaries, no partial projection-only proof acceptance.",
+    "All definitions exact and test-local; import of proposed production module is prospective.",
+    "Source indexing zero based, full space R, comparator2, horizon3; positive nonmonotone eta ensures equality has no hidden monotonicity premise.",
+    "Real and extended losses use scalar inner product, mathematically g*z; EReal affine +0 aligns existing affine source API.",
+    "The constant/zero canary covers arbitrary signed c and signed potential; one-step leaves terminal unrestricted.",
+    "No T=0 claim in frozen canaries.",
+    "No BODY supplied, no Lean file created, no compiler run; elaboration remains unverified."
+  ],
+  "source_reference": {
+    "source_contract": "source-contract.txt",
+    "sha256": "2f4981495ca64cfda8383fb33f081e08bba39e5cb84b93a30a53e96ba0962ce4"
+  },
+  "parent_authorization_required": true
+}

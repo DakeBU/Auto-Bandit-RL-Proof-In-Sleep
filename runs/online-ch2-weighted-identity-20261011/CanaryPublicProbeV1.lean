@@ -1,0 +1,16 @@
+import Tests.OnlineWeightedPotentialCanary
+#check WeightedIdentityProbe.signed_weights_complete
+#print axioms WeightedIdentityProbe.signed_weights_complete
+#print WeightedIdentityProbe.signed_weights_complete
+#check WeightedIdentityProbe.one_step_free_terminal_complete
+#print axioms WeightedIdentityProbe.one_step_free_terminal_complete
+#print WeightedIdentityProbe.one_step_free_terminal_complete
+#check WeightedIdentityProbe.constant_zero_weights_complete
+#print axioms WeightedIdentityProbe.constant_zero_weights_complete
+#print WeightedIdentityProbe.constant_zero_weights_complete
+#check WeightedIdentityProbe.ogd_three_step_complete
+#print axioms WeightedIdentityProbe.ogd_three_step_complete
+#print WeightedIdentityProbe.ogd_three_step_complete
+#check WeightedIdentityProbe.osd_three_step_complete
+#print axioms WeightedIdentityProbe.osd_three_step_complete
+#print WeightedIdentityProbe.osd_three_step_complete
