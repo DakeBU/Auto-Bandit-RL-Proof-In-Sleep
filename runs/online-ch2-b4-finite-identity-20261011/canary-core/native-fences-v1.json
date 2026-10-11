@@ -1,0 +1,48 @@
+[
+  {
+    "declaration": "finite_identity_one_round_positive_gap",
+    "frozen_complete_header_sha256": "7d10ab86d93f97a5ac03db64ce96b8759a0a64d7bd440fa5bfbbe666717be75e",
+    "whole_header_reconstructed_exact": true,
+    "fence": {
+      "schema_version": 1,
+      "declaration": "BanditRL.OnlineCumulativePotentialCanary.finite_identity_one_round_positive_gap",
+      "file": "Tests/OnlineCumulativePotentialCanary.lean",
+      "statement": "theorem finite_identity_one_round_positive_gap : let psi : \u2115 \u2192 \u211d \u2192 \u211d := fun _ v => v ^ 2 / 2 let loss : \u2115 \u2192 \u211d \u2192 \u211d := fun _ v => (v - 1) ^ 2 / 2 let x : \u2115 \u2192 \u211d := fun _ => 1 / 2 let u : \u211d := 1 / 2 let z : \u211d := 2 / 3 let T : \u2115 := 1 let y : \u2115 \u2192 \u211d := fun t => if t = T then z else x t let G : \u2115 \u2192 \u211d \u2192 \u211d := fun t v => psi t v + \u2211 i \u2208 range (t + 1), loss i v ((\u2211 t \u2208 range T, (loss t (y t) - loss t u)) = psi (T - 1) u - psi 0 (y 0) + (\u2211 t \u2208 range T, (G t (y t) - G t (y (t + 1)))) + (\u2211 t \u2208 range (T - 1), (psi t (y (t + 1)) - psi (t + 1) (y (t + 1)))) + G (T - 1) z - G (T - 1) u) \u2227 (\u2211 t \u2208 range T, (loss t (y t) - loss t u)) = 0 \u2227 (psi (T - 1) u - psi 0 (y 0)) = 0 \u2227 (\u2211 t \u2208 range T, (G t (y t) - G t (y (t + 1)))) = -(1 / 36 : \u211d) \u2227 (\u2211 t \u2208 range (T - 1), (psi t (y (t + 1)) - psi (t + 1) (y (t + 1)))) = 0 \u2227 (G (T - 1) z - G (T - 1) u) = (1 / 36 : \u211d) \u2227 \u00ac ((\u2211 t \u2208 range T, (loss t (y t) - loss t u)) \u2264 (psi (T - 1) u - psi 0 (y 0)) + (\u2211 t \u2208 range T, (G t (y t) - G t (y (t + 1)))) + (\u2211 t \u2208 range (T - 1), (psi t (y (t + 1)) - psi (t + 1) (y (t + 1)))))",
+      "statement_hash": "9b11049f357e8ab40671bd431890b7266221fa70baf2a9822d683026386c1c13",
+      "source_assumptions": [],
+      "created_at": "2026-10-11T08:51:09+00:00"
+    },
+    "result": {
+      "ok": true,
+      "declaration": "BanditRL.OnlineCumulativePotentialCanary.finite_identity_one_round_positive_gap",
+      "expected_statement_hash": "9b11049f357e8ab40671bd431890b7266221fa70baf2a9822d683026386c1c13",
+      "actual_statement_hash": "9b11049f357e8ab40671bd431890b7266221fa70baf2a9822d683026386c1c13",
+      "source_assumptions_preserved": true,
+      "findings": []
+    },
+    "source_assumptions_reason": "Closed concrete canary: no logical input binders; all objects are explicit statement-local lets preserved by full byte fence."
+  },
+  {
+    "declaration": "finite_identity_two_round_terminal_splice",
+    "frozen_complete_header_sha256": "718a2eb714597c34033cc4d35af06b00b3718768cd60799800c6e487c777af64",
+    "whole_header_reconstructed_exact": true,
+    "fence": {
+      "schema_version": 1,
+      "declaration": "BanditRL.OnlineCumulativePotentialCanary.finite_identity_two_round_terminal_splice",
+      "file": "Tests/OnlineCumulativePotentialCanary.lean",
+      "statement": "theorem finite_identity_two_round_terminal_splice : let psi : \u2115 \u2192 \u211d \u2192 \u211d := fun t v => ((t : \u211d) + 1) * v ^ 2 / 2 let loss : \u2115 \u2192 \u211d \u2192 \u211d := fun t v => if t = 0 then v else if t = 1 then -2 * v + 1 else 0 let x : \u2115 \u2192 \u211d := fun t => if t = 0 then 0 else if t = 1 then 1 else 100 let u : \u211d := 3 let z : \u211d := 2 let T : \u2115 := 2 let y : \u2115 \u2192 \u211d := fun t => if t = T then z else x t let G : \u2115 \u2192 \u211d \u2192 \u211d := fun t v => psi t v + \u2211 i \u2208 range (t + 1), loss i v ((\u2211 t \u2208 range T, (loss t (y t) - loss t u)) = psi (T - 1) u - psi 0 (y 0) + (\u2211 t \u2208 range T, (G t (y t) - G t (y (t + 1)))) + (\u2211 t \u2208 range (T - 1), (psi t (y (t + 1)) - psi (t + 1) (y (t + 1)))) + G (T - 1) z - G (T - 1) u) \u2227 (\u2211 t \u2208 range T, (loss t (y t) - loss t u)) = 1 \u2227 (psi (T - 1) u - psi 0 (y 0)) = 9 \u2227 (\u2211 t \u2208 range T, (G t (y t) - G t (y (t + 1)))) = -(7 / 2 : \u211d) \u2227 (\u2211 t \u2208 range (T - 1), (psi t (y (t + 1)) - psi (t + 1) (y (t + 1)))) = -(1 / 2 : \u211d) \u2227 (G (T - 1) z - G (T - 1) u) = -4 \u2227 x 2 = 100 \u2227 y 2 = 2 \u2227 y 2 \u2260 x 2",
+      "statement_hash": "2689c3cd0cfdf09e7581e0cab9c888a633d468768d5753f737d118b5a3b01788",
+      "source_assumptions": [],
+      "created_at": "2026-10-11T08:51:09+00:00"
+    },
+    "result": {
+      "ok": true,
+      "declaration": "BanditRL.OnlineCumulativePotentialCanary.finite_identity_two_round_terminal_splice",
+      "expected_statement_hash": "2689c3cd0cfdf09e7581e0cab9c888a633d468768d5753f737d118b5a3b01788",
+      "actual_statement_hash": "2689c3cd0cfdf09e7581e0cab9c888a633d468768d5753f737d118b5a3b01788",
+      "source_assumptions_preserved": true,
+      "findings": []
+    },
+    "source_assumptions_reason": "Closed concrete canary: no logical input binders; all objects are explicit statement-local lets preserved by full byte fence."
+  }
+]

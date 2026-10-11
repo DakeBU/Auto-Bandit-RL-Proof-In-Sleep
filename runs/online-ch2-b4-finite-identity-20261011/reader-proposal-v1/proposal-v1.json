@@ -1,0 +1,182 @@
+{
+  "status": "PROOF-FREE INTEGRATION PROPOSAL v1; not applied; distinct review required",
+  "actor": "/root/adaptive_decoder",
+  "requested_model_effort": "GPT-6 Astra / medium; runtime not attested",
+  "input_raw_sha256": {
+    "website/content/chapters.json": "17fe0e096447259511e706179a8ebe5eae4d19a6b26764ccd073d02e287db795",
+    "website/content/readings.json": "fa35944998387cf579ca9b88c71bcf1d73e2b0400335c17cb6938d54a8fa26f2",
+    "website/content/highlights.json": "43df4440422f70f042c6468af344fcc51fb3adfa798c79bf08227fcac2c4abda",
+    "website/scripts/build_site.py": "4fe18b8b9a543ff5256a278f49d160424b30ba2185c946f3d6081ad5460ccaff",
+    "docs/contracts/online-ch2-b4-finite-identity-v1/neutral-frozen-header-v1.txt": "92e0dcfac53595e35b68bfd8083c09640d06da809355ab02ec4eb4b007b0bd67",
+    "docs/contracts/online-ch2-b4-finite-identity-v1/source-contract-proposal-v1.json": "939a72100fe5a416a19aace105b95dad38cd4fc5713cdb4c9edf7a61d6197e6a",
+    "docs/contracts/online-ch2-b4-finite-identity-v1/leaf-freeze-receipt-v1.json": "9150e0fd1342375bf13c7313b7b6715e7e4bdde5edd6078689474381d3ca80cd",
+    "tmp/online-ch2-b4-finite-identity-source-review-20261011/source-header-review-v1.json": "adda7e17c6ebf0ba1b8c24d9cd78e0df763f55000521ec01fb8d94b51229228f",
+    "tmp/online-ch2-b4-finite-identity-source-review-20261011/topology-proposal-v2.json": "d7d6051f3788797b53a19d5d80f163bdca80491281ec13be998b4c2d106ad8bc",
+    "tmp/online-ch2-b4-finite-identity-canary-source-review-20261011/source-header-review-v1.json": "b581b3fff2379b4805fd7e472b12bd7d4cca4e2dc13d519b3d2e4f7f3b364939"
+  },
+  "allowed_future_product_scope": [
+    "website/content/chapters.json",
+    "website/content/readings.json",
+    "website/content/highlights.json"
+  ],
+  "patch_format": "RFC6902 add operations only; apply only to exact hash-bound baseline or independently reviewed rebase; these are proposals, not an apply tool",
+  "patches": {
+    "website/content/chapters.json": [
+      {
+        "op": "add",
+        "path": "/chapters/10/module_globs/-",
+        "value": "BanditRLProof/OnlineCumulativePotential.lean"
+      }
+    ],
+    "website/content/readings.json": [
+      {
+        "op": "add",
+        "path": "/readings/10/source_theorems/-",
+        "value": {
+          "label": "Corrected terminal accounting: the finite-real regret identity",
+          "pages": "printed129–130,266–267 / PDF141–142,278–279",
+          "pdf_page": 142,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=142",
+          "math": "\\begin{gathered}G_t(v)=\\psi_t(v)+\\sum_{i=0}^{t}\\ell_i(v),\\quad y_t=\\begin{cases}z&t=T,\\\\x_t&t\\ne T.\\end{cases}\\\\R_T(u)=\\sum_{t=0}^{T-1}(\\ell_t(y_t)-\\ell_t(u))\\\\=\\psi_{T-1}(u)-\\psi_0(y_0)+\\sum_{t=0}^{T-1}\\bigl(G_t(y_t)-G_t(y_{t+1})\\bigr)\\\\\\quad+\\sum_{t=0}^{T-2}\\bigl(\\psi_t(y_{t+1})-\\psi_{t+1}(y_{t+1})\\bigr)+G_{T-1}(z)-G_{T-1}(u).\\end{gathered}",
+          "plain": "An arbitrary state type E, total real-valued functions psi and loss on natural time and E, an arbitrary sequence x, comparator u and terminal z, and a natural horizon T>0. No convexity, norm, optimizer, algorithm, probability or causal premise is required. Finite real arithmetic is a specialization: the full EReal/domain adapter remains separate. Indices are zero-based: source round s corresponds to t=s-1. G includes the current loss through t. Only the unscored coordinate T is spliced to z; all y(t)=x(t) for t<T. The original x(T) is unused. The interior drift has indices0..T-2; forT1 it is empty. T0 is not claimed.",
+          "fallback": "Regret equals initial regularizer difference plus within-potential differences plus interior regularizer drift plus the terminal cumulative-objective gap.",
+          "relationship": "This is the finite-real corrected algebra subclause of repair:7.47-terminal, related to the terminal correction of Theorem15.31; it is not the literal full printed theorem. The source uses Euclidean feasible states and extended losses; the algebra abstracts the carrier and uses globally real functions. Repeating a virtual final hint is legitimate, but omitting its terminal residual can invalidate the sharp bound. The full EReal adapter, actual optimistic-FTRL/BTRL producers, ghost attainment, support qualification, strong-convex stability, Young estimate and whole corrected7.47/15.31 bounds remain open. A positive arbitrary terminal gap cannot be discarded.",
+          "contract": {
+            "model": "Exact deterministic accounting for arbitrary states and functions; no algorithmic run is asserted. Indices are zero-based: source round s corresponds to t=s-1. G includes the current loss through t. Only the unscored coordinate T is spliced to z; all y(t)=x(t) for t<T. The original x(T) is unused. The interior drift has indices0..T-2; forT1 it is empty. T0 is not claimed.",
+            "assumptions": "An arbitrary state type E, total real-valued functions psi and loss on natural time and E, an arbitrary sequence x, comparator u and terminal z, and a natural horizon T>0. No convexity, norm, optimizer, algorithm, probability or causal premise is required. Finite real arithmetic is a specialization: the full EReal/domain adapter remains separate.",
+            "parameters": "T is a positive natural number. u and z are independent arbitrary states; no relation between z and original x(T).",
+            "regret": "R_T(u)=sum_{t<T}(loss_t(y_t)-loss_t(u)); the scored states are unchanged by the terminal splice.",
+            "guarantee": "Full equality including every endpoint and drift term. The full EReal adapter, actual optimistic-FTRL/BTRL producers, ghost attainment, support qualification, strong-convex stability, Young estimate and whole corrected7.47/15.31 bounds remain open. A positive arbitrary terminal gap cannot be discarded."
+          },
+          "local_status": {
+            "status": "planned",
+            "label": "Candidate corrected finite-real identity",
+            "boundary": "Candidate finite-real corrected algebra subclause. Production BODY acceptance, actual VALUE export and package gates are pending; no compiled claim is made. Unmerged and unpublished."
+          }
+        }
+      }
+    ],
+    "website/content/highlights.json": [
+      {
+        "op": "add",
+        "path": "/highlights/-",
+        "value": {
+          "full_name": "BanditRL.OnlineCumulativePotential.finite_regret_identity",
+          "title": "Why the terminal gap belongs in the regret identity",
+          "chapter": "online-ogd",
+          "featured": false,
+          "teaching_order": 340,
+          "source_match": "closest-source",
+          "plain": "An arbitrary state type E, total real-valued functions psi and loss on natural time and E, an arbitrary sequence x, comparator u and terminal z, and a natural horizon T>0. No convexity, norm, optimizer, algorithm, probability or causal premise is required. Finite real arithmetic is a specialization: the full EReal/domain adapter remains separate. Indices are zero-based: source round s corresponds to t=s-1. G includes the current loss through t. Only the unscored coordinate T is spliced to z; all y(t)=x(t) for t<T. The original x(T) is unused. The interior drift has indices0..T-2; forT1 it is empty. T0 is not claimed.",
+          "math": "\\begin{gathered}G_t(v)=\\psi_t(v)+\\sum_{i=0}^{t}\\ell_i(v),\\quad y_t=\\begin{cases}z&t=T,\\\\x_t&t\\ne T.\\end{cases}\\\\R_T(u)=\\sum_{t=0}^{T-1}(\\ell_t(y_t)-\\ell_t(u))\\\\=\\psi_{T-1}(u)-\\psi_0(y_0)+\\sum_{t=0}^{T-1}\\bigl(G_t(y_t)-G_t(y_{t+1})\\bigr)\\\\\\quad+\\sum_{t=0}^{T-2}\\bigl(\\psi_t(y_{t+1})-\\psi_{t+1}(y_{t+1})\\bigr)+G_{T-1}(z)-G_{T-1}(u).\\end{gathered}",
+          "intuition": "The terminal point appears once with a minus sign inside the last within-potential difference and once with a plus sign in the endpoint gap. Their cancellation explains why the scored regret does not depend on an unplayed endpoint.",
+          "why": "One shared algebraic component needed by labeled terminal corrections, not a complete regret theorem or source-container count.",
+          "position": "Finite-real corrected accounting near Theorem7.47 proof, PDF141–142; related Theorem15.31 terminal convention, PDF278–279. The full EReal adapter, actual optimistic-FTRL/BTRL producers, ghost attainment, support qualification, strong-convex stability, Young estimate and whole corrected7.47/15.31 bounds remain open. A positive arbitrary terminal gap cannot be discarded.",
+          "proof_idea": "Put H_t(v)=sum_{i<t}loss_i(v), so G_t=psi_t+H_(t+1). The regularizer parts of the within-G sum, together with the interior drift, telescope to psi_0(y_0)-psi_(T-1)(z). The cumulative-loss parts telescope to sum_{t<T}loss_t(y_t)-H_T(z). Adding the initial comparator term and the retained G_(T-1)(z)-G_(T-1)(u) leaves exactly the regret. This is the mathematical cancellation argument, not a claimed implementation route.",
+          "lean_notes": "E has no additional typeclass assumptions; psi/loss are real-valued and T>0 is the only propositional premise. Local y and G are definitions, not extra hypotheses. The exact Lean header and eventual full-proof source link use the declaration fold; the current renderer exposes these notes, not a complete rendered source-proof graph. Actual compiled VALUE parents are pending an export and will be recorded separately from the source-only AND topology. Prepared one-round and two-round canary headers check a positive gap and nonzero drift/terminal splice; their BODY and compilation are not claimed. Candidate finite-real corrected algebra subclause. Production BODY acceptance, actual VALUE export and package gates are pending; no compiled claim is made. Unmerged and unpublished.",
+          "dependencies": []
+        }
+      }
+    ]
+  },
+  "production_declaration": "BanditRL.OnlineCumulativePotential.finite_regret_identity",
+  "compiled": null,
+  "production_BODY_review": null,
+  "actual_TYPE_VALUE_export": null,
+  "actual_VALUE_parents": null,
+  "pending_evidence": "No new production implementation read; no actual dependency/compiled status invented. Follow-up v2 must bind actual export/BODY acceptance and gate status before review/apply.",
+  "in_memory_invariants": {
+    "restoring_only_three_appends_equals_entire_old_documents": true,
+    "all22_old_source_cards_exact_objects_preserved": true,
+    "proposed_card_count": 23,
+    "all_old_highlights_preserved": true,
+    "all_other_chapter_objects_preserved": true,
+    "historical_completion_definition_unchanged": true,
+    "operation_count": 3,
+    "new_highlights": 1
+  },
+  "atomic_binder_ledger": [
+    {
+      "binder": "E",
+      "classification": "TYPING",
+      "reason": "Type*; arbitrary carrier generalizes source Euclidean feasible states for algebra only."
+    },
+    {
+      "binder": "psi",
+      "classification": "STANDING",
+      "reason": "Natural-time total real-valued functions; source regularizer values restricted to this finite-real algebra interface."
+    },
+    {
+      "binder": "loss",
+      "classification": "STANDING",
+      "reason": "Natural-time total real-valued functions; source EReal losses require a separate finite-evaluation adapter."
+    },
+    {
+      "binder": "x",
+      "classification": "SOURCE",
+      "reason": "Played finite sequence extended to a total sequence for indexing, with arbitrary unused tail; no algorithm premise needed for equality."
+    },
+    {
+      "binder": "u",
+      "classification": "SOURCE",
+      "reason": "Arbitrary comparator in the chosen carrier; feasible-set embedding remains external."
+    },
+    {
+      "binder": "z",
+      "classification": "SOURCE",
+      "reason": "Arbitrary terminal point of frozen corrected algebra clause; no minimizer or recurrence assumed."
+    },
+    {
+      "binder": "T",
+      "classification": "SOURCE",
+      "reason": "Finite natural horizon."
+    },
+    {
+      "binder": "hT",
+      "classification": "STANDING",
+      "reason": "Positive horizon of frozen correction; avoids Nat-subtraction terminal degeneracy."
+    }
+  ],
+  "local_let_ledger": [
+    {
+      "name": "y",
+      "classification": "TYPING",
+      "meaning": "Endpoint splice, no hypothesis; t<T unchanged and y(T)=z."
+    },
+    {
+      "name": "G",
+      "classification": "TYPING",
+      "meaning": "Inclusive cumulative potential definition, no extra premise."
+    }
+  ],
+  "graph_contract": {
+    "source_topology_sha256": "d7d6051f3788797b53a19d5d80f163bdca80491281ec13be998b4c2d106ad8bc",
+    "source_topology": "Source-only unverified AND obligations and separate literal/corrected endpoint nodes, not actual Lean proof edges.",
+    "future_Lean_VALUE": "Pending actual export; dependencies=[] avoids inventing Mathlib project-registry nodes. Any eventual selected occurrences go into lean_notes with occurrence/not-necessity limit.",
+    "compressed_spine": "Expository initial/within/drift/gap grouping only; no additional theorem or verified route.",
+    "functor": "Arbitrary-carrier algebra abstraction is conceptual; no formal categorical transport/functor claimed.",
+    "rendering": "Current renderer supports lean_notes and declaration folds; full source graph visual rendering is not asserted."
+  },
+  "governance_boundary": {
+    "open_forward_containers": 7,
+    "future_claims_open": 6,
+    "Chapter2": "partial",
+    "accepted": false,
+    "denominator": null,
+    "Goal": "ACTIVE boundary; no tool query in this task",
+    "PURIFIED": "pending",
+    "unmerged": true,
+    "unpublished": true,
+    "root_Tests_manifest_DOC_RUN_site_writes": false,
+    "canary_BODY_authorization": false
+  },
+  "validation_hooks": [
+    "Verify exact input RAW hashes and independently review proposed rows before apply.",
+    "After actual core BODY acceptance/export, prepare successor binding current truthful status and selected VALUE parents.",
+    "Later check module declaration fold/header/fullproof link against actual candidate commit; no link invented now.",
+    "Later registry-preservation and renderer checks must run against current prior baseline; no node-count/source-denominator inference.",
+    "MathJax full identity and boundary adjacent prose require actual rendered review.",
+    "Any root/Test imports are parent-owned and outside these three patches."
+  ],
+  "inputs_unchanged": true
+}

@@ -1,0 +1,51 @@
+{
+  "UTC": "2026-10-11T09:00:34.872468+00:00",
+  "actor": "/root/adaptive_reviewer",
+  "requested_model_effort": "GPT-6 Astra / medium; runtime not independently attested",
+  "verdict": "repair-stabilization-metadata",
+  "blocking_repairs": [
+    {
+      "id": "S1",
+      "path": "/graph_contribution/visual_review",
+      "finding": "Still describes DRAFT readerV2 proposed/not applied, but reviewed V3 has been applied.",
+      "repair": "Bind exact applied V3 and its independent review; explicitly keep rendered visual acceptance pending."
+    },
+    {
+      "id": "S2",
+      "paths": [
+        "/verification/bandit_check",
+        "/verification/site_build",
+        "/verification/site_check"
+      ],
+      "finding": "Present-tense actual receipts are recorded wording overstates gates that have not run.",
+      "repair": "State gates pending on next clean committed candidate, identify future receipt location without claiming existence or success."
+    },
+    {
+      "id": "S3",
+      "path": "/verification/focused_checks/4",
+      "finding": "Unqualified no BODY read by metadata author no longer distinguishes original source-only drafter from stabilizing parent.",
+      "repair": "Use the same explicit role/exposure distinction already present in DOC proof-digestion exposure."
+    }
+  ],
+  "reviewed_manifest_sha256": "9d0880d79a5aa080598657d501661b50cd21b0ca1cda9f99f4e6ed2d9cf3360c",
+  "reviewed_proof_digestion_sha256": "ac3a34276f399d0ee940a1724a137e096da8e4281dd17607db1ab67c9df11079",
+  "passed_checks": {
+    "exact_ports_origin_destination": 87,
+    "unchanged_frozen_rows": [
+      116,
+      317,
+      57
+    ],
+    "core_Test_hashes_unchanged": true,
+    "one_exact_import_append_each_root": true,
+    "MANIFEST_old_raw_prefix_preserved": true,
+    "all_old_site_objects_recovered_by_removing_exact3approvedappends": true,
+    "protected_paths_exact": 5,
+    "pure_validate_contract_errors": [],
+    "known_consumers_two_actual_firstconjunct_consumers": true,
+    "DOC_parent_exposure_distinction_correct": true,
+    "source_topology_29nodes_4exclusions_0verified_kept_separate": true,
+    "wholeB4_7plus6_Goal_boundaries_unchanged": true
+  },
+  "scope": "Metadata stabilization repair only; mathematical source and frozen contracts unaffected. No canonical edits, builds, commit or full acceptance."
+}

@@ -1,0 +1,129 @@
+{
+  "status": "INTEGRATION PROPOSAL v2; not applied; independent review required",
+  "actor": "/root/adaptive_decoder",
+  "requested_model_effort": "GPT-6 Astra / medium; runtime not attested",
+  "input_raw_sha256": {
+    "website/content/chapters.json": "17fe0e096447259511e706179a8ebe5eae4d19a6b26764ccd073d02e287db795",
+    "website/content/readings.json": "fa35944998387cf579ca9b88c71bcf1d73e2b0400335c17cb6938d54a8fa26f2",
+    "website/content/highlights.json": "43df4440422f70f042c6468af344fcc51fb3adfa798c79bf08227fcac2c4abda",
+    "tmp/online-ch2-b4-finite-identity-integration-proposal-20261011/proposal-v1.json": "48e166aa04c4ad645a84a4ef4ede200e646383b7ba7f7e96bee5d9ba2242dc30",
+    "tmp/online-ch2-b4-finite-identity-core-20261011/core-report-v2.json": "5c55e8ea41cf2c18af4c47f9929233e7e4afcf903de00f654fd00edec1ab98aa",
+    "tmp/online-ch2-b4-finite-identity-core-20261011/compiled-constant-occurrences-v3.json": "7fc98eedc77882cc97cc9923f50073b79991b96e547fe1c8d1ec4f4dcd82f6f1",
+    "tmp/online-ch2-b4-finite-identity-body-review-20261011/fresh-production-body-review-v1.json": "4b3246ef699eba8c3df7a8063e12342f86211c43b60efd121ce2bccb58c8aac6"
+  },
+  "prior_proposal": {
+    "path": "tmp/online-ch2-b4-finite-identity-integration-proposal-20261011/proposal-v1.json",
+    "sha256": "48e166aa04c4ad645a84a4ef4ede200e646383b7ba7f7e96bee5d9ba2242dc30",
+    "preserved": true
+  },
+  "patches": {
+    "website/content/chapters.json": [
+      {
+        "op": "add",
+        "path": "/chapters/10/module_globs/-",
+        "value": "BanditRLProof/OnlineCumulativePotential.lean"
+      }
+    ],
+    "website/content/readings.json": [
+      {
+        "op": "add",
+        "path": "/readings/10/source_theorems/-",
+        "value": {
+          "label": "Corrected terminal accounting: the finite-real regret identity",
+          "pages": "printed129–130,266–267 / PDF141–142,278–279",
+          "pdf_page": 142,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=142",
+          "math": "\\begin{gathered}G_t(v)=\\psi_t(v)+\\sum_{i=0}^{t}\\ell_i(v),\\quad y_t=\\begin{cases}z&t=T,\\\\x_t&t\\ne T.\\end{cases}\\\\R_T(u)=\\sum_{t=0}^{T-1}(\\ell_t(y_t)-\\ell_t(u))\\\\=\\psi_{T-1}(u)-\\psi_0(y_0)+\\sum_{t=0}^{T-1}\\bigl(G_t(y_t)-G_t(y_{t+1})\\bigr)\\\\\\quad+\\sum_{t=0}^{T-2}\\bigl(\\psi_t(y_{t+1})-\\psi_{t+1}(y_{t+1})\\bigr)+G_{T-1}(z)-G_{T-1}(u).\\end{gathered}",
+          "plain": "An arbitrary state type E, total real-valued functions psi and loss on natural time and E, an arbitrary sequence x, comparator u and terminal z, and a natural horizon T>0. No convexity, norm, optimizer, algorithm, probability or causal premise is required. Finite real arithmetic is a specialization: the full EReal/domain adapter remains separate. Indices are zero-based: source round s corresponds to t=s-1. G includes the current loss through t. Only the unscored coordinate T is spliced to z; all y(t)=x(t) for t<T. The original x(T) is unused. The interior drift has indices0..T-2; forT1 it is empty. T0 is not claimed.",
+          "fallback": "Regret equals the final comparator regularizer minus the initial played regularizer, plus within-potential differences, interior regularizer drift and the terminal cumulative-objective gap.",
+          "relationship": "This is the finite-real corrected algebra subclause of repair:7.47-terminal, related to the terminal correction of Theorem15.31; it is not the literal full printed theorem. The source uses Euclidean feasible states and extended losses; the algebra abstracts the carrier and uses globally real functions. Repeating a virtual final hint is legitimate, but omitting its terminal residual can invalidate the sharp bound. The full EReal adapter, actual optimistic-FTRL/BTRL producers, ghost attainment, support qualification, strong-convex stability, Young estimate and whole corrected7.47/15.31 bounds remain open. A positive arbitrary terminal gap cannot be discarded.",
+          "contract": {
+            "model": "Exact deterministic accounting for arbitrary states and functions; no algorithmic run is asserted. Indices are zero-based: source round s corresponds to t=s-1. G includes the current loss through t. Only the unscored coordinate T is spliced to z; all y(t)=x(t) for t<T. The original x(T) is unused. The interior drift has indices0..T-2; forT1 it is empty. T0 is not claimed.",
+            "assumptions": "An arbitrary state type E, total real-valued functions psi and loss on natural time and E, an arbitrary sequence x, comparator u and terminal z, and a natural horizon T>0. No convexity, norm, optimizer, algorithm, probability or causal premise is required. Finite real arithmetic is a specialization: the full EReal/domain adapter remains separate.",
+            "parameters": "T is a positive natural number. u and z are independent arbitrary states; no relation between z and original x(T).",
+            "regret": "R_T(u)=sum_{t<T}(loss_t(y_t)-loss_t(u)); the scored states are unchanged by the terminal splice.",
+            "guarantee": "Full equality including every endpoint and drift term. The full EReal adapter, actual optimistic-FTRL/BTRL producers, ghost attainment, support qualification, strong-convex stability, Young estimate and whole corrected7.47/15.31 bounds remain open. A positive arbitrary terminal gap cannot be discarded."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Locally compiled corrected finite-real identity",
+            "boundary": "Locally compiled finite-real identity with independent production BODY acceptance as a bounded candidate. Canary and combined package validation remain pending. Unmerged and unpublished."
+          }
+        }
+      }
+    ],
+    "website/content/highlights.json": [
+      {
+        "op": "add",
+        "path": "/highlights/-",
+        "value": {
+          "full_name": "BanditRL.OnlineCumulativePotential.finite_regret_identity",
+          "title": "Why the terminal gap belongs in the regret identity",
+          "chapter": "online-ogd",
+          "featured": false,
+          "teaching_order": 340,
+          "source_match": "closest-source",
+          "plain": "An arbitrary state type E, total real-valued functions psi and loss on natural time and E, an arbitrary sequence x, comparator u and terminal z, and a natural horizon T>0. No convexity, norm, optimizer, algorithm, probability or causal premise is required. Finite real arithmetic is a specialization: the full EReal/domain adapter remains separate. Indices are zero-based: source round s corresponds to t=s-1. G includes the current loss through t. Only the unscored coordinate T is spliced to z; all y(t)=x(t) for t<T. The original x(T) is unused. The interior drift has indices0..T-2; forT1 it is empty. T0 is not claimed.",
+          "math": "\\begin{gathered}G_t(v)=\\psi_t(v)+\\sum_{i=0}^{t}\\ell_i(v),\\quad y_t=\\begin{cases}z&t=T,\\\\x_t&t\\ne T.\\end{cases}\\\\R_T(u)=\\sum_{t=0}^{T-1}(\\ell_t(y_t)-\\ell_t(u))\\\\=\\psi_{T-1}(u)-\\psi_0(y_0)+\\sum_{t=0}^{T-1}\\bigl(G_t(y_t)-G_t(y_{t+1})\\bigr)\\\\\\quad+\\sum_{t=0}^{T-2}\\bigl(\\psi_t(y_{t+1})-\\psi_{t+1}(y_{t+1})\\bigr)+G_{T-1}(z)-G_{T-1}(u).\\end{gathered}",
+          "intuition": "The terminal point appears once with a minus sign inside the last within-potential difference and once with a plus sign in the endpoint gap. Their cancellation explains why the scored regret does not depend on an unplayed endpoint.",
+          "why": "One shared algebraic component needed by labeled terminal corrections, not a complete regret theorem or source-container count.",
+          "position": "Finite-real corrected accounting near Theorem7.47 proof, PDF141–142; related Theorem15.31 terminal convention, PDF278–279. The full EReal adapter, actual optimistic-FTRL/BTRL producers, ghost attainment, support qualification, strong-convex stability, Young estimate and whole corrected7.47/15.31 bounds remain open. A positive arbitrary terminal gap cannot be discarded.",
+          "proof_idea": "Put H_t(v)=sum_{i<t}loss_i(v), so G_t=psi_t+H_(t+1). The regularizer parts of the within-G sum, together with the interior drift, telescope to psi_0(y_0)-psi_(T-1)(z). The cumulative-loss parts telescope to sum_{t<T}loss_t(y_t)-H_T(z). Adding the final comparator regularizer minus the initial played regularizer and the retained G_(T-1)(z)-G_(T-1)(u) leaves exactly the regret. This is the mathematical cancellation argument, not a claimed implementation route.",
+          "lean_notes": "E has no additional typeclass assumptions; psi/loss are real-valued and T>0 is the only propositional premise. The boundary regularizer difference is psi_(T-1)(u)-psi_0(y_0): final comparator regularizer minus initial played regularizer. Local y and G are definitions, not extra hypotheses. The exact Lean header and eventual full-proof source link use the declaration fold; these notes do not claim a complete rendered source-proof graph. Selected actual compiled direct VALUE occurrences are Nat.recAux, Finset.sum_range_succ, Finset.sum_range_zero and Nat.sub_add_cancel. Occurrence does not establish logical necessity or a complete transitive graph; Nat.rec is not the exported direct constant. The source-only AND topology remains distinct from these implementation occurrences. Prepared one-round and two-round canary headers check a positive gap and nonzero drift/terminal splice; their BODY acceptance and compilation remain pending. Locally compiled finite-real identity with independent production BODY acceptance as a bounded candidate. Canary and combined package validation remain pending. Unmerged and unpublished.",
+          "dependencies": []
+        }
+      }
+    ]
+  },
+  "evidence_join": {
+    "production_core_sha256_from_reviewed_reports": "61c811c0b1f941ec22ac41f64e555a0e4d4d8dc32b8145ea53808dbdc0fc17da",
+    "frozen_header_sha256": "92e0dcfac53595e35b68bfd8083c09640d06da809355ab02ec4eb4b007b0bd67",
+    "production_review_verdict": "accepted-local-candidate",
+    "production_compilation": "Actual focused0 and compiled public probe0 verified by distinct reviewer; not rerun here",
+    "compiled_direct_VALUE_parents_selected": [
+      "Nat.recAux",
+      "Finset.sum_range_succ",
+      "Finset.sum_range_zero",
+      "Nat.sub_add_cancel"
+    ],
+    "project_owned_direct_VALUE_parents": [],
+    "occurrence_not_necessity_or_transitive_graph": true,
+    "canary_BODY_acceptance": "pending",
+    "canary_compilation": "pending",
+    "combined_gates": "pending"
+  },
+  "in_memory_preservation": {
+    "three_append_operations_only": true,
+    "all_old_whole_parsed_objects_preserved": true,
+    "old22_cards_preserved": true,
+    "new_card_count": 23,
+    "new_highlights": 1,
+    "historical_blobs_and_other_chapters_unchanged": true
+  },
+  "unchanged_contracts": {
+    "atomic_binder_ledger": "Exact v1 ledger retained by pinned prior-proposal reference; no binder/header edit.",
+    "source_math_and_scope": "Full formula and finite-real corrected subclause unchanged. Terminal gap, inclusive G, T>0 and y(T)=z splice preserved.",
+    "source_graph": "Source topology d7d605... distinct from actual compiled occurrence export. No rendered full graph or verified OR-route claimed.",
+    "registry": "dependencies=[] because selected Mathlib/kernel parents are not local project registry nodes; actual names exposed in lean_notes.",
+    "closure": {
+      "open_forward_containers": 7,
+      "future_claims_open": 6,
+      "Chapter2": "partial",
+      "accepted": false,
+      "denominator": null,
+      "Goal": "ACTIVE boundary; no tool query in this task",
+      "PURIFIED": "pending",
+      "unmerged": true,
+      "unpublished": true,
+      "root_Tests_manifest_DOC_RUN_site_writes": false,
+      "canary_BODY_authorization": false
+    }
+  },
+  "scope_exposure": "Read only permitted report/export/independent review and prior proposal/current JSON baseline. No production Lean BODY, snapshots or pp.proofs read.",
+  "review_notes": [
+    "Only comparator-boundary wording and timely production status/actual occurrence evidence changed from v1.",
+    "First boundary term is final psi_(T-1)(u) minus initial psi_0(y0), not a same-time or initial-comparator difference.",
+    "Future canary acceptance, full gates, root imports and integration application remain separate."
+  ],
+  "input_hashes_unchanged": true
+}
