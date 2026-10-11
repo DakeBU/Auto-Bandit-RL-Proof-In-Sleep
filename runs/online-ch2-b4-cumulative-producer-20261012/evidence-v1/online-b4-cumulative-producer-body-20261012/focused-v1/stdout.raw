@@ -1,0 +1,85 @@
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-cumulative-producer-body-20261012\candidate-v1.lean:44:16: error: unsolved goals
+case succ
+E : Type u_1
+inst✝¹ : NormedAddCommGroup E
+inst✝ : NormedSpace ℝ E
+V : Set E
+hV : V.Nonempty
+psi : E → ℝ
+loss : ℕ → E → EReal
+n : ℕ
+lam : ℝ
+hlam : 0 ≤ lam
+hpsi : StrongConvexOn V lam psi
+hbot : ∀ i < n, ∀ (x : E), loss i x ≠ ⊥
+hdom : ∀ i < n, V ⊆ effectiveDomain (loss i)
+hloss : ∀ i < n, ConvexOn ℝ V fun x => (loss i x).toReal
+F : E → EReal := fun x => ↑(psi x) + ∑ i ∈ Finset.range n, loss i x + extendedIndicator V x
+hfinite : ∀ i < n, ∀ x ∈ V, ↑(loss i x).toReal = loss i x
+hsumBot : ∀ m ≤ n, ∀ (x : E), ∑ i ∈ Finset.range m, loss i x ≠ ⊥
+x : E
+hx : x ∈ V
+m : ℕ
+ih : m ≤ n → ∑ i ∈ Finset.range m, loss i x = ↑(∑ i ∈ Finset.range m, (loss i x).toReal)
+hm : m + 1 ≤ n
+⊢ ↑(∑ i ∈ Finset.range m, (loss i x).toReal) + ↑(loss m x).toReal =
+    ↑(∑ x_1 ∈ Finset.range m, (loss x_1 x).toReal) + ↑(↑(loss m x).toReal).toReal
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-cumulative-producer-body-20261012\candidate-v1.lean:90:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  F (a • x + (1 - a) • y)
+in the target expression
+  (fun x => ↑(psi x) + ∑ i ∈ Finset.range n, loss i x + extendedIndicator V x) (a • x + (1 - a) • y) ≤
+    ↑a * (fun x => ↑(psi x) + ∑ i ∈ Finset.range n, loss i x + extendedIndicator V x) x +
+        ↑(1 - a) * (fun x => ↑(psi x) + ∑ i ∈ Finset.range n, loss i x + extendedIndicator V x) y -
+      ↑(lam / 2 * a * (1 - a) * ‖x - y‖ ^ 2)
+
+E : Type u_1
+inst✝¹ : NormedAddCommGroup E
+inst✝ : NormedSpace ℝ E
+V : Set E
+hV : V.Nonempty
+psi : E → ℝ
+loss : ℕ → E → EReal
+n : ℕ
+lam : ℝ
+hlam : 0 ≤ lam
+hpsi : StrongConvexOn V lam psi
+hbot : ∀ i < n, ∀ (x : E), loss i x ≠ ⊥
+hdom : ∀ i < n, V ⊆ effectiveDomain (loss i)
+hloss : ∀ i < n, ConvexOn ℝ V fun x => (loss i x).toReal
+F : E → EReal := fun x => ↑(psi x) + ∑ i ∈ Finset.range n, loss i x + extendedIndicator V x
+hfinite : ∀ i < n, ∀ x ∈ V, ↑(loss i x).toReal = loss i x
+hsumBot : ∀ m ≤ n, ∀ (x : E), ∑ i ∈ Finset.range m, loss i x ≠ ⊥
+hsumFinite : ∀ m ≤ n, ∀ x ∈ V, ∑ i ∈ Finset.range m, loss i x = ↑(∑ i ∈ Finset.range m, (loss i x).toReal)
+hvalue : ∀ x ∈ V, F x = ↑(psi x + ∑ i ∈ Finset.range n, (loss i x).toReal)
+hout : ∀ x ∉ V, F x = ⊤
+hFbot : ∀ (x : E), F x ≠ ⊥
+hFdom : effectiveDomain F = V
+hproper : SourceProper F
+x : E
+hx : x ∈ V
+y : E
+hy : y ∈ V
+a : ℝ
+ha : 0 < a
+ha1 : a < 1
+hz : a • x + (1 - a) • y ∈ V
+hp : psi (a • x + (1 - a) • y) ≤ a • psi x + (1 - a) • psi y - a * (1 - a) * (fun r => lam / 2 * r ^ 2) ‖x - y‖
+hs :
+  ∑ i ∈ Finset.range n, (loss i (a • x + (1 - a) • y)).toReal ≤
+    a * ∑ i ∈ Finset.range n, (loss i x).toReal + (1 - a) * ∑ i ∈ Finset.range n, (loss i y).toReal
+hr :
+  psi (a • x + (1 - a) • y) + ∑ i ∈ Finset.range n, (loss i (a • x + (1 - a) • y)).toReal ≤
+    a * (psi x + ∑ i ∈ Finset.range n, (loss i x).toReal) +
+        (1 - a) * (psi y + ∑ i ∈ Finset.range n, (loss i y).toReal) -
+      lam / 2 * a * (1 - a) * ‖x - y‖ ^ 2
+⊢ (fun x => ↑(psi x) + ∑ i ∈ Finset.range n, loss i x + extendedIndicator V x) (a • x + (1 - a) • y) ≤
+    ↑a * (fun x => ↑(psi x) + ∑ i ∈ Finset.range n, loss i x + extendedIndicator V x) x +
+        ↑(1 - a) * (fun x => ↑(psi x) + ∑ i ∈ Finset.range n, loss i x + extendedIndicator V x) y -
+      ↑(lam / 2 * a * (1 - a) * ‖x - y‖ ^ 2)
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-cumulative-producer-body-20261012\candidate-v1.lean:51:55: warning: This simp argument is unused:
+  EReal.coe_add
+
+Hint: Omit it from the simp argument list.
+  simp only [extendedIndicator, if_pos hx, add_zero,̵ ̵E̵R̵e̵a̵l̵.̵c̵o̵e̵_̵a̵d̵d̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`

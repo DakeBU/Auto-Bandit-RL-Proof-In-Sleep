@@ -1,0 +1,17 @@
+Literal auxiliary definition text; E is the corresponding space in the declaration.
+
+def effectiveDomain (f : E → EReal) : Set E := {x | f x < ⊤}
+
+def extendedIndicator (V : Set E) (x : E) : EReal := by
+  classical
+  exact if x ∈ V then 0 else ⊤
+
+def SourceProper (f : E → EReal) : Prop :=
+  (∀ x, f x ≠ ⊥) ∧ ∃ x, ∃ r : ℝ, f x = (r : EReal)
+
+def UniformConvexOn (s : Set E) (φ : ℝ → ℝ) (f : E → ℝ) : Prop :=
+  Convex ℝ s ∧ ∀ ⦃x⦄, x ∈ s → ∀ ⦃y⦄, y ∈ s → ∀ ⦃a b : ℝ⦄, 0 ≤ a → 0 ≤ b → a + b = 1 →
+    f (a • x + b • y) ≤ a • f x + b • f y - a * b * φ ‖x - y‖
+
+def StrongConvexOn (s : Set E) (m : ℝ) : (E → ℝ) → Prop :=
+  UniformConvexOn s fun r ↦ m / (2 : ℝ) * r ^ 2

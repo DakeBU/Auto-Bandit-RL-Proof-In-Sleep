@@ -1,0 +1,23 @@
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-cumulative-producer-canary-body-20261012\candidate-v2.lean:115:2: error: unsolved goals
+case refine_7
+h0 : 0 ∈ feasible
+h1 : 1 ∈ feasible
+hm1 : -1 ∈ feasible
+hv : ∀ (i : ℕ), ∀ z ∈ feasible, twoLoss i z = ↑(if i = 0 then -z else 3 * z)
+hpsi : StrongConvexOn feasible 1 quadraticRegularizer
+hbot : ∀ i < 2, ∀ (z : ℝ), twoLoss i z ≠ ⊥
+hdom : ∀ i < 2, feasible ⊆ effectiveDomain (twoLoss i)
+hloss : ∀ i < 2, ConvexOn ℝ feasible fun z => (twoLoss i z).toReal
+package :
+  have F := fun x => ↑(quadraticRegularizer x) + ∑ i ∈ Finset.range 2, twoLoss i x + extendedIndicator feasible x;
+  SourceProper F ∧
+    effectiveDomain F = feasible ∧
+      (∀ x ∈ feasible, F x = ↑(quadraticRegularizer x + ∑ i ∈ Finset.range 2, (twoLoss i x).toReal)) ∧
+        ∀ x ∈ feasible,
+          ∀ y ∈ feasible,
+            ∀ (a : ℝ),
+              0 < a → a < 1 → F (a • x + (1 - a) • y) ≤ ↑a * F x + ↑(1 - a) * F y - ↑(1 / 2 * a * (1 - a) * ‖x - y‖ ^ 2)
+hvalue : ∀ z ∈ feasible, twoObjective z = ↑(z ^ 2 / 2 + 2 * z)
+hs : ∀ z ∈ feasible, twoObjective 0 + ↑(doubleSupport (z - 0)) ≤ twoObjective z
+hg : (twoObjective 0).toReal + doubleSupport (1 - 0) + 1 / 2 * ‖1 - 0‖ ^ 2 ≤ (twoObjective 1).toReal
+⊢ ↑2 + 2 * ⊤ + ⊤ = ⊤
