@@ -134,13 +134,17 @@ class BookRegistryTests(unittest.TestCase):
             "BanditRLProof.OnlineExpectation",
             "BanditRLProof.OnlineConvexMinorant",
             "BanditRLProof.OnlineJensen",
+            "BanditRLProof.OnlineClosedProper",
+            "BanditRLProof.OnlineSubgradientBasic",
+            "BanditRLProof.OnlineSubgradientInterior",
+            "BanditRLProof.OnlineSubgradientDifferentiability",
             "BanditRLProof.OnlineConvexFirstOrder",
             "BanditRLProof.OnlineGradientDescent",
             "BanditRLProof.OnlineGradientDescentVariable",
             "BanditRLProof.OnlineGradientDescentSource",
         }
         declarations = [d for d in self.declarations if d["module"] in online_modules]
-        self.assertEqual(94, len(declarations))
+        self.assertEqual(117, len(declarations))
         for declaration in declarations:
             key = "declaration:" + declaration["full_name"]
             self.assertIn("online-learning", nodes[key]["books"])
@@ -148,6 +152,40 @@ class BookRegistryTests(unittest.TestCase):
                      "BanditRL.OnlineConvex.example_2_6"):
             self.assertIn("online-learning", nodes["declaration:" + name]["books"])
         self.assertIn("bandit", nodes["declaration:BanditRLProof.FiniteBanditModel"]["books"])
+
+    def test_closed_proper_source_uses_shared_extended_indicator(self):
+        registry = self.registry()
+        nodes = membership_index(registry)
+        chapter = next(c for c in registry["chapters"] if c["id"] == "teaching:online-closed-proper")
+        for name in ("sourceClosed_iff_lowerSemicontinuous", "sourceClosed_indicator_iff", "sourceProper_indicator_iff"):
+            key = "declaration:BanditRL.OnlineConvex." + name
+            self.assertIn(key, chapter["node_ids"])
+            self.assertEqual(["online-learning"], nodes[key]["books"])
+        self.assertIn("declaration:BanditRL.OnlineConvex.extendedIndicator", nodes)
+        scope = next(c for c in self.chapters if c["slug"] == "online-closed-proper")
+        self.assertIn("Chapter 2 and the whole book remain incomplete.", scope["completion_definition"])
+
+    def test_subgradient_basic_source_uses_global_support_registry(self):
+        registry = self.registry()
+        nodes = membership_index(registry)
+        chapter = next(c for c in registry["chapters"] if c["id"] == "teaching:online-subgradient-basic")
+        for name in ("SourceSubdifferential", "subgradient_point_finite", "theorem_2_21"):
+            key = "declaration:BanditRL.OnlineConvex." + name
+            self.assertIn(key, chapter["node_ids"])
+            self.assertEqual(["online-learning"], nodes[key]["books"])
+        scope = next(c for c in self.chapters if c["slug"] == "online-subgradient-basic")
+        self.assertIn("Chapter 2 and the whole book remain incomplete.", scope["completion_definition"])
+
+    def test_interior_subgradient_uses_shared_producer(self):
+        registry = self.registry()
+        nodes = membership_index(registry)
+        chapter = next(c for c in registry["chapters"] if c["id"] == "teaching:online-subgradient-interior")
+        key = "declaration:BanditRL.OnlineConvex.subgradient_exists_of_domain_interior"
+        self.assertIn(key, chapter["node_ids"])
+        self.assertEqual(["online-learning"], nodes[key]["books"])
+        self.assertIn("declaration:BanditRL.OnlineConvex.affine_support_of_domain_interior", nodes)
+        scope = next(c for c in self.chapters if c["slug"] == "online-subgradient-interior")
+        self.assertIn("Chapter 2 and the whole book remain incomplete.", scope["completion_definition"])
 
     def test_preview_badge_cannot_borrow_evidence_from_another_declaration(self):
         source = ('<details class="declaration" id="a"><summary>'
@@ -184,7 +222,7 @@ class BookRegistryTests(unittest.TestCase):
                 bandit_nav = nav.split('data-nav-group="bandit-book"', 1)[1].split('</details>', 1)[0]
                 self.assertNotIn('chapters/online-', bandit_nav)
                 online_nav = nav.split('data-nav-group="online-learning-book"', 1)[1].split('</details>', 1)[0]
-                self.assertEqual(9, online_nav.count('class="book-nav-link"'))
+                self.assertEqual(13, online_nav.count('class="book-nav-link"'))
                 self.assertNotIn('chapters/probability/', online_nav)
             breadcrumb = site.render_book_breadcrumb("chapters/finite-horizon-rl/index.html")
             self.assertIn("Reinforcement Learning Book", breadcrumb)
@@ -204,7 +242,7 @@ class BookRegistryTests(unittest.TestCase):
             self.assertEqual("online-learning", site.primary_teaching_book("online-ogd")["id"])
             self.assertEqual("bandit", site.primary_teaching_book("probability")["id"])
             online = site.teaching_chapters_for_book("online-learning", owned_only=True)
-            self.assertEqual({'online-jensen', 'online-minorant', 'online-ogd', 'online-expectation', 'online-first-order', 'online-optimality', 'online-convex-closures', 'online-convex', 'online-barycenter'},
+            self.assertEqual({'online-jensen', 'online-minorant', 'online-ogd', 'online-expectation', 'online-first-order', 'online-optimality', 'online-convex-closures', 'online-convex', 'online-barycenter', 'online-closed-proper', 'online-subgradient-basic', 'online-subgradient-interior', 'online-subgradient-differentiability'},
                              {chapter["slug"] for chapter in online})
             shared = site.teaching_chapters_for_book("online-learning")
             self.assertIn("probability", {chapter["slug"] for chapter in shared})

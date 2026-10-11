@@ -1,0 +1,302 @@
+{
+  "schema_version": "3.0",
+  "id": "ONLINE-CH2-SUBGRADIENT-INTEGRATION-20261012",
+  "route": "online-learning / closed and proper functions, global subgradients and interpreted differentiability",
+  "frontier_cell": "online-subgradient-differentiability",
+  "source_facing": true,
+  "source": {
+    "kind": "textbook",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10",
+    "anchor": "Section2.2.1 printed16-17/PDF28-29: Definitions2.16/2.18/2.20, Examples2.17/2.19, LSC/domain/interior observations, relative-interior footnote1 and Theorems2.21/2.22.",
+    "url": "https://arxiv.org/abs/1912.13213v10",
+    "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17"
+  },
+  "target": "Integrate four retained modules and six canaries; preserve source assumptions and disclose generic-support and ambient-real-germ interpretation boundaries.",
+  "affected_files": [
+    "BanditRLProof.lean",
+    "BanditRLProof/OnlineClosedProper.lean",
+    "BanditRLProof/OnlineSubgradientBasic.lean",
+    "BanditRLProof/OnlineSubgradientInterior.lean",
+    "BanditRLProof/OnlineSubgradientDifferentiability.lean",
+    "website/content/books.json",
+    "website/content/chapters.json",
+    "website/content/highlights.json",
+    "website/content/readings.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineConvex.SourceClosed",
+    "BanditRL.OnlineConvex.SourceProper",
+    "BanditRL.OnlineConvex.sourceClosed_iff_lowerSemicontinuous",
+    "BanditRL.OnlineConvex.sourceClosed_indicator_iff",
+    "BanditRL.OnlineConvex.sourceProper_indicator_iff",
+    "BanditRL.OnlineConvex.SourceSubdifferential",
+    "BanditRL.OnlineConvex.subgradient_point_finite",
+    "BanditRL.OnlineConvex.theorem_2_21",
+    "BanditRL.OnlineConvex.subgradient_exists_of_domain_interior",
+    "BanditRL.OnlineConvex.affine_support_of_relative_domain_interior",
+    "BanditRL.OnlineConvex.subgradient_exists_of_relative_domain_interior",
+    "BanditRL.OnlineConvex.SourceDifferentiableAt",
+    "BanditRL.OnlineConvex.subgradient_norm_le_lipschitz_ball",
+    "BanditRL.OnlineConvex.subgradients_locally_bounded",
+    "BanditRL.OnlineConvex.subgradient_limit_of_continuousAt",
+    "BanditRL.OnlineConvex.singleton_subgradient_tendsto",
+    "BanditRL.OnlineConvex.singleton_subdifferential_interior",
+    "BanditRL.OnlineConvex.singleton_subdifferential_hasGradientAt",
+    "BanditRL.OnlineConvex.sourceDifferentiableAt_regular",
+    "BanditRL.OnlineConvex.subgradient_eq_gradient_at_interior",
+    "BanditRL.OnlineConvex.theorem_2_22_gradient",
+    "BanditRL.OnlineConvex.theorem_2_22_forward",
+    "BanditRL.OnlineConvex.theorem_2_22"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Accepted main convexity, first-order and affine-contact interfaces",
+      "Frozen retained Online stack 8045070bf1ee53c83778d04eb168f8ad6f728b59",
+      "Pinned Mathlib real density, convexity, finite-dimensional linear extension, Riesz and calculus interfaces"
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineConvex.realEpigraph",
+      "BanditRL.OnlineConvex.IsConvexExtended",
+      "BanditRL.OnlineConvex.extendedIndicator",
+      "BanditRL.OnlineConvex.effectiveDomain",
+      "BanditRL.OnlineConvex.affine_support_of_domain_interior",
+      "BanditRL.OnlineConvex.affine_support_of_finite_neighborhood",
+      "BanditRL.OnlineConvex.convex_gradient_lower_bound"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineConvex.SourceClosed",
+      "BanditRL.OnlineConvex.SourceProper",
+      "BanditRL.OnlineConvex.sourceClosed_iff_lowerSemicontinuous",
+      "BanditRL.OnlineConvex.sourceClosed_indicator_iff",
+      "BanditRL.OnlineConvex.sourceProper_indicator_iff",
+      "BanditRL.OnlineConvex.SourceSubdifferential",
+      "BanditRL.OnlineConvex.subgradient_point_finite",
+      "BanditRL.OnlineConvex.theorem_2_21",
+      "BanditRL.OnlineConvex.subgradient_exists_of_domain_interior",
+      "BanditRL.OnlineConvex.affine_support_of_relative_domain_interior",
+      "BanditRL.OnlineConvex.subgradient_exists_of_relative_domain_interior",
+      "BanditRL.OnlineConvex.SourceDifferentiableAt",
+      "BanditRL.OnlineConvex.subgradient_norm_le_lipschitz_ball",
+      "BanditRL.OnlineConvex.subgradients_locally_bounded",
+      "BanditRL.OnlineConvex.subgradient_limit_of_continuousAt",
+      "BanditRL.OnlineConvex.singleton_subgradient_tendsto",
+      "BanditRL.OnlineConvex.singleton_subdifferential_interior",
+      "BanditRL.OnlineConvex.singleton_subdifferential_hasGradientAt",
+      "BanditRL.OnlineConvex.sourceDifferentiableAt_regular",
+      "BanditRL.OnlineConvex.subgradient_eq_gradient_at_interior",
+      "BanditRL.OnlineConvex.theorem_2_22_gradient",
+      "BanditRL.OnlineConvex.theorem_2_22_forward",
+      "BanditRL.OnlineConvex.theorem_2_22"
+    ],
+    "known_consumers": [
+      "Six genuine canary modules with22theorem consumers",
+      "Differentiability uses interior support, local bounds and support-limit interfaces",
+      "Relative support uses canonical affine contact and its own affine-span extension"
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Retain existing mathematical bodies and shared names; canonical contact highlights stay in the already accepted minorant route."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root integration formalizer and reader author",
+    "blind_decoder": "/root/batch4_blind_decoder, source-blind neutral packet only",
+    "source_reviewer": "/root/batch4_source_reviewer, source topology before implementation exposure",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "G-T22-SCOPE: proper-source definition versus wider printed theorem carrier remains unreconciled; generic global-support predicate is an explicit library extension. G-T22-DIFF: inspected source does not define extended-valued differentiability; ambient finite-real-germ semantics is an explicit library interpretation. Neither is claimed as a repaired or literally resolved source definition. Topological and inner-product carrier generalizations and dropped convexity in the support-point lemma are explicit. Helpers are not additional printed source results."
+  },
+  "graph_contribution": {
+    "lean_graph": "new-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Shared convex geometry, affine contact and differentiation; no separately certified cross-setting transport or graph-derived discovery.",
+    "focus_targets": [
+      "online-closed-proper",
+      "online-subgradient-basic",
+      "online-subgradient-interior",
+      "online-subgradient-differentiability"
+    ],
+    "visual_review": "Eight desktop/mobile cases passed for four new readers, with formulas, overflow, folded Lean and Online Book navigation checked.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: four bounded readers, thirteen new highlights and two existing canonical contact cross-reader explanations",
+    "banditrlwiki": "no-change-with-reason: Bandit and Extended Topics case endpoints unchanged",
+    "results_ledger": "updated: research-wiki/integrations/ONLINE-CH2-SUBGRADIENT-INTEGRATION-20261012/README.md",
+    "roadmap": "updated: thirteen bounded Online teaching routes, no chapter/book completion",
+    "website_surfaces": [
+      "Online Book/chapter metadata",
+      "Four readers and shared contact dependencies",
+      "Shared canonical declaration/module registry"
+    ]
+  },
+  "truth_boundary": "Nineteen retained theorems and four definitions: two literal source formulas over generalized carriers, one all-EReal carrier extension, one ambient-real-germ interpretation. G-T22-SCOPE: proper-source definition versus wider printed theorem carrier remains unreconciled; generic global-support predicate is an explicit library extension. G-T22-DIFF: inspected source does not define extended-valued differentiability; ambient finite-real-germ semantics is an explicit library interpretation. Neither is claimed as a repaired or literally resolved source definition. No Chapter2/book completion, PURIFIED, full Exposition Seal, original whole-PR closure, merge or live deployment inferred.",
+  "verification": {
+    "focused_checks": [
+      "Focused production build3315jobs and actual23elaborated types",
+      "Fresh transitive axiom checks for23declarations: onlypropext/Classical.choice/Quot.sound",
+      "Scoped compiled graph and8desktop/mobile reader checks"
+    ],
+    "bandit_check": "Combined9062library/9188Tests, exporter, strict placeholder scan and458harness tests passed with7platform skips",
+    "site_build": "Passed --lean-verified after combined gate",
+    "site_check": "passed",
+    "independent_review": "Source topology separately accepted; neutral decoding complete; corrected source/binder/body/reader review accepted with explicit interpretation deltas"
+  },
+  "contributor": {
+    "name": "OpenAI Codex",
+    "role": "Integration and maintenance; original proof authors and historical review roles retained by immutable source provenance"
+  },
+  "learning_contract": {
+    "control_plane_math_authority": false,
+    "process_memory_checked": true,
+    "process_memory_ids": [
+      "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS",
+      "ABRL-NK-WINDOWS-PATH-LENGTH"
+    ],
+    "failure_class": "NONE",
+    "salvage": {
+      "required": true,
+      "status": "completed",
+      "reason": "Preserved rejected first reader packet and first site gate. Corrected missing public convexity premise, explicit source formula/quantifier scope, definition classification, historical graph claims and a cross-chapter teaching-route reference. Mathematical tokens and canaries unchanged; one extra EOF newline normalized. Restored three original registry regression methods after whole-PR review. Preserved transient missing-object probe and graph-receipt parser failures before successful checks.",
+      "promoted_fragments": [
+        "BanditRLProof/OnlineClosedProper.lean",
+        "BanditRLProof/OnlineSubgradientBasic.lean",
+        "BanditRLProof/OnlineSubgradientInterior.lean",
+        "BanditRLProof/OnlineSubgradientDifferentiability.lean"
+      ],
+      "discarded_fragments": []
+    },
+    "parallelism": {
+      "decision": "serial",
+      "direction_fingerprints": [
+        "retained-closed-proper-global-support-relative-contact-real-germ-singleton"
+      ],
+      "expected_information_gain": "Distinct blind, source and topology reviewers satisfy role separation; these are audits, not competing proof directions.",
+      "shared_verified_context_digest": "Pinned Orabona cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17; frozen stack 8045070bf1ee53c83778d04eb168f8ad6f728b59"
+    },
+    "cross_route_blind_spot_audit": {
+      "required": false,
+      "status": "not-applicable",
+      "evidence": "",
+      "canonical_route": "retained library proof routes",
+      "selection_reason": "No parallel mathematical proof-route competition."
+    },
+    "reader_backpressure": {
+      "purification_status": "pending",
+      "exposition_seal_status": "pending",
+      "reader_debt_delta": 0,
+      "exposition_evidence": "Four formula-bearing proof bridges with source interpretation deltas, independently reviewed and rendered in8cases. Full purification and Exposition Seal remain pending.",
+      "source_expansion_nodes": [
+        "D216",
+        "O-LSC",
+        "X217",
+        "D218",
+        "X219",
+        "D220",
+        "O-DOM-INCLUSION",
+        "O-INT-SUPPORT",
+        "F-RELINT",
+        "T221",
+        "T222"
+      ],
+      "lean_expansion_nodes": [
+        "BanditRL.OnlineConvex.SourceClosed",
+        "BanditRL.OnlineConvex.SourceProper",
+        "BanditRL.OnlineConvex.sourceClosed_iff_lowerSemicontinuous",
+        "BanditRL.OnlineConvex.sourceClosed_indicator_iff",
+        "BanditRL.OnlineConvex.sourceProper_indicator_iff",
+        "BanditRL.OnlineConvex.SourceSubdifferential",
+        "BanditRL.OnlineConvex.subgradient_point_finite",
+        "BanditRL.OnlineConvex.theorem_2_21",
+        "BanditRL.OnlineConvex.subgradient_exists_of_domain_interior",
+        "BanditRL.OnlineConvex.affine_support_of_relative_domain_interior",
+        "BanditRL.OnlineConvex.subgradient_exists_of_relative_domain_interior",
+        "BanditRL.OnlineConvex.SourceDifferentiableAt",
+        "BanditRL.OnlineConvex.subgradient_norm_le_lipschitz_ball",
+        "BanditRL.OnlineConvex.subgradients_locally_bounded",
+        "BanditRL.OnlineConvex.subgradient_limit_of_continuousAt",
+        "BanditRL.OnlineConvex.singleton_subgradient_tendsto",
+        "BanditRL.OnlineConvex.singleton_subdifferential_interior",
+        "BanditRL.OnlineConvex.singleton_subdifferential_hasGradientAt",
+        "BanditRL.OnlineConvex.sourceDifferentiableAt_regular",
+        "BanditRL.OnlineConvex.subgradient_eq_gradient_at_interior",
+        "BanditRL.OnlineConvex.theorem_2_22_gradient",
+        "BanditRL.OnlineConvex.theorem_2_22_forward",
+        "BanditRL.OnlineConvex.theorem_2_22"
+      ],
+      "assumptions_preserved": true,
+      "boundary_preserved": true
+    }
+  },
+  "statement_seal": {
+    "version": 1,
+    "source_revision": "arXiv:1912.13213v10",
+    "sealed_statement_record_sha256": "c21a49cace3a1c169ea37b8f19980a965ea038c4f1f0ffe4860e09b18c300b0f",
+    "actual_elaborated_types_sha256": "427ee627130c7156fa48a739a22b1d7de9bd95670ae3b207dfc173ec2580ac15",
+    "binder_audit": "All23expanded types audited, including retained unused-looking instances and helper premises; no source-terminal oracle premise substituted.",
+    "definition_kind": "Two literal source formulas with generalized carriers; one library carrier extension faithful for proper functions; one explicitly chosen ambient-real-germ interpretation."
+  },
+  "source_proof_coverage": {
+    "inventory_sha256": "5b6b473d8827b7099f1787ce145ea52012150c1f661e38f7b9b1c5afb8f53322",
+    "independent_topology_receipt_sha256": "a944567c772e49d1a29400c75db3bd8c43b93bd99337274ec5a3d280d320de44",
+    "reviewed_endpoint_nodes": [
+      "D216",
+      "O-LSC",
+      "X217",
+      "D218",
+      "X219",
+      "D220",
+      "O-DOM-INCLUSION",
+      "O-INT-SUPPORT",
+      "F-RELINT",
+      "T221",
+      "T222"
+    ],
+    "source_gaps": [
+      "G-T22-SCOPE: proper-source definition versus wider printed theorem carrier remains unreconciled; generic global-support predicate is an explicit library extension. G-T22-DIFF: inspected source does not define extended-valued differentiability; ambient finite-real-germ semantics is an explicit library interpretation. Neither is claimed as a repaired or literally resolved source definition.",
+      "External cited proofs for LSC and interior/differentiability are not present in inspected source; supplied library proofs remain separately attributed",
+      "Indicator examples and finite-witness domain bridge receive explicitly added explanations"
+    ],
+    "exclusions": "Earlier Huber/OGD, later nonsmooth examples, Theorem2.23 and unrelated source regions excluded with reasons in pinned inventory.",
+    "alternative_routes": "Theorem2.21 combines two required weighted inequalities. Theorem2.22 requires both directions; no alternative printed proof exists in scope."
+  },
+  "proof_digestion": {
+    "existing_substrate": [
+      "Accepted convex epigraph and contact interfaces",
+      "Pinned Riesz, separation, affine span, local convex Lipschitz and calculus"
+    ],
+    "bookkeeping": [
+      "Finite EReal coercions and real-cut limits",
+      "Affine intercept correction",
+      "Nonbottom-filter support-limit inequalities"
+    ],
+    "new_to_main_reusable": [
+      "Closed/proper predicates and equivalences",
+      "Global support and interior existence",
+      "Prescribed relative-interior contact",
+      "Singleton support and ambient real-germ equivalence"
+    ],
+    "new_topology": "Existing stack routes retained; source citation/proof topology is separate from compiled direct-constant occurrences."
+  },
+  "purification": {
+    "status": "pending",
+    "dead_code_audit": "All23declarations have canary or parent/helper uses; not a whole-project dead-code certificate.",
+    "duplicate_semantics_audit": "Single canonical library and contact highlights; no per-book proof duplication.",
+    "canonicalization": "Shared root and declaration registry.",
+    "compressed_spine_delta": "Four source-attributed formula-bearing reader bridges.",
+    "reader_default_view": "Natural-language mathematics first and exact Lean folded; full Exposition Seal not claimed."
+  }
+}

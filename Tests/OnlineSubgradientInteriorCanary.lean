@@ -1,0 +1,15 @@
+import BanditRLProof
+
+namespace InteriorSupportProbe
+open BanditRL.OnlineConvex Set
+theorem interval_center_support :
+    (SourceSubdifferential (extendedIndicator (Icc (0 : ℝ) 2)) 1).Nonempty := by
+  apply subgradient_exists_of_domain_interior
+  · exact (sourceProper_indicator_iff _).mpr ⟨1, by norm_num⟩
+  · exact (convex_indicator_iff _).mpr (convex_Icc 0 2)
+  · rw [effectiveDomain_indicator, interior_Icc]
+    norm_num
+#print axioms BanditRL.OnlineConvex.affine_support_of_domain_interior
+#print axioms BanditRL.OnlineConvex.subgradient_exists_of_domain_interior
+#print axioms interval_center_support
+end InteriorSupportProbe

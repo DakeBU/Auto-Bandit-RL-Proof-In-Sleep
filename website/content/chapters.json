@@ -518,6 +518,103 @@
       "open_gaps": [
         "No whole Chapter2 or infinite-dimensional source generalization claimed."
       ]
+    },
+    {
+      "slug": "online-closed-proper",
+      "title": "Closed and proper extended-real functions",
+      "short_title": "Closed and proper",
+      "status": "compiled",
+      "summary": "Real-cut closedness/LSC and proper finite witnesses for shared extended indicators, with explicit arbitrary-topological generalization.",
+      "audience": "Readers entering Orabona Chapter2 subgradient analysis.",
+      "completion_definition": "Three equivalences and two literal definitions. Later source obligations, Chapter 2 and the whole book remain incomplete.",
+      "completion_blockers": [
+        "Later source obligations, Chapter 2 and the whole book remain incomplete."
+      ],
+      "learning_goals": [
+        "Separate REAL cuts from infinite function values and derive the bottom threshold.",
+        "Read source Euclidean/Hausdorff scope as a specialization of the stronger arbitrary-topological Lean result.",
+        "Distinguish topology-free properness definition from actual topology-bearing public iff.",
+        "Use the same zero/top indicator, genuine finite witnesses and empty ambient/set boundaries; teaching order is not proof dependency."
+      ],
+      "module_globs": [
+        "BanditRLProof/OnlineClosedProper.lean"
+      ],
+      "open_gaps": [
+        "Arbitrary topological spaces generalize the source Euclidean/Hausdorff scope. No convexity, properness or separation premise is needed for closedness. The properness definition needs no topology, although its indicator equivalence retains a topology instance. The source cites the lower-semicontinuity equivalence externally and supplies no proofs for the two indicator examples; the explanations here are library proofs. Later source obligations, Chapter 2 and the whole book remain incomplete."
+      ]
+    },
+    {
+      "slug": "online-subgradient-basic",
+      "title": "Global subgradients and convex restrictions",
+      "short_title": "Subgradient foundations",
+      "status": "compiled",
+      "summary": "Proper-source specialization of the global support predicate, finite-witness domain inclusion and real-valued convex restrictions, with explicit source deltas.",
+      "audience": "Readers of Orabona Section2.2.1.",
+      "completion_definition": "Two theorems and one library global-support extension faithful on the printed proper-function carrier. Later source obligations, Chapter 2 and the whole book remain incomplete.",
+      "completion_blockers": [
+        "Later source obligations, Chapter 2 and the whole book remain incomplete."
+      ],
+      "learning_goals": [
+        "Separate source proper restriction from generic all-EReal predicate and bottom/top degeneracy.",
+        "Derive finite support points from a real witness and recover quantified domain inclusion/outside emptiness.",
+        "Read globallyREAL/globalambient supports and legitimate existence hypothesis in Theorem2.21.",
+        "Cancel weighted support inequalities, including endpoint weights zero and one."
+      ],
+      "module_globs": [
+        "BanditRLProof/OnlineSubgradientBasic.lean"
+      ],
+      "open_gaps": [
+        "The generic support predicate extends the printed proper-function definition to all extended-real functions. The support-point lemma retains properness and drops the source observation's convexity hypothesis. Theorem 2.21 keeps globally real f, convex V and a global support at each point of V; arbitrary real inner-product spaces generalize Euclidean space. Neither completeness nor finite dimension is assumed. Later source obligations, Chapter 2 and the whole book remain incomplete."
+      ]
+    },
+    {
+      "slug": "online-subgradient-interior",
+      "title": "Global subgradients at relative interior points",
+      "short_title": "Relative interior supports",
+      "status": "compiled",
+      "summary": "Preserve affine contact at a specified point of the original domain affine span, then construct a global supporting vector.",
+      "audience": "Readers of Orabona Section2.2.1.",
+      "completion_definition": "Three existence/contact theorems. Later source obligations, Chapter 2 and the whole book remain incomplete.",
+      "completion_blockers": [
+        "Later source obligations, Chapter 2 and the whole book remain incomplete."
+      ],
+      "learning_goals": [
+        "Separate ambient interior from relative interior in the original affine span.",
+        "Keep equality at the prescribed point while extending a linear support.",
+        "Derive finite-dimensional completeness and produce a global Riesz vector without a support oracle.",
+        "Instantiate nonclosed low-dimensional and singleton domains; preserve remaining Chapter2 obligations."
+      ],
+      "module_globs": [
+        "BanditRLProof/OnlineSubgradientInterior.lean"
+      ],
+      "open_gaps": [
+        "The vector results require a finite-dimensional real inner-product space and proper convex f. The contact helper only needs a finite-dimensional real normed space, no bottom values, convexity and the specified relative-interior point; these imply a finite witness. Contact is at that same point and the lower bound tests every ambient query. The source cites Rockafellar Theorem 23.4 without a local proof; this page explains the library construction. No boundary-wide existence, uniqueness or selection algorithm is claimed. Later source obligations, Chapter 2 and the whole book remain incomplete."
+      ]
+    },
+    {
+      "slug": "online-subgradient-differentiability",
+      "title": "A singleton global support produces the derivative",
+      "short_title": "Singleton and real germ",
+      "status": "compiled",
+      "summary": "Prove the singleton equivalence and gradient identity for an explicitly specified ambient real-germ interpretation; keep the source interpretation gaps visible.",
+      "audience": "Readers of Orabona Theorem 2.22.",
+      "completion_definition": "Eleven theorems and one ambient-real-germ definition. Later source obligations, Chapter 2 and the whole book remain incomplete.",
+      "completion_blockers": [
+        "Later source obligations, Chapter 2 and the whole book remain incomplete.",
+        "The source defines subgradients for proper functions, but Theorem 2.22 prints a wider codomain without reconciling that scope (G-T22-SCOPE). It does not define extended-valued differentiability in the inspected passage (G-T22-DIFF). The library therefore separately specifies a total support predicate and an ambient finite-real-germ interpretation; these are explicit interpretations, not definitions supplied by that passage."
+      ],
+      "learning_goals": [
+        "Keep local real values while differentiating extended-real functions.",
+        "Derive domain interior from nonzero normal perturbation and a singleton.",
+        "Use actual neighboring supports and compactness to produce a Frechet derivative.",
+        "Distinguish a smooth toReal cast from a genuine real germ, preserving required later results."
+      ],
+      "module_globs": [
+        "BanditRLProof/OnlineSubgradientDifferentiability.lean"
+      ],
+      "open_gaps": [
+        "The source defines subgradients for proper functions, but Theorem 2.22 prints a wider codomain without reconciling that scope (G-T22-SCOPE). It does not define extended-valued differentiability in the inspected passage (G-T22-DIFF). The library therefore separately specifies a total support predicate and an ambient finite-real-germ interpretation; these are explicit interpretations, not definitions supplied by that passage. The eleven theorems use finite-dimensional real inner-product spaces; the germ definition itself omits finite dimension. No-bottom and ambient interior are derived in the terminal directions, while individual helpers retain their stated local-finiteness, Lipschitz, continuity and nonbottom-filter premises. The source gives no local proof; the construction below is the library proof. Later source obligations, Chapter 2 and the whole book remain incomplete."
+      ]
     }
   ]
 }
