@@ -22,12 +22,7 @@ endorsement of these libraries.
    controlled ablation, verified theorem neighborhoods, inspectable material for
    specialized models, and analysis of mathematical/model boundaries.
 
-Samplinglib contributes sampling and analytic mechanisms; QuantumComputinglib
-contributes quantum semantics and oracle interfaces; BanditRLlib contributes
-feedback models, sequential decisions and regret/sample-complexity guarantees.
-Cross-library links express a research agenda until compatible imports or compiled
-adapters prove the transport. The three libraries share a purpose, not a claim of
-identical maturity or interchangeable foundations.
+BanditRLlib focuses on feedback models, sequential decisions and regret/sample-complexity guarantees. Proposed transfers between learning settings require explicit assumptions and a checked mathematical bridge.
 
 ## Public claims and evidence
 
@@ -63,3 +58,7 @@ Public introductions should lead with our original mission, explain the concrete
 
 This communication protocol supplements the theorem-publication and
 proof-digestion protocols; it does not change theorem acceptance gates.
+
+## Library identity and contributor scope
+
+Present this library's own mission, contributors, achievements and research agenda in its README, home page and Math 2.0 page. Do not add prominent cross-library promotion, a joint-library section, or a common-collaborator claim. Contributor and achievement attribution must follow the actual scope of the work. Necessary external technical references belong in the relevant source or attribution notes, with precise scope; they do not establish shared maintenance or responsibility.

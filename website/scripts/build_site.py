@@ -2448,10 +2448,6 @@ def build_math_2_0(output: Path, verified: bool, generated_at: str) -> None:
   <p class="math-evidence-links">{' · '.join(links)}</p>
 </article>""")
         sections.append(f'<section id="{group["id"]}"><h2>{html.escape(group["title"])}</h2><div class="math-direction-grid">{"".join(cards)}</div></section>')
-    sisters = "".join(
-        f'<article class="info-card"><h3><a href="{html.escape(item["url"], quote=True)}">{html.escape(item["name"])}</a></h3><p>{html.escape(item["role"])}</p></article>'
-        for item in content["sisters"]
-    )
     body = f"""
 <section class="hero" id="mission">
   <p class="eyebrow">Human-understanding infrastructure for Math 2.0</p>
@@ -2463,17 +2459,12 @@ def build_math_2_0(output: Path, verified: bool, generated_at: str) -> None:
   <p class="mission-boundary">These are examples in Tao’s talk, not an official nine-goal program or an endorsement. “Current foundation” links to existing work; “Next contribution” names work still to do.</p>
 </section>
 {''.join(sections)}
-<section id="three-libraries">
-  <h2>Three libraries, one shared purpose</h2>
-  <p>Connect explanations, source evidence and formal proof structure across domains. Each library owns its mathematical foundations; cross-library research links become theorem edges only through checked imports or explicit adapters.</p>
-  <div class="math-sister-grid">{sisters}</div>
-</section>
 <section id="participate">
   <h2>Contribute a clearer proof or a reusable mathematical step</h2>
   <p>Start with one sourced claim, one exposition problem or one explicit assumption boundary. The <a href="{href_from(page_path, 'community/index.html')}">contribution guide</a> connects it to the library; our <a href="{source_url('docs/math-2-0-positioning.md')}">public claims and evidence protocol</a> keeps present capabilities and research ambitions distinct.</p>
 </section>
 """
-    toc = [("mission", "Our mission")] + [(group["id"], group["title"].split(":")[0]) for group in content["groups"]] + [("three-libraries", "Three libraries"), ("participate", "Contribute")]
+    toc = [("mission", "Our mission")] + [(group["id"], group["title"].split(":")[0]) for group in content["groups"]] + [("participate", "Contribute")]
     write_page(output, page_path, layout(page_path, content["title"], body, toc, "math-2-0", verified, generated_at))
 
 
