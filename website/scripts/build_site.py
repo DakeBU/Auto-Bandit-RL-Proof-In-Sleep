@@ -71,7 +71,7 @@ PAPER_TITLE = (
 PRIMARY_TEXTBOOK_TITLE = "Bandit Algorithms"
 PRIMARY_TEXTBOOK_AUTHORS = "Tor Lattimore and Csaba Szepesvári"
 PRIMARY_TEXTBOOK_URL = "https://tor-lattimore.com/downloads/book/book.pdf"
-ASSET_VERSION = "20260919-taxonomy-techniques"
+ASSET_VERSION = "20261011-math-2-0"
 CATALOG_PAGE_SIZE = 20
 MILESTONE_PAGE_SIZE = 12
 MODULE_PAGE_SIZE = 30
@@ -723,6 +723,7 @@ def layout(
     root = page_root(page_path)
     start_items = [
         ("overview", "Overview", "index.html"),
+        ("math-2-0", "Math 2.0 mission", "math-2-0/index.html"),
         ("installation", "Installation", "installation/index.html"),
     ]
     library_items = [
@@ -826,7 +827,7 @@ def layout(
     breadcrumb = render_book_breadcrumb(page_path)
     sidebar_groups = "".join(
         [
-            nav_group("start", "Start", start_nav, current in {"overview", "installation"}),
+            nav_group("start", "Start", start_nav, current in {"overview", "math-2-0", "installation"}),
             nav_group("books", "Books", books_nav, bandit_active or other_book_active or current in {"books", "reinforcement-learning", "online-learning", "conformal-prediction"}),
             nav_group(
                 "research",
@@ -899,15 +900,15 @@ def layout(
     canonical_url = public_page_url(page_path)
     social_title = f"{title} · BanditRLlib"
     social_description = (
-        "Verified bandit and reinforcement-learning theory in Lean, with "
-        "source-mapped teaching chapters, exact declarations, and explicit proof boundaries."
+        "Understand sequential-learning proofs through source-linked explanations, "
+        "Lean evidence and navigable proof graphs. Human-understanding infrastructure for Math 2.0."
     )
     return f"""<!doctype html>
 <html lang="en" data-theme="blueprint">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="description" content="{html.escape(social_description, quote=True)}">
   <meta name="citation_title" content="{html.escape(PAPER_TITLE)}">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="BanditRLlib">
@@ -2223,16 +2224,16 @@ def build_index(
     )
     body = f"""
 <section class="hero" id="overview">
-  <p class="eyebrow">Verified bandit and reinforcement-learning theory in Lean</p>
+  <p class="eyebrow">Sequential learning · human understanding · Lean</p>
   <h1>BanditRLlib</h1>
-  <p class="lede">Learn bandit and reinforcement-learning theory beside its compiled Lean interfaces, search exact declarations, and contribute one reviewable lemma at a time.</p>
+  <p class="hero-purpose">Understand why a learning guarantee holds—and where it breaks.</p>
+  <p class="lede">Read the proof ideas, follow their Lean evidence, and explore how they connect across bandits, reinforcement learning and online learning.</p>
   <div class="hero-actions">
     <a class="button primary" href="{href_from(page_path, 'books/index.html')}">Explore the Books</a>
     <a class="button" href="{href_from(page_path, 'declarations/index.html')}">Search Declarations</a>
     <a class="button" href="{href_from(page_path, 'community/index.html')}">Contribute a Lemma</a>
   </div>
-  <p class="paper-title"><strong>Paper.</strong> {html.escape(PAPER_TITLE)}</p>
-  <p class="hero-secondary-links"><a href="{GITHUB_REPO}">GitHub repository ↗</a><span aria-hidden="true">·</span><a href="{href_from(page_path, 'banditrlwiki/index.html')}">Compare minimax frontiers</a><span aria-hidden="true">·</span><a href="{href_from(page_path, 'ide/index.html')}">Local experimental workspace</a></p>
+  <p class="hero-secondary-links"><a href="{GITHUB_REPO}">GitHub repository ↗</a><span aria-hidden="true">·</span><a href="{href_from(page_path, 'banditrlwiki/index.html')}">Compare minimax frontiers</a><span aria-hidden="true">·</span><a href="{href_from(page_path, 'math-2-0/index.html')}">Our Math 2.0 mission</a></p>
 </section>
 
 <section id="three-roles" class="audience-paths" aria-labelledby="three-roles-title">
@@ -2244,6 +2245,13 @@ def build_index(
     <a class="audience-path-card contribute-role" href="{href_from(page_path, 'community/index.html')}"><span>03 · Contributor</span><strong>Contribute one lemma</strong><small>Follow the contribution contract →</small></a>
   </div>
 </section>
+
+<aside class="math-mission-strip" id="math-2-0" aria-labelledby="math-mission-title">
+  <p class="eyebrow">Our response to Terence Tao’s Math 2.0</p>
+  <h2 id="math-mission-title">A living network → understandable mathematics → new ideas.</h2>
+  <p>Source-linked research maps and a reusable Lean library are the foundations. Clear explanations and interactive teaching are the human value. Proof-method transfer, ablation and verified theorem neighborhoods are the research agenda.</p>
+  <a href="{href_from(page_path, 'math-2-0/index.html')}">Explore all nine directions, with current evidence and next steps →</a>
+</aside>
 
 <section id="books">
   <p class="eyebrow">Books · shared Lean foundations</p>
@@ -2283,6 +2291,7 @@ def build_index(
     <article class="info-card system-card"><span class="level-label">Research system</span><h3>ABRL Adaptive Harness</h3><p>A fixed mathematical target enters an evidence-aware scheduler. The hierarchical route remains the default; bounded master–worker trials use the same hashed route packet, and only separate reviewer verdicts can enter the comparison.</p><a href="{href_from(page_path, 'workflow/index.html')}">Inspect the ABRL harness →</a></article>
     <article class="info-card system-card"><span class="level-label">User-facing library</span><h3>BanditRLlib</h3><p>Compiled Lean declarations → searchable reusable library → textbook-aligned learning → LaTeX↔Lean formalization → community lemma intake.</p><a href="{href_from(page_path, 'declarations/index.html')}">Browse BanditRLlib →</a></article>
   </div>
+  <p class="paper-title"><strong>Paper.</strong> {html.escape(PAPER_TITLE)}</p>
   {render_diagram(page_path, 'system-architecture.mmd', 'A research target enters ABRL and returns as reusable, reviewer-gated BanditRLlib mathematics')}
 </section>
 
@@ -2388,6 +2397,7 @@ python3 tools/bandit.py check</code></pre></article>
     toc = [
         ("overview", "Overview"),
         ("three-roles", "Three ways to use BanditRLlib"),
+        ("math-2-0", "Math 2.0 mission"),
         ("books", "Books"),
         ("primary-textbook", "Primary textbook"),
         ("textbook-spine", "Part IV spine"),
@@ -2409,6 +2419,61 @@ python3 tools/bandit.py check</code></pre></article>
         page_path,
         layout(page_path, "Overview", body, toc, "overview", verified, generated_at),
     )
+
+
+def build_math_2_0(output: Path, verified: bool, generated_at: str) -> None:
+    """Publish the maintained mission without changing mathematical status."""
+    page_path = "math-2-0/index.html"
+    content = load_json(CONTENT_DIR / "math_2_0.json")
+    source = content["source"]
+    directions = {item["number"]: item for item in content["directions"]}
+    sections: list[str] = []
+    for group in content["groups"]:
+        cards: list[str] = []
+        for number in group["directions"]:
+            item = directions[number]
+            links: list[str] = []
+            for evidence in item["evidence"]:
+                target = source_url(evidence["source"]) if "source" in evidence else href_from(page_path, evidence["path"])
+                links.append(f'<a href="{html.escape(target, quote=True)}">{html.escape(evidence["title"])}</a>')
+            cards.append(f"""
+<article class="math-direction" id="direction-{number}">
+  <p class="eyebrow">{number:02d} · Tao’s example · p. {item['page']}</p>
+  <h3>{html.escape(item['title'])}</h3>
+  <p class="math-direction-role">{html.escape(item['role'])}</p>
+  <dl>
+    <div><dt>Current foundation</dt><dd>{html.escape(item['foundation'])}</dd></div>
+    <div><dt>Next contribution</dt><dd>{html.escape(item['next'])}</dd></div>
+  </dl>
+  <p class="math-evidence-links">{' · '.join(links)}</p>
+</article>""")
+        sections.append(f'<section id="{group["id"]}"><h2>{html.escape(group["title"])}</h2><div class="math-direction-grid">{"".join(cards)}</div></section>')
+    sisters = "".join(
+        f'<article class="info-card"><h3><a href="{html.escape(item["url"], quote=True)}">{html.escape(item["name"])}</a></h3><p>{html.escape(item["role"])}</p></article>'
+        for item in content["sisters"]
+    )
+    body = f"""
+<section class="hero" id="mission">
+  <p class="eyebrow">Human-understanding infrastructure for Math 2.0</p>
+  <h1 class="page-title">{html.escape(content['title'])}</h1>
+  <p class="hero-purpose">{html.escape(content['mission'])}</p>
+  <p class="lede">A living knowledge network and a reusable Lean library support clearer explanations, interactive teaching and the search for transferable proof ideas.</p>
+  <p>Terence Tao’s <a href="{html.escape(source['url'], quote=True)}"><cite>{html.escape(source['title'])}</cite>, {html.escape(source['date'])}</a> argues that AI should strengthen human understanding throughout mathematics. Below is our response to nine examples on pp. {html.escape(source['pages'])}, organized by foundations, human value and research agenda.</p>
+  <p class="mission-boundary">These are examples in Tao’s talk, not an official nine-goal program or an endorsement. “Current foundation” links to existing work; “Next contribution” names work still to do.</p>
+</section>
+{''.join(sections)}
+<section id="three-libraries">
+  <h2>Three libraries, one shared purpose</h2>
+  <p>Connect explanations, source evidence and formal proof structure across domains. Each library owns its mathematical foundations; cross-library research links become theorem edges only through checked imports or explicit adapters.</p>
+  <div class="math-sister-grid">{sisters}</div>
+</section>
+<section id="participate">
+  <h2>Contribute a clearer proof or a reusable mathematical step</h2>
+  <p>Start with one sourced claim, one exposition problem or one explicit assumption boundary. The <a href="{href_from(page_path, 'community/index.html')}">contribution guide</a> connects it to the library; our <a href="{source_url('docs/math-2-0-positioning.md')}">public claims and evidence protocol</a> keeps present capabilities and research ambitions distinct.</p>
+</section>
+"""
+    toc = [("mission", "Our mission")] + [(group["id"], group["title"].split(":")[0]) for group in content["groups"]] + [("three-libraries", "Three libraries"), ("participate", "Contribute")]
+    write_page(output, page_path, layout(page_path, content["title"], body, toc, "math-2-0", verified, generated_at))
 
 
 def build_implementation_map(
@@ -5829,6 +5894,7 @@ def main() -> int:
     (output / ".nojekyll").write_text("", encoding="utf-8")
 
     build_books(output, args.lean_verified, generated_at)
+    build_math_2_0(output, args.lean_verified, generated_at)
     build_index(
         output,
         modules,

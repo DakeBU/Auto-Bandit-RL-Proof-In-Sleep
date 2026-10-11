@@ -1,0 +1,104 @@
+{
+  "title": "BanditRLlib in Math 2.0",
+  "mission": "Understand why a learning guarantee holds—and where it breaks.",
+  "source": {
+    "title": "Math 2.0",
+    "author": "Terence Tao",
+    "date": "October 2026",
+    "url": "https://teorth.github.io/tao-web/slides/math-2-0-caltech-2026.pdf",
+    "pages": "22, 25–26"
+  },
+  "groups": [
+    {"id": "foundations", "title": "Foundations: a living network and a reusable formal library", "directions": [2, 3]},
+    {"id": "understanding", "title": "Human value: clearer proofs and better teaching", "directions": [1, 8]},
+    {"id": "research", "title": "Research agenda: learn from the structure of proofs", "directions": [4, 5, 6, 7, 9]}
+  ],
+  "directions": [
+    {
+      "number": 1,
+      "title": "Open exposition problems",
+      "page": 22,
+      "role": "Explain the mechanisms behind regret and sample-complexity bounds, beyond a finished proof.",
+      "foundation": "Source-aligned teaching routes pair mathematical explanations with exact Lean. The proof-digestion protocol preserves assumptions and a path back to the full proof.",
+      "next": "Turn opaque adaptivity, stopping and change-of-measure arguments into reviewed conceptual steps, using compressed proof spines and the Functor Hypergraph.",
+      "evidence": [{"title": "Reading routes", "path": "learning/index.html"}, {"title": "Proof digestion protocol", "source": "docs/proof-digestion-protocol.md"}]
+    },
+    {
+      "number": 2,
+      "title": "Living knowledge networks",
+      "page": 22,
+      "role": "Connect papers by their feedback model, assumptions, bound and reusable proof mechanism.",
+      "foundation": "BanditRLwiki, the setting/technique atlas and named frontier leaves organize primary sources with separate literature and local formalization status.",
+      "next": "Keep new papers and corrected statements attached to stable source and graph nodes, so the field map can evolve without losing provenance.",
+      "evidence": [{"title": "Bound & Source Atlas", "path": "banditrlwiki/index.html"}, {"title": "Technique Map", "path": "banditrlwiki/technique-map/index.html"}]
+    },
+    {
+      "number": 3,
+      "title": "High-quality formal libraries",
+      "page": 22,
+      "role": "Build a reusable Lean foundation for sequential learning.",
+      "foundation": "BanditRLlib contains Lean developments for bandits, probability, stopping, information bounds and finite-horizon RL. Exact declarations and route-specific proof boundaries are searchable.",
+      "next": "Prioritize canonical shared primitives and narrow adapters between settings; keep compilation, source fidelity and route completion distinct.",
+      "evidence": [{"title": "Lean declarations", "path": "declarations/index.html"}, {"title": "Implementation Map", "path": "implementation-map/index.html"}]
+    },
+    {
+      "number": 4,
+      "title": "New principles, methods and insights",
+      "page": 22,
+      "role": "Use proof graphs to discover which ideas transfer across learning problems.",
+      "foundation": "The Lean Graph exposes formal structure; the Functor Hypergraph records candidate mechanisms across feedback, state, objective and oracle changes.",
+      "next": "Cross-pollinate confidence, information and Bellman/occupancy routes across BanditRLlib, Samplinglib and QuantumComputinglib; prove the smallest useful transport. A conceptual match alone is not a new theorem or novelty verdict.",
+      "evidence": [{"title": "Lean Graph", "path": "lean-graph/index.html"}, {"title": "Functor Hypergraph", "path": "functor-hypergraph/index.html"}]
+    },
+    {
+      "number": 5,
+      "title": "Ablation studies",
+      "page": 25,
+      "role": "Ask whether the same learning guarantee survives without a particular proof tool.",
+      "foundation": "The source/Lean graph distinction, ingredient audits and source-blind encoder–denoiser review help identify what a proof really assumes and uses. The Proof Graph Laboratory provides experimental dependency analysis.",
+      "next": "Freeze one theorem contract, remove a proof theory or input, and test an alternative route. Round-trip review supports this experiment; it does not itself establish an ablation result.",
+      "evidence": [{"title": "Proof Graph Laboratory", "path": "proof-graph-laboratory/index.html"}, {"title": "Semantic round trip", "source": ".agents/skills/bandit-semantic-roundtrip/SKILL.md"}]
+    },
+    {
+      "number": 6,
+      "title": "The neighborhood of a theorem",
+      "page": 25,
+      "role": "Explore what remains true when feedback, stationarity, reward tails or horizon assumptions change.",
+      "foundation": "The assumption-indexed atlas, theorem contracts and explicit frontier gaps distinguish compatible guarantees from superficially similar rates.",
+      "next": "Generate nearby contracts from the graph, then separately verify weakened conclusions or checked counterexamples. Dropping a hypothesis creates a new target, not an inherited proof.",
+      "evidence": [{"title": "Bandit Taxonomy", "path": "banditrlwiki/setting-atlas/index.html"}, {"title": "Formalization frontier", "path": "banditrlwiki/frontier/index.html"}]
+    },
+    {
+      "number": 7,
+      "title": "Interpretable, safe, open math models",
+      "page": 25,
+      "role": "Supply inspectable mathematical tasks, concise Lean and aligned natural-language explanations for specialized models.",
+      "foundation": "ABRL uses our own or appropriately licensed versioned lemma packets, explicit targets, compiler feedback and reviewer evidence. Those source contracts and typed failures can support future training and evaluation where their licenses permit.",
+      "next": "Curate licensed, versioned proof/explanation pairs and failure cases, with held-out source-fidelity evaluation. No trained model, validated training corpus or faithful access to a model’s internal reasoning is claimed here.",
+      "evidence": [{"title": "ABRL workflow", "path": "workflow/index.html"}, {"title": "Contribution packets", "path": "community/index.html#machine-contract"}]
+    },
+    {
+      "number": 8,
+      "title": "Interactive texts and presentations",
+      "page": 26,
+      "role": "Make sequential-learning theory navigable for students and useful to researchers.",
+      "foundation": "Book views, worked examples, source-to-Lean bridges, folded exact statements and a progressively expandable graph offer several routes through the same mathematics.",
+      "next": "Lead with the motivating question and a short proof spine; use graph drill-down and alternative verified routes to deepen understanding without overwhelming the first reading.",
+      "evidence": [{"title": "Books", "path": "books/index.html"}, {"title": "Explore the graph", "path": "lean-graph/index.html"}]
+    },
+    {
+      "number": 9,
+      "title": "Real-world model failure and misalignment",
+      "page": 26,
+      "role": "Expose the gap between a formal learning guarantee and the assumptions of its deployment.",
+      "foundation": "The source and assumption ledgers make feedback access, adaptivity, probability mode and remaining mathematical boundaries visible.",
+      "next": "Use formal model violations and checked counterexamples to study misleading guarantee claims, then pair them with external evidence about the deployed environment. Lean correctness alone cannot validate that environment or certify deployment safety.",
+      "evidence": [{"title": "Assumption-indexed atlas", "path": "banditrlwiki/index.html"}, {"title": "Publication protocol", "source": "docs/theorem-publication-protocol.md"}]
+    }
+  ],
+  "sisters": [
+    {"name": "Samplinglib", "role": "Sampling, probability and analytic proof mechanisms", "url": "https://dakebu.github.io/Automization-Sampling-Optimisation-Geometry-Lib/"},
+    {"name": "QuantumComputinglib", "role": "Quantum algorithms, operators and explicit oracle interfaces", "url": "https://dakebu.github.io/Quantum-Computing-Block-Encoding/"},
+    {"name": "BanditRLlib", "role": "Sequential decisions, feedback models and learning guarantees", "url": "https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/"}
+  ]
+}
