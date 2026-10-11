@@ -1,0 +1,4 @@
+import BanditRLProof.OnlineUnboundedOGD
+#check BanditRL.OnlineUnboundedOGD.regret_lower_bound
+#print axioms BanditRL.OnlineUnboundedOGD.regret_lower_bound
+#print BanditRL.OnlineUnboundedOGD.regret_lower_bound

@@ -1,0 +1,144 @@
+BanditRL.OnlineUnboundedOGD.regret_lower_bound.{u_1} {E : Type u_1} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+  [FiniteDimensional ℝ E] [Nontrivial E] (α : ℝ) (hα0 : 0 < α) (hα1 : α < 1) (T : ℕ)
+  (hT : 2 / ((1 - α) * BanditRL.OnlineUnboundedOSD.phi α) ≤ ↑T) :
+  ∃ loss,
+    (∀ t < T, ConvexOn ℝ Set.univ (loss t) ∧ LipschitzWith 1 (loss t) ∧ Differentiable ℝ (loss t)) ∧
+      1 / 2 * BanditRL.OnlineUnboundedOSD.phi α * ↑T ^ (2 - α) ≤
+        BanditRL.OnlineGradientDescent.regretVariable BanditRL.OnlineHuber.fullSpace
+          (BanditRL.OnlineUnboundedOSD.powerSteps α) loss 0 0 T
+'BanditRL.OnlineUnboundedOGD.regret_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+theorem BanditRL.OnlineUnboundedOGD.regret_lower_bound.{u_1} : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : InnerProductSpace ℝ E] [inst_2 : FiniteDimensional ℝ E] [Nontrivial E] (α : ℝ),
+  0 < α →
+    α < 1 →
+      ∀ (T : ℕ),
+        2 / ((1 - α) * BanditRL.OnlineUnboundedOSD.phi α) ≤ ↑T →
+          ∃ loss,
+            (∀ t < T, ConvexOn ℝ Set.univ (loss t) ∧ LipschitzWith 1 (loss t) ∧ Differentiable ℝ (loss t)) ∧
+              1 / 2 * BanditRL.OnlineUnboundedOSD.phi α * ↑T ^ (2 - α) ≤
+                BanditRL.OnlineGradientDescent.regretVariable BanditRL.OnlineHuber.fullSpace
+                  (BanditRL.OnlineUnboundedOSD.powerSteps α) loss 0 0 T :=
+fun {E} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [Nontrivial E] α hα0 hα1 T hT =>
+  Exists.casesOn
+    (exists_norm_eq E
+      (have this :=
+        Mathlib.Meta.NormNum.isNat_le_true (Mathlib.Meta.NormNum.isNat_ofNat ℝ Nat.cast_zero)
+          (Mathlib.Meta.NormNum.isNat_ofNat ℝ Nat.cast_one) (Eq.refl true);
+      this))
+    fun v hv =>
+    let loss := BanditRL.OnlineUnboundedOSD.switchLoss T v;
+    let η := BanditRL.OnlineUnboundedOSD.powerSteps α;
+    have hlinear := fun t =>
+      funext fun z =>
+        of_eq_true
+          (Eq.trans
+            (congrArg (Eq (BanditRL.OnlineUnboundedOSD.switchSlope T t * inner ℝ v z))
+              (real_inner_smul_left v z (BanditRL.OnlineUnboundedOSD.switchSlope T t)))
+            (eq_self (BanditRL.OnlineUnboundedOSD.switchSlope T t * inner ℝ v z)));
+    have hgradient := fun t z =>
+      Eq.mpr (id (congrArg (fun _a => gradient _a z = BanditRL.OnlineUnboundedOSD.switchSlope T t • v) (hlinear t)))
+        (BanditRL.OnlineGradientDescentSource.gradient_linear (BanditRL.OnlineUnboundedOSD.switchSlope T t • v) z);
+    have hsupport := fun t z =>
+      have hf :=
+        funext fun y =>
+          Eq.mpr
+            (id
+              (congrArg (fun _a => ↑(_a y) = ↑(inner ℝ (BanditRL.OnlineUnboundedOSD.switchSlope T t • v) y + 0))
+                (hlinear t)))
+            (of_eq_true
+              (Eq.trans
+                (congrArg (Eq ↑(inner ℝ (BanditRL.OnlineUnboundedOSD.switchSlope T t • v) y))
+                  (congrArg Real.toEReal (add_zero (inner ℝ (BanditRL.OnlineUnboundedOSD.switchSlope T t • v) y))))
+                (eq_self ↑(inner ℝ (BanditRL.OnlineUnboundedOSD.switchSlope T t • v) y))));
+      Eq.mpr
+        (id
+          (congrArg
+            (fun _a =>
+              BanditRL.OnlineSubgradientDescent.currentSubgradient _a z =
+                BanditRL.OnlineUnboundedOSD.switchSlope T t • v)
+            hf))
+        (BanditRL.OnlineUnboundedOSD.currentSubgradient_affine (BanditRL.OnlineUnboundedOSD.switchSlope T t • v) z 0);
+    have htrajectory := fun t =>
+      Nat.recAux (Eq.refl (BanditRL.OnlineGradientDescent.iterateVariable BanditRL.OnlineHuber.fullSpace η loss 0 0))
+        (fun t ih =>
+          of_eq_true
+            (Eq.trans
+              (congr
+                (congrArg Eq
+                  (BanditRL.OnlineGradientDescent.project.congr_simp BanditRL.OnlineHuber.fullSpace
+                    BanditRL.OnlineHuber.fullSpace (Eq.refl BanditRL.OnlineHuber.fullSpace)
+                    (BanditRL.OnlineGradientDescent.iterateVariable BanditRL.OnlineHuber.fullSpace η loss 0 t -
+                      η t •
+                        gradient (loss t)
+                          (BanditRL.OnlineGradientDescent.iterateVariable BanditRL.OnlineHuber.fullSpace η loss 0 t))
+                    (BanditRL.OnlineSubgradientDescent.iterate BanditRL.OnlineHuber.fullSpace η (fun s z => ↑(loss s z))
+                        0 t -
+                      η t • BanditRL.OnlineUnboundedOSD.switchSlope T t • v)
+                    (congr (congrArg HSub.hSub ih)
+                      (congrArg (HSMul.hSMul (η t))
+                        (Eq.trans
+                          (gradient.congr_simp (loss t) (loss t) (Eq.refl (loss t))
+                            (BanditRL.OnlineGradientDescent.iterateVariable BanditRL.OnlineHuber.fullSpace η loss 0 t)
+                            (BanditRL.OnlineSubgradientDescent.iterate BanditRL.OnlineHuber.fullSpace η
+                              (fun s z => ↑(loss s z)) 0 t)
+                            ih)
+                          ((fun t z => hgradient t z) t
+                            (BanditRL.OnlineSubgradientDescent.iterate BanditRL.OnlineHuber.fullSpace η
+                              (fun s z => ↑(loss s z)) 0 t)))))))
+                (BanditRL.OnlineGradientDescent.project.congr_simp BanditRL.OnlineHuber.fullSpace
+                  BanditRL.OnlineHuber.fullSpace (Eq.refl BanditRL.OnlineHuber.fullSpace)
+                  (BanditRL.OnlineSubgradientDescent.iterate BanditRL.OnlineHuber.fullSpace η (fun s z => ↑(loss s z)) 0
+                      t -
+                    η t •
+                      BanditRL.OnlineSubgradientDescent.currentSubgradient ((fun s z => ↑(loss s z)) t)
+                        (BanditRL.OnlineSubgradientDescent.iterate BanditRL.OnlineHuber.fullSpace η
+                          (fun s z => ↑(loss s z)) 0 t))
+                  (BanditRL.OnlineSubgradientDescent.iterate BanditRL.OnlineHuber.fullSpace η (fun s z => ↑(loss s z)) 0
+                      t -
+                    η t • BanditRL.OnlineUnboundedOSD.switchSlope T t • v)
+                  (congrArg
+                    (HSub.hSub
+                      (BanditRL.OnlineSubgradientDescent.iterate BanditRL.OnlineHuber.fullSpace η
+                        (fun s z => ↑(loss s z)) 0 t))
+                    (congrArg (HSMul.hSMul (η t))
+                      ((fun t z => hsupport t z) t
+                        (BanditRL.OnlineSubgradientDescent.iterate BanditRL.OnlineHuber.fullSpace η
+                          (fun s z => ↑(loss s z)) 0 t))))))
+              (eq_self
+                (BanditRL.OnlineGradientDescent.project BanditRL.OnlineHuber.fullSpace
+                  (BanditRL.OnlineSubgradientDescent.iterate BanditRL.OnlineHuber.fullSpace η (fun s z => ↑(loss s z)) 0
+                      t -
+                    η t • BanditRL.OnlineUnboundedOSD.switchSlope T t • v)))))
+        t;
+    have hregret :=
+      id
+        (id
+          (of_eq_true
+            (Eq.trans
+              (congr
+                (congrArg Eq
+                  (Finset.sum_congr (Eq.refl (Finset.range T)) fun x a =>
+                    congrFun' (congrArg HSub.hSub (congrArg (loss x) ((fun t => htrajectory t) x))) (loss x 0)))
+                (Finset.sum_congr (Eq.refl (Finset.range T)) fun x a =>
+                  Eq.refl
+                    (loss x
+                        (BanditRL.OnlineSubgradientDescent.iterate BanditRL.OnlineHuber.fullSpace η
+                          (fun s z => ↑(loss s z)) 0 x) -
+                      loss x 0)))
+              (eq_self
+                (∑ x ∈ Finset.range T,
+                  (loss x
+                      (BanditRL.OnlineSubgradientDescent.iterate BanditRL.OnlineHuber.fullSpace η
+                        (fun s z => ↑(loss s z)) 0 x) -
+                    loss x 0))))));
+    Exists.intro loss
+      ⟨fun t ht =>
+        And.casesOn (BanditRL.OnlineUnboundedOSD.switching_loss_regular T v hv t) fun hc hl =>
+          ⟨hc,
+            ⟨hl,
+              Eq.mpr (id (congrArg (fun _a => Differentiable ℝ _a) (hlinear t)))
+                (ContinuousLinearMap.differentiable
+                  ((InnerProductSpace.toDual ℝ E) (BanditRL.OnlineUnboundedOSD.switchSlope T t • v)))⟩⟩,
+        id
+          (Eq.mpr (id (congrArg (fun _a => 1 / 2 * BanditRL.OnlineUnboundedOSD.phi α * ↑T ^ (2 - α) ≤ _a) hregret))
+            (BanditRL.OnlineUnboundedOSD.switching_vector_lower_bound α hα0 hα1 T hT v hv))⟩

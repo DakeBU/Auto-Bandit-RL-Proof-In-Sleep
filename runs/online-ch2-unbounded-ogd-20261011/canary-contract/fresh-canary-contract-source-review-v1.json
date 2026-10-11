@@ -1,0 +1,116 @@
+{
+  "verdict": "accepted-with-explicit-delta",
+  "scope": "Exactly two canary source contracts only; no BODY/build acceptance",
+  "blocking_repairs": [],
+  "actor": "/root/adaptive_reviewer",
+  "formalizer": "/root/adaptive_formalizer",
+  "fresh_blind_actor": "/root/unbounded_header_blind",
+  "requested_model": "GPT-6 Astra",
+  "requested_effort": "medium",
+  "runtime_attestation": false,
+  "approved_headers_sha256": "bfa5398e87af36f6637f9c2bcbbad56da074611c4007e0802287dcc0737f7453",
+  "approved_definitions_sha256": "d9e196391b2aad8e2c4f279e14ae8eef142dd2d4c44a46ab77290416d3510d9e",
+  "approved_prospectus_sha256": "bb6a53aead71f847681ef7fe4a92e057f510c182f9637a8db80153a5031a1e9e",
+  "fresh_blind_sha256": "17a6eb3cac1972c61c52179ef63978d57f884d2b3cd1d17c06db24a9beb6578e",
+  "seven_slots": [
+    {
+      "slot": "objects",
+      "finding": "Case1 R with explicit switchLoss2 unit1; case2 EuclideanSpace R Fin2, nontrivial finite-dimensional Euclidean model.",
+      "verdict": "accepted"
+    },
+    {
+      "slot": "quantifiers",
+      "finding": "Both closed conclusions, no input premises. Case2 one exists loss scopes regularity and all three regret bounds; no witness substitution or uniform-in-T claim.",
+      "verdict": "accepted"
+    },
+    {
+      "slot": "assumptions",
+      "finding": "Convex/global1-Lipschitz/global Differentiable output facts. phi lower bound, exact threshold and power512 also proved outputs; no desired-regret premise.",
+      "verdict": "accepted"
+    },
+    {
+      "slot": "conclusion_metric",
+      "finding": "Actual regretVariable from actual iterateVariable against zero; T2 pre-update outputs0,1 yield regret1. E2T64 lower bounds use identical loss/run.",
+      "verdict": "accepted"
+    },
+    {
+      "slot": "constants_time",
+      "finding": "eta0=1, eta1=2^(-1/2)>0 and smaller; actual states0,1,1-2^(-1/2). T64: phi>=1/15, threshold<=64, power512, printedhalfphi bound>=256/15>17.",
+      "verdict": "accepted"
+    },
+    {
+      "slot": "feedback_causality",
+      "finding": "Actual current-loss gradient updates, full-space projection. All-point gradient identities proven for scalar affine losses; no recurrence equality assumed.",
+      "verdict": "accepted"
+    },
+    {
+      "slot": "boundaries",
+      "finding": "T2 explicitly below threshold, never an application of theorem5.4. T64 is terminal specialization with same horizon-specific witness. Source OSD to OGD refinement supported by accepted core; no all-schedule/minimax/average-regret theorem asserted.",
+      "verdict": "accepted"
+    }
+  ],
+  "definition_check": "All ten imported definition/structure excerpts compared verbatim after newline decoding with current actual modules; four own abbreviations directly use them. No new opaque scoring or producer API. Blind received definitions and exact headers only; proof/source exposure remains absent per its disclosure.",
+  "reuse_check": "Existing OSD canary exports phi>=1/15 and threshold<=64; those numeric projections can be reused. Its local hpower is not exported and must be calculated locally. OSD vectorRegret cannot be substituted for new OGD regret. Case2 BODY must consume accepted actual OGD production theorem; case1 must verify its actual OGD producer.",
+  "delta": "Canaries are concrete semantic validation cases, not printed standalone source claims. Global differentiability is witness refinement and E2 is a source-compatible specialization.",
+  "source_pixels": "Reviewer personally inspected pinned PDF26/64/65 in source-route review; SHAcef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17 unchanged source contract.",
+  "input_raw_hashes_before_after": [
+    {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-ch2-unbounded-ogd-canary-proposal-20261011\\neutral-canary-headers-v1.txt",
+      "before": "bfa5398e87af36f6637f9c2bcbbad56da074611c4007e0802287dcc0737f7453",
+      "after": "bfa5398e87af36f6637f9c2bcbbad56da074611c4007e0802287dcc0737f7453"
+    },
+    {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-ch2-unbounded-ogd-canary-proposal-20261011\\neutral-imported-definitions-v1.txt",
+      "before": "d9e196391b2aad8e2c4f279e14ae8eef142dd2d4c44a46ab77290416d3510d9e",
+      "after": "d9e196391b2aad8e2c4f279e14ae8eef142dd2d4c44a46ab77290416d3510d9e"
+    },
+    {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-ch2-unbounded-ogd-canary-proposal-20261011\\canary-source-prospectus-v1.json",
+      "before": "bb6a53aead71f847681ef7fe4a92e057f510c182f9637a8db80153a5031a1e9e",
+      "after": "bb6a53aead71f847681ef7fe4a92e057f510c182f9637a8db80153a5031a1e9e"
+    },
+    {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-ch2-unbounded-ogd-canary-proposal-20261011\\fresh-canary-blind-v1.json",
+      "before": "17a6eb3cac1972c61c52179ef63978d57f884d2b3cd1d17c06db24a9beb6578e",
+      "after": "17a6eb3cac1972c61c52179ef63978d57f884d2b3cd1d17c06db24a9beb6578e"
+    },
+    {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-ch2-unbounded-ogd-canary-proposal-20261011\\fresh-canary-blind-v1.md",
+      "before": "6f3d263b27dcebb24489edb203d77f7f13faa9bf5a80cfaa5949045366192b45",
+      "after": "6f3d263b27dcebb24489edb203d77f7f13faa9bf5a80cfaa5949045366192b45"
+    },
+    {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\Tests\\OnlineUnboundedOSDCanary.lean",
+      "before": "bd04685f5e8c59b982c2de751f374881d31069085491e80f4053f06ecbb93238",
+      "after": "bd04685f5e8c59b982c2de751f374881d31069085491e80f4053f06ecbb93238"
+    },
+    {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\BanditRLProof\\OnlineUnboundedOGD.lean",
+      "before": "313c8522a40599846d79df32d2a8a42014a3338f814286df7ffe9603554d6b50",
+      "after": "313c8522a40599846d79df32d2a8a42014a3338f814286df7ffe9603554d6b50"
+    },
+    {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\BanditRLProof\\OnlineUnboundedOSD.lean",
+      "before": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8",
+      "after": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8"
+    },
+    {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\BanditRLProof\\OnlineGradientDescentSource.lean",
+      "before": "627df452453bbdfa2ecf4ddac8b5b85bfd750c74f1db5b81a26e6e20ca2eeec7",
+      "after": "627df452453bbdfa2ecf4ddac8b5b85bfd750c74f1db5b81a26e6e20ca2eeec7"
+    },
+    {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-ch2-next-target-prospectus-20261011\\next-target-header-v1-neutral-definitions.txt",
+      "before": "707df92f3a1660b96427ee14949e10ff92d3095a064ebfcce143c6dd2bdcd2cd",
+      "after": "707df92f3a1660b96427ee14949e10ff92d3095a064ebfcce143c6dd2bdcd2cd"
+    }
+  ],
+  "proof_authorized": false,
+  "chapter_accepted": false,
+  "required_open_containers": 8,
+  "future_claims": 6,
+  "B1_B7": "unchanged/open",
+  "source_denominator": null,
+  "Goal": "ACTIVE",
+  "created_utc": "2026-10-11T05:16:21.844899+00:00"
+}

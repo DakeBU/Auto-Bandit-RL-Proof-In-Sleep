@@ -1,0 +1,7 @@
+# Independent UnboundedOGD core BODY review
+
+Accepted candidate core only; no blocking repairs. The sole public theorem retains the exact frozen context/header and constructs the existing explicit unit-vector switching loss. It proves convexity, global 1-Lipschitzness and global differentiability, identifies the actual OGD gradient with the selected affine subgradient, then identifies both actual trajectories by induction and transports regret through finite EReal coercions. The existing vector lower bound supplies the unchanged threshold, half coefficient and exponent. No duplicate scalar analysis, public helper or desired-conclusion premise is introduced.
+
+Verified focused compile, public probe and TYPE/VALUE export actual exit0, their exact RAW streams/snapshots, the individual native fence/safe_verify receipt and three standard axioms. Compiled VALUE contains the intended explicit producers; opaque theorem_5_4 is absent. Occurrence is not necessity or complete dependency-graph evidence. The fence parser labels conclusion differentiability as a source_assumption, but exact type inspection confirms it is produced output, not an input premise.
+
+Canary review, combined gates and package integration remain pending. No chapter/container closure, native whole-loop, main or live acceptance follows. Eight required containers, six future claims and B1-B7 stay open; denominator null and Goal active.

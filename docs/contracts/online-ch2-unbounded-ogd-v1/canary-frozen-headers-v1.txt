@@ -1,0 +1,44 @@
+import BanditRLProof.OnlineUnboundedOGD
+import Tests.OnlineUnboundedOSDCanary
+import Mathlib.Tactic
+
+noncomputable section
+open Set Finset
+open scoped InnerProductSpace
+namespace UnboundedOGDProbe
+
+abbrev eta : ℕ → ℝ := BanditRL.OnlineUnboundedOSD.powerSteps (1 / 2)
+abbrev scalarLoss : ℕ → ℝ → ℝ := BanditRL.OnlineUnboundedOSD.switchLoss 2 (1 : ℝ)
+abbrev scalarRun (t : ℕ) : ℝ :=
+  BanditRL.OnlineGradientDescent.iterateVariable BanditRL.OnlineHuber.fullSpace eta scalarLoss 0 t
+abbrev scalarRegret : ℝ :=
+  BanditRL.OnlineGradientDescent.regretVariable BanditRL.OnlineHuber.fullSpace eta scalarLoss 0 0 2
+
+theorem scalar_actual_two_rounds :
+    eta 0 = 1 ∧ eta 1 = (2 : ℝ) ^ (-(1 / 2 : ℝ)) ∧
+    0 < eta 1 ∧ eta 1 < eta 0 ∧
+    (∀ z : ℝ, scalarLoss 0 z = -z ∧ scalarLoss 1 z = z) ∧
+    (∀ t < 2, ConvexOn ℝ univ (scalarLoss t) ∧ LipschitzWith 1 (scalarLoss t) ∧
+      Differentiable ℝ (scalarLoss t)) ∧
+    (∀ z : ℝ, gradient (scalarLoss 0) z = -1 ∧ gradient (scalarLoss 1) z = 1) ∧
+    scalarRun 0 = 0 ∧ scalarRun 1 = 1 ∧
+    scalarRun 2 = 1 - (2 : ℝ) ^ (-(1 / 2 : ℝ)) ∧
+    scalarRegret = 1 ∧
+    (2 : ℝ) < 2 / ((1 - (1 / 2 : ℝ)) * BanditRL.OnlineUnboundedOSD.phi (1 / 2))
+
+theorem finiteDim_terminal_lower_bound :
+    (1 / 15 : ℝ) ≤ BanditRL.OnlineUnboundedOSD.phi (1 / 2) ∧
+    2 / ((1 - (1 / 2 : ℝ)) * BanditRL.OnlineUnboundedOSD.phi (1 / 2)) ≤ (64 : ℝ) ∧
+    (64 : ℝ) ^ (2 - (1 / 2 : ℝ)) = 512 ∧
+    (∃ loss : ℕ → EuclideanSpace ℝ (Fin 2) → ℝ,
+      (∀ t < 64, ConvexOn ℝ univ (loss t) ∧ LipschitzWith 1 (loss t) ∧
+        Differentiable ℝ (loss t)) ∧
+      (1 / 2 : ℝ) * BanditRL.OnlineUnboundedOSD.phi (1 / 2) *
+          (64 : ℝ) ^ (2 - (1 / 2 : ℝ)) ≤
+        BanditRL.OnlineGradientDescent.regretVariable BanditRL.OnlineHuber.fullSpace eta loss 0 0 64 ∧
+      (256 / 15 : ℝ) ≤
+        BanditRL.OnlineGradientDescent.regretVariable BanditRL.OnlineHuber.fullSpace eta loss 0 0 64 ∧
+      (17 : ℝ) <
+        BanditRL.OnlineGradientDescent.regretVariable BanditRL.OnlineHuber.fullSpace eta loss 0 0 64)
+
+end UnboundedOGDProbe

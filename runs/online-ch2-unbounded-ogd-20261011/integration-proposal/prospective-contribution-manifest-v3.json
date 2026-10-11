@@ -1,0 +1,105 @@
+{
+  "schema_version": "2.0",
+  "id": "ONLINE-CH2-UNBOUNDED-OGD-20261011",
+  "route": "online-learning/chapter-2/unbounded-actual-ogd",
+  "frontier_cell": "online-ogd",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv1912.13213v10 SHA256 cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchor": "Chapter2 PDF26/printed14 forward claim; literal Theorem5.4 OSD PDF64–65/printed52–53",
+    "url": "https://arxiv.org/pdf/1912.13213v10#page=26"
+  },
+  "target": "For every nontrivial finite-dimensional real inner-product space E, every 0<alpha<1, and every natural T satisfying T>=2/((1-alpha)*phi(alpha)), there exists a horizon-dependent sequence of globally convex, 1-Lipschitz, differentiable real losses. The SAME actual OnlineGradientDescent.iterateVariable/regretVariable run on fullSpace starts at zero and compares with zero, with source eta_t=t^(-alpha). Production and two complete public canaries are locally compiled and independently BODY reviewed; combined gates and final integration acceptance remain pending. Chapter 2 remains partial, accepted=false and complete proof denominator=null; all eight forward containers and six future claims remain open. Chapters 1–16 Goal ACTIVE. No merge or live publication claim.",
+  "affected_files": [
+    "BanditRLProof/OnlineUnboundedOGD.lean",
+    "BanditRLProof.lean",
+    "website/content/chapters.json",
+    "website/content/readings.json",
+    "website/content/highlights.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineUnboundedOGD.regret_lower_bound"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Current accepted OSD producer chain and actual OGD gradient/recurrence; frozen source/reuse contract."
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineGradientDescentSource.gradient_linear",
+      "BanditRL.OnlineUnboundedOSD.currentSubgradient_affine",
+      "BanditRL.OnlineUnboundedOSD.switching_loss_regular",
+      "BanditRL.OnlineUnboundedOSD.switching_vector_lower_bound"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineUnboundedOGD.regret_lower_bound"
+    ],
+    "known_consumers": [
+      "UnboundedOGDProbe.finiteDim_terminal_lower_bound"
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Explicit differentiable affine witness and actual gradient trajectory transfer; old opaque existential alone is insufficient."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root/adaptive_formalizer",
+    "blind_decoder": "/root/unbounded_header_blind",
+    "source_reviewer": "/root/adaptive_decoder",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Chapter 2 printed14/PDF26 points to Section5.2. Theorem5.4 printed52–53/PDF64–65 literally states OSD; this result proves its explicit affine witness also drives actual OGD. Global differentiability is a proved strengthening of the witness regularity. Coordinate-free nontrivial finite-dimensional real inner-product spaces express the source Euclidean positive-dimensional construction. This is one specified polynomial schedule family, not every varying schedule or every learner. Acceptance here is bounded production HEADER roundtrip only; candidate core BODY separately reviewed, canary and package gates pending."
+  },
+  "graph_contribution": {
+    "lean_graph": "integration-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "One affine witness trajectory transfer, not a general transport between settings.",
+    "focus_targets": [
+      "BanditRL.OnlineUnboundedOGD.regret_lower_bound"
+    ],
+    "visual_review": "Pending rendered candidate site and preservation checks.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: one source card and actual OGD lesson with shared canonical node mapping in the candidate integration.",
+    "banditrlwiki": "no-change-with-reason: no Bandit setting result.",
+    "results_ledger": "no-change-with-reason: full package and closure reconciliation pending.",
+    "roadmap": "no-change-with-reason: retain C2 partial,8+6open and GoalACTIVE.",
+    "website_surfaces": [
+      "website/content/chapters.json",
+      "website/content/readings.json",
+      "website/content/highlights.json"
+    ]
+  },
+  "truth_boundary": "Production and two complete public canaries are locally compiled and independently BODY reviewed; combined gates and final integration acceptance remain pending. Chapter 2 remains partial, accepted=false and complete proof denominator=null; all eight forward containers and six future claims remain open. Chapters 1–16 Goal ACTIVE. No merge or live publication claim. No native whole-loop attestation; no closure by declaration count.",
+  "verification": {
+    "focused_checks": [
+      "Production core RAW 313c8522a40599846d79df32d2a8a42014a3338f814286df7ffe9603554d6b50 at source commit06d679b8f0d8c77678e293a9a840f7473c69b2aa.",
+      "Bounded source HEADER review runs/online-ch2-unbounded-ogd-20261011/fresh-header-source-review-v1.json SHA256 bf19f899ef17184fc9bd00a3ecc1ba3ba058e376de5d65b00368547fee63ceed; candidate-core BODY review runs/online-ch2-unbounded-ogd-20261011/fresh-core-BODY-review-v1.json SHA256 3c365ded43978cb54bce5e13ed03f93512d3e41698698d4f196aa7900ea868e1.",
+      "Selected actual VALUE parents BanditRL.OnlineGradientDescentSource.gradient_linear, BanditRL.OnlineUnboundedOSD.currentSubgradient_affine, BanditRL.OnlineUnboundedOSD.switching_loss_regular, BanditRL.OnlineUnboundedOSD.switching_vector_lower_bound; export runs/online-ch2-unbounded-ogd-20261011/production-type-value-constants-v1.json SHA256 0dc3e77a28a2918569eba7b66b08e390112f152e9d01f611d48ff42f696a45c7. Occurrence is not necessity or complete graph.",
+      "Owned Test file Tests/OnlineUnboundedOGDCanary.lean RAW e8defe495324af6b1f82500c8c1f2138feacf025ebcfeef245c96edb37f23662 and Tests.lean root import. Two complete Test theorems and four abbreviations are implementation counts, never a source denominator. Tests are outside the five protected affected_files.",
+      "Fresh complete canary BODY review runs/online-ch2-unbounded-ogd-20261011/fresh-canary-BODY-review-v1.json SHA256 1a55fb1510aa477db32daefc3c211b65637cad627928d5b0f1a519ee5a302113 accepted-candidate-canaries-only/blockers[]. Actual focused compile/public probe/type-VALUE export all exit0, both standard three axioms and exact fences. Stable summary d7691e3f00544955ee27fa7f9b3709e3e7b9afb0427eec3edd902c01bc10531e; machine whole TYPE/VALUE ef058b1e2ff22caa2bf42af2df9af56c6d5ddf476a0ebba793a3a3dd5f7d6d73. Scalar canary proves actual gradient trajectory/pre-update regret1 and separately T2 below threshold; T64 directly consumes the new terminal and derives printed,256/15,and >17 for the same loss witness."
+    ],
+    "bandit_check": "Pending fresh shared root/Tests/full harness.",
+    "site_build": "Pending authorized fresh-gate-bound site build.",
+    "site_check": "Pending all11100old canonical node parsed-object preservation, exactly1new production node, old source cards, formulas, folds and pinned source links.",
+    "independent_review": "Bounded production and complete two-canary BODY reviews accepted with exact hashes above. Full integration and FINAL acceptance pending."
+  },
+  "contributor": {
+    "name": "ABRL agent-assisted actual OGD package",
+    "role": "Bounded candidate integration proposal; authorship unchanged"
+  }
+}

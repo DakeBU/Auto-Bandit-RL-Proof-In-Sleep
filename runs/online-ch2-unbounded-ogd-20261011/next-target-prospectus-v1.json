@@ -1,0 +1,121 @@
+{
+  "status": "proposed next substantive source reconciliation; no implementation authorized",
+  "chosen_target_id": "forward:unbounded-variable-OGD-failure",
+  "ledger_container": "forward:chapter5-unbounded-variable-OGD-failure",
+  "choice_reason": "Closes the actual OGD wording of an existing mainrequired Chapter2 forward target using an already implemented full source lower bound, rather than adding another tiny algebra API. Ambient first-order equivalence still has explicit B1 definition/source-equivalence debt and is less immediately dependency-ready.",
+  "frozen_target": {
+    "target_id": "forward:unbounded-variable-OGD-failure",
+    "source_id": "forward:unbounded-variable-OGD-failure",
+    "scope_tag": "mainrequired",
+    "domain": "Finite-dimensional real Euclidean space unless explicitly quantified otherwise",
+    "assumptions": "Exactly the explicit premises in effective_statement and named child interfaces; no historical recommendation adds premises implicitly",
+    "effective_statement": "OGD can fail on unbounded domains with varying steps; Section5.2.",
+    "branch": "source contract",
+    "status": "precise proposed target; external approval and proof pending",
+    "implementation_acceptance": false,
+    "source_locator": {
+      "pdf_pages_1based": [
+        26
+      ],
+      "source_anchor": "OGD can fail",
+      "source_excerpt_sha256": "78ab6cf65d91bc910e501e4229ed120df39590be9a0cf3ec23b888b22c6ed4ab"
+    },
+    "decisions_applied": [],
+    "semantic_decisions_pending": [],
+    "proof_body_ready": false,
+    "proof_body_ready_reason": "No next proof before distinct effective-target freeze approval; listed semantic decisions and open repairs remain explicit.",
+    "claim_kind": "mathematical target or required repair obligation"
+  },
+  "source": {
+    "version": "arXiv1912.13213v10",
+    "pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "Chapter2_pointer": {
+      "pdf_page": 26,
+      "printed_page": 14,
+      "anchor": "OGD can fail on unbounded domains with time-varying learning rates; Section5.2"
+    },
+    "owning_result": {
+      "theorem": "5.4",
+      "pdf_pages": [
+        64,
+        65
+      ],
+      "printed_pages": [
+        52,
+        53
+      ],
+      "literal_algorithm": "unprojected OSD",
+      "formula": "For alpha in(0,1), T>=2/((1-alpha)phi(alpha)), exists convex 1-Lipschitz losses with Regret_T(0)>=phi(alpha)T^(2-alpha)/2; phi range and alpha->1 limit also source obligations."
+    }
+  },
+  "existing_complete_contract": {
+    "declaration": "BanditRL.OnlineUnboundedOSD.theorem_5_4",
+    "raw_source_header": "theorem theorem_5_4 [Nontrivial E] (α : ℝ) (hα0 : 0 < α) (hα1 : α < 1)\n    (T : ℕ) (hT : 2 / ((1 - α) * phi α) ≤ (T : ℝ)) :\n    ∃ loss : ℕ → E → ℝ,\n      (∀ t < T, ConvexOn ℝ univ (loss t) ∧ LipschitzWith 1 (loss t)) ∧\n      (1 / 2 : ℝ) * phi α * (T : ℝ) ^ (2 - α) ≤\n        BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (powerSteps α)\n          (fun t z => (loss t z : EReal)) 0 0 T",
+    "captured_elaborated_public_type": "BanditRL.OnlineUnboundedOSD.theorem_5_4.{u_1} {E : Type u_1} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\n  [FiniteDimensional ℝ E] [Nontrivial E] (α : ℝ) (hα0 : 0 < α) (hα1 : α < 1) (T : ℕ)\n  (hT : 2 / ((1 - α) * BanditRL.OnlineUnboundedOSD.phi α) ≤ ↑T) :\n  ∃ loss,\n    (∀ t < T, ConvexOn ℝ Set.univ (loss t) ∧ LipschitzWith 1 (loss t)) ∧\n      1 / 2 * BanditRL.OnlineUnboundedOSD.phi α * ↑T ^ (2 - α) ≤\n        BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace\n          (BanditRL.OnlineUnboundedOSD.powerSteps α) (fun t z => ↑(loss t z)) 0 0 T",
+    "evidence_kind": "Existing actual-exit0 public #check/#print-axioms capture, not a freshly executed #print/build. Full current theorem header inspected directly.",
+    "probe_receipt_sha256": "114c0ff7c0a3c92b27042fe946fe849978d20c9aae9bdd1bd50e85ac442bc76c",
+    "source_module_sha256": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8",
+    "existing_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ]
+  },
+  "actual_remaining_gap": "The existing public existential theorem concludes regret for OnlineSubgradientDescent with its actual currentSubgradient selector. The Chapter2 sentence names OGD. The explicit switching affine losses make gradient and all legal subgradients coincide, but a direct actual iterateVariable/regretVariable bridge for this witness was not found in the inspected source modules. Independently adjudicate whether existing affine uniqueness plus printed OSD theorem already reconciles the pointer; if a public OGD interface is needed, add exactly one terminal integration theorem, not a duplicate lower-bound proof or generic chain of wrappers.",
+  "candidate_terminal_target": "Under the same nontrivial finite-dimensional real inner-product space, alpha in(0,1), and exact T threshold, the explicit switchLoss T v witness (unit v) gives the same phi(alpha)T^(2-alpha)/2 lower bound for OnlineGradientDescent.regretVariable fullSpace (powerSteps alpha) (switchLoss T v) 0 0 T, with actual convex/1-Lipschitz and differentiability facts. The loss sequence is horizon-dependent; do not claim one fixed adversarial sequence or adaptive-law theorem. Exact header needs separate source/blind freeze before proof.",
+  "proof_route": [
+    "Choose the existing explicit unit-vector witness; retain arbitrary nontrivial dimension, zero initialization/comparator, threshold and phi factors.",
+    "For switchLoss T v, use gradient_linear with scaled vector and currentSubgradient_affine; existing affine iterate prefix and identity projection show actual OGD and OSD outputs coincide. A local bridge suffices unless a second real consumer justifies a shared interface.",
+    "Transfer switching_vector_lower_bound along actual regret/trajectory equality. Reuse switching_loss_regular. Do not reprove scalar integral estimates, vector embedding, phi_range or phi_limit.",
+    "Distinct source review reconciles C2 OGD pointer with literal Theorem5.4 OSD. Review complete public terminal contract and actual multi-round producer canary, not a recurrence assumption."
+  ],
+  "existing_reuse": [
+    "OnlineUnboundedOSD.switching_vector_lower_bound",
+    "OnlineUnboundedOSD.switching_loss_regular",
+    "OnlineUnboundedOSD.currentSubgradient_affine",
+    "OnlineUnboundedOSD.iterate_affine_prefix",
+    "OnlineUnboundedOSD.phi_range",
+    "OnlineUnboundedOSD.phi_limit",
+    "OnlineGradientDescentSource.gradient_linear",
+    "OnlineGradientDescent.iterateVariable",
+    "OnlineGradientDescent.regretVariable",
+    "OnlineHuber.project_fullSpace"
+  ],
+  "readiness": "Dependency-ready route candidate, not frozen/proof-ready: source reviewer must approve exact OGD/OSD reconciliation and final header after current identity package acceptance. No new ambient EReal semantics needed because witness losses are finite affine everywhere.",
+  "progress_boundary": "No source obligation or container closed by this prospectus. Reuse/reconciliation is not counted as new proof progress. Preserve 172 overlapping IDs, null denominator, B1-B7, all8required containers and6futureclaims. Entire owning Theorem5.4 package still requires exact evidence reconciliation before a completion change.",
+  "inputs": [
+    {
+      "path": "docs/contracts/online-ch2-complete-target-freeze-v1/effective-targets-frozen-v3.2.json",
+      "sha256": "61cf1901a632aeee35ee71511ba53b115ae0958649ea78b786536a4404684ba1"
+    },
+    {
+      "path": "docs/contracts/online-ch2-complete-target-freeze-v1/freeze-receipt-v1.json",
+      "sha256": "1bbf7d185cdd0adb449af9dd5f036e955b9b50bc4118deb13233b3801bdddb4d"
+    },
+    {
+      "path": "BanditRLProof/OnlineUnboundedOSD.lean",
+      "sha256": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8"
+    },
+    {
+      "path": "BanditRLProof/OnlineGradientDescentSource.lean",
+      "sha256": "627df452453bbdfa2ecf4ddac8b5b85bfd750c74f1db5b81a26e6e20ca2eeec7"
+    },
+    {
+      "path": "BanditRLProof/OnlineGradientDescentVariable.lean",
+      "sha256": "9fd385b55d76ff0fe5e1988d553007fb46f59f6864e5534ec867a7c820ecbea0"
+    },
+    {
+      "path": "runs/online-ch2-reconciliation-20261010/chapter2-reconciliation-public-and-axioms-v1.json",
+      "sha256": "114c0ff7c0a3c92b27042fe946fe849978d20c9aae9bdd1bd50e85ac442bc76c"
+    },
+    {
+      "path": "tmp/online-ch2-forward-source-repair-20261011/pdf-64-text-v2.txt",
+      "sha256": "5605d8b80cca781dcc333618fb7ba668e3eb7ee0a47e2b839746a52e922abde7"
+    }
+  ],
+  "no_actions": [
+    "No compiler or fresh #print",
+    "No source/header/BODY edits",
+    "No canonical/Git/native/external publication actions"
+  ]
+}

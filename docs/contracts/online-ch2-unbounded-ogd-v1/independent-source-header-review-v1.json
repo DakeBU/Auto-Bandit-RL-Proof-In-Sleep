@@ -1,0 +1,179 @@
+{
+  "actor": "/root/adaptive_decoder",
+  "role": "independent source-header reviewer, source-exposed",
+  "formalizer": "/root/adaptive_formalizer",
+  "fresh_blind_actor": "/root/unbounded_header_blind",
+  "verdict": "accepted-with-explicit-delta",
+  "scope": "header/source contract only; no BODY approval, build or chapter acceptance",
+  "blocking_repairs": [],
+  "seven_slots": [
+    {
+      "slot": "objects",
+      "verdict": "accepted-with-explicit-delta",
+      "comparison": "Source proof explicitly treats d=1 then d>=2 by coordinate embedding; header uses Nontrivial finite-dimensional real inner-product E. This is coordinate-free Euclidean scope, not an infinite-dimensional claim. Nontrivial makes necessary d>=1 explicit; zero dimension cannot realize positive regret at0."
+    },
+    {
+      "slot": "quantifiers",
+      "verdict": "accepted",
+      "comparison": "For every alpha in(0,1) and every natural T meeting the threshold, choose a loss sequence; then regularity for every t<T. Source witness switches after ceil(T/2), so dependence on T is required/permitted. Nat-indexed extension beyond T is harmless and unconstrained. No single witness uniform in T or forall-loss lower bound."
+    },
+    {
+      "slot": "assumptions",
+      "verdict": "accepted-with-explicit-delta",
+      "comparison": "Exact strict alpha range and threshold are retained. Convexity, global 1-Lipschitzness and global differentiability are output witness properties, not input restrictions concealing the construction. Differentiability is extra relative to the printed theorem, justified by its explicit linear witness. Completeness is inferred from finite-dimensional real normed space, no new independently supplied premise."
+    },
+    {
+      "slot": "conclusion_metric",
+      "verdict": "accepted",
+      "comparison": "Exact lower bound on actual regretVariable(fullSpace,powerSteps,loss,0,0,T), the sum of played losses minus zero-comparator losses. This is not best-comparator infimum regret, expected regret, arbitrary trajectory regret, or all-algorithm minimax. Full-space projection is identity by inspected project_fullSpace; actual gradient trajectory transfer remains proof debt."
+    },
+    {
+      "slot": "constants_time",
+      "verdict": "accepted",
+      "comparison": "phi(alpha)=1/(2-alpha)+((1/2)^(1-alpha)-1)/(1-alpha), T>=2/((1-alpha)phi(alpha)), lower coefficient1/2 and exponent2-alpha exactly match PDF64. Source round1 maps to Lean0, eta(t)=(t+1)^(-alpha); first step1; regret last output indexT-1 and next stateT. Initial point and comparator both0. ceil(T/2)=(T+1)/2 in natural division matches existing switchSlope."
+    },
+    {
+      "slot": "feedback_causality",
+      "verdict": "accepted-with-explicit-delta",
+      "comparison": "C2PDF26 explicitly says OGD can fail; owning Theorem5.4 states unprojected OSD. Source proof uses losses -x then+x, with unique subgradient equal to gradient. Proposed actual OGD is valid source-target refinement only through explicit affine witness/gradient/iterate transport. Output precedes current loss and update. No stochastic oracle, adaptive filtration or selector-choice premise is hidden."
+    },
+    {
+      "slot": "boundaries",
+      "verdict": "accepted-with-explicit-delta",
+      "comparison": "Header extracts only failure endpoint. Printed phi range and limit1-log2>=0.3 remain separate source components, with existing phi_range/phi_limit reused, not discharged again by this header. Alpha endpoints excluded; T0 cannot satisfy positive threshold given existing phi positivity. No arbitrary varying schedule, bounded-domain failure, strong convexity, gradient Lipschitzness, or competing FTRL impossibility asserted."
+    }
+  ],
+  "required_explicit_producer_route": [
+    {
+      "declaration": "OnlineUnboundedOSD.switchLoss / switchSlope",
+      "evidence": "lines17–19: slope=-1 for t<(T+1)/2, +1 otherwise; loss=slope*inner(v,z). Unit v produces linear finite real losses matching printed witness."
+    },
+    {
+      "declaration": "OnlineUnboundedOSD.switching_loss_regular",
+      "evidence": "lines126ff: convexity and LipschitzWith1 for every t when norm(v)=1; does NOT export differentiability."
+    },
+    {
+      "declaration": "OnlineGradientDescentSource.gradient_linear",
+      "evidence": "lines53ff: actual gradient of inner(g,z) equals g. Rewrite switchLoss as inner(switchSlope*T-index smul v,z); no T multiplicative factor."
+    },
+    {
+      "declaration": "OnlineGradientDescentSource.linear_regular / InnerProductSpace.toDual",
+      "evidence": "lines45–58: differentiability of continuous linear inner functional available. Global Differentiable for constructed witness must be explicitly produced, not inferred from arbitrary convex Lipschitz loss."
+    },
+    {
+      "declaration": "OnlineUnboundedOSD.currentSubgradient_affine / step_affine_fullSpace / iterate_affine_prefix",
+      "evidence": "lines32–80: unique affine subgradient and explicit same-run OSD prefix formula; supports local actual OGD=OSD trajectory equality under same witness and steps."
+    },
+    {
+      "declaration": "OnlineUnboundedOSD.switching_vector_lower_bound",
+      "evidence": "lines470ff: exact threshold/coefficient bound for explicit switchLoss T v, unit v, actual OSD regret. Appropriate producer to transport after proving actual OGD trajectory/regret equality."
+    },
+    {
+      "declaration": "OnlineUnboundedOSD.theorem_5_4",
+      "evidence": "lines516ff exports only existential convex/Lipschitz OSD losses. Opaque use cannot supply differentiability or actual OGD trajectory; alone insufficient."
+    }
+  ],
+  "notes": [
+    "No blocking header/source mismatch found. No mathematical header correction requested.",
+    "Metadata finite_witness phrase \"switchSlope*T\" should be read as switchSlope T t, not multiplication by T; actual definition and header are unambiguous. This wording clarification is nonblocking.",
+    "Source pixels64/65 and26 personally inspected; original PDF raw hash independently verified. No missing-half or changed source constant alleged.",
+    "Blind reconstruction a69315... matches all seven slots. Reviewer is source-exposed and distinct from formalizer and fresh blind actor; no claim of reviewer blindness.",
+    "Header approval is not BODY authorization by this reviewer, elaboration, proof validation, package acceptance or chapter closure."
+  ],
+  "input_raw_hashes_before_after": [
+    {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-ch2-next-target-prospectus-20261011\\next-target-header-v1.txt",
+      "before": "fd0cccb6f5deb86a63466516a49531db7599cb983620072782726e5ecc136efa",
+      "after": "fd0cccb6f5deb86a63466516a49531db7599cb983620072782726e5ecc136efa"
+    },
+    {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-ch2-next-target-prospectus-20261011\\next-target-header-v1-neutral-definitions.txt",
+      "before": "707df92f3a1660b96427ee14949e10ff92d3095a064ebfcce143c6dd2bdcd2cd",
+      "after": "707df92f3a1660b96427ee14949e10ff92d3095a064ebfcce143c6dd2bdcd2cd"
+    },
+    {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-ch2-next-target-prospectus-20261011\\next-target-header-v1.json",
+      "before": "cb5bf3852de667075852e59e53d7299620698ad7962137080e597de9568da39c",
+      "after": "cb5bf3852de667075852e59e53d7299620698ad7962137080e597de9568da39c"
+    },
+    {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-ch2-next-target-prospectus-20261011\\fresh-header-blind-v1.json",
+      "before": "a69315bad144cb6ebd0eb225ea302563e990e50cac21a2bd5793256cd585dbf2",
+      "after": "a69315bad144cb6ebd0eb225ea302563e990e50cac21a2bd5793256cd585dbf2"
+    },
+    {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-ch2-next-target-prospectus-20261011\\source-064.png",
+      "before": "347925f8ae42d43f197b8e346817a4b9bd6871c205b58ce4fbd1f7929bc31279",
+      "after": "347925f8ae42d43f197b8e346817a4b9bd6871c205b58ce4fbd1f7929bc31279"
+    },
+    {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-ch2-next-target-prospectus-20261011\\source-065.png",
+      "before": "8b998be341c4f93c1b1e06d4219090a0b713b658bc7da418638b27618f620458",
+      "after": "8b998be341c4f93c1b1e06d4219090a0b713b658bc7da418638b27618f620458"
+    },
+    {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-ch2-weighted-identity-prospectus-20261011\\source-PDF026.png",
+      "before": "ef1ab958be7f42196e6b1364d0d18d153b0994d1a83a411d25ed3ea6ed683e4e",
+      "after": "ef1ab958be7f42196e6b1364d0d18d153b0994d1a83a411d25ed3ea6ed683e4e"
+    },
+    {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\BanditRLProof\\OnlineUnboundedOSD.lean",
+      "before": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8",
+      "after": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8"
+    },
+    {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\BanditRLProof\\OnlineGradientDescent.lean",
+      "before": "9300cb2735da9f125e404f78b86509df47fe65a5f4d89abc469e071bdffdb871",
+      "after": "9300cb2735da9f125e404f78b86509df47fe65a5f4d89abc469e071bdffdb871"
+    },
+    {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\BanditRLProof\\OnlineGradientDescentVariable.lean",
+      "before": "9fd385b55d76ff0fe5e1988d553007fb46f59f6864e5534ec867a7c820ecbea0",
+      "after": "9fd385b55d76ff0fe5e1988d553007fb46f59f6864e5534ec867a7c820ecbea0"
+    },
+    {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\BanditRLProof\\OnlineGradientDescentSource.lean",
+      "before": "627df452453bbdfa2ecf4ddac8b5b85bfd750c74f1db5b81a26e6e20ca2eeec7",
+      "after": "627df452453bbdfa2ecf4ddac8b5b85bfd750c74f1db5b81a26e6e20ca2eeec7"
+    },
+    {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\BanditRLProof\\OnlineHuber.lean",
+      "before": "6aa70d9db582884dae95c325445d0d96e963e918bf85a26db2ce67a5159cd1ce",
+      "after": "6aa70d9db582884dae95c325445d0d96e963e918bf85a26db2ce67a5159cd1ce"
+    },
+    {
+      "path": "E:\\ABRL\\worktrees\\research-online-ogd\\tmp\\pdfs\\orabona-v10.pdf",
+      "before": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+      "after": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17"
+    }
+  ],
+  "input_unchanged": true,
+  "source_original_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+  "source_pages": [
+    {
+      "pdf": 26,
+      "printed": 14,
+      "anchor": "time-varying OGD failure pointer to5.2"
+    },
+    {
+      "pdf": 64,
+      "printed": 52,
+      "anchor": "Theorem5.4 statement, linear witness and recurrence"
+    },
+    {
+      "pdf": 65,
+      "printed": 53,
+      "anchor": "regret coefficient/threshold conclusion and algorithm-specific limitation"
+    }
+  ],
+  "blind_reconstruction_matches": true,
+  "existing_definition_source_hash_bindings_match": true,
+  "compilation_run": false,
+  "proof_body_created": false,
+  "chapter_accepted": false,
+  "source_denominator": null,
+  "required_open_containers": 8,
+  "future_claims_open": 6,
+  "goal_status": "ACTIVE",
+  "report_sha256": "7e1d91677ff77e6bcd7ec4a8f0778b755cd85ecffcf48d95e6ba344611cf6621"
+}

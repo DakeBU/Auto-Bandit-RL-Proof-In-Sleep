@@ -1,0 +1,762 @@
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:1: trailing whitespace.
++import BanditRLProof.OnlineGradientDescent
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:2: trailing whitespace.
++import Mathlib.Topology.MetricSpace.Bounded
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:3: trailing whitespace.
++
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:14: trailing whitespace.
++noncomputable section
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:15: trailing whitespace.
++open Set Finset
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:16: trailing whitespace.
++open scoped InnerProductSpace
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:17: trailing whitespace.
++
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:18: trailing whitespace.
++namespace BanditRL.OnlineGradientDescent
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:19: trailing whitespace.
++
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:20: trailing whitespace.
++variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:21: trailing whitespace.
++
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:22: trailing whitespace.
++/-- Algorithm 2.1 with a prescribed schedule: source round t+1 is Lean t. -/
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:23: trailing whitespace.
++def iterateVariable (V : Domain E) (η : ℕ → ℝ) (loss : ℕ → E → ℝ) (x₁ : E) : ℕ → E
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:24: trailing whitespace.
++  | 0 => x₁
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:25: trailing whitespace.
++  | t + 1 => step V (η t) (loss t) (iterateVariable V η loss x₁ t)
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:26: trailing whitespace.
++
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:27: trailing whitespace.
++/-- Regret uses exactly the variable-step trajectory, with no comparator input to the policy. -/
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:28: trailing whitespace.
++def regretVariable (V : Domain E) (η : ℕ → ℝ) (loss : ℕ → E → ℝ)
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:29: trailing whitespace.
++    (x₁ u : E) (T : ℕ) : ℝ :=
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:30: trailing whitespace.
++  ∑ t ∈ range T, (loss t (iterateVariable V η loss x₁ t) - loss t u)
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:31: trailing whitespace.
++
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:32: trailing whitespace.
++theorem iterateVariable_mem (V : Domain E) (η : ℕ → ℝ) (loss : ℕ → E → ℝ)
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:33: trailing whitespace.
++    (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (t : ℕ) : iterateVariable V η loss x₁ t ∈ V.carrier := by
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:34: trailing whitespace.
++  cases t with
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:35: trailing whitespace.
++  | zero => exact hx₁
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:36: trailing whitespace.
++  | succ t => exact (project_spec V _).1
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:37: trailing whitespace.
++
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:38: trailing whitespace.
++theorem iterateVariable_prefix (V : Domain E) (η : ℕ → ℝ) (loss loss' : ℕ → E → ℝ)
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:39: trailing whitespace.
++    (x₁ : E) (t : ℕ) (h : ∀ s < t, loss s = loss' s) :
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:40: trailing whitespace.
++    iterateVariable V η loss x₁ t = iterateVariable V η loss' x₁ t := by
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:41: trailing whitespace.
++  induction t with
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:42: trailing whitespace.
++  | zero => rfl
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:43: trailing whitespace.
++  | succ t ih =>
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:44: trailing whitespace.
++    simp only [iterateVariable, h t (Nat.lt_succ_self t),
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:45: trailing whitespace.
++      ih (fun s hs => h s (Nat.lt_succ_of_lt hs))]
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:46: trailing whitespace.
++
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:47: trailing whitespace.
++theorem variable_one_step (V : Domain E) (η : ℕ → ℝ) (loss : ℕ → E → ℝ)
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:48: trailing whitespace.
++    (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (t : ℕ) (hη : 0 < η t)
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:49: trailing whitespace.
++    (hloss : RegularLoss V (loss t)) (u : E) (hu : u ∈ V.carrier) :
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:50: trailing whitespace.
++    loss t (iterateVariable V η loss x₁ t) - loss t u ≤
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:51: trailing whitespace.
++      (‖iterateVariable V η loss x₁ t - u‖ ^ 2 -
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:52: trailing whitespace.
++        ‖iterateVariable V η loss x₁ (t + 1) - u‖ ^ 2) / (2 * η t) +
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:53: trailing whitespace.
++      η t / 2 * ‖gradient (loss t) (iterateVariable V η loss x₁ t)‖ ^ 2 := by
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:54: trailing whitespace.
++  have hs := lemma_2_12 V (loss t) hloss (η t) hη
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:55: trailing whitespace.
++    (iterateVariable V η loss x₁ t) u (iterateVariable_mem V η loss x₁ hx₁ t) hu
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:56: trailing whitespace.
++  apply le_of_mul_le_mul_left (a := η t) _ hη
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:57: trailing whitespace.
++  calc
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:58: trailing whitespace.
++    η t * (loss t (iterateVariable V η loss x₁ t) - loss t u) ≤
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:59: trailing whitespace.
++        ‖iterateVariable V η loss x₁ t - u‖ ^ 2 / 2 -
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:60: trailing whitespace.
++        ‖iterateVariable V η loss x₁ (t + 1) - u‖ ^ 2 / 2 +
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:61: trailing whitespace.
++        (η t) ^ 2 / 2 * ‖gradient (loss t) (iterateVariable V η loss x₁ t)‖ ^ 2 :=
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:62: trailing whitespace.
++      hs.1.trans hs.2
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:63: trailing whitespace.
++    _ = η t * ((‖iterateVariable V η loss x₁ t - u‖ ^ 2 -
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:64: trailing whitespace.
++        ‖iterateVariable V η loss x₁ (t + 1) - u‖ ^ 2) / (2 * η t) +
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:65: trailing whitespace.
++        η t / 2 * ‖gradient (loss t) (iterateVariable V η loss x₁ t)‖ ^ 2) := by
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:66: trailing whitespace.
++      field_simp
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:67: trailing whitespace.
++
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:68: trailing whitespace.
++theorem weighted_potential_sum (a η : ℕ → ℝ) (C : ℝ) (T : ℕ) (hT : 0 < T)
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:69: trailing whitespace.
++    (hη : ∀ t < T, 0 < η t) (hmono : ∀ t, t + 1 < T → η (t + 1) ≤ η t)
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:70: trailing whitespace.
++    (hbound : ∀ t < T, a t ≤ C) :
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:71: trailing whitespace.
++    (∑ t ∈ range T, (a t - a (t + 1)) / (2 * η t)) ≤
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:72: trailing whitespace.
++      C / (2 * η (T - 1)) - a T / (2 * η (T - 1)) := by
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:73: trailing whitespace.
++  induction T with
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:74: trailing whitespace.
++  | zero => omega
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:75: trailing whitespace.
++  | succ T ih =>
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:76: trailing whitespace.
++    by_cases hz : T = 0
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:77: trailing whitespace.
++    · subst T
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:78: trailing whitespace.
++      have hpos := hη 0 (by omega)
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:79: trailing whitespace.
++      simpa [sub_div] using div_le_div_of_nonneg_right
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:80: trailing whitespace.
++        (sub_le_sub_right (hbound 0 (by omega)) (a 1))
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:81: trailing whitespace.
++        (by positivity : 0 ≤ 2 * η 0)
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:82: trailing whitespace.
++    · have hTpos : 0 < T := Nat.pos_of_ne_zero hz
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:83: trailing whitespace.
++      have hi := ih hTpos (fun t ht => hη t (Nat.lt_succ_of_lt ht))
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:84: trailing whitespace.
++        (fun t ht => hmono t (Nat.lt_succ_of_lt ht))
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:85: trailing whitespace.
++        (fun t ht => hbound t (Nat.lt_succ_of_lt ht))
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:86: trailing whitespace.
++      have hprev : T - 1 + 1 = T := Nat.sub_add_cancel hTpos
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:87: trailing whitespace.
++      have hm : η T ≤ η (T - 1) := by
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:88: trailing whitespace.
++        simpa only [hprev] using hmono (T - 1) (by omega)
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:89: trailing whitespace.
++      have hpos := hη T (by omega)
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:90: trailing whitespace.
++      have hd := div_le_div_of_nonneg_left
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:91: trailing whitespace.
++        (sub_nonneg.mpr (hbound T (by omega)))
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:92: trailing whitespace.
++        (by positivity : 0 < 2 * η T)
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:93: trailing whitespace.
++        (mul_le_mul_of_nonneg_left hm (by norm_num : (0 : ℝ) ≤ 2))
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:94: trailing whitespace.
++      rw [sum_range_succ]
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:95: trailing whitespace.
++      simp only [Nat.add_sub_cancel]
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:96: trailing whitespace.
++      simp only [sub_div] at hd
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:97: trailing whitespace.
++      calc
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:98: trailing whitespace.
++        _ ≤ (C / (2 * η (T - 1)) - a T / (2 * η (T - 1))) +
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:99: trailing whitespace.
++            (a T - a (T + 1)) / (2 * η T) := by linarith
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:100: trailing whitespace.
++        _ ≤ (C / (2 * η T) - a T / (2 * η T)) +
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:101: trailing whitespace.
++            (a T - a (T + 1)) / (2 * η T) := by linarith
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:102: trailing whitespace.
++        _ = _ := by rw [sub_div]; ring
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:103: trailing whitespace.
++
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:104: trailing whitespace.
++theorem theorem_2_13_variable_bound (V : Domain E) (η : ℕ → ℝ)
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:105: trailing whitespace.
++    (loss : ℕ → E → ℝ) (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (T : ℕ) (hT : 0 < T)
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:106: trailing whitespace.
++    (hη : ∀ t < T, 0 < η t) (hmono : ∀ t, t + 1 < T → η (t + 1) ≤ η t)
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:107: trailing whitespace.
++    (hloss : ∀ t < T, RegularLoss V (loss t)) (D : ℝ)
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:108: trailing whitespace.
++    (hdiam : ∀ x ∈ V.carrier, ∀ y ∈ V.carrier, ‖x - y‖ ≤ D)
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:109: trailing whitespace.
++    (u : E) (hu : u ∈ V.carrier) :
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:110: trailing whitespace.
++    regretVariable V η loss x₁ u T ≤ D ^ 2 / (2 * η (T - 1)) +
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:111: trailing whitespace.
++      (∑ t ∈ range T, η t / 2 * ‖gradient (loss t) (iterateVariable V η loss x₁ t)‖ ^ 2) -
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:112: trailing whitespace.
++      ‖iterateVariable V η loss x₁ T - u‖ ^ 2 / (2 * η (T - 1)) := by
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:113: trailing whitespace.
++  have hp := weighted_potential_sum
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:114: trailing whitespace.
++    (fun t => ‖iterateVariable V η loss x₁ t - u‖ ^ 2) η (D ^ 2) T hT hη hmono
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:115: trailing whitespace.
++    (fun t ht => pow_le_pow_left₀ (norm_nonneg _)
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:116: trailing whitespace.
++      (hdiam _ (iterateVariable_mem V η loss x₁ hx₁ t) u hu) 2)
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:117: trailing whitespace.
++  have hs := Finset.sum_le_sum (s := range T) (fun t ht =>
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:118: trailing whitespace.
++    variable_one_step V η loss x₁ hx₁ t (hη t (mem_range.mp ht))
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:119: trailing whitespace.
++      (hloss t (mem_range.mp ht)) u hu)
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:120: trailing whitespace.
++  rw [sum_add_distrib] at hs
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:121: trailing whitespace.
++  change regretVariable V η loss x₁ u T ≤ _ at hs
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:122: trailing whitespace.
++  linarith
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:123: trailing whitespace.
++
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:124: trailing whitespace.
++theorem theorem_2_13_variable (V : Domain E) (hV : Bornology.IsBounded V.carrier)
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:125: trailing whitespace.
++    (η : ℕ → ℝ) (loss : ℕ → E → ℝ) (x₁ : E) (hx₁ : x₁ ∈ V.carrier)
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:126: trailing whitespace.
++    (T : ℕ) (hT : 0 < T) (hη : ∀ t < T, 0 < η t)
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:127: trailing whitespace.
++    (hmono : ∀ t, t + 1 < T → η (t + 1) ≤ η t)
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:128: trailing whitespace.
++    (hloss : ∀ t < T, RegularLoss V (loss t)) (u : E) (hu : u ∈ V.carrier) :
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:129: trailing whitespace.
++    regretVariable V η loss x₁ u T ≤ (Metric.diam V.carrier) ^ 2 / (2 * η (T - 1)) +
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:130: trailing whitespace.
++      (∑ t ∈ range T, η t / 2 * ‖gradient (loss t) (iterateVariable V η loss x₁ t)‖ ^ 2) -
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:131: trailing whitespace.
++      ‖iterateVariable V η loss x₁ T - u‖ ^ 2 / (2 * η (T - 1)) := by
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:132: trailing whitespace.
++  apply theorem_2_13_variable_bound V η loss x₁ hx₁ T hT hη hmono hloss
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:133: trailing whitespace.
++    (Metric.diam V.carrier) ?_ u hu
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:134: trailing whitespace.
++  intro x hx y hy
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:135: trailing whitespace.
++  simpa only [dist_eq_norm] using Metric.dist_le_diam_of_mem hV hx hy
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:136: trailing whitespace.
++
+runs/online-ch2-unbounded-ogd-20261011/canary-focused-v1-OnlineGradientDescentVariable.lean.txt:137: trailing whitespace.
++end BanditRL.OnlineGradientDescent
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:1: trailing whitespace.
++import BanditRLProof.OnlineGradientDescent
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:2: trailing whitespace.
++import Mathlib.Topology.MetricSpace.Bounded
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:3: trailing whitespace.
++
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:14: trailing whitespace.
++noncomputable section
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:15: trailing whitespace.
++open Set Finset
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:16: trailing whitespace.
++open scoped InnerProductSpace
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:17: trailing whitespace.
++
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:18: trailing whitespace.
++namespace BanditRL.OnlineGradientDescent
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:19: trailing whitespace.
++
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:20: trailing whitespace.
++variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:21: trailing whitespace.
++
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:22: trailing whitespace.
++/-- Algorithm 2.1 with a prescribed schedule: source round t+1 is Lean t. -/
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:23: trailing whitespace.
++def iterateVariable (V : Domain E) (η : ℕ → ℝ) (loss : ℕ → E → ℝ) (x₁ : E) : ℕ → E
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:24: trailing whitespace.
++  | 0 => x₁
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:25: trailing whitespace.
++  | t + 1 => step V (η t) (loss t) (iterateVariable V η loss x₁ t)
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:26: trailing whitespace.
++
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:27: trailing whitespace.
++/-- Regret uses exactly the variable-step trajectory, with no comparator input to the policy. -/
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:28: trailing whitespace.
++def regretVariable (V : Domain E) (η : ℕ → ℝ) (loss : ℕ → E → ℝ)
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:29: trailing whitespace.
++    (x₁ u : E) (T : ℕ) : ℝ :=
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:30: trailing whitespace.
++  ∑ t ∈ range T, (loss t (iterateVariable V η loss x₁ t) - loss t u)
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:31: trailing whitespace.
++
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:32: trailing whitespace.
++theorem iterateVariable_mem (V : Domain E) (η : ℕ → ℝ) (loss : ℕ → E → ℝ)
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:33: trailing whitespace.
++    (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (t : ℕ) : iterateVariable V η loss x₁ t ∈ V.carrier := by
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:34: trailing whitespace.
++  cases t with
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:35: trailing whitespace.
++  | zero => exact hx₁
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:36: trailing whitespace.
++  | succ t => exact (project_spec V _).1
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:37: trailing whitespace.
++
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:38: trailing whitespace.
++theorem iterateVariable_prefix (V : Domain E) (η : ℕ → ℝ) (loss loss' : ℕ → E → ℝ)
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:39: trailing whitespace.
++    (x₁ : E) (t : ℕ) (h : ∀ s < t, loss s = loss' s) :
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:40: trailing whitespace.
++    iterateVariable V η loss x₁ t = iterateVariable V η loss' x₁ t := by
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:41: trailing whitespace.
++  induction t with
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:42: trailing whitespace.
++  | zero => rfl
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:43: trailing whitespace.
++  | succ t ih =>
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:44: trailing whitespace.
++    simp only [iterateVariable, h t (Nat.lt_succ_self t),
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:45: trailing whitespace.
++      ih (fun s hs => h s (Nat.lt_succ_of_lt hs))]
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:46: trailing whitespace.
++
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:47: trailing whitespace.
++theorem variable_one_step (V : Domain E) (η : ℕ → ℝ) (loss : ℕ → E → ℝ)
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:48: trailing whitespace.
++    (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (t : ℕ) (hη : 0 < η t)
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:49: trailing whitespace.
++    (hloss : RegularLoss V (loss t)) (u : E) (hu : u ∈ V.carrier) :
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:50: trailing whitespace.
++    loss t (iterateVariable V η loss x₁ t) - loss t u ≤
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:51: trailing whitespace.
++      (‖iterateVariable V η loss x₁ t - u‖ ^ 2 -
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:52: trailing whitespace.
++        ‖iterateVariable V η loss x₁ (t + 1) - u‖ ^ 2) / (2 * η t) +
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:53: trailing whitespace.
++      η t / 2 * ‖gradient (loss t) (iterateVariable V η loss x₁ t)‖ ^ 2 := by
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:54: trailing whitespace.
++  have hs := lemma_2_12 V (loss t) hloss (η t) hη
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:55: trailing whitespace.
++    (iterateVariable V η loss x₁ t) u (iterateVariable_mem V η loss x₁ hx₁ t) hu
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:56: trailing whitespace.
++  apply le_of_mul_le_mul_left (a := η t) _ hη
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:57: trailing whitespace.
++  calc
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:58: trailing whitespace.
++    η t * (loss t (iterateVariable V η loss x₁ t) - loss t u) ≤
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:59: trailing whitespace.
++        ‖iterateVariable V η loss x₁ t - u‖ ^ 2 / 2 -
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:60: trailing whitespace.
++        ‖iterateVariable V η loss x₁ (t + 1) - u‖ ^ 2 / 2 +
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:61: trailing whitespace.
++        (η t) ^ 2 / 2 * ‖gradient (loss t) (iterateVariable V η loss x₁ t)‖ ^ 2 :=
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:62: trailing whitespace.
++      hs.1.trans hs.2
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:63: trailing whitespace.
++    _ = η t * ((‖iterateVariable V η loss x₁ t - u‖ ^ 2 -
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:64: trailing whitespace.
++        ‖iterateVariable V η loss x₁ (t + 1) - u‖ ^ 2) / (2 * η t) +
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:65: trailing whitespace.
++        η t / 2 * ‖gradient (loss t) (iterateVariable V η loss x₁ t)‖ ^ 2) := by
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:66: trailing whitespace.
++      field_simp
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:67: trailing whitespace.
++
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:68: trailing whitespace.
++theorem weighted_potential_sum (a η : ℕ → ℝ) (C : ℝ) (T : ℕ) (hT : 0 < T)
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:69: trailing whitespace.
++    (hη : ∀ t < T, 0 < η t) (hmono : ∀ t, t + 1 < T → η (t + 1) ≤ η t)
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:70: trailing whitespace.
++    (hbound : ∀ t < T, a t ≤ C) :
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:71: trailing whitespace.
++    (∑ t ∈ range T, (a t - a (t + 1)) / (2 * η t)) ≤
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:72: trailing whitespace.
++      C / (2 * η (T - 1)) - a T / (2 * η (T - 1)) := by
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:73: trailing whitespace.
++  induction T with
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:74: trailing whitespace.
++  | zero => omega
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:75: trailing whitespace.
++  | succ T ih =>
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:76: trailing whitespace.
++    by_cases hz : T = 0
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:77: trailing whitespace.
++    · subst T
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:78: trailing whitespace.
++      have hpos := hη 0 (by omega)
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:79: trailing whitespace.
++      simpa [sub_div] using div_le_div_of_nonneg_right
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:80: trailing whitespace.
++        (sub_le_sub_right (hbound 0 (by omega)) (a 1))
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:81: trailing whitespace.
++        (by positivity : 0 ≤ 2 * η 0)
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:82: trailing whitespace.
++    · have hTpos : 0 < T := Nat.pos_of_ne_zero hz
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:83: trailing whitespace.
++      have hi := ih hTpos (fun t ht => hη t (Nat.lt_succ_of_lt ht))
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:84: trailing whitespace.
++        (fun t ht => hmono t (Nat.lt_succ_of_lt ht))
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:85: trailing whitespace.
++        (fun t ht => hbound t (Nat.lt_succ_of_lt ht))
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:86: trailing whitespace.
++      have hprev : T - 1 + 1 = T := Nat.sub_add_cancel hTpos
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:87: trailing whitespace.
++      have hm : η T ≤ η (T - 1) := by
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:88: trailing whitespace.
++        simpa only [hprev] using hmono (T - 1) (by omega)
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:89: trailing whitespace.
++      have hpos := hη T (by omega)
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:90: trailing whitespace.
++      have hd := div_le_div_of_nonneg_left
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:91: trailing whitespace.
++        (sub_nonneg.mpr (hbound T (by omega)))
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:92: trailing whitespace.
++        (by positivity : 0 < 2 * η T)
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:93: trailing whitespace.
++        (mul_le_mul_of_nonneg_left hm (by norm_num : (0 : ℝ) ≤ 2))
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:94: trailing whitespace.
++      rw [sum_range_succ]
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:95: trailing whitespace.
++      simp only [Nat.add_sub_cancel]
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:96: trailing whitespace.
++      simp only [sub_div] at hd
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:97: trailing whitespace.
++      calc
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:98: trailing whitespace.
++        _ ≤ (C / (2 * η (T - 1)) - a T / (2 * η (T - 1))) +
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:99: trailing whitespace.
++            (a T - a (T + 1)) / (2 * η T) := by linarith
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:100: trailing whitespace.
++        _ ≤ (C / (2 * η T) - a T / (2 * η T)) +
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:101: trailing whitespace.
++            (a T - a (T + 1)) / (2 * η T) := by linarith
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:102: trailing whitespace.
++        _ = _ := by rw [sub_div]; ring
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:103: trailing whitespace.
++
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:104: trailing whitespace.
++theorem theorem_2_13_variable_bound (V : Domain E) (η : ℕ → ℝ)
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:105: trailing whitespace.
++    (loss : ℕ → E → ℝ) (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (T : ℕ) (hT : 0 < T)
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:106: trailing whitespace.
++    (hη : ∀ t < T, 0 < η t) (hmono : ∀ t, t + 1 < T → η (t + 1) ≤ η t)
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:107: trailing whitespace.
++    (hloss : ∀ t < T, RegularLoss V (loss t)) (D : ℝ)
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:108: trailing whitespace.
++    (hdiam : ∀ x ∈ V.carrier, ∀ y ∈ V.carrier, ‖x - y‖ ≤ D)
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:109: trailing whitespace.
++    (u : E) (hu : u ∈ V.carrier) :
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:110: trailing whitespace.
++    regretVariable V η loss x₁ u T ≤ D ^ 2 / (2 * η (T - 1)) +
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:111: trailing whitespace.
++      (∑ t ∈ range T, η t / 2 * ‖gradient (loss t) (iterateVariable V η loss x₁ t)‖ ^ 2) -
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:112: trailing whitespace.
++      ‖iterateVariable V η loss x₁ T - u‖ ^ 2 / (2 * η (T - 1)) := by
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:113: trailing whitespace.
++  have hp := weighted_potential_sum
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:114: trailing whitespace.
++    (fun t => ‖iterateVariable V η loss x₁ t - u‖ ^ 2) η (D ^ 2) T hT hη hmono
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:115: trailing whitespace.
++    (fun t ht => pow_le_pow_left₀ (norm_nonneg _)
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:116: trailing whitespace.
++      (hdiam _ (iterateVariable_mem V η loss x₁ hx₁ t) u hu) 2)
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:117: trailing whitespace.
++  have hs := Finset.sum_le_sum (s := range T) (fun t ht =>
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:118: trailing whitespace.
++    variable_one_step V η loss x₁ hx₁ t (hη t (mem_range.mp ht))
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:119: trailing whitespace.
++      (hloss t (mem_range.mp ht)) u hu)
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:120: trailing whitespace.
++  rw [sum_add_distrib] at hs
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:121: trailing whitespace.
++  change regretVariable V η loss x₁ u T ≤ _ at hs
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:122: trailing whitespace.
++  linarith
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:123: trailing whitespace.
++
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:124: trailing whitespace.
++theorem theorem_2_13_variable (V : Domain E) (hV : Bornology.IsBounded V.carrier)
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:125: trailing whitespace.
++    (η : ℕ → ℝ) (loss : ℕ → E → ℝ) (x₁ : E) (hx₁ : x₁ ∈ V.carrier)
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:126: trailing whitespace.
++    (T : ℕ) (hT : 0 < T) (hη : ∀ t < T, 0 < η t)
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:127: trailing whitespace.
++    (hmono : ∀ t, t + 1 < T → η (t + 1) ≤ η t)
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:128: trailing whitespace.
++    (hloss : ∀ t < T, RegularLoss V (loss t)) (u : E) (hu : u ∈ V.carrier) :
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:129: trailing whitespace.
++    regretVariable V η loss x₁ u T ≤ (Metric.diam V.carrier) ^ 2 / (2 * η (T - 1)) +
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:130: trailing whitespace.
++      (∑ t ∈ range T, η t / 2 * ‖gradient (loss t) (iterateVariable V η loss x₁ t)‖ ^ 2) -
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:131: trailing whitespace.
++      ‖iterateVariable V η loss x₁ T - u‖ ^ 2 / (2 * η (T - 1)) := by
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:132: trailing whitespace.
++  apply theorem_2_13_variable_bound V η loss x₁ hx₁ T hT hη hmono hloss
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:133: trailing whitespace.
++    (Metric.diam V.carrier) ?_ u hu
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:134: trailing whitespace.
++  intro x hx y hy
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:135: trailing whitespace.
++  simpa only [dist_eq_norm] using Metric.dist_le_diam_of_mem hV hx hy
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:136: trailing whitespace.
++
+runs/online-ch2-unbounded-ogd-20261011/canary-public-probe-v1-OnlineGradientDescentVariable.lean.txt:137: trailing whitespace.
++end BanditRL.OnlineGradientDescent
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:1: trailing whitespace.
++import BanditRLProof.OnlineGradientDescent
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:2: trailing whitespace.
++import Mathlib.Topology.MetricSpace.Bounded
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:3: trailing whitespace.
++
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:14: trailing whitespace.
++noncomputable section
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:15: trailing whitespace.
++open Set Finset
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:16: trailing whitespace.
++open scoped InnerProductSpace
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:17: trailing whitespace.
++
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:18: trailing whitespace.
++namespace BanditRL.OnlineGradientDescent
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:19: trailing whitespace.
++
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:20: trailing whitespace.
++variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:21: trailing whitespace.
++
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:22: trailing whitespace.
++/-- Algorithm 2.1 with a prescribed schedule: source round t+1 is Lean t. -/
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:23: trailing whitespace.
++def iterateVariable (V : Domain E) (η : ℕ → ℝ) (loss : ℕ → E → ℝ) (x₁ : E) : ℕ → E
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:24: trailing whitespace.
++  | 0 => x₁
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:25: trailing whitespace.
++  | t + 1 => step V (η t) (loss t) (iterateVariable V η loss x₁ t)
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:26: trailing whitespace.
++
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:27: trailing whitespace.
++/-- Regret uses exactly the variable-step trajectory, with no comparator input to the policy. -/
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:28: trailing whitespace.
++def regretVariable (V : Domain E) (η : ℕ → ℝ) (loss : ℕ → E → ℝ)
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:29: trailing whitespace.
++    (x₁ u : E) (T : ℕ) : ℝ :=
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:30: trailing whitespace.
++  ∑ t ∈ range T, (loss t (iterateVariable V η loss x₁ t) - loss t u)
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:31: trailing whitespace.
++
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:32: trailing whitespace.
++theorem iterateVariable_mem (V : Domain E) (η : ℕ → ℝ) (loss : ℕ → E → ℝ)
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:33: trailing whitespace.
++    (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (t : ℕ) : iterateVariable V η loss x₁ t ∈ V.carrier := by
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:34: trailing whitespace.
++  cases t with
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:35: trailing whitespace.
++  | zero => exact hx₁
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:36: trailing whitespace.
++  | succ t => exact (project_spec V _).1
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:37: trailing whitespace.
++
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:38: trailing whitespace.
++theorem iterateVariable_prefix (V : Domain E) (η : ℕ → ℝ) (loss loss' : ℕ → E → ℝ)
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:39: trailing whitespace.
++    (x₁ : E) (t : ℕ) (h : ∀ s < t, loss s = loss' s) :
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:40: trailing whitespace.
++    iterateVariable V η loss x₁ t = iterateVariable V η loss' x₁ t := by
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:41: trailing whitespace.
++  induction t with
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:42: trailing whitespace.
++  | zero => rfl
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:43: trailing whitespace.
++  | succ t ih =>
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:44: trailing whitespace.
++    simp only [iterateVariable, h t (Nat.lt_succ_self t),
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:45: trailing whitespace.
++      ih (fun s hs => h s (Nat.lt_succ_of_lt hs))]
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:46: trailing whitespace.
++
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:47: trailing whitespace.
++theorem variable_one_step (V : Domain E) (η : ℕ → ℝ) (loss : ℕ → E → ℝ)
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:48: trailing whitespace.
++    (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (t : ℕ) (hη : 0 < η t)
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:49: trailing whitespace.
++    (hloss : RegularLoss V (loss t)) (u : E) (hu : u ∈ V.carrier) :
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:50: trailing whitespace.
++    loss t (iterateVariable V η loss x₁ t) - loss t u ≤
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:51: trailing whitespace.
++      (‖iterateVariable V η loss x₁ t - u‖ ^ 2 -
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:52: trailing whitespace.
++        ‖iterateVariable V η loss x₁ (t + 1) - u‖ ^ 2) / (2 * η t) +
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:53: trailing whitespace.
++      η t / 2 * ‖gradient (loss t) (iterateVariable V η loss x₁ t)‖ ^ 2 := by
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:54: trailing whitespace.
++  have hs := lemma_2_12 V (loss t) hloss (η t) hη
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:55: trailing whitespace.
++    (iterateVariable V η loss x₁ t) u (iterateVariable_mem V η loss x₁ hx₁ t) hu
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:56: trailing whitespace.
++  apply le_of_mul_le_mul_left (a := η t) _ hη
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:57: trailing whitespace.
++  calc
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:58: trailing whitespace.
++    η t * (loss t (iterateVariable V η loss x₁ t) - loss t u) ≤
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:59: trailing whitespace.
++        ‖iterateVariable V η loss x₁ t - u‖ ^ 2 / 2 -
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:60: trailing whitespace.
++        ‖iterateVariable V η loss x₁ (t + 1) - u‖ ^ 2 / 2 +
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:61: trailing whitespace.
++        (η t) ^ 2 / 2 * ‖gradient (loss t) (iterateVariable V η loss x₁ t)‖ ^ 2 :=
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:62: trailing whitespace.
++      hs.1.trans hs.2
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:63: trailing whitespace.
++    _ = η t * ((‖iterateVariable V η loss x₁ t - u‖ ^ 2 -
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:64: trailing whitespace.
++        ‖iterateVariable V η loss x₁ (t + 1) - u‖ ^ 2) / (2 * η t) +
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:65: trailing whitespace.
++        η t / 2 * ‖gradient (loss t) (iterateVariable V η loss x₁ t)‖ ^ 2) := by
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:66: trailing whitespace.
++      field_simp
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:67: trailing whitespace.
++
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:68: trailing whitespace.
++theorem weighted_potential_sum (a η : ℕ → ℝ) (C : ℝ) (T : ℕ) (hT : 0 < T)
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:69: trailing whitespace.
++    (hη : ∀ t < T, 0 < η t) (hmono : ∀ t, t + 1 < T → η (t + 1) ≤ η t)
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:70: trailing whitespace.
++    (hbound : ∀ t < T, a t ≤ C) :
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:71: trailing whitespace.
++    (∑ t ∈ range T, (a t - a (t + 1)) / (2 * η t)) ≤
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:72: trailing whitespace.
++      C / (2 * η (T - 1)) - a T / (2 * η (T - 1)) := by
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:73: trailing whitespace.
++  induction T with
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:74: trailing whitespace.
++  | zero => omega
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:75: trailing whitespace.
++  | succ T ih =>
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:76: trailing whitespace.
++    by_cases hz : T = 0
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:77: trailing whitespace.
++    · subst T
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:78: trailing whitespace.
++      have hpos := hη 0 (by omega)
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:79: trailing whitespace.
++      simpa [sub_div] using div_le_div_of_nonneg_right
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:80: trailing whitespace.
++        (sub_le_sub_right (hbound 0 (by omega)) (a 1))
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:81: trailing whitespace.
++        (by positivity : 0 ≤ 2 * η 0)
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:82: trailing whitespace.
++    · have hTpos : 0 < T := Nat.pos_of_ne_zero hz
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:83: trailing whitespace.
++      have hi := ih hTpos (fun t ht => hη t (Nat.lt_succ_of_lt ht))
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:84: trailing whitespace.
++        (fun t ht => hmono t (Nat.lt_succ_of_lt ht))
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:85: trailing whitespace.
++        (fun t ht => hbound t (Nat.lt_succ_of_lt ht))
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:86: trailing whitespace.
++      have hprev : T - 1 + 1 = T := Nat.sub_add_cancel hTpos
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:87: trailing whitespace.
++      have hm : η T ≤ η (T - 1) := by
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:88: trailing whitespace.
++        simpa only [hprev] using hmono (T - 1) (by omega)
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:89: trailing whitespace.
++      have hpos := hη T (by omega)
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:90: trailing whitespace.
++      have hd := div_le_div_of_nonneg_left
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:91: trailing whitespace.
++        (sub_nonneg.mpr (hbound T (by omega)))
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:92: trailing whitespace.
++        (by positivity : 0 < 2 * η T)
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:93: trailing whitespace.
++        (mul_le_mul_of_nonneg_left hm (by norm_num : (0 : ℝ) ≤ 2))
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:94: trailing whitespace.
++      rw [sum_range_succ]
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:95: trailing whitespace.
++      simp only [Nat.add_sub_cancel]
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:96: trailing whitespace.
++      simp only [sub_div] at hd
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:97: trailing whitespace.
++      calc
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:98: trailing whitespace.
++        _ ≤ (C / (2 * η (T - 1)) - a T / (2 * η (T - 1))) +
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:99: trailing whitespace.
++            (a T - a (T + 1)) / (2 * η T) := by linarith
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:100: trailing whitespace.
++        _ ≤ (C / (2 * η T) - a T / (2 * η T)) +
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:101: trailing whitespace.
++            (a T - a (T + 1)) / (2 * η T) := by linarith
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:102: trailing whitespace.
++        _ = _ := by rw [sub_div]; ring
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:103: trailing whitespace.
++
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:104: trailing whitespace.
++theorem theorem_2_13_variable_bound (V : Domain E) (η : ℕ → ℝ)
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:105: trailing whitespace.
++    (loss : ℕ → E → ℝ) (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (T : ℕ) (hT : 0 < T)
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:106: trailing whitespace.
++    (hη : ∀ t < T, 0 < η t) (hmono : ∀ t, t + 1 < T → η (t + 1) ≤ η t)
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:107: trailing whitespace.
++    (hloss : ∀ t < T, RegularLoss V (loss t)) (D : ℝ)
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:108: trailing whitespace.
++    (hdiam : ∀ x ∈ V.carrier, ∀ y ∈ V.carrier, ‖x - y‖ ≤ D)
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:109: trailing whitespace.
++    (u : E) (hu : u ∈ V.carrier) :
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:110: trailing whitespace.
++    regretVariable V η loss x₁ u T ≤ D ^ 2 / (2 * η (T - 1)) +
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:111: trailing whitespace.
++      (∑ t ∈ range T, η t / 2 * ‖gradient (loss t) (iterateVariable V η loss x₁ t)‖ ^ 2) -
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:112: trailing whitespace.
++      ‖iterateVariable V η loss x₁ T - u‖ ^ 2 / (2 * η (T - 1)) := by
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:113: trailing whitespace.
++  have hp := weighted_potential_sum
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:114: trailing whitespace.
++    (fun t => ‖iterateVariable V η loss x₁ t - u‖ ^ 2) η (D ^ 2) T hT hη hmono
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:115: trailing whitespace.
++    (fun t ht => pow_le_pow_left₀ (norm_nonneg _)
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:116: trailing whitespace.
++      (hdiam _ (iterateVariable_mem V η loss x₁ hx₁ t) u hu) 2)
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:117: trailing whitespace.
++  have hs := Finset.sum_le_sum (s := range T) (fun t ht =>
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:118: trailing whitespace.
++    variable_one_step V η loss x₁ hx₁ t (hη t (mem_range.mp ht))
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:119: trailing whitespace.
++      (hloss t (mem_range.mp ht)) u hu)
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:120: trailing whitespace.
++  rw [sum_add_distrib] at hs
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:121: trailing whitespace.
++  change regretVariable V η loss x₁ u T ≤ _ at hs
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:122: trailing whitespace.
++  linarith
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:123: trailing whitespace.
++
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:124: trailing whitespace.
++theorem theorem_2_13_variable (V : Domain E) (hV : Bornology.IsBounded V.carrier)
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:125: trailing whitespace.
++    (η : ℕ → ℝ) (loss : ℕ → E → ℝ) (x₁ : E) (hx₁ : x₁ ∈ V.carrier)
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:126: trailing whitespace.
++    (T : ℕ) (hT : 0 < T) (hη : ∀ t < T, 0 < η t)
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:127: trailing whitespace.
++    (hmono : ∀ t, t + 1 < T → η (t + 1) ≤ η t)
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:128: trailing whitespace.
++    (hloss : ∀ t < T, RegularLoss V (loss t)) (u : E) (hu : u ∈ V.carrier) :
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:129: trailing whitespace.
++    regretVariable V η loss x₁ u T ≤ (Metric.diam V.carrier) ^ 2 / (2 * η (T - 1)) +
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:130: trailing whitespace.
++      (∑ t ∈ range T, η t / 2 * ‖gradient (loss t) (iterateVariable V η loss x₁ t)‖ ^ 2) -
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:131: trailing whitespace.
++      ‖iterateVariable V η loss x₁ T - u‖ ^ 2 / (2 * η (T - 1)) := by
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:132: trailing whitespace.
++  apply theorem_2_13_variable_bound V η loss x₁ hx₁ T hT hη hmono hloss
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:133: trailing whitespace.
++    (Metric.diam V.carrier) ?_ u hu
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:134: trailing whitespace.
++  intro x hx y hy
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:135: trailing whitespace.
++  simpa only [dist_eq_norm] using Metric.dist_le_diam_of_mem hV hx hy
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:136: trailing whitespace.
++
+runs/online-ch2-unbounded-ogd-20261011/canary-type-value-export-v1-OnlineGradientDescentVariable.lean.txt:137: trailing whitespace.
++end BanditRL.OnlineGradientDescent

@@ -1,0 +1,155 @@
+{
+  "status": "prospective-only; not applied or accepted",
+  "input_raw_sha256": {
+    "website/content/chapters.json": "3fa8be13f034235f8618b63bdd161a22a601690db2cda0d7c2ed7c3901705de8",
+    "website/content/readings.json": "7a250a6cfbe0bc2f3f65e7bcc87a145770e1e17b27195b2e94d1ef765b0e17a4",
+    "website/content/highlights.json": "06fb9e7f745f3785b5b895aeaecd725f068448fc19daaf001723c4badc2d4c32",
+    "website/scripts/build_site.py": "4fe18b8b9a543ff5256a278f49d160424b30ba2185c946f3d6081ad5460ccaff",
+    "website/scripts/book_registry.py": "2557e84c4a60bbd659d1067843cedbe329a4c0c922244614299ae93d347dce03",
+    "website/scripts/check_books.py": "14a7bdb5dead63f1cf97de56e6f1e05a738d31ecd99ded4d57a9f903625e1cd3",
+    "tools/check_contributor_contract.py": "2d49be2d3be7b58287d2fa4022441b48f986cb13995c414dfccb1b2ac52d0eff",
+    "research-wiki/contribution-contracts/ONLINE-CH2-WEIGHTED-IDENTITY-20261011.json": "9d6e041bcd107d58352c64ae1783e8da09894104875cc95bbb89e8799989395d",
+    "BanditRLProof/OnlineUnboundedOGD.lean": "313c8522a40599846d79df32d2a8a42014a3338f814286df7ffe9603554d6b50",
+    "runs/online-ch2-unbounded-ogd-20261011/production-type-value-constants-v1.json": "0dc3e77a28a2918569eba7b66b08e390112f152e9d01f611d48ff42f696a45c7",
+    "runs/online-ch2-unbounded-ogd-20261011/fresh-header-source-review-v1.json": "bf19f899ef17184fc9bd00a3ecc1ba3ba058e376de5d65b00368547fee63ceed",
+    "runs/online-ch2-unbounded-ogd-20261011/fresh-core-BODY-review-v1.json": "3c365ded43978cb54bce5e13ed03f93512d3e41698698d4f196aa7900ea868e1",
+    "runs/online-ch2-unbounded-ogd-20261011/closure-readiness/independent-closure-contract-adjudication-v1.json": "6e6f882b641abe5379a8fa0cfd6e49355702c58797c9fa39c6eb7077ae347c48",
+    "tmp/online-ch2-weighted-identity-site-20261011-v1/books/registry.json": "04e3d32de848b7221b55f0b0cc311dc31a75e512954836f54a5fbc5370878392",
+    "docs/contracts/online-book-v1/coverage.json": "0e1f758dc4b1672d582341e82433b596864e07fd669f6a79ea4ffbc6017cb60a"
+  },
+  "source_commit": "06d679b8f0d8c77678e293a9a840f7473c69b2aa",
+  "patches": [
+    {
+      "file": "website/content/chapters.json",
+      "operations": [
+        {
+          "op": "add",
+          "path": "/chapters/10/module_globs/-",
+          "value": "BanditRLProof/OnlineUnboundedOGD.lean"
+        }
+      ]
+    },
+    {
+      "file": "website/content/readings.json",
+      "operations": [
+        {
+          "op": "add",
+          "path": "/readings/10/source_theorems/-",
+          "value": {
+            "label": "Chapter 2 forward claim: actual OGD inherits Theorem 5.4’s affine lower bound",
+            "pages": "printed14,52–53 / PDF26,64–65",
+            "pdf_page": 26,
+            "url": "https://arxiv.org/pdf/1912.13213v10#page=26",
+            "math": "\\begin{gathered}\\phi(\\alpha)=\\frac1{2-\\alpha}+\\frac{2^{\\alpha-1}-1}{1-\\alpha},\\quad 0<\\alpha<1,\\quad T\\ge\\frac2{(1-\\alpha)\\phi(\\alpha)},\\\\ \\exists(\\ell_t)_{t=1}^{T}\\text{ convex, 1-Lipschitz and differentiable}:\\quad R_T^{\\mathrm{OGD}}(0)\\ge\\frac12\\phi(\\alpha)T^{2-\\alpha}.\\end{gathered}",
+            "plain": "Ambient Lean context: {E : Type*}, [NormedAddCommGroup E], [InnerProductSpace ℝ E], [FiniteDimensional ℝ E], and [Nontrivial E]. For every nontrivial finite-dimensional real inner-product space E, every 0<alpha<1, and every natural T satisfying T>=2/((1-alpha)*phi(alpha)), there exists a horizon-dependent sequence of globally convex, 1-Lipschitz, differentiable real losses. The SAME actual OnlineGradientDescent.iterateVariable/regretVariable run on fullSpace starts at zero and compares with zero, with source eta_t=t^(-alpha).",
+            "fallback": "For the specified polynomial step schedule and exact threshold, actual OGD regret at zero is at least half phi(alpha) times T^(2-alpha).",
+            "relationship": "Chapter 2 printed14/PDF26 points to Section5.2. Theorem5.4 printed52–53/PDF64–65 literally states OSD; this result proves its explicit affine witness also drives actual OGD. Global differentiability is a proved strengthening of the witness regularity. Coordinate-free nontrivial finite-dimensional real inner-product spaces express the source Euclidean positive-dimensional construction. This is one specified polynomial schedule family, not every varying schedule or every learner. See the literal OSD statement at https://arxiv.org/pdf/1912.13213v10#page=64 and its proof at https://arxiv.org/pdf/1912.13213v10#page=65. Locally compiled and independently reviewed candidate core; full package, Test consumers, combined gates and final integration acceptance remain pending. Chapter 2 remains partial, accepted=false and complete proof denominator=null; all eight forward containers and six future claims remain open. Chapters 1–16 Goal ACTIVE. No merge or live publication claim.",
+            "contract": {
+              "model": "Same causal actual OGD recursion and pre-update regret on the full space.",
+              "assumptions": "Ambient Lean context: {E : Type*}, [NormedAddCommGroup E], [InnerProductSpace ℝ E], [FiniteDimensional ℝ E], and [Nontrivial E]. For every nontrivial finite-dimensional real inner-product space E, every 0<alpha<1, and every natural T satisfying T>=2/((1-alpha)*phi(alpha)), there exists a horizon-dependent sequence of globally convex, 1-Lipschitz, differentiable real losses. The SAME actual OnlineGradientDescent.iterateVariable/regretVariable run on fullSpace starts at zero and compares with zero, with source eta_t=t^(-alpha).",
+              "parameters": "Lean loss index t is source round t+1; eta(t)=(t+1)^(-alpha), state0=x1=0, and loss t is scored at state t before updating to state(t+1). Comparator0 is unchanged. Existing phi_range and phi_limit remain separate accepted OSD supplements, not new direct proof parents of this terminal.",
+              "regret": "R_T(0)=sum_{t=1}^T (loss_t(x_t)-loss_t(0)); exact factor1/2, zero initial point and comparator.",
+              "guarantee": "Choose a unit vector v and m=ceil(T/2). Let loss_t(z)=-<v,z> for source t<=m and +<v,z> thereafter. Each loss is globally differentiable, convex and 1-Lipschitz. Its actual gradient and the canonical OSD selected subgradient both equal the signed unit vector. Induction identifies the two actual trajectories at every time; their pre-update regret sums agree. Apply the accepted switching_vector_lower_bound to obtain the same exact half-phi bound. The loss stream may depend on T; no fixed infinite witness or Tendsto theorem is asserted."
+            },
+            "local_status": {
+              "status": "compiled",
+              "label": "Actual OGD candidate core compiled; package gates pending",
+              "boundary": "Locally compiled and independently reviewed candidate core; full package, Test consumers, combined gates and final integration acceptance remain pending. Chapter 2 remains partial, accepted=false and complete proof denominator=null; all eight forward containers and six future claims remain open. Chapters 1–16 Goal ACTIVE. No merge or live publication claim."
+            }
+          }
+        }
+      ]
+    },
+    {
+      "file": "website/content/highlights.json",
+      "operations": [
+        {
+          "op": "add",
+          "path": "/highlights/-",
+          "value": {
+            "full_name": "BanditRL.OnlineUnboundedOGD.regret_lower_bound",
+            "title": "Why decreasing-step OGD can fail without a bounded domain",
+            "chapter": "online-ogd",
+            "featured": false,
+            "teaching_order": 321,
+            "source_match": "closest-source",
+            "plain": "Ambient Lean context: {E : Type*}, [NormedAddCommGroup E], [InnerProductSpace ℝ E], [FiniteDimensional ℝ E], and [Nontrivial E]. For every nontrivial finite-dimensional real inner-product space E, every 0<alpha<1, and every natural T satisfying T>=2/((1-alpha)*phi(alpha)), there exists a horizon-dependent sequence of globally convex, 1-Lipschitz, differentiable real losses. The SAME actual OnlineGradientDescent.iterateVariable/regretVariable run on fullSpace starts at zero and compares with zero, with source eta_t=t^(-alpha).",
+            "math": "\\begin{gathered}\\phi(\\alpha)=\\frac1{2-\\alpha}+\\frac{2^{\\alpha-1}-1}{1-\\alpha},\\quad 0<\\alpha<1,\\quad T\\ge\\frac2{(1-\\alpha)\\phi(\\alpha)},\\\\ \\exists(\\ell_t)_{t=1}^{T}\\text{ convex, 1-Lipschitz and differentiable}:\\quad R_T^{\\mathrm{OGD}}(0)\\ge\\frac12\\phi(\\alpha)T^{2-\\alpha}.\\end{gathered}",
+            "intuition": "Larger early steps move the learner along a unit direction; after the affine slope switches halfway through, smaller later steps make the return too slow. The proof tracks the actual gradient trajectory.",
+            "why": "Supply the algorithm-specific OGD bridge for the Chapter 2 unbounded-domain forward claim.",
+            "position": "Chapter 2 printed14/PDF26 points to Section5.2. Theorem5.4 printed52–53/PDF64–65 literally states OSD; this result proves its explicit affine witness also drives actual OGD. Global differentiability is a proved strengthening of the witness regularity. Coordinate-free nontrivial finite-dimensional real inner-product spaces express the source Euclidean positive-dimensional construction. This is one specified polynomial schedule family, not every varying schedule or every learner.",
+            "proof_idea": "Choose a unit vector v and m=ceil(T/2). Let loss_t(z)=-<v,z> for source t<=m and +<v,z> thereafter. Each loss is globally differentiable, convex and 1-Lipschitz. Its actual gradient and the canonical OSD selected subgradient both equal the signed unit vector. Induction identifies the two actual trajectories at every time; their pre-update regret sums agree. Apply the accepted switching_vector_lower_bound to obtain the same exact half-phi bound. The loss stream may depend on T; no fixed infinite witness or Tendsto theorem is asserted.",
+            "lean_notes": "Ambient Lean context: {E : Type*}, [NormedAddCommGroup E], [InnerProductSpace ℝ E], [FiniteDimensional ℝ E], and [Nontrivial E]. Lean loss index t is source round t+1; eta(t)=(t+1)^(-alpha), state0=x1=0, and loss t is scored at state t before updating to state(t+1). Comparator0 is unchanged. Existing phi_range and phi_limit remain separate accepted OSD supplements, not new direct proof parents of this terminal. Selected actual compiled VALUE parents: BanditRL.OnlineGradientDescentSource.gradient_linear, BanditRL.OnlineUnboundedOSD.currentSubgradient_affine, BanditRL.OnlineUnboundedOSD.switching_loss_regular, BanditRL.OnlineUnboundedOSD.switching_vector_lower_bound. Selected external Mathlib occurrences: exists_norm_eq, ContinuousLinearMap.differentiable, real_inner_smul_left. Occurrence is not necessity or a complete transitive graph. Locally compiled and independently reviewed candidate core; full package, Test consumers, combined gates and final integration acceptance remain pending. Chapter 2 remains partial, accepted=false and complete proof denominator=null; all eight forward containers and six future claims remain open. Chapters 1–16 Goal ACTIVE. No merge or live publication claim. The ambient assumptions listed above are part of the theorem; the full-proof source link includes the section declarations.",
+            "dependencies": [
+              "BanditRL.OnlineGradientDescentSource.gradient_linear",
+              "BanditRL.OnlineUnboundedOSD.currentSubgradient_affine",
+              "BanditRL.OnlineUnboundedOSD.switching_loss_regular",
+              "BanditRL.OnlineUnboundedOSD.switching_vector_lower_bound"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "in_memory_invariants": [
+    {
+      "file": "website/content/chapters.json",
+      "all_prior_parsed_objects_preserved_except_named_list_append": true,
+      "before_raw_sha256": "3fa8be13f034235f8618b63bdd161a22a601690db2cda0d7c2ed7c3901705de8",
+      "draft_serialization_sha256": "61d244bee6fdf8394c7515a1a704c4f18641bc1197dfb681be1fd55ece1281dd"
+    },
+    {
+      "file": "website/content/readings.json",
+      "all_prior_parsed_objects_preserved_except_named_list_append": true,
+      "before_raw_sha256": "7a250a6cfbe0bc2f3f65e7bcc87a145770e1e17b27195b2e94d1ef765b0e17a4",
+      "draft_serialization_sha256": "8d677d53e58cf02265846a76d749d3502b6ad7838b46389372f1bb5a0fe9a599"
+    },
+    {
+      "file": "website/content/highlights.json",
+      "all_prior_parsed_objects_preserved_except_named_list_append": true,
+      "before_raw_sha256": "06fb9e7f745f3785b5b895aeaecd725f068448fc19daaf001723c4badc2d4c32",
+      "draft_serialization_sha256": "adc22b3ae19d18b7391cee93349223600cfef71cf55ca15e1a7350ca539650a6"
+    }
+  ],
+  "mapping": {
+    "canonical_node_id": "declaration:BanditRL.OnlineUnboundedOGD.regret_lower_bound",
+    "teaching_chapter": "teaching:online-ogd",
+    "anchor": "decl-215923cf4fa8",
+    "teaching_anchor": "decl-215923cf4fa8-teaching",
+    "source_url": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/06d679b8f0d8c77678e293a9a840f7473c69b2aa/BanditRLProof/OnlineUnboundedOGD.lean#L12",
+    "registry_generated_not_hand_edited": true,
+    "source_line": 12
+  },
+  "registry_baseline": {
+    "path": "tmp/online-ch2-weighted-identity-site-20261011-v1/books/registry.json",
+    "sha256": "04e3d32de848b7221b55f0b0cc311dc31a75e512954836f54a5fbc5370878392",
+    "nodes": 11100,
+    "required_new_production_ids": [
+      "declaration:BanditRL.OnlineUnboundedOGD.regret_lower_bound"
+    ],
+    "preservation": "Every old node exact parsed-object equality; retain baseline bytes unchanged. JSON formatting may change in generated output; do not claim whole output byte identity."
+  },
+  "metadata_boundary": {
+    "required_open_forward_containers": 8,
+    "future_claims_open": 6,
+    "chapter_partial": true,
+    "accepted": false,
+    "denominator": null,
+    "goal": "ACTIVE",
+    "closure_update": "Separate later approval only; conditional8to7 not applied"
+  },
+  "no_change": [
+    "historical completion_definition",
+    "old source cards and highlights",
+    "docs/contracts/online-book-v1/coverage.json",
+    "existing contribution manifests",
+    "core/Test/roots",
+    "generated site",
+    "results/roadmap/functor surfaces"
+  ],
+  "input_unchanged": true,
+  "supersedes": "v3 unchanged product operations; repair machine proposal source link to actual declaration line 12",
+  "checker_metadata": {
+    "raw_header_vs_compiled_type": "The module renderer displays the raw source header with ambient section parameters omitted from that text. Compare rendered header to actual source header, and independently bind the complete frozen/compiled TYPE and ambient hypotheses. Do not assert raw source header equals the neutral explicit header. This instruction is machine proposal metadata, not product prose."
+  }
+}

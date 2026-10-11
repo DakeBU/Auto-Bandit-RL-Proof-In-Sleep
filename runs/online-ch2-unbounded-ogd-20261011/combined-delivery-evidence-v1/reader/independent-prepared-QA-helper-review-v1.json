@@ -1,0 +1,44 @@
+{
+  "verdict": "structural-check-logic-sound-with-binding-gaps",
+  "scope": "Prepared helper inspection only; no helper/site/build executed",
+  "actor": "/root/adaptive_reviewer",
+  "requested_model": "GPT-6 Astra",
+  "requested_effort": "medium",
+  "runtime_attestation": false,
+  "structural_helper_sha256": "67c181f524a092c1d4f7e9187b2066f6c1ceca6ba7716d3bb1d66818dc5ba030",
+  "gate_helper_sha256": "71f8e2fdb4494682a8358346ec253f699cb9d652d779b91e2feb26e344faf8af",
+  "gate_helper_executable_AST_equal_previously_reviewed": true,
+  "candidate_HEAD_observed": "fff9bb2687759fdfd9db7f8690ad7169054b8936",
+  "git_clean_observed": true,
+  "sound_checks": [
+    "Exact11100old registry objects plus1new production, unique new IDs and compiled status",
+    "Scoped declaration fold raw header equals actualsource header, source hash pinned, actual theorem line derived",
+    "Reader visible ambient hypotheses separately from section-dependent raw header; no hidden assumption erased by claiming raw==fullTYPE",
+    "Sourcecard20to21/preserved oldlist; highlights appended with selectedactualparents; source formula and fullprooflink checks",
+    "Chapter8+6/false/null maintained, no wholechapter claim"
+  ],
+  "binding_gaps": [
+    {
+      "id": "Q1",
+      "finding": "--before readings/highlights are read without exact before-hash checks",
+      "repair_or_independent_final_check": "Pin to reviewed payload input hashes7a250a... and06fb9e... before comparison."
+    },
+    {
+      "id": "Q2",
+      "finding": "CompiledTYPE scope is described as independently bound, but no exact frozen/context/export/BODY receipt is read or pinned here",
+      "repair_or_independent_final_check": "Bind those immutable receipts and verify hashes/ambientTYPE; otherwise label this outside helper scope and independently recheck in final audit."
+    },
+    {
+      "id": "Q3",
+      "finding": "Gate receipt historical pre/post HEAD checked, but current HEAD/clean and source inventory are not checked",
+      "repair_or_independent_final_check": "Verify currentHEAD/clean plus current RAW/sourcepathset against gate postmanifest and its receipt hash before site certification, or make this explicit external final-audit prerequisite."
+    }
+  ],
+  "parser_notes": [
+    "Joining h.text with spaces can insert spaces at word-break boundaries, but checked ambient class tokens are plain reader strings and not fragmented long declaration IDs. Later actual run still required.",
+    "Fold parser handles nested details and lean-code pre separately; exact frozen full TYPE remains a different obligation.",
+    "No broad exception swallowing; assertion errors fail. New QA supplements official check and personal pixels, never replaces them."
+  ],
+  "writes": "Only this ignored receipt; no canonical input mutation",
+  "created_utc": "2026-10-11T05:32:46.831696+00:00"
+}
