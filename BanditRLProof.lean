@@ -799,3 +799,4 @@ import BanditRLProof.OnlineStrongConvexMinimum
 import BanditRLProof.OnlineStrongConvexSupport
 import BanditRLProof.OnlineStrongConvexSourceSubgradient
 import BanditRLProof.OnlineCumulativeStrongConvex
+import BanditRLProof.OnlineStrongConvexSubgradientIff

@@ -1,0 +1,7 @@
+Literal auxiliary definitions. Each E is the corresponding carrier for that definition; the second carries its real inner product.
+
+def SourceProper (f : E → EReal) : Prop :=
+  (∀ x, f x ≠ ⊥) ∧ ∃ x, ∃ r : ℝ, f x = (r : EReal)
+
+def SourceSubdifferential (f : E → EReal) (x : E) : Set E :=
+  {g | ∀ y, f x + (inner ℝ g (y - x) : EReal) ≤ f y}

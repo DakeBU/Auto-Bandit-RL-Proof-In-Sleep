@@ -1,0 +1,95 @@
+                                       4
+                                      √
+                                Beyond T Regret
+
+
+
+                                                         is possible to get logarithmic regret
+The guessing game in the first chapter showed us that it √
+in time. However, in Chapter 2, we saw that we get only T -regret with Online Subgradient
+Descent (OSD) on the same game. What is the reason? In this chapter, we will see that some
+sequences of losses can possess properties that make it easier for OSD to learn, but we will
+have to change the learning rate a bit.
+
+
+                4.1 Strong Convexity and Online Subgradient Descent
+The losses in the guessing game in Chapter 1, ℓt (x) = (x − yt )2 on [0, 1], are not just
+Lipschitz. They possess some curvature that can be exploited to achieve a better asymptotic
+regret. In a moment, we will see that the only change we will need to Online Subgradient
+Descent (OSD) is a different learning rate, dictated as usual by the regret analysis.
+   The key concept we will need is strong convexity.
+
+
+                      4.1.1 Convex Analysis Bits: Strong Convexity
+Here, we introduce a stronger concept of convexity that allows us to build a better lower
+bound to a function. Instead of the linear lower bound achievable using subgradients, we
+will make use of a quadratic lower bound.
+Definition 4.1 Let λ ≥ 0. A proper function f : Rd → (−∞, +∞] is λ-strongly convex
+with respect to ∥ · ∥ over a convex set V ⊆ dom f if
+                                                            1
+         f (αx + (1 − α)y) ≤ αf (x) + (1 − α)f (y) − λα(1 − α)∥x − y∥2 ,
+                                                            2
+for all x, y ∈ V and all α ∈ (0, 1).
+   We will also say that f is strongly convex in V , if there exists λ > 0 and a norm such
+that the above holds.
+  From the definition, it is clear that if a function is λ-strongly convex, it is also λ′ -strongly
+convex for any 0 ≤ λ′ < λ. Moreover, convex functions are 0-strongly convex.
+  We can also obtain an equivalent characterization in terms of subgradients.
+Lemma 4.2 Let λ ≥ 0. We have that f : Rd → (−∞, +∞] is λ-strongly convex over a
+convex set V ⊆ dom ∂f with respect to ∥ · ∥ iff
+                                                                           λ
+         ∀x, y ∈ V, ∀g ∈ ∂f (y),        f (x) ≥ f (y) + ⟨g, x − y⟩ +         ∥x − y∥2 .
+                                                                           2
+                                                34
+                     4.1 Strong Convexity and Online Subgradient Descent                      35
+
+Proof Let’s first assume that f is λ-strongly convex over V with respect to ∥ · ∥. Then, for
+any α ∈ (0, 1) and any g ∈ ∂f (y), we have
+
+                  f (αx + (1 − α)y) − f (y)                  1
+  ⟨g, x − y⟩ ≤                              ≤ f (x) − f (y) − λ(1 − α)∥x − y∥2 .
+                              α                              2
+Taking the limit as α → 0, we obtain the statement.
+   Let’s now assume that the inequality in the lemma holds, and let’s prove that f is λ-
+strongly convex. Setting v = αx + (1 − α)y , for any g ∈ ∂f (v), we have
+                                                     λ
+                        ⟨g, x − v⟩ ≤ f (x) − f (v) −   ∥x − v∥2 ,
+                                                     2
+                                                     λ
+                         ⟨g, y − v⟩ ≤ f (y) − f (v) − ∥y − v∥2 .
+                                                     2
+Summing these two inequalities with coefficients α and 1 − α and using the definition of v ,
+we have
+
+        0 = ⟨g, αx − αv + (1 − α)y − (1 − α)v⟩
+                                                               λ
+         = αf (x) − f (αx + (1 − α)y) + (1 − α)f (y) − α(1 − α) ∥x − y∥2 .
+                                                               2
+  In words, the lemma above tells us that a strongly convex function can be lower bounded
+by a quadratic, where the linear term is the usual one constructed through the subgradient,
+and the quadratic term depends on the strong convexity. Hence, we have a tighter lower
+bound to the function than the one obtained by using convexity alone. This is what we
+would expect using a Taylor expansion on a twice-differentiable convex function and lower-
+bounding the smallest eigenvalue of the Hessian. Indeed, we have the following theorem.
+
+
+Theorem 4.3 Let f : Rd → (−∞, +∞] be proper and convex.
+
+• f is λ-strongly convex with respect to ∥ · ∥ in dom ∂f iff
+
+   ⟨g x −g y , x−y⟩ ≥ λ∥x−y∥2 ,          ∀x, y ∈ dom ∂f, g x ∈ ∂f (x), g y ∈ ∂f (y). (4.1)
+
+• Let x, y ∈ dom f . If f is continuously twice differentiable on an open set containing the
+  segment between y and x, and it holds that
+
+          ⟨∇2 f (y + α(x − y))(x − y), x − y⟩ ≥ λ∥x − y∥2 ,             ∀α ∈ [0, 1],       (4.2)
+
+  then we have
+                                                              λ
+                       f (x) ≥ f (y) + ⟨∇f (y), x − y⟩ +        ∥x − y∥2 .
+                                                              2
+  If the assumption holds for any x, y ∈ dom f , then f is λ-strongly convex in dom f with
+  respect to ∥ · ∥.
+
+Proof    For the first statement, first assume that f is λ-strongly convex with respect to ∥ · ∥.
+

@@ -1,0 +1,61 @@
+import BanditRLProof.OnlineStrongConvexSubgradientIff
+
+noncomputable section
+open Set
+namespace BanditRL.Tests.OnlineStrongConvexSubgradientIffCanary
+open BanditRL.OnlineConvex
+
+abbrev E := Fin 2 → ℝ
+abbrev U := EuclideanSpace ℝ (Fin 2)
+def feasible : Set E := {x | ∀ i, x i ∈ Set.Icc (-1 : ℝ) 1}
+def objective (x : E) : EReal :=
+  (((x 0 ^ 2 + x 1 ^ 2) / 2 + x 0 : ℝ) : EReal)
+def coordinates : E ≃ₗ[ℝ] U := (WithLp.linearEquiv 2 ℝ E).symm
+def scaledCoordinates : E ≃ₗ[ℝ] U :=
+  coordinates.trans (LinearEquiv.smulOfNeZero ℝ U 2 two_ne_zero)
+def covector (p : E) : U :=
+  (1 / 2 : ℝ) • coordinates (fun i => p i + if i = 0 then 1 else 0)
+def query : E := fun _ => 1
+def negativeSquare (x : ℝ) : EReal := ((-x ^ 2 : ℝ) : EReal)
+
+theorem box_converse_originalNorm :
+    (∀ x ∈ feasible, ∀ y ∈ feasible, ∀ a : ℝ, 0 < a → a < 1 →
+      objective (a • x + (1 - a) • y) ≤
+        (a : EReal) * objective x + ((1 - a : ℝ) : EReal) * objective y -
+          ((((1 : ℝ) / 2) * a * (1 - a) * ‖x - y‖ ^ 2 : ℝ) : EReal)) ∧
+    SourceProper objective ∧
+    (∀ p ∈ feasible,
+      covector p ∈ SourceSubdifferential
+        (fun u => objective (scaledCoordinates.symm u)) (scaledCoordinates p)) ∧
+    (∀ p ∈ feasible, ∀ q ∈ feasible, ∀ g : U,
+      g ∈ SourceSubdifferential
+        (fun u => objective (scaledCoordinates.symm u)) (scaledCoordinates p) →
+        (objective p).toReal + inner ℝ g (scaledCoordinates (q - p)) +
+          (1 / 2 : ℝ) * ‖q - p‖ ^ 2 ≤ (objective q).toReal) ∧
+    ‖query‖ ^ 2 = (1 : ℝ) ∧
+    ‖scaledCoordinates query‖ ^ 2 = (8 : ℝ) ∧
+    inner ℝ (covector 0) (scaledCoordinates query) = (1 : ℝ) ∧
+    covector 0 ≠ 0 ∧
+    objective 0 = (0 : EReal) ∧ objective query = (2 : EReal) ∧
+    ¬ ((objective 0).toReal + inner ℝ (covector 0) (scaledCoordinates query) +
+      (1 / 2 : ℝ) * ‖scaledCoordinates query‖ ^ 2 ≤ (objective query).toReal) ∧
+    (1 / 2 : ℝ) * (objective query).toReal +
+      (1 / 2 : ℝ) * (objective (-query)).toReal - (objective 0).toReal -
+      (1 / 2 : ℝ) * (1 / 2 : ℝ) * (1 / 2 : ℝ) * ‖query - (-query)‖ ^ 2 =
+        (1 / 2 : ℝ)
+
+theorem absent_support_vacuity :
+    SourceProper negativeSquare ∧
+    (∀ p : ℝ, SourceSubdifferential negativeSquare p = ∅) ∧
+    (∀ p q : ℝ, ∀ g ∈ SourceSubdifferential negativeSquare p,
+      (negativeSquare p).toReal + inner ℝ g (q - p) +
+        ((0 : ℝ) / 2) * ‖q - p‖ ^ 2 ≤ (negativeSquare q).toReal) ∧
+    ¬ (∀ x y : ℝ, ∀ a : ℝ, 0 < a → a < 1 →
+      negativeSquare (a • x + (1 - a) • y) ≤
+        (a : EReal) * negativeSquare x + ((1 - a : ℝ) : EReal) * negativeSquare y -
+          ((((0 : ℝ) / 2) * a * (1 - a) * ‖x - y‖ ^ 2 : ℝ) : EReal)) ∧
+    negativeSquare 0 = (0 : EReal) ∧
+    (1 / 2 : EReal) * negativeSquare (-1) +
+      (1 / 2 : EReal) * negativeSquare 1 = (-1 : EReal)
+
+end BanditRL.Tests.OnlineStrongConvexSubgradientIffCanary

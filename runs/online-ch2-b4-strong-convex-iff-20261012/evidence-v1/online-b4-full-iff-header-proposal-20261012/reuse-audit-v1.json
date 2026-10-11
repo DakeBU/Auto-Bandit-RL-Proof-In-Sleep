@@ -1,0 +1,45 @@
+{
+  "classification": "adapt_existing",
+  "module": "BanditRLProof/OnlineStrongConvexSubgradientIff.lean",
+  "one_public_theorem": true,
+  "extra_public_helpers": false,
+  "searched": [
+    {
+      "declaration": "BanditRL.OnlineConvex.stronglyConvex_sourceSubgradient_growth",
+      "decision": "reuse_existing",
+      "role": "Entire forward implication; exact original f,V,lambda,e and derived domain, supplied g. Actual imported VALUE call required after future BODY authorization."
+    },
+    {
+      "declaration": "BanditRL.OnlineConvex.subgradient_point_finite",
+      "decision": "reuse_existing",
+      "role": "After transporting properness to f composed e.symm, proves each supported coordinate point finite. No new public domain premise."
+    },
+    {
+      "declaration": "BanditRL.OnlineConvex.theorem_2_21",
+      "decision": "adapt_existing",
+      "role": "Read its two weighted support inequalities and cancellation proof topology. Not an actual dependency promise: theorem only yields zero-curvature real ConvexOn in an inner-product carrier, and cannot establish the arbitrary-original-norm quadratic term."
+    },
+    {
+      "declaration": "strongConvexOn_iff_convex",
+      "decision": "out_of_scope",
+      "role": "Mathlib subtract-squared-norm characterization assumes InnerProductSpace on the same carrier. Cannot substitute it for arbitrary E norm. No Euclidean penalty transport."
+    },
+    {
+      "declaration": "stronglyConvex_support_growth / stronglyConvex_minimum_growth",
+      "decision": "reuse_existing",
+      "role": "Already indirect parents through installed adapter; do not add artificial direct calls or wrappers."
+    },
+    {
+      "declaration": "EReal.coe_toReal / coe_le_coe_iff / coe_add / coe_mul / coe_sub; map_add,map_smul,map_sub; norm_smul,norm_neg; real inner linearity",
+      "decision": "reuse_existing",
+      "role": "Existing APIs for real/extended-real transport and original norm homogeneity; exact tactic elaboration remains untested."
+    }
+  ],
+  "search_scope": "Current Online*.lean declarations plus Mathlib Analysis/Convex/Strong.lean; no existing full arbitrary-norm source-coordinate iff found in this bounded search.",
+  "search_failure_history": "Initial rg used an unexpanded Windows Online* path, producing error123; repeated with -g Online*.lean and directory succeeds. No mathematical evidence inferred from the failed command.",
+  "genuine_future_consumers": [
+    "Converts all-point source quadratic-growth characterizations to/from Def4.1 curvature for actual cumulative parents once their source support-existence premises are proved.",
+    "Full source Lemma4.2 iff boundary itself; does not resolve existence/attainment/stability."
+  ],
+  "proof_graph": "IFF forward -> installed adapter -> supplied-support/minimum growth; point finiteness -> subgradient_point_finite; converse -> same actual g at segment point, weighted endpoint growth, original norm homogeneity. Teaching order is not extra proof-term dependency."
+}

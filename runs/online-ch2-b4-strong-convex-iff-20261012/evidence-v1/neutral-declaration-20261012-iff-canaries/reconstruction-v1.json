@@ -1,0 +1,135 @@
+{
+  "schema": "blind-canary-reconstruction-v1",
+  "input_hashes_verified": true,
+  "inputs": [
+    {
+      "file": "context-v1.txt",
+      "bytes": 1078,
+      "sha256": "b4104e7a15e67cbdaa6f8a46392fba4a7caa960100813716a8518f05c9840e5b"
+    },
+    {
+      "file": "declarations-v1.txt",
+      "bytes": 2221,
+      "sha256": "130410aa2ccfec16ce4a0104762da9d2e78965409957dae7366a046e977cd7ed"
+    }
+  ],
+  "declarations": [
+    {
+      "name": "box_converse_originalNorm",
+      "semantic_slots": {
+        "objects": [
+          "E = Fin 2 -> R consists of real pairs x = (x0,x1). U = EuclideanSpace R (Fin 2) is the real Euclidean coordinate space.",
+          "feasible = {x : -1 <= x0 <= 1 and -1 <= x1 <= 1}. Write B for this box.",
+          "objective(x) = embed(Q(x)), where Q(x) = (x0^2+x1^2)/2+x0. query = v = (1,1).",
+          "coordinates C : E -> U is (WithLp.linearEquiv 2 R E).symm. scaledCoordinates S = C followed by multiplication by 2, hence S(x) = 2 C(x), and S.symm(u) is the original pair with entries u_i/2.",
+          "covector(p) = c(p) = (1/2) C((p0+1,p1)). Let F(u) = objective(S.symm(u)) = embed((u0^2+u1^2)/8+u0/2)."
+        ],
+        "domains_types": [
+          "There are no declaration parameters, typeclass binders or hypotheses preceding the colon: this is a closed conjunction about the fixed definitions in the context.",
+          "x,y,p,q range over E. a ranges over R. g ranges over U. Function values lie in EReal; toReal function values, norms and inner products in the stated growth inequality lie in R.",
+          "E carries the finite Pi norm: norm_E(x) = max(abs(x0),abs(x1)). U carries the Euclidean norm: norm_U(u)^2 = u0^2+u1^2.",
+          "The interpolation and valid growth inequalities use the norm on E. The separately negated inequality uses the norm of S(v) on U. These are different norms on different types.",
+          "Real numbers in the interpolation inequality and in objective are coerced into EReal. The final slack identity is an identity in R."
+        ],
+        "assumptions": [
+          "The declaration has no external premise. SourceProper objective and the support assertions are conjuncts of its conclusion, not input assumptions.",
+          "SourceProper objective expands to: for every z in E, objective(z) is not negative infinity; and there exist z in E and r in R with objective(z)=embed(r). The literal objective definition is finite everywhere, and z=0,r=0 is a finite witness.",
+          "For each p in B the specified c(p) is asserted to lie in the GLOBAL subdifferential of F at S(p). Expanded: for every u in U, F(S(p)) + embed(inner_R(c(p),u-S(p))) <= F(u).",
+          "The support assertion applies at every base point p in B, rather than just at p=0; its test points u range over all U, not just S(B). Thus it supplies nonempty global subdifferentials at all points of B.",
+          "The subsequent growth conjunct is stronger in its subgradient quantifier than checking only c(p): it tests EVERY g in that global subdifferential.",
+          "No convexity-of-B premise or separate convexity-of-B conjunct appears in this type. The literal box is convex, but a proof's use of that fact cannot be inferred from the type."
+        ],
+        "quantifiers": [
+          "Interpolation: for every x in E, x in B -> for every y in E, y in B -> for every a in R, 0<a -> a<1 -> the interpolation inequality.",
+          "Specified support: for every p in E, p in B -> for every u in U, the global supporting inequality for c(p). This implies for every p in B there exists a support vector, with that vector fixed before u varies.",
+          "Growth: for every p in E, p in B -> for every q in E, q in B -> for every g in U, g in SourceSubdifferential F (S(p)) -> the real growth inequality.",
+          "SourceProper has a separate universal no-bottom condition and an existential finite witness: (for every z) AND (there exists z, there exists r).",
+          "All remaining conjuncts are fixed numerical equalities, one vector inequality c(0) != 0, and one negated real inequality; they have no additional free parameters."
+        ],
+        "operations": [
+          "Interpolation: objective(a*x+(1-a)*y) <= embed(a)*objective(x)+embed(1-a)*objective(y)-embed((1/2)*a*(1-a)*norm_E(x-y)^2), for x,y in B and 0<a<1.",
+          "Every-g growth: Q(p)+inner_R(g,S(q-p))+(1/2)*norm_E(q-p)^2 <= Q(q). The use of Q is valid because the literal objective is always finite and its toReal equals Q.",
+          "Subgradient membership for arbitrary g expands to: for every u in U, F(S(p))+embed(inner_R(g,u-S(p))) <= F(u). Equivalently every original point z in E is tested by objective(p)+embed(inner_R(g,S(z-p))) <= objective(z).",
+          "At p=0, c(0) has Euclidean entries (1/2,0), S(v)=(2,2), norm_E(v)^2=1, norm_U(S(v))^2=8, and inner_R(c(0),S(v))=1.",
+          "objective(0)=embed(0), objective(v)=embed(2), and the literal formula also gives objective(-v)=embed(0). c(0) is nonzero.",
+          "The negated inequality is NOT (0+1+(1/2)*8 <= 2), exactly NOT (5 <= 2). By contrast, the valid original-norm growth expression for these points is 0+1+(1/2)*1 <= 2, i.e. 3/2 <= 2.",
+          "The final real identity is (1/2)Q(v)+(1/2)Q(-v)-Q(0)-(1/2)*(1/2)*(1/2)*norm_E(v-(-v))^2 = 1/2. Since v-(-v)=(2,2), its original norm squared is 4, and the left side is 1+0-0-1/2=1/2.",
+          "EReal.toReal maps finite embedded reals to their real values; infinity cases are irrelevant for this objective because finiteness follows directly from its literal definition."
+        ],
+        "conclusion": [
+          "The type asserts the conjunction of: the open-weight strong-convexity interpolation inequality with parameter 1 and original norm on B; SourceProper objective; specified global support at every p in B; growth for every global subgradient and every p,q in B; norm_E(v)^2=1; norm_U(S(v))^2=8; inner_R(c(0),S(v))=1; c(0)!=0; objective(0)=0; objective(v)=2; failure of the explicitly written coordinate-norm growth inequality; and the exact original-norm interpolation slack 1/2.",
+          "This is a conjunction, not an iff or a theorem whose stated premise is growth and whose stated conclusion is convexity. In particular, the word 'converse' in its name does not identify its proof route.",
+          "If supplied by an accepted proof in a checked environment, this type certifies those propositions simultaneously. Merely reading this statement does not establish that such a proof was provided or checked.",
+          "The type does not certify which general theorem was invoked, any provider identity, dependency path, proof method, source correspondence, or that a converse theorem was used. No body or source-fidelity inference is made."
+        ],
+        "edge_cases": [
+          "The box is explicitly nonempty: it contains 0, v and -v. Its boundary points are included by Icc, and the quantified assertions include them.",
+          "The support and growth conditions cover every p in the box; specified support prevents every-g growth from being vacuous there.",
+          "Interpolation only requires 0<a<1, excluding endpoint weights. The fixed midpoint a=1/2 belongs to this range.",
+          "x=y and p=q are allowed, with vanishing differences. No distinct-point restriction occurs.",
+          "The support test is global even though interpolation and pairwise growth are restricted to the box.",
+          "Only the explicitly written replacement by norm_U(S(v)) is refuted by the fixed numerical counterexample. The type does not assert that every choice of coordinates, every pair of points or every rescaled parameter fails.",
+          "The parameter is fixed at 1 and the dimension is fixed at 2. This declaration does not quantify over zero dimension or zero strong-convexity parameter."
+        ]
+      }
+    },
+    {
+      "name": "absent_support_vacuity",
+      "semantic_slots": {
+        "objects": [
+          "The original carrier is R. negativeSquare(x)=embed(-(x^2)); write N for this EReal-valued function.",
+          "The subdifferential uses the ordinary real inner product on R. No coordinate transformation, box or separately chosen covector occurs in this declaration."
+        ],
+        "domains_types": [
+          "This is a closed conjunction with no parameters or input hypotheses preceding the colon.",
+          "p,q,g,x,y,a are real numbers. N values and the interpolation comparison are in EReal. The growth comparison is in R after toReal.",
+          "For reals, inner_R(g,q-p)=g*(q-p), the norm is abs, and norm(q-p)^2=(q-p)^2.",
+          "The strong-convexity parameter in both comparisons is exactly 0. The final displayed weighted average uses coefficients (1/2 : EReal), whereas the interpolation quantifier uses real a coerced into EReal."
+        ],
+        "assumptions": [
+          "There are no external premises. SourceProper N is itself asserted as a conjunct.",
+          "SourceProper N expands to (for every z in R, N(z) != negative infinity) AND (there exists z in R, there exists r in R, N(z)=embed(r)). The literal definition is finite everywhere; z=0,r=0 is a witness.",
+          "g in SourceSubdifferential N p expands to: for every z in R, N(p)+embed(g*(z-p)) <= N(z). These are global supports with every real test point z.",
+          "The second conjunct asserts SourceSubdifferential N p = empty for every p in R. Thus there is no all-point nonempty-support condition; the declaration instead asserts emptiness at all points.",
+          "The membership premise in the universal growth conjunct is consequently never satisfied."
+        ],
+        "quantifiers": [
+          "Emptiness: for every p in R, SourceSubdifferential N p = empty.",
+          "Growth: for every p in R, for every q in R, for every g in R, g in SourceSubdifferential N p -> the growth inequality. This is a universal implication over g, not existence of any g.",
+          "Negated interpolation: NOT (for every x in R, for every y in R, for every real a, 0<a -> a<1 -> the interpolation inequality).",
+          "The negated universal says at least one eligible triple fails; it does not say that all triples fail.",
+          "The last two equalities are fixed statements at 0 and at the weighted endpoints -1 and 1."
+        ],
+        "operations": [
+          "The growth inequality is toReal(N(p))+g*(q-p)+(0/2)*abs(q-p)^2 <= toReal(N(q)), i.e. -p^2+g*(q-p) <= -q^2. Its zero quadratic term does not prevent its universal conditional statement from holding vacuously.",
+          "The interpolation inequality being denied is N(a*x+(1-a)*y) <= embed(a)*N(x)+embed(1-a)*N(y)-embed((0/2)*a*(1-a)*abs(x-y)^2). Its correction is zero.",
+          "N(0)=embed(0). N(-1)=N(1)=embed(-1). Hence (1/2 : EReal)*N(-1)+(1/2 : EReal)*N(1)=(-1 : EReal), exactly as asserted.",
+          "The values x=-1,y=1,a=1/2 give midpoint 0 and a zero correction, so the denied universal includes the false inequality (0 : EReal) <= (-1 : EReal). This is a direct numerical reading of the supplied formulas, not a claim about a proof body.",
+          "All N values are finite from the literal definition; toReal(N(t))=-(t^2). No operation on infinite values is needed in this example."
+        ],
+        "conclusion": [
+          "The type asserts simultaneously: N is SourceProper; its global subdifferential is empty at every real point; the stated every-g real growth condition with parameter 0 holds; the open-weight convexity interpolation condition with parameter 0 does not hold; N(0)=0; and the equal-weight value at -1 and 1 is -1.",
+          "The asserted growth property and failed convexity coexist because the universal growth premise requires membership in an empty set. Properness alone does not supply a global subgradient.",
+          "This closed statement is a counterexample to using this every-g growth condition alone, even together with SourceProper, to infer the displayed convexity condition without a nonempty-support assumption.",
+          "If backed by an accepted checked proof, the type certifies precisely these propositions; the supplied declaration text alone does not establish proof existence or compilation.",
+          "It does not certify any particular theorem invocation, proof dependency, implementation provider, source correspondence, or source-faithfulness. It does not contradict a theorem that separately assumes nonempty global subdifferentials at its base points."
+        ],
+        "edge_cases": [
+          "The domain is all real numbers and is nonempty. Vacuity comes from the empty subgradient sets, not from an empty domain.",
+          "The parameter is zero, so this failure already concerns ordinary convexity rather than a positive quadratic strengthening.",
+          "p=q is included in growth, but there is still no eligible g. For arbitrary p,q, no supported g exists to instantiate its conditional inequality.",
+          "Interpolation weights 0 and 1 are excluded, while the failing midpoint weight 1/2 is permitted.",
+          "x=y would satisfy the corresponding finite-value interpolation equality; the negated universal does not forbid such successful individual triples.",
+          "The literal N is finite everywhere, so this example's failure is not caused by EReal.toReal collapsing infinities.",
+          "The asserted emptiness is for global supporting affine functionals, not for a derivative or for supporting functionals on a restricted local set."
+        ]
+      }
+    }
+  ],
+  "uncertainty_and_scope": [
+    "Only the two current input files were read. Their byte counts and SHA-256 hashes match the supplied values. No prior packet is used as evidence.",
+    "Definitions in the current context are expanded explicitly. Standard readings of finite Pi norms, EuclideanSpace, WithLp.linearEquiv, LinearEquiv.smulOfNeZero, real inner products and EReal are used; their implementations were not inspected.",
+    "Arithmetic consequences and vacuity explanations above are semantic reconstructions from the statements and definitions, not Lean execution or additional theorem proofs.",
+    "No proof bodies, imported modules, source papers, contracts, reviews, repository search or other inputs were consulted. The types alone do not establish compilation status, proof route or source fidelity."
+  ]
+}

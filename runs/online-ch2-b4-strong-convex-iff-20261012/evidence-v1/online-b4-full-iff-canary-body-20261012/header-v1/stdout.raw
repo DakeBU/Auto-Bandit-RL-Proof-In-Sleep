@@ -1,0 +1,38 @@
+(∀ x ∈ feasible,
+    ∀ y ∈ feasible,
+      ∀ (a : ℝ),
+        0 < a →
+          a < 1 →
+            objective (a • x + (1 - a) • y) ≤
+              ↑a * objective x + ↑(1 - a) * objective y - ↑(1 / 2 * a * (1 - a) * ‖x - y‖ ^ 2)) ∧
+  SourceProper objective ∧
+    (∀ p ∈ feasible,
+        covector p ∈ SourceSubdifferential (fun u => objective (scaledCoordinates.symm u)) (scaledCoordinates p)) ∧
+      (∀ p ∈ feasible,
+          ∀ q ∈ feasible,
+            ∀ g ∈ SourceSubdifferential (fun u => objective (scaledCoordinates.symm u)) (scaledCoordinates p),
+              (objective p).toReal + inner ℝ g (scaledCoordinates (q - p)) + 1 / 2 * ‖q - p‖ ^ 2 ≤
+                (objective q).toReal) ∧
+        ‖query‖ ^ 2 = 1 ∧
+          ‖scaledCoordinates query‖ ^ 2 = 8 ∧
+            inner ℝ (covector 0) (scaledCoordinates query) = 1 ∧
+              covector 0 ≠ 0 ∧
+                objective 0 = 0 ∧
+                  objective query = 2 ∧
+                    ¬(objective 0).toReal + inner ℝ (covector 0) (scaledCoordinates query) +
+                            1 / 2 * ‖scaledCoordinates query‖ ^ 2 ≤
+                          (objective query).toReal ∧
+                      1 / 2 * (objective query).toReal + 1 / 2 * (objective (-query)).toReal - (objective 0).toReal -
+                          1 / 2 * (1 / 2) * (1 / 2) * ‖query - -query‖ ^ 2 =
+                        1 / 2 : Prop
+SourceProper negativeSquare ∧
+  (∀ (p : ℝ), SourceSubdifferential negativeSquare p = ∅) ∧
+    (∀ (p q g : ℝ),
+        g ∈ SourceSubdifferential negativeSquare p →
+          (negativeSquare p).toReal + inner ℝ g (q - p) + 0 / 2 * ‖q - p‖ ^ 2 ≤ (negativeSquare q).toReal) ∧
+      (¬∀ (x y a : ℝ),
+            0 < a →
+              a < 1 →
+                negativeSquare (a • x + (1 - a) • y) ≤
+                  ↑a * negativeSquare x + ↑(1 - a) * negativeSquare y - ↑(0 / 2 * a * (1 - a) * ‖x - y‖ ^ 2)) ∧
+        negativeSquare 0 = 0 ∧ 1 / 2 * negativeSquare (-1) + 1 / 2 * negativeSquare 1 = -1 : Prop

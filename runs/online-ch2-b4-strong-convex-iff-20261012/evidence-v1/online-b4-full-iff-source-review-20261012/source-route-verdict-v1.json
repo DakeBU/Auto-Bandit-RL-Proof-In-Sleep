@@ -1,0 +1,46 @@
+{
+  "reviewer": "/root/support_reader_source_review_20261012",
+  "status": "ACCEPTED_SOURCE_ROUTE_FOR_HEADER_PREPARATION_ONLY",
+  "route_sha256": "b21b33219eb83f5c9c43cc58e2d938683c73235554a78965ffa5f339bba53c60",
+  "pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+  "source_pages_personally_read": [
+    "PDF28 Def2.18/2.20",
+    "PDF29 dom-subdifferential paragraph and Theorem2.21",
+    "PDF46 Def4.1/Lemma4.2",
+    "PDF47 full Lemma4.2 proof"
+  ],
+  "source_binders": {
+    "properness": "SourceProper explicitly unfolds Definition2.18; proper f inherited by Definition4.1 and Definition2.20, not an invented extra hypothesis.",
+    "domain_of_subdifferential": "For every p in literal V, a GLOBAL coordinate source subgradient exists at e(p). This is exactly V subset dom partial f under coordinate bijection; keep all-point existence as premise and do not replace by mere finite-onV or local supports.",
+    "convexity": "Only Convex R V; global convexity of f not a new premise.",
+    "norm_coordinates": "Any real normed E algebraically equivalent to R^d; coordinates define pairing, original E norm defines penalty. No isometry, completeness, Euclidean penalty or separately assumed finiteDim/continuity.",
+    "coefficient_and_edges": "lambda>=0; zero lambda, d0 and emptyV remain in scope. Properness still has a global finite witness even if V empty.",
+    "growth_quantifier": "Every p,q inV and every g in actual global source subdifferential at e(p), with norm_E(q-p). All-point hsub is separate from this universal implication, avoiding vacuity."
+  },
+  "finite_derivation": "Transport properness along e.symm using inverse-bijection and actual finite witness. subgradient_point_finite then proves each e(p) is below top. SourceProper supplies no-bottom; together yield exact f(p)=coe(toReal(f(p))). Segment finiteness follows from hV and derived inclusion; never coerce infinity by toReal without these proofs.",
+  "genuine_reuse": "Forward must call installed stronglyConvex_sourceSubgradient_growth on originalf,V,lambda,E norm. Converse consumes assumed right-hand inequalities at z=a*x+(1-a)*y after choosing an actual supplied support atz, not a constructed support-existence theorem.",
+  "converse_algebra": "Multiply z-to-x bound by a and z-to-y by1-a. e linearity and inner linearity cancel a*e(x-z)+(1-a)*e(y-z)=0. Homogeneity with positive a,1-a yields squared distances (1-a)^2||x-y||^2 and a^2||x-y||^2. Their weighted sum is a(1-a)||x-y||^2; convert finite real inequality back to EReal.",
+  "printed_proof_correction": {
+    "location": "PDF47 printed35, final two-line display in converse",
+    "printed": "0 = inner cancellation = weighted value residual",
+    "required": "0 = inner cancellation <= weighted value residual",
+    "counterexample": "On R take f(t)=t^2,lambda=1,x=1,y=-1,a=1/2,z=0,g=0. The function meets strong convexity with lambda1 and global supports; weighted residual equals1/2, whereas pairing is0. Thus second equality is false in general.",
+    "scope": "Preserve truthful erratum record; theorem iff itself is valid. No need to assert erroneous equality or add equality/saturation premises."
+  },
+  "existing_finiteness_source": {
+    "path": "BanditRLProof/OnlineSubgradientBasic.lean",
+    "sha256": "af3d3f56e4a64cd8adbe47368caf5382e63b428f01da29a121c28c8014f352a5",
+    "declaration": "BanditRL.OnlineConvex.subgradient_point_finite",
+    "inspection": "Actual proof uses hf.2 finite witness and hg at that witness to exclude top; it needs no global convexity."
+  },
+  "pending": [
+    "Exact Lean header and binder/source ledger",
+    "Independent blind reconstruction and header source review before freeze",
+    "Public concrete canary design including actual converse and corrected inequality discriminator",
+    "BODY/canonical proof/gates/reader review"
+  ],
+  "no_header_freeze": true,
+  "no_BODY_authorization": true,
+  "chapter_accepted": false,
+  "production_mutations": false
+}

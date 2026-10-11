@@ -1,0 +1,101 @@
+{
+  "status": "CANONICAL_INTEGRATION_PROPOSAL_ONLY",
+  "source": {
+    "version": "Orabona arXiv1912.13213v10",
+    "pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchors": [
+      "Definition2.20",
+      "Definition4.1",
+      "Lemma4.2 full iff",
+      "printed35/PDF47 converse equality correction"
+    ]
+  },
+  "public_declaration": "BanditRL.OnlineConvex.stronglyConvex_iff_sourceSubgradient_growth",
+  "module": "BanditRLProof/OnlineStrongConvexSubgradientIff.lean",
+  "exact_statement": "import BanditRLProof.OnlineStrongConvexSourceSubgradient\n\nnoncomputable section\nopen Set\nnamespace BanditRL.OnlineConvex\n\ntheorem stronglyConvex_iff_sourceSubgradient_growth {E : Type*}\n    [NormedAddCommGroup E] [NormedSpace ℝ E]\n    (d : ℕ) (e : E ≃ₗ[ℝ] EuclideanSpace ℝ (Fin d))\n    (f : E → EReal) (V : Set E) (lam : ℝ)\n    (hf : SourceProper f) (hV : Convex ℝ V) (hlam : 0 ≤ lam)\n    (hsub : ∀ p ∈ V,\n      (SourceSubdifferential (fun u => f (e.symm u)) (e p)).Nonempty) :\n    (∀ x ∈ V, ∀ y ∈ V, ∀ a : ℝ, 0 < a → a < 1 →\n      f (a • x + (1 - a) • y) ≤\n        (a : EReal) * f x + ((1 - a : ℝ) : EReal) * f y -\n          (((lam / 2) * a * (1 - a) * ‖x - y‖ ^ 2 : ℝ) : EReal)) ↔\n    (∀ p ∈ V, ∀ q ∈ V, ∀ g : EuclideanSpace ℝ (Fin d),\n      g ∈ SourceSubdifferential (fun u => f (e.symm u)) (e p) →\n        (f p).toReal + inner ℝ g (e (q - p)) +\n          (lam / 2) * ‖q - p‖ ^ 2 ≤ (f q).toReal)\n\nend BanditRL.OnlineConvex\n",
+  "binder_ledger": {
+    "binders": [
+      {
+        "binder": "E, NormedAddCommGroup E, NormedSpace ℝ E",
+        "classification": "TYPING",
+        "expanded": "Real normed carrier with arbitrary original norm; no inner product on E, completeness or finite-dimensionality premise."
+      },
+      {
+        "binder": "d,e",
+        "classification": "TYPING",
+        "expanded": "Finite algebraic coordinate equivalence to EuclideanSpace ℝ (Fin d), supplying the coordinate pairing and source R^d carrier. No isometry or relation between coordinate Euclidean norm and E norm. d=0 allowed."
+      },
+      {
+        "binder": "f,V,lam",
+        "classification": "TYPING",
+        "expanded": "Extended-real function, literal feasible subset, real curvature coefficient. Original values and set retained."
+      },
+      {
+        "binder": "hf",
+        "classification": "SOURCE",
+        "expanded": "Definition4.1 properness inherited by the strong-convexity predicate: forall x, f x != bottom; exists x and real r with f x=coe r. The global witness is used to exclude top at supported points, including after coordinate transport."
+      },
+      {
+        "binder": "hV",
+        "classification": "SOURCE",
+        "expanded": "Printed convex set V. For x,y in V and nonnegative weights summing to one, their weighted sum belongs to V. Empty V allowed."
+      },
+      {
+        "binder": "hlam",
+        "classification": "SOURCE",
+        "expanded": "Printed lambda >=0; zero allowed, no division by lambda."
+      },
+      {
+        "binder": "hsub",
+        "classification": "SOURCE",
+        "expanded": "Exact printed V subset dom partial f: for every p in V there exists an actual vector g whose GLOBAL coordinate support inequality holds at every u in R^d. No support construction is concluded; no restriction of support evaluation to V."
+      },
+      {
+        "binder": "left x,y,a",
+        "classification": "TYPING",
+        "expanded": "Universal feasible endpoints, strict 0<a<1. Original E norm and coefficient lambda/2*a*(1-a). Finite values follow internally; endpoint weights need not be added to the source statement."
+      },
+      {
+        "binder": "right p,q,g",
+        "classification": "TYPING",
+        "expanded": "Universal p,q in V and EVERY global coordinate subgradient at p, not merely a chosen support. Pairing uses e(q-p); quadratic penalty uses original norm(q-p)."
+      }
+    ],
+    "no_EXCESS": true,
+    "derived_not_assumed": [
+      "SourceProper (fun u => f (e.symm u))",
+      "V subset effectiveDomain f",
+      "finite real identities at every point of V",
+      "segment membership",
+      "same support used for both converse endpoint inequalities"
+    ],
+    "definition_audit": {
+      "SourceSubdifferential": "Literal set of all g satisfying forall ambient u, f(e.symm(e p))+coe(inner g (u-e p)) <= f(e.symm u). No default selection and no finite-point restriction hidden in definition.",
+      "effectiveDomain": "Below-top set, which generically includes bottom; hf separately excludes bottom.",
+      "SourceProper": "Global no-bottom plus genuine finite witness.",
+      "strong_convexity": "Expanded EReal interpolation, with properness/convex domain/nonnegative coefficient as external source standing assumptions."
+    }
+  },
+  "header": {
+    "path": "tmp/online-b4-full-iff-header-proposal-20261012/proposed-header-v1.txt",
+    "bytes": 1006,
+    "sha256": "56a0e9247ff901eeb9ed7a48a2e181772396d57f9726c43affba52d21e21d4d1"
+  },
+  "body_raw_sha256": "7f5168bcb82044b850b891d7cf0872062f83293135169249f23962cadab40d44",
+  "source_delta": "This is the full Lemma4.2 iff under its printed V subset dom partial f premise, represented by explicit algebraic coordinates. Properness comes from Definition4.1; it means no bottom anywhere and a genuine finite real witness somewhere. The all-point support premise is supplied, not proved by this theorem. No separate V subset effectiveDomain premise is added: derive it using subgradient_point_finite after transporting properness through e inverse. No isometry or Euclidean penalty substitution is allowed. This is finite-dimensional coordinate representation, not an infinite-dimensional iff claim. Empty V, lambda0 and d0 are allowed by the core statement. Closedness, global convexity of f and minimizer attainment are not assumed.",
+  "source_proof_correction": "Printed35/PDF47 has an erroneous second equality in the converse proof. The valid chain is 0=the weighted pairing <= a*f(x)+(1-a)*f(y)-f(z)-(lambda/2)a(1-a)||x-y||^2. The iff statement is unchanged; no saturation/equality assumption is added. The strict residual1/2 in the concrete canary refutes that printed equality and validates the inequality correction.",
+  "implementation_spine": "Transport the actual properness witness to coordinates. At each feasible p choose a support from the explicit all-point premise and apply subgradient_point_finite to derive f(p)<top; combine with no-bottom to obtain the finite-value identity. The forward implication genuinely calls stronglyConvex_sourceSubgradient_growth on the original f,V,lambda,e and the internally derived domain inclusion. For the converse put z=a*x+(1-a)*y in V and choose ONE actual global support g at z. Apply the hypothesized quadratic growth to (z,x) and (z,y), multiply by a and1-a, and add. The weighted pairing cancels. Original norm homogeneity gives ||x-z||^2=(1-a)^2||x-y||^2 and ||y-z||^2=a^2||x-y||^2, yielding exactly the source curvature term. Finally convert finite real values back to EReal. The source forward proof instead uses support based at y evaluated at a*x+(1-a)*y, division by positive a and the limit a down to0; implementation reuse and source topology are kept distinct.",
+  "consumers": "The first closed experimental consumer uses E=R^2 with the sup norm, e=2 times ordinary coordinates, V=[-1,1]^2, and globally finite f(x)=(x0^2+x1^2)/2+x0. For every p it explicitly produces the global covector (p+(1,0))/2. It characterizes every global support algebraically and proves the quadratic growth premise independently, then its first conjunction genuinely applies the iff CONVERSE to obtain interpolation. At q=(1,1), original squared norm1 differs from coordinate squared norm8; pairing1 and f(q)=2 refute a substituted coordinate penalty5<=2. The same example at x=q,y=-q,a=1/2 has weighted residual1/2, so equality to0 is false. The second consumer proves f(t)=-t^2 proper with an EMPTY global subdifferential at every point. Support-indexed lambda0 growth is vacuous, but midpoint interpolation would require0<=-1. This is a counterexample to removing the all-point support premise, not to Lemma4.2. The concrete quadratic is globally finite; the canaries do not test top outside V, empty V, d0 or exhaustive edge coverage.",
+  "canary_frozen_context": {
+    "path": "tmp/online-b4-full-iff-canary-proposal-20261012/canonical-context-and-statements-v1.txt",
+    "bytes": 3047,
+    "sha256": "07206bc192017e0eb681ba5e41a53237f10886812b8a665194ffe9b8ca8bb426"
+  },
+  "statement_fingerprint": {
+    "raw_header_sha256": "56a0e9247ff901eeb9ed7a48a2e181772396d57f9726c43affba52d21e21d4d1",
+    "canonical_alpha_TYPE": null,
+    "canonical_alpha_VALUE": null,
+    "status": "PENDING real canonical builds/import audits; unchanged RAW source does not prove identity"
+  },
+  "truth_boundary": "Experimental iff core and both closed canaries compiled and passed separate source/BODY reviews; stronger imported operand checks are retained. This canonical iff integration packet is proposed only. Canonical focused builds, genuine imported TYPE/VALUE identity and axiom audits, combined project gates, publication review and reader Exposition Seal remain pending. No independent all-point support-existence theorem, qualified attainment, uniqueness, general cumulative stability or corrected full Lemma7.5/Theorems7.47/15.31 is claimed. The next cumulative optimistic-stability header is planning only. Chapter2 and all Chapters1-16 obligations remain open where previously open; seven forward containers, six future claims, null mandatory denominator and accepted=false are unchanged. No merge or live acceptance claim."
+}

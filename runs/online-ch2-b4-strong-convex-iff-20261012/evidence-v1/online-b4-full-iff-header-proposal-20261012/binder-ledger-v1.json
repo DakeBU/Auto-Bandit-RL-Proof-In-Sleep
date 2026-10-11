@@ -1,0 +1,63 @@
+{
+  "binders": [
+    {
+      "binder": "E, NormedAddCommGroup E, NormedSpace ℝ E",
+      "classification": "TYPING",
+      "expanded": "Real normed carrier with arbitrary original norm; no inner product on E, completeness or finite-dimensionality premise."
+    },
+    {
+      "binder": "d,e",
+      "classification": "TYPING",
+      "expanded": "Finite algebraic coordinate equivalence to EuclideanSpace ℝ (Fin d), supplying the coordinate pairing and source R^d carrier. No isometry or relation between coordinate Euclidean norm and E norm. d=0 allowed."
+    },
+    {
+      "binder": "f,V,lam",
+      "classification": "TYPING",
+      "expanded": "Extended-real function, literal feasible subset, real curvature coefficient. Original values and set retained."
+    },
+    {
+      "binder": "hf",
+      "classification": "SOURCE",
+      "expanded": "Definition4.1 properness inherited by the strong-convexity predicate: forall x, f x != bottom; exists x and real r with f x=coe r. The global witness is used to exclude top at supported points, including after coordinate transport."
+    },
+    {
+      "binder": "hV",
+      "classification": "SOURCE",
+      "expanded": "Printed convex set V. For x,y in V and nonnegative weights summing to one, their weighted sum belongs to V. Empty V allowed."
+    },
+    {
+      "binder": "hlam",
+      "classification": "SOURCE",
+      "expanded": "Printed lambda >=0; zero allowed, no division by lambda."
+    },
+    {
+      "binder": "hsub",
+      "classification": "SOURCE",
+      "expanded": "Exact printed V subset dom partial f: for every p in V there exists an actual vector g whose GLOBAL coordinate support inequality holds at every u in R^d. No support construction is concluded; no restriction of support evaluation to V."
+    },
+    {
+      "binder": "left x,y,a",
+      "classification": "TYPING",
+      "expanded": "Universal feasible endpoints, strict 0<a<1. Original E norm and coefficient lambda/2*a*(1-a). Finite values follow internally; endpoint weights need not be added to the source statement."
+    },
+    {
+      "binder": "right p,q,g",
+      "classification": "TYPING",
+      "expanded": "Universal p,q in V and EVERY global coordinate subgradient at p, not merely a chosen support. Pairing uses e(q-p); quadratic penalty uses original norm(q-p)."
+    }
+  ],
+  "no_EXCESS": true,
+  "derived_not_assumed": [
+    "SourceProper (fun u => f (e.symm u))",
+    "V subset effectiveDomain f",
+    "finite real identities at every point of V",
+    "segment membership",
+    "same support used for both converse endpoint inequalities"
+  ],
+  "definition_audit": {
+    "SourceSubdifferential": "Literal set of all g satisfying forall ambient u, f(e.symm(e p))+coe(inner g (u-e p)) <= f(e.symm u). No default selection and no finite-point restriction hidden in definition.",
+    "effectiveDomain": "Below-top set, which generically includes bottom; hf separately excludes bottom.",
+    "SourceProper": "Global no-bottom plus genuine finite witness.",
+    "strong_convexity": "Expanded EReal interpolation, with properness/convex domain/nonnegative coefficient as external source standing assumptions."
+  }
+}

@@ -1,0 +1,26 @@
+Literal auxiliary definitions. Each E is the corresponding carrier for that definition; the second carries its real inner product.
+
+def SourceProper (f : E → EReal) : Prop :=
+  (∀ x, f x ≠ ⊥) ∧ ∃ x, ∃ r : ℝ, f x = (r : EReal)
+
+def SourceSubdifferential (f : E → EReal) (x : E) : Set E :=
+  {g | ∀ y, f x + (inner ℝ g (y - x) : EReal) ≤ f y}
+
+noncomputable section
+open Set
+namespace BanditRL.Tests.OnlineStrongConvexSubgradientIffCanary
+open BanditRL.OnlineConvex
+
+abbrev E := Fin 2 → ℝ
+abbrev U := EuclideanSpace ℝ (Fin 2)
+def feasible : Set E := {x | ∀ i, x i ∈ Set.Icc (-1 : ℝ) 1}
+def objective (x : E) : EReal :=
+  (((x 0 ^ 2 + x 1 ^ 2) / 2 + x 0 : ℝ) : EReal)
+def coordinates : E ≃ₗ[ℝ] U := (WithLp.linearEquiv 2 ℝ E).symm
+def scaledCoordinates : E ≃ₗ[ℝ] U :=
+  coordinates.trans (LinearEquiv.smulOfNeZero ℝ U 2 two_ne_zero)
+def covector (p : E) : U :=
+  (1 / 2 : ℝ) • coordinates (fun i => p i + if i = 0 then 1 else 0)
+def query : E := fun _ => 1
+def negativeSquare (x : ℝ) : EReal := ((-x ^ 2 : ℝ) : EReal)
+
