@@ -1,0 +1,9 @@
+# Independent applied support-freeze verification
+
+Accepted as an applied freeze only; blockers empty. Requested GPT-6 Astra / medium, runtime not attested. Clean support branch HEAD e44f554be4b3deb4946fe8bfc801b1f23d19d8fd contains exactly39 changed paths confined to this support DOC/RUN. All39 RAW files equal their committed Git blobs. All34 receipt rows match SHA/size and every named tmp original is byte-identical. The remaining five files are the application receipt and four context/execution records; all are Git-bound.
+
+Exact header fingerprint23e26732..., plan c61d0e..., pre-BODY review1cc2c634... and authorization bindings match. The recorded application actually exited0. All contract RAW dependencies, including pinned .olean files, still match SHA/size; no fresh Lean execution was performed. All1391 preceding accepted-growth active gate RAW rows remain unchanged. The new proposed production module does not exist.
+
+Neutral V2 and source V2 evidence remain included with their predecessors. Typing V1 actual1 and V2 actual0 are preserved, not relabelled proof. The frozen contract retains its historical proposal status while the later authorization/receipt establishes applied-freeze status; none grants BODY authorization. Mathematical scope remains forward-only growth at a supplied V-local continuous-linear support, with finite-on-V premises. Full iff, support producers, arbitrary chosen-norm transport and corrected parent bounds remain OPEN. Chapter2 stays partial/unaccepted, null denominator,7+6 open and Goal ACTIVE.
+
+Prior growth tested source48ca and delivery60f7/PR226 are distinct identities. This read-only local verification does not check or promote GitHub CI to main/live status. No BODY was read, written or authorized, no tests/browser were run, and no additional review workflow is requested.

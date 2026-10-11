@@ -1,0 +1,28 @@
+contributor-contract	Validate affected contribution contracts	﻿2026-10-11T17:30:14.9123467Z ##[group]Run if [[ -n "$CONTRIBUTOR_HEAD" ]]; then
+contributor-contract	Validate affected contribution contracts	2026-10-11T17:30:14.9123683Z ^[[36;1mif [[ -n "$CONTRIBUTOR_HEAD" ]]; then^[[0m
+contributor-contract	Validate affected contribution contracts	2026-10-11T17:30:14.9123891Z ^[[36;1m  # Provenance is checked on the contribution's real history. Keep^[[0m
+contributor-contract	Validate affected contribution contracts	2026-10-11T17:30:14.9124140Z ^[[36;1m  # this checkout for integration tests, Lean, and documentation.^[[0m
+contributor-contract	Validate affected contribution contracts	2026-10-11T17:30:14.9124372Z ^[[36;1m  contract_root="$RUNNER_TEMP/abrl-contributor-head"^[[0m
+contributor-contract	Validate affected contribution contracts	2026-10-11T17:30:14.9124599Z ^[[36;1m  git worktree add --detach "$contract_root" "$CONTRIBUTOR_HEAD"^[[0m
+contributor-contract	Validate affected contribution contracts	2026-10-11T17:30:14.9124842Z ^[[36;1m  python3 "$contract_root/tools/check_contributor_contract.py" --ci^[[0m
+contributor-contract	Validate affected contribution contracts	2026-10-11T17:30:14.9125032Z ^[[36;1melse^[[0m
+contributor-contract	Validate affected contribution contracts	2026-10-11T17:30:14.9125173Z ^[[36;1m  python3 tools/check_contributor_contract.py --ci^[[0m
+contributor-contract	Validate affected contribution contracts	2026-10-11T17:30:14.9125336Z ^[[36;1mfi^[[0m
+contributor-contract	Validate affected contribution contracts	2026-10-11T17:30:14.9173181Z shell: /usr/bin/bash -e {0}
+contributor-contract	Validate affected contribution contracts	2026-10-11T17:30:14.9173319Z env:
+contributor-contract	Validate affected contribution contracts	2026-10-11T17:30:14.9173463Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+contributor-contract	Validate affected contribution contracts	2026-10-11T17:30:14.9173726Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+contributor-contract	Validate affected contribution contracts	2026-10-11T17:30:14.9173953Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+contributor-contract	Validate affected contribution contracts	2026-10-11T17:30:14.9174154Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+contributor-contract	Validate affected contribution contracts	2026-10-11T17:30:14.9174351Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+contributor-contract	Validate affected contribution contracts	2026-10-11T17:30:14.9174556Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+contributor-contract	Validate affected contribution contracts	2026-10-11T17:30:14.9174758Z   CONTRIBUTOR_BASE: origin/main
+contributor-contract	Validate affected contribution contracts	2026-10-11T17:30:14.9174889Z   CONTRIBUTOR_HEAD: 
+contributor-contract	Validate affected contribution contracts	2026-10-11T17:30:14.9175004Z ##[endgroup]
+contributor-contract	Validate affected contribution contracts	2026-10-11T17:30:20.9655685Z CONTRIBUTOR CONTRACT FAILED
+contributor-contract	Validate affected contribution contracts	2026-10-11T17:30:20.9656401Z  - contribution manifests list affected files that are not changed protected/production surfaces: BanditRLProof/OnlineConstraintFiniteLoss.lean, BanditRLProof/OnlineConvexMinorant.lean
+contributor-contract	Validate affected contribution contracts	2026-10-11T17:30:20.9671074Z contributor base: origin/main
+contributor-contract	Validate affected contribution contracts	2026-10-11T17:30:20.9671385Z changed paths: 38116
+contributor-contract	Validate affected contribution contracts	2026-10-11T17:30:20.9671605Z affected production paths: 84
+contributor-contract	Validate affected contribution contracts	2026-10-11T17:30:20.9671854Z changed contribution contracts: 93
+contributor-contract	Validate affected contribution contracts	2026-10-11T17:30:20.9752215Z ##[error]Process completed with exit code 1.

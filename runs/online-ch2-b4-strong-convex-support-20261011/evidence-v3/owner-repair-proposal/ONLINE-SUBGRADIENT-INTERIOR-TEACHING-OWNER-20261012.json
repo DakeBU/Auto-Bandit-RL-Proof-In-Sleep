@@ -1,0 +1,146 @@
+{
+  "schema_version": "3.0",
+  "id": "ONLINE-SUBGRADIENT-INTERIOR-TEACHING-OWNER-20261012",
+  "route": "online-learning/subgradient-interior/canonical-teaching-owner",
+  "frontier_cell": "online-subgradient-interior",
+  "source_facing": false,
+  "source": {
+    "kind": "internal-design",
+    "title": "Preserve a shared affine-support dependency while keeping teaching-route entries owned by their chapter",
+    "version": "candidate based on ceef2d303da1398bd543d144930e3ec7e1b58263",
+    "anchor": "readings online-subgradient-interior teaching_route; accepted main60 highlight owner correction; current build_site chapter ownership invariant",
+    "url": ""
+  },
+  "target": "Remove exactly one cross-owned navigation entry from the interior chapter teaching_route; keep the three existing owned lessons in order. The canonical affine-support highlight remains owned by online-minorant and remains an actual recorded dependency of both interior consumers. No theorem, assumption, proof, source card, lesson, route, graph node or dependency edge is deleted.",
+  "affected_files": [
+    "website/content/readings.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineConvex.affine_support_of_domain_interior",
+    "BanditRL.OnlineConvex.subgradient_exists_of_domain_interior",
+    "BanditRL.OnlineConvex.affine_support_of_relative_domain_interior"
+  ],
+  "reuse_plan": {
+    "classification": "reuse",
+    "decision": "reuse_existing",
+    "searched_existing": [
+      "All current reading teaching_route references checked against canonical highlight ownership in one pass.",
+      "OnlineSubgradientInterior.lean lines15 and46 directly invoke the canonical parent.",
+      "Existing two consumer highlights already list the shared parent in dependencies."
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineConvex.affine_support_of_domain_interior",
+      "BanditRL.OnlineConvex.subgradient_exists_of_domain_interior",
+      "BanditRL.OnlineConvex.affine_support_of_relative_domain_interior"
+    ],
+    "new_shared_declarations": [],
+    "known_consumers": [
+      "BanditRL.OnlineConvex.subgradient_exists_of_domain_interior",
+      "BanditRL.OnlineConvex.affine_support_of_relative_domain_interior"
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "One canonical highlight and existing mathematical dependencies suffice. Local teaching_route renders owned lessons; a shared prerequisite already represented in dependencies need not be duplicated as a locally owned lesson."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": false,
+    "status": "not-required",
+    "formalizer": "not-applicable: navigation metadata repair only",
+    "blind_decoder": "not-applicable: no Lean statement changes",
+    "source_reviewer": "pending separate review of concrete candidate; previous source evidence preserved",
+    "verdict": "not-required",
+    "remaining_semantic_delta": "No mathematical delta. Shared parent, both actual uses, both dependency metadata entries and all source exposition remain unchanged."
+  },
+  "graph_contribution": {
+    "lean_graph": "reuse-only",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "No new cross-setting mechanism.",
+    "focus_targets": [
+      "BanditRL.OnlineConvex.affine_support_of_domain_interior",
+      "BanditRL.OnlineConvex.subgradient_exists_of_domain_interior",
+      "BanditRL.OnlineConvex.affine_support_of_relative_domain_interior"
+    ],
+    "visual_review": "Pending fresh generated interior/minorant reader, dependency presence, exact owned preview and pixel review.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: remove one foreign-owned preview entry; retain all three owned interior lessons and the shared parent in both actual consumer dependencies.",
+    "banditrlwiki": "no-change-with-reason: no claim or case changes.",
+    "results_ledger": "no-change-with-reason: no mathematical or completion increment.",
+    "roadmap": "no-change-with-reason: all Chapter2 and book obligations unchanged.",
+    "website_surfaces": [
+      "website/content/readings.json"
+    ]
+  },
+  "truth_boundary": "Navigation maintenance only. Exactly one list entry removed, no mathematical target or dependency removed. Preserve40routes,504highlight objects including duplicate multiplicity,25OGDsourcecards,33Online Book references and Chapter2partial/acceptedfalse/7forwardcontainers/6futureclaims/denominatornull/B1-B7open/GoalACTIVE. Existing ceef Lean/Tests/harness evidence is historical after application; candidate commit requires fresh matching-source gate/structural/site/reader evidence. No candidate build, browser, pixel, main, live, Exposition or whole-goal acceptance claimed.",
+  "verification": {
+    "focused_checks": [
+      "Read-only all-route ownership scan: exactly one mismatch before and zero in candidate.",
+      "Candidate JSON deep equality differs only by removing the first named teaching_route item; remaining RAW bytes untouched.",
+      "Two actual Lean invokes and two existing dependency lists preserve the canonical parent."
+    ],
+    "bandit_check": "Pending fresh required acceptance on the new committed candidate; prior ceef gates remain exact historical evidence.",
+    "site_build": "Pending plain preflight then verified build with matching current source gate. Original ceef site failure retained.",
+    "site_check": "Pending official site check, full structural preservation and actual reader capture including interior/minorant.",
+    "independent_review": "Distinct tooling diagnosis supplied; concrete source/governance application review pending."
+  },
+  "contributor": {
+    "name": "Ji Cheng with Codex assistance",
+    "role": "Navigation maintenance; distinct tooling/source review; no new mathematical authorship."
+  },
+  "learning_contract": {
+    "control_plane_math_authority": false,
+    "process_memory_checked": true,
+    "process_memory_ids": [
+      "ABRL-PM-MATCHED-HARNESS-EVIDENCE",
+      "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS"
+    ],
+    "failure_class": "IMPLEMENTATION_FAILED",
+    "salvage": {
+      "required": true,
+      "status": "completed",
+      "reason": "Preserve all ceef proofs/gates and actual plain-site failure; retain canonical parent, both consumer dependencies, all source text and all routes. Repair only conflicting local preview ownership.",
+      "promoted_fragments": [],
+      "discarded_fragments": []
+    },
+    "parallelism": {
+      "decision": "serial",
+      "direction_fingerprints": [
+        "single-owned-teaching-preview-metadata-repair"
+      ],
+      "expected_information_gain": "One deterministic metadata correction; no alternate proof or scheduler change.",
+      "shared_verified_context_digest": "5100d9b77ec4e76014ef448c7833e36987280389a0605b9a5c8b30de5db4e9ca"
+    },
+    "cross_route_blind_spot_audit": {
+      "required": false,
+      "status": "not-applicable",
+      "evidence": "No parallel mathematical proof routes. All chapter ownership references checked at once.",
+      "canonical_route": "Keep shared parent in its canonical minorant chapter and in both consumer dependency lists.",
+      "selection_reason": "Smallest correction preserving mathematical graph."
+    },
+    "reader_backpressure": {
+      "purification_status": "pending",
+      "exposition_seal_status": "pending",
+      "reader_debt_delta": 0,
+      "exposition_evidence": "Fresh corrected reader and pixel review pending. No removed source material.",
+      "source_expansion_nodes": [],
+      "lean_expansion_nodes": [
+        "BanditRL.OnlineConvex.affine_support_of_domain_interior",
+        "BanditRL.OnlineConvex.subgradient_exists_of_domain_interior",
+        "BanditRL.OnlineConvex.affine_support_of_relative_domain_interior"
+      ],
+      "assumptions_preserved": true,
+      "boundary_preserved": true
+    }
+  }
+}

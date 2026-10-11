@@ -1,0 +1,30 @@
+--- runs\online-ch2-b4-finite-identity-20261011\prepared\capture-gate-v2.py
++++ tmp\online-b4-support-gate-preparation-20261011\capture-gate-v3.py
+@@ -27,7 +27,7 @@
+ 
+ 
+ def git(root, *args):
+-    proc = subprocess.run(["git"] + list(args), cwd=str(root), stdout=subprocess.PIPE,
++    proc = subprocess.run(["git", "-c", "core.longpaths=true"] + list(args), cwd=str(root), stdout=subprocess.PIPE,
+                           stderr=subprocess.PIPE)
+     if proc.returncode:
+         raise RuntimeError("git failed: " + repr(args) + ": " + proc.stderr.decode("utf-8", "replace"))
+@@ -45,7 +45,7 @@
+     names = set(x.decode("utf-8") for x in git(root, "ls-files", "-z", "--cached").split(b"\0") if x)
+     # Add new source paths, including ignored additions inside actual source trees.
+     for folder in ("BanditRLProof", "Tests", "tools", "website/scripts", "website/content",
+-                   "website/static", "research-wiki/contribution-contracts"):
++                   "website/static", "research-wiki/contribution-contracts", ".github/workflows"):
+         for path in (root / folder).rglob("*"):
+             if path.is_file() and "__pycache__" not in path.parts:
+                 names.add(path.relative_to(root).as_posix())
+@@ -76,7 +76,8 @@
+     if name.startswith("runs/"):
+         return False
+     prefixes = ("BanditRLProof/", "Tests/", "tools/", "website/scripts/",
+-                "website/content/", "website/static/", "research-wiki/contribution-contracts/")
++                "website/content/", "website/static/", "research-wiki/contribution-contracts/",
++                ".github/workflows/")
+     exact = {"README.md", "AGENTS.md", "CONTRIBUTING.md", "docs/contribution-contract.schema.json", "docs/contributor-codex-contract.md", "docs/theorem-publication-protocol.md", "docs/contracts/online-book-v1/coverage.json", "BanditRLProof.lean", "Tests.lean", "lean-toolchain", "lakefile.lean",
+              "lake-manifest.json", ".gitattributes", "docs/proof-digestion-protocol.md", "docs/evidence-routed-memory-protocol.md", "docs/openai-math-assimilation-protocol.md", "research-wiki/openai-math-2026-intake.json"}
+     return (name in exact or name.startswith(prefixes) or

@@ -1,0 +1,31 @@
+# The production checker image executes these files on Linux.  Force stable
+# bytes across Windows and Linux checkouts so image/SBOM hashes are portable.
+.gitattributes text eol=lf
+tools/*.py text eol=lf
+evaluation/target-drift-v2/checker-image.Containerfile text eol=lf
+evaluation/target-drift-v2/agent-image.Containerfile text eol=lf
+evaluation/target-drift-v2/agent-codex-native.apparmor text eol=lf
+evaluation/target-drift-v2/*.json text eol=lf
+evaluation/target-drift-v2/agent-production-action-fixture/** text eol=lf
+evaluation/target-drift-v1/challenges.json text eol=lf
+evaluation/target-drift-v1/protocol.json text eol=lf
+evaluation/source-contract-audit-v1/*.json text eol=lf
+evaluation/source-contract-audit-v1/**/*.json text eol=lf
+research-wiki/papers/sgb-theorem2-interface-frontier-trace.json text eol=lf
+research-wiki/papers/sgb-theorem2-interface-frontier-trace.csv text eol=lf
+.github/workflows/target-drift-agent-image.yml text eol=lf
+.github/workflows/leanflow-source-preflight.yml text eol=lf
+
+# Append-only normalization evidence is bound by its exact committed bytes.
+runs/extended-topics-20260921/topic-receipt-hash-normalization.json text eol=lf
+BanditRLProof/OnlineWeightedPotential.lean text eol=lf
+Tests/OnlineWeightedPotentialCanary.lean text eol=lf
+docs/contracts/online-ch2-weighted-identity-v1/canary-neutral-imported-definitions-v1.txt whitespace=-blank-at-eol,-blank-at-eof
+BanditRLProof/OnlineUnboundedOGD.lean text eol=lf
+Tests/OnlineUnboundedOGDCanary.lean text eol=lf
+
+# Prescient Euclidean frozen producer and complete canary sources
+BanditRLProof/OnlinePrescientEuclidean.lean text eol=lf
+Tests/OnlinePrescientEuclideanCanary.lean text eol=lf
+# Keep the shared source manifest portable across Windows/Linux.
+MANIFEST.md text eol=lf

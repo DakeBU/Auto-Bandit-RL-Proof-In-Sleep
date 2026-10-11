@@ -1,0 +1,21 @@
+--- capture-support-reader-v4.cjs
++++ capture-support-reader-v5.cjs
+@@ -119,7 +119,7 @@
+     const parsed = new URL(target);
+     if(parsed.origin !== u.origin) throw Error('Nonlocal raw HTTP');
+     let rel = decodeURIComponent(parsed.pathname).replace(/^\/+/, '');
+-    if(rel.endsWith('/')) rel += 'index.html';
++    if(!rel||rel.endsWith('/')) rel += 'index.html';
+     const file = fs.realpathSync(path.join(expectedSite,rel));
+     if(!inside(file,expectedSite)) throw Error('HTTP target escapes site');
+     const local = fs.readFileSync(file);
+@@ -567,6 +567,9 @@
+     for(const chapter of mainRender.chapters){
+       const chapterURL=new URL('/chapters/'+chapter.slug+'/',url).href;
+       await exactHTTP(chapterURL);await page.goto(chapterURL,{waitUntil:'networkidle',timeout:60000});
++      const orientation=await exactOne('#orientation',chapter.slug+' orientation');const orientValue=await data(orientation);requireWords(orientValue.text,[chapter.chapter.audience,...chapter.chapter.learning_goals],chapter.slug+' orientation');report.panels.push({kind:'corrected-main-orientation',chapter:chapter.slug,...orientValue,screenshot:await strictPanelShots(orientation,'main-'+chapter.slug+'-orientation')});
++      if(chapter.chapter.completion_definition){const completion=await exactOne('#completion-contract',chapter.slug+' completion');const disclosure=completion.locator('details.maintainer-contract');if(await disclosure.count()!==1)throw Error('Unique maintainer disclosure '+chapter.slug);const initialOpen=await disclosure.evaluate(e=>e.open);if(initialOpen)throw Error('Completion initially unfolded '+chapter.slug);await disclosure.locator(':scope > summary').click();const cv=await data(completion);requireWords(cv.text,[chapter.chapter.completion_definition,...chapter.chapter.completion_blockers],chapter.slug+' exact completion');report.panels.push({kind:'corrected-main-completion',chapter:chapter.slug,initialOpen,...cv,screenshot:await strictPanelShots(completion,'main-'+chapter.slug+'-completion')});}
++      const visibleNames=await page.locator('#teaching-notes > article.theorem-panel .declaration-name code').allTextContents();const expectedVisible=chapter.reading.teaching_route.filter(n=>highlights.find(x=>x.full_name===n)?.source_match!=='extension');if(JSON.stringify(visibleNames.map(norm))!==JSON.stringify(expectedVisible))throw Error('Exact current visible teaching-route order '+chapter.slug);
+       const reading=chapter.reading,cards=[...(reading.source_theorem?[reading.source_theorem]:[]),...(reading.source_theorems||[])];
+       if(await page.locator('article.source-theorem-card').count()!==cards.length)throw Error('Exact current source card count '+chapter.slug);
+       for(let i=0;i<cards.length;i++){

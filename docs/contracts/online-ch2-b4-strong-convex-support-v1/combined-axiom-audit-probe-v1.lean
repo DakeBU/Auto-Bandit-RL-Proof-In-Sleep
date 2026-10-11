@@ -1,0 +1,18 @@
+import BanditRLProof.OnlineGradientDescent
+import Tests.OnlineCumulativePotentialCanary
+import Tests.OnlineStrongConvexMinimumCanary
+import Tests.OnlineStrongConvexSupportCanary
+
+#check BanditRL.OnlineGradientDescent.project_existsUnique
+#print axioms BanditRL.OnlineGradientDescent.project_existsUnique
+#print axioms BanditRL.OnlineCumulativePotential.finite_regret_identity
+#print axioms BanditRL.OnlineCumulativePotentialCanary.finite_identity_one_round_positive_gap
+#print axioms BanditRL.OnlineCumulativePotentialCanary.finite_identity_two_round_terminal_splice
+
+#print axioms BanditRL.OnlineConvex.stronglyConvex_minimum_growth
+#print axioms BanditRL.Tests.OnlineStrongConvexMinimumCanary.square_two_exact_growth
+#print axioms BanditRL.Tests.OnlineStrongConvexMinimumCanary.interval_zero_extended_domain
+
+#print axioms BanditRL.OnlineConvex.stronglyConvex_support_growth
+#print axioms BanditRL.Tests.OnlineStrongConvexSupportCanary.nonzero_point_nonzero_support_sharp
+#print axioms BanditRL.Tests.OnlineStrongConvexSupportCanary.boundary_nonzero_support_extended_domain

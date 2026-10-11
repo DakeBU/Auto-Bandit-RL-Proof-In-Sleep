@@ -1,0 +1,53 @@
+{
+  "status": "statement-only proposal; no canary proof BODY or Lean invocation",
+  "actor": "/root/adaptive_reviewer",
+  "requested_model": "GPT-6 Astra",
+  "requested_effort": "medium",
+  "runtime_attested": false,
+  "role_exposure": "Previously authored minimum-growth canaries and reviewed other B4 work; not fresh source-naive. For this leaf read only neutral public header/imported definitions and attempted existing Mathlib API lookup. No future production BODY, author proposal, source book or source-review report read.",
+  "input_hashes": {
+    "tmp\\online-b4-support-neutral-20261011\\header-v1.txt": "23e26732b827730a343a1dd758a19a39d4f8d4af06941330f9636272d3114d57",
+    "tmp\\online-b4-support-neutral-20261011\\imported-definitions-v1.txt": "d387956be74876b77456c22f6fe444810681515bd0e6ec3111a83716271cae45"
+  },
+  "context_sha256": "d031caf9686c0600247011b6d0d97d963a28f92eaec9586d355ad4bcc8d85a50",
+  "statements_sha256": "b8044725688877e966c78aac7cd149d7ba231b3d06595aad0cfda86b17c0abaf",
+  "future_import": "BanditRLProof.OnlineStrongConvexSupport",
+  "production_module_exists": false,
+  "canary_theorem_count": 2,
+  "public_premises": 0,
+  "definitions": "four local test definitions: square real coercion;4*identity CLM;-identity CLM; square on[0,1]/top outside. Only necessary definition bodies, no theorem proofs.",
+  "cases": [
+    {
+      "name": "nonzero_point_nonzero_support_sharp",
+      "objects": "real line,f=x\u00b2,V=univ,p2,lambda2,g(h)=4h",
+      "quantifiers": "First two conjuncts all realq; support all realz, no public assumptions.",
+      "future_internal_obligations": "SourceProper, convexuniv, finite-domain inclusion, nonnegative2, strong segment inequality by exact square identity, p2 feasible and support4+4(z-2)<=z\u00b2 by(z-2)\u00b2>=0.",
+      "guarantee": "First conjunct must be direct public new-core instantiation forallq, not arithmetic-only or unused let. Second exact equality4+4(q-2)+(q-2)\u00b2=q\u00b2. g1=4 and p2 is not a global minimizer preclude reducing to old minimum-growth atp2.",
+      "coefficient": "lambda/2=1, norm squared; genuine nonzero point/support.",
+      "information": "Deterministic no algorithm/probability.",
+      "boundary": "No minimizer existence claim; actual supported point is non-minimal."
+    },
+    {
+      "name": "boundary_nonzero_support_extended_domain",
+      "objects": "real line,V=[0,1],f=x\u00b2 onV/topoutside,p0,lambda2,g(h)=-h",
+      "quantifiers": "Growth/support only for feasibleq/z; no public assumptions.",
+      "future_internal_obligations": "Properness from0, exactdomain[0,1], intervalconvexity, positive2, finite feasible square strong inequality,0 feasible, support-z<=z\u00b2 usingz>=0.",
+      "guarantee": "First conjunct must directly instantiate newcore for allq\u2208V. Additional conjuncts certify g1=-1, actual restricted support, f2=top, exactdomain, lhs(q1)=0,rhs(q1)=1 and strict gap.",
+      "coefficient": "lambda/2=1; nonzero negative boundary support retained, not replaced with zero.",
+      "information": "No algorithm or optimizer selection.",
+      "boundary": "Never evaluate toReal at outside2 as finite guarantee; outside top is explicitly separate. Support is required only onV; no global finite extension or strengthened source premise."
+    }
+  ],
+  "audit": {
+    "no_proof_BODIES": true,
+    "no_Lean_calls": true,
+    "no_compilation_claim": true,
+    "no_axiom_stub": true,
+    "no_tracked_changes": true,
+    "first_conjunct_actual_core_required": true,
+    "later_VALUE_and_constructor_audit_required": true
+  },
+  "next": "Parent contract freeze plus explicit BODY/compile authorization needed before proof work; production API is currently absent.",
+  "remaining": "7+6/B1-B7/fullparent obligations OPEN; no source/package/chapter/Goal acceptance.",
+  "HEAD": "48ca57cd497a3dcebbeedeb2d54ef3bcefdcd937"
+}

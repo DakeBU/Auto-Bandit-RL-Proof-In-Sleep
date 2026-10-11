@@ -1,0 +1,77 @@
+{
+  "status": "compiled-public-canary-candidate; independent BODY review pending",
+  "actor": "/root/adaptive_reviewer",
+  "role": "Public canary author distinct from core formalizer/source reviewer; no core BODY exposure",
+  "requested_model": "GPT-6 Astra",
+  "requested_effort": "medium",
+  "runtime_attested": false,
+  "candidate_path": "tmp\\online-b4-support-canary-body-20261011\\Canary.lean",
+  "candidate_sha256": "62163851ea2edb131a6f365d624de4523aa19d16e62ad16a598db66386afa01c",
+  "candidate_v2_exact": true,
+  "frozen_context_sha256": "d031caf9686c0600247011b6d0d97d963a28f92eaec9586d355ad4bcc8d85a50",
+  "frozen_statements_sha256": "b8044725688877e966c78aac7cd149d7ba231b3d06595aad0cfda86b17c0abaf",
+  "headers_context_exact": true,
+  "authorization_sha256": "8a8dace0936bc4d4b0da52679f95a95ef0289b50347a6aa53fbb78b24aeb336e",
+  "production_source_sha256": "f3a475b58661a4efefdb33b9715852a08008940bd437e1cb3ad64862b772d1e5",
+  "production_olean_sha256": "486ade5ef15677d8ded3df87edd80aced165f65358402c0a3acff3ee917bd0ad",
+  "public_canary_olean_sha256": "e4cf3a86ddece659483d27f5f7a41fb7635023f5625a25ed65153a9099eae5aa",
+  "TYPE_VALUE_firstconjunction_sha256": "640bbbd0830411271b0c5eea9528b055df8d0517f0ea2132037857b8eac326aa",
+  "public_probe_source_sha256": "97560af0d9563595f58815a82b8d84e9f0fd62db8c4e0c51e5e82d202b541fee",
+  "axioms": {
+    "BanditRL.Tests.OnlineStrongConvexSupportCanary.nonzero_point_nonzero_support_sharp": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "BanditRL.Tests.OnlineStrongConvexSupportCanary.boundary_nonzero_support_extended_domain": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ]
+  },
+  "consumer_check": "Both full VALUEs and actual first And.intro argument after only let/mdata reduction contain stronglyConvex_support_growth. This is syntactic occurrence in the selected proof branch, not necessity/full transitive graph.",
+  "mathematics": [
+    "Square atp2,g4h,lambda2 yields sharp growth allq, nonzero support and p2 notglobalminimum.",
+    "Square on[0,1]/topoutside,p0,g=-h,lambda2; internally proved restricted support/strongconvex/proper/domain; firstconj allfeasibleq uses newcore. Separate q1LHS0/RHS1/strictgap, nonzero g1 and top2/exactdomain retained."
+  ],
+  "receipts": {
+    "focused-v1": {
+      "actual_exit": 1,
+      "sha256": "d3d9ca53d109d3e5e5a2c6905364c8dc62a9e1b580a6d4be0d3ae4553f9eb53a",
+      "inputs_unchanged": true
+    },
+    "focused-v2": {
+      "actual_exit": 0,
+      "sha256": "3f01747c496302c714d3c4237b6ca37020cb4013bcde556fa9c650bdd7eebdba",
+      "inputs_unchanged": true
+    },
+    "search-path-v1": {
+      "actual_exit": 0,
+      "sha256": "43daff5da39b416e453ae1cbe890e31e45d89201be58645bce8e5f58b3f64025",
+      "inputs_unchanged": true
+    },
+    "public-olean-v1": {
+      "actual_exit": 0,
+      "sha256": "b19a622cc146d2536c69811fce90130ca92ffa60104bb9109ebdf84e6a21a50a",
+      "inputs_unchanged": true
+    },
+    "public-probe-v1": {
+      "actual_exit": 0,
+      "sha256": "786242f1ed88cb3133685cd970cc93402c886afeec46daba2bc34722e9ffb4f3",
+      "inputs_unchanged": true
+    }
+  },
+  "failures": [
+    {
+      "attempt": "focused-v1",
+      "class": "IMPLEMENTATION_FAILED",
+      "reason": "simp unfolded EReal real-square coercions and smul combination membership before applying supplied interval witness; fixed by direct finite-coercion facts and explicit smul-normalized membership. No frozen statements or math hypotheses changed."
+    }
+  ],
+  "canonical_Test_installed": false,
+  "root_changes": false,
+  "clean_gate_claim": false,
+  "current_HEAD": "eea3d188c498b8b336fb8669bd9f23fb50a7436a",
+  "current_status": "?? BanditRLProof/OnlineStrongConvexSupport.lean\n",
+  "remaining": "Independent BODY/evidence review then authorized installation and combined/publication gates.7+6/B1-B7/fullB4 parents remain OPEN; no package/chapter/Goal closure."
+}

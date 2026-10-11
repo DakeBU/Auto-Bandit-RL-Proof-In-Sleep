@@ -1,0 +1,14 @@
+import BanditRLProof.OnlineStrongConvexSupport
+
+noncomputable section
+open Set
+namespace BanditRL.Tests.OnlineStrongConvexSupportCanary
+open BanditRL.OnlineConvex
+
+abbrev squareLoss (x : ℝ) : EReal := ((x ^ 2 : ℝ) : EReal)
+abbrev fourSupport : ℝ →L[ℝ] ℝ := (4 : ℝ) • ContinuousLinearMap.id ℝ ℝ
+abbrev negativeSupport : ℝ →L[ℝ] ℝ := (-1 : ℝ) • ContinuousLinearMap.id ℝ ℝ
+noncomputable def restrictedSquare (x : ℝ) : EReal := by
+  classical
+  exact if x ∈ Set.Icc (0 : ℝ) 1 then ((x ^ 2 : ℝ) : EReal) else ⊤
+

@@ -1,0 +1,57 @@
+--- capture-support-reader-v8.cjs
++++ capture-support-reader-v9.cjs
+@@ -499,6 +499,21 @@
+       if(required)await panel.locator('mjx-container').first().waitFor({state:'visible',timeout:60000});
+       const value=await data(panel);if(value.mathErrors||(required&&!value.mathContainers))throw Error('MathJax render '+label);return value;
+     }
++    async function exactStyledLabel(panel,selector,expected,cssClass,transform,label){
++      if(!['uppercase','none'].includes(transform))throw Error('Unreviewed label transformation '+label);
++      const element=panel.locator(selector);
++      if(await element.count()!==1)throw Error('Unique exact styled label '+label);
++      const states=[];
++      for(const width of [1440,390]){
++        await page.setViewportSize({width,height:1800});await closeReaderSidebar(label+' '+width);await element.scrollIntoViewIfNeeded();
++        if(!(await element.isVisible()))throw Error('Styled label not visible '+label+' '+width);
++        const state=await element.evaluate(e=>({raw:e.textContent,visible:e.innerText,textTransform:getComputedStyle(e).textTransform,classes:[...e.classList],width:e.getBoundingClientRect().width,height:e.getBoundingClientRect().height}));
++        const rendered=transform==='uppercase'?norm(expected).toUpperCase():norm(expected);
++        if(norm(state.raw)!==norm(expected)||norm(state.visible)!==rendered||state.textTransform!==transform||!state.classes.includes(cssClass)||state.width<=0||state.height<=0)throw Error('Exact styled raw/rendered label '+label+' '+width);
++        states.push({width,...state});
++      }
++      report.styledLabelChecks ||= [];report.styledLabelChecks.push({label,selector,expected,cssClass,transform,states});
++    }
+     async function closeReaderSidebar(label){
+       const before=await page.evaluate(()=>document.body.classList.contains('sidebar-open'));
+       if(before)await page.keyboard.press('Escape');
+@@ -682,8 +697,8 @@
+       }
+       for(const [field,selector,words] of [
+         ['notation','#notation',reading.notation.flatMap(x=>[x.term,x.meaning])],
+-        ['algorithm','#algorithm',[reading.algorithm.title,reading.algorithm.kind,...reading.algorithm.steps.flatMap(x=>[x.title,x.detail])]]
+-      ]){const panel=await exactOne(selector,chapter.slug+' '+field);await openRecordedAncestors(panel,field);const value=await data(panel);requireWords(value.text,words,chapter.slug+' '+field);report.panels.push({kind:'corrected-main-'+field,chapter:chapter.slug,...value,screenshot:await strictPanelShots(panel,'main-'+chapter.slug+'-'+field)});}
++        ['algorithm','#algorithm',[reading.algorithm.title,...reading.algorithm.steps.flatMap(x=>[x.title,x.detail])]]
++      ]){const panel=await exactOne(selector,chapter.slug+' '+field);await openRecordedAncestors(panel,field);if(field==='algorithm')await exactStyledLabel(panel,':scope > div > span.panel-kicker',reading.algorithm.kind+' · ordered flow','panel-kicker','uppercase',chapter.slug+' algorithm.kind');const value=await data(panel);requireWords(value.text,words,chapter.slug+' '+field);report.panels.push({kind:'corrected-main-'+field,chapter:chapter.slug,...value,screenshot:await strictPanelShots(panel,'main-'+chapter.slug+'-'+field)});}
+       for(const [field,selector] of [['proof_bridge','#proof-bridge'],['worked_example','#worked-example']]){
+         const expected=reading[field];if(!expected)continue;const panel=await exactOne(selector,chapter.slug+' '+field);await openRecordedAncestors(panel,field);
+         const value=await readyMath(panel,chapter.slug+' '+field,expected.steps.some(x=>Boolean(x.math)));
+@@ -698,18 +713,18 @@
+     // Previously inspected local generated selector families; exact current mission strings.
+     const missionCases=[
+       {path:'/',selector:'#overview',name:'home-overview',words:['BanditRLlib','Understand why a learning guarantee holds—and where it breaks.','Read the proof ideas, follow their Lean evidence, and explore how they connect across bandits, reinforcement learning and online learning.']},
+-      {path:'/',selector:'#math-2-0',name:'home-math-mission',words:['Our original aims meet Terence Tao’s Math 2.0','A living network → understandable mathematics → new ideas.','Source-linked research maps and a reusable Lean library are the foundations. Clear explanations and interactive teaching are the human value. Proof-method transfer, ablation and verified theorem neighborhoods are the research agenda.']},
++      {path:'/',selector:'#math-2-0',name:'home-math-mission',styled:{selector:':scope > p.eyebrow',expected:'Our original aims meet Terence Tao’s Math 2.0',cssClass:'eyebrow',transform:'uppercase'},words:['A living network → understandable mathematics → new ideas.','Source-linked research maps and a reusable Lean library are the foundations. Clear explanations and interactive teaching are the human value. Proof-method transfer, ablation and verified theorem neighborhoods are the research agenda.']},
+       {path:'/math-2-0/',selector:'#mission',name:'math2-mission',words:[mainRender.math2.title,mainRender.math2.mission,'Our original goals of connected knowledge, checked proofs and clearer teaching predate and resonate with this report.','These are examples in Tao’s talk, not an official nine-goal program or an endorsement.']}
+     ];
+     for(const item of missionCases){
+       const target=new URL(item.path,url).href;await exactHTTP(target);await page.goto(target,{waitUntil:'networkidle',timeout:60000});
+-      const panel=await exactOne(item.selector,item.name);const value=await data(panel);requireWords(value.text,item.words,item.name);
++      const panel=await exactOne(item.selector,item.name);if(item.styled)await exactStyledLabel(panel,item.styled.selector,item.styled.expected,item.styled.cssClass,item.styled.transform,item.name+' eyebrow');const value=await data(panel);requireWords(value.text,item.words,item.name);
+       if(item.path==='/math-2-0/'&&!value.links.some(x=>x.href===mainRender.math2.source.url))throw Error('Tao source link');
+       report.correctedMain.missionPanels.push({name:item.name,...value,screenshots:await strictPanelShots(panel,item.name)});write(item.name+'-dom.html',await page.content());
+     }
+     await page.goto(new URL('/math-2-0/',url).href,{waitUntil:'networkidle',timeout:60000});
+     if(await page.locator('article.math-direction').count()!==9)throw Error('Exactly nine current Math2 examples');
+-    for(const direction of mainRender.math2.directions){const panel=await exactOne('#direction-'+direction.number,'Math2 example');const value=await data(panel);requireWords(value.text,[direction.title,direction.role,direction.foundation,direction.next],'Math2 example '+direction.number);for(const evidence of direction.evidence){const expected=evidence.source?`https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/${expectedHead}/${evidence.source}`:new URL('/'+evidence.path,url).href;if(!value.links.some(x=>x.href===expected&&norm(x.text)===norm(evidence.title)))throw Error('Math2 exact evidence link '+direction.number+' '+evidence.title);}report.correctedMain.missionPanels.push({name:'math2-example-'+direction.number,...value,screenshots:await strictPanelShots(panel,'math2-example-'+direction.number)});}
++    for(const direction of mainRender.math2.directions){const panel=await exactOne('#direction-'+direction.number,'Math2 example');await exactStyledLabel(panel,':scope > p.math-direction-role',direction.role,'math-direction-role','none','Math2 role '+direction.number);const value=await data(panel);requireWords(value.text,[direction.title,direction.role,direction.foundation,direction.next],'Math2 example '+direction.number);for(const evidence of direction.evidence){const expected=evidence.source?`https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/${expectedHead}/${evidence.source}`:new URL('/'+evidence.path,url).href;if(!value.links.some(x=>x.href===expected&&norm(x.text)===norm(evidence.title)))throw Error('Math2 exact evidence link '+direction.number+' '+evidence.title);}report.correctedMain.missionPanels.push({name:'math2-example-'+direction.number,...value,screenshots:await strictPanelShots(panel,'math2-example-'+direction.number)});}
+     write('math2-directions-dom.html',await page.content());
+     for(const [p,sha] of Object.entries(mainRender.source_RAW))if(hash(fs.readFileSync(path.join(root,p)))!==sha)throw Error('Corrected-main source changed during capture '+p);
+     if(hash(fs.readFileSync(path.join(root,inputSpec.corrected_main_render_inputs.path)))!==hash(mainRenderBytes))throw Error('Corrected-main payload changed');

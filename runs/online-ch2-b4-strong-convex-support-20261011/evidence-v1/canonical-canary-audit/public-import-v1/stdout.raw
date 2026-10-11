@@ -1,0 +1,46 @@
+BanditRL.Tests.OnlineStrongConvexSupportCanary.nonzero_point_nonzero_support_sharp :
+  (∀ (q : ℝ),
+      (BanditRL.Tests.OnlineStrongConvexSupportCanary.squareLoss 2).toReal +
+            BanditRL.Tests.OnlineStrongConvexSupportCanary.fourSupport (q - 2) +
+          2 / 2 * ‖q - 2‖ ^ 2 ≤
+        (BanditRL.Tests.OnlineStrongConvexSupportCanary.squareLoss q).toReal) ∧
+    (∀ (q : ℝ),
+        (BanditRL.Tests.OnlineStrongConvexSupportCanary.squareLoss 2).toReal +
+              BanditRL.Tests.OnlineStrongConvexSupportCanary.fourSupport (q - 2) +
+            2 / 2 * ‖q - 2‖ ^ 2 =
+          (BanditRL.Tests.OnlineStrongConvexSupportCanary.squareLoss q).toReal) ∧
+      BanditRL.Tests.OnlineStrongConvexSupportCanary.fourSupport 1 = 4 ∧
+        (∀ (z : ℝ),
+            BanditRL.Tests.OnlineStrongConvexSupportCanary.squareLoss 2 +
+                ↑(BanditRL.Tests.OnlineStrongConvexSupportCanary.fourSupport (z - 2)) ≤
+              BanditRL.Tests.OnlineStrongConvexSupportCanary.squareLoss z) ∧
+          ¬IsMinOn BanditRL.Tests.OnlineStrongConvexSupportCanary.squareLoss Set.univ 2
+'BanditRL.Tests.OnlineStrongConvexSupportCanary.nonzero_point_nonzero_support_sharp' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BanditRL.Tests.OnlineStrongConvexSupportCanary.boundary_nonzero_support_extended_domain :
+  (∀ q ∈ Set.Icc 0 1,
+      (BanditRL.Tests.OnlineStrongConvexSupportCanary.restrictedSquare 0).toReal +
+            BanditRL.Tests.OnlineStrongConvexSupportCanary.negativeSupport (q - 0) +
+          2 / 2 * ‖q - 0‖ ^ 2 ≤
+        (BanditRL.Tests.OnlineStrongConvexSupportCanary.restrictedSquare q).toReal) ∧
+    BanditRL.Tests.OnlineStrongConvexSupportCanary.negativeSupport 1 = -1 ∧
+      (∀ z ∈ Set.Icc 0 1,
+          BanditRL.Tests.OnlineStrongConvexSupportCanary.restrictedSquare 0 +
+              ↑(BanditRL.Tests.OnlineStrongConvexSupportCanary.negativeSupport (z - 0)) ≤
+            BanditRL.Tests.OnlineStrongConvexSupportCanary.restrictedSquare z) ∧
+        BanditRL.Tests.OnlineStrongConvexSupportCanary.restrictedSquare 2 = ⊤ ∧
+          BanditRL.OnlineConvex.effectiveDomain BanditRL.Tests.OnlineStrongConvexSupportCanary.restrictedSquare =
+              Set.Icc 0 1 ∧
+            (BanditRL.Tests.OnlineStrongConvexSupportCanary.restrictedSquare 0).toReal +
+                    BanditRL.Tests.OnlineStrongConvexSupportCanary.negativeSupport (1 - 0) +
+                  2 / 2 * ‖1 - 0‖ ^ 2 =
+                0 ∧
+              (BanditRL.Tests.OnlineStrongConvexSupportCanary.restrictedSquare 1).toReal = 1 ∧
+                (BanditRL.Tests.OnlineStrongConvexSupportCanary.restrictedSquare 0).toReal +
+                      BanditRL.Tests.OnlineStrongConvexSupportCanary.negativeSupport (1 - 0) +
+                    2 / 2 * ‖1 - 0‖ ^ 2 <
+                  (BanditRL.Tests.OnlineStrongConvexSupportCanary.restrictedSquare 1).toReal
+'BanditRL.Tests.OnlineStrongConvexSupportCanary.boundary_nonzero_support_extended_domain' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

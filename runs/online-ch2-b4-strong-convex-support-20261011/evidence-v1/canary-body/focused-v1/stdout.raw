@@ -1,0 +1,58 @@
+tmp\online-b4-support-canary-body-20261011\candidate-v1.lean:79:73: error: unsolved goals
+case pos
+h0 : 0 ∈ Icc 0 1
+h1 : 1 ∈ Icc 0 1
+x : ℝ
+hx : x ∈ Icc 0 1
+⊢ ↑x ^ 2 < ⊤
+tmp\online-b4-support-canary-body-20261011\candidate-v1.lean:86:4: error: unsolved goals
+case pos
+h0 : 0 ∈ Icc 0 1
+h1 : 1 ∈ Icc 0 1
+hdomain : effectiveDomain restrictedSquare = Icc 0 1
+x : ℝ
+h✝ : x ∈ Icc 0 1
+⊢ ¬↑x ^ 2 = ⊥
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+tmp\online-b4-support-canary-body-20261011\candidate-v1.lean:97:69: error: unsolved goals
+case hab
+h0 : 0 ∈ Icc 0 1
+h1 : 1 ∈ Icc 0 1
+hdomain : effectiveDomain restrictedSquare = Icc 0 1
+hp : SourceProper restrictedSquare
+hV : Convex ℝ (Icc 0 1)
+hd : Icc 0 1 ⊆ effectiveDomain restrictedSquare
+x : ℝ
+hx : x ∈ Icc 0 1
+y : ℝ
+hy : y ∈ Icc 0 1
+a : ℝ
+ha : 0 < a
+ha1 : a < 1
+hm : a • x + (1 - a) • y ∈ Icc 0 1
+⊢ (if a * x - a * y + y ∈ Icc 0 1 then
+      ↑(a * x * y * 2 - a * y ^ 2 * 2 - a ^ 2 * x * y * 2 + a ^ 2 * x ^ 2 + a ^ 2 * y ^ 2 + y ^ 2)
+    else ⊤) =
+    ↑(a * x * y * 2 - a * y ^ 2 * 2 - a ^ 2 * x * y * 2 + a ^ 2 * x ^ 2 + a ^ 2 * y ^ 2 + y ^ 2)
+tmp\online-b4-support-canary-body-20261011\candidate-v1.lean:101:55: warning: This simp argument is unused:
+  if_pos hm
+
+Hint: Omit it from the simp argument list.
+  simp only [restrictedSquare, if_pos hx, if_pos hy, i̵f̵_̵p̵o̵s̵ ̵h̵m̵,̵smul_eq_mul, ← EReal.coe_mul,
+  ̲  ̲ ̲ ̲ ̲ ̲← EReal.coe_add, ← EReal.coe_sub, EReal.coe_le_coe_iff]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+tmp\online-b4-support-canary-body-20261011\candidate-v1.lean:103:6: warning: This simp argument is unused:
+  EReal.coe_le_coe_iff
+
+Hint: Omit it from the simp argument list.
+  simp only [restrictedSquare, if_pos hx, if_pos hy, if_pos hm, smul_eq_mul, ← EReal.coe_mul,
+  ̲  ̲ ̲ ̲ ̲ ̲← EReal.coe_add, ← E̵R̵e̵a̵l̵.̵c̵o̵e̵_̵s̵u̵b̵,̵
+  ̵ ̵ ̵ ̵ ̵ ̵ ̵E̵R̵e̵a̵l̵.̵c̵o̵e̵_̵l̵e̵_̵c̵o̵e̵_̵i̵f̵f̵]̵E̲R̲e̲a̲l̲.̲c̲o̲e̲_̲s̲u̲b̲]̲
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`

@@ -4,7 +4,10 @@ printed pp.9-10 / PDF pp.21-22, unnumbered finite-loss constraint sentence.
 The source necessity is refined to an exact finite-real-witness iff; membership
 alone is insufficient when the original loss is infinite. Arbitrary carriers
 generalize the source Euclidean setting for this pointwise algebra.
-Both results use ordinary EReal addition. The finite criterion permits bottom;
+Orabona's passage specifies neither mixed-infinity addition nor a total ambient
+extension of the original V-to-real game losses. These results use arbitrary
+ambient EReal functions and ordinary bottom-dominant EReal addition as an explicit
+library interpretation/refinement. The finite criterion permits bottom;
 the separate below-top effective-domain identity retains global noBottom.
 No convexity, topology, or nonempty-set hypothesis is needed here.
 -/
