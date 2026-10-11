@@ -22,7 +22,8 @@
     "website/content/books.json",
     "website/content/chapters.json",
     "website/content/readings.json",
-    "website/content/highlights.json"
+    "website/content/highlights.json",
+    "website/scripts/build_site.py"
   ],
   "declarations": [
     "BanditRL.OnlineConvex.SourceSubgradientSum",
@@ -158,7 +159,7 @@
       "online-normal-cone",
       "online-subgradient-max"
     ],
-    "visual_review": "Eight desktop/mobile reader viewports passed MathJax, navigation, folded Lean and overflow checks; all eight PNGs actually inspected.",
+    "visual_review": "Eight desktop/mobile reader viewports passed MathJax, navigation, folded Lean and overflow checks; all eight PNGs actually inspected. Ten additional source-guide desktop/mobile screenshots inspected after shared template correction.",
     "edge_semantics": "formal-solid; overlays-dashed"
   },
   "progress_updates": {
@@ -169,7 +170,8 @@
     "website_surfaces": [
       "Online Book/chapter metadata",
       "Four source-attributed mathematical readers",
-      "Shared canonical module/declaration registry"
+      "Shared canonical module/declaration registry",
+      "Shared source-guide attribution and worked-example label template"
     ],
     "integration_evidence": "updated: research-wiki/integrations/ONLINE-CH2-NONSMOOTH-CALCULUS-INTEGRATION-20261012/README.md records this local candidate and its acceptance boundaries."
   },
@@ -180,10 +182,11 @@
       "33theorems and12literal definitions independently blind-decoded; four owned definitions plus eight shared context definitions",
       "37production transitive axiom checks use onlypropext/Classical.choice/Quot.sound; unchanged mathematical bytes bridge leading-comment clarification",
       "90selected compiled declarations,8851direct type/value edges,1202metadata-only boundary nodes; all90source ranges verified",
-      "Eight desktop/mobile local render cases passed"
+      "Eight desktop/mobile local render cases passed",
+      "All27generated source-guide titles match canonical primary sources;10additionaldesktop/mobile source-guide cases passed and all10images inspected"
     ],
-    "bandit_check": "Combined9066library/9196Tests, exporter, strict placeholder scan and458harness tests passed with7platform skips",
-    "site_build": "Passed --lean-verified after combined gate; publication-only correction rebuilt and rechecked",
+    "bandit_check": "Combined9066library/9196Tests, exporter, strict placeholder scan and458harness tests passed with7platform skips; after two shared template string repairs, full458-test Python harness rerun passed with7skips, reusing unchanged combined Lean gate",
+    "site_build": "Passed --lean-verified after combined gate; publication-only correction rebuilt and rechecked; rebuilt again after shared template attribution repair",
     "site_check": "passed",
     "independent_review": "Source topology, expanded binders/bodies/canaries, corrected readers and original PR scope independently reviewed; see hash-bound receipts"
   },
@@ -353,5 +356,13 @@
     "canonicalization": "Existing shared names and source bodies preserved.",
     "compressed_spine_delta": "Four source-attributed formula-bearing reader bridges.",
     "reader_default_view": "Mathematical explanation and explicit remaining boundary, exact Lean folded; full Exposition Seal not claimed."
+  },
+  "shared_template_repair": {
+    "original_prs": [
+      144,
+      146
+    ],
+    "scope": "Two exact retained historical template fixes: display each reading primary.title with HTML escaping, and remove a fixed three-step claim while retaining worked-example presence condition.",
+    "boundary": "This does not integrate or supersede the mathematical scope of PR144/146 or their migration PRs. All37production and53canary declarations and prior15reviewed inputs remain unchanged."
   }
 }
