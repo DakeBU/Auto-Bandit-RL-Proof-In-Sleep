@@ -1,0 +1,196 @@
+{
+  "schema_version": "3.0",
+  "id": "ONLINE-CH2-PRESCIENT-EUCLIDEAN-20261011",
+  "route": "online-learning/chapter-2/prescient-euclidean",
+  "frontier_cell": "online-ogd",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv1912.13213v10 SHA256 cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchor": "Chapter2 PDF26/printed14 prescient lookahead; Algorithm15.8/Theorem15.30 PDF277-278/printed265-266, quadratic specialization of actual prescient Bregman run. Theorem15.31 and Eq7.47 terminal repairs are separate mandatory open targets.",
+    "url": "https://arxiv.org/pdf/1912.13213v10#page=277"
+  },
+  "target": "Prove actual gradient and ordered half-square divergence for quadratic geometry on real Hilbert spaces. In finite-dimensional real inner-product E, specialize the same Option-valued prescient Bregman selector to convex nonempty closed V, arbitrary EReal losses with ambient no-bottom, finite values and global supporting subgradients on V, and supplied attained feasible quadratic updates. Derive both actual-run equality through T AND new-state regret with full negative squared-movement term. Variable schedule: T>0, played steps positive/nonincreasing, previous-state max distance divided by final step; fixed schedule: eta>0, T may be zero, initial distance divided by eta. x0 need not belong to V. No global existence claim, Lipschitz bound, bounded V or affine restriction is added. Candidate bounded Euclidean prescient leaf only. Seven required Chapter 2 containers and all six future mathematical claims remain open. In particular the whole prescient container is NOT closed: mandatory repair:7.47-terminal and repair:15.31-terminal remain open. B1-B7 and every other difficult target are retained. Chapter 2 partial, accepted=false, complete proof denominator=null; Chapters1-16 Goal ACTIVE. No declaration-count closure, main update, merge, deployment, live verification, purification or native whole-loop acceptance is claimed. Latest main fea256b was merged INTO this isolated candidate branch, not the reverse.",
+  "affected_files": [
+    "BanditRLProof/OnlinePrescientEuclidean.lean",
+    "BanditRLProof.lean",
+    "website/content/chapters.json",
+    "website/content/readings.json",
+    "website/content/highlights.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineBregman.quadratic_geometry",
+    "BanditRL.OnlinePrescientBregman.euclidean_variable_regret",
+    "BanditRL.OnlinePrescientBregman.euclidean_fixed_regret"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Frozen reuse/source HEADER contract and actual Mathlib norm-square derivative, OnlineBregman divergence, SourceSubdifferential, selector uniqueness, source_variable_regret and source_fixed_regret."
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlinePrescientBregman.sourceProper_of_domain",
+      "BanditRL.OnlinePrescientBregman.iterate_eq_of_source_updates",
+      "BanditRL.OnlinePrescientBregman.source_variable_regret",
+      "BanditRL.OnlinePrescientBregman.source_fixed_regret",
+      "hasStrictFDerivAt_norm_sq",
+      "norm_sub_sq_real"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineBregman.quadratic_geometry",
+      "BanditRL.OnlinePrescientBregman.euclidean_variable_regret",
+      "BanditRL.OnlinePrescientBregman.euclidean_fixed_regret"
+    ],
+    "known_consumers": [
+      "BanditRL.OnlinePrescientBregman.euclidean_variable_regret consumes quadratic_geometry",
+      "BanditRL.OnlinePrescientBregman.euclidean_fixed_regret consumes quadratic_geometry",
+      "PrescientEuclideanProbe.variable_quadratic_actual_run consumes SAME production run and regret conjuncts",
+      "PrescientEuclideanProbe.fixed_quadratic_actual_run consumes SAME production run and regret conjuncts"
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "One reusable actual quadratic geometry primitive and two source-faithful specializations of existing selectors/endpoints. No new definition or named helper API; actual VALUE parents independently reviewed. No duplicated cumulative telescope."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root/adaptive_formalizer",
+    "blind_decoder": "fresh neutral header decoder; runs/online-ch2-prescient-euclidean-20261011/production-header-proposal/fresh-blind-v1.json",
+    "source_reviewer": "/root/adaptive_decoder",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Explicit quadratic specialization with ambient X=univ and source interior automatic; source Euclidean convention expressed by real finite-dimensional inner-product E. Quadratic geometry also holds in complete real Hilbert E. Supplied exact minimizers are a conditional actual-run specialization, not an existence theorem. Current round losses score x(t+1); variable distance max uses x0,...,x(T-1), final eta(T-1); fixed bound retains negative movement and T=0. Full atomic binder audit has SOURCE/STANDING/TYPING only, no EXCESS. Legacy HEADER freeze/neutralblind/sourceHEADER review preceded proof. Independent source topology was extracted while legacy BODY construction had started, but source-only actors remained implementation-unexposed until topologyV2 review sealed. New-main protocol was adopted incrementally later; no retroactive preproof topology gate is claimed. Native fence source_assumptions arrays are empty; independent full signatures, binder audits and TYPE/VALUE reviews supply premise audit."
+  },
+  "graph_contribution": {
+    "lean_graph": "integration-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Quadratic specialization is a reviewed conceptual transport of Bregman geometry, not a separately formalized categorical functor or new general settings transport.",
+    "focus_targets": [
+      "BanditRL.OnlineBregman.quadratic_geometry",
+      "BanditRL.OnlinePrescientBregman.euclidean_variable_regret",
+      "BanditRL.OnlinePrescientBregman.euclidean_fixed_regret"
+    ],
+    "visual_review": "One coherent source-card group and three declaration-bound lessons approved in the integration proposal. Actual rendered site/DOM/screenshot checks and final reader review must be recorded separately in this RUN; proposal approval alone is not a rendered pass.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: one coherent source-card group, three adjacent full_name-bound lessons and one online-ogd module glob. Preserve every old parsed Book object.",
+    "banditrlwiki": "no-change-with-reason: no Bandit setting result.",
+    "results_ledger": "updated: production3/canary2 focused compilation and independent BODY acceptance only; full gates and bounded FINAL acceptance recorded separately in RUN. No source container closed.",
+    "roadmap": "updated: Chapter2 partial/null; seven required containers, six future claims and B1-B7 including mandatory7.47/15.31 terminal repairs remain open; Goal ACTIVE.",
+    "website_surfaces": [
+      "website/content/chapters.json",
+      "website/content/readings.json",
+      "website/content/highlights.json"
+    ]
+  },
+  "truth_boundary": "Candidate bounded Euclidean prescient leaf only. Seven required Chapter 2 containers and all six future mathematical claims remain open. In particular the whole prescient container is NOT closed: mandatory repair:7.47-terminal and repair:15.31-terminal remain open. B1-B7 and every other difficult target are retained. Chapter 2 partial, accepted=false, complete proof denominator=null; Chapters1-16 Goal ACTIVE. No declaration-count closure, main update, merge, deployment, live verification, purification or native whole-loop acceptance is claimed. Latest main fea256b was merged INTO this isolated candidate branch, not the reverse.",
+  "verification": {
+    "focused_checks": [
+      "BanditRLProof/OnlinePrescientEuclidean.lean SHA256 9b755a12d540c1039b068e4b97af90ac483a58fd1a8b40af9c806264f95d42b8",
+      "Tests/OnlinePrescientEuclideanCanary.lean SHA256 dbc2a2f7660e70517a6f50826944976aa9cbbba17e37f88b8bac9fbef97e0122",
+      "runs/online-ch2-prescient-euclidean-20261011/fresh-production-body-review-v1.json SHA256 8b3cc4fea0b8a6988908cc7370ab67907815f1d04637f75f01241c19e052d8f4",
+      "runs/online-ch2-prescient-euclidean-20261011/fresh-canary-body-review-v1.json SHA256 e1feb92bf0e9606e579a6eec4f0247623757b8e062cf0c4e2bde85ac9045f257",
+      "runs/online-ch2-prescient-euclidean-20261011/formalizer-core-v1/type-value-constants-v1.json SHA256 32855356493f3e7048ba9eccce9d8186f2dbf48b601061f200ff5c2722929f4c",
+      "docs/contracts/online-ch2-prescient-euclidean-v1/proof-digestion-record-v1.json SHA256 d83960e20d3b4252981ff65b19813f4595efac6a3c5454ca8c7dcb337fa12193",
+      "Three public production theorems and two complete Test canaries; no definitions or helper API. Only propext/Classical.choice/Quot.sound in actual axiom exports; exact headers/fences and selected actual VALUE parents reviewed. These are implementation counts, never a source denominator. Tests/OnlinePrescientEuclideanCanary.lean, Tests.lean, MANIFEST.md, current leaf docs and RUN are support/verification paths outside the five protected production surfaces."
+    ],
+    "bandit_check": "Fresh combined root/Tests/full harness capture on committed current candidate is required; actual argv, HEAD, source RAW inventory, selected ZIP, streams, exit and independent FINAL acceptance are recorded separately in runs/online-ch2-prescient-euclidean-20261011. Focused compilation is not a combined gate.",
+    "site_build": "Fresh plain preflight and Lean-verified build after successful combined gate are required. Actual current-source binding and receipts recorded separately in runs/online-ch2-prescient-euclidean-20261011. Historical predecessor site evidence does not certify this leaf.",
+    "site_check": "Fresh official site, structural preservation/registry and isolated local-browser DOM/render checks are required and recorded separately in runs/online-ch2-prescient-euclidean-20261011. Local screenshots are not live publication or cross-device verification.",
+    "independent_review": "Accepted production and canary BODY reviews, source topologyV2, integration proposalV2 and current-protocol/common-blind-spot review are bound in RUN. Bounded FINAL and Exposition Seal require actual complete gate/render evidence; no prior package review substitutes for them."
+  },
+  "contributor": {
+    "name": "ABRL agent-assisted prescient Euclidean package",
+    "role": "Candidate bounded source-faithful specialization; authorship unchanged."
+  },
+  "learning_contract": {
+    "control_plane_math_authority": false,
+    "process_memory_checked": true,
+    "process_memory_ids": [
+      "ABRL-PM-MATCHED-HARNESS-EVIDENCE",
+      "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS",
+      "ABRL-NK-WINDOWS-PATH-LENGTH",
+      "ABRL-NK-EXP3-API-SHAPE"
+    ],
+    "failure_class": "NONE",
+    "salvage": {
+      "required": true,
+      "status": "completed",
+      "reason": "NONE describes the recovered current candidate, not historical attempts. Historical typed IMPLEMENTATION_FAILED core v1/v2 and canary v1 compile attempts, tooling/encoding preparation failure, manifest-self hash error, whitespace failures and MANIFEST transport mismatch are retained with exact failures/corrections. No mathematical refutation is inferred from API/environment/implementation errors.",
+      "promoted_fragments": [
+        "BanditRL.OnlineBregman.quadratic_geometry",
+        "BanditRL.OnlinePrescientBregman.euclidean_variable_regret",
+        "BanditRL.OnlinePrescientBregman.euclidean_fixed_regret",
+        "Both same-run canaries and all corrected source/evidence manifests; failed source snapshots remain retained."
+      ],
+      "discarded_fragments": []
+    },
+    "parallelism": {
+      "decision": "parallel",
+      "direction_fingerprints": [
+        "source-only-topology:f317dce023cae552746ad8ef38163e646d3b77712feffc73468ceac41efee448",
+        "construction:9b755a12d540c1039b068e4b97af90ac483a58fd1a8b40af9c806264f95d42b8",
+        "adversarial-canaries:dbc2a2f7660e70517a6f50826944976aa9cbbba17e37f88b8bac9fbef97e0122"
+      ],
+      "expected_information_gain": "Independent source reconstruction checks omissions and semantics; construction checks API/actual selector composition; nonaffine top-outside canaries check scoring/indexing/attainment/consumer faithfulness. These are independent audit/construction directions, not two verified alternative mathematical routes or a scheduler experiment.",
+      "shared_verified_context_digest": "1d6cda54b46476323dccaeae6fc3b33e8d1494bb655b99045ea2cde569b8e20a"
+    },
+    "cross_route_blind_spot_audit": {
+      "required": true,
+      "status": "accepted",
+      "evidence": "runs/online-ch2-prescient-euclidean-20261011/current-protocol-and-common-blind-spot-review-v1.json SHA256 76c6be65fbdba19125eb8a35df643b2e71dde03d485bac70896a5fb8b134180f",
+      "canonical_route": "ONE verified existing proximal/segment selector route composed with actual quadratic geometry; printed source optimality/same-g justification remains unresolved SOURCE_GAP, not a second verified OR-route.",
+      "selection_reason": "Independent source-only topologyV2 and separate complete BODY reviews plus common-blind-spot audit check conditional attainment, global support, Option run, updated scoring and terminal conventions. No source-gap claim is erased by the alternative checked implementation."
+    },
+    "reader_backpressure": {
+      "purification_status": "pending",
+      "exposition_seal_status": "pending",
+      "reader_debt_delta": 0,
+      "exposition_evidence": "Integration proposalV2 independently accepted; exact current rendered Exposition Seal remains required and separate in RUN.",
+      "source_expansion_nodes": [
+        "SRC-C2-PRESCIENT",
+        "SRC-ORACLE",
+        "SRC-MOTIVATION",
+        "SRC-ALG15.8",
+        "SRC-TH15.30-VAR",
+        "SRC-TH15.30-FIX",
+        "SRC-OPTIMALITY",
+        "SRC-SUPPORT",
+        "SRC-VARIATIONAL",
+        "SRC-THREEPOINT",
+        "SRC-ONES",
+        "SRC-SUM",
+        "SRC-BYPARTS",
+        "SRC-DMAX",
+        "SRC-MAXBOUND",
+        "SRC-RECIPTELESCOPE",
+        "SRC-VARFINISH",
+        "SRC-FIX-EXERCISE",
+        "SRC-NEGATIVE-INTERPRETATION",
+        "SPEC-QUADRATIC",
+        "SPEC-VAR",
+        "SPEC-FIX",
+        "SPEC-ACTUAL-RUN"
+      ],
+      "lean_expansion_nodes": [
+        "BanditRL.OnlineBregman.quadratic_geometry",
+        "BanditRL.OnlinePrescientBregman.euclidean_variable_regret",
+        "BanditRL.OnlinePrescientBregman.euclidean_fixed_regret"
+      ],
+      "assumptions_preserved": true,
+      "boundary_preserved": true
+    }
+  }
+}
