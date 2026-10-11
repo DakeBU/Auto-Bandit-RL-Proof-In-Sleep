@@ -1,0 +1,8 @@
+  let rec canon : Lean.Expr → Lean.Expr
+    | .forallE _ t b i => .forallE .anonymous (canon t) (canon b) i
+    | .lam _ t b i => .lam .anonymous (canon t) (canon b) i
+    | .letE _ t v b n => .letE .anonymous (canon t) (canon v) (canon b) n
+    | .app f a => .app (canon f) (canon a)
+    | .mdata _ e => canon e
+    | .proj s i e => .proj s i (canon e)
+    | e => e

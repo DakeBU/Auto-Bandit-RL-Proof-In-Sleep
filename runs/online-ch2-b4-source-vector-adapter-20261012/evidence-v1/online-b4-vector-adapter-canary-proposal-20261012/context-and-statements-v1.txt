@@ -1,0 +1,52 @@
+import BanditRLProof.OnlineStrongConvexSourceSubgradient
+
+noncomputable section
+open Set
+namespace BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary
+open BanditRL.OnlineConvex
+
+abbrev E := Fin 2 → ℝ
+abbrev U := EuclideanSpace ℝ (Fin 2)
+
+def feasible : Set E := {x | ∀ i, x i ∈ Set.Icc (-1 : ℝ) 1}
+def objective (x : E) : EReal :=
+  (((x 0 ^ 2 + x 1 ^ 2) / 2 + x 0 : ℝ) : EReal) + extendedIndicator feasible x
+def base : E := 0
+def query : E := fun _ => 1
+def outside : E := fun _ => 2
+
+def coordinates : E ≃ₗ[ℝ] U := (WithLp.linearEquiv 2 ℝ E).symm
+def supportVector : U := coordinates (fun i => if i = 0 then 1 else 0)
+def scaledCoordinates : E ≃ₗ[ℝ] U :=
+  coordinates.trans (LinearEquiv.smulOfNeZero ℝ U 2 two_ne_zero)
+def scaledSupportVector : U := (1 / 2 : ℝ) • supportVector
+
+theorem supNorm_nonzero_support :
+    ((objective base).toReal + inner ℝ supportVector (coordinates (query - base)) +
+      (1 / 2 : ℝ) * ‖query - base‖ ^ 2 ≤ (objective query).toReal) ∧
+    ‖query - base‖ ^ 2 = (1 : ℝ) ∧
+    ‖coordinates (query - base)‖ ^ 2 = (2 : ℝ) ∧
+    inner ℝ supportVector (coordinates (query - base)) = (1 : ℝ) ∧
+    supportVector ≠ 0 ∧
+    base ∈ feasible ∧ query ∈ feasible ∧ outside ∉ feasible ∧
+    objective base = (0 : EReal) ∧ objective query = (2 : EReal) ∧
+    objective outside = ⊤
+
+theorem scaledCoordinates_discriminate_wrong_norm :
+    ((objective base).toReal +
+      inner ℝ scaledSupportVector (scaledCoordinates (query - base)) +
+      (1 / 2 : ℝ) * ‖query - base‖ ^ 2 ≤ (objective query).toReal) ∧
+    ‖query - base‖ ^ 2 = (1 : ℝ) ∧
+    ‖scaledCoordinates (query - base)‖ ^ 2 = (8 : ℝ) ∧
+    inner ℝ scaledSupportVector (scaledCoordinates (query - base)) = (1 : ℝ) ∧
+    scaledSupportVector ≠ 0 ∧
+    (∀ x : E, scaledCoordinates x = (2 : ℝ) • coordinates x) ∧
+    base ∈ feasible ∧ query ∈ feasible ∧ outside ∉ feasible ∧
+    objective base = (0 : EReal) ∧ objective query = (2 : EReal) ∧
+    objective outside = ⊤ ∧
+    ¬ ((objective base).toReal +
+      inner ℝ scaledSupportVector (scaledCoordinates (query - base)) +
+      (1 / 2 : ℝ) * ‖scaledCoordinates (query - base)‖ ^ 2 ≤
+        (objective query).toReal)
+
+end BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary

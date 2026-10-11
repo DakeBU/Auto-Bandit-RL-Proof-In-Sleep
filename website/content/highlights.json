@@ -8656,6 +8656,29 @@
         "BanditRL.OnlineConvex.SourceProper",
         "BanditRL.OnlineConvex.effectiveDomain"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.stronglyConvex_sourceSubgradient_growth",
+      "title": "Source vector supports in an arbitrary chosen norm",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 347,
+      "source_match": "closest-source",
+      "plain": "Let E be a real normed space with arbitrary chosen norm and let e:E to R^d be an algebraic linear equivalence, not assumed isometric. Let f:E to EReal be proper (no bottom anywhere, a real finite value somewhere), V a convex subset of its effective domain, and lambda>=0. Assume the exact Definition4.1 strong interpolation inequality on V in the original E norm. For p,q in V and any supplied global source subgradient vector g of u maps to f(e inverse u) at e(p), f(p)+<g,e(q-p)>+(lambda/2)||q-p||_E^2<=f(q). Values at p and q are finite by properness and domain inclusion. Zero lambda and zero g are permitted.",
+      "math": "\\begin{gathered}\\bar f=f\\circ e^{-1},\\quad g\\in\\partial\\bar f(e(p)),\\quad L(z)=\\langle g,e(z)\\rangle.\\\\f(p)+\\langle g,e(q-p)\\rangle+\\frac{\\lambda}{2}\\lVert q-p\\rVert_E^2\\le f(q).\\end{gathered}",
+      "intuition": "A vector describes a linear supporting functional through coordinates; it does not choose the norm that measures curvature.",
+      "why": "Makes the actual nonzero loss or difference-loss vector usable in the conditional strong-convexity step for Lemma7.5 and Theorem7.47. The algorithmic support and minimizer producers remain separate.",
+      "position": "This is the generalized forward implication of Lemma4.2 for one supplied global vector support at p, not the full iff. The printed full lemma assumes V subset dom(partial f); existence of support at every V point is neither assumed nor produced here. Coordinates supply the Euclidean pairing only; e is algebraic and the penalty uses the original E norm. No isometry, minimizer, continuity, or extra finite-dimensionality premise is added. Routed under existing Chapter2 B4; no new Chapter4 route or closure.",
+      "proof_idea": "The coordinate equivalence derives finite dimensionality of E. Compose the algebraic real inner-product functional g with e; finite-dimensional continuity promotes this map to a continuous real linear functional L(z)=<g,e(z)>. Evaluate the supplied GLOBAL coordinate subgradient at e(z), simplify e inverse(e(z)), and restrict the resulting support to z in V. Apply stronglyConvex_support_growth to the original f,V,lambda,p,q and this internally obtained L, preserving the exact lambda/2 and E norm. Its existing proof uses an affine tilt and minimum growth. Separately, the printed Lemma4.2 forward proof bases the support at p, evaluates it at p+a(q-p), combines with strong interpolation, divides by positive a, and takes a down to zero. The source limit route is distinct from this implementation reuse route.",
+      "lean_notes": "Two kernel-checked experimental canaries use E=R^2 with the sup norm, V=[-1,1]^2, f(x)=(x0^2+x1^2)/2+x0 on V and top outside, p=0 and q=(1,1). For ordinary coordinates and g=(1,0), the chosen squared norm is1 and coordinate Euclidean squared norm is2; the correct bound is3/2<=2, while a wrong Euclidean penalty still gives2<=2, so this first numerical bound alone cannot detect that error. Scaling coordinates to e prime=2e and g prime=g/2 preserves pairing1 and the E penalty1/2, while the coordinate squared norm becomes8. The wrong substituted penalty would give5<=2, which the second canary explicitly refutes. Both first-conjunction providers directly apply the adapter with internally proved source premises, including global support outside V. Experimental imported core TYPE127/VALUE222 include actual support-growth, internally derived finite dimensionality and continuous linear-map conversion. Two canary first providers are direct19-argument adapter applications. Standard axioms only. Only experimental scratch core/canary compilation and imported audits have passed, with independent mathematical BODY/source reviews accepted with explicit delta. Canonical installation, production alpha-normalized TYPE/VALUE comparison, new combined gates, publication review and reader Exposition Seal remain pending. No accepted actual cumulative FTRL/BTRL producer, full Lemma4.2 iff/converse, support existence, qualified attainment, full stability or corrected Theorem7.47/15.31 is claimed. Chapter2, B4 and Chapters1-16 remain OPEN/ACTIVE; complete proof denominator stays null, seven forward containers and six future claims remain, accepted=false. No merge or live claim; support-leaf reader acceptance remains separate and pending.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.stronglyConvex_support_growth",
+        "BanditRL.OnlineConvex.SourceSubdifferential",
+        "BanditRL.OnlineConvex.SourceProper",
+        "BanditRL.OnlineConvex.effectiveDomain",
+        "LinearEquiv.finiteDimensional",
+        "LinearMap.toContinuousLinearMap"
+      ]
     }
   ]
 }

@@ -1,0 +1,90 @@
+{
+  "status": "CANONICAL_CONTRACT_PROPOSAL_ONLY_NOT_APPLIED",
+  "source": {
+    "version": "arXiv:1912.13213v10",
+    "pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchors": [
+      "Definition2.20",
+      "Definition4.1",
+      "Lemma4.2 forward-only"
+    ],
+    "downstream_open": [
+      "Lemma7.5",
+      "Theorem7.47",
+      "Theorem15.31"
+    ]
+  },
+  "public_declaration": "BanditRL.OnlineConvex.stronglyConvex_sourceSubgradient_growth",
+  "module": "BanditRLProof/OnlineStrongConvexSourceSubgradient.lean",
+  "header": {
+    "bytes": 1097,
+    "sha256": "6b3937a683760c04d44a0fe595490aa3a12ead49ee490eaca534670c641d3b7f",
+    "target": "docs/contracts/online-ch2-b4-source-vector-adapter-v1/neutral-frozen-header-v1.txt"
+  },
+  "body_raw_sha256": "72ac5b8037aefbb68e8e213cd808bc4892d45f6b11d3dfe00639c839b4c734a9",
+  "exact_statement": "import BanditRLProof.OnlineStrongConvexSupport\nimport BanditRLProof.OnlineSubgradientBasic\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.Analysis.Normed.Module.FiniteDimension\n\nnoncomputable section\nopen Set\nnamespace BanditRL.OnlineConvex\n\ntheorem stronglyConvex_sourceSubgradient_growth {E : Type*}\n    [NormedAddCommGroup E] [NormedSpace ℝ E]\n    (d : ℕ) (e : E ≃ₗ[ℝ] EuclideanSpace ℝ (Fin d))\n    (f : E → EReal) (V : Set E) (lam : ℝ)\n    (hf : SourceProper f) (hV : Convex ℝ V)\n    (hdom : V ⊆ effectiveDomain f) (hlam : 0 ≤ lam)\n    (hstrong : ∀ x ∈ V, ∀ y ∈ V, ∀ a : ℝ, 0 < a → a < 1 →\n      f (a • x + (1 - a) • y) ≤\n        (a : EReal) * f x + ((1 - a : ℝ) : EReal) * f y -\n          (((lam / 2) * a * (1 - a) * ‖x - y‖ ^ 2 : ℝ) : EReal))\n    (p : E) (hp : p ∈ V) (g : EuclideanSpace ℝ (Fin d))\n    (hg : g ∈ SourceSubdifferential (fun u => f (e.symm u)) (e p))\n    (q : E) (hq : q ∈ V) :\n    (f p).toReal + inner ℝ g (e (q - p)) +\n      (lam / 2) * ‖q - p‖ ^ 2 ≤ (f q).toReal\n\nend BanditRL.OnlineConvex\n",
+  "binder_ledger": [
+    {
+      "binder": "E,NormedAddCommGroup,NormedSpace,d,e",
+      "classification": "TYPING",
+      "expanded": "Arbitrary chosen norm on real vector carrier with algebraic coordinate bijection to R^d; not an isometry. Finite dimensionality and continuity derived internally."
+    },
+    {
+      "binder": "f,V,lam,p,q,g",
+      "classification": "TYPING",
+      "expanded": "Extended objective, literal feasible set, real modulus, feasible endpoints and coordinate vector."
+    },
+    {
+      "binder": "hf",
+      "classification": "SOURCE",
+      "expanded": "Forall x f(x)!=bottom and exists x r:real f(x)=coe r."
+    },
+    {
+      "binder": "hV",
+      "classification": "SOURCE",
+      "expanded": "Convex real V."
+    },
+    {
+      "binder": "hdom",
+      "classification": "SOURCE",
+      "expanded": "Forall x in V f(x)<top; together with hf justifies finite toReal."
+    },
+    {
+      "binder": "hlam",
+      "classification": "SOURCE",
+      "expanded": "0<=lam, equality allowed."
+    },
+    {
+      "binder": "hstrong",
+      "classification": "SOURCE",
+      "expanded": "Exact full header interpolation for all x,y in V, all0<a<1; penalty lam/2*a*(1-a)*norm_E(x-y)^2."
+    },
+    {
+      "binder": "hp,hq",
+      "classification": "SOURCE",
+      "expanded": "p,q in unchanged literal V."
+    },
+    {
+      "binder": "hg",
+      "classification": "SOURCE",
+      "expanded": "Forall u:R^d, f(e inverse(e p))+coe inner(g,u-e p)<=f(e inverse u). Global support, not just feasible u."
+    }
+  ],
+  "definition_audit": "Reuse literal SourceProper/effectiveDomain/SourceSubdifferential; no new public definition, choice or default witness.",
+  "source_delta": "This is the generalized forward implication of Lemma4.2 for one supplied global vector support at p, not the full iff. The printed full lemma assumes V subset dom(partial f); existence of support at every V point is neither assumed nor produced here. Coordinates supply the Euclidean pairing only; e is algebraic and the penalty uses the original E norm. No isometry, minimizer, continuity, or extra finite-dimensionality premise is added.",
+  "source_proof_spine": "Support based at p evaluated at p+a(q-p) -> Definition4.1 interpolation -> divide by a>0 -> a down to zero. Converse/support existence and equality typo excluded OPEN.",
+  "implementation_proof_spine": "The coordinate equivalence derives finite dimensionality of E. Compose the algebraic real inner-product functional g with e; finite-dimensional continuity promotes this map to a continuous real linear functional L(z)=<g,e(z)>. Evaluate the supplied GLOBAL coordinate subgradient at e(z), simplify e inverse(e(z)), and restrict the resulting support to z in V. Apply stronglyConvex_support_growth to the original f,V,lambda,p,q and this internally obtained L, preserving the exact lambda/2 and E norm. Its existing proof uses an affine tilt and minimum growth. Separately, the printed Lemma4.2 forward proof bases the support at p, evaluates it at p+a(q-p), combines with strong interpolation, divides by positive a, and takes a down to zero. The source limit route is distinct from this implementation reuse route.",
+  "statement_fingerprint": {
+    "raw_frozen_header_sha256": "6b3937a683760c04d44a0fe595490aa3a12ead49ee490eaca534670c641d3b7f",
+    "canonical_alpha_normalized_TYPE_sha256": null,
+    "canonical_alpha_normalized_VALUE_sha256": null,
+    "status": "PENDING_CANONICAL_COMPILE_AND_INDEPENDENT_IMPORT_AUDIT; raw repr hash is not alpha normalized"
+  },
+  "canary_context": {
+    "canonical_sha256": "c8ce98d2234538d2fe8b5b9db420440703a1d778b312c5ebcfb7df9a08583be1",
+    "canonical_bytes": 2377,
+    "candidate_import_change_only": true,
+    "expected_providers": "Both first conjunctions directly apply this adapter with d2 lam1, concrete coordinates and vectors."
+  },
+  "truth_boundary": "Only experimental scratch core/canary compilation and imported audits have passed, with independent mathematical BODY/source reviews accepted with explicit delta. Canonical installation, production alpha-normalized TYPE/VALUE comparison, new combined gates, publication review and reader Exposition Seal remain pending. No accepted actual cumulative FTRL/BTRL producer, full Lemma4.2 iff/converse, support existence, qualified attainment, full stability or corrected Theorem7.47/15.31 is claimed. Chapter2, B4 and Chapters1-16 remain OPEN/ACTIVE; complete proof denominator stays null, seven forward containers and six future claims remain, accepted=false. No merge or live claim; support-leaf reader acceptance remains separate and pending."
+}

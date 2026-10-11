@@ -1,0 +1,40 @@
+{
+  "artifact_kind": "independent_blind_statement_reconstruction",
+  "version": 1,
+  "status": "statement_reconstruction_only_not_acceptance",
+  "inputs": [
+    {"file": "declaration-v1.txt", "sha256": "6b3937a683760c04d44a0fe595490aa3a12ead49ee490eaca534670c641d3b7f", "requested_hash_matched": true},
+    {"file": "notation-v1.txt", "sha256": "8da7fdf49d2079c19845f7f7a2dbc9609d98fee006a26f7b8f73c144a6f174ff"}
+  ],
+  "semantic_slots": [
+    {"id": 1, "name": "ambient_space_and_coordinates", "content": "E is a real normed vector space; d is any natural number; e is an algebraic real-linear bijection from E to Euclidean R^d, not assumed isometric. E has finite dimension d."},
+    {"id": 2, "name": "function_and_properness", "content": "f maps E to EReal; f never takes bottom and has at least one finite real value globally."},
+    {"id": 3, "name": "set_and_domain", "content": "V is convex and contained in {x | f(x) < top}. Together with properness, this makes f finite on V."},
+    {"id": 4, "name": "curvature", "content": "lambda >= 0 and for all x,y in V and 0 < a < 1, f(a*x+(1-a)*y) <= a*f(x)+(1-a)*f(y)-(lambda/2)*a*(1-a)*norm_E(x-y)^2."},
+    {"id": 5, "name": "base_point", "content": "p is any point of V; no interior, differentiability or optimality hypothesis."},
+    {"id": 6, "name": "coordinate_global_support", "content": "g is any Euclidean coordinate vector with global support: for every z in E, f(p)+inner(g,e(z-p)) <= f(z), in EReal. This is assumed, not proved to exist."},
+    {"id": 7, "name": "comparison_and_conclusion", "content": "For every q in V, toReal(f(p))+inner(g,e(q-p))+(lambda/2)*norm_E(q-p)^2 <= toReal(f(q)), in the reals."}
+  ],
+  "quantifier_order": ["E", "normed additive group structure", "real normed space structure", "d", "e", "f", "V", "lambda", "properness", "convexity of V", "domain inclusion", "lambda nonnegative", "universal strong convexity premise", "p", "p in V", "g", "global support premise", "q", "q in V", "conclusion"],
+  "global_support_quantifier": "all coordinate u in R^d, equivalently all z in E, including outside V",
+  "norm_role": "original E norm in both quadratic terms",
+  "pairing_role": "standard Euclidean pairing of g with e(q-p)",
+  "finite_infinite_domains": "effectiveDomain alone permits bottom, but SourceProper rules bottom out globally; top is allowed outside V; all f-values on V are finite",
+  "asserted_conclusion": "real quadratic supporting inequality on V",
+  "derived_facts": ["finite f on V", "V nonempty once p in V is supplied", "equivalent support formulation over E", "finite real dimension d"],
+  "boundaries": {
+    "d_zero": "E and R^0 are singletons; p=q, g=0, conclusion equality; any nonnegative lambda allowed",
+    "lambda_zero": "conclusion is the supplied linear support inequality at q; no positive curvature guaranteed",
+    "q_equals_p": "conclusion equality",
+    "empty_V": "no p in V can be supplied",
+    "empty_subdifferential": "no admissible g can be supplied"
+  },
+  "not_guaranteed": ["existence or uniqueness of a subgradient", "existence of a minimizer", "differentiability", "global finiteness", "global convexity", "global strong convexity", "quadratic growth outside V", "lower semicontinuity", "closed V", "isometry of e", "inner product structure on E"],
+  "ambiguities": ["The request gives no canonical names for the seven slots; the explicit partition in this artifact supplies organizational labels only."],
+  "mathematical_notation_ambiguity": false,
+  "source_identity_inferred": false,
+  "proof_or_body_read": false,
+  "typecheck_or_build_run": false,
+  "tracked_source_mutated": false,
+  "read_scope": ["declaration-v1.txt", "notation-v1.txt"]
+}

@@ -1,0 +1,21 @@
+Neutral notation context for declaration reconstruction. No source identity or intended verdict supplied.
+
+EReal is the extended real line with bottom and top. Coercion from real is finite.
+
+BanditRL.OnlineConvex.effectiveDomain (f : E → EReal) := {x | f x < top}.
+BanditRL.OnlineConvex.SourceProper (f : E → EReal) :=
+  (forall x, f x != bottom) AND exists x, exists r : real, f x = coe r.
+
+On a real inner product space H:
+BanditRL.OnlineConvex.SourceSubdifferential (F : H → EReal) (x : H) :=
+  {g | forall y, F x + coe (inner real g (y-x)) <= F y}.
+
+EuclideanSpace real (Fin d) carries its standard coordinate inner product.
+LinearEquiv notation E ≃ₗ[real] H means an algebraic real-linear bijection
+with inverse; it does not assert isometry.
+The norm used for an expression on E is the declared norm on E.
+
+Reconstruct every quantified object, premise and conclusion of declaration-v1.txt,
+including which statements are assumed, which are concluded, the scope of
+the subgradient quantifier, and the separate roles of coordinate pairing and
+the norm. Do not consult source books, prior reviews or intended use.

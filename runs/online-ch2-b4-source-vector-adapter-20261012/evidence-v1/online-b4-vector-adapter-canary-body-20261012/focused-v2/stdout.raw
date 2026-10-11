@@ -1,0 +1,44 @@
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-vector-adapter-canary-body-20261012\candidate-v2.lean:110:71: error: unsolved goals
+hp : base ∈ feasible
+hq : query ∈ feasible
+hout : outside ∉ feasible
+hfin : ∀ x ∈ feasible, objective x = ↑((x 0 ^ 2 + x 1 ^ 2) / 2 + x 0)
+hf0 : objective base = 0
+hfq : objective query = 2
+hfo : objective outside = ⊤
+hproper : SourceProper objective
+hconv : Convex ℝ feasible
+hdom : feasible ⊆ effectiveDomain objective
+hnorm_sq : ∀ (v : E), ‖v‖ ^ 2 ≤ v 0 ^ 2 + v 1 ^ 2
+hstrong :
+  ∀ x ∈ feasible,
+    ∀ y ∈ feasible,
+      ∀ (a : ℝ),
+        0 < a →
+          a < 1 →
+            objective (a • x + (1 - a) • y) ≤
+              ↑a * objective x + ↑(1 - a) * objective y - ↑(1 / 2 * a * (1 - a) * ‖x - y‖ ^ 2)
+z : E
+⊢ inner ℝ 1 (z 0) = z 0
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-vector-adapter-canary-body-20261012\candidate-v2.lean:239:71: error: unsolved goals
+hp : base ∈ feasible
+hq : query ∈ feasible
+hout : outside ∉ feasible
+hfin : ∀ x ∈ feasible, objective x = ↑((x 0 ^ 2 + x 1 ^ 2) / 2 + x 0)
+hf0 : objective base = 0
+hfq : objective query = 2
+hfo : objective outside = ⊤
+hproper : SourceProper objective
+hconv : Convex ℝ feasible
+hdom : feasible ⊆ effectiveDomain objective
+hnorm_sq : ∀ (v : E), ‖v‖ ^ 2 ≤ v 0 ^ 2 + v 1 ^ 2
+hstrong :
+  ∀ x ∈ feasible,
+    ∀ y ∈ feasible,
+      ∀ (a : ℝ),
+        0 < a →
+          a < 1 →
+            objective (a • x + (1 - a) • y) ≤
+              ↑a * objective x + ↑(1 - a) * objective y - ↑(1 / 2 * a * (1 - a) * ‖x - y‖ ^ 2)
+z : E
+⊢ inner ℝ 1 (z 0) = z 0
