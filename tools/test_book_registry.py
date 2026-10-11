@@ -138,13 +138,17 @@ class BookRegistryTests(unittest.TestCase):
             "BanditRLProof.OnlineSubgradientBasic",
             "BanditRLProof.OnlineSubgradientInterior",
             "BanditRLProof.OnlineSubgradientDifferentiability",
+            "BanditRLProof.OnlineSubgradientSum",
+            "BanditRLProof.OnlineSubgradientAbsolute",
+            "BanditRLProof.OnlineNormalCone",
+            "BanditRLProof.OnlineSubgradientMax",
             "BanditRLProof.OnlineConvexFirstOrder",
             "BanditRLProof.OnlineGradientDescent",
             "BanditRLProof.OnlineGradientDescentVariable",
             "BanditRLProof.OnlineGradientDescentSource",
         }
         declarations = [d for d in self.declarations if d["module"] in online_modules]
-        self.assertEqual(117, len(declarations))
+        self.assertEqual(154, len(declarations))
         for declaration in declarations:
             key = "declaration:" + declaration["full_name"]
             self.assertIn("online-learning", nodes[key]["books"])
@@ -222,7 +226,7 @@ class BookRegistryTests(unittest.TestCase):
                 bandit_nav = nav.split('data-nav-group="bandit-book"', 1)[1].split('</details>', 1)[0]
                 self.assertNotIn('chapters/online-', bandit_nav)
                 online_nav = nav.split('data-nav-group="online-learning-book"', 1)[1].split('</details>', 1)[0]
-                self.assertEqual(13, online_nav.count('class="book-nav-link"'))
+                self.assertEqual(17, online_nav.count('class="book-nav-link"'))
                 self.assertNotIn('chapters/probability/', online_nav)
             breadcrumb = site.render_book_breadcrumb("chapters/finite-horizon-rl/index.html")
             self.assertIn("Reinforcement Learning Book", breadcrumb)
@@ -242,7 +246,7 @@ class BookRegistryTests(unittest.TestCase):
             self.assertEqual("online-learning", site.primary_teaching_book("online-ogd")["id"])
             self.assertEqual("bandit", site.primary_teaching_book("probability")["id"])
             online = site.teaching_chapters_for_book("online-learning", owned_only=True)
-            self.assertEqual({'online-jensen', 'online-minorant', 'online-ogd', 'online-expectation', 'online-first-order', 'online-optimality', 'online-convex-closures', 'online-convex', 'online-barycenter', 'online-closed-proper', 'online-subgradient-basic', 'online-subgradient-interior', 'online-subgradient-differentiability'},
+            self.assertEqual({'online-jensen', 'online-minorant', 'online-ogd', 'online-expectation', 'online-first-order', 'online-optimality', 'online-convex-closures', 'online-convex', 'online-barycenter', 'online-closed-proper', 'online-subgradient-basic', 'online-subgradient-interior', 'online-subgradient-differentiability', 'online-subgradient-sum', 'online-subgradient-absolute', 'online-normal-cone', 'online-subgradient-max'},
                              {chapter["slug"] for chapter in online})
             shared = site.teaching_chapters_for_book("online-learning")
             self.assertIn("probability", {chapter["slug"] for chapter in shared})

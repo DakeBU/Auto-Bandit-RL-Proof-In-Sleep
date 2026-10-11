@@ -1,0 +1,368 @@
+{
+  "schema_version": "3.0",
+  "id": "ONLINE-CH2-NONSMOOTH-CALCULUS-INTEGRATION-20261012",
+  "route": "online-learning / sum rule, absolute value, normal cones and finite maximum",
+  "frontier_cell": "online-subgradient-max",
+  "source_facing": true,
+  "source": {
+    "kind": "textbook",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10",
+    "anchor": "Section2.2.1 printed17-18/PDF29-30: Theorem2.23 inclusion/equality, Example2.24 all scalar cases, Example2.25 indicator/interior/unit-ball boundary, Theorem2.26 finite maximum; contextual definitions separately inventoried.",
+    "url": "https://arxiv.org/abs/1912.13213v10",
+    "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17"
+  },
+  "target": "Integrate four retained production modules and four genuine canary modules, with exact assumptions and explicit source convention boundaries.",
+  "affected_files": [
+    "BanditRLProof/OnlineSubgradientSum.lean",
+    "BanditRLProof/OnlineSubgradientAbsolute.lean",
+    "BanditRLProof/OnlineNormalCone.lean",
+    "BanditRLProof/OnlineSubgradientMax.lean",
+    "BanditRLProof.lean",
+    "website/content/books.json",
+    "website/content/chapters.json",
+    "website/content/readings.json",
+    "website/content/highlights.json",
+    "website/scripts/build_site.py"
+  ],
+  "declarations": [
+    "BanditRL.OnlineConvex.SourceSubgradientSum",
+    "BanditRL.OnlineConvex.upperAdd_eq_add_of_ne_bot",
+    "BanditRL.OnlineConvex.ereal_finset_sum_ne_bot",
+    "BanditRL.OnlineConvex.convex_finset_sum",
+    "BanditRL.OnlineConvex.finite_sum_point",
+    "BanditRL.OnlineConvex.sum_finite_implies_components_finite",
+    "BanditRL.OnlineConvex.interior_domain_sum",
+    "BanditRL.OnlineConvex.binary_subgradient_decomposition",
+    "BanditRL.OnlineConvex.theorem_2_23_inclusion",
+    "BanditRL.OnlineConvex.theorem_2_23_equality",
+    "BanditRL.OnlineConvex.abs_subgradient_zero",
+    "BanditRL.OnlineConvex.abs_subgradient_positive",
+    "BanditRL.OnlineConvex.abs_subgradient_negative",
+    "BanditRL.OnlineConvex.example_2_24",
+    "BanditRL.OnlineConvex.SourceNormalCone",
+    "BanditRL.OnlineConvex.indicator_subdifferential_eq_normalCone",
+    "BanditRL.OnlineConvex.normalCone_interior_eq_zero",
+    "BanditRL.OnlineConvex.normalCone_unitBall_boundary",
+    "BanditRL.OnlineConvex.SourceFiniteMax",
+    "BanditRL.OnlineConvex.SourceActiveSubgradientUnion",
+    "BanditRL.OnlineConvex.active_subgradient_support_max",
+    "BanditRL.OnlineConvex.finiteMax_attained",
+    "BanditRL.OnlineConvex.finiteMax_point_finite",
+    "BanditRL.OnlineConvex.subgradient_iff_real_support",
+    "BanditRL.OnlineConvex.convex_sourceSubdifferential",
+    "BanditRL.OnlineConvex.continuousAt_mem_domain_interior",
+    "BanditRL.OnlineConvex.finiteMax_ne_bot",
+    "BanditRL.OnlineConvex.convexHull_active_support_max",
+    "BanditRL.OnlineConvex.isClosed_sourceSubdifferential",
+    "BanditRL.OnlineConvex.isCompact_sourceSubdifferential",
+    "BanditRL.OnlineConvex.isCompact_convexJoin",
+    "BanditRL.OnlineConvex.isCompact_convexHull_finite_convex_union",
+    "BanditRL.OnlineConvex.isCompact_active_subgradient_hull",
+    "BanditRL.OnlineConvex.continuousAt_finite_toReal",
+    "BanditRL.OnlineConvex.max_support_displacement_compare",
+    "BanditRL.OnlineConvex.max_subgradient_direction_witness",
+    "BanditRL.OnlineConvex.theorem_2_26"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Accepted shared properness, global support, convexity, separation, interior existence and support-limit interfaces",
+      "Frozen retained Online stack 8045070bf1ee53c83778d04eb168f8ad6f728b59",
+      "Pinned Mathlib EReal, finite sums, finite maxima, compactness, Riesz and separation"
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineConvex.SourceProper",
+      "BanditRL.OnlineConvex.SourceSubdifferential",
+      "BanditRL.OnlineConvex.convex_upperAdd",
+      "BanditRL.OnlineConvex.supporting_functional_at_closure",
+      "BanditRL.OnlineConvex.subgradient_point_finite",
+      "BanditRL.OnlineConvex.subgradient_exists_of_domain_interior",
+      "BanditRL.OnlineConvex.subgradients_locally_bounded",
+      "BanditRL.OnlineConvex.subgradient_limit_of_continuousAt"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineConvex.SourceSubgradientSum",
+      "BanditRL.OnlineConvex.upperAdd_eq_add_of_ne_bot",
+      "BanditRL.OnlineConvex.ereal_finset_sum_ne_bot",
+      "BanditRL.OnlineConvex.convex_finset_sum",
+      "BanditRL.OnlineConvex.finite_sum_point",
+      "BanditRL.OnlineConvex.sum_finite_implies_components_finite",
+      "BanditRL.OnlineConvex.interior_domain_sum",
+      "BanditRL.OnlineConvex.binary_subgradient_decomposition",
+      "BanditRL.OnlineConvex.theorem_2_23_inclusion",
+      "BanditRL.OnlineConvex.theorem_2_23_equality",
+      "BanditRL.OnlineConvex.abs_subgradient_zero",
+      "BanditRL.OnlineConvex.abs_subgradient_positive",
+      "BanditRL.OnlineConvex.abs_subgradient_negative",
+      "BanditRL.OnlineConvex.example_2_24",
+      "BanditRL.OnlineConvex.SourceNormalCone",
+      "BanditRL.OnlineConvex.indicator_subdifferential_eq_normalCone",
+      "BanditRL.OnlineConvex.normalCone_interior_eq_zero",
+      "BanditRL.OnlineConvex.normalCone_unitBall_boundary",
+      "BanditRL.OnlineConvex.SourceFiniteMax",
+      "BanditRL.OnlineConvex.SourceActiveSubgradientUnion",
+      "BanditRL.OnlineConvex.active_subgradient_support_max",
+      "BanditRL.OnlineConvex.finiteMax_attained",
+      "BanditRL.OnlineConvex.finiteMax_point_finite",
+      "BanditRL.OnlineConvex.subgradient_iff_real_support",
+      "BanditRL.OnlineConvex.convex_sourceSubdifferential",
+      "BanditRL.OnlineConvex.continuousAt_mem_domain_interior",
+      "BanditRL.OnlineConvex.finiteMax_ne_bot",
+      "BanditRL.OnlineConvex.convexHull_active_support_max",
+      "BanditRL.OnlineConvex.isClosed_sourceSubdifferential",
+      "BanditRL.OnlineConvex.isCompact_sourceSubdifferential",
+      "BanditRL.OnlineConvex.isCompact_convexJoin",
+      "BanditRL.OnlineConvex.isCompact_convexHull_finite_convex_union",
+      "BanditRL.OnlineConvex.isCompact_active_subgradient_hull",
+      "BanditRL.OnlineConvex.continuousAt_finite_toReal",
+      "BanditRL.OnlineConvex.max_support_displacement_compare",
+      "BanditRL.OnlineConvex.max_subgradient_direction_witness",
+      "BanditRL.OnlineConvex.theorem_2_26"
+    ],
+    "known_consumers": [
+      "Four genuine canary modules with46theorems and7testdefinitions, including premise-building helpers",
+      "Sum equality constructs actual component vectors through binary separation and finite induction",
+      "Maximum equality uses compact active hulls and constructed directional limit supports"
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Preserve every mathematical byte from first import and all original canary bytes; integrate into the same root/library/registry with bounded source-adjacent readers."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root integration formalizer and reader author",
+    "blind_decoder": "/root/batch5_blind_decoder; neutral compiler types and literal definitions only",
+    "source_reviewer": "/root/batch5_source_reviewer; source-only topology first, then anti-anchored binder/body/reader audit",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "G2.23.PROPER: the generic support predicate extends the printed proper-function carrier because proper summands need not have a proper sum. G2.23.INDEX: empty-index inclusion extends positive-family notation, while equality uses Fin(n+1). G2.25.OFFSET: feasible normals explicitly require x in V and are empty outside V, an off-set convention not separately fixed by the inspected source. G2.26.EMPTY and G2.26.CONTINUITY: the library specifies a nonempty finite index and ambient EReal continuity. These are explicit interpretation boundaries, not repaired source definitions. Finite-dimensional real inner-product carriers generalize source Euclidean instances. Helpers are not additional printed source results."
+  },
+  "graph_contribution": {
+    "lean_graph": "new-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Shared nonsmooth convex geometry and supporting inequalities; no separately certified cross-setting transport or graph-derived discovery.",
+    "focus_targets": [
+      "online-subgradient-sum",
+      "online-subgradient-absolute",
+      "online-normal-cone",
+      "online-subgradient-max"
+    ],
+    "visual_review": "Eight desktop/mobile reader viewports passed MathJax, navigation, folded Lean and overflow checks; all eight PNGs actually inspected. Ten additional source-guide desktop/mobile screenshots inspected after shared template correction.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: four bounded readers and nineteen highlights",
+    "banditrlwiki": "no-change-with-reason: Bandit and Extended Topics case endpoints unchanged",
+    "results_ledger": "no-change-with-reason: canonical website/content/results.json is unchanged; this bounded integration does not alter research milestone completion.",
+    "roadmap": "no-change-with-reason: canonical roadmap/frontier metadata is unchanged; the Online Book and chapter teaching metadata alone adds four routes for a total of seventeen, with no chapter/book completion.",
+    "website_surfaces": [
+      "Online Book/chapter metadata",
+      "Four source-attributed mathematical readers",
+      "Shared canonical module/declaration registry",
+      "Shared source-guide attribution and worked-example label template"
+    ],
+    "integration_evidence": "updated: research-wiki/integrations/ONLINE-CH2-NONSMOOTH-CALCULUS-INTEGRATION-20261012/README.md records this local candidate and its acceptance boundaries."
+  },
+  "truth_boundary": "Thirty-three retained theorems and four definitions, integrated in this local candidate for prospective main acceptance but not new mathematics. G2.23.PROPER: the generic support predicate extends the printed proper-function carrier because proper summands need not have a proper sum. G2.23.INDEX: empty-index inclusion extends positive-family notation, while equality uses Fin(n+1). G2.25.OFFSET: feasible normals explicitly require x in V and are empty outside V, an off-set convention not separately fixed by the inspected source. G2.26.EMPTY and G2.26.CONTINUITY: the library specifies a nonempty finite index and ambient EReal continuity. These are explicit interpretation boundaries, not repaired source definitions. No Chapter2/book completion, PURIFIED, full Exposition Seal, merge, deployment or original PR closure inferred from local acceptance.",
+  "verification": {
+    "focused_checks": [
+      "Four production/four canary focused builds and37actual compiler declaration types passed",
+      "33theorems and12literal definitions independently blind-decoded; four owned definitions plus eight shared context definitions",
+      "37production transitive axiom checks use onlypropext/Classical.choice/Quot.sound; unchanged mathematical bytes bridge leading-comment clarification",
+      "90selected compiled declarations,8851direct type/value edges,1202metadata-only boundary nodes; all90source ranges verified",
+      "Eight desktop/mobile local render cases passed",
+      "All27generated source-guide titles match canonical primary sources;10additionaldesktop/mobile source-guide cases passed and all10images inspected"
+    ],
+    "bandit_check": "Combined9066library/9196Tests, exporter, strict placeholder scan and458harness tests passed with7platform skips; after two shared template string repairs, full458-test Python harness rerun passed with7skips, reusing unchanged combined Lean gate",
+    "site_build": "Passed --lean-verified after combined gate; publication-only correction rebuilt and rechecked; rebuilt again after shared template attribution repair",
+    "site_check": "passed",
+    "independent_review": "Source topology, expanded binders/bodies/canaries, corrected readers and original PR scope independently reviewed; see hash-bound receipts"
+  },
+  "contributor": {
+    "name": "OpenAI Codex",
+    "role": "Integration and maintenance; original proof authors and historical review roles retained by immutable source provenance"
+  },
+  "learning_contract": {
+    "control_plane_math_authority": false,
+    "process_memory_checked": true,
+    "process_memory_ids": [
+      "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS",
+      "ABRL-NK-WINDOWS-PATH-LENGTH"
+    ],
+    "failure_class": "NONE",
+    "salvage": {
+      "required": true,
+      "status": "completed",
+      "reason": "Preserved rejected publication v1 and corrected unsupported disjoint-domain canary claim plus definition/terminal attribution. Preserved initial overbroad canary inventory failure before mutation. Preserved graph runtime failure, interrupted overbroad full-root graph and inherited source-coordinate offset evidence; final graph explicitly selects90declarations with corrected compiler ranges. Mathematical bodies and canaries unchanged.",
+      "promoted_fragments": [
+        "BanditRLProof/OnlineSubgradientSum.lean",
+        "BanditRLProof/OnlineSubgradientAbsolute.lean",
+        "BanditRLProof/OnlineNormalCone.lean",
+        "BanditRLProof/OnlineSubgradientMax.lean"
+      ],
+      "discarded_fragments": []
+    },
+    "parallelism": {
+      "decision": "serial",
+      "direction_fingerprints": [
+        "retained-sum-separation-absolute-inequalities-feasible-normals-active-hull"
+      ],
+      "expected_information_gain": "Distinct blind, source and topology reviewers satisfy role separation; these are audits, not competing proof directions.",
+      "shared_verified_context_digest": "Pinned Orabona cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17; frozen stack 8045070bf1ee53c83778d04eb168f8ad6f728b59"
+    },
+    "cross_route_blind_spot_audit": {
+      "required": false,
+      "status": "not-applicable",
+      "evidence": "",
+      "canonical_route": "retained library proof routes",
+      "selection_reason": "No parallel mathematical proof-route competition."
+    },
+    "reader_backpressure": {
+      "purification_status": "pending",
+      "exposition_seal_status": "pending",
+      "reader_debt_delta": 0,
+      "exposition_evidence": "Four formula-bearing proof bridges preserve source hypotheses and explicit convention deltas, independently reviewed and rendered in8cases. Full purification and Exposition Seal remain pending.",
+      "source_expansion_nodes": [
+        "T2.23.INCL",
+        "T2.23.EQ",
+        "E2.24.POS",
+        "E2.24.ZERO",
+        "E2.24.NEG",
+        "E2.24.ALL",
+        "E2.25.SUBGRAD",
+        "D.NORMAL",
+        "E2.25.INTERIOR",
+        "E2.25.BALL",
+        "D.MAXACTIVE",
+        "T2.26"
+      ],
+      "lean_expansion_nodes": [
+        "BanditRL.OnlineConvex.SourceSubgradientSum",
+        "BanditRL.OnlineConvex.upperAdd_eq_add_of_ne_bot",
+        "BanditRL.OnlineConvex.ereal_finset_sum_ne_bot",
+        "BanditRL.OnlineConvex.convex_finset_sum",
+        "BanditRL.OnlineConvex.finite_sum_point",
+        "BanditRL.OnlineConvex.sum_finite_implies_components_finite",
+        "BanditRL.OnlineConvex.interior_domain_sum",
+        "BanditRL.OnlineConvex.binary_subgradient_decomposition",
+        "BanditRL.OnlineConvex.theorem_2_23_inclusion",
+        "BanditRL.OnlineConvex.theorem_2_23_equality",
+        "BanditRL.OnlineConvex.abs_subgradient_zero",
+        "BanditRL.OnlineConvex.abs_subgradient_positive",
+        "BanditRL.OnlineConvex.abs_subgradient_negative",
+        "BanditRL.OnlineConvex.example_2_24",
+        "BanditRL.OnlineConvex.SourceNormalCone",
+        "BanditRL.OnlineConvex.indicator_subdifferential_eq_normalCone",
+        "BanditRL.OnlineConvex.normalCone_interior_eq_zero",
+        "BanditRL.OnlineConvex.normalCone_unitBall_boundary",
+        "BanditRL.OnlineConvex.SourceFiniteMax",
+        "BanditRL.OnlineConvex.SourceActiveSubgradientUnion",
+        "BanditRL.OnlineConvex.active_subgradient_support_max",
+        "BanditRL.OnlineConvex.finiteMax_attained",
+        "BanditRL.OnlineConvex.finiteMax_point_finite",
+        "BanditRL.OnlineConvex.subgradient_iff_real_support",
+        "BanditRL.OnlineConvex.convex_sourceSubdifferential",
+        "BanditRL.OnlineConvex.continuousAt_mem_domain_interior",
+        "BanditRL.OnlineConvex.finiteMax_ne_bot",
+        "BanditRL.OnlineConvex.convexHull_active_support_max",
+        "BanditRL.OnlineConvex.isClosed_sourceSubdifferential",
+        "BanditRL.OnlineConvex.isCompact_sourceSubdifferential",
+        "BanditRL.OnlineConvex.isCompact_convexJoin",
+        "BanditRL.OnlineConvex.isCompact_convexHull_finite_convex_union",
+        "BanditRL.OnlineConvex.isCompact_active_subgradient_hull",
+        "BanditRL.OnlineConvex.continuousAt_finite_toReal",
+        "BanditRL.OnlineConvex.max_support_displacement_compare",
+        "BanditRL.OnlineConvex.max_subgradient_direction_witness",
+        "BanditRL.OnlineConvex.theorem_2_26"
+      ],
+      "assumptions_preserved": true,
+      "boundary_preserved": true
+    }
+  },
+  "statement_seal": {
+    "version": 1,
+    "source_revision": "arXiv:1912.13213v10",
+    "sealed_statement_record_sha256": "9e063f43f3239fa1caf5772a947d93b0084ac84e9a41aaa0002ab57ada1f8004",
+    "actual_elaborated_types_sha256": "dbad5905b3d3a075b3d96aac0cdd141f29581aaa46eb2659614b3d70599b88ff",
+    "binder_audit": "All37production declarations and12definition bodies audited, including weaker helper/definition signatures and all retained instances; terminal consumers discharge helper premises.",
+    "definition_kind": {
+      "SourceSubgradientSum": "Literal witness-defined finite Minkowski sum over generalized inner-product carriers; empty-index {0} is explicit extension.",
+      "SourceNormalCone": "Explicit feasible-normal interpretation; x-in-V guard assigns empty off-set normals beyond the locally specified source context.",
+      "SourceFiniteMax": "Literal pointwise finite maximum with explicit nonempty-index convention, arbitrary carrier and EReal values.",
+      "SourceActiveSubgradientUnion": "Literal union of global supports over attaining indices, on generalized inner-product carriers and explicit finite nonempty indexing."
+    }
+  },
+  "source_proof_coverage": {
+    "inventory_sha256": "6a26b0dbe4fe59e3c5fbf7870cc00f34911c2f53221001d3b0e0d1e1d60cc347",
+    "independent_topology_receipt_sha256": "009b5ff5604d2a0b6d8ef74846c66a3fc5c00258e3b5cdee0cad26064381b619",
+    "reviewed_endpoint_nodes": [
+      "T2.23.INCL",
+      "T2.23.EQ",
+      "E2.24.POS",
+      "E2.24.ZERO",
+      "E2.24.NEG",
+      "E2.24.ALL",
+      "E2.25.SUBGRAD",
+      "D.NORMAL",
+      "E2.25.INTERIOR",
+      "E2.25.BALL",
+      "D.MAXACTIVE",
+      "T2.26"
+    ],
+    "source_gaps": [
+      "G2.23.PROPER: the generic support predicate extends the printed proper-function carrier because proper summands need not have a proper sum. G2.23.INDEX: empty-index inclusion extends positive-family notation, while equality uses Fin(n+1). G2.25.OFFSET: feasible normals explicitly require x in V and are empty outside V, an off-set convention not separately fixed by the inspected source. G2.26.EMPTY and G2.26.CONTINUITY: the library specifies a nonempty finite index and ambient EReal continuity. These are explicit interpretation boundaries, not repaired source definitions.",
+      "G2.24.POS/ZERO/NEG: source gives exact cases without local derivations",
+      "G2.25.EQUIV/INTERIOR/BALL: compressed reverse bridge, hint-only interior argument and unproved unit-ball equality",
+      "G.BG.DOMCONV/INDCONV/INDCLOSED/INDPROPER: locally unproved contextual assertions",
+      "Four external leaves remain unverified: Bauschke-Combettes Cor16.50 and Theorem18.5 for target equalities, Lemma1.24 and Rockafellar Theorem23.4 in background"
+    ],
+    "exclusions": "Earlier OGD/Huber, adjacent Theorems2.21/2.22 as independent targets, later hinge Example2.27 and affine Theorem2.28 excluded with page-region reasons.",
+    "alternative_routes": "Inclusion empty/nonempty and absolute sign branches are case splits, not alternative sufficient OR routes. Sum equality and maximum theorem are citation-only source routes; library proofs remain separately attributed."
+  },
+  "proof_digestion": {
+    "existing_substrate": [
+      "Accepted epigraph/support/separation/interior/limit interfaces",
+      "Pinned finite-sum, EReal, compactness, Riesz and strict-separation APIs"
+    ],
+    "bookkeeping": [
+      "No-bottom and finite-value arithmetic",
+      "Prefix interior/common-witness construction",
+      "Frequent-index nonbottom filters and directional limit inequalities"
+    ],
+    "new_to_main_reusable": [
+      "Actual sum-of-support witnesses and qualified decomposition",
+      "Exact scalar absolute-value supports",
+      "Feasible normal cone, interior zero and unit-ball radial ray",
+      "Finite maximum, active union, compact ordinary hull and reverse decomposition"
+    ],
+    "new_topology": "Existing stack proof routes retained; local source proof topology and external source citations stay separate from selected compiler direct-constant edges."
+  },
+  "purification": {
+    "status": "pending",
+    "dead_code_audit": "All37production declarations have another selected declaration using them in a value/proof term; selected90node audit is not whole-project dead-code or irredundancy certification.",
+    "duplicate_semantics_audit": "One canonical library/root/registry; no per-book duplicate proof project.",
+    "canonicalization": "Existing shared names and source bodies preserved.",
+    "compressed_spine_delta": "Four source-attributed formula-bearing reader bridges.",
+    "reader_default_view": "Mathematical explanation and explicit remaining boundary, exact Lean folded; full Exposition Seal not claimed."
+  },
+  "shared_template_repair": {
+    "original_prs": [
+      144,
+      146
+    ],
+    "scope": "Two exact retained historical template fixes: display each reading primary.title with HTML escaping, and remove a fixed three-step claim while retaining worked-example presence condition.",
+    "boundary": "This does not integrate or supersede the mathematical scope of PR144/146 or their migration PRs. All37production and53canary declarations and prior15reviewed inputs remain unchanged."
+  }
+}

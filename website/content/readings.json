@@ -3376,6 +3376,583 @@
         "takeaway": "The library interpretation distinguishes a genuine real germ from a smooth total cast and identifies the gradient when a germ exists.",
         "boundary": "Nine retained canaries cover interval and quadratic instances, boundary supports, and a real singleton indicator whose toReal cast is smooth but which has no ambient real germ. Some reverse instances reuse singleton results proved by the forward theorem; these are API consumer tests, not independent proofs of the reverse implication. Later source obligations, Chapter 2 and the whole book remain incomplete."
       }
+    },
+    {
+      "slug": "online-subgradient-sum",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10,21June2026",
+        "sections": "Section 2.2.1, Theorem 2.23: sum inclusion and qualified equality",
+        "pages": "printed17–18/PDF29–30",
+        "pdf_page": 29,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "Actual vector sums",
+          "meaning": "A member has simultaneous vectors G(i), each supporting f(i) globally at the same x, and g is their exact finite sum. Empty-index inclusion gives only the zero vector on this side. Ordinary EReal addition agrees with upperAdd because proper components exclude bottom."
+        },
+        {
+          "term": "Asymmetric qualification",
+          "meaning": "One z lies in the last domain and every earlier ambient domain interior. Equality holds at every queried x, independently of z. Every component remains closed, convex and proper, including in the singleton case."
+        },
+        {
+          "term": "Possible improper aggregate",
+          "meaning": "Different proper components can have disjoint domains. Their sum is then identically top, whose generic global support is every vector, while the component support sum is empty. This is the explicit extension boundary G2.23.PROPER; no aggregate-proper premise is silently added."
+        }
+      ],
+      "algorithm": {
+        "title": "Construct actual component supports",
+        "kind": "proof flow",
+        "steps": [
+          {
+            "title": "Sum actual support inequalities",
+            "detail": "Inclusion quantifies EVERY x and an arbitrary Fintype family of proper components, with no convexity, closedness, query-finiteness or common finite point. Empty-index inclusion produces the zero support as an explicit library extension, not a printed positive-family equality. SourceSubgradientSum f x means actual simultaneous vectors G(i), each globally supporting the same f(i) at the same x, and their exact finite vector sum equals g. An empty component support makes this witness set empty."
+          },
+          {
+            "title": "Force a strictly negative height coefficient",
+            "detail": "The stronger binary interface omits closedness and explicitly takes finite query values. Build the linear image of two actual real epigraphs; aggregate support gives contact and noninterior. A nonzero separating L(v,t)=A(v)+ct has c<=0 from upward heights. If c=0, variation at the qualifying interior point forces A=0 and L=0, a contradiction; hence c<0. Normalize and use Riesz to produce actual global p and g-p, treating top branches before toReal."
+          },
+          {
+            "title": "Construct the full family",
+            "detail": "The mixed point yields prefix interior and an actual common finite value, so prefix/full sums are proper and prefix convex. Actual aggregate support then forces query finiteness and no-bottom summation forces every component finite. Apply the binary producer, recursively decompose the prefix, and use Fin.snoc to construct all component vectors and their exact sum. Public closedness hypotheses remain and are passed recursively; no decomposition or dual-attainment oracle is assumed."
+          }
+        ]
+      },
+      "teaching_route": [
+        "BanditRL.OnlineConvex.theorem_2_23_inclusion",
+        "BanditRL.OnlineConvex.binary_subgradient_decomposition",
+        "BanditRL.OnlineConvex.interior_domain_sum",
+        "BanditRL.OnlineConvex.theorem_2_23_equality"
+      ],
+      "source_theorems": [
+        {
+          "label": "Theorem 2.23 inclusion",
+          "pages": "printed17",
+          "pdf_page": 29,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\(\\partial F(x)\\supseteq\\sum_{i=1}^m\\partial f_i(x)\\)",
+          "fallback": "For proper components, every actual finite sum of component subgradients is a global subgradient of their sum, at every x.",
+          "plain": "For proper components, every actual finite sum of component subgradients is a global subgradient of their sum, at every x.",
+          "relationship": "The inclusion keeps only individual properness and allows an empty finite index family, an explicit extension of the printed positive-family notation. The shared global-support predicate is defined for all EReal functions; the printed definition only covers proper functions. Proper components need not have a proper sum (G2.23.PROPER). Equality keeps every properness, convexity and closedness premise, a positive Fin(n+1) family, and one point in the last domain and every other ambient domain interior. This point is independent of the query. Singleton indexing makes the earlier-interior condition vacuous (G2.23.INDEX). The source proves inclusion locally and cites Bauschke and Combettes (2017), Corollary 16.50 for equality. The separation and induction proof below is a library proof, not a reconstruction of that external text. The finite-dimensional real inner-product carrier generalizes the Euclidean presentation.",
+          "contract": {
+            "model": "Finite-dimensional real inner-product space, ordinary EReal sum and actual component support witnesses.",
+            "assumptions": "Inclusion quantifies EVERY x and an arbitrary Fintype family of proper components, with no convexity, closedness, query-finiteness or common finite point. Empty-index inclusion produces the zero support as an explicit library extension, not a printed positive-family equality.",
+            "parameters": "All component functions and every queried x; equality qualification point z is independent of x.",
+            "regret": "No algorithm, probability, regret or measurable/computable selection guarantee.",
+            "guarantee": "SourceSubgradientSum f x is a subset of SourceSubdifferential (sum f) x."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Bounded library declarations",
+            "boundary": "The inclusion keeps only individual properness and allows an empty finite index family, an explicit extension of the printed positive-family notation. The shared global-support predicate is defined for all EReal functions; the printed definition only covers proper functions. Proper components need not have a proper sum (G2.23.PROPER). Equality keeps every properness, convexity and closedness premise, a positive Fin(n+1) family, and one point in the last domain and every other ambient domain interior. This point is independent of the query. Singleton indexing makes the earlier-interior condition vacuous (G2.23.INDEX). The source proves inclusion locally and cites Bauschke and Combettes (2017), Corollary 16.50 for equality. The separation and induction proof below is a library proof, not a reconstruction of that external text. The finite-dimensional real inner-product carrier generalizes the Euclidean presentation. Later source obligations, Chapter 2 and the whole book remain incomplete."
+          }
+        },
+        {
+          "label": "Theorem 2.23 equality",
+          "pages": "printed17",
+          "pdf_page": 29,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\(\\partial F(x)=\\sum_{i=1}^m\\partial f_i(x),\\quad\\operatorname{dom}f_m\\cap\\bigcap_{i<m}\\operatorname{int}(\\operatorname{dom}f_i)\\ne\\varnothing\\)",
+          "fallback": "For proper convex closed components and the exact mixed qualification, every sum-function support decomposes into actual component supports, at every x.",
+          "plain": "For proper convex closed components and the exact mixed qualification, every sum-function support decomposes into actual component supports, at every x.",
+          "relationship": "The inclusion keeps only individual properness and allows an empty finite index family, an explicit extension of the printed positive-family notation. The shared global-support predicate is defined for all EReal functions; the printed definition only covers proper functions. Proper components need not have a proper sum (G2.23.PROPER). Equality keeps every properness, convexity and closedness premise, a positive Fin(n+1) family, and one point in the last domain and every other ambient domain interior. This point is independent of the query. Singleton indexing makes the earlier-interior condition vacuous (G2.23.INDEX). The source proves inclusion locally and cites Bauschke and Combettes (2017), Corollary 16.50 for equality. The separation and induction proof below is a library proof, not a reconstruction of that external text. The finite-dimensional real inner-product carrier generalizes the Euclidean presentation.",
+          "contract": {
+            "model": "Finite-dimensional real inner-product space, ordinary EReal sum and actual component support witnesses.",
+            "assumptions": "Equality quantifies EVERY queried x for a positive Fin(n+1) family. ALL components are proper, convex and CLOSED. An independent z is in the LAST domain and every OTHER AMBIENT domain interior; last may be boundary. For a singleton the other-interior condition is vacuous, while all proper/convex/closed hypotheses remain. Do not replace by all interiors, relative interiors, closure or qualification at the queried x.",
+            "parameters": "All component functions and every queried x; equality qualification point z is independent of x.",
+            "regret": "No algorithm, probability, regret or measurable/computable selection guarantee.",
+            "guarantee": "Exact equality at every queried point, including points outside the sum domain."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Bounded library declarations",
+            "boundary": "The inclusion keeps only individual properness and allows an empty finite index family, an explicit extension of the printed positive-family notation. The shared global-support predicate is defined for all EReal functions; the printed definition only covers proper functions. Proper components need not have a proper sum (G2.23.PROPER). Equality keeps every properness, convexity and closedness premise, a positive Fin(n+1) family, and one point in the last domain and every other ambient domain interior. This point is independent of the query. Singleton indexing makes the earlier-interior condition vacuous (G2.23.INDEX). The source proves inclusion locally and cites Bauschke and Combettes (2017), Corollary 16.50 for equality. The separation and induction proof below is a library proof, not a reconstruction of that external text. The finite-dimensional real inner-product carrier generalizes the Euclidean presentation. Later source obligations, Chapter 2 and the whole book remain incomplete."
+          }
+        }
+      ],
+      "proof_bridge": {
+        "title": "From a sum support to actual component vectors",
+        "summary": "Inclusion follows the printed sum argument; reverse decomposition is supplied by the library separation and induction proof.",
+        "steps": [
+          {
+            "title": "Derive query finiteness",
+            "detail": "The mixed common point makes the actual aggregate proper. A global aggregate support forces its queried value finite, then no-bottom arithmetic forces all component values finite.",
+            "math": "\\(g\\in\\partial F(x)\\Longrightarrow F(x)<+\\infty\\Longrightarrow f_i(x)<+\\infty\\)",
+            "fallback": "Query finiteness is proved internally, never added to the source theorem."
+          },
+          {
+            "title": "Obtain a real separating functional",
+            "detail": "The stronger binary interface omits closedness and explicitly takes finite query values. Build the linear image of two actual real epigraphs; aggregate support gives contact and noninterior. A nonzero separating L(v,t)=A(v)+ct has c<=0 from upward heights. If c=0, variation at the qualifying interior point forces A=0 and L=0, a contradiction; hence c<0. Normalize and use Riesz to produce actual global p and g-p, treating top branches before toReal.",
+            "math": "\\(L(w,t)=A(w)+ct,\\qquad c<0\\)",
+            "fallback": "This is actual finite-dimensional separation, including empty-interior image cases."
+          },
+          {
+            "title": "Construct complementary supports",
+            "detail": "Normalize -A/c and use Riesz representation. The resulting p and g-p satisfy the original global inequalities, including infinite test values.",
+            "math": "\\(p\\in\\partial f(x),\\qquad g-p\\in\\partial h(x)\\)",
+            "fallback": "The second qualifying point may lie on the domain boundary."
+          },
+          {
+            "title": "Extend to every positive finite family",
+            "detail": "The mixed point yields prefix interior and an actual common finite value, so prefix/full sums are proper and prefix convex. Actual aggregate support then forces query finiteness and no-bottom summation forces every component finite. Apply the binary producer, recursively decompose the prefix, and use Fin.snoc to construct all component vectors and their exact sum. Public closedness hypotheses remain and are passed recursively; no decomposition or dual-attainment oracle is assumed.",
+            "math": "\\(g=\\sum_iG_i,\\qquad G_i\\in\\partial f_i(x)\\)",
+            "fallback": "The singleton case uses no domain interior. Outside-domain equality is retained."
+          }
+        ],
+        "boundary": "The inclusion keeps only individual properness and allows an empty finite index family, an explicit extension of the printed positive-family notation. The shared global-support predicate is defined for all EReal functions; the printed definition only covers proper functions. Proper components need not have a proper sum (G2.23.PROPER). Equality keeps every properness, convexity and closedness premise, a positive Fin(n+1) family, and one point in the last domain and every other ambient domain interior. This point is independent of the query. Singleton indexing makes the earlier-interior condition vacuous (G2.23.INDEX). The source proves inclusion locally and cites Bauschke and Combettes (2017), Corollary 16.50 for equality. The separation and induction proof below is a library proof, not a reconstruction of that external text. The finite-dimensional real inner-product carrier generalizes the Euclidean presentation. Later source obligations, Chapter 2 and the whole book remain incomplete."
+      },
+      "worked_example": {
+        "title": "A genuine last-domain boundary and a thin singleton",
+        "intro": "Twenty retained canary theorems and three test definitions include premise-building helpers and exercise qualified decomposition, outside-domain queries, singleton indexing, nonconvex vacuity and empty-index inclusion.",
+        "steps": [
+          {
+            "title": "Three components and a nonzero vector",
+            "detail": "Take two squares and the zero/top indicator of [0,2], at x=0. The actual aggregate has support -1; the theorem produces three component supports whose sum is -1.",
+            "math": "\\(F(y)=2y^2+I_{[0,2]}(y),\\quad -1\\in\\partial F(0)\\)",
+            "fallback": "The last qualifying point 0 is not in the last domain interior."
+          },
+          {
+            "title": "Query outside the domain",
+            "detail": "At x=3, both aggregate and Minkowski support sets are empty. The same all-x theorem applies.",
+            "math": "\\(\\partial F(3)=\\sum_i\\partial f_i(3)=\\varnothing\\)",
+            "fallback": "No finite-query premise is hidden."
+          },
+          {
+            "title": "Singleton family with empty interior",
+            "detail": "On the REAL line, indicator{0} is proper, convex and closed; its domain has empty REAL interior. With one component the other-interior condition is vacuous, so the full equality produces genuine support7 at0. The retained regularity hypotheses do not vanish.",
+            "math": "\\(\\operatorname{int}\\{0\\}=\\varnothing,\\quad 7\\in\\partial I_{\\{0\\}}(0)\\)",
+            "fallback": "Requiring every domain interior would incorrectly exclude this source case."
+          }
+        ],
+        "takeaway": "The exact mixed qualification handles real boundary geometry, all queried points and the singleton edge case.",
+        "boundary": "Later source obligations, Chapter 2 and the whole book remain incomplete."
+      }
+    },
+    {
+      "slug": "online-subgradient-absolute",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10,21June2026",
+        "sections": "Section 2.2.1, Example 2.24: scalar absolute value",
+        "pages": "printed18/PDF30",
+        "pdf_page": 30,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "Global scalar support",
+          "meaning": "A real g satisfies |x|+g(y-x) <= |y| for every real y. This characterizes the entire support set."
+        },
+        {
+          "term": "Closed interval",
+          "meaning": "At zero the answer contains both endpoints and all intermediate slopes of [-1,1]. At positive or negative x the answer is the singleton {1} or {-1} respectively."
+        },
+        {
+          "term": "Finite embedding",
+          "meaning": "Real absolute value is embedded into EReal to use the shared support definition. It is finite everywhere; neither abstract E nor an extra convexity or differentiability assumption occurs."
+        }
+      ],
+      "algorithm": {
+        "title": "Characterize all global supports",
+        "kind": "proof flow",
+        "steps": [
+          {
+            "title": "Test necessary inequalities",
+            "detail": "At nonzero x, actual tests y=0 and y=2x give x(g-1)=0 for positive x or x(g+1)=0 for negative x. The strict sign guarantees x≠0 for cancellation. The inequalities y≤|y| and -y≤|y| prove sufficiency at EVERY real y. At zero, tests y=1,-1 give -1≤g≤1. Conversely, any g in the FULL CLOSED interval globally supports: multiply the upper bound when y≥0 and the lower bound with reversed order when y<0. Both endpoints and every interior slope remain; choosing only0 or asserting existence is weaker."
+          },
+          {
+            "title": "Prove every proposed slope works",
+            "detail": "Prove both directions with every global test y. At zero, tests y=1,-1 give -1≤g≤1. Conversely, any g in the FULL CLOSED interval globally supports: multiply the upper bound when y≥0 and the lower bound with reversed order when y<0. Both endpoints and every interior slope remain; choosing only0 or asserting existence is weaker. At nonzero x, actual tests y=0 and y=2x give x(g-1)=0 for positive x or x(g+1)=0 for negative x. The strict sign guarantees x≠0 for cancellation. The inequalities y≤|y| and -y≤|y| prove sufficiency at EVERY real y."
+          },
+          {
+            "title": "Cover every real query",
+            "detail": "The exact allx terminal dispatches the three proved equalities, deriving x<0 in the final else. No support inequality is assumed as a consumer premise."
+          }
+        ]
+      },
+      "teaching_route": [
+        "BanditRL.OnlineConvex.abs_subgradient_positive",
+        "BanditRL.OnlineConvex.abs_subgradient_zero",
+        "BanditRL.OnlineConvex.abs_subgradient_negative",
+        "BanditRL.OnlineConvex.example_2_24"
+      ],
+      "source_theorems": [
+        {
+          "label": "Example2.24",
+          "pages": "printed18",
+          "pdf_page": 30,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\(\\partial|\\cdot|(x)=\\begin{cases}\\{1\\}&x>0,\\\\[-1,1]&x=0,\\\\\\{-1\\}&x<0.\\end{cases}\\)",
+          "fallback": "The subdifferential is {1} at positive x, the closed interval [-1,1] at zero, and {-1} at negative x.",
+          "plain": "Every global support slope is characterized exactly, at every real query.",
+          "relationship": "The source states the three exact scalar cases without a derivation. The direct inequalities below supply a library proof; G2.24.POS, G2.24.ZERO and G2.24.NEG record the missing local source derivations. Four real-scalar theorems have no abstract-space, finite-dimensionality, convexity or differentiability premises. The absolute-value function is finite and proper everywhere, so the wider shared support definition causes no improper-function ambiguity here.",
+          "contract": {
+            "model": "Real scalar absolute value, embedded into EReal.",
+            "assumptions": "None for the allx terminal. Positive/negative leaves have only their strict sign hypothesis; zero leaf has no supplied slope/support premise.",
+            "parameters": "Every real query x and every real candidate slope g; the support definition quantifies every ambient real y.",
+            "regret": "No algorithm/probability/feedback/regret or measurable/computable selection guarantee.",
+            "guarantee": "Complete three-case set equality, including the full CLOSED [-1,1] at zero."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Bounded library declarations",
+            "boundary": "The source states the three exact scalar cases without a derivation. The direct inequalities below supply a library proof; G2.24.POS, G2.24.ZERO and G2.24.NEG record the missing local source derivations. Four real-scalar theorems have no abstract-space, finite-dimensionality, convexity or differentiability premises. The absolute-value function is finite and proper everywhere, so the wider shared support definition causes no improper-function ambiguity here. Later source obligations, Chapter 2 and the whole book remain incomplete."
+          }
+        }
+      ],
+      "proof_bridge": {
+        "title": "Necessity and global sufficiency",
+        "summary": "The source states the cases; direct scalar library proofs establish necessity and sufficiency.",
+        "steps": [
+          {
+            "title": "Positive and negative uniqueness",
+            "detail": "At nonzero x, actual tests y=0 and y=2x give x(g-1)=0 for positive x or x(g+1)=0 for negative x. The strict sign guarantees x≠0 for cancellation. The inequalities y≤|y| and -y≤|y| prove sufficiency at EVERY real y.",
+            "math": "\\(g\\in\\partial|\\cdot|(x),\\ x>0\\Rightarrow g=1;\\quad x<0\\Rightarrow g=-1\\)",
+            "fallback": "Both uniqueness and global support are proved."
+          },
+          {
+            "title": "All zero slopes",
+            "detail": "At zero, tests y=1,-1 give -1≤g≤1. Conversely, any g in the FULL CLOSED interval globally supports: multiply the upper bound when y≥0 and the lower bound with reversed order when y<0. Both endpoints and every interior slope remain; choosing only0 or asserting existence is weaker.",
+            "math": "\\(g\\in\\partial|\\cdot|(0)\\Longleftrightarrow -1\\le g\\le1\\)",
+            "fallback": "Includes both endpoints and fractional slopes."
+          },
+          {
+            "title": "One all-query terminal",
+            "detail": "Real trichotomy selects the sign leaf; no x≠0, bounded set, existence or assumed support premise is introduced.",
+            "math": "\\(\\forall x\\in\\mathbb R,\\quad\\partial|\\cdot|(x)=\\text{the source three-case set}\\)",
+            "fallback": "Every real query is covered."
+          }
+        ],
+        "boundary": "The source states the three exact scalar cases without a derivation. The direct inequalities below supply a library proof; G2.24.POS, G2.24.ZERO and G2.24.NEG record the missing local source derivations. Four real-scalar theorems have no abstract-space, finite-dimensionality, convexity or differentiability premises. The absolute-value function is finite and proper everywhere, so the wider shared support definition causes no improper-function ambiguity here. Later source obligations, Chapter 2 and the whole book remain incomplete."
+      },
+      "worked_example": {
+        "title": "Fractional and boundary slopes at the kink",
+        "intro": "Three retained canaries exercise the closed interval, non-singleton zero support and all three query cases.",
+        "steps": [
+          {
+            "title": "Zero has many supports",
+            "detail": "Slopes -1,1 and1/2 all support |y| at zero; slope2 does not. The support set cannot be a singleton.",
+            "math": "\\(-1,1,\\tfrac12\\in\\partial|\\cdot|(0),\\quad2\\notin\\partial|\\cdot|(0)\\)",
+            "fallback": "Zero is not replaced by the single slope0."
+          },
+          {
+            "title": "Nonzero queries",
+            "detail": "Instantiate the complete original terminal at2,-2 and0 to exercise all source branches.",
+            "math": "\\(\\partial|\\cdot|(2)=\\{1\\},\\quad\\partial|\\cdot|(-2)=\\{-1\\}\\)",
+            "fallback": "Both nonzero sides and the zero branch are checked."
+          },
+          {
+            "title": "Exclude an invalid slope and a singleton answer",
+            "detail": "The same zero equality excludes slope2, and the two distinct admitted endpoints prove that no singleton can equal the zero subdifferential.",
+            "math": "\\(2\\notin\\partial|\\cdot|(0),\\quad\\neg\\exists g,\\ \\partial|\\cdot|(0)=\\{g\\}\\)",
+            "fallback": "Both directions of the zero characterization are exercised."
+          }
+        ],
+        "takeaway": "The nonsmooth point has the full closed interval, while nonzero points have unique slopes.",
+        "boundary": "Later source obligations, Chapter 2 and the whole book remain incomplete."
+      }
+    },
+    {
+      "slug": "online-normal-cone",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10,21June2026",
+        "sections": "Section 2.2.1, Example 2.25: indicator and normal cone",
+        "pages": "printed18/PDF30",
+        "pdf_page": 30,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "Feasible normal convention",
+          "meaning": "N_V(x) consists of g with x in V and inner(g,y-x) <= 0 for every y in V. Empty V or an off-set x gives the empty cone. This is an explicit library convention at off-set points, which the source leaves implicit."
+        },
+        {
+          "term": "Extended indicator",
+          "meaning": "The indicator is zero on V and top outside. Nonempty V makes it proper and allows support to force query feasibility. For empty V, generic all-top support would instead contain every vector, so the indicator theorem retains nonemptiness."
+        },
+        {
+          "term": "Ambient interior and unit ball",
+          "meaning": "Interior is ambient, not relative. The closed unit ball is norm y <= 1, its boundary query has norm x=1, and its cone is all alpha*x for real alpha >= 0. In zero dimension no unit query exists; no positive-dimension premise is added."
+        }
+      ],
+      "algorithm": {
+        "title": "Construct and characterize the actual normals",
+        "kind": "proof flow",
+        "steps": [
+          {
+            "title": "Use the actual indicator support",
+            "detail": "Nonempty V produces actual indicator properness. The shared support-domain theorem forces queried x∈V. At every feasible y, the global support inequality reduces to inner(g,y-x)≤0; outside y its upper value is top. Conversely actual feasible normality gives global support at EVERY ambient y. Exact equality holds for EVERY query and candidate vector, including outside-query emptiness."
+          },
+          {
+            "title": "Move along an interior normal",
+            "detail": "AMBIENT interior supplies an actual metric ball around x inside V. If g≠0, choose a=r/(2‖g‖)>0 so actual y=x+ag lies in that ball; normality gives a‖g‖²≤0, contradicting positivity. Zero satisfies all inequalities and x is feasible. Ambient interior is not relative interior; no conclusion of zero normals is supplied at a thin set with empty ambient interior."
+          },
+          {
+            "title": "Normalize a boundary normal",
+            "detail": "The set is the CLOSED unit ball ‖y‖≤1, query ‖x‖=1. Zero gives α=0. For g≠0 test actual y=g/‖g‖; normality and Cauchy imply inner(g,x)=‖g‖. The squared difference ‖g-‖g‖x‖²=0 produces g=‖g‖x and α=‖g‖≥0. Conversely EVERY real α≥0 satisfies ALL feasible-y inequalities by Cauchy. Whole ray equality includes zero and both directions; radiality is produced, not assumed. In zero dimension no norm1 query exists, so this boundary result is vacuous without adding d>0."
+          }
+        ]
+      },
+      "teaching_route": [
+        "BanditRL.OnlineConvex.indicator_subdifferential_eq_normalCone",
+        "BanditRL.OnlineConvex.normalCone_interior_eq_zero",
+        "BanditRL.OnlineConvex.normalCone_unitBall_boundary"
+      ],
+      "source_theorems": [
+        {
+          "label": "Example2.25 indicator",
+          "pages": "printed18",
+          "pdf_page": 30,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\(x\\in V:\\quad\\partial\\iota_V(x)=\\{g:\\forall y\\in V,\\ \\langle g,y-x\\rangle\\le0\\}\\)",
+          "fallback": "For nonempty convex V and x in V, indicator supports are exactly the vectors satisfying all feasible displacement inequalities. The library feasible-normal convention extends equality to every x.",
+          "plain": "For nonempty convex V and x in V, indicator supports are exactly the vectors satisfying all feasible displacement inequalities. The library feasible-normal convention extends equality to every x.",
+          "relationship": "The library chooses feasible normals: x belongs to V and every feasible displacement has nonpositive inner product. This explicitly makes the cone empty outside V; the inspected source names the cone after an x-in-V reduction and does not independently specify its off-set convention (G2.25.OFFSET). Indicator equality and interior equality retain nonempty convex V in a finite-dimensional real inner-product space; no closedness of V is added. The unit-ball result retains norm x=1 and the entire nonnegative ray, including zero. The definition itself needs no finite dimension, convexity or nonemptiness. The reverse indicator bridge is compressed in the source, the interior proof is only a hint, and the ball equality has no local proof (G2.25.EQUIV, G2.25.INTERIOR, G2.25.BALL). The proofs below complete these library arguments without claiming the source supplied them.",
+          "contract": {
+            "model": "Finite-dimensional real inner-product space, zero/top indicator and explicitly feasible normals.",
+            "assumptions": "Explicit FD/nonemptyconvexV; every ambientquery x including outsideV. No query-feasibility, generalclosed/boundedV premise.",
+            "parameters": "Every candidate g, EVERY ambient support test y and EVERY feasible normal test y.",
+            "regret": "No algorithm/regret/probability/feedback/computable or measurable vector selection claim.",
+            "guarantee": "Complete indicator subdifferential equals full feasible normal set, both directions/allqueries incloutsideempty."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Bounded library declarations",
+            "boundary": "The library chooses feasible normals: x belongs to V and every feasible displacement has nonpositive inner product. This explicitly makes the cone empty outside V; the inspected source names the cone after an x-in-V reduction and does not independently specify its off-set convention (G2.25.OFFSET). Indicator equality and interior equality retain nonempty convex V in a finite-dimensional real inner-product space; no closedness of V is added. The unit-ball result retains norm x=1 and the entire nonnegative ray, including zero. The definition itself needs no finite dimension, convexity or nonemptiness. The reverse indicator bridge is compressed in the source, the interior proof is only a hint, and the ball equality has no local proof (G2.25.EQUIV, G2.25.INTERIOR, G2.25.BALL). The proofs below complete these library arguments without claiming the source supplied them. Later source obligations, Chapter 2 and the whole book remain incomplete."
+          }
+        },
+        {
+          "label": "Example2.25 interior",
+          "pages": "printed18",
+          "pdf_page": 30,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\(x\\in\\operatorname{int}V\\Longrightarrow N_V(x)=\\{0\\}\\)",
+          "fallback": "Interior normals are exactly zero, proved from an actual feasible neighborhood.",
+          "plain": "Interior normals are exactly zero, proved from an actual feasible neighborhood.",
+          "relationship": "The library chooses feasible normals: x belongs to V and every feasible displacement has nonpositive inner product. This explicitly makes the cone empty outside V; the inspected source names the cone after an x-in-V reduction and does not independently specify its off-set convention (G2.25.OFFSET). Indicator equality and interior equality retain nonempty convex V in a finite-dimensional real inner-product space; no closedness of V is added. The unit-ball result retains norm x=1 and the entire nonnegative ray, including zero. The definition itself needs no finite dimension, convexity or nonemptiness. The reverse indicator bridge is compressed in the source, the interior proof is only a hint, and the ball equality has no local proof (G2.25.EQUIV, G2.25.INTERIOR, G2.25.BALL). The proofs below complete these library arguments without claiming the source supplied them.",
+          "contract": {
+            "model": "Finite-dimensional real inner-product space, zero/top indicator and explicitly feasible normals.",
+            "assumptions": "Explicit FD/nonemptyconvexV, x in actual AMBIENT interiorV. No relative-interior or closedV replacement.",
+            "parameters": "Every eligible interiorquery x and every candidate g.",
+            "regret": "No algorithm/regret/probability/feedback/computable or measurable vector selection claim.",
+            "guarantee": "Entire normal set equals singletonzero, including actual membership of0."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Bounded library declarations",
+            "boundary": "The library chooses feasible normals: x belongs to V and every feasible displacement has nonpositive inner product. This explicitly makes the cone empty outside V; the inspected source names the cone after an x-in-V reduction and does not independently specify its off-set convention (G2.25.OFFSET). Indicator equality and interior equality retain nonempty convex V in a finite-dimensional real inner-product space; no closedness of V is added. The unit-ball result retains norm x=1 and the entire nonnegative ray, including zero. The definition itself needs no finite dimension, convexity or nonemptiness. The reverse indicator bridge is compressed in the source, the interior proof is only a hint, and the ball equality has no local proof (G2.25.EQUIV, G2.25.INTERIOR, G2.25.BALL). The proofs below complete these library arguments without claiming the source supplied them. Later source obligations, Chapter 2 and the whole book remain incomplete."
+          }
+        },
+        {
+          "label": "Example2.25 unit-ball boundary",
+          "pages": "printed18",
+          "pdf_page": 30,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\(\\|x\\|=1\\Longrightarrow N_{\\{y:\\|y\\|\\le1\\}}(x)=\\{\\alpha x:\\alpha\\ge0\\}\\)",
+          "fallback": "Every boundary normal is a nonnegative radial multiple, and every such multiple is a normal.",
+          "plain": "Every boundary normal is a nonnegative radial multiple, and every such multiple is a normal.",
+          "relationship": "The library chooses feasible normals: x belongs to V and every feasible displacement has nonpositive inner product. This explicitly makes the cone empty outside V; the inspected source names the cone after an x-in-V reduction and does not independently specify its off-set convention (G2.25.OFFSET). Indicator equality and interior equality retain nonempty convex V in a finite-dimensional real inner-product space; no closedness of V is added. The unit-ball result retains norm x=1 and the entire nonnegative ray, including zero. The definition itself needs no finite dimension, convexity or nonemptiness. The reverse indicator bridge is compressed in the source, the interior proof is only a hint, and the ball equality has no local proof (G2.25.EQUIV, G2.25.INTERIOR, G2.25.BALL). The proofs below complete these library arguments without claiming the source supplied them.",
+          "contract": {
+            "model": "Finite-dimensional real inner-product space, zero/top indicator and explicitly feasible normals.",
+            "assumptions": "Explicit FD and normx=1, CLOSEDunitballnormy≤1. No assumed direction/multiplier or positive dimension.",
+            "parameters": "Every unit queryx/every candidateg/realα≥0 including0; EVERY feasibley.",
+            "regret": "No algorithm/regret/probability/feedback/computable or measurable vector selection claim.",
+            "guarantee": "FULL nonnegative radial-ray equality, produced and proved in both directions. Zero-dimensional case has no unitquery."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Bounded library declarations",
+            "boundary": "The library chooses feasible normals: x belongs to V and every feasible displacement has nonpositive inner product. This explicitly makes the cone empty outside V; the inspected source names the cone after an x-in-V reduction and does not independently specify its off-set convention (G2.25.OFFSET). Indicator equality and interior equality retain nonempty convex V in a finite-dimensional real inner-product space; no closedness of V is added. The unit-ball result retains norm x=1 and the entire nonnegative ray, including zero. The definition itself needs no finite dimension, convexity or nonemptiness. The reverse indicator bridge is compressed in the source, the interior proof is only a hint, and the ball equality has no local proof (G2.25.EQUIV, G2.25.INTERIOR, G2.25.BALL). The proofs below complete these library arguments without claiming the source supplied them. Later source obligations, Chapter 2 and the whole book remain incomplete."
+          }
+        }
+      ],
+      "proof_bridge": {
+        "title": "Full equalities from global inequalities",
+        "summary": "The library completes the source reduction and interior hint, and supplies the omitted unit-ball proof.",
+        "steps": [
+          {
+            "title": "Derive actual query feasibility",
+            "detail": "Nonempty V produces actual indicator properness. The shared support-domain theorem forces queried x∈V. At every feasible y, the global support inequality reduces to inner(g,y-x)≤0; outside y its upper value is top. Conversely actual feasible normality gives global support at EVERY ambient y. Exact equality holds for EVERY query and candidate vector, including outside-query emptiness.",
+            "math": "\\(g\\in\\partial\\iota_V(x)\\Longleftrightarrow x\\in V\\text{ and }\\forall y\\in V,\\langle g,y-x\\rangle\\le0\\)",
+            "fallback": "Every x, including outside-domain emptiness."
+          },
+          {
+            "title": "Exclude nonzero interior normals",
+            "detail": "AMBIENT interior supplies an actual metric ball around x inside V. If g≠0, choose a=r/(2‖g‖)>0 so actual y=x+ag lies in that ball; normality gives a‖g‖²≤0, contradicting positivity. Zero satisfies all inequalities and x is feasible. Ambient interior is not relative interior; no conclusion of zero normals is supplied at a thin set with empty ambient interior.",
+            "math": "\\(a>0,\\quad a\\|g\\|^2\\le0\\Longrightarrow g=0\\)",
+            "fallback": "Uses the actual ambient neighborhood, not a consumer bound."
+          },
+          {
+            "title": "Construct the full boundary ray",
+            "detail": "The set is the CLOSED unit ball ‖y‖≤1, query ‖x‖=1. Zero gives α=0. For g≠0 test actual y=g/‖g‖; normality and Cauchy imply inner(g,x)=‖g‖. The squared difference ‖g-‖g‖x‖²=0 produces g=‖g‖x and α=‖g‖≥0. Conversely EVERY real α≥0 satisfies ALL feasible-y inequalities by Cauchy. Whole ray equality includes zero and both directions; radiality is produced, not assumed. In zero dimension no norm1 query exists, so this boundary result is vacuous without adding d>0.",
+            "math": "\\(\\|g-\\|g\\|x\\|^2=0,\\quad g=\\|g\\|x\\)",
+            "fallback": "Both ray directions, zero and all vectors retained."
+          }
+        ],
+        "boundary": "The library chooses feasible normals: x belongs to V and every feasible displacement has nonpositive inner product. This explicitly makes the cone empty outside V; the inspected source names the cone after an x-in-V reduction and does not independently specify its off-set convention (G2.25.OFFSET). Indicator equality and interior equality retain nonempty convex V in a finite-dimensional real inner-product space; no closedness of V is added. The unit-ball result retains norm x=1 and the entire nonnegative ray, including zero. The definition itself needs no finite dimension, convexity or nonemptiness. The reverse indicator bridge is compressed in the source, the interior proof is only a hint, and the ball equality has no local proof (G2.25.EQUIV, G2.25.INTERIOR, G2.25.BALL). The proofs below complete these library arguments without claiming the source supplied them. Later source obligations, Chapter 2 and the whole book remain incomplete."
+      },
+      "worked_example": {
+        "title": "Boundary, thin set and genuine two-dimensional normals",
+        "intro": "Four retained canaries and two test basis definitions cover an interval, a singleton and a genuine two-dimensional unit-ball query.",
+        "steps": [
+          {
+            "title": "Interval boundary and outside query",
+            "detail": "For V=[0,1] at0, slope-1 is a genuine support while+1 is excluded. At2 the indicator subdifferential is empty. At1/2 it equals{0}.",
+            "math": "\\(-1\\in N_{[0,1]}(0),\\quad1\\notin N_{[0,1]}(0),\\quad\\partial\\iota_{[0,1]}(2)=\\varnothing\\)",
+            "fallback": "All-query equality and interiorzero both exercised."
+          },
+          {
+            "title": "A nonempty set with empty interior",
+            "detail": "For V={0} in ℝ the actual canary proves every real slope is a support, including7. The separate elementary fact that this singleton has empty ambient interior explains why the interior theorem is inapplicable; the canary does not itself prove that topological fact.",
+            "math": "\\(N_{\\{0\\}}(0)=\\mathbb R\\)",
+            "fallback": "No hidden full-dimensional requirement."
+          },
+          {
+            "title": "Unit coordinate in two dimensions",
+            "detail": "At the first Euclidean unit basis vectorx,2x and0 belong. The second unit basis vector is tangential and excluded; -x is excluded as a negative multiple.",
+            "math": "\\(2e_0,0\\in N_B(e_0),\\quad e_1,-e_0\\notin N_B(e_0)\\)",
+            "fallback": "Actual EuclideanSpace real Fin2 canary, not only a scalar or zero instance."
+          }
+        ],
+        "takeaway": "Normal geometry depends on the actual set and query, and the boundary ray includes exactly nonnegative radial vectors.",
+        "boundary": "Later source obligations, Chapter 2 and the whole book remain incomplete."
+      }
+    },
+    {
+      "slug": "online-subgradient-max",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10,21June2026",
+        "sections": "Section 2.2.1, Theorem 2.26: finite maximum",
+        "pages": "printed18/PDF30",
+        "pdf_page": 30,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "Maximum and active set",
+          "meaning": "A finite nonempty index set defines F(x)=max_i f_i(x). An index is active exactly when f_i(x)=F(x). The active union contains all global supports of every active component, including ties."
+        },
+        {
+          "term": "Shared global support",
+          "meaning": "A support g satisfies f(x)+inner(g,y-x) <= f(y) for every ambient y. Every component is proper and the common query is finite for every component, making the maximum proper; top values away from the query remain allowed."
+        },
+        {
+          "term": "Ordinary convex hull and continuity",
+          "meaning": "The conclusion is the ordinary convex hull of the active union, with no added closure. Every component, including inactive ones, is continuous at x in the ambient EReal topology. This explicitly specifies the source convention; it is not relative-domain continuity. Helper declarations keep their own weaker signatures."
+        }
+      ],
+      "algorithm": {
+        "title": "Prove both directions of the maximum rule",
+        "kind": "proof flow",
+        "steps": [
+          {
+            "title": "Lift active supports",
+            "detail": "An attaining component has fi(x)=F(x) and fi(y)≤F(y) for every ambient y. Its full global support therefore supports F. The maximum support set is convex at this finite query, so the ordinary active convex hull supports F. The active lifting result needs no properness/convexity/continuity; hull-forward needs properness/common finite query but not convexity of the fi or continuity. Those weaker-premise foundations are not the full numbered source terminal."
+          },
+          {
+            "title": "Establish ordinary hull compactness",
+            "detail": "Ambient continuity and finite query values give actual interior neighborhoods of the effective domains. Shared local support boundedness and closed global inequalities make component supports compact. A convex join is the continuous image of [0,1] times two compact sets; finite induction gives compactness of the ordinary active hull, with inactive sets empty. The generic finite-convex-union helper permits an empty selected Finset; the domain-interior continuity helper permits a bottom query value, unlike the source terminal."
+          },
+          {
+            "title": "Construct the reverse",
+            "detail": "For g supporting F and EACH direction d, use yn=x+d/(n+1), choose actual maximizing indices and actual component supports at sufficiently large n, and use the finite family local bounds for a compact subsequence. One finite index recurs; the restricted frequent-index filter is NeBot. Continuity makes that index active at x, and the global support limit yields k in its full support set. Actual displacement comparison gives inner(g,d)≤inner(k,d). This k depends on d, including d=0; no single k for all directions and no supplied witness is claimed. If g were outside the ordinary active hull, its compactness and convexity give strict separation by a continuous linear functional. Riesz supplies the corresponding direction d. The constructed active k has at least the directional value of g, contradicting separation. Thus every maximum support belongs to the ordinary hull; both equality directions are proved without a closure replacement."
+          }
+        ]
+      },
+      "teaching_route": [
+        "BanditRL.OnlineConvex.SourceFiniteMax",
+        "BanditRL.OnlineConvex.isCompact_active_subgradient_hull",
+        "BanditRL.OnlineConvex.max_subgradient_direction_witness",
+        "BanditRL.OnlineConvex.theorem_2_26"
+      ],
+      "source_theorems": [
+        {
+          "label": "Theorem2.26 finite maximum rule",
+          "pages": "printed18",
+          "pdf_page": 30,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\(F=\\max_{i\\in I}f_i,\\quad A(x)=\\{i:f_i(x)=F(x)\\},\\qquad\\partial F(x)=\\operatorname{conv}\\!\\bigcup_{i\\in A(x)}\\partial f_i(x)\\)",
+          "fallback": "The maximum subdifferential is exactly the ordinary convex hull of all active component subdifferentials.",
+          "plain": "For a finite family of proper convex functions, if every function is finite and continuous at x, every maximum support is a finite convex combination of active component supports, and every such combination supports the maximum.",
+          "relationship": "The library explicitly uses a finite nonempty index set because the source leaves the empty-maximum convention unspecified (G2.26.EMPTY). Every component is proper and convex, the query lies in every effective domain, and every component, including inactive ones, is continuous there. Continuity is interpreted in the ambient topology with EReal carrying its standard topology; the inspected source does not expand this convention (G2.26.CONTINUITY). The conclusion uses ordinary convex hull without closure. No component closedness, global finiteness, relative-domain continuity or supplied decomposition is assumed. Finite-dimensional real inner-product spaces generalize the Euclidean carrier. The source cites Bauschke and Combettes (2017), Theorem 18.5 and gives no local proof. The compactness and separation argument below is the library proof, not an independently checked reconstruction of that external result.",
+          "contract": {
+            "model": "Finite-dimensional real inner-product space and finite nonempty family of EReal functions.",
+            "assumptions": "Every component is proper and convex, x belongs to every effective domain, and EVERY component, including inactive ones, is continuous at x into EReal in the AMBIENT topology. No relative-domain continuity, global finiteness, component closedness, bounded domain, supplied support decomposition or closure of the hull is assumed.",
+            "parameters": "Every finite nonempty family/common query x/candidate g; EVERY ambient test y, ALL active indices/finite convex combinations. Directional witness k depends on the chosen d.",
+            "regret": "No algorithm/regret/probability/feedback/computable or measurable selection claim.",
+            "guarantee": "Complete ordinary active-support convexHull equality, both directions/all candidate vectors; ties and inactive functions retained exactly."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Bounded library declarations",
+            "boundary": "The library explicitly uses a finite nonempty index set because the source leaves the empty-maximum convention unspecified (G2.26.EMPTY). Every component is proper and convex, the query lies in every effective domain, and every component, including inactive ones, is continuous there. Continuity is interpreted in the ambient topology with EReal carrying its standard topology; the inspected source does not expand this convention (G2.26.CONTINUITY). The conclusion uses ordinary convex hull without closure. No component closedness, global finiteness, relative-domain continuity or supplied decomposition is assumed. Finite-dimensional real inner-product spaces generalize the Euclidean carrier. The source cites Bauschke and Combettes (2017), Theorem 18.5 and gives no local proof. The compactness and separation argument below is the library proof, not an independently checked reconstruction of that external result. Later source obligations, Chapter 2 and the whole book remain incomplete."
+          }
+        }
+      ],
+      "proof_bridge": {
+        "title": "An actual support decomposition through compactness and separation",
+        "summary": "The source gives only an external citation; this is the library compactness and separation proof.",
+        "steps": [
+          {
+            "title": "Lift and take convex combinations",
+            "detail": "An attaining component has fi(x)=F(x) and fi(y)≤F(y) for every ambient y. Its full global support therefore supports F. The maximum support set is convex at this finite query, so the ordinary active convex hull supports F. The active lifting result needs no properness/convexity/continuity; hull-forward needs properness/common finite query but not convexity of the fi or continuity. Those weaker-premise foundations are not the full numbered source terminal.",
+            "math": "\\(\\operatorname{conv}\\!\\bigcup_{i\\in A(x)}\\partial f_i(x)\\subseteq\\partial F(x)\\)",
+            "fallback": "Actual finite maximum order and all-y support inequalities."
+          },
+          {
+            "title": "Make the ordinary hull compact",
+            "detail": "Ambient continuity and finite query values give actual interior neighborhoods of the effective domains. Shared local support boundedness and closed global inequalities make component supports compact. A convex join is the continuous image of [0,1] times two compact sets; finite induction gives compactness of the ordinary active hull, with inactive sets empty. The generic finite-convex-union helper permits an empty selected Finset; the domain-interior continuity helper permits a bottom query value, unlike the source terminal.",
+            "math": "\\(\\partial f_i(x)\\text{ compact},\\qquad K=\\operatorname{conv}\\!\\bigcup_{i\\in A(x)}\\partial f_i(x)\\text{ compact}\\)",
+            "fallback": "No closure replacement or global closedness premise."
+          },
+          {
+            "title": "Construct a support dominating a direction",
+            "detail": "For g supporting F and EACH direction d, use yn=x+d/(n+1), choose actual maximizing indices and actual component supports at sufficiently large n, and use the finite family local bounds for a compact subsequence. One finite index recurs; the restricted frequent-index filter is NeBot. Continuity makes that index active at x, and the global support limit yields k in its full support set. Actual displacement comparison gives inner(g,d)≤inner(k,d). This k depends on d, including d=0; no single k for all directions and no supplied witness is claimed.",
+            "math": "\\(\\langle g,y_n-x\\rangle\\le\\langle q_n,y_n-x\\rangle,\\qquad\\langle g,d\\rangle\\le\\langle k,d\\rangle\\)",
+            "fallback": "Both actual choices and the limit support are constructed."
+          },
+          {
+            "title": "Contradict strict separation",
+            "detail": "If g were outside the ordinary active hull, its compactness and convexity give strict separation by a continuous linear functional. Riesz supplies the corresponding direction d. The constructed active k has at least the directional value of g, contradicting separation. Thus every maximum support belongs to the ordinary hull; both equality directions are proved without a closure replacement.",
+            "math": "\\(g\\in\\partial F(x)\\Longrightarrow g\\in K\\)",
+            "fallback": "Full reverse inclusion with the explicitly stated nonempty-index and ambient-continuity conventions."
+          }
+        ],
+        "boundary": "The library explicitly uses a finite nonempty index set because the source leaves the empty-maximum convention unspecified (G2.26.EMPTY). Every component is proper and convex, the query lies in every effective domain, and every component, including inactive ones, is continuous there. Continuity is interpreted in the ambient topology with EReal carrying its standard topology; the inspected source does not expand this convention (G2.26.CONTINUITY). The conclusion uses ordinary convex hull without closure. No component closedness, global finiteness, relative-domain continuity or supplied decomposition is assumed. Finite-dimensional real inner-product spaces generalize the Euclidean carrier. The source cites Bauschke and Combettes (2017), Theorem 18.5 and gives no local proof. The compactness and separation argument below is the library proof, not an independently checked reconstruction of that external result. Later source obligations, Chapter 2 and the whole book remain incomplete."
+      },
+      "worked_example": {
+        "title": "Tied supports, an inactive function and extended values",
+        "intro": "Nineteen retained canaries and two test definitions cover tied affine components, inactive components and a singleton extended-valued indicator family.",
+        "steps": [
+          {
+            "title": "A genuine tie",
+            "detail": "For f1(y)=y and f2(y)=−y at0, the active union is exactly{−1,1}, but the maximum subdifferential is the whole interval[−1,1]. The slope1/2 belongs to the hull and is absent from the union;2 is excluded from the subdifferential.",
+            "math": "\\(\\partial\\max(y,-y)(0)=[-1,1],\\quad\\tfrac12\\notin\\{-1,1\\}\\)",
+            "fallback": "Exercises the hull and reverse characterization, not only active inclusion."
+          },
+          {
+            "title": "A strict maximum",
+            "detail": "At2 the function y is active and −y is inactive. The maximum subdifferential is{1}; the inactive component slope−1 is excluded.",
+            "math": "\\(\\partial\\max(y,-y)(2)=\\{1\\}\\)",
+            "fallback": "No union over all component supports."
+          },
+          {
+            "title": "A singleton extended-domain family",
+            "detail": "Use the indicator of[−1,1] as a one-function family. It is continuous and finite at0, whose subdifferential is{0}; at2 the maximum is+∞. This shows that global real-valuedness is not assumed.",
+            "math": "\\(\\partial\\iota_{[-1,1]}(0)=\\{0\\},\\qquad\\iota_{[-1,1]}(2)=+\\infty\\)",
+            "fallback": "Proper convex extended values and nonempty singleton indexing."
+          }
+        ],
+        "takeaway": "Active supports may require convex mixing, while inactive functions contribute no supports; infinity away from the common query remains permitted.",
+        "boundary": "Later source obligations, Chapter 2 and the whole book remain incomplete."
+      }
     }
   ]
 }
