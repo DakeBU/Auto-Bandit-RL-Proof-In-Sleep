@@ -1,0 +1,140 @@
+{
+  "schema_version": 1,
+  "kind": "external-lean-intake",
+  "upstream": {
+    "repository": "openai/math",
+    "commit": "adc7f1241b42e322a6451854ab7e4b4c146bf78a",
+    "release_date": "2026-10-06",
+    "license": "Apache-2.0",
+    "floating_main_allowed": false,
+    "verification_status_required": true
+  },
+  "scope_finding": {
+    "direct_bandit_cluster_found": false,
+    "direct_reinforcement_learning_cluster_found": false,
+    "keyword_regret_is_not_sufficient": true
+  },
+  "clusters": [
+    {
+      "id": "oai-matroid-prophet",
+      "path": "lean/OAI/Probability/MatroidProphet",
+      "main_blob_sha": "cfd8c1eb2df52f9085b7dbeb8d3f3f49726e66e1",
+      "priority": "A",
+      "class": "adjacent-route",
+      "local_role": "online selection / prophet inequality route",
+      "upstream_verification": {
+        "status": "comparator-backed",
+        "config": "ComparatorChallenges/MatroidProphet.json",
+        "declaration": "OAI.MatroidProphet.one_sample"
+      }
+    },
+    {
+      "id": "oai-matroid-secretary",
+      "path": "lean/OAI/Probability/MatroidSecretary",
+      "main_blob_sha": "f85acb149edc224d4afe976527fc0fbd3f307e86",
+      "priority": "A",
+      "class": "adjacent-route",
+      "local_role": "secretary and randomized online selection route",
+      "upstream_verification": {
+        "status": "comparator-backed",
+        "config": "ComparatorChallenges/MatroidSecretary.json",
+        "declaration": "OAI.MatroidProphet.Assigned.one_sample"
+      }
+    },
+    {
+      "id": "oai-boolean-noise",
+      "path": "lean/OAI/InformationTheory/BooleanNoise",
+      "main_blob_sha": "ad758c7fb9a830a6a159b02afed81aeabf30fc08",
+      "priority": "B",
+      "class": "adapter-backed",
+      "local_role": "finite noisy-observation information contraction substrate"
+    },
+    {
+      "id": "oai-soft-channel",
+      "path": "lean/OAI/InformationTheory/SoftChannel",
+      "upstream_sha": "c7f7510180d65e41f89381b748205e60cb423039",
+      "priority": "B",
+      "class": "adapter-backed",
+      "local_role": "mutual-information and entropy-production substrate",
+      "upstream_verification": {
+        "status": "comparator-backed",
+        "config": "ComparatorChallenges/SoftChannel204.json",
+        "declaration": "OAI.SoftChannel204.fullMain"
+      }
+    },
+    {
+      "id": "oai-gaussian-information",
+      "path": "lean/OAI/Probability/GaussianInformation",
+      "main_blob_sha": "db0d0c10afd1a12862e952604f0d8b56a1fedc7a",
+      "priority": "B",
+      "class": "benchmark-only",
+      "local_role": "candidate information lower-bound machinery",
+      "upstream_verification": {
+        "status": "comparator-backed",
+        "config": "ComparatorChallenges/GaussianInformation.json",
+        "declarations": [
+          "OAI.RepeatedLocalization.repeated_localization",
+          "OAI.AllScaleInverseVolume.inverse_volume_without_support",
+          "OAI.KernelPotential.kernel_coercivity",
+          "OAI.KernelPotential.actual_row_drift"
+        ]
+      }
+    },
+    {
+      "id": "oai-gaussian-regression",
+      "path": "lean/OAI/Probability/GaussianRegression",
+      "main_blob_sha": "90b6a09aaf5824576a1c6a93841873cc9aa4d6a1",
+      "priority": "B",
+      "class": "benchmark-only",
+      "local_role": "candidate linear/Gaussian experiment and memory lower-bound substrate",
+      "upstream_verification": {
+        "status": "comparator-backed",
+        "config": "ComparatorChallenges/NoiselessRegression.json",
+        "declaration": "OAI.NoiselessRegression.main"
+      }
+    },
+    {
+      "id": "oai-memory-precision",
+      "path": "lean/OAI/Probability/MemoryPrecision",
+      "main_blob_sha": "37a55271d3acd46185eedc7ddef076013e2c520c",
+      "priority": "B",
+      "class": "benchmark-only",
+      "local_role": "resource-constrained learner/transcript lower-bound substrate",
+      "upstream_verification": {
+        "status": "comparator-backed",
+        "config": "ComparatorChallenges/MemoryPrecision.json",
+        "declaration": "OAI.MemoryPrecision.main"
+      }
+    },
+    {
+      "id": "oai-stochastic-mean-payoff-games",
+      "path": "preprints/Turn-Based-Stochastic-Mean-Payoff-Games-in-Deterministic-Quasipolynomial-Time-October-5-2026",
+      "priority": "C",
+      "class": "benchmark-only",
+      "local_role": "RL-adjacent stochastic-game route, not an MDP theorem",
+      "upstream_verification": {
+        "status": "manuscript-only-in-current-audit"
+      },
+      "next_action": "audit state/action/transition/policy/player quantifiers and only then decide whether any dynamic-programming or policy lemma is reusable"
+    }
+  ],
+  "out_of_scope_keyword_matches": [
+    "lean/OAI/Combinatorics/EditApproximation/**/Regret*.lean"
+  ],
+  "hard_guards": [
+    "Adjacent online-selection results do not count as bandit or RL theorem completion.",
+    "A static experiment lower bound requires an explicit proved reduction before becoming a bandit/RL lower bound.",
+    "Quantum semantics are owned by QuantumComputinglib/ASPBE at the cross-library boundary.",
+    "No solid graph edge without local compiled evidence."
+  ],
+  "execution_order": [
+    "oai-matroid-prophet",
+    "oai-matroid-secretary",
+    "oai-boolean-noise",
+    "oai-soft-channel",
+    "oai-gaussian-information",
+    "oai-gaussian-regression",
+    "oai-memory-precision",
+    "oai-stochastic-mean-payoff-games"
+  ]
+}
