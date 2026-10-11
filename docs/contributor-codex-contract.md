@@ -152,3 +152,31 @@ The contract checker fails closed when changed production surfaces are not cover
 The PR must state the exact mathematical/source delta, reuse decision, remaining truth boundary, semantic round-trip status, typed failure/salvage state when relevant, process-memory IDs used, parallel-direction/common-blind-spot status, reader-page/Exposition-Seal delta, route/progress delta, Lean Graph delta, Functor Hypergraph delta, and commands actually run.
 
 Generated site output is never committed.
+
+
+## Historical coverage rows after branch integration
+
+The diff-aware contribution gate keeps the actual supplied PR base. A changed
+protected file still requires active manifest coverage; ordinary stale affected
+rows still fail. An inherited immutable manifest may contain a historical row
+whose source has already been integrated byte-identically into that base. Such
+a row can be reported separately only with a Git provenance certificate.
+
+The certificate must identify an integration merge joining actual-base ancestry
+to the inherited source parent, preserve the exact manifest blob from that
+parent, and show the protected source blob and file mode at a genuine historical
+source-changing commit equal both the actual base and current HEAD. The affected
+row must remain present across historical manifest amendments. Every changed
+manifest is still schema-validated. Each stale occurrence is checked separately;
+one valid historical row cannot mask a newly authored stale row in another
+manifest. Historical rows do not count as newly affected production.
+
+New manifests authored during or after reconciliation, current modifications to
+historical manifests (including reverted modifications), dirty relevant paths,
+missing merge witnesses/history, source-byte or mode mismatches, and removed
+then re-added rows fail closed. Do not edit historical records or make empty
+mathematical changes to manufacture eligibility. Unknown provenance remains a
+stale-coverage failure. The certificate proves coverage provenance only: it does
+not validate mathematics, source fidelity, previous proof acceptance, or current
+Lean/site gates. Common-ancestor aggregate checks must remain explicitly labelled
+and cannot be presented as the actual-PR-base check.

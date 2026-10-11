@@ -1,0 +1,43 @@
+from pathlib import Path
+import datetime,hashlib,json,re,subprocess,sys
+root=Path.cwd()
+dest=root/'tmp/online-main-reconciliation-20261011/metadata'
+p=dest/'CONTRIBUTOR-HISTORICAL-ROWS-20261011.draft-v2.json'
+schema=json.loads((root/'docs/contribution-contract.schema.json').read_bytes())
+allowed={'$schema','$id','title','type','additionalProperties','required','properties','enum','const','pattern','minLength','items','uniqueItems','minItems','allOf','if','then','else'}
+def check(v,s,at='$'):
+    unknown=set(s)-allowed
+    if unknown: raise RuntimeError('unsupported schema keywords '+repr(unknown))
+    e=[]; typ=s.get('type')
+    ok={'object':isinstance(v,dict),'array':isinstance(v,list),'string':isinstance(v,str),'boolean':type(v)is bool,'integer':type(v)is int}
+    if typ and not ok[typ]: return [at+': type '+typ]
+    if 'const' in s and v!=s['const']:e.append(at+': const')
+    if 'enum' in s and v not in s['enum']:e.append(at+': enum')
+    if isinstance(v,dict):
+        e += [at+': missing '+k for k in s.get('required',[]) if k not in v]
+        props=s.get('properties',{})
+        if s.get('additionalProperties') is False:e += [at+': extra '+k for k in v if k not in props]
+        for k in v:
+            if k in props:e+=check(v[k],props[k],at+'.'+k)
+    if isinstance(v,list):
+        if len(v)<s.get('minItems',0):e.append(at+': minItems')
+        if s.get('uniqueItems') and len({json.dumps(x,sort_keys=True) for x in v})!=len(v):e.append(at+': uniqueItems')
+        if 'items' in s:
+            for i,x in enumerate(v):e+=check(x,s['items'],at+'['+str(i)+']')
+    if isinstance(v,str):
+        if len(v)<s.get('minLength',0):e.append(at+': minLength')
+        if 'pattern' in s and not re.search(s['pattern'],v):e.append(at+': pattern')
+    for sub in s.get('allOf',[]):e+=check(v,sub,at)
+    if 'if' in s:
+        branch='then' if not check(v,s['if'],at) else 'else'
+        if branch in s:e+=check(v,s[branch],at)
+    return e
+sys.path.insert(0,str(root))
+from tools.check_contributor_contract import validate_contract
+start=datetime.datetime.now(datetime.timezone.utc).isoformat()
+data,errors=validate_contract(p.resolve())
+struct=check(data,schema)
+result={'scope':'native pure validate_contract plus explicit structural traversal of every keyword present in checked schema; not jsonschema package, not diff-aware gate','draft_sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'schema_sha256':hashlib.sha256((root/'docs/contribution-contract.schema.json').read_bytes()).hexdigest(),'native_errors':errors,'structural_errors':struct,'python':sys.version,'start_utc':start,'end_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'actual_exit_code':int(bool(errors or struct)),'environment_note':'Earlier jsonschema import unavailable; no package validation claimed.'}
+(dest/'historical-rows-pure-and-structural-validator-v2.json').write_bytes((json.dumps(result,indent=2)+'\n').encode())
+print(json.dumps(result,indent=2))
+sys.exit(result['actual_exit_code'])

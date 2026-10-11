@@ -1,0 +1,126 @@
+--- active/tools/check_contributor_contract.py
++++ candidate/tools/check_contributor_contract.py
+@@ -548,6 +548,79 @@
+     return data, errors
+ 
+ 
++def historical_row_certificate(base: str, manifest: str, source: str) -> dict[str, Any] | None:
++    """Prove one inherited row; absence/ambiguity never relaxes stale coverage.
++
++    Only a merge joining the actual base to a previously independent source
++    parent is a witness. Source blobs AND modes must match the original change.
++    Historical amendments may preserve a row, but removal/readdition cannot.
++    This certifies coverage provenance, not mathematical or runtime acceptance.
++    """
++    def ancestor(a: str, b: str) -> bool:
++        return a in run_git("rev-list", b).splitlines()
++
++    def entry(commit: str, path: str) -> tuple[str, str] | None:
++        lines = run_git("ls-tree", commit, "--", path).splitlines()
++        if len(lines) != 1:
++            return None
++        meta, name = lines[0].split("\t", 1)
++        mode, kind, oid = meta.split()
++        if name != path or kind != "blob" or mode not in {"100644", "100755"}:
++            return None
++        return mode, oid
++
++    def includes(commit: str) -> bool:
++        value = json.loads(run_git("show", f"{commit}:{manifest}"))
++        return source in value.get("affected_files", [])
++
++    try:
++        base = run_git("rev-parse", f"{base}^{{commit}}").strip()
++        head = run_git("rev-parse", "HEAD").strip()
++        if not is_production(source) or not ancestor(base, head):
++            return None
++        # Existing-at-base manifests are current modifications, never imports.
++        if run_git("ls-tree", base, "--", manifest).strip():
++            return None
++        if run_git("status", "--porcelain", "--untracked-files=no", "--", manifest, source).strip():
++            return None
++        mhead, target = entry(head, manifest), entry(head, source)
++        if not mhead or not target or entry(base, source) != target:
++            return None
++        witnesses = run_git("rev-list", "--first-parent", "--merges", head).splitlines()
++        for merge in witnesses:
++            parents = run_git("rev-list", "--parents", "-n", "1", merge).split()[1:]
++            if not any(ancestor(base, parent) for parent in parents):
++                continue
++            for inherited in parents:
++                if ancestor(base, inherited) or entry(inherited, manifest) != mhead:
++                    continue
++                if entry(merge, manifest) != mhead:
++                    continue
++                # --full-history includes modifications later reverted as well.
++                if run_git("rev-list", "--full-history", f"{merge}..{head}", "--", manifest).strip():
++                    continue
++                for origin in run_git("rev-list", "--full-history", inherited, "--", manifest, source).splitlines():
++                    op = run_git("rev-list", "--parents", "-n", "1", origin).split()[1:]
++                    if not op or entry(origin, source) != target:
++                        continue
++                    if entry(op[0], source) == target or not entry(origin, manifest) or not includes(origin):
++                        continue
++                    amendments = run_git("rev-list", "--full-history", "--ancestry-path",
++                                          f"{origin}..{inherited}", "--", manifest).splitlines()
++                    if any(not entry(c, manifest) or not includes(c) for c in amendments):
++                        continue
++                    return {"base": base, "head": head, "integration_merge": merge,
++                            "source_parent": inherited, "origin": origin,
++                            "manifest": manifest, "source": source,
++                            "manifest_head_entry": mhead, "source_entry": target,
++                            "origin_manifest_entry": entry(origin, manifest),
++                            "historical_amendments": [
++                                {"commit": c, "manifest_entry": entry(c, manifest)} for c in amendments]}
++        return None
++    except (RuntimeError, ValueError, KeyError, TypeError):
++        return None
++
++
+ def resolve_base(args: argparse.Namespace) -> str:
+     if args.base:
+         return args.base
+@@ -599,6 +672,7 @@
+     errors: list[str] = []
+     covered: set[str] = set()
+     ids: set[str] = set()
++    coverage_rows: list[tuple[str, str]] = []
+     for rel in contracts:
+         path = ROOT / rel
+         data, contract_errors = validate_contract(path)
+@@ -610,6 +684,7 @@
+             errors.append(f"{rel}: duplicate contribution id {cid}")
+         ids.add(cid)
+         covered.update(data.get("affected_files") or [])
++        coverage_rows.extend((rel, item) for item in (data.get("affected_files") or []))
+ 
+     production_set = set(production)
+     uncovered = [path for path in production if path not in covered]
+@@ -618,7 +693,17 @@
+             "production paths missing from all changed contribution manifests: "
+             + ", ".join(uncovered)
+         )
+-    stale_coverage = sorted(covered - production_set)
++    historical_certificates = []
++    stale_rows = []
++    for manifest, source in coverage_rows:
++        if source in production_set:
++            continue
++        certificate = historical_row_certificate(base, manifest, source)
++        if certificate is None:
++            stale_rows.append((manifest, source))
++        else:
++            historical_certificates.append(certificate)
++    stale_coverage = sorted({source for _manifest, source in stale_rows})
+     if stale_coverage:
+         errors.append(
+             "contribution manifests list affected files that are not changed protected/production surfaces: "
+@@ -631,6 +716,8 @@
+             print(f" - {error}", file=sys.stderr)
+         return 1
+ 
++    for certificate in historical_certificates:
++        print("Historical coverage row (not newly affected): " + json.dumps(certificate, sort_keys=True))
+     print("Contributor contract passed.")
+     for path in production:
+         print(f" - covered: {path}")

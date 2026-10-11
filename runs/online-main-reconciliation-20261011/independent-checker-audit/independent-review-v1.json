@@ -1,0 +1,69 @@
+{
+  "actor": "/root/adaptive_decoder",
+  "requested_model": "GPT-6 Astra / medium; runtime not attested",
+  "independence": "Not author of checker/tests/docs candidate; self-authored Book wording not reviewed here",
+  "verdict": "accepted-bounded-checker-maintenance-candidate",
+  "blocking_repairs": [],
+  "application_files": [
+    {
+      "path": "tools/check_contributor_contract.py",
+      "candidate_sha256": "35f98edff8c77d3c9ecf365d14fe12f5a4851f36a4331c28a6c00b65526198a7",
+      "active_sha256": "2ba2e53a1f3194a13755140d9d755e3ff19d70f8e6d09bacfe318fb5ca4d1dd6"
+    },
+    {
+      "path": "tools/test_contributor_contract.py",
+      "candidate_sha256": "4a592338a2ee90d77845991329e85ee7bda96c6bd5ad6c2d4e8ca3a29bb5f5fe",
+      "active_sha256": "07486f2204041e8858da6ecb5e39d64de48d2ce5da0eb6ff4e9f4a2504dde955"
+    },
+    {
+      "path": "docs/contributor-codex-contract.md",
+      "candidate_sha256": "48dd398da87a267bd82b2f20b3ab6db99909f3ebfbccd75502ecfb65aa49b993",
+      "active_sha256": "bf1bea6a7532f1a192f6289107e3120a6428b2806850cfe69bb62c71865a8353"
+    }
+  ],
+  "inputs": {
+    "tmp/online-main-reconciliation-20261011/contributor-baseline-review/historical-row-checker-design-v1.json": "42bdd33445179f7904eb9d94112952fe5fd8ddd66f53f550f41bc623da9ee07e",
+    "tmp/online-main-reconciliation-gates-20261011/contributor-actual-main-base-v1/receipt.json": "ca35d69344ab240288dab9b9cd2126679e317b556caab42eca8a60d8c21001d3",
+    "tmp/online-main-reconciliation-gates-20261011/contributor-actual-main-base-v1/stderr.raw": "01e4775bf97c184381de352b6038b0e2b7e4ea410c9e0106c8ca95cec46a8107"
+  },
+  "checks": {
+    "per_manifest_row_not_union_masking": true,
+    "schema_validation_and_duplicate_ID_checks_preserved": true,
+    "uncovered_changed_production_still_fails": true,
+    "existing_current_manifest_no_exemption": true,
+    "base_must_be_ancestor": true,
+    "source_regular_blob_and_mode_equal_at_base_HEAD_origin": true,
+    "immutable_inherited_manifest_equals_merge_and_HEAD": true,
+    "postmerge_changes_even_reverted_rejected": true,
+    "origin_requires_real_source_change_and_row_membership": true,
+    "historical_row_membership_continuity_checked": true,
+    "dirty_relevant_paths_rejected": true,
+    "no_unreachable_all_history_search": true,
+    "original_3_tests_verbatim": true
+  },
+  "execution": {
+    "independent_fixture_tests": 19,
+    "actual_exit": 0,
+    "candidate_original_tests": 3,
+    "candidate_added_tests": 12,
+    "reviewer_extra_negative_tests": 4,
+    "fixtures_receipt_sha256": "57dcfe0258a78223e2bf19a7a5c2deb09b1218de9ef2081690a18c53d6a14e30",
+    "fixtures_stderr_sha256": "1dbd2443b58861ddf19e346d96e2f796ea629bb7991ef4da611199fc9aad8ffc",
+    "actual_five_rows_probe_exit": 0,
+    "actual_five_rows_probe_sha256": "a2bcf2fb36fe4da3461f78f4cc7be50c935d1612d598f30420cf23cd78b28f26",
+    "five_row_receipt_sha256": "e87039b3385cd39427309fffd81e58ffa0af67de40efc1e0024dba8475b9604a",
+    "no_full_gates": true
+  },
+  "assessment": "Narrow historical coverage provenance exception, not a general unchanged-file waiver. Unknown history/parse failures produce no certificate; each stale occurrence must independently qualify. Documentation correctly separates coverage from semantic/source/runtime acceptance. Actual five previously failing rows independently produce certificates under exact main base f07 and clean a5ec HEAD.",
+  "nonblocking_limits": [
+    "Traversal uses repeated Git history scans without caching or an operational history limit; worst-case runtime can be high. No timeout-to-accept fallback exists. Future optimization should preserve semantics and reject unresolved limits.",
+    "The checker validates the supplied base rather than independently discovering the PR base; CI/policy must continue pinning actual PR base. Older-ancestor aggregate checks remain separately labelled.",
+    "Fixtures are targeted, not exhaustive for every possible Git DAG. Existing schema validator code is unchanged; original three tests plus negative coverage cases passed.",
+    "Certificates bind source modes/blobs and ancestry, not historical mathematical acceptance or all prior runtime gates. Full clean actual-base contributor/harness gates remain required after application."
+  ],
+  "git_after": {
+    "HEAD": "a5ec0ba8198d6b93505b953d1f63d6d5cb63f065",
+    "status_porcelain_hex": ""
+  },
+  "canonical_edits": false
+}
