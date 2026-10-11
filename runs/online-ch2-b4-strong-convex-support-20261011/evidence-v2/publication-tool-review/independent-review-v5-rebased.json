@@ -1,0 +1,143 @@
+{
+  "verdict": "accepted-bounded-V5-rebased-tool-application-eligibility",
+  "blockers": [],
+  "actor": "/root/adaptive_decoder",
+  "requested_model": "GPT-6 Astra",
+  "requested_effort": "medium",
+  "runtime_attested": false,
+  "plan_sha256": "83b99da7f199c6721dee6639ab443009230abf861eb3d7d1fda17e1b2fdc0153",
+  "input_bindings": [
+    {
+      "path": "website/content/books.json",
+      "sha256": "e46602bab9152d3fb0bd90e16416faaca743d3e4abdb94f041cbf689ce7f80bf",
+      "bytes": 4855
+    },
+    {
+      "path": "tmp/online-b4-support-publication-proposal-20261011/books-candidate-v4-rebased.json",
+      "sha256": "206c36a9c88044b84e619bb0439baba79e0bfe2d0044451ccc0bd64b09b62671",
+      "bytes": 5417
+    },
+    {
+      "path": "website/content/chapters.json",
+      "sha256": "28c32318ccc86cf0c3b6ebe19ab36bf99a5b7237bc18d4422b47dc381fe72834",
+      "bytes": 123196
+    },
+    {
+      "path": "tmp/online-b4-support-publication-proposal-20261011/chapters-candidate-v4-rebased.json",
+      "sha256": "bd42986ea3dfda702ff1088aa52e629f501bec5abeeedb7e3810be0066db9f56",
+      "bytes": 124368
+    },
+    {
+      "path": "website/content/readings.json",
+      "sha256": "55e5dda76f8816cc9205d4bd78d1d96bf2851fa407c1896728e4b003b5477b2f",
+      "bytes": 919643
+    },
+    {
+      "path": "tmp/online-b4-support-publication-proposal-20261011/readings-candidate-v4-rebased.json",
+      "sha256": "5100d9b77ec4e76014ef448c7833e36987280389a0605b9a5c8b30de5db4e9ca",
+      "bytes": 925606
+    },
+    {
+      "path": "website/content/highlights.json",
+      "sha256": "21813bd36a90ea50f40f59513fb0cd237cedda6198549169fa6150b57db06cad",
+      "bytes": 1503047
+    },
+    {
+      "path": "tmp/online-b4-support-publication-proposal-20261011/highlights-candidate-v4-rebased.json",
+      "sha256": "df8fface4ef25efdb5376a82854c05c7aaf568db1a950995d9a5f2ba72cc07be",
+      "bytes": 1515869
+    },
+    {
+      "path": "BanditRLProof.lean",
+      "sha256": "fc6131d4374ffca079f2e2bd8368e691413e48ed2c31c3961db9745d636419f5",
+      "bytes": 50248
+    },
+    {
+      "path": "tmp/online-b4-support-publication-proposal-20261011/BanditRLProof-root-candidate-v4-rebased.lean",
+      "sha256": "9ecafa9d3f9a994632cfe7b17774165004c5626d8fab6c510e54064c5ea4e89d",
+      "bytes": 50296
+    },
+    {
+      "path": "Tests.lean",
+      "sha256": "60a40af3e69b92db3f9e2674df28090805070f6d05fdf1e3465f4512e26831c2",
+      "bytes": 8437
+    },
+    {
+      "path": "tmp/online-b4-support-publication-proposal-20261011/Tests-root-candidate-v4-rebased.lean",
+      "sha256": "fbfaf60205ccf9190ba0edba55b06b5a71d4bbad5c9df70bdb3f0540265c0dde",
+      "bytes": 8483
+    },
+    {
+      "path": "tmp/online-b4-support-publication-proposal-20261011/native-contribution-candidate-v3.json",
+      "sha256": "cb3ce72b5f9e884e319ccd758d158a1bb6ab4cfe21221383b7e1d22f286cbedf",
+      "bytes": 14140
+    },
+    {
+      "path": ".gitattributes",
+      "sha256": "4719086397a8fece56b5b668915f3c48ba0c052e08592211877231f1b1e43ac6",
+      "bytes": 1772
+    },
+    {
+      "path": "tmp/online-b4-support-publication-proposal-20261011/gitattributes-candidate-v4-rebased.txt",
+      "sha256": "46cadc35dcd747128423e2f0fdcec4e3d3434d6e9055ce3517c4002a60ebdcef",
+      "bytes": 1947
+    },
+    {
+      "path": "BanditRLProof/OnlineStrongConvexSupport.lean",
+      "sha256": "f3a475b58661a4efefdb33b9715852a08008940bd437e1cb3ad64862b772d1e5",
+      "bytes": 3491
+    },
+    {
+      "path": "Tests/OnlineStrongConvexSupportCanary.lean",
+      "sha256": "62163851ea2edb131a6f365d624de4523aa19d16e62ad16a598db66386afa01c",
+      "bytes": 6109
+    }
+  ],
+  "git_pre": [
+    "5bff23f88ff5b9633d8e3126096df979ea1771d6",
+    ""
+  ],
+  "git_post": [
+    "5bff23f88ff5b9633d8e3126096df979ea1771d6",
+    ""
+  ],
+  "checks": {
+    "books_inverse_complete_object_equality": true,
+    "chapters_inverse_complete_object_equality": true,
+    "readings_inverse_complete_object_equality": true,
+    "highlights_inverse_complete_object_equality": true,
+    "BanditRLProof.lean": "exact RAW prefix plus one import",
+    "Tests.lean": "exact RAW prefix plus one import",
+    "attributes_only_two_rules": [
+      "BanditRLProof/OnlineStrongConvexSupport.lean text eol=lf",
+      "Tests/OnlineStrongConvexSupportCanary.lean text eol=lf"
+    ]
+  },
+  "native_stdlib_validator_errors": [],
+  "protected_affected_files": [
+    "BanditRLProof.lean",
+    "BanditRLProof/OnlineStrongConvexSupport.lean",
+    "website/content/books.json",
+    "website/content/chapters.json",
+    "website/content/highlights.json",
+    "website/content/readings.json"
+  ],
+  "V4_repair": "Stale old-base precondition repaired; all eight candidate/base bindings unchanged; V4 retained.",
+  "preservation": "Four inverse complete-object equalities against actual 5bff preserve sixty main corrections, 40 routes, old OGD24 cards/navigation4, and all503 highlight multiplicities; additions only.",
+  "attributes_boundary": "Two file-specific LF rules are portable-byte maintenance only, not new mathematics.",
+  "review_execution_failure_retained": "Initial read-only in-memory audit exited1 KeyError id because chapters/readings use slug; corrected accessor, no input edits.",
+  "remaining": [
+    "parent concrete apply authorization",
+    "actual diff-aware contributor CLI",
+    "combined Lean/Tests/harness/axiom gates",
+    "site DOM/pixels",
+    "Exposition and final bounded acceptance"
+  ],
+  "not_performed": [
+    "production edits",
+    "Lean BODY reading",
+    "build/browser/gates",
+    "merge/commit",
+    "jsonschema installation"
+  ]
+}

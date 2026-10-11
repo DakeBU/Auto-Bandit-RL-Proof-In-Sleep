@@ -1,0 +1,68 @@
+tmp/online-b4-support-body-20261011/Candidate-v1.lean:34:44: error: unsolved goals
+E : Type u_1
+inst✝¹ : NormedAddCommGroup E
+inst✝ : NormedSpace ℝ E
+f : E → EReal
+V : Set E
+lam : ℝ
+hf : SourceProper f
+hV : Convex ℝ V
+hdom : V ⊆ effectiveDomain f
+hlam : 0 ≤ lam
+hstrong :
+  ∀ x ∈ V,
+    ∀ y ∈ V,
+      ∀ (a : ℝ),
+        0 < a → a < 1 → f (a • x + (1 - a) • y) ≤ ↑a * f x + ↑(1 - a) * f y - ↑(lam / 2 * a * (1 - a) * ‖x - y‖ ^ 2)
+p : E
+hp : p ∈ V
+g : E →L[ℝ] ℝ
+hsupport : ∀ z ∈ V, f p + ↑(g (z - p)) ≤ f z
+q : E
+hq : q ∈ V
+hfinite : ∀ x ∈ V, ↑(f x).toReal = f x
+F : E → EReal := fun x => f x - ↑(g (x - p))
+hFfinite : ∀ x ∈ V, F x = ↑((f x).toReal - g (x - p))
+x : E
+⊢ ¬↑(g x) - ↑(g p) = ⊤
+tmp/online-b4-support-body-20261011/Candidate-v1.lean:72:23: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  F z
+in the target expression
+  z ∈ {x | (fun x => ↑((f p).toReal - g (p - p)) ≤ F x) x}
+
+E : Type u_1
+inst✝¹ : NormedAddCommGroup E
+inst✝ : NormedSpace ℝ E
+f : E → EReal
+V : Set E
+lam : ℝ
+hf : SourceProper f
+hV : Convex ℝ V
+hdom : V ⊆ effectiveDomain f
+hlam : 0 ≤ lam
+hstrong :
+  ∀ x ∈ V,
+    ∀ y ∈ V,
+      ∀ (a : ℝ),
+        0 < a → a < 1 → f (a • x + (1 - a) • y) ≤ ↑a * f x + ↑(1 - a) * f y - ↑(lam / 2 * a * (1 - a) * ‖x - y‖ ^ 2)
+p : E
+hp : p ∈ V
+g : E →L[ℝ] ℝ
+hsupport : ∀ z ∈ V, f p + ↑(g (z - p)) ≤ f z
+q : E
+hq : q ∈ V
+hfinite : ∀ x ∈ V, ↑(f x).toReal = f x
+F : E → EReal := fun x => f x - ↑(g (x - p))
+hFfinite : ∀ x ∈ V, F x = ↑((f x).toReal - g (x - p))
+hFproper : SourceProper F
+hFdom : V ⊆ effectiveDomain F
+hFstrong :
+  ∀ x ∈ V,
+    ∀ y ∈ V,
+      ∀ (a : ℝ),
+        0 < a → a < 1 → F (a • x + (1 - a) • y) ≤ ↑a * F x + ↑(1 - a) * F y - ↑(lam / 2 * a * (1 - a) * ‖x - y‖ ^ 2)
+z : E
+hz : z ∈ V
+hs : ↑(f p).toReal + ↑(g (z - p)) ≤ ↑(f z).toReal
+hr : (f p).toReal + g (z - p) ≤ (f z).toReal
+⊢ z ∈ {x | (fun x => ↑((f p).toReal - g (p - p)) ≤ F x) x}

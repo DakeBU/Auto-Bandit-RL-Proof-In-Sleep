@@ -1,0 +1,42 @@
+{
+  "root": "E:\\ABRL\\worktrees\\research-online-book",
+  "helper": "runs/online-ch2-b4-strong-convex-support-20261011/prepared/capture-gate-v3.py",
+  "run": "tmp/online-ch2-b4-strong-convex-support-gates-20261011",
+  "leaf_contracts": [
+    "docs/contracts/online-book-v1",
+    "docs/contracts/online-main-reconciliation-v1",
+    "docs/contracts/online-ch2-complete-target-freeze-v1",
+    "docs/contracts/online-ch2-b4-finite-identity-v1",
+    "docs/contracts/online-ch2-b4-strong-convex-growth-v1",
+    "docs/contracts/online-ch2-b4-strong-convex-support-v1"
+  ],
+  "gates": [
+    {
+      "label": "production-root-v1",
+      "argv": [
+        "lake",
+        "build",
+        "BanditRLProof"
+      ]
+    },
+    {
+      "label": "shared-Tests-v1",
+      "argv": [
+        "lake",
+        "build",
+        "Tests"
+      ]
+    },
+    {
+      "label": "full-harness-v1",
+      "argv": [
+        "C:/Users/admin/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe",
+        "-B",
+        "-X",
+        "utf8",
+        "tools/bandit.py",
+        "check"
+      ]
+    }
+  ]
+}

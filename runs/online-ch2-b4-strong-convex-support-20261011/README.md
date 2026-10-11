@@ -1,0 +1,5 @@
+# Strong-convex support dependency candidate
+
+One generalized forward supplied-local-support theorem, its frozen exact signature and two actual public canary consumers are retained. The production proof constructs an extended-real affine tilt and genuinely calls minimum-growth. Printed full Lemma4.2 iff, support existence, source-vector/chosen-norm transport, attainment, actual cumulative-objective producers, corrected full7.47/15.31, Chapter2 and the Chapters1-16 Goal remain OPEN/ACTIVE.
+
+Evidence-v1 retains114compact original copies and explicitly excludes the locally retained giant Expr streams/rebuildable artifacts. Evidence-v2 preserves publication/native repairs, independent source/tool reviews and exact application on true main9f reconciliation5bff. Prepared capture-v3 is independently reviewed and binds active workflow sources and frozen complete-target inventory. Combined root/Tests/full harness, axiom, native/process and fresh rendered site/reader gates are pending on this committed candidate. No accepted-leaf/chapter, main/live, PURIFIED or fresh Exposition claim.

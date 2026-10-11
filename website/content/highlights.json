@@ -8636,6 +8636,26 @@
         "BanditRL.OnlineConvex.SourceProper",
         "BanditRL.OnlineConvex.effectiveDomain"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.stronglyConvex_support_growth",
+      "title": "Quadratic growth above a supplied affine support",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 346,
+      "source_match": "closest-source",
+      "plain": "Let E be a real normed space and f:E to EReal be SourceProper: no bottom value anywhere and a finite value somewhere. Let V be the literal convex feasible set, V contained in effectiveDomain f, and lambda>=0. Assume the Definition4.1 strong interpolation inequality with penalty lambda/2 for every x,y in V and 0<a<1. Supply p in V and one continuous real linear functional g such that f(p)+g(z-p)<=f(z) for every z in V. For every q in V, f(p)+g(q-p)+(lambda/2)||q-p||^2<=f(q). Every displayed endpoint is finite by properness plus domain inclusion; toReal uses these genuine finite values. g may be zero and lambda may be zero.",
+      "math": "\\begin{gathered}f(p)+g(q-p)+\\frac{\\lambda}{2}\\lVert q-p\\rVert^2\\le f(q),\\quad q\\in V.\\\\F(x)=f(x)-g(x-p),\\qquad F(p)\\le F(z)\\ (z\\in V).\\\\F(p)+\\frac{\\lambda}{2}\\lVert q-p\\rVert^2\\le F(q).\\end{gathered}",
+      "intuition": "Subtract the supporting affine function. The support point becomes a true minimum of the tilted objective, while strong convexity retains its curvature.",
+      "why": "Advances the conditional analytic support step used by corrected FTRL/BTRL stability, without pretending to produce actual algorithmic supports.",
+      "position": "Printed Lemma4.2 (printed34-35/PDF46-47) is an iff with V subset dom(partial f). This theorem is explicitly its generalized forward implication at one supplied support at p, localized to literal V; support existence at other V points is dropped. The finite-dimensional vector/dot-product interface is generalized to a continuous real dual functional on an arbitrary normed space. Vector representation, indicator restriction/extension and transport to the source chosen arbitrary norm remain unfinished. No inner-product norm on E is imposed. Mapped under Chapter2 B4; no Chapter4 main closure.",
+      "proof_idea": "Set F(x)=f(x)-g(x-p) as an actual extended-real function, including outside V. Subtracting a finite real preserves global no-bottom, and the feasible finite point p supplies a finite witness, so F is proper. F is finite on V. Linearity gives g(a x+(1-a)y-p)=a g(x-p)+(1-a)g(y-p), so the original strong interpolation inequality transfers with exactly the same lambda/2 penalty. The supplied support gives F(p)<=F(z) for every z in V; no minimum hypothesis is added. Apply stronglyConvex_minimum_growth to this internally justified tilt and simplify its finite endpoint values. The actual proof therefore has a solid dependency on minimum-growth. The printed segment-and-alpha-to-zero proof is a distinct source route, not a claim about the implementation graph.",
+      "lean_notes": "The complete exact Lean theorem is available in the folded declaration. Local facts prove finite casts, tilted properness and strong convexity, and IsMinOn of the tilt. The imported actual TYPE has99 constants and VALUE299; minimum-growth occurs in VALUE. Binder-name/metadata-normalized actual expressions match the candidate; raw module-hygiene names differ. These are proof evidence, not a completed source vector/norm adapter. Locally compiled and independently BODY/source-reviewed generalized forward dependency; imported production audit passed. Reader/native integration is proposed, with combined gates and final leaf acceptance pending. No support-existence or actual cumulative FTRL/BTRL producer, vector/chosen-norm transport, full Lemma4.2 iff, qualified attainment or corrected full7.47/15.31 guarantee. Chapter2 remains partial: seven forward containers and six future claims, B1-B7 and full B4/full parents OPEN; complete proof denominator null, accepted=false, Chapters1-16 Goal ACTIVE. Unmerged/unpublished; no main/live claim.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.stronglyConvex_minimum_growth",
+        "BanditRL.OnlineConvex.SourceProper",
+        "BanditRL.OnlineConvex.effectiveDomain"
+      ]
     }
   ]
 }

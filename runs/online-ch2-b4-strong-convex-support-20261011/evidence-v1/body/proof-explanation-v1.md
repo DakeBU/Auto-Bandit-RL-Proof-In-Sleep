@@ -1,0 +1,13 @@
+The candidate proves the exact supplied-support quadratic bound by genuine reuse of stronglyConvex_minimum_growth.
+
+For every x in literal V, SourceProper excludes bottom and hdom excludes top, so EReal.coe_toReal recovers f x exactly. Define the actual extended-real affine tilt F x = f x - coe(g(x-p)), including outside V. No real-valued totalization is substituted for this function. Subtracting a finite real preserves global no-bottom; p and the established finite endpoint identity provide an explicit finite witness. Thus F is SourceProper. Its restriction to V is finite with F x = coe((f x).toReal - g(x-p)).
+
+For x,y in V and the original strict interior weight, convexity places the segment in V. Convert only proven finite values in the original strong inequality to real values. Linearity gives g(a*x+(1-a)*y-p) = a*g(x-p)+(1-a)*g(y-p). Subtract this affine expression to obtain exactly the same lambda/2 strong interpolation penalty for F, then recast to EReal.
+
+The supplied local support inequality, after finite endpoint conversion, says f(p).toReal <= f(z).toReal-g(z-p). As g(p-p)=0, it establishes IsMinOn F V p internally. Applying the already proved minimum-growth theorem to F yields the target after real endpoint simplification. There is no assumed hmin and no assumed quadratic bound, support existence or attainment theorem.
+
+The original global properness witness need not be used: hp and the established finiteness at p furnish a genuine finite witness for F. No support at other V points is introduced. The proof works for lambda=0 and g=0 and uses no finite-dimension/completeness/closedness/inner-product assumption on E.
+
+Purification: one genuine public theorem, no new public helper, wrapper, alias or dead declaration. Local definitions and facts all serve the core tilt/properness/interpolation/minimum/application spine. Direct VALUE evidence confirms stronglyConvex_minimum_growth reuse. The general normed-space continuous-dual TYPE must not be mistaken for completed vector-support or chosen-norm transport. Printed Lemma4.2 iff, all actual cumulative objective/support producers, qualified attainment, corrected terminal/indexing guarantees and C2/full B4/full parents remain OPEN.
+
+Evidence boundary: V1 failed on two API/elaboration issues, retained and classified. V2 compiled but normalized trailing header newlines; retained as historical. V3 restores exact raw prefix/suffix and compiles with actual exit0. The separate diagnostic appends to the exact candidate, prints its axioms and extracts actual TYPE/VALUE constants; it does not claim imported-production validation. No production edit, root/test registration, native install, broad build or commit was performed by this author.
