@@ -1,0 +1,78 @@
+{
+  "schema": "blind-reconstruction-v1",
+  "declaration": "BanditRL.OnlineConvex.stronglyConvex_iff_sourceSubgradient_growth",
+  "input_hashes_verified": true,
+  "inputs": [
+    {
+      "file": "declaration-v1.txt",
+      "bytes": 1006,
+      "sha256": "56a0e9247ff901eeb9ed7a48a2e181772396d57f9726c43affba52d21e21d4d1"
+    },
+    {
+      "file": "context-v1.txt",
+      "bytes": 365,
+      "sha256": "beffad279a04dbd839a05f9840d80e876dad0028687ad6d9b229b9aa9eb21cdd"
+    }
+  ],
+  "semantic_slots": {
+    "objects": [
+      "The carrier E is a real normed vector space; d is a natural number; e is a real linear equivalence from E to U := EuclideanSpace R (Fin d).",
+      "The function f maps E to the extended reals EReal. V is a subset of E, and lam is a real scalar.",
+      "Write F(u) := f(e.symm(u)). Source subgradients are computed for this transported function on all of U."
+    ],
+    "domains_types": [
+      "E : Type*, with instances NormedAddCommGroup E and NormedSpace R E. No original inner-product instance on E is required.",
+      "d : Nat; e : E equiv_linear[R] EuclideanSpace R (Fin d); f : E -> EReal; V : Set E; lam : R.",
+      "x, y, p, q are elements of E. The interpolation weight a is real. The subgradient g and the universally tested coordinate point u are elements of U.",
+      "The inner product is the real Euclidean inner product on U. Every norm displayed in the theorem is the original norm on E.",
+      "e is a linear equivalence, with no isometry or norm-preservation hypothesis. Thus the norm terms cannot be silently replaced by Euclidean norms of coordinate vectors."
+    ],
+    "assumptions": [
+      "hf : SourceProper f means (for every z in E, f(z) is not bottom = negative infinity) AND (there exist z0 in E and r in R such that f(z0) equals r embedded in EReal). The finite witness need not lie in V.",
+      "hV : Convex R V means V is convex with respect to real scalar combinations in E.",
+      "hlam : 0 <= lam.",
+      "hsub : for every p in E, if p belongs to V, then there exists g in U belonging to SourceSubdifferential F (e(p)). This is nonemptiness at every point of V, not merely at one point.",
+      "By the supplied literal definition, g belongs to SourceSubdifferential F (e(p)) exactly when, for every u in U, F(e(p)) + embed(inner_R(g, u - e(p))) <= F(u). Here F(e(p)) = f(p).",
+      "The subgradient inequality tests all u in U, including coordinates of points outside V. Equivalently it tests every z in E as f(p) + embed(inner_R(g, e(z-p))) <= f(z). No global convexity of f is separately assumed.",
+      "SourceProper alone allows f to be positive infinity at some points. The combination of hf and hsub implies every value f(p) with p in V is finite: negative infinity is excluded by hf, and a global subgradient can be tested at the finite witness of hf to exclude positive infinity. This is a semantic consequence of the premises, not an extra finiteness binder or a Lean-checked proof in this reconstruction."
+    ],
+    "quantifiers": [
+      "The theorem has implicit E and its two typeclass instances, then the explicit parameters d, e, f, V, lam and the four proof arguments hf, hV, hlam, hsub. Under all these premises it asserts an equivalence.",
+      "Left proposition L: for every x in E, if x is in V, then for every y in E, if y is in V, then for every real a, if 0 < a and a < 1, the stated interpolation inequality holds.",
+      "Right proposition R: for every p in E, if p is in V, then for every q in E, if q is in V, then for every g in U, if g belongs to the global SourceSubdifferential F (e(p)), the stated real growth inequality holds.",
+      "The right side uses every eligible g, rather than choosing one g for each pair (p,q). hsub supplies existence at each p separately; its order is for every p in V, there exists g, for every u in U, the global supporting inequality holds.",
+      "The properness witness order is there exists z0 in E, there exists r in R, f(z0) = embed(r), in conjunction with the separate universal exclusion of bottom."
+    ],
+    "operations": [
+      "embed(t) denotes the coercion of a real number t into EReal. toReal is EReal.toReal; it yields the real value on finite inputs and maps either infinity to zero. It must not be read as an extended-real-preserving identity at infinite inputs.",
+      "L is an EReal inequality: f(a*x + (1-a)*y) <= embed(a)*f(x) + embed(1-a)*f(y) - embed((lam/2)*a*(1-a)*norm_E(x-y)^2). Here vector multiplication denotes real scalar action, not multiplication in E.",
+      "R is a real inequality: toReal(f(p)) + inner_R(g, e(q-p)) + (lam/2)*norm_E(q-p)^2 <= toReal(f(q)).",
+      "The coordinate pairing uses e(q-p), equivalently e(q)-e(p), while the quadratic term uses norm_E(q-p). The equivalent left quadratic term uses norm_E(x-y).",
+      "The literal subdifferential definition uses EReal addition and comparison, with the real inner product coerced into EReal. It has no separate finiteness clause.",
+      "Finiteness on V follows from the premises as described above. Convexity of V places the interpolated point of L in V, so its f-value is finite as well. Values outside V may remain positive infinity; the global subdifferential still tests them."
+    ],
+    "conclusion": [
+      "L iff R, under all four listed hypotheses and all ambient parameters.",
+      "Forward direction: if the interpolation inequality L holds for every x,y in V and every 0<a<1, then every global coordinate subgradient g at every p in V obeys the real quadratic lower-growth inequality at every q in V.",
+      "Reverse direction: if that real quadratic lower-growth inequality holds at every p,q in V for every global coordinate subgradient at p, then the extended-real interpolation inequality holds for every x,y in V and every 0<a<1.",
+      "Both directions retain hf, hV, hlam and hsub. Neither direction asserts existence of subgradients without the separate hsub premise.",
+      "No comparison with a source text, intended target statement, or source fidelity is made."
+    ],
+    "edge_cases": [
+      "V may be empty. hsub, L and R are then vacuous, and convexity holds for the empty set; hf and 0<=lam are still hypotheses of the theorem.",
+      "lam may be zero. Both quadratic correction terms vanish; L becomes the usual open-weight convexity inequality on V, and R becomes the supporting affine inequality on V for every global coordinate subgradient. No strict positive lower bound on lam is imposed.",
+      "Only 0<a<1 is quantified in L. The endpoint weights a=0 and a=1 are not requested by that proposition.",
+      "p=q is allowed in R. The coordinate difference, inner-product contribution and quadratic term vanish, leaving equality of toReal(f(p)) with itself. x=y is likewise allowed in L, with a zero norm correction.",
+      "V may be a singleton; no distinct-point condition or nonempty-interior assumption occurs.",
+      "d may be zero; no positive-dimension condition occurs. In this case U has only the zero vector and the linear equivalence makes E a singleton. This causes no extra quantified cases.",
+      "There is no separate nonempty-V hypothesis, differentiability hypothesis, continuity hypothesis, global convexity hypothesis for f, or norm-preservation hypothesis for e.",
+      "If hsub were omitted, a universal assertion over an empty subdifferential on the right could be vacuous; the actual theorem explicitly excludes that possibility at every p in V.",
+      "No top values can occur on V under all the actual premises; positive infinity remains permitted outside V. Bottom is excluded everywhere by hf."
+    ]
+  },
+  "uncertainty_and_scope": [
+    "Only the exact declaration and the two literal auxiliary definitions were inspected; no imports, proofs, source text, other workspace files, or chats were consulted, and no Lean execution was performed.",
+    "Standard meanings of the named Lean mathematical structures, EReal arithmetic and EReal.toReal are used for this mathematical reading; their implementations were not inspected. The supplied packet does not itself define these standard primitives.",
+    "The stated finiteness and degenerate-case consequences are semantic deductions, not independently machine-verified results. The packet provides no evidence establishing the theorem's proof, compilation status or source fidelity."
+  ]
+}

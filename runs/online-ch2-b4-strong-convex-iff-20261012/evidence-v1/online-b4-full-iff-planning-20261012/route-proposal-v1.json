@@ -1,0 +1,46 @@
+{
+  "status": "SOURCE_ROUTE_PROPOSAL_ONLY_NO_HEADER_FREEZE_OR_BODY",
+  "source_head_at_proposal": "bca78321f0e553f0592b1d9753c9bab78fc878cc",
+  "source": {
+    "version": "Orabona arXiv1912.13213v10",
+    "pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchor": "Lemma4.2 printed34/PDF46, following Definition4.1; Definition2.20 and existing subgradient_point_finite",
+    "literal_critical_condition": "V subset dom partial f, not merely V subset dom f"
+  },
+  "proposed_public_declaration": "BanditRL.OnlineConvex.stronglyConvex_iff_sourceSubgradient_growth",
+  "proposed_module": "BanditRLProof.OnlineStrongConvexSubgradientIff",
+  "inputs": [
+    "Same arbitrary real normed E, d and algebraic e:E equiv_linear EuclideanSpace R (Fin d) as the installed forward adapter; no isometry or substituted norm.",
+    "SourceProper f, literal Convex R V, real lambda>=0.",
+    "For every p in V the actual global SourceSubdifferential of (f composed e.symm) at e(p) is nonempty. This spells out the printed V subset dom partial f assumption.",
+    "Do not add V subset effectiveDomain f: derive it internally from SourceProper, the global finite witness and the existing subgradient_point_finite theorem."
+  ],
+  "proposed_conclusion": {
+    "left": "Exact existing EReal strong interpolation for all x,y in V and 0<a<1, coefficient lambda/2*a*(1-a)*norm_E(x-y)^2.",
+    "right": "For all p,q in V and every actual global coordinate subgradient g at e(p), f(p).toReal + inner(g,e(q-p)) + lambda/2*norm_E(q-p)^2 <= f(q).toReal.",
+    "finite_value_transport": "Both endpoints and every feasible segment point are genuinely finite by derived domain inclusion, so toReal formulation is explicitly equivalent to the printed extended-real inequality."
+  },
+  "dependency_ready_route": [
+    "Transport SourceProper to f composed e.symm using the actual algebraic bijection; apply existing subgradient_point_finite to each supplied global support to derive original feasible-point finiteness.",
+    "Forward direction genuinely uses installed stronglyConvex_sourceSubgradient_growth with original f,V,norm,lambda and each supplied g; no support-existence producer is claimed.",
+    "Converse: for z=a*x+(1-a)*y in V, choose one of the actual global subgradients at z from the source assumption. Apply the right-hand growth inequality to (z,x) and (z,y), multiply by a and (1-a), then cancel the two linear pairings using e linearity.",
+    "Original-norm homogeneity yields norm(x-z)^2=(1-a)^2*norm(x-y)^2 and norm(y-z)^2=a^2*norm(x-y)^2. Weighted sum produces exactly lambda/2*a*(1-a)*norm(x-y)^2.",
+    "Transport the resulting real inequality back to EReal using internally established finite values. Empty V and lambda=0 remain included."
+  ],
+  "questions_for_source_reviewer": [
+    "Confirm all-point nonempty global coordinate subdifferentials are exactly the printed V subset dom partial f premise, and properness is inherited from Definition4.1 rather than an extra assumption.",
+    "Confirm the finite-value rewrite and arbitrary original-norm coordinates preserve the source theorem, with explicit generalization rather than a new strengthened hypothesis.",
+    "Separate the printed proof equality typo from the valid iff statement: proving the stated iff need not assert the erroneous equality or produce all-point supports from convexity alone."
+  ],
+  "excluded_claims": [
+    "Global support existence without the source all-point premise",
+    "Closedness, minimizer attainment, uniqueness, or FTRL stability/regret",
+    "Source equality typo proved unchanged",
+    "New accepted target, chapter gate, or book completion before full contract/blind/review/proof/canary/canonical gates"
+  ],
+  "C2_accepted": false,
+  "C2_mandatory_denominator": null,
+  "C2_open_forward": 7,
+  "C2_future_claims": 6,
+  "global_goal_complete": false
+}

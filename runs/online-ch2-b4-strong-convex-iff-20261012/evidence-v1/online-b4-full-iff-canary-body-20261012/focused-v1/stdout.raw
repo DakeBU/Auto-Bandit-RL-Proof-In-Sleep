@@ -1,0 +1,133 @@
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-full-iff-canary-body-20261012\candidate-v1.lean:49:37: error: unsolved goals
+hscaled : ∀ (v : E), scaledCoordinates v = 2 • coordinates v
+w v : E
+⊢ inner ℝ (w 0) (v 0) + inner ℝ (w 1) (v 1) = w 0 * v 0 + w 1 * v 1
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-full-iff-canary-body-20261012\candidate-v1.lean:123:37: error: unsolved goals
+hscaled : ∀ (v : E), scaledCoordinates v = 2 • coordinates v
+hpair : ∀ (w v : E), inner ℝ (coordinates w) (scaledCoordinates v) = 2 * (w 0 * v 0 + w 1 * v 1)
+hcov : ∀ (p v : E), inner ℝ (covector p) (scaledCoordinates v) = (p 0 + 1) * v 0 + p 1 * v 1
+hproper : SourceProper objective
+hconv : Convex ℝ feasible
+hsub :
+  ∀ (p : E), covector p ∈ SourceSubdifferential (fun u => objective (scaledCoordinates.symm u)) (scaledCoordinates p)
+hnorm : ∀ (v : E), ‖v‖ ^ 2 ≤ v 0 ^ 2 + v 1 ^ 2
+hgrowth :
+  ∀ p ∈ feasible,
+    ∀ q ∈ feasible,
+      ∀ g ∈ SourceSubdifferential (fun u => objective (scaledCoordinates.symm u)) (scaledCoordinates p),
+        (objective p).toReal + inner ℝ g (scaledCoordinates (q - p)) + 1 / 2 * ‖q - p‖ ^ 2 ≤ (objective q).toReal
+hbound :
+  ∀ x ∈ feasible,
+    ∀ y ∈ feasible,
+      ∀ (a : ℝ),
+        0 < a →
+          a < 1 →
+            objective (a • x + (1 - a) • y) ≤
+              ↑a * objective x + ↑(1 - a) * objective y - ↑(1 / 2 * a * (1 - a) * ‖x - y‖ ^ 2)
+⊢ ‖query‖ = 1 ∨ ‖query‖ = -1
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-full-iff-canary-body-20261012\candidate-v1.lean:135:46: error: unsolved goals
+hscaled : ∀ (v : E), scaledCoordinates v = 2 • coordinates v
+hpair : ∀ (w v : E), inner ℝ (coordinates w) (scaledCoordinates v) = 2 * (w 0 * v 0 + w 1 * v 1)
+hcov : ∀ (p v : E), inner ℝ (covector p) (scaledCoordinates v) = (p 0 + 1) * v 0 + p 1 * v 1
+hproper : SourceProper objective
+hconv : Convex ℝ feasible
+hsub :
+  ∀ (p : E), covector p ∈ SourceSubdifferential (fun u => objective (scaledCoordinates.symm u)) (scaledCoordinates p)
+hnorm : ∀ (v : E), ‖v‖ ^ 2 ≤ v 0 ^ 2 + v 1 ^ 2
+hgrowth :
+  ∀ p ∈ feasible,
+    ∀ q ∈ feasible,
+      ∀ g ∈ SourceSubdifferential (fun u => objective (scaledCoordinates.symm u)) (scaledCoordinates p),
+        (objective p).toReal + inner ℝ g (scaledCoordinates (q - p)) + 1 / 2 * ‖q - p‖ ^ 2 ≤ (objective q).toReal
+hbound :
+  ∀ x ∈ feasible,
+    ∀ y ∈ feasible,
+      ∀ (a : ℝ),
+        0 < a →
+          a < 1 →
+            objective (a • x + (1 - a) • y) ≤
+              ↑a * objective x + ↑(1 - a) * objective y - ↑(1 / 2 * a * (1 - a) * ‖x - y‖ ^ 2)
+hn : ‖query‖ ^ 2 = 1
+hc : ‖scaledCoordinates query‖ ^ 2 = 8
+hp : inner ℝ (covector 0) (scaledCoordinates query) = 1
+hg0 : covector 0 ≠ 0
+hf0 : objective 0 = 0
+⊢ ↑2 = 2
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-full-iff-canary-body-20261012\candidate-v1.lean:142:81: error: unsolved goals
+hscaled : ∀ (v : E), scaledCoordinates v = 2 • coordinates v
+hpair : ∀ (w v : E), inner ℝ (coordinates w) (scaledCoordinates v) = 2 * (w 0 * v 0 + w 1 * v 1)
+hcov : ∀ (p v : E), inner ℝ (covector p) (scaledCoordinates v) = (p 0 + 1) * v 0 + p 1 * v 1
+hproper : SourceProper objective
+hconv : Convex ℝ feasible
+hsub :
+  ∀ (p : E), covector p ∈ SourceSubdifferential (fun u => objective (scaledCoordinates.symm u)) (scaledCoordinates p)
+hnorm : ∀ (v : E), ‖v‖ ^ 2 ≤ v 0 ^ 2 + v 1 ^ 2
+hgrowth :
+  ∀ p ∈ feasible,
+    ∀ q ∈ feasible,
+      ∀ g ∈ SourceSubdifferential (fun u => objective (scaledCoordinates.symm u)) (scaledCoordinates p),
+        (objective p).toReal + inner ℝ g (scaledCoordinates (q - p)) + 1 / 2 * ‖q - p‖ ^ 2 ≤ (objective q).toReal
+hbound :
+  ∀ x ∈ feasible,
+    ∀ y ∈ feasible,
+      ∀ (a : ℝ),
+        0 < a →
+          a < 1 →
+            objective (a • x + (1 - a) • y) ≤
+              ↑a * objective x + ↑(1 - a) * objective y - ↑(1 / 2 * a * (1 - a) * ‖x - y‖ ^ 2)
+hn : ‖query‖ ^ 2 = 1
+hc : ‖scaledCoordinates query‖ ^ 2 = 8
+hp : inner ℝ (covector 0) (scaledCoordinates query) = 1
+hg0 : covector 0 ≠ 0
+hf0 : objective 0 = 0
+hfq : objective query = 2
+hfn : objective (-query) = 0
+hdiff : ‖query - -query‖ ^ 2 = 4
+⊢ EReal.toReal 2 < 5
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-full-iff-canary-body-20261012\candidate-v1.lean:45:23: error: unsolved goals
+hscaled : ∀ (v : E), scaledCoordinates v = 2 • coordinates v
+hpair : ∀ (w v : E), inner ℝ (coordinates w) (scaledCoordinates v) = 2 * (w 0 * v 0 + w 1 * v 1)
+hcov : ∀ (p v : E), inner ℝ (covector p) (scaledCoordinates v) = (p 0 + 1) * v 0 + p 1 * v 1
+hproper : SourceProper objective
+hconv : Convex ℝ feasible
+hsub :
+  ∀ (p : E), covector p ∈ SourceSubdifferential (fun u => objective (scaledCoordinates.symm u)) (scaledCoordinates p)
+hnorm : ∀ (v : E), ‖v‖ ^ 2 ≤ v 0 ^ 2 + v 1 ^ 2
+hgrowth :
+  ∀ p ∈ feasible,
+    ∀ q ∈ feasible,
+      ∀ g ∈ SourceSubdifferential (fun u => objective (scaledCoordinates.symm u)) (scaledCoordinates p),
+        (objective p).toReal + inner ℝ g (scaledCoordinates (q - p)) + 1 / 2 * ‖q - p‖ ^ 2 ≤ (objective q).toReal
+hbound :
+  ∀ x ∈ feasible,
+    ∀ y ∈ feasible,
+      ∀ (a : ℝ),
+        0 < a →
+          a < 1 →
+            objective (a • x + (1 - a) • y) ≤
+              ↑a * objective x + ↑(1 - a) * objective y - ↑(1 / 2 * a * (1 - a) * ‖x - y‖ ^ 2)
+hn : ‖query‖ ^ 2 = 1
+hc : ‖scaledCoordinates query‖ ^ 2 = 8
+hp : inner ℝ (covector 0) (scaledCoordinates query) = 1
+hg0 : covector 0 ≠ 0
+hf0 : objective 0 = 0
+hfq : objective query = 2
+hfn : objective (-query) = 0
+hdiff : ‖query - -query‖ ^ 2 = 4
+hwrong :
+  ¬(objective 0).toReal + inner ℝ (covector 0) (scaledCoordinates query) + 1 / 2 * ‖scaledCoordinates query‖ ^ 2 ≤
+      (objective query).toReal
+⊢ 1 / 2 * EReal.toReal 2 - 1 / 2 = 1 / 2
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-full-iff-canary-body-20261012\candidate-v1.lean:165:10: error(lean.unknownIdentifier): Unknown constant `Set.eq_empty_iff_forall_not_mem.mpr`
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-full-iff-canary-body-20261012\candidate-v1.lean:166:10: error: No goals to be solved
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-full-iff-canary-body-20261012\candidate-v1.lean:181:2: error: unsolved goals
+case refine_4
+hproper : SourceProper negativeSquare
+hempty : ∀ (p : ℝ), SourceSubdifferential negativeSquare p = ∅
+⊢ -2⁻¹ + -2⁻¹ = -1
