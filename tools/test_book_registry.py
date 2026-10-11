@@ -8,7 +8,7 @@ from pathlib import Path
 
 from website.scripts import build_site as site
 from website.scripts.book_registry import build_registry, membership_index, verify_reviewed_module, reviewed_module_matches
-from website.scripts.check_site import declaration_has_expected_badge
+from website.scripts.check_site import declaration_has_expected_badge, expected_book_chapters, expected_navigation_groups, LinkCollector
 
 
 class BookRegistryTests(unittest.TestCase):
@@ -117,8 +117,29 @@ class BookRegistryTests(unittest.TestCase):
         self.assertIn("June 27, 2026", books["reinforcement-learning"]["source"]["version"])
         self.assertTrue(books["online-learning"]["source"]["url"].endswith("v10"))
         self.assertIsNone(books["conformal-prediction"]["source"])
-        for key in books.keys() - {"bandit"}:
+        self.assertEqual("source-mapped", books["online-learning"]["status"])
+        for key in books.keys() - {"bandit", "online-learning"}:
             self.assertEqual("planned", books[key]["status"])
+
+    def test_online_integration_keeps_one_registry_and_bounded_scope(self):
+        nodes = membership_index(self.registry(verified=True))
+        online_modules = {
+            "BanditRLProof.OnlineConvexExtended",
+            "BanditRLProof.OnlineConvexExamples",
+            "BanditRLProof.OnlineConvexFirstOrder",
+            "BanditRLProof.OnlineGradientDescent",
+            "BanditRLProof.OnlineGradientDescentVariable",
+            "BanditRLProof.OnlineGradientDescentSource",
+        }
+        declarations = [d for d in self.declarations if d["module"] in online_modules]
+        self.assertEqual(57, len(declarations))
+        for declaration in declarations:
+            key = "declaration:" + declaration["full_name"]
+            self.assertIn("online-learning", nodes[key]["books"])
+        for name in ("BanditRL.OnlineConvex.example_2_5",
+                     "BanditRL.OnlineConvex.example_2_6"):
+            self.assertIn("online-learning", nodes["declaration:" + name]["books"])
+        self.assertIn("bandit", nodes["declaration:BanditRLProof.FiniteBanditModel"]["books"])
 
     def test_preview_badge_cannot_borrow_evidence_from_another_declaration(self):
         source = ('<details class="declaration" id="a"><summary>'
@@ -137,6 +158,7 @@ class BookRegistryTests(unittest.TestCase):
             site.SITE_CHAPTERS, site.SITE_BOOKS = self.chapters, self.config
             site.SITE_TEXTBOOK_SPINE, site.SITE_REGISTRY = self.spine, self.registry()
             for path, key in [("chapters/finite-horizon-rl/index.html", "finite-horizon-rl"),
+                              ("chapters/online-ogd/index.html", "online-ogd"),
                               ("textbook-spine/chapter-17-high-probability/index.html", "textbook-spine"),
                               ("books/bandit/index.html", "bandit")]:
                 source = site.layout(path, "Fixture", "", [], key, False, "fixture")
@@ -144,12 +166,50 @@ class BookRegistryTests(unittest.TestCase):
                 self.assertEqual(1, nav.count('aria-current="page"'))
                 self.assertNotIn("Learn · Book map", nav)
                 self.assertNotIn("Textbook spine · Part IV", nav)
-                self.assertEqual(10, nav.count('class="book-nav-link"'))
+                self.assertEqual(len(self.chapters), nav.count('class="book-nav-link"'))
                 self.assertEqual(5, nav.count('class="spine-nav-link"'))
+                collector = LinkCollector()
+                collector.feed(source)
+                expected_groups = expected_navigation_groups(self.config["books"], {c["slug"] for c in self.chapters})
+                self.assertEqual(expected_groups, set(collector.nav_group_ids))
+                self.assertEqual(len(expected_groups), collector.nav_group_count)
+                bandit_nav = nav.split('data-nav-group="bandit-book"', 1)[1].split('</details>', 1)[0]
+                self.assertNotIn('chapters/online-', bandit_nav)
+                online_nav = nav.split('data-nav-group="online-learning-book"', 1)[1].split('</details>', 1)[0]
+                self.assertEqual(3, online_nav.count('class="book-nav-link"'))
+                self.assertNotIn('chapters/probability/', online_nav)
             breadcrumb = site.render_book_breadcrumb("chapters/finite-horizon-rl/index.html")
             self.assertIn("Reinforcement Learning Book", breadcrumb)
+            online_breadcrumb = site.render_book_breadcrumb("chapters/online-ogd/index.html")
+            self.assertIn("Online Learning Book", online_breadcrumb)
+            self.assertNotIn("Bandit Book", online_breadcrumb)
         finally:
             site.SITE_CHAPTERS, site.SITE_BOOKS, site.SITE_TEXTBOOK_SPINE, site.SITE_REGISTRY = saved
+
+    def test_online_routes_preserve_bandit_coverage_and_shared_identity(self):
+        with patch.multiple(site, SITE_CHAPTERS=self.chapters, SITE_BOOKS=self.config,
+                            SITE_TEXTBOOK_SPINE=self.spine):
+            banner = site.render_primary_textbook_banner()
+            self.assertIn("10 source-mapped routes", banner)
+            self.assertIn("9 canonical cores compiled", banner)
+            self.assertNotIn("13 source-mapped routes", banner)
+            self.assertEqual("online-learning", site.primary_teaching_book("online-ogd")["id"])
+            self.assertEqual("bandit", site.primary_teaching_book("probability")["id"])
+            online = site.teaching_chapters_for_book("online-learning", owned_only=True)
+            self.assertEqual({"online-ogd", "online-convex", "online-first-order"},
+                             {chapter["slug"] for chapter in online})
+            shared = site.teaching_chapters_for_book("online-learning")
+            self.assertIn("probability", {chapter["slug"] for chapter in shared})
+            chapter_slugs = {chapter["slug"] for chapter in self.chapters}
+            bandit_chapters = expected_book_chapters(self.config["books"], "bandit", chapter_slugs)
+            self.assertEqual(10, len(bandit_chapters))
+            self.assertIn("probability", bandit_chapters)
+            self.assertFalse(any(slug.startswith("online-") for slug in bandit_chapters))
+            self.assertIn("online-learning-book", expected_navigation_groups(self.config["books"], chapter_slugs))
+            shared_only = copy.deepcopy(self.config)
+            online_book = next(b for b in shared_only["books"] if b["id"] == "online-learning")
+            online_book["chapter_refs"] = ["teaching:probability", "teaching:exp3"]
+            self.assertNotIn("online-learning-book", expected_navigation_groups(shared_only["books"], chapter_slugs))
 
     def test_cucb_mapping_uses_canonical_nodes_without_preview_promotion(self):
         registry = self.registry()

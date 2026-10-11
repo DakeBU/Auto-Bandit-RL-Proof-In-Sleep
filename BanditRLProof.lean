@@ -701,3 +701,9 @@ import BanditRLProof.Algorithms.HeavyTailRegretCap
 import BanditRLProof.Algorithms.MusicalChairsCoordinationTime
 import BanditRLProof.Algorithms.MusicalChairsCoordinationRegret
 import BanditRLProof.Algorithms.MusicalChairsRealized
+import BanditRLProof.OnlineConvexExtended
+import BanditRLProof.OnlineConvexExamples
+import BanditRLProof.OnlineConvexFirstOrder
+import BanditRLProof.OnlineGradientDescent
+import BanditRLProof.OnlineGradientDescentVariable
+import BanditRLProof.OnlineGradientDescentSource
