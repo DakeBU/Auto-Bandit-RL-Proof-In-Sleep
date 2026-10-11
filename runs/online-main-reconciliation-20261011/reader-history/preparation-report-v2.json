@@ -1,0 +1,73 @@
+{
+  "status": "prepared syntax-only; no browser or structural execution",
+  "requested_model_effort": "GPT-6 Astra / medium; not runtime attested",
+  "definitive_source_head": "e7babdaa0333262b87e3988159178364de33159e",
+  "gate_path": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-main-reconciliation-gates-20261011\\full-harness-v3\\receipt.json",
+  "gate_sha256": "a8ca95abff718b83e063f09fd6775a42c09f3d02fb828ae677cf82821dee685f",
+  "site": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-main-reconciliation-site-20261011-v3",
+  "syntax_checks": [
+    {
+      "argv": [
+        "C:/Users/admin/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node.exe",
+        "--check",
+        "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-main-reconciliation-reader-qa-20261011\\capture-reconciliation-reader-v1.cjs"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "C:/Users/admin/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe",
+        "-B",
+        "-c",
+        "import ast,sys; ast.parse(open(sys.argv[1],encoding=\"utf8\").read()); print(\"AST parse OK\")",
+        "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-main-reconciliation-structural-qa-20261011\\check-reconciliation-structure-v1.py"
+      ],
+      "exit": 0,
+      "stdout": "AST parse OK\r\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "C:/Users/admin/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node.exe",
+        "--check",
+        "tmp\\online-main-reconciliation-reader-qa-20261011\\capture-reconciliation-reader-v2.cjs"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "scope": "No canonical changes, no gate/site/pixel acceptance. Old helpers and failures preserved. Source topology is not actual VALUE graph; these are DOM/registry/search checks only.",
+  "helper": {
+    "path": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-main-reconciliation-reader-qa-20261011\\capture-reconciliation-reader-v2.cjs",
+    "sha256": "c09b3f724d30c6bf736839e9581565b76570a918ca88214fcf2b285830cca2e9"
+  },
+  "required_argv": [
+    "C:/Users/admin/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node.exe",
+    "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-main-reconciliation-reader-qa-20261011\\capture-reconciliation-reader-v2.cjs",
+    "http://127.0.0.1:8892/chapters/online-ogd/",
+    "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-main-reconciliation-reader-qa-20261011\\actual-v1",
+    "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-main-reconciliation-reader-qa-20261011\\profile-v1",
+    "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-main-reconciliation-site-20261011-v3\\books\\registry.json",
+    "E:\\ABRL\\worktrees\\research-online-book",
+    "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-main-reconciliation-site-20261011-v3",
+    "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-main-reconciliation-gates-20261011\\full-harness-v3\\receipt.json",
+    "a8ca95abff718b83e063f09fd6775a42c09f3d02fb828ae677cf82821dee685f",
+    "e7babdaa0333262b87e3988159178364de33159e"
+  ],
+  "prerequisites": [
+    "Full harness successful same clean HEAD/branch; registry/site-manifest lean_verified exactHEAD; official site check separately passed.",
+    "Start a separate local server serving exactly specified site directory at8892; script verifies actualHTTPbytes beforeDOM and everydocument navigation. Never reuse old8891 content.",
+    "Output/profile create-only and confined to own ignored directory; isolated headlessEdge,1440+390 captures.",
+    "Manual original-pixel review remains necessary after capture."
+  ],
+  "expected_panels": [
+    "B4 source card,lesson,chapterboundary,catalog both widths",
+    "Unique projection full lesson proof and catalog exact header/source link both widths",
+    "Projection source bridge both widths",
+    "Both Book-owned navigation landingpages fullpage both widths"
+  ],
+  "supersedes": "V1 unexecuted: added explicit true lean_verified requirements for both site manifest and registry, preventing plain preflight site being captured as verified"
+}
