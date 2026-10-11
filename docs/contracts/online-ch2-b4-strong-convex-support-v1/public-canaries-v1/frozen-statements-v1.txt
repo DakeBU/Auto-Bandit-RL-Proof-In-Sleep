@@ -1,0 +1,23 @@
+theorem nonzero_point_nonzero_support_sharp :
+    (∀ q : ℝ, (squareLoss 2).toReal + fourSupport (q - 2) +
+      (2 / 2 : ℝ) * ‖q - 2‖ ^ 2 ≤ (squareLoss q).toReal) ∧
+    (∀ q : ℝ, (squareLoss 2).toReal + fourSupport (q - 2) +
+      (2 / 2 : ℝ) * ‖q - 2‖ ^ 2 = (squareLoss q).toReal) ∧
+    fourSupport 1 = 4 ∧
+    (∀ z : ℝ, squareLoss 2 + (fourSupport (z - 2) : EReal) ≤ squareLoss z) ∧
+    ¬ IsMinOn squareLoss Set.univ 2
+
+theorem boundary_nonzero_support_extended_domain :
+    (∀ q ∈ Set.Icc (0 : ℝ) 1,
+      (restrictedSquare 0).toReal + negativeSupport (q - 0) +
+        (2 / 2 : ℝ) * ‖q - 0‖ ^ 2 ≤ (restrictedSquare q).toReal) ∧
+    negativeSupport 1 = -1 ∧
+    (∀ z ∈ Set.Icc (0 : ℝ) 1,
+      restrictedSquare 0 + (negativeSupport (z - 0) : EReal) ≤ restrictedSquare z) ∧
+    restrictedSquare 2 = ⊤ ∧
+    effectiveDomain restrictedSquare = Set.Icc (0 : ℝ) 1 ∧
+    (restrictedSquare 0).toReal + negativeSupport ((1 : ℝ) - 0) +
+      (2 / 2 : ℝ) * ‖(1 : ℝ) - 0‖ ^ 2 = 0 ∧
+    (restrictedSquare 1).toReal = 1 ∧
+    (restrictedSquare 0).toReal + negativeSupport ((1 : ℝ) - 0) +
+      (2 / 2 : ℝ) * ‖(1 : ℝ) - 0‖ ^ 2 < (restrictedSquare 1).toReal
